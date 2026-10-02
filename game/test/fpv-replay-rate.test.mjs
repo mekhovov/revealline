@@ -42,6 +42,10 @@ function fixture(t, locale = 'en') {
   let serial = 0,
     now = 0;
   Object.assign(win, {
+    MutationObserver: class {
+      observe() {}
+      disconnect() {}
+    },
     location: new URL(`https://example.test/optional-practice/civilian-fpv/?lang=${locale}`),
     navigator: {},
     requestAnimationFrame: (callback) => {

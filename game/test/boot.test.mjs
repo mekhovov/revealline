@@ -152,6 +152,38 @@ async function settle() {
   for (let i = 0; i < 8; i++) await new Promise((resolve) => setImmediate(resolve));
 }
 
+test('installed startup retains a plain update link when optional modules and renderer fail', async () => {
+  const page = boundary({
+    renderer: false,
+    href: 'https://game.example/revealline/releases/v0.142.4/site/game/',
+  });
+  page.context.navigator.standalone = true;
+  const section = page.make('section', 'boot-updates', page.screen);
+  const action = page.make('a', 'boot-update-action', section);
+  section.hidden = true;
+  page.run();
+  page.mount();
+  await settle();
+  assert.equal(section.hidden, false);
+  assert.equal(new URL(action.href).pathname, '/revealline/app/update.html');
+  assert.equal(new URL(action.href).searchParams.get('return'), page.context.location.href);
+  assert.equal(page.document.documentElement.dataset.bootState, 'failed');
+  assert.deepEqual(page.locations, []);
+});
+
+test('native wrapper startup never resolves a web updater under its custom protocol', async () => {
+  const page = boundary({ renderer: false, href: 'capacitor://localhost/game/' });
+  page.context.navigator.standalone = true;
+  const section = page.make('section', 'boot-updates', page.screen);
+  page.make('a', 'boot-update-action', section);
+  section.hidden = true;
+  page.run();
+  page.mount();
+  await settle();
+  assert.equal(section.hidden, true);
+  assert.equal(page.document.documentElement.dataset.bootState, 'failed');
+});
+
 test('downloaded file shows usable native launch options without importing or redirecting', () => {
   const page = boundary({ href: 'file:///tmp/RevealLine/game/index.html' });
   page.run();

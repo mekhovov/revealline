@@ -1,0 +1,264 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Flight practice · Player guide / Посібник</title>
+    <style>
+      body {
+        margin: auto;
+        max-width: 52rem;
+        padding: clamp(1rem, 4vw, 3rem);
+        background: #0b1e2b;
+        color: #f4f2e8;
+        font: 1.1rem/1.6 system-ui;
+      }
+      a,
+      button,
+      select {
+        color: inherit;
+        background: #10263b;
+        border: 2px solid #68b2ff;
+        padding: 0.6rem;
+        display: inline-block;
+        margin: 0.3rem 0;
+        font: inherit;
+      }
+      a:focus-visible,
+      button:focus-visible,
+      select:focus-visible {
+        outline: 3px solid #ffd85c;
+        outline-offset: 3px;
+      }
+      img {
+        width: 100%;
+        height: auto;
+      }
+      h2 {
+        margin-top: 2rem;
+      }
+      [hidden] {
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <label
+      >Language / Мова
+      <select id="locale">
+        <option value="en">English</option>
+        <option value="uk">Українська</option>
+      </select></label
+    >
+    <nav>
+      <a href="index.html" id="play">Open app / Відкрити застосунок</a>
+      <a id="directory">Directory / Каталог</a>
+      <a href="README.md">Package notes / Документація пакета</a>
+    </nav>
+    <section lang="en">
+      <h1>Your first practice flight</h1>
+      <p>
+        No unlocks, payment, or installation is needed to play online. Practice does not grant
+        campaign wins. Choose an app in Flight practice, then select <strong>Play</strong>. It opens
+        the published app in a new tab without arming a flight.
+      </p>
+      <h2>Choose your app</h2>
+      <ul>
+        <li>
+          <strong>Civilian flight gym:</strong> assisted movement, orientation, and route following.
+        </li>
+        <li><strong>FPV Flight Studio:</strong> focused lessons in self-level and Acro modes.</li>
+        <li>
+          <strong>FPV World Studio:</strong> environments, challenges, playlists, and world
+          creation.
+        </li>
+      </ul>
+      <h2>1. Set up inputs</h2>
+      <p>
+        Use the app’s current Controls / Flight guide. Gym supports keyboard, touch buttons, and
+        standard gamepad. In FPV apps select Keyboard, Touch · Mode 2, or USB radio. Radio setup
+        detects axes and calibrates them; do not assume every gamepad is a radio. Keep controls
+        neutral before starting. Use the in-app guide for the current bindings rather than relying
+        on a second, possibly outdated mapping here.
+      </p>
+      <h2>2. Watch, try, pause, retry</h2>
+      <p>
+        Gym: select Lift and return, then Start / resume. Flight Studio: start with Lift and land,
+        open Flight guide, and Watch example. World Studio: choose Watch first flight, then Try
+        first flight. Choose self-level first; Acro does not automatically level when sticks return
+        to centre. Arm / resume is always your explicit action. Follow the objective on screen,
+        pause before changing setup, and use Reset / Retry for another attempt. Back to lobby
+        returns to World Studio’s selection.
+      </p>
+    </section>
+    <img src="preview.png" alt="Gameplay / Ігровий процес" width="800" height="700" />
+    <section lang="en">
+      <h2>3. Download for offline use</h2>
+      <p>
+        Choose Download for offline use on the launcher. You can also use the app’s Prepare offline
+        action (Controls &amp; authoring in Gym, Notebook in Flight Studio, Settings in World
+        Studio). Leave the tab open. The download shows progress and Cancel; files are checked
+        before the version is recorded. Thirty seconds without download activity or five minutes
+        overall ends the attempt. A cancelled or failed new download leaves the previous prepared
+        version intact.
+      </p>
+      <p>
+        Return to the stable launcher from the directory. <strong>Ready offline</strong> means the
+        exact owning worker and every pinned dependency passed verification. Close all tabs, disable
+        networking, and reopen that stable launcher to check on your device. A saved version name
+        alone is not proof of readiness. Package guides and previews are included in the offline
+        copy.
+      </p>
+      <h2>4. Add to home screen — optional</h2>
+      <p>
+        This is separate from downloading files. Use Add to home screen when the launcher offers it.
+        Otherwise use the browser’s Install app menu; on iPhone/iPad use Share → Add to Home Screen.
+        Availability depends on browser and platform. Online play works without either step.
+      </p>
+      <h2>Updates, removal, and backups</h2>
+      <p>
+        The launcher announces Update available without reloading a flight. Open the new version
+        when you are ready and prepare it offline. The previous prepared version remains linked for
+        rollback. Updates to the launcher itself may need its tabs closed. Remove offline deletes
+        only that version’s app-shell cache and worker, not flight records, radio profiles, or
+        imported worlds. Use Remove this offline copy (keep records) on the launcher; use browser
+        site settings only if you intend to remove all site data.
+      </p>
+      <p>
+        Export recordings, notebooks, playlists, and authored worlds with each app’s current export
+        tools before clearing browser storage. Export is not automatic backup. Imported
+        <strong>.rlpack</strong> files add content inside World Studio: they are not executable apps
+        and cannot be installed in this directory.
+      </p>
+      <h2>Troubleshooting</h2>
+      <ul>
+        <li>
+          <strong>Empty directory:</strong> no reviewed packages are selected for this host. Use the
+          existing FPV flight simulator shortcut in the main game.
+        </li>
+        <li>
+          <strong>Request failed:</strong> Retry. A dated saved catalogue is not a fresh
+          availability check. A card can still open its stable launcher.
+        </li>
+        <li>
+          <strong>Version unavailable:</strong> Retry online or open a verified prepared version. A
+          retired online version may no longer be hosted.
+        </li>
+        <li>
+          <strong>Needs repair / missing offline files:</strong> reconnect, remove this version’s
+          offline copy, and prepare again. Never clear all site data as the first repair step.
+        </li>
+        <li>
+          <strong>Storage full or denied:</strong> allow site storage, leave private browsing if
+          necessary, free space, then retry. Apps have separate cache ownership but share the
+          origin’s browser quota. Browsers may evict caches.
+        </li>
+        <li>
+          <strong>Blank 3D view:</strong> verify WebGL2 support and hardware acceleration. Try Gym,
+          which has lower graphics requirements. Report browser, device, package version, and error
+          to the project issue tracker; do not include private recordings.
+        </li>
+      </ul>
+    </section>
+    <section lang="uk" hidden>
+      <h1>Ваш перший тренувальний політ</h1>
+      <p>
+        Для гри онлайн не потрібні розблокування, оплата чи встановлення. Практика не дає перемог у
+        кампанії. Виберіть застосунок у каталозі та натисніть <strong>Грати</strong>: він
+        відкриється в новій вкладці без автоматичного запуску польоту.
+      </p>
+      <h2>Виберіть застосунок</h2>
+      <ul>
+        <li>
+          <strong>Цивільний льотний тренажер:</strong> рух із допомогою, орієнтація та маршрути.
+        </li>
+        <li><strong>FPV Flight Studio:</strong> окремі вправи з автовирівнюванням та в Acro.</li>
+        <li>
+          <strong>FPV World Studio:</strong> середовища, випробування, списки польотів і створення
+          світів.
+        </li>
+      </ul>
+      <h2>1. Налаштуйте керування</h2>
+      <p>
+        Відкрийте чинний посібник із керування в застосунку. Тренажер підтримує клавіатуру, сенсорні
+        кнопки та стандартний геймпад. У FPV виберіть клавіатуру, сенсорний режим Mode 2 або
+        USB-пульт. Налаштування пульта визначає й калібрує осі: не кожен геймпад є пультом. Перед
+        стартом поверніть керування в нейтраль. Актуальні клавіші дивіться саме у вбудованому
+        посібнику.
+      </p>
+      <h2>2. Перегляньте приклад, спробуйте, призупиніть, повторіть</h2>
+      <p>
+        У тренажері виберіть першу вправу підйому й повернення та Старт / продовжити. У Flight
+        Studio відкрийте посібник і приклад першого зльоту та посадки. У World Studio виберіть
+        перегляд першого польоту, потім спробуйте його. Починайте з автовирівнювання: в Acro
+        нейтральні стіки не вирівнюють апарат. Запуск / продовження завжди потребує вашої дії.
+        Виконуйте мету на екрані, призупиніть перед зміною налаштувань, а для нової спроби виберіть
+        Скинути / Повторити. Повернення до лобі відкриває вибір польотів.
+      </p>
+      <h2>3. Підготуйте офлайн</h2>
+      <p>
+        На сторінці запуску виберіть «Завантажити для роботи офлайн». Також можна скористатися
+        підготовкою офлайн у застосунку: керування й авторство у тренажері, нотатник у Flight Studio
+        або налаштування у World Studio. Не закривайте вкладку: показано поступ і скасування, а
+        файли перевіряються. Спроба припиняється після 30 секунд без даних або п’яти хвилин загалом.
+        Скасування чи помилка нової версії не видаляє попередню підготовлену.
+      </p>
+      <p>
+        Поверніться до стабільної сторінки запуску через каталог.
+        <strong>Готово офлайн</strong> означає, що перевірено воркер-власник і всі потрібні файли.
+        Закрийте всі вкладки, вимкніть мережу та знову відкрийте сторінку запуску. Сам запис назви
+        версії не доводить готовності. Посібник і знімок входять до офлайн-копії.
+      </p>
+      <h2>4. Додайте на початковий екран — за бажанням</h2>
+      <p>
+        Це окрема дія від завантаження файлів. Використайте кнопку встановлення, якщо вона доступна,
+        або меню браузера. На iPhone/iPad: Поділитися → На початковий екран. Підтримка залежить від
+        браузера. Онлайн можна грати без установлення.
+      </p>
+      <h2>Оновлення, видалення, резервні копії</h2>
+      <p>
+        Сторінка запуску повідомить про оновлення, але не перезавантажить політ. Відкрийте нову
+        версію та підготуйте її офлайн, коли будете готові. Попередня залишається для повернення.
+        Оновлення самої сторінки запуску інколи потребує закриття її вкладок. Видалення офлайн-копії
+        прибирає лише оболонку цієї версії, не записи, профілі пульта чи імпортовані світи.
+        Скористайтеся кнопкою видалення офлайн-копії зі збереженням записів на сторінці запуску;
+        очищайте дані сайту лише якщо справді хочете видалити все.
+      </p>
+      <p>
+        Перед очищенням сховища експортуйте записи, нотатники, списки та авторські світи засобами
+        застосунків. Автоматичної резервної копії немає. Файли <strong>.rlpack</strong> додають
+        контент усередині World Studio, а не виконувані застосунки каталогу.
+      </p>
+      <h2>Як усунути проблему</h2>
+      <ul>
+        <li>
+          <strong>Порожній каталог:</strong> на сайті не вибрано перевірених пакетів. Скористайтеся
+          наявним ярликом симулятора FPV в основній грі.
+        </li>
+        <li>
+          <strong>Помилка запиту:</strong> повторіть. Збережений каталог із датою не є поточною
+          перевіркою доступності.
+        </li>
+        <li>
+          <strong>Версія недоступна:</strong> спробуйте онлайн або відкрийте перевірену підготовлену
+          версію. Вилучену версію можуть більше не розміщувати.
+        </li>
+        <li>
+          <strong>Потрібне відновлення:</strong> під’єднайте мережу, видаліть лише офлайн-копію цієї
+          версії та підготуйте знову. Не починайте з очищення всіх даних сайту.
+        </li>
+        <li>
+          <strong>Бракує місця або доступ заборонено:</strong> дозвольте сховище, вийдіть із
+          приватного режиму, звільніть місце та повторіть. Кеші окремі, але квота сайту спільна;
+          браузер може їх витіснити.
+        </li>
+        <li>
+          <strong>Порожній 3D-екран:</strong> перевірте WebGL2 та апаратне прискорення або спробуйте
+          простіший тренажер. Повідомте про браузер, пристрій, версію й помилку в трекері проєкту
+          без приватних записів.
+        </li>
+      </ul>
+    </section>
+    <script type="module" src="../guide.mjs"></script>
+  </body>
+</html>

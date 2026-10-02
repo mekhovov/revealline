@@ -268,3 +268,15 @@ DAMAGES, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
 FROM, OUT OF THE USE OR INABILITY TO USE THE FONT SOFTWARE OR FROM
 OTHER DEALINGS IN THE FONT SOFTWARE.
 ```
+
+# Directory and offline guide
+
+Open [the bilingual player guide](guide.html) for choosing an app, first flight,
+offline preparation, home-screen installation, updates, removal and recovery.
+Use the maintained in-app control guide for exact input bindings.
+Maintainers: [register and publish packages](../../docs/flight-practice-maintainer.md).
+
+The package's `preview.png` is an actual local gameplay screenshot captured from
+RevealLine source plus the SIM owner's startup correction on 2026-10-02. It is
+not generated artwork and contains no privately imported world. Underlying
+artwork/code retains the asset licenses documented in this package's inventory.

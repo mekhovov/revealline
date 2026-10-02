@@ -1,0 +1,282 @@
+{
+  "format": "FPVEnvironmentArtProbe.v1",
+  "passed": true,
+  "createdAt": "2026-10-02T07:06:09.275Z",
+  "checks": [
+    {
+      "name": "flight-01: persistent surface/exterior geometry stays within declared safety boundary",
+      "passed": true,
+      "instances": 92,
+      "batches": 3
+    },
+    {
+      "name": "flight-01: ground palette matches surface and preserves natural/pixel authorship",
+      "passed": true,
+      "groundHex": "737e78"
+    },
+    {
+      "name": "flight-01: material-role maps shared/owned with uniform world texture scale",
+      "passed": true
+    },
+    {
+      "name": "flight-01: quality preserves dressing and finite mipmapped maps",
+      "passed": true
+    },
+    {
+      "name": "flight-05: persistent surface/exterior geometry stays within declared safety boundary",
+      "passed": true,
+      "instances": 16,
+      "batches": 2
+    },
+    {
+      "name": "flight-05: ground palette matches surface and preserves natural/pixel authorship",
+      "passed": true,
+      "groundHex": "526963"
+    },
+    {
+      "name": "flight-05: material-role maps shared/owned with uniform world texture scale",
+      "passed": true
+    },
+    {
+      "name": "flight-05: quality preserves dressing and finite mipmapped maps",
+      "passed": true
+    },
+    {
+      "name": "Grass has no directional stripe energy and is deterministically generated",
+      "passed": true,
+      "gradientEnergyXOverY": 0.9966013594562175,
+      "textureSha256": "b7c777a70bfd4543ed60ffd01503b257c7372a0988e717e6777475d44a16840a"
+    },
+    {
+      "name": "woodland-01: persistent surface/exterior geometry stays within declared safety boundary",
+      "passed": true,
+      "instances": 16,
+      "batches": 2
+    },
+    {
+      "name": "woodland-01: ground palette matches surface and preserves natural/pixel authorship",
+      "passed": true,
+      "groundHex": "6e835d"
+    },
+    {
+      "name": "woodland-01: material-role maps shared/owned with uniform world texture scale",
+      "passed": true
+    },
+    {
+      "name": "woodland-01: quality preserves dressing and finite mipmapped maps",
+      "passed": true
+    },
+    {
+      "name": "courtyard-01: persistent surface/exterior geometry stays within declared safety boundary",
+      "passed": true,
+      "instances": 30,
+      "batches": 2
+    },
+    {
+      "name": "courtyard-01: ground palette matches surface and preserves natural/pixel authorship",
+      "passed": true,
+      "groundHex": "a49a83"
+    },
+    {
+      "name": "courtyard-01: material-role maps shared/owned with uniform world texture scale",
+      "passed": true
+    },
+    {
+      "name": "courtyard-01: quality preserves dressing and finite mipmapped maps",
+      "passed": true
+    },
+    {
+      "name": "warehouse-01: persistent surface/exterior geometry stays within declared safety boundary",
+      "passed": true,
+      "instances": 96,
+      "batches": 2
+    },
+    {
+      "name": "warehouse-01: ground palette matches surface and preserves natural/pixel authorship",
+      "passed": true,
+      "groundHex": "33404c"
+    },
+    {
+      "name": "warehouse-01: material-role maps shared/owned with uniform world texture scale",
+      "passed": true
+    },
+    {
+      "name": "warehouse-01: quality preserves dressing and finite mipmapped maps",
+      "passed": true
+    },
+    {
+      "name": "stadium-01: persistent surface/exterior geometry stays within declared safety boundary",
+      "passed": true,
+      "instances": 54,
+      "batches": 2
+    },
+    {
+      "name": "stadium-01: ground palette matches surface and preserves natural/pixel authorship",
+      "passed": true,
+      "groundHex": "33404c"
+    },
+    {
+      "name": "stadium-01: material-role maps shared/owned with uniform world texture scale",
+      "passed": true
+    },
+    {
+      "name": "stadium-01: quality preserves dressing and finite mipmapped maps",
+      "passed": true
+    },
+    {
+      "name": "container-yard-01: persistent surface/exterior geometry stays within declared safety boundary",
+      "passed": true,
+      "instances": 96,
+      "batches": 2
+    },
+    {
+      "name": "container-yard-01: ground palette matches surface and preserves natural/pixel authorship",
+      "passed": true,
+      "groundHex": "495257"
+    },
+    {
+      "name": "container-yard-01: material-role maps shared/owned with uniform world texture scale",
+      "passed": true
+    },
+    {
+      "name": "container-yard-01: quality preserves dressing and finite mipmapped maps",
+      "passed": true
+    },
+    {
+      "name": "garage-01: persistent surface/exterior geometry stays within declared safety boundary",
+      "passed": true,
+      "instances": 161,
+      "batches": 3
+    },
+    {
+      "name": "garage-01: ground palette matches surface and preserves natural/pixel authorship",
+      "passed": true,
+      "groundHex": "828885"
+    },
+    {
+      "name": "garage-01: material-role maps shared/owned with uniform world texture scale",
+      "passed": true
+    },
+    {
+      "name": "garage-01: quality preserves dressing and finite mipmapped maps",
+      "passed": true
+    },
+    {
+      "name": "beginner-43: persistent surface/exterior geometry stays within declared safety boundary",
+      "passed": true,
+      "instances": 16,
+      "batches": 2
+    },
+    {
+      "name": "beginner-43: ground palette matches surface and preserves natural/pixel authorship",
+      "passed": true,
+      "groundHex": "526963"
+    },
+    {
+      "name": "beginner-43: material-role maps shared/owned with uniform world texture scale",
+      "passed": true
+    },
+    {
+      "name": "beginner-43: quality preserves dressing and finite mipmapped maps",
+      "passed": true
+    },
+    {
+      "name": "Grass has no directional stripe energy and is deterministically generated",
+      "passed": true,
+      "gradientEnergyXOverY": 0.9966013594562175,
+      "textureSha256": "b7c777a70bfd4543ed60ffd01503b257c7372a0988e717e6777475d44a16840a"
+    },
+    {
+      "name": "raised-art-fixture: persistent surface/exterior geometry stays within declared safety boundary",
+      "passed": true,
+      "instances": 96,
+      "batches": 2
+    },
+    {
+      "name": "raised-art-fixture: ground palette matches surface and preserves natural/pixel authorship",
+      "passed": true,
+      "groundHex": "495257"
+    },
+    {
+      "name": "raised-art-fixture: material-role maps shared/owned with uniform world texture scale",
+      "passed": true
+    },
+    {
+      "name": "raised-art-fixture: quality preserves dressing and finite mipmapped maps",
+      "passed": true
+    },
+    {
+      "name": "Detailed drone source is byte-identical to parent",
+      "passed": true,
+      "droneSourceSha256": "13e58194dff83188bdb4f5eb9ff9fed776371c2e92dba1f004af850c670aae85"
+    }
+  ],
+  "samples": [
+    {
+      "id": "flight-01",
+      "environment": "gym",
+      "persistentBatches": 3,
+      "persistentInstances": 92
+    },
+    {
+      "id": "flight-05",
+      "environment": "field",
+      "persistentBatches": 2,
+      "persistentInstances": 16
+    },
+    {
+      "id": "woodland-01",
+      "environment": "woodland",
+      "persistentBatches": 2,
+      "persistentInstances": 16
+    },
+    {
+      "id": "courtyard-01",
+      "environment": "courtyard",
+      "persistentBatches": 2,
+      "persistentInstances": 30
+    },
+    {
+      "id": "warehouse-01",
+      "environment": "warehouse",
+      "persistentBatches": 2,
+      "persistentInstances": 96
+    },
+    {
+      "id": "stadium-01",
+      "environment": "stadium",
+      "persistentBatches": 2,
+      "persistentInstances": 54
+    },
+    {
+      "id": "container-yard-01",
+      "environment": "container-yard",
+      "persistentBatches": 2,
+      "persistentInstances": 96
+    },
+    {
+      "id": "garage-01",
+      "environment": "garage",
+      "persistentBatches": 3,
+      "persistentInstances": 161
+    },
+    {
+      "id": "beginner-43",
+      "environment": "field",
+      "persistentBatches": 2,
+      "persistentInstances": 16
+    },
+    {
+      "id": "raised-art-fixture",
+      "environment": "container-yard",
+      "persistentBatches": 2,
+      "persistentInstances": 96
+    }
+  ],
+  "inputs": {
+    "world-visuals.mjs": "5c5bcfc0602c43a8f350823744843be5e839c97a69a05cce8ec502ae08ab5a51",
+    "world-catalogue.mjs": "d901363b623193f4896100f9381c7579946796e741554f012581ebb93f9ea8a6",
+    "world-model.mjs": "78f606f2d7acc02c0cacccfcf6566996658854666b1ad453a906e2fa94ed7208"
+  },
+  "scope": "Actual production Three.js scene construction and CPU resource geometry/material inspection. No WebGL/browser/physical-device/FPS claim; no added unit suite."
+}

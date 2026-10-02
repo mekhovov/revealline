@@ -29,10 +29,10 @@
     "assets/kenney/city-industrial/shipping-container-b.glb",
     "assets/kenney/city-industrial/water-tower.glb"
   ],
-  "modifications": "Embedded original textures, deduplicated shared geometry/materials/textures, centered source models at ground level. Runtime instances form original scenery layouts outside flight bounds. No source geometry changes.",
+  "modifications": "Embedded original textures, deduplicated shared geometry/materials/textures, centered source models at ground level. Runtime instances form original environment-specific scenery layouts outside flight bounds. Repeated opaque/masked static models use per-side EXT_mesh_gpu_instancing batches; alpha-blended models retain individual sorting. No source geometry changes or new decoder.",
   "runtime": "optional-practice/civilian-fpv/world-assets.mjs",
-  "bytes": 1155964,
-  "sha256": "9d51fa23cf65fcb86a21bcc4861af4adfaf964f43e964e6b2fe7a3ebe33ec8a5",
+  "bytes": 1162934,
+  "sha256": "b246c3e05acb0050786a187267a6766ad9ab009a75525b93af7098ed8b18125a",
   "libraryBytes": 861504,
   "librarySha256": "6153c9c7e5dbe571e91a1ba54d021a95bf618db13873e7e661f1ea593c71573e"
 }

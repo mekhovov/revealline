@@ -1,0 +1,10015 @@
+{
+  "checks": 122,
+  "failures": [],
+  "results": [
+    {
+      "id": "beginner-01",
+      "mode": "self-level",
+      "step": 1,
+      "title": "Ready on the launch pad",
+      "kind": "ground",
+      "prepared": 0,
+      "warmup": 0,
+      "ticks": 150,
+      "first": {
+        "roll": 0,
+        "pitch": 0,
+        "yaw": 0,
+        "throttle": 0
+      },
+      "limits": {
+        "roll": [
+          0,
+          0
+        ],
+        "pitch": [
+          0,
+          0
+        ],
+        "yaw": [
+          0,
+          0
+        ],
+        "throttle": [
+          0,
+          0
+        ]
+      },
+      "low": 0,
+      "high": 0,
+      "maxTilt": 0,
+      "start": {
+        "position": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "attitude": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 0,
+          "up": {
+            "x": 0,
+            "y": 1000000,
+            "z": 0
+          }
+        },
+        "velocity": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      "end": {
+        "position": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "attitude": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 0,
+          "up": {
+            "x": 0,
+            "y": 1000000,
+            "z": 0
+          }
+        },
+        "velocity": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      "errors": []
+    },
+    {
+      "id": "beginner-01",
+      "mode": "self-level",
+      "step": 2,
+      "title": "Lift gently",
+      "kind": "lift",
+      "prepared": 0,
+      "warmup": 0,
+      "ticks": 300,
+      "first": {
+        "roll": 0,
+        "pitch": 0,
+        "yaw": 0,
+        "throttle": 0.7140672782874617
+      },
+      "limits": {
+        "roll": [
+          0,
+          0
+        ],
+        "pitch": [
+          0,
+          0
+        ],
+        "yaw": [
+          0,
+          0
+        ],
+        "throttle": [
+          0.458927624872579,
+          0.7140672782874617
+        ]
+      },
+      "low": 0,
+      "high": 1425,
+      "maxTilt": 0,
+      "start": {
+        "position": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "attitude": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 0,
+          "up": {
+            "x": 0,
+            "y": 1000000,
+            "z": 0
+          }
+        },
+        "velocity": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      "end": {
+        "position": {
+          "x": 0,
+          "y": 1410,
+          "z": 0
+        },
+        "attitude": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 0,
+          "up": {
+            "x": 0,
+            "y": 1000000,
+            "z": 0
+          }
+        },
+        "velocity": {
+          "x": 0,
+          "y": -24,
+          "z": 0
+        }
+      },
+      "errors": []
+    },
+    {
+      "id": "beginner-01",
+      "mode": "self-level",
+      "step": 3,
+      "title": "Settle onto the pad",
+      "kind": "land",
+      "prepared": 165,
+      "warmup": 0,
+      "ticks": 400,
+      "first": {
+        "roll": 0,
+        "pitch": 0,
+        "yaw": 0,
+        "throttle": 0.3520081549439347
+      },
+      "limits": {
+        "roll": [
+          0,
+          0
+        ],
+        "pitch": [
+          0,
+          0
+        ],
+        "yaw": [
+          0,
+          0
+        ],
+        "throttle": [
+          0,
+          0.5599388379204893
+        ]
+      },
+      "low": 0,
+      "high": 3019,
+      "maxTilt": 0,
+      "start": {
+        "position": {
+          "x": 0,
+          "y": 3018,
+          "z": 0
+        },
+        "attitude": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 0,
+          "up": {
+            "x": 0,
+            "y": 1000000,
+            "z": 0
+          }
+        },
+        "velocity": {
+          "x": 0,
+          "y": 87,
+          "z": 0
+        }
+      },
+      "end": {
+        "position": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "attitude": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 0,
+          "up": {
+            "x": 0,
+            "y": 1000000,
+            "z": 0
+          }
+        },
+        "velocity": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      "errors": []
+    },
+    {
+      "id": "beginner-02",
+      "mode": "self-level",
+      "step": 1,
+      "title": "Lift gently",
+      "kind": "lift",
+      "prepared": 0,
+      "warmup": 0,
+      "ticks": 300,
+      "first": {
+        "roll": 0,
+        "pitch": 0,
+        "yaw": 0,
+        "throttle": 0.7140672782874617
+      },
+      "limits": {
+        "roll": [
+          0,
+          0
+        ],
+        "pitch": [
+          0,
+          0
+        ],
+        "yaw": [
+          0,
+          0
+        ],
+        "throttle": [
+          0.4541896024464832,
+          0.7140672782874617
+        ]
+      },
+      "low": 0,
+      "high": 1828,
+      "maxTilt": 0,
+      "start": {
+        "position": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "attitude": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 0,
+          "up": {
+            "x": 0,
+            "y": 1000000,
+            "z": 0
+          }
+        },
+        "velocity": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      "end": {
+        "position": {
+          "x": 0,
+          "y": 1810,
+          "z": 0
+        },
+        "attitude": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 0,
+          "up": {
+            "x": 0,
+            "y": 1000000,
+            "z": 0
+          }
+        },
+        "velocity": {
+          "x": 0,
+          "y": -24,
+          "z": 0
+        }
+      },
+      "errors": []
+    },
+    {
+      "id": "beginner-02",
+      "mode": "self-level",
+      "step": 2,
+      "title": "Climb to the upper ribbon",
+      "kind": "lift",
+      "prepared": 122,
+      "warmup": 0,
+      "ticks": 300,
+      "first": {
+        "roll": 0,
+        "pitch": 0,
+        "yaw": 0,
+        "throttle": 0.701651376146789
+      },
+      "limits": {
+        "roll": [
+          0,
+          0
+        ],
+        "pitch": [
+          0,
+          0
+        ],
+        "yaw": [
+          0,
+          0
+        ],
+        "throttle": [
+          0.4525341488277268,
+          0.701651376146789
+        ]
+      },
+      "low": 1814,
+      "high": 3830,
+      "maxTilt": 0,
+      "start": {
+        "position": {
+          "x": 0,
+          "y": 1814,
+          "z": 0
+        },
+        "attitude": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 0,
+          "up": {
+            "x": 0,
+            "y": 1000000,
+            "z": 0
+          }
+        },
+        "velocity": {
+          "x": 0,
+          "y": 87,
+          "z": 0
+        }
+      },
+      "end": {
+        "position": {
+          "x": 0,
+          "y": 3809,
+          "z": 0
+        },
+        "attitude": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 0,
+          "up": {
+            "x": 0,
+            "y": 1000000,
+            "z": 0
+          }
+        },
+        "velocity": {
+          "x": 0,
+          "y": -23,
+          "z": 0
+        }
+      },
+      "errors": []
+    },
+    {
+      "id": "beginner-02",
+      "mode": "self-level",
+      "step": 3,
+      "title": "Settle onto the pad",
+      "kind": "land",
+      "prepared": 165,
+      "warmup": 0,
+      "ticks": 400,
+      "first": {
+        "roll": 0,
+        "pitch": 0,
+        "yaw": 0,
+        "throttle": 0.3520081549439347
+      },
+      "limits": {
+        "roll": [
+          0,
+          0
+        ],
+        "pitch": [
+          0,
+          0
+        ],
+        "yaw": [
+          0,
+          0
+        ],
+        "throttle": [
+          0,
+          0.5599388379204893
+        ]
+      },
+      "low": 0,
+      "high": 3019,
+      "maxTilt": 0,
+      "start": {
+        "position": {
+          "x": 0,
+          "y": 3018,
+          "z": 0
+        },
+        "attitude": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 0,
+          "up": {
+            "x": 0,
+            "y": 1000000,
+            "z": 0
+          }
+        },
+        "velocity": {
+          "x": 0,
+          "y": 87,
+          "z": 0
+        }
+      },
+      "end": {
+        "position": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "attitude": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 0,
+          "up": {
+            "x": 0,
+            "y": 1000000,
+            "z": 0
+          }
+        },
+        "velocity": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      "errors": []
+    },
+    {
+      "id": "beginner-03",
+      "mode": "self-level",
+      "step": 1,
+      "title": "Lift gently",
+      "kind": "lift",
+      "prepared": 0,
+      "warmup": 0,
+      "ticks": 300,
+      "first": {
+        "roll": 0,
+        "pitch": 0,
+        "yaw": 0,
+        "throttle": 0.7140672782874617
+      },
+      "limits": {
+        "roll": [
+          0,
+          0
+        ],
+        "pitch": [
+          0,
+          0
+        ],
+        "yaw": [
+          0,
+          0
+        ],
+        "throttle": [
+          0.4514495412844037,
+          0.7140672782874617
+        ]
+      },
+      "low": 0,
+      "high": 2530,
+      "maxTilt": 0,
+      "start": {
+        "position": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "attitude": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 0,
+          "up": {
+            "x": 0,
+            "y": 1000000,
+            "z": 0
+          }
+        },
+        "velocity": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      "end": {
+        "position": {
+          "x": 0,
+          "y": 2509,
+          "z": 0
+        },
+        "attitude": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 0,
+          "up": {
+            "x": 0,
+            "y": 1000000,
+            "z": 0
+          }
+        },
+        "velocity": {
+          "x": 0,
+          "y": -23,
+          "z": 0
+        }
+      },
+      "errors": []
+    },
+    {
+      "id": "beginner-03",
+      "mode": "self-level",
+      "step": 2,
+      "title": "Keep the hover calm",
+      "kind": "hover",
+      "prepared": 147,
+      "warmup": 0,
+      "ticks": 220,
+      "first": {
+        "roll": 0,
+        "pitch": 0,
+        "yaw": 0,
+        "throttle": 0.48441590214067276
+      },
+      "limits": {
+        "roll": [
+          0,
+          0
+        ],
+        "pitch": [
+          0,
+          0
+        ],
+        "yaw": [
+          0,
+          0
+        ],
+        "throttle": [
+          0.48441590214067276,
+          0.501769622833843
+        ]
+      },
+      "low": 2509,
+      "high": 2530,
+      "maxTilt": 0,
+      "start": {
+        "position": {
+          "x": 0,
+          "y": 2518,
+          "z": 0
+        },
+        "attitude": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 0,
+          "up": {
+            "x": 0,
+            "y": 1000000,
+            "z": 0
+          }
+        },
+        "velocity": {
+          "x": 0,
+          "y": 84,
+          "z": 0
+        }
+      },
+      "end": {
+        "position": {
+          "x": 0,
+          "y": 2509,
+          "z": 0
+        },
+        "attitude": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 0,
+          "up": {
+            "x": 0,
+            "y": 1000000,
+            "z": 0
+          }
+        },
+        "velocity": {
+          "x": 0,
+          "y": -23,
+          "z": 0
+        }
+      },
+      "errors": []
+    },
+    {
+      "id": "beginner-03",
+      "mode": "self-level",
+      "step": 3,
+      "title": "Settle onto the pad",
+      "kind": "land",
+      "prepared": 165,
+      "warmup": 0,
+      "ticks": 400,
+      "first": {
+        "roll": 0,
+        "pitch": 0,
+        "yaw": 0,
+        "throttle": 0.3520081549439347
+      },
+      "limits": {
+        "roll": [
+          0,
+          0
+        ],
+        "pitch": [
+          0,
+          0
+        ],
+        "yaw": [
+          0,
+          0
+        ],
+        "throttle": [
+          0,
+          0.5599388379204893
+        ]
+      },
+      "low": 0,
+      "high": 3019,
+      "maxTilt": 0,
+      "start": {
+        "position": {
+          "x": 0,
+          "y": 3018,
+          "z": 0
+        },
+        "attitude": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 0,
+          "up": {
+            "x": 0,
+            "y": 1000000,
+            "z": 0
+          }
+        },
+        "velocity": {
+          "x": 0,
+          "y": 87,
+          "z": 0
+        }
+      },
+      "end": {
+        "position": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "attitude": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 0,
+          "up": {
+            "x": 0,
+            "y": 1000000,
+            "z": 0
+          }
+        },
+        "velocity": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      "errors": []
+    },
+    {
+      "id": "beginner-04",
+      "mode": "self-level",
+      "step": 1,
+      "title": "Lift gently",
+      "kind": "lift",
+      "prepared": 0,
+      "warmup": 0,
+      "ticks": 300,
+      "first": {
+        "roll": 0,
+        "pitch": 0,
+        "yaw": 0,
+        "throttle": 0.7140672782874617
+      },
+      "limits": {
+        "roll": [
+          0,
+          0
+        ],
+        "pitch": [
+          0,
+          0
+        ],
+        "yaw": [
+          0,
+          0
+        ],
+        "throttle": [
+          0.4514495412844037,
+          0.7140672782874617
+        ]
+      },
+      "low": 0,
+      "high": 2530,
+      "maxTilt": 0,
+      "start": {
+        "position": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "attitude": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 0,
+          "up": {
+            "x": 0,
+            "y": 1000000,
+            "z": 0
+          }
+        },
+        "velocity": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      "end": {
+        "position": {
+          "x": 0,
+          "y": 2509,
+          "z": 0
+        },
+        "attitude": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 0,
+          "up": {
+            "x": 0,
+            "y": 1000000,
+            "z": 0
+          }
+        },
+        "velocity": {
+          "x": 0,
+          "y": -23,
+          "z": 0
+        }
+      },
+      "errors": []
+    },
+    {
+      "id": "beginner-04",
+      "mode": "self-level",
+      "step": 2,
+      "title": "Face right",
+      "kind": "yaw",
+      "prepared": 147,
+      "warmup": 0,
+      "ticks": 280,
+      "first": {
+        "roll": 0,
+        "pitch": 0,
+        "yaw": 0.210296630859375,
+        "throttle": 0.48441590214067276
+      },
+      "limits": {
+        "roll": [
+          0,
+          0
+        ],
+        "pitch": [
+          0,
+          0
+        ],
+        "yaw": [
+          0.001922607421875,
+          0.210296630859375
+        ],
+        "throttle": [
+          0.48441590214067276,
+          0.501769622833843
+        ]
+      },
+      "low": 2509,
+      "high": 2530,
+      "maxTilt": 0,
+      "start": {
+        "position": {
+          "x": 0,
+          "y": 2518,
+          "z": 0
+        },
+        "attitude": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 0,
+          "up": {
+            "x": 0,
+            "y": 1000000,
+            "z": 0
+          }
+        },
+        "velocity": {
+          "x": 0,
+          "y": 84,
+          "z": 0
+        }
+      },
+      "end": {
+        "position": {
+          "x": 0,
+          "y": 2509,
+          "z": 0
+        },
+        "attitude": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 8975,
+          "up": {
+            "x": 0,
+            "y": 1000000,
+            "z": 0
+          }
+        },
+        "velocity": {
+          "x": 0,
+          "y": -23,
+          "z": 0
+        }
+      },
+      "errors": []
+    },
+    {
+      "id": "beginner-04",
+      "mode": "self-level",
+      "step": 3,
+      "title": "Face left",
+      "kind": "yaw",
+      "prepared": 167,
+      "warmup": 0,
+      "ticks": 280,
+      "first": {
+        "roll": 0,
+        "pitch": 0,
+        "yaw": -0.210296630859375,
+        "throttle": 0.4941488277268094
+      },
+      "limits": {
+        "roll": [
+          0,
+          0
+        ],
+        "pitch": [
+          0,
+          0
+        ],
+        "yaw": [
+          -0.210296630859375,
+          -0.023529052734375
+        ],
+        "throttle": [
+          0.4941488277268094,
+          0.501769622833843
+        ]
+      },
+      "low": 2509,
+      "high": 2530,
+      "maxTilt": 0,
+      "start": {
+        "position": {
+          "x": 0,
+          "y": 2530,
+          "z": 0
+        },
+        "attitude": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 8805,
+          "up": {
+            "x": 0,
+            "y": 1000000,
+            "z": 0
+          }
+        },
+        "velocity": {
+          "x": 0,
+          "y": -1,
+          "z": 0
+        }
+      },
+      "end": {
+        "position": {
+          "x": 0,
+          "y": 2509,
+          "z": 0
+        },
+        "attitude": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": -8714,
+          "up": {
+            "x": 0,
+            "y": 1000000,
+            "z": 0
+          }
+        },
+        "velocity": {
+          "x": 0,
+          "y": -23,
+          "z": 0
+        }
+      },
+      "errors": []
+    },
+    {
+      "id": "beginner-04",
+      "mode": "self-level",
+      "step": 4,
+      "title": "Face forward",
+      "kind": "yaw",
+      "prepared": 167,
+      "warmup": 0,
+      "ticks": 280,
+      "first": {
+        "roll": 0,
+        "pitch": 0,
+        "yaw": 0.210296630859375,
+        "throttle": 0.4941488277268094
+      },
+      "limits": {
+        "roll": [
+          0,
+          0
+        ],
+        "pitch": [
+          0,
+          0
+        ],
+        "yaw": [
+          0.001983642578125,
+          0.210296630859375
+        ],
+        "throttle": [
+          0.4941488277268094,
+          0.501769622833843
+        ]
+      },
+      "low": 2509,
+      "high": 2530,
+      "maxTilt": 0,
+      "start": {
+        "position": {
+          "x": 0,
+          "y": 2530,
+          "z": 0
+        },
+        "attitude": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": -8805,
+          "up": {
+            "x": 0,
+            "y": 1000000,
+            "z": 0
+          }
+        },
+        "velocity": {
+          "x": 0,
+          "y": -1,
+          "z": 0
+        }
+      },
+      "end": {
+        "position": {
+          "x": 0,
+          "y": 2509,
+          "z": 0
+        },
+        "attitude": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": -26,
+          "up": {
+            "x": 0,
+            "y": 1000000,
+            "z": 0
+          }
+        },
+        "velocity": {
+          "x": 0,
+          "y": -23,
+          "z": 0
+        }
+      },
+      "errors": []
+    },
+    {
+      "id": "beginner-04",
+      "mode": "self-level",
+      "step": 5,
+      "title": "Settle onto the pad",
+      "kind": "land",
+      "prepared": 165,
+      "warmup": 0,
+      "ticks": 400,
+      "first": {
+        "roll": 0,
+        "pitch": 0,
+        "yaw": 0,
+        "throttle": 0.3520081549439347
+      },
+      "limits": {
+        "roll": [
+          0,
+          0
+        ],
+        "pitch": [
+          0,
+          0
+        ],
+        "yaw": [
+          0,
+          0
+        ],
+        "throttle": [
+          0,
+          0.5599388379204893
+        ]
+      },
+      "low": 0,
+      "high": 3019,
+      "maxTilt": 0,
+      "start": {
+        "position": {
+          "x": 0,
+          "y": 3018,
+          "z": 0
+        },
+        "attitude": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 0,
+          "up": {
+            "x": 0,
+            "y": 1000000,
+            "z": 0
+          }
+        },
+        "velocity": {
+          "x": 0,
+          "y": 87,
+          "z": 0
+        }
+      },
+      "end": {
+        "position": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "attitude": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 0,
+          "up": {
+            "x": 0,
+            "y": 1000000,
+            "z": 0
+          }
+        },
+        "velocity": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      "errors": []
+    },
+    {
+      "id": "beginner-05",
+      "mode": "self-level",
+      "step": 1,
+      "title": "Lift gently",
+      "kind": "lift",
+      "prepared": 0,
+      "warmup": 0,
+      "ticks": 300,
+      "first": {
+        "roll": 0,
+        "pitch": 0,
+        "yaw": 0,
+        "throttle": 0.7140672782874617
+      },
+      "limits": {
+        "roll": [
+          0,
+          0
+        ],
+        "pitch": [
+          0,
+          0
+        ],
+        "yaw": [
+          0,
+          0
+        ],
+        "throttle": [
+          0.4514495412844037,
+          0.7140672782874617
+        ]
+      },
+      "low": 0,
+      "high": 2530,
+      "maxTilt": 0,
+      "start": {
+        "position": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "attitude": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 0,
+          "up": {
+            "x": 0,
+            "y": 1000000,
+            "z": 0
+          }
+        },
+        "velocity": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      "end": {
+        "position": {
+          "x": 0,
+          "y": 2509,
+          "z": 0
+        },
+        "attitude": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 0,
+          "up": {
+            "x": 0,
+            "y": 1000000,
+            "z": 0
+          }
+        },
+        "velocity": {
+          "x": 0,
+          "y": -23,
+          "z": 0
+        }
+      },
+      "errors": []
+    },
+    {
+      "id": "beginner-05",
+      "mode": "self-level",
+      "step": 2,
+      "title": "Nose forward, move forward",
+      "kind": "travel",
+      "prepared": 147,
+      "warmup": 0,
+      "ticks": 320,
+      "first": {
+        "roll": 0,
+        "pitch": 0.360809326171875,
+        "yaw": 0,
+        "throttle": 0.48441590214067276
+      },
+      "limits": {
+        "roll": [
+          0,
+          0
+        ],
+        "pitch": [
+          -0.265350341796875,
+          0.360809326171875
+        ],
+        "yaw": [
+          0,
+          0
+        ],
+        "throttle": [
+          0.48441590214067276,
+          0.5066759410355641
+        ]
+      },
+      "low": 2511,
+      "high": 2530,
+      "maxTilt": 857,
+      "start": {
+        "position": {
+          "x": 0,
+          "y": 2518,
+          "z": 0
+        },
+        "attitude": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 0,
+          "up": {
+            "x": 0,
+            "y": 1000000,
+            "z": 0
+          }
+        },
+        "velocity": {
+          "x": 0,
+          "y": 84,
+          "z": 0
+        }
+      },
+      "end": {
+        "position": {
+          "x": 0,
+          "y": 2511,
+          "z": -4093
+        },
+        "attitude": {
+          "roll": 0,
+          "pitch": -18,
+          "yaw": 0,
+          "up": {
+            "x": 0,
+            "y": 999996,
+            "z": 3104
+          }
+        },
+        "velocity": {
+          "x": 0,
+          "y": -18,
+          "z": -18
+        }
+      },
+      "errors": []
+    },
+    {
+      "id": "beginner-05",
+      "mode": "self-level",
+      "step": 3,
+      "title": "Level, then slow the drift",
+      "kind": "brake",
+      "prepared": 147,
+      "warmup": 70,
+      "ticks": 280,
+      "first": {
+        "roll": 0,
+        "pitch": -0.158111572265625,
+        "yaw": 0,
+        "throttle": 0.3839723350385366
+      },
+      "limits": {
+        "roll": [
+          0,
+          0
+        ],
+        "pitch": [
+          -0.158111572265625,
+          -0.002288818359375
+        ],
+        "yaw": [
+          0,
+          0
+        ],
+        "throttle": [
+          0.3839723350385366,
+          0.5116876671498991
+        ]
+      },
+      "low": 2492,
+      "high": 2854,
+      "maxTilt": 289,
+      "start": {
+        "position": {
+          "x": 0,
+          "y": 2828,
+          "z": -787
+        },
+        "attitude": {
+          "roll": 0,
+          "pitch": -67,
+          "yaw": 0,
+          "up": {
+            "x": 0,
+            "y": 999934,
+            "z": 11524
+          }
+        },
+        "velocity": {
+          "x": 0,
+          "y": 354,
+          "z": -839
+        }
+      },
+      "end": {
+        "position": {
+          "x": 0,
+          "y": 2492,
+          "z": -1636
+        },
+        "attitude": {
+          "roll": 0,
+          "pitch": -12,
+          "yaw": 0,
+          "up": {
+            "x": 0,
+            "y": 999998,
+            "z": 2044
+          }
+        },
+        "velocity": {
+          "x": 0,
+          "y": 1,
+          "z": -12
+        }
+      },
+      "errors": []
+    },
+    {
+      "id": "beginner-05",
+      "mode": "self-level",
+      "step": 4,
+      "title": "Settle onto the pad",
+      "kind": "land",
+      "prepared": 165,
+      "warmup": 0,
+      "ticks": 400,
+      "first": {
+        "roll": 0,
+        "pitch": 0,
+        "yaw": 0,
+        "throttle": 0.3520081549439347
+      },
+      "limits": {
+        "roll": [
+          0,
+          0
+        ],
+        "pitch": [
+          0,
+          0
+        ],
+        "yaw": [
+          0,
+          0
+        ],
+        "throttle": [
+          0,
+          0.5599388379204893
+        ]
+      },
+      "low": 0,
+      "high": 3019,
+      "maxTilt": 0,
+      "start": {
+        "position": {
+          "x": 0,
+          "y": 3018,
+          "z": 0
+        },
+        "attitude": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 0,
+          "up": {
+            "x": 0,
+            "y": 1000000,
+            "z": 0
+          }
+        },
+        "velocity": {
+          "x": 0,
+          "y": 87,
+          "z": 0
+        }
+      },
+      "end": {
+        "position": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "attitude": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 0,
+          "up": {
+            "x": 0,
+            "y": 1000000,
+            "z": 0
+          }
+        },
+        "velocity": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      "errors": []
+    },
+    {
+      "id": "beginner-06",
+      "mode": "self-level",
+      "step": 1,
+      "title": "Lift gently",
+      "kind": "lift",
+      "prepared": 0,
+      "warmup": 0,
+      "ticks": 300,
+      "first": {
+        "roll": 0,
+        "pitch": 0,
+        "yaw": 0,
+        "throttle": 0.7140672782874617
+      },
+      "limits": {
+        "roll": [
+          0,
+          0
+        ],
+        "pitch": [
+          0,
+          0
+        ],
+        "yaw": [
+          0,
+          0
+        ],
+        "throttle": [
+          0.4514495412844037,
+          0.7140672782874617
+        ]
+      },
+      "low": 0,
+      "high": 2530,
+      "maxTilt": 0,
+      "start": {
+        "position": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "attitude": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 0,
+          "up": {
+            "x": 0,
+            "y": 1000000,
+            "z": 0
+          }
+        },
+        "velocity": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      "end": {
+        "position": {
+          "x": 0,
+          "y": 2509,
+          "z": 0
+        },
+        "attitude": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 0,
+          "up": {
+            "x": 0,
+            "y": 1000000,
+            "z": 0
+          }
+        },
+        "velocity": {
+          "x": 0,
+          "y": -23,
+          "z": 0
+        }
+      },
+      "errors": []
+    },
+    {
+      "id": "beginner-06",
+      "mode": "self-level",
+      "step": 2,
+      "title": "Slide right",
+      "kind": "travel",
+      "prepared": 147,
+      "warmup": 0,
+      "ticks": 320,
+      "first": {
+        "roll": 0.360809326171875,
+        "pitch": 0,
+        "yaw": 0,
+        "throttle": 0.48441590214067276
+      },
+      "limits": {
+        "roll": [
+          -0.265350341796875,
+          0.360809326171875
+        ],
+        "pitch": [
+          0,
+          0
+        ],
+        "yaw": [
+          0,
+          0
+        ],
+        "throttle": [
+          0.48441590214067276,
+          0.5066759410355641
+        ]
+      },
+      "low": 2511,
+      "high": 2530,
+      "maxTilt": 857,
+      "start": {
+        "position": {
+          "x": 0,
+          "y": 2518,
+          "z": 0
+        },
+        "attitude": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 0,
+          "up": {
+            "x": 0,
+            "y": 1000000,
+            "z": 0
+          }
+        },
+        "velocity": {
+          "x": 0,
+          "y": 84,
+          "z": 0
+        }
+      },
+      "end": {
+        "position": {
+          "x": 4093,
+          "y": 2511,
+          "z": 0
+        },
+        "attitude": {
+          "roll": -18,
+          "pitch": 0,
+          "yaw": 0,
+          "up": {
+            "x": -3104,
+            "y": 999996,
+            "z": 0
+          }
+        },
+        "velocity": {
+          "x": 18,
+          "y": -18,
+          "z": 0
+        }
+      },
+      "errors": []
+    },
+    {
+      "id": "beginner-06",
+      "mode": "self-level",
+      "step": 3,
+      "title": "Slide left",
+      "kind": "travel",
+      "prepared": 147,
+      "warmup": 0,
+      "ticks": 320,
+      "first": {
+        "roll": -0.360809326171875,
+        "pitch": 0,
+        "yaw": 0,
+        "throttle": 0.48441590214067276
+      },
+      "limits": {
+        "roll": [
+          -0.360809326171875,
+          0.265350341796875
+        ],
+        "pitch": [
+          0,
+          0
+        ],
+        "yaw": [
+          0,
+          0
+        ],
+        "throttle": [
+          0.48441590214067276,
+          0.5066759410355641
+        ]
+      },
+      "low": 2511,
+      "high": 2530,
+      "maxTilt": 857,
+      "start": {
+        "position": {
+          "x": 0,
+          "y": 2518,
+          "z": 0
+        },
+        "attitude": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 0,
+          "up": {
+            "x": 0,
+            "y": 1000000,
+            "z": 0
+          }
+        },
+        "velocity": {
+          "x": 0,
+          "y": 84,
+          "z": 0
+        }
+      },
+      "end": {
+        "position": {
+          "x": -4093,
+          "y": 2511,
+          "z": 0
+        },
+        "attitude": {
+          "roll": 18,
+          "pitch": 0,
+          "yaw": 0,
+          "up": {
+            "x": 3104,
+            "y": 999996,
+            "z": 0
+          }
+        },
+        "velocity": {
+          "x": -18,
+          "y": -18,
+          "z": 0
+        }
+      },
+      "errors": []
+    },
+    {
+      "id": "beginner-06",
+      "mode": "self-level",
+      "step": 4,
+      "title": "Settle onto the pad",
+      "kind": "land",
+      "prepared": 165,
+      "warmup": 0,
+      "ticks": 400,
+      "first": {
+        "roll": 0,
+        "pitch": 0,
+        "yaw": 0,
+        "throttle": 0.3520081549439347
+      },
+      "limits": {
+        "roll": [
+          0,
+          0
+        ],
+        "pitch": [
+          0,
+          0
+        ],
+        "yaw": [
+          0,
+          0
+        ],
+        "throttle": [
+          0,
+          0.5599388379204893
+        ]
+      },
+      "low": 0,
+      "high": 3019,
+      "maxTilt": 0,
+      "start": {
+        "position": {
+          "x": 0,
+          "y": 3018,
+          "z": 0
+        },
+        "attitude": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 0,
+          "up": {
+            "x": 0,
+            "y": 1000000,
+            "z": 0
+          }
+        },
+        "velocity": {
+          "x": 0,
+          "y": 87,
+          "z": 0
+        }
+      },
+      "end": {
+        "position": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "attitude": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 0,
+          "up": {
+            "x": 0,
+            "y": 1000000,
+            "z": 0
+          }
+        },
+        "velocity": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      "errors": []
+    },
+    {
+      "id": "beginner-07",
+      "mode": "self-level",
+      "step": 1,
+      "title": "Lift gently",
+      "kind": "lift",
+      "prepared": 0,
+      "warmup": 0,
+      "ticks": 300,
+      "first": {
+        "roll": 0,
+        "pitch": 0,
+        "yaw": 0,
+        "throttle": 0.7140672782874617
+      },
+      "limits": {
+        "roll": [
+          0,
+          0
+        ],
+        "pitch": [
+          0,
+          0
+        ],
+        "yaw": [
+          0,
+          0
+        ],
+        "throttle": [
+          0.4514495412844037,
+          0.7140672782874617
+        ]
+      },
+      "low": 0,
+      "high": 2530,
+      "maxTilt": 0,
+      "start": {
+        "position": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "attitude": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 0,
+          "up": {
+            "x": 0,
+            "y": 1000000,
+            "z": 0
+          }
+        },
+        "velocity": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      "end": {
+        "position": {
+          "x": 0,
+          "y": 2509,
+          "z": 0
+        },
+        "attitude": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 0,
+          "up": {
+            "x": 0,
+            "y": 1000000,
+            "z": 0
+          }
+        },
+        "velocity": {
+          "x": 0,
+          "y": -23,
+          "z": 0
+        }
+      },
+      "errors": []
+    },
+    {
+      "id": "beginner-07",
+      "mode": "self-level",
+      "step": 2,
+      "title": "Build a little speed",
+      "kind": "travel",
+      "prepared": 147,
+      "warmup": 0,
+      "ticks": 320,
+      "first": {
+        "roll": 0,
+        "pitch": 0.360809326171875,
+        "yaw": 0,
+        "throttle": 0.48441590214067276
+      },
+      "limits": {
+        "roll": [
+          0,
+          0
+        ],
+        "pitch": [
+          -0.265350341796875,
+          0.360809326171875
+        ],
+        "yaw": [
+          0,
+          0
+        ],
+        "throttle": [
+          0.48441590214067276,
+          0.5066759410355641
+        ]
+      },
+      "low": 2511,
+      "high": 2530,
+      "maxTilt": 857,
+      "start": {
+        "position": {
+          "x": 0,
+          "y": 2518,
+          "z": 0
+        },
+        "attitude": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 0,
+          "up": {
+            "x": 0,
+            "y": 1000000,
+            "z": 0
+          }
+        },
+        "velocity": {
+          "x": 0,
+          "y": 84,
+          "z": 0
+        }
+      },
+      "end": {
+        "position": {
+          "x": 0,
+          "y": 2511,
+          "z": -4093
+        },
+        "attitude": {
+          "roll": 0,
+          "pitch": -18,
+          "yaw": 0,
+          "up": {
+            "x": 0,
+            "y": 999996,
+            "z": 3104
+          }
+        },
+        "velocity": {
+          "x": 0,
+          "y": -18,
+          "z": -18
+        }
+      },
+      "errors": []
+    },
+    {
+      "id": "beginner-07",
+      "mode": "self-level",
+      "step": 3,
+      "title": "Brake into the box",
+      "kind": "brake",
+      "prepared": 147,
+      "warmup": 70,
+      "ticks": 280,
+      "first": {
+        "roll": 0,
+        "pitch": -0.158111572265625,
+        "yaw": 0,
+        "throttle": 0.3839723350385366
+      },
+      "limits": {
+        "roll": [
+          0,
+          0
+        ],
+        "pitch": [
+          -0.158111572265625,
+          -0.002288818359375
+        ],
+        "yaw": [
+          0,
+          0
+        ],
+        "throttle": [
+          0.3839723350385366,
+          0.5116876671498991
+        ]
+      },
+      "low": 2492,
+      "high": 2854,
+      "maxTilt": 289,
+      "start": {
+        "position": {
+          "x": 0,
+          "y": 2828,
+          "z": -787
+        },
+        "attitude": {
+          "roll": 0,
+          "pitch": -67,
+          "yaw": 0,
+          "up": {
+            "x": 0,
+            "y": 999934,
+            "z": 11524
+          }
+        },
+        "velocity": {
+          "x": 0,
+          "y": 354,
+          "z": -839
+        }
+      },
+      "end": {
+        "position": {
+          "x": 0,
+          "y": 2492,
+          "z": -1636
+        },
+        "attitude": {
+          "roll": 0,
+          "pitch": -12,
+          "yaw": 0,
+          "up": {
+            "x": 0,
+            "y": 999998,
+            "z": 2044
+          }
+        },
+        "velocity": {
+          "x": 0,
+          "y": 1,
+          "z": -12
+        }
+      },
+      "errors": []
+    },
+    {
+      "id": "beginner-07",
+      "mode": "self-level",
+      "step": 4,
+      "title": "Reverse, then settle",
+      "kind": "brake",
+      "prepared": 147,
+      "warmup": 70,
+      "ticks": 280,
+      "first": {
+        "roll": 0,
+        "pitch": 0.158111572265625,
+        "yaw": 0,
+        "throttle": 0.3839723350385366
+      },
+      "limits": {
+        "roll": [
+          0,
+          0
+        ],
+        "pitch": [
+          0.002288818359375,
+          0.158111572265625
+        ],
+        "yaw": [
+          0,
+          0
+        ],
+        "throttle": [
+          0.3839723350385366,
+          0.5116876671498991
+        ]
+      },
+      "low": 2492,
+      "high": 2854,
+      "maxTilt": 289,
+      "start": {
+        "position": {
+          "x": 0,
+          "y": 2828,
+          "z": 787
+        },
+        "attitude": {
+          "roll": 0,
+          "pitch": 67,
+          "yaw": 0,
+          "up": {
+            "x": 0,
+            "y": 999934,
+            "z": -11524
+          }
+        },
+        "velocity": {
+          "x": 0,
+          "y": 354,
+          "z": 839
+        }
+      },
+      "end": {
+        "position": {
+          "x": 0,
+          "y": 2492,
+          "z": 1636
+        },
+        "attitude": {
+          "roll": 0,
+          "pitch": 12,
+          "yaw": 0,
+          "up": {
+            "x": 0,
+            "y": 999998,
+            "z": -2044
+          }
+        },
+        "velocity": {
+          "x": 0,
+          "y": 1,
+          "z": 12
+        }
+      },
+      "errors": []
+    },
+    {
+      "id": "beginner-07",
+      "mode": "self-level",
+      "step": 5,
+      "title": "Settle onto the pad",
+      "kind": "land",
+      "prepared": 165,
+      "warmup": 0,
+      "ticks": 400,
+      "first": {
+        "roll": 0,
+        "pitch": 0,
+        "yaw": 0,
+        "throttle": 0.3520081549439347
+      },
+      "limits": {
+        "roll": [
+          0,
+          0
+        ],
+        "pitch": [
+          0,
+          0
+        ],
+        "yaw": [
+          0,
+          0
+        ],
+        "throttle": [
+          0,
+          0.5599388379204893
+        ]
+      },
+      "low": 0,
+      "high": 3019,
+      "maxTilt": 0,
+      "start": {
+        "position": {
+          "x": 0,
+          "y": 3018,
+          "z": 0
+        },
+        "attitude": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 0,
+          "up": {
+            "x": 0,
+            "y": 1000000,
+            "z": 0
+          }
+        },
+        "velocity": {
+          "x": 0,
+          "y": 87,
+          "z": 0
+        }
+      },
+      "end": {
+        "position": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "attitude": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 0,
+          "up": {
+            "x": 0,
+            "y": 1000000,
+            "z": 0
+          }
+        },
+        "velocity": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      "errors": []
+    },
+    {
+      "id": "beginner-08",
+      "mode": "self-level",
+      "step": 1,
+      "title": "Lift gently",
+      "kind": "lift",
+      "prepared": 0,
+      "warmup": 0,
+      "ticks": 300,
+      "first": {
+        "roll": 0,
+        "pitch": 0,
+        "yaw": 0,
+        "throttle": 0.7140672782874617
+      },
+      "limits": {
+        "roll": [
+          0,
+          0
+        ],
+        "pitch": [
+          0,
+          0
+        ],
+        "yaw": [
+          0,
+          0
+        ],
+        "throttle": [
+          0.4510784913353721,
+          0.7140672782874617
+        ]
+      },
+      "low": 0,
+      "high": 3032,
+      "maxTilt": 0,
+      "start": {
+        "position": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "attitude": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 0,
+          "up": {
+            "x": 0,
+            "y": 1000000,
+            "z": 0
+          }
+        },
+        "velocity": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      "end": {
+        "position": {
+          "x": 0,
+          "y": 3009,
+          "z": 0
+        },
+        "attitude": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 0,
+          "up": {
+            "x": 0,
+            "y": 1000000,
+            "z": 0
+          }
+        },
+        "velocity": {
+          "x": 0,
+          "y": -23,
+          "z": 0
+        }
+      },
+      "errors": []
+    },
+    {
+      "id": "beginner-08",
+      "mode": "self-level",
+      "step": 2,
+      "title": "Travel and climb a little",
+      "kind": "lift",
+      "prepared": 129,
+      "warmup": 0,
+      "ticks": 300,
+      "first": {
+        "roll": 0,
+        "pitch": 0.232696533203125,
+        "yaw": 0,
+        "throttle": 0.7019367991845056
+      },
+      "limits": {
+        "roll": [
+          0,
+          0
+        ],
+        "pitch": [
+          -0.239471435546875,
+          0.232696533203125
+        ],
+        "yaw": [
+          0,
+          0
+        ],
+        "throttle": [
+          0.45464832043731507,
+          0.7019367991845056
+        ]
+      },
+      "low": 2017,
+      "high": 4029,
+      "maxTilt": 536,
+      "start": {
+        "position": {
+          "x": 0,
+          "y": 2017,
+          "z": 0
+        },
+        "attitude": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 0,
+          "up": {
+            "x": 0,
+            "y": 1000000,
+            "z": 0
+          }
+        },
+        "velocity": {
+          "x": 0,
+          "y": 85,
+          "z": 0
+        }
+      },
+      "end": {
+        "position": {
+          "x": 0,
+          "y": 4009,
+          "z": -2777
+        },
+        "attitude": {
+          "roll": 0,
+          "pitch": -18,
+          "yaw": 0,
+          "up": {
+            "x": 0,
+            "y": 999996,
+            "z": 3130
+          }
+        },
+        "velocity": {
+          "x": 0,
+          "y": -22,
+          "z": -18
+        }
+      },
+      "errors": []
+    },
+    {
+      "id": "beginner-08",
+      "mode": "self-level",
+      "step": 3,
+      "title": "Travel into the lower box",
+      "kind": "descend",
+      "prepared": 195,
+      "warmup": 0,
+      "ticks": 300,
+      "first": {
+        "roll": 0,
+        "pitch": 0.232696533203125,
+        "yaw": 0,
+        "throttle": 0.345158002038736
+      },
+      "limits": {
+        "roll": [
+          0,
+          0
+        ],
+        "pitch": [
+          -0.235565185546875,
+          0.232696533203125
+        ],
+        "yaw": [
+          0,
+          0
+        ],
+        "throttle": [
+          0.345158002038736,
+          0.5336828746347103
+        ]
+      },
+      "low": 1979,
+      "high": 3818,
+      "maxTilt": 536,
+      "start": {
+        "position": {
+          "x": 0,
+          "y": 3818,
+          "z": 0
+        },
+        "attitude": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 0,
+          "up": {
+            "x": 0,
+            "y": 1000000,
+            "z": 0
+          }
+        },
+        "velocity": {
+          "x": 0,
+          "y": 85,
+          "z": 0
+        }
+      },
+      "end": {
+        "position": {
+          "x": 0,
+          "y": 1979,
+          "z": -2571
+        },
+        "attitude": {
+          "roll": 0,
+          "pitch": -18,
+          "yaw": 0,
+          "up": {
+            "x": 0,
+            "y": 999996,
+            "z": 3130
+          }
+        },
+        "velocity": {
+          "x": 0,
+          "y": 20,
+          "z": -17
+        }
+      },
+      "errors": []
+    },
+    {
+      "id": "beginner-08",
+      "mode": "self-level",
+      "step": 4,
+      "title": "Settle onto the pad",
+      "kind": "land",
+      "prepared": 165,
+      "warmup": 0,
+      "ticks": 400,
+      "first": {
+        "roll": 0,
+        "pitch": 0,
+        "yaw": 0,
+        "throttle": 0.3520081549439347
+      },
+      "limits": {
+        "roll": [
+          0,
+          0
+        ],
+        "pitch": [
+          0,
+          0
+        ],
+        "yaw": [
+          0,
+          0
+        ],
+        "throttle": [
+          0,
+          0.5599388379204893
+        ]
+      },
+      "low": 0,
+      "high": 3019,
+      "maxTilt": 0,
+      "start": {
+        "position": {
+          "x": 0,
+          "y": 3018,
+          "z": 0
+        },
+        "attitude": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 0,
+          "up": {
+            "x": 0,
+            "y": 1000000,
+            "z": 0
+          }
+        },
+        "velocity": {
+          "x": 0,
+          "y": 87,
+          "z": 0
+        }
+      },
+      "end": {
+        "position": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "attitude": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 0,
+          "up": {
+            "x": 0,
+            "y": 1000000,
+            "z": 0
+          }
+        },
+        "velocity": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      "errors": []
+    },
+    {
+      "id": "beginner-09",
+      "mode": "self-level",
+      "step": 1,
+      "title": "Lift gently",
+      "kind": "lift",
+      "prepared": 0,
+      "warmup": 0,
+      "ticks": 300,
+      "first": {
+        "roll": 0,
+        "pitch": 0,
+        "yaw": 0,
+        "throttle": 0.7140672782874617
+      },
+      "limits": {
+        "roll": [
+          0,
+          0
+        ],
+        "pitch": [
+          0,
+          0
+        ],
+        "yaw": [
+          0,
+          0
+        ],
+        "throttle": [
+          0.4514495412844037,
+          0.7140672782874617
+        ]
+      },
+      "low": 0,
+      "high": 2530,
+      "maxTilt": 0,
+      "start": {
+        "position": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "attitude": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 0,
+          "up": {
+            "x": 0,
+            "y": 1000000,
+            "z": 0
+          }
+        },
+        "velocity": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      "end": {
+        "position": {
+          "x": 0,
+          "y": 2509,
+          "z": 0
+        },
+        "attitude": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 0,
+          "up": {
+            "x": 0,
+            "y": 1000000,
+            "z": 0
+          }
+        },
+        "velocity": {
+          "x": 0,
+          "y": -23,
+          "z": 0
+        }
+      },
+      "errors": []
+    },
+    {
+      "id": "beginner-09",
+      "mode": "self-level",
+      "step": 2,
+      "title": "Fly to the corner",
+      "kind": "brake",
+      "prepared": 147,
+      "warmup": 70,
+      "ticks": 280,
+      "first": {
+        "roll": 0,
+        "pitch": -0.158111572265625,
+        "yaw": 0,
+        "throttle": 0.3839723350385366
+      },
+      "limits": {
+        "roll": [
+          0,
+          0
+        ],
+        "pitch": [
+          -0.158111572265625,
+          -0.002288818359375
+        ],
+        "yaw": [
+          0,
+          0
+        ],
+        "throttle": [
+          0.3839723350385366,
+          0.5116876671498991
+        ]
+      },
+      "low": 2492,
+      "high": 2854,
+      "maxTilt": 289,
+      "start": {
+        "position": {
+          "x": 0,
+          "y": 2828,
+          "z": -787
+        },
+        "attitude": {
+          "roll": 0,
+          "pitch": -67,
+          "yaw": 0,
+          "up": {
+            "x": 0,
+            "y": 999934,
+            "z": 11524
+          }
+        },
+        "velocity": {
+          "x": 0,
+          "y": 354,
+          "z": -839
+        }
+      },
+      "end": {
+        "position": {
+          "x": 0,
+          "y": 2492,
+          "z": -1636
+        },
+        "attitude": {
+          "roll": 0,
+          "pitch": -12,
+          "yaw": 0,
+          "up": {
+            "x": 0,
+            "y": 999998,
+            "z": 2044
+          }
+        },
+        "velocity": {
+          "x": 0,
+          "y": 1,
+          "z": -12
+        }
+      },
+      "errors": []
+    },
+    {
+      "id": "beginner-09",
+      "mode": "self-level",
+      "step": 3,
+      "title": "Turn the nose right",
+      "kind": "yaw",
+      "prepared": 147,
+      "warmup": 0,
+      "ticks": 280,
+      "first": {
+        "roll": 0,
+        "pitch": 0,
+        "yaw": 0.210296630859375,
+        "throttle": 0.48441590214067276
+      },
+      "limits": {
+        "roll": [
+          0,
+          0
+        ],
+        "pitch": [
+          0,
+          0
+        ],
+        "yaw": [
+          0.001922607421875,
+          0.210296630859375
+        ],
+        "throttle": [
+          0.48441590214067276,
+          0.501769622833843
+        ]
+      },
+      "low": 2509,
+      "high": 2530,
+      "maxTilt": 0,
+      "start": {
+        "position": {
+          "x": 0,
+          "y": 2518,
+          "z": 0
+        },
+        "attitude": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 0,
+          "up": {
+            "x": 0,
+            "y": 1000000,
+            "z": 0
+          }
+        },
+        "velocity": {
+          "x": 0,
+          "y": 84,
+          "z": 0
+        }
+      },
+      "end": {
+        "position": {
+          "x": 0,
+          "y": 2509,
+          "z": 0
+        },
+        "attitude": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 8975,
+          "up": {
+            "x": 0,
+            "y": 1000000,
+            "z": 0
+          }
+        },
+        "velocity": {
+          "x": 0,
+          "y": -23,
+          "z": 0
+        }
+      },
+      "errors": []
+    },
+    {
+      "id": "beginner-09",
+      "mode": "self-level",
+      "step": 4,
+      "title": "Fly the new straight",
+      "kind": "travel",
+      "prepared": 167,
+      "warmup": 0,
+      "ticks": 320,
+      "first": {
+        "roll": 0,
+        "pitch": 0.360809326171875,
+        "yaw": 0.015594482421875,
+        "throttle": 0.4941488277268094
+      },
+      "limits": {
+        "roll": [
+          0,
+          0
+        ],
+        "pitch": [
+          -0.266937255859375,
+          0.360809326171875
+        ],
+        "yaw": [
+          0.001983642578125,
+          0.015594482421875
+        ],
+        "throttle": [
+          0.4941488277268094,
+          0.5073422703311604
+        ]
+      },
+      "low": 2509,
+      "high": 2530,
+      "maxTilt": 858,
+      "start": {
+        "position": {
+          "x": 0,
+          "y": 2530,
+          "z": 0
+        },
+        "attitude": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 8805,
+          "up": {
+            "x": 0,
+            "y": 1000000,
+            "z": 0
+          }
+        },
+        "velocity": {
+          "x": 0,
+          "y": -1,
+          "z": 0
+        }
+      },
+      "end": {
+        "position": {
+          "x": 4110,
+          "y": 2509,
+          "z": -278
+        },
+        "attitude": {
+          "roll": -9,
+          "pitch": -17,
+          "yaw": 8973,
+          "up": {
+            "x": -2812,
+            "y": 999996,
+            "z": -1388
+          }
+        },
+        "velocity": {
+          "x": 15,
+          "y": -15,
+          "z": -32
+        }
+      },
+      "errors": []
+    },
+    {
+      "id": "beginner-09",
+      "mode": "self-level",
+      "step": 5,
+      "title": "Settle onto the pad",
+      "kind": "land",
+      "prepared": 167,
+      "warmup": 0,
+      "ticks": 400,
+      "first": {
+        "roll": 0,
+        "pitch": 0,
+        "yaw": 0.015594482421875,
+        "throttle": 0.35372069317023447
+      },
+      "limits": {
+        "roll": [
+          0,
+          0
+        ],
+        "pitch": [
+          0,
+          0
+        ],
+        "yaw": [
+          0.001922607421875,
+          0.015594482421875
+        ],
+        "throttle": [
+          0,
+          0.5599388379204893
+        ]
+      },
+      "low": 0,
+      "high": 3022,
+      "maxTilt": 0,
+      "start": {
+        "position": {
+          "x": 0,
+          "y": 3022,
+          "z": 0
+        },
+        "attitude": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 8805,
+          "up": {
+            "x": 0,
+            "y": 1000000,
+            "z": 0
+          }
+        },
+        "velocity": {
+          "x": 0,
+          "y": 75,
+          "z": 0
+        }
+      },
+      "end": {
+        "position": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "attitude": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 8975,
+          "up": {
+            "x": 0,
+            "y": 1000000,
+            "z": 0
+          }
+        },
+        "velocity": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      "errors": []
+    },
+    {
+      "id": "beginner-10",
+      "mode": "self-level",
+      "step": 1,
+      "title": "Lift gently",
+      "kind": "lift",
+      "prepared": 0,
+      "warmup": 0,
+      "ticks": 300,
+      "first": {
+        "roll": 0,
+        "pitch": 0,
+        "yaw": 0,
+        "throttle": 0.7140672782874617
+      },
+      "limits": {
+        "roll": [
+          0,
+          0
+        ],
+        "pitch": [
+          0,
+          0
+        ],
+        "yaw": [
+          0,
+          0
+        ],
+        "throttle": [
+          0.4514495412844037,
+          0.7140672782874617
+        ]
+      },
+      "low": 0,
+      "high": 2530,
+      "maxTilt": 0,
+      "start": {
+        "position": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "attitude": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 0,
+          "up": {
+            "x": 0,
+            "y": 1000000,
+            "z": 0
+          }
+        },
+        "velocity": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      "end": {
+        "position": {
+          "x": 0,
+          "y": 2509,
+          "z": 0
+        },
+        "attitude": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 0,
+          "up": {
+            "x": 0,
+            "y": 1000000,
+            "z": 0
+          }
+        },
+        "velocity": {
+          "x": 0,
+          "y": -23,
+          "z": 0
+        }
+      },
+      "errors": []
+    },
+    {
+      "id": "beginner-10",
+      "mode": "self-level",
+      "step": 2,
+      "title": "Approach the front landmark",
+      "kind": "travel",
+      "prepared": 147,
+      "warmup": 0,
+      "ticks": 320,
+      "first": {
+        "roll": 0,
+        "pitch": 0.360809326171875,
+        "yaw": 0,
+        "throttle": 0.48441590214067276
+      },
+      "limits": {
+        "roll": [
+          0,
+          0
+        ],
+        "pitch": [
+          -0.265350341796875,
+          0.360809326171875
+        ],
+        "yaw": [
+          0,
+          0
+        ],
+        "throttle": [
+          0.48441590214067276,
+          0.5066759410355641
+        ]
+      },
+      "low": 2511,
+      "high": 2530,
+      "maxTilt": 857,
+      "start": {
+        "position": {
+          "x": 0,
+          "y": 2518,
+          "z": 0
+        },
+        "attitude": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 0,
+          "up": {
+            "x": 0,
+            "y": 1000000,
+            "z": 0
+          }
+        },
+        "velocity": {
+          "x": 0,
+          "y": 84,
+          "z": 0
+        }
+      },
+      "end": {
+        "position": {
+          "x": 0,
+          "y": 2511,
+          "z": -4093
+        },
+        "attitude": {
+          "roll": 0,
+          "pitch": -18,
+          "yaw": 0,
+          "up": {
+            "x": 0,
+            "y": 999996,
+            "z": 3104
+          }
+        },
+        "velocity": {
+          "x": 0,
+          "y": -18,
+          "z": -18
+        }
+      },
+      "errors": []
+    },
+    {
+      "id": "beginner-10",
+      "mode": "self-level",
+      "step": 3,
+      "title": "Slide to the side landmark",
+      "kind": "travel",
+      "prepared": 147,
+      "warmup": 0,
+      "ticks": 320,
+      "first": {
+        "roll": 0.360809326171875,
+        "pitch": 0,
+        "yaw": 0,
+        "throttle": 0.48441590214067276
+      },
+      "limits": {
+        "roll": [
+          -0.265350341796875,
+          0.360809326171875
+        ],
+        "pitch": [
+          0,
+          0
+        ],
+        "yaw": [
+          0,
+          0
+        ],
+        "throttle": [
+          0.48441590214067276,
+          0.5066759410355641
+        ]
+      },
+      "low": 2511,
+      "high": 2530,
+      "maxTilt": 857,
+      "start": {
+        "position": {
+          "x": 0,
+          "y": 2518,
+          "z": 0
+        },
+        "attitude": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 0,
+          "up": {
+            "x": 0,
+            "y": 1000000,
+            "z": 0
+          }
+        },
+        "velocity": {
+          "x": 0,
+          "y": 84,
+          "z": 0
+        }
+      },
+      "end": {
+        "position": {
+          "x": 4093,
+          "y": 2511,
+          "z": 0
+        },
+        "attitude": {
+          "roll": -18,
+          "pitch": 0,
+          "yaw": 0,
+          "up": {
+            "x": -3104,
+            "y": 999996,
+            "z": 0
+          }
+        },
+        "velocity": {
+          "x": 18,
+          "y": -18,
+          "z": 0
+        }
+      },
+      "errors": []
+    },
+    {
+      "id": "beginner-10",
+      "mode": "self-level",
+      "step": 4,
+      "title": "Settle onto the pad",
+      "kind": "land",
+      "prepared": 165,
+      "warmup": 0,
+      "ticks": 400,
+      "first": {
+        "roll": 0,
+        "pitch": 0,
+        "yaw": 0,
+        "throttle": 0.3520081549439347
+      },
+      "limits": {
+        "roll": [
+          0,
+          0
+        ],
+        "pitch": [
+          0,
+          0
+        ],
+        "yaw": [
+          0,
+          0
+        ],
+        "throttle": [
+          0,
+          0.5599388379204893
+        ]
+      },
+      "low": 0,
+      "high": 3019,
+      "maxTilt": 0,
+      "start": {
+        "position": {
+          "x": 0,
+          "y": 3018,
+          "z": 0
+        },
+        "attitude": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 0,
+          "up": {
+            "x": 0,
+            "y": 1000000,
+            "z": 0
+          }
+        },
+        "velocity": {
+          "x": 0,
+          "y": 87,
+          "z": 0
+        }
+      },
+      "end": {
+        "position": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "attitude": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 0,
+          "up": {
+            "x": 0,
+            "y": 1000000,
+            "z": 0
+          }
+        },
+        "velocity": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      "errors": []
+    },
+    {
+      "id": "beginner-11",
+      "mode": "self-level",
+      "step": 1,
+      "title": "Lift gently",
+      "kind": "lift",
+      "prepared": 0,
+      "warmup": 0,
+      "ticks": 300,
+      "first": {
+        "roll": 0,
+        "pitch": 0,
+        "yaw": 0,
+        "throttle": 0.7140672782874617
+      },
+      "limits": {
+        "roll": [
+          0,
+          0
+        ],
+        "pitch": [
+          0,
+          0
+        ],
+        "yaw": [
+          0,
+          0
+        ],
+        "throttle": [
+          0.4514495412844037,
+          0.7140672782874617
+        ]
+      },
+      "low": 0,
+      "high": 2530,
+      "maxTilt": 0,
+      "start": {
+        "position": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "attitude": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 0,
+          "up": {
+            "x": 0,
+            "y": 1000000,
+            "z": 0
+          }
+        },
+        "velocity": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      "end": {
+        "position": {
+          "x": 0,
+          "y": 2509,
+          "z": 0
+        },
+        "attitude": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 0,
+          "up": {
+            "x": 0,
+            "y": 1000000,
+            "z": 0
+          }
+        },
+        "velocity": {
+          "x": 0,
+          "y": -23,
+          "z": 0
+        }
+      },
+      "errors": []
+    },
+    {
+      "id": "beginner-11",
+      "mode": "self-level",
+      "step": 2,
+      "title": "Pass gate 1",
+      "kind": "travel",
+      "prepared": 147,
+      "warmup": 0,
+      "ticks": 320,
+      "first": {
+        "roll": 0,
+        "pitch": 0.360809326171875,
+        "yaw": 0,
+        "throttle": 0.48441590214067276
+      },
+      "limits": {
+        "roll": [
+          0,
+          0
+        ],
+        "pitch": [
+          -0.265350341796875,
+          0.360809326171875
+        ],
+        "yaw": [
+          0,
+          0
+        ],
+        "throttle": [
+          0.48441590214067276,
+          0.5066759410355641
+        ]
+      },
+      "low": 2511,
+      "high": 2530,
+      "maxTilt": 857,
+      "start": {
+        "position": {
+          "x": 0,
+          "y": 2518,
+          "z": 0
+        },
+        "attitude": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 0,
+          "up": {
+            "x": 0,
+            "y": 1000000,
+            "z": 0
+          }
+        },
+        "velocity": {
+          "x": 0,
+          "y": 84,
+          "z": 0
+        }
+      },
+      "end": {
+        "position": {
+          "x": 0,
+          "y": 2511,
+          "z": -4093
+        },
+        "attitude": {
+          "roll": 0,
+          "pitch": -18,
+          "yaw": 0,
+          "up": {
+            "x": 0,
+            "y": 999996,
+            "z": 3104
+          }
+        },
+        "velocity": {
+          "x": 0,
+          "y": -18,
+          "z": -18
+        }
+      },
+      "errors": []
+    },
+    {
+      "id": "beginner-11",
+      "mode": "self-level",
+      "step": 3,
+      "title": "Pass gate 2",
+      "kind": "travel",
+      "prepared": 147,
+      "warmup": 0,
+      "ticks": 320,
+      "first": {
+        "roll": 0.141632080078125,
+        "pitch": 0.360809326171875,
+        "yaw": 0,
+        "throttle": 0.48441590214067276
+      },
+      "limits": {
+        "roll": [
+          -0.114410400390625,
+          0.141632080078125
+        ],
+        "pitch": [
+          -0.265533447265625,
+          0.360809326171875
+        ],
+        "yaw": [
+          0,
+          0.002655029296875
+        ],
+        "throttle": [
+          0.48441590214067276,
+          0.5075888148742198
+        ]
+      },
+      "low": 2510,
+      "high": 2530,
+      "maxTilt": 857,
+      "start": {
+        "position": {
+          "x": 0,
+          "y": 2518,
+          "z": 0
+        },
+        "attitude": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 0,
+          "up": {
+            "x": 0,
+            "y": 1000000,
+            "z": 0
+          }
+        },
+        "velocity": {
+          "x": 0,
+          "y": 84,
+          "z": 0
+        }
+      },
+      "end": {
+        "position": {
+          "x": 1089,
+          "y": 2510,
+          "z": -4100
+        },
+        "attitude": {
+          "roll": -12,
+          "pitch": -18,
+          "yaw": -22,
+          "up": {
+            "x": -1944,
+            "y": 999994,
+            "z": 3078
+          }
+        },
+        "velocity": {
+          "x": 11,
+          "y": -17,
+          "z": -18
+        }
+      },
+      "errors": []
+    },
+    {
+      "id": "beginner-11",
+      "mode": "self-level",
+      "step": 4,
+      "title": "Pass gate 3",
+      "kind": "travel",
+      "prepared": 147,
+      "warmup": 0,
+      "ticks": 320,
+      "first": {
+        "roll": -0.141632080078125,
+        "pitch": 0.360809326171875,
+        "yaw": 0,
+        "throttle": 0.48441590214067276
+      },
+      "limits": {
+        "roll": [
+          -0.141632080078125,
+          0.114410400390625
+        ],
+        "pitch": [
+          -0.265533447265625,
+          0.360809326171875
+        ],
+        "yaw": [
+          -0.002655029296875,
+          0
+        ],
+        "throttle": [
+          0.48441590214067276,
+          0.5075888148742198
+        ]
+      },
+      "low": 2510,
+      "high": 2530,
+      "maxTilt": 857,
+      "start": {
+        "position": {
+          "x": 0,
+          "y": 2518,
+          "z": 0
+        },
+        "attitude": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 0,
+          "up": {
+            "x": 0,
+            "y": 1000000,
+            "z": 0
+          }
+        },
+        "velocity": {
+          "x": 0,
+          "y": 84,
+          "z": 0
+        }
+      },
+      "end": {
+        "position": {
+          "x": -1089,
+          "y": 2510,
+          "z": -4100
+        },
+        "attitude": {
+          "roll": 12,
+          "pitch": -18,
+          "yaw": 22,
+          "up": {
+            "x": 1944,
+            "y": 999994,
+            "z": 3078
+          }
+        },
+        "velocity": {
+          "x": -11,
+          "y": -17,
+          "z": -18
+        }
+      },
+      "errors": []
+    },
+    {
+      "id": "beginner-11",
+      "mode": "self-level",
+      "step": 5,
+      "title": "Settle onto the pad",
+      "kind": "land",
+      "prepared": 165,
+      "warmup": 0,
+      "ticks": 400,
+      "first": {
+        "roll": 0,
+        "pitch": 0,
+        "yaw": 0,
+        "throttle": 0.3520081549439347
+      },
+      "limits": {
+        "roll": [
+          0,
+          0
+        ],
+        "pitch": [
+          0,
+          0
+        ],
+        "yaw": [
+          0,
+          0
+        ],
+        "throttle": [
+          0,
+          0.5599388379204893
+        ]
+      },
+      "low": 0,
+      "high": 3019,
+      "maxTilt": 0,
+      "start": {
+        "position": {
+          "x": 0,
+          "y": 3018,
+          "z": 0
+        },
+        "attitude": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 0,
+          "up": {
+            "x": 0,
+            "y": 1000000,
+            "z": 0
+          }
+        },
+        "velocity": {
+          "x": 0,
+          "y": 87,
+          "z": 0
+        }
+      },
+      "end": {
+        "position": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "attitude": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 0,
+          "up": {
+            "x": 0,
+            "y": 1000000,
+            "z": 0
+          }
+        },
+        "velocity": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      "errors": []
+    },
+    {
+      "id": "beginner-12",
+      "mode": "self-level",
+      "step": 1,
+      "title": "Lift gently",
+      "kind": "lift",
+      "prepared": 0,
+      "warmup": 0,
+      "ticks": 300,
+      "first": {
+        "roll": 0,
+        "pitch": 0,
+        "yaw": 0,
+        "throttle": 0.7140672782874617
+      },
+      "limits": {
+        "roll": [
+          0,
+          0
+        ],
+        "pitch": [
+          0,
+          0
+        ],
+        "yaw": [
+          0,
+          0
+        ],
+        "throttle": [
+          0.4514495412844037,
+          0.7140672782874617
+        ]
+      },
+      "low": 0,
+      "high": 2530,
+      "maxTilt": 0,
+      "start": {
+        "position": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "attitude": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 0,
+          "up": {
+            "x": 0,
+            "y": 1000000,
+            "z": 0
+          }
+        },
+        "velocity": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      "end": {
+        "position": {
+          "x": 0,
+          "y": 2509,
+          "z": 0
+        },
+        "attitude": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 0,
+          "up": {
+            "x": 0,
+            "y": 1000000,
+            "z": 0
+          }
+        },
+        "velocity": {
+          "x": 0,
+          "y": -23,
+          "z": 0
+        }
+      },
+      "errors": []
+    },
+    {
+      "id": "beginner-12",
+      "mode": "self-level",
+      "step": 2,
+      "title": "Begin your first straight",
+      "kind": "travel",
+      "prepared": 147,
+      "warmup": 0,
+      "ticks": 320,
+      "first": {
+        "roll": 0,
+        "pitch": 0.360809326171875,
+        "yaw": 0,
+        "throttle": 0.48441590214067276
+      },
+      "limits": {
+        "roll": [
+          0,
+          0
+        ],
+        "pitch": [
+          -0.265350341796875,
+          0.360809326171875
+        ],
+        "yaw": [
+          0,
+          0
+        ],
+        "throttle": [
+          0.48441590214067276,
+          0.5066759410355641
+        ]
+      },
+      "low": 2511,
+      "high": 2530,
+      "maxTilt": 857,
+      "start": {
+        "position": {
+          "x": 0,
+          "y": 2518,
+          "z": 0
+        },
+        "attitude": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 0,
+          "up": {
+            "x": 0,
+            "y": 1000000,
+            "z": 0
+          }
+        },
+        "velocity": {
+          "x": 0,
+          "y": 84,
+          "z": 0
+        }
+      },
+      "end": {
+        "position": {
+          "x": 0,
+          "y": 2511,
+          "z": -4093
+        },
+        "attitude": {
+          "roll": 0,
+          "pitch": -18,
+          "yaw": 0,
+          "up": {
+            "x": 0,
+            "y": 999996,
+            "z": 3104
+          }
+        },
+        "velocity": {
+          "x": 0,
+          "y": -18,
+          "z": -18
+        }
+      },
+      "errors": []
+    },
+    {
+      "id": "beginner-12",
+      "mode": "self-level",
+      "step": 3,
+      "title": "Slow and face the turn",
+      "kind": "yaw",
+      "prepared": 147,
+      "warmup": 0,
+      "ticks": 280,
+      "first": {
+        "roll": 0,
+        "pitch": 0,
+        "yaw": 0.210296630859375,
+        "throttle": 0.48441590214067276
+      },
+      "limits": {
+        "roll": [
+          0,
+          0
+        ],
+        "pitch": [
+          0,
+          0
+        ],
+        "yaw": [
+          0.001922607421875,
+          0.210296630859375
+        ],
+        "throttle": [
+          0.48441590214067276,
+          0.501769622833843
+        ]
+      },
+      "low": 2509,
+      "high": 2530,
+      "maxTilt": 0,
+      "start": {
+        "position": {
+          "x": 0,
+          "y": 2518,
+          "z": 0
+        },
+        "attitude": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 0,
+          "up": {
+            "x": 0,
+            "y": 1000000,
+            "z": 0
+          }
+        },
+        "velocity": {
+          "x": 0,
+          "y": 84,
+          "z": 0
+        }
+      },
+      "end": {
+        "position": {
+          "x": 0,
+          "y": 2509,
+          "z": 0
+        },
+        "attitude": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 8975,
+          "up": {
+            "x": 0,
+            "y": 1000000,
+            "z": 0
+          }
+        },
+        "velocity": {
+          "x": 0,
+          "y": -23,
+          "z": 0
+        }
+      },
+      "errors": []
+    },
+    {
+      "id": "beginner-12",
+      "mode": "self-level",
+      "step": 4,
+      "title": "Take the second straight",
+      "kind": "travel",
+      "prepared": 167,
+      "warmup": 0,
+      "ticks": 320,
+      "first": {
+        "roll": 0,
+        "pitch": 0.360809326171875,
+        "yaw": 0.015594482421875,
+        "throttle": 0.4941488277268094
+      },
+      "limits": {
+        "roll": [
+          0,
+          0
+        ],
+        "pitch": [
+          -0.266937255859375,
+          0.360809326171875
+        ],
+        "yaw": [
+          0.001983642578125,
+          0.015594482421875
+        ],
+        "throttle": [
+          0.4941488277268094,
+          0.5073422703311604
+        ]
+      },
+      "low": 2509,
+      "high": 2530,
+      "maxTilt": 858,
+      "start": {
+        "position": {
+          "x": 0,
+          "y": 2530,
+          "z": 0
+        },
+        "attitude": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 8805,
+          "up": {
+            "x": 0,
+            "y": 1000000,
+            "z": 0
+          }
+        },
+        "velocity": {
+          "x": 0,
+          "y": -1,
+          "z": 0
+        }
+      },
+      "end": {
+        "position": {
+          "x": 4110,
+          "y": 2509,
+          "z": -278
+        },
+        "attitude": {
+          "roll": -9,
+          "pitch": -17,
+          "yaw": 8973,
+          "up": {
+            "x": -2812,
+            "y": 999996,
+            "z": -1388
+          }
+        },
+        "velocity": {
+          "x": 15,
+          "y": -15,
+          "z": -32
+        }
+      },
+      "errors": []
+    },
+    {
+      "id": "beginner-12",
+      "mode": "self-level",
+      "step": 5,
+      "title": "Hover above home",
+      "kind": "brake",
+      "prepared": 167,
+      "warmup": 70,
+      "ticks": 280,
+      "first": {
+        "roll": 0.001922607421875,
+        "pitch": -0.158233642578125,
+        "yaw": 0.019500732421875,
+        "throttle": 0.41865352307951614
+      },
+      "limits": {
+        "roll": [
+          0.001922607421875,
+          0.006072998046875
+        ],
+        "pitch": [
+          -0.158233642578125,
+          -0.002105712890625
+        ],
+        "yaw": [
+          0.002105712890625,
+          0.019500732421875
+        ],
+        "throttle": [
+          0.41865352307951614,
+          0.5067934343987429
+        ]
+      },
+      "low": 1997,
+      "high": 2233,
+      "maxTilt": 288,
+      "start": {
+        "position": {
+          "x": 786,
+          "y": 2208,
+          "z": -34
+        },
+        "attitude": {
+          "roll": -2,
+          "pitch": -66,
+          "yaw": 8851,
+          "up": {
+            "x": -11518,
+            "y": 999934,
+            "z": 30
+          }
+        },
+        "velocity": {
+          "x": 839,
+          "y": 279,
+          "z": -32
+        }
+      },
+      "end": {
+        "position": {
+          "x": 1636,
+          "y": 1997,
+          "z": -314
+        },
+        "attitude": {
+          "roll": 3,
+          "pitch": -12,
+          "yaw": 8973,
+          "up": {
+            "x": -2070,
+            "y": 999998,
+            "z": 528
+          }
+        },
+        "velocity": {
+          "x": 11,
+          "y": -6,
+          "z": -32
+        }
+      },
+      "errors": []
+    },
+    {
+      "id": "beginner-12",
+      "mode": "self-level",
+      "step": 6,
+      "title": "Settle onto the pad",
+      "kind": "land",
+      "prepared": 165,
+      "warmup": 0,
+      "ticks": 400,
+      "first": {
+        "roll": 0,
+        "pitch": 0,
+        "yaw": 0,
+        "throttle": 0.3520081549439347
+      },
+      "limits": {
+        "roll": [
+          0,
+          0
+        ],
+        "pitch": [
+          0,
+          0
+        ],
+        "yaw": [
+          0,
+          0
+        ],
+        "throttle": [
+          0,
+          0.5599388379204893
+        ]
+      },
+      "low": 0,
+      "high": 3019,
+      "maxTilt": 0,
+      "start": {
+        "position": {
+          "x": 0,
+          "y": 3018,
+          "z": 0
+        },
+        "attitude": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 0,
+          "up": {
+            "x": 0,
+            "y": 1000000,
+            "z": 0
+          }
+        },
+        "velocity": {
+          "x": 0,
+          "y": 87,
+          "z": 0
+        }
+      },
+      "end": {
+        "position": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "attitude": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 0,
+          "up": {
+            "x": 0,
+            "y": 1000000,
+            "z": 0
+          }
+        },
+        "velocity": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      "errors": []
+    },
+    {
+      "id": "beginner-13",
+      "mode": "acro",
+      "step": 1,
+      "title": "Lift gently",
+      "kind": "lift",
+      "prepared": 0,
+      "warmup": 0,
+      "ticks": 300,
+      "first": {
+        "roll": 0,
+        "pitch": 0,
+        "yaw": 0,
+        "throttle": 0.7140672782874617
+      },
+      "limits": {
+        "roll": [
+          0,
+          0
+        ],
+        "pitch": [
+          0,
+          0
+        ],
+        "yaw": [
+          0,
+          0
+        ],
+        "throttle": [
+          0.4511355759429154,
+          0.7140672782874617
+        ]
+      },
+      "low": 0,
+      "high": 4031,
+      "maxTilt": 0,
+      "start": {
+        "position": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "attitude": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 0,
+          "up": {
+            "x": 0,
+            "y": 1000000,
+            "z": 0
+          }
+        },
+        "velocity": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      "end": {
+        "position": {
+          "x": 0,
+          "y": 4009,
+          "z": 0
+        },
+        "attitude": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 0,
+          "up": {
+            "x": 0,
+            "y": 1000000,
+            "z": 0
+          }
+        },
+        "velocity": {
+          "x": 0,
+          "y": -23,
+          "z": 0
+        }
+      },
+      "errors": []
+    },
+    {
+      "id": "beginner-13",
+      "mode": "acro",
+      "step": 2,
+      "title": "Tip, then centre",
+      "kind": "tilt-release",
+      "prepared": 258,
+      "warmup": 0,
+      "ticks": 180,
+      "first": {
+        "roll": 0,
+        "pitch": 0.210296630859375,
+        "yaw": 0,
+        "throttle": 0.4842731906218145
+      },
+      "limits": {
+        "roll": [
+          0,
+          0
+        ],
+        "pitch": [
+          0,
+          0.210296630859375
+        ],
+        "yaw": [
+          0,
+          0
+        ],
+        "throttle": [
+          0.4842731906218145,
+          0.5115183534693456
+        ]
+      },
+      "low": 5510,
+      "high": 5530,
+      "maxTilt": 1161,
+      "start": {
+        "position": {
+          "x": 0,
+          "y": 5518,
+          "z": 0
+        },
+        "attitude": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 0,
+          "up": {
+            "x": 0,
+            "y": 1000000,
+            "z": 0
+          }
+        },
+        "velocity": {
+          "x": 0,
+          "y": 85,
+          "z": 0
+        }
+      },
+      "end": {
+        "position": {
+          "x": 0,
+          "y": 5510,
+          "z": -7974
+        },
+        "attitude": {
+          "roll": 0,
+          "pitch": 1161,
+          "yaw": 0,
+          "up": {
+            "x": 0,
+            "y": 979574,
+            "z": -201082
+          }
+        },
+        "velocity": {
+          "x": 0,
+          "y": -21,
+          "z": -4382
+        }
+      },
+      "errors": []
+    },
+    {
+      "id": "beginner-13",
+      "mode": "acro",
+      "step": 3,
+      "title": "Actively return to level",
+      "kind": "level",
+      "prepared": 295,
+      "warmup": 70,
+      "ticks": 220,
+      "first": {
+        "roll": 0,
+        "pitch": -0.214080810546875,
+        "yaw": 0,
+        "throttle": 0.41518867944481636
+      },
+      "limits": {
+        "roll": [
+          0,
+          0
+        ],
+        "pitch": [
+          -0.214080810546875,
+          -0.001434326171875
+        ],
+        "yaw": [
+          0,
+          0
+        ],
+        "throttle": [
+          0.41518867944481636,
+          0.5101488426019031
+        ]
+      },
+      "low": 6494,
+      "high": 6819,
+      "maxTilt": 1211,
+      "start": {
+        "position": {
+          "x": 0,
+          "y": 6805,
+          "z": -1002
+        },
+        "attitude": {
+          "roll": 0,
+          "pitch": 1221,
+          "yaw": 0,
+          "up": {
+            "x": 0,
+            "y": 977412,
+            "z": -211338
+          }
+        },
+        "velocity": {
+          "x": 0,
+          "y": 233,
+          "z": -1846
+        }
+      },
+      "end": {
+        "position": {
+          "x": 0,
+          "y": 6494,
+          "z": -8311
+        },
+        "attitude": {
+          "roll": 0,
+          "pitch": 16,
+          "yaw": 0,
+          "up": {
+            "x": 0,
+            "y": 999996,
+            "z": -2780
+          }
+        },
+        "velocity": {
+          "x": 0,
+          "y": -2,
+          "z": -1040
+        }
+      },
+      "errors": []
+    },
+    {
+      "id": "beginner-13",
+      "mode": "acro",
+      "step": 4,
+      "title": "Settle onto the pad",
+      "kind": "land",
+      "prepared": 165,
+      "warmup": 0,
+      "ticks": 400,
+      "first": {
+        "roll": 0,
+        "pitch": 0,
+        "yaw": 0,
+        "throttle": 0.3520081549439347
+      },
+      "limits": {
+        "roll": [
+          0,
+          0
+        ],
+        "pitch": [
+          0,
+          0
+        ],
+        "yaw": [
+          0,
+          0
+        ],
+        "throttle": [
+          0,
+          0.5599388379204893
+        ]
+      },
+      "low": 0,
+      "high": 3019,
+      "maxTilt": 0,
+      "start": {
+        "position": {
+          "x": 0,
+          "y": 3018,
+          "z": 0
+        },
+        "attitude": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 0,
+          "up": {
+            "x": 0,
+            "y": 1000000,
+            "z": 0
+          }
+        },
+        "velocity": {
+          "x": 0,
+          "y": 87,
+          "z": 0
+        }
+      },
+      "end": {
+        "position": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "attitude": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 0,
+          "up": {
+            "x": 0,
+            "y": 1000000,
+            "z": 0
+          }
+        },
+        "velocity": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      "errors": []
+    },
+    {
+      "id": "beginner-14",
+      "mode": "acro",
+      "step": 1,
+      "title": "Lift gently",
+      "kind": "lift",
+      "prepared": 0,
+      "warmup": 0,
+      "ticks": 300,
+      "first": {
+        "roll": 0,
+        "pitch": 0,
+        "yaw": 0,
+        "throttle": 0.7140672782874617
+      },
+      "limits": {
+        "roll": [
+          0,
+          0
+        ],
+        "pitch": [
+          0,
+          0
+        ],
+        "yaw": [
+          0,
+          0
+        ],
+        "throttle": [
+          0.4510784913353721,
+          0.7140672782874617
+        ]
+      },
+      "low": 0,
+      "high": 3032,
+      "maxTilt": 0,
+      "start": {
+        "position": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "attitude": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 0,
+          "up": {
+            "x": 0,
+            "y": 1000000,
+            "z": 0
+          }
+        },
+        "velocity": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      "end": {
+        "position": {
+          "x": 0,
+          "y": 3009,
+          "z": 0
+        },
+        "attitude": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 0,
+          "up": {
+            "x": 0,
+            "y": 1000000,
+            "z": 0
+          }
+        },
+        "velocity": {
+          "x": 0,
+          "y": -23,
+          "z": 0
+        }
+      },
+      "errors": []
+    },
+    {
+      "id": "beginner-14",
+      "mode": "acro",
+      "step": 2,
+      "title": "Set a small forward tilt",
+      "kind": "travel",
+      "prepared": 156,
+      "warmup": 0,
+      "ticks": 320,
+      "first": {
+        "roll": 0,
+        "pitch": 0.141632080078125,
+        "yaw": 0,
+        "throttle": 0.4841875637104995
+      },
+      "limits": {
+        "roll": [
+          0,
+          0
+        ],
+        "pitch": [
+          -0.260284423828125,
+          0.141632080078125
+        ],
+        "yaw": [
+          0,
+          0
+        ],
+        "throttle": [
+          0.4841875637104995,
+          0.5061467801889168
+        ]
+      },
+      "low": 2759,
+      "high": 2781,
+      "maxTilt": 785,
+      "start": {
+        "position": {
+          "x": 0,
+          "y": 2767,
+          "z": 0
+        },
+        "attitude": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 0,
+          "up": {
+            "x": 0,
+            "y": 1000000,
+            "z": 0
+          }
+        },
+        "velocity": {
+          "x": 0,
+          "y": 87,
+          "z": 0
+        }
+      },
+      "end": {
+        "position": {
+          "x": 0,
+          "y": 2759,
+          "z": -5548
+        },
+        "attitude": {
+          "roll": 0,
+          "pitch": -18,
+          "yaw": 0,
+          "up": {
+            "x": 0,
+            "y": 999996,
+            "z": 3084
+          }
+        },
+        "velocity": {
+          "x": 0,
+          "y": -16,
+          "z": 17
+        }
+      },
+      "errors": []
+    },
+    {
+      "id": "beginner-14",
+      "mode": "acro",
+      "step": 3,
+      "title": "Counter-rotate and brake",
+      "kind": "brake",
+      "prepared": 165,
+      "warmup": 70,
+      "ticks": 280,
+      "first": {
+        "roll": 0,
+        "pitch": -0.260284423828125,
+        "yaw": 0,
+        "throttle": 0.414079006611535
+      },
+      "limits": {
+        "roll": [
+          0,
+          0
+        ],
+        "pitch": [
+          -0.260284423828125,
+          0.024017333984375
+        ],
+        "yaw": [
+          0,
+          0
+        ],
+        "throttle": [
+          0.414079006611535,
+          0.5132455542407708
+        ]
+      },
+      "low": 2994,
+      "high": 3323,
+      "maxTilt": 1209,
+      "start": {
+        "position": {
+          "x": 0,
+          "y": 3309,
+          "z": -1002
+        },
+        "attitude": {
+          "roll": 0,
+          "pitch": 1221,
+          "yaw": 0,
+          "up": {
+            "x": 0,
+            "y": 977412,
+            "z": -211338
+          }
+        },
+        "velocity": {
+          "x": 0,
+          "y": 235,
+          "z": -1846
+        }
+      },
+      "end": {
+        "position": {
+          "x": 0,
+          "y": 2994,
+          "z": -3915
+        },
+        "attitude": {
+          "roll": 0,
+          "pitch": -12,
+          "yaw": 0,
+          "up": {
+            "x": 0,
+            "y": 999998,
+            "z": 2034
+          }
+        },
+        "velocity": {
+          "x": 0,
+          "y": 0,
+          "z": 27
+        }
+      },
+      "errors": []
+    },
+    {
+      "id": "beginner-14",
+      "mode": "acro",
+      "step": 4,
+      "title": "Settle onto the pad",
+      "kind": "land",
+      "prepared": 165,
+      "warmup": 0,
+      "ticks": 400,
+      "first": {
+        "roll": 0,
+        "pitch": 0,
+        "yaw": 0,
+        "throttle": 0.3520081549439347
+      },
+      "limits": {
+        "roll": [
+          0,
+          0
+        ],
+        "pitch": [
+          0,
+          0
+        ],
+        "yaw": [
+          0,
+          0
+        ],
+        "throttle": [
+          0,
+          0.5599388379204893
+        ]
+      },
+      "low": 0,
+      "high": 3019,
+      "maxTilt": 0,
+      "start": {
+        "position": {
+          "x": 0,
+          "y": 3018,
+          "z": 0
+        },
+        "attitude": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 0,
+          "up": {
+            "x": 0,
+            "y": 1000000,
+            "z": 0
+          }
+        },
+        "velocity": {
+          "x": 0,
+          "y": 87,
+          "z": 0
+        }
+      },
+      "end": {
+        "position": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "attitude": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 0,
+          "up": {
+            "x": 0,
+            "y": 1000000,
+            "z": 0
+          }
+        },
+        "velocity": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      "errors": []
+    },
+    {
+      "id": "beginner-15",
+      "mode": "acro",
+      "step": 1,
+      "title": "Ground check",
+      "kind": "ground",
+      "prepared": 0,
+      "warmup": 0,
+      "ticks": 150,
+      "first": {
+        "roll": 0,
+        "pitch": 0,
+        "yaw": 0,
+        "throttle": 0
+      },
+      "limits": {
+        "roll": [
+          0,
+          0
+        ],
+        "pitch": [
+          0,
+          0
+        ],
+        "yaw": [
+          0,
+          0
+        ],
+        "throttle": [
+          0,
+          0
+        ]
+      },
+      "low": 0,
+      "high": 0,
+      "maxTilt": 0,
+      "start": {
+        "position": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "attitude": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 0,
+          "up": {
+            "x": 0,
+            "y": 1000000,
+            "z": 0
+          }
+        },
+        "velocity": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      "end": {
+        "position": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "attitude": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 0,
+          "up": {
+            "x": 0,
+            "y": 1000000,
+            "z": 0
+          }
+        },
+        "velocity": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      "errors": []
+    },
+    {
+      "id": "beginner-15",
+      "mode": "acro",
+      "step": 2,
+      "title": "Lift gently",
+      "kind": "lift",
+      "prepared": 0,
+      "warmup": 0,
+      "ticks": 300,
+      "first": {
+        "roll": 0,
+        "pitch": 0,
+        "yaw": 0,
+        "throttle": 0.7140672782874617
+      },
+      "limits": {
+        "roll": [
+          0,
+          0
+        ],
+        "pitch": [
+          0,
+          0
+        ],
+        "yaw": [
+          0,
+          0
+        ],
+        "throttle": [
+          0.458927624872579,
+          0.7140672782874617
+        ]
+      },
+      "low": 0,
+      "high": 1425,
+      "maxTilt": 0,
+      "start": {
+        "position": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "attitude": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 0,
+          "up": {
+            "x": 0,
+            "y": 1000000,
+            "z": 0
+          }
+        },
+        "velocity": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      "end": {
+        "position": {
+          "x": 0,
+          "y": 1410,
+          "z": 0
+        },
+        "attitude": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 0,
+          "up": {
+            "x": 0,
+            "y": 1000000,
+            "z": 0
+          }
+        },
+        "velocity": {
+          "x": 0,
+          "y": -24,
+          "z": 0
+        }
+      },
+      "errors": []
+    },
+    {
+      "id": "beginner-15",
+      "mode": "acro",
+      "step": 3,
+      "title": "Settle onto the pad",
+      "kind": "land",
+      "prepared": 165,
+      "warmup": 0,
+      "ticks": 400,
+      "first": {
+        "roll": 0,
+        "pitch": 0,
+        "yaw": 0,
+        "throttle": 0.3520081549439347
+      },
+      "limits": {
+        "roll": [
+          0,
+          0
+        ],
+        "pitch": [
+          0,
+          0
+        ],
+        "yaw": [
+          0,
+          0
+        ],
+        "throttle": [
+          0,
+          0.5599388379204893
+        ]
+      },
+      "low": 0,
+      "high": 3019,
+      "maxTilt": 0,
+      "start": {
+        "position": {
+          "x": 0,
+          "y": 3018,
+          "z": 0
+        },
+        "attitude": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 0,
+          "up": {
+            "x": 0,
+            "y": 1000000,
+            "z": 0
+          }
+        },
+        "velocity": {
+          "x": 0,
+          "y": 87,
+          "z": 0
+        }
+      },
+      "end": {
+        "position": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "attitude": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 0,
+          "up": {
+            "x": 0,
+            "y": 1000000,
+            "z": 0
+          }
+        },
+        "velocity": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      "errors": []
+    },
+    {
+      "id": "beginner-16",
+      "mode": "acro",
+      "step": 1,
+      "title": "Lift gently",
+      "kind": "lift",
+      "prepared": 0,
+      "warmup": 0,
+      "ticks": 300,
+      "first": {
+        "roll": 0,
+        "pitch": 0,
+        "yaw": 0,
+        "throttle": 0.7140672782874617
+      },
+      "limits": {
+        "roll": [
+          0,
+          0
+        ],
+        "pitch": [
+          0,
+          0
+        ],
+        "yaw": [
+          0,
+          0
+        ],
+        "throttle": [
+          0.4541896024464832,
+          0.7140672782874617
+        ]
+      },
+      "low": 0,
+      "high": 1828,
+      "maxTilt": 0,
+      "start": {
+        "position": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "attitude": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 0,
+          "up": {
+            "x": 0,
+            "y": 1000000,
+            "z": 0
+          }
+        },
+        "velocity": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      "end": {
+        "position": {
+          "x": 0,
+          "y": 1810,
+          "z": 0
+        },
+        "attitude": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 0,
+          "up": {
+            "x": 0,
+            "y": 1000000,
+            "z": 0
+          }
+        },
+        "velocity": {
+          "x": 0,
+          "y": -24,
+          "z": 0
+        }
+      },
+      "errors": []
+    },
+    {
+      "id": "beginner-16",
+      "mode": "acro",
+      "step": 2,
+      "title": "Climb, then ease off",
+      "kind": "lift",
+      "prepared": 147,
+      "warmup": 0,
+      "ticks": 300,
+      "first": {
+        "roll": 0,
+        "pitch": 0,
+        "yaw": 0,
+        "throttle": 0.7020795107033638
+      },
+      "limits": {
+        "roll": [
+          0,
+          0
+        ],
+        "pitch": [
+          0,
+          0
+        ],
+        "yaw": [
+          0,
+          0
+        ],
+        "throttle": [
+          0.4529622833843018,
+          0.7020795107033638
+        ]
+      },
+      "low": 2518,
+      "high": 4530,
+      "maxTilt": 0,
+      "start": {
+        "position": {
+          "x": 0,
+          "y": 2518,
+          "z": 0
+        },
+        "attitude": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 0,
+          "up": {
+            "x": 0,
+            "y": 1000000,
+            "z": 0
+          }
+        },
+        "velocity": {
+          "x": 0,
+          "y": 84,
+          "z": 0
+        }
+      },
+      "end": {
+        "position": {
+          "x": 0,
+          "y": 4509,
+          "z": 0
+        },
+        "attitude": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 0,
+          "up": {
+            "x": 0,
+            "y": 1000000,
+            "z": 0
+          }
+        },
+        "velocity": {
+          "x": 0,
+          "y": -23,
+          "z": 0
+        }
+      },
+      "errors": []
+    },
+    {
+      "id": "beginner-16",
+      "mode": "acro",
+      "step": 3,
+      "title": "Catch the descent",
+      "kind": "descend",
+      "prepared": 195,
+      "warmup": 0,
+      "ticks": 300,
+      "first": {
+        "roll": 0,
+        "pitch": 0,
+        "yaw": 0,
+        "throttle": 0.345158002038736
+      },
+      "limits": {
+        "roll": [
+          0,
+          0
+        ],
+        "pitch": [
+          0,
+          0
+        ],
+        "yaw": [
+          0,
+          0
+        ],
+        "throttle": [
+          0.345158002038736,
+          0.5323384301732925
+        ]
+      },
+      "low": 1980,
+      "high": 3818,
+      "maxTilt": 0,
+      "start": {
+        "position": {
+          "x": 0,
+          "y": 3818,
+          "z": 0
+        },
+        "attitude": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 0,
+          "up": {
+            "x": 0,
+            "y": 1000000,
+            "z": 0
+          }
+        },
+        "velocity": {
+          "x": 0,
+          "y": 85,
+          "z": 0
+        }
+      },
+      "end": {
+        "position": {
+          "x": 0,
+          "y": 1980,
+          "z": 0
+        },
+        "attitude": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 0,
+          "up": {
+            "x": 0,
+            "y": 1000000,
+            "z": 0
+          }
+        },
+        "velocity": {
+          "x": 0,
+          "y": 18,
+          "z": 0
+        }
+      },
+      "errors": []
+    },
+    {
+      "id": "beginner-16",
+      "mode": "acro",
+      "step": 4,
+      "title": "Settle onto the pad",
+      "kind": "land",
+      "prepared": 165,
+      "warmup": 0,
+      "ticks": 400,
+      "first": {
+        "roll": 0,
+        "pitch": 0,
+        "yaw": 0,
+        "throttle": 0.3520081549439347
+      },
+      "limits": {
+        "roll": [
+          0,
+          0
+        ],
+        "pitch": [
+          0,
+          0
+        ],
+        "yaw": [
+          0,
+          0
+        ],
+        "throttle": [
+          0,
+          0.5599388379204893
+        ]
+      },
+      "low": 0,
+      "high": 3019,
+      "maxTilt": 0,
+      "start": {
+        "position": {
+          "x": 0,
+          "y": 3018,
+          "z": 0
+        },
+        "attitude": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 0,
+          "up": {
+            "x": 0,
+            "y": 1000000,
+            "z": 0
+          }
+        },
+        "velocity": {
+          "x": 0,
+          "y": 87,
+          "z": 0
+        }
+      },
+      "end": {
+        "position": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "attitude": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 0,
+          "up": {
+            "x": 0,
+            "y": 1000000,
+            "z": 0
+          }
+        },
+        "velocity": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      "errors": []
+    },
+    {
+      "id": "beginner-17",
+      "mode": "acro",
+      "step": 1,
+      "title": "Lift gently",
+      "kind": "lift",
+      "prepared": 0,
+      "warmup": 0,
+      "ticks": 300,
+      "first": {
+        "roll": 0,
+        "pitch": 0,
+        "yaw": 0,
+        "throttle": 0.7140672782874617
+      },
+      "limits": {
+        "roll": [
+          0,
+          0
+        ],
+        "pitch": [
+          0,
+          0
+        ],
+        "yaw": [
+          0,
+          0
+        ],
+        "throttle": [
+          0.4511355759429154,
+          0.7140672782874617
+        ]
+      },
+      "low": 0,
+      "high": 4031,
+      "maxTilt": 0,
+      "start": {
+        "position": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "attitude": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 0,
+          "up": {
+            "x": 0,
+            "y": 1000000,
+            "z": 0
+          }
+        },
+        "velocity": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      "end": {
+        "position": {
+          "x": 0,
+          "y": 4009,
+          "z": 0
+        },
+        "attitude": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 0,
+          "up": {
+            "x": 0,
+            "y": 1000000,
+            "z": 0
+          }
+        },
+        "velocity": {
+          "x": 0,
+          "y": -23,
+          "z": 0
+        }
+      },
+      "errors": []
+    },
+    {
+      "id": "beginner-17",
+      "mode": "acro",
+      "step": 2,
+      "title": "Set a small tilt and release",
+      "kind": "tilt-release",
+      "prepared": 239,
+      "warmup": 0,
+      "ticks": 180,
+      "first": {
+        "roll": 0,
+        "pitch": 0.176239013671875,
+        "yaw": 0,
+        "throttle": 0.4840448521916411
+      },
+      "limits": {
+        "roll": [
+          0,
+          0
+        ],
+        "pitch": [
+          0,
+          0.176239013671875
+        ],
+        "yaw": [
+          0,
+          0
+        ],
+        "throttle": [
+          0.4840448521916411,
+          0.5085247794799604
+        ]
+      },
+      "low": 5010,
+      "high": 5031,
+      "maxTilt": 968,
+      "start": {
+        "position": {
+          "x": 0,
+          "y": 5017,
+          "z": 0
+        },
+        "attitude": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 0,
+          "up": {
+            "x": 0,
+            "y": 1000000,
+            "z": 0
+          }
+        },
+        "velocity": {
+          "x": 0,
+          "y": 88,
+          "z": 0
+        }
+      },
+      "end": {
+        "position": {
+          "x": 0,
+          "y": 5010,
+          "z": -6712
+        },
+        "attitude": {
+          "roll": 0,
+          "pitch": 968,
+          "yaw": 0,
+          "up": {
+            "x": 0,
+            "y": 985762,
+            "z": -168144
+          }
+        },
+        "velocity": {
+          "x": 0,
+          "y": -22,
+          "z": -3711
+        }
+      },
+      "errors": []
+    },
+    {
+      "id": "beginner-17",
+      "mode": "acro",
+      "step": 3,
+      "title": "Level and stop the drift",
+      "kind": "brake",
+      "prepared": 202,
+      "warmup": 70,
+      "ticks": 280,
+      "first": {
+        "roll": 0,
+        "pitch": -0.260284423828125,
+        "yaw": 0,
+        "throttle": 0.41393299702820857
+      },
+      "limits": {
+        "roll": [
+          0,
+          0
+        ],
+        "pitch": [
+          -0.260284423828125,
+          0.024017333984375
+        ],
+        "yaw": [
+          0,
+          0
+        ],
+        "throttle": [
+          0.41393299702820857,
+          0.5132455542407708
+        ]
+      },
+      "low": 3994,
+      "high": 4323,
+      "maxTilt": 1209,
+      "start": {
+        "position": {
+          "x": 0,
+          "y": 4309,
+          "z": -1002
+        },
+        "attitude": {
+          "roll": 0,
+          "pitch": 1221,
+          "yaw": 0,
+          "up": {
+            "x": 0,
+            "y": 977412,
+            "z": -211338
+          }
+        },
+        "velocity": {
+          "x": 0,
+          "y": 236,
+          "z": -1846
+        }
+      },
+      "end": {
+        "position": {
+          "x": 0,
+          "y": 3994,
+          "z": -3915
+        },
+        "attitude": {
+          "roll": 0,
+          "pitch": -12,
+          "yaw": 0,
+          "up": {
+            "x": 0,
+            "y": 999998,
+            "z": 2034
+          }
+        },
+        "velocity": {
+          "x": 0,
+          "y": 0,
+          "z": 27
+        }
+      },
+      "errors": []
+    },
+    {
+      "id": "beginner-17",
+      "mode": "acro",
+      "step": 4,
+      "title": "Settle onto the pad",
+      "kind": "land",
+      "prepared": 165,
+      "warmup": 0,
+      "ticks": 400,
+      "first": {
+        "roll": 0,
+        "pitch": 0,
+        "yaw": 0,
+        "throttle": 0.3520081549439347
+      },
+      "limits": {
+        "roll": [
+          0,
+          0
+        ],
+        "pitch": [
+          0,
+          0
+        ],
+        "yaw": [
+          0,
+          0
+        ],
+        "throttle": [
+          0,
+          0.5599388379204893
+        ]
+      },
+      "low": 0,
+      "high": 3019,
+      "maxTilt": 0,
+      "start": {
+        "position": {
+          "x": 0,
+          "y": 3018,
+          "z": 0
+        },
+        "attitude": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 0,
+          "up": {
+            "x": 0,
+            "y": 1000000,
+            "z": 0
+          }
+        },
+        "velocity": {
+          "x": 0,
+          "y": 87,
+          "z": 0
+        }
+      },
+      "end": {
+        "position": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "attitude": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 0,
+          "up": {
+            "x": 0,
+            "y": 1000000,
+            "z": 0
+          }
+        },
+        "velocity": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      "errors": []
+    },
+    {
+      "id": "beginner-18",
+      "mode": "acro",
+      "step": 1,
+      "title": "Lift gently",
+      "kind": "lift",
+      "prepared": 0,
+      "warmup": 0,
+      "ticks": 300,
+      "first": {
+        "roll": 0,
+        "pitch": 0,
+        "yaw": 0,
+        "throttle": 0.7140672782874617
+      },
+      "limits": {
+        "roll": [
+          0,
+          0
+        ],
+        "pitch": [
+          0,
+          0
+        ],
+        "yaw": [
+          0,
+          0
+        ],
+        "throttle": [
+          0.4510784913353721,
+          0.7140672782874617
+        ]
+      },
+      "low": 0,
+      "high": 3032,
+      "maxTilt": 0,
+      "start": {
+        "position": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "attitude": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 0,
+          "up": {
+            "x": 0,
+            "y": 1000000,
+            "z": 0
+          }
+        },
+        "velocity": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      "end": {
+        "position": {
+          "x": 0,
+          "y": 3009,
+          "z": 0
+        },
+        "attitude": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 0,
+          "up": {
+            "x": 0,
+            "y": 1000000,
+            "z": 0
+          }
+        },
+        "velocity": {
+          "x": 0,
+          "y": -23,
+          "z": 0
+        }
+      },
+      "errors": []
+    },
+    {
+      "id": "beginner-18",
+      "mode": "acro",
+      "step": 2,
+      "title": "Slide right and brake",
+      "kind": "travel",
+      "prepared": 165,
+      "warmup": 0,
+      "ticks": 320,
+      "first": {
+        "roll": 0.141632080078125,
+        "pitch": 0,
+        "yaw": 0,
+        "throttle": 0.4839877675840979
+      },
+      "limits": {
+        "roll": [
+          -0.260284423828125,
+          0.141632080078125
+        ],
+        "pitch": [
+          0,
+          0
+        ],
+        "yaw": [
+          0,
+          0
+        ],
+        "throttle": [
+          0.4839877675840979,
+          0.5061232954210548
+        ]
+      },
+      "low": 3009,
+      "high": 3032,
+      "maxTilt": 785,
+      "start": {
+        "position": {
+          "x": 0,
+          "y": 3018,
+          "z": 0
+        },
+        "attitude": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 0,
+          "up": {
+            "x": 0,
+            "y": 1000000,
+            "z": 0
+          }
+        },
+        "velocity": {
+          "x": 0,
+          "y": 87,
+          "z": 0
+        }
+      },
+      "end": {
+        "position": {
+          "x": 5550,
+          "y": 3009,
+          "z": 0
+        },
+        "attitude": {
+          "roll": -18,
+          "pitch": 0,
+          "yaw": 0,
+          "up": {
+            "x": -3084,
+            "y": 999996,
+            "z": 0
+          }
+        },
+        "velocity": {
+          "x": -17,
+          "y": -16,
+          "z": 0
+        }
+      },
+      "errors": []
+    },
+    {
+      "id": "beginner-18",
+      "mode": "acro",
+      "step": 3,
+      "title": "Slide left and brake",
+      "kind": "travel",
+      "prepared": 165,
+      "warmup": 0,
+      "ticks": 320,
+      "first": {
+        "roll": -0.141632080078125,
+        "pitch": 0,
+        "yaw": 0,
+        "throttle": 0.4839877675840979
+      },
+      "limits": {
+        "roll": [
+          -0.141632080078125,
+          0.260284423828125
+        ],
+        "pitch": [
+          0,
+          0
+        ],
+        "yaw": [
+          0,
+          0
+        ],
+        "throttle": [
+          0.4839877675840979,
+          0.5061232954210548
+        ]
+      },
+      "low": 3009,
+      "high": 3032,
+      "maxTilt": 785,
+      "start": {
+        "position": {
+          "x": 0,
+          "y": 3018,
+          "z": 0
+        },
+        "attitude": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 0,
+          "up": {
+            "x": 0,
+            "y": 1000000,
+            "z": 0
+          }
+        },
+        "velocity": {
+          "x": 0,
+          "y": 87,
+          "z": 0
+        }
+      },
+      "end": {
+        "position": {
+          "x": -5550,
+          "y": 3009,
+          "z": 0
+        },
+        "attitude": {
+          "roll": 18,
+          "pitch": 0,
+          "yaw": 0,
+          "up": {
+            "x": 3084,
+            "y": 999996,
+            "z": 0
+          }
+        },
+        "velocity": {
+          "x": 17,
+          "y": -16,
+          "z": 0
+        }
+      },
+      "errors": []
+    },
+    {
+      "id": "beginner-18",
+      "mode": "acro",
+      "step": 4,
+      "title": "Settle onto the pad",
+      "kind": "land",
+      "prepared": 165,
+      "warmup": 0,
+      "ticks": 400,
+      "first": {
+        "roll": 0,
+        "pitch": 0,
+        "yaw": 0,
+        "throttle": 0.3520081549439347
+      },
+      "limits": {
+        "roll": [
+          0,
+          0
+        ],
+        "pitch": [
+          0,
+          0
+        ],
+        "yaw": [
+          0,
+          0
+        ],
+        "throttle": [
+          0,
+          0.5599388379204893
+        ]
+      },
+      "low": 0,
+      "high": 3019,
+      "maxTilt": 0,
+      "start": {
+        "position": {
+          "x": 0,
+          "y": 3018,
+          "z": 0
+        },
+        "attitude": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 0,
+          "up": {
+            "x": 0,
+            "y": 1000000,
+            "z": 0
+          }
+        },
+        "velocity": {
+          "x": 0,
+          "y": 87,
+          "z": 0
+        }
+      },
+      "end": {
+        "position": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "attitude": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 0,
+          "up": {
+            "x": 0,
+            "y": 1000000,
+            "z": 0
+          }
+        },
+        "velocity": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      "errors": []
+    },
+    {
+      "id": "beginner-19",
+      "mode": "acro",
+      "step": 1,
+      "title": "Lift gently",
+      "kind": "lift",
+      "prepared": 0,
+      "warmup": 0,
+      "ticks": 300,
+      "first": {
+        "roll": 0,
+        "pitch": 0,
+        "yaw": 0,
+        "throttle": 0.7140672782874617
+      },
+      "limits": {
+        "roll": [
+          0,
+          0
+        ],
+        "pitch": [
+          0,
+          0
+        ],
+        "yaw": [
+          0,
+          0
+        ],
+        "throttle": [
+          0.4510784913353721,
+          0.7140672782874617
+        ]
+      },
+      "low": 0,
+      "high": 3032,
+      "maxTilt": 0,
+      "start": {
+        "position": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "attitude": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 0,
+          "up": {
+            "x": 0,
+            "y": 1000000,
+            "z": 0
+          }
+        },
+        "velocity": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      "end": {
+        "position": {
+          "x": 0,
+          "y": 3009,
+          "z": 0
+        },
+        "attitude": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 0,
+          "up": {
+            "x": 0,
+            "y": 1000000,
+            "z": 0
+          }
+        },
+        "velocity": {
+          "x": 0,
+          "y": -23,
+          "z": 0
+        }
+      },
+      "errors": []
+    },
+    {
+      "id": "beginner-19",
+      "mode": "acro",
+      "step": 2,
+      "title": "Face east",
+      "kind": "yaw",
+      "prepared": 165,
+      "warmup": 0,
+      "ticks": 280,
+      "first": {
+        "roll": 0,
+        "pitch": 0,
+        "yaw": 0.210296630859375,
+        "throttle": 0.4839877675840979
+      },
+      "limits": {
+        "roll": [
+          0,
+          0
+        ],
+        "pitch": [
+          0,
+          0
+        ],
+        "yaw": [
+          0.001922607421875,
+          0.210296630859375
+        ],
+        "throttle": [
+          0.4839877675840979,
+          0.501769622833843
+        ]
+      },
+      "low": 3009,
+      "high": 3032,
+      "maxTilt": 0,
+      "start": {
+        "position": {
+          "x": 0,
+          "y": 3018,
+          "z": 0
+        },
+        "attitude": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 0,
+          "up": {
+            "x": 0,
+            "y": 1000000,
+            "z": 0
+          }
+        },
+        "velocity": {
+          "x": 0,
+          "y": 87,
+          "z": 0
+        }
+      },
+      "end": {
+        "position": {
+          "x": 0,
+          "y": 3009,
+          "z": 0
+        },
+        "attitude": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 8975,
+          "up": {
+            "x": 0,
+            "y": 1000000,
+            "z": 0
+          }
+        },
+        "velocity": {
+          "x": 0,
+          "y": -23,
+          "z": 0
+        }
+      },
+      "errors": []
+    },
+    {
+      "id": "beginner-19",
+      "mode": "acro",
+      "step": 3,
+      "title": "Face west",
+      "kind": "yaw",
+      "prepared": 167,
+      "warmup": 0,
+      "ticks": 280,
+      "first": {
+        "roll": 0,
+        "pitch": 0,
+        "yaw": -0.210296630859375,
+        "throttle": 0.484901121304791
+      },
+      "limits": {
+        "roll": [
+          0,
+          0
+        ],
+        "pitch": [
+          0,
+          0
+        ],
+        "yaw": [
+          -0.210296630859375,
+          -0.023529052734375
+        ],
+        "throttle": [
+          0.484901121304791,
+          0.501769622833843
+        ]
+      },
+      "low": 3009,
+      "high": 3032,
+      "maxTilt": 0,
+      "start": {
+        "position": {
+          "x": 0,
+          "y": 3022,
+          "z": 0
+        },
+        "attitude": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 8805,
+          "up": {
+            "x": 0,
+            "y": 1000000,
+            "z": 0
+          }
+        },
+        "velocity": {
+          "x": 0,
+          "y": 75,
+          "z": 0
+        }
+      },
+      "end": {
+        "position": {
+          "x": 0,
+          "y": 3009,
+          "z": 0
+        },
+        "attitude": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": -8714,
+          "up": {
+            "x": 0,
+            "y": 1000000,
+            "z": 0
+          }
+        },
+        "velocity": {
+          "x": 0,
+          "y": -23,
+          "z": 0
+        }
+      },
+      "errors": []
+    },
+    {
+      "id": "beginner-19",
+      "mode": "acro",
+      "step": 4,
+      "title": "Face north again",
+      "kind": "yaw",
+      "prepared": 167,
+      "warmup": 0,
+      "ticks": 280,
+      "first": {
+        "roll": 0,
+        "pitch": 0,
+        "yaw": 0.210296630859375,
+        "throttle": 0.484901121304791
+      },
+      "limits": {
+        "roll": [
+          0,
+          0
+        ],
+        "pitch": [
+          0,
+          0
+        ],
+        "yaw": [
+          0.001983642578125,
+          0.210296630859375
+        ],
+        "throttle": [
+          0.484901121304791,
+          0.501769622833843
+        ]
+      },
+      "low": 3009,
+      "high": 3032,
+      "maxTilt": 0,
+      "start": {
+        "position": {
+          "x": 0,
+          "y": 3022,
+          "z": 0
+        },
+        "attitude": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": -8805,
+          "up": {
+            "x": 0,
+            "y": 1000000,
+            "z": 0
+          }
+        },
+        "velocity": {
+          "x": 0,
+          "y": 75,
+          "z": 0
+        }
+      },
+      "end": {
+        "position": {
+          "x": 0,
+          "y": 3009,
+          "z": 0
+        },
+        "attitude": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": -26,
+          "up": {
+            "x": 0,
+            "y": 1000000,
+            "z": 0
+          }
+        },
+        "velocity": {
+          "x": 0,
+          "y": -23,
+          "z": 0
+        }
+      },
+      "errors": []
+    },
+    {
+      "id": "beginner-19",
+      "mode": "acro",
+      "step": 5,
+      "title": "Now travel north",
+      "kind": "travel",
+      "prepared": 165,
+      "warmup": 0,
+      "ticks": 320,
+      "first": {
+        "roll": 0,
+        "pitch": 0.141632080078125,
+        "yaw": 0,
+        "throttle": 0.4839877675840979
+      },
+      "limits": {
+        "roll": [
+          0,
+          0
+        ],
+        "pitch": [
+          -0.260284423828125,
+          0.141632080078125
+        ],
+        "yaw": [
+          0,
+          0
+        ],
+        "throttle": [
+          0.4839877675840979,
+          0.5061232954210548
+        ]
+      },
+      "low": 3009,
+      "high": 3032,
+      "maxTilt": 785,
+      "start": {
+        "position": {
+          "x": 0,
+          "y": 3018,
+          "z": 0
+        },
+        "attitude": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 0,
+          "up": {
+            "x": 0,
+            "y": 1000000,
+            "z": 0
+          }
+        },
+        "velocity": {
+          "x": 0,
+          "y": 87,
+          "z": 0
+        }
+      },
+      "end": {
+        "position": {
+          "x": 0,
+          "y": 3009,
+          "z": -5550
+        },
+        "attitude": {
+          "roll": 0,
+          "pitch": -18,
+          "yaw": 0,
+          "up": {
+            "x": 0,
+            "y": 999996,
+            "z": 3084
+          }
+        },
+        "velocity": {
+          "x": 0,
+          "y": -16,
+          "z": 17
+        }
+      },
+      "errors": []
+    },
+    {
+      "id": "beginner-19",
+      "mode": "acro",
+      "step": 6,
+      "title": "Settle onto the pad",
+      "kind": "land",
+      "prepared": 165,
+      "warmup": 0,
+      "ticks": 400,
+      "first": {
+        "roll": 0,
+        "pitch": 0,
+        "yaw": 0,
+        "throttle": 0.3520081549439347
+      },
+      "limits": {
+        "roll": [
+          0,
+          0
+        ],
+        "pitch": [
+          0,
+          0
+        ],
+        "yaw": [
+          0,
+          0
+        ],
+        "throttle": [
+          0,
+          0.5599388379204893
+        ]
+      },
+      "low": 0,
+      "high": 3019,
+      "maxTilt": 0,
+      "start": {
+        "position": {
+          "x": 0,
+          "y": 3018,
+          "z": 0
+        },
+        "attitude": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 0,
+          "up": {
+            "x": 0,
+            "y": 1000000,
+            "z": 0
+          }
+        },
+        "velocity": {
+          "x": 0,
+          "y": 87,
+          "z": 0
+        }
+      },
+      "end": {
+        "position": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "attitude": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 0,
+          "up": {
+            "x": 0,
+            "y": 1000000,
+            "z": 0
+          }
+        },
+        "velocity": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      "errors": []
+    },
+    {
+      "id": "beginner-20",
+      "mode": "acro",
+      "step": 1,
+      "title": "Lift gently",
+      "kind": "lift",
+      "prepared": 0,
+      "warmup": 0,
+      "ticks": 300,
+      "first": {
+        "roll": 0,
+        "pitch": 0,
+        "yaw": 0,
+        "throttle": 0.7140672782874617
+      },
+      "limits": {
+        "roll": [
+          0,
+          0
+        ],
+        "pitch": [
+          0,
+          0
+        ],
+        "yaw": [
+          0,
+          0
+        ],
+        "throttle": [
+          0.4510784913353721,
+          0.7140672782874617
+        ]
+      },
+      "low": 0,
+      "high": 3032,
+      "maxTilt": 0,
+      "start": {
+        "position": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "attitude": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 0,
+          "up": {
+            "x": 0,
+            "y": 1000000,
+            "z": 0
+          }
+        },
+        "velocity": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      "end": {
+        "position": {
+          "x": 0,
+          "y": 3009,
+          "z": 0
+        },
+        "attitude": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 0,
+          "up": {
+            "x": 0,
+            "y": 1000000,
+            "z": 0
+          }
+        },
+        "velocity": {
+          "x": 0,
+          "y": -23,
+          "z": 0
+        }
+      },
+      "errors": []
+    },
+    {
+      "id": "beginner-20",
+      "mode": "acro",
+      "step": 2,
+      "title": "Climb while moving",
+      "kind": "lift",
+      "prepared": 129,
+      "warmup": 0,
+      "ticks": 300,
+      "first": {
+        "roll": 0,
+        "pitch": 0.088958740234375,
+        "yaw": 0,
+        "throttle": 0.7019367991845056
+      },
+      "limits": {
+        "roll": [
+          0,
+          0
+        ],
+        "pitch": [
+          -0.161102294921875,
+          0.088958740234375
+        ],
+        "yaw": [
+          0,
+          0
+        ],
+        "throttle": [
+          0.4543559958593463,
+          0.7019367991845056
+        ]
+      },
+      "low": 2017,
+      "high": 4031,
+      "maxTilt": 485,
+      "start": {
+        "position": {
+          "x": 0,
+          "y": 2017,
+          "z": 0
+        },
+        "attitude": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 0,
+          "up": {
+            "x": 0,
+            "y": 1000000,
+            "z": 0
+          }
+        },
+        "velocity": {
+          "x": 0,
+          "y": 85,
+          "z": 0
+        }
+      },
+      "end": {
+        "position": {
+          "x": 0,
+          "y": 4011,
+          "z": -2518
+        },
+        "attitude": {
+          "roll": 0,
+          "pitch": -14,
+          "yaw": 0,
+          "up": {
+            "x": 0,
+            "y": 999998,
+            "z": 2352
+          }
+        },
+        "velocity": {
+          "x": 0,
+          "y": -23,
+          "z": 23
+        }
+      },
+      "errors": []
+    },
+    {
+      "id": "beginner-20",
+      "mode": "acro",
+      "step": 3,
+      "title": "Descend while moving",
+      "kind": "descend",
+      "prepared": 213,
+      "warmup": 0,
+      "ticks": 300,
+      "first": {
+        "roll": 0,
+        "pitch": 0.088958740234375,
+        "yaw": 0,
+        "throttle": 0.34472986748216106
+      },
+      "limits": {
+        "roll": [
+          0,
+          0
+        ],
+        "pitch": [
+          -0.160675048828125,
+          0.088958740234375
+        ],
+        "yaw": [
+          0,
+          0
+        ],
+        "throttle": [
+          0.34472986748216106,
+          0.5337286360100748
+        ]
+      },
+      "low": 2479,
+      "high": 4318,
+      "maxTilt": 485,
+      "start": {
+        "position": {
+          "x": 0,
+          "y": 4317,
+          "z": 0
+        },
+        "attitude": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 0,
+          "up": {
+            "x": 0,
+            "y": 1000000,
+            "z": 0
+          }
+        },
+        "velocity": {
+          "x": 0,
+          "y": 88,
+          "z": 0
+        }
+      },
+      "end": {
+        "position": {
+          "x": 0,
+          "y": 2479,
+          "z": -2425
+        },
+        "attitude": {
+          "roll": 0,
+          "pitch": -14,
+          "yaw": 0,
+          "up": {
+            "x": 0,
+            "y": 999998,
+            "z": 2356
+          }
+        },
+        "velocity": {
+          "x": 0,
+          "y": 21,
+          "z": 27
+        }
+      },
+      "errors": []
+    },
+    {
+      "id": "beginner-20",
+      "mode": "acro",
+      "step": 4,
+      "title": "Settle after the gates",
+      "kind": "brake",
+      "prepared": 147,
+      "warmup": 70,
+      "ticks": 280,
+      "first": {
+        "roll": 0,
+        "pitch": -0.260284423828125,
+        "yaw": 0,
+        "throttle": 0.4155391024447999
+      },
+      "limits": {
+        "roll": [
+          0,
+          0
+        ],
+        "pitch": [
+          -0.260284423828125,
+          0.024017333984375
+        ],
+        "yaw": [
+          0,
+          0
+        ],
+        "throttle": [
+          0.4155391024447999,
+          0.5127578379693428
+        ]
+      },
+      "low": 2494,
+      "high": 2817,
+      "maxTilt": 1209,
+      "start": {
+        "position": {
+          "x": 0,
+          "y": 2804,
+          "z": -1002
+        },
+        "attitude": {
+          "roll": 0,
+          "pitch": 1221,
+          "yaw": 0,
+          "up": {
+            "x": 0,
+            "y": 977412,
+            "z": -211338
+          }
+        },
+        "velocity": {
+          "x": 0,
+          "y": 232,
+          "z": -1846
+        }
+      },
+      "end": {
+        "position": {
+          "x": 0,
+          "y": 2494,
+          "z": -3916
+        },
+        "attitude": {
+          "roll": 0,
+          "pitch": -12,
+          "yaw": 0,
+          "up": {
+            "x": 0,
+            "y": 999998,
+            "z": 2034
+          }
+        },
+        "velocity": {
+          "x": 0,
+          "y": 0,
+          "z": 27
+        }
+      },
+      "errors": []
+    },
+    {
+      "id": "beginner-20",
+      "mode": "acro",
+      "step": 5,
+      "title": "Settle onto the pad",
+      "kind": "land",
+      "prepared": 165,
+      "warmup": 0,
+      "ticks": 400,
+      "first": {
+        "roll": 0,
+        "pitch": 0,
+        "yaw": 0,
+        "throttle": 0.3520081549439347
+      },
+      "limits": {
+        "roll": [
+          0,
+          0
+        ],
+        "pitch": [
+          0,
+          0
+        ],
+        "yaw": [
+          0,
+          0
+        ],
+        "throttle": [
+          0,
+          0.5599388379204893
+        ]
+      },
+      "low": 0,
+      "high": 3019,
+      "maxTilt": 0,
+      "start": {
+        "position": {
+          "x": 0,
+          "y": 3018,
+          "z": 0
+        },
+        "attitude": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 0,
+          "up": {
+            "x": 0,
+            "y": 1000000,
+            "z": 0
+          }
+        },
+        "velocity": {
+          "x": 0,
+          "y": 87,
+          "z": 0
+        }
+      },
+      "end": {
+        "position": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "attitude": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 0,
+          "up": {
+            "x": 0,
+            "y": 1000000,
+            "z": 0
+          }
+        },
+        "velocity": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      "errors": []
+    },
+    {
+      "id": "beginner-21",
+      "mode": "acro",
+      "step": 1,
+      "title": "Lift gently",
+      "kind": "lift",
+      "prepared": 0,
+      "warmup": 0,
+      "ticks": 300,
+      "first": {
+        "roll": 0,
+        "pitch": 0,
+        "yaw": 0,
+        "throttle": 0.7140672782874617
+      },
+      "limits": {
+        "roll": [
+          0,
+          0
+        ],
+        "pitch": [
+          0,
+          0
+        ],
+        "yaw": [
+          0,
+          0
+        ],
+        "throttle": [
+          0.4510784913353721,
+          0.7140672782874617
+        ]
+      },
+      "low": 0,
+      "high": 3032,
+      "maxTilt": 0,
+      "start": {
+        "position": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "attitude": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 0,
+          "up": {
+            "x": 0,
+            "y": 1000000,
+            "z": 0
+          }
+        },
+        "velocity": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      "end": {
+        "position": {
+          "x": 0,
+          "y": 3009,
+          "z": 0
+        },
+        "attitude": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 0,
+          "up": {
+            "x": 0,
+            "y": 1000000,
+            "z": 0
+          }
+        },
+        "velocity": {
+          "x": 0,
+          "y": -23,
+          "z": 0
+        }
+      },
+      "errors": []
+    },
+    {
+      "id": "beginner-21",
+      "mode": "acro",
+      "step": 2,
+      "title": "Approach the corner",
+      "kind": "travel",
+      "prepared": 165,
+      "warmup": 0,
+      "ticks": 320,
+      "first": {
+        "roll": 0,
+        "pitch": 0.141632080078125,
+        "yaw": 0,
+        "throttle": 0.4839877675840979
+      },
+      "limits": {
+        "roll": [
+          0,
+          0
+        ],
+        "pitch": [
+          -0.260284423828125,
+          0.141632080078125
+        ],
+        "yaw": [
+          0,
+          0
+        ],
+        "throttle": [
+          0.4839877675840979,
+          0.5061232954210548
+        ]
+      },
+      "low": 3009,
+      "high": 3032,
+      "maxTilt": 785,
+      "start": {
+        "position": {
+          "x": 0,
+          "y": 3018,
+          "z": 0
+        },
+        "attitude": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 0,
+          "up": {
+            "x": 0,
+            "y": 1000000,
+            "z": 0
+          }
+        },
+        "velocity": {
+          "x": 0,
+          "y": 87,
+          "z": 0
+        }
+      },
+      "end": {
+        "position": {
+          "x": 0,
+          "y": 3009,
+          "z": -5550
+        },
+        "attitude": {
+          "roll": 0,
+          "pitch": -18,
+          "yaw": 0,
+          "up": {
+            "x": 0,
+            "y": 999996,
+            "z": 3084
+          }
+        },
+        "velocity": {
+          "x": 0,
+          "y": -16,
+          "z": 17
+        }
+      },
+      "errors": []
+    },
+    {
+      "id": "beginner-21",
+      "mode": "acro",
+      "step": 3,
+      "title": "Enter the right turn",
+      "kind": "turn",
+      "prepared": 165,
+      "warmup": 0,
+      "ticks": 360,
+      "first": {
+        "roll": 0.124176025390625,
+        "pitch": 0.071258544921875,
+        "yaw": 0.210296630859375,
+        "throttle": 0.4839877675840979
+      },
+      "limits": {
+        "roll": [
+          -0.120391845703125,
+          0.124176025390625
+        ],
+        "pitch": [
+          -0.212615966796875,
+          0.071258544921875
+        ],
+        "yaw": [
+          0.001739501953125,
+          0.210296630859375
+        ],
+        "throttle": [
+          0.4839877675840979,
+          0.5060018220736672
+        ]
+      },
+      "low": 3009,
+      "high": 3032,
+      "maxTilt": 664,
+      "start": {
+        "position": {
+          "x": 0,
+          "y": 3018,
+          "z": 0
+        },
+        "attitude": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 0,
+          "up": {
+            "x": 0,
+            "y": 1000000,
+            "z": 0
+          }
+        },
+        "velocity": {
+          "x": 0,
+          "y": 87,
+          "z": 0
+        }
+      },
+      "end": {
+        "position": {
+          "x": 9255,
+          "y": 3009,
+          "z": 4056
+        },
+        "attitude": {
+          "roll": 15,
+          "pitch": -66,
+          "yaw": 8981,
+          "up": {
+            "x": -11384,
+            "y": 999930,
+            "z": 2658
+          }
+        },
+        "velocity": {
+          "x": 39,
+          "y": -16,
+          "z": 694
+        }
+      },
+      "errors": []
+    },
+    {
+      "id": "beginner-21",
+      "mode": "acro",
+      "step": 4,
+      "title": "Exit through a left turn",
+      "kind": "turn",
+      "prepared": 167,
+      "warmup": 0,
+      "ticks": 360,
+      "first": {
+        "roll": -0.124176025390625,
+        "pitch": 0.071258544921875,
+        "yaw": -0.210296630859375,
+        "throttle": 0.484901121304791
+      },
+      "limits": {
+        "roll": [
+          -0.124176025390625,
+          0.120635986328125
+        ],
+        "pitch": [
+          -0.212677001953125,
+          0.071258544921875
+        ],
+        "yaw": [
+          -0.210296630859375,
+          -0.001739501953125
+        ],
+        "throttle": [
+          0.484901121304791,
+          0.5061839061629574
+        ]
+      },
+      "low": 3008,
+      "high": 3032,
+      "maxTilt": 666,
+      "start": {
+        "position": {
+          "x": 0,
+          "y": 3022,
+          "z": 0
+        },
+        "attitude": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 8805,
+          "up": {
+            "x": 0,
+            "y": 1000000,
+            "z": 0
+          }
+        },
+        "velocity": {
+          "x": 0,
+          "y": 75,
+          "z": 0
+        }
+      },
+      "end": {
+        "position": {
+          "x": -4312,
+          "y": 3008,
+          "z": -9238
+        },
+        "attitude": {
+          "roll": -16,
+          "pitch": -67,
+          "yaw": 19,
+          "up": {
+            "x": -2798,
+            "y": 999930,
+            "z": 11516
+          }
+        },
+        "velocity": {
+          "x": -721,
+          "y": -15,
+          "z": -40
+        }
+      },
+      "errors": []
+    },
+    {
+      "id": "beginner-21",
+      "mode": "acro",
+      "step": 5,
+      "title": "Settle onto the pad",
+      "kind": "land",
+      "prepared": 165,
+      "warmup": 0,
+      "ticks": 400,
+      "first": {
+        "roll": 0,
+        "pitch": 0,
+        "yaw": 0,
+        "throttle": 0.3520081549439347
+      },
+      "limits": {
+        "roll": [
+          0,
+          0
+        ],
+        "pitch": [
+          0,
+          0
+        ],
+        "yaw": [
+          0,
+          0
+        ],
+        "throttle": [
+          0,
+          0.5599388379204893
+        ]
+      },
+      "low": 0,
+      "high": 3019,
+      "maxTilt": 0,
+      "start": {
+        "position": {
+          "x": 0,
+          "y": 3018,
+          "z": 0
+        },
+        "attitude": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 0,
+          "up": {
+            "x": 0,
+            "y": 1000000,
+            "z": 0
+          }
+        },
+        "velocity": {
+          "x": 0,
+          "y": 87,
+          "z": 0
+        }
+      },
+      "end": {
+        "position": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "attitude": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 0,
+          "up": {
+            "x": 0,
+            "y": 1000000,
+            "z": 0
+          }
+        },
+        "velocity": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      "errors": []
+    },
+    {
+      "id": "beginner-22",
+      "mode": "acro",
+      "step": 1,
+      "title": "Lift gently",
+      "kind": "lift",
+      "prepared": 0,
+      "warmup": 0,
+      "ticks": 300,
+      "first": {
+        "roll": 0,
+        "pitch": 0,
+        "yaw": 0,
+        "throttle": 0.7140672782874617
+      },
+      "limits": {
+        "roll": [
+          0,
+          0
+        ],
+        "pitch": [
+          0,
+          0
+        ],
+        "yaw": [
+          0,
+          0
+        ],
+        "throttle": [
+          0.45116411824668706,
+          0.7140672782874617
+        ]
+      },
+      "low": 0,
+      "high": 3531,
+      "maxTilt": 0,
+      "start": {
+        "position": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "attitude": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 0,
+          "up": {
+            "x": 0,
+            "y": 1000000,
+            "z": 0
+          }
+        },
+        "velocity": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      "end": {
+        "position": {
+          "x": 0,
+          "y": 3509,
+          "z": 0
+        },
+        "attitude": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 0,
+          "up": {
+            "x": 0,
+            "y": 1000000,
+            "z": 0
+          }
+        },
+        "velocity": {
+          "x": 0,
+          "y": -23,
+          "z": 0
+        }
+      },
+      "errors": []
+    },
+    {
+      "id": "beginner-22",
+      "mode": "acro",
+      "step": 2,
+      "title": "Loop marker 1 of 8",
+      "kind": "turn",
+      "prepared": 184,
+      "warmup": 0,
+      "ticks": 360,
+      "first": {
+        "roll": -0.124176025390625,
+        "pitch": 0.071258544921875,
+        "yaw": -0.210296630859375,
+        "throttle": 0.4842161060142711
+      },
+      "limits": {
+        "roll": [
+          -0.124176025390625,
+          0.120391845703125
+        ],
+        "pitch": [
+          -0.212615966796875,
+          0.071258544921875
+        ],
+        "yaw": [
+          -0.210296630859375,
+          -0.001739501953125
+        ],
+        "throttle": [
+          0.4842161060142711,
+          0.5059650853213274
+        ]
+      },
+      "low": 3509,
+      "high": 3531,
+      "maxTilt": 664,
+      "start": {
+        "position": {
+          "x": 0,
+          "y": 3519,
+          "z": 0
+        },
+        "attitude": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 0,
+          "up": {
+            "x": 0,
+            "y": 1000000,
+            "z": 0
+          }
+        },
+        "velocity": {
+          "x": 0,
+          "y": 84,
+          "z": 0
+        }
+      },
+      "end": {
+        "position": {
+          "x": -9260,
+          "y": 3509,
+          "z": 4056
+        },
+        "attitude": {
+          "roll": -15,
+          "pitch": -66,
+          "yaw": -8981,
+          "up": {
+            "x": 11384,
+            "y": 999930,
+            "z": 2658
+          }
+        },
+        "velocity": {
+          "x": -39,
+          "y": -16,
+          "z": 694
+        }
+      },
+      "errors": []
+    },
+    {
+      "id": "beginner-22",
+      "mode": "acro",
+      "step": 3,
+      "title": "Loop marker 2 of 8",
+      "kind": "turn",
+      "prepared": 184,
+      "warmup": 0,
+      "ticks": 360,
+      "first": {
+        "roll": -0.124176025390625,
+        "pitch": 0.071258544921875,
+        "yaw": -0.210296630859375,
+        "throttle": 0.4842161060142711
+      },
+      "limits": {
+        "roll": [
+          -0.124176025390625,
+          0.120086669921875
+        ],
+        "pitch": [
+          -0.212677001953125,
+          0.071258544921875
+        ],
+        "yaw": [
+          -0.210296630859375,
+          -0.001739501953125
+        ],
+        "throttle": [
+          0.4842161060142711,
+          0.505963044547049
+        ]
+      },
+      "low": 3509,
+      "high": 3531,
+      "maxTilt": 662,
+      "start": {
+        "position": {
+          "x": 0,
+          "y": 3519,
+          "z": 0
+        },
+        "attitude": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": -8895,
+          "up": {
+            "x": 0,
+            "y": 1000000,
+            "z": 0
+          }
+        },
+        "velocity": {
+          "x": 0,
+          "y": 84,
+          "z": 0
+        }
+      },
+      "end": {
+        "position": {
+          "x": 3896,
+          "y": 3509,
+          "z": 9281
+        },
+        "attitude": {
+          "roll": -15,
+          "pitch": -66,
+          "yaw": -17980,
+          "up": {
+            "x": 2540,
+            "y": 999930,
+            "z": -11488
+          }
+        },
+        "velocity": {
+          "x": 681,
+          "y": -16,
+          "z": 39
+        }
+      },
+      "errors": []
+    },
+    {
+      "id": "beginner-22",
+      "mode": "acro",
+      "step": 4,
+      "title": "Loop marker 3 of 8",
+      "kind": "turn",
+      "prepared": 292,
+      "warmup": 0,
+      "ticks": 360,
+      "first": {
+        "roll": -0.124176025390625,
+        "pitch": 0.071258544921875,
+        "yaw": -0.210296630859375,
+        "throttle": 0.5014841997961265
+      },
+      "limits": {
+        "roll": [
+          -0.124176025390625,
+          0.120025634765625
+        ],
+        "pitch": [
+          -0.212677001953125,
+          0.071258544921875
+        ],
+        "yaw": [
+          -0.210296630859375,
+          -0.001556396484375
+        ],
+        "throttle": [
+          0.5005022362401504,
+          0.5055062245130735
+        ]
+      },
+      "low": 3509,
+      "high": 3509,
+      "maxTilt": 661,
+      "start": {
+        "position": {
+          "x": 0,
+          "y": 3509,
+          "z": 0
+        },
+        "attitude": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": -17805,
+          "up": {
+            "x": 0,
+            "y": 1000000,
+            "z": 0
+          }
+        },
+        "velocity": {
+          "x": 0,
+          "y": -23,
+          "z": 0
+        }
+      },
+      "end": {
+        "position": {
+          "x": 9327,
+          "y": 3509,
+          "z": -3755
+        },
+        "attitude": {
+          "roll": -15,
+          "pitch": -68,
+          "yaw": 9019,
+          "up": {
+            "x": -11826,
+            "y": 999926,
+            "z": -2650
+          }
+        },
+        "velocity": {
+          "x": 38,
+          "y": -16,
+          "z": -671
+        }
+      },
+      "errors": []
+    },
+    {
+      "id": "beginner-22",
+      "mode": "acro",
+      "step": 5,
+      "title": "Loop marker 4 of 8",
+      "kind": "turn",
+      "prepared": 184,
+      "warmup": 0,
+      "ticks": 360,
+      "first": {
+        "roll": -0.124176025390625,
+        "pitch": 0.071258544921875,
+        "yaw": -0.210296630859375,
+        "throttle": 0.4842161060142711
+      },
+      "limits": {
+        "roll": [
+          -0.124176025390625,
+          0.120452880859375
+        ],
+        "pitch": [
+          -0.212615966796875,
+          0.071258544921875
+        ],
+        "yaw": [
+          -0.210296630859375,
+          -0.001556396484375
+        ],
+        "throttle": [
+          0.4842161060142711,
+          0.5059814121082319
+        ]
+      },
+      "low": 3509,
+      "high": 3531,
+      "maxTilt": 665,
+      "start": {
+        "position": {
+          "x": 0,
+          "y": 3519,
+          "z": 0
+        },
+        "attitude": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 8895,
+          "up": {
+            "x": 0,
+            "y": 1000000,
+            "z": 0
+          }
+        },
+        "velocity": {
+          "x": 0,
+          "y": 84,
+          "z": 0
+        }
+      },
+      "end": {
+        "position": {
+          "x": -4166,
+          "y": 3509,
+          "z": -9255
+        },
+        "attitude": {
+          "roll": -15,
+          "pitch": -67,
+          "yaw": 19,
+          "up": {
+            "x": -2604,
+            "y": 999930,
+            "z": 11520
+          }
+        },
+        "velocity": {
+          "x": -706,
+          "y": -16,
+          "z": -38
+        }
+      },
+      "errors": []
+    },
+    {
+      "id": "beginner-22",
+      "mode": "acro",
+      "step": 6,
+      "title": "Loop marker 5 of 8",
+      "kind": "turn",
+      "prepared": 184,
+      "warmup": 0,
+      "ticks": 360,
+      "first": {
+        "roll": 0.124176025390625,
+        "pitch": 0.071258544921875,
+        "yaw": 0.210296630859375,
+        "throttle": 0.4842161060142711
+      },
+      "limits": {
+        "roll": [
+          -0.120391845703125,
+          0.124176025390625
+        ],
+        "pitch": [
+          -0.212615966796875,
+          0.071258544921875
+        ],
+        "yaw": [
+          0.001739501953125,
+          0.210296630859375
+        ],
+        "throttle": [
+          0.4842161060142711,
+          0.5059650853213274
+        ]
+      },
+      "low": 3509,
+      "high": 3531,
+      "maxTilt": 664,
+      "start": {
+        "position": {
+          "x": 0,
+          "y": 3519,
+          "z": 0
+        },
+        "attitude": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 0,
+          "up": {
+            "x": 0,
+            "y": 1000000,
+            "z": 0
+          }
+        },
+        "velocity": {
+          "x": 0,
+          "y": 84,
+          "z": 0
+        }
+      },
+      "end": {
+        "position": {
+          "x": 9260,
+          "y": 3509,
+          "z": 4056
+        },
+        "attitude": {
+          "roll": 15,
+          "pitch": -66,
+          "yaw": 8981,
+          "up": {
+            "x": -11384,
+            "y": 999930,
+            "z": 2658
+          }
+        },
+        "velocity": {
+          "x": 39,
+          "y": -16,
+          "z": 694
+        }
+      },
+      "errors": []
+    },
+    {
+      "id": "beginner-22",
+      "mode": "acro",
+      "step": 7,
+      "title": "Loop marker 6 of 8",
+      "kind": "turn",
+      "prepared": 184,
+      "warmup": 0,
+      "ticks": 360,
+      "first": {
+        "roll": 0.124176025390625,
+        "pitch": 0.071258544921875,
+        "yaw": 0.210296630859375,
+        "throttle": 0.4842161060142711
+      },
+      "limits": {
+        "roll": [
+          -0.120086669921875,
+          0.124176025390625
+        ],
+        "pitch": [
+          -0.212677001953125,
+          0.071258544921875
+        ],
+        "yaw": [
+          0.001739501953125,
+          0.210296630859375
+        ],
+        "throttle": [
+          0.4842161060142711,
+          0.505963044547049
+        ]
+      },
+      "low": 3509,
+      "high": 3531,
+      "maxTilt": 662,
+      "start": {
+        "position": {
+          "x": 0,
+          "y": 3519,
+          "z": 0
+        },
+        "attitude": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 8895,
+          "up": {
+            "x": 0,
+            "y": 1000000,
+            "z": 0
+          }
+        },
+        "velocity": {
+          "x": 0,
+          "y": 84,
+          "z": 0
+        }
+      },
+      "end": {
+        "position": {
+          "x": -3896,
+          "y": 3509,
+          "z": 9281
+        },
+        "attitude": {
+          "roll": 15,
+          "pitch": -66,
+          "yaw": 17980,
+          "up": {
+            "x": -2540,
+            "y": 999930,
+            "z": -11488
+          }
+        },
+        "velocity": {
+          "x": -681,
+          "y": -16,
+          "z": 39
+        }
+      },
+      "errors": []
+    },
+    {
+      "id": "beginner-22",
+      "mode": "acro",
+      "step": 8,
+      "title": "Loop marker 7 of 8",
+      "kind": "turn",
+      "prepared": 292,
+      "warmup": 0,
+      "ticks": 360,
+      "first": {
+        "roll": 0.124176025390625,
+        "pitch": 0.071258544921875,
+        "yaw": 0.210296630859375,
+        "throttle": 0.5014841997961265
+      },
+      "limits": {
+        "roll": [
+          -0.120635986328125,
+          0.124176025390625
+        ],
+        "pitch": [
+          -0.212677001953125,
+          0.071258544921875
+        ],
+        "yaw": [
+          0.001861572265625,
+          0.210296630859375
+        ],
+        "throttle": [
+          0.5005022362401504,
+          0.5055072450883125
+        ]
+      },
+      "low": 3509,
+      "high": 3509,
+      "maxTilt": 666,
+      "start": {
+        "position": {
+          "x": 0,
+          "y": 3509,
+          "z": 0
+        },
+        "attitude": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": -17805,
+          "up": {
+            "x": 0,
+            "y": 1000000,
+            "z": 0
+          }
+        },
+        "velocity": {
+          "x": 0,
+          "y": -23,
+          "z": 0
+        }
+      },
+      "end": {
+        "position": {
+          "x": -9248,
+          "y": 3509,
+          "z": -4294
+        },
+        "attitude": {
+          "roll": 16,
+          "pitch": -67,
+          "yaw": -9021,
+          "up": {
+            "x": 11526,
+            "y": 999928,
+            "z": -2802
+          }
+        },
+        "velocity": {
+          "x": -40,
+          "y": -16,
+          "z": -719
+        }
+      },
+      "errors": []
+    },
+    {
+      "id": "beginner-22",
+      "mode": "acro",
+      "step": 9,
+      "title": "Loop marker 8 of 8",
+      "kind": "turn",
+      "prepared": 184,
+      "warmup": 0,
+      "ticks": 360,
+      "first": {
+        "roll": 0.124176025390625,
+        "pitch": 0.071258544921875,
+        "yaw": 0.210296630859375,
+        "throttle": 0.4842161060142711
+      },
+      "limits": {
+        "roll": [
+          -0.120452880859375,
+          0.124176025390625
+        ],
+        "pitch": [
+          -0.212615966796875,
+          0.071258544921875
+        ],
+        "yaw": [
+          0.001556396484375,
+          0.210296630859375
+        ],
+        "throttle": [
+          0.4842161060142711,
+          0.5059814121082319
+        ]
+      },
+      "low": 3509,
+      "high": 3531,
+      "maxTilt": 665,
+      "start": {
+        "position": {
+          "x": 0,
+          "y": 3519,
+          "z": 0
+        },
+        "attitude": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": -8895,
+          "up": {
+            "x": 0,
+            "y": 1000000,
+            "z": 0
+          }
+        },
+        "velocity": {
+          "x": 0,
+          "y": 84,
+          "z": 0
+        }
+      },
+      "end": {
+        "position": {
+          "x": 4166,
+          "y": 3509,
+          "z": -9255
+        },
+        "attitude": {
+          "roll": 15,
+          "pitch": -67,
+          "yaw": -19,
+          "up": {
+            "x": 2604,
+            "y": 999930,
+            "z": 11520
+          }
+        },
+        "velocity": {
+          "x": 706,
+          "y": -16,
+          "z": -38
+        }
+      },
+      "errors": []
+    },
+    {
+      "id": "beginner-22",
+      "mode": "acro",
+      "step": 10,
+      "title": "Settle onto the pad",
+      "kind": "land",
+      "prepared": 165,
+      "warmup": 0,
+      "ticks": 400,
+      "first": {
+        "roll": 0,
+        "pitch": 0,
+        "yaw": 0,
+        "throttle": 0.3520081549439347
+      },
+      "limits": {
+        "roll": [
+          0,
+          0
+        ],
+        "pitch": [
+          0,
+          0
+        ],
+        "yaw": [
+          0,
+          0
+        ],
+        "throttle": [
+          0,
+          0.5599388379204893
+        ]
+      },
+      "low": 0,
+      "high": 3019,
+      "maxTilt": 0,
+      "start": {
+        "position": {
+          "x": 0,
+          "y": 3018,
+          "z": 0
+        },
+        "attitude": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 0,
+          "up": {
+            "x": 0,
+            "y": 1000000,
+            "z": 0
+          }
+        },
+        "velocity": {
+          "x": 0,
+          "y": 87,
+          "z": 0
+        }
+      },
+      "end": {
+        "position": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "attitude": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 0,
+          "up": {
+            "x": 0,
+            "y": 1000000,
+            "z": 0
+          }
+        },
+        "velocity": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      "errors": []
+    },
+    {
+      "id": "beginner-23",
+      "mode": "acro",
+      "step": 1,
+      "title": "Lift gently",
+      "kind": "lift",
+      "prepared": 0,
+      "warmup": 0,
+      "ticks": 300,
+      "first": {
+        "roll": 0,
+        "pitch": 0,
+        "yaw": 0,
+        "throttle": 0.7140672782874617
+      },
+      "limits": {
+        "roll": [
+          0,
+          0
+        ],
+        "pitch": [
+          0,
+          0
+        ],
+        "yaw": [
+          0,
+          0
+        ],
+        "throttle": [
+          0.4510784913353721,
+          0.7140672782874617
+        ]
+      },
+      "low": 0,
+      "high": 3032,
+      "maxTilt": 0,
+      "start": {
+        "position": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "attitude": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 0,
+          "up": {
+            "x": 0,
+            "y": 1000000,
+            "z": 0
+          }
+        },
+        "velocity": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      "end": {
+        "position": {
+          "x": 0,
+          "y": 3009,
+          "z": 0
+        },
+        "attitude": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 0,
+          "up": {
+            "x": 0,
+            "y": 1000000,
+            "z": 0
+          }
+        },
+        "velocity": {
+          "x": 0,
+          "y": -23,
+          "z": 0
+        }
+      },
+      "errors": []
+    },
+    {
+      "id": "beginner-23",
+      "mode": "acro",
+      "step": 2,
+      "title": "Approach the northern marker",
+      "kind": "travel",
+      "prepared": 165,
+      "warmup": 0,
+      "ticks": 320,
+      "first": {
+        "roll": 0,
+        "pitch": 0.141632080078125,
+        "yaw": 0,
+        "throttle": 0.4839877675840979
+      },
+      "limits": {
+        "roll": [
+          0,
+          0
+        ],
+        "pitch": [
+          -0.260284423828125,
+          0.141632080078125
+        ],
+        "yaw": [
+          0,
+          0
+        ],
+        "throttle": [
+          0.4839877675840979,
+          0.5061232954210548
+        ]
+      },
+      "low": 3009,
+      "high": 3032,
+      "maxTilt": 785,
+      "start": {
+        "position": {
+          "x": 0,
+          "y": 3018,
+          "z": 0
+        },
+        "attitude": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 0,
+          "up": {
+            "x": 0,
+            "y": 1000000,
+            "z": 0
+          }
+        },
+        "velocity": {
+          "x": 0,
+          "y": 87,
+          "z": 0
+        }
+      },
+      "end": {
+        "position": {
+          "x": 0,
+          "y": 3009,
+          "z": -5550
+        },
+        "attitude": {
+          "roll": 0,
+          "pitch": -18,
+          "yaw": 0,
+          "up": {
+            "x": 0,
+            "y": 999996,
+            "z": 3084
+          }
+        },
+        "velocity": {
+          "x": 0,
+          "y": -16,
+          "z": 17
+        }
+      },
+      "errors": []
+    },
+    {
+      "id": "beginner-23",
+      "mode": "acro",
+      "step": 3,
+      "title": "Move sideways with the same view",
+      "kind": "travel",
+      "prepared": 165,
+      "warmup": 0,
+      "ticks": 320,
+      "first": {
+        "roll": 0.141632080078125,
+        "pitch": 0,
+        "yaw": 0,
+        "throttle": 0.4839877675840979
+      },
+      "limits": {
+        "roll": [
+          -0.260284423828125,
+          0.141632080078125
+        ],
+        "pitch": [
+          0,
+          0
+        ],
+        "yaw": [
+          0,
+          0
+        ],
+        "throttle": [
+          0.4839877675840979,
+          0.5061232954210548
+        ]
+      },
+      "low": 3009,
+      "high": 3032,
+      "maxTilt": 785,
+      "start": {
+        "position": {
+          "x": 0,
+          "y": 3018,
+          "z": 0
+        },
+        "attitude": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 0,
+          "up": {
+            "x": 0,
+            "y": 1000000,
+            "z": 0
+          }
+        },
+        "velocity": {
+          "x": 0,
+          "y": 87,
+          "z": 0
+        }
+      },
+      "end": {
+        "position": {
+          "x": 5550,
+          "y": 3009,
+          "z": 0
+        },
+        "attitude": {
+          "roll": -18,
+          "pitch": 0,
+          "yaw": 0,
+          "up": {
+            "x": -3084,
+            "y": 999996,
+            "z": 0
+          }
+        },
+        "velocity": {
+          "x": -17,
+          "y": -16,
+          "z": 0
+        }
+      },
+      "errors": []
+    },
+    {
+      "id": "beginner-23",
+      "mode": "acro",
+      "step": 4,
+      "title": "Keep the horizon calm",
+      "kind": "travel",
+      "prepared": 165,
+      "warmup": 0,
+      "ticks": 320,
+      "first": {
+        "roll": 0,
+        "pitch": 0.141632080078125,
+        "yaw": 0,
+        "throttle": 0.4839877675840979
+      },
+      "limits": {
+        "roll": [
+          0,
+          0
+        ],
+        "pitch": [
+          -0.260284423828125,
+          0.141632080078125
+        ],
+        "yaw": [
+          0,
+          0
+        ],
+        "throttle": [
+          0.4839877675840979,
+          0.5061232954210548
+        ]
+      },
+      "low": 3009,
+      "high": 3032,
+      "maxTilt": 785,
+      "start": {
+        "position": {
+          "x": 0,
+          "y": 3018,
+          "z": 0
+        },
+        "attitude": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 0,
+          "up": {
+            "x": 0,
+            "y": 1000000,
+            "z": 0
+          }
+        },
+        "velocity": {
+          "x": 0,
+          "y": 87,
+          "z": 0
+        }
+      },
+      "end": {
+        "position": {
+          "x": 0,
+          "y": 3009,
+          "z": -5550
+        },
+        "attitude": {
+          "roll": 0,
+          "pitch": -18,
+          "yaw": 0,
+          "up": {
+            "x": 0,
+            "y": 999996,
+            "z": 3084
+          }
+        },
+        "velocity": {
+          "x": 0,
+          "y": -16,
+          "z": 17
+        }
+      },
+      "errors": []
+    },
+    {
+      "id": "beginner-23",
+      "mode": "acro",
+      "step": 5,
+      "title": "Settle onto the pad",
+      "kind": "land",
+      "prepared": 165,
+      "warmup": 0,
+      "ticks": 400,
+      "first": {
+        "roll": 0,
+        "pitch": 0,
+        "yaw": 0,
+        "throttle": 0.3520081549439347
+      },
+      "limits": {
+        "roll": [
+          0,
+          0
+        ],
+        "pitch": [
+          0,
+          0
+        ],
+        "yaw": [
+          0,
+          0
+        ],
+        "throttle": [
+          0,
+          0.5599388379204893
+        ]
+      },
+      "low": 0,
+      "high": 3019,
+      "maxTilt": 0,
+      "start": {
+        "position": {
+          "x": 0,
+          "y": 3018,
+          "z": 0
+        },
+        "attitude": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 0,
+          "up": {
+            "x": 0,
+            "y": 1000000,
+            "z": 0
+          }
+        },
+        "velocity": {
+          "x": 0,
+          "y": 87,
+          "z": 0
+        }
+      },
+      "end": {
+        "position": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "attitude": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 0,
+          "up": {
+            "x": 0,
+            "y": 1000000,
+            "z": 0
+          }
+        },
+        "velocity": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      "errors": []
+    },
+    {
+      "id": "beginner-24",
+      "mode": "acro",
+      "step": 1,
+      "title": "Lift gently",
+      "kind": "lift",
+      "prepared": 0,
+      "warmup": 0,
+      "ticks": 300,
+      "first": {
+        "roll": 0,
+        "pitch": 0,
+        "yaw": 0,
+        "throttle": 0.7140672782874617
+      },
+      "limits": {
+        "roll": [
+          0,
+          0
+        ],
+        "pitch": [
+          0,
+          0
+        ],
+        "yaw": [
+          0,
+          0
+        ],
+        "throttle": [
+          0.4510784913353721,
+          0.7140672782874617
+        ]
+      },
+      "low": 0,
+      "high": 3032,
+      "maxTilt": 0,
+      "start": {
+        "position": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "attitude": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 0,
+          "up": {
+            "x": 0,
+            "y": 1000000,
+            "z": 0
+          }
+        },
+        "velocity": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      "end": {
+        "position": {
+          "x": 0,
+          "y": 3009,
+          "z": 0
+        },
+        "attitude": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 0,
+          "up": {
+            "x": 0,
+            "y": 1000000,
+            "z": 0
+          }
+        },
+        "velocity": {
+          "x": 0,
+          "y": -23,
+          "z": 0
+        }
+      },
+      "errors": []
+    },
+    {
+      "id": "beginner-24",
+      "mode": "acro",
+      "step": 2,
+      "title": "Gate 1: look through the opening",
+      "kind": "travel",
+      "prepared": 156,
+      "warmup": 0,
+      "ticks": 320,
+      "first": {
+        "roll": 0,
+        "pitch": 0.141632080078125,
+        "yaw": 0,
+        "throttle": 0.4841875637104995
+      },
+      "limits": {
+        "roll": [
+          0,
+          0
+        ],
+        "pitch": [
+          -0.260284423828125,
+          0.141632080078125
+        ],
+        "yaw": [
+          0,
+          0
+        ],
+        "throttle": [
+          0.4841875637104995,
+          0.5061467801889168
+        ]
+      },
+      "low": 2759,
+      "high": 2781,
+      "maxTilt": 785,
+      "start": {
+        "position": {
+          "x": 0,
+          "y": 2767,
+          "z": 0
+        },
+        "attitude": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 0,
+          "up": {
+            "x": 0,
+            "y": 1000000,
+            "z": 0
+          }
+        },
+        "velocity": {
+          "x": 0,
+          "y": 87,
+          "z": 0
+        }
+      },
+      "end": {
+        "position": {
+          "x": 0,
+          "y": 2759,
+          "z": -5548
+        },
+        "attitude": {
+          "roll": 0,
+          "pitch": -18,
+          "yaw": 0,
+          "up": {
+            "x": 0,
+            "y": 999996,
+            "z": 3084
+          }
+        },
+        "velocity": {
+          "x": 0,
+          "y": -16,
+          "z": 17
+        }
+      },
+      "errors": []
+    },
+    {
+      "id": "beginner-24",
+      "mode": "acro",
+      "step": 3,
+      "title": "Gate 2: look through the opening",
+      "kind": "travel",
+      "prepared": 165,
+      "warmup": 0,
+      "ticks": 320,
+      "first": {
+        "roll": 0.053497314453125,
+        "pitch": 0.141632080078125,
+        "yaw": 0,
+        "throttle": 0.4839877675840979
+      },
+      "limits": {
+        "roll": [
+          -0.085113525390625,
+          0.053497314453125
+        ],
+        "pitch": [
+          -0.260284423828125,
+          0.141632080078125
+        ],
+        "yaw": [
+          0,
+          0.003692626953125
+        ],
+        "throttle": [
+          0.4839877675840979,
+          0.506693671937734
+        ]
+      },
+      "low": 3009,
+      "high": 3032,
+      "maxTilt": 785,
+      "start": {
+        "position": {
+          "x": 0,
+          "y": 3018,
+          "z": 0
+        },
+        "attitude": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 0,
+          "up": {
+            "x": 0,
+            "y": 1000000,
+            "z": 0
+          }
+        },
+        "velocity": {
+          "x": 0,
+          "y": 87,
+          "z": 0
+        }
+      },
+      "end": {
+        "position": {
+          "x": 1033,
+          "y": 3009,
+          "z": -5551
+        },
+        "attitude": {
+          "roll": -14,
+          "pitch": -21,
+          "yaw": -29,
+          "up": {
+            "x": -2390,
+            "y": 999992,
+            "z": 3574
+          }
+        },
+        "velocity": {
+          "x": -24,
+          "y": -16,
+          "z": 15
+        }
+      },
+      "errors": []
+    },
+    {
+      "id": "beginner-24",
+      "mode": "acro",
+      "step": 4,
+      "title": "Gate 3: look through the opening",
+      "kind": "travel",
+      "prepared": 147,
+      "warmup": 0,
+      "ticks": 320,
+      "first": {
+        "roll": -0.053497314453125,
+        "pitch": 0.141632080078125,
+        "yaw": 0,
+        "throttle": 0.48441590214067276
+      },
+      "limits": {
+        "roll": [
+          -0.053497314453125,
+          0.085113525390625
+        ],
+        "pitch": [
+          -0.260284423828125,
+          0.141632080078125
+        ],
+        "yaw": [
+          -0.003692626953125,
+          0
+        ],
+        "throttle": [
+          0.48441590214067276,
+          0.5067407495872943
+        ]
+      },
+      "low": 2509,
+      "high": 2530,
+      "maxTilt": 785,
+      "start": {
+        "position": {
+          "x": 0,
+          "y": 2518,
+          "z": 0
+        },
+        "attitude": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 0,
+          "up": {
+            "x": 0,
+            "y": 1000000,
+            "z": 0
+          }
+        },
+        "velocity": {
+          "x": 0,
+          "y": 84,
+          "z": 0
+        }
+      },
+      "end": {
+        "position": {
+          "x": -1033,
+          "y": 2509,
+          "z": -5551
+        },
+        "attitude": {
+          "roll": 14,
+          "pitch": -21,
+          "yaw": 29,
+          "up": {
+            "x": 2390,
+            "y": 999992,
+            "z": 3574
+          }
+        },
+        "velocity": {
+          "x": 24,
+          "y": -16,
+          "z": 15
+        }
+      },
+      "errors": []
+    },
+    {
+      "id": "beginner-24",
+      "mode": "acro",
+      "step": 5,
+      "title": "Settle onto the pad",
+      "kind": "land",
+      "prepared": 165,
+      "warmup": 0,
+      "ticks": 400,
+      "first": {
+        "roll": 0,
+        "pitch": 0,
+        "yaw": 0,
+        "throttle": 0.3520081549439347
+      },
+      "limits": {
+        "roll": [
+          0,
+          0
+        ],
+        "pitch": [
+          0,
+          0
+        ],
+        "yaw": [
+          0,
+          0
+        ],
+        "throttle": [
+          0,
+          0.5599388379204893
+        ]
+      },
+      "low": 0,
+      "high": 3019,
+      "maxTilt": 0,
+      "start": {
+        "position": {
+          "x": 0,
+          "y": 3018,
+          "z": 0
+        },
+        "attitude": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 0,
+          "up": {
+            "x": 0,
+            "y": 1000000,
+            "z": 0
+          }
+        },
+        "velocity": {
+          "x": 0,
+          "y": 87,
+          "z": 0
+        }
+      },
+      "end": {
+        "position": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "attitude": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 0,
+          "up": {
+            "x": 0,
+            "y": 1000000,
+            "z": 0
+          }
+        },
+        "velocity": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      "errors": []
+    },
+    {
+      "id": "beginner-25",
+      "mode": "acro",
+      "step": 1,
+      "title": "Lift gently",
+      "kind": "lift",
+      "prepared": 0,
+      "warmup": 0,
+      "ticks": 300,
+      "first": {
+        "roll": 0,
+        "pitch": 0,
+        "yaw": 0,
+        "throttle": 0.7140672782874617
+      },
+      "limits": {
+        "roll": [
+          0,
+          0
+        ],
+        "pitch": [
+          0,
+          0
+        ],
+        "yaw": [
+          0,
+          0
+        ],
+        "throttle": [
+          0.45116411824668706,
+          0.7140672782874617
+        ]
+      },
+      "low": 0,
+      "high": 4531,
+      "maxTilt": 0,
+      "start": {
+        "position": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "attitude": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 0,
+          "up": {
+            "x": 0,
+            "y": 1000000,
+            "z": 0
+          }
+        },
+        "velocity": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      "end": {
+        "position": {
+          "x": 0,
+          "y": 4509,
+          "z": 0
+        },
+        "attitude": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 0,
+          "up": {
+            "x": 0,
+            "y": 1000000,
+            "z": 0
+          }
+        },
+        "velocity": {
+          "x": 0,
+          "y": -23,
+          "z": 0
+        }
+      },
+      "errors": []
+    },
+    {
+      "id": "beginner-25",
+      "mode": "acro",
+      "step": 2,
+      "title": "Create a small, recoverable tilt",
+      "kind": "tilt-release",
+      "prepared": 258,
+      "warmup": 0,
+      "ticks": 180,
+      "first": {
+        "roll": 0.260284423828125,
+        "pitch": 0,
+        "yaw": 0,
+        "throttle": 0.4842731906218145
+      },
+      "limits": {
+        "roll": [
+          0,
+          0.260284423828125
+        ],
+        "pitch": [
+          0,
+          0
+        ],
+        "yaw": [
+          0,
+          0
+        ],
+        "throttle": [
+          0.4842731906218145,
+          0.5175330558287791
+        ]
+      },
+      "low": 5508,
+      "high": 5530,
+      "maxTilt": 1451,
+      "start": {
+        "position": {
+          "x": 0,
+          "y": 5518,
+          "z": 0
+        },
+        "attitude": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 0,
+          "up": {
+            "x": 0,
+            "y": 1000000,
+            "z": 0
+          }
+        },
+        "velocity": {
+          "x": 0,
+          "y": 85,
+          "z": 0
+        }
+      },
+      "end": {
+        "position": {
+          "x": 10117,
+          "y": 5508,
+          "z": 0
+        },
+        "attitude": {
+          "roll": 1451,
+          "pitch": 0,
+          "yaw": 0,
+          "up": {
+            "x": 250402,
+            "y": 968142,
+            "z": 0
+          }
+        },
+        "velocity": {
+          "x": 5574,
+          "y": -18,
+          "z": 0
+        }
+      },
+      "errors": []
+    },
+    {
+      "id": "beginner-25",
+      "mode": "acro",
+      "step": 3,
+      "title": "Level, brake, return",
+      "kind": "brake",
+      "prepared": 165,
+      "warmup": 70,
+      "ticks": 280,
+      "first": {
+        "roll": -0.260284423828125,
+        "pitch": 0,
+        "yaw": 0,
+        "throttle": 0.414079006611535
+      },
+      "limits": {
+        "roll": [
+          -0.260284423828125,
+          0.024017333984375
+        ],
+        "pitch": [
+          0,
+          0
+        ],
+        "yaw": [
+          0,
+          0
+        ],
+        "throttle": [
+          0.414079006611535,
+          0.5132455542407708
+        ]
+      },
+      "low": 2994,
+      "high": 3323,
+      "maxTilt": 1209,
+      "start": {
+        "position": {
+          "x": 1002,
+          "y": 3309,
+          "z": 0
+        },
+        "attitude": {
+          "roll": 1221,
+          "pitch": 0,
+          "yaw": 0,
+          "up": {
+            "x": 211338,
+            "y": 977412,
+            "z": 0
+          }
+        },
+        "velocity": {
+          "x": 1846,
+          "y": 235,
+          "z": 0
+        }
+      },
+      "end": {
+        "position": {
+          "x": 3915,
+          "y": 2994,
+          "z": 0
+        },
+        "attitude": {
+          "roll": -12,
+          "pitch": 0,
+          "yaw": 0,
+          "up": {
+            "x": -2034,
+            "y": 999998,
+            "z": 0
+          }
+        },
+        "velocity": {
+          "x": -27,
+          "y": 0,
+          "z": 0
+        }
+      },
+      "errors": []
+    },
+    {
+      "id": "beginner-25",
+      "mode": "acro",
+      "step": 4,
+      "title": "Settle onto the pad",
+      "kind": "land",
+      "prepared": 165,
+      "warmup": 0,
+      "ticks": 400,
+      "first": {
+        "roll": 0,
+        "pitch": 0,
+        "yaw": 0,
+        "throttle": 0.3520081549439347
+      },
+      "limits": {
+        "roll": [
+          0,
+          0
+        ],
+        "pitch": [
+          0,
+          0
+        ],
+        "yaw": [
+          0,
+          0
+        ],
+        "throttle": [
+          0,
+          0.5599388379204893
+        ]
+      },
+      "low": 0,
+      "high": 3019,
+      "maxTilt": 0,
+      "start": {
+        "position": {
+          "x": 0,
+          "y": 3018,
+          "z": 0
+        },
+        "attitude": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 0,
+          "up": {
+            "x": 0,
+            "y": 1000000,
+            "z": 0
+          }
+        },
+        "velocity": {
+          "x": 0,
+          "y": 87,
+          "z": 0
+        }
+      },
+      "end": {
+        "position": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "attitude": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 0,
+          "up": {
+            "x": 0,
+            "y": 1000000,
+            "z": 0
+          }
+        },
+        "velocity": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      "errors": []
+    },
+    {
+      "id": "beginner-26",
+      "mode": "acro",
+      "step": 1,
+      "title": "Lift gently",
+      "kind": "lift",
+      "prepared": 0,
+      "warmup": 0,
+      "ticks": 300,
+      "first": {
+        "roll": 0,
+        "pitch": 0,
+        "yaw": 0,
+        "throttle": 0.7140672782874617
+      },
+      "limits": {
+        "roll": [
+          0,
+          0
+        ],
+        "pitch": [
+          0,
+          0
+        ],
+        "yaw": [
+          0,
+          0
+        ],
+        "throttle": [
+          0.4510784913353721,
+          0.7140672782874617
+        ]
+      },
+      "low": 0,
+      "high": 3032,
+      "maxTilt": 0,
+      "start": {
+        "position": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "attitude": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 0,
+          "up": {
+            "x": 0,
+            "y": 1000000,
+            "z": 0
+          }
+        },
+        "velocity": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      "end": {
+        "position": {
+          "x": 0,
+          "y": 3009,
+          "z": 0
+        },
+        "attitude": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 0,
+          "up": {
+            "x": 0,
+            "y": 1000000,
+            "z": 0
+          }
+        },
+        "velocity": {
+          "x": 0,
+          "y": -23,
+          "z": 0
+        }
+      },
+      "errors": []
+    },
+    {
+      "id": "beginner-26",
+      "mode": "acro",
+      "step": 2,
+      "title": "The opening straight",
+      "kind": "travel",
+      "prepared": 156,
+      "warmup": 0,
+      "ticks": 320,
+      "first": {
+        "roll": 0,
+        "pitch": 0.141632080078125,
+        "yaw": 0,
+        "throttle": 0.4841875637104995
+      },
+      "limits": {
+        "roll": [
+          0,
+          0
+        ],
+        "pitch": [
+          -0.260284423828125,
+          0.141632080078125
+        ],
+        "yaw": [
+          0,
+          0
+        ],
+        "throttle": [
+          0.4841875637104995,
+          0.5061467801889168
+        ]
+      },
+      "low": 2759,
+      "high": 2781,
+      "maxTilt": 785,
+      "start": {
+        "position": {
+          "x": 0,
+          "y": 2767,
+          "z": 0
+        },
+        "attitude": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 0,
+          "up": {
+            "x": 0,
+            "y": 1000000,
+            "z": 0
+          }
+        },
+        "velocity": {
+          "x": 0,
+          "y": 87,
+          "z": 0
+        }
+      },
+      "end": {
+        "position": {
+          "x": 0,
+          "y": 2759,
+          "z": -5548
+        },
+        "attitude": {
+          "roll": 0,
+          "pitch": -18,
+          "yaw": 0,
+          "up": {
+            "x": 0,
+            "y": 999996,
+            "z": 3084
+          }
+        },
+        "velocity": {
+          "x": 0,
+          "y": -16,
+          "z": 17
+        }
+      },
+      "errors": []
+    },
+    {
+      "id": "beginner-26",
+      "mode": "acro",
+      "step": 3,
+      "title": "Right toward the next gate",
+      "kind": "turn",
+      "prepared": 165,
+      "warmup": 0,
+      "ticks": 360,
+      "first": {
+        "roll": 0.124176025390625,
+        "pitch": 0.071258544921875,
+        "yaw": 0.210296630859375,
+        "throttle": 0.4839877675840979
+      },
+      "limits": {
+        "roll": [
+          -0.120391845703125,
+          0.124176025390625
+        ],
+        "pitch": [
+          -0.212615966796875,
+          0.071258544921875
+        ],
+        "yaw": [
+          0.001739501953125,
+          0.210296630859375
+        ],
+        "throttle": [
+          0.4839877675840979,
+          0.5060018220736672
+        ]
+      },
+      "low": 3009,
+      "high": 3032,
+      "maxTilt": 664,
+      "start": {
+        "position": {
+          "x": 0,
+          "y": 3018,
+          "z": 0
+        },
+        "attitude": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 0,
+          "up": {
+            "x": 0,
+            "y": 1000000,
+            "z": 0
+          }
+        },
+        "velocity": {
+          "x": 0,
+          "y": 87,
+          "z": 0
+        }
+      },
+      "end": {
+        "position": {
+          "x": 9255,
+          "y": 3009,
+          "z": 4056
+        },
+        "attitude": {
+          "roll": 15,
+          "pitch": -66,
+          "yaw": 8981,
+          "up": {
+            "x": -11384,
+            "y": 999930,
+            "z": 2658
+          }
+        },
+        "velocity": {
+          "x": 39,
+          "y": -16,
+          "z": 694
+        }
+      },
+      "errors": []
+    },
+    {
+      "id": "beginner-26",
+      "mode": "acro",
+      "step": 4,
+      "title": "Cross the eastern gate",
+      "kind": "travel",
+      "prepared": 167,
+      "warmup": 0,
+      "ticks": 320,
+      "first": {
+        "roll": 0,
+        "pitch": 0.141632080078125,
+        "yaw": 0.015594482421875,
+        "throttle": 0.4897247706422018
+      },
+      "limits": {
+        "roll": [
+          0,
+          0.001312255859375
+        ],
+        "pitch": [
+          -0.260284423828125,
+          0.141632080078125
+        ],
+        "yaw": [
+          0.001800537109375,
+          0.015594482421875
+        ],
+        "throttle": [
+          0.4897247706422018,
+          0.5055817089190929
+        ]
+      },
+      "low": 2759,
+      "high": 2781,
+      "maxTilt": 785,
+      "start": {
+        "position": {
+          "x": 0,
+          "y": 2780,
+          "z": 0
+        },
+        "attitude": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 8805,
+          "up": {
+            "x": 0,
+            "y": 1000000,
+            "z": 0
+          }
+        },
+        "velocity": {
+          "x": 0,
+          "y": 30,
+          "z": 0
+        }
+      },
+      "end": {
+        "position": {
+          "x": 5557,
+          "y": 2759,
+          "z": 0
+        },
+        "attitude": {
+          "roll": -11,
+          "pitch": -21,
+          "yaw": 8974,
+          "up": {
+            "x": -3512,
+            "y": 999992,
+            "z": -1780
+          }
+        },
+        "velocity": {
+          "x": -13,
+          "y": -16,
+          "z": 0
+        }
+      },
+      "errors": []
+    },
+    {
+      "id": "beginner-26",
+      "mode": "acro",
+      "step": 5,
+      "title": "Left onto the final line",
+      "kind": "turn",
+      "prepared": 167,
+      "warmup": 0,
+      "ticks": 360,
+      "first": {
+        "roll": -0.124176025390625,
+        "pitch": 0.071258544921875,
+        "yaw": -0.210296630859375,
+        "throttle": 0.484901121304791
+      },
+      "limits": {
+        "roll": [
+          -0.124176025390625,
+          0.120635986328125
+        ],
+        "pitch": [
+          -0.212677001953125,
+          0.071258544921875
+        ],
+        "yaw": [
+          -0.210296630859375,
+          -0.001739501953125
+        ],
+        "throttle": [
+          0.484901121304791,
+          0.5061839061629574
+        ]
+      },
+      "low": 3008,
+      "high": 3032,
+      "maxTilt": 666,
+      "start": {
+        "position": {
+          "x": 0,
+          "y": 3022,
+          "z": 0
+        },
+        "attitude": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 8805,
+          "up": {
+            "x": 0,
+            "y": 1000000,
+            "z": 0
+          }
+        },
+        "velocity": {
+          "x": 0,
+          "y": 75,
+          "z": 0
+        }
+      },
+      "end": {
+        "position": {
+          "x": -4312,
+          "y": 3008,
+          "z": -9238
+        },
+        "attitude": {
+          "roll": -16,
+          "pitch": -67,
+          "yaw": 19,
+          "up": {
+            "x": -2798,
+            "y": 999930,
+            "z": 11516
+          }
+        },
+        "velocity": {
+          "x": -721,
+          "y": -15,
+          "z": -40
+        }
+      },
+      "errors": []
+    },
+    {
+      "id": "beginner-26",
+      "mode": "acro",
+      "step": 6,
+      "title": "The final gate",
+      "kind": "travel",
+      "prepared": 156,
+      "warmup": 0,
+      "ticks": 320,
+      "first": {
+        "roll": 0,
+        "pitch": 0.141632080078125,
+        "yaw": 0,
+        "throttle": 0.4841875637104995
+      },
+      "limits": {
+        "roll": [
+          0,
+          0
+        ],
+        "pitch": [
+          -0.260284423828125,
+          0.141632080078125
+        ],
+        "yaw": [
+          0,
+          0
+        ],
+        "throttle": [
+          0.4841875637104995,
+          0.5061467801889168
+        ]
+      },
+      "low": 2759,
+      "high": 2781,
+      "maxTilt": 785,
+      "start": {
+        "position": {
+          "x": 0,
+          "y": 2767,
+          "z": 0
+        },
+        "attitude": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 0,
+          "up": {
+            "x": 0,
+            "y": 1000000,
+            "z": 0
+          }
+        },
+        "velocity": {
+          "x": 0,
+          "y": 87,
+          "z": 0
+        }
+      },
+      "end": {
+        "position": {
+          "x": 0,
+          "y": 2759,
+          "z": -5548
+        },
+        "attitude": {
+          "roll": 0,
+          "pitch": -18,
+          "yaw": 0,
+          "up": {
+            "x": 0,
+            "y": 999996,
+            "z": 3084
+          }
+        },
+        "velocity": {
+          "x": 0,
+          "y": -16,
+          "z": 17
+        }
+      },
+      "errors": []
+    },
+    {
+      "id": "beginner-26",
+      "mode": "acro",
+      "step": 7,
+      "title": "Hold over home",
+      "kind": "brake",
+      "prepared": 147,
+      "warmup": 70,
+      "ticks": 280,
+      "first": {
+        "roll": 0,
+        "pitch": -0.260284423828125,
+        "yaw": 0,
+        "throttle": 0.4155391024447999
+      },
+      "limits": {
+        "roll": [
+          0,
+          0
+        ],
+        "pitch": [
+          -0.260284423828125,
+          0.024017333984375
+        ],
+        "yaw": [
+          0,
+          0
+        ],
+        "throttle": [
+          0.4155391024447999,
+          0.5127578379693428
+        ]
+      },
+      "low": 2494,
+      "high": 2817,
+      "maxTilt": 1209,
+      "start": {
+        "position": {
+          "x": 0,
+          "y": 2804,
+          "z": -1002
+        },
+        "attitude": {
+          "roll": 0,
+          "pitch": 1221,
+          "yaw": 0,
+          "up": {
+            "x": 0,
+            "y": 977412,
+            "z": -211338
+          }
+        },
+        "velocity": {
+          "x": 0,
+          "y": 232,
+          "z": -1846
+        }
+      },
+      "end": {
+        "position": {
+          "x": 0,
+          "y": 2494,
+          "z": -3916
+        },
+        "attitude": {
+          "roll": 0,
+          "pitch": -12,
+          "yaw": 0,
+          "up": {
+            "x": 0,
+            "y": 999998,
+            "z": 2034
+          }
+        },
+        "velocity": {
+          "x": 0,
+          "y": 0,
+          "z": 27
+        }
+      },
+      "errors": []
+    },
+    {
+      "id": "beginner-26",
+      "mode": "acro",
+      "step": 8,
+      "title": "Settle onto the pad",
+      "kind": "land",
+      "prepared": 165,
+      "warmup": 0,
+      "ticks": 400,
+      "first": {
+        "roll": 0,
+        "pitch": 0,
+        "yaw": 0,
+        "throttle": 0.3520081549439347
+      },
+      "limits": {
+        "roll": [
+          0,
+          0
+        ],
+        "pitch": [
+          0,
+          0
+        ],
+        "yaw": [
+          0,
+          0
+        ],
+        "throttle": [
+          0,
+          0.5599388379204893
+        ]
+      },
+      "low": 0,
+      "high": 3019,
+      "maxTilt": 0,
+      "start": {
+        "position": {
+          "x": 0,
+          "y": 3018,
+          "z": 0
+        },
+        "attitude": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 0,
+          "up": {
+            "x": 0,
+            "y": 1000000,
+            "z": 0
+          }
+        },
+        "velocity": {
+          "x": 0,
+          "y": 87,
+          "z": 0
+        }
+      },
+      "end": {
+        "position": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "attitude": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 0,
+          "up": {
+            "x": 0,
+            "y": 1000000,
+            "z": 0
+          }
+        },
+        "velocity": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      "errors": []
+    }
+  ],
+  "inputs": {
+    "optional-practice/civilian-fpv/beginner-coach.mjs": "6b0804152563ee67e1f9010d1e499fbe671a5dd7b17f0a71581f215af25a9cbe",
+    "optional-practice/civilian-fpv/world-catalogue.mjs": "a85413afca83981472abd2f6a5603ff36aa272e9799162dd82342c3693ffaaa4",
+    "optional-practice/civilian-fpv/model.mjs": "9e4cd11cfdde2dd43b437069b8cb7a359a8132495db806cb5f68e8674d48aaf6"
+  }
+}

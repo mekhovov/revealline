@@ -723,10 +723,16 @@
     {
       "name": "Prepared reveal review",
       "route": "/authoring/library/fpv-field-kit/prepared/reveals/review.html",
-      "verification": "Bounded keyboard and virtual-controller donor workflow evidence recorded in PR #863; integration/source attribution and physical/offline/public acceptance remain pending at 2026-09-30 18:47 UTC. Do not label the donor implementation absent or transfer its evidence to later main without attribution.",
+      "verification": "At runtime 573d357fe, 44 prepared frames/38 compositions/56 owner bindings are preserved with stable Sections, bounded specimen/native/provenance and pinned document readers, exact Back and captured Retry/Cancel. Final overlapping focused 90/90, localization 11992/8858 and scoped lint pass. Native keys at 390 × 844 traverse all 44 frames at truthful native dimensions, read exact manifest/Guide text, qualify delayed Cancel/503/Retry and real Asset Studio Return without pointer reset. Fresh complete virtual 4/4 at repair 781a4aac7 verifies all 44 exact Blob/hash/full-decode specimens and native 1:1 frames, representative pans, provenance, Retry, both exact documents, one local original, UK–EN choices and real Studio Return. Two earlier 0/4 failures remain unexplained; a third 2/4 found the fixed manifest Retry focus defect. Targeted 2/2 and native Retry/pending Back follow-up remain separate from the final full pass. Original artwork/provenance remains exact. Six optional runtime/CSS files are admitted; original/prepared source images stay excluded. 18/18 single in-memory compiles at 573d remain attributable: all 1259 edition inputs are unchanged after the manifest-only repair; 1407 captured paths have no Git/disk drift. No installed-offline/device/published acceptance. Full Ukrainian, active-device hint wording, broader image/source actions, physical controllers and global gates remain open.",
       "historicalVerification": "browser mount verified; shared keyboard and virtual-controller reader/navigation; physical controller not tested",
       "delivery": "https://github.com/mekhovov/revealline/pull/863",
-      "evidenceReport": "https://github.com/mekhovov/revealline/blob/11299ceffbb5b48d7ee4fe8658ee4e6a0a12bfdc/docs/verification/prepared-reveal-input-2026-09-30.md"
+      "evidenceReport": "https://github.com/mekhovov/revealline/blob/11299ceffbb5b48d7ee4fe8658ee4e6a0a12bfdc/docs/verification/prepared-reveal-input-2026-09-30.md",
+      "documentationCheckpoint20260930": {
+        "verification": "Bounded keyboard and virtual-controller donor workflow evidence recorded in PR #863; integration/source attribution and physical/offline/public acceptance remain pending at 2026-09-30 18:47 UTC. Do not label the donor implementation absent or transfer its evidence to later main without attribution.",
+        "delivery": "https://github.com/mekhovov/revealline/pull/863",
+        "evidenceReport": "https://github.com/mekhovov/revealline/blob/11299ceffbb5b48d7ee4fe8658ee4e6a0a12bfdc/docs/verification/prepared-reveal-input-2026-09-30.md"
+      },
+      "evidence": "docs/verification/prepared-reveal-input-2026-09-30.md"
     },
     {
       "name": "Prepared title review",
