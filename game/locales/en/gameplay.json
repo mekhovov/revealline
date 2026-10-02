@@ -363,6 +363,7 @@
   "tuning.raceNote": "Next fresh race: {{difficulty}}. {{description}} {{rules}} Both current boards keep their rules.",
   "tuning.teamNote": "{{guidance}} Next fresh attempt: {{description}} Resume keeps its rules.",
   "hud.coverageValue": "{{coverage}} percent revealed; target {{target}} percent",
+  "hud.huntCoverageValue": "{{coverage}} percent revealed; Hunt targets eliminated {{kills}} of {{total}}",
   "hud.lives_one": "{{count}} lives",
   "hud.lives_other": "{{count}} lives",
   "hud.cooldown": "{{seconds}}s cooldown",
@@ -487,5 +488,9 @@
   "controller.menuEditingHelp": "{{navigation}} Confirm a select or slider to edit; confirm again to apply or go back to cancel.",
   "team.previewUnnamed": "Arena teaser · preview only · scenery is not collision geometry.",
   "interferenceResisted": " · interference resisted",
+  "brief.huntAll": "Eliminate all {{count}} humanoid targets. Contact and enclosure both count; no capture percentage is required.",
+  "brief.huntQuota": "{{captureGoal}} Eliminate {{quota}} of {{total}} humanoid targets by contact or enclosure.",
+  "brief.huntBonus": "{{captureGoal}} Hunt up to {{count}} humanoids for bonus points; zero kills is a valid completion.",
+  "brief.huntDetails": "Active players defeat humanoids on touch, including from a safe edge. Walls block contact. Their bodies do not damage players or trails, and they never retain territory. Guard warnings lock before firing; projectiles and ordinary enemies remain dangerous. Targets do not respawn. Contact earns 100 Hunt points and enclosure earns 50. Graphic destruction is optional and does not change the rules.",
   "brief.routeCoverage": "Capture {{coverage}}% of reachable routes. Hazard pockets are bonus reveal territory."
 }

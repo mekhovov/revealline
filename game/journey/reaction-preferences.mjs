@@ -2,6 +2,7 @@ import { boundedJSON, exactKeys } from '../data-json.mjs';
 
 export const JOURNEY_REACTION_PREFERENCES_KEY = 'revealline.journey-reactions.v1';
 const format = 'JourneyReactionPreferencesV1';
+const pageObservers = new WeakMap();
 export function validateReactionPreferences(source) {
   const value = boundedJSON(source, { maxBytes: 256, maxNodes: 4, maxDepth: 1 });
   exactKeys(value, ['format', 'enabled'], 'Character reaction preferences');
@@ -15,6 +16,7 @@ export function validateReactionPreferences(source) {
 export function createReactionPreferences({
   getStorage = () => globalThis.localStorage,
   window: eventTarget = globalThis,
+  getLocale = () => 'en',
 } = {}) {
   let enabled = true,
     durable = true,
@@ -22,7 +24,17 @@ export function createReactionPreferences({
     disposed = false,
     error = '';
   const listeners = new Set();
-  const snapshot = () => Object.freeze({ enabled, durable, error });
+  const peers = pageObservers.get(eventTarget) ?? new Set();
+  pageObservers.set(eventTarget, peers);
+  const snapshot = () =>
+    Object.freeze({
+      enabled,
+      durable,
+      error:
+        error && getLocale() === 'uk'
+          ? 'Налаштування реакцій діє лише в цьому сеансі. Збережені дані залишено без змін, де це можливо. Повторіть збереження, коли сховище стане доступним.'
+          : error,
+    });
   const read = () => {
     const storage = getStorage();
     if (!storage) throw new Error('Storage unavailable.');
@@ -51,15 +63,29 @@ export function createReactionPreferences({
     enabled = false;
     failed();
   }
+  const receivePageChoice = (choice) => {
+    if (disposed || pending) return;
+    enabled = choice.enabled;
+    durable = choice.durable;
+    error = choice.error;
+    notify();
+  };
+  peers.add(receivePageChoice);
   const refresh = (event) => {
     if (disposed || pending) return;
-    if (event.type === 'storage' && event.key !== JOURNEY_REACTION_PREFERENCES_KEY) return;
+    if (
+      event.type === 'storage' &&
+      event.key !== null &&
+      event.key !== JOURNEY_REACTION_PREFERENCES_KEY
+    )
+      return;
     if (event.type === 'pageshow' && event.persisted !== true) return;
     try {
       const current = read();
       if (
         event.type === 'storage' &&
-        (event.storageArea !== current.storage || event.newValue !== current.raw)
+        (event.storageArea !== current.storage ||
+          (event.key === null ? current.raw !== null : event.newValue !== current.raw))
       )
         return;
       enabled = current.value?.enabled ?? true;
@@ -84,7 +110,10 @@ export function createReactionPreferences({
     } catch {
       failed();
     }
-    return notify();
+    const result = notify();
+    for (const receive of peers)
+      if (receive !== receivePageChoice) receive({ enabled, durable, error });
+    return result;
   };
   eventTarget?.addEventListener?.('storage', refresh);
   eventTarget?.addEventListener?.('pageshow', refresh);
@@ -117,6 +146,7 @@ export function createReactionPreferences({
     dispose() {
       disposed = true;
       listeners.clear();
+      peers.delete(receivePageChoice);
       eventTarget?.removeEventListener?.('storage', refresh);
       eventTarget?.removeEventListener?.('pageshow', refresh);
     },

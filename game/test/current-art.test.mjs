@@ -46,8 +46,8 @@ function imageDecoder(facts, closed = []) {
     return image;
   };
 }
-test('trusted locator mapping remains fresh for155 exact owners including56 FPV owners', async () => {
-  assert.equal(CURRENT_ART_SOURCES.length, 155);
+test('trusted locator mapping remains fresh for 209 exact owners including 56 FPV owners', async () => {
+  assert.equal(CURRENT_ART_SOURCES.length, 209);
   assert.equal(CURRENT_ART_SOURCES.filter((row) => row.owner.themeId === 'fpv').length, 56);
   assert.deepEqual(
     CURRENT_ART_SOURCES.map(({ id, owner }) => ({ id, owner })),

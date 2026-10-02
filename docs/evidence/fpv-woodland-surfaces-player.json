@@ -1,0 +1,23 @@
+{
+  "format": "FPVPlayerLaunchEvidence.v1",
+  "observationDateUtc": "2026-10-02",
+  "build": {
+    "files": 92,
+    "bytes": 13932487,
+    "zipSha256": "fc3ddb63c13c02f36968f75d384a2e12fee932e10c8eefe6cc126affec92fe13"
+  },
+  "url": "http://127.0.0.1:8789/dist/fpv-woodland-surfaces-playtest/optional-practice/fpv-worlds/index.html",
+  "observations": [
+    "Crossing trail installed demonstration plays through all4 objectives and ends Demonstration complete at49.4s.",
+    "Fly this challenge opens a fresh paused attempt with Ready status, arm available and zero throttle.",
+    "Refined floor leaves form muted patches; objective and actor silhouettes remain visible in inspected views."
+  ],
+  "screenshots": [
+    "/tmp/fpv-woodland-flight-refined.png",
+    "/tmp/fpv-woodland-surfaces-comparison.png"
+  ],
+  "limitations": [
+    "Browser visual review only, not novice/art acceptance or named-hardware sustained performance.",
+    "No new physical-controller or unit-coverage claim."
+  ]
+}

@@ -1,0 +1,52 @@
+{
+  "format": "revealline-hunt-inspection-summary.v1",
+  "version": "0.142.4",
+  "sourceRevision": "eb086eafbd629b80075a619bbf552a93134262ec",
+  "publicationProfile": "main-pages",
+  "publicEligible": false,
+  "promotable": false,
+  "completeHostedOutput": false,
+  "publicationAssessment": "not-performed",
+  "payloadBytesIncludingManifest": 852911082,
+  "manifestDescriptor": {
+    "path": "manifest.json",
+    "bytes": 405511,
+    "sha256": "35946d99487cfd5359ef530a9da55797e2c11a99a61b5c5716b37ea8be5990d5"
+  },
+  "missingComponents": [
+    "Pages root routes and publication metadata",
+    "Hosted edition versions, stable launchers and company hub",
+    "Hosted optional packages, launchers and any other generated files"
+  ],
+  "sourceTree": "2bb9b5a2958ec585d8a532c83f72cfbd43280739",
+  "includedInputs": {
+    "format": "revealline-default-build-inputs.v1",
+    "sourceRevision": "eb086eafbd629b80075a619bbf552a93134262ec",
+    "sourceTree": "2bb9b5a2958ec585d8a532c83f72cfbd43280739",
+    "files": 2646,
+    "bytes": 778036508,
+    "note": "Included originals only; transitive producer inputs are checked by normal build preparation."
+  },
+  "availableCommittedSources": {
+    "files": 23968,
+    "bytes": 2301855976,
+    "absentTrackedFiles": 0,
+    "inventorySha256": "7285d6a86ce143982a80cf4dfefc70e49727760104f9f0142b01fc5241603c47"
+  },
+  "sourceEligibility": {
+    "status": "verified",
+    "format": "revealline-public-source-eligibility.v1",
+    "files": 23968,
+    "assets": 370
+  },
+  "includedInputsVerified": true,
+  "availableCommittedSourcesVerified": true,
+  "reproducibleBuilds": 0,
+  "note": "One rolling main Pages profile preparation, without ZIP or expanded-site writes. A 25 MB margin covers separately staged hosted metadata/packages; not frozen release, human review or whole-site qualification.",
+  "preparedFiles": 2730,
+  "fullReport": {
+    "bytes": 527523,
+    "sha256": "aca8fca02ce86b9f662642b124944c0762bda8f180d6465a5220a89970ef5eda",
+    "inspectionFormat": "revealline-default-build-inspection.v1"
+  }
+}
