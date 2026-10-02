@@ -1542,3 +1542,20 @@ Themes coordination was sent to the user-authorized Themes chat. Its active
 primary-checkout appearance and cross-tab handoff work remains separate; do not
 copy uncommitted files or edit that checkout. C will build on the published
 shared contract once its current handoff is reviewed.
+
+### 2 October — Garage published as #954; C starts separately
+
+Garage is pushed and attached as [PR #954](https://github.com/mekhovov/revealline/pull/954),
+branch `codex/fpv-garage-demonstrations`, published head
+`8df23f7ab` (frozen runtime candidate remains `5d9411ba831800bc7f6ae763f46d9d4ea69fa8f7`).
+It targets main because both preceding increments are merged. An independent
+review found no blocking issue and checked157 source/provenance/archive hashes.
+Both normal local playtest URLs now have the qualified Garage build
+`47d5b732a0b4fb5a94e1579c2fdafd70d5db64b95552eb618f69e7928c194c45`.
+No Garage public claim yet. Inspect exact remote heads/checks before protected merge.
+
+Next work begins separately on `codex/fpv-hangar-surfaces`: a bounded visual
+Hangar pass on current published SIM contracts, while the broader shared Themes
+integration remains owned by its active chat. Do not add unfinished Hangar edits
+to #954. If the Hangar PR is ready while #954 is open and remains dependent,
+create a fresh linear native stack; never revive stacks889/902.
