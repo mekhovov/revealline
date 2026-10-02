@@ -783,3 +783,29 @@ Receipts: `docs/evidence/fpv-response-{lesson-audit,identity-replay,step-model,
 lessons-browser,propeller-browser,endless-browser,host-browser,browser-benchmark}-20261002.*`.
 The full-range explorer remains visibly slow by design; manual inputs always run
 at normal speed. No change to actual physics, rates, response curves or proofs.
+
+### Frozen package and rebuilt player
+
+Runtime candidate `f1b8f65a82c84374a709bce4e414d1b351d41f51` passed all three
+optional-package admissions, committed-input validation, ZIP-member validation
+and two byte-identical builds. See `fpv-response-package-20261002.json`.
+Existing package file limits are unchanged (Academy62 runtime/64 source;
+World Studio94/96). The reviewed-player build has87 files /12,510,913 bytes;
+ZIP SHA-256 `8e99fe737fe02921a4312c5fda5f21e837aea0d0b7b02205927d3091b4e70f7f`.
+
+Opened the actual rebuilt player URL, selected lesson9 / step4, inspected the
+corrected left-turn phase, bare props and cyan motor arcs, entered fullscreen
+practice, and confirmed keyboard takeover reports continuous manual control.
+Browser error log is empty. EN/UK phase captions are visible in the full-window
+practice view. At390×844 the Ukrainian toolbar has four44px targets within the
+viewport, its phase/status remains visible, and there is no horizontal document
+overflow. The in-app screenshot capture scales that mobile tab inconsistently;
+mobile bounds are DOM-verified, not a new native-device screenshot certification.
+Desktop evidence: `/tmp/fpv-lesson-response-final-fullscreen.png`.
+
+No new native OS-fullscreen permission or physical-radio acceptance is claimed;
+controlled lifecycle/controller evidence and the full-window fallback pass.
+The player entry is local, not publicly deployed:
+`http://127.0.0.1:8789/dist/fpv-reviewed-player-playtest/optional-practice/fpv-worlds/index.html#learn`.
+The user's prior USB-radio source and English locale are preserved. Subsequent
+commits only record delivery evidence and publication status.
