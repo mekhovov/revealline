@@ -16,7 +16,10 @@ export function createRadioRuntime({ getGamepads, onFreeze = () => {}, onReset =
     profile = null,
     verified = false,
     active = false,
-    frozen = false;
+    frozen = false,
+    connectionLost = false,
+    editing = false,
+    profileDirty = false;
   let live = neutralFlightInput(),
     pickup = null,
     reason = 'select-device';
@@ -63,6 +66,7 @@ export function createRadioRuntime({ getGamepads, onFreeze = () => {}, onReset =
       if (!pad || radioDeviceKey(pad) !== selected.key) throw new Error('device-replaced');
       return pad;
     } catch {
+      connectionLost = true;
       if (reason !== 'device-lost') freeze('device-lost');
       verified = false;
       return null;
@@ -74,7 +78,7 @@ export function createRadioRuntime({ getGamepads, onFreeze = () => {}, onReset =
     try {
       return normalizeRadioInput(profile, pad);
     } catch {
-      freeze('invalid-sample');
+      if (reason !== 'invalid-sample') freeze('invalid-sample');
       verified = false;
       return null;
     }
@@ -98,6 +102,20 @@ export function createRadioRuntime({ getGamepads, onFreeze = () => {}, onReset =
     const command = sample();
     reason = armReason(command);
     if (reason !== 'ready') return false;
+    if (profile.switches.arm) {
+      try {
+        const pad = read();
+        if (!pad) return false;
+        if (!radioSwitch(profile, pad, 'arm', previous.arm)) {
+          reason = 'arm-switch-off';
+          return false;
+        }
+      } catch {
+        if (reason !== 'invalid-sample') freeze('invalid-sample');
+        verified = false;
+        return false;
+      }
+    }
     active = true;
     frozen = false;
     pickup = null;
@@ -112,6 +130,8 @@ export function createRadioRuntime({ getGamepads, onFreeze = () => {}, onReset =
       verified = false;
       profile = null;
       selected = null;
+      connectionLost = false;
+      profileDirty = false;
       try {
         const pad = Array.from(getGamepads?.() ?? []).find(
           (item) => item?.index === index && item.connected !== false,
@@ -127,14 +147,20 @@ export function createRadioRuntime({ getGamepads, onFreeze = () => {}, onReset =
       }
       return !!selected;
     },
-    setProfile(value) {
+    setProfile(value, { restoring = false } = {}) {
       freeze('profile-changed');
       profile = validateRadioProfile(value);
       verified = false;
+      // Losing hardware during restoration is not an unsaved calibration edit.
+      profileDirty = !restoring;
     },
     verify() {
       const command = sample();
       verified = !!command && !!profile?.verified;
+      if (verified) {
+        connectionLost = false;
+        profileDirty = false;
+      }
       reason = verified ? armReason(command) : 'verify-controls';
       return verified;
     },
@@ -142,14 +168,46 @@ export function createRadioRuntime({ getGamepads, onFreeze = () => {}, onReset =
     freeze,
     disconnect(index) {
       if (selected?.index === index) {
+        connectionLost = true;
         freeze('device-lost');
         verified = false;
       }
     },
-    reset({ notify = true } = {}) {
+    reset({ notify = true, pickup: restoredPickup = null } = {}) {
+      if (
+        restoredPickup !== null &&
+        (!restoredPickup ||
+          FLIGHT_CONTROLS.some((key) => {
+            const value = restoredPickup[key];
+            return !Number.isFinite(value) || value < (key === 'throttle' ? 0 : -1) || value > 1;
+          }))
+      )
+        throw new TypeError('Recovered radio pickup needs normalized flight controls.');
       freeze('reset');
-      pickup = null;
+      pickup = restoredPickup
+        ? Object.fromEntries(FLIGHT_CONTROLS.map((key) => [key, restoredPickup[key]]))
+        : null;
       if (notify) onReset();
+    },
+    beginSetup() {
+      editing = true;
+      freeze('setup');
+    },
+    editProfile() {
+      profileDirty = true;
+      verified = false;
+      freeze('profile-changed');
+    },
+    endSetup() {
+      editing = false;
+    },
+    preview() {
+      const controls = sample();
+      return {
+        controls,
+        stickMode: profile?.stickMode ?? 2,
+        verified: !!controls && verified,
+      };
     },
     raw: read,
     poll() {
@@ -166,7 +224,8 @@ export function createRadioRuntime({ getGamepads, onFreeze = () => {}, onReset =
           ]),
         );
       } catch {
-        freeze('invalid-sample');
+        if (reason !== 'invalid-sample') freeze('invalid-sample');
+        verified = false;
         return neutralFlightInput();
       }
       if (!next.arm) armOffSeen = true;
@@ -199,6 +258,10 @@ export function createRadioRuntime({ getGamepads, onFreeze = () => {}, onReset =
         selected: selected ? { ...selected } : null,
         pickup: pickup ? { ...pickup } : null,
         profile: profile ? canonicalJSON(profile) : null,
+        connectionLost,
+        editing,
+        profileDirty,
+        armSwitchBound: !!profile?.switches.arm,
       };
     },
   };

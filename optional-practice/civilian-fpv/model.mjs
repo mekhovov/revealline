@@ -19,6 +19,7 @@ export const FLIGHT_MODEL = 'civilian-quad-fixed.v1';
 export const FLIGHT_HZ = 50;
 export const MAX_FLIGHT_TICKS = 50 * 60 * 12;
 export const FLIGHT_MODES = Object.freeze(['self-level', 'acro']);
+const unscoredFlights = new WeakSet();
 const int = (n, a, b) => Number.isSafeInteger(n) && n >= a && n <= b;
 const vector = (v, min, max) => {
   exactKeys(v, ['x', 'y', 'z'], 'position');
@@ -204,10 +205,16 @@ function sweepBox(a, b, box) {
   }
   return entry >= 0 && entry <= Q && exit >= 0 ? { at: entry, axis: hitAxis, sign } : null;
 }
-export function createFlight({ course, mode = 'self-level', response = DEFAULT_RESPONSE }) {
+export function createFlight({
+  course,
+  mode = 'self-level',
+  response = DEFAULT_RESPONSE,
+  unscoredPractice = false,
+}) {
   const source = validateFlightCourse(course),
     rates = validateFlightResponse(response);
   required(FLIGHT_MODES.includes(mode), 'Unsupported flight mode');
+  required(typeof unscoredPractice === 'boolean', 'Invalid unscored practice option');
   const identity = {
     model: FLIGHT_MODEL,
     course: source.id,
@@ -244,7 +251,7 @@ export function createFlight({ course, mode = 'self-level', response = DEFAULT_R
     const command = quantized ? input : quantizeFlightInput(input);
     validateQuantized(command);
     if (state.status !== 'active') return snapshot();
-    if (state.ticks >= MAX_FLIGHT_TICKS) {
+    if (!unscoredPractice && state.ticks >= MAX_FLIGHT_TICKS) {
       state.status = 'expired';
       return snapshot();
     }
@@ -353,7 +360,7 @@ export function createFlight({ course, mode = 'self-level', response = DEFAULT_R
     }
     return snapshot();
   }
-  return {
+  const flight = {
     identity,
     course: () => structuredClone(source),
     response: () => ({ ...rates }),
@@ -367,12 +374,17 @@ export function createFlight({ course, mode = 'self-level', response = DEFAULT_R
       if (state.status === 'active') state.status = 'paused';
     },
   };
+  // An unbounded controls sandbox never produces scored/replay proof bytes.
+  // Keep its runtime policy outside the unchanged v1 identity and snapshots.
+  if (unscoredPractice) unscoredFlights.add(flight);
+  return flight;
 }
 export const exportFlightCourse = (input) => canonicalJSON(validateFlightCourse(input));
 
 /** Fixed-width four-int input frames avoid JSON expansion from continuously moving
  * sticks. 36,000 frames cover every tick of a 12 minute authored attempt. No truncation. */
 export function createFlightRecorder(flight, { session = 'practice' } = {}) {
+  required(!unscoredFlights.has(flight), 'Unscored practice cannot create a flight proof');
   required(
     ['practice', 'demonstration', 'authoring', 'replay'].includes(session),
     'Invalid practice session',

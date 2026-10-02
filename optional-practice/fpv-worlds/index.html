@@ -5,37 +5,76 @@
     <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
     <meta name="theme-color" content="#101b20" />
     <link rel="manifest" href="./app.webmanifest" />
-    <title>FPV · World Studio</title>
+    <title>FPV / LINE · Simulator</title>
     <link rel="stylesheet" href="../civilian-fpv/world-style.css" />
+    <link rel="stylesheet" href="../civilian-fpv/flight-fullscreen.css" />
     <script type="module" src="../civilian-fpv/world-app.mjs"></script>
   </head>
-  <body>
+  <body class="field-kit sim-worlds">
+    <a class="sim-skip" href="#explore">Skip to flight selection</a>
     <header class="studio-header">
-      <a class="wordmark" href="#explore"
-        ><span class="brand-mark" aria-hidden="true">✣</span><span>FPV <b>WORLD STUDIO</b></span></a
-      >
-      <nav aria-label="Studio">
-        <button data-tab="explore" class="selected" data-i18n="explore">Explore</button
-        ><button data-tab="playlists" data-i18n="playlists">My playlists</button
-        ><button data-tab="creator" data-i18n="creator">Create</button
-        ><button data-tab="packs" data-i18n="packs">World packs</button>
+      <a class="wordmark" href="#explore" aria-label="FPV / LINE Simulator">
+        <img
+          src="../../game/ui/art/identity/fpv-line/wordmark.png"
+          alt="FPV / LINE"
+          width="250"
+          height="44"
+        />
+        <span class="sim-brand-subtitle">FLIGHT SIMULATOR</span>
+      </a>
+      <nav aria-label="Simulator">
+        <button data-tab="explore" class="selected" data-i18n="explore" data-sim-icon="play">
+          Fly
+        </button>
+        <button data-tab="learn" data-i18n="learn" data-sim-icon="missions">Learn to fly</button>
+        <button data-tab="playlists" data-i18n="playlists" data-sim-icon="collection">
+          Playlists
+        </button>
+        <button data-tab="creator" data-i18n="creator" data-sim-icon="settings">Workshop</button>
+        <button data-tab="packs" data-i18n="packs" data-sim-icon="content">Library</button>
       </nav>
-      <select id="world-language" aria-label="Language">
-        <option value="en">EN</option>
-        <option value="uk">УК</option>
-      </select>
+      <div class="sim-utilities">
+        <button id="lobby-sound" data-sim-icon="mute" aria-label="Sound off">Sound off</button>
+        <button id="lobby-settings" data-sim-icon="settings" data-i18n="settings">Settings</button>
+        <select id="world-language" aria-label="Language">
+          <option value="en">EN</option>
+          <option value="uk">УК</option>
+        </select>
+      </div>
     </header>
     <main>
       <section id="explore" class="tab-panel">
-        <div class="intro">
-          <div>
-            <p class="eyebrow" data-i18n="eyebrow">YOUR NEXT FLIGHT</p>
-            <h1 data-i18n="heading">A world worth flying.</h1>
-            <p data-i18n="intro">Find your line. Build a playlist. Every challenge is open.</p>
+        <div class="sim-hero">
+          <div class="sim-hero-copy">
+            <p class="eyebrow" data-i18n="eyebrow">THE WORLD IS YOUR FLIGHT LINE</p>
+            <h1 data-i18n="heading" tabindex="-1">Find your line.</h1>
+            <p data-i18n="intro">
+              From your first hover to your next perfect lap. Pick a world and make it yours.
+            </p>
+            <div class="button-row hero-actions">
+              <button id="hero-fly" class="primary" data-sim-icon="play" data-i18n="startFlying">
+                Start flying
+              </button>
+              <button id="hero-browse" data-sim-icon="missions" data-i18n="chooseWorld">
+                Choose a world
+              </button>
+            </div>
+            <button
+              id="lobby-radio"
+              class="text-action"
+              data-sim-icon="controls"
+              data-i18n="connectRadio"
+            >
+              Set up your radio
+            </button>
+          </div>
+          <div class="hero-caption">
+            <span>FPV / LINE</span><span data-i18n="simEdition">SIMULATOR EDITION</span>
           </div>
           <div class="catalogue-stats">
             <strong id="level-count">60</strong><span data-i18n="challenges">challenges</span
-            ><strong>8</strong><span data-i18n="worlds">worlds</span>
+            ><strong>8</strong><span data-i18n="worlds">worlds</span
+            ><span class="sim-open-label" data-i18n="allOpen">All open. Your pace.</span>
           </div>
         </div>
         <aside class="first-flight-card" aria-labelledby="first-flight-title">
@@ -45,16 +84,24 @@
               Watch a hover. Then try it yourself.
             </h2>
             <p data-i18n="firstFlightHelp">
-              Start with the Academy: raise throttle gently, hold inside the marker, then land.
-              Self-level helps you stay upright; Acro keeps the angle you set.
+              Start with beginner Acro lessons and clear live control diagrams. Continue into
+              precision, navigation and raised landings when you are ready. Every lesson is open.
             </p>
             <small data-i18n="demoCoverage"
-              >56 recorded examples cover all 28 Academy, Woodland Park and Ukrainian Courtyard
-              challenges in both modes. Examples for the remaining worlds are still in
-              production.</small
+              >104 recorded examples cover all 52 Academy, Woodland Park, Ukrainian Courtyard,
+              Warehouse, Racing Stadium and Container Yard challenges in both modes. Parking Garage
+              examples are still in production.</small
             >
           </div>
           <div class="button-row">
+            <button
+              id="begin-learning"
+              class="primary"
+              data-sim-icon="play"
+              data-i18n="beginLearning"
+            >
+              Start Flight School
+            </button>
             <select id="first-flight-mode" aria-label="First flight mode">
               <option value="self-level">Self-level</option>
               <option value="acro">Acro</option>
@@ -65,27 +112,144 @@
             </button>
           </div>
         </aside>
-        <div id="theme-tabs" class="theme-tabs" aria-label="Collections"></div>
-        <div class="library-tools">
-          <input
-            id="search"
-            type="search"
-            placeholder="Find a world or challenge…"
-            aria-label="Find a challenge"
-          /><select id="activity-filter" aria-label="Activity"></select
-          ><select id="difficulty-filter" aria-label="Difficulty">
-            <option value="all" data-i18n="allDifficulty">All difficulties</option>
-            <option value="beginner" data-i18n="beginner">Beginner</option>
-            <option value="intermediate" data-i18n="intermediate">Intermediate</option>
-            <option value="advanced" data-i18n="advanced">Advanced</option></select
-          ><select id="completion-filter" aria-label="Completion">
-            <option value="all" data-i18n="allProgress">All progress</option>
-            <option value="complete" data-i18n="completed">Completed</option>
-            <option value="new" data-i18n="notFlown">Not completed</option>
-          </select>
+        <div class="sim-section-heading">
+          <div>
+            <p class="eyebrow" data-i18n="flightDestinations">FLIGHT DESTINATIONS</p>
+            <h2 id="world-picker-title" data-i18n="chooseWorld" tabindex="-1">Choose a world</h2>
+          </div>
+          <p data-i18n="chooseWorldHelp">Explore, race or test your precision.</p>
         </div>
+        <div id="theme-tabs" class="theme-tabs" aria-label="Collections"></div>
+        <details class="sim-filters">
+          <summary data-i18n="filterChallenges" data-sim-icon="missions">Search & filters</summary>
+          <div class="library-tools">
+            <input
+              id="search"
+              type="search"
+              placeholder="Find a world or challenge…"
+              aria-label="Find a challenge"
+            /><select id="activity-filter" aria-label="Activity"></select
+            ><select id="difficulty-filter" aria-label="Difficulty">
+              <option value="all" data-i18n="allDifficulty">All difficulties</option>
+              <option value="beginner" data-i18n="beginner">Beginner</option>
+              <option value="intermediate" data-i18n="intermediate">Intermediate</option>
+              <option value="advanced" data-i18n="advanced">Advanced</option></select
+            ><select id="completion-filter" aria-label="Completion">
+              <option value="all" data-i18n="allProgress">All progress</option>
+              <option value="complete" data-i18n="completed">Completed</option>
+              <option value="new" data-i18n="notFlown">Not completed</option>
+            </select>
+          </div>
+        </details>
         <div id="world-grid" class="world-grid"></div>
         <p id="empty-library" hidden data-i18n="empty">No challenges match these filters.</p>
+      </section>
+      <section id="learn" class="tab-panel flight-school" hidden>
+        <div class="school-hero">
+          <div class="school-hero-copy">
+            <p class="eyebrow" data-i18n="schoolEyebrow">ACRO FLIGHT SCHOOL · BUILD YOUR MASTERY</p>
+            <h1 data-i18n="schoolTitle">Every pilot starts here.</h1>
+            <p class="school-intro" data-i18n="schoolIntro">
+              Build your skills through Beginner, Experienced, Advanced, Pro and Master Acro
+              lessons. Watch the complete route, take control and practise each real objective.
+              Optional self-level lessons are also open.
+            </p>
+            <div class="button-row">
+              <button id="school-continue" class="primary" data-sim-icon="play"></button
+              ><button id="school-recover" hidden>Resume saved lesson</button>
+              <button id="school-radio" data-sim-icon="controls" data-i18n="connectRadio">
+                Set up your radio
+              </button>
+            </div>
+            <p class="school-reassurance" data-i18n="schoolReassurance">
+              Acro · FPV view · Gentle response. Your usual settings return when you leave. All
+              lessons are open.
+            </p>
+          </div>
+          <div class="school-flight-map" aria-hidden="true">
+            <svg viewBox="0 0 440 260" focusable="false">
+              <defs>
+                <pattern id="school-grid" width="24" height="24" patternUnits="userSpaceOnUse">
+                  <path d="M24 0H0V24" fill="none" stroke="currentColor" stroke-width=".5" />
+                </pattern>
+              </defs>
+              <rect width="440" height="260" fill="url(#school-grid)" opacity=".15" />
+              <path
+                class="school-path"
+                d="M40 205C90 205 86 75 162 75S226 205 300 185S325 52 400 52"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="3"
+                stroke-dasharray="5 9"
+              />
+              <g fill="var(--school-bg,#101b25)" stroke="currentColor" stroke-width="3">
+                <circle cx="40" cy="205" r="16" />
+                <rect x="144" y="49" width="36" height="50" rx="3" />
+                <rect x="282" y="161" width="36" height="50" rx="3" />
+                <circle cx="400" cy="52" r="16" />
+              </g>
+              <g class="school-map-quad" transform="translate(219 117) rotate(24)">
+                <path d="M-30-25L30 25M30-25L-30 25" stroke="#ffca6a" stroke-width="9" />
+                <g fill="#101b25" stroke="#ffca6a" stroke-width="3">
+                  <ellipse cx="-31" cy="-25" rx="20" ry="8" />
+                  <ellipse cx="31" cy="-25" rx="20" ry="8" />
+                  <ellipse cx="-31" cy="25" rx="20" ry="8" />
+                  <ellipse cx="31" cy="25" rx="20" ry="8" />
+                  <rect x="-12" y="-22" width="24" height="45" rx="5" />
+                </g>
+                <path d="M-5-28L0-39L5-28" fill="#dff7f4" />
+              </g>
+            </svg>
+            <div class="school-map-legend">
+              <span data-i18n="schoolLift">01 · Lift</span
+              ><span data-i18n="schoolControl">02 · Control</span
+              ><span data-i18n="schoolExplore">03 · Explore</span>
+            </div>
+          </div>
+        </div>
+        <div class="school-progress-bar">
+          <div>
+            <strong id="school-progress-title"></strong>
+            <p id="school-progress-copy"></p>
+          </div>
+          <progress
+            id="school-progress"
+            max="46"
+            value="0"
+            aria-label="Flight School progress"
+          ></progress>
+        </div>
+        <div class="school-method" aria-label="How lessons work">
+          <span><b>01</b><strong data-i18n="schoolSee">See the control</strong></span
+          ><span><b>02</b><strong data-i18n="schoolUnderstand">Watch the response</strong></span
+          ><span><b>03</b><strong data-i18n="schoolTry">Fly it yourself</strong></span>
+        </div>
+        <div class="toolbar school-filter">
+          <label for="school-tier">
+            <span data-i18n="schoolFilterLabel">Choose a learning tier</span>
+            <select id="school-tier">
+              <option value="all">All lessons</option>
+              <option value="beginner">Beginner</option>
+              <option value="experienced">Experienced</option>
+              <option value="advanced">Advanced</option>
+              <option value="pro">Pro</option>
+              <option value="master">Master</option>
+              <option value="self-level">Optional self-level</option>
+            </select>
+          </label>
+        </div>
+        <div id="school-lessons"></div>
+        <div class="school-after">
+          <div>
+            <h2 data-i18n="schoolAfterTitle">Your next adventure is waiting.</h2>
+            <p data-i18n="schoolAfterHelp">
+              Use what you learned in Academy drills, open exploration and your first races.
+            </p>
+          </div>
+          <button id="school-worlds" data-sim-icon="missions" data-i18n="chooseWorld">
+            Choose a world
+          </button>
+        </div>
       </section>
       <section id="playlists" class="tab-panel" hidden>
         <p class="eyebrow" data-i18n="yourSequence">YOUR FLIGHT SEQUENCE</p>
@@ -259,45 +423,136 @@
           </button>
         </div>
         <p id="storage-status"></p>
+        <h2 data-i18n="installedWorlds">Installed worlds</h2>
         <div id="installed-packs"></div>
-        <div id="proof-records"></div>
+        <details class="sim-records">
+          <summary data-i18n="recordedFlights">Recorded flights & recovery</summary>
+          <div id="proof-records"></div>
+        </details>
       </section>
       <p id="studio-status" role="status" aria-live="polite"></p>
     </main>
-    <dialog id="flight-dialog" class="flight-dialog">
+    <dialog
+      id="flight-dialog"
+      class="flight-dialog"
+      data-flight-state="ready"
+      data-flight-menu-open="false"
+    >
       <header>
-        <div><small id="flight-collection"></small><strong id="flight-title"></strong></div>
-        <button id="leave-flight" data-i18n="close">Close</button>
+        <button
+          id="world-flight-close-menu"
+          class="handheld-flight-close-menu"
+          type="button"
+          data-i18n="returnToFlight"
+        >
+          Return to flight
+        </button>
+        <div>
+          <small id="flight-collection"></small><strong id="flight-title"></strong>
+          <p id="flight-loadout" class="flight-loadout"></p>
+          <details class="mission-briefing">
+            <summary data-i18n="missionBriefing">Mission briefing</summary>
+            <p id="flight-menu-brief"></p>
+          </details>
+        </div>
+        <div class="button-row">
+          <button
+            id="flight-options"
+            data-i18n="flightOptions"
+            data-sim-icon="settings"
+            aria-expanded="false"
+            aria-controls="sim-flight-controls"
+          >
+            Flight options
+          </button>
+          <button id="world-fullscreen" data-sim-icon="fullscreen" type="button">Fullscreen</button>
+          <button id="leave-flight" data-i18n="backToLobby" data-sim-icon="back">
+            Back to lobby
+          </button>
+        </div>
       </header>
-      <div class="flight-controls">
-        <select id="flight-mode" aria-label="Flight mode">
-          <option value="self-level">Self-level</option>
-          <option value="acro">Acro</option></select
-        ><select id="flight-source" aria-label="Control source">
-          <option value="keyboard" data-i18n="keyboard">Keyboard</option>
-          <option value="touch" data-i18n="touch">Touch</option>
-          <option value="radio" data-i18n="radio">USB radio</option></select
-        ><button id="radio-setup-button" data-i18n="setup">Setup</button
-        ><select id="flight-camera" aria-label="Camera">
-          <option value="fpv">FPV</option>
-          <option value="chase" data-i18n="chase">Chase</option>
-          <option value="overview" data-i18n="overview">Overview</option></select
-        ><select id="drone-look" aria-label="Drone">
-          <option value="racer" data-i18n="racer">Racer</option>
-          <option value="pixel" data-i18n="pixel">Pixel</option>
-          <option value="utility" data-i18n="utility">Utility</option></select
-        ><button id="inspect-drone" data-i18n="inspectDrone">Inspect drone</button
-        ><select id="flight-quality" aria-label="Visual quality">
-          <option value="balanced" data-i18n="balanced">Balanced</option>
-          <option value="low" data-i18n="performance">Performance</option>
-          <option value="high" data-i18n="quality">Quality</option>
-        </select>
+      <div class="flight-controls" id="sim-flight-controls">
+        <label
+          ><span data-i18n="flightMode">Flight mode</span
+          ><select id="flight-mode" aria-label="Flight mode">
+            <option value="self-level">Self-level</option>
+            <option value="acro">Acro</option>
+          </select></label
+        >
+        <label
+          ><span data-i18n="controlSource">Controls</span
+          ><select id="flight-source" aria-label="Control source">
+            <option value="keyboard" data-i18n="keyboard">Keyboard</option>
+            <option value="touch" data-i18n="touch">Touch</option>
+            <option value="controller" data-i18n="controller">Controller</option>
+            <option value="radio" data-i18n="radio">USB radio</option>
+          </select></label
+        >
+        <button id="radio-setup-button" data-i18n="radioSetup" data-sim-icon="controls">
+          Radio setup
+        </button>
+        <label
+          ><span data-i18n="cameraLabel">Camera</span
+          ><select id="flight-camera" aria-label="Camera">
+            <option value="fpv">FPV</option>
+            <option value="chase" data-i18n="chase">Chase</option>
+            <option value="overview" data-i18n="overview">Overview</option>
+          </select></label
+        >
+        <label
+          ><span data-i18n="aircraftLabel">Aircraft</span
+          ><select id="drone-look" aria-label="Drone">
+            <option value="racer" data-i18n="racer">Racer</option>
+            <option value="pixel" data-i18n="pixel">Pixel</option>
+            <option value="utility" data-i18n="utility">Utility</option>
+          </select></label
+        >
+        <button id="inspect-drone" data-i18n="inspectDrone">Inspect drone</button>
+        <label
+          ><span data-i18n="graphicsLabel">Graphics</span
+          ><select id="flight-quality" aria-label="Visual quality">
+            <option value="balanced" data-i18n="balanced">Balanced</option>
+            <option value="low" data-i18n="performance">Performance</option>
+            <option value="high" data-i18n="quality">Quality</option>
+          </select></label
+        >
+        <label
+          ><span data-i18n="sticksLabel">Live sticks</span
+          ><select id="flight-stick-display" aria-label="Stick display">
+            <option value="compact" data-i18n="compactSticks">Compact sticks</option>
+            <option value="expanded" data-i18n="expandedSticks">Expanded sticks</option>
+            <option value="setup" data-i18n="setupSticks">Sticks in setup only</option>
+          </select></label
+        >
+        <label
+          ><span data-i18n="droneGuideLabel">Drone response</span
+          ><select id="flight-drone-guide" aria-label="Drone response">
+            <option value="compact" data-i18n="droneGuideOn">Compact</option>
+            <option value="learning" data-i18n="droneGuideLearning">Learning</option>
+            <option value="off" data-i18n="droneGuideOff">Off</option>
+          </select></label
+        >
+        <label
+          ><span id="flight-guide-scale-label" data-i18n="guideScale">Guide text</span
+          ><select id="flight-guide-scale" aria-labelledby="flight-guide-scale-label">
+            <option value="standard" data-i18n="guideStandard">Standard</option>
+            <option value="large" data-i18n="guideLarge">Large</option>
+          </select></label
+        >
+        <div class="camera-settings">
+          <label>FOV<input id="world-fov" type="range" min="60" max="110" value="82" /></label
+          ><label
+            ><span data-i18n="tilt">Camera tilt</span
+            ><input id="world-tilt" type="range" min="0" max="35" value="10"
+          /></label>
+        </div>
       </div>
       <div id="world-replay-controls" class="replay-controls" hidden>
         <strong id="world-replay-label"></strong>
         <label
           ><span data-i18n="playbackSpeed">Playback speed</span>
           <select id="world-replay-rate">
+            <option value="0.25">0.25×</option>
             <option value="0.5">0.5×</option>
             <option value="1" selected>1×</option>
           </select>
@@ -308,6 +563,35 @@
       </div>
       <section id="world-viewport" tabindex="0">
         <canvas id="world-canvas"></canvas>
+        <p id="world-flight-identity" class="handheld-flight-identity"></p>
+        <div class="handheld-flight-actions">
+          <button
+            id="world-flight-menu"
+            class="handheld-flight-menu"
+            type="button"
+            data-i18n="flightMenu"
+            aria-expanded="false"
+          >
+            Menu
+          </button>
+          <button
+            id="world-flight-resume"
+            class="handheld-flight-resume"
+            type="button"
+            data-i18n="arm"
+          >
+            Arm / resume
+          </button>
+          <button
+            id="world-flight-fire"
+            class="handheld-flight-fire"
+            type="button"
+            data-i18n="fire"
+            hidden
+          >
+            Fire
+          </button>
+        </div>
         <div class="flight-brief"><p id="flight-brief"></p></div>
         <div id="aim-reticle" class="aim-reticle" aria-hidden="true">+</div>
         <div id="flight-instruments" class="flight-instruments"></div>
@@ -316,15 +600,22 @@
           <p id="flight-status" role="status"></p>
         </div>
         <div id="world-touch" class="world-touch" hidden>
-          <div id="world-left-stick" class="touch-stick"><i></i></div>
-          <div id="world-right-stick" class="touch-stick"><i></i></div>
+          <div id="world-left-stick" class="touch-stick">
+            <i aria-hidden="true"></i><span id="world-left-label"></span>
+          </div>
+          <div id="world-right-stick" class="touch-stick">
+            <i aria-hidden="true"></i><span id="world-right-label"></span>
+          </div>
         </div>
+        <aside id="flight-drone-response" hidden></aside>
+        <aside id="beginner-coach" hidden></aside>
         <div id="result-panel" class="result-panel" hidden></div>
       </section>
       <section id="sector-panel" class="sector-panel" aria-label="Sector timing" aria-live="polite">
         <div class="sector-current">
           <strong id="sector-latest"></strong>
           <small id="sector-reference"></small>
+          <small id="ghost-status" hidden></small>
         </div>
         <div class="sector-deltas">
           <span id="sector-delta"></span>
@@ -332,21 +623,20 @@
         </div>
       </section>
       <footer>
+        <p id="world-input-status" class="world-input-status" role="status"></p>
         <div class="button-row">
-          <button id="world-arm" class="primary" data-i18n="arm">Arm / resume</button
+          <button id="world-arm" data-sim-icon="play" class="primary" data-i18n="arm">
+            Arm / resume</button
           ><button id="world-pause" data-i18n="pause">Pause</button
-          ><button id="world-retry" data-i18n="retry">Retry</button
+          ><button id="world-retry" data-sim-icon="back" data-i18n="retry">Retry</button
           ><button id="world-watch-demo" data-i18n="watchDemo" hidden>Watch demonstration</button
           ><button id="world-fire" data-i18n="fire">Fire · Space</button
           ><button id="world-next" data-i18n="next">Next in playlist</button
           ><button id="export-flight" data-i18n="exportProof">Export recording</button>
         </div>
-        <div class="camera-settings">
-          <label>FOV <input id="world-fov" type="range" min="60" max="110" value="82" /></label
-          ><label data-i18n="tilt">Camera tilt</label
-          ><input id="world-tilt" type="range" min="0" max="35" value="10" />
-        </div>
-        <p data-i18n="keys">W/S pitch · A/D roll · Q/E yaw · ↑/↓ throttle · P pause · Space fire</p>
+        <p id="world-keys-hint" data-i18n="keys">
+          W/S pitch · A/D roll · Q/E yaw · ↑/↓ throttle · P pause · Space fire
+        </p>
       </footer>
     </dialog>
     <dialog id="drone-hangar">
@@ -359,9 +649,46 @@
         Drag to rotate. Scroll to zoom. Every appearance uses the same flight handling.
       </p>
     </dialog>
+    <dialog id="sim-settings" class="sim-settings">
+      <header>
+        <div>
+          <p class="eyebrow" data-i18n="makeItYours">MAKE IT YOURS</p>
+          <h2 data-i18n="settings">Settings</h2>
+        </div>
+        <button id="close-sim-settings" data-i18n="close">Close</button>
+      </header>
+      <p data-i18n="settingsHelp">
+        Your controls and flight preferences carry across worlds and playlists.
+      </p>
+      <div id="sim-settings-controls"></div>
+      <div class="sim-accessibility">
+        <label
+          ><span data-i18n="textStyle">Text style</span
+          ><select id="sim-text-face">
+            <option value="pixel" data-i18n="gameType">Game typography</option>
+            <option value="plain" data-i18n="plainType">Plain text</option>
+          </select></label
+        >
+        <label
+          ><span data-i18n="menuMotion">Menu motion</span
+          ><select id="sim-motion">
+            <option value="system" data-i18n="systemMotion">Follow device preference</option>
+            <option value="reduced" data-i18n="reducedMotion">Reduced motion</option>
+          </select></label
+        >
+      </div>
+      <div id="sim-audio-mix" class="sim-accessibility"></div>
+      <p class="hint" data-i18n="audioMixHelp">
+        Adjust sound without changing your master mute. Interface &amp; feedback includes gate,
+        impact and combat cues. Your mix is shared across simulator views.
+      </p>
+      <p class="hint" data-i18n="settingsPaused">
+        Changing settings keeps your flight paused. Resume when you are ready.
+      </p>
+    </dialog>
     <dialog id="world-radio-dialog">
       <header>
-        <h2 data-i18n="setup">Controller setup</h2>
+        <h2 id="world-radio-title">Radio setup</h2>
         <button id="close-radio" data-i18n="close">Close</button>
       </header>
       <div id="world-radio-setup"></div>
