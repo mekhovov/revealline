@@ -1589,3 +1589,10 @@ A temporary disk-full condition was resolved by deleting only two generated
 `distribution.zip` duplicates under `/tmp/fpv-sim-entry-build-20261002` and
 `/tmp/fpv-sim-entry-qualified-20261002`; extracted builds, checksum manifests,
 source and recorded evidence remain. No user assets or checkout were removed.
+
+Integrated Garage candidate `88a407579828a2b15ed5d3d1846414d6cc9de754` passes
+all three fresh admissions under inherited #930 policies, committed-input/ZIP
+checks and two identical builds. Admitted complete source counts are35/68/100
+for Flight/Academy/World; World bytes14,064,140. Exact source runtime from the
+Garage playback receipts is unchanged; new discovery/worker helpers are inherited
+from reviewed #930. See `fpv-garage-integrated-package-verification.json`.
