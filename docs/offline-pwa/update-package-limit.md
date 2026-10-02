@@ -44,6 +44,50 @@ verified cached content. Removing the icon or clearing website data is not a
 repair for this programming error. A currently loaded updater may need to be
 reopened to receive the corrected published code.
 
+## Growth and compatibility safeguards
+
+The publisher and downloads screen now call the same catalogue admission
+function. It checks all choices, including unselected archives, tools and music,
+before offering a download. New groups need no hard-coded downloader menu entry:
+their IDs, ownership and dependencies come from the generated catalogue.
+
+- Duplicate package IDs and file paths fail admission instead of silently
+  replacing an earlier entry. Reusing the same content hash at different paths
+  remains supported, provided its declared byte size agrees.
+- Every dependency must exist and stay within its gameplay or soundtrack class.
+  Cycles fail admission. Mission references must point to gameplay packages.
+- Files use the downloader's own hash and size validator. Its existing 32 MiB
+  per-file cap now also applies at build time. A larger asset needs a reviewed
+  chunked/streaming format or an explicitly qualified memory-budget change;
+  simply raising the cap is not a safe mobile-storage strategy.
+- Dependency resolution uses an explicit stack and visits shared dependencies
+  once. More chapters or deeper dependency chains do not consume the JavaScript
+  call stack. Downloads still reuse verified content hashes and checkpoint
+  completed files through the existing store.
+- Both existing catalogue formats remain supported. Additional metadata is
+  allowed; an unknown format or asset kind fails before transfer. Gameplay paths
+  stay edition-relative, while virtual recording IDs retain the rights-aware
+  audio-provider path.
+- All-current updates include newly published current gameplay **and** retain
+  extras the player already selected. Selected-only intent remains explicit,
+  even if that selection happens to cover every current package. Newly added
+  optional extras and recordings are never inferred from all-current intent.
+
+These checks do not prove an authored package lists every asset it will use at
+runtime. When adding a feature, its publisher must register its complete runtime
+and asset closure, stable package identity and current/optional classification.
+Then verify a cold offline launch into previously unvisited content with actual
+outbound requests blocked. Package renames require an explicit compatibility
+strategy; they are not inferred from titles. Breaking catalogue changes require
+compatible reader rollout and migration before publication. Keep old saves,
+replays, pinned content and installed-state readers compatible.
+
+The bounds are deliberate, not promises of unlimited device capacity. Builds
+must fail before release when content exceeds a reader contract. Quota failures,
+browser eviction and physical-device update/offline qualification remain separate
+release checks. None of this makes offline preparation a prerequisite for online
+play, and admission does not clear installed files or progress.
+
 ## Evidence and limits
 
 A one-off diagnostic used the actual published catalogue with the production
@@ -66,6 +110,15 @@ update with 108 packages, competing profile ownership, additions/removals,
 malformed and oversized selections, copying the selection, and foreign scopes.
 Automated suites remain **WAIVED_SKIPPED_NOT_PASSED** under the existing
 owner-authorized `publishing/test-policy.json`. The cases are not claimed as run.
+
+Additional cases in `game/test/download-catalogue.test.mjs` cover 4,096 deeply
+dependent packages, cycles, missing and mixed dependencies, duplicate identities,
+oversized files, both existing formats, additive metadata, hash aliases and
+selection restoration as chapters and extras are added. These are also unrun
+under the same policy. A read-only diagnostic of the actual published catalogue
+passed admission for all 285 groups and 1,544 file descriptors; its largest file
+was 12,358,446 bytes. The all-current selection resolved 525 deduplicated gameplay
+files without selecting recorded music.
 
 Required lint, formatting, repository validation, whitespace checking and full
 in-memory build inspection passed. The [build summary](evidence/update-package-limit-20261002/build-summary.json)
