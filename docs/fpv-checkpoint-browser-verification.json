@@ -1,0 +1,140 @@
+{
+  "format": "FPVCheckpointHostEvidence.v1",
+  "createdAt": "2026-10-02T14:16:36.258Z",
+  "passed": true,
+  "checks": [
+    {
+      "name": "Prepare real recorded two-objective flight and separate interrupted evidence",
+      "passed": true,
+      "course": "checkpoint-browser-fixture",
+      "frames": 25
+    },
+    {
+      "name": "Load production HTML with isolated native storage and no physical gamepads",
+      "passed": true,
+      "catalogue": 148,
+      "viewport": {
+        "width": 1264,
+        "height": 760
+      }
+    },
+    {
+      "name": "Former blocked spawn beginner-52 section 4: exact paused entry and retry",
+      "passed": true,
+      "startTick": 1198,
+      "orientation": [42493, -797677, -87374, -595208],
+      "velocity": {
+        "x": 11,
+        "y": -7,
+        "z": 3458
+      }
+    },
+    {
+      "name": "Former blocked spawn beginner-52 section 6: exact paused entry and retry",
+      "passed": true,
+      "startTick": 2123,
+      "orientation": [-88697, 555735, 38238, 825731],
+      "velocity": {
+        "x": 340,
+        "y": 3,
+        "z": -3441
+      }
+    },
+    {
+      "name": "Former blocked spawn beginner-53 section 4: exact paused entry and retry",
+      "passed": true,
+      "startTick": 1797,
+      "orientation": [-42724, 798655, 87635, 593840],
+      "velocity": {
+        "x": 27,
+        "y": 106,
+        "z": 3452
+      }
+    },
+    {
+      "name": "Former blocked spawn beginner-56 section 7: exact paused entry and retry",
+      "passed": true,
+      "startTick": 1915,
+      "orientation": [-45682, 777210, 84926, 621809],
+      "velocity": {
+        "x": -224,
+        "y": 21,
+        "z": 3451
+      }
+    },
+    {
+      "name": "Missing proof is visibly labelled full-route unscored practice from original spawn",
+      "passed": true
+    },
+    {
+      "name": "Actual ordinary-flight result offers targeted practice through its player button",
+      "passed": true,
+      "button": "Practise longest section",
+      "startTick": 5
+    },
+    {
+      "name": "Manual completion stops at selected goal without proof, recovery, medal or playlist changes",
+      "passed": true,
+      "result": "Section completeUnscored practice. Completion records, medals and playlists are unchanged.0.40 sPractise againFly full challengeBack to lobby",
+      "ticks": 25
+    },
+    {
+      "name": "Practise again reconstructs entry; full challenge returns to ordinary original launch",
+      "passed": true
+    },
+    {
+      "name": "Ukrainian checkpoint briefing and practice result retain unscored meaning",
+      "passed": true,
+      "brief": "Тренуйте лише цю ціль: Утримуйте позицію. Відновлено записані орієнтацію, імпульс, параметри чутливості та стан світу.",
+      "result": "Ділянку виконаноТренування без заліку. Записи виконання, медалі та списки польотів не змінюються.0.40 сТренуватися ще разЛетіти повне завданняДо меню"
+    },
+    {
+      "name": "Controlled keyboard takeover preserves recorded throttle only after deliberate Arm",
+      "passed": true,
+      "source": "keyboard",
+      "throttle": 500,
+      "ticks": 10
+    },
+    {
+      "name": "Controlled touch takeover preserves recorded throttle only after deliberate Arm",
+      "passed": true,
+      "source": "touch",
+      "throttle": 500,
+      "ticks": 9
+    },
+    {
+      "name": "Controlled controller takeover preserves recorded throttle only after deliberate Arm",
+      "passed": true,
+      "source": "controller",
+      "throttle": 500,
+      "ticks": 9
+    },
+    {
+      "name": "Controlled TX15 requires exact stick pickup and a fresh OFF→ON edge; held arm/fire cannot resume",
+      "passed": true,
+      "device": "Controlled TX15-shaped browser sample",
+      "pickupThrottle": 500,
+      "freshArmRequired": true,
+      "heldFireCleared": true
+    },
+    {
+      "name": "Closing while a recorded prefix prepares cannot resurrect or arm the flight",
+      "passed": true
+    },
+    {
+      "name": "No application error and verified source bytes unchanged",
+      "passed": true
+    }
+  ],
+  "source": {
+    "optional-practice/fpv-worlds/index.html": "cb11e9075a1de6a53f8097d5f3819f54426b49cef309c09189aa2f9e226af25c",
+    "optional-practice/civilian-fpv/world-app.mjs": "871813b2a4bb010fa8497b592b1b6f4404837cb4bdcb76f2e7028d43cb2e6df8",
+    "optional-practice/civilian-fpv/world-progress.mjs": "032fa513f09104efde3a3e64f09d0534d889465bba9baa771ac6f0e1d830077c",
+    "optional-practice/civilian-fpv/world-model.mjs": "719cbb0761bac1ef47846f4f08d7f65b959da00c85afbf43fb86c53c6c088478",
+    "optional-practice/civilian-fpv/input.mjs": "9673e7be6df876d9fa95e8674a879bf3ca9b930ec13d861e216eeacd08f0a761",
+    "optional-practice/civilian-fpv/world-catalogue.mjs": "d901363b623193f4896100f9381c7579946796e741554f012581ebb93f9ea8a6",
+    "optional-practice/civilian-fpv/world-demonstrations.mjs": "2e86eeb76571b4caeb23f7f4a39461c57e8bd8d3ba9926f1b781295bdf1885b1"
+  },
+  "errors": [],
+  "scope": "Actual production host and browser DOM; deterministic synthetic flight plus real bundled Acro recordings; isolated native IndexedDB/preferences. No physical-radio, player or deployment qualification."
+}

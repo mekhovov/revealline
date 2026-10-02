@@ -1,0 +1,81 @@
+{
+  "format": "FPVStandardControllerAdapterEvidence.v1",
+  "createdAt": "2026-10-02T03:52:50.375Z",
+  "passed": true,
+  "results": [
+    {
+      "name": "Steam Deck/Xbox/DualSense standard mapping has identical four axes",
+      "passed": true,
+      "deviceShapes": 3
+    },
+    {
+      "name": "Connect held controls/buttons require release and never arm automatically",
+      "passed": true
+    },
+    {
+      "name": "A requires fresh press-release and centred axes; held A cannot repeat",
+      "passed": true
+    },
+    {
+      "name": "UI Arm requires current neutral axes and released buttons rather than latched readiness",
+      "passed": true
+    },
+    {
+      "name": "Qualified Arm retains neutral pickup when throttle rises on the next frame",
+      "passed": true
+    },
+    {
+      "name": "Menu/flight scope handoff releases throttle and pending gestures",
+      "passed": true
+    },
+    {
+      "name": "Throttle integrates only fixed samples; centre holds and negative lowers",
+      "passed": true
+    },
+    {
+      "name": "Dead zone stops drift and full axes retain full travel",
+      "passed": true
+    },
+    {
+      "name": "D-pad/bumpers/triggers are flight fallbacks; analog has priority",
+      "passed": true
+    },
+    {
+      "name": "Back Start Reset release actions occur once and clear flight outputs",
+      "passed": true
+    },
+    {
+      "name": "Fire held on connect cannot fire; X only fires inside active scope",
+      "passed": true
+    },
+    {
+      "name": "Disconnect and device replacement pause once, zero output and demand neutral",
+      "passed": true
+    },
+    {
+      "name": "Unmapped radios, excluded calibrated device and malformed axes never fly",
+      "passed": true
+    },
+    {
+      "name": "Multiple controllers preserve selected device until loss",
+      "passed": true
+    },
+    {
+      "name": "Stall and focus loss cannot catch up throttle or rearm held inputs",
+      "passed": true
+    },
+    {
+      "name": "Preview seeding has no ownership effect and reset removes seed",
+      "passed": true
+    },
+    {
+      "name": "Legacy input owner remains inert for external controller and radio",
+      "passed": true
+    },
+    {
+      "name": "Disposed adapter stays silent and releases listeners",
+      "passed": true
+    }
+  ],
+  "scope": "Production adapter with explicit standard Gamepad-shaped samples and controlled event targets. Actual browser module; controlled Gamepad-shaped samples/event targets, no physical device or added unit-suite claim."
+}

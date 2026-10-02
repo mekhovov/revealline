@@ -1,0 +1,1959 @@
+{
+  "format": "FPVLessonResponseBrowserVerification.v1",
+  "createdAt": "2026-10-02T00:13:47.840Z",
+  "url": "http://127.0.0.1:8789/dist/fpv-lesson-response-verification/index.html",
+  "passed": true,
+  "checks": [
+    {
+      "name": "All26lessons and122steps select their own example and localized phase",
+      "passed": true,
+      "lessons": 26,
+      "steps": 122,
+      "locales": [
+        "en",
+        "uk"
+      ],
+      "axisExplorerExceptions": 2
+    },
+    {
+      "name": "Acro lesson9 left turn uses actual negative bank/yaw, then counter-roll exit",
+      "passed": true,
+      "lesson": "beginner-21",
+      "step": 4,
+      "initialYaw": 8805,
+      "minRoll": -627,
+      "minimumYawCommand": -0.210296630859375,
+      "maximumExitRoll": 0.112762451171875,
+      "exit": {
+        "tick": 350,
+        "controls": {
+          "roll": 0.002227783203125,
+          "pitch": 0.008514404296875,
+          "yaw": -0.001861572265625,
+          "throttle": 0.500620400554148
+        },
+        "attitude": {
+          "roll": -16,
+          "pitch": -97,
+          "yaw": 19,
+          "up": {
+            "x": -2816,
+            "y": 999856,
+            "z": 16756
+          }
+        },
+        "phase": "Counter-roll to leave the turn"
+      }
+    },
+    {
+      "name": "Fullscreen practice retains the current localized phase in its visible status",
+      "passed": true,
+      "locales": [
+        "en",
+        "uk"
+      ],
+      "kind": "turn",
+      "status": "Крен і рискання ліворуч разом · ПРИКЛАД КРОКУ · темп 0,5× · прийом керування, а не запис маршруту"
+    },
+    {
+      "name": "Keyboard takeover and release update displayed controls before the next tick",
+      "passed": true,
+      "takeoverTick": 0,
+      "applied": {
+        "throttle": 0,
+        "roll": 0.5,
+        "pitch": 0,
+        "yaw": 0
+      }
+    },
+    {
+      "name": "Manual control remains unscored and continuous beyond13minutes",
+      "passed": true,
+      "ticks": 39105,
+      "seconds": 782.1,
+      "contacts": 0
+    },
+    {
+      "name": "en Mode1: immediate calibrated input and both gimbal axes",
+      "passed": true,
+      "layout": [
+        "yaw",
+        "pitch",
+        "roll",
+        "throttle"
+      ],
+      "command": {
+        "throttle": 0.61,
+        "roll": 0.22,
+        "pitch": -0.31,
+        "yaw": 0.44
+      },
+      "phase": {
+        "en": "Bank and yaw left together",
+        "uk": "Крен і рискання ліворуч разом"
+      }
+    },
+    {
+      "name": "en Mode2: immediate calibrated input and both gimbal axes",
+      "passed": true,
+      "layout": [
+        "yaw",
+        "throttle",
+        "roll",
+        "pitch"
+      ],
+      "command": {
+        "throttle": 0.61,
+        "roll": 0.22,
+        "pitch": -0.31,
+        "yaw": 0.44
+      },
+      "phase": {
+        "en": "Bank and yaw left together",
+        "uk": "Крен і рискання ліворуч разом"
+      }
+    },
+    {
+      "name": "en Mode3: immediate calibrated input and both gimbal axes",
+      "passed": true,
+      "layout": [
+        "roll",
+        "pitch",
+        "yaw",
+        "throttle"
+      ],
+      "command": {
+        "throttle": 0.61,
+        "roll": 0.22,
+        "pitch": -0.31,
+        "yaw": 0.44
+      },
+      "phase": {
+        "en": "Bank and yaw left together",
+        "uk": "Крен і рискання ліворуч разом"
+      }
+    },
+    {
+      "name": "en Mode4: immediate calibrated input and both gimbal axes",
+      "passed": true,
+      "layout": [
+        "roll",
+        "throttle",
+        "yaw",
+        "pitch"
+      ],
+      "command": {
+        "throttle": 0.61,
+        "roll": 0.22,
+        "pitch": -0.31,
+        "yaw": 0.44
+      },
+      "phase": {
+        "en": "Bank and yaw left together",
+        "uk": "Крен і рискання ліворуч разом"
+      }
+    },
+    {
+      "name": "uk Mode1: immediate calibrated input and both gimbal axes",
+      "passed": true,
+      "layout": [
+        "yaw",
+        "pitch",
+        "roll",
+        "throttle"
+      ],
+      "command": {
+        "throttle": 0.61,
+        "roll": 0.22,
+        "pitch": -0.31,
+        "yaw": 0.44
+      },
+      "phase": {
+        "en": "Bank and yaw left together",
+        "uk": "Крен і рискання ліворуч разом"
+      }
+    },
+    {
+      "name": "uk Mode2: immediate calibrated input and both gimbal axes",
+      "passed": true,
+      "layout": [
+        "yaw",
+        "throttle",
+        "roll",
+        "pitch"
+      ],
+      "command": {
+        "throttle": 0.61,
+        "roll": 0.22,
+        "pitch": -0.31,
+        "yaw": 0.44
+      },
+      "phase": {
+        "en": "Bank and yaw left together",
+        "uk": "Крен і рискання ліворуч разом"
+      }
+    },
+    {
+      "name": "uk Mode3: immediate calibrated input and both gimbal axes",
+      "passed": true,
+      "layout": [
+        "roll",
+        "pitch",
+        "yaw",
+        "throttle"
+      ],
+      "command": {
+        "throttle": 0.61,
+        "roll": 0.22,
+        "pitch": -0.31,
+        "yaw": 0.44
+      },
+      "phase": {
+        "en": "Bank and yaw left together",
+        "uk": "Крен і рискання ліворуч разом"
+      }
+    },
+    {
+      "name": "uk Mode4: immediate calibrated input and both gimbal axes",
+      "passed": true,
+      "layout": [
+        "roll",
+        "throttle",
+        "yaw",
+        "pitch"
+      ],
+      "command": {
+        "throttle": 0.61,
+        "roll": 0.22,
+        "pitch": -0.31,
+        "yaw": 0.44
+      },
+      "phase": {
+        "en": "Bank and yaw left together",
+        "uk": "Крен і рискання ліворуч разом"
+      }
+    },
+    {
+      "name": "All preview work leaves host evidence and progress unchanged; disposal releases frames",
+      "passed": true,
+      "hostStarts": 0,
+      "hostPauses": 37
+    }
+  ],
+  "curriculum": [
+    {
+      "lesson": "beginner-01",
+      "mode": "self-level",
+      "step": 1,
+      "title": "Ready on the launch pad",
+      "passed": true,
+      "kind": "axis-explorer",
+      "phase": null,
+      "exampleTick": 1,
+      "physicalTicks": 1
+    },
+    {
+      "lesson": "beginner-01",
+      "mode": "self-level",
+      "step": 2,
+      "title": "Lift gently",
+      "passed": true,
+      "kind": "lift",
+      "phase": {
+        "en": "Add thrust and climb gently",
+        "uk": "Додайте тягу й плавно підніміться"
+      },
+      "exampleTick": 2,
+      "physicalTicks": 2
+    },
+    {
+      "lesson": "beginner-01",
+      "mode": "self-level",
+      "step": 3,
+      "title": "Settle onto the pad",
+      "passed": true,
+      "kind": "land",
+      "phase": {
+        "en": "Descend level at a calm speed",
+        "uk": "Спускайтеся рівно й повільно"
+      },
+      "exampleTick": 2,
+      "physicalTicks": 167
+    },
+    {
+      "lesson": "beginner-02",
+      "mode": "self-level",
+      "step": 1,
+      "title": "Lift gently",
+      "passed": true,
+      "kind": "lift",
+      "phase": {
+        "en": "Add thrust and climb gently",
+        "uk": "Додайте тягу й плавно підніміться"
+      },
+      "exampleTick": 2,
+      "physicalTicks": 2
+    },
+    {
+      "lesson": "beginner-02",
+      "mode": "self-level",
+      "step": 2,
+      "title": "Climb to the upper ribbon",
+      "passed": true,
+      "kind": "lift",
+      "phase": {
+        "en": "Add thrust and climb gently",
+        "uk": "Додайте тягу й плавно підніміться"
+      },
+      "exampleTick": 2,
+      "physicalTicks": 124
+    },
+    {
+      "lesson": "beginner-02",
+      "mode": "self-level",
+      "step": 3,
+      "title": "Settle onto the pad",
+      "passed": true,
+      "kind": "land",
+      "phase": {
+        "en": "Descend level at a calm speed",
+        "uk": "Спускайтеся рівно й повільно"
+      },
+      "exampleTick": 2,
+      "physicalTicks": 167
+    },
+    {
+      "lesson": "beginner-03",
+      "mode": "self-level",
+      "step": 1,
+      "title": "Lift gently",
+      "passed": true,
+      "kind": "lift",
+      "phase": {
+        "en": "Add thrust and climb gently",
+        "uk": "Додайте тягу й плавно підніміться"
+      },
+      "exampleTick": 2,
+      "physicalTicks": 2
+    },
+    {
+      "lesson": "beginner-03",
+      "mode": "self-level",
+      "step": 2,
+      "title": "Keep the hover calm",
+      "passed": true,
+      "kind": "hover",
+      "phase": {
+        "en": "Keep level; make small height corrections",
+        "uk": "Тримайте рівно; малі поправки висоти"
+      },
+      "exampleTick": 2,
+      "physicalTicks": 149
+    },
+    {
+      "lesson": "beginner-03",
+      "mode": "self-level",
+      "step": 3,
+      "title": "Settle onto the pad",
+      "passed": true,
+      "kind": "land",
+      "phase": {
+        "en": "Descend level at a calm speed",
+        "uk": "Спускайтеся рівно й повільно"
+      },
+      "exampleTick": 2,
+      "physicalTicks": 167
+    },
+    {
+      "lesson": "beginner-04",
+      "mode": "self-level",
+      "step": 1,
+      "title": "Lift gently",
+      "passed": true,
+      "kind": "lift",
+      "phase": {
+        "en": "Add thrust and climb gently",
+        "uk": "Додайте тягу й плавно підніміться"
+      },
+      "exampleTick": 2,
+      "physicalTicks": 2
+    },
+    {
+      "lesson": "beginner-04",
+      "mode": "self-level",
+      "step": 2,
+      "title": "Face right",
+      "passed": true,
+      "kind": "yaw",
+      "phase": {
+        "en": "Yaw right; keep roll and pitch calm",
+        "uk": "Рискання праворуч; крен і тангаж спокійні"
+      },
+      "exampleTick": 2,
+      "physicalTicks": 149
+    },
+    {
+      "lesson": "beginner-04",
+      "mode": "self-level",
+      "step": 3,
+      "title": "Face left",
+      "passed": true,
+      "kind": "yaw",
+      "phase": {
+        "en": "Yaw left; keep roll and pitch calm",
+        "uk": "Рискання ліворуч; крен і тангаж спокійні"
+      },
+      "exampleTick": 2,
+      "physicalTicks": 169
+    },
+    {
+      "lesson": "beginner-04",
+      "mode": "self-level",
+      "step": 4,
+      "title": "Face forward",
+      "passed": true,
+      "kind": "yaw",
+      "phase": {
+        "en": "Yaw right; keep roll and pitch calm",
+        "uk": "Рискання праворуч; крен і тангаж спокійні"
+      },
+      "exampleTick": 2,
+      "physicalTicks": 169
+    },
+    {
+      "lesson": "beginner-04",
+      "mode": "self-level",
+      "step": 5,
+      "title": "Settle onto the pad",
+      "passed": true,
+      "kind": "land",
+      "phase": {
+        "en": "Descend level at a calm speed",
+        "uk": "Спускайтеся рівно й повільно"
+      },
+      "exampleTick": 2,
+      "physicalTicks": 167
+    },
+    {
+      "lesson": "beginner-05",
+      "mode": "self-level",
+      "step": 1,
+      "title": "Lift gently",
+      "passed": true,
+      "kind": "lift",
+      "phase": {
+        "en": "Add thrust and climb gently",
+        "uk": "Додайте тягу й плавно підніміться"
+      },
+      "exampleTick": 2,
+      "physicalTicks": 2
+    },
+    {
+      "lesson": "beginner-05",
+      "mode": "self-level",
+      "step": 2,
+      "title": "Nose forward, move forward",
+      "passed": true,
+      "kind": "travel",
+      "phase": {
+        "en": "Set a small directional tilt",
+        "uk": "Задайте малий нахил у напрямку руху"
+      },
+      "exampleTick": 2,
+      "physicalTicks": 149
+    },
+    {
+      "lesson": "beginner-05",
+      "mode": "self-level",
+      "step": 3,
+      "title": "Level, then slow the drift",
+      "passed": true,
+      "kind": "brake",
+      "phase": {
+        "en": "Lean against the existing drift",
+        "uk": "Нахиліться проти початкового дрейфу"
+      },
+      "exampleTick": 2,
+      "physicalTicks": 219
+    },
+    {
+      "lesson": "beginner-05",
+      "mode": "self-level",
+      "step": 4,
+      "title": "Settle onto the pad",
+      "passed": true,
+      "kind": "land",
+      "phase": {
+        "en": "Descend level at a calm speed",
+        "uk": "Спускайтеся рівно й повільно"
+      },
+      "exampleTick": 2,
+      "physicalTicks": 167
+    },
+    {
+      "lesson": "beginner-06",
+      "mode": "self-level",
+      "step": 1,
+      "title": "Lift gently",
+      "passed": true,
+      "kind": "lift",
+      "phase": {
+        "en": "Add thrust and climb gently",
+        "uk": "Додайте тягу й плавно підніміться"
+      },
+      "exampleTick": 2,
+      "physicalTicks": 2
+    },
+    {
+      "lesson": "beginner-06",
+      "mode": "self-level",
+      "step": 2,
+      "title": "Slide right",
+      "passed": true,
+      "kind": "travel",
+      "phase": {
+        "en": "Set a small directional tilt",
+        "uk": "Задайте малий нахил у напрямку руху"
+      },
+      "exampleTick": 2,
+      "physicalTicks": 149
+    },
+    {
+      "lesson": "beginner-06",
+      "mode": "self-level",
+      "step": 3,
+      "title": "Slide left",
+      "passed": true,
+      "kind": "travel",
+      "phase": {
+        "en": "Set a small directional tilt",
+        "uk": "Задайте малий нахил у напрямку руху"
+      },
+      "exampleTick": 2,
+      "physicalTicks": 149
+    },
+    {
+      "lesson": "beginner-06",
+      "mode": "self-level",
+      "step": 4,
+      "title": "Settle onto the pad",
+      "passed": true,
+      "kind": "land",
+      "phase": {
+        "en": "Descend level at a calm speed",
+        "uk": "Спускайтеся рівно й повільно"
+      },
+      "exampleTick": 2,
+      "physicalTicks": 167
+    },
+    {
+      "lesson": "beginner-07",
+      "mode": "self-level",
+      "step": 1,
+      "title": "Lift gently",
+      "passed": true,
+      "kind": "lift",
+      "phase": {
+        "en": "Add thrust and climb gently",
+        "uk": "Додайте тягу й плавно підніміться"
+      },
+      "exampleTick": 2,
+      "physicalTicks": 2
+    },
+    {
+      "lesson": "beginner-07",
+      "mode": "self-level",
+      "step": 2,
+      "title": "Build a little speed",
+      "passed": true,
+      "kind": "travel",
+      "phase": {
+        "en": "Set a small directional tilt",
+        "uk": "Задайте малий нахил у напрямку руху"
+      },
+      "exampleTick": 2,
+      "physicalTicks": 149
+    },
+    {
+      "lesson": "beginner-07",
+      "mode": "self-level",
+      "step": 3,
+      "title": "Brake into the box",
+      "passed": true,
+      "kind": "brake",
+      "phase": {
+        "en": "Lean against the existing drift",
+        "uk": "Нахиліться проти початкового дрейфу"
+      },
+      "exampleTick": 2,
+      "physicalTicks": 219
+    },
+    {
+      "lesson": "beginner-07",
+      "mode": "self-level",
+      "step": 4,
+      "title": "Reverse, then settle",
+      "passed": true,
+      "kind": "brake",
+      "phase": {
+        "en": "Lean against the existing drift",
+        "uk": "Нахиліться проти початкового дрейфу"
+      },
+      "exampleTick": 2,
+      "physicalTicks": 219
+    },
+    {
+      "lesson": "beginner-07",
+      "mode": "self-level",
+      "step": 5,
+      "title": "Settle onto the pad",
+      "passed": true,
+      "kind": "land",
+      "phase": {
+        "en": "Descend level at a calm speed",
+        "uk": "Спускайтеся рівно й повільно"
+      },
+      "exampleTick": 2,
+      "physicalTicks": 167
+    },
+    {
+      "lesson": "beginner-08",
+      "mode": "self-level",
+      "step": 1,
+      "title": "Lift gently",
+      "passed": true,
+      "kind": "lift",
+      "phase": {
+        "en": "Add thrust and climb gently",
+        "uk": "Додайте тягу й плавно підніміться"
+      },
+      "exampleTick": 2,
+      "physicalTicks": 2
+    },
+    {
+      "lesson": "beginner-08",
+      "mode": "self-level",
+      "step": 2,
+      "title": "Travel and climb a little",
+      "passed": true,
+      "kind": "lift",
+      "phase": {
+        "en": "Add thrust and climb gently",
+        "uk": "Додайте тягу й плавно підніміться"
+      },
+      "exampleTick": 2,
+      "physicalTicks": 131
+    },
+    {
+      "lesson": "beginner-08",
+      "mode": "self-level",
+      "step": 3,
+      "title": "Travel into the lower box",
+      "passed": true,
+      "kind": "descend",
+      "phase": {
+        "en": "Reduce thrust to descend",
+        "uk": "Зменште тягу для спуску"
+      },
+      "exampleTick": 2,
+      "physicalTicks": 197
+    },
+    {
+      "lesson": "beginner-08",
+      "mode": "self-level",
+      "step": 4,
+      "title": "Settle onto the pad",
+      "passed": true,
+      "kind": "land",
+      "phase": {
+        "en": "Descend level at a calm speed",
+        "uk": "Спускайтеся рівно й повільно"
+      },
+      "exampleTick": 2,
+      "physicalTicks": 167
+    },
+    {
+      "lesson": "beginner-09",
+      "mode": "self-level",
+      "step": 1,
+      "title": "Lift gently",
+      "passed": true,
+      "kind": "lift",
+      "phase": {
+        "en": "Add thrust and climb gently",
+        "uk": "Додайте тягу й плавно підніміться"
+      },
+      "exampleTick": 2,
+      "physicalTicks": 2
+    },
+    {
+      "lesson": "beginner-09",
+      "mode": "self-level",
+      "step": 2,
+      "title": "Fly to the corner",
+      "passed": true,
+      "kind": "brake",
+      "phase": {
+        "en": "Lean against the existing drift",
+        "uk": "Нахиліться проти початкового дрейфу"
+      },
+      "exampleTick": 2,
+      "physicalTicks": 219
+    },
+    {
+      "lesson": "beginner-09",
+      "mode": "self-level",
+      "step": 3,
+      "title": "Turn the nose right",
+      "passed": true,
+      "kind": "yaw",
+      "phase": {
+        "en": "Yaw right; keep roll and pitch calm",
+        "uk": "Рискання праворуч; крен і тангаж спокійні"
+      },
+      "exampleTick": 2,
+      "physicalTicks": 149
+    },
+    {
+      "lesson": "beginner-09",
+      "mode": "self-level",
+      "step": 4,
+      "title": "Fly the new straight",
+      "passed": true,
+      "kind": "travel",
+      "phase": {
+        "en": "Set a small directional tilt",
+        "uk": "Задайте малий нахил у напрямку руху"
+      },
+      "exampleTick": 2,
+      "physicalTicks": 169
+    },
+    {
+      "lesson": "beginner-09",
+      "mode": "self-level",
+      "step": 5,
+      "title": "Settle onto the pad",
+      "passed": true,
+      "kind": "land",
+      "phase": {
+        "en": "Descend level at a calm speed",
+        "uk": "Спускайтеся рівно й повільно"
+      },
+      "exampleTick": 2,
+      "physicalTicks": 169
+    },
+    {
+      "lesson": "beginner-10",
+      "mode": "self-level",
+      "step": 1,
+      "title": "Lift gently",
+      "passed": true,
+      "kind": "lift",
+      "phase": {
+        "en": "Add thrust and climb gently",
+        "uk": "Додайте тягу й плавно підніміться"
+      },
+      "exampleTick": 2,
+      "physicalTicks": 2
+    },
+    {
+      "lesson": "beginner-10",
+      "mode": "self-level",
+      "step": 2,
+      "title": "Approach the front landmark",
+      "passed": true,
+      "kind": "travel",
+      "phase": {
+        "en": "Set a small directional tilt",
+        "uk": "Задайте малий нахил у напрямку руху"
+      },
+      "exampleTick": 2,
+      "physicalTicks": 149
+    },
+    {
+      "lesson": "beginner-10",
+      "mode": "self-level",
+      "step": 3,
+      "title": "Slide to the side landmark",
+      "passed": true,
+      "kind": "travel",
+      "phase": {
+        "en": "Set a small directional tilt",
+        "uk": "Задайте малий нахил у напрямку руху"
+      },
+      "exampleTick": 2,
+      "physicalTicks": 149
+    },
+    {
+      "lesson": "beginner-10",
+      "mode": "self-level",
+      "step": 4,
+      "title": "Settle onto the pad",
+      "passed": true,
+      "kind": "land",
+      "phase": {
+        "en": "Descend level at a calm speed",
+        "uk": "Спускайтеся рівно й повільно"
+      },
+      "exampleTick": 2,
+      "physicalTicks": 167
+    },
+    {
+      "lesson": "beginner-11",
+      "mode": "self-level",
+      "step": 1,
+      "title": "Lift gently",
+      "passed": true,
+      "kind": "lift",
+      "phase": {
+        "en": "Add thrust and climb gently",
+        "uk": "Додайте тягу й плавно підніміться"
+      },
+      "exampleTick": 2,
+      "physicalTicks": 2
+    },
+    {
+      "lesson": "beginner-11",
+      "mode": "self-level",
+      "step": 2,
+      "title": "Pass gate 1",
+      "passed": true,
+      "kind": "travel",
+      "phase": {
+        "en": "Set a small directional tilt",
+        "uk": "Задайте малий нахил у напрямку руху"
+      },
+      "exampleTick": 2,
+      "physicalTicks": 149
+    },
+    {
+      "lesson": "beginner-11",
+      "mode": "self-level",
+      "step": 3,
+      "title": "Pass gate 2",
+      "passed": true,
+      "kind": "travel",
+      "phase": {
+        "en": "Set a small directional tilt",
+        "uk": "Задайте малий нахил у напрямку руху"
+      },
+      "exampleTick": 2,
+      "physicalTicks": 149
+    },
+    {
+      "lesson": "beginner-11",
+      "mode": "self-level",
+      "step": 4,
+      "title": "Pass gate 3",
+      "passed": true,
+      "kind": "travel",
+      "phase": {
+        "en": "Set a small directional tilt",
+        "uk": "Задайте малий нахил у напрямку руху"
+      },
+      "exampleTick": 2,
+      "physicalTicks": 149
+    },
+    {
+      "lesson": "beginner-11",
+      "mode": "self-level",
+      "step": 5,
+      "title": "Settle onto the pad",
+      "passed": true,
+      "kind": "land",
+      "phase": {
+        "en": "Descend level at a calm speed",
+        "uk": "Спускайтеся рівно й повільно"
+      },
+      "exampleTick": 2,
+      "physicalTicks": 167
+    },
+    {
+      "lesson": "beginner-12",
+      "mode": "self-level",
+      "step": 1,
+      "title": "Lift gently",
+      "passed": true,
+      "kind": "lift",
+      "phase": {
+        "en": "Add thrust and climb gently",
+        "uk": "Додайте тягу й плавно підніміться"
+      },
+      "exampleTick": 2,
+      "physicalTicks": 2
+    },
+    {
+      "lesson": "beginner-12",
+      "mode": "self-level",
+      "step": 2,
+      "title": "Begin your first straight",
+      "passed": true,
+      "kind": "travel",
+      "phase": {
+        "en": "Set a small directional tilt",
+        "uk": "Задайте малий нахил у напрямку руху"
+      },
+      "exampleTick": 2,
+      "physicalTicks": 149
+    },
+    {
+      "lesson": "beginner-12",
+      "mode": "self-level",
+      "step": 3,
+      "title": "Slow and face the turn",
+      "passed": true,
+      "kind": "yaw",
+      "phase": {
+        "en": "Yaw right; keep roll and pitch calm",
+        "uk": "Рискання праворуч; крен і тангаж спокійні"
+      },
+      "exampleTick": 2,
+      "physicalTicks": 149
+    },
+    {
+      "lesson": "beginner-12",
+      "mode": "self-level",
+      "step": 4,
+      "title": "Take the second straight",
+      "passed": true,
+      "kind": "travel",
+      "phase": {
+        "en": "Set a small directional tilt",
+        "uk": "Задайте малий нахил у напрямку руху"
+      },
+      "exampleTick": 2,
+      "physicalTicks": 169
+    },
+    {
+      "lesson": "beginner-12",
+      "mode": "self-level",
+      "step": 5,
+      "title": "Hover above home",
+      "passed": true,
+      "kind": "brake",
+      "phase": {
+        "en": "Lean against the existing drift",
+        "uk": "Нахиліться проти початкового дрейфу"
+      },
+      "exampleTick": 2,
+      "physicalTicks": 239
+    },
+    {
+      "lesson": "beginner-12",
+      "mode": "self-level",
+      "step": 6,
+      "title": "Settle onto the pad",
+      "passed": true,
+      "kind": "land",
+      "phase": {
+        "en": "Descend level at a calm speed",
+        "uk": "Спускайтеся рівно й повільно"
+      },
+      "exampleTick": 2,
+      "physicalTicks": 167
+    },
+    {
+      "lesson": "beginner-13",
+      "mode": "acro",
+      "step": 1,
+      "title": "Lift gently",
+      "passed": true,
+      "kind": "lift",
+      "phase": {
+        "en": "Add thrust and climb gently",
+        "uk": "Додайте тягу й плавно підніміться"
+      },
+      "exampleTick": 2,
+      "physicalTicks": 2
+    },
+    {
+      "lesson": "beginner-13",
+      "mode": "acro",
+      "step": 2,
+      "title": "Tip, then centre",
+      "passed": true,
+      "kind": "tilt-release",
+      "phase": {
+        "en": "Set a small tilt",
+        "uk": "Задайте малий нахил"
+      },
+      "exampleTick": 2,
+      "physicalTicks": 260
+    },
+    {
+      "lesson": "beginner-13",
+      "mode": "acro",
+      "step": 3,
+      "title": "Actively return to level",
+      "passed": true,
+      "kind": "level",
+      "phase": {
+        "en": "Counter the existing tilt",
+        "uk": "Протидійте початковому нахилу"
+      },
+      "exampleTick": 2,
+      "physicalTicks": 367
+    },
+    {
+      "lesson": "beginner-13",
+      "mode": "acro",
+      "step": 4,
+      "title": "Settle onto the pad",
+      "passed": true,
+      "kind": "land",
+      "phase": {
+        "en": "Descend level at a calm speed",
+        "uk": "Спускайтеся рівно й повільно"
+      },
+      "exampleTick": 2,
+      "physicalTicks": 167
+    },
+    {
+      "lesson": "beginner-14",
+      "mode": "acro",
+      "step": 1,
+      "title": "Lift gently",
+      "passed": true,
+      "kind": "lift",
+      "phase": {
+        "en": "Add thrust and climb gently",
+        "uk": "Додайте тягу й плавно підніміться"
+      },
+      "exampleTick": 2,
+      "physicalTicks": 2
+    },
+    {
+      "lesson": "beginner-14",
+      "mode": "acro",
+      "step": 2,
+      "title": "Set a small forward tilt",
+      "passed": true,
+      "kind": "travel",
+      "phase": {
+        "en": "Set a small directional tilt",
+        "uk": "Задайте малий нахил у напрямку руху"
+      },
+      "exampleTick": 2,
+      "physicalTicks": 158
+    },
+    {
+      "lesson": "beginner-14",
+      "mode": "acro",
+      "step": 3,
+      "title": "Counter-rotate and brake",
+      "passed": true,
+      "kind": "brake",
+      "phase": {
+        "en": "Lean against the existing drift",
+        "uk": "Нахиліться проти початкового дрейфу"
+      },
+      "exampleTick": 2,
+      "physicalTicks": 237
+    },
+    {
+      "lesson": "beginner-14",
+      "mode": "acro",
+      "step": 4,
+      "title": "Settle onto the pad",
+      "passed": true,
+      "kind": "land",
+      "phase": {
+        "en": "Descend level at a calm speed",
+        "uk": "Спускайтеся рівно й повільно"
+      },
+      "exampleTick": 2,
+      "physicalTicks": 167
+    },
+    {
+      "lesson": "beginner-15",
+      "mode": "acro",
+      "step": 1,
+      "title": "Ground check",
+      "passed": true,
+      "kind": "axis-explorer",
+      "phase": null,
+      "exampleTick": 1,
+      "physicalTicks": 1
+    },
+    {
+      "lesson": "beginner-15",
+      "mode": "acro",
+      "step": 2,
+      "title": "Lift gently",
+      "passed": true,
+      "kind": "lift",
+      "phase": {
+        "en": "Add thrust and climb gently",
+        "uk": "Додайте тягу й плавно підніміться"
+      },
+      "exampleTick": 2,
+      "physicalTicks": 2
+    },
+    {
+      "lesson": "beginner-15",
+      "mode": "acro",
+      "step": 3,
+      "title": "Settle onto the pad",
+      "passed": true,
+      "kind": "land",
+      "phase": {
+        "en": "Descend level at a calm speed",
+        "uk": "Спускайтеся рівно й повільно"
+      },
+      "exampleTick": 2,
+      "physicalTicks": 167
+    },
+    {
+      "lesson": "beginner-16",
+      "mode": "acro",
+      "step": 1,
+      "title": "Lift gently",
+      "passed": true,
+      "kind": "lift",
+      "phase": {
+        "en": "Add thrust and climb gently",
+        "uk": "Додайте тягу й плавно підніміться"
+      },
+      "exampleTick": 2,
+      "physicalTicks": 2
+    },
+    {
+      "lesson": "beginner-16",
+      "mode": "acro",
+      "step": 2,
+      "title": "Climb, then ease off",
+      "passed": true,
+      "kind": "lift",
+      "phase": {
+        "en": "Add thrust and climb gently",
+        "uk": "Додайте тягу й плавно підніміться"
+      },
+      "exampleTick": 2,
+      "physicalTicks": 149
+    },
+    {
+      "lesson": "beginner-16",
+      "mode": "acro",
+      "step": 3,
+      "title": "Catch the descent",
+      "passed": true,
+      "kind": "descend",
+      "phase": {
+        "en": "Reduce thrust to descend",
+        "uk": "Зменште тягу для спуску"
+      },
+      "exampleTick": 2,
+      "physicalTicks": 197
+    },
+    {
+      "lesson": "beginner-16",
+      "mode": "acro",
+      "step": 4,
+      "title": "Settle onto the pad",
+      "passed": true,
+      "kind": "land",
+      "phase": {
+        "en": "Descend level at a calm speed",
+        "uk": "Спускайтеся рівно й повільно"
+      },
+      "exampleTick": 2,
+      "physicalTicks": 167
+    },
+    {
+      "lesson": "beginner-17",
+      "mode": "acro",
+      "step": 1,
+      "title": "Lift gently",
+      "passed": true,
+      "kind": "lift",
+      "phase": {
+        "en": "Add thrust and climb gently",
+        "uk": "Додайте тягу й плавно підніміться"
+      },
+      "exampleTick": 2,
+      "physicalTicks": 2
+    },
+    {
+      "lesson": "beginner-17",
+      "mode": "acro",
+      "step": 2,
+      "title": "Set a small tilt and release",
+      "passed": true,
+      "kind": "tilt-release",
+      "phase": {
+        "en": "Set a small tilt",
+        "uk": "Задайте малий нахил"
+      },
+      "exampleTick": 2,
+      "physicalTicks": 241
+    },
+    {
+      "lesson": "beginner-17",
+      "mode": "acro",
+      "step": 3,
+      "title": "Level and stop the drift",
+      "passed": true,
+      "kind": "brake",
+      "phase": {
+        "en": "Lean against the existing drift",
+        "uk": "Нахиліться проти початкового дрейфу"
+      },
+      "exampleTick": 2,
+      "physicalTicks": 274
+    },
+    {
+      "lesson": "beginner-17",
+      "mode": "acro",
+      "step": 4,
+      "title": "Settle onto the pad",
+      "passed": true,
+      "kind": "land",
+      "phase": {
+        "en": "Descend level at a calm speed",
+        "uk": "Спускайтеся рівно й повільно"
+      },
+      "exampleTick": 2,
+      "physicalTicks": 167
+    },
+    {
+      "lesson": "beginner-18",
+      "mode": "acro",
+      "step": 1,
+      "title": "Lift gently",
+      "passed": true,
+      "kind": "lift",
+      "phase": {
+        "en": "Add thrust and climb gently",
+        "uk": "Додайте тягу й плавно підніміться"
+      },
+      "exampleTick": 2,
+      "physicalTicks": 2
+    },
+    {
+      "lesson": "beginner-18",
+      "mode": "acro",
+      "step": 2,
+      "title": "Slide right and brake",
+      "passed": true,
+      "kind": "travel",
+      "phase": {
+        "en": "Set a small directional tilt",
+        "uk": "Задайте малий нахил у напрямку руху"
+      },
+      "exampleTick": 2,
+      "physicalTicks": 167
+    },
+    {
+      "lesson": "beginner-18",
+      "mode": "acro",
+      "step": 3,
+      "title": "Slide left and brake",
+      "passed": true,
+      "kind": "travel",
+      "phase": {
+        "en": "Set a small directional tilt",
+        "uk": "Задайте малий нахил у напрямку руху"
+      },
+      "exampleTick": 2,
+      "physicalTicks": 167
+    },
+    {
+      "lesson": "beginner-18",
+      "mode": "acro",
+      "step": 4,
+      "title": "Settle onto the pad",
+      "passed": true,
+      "kind": "land",
+      "phase": {
+        "en": "Descend level at a calm speed",
+        "uk": "Спускайтеся рівно й повільно"
+      },
+      "exampleTick": 2,
+      "physicalTicks": 167
+    },
+    {
+      "lesson": "beginner-19",
+      "mode": "acro",
+      "step": 1,
+      "title": "Lift gently",
+      "passed": true,
+      "kind": "lift",
+      "phase": {
+        "en": "Add thrust and climb gently",
+        "uk": "Додайте тягу й плавно підніміться"
+      },
+      "exampleTick": 2,
+      "physicalTicks": 2
+    },
+    {
+      "lesson": "beginner-19",
+      "mode": "acro",
+      "step": 2,
+      "title": "Face east",
+      "passed": true,
+      "kind": "yaw",
+      "phase": {
+        "en": "Yaw right; keep roll and pitch calm",
+        "uk": "Рискання праворуч; крен і тангаж спокійні"
+      },
+      "exampleTick": 2,
+      "physicalTicks": 167
+    },
+    {
+      "lesson": "beginner-19",
+      "mode": "acro",
+      "step": 3,
+      "title": "Face west",
+      "passed": true,
+      "kind": "yaw",
+      "phase": {
+        "en": "Yaw left; keep roll and pitch calm",
+        "uk": "Рискання ліворуч; крен і тангаж спокійні"
+      },
+      "exampleTick": 2,
+      "physicalTicks": 169
+    },
+    {
+      "lesson": "beginner-19",
+      "mode": "acro",
+      "step": 4,
+      "title": "Face north again",
+      "passed": true,
+      "kind": "yaw",
+      "phase": {
+        "en": "Yaw right; keep roll and pitch calm",
+        "uk": "Рискання праворуч; крен і тангаж спокійні"
+      },
+      "exampleTick": 2,
+      "physicalTicks": 169
+    },
+    {
+      "lesson": "beginner-19",
+      "mode": "acro",
+      "step": 5,
+      "title": "Now travel north",
+      "passed": true,
+      "kind": "travel",
+      "phase": {
+        "en": "Set a small directional tilt",
+        "uk": "Задайте малий нахил у напрямку руху"
+      },
+      "exampleTick": 2,
+      "physicalTicks": 167
+    },
+    {
+      "lesson": "beginner-19",
+      "mode": "acro",
+      "step": 6,
+      "title": "Settle onto the pad",
+      "passed": true,
+      "kind": "land",
+      "phase": {
+        "en": "Descend level at a calm speed",
+        "uk": "Спускайтеся рівно й повільно"
+      },
+      "exampleTick": 2,
+      "physicalTicks": 167
+    },
+    {
+      "lesson": "beginner-20",
+      "mode": "acro",
+      "step": 1,
+      "title": "Lift gently",
+      "passed": true,
+      "kind": "lift",
+      "phase": {
+        "en": "Add thrust and climb gently",
+        "uk": "Додайте тягу й плавно підніміться"
+      },
+      "exampleTick": 2,
+      "physicalTicks": 2
+    },
+    {
+      "lesson": "beginner-20",
+      "mode": "acro",
+      "step": 2,
+      "title": "Climb while moving",
+      "passed": true,
+      "kind": "lift",
+      "phase": {
+        "en": "Add thrust and climb gently",
+        "uk": "Додайте тягу й плавно підніміться"
+      },
+      "exampleTick": 2,
+      "physicalTicks": 131
+    },
+    {
+      "lesson": "beginner-20",
+      "mode": "acro",
+      "step": 3,
+      "title": "Descend while moving",
+      "passed": true,
+      "kind": "descend",
+      "phase": {
+        "en": "Reduce thrust to descend",
+        "uk": "Зменште тягу для спуску"
+      },
+      "exampleTick": 2,
+      "physicalTicks": 215
+    },
+    {
+      "lesson": "beginner-20",
+      "mode": "acro",
+      "step": 4,
+      "title": "Settle after the gates",
+      "passed": true,
+      "kind": "brake",
+      "phase": {
+        "en": "Lean against the existing drift",
+        "uk": "Нахиліться проти початкового дрейфу"
+      },
+      "exampleTick": 2,
+      "physicalTicks": 219
+    },
+    {
+      "lesson": "beginner-20",
+      "mode": "acro",
+      "step": 5,
+      "title": "Settle onto the pad",
+      "passed": true,
+      "kind": "land",
+      "phase": {
+        "en": "Descend level at a calm speed",
+        "uk": "Спускайтеся рівно й повільно"
+      },
+      "exampleTick": 2,
+      "physicalTicks": 167
+    },
+    {
+      "lesson": "beginner-21",
+      "mode": "acro",
+      "step": 1,
+      "title": "Lift gently",
+      "passed": true,
+      "kind": "lift",
+      "phase": {
+        "en": "Add thrust and climb gently",
+        "uk": "Додайте тягу й плавно підніміться"
+      },
+      "exampleTick": 2,
+      "physicalTicks": 2
+    },
+    {
+      "lesson": "beginner-21",
+      "mode": "acro",
+      "step": 2,
+      "title": "Approach the corner",
+      "passed": true,
+      "kind": "travel",
+      "phase": {
+        "en": "Set a small directional tilt",
+        "uk": "Задайте малий нахил у напрямку руху"
+      },
+      "exampleTick": 2,
+      "physicalTicks": 167
+    },
+    {
+      "lesson": "beginner-21",
+      "mode": "acro",
+      "step": 3,
+      "title": "Enter the right turn",
+      "passed": true,
+      "kind": "turn",
+      "phase": {
+        "en": "Bank and yaw right together",
+        "uk": "Крен і рискання праворуч разом"
+      },
+      "exampleTick": 2,
+      "physicalTicks": 167
+    },
+    {
+      "lesson": "beginner-21",
+      "mode": "acro",
+      "step": 4,
+      "title": "Exit through a left turn",
+      "passed": true,
+      "kind": "turn",
+      "phase": {
+        "en": "Bank and yaw left together",
+        "uk": "Крен і рискання ліворуч разом"
+      },
+      "exampleTick": 2,
+      "physicalTicks": 169
+    },
+    {
+      "lesson": "beginner-21",
+      "mode": "acro",
+      "step": 5,
+      "title": "Settle onto the pad",
+      "passed": true,
+      "kind": "land",
+      "phase": {
+        "en": "Descend level at a calm speed",
+        "uk": "Спускайтеся рівно й повільно"
+      },
+      "exampleTick": 2,
+      "physicalTicks": 167
+    },
+    {
+      "lesson": "beginner-22",
+      "mode": "acro",
+      "step": 1,
+      "title": "Lift gently",
+      "passed": true,
+      "kind": "lift",
+      "phase": {
+        "en": "Add thrust and climb gently",
+        "uk": "Додайте тягу й плавно підніміться"
+      },
+      "exampleTick": 2,
+      "physicalTicks": 2
+    },
+    {
+      "lesson": "beginner-22",
+      "mode": "acro",
+      "step": 2,
+      "title": "Loop marker 1 of 8",
+      "passed": true,
+      "kind": "turn",
+      "phase": {
+        "en": "Bank and yaw left together",
+        "uk": "Крен і рискання ліворуч разом"
+      },
+      "exampleTick": 2,
+      "physicalTicks": 186
+    },
+    {
+      "lesson": "beginner-22",
+      "mode": "acro",
+      "step": 3,
+      "title": "Loop marker 2 of 8",
+      "passed": true,
+      "kind": "turn",
+      "phase": {
+        "en": "Bank and yaw left together",
+        "uk": "Крен і рискання ліворуч разом"
+      },
+      "exampleTick": 2,
+      "physicalTicks": 186
+    },
+    {
+      "lesson": "beginner-22",
+      "mode": "acro",
+      "step": 4,
+      "title": "Loop marker 3 of 8",
+      "passed": true,
+      "kind": "turn",
+      "phase": {
+        "en": "Bank and yaw left together",
+        "uk": "Крен і рискання ліворуч разом"
+      },
+      "exampleTick": 2,
+      "physicalTicks": 294
+    },
+    {
+      "lesson": "beginner-22",
+      "mode": "acro",
+      "step": 5,
+      "title": "Loop marker 4 of 8",
+      "passed": true,
+      "kind": "turn",
+      "phase": {
+        "en": "Bank and yaw left together",
+        "uk": "Крен і рискання ліворуч разом"
+      },
+      "exampleTick": 2,
+      "physicalTicks": 186
+    },
+    {
+      "lesson": "beginner-22",
+      "mode": "acro",
+      "step": 6,
+      "title": "Loop marker 5 of 8",
+      "passed": true,
+      "kind": "turn",
+      "phase": {
+        "en": "Bank and yaw right together",
+        "uk": "Крен і рискання праворуч разом"
+      },
+      "exampleTick": 2,
+      "physicalTicks": 186
+    },
+    {
+      "lesson": "beginner-22",
+      "mode": "acro",
+      "step": 7,
+      "title": "Loop marker 6 of 8",
+      "passed": true,
+      "kind": "turn",
+      "phase": {
+        "en": "Bank and yaw right together",
+        "uk": "Крен і рискання праворуч разом"
+      },
+      "exampleTick": 2,
+      "physicalTicks": 186
+    },
+    {
+      "lesson": "beginner-22",
+      "mode": "acro",
+      "step": 8,
+      "title": "Loop marker 7 of 8",
+      "passed": true,
+      "kind": "turn",
+      "phase": {
+        "en": "Bank and yaw right together",
+        "uk": "Крен і рискання праворуч разом"
+      },
+      "exampleTick": 2,
+      "physicalTicks": 294
+    },
+    {
+      "lesson": "beginner-22",
+      "mode": "acro",
+      "step": 9,
+      "title": "Loop marker 8 of 8",
+      "passed": true,
+      "kind": "turn",
+      "phase": {
+        "en": "Bank and yaw right together",
+        "uk": "Крен і рискання праворуч разом"
+      },
+      "exampleTick": 2,
+      "physicalTicks": 186
+    },
+    {
+      "lesson": "beginner-22",
+      "mode": "acro",
+      "step": 10,
+      "title": "Settle onto the pad",
+      "passed": true,
+      "kind": "land",
+      "phase": {
+        "en": "Descend level at a calm speed",
+        "uk": "Спускайтеся рівно й повільно"
+      },
+      "exampleTick": 2,
+      "physicalTicks": 167
+    },
+    {
+      "lesson": "beginner-23",
+      "mode": "acro",
+      "step": 1,
+      "title": "Lift gently",
+      "passed": true,
+      "kind": "lift",
+      "phase": {
+        "en": "Add thrust and climb gently",
+        "uk": "Додайте тягу й плавно підніміться"
+      },
+      "exampleTick": 2,
+      "physicalTicks": 2
+    },
+    {
+      "lesson": "beginner-23",
+      "mode": "acro",
+      "step": 2,
+      "title": "Approach the northern marker",
+      "passed": true,
+      "kind": "travel",
+      "phase": {
+        "en": "Set a small directional tilt",
+        "uk": "Задайте малий нахил у напрямку руху"
+      },
+      "exampleTick": 2,
+      "physicalTicks": 167
+    },
+    {
+      "lesson": "beginner-23",
+      "mode": "acro",
+      "step": 3,
+      "title": "Move sideways with the same view",
+      "passed": true,
+      "kind": "travel",
+      "phase": {
+        "en": "Set a small directional tilt",
+        "uk": "Задайте малий нахил у напрямку руху"
+      },
+      "exampleTick": 2,
+      "physicalTicks": 167
+    },
+    {
+      "lesson": "beginner-23",
+      "mode": "acro",
+      "step": 4,
+      "title": "Keep the horizon calm",
+      "passed": true,
+      "kind": "travel",
+      "phase": {
+        "en": "Set a small directional tilt",
+        "uk": "Задайте малий нахил у напрямку руху"
+      },
+      "exampleTick": 2,
+      "physicalTicks": 167
+    },
+    {
+      "lesson": "beginner-23",
+      "mode": "acro",
+      "step": 5,
+      "title": "Settle onto the pad",
+      "passed": true,
+      "kind": "land",
+      "phase": {
+        "en": "Descend level at a calm speed",
+        "uk": "Спускайтеся рівно й повільно"
+      },
+      "exampleTick": 2,
+      "physicalTicks": 167
+    },
+    {
+      "lesson": "beginner-24",
+      "mode": "acro",
+      "step": 1,
+      "title": "Lift gently",
+      "passed": true,
+      "kind": "lift",
+      "phase": {
+        "en": "Add thrust and climb gently",
+        "uk": "Додайте тягу й плавно підніміться"
+      },
+      "exampleTick": 2,
+      "physicalTicks": 2
+    },
+    {
+      "lesson": "beginner-24",
+      "mode": "acro",
+      "step": 2,
+      "title": "Gate 1: look through the opening",
+      "passed": true,
+      "kind": "travel",
+      "phase": {
+        "en": "Set a small directional tilt",
+        "uk": "Задайте малий нахил у напрямку руху"
+      },
+      "exampleTick": 2,
+      "physicalTicks": 158
+    },
+    {
+      "lesson": "beginner-24",
+      "mode": "acro",
+      "step": 3,
+      "title": "Gate 2: look through the opening",
+      "passed": true,
+      "kind": "travel",
+      "phase": {
+        "en": "Set a small directional tilt",
+        "uk": "Задайте малий нахил у напрямку руху"
+      },
+      "exampleTick": 2,
+      "physicalTicks": 167
+    },
+    {
+      "lesson": "beginner-24",
+      "mode": "acro",
+      "step": 4,
+      "title": "Gate 3: look through the opening",
+      "passed": true,
+      "kind": "travel",
+      "phase": {
+        "en": "Set a small directional tilt",
+        "uk": "Задайте малий нахил у напрямку руху"
+      },
+      "exampleTick": 2,
+      "physicalTicks": 149
+    },
+    {
+      "lesson": "beginner-24",
+      "mode": "acro",
+      "step": 5,
+      "title": "Settle onto the pad",
+      "passed": true,
+      "kind": "land",
+      "phase": {
+        "en": "Descend level at a calm speed",
+        "uk": "Спускайтеся рівно й повільно"
+      },
+      "exampleTick": 2,
+      "physicalTicks": 167
+    },
+    {
+      "lesson": "beginner-25",
+      "mode": "acro",
+      "step": 1,
+      "title": "Lift gently",
+      "passed": true,
+      "kind": "lift",
+      "phase": {
+        "en": "Add thrust and climb gently",
+        "uk": "Додайте тягу й плавно підніміться"
+      },
+      "exampleTick": 2,
+      "physicalTicks": 2
+    },
+    {
+      "lesson": "beginner-25",
+      "mode": "acro",
+      "step": 2,
+      "title": "Create a small, recoverable tilt",
+      "passed": true,
+      "kind": "tilt-release",
+      "phase": {
+        "en": "Set a small tilt",
+        "uk": "Задайте малий нахил"
+      },
+      "exampleTick": 2,
+      "physicalTicks": 260
+    },
+    {
+      "lesson": "beginner-25",
+      "mode": "acro",
+      "step": 3,
+      "title": "Level, brake, return",
+      "passed": true,
+      "kind": "brake",
+      "phase": {
+        "en": "Lean against the existing drift",
+        "uk": "Нахиліться проти початкового дрейфу"
+      },
+      "exampleTick": 2,
+      "physicalTicks": 237
+    },
+    {
+      "lesson": "beginner-25",
+      "mode": "acro",
+      "step": 4,
+      "title": "Settle onto the pad",
+      "passed": true,
+      "kind": "land",
+      "phase": {
+        "en": "Descend level at a calm speed",
+        "uk": "Спускайтеся рівно й повільно"
+      },
+      "exampleTick": 2,
+      "physicalTicks": 167
+    },
+    {
+      "lesson": "beginner-26",
+      "mode": "acro",
+      "step": 1,
+      "title": "Lift gently",
+      "passed": true,
+      "kind": "lift",
+      "phase": {
+        "en": "Add thrust and climb gently",
+        "uk": "Додайте тягу й плавно підніміться"
+      },
+      "exampleTick": 2,
+      "physicalTicks": 2
+    },
+    {
+      "lesson": "beginner-26",
+      "mode": "acro",
+      "step": 2,
+      "title": "The opening straight",
+      "passed": true,
+      "kind": "travel",
+      "phase": {
+        "en": "Set a small directional tilt",
+        "uk": "Задайте малий нахил у напрямку руху"
+      },
+      "exampleTick": 2,
+      "physicalTicks": 158
+    },
+    {
+      "lesson": "beginner-26",
+      "mode": "acro",
+      "step": 3,
+      "title": "Right toward the next gate",
+      "passed": true,
+      "kind": "turn",
+      "phase": {
+        "en": "Bank and yaw right together",
+        "uk": "Крен і рискання праворуч разом"
+      },
+      "exampleTick": 2,
+      "physicalTicks": 167
+    },
+    {
+      "lesson": "beginner-26",
+      "mode": "acro",
+      "step": 4,
+      "title": "Cross the eastern gate",
+      "passed": true,
+      "kind": "travel",
+      "phase": {
+        "en": "Set a small directional tilt",
+        "uk": "Задайте малий нахил у напрямку руху"
+      },
+      "exampleTick": 2,
+      "physicalTicks": 169
+    },
+    {
+      "lesson": "beginner-26",
+      "mode": "acro",
+      "step": 5,
+      "title": "Left onto the final line",
+      "passed": true,
+      "kind": "turn",
+      "phase": {
+        "en": "Bank and yaw left together",
+        "uk": "Крен і рискання ліворуч разом"
+      },
+      "exampleTick": 2,
+      "physicalTicks": 169
+    },
+    {
+      "lesson": "beginner-26",
+      "mode": "acro",
+      "step": 6,
+      "title": "The final gate",
+      "passed": true,
+      "kind": "travel",
+      "phase": {
+        "en": "Set a small directional tilt",
+        "uk": "Задайте малий нахил у напрямку руху"
+      },
+      "exampleTick": 2,
+      "physicalTicks": 158
+    },
+    {
+      "lesson": "beginner-26",
+      "mode": "acro",
+      "step": 7,
+      "title": "Hold over home",
+      "passed": true,
+      "kind": "brake",
+      "phase": {
+        "en": "Lean against the existing drift",
+        "uk": "Нахиліться проти початкового дрейфу"
+      },
+      "exampleTick": 2,
+      "physicalTicks": 219
+    },
+    {
+      "lesson": "beginner-26",
+      "mode": "acro",
+      "step": 8,
+      "title": "Settle onto the pad",
+      "passed": true,
+      "kind": "land",
+      "phase": {
+        "en": "Descend level at a calm speed",
+        "uk": "Спускайтеся рівно й повільно"
+      },
+      "exampleTick": 2,
+      "physicalTicks": 167
+    }
+  ],
+  "inputs": {
+    "beginner-coach.mjs": "6b0804152563ee67e1f9010d1e499fbe671a5dd7b17f0a71581f215af25a9cbe",
+    "sim-presentation.mjs": "0125f49e0ed93c75f2fcb604733a4883ba87e8326290c9769f1f3d38865dab3f",
+    "model.mjs": "9e4cd11cfdde2dd43b437069b8cb7a359a8132495db806cb5f68e8674d48aaf6",
+    "world-catalogue.mjs": "a85413afca83981472abd2f6a5603ff36aa272e9799162dd82342c3693ffaaa4",
+    "radio-profile.mjs": "75944a7c621d087618eae009b7daf3482cee4196df48f1843e540918eddb793a"
+  },
+  "scope": "Actual browser coach and SVG, real fixed-step flight integrator, controlled100ms frame clock and synthetic normalized keyboard/radio. Frozen expected kinds from the independently exercised122-step technique evidence; initial explicitaxisexplorers excluded from objective-kind match.",
+  "limits": [
+    "No physical-radio/player acceptance or performance claim",
+    "No new permanent unit suite or scored host attempt"
+  ]
+}

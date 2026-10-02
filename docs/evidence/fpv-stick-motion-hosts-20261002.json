@@ -1,0 +1,187 @@
+{
+  "format": "FPVStickMotionHostEvidence.v1",
+  "createdAt": "2026-10-02T03:09:51.848Z",
+  "passed": true,
+  "checks": [
+    {
+      "name": "Academy live trace follows exact commands before100ms HUD updates",
+      "passed": true,
+      "observations": [
+        {
+          "time": 415.5,
+          "latencyMs": 29.5,
+          "ticks": 1,
+          "roll": 500,
+          "traceEndpoint": [
+            117,
+            90
+          ],
+          "points": 2
+        },
+        {
+          "time": 434.0999999977648,
+          "latencyMs": 18.5,
+          "ticks": 2,
+          "roll": -500,
+          "traceEndpoint": [
+            63,
+            90
+          ],
+          "points": 3
+        },
+        {
+          "time": 461.5,
+          "latencyMs": 27.300000000745058,
+          "ticks": 3,
+          "roll": 500,
+          "traceEndpoint": [
+            117,
+            90
+          ],
+          "points": 4
+        },
+        {
+          "time": 480.29999999701977,
+          "latencyMs": 18.699999999254942,
+          "ticks": 4,
+          "roll": -500,
+          "traceEndpoint": [
+            63,
+            90
+          ],
+          "points": 5
+        },
+        {
+          "time": 489.8999999985099,
+          "latencyMs": 9.600000001490116,
+          "ticks": 5,
+          "roll": 500,
+          "traceEndpoint": [
+            117,
+            90
+          ],
+          "points": 6
+        },
+        {
+          "time": 516.0999999977648,
+          "latencyMs": 26.099999997764826,
+          "ticks": 6,
+          "roll": -500,
+          "traceEndpoint": [
+            63,
+            90
+          ],
+          "points": 7
+        }
+      ],
+      "intervalsMs": [
+        18.599999997764826,
+        27.400000002235174,
+        18.799999997019768,
+        9.600000001490116,
+        26.199999999254942
+      ],
+      "scope": "Real host renderer and input; no physical-radio or FPS claim"
+    },
+    {
+      "name": "Academy pause and source change clear trails without advancing physics",
+      "passed": true,
+      "pausedTicks": 6
+    },
+    {
+      "name": "World Studio live trace follows exact commands before100ms HUD updates",
+      "passed": true,
+      "observations": [
+        {
+          "time": 1335.3999999985099,
+          "latencyMs": 32.5,
+          "ticks": 1,
+          "roll": 500,
+          "traceEndpoint": [
+            120.6,
+            90
+          ],
+          "points": 2
+        },
+        {
+          "time": 1354.3999999985099,
+          "latencyMs": 18.899999998509884,
+          "ticks": 2,
+          "roll": -500,
+          "traceEndpoint": [
+            59.4,
+            90
+          ],
+          "points": 3
+        },
+        {
+          "time": 1374.699999999255,
+          "latencyMs": 20.300000000745058,
+          "ticks": 3,
+          "roll": 500,
+          "traceEndpoint": [
+            120.6,
+            90
+          ],
+          "points": 4
+        },
+        {
+          "time": 1392.699999999255,
+          "latencyMs": 18,
+          "ticks": 4,
+          "roll": -500,
+          "traceEndpoint": [
+            59.4,
+            90
+          ],
+          "points": 5
+        },
+        {
+          "time": 1411.5999999977648,
+          "latencyMs": 18.899999998509884,
+          "ticks": 5,
+          "roll": 500,
+          "traceEndpoint": [
+            120.6,
+            90
+          ],
+          "points": 6
+        },
+        {
+          "time": 1432.8999999985099,
+          "latencyMs": 21.300000000745058,
+          "ticks": 6,
+          "roll": -500,
+          "traceEndpoint": [
+            59.4,
+            90
+          ],
+          "points": 7
+        }
+      ],
+      "intervalsMs": [
+        19,
+        20.300000000745058,
+        18,
+        18.899999998509884,
+        21.300000000745058
+      ],
+      "scope": "Real host renderer and input; no physical-radio or FPS claim"
+    },
+    {
+      "name": "World Studio pause and source change clear trails without advancing physics",
+      "passed": true,
+      "pausedTicks": 6
+    }
+  ],
+  "inputs": {
+    "Academy index.html": "dc6ab0a007387838abd410fe3c8b6fc6951338714f68e6ab7b245876be37f43d",
+    "World Studio index.html": "20c6330cc050d3c0a4ba78c5f45243bcc68ded1a6baa0ddcd851cf9a003d55a9",
+    "app.mjs": "5e7e96488879befa7311f38118704d7ef5d017bb443ccc1e05b5109c9be0ff5f",
+    "world-app.mjs": "9fec555c9882ee5a4f4255984a5043db12843a56e006079b453a6711e7d3c5b0",
+    "sim-presentation.mjs": "3ab238301da0ac4becac88a1970d9d73e4d0b17a5a7a45ac42a423990e84aafd",
+    "style.css": "6d67bd2b760745eb1b33a8887e92def6114ba58d55aeaf25ddb13634e13cd631",
+    "world-style.css": "9d5a69b8db4eedc774eacffcbe0eff1e3334ac5798810424152d6858ef3aee09"
+  },
+  "scope": "Actual Academy/World Studio source HTML and runtime in isolated same-origin iframes. Real WebGL prepare/draw; synthetic DOM key events and in-memory settings. No physical radio/player acceptance, persistent data writes, frame-rate measurement or unit coverage claim."
+}
