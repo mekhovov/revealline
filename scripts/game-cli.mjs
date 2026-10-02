@@ -573,7 +573,10 @@ export function applyPublicationProfile(entries, catalogue, profile, optionalArt
     fail('Main Pages profile would orphan a mission download group.');
   entries.splice(0, entries.length, ...entries.filter((entry) => !omittedPaths.has(entry.name)));
   catalogue.files = catalogue.files.filter((file) => !omittedPaths.has(file.path));
-  catalogue.groups = retainedGroups;
+  catalogue.groups = retainedGroups.map((group) => ({
+    ...group,
+    files: group.files.filter((path) => !omittedPaths.has(path)),
+  }));
   // The summary promises that every listed original is hosted. The lean rolling
   // channel therefore omits it together with its exclusive preview-only files.
   // Exact originals remain in Git and in full release distributions.

@@ -46,7 +46,8 @@ import {
   inspectImport,
   projectFromImport,
   compilePlayable,
-  mergeReimport,
+  previewReimport,
+  canonicalWorldJSON,
   preparePack,
   inspectPack,
   installPack,
@@ -124,7 +125,7 @@ const COPY_EN = {
   watchFirst: 'Watch first flight',
   tryFirst: 'Try first flight',
   demoCoverage:
-    '56 recorded examples cover all 28 Academy, Woodland Park and Ukrainian Courtyard challenges in both modes. Examples for the remaining worlds are still in production.',
+    '104 recorded examples cover all 52 Academy, Woodland Park, Ukrainian Courtyard, Warehouse, Racing Stadium and Container Yard challenges in both modes. Parking Garage examples are still in production.',
   watchDemo: 'Watch demonstration',
   playbackSpeed: 'Playback speed',
   flyThis: 'Fly this challenge',
@@ -277,7 +278,7 @@ const COPY_UK = {
   watchFirst: 'Переглянути перший політ',
   tryFirst: 'Спробувати перший політ',
   demoCoverage:
-    '56 записаних прикладів охоплюють усі 28 завдань Академії, Лісопарку та Українського подвір’я в обох режимах. Приклади для решти світів ще готуються.',
+    '104 записані приклади охоплюють усі 52 завдання Академії, Лісопарку, Українського подвір’я, Складу, Перегонового стадіону та Контейнерного двору в обох режимах. Приклади для Паркінгу ще готуються.',
   watchDemo: 'Переглянути демонстрацію',
   playbackSpeed: 'Швидкість відтворення',
   flyThis: 'Виконати це завдання',
@@ -387,7 +388,7 @@ const unique = (prefix) =>
   `${prefix}-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 7)}`;
 const terminal = (state) => ['complete', 'expired', 'failed', 'destroyed'].includes(state.status);
 const coordinates = ['x', 'y', 'z'];
-function synchronizeDefinitions(project) {
+export function synchronizeDefinitions(project) {
   const definitions = project.definitions ?? {
     worlds: [],
     layouts: [],
@@ -688,6 +689,10 @@ export function mountWorldApp({
     replayKind = 'recording',
     replayRate = 1,
     sectorReference = null,
+    sectorReferenceProof = null,
+    ghostEnabled = false,
+    ghostLookup = null,
+    ghostError = false,
     sectorReferenceId = null,
     sectorReferenceStatus = 'none',
     sectorLookup = null,
@@ -882,7 +887,13 @@ export function mountWorldApp({
   folderLabel.append(folderText, folderInput);
   $('import-world').closest('label').after(folderLabel);
   translatedNodes.push({ node: folderText, key: 'chooseFolder', fallback: 'Choose scene folder' });
-  on(folderInput, 'change', (e) => importScene(e.target.files));
+  on(folderInput, 'change', async (e) => {
+    try {
+      await importScene(e.target.files);
+    } finally {
+      e.target.value = '';
+    }
+  });
   const newWorldButton = button(txt('Start a new world', 'Почати новий світ'), () => {
     editingProject = null;
     projectAssets = new Map();
@@ -895,23 +906,18 @@ export function mountWorldApp({
   });
   folderLabel.after(newWorldButton);
   translatedNodes.push({ node: newWorldButton, key: 'newWorld', fallback: 'Start a new world' });
-  const ghostButton = button(txt('Show best line', 'Показати найкращий маршрут'), async () => {
-    if (!flight) return;
-    pauseFlight();
-    const best = records
-      .filter((r) => compatibleGhost(r, flight.identity))
-      .sort((a, b) => a.proof.frames.length - b.proof.frames.length)[0];
-    if (!best)
-      throw new Error(
-        txt('No compatible verified best flight yet.', 'Ще немає сумісного перевіреного польоту.'),
-      );
-    const token = flightToken,
-      result = current.legacy
-        ? await replayFlightCooperatively(current.course, best.proof, { sampleEvery: 5 })
-        : await replayWorldFlight(current.course, best.proof, { sampleEvery: 5 });
-    if (token === flightToken) renderer.setPath(result.path);
+  const ghostButton = button('', async () => {
+    if (!flight || preview || replayProof || !sectorReference) return;
+    ghostEnabled = !ghostEnabled;
+    if (ghostEnabled) {
+      pauseFlight();
+      await loadGhost();
+    } else clearGhost();
+    updateGhostHUD();
+    await saveRecovery();
   });
   ghostButton.id = 'show-ghost';
+  ghostButton.setAttribute('aria-describedby', 'sector-reference ghost-status');
   doc.querySelector('.flight-controls').append(ghostButton);
   function download(data, name, type = 'application/json') {
     const blob =
@@ -952,7 +958,7 @@ export function mountWorldApp({
     $('world-radio-title').textContent = txt('Radio setup', 'Налаштування пульта');
     immersive.refresh();
     updateSoundLabel();
-    ghostButton.textContent = txt('Show best line', 'Показати найкращий маршрут');
+    updateGhostHUD();
     for (const id of ['flight-mode', 'first-flight-mode']) {
       $(id).options[0].textContent = txt('Self-level', 'Самовирівнювання');
       $(id).options[1].textContent = 'Acro';
@@ -1925,6 +1931,7 @@ export function mountWorldApp({
       preview: recovery.preview,
       recover: recovery.proof,
       sectorReferenceId: recovery.sectorReferenceId,
+      ghostEnabled: recovery.ghostEnabled,
     });
   }
   function renderPacks() {
@@ -2025,7 +2032,7 @@ export function mountWorldApp({
       banner.id = 'recovery-banner';
       $('explore').prepend(banner);
       const b = button(
-        txt('Resume interrupted flight', 'Відновити перерваний політ'),
+        txt("Resume interrupted flight", "Відновити перерваний політ"),
         resumeInterruptedFlight,
       );
       b.id = 'resume-flight';
@@ -2035,6 +2042,84 @@ export function mountWorldApp({
   function updateImportControls() {
     for (const id of ['preview-world', 'export-project', 'export-pack', 'install-project'])
       $(id).disabled = !editingProject;
+  }
+  function reviewReimport({ changes, diagnostics }) {
+    return new Promise((resolve) => {
+      const previousFocus = doc.activeElement,
+        dialog = el('dialog'),
+        heading = el('h2', txt('Review world update', 'Перегляньте оновлення світу')),
+        summary = el(
+          'p',
+          txt(
+            'Your draft is unchanged until you apply. Local edits and removed source items are retained when they need review.',
+            'Чернетка не зміниться до застосування. Локальні зміни та вилучені об’єкти джерела зберігаються для перевірки.',
+          ),
+        ),
+        list = el('ul'),
+        actions = el('div', undefined, 'button-row');
+      dialog.id = 'reimport-review';
+      heading.id = 'reimport-review-title';
+      dialog.setAttribute('aria-labelledby', heading.id);
+      dialog.style.width = 'min(44rem, calc(100vw - 2rem))';
+      dialog.style.overflowWrap = 'anywhere';
+      const actionNames = {
+        added: txt('Added', 'Додано'),
+        changed: txt('Changed', 'Змінено'),
+        removed: txt('Removed from source', 'Вилучено з джерела'),
+      };
+      for (const change of changes)
+        list.append(el('li', `${actionNames[change.action]} · ${change.kind} · ${change.id}`));
+      if (!changes.length)
+        list.append(
+          el('li', txt('No semantic source changes.', 'Семантичних змін у джерелі немає.')),
+        );
+      const diagnosticCopy = {
+        'local-conflict': 'Джерело й локальні дані змінено; збережено локальний варіант.',
+        'local-id-conflict':
+          'Новий ID джерела збігається з локальним об’єктом; збережено локальний варіант.',
+        'removed-source-retained':
+          'Джерело вилучило об’єкт; його авторську версію збережено для перевірки.',
+        'local-deletion-preserved': 'Збережено локальне вилучення об’єкта.',
+        'missing-spawn-binding':
+          'Вибраний стартовий маркер відсутній або змінив тип; збережено авторську позицію старту.',
+        'missing-route-binding':
+          'Маркер маршруту відсутній або змінив тип; збережено авторське завдання.',
+        'unplaced-marker': 'Доступний новий маркер; порядок поточного маршруту збережено.',
+        'orphan-override': 'Джерело вилучило маркер; його локальні зміни збережено для перевірки.',
+        'override-preserved': 'Джерело змінилося; локальні зміни залишаються чинними.',
+      };
+      for (const diagnostic of diagnostics)
+        list.append(
+          el(
+            'li',
+            locale === 'uk' && diagnosticCopy[diagnostic.code]
+              ? `${diagnostic.id}: ${diagnosticCopy[diagnostic.code]}`
+              : `${diagnostic.severity}: ${diagnostic.message}`,
+          ),
+        );
+      const finish = (accepted) => {
+        dialog.close();
+        dialog.remove();
+        previousFocus?.focus?.();
+        resolve(accepted);
+      };
+      const cancel = button(txt('Keep current draft', 'Залишити поточну чернетку'), () =>
+          finish(false),
+        ),
+        apply = button(txt('Apply reviewed update', 'Застосувати перевірене оновлення'), () =>
+          finish(true),
+        );
+      cancel.autofocus = true;
+      actions.append(cancel, apply);
+      dialog.append(heading, summary, list, actions);
+      dialog.addEventListener('cancel', (event) => {
+        event.preventDefault();
+        finish(false);
+      });
+      doc.body.append(dialog);
+      dialog.showModal();
+      cancel.focus();
+    });
   }
   async function installProject() {
     if (!worldStore)
@@ -2055,7 +2140,9 @@ export function mountWorldApp({
     await refreshStorage();
     status(txt('World pack is ready to fly.', 'Пакунок світу готовий до польоту.'));
   }
+  let importRequest = 0;
   async function importScene(files) {
+    const request = ++importRequest;
     const list = Array.from(files),
       models = list.filter((f) => /\.(glb|gltf)$/i.test(f.name));
     if (models.length !== 1)
@@ -2065,7 +2152,10 @@ export function mountWorldApp({
           'Виберіть один GLB або glTF та його ресурси.',
         ),
       );
-    const prior = editingProject?.world.modelAsset ? editingProject : null,
+    syncProject();
+    const draft = editingProject,
+      draftIdentity = draft ? canonicalWorldJSON(draft) : null,
+      prior = draft?.world.modelAsset ? clone(draft) : null,
       name = models[0].name,
       id = prior?.id ?? unique('world');
     const inspected = await inspectImport({
@@ -2080,46 +2170,16 @@ export function mountWorldApp({
       },
     });
     let next,
+      review = null,
       diagnostics = [...inspected.metadata.diagnostics];
     if (prior) {
-      const merged = mergeReimport(prior, inspected);
-      next = merged.project;
-      diagnostics = merged.diagnostics;
-      const oldWorld = compilePlayable(prior).world,
-        newWorld = compilePlayable(next).world;
-      const oldAnchors = new Map(oldWorld.anchors.map((a) => [a.id, a])),
-        newAnchors = new Map(newWorld.anchors.map((a) => [a.id, a]));
-      next.courses = next.courses.map((source) => {
-        const c = clone(source);
-        c.obstacles = newWorld.colliders.map(colliderFromAnchor);
-        for (const mode of ['self-level', 'acro'])
-          for (const [i, anchorId] of (next.routeBindings?.[c.id]?.[mode] ?? []).entries()) {
-            const before = oldAnchors.get(anchorId),
-              after = newAnchors.get(anchorId),
-              centre = criterionCentre(c.steps[mode][i]);
-            if (before && after && centre)
-              c.steps[mode][i] = moveCriterion(
-                c.steps[mode][i],
-                Object.fromEntries(
-                  coordinates.map((k) => [
-                    k,
-                    centre[k] + Math.round((after.position[k] - before.position[k]) * 1000),
-                  ]),
-                ),
-              );
-            else if (before && !after)
-              diagnostics.push({
-                severity: 'warning',
-                message: `${anchorId}: source marker removed; authored objective retained for review.`,
-              });
-          }
-        const before = oldWorld.anchors.find((a) => a.kind === 'spawn'),
-          after = newWorld.anchors.find((a) => a.kind === 'spawn');
-        if (before && after)
-          for (const k of coordinates)
-            c.spawn[k] += Math.round((after.position[k] - before.position[k]) * 1000);
-        return validateWorldCourse(c);
+      review = previewReimport(prior, inspected, {
+        createCourse: courseFromProject,
+        createCollider: colliderFromAnchor,
+        validateCourse: validateWorldCourse,
       });
+      next = review.project;
+      diagnostics = review.diagnostics;
     } else {
       next = projectFromImport(inspected);
       next.courses = [courseFromProject(next)];
@@ -2133,6 +2193,8 @@ export function mountWorldApp({
           acro: next.courses[0].steps.acro.map((_, i) => ids[i] ?? null),
         },
       };
+      const spawnId = compilePlayable(next).world.anchors.find((a) => a.kind === 'spawn')?.id;
+      if (spawnId) next.spawnBindings = { [next.courses[0].id]: spawnId };
     }
     // Commit the editor state only after the entire source and every playable
     // challenge validates; a rejected reimport leaves the previous draft intact.
@@ -2143,10 +2205,30 @@ export function mountWorldApp({
       { asset: next.world.modelAsset, license: inspected.license },
     ];
     synchronizeDefinitions(next);
+    if (request !== importRequest) return;
+    if (review && !(await reviewReimport(review))) {
+      $('import-report').textContent = txt(
+        'Update cancelled. Your draft is unchanged.',
+        'Оновлення скасовано. Чернетка не змінилася.',
+      );
+      return;
+    }
+    const generation = worldStore ? await worldStore.generation() : null;
+    if (
+      request !== importRequest ||
+      editingProject !== draft ||
+      (draft && canonicalWorldJSON(draft) !== draftIdentity)
+    )
+      throw new Error(
+        txt(
+          'The draft changed while this import was prepared. Import again to review against the latest draft.',
+          'Чернетка змінилася під час підготовки імпорту. Повторіть імпорт для перевірки останньої версії.',
+        ),
+      );
     editingProject = next;
     projectAssets = assets;
-    setEditor(next.courses[0]);
-    projectGeneration = worldStore ? await worldStore.generation() : null;
+    setEditor(next.courses.find((course) => course.id === editor?.id) ?? next.courses[0]);
+    projectGeneration = generation;
     updateImportControls();
     $('import-report').textContent = [
       `${name}: ${(inspected.modelBlob.size / 1024).toFixed(1)} KiB`,
@@ -2172,6 +2254,7 @@ export function mountWorldApp({
       packIdentity: current.packIdentity,
       preview,
       sectorReferenceId,
+      ghostEnabled,
     };
     await recordStore.saveSession(saved);
     recovery = saved;
@@ -2205,6 +2288,86 @@ export function mountWorldApp({
   function abortSectorLookup() {
     sectorLookup?.abort();
     sectorLookup = null;
+    clearGhost();
+  }
+  function clearGhost() {
+    ghostLookup?.abort();
+    ghostLookup = null;
+    ghostError = false;
+    renderer?.setGhost?.([]);
+    // Also clear any older static route when replacing a course.
+    renderer?.setPath?.([]);
+  }
+  function updateGhostHUD() {
+    const loading = Boolean(ghostLookup),
+      available = Boolean(sectorReference && !preview && !replayProof),
+      shown = ghostEnabled && available,
+      ended = shown && flight && flight.snapshot().ticks >= sectorReference.ticks;
+    ghostButton.disabled = !available || (!sceneReady && !loading);
+    ghostButton.textContent = loading
+      ? txt('Cancel ghost loading', 'Скасувати завантаження примари')
+      : shown
+        ? txt('Hide personal best', 'Сховати особистий рекорд')
+        : txt('Show personal best', 'Показати особистий рекорд');
+    ghostButton.setAttribute('aria-pressed', String(shown));
+    const description = loading
+      ? txt('Loading personal best… Flight paused.', 'Завантаження рекорду… Політ на паузі.')
+      : ghostError
+        ? txt(
+            'Ghost unavailable. Sector timing still works.',
+            'Примара недоступна. Час ділянок працює.',
+          )
+        : shown
+          ? ended
+            ? txt(
+                'Personal best finished · ghost holds its final position.',
+                'Рекорд завершено · примара залишається на фініші.',
+              )
+            : txt(
+                'Cyan ghost · same personal best as sector timing. No collision.',
+                'Блакитна примара · той самий рекорд, що й для ділянок. Без зіткнень.',
+              )
+          : '';
+    $('ghost-status').hidden = !description;
+    if ($('ghost-status').textContent !== description) $('ghost-status').textContent = description;
+  }
+  async function loadGhost() {
+    if (!ghostEnabled || !sectorReferenceProof || !sectorReference || preview || replayProof)
+      return;
+    clearGhost();
+    const controller = new AbortController(),
+      token = flightToken,
+      reference = sectorReference,
+      entry = current,
+      proof = sectorReferenceProof;
+    ghostLookup = controller;
+    const isCurrent = () =>
+      !disposed && token === flightToken && ghostLookup === controller && ghostEnabled;
+    updateGhostHUD();
+    try {
+      const checked = await (entry.legacy ? replayFlightCooperatively : replayWorldFlight)(
+        entry.course,
+        proof,
+        { sampleEvery: 5, signal: controller.signal },
+      );
+      if (!isCurrent()) return;
+      if (checked.state.status !== 'complete' || checked.state.ticks !== reference.ticks)
+        throw new Error('Personal best no longer reproduces its completed flight');
+      renderer.setGhost([
+        { tick: 0, position: entry.course.spawn, orientation: [0, 0, 0, 1000000] },
+        ...checked.path,
+      ]);
+    } catch {
+      if (isCurrent()) {
+        ghostEnabled = false;
+        ghostError = true;
+      }
+    } finally {
+      if (isCurrent() || ghostLookup === controller) {
+        ghostLookup = null;
+        updateGhostHUD();
+      }
+    }
   }
   const seconds = (ticks) => `${(ticks / 50).toFixed(2)} ${txt('s', 'с')}`;
   const deltaSeconds = (ticks) =>
@@ -2286,6 +2449,7 @@ export function mountWorldApp({
             ticks: checked.state.ticks,
             sectors: checked.sectors,
           };
+          sectorReferenceProof = candidate.proof;
           sectorReferenceId = candidate.id;
           sectorReferenceStatus = 'ready';
           return;
@@ -2345,13 +2509,15 @@ export function mountWorldApp({
   }
   function updateHUD(state) {
     updateSectorHUD();
+    updateGhostHUD();
     const target = current.course.steps[$('flight-mode').value][state.step];
     $('flight-instruments').textContent =
       `${(state.position.y / 1000).toFixed(1)} m · ${(Math.hypot(state.velocity.x, state.velocity.y, state.velocity.z) / 1000) | 0} m/s · ${(state.ticks / 50).toFixed(1)} s${state.health !== undefined ? ` · ♥ ${state.health}` : ''}`;
     $('flight-objective').textContent = terminal(state)
       ? txt('Flight ended', 'Політ завершено')
       : `${Math.min(state.step + 1, state.total ?? current.course.steps[$('flight-mode').value].length)}/${current.course.steps[$('flight-mode').value].length} · ${target ? stepName(target) : state.status}${state.hold ? ` · ${state.hold}/${target?.ticks ?? 0}` : ''}`;
-    $('world-arm').disabled = !sceneReady || terminal(state) || (Boolean(replayProof) && finished);
+    $('world-arm').disabled =
+      !sceneReady || Boolean(ghostLookup) || terminal(state) || (Boolean(replayProof) && finished);
     $('world-arm').textContent = replayProof
       ? txt('Resume playback', 'Продовжити перегляд')
       : txt('Arm / resume', 'Увімкнути / продовжити');
@@ -2637,6 +2803,7 @@ export function mountWorldApp({
     // therefore cannot resume a flight simply because the tab regained focus.
     if (
       sceneReady &&
+      !ghostLookup &&
       !replayProof &&
       $('flight-source').value === 'radio' &&
       ['paused', 'disarmed'].includes(flight.snapshot().status) &&
@@ -2763,6 +2930,8 @@ export function mountWorldApp({
     $('world-touch').hidden = Boolean(replayProof) || $('flight-source').value !== 'touch';
     sectors.reset();
     sectorReference = null;
+    sectorReferenceProof = null;
+    ghostEnabled = !preview && (options.recover ? options.ghostEnabled === true : ghostEnabled);
     sectorReferenceId = options.recover ? (options.sectorReferenceId ?? null) : null;
     sectorReferenceStatus =
       preview || (options.recover && options.recover.session !== 'practice')
@@ -2900,6 +3069,8 @@ export function mountWorldApp({
       );
     }
     if (disposed || token !== flightToken) return;
+    if (ghostEnabled) await loadGhost();
+    if (token !== flightToken || disposed) return;
     sceneReady = true;
     $('flight-status').textContent = txt(
       'Ready. Choose your controls, then arm.',
@@ -2937,7 +3108,8 @@ export function mountWorldApp({
     current = null;
     beginnerCoach.close();
     restoreLearningPreferences();
-    $('flight-dialog').classList.remove('learning-flight');
+    $("flight-dialog").classList.remove("learning-flight");
+    sectorReferenceProof = null;
     $('flight-dialog').close();
     replayProof = null;
     $('flight-mode').disabled =
@@ -3228,7 +3400,13 @@ export function mountWorldApp({
     if (!editor) throw new Error('Create a challenge first.');
     download(editor, `${editor.id}.json`);
   });
-  on($('import-world'), 'change', (e) => importScene(e.target.files));
+  on($('import-world'), 'change', async (e) => {
+    try {
+      await importScene(e.target.files);
+    } finally {
+      e.target.value = '';
+    }
+  });
   on($('preview-world'), 'click', () => {
     syncProject();
     return startFlight(customEntry(editingProject.courses[0]), { preview: true });
@@ -3332,7 +3510,14 @@ export function mountWorldApp({
     $('flight-dialog').dataset.optionsOpen = 'false';
     $('flight-options').setAttribute('aria-expanded', 'false');
     immersive.closeControls();
-    if (!sceneReady || !flight || terminal(flight.snapshot()) || (replayProof && finished)) return;
+    if (
+      !sceneReady ||
+      ghostLookup ||
+      !flight ||
+      terminal(flight.snapshot()) ||
+      (replayProof && finished)
+    )
+      return;
     if (!replayProof && $('flight-source').value === 'radio') {
       restoreRadio();
       radio.poll();
@@ -3588,6 +3773,13 @@ export function mountWorldApp({
         sectors: sectors.snapshot(),
         latest: sectors.latest(sectorReference?.sectors),
       },
+      ghost: {
+        enabled: ghostEnabled,
+        loading: Boolean(ghostLookup),
+        referenceId: ghostEnabled ? (sectorReference?.id ?? null) : null,
+        presentation: renderer?.ghostSnapshot?.() ?? null,
+        resources: renderer?.resources?.() ?? null,
+      },
       records: clone(records),
       catalogue: catalogue.length,
       learning: current?.beginner
@@ -3615,6 +3807,11 @@ export function mountWorldApp({
       input.dispose();
       radioSetup?.dispose();
       flight?.dispose?.();
+      flight = null;
+      recorder = null;
+      current = null;
+      sectorReferenceProof = null;
+      ghostEnabled = false;
       renderer?.dispose();
       hangar.dispose();
       actorEditor?.dispose();
