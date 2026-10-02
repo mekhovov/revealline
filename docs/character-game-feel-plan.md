@@ -25,6 +25,12 @@ comparison are already integrated through PR761. Required C6 support travels wit
 A/B/C; broad tooling and C2 remain later. The current explanation and daily register
 supersede historical status paragraphs below.
 
+The 30 September successor refreshes current coverage to FPV104, corrects the
+ordinary Sentry projectile-loss explanation, and prepares exact fpv38/50 Team
+import restoration. These are bounded A/B compatibility and feedback changes,
+not new production-art adoption. See the register for queued menu/authoring owner
+work and the separate remaining C7/device and C2/human qualification.
+
 The integrated [batch24](verification/actor-batch-24/README.md) records real
 Solo save/Continue during an active enemy-freeze interval and real Sentry
 projectile contact/nonterminal recovery. These close distinct host boundaries;
