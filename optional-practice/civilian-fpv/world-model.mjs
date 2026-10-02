@@ -406,7 +406,15 @@ function relativeTilt(orientation, surfaceNormal) {
 
 /** v2 keeps v1's integer force/attitude integration, replacing only collision,
  * objectives and actor rules. Legacy model.mjs and its replay format are untouched. */
-export function createWorldFlight({ course, mode = 'self-level', response = DEFAULT_RESPONSE }) {
+// Practice is an in-memory host policy, never part of a portable scored proof.
+const unscoredWorldFlights = new WeakSet();
+export function createWorldFlight({
+  course,
+  mode = 'self-level',
+  response = DEFAULT_RESPONSE,
+  unscoredPractice = false,
+}) {
+  required(typeof unscoredPractice === 'boolean', 'Invalid world practice policy');
   const source = validateWorldCourse(course);
   const rates = validateFlightResponse(response);
   required(MODES.includes(mode), 'Unsupported flight mode');
@@ -647,6 +655,7 @@ export function createWorldFlight({ course, mode = 'self-level', response = DEFA
   }
   function evaluate(before, command) {
     const target = source.steps[mode][state.step];
+    if (!target) return; // Completed lab routes remain available for free practice.
     let accepted = false;
     if (target.type === 'gate') accepted = crossesGate(before, state.position, target);
     else if (target.type === 'eliminate')
@@ -684,14 +693,14 @@ export function createWorldFlight({ course, mode = 'self-level', response = DEFA
       state.events.push({ type: 'objective', index: state.step });
       state.step++;
       state.hold = 0;
-      if (state.step === source.steps[mode].length) state.status = 'complete';
+      if (!unscoredPractice && state.step === source.steps[mode].length) state.status = 'complete';
     }
   }
   function step(input, { quantized = false } = {}) {
     assertLive();
     const command = quantized ? validateCommand(input) : quantizeWorldInput(input);
     if (state.status !== 'active') return snapshot();
-    if (state.ticks >= rules.maxTicks) {
+    if (!unscoredPractice && state.ticks >= rules.maxTicks) {
       state.status = 'expired';
       return snapshot();
     }
@@ -788,10 +797,11 @@ export function createWorldFlight({ course, mode = 'self-level', response = DEFA
     state.heightRange.max = Math.max(state.heightRange.max, state.position.y);
     if (state.health === 0) state.status = 'failed';
     else evaluate(before, command);
-    if (state.status === 'active' && state.ticks >= rules.maxTicks) state.status = 'expired';
+    if (!unscoredPractice && state.status === 'active' && state.ticks >= rules.maxTicks)
+      state.status = 'expired';
     return snapshot();
   }
-  return {
+  const flight = {
     identity,
     course: () => clone(source),
     response: () => ({ ...rates }),
@@ -813,6 +823,8 @@ export function createWorldFlight({ course, mode = 'self-level', response = DEFA
       }
     },
   };
+  if (unscoredPractice) unscoredWorldFlights.add(flight);
+  return flight;
 }
 
 export const exportWorldCourse = (course) => canonicalJSON(validateWorldCourse(course));
@@ -826,6 +838,7 @@ export function worldStateIdentity(snapshot) {
   return dataIdentity(state);
 }
 export function createWorldRecorder(flight, { session = 'practice', prefix = [] } = {}) {
+  required(!unscoredWorldFlights.has(flight), 'Unscored learning practice cannot create proofs');
   required(SESSION.includes(session), 'Invalid world session');
   const frames = prefix.map((f) => [...f]);
   required(
