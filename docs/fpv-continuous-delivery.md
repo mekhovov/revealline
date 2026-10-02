@@ -1519,3 +1519,26 @@ Next: freeze and publish this increment against current main (B already merged,
 so no stack is needed yet), then continue C's shared Themes/hero-environment work.
 Do not append to closed stacks889/902 or claim the Garage build is public before
 its own protected merge, deployment identity and actual public launch.
+
+### 2 October — Garage frozen candidate; B public launch verified
+
+Garage runtime candidate `5d9411ba831800bc7f6ae763f46d9d4ea69fa8f7` is rebased
+onto merged B/main. All three optional packages pass admission, committed-input
+and ZIP checks; two builds are byte-identical. World Studio has94 admitted
+source files /13,811,694 bytes and87 player runtime files /13,677,223 bytes.
+The prepared player SHA256 is
+`47d5b732a0b4fb5a94e1579c2fdafd70d5db64b95552eb618f69e7928c194c45`.
+See `fpv-garage-package-verification.json`. This is local qualification, not
+public eligibility or a release allocation.
+
+The public deployment marker now identifies B merge
+`b278b0b67137ee8fa3441dd0196e634981137546`. The actual public World Studio
+and Lighthouse flight launched with enabled Arm/resume, visible world and no
+application errors. Public `world-app.mjs` SHA256 matches the qualified source:
+`7998ec5987f26349dab28d0870b646eed070bf3448ef42a12433743858f1912d`.
+B's lifecycle repair is now live. Screenshot: `/tmp/fpv-lifecycle-live-player-20261002.png`.
+
+Themes coordination was sent to the user-authorized Themes chat. Its active
+primary-checkout appearance and cross-tab handoff work remains separate; do not
+copy uncommitted files or edit that checkout. C will build on the published
+shared contract once its current handoff is reviewed.
