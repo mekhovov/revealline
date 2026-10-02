@@ -1197,3 +1197,51 @@ external follow-up; do not infer passing gates from skipped or absent checks.
 The corrected player is left on the paused coordinated-turn lesson for review.
 Next independent work remains the reviewed R5 art backlog, with physical-device
 acceptance and R7 coverage still outstanding; preserve all older stack holds.
+
+### 2 October — automatic radio calibration, Arm/Reset and retained profiles
+
+Current feature branch: `codex/fpv-radio-guided-actions`, based on #944 at
+`7821ffdec87971bb9b7a8e5ea298eed925c1786b`. Live stack902 still ends at #944;
+no upstream ref was rewritten. The focused increment fixes EdgeTX paired-position
+switch detection, promotes Arm/Reset into the guided flow, and advances stable
+stick endpoints/rest positions without repeated clicks. A deliberate final
+radio gesture confirms and saves. Both shared SIM hosts receive the feature.
+
+The bounded multi-radio library preserves the original v1 key, automatically
+restores an exact uniquely connected selected mapping, and retains other radios.
+Backup/share JSON files, a saved-radio picker and removal are provided. Imports
+are local drafts; no community mapping is automatically trusted or uploaded.
+Research and player flow: `docs/fpv-radio-guided-actions.md`.
+
+Verification: actual mounted-browser checks16/16, including one initial click
+followed by the complete axis→Arm→Reset→save path; guide checks18/18; retained
+library production-module checks31/31; existing focused regressions22/22.
+Receipts: `docs/evidence/fpv-radio-{actions-browser,guide-browser,library}-20261002.json`.
+Syntax/lint/format pass; extra unit coverage remains deferred. Browser setup
+was inspected at desktop and390px with no horizontal overflow. Actual public
+release and physical radio acceptance are not claimed. Next: freeze inputs,
+qualify all optional packages, refresh both player URLs, publish after #944.
+
+Frozen runtime `bb16ba61e9f0a0529cbf0438382f09494e33b15b` passes all3 optional
+package admissions, committed inputs and ZIP members, with2 byte-identical
+builds. Receipt: `docs/evidence/fpv-radio-package-20261002.json`. Limits remain
+unchanged. Both reviewed-player and continuous-school builds are87 files,
+13,986,906bytes, SHA
+`d21ed535d784fb14df05cf7a685f53b68c5cd26bac1574c2f7a6fe70c824c405`.
+Actual Academy and built World Studio setup launch successfully and show the
+existing saved calibration without rewriting it. The desktop/mobile switch
+cards and opaque scrolling header were inspected; no new hardware acceptance.
+Stack902's current open members begin at #932 and end at #944. Publication is
+ready as its next dependent member; upstream holds are preserved.
+
+### 2 October — guided radio setup published
+
+[#945](https://github.com/mekhovov/revealline/pull/945) is attached to this chat
+and appended after #944 through native stack902's API. Qualification commit:
+`6ed8c3b56817f826c2767ed86b3f21d531c3f79a`; frozen runtime stays bb16ba61e.
+Both local playtests are current and the reviewed-player radio setup is left
+open. CI, protected merging and public deployment remain external follow-up;
+no upstream member was retargeted and no existing hold was lifted. Next: inspect
+exact PR heads/checks before permitted protected publication, obtain physical
+Arm/Reset acceptance, and continue the independent R5 art backlog. Preserve R7
+unit-coverage deferral and all prior learning/content acceptance limitations.
