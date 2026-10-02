@@ -325,3 +325,10 @@ coordinated with #955 shared material ownership. Existing counts stay148 authore
 challenges/14worlds and178 original/school demonstrations. B physical hardware,
 D novice sessions, F creator/device-offline qualification, feedback-led G maps
 and H/R7 deferred unit coverage remain pending.
+
+C4 is now published as #964 with all three optional packages qualified against
+merged main #883/#965. Public deployment is still pending. C5 is split into a
+focused Warehouse storage-surface/UV increment followed by Stadium display and
+stand surfaces, keeping solid collision and Pixel readability. See the latest
+delivery-log checkpoint for exact candidates, capacity #963 and open human/device
+qualification. Keep unfinished C5 separate from the ready woodland PR.
