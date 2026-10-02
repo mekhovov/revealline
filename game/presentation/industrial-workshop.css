@@ -797,9 +797,6 @@
 [data-theme-motion='reduced'] .menu-retune-layer {
   display: none;
 }
-[data-theme-motion='reduced'] :where(button, .button, [role='button']) {
-  transition: none;
-}
 [data-theme-text-size='large']:not([data-interface-theme='legacy'])
   :where(p, label, button, select, input, textarea, .micro-note) {
   font-size: max(18px, 1em);
@@ -903,6 +900,12 @@
     box-shadow 100ms ease,
     outline-color 100ms ease;
 }
+/* The game's motion preference applies even when the operating system allows
+   animation. Keep this override after the common action transition recipe. */
+[data-theme-motion='reduced']
+  :where(button, .button, [role='button'], .native-menu-actions > a, .game-mode-choice > a) {
+  transition: none;
+}
 [data-theme-styled='true'] label:has(> input:is([type='checkbox'], [type='radio'])) {
   color: var(--iw-text);
   background-color: var(--iw-panel-raised);
@@ -999,7 +1002,8 @@
   min-inline-size: var(--iw-target);
 }
 @media (prefers-reduced-motion: reduce) {
-  [data-theme-styled='true'] :where(button, .button, [role='button']) {
+  [data-theme-styled='true']
+    :where(button, .button, [role='button'], .native-menu-actions > a, .game-mode-choice > a) {
     transition: none;
   }
 }
@@ -1036,6 +1040,11 @@
   border: 0;
   border-image: none;
   box-shadow: none;
+}
+/* The image element fills the viewport, including its contain-fit letterbox.
+   Theme only that backing; the authored pixels and fitting remain unchanged. */
+[data-theme-styled='true'] .creator-player #earned-picture {
+  background-color: var(--iw-ink);
 }
 [data-theme-styled='true'] .win-picture-caption {
   width: fit-content;

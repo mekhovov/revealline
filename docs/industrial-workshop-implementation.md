@@ -1,5 +1,9 @@
 # Unified appearance implementation
 
+The latest [continuation report](verification/appearance-continuation-2026-10-02/README.md)
+records the subsequent Industrial state, Neon entrypoint, SIM badge and original
+marking-kit work, with scoped browser evidence and prioritized remaining gates.
+
 The subsequent [quality-first implementation follow-up](verification/appearance-quality-2026-10-02/README.md)
 records the custom community registration path, deeper surface/contrast repairs,
 localization, classified baseline and the latest build/test evidence. The initial
@@ -74,7 +78,8 @@ selected, input and semantic fills have explicit foreground partners. The shared
 unlayered recipes override legacy page paint held in `@layer legacy`, preserving
 layout and authored image ownership. Icons inherit their action foreground rather
 than carrying an unrelated cyan raster. A generated read-only first-paint seed
-covers 45 public entrypoints, including gates and offline launchers.
+covers the original 45 public entrypoints plus 18 Neon authoring entrypoints,
+including gates and offline launchers.
 
 Shared adapters cover the game DOM, native menus, settings and dialogs, Canvas
 board labels, Team Canvas, Company interface, SIM interface and creator entry

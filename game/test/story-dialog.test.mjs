@@ -9,6 +9,7 @@ import { changeStoredStoryBinding, STORY_STORAGE_FORMAT } from '../story-storage
 import { createAuthoredStoryPin } from '../story-bindings.mjs';
 import { acquirePinnedStory, createStoryDialog } from '../ui/story-dialog.mjs';
 import { createAudioMaster } from '../ui/audio-master.mjs';
+import { getLocale, setLocale, t as translate } from '../i18n/index.mjs';
 
 const f = await prepareStoryFixture(),
   still = (
@@ -205,6 +206,72 @@ test('missing/corrupt movie keeps the already staged exact poster and gives fini
     /picture stays visible.*\.rlstory.*Original hash differs/s,
   );
   assert.equal(h.calls.length, 0);
+});
+
+test('story loading and failure notices follow the active language without replacing focused Close or the exact poster', async (t) => {
+  const previousLocale = getLocale();
+  t.after(() => setLocale(previousLocale, { persist: false }));
+  setLocale('en', { persist: false });
+  const metadata = deferred(),
+    original = deferred(),
+    h = setup(t, {
+      readMedia: () => metadata.promise,
+      acquire: () => original.promise,
+    });
+  const opening = h.host.open(h.request),
+    close = h.host.dialog.querySelector('.dialog-close'),
+    poster = h.host.dialog.querySelector('canvas'),
+    label = h.host.dialog.querySelector('.operation-status-label');
+  const check = (message, values) => {
+    for (const locale of ['uk', 'en']) {
+      setLocale(locale, { persist: false });
+      assert.equal(label.textContent, translate(message, values));
+      assert.equal(close.getAttribute('aria-label'), translate('interface:closeStory'));
+      assert.equal(h.doc.activeElement, close);
+      assert.equal(h.host.dialog.querySelector('canvas'), poster);
+      assert.equal(poster.dataset.original, f.pin.sha256);
+    }
+  };
+  check('interface:yourPictureIsReadyReadingOptionalStoryMetadata');
+  metadata.resolve(media());
+  await Promise.resolve();
+  check('interface:checkingAndOpeningTheExactStoryOriginal');
+  original.reject(new Error('Original hash differs.'));
+  assert.equal(await opening, false);
+  check('gameplay:storyUnavailableYourExactPictureStaysVisibleRestoreItsOriginal', {
+    value1: 'Original hash differs.',
+  });
+  assert.equal(h.host.dialog.querySelector('.operation-status').dataset.state, 'error');
+  assert.equal(h.calls.length, 0);
+});
+
+test('story preference-save failure uses the existing live localized error while playback ownership stays intact', async (t) => {
+  const previousLocale = getLocale();
+  t.after(() => setLocale(previousLocale, { persist: false }));
+  const h = setup(t, {
+    saveVolume() {
+      throw new Error('Storage denied.');
+    },
+  });
+  assert.equal(await h.host.open(h.request), true);
+  const close = h.host.dialog.querySelector('.dialog-close');
+  h.calls[0].onChange({ state: 'playing', volume: 0.3 });
+  const status = h.host.dialog.querySelector('.operation-status'),
+    label = status.querySelector('.operation-status-label');
+  assert.equal(status.dataset.state, 'error');
+  assert.equal(status.hidden, false);
+  for (const locale of ['uk', 'en']) {
+    setLocale(locale, { persist: false });
+    assert.equal(
+      label.textContent,
+      translate('gameplay:cinematicPreferenceCouldNotBeSaved', { value1: 'Storage denied.' }),
+    );
+    assert.equal(h.doc.activeElement, close);
+    assert.equal(close.getAttribute('aria-label'), translate('interface:closeStory'));
+  }
+  assert.equal(h.host.dialog.dataset.storyState, 'playing');
+  assert.equal(h.instances[0].disposed, 0);
+  assert.equal(h.instances[0].paused, 0);
 });
 
 test('Close during delayed acquisition neutralizes input and prevents late presentation allocation', async (t) => {

@@ -13,6 +13,8 @@ on:
       - 'game/ui/edition-tool-provider.mjs'
       - 'game/ui/optional-practice-panel.mjs'
       - 'game/ui/mode-choice.mjs'
+      - 'game/ui/story-dialog.mjs'
+      - 'game/ui/operation-status.mjs'
       - 'game/editions/model.mjs'
       - 'game/editions/retained-presentation.mjs'
       - 'game/fpv-entry.mjs'
@@ -20,7 +22,16 @@ on:
       - 'authoring/company-studio/model.mjs'
       - 'authoring/company-studio/studio.mjs'
       - 'authoring/fpv-worlds/**'
+      - 'authoring/library/neon*/index.html'
       - 'scripts/prepare-sim-appearance-acceptance.mjs'
+      - 'scripts/build-neon-artwork-gallery.mjs'
+      - 'scripts/build-neon-mosaic.mjs'
+      - 'scripts/refresh-fpv-presentation-assets.mjs'
+      - 'scripts/test-industrial-marking-kit.mjs'
+      - 'game/test/story-dialog.test.mjs'
+      - 'game/test/operation-status.test.mjs'
+      - 'game/test/creator-player-menu.test.mjs'
+      - 'game/test/creator-player-victory-story.test.mjs'
       - 'game/test/menu-audio-localization.test.mjs'
       - 'game/test/win-picture-host.test.mjs'
       - 'game/test/demo-reward.test.mjs'
@@ -73,6 +84,10 @@ jobs:
         game/test/theme-system.test.mjs
         game/test/unified-appearance.test.mjs
         game/test/theme-bootstrap.test.mjs
+        game/test/story-dialog.test.mjs
+        game/test/operation-status.test.mjs
+        game/test/creator-player-menu.test.mjs
+        game/test/creator-player-victory-story.test.mjs
         game/test/theme-preview.test.mjs
         game/test/industrial-arcade.test.mjs
         game/test/theme-family-host.test.mjs
@@ -103,6 +118,8 @@ jobs:
         game/test/fpv-world-runtime.test.mjs
         game/test/fpv-world-content.test.mjs
         game/test/fpv-workshop-visuals.test.mjs
+        game/test/fpv-objective-labels.test.mjs
+        scripts/test-industrial-marking-kit.mjs
         game/test/fpv-flight-ui.test.mjs
         game/test/fpv-replay-rate.test.mjs
         game/test/fpv-studio-setup.test.mjs
@@ -125,6 +142,13 @@ jobs:
       - run: npm ci
       - name: Install pinned SIM test dependencies
         run: npm ci --prefix authoring/fpv-worlds --ignore-scripts
+      - name: Verify generated presentation and marking sources
+        shell: bash
+        run: |
+          set -euo pipefail
+          node scripts/refresh-theme-bootstrap.mjs --check
+          node scripts/refresh-fpv-presentation-assets.mjs --check
+          node authoring/fpv-worlds/industrial-markings/generate.mjs --check
       - name: Run focused appearance, SIM and curated-community checks
         id: focused
         shell: bash

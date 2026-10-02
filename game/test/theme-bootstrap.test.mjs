@@ -5,6 +5,8 @@ import vm from 'node:vm';
 import path from 'node:path';
 import { parse } from 'parse5';
 import { buildThemeBootstrap } from '../../scripts/refresh-theme-bootstrap.mjs';
+import { buildNeonArtworkGallery } from '../../scripts/build-neon-artwork-gallery.mjs';
+import { buildNeonMosaicGallery } from '../../scripts/build-neon-mosaic.mjs';
 import {
   BUILTIN_THEME_FAMILIES,
   INSTALLED_THEME_FAMILIES,
@@ -232,13 +234,39 @@ function nodes(tree, name, out = []) {
 }
 const attr = (node, name) => node.attrs?.find((item) => item.name === name)?.value;
 
-test('every production game, authoring and site entry seeds appearance before other scripts and styles', async () => {
-  const files = (
+async function neonEntrypoints() {
+  const library = path.join(root, 'authoring/library');
+  const directories = (await fs.readdir(library, { withFileTypes: true })).filter(
+    (entry) => entry.isDirectory() && entry.name.startsWith('neon-'),
+  );
+  return (
     await Promise.all(
-      ['game', 'authoring', 'site'].map((name) => entrypoints(path.join(root, name))),
+      directories.map(async (entry) => {
+        const directory = path.join(library, entry.name);
+        return (await fs.readdir(directory)).includes('index.html')
+          ? [path.join(directory, 'index.html')]
+          : [];
+      }),
     )
   ).flat();
-  assert.ok(files.length >= 45);
+}
+
+test('every production game, authoring and site entry seeds appearance before other scripts and styles', async () => {
+  const library = await neonEntrypoints();
+  assert.equal(
+    library.length,
+    18,
+    'Neon reference launchers and both galleries are UI entrypoints.',
+  );
+  const files = [
+    ...(
+      await Promise.all(
+        ['game', 'authoring', 'site'].map((name) => entrypoints(path.join(root, name))),
+      )
+    ).flat(),
+    ...library,
+  ];
+  assert.ok(files.length >= 63);
   for (const file of files) {
     const html = await fs.readFile(file, 'utf8'),
       tree = parse(html, { sourceCodeLocationInfo: true });
@@ -253,13 +281,52 @@ test('every production game, authoring and site entry seeds appearance before ot
       styles.some((node) => node.attrs.some((a) => a.name === 'data-industrial-workshop')),
       file,
     );
-    for (const resource of [...scripts, ...styles]) {
+    const inlineStyles = library.includes(file) ? nodes(tree, 'style') : [];
+    for (const resource of [...scripts, ...styles, ...inlineStyles]) {
       if (resource === bootstrap) continue;
       assert.ok(
         bootstrap.sourceCodeLocation.startOffset < resource.sourceCodeLocation.startOffset,
         `${file}: seed precedes resources`,
       );
     }
+    if (library.includes(file)) {
+      assert.equal(attr(bootstrap, 'data-theme-density'), 'studio');
+      assert.equal(attr(bootstrap, 'data-theme-follow-context'), 'true');
+      assert.ok(
+        scripts.some((node) => attr(node, 'src')?.endsWith('theme-entry.mjs')),
+        file,
+      );
+      for (const node of nodes(tree, 'style')) {
+        const css = node.childNodes.map((child) => child.value ?? '').join('');
+        assert.match(css, /^\s*@layer legacy\s*\{/, file);
+      }
+      for (const resource of [...scripts, ...styles]) {
+        const relative = attr(resource, 'src') ?? attr(resource, 'href');
+        if (relative) await fs.access(path.resolve(path.dirname(file), relative));
+      }
+    }
+  }
+});
+
+test('Neon gallery generators retain shared appearance and exact authored image references on regeneration', async () => {
+  const library = path.join(root, 'authoring/library');
+  const images = JSON.parse(await fs.readFile(path.join(library, 'neon-artwork/prompts.json')));
+  const designs = JSON.parse(await fs.readFile(path.join(library, 'neon-mosaic/designs.json')));
+  for (const [folder, html, expected] of [
+    ['neon-artwork', buildNeonArtworkGallery(images), images.map((image) => image.file)],
+    [
+      'neon-mosaic',
+      buildNeonMosaicGallery(designs.map((design) => ({ design }))),
+      designs.map((design) => `${design.id}/preview.svg`),
+    ],
+  ]) {
+    assert.equal(html, await fs.readFile(path.join(library, folder, 'index.html'), 'utf8'));
+    const tree = parse(html);
+    assert.deepEqual(
+      nodes(tree, 'img').map((image) => attr(image, 'src')),
+      expected,
+    );
+    assert.ok(nodes(tree, 'article').every((node) => attr(node, 'data-ui-surface') === 'panel'));
   }
 });
 
