@@ -90,8 +90,10 @@ import {
 import { builtinWorldScene, createFlightRenderer } from './world-assets.mjs';
 import { mountDroneHangar } from './world-hangar.mjs';
 import { mountActorEditor } from './world-actor-editor.mjs';
+import { fpvReturnURL } from '../../game/fpv-entry.mjs';
 
 const COPY_EN = {
+  backToGame: 'Back to FPV / LINE',
   learn: 'Learn to fly',
   beginLearning: 'Start Flight School',
   schoolEyebrow: 'ACRO FLIGHT SCHOOL · BUILD YOUR MASTERY',
@@ -258,6 +260,7 @@ const COPY_EN = {
   keys: 'W/S pitch · A/D roll · Q/E yaw · ↑/↓ throttle · P pause · Space fire',
 };
 const COPY_UK = {
+  backToGame: 'Повернутися до FPV / LINE',
   learn: 'Навчитися літати',
   beginLearning: 'Почати льотну школу',
   schoolEyebrow: 'ШКОЛА ACRO · РОЗВИВАЙТЕ МАЙСТЕРНІСТЬ',
@@ -662,6 +665,16 @@ export function mountWorldApp({
   const $ = (id) => doc.getElementById(id),
     listeners = [],
     translatedNodes = [];
+  // The containing PWA supplies a validated return route; standalone SIM keeps its own shell.
+  const returnURL = fpvReturnURL(win.location.href);
+  if (returnURL && $('sim-settings')) {
+    const back = doc.createElement('a');
+    back.id = 'sim-game-return';
+    back.href = returnURL;
+    back.dataset.i18n = 'backToGame';
+    back.textContent = COPY_EN.backToGame;
+    $('sim-settings').append(back);
+  }
   doc.querySelectorAll('[data-i18n]').forEach((n) => {
     translatedNodes.push({ node: n, key: n.dataset.i18n, fallback: n.textContent });
     // The host's translator owns its own data-i18n namespace. Studio strings
