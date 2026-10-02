@@ -254,14 +254,30 @@ export function builtinWorldScene(course) {
     }
   }
   if (environment === 'courtyard' || environment === 'stadium') {
-    // The courtyard has varied low-rise blocks; the stadium has a single
-    // pavilion behind its start side, leaving the surrounding bleachers clear.
+    // The existing three-bay height groups become connected courtyard terraces.
+    // Fixed metre-scale bay spacing avoids isolated blocks in larger lessons;
+    // uneven alleys and setbacks give each street front a distinct silhouette.
+    // The stadium keeps its original single pavilion and exact placement.
     const sides = environment === 'stadium' ? [0] : [0, 1, 2, 3];
-    const gap = environment === 'stadium' ? 18 : 8;
+    const terraceCentres = [
+      [0.1, 0.3, 0.64, 0.86],
+      [0.12, 0.4, 0.66, 0.88],
+      [0.14, 0.36, 0.67, 0.87],
+      [0.1, 0.33, 0.61, 0.85],
+    ];
+    const setbacks = [8, 10, 12, 9];
     for (const side of sides) {
+      const span = side % 2 ? maxZ - minZ : maxX - minX;
+      // All authored courtyards span at least 70 m. Retain the old layout for
+      // small creator worlds instead of squeezing full-size terrace groups.
+      const terraces = environment === 'courtyard' && span >= 64;
       for (let i = 0; i < 12; i++) {
-        const along = (i + 0.5) / 12;
-        const floors = environment === 'stadium' || (Math.floor(i / 3) + side) % 3 === 1 ? 2 : 1;
+        const group = Math.floor(i / 3),
+          along = terraces
+            ? terraceCentres[side][group] + (((i % 3) - 1) * 4.04) / span
+            : (i + 0.5) / 12,
+          gap = terraces ? setbacks[(group + side) % 4] : environment === 'stadium' ? 18 : 8;
+        const floors = environment === 'stadium' || (group + side) % 3 === 1 ? 2 : 1;
         retro(
           i % 4 === 1 ? 'wall-a-door' : i % 4 === 2 ? 'wall-a-garage' : 'wall-a-window',
           side,

@@ -1829,3 +1829,76 @@ Next work uses independent `codex/fpv-courtyard-terraces` from current main;
 keep unfinished C3 out of ready #960. Preserve Themes #955 and C2 placement when
 integrating branches. Do not report remaining physical-device/art qualification
 or deferred unit coverage as complete.
+### C3 courtyard continuation — 2 October 2026
+
+C2 meadow composition is published separately as
+[PR #960](https://github.com/mekhovov/revealline/pull/960), last inspected at
+`4507c4636` with required checks running. Branch `codex/fpv-meadow-groves` and its
+qualified normal player builds are preserved; no unfinished courtyard work was
+added there. C3 uses independent `codex/fpv-courtyard-terraces` from current main
+`1d0b359f75dfb48aa5729cdc619c2f93fe9ac65a`.
+
+The public marker identifies this merged touch #959 revision. Actual public SIM
+launch and Lighthouse approach succeed, exposing both flight modes and
+Precise/Direct touch response without application errors. This now verifies #959
+live; see `docs/evidence/fpv-touch-public-20261002.json`. It does not certify C2 or
+C3 publicly deployed, or new physical-device/hardware acceptance.
+
+C3 groups existing courtyard wall/roof modules into connected three-bay terraces
+with uneven alleys and setbacks. All139 placements,20 batches,119 instances and
+23-source-model library remain; only courtyard X/Z placement changes. Roof/floor
+alignment and ≥8m building clearance pass all3 actual bounds. Small creator
+sides under64m retain the old layout. Other5 prepared environments compare exactly
+across11 authored bounds/theme cases. Runtime grows801bytes; two offline source
+regenerations are identical and the embedded library hash is unchanged.
+
+Actual GLB/browser checks pass124/124 with59 image pairs, no increased sampled
+draw calls and stable reload/disposal counts. The real player completes Roofline
+survey at50.6s. Prior178-demo replay evidence remains applicable via exact equality
+of all12 bound runtime/catalogue/proof inputs; do not call this a new replay run.
+See `docs/fpv-courtyard-terraces.md` and adjacent model/browser receipts. Frozen
+packages/publication follow. Normal C2+touch player URLs stay untouched until an
+integrated C2+C3 build is qualified. Separate C3 URL is
+`dist/fpv-courtyard-terraces-playtest/optional-practice/fpv-worlds/index.html`.
+
+Themes #955 retains shared appearance/material-role ownership. C3 is a template
+placement hunk with offline-generated runtime/provenance only; preserve its
+contracts and C2 meadow visuals during integration. Broad C realistic art is not
+complete. Next work is woodland readability and shared-theme material/asset
+qualification; do not add wide decorative canopies across narrow flight gaps
+without matching authored visual/collision rules. B/D/F/G/H hardware, novice,
+creator/offline, feedback-led maps and deferred unit-coverage work remain open.
+
+C3 frozen candidate `b00fe336338cdf9a351f5851346f93c29ccdd003` passes all3
+optional-package admissions, committed-input and ZIP checks, and2 identical
+builds. Counts35/68/100 and bytes545,596 /3,825,812 /14,080,598 remain under the
+inherited guards. Packaged WebGL repeats124/124 checks and59 comparisons.
+C3 local build is92files/13,923,279bytes, ZIP SHA256
+`8d82a3e83798fc79adfcf9c048ad704a5de45eae18141ad0f9de3e571a681f03`.
+Source remains independent of ready #960. If960 merges first, reconcile new main
+with a recovery ref, preserve both log appends, and requalify combined package
+inputs before refreshing normal playtests. Native stacks are only needed if a
+new feature actually depends on an unmerged one.
+
+C3 is published and attached as [PR #961](https://github.com/mekhovov/revealline/pull/961),
+`codex/fpv-courtyard-terraces`, initially at `af24f6ce3`, directly against main.
+No native stack is needed: C2 and C3 change independent scenery areas. Themes was
+sent the exact template/placement handoff with both PR links under the user's
+existing coordination authorization. Do not overwrite its appearance work.
+
+At final inspection, unrelated rewards #906 advanced main to `c78258e24`.
+Repository automation already merged that main into meadow #960 as `989a4840e`;
+its required current-head checks are running. Preserve this remote merge history,
+not a force-rewritten linear approximation. Courtyard #961 is still at `af24f6ce3`
+and behind new main; inspect its exact remote head before any update because the
+same automation may reconcile it. No merge/live availability for960/961 is
+claimed. The frozen evidence identifies the earlier candidates honestly. If new
+main changes optional package inputs, repeat applicable frozen admission and
+browser checks before reporting the updated candidate qualified.
+
+Next concrete item: woodland/shared-theme asset readability. First reconcile
+#955 material-role ownership and determine visual/collision rules for the six
+existing tall timber-like tree colliders; avoid adding a solid-looking broad
+canopy in a flyable opening. Preserve completed960/961 and normal C2+touch builds
+while working on a new independent branch. Keep hardware/novice qualification
+and deferred unit coverage explicitly open.

@@ -294,3 +294,14 @@ separate branch. Keep #959 and the completed C2 PR isolated while publication
 runs. D's novice sessions, B's real TX15/iPhone/Steam Deck acceptance, F's creator
 and device-offline qualification, feedback-led G map growth, and H's deferred
 unit coverage remain open. Authored counts remain 148 challenges and 14 worlds.
+### C3 courtyard continuation — 2 October 2026
+
+Touch #959 is merged and its actual public launch is now verified. Meadow C2 is
+published as #960; publication is independent from the new C3 courtyard branch.
+C3 connects the existing facade modules into three-bay terraces with deliberate
+alleys, keeping all139 scenery placements and the original asset library. Actual
+GLB verification passes124 checks/59 image pairs with no increased draw calls in
+the sampled views. Frozen admission/publication follows; physical-device and art
+acceptance remain open. Authored counts stay148 challenges/14 worlds. Continue
+woodland/shared-theme asset qualification after this focused increment; preserve
+#955's appearance ownership and the deferred H/R7 unit-coverage phase.
