@@ -275,5 +275,9 @@
   "companyJourneys": "Company journeys",
   "page.qrNotice": "Offline QR rewards use Project Nayuki’s QR Code generator 1.8.0 under its [[license]]. Its [[source]] is included.",
   "page.menuFontNotice": "Menu pixel type: Departure Mono 1.500 by Helena Zhang, self-hosted with full English and Ukrainian glyph coverage. [[license]]; [[source]].",
-  "page.effectsCredits": "Sound effects credits and source"
+  "page.effectsCredits": "Sound effects credits and source",
+  "neonReferencePack": "Neon Reference Pack",
+  "neonReferenceDescription": "Sixteen screenshot-based neon arenas: Channels, Crossroads, Hearts, Labyrinth, Arrows, Chambers, Crossgrid, Switchback, Spirals, Crossfire, Pinwheels, Wavebands, Conduit, Switchyards, Spines and Prism.",
+  "neonMosaicPackTitle": "Neon Words & Symbols",
+  "neonMosaicPackDescription": "38 word and symbol arenas with varied terrain, passages and enemies, inspired by FPV flight and Ukrainian cultural motifs."
 }

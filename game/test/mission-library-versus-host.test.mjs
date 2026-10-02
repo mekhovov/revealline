@@ -163,14 +163,14 @@ test('Versus All missions lists exact Journey and retained Classic rows without 
   assert.equal(p.$('journey-mode').value, 'versus');
   assert.equal(p.$('journey-collection').value, '');
   assert.equal(p.$('journey-lifecycle').value, 'current');
-  assert.equal(p.$('journey-cards').children.length, 186);
+  assert.equal(p.$('journey-cards').children.length, 240);
   showAllLifecycles(p);
-  assert.equal(p.$('journey-cards').children.length, 327);
+  assert.equal(p.$('journey-cards').children.length, 435);
   assert.match(p.$('journey-cards').children[0].textContent, /Journey/);
   const classic = [...p.$('journey-cards').children].filter((card) =>
     card.querySelector('.journey-card-tags').textContent.includes('Classic'),
   );
-  assert.equal(classic.length, 188);
+  assert.equal(classic.length, 296);
   assertReadyCard(
     classic.find((card) => card.dataset.missionId === late.id),
     late.name,
@@ -366,7 +366,7 @@ test('Versus mode filter exposes the same qualified Journey identities in Solo w
     cards.map((card) => card.dataset.missionId),
     original,
   );
-  assert.equal(new Set(original).size, 327);
+  assert.equal(new Set(original).size, 435);
   const target = cards[1];
   assert.match(target.textContent, /Journey.*Band 1\/12/);
   assertReadyCard(target);
@@ -475,7 +475,7 @@ test('new Journey Versus mounts the same library and chooses an exact authored m
   assert.equal(p.renders[0].level.id, 'first-return');
   await open(p);
   showAllLifecycles(p);
-  assert.equal(p.$('journey-cards').children.length, 327);
+  assert.equal(p.$('journey-cards').children.length, 435);
   const card = [...p.$('journey-cards').children].find((card) =>
     JSON.parse(card.dataset.missionId)[3].endsWith('/choose-your-share'),
   );
@@ -650,7 +650,7 @@ for (const interruption of ['blur', 'focus', 'pointer'])
         assert.equal(p.doc.activeElement, focused);
         await open(p);
         showAllLifecycles(p);
-        assert.equal(p.$('journey-cards').children.length, 327);
+        assert.equal(p.$('journey-cards').children.length, 435);
       } finally {
         release();
         await opening;

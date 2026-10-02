@@ -456,12 +456,15 @@ test('historical nine packs retain their budget boundary; optional pressure chap
     await readFile(path.join(ROOT, 'game/content/packs/archive-index.json')),
   );
   assert.equal(index.packs.length, 8);
-  assert.equal(archiveIndex.packs.length, 4);
+  assert.equal(archiveIndex.packs.length, 6);
   const historicalRefs = [
     ...index.packs.filter(
-      (entry) => !['fpv-arcade-r5', 'fpv-pressure-frontier'].includes(entry.id),
+      (entry) =>
+        !['fpv-arcade-r5', 'fpv-pressure-frontier', 'neon-reference-pack'].includes(entry.id),
     ),
-    ...archiveIndex.packs.filter((entry) => entry.id !== 'fpv-arcade-r4'),
+    ...archiveIndex.packs.filter(
+      (entry) => !['fpv-arcade-r4', 'neon-reference-pack', 'neon-mosaic-pack'].includes(entry.id),
+    ),
   ];
   assert.equal(historicalRefs.length, 9);
   const known = new Map(
@@ -523,7 +526,7 @@ test('historical nine packs retain their budget boundary; optional pressure chap
   let decoded = 0;
   const decodeImage = async (dataUrl) => {
     const info = known.get(dataUrl);
-    assert.ok(info, 'Only exact Homeward, Workshop and First Light originals');
+    assert.ok(info, 'Only exact shipped originals and Neon placeholder sprites');
     decoded++;
     return { naturalWidth: info.width, naturalHeight: info.height };
   };
@@ -551,6 +554,18 @@ test('historical nine packs retain their budget boundary; optional pressure chap
       'Rejected ninth pack never evicts or changes the installed library.',
     );
   }
+  const neonPacks = await Promise.all(
+    ['neon-reference-pack', 'neon-mosaic-pack'].map(async (id) =>
+      JSON.parse(await readFile(path.join(ROOT, `game/content/packs/${id}.json`))),
+    ),
+  );
+  for (const neon of neonPacks)
+    for (const entry of neon.levelVisuals)
+    for (const { dataUrl } of Object.values(entry.visualOverrides)) {
+      const dimensions = inspectImageDataUrl(dataUrl);
+      assert.equal(dimensions.valid, true);
+      known.set(dataUrl, dimensions);
+    }
   const active = [];
   for (const entry of index.packs) {
     const source = JSON.parse(await readFile(path.join(ROOT, 'game/content/packs', entry.path)));
