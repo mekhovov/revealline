@@ -48,10 +48,17 @@ unit coverage remains in R7.
 
 Generate the actual-host browser fixture with
 `node scripts/prepare-fpv-checkpoint-verification.mjs [unique-suffix]`, serve the
-repository and open its generated `index.html`. The fixture uses production HTML
+repository and open its generated `index.html`. Append
+`--package dist/fpv-checkpoint-playtest` to verify a prepared player package. The fixture uses production HTML
 and modules with isolated native IndexedDB and controlled devices. Browser
 results and frozen package evidence are recorded alongside this document.
 
 Physical TX15/iPhone/Steam Deck acceptance, novice observations and sustained
 hardware measurements remain pending. A local build or PR is not public live
 availability.
+
+Frozen source `9a13a9b1ce9316d19c3ac1f572f1bc0bfc21fcbc` passed all three
+package admissions, committed-input and ZIP-member verification, and two
+byte-identical builds per package. Academy remains 62 source/55 runtime files;
+World Studio remains 94 source/87 runtime files, within unchanged policy limits.
+See `fpv-checkpoint-package-verification.json`; no public eligibility is implied.

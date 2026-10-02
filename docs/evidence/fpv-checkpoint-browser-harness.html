@@ -67,6 +67,8 @@
       await wait(25);
     }
   }
+  const runtimeRoot = document.querySelector('meta[name="fixture-runtime-root"]')?.content ?? '/';
+  const runtimeURL = new URL(runtimeRoot, location.href);
   async function sourceHashes() {
     const paths = [
       'optional-practice/fpv-worlds/index.html',
@@ -82,7 +84,9 @@
     return Object.fromEntries(
       await Promise.all(
         paths.map(async (p) => {
-          const bytes = await (await fetch('../../' + p, { cache: 'no-store' })).arrayBuffer();
+          const result = await fetch(new URL(p, runtimeURL), { cache: 'no-store' });
+          must(result.ok, 'Missing runtime file: ' + result.url);
+          const bytes = await result.arrayBuffer();
           return [
             p,
             Array.from(new Uint8Array(await crypto.subtle.digest('SHA-256', bytes)))
@@ -752,6 +756,9 @@
     });
     const receipt = {
       format: 'FPVCheckpointHostEvidence.v1',
+      runtimeRoot,
+      proofGenerator:
+        'Repository source modules produce independent recorded-command fixtures; all simulator host HTML, imports and assets use runtimeRoot.',
       createdAt: new Date().toISOString(),
       passed: checks.every((c) => c.passed),
       checks,
