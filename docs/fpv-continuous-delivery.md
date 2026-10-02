@@ -1763,3 +1763,6 @@ and this evidence is applied on top without a force-push. Recovery refs
 `codex/fpv-touch-automation-main958-20261002` preserve both histories.
 No new native stack is needed. Public deployment and current-head checks remain
 external pending work; keep the ready increment separate from C2.
+Preserved-history candidate `e18d14aa7` also passes all three admissions and
+reproducibility checks; the main958 receipt now names that published-history
+candidate. Runtime and browser-fixture bytes are unchanged.
