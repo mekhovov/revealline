@@ -1120,6 +1120,13 @@ export function mountWorldApp({
     },
     onRadio: () => $('radio-setup-button').click(),
     readRadioPreview: () => radio.preview(),
+    createLessonPreview: (lesson, mode, proof) =>
+      createWorldFlight({
+        course: lesson.course,
+        mode,
+        response: proof.response,
+        unscoredPractice: true,
+      }),
     onFullscreen: () => immersive.toggle(),
     onPracticeView: async (enabled) => {
       if (enabled) {
@@ -3061,6 +3068,9 @@ export function mountWorldApp({
     await saveRecovery();
     await ready;
     if (disposed || token !== flightToken) return;
+    // The guide creates its isolated lesson simulation before the flight view.
+    if (!entry.legacy) await initWorldRuntime();
+    if (disposed || token !== flightToken) return;
     radio.reset({ notify: false });
     flight?.dispose?.();
     flight = null;
@@ -3076,6 +3086,7 @@ export function mountWorldApp({
       $('flight-mode').value = options.replayProof?.mode ?? options.recover?.mode ?? learning.mode;
       $('flight-camera').value = learning.mode === 'acro' ? 'fpv' : learning.camera;
       beginnerCoach.open(learning, {
+        demonstration: demonstrationFor(entry, learning.mode),
         practice: Boolean(options.recover),
         replay: Boolean(options.replayProof),
       });
@@ -3158,7 +3169,6 @@ export function mountWorldApp({
       throw new Error(
         txt('WebGL is unavailable in this browser.', 'WebGL недоступний у цьому браузері.'),
       );
-    if (!entry.legacy) await initWorldRuntime();
     if (token !== flightToken) return;
     if (replayProof) {
       const proof = replayProof;
@@ -3279,7 +3289,8 @@ export function mountWorldApp({
     restoreRadio();
     paintInput(flight.snapshot());
     updateHUD(flight.snapshot());
-    $('world-viewport').focus();
+    if (beginnerCoach.blocksArm()) beginnerCoach.focusPreview();
+    else $('world-viewport').focus();
     if (replayProof) {
       input.enable(false);
       flight.arm();

@@ -226,6 +226,32 @@ export function mountDroneDiagram({ root }) {
     'text-anchor': 'middle',
     class: 'sim-response-rear-label',
   });
+  const targetCue = svg('g', { class: 'sim-response-practice-target' });
+  const targetOutline = svg('path', {
+    class: 'sim-response-target-outline',
+    fill: 'none',
+    stroke: 'var(--fk-amber, #ffd27c)',
+    'stroke-width': 1.5,
+    'stroke-dasharray': '4 3',
+  });
+  const targetMarker = svg('path', {
+    class: 'sim-response-target-marker',
+    fill: 'none',
+    stroke: 'var(--fk-amber, #ffd27c)',
+    'stroke-width': 2,
+    'stroke-linecap': 'round',
+    'stroke-linejoin': 'round',
+  });
+  const targetLabel = svg('text', {
+    class: 'sim-response-target-label',
+    'text-anchor': 'middle',
+    fill: 'var(--fk-amber, #ffd27c)',
+    stroke: 'var(--fk-panel, #101923)',
+    'stroke-width': 3,
+    'paint-order': 'stroke',
+    'font-family': 'var(--fk-font-mono, monospace)',
+  });
+  targetCue.append(targetOutline, targetMarker, targetLabel);
   airframe.append(
     lowerArms,
     arms,
@@ -247,6 +273,7 @@ export function mountDroneDiagram({ root }) {
     heightLine,
     drift,
     airframe,
+    targetCue,
     frontLeader,
     frontLabel,
     rearLabel,
@@ -268,11 +295,17 @@ export function mountDroneDiagram({ root }) {
   const phases = [0, 0, 0, 0],
     previousPower = [0, 0, 0, 0],
     drawnPhases = [NaN, NaN, NaN, NaN];
+  // Generic 10-inch True-X proportions: 254 mm props / 420 mm diagonal.
+  // Reduce the motor span as the props grow to preserve the observer's fit.
+  // These visual dimensions never enter the flight or collision model.
+  const motorOffset = 0.58,
+    propRadius = (motorOffset * Math.SQRT2 * 254) / 420,
+    powerRadius = propRadius + 0.025;
   const corners = [
-    [-0.82, 0, -0.82],
-    [0.82, 0, -0.82],
-    [-0.82, 0, 0.82],
-    [0.82, 0, 0.82],
+    [-motorOffset, 0, -motorOffset],
+    [motorOffset, 0, -motorOffset],
+    [-motorOffset, 0, motorOffset],
+    [motorOffset, 0, motorOffset],
   ];
   const finite = (value) => (Number.isFinite(value) ? value : 0);
   const rotation = (orientation) => {
@@ -310,6 +343,7 @@ export function mountDroneDiagram({ root }) {
       reducedMotion = false,
       immersivePractice = false,
       showMotorDetails = false,
+      practiceTarget = null,
     } = {}) {
       if (disposed || !state) return;
       environmentMotion ||= immersivePractice;
@@ -334,6 +368,17 @@ export function mountDroneDiagram({ root }) {
         reducedMotion,
         immersivePractice,
         showMotorDetails,
+        practiceTarget?.type,
+        practiceTarget?.axis,
+        practiceTarget?.at,
+        practiceTarget?.minSide,
+        practiceTarget?.maxSide,
+        practiceTarget?.minY,
+        practiceTarget?.maxY,
+        ...['x', 'y', 'z'].flatMap((axis) => [
+          practiceTarget?.min?.[axis],
+          practiceTarget?.max?.[axis],
+        ]),
       ].join('|');
       // Hosts may paint more often than the fixed simulation clock. Repeated
       // samples perform no SVG work; changed attitude/position is never delayed.
@@ -590,6 +635,174 @@ export function mountDroneDiagram({ root }) {
       attr(mixNote, 'y', immersivePractice ? '324' : '184');
       attr(reference, 'x', String(centerX));
       attr(reference, 'y', immersivePractice ? '345' : environmentMotion ? '196' : '154');
+      let targetResult = null;
+      const target = practiceTarget;
+      let bounds = null;
+      if (target?.type === 'gate' && ['x', 'z'].includes(target.axis)) {
+        const side = target.axis === 'x' ? 'z' : 'x';
+        bounds = {
+          min: { [target.axis]: target.at, [side]: target.minSide, y: target.minY },
+          max: { [target.axis]: target.at, [side]: target.maxSide, y: target.maxY },
+        };
+      } else if (['hold', 'land'].includes(target?.type)) bounds = target;
+      const validBounds =
+        bounds &&
+        ['x', 'y', 'z'].every(
+          (axis) =>
+            Number.isFinite(bounds.min?.[axis]) &&
+            Number.isFinite(bounds.max?.[axis]) &&
+            bounds.min[axis] <= bounds.max[axis],
+        );
+      style(targetCue, 'display', validBounds ? '' : 'none');
+      if (validBounds) {
+        const center = Object.fromEntries(
+          ['x', 'y', 'z'].map((axis) => [
+            axis,
+            (target.type === 'land' && axis === 'y'
+              ? bounds.min.y
+              : (bounds.min[axis] + bounds.max[axis]) / 2) / 1000,
+          ]),
+        );
+        const targetView = (point) => {
+          const [x, , z] = relative([
+            point.x - finite(state.position?.x) / 1000,
+            0,
+            point.z - finite(state.position?.z) / 1000,
+          ]);
+          const depth = 5 - z * 0.9165;
+          const scale = (projectionScale * 5) / Math.max(0.35, depth);
+          const altitude = Math.max(0, point.y);
+          // Use the same explicit height auto-framing as the observer. A target
+          // at the drone's position/height projects onto its body centre.
+          const framedHeight = environmentMotion
+            ? (96 * altitude) / (altitude + 4)
+            : floorY - bodyY + (altitude - height) * projectionScale;
+          return {
+            point: [
+              centerX + x * scale,
+              floorY + z * 0.4 * scale - framedHeight * (scale / projectionScale),
+            ],
+            direction: [x, z * 0.4 - (altitude - height)],
+            depth,
+          };
+        };
+        const minX = 18,
+          maxX = immersivePractice ? 622 : 202,
+          minY = 30,
+          maxY = immersivePractice ? 298 : environmentMotion ? 163 : 123;
+        const inside = (view) =>
+          view.depth > 0.35 &&
+          view.point[0] >= minX &&
+          view.point[0] <= maxX &&
+          view.point[1] >= minY &&
+          view.point[1] <= maxY;
+        const view = targetView(center);
+        const offscreen = !inside(view);
+        let screen = view.point;
+        let direction =
+          view.depth > 0.35 ? [screen[0] - centerX, screen[1] - bodyY] : view.direction;
+        if (Math.hypot(...direction) < 1e-6) direction = [0, -1];
+        if (offscreen) {
+          const originY = Math.max(minY, Math.min(maxY, bodyY));
+          const reach = Math.min(
+            direction[0]
+              ? (direction[0] > 0 ? maxX - centerX : minX - centerX) / direction[0]
+              : Infinity,
+            direction[1]
+              ? (direction[1] > 0 ? maxY - originY : minY - originY) / direction[1]
+              : Infinity,
+          );
+          screen = [centerX + direction[0] * reach, originY + direction[1] * reach];
+        }
+        const [x, y] = screen;
+        if (offscreen) {
+          const length = Math.hypot(...direction),
+            dx = direction[0] / length,
+            dy = direction[1] / length;
+          attr(
+            targetMarker,
+            'd',
+            path([
+              [x - dx * 11 - dy * 5, y - dy * 11 + dx * 5],
+              screen,
+              [x - dx * 11 + dy * 5, y - dy * 11 - dx * 5],
+            ]),
+          );
+        } else
+          attr(
+            targetMarker,
+            'd',
+            path([
+              [x - 5, y],
+              [x + 5, y],
+            ]) +
+              path([
+                [x, y - 5],
+                [x, y + 5],
+              ]),
+          );
+        // Draw actual target extents only when the entire outline is in view;
+        // distant/near-plane volumes use the bounded centre/direction cue.
+        const corners =
+          target.type === 'gate'
+            ? [
+                { x: bounds.min.x, y: bounds.min.y, z: bounds.min.z },
+                { x: bounds.max.x, y: bounds.min.y, z: bounds.max.z },
+                { x: bounds.max.x, y: bounds.max.y, z: bounds.max.z },
+                { x: bounds.min.x, y: bounds.max.y, z: bounds.min.z },
+              ].map((point) =>
+                Object.fromEntries(
+                  Object.entries(point).map(([axis, value]) => [axis, value / 1000]),
+                ),
+              )
+            : [
+                { x: bounds.min.x / 1000, y: center.y, z: bounds.min.z / 1000 },
+                { x: bounds.max.x / 1000, y: center.y, z: bounds.min.z / 1000 },
+                { x: bounds.max.x / 1000, y: center.y, z: bounds.max.z / 1000 },
+                { x: bounds.min.x / 1000, y: center.y, z: bounds.max.z / 1000 },
+              ];
+        const outline = corners.map(targetView);
+        attr(
+          targetOutline,
+          'd',
+          !offscreen && outline.every(inside)
+            ? path(
+                outline.map((point) => point.point),
+                true,
+              )
+            : '',
+        );
+        const distance = Math.hypot(
+          center.x - finite(state.position?.x) / 1000,
+          center.y - finite(state.position?.y) / 1000,
+          center.z - finite(state.position?.z) / 1000,
+        );
+        const name =
+          locale === 'uk'
+            ? target.type === 'gate'
+              ? 'Брама'
+              : target.type === 'land'
+                ? 'Посадка'
+                : 'Ціль'
+            : target.type === 'gate'
+              ? 'Gate'
+              : target.type === 'land'
+                ? 'Land'
+                : 'Goal';
+        const unit = locale === 'uk' ? 'м' : 'm';
+        text(
+          targetLabel,
+          `${name} ${distance.toFixed(1)}${unit} · ↑${(bounds.min.y / 1000).toFixed(1)}–${(bounds.max.y / 1000).toFixed(1)}${unit}`,
+        );
+        // Keep instructions in the quiet header. Only the target marker moves:
+        // following it with text would obscure the drone and FRONT annotation.
+        attr(targetLabel, 'x', centerX);
+        attr(targetLabel, 'y', immersivePractice ? 44 : 30);
+        attr(targetLabel, 'font-size', immersivePractice ? 11 : 8);
+        data(targetCue, 'offscreen', offscreen);
+        data(targetCue, 'type', target.type);
+        targetResult = { type: target.type, center, screen, distance, offscreen };
+      }
       const poseKey = [
         ...(state.orientation ?? []),
         cameraHeading,
@@ -603,30 +816,30 @@ export function mountDroneDiagram({ root }) {
         const crosses = (height) =>
           bodyPath([corners[0], corners[3]].map(([x, , z]) => [x, height, z])) +
           bodyPath([corners[1], corners[2]].map(([x, , z]) => [x, height, z]));
-        attr(arms, 'd', crosses(0.04));
-        attr(lowerArms, 'd', crosses(-0.09));
+        attr(arms, 'd', crosses(-0.025));
+        attr(lowerArms, 'd', crosses(-0.06));
         attr(
           struts,
           'd',
           corners
             .map(([x, , z]) =>
               bodyPath([
-                [x, -0.09, z],
-                [x, 0.08, z],
+                [x, -0.06, z],
+                [x, 0.11, z],
               ]),
             )
             .join(''),
         );
         const chassis = [
-          [-0.25, 0.1, -0.43],
-          [0.25, 0.1, -0.43],
-          [0.25, 0.1, 0.43],
-          [-0.25, 0.1, 0.43],
+          [-0.1, 0.08, -0.5],
+          [0.1, 0.08, -0.5],
+          [0.1, 0.08, 0.5],
+          [-0.1, 0.08, 0.5],
         ];
         sides.forEach((side, index) => {
           const a = chassis[index],
             b = chassis[(index + 1) % 4];
-          attr(side, 'd', bodyPath([a, b, [b[0], -0.1, b[2]], [a[0], -0.1, a[2]]], true));
+          attr(side, 'd', bodyPath([a, b, [b[0], -0.06, b[2]], [a[0], -0.06, a[2]]], true));
         });
         attr(body, 'd', bodyPath(chassis, true));
       }
@@ -669,7 +882,7 @@ export function mountDroneDiagram({ root }) {
         const center = corners[index];
         const rotorPoint = (angle, radius) => [
           center[0] + Math.cos(angle) * radius,
-          0.105,
+          0.115,
           center[2] + Math.sin(angle) * radius,
         ];
         if (poseChanged || phases[index] !== drawnPhases[index]) {
@@ -680,10 +893,12 @@ export function mountDroneDiagram({ root }) {
               const angle = phases[index] + (blade * Math.PI * 2) / 3;
               return bodyPath(
                 [
-                  rotorPoint(angle - 0.55, 0.025),
-                  rotorPoint(angle - 0.16, 0.205),
-                  rotorPoint(angle + 0.16, 0.205),
-                  rotorPoint(angle + 0.55, 0.025),
+                  rotorPoint(angle - 0.55, 0.035),
+                  rotorPoint(angle - 0.18, propRadius * 0.52),
+                  rotorPoint(angle - 0.025, propRadius),
+                  rotorPoint(angle + 0.025, propRadius),
+                  rotorPoint(angle + 0.18, propRadius * 0.52),
+                  rotorPoint(angle + 0.55, 0.035),
                 ],
                 true,
               );
@@ -700,7 +915,7 @@ export function mountDroneDiagram({ root }) {
             'd',
             bodyPath(
               Array.from({ length: 21 }, (_, part) =>
-                rotorPoint(-Math.PI / 2 + (Math.PI * 2 * power[index] * part) / 20, 0.24),
+                rotorPoint(-Math.PI / 2 + (Math.PI * 2 * power[index] * part) / 20, powerRadius),
               ),
             ),
           );
@@ -730,9 +945,9 @@ export function mountDroneDiagram({ root }) {
           'd',
           bodyPath(
             [
-              [-0.22, 0.12, -0.45],
-              [0, 0.12, -0.76],
-              [0.22, 0.12, -0.45],
+              [-0.1, 0.1, -0.5],
+              [0, 0.1, -0.64],
+              [0.1, 0.1, -0.5],
             ],
             true,
           ),
@@ -741,13 +956,13 @@ export function mountDroneDiagram({ root }) {
           rear,
           'd',
           bodyPath([
-            [-0.22, 0.12, 0.44],
-            [0.22, 0.12, 0.44],
+            [-0.1, 0.1, 0.51],
+            [0.1, 0.1, 0.51],
           ]),
         );
       }
-      const front = bodyPoint([0, 0.12, -0.9]),
-        back = bodyPoint([0, 0.12, 0.85]);
+      const front = bodyPoint([0, 0.1, -0.72]),
+        back = bodyPoint([0, 0.1, 0.7]);
       const labelY = Math.min(
         immersivePractice ? 314 : environmentMotion ? 172 : 109,
         Math.max(12, front[1] - 10),
@@ -846,8 +1061,9 @@ export function mountDroneDiagram({ root }) {
         })),
         front,
         rear: back,
-        left: bodyPoint([-0.82, 0, 0]),
-        right: bodyPoint([0.82, 0, 0]),
+        left: bodyPoint([-motorOffset, 0, 0]),
+        right: bodyPoint([motorOffset, 0, 0]),
+        practiceTarget: targetResult,
       };
       return lastResult;
     },
