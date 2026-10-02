@@ -31,3 +31,9 @@ Focused syntax, lint, formatting and independent source/lifecycle review pass.
 No additional unit coverage or physical-device acceptance is claimed. The
 continuous-school player was rebuilt and its coordinated-turn lesson inspected.
 Public availability requires protected publication and deployment verification.
+
+Frozen runtime `a4df52c790e3c41449a3f0a48be235e8a9edf48d` also passes all3
+optional package admissions, exact committed inputs/ZIP checks and2 reproducible
+builds. Both continuous-school and reviewed-player local entries have the fix;
+the coordinated-turn second step visibly retains49% throttle while paused.
+Package receipt: `docs/evidence/fpv-step-boundary-package-20261002.json`.
