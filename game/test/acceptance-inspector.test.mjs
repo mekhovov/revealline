@@ -257,6 +257,7 @@ test('Studio owns the inspector and synchronizes it when the applied board selec
             'relayEditor',
             'directionalEditor',
             'encounterEditor',
+            'discoveryEditor',
             'imageWorkbench',
             'traceRecovery',
           ].map((name) => [name, { sync() {} }]),

@@ -10,7 +10,10 @@ import {
   freezeEdition,
   resolveEditionSelection,
   resolveEditionAssets,
+  resolveEditionAppearanceThemes,
   validateEditionRuntimeCatalog,
+  validateAppearanceDefault,
+  EDITION_FORMATS,
 } from '../../game/editions/model.mjs';
 import {
   validateEditionCampaignProject,
@@ -28,6 +31,11 @@ import { validateRetainedPresentation } from '../../game/editions/retained-prese
 import { projectEditionThemeSelection } from '../../game/editions/selected-presentation.mjs';
 import { validateCompanyLessons } from '../../game/company-campaigns/learning.mjs';
 import { validateTheme } from '../../game/content.mjs';
+import { getThemeFamily, BUILTIN_THEME_FAMILIES } from '../../game/presentation/theme-system.mjs';
+import {
+  validateCuratedThemeQuality,
+  validateCuratedAppearanceInventory,
+} from '../../game/presentation/theme-system.mjs';
 import { validateAnimationRecipes } from '../motion-lab/animation.mjs';
 import {
   validateEditionPresetMotion,
@@ -390,6 +398,12 @@ export function assertMatchingStudioSelection(draft, built, editionId, files = n
       canonicalJSON(a[key]) === canonicalJSON(b[key]),
       'The compiled preview differs from this applied draft. Compile and import a fresh report.',
     );
+  const expectedThemes = resolveEditionAppearanceThemes(draft, { editionIds: [editionId] });
+  required(
+    canonicalJSON(expectedThemes) === canonicalJSON(built.appearanceThemes ?? []),
+    'The compiled preview appearance differs from this applied draft. Compile a fresh report.',
+  );
+  validateCuratedAppearanceInventory(built, { selectedOnly: true });
   return b;
 }
 
@@ -406,5 +420,94 @@ export function withStudioCampaignHero(source, campaignId, heroAssetId) {
   if (canonicalJSON(checked) === canonicalJSON(source)) return checked;
   for (const edition of catalog.editions.filter((item) => item.campaignIds.includes(campaignId)))
     edition.revision++;
+  return validateEditionRuntimeCatalog(catalog);
+}
+
+/** A default is portable presentation metadata, separate from campaign content
+ * and legacy theme inventory. Only applied drafts change; publication remains
+ * the ordinary compile, review and export flow. */
+export function withStudioAppearanceDefault(source, { scope, id, appearanceDefault = null }) {
+  const catalog = structuredClone(validateEditionRuntimeCatalog(source));
+  required(['community', 'campaign'].includes(scope), 'Choose a community or campaign default.');
+  const owner = (scope === 'community' ? catalog.brands : catalog.campaigns).find(
+    (row) => row.id === id,
+  );
+  required(owner, 'Choose a registered community or campaign.');
+  if (appearanceDefault === null) delete owner.appearanceDefault;
+  else {
+    const pin = validateAppearanceDefault(appearanceDefault);
+    required(
+      findStudioAppearanceTheme(catalog, pin.familyId, pin.revision),
+      'The selected theme revision is unavailable in this Studio.',
+    );
+    owner.appearanceDefault = pin;
+    if (catalog.format !== EDITION_FORMATS.curatedAppearanceCatalog)
+      catalog.format = EDITION_FORMATS.appearanceCatalog;
+    if (scope === 'community') owner.format = EDITION_FORMATS.appearanceBrand;
+  }
+  if (canonicalJSON(catalog) === canonicalJSON(source))
+    return validateEditionRuntimeCatalog(catalog);
+  if (scope === 'community') owner.revision++;
+  for (const edition of catalog.editions.filter((row) =>
+    scope === 'community' ? row.brandId === id : row.campaignIds.includes(id),
+  ))
+    edition.revision++;
+  return validateEditionRuntimeCatalog(catalog);
+}
+
+export function listStudioAppearanceThemes(source) {
+  const catalog = validateEditionRuntimeCatalog(source);
+  return Object.freeze([
+    ...BUILTIN_THEME_FAMILIES,
+    ...(catalog.appearanceThemes ?? []).map((row) => row.family),
+  ]);
+}
+
+export function findStudioAppearanceTheme(source, id, revision) {
+  const catalog = validateEditionRuntimeCatalog(source);
+  return (
+    getThemeFamily(id, revision) ??
+    (catalog.appearanceThemes ?? []).find(
+      (row) => row.family.id === id && (!revision || row.family.revision === revision),
+    )?.family ??
+    null
+  );
+}
+
+/** Curated registration adds a closed interface candidate, not executable code
+ * or arbitrary player assets. Assignment remains a separate explicit action. */
+export function withStudioAppearanceTheme(source, input) {
+  const catalog = structuredClone(validateEditionRuntimeCatalog(source));
+  const candidate = validateCuratedThemeQuality(input);
+  required(candidate.format === 'ThemeCandidate.v2', 'Register an exact-version Studio theme.');
+  const prior = (catalog.appearanceThemes ?? []).find(
+    (row) =>
+      row.family.id === candidate.family.id && row.family.revision === candidate.family.revision,
+  );
+  if (prior) {
+    required(
+      canonicalJSON(prior) === canonicalJSON(candidate),
+      'An immutable curated theme cannot be replaced.',
+    );
+    return validateEditionRuntimeCatalog(catalog);
+  }
+  catalog.appearanceThemes = [...(catalog.appearanceThemes ?? []), candidate];
+  catalog.format = EDITION_FORMATS.curatedAppearanceCatalog;
+  // A formerly unavailable exact pin becoming usable changes the compiled
+  // presentation even when the owner already stores that same reference.
+  const matches = (owner) =>
+    owner.appearanceDefault?.familyId === candidate.family.id &&
+    owner.appearanceDefault.revision === candidate.family.revision;
+  const brands = new Set(
+    catalog.brands.filter(matches).map((brand) => {
+      brand.revision++;
+      return brand.id;
+    }),
+  );
+  const campaigns = new Set(catalog.campaigns.filter(matches).map((row) => row.id));
+  for (const edition of catalog.editions) {
+    if (brands.has(edition.brandId) || edition.campaignIds.some((id) => campaigns.has(id)))
+      edition.revision++;
+  }
   return validateEditionRuntimeCatalog(catalog);
 }

@@ -202,6 +202,29 @@ try {
     frameId = null,
     nativeUnsubscribe = null;
   const importStatus = createOperationStatus($('import-status'), { isCurrent: () => !disposed });
+  // Keep feedback beside the import controls when the global live region is
+  // above the viewport. Only that existing region announces the operation.
+  function beginImportStatus(options) {
+    const lease = importStatus.begin(options),
+      feedback = $('replay-import-feedback');
+    const paint = ({ message, state = 'busy' }) => {
+      if (message !== undefined) {
+        localizedText(feedback, message);
+        feedback.hidden = !message;
+      }
+      feedback.dataset.error = String(state === 'error');
+      feedback.dataset.uiTone = state === 'error' ? 'danger' : 'neutral';
+    };
+    paint(options);
+    return {
+      update(next) {
+        if (lease.update(next)) paint(next);
+      },
+      finish(next) {
+        if (lease.finish(next)) paint({ ...next, state: next.state ?? 'ready' });
+      },
+    };
+  }
   let retainedRecovery = null;
   disposeRecording = () => {
     if (disposed) return;
@@ -232,6 +255,7 @@ try {
   const bodyFor = (theme, state) => theme.classBodies?.[state.activeClassId] || theme.player;
   function updateControls() {
     const previousFocus = document.activeElement;
+    const finishedLoadControl = !disposed && !pending && previousFocus === $('cancel-load');
     const completedControl =
       !disposed &&
       !pending &&
@@ -250,8 +274,28 @@ try {
     $('theme').disabled = pending || !!actorLease?.pin().authoredPresentationSha256;
     $('cancel-load').hidden = !pending;
     localizedText($('playback-phase'), () =>
-      pending ? t('interface:verifying') : player?.phase || t('interface:empty'),
+      pending
+        ? t('interface:verifying')
+        : player
+          ? t(`interface:replay.phase.${player.phase}`)
+          : t('interface:empty'),
     );
+    if (
+      finishedLoadControl &&
+      !document.hidden &&
+      document.hasFocus?.() !== false &&
+      [previousFocus, document.body, null].includes(document.activeElement)
+    ) {
+      const target = !$('play-pause').disabled
+        ? $('play-pause')
+        : !$('restart').disabled
+          ? $('restart')
+          : !$('load-example').disabled
+            ? $('load-example')
+            : $('load-text');
+      target.focus({ preventScroll: true });
+      target.scrollIntoView({ block: 'nearest', inline: 'nearest' });
+    }
     // Native disabling can move Play/Step focus to BODY. Keep this completed
     // transport journey local without moving focus out of another editor.
     if (
@@ -356,7 +400,7 @@ try {
     if (!pending) return;
     importDisplay?.finish({
       state: 'cancelled',
-      message: t('interface:loadCancelledThePreviousRecordingIsUnchanged'),
+      message: () => t('interface:loadCancelledThePreviousRecordingIsUnchanged'),
     });
     importDisplay = null;
     controller?.abort();
@@ -379,7 +423,7 @@ try {
     updateControls();
     const current = () => !disposed && ticket === epoch && !nextController.signal.aborted,
       loadLabel = () => clipped(typeof label === 'function' ? label() : label);
-    const display = importStatus.begin({
+    const display = beginImportStatus({
       message: () => t('gameplay:reading2', { value1: loadLabel() }),
       stage: 'reading',
       isCurrent: current,
@@ -406,7 +450,7 @@ try {
       if (runtimeContent && receipt !== runtimeContent.authoredPresentationSha256)
         retainedRequest = runtimeContent.presentationHistory.find((item) => item.id === receipt);
       display.update({
-        message: t('interface:verifyingTheRecordingSExactInputTicks'),
+        message: () => t('interface:verifyingTheRecordingSExactInputTicks'),
         stage: 'verifying',
       });
       const nextPlayer = await prepareReplayPlayer(replay, {
@@ -422,7 +466,7 @@ try {
         if (runtimeContent && envelope.actorAppearancePin.style !== 'campaign')
           throw new Error(t('interface:replay.actorStyleUnavailable'));
         display.update({
-          message: t('interface:checkingTheRecordedMissionOwnerAndExactFpvActors'),
+          message: () => t('interface:checkingTheRecordedMissionOwnerAndExactFpvActors'),
           stage: 'verifying',
           progress: null,
         });
@@ -470,7 +514,7 @@ try {
         ? themes.find((item) => item.id === envelope.actorAppearancePin.content.contentThemeId)
         : chosenTheme();
       display.update({
-        message: t('interface:preparingTheRecordingSArtwork'),
+        message: () => t('interface:preparingTheRecordingSArtwork'),
         stage: 'decoding',
         progress: null,
       });

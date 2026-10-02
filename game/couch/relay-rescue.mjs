@@ -423,6 +423,8 @@ export function bootCoop({
     menuStyle.dispose();
   };
   const painter = createCoopPainter($('coop-canvas'));
+  painter.setArcadeProvider(() => menuStyle.themeHost.effectivePreferences());
+  painter.setInterfaceProvider(() => menuStyle.themeHost.snapshot());
   const presentationPage = mountPresentationPage({ document, window });
   presentationPage.bindPainter(painter);
   void presentationPage.ready.then((snapshot) => {
@@ -1125,60 +1127,60 @@ export function bootCoop({
     modeNavigation.simulatorRoot()
       ? 'coop-fpv-sim'
       : installOfflinePanel?.isOpen()
-        ? 'coop-install-offline'
-        : music?.root()
-          ? 'coop-music-library'
-          : journeyPictures?.root()
-            ? 'coop-journey-pictures'
-            : settingsDialog.open
-              ? `coop-settings:${settingsPanels?.selected() || 'display'}`
-              : earnedDialog.open
-                ? 'coop-earned-picture'
-                : departure
-                  ? 'coop-discard'
-                  : discovery?.isOpen()
-                    ? 'coop-discovery'
-                    : running()
-                      ? 'flight'
-                      : run
-                        ? `coop-${run.status}`
-                        : 'coop-lobby';
+      ? 'coop-install-offline'
+      : music?.root()
+        ? 'coop-music-library'
+        : journeyPictures?.root()
+          ? 'coop-journey-pictures'
+          : settingsDialog.open
+            ? `coop-settings:${settingsPanels?.selected() || 'display'}`
+            : earnedDialog.open
+              ? 'coop-earned-picture'
+              : departure
+                ? 'coop-discard'
+                : discovery?.isOpen()
+                  ? 'coop-discovery'
+                  : running()
+                    ? 'flight'
+                    : run
+                      ? `coop-${run.status}`
+                      : 'coop-lobby';
   const primary = () =>
     modeNavigation.simulatorRoot()
       ? modeNavigation.simulatorPrimary()
       : installOfflinePanel?.isOpen()
-        ? $('install-offline-downloads')
-        : music?.root()
-          ? music.primary()
-          : journeyPictures?.root()
-            ? journeyPictures.primary()
-            : settingsDialog.open
-              ? settingsPanels?.primary() || $('coop-settings-close')
-              : earnedDialog.open
-                ? $('coop-picture-return')
-                : departure
-                  ? $('coop-discard-stay')
-                  : discovery?.isOpen()
-                    ? discovery.primary()
-                    : nextOperation
-                      ? $('coop-next-cancel')
-                      : importOperation
-                        ? $('coop-pack-cancel')
-                        : pictureOperation
-                          ? pictureOperation.passive
-                            ? $('coop-optional-setup-toggle')
-                            : $('coop-picture-cancel')
-                          : !run && pictureSelection?.state !== 'ready'
-                            ? $('coop-picture-retry')
-                            : !run
-                              ? $('coop-start')
-                              : run.status === 'paused' && !loopStopped
-                                ? $('coop-resume')
-                                : run.status === 'won' && !loopStopped
-                                  ? teamDestination()?.next
-                                    ? $('coop-next')
-                                    : $('coop-discovery-paused')
-                                  : $('coop-retry');
+      ? $('install-offline-downloads')
+      : music?.root()
+        ? music.primary()
+        : journeyPictures?.root()
+          ? journeyPictures.primary()
+          : settingsDialog.open
+            ? settingsPanels?.primary() || $('coop-settings-close')
+            : earnedDialog.open
+              ? $('coop-picture-return')
+              : departure
+                ? $('coop-discard-stay')
+                : discovery?.isOpen()
+                  ? discovery.primary()
+                  : nextOperation
+                    ? $('coop-next-cancel')
+                    : importOperation
+                      ? $('coop-pack-cancel')
+                      : pictureOperation
+                        ? pictureOperation.passive
+                          ? $('coop-optional-setup-toggle')
+                          : $('coop-picture-cancel')
+                        : !run && pictureSelection?.state !== 'ready'
+                          ? $('coop-picture-retry')
+                          : !run
+                            ? $('coop-start')
+                            : run.status === 'paused' && !loopStopped
+                              ? $('coop-resume')
+                              : run.status === 'won' && !loopStopped
+                                ? teamDestination()?.next
+                                  ? $('coop-next')
+                                  : $('coop-discovery-paused')
+                                : $('coop-retry');
   // Preference updates can reflow a focused select beyond the Settings scroller
   // without a window resize. Keep only that current action visible, never focus
   // it again or resume. Initial display application runs before this owner exists.
@@ -4648,6 +4650,7 @@ export function bootCoop({
   function createTunedCoop(recipe) {
     const level = applyGameplayTuning(recipe.encounterLevel ?? recipe.level, recipe.tuning);
     const next = createCoop(level, recipe.options);
+    painter.captureArcadeCollection(next);
     attemptTuning.set(next, {
       pictureLevel: recipe.level,
       encounterLevel: recipe.encounterLevel ?? recipe.level,
@@ -6529,6 +6532,7 @@ export function bootCoop({
     packArtworkSource = null;
     localDiscoveryPack = null;
     presentationPage.close();
+    painter.dispose();
     closeAudio();
     closeDisplay();
     contextualReactions?.dispose();

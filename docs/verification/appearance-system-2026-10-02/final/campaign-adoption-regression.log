@@ -1,0 +1,46 @@
+TAP version 13
+# Subtest: actual edition campaign adoption updates appearance and SIM context without saving a preference
+ok 1 - actual edition campaign adoption updates appearance and SIM context without saving a preference
+  ---
+  duration_ms: 642.780875
+  ...
+# Subtest: actual edition campaign adoption updates appearance and SIM context while preserving a global choice
+ok 2 - actual edition campaign adoption updates appearance and SIM context while preserving a global choice
+  ---
+  duration_ms: 421.950875
+  ...
+# Subtest: a cancelled campaign theme preload retains the active flight and SIM context
+ok 3 - a cancelled campaign theme preload retains the active flight and SIM context
+  ---
+  duration_ms: 367.952042
+  ...
+# Mission preparation failed. Error: Fixture font decode failed.
+#     at TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/game/test/edition-appearance-host.test.mjs:163:19)
+#     at async Test.run (node:internal/test_runner/test:797:9)
+#     at async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+# Subtest: a failed campaign theme preload retains the active flight and SIM context
+ok 4 - a failed campaign theme preload retains the active flight and SIM context
+  ---
+  duration_ms: 349.144583
+  ...
+# {"personal":null,"captures":[{"levelId":"porcelain-mission","collection":"dnipro-porcelain","accepted":"dnipro-porcelain"}],"final":"dnipro-porcelain"}
+# Subtest: actual edition campaign adoption updates appearance and SIM context without saving a preference
+ok 5 - actual edition campaign adoption updates appearance and SIM context without saving a preference
+  ---
+  duration_ms: 647.298708
+  ...
+# {"personal":"tryzub","captures":[{"levelId":"porcelain-mission","collection":"tryzub","accepted":"tryzub"}],"final":"tryzub"}
+# Subtest: actual edition campaign adoption updates appearance and SIM context while preserving a global choice
+ok 6 - actual edition campaign adoption updates appearance and SIM context while preserving a global choice
+  ---
+  duration_ms: 424.142583
+  ...
+1..6
+# tests 6
+# suites 0
+# pass 6
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1997.052167

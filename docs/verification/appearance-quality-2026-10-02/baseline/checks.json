@@ -1,0 +1,23 @@
+{
+  "node": "v20.19.5",
+  "repairedSuites": {
+    "tests": 122,
+    "pass": 122,
+    "fail": 0,
+    "log": "repaired-harnesses.log"
+  },
+  "pausedPresentationPreference": {
+    "selected": 1,
+    "pass": 1,
+    "fail": 0,
+    "skipped": 18,
+    "log": "paused-presentation-preferences.log"
+  },
+  "format": "passed",
+  "eslint": "passed",
+  "fullSuite": "not-run-to-completion",
+  "originalFailureRecords": 116,
+  "fixedHere": 30,
+  "alreadyFixed": 23,
+  "preexistingUnresolved": 63
+}

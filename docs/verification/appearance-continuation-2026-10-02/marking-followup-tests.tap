@@ -1,0 +1,41 @@
+TAP version 13
+# Subtest: actual runtime loader uses the image-element path for the exact embedded PNG and distinguishes decode failures
+ok 1 - actual runtime loader uses the image-element path for the exact embedded PNG and distinguishes decode failures
+  ---
+  duration_ms: 26.686458
+  ...
+# Subtest: stored kit regenerates exactly and passes the actual Khronos standards validator
+ok 2 - stored kit regenerates exactly and passes the actual Khronos standards validator
+  ---
+  duration_ms: 80.660125
+  ...
+# Subtest: gate marks stay outside their exact aperture; pad pixels retain quiet H/orientation and alpha envelope
+ok 3 - gate marks stay outside their exact aperture; pad pixels retain quiet H/orientation and alpha envelope
+  ---
+  duration_ms: 19.307792
+  ...
+# prune: Removed types... Primitive (3)
+# Subtest: existing world preparation preserves exact marking geometry and extracts no gameplay or collision authority
+ok 4 - existing world preparation preserves exact marking geometry and extracts no gameplay or collision authority
+  ---
+  duration_ms: 208.091084
+  ...
+# Subtest: portable recoloring keeps geometry while exact missing dependencies and unsafe source metadata fail closed
+ok 5 - portable recoloring keeps geometry while exact missing dependencies and unsafe source metadata fail closed
+  ---
+  duration_ms: 26.304834
+  ...
+# Subtest: successor receipts require the exact retained predecessor and refuse changed stored output
+ok 6 - successor receipts require the exact retained predecessor and refuse changed stored output
+  ---
+  duration_ms: 44.022833
+  ...
+1..6
+# tests 6
+# suites 0
+# pass 6
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 745.554959

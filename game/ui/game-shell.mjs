@@ -35,6 +35,7 @@ export function attachGameShell({
   focusMissions,
   focusBriefing,
   focusGame = () => doc.getElementById('start-button')?.focus(),
+  getAppearanceDefault = () => null,
 } = {}) {
   // A registered embedded lesson already owns a token-checked return action.
   // Its shell must not expose campaign destinations inside the practice frame.
@@ -59,6 +60,7 @@ export function attachGameShell({
         container: workshop?.querySelector('.more-destinations'),
         pause,
         href: doc.defaultView?.location?.href ?? globalThis.location?.href,
+        getAppearanceDefault,
       })
     : null;
   const homeFPV = $('shell-home-fpv');
@@ -572,6 +574,7 @@ export function attachGameShell({
     modeChoices = mountModeChoices({
       root: titleModes,
       current: 'solo',
+      getAppearanceDefault,
       pause,
       separateTeam,
       actions: { versus: $('shell-title-versus'), team: $('shell-title-team') },

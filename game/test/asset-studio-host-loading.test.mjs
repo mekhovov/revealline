@@ -65,6 +65,17 @@ function mount(doc, html) {
   }
 }
 
+async function loadActiveWorkspace(indexedDB) {
+  const store = createStudioStore({ indexedDB });
+  try {
+    const library = await store.listWorkspaces();
+    assert.ok(library.activeId, 'The Studio owns an explicit workspace.');
+    return await store.loadWorkspace(library.activeId);
+  } finally {
+    store.close();
+  }
+}
+
 test('actual Studio handlers show startup/read/encode stages, cancel a late upload, and save exact source bytes in Studio storage only', async (t) => {
   const pixels = iconForSlot('icon.play');
   const bytes = encodeSpritePNG(pixels);
@@ -574,6 +585,13 @@ test('actual Studio handlers show startup/read/encode stages, cancel a late uplo
   );
   assert.match(currentAudio.textContent, /Playing the registered/);
   assert.equal(auditionContexts[0].context.state, 'running');
+  assert.equal(
+    auditionContexts[0].sources.length,
+    0,
+    'Unmute does not replay a previously muted one-shot cue.',
+  );
+  await currentAudio.querySelectorAll('button')[0].onclick();
+  await until(() => auditionContexts[0].sources.length > 0);
   assert.ok(auditionContexts[0].sources.length > 0);
   const visibleMarker = currentAudio.previewMarker;
   window.emit('blur');
@@ -1104,10 +1122,10 @@ test('actual Studio handlers show startup/read/encode stages, cancel a late uplo
   assert.deepEqual([$('undo-draft').disabled, $('redo-draft').disabled], stagedHistory);
   await $('save-workspace').onclick();
   assert.match(message(), /saved atomically/);
-  const saved = await createStudioStore({ indexedDB: db.indexedDB }).load();
+  const saved = await loadActiveWorkspace(db.indexedDB);
   const hash = await hashPresentationBytes(bytes);
   assert.deepEqual(Buffer.from(await saved.assets.get(hash).arrayBuffer()), Buffer.from(bytes));
-  assert.equal(saved.generation, 1);
+  assert.equal(saved.generation, 2, 'One explicit save advances the seeded workspace.');
   assert.ok(saved.document.assets.some((asset) => asset.id.endsWith('.source')));
   assert.deepEqual(saved.document.themes.slice(0, published.themes.length), published.themes);
   assert.deepEqual(saved.document.assets.slice(0, published.assets.length), published.assets);
@@ -1121,7 +1139,7 @@ test('actual Studio handlers show startup/read/encode stages, cancel a late uplo
   );
   await bindButton(approved.id, 2).onclick();
   assert.equal(currentBinding(), `${approved.id}@2`);
-  assert.equal((await createStudioStore({ indexedDB: db.indexedDB }).load()).generation, 1);
+  assert.equal((await loadActiveWorkspace(db.indexedDB)).generation, 2);
   await $('reset-draft').onclick();
   assert.equal(currentBinding(), `${customId}@1`, 'Reset keeps the last saved custom binding.');
   await $('reload-workspace').onclick();
@@ -1131,10 +1149,7 @@ test('actual Studio handlers show startup/read/encode stages, cancel a late uplo
     'Reloaded history still reaches the exact approved original.',
   );
   assert.deepEqual(await customPreviewBytes('current-preview'), Buffer.from(bytes));
-  assert.deepEqual(
-    (await createStudioStore({ indexedDB: db.indexedDB }).load()).document,
-    saved.document,
-  );
+  assert.deepEqual((await loadActiveWorkspace(db.indexedDB)).document, saved.document);
   assert.deepEqual(new Set(opened), new Set([STUDIO_DATABASE]));
   // Reusing approved raster bytes does not approve changed placement metadata.
   await bindButton(approved.id, 2).onclick();
@@ -1149,7 +1164,7 @@ test('actual Studio handlers show startup/read/encode stages, cancel a late uplo
   assert.match(message(), /validated and staged/);
   await $('save-workspace').onclick();
   assert.match(message(), /saved atomically/);
-  const metadataSaved = await createStudioStore({ indexedDB: db.indexedDB }).load();
+  const metadataSaved = await loadActiveWorkspace(db.indexedDB);
   const metadataAsset = resolvePresentation(metadataSaved.document).assets[originalSlot];
   assert.equal(metadataAsset.geometry.nineSlice.left, 7);
   assert.equal(metadataAsset.file.sha256, approved.file.sha256);
@@ -1172,7 +1187,7 @@ test('actual Studio handlers show startup/read/encode stages, cancel a late uplo
       $('rotor-hub').value = String(index);
       $('rotor-hub').emit('change');
     },
-    rotorStoreBefore = await createStudioStore({ indexedDB: db.indexedDB }).load();
+    rotorStoreBefore = await loadActiveWorkspace(db.indexedDB);
   let acceptedRotors;
   await t.test(
     'actual rotor controls preserve inherited motion while editing one existing hub',
@@ -1221,7 +1236,7 @@ test('actual Studio handlers show startup/read/encode stages, cancel a late uplo
       Object.assign(acceptedRotors[1], { direction: 1, phaseDegrees: 0 });
       assert.deepEqual(rotorAnchors(), acceptedRotors, 'An explicit zero phase is retained.');
       assert.deepEqual(
-        (await createStudioStore({ indexedDB: db.indexedDB }).load()).document,
+        (await loadActiveWorkspace(db.indexedDB)).document,
         rotorStoreBefore.document,
         'Preview application does not save a workspace revision.',
       );
@@ -1335,13 +1350,13 @@ test('actual Studio handlers show startup/read/encode stages, cancel a late uplo
       await $('stage-asset').onclick();
       assert.match(message(), /validated and staged/);
       assert.deepEqual(
-        (await createStudioStore({ indexedDB: db.indexedDB }).load()).document,
+        (await loadActiveWorkspace(db.indexedDB)).document,
         rotorStoreBefore.document,
         'Staging rotor metadata alone does not save.',
       );
       await $('save-workspace').onclick();
       assert.match(message(), /saved atomically/);
-      const rotorSaved = await createStudioStore({ indexedDB: db.indexedDB }).load(),
+      const rotorSaved = await loadActiveWorkspace(db.indexedDB),
         editedRotorAsset = resolvePresentation(rotorSaved.document).assets[rotorSlot.id];
       assert.deepEqual(editedRotorAsset.geometry.rotorAnchors, acceptedRotors);
       assert.deepEqual(editedRotorAsset.file, rotorApproved.file);

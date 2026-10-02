@@ -5,7 +5,7 @@ import {
   validateOptionalPracticeCatalog,
 } from '../optional-practice-catalog.mjs';
 import { loadPracticeDetails, validatePracticeDetails } from '../optional-practice-details.mjs';
-import { fpvLaunchURL } from '../fpv-entry.mjs';
+import { fpvLaunchURL, appearanceLaunchURL } from '../fpv-entry.mjs';
 import { optionalPracticeSourcePreviews } from '../optional-practice-preview.mjs';
 
 /** Explicit simulator navigation. Only a bounded entry page and the public
@@ -18,6 +18,7 @@ export function mountOptionalPracticePanel({
   fetcher,
   storage,
   timeoutMs = 10000,
+  getAppearanceDefault = () => null,
   opener: existingOpener = null,
   packageId = null,
   bundledHref = null,
@@ -26,6 +27,14 @@ export function mountOptionalPracticePanel({
   navigate = (url) => (doc.defaultView ?? globalThis.window).location.assign(url),
 }) {
   const indexURL = href && optionalPracticeCatalogURL(href);
+  const withAppearance = (url, transfer = false) =>
+    appearanceLaunchURL(url, getAppearanceDefault(), { window: doc.defaultView, transfer });
+  const bindAppearance = (link) => {
+    link.href = withAppearance(link.href);
+    link.onclick = () => {
+      link.href = withAppearance(link.href, true);
+    };
+  };
   if (storage === undefined) {
     try {
       storage = globalThis.localStorage;
@@ -85,6 +94,7 @@ export function mountOptionalPracticePanel({
     fallback.href =
       fpvLaunchURL(href, getLocale()) ??
       new URL('../optional-practice/civilian-fpv/index.html', indexURL).href;
+    bindAppearance(fallback);
     fallback.target = '_blank';
     fallback.rel = 'noopener noreferrer';
     fallback.className = 'optional-practice-fallback';
@@ -97,6 +107,7 @@ export function mountOptionalPracticePanel({
       'guide.html?lang=' + (getLocale() === 'uk' ? 'uk' : 'en'),
       fallback.href,
     ).href;
+    bindAppearance(fallbackGuide);
     content.append(fallbackGuide);
   }
   if (preferDirect && bundledHref) {
@@ -117,6 +128,7 @@ export function mountOptionalPracticePanel({
       const row = node('li'),
         link = node('a', item.titleKey);
       link.href = item.url;
+      bindAppearance(link);
       link.target = '_blank';
       link.rel = 'noopener noreferrer';
       link.setAttribute('data-practice-source-preview', item.id);
@@ -182,6 +194,7 @@ export function mountOptionalPracticePanel({
       play.href = item.url + '?action=play&lang=' + (getLocale() === 'uk' ? 'uk' : 'en');
       guide.href = item.url + '?lang=' + (getLocale() === 'uk' ? 'uk' : 'en');
       for (const link of [play, guide]) {
+        bindAppearance(link);
         link.target = '_blank';
         link.rel = 'noopener noreferrer';
       }
@@ -268,13 +281,13 @@ export function mountOptionalPracticePanel({
           const owner = returnTo?.closest?.('dialog');
           if (doc.hidden || returnTo?.closest?.('[hidden],[inert]') || (owner && !owner.open))
             return;
-          navigate(target.href);
+          navigate(withAppearance(target.href, true));
           return;
         }
-        link.href = target.href;
+        link.href = withAppearance(target.href);
         link.onclick = () => {
           target.searchParams.set('lang', doc.documentElement.lang === 'uk' ? 'uk' : 'en');
-          link.href = target.href;
+          link.href = withAppearance(target.href, true);
         };
         // Gamepad polling is not a browser popup gesture. The checked bundled
         // destination can navigate this window after the host has paused.
@@ -401,11 +414,12 @@ export function mountOptionalPracticePanel({
   };
   const unsubscribeLocale = onLocaleChange(() => {
     if (fallback) {
-      fallback.href = fpvLaunchURL(href, getLocale()) ?? fallback.href;
+      fallback.href = withAppearance(fpvLaunchURL(href, getLocale()) ?? fallback.href);
       fallbackGuide.href = new URL(
         'guide.html?lang=' + (getLocale() === 'uk' ? 'uk' : 'en'),
         fallback.href,
       ).href;
+      fallbackGuide.href = withAppearance(fallbackGuide.href);
     }
     for (const link of list.querySelectorAll('a')) {
       const url = new URL(link.href);

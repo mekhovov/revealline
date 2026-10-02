@@ -1,0 +1,29 @@
+{
+  "file": "game/test/acceptance-inspector.test.mjs",
+  "kind": "current",
+  "command": [
+    "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node",
+    "--test",
+    "--test-concurrency=1",
+    "game/test/acceptance-inspector.test.mjs"
+  ],
+  "cwd": "/Users/oleksandr.mekhovov/work/my_projects/go_test",
+  "exitCode": 1,
+  "timedOut": false,
+  "seconds": 1.59,
+  "failures": [
+    {
+      "test": "Studio owns the inspector and synchronizes it when the applied board selection changes",
+      "location": "game/test/acceptance-inspector.test.mjs:212:1",
+      "detail": "\n  ---\n  duration_ms: 4.451334\n  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/game/test/acceptance-inspector.test.mjs:212:1'\n  failureType: 'testCodeFailure'\n  error: |-\n    The validation function is expected to return \"true\". Received false\n    \n    Caught error:\n    \n    ReferenceError: discoveryEditor is not defined\n  code: 'ERR_ASSERTION'\n  name: 'AssertionError'\n  stack: |-\n    TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/game/test/acceptance-inspector.test.mjs:278:19)\n    Test.runInAsyncScope (node:async_hooks:206:9)\n    Test.run (node:internal/test_runner/test:796:25)\n    Test.processPendingSubtests (node:internal/test_runner/test:526:18)\n    Test.postRun (node:internal/test_runner/test:889:19)\n    Test.run (node:internal/test_runner/test:835:12)\n    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)"
+    }
+  ],
+  "summary": [
+    "# tests 6",
+    "# pass 5",
+    "# fail 1",
+    "# cancelled 0",
+    "# skipped 0",
+    "# duration_ms 1060.04325"
+  ]
+}
