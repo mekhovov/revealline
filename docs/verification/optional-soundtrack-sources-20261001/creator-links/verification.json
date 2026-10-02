@@ -1,0 +1,229 @@
+{
+  "format": "revealline-creator-links-verification.v1",
+  "measuredAt": "2026-10-01T00:18:46.100Z",
+  "parentCommit": "b0750bca2cf28f75320ea0f854f9fafc0e60824a",
+  "pr": "https://github.com/mekhovov/revealline/pull/903",
+  "status": "Implemented and locally verified; not a public release approval.",
+  "sourceFiles": [
+    {
+      "path": "game/app.mjs",
+      "bytes": 509616,
+      "sha256": "effb66de91326feb568c79c05ac90b6e1088925f4d6b9529cd55d7978e2e69f8"
+    },
+    {
+      "path": "game/couch/couch-music-host.mjs",
+      "bytes": 16324,
+      "sha256": "f3cc0d1f4a94bc5ee02e596f774b9c94c148fa0180c0d4f596d9977e73fc9e98"
+    },
+    {
+      "path": "game/i18n/catalogs.mjs",
+      "bytes": 1085819,
+      "sha256": "d3bc13b7354ccb8164bb67323c1cf078f86b78e38c93f0ae19702b983662104f"
+    },
+    {
+      "path": "game/index.html",
+      "bytes": 133370,
+      "sha256": "8582c5c04142bfd4cdc2444dbbbd972642e71f5364f9feb730af9e684f7dc8b1"
+    },
+    {
+      "path": "game/locales/en/common.json",
+      "bytes": 12008,
+      "sha256": "6d7bf9f3c21ca773720b2fbc649f931aaa05b5c8266d1cbb578340431d869baf"
+    },
+    {
+      "path": "game/locales/uk/common.json",
+      "bytes": 19639,
+      "sha256": "f421990db77fe85f0f2e6466db6989772278d788d5b5924a9abbc0430f740915"
+    },
+    {
+      "path": "game/test/couch-audio-master.test.mjs",
+      "bytes": 50476,
+      "sha256": "d5fb5c3169d0daf0588401e63c4c5fa0da953bd079b422be570c955745dadb13"
+    },
+    {
+      "path": "game/test/couch-menu-music.test.mjs",
+      "bytes": 13113,
+      "sha256": "9353369f30e2c2ad0de068524503d1bbb04c2af00af416bd80968e8441c5dbf2"
+    },
+    {
+      "path": "game/test/demo-audio.test.mjs",
+      "bytes": 10843,
+      "sha256": "8e8de8b6e2caff58e851afaf63baac8c184170d70cf0bc4da4e4b0766aa24076"
+    },
+    {
+      "path": "game/test/field-kit-audio-source-dependencies.test.mjs",
+      "bytes": 1383,
+      "sha256": "95edaeab3166e93ac5f927350bf150bbe69a2533d0347bf145ad12ebbe8a6736"
+    },
+    {
+      "path": "game/test/music-creator-links.test.mjs",
+      "bytes": 2890,
+      "sha256": "9a17ecc9cb159d9290c0408f0b622346816e0317f5da6ce55019491134e1c5ce"
+    },
+    {
+      "path": "game/test/music-credit.test.mjs",
+      "bytes": 6293,
+      "sha256": "be0dd7c5bf1d7074ae2f5fbae5388963acbb3e44599437e26740fcb812b03125"
+    },
+    {
+      "path": "game/test/native-landing-whitelist.test.mjs",
+      "bytes": 9897,
+      "sha256": "37ea594592c6327f39d9b4cf73d339b7e7f42fdd362c53ecefe2c0386a0df885"
+    },
+    {
+      "path": "game/test/quick-music-controls.test.mjs",
+      "bytes": 14501,
+      "sha256": "4f6fe2fe4f8c0bee2f0857c4f285189e3ac29ac2b2c486150589165fbcd986ae"
+    },
+    {
+      "path": "game/test/soundtrack-host.test.mjs",
+      "bytes": 44239,
+      "sha256": "12a7c90aa1e67195a4567b7cea6feefaffc01d5b8bead5c1eafe53b3404faa92"
+    },
+    {
+      "path": "game/test/soundtrack-panel.test.mjs",
+      "bytes": 189552,
+      "sha256": "24730d5521592f380e5f54a3ced4a4fcc66ee25e2bcf7f4e209d05d92297179d"
+    },
+    {
+      "path": "game/ui/demo-audio.mjs",
+      "bytes": 8152,
+      "sha256": "7faa6491bf0d23a1fd1c763db85d7d8e00209c5d3012ce584bdf877ea1b27d29"
+    },
+    {
+      "path": "game/ui/music-credit.mjs",
+      "bytes": 3892,
+      "sha256": "9b68bcc6cd3651d2ccde7e784b1d035d8c0d8471a049973b26519e4085d15d32"
+    },
+    {
+      "path": "game/ui/music-credits.mjs",
+      "bytes": 3885,
+      "sha256": "db855f1ba66fff0ad0f1e17ce0285f0c68949b86f5b8fcfc208a57b9f6d63249"
+    },
+    {
+      "path": "game/ui/quick-music-controls.css",
+      "bytes": 1340,
+      "sha256": "ba501fb89142e27f7f8d80da11b4d81dc7edba77f6ba78019b407a1ceb825fca"
+    },
+    {
+      "path": "game/ui/quick-music-controls.mjs",
+      "bytes": 11610,
+      "sha256": "2ff656550c3eb5917d27b19a3fa460a96ef54710fe08db2323df15576e5b7b5d"
+    },
+    {
+      "path": "game/ui/soundtrack-panel.mjs",
+      "bytes": 149464,
+      "sha256": "4c8734ff4c6c53b31a785ef6173c5bf70e903c89fa1b65c2f552cd6f0a9b50ff"
+    },
+    {
+      "path": "scripts/produce-field-kit-theme.mjs",
+      "bytes": 67843,
+      "sha256": "f2a72b351393e815c5b8c82288f0fb27abcb29dd1c5ac8b2f198b90ef2422ca3"
+    }
+  ],
+  "tests": {
+    "node": "v20.19.5",
+    "finalPassed": 278,
+    "finalFailed": 0,
+    "finalSkipped": 0,
+    "logs": [
+      {
+        "path": "initial-focused.tap.json",
+        "bytes": 48764,
+        "sha256": "2b81a91eca4a5064d859b4285425e61fbd9e6913770364f00fc0e5803a3fa247",
+        "summary": [
+          "# tests 215",
+          "# pass 213",
+          "# fail 2",
+          "# cancelled 0",
+          "# skipped 0",
+          "# todo 0",
+          "# duration_ms 28340.083167"
+        ],
+        "hashScope": "Decoded UTF-8 text field; original TAP bytes are retained exactly."
+      },
+      {
+        "path": "final-focused.tap.json",
+        "bytes": 46805,
+        "sha256": "a1c0be34b4d203002167e8ac6cce165b1b449aaf6276b9337b0d8ac042fa17d7",
+        "summary": [
+          "# tests 215",
+          "# pass 215",
+          "# fail 0",
+          "# cancelled 0",
+          "# skipped 0",
+          "# todo 0",
+          "# duration_ms 47320.027375"
+        ],
+        "hashScope": "Decoded UTF-8 text field; original TAP bytes are retained exactly."
+      },
+      {
+        "path": "final-host.tap.json",
+        "bytes": 15076,
+        "sha256": "84ec747cde17f70746425030f3a49b74d1d0f6414c7b1e187d37ff45eae06873",
+        "summary": [
+          "# tests 63",
+          "# pass 63",
+          "# fail 0",
+          "# cancelled 0",
+          "# skipped 0",
+          "# todo 0",
+          "# duration_ms 52654.181333"
+        ],
+        "hashScope": "Decoded UTF-8 text field; original TAP bytes are retained exactly."
+      }
+    ],
+    "initialFailure": "Two Solo native-menu whitelist assertions prohibited every footer anchor. Updated the contract to allow exactly one safe creator anchor requested by the user, while retaining the footer transport/input prohibition. Final full 215-test rerun passes.",
+    "staticChecks": [
+      "Pinned Prettier changed-source check passed",
+      "Scoped ESLint passed",
+      "Localization build and check passed",
+      "git diff --check passed"
+    ],
+    "independentReview": {
+      "outstandingFindings": 0,
+      "resolved": [
+        "Distinct accessible labels for creator and licence/provenance links",
+        "Exclude creator-link gestures from remembered start/retry/audio restore"
+      ],
+      "additionalChecks": "Independent read-only safety, stable focus, stale credit clearing and paused EN-to-UK label checks passed."
+    }
+  },
+  "browser": {
+    "environment": "Codex in-app browser, local source server at http://127.0.0.1:18840/game/",
+    "observations": [
+      "Audio quick control and detailed credit both expose Creator source links for the selected remote original.",
+      "Visible links use https://www.youtube.com/@single_deck, target=_blank and rel=noopener noreferrer.",
+      "Click opened that creator URL in a separate tab; the original Audio view remained paused/muted with Play music visible.",
+      "Returning to the main menu exposes the current title/artist as a creator link."
+    ],
+    "fullAudition": false,
+    "physicalDevice": false,
+    "publicGameRelease": false
+  },
+  "production": {
+    "fingerprints": {
+      "ui": "game/ui/field-kit-components.css; game/ui/field-kit-compiled.css; game/presentation/host.mjs; game/presentation/team-runtime-slots.mjs; game/ui/operation-status.css; game/ui/operation-status.mjs; game/presentation/dom-ownership.mjs sha256:681df05a5885995d476b28d9609cbf7ca5daeafffe7eb3a33d650d747ce327a7",
+      "screens": "game/ui/field-kit-flow.css; game/ui/field-kit-surfaces.css; game/ui/field-kit-compiled.css; site/release-catalog.css sha256:af463b140a15b5c2fdb27cf89c689b44923960f59697e6001d4d0fdf6a973121",
+      "motion": "authoring/motion-lab/render-character.mjs; game/ui/actor-presentation.mjs; game/ui/rotor-presentation.mjs; game/presentation/journey-actor-materials.mjs; game/ui/body-backing.mjs; game/ui/body-motion.mjs; game/ui/actor-recipes.mjs; game/ui/fpv-body-recipes.mjs; authoring/motion-lab/animation.mjs; authoring/motion-lab/presets.json; authoring/library/fpv-role-presentations/originals/scout.png; authoring/library/fpv-role-presentations/originals/bomber.png; authoring/library/fpv-role-presentations/originals/carrier.png; authoring/library/fpv-role-presentations/originals/interceptor.png; authoring/library/fpv-role-presentations/originals/fiber.png; authoring/library/fpv-role-presentations/originals/impact.png; authoring/library/fpv-role-presentations/originals/trapper.png sha256:5e092fb45edd0d320eed96dadc195eeca9dc15ce7b07e7a103a9f7eabbd204d8",
+      "effects": "game/ui/classic-view.mjs; game/ui/event-feedback.mjs; game/content-design/actor-marker.mjs; game/ui/lane-presentation.mjs; game/ui/render.mjs; game/ui/contact-cue.mjs; game/ui/relay-view.mjs; game/ui/directional-view.mjs; game/ui/enemy-body-assets.mjs; game/ui/enemy-body-motion.mjs; game/enemy-catalog.mjs; game/ui/body-motion.mjs; game/ui/actor-recipes.mjs; game/ui/fpv-body-recipes.mjs; game/ui/body-backing.mjs; authoring/motion-lab/animation.mjs; game/ui/combat-view.mjs; game/ui/combat-presentation.mjs; game/ui/actor-presentation.mjs; game/data-json.mjs; game/core/registry.mjs; game/core/combat-definition.mjs; game/core/geometry.mjs; game/core/classic-motion.mjs; game/core/classic-topology.mjs; game/core/movement.mjs; game/core/versions.mjs sha256:35cd4d82e13920678d320ccbe89ad65419f2df6c02f2897f715937abe136fa20",
+      "team": "game/couch/coop-view.mjs; game/couch/coop-actor-presentation.mjs; game/couch/coop-pilot-cues.mjs; game/ui/contact-cue.mjs; game/couch/coop-anchor-presentation.mjs; game/couch/coop-core-presentation.mjs; game/couch/coop-support-presentation.mjs; game/couch/coop-emitter-presentation.mjs; game/couch/coop-rescue-presentation.mjs; game/couch/coop-pilot-slots.mjs; game/couch/coop-enemy-slots.mjs; game/couch/coop-outcome-presentation.mjs; game/presentation/team-runtime-slots.mjs; game/ui/actor-presentation.mjs; game/ui/rotor-presentation.mjs; game/presentation/catalog.mjs; game/couch/coop-actor-layout.mjs; game/text-size.mjs; game/couch/coop-terrain-trail.mjs; game/couch/coop-bonus-view.mjs; game/couch/candidate-team-pictures.mjs; game/content-design/material-markers.mjs; game/presentation/journey-actor-materials.mjs; authoring/motion-lab/render-character.mjs; game/ui/classic-view.mjs; game/ui/presentation-draw-image.mjs; game/ui/enemy-body-assets.mjs; game/ui/enemy-body-motion.mjs; authoring/motion-lab/animation.mjs; game/content-design/actor-marker.mjs; game/enemy-catalog.mjs; game/ui/actor-recipes.mjs; game/ui/fpv-body-recipes.mjs; game/ui/body-backing.mjs; game/ui/body-motion.mjs sha256:d117d023b097472e8975a7fa6e0384ba72bcc194ee84405e7afbe3753df14605",
+      "audio": "game/app.mjs; game/couch/couch-music-host.mjs; game/opening-soundtrack.mjs; game/ui/audio.mjs; game/ui/published-audio.mjs; game/ui/soundtrack-player.mjs; game/ui/quick-music-controls.mjs; game/ui/quick-music-controls.css; game/ui/music-credits.mjs; game/ui/music-credit.mjs; game/ui/demo-audio.mjs; game/ui/audio-master.mjs; game/soundtrack.mjs; game/soundtrack-style-taxonomy.mjs; game/soundtrack-rights.mjs; game/soundtrack-bundle.mjs; game/soundtrack-share.mjs; game/soundtrack-source.mjs; game/soundtrack-bundled.mjs; game/ui/soundtrack-panel.mjs; game/ui/soundtrack-panel.css; game/soundtrack-albums.mjs; game/soundtrack-portable.mjs; game/content/soundtrack-catalogue.mjs; game/online-soundtrack-catalogue.mjs; game/online-soundtrack-sources.mjs; game/online-soundtrack-source-store.mjs; game/official-downloads.mjs; game/soundtrack-download-volumes.mjs; game/installed-app.mjs; game/managed-media-store.mjs; game/media-storage-record.mjs; game/soundtrack-private-intake.mjs; game/ui/soundtrack-error-copy.mjs; game/journey/campaign-feedback.mjs; game/rewards/audio-original.mjs; game/rewards/media-format.mjs; game/ui/edition-solo.mjs; game/ui/edition-rewards.mjs; game/ui/reward-media.mjs; game/ui/reward-audio-group.mjs; game/rewards/audio-groups.mjs; game/studio-preview-session.mjs; game/audio-preferences.mjs; game/ui/story-dialog.mjs; game/ui/victory-story.mjs; game/ui/music.mjs; game/data-json.mjs; game/mp3.mjs; game/media-audio.mjs; game/video-poster.mjs; game/rewards/model.mjs; game/rewards/media.mjs; game/editions/assets.mjs; game/editions/model.mjs; game/editions/retained-presentation.mjs sha256:2c7ab74bf7789540fd68f67021335e13913f34c7637925630459e01fb99b85a8"
+    },
+    "audioSHA256": "2c7ab74bf7789540fd68f67021335e13913f34c7637925630459e01fb99b85a8",
+    "dependencyInputsAdded": [
+      "game/ui/quick-music-controls.css",
+      "game/ui/music-credits.mjs",
+      "game/ui/music-credit.mjs",
+      "game/ui/demo-audio.mjs"
+    ],
+    "historicalLedgerModified": false,
+    "historicalReviewPinsModified": false,
+    "aggregateCheck": "Existing stale aggregate ledger remains unresolved. Measurements do not grant review or release approval."
+  },
+  "limits": [
+    "Temporary ENOSPC blocked log/docs writes and one attempted rerun before execution. Source remained intact; small writes later recovered and final tests/log preservation completed.",
+    "No heavy local build or MP3 download/copy performed.",
+    "Physical iPhone/controller, hosted release qualification and public game acceptance remain outstanding."
+  ]
+}
