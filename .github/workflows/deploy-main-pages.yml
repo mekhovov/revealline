@@ -17,7 +17,9 @@ concurrency:
 env:
   # Keep enough headroom for GitHub Pages packaging while the repository grows.
   # Full releases still retain the complete source and optional authoring artwork.
-  MAX_PUBLISHED_BYTES: 950000000
+  MAX_PUBLISHED_BYTES: 975000000
+  # Warn before the historical 950 MB operating threshold; hard fail below Pages 1 GB.
+  WARN_PUBLISHED_BYTES: 950000000
 
 jobs:
   build:
@@ -144,6 +146,9 @@ jobs:
               total += entry.stat().st_size
           maximum = int(os.environ['MAX_PUBLISHED_BYTES'])
           assert total <= maximum, f'Pages snapshot exceeds {maximum} bytes: {total}'
+          warning = int(os.environ['WARN_PUBLISHED_BYTES'])
+          if total > warning:
+              print(f'::warning title=Pages capacity nearing limit::{total} bytes exceeds the {warning}-byte operating threshold; hard limit remains {maximum}.')
           receipt = {
             'format': 'revealline-main-pages-receipt.v1',
             'sourceRevision': os.environ['SOURCE_SHA'],
