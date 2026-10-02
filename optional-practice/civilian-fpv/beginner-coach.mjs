@@ -22,6 +22,290 @@ export function beginnerExampleCommand(ticks, axis = 'throttle') {
   return input;
 }
 
+/** A command-driven control-technique example, not a route replay or scored proof.
+ * Run warmup through the same flight before tick 0; never assign its attitude.
+ * Commands use the lab's Gentle response and consume the actual simulation state. */
+export function beginnerStepExample(
+  step,
+  { mode = 'acro', objective, previousStep, previousObjective } = {},
+) {
+  const limit = (n, lo = -1, hi = 1) => Math.max(lo, Math.min(hi, n));
+  const sign = step.direction < 0 ? -1 : 1;
+  const motion = step.motion;
+  const axis = ['roll', 'pitch', 'yaw'].includes(step.axis) ? step.axis : 'pitch';
+  const ground = objective?.type === 'hold' && objective.max?.y <= 800 && objective.centred;
+  const centredTilt = objective?.minTilt > 0 && objective.centred;
+  const techniqueTilt = centredTilt ? (objective.minTilt + objective.maxTilt) / 200 : 8;
+  const levelOnly = motion === 'acro' && sign < 0 && objective?.centred && !centredTilt;
+  const descending =
+    objective?.type !== 'land' &&
+    ((step.axis === 'throttle' && sign < 0) || (motion === 'lift' && sign < 0));
+  const kind = ground
+    ? 'ground'
+    : objective?.type === 'land'
+      ? 'land'
+      : descending
+        ? 'descend'
+        : ['throttle', 'mixed'].includes(step.axis) && motion === 'lift'
+          ? 'lift'
+          : centredTilt
+            ? 'tilt-release'
+            : levelOnly
+              ? 'level'
+              : motion === 'brake' || (motion === 'hover' && step.axis === 'mixed')
+                ? 'brake'
+                : motion === 'turn'
+                  ? 'turn'
+                  : step.axis === 'yaw'
+                    ? 'yaw'
+                    : motion === 'hover' && step.axis === 'throttle'
+                      ? 'hover'
+                      : 'travel';
+  const initialHeading =
+    typeof previousObjective?.heading === 'number'
+      ? previousObjective.heading / 100
+      : previousObjective?.type === 'gate'
+        ? previousObjective.axis === 'x'
+          ? previousObjective.direction * 90
+          : previousObjective.direction < 0
+            ? 0
+            : 180
+        : 0;
+  const targetHeading =
+    typeof objective?.heading === 'number' ? objective.heading / 100 : initialHeading + sign * 65;
+  const desiredHeight =
+    objective?.min && objective?.max
+      ? (objective.min.y + objective.max.y) / 2
+      : objective?.type === 'gate'
+        ? motion === 'lift'
+          ? objective.maxY - 2000
+          : (objective.minY + objective.maxY) / 2
+        : 3000;
+  const height = Math.max(1400, desiredHeight);
+  const spawnHeight =
+    kind === 'ground' || (kind === 'lift' && (!previousStep || previousStep.target === 0))
+      ? 0
+      : kind === 'lift'
+        ? Math.max(1000, height - 2000)
+        : kind === 'descend'
+          ? height + 1800
+          : kind === 'land'
+            ? 3000
+            : height;
+  const neutral = (throttle = 0.5) => ({ roll: 0, pitch: 0, yaw: 0, throttle });
+  const warmup = [];
+  // Setup is physical: a small input creates the tilt/drift the next step corrects.
+  if (kind === 'level' || kind === 'brake') {
+    const driftAxis =
+      step.axis === 'mixed'
+        ? ['roll', 'pitch'].includes(previousStep?.axis)
+          ? previousStep.axis
+          : 'pitch'
+        : axis;
+    const initialSign = step.axis === 'mixed' ? 1 : -sign;
+    for (let tick = 0; tick < 70; tick++) {
+      const input = neutral(0.515);
+      input[driftAxis] = tick < 30 ? initialSign * (mode === 'acro' ? 0.12 : 0.42) : 0;
+      warmup.push(input);
+    }
+  }
+  // Invert the Gentle expo curve, rather than changing the integrator or display.
+  const unshape = (value) => {
+    const s = Math.sign(value);
+    const magnitude = Math.abs(limit(value));
+    let lo = 0,
+      hi = 1;
+    for (let i = 0; i < 14; i++) {
+      const n = (lo + hi) / 2;
+      if (0.7 * n + 0.3 * n * n * n < magnitude) lo = n;
+      else hi = n;
+    }
+    return (s * (lo + hi)) / 2;
+  };
+  const tiltCommand = (target, key, state) => {
+    if (mode === 'self-level') return unshape(target / 30);
+    const angle = (state.attitude?.[key] ?? 0) / 100;
+    const rate = (state.angular?.[key] ?? 0) / 100;
+    return unshape(limit((target - angle) * 3 - rate * 0.45, -45, 45) / 240);
+  };
+  const yawCommand = (target, state) => {
+    const angle = (state.attitude?.yaw ?? 0) / 100;
+    const delta = ((target - angle + 540) % 360) - 180;
+    return unshape(limit(delta * 2.2 - ((state.angular?.yaw ?? 0) / 100) * 0.45, -36, 36) / 240);
+  };
+  const throttleFor = (target, state, landing = false) => {
+    const y = state.position?.y ?? 0;
+    if (landing && y < 35) return 0;
+    const velocity = state.velocity?.y ?? 0;
+    const desiredVelocity = landing
+      ? -(y < 650 ? 450 : 950)
+      : limit((target - y) * 1.4, -1000, 1500);
+    const acceleration = limit((desiredVelocity - velocity) * 2.8, -4000, 5000);
+    const up = Math.max(0.65, (state.attitude?.up?.y ?? 1000000) / 1000000);
+    return limit((9810 + acceleration) / (19620 * up), 0, 0.82);
+  };
+  const localVelocity = (state) => {
+    const yaw = ((state.attitude?.yaw ?? 0) * Math.PI) / 18000;
+    const vx = state.velocity?.x ?? 0;
+    const vz = state.velocity?.z ?? 0;
+    return {
+      pitch: (vx * Math.sin(yaw) - vz * Math.cos(yaw)) / 1000,
+      roll: (vx * Math.cos(yaw) + vz * Math.sin(yaw)) / 1000,
+    };
+  };
+  const ticks = {
+    ground: 150,
+    lift: 300,
+    descend: 300,
+    land: 400,
+    hover: 220,
+    'tilt-release': 180,
+    level: 220,
+    brake: 280,
+    yaw: 280,
+    turn: 360,
+    travel: 320,
+  }[kind];
+  const phases = {
+    ground: [['Keep throttle down; centre the controls', 'Газ унизу; решта осей по центру']],
+    lift: [
+      ['Add thrust and climb gently', 'Додайте тягу й плавно підніміться'],
+      ['Ease thrust and settle at height', 'Зменште тягу й утримайте висоту'],
+    ],
+    descend: [
+      ['Reduce thrust to descend', 'Зменште тягу для спуску'],
+      ['Restore thrust to catch the descent', 'Відновіть тягу, щоб припинити спуск'],
+    ],
+    land: [
+      ['Descend level at a calm speed', 'Спускайтеся рівно й повільно'],
+      ['Touch down, then lower throttle', 'Торкніться землі, потім приберіть газ'],
+    ],
+    hover: [['Keep level; make small height corrections', 'Тримайте рівно; малі поправки висоти']],
+    'tilt-release': [
+      ['Set a small tilt', 'Задайте малий нахил'],
+      ['Centre: Acro retains the tilt', 'По центру: Acro зберігає нахил'],
+    ],
+    level: [
+      ['Counter the existing tilt', 'Протидійте початковому нахилу'],
+      ['Centre near level', 'Центруйте біля горизонту'],
+    ],
+    brake: [
+      ['Lean against the existing drift', 'Нахиліться проти початкового дрейфу'],
+      ['Level as the motion slows', 'Вирівнюйтеся, коли рух сповільнюється'],
+    ],
+    yaw: [
+      [
+        sign < 0 ? 'Yaw left; keep roll and pitch calm' : 'Yaw right; keep roll and pitch calm',
+        sign < 0
+          ? 'Рискання ліворуч; крен і тангаж спокійні'
+          : 'Рискання праворуч; крен і тангаж спокійні',
+      ],
+      ['Centre near the new heading', 'Центруйте біля нового курсу'],
+    ],
+    turn: [
+      [
+        sign < 0 ? 'Bank and yaw left together' : 'Bank and yaw right together',
+        sign < 0 ? 'Крен і рискання ліворуч разом' : 'Крен і рискання праворуч разом',
+      ],
+      ['Counter-roll to leave the turn', 'Протилежний крен для виходу з повороту'],
+    ],
+    travel: [
+      ['Set a small directional tilt', 'Задайте малий нахил у напрямку руху'],
+      ['Centre and observe the motion', 'Центруйте й спостерігайте за рухом'],
+      ['Brake the drift, then level', 'Погасіть дрейф і вирівняйтеся'],
+    ],
+  };
+  const phaseIndex = (tick) =>
+    kind === 'travel'
+      ? tick < 75
+        ? 0
+        : tick < 125
+          ? 1
+          : 2
+      : phases[kind].length === 1
+        ? 0
+        : tick <
+            (kind === 'turn'
+              ? 170
+              : kind === 'tilt-release'
+                ? 60
+                : kind === 'level'
+                  ? 100
+                  : ticks / 2)
+          ? 0
+          : 1;
+  return {
+    kind,
+    spawnHeight,
+    initialHeading,
+    targetHeading,
+    warmup,
+    ticks,
+    prepareMaxTicks: spawnHeight ? 500 : 0,
+    prepareReady(state) {
+      const headingError = ((initialHeading - (state.attitude?.yaw ?? 0) / 100 + 540) % 360) - 180;
+      return (
+        !spawnHeight ||
+        (Math.abs((state.position?.y ?? 0) - spawnHeight) < 45 &&
+          Math.abs(state.velocity?.y ?? 0) < 90 &&
+          Math.abs(headingError) < 2 &&
+          Math.abs(state.angular?.yaw ?? 0) < 500)
+      );
+    },
+    prepareCommand(state) {
+      return {
+        roll: tiltCommand(0, 'roll', state),
+        pitch: tiltCommand(0, 'pitch', state),
+        yaw: yawCommand(initialHeading, state),
+        throttle: throttleFor(spawnHeight, state),
+      };
+    },
+    phase(tick) {
+      const [en, uk] = phases[kind][phaseIndex(tick)];
+      return { en, uk };
+    },
+    command(tick, state = {}) {
+      if (kind === 'ground') return neutral(0);
+      const input = neutral(throttleFor(kind === 'land' ? 0 : height, state, kind === 'land'));
+      let desiredPitch = 0,
+        desiredRoll = 0,
+        desiredYaw = initialHeading;
+      const velocity = localVelocity(state);
+      if (kind === 'turn') {
+        desiredRoll = tick < 170 ? sign * 7 : 0;
+        desiredPitch = tick < 210 ? 4 : limit(-velocity.pitch * 4, -8, 8);
+        desiredYaw = targetHeading;
+      } else if (kind === 'yaw') desiredYaw = targetHeading;
+      else if (kind === 'travel' || kind === 'tilt-release') {
+        let tilt = tick < (kind === 'travel' ? 75 : 60) ? sign * techniqueTilt : 0;
+        if (kind === 'travel' && tick >= 125) tilt = limit(-velocity[axis] * 4, -8, 8);
+        if (axis === 'roll') desiredRoll = tilt;
+        else desiredPitch = tilt;
+        if (step.axis === 'mixed' && motion === 'lift')
+          desiredPitch = tick < 125 ? 6 : desiredPitch;
+        if (step.axis === 'mixed' && Number.isFinite(step.lateralDirection))
+          desiredRoll =
+            tick < 75 ? limit(step.lateralDirection ?? 0) * 3 : limit(-velocity.roll * 4, -6, 6);
+      } else if (kind === 'brake') {
+        desiredPitch = limit(-velocity.pitch * 4, -8, 8);
+        desiredRoll = limit(-velocity.roll * 4, -8, 8);
+      } else if (['lift', 'descend'].includes(kind) && step.axis === 'mixed') {
+        desiredPitch = tick < 100 ? 5 : limit(-velocity.pitch * 4, -8, 8);
+      }
+      input.roll = tiltCommand(desiredRoll, 'roll', state);
+      input.pitch = tiltCommand(desiredPitch, 'pitch', state);
+      input.yaw = yawCommand(desiredYaw, state);
+      if (
+        (kind === 'tilt-release' && tick >= 60) ||
+        (kind === 'travel' && tick >= 75 && tick < 125)
+      ) {
+        input[axis] = 0;
+      }
+      return input;
+    },
+  };
+}
+
 /** A separate, unscored teaching sandbox using the unchanged flight integrator.
  * It never receives the host flight or a recorder and cannot award completion. */
 export function createBeginnerPreview(mode = 'acro') {
@@ -78,6 +362,7 @@ export function mountBeginnerCoach({
   onRadio = () => {},
   onFullscreen = () => {},
   onPracticeView = () => {},
+  readRadioPreview = () => undefined,
 }) {
   const doc = root.ownerDocument;
   let lesson = null,
@@ -95,6 +380,10 @@ export function mountBeginnerCoach({
     labSource = 'keyboard',
     labRunning = false,
     labFlight = null,
+    labState = null,
+    labPlan = null,
+    labExampleTick = 0,
+    labReferenceOrientation = null,
     labInput = neutralFlightInput(),
     labReason = '',
     labFrameId = null,
@@ -253,6 +542,7 @@ export function mountBeginnerCoach({
     labRunning = false;
     labReason = reason;
     labFlight?.pause();
+    labState = labFlight?.snapshot() ?? null;
     clearLabInput();
     if (labFrameId !== null) win.cancelAnimationFrame(labFrameId);
     labFrameId = null;
@@ -260,9 +550,38 @@ export function mountBeginnerCoach({
     labAccumulator = 0;
     paintLab();
   }
+  function prepareExample() {
+    labPlan =
+      labMode === 'example' && !isExploring()
+        ? beginnerStepExample(displayedStep(), {
+            mode: mode(),
+            objective: criterion(viewedStep),
+            previousStep: lesson?.steps[viewedStep - 1],
+            previousObjective: criterion(viewedStep - 1),
+          })
+        : null;
+    labExampleTick = 0;
+    labFlight = createBeginnerPreview(mode());
+    labState = labFlight.snapshot();
+    if (labPlan) {
+      // Reach the example's opening height/heading through real commands.
+      // This bounded setup never touches the host flight or its recorder.
+      labFlight.arm();
+      for (let tick = 0; tick < labPlan.prepareMaxTicks && !labPlan.prepareReady(labState); tick++)
+        labState = labFlight.step(labPlan.prepareCommand(labState));
+      for (const command of labPlan.warmup) labState = labFlight.step(command);
+      labFlight.pause();
+      labState = labFlight.snapshot();
+    }
+    labReferenceOrientation = [...labState.orientation];
+    labInput = Object.fromEntries(
+      AXES.map((axis) => [axis, (labState.lastInput?.[axis] ?? 0) / 1000]),
+    );
+  }
+  const examplePace = () => (labPlan ? 0.5 : EXAMPLE_PACE);
   function resetPreview() {
     pausePreview('ready');
-    labFlight = createBeginnerPreview(mode());
+    prepareExample();
     paintLab();
   }
   function rememberRadioBaseline() {
@@ -309,16 +628,26 @@ export function mountBeginnerCoach({
     radioIntentTicks = labRunning && moved ? radioIntentTicks + 1 : 0;
     if (radioIntentTicks >= 2) takeControls('radio');
   }
-  function previewCommand() {
+  function refreshRadioSample() {
+    const value = readRadioPreview();
+    if (value === undefined) return;
+    snapshot.radioMonitor = value?.controls;
+    snapshot.radioAvailable = Boolean(value?.verified);
+    snapshot.radioStickMode = value?.stickMode ?? snapshot.radioStickMode;
+  }
+  function previewCommand(advance = true) {
     if (labMode === 'example')
-      return beginnerExampleCommand(labFlight.snapshot().ticks, displayedStep()?.axis);
+      return labPlan
+        ? labPlan.command(labExampleTick, labState)
+        : beginnerExampleCommand(labExampleTick, displayedStep()?.axis);
     if (labSource === 'radio') return labRadioInput();
     if (labSource === 'touch') {
-      labTouch.throttle = clamp(
-        labTouch.throttle + (touchThrottleDirection * 0.35) / FLIGHT_HZ,
-        0,
-        1,
-      );
+      if (advance)
+        labTouch.throttle = clamp(
+          labTouch.throttle + (touchThrottleDirection * 0.35) / FLIGHT_HZ,
+          0,
+          1,
+        );
       return { ...labTouch };
     }
     const fine = labKeys.has('ShiftLeft') || labKeys.has('ShiftRight');
@@ -327,7 +656,8 @@ export function mountBeginnerCoach({
       throttle: clamp(
         labInput.throttle +
           ((Number(labKeys.has('ArrowUp')) - Number(labKeys.has('ArrowDown'))) *
-            (fine ? 0.1 : 0.35)) /
+            (fine ? 0.1 : 0.35) *
+            Number(advance)) /
             FLIGHT_HZ,
         0,
         1,
@@ -344,6 +674,7 @@ export function mountBeginnerCoach({
       pausePreview('focus');
       return;
     }
+    refreshRadioSample();
     if (labMode === 'try' && labSource === 'radio' && !labRadioAvailable()) {
       pausePreview('radio');
       return;
@@ -354,22 +685,22 @@ export function mountBeginnerCoach({
       pausePreview('stall');
       return;
     }
-    labAccumulator += Math.max(0, elapsed) * (labMode === 'example' ? EXAMPLE_PACE : 1);
+    labAccumulator += Math.max(0, elapsed) * (labMode === 'example' ? examplePace() : 1);
     while (labAccumulator >= 1000 / FLIGHT_HZ) {
       labAccumulator -= 1000 / FLIGHT_HZ;
       labInput = previewCommand();
-      labFlight.step(labInput);
-      const state = labFlight.snapshot();
-      if (labMode === 'example' && state.ticks >= EXAMPLE_TICKS) {
+      const state = (labState = labFlight.step(labInput));
+      if (labMode === 'example') labExampleTick++;
+      if (labMode === 'example' && labExampleTick >= (labPlan?.ticks ?? EXAMPLE_TICKS)) {
         exampleLoops++;
         if (snapshot.reducedMotion) {
           pausePreview('finished');
           break;
         }
         // Each labelled example repeats from the same safe starting pose.
-        labFlight = createBeginnerPreview(mode());
+        prepareExample();
         labFlight.arm();
-        labInput = neutralFlightInput();
+        labState = labFlight.snapshot();
         continue;
       }
       // The unscored lab has no attempt timer. Ground and boundary contacts
@@ -397,6 +728,7 @@ export function mountBeginnerCoach({
     ++previewActivityRevision;
     labRunning = true;
     labFlight.arm();
+    labState = labFlight.snapshot();
     labLastTime = null;
     labAccumulator = 0;
     if (labFrameId === null) labFrameId = win.requestAnimationFrame(previewFrame);
@@ -515,10 +847,17 @@ export function mountBeginnerCoach({
   }
   function paintLab() {
     if (stage !== 'guide' || !labFlight) return;
-    const state = labFlight.snapshot();
-    const input = labRunning ? labInput : neutralFlightInput();
+    const state = labState;
+    // Live controls are displayed on the next animation frame. Only the fixed
+    // simulation loop advances throttle or physics; attitude is never predicted.
+    const input = labRunning
+      ? labMode === 'try'
+        ? previewCommand(false)
+        : labInput
+      : neutralFlightInput();
     diagram?.update({
       state,
+      referenceOrientation: labReferenceOrientation,
       detailScale: 1.5,
       followHeading: true,
       environmentMotion: true,
@@ -528,12 +867,14 @@ export function mountBeginnerCoach({
       locale: lang(),
       unavailable: labMode === 'try' && labSource === 'radio' && !labRadioAvailable(),
     });
-    if (refs.labPlay)
-      refs.labPlay.textContent = labRunning
+    if (refs.labPlay) {
+      const label = labRunning
         ? t('Pause preview', 'Пауза перегляду')
         : labMode === 'example'
           ? t('Play example', 'Показати приклад')
           : t('Resume controls', 'Продовжити керування');
+      if (refs.labPlay.textContent !== label) refs.labPlay.textContent = label;
+    }
     if (refs.labSourceHint) {
       const source = {
         keyboard: t('Keyboard', 'Клавіатура'),
@@ -549,18 +890,28 @@ export function mountBeginnerCoach({
           : `${source} · ${t('live input at normal speed · replay the example whenever you want', 'ваш сигнал зі звичайною швидкістю · приклад можна повторити будь-коли')}`;
       if (refs.labSourceHint.textContent !== text) refs.labSourceHint.textContent = text;
     }
+    if (refs.labPhase) {
+      refs.labPhase.hidden = labMode !== 'example' || !labPlan;
+      const text = labPlan ? copy(labPlan.phase(labExampleTick)) : '';
+      if (refs.labPhase.textContent !== text) refs.labPhase.textContent = text;
+    }
     if (refs.labStatus) {
       const text = labRunning
         ? labMode === 'example'
-          ? snapshot.reducedMotion
-            ? t(
-                'EXAMPLE · 0.2× teaching pace · real full-travel commands · one pass',
-                'ПРИКЛАД · навчальний темп 0,2× · справжні команди до краю · один показ',
-              )
-            : t(
-                'EXAMPLE · 0.2× teaching pace · real full-travel commands · loops from the starting pose',
-                'ПРИКЛАД · навчальний темп 0,2× · справжні команди до краю · повтор із початкової позиції',
-              )
+          ? labPlan
+            ? `${labImmersive ? copy(labPlan.phase(labExampleTick)) + ' · ' : ''}${t(
+                'STEP EXAMPLE · 0.5× pace · control technique, not route playback',
+                'ПРИКЛАД КРОКУ · темп 0,5× · прийом керування, а не запис маршруту',
+              )}`
+            : snapshot.reducedMotion
+              ? t(
+                  'EXAMPLE · 0.2× teaching pace · real full-travel commands · one pass',
+                  'ПРИКЛАД · навчальний темп 0,2× · справжні команди до краю · один показ',
+                )
+              : t(
+                  'EXAMPLE · 0.2× teaching pace · real full-travel commands · loops from the starting pose',
+                  'ПРИКЛАД · навчальний темп 0,2× · справжні команди до краю · повтор із початкової позиції',
+                )
           : t(
               'YOUR CONTROLS · no time limit · real lesson stays paused',
               'ВАШЕ КЕРУВАННЯ · без обмеження часу · урок залишається на паузі',
@@ -586,8 +937,10 @@ export function mountBeginnerCoach({
                 );
       if (refs.labStatus.textContent !== text) refs.labStatus.textContent = text;
     }
-    if (refs.labTelemetry)
-      refs.labTelemetry.textContent = `${(state.position.y / 1000).toFixed(1)} ${t('m height', 'м висоти')} · ${(Math.hypot(state.velocity.x, state.velocity.z) / 1000).toFixed(1)} ${t('m/s drift', 'м/с дрейфу')} · ${(Math.max(Math.abs(state.attitude.roll), Math.abs(state.attitude.pitch)) / 100).toFixed(1)}° ${t('tilt', 'нахилу')}`;
+    if (refs.labTelemetry) {
+      const text = `${(state.position.y / 1000).toFixed(1)} ${t('m height', 'м висоти')} · ${(Math.hypot(state.velocity.x, state.velocity.z) / 1000).toFixed(1)} ${t('m/s drift', 'м/с дрейфу')} · ${(Math.max(Math.abs(state.attitude.roll), Math.abs(state.attitude.pitch)) / 100).toFixed(1)}° ${t('tilt', 'нахилу')}`;
+      if (refs.labTelemetry.textContent !== text) refs.labTelemetry.textContent = text;
+    }
     for (const stick of refs.sticks ?? []) {
       const x = input[stick.h],
         y = stick.v === 'throttle' ? input[stick.v] * 2 - 1 : input[stick.v];
@@ -596,7 +949,8 @@ export function mountBeginnerCoach({
       stick.live.setAttribute('cx', 90 + x * 60);
       stick.live.setAttribute('cy', 90 - y * 60);
       stick.suggestion.style.transform = `translate(${x * 60}px, ${-y * 60}px)`;
-      stick.readout.textContent = `${axisName(stick.h)} ${Math.round(x * 100)}% · ${axisName(stick.v)} ${Math.round(input[stick.v] * 100)}%`;
+      const text = `${axisName(stick.h)} ${Math.round(x * 100)}% · ${axisName(stick.v)} ${Math.round(input[stick.v] * 100)}%`;
+      if (stick.readout.textContent !== text) stick.readout.textContent = text;
     }
   }
   function makeStick(side, layout, step) {
@@ -977,8 +1331,12 @@ export function mountBeginnerCoach({
           'p',
           'coach-example-note',
           t(
-            'Full travel shown slowly. Use small corrections in flight. Hollow dots show the example; solid dots show your actual input at normal speed.',
-            'Повний хід показано повільно. У польоті коригуйте малими рухами. Порожні крапки — приклад; суцільні — ваш справжній сигнал зі звичайною швидкістю.',
+            isExploring()
+              ? 'Full travel shown slowly. Use small corrections in flight. Hollow dots show the example; solid dots show your actual input at normal speed.'
+              : 'Hollow dots show this step’s actual example commands. Small corrections are intentional. Solid dots show your live input at normal speed.',
+            isExploring()
+              ? 'Повний хід показано повільно. У польоті коригуйте малими рухами. Порожні крапки — приклад; суцільні — ваш справжній сигнал зі звичайною швидкістю.'
+              : 'Порожні крапки показують справжні команди прикладу цього кроку. Малі поправки навмисні. Суцільні — ваш сигнал зі звичайною швидкістю.',
           ),
         ),
       );
@@ -987,8 +1345,10 @@ export function mountBeginnerCoach({
       controller.append(touchControls);
       visuals.append(controller);
       const behavior = node('section', 'coach-behavior coach-drone');
+      refs.labPhase = node('p', 'coach-lab-phase coach-target');
       behavior.append(
         node('h3', '', t('WHAT THE DRONE DOES', 'ЩО РОБИТЬ ДРОН')),
+        refs.labPhase,
         makeDrone(step),
         node(
           'p',
@@ -1021,8 +1381,8 @@ export function mountBeginnerCoach({
           'p',
           'coach-lab-help',
           t(
-            'Focus the drone and use W/S, A/D, Q/E and ↑/↓, or move a calibrated radio stick. Drag either gimbal or open Touch buttons. Shift is gentle; throttle stays set. Esc pauses for menu navigation. Replay example returns to the lesson’s demonstration.',
-            'Виберіть схему дрона й натискайте W/S, A/D, Q/E та ↑/↓ або рухайте каліброваним стіком пульта. Перетягніть джойстик або відкрийте сенсорні кнопки. Shift — плавно; газ зберігається. Esc — пауза для меню. «Повторити приклад» повертає демонстрацію уроку.',
+            'Focus the drone and use W/S, A/D, Q/E and ↑/↓, or move a calibrated radio stick. Drag either gimbal or open Touch buttons. Shift is gentle; throttle stays set. Esc pauses for menu navigation. Replay example returns to this step’s control technique. Watch demonstration plays the complete route from the flight screen.',
+            'Виберіть схему дрона й натискайте W/S, A/D, Q/E та ↑/↓ або рухайте каліброваним стіком пульта. Перетягніть джойстик або відкрийте сенсорні кнопки. Shift — плавно; газ зберігається. Esc — пауза для меню. «Повторити приклад» показує прийом цього кроку. «Переглянути демонстрацію» на екрані польоту відтворює весь маршрут.',
           ),
         ),
       );
@@ -1113,7 +1473,8 @@ export function mountBeginnerCoach({
         y = stick.v === 'throttle' ? input[stick.v] * 2 - 1 : input[stick.v];
       stick.live.setAttribute('cx', 90 + x * 60);
       stick.live.setAttribute('cy', 90 - y * 60);
-      stick.readout.textContent = `${axisName(stick.h)} ${Math.round(x * 100)}% · ${axisName(stick.v)} ${Math.round(input[stick.v] * 100)}%`;
+      const text = `${axisName(stick.h)} ${Math.round(x * 100)}% · ${axisName(stick.v)} ${Math.round(input[stick.v] * 100)}%`;
+      if (stick.readout.textContent !== text) stick.readout.textContent = text;
     }
     const state = snapshot.state,
       at = state?.attitude;
@@ -1194,6 +1555,7 @@ export function mountBeginnerCoach({
     onPause();
     stage = 'guide';
     labMode = 'example';
+    viewedStep = activeStep();
     resetPreview();
     radioBaseline = null;
     radioIntentTicks = 0;
@@ -1339,13 +1701,13 @@ export function mountBeginnerCoach({
       radioBaseline = null;
       radioIntentTicks = 0;
       exampleLoops = 0;
-      resetPreview();
       replay = Boolean(options.replay);
       explored = 'throttle';
       viewedStep = 0;
       lastRender = '';
       lastPaint = 0;
       stage = options.practice || replay ? 'live' : 'guide';
+      resetPreview();
       if (stage === 'guide') onPause();
       render();
       autoPreviewPending = stage === 'guide';
@@ -1375,7 +1737,7 @@ export function mountBeginnerCoach({
       }
       observeRadio();
       const now = win.performance?.now?.() ?? Date.now();
-      if (now - lastPaint >= 80) {
+      if (!(stage === 'guide' && labRunning) && now - lastPaint >= 80) {
         lastPaint = now;
         paint();
       }
@@ -1383,6 +1745,7 @@ export function mountBeginnerCoach({
     blocksArm: () => Boolean(lesson && stage === 'guide'),
     pausePreview,
     wantsRadioPreview: () => Boolean(lesson && stage === 'guide' && !disposed),
+    previewRunning: () => labRunning,
     previewSource: () => (stage === 'guide' && labMode === 'try' ? labSource : null),
     previewSnapshot: () => ({
       mode: labMode,
@@ -1390,7 +1753,11 @@ export function mountBeginnerCoach({
       running: labRunning,
       state: labFlight?.snapshot() ?? null,
       controls: { ...labInput },
-      teachingPace: labMode === 'example' ? EXAMPLE_PACE : 1,
+      teachingPace: labMode === 'example' ? examplePace() : 1,
+      exampleKind: labPlan?.kind ?? 'axis-explorer',
+      exampleTick: labExampleTick,
+      phase: labPlan?.phase(labExampleTick) ?? null,
+      displayedInput: labRunning && labMode === 'try' ? previewCommand(false) : { ...labInput },
       exampleLoops,
       immersive: labImmersive,
     }),
