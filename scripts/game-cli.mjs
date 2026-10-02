@@ -555,23 +555,62 @@ export function offlineIcons(sizes = [180, 192, 512]) {
 export function applyPublicationProfile(entries, catalogue, profile, optionalArtwork) {
   if (profile === null) return optionalArtwork;
   if (profile !== 'main-pages') fail(`Unknown publication profile: ${profile}`);
-  const omittedGroups = catalogue.groups.filter((group) => group.id === 'tooling:artwork');
-  const retainedGroups = catalogue.groups.filter((group) => group.id !== 'tooling:artwork');
+  // Main Pages is the continuously deployed production/testing channel, not an
+  // archive mirror. Keep current gameplay and active tools there; exact archive
+  // inputs remain in Git and in complete release distributions.
+  const omittedGroupIDs = new Set(
+    catalogue.groups
+      .filter((group) => group.category === 'archive' || group.id === 'tooling:artwork')
+      .map((group) => group.id),
+  );
+  let changed = true;
+  while (changed) {
+    changed = false;
+    for (const group of catalogue.groups)
+      if (
+        !omittedGroupIDs.has(group.id) &&
+        group.requires.some((id) => omittedGroupIDs.has(id))
+      ) {
+        omittedGroupIDs.add(group.id);
+        changed = true;
+      }
+  }
+  const omittedGroups = catalogue.groups.filter((group) => omittedGroupIDs.has(group.id));
+  const retainedGroups = catalogue.groups.filter((group) => !omittedGroupIDs.has(group.id));
   const retainedPaths = new Set(retainedGroups.flatMap((group) => group.files));
   const omittedPaths = new Set(
     omittedGroups.flatMap((group) => group.files).filter((path) => !retainedPaths.has(path)),
   );
   if (!omittedGroups.length || !omittedPaths.size)
-    fail('Main Pages profile found no exclusive unused authoring artwork to omit.');
+    fail('Main Pages profile found no exclusive archive or unused artwork to omit.');
   const retainedGroupIDs = new Set(retainedGroups.map((group) => group.id));
-  if (catalogue.missions.some((mission) => mission.groups.some((id) => !retainedGroupIDs.has(id))))
-    fail('Main Pages profile would orphan a mission download group.');
+  const groupsRetained = (record) =>
+    [...(record.groups || []), ...(record.runtimeGroups || [])].every((id) =>
+      retainedGroupIDs.has(id),
+    );
+  catalogue.missions = (catalogue.missions || []).filter(groupsRetained);
+  if (Array.isArray(catalogue.destinations)) {
+    catalogue.destinations = catalogue.destinations.filter(groupsRetained);
+    const retainedRouteIDs = new Set(catalogue.destinations.map((record) => record.routeId));
+    if (Array.isArray(catalogue.navigationBootstraps))
+      catalogue.navigationBootstraps = catalogue.navigationBootstraps.filter(
+        (record) =>
+          retainedRouteIDs.has(record.routeId) &&
+          record.files.every((path) => !omittedPaths.has(path)),
+      );
+  }
   entries.splice(0, entries.length, ...entries.filter((entry) => !omittedPaths.has(entry.name)));
   catalogue.files = catalogue.files.filter((file) => !omittedPaths.has(file.path));
+  const retainedHashes = new Set(catalogue.files.map((file) => file.sha256));
+  if (Array.isArray(catalogue.originals))
+    catalogue.originals = catalogue.originals.filter((original) =>
+      retainedHashes.has(original.parent),
+    );
   catalogue.groups = retainedGroups;
-  // The summary promises that every listed original is hosted. The lean rolling
-  // channel therefore omits it together with its exclusive preview-only files.
-  // Exact originals remain in Git and in full release distributions.
+  catalogue.sharedPolicy =
+    'The rolling main channel keeps current gameplay and active tools. Archived playable copies remain in Git and complete release distributions.';
+  // The summary promises every listed original is hosted, so optional artwork
+  // metadata is omitted together with preview-only files that are not retained.
   return null;
 }
 
@@ -990,15 +1029,18 @@ export async function prepareBuildProject({
 /** Runs the same preparation and validation as a build, without allocating a
  * ZIP or writing an expanded site. This inventory is not publication admission. */
 export async function inspectBuildProject(options = {}) {
+  const publicationProfile = options.publicationProfile ?? null;
   const { version, sourceRevision, manifest, manifestBytes } = await prepareBuildProject({
     root: options.root,
     version: options.version,
     sourceRevision: options.sourceRevision,
+    publicationProfile,
   });
   return {
     format: 'revealline-default-build-inspection.v1',
     version,
     sourceRevision,
+    publicationProfile,
     publicEligible: false,
     promotable: false,
     completeHostedOutput: false,
