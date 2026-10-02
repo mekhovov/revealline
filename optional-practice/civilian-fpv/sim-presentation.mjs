@@ -1957,6 +1957,152 @@ const SHARED_ASSETS = {
 };
 // END SHARED SIM ASSETS
 
+/** Observer-only, bounded input history. Coordinates stay normalized and current dots stay host-owned. */
+export function mountStickTrace(element, { center = 90, travel = 60 } = {}) {
+  const ns = 'http://www.w3.org/2000/svg',
+    doc = element.ownerDocument,
+    ownedSVG = element.namespaceURI !== ns,
+    make = (name, attributes) => {
+      const node = doc.createElementNS(ns, name);
+      for (const [key, value] of Object.entries(attributes)) node.setAttribute(key, String(value));
+      return node;
+    },
+    canvas = ownedSVG
+      ? make('svg', {
+          class: 'sim-stick-trace',
+          viewBox: `0 0 ${center * 2} ${center * 2}`,
+          'aria-hidden': 'true',
+          focusable: 'false',
+        })
+      : element,
+    group = make('g', { class: 'sim-stick-trace-history', 'aria-hidden': 'true' }),
+    line = make('polyline', { class: 'sim-stick-trace-path', fill: 'none' }),
+    origin = make('circle', { class: 'sim-stick-trace-origin', r: 2.8, fill: 'none' }),
+    arrow = make('path', { class: 'sim-stick-trace-arrow', fill: 'none' });
+  group.style.pointerEvents = 'none';
+  group.append(line, origin, arrow);
+  canvas.append(group);
+  if (ownedSVG) element.insertBefore(canvas, element.querySelector('i') ?? element.firstChild);
+  let history = [],
+    previous = null,
+    directionPoint = null,
+    tangent = null,
+    previousSource = null,
+    lastMotion = 0,
+    disposed = false;
+  const attr = (node, key, value) => {
+    const text = String(value);
+    if (node.getAttribute(key) !== text) node.setAttribute(key, text);
+  };
+  const reset = () => {
+    history = [];
+    previous = null;
+    directionPoint = null;
+    tangent = null;
+    previousSource = null;
+    group.style.display = 'none';
+    attr(line, 'points', '');
+    attr(arrow, 'd', '');
+  };
+  reset();
+  return {
+    update({ x, y, now, source = 'live', reducedMotion = false, available = true }) {
+      if (disposed) return;
+      if (!available || reducedMotion || ![x, y, now].every(Number.isFinite)) {
+        reset();
+        return;
+      }
+      if (source !== previousSource || (previous && now < previous.time)) reset();
+      previousSource = source;
+      attr(
+        group,
+        'data-source',
+        source === 'example' || String(source).startsWith('example:') ? 'example' : source,
+      );
+      const point = {
+        x: Math.max(-1, Math.min(1, x)),
+        y: Math.max(-1, Math.min(1, y)),
+        time: now,
+      };
+      history = history.filter((sample) => now - sample.time <= 450);
+      if (!directionPoint) {
+        directionPoint = point;
+        lastMotion = now;
+      } else if (Math.hypot(point.x - directionPoint.x, point.y - directionPoint.y) > 0.002) {
+        const nextTangent = { x: point.x - directionPoint.x, y: directionPoint.y - point.y };
+        // Preserve a real reversal even when it falls between regular history samples.
+        if (
+          tangent &&
+          tangent.x * nextTangent.x + tangent.y * nextTangent.y < 0 &&
+          now - directionPoint.time <= 450 &&
+          history.at(-1) !== directionPoint
+        )
+          history.push(directionPoint);
+        tangent = nextTangent;
+        directionPoint = point;
+        lastMotion = now;
+      }
+      previous = point;
+      const last = history.at(-1);
+      // Sample every 40 ms plus reversals; the unsmoothed current endpoint is always included.
+      if (
+        !last ||
+        (now - last.time >= 40 && Math.hypot(point.x - last.x, point.y - last.y) > 0.002)
+      )
+        history.push(point);
+      if (history.length > 11) history.splice(0, history.length - 11);
+      const points = [...history];
+      if (points.at(-1) !== point) points.push(point);
+      const distance = points
+        .slice(1)
+        .reduce(
+          (sum, sample, index) =>
+            sum + Math.hypot(sample.x - points[index].x, sample.y - points[index].y),
+          0,
+        );
+      if (distance < 0.025 || now - lastMotion >= 450) {
+        group.style.display = 'none';
+        attr(line, 'points', '');
+        attr(arrow, 'd', '');
+        return;
+      }
+      const projected = points.map((sample) => ({
+        x: center + sample.x * travel,
+        y: center - sample.y * travel,
+      }));
+      attr(
+        line,
+        'points',
+        projected.map((sample) => `${sample.x.toFixed(2)},${sample.y.toFixed(2)}`).join(' '),
+      );
+      attr(origin, 'cx', projected[0].x.toFixed(2));
+      attr(origin, 'cy', projected[0].y.toFixed(2));
+      const end = projected.at(-1);
+      if (tangent) {
+        // This is a direction cue, not additional travel: keep it separate from the exact dot.
+        const length = Math.hypot(tangent.x, tangent.y),
+          dx = tangent.x / length,
+          dy = tangent.y / length,
+          tip = { x: end.x - dx * 8, y: end.y - dy * 8 };
+        attr(
+          arrow,
+          'd',
+          `M ${(tip.x - dx * 5 - dy * 3).toFixed(2)} ${(tip.y - dy * 5 + dx * 3).toFixed(2)} L ${tip.x.toFixed(2)} ${tip.y.toFixed(2)} L ${(tip.x - dx * 5 + dy * 3).toFixed(2)} ${(tip.y - dy * 5 - dx * 3).toFixed(2)}`,
+        );
+      } else attr(arrow, 'd', '');
+      group.style.display = '';
+      group.style.opacity = String(Math.min(1, (450 - (now - lastMotion)) / 200));
+    },
+    reset,
+    dispose() {
+      if (disposed) return;
+      reset();
+      disposed = true;
+      (ownedSVG ? canvas : group).remove();
+    },
+  };
+}
+
 /** Static axis legends share calibrated Mode 1–4 layout; never generate input. */
 export function paintStickDirections(element, { horizontal, vertical, locale = 'en' }) {
   const key = `${horizontal}:${vertical}:${locale}`;
