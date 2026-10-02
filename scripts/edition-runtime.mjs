@@ -2,6 +2,8 @@ import path from 'node:path';
 import { readFileSync } from 'node:fs';
 import { parse } from 'acorn';
 import { validateDemoCatalog } from '../game/demo-catalog.mjs';
+import { REACTION_PORTRAITS } from '../game/journey/reaction-portraits.mjs';
+import { REACTION_VOICE_PILOT } from '../game/audio/reactions/pilot.mjs';
 import {
   MENU_SCENES,
   MENU_SCENE_COMPOSITIONS,
@@ -51,6 +53,46 @@ export function editionDemoResources(source) {
       ),
     ),
   ];
+}
+
+/** The shared reaction hosts resolve these catalog URLs at runtime, outside
+ * static import traversal. Preserve their exact art and pilot recordings. */
+export function editionReactionPortraitResources() {
+  const speakers = Object.entries(REACTION_PORTRAITS);
+  if (!speakers.length || speakers.length > 16)
+    throw new Error('Invalid reaction portrait catalog.');
+  return speakers.flatMap(([speaker, poses]) => {
+    if (!/^[a-z][a-z0-9-]*$/.test(speaker)) throw new Error('Invalid reaction portrait identity.');
+    return ['idle', 'react'].map((pose) => {
+      const name = `game/ui/art/reactions/${speaker}-${pose}.svg`;
+      if (poses[pose] !== new URL(`../${name}`, import.meta.url).href)
+        throw new Error('Reaction portrait must resolve to its exact local catalog asset.');
+      return name;
+    });
+  });
+}
+
+export function editionReactionVoiceResources() {
+  if (!Array.isArray(REACTION_VOICE_PILOT) || REACTION_VOICE_PILOT.length > 256)
+    throw new Error('Invalid reaction voice catalog.');
+  const identities = new Set();
+  return REACTION_VOICE_PILOT.map((voice) => {
+    const identity = `${voice.lineId}|${voice.locale}`;
+    if (
+      typeof voice.lineId !== 'string' ||
+      !['en', 'uk'].includes(voice.locale) ||
+      !/^[a-z0-9][a-z0-9-]*-(?:en|uk)\.m4a$/.test(voice.file) ||
+      !voice.file.endsWith(`-${voice.locale}.m4a`) ||
+      !Number.isSafeInteger(voice.bytes) ||
+      voice.bytes < 1 ||
+      voice.bytes > 2 * 1024 * 1024 ||
+      !/^[a-f0-9]{64}$/.test(voice.sha256) ||
+      identities.has(identity)
+    )
+      throw new Error('Invalid reaction voice resource.');
+    identities.add(identity);
+    return `game/audio/reactions/${voice.file}`;
+  });
 }
 
 function sceneAssets(scene) {
@@ -131,6 +173,8 @@ export const EDITION_RUNTIME_RESOURCES = Object.freeze({
   'game/app.mjs': ['game/content/scenarios/line-impact-demo.json'],
   'game/ui/soundtrack-panel.mjs': ['game/ui/soundtrack-panel.css'],
   'game/ui/install-offline-panel.mjs': ['game/ui/install-offline-panel.css'],
+  'game/journey/reaction-portraits.mjs': editionReactionPortraitResources(),
+  'game/audio/reactions/pilot.mjs': editionReactionVoiceResources(),
   'game/vendor/qrcodegen-1.8.0.mjs': [
     'game/vendor/QRCODEGEN-LICENSE.txt',
     'game/vendor/qrcodegen-1.8.0.json',

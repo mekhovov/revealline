@@ -1,3 +1,4 @@
+import { createHuntDestruction } from '../hunt/destruction.mjs';
 import { preparedRotorRecipe } from './rotor-presentation.mjs';
 import { contactCueUnderstroke } from './contact-cue.mjs';
 import { t } from '../i18n/index.mjs';
@@ -138,6 +139,7 @@ export class BoardPainter {
     this.animation = createAnimationState();
     this.actorPresentation = createActorPresentation();
     this.combatPresentation = createCombatPresentation();
+    this.huntDestruction = createHuntDestruction();
     this.heading = 0;
     this.time = 0;
     this.effects = [];
@@ -162,6 +164,8 @@ export class BoardPainter {
     this.pictureFilter.clear();
     this.jammerPictureFilter.clear();
     this.signalReception.dispose();
+    this.huntDestruction.reset();
+    this.combatPresentation.reset();
     this.images = {};
     this.overrides = {};
     this.image = null;
@@ -192,6 +196,7 @@ export class BoardPainter {
     this.animation = createAnimationState();
     this.actorPresentation.reset();
     this.combatPresentation.reset();
+    this.huntDestruction.reset();
     const knownBody = Object.hasOwn(this.presets.characters, bodyId)
         ? this.presets.characters[bodyId]
         : null,
@@ -286,6 +291,7 @@ export class BoardPainter {
     this.time = 0;
     this.actorPresentation.reset();
     this.combatPresentation.reset();
+    this.huntDestruction.reset();
   }
   startCelebration({
     levelId = this.levelInfo.id || '',
@@ -364,6 +370,8 @@ export class BoardPainter {
       debug = false,
       fullReveal = false,
       showCombatScrap = true,
+      brutal = false,
+      blood = true,
       celebrationPaused = false,
       defeatEffectsRunning = false,
       actorScale = 1,
@@ -447,6 +455,8 @@ export class BoardPainter {
       canvasCSSWidth,
       scale: actorScale,
       showScrap: showCombatScrap,
+      brutal,
+      blood,
     };
     const images = { ...this.images, presentationSprites: {} };
     const enemySprites = {};
@@ -638,7 +648,17 @@ export class BoardPainter {
     // terrain, live cuts and actors below remain sharp from the first tick.
     if (reception.kind === 'acquire') this.signalReception.draw(ctx, W, H, reception);
     drawClassicTerrain(ctx, classic, p, images);
+    this.huntDestruction.advance(combat, dt, {
+      key: state,
+      sources: [state.player],
+      paused: state.status === 'won' ? celebrationPaused : paused,
+      brutal,
+      blood,
+      reduced,
+      concealed: fullReveal,
+    });
     if (combat && !fullReveal) drawCombatScrap(ctx, combat, p, combatOptions);
+    this.huntDestruction.draw(ctx, { unit: 1 / (canvasCSSWidth / W), color: p.accent });
     // Reveal decoration belongs below current hazards, actors and live cuts.
     // An old capture pulse must never wash over a newly opened live line.
     if (!fullReveal && captureAccent)

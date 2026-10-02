@@ -1,0 +1,284 @@
+{
+  "observedAt": "2026-10-02T20:44:32.167Z",
+  "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36",
+  "viewport": {
+    "width": 1280,
+    "height": 720,
+    "dpr": 2
+  },
+  "presentationCatalog": "humanoid-presentation.v1",
+  "scope": "Explicit desktop review; no suite verdict or listening approval.",
+  "results": {
+    "pilot": {
+      "elapsedMs": 90.3999999910593,
+      "clips": [
+        {
+          "lineId": "journey-reaction.v1/engineer/0",
+          "locale": "en",
+          "file": "engineer-0-en.m4a",
+          "containerBytes": 26177,
+          "loaded": true,
+          "elapsedMs": 10.400000005960464,
+          "duration": 2.4413125,
+          "channels": 1,
+          "sampleRate": 48000,
+          "decodedBytes": 468732
+        },
+        {
+          "lineId": "journey-reaction.v1/engineer/0",
+          "locale": "uk",
+          "file": "engineer-0-uk.m4a",
+          "containerBytes": 25980,
+          "loaded": true,
+          "elapsedMs": 9.899999991059303,
+          "duration": 2.44425,
+          "channels": 1,
+          "sampleRate": 48000,
+          "decodedBytes": 469296
+        },
+        {
+          "lineId": "journey-incidental.v1/engineer/capture/0",
+          "locale": "en",
+          "file": "engineer-capture-0-en.m4a",
+          "containerBytes": 17202,
+          "loaded": true,
+          "elapsedMs": 10.600000008940697,
+          "duration": 1.4544583333333334,
+          "channels": 1,
+          "sampleRate": 48000,
+          "decodedBytes": 279256
+        },
+        {
+          "lineId": "journey-incidental.v1/engineer/capture/0",
+          "locale": "uk",
+          "file": "engineer-capture-0-uk.m4a",
+          "containerBytes": 20518,
+          "loaded": true,
+          "elapsedMs": 11,
+          "duration": 1.959,
+          "channels": 1,
+          "sampleRate": 48000,
+          "decodedBytes": 376128
+        },
+        {
+          "lineId": "journey-reaction.v1/guide/0",
+          "locale": "en",
+          "file": "guide-0-en.m4a",
+          "containerBytes": 23110,
+          "loaded": true,
+          "elapsedMs": 14.099999994039536,
+          "duration": 2.2490208333333332,
+          "channels": 1,
+          "sampleRate": 48000,
+          "decodedBytes": 431812
+        },
+        {
+          "lineId": "journey-reaction.v1/guide/0",
+          "locale": "uk",
+          "file": "guide-0-uk.m4a",
+          "containerBytes": 24070,
+          "loaded": true,
+          "elapsedMs": 14.200000002980232,
+          "duration": 2.3653333333333335,
+          "channels": 1,
+          "sampleRate": 48000,
+          "decodedBytes": 454144
+        },
+        {
+          "lineId": "journey-incidental.v1/guide/capture/0",
+          "locale": "en",
+          "file": "guide-capture-0-en.m4a",
+          "containerBytes": 16018,
+          "loaded": true,
+          "elapsedMs": 11.599999994039536,
+          "duration": 1.4014375,
+          "channels": 1,
+          "sampleRate": 48000,
+          "decodedBytes": 269076
+        },
+        {
+          "lineId": "journey-incidental.v1/guide/capture/0",
+          "locale": "uk",
+          "file": "guide-capture-0-uk.m4a",
+          "containerBytes": 20518,
+          "loaded": true,
+          "elapsedMs": 11.600000008940697,
+          "duration": 1.959,
+          "channels": 1,
+          "sampleRate": 48000,
+          "decodedBytes": 376128
+        },
+        {
+          "lineId": "journey-reaction.v1/rival/0",
+          "locale": "en",
+          "file": "rival-0-en.m4a",
+          "containerBytes": 25231,
+          "loaded": true,
+          "elapsedMs": 11.899999991059303,
+          "duration": 2.4813958333333335,
+          "channels": 1,
+          "sampleRate": 48000,
+          "decodedBytes": 476428
+        },
+        {
+          "lineId": "journey-reaction.v1/rival/0",
+          "locale": "uk",
+          "file": "rival-0-uk.m4a",
+          "containerBytes": 28181,
+          "loaded": true,
+          "elapsedMs": 11.900000005960464,
+          "duration": 2.7926041666666666,
+          "channels": 1,
+          "sampleRate": 48000,
+          "decodedBytes": 536180
+        },
+        {
+          "lineId": "journey-incidental.v1/rival/capture/0",
+          "locale": "en",
+          "file": "rival-capture-0-en.m4a",
+          "containerBytes": 15493,
+          "loaded": true,
+          "elapsedMs": 9.700000002980232,
+          "duration": 1.379625,
+          "channels": 1,
+          "sampleRate": 48000,
+          "decodedBytes": 264888
+        },
+        {
+          "lineId": "journey-incidental.v1/rival/capture/0",
+          "locale": "uk",
+          "file": "rival-capture-0-uk.m4a",
+          "containerBytes": 20518,
+          "loaded": true,
+          "elapsedMs": 10,
+          "duration": 1.959,
+          "channels": 1,
+          "sampleRate": 48000,
+          "decodedBytes": 376128
+        },
+        {
+          "lineId": "journey-reaction.v1/sentinel/0",
+          "locale": "en",
+          "file": "sentinel-0-en.m4a",
+          "containerBytes": 17879,
+          "loaded": true,
+          "elapsedMs": 7.9000000059604645,
+          "duration": 2.1543125,
+          "channels": 1,
+          "sampleRate": 48000,
+          "decodedBytes": 413628
+        },
+        {
+          "lineId": "journey-reaction.v1/sentinel/0",
+          "locale": "uk",
+          "file": "sentinel-0-uk.m4a",
+          "containerBytes": 21677,
+          "loaded": true,
+          "elapsedMs": 7.399999991059303,
+          "duration": 2.1664791666666665,
+          "channels": 1,
+          "sampleRate": 48000,
+          "decodedBytes": 415964
+        },
+        {
+          "lineId": "journey-incidental.v1/sentinel/capture/0",
+          "locale": "en",
+          "file": "sentinel-capture-0-en.m4a",
+          "containerBytes": 18562,
+          "loaded": true,
+          "elapsedMs": 9.899999991059303,
+          "duration": 2.1840208333333333,
+          "channels": 1,
+          "sampleRate": 48000,
+          "decodedBytes": 419332
+        },
+        {
+          "lineId": "journey-incidental.v1/sentinel/capture/0",
+          "locale": "uk",
+          "file": "sentinel-capture-0-uk.m4a",
+          "containerBytes": 22286,
+          "loaded": true,
+          "elapsedMs": 9.5,
+          "duration": 2.1546875,
+          "channels": 1,
+          "sampleRate": 48000,
+          "decodedBytes": 413700
+        }
+      ],
+      "maxLoading": 2,
+      "beforeDispose": {
+        "buffers": 16,
+        "decodedBytes": 6440820,
+        "loading": 0,
+        "generation": 1,
+        "closed": false
+      },
+      "afterDispose": {
+        "buffers": 0,
+        "decodedBytes": 0,
+        "loading": 0,
+        "generation": 2,
+        "closed": true
+      },
+      "contextReleased": true,
+      "lifecycle": {
+        "firstOwner": {
+          "voices": 1,
+          "kind": "dialogue"
+        },
+        "replacement": {
+          "firstEnded": true,
+          "secondActive": true,
+          "channel": {
+            "voices": 1,
+            "kind": "dialogue"
+          }
+        },
+        "warning": {
+          "warningSourceStarted": true,
+          "dialogueEnded": true,
+          "channel": {
+            "voices": 0,
+            "kind": null
+          }
+        },
+        "pause": {
+          "dialogueEnded": true,
+          "channel": {
+            "voices": 0,
+            "kind": null
+          },
+          "voices": 0
+        },
+        "missingRecording": {
+          "loaded": false,
+          "cache": {
+            "buffers": 0,
+            "decodedBytes": 0,
+            "loading": 0,
+            "generation": 1,
+            "closed": false
+          }
+        }
+      },
+      "limitation": "Silent browser decoding and source lifecycle only; pronunciation, audibility, quality, and human transcription are unqualified."
+    },
+    "persistence": {
+      "temporaryDatabase": "revealline-review-only-c40de9ac-ee90-4fde-ab78-8197c85369d7",
+      "productionDatabaseWritten": false,
+      "lineId": "journey-reaction.v1/guide/0",
+      "locale": "en",
+      "originalHash": "58f961f54b52d0dbb58f53f000ca85bba166236126e135dc1f5e89f8f9a94210",
+      "replacementHash": "cf321b8ff8a778850a6a35386480f6de46690902013a9926c505cd43741431fd",
+      "activeHashAfterReopen": "cf321b8ff8a778850a6a35386480f6de46690902013a9926c505cd43741431fd",
+      "retainedRevisionsAfterReopen": 1,
+      "archivedOriginalHash": "58f961f54b52d0dbb58f53f000ca85bba166236126e135dc1f5e89f8f9a94210",
+      "restoredHash": "58f961f54b52d0dbb58f53f000ca85bba166236126e135dc1f5e89f8f9a94210",
+      "importedRecords": 1,
+      "activeHashAfterImport": "cf321b8ff8a778850a6a35386480f6de46690902013a9926c505cd43741431fd",
+      "revisionCountAfterImport": 1,
+      "bundleBytes": 319801,
+      "cleanup": "temporary database deleted"
+    }
+  }
+}

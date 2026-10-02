@@ -31,6 +31,7 @@
       sizes="32x32"
       href="../ui/art/identity/fpv-line/icon-32.png"
     />
+    <link rel="stylesheet" href="../ui/hunt-feedback.css" />
   </head>
   <body class="field-kit field-kit-support" data-field-kit-page="relay-rescue">
     <div data-language-control data-language-launch></div>
@@ -139,6 +140,7 @@
             </div>
           </div>
           <div id="coop-language" data-language-control></div>
+          <div id="coop-hunt-save"></div>
           <details id="coop-optional-setup" class="optional-setup">
             <summary id="coop-optional-setup-toggle" data-i18n="interface:couch.teamOptions">
               Arena &amp; team options
@@ -160,6 +162,7 @@
                 </select></label
               >
             </div>
+            <div id="coop-encounter-variant"></div>
             <p id="coop-advanced-note" class="setup-note"></p>
             <div class="setup">
               <label
@@ -272,10 +275,15 @@
             >
           </div>
         </div>
-        <p id="coop-objective" class="live-objective" data-i18n="interface:reveal65Together">
-          Reveal 65% together
-        </p>
-        <p id="coop-bonus-live" class="micro-note" hidden></p>
+        <div class="coop-mission-feedback">
+          <p id="coop-objective" class="live-objective" data-i18n="interface:reveal65Together">
+            Reveal 65% together
+          </p>
+          <div id="coop-hunt-status"></div>
+          <p id="coop-hunt-attempt-status" class="micro-note" role="status" hidden></p>
+          <div id="coop-contextual-reactions"></div>
+          <p id="coop-bonus-live" class="micro-note" hidden></p>
+        </div>
         <div class="coop-board-slot">
           <div class="arena-wrap">
             <canvas
@@ -303,6 +311,7 @@
                 >
                   Release your controls, then choose Resume together.
                 </p>
+                <div id="coop-hunt-result"></div>
                 <section
                   id="coop-bonus-details"
                   aria-label="Pickup field details"
@@ -1260,7 +1269,8 @@
             class="micro-note"
             data-i18n="interface:optionalCaptionsAfterCompletedJourneyMissionsNoVoiceOrAnimation"
           >
-            Optional captions after completed Journey missions. No voice or animation.
+            Optional character captions, sound and brief reactions during play and after Journey
+            missions. Sound follows your audio settings.
           </p>
           <p id="coop-journey-reactions-status" class="micro-note" role="status" hidden></p>
           <button

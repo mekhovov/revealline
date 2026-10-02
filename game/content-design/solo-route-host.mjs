@@ -1,14 +1,14 @@
-import { createCandidateSoloHost } from './solo-host.mjs';
+import { createEncounterSoloHost } from './encounter-host.mjs';
 import { publishedRouteViews } from './published-journey.mjs';
 import { loadPublishedChapter } from './route-snapshot.mjs';
 import { createCandidateSequence } from './sequence.mjs';
-import { createJourneyVisualThemeIdentityAdapter } from '../presentation/journey-visual-theme-identities.mjs';
+import { journeyMissionDetails } from '../mission-library/journey-presentation.mjs';
 
 /** Old source hosts retain their exact contract; publication hosts materialize
  * complete packs into an append-only registry without replacing active entries. */
 export async function createSoloRouteHost(route, options = {}) {
   if (!route.navigation)
-    return createCandidateSoloHost(route.source, {
+    return createEncounterSoloHost(route.source, {
       ...options,
       corePackIds: route.corePackIds,
       optionalCampaignIds: route.optionalCampaignIds,
@@ -20,8 +20,7 @@ export async function createSoloRouteHost(route, options = {}) {
   const metadata = new Map(view.executionMetadata.map((entry) => [entry.key, entry]));
   const loaded = new Map(),
     owners = new Map(),
-    rawOwners = new WeakMap(),
-    identity = new Map();
+    rawOwners = new WeakMap();
   let entries = Object.freeze([]),
     disposed = false,
     generation = 0,
@@ -30,6 +29,26 @@ export async function createSoloRouteHost(route, options = {}) {
   const check = (signal) => {
     signal?.throwIfAborted();
     if (disposed) throw new DOMException('Journey host is closed.', 'AbortError');
+  };
+  const syncEntries = (item) => {
+    const additions = item.host.entries.filter((entry) => !owners.has(entry));
+    for (const entry of additions) {
+      owners.set(entry, item);
+      if (!metadata.has(entry.executionKey))
+        metadata.set(
+          entry.executionKey,
+          Object.freeze({
+            key: entry.executionKey,
+            difficulty: entry.difficulty,
+            packId: entry.sourcePackId,
+            campaignId: entry.campaignId,
+            campaign: entry.campaign,
+            encounterVariant: entry.encounterVariant,
+            encounterVariants: entry.encounterVariants,
+          }),
+        );
+    }
+    if (additions.length) entries = Object.freeze([...entries, ...additions]);
   };
   const loadPack = async (packId, { signal, prepare = true } = {}) => {
     check(signal);
@@ -44,7 +63,7 @@ export async function createSoloRouteHost(route, options = {}) {
     if (loaded.has(packId)) return loaded.get(packId);
     const source = await loadPublishedChapter(route, descriptor, { fetchAsset, signal });
     check(signal);
-    const host = createCandidateSoloHost(source, {
+    const host = createEncounterSoloHost(source, {
       ...hostOptions,
       corePackIds: [packId],
       optionalCampaignIds: [],
@@ -56,8 +75,7 @@ export async function createSoloRouteHost(route, options = {}) {
     }
     const item = { source, host };
     loaded.set(packId, item);
-    for (const entry of host.entries) owners.set(entry, item);
-    entries = Object.freeze([...entries, ...host.entries]);
+    syncEntries(item);
     return item;
   };
   const missionFor = (value) =>
@@ -81,27 +99,113 @@ export async function createSoloRouteHost(route, options = {}) {
   const facade = {
     catalog,
     get entries() {
+      for (const item of loaded.values()) syncEntries(item);
       return entries;
     },
     owns: (entry) => owners.has(entry),
     executionMetadata: (key) => metadata.get(key) ?? null,
+    ensureVariant(variant) {
+      let available = false;
+      for (const item of loaded.values()) {
+        available = item.host.ensureVariant(variant) || available;
+        syncEntries(item);
+      }
+      return available;
+    },
     async ensureMission(value, options = {}) {
       const mission = missionFor(value);
       return mission ? loadPack(mission.packId, options) : null;
     },
+    async ensureProgressMission(id, options = {}) {
+      if (typeof id !== 'string') return null;
+      const canonical = id.replace(
+        /^candidate-encounter-(?:off|patrol|bonus|capture-quota|hunt)\//,
+        'candidate/',
+      );
+      const mission = catalog.find(canonical);
+      if (!mission) return null;
+      const item = await loadPack(mission.packId, options);
+      return item?.host.resolveProgressMission(id) ?? null;
+    },
     async ensureExecution(key, options = {}) {
       const record = metadata.get(key);
-      return record ? loadPack(record.packId, options) : null;
+      if (record) return loadPack(record.packId, options);
+      // Save keys never choose a URL or package. Only an already admitted campaign
+      // may nominate a chapter, and the derived key must subsequently match exactly.
+      if (
+        typeof key !== 'string' ||
+        !/^[a-zA-Z0-9][a-zA-Z0-9._-]{0,79}\/[^/]{1,180}\/[0-9a-f]{16}$/.test(key)
+      )
+        return null;
+      const campaignId = key.slice(0, key.indexOf('/'));
+      const packs = new Set(
+        view.executionMetadata
+          .filter((entry) => entry.campaignId === campaignId)
+          .map((entry) => entry.packId),
+      );
+      for (const packId of packs) {
+        const item = await loadPack(packId, options);
+        if (item?.host.ensureExecution(key)) {
+          syncEntries(item);
+          return item;
+        }
+      }
+      return null;
     },
-    card: view.card,
-    select(mission, difficulty) {
+    availableVariants(value) {
+      const mission = missionFor(value);
+      const item = loaded.get(mission?.packId);
+      return item
+        ? item.host.availableVariants(item.host.catalog.find(mission.id))
+        : Object.freeze(['authored']);
+    },
+    card(mission, difficulty = 'standard', options) {
       if (!missionFor(mission)) return null;
       const item = loaded.get(mission.packId);
-      return item?.host.select(item.host.catalog.find(mission.id), difficulty) ?? null;
+      return item
+        ? item.host.card(item.host.catalog.find(mission.id), difficulty, options)
+        : view.card(mission, difficulty);
+    },
+    details(mission, difficulty = 'standard', options) {
+      if (!missionFor(mission)) return null;
+      const item = loaded.get(mission.packId);
+      if (!item) return view.details(mission, difficulty);
+      const entry = item.host.select(item.host.catalog.find(mission.id), difficulty, options),
+        manifest = entry?.manifests.find((value) => value.missionId === mission.levelId);
+      syncEntries(item);
+      return manifest ? journeyMissionDetails(manifest) : view.details(mission, difficulty);
+    },
+    select(mission, difficulty, options) {
+      if (!missionFor(mission)) return null;
+      const item = loaded.get(mission.packId);
+      const entry =
+        item?.host.select(item.host.catalog.find(mission.id), difficulty, options) ?? null;
+      if (item) syncEntries(item);
+      return entry;
     },
     mission(entry, index) {
       const item = owners.get(entry);
       return catalog.find(item?.host.mission(entry, index)?.id) ?? null;
+    },
+    progressMission(entry, index) {
+      return owners.get(entry)?.host.progressMission(entry, index) ?? null;
+    },
+    resolveProgressMission(id) {
+      for (const item of loaded.values()) {
+        const mission = item.host.resolveProgressMission(id);
+        if (mission) return mission;
+      }
+      return catalog.find(id);
+    },
+    selectProgress(id, difficulty) {
+      for (const item of loaded.values()) {
+        const entry = item.host.selectProgress(id, difficulty);
+        if (entry) {
+          syncEntries(item);
+          return entry;
+        }
+      }
+      return null;
     },
     visualThemeSelection(entry, level) {
       return owners.get(entry)?.host.visualThemeSelection(entry, level) ?? null;
@@ -109,12 +213,7 @@ export async function createSoloRouteHost(route, options = {}) {
     async prepareVisualIdentity({ selection, level, association }, options = {}) {
       const item = owners.get(selection);
       if (!item) throw new Error('Use an owned published selection.');
-      if (!identity.has(item))
-        identity.set(item, createJourneyVisualThemeIdentityAdapter(item.source, { mode: 'solo' }));
-      return (await identity.get(item)).prepareHostSelection(
-        { host: facade, selection, level, association },
-        options,
-      );
+      return item.host.prepareVisualIdentity({ selection, level, association }, options);
     },
     ...createCandidateSequence(catalog, route.corePackIds, route.optionalCampaignIds),
   };
