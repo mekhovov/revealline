@@ -3,7 +3,7 @@
 The implementation is published on `codex/unified-appearance-20261002` against
 `main`. It includes the complete appearance changes rather than depending on the
 already merged personal-best ghost PR #913. Baseline route/harness repairs are a
-separate commit. The integration preserves main at `d4b284819`, including the new
+separate commit. The integration preserves main at `89e25c726`, including the new
 SIM entry/practice directory, mobile and pause geometry, flight lifecycle, radio
 and replay behavior.
 

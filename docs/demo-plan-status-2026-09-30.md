@@ -166,6 +166,7 @@ These items protect promises already made by the feature. Skipping one means kno
 
 #### 10. Tune scene weights, tips and failure frequency from observation data
 
+- **2 October correction:** Direct player feedback identified repeated suicide reversals in the improvised source. Replaced timed random steering with bounded, simulated capture routes through reachable safe ground. Performance seeds vary route choices. Exposed reversals, self-contact, stalled routes and immediate departure deaths are rejected. A successful capture must precede an optional late hazard loss; a scene allows at most one such loss and uses safe routes afterward. This corrects a demonstrated quality defect; broad engagement tuning remains pending.
 - **Why:** The current mixture is intentionally varied, but the ideal win/loss ratio and caption timing are product judgments.
 - **Benefit:** Better pacing, fewer repeated-feeling routes and clearer teaching moments.
 - **If skipped:** Current behavior remains correct and varied; it may be less engaging than possible. **Recommendation: wait for viewer or telemetry evidence instead of guessing.**
