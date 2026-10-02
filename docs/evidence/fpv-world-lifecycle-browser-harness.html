@@ -1,0 +1,608 @@
+<!doctype html>
+<html lang="en">
+  <meta charset="utf-8" /><meta
+    name="viewport"
+    content="width=device-width,initial-scale=1"
+  /><title>World lifecycle qualification</title
+  ><style>
+    body {
+      font: 16px system-ui;
+      background: #101923;
+      color: #eef4f4;
+      margin: 20px;
+    }
+    button {
+      font: inherit;
+      padding: 12px;
+      margin: 4px;
+    }
+    iframe {
+      width: 100%;
+      height: 620px;
+      border: 1px solid #456;
+    }
+    textarea {
+      width: 100%;
+      height: 250px;
+      font: 12px monospace;
+    }
+    p {
+      max-width: 900px;
+    }
+  </style>
+  <h1>World Studio lifecycle · actual callback clock</h1>
+  <p>
+    Production host, flight physics, actors, input adapters and DOM. Controlled gamepad/pointer/key
+    samples and queued rAF delivery, with real unmodified performance.now and a real ≥310ms callback
+    gap. Renderer is a lifecycle stub; this does not qualify GPU performance, physical devices or
+    native Space synthesis.
+  </p>
+  <button id="run">Run candidate lifecycle verification</button
+  ><button id="baseline">Reproduce baseline stale-frame defect</button>
+  <p id="status">Ready</p>
+  <textarea id="receipt" readonly aria-label="Qualification receipt"></textarea
+  ><iframe id="sim" title="Actual production host"></iframe>
+  <script type="module">
+    const $ = (id) => document.getElementById(id),
+      frame = $('sim');
+    const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+    const hash = async (value) =>
+      [...new Uint8Array(await crypto.subtle.digest('SHA-256', new TextEncoder().encode(value)))]
+        .map((n) => n.toString(16).padStart(2, '0'))
+        .join('');
+    let active = null;
+    async function run(baseline = false) {
+      $('run').disabled = $('baseline').disabled = true;
+      const checks = [],
+        sources = {},
+        wallGaps = [],
+        names = new Set(),
+        prefix = 'fpv-lifecycle-' + Date.now() + ':';
+      let ctx = null,
+        failure = null,
+        manifest = null,
+        loadId = 0,
+        phase = 'Starting';
+      const phases = [],
+        runStarted = performance.now();
+      const progress = (label) => {
+        phase = label;
+        phases.push({ elapsedMs: Math.round(performance.now() - runStarted), label });
+        $('status').textContent =
+          `${baseline ? 'Baseline' : 'Candidate'} · ${ctx?.source ?? 'fixture'} · ${label}`;
+        $('receipt').value = JSON.stringify({ status: 'running', phase, checks, phases }, null, 2);
+      };
+      async function bounded(operation, label, timeout = 10000) {
+        progress(label);
+        let timer;
+        try {
+          return await Promise.race([
+            Promise.resolve(operation),
+            new Promise((_, reject) => {
+              timer = setTimeout(() => reject(Error('Timeout: ' + label)), timeout);
+            }),
+          ]);
+        } finally {
+          clearTimeout(timer);
+        }
+      }
+      async function disposeActive() {
+        if (!active) return;
+        const prior = active;
+        active = null;
+        await bounded(prior.app.dispose(), 'Dispose ' + prior.source + ' host', 5000);
+      }
+      const candidateURL = (file) => manifest.candidateBase + '/' + file;
+      const must = (value, name, data = {}) => {
+        checks.push({ source: ctx?.source ?? 'fixture', name, passed: Boolean(value), ...data });
+        progress(name);
+        if (!value) throw Error(name);
+      };
+      window.fixtureDB = {
+        open(name, version) {
+          const key = prefix + name;
+          names.add(key);
+          return version === undefined ? indexedDB.open(key) : indexedDB.open(key, version);
+        },
+        deleteDatabase(name) {
+          return indexedDB.deleteDatabase(prefix + name);
+        },
+        cmp: indexedDB.cmp.bind(indexedDB),
+      };
+      const until = async (fn, label, timeout = 30000) => {
+        const begin = performance.now();
+        while (!fn()) {
+          if (performance.now() - begin > timeout) throw Error('Timeout: ' + label);
+          await wait(25);
+        }
+      };
+      async function load(source) {
+        await disposeActive();
+        const loadToken = prefix + source + ':' + ++loadId;
+        progress('Fetch ' + source + ' host HTML');
+        const raw = await (
+          await fetch(candidateURL('optional-practice/fpv-worlds/index.html'), {
+            cache: 'no-store',
+          })
+        ).text();
+        sources['world-index.html'] = await hash(raw);
+        const candidate = new URL(
+          baseline ? './world-app.before.served.mjs' : './world-app.candidate.served.mjs',
+          location.href,
+        ).href;
+        const setup = `
+      window.fixtureLoadToken=${JSON.stringify(loadToken)};
+      history.replaceState=()=>{};history.pushState=()=>{};
+      window.fixtureErrors=[];addEventListener('error',e=>fixtureErrors.push(e.message));addEventListener('unhandledrejection',e=>fixtureErrors.push(String(e.reason)));
+      const memory=new Map([['revealline.fpv.world-settings.v1',JSON.stringify({'world-language':'en','flight-source':${JSON.stringify(source)},'sim-motion':'reduced','flight-quality':'performance'})]]);
+      window.fixtureStorage={getItem:k=>memory.get(k)??null,setItem:(k,v)=>memory.set(k,String(v)),removeItem:k=>memory.delete(k)};
+      Object.defineProperty(window,'localStorage',{value:fixtureStorage});Object.defineProperty(window,'indexedDB',{value:parent.fixtureDB});
+      window.controlledRadio={id:'TX15 Joystick (Vendor: 1209 Product: 4f54)',index:0,mapping:'',connected:${source === 'radio'},axes:[.004,.004,-1,.004,-1,0,0,0],buttons:Array.from({length:24},()=>({pressed:false,touched:false,value:0})),timestamp:0};
+      window.controlledPad={id:'Controlled standard gamepad',index:1,mapping:'standard',connected:${source === 'controller'},axes:[0,0,0,0],buttons:Array.from({length:17},()=>({pressed:false,touched:false,value:0})),timestamp:0};
+      Object.defineProperty(navigator,'getGamepads',{value:()=>[controlledRadio.connected?controlledRadio:null,controlledPad.connected?controlledPad:null]});
+      let nextId=1;const callbacks=new Map();
+      window.requestAnimationFrame=cb=>{const id=nextId++;callbacks.set(id,cb);return id};window.cancelAnimationFrame=id=>callbacks.delete(id);
+      window.fixtureRAF={lastStamp:null,lastExecution:null,deliver(stamp=performance.now()){this.lastStamp=stamp;this.lastExecution=performance.now();const pending=[...callbacks.entries()];callbacks.clear();for(const[,cb]of pending)cb(stamp);return pending.length},pending:()=>callbacks.size};
+    `;
+        const boot = `
+      import{mountWorldApp}from${JSON.stringify(candidate)};
+      import{WORLD_CATALOGUE}from${JSON.stringify(candidateURL('optional-practice/civilian-fpv/world-catalogue.mjs'))};
+      import{defaultRadioProfile,createFlightProfileStore,DEFAULT_RESPONSE}from${JSON.stringify(candidateURL('optional-practice/civilian-fpv/radio-profile.mjs'))};
+      if(${source === 'radio'})createFlightProfileStore({storage:fixtureStorage}).save({format:'FlightProfiles.v1',radio:defaultRadioProfile(),response:DEFAULT_RESPONSE});
+      window.fixtureEntry=WORLD_CATALOGUE.find(e=>e.id==='garage-06');
+      const rendererFactory=()=>({available:true,ready:Promise.resolve(),setCourse(){},setQuality(){},setDrone(){},setPath(){},setGhost(){},loadScene:async()=>{},prepare:async()=>true,draw(s){window.fixtureRenderedTick=s.ticks},aimScreen:()=>null,dispose(){}});
+      window.fixtureApp=mountWorldApp({rendererFactory});
+    `;
+        const loaded = new Promise((resolve) =>
+          frame.addEventListener('load', resolve, { once: true }),
+        );
+        frame.srcdoc = raw
+          .replace('data-fpv-worlds="true"', 'data-fpv-worlds="fixture"')
+          .replace(/<script\b[^>]*src="[^\"]*world-app\.mjs"[^>]*><\/script>/, '')
+          .replace(
+            '<head>',
+            '<head><base href="' +
+              candidateURL('optional-practice/fpv-worlds/') +
+              '"><script>' +
+              setup +
+              '<\/script>',
+          )
+          .replace('</body>', '<script type="module">' + boot + '<\/script></body>');
+        await bounded(loaded, 'Load fresh ' + source + ' iframe document', 20000);
+        progress('Mount fresh ' + source + ' host');
+        await until(
+          () =>
+            frame.contentWindow?.fixtureLoadToken === loadToken && frame.contentWindow?.fixtureApp,
+          'fresh host mount',
+        );
+        const w = frame.contentWindow,
+          d = w.document,
+          app = w.fixtureApp;
+        ctx = active = { source, w, d, app };
+        await bounded(app.ready, 'Ready ' + source + ' host', 20000);
+        w.focus();
+        await bounded(
+          app.startFlight(w.fixtureEntry, { preview: true }),
+          'Start ' + source + ' preview',
+          20000,
+        );
+        d.getElementById('world-viewport').focus();
+        for (const id of [
+          'world-left-stick',
+          'world-right-stick',
+          'world-fire',
+          'world-flight-fire',
+        ]) {
+          const node = d.getElementById(id);
+          node.setPointerCapture = () => {};
+          node.releasePointerCapture = () => {};
+        }
+        await pump(3);
+        must(
+          app.snapshot().state.status !== 'active',
+          'Fresh source is disarmed/paused until explicit arm',
+        );
+        return ctx;
+      }
+      const state = () => ctx.app.snapshot().state;
+      const dynamic = () => {
+        const s = state();
+        return JSON.stringify(
+          Object.fromEntries(
+            [
+              'ticks',
+              'step',
+              'hold',
+              'position',
+              'velocity',
+              'orientation',
+              'angularVelocity',
+              'actors',
+              'projectiles',
+              'cooldown',
+              'shots',
+              'hits',
+              'health',
+              'contacts',
+              'lastInput',
+            ].map((k) => [k, s[k]]),
+          ),
+        );
+      };
+      const click = (id) => ctx.d.getElementById(id).click();
+      async function pump(count = 1) {
+        for (let i = 0; i < count; i++) {
+          await wait(22);
+          ctx.w.fixtureRAF.deliver(ctx.w.performance.now());
+        }
+      }
+      function key(
+        code,
+        type = 'keydown',
+        target = ctx.d.getElementById('world-viewport'),
+        options = {},
+      ) {
+        const event = new ctx.w.KeyboardEvent(type, {
+          code,
+          key: code === 'Space' ? ' ' : code === 'KeyP' ? 'p' : code,
+          bubbles: true,
+          cancelable: true,
+          ...options,
+        });
+        target.dispatchEvent(event);
+        return event;
+      }
+      function padButton(index, value) {
+        ctx.w.controlledPad.buttons[index] = { pressed: value > 0.5, touched: value > 0, value };
+      }
+      function pointer(id, type, x = 0.5, y = 0.5, pointerId = 17) {
+        const node = ctx.d.getElementById(id),
+          r = node.getBoundingClientRect();
+        node.dispatchEvent(
+          new ctx.w.PointerEvent(type, {
+            pointerId,
+            pointerType: 'touch',
+            isPrimary: true,
+            button: 0,
+            buttons: type === 'pointerup' ? 0 : 1,
+            clientX: r.left + x * r.width,
+            clientY: r.top + y * r.height,
+            bubbles: true,
+            cancelable: true,
+          }),
+        );
+      }
+      async function arm() {
+        if (ctx.source === 'radio') {
+          ctx.w.controlledRadio.axes[4] = -1;
+          await pump(2);
+          ctx.w.controlledRadio.axes[4] = 1;
+          await pump(2);
+        } else {
+          click('world-arm');
+          await pump(2);
+        }
+        must(state().status === 'active', 'Deliberate source-specific arm starts flight');
+      }
+      function holdControls() {
+        if (ctx.source === 'keyboard') {
+          key('KeyD');
+          key('ArrowUp');
+          key('Space');
+        }
+        if (ctx.source === 'touch') {
+          pointer('world-right-stick', 'pointerdown', 0.85, 0.35);
+          pointer('world-left-stick', 'pointerdown', 0.5, 0.18, 18);
+          pointer('world-fire', 'pointerdown', 0.5, 0.5, 19);
+        }
+        if (ctx.source === 'controller') {
+          ctx.w.controlledPad.axes[1] = -0.8;
+          ctx.w.controlledPad.axes[2] = 0.7;
+          padButton(2, 1);
+        }
+        if (ctx.source === 'radio') {
+          ctx.w.controlledRadio.axes[0] = 0.7;
+          ctx.w.controlledRadio.axes[2] = 0.1;
+          key('Space');
+        }
+      }
+      function releaseControls({ radioKeepPickup = false } = {}) {
+        for (const code of ['KeyD', 'ArrowUp', 'Space']) key(code, 'keyup');
+        for (const [id, n] of [
+          ['world-right-stick', 17],
+          ['world-left-stick', 18],
+          ['world-fire', 19],
+        ])
+          pointer(id, 'pointerup', 0.5, 0.5, n);
+        ctx.w.controlledPad.axes.fill(0);
+        for (let i = 0; i < 17; i++) padButton(i, 0);
+        if (!radioKeepPickup) {
+          ctx.w.controlledRadio.axes[0] = 0.004;
+          ctx.w.controlledRadio.axes[2] = -1;
+        }
+      }
+      async function delayedFrame() {
+        const before = dynamic(),
+          prior = ctx.w.fixtureRAF.lastExecution,
+          queuedStamp = ctx.w.fixtureRAF.lastStamp + 20;
+        await wait(320);
+        const actualGap = ctx.w.performance.now() - prior;
+        ctx.w.fixtureRAF.deliver(queuedStamp);
+        wallGaps.push({ source: ctx.source, actualCallbackGap: actualGap, rafTimestampGap: 20 });
+        must(actualGap > 250, 'Stale callback test used real wall-clock gap', {
+          actualCallbackGap: actualGap,
+          rafTimestampGap: 20,
+        });
+        return before;
+      }
+      async function verifyDependencies() {
+        for (const [file, expected] of Object.entries(manifest.currentSources)) {
+          const response = await fetch(file, { cache: 'no-store' });
+          if (!response.ok) throw Error('Missing candidate dependency: ' + file);
+          const actual = await hash(await response.text());
+          sources[file] = actual;
+          if (actual !== expected)
+            throw Error('Candidate dependency changed after preparation: ' + file);
+        }
+        must(true, 'Selected candidate dependency tree matches prepared SHA-256 hashes', {
+          files: Object.keys(manifest.currentSources).length,
+        });
+      }
+      try {
+        manifest = await (await fetch('./fixture-manifest.json', { cache: 'no-store' })).json();
+        must(
+          manifest.format === 'FPVWorldLifecycleFixture.v1',
+          'Prepared fixture manifest is recognized',
+        );
+        for (const [file, expected] of Object.entries(manifest.fixtureFiles)) {
+          const response = await fetch(new URL(file, location.href), { cache: 'no-store' });
+          if (!response.ok) throw Error('Missing fixture input: ' + file);
+          const actual = await hash(await response.text());
+          sources[file] = actual;
+          if (actual !== expected) throw Error('Frozen fixture bytes changed: ' + file);
+        }
+        must(
+          sources['world-app.before.mjs'] === manifest.baselineSha256 &&
+            sources['world-app.candidate.mjs'] === manifest.candidateHostSha256,
+          'Frozen baseline and candidate host hashes match preparation',
+        );
+        await verifyDependencies();
+        for (const source of baseline
+          ? ['keyboard']
+          : ['keyboard', 'touch', 'controller', 'radio']) {
+          $('status').textContent =
+            `Running ${baseline ? 'baseline probe' : 'candidate'} · ${source}`;
+          await load(source);
+          if (!baseline && source === 'controller') {
+            // Arm is accepted inside pollGamepad on A release. Do not deliver a
+            // normal subsequent frame: its very first successor is stale.
+            padButton(0, 1);
+            await pump(1);
+            padButton(0, 0);
+            await pump(1);
+            must(state().status === 'active', 'Controller A release arms inside the host callback');
+            const armedState = await delayedFrame();
+            must(
+              state().status === 'paused' && dynamic() === armedState,
+              'First callback after controller arming rejects a queued stale timestamp before any tick',
+            );
+            await pump(2);
+            must(
+              state().status === 'paused',
+              'Stall immediately after arming still requires deliberate resume',
+            );
+          }
+          await arm();
+          const actorsBefore = JSON.stringify(state().actors);
+          holdControls();
+          await pump(5);
+          must(
+            state().ticks > 0 && Math.abs(state().lastInput.roll) > 0,
+            'Fresh callbacks consume actual source movement',
+            { ticks: state().ticks, input: state().lastInput },
+          );
+          must(
+            state().shots > 0 && state().lastInput.actions === 1,
+            'Fresh callbacks consume explicit fire action',
+            { shots: state().shots },
+          );
+          must(
+            JSON.stringify(state().actors) !== actorsBefore,
+            'Fresh callbacks advance authored moving actors',
+          );
+          must(state().projectiles.length > 0, 'Stall begins with actual live projectiles', {
+            projectiles: state().projectiles.length,
+          });
+          const frozen = await delayedFrame();
+          if (baseline) {
+            must(
+              state().status === 'active' && dynamic() !== frozen,
+              'Baseline reproduces stale callback consuming simulation after real stall',
+              { status: state().status, ticks: state().ticks },
+            );
+            break;
+          }
+          must(
+            state().status === 'paused' && dynamic() === frozen,
+            'Queued stale callback pauses before any movement, fire, actor or projectile advance',
+          );
+          await pump(4);
+          must(
+            state().status === 'paused' && dynamic() === frozen,
+            'Fresh callbacks after stall cannot auto-resume or catch up while controls remain held',
+          );
+          if (source === 'radio') {
+            click('world-arm');
+            await pump(2);
+            must(state().status === 'paused', 'Held radio Arm ON cannot resume after stall');
+            releaseControls({ radioKeepPickup: true });
+            ctx.w.controlledRadio.axes[4] = -1;
+            await pump(2);
+            ctx.w.controlledRadio.axes[4] = 1;
+            await pump(2);
+            must(
+              state().status === 'active',
+              'Radio resumes only after OFF→ON and matching previous sticks',
+            );
+            must(
+              state().lastInput.actions === 0,
+              'Radio resume cannot restore held auxiliary fire',
+            );
+            releaseControls();
+          } else {
+            if (source === 'controller') {
+              click('world-arm');
+              await pump(2);
+              must(
+                state().status === 'paused',
+                'Held controller inputs block resume until neutral pickup',
+              );
+            }
+            releaseControls();
+            await pump(2);
+            await arm();
+            await pump(2);
+            must(
+              state().lastInput.actions === 0 &&
+                state().lastInput.roll === 0 &&
+                state().lastInput.throttle === 0,
+              'Deliberate resume starts with released local controls and no stale fire',
+              { input: state().lastInput },
+            );
+          }
+          const shots = state().shots;
+          key('Space', 'keydown', undefined, { repeat: true });
+          await pump(2);
+          must(state().shots === shots, 'Repeated held-key event cannot fire after resume');
+          key('Space', 'keyup');
+          if (source === 'controller') padButton(2, 1);
+          else if (source === 'touch') pointer('world-fire', 'pointerdown', 0.5, 0.5, 19);
+          else key('Space');
+          await pump(15);
+          must(state().shots > shots, 'Fresh post-release fire works after deliberate resume');
+          releaseControls();
+          await pump(1);
+          if (source === 'keyboard') {
+            const button = ctx.d.getElementById('world-flight-menu');
+            button.focus();
+            const shotCount = state().shots;
+            const space = key('Space', 'keydown', button);
+            key('Space', 'keyup', button);
+            await pump(2);
+            must(
+              !space.defaultPrevented && state().shots === shotCount && state().status === 'active',
+              'Space on focused HUD button is not hijacked for firing',
+            );
+            const pause = key('KeyP', 'keydown', button);
+            key('KeyP', 'keyup', button);
+            await pump(2);
+            must(
+              pause.defaultPrevented &&
+                state().status === 'paused' &&
+                ctx.d.getElementById('flight-dialog').dataset.flightMenuOpen === 'true',
+              'P on focused HUD button pauses and opens flight menu',
+            );
+            click('world-flight-close-menu');
+            await pump(1);
+            must(state().status === 'paused', 'Closing menu never arms');
+          } else ctx.app.pause();
+          must(ctx.w.fixtureErrors.length === 0, 'No uncaught host errors', {
+            errors: ctx.w.fixtureErrors,
+          });
+        }
+        await verifyDependencies();
+      } catch (error) {
+        failure = error.stack;
+        const failedPhase = phase;
+        progress('FAILED: ' + error.message);
+        checks.push({
+          source: ctx?.source ?? 'fixture',
+          name: 'Fixture completion',
+          passed: false,
+          error: failure,
+          failedPhase,
+          hostStatus: ctx?.d.getElementById('flight-status')?.textContent,
+          errors: ctx?.w.fixtureErrors,
+        });
+      } finally {
+        try {
+          await disposeActive();
+        } catch (error) {
+          failure ??= error.stack;
+          checks.push({
+            source: ctx?.source ?? 'fixture',
+            name: 'Bounded host disposal',
+            passed: false,
+            error: error.message,
+            phase,
+          });
+          // Navigation tears down the abandoned document and its DB connections.
+          frame.srcdoc =
+            '<!doctype html><title>Fixture cleanup</title><p>Host cleanup timed out; see the qualification receipt.</p>';
+        }
+        const cleanup = await Promise.all(
+          [...names].map(
+            (name) =>
+              new Promise((resolve) => {
+                const request = indexedDB.deleteDatabase(name);
+                let done = false;
+                const finish = (result) => {
+                  if (done) return;
+                  done = true;
+                  clearTimeout(timer);
+                  resolve(result);
+                };
+                const timer = setTimeout(
+                  () => finish({ name, deleted: false, reason: 'timeout-or-blocked' }),
+                  3000,
+                );
+                request.onsuccess = () => finish({ name, deleted: true });
+                request.onerror = () =>
+                  finish({
+                    name,
+                    deleted: false,
+                    reason: request.error?.message ?? 'delete-error',
+                  });
+              }),
+          ),
+        );
+        if (cleanup.some((item) => !item.deleted)) {
+          failure ??= 'Isolated fixture storage cleanup incomplete';
+          checks.push({
+            source: 'fixture',
+            name: 'Isolated storage cleanup',
+            passed: false,
+            cleanup,
+          });
+        }
+        const receipt = {
+          format: 'FPVWorldLifecycleBrowserEvidence.v1',
+          createdAt: new Date().toISOString(),
+          variant: baseline ? 'baseline-regression-probe' : 'candidate',
+          passed: !failure && checks.every((c) => c.passed),
+          baseline: manifest?.baseline,
+          candidateBase: manifest?.candidateBase,
+          sources,
+          wallGaps,
+          phases,
+          cleanup,
+          checks,
+          limitations: [
+            'Real production host/physics with renderer lifecycle stub; no GPU rendering or visual-quality qualification.',
+            'Controlled DOM input and Gamepad samples, not physical radio/controller/touch acceptance.',
+            'Real unmodified callback wall clock; requestAnimationFrame scheduling is controlled to reproduce a queued stale timestamp.',
+            'Synthetic Space dispatch verifies event ownership only; browser-native trusted activation needs manual spot-check.',
+            'No unit-test suite or new unit coverage.',
+          ],
+        };
+        window.fpvWorldLifecycleReceipt = receipt;
+        $('receipt').value = JSON.stringify(receipt, null, 2);
+        $('status').textContent =
+          `${receipt.passed ? 'PASS' : 'FAIL'} · ${checks.filter((c) => c.passed).length}/${checks.length}`;
+        $('run').disabled = $('baseline').disabled = false;
+      }
+    }
+    $('run').onclick = () => run(false);
+    $('baseline').onclick = () => run(true);
+  </script>
+</html>
