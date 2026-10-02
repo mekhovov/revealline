@@ -3,6 +3,11 @@
 // certifies an installation or grants access to a production launcher.
 const SOURCE_PREVIEWS = Object.freeze([
   Object.freeze({
+    id: 'fpv-worlds',
+    titleKey: 'worldsSourcePreview',
+    path: 'optional-practice/fpv-worlds/',
+  }),
+  Object.freeze({
     id: 'civilian-flight',
     titleKey: 'assistedSourcePreview',
     path: 'optional-practice/civilian-flight/',
@@ -14,7 +19,7 @@ const SOURCE_PREVIEWS = Object.freeze([
   }),
 ]);
 
-export function optionalPracticeSourcePreviews(href) {
+export function optionalPracticeSourcePreviews(href, { packageId = null } = {}) {
   let location;
   try {
     location = new URL(href);
@@ -28,8 +33,19 @@ export function optionalPracticeSourcePreviews(href) {
     location.password
   )
     return [];
-  if (!['/game/', '/game/index.html'].includes(location.pathname)) return [];
-  return SOURCE_PREVIEWS.map((preview) =>
+  if (
+    ![
+      '/game/',
+      '/game/index.html',
+      '/game/couch/',
+      '/game/couch/index.html',
+      '/game/couch/relay-rescue.html',
+    ].includes(location.pathname)
+  )
+    return [];
+  return SOURCE_PREVIEWS.filter((preview) =>
+    packageId ? preview.id === packageId : preview.id !== 'fpv-worlds',
+  ).map((preview) =>
     Object.freeze({
       id: preview.id,
       titleKey: preview.titleKey,
