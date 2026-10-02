@@ -1275,3 +1275,13 @@ focused child of #945 in native stack902. Last inspected open stack begins at
 or infer passing checks from #945's empty current check list. Afterwards continue
 shared-theme integration and artist/device acceptance, preserving R7 deferral
 and earlier course/reimport/content holds.
+
+Frozen candidate bd77622f775eb6abb6c6bd23634e28740b7356ba passes all3
+optional-package admissions, committed-input/ZIP-member verification and2
+byte-identical builds; receipt `docs/evidence/fpv-environment-package-20261002.json`.
+Package limits remain unchanged. Actual built Courtyard welcome demonstration
+completed its existing24.1s recording without awarding player progress. Quality
+and camera changes prepare successfully and leave playback safely paused; the
+updated paving, facades and animated civilian appear in the built player.
+Screenshot `/tmp/fpv-environment-quality-player-20261002.png`. No new radio,
+physical-device or sustained-FPS acceptance is claimed.

@@ -109,3 +109,12 @@ Evidence: `docs/evidence/fpv-environment-browser-20261002.json`,
 and `fpv-environment-scenery-20261002.json`. The browser fixture and a bounded,
 hash-verified baseline preparation command are retained alongside the receipts;
 see `fpv-environment-browser-readme.md` for reproduction and measurement limits.
+
+The frozen candidate `bd77622f775eb6abb6c6bd23634e28740b7356ba` passes all
+three optional-package admissions, committed-input and ZIP-member verification,
+and two byte-identical builds. See `fpv-environment-package-20261002.json`.
+Both local player builds match at87files/14,018,764bytes, only31,858bytes above
+the prior build. The actual packaged Courtyard welcome demonstration completes
+its original24.1s recording; preset and camera switching leave playback safely
+paused after shader preparation. Existing physical-radio acceptance is preserved
+but no new hardware acceptance is claimed.
