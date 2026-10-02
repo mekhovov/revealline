@@ -64,7 +64,25 @@ export function schoolAuthoringPilot(state, course, memory, mode = 'acro') {
       y: (target.minY + target.maxY) / 2,
     };
   } else position = centre(target);
-  if (target.type === 'land') position.y = -100;
+  if (target.type === 'land') {
+    let surfaceY = course.bounds?.min?.y ?? 0;
+    if (target.surface && target.surface !== '$floor') {
+      const surface = course.obstacles.find((obstacle) => obstacle.id === target.surface);
+      if (
+        !surface ||
+        (surface.type && surface.type !== 'box') ||
+        surface.rotation?.slice(0, 3).some((value) => value !== 0) ||
+        !Number.isFinite(surface.max?.y)
+      )
+        throw new Error(
+          `Authoring pilot needs an axis-aligned named landing surface: ${target.surface}`,
+        );
+      surfaceY = surface.max.y;
+    }
+    // Aim just below physical support so descent settles onto the surface.
+    // Existing floor courses retain their exact -100 mm command target.
+    position.y = surfaceY - 100;
+  }
   if (target.centred && target.max.y <= 800 && state.step === 0) position.y = 0;
   const yaw = (state.attitude.yaw * Math.PI) / 18000;
   const ax = clamp((position.x - state.position.x) * 0.8 - state.velocity.x * 1.9, -2600, 2600);

@@ -1,7 +1,13 @@
 import { STICK_LAYOUTS, DEFAULT_RESPONSE, neutralFlightInput } from './radio-profile.mjs';
 import { createFlight, FLIGHT_HZ } from './model.mjs';
 import { mountDroneDiagram } from './sim-presentation.mjs';
-import { ACRO_LESSON_ORDER, SELF_LEVEL_LESSON_ORDER } from './world-catalogue.mjs';
+import {
+  ACRO_LESSON_ORDER,
+  EXPERIENCED_LESSON_ORDER,
+  ADVANCED_LESSON_ORDER,
+  PRIMARY_LESSON_ORDER,
+  SELF_LEVEL_LESSON_ORDER,
+} from './world-catalogue.mjs';
 
 const SVG_NS = 'http://www.w3.org/2000/svg';
 const AXES = ['throttle', 'yaw', 'pitch', 'roll'];
@@ -505,8 +511,20 @@ export function mountBeginnerCoach({
     labScope !== 'lesson' &&
     ['beginner-01', 'beginner-15'].includes(lesson?.id) &&
     viewedStep === 0;
-  const sequence = () => (lesson?.mode === 'acro' ? ACRO_LESSON_ORDER : SELF_LEVEL_LESSON_ORDER);
+  const sequence = () => (lesson?.mode === 'acro' ? PRIMARY_LESSON_ORDER : SELF_LEVEL_LESSON_ORDER);
   const lessonNumber = () => Math.max(0, sequence().indexOf(lesson?.id)) + 1;
+  const curriculumPosition = () => {
+    if (lesson?.mode !== 'acro')
+      return `${t('SELF-LEVEL PRACTICE', 'САМОВИРІВНЮВАННЯ')} · ${String(lessonNumber()).padStart(2, '0')} / ${SELF_LEVEL_LESSON_ORDER.length}`;
+    const tiers = {
+      beginner: [ACRO_LESSON_ORDER, t('BEGINNER', 'ПОЧАТКОВИЙ')],
+      experienced: [EXPERIENCED_LESSON_ORDER, t('EXPERIENCED', 'ДЛЯ ДОСВІДЧЕНИХ')],
+      advanced: [ADVANCED_LESSON_ORDER, t('ADVANCED', 'ПОГЛИБЛЕНИЙ')],
+    };
+    const [ids, name] = tiers[lesson.tier] ?? tiers.beginner;
+    const withinTier = Math.max(0, ids.indexOf(lesson.id)) + 1;
+    return `${name} · ${String(withinTier).padStart(2, '0')}/${ids.length} · ACRO ${String(lessonNumber()).padStart(2, '0')}/${PRIMARY_LESSON_ORDER.length}`;
+  };
   const displayedStep = () => {
     if (!isExploring()) return currentStep();
     return {
@@ -1361,14 +1379,7 @@ export function mountBeginnerCoach({
           ? t('Back to practice →', 'До практики →')
           : t('Let’s fly →', 'Почнімо політ →');
     const heading = node('header', 'coach-heading'),
-      eyebrow = node(
-        'p',
-        'coach-eyebrow',
-        t(
-          `${lesson.mode === 'acro' ? 'ACRO SCHOOL' : 'SELF-LEVEL PRACTICE'} · ${String(lessonNumber()).padStart(2, '0')} / ${sequence().length}`,
-          `${lesson.mode === 'acro' ? 'ШКОЛА ACRO' : 'САМОВИРІВНЮВАННЯ'} · ${String(lessonNumber()).padStart(2, '0')} / ${sequence().length}`,
-        ),
-      );
+      eyebrow = node('p', 'coach-eyebrow', curriculumPosition());
     const headingText = node('div', '');
     headingText.append(
       eyebrow,
