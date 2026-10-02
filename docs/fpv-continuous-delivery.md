@@ -231,3 +231,21 @@ correction receive focused increments. Preserve Garage/ghost handoffs and the
 content-stack hold described above. Do not overwrite this branch with the next
 unfinished item or repeatedly restart unchanged CI. Additional unit coverage
 remains in final qualification; functional verification continues per feature.
+
+### Beginner Flight School — 1 October
+
+The completed beginner course is published as [PR #905](https://github.com/mekhovov/revealline/pull/905),
+`codex/fpv-beginner-flight-school`, based on PR #904 and appended to native stack
+#902 (`#899 → #901 → #904 → #905`). It adds 14 freely selectable lessons and 59
+guided steps, from the four controls and first lift to a complete route and two
+optional Acro introductions. The coach shows the player's selected Mode 1–4
+radio layout, animated response diagrams, current-objective telemetry, and a
+safe pause/explain/resume path for keyboard, touch and USB-radio flying.
+
+All 14 recommended-mode courses completed and independently replayed against the
+unchanged fixed-step runtime with zero contacts and full health; the committed
+receipt records their identities and proof hashes. Browser verification also
+covered lesson launch, EN/UK layouts, compact views, input layouts, guide arm
+safety, persistence and proof-backed progress. Unit coverage is deferred to the
+final phase. This does not claim novice-player acceptance, physical-radio
+acceptance on the final build, hardware qualification or public deployment.
