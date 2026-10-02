@@ -201,6 +201,7 @@ const COPY_EN = {
   redo: 'Redo',
   challengeTitle: 'Challenge title',
   criteria: 'Route & objectives',
+  missionBriefing: 'Mission briefing',
   applyPosition: 'Apply position',
   duplicate: 'Duplicate',
   remove: 'Remove',
@@ -361,6 +362,7 @@ const COPY_UK = {
   redo: 'Повторити',
   challengeTitle: 'Назва завдання',
   criteria: 'Маршрут та цілі',
+  missionBriefing: 'Опис завдання',
   applyPosition: 'Застосувати координати',
   duplicate: 'Дублювати',
   remove: 'Видалити',
@@ -869,6 +871,10 @@ export function mountWorldApp({
       land: ['Land', 'Сідайте'],
       eliminate: ['Disable targets', 'Вимкніть мішені'],
       survive: ['Stay airborne', 'Тримайтеся в повітрі'],
+      'actor-track-v1':
+        step?.minTargetTravel > 0
+          ? ['Follow the marked subject', 'Супроводжуйте позначений об’єкт']
+          : ['Observe the marked subject', 'Спостерігайте за позначеним об’єктом'],
       'rotation-v1': ['Complete the rotation', 'Виконайте повний поворот'],
       'attitude-v1': ['Hold the required attitude', 'Утримуйте потрібне положення'],
       'path-v1': ['Follow the manoeuvre path', 'Виконайте траєкторію маневру'],
@@ -2868,7 +2874,25 @@ export function mountWorldApp({
       `${(state.position.y / 1000).toFixed(1)} m · ${(Math.hypot(state.velocity.x, state.velocity.y, state.velocity.z) / 1000) | 0} m/s · ${(state.ticks / 50).toFixed(1)} s${state.health !== undefined ? ` · ♥ ${state.health}` : ''}`;
     $('flight-objective').textContent = terminal(state)
       ? txt('Flight ended', 'Політ завершено')
-      : `${Math.min(state.step + 1, state.total ?? current.course.steps[$('flight-mode').value].length)}/${current.course.steps[$('flight-mode').value].length} · ${target ? stepName(target) : state.status}${state.hold ? ` · ${state.hold}/${target?.ticks ?? 0}` : ''}`;
+      : `${Math.min(state.step + 1, state.total ?? current.course.steps[$('flight-mode').value].length)}/${current.course.steps[$('flight-mode').value].length} · ${target ? stepName(target) : state.status}${state.hold ? ` · ${target?.type === 'actor-track-v1' ? `${(state.hold / 50).toFixed(1)}/${(target.ticks / 50).toFixed(1)} s` : `${state.hold}/${target?.ticks ?? 0}`}` : ''}`;
+    if (target?.type === 'actor-track-v1' && !terminal(state)) {
+      const hints = {
+        'acquire-subject': ['Find the marked subject', 'Знайдіть позначений об’єкт'],
+        'subject-unavailable': ['Subject unavailable — retry', 'Об’єкт недоступний — повторіть'],
+        'airborne-clearance': ['Lift off first', 'Спершу злетіть'],
+        'subject-range': [
+          `Keep ${target.minDistance / 1000}–${target.maxDistance / 1000} m away`,
+          `Тримайте ${target.minDistance / 1000}–${target.maxDistance / 1000} м`,
+        ],
+        'relative-speed': ['Match the subject’s movement', 'Повторюйте рух об’єкта'],
+        'airframe-tilt': ['Reduce the bank angle', 'Зменште нахил'],
+        'nose-alignment': ['Point the nose toward the subject', 'Спрямуйте ніс на об’єкт'],
+        'subject-occluded': ['Find a clear sight line', 'Знайдіть пряму видимість'],
+        'subject-travel': ['Continue with the moving subject', 'Продовжуйте рух за об’єктом'],
+      };
+      const hint = hints[state.actorTrack?.reason];
+      if (hint) $('flight-objective').textContent += ` · ${txt(...hint)}`;
+    }
     $('world-arm').disabled =
       !sceneReady ||
       Boolean(ghostLookup) ||
@@ -3349,6 +3373,7 @@ export function mountWorldApp({
           ? txt('FLIGHT SCHOOL', 'ЛЬОТНА ШКОЛА')
           : localized(WORLD_THEMES.find((t) => t.id === entry.theme)?.title) || entry.world;
     $('flight-brief').textContent = entry.course.locales[locale].brief;
+    $('flight-menu-brief').textContent = entry.course.locales[locale].brief;
     $('flight-status').textContent = txt('Preparing scene…', 'Підготовка сцени…');
     paintLoadout();
     if (!$('flight-dialog').open) $('flight-dialog').showModal();

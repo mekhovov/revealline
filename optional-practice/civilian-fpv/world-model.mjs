@@ -684,6 +684,38 @@ export function validateWorldCourse(input) {
     for (const step of c.steps[mode]) {
       if (SKILL_TYPES.has(step.type)) {
         validateSkillTarget(step);
+      } else if (step.type === 'actor-track-v1') {
+        exactKeys(
+          step,
+          [
+            'type',
+            'actorId',
+            'minDistance',
+            'maxDistance',
+            'maxRelativeSpeed',
+            'maxTilt',
+            'ticks',
+            'viewAngle',
+            'minTargetTravel',
+          ],
+          'actor tracking objective',
+        );
+        const subject = c.actors.find((actor) => actor.id === step.actorId);
+        required(subject && subject.type !== 'hazard', 'Tracking needs an existing subject');
+        required(
+          int(step.minDistance, 100, 100000) &&
+            int(step.maxDistance, step.minDistance + 100, 100000) &&
+            int(step.maxRelativeSpeed, 0, 60000) &&
+            int(step.maxTilt, 0, 9000) &&
+            int(step.ticks, 1, Math.min(5000, c.rules.maxTicks)) &&
+            int(step.viewAngle, 100, 9000) &&
+            int(step.minTargetTravel, 0, 1500000),
+          'Invalid actor tracking limits',
+        );
+        required(
+          step.minTargetTravel === 0 || (subject.speed > 0 && subject.path.length > 1),
+          'Following needs a moving subject route',
+        );
       } else if (step.type === 'gate') {
         exactKeys(
           step,
@@ -795,6 +827,9 @@ export function createWorldFlight({
   const rates = validateFlightResponse(response);
   required(MODES.includes(mode), 'Unsupported flight mode');
   const hasSkills = worldCourseRequiresAcro(source);
+  const hasActorTracking = MODES.some((mode) =>
+    source.steps[mode].some((step) => step.type === 'actor-track-v1'),
+  );
   required(!hasSkills || mode === 'acro', 'Skill courses require Acro mode');
   const rules = source.rules;
   const gameplay = { ...source };
@@ -877,6 +912,9 @@ export function createWorldFlight({
         shots: 0,
         hits: 0,
         ...(hasSkills ? { skill: { index: 0, status: 'entry', reason: 'enter-zone' } } : {}),
+        ...(hasActorTracking
+          ? { actorTrack: { index: 0, status: 'acquire', reason: 'acquire-subject', travel: 0 } }
+          : {}),
       };
       for (const a of sorted(source.actors)) {
         const actor = {
@@ -1035,11 +1073,59 @@ export function createWorldFlight({
     }
     state.projectiles = live;
   }
-  function evaluate(before, command, skillBefore) {
+  function evaluateActorTrack(target, motions) {
+    const empty = (reason) => ({ index: state.step, status: 'acquire', reason, travel: 0 });
+    if (state.actorTrack.index !== state.step) state.actorTrack = empty('acquire-subject');
+    const reset = (reason) => {
+      state.hold = 0;
+      state.actorTrack = empty(reason);
+      return false;
+    };
+    const actor = state.actors.find((value) => value.id === target.actorId);
+    if (!actor || actor.status !== 'active') return reset('subject-unavailable');
+    if (state.grounded) return reset('airborne-clearance');
+    const from = { ...state.position, y: state.position.y + rules.droneRadius },
+      to = actorCentre(actor),
+      difference = sub(to, from),
+      distance = length(difference);
+    if (distance < target.minDistance || distance > target.maxDistance)
+      return reset('subject-range');
+    const motion = motions.find((value) => value.id === actor.id),
+      movement = motion ? sub(motion.to, motion.from) : { x: 0, y: 0, z: 0 },
+      relative = Object.fromEntries(
+        AXES.map((axis) => [axis, state.velocity[axis] - movement[axis] * WORLD_FLIGHT_HZ]),
+      ),
+      relativeSpeed = length(relative);
+    if (relativeSpeed > target.maxRelativeSpeed) return reset('relative-speed');
+    if (relativeTilt(state.orientation, { x: 0, y: Q, z: 0 }) > target.maxTilt)
+      return reset('airframe-tilt');
+    const forward = rotate(state.orientation, { x: 0, y: 0, z: -Q });
+    // A body-relative cone is independent of camera mode, camera tilt and graphics.
+    // Dot products stay within safe integer range; no squared products are used.
+    if (
+      AXES.reduce((sum, axis) => sum + forward[axis] * difference[axis], 0) <
+      distance * cos(target.viewAngle)
+    )
+      return reset('nose-alignment');
+    if (!collision.visible(from, to)) return reset('subject-occluded');
+    state.hold++;
+    state.actorTrack.travel += length(movement);
+    const accepted =
+      state.hold >= target.ticks && state.actorTrack.travel >= target.minTargetTravel;
+    Object.assign(state.actorTrack, {
+      status: accepted ? 'complete' : 'tracking',
+      reason: state.hold >= target.ticks && !accepted ? 'subject-travel' : null,
+      distance,
+      relativeSpeed,
+    });
+    return accepted;
+  }
+  function evaluate(before, command, skillBefore, motions) {
     const target = source.steps[mode][state.step];
     if (!target) return; // Completed lab routes remain available for free practice.
     let accepted = false;
     if (SKILL_TYPES.has(target.type)) accepted = evaluateSkillTarget(target, state, skillBefore);
+    else if (target.type === 'actor-track-v1') accepted = evaluateActorTrack(target, motions);
     else if (target.type === 'gate') accepted = crossesGate(before, state.position, target);
     else if (target.type === 'eliminate')
       accepted = target.targets.every(
@@ -1188,7 +1274,7 @@ export function createWorldFlight({
     state.heightRange.min = Math.min(state.heightRange.min, state.position.y);
     state.heightRange.max = Math.max(state.heightRange.max, state.position.y);
     if (state.health === 0) state.status = 'failed';
-    else evaluate(before, command, skillBefore);
+    else evaluate(before, command, skillBefore, motions);
     if (!unscoredPractice && state.status === 'active' && state.ticks >= rules.maxTicks)
       state.status = 'expired';
     return snapshot();

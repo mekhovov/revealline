@@ -166,3 +166,55 @@ Estimate: **one working day**, including browser verification and publication.
 See [Readable FPV stick motion](fpv-readable-stick-motion.md) for the implementation,
 research and qualification boundaries. R4–R7 art, device/player acceptance and
 deferred unit coverage remain unchanged.
+
+## Reviewed continuation — World Adventures, 2 October 2026
+
+This checkpoint supersedes the earlier catalogue counts and historical hold
+summaries above. The active branch contains **58 learning lessons (46 Acro and
+12 optional self-level)**, the original 60 challenges and a newly verified
+**30-adventure expansion**, totaling **148 challenges in 14 worlds**. See
+[World Adventures](fpv-world-adventures.md) for the full route/actor contract,
+research, content allocation and qualification boundaries.
+
+| Area                                      | Reviewed state                                                                                                                            | Remaining concrete work                                                                                                            |
+| ----------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------- |
+| Shared UI, radio, teaching and fullscreen | Native presentation, continuous school, handheld flight, controller actions, radio Arm/Reset and stored profiles implemented through #945 | Physical iPhone/Steam Deck/radio acceptance and novice observations; coordinate protected integration                              |
+| School                                    | 58 authored lessons and installed recommended-mode examples                                                                               | Five first-time player sessions, revise confusing steps, final curriculum/art acceptance                                           |
+| World art                                 | #946 improves original eight worlds, actor models, materials, repeated scenery and projectile disposal                                    | Themes integration, artist-authored detail and measured device budgets                                                             |
+| New worlds and activities                 | Six distinct arenas, 30 challenges, real follow/observe scoring, six revision-pinned playlists                                            | Protected publication and player feedback; optional example-library delivery                                                       |
+| Creator reliability                       | Reimport correction #922 is merged upstream                                                                                               | Integrate its reviewed behavior into the current dependent player branch through coordinated stack update; preserve parallel edits |
+| Ghosts and original demonstrations        | #913 is merged; native content stack #889 is fully merged/closed, including #896                                                          | Integrate upstream content into the dependent player branch, finish preserved Garage16 handoff, verify original120 total           |
+| Deferred qualification                    | Functional verification continues with every item                                                                                         | R7 unit coverage, broader regressions and actual hardware/player acceptance                                                        |
+
+Do not repeat the old claim that stack889 or #922 is still held. On this review,
+stack902 has open members #939 → #940 → #941 → #942 → #943 → #944 → #945 → #946;
+inspect live membership before any subsequent publication or rebase. Current
+source keeps only its already integrated original demonstrations; a merged PR is
+not proof that this worktree's built player includes its changes.
+
+### Next delivery sequence and working estimates
+
+1. **World Adventures publication:** finish frozen-package and packaged-player
+   qualification, focused child PR after #946, then refresh the normal local URLs.
+   Implementation/functional checks are complete in this increment; CI/merge timing
+   is external and has no guaranteed ETA.
+2. **Coordinated upstream integration:** 1–3 working days, depending on conflicts.
+   Recovery refs and exact remote-head leases, linear stack, preserve every active
+   branch. Verify reimport, ghost compatibility and all retained examples again.
+3. **Themes and environment refinement:** 3–5 working days per reviewed art batch,
+   parallel with gameplay feedback. The Themes chat owns shared appearance contracts;
+   avoid a competing theme/preferences layer. Add details based on flight readability,
+   not decorative density alone.
+4. **Further world variety:** after this six-world pack receives player feedback,
+   a closed stunt circuit and observatory ridge are the next researched candidates.
+   Estimate 3–5 working days for a verified pair with distinct routes/subjects;
+   detailed custom art is additional. They are planned candidates, not shipped maps.
+5. **R6 completion:** 4–6 working days for remaining original demos, bounded optional
+   adventure examples and targeted retry/section flow after dependencies integrate.
+6. **R7:** retain 5–10 working days for deferred unit coverage and release qualification.
+   Human sessions and named-device measurements must actually occur; automated
+   replay/WebGL receipts do not satisfy them.
+
+The earlier 8–10 week remaining-release estimate is not a measurement of work
+already elapsed. Re-estimate after coordinated integration and the first physical
+handheld/novice session; no reduced release ETA is claimed from authored counts.

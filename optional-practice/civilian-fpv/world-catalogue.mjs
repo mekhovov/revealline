@@ -8,7 +8,70 @@ export const WORLD_THEMES = Object.freeze([
   { id: 'pixel', title: text('Pixel Circuit', 'Піксельні перегони'), color: '#bd9cfc' },
   { id: 'operations', title: text('Field Operations', 'Польові операції'), color: '#a5c581' },
 ]);
+const ADVENTURE_WORLDS = Object.freeze([
+  {
+    id: 'coast',
+    theme: 'ukrainian',
+    title: text('Coastal airfield', 'Прибережний аеродром'),
+    subtitle: text(
+      'Sea light, piers and a lighthouse approach',
+      'Морське світло, причали й підхід до маяка',
+    ),
+    style: 'coast',
+  },
+  {
+    id: 'quarry',
+    theme: 'operations',
+    title: text('Amber quarry', 'Бурштиновий кар’єр'),
+    subtitle: text(
+      'Rock terraces, haul traffic and a deep slalom',
+      'Скельні тераси, транспорт і слалом у кар’єрі',
+    ),
+    style: 'quarry',
+  },
+  {
+    id: 'rooftops',
+    theme: 'pixel',
+    title: text('Skyline campus', 'Кампус на дахах'),
+    subtitle: text(
+      'Skybridges, couriers and three landing heights',
+      'Повітряні мости, кур’єри й посадки на різних висотах',
+    ),
+    style: 'rooftops',
+  },
+  {
+    id: 'orchard',
+    theme: 'ukrainian',
+    title: text('Harvest orchard', 'Осінній сад'),
+    subtitle: text(
+      'Tree avenues, a walking guide and a quiet barn',
+      'Алеї дерев, піший провідник і тихий амбар',
+    ),
+    style: 'orchard',
+  },
+  {
+    id: 'solar-farm',
+    theme: 'operations',
+    title: text('Solar research park', 'Сонячний дослідний парк'),
+    subtitle: text(
+      'Tilted panels, service rovers and open flight lanes',
+      'Похилі панелі, сервісні ровери й відкриті коридори',
+    ),
+    style: 'solar-farm',
+  },
+  {
+    id: 'rail-depot',
+    theme: 'operations',
+    title: text('Railworks', 'Залізничне депо'),
+    subtitle: text(
+      'Long sight lines, parked wagons and gantry gaps',
+      'Довгі прямі, вагони й отвори між кранами',
+    ),
+    style: 'rail-depot',
+  },
+]);
 export const FLIGHT_WORLDS = Object.freeze([
+  ...ADVENTURE_WORLDS,
   {
     id: 'gym',
     theme: 'academy',
@@ -75,6 +138,8 @@ export const ACTIVITY_NAMES = Object.freeze({
   combat: text('Combat', 'Бій'),
   capstone: text('Mixed challenge', 'Комбіноване завдання'),
   academy: text('Academy drill', 'Вправа академії'),
+  follow: text('Follow a subject', 'Супровід об’єкта'),
+  observe: text('Observe a subject', 'Спостереження за об’єктом'),
 });
 const p = (x, y, z) => ({ x: x * 1000, y: y * 1000, z: z * 1000 });
 const box = (id, x, z, width, depth, height) => ({
@@ -83,6 +148,7 @@ const box = (id, x, z, width, depth, height) => ({
   max: p(x + width / 2, height, z + depth / 2),
 });
 export function worldObstacles(id) {
+  if (ADVENTURE_WORLDS.some((w) => w.id === id)) return adventureObstacles(id);
   if (id === 'woodland')
     return [
       [-16, -12],
@@ -158,6 +224,106 @@ const gate = (axis, at, side, direction, y = 3, width = 5) => ({
   minY: Math.max(500, (y - 1.6) * 1000),
   maxY: (y + 1.6) * 1000,
 });
+
+// Original compact worlds: visible solid geometry is the collision source.
+// Separate from the original 48-world pack so no old proof identity changes.
+function adventureObstacles(id) {
+  const raised = (name, x, y, z, w, h, d) => ({
+    id: name,
+    min: p(x - w / 2, y, z - d / 2),
+    max: p(x + w / 2, y + h, z + d / 2),
+  });
+  const gantry = (prefix, z, span, height) => [
+    box(`${prefix}-west`, -span / 2, z, 1.2, 1.2, height),
+    box(`${prefix}-east`, span / 2, z, 1.2, 1.2, height),
+    raised(`${prefix}-beam`, 0, height - 1, z, span + 1.2, 1, 1.2),
+  ];
+  if (id === 'coast')
+    return [
+      box('coast-pier-west', -32, -10, 12, 48, 2),
+      box('coast-pier-east', 32, -10, 12, 48, 2),
+      box('building-boathouse', -45, -43, 18, 16, 8),
+      box('coast-tower-lighthouse', 43, -43, 6, 6, 22),
+      ...gantry('coast-deck', -18, 25, 9),
+      box('coast-deck-lookout', 0, -44, 10, 8, 3),
+    ];
+  if (id === 'quarry')
+    return [
+      box('rock-west-terrace', -45, -15, 22, 76, 7),
+      box('rock-east-terrace', 45, -15, 22, 76, 9),
+      box('rock-west-rim', -55, -15, 8, 82, 16),
+      box('rock-east-rim', 55, -15, 8, 82, 19),
+      box('rock-central-spire', 0, -34, 12, 12, 20),
+      box('rock-landing-ledge', -23, -44, 8, 8, 5),
+      ...gantry('rail-gantry-conveyor', 8, 25, 10),
+    ];
+  if (id === 'rooftops')
+    return [
+      box('building-west-low', -33, 22, 18, 20, 9),
+      box('building-east-mid', 33, 22, 18, 20, 14),
+      box('building-west-high', -33, -24, 18, 22, 19),
+      box('building-east-high', 33, -24, 18, 22, 23),
+      raised('roof-deck-skybridge', 0, 11, -24, 50, 1.2, 6),
+      ...gantry('roof-deck-entry', 28, 22, 8),
+    ];
+  if (id === 'orchard') {
+    const trees = [];
+    for (const [i, x] of [-36, -18, 18, 36].entries())
+      for (const [j, z] of [-34, -16, 2, 20].entries()) {
+        trees.push(box(`tree-trunk-${i}-${j}`, x, z, 0.8, 0.8, 5));
+        const vertices = [
+          [x, 8, z],
+          [x - 3.4, 4.8, z],
+          [x, 4.8, z - 3.4],
+          [x + 3.4, 4.8, z],
+          [x, 4.8, z + 3.4],
+          [x, 3, z],
+        ]
+          .flat()
+          .map((v) => Math.round(v * 1000));
+        trees.push({
+          id: `tree-canopy-${i}-${j}`,
+          type: 'trimesh',
+          vertices,
+          indices: [0, 1, 2, 0, 2, 3, 0, 3, 4, 0, 4, 1, 5, 2, 1, 5, 3, 2, 5, 4, 3, 5, 1, 4],
+        });
+      }
+    return [
+      ...trees,
+      box('building-barn', -46, -45, 16, 14, 9),
+      box('rock-survey-plinth', 0, -43, 8, 8, 1.5),
+    ];
+  }
+  if (id === 'solar-farm') {
+    const panels = [];
+    for (const [i, x] of [-43, -25, 25, 43].entries())
+      for (const [j, z] of [-34, -12, 10, 30].entries()) {
+        panels.push({
+          ...raised(`solar-panel-${i}-${j}`, x, 2.2, z, 11, 0.3, 7),
+          rotation: [Math.sin(Math.PI / 24), 0, 0, Math.cos(Math.PI / 24)],
+        });
+        panels.push(box(`solar-hut-support-${i}-${j}`, x, z, 0.6, 0.6, 2.3));
+      }
+    return [
+      ...panels,
+      box('solar-hut-control', 0, -46, 13, 9, 6),
+      box('coast-deck-service', -14, 38, 6, 8, 1.2),
+    ];
+  }
+  if (id === 'rail-depot')
+    return [
+      ...[-31, 31].flatMap((x, i) =>
+        [-32, -12, 10, 30].map((z, j) => box(`rail-car-${i}-${j}`, x, z, 5, 13, 4)),
+      ),
+      box('rail-platform-west', -46, -5, 8, 94, 1.4),
+      box('rail-platform-east', 46, -5, 8, 94, 1.4),
+      ...gantry('rail-gantry-north', -24, 24, 12),
+      ...gantry('rail-gantry-south', 22, 24, 10),
+      box('building-signal-box', -16, -47, 8, 8, 8),
+    ];
+  return [];
+}
+
 // Every row is an authored route/task. Theme, mode and medal variants do not add levels.
 const SLATES = {
   woodland: [
@@ -838,7 +1004,629 @@ export const WORLD_COURSES = Object.freeze(
 );
 export const BUILTIN_WORLD_IDENTITY = `fpv-worlds:${dataIdentity(WORLD_COURSES)}`;
 export const ACADEMY_IDENTITY = `fpv-academy:${dataIdentity(FLIGHT_COURSES)}`;
+
+// Adventure routes have their own immutable content identity and playlists.
+const adventureActor = (id, type, position, path, options = {}) => ({
+  id,
+  type,
+  role: 'civilian',
+  position: p(...position),
+  path: path.map((v) => p(...v)),
+  speed: 1000,
+  radius: type === 'vehicle' ? 900 : type === 'drone' ? 350 : 300,
+  height: 1800,
+  health: 75,
+  fireEveryTicks: 0,
+  ...options,
+});
+const adventureTrack = (actor, follow = true) => ({
+  type: 'actor-track-v1',
+  actorId: actor.id,
+  minDistance: 4000,
+  maxDistance: 18000,
+  maxRelativeSpeed: follow ? Math.floor(actor.speed * 0.72) : 5500,
+  maxTilt: 6500,
+  ticks: follow ? 400 : 200,
+  viewAngle: 4500,
+  minTargetTravel: follow ? 5000 : 0,
+});
+const adventurePad = (x, z, height = 0, surface = '$floor') => ({
+  ...hold(x, height, z, 30, 2200),
+  type: 'land',
+  min: p(x - 2.2, Math.max(0, height - 0.15), z - 2.2),
+  max: p(x + 2.2, height + 0.7, z + 2.2),
+  maxSpeed: 1400,
+  maxTilt: 2500,
+  surface,
+});
+const adventureHold = (x, y, z) => hold(x, y, z, 40, 2600);
+const adventureGates = (points) => {
+  let previous = [0, 3, 48];
+  return points.map(([x, y, z, width = 7]) => {
+    const axis = Math.abs(x - previous[0]) > Math.abs(z - previous[2]) ? 'x' : 'z';
+    const direction = Math.sign(axis === 'x' ? x - previous[0] : z - previous[2]) || 1;
+    previous = [x, y, z];
+    return gate(axis, axis === 'x' ? x : z, axis === 'x' ? z : x, direction, y, width);
+  });
+};
+const adventureRows = (() => {
+  const droneLoop = [
+      [-10, 5, 14],
+      [10, 5, 14],
+      [10, 7, -10],
+      [-10, 7, -10],
+    ],
+    groundLoop = [
+      [-8, 0, 14],
+      [8, 0, 14],
+      [8, 0, -8],
+      [-8, 0, -8],
+    ],
+    visitor = (name = 'guide') =>
+      adventureActor(name, 'patrol', [-8, 0, 14], groundLoop, { speed: 850 }),
+    rover = (name = 'rover') =>
+      adventureActor(name, 'vehicle', [-8, 0, 14], groundLoop, { speed: 1350 }),
+    courier = (path = droneLoop) =>
+      adventureActor('courier', 'drone', path[0], path, { role: 'rival', speed: 1900 }),
+    hazard = (name, x, y, z, to) => ({
+      id: name,
+      type: 'hazard',
+      position: p(x, y, z),
+      path: [p(x, y, z), p(...to)],
+      speed: 1700,
+      radius: 700,
+    }),
+    enemies = (prefix) => [
+      adventureActor(
+        `${prefix}-drone`,
+        'drone',
+        [-9, 5, -9],
+        [
+          [-9, 5, -9],
+          [9, 5, -9],
+        ],
+        { role: 'hostile', speed: 950, health: 50, fireEveryTicks: 200, damage: 3, range: 18000 },
+      ),
+      adventureActor(
+        `${prefix}-rover`,
+        'vehicle',
+        [8, 0, 16],
+        [
+          [8, 0, 16],
+          [-8, 0, 16],
+        ],
+        { role: 'hostile', speed: 600, health: 75, fireEveryTicks: 240, damage: 3, range: 18000 },
+      ),
+      adventureActor(`${prefix}-sentry`, 'sentry', [-17, 0, -19], [], {
+        role: 'hostile',
+        health: 50,
+        fireEveryTicks: 220,
+        damage: 3,
+        range: 16000,
+      }),
+    ],
+    landing = adventurePad(0, 48),
+    flight = (
+      en,
+      uk,
+      activity,
+      briefEn,
+      briefUk,
+      steps,
+      actors = [],
+      difficulty = 'intermediate',
+    ) => ({ en, uk, activity, brief: text(briefEn, briefUk), steps, actors, difficulty }),
+    survey = (points) => [...points.map((v) => adventureHold(...v)), landing],
+    race = (points) => [adventureHold(0, 3, 39), ...adventureGates(points), landing],
+    follow = (subject) => [adventureHold(0, 4, 28), adventureTrack(subject), landing],
+    observe = (subject, points) => [
+      ...points.flatMap((v) => [adventureHold(...v), adventureTrack(subject, false)]),
+      landing,
+    ],
+    battle = (actors, points = []) => [
+      ...points.map((v) => adventureHold(...v)),
+      { type: 'eliminate', targets: actors.map((a) => a.id) },
+      landing,
+    ];
+  const coastGuide = courier([
+      [-11, 5, 18],
+      [11, 5, 18],
+      [11, 6, -8],
+      [-11, 6, -8],
+    ]),
+    coastRover = rover('harbour-rover'),
+    quarryRover = rover('haul-rover'),
+    quarryEnemies = enemies('quarry'),
+    roofCourier = courier([
+      [-10, 7, 18],
+      [10, 12, 18],
+      [10, 16, -8],
+      [-10, 12, -8],
+    ]),
+    orchardGuide = visitor('orchard-guide'),
+    orchardRover = rover('harvest-cart'),
+    solarRover = rover('service-rover'),
+    solarEnemies = enemies('solar'),
+    railRover = rover('inspection-rover'),
+    railEnemies = enemies('rail');
+  return {
+    coast: [
+      flight(
+        'Lighthouse approach',
+        'Підхід до маяка',
+        'training',
+        'Find the lighthouse and visit both pier approaches. Open sea is scenery beyond the flight boundary.',
+        'Знайдіть маяк і відвідайте підходи до обох причалів. Море — декорація за межами польоту.',
+        survey([
+          [-16, 4, 26],
+          [16, 6, -4],
+          [22, 11, -34],
+        ]),
+        [visitor()],
+        'beginner',
+      ),
+      flight(
+        'Under the harbour bridge',
+        'Під портовим мостом',
+        'race',
+        'Link the harbour gate sequence. Pass below the bridge, then rise on the open north straight.',
+        'Поєднайте портові ворота. Пройдіть під мостом і набирайте висоту на відкритій північній прямій.',
+        race([
+          [0, 4, 24],
+          [-12, 5, 4],
+          [-5, 4, -18],
+          [12, 8, -32],
+          [18, 5, 6],
+          [5, 3, 34],
+        ]),
+        [coastGuide],
+      ),
+      flight(
+        'Coastal courier',
+        'Прибережний кур’єр',
+        'follow',
+        'Follow the marked courier for 8 continuous seconds, 4–18 m away. Point the nose at it; its movement must cover 5 m.',
+        'Супроводжуйте позначений дрон 8 секунд поспіль на відстані 4–18 м. Спрямовуйте на нього ніс; він має подолати 5 м.',
+        follow(coastGuide),
+        [coastGuide],
+      ),
+      flight(
+        'Harbour observer',
+        'Портовий спостерігач',
+        'observe',
+        'Visit both lookout markers, then keep the service rover within the forward 45° cone for 4 seconds from each. Stay 4–18 m away.',
+        'Відвідайте обидва оглядові маркери й утримуйте ровер у передньому конусі 45° по 4 секунди. Відстань 4–18 м.',
+        observe(coastRover, [
+          [0, 4, 22],
+          [0, 4, -16],
+        ]),
+        [coastRover],
+      ),
+      flight(
+        'Three pier landings',
+        'Три посадки на причалах',
+        'precision',
+        'Touch down on each marked raised pier and the lookout before returning to the start. Brake before descending.',
+        'Сядьте на обидва підняті причали й оглядовий майданчик, потім поверніться. Гальмуйте до зниження.',
+        [
+          adventureHold(-32, 5, 14),
+          adventurePad(-32, 10, 2, 'coast-pier-west'),
+          adventureHold(0, 6, -34),
+          adventurePad(0, -44, 3, 'coast-deck-lookout'),
+          adventureHold(32, 5, -16),
+          adventurePad(32, -10, 2, 'coast-pier-east'),
+          landing,
+        ],
+        [],
+        'advanced',
+      ),
+    ],
+    quarry: [
+      flight(
+        'Read the rock bowl',
+        'Розвідка кар’єру',
+        'exploration',
+        'Use the central spire and terraced walls to navigate the bowl at three heights.',
+        'Орієнтуйтеся за центральною скелею й терасами на трьох висотах.',
+        survey([
+          [-20, 5, 20],
+          [-22, 12, -20],
+          [22, 10, -24],
+          [14, 4, 26],
+        ]),
+        [quarryRover],
+      ),
+      flight(
+        'Conveyor crossings',
+        'Перетини конвеєра',
+        'hazard',
+        'Watch the moving safety beacons and choose a clear moment to cross each lane beneath the gantry.',
+        'Спостерігайте за рухомими маяками й перетинайте коридори під порталом у вільний момент.',
+        survey([
+          [0, 4, 18],
+          [-6, 4, 2],
+          [8, 5, -18],
+          [18, 4, 25],
+        ]),
+        [
+          hazard('crossing-west', -10, 3, 8, [10, 3, 8]),
+          hazard('crossing-north', 10, 4, -4, [-10, 4, -4]),
+        ],
+      ),
+      flight(
+        'Haul-rover escort',
+        'Супровід кар’єрного ровера',
+        'follow',
+        'Match the haul rover through its corners. Keep the nose on it for 8 seconds at 4–18 m while it travels at least 5 m.',
+        'Повторюйте повороти ровера. Тримайте його перед носом 8 секунд на відстані 4–18 м, поки він проходить щонайменше 5 м.',
+        follow(quarryRover),
+        [quarryRover],
+      ),
+      flight(
+        'Quarry pulse arena',
+        'Імпульсна арена кар’єру',
+        'combat',
+        'Tag three fictional training machines with pulse shots, then return. Amber machines can fire back; rock walls block shots.',
+        'Вимкніть три вигадані тренувальні машини імпульсами й поверніться. Бурштинові машини стріляють у відповідь; скелі блокують постріли.',
+        battle(quarryEnemies, [[0, 5, 28]]),
+        quarryEnemies,
+      ),
+      flight(
+        'Spire and ledge',
+        'Скеля й уступ',
+        'capstone',
+        'Circle the spire through the marked gates, then settle on the western ledge and return.',
+        'Облетіть скелю через позначені ворота, сядьте на західному уступі й поверніться.',
+        [
+          ...adventureGates([
+            [-20, 8, 12],
+            [-21, 10, -26],
+            [-18, 12, -48],
+            [20, 12, -46],
+            [21, 10, -20],
+          ]),
+          adventureHold(-23, 9, -44),
+          adventurePad(-23, -44, 5, 'rock-landing-ledge'),
+          landing,
+        ],
+        [],
+        'advanced',
+      ),
+    ],
+    rooftops: [
+      flight(
+        'Campus skylines',
+        'Обрії кампусу',
+        'exploration',
+        'Find the four roof corners and read the space above and below the skybridge.',
+        'Знайдіть чотири кути дахів і простір над та під повітряним мостом.',
+        survey([
+          [-18, 7, 20],
+          [18, 17, 20],
+          [16, 17, -24],
+          [-16, 8, -12],
+        ]),
+        [roofCourier],
+      ),
+      flight(
+        'Over and under',
+        'Над і під',
+        'race',
+        'Pass beneath the skybridge on the outbound line, climb in the open, and return above it.',
+        'На шляху вперед пройдіть під мостом, підніміться у відкритому просторі й поверніться над ним.',
+        race([
+          [0, 5, 28],
+          [-10, 6, 2],
+          [-10, 6, -24],
+          [0, 17, -42],
+          [10, 17, -24],
+          [10, 12, 4],
+          [0, 4, 34],
+        ]),
+        [],
+        'advanced',
+      ),
+      flight(
+        'Rooftop courier trail',
+        'Слід кур’єра між дахами',
+        'follow',
+        'Follow the courier as it changes height. Keep 4–18 m spacing, clear sight and the drone nose toward it for 8 seconds.',
+        'Супроводжуйте кур’єра зі зміною висоти. 8 секунд тримайте відстань 4–18 м, пряму видимість і ніс у його напрямку.',
+        follow(roofCourier),
+        [roofCourier],
+      ),
+      flight(
+        'Roof-to-roof landings',
+        'Посадки з даху на дах',
+        'precision',
+        'Land on the low western roof, the mid eastern roof and the high western roof. Approach from above before descending.',
+        'Сядьте на низькому західному, середньому східному й високому західному дахах. Заходьте згори.',
+        [
+          adventureHold(-33, 13, 22),
+          adventurePad(-33, 22, 9, 'building-west-low'),
+          adventureHold(33, 18, 22),
+          adventurePad(33, 22, 14, 'building-east-mid'),
+          adventureHold(-33, 24, -24),
+          adventurePad(-33, -24, 19, 'building-west-high'),
+          landing,
+        ],
+        [],
+        'advanced',
+      ),
+      flight(
+        'Skybridge traffic',
+        'Рух біля повітряного мосту',
+        'hazard',
+        'Read the passing beacons, cross below the bridge, then climb along the open eastern lane.',
+        'Врахуйте рух маяків, пройдіть під мостом і підніміться у відкритому східному коридорі.',
+        survey([
+          [0, 5, 12],
+          [0, 6, -24],
+          [15, 16, -8],
+          [0, 5, 30],
+        ]),
+        [
+          hazard('bridge-crossing', -9, 6, -10, [9, 6, -10]),
+          hazard('upper-crossing', 12, 15, 4, [-12, 15, 4]),
+        ],
+      ),
+    ],
+    orchard: [
+      flight(
+        'Meet the orchard guide',
+        'Знайомство з провідником саду',
+        'training',
+        'Lift into the central avenue, find the barn and return through the eastern tree rows.',
+        'Підніміться над центральною алеєю, знайдіть амбар і поверніться східними рядами.',
+        survey([
+          [0, 3, 28],
+          [-8, 4, -24],
+          [27, 4, -24],
+          [27, 4, 12],
+        ]),
+        [orchardGuide],
+        'beginner',
+      ),
+      flight(
+        'Between the rows',
+        'Між рядами',
+        'exploration',
+        'Visit the clear avenues on both sides of the orchard. Tree crowns and trunks are solid.',
+        'Відвідайте вільні алеї з обох боків саду. Крони й стовбури мають зіткнення.',
+        survey([
+          [-27, 3, 28],
+          [-27, 3, -24],
+          [0, 10, -34],
+          [27, 3, -24],
+          [27, 3, 28],
+        ]),
+        [orchardRover],
+      ),
+      flight(
+        'Watch the harvest cart',
+        'Спостерігайте за візком',
+        'observe',
+        'Stop at each observation marker. Keep the cart within the forward 45° nose cone for 4 seconds, 4–18 m away.',
+        'Зупиніться біля оглядових маркерів. Тримайте візок у передньому конусі носа 45° по 4 секунди на відстані 4–18 м.',
+        observe(orchardRover, [
+          [0, 3, 24],
+          [0, 3, -16],
+        ]),
+        [orchardRover],
+      ),
+      flight(
+        'A walk through the orchard',
+        'Прогулянка садом',
+        'follow',
+        'Follow the walking guide calmly for 8 seconds, keeping 4–18 m away and clear sight. Never crowd the subject.',
+        'Спокійно супроводжуйте пішого провідника 8 секунд на відстані 4–18 м із прямою видимістю. Не наближайтеся надмірно.',
+        follow(orchardGuide),
+        [orchardGuide],
+        'beginner',
+      ),
+      flight(
+        'Barn beacon and garden pad',
+        'Маяк амбару й садовий майданчик',
+        'precision',
+        'Settle at the barn approach, hold above the orchard centre, then land on the raised stone plinth.',
+        'Стабілізуйтеся на підході до амбару, над центром саду та сядьте на піднятій кам’яній платформі.',
+        [
+          adventureHold(-27, 4, -42),
+          adventureHold(0, 10, -24),
+          adventurePad(0, -43, 1.5, 'rock-survey-plinth'),
+          landing,
+        ],
+      ),
+    ],
+    'solar-farm': [
+      flight(
+        'Read the solar lanes',
+        'Сонячні коридори',
+        'exploration',
+        'Find the open diagonals between panel banks. Fly around the panels, never through them.',
+        'Знайдіть відкриті діагоналі між рядами панелей. Облітайте панелі, не перетинайте їх.',
+        survey([
+          [-12, 4, 28],
+          [12, 5, 0],
+          [-12, 6, -28],
+          [0, 9, -36],
+        ]),
+        [solarRover],
+      ),
+      flight(
+        'Panel-edge precision',
+        'Точність біля панелей',
+        'precision',
+        'Hold the three service positions and land on the raised service pad. Keep room beside the tilted panel edges.',
+        'Утримайте три сервісні позиції та сядьте на піднятий майданчик. Залишайте простір біля країв похилих панелей.',
+        [
+          hold(-14, 4, 18, 70, 1400),
+          hold(14, 4, -10, 70, 1400),
+          hold(0, 8, -34, 70, 1400),
+          adventurePad(-14, 38, 1.2, 'coast-deck-service'),
+          landing,
+        ],
+      ),
+      flight(
+        'Rover inspection',
+        'Огляд ровера',
+        'observe',
+        'Visit both viewing markers and hold the marked service rover in the forward 45° cone for 4 seconds from each. Keep 4–18 m spacing.',
+        'Відвідайте два оглядові маркери й утримуйте сервісний ровер у передньому конусі 45° по 4 секунди. Дистанція 4–18 м.',
+        observe(solarRover, [
+          [0, 4, 22],
+          [0, 4, -16],
+        ]),
+        [solarRover],
+      ),
+      flight(
+        'Service-lane timing',
+        'Ритм сервісних коридорів',
+        'hazard',
+        'Cross the moving safety beacons in sequence. Slow down to read the second crossing before committing.',
+        'Послідовно перетніть рухомі маяки. Сповільніться перед другим перетином.',
+        race([
+          [0, 4, 24],
+          [-8, 4, 6],
+          [8, 4, -14],
+          [0, 6, -30],
+          [12, 5, 24],
+        ]),
+        [
+          hazard('solar-crossing-a', -10, 4, 14, [10, 4, 14]),
+          hazard('solar-crossing-b', 10, 4, -4, [-10, 4, -4]),
+        ],
+      ),
+      flight(
+        'Solar pulse trial',
+        'Сонячне імпульсне випробування',
+        'combat',
+        'Disable the three fictional practice machines. Use open lanes for a clear shot, then land at the start.',
+        'Вимкніть три вигадані тренувальні машини. Стріляйте з відкритих коридорів і сядьте на старті.',
+        battle(solarEnemies, [[0, 5, 26]]),
+        solarEnemies,
+      ),
+    ],
+    'rail-depot': [
+      flight(
+        'Signals and platforms',
+        'Сигнали й платформи',
+        'exploration',
+        'Read the depot through the north gantry and both platform approaches. Wagons are parked obstacles.',
+        'Огляньте депо через північний портал і підходи до платформ. Вагони — нерухомі перешкоди.',
+        survey([
+          [-17, 4, 28],
+          [0, 6, -30],
+          [18, 5, 12],
+        ]),
+        [railRover],
+      ),
+      flight(
+        'Gantry express',
+        'Експрес під порталами',
+        'race',
+        'Connect the two gantry openings with a fast northern turn and a controlled return.',
+        'Поєднайте два отвори порталів північним поворотом і контрольованим поверненням.',
+        race([
+          [0, 5, 22],
+          [-8, 5, 4],
+          [-8, 6, -24, 6],
+          [0, 8, -40],
+          [8, 6, -24, 6],
+          [8, 5, 22, 6],
+          [0, 4, 38],
+        ]),
+        [courier()],
+      ),
+      flight(
+        'Inspection run',
+        'Інспекційний рейс',
+        'follow',
+        'Shadow the inspection rover through the depot for 8 seconds at 4–18 m. Keep its path visible and the nose pointing toward it.',
+        'Супроводжуйте інспекційний ровер 8 секунд на відстані 4–18 м. Зберігайте видимість і напрямок носа на нього.',
+        follow(railRover),
+        [railRover],
+      ),
+      flight(
+        'Depot crossing windows',
+        'Вікна перетинів депо',
+        'hazard',
+        'Wait for a clear crossing and alternate altitude through the two moving beacons.',
+        'Дочекайтеся вільного перетину й змінюйте висоту між двома рухомими маяками.',
+        survey([
+          [0, 4, 30],
+          [-6, 4, 8],
+          [6, 6, -12],
+          [0, 5, -34],
+        ]),
+        [
+          hazard('depot-south', -10, 3, 18, [10, 3, 18]),
+          hazard('depot-north', 10, 5, -8, [-10, 5, -8]),
+        ],
+      ),
+      flight(
+        'Depot drone duel',
+        'Дуель дронів у депо',
+        'combat',
+        'Pulse-tag the training drone, rover and sentry. Keep the gates and wagon lanes clear on your return.',
+        'Вимкніть імпульсами тренувальний дрон, ровер і вартового. Повертайтеся вільними коридорами.',
+        battle(railEnemies, [[0, 5, 28]]),
+        railEnemies,
+      ),
+    ],
+  };
+})();
+export const ADVENTURE_COURSES = Object.freeze(
+  ADVENTURE_WORLDS.flatMap((world) =>
+    adventureRows[world.id].map((row, index) => ({
+      format: 'FlightCourse.v2',
+      id: `adventure-${world.id}-${String(index + 1).padStart(2, '0')}`,
+      revision: 'r1',
+      environment: world.id,
+      locales: Object.fromEntries(
+        ['en', 'uk'].map((lang) => [
+          lang,
+          {
+            title: row[lang],
+            brief: row.brief[lang],
+            lesson:
+              lang === 'en'
+                ? 'Fly a clean line, retry a difficult section, or choose another open activity.'
+                : 'Побудуйте плавну траєкторію, повторіть складну ділянку або виберіть іншу відкриту вправу.',
+          },
+        ]),
+      ),
+      spawn: p(0, 0, 48),
+      bounds: { min: p(-60, 0, -60), max: p(60, 35, 60) },
+      obstacles: adventureObstacles(world.id),
+      steps: { 'self-level': row.steps, acro: structuredClone(row.steps) },
+      world: { id: world.id, theme: world.theme, style: world.style },
+      actors: row.actors,
+      rules: { seed: 600 + ADVENTURE_WORLDS.indexOf(world) * 10 + index, maxTicks: 36000 },
+      conditions: { profile: 'clear', revision: 'r1' },
+    })),
+  ),
+);
+export const ADVENTURE_IDENTITY = `fpv-adventures:${dataIdentity(ADVENTURE_COURSES)}`;
+export const ADVENTURE_CATALOGUE = Object.freeze(
+  ADVENTURE_COURSES.map((course) => {
+    const row = adventureRows[course.environment][Number(course.id.slice(-2)) - 1];
+    return {
+      id: course.id,
+      course,
+      world: course.environment,
+      theme: course.world.theme,
+      activity: row.activity,
+      difficulty: row.difficulty,
+      duration: 3,
+      packIdentity: ADVENTURE_IDENTITY,
+      legacy: false,
+    };
+  }),
+);
+
 export const WORLD_CATALOGUE = Object.freeze([
+  ...ADVENTURE_CATALOGUE,
   ...FLIGHT_COURSES.map((course, index) => ({
     id: course.id,
     course,
@@ -866,18 +1654,30 @@ export const WORLD_CATALOGUE = Object.freeze([
     };
   }),
 ]);
-export const CURATED_PLAYLISTS = Object.freeze(
-  WORLD_THEMES.map((theme) => ({
+export const CURATED_PLAYLISTS = Object.freeze([
+  ...WORLD_THEMES.map((theme) => ({
     format: 'FPVPlaylist.v1',
     id: `collection-${theme.id}`,
     revision: 'r1',
     title: theme.title,
-    entries: WORLD_CATALOGUE.filter((entry) => entry.theme === theme.id).map((entry) => ({
+    entries: WORLD_CATALOGUE.filter(
+      (entry) => entry.theme === theme.id && entry.packIdentity !== ADVENTURE_IDENTITY,
+    ).map((entry) => ({
       packIdentity: entry.packIdentity,
       levelId: entry.id,
     })),
   })),
-);
+  ...ADVENTURE_WORLDS.map((world) => ({
+    format: 'FPVPlaylist.v1',
+    id: `adventure-${world.id}`,
+    revision: 'r1',
+    title: world.title,
+    entries: ADVENTURE_CATALOGUE.filter((e) => e.world === world.id).map((e) => ({
+      packIdentity: e.packIdentity,
+      levelId: e.id,
+    })),
+  })),
+]);
 
 // Flight School is a separate content revision. Existing Academy/world identities
 // and their recorded demonstrations deliberately do not include these lessons.
