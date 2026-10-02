@@ -84,7 +84,7 @@ export function createFlightInput({ window: win, document: doc, onPause = () => 
   return {
     clear,
     select(value) {
-      if (!['keyboard', 'touch', 'radio'].includes(value))
+      if (!['keyboard', 'touch', 'radio', 'controller'].includes(value))
         throw new TypeError('Unknown input source');
       clear();
       enabled = false;
@@ -100,7 +100,8 @@ export function createFlightInput({ window: win, document: doc, onPause = () => 
         touch.throttle = clamp(value, 0, 1);
     },
     sample(seconds) {
-      if (disposed || !enabled || owner === 'radio') return neutralFlightInput();
+      if (disposed || !enabled || ['radio', 'controller'].includes(owner))
+        return neutralFlightInput();
       if (owner === 'touch') return { ...touch };
       const fine = keys.has('ShiftLeft') || keys.has('ShiftRight'),
         gain = fine ? 0.18 : 0.5;
@@ -175,6 +176,232 @@ export function createFlightInput({ window: win, document: doc, onPause = () => 
     dispose() {
       disposed = true;
       clear();
+      for (const remove of listeners) remove();
+    },
+  };
+}
+
+/** Standard browser Gamepad flight ownership, separate from calibrated USB radios.
+ * Poll once per host frame; integrate throttle only by calling sample at fixed
+ * simulation ticks. A centred left stick holds the current throttle position.
+ * The host owns arming and gives this adapter an exclusive ready/flight scope;
+ * its menu adapter must be blocked for that same device while scope is owned.
+ * W3C standard mapping: LX yaw, -LY throttle rate, RX roll, -RY pitch. */
+export function createFlightGamepad({
+  window: win = globalThis.window,
+  document: doc = globalThis.document,
+} = {}) {
+  const mappedButtons = [0, 1, 2, 3, 4, 5, 6, 7, 9, 12, 13, 14, 15];
+  const actionButtons = new Map([
+    [0, 'arm'],
+    [1, 'back'],
+    [3, 'reset'],
+    [9, 'pause'],
+  ]);
+  let scope = 'blocked',
+    ready = false,
+    connected = false,
+    selected = null,
+    reason = 'blocked',
+    throttle = 0,
+    throttleRate = 0,
+    rotation = { roll: 0, pitch: 0, yaw: 0 },
+    fire = false,
+    intent = false,
+    neutral = false,
+    pending = null,
+    lastTime = null,
+    interrupted = false,
+    disposed = false;
+  const listeners = [];
+  const axis = (value) =>
+    Math.abs(value) <= 0.12 ? 0 : (Math.sign(value) * (Math.abs(value) - 0.12)) / 0.88;
+  const button = (pad, index) => {
+    const raw = pad.buttons?.[index];
+    return typeof raw === 'number' ? raw : (raw?.value ?? (raw?.pressed ? 1 : 0));
+  };
+  const valid = (pad) =>
+    pad &&
+    pad.connected !== false &&
+    pad.mapping === 'standard' &&
+    Number.isInteger(pad.index) &&
+    pad.index >= 0 &&
+    typeof pad.id === 'string' &&
+    pad.axes?.length >= 4 &&
+    pad.buttons?.length >= 16 &&
+    Array.from(pad.axes)
+      .slice(0, 4)
+      .every((n) => Number.isFinite(n) && Math.abs(n) <= 1) &&
+    mappedButtons.every(
+      (i) => Number.isFinite(button(pad, i)) && button(pad, i) >= 0 && button(pad, i) <= 1,
+    );
+  const key = (pad) => `${pad.index}:${pad.id}:${pad.axes.length}:${pad.buttons.length}`;
+  const clear = (nextReason = 'reset') => {
+    ready = false;
+    throttle = throttleRate = 0;
+    rotation = { roll: 0, pitch: 0, yaw: 0 };
+    fire = false;
+    intent = false;
+    neutral = false;
+    pending = null;
+    reason = nextReason;
+  };
+  const active = () => !disposed && connected && ready && scope === 'flight';
+  const controls = () =>
+    !disposed && connected && ready && scope !== 'blocked'
+      ? { ...rotation, throttle }
+      : neutralFlightInput();
+  const status = () => ({
+    connected: !disposed && connected,
+    ready: !disposed && connected && ready && scope !== 'blocked',
+    neutral: !disposed && connected && neutral,
+    canArm: !disposed && connected && ready && neutral && scope === 'ready',
+    active: active(),
+    id: selected?.id ?? null,
+    index: selected?.index ?? null,
+    reason,
+    stickMode: 2,
+    controls: controls(),
+    throttleRate: ready && scope !== 'blocked' ? throttleRate : 0,
+    fire: active() && fire,
+    intent: !disposed && connected && ready && scope !== 'blocked' && intent,
+  });
+  const suspend = () => {
+    interrupted ||= active();
+    clear('focus');
+    lastTime = null;
+  };
+  for (const [target, name] of [
+    [win, 'blur'],
+    [doc, 'visibilitychange'],
+  ]) {
+    if (!target?.addEventListener) continue;
+    target.addEventListener(name, suspend);
+    listeners.push(() => target.removeEventListener(name, suspend));
+  }
+  return {
+    poll({
+      gamepads = win?.navigator?.getGamepads?.() ?? [],
+      now = win?.performance?.now?.() ?? 0,
+      scope: nextScope = 'blocked',
+      excludeIndex = null,
+    } = {}) {
+      const actions = [];
+      if (disposed) return { ...status(), actions };
+      const wasActive = active();
+      if (interrupted) actions.push('pause');
+      interrupted = false;
+      if (!['ready', 'flight'].includes(nextScope)) nextScope = 'blocked';
+      const focused = !doc?.hidden && doc?.hasFocus?.() !== false;
+      if (!focused) nextScope = 'blocked';
+      if (nextScope !== scope) {
+        // The host has already accepted an explicit Arm from a neutral ready
+        // state. Keep that pickup when its next frame becomes flight: a pilot
+        // may raise throttle immediately after releasing Arm. Other scope
+        // transitions still demand a fresh neutral pickup.
+        const armedPickup = scope === 'ready' && nextScope === 'flight' && ready && connected;
+        clear(focused ? (nextScope === 'blocked' ? 'blocked' : 'neutral') : 'focus');
+        scope = nextScope;
+        if (armedPickup) {
+          ready = true;
+          reason = 'active';
+        }
+      }
+      const stalled =
+        !Number.isFinite(now) || (lastTime !== null && (now < lastTime || now - lastTime > 250));
+      lastTime = Number.isFinite(now) ? now : null;
+      if (stalled || !focused) {
+        if (wasActive && !actions.includes('pause')) actions.push('pause');
+        clear(stalled ? 'stall' : 'focus');
+      }
+      const all = Array.from(gamepads ?? []).filter((pad) => pad && pad.index !== excludeIndex);
+      const candidates = all.filter(valid).sort((a, b) => a.index - b.index);
+      const pad = candidates.find((candidate) => selected?.key === key(candidate)) ?? candidates[0];
+      const changed = selected?.key !== (pad ? key(pad) : undefined);
+      const lost = connected && changed;
+      if (changed) {
+        if (wasActive && !actions.includes('pause')) actions.push('pause');
+        clear(lost ? 'disconnected' : 'neutral');
+        selected = pad ? { key: key(pad), id: pad.id, index: pad.index } : null;
+      }
+      connected = Boolean(pad);
+      if (!pad) {
+        clear(
+          lost
+            ? 'disconnected'
+            : all.some((p) => p.connected !== false)
+              ? 'unsupported'
+              : 'missing',
+        );
+        return { ...status(), actions };
+      }
+      const values = Array.from(pad.axes).slice(0, 4).map(axis);
+      const centred = values.every((value) => value === 0);
+      const released = mappedButtons.every((i) => button(pad, i) <= 0.12);
+      neutral = centred && released;
+      if (scope === 'blocked' || stalled || !focused || lost) return { ...status(), actions };
+      if (!ready) {
+        if (centred && released) {
+          ready = true;
+          reason = scope === 'flight' ? 'active' : 'ready';
+        } else reason = 'neutral';
+        return { ...status(), actions };
+      }
+      const pressed = (i) => button(pad, i) > 0.5;
+      const heldActions = [...actionButtons.keys()].filter(pressed);
+      if (heldActions.length > 1) clear('neutral');
+      else if (pending !== null) {
+        if (!pressed(pending)) {
+          const action = actionButtons.get(pending);
+          pending = null;
+          if (heldActions.length) clear('neutral');
+          else if (action !== 'arm' || (scope === 'ready' && centred && released)) {
+            if (action !== 'arm' || scope === 'ready') actions.push(action);
+            if (action !== 'arm') clear(action === 'reset' ? 'reset' : 'neutral');
+          }
+        }
+      } else if (heldActions.length) pending = heldActions[0];
+      if (ready) {
+        rotation = {
+          roll: values[2] || (Number(pressed(15)) - Number(pressed(14))) * 0.5,
+          pitch: -values[3] || (Number(pressed(12)) - Number(pressed(13))) * 0.5,
+          yaw: values[0] || (Number(pressed(5)) - Number(pressed(4))) * 0.5,
+        };
+        const trigger = (i) => Math.max(0, (button(pad, i) - 0.12) / 0.88);
+        throttleRate = -values[1] || trigger(7) - trigger(6);
+        fire = pressed(2);
+        intent =
+          values.some((value) => Math.abs(value) > 0.18) ||
+          [4, 5, 12, 13, 14, 15].some(pressed) ||
+          Math.abs(trigger(7) - trigger(6)) > 0.18;
+        reason = scope === 'flight' ? 'active' : 'ready';
+      }
+      return { ...status(), actions };
+    },
+    sample(seconds) {
+      if (!active()) return neutralFlightInput();
+      const dt = Number.isFinite(seconds) ? clamp(seconds, 0, 0.05) : 0;
+      throttle = clamp(throttle + throttleRate * 0.5 * dt, 0, 1);
+      return controls();
+    },
+    preview: status,
+    status,
+    // A separate unscored preview may inherit its current thrust on takeover.
+    // Real flight ownership/reset still clears this value and all action edges.
+    seedThrottle(value) {
+      if (disposed || !Number.isFinite(value) || value < 0 || value > 1) return false;
+      throttle = value;
+      return true;
+    },
+    reset(nextReason = 'reset') {
+      clear(nextReason);
+      interrupted = false;
+      lastTime = null;
+    },
+    dispose() {
+      if (disposed) return;
+      clear('disposed');
+      disposed = true;
       for (const remove of listeners) remove();
     },
   };

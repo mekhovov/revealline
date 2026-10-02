@@ -1,5 +1,6 @@
 import { STICK_LAYOUTS, DEFAULT_RESPONSE, neutralFlightInput } from './radio-profile.mjs';
 import { createFlight, FLIGHT_HZ } from './model.mjs';
+import { createFlightGamepad } from './input.mjs';
 import { mountDroneDiagram, mountStickTrace, practiceSkillFeedback } from './sim-presentation.mjs';
 import {
   ACRO_LESSON_ORDER,
@@ -374,6 +375,7 @@ export function mountBeginnerCoach({
   createLessonPreview = null,
 }) {
   const doc = root.ownerDocument;
+  const labController = createFlightGamepad({ window: win, document: doc });
   let lesson = null,
     stage = 'closed',
     explored = 'throttle',
@@ -566,6 +568,13 @@ export function mountBeginnerCoach({
       AXES.map((axis) => [axis, clamp(values?.[axis], axis === 'throttle' ? 0 : -1, 1)]),
     );
   };
+  const labStickMode = () => {
+    if (labMode === 'try' && labSource === 'controller') return 2;
+    const requested = labRadioAvailable()
+      ? (snapshot.radioStickMode ?? snapshot.stickMode)
+      : snapshot.stickMode;
+    return STICK_LAYOUTS[requested] ? requested : 2;
+  };
   function clearLabInput({ block = true } = {}) {
     if (block) for (const key of labKeys) blockedKeys.add(key);
     labKeys.clear();
@@ -578,6 +587,7 @@ export function mountBeginnerCoach({
     autoPreviewPending = false;
     labRunning = false;
     labReason = reason;
+    labController.reset(reason);
     labFlight?.pause();
     labState = labFlight?.snapshot() ?? null;
     clearLabInput();
@@ -597,6 +607,7 @@ export function mountBeginnerCoach({
   });
   function prepareExample({ fromStep = viewedStep } = {}) {
     clearStickMotion();
+    labController.reset('preview-reset');
     labFlight?.dispose?.();
     labFlight = null;
     labLesson = labScope === 'lesson' && hasLessonPreview();
@@ -687,6 +698,7 @@ export function mountBeginnerCoach({
     if (stage !== 'guide' || disposed) return;
     if (labMode !== 'try' || labSource !== source) {
       ++previewActivityRevision;
+      const previousStickMode = labStickMode();
       const throttle = labInput.throttle;
       clearLabInput();
       labMode = 'try';
@@ -696,8 +708,11 @@ export function mountBeginnerCoach({
       // throttle. Radio uses its actual calibrated value, never this handoff.
       labInput.throttle = throttle;
       labTouch.throttle = throttle;
+      if (source === 'controller') labController.seedThrottle(throttle);
+      else labController.reset('ownership');
       rememberRadioBaseline();
-      paint();
+      if (labStickMode() !== previousStickMode) render();
+      else paint();
     }
     playPreview({ focus });
   }
@@ -726,6 +741,47 @@ export function mountBeginnerCoach({
     snapshot.radioMonitor = value?.controls;
     snapshot.radioAvailable = Boolean(value?.verified);
     snapshot.radioStickMode = value?.stickMode ?? snapshot.radioStickMode;
+    snapshot.radioIndex = value?.verified && Number.isInteger(value.index) ? value.index : null;
+  }
+  function pollController(now = win.performance?.now?.() ?? Date.now()) {
+    let gamepads = [];
+    try {
+      gamepads = win.navigator?.getGamepads?.() ?? [];
+    } catch {
+      // An unavailable browser Gamepad API cannot keep a preview moving.
+    }
+    // Older hosts may omit the selected radio slot. Preserve their calibrated
+    // radio ownership instead of guessing whether a standard pad is that radio.
+    if (labRadioAvailable() && !Number.isInteger(snapshot.radioIndex)) gamepads = [];
+    return labController.poll({
+      gamepads,
+      now,
+      scope: 'flight',
+      excludeIndex: labRadioAvailable() ? snapshot.radioIndex : null,
+    });
+  }
+  function observeController(now) {
+    const value = pollController(now);
+    if (value.actions.includes('reset')) {
+      if (labLesson) viewedStep = 0;
+      resetPreview();
+      patchLessonStep();
+      return false;
+    }
+    const ownsPreview = labMode === 'try' && labSource === 'controller';
+    const explicitPause =
+      value.actions.includes('back') ||
+      (value.actions.includes('pause') && value.reason === 'neutral');
+    if (explicitPause || (ownsPreview && value.actions.includes('pause'))) {
+      pausePreview('controller');
+      return false;
+    }
+    if (ownsPreview && !value.active) {
+      pausePreview('controller');
+      return false;
+    }
+    if (labMode === 'example' && value.intent) takeControls('controller');
+    return true;
   }
   function previewCommand(advance = true) {
     if (labMode === 'example')
@@ -740,6 +796,8 @@ export function mountBeginnerCoach({
           ? labPlan.command(labExampleTick, labState)
           : beginnerExampleCommand(labExampleTick, displayedStep()?.axis);
     if (labSource === 'radio') return labRadioInput();
+    if (labSource === 'controller')
+      return advance ? labController.sample(1 / FLIGHT_HZ) : labController.preview().controls;
     if (labSource === 'touch') {
       if (advance)
         labTouch.throttle = clamp(
@@ -815,6 +873,7 @@ export function mountBeginnerCoach({
       pausePreview('stall');
       return;
     }
+    if (!observeController(time)) return;
     labAccumulator += Math.max(0, elapsed) * (labMode === 'example' ? examplePace() : 1);
     while (labAccumulator >= 1000 / FLIGHT_HZ) {
       labAccumulator -= 1000 / FLIGHT_HZ;
@@ -866,6 +925,14 @@ export function mountBeginnerCoach({
     if (labMode === 'try' && labSource === 'radio' && !labRadioAvailable()) {
       pausePreview('radio');
       return;
+    }
+    if (!labRunning && labMode === 'try' && labSource === 'controller') {
+      refreshRadioSample();
+      if (!pollController().ready) {
+        pausePreview('controller');
+        return;
+      }
+      labController.seedThrottle(labInput.throttle);
     }
     labReason = '';
     if (labRunning) {
@@ -1012,7 +1079,10 @@ export function mountBeginnerCoach({
       reducedMotion: Boolean(snapshot.reducedMotion),
       controls: input,
       locale: lang(),
-      unavailable: labMode === 'try' && labSource === 'radio' && !labRadioAvailable(),
+      unavailable:
+        labMode === 'try' &&
+        ((labSource === 'radio' && !labRadioAvailable()) ||
+          (labSource === 'controller' && !labController.status().connected)),
       practiceTarget: labLesson ? state.target : null,
     });
     if (refs.labPlay) {
@@ -1028,6 +1098,7 @@ export function mountBeginnerCoach({
         keyboard: t('Keyboard', 'Клавіатура'),
         touch: t('Touch controls', 'Дотикове керування'),
         radio: t('Radio / controller', 'Пульт / контролер'),
+        controller: t('Gamepad / Steam Deck', 'Геймпад / Steam Deck'),
       }[labSource];
       const text =
         labMode === 'example'
@@ -1035,7 +1106,9 @@ export function mountBeginnerCoach({
               'Move a stick, drag a gimbal or use the keyboard to take control. Esc pauses so you can browse.',
               'Рухайте стіком, перетягніть джойстик або натисніть клавішу, щоб керувати. Esc — пауза для навігації.',
             )
-          : `${source} · ${t('live input at normal speed · replay the example whenever you want', 'ваш сигнал зі звичайною швидкістю · приклад можна повторити будь-коли')}`;
+          : labSource === 'controller'
+            ? `${source} · ${t('left up/down adjusts thrust; release holds · Start / B pauses', 'лівий стік угору/вниз змінює тягу; центр утримує · Start / B — пауза')}`
+            : `${source} · ${t('live input at normal speed · replay the example whenever you want', 'ваш сигнал зі звичайною швидкістю · приклад можна повторити будь-коли')}`;
       if (refs.labSourceHint.textContent !== text) refs.labSourceHint.textContent = text;
     }
     if (refs.labPhase) {
@@ -1098,25 +1171,30 @@ export function mountBeginnerCoach({
                 'YOUR CONTROLS · no time limit · real lesson stays paused',
                 'ВАШЕ КЕРУВАННЯ · без обмеження часу · урок залишається на паузі',
               )
-        : labReason === 'radio'
+        : labReason === 'controller'
           ? t(
-              'Connect and select a radio/controller in Setup, then resume preview.',
-              'Під’єднайте та виберіть пульт у налаштуваннях і продовжте перегляд.',
+              'PREVIEW PAUSED · Centre the gamepad sticks and release its buttons, then choose Resume controls. The real flight stays paused.',
+              'ПЕРЕГЛЯД НА ПАУЗІ · Центруйте стіки геймпада й відпустіть кнопки, потім виберіть «Продовжити керування». Справжній політ на паузі.',
             )
-          : labReason === 'boundary'
+          : labReason === 'radio'
             ? t(
-                'Preview touched ground or its boundary. Reset to try again.',
-                'Перегляд торкнувся землі чи межі. Скиньте його та спробуйте знову.',
+                'Connect and select a radio/controller in Setup, then resume preview.',
+                'Під’єднайте та виберіть пульт у налаштуваннях і продовжте перегляд.',
               )
-            : labReason === 'finished'
+            : labReason === 'boundary'
               ? t(
-                  'Preview finished. Reset or play again; no progress was awarded.',
-                  'Перегляд завершено. Скиньте або повторіть; поступ не зараховано.',
+                  'Preview touched ground or its boundary. Reset to try again.',
+                  'Перегляд торкнувся землі чи межі. Скиньте його та спробуйте знову.',
                 )
-              : t(
-                  'PREVIEW PAUSED · Play / Resume opens controls; the real lesson stays paused',
-                  'ПЕРЕГЛЯД НА ПАУЗІ · показ / продовжити відкриває керування; справжній урок на паузі',
-                );
+              : labReason === 'finished'
+                ? t(
+                    'Preview finished. Reset or play again; no progress was awarded.',
+                    'Перегляд завершено. Скиньте або повторіть; поступ не зараховано.',
+                  )
+                : t(
+                    'PREVIEW PAUSED · Play / Resume opens controls; the real lesson stays paused',
+                    'ПЕРЕГЛЯД НА ПАУЗІ · показ / продовжити відкриває керування; справжній урок на паузі',
+                  );
       const statusText =
         labImmersive && labLesson && labMode === 'try' && labCompletedStep >= 0
           ? `${refs.labPhase.textContent} · ${text}`
@@ -1557,10 +1635,7 @@ export function mountBeginnerCoach({
       card.append(refs.labSourceHint);
       const visuals = node('div', 'coach-visuals coach-grid'),
         controller = node('section', 'coach-controller coach-radio-chassis');
-      const requestedMode = labRadioAvailable()
-        ? (snapshot.radioStickMode ?? snapshot.stickMode)
-        : snapshot.stickMode;
-      const stickMode = STICK_LAYOUTS[requestedMode] ? requestedMode : 2;
+      const stickMode = labStickMode();
       controller.append(
         node(
           'div',
@@ -1594,6 +1669,16 @@ export function mountBeginnerCoach({
           t(
             'The small amber dot shows exact example input; the hollow ring follows its movement. The short trail shows where the stick came from. Your cyan dot responds immediately.',
             'Мала жовта крапка показує точний сигнал прикладу; порожнє коло допомагає простежити рух. Короткий слід показує, звідки рухався стік. Ваша блакитна крапка реагує відразу.',
+          ),
+        ),
+      );
+      notes.append(
+        node(
+          'p',
+          'coach-example-note',
+          t(
+            'Gamepad / Steam Deck: left stick turns the nose and adjusts thrust; centring holds the thrust setting. Right stick banks and pitches. D-pad moves roll/pitch; shoulder buttons turn; triggers lower/raise thrust. Move a centred controller to take over an example. Start or B / Circle pauses; Y / Triangle resets practice. Paused controls belong to the menus. These buttons never arm the real flight from this guide.',
+            'Геймпад / Steam Deck: лівий стік повертає ніс і змінює тягу; центр зберігає її рівень. Правий стік — крен і тангаж. Хрестовина — крен/тангаж; плечові кнопки — поворот; тригери зменшують/збільшують тягу. Центруйте геймпад і рухайте стіком, щоб перейняти приклад. Start або B / Circle — пауза; Y / Triangle — скидання практики. На паузі керування належить меню. Ці кнопки ніколи не вмикають справжній політ із пояснення.',
           ),
         ),
       );
@@ -1727,20 +1812,25 @@ export function mountBeginnerCoach({
     if (stage === 'guide') paintLab();
     if (refs.signal)
       refs.signal.textContent =
-        labMode === 'try' && labSource === 'radio'
-          ? labRadioAvailable()
-            ? t(
-                'Calibrated radio/controller signal drives only this preview. Arm switches cannot start the real lesson here.',
-                'Калібрований сигнал пульта керує лише переглядом. Перемикач увімкнення не запускає справжній урок тут.',
-              )
+        labMode === 'try' && labSource === 'controller'
+          ? t(
+              'The standard gamepad drives only this preview. Thrust is inherited at takeover, then changes only while you move the left stick vertically or use the triggers.',
+              'Стандартний геймпад керує лише переглядом. Під час переходу тяга зберігається, а далі змінюється лише вертикальним рухом лівого стіка або тригерами.',
+            )
+          : labMode === 'try' && labSource === 'radio'
+            ? labRadioAvailable()
+              ? t(
+                  'Calibrated radio/controller signal drives only this preview. Arm switches cannot start the real lesson here.',
+                  'Калібрований сигнал пульта керує лише переглядом. Перемикач увімкнення не запускає справжній урок тут.',
+                )
+              : t(
+                  'No selected radio/controller signal. Use Setup, then resume the preview.',
+                  'Немає сигналу вибраного пульта. Відкрийте налаштування та продовжте перегляд.',
+                )
             : t(
-                'No selected radio/controller signal. Use Setup, then resume the preview.',
-                'Немає сигналу вибраного пульта. Відкрийте налаштування та продовжте перегляд.',
-              )
-          : t(
-              'Use the keyboard, touch a gimbal or move a calibrated controller to take over. Preview results never count toward the lesson.',
-              'Скористайтеся клавіатурою, торкніться джойстика або рухайте каліброваним пультом, щоб керувати. Результати перегляду не зараховуються до уроку.',
-            );
+                'Use the keyboard, touch a gimbal or move a calibrated controller to take over. Preview results never count toward the lesson.',
+                'Скористайтеся клавіатурою, торкніться джойстика або рухайте каліброваним пультом, щоб керувати. Результати перегляду не зараховуються до уроку.',
+              );
     if (stage !== 'guide') for (const stick of refs.sticks) paintStick(stick, input);
     const state = stage === 'guide' && labLesson ? labState : snapshot.state,
       at = state?.attitude;
@@ -2092,6 +2182,7 @@ export function mountBeginnerCoach({
       labFlight = labState = null;
       lessonDemonstration = lessonTimeline = null;
       disposed = true;
+      labController.dispose();
       win.removeEventListener('keydown', keyDown, true);
       win.removeEventListener('keyup', keyUp, true);
       win.removeEventListener('blur', loseFocus);

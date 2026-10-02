@@ -152,3 +152,13 @@ Scenery attribution and original files are retained in
 `authoring/fpv-worlds/assets/kenney`; runtime license/provenance files are shipped
 with the package. Sources: [Kenney Industrial Kit](https://kenney.nl/assets/city-kit-industrial)
 and [Kenney Retro Urban Kit](https://opengameart.org/content/retro-urban-kit).
+
+## 2 October handheld/controller update
+
+Both hosts now prioritize the FPV viewport on phones and handheld dimensions;
+secondary controls live in a paused menu. Standard browser controllers supply
+flight axes, Arm, Reset, Pause and combat Fire, with exclusive menu/radio ownership.
+The isolated learning lab supports controller takeover. Functional receipts and
+research are in [Handheld flight](fpv-handheld-flight.md). Physical device and
+sustained performance qualification remain in R7; additional unit coverage stays
+deferred. The next focused increment adds FPV SIM after Solo/Versus/Team.

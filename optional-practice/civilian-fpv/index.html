@@ -11,7 +11,7 @@
     <script type="module" src="app.mjs"></script>
   </head>
   <body class="field-kit sim-academy">
-    <main id="flight-app">
+    <main id="flight-app" data-flight-state="ready" data-flight-menu-open="false">
       <header class="flight-header">
         <div class="brand">
           <strong>FPV / LINE</strong>
@@ -33,6 +33,14 @@
         </nav>
       </header>
       <section class="flight-toolbar" aria-label="Flight controls">
+        <button
+          id="academy-flight-close-menu"
+          class="handheld-flight-close-menu"
+          type="button"
+          data-sim-copy="returnToFlight"
+        >
+          Return to flight
+        </button>
         <div class="academy-input-controls">
           <label
             ><span data-copy="mode"></span>
@@ -46,6 +54,7 @@
             <select id="input-source">
               <option value="keyboard" data-copy="keyboard"></option>
               <option value="touch" data-copy="touch"></option>
+              <option value="controller" data-sim-copy="controller">Controller</option>
               <option value="radio" data-copy="radio"></option>
             </select>
           </label>
@@ -130,6 +139,25 @@
         aria-describedby="brief target keyboard-help"
       >
         <canvas id="flight-canvas" aria-hidden="true"></canvas>
+        <div class="handheld-flight-actions">
+          <button
+            id="academy-flight-menu"
+            class="handheld-flight-menu"
+            type="button"
+            data-sim-copy="flightMenu"
+            aria-expanded="false"
+          >
+            Menu
+          </button>
+          <button
+            id="academy-flight-resume"
+            class="handheld-flight-resume"
+            type="button"
+            data-copy="arm"
+          >
+            Arm / resume
+          </button>
+        </div>
         <div class="scene-heading">
           <p id="course-number"></p>
           <h1 id="course-title"></h1>
