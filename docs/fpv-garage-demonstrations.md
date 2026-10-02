@@ -49,8 +49,10 @@ Evidence:
 - The prepared player was also inspected with native real-time playback for
   Upper deck survey, including its final result and the same paused approach in
   FPV/chase. These spot-checks are separate from the accelerated fixture.
-- Frozen package admission and public availability are separate gates; consult
-  the latest delivery checkpoint before claiming publication.
+- `fpv-garage-package-verification.json`: all three admissions, committed-input
+  and ZIP checks, and two byte-identical builds at frozen candidate
+  `5d9411ba831800bc7f6ae763f46d9d4ea69fa8f7`. Public availability remains a
+  separate gate; consult the latest delivery checkpoint.
 
 Browser qualification uses unchanged production renderer, input adapters and
 recordings, with controlled frame timestamps to complete all fixed-step commands
