@@ -128,6 +128,9 @@ export function createFlightRenderer({
     importedMixer = null,
     importedClips = [],
     obstacleMaps = null,
+    obstacleSurface = null,
+    lastActorState = null,
+    importedAnimationTick = null,
     environmentLight = null,
     cosmeticColor = null,
     themeProfile = null,
@@ -145,7 +148,16 @@ export function createFlightRenderer({
     shadowMaterials = new WeakMap(),
     goalRows = [],
     actorRows = new Map(),
-    pulseRows = new Map();
+    actorDefinitions = new Map(),
+    seenActors = new Set(),
+    pulseRows = new Map(),
+    qualityDetails = [];
+  const framePosition = new THREE.Vector3(),
+    frameRotation = new THREE.Quaternion(),
+    cameraOffset = new THREE.Vector3(),
+    cameraTiltRotation = new THREE.Quaternion(),
+    cameraTiltAxis = new THREE.Vector3(1, 0, 0),
+    pulseTransform = new THREE.Matrix4();
   const texturesOf = (paint) => Object.values(paint ?? {}).filter((value) => value?.isTexture);
   function ownShadowMaterial(item) {
     if (!item.isMesh || item.customDepthMaterial || Array.isArray(item.material)) return;
@@ -236,6 +248,7 @@ export function createFlightRenderer({
       importedMixer = null;
     }
     importedClips = [];
+    importedAnimationTick = null;
     releaseGroup(imported);
   }
   function releaseShadow() {
@@ -298,7 +311,7 @@ export function createFlightRenderer({
     renderer.shadowMap.needsUpdate = true;
     const visuals = world.userData.visuals;
     if (visuals) {
-      const baseAmbient = visuals.indoor ? 2.5 : 2.1;
+      const baseAmbient = visuals.indoor ? 2.0 : 1.55;
       const baseSun = visuals.indoor ? 2.0 : 3.1;
       hemisphere.intensity = baseAmbient * selected.ambient;
       sunlight.intensity = baseSun * selected.key;
@@ -311,6 +324,16 @@ export function createFlightRenderer({
     scene.environment = value === 'low' ? null : (environmentLight?.texture ?? null);
     scene.environmentIntensity = value === 'high' ? 0.55 : 0.32;
     if (changed && droneVisual) setDrone(droneKind);
+    for (const item of qualityDetails)
+      item.visible =
+        value === 'high' || (item.userData.minimumQuality === 'balanced' && value !== 'low');
+    if (changed && actorRows.size) {
+      releaseGroup(actors);
+      actorRows.clear();
+      for (const descriptor of (course?.actors ?? []).slice(0, 20))
+        actorRows.set(descriptor.id, createActor(descriptor));
+      if (lastActorState) updateActors(lastActorState);
+    }
     setSurfaceQuality(materials, value, renderer.capabilities.getMaxAnisotropy());
     if (changed) for (const paint of materials) paint.needsUpdate = true;
     lastWidth = lastHeight = 0;
@@ -364,9 +387,40 @@ export function createFlightRenderer({
       depthWrite: false,
     });
     if (step.type === 'gate') {
+      const gateStyle = themeProfile?.assets?.gate ?? 'builtin:gate';
+      group.userData.themeAsset = gateStyle;
+      // These remain translucent criterion guides; their aperture is unchanged.
+      light.roughness = gateStyle.includes('timber')
+        ? 0.95
+        : gateStyle.includes('utility')
+          ? 0.65
+          : 0.35;
+      light.metalness = gateStyle.includes('utility') ? 0.5 : 0;
+      light.emissiveIntensity = gateStyle.includes('neon')
+        ? 1.5
+        : gateStyle.includes('timber')
+          ? 0.2
+          : 0.65;
+      light.emissive.setHex(
+        gateStyle.includes('timber') ? 0xc8aa72 : (themeProfile?.palette?.accent ?? 0x82e1d5),
+      );
       const horizontal = step.axis === 'z',
         span = horizontal ? size[0] : size[2];
       for (const side of [-1, 1]) {
+        // A short bracket at each outer corner identifies the theme without
+        // filling the gate opening or changing its exact crossing boundary.
+        if (gateStyle.includes('utility') || gateStyle.includes('neon')) {
+          const bracket = mesh(
+            new THREE.BoxGeometry(horizontal ? 0.32 : 0.045, 0.045, horizontal ? 0.045 : 0.32),
+            light,
+            group,
+          );
+          bracket.position.set(
+            horizontal ? side * (span / 2 + 0.14) : 0,
+            size[1] / 2,
+            horizontal ? 0 : side * (span / 2 + 0.14),
+          );
+        }
         const upright = mesh(new THREE.BoxGeometry(0.045, size[1], 0.045), light, group);
         upright.position.set(
           horizontal ? (side * span) / 2 : 0,
@@ -509,17 +563,102 @@ export function createFlightRenderer({
       register(arrow);
     }
   }
+  function obstacleSurfaceKind(obstacle) {
+    const id = obstacle.id ?? '';
+    if (/tree|timber|crate/.test(id) || course.environment === 'woodland') return 'wood';
+    if (/house/.test(id) && course.environment === 'courtyard') return 'plaster';
+    if (/wall|well/.test(id) && course.environment === 'courtyard') return 'brick';
+    if (['garage', 'gym'].includes(course.environment) || /ramp|deck|column|stand/.test(id))
+      return 'concrete';
+    return 'metal';
+  }
+  function worldScaleUV(shape) {
+    const positions = shape.getAttribute('position'),
+      normals = shape.getAttribute('normal');
+    const uv = new Float32Array(positions.count * 2);
+    for (let i = 0; i < positions.count; i++) {
+      const nx = Math.abs(normals.getX(i)),
+        ny = Math.abs(normals.getY(i)),
+        nz = Math.abs(normals.getZ(i));
+      // Local metres survive rotation and avoid a different texture scale on
+      // every authored box. Shape vertices remain completely unchanged.
+      uv[i * 2] = (nx > ny && nx > nz ? positions.getZ(i) : positions.getX(i)) / 4;
+      uv[i * 2 + 1] = (ny >= nx && ny >= nz ? positions.getZ(i) : positions.getY(i)) / 4;
+    }
+    shape.setAttribute('uv', new THREE.BufferAttribute(uv, 2));
+  }
+  function addFlushPanels(parent, panels, color, minimumQuality = 'balanced') {
+    if (!panels.length) return;
+    const positions = [],
+      normals = [];
+    for (const panel of panels) {
+      const [side, along, elevation, width, height, half] = panel;
+      const corners = [
+        [-1, -1],
+        [1, -1],
+        [1, 1],
+        [-1, -1],
+        [1, 1],
+        [-1, 1],
+      ];
+      for (const [u, v] of corners) {
+        const a = along + (u * width) / 2,
+          y = elevation + (v * height) / 2;
+        if (side === 0) {
+          positions.push(a, y, half);
+          normals.push(0, 0, 1);
+        } else if (side === 1) {
+          positions.push(-a, y, -half);
+          normals.push(0, 0, -1);
+        } else if (side === 2) {
+          positions.push(half, y, -a);
+          normals.push(1, 0, 0);
+        } else {
+          positions.push(-half, y, a);
+          normals.push(-1, 0, 0);
+        }
+      }
+    }
+    const shape = new THREE.BufferGeometry();
+    shape.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3));
+    shape.setAttribute('normal', new THREE.Float32BufferAttribute(normals, 3));
+    const paint = material(color, {
+      roughness: 0.62,
+      metalness: 0.15,
+      side: THREE.DoubleSide,
+      polygonOffset: true,
+      polygonOffsetFactor: -2,
+      polygonOffsetUnits: -2,
+    });
+    const panelsMesh = mesh(shape, paint, parent);
+    panelsMesh.name = 'flush-surface-markings';
+    panelsMesh.userData.minimumQuality = minimumQuality;
+    panelsMesh.visible = quality === 'high' || (minimumQuality === 'balanced' && quality !== 'low');
+    qualityDetails.push(panelsMesh);
+  }
   function renderObstacle(obstacle, index) {
     const theme = themeForCourse(course),
-      paint = material(index % 3 ? 0xffffff : 0xffe3b9, {
-        ...obstacleMaps,
-        normalScale: new THREE.Vector2(0.3, 0.3),
-        roughness: 0.78,
-        metalness: course.environment === 'container-yard' ? 0.25 : 0.08,
-      });
-    let value;
+      kind = obstacleSurfaceKind(obstacle);
+    const maps = obstacleSurface?.(kind) ?? obstacleMaps;
+    const paint = material(
+      kind === 'metal' && course.environment === 'container-yard'
+        ? [0x91aca7, 0xcbb47e, 0x9dacae][index % 3]
+        : kind === 'plaster'
+          ? 0xfff5dd
+          : 0xffffff,
+      {
+        ...maps,
+        normalScale: new THREE.Vector2(
+          kind === 'plaster' ? 0.13 : 0.3,
+          kind === 'plaster' ? 0.13 : 0.3,
+        ),
+        roughness: kind === 'metal' ? 0.66 : 0.9,
+        metalness: kind === 'metal' ? 0.28 : 0,
+      },
+    );
+    let value, size;
     if (obstacle.type === 'trimesh') {
-      const shape = new THREE.BufferGeometry();
+      let shape = new THREE.BufferGeometry();
       shape.setAttribute(
         'position',
         new THREE.Float32BufferAttribute(
@@ -528,16 +667,20 @@ export function createFlightRenderer({
         ),
       );
       shape.setIndex(obstacle.indices);
+      // Split only the visual vertices for stable planar texture projection;
+      // the canonical collision triangles and their identity are untouched.
+      const flat = shape.toNonIndexed();
+      shape.dispose();
+      shape = flat;
       shape.computeVertexNormals();
+      if (obstacleSurface) worldScaleUV(shape);
       paint.side = THREE.DoubleSide;
       value = mesh(shape, paint);
     } else if (obstacle.min && obstacle.max) {
-      value = mesh(
-        new THREE.BoxGeometry(
-          ...['x', 'y', 'z'].map((key) => (obstacle.max[key] - obstacle.min[key]) / 1000),
-        ),
-        paint,
-      );
+      size = ['x', 'y', 'z'].map((key) => (obstacle.max[key] - obstacle.min[key]) / 1000);
+      const shape = new THREE.BoxGeometry(...size);
+      if (obstacleSurface) worldScaleUV(shape);
+      value = mesh(shape, paint);
       value.position.set(
         ...['x', 'y', 'z'].map((key) => (obstacle.max[key] + obstacle.min[key]) / 2000),
       );
@@ -549,13 +692,59 @@ export function createFlightRenderer({
     }
     value.name = obstacle.id;
     value.userData.collisionId = obstacle.id;
+    value.userData.surfaceKind = kind;
     value.castShadow = value.receiveShadow = true;
+    if (size && size[1] > 0.5) {
+      const panels = [],
+        accents = [],
+        [width, height, depth] = size;
+      for (let side = 0; side < 4; side++) {
+        const span = side < 2 ? width : depth,
+          half = (side < 2 ? depth : width) / 2;
+        if (kind === 'plaster' && span > 2 && height > 2) {
+          const count = Math.max(1, Math.min(5, Math.floor(span / 2.4)));
+          for (let i = 0; i < count; i++)
+            for (let floor = 0; floor < Math.min(3, Math.floor(height / 2.2)); floor++)
+              panels.push([
+                side,
+                -span / 2 + ((i + 0.5) * span) / count,
+                -height / 2 + 1.4 + floor * 2.2,
+                Math.min(1.1, (span / count) * 0.55),
+                1.05,
+                half,
+              ]);
+          accents.push([side, 0, -height / 2 + 0.25, span, 0.24, half]);
+        } else if (kind === 'metal' && span > 1) {
+          accents.push([side, 0, -height * 0.34, span * 0.96, Math.min(0.12, height * 0.08), half]);
+          if (/container|rack/.test(obstacle.id))
+            panels.push([
+              side,
+              span * 0.26,
+              height * 0.12,
+              Math.min(0.5, span * 0.16),
+              Math.min(0.3, height * 0.18),
+              half,
+            ]);
+        } else if (/column/.test(obstacle.id) && span > 0.2) {
+          accents.push([
+            side,
+            0,
+            -height / 2 + Math.min(1, height * 0.4),
+            span,
+            Math.min(0.3, height * 0.12),
+            half,
+          ]);
+        }
+      }
+      addFlushPanels(value, panels, kind === 'plaster' ? 0x456475 : 0xe7e7cf);
+      addFlushPanels(value, accents, kind === 'plaster' ? 0x8c7863 : theme.warm, 'high');
+    }
     const edges = new THREE.EdgesGeometry(value.geometry, 30);
     geometry.add(edges);
     const edgePaint = new THREE.LineBasicMaterial({
       color: theme.warm,
       transparent: true,
-      opacity: 0.35,
+      opacity: 0.22,
     });
     materials.add(edgePaint);
     value.add(new THREE.LineSegments(edges, edgePaint));
@@ -578,6 +767,9 @@ export function createFlightRenderer({
     for (const group of [world, goals, actors, projectiles]) releaseGroup(group);
     goalRows.length = 0;
     actorRows.clear();
+    actorDefinitions.clear();
+    qualityDetails.length = 0;
+    lastActorState = null;
     pulseRows.clear();
     const surroundings = buildWorldVisuals({ course, world, mesh, material, box });
     register(world);
@@ -585,18 +777,23 @@ export function createFlightRenderer({
     themeProfile = surroundings.profile;
     sceneryFallback = surroundings.backdrop;
     obstacleMaps = surroundings.obstacleMaps;
+    obstacleSurface = surroundings.obstacleSurface ?? null;
     scene.background = new THREE.Color(surroundings.indoor ? theme.wall : theme.sky);
     // Visibility is a course property, identical across graphics presets.
     scene.fog = new THREE.Fog(theme.fog, surroundings.indoor ? 55 : 85, 210);
+    hemisphere.groundColor
+      .copy(surroundings.groundColor ?? new THREE.Color(theme.ground))
+      .multiplyScalar(0.4);
     environmentLight = createEnvironmentLight(renderer, {
       sky: surroundings.indoor ? theme.wall : theme.sky,
-      ground: theme.ground,
+      ground: surroundings.groundColor ?? theme.ground,
       indoor: surroundings.indoor,
     });
     world.userData.visuals = {
       indoor: surroundings.indoor,
       center: surroundings.center,
       setQuality: surroundings.setQuality,
+      updatePresentation: surroundings.updatePresentation,
     };
     const extent = Math.max(surroundings.width, surroundings.depth) / 2 + 5;
     Object.assign(sunlight.shadow.camera, {
@@ -623,6 +820,7 @@ export function createFlightRenderer({
     (course.obstacles ?? []).forEach(renderObstacle);
     (course.steps?.[mode] ?? []).forEach(lineVolume);
     for (const actor of (course.actors ?? []).slice(0, 20)) {
+      actorDefinitions.set(actor.id, actor);
       const row = createActor(actor);
       if (actor.position)
         row.group.position.set(
@@ -637,30 +835,36 @@ export function createFlightRenderer({
   }
   function createActor(actor) {
     const group = new THREE.Group();
-    const animated = { rotors: [], wheels: [], limbs: [] };
+    const animated = { rotors: [], wheels: [], limbs: [], body: null };
     actors.add(group);
     const radius = (actor.radius ?? 300) / 1000,
-      height = (actor.height ?? 1800) / 1000;
-    const role = actor.type === 'hazard' ? 'hazard' : (actor.role ?? 'hostile');
-    const friendly = role === 'rival' || role === 'civilian';
+      height = (actor.height ?? 1800) / 1000,
+      role = actor.type === 'hazard' ? 'hazard' : (actor.role ?? 'hostile'),
+      friendly = role === 'rival' || role === 'civilian',
+      slot = actor.type === 'vehicle' ? themeProfile?.assets?.vehicle : themeProfile?.assets?.enemy,
+      pixel = themeProfile?.characters === 'arcade' || /pixel|arcade/.test(slot ?? ''),
+      detailed = quality === 'high',
+      civilian = themeProfile?.characters === 'civilian' || role === 'civilian';
+    group.name = `actor-${actor.id}`;
+    group.userData.themeAsset = slot ?? 'builtin:sentry';
+    if (actor.position)
+      group.position.set(actor.position.x / 1000, actor.position.y / 1000, actor.position.z / 1000);
     const armor = material(
-      friendly
-        ? 0x74bfc0
-        : themeProfile?.characters === 'arcade'
-          ? 0xa785cb
-          : themeProfile?.characters === 'civilian'
-            ? 0x839c9d
-            : 0x778b86,
-      { metalness: 0.4, roughness: 0.5 },
+      friendly ? 0x74bfc0 : pixel ? 0xa785cb : civilian ? 0x839c9d : 0x778b86,
+      { metalness: civilian ? 0.08 : 0.35, roughness: civilian ? 0.84 : 0.55 },
     );
     const threat = material(friendly ? 0x77ebe0 : 0xf1ae75, {
       emissive: friendly ? 0x249eaa : 0xb86231,
       emissiveIntensity: 0.5,
     });
-    const dark = material(0x283e47, { roughness: 0.65 });
-    group.userData.ownedMaterials = [armor, threat, dark];
-    const part = (shape, paint, at) => {
-      const value = mesh(shape, paint, group);
+    const dark = material(0x283e47, { roughness: 0.78 });
+    const metal =
+      quality === 'low' ? dark : material(0xa9b7b8, { metalness: 0.72, roughness: 0.34 });
+    const glass =
+      quality === 'low' ? dark : material(0x456975, { metalness: 0.25, roughness: 0.17 });
+    group.userData.ownedMaterials = [armor, threat, dark, metal, glass];
+    const part = (shape, paint, at, parent = group) => {
+      const value = mesh(shape, paint, parent);
       value.position.set(...at);
       value.castShadow = true;
       return value;
@@ -668,38 +872,99 @@ export function createFlightRenderer({
     if (actor.type === 'drone') {
       const rig = new THREE.Group();
       group.add(rig);
+      animated.body = rig;
       rig.position.y = radius;
       rig.scale.setScalar(radius / 0.22);
+      const kind = pixel
+        ? 'pixel'
+        : /practice-drone/.test(slot ?? '') || role === 'rival'
+          ? 'racer'
+          : 'utility';
       const visual = buildDroneVisual({
         parent: rig,
         mesh,
         material,
         box,
-        kind: role === 'rival' ? 'racer' : 'utility',
+        kind,
         quality: quality === 'high' ? 'balanced' : 'low',
       });
       visual.tint.color.setHex(friendly ? 0x77ebe0 : 0xe6a16b);
       animated.rotors = visual.rotors;
     } else if (actor.type === 'vehicle') {
+      const van = /van/.test(slot ?? ''),
+        truck = /truck/.test(slot ?? '');
       part(new THREE.BoxGeometry(radius * 1.4, radius * 0.55, radius * 1.3), armor, [
         0,
         radius * 0.55,
         0,
       ]);
-      part(new THREE.BoxGeometry(radius * 0.7, radius * 0.5, radius * 0.6), dark, [
-        0,
-        radius * 1.04,
-        0,
-      ]);
+      part(
+        new THREE.BoxGeometry(
+          radius * (van ? 1.18 : 0.85),
+          radius * (van ? 0.62 : 0.45),
+          radius * (truck ? 0.53 : van ? 1.03 : 0.75),
+        ),
+        armor,
+        [0, radius * (van ? 1.0 : 0.96), truck ? -radius * 0.26 : 0],
+      );
+      if (quality !== 'low') {
+        part(new THREE.BoxGeometry(radius * 0.7, radius * 0.25, radius * 0.012), glass, [
+          0,
+          radius * 1.02,
+          -radius * (van ? 0.522 : truck ? 0.53 : 0.383),
+        ]);
+        for (const side of [-1, 1]) {
+          part(
+            new THREE.BoxGeometry(radius * 0.012, radius * 0.24, radius * (van ? 0.56 : 0.27)),
+            glass,
+            [side * radius * (van ? 0.596 : 0.432), radius * 1.02, truck ? -radius * 0.26 : 0],
+          );
+          part(new THREE.BoxGeometry(radius * 0.13, radius * 0.09, radius * 0.03), threat, [
+            side * radius * 0.44,
+            radius * 0.58,
+            -radius * 0.662,
+          ]);
+        }
+        for (const end of [-1, 1])
+          part(new THREE.BoxGeometry(radius * 1.2, radius * 0.11, radius * 0.065), dark, [
+            0,
+            radius * 0.39,
+            end * radius * 0.65,
+          ]);
+      }
       for (const x of [-0.63, 0.63])
         for (const z of [-0.48, 0.48]) {
+          const axle = new THREE.Group();
+          axle.position.set(x * radius, radius * 0.26, z * radius);
+          group.add(axle);
           const wheel = part(
-            new THREE.CylinderGeometry(radius * 0.25, radius * 0.25, radius * 0.22, 10),
+            new THREE.CylinderGeometry(
+              radius * 0.25,
+              radius * 0.25,
+              radius * 0.22,
+              pixel ? 6 : quality === 'low' ? 8 : 16,
+            ),
             dark,
-            [x * radius, radius * 0.26, z * radius],
+            [0, 0, 0],
+            axle,
           );
           wheel.rotation.z = Math.PI / 2;
-          animated.wheels.push(wheel);
+          animated.wheels.push(axle);
+          if (detailed) {
+            const hub = part(
+              new THREE.CylinderGeometry(radius * 0.13, radius * 0.13, radius * 0.225, 8),
+              metal,
+              [0, 0, 0],
+              axle,
+            );
+            hub.rotation.z = Math.PI / 2;
+            part(
+              new THREE.BoxGeometry(radius * 0.23, radius * 0.045, radius * 0.22),
+              metal,
+              [0, 0, 0],
+              axle,
+            );
+          }
         }
       part(
         new THREE.BoxGeometry(
@@ -708,28 +973,40 @@ export function createFlightRenderer({
           radius * (friendly ? 0.18 : 0.8),
         ),
         threat,
-        [0, radius * 1.2, -radius * 0.48],
+        [0, radius * (van ? 1.37 : 1.2), -radius * 0.18],
       );
+      if (detailed && !friendly)
+        part(new THREE.CylinderGeometry(radius * 0.012, radius * 0.016, radius * 0.36, 6), dark, [
+          radius * 0.28,
+          radius * 1.35,
+          radius * 0.24,
+        ]);
     } else if (actor.type === 'hazard') {
-      const orb = part(new THREE.IcosahedronGeometry(radius, 1), threat, [0, radius, 0]);
-      orb.material.wireframe = true;
-      const ring = part(new THREE.TorusGeometry(radius * 0.75, radius * 0.07, 6, 24), dark, [
+      const orb = part(new THREE.IcosahedronGeometry(radius, quality === 'low' ? 0 : 1), threat, [
         0,
         radius,
         0,
       ]);
+      orb.material.wireframe = true;
+      const ring = part(
+        new THREE.TorusGeometry(radius * 0.75, radius * 0.07, 6, pixel ? 12 : 24),
+        dark,
+        [0, radius, 0],
+      );
       ring.rotation.x = Math.PI / 2;
     } else {
-      part(new THREE.CapsuleGeometry(radius * 0.66, height * 0.25, 3, 8), armor, [
-        0,
-        height * 0.58,
-        0,
-      ]);
       part(
-        themeProfile?.characters === 'arcade'
+        pixel
+          ? new THREE.BoxGeometry(radius * 1.25, height * 0.3, radius * 0.8)
+          : new THREE.CapsuleGeometry(radius * 0.66, height * 0.25, 3, quality === 'low' ? 6 : 10),
+        armor,
+        [0, height * 0.58, 0],
+      );
+      part(
+        pixel
           ? new THREE.BoxGeometry(radius * 1.05, radius * 1.05, radius * 1.05)
-          : new THREE.SphereGeometry(radius * 0.6, 10, 8),
-        dark,
+          : new THREE.SphereGeometry(radius * 0.6, quality === 'low' ? 8 : 12, 8),
+        civilian ? armor : dark,
         [0, height * 0.87, 0],
       );
       part(new THREE.BoxGeometry(radius * 0.92, height * 0.05, radius * 0.16), threat, [
@@ -737,18 +1014,54 @@ export function createFlightRenderer({
         height * 0.89,
         -radius * 0.53,
       ]);
-      for (const side of [-1, 1]) {
-        const leg = part(new THREE.BoxGeometry(radius * 0.34, height * 0.4, radius * 0.43), dark, [
-          side * radius * 0.38,
-          height * 0.24,
+      if (quality !== 'low') {
+        part(
+          new THREE.BoxGeometry(radius * 0.91, height * 0.19, radius * 0.16),
+          civilian ? threat : dark,
+          [0, height * 0.58, -radius * 0.59],
+        );
+        part(new THREE.BoxGeometry(radius * 0.78, height * 0.19, radius * 0.3), dark, [
           0,
+          height * 0.58,
+          radius * 0.54,
         ]);
-        const arm = part(
+      }
+      for (const side of [-1, 1]) {
+        const leg = new THREE.Group(),
+          arm = new THREE.Group();
+        leg.position.set(side * radius * 0.38, height * 0.43, 0);
+        arm.position.set(side * radius * 0.76, height * 0.71, 0);
+        group.add(leg, arm);
+        part(
+          new THREE.BoxGeometry(radius * 0.34, height * 0.38, radius * 0.43),
+          dark,
+          [0, -height * 0.19, 0],
+          leg,
+        );
+        part(
           new THREE.BoxGeometry(radius * 0.28, height * 0.31, radius * 0.32),
           armor,
-          [side * radius * 0.76, height * 0.57, 0],
+          [0, -height * 0.155, 0],
+          arm,
         );
-        animated.limbs.push({ part: leg, side }, { part: arm, side: -side });
+        if (detailed) {
+          part(
+            new THREE.BoxGeometry(radius * 0.38, height * 0.065, radius * 0.62),
+            dark,
+            [0, -height * 0.365, -radius * 0.06],
+            leg,
+          );
+          part(
+            new THREE.SphereGeometry(radius * 0.17, 6, 4),
+            civilian ? armor : dark,
+            [0, -height * 0.31, 0],
+            arm,
+          );
+        }
+        animated.limbs.push(
+          { part: leg, side, amount: 0.32 },
+          { part: arm, side: -side, amount: 0.24 },
+        );
       }
       if (!friendly)
         part(new THREE.BoxGeometry(radius * 0.35, height * 0.085, radius * 1.2), threat, [
@@ -778,86 +1091,130 @@ export function createFlightRenderer({
         actor.type === 'drone' || actor.type === 'hazard'
           ? radius * 2 + 0.35
           : actor.type === 'vehicle'
-            ? radius * 1.6
+            ? radius * 1.7
             : height + 0.3;
     return {
       group,
       marker,
       animated,
-      lastPosition: null,
+      lastPosition: new THREE.Vector3(),
       lastTick: null,
-      distance: 0,
+      moving: false,
       radius,
-      health: actor.health ?? 1,
+      quality,
+      health: actor.maxHealth ?? actor.health ?? 1,
     };
   }
+  function projectileBatch(owner) {
+    const key = owner === 'player' ? 'player' : 'other';
+    let batch = pulseRows.get(key);
+    if (!batch) {
+      const color = key === 'player' ? 0x8ce4e3 : 0xf7b071;
+      batch = new THREE.InstancedMesh(
+        new THREE.SphereGeometry(0.055, 6, 4),
+        material(color, { emissive: color, emissiveIntensity: 1.4, roughness: 0.2 }),
+        64,
+      );
+      batch.name = `projectile-pool-${key}`;
+      batch.count = 0;
+      batch.frustumCulled = false;
+      batch.instanceMatrix.setUsage(THREE.DynamicDrawUsage);
+      projectiles.add(batch);
+      register(batch);
+      pulseRows.set(key, batch);
+    }
+    return batch;
+  }
   function updateActors(state) {
-    const seen = new Set();
-    for (const actor of (state.actors ?? []).slice(0, 20)) {
+    lastActorState = state;
+    seenActors.clear();
+    for (let i = 0; i < Math.min(20, state.actors?.length ?? 0); i++) {
+      const actor = state.actors[i];
       if (!actor.position || !actor.id) continue;
-      seen.add(actor.id);
+      seenActors.add(actor.id);
       let row = actorRows.get(actor.id);
       if (!row) {
         row = createActor(actor);
         actorRows.set(actor.id, row);
       }
-      const p = actor.position;
+      const p = actor.position,
+        definition = actorDefinitions.get(actor.id),
+        target = definition?.path?.[actor.pathIndex ?? 0];
       row.group.position.set(p.x / 1000, p.y / 1000, p.z / 1000);
-      let movement = 0;
-      if (row.lastPosition && row.lastTick !== null && state.ticks > row.lastTick) {
-        const dx = p.x - row.lastPosition.x,
-          dz = p.z - row.lastPosition.z;
-        if (Math.abs(dx) + Math.abs(dz) > 1) row.group.rotation.y = Math.atan2(-dx, -dz);
-        movement = Math.hypot(dx, dz) / 1000;
-      }
       if (row.lastTick !== state.ticks) {
-        if (row.lastTick !== null && state.ticks < row.lastTick) row.distance = 0;
-        row.distance += movement;
-        if (!reducedMotion) {
-          for (const [index, rotor] of row.animated.rotors.entries())
-            rotor.rotation.y =
-              ((state.ticks * 0.64) % (Math.PI * 2)) * (index === 0 || index === 3 ? -1 : 1);
-          for (const wheel of row.animated.wheels)
-            wheel.rotation.x = row.distance / Math.max(0.02, row.radius * 0.25);
-          for (const limb of row.animated.limbs)
-            limb.part.rotation.x =
-              movement > 0.0001 ? Math.sin(row.distance * 7) * 0.22 * limb.side : 0;
+        let moving = false;
+        if (target && definition.speed > 0) {
+          let dx = target.x - p.x,
+            dz = target.z - p.z;
+          const approaching = Math.hypot(dx, dz) > 30;
+          moving = approaching && !actor.blocked && actor.status !== 'defeated';
+          // A stopped/arrived snapshot must face the same authored direction
+          // even when reached through a replay seek rather than a prior draw.
+          if (!approaching) {
+            const previous =
+              definition.path[
+                ((actor.pathIndex ?? 0) + definition.path.length - 1) % definition.path.length
+              ] ?? definition.position;
+            dx = target.x - previous.x;
+            dz = target.z - previous.z;
+          }
+          row.group.rotation.y = Math.hypot(dx, dz) > 0 ? Math.atan2(-dx, -dz) : 0;
+        } else if (definition) row.group.rotation.y = 0;
+        else if (row.lastTick !== null && state.ticks > row.lastTick) {
+          const dx = p.x - row.lastPosition.x,
+            dz = p.z - row.lastPosition.z;
+          moving = Math.hypot(dx, dz) > 1;
+          if (moving) row.group.rotation.y = Math.atan2(-dx, -dz);
+        }
+        row.moving = moving;
+        const seconds = state.ticks / 50,
+          speed = Math.max(0.35, (definition?.speed ?? 1000) / 1000),
+          phase = seconds * speed * 7;
+        // Pose is a pure function of simulation time/current route direction.
+        // Repeated draws, pause, view changes and replay seeks cannot add motion.
+        for (const [index, rotor] of row.animated.rotors.entries())
+          rotor.rotation.y = reducedMotion
+            ? 0
+            : ((state.ticks * 0.64) % (Math.PI * 2)) * (index === 0 || index === 3 ? -1 : 1);
+        for (const wheel of row.animated.wheels)
+          wheel.rotation.x =
+            !reducedMotion && moving ? -(seconds * speed) / Math.max(0.02, row.radius * 0.25) : 0;
+        for (const limb of row.animated.limbs)
+          limb.part.rotation.x =
+            !reducedMotion && moving ? Math.sin(phase) * limb.amount * limb.side : 0;
+        if (row.animated.body) {
+          row.animated.body.rotation.x = !reducedMotion && moving ? -0.07 : 0;
+          row.animated.body.rotation.z =
+            !reducedMotion && moving ? Math.sin(seconds * 2.3) * 0.018 : 0;
         }
         row.lastTick = state.ticks;
       }
-      row.lastPosition = { ...p };
+      row.lastPosition.set(p.x, p.y, p.z);
       row.group.visible = actor.status !== 'defeated';
       if (row.marker) row.marker.material.opacity = actor.health < row.health * 0.4 ? 0.6 : 1;
     }
     for (const [id, row] of actorRows)
-      if (!seen.has(id)) {
+      if (!seenActors.has(id)) {
         releaseGroup(row.group);
         actors.remove(row.group);
         actorRows.delete(id);
       }
-    const pulseSeen = new Set();
-    for (const pulse of (state.projectiles ?? []).slice(0, 64)) {
+    for (const batch of pulseRows.values()) batch.count = 0;
+    for (let i = 0; i < Math.min(64, state.projectiles?.length ?? 0); i++) {
+      const pulse = state.projectiles[i];
       if (!pulse.position || pulse.id === undefined) continue;
-      pulseSeen.add(pulse.id);
-      let item = pulseRows.get(pulse.id);
-      if (!item) {
-        const color = pulse.owner === 'player' ? 0x8ce4e3 : 0xf7b071;
-        item = mesh(
-          new THREE.SphereGeometry(0.055, 6, 4),
-          material(color, { emissive: color, emissiveIntensity: 1.4, roughness: 0.2 }),
-          projectiles,
-        );
-        pulseRows.set(pulse.id, item);
-      }
-      item.position.set(pulse.position.x / 1000, pulse.position.y / 1000, pulse.position.z / 1000);
+      const batch = projectileBatch(pulse.owner);
+      pulseTransform.makeTranslation(
+        pulse.position.x / 1000,
+        pulse.position.y / 1000,
+        pulse.position.z / 1000,
+      );
+      batch.setMatrixAt(batch.count++, pulseTransform);
     }
-    for (const [id, item] of pulseRows)
-      if (!pulseSeen.has(id)) {
-        const holder = new THREE.Group();
-        holder.add(item);
-        releaseGroup(holder);
-        pulseRows.delete(id);
-      }
+    for (const batch of pulseRows.values()) {
+      batch.visible = batch.count > 0;
+      batch.instanceMatrix.needsUpdate = true;
+    }
   }
   function draw(state, { cameraMode = view, cameraFov = fov, cameraTilt = tilt } = {}) {
     if (disposed || !course) return;
@@ -870,19 +1227,27 @@ export function createFlightRenderer({
     if (width !== lastWidth || height !== lastHeight) {
       renderer.setSize(width, height, false);
       camera.aspect = width / height;
+      camera.updateProjectionMatrix();
       lastWidth = width;
       lastHeight = height;
     }
-    camera.fov = fov;
-    camera.updateProjectionMatrix();
-    const position = new THREE.Vector3(
+    if (camera.fov !== fov) {
+      camera.fov = fov;
+      camera.updateProjectionMatrix();
+    }
+    const position = framePosition.set(
       state.position.x / 1000,
       state.position.y / 1000 + (course.rules?.droneRadius ?? 220) / 1000,
       state.position.z / 1000,
     );
-    const rotation = new THREE.Quaternion(
-      ...state.orientation.map((value) => value / 1000000),
-    ).normalize();
+    const rotation = frameRotation
+      .set(
+        state.orientation[0] / 1000000,
+        state.orientation[1] / 1000000,
+        state.orientation[2] / 1000000,
+        state.orientation[3] / 1000000,
+      )
+      .normalize();
     aircraft.position.copy(position);
     aircraft.quaternion.copy(rotation);
     aircraft.scale.setScalar((course.rules?.droneRadius ?? 220) / 220);
@@ -901,14 +1266,9 @@ export function createFlightRenderer({
       camera.position.copy(position);
       camera.quaternion
         .copy(rotation)
-        .multiply(
-          new THREE.Quaternion().setFromAxisAngle(
-            new THREE.Vector3(1, 0, 0),
-            (tilt * Math.PI) / 180,
-          ),
-        );
+        .multiply(cameraTiltRotation.setFromAxisAngle(cameraTiltAxis, (tilt * Math.PI) / 180));
     } else if (view === 'chase') {
-      camera.position.copy(position).add(new THREE.Vector3(0, 1.35, 3.2).applyQuaternion(rotation));
+      camera.position.copy(position).add(cameraOffset.set(0, 1.35, 3.2).applyQuaternion(rotation));
       camera.up.set(0, 1, 0);
       camera.lookAt(position);
     } else {
@@ -963,7 +1323,12 @@ export function createFlightRenderer({
     }
     // Imported animations are presentation only and follow simulation time.
     // Pausing, replay speed and backgrounding never advance them independently.
-    importedMixer?.setTime(state.ticks / 50);
+    const animationTick = reducedMotion ? 0 : state.ticks;
+    if (importedMixer && importedAnimationTick !== animationTick) {
+      importedMixer.setTime(animationTick / 50);
+      importedAnimationTick = animationTick;
+    }
+    world.userData.visuals?.updatePresentation?.(state, { reducedMotion });
     updateGhost(state.ticks);
     if (pathLine) pathLine.visible = view !== 'fpv' && view !== 'editor';
     renderer.render(scene, camera);
@@ -1212,6 +1577,7 @@ export function createFlightRenderer({
       presentationGeneration++;
       for (const item of imported.userData.auxiliaryRoots) register(item);
       importedClips = result.animations;
+      importedAnimationTick = null;
       if (importedClips.length) {
         importedMixer = new THREE.AnimationMixer(result.scene);
         const selected =
@@ -1511,6 +1877,7 @@ export function createFlightRenderer({
       if (!clip || !importedMixer) throw new Error('Imported animation is unavailable');
       importedMixer.stopAllAction();
       importedMixer.clipAction(clip).play();
+      importedAnimationTick = null;
     },
     setCosmetic(recipe) {
       if (/^#[a-fA-F0-9]{6}$/.test(recipe?.color)) {
@@ -1524,6 +1891,21 @@ export function createFlightRenderer({
         disposed,
         quality,
         drone: droneKind,
+        presentation: {
+          actors: [...actorRows].map(([id, row]) => ({
+            id,
+            quality: row.quality,
+            themeAsset: row.group.userData.themeAsset,
+            heading: row.group.rotation.y,
+            moving: row.moving,
+          })),
+          projectileBatches: pulseRows.size,
+          activeProjectiles: [...pulseRows.values()].reduce(
+            (total, batch) => total + batch.count,
+            0,
+          ),
+          surfaceDetailGroups: qualityDetails.length,
+        },
         registered: {
           geometries: geometry.size + (pathLine ? 1 : 0),
           materials: materials.size + (pathLine ? 1 : 0),
@@ -1567,9 +1949,14 @@ export function createFlightRenderer({
       geometry.clear();
       goalRows.length = 0;
       actorRows.clear();
+      actorDefinitions.clear();
+      seenActors.clear();
+      qualityDetails.length = 0;
+      lastActorState = null;
       pulseRows.clear();
       droneVisual = null;
       obstacleMaps = null;
+      obstacleSurface = null;
       sceneryFallback = null;
       themeProfile = null;
       course = null;

@@ -2,6 +2,7 @@
 // licenses, unmodified models, textures and hashes: authoring/fpv-worlds/assets/kenney.
 // Scene layouts are presentation only; every model lies outside flight bounds.
 import { createFlightRenderer as createRenderer } from './renderer.mjs';
+import { Matrix4, Vector3, Quaternion } from './vendor/three.module.js';
 
 /** World-only extensions stay outside the original Academy package's closure. */
 export function createFlightRenderer(options) {
@@ -31,6 +32,135 @@ function readLibrary() {
   return library;
 }
 
+/** Only this closed, static library is batched. Creator imports retain their
+ * hierarchy, authoring IDs and animation targets in the general GLTF loader. */
+function instanceScenery(json, roots, placements, originalBin) {
+  if (json.animations?.length || json.skins?.length) return originalBin;
+  const batches = new Map();
+  const position = new Vector3(),
+    rotation = new Quaternion(),
+    scale = new Vector3();
+  const rebuilt = new Matrix4();
+  let sourceMeshes = 0;
+  function visit(index, parent, side) {
+    const node = json.nodes[index];
+    const local = node.matrix
+      ? new Matrix4().fromArray(node.matrix)
+      : new Matrix4().compose(
+          new Vector3().fromArray(node.translation ?? [0, 0, 0]),
+          new Quaternion().fromArray(node.rotation ?? [0, 0, 0, 1]),
+          new Vector3().fromArray(node.scale ?? [1, 1, 1]),
+        );
+    const transform = parent.clone().multiply(local);
+    if (node.mesh !== undefined) {
+      sourceMeshes++;
+      const mesh = json.meshes[node.mesh];
+      transform.decompose(position, rotation, scale);
+      rebuilt.compose(position, rotation, scale);
+      // Keep blending individually sorted and reject sheared/mirrored transforms.
+      const safe =
+        !node.skin &&
+        !node.weights &&
+        !node.extensions &&
+        mesh.primitives.every(
+          (primitive) =>
+            !primitive.targets && json.materials?.[primitive.material]?.alphaMode !== 'BLEND',
+        ) &&
+        scale.x > 0 &&
+        scale.y > 0 &&
+        scale.z > 0 &&
+        rebuilt.elements.every((value, i) => Math.abs(value - transform.elements[i]) < 0.00001);
+      if (safe) {
+        const key = `${side}:${node.mesh}`;
+        if (!batches.has(key)) batches.set(key, { side, mesh: node.mesh, rows: [] });
+        batches.get(key).rows.push({
+          node,
+          position: position.toArray(),
+          rotation: rotation.toArray(),
+          scale: scale.toArray(),
+        });
+      }
+    }
+    for (const child of node.children ?? []) visit(child, transform, side);
+  }
+  roots.forEach((root, i) => visit(root, new Matrix4(), placements[i].side));
+  const chunks = [originalBin];
+  let byteLength = originalBin.byteLength,
+    instances = 0,
+    batchCount = 0;
+  function attribute(rows, key, type, count) {
+    const values = new Float32Array(rows.flatMap((row) => row[key]));
+    const bufferView = json.bufferViews.length;
+    json.bufferViews.push({ buffer: 0, byteOffset: byteLength, byteLength: values.byteLength });
+    chunks.push(new Uint8Array(values.buffer));
+    byteLength += values.byteLength;
+    const accessor = json.accessors.length;
+    json.accessors.push({
+      bufferView,
+      componentType: 5126,
+      count: rows.length,
+      type,
+      min: Array.from({ length: count }, (_, i) => Math.min(...rows.map((row) => row[key][i]))),
+      max: Array.from({ length: count }, (_, i) => Math.max(...rows.map((row) => row[key][i]))),
+    });
+    return accessor;
+  }
+  for (const batch of batches.values()) {
+    if (batch.rows.length < 2) continue;
+    const attributes = {
+      TRANSLATION: attribute(batch.rows, 'position', 'VEC3', 3),
+      ROTATION: attribute(batch.rows, 'rotation', 'VEC4', 4),
+      SCALE: attribute(batch.rows, 'scale', 'VEC3', 3),
+    };
+    roots.push(json.nodes.length);
+    json.nodes.push({
+      name: `scenery-side-${batch.side}-mesh-${batch.mesh}`,
+      mesh: batch.mesh,
+      extensions: { EXT_mesh_gpu_instancing: { attributes } },
+    });
+    for (const row of batch.rows) delete row.node.mesh;
+    instances += batch.rows.length;
+    batchCount++;
+  }
+  // Remove the now-empty model scaffolding and the unused source-library nodes.
+  const compact = [];
+  function retain(index) {
+    const node = json.nodes[index];
+    const children = (node.children ?? []).map(retain).filter((id) => id !== null);
+    if (node.mesh === undefined && !children.length) return null;
+    const copy = { ...node };
+    if (children.length) copy.children = children;
+    else delete copy.children;
+    const id = compact.length;
+    compact.push(copy);
+    return id;
+  }
+  const retained = roots.map(retain).filter((id) => id !== null);
+  json.nodes = compact;
+  roots.splice(0, roots.length, ...retained);
+  if (batchCount) {
+    json.extensionsUsed = [...new Set([...(json.extensionsUsed ?? []), 'EXT_mesh_gpu_instancing'])];
+    json.extensionsRequired = [
+      ...new Set([...(json.extensionsRequired ?? []), 'EXT_mesh_gpu_instancing']),
+    ];
+  }
+  json.asset.extras.batching = {
+    sourceMeshes,
+    batches: batchCount,
+    instances,
+    unbatched: sourceMeshes - instances,
+    spatialGroups: 4,
+  };
+  json.buffers[0].byteLength = byteLength;
+  const combined = new Uint8Array(byteLength);
+  let offset = 0;
+  for (const chunk of chunks) {
+    combined.set(chunk, offset);
+    offset += chunk.byteLength;
+  }
+  return combined;
+}
+
 /** Fresh owned GLB bytes. Pass a course to adapt scenery to its flight bounds;
  * pass an environment ID for the standard 76 × 70 m built-in world. */
 export function builtinWorldScene(course) {
@@ -49,7 +179,7 @@ export function builtinWorldScene(course) {
     maxX = bounds.max.x / 1000;
   const minZ = bounds.min.z / 1000,
     maxZ = bounds.max.z / 1000;
-  const { json: original, bin, models } = readLibrary();
+  const { json: original, bin: originalBin, models } = readLibrary();
   const json = structuredClone(original);
   const roots = [],
     placements = [];
@@ -104,57 +234,93 @@ export function builtinWorldScene(course) {
   const industrial = (name, ...args) => edge(`city-industrial/${name}`, ...args);
   if (environment === 'woodland' || environment === 'courtyard') {
     for (let side = 0; side < 4; side++) {
-      const count = environment === 'woodland' ? 8 : 4;
+      const count = environment === 'woodland' ? 10 : 3;
       for (let i = 0; i < count; i++) {
-        retro(
-          i % 3 === 0 ? 'tree-park-pine-large' : 'tree-park-large',
-          side,
-          (i + 0.5) / count,
-          5.5 + (i % 3) * 0.8,
-          environment === 'woodland' ? 1.5 : 9,
+        // Alternating clusters, setbacks and canopy heights give each edge a
+        // recognizable silhouette without filling any authored flight opening.
+        const along = Math.min(
+          0.96,
+          Math.max(0.04, (i + 0.5 + Math.sin(i * 2.7 + side) * 0.22) / count),
         );
-        if (i % 3 === 1) retro('detail-bench', side, (i + 0.2) / count, 1.1, 1.2);
+        retro(
+          (i + side) % 3 === 0 ? 'tree-park-pine-large' : 'tree-park-large',
+          side,
+          along,
+          environment === 'woodland' ? 5.5 + ((i * 3 + side) % 5) * 1.2 : 5.2 + (i % 2),
+          environment === 'woodland' ? 1.5 + ((i + side) % 3) * 2 : 3.5,
+        );
+        if (i % 4 === 1) retro('detail-bench', side, along, 1.1, 1.2);
       }
     }
   }
   if (environment === 'courtyard' || environment === 'stadium') {
-    // A modular, textured streetscape beyond the perimeter. Each wall module
-    // faces the course; low urban rooftops give the route a distinct skyline.
-    const gap = environment === 'stadium' ? 15 : 8;
-    for (let side = 0; side < 4; side++) {
+    // The courtyard has varied low-rise blocks; the stadium has a single
+    // pavilion behind its start side, leaving the surrounding bleachers clear.
+    const sides = environment === 'stadium' ? [0] : [0, 1, 2, 3];
+    const gap = environment === 'stadium' ? 18 : 8;
+    for (const side of sides) {
       for (let i = 0; i < 12; i++) {
         const along = (i + 0.5) / 12;
+        const floors = environment === 'stadium' || (Math.floor(i / 3) + side) % 3 === 1 ? 2 : 1;
         retro(
           i % 4 === 1 ? 'wall-a-door' : i % 4 === 2 ? 'wall-a-garage' : 'wall-a-window',
           side,
           along,
-          5,
+          4,
           gap,
         );
-        retro('wall-a-window', side, along, 5, gap, 5);
-        retro('wall-a-roof', side, along, 2.5, gap, 10);
+        if (floors === 2) retro('wall-a-window', side, along, 4, gap, 4);
+        retro('wall-a-roof', side, along, 2, gap, floors * 4);
       }
       retro('detail-light-double', side, 0.18, 6, 1.5);
       retro('detail-light-double', side, 0.82, 6, 1.5);
-      retro('detail-dumpster-closed', side, 0.06, 1.4, 2);
+      if (environment === 'courtyard') retro('detail-dumpster-closed', side, 0.06, 1.4, 2);
     }
   }
   if (['warehouse', 'container-yard', 'garage'].includes(environment)) {
+    // Distinct industrial settings, not the same mirrored row on every side.
+    const yard = environment === 'container-yard';
+    const garage = environment === 'garage';
     for (let side = 0; side < 4; side++) {
-      ['building-a', 'building-d', 'building-l'].forEach((name, i) =>
-        industrial(name, side, (i + 0.5) / 3, 11 + i * 2, 12),
-      );
-      industrial('shipping-container-a', side, 0.18, 2.8, 1.2);
-      industrial('shipping-container-b', side, 0.35, 2.8, 1.2);
-      if (side % 2 === 0) industrial('shipping-container-b', side, 0.35, 2.8, 1.2, 2.8);
-      retro('truck-green', side, 0.63, 3.1, 1.4);
-      retro('truck-green-cargo', side, 0.76, 2.7, 2.5);
-      retro('pallet', side, 0.87, 0.6, 1);
-      retro('pallet', side, 0.87, 0.6, 1, 0.6);
-      retro('detail-light-double', side, 0.05, 6, 1.5);
+      if (yard || side % 2 === 0) {
+        const buildings = garage
+          ? ['building-d', 'building-l']
+          : ['building-a', 'building-d', 'building-l'];
+        buildings.forEach((name, i) =>
+          industrial(
+            name,
+            side,
+            (i + 0.5) / buildings.length,
+            (garage ? 14 : 10) + i * 2 + side,
+            garage ? 24 : 14,
+          ),
+        );
+      }
+      if (!garage && (yard || side === 1)) {
+        for (let i = 0; i < (yard ? 4 : 2); i++) {
+          const along = 0.16 + i * 0.17;
+          const name = (side + i) % 2 ? 'shipping-container-a' : 'shipping-container-b';
+          industrial(name, side, along, 2.8, 1.5 + (i % 2) * 0.4);
+          if (yard && (i + side) % 3 !== 0)
+            industrial(name, side, along, 2.8, 1.5 + (i % 2) * 0.4, 2.8);
+        }
+      }
+      if (side === 3 || (yard && side === 1)) {
+        retro('truck-green', side, 0.72, 3.1, 2);
+        retro('truck-green-cargo', side, 0.84, 2.7, 2.5);
+      }
+      if (!garage && side % 2 === 0) {
+        for (let i = 0; i < 3; i++) {
+          retro('pallet', side, 0.78 + i * 0.05, 0.6, 1);
+          if (i !== 1) retro('pallet', side, 0.78 + i * 0.05, 0.6, 1, 0.6);
+        }
+      }
+      retro('detail-light-double', side, side % 2 ? 0.08 : 0.9, 6, 1.5);
     }
-    industrial('water-tower', 0, 0.94, 24, 5);
-    industrial('detail-tank', 2, 0.03, 4.5, 6);
+    if (yard) {
+      industrial('water-tower', 0, 0.94, 24, 5);
+      industrial('detail-tank', 2, 0.03, 4.5, 6);
+    } else if (!garage) industrial('detail-tank', 0, 0.04, 6, 8);
   }
   if (environment === 'warehouse') {
     for (let side = 0; side < 4; side++)
@@ -170,6 +336,7 @@ export function builtinWorldScene(course) {
     environment,
     placements,
   };
+  const bin = instanceScenery(json, roots, placements, originalBin);
   const pixels =
     environment === 'warehouse' || environment === 'stadium' || course?.world?.theme === 'pixel';
   if (pixels)
