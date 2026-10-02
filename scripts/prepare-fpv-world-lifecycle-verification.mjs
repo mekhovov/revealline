@@ -66,6 +66,46 @@ function rewriteHost(source, candidateBase) {
   }
   return output;
 }
+function buildPlayer(html, sourceBase, frozenBase, fixtureBase) {
+  const setup = `
+    const query=new URL(location.href).searchParams;
+    const source=query.get('source');
+    if(!['keyboard','touch','controller','radio'].includes(source))throw Error('Unknown qualification input source');
+    window.fixtureLoadToken=query.get('token');
+    window.fixtureErrors=[];addEventListener('error',e=>fixtureErrors.push(e.message));addEventListener('unhandledrejection',e=>fixtureErrors.push(String(e.reason)));
+    const memory=new Map([['revealline.fpv.world-settings.v1',JSON.stringify({'world-language':'en','flight-source':source,'sim-motion':'reduced','flight-quality':'performance'})]]);
+    window.fixtureStorage={getItem:k=>memory.get(k)??null,setItem:(k,v)=>memory.set(k,String(v)),removeItem:k=>memory.delete(k)};
+    Object.defineProperty(window,'localStorage',{value:fixtureStorage});Object.defineProperty(window,'indexedDB',{value:parent.fixtureDB});
+    window.controlledRadio={id:'TX15 Joystick (Vendor: 1209 Product: 4f54)',index:0,mapping:'',connected:source==='radio',axes:[.004,.004,-1,.004,-1,0,0,0],buttons:Array.from({length:24},()=>({pressed:false,touched:false,value:0})),timestamp:0};
+    window.controlledPad={id:'Controlled standard gamepad',index:1,mapping:'standard',connected:source==='controller',axes:[0,0,0,0],buttons:Array.from({length:17},()=>({pressed:false,touched:false,value:0})),timestamp:0};
+    Object.defineProperty(navigator,'getGamepads',{value:()=>[controlledRadio.connected?controlledRadio:null,controlledPad.connected?controlledPad:null]});
+    let nextId=1;const callbacks=new Map();
+    window.requestAnimationFrame=cb=>{const id=nextId++;callbacks.set(id,cb);return id};window.cancelAnimationFrame=id=>callbacks.delete(id);
+    window.fixtureRAF={lastStamp:null,lastExecution:null,deliver(stamp=performance.now()){this.lastStamp=stamp;this.lastExecution=performance.now();const pending=[...callbacks.entries()];callbacks.clear();for(const[,cb]of pending)cb(stamp);return pending.length},pending:()=>callbacks.size};
+  `;
+  const boot = `
+    import{WORLD_CATALOGUE}from${JSON.stringify(`${frozenBase}/optional-practice/civilian-fpv/world-catalogue.mjs`)};
+    import{defaultRadioProfile,createFlightProfileStore,DEFAULT_RESPONSE}from${JSON.stringify(`${frozenBase}/optional-practice/civilian-fpv/radio-profile.mjs`)};
+    const source=new URL(location.href).searchParams.get('source');
+    const baseline=new URL(location.href).searchParams.get('variant')==='baseline';
+    const{mountWorldApp}=await import(${JSON.stringify(fixtureBase)}+(baseline?'/world-app.before.served.mjs':'/world-app.candidate.served.mjs'));
+    if(source==='radio')createFlightProfileStore({storage:fixtureStorage}).save({format:'FlightProfiles.v1',radio:defaultRadioProfile(),response:DEFAULT_RESPONSE});
+    window.fixtureEntry=WORLD_CATALOGUE.find(e=>e.id==='garage-06');
+    const rendererFactory=()=>({available:true,ready:Promise.resolve(),setCourse(){},setQuality(){},setDrone(){},setPath(){},setGhost(){},loadScene:async()=>{},prepare:async()=>true,draw(s){window.fixtureRenderedTick=s.ticks},aimScreen:()=>null,dispose(){}});
+    window.fixtureApp=mountWorldApp({rendererFactory});
+  `;
+  if (!html.includes('data-fpv-worlds="true"') || !html.includes('</body>'))
+    fail('Prepared World HTML lacks its supported mount markers.');
+  return html
+    .replace('data-fpv-worlds="true"', 'data-fpv-worlds="fixture"')
+    .replace(/<script\b[^>]*src="[^"]*world-app\.mjs"[^>]*><\/script>/, '')
+    .replace(
+      '<head>',
+      `<head><base href="${sourceBase}/optional-practice/fpv-worlds/"><script>${setup}</script>`,
+    )
+    .replace('</body>', `<script type="module">${boot}</script></body>`);
+}
+
 async function main() {
   let output = 'dist/fpv-world-lifecycle-verification',
     candidate = '',
@@ -90,7 +130,9 @@ async function main() {
   const repositoryRoot = await fs.realpath(ROOT),
     candidateRoot = await fs.realpath(path.join(ROOT, candidate));
   if (!within(repositoryRoot, candidateRoot)) fail('Candidate base cannot leave the repository.');
-  const candidateBase = candidate ? `/${candidate}` : '';
+  const sourceBase = candidate ? `/${candidate}` : '',
+    fixtureBase = `/${output}`,
+    candidateBase = `${fixtureBase}/candidate`;
   let total = 0;
   async function read(relative) {
     const file = await fs.realpath(path.join(candidateRoot, relative));
@@ -113,6 +155,8 @@ async function main() {
   const before = result.stdout;
   if (digest(before) !== BASELINE_SHA) fail('Pinned baseline host SHA-256 differs.');
   const currentSources = {},
+    sourceFiles = {},
+    frozen = new Map(),
     pending = [HOST],
     visited = new Set();
   let current;
@@ -123,6 +167,8 @@ async function main() {
     visited.add(relative);
     const bytes = await read(relative);
     currentSources[`${candidateBase}/${relative}`] = digest(bytes);
+    sourceFiles[relative] = digest(bytes);
+    frozen.set(relative, bytes);
     if (relative === HOST) current = bytes;
     for (const specifier of imports(bytes.toString('utf8')).literals) {
       const next = dependency(relative, specifier);
@@ -131,6 +177,8 @@ async function main() {
   }
   const html = await read(HTML);
   currentSources[`${candidateBase}/${HTML}`] = digest(html);
+  sourceFiles[HTML] = digest(html);
+  frozen.set(HTML, html);
   const artifacts = new Map([
     ['world-app.before.mjs', before],
     ['world-app.candidate.mjs', current],
@@ -143,17 +191,23 @@ async function main() {
       Buffer.from(rewriteHost(current.toString('utf8'), candidateBase)),
     ],
     ['index.html', await fs.readFile(path.join(ROOT, EVIDENCE))],
+    [
+      'player.html',
+      Buffer.from(buildPlayer(html.toString('utf8'), sourceBase, candidateBase, fixtureBase)),
+    ],
   ]);
   const manifest = {
     format: 'FPVWorldLifecycleFixture.v1',
     baseline: BASELINE,
     baselineSha256: BASELINE_SHA,
     candidateBase,
+    sourceBase,
+    sourceFiles,
     candidateHostSha256: digest(current),
     fixtureFiles: Object.fromEntries([...artifacts].map(([name, bytes]) => [name, digest(bytes)])),
     currentSources,
     scope:
-      'Frozen baseline host versus current candidate host; both resolve to the same selected candidate dependency tree. Static host import URL rewriting only. Renderer lifecycle stub; real physics/input/actors.',
+      'Frozen baseline host versus candidate host; both resolve to an immutable copy of the selected candidate module dependency tree under this unique prepared URL. Only static host import URLs are rewritten; dependency bytes are unchanged. Real HTTP iframe URL; renderer lifecycle stub, real physics/input/actors. CSS and artwork use the original candidate base and are not visually qualified.',
   };
   if (verifyOnly) {
     console.log(
@@ -185,6 +239,11 @@ async function main() {
   if (exists)
     fail(`Destination exists: ${output}; preserve running fixtures and use a fresh --out.`);
   await fs.mkdir(destination);
+  for (const [relative, bytes] of frozen) {
+    const target = path.join(destination, 'candidate', relative);
+    await fs.mkdir(path.dirname(target), { recursive: true });
+    await fs.writeFile(target, bytes, { flag: 'wx' });
+  }
   for (const [name, bytes] of artifacts)
     await fs.writeFile(path.join(destination, name), bytes, { flag: 'wx' });
   await fs.writeFile(

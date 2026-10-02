@@ -1,493 +1,494 @@
 {
   "format": "FPVWorldLifecycleBrowserEvidence.v1",
-  "createdAt": "2026-10-02T14:42:54.336Z",
+  "createdAt": "2026-10-02T15:04:50.542Z",
   "variant": "candidate",
   "passed": true,
   "baseline": "02ac74d42a3f332f262da06c7d3911c9301dd39e",
-  "candidateBase": "",
+  "candidateBase": "/dist/fpv-world-lifecycle-verification-integrated-v2/candidate",
+  "sourceBase": "",
   "sources": {
     "world-app.before.mjs": "871813b2a4bb010fa8497b592b1b6f4404837cb4bdcb76f2e7028d43cb2e6df8",
-    "world-app.candidate.mjs": "c8027aca0f29b9188e4289052a0246d021a86a51a8355f2fa41e997f87aa45a0",
-    "world-app.before.served.mjs": "829735ddd0a234bfe8b1d2e4b0bffe382afe8b871a30e7381d76badb7f41e1c8",
-    "world-app.candidate.served.mjs": "0bc51a6e0f3a9e667251b333d7b4e4303dff5a53396b618a2cbe86396c76a7f6",
-    "index.html": "fa9003cd22aebcaa8a3d9379c4882ecee827436184fa19a2fd56f1c53a9ee0e2",
-    "/optional-practice/civilian-fpv/world-app.mjs": "c8027aca0f29b9188e4289052a0246d021a86a51a8355f2fa41e997f87aa45a0",
-    "/optional-practice/civilian-fpv/world-catalogue.mjs": "d901363b623193f4896100f9381c7579946796e741554f012581ebb93f9ea8a6",
-    "/game/data-json.mjs": "9ce33d6173f3cba8587ed7a7f1924c66e9d9c86ffa59b37a743764ea0b01f7bd",
-    "/game/i18n/index.mjs": "29f40a6d92826ced1eb53283ed32e342ac6e95920abbf8d549f2d78e65b48d07",
-    "/game/vendor/i18next-26.4.2.min.js": "eb0dd6d72e8f756b90faf864853af2a17870fe97b54473b7c34494870c65901c",
-    "/game/i18n/catalogs.mjs": "011a6e0cb8324fc4d816f7498bf03794c839a2e26504133f7984f12ff8c5d661",
-    "/game/i18n/bootstrap.mjs": "242e4791b2202d2644b91df5aa76355019890525af774ee2e795c937988b0395",
-    "/optional-practice/civilian-fpv/catalogue.mjs": "98338353d17eb585414538c9905040752fd5cd6699c48b17fa1706832b750997",
-    "/optional-practice/civilian-fpv/model.mjs": "9e4cd11cfdde2dd43b437069b8cb7a359a8132495db806cb5f68e8674d48aaf6",
-    "/optional-practice/civilian-fpv/radio-profile.mjs": "f588fd5cda96ed9627a483f49ca843ace8d99a68fae42b0a4239c2cd0ab81933",
-    "/optional-practice/civilian-fpv/math.mjs": "555c8b6ea170b46992133507d2a3d867f06185bca060239cab7db9c9b87f9f98",
-    "/optional-practice/civilian-fpv/rotation-table.mjs": "2ddab304ac99a2e70fc7e84fc6c27eedb49f1f3dac976baed680effa659cef41",
-    "/optional-practice/civilian-fpv/flight-sectors.mjs": "5b1b54bde4e578e61da7d59f4a80a86db9aafbc78b4523d2ba2b540277a0a16d",
-    "/optional-practice/civilian-fpv/demonstrations.mjs": "92bb4365c46d94f5c1fea9808ec4e24fb9014d35640ee488959c4e0f4b6c5cfa",
-    "/optional-practice/civilian-fpv/world-demonstrations.mjs": "2e86eeb76571b4caeb23f7f4a39461c57e8bd8d3ba9926f1b781295bdf1885b1",
-    "/optional-practice/civilian-fpv/world-model.mjs": "719cbb0761bac1ef47846f4f08d7f65b959da00c85afbf43fb86c53c6c088478",
-    "/optional-practice/civilian-fpv/world-themes.mjs": "8331dc6931299043e14620fe312affddd382b551607db5ff6fae85f14b627bc7",
-    "/optional-practice/civilian-fpv/world-collision.mjs": "2899c7c84f9eae14b9a3434f585a8e873f4a1361e8f3ce4026ef27f44bdeef32",
-    "/optional-practice/civilian-fpv/vendor/rapier/rapier.mjs": "02dc6a4e2fffc013bab08fbb44fa68f501d8303615e9afe4c7d89ad4eedda0d0",
-    "/optional-practice/civilian-fpv/beginner-coach.mjs": "0703984e40efa41f4b822b89a411ad083e109962586155badd26b6d474105ee8",
-    "/optional-practice/civilian-fpv/input.mjs": "9673e7be6df876d9fa95e8674a879bf3ca9b930ec13d861e216eeacd08f0a761",
-    "/optional-practice/civilian-fpv/sim-presentation.mjs": "3ab238301da0ac4becac88a1970d9d73e4d0b17a5a7a45ac42a423990e84aafd",
-    "/game/ui/native-menu-icons.mjs": "d710daff089fbbfe262ed0738b89e31f2494789b02c326f130e6eb32d248b731",
-    "/optional-practice/civilian-fpv/radio-runtime.mjs": "3d908c7f6f1295fddacb952fadfc327206153248dbf5222ef31677eb4ff8f71b",
-    "/optional-practice/civilian-fpv/radio-session.mjs": "98fdd029f1deb9eb6b51f2ae2f8fb5c441e2b3a7a2aca520a7e9ce5e267e80ef",
-    "/optional-practice/civilian-fpv/radio-setup.mjs": "d4c091a8539221e71e39a12436af45a681a21e13f5468b8b4ecccd1b4c05e7d6",
-    "/optional-practice/civilian-fpv/radio-controls.mjs": "ec81c8b2d7cfe8586a7b73ef0887972019c7c1c39e64e6f32ea0d39437d7d4fb",
-    "/optional-practice/civilian-fpv/radio-guide.mjs": "52685411b2099492a1bb26ffed12911c2a006fae971229a08147c0ddfd81a2b1",
-    "/optional-practice/civilian-fpv/flight-fullscreen.mjs": "c5a0eb8ddcc0f6cd9ef81c548b9a7284050b4a896cf747c5705bcbd009a5c63e",
-    "/optional-practice/civilian-fpv/notebook.mjs": "966745ecf19f49568fcb454c9fe6aa7ca86bb8717834b6eb424c730600425a8c",
-    "/game/rewards/model.mjs": "1f7ac62d4c5e9a01d1435e93116d7b59eb9bac8c4714769a9abaaba98d790d92",
-    "/game/rewards/learning-profiles.mjs": "f24f81f972c921c7d3f89713c8a470086affd0b420783c1ab97cb15c6de4dc1d",
-    "/game/rewards/exploration.mjs": "e997a52802aee1410f06faa75ca4984958fd979d495b1b34b0ee2582c5628ccd",
-    "/game/rewards/audio-groups.mjs": "85e1340e57dc925927830d6dd436d7b3da4b459f781e5f989d8efbbe54a44b6b",
-    "/game/rewards/store.mjs": "0d12e0e1b83e55a8103c9efe9bfde90291005150dac766af7ee42bd51f91521f",
-    "/game/profile-storage.mjs": "7f0e6cc3a957ddc00a032d41e8bea782907b901f714708de5385667fe5fbbaec",
-    "/game/profile-database.mjs": "6a843fc68c3d639ca6d3bac8c77228eccf21cd72a525872245bd5cbbd9d68a1c",
-    "/game/ui/reward-knowledge.mjs": "77232a28c5112c0d20c291ca629bebbd908ca9945344bb997e0a4b392a8e931b",
-    "/optional-practice/civilian-fpv/attempts.mjs": "29e7376488703566e0995612464e0256747561896dd366497828c6f8f9349a8c",
-    "/optional-practice/civilian-fpv/playlists.mjs": "ed81b450bc268cf8096fe14a7c1a46e9a5fca0c32ff8fdedad3c356955280a77",
-    "/optional-practice/civilian-fpv/world-records.mjs": "66b4c9dce92a26a2e53fd82b87654ea4eb4bce3051b8a50ce9bb9a2c27e70e9d",
-    "/optional-practice/civilian-fpv/world-content.mjs": "aa3788b42d2e6379be68a4d76abb10667e7adb260fe00580a963ab09324f0df0",
-    "/optional-practice/civilian-fpv/content-definitions.mjs": "e3808d22cc3dc294311533a16164aced16f342eb9d4b1b22b77d279b2e8dcbfd",
-    "/optional-practice/civilian-fpv/world-zip.mjs": "874b371c817810a5869bc3ba37c94ff6fae4fc5cd418298f35340d2ce09039c8",
-    "/optional-practice/civilian-fpv/world-store.mjs": "ff207fba00f037e079f8fbe2f4f49e3309ab7526b8c2efba6617175f5a1bb57f",
-    "/optional-practice/civilian-fpv/offline.mjs": "88ca8d4baea5c49bd34887c6b3a482c027bf7d2f590d1cb2e2280598afa67b06",
-    "/optional-practice/install-context.mjs": "7745cad36e9c003d0745b361744d4fea1dee3edb4653a66fd666944683c0cddb",
-    "/optional-practice/civilian-fpv/world-editor.mjs": "546be0262b240c8ae2d8bcbbcf7f524936ec715874a5379df2da5571b219b0a5",
-    "/optional-practice/civilian-fpv/world-assets.mjs": "b246c3e05acb0050786a187267a6766ad9ab009a75525b93af7098ed8b18125a",
-    "/optional-practice/civilian-fpv/renderer.mjs": "207cb6068ea24a527365433cdea30b4797799065b0abf0e05b823c3fe4ee12be",
-    "/optional-practice/civilian-fpv/vendor/three.module.js": "9052042d676cb0fdc1ddfefe193053f34b7ac0513a616fdac4535d49987812ea",
-    "/optional-practice/civilian-fpv/vendor/three.core.js": "9edde002b066a9a05676a6127f67735b62baf399bdea529f2f7e31657da769e6",
-    "/optional-practice/civilian-fpv/world-visuals.mjs": "5c5bcfc0602c43a8f350823744843be5e839c97a69a05cce8ec502ae08ab5a51",
-    "/optional-practice/civilian-fpv/vendor/addons/loaders/GLTFLoader.js": "03952cb129d558f92b8e6c757fbf7c1f718b3126c4d34f264d574b40ea36054f",
-    "/optional-practice/civilian-fpv/vendor/addons/utils/BufferGeometryUtils.js": "259085a7dac89e0840393a9347c77123fbc4206ec2146bf0c29ffc72e14a2800",
-    "/optional-practice/civilian-fpv/vendor/addons/utils/SkeletonUtils.js": "28017bf37d0ecb0c4be6048db759ff14df729a562464830b064d4cc239c5af17",
-    "/optional-practice/civilian-fpv/vendor/addons/controls/TransformControls.js": "10f6d3e4c108dff62110f61a76749f9a1826c9781df9c3eb4ca0b5d9d2f5c4a8",
-    "/optional-practice/civilian-fpv/world-audio.mjs": "0aead831e25798324e3ad51356401f36612b832b55946225d849654f04d26233",
-    "/optional-practice/civilian-fpv/world-progress.mjs": "032fa513f09104efde3a3e64f09d0534d889465bba9baa771ac6f0e1d830077c",
-    "/optional-practice/civilian-fpv/world-hangar.mjs": "ca02a08e4559f5a481ec5cc654005f88680da4f313a3a93308abf8868553390c",
-    "/optional-practice/civilian-fpv/world-actor-editor.mjs": "a157c824cbb5058059402e159d7571dfa394f4ae21b6aa28296e5deea7190159",
-    "/game/fpv-entry.mjs": "264aed5590d128d87e33b06892f7df5e69e5289a96ae7d5f93e6839385e2eb01",
-    "/optional-practice/fpv-worlds/index.html": "cb11e9075a1de6a53f8097d5f3819f54426b49cef309c09189aa2f9e226af25c",
-    "world-index.html": "cb11e9075a1de6a53f8097d5f3819f54426b49cef309c09189aa2f9e226af25c"
+    "world-app.candidate.mjs": "7998ec5987f26349dab28d0870b646eed070bf3448ef42a12433743858f1912d",
+    "world-app.before.served.mjs": "1b27f711d5e168902760f734675e168ef46b4f36feb1f6ba8b585fb9f6c6d027",
+    "world-app.candidate.served.mjs": "fad7b4ff2038523a7f9d7831976ac32a108d50c3d66a861a1af9eaec0a06e6f8",
+    "index.html": "6c49df4015a95d61ac90d5936b101bdc6ba877f25651ef3d9628866bdfe0e82a",
+    "player.html": "31e1ab5820ee50bef9f070662b8285fb0de9f7d67c3629ed7248aa6a1bf9f971",
+    "/dist/fpv-world-lifecycle-verification-integrated-v2/candidate/optional-practice/civilian-fpv/world-app.mjs": "7998ec5987f26349dab28d0870b646eed070bf3448ef42a12433743858f1912d",
+    "/dist/fpv-world-lifecycle-verification-integrated-v2/candidate/optional-practice/civilian-fpv/world-catalogue.mjs": "d901363b623193f4896100f9381c7579946796e741554f012581ebb93f9ea8a6",
+    "/dist/fpv-world-lifecycle-verification-integrated-v2/candidate/game/data-json.mjs": "9ce33d6173f3cba8587ed7a7f1924c66e9d9c86ffa59b37a743764ea0b01f7bd",
+    "/dist/fpv-world-lifecycle-verification-integrated-v2/candidate/game/i18n/index.mjs": "29f40a6d92826ced1eb53283ed32e342ac6e95920abbf8d549f2d78e65b48d07",
+    "/dist/fpv-world-lifecycle-verification-integrated-v2/candidate/game/vendor/i18next-26.4.2.min.js": "eb0dd6d72e8f756b90faf864853af2a17870fe97b54473b7c34494870c65901c",
+    "/dist/fpv-world-lifecycle-verification-integrated-v2/candidate/game/i18n/catalogs.mjs": "8bede445c906d565ed26f3ac247eb4b0b78f52b6b3cd3d179f365467c935afeb",
+    "/dist/fpv-world-lifecycle-verification-integrated-v2/candidate/game/i18n/bootstrap.mjs": "242e4791b2202d2644b91df5aa76355019890525af774ee2e795c937988b0395",
+    "/dist/fpv-world-lifecycle-verification-integrated-v2/candidate/optional-practice/civilian-fpv/catalogue.mjs": "98338353d17eb585414538c9905040752fd5cd6699c48b17fa1706832b750997",
+    "/dist/fpv-world-lifecycle-verification-integrated-v2/candidate/optional-practice/civilian-fpv/model.mjs": "9e4cd11cfdde2dd43b437069b8cb7a359a8132495db806cb5f68e8674d48aaf6",
+    "/dist/fpv-world-lifecycle-verification-integrated-v2/candidate/optional-practice/civilian-fpv/radio-profile.mjs": "f588fd5cda96ed9627a483f49ca843ace8d99a68fae42b0a4239c2cd0ab81933",
+    "/dist/fpv-world-lifecycle-verification-integrated-v2/candidate/optional-practice/civilian-fpv/math.mjs": "555c8b6ea170b46992133507d2a3d867f06185bca060239cab7db9c9b87f9f98",
+    "/dist/fpv-world-lifecycle-verification-integrated-v2/candidate/optional-practice/civilian-fpv/rotation-table.mjs": "2ddab304ac99a2e70fc7e84fc6c27eedb49f1f3dac976baed680effa659cef41",
+    "/dist/fpv-world-lifecycle-verification-integrated-v2/candidate/optional-practice/civilian-fpv/flight-sectors.mjs": "5b1b54bde4e578e61da7d59f4a80a86db9aafbc78b4523d2ba2b540277a0a16d",
+    "/dist/fpv-world-lifecycle-verification-integrated-v2/candidate/optional-practice/civilian-fpv/demonstrations.mjs": "92bb4365c46d94f5c1fea9808ec4e24fb9014d35640ee488959c4e0f4b6c5cfa",
+    "/dist/fpv-world-lifecycle-verification-integrated-v2/candidate/optional-practice/civilian-fpv/world-demonstrations.mjs": "2e86eeb76571b4caeb23f7f4a39461c57e8bd8d3ba9926f1b781295bdf1885b1",
+    "/dist/fpv-world-lifecycle-verification-integrated-v2/candidate/optional-practice/civilian-fpv/world-model.mjs": "719cbb0761bac1ef47846f4f08d7f65b959da00c85afbf43fb86c53c6c088478",
+    "/dist/fpv-world-lifecycle-verification-integrated-v2/candidate/optional-practice/civilian-fpv/world-themes.mjs": "8331dc6931299043e14620fe312affddd382b551607db5ff6fae85f14b627bc7",
+    "/dist/fpv-world-lifecycle-verification-integrated-v2/candidate/optional-practice/civilian-fpv/world-collision.mjs": "2899c7c84f9eae14b9a3434f585a8e873f4a1361e8f3ce4026ef27f44bdeef32",
+    "/dist/fpv-world-lifecycle-verification-integrated-v2/candidate/optional-practice/civilian-fpv/vendor/rapier/rapier.mjs": "02dc6a4e2fffc013bab08fbb44fa68f501d8303615e9afe4c7d89ad4eedda0d0",
+    "/dist/fpv-world-lifecycle-verification-integrated-v2/candidate/optional-practice/civilian-fpv/beginner-coach.mjs": "0703984e40efa41f4b822b89a411ad083e109962586155badd26b6d474105ee8",
+    "/dist/fpv-world-lifecycle-verification-integrated-v2/candidate/optional-practice/civilian-fpv/input.mjs": "9673e7be6df876d9fa95e8674a879bf3ca9b930ec13d861e216eeacd08f0a761",
+    "/dist/fpv-world-lifecycle-verification-integrated-v2/candidate/optional-practice/civilian-fpv/sim-presentation.mjs": "3ab238301da0ac4becac88a1970d9d73e4d0b17a5a7a45ac42a423990e84aafd",
+    "/dist/fpv-world-lifecycle-verification-integrated-v2/candidate/game/ui/native-menu-icons.mjs": "d710daff089fbbfe262ed0738b89e31f2494789b02c326f130e6eb32d248b731",
+    "/dist/fpv-world-lifecycle-verification-integrated-v2/candidate/optional-practice/civilian-fpv/radio-runtime.mjs": "3d908c7f6f1295fddacb952fadfc327206153248dbf5222ef31677eb4ff8f71b",
+    "/dist/fpv-world-lifecycle-verification-integrated-v2/candidate/optional-practice/civilian-fpv/radio-session.mjs": "98fdd029f1deb9eb6b51f2ae2f8fb5c441e2b3a7a2aca520a7e9ce5e267e80ef",
+    "/dist/fpv-world-lifecycle-verification-integrated-v2/candidate/optional-practice/civilian-fpv/radio-setup.mjs": "d4c091a8539221e71e39a12436af45a681a21e13f5468b8b4ecccd1b4c05e7d6",
+    "/dist/fpv-world-lifecycle-verification-integrated-v2/candidate/optional-practice/civilian-fpv/radio-controls.mjs": "ec81c8b2d7cfe8586a7b73ef0887972019c7c1c39e64e6f32ea0d39437d7d4fb",
+    "/dist/fpv-world-lifecycle-verification-integrated-v2/candidate/optional-practice/civilian-fpv/radio-guide.mjs": "52685411b2099492a1bb26ffed12911c2a006fae971229a08147c0ddfd81a2b1",
+    "/dist/fpv-world-lifecycle-verification-integrated-v2/candidate/optional-practice/civilian-fpv/flight-fullscreen.mjs": "c5a0eb8ddcc0f6cd9ef81c548b9a7284050b4a896cf747c5705bcbd009a5c63e",
+    "/dist/fpv-world-lifecycle-verification-integrated-v2/candidate/optional-practice/civilian-fpv/notebook.mjs": "966745ecf19f49568fcb454c9fe6aa7ca86bb8717834b6eb424c730600425a8c",
+    "/dist/fpv-world-lifecycle-verification-integrated-v2/candidate/game/rewards/model.mjs": "1f7ac62d4c5e9a01d1435e93116d7b59eb9bac8c4714769a9abaaba98d790d92",
+    "/dist/fpv-world-lifecycle-verification-integrated-v2/candidate/game/rewards/learning-profiles.mjs": "f24f81f972c921c7d3f89713c8a470086affd0b420783c1ab97cb15c6de4dc1d",
+    "/dist/fpv-world-lifecycle-verification-integrated-v2/candidate/game/rewards/exploration.mjs": "e997a52802aee1410f06faa75ca4984958fd979d495b1b34b0ee2582c5628ccd",
+    "/dist/fpv-world-lifecycle-verification-integrated-v2/candidate/game/rewards/audio-groups.mjs": "85e1340e57dc925927830d6dd436d7b3da4b459f781e5f989d8efbbe54a44b6b",
+    "/dist/fpv-world-lifecycle-verification-integrated-v2/candidate/game/rewards/store.mjs": "0d12e0e1b83e55a8103c9efe9bfde90291005150dac766af7ee42bd51f91521f",
+    "/dist/fpv-world-lifecycle-verification-integrated-v2/candidate/game/profile-storage.mjs": "7f0e6cc3a957ddc00a032d41e8bea782907b901f714708de5385667fe5fbbaec",
+    "/dist/fpv-world-lifecycle-verification-integrated-v2/candidate/game/profile-database.mjs": "6a843fc68c3d639ca6d3bac8c77228eccf21cd72a525872245bd5cbbd9d68a1c",
+    "/dist/fpv-world-lifecycle-verification-integrated-v2/candidate/game/ui/reward-knowledge.mjs": "77232a28c5112c0d20c291ca629bebbd908ca9945344bb997e0a4b392a8e931b",
+    "/dist/fpv-world-lifecycle-verification-integrated-v2/candidate/optional-practice/civilian-fpv/attempts.mjs": "29e7376488703566e0995612464e0256747561896dd366497828c6f8f9349a8c",
+    "/dist/fpv-world-lifecycle-verification-integrated-v2/candidate/optional-practice/civilian-fpv/playlists.mjs": "ed81b450bc268cf8096fe14a7c1a46e9a5fca0c32ff8fdedad3c356955280a77",
+    "/dist/fpv-world-lifecycle-verification-integrated-v2/candidate/optional-practice/civilian-fpv/world-records.mjs": "66b4c9dce92a26a2e53fd82b87654ea4eb4bce3051b8a50ce9bb9a2c27e70e9d",
+    "/dist/fpv-world-lifecycle-verification-integrated-v2/candidate/optional-practice/civilian-fpv/world-content.mjs": "aa3788b42d2e6379be68a4d76abb10667e7adb260fe00580a963ab09324f0df0",
+    "/dist/fpv-world-lifecycle-verification-integrated-v2/candidate/optional-practice/civilian-fpv/content-definitions.mjs": "e3808d22cc3dc294311533a16164aced16f342eb9d4b1b22b77d279b2e8dcbfd",
+    "/dist/fpv-world-lifecycle-verification-integrated-v2/candidate/optional-practice/civilian-fpv/world-zip.mjs": "874b371c817810a5869bc3ba37c94ff6fae4fc5cd418298f35340d2ce09039c8",
+    "/dist/fpv-world-lifecycle-verification-integrated-v2/candidate/optional-practice/civilian-fpv/world-store.mjs": "ff207fba00f037e079f8fbe2f4f49e3309ab7526b8c2efba6617175f5a1bb57f",
+    "/dist/fpv-world-lifecycle-verification-integrated-v2/candidate/optional-practice/civilian-fpv/offline.mjs": "88ca8d4baea5c49bd34887c6b3a482c027bf7d2f590d1cb2e2280598afa67b06",
+    "/dist/fpv-world-lifecycle-verification-integrated-v2/candidate/optional-practice/install-context.mjs": "7745cad36e9c003d0745b361744d4fea1dee3edb4653a66fd666944683c0cddb",
+    "/dist/fpv-world-lifecycle-verification-integrated-v2/candidate/optional-practice/civilian-fpv/world-editor.mjs": "546be0262b240c8ae2d8bcbbcf7f524936ec715874a5379df2da5571b219b0a5",
+    "/dist/fpv-world-lifecycle-verification-integrated-v2/candidate/optional-practice/civilian-fpv/world-assets.mjs": "b246c3e05acb0050786a187267a6766ad9ab009a75525b93af7098ed8b18125a",
+    "/dist/fpv-world-lifecycle-verification-integrated-v2/candidate/optional-practice/civilian-fpv/renderer.mjs": "207cb6068ea24a527365433cdea30b4797799065b0abf0e05b823c3fe4ee12be",
+    "/dist/fpv-world-lifecycle-verification-integrated-v2/candidate/optional-practice/civilian-fpv/vendor/three.module.js": "9052042d676cb0fdc1ddfefe193053f34b7ac0513a616fdac4535d49987812ea",
+    "/dist/fpv-world-lifecycle-verification-integrated-v2/candidate/optional-practice/civilian-fpv/vendor/three.core.js": "9edde002b066a9a05676a6127f67735b62baf399bdea529f2f7e31657da769e6",
+    "/dist/fpv-world-lifecycle-verification-integrated-v2/candidate/optional-practice/civilian-fpv/world-visuals.mjs": "5c5bcfc0602c43a8f350823744843be5e839c97a69a05cce8ec502ae08ab5a51",
+    "/dist/fpv-world-lifecycle-verification-integrated-v2/candidate/optional-practice/civilian-fpv/vendor/addons/loaders/GLTFLoader.js": "03952cb129d558f92b8e6c757fbf7c1f718b3126c4d34f264d574b40ea36054f",
+    "/dist/fpv-world-lifecycle-verification-integrated-v2/candidate/optional-practice/civilian-fpv/vendor/addons/utils/BufferGeometryUtils.js": "259085a7dac89e0840393a9347c77123fbc4206ec2146bf0c29ffc72e14a2800",
+    "/dist/fpv-world-lifecycle-verification-integrated-v2/candidate/optional-practice/civilian-fpv/vendor/addons/utils/SkeletonUtils.js": "28017bf37d0ecb0c4be6048db759ff14df729a562464830b064d4cc239c5af17",
+    "/dist/fpv-world-lifecycle-verification-integrated-v2/candidate/optional-practice/civilian-fpv/vendor/addons/controls/TransformControls.js": "10f6d3e4c108dff62110f61a76749f9a1826c9781df9c3eb4ca0b5d9d2f5c4a8",
+    "/dist/fpv-world-lifecycle-verification-integrated-v2/candidate/optional-practice/civilian-fpv/world-audio.mjs": "0aead831e25798324e3ad51356401f36612b832b55946225d849654f04d26233",
+    "/dist/fpv-world-lifecycle-verification-integrated-v2/candidate/optional-practice/civilian-fpv/world-progress.mjs": "032fa513f09104efde3a3e64f09d0534d889465bba9baa771ac6f0e1d830077c",
+    "/dist/fpv-world-lifecycle-verification-integrated-v2/candidate/optional-practice/civilian-fpv/world-hangar.mjs": "ca02a08e4559f5a481ec5cc654005f88680da4f313a3a93308abf8868553390c",
+    "/dist/fpv-world-lifecycle-verification-integrated-v2/candidate/optional-practice/civilian-fpv/world-actor-editor.mjs": "a157c824cbb5058059402e159d7571dfa394f4ae21b6aa28296e5deea7190159",
+    "/dist/fpv-world-lifecycle-verification-integrated-v2/candidate/game/fpv-entry.mjs": "7676e3c7e05dfb960201468a89534410d3313badd5d49001d333bf945e6772ac",
+    "/dist/fpv-world-lifecycle-verification-integrated-v2/candidate/optional-practice/fpv-worlds/index.html": "6240b7e5f319fd8c4bd40ae4a06b7bd896bc4f2cf23c733c0dadaeaa4b3f7098"
   },
   "wallGaps": [
     {
       "source": "keyboard",
-      "actualCallbackGap": 324.90000000596046,
+      "actualCallbackGap": 323,
       "rafTimestampGap": 20
     },
     {
       "source": "touch",
-      "actualCallbackGap": 325.5,
+      "actualCallbackGap": 324.30000001192093,
       "rafTimestampGap": 20
     },
     {
       "source": "controller",
-      "actualCallbackGap": 324,
+      "actualCallbackGap": 322.90000000596046,
       "rafTimestampGap": 20
     },
     {
       "source": "controller",
-      "actualCallbackGap": 326.09999999403954,
+      "actualCallbackGap": 324.59999999403954,
       "rafTimestampGap": 20
     },
     {
       "source": "radio",
-      "actualCallbackGap": 327.20000000298023,
+      "actualCallbackGap": 326.20000000298023,
       "rafTimestampGap": 20
     }
   ],
   "phases": [
     {
-      "elapsedMs": 4,
+      "elapsedMs": 3,
       "label": "Prepared fixture manifest is recognized"
     },
     {
-      "elapsedMs": 15,
+      "elapsedMs": 21,
       "label": "Frozen baseline and candidate host hashes match preparation"
     },
     {
-      "elapsedMs": 136,
+      "elapsedMs": 170,
       "label": "Selected candidate dependency tree matches prepared SHA-256 hashes"
     },
     {
-      "elapsedMs": 136,
-      "label": "Fetch keyboard host HTML"
+      "elapsedMs": 170,
+      "label": "Load keyboard real HTTP host page"
     },
     {
-      "elapsedMs": 139,
+      "elapsedMs": 171,
       "label": "Load fresh keyboard iframe document"
     },
     {
-      "elapsedMs": 363,
+      "elapsedMs": 315,
       "label": "Mount fresh keyboard host"
     },
     {
-      "elapsedMs": 363,
+      "elapsedMs": 485,
       "label": "Ready keyboard host"
     },
     {
-      "elapsedMs": 401,
+      "elapsedMs": 527,
       "label": "Start keyboard preview"
     },
     {
-      "elapsedMs": 543,
+      "elapsedMs": 687,
       "label": "Fresh source is disarmed/paused until explicit arm"
     },
     {
-      "elapsedMs": 593,
+      "elapsedMs": 738,
       "label": "Deliberate source-specific arm starts flight"
     },
     {
-      "elapsedMs": 719,
+      "elapsedMs": 865,
       "label": "Fresh callbacks consume actual source movement"
     },
     {
-      "elapsedMs": 719,
+      "elapsedMs": 865,
       "label": "Fresh callbacks consume explicit fire action"
     },
     {
-      "elapsedMs": 719,
+      "elapsedMs": 865,
       "label": "Fresh callbacks advance authored moving actors"
     },
     {
-      "elapsedMs": 720,
+      "elapsedMs": 865,
       "label": "Stall begins with actual live projectiles"
     },
     {
-      "elapsedMs": 1042,
+      "elapsedMs": 1186,
       "label": "Stale callback test used real wall-clock gap"
     },
     {
-      "elapsedMs": 1043,
+      "elapsedMs": 1187,
       "label": "Queued stale callback pauses before any movement, fire, actor or projectile advance"
     },
     {
-      "elapsedMs": 1145,
+      "elapsedMs": 1284,
       "label": "Fresh callbacks after stall cannot auto-resume or catch up while controls remain held"
     },
     {
-      "elapsedMs": 1247,
+      "elapsedMs": 1385,
       "label": "Deliberate source-specific arm starts flight"
     },
     {
-      "elapsedMs": 1298,
+      "elapsedMs": 1434,
       "label": "Deliberate resume starts with released local controls and no stale fire"
     },
     {
-      "elapsedMs": 1349,
+      "elapsedMs": 1484,
       "label": "Repeated held-key event cannot fire after resume"
     },
     {
-      "elapsedMs": 1730,
+      "elapsedMs": 1856,
       "label": "Fresh post-release fire works after deliberate resume"
     },
     {
-      "elapsedMs": 1808,
+      "elapsedMs": 1934,
       "label": "Space on focused HUD button is not hijacked for firing"
     },
     {
-      "elapsedMs": 1862,
+      "elapsedMs": 1985,
       "label": "P on focused HUD button pauses and opens flight menu"
     },
     {
-      "elapsedMs": 1889,
+      "elapsedMs": 2011,
       "label": "Closing menu never arms"
     },
     {
-      "elapsedMs": 1889,
+      "elapsedMs": 2011,
       "label": "No uncaught host errors"
     },
     {
-      "elapsedMs": 1890,
+      "elapsedMs": 2012,
       "label": "Dispose keyboard host"
     },
     {
-      "elapsedMs": 1891,
-      "label": "Fetch touch host HTML"
+      "elapsedMs": 2014,
+      "label": "Load touch real HTTP host page"
     },
     {
-      "elapsedMs": 1901,
+      "elapsedMs": 2014,
       "label": "Load fresh touch iframe document"
     },
     {
-      "elapsedMs": 2083,
+      "elapsedMs": 2128,
       "label": "Mount fresh touch host"
     },
     {
-      "elapsedMs": 2084,
+      "elapsedMs": 2250,
       "label": "Ready touch host"
     },
     {
-      "elapsedMs": 2105,
+      "elapsedMs": 2268,
       "label": "Start touch preview"
     },
     {
-      "elapsedMs": 2221,
+      "elapsedMs": 2395,
       "label": "Fresh source is disarmed/paused until explicit arm"
     },
     {
-      "elapsedMs": 2271,
+      "elapsedMs": 2446,
       "label": "Deliberate source-specific arm starts flight"
     },
     {
-      "elapsedMs": 2396,
+      "elapsedMs": 2570,
       "label": "Fresh callbacks consume actual source movement"
     },
     {
-      "elapsedMs": 2397,
+      "elapsedMs": 2571,
       "label": "Fresh callbacks consume explicit fire action"
     },
     {
-      "elapsedMs": 2397,
+      "elapsedMs": 2571,
       "label": "Fresh callbacks advance authored moving actors"
     },
     {
-      "elapsedMs": 2397,
+      "elapsedMs": 2571,
       "label": "Stall begins with actual live projectiles"
     },
     {
-      "elapsedMs": 2720,
+      "elapsedMs": 2893,
       "label": "Stale callback test used real wall-clock gap"
     },
     {
-      "elapsedMs": 2722,
+      "elapsedMs": 2894,
       "label": "Queued stale callback pauses before any movement, fire, actor or projectile advance"
     },
     {
-      "elapsedMs": 2820,
+      "elapsedMs": 2993,
       "label": "Fresh callbacks after stall cannot auto-resume or catch up while controls remain held"
     },
     {
-      "elapsedMs": 2921,
+      "elapsedMs": 3095,
       "label": "Deliberate source-specific arm starts flight"
     },
     {
-      "elapsedMs": 2971,
+      "elapsedMs": 3145,
       "label": "Deliberate resume starts with released local controls and no stale fire"
     },
     {
-      "elapsedMs": 3020,
+      "elapsedMs": 3196,
       "label": "Repeated held-key event cannot fire after resume"
     },
     {
-      "elapsedMs": 3394,
+      "elapsedMs": 3570,
       "label": "Fresh post-release fire works after deliberate resume"
     },
     {
-      "elapsedMs": 3421,
+      "elapsedMs": 3596,
       "label": "No uncaught host errors"
     },
     {
-      "elapsedMs": 3422,
+      "elapsedMs": 3597,
       "label": "Dispose touch host"
     },
     {
-      "elapsedMs": 3423,
-      "label": "Fetch controller host HTML"
+      "elapsedMs": 3599,
+      "label": "Load controller real HTTP host page"
     },
     {
-      "elapsedMs": 3435,
+      "elapsedMs": 3599,
       "label": "Load fresh controller iframe document"
     },
     {
-      "elapsedMs": 3618,
+      "elapsedMs": 3718,
       "label": "Mount fresh controller host"
     },
     {
-      "elapsedMs": 3618,
+      "elapsedMs": 3830,
       "label": "Ready controller host"
     },
     {
-      "elapsedMs": 3645,
+      "elapsedMs": 3852,
       "label": "Start controller preview"
     },
     {
-      "elapsedMs": 3769,
+      "elapsedMs": 3976,
       "label": "Fresh source is disarmed/paused until explicit arm"
     },
     {
-      "elapsedMs": 3819,
+      "elapsedMs": 4025,
       "label": "Controller A release arms inside the host callback"
     },
     {
-      "elapsedMs": 4143,
+      "elapsedMs": 4347,
       "label": "Stale callback test used real wall-clock gap"
     },
     {
-      "elapsedMs": 4144,
+      "elapsedMs": 4349,
       "label": "First callback after controller arming rejects a queued stale timestamp before any tick"
     },
     {
-      "elapsedMs": 4194,
+      "elapsedMs": 4397,
       "label": "Stall immediately after arming still requires deliberate resume"
     },
     {
-      "elapsedMs": 4245,
+      "elapsedMs": 4448,
       "label": "Deliberate source-specific arm starts flight"
     },
     {
-      "elapsedMs": 4369,
+      "elapsedMs": 4572,
       "label": "Fresh callbacks consume actual source movement"
     },
     {
-      "elapsedMs": 4370,
+      "elapsedMs": 4573,
       "label": "Fresh callbacks consume explicit fire action"
     },
     {
-      "elapsedMs": 4371,
+      "elapsedMs": 4573,
       "label": "Fresh callbacks advance authored moving actors"
     },
     {
-      "elapsedMs": 4371,
+      "elapsedMs": 4573,
       "label": "Stall begins with actual live projectiles"
     },
     {
-      "elapsedMs": 4694,
+      "elapsedMs": 4895,
       "label": "Stale callback test used real wall-clock gap"
     },
     {
-      "elapsedMs": 4697,
+      "elapsedMs": 4896,
       "label": "Queued stale callback pauses before any movement, fire, actor or projectile advance"
     },
     {
-      "elapsedMs": 4795,
+      "elapsedMs": 4995,
       "label": "Fresh callbacks after stall cannot auto-resume or catch up while controls remain held"
     },
     {
-      "elapsedMs": 4846,
+      "elapsedMs": 5045,
       "label": "Held controller inputs block resume until neutral pickup"
     },
     {
-      "elapsedMs": 4950,
+      "elapsedMs": 5147,
       "label": "Deliberate source-specific arm starts flight"
     },
     {
-      "elapsedMs": 5001,
+      "elapsedMs": 5198,
       "label": "Deliberate resume starts with released local controls and no stale fire"
     },
     {
-      "elapsedMs": 5052,
+      "elapsedMs": 5249,
       "label": "Repeated held-key event cannot fire after resume"
     },
     {
-      "elapsedMs": 5431,
+      "elapsedMs": 5623,
       "label": "Fresh post-release fire works after deliberate resume"
     },
     {
-      "elapsedMs": 5461,
+      "elapsedMs": 5651,
       "label": "No uncaught host errors"
     },
     {
-      "elapsedMs": 5463,
+      "elapsedMs": 5652,
       "label": "Dispose controller host"
     },
     {
-      "elapsedMs": 5469,
-      "label": "Fetch radio host HTML"
+      "elapsedMs": 5654,
+      "label": "Load radio real HTTP host page"
     },
     {
-      "elapsedMs": 5488,
+      "elapsedMs": 5654,
       "label": "Load fresh radio iframe document"
     },
     {
-      "elapsedMs": 5693,
+      "elapsedMs": 5775,
       "label": "Mount fresh radio host"
     },
     {
-      "elapsedMs": 5694,
+      "elapsedMs": 5893,
       "label": "Ready radio host"
     },
     {
-      "elapsedMs": 5723,
+      "elapsedMs": 5919,
       "label": "Start radio preview"
     },
     {
-      "elapsedMs": 5845,
+      "elapsedMs": 6047,
       "label": "Fresh source is disarmed/paused until explicit arm"
     },
     {
-      "elapsedMs": 5946,
+      "elapsedMs": 6149,
       "label": "Deliberate source-specific arm starts flight"
     },
     {
-      "elapsedMs": 6071,
+      "elapsedMs": 6276,
       "label": "Fresh callbacks consume actual source movement"
     },
     {
-      "elapsedMs": 6073,
+      "elapsedMs": 6277,
       "label": "Fresh callbacks consume explicit fire action"
     },
     {
-      "elapsedMs": 6074,
+      "elapsedMs": 6278,
       "label": "Fresh callbacks advance authored moving actors"
     },
     {
-      "elapsedMs": 6075,
+      "elapsedMs": 6279,
       "label": "Stall begins with actual live projectiles"
     },
     {
-      "elapsedMs": 6397,
+      "elapsedMs": 6600,
       "label": "Stale callback test used real wall-clock gap"
     },
     {
-      "elapsedMs": 6402,
+      "elapsedMs": 6602,
       "label": "Queued stale callback pauses before any movement, fire, actor or projectile advance"
     },
     {
-      "elapsedMs": 6508,
+      "elapsedMs": 6702,
       "label": "Fresh callbacks after stall cannot auto-resume or catch up while controls remain held"
     },
     {
-      "elapsedMs": 6563,
+      "elapsedMs": 6755,
       "label": "Held radio Arm ON cannot resume after stall"
     },
     {
-      "elapsedMs": 6667,
+      "elapsedMs": 6859,
       "label": "Radio resumes only after OFF→ON and matching previous sticks"
     },
     {
-      "elapsedMs": 6669,
+      "elapsedMs": 6861,
       "label": "Radio resume cannot restore held auxiliary fire"
     },
     {
-      "elapsedMs": 6724,
+      "elapsedMs": 6914,
       "label": "Repeated held-key event cannot fire after resume"
     },
     {
-      "elapsedMs": 7106,
+      "elapsedMs": 7290,
       "label": "Fresh post-release fire works after deliberate resume"
     },
     {
-      "elapsedMs": 7138,
+      "elapsedMs": 7319,
       "label": "No uncaught host errors"
     },
     {
-      "elapsedMs": 7301,
+      "elapsedMs": 7515,
       "label": "Selected candidate dependency tree matches prepared SHA-256 hashes"
     },
     {
-      "elapsedMs": 7303,
+      "elapsedMs": 7517,
       "label": "Dispose radio host"
     }
   ],
   "cleanup": [
     {
-      "name": "fpv-lifecycle-1790952167013:revealline-fpv-worlds-v1",
+      "name": "fpv-lifecycle-1790953483002:revealline-fpv-worlds-v1",
       "deleted": true
     },
     {
-      "name": "fpv-lifecycle-1790952167013:revealline.fpv.world-records.v1",
+      "name": "fpv-lifecycle-1790953483002:revealline.fpv.world-records.v1",
       "deleted": true
     },
     {
-      "name": "fpv-lifecycle-1790952167013:revealline-journey-v1",
+      "name": "fpv-lifecycle-1790953483002:revealline-journey-v1",
       "deleted": true
     }
   ],
@@ -552,7 +553,7 @@
       "source": "keyboard",
       "name": "Stale callback test used real wall-clock gap",
       "passed": true,
-      "actualCallbackGap": 324.90000000596046,
+      "actualCallbackGap": 323,
       "rafTimestampGap": 20
     },
     {
@@ -657,7 +658,7 @@
       "source": "touch",
       "name": "Stale callback test used real wall-clock gap",
       "passed": true,
-      "actualCallbackGap": 325.5,
+      "actualCallbackGap": 324.30000001192093,
       "rafTimestampGap": 20
     },
     {
@@ -717,7 +718,7 @@
       "source": "controller",
       "name": "Stale callback test used real wall-clock gap",
       "passed": true,
-      "actualCallbackGap": 324,
+      "actualCallbackGap": 322.90000000596046,
       "rafTimestampGap": 20
     },
     {
@@ -769,7 +770,7 @@
       "source": "controller",
       "name": "Stale callback test used real wall-clock gap",
       "passed": true,
-      "actualCallbackGap": 326.09999999403954,
+      "actualCallbackGap": 324.59999999403954,
       "rafTimestampGap": 20
     },
     {
@@ -864,7 +865,7 @@
       "source": "radio",
       "name": "Stale callback test used real wall-clock gap",
       "passed": true,
-      "actualCallbackGap": 327.20000000298023,
+      "actualCallbackGap": 326.20000000298023,
       "rafTimestampGap": 20
     },
     {
@@ -916,7 +917,7 @@
     }
   ],
   "limitations": [
-    "Real production host/physics with renderer lifecycle stub; no GPU rendering or visual-quality qualification.",
+    "Real HTTP host document and frozen production module dependency tree; renderer lifecycle stub, no GPU rendering or visual-quality qualification. CSS/artwork remain on the original candidate base.",
     "Controlled DOM input and Gamepad samples, not physical radio/controller/touch acceptance.",
     "Real unmodified callback wall clock; requestAnimationFrame scheduling is controlled to reproduce a queued stale timestamp.",
     "Synthetic Space dispatch verifies event ownership only; browser-native trusted activation needs manual spot-check.",

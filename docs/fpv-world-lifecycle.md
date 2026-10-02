@@ -36,8 +36,10 @@ requirements remain in force.
 Prepare a fresh fixture with
 `node scripts/prepare-fpv-world-lifecycle-verification.mjs --out dist/fpv-world-lifecycle-verification-NAME`.
 Use `--candidate-base dist/PREPARED-PLAYER` for a packaged host. The generator
-pins the baseline host, snapshots hashes of the candidate module closure, rejects
-overwrites and requires an actual browser run. The maintained harness lives in
+pins the baseline host, freezes unchanged copies of the candidate module closure
+under unique URLs, verifies hashes before/after the run, rejects overwrites and
+requires an actual browser run. A real HTTP iframe avoids synthetic location
+behavior. The maintained harness lives in
 `docs/evidence/fpv-world-lifecycle-browser-harness.html`.
 
 The fixture uses production HTML, input adapters and flight/actor physics with
