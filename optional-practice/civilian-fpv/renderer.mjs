@@ -76,12 +76,13 @@ export function createFlightRenderer({
   const world = new THREE.Group(),
     goals = new THREE.Group(),
     aircraft = new THREE.Group(),
+    ghostAircraft = new THREE.Group(),
     actors = new THREE.Group(),
     projectiles = new THREE.Group(),
     imported = new THREE.Group(),
     editHandles = new THREE.Group();
   editHandles.visible = false;
-  scene.add(world, goals, aircraft, actors, projectiles, imported, editHandles);
+  scene.add(world, goals, aircraft, ghostAircraft, actors, projectiles, imported, editHandles);
   const hemisphere = new THREE.HemisphereLight(0xe5f3ff, 0x3d504a, 2.1);
   const sunlight = new THREE.DirectionalLight(0xffefd8, 3.1);
   const fillLight = new THREE.DirectionalLight(0x9cc7e8, 0.24);
@@ -116,6 +117,9 @@ export function createFlightRenderer({
     lastHeight = 0,
     pathLine = null,
     droneVisual = null,
+    ghostVisual = null,
+    ghostSamples = [],
+    ghostPose = null,
     sceneGeneration = 0,
     presentationGeneration = 0,
     rotorTick = null,
@@ -459,6 +463,7 @@ export function createFlightRenderer({
     presentationGeneration++;
     rotorTick = null;
     rotorPhase = 0;
+    setGhost([]);
     editor?.detach();
     course = value;
     mode = selectedMode;
@@ -847,7 +852,8 @@ export function createFlightRenderer({
     // Imported animations are presentation only and follow simulation time.
     // Pausing, replay speed and backgrounding never advance them independently.
     importedMixer?.setTime(state.ticks / 50);
-    if (pathLine) pathLine.visible = view !== 'fpv';
+    updateGhost(state.ticks);
+    if (pathLine) pathLine.visible = view !== 'fpv' && view !== 'editor';
     renderer.render(scene, camera);
   }
   function setPath(samples) {
@@ -871,6 +877,100 @@ export function createFlightRenderer({
       new THREE.LineBasicMaterial({ color: 0x95e9ef, transparent: true, opacity: 0.65 }),
     );
     scene.add(pathLine);
+  }
+  /** Bounded, replay-verified presentation samples; never a physics body. */
+  function setGhost(samples) {
+    if (
+      !Array.isArray(samples) ||
+      samples.length > 7202 ||
+      samples.some(
+        (sample, index) =>
+          !Number.isSafeInteger(sample.tick) ||
+          sample.tick < 0 ||
+          sample.tick > 36000 ||
+          (index === 0 ? sample.tick !== 0 : sample.tick <= samples[index - 1].tick) ||
+          !['x', 'y', 'z'].every((key) => Number.isFinite(sample.position?.[key])) ||
+          !Array.isArray(sample.orientation) ||
+          sample.orientation.length !== 4 ||
+          !sample.orientation.every(Number.isFinite) ||
+          Math.hypot(...sample.orientation) === 0,
+      )
+    )
+      throw new Error('Invalid personal-best presentation samples');
+    releaseGroup(ghostAircraft);
+    ghostSamples = samples.map(({ tick, position, orientation }) => ({
+      tick,
+      position: { ...position },
+      orientation: [...orientation],
+    }));
+    ghostVisual = null;
+    ghostPose = null;
+    ghostAircraft.visible = false;
+    setPath(ghostSamples);
+    if (!ghostSamples.length) return;
+    ghostVisual = buildDroneVisual({
+      parent: ghostAircraft,
+      mesh,
+      box,
+      material: () =>
+        material(0x95e9ef, {
+          emissive: 0x247880,
+          emissiveIntensity: 0.65,
+          transparent: true,
+          opacity: 0.48,
+          depthWrite: false,
+        }),
+    });
+    const badge = label('PB', '#95e9ef', ghostAircraft, 0.48);
+    if (badge) badge.position.y = 0.4;
+    ghostAircraft.traverse((item) => {
+      item.castShadow = false;
+      item.receiveShadow = false;
+    });
+  }
+  const ghostRotation = new THREE.Quaternion(),
+    ghostNextRotation = new THREE.Quaternion();
+  function updateGhost(tick) {
+    if (!ghostSamples.length) return;
+    const finalTick = ghostSamples.at(-1).tick,
+      at = Math.max(0, Math.min(tick, finalTick));
+    let low = 0,
+      high = ghostSamples.length - 1;
+    while (low + 1 < high) {
+      const middle = (low + high) >> 1;
+      if (ghostSamples[middle].tick <= at) low = middle;
+      else high = middle;
+    }
+    const from = ghostSamples[low],
+      to = ghostSamples[high],
+      alpha = to.tick === from.tick ? 0 : (at - from.tick) / (to.tick - from.tick),
+      position = Object.fromEntries(
+        ['x', 'y', 'z'].map((key) => [
+          key,
+          from.position[key] + (to.position[key] - from.position[key]) * alpha,
+        ]),
+      );
+    ghostRotation.fromArray(from.orientation).normalize();
+    ghostNextRotation.fromArray(to.orientation).normalize();
+    ghostRotation.slerp(ghostNextRotation, alpha);
+    ghostAircraft.position.set(
+      position.x / 1000,
+      (position.y + (course.rules?.droneRadius ?? 220)) / 1000,
+      position.z / 1000,
+    );
+    ghostAircraft.quaternion.copy(ghostRotation);
+    ghostAircraft.scale.setScalar((course.rules?.droneRadius ?? 220) / 220);
+    // Hide overlap in FPV instead of filling the player's camera with a translucent body.
+    ghostAircraft.visible =
+      view !== 'editor' &&
+      (view !== 'fpv' || ghostAircraft.position.distanceTo(camera.position) >= 0.65);
+    if (!reducedMotion) for (const rotor of ghostVisual.rotors) rotor.rotation.y = at * 0.72;
+    ghostPose = {
+      tick: at,
+      finished: tick >= finalTick,
+      position,
+      orientation: ghostRotation.toArray().map((value) => value * 1000000),
+    };
   }
   /** Accept owned bytes and a bounded relative-path resource map, never URLs.
    * Imported geometry remains a visual preview until the authoring compiler has
@@ -1242,6 +1342,13 @@ export function createFlightRenderer({
     setQuality,
     setDrone,
     setPath,
+    setGhost,
+    ghostSnapshot: () => ({
+      samples: ghostSamples.length,
+      visible: ghostAircraft.visible,
+      trail: Boolean(pathLine),
+      pose: ghostPose ? structuredClone(ghostPose) : null,
+    }),
     loadScene,
     async prepare({ signal } = {}) {
       const generation = sceneGeneration,
@@ -1328,6 +1435,7 @@ export function createFlightRenderer({
       scene.environment = null;
       environmentLight?.dispose();
       environmentLight = null;
+      setGhost([]);
       clearImported();
       for (const group of [world, goals, aircraft, actors, projectiles, editHandles])
         releaseGroup(group);
