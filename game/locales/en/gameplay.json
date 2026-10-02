@@ -486,5 +486,6 @@
   "controller.keepFlying": "Lift the stick to keep flying.",
   "controller.menuEditingHelp": "{{navigation}} Confirm a select or slider to edit; confirm again to apply or go back to cancel.",
   "team.previewUnnamed": "Arena teaser · preview only · scenery is not collision geometry.",
-  "interferenceResisted": " · interference resisted"
+  "interferenceResisted": " · interference resisted",
+  "brief.routeCoverage": "Capture {{coverage}}% of reachable routes. Hazard pockets are bonus reveal territory."
 }
