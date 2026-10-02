@@ -45,3 +45,19 @@ and frozen candidate `11b3d9e438104f641ee98f95abcaef9f0a6a333e`. They do not qua
 the newer Neon inventory. Updated frozen-package and default-inspection evidence
 is recorded separately after the new source is committed. Protected CI/review
 and deployment are still required; no browser/device acceptance is implied.
+
+Frozen candidate `9cb659d3cde6efb0275ec28f4ffedc6d8371e6f0` passes normal
+committed-input, ZIP member, presentation and admission checks for the formerly
+failing community edition, including two byte-identical builds. See
+`evidence/picture-catalogue-capacity-neon-package.json`. Default inspection also
+verifies all included inputs and available committed source, with a 989,957,084-byte
+payload including its manifest; see the adjacent default-inspection summary.
+This is one ordinary preparation, not a complete hosted Pages or native package
+qualification. Its report explicitly lists the excluded hosted components.
+
+The first local archive write exhausted disk space and cleaned its temporary
+output. Obsolete reproducible FPV verification copies were removed, preserving
+source, committed evidence, handoffs and normal player builds; the unchanged
+candidate then passed. Ignored authoring dependencies were temporarily parked
+and restored around qualification without changing source eligibility rules.
+The current #963 PR remains subject to exact-head CI, review and deployment.
