@@ -621,7 +621,7 @@
   "content.textBudget": "{{path}} перевищує обмеження тексту у 4096 символів.",
   "content.plainJson": "{{path}} має містити звичайні дані JSON.",
   "content.cycle": "{{path}} не має містити циклічних посилань.",
-  "content.arrayBudget": "{{path}} перевищує обмеження масиву у 256 елементів.",
+  "content.arrayBudget": "{{path}} перевищує обмеження масиву у {{limit}} елементів.",
   "content.fieldBudget": "{{path}} містить забагато полів.",
   "content.symbolKeys": "{{path}} не має містити символьних ключів.",
   "content.arrayProperties": "{{path}} не має містити власних додаткових властивостей масиву.",
