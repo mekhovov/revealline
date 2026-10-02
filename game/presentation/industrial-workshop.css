@@ -127,6 +127,10 @@
     .race-menu-status,
     .soundtrack-advanced-description,
     .native-menu-footer,
+    #demo-status,
+    #demo-picture-note,
+    #demo-audio-artist,
+    .demo-audio-status,
     .sidebar-note,
     [data-ui-tone='muted']
   ) {
@@ -255,6 +259,10 @@
     .race-heading,
     .reading-toolbar,
     .shell-dialog-heading,
+    .demo-panel,
+    .demo-notes,
+    .demo-transport,
+    #demo-audio,
     [data-ui-surface='toolbar']
   ) {
   color: var(--iw-text);
@@ -291,6 +299,8 @@
     .coach-tip,
     .checkpoint,
     .encounter-cue,
+    .demo-board,
+    .demo-settings,
     .seat,
     .control-card,
     .batch-card-media,
@@ -454,10 +464,18 @@
   text-decoration-thickness: 2px;
 }
 [data-theme-styled='true']
-  :where(button, input, select, textarea, .button, [role='button']):is(
-    :disabled,
-    [aria-disabled='true']
-  ) {
+  :where(
+    button,
+    input,
+    select,
+    textarea,
+    a,
+    .button,
+    .button-link,
+    [role='button'],
+    [role='tab'],
+    [data-ui-action]
+  ):is(:disabled, [aria-disabled='true']) {
   color: var(--iw-muted);
   background: var(--iw-panel);
   border-color: var(--iw-line);
@@ -545,6 +563,15 @@
 }
 [data-theme-styled='true'] :where(input[type='checkbox'], input[type='radio']):checked::before {
   transform: scale(1);
+}
+[data-theme-styled='true'] :where(input[type='checkbox'], input[type='radio']):disabled {
+  background: var(--iw-panel);
+  border-color: var(--iw-muted);
+  border-style: dashed;
+  cursor: not-allowed;
+}
+[data-theme-styled='true'] :where(input[type='checkbox'], input[type='radio']):disabled::before {
+  background: var(--iw-muted);
 }
 [data-theme-styled='true'] input[type='checkbox']:indeterminate::before {
   transform: scale(1);
@@ -755,13 +782,23 @@
   opacity: 1;
 }
 [data-theme-motion='reduced']
-  :where(.menu-ornament, .edition-propeller, .theme-decoration, .menu-scene-decoration) {
+  :where(
+    .menu-ornament,
+    .edition-propeller,
+    .theme-decoration,
+    .menu-scene-decoration,
+    .operation-status-signal i,
+    .win-picture-caption
+  ) {
   animation: none;
   transition: none;
   transform: none;
 }
 [data-theme-motion='reduced'] .menu-retune-layer {
   display: none;
+}
+[data-theme-motion='reduced'] :where(button, .button, [role='button']) {
+  transition: none;
 }
 [data-theme-text-size='large']:not([data-interface-theme='legacy'])
   :where(p, label, button, select, input, textarea, .micro-note) {
@@ -907,6 +944,10 @@
   outline: 2px solid var(--iw-focus, var(--fk-focus));
   outline-offset: 2px;
 }
+.theme-gallery .theme-preview-card:is(:focus-visible, .controller-focus) {
+  outline: 3px solid var(--iw-focus, var(--fk-focus));
+  outline-offset: 5px;
+}
 .theme-preview-card[aria-pressed='true'] strong::after {
   content: ' ✓';
 }
@@ -927,6 +968,36 @@
     grid-template-columns: 1fr;
   }
 }
+/* Compact Settings deliberately gives Back a fixed icon slot. Typography
+   overrides, including Large text, must not reveal its label over the arrow.
+   The real text/accessible name and the 44px target remain intact. */
+@media (max-width: 700px) {
+  [data-theme-styled='true'] .native-settings [data-menu-icon='back'] {
+    font-size: 0;
+    flex: 0 0 44px;
+    width: 44px;
+    min-width: 44px;
+    height: 44px;
+    min-height: 44px;
+    padding: 8px;
+    gap: 0;
+  }
+}
+/* Keep the compiled icon-only controls' real labels available to assistive
+   technology without drawing fallback text beside their replacement glyphs. */
+[data-theme-styled='true']
+  :is(.dialog-close, .icon-button)[data-presentation-icon][aria-label]:not([data-menu-icon]),
+[data-theme-styled='true']
+  :is(
+    [data-presentation-control='up'],
+    [data-presentation-control='down'],
+    [data-presentation-control='left'],
+    [data-presentation-control='right']
+  )[aria-label] {
+  font-size: 0;
+  gap: 0;
+  min-inline-size: var(--iw-target);
+}
 @media (prefers-reduced-motion: reduce) {
   [data-theme-styled='true'] :where(button, .button, [role='button']) {
     transition: none;
@@ -938,6 +1009,50 @@
   background: var(--iw-ink);
   border-color: var(--iw-line);
   border-image: none;
+}
+
+/* Earned media keeps its authored picture. Only the overlaid reading and
+   control surfaces share the active interface's paired colors. */
+[data-theme-styled='true']
+  :where(
+    .story-controls,
+    .story-notice,
+    .story-dialog--immersive > p:not(:empty),
+    .win-picture-caption,
+    #demo-dialog[data-reward='expanded'] .demo-header,
+    #demo-dialog[data-reward='expanded'] .demo-panel
+  ) {
+  color: var(--iw-text);
+  background: var(--iw-panel);
+  border-color: var(--iw-line);
+  border-image: none;
+  border-radius: 0;
+  text-shadow: none;
+  backdrop-filter: none;
+}
+[data-theme-styled='true']
+  :where(.story-dialog--immersive, .creator-player[data-earned-view='on'] #earned) {
+  background: var(--iw-ink);
+  border: 0;
+  border-image: none;
+  box-shadow: none;
+}
+[data-theme-styled='true'] .win-picture-caption {
+  width: fit-content;
+  max-width: calc(100% - 32px);
+  box-sizing: border-box;
+  margin-inline: auto;
+  padding: 12px 20px;
+  border: 1px solid var(--iw-line);
+}
+[data-theme-styled='true'] .win-picture-mark {
+  color: var(--iw-accent);
+}
+[data-theme-styled='true'] [data-win-picture] #shell-menu {
+  padding: 0;
+}
+[data-theme-styled='true'] [data-win-picture] #shell-menu::before {
+  color: inherit;
 }
 
 /* Status, badges and callouts are shared reading surfaces, including tools. */
@@ -980,6 +1095,18 @@
 [data-theme-styled='true'] :where([role='status'][data-error='true'], [role='status'].error) {
   border-inline-start: 3px solid var(--iw-hazard);
   padding-inline-start: 0.75rem;
+}
+[data-theme-styled='true'] .operation-status[data-state='error'] {
+  color: var(--iw-hazard);
+  border-inline-start: 3px solid var(--iw-hazard);
+  padding-inline-start: 0.75rem;
+}
+[data-theme-styled='true'] .operation-status:is([data-state='cancelled'], [data-state='detached']) {
+  color: var(--iw-amber);
+}
+[data-theme-styled='true'] .operation-status .operation-status-label {
+  color: inherit;
+  background: transparent;
 }
 
 /* Deep dialogs and tool results are part of the same interface. Never leave a

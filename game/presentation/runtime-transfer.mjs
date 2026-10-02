@@ -5,6 +5,7 @@ import {
   candidateFromPresentation,
   validateThemeCandidate,
   THEME_PREVIEW_LIMIT,
+  studioCandidateOptions,
 } from './theme-preview.mjs';
 import { COMPILED_PRESENTATION_FORMAT, validateCompiledPresentation } from './host.mjs';
 import {
@@ -60,7 +61,7 @@ export function compileRuntimeEnvelope(source, options) {
   return validateRuntimeEnvelope({
     format: 'RuntimeTheme.v2',
     presentation,
-    candidate: candidateFromPresentation(presentation, options),
+    candidate: candidateFromPresentation(presentation, studioCandidateOptions(source, options)),
   });
 }
 
@@ -91,11 +92,16 @@ export function validateRuntimeEnvelope(input) {
 export async function exportRuntimeTheme(
   source,
   sourceAssets,
-  { signal, familyId, interfaceId } = {},
+  { signal, familyId, familyRevision, interfaceId, interfaceRevision } = {},
 ) {
   cancelled(signal);
   const assets = await verifyThemeAssets(source, sourceAssets, { signal });
-  const envelope = compileRuntimeEnvelope(source, { familyId, interfaceId }),
+  const envelope = compileRuntimeEnvelope(source, {
+      familyId,
+      familyRevision,
+      interfaceId,
+      interfaceRevision,
+    }),
     manifest = encode(envelope),
     presentationBytes = encode(envelope.presentation);
   const inventory = await inspectPresentationDependencies(presentationBytes, { signal });

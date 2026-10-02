@@ -64,6 +64,8 @@ test(
     assert.equal(accepted.length, 1);
     assert.deepEqual(accepted[0].feedback, source.campaigns[0].discovery.feedback);
     assert.equal(accepted[0].owned, true);
+    if (!page.$('skip-celebration').hidden) page.$('skip-celebration').click();
+    page.$('show-result').click();
     const previous = getLocale();
     try {
       setLocale('en');

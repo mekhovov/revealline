@@ -169,8 +169,8 @@
               </button>
             </div>
             <p class="school-reassurance" data-i18n="schoolReassurance">
-              Acro · FPV view · Gentle response. Your usual settings return when you leave. All
-              lessons are open.
+              Choose Self-level or Acro. Your mode choice is kept; your usual camera and response
+              settings return when you leave. All lessons are open.
             </p>
           </div>
           <div class="school-flight-map" aria-hidden="true">
@@ -507,6 +507,13 @@
           Radio setup
         </button>
         <label
+          ><span data-i18n="touchResponse">Touch response</span>
+          <select id="flight-touch-response">
+            <option value="precise" data-i18n="touchPrecise">Precise — small corrections</option>
+            <option value="direct" data-i18n="touchDirect">Direct — linear response</option>
+          </select>
+        </label>
+        <label
           ><span data-i18n="cameraLabel">Camera</span
           ><select id="flight-camera" aria-label="Camera">
             <option value="fpv">FPV</option>
@@ -617,6 +624,9 @@
         <div id="world-touch" class="world-touch" hidden>
           <div id="world-left-stick" class="touch-stick">
             <i aria-hidden="true"></i><span id="world-left-label"></span>
+            <output id="world-touch-throttle" class="touch-throttle-readout" aria-live="off"
+              >0%</output
+            >
           </div>
           <div id="world-right-stick" class="touch-stick">
             <i aria-hidden="true"></i><span id="world-right-label"></span>

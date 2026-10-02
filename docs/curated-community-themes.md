@@ -19,6 +19,20 @@ This is curated content admission, not player file installation or executable
 plugins. Arbitrary replacement collections and new model/font payloads remain a
 future extension requiring explicit bounded dependency and revision contracts.
 
+## Saved workspace basis
+
+New workspaces and explicit basis changes use `revealline-theme-bundle.v2` with
+`appearanceBasis: {familyId, familyRevision, interfaceId, interfaceRevision}`.
+Save, reopen, duplicate, native export/import and runtime export preserve these
+exact pins, including retained Industrial r1. Existing v1 bundles stay byte-compatible;
+opening or exporting them alone does not migrate the document. Choosing a basis is
+an ordinary staged edit and requires Save before community assignment.
+
+An imported unavailable basis remains editable and can still be exported intact.
+The workbench shows its exact reference and blocks candidate preview, runtime
+export and community assignment until the author explicitly chooses an installed
+basis and saves it. It never silently substitutes the latest Industrial revision.
+
 ## Immutable data and admission
 
 `revealline-edition-catalog.v3` adds `appearanceThemes`, a maximum of 64 validated
@@ -76,12 +90,42 @@ world appearance. An explicit world override still wins.
   contrast admission, bounded first paint and separate-tab transfer/fallback.
 - `game/test/edition-appearance-host.test.mjs`: atomic real mission adoption,
   cancellation, failed resource preparation and personal overrides.
+- `game/test/studio-appearance-basis.test.mjs`: saved, duplicated, native and runtime
+  round trips, retained and unavailable revisions, and the visible workbench state.
+- `game/test/company-studio-preview.test.mjs`: a self-consistent compiled report
+  cannot omit or add curated definitions behind otherwise matching default pins.
+- `scripts/test-curated-appearance-package.mjs`: two real compiler packages, emitted
+  entry/provider/host modules, HTTP loading, exact cached bytes, cache-only reload,
+  community isolation and personal override precedence.
 - `game/test/company-studio-ui.test.mjs`: pending handoff, explicit assignment,
   exported source and input focus.
 - `scripts/test-optional-fpv-package.mjs`: reproducible Academy runtime and source
-  closure inside the unchanged 62/64 file totals and package byte caps.
+  closure inside the unchanged 72-file / 8-MiB Academy caps; World uses its separate
+  104-file / 16-MiB caps. File totals are measured from the current source closure.
 
 The [verification receipt](verification/appearance-quality-2026-10-02/curated-workflow/README.md)
 records focused checks and explicitly separates programmatic harness evidence
 from Cua UI proof. Password-gated browser and offline-browser qualification are
 not established by this receipt.
+
+## Reproduce the compiled acceptance journey
+
+Run `node --test game/test/studio-appearance-basis.test.mjs game/test/company-studio-preview.test.mjs scripts/test-curated-appearance-package.mjs`.
+The last check compiles two neutral communities in memory and writes only a temporary
+closure of emitted modules for Node execution. It deletes that small directory after
+the run and produces no duplicate site builds or archives.
+
+For browser review, run
+`node scripts/check-curated-appearance-package.mjs --serve 8876 --receipt /tmp/appearance-package.json`.
+Open `http://127.0.0.1:8876/north/game/company.html`, then the corresponding
+`/south/game/company.html`. Both should show the edited **River acceptance** theme
+and redirect to the ordinary Solo entry. Choose Tryzub in the first community,
+open the second, and verify that the personal choice wins; choose Follow community
+and reload to restore the exact custom candidate. Ordinary access gates remain in
+place. Stop the server with Ctrl-C when finished.
+
+The JSON receipt pins actual compiler inputs, entry/catalogue bytes, package size,
+and emitted module count. Node uses a DOM adapter for host assertions and a verified
+cache-only fetcher for reload. This is reproducible runtime and packaging evidence;
+physical offline installation, rendered contrast and user interaction still need
+separate browser/device evidence.

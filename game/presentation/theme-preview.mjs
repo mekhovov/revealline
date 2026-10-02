@@ -100,8 +100,26 @@ export function createThemeCandidate(source, options) {
       source: { id: document.id, revision: document.revision },
       resolved: resolvePresentation(document),
     },
-    options,
+    studioCandidateOptions(document, options),
   );
+}
+
+/** Saved exact pins win over omitted options. An explicit different family or
+ * interface starts a new basis instead of borrowing the old family's pins. */
+export function studioCandidateOptions(source, options = {}) {
+  const document = validateThemeBundle(source);
+  const explicit = Object.fromEntries(
+    Object.entries(options).filter(([, value]) => value !== undefined),
+  );
+  const basis = { ...document.appearanceBasis };
+  if (explicit.familyId && explicit.familyId !== basis.familyId) {
+    delete basis.familyRevision;
+    delete basis.interfaceId;
+    delete basis.interfaceRevision;
+  } else if (explicit.interfaceId && explicit.interfaceId !== basis.interfaceId) {
+    delete basis.interfaceRevision;
+  }
+  return { ...basis, ...explicit };
 }
 
 /** Curated interface candidates use engine-owned art. Reject changed selected

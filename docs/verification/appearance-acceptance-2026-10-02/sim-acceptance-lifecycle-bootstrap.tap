@@ -1,0 +1,85 @@
+TAP version 13
+# Subtest: fixed acceptance routes cover every current environment without changing course data
+ok 1 - fixed acceptance routes cover every current environment without changing course data
+  ---
+  duration_ms: 176.091584
+  ...
+# Subtest: paired comparison rejects changed conditions or incomplete runs and retains both directional results
+ok 2 - paired comparison rejects changed conditions or incomplete runs and retains both directional results
+  ---
+  duration_ms: 2.703
+  ...
+# Subtest: percentiles use bounded actual samples and reject missing timing data
+ok 3 - percentiles use bounded actual samples and reject missing timing data
+  ---
+  duration_ms: 3.933333
+  ...
+# Subtest: snapshot closure discovers loader imports and styles but refuses external or escaping dependencies
+ok 4 - snapshot closure discovers loader imports and styles but refuses external or escaping dependencies
+  ---
+  duration_ms: 1615.71975
+  ...
+# Subtest: authoring controls cannot bypass pending or failed source verification
+ok 5 - authoring controls cannot bypass pending or failed source verification
+  ---
+  duration_ms: 24.861042
+  ...
+# Subtest: failed scene changes block mislabeled reviews and recover only after a successful install
+ok 6 - failed scene changes block mislabeled reviews and recover only after a successful install
+  ---
+  duration_ms: 27.767417
+  ...
+# Subtest: closing the page while source verification waits never installs into a disposed renderer
+ok 7 - closing the page while source verification waits never installs into a disposed renderer
+  ---
+  duration_ms: 15.907917
+  ...
+# Subtest: measurement hashing failures release controls and disposal cannot reactivate them
+ok 8 - measurement hashing failures release controls and disposal cannot reactivate them
+  ---
+  duration_ms: 9.531208
+  ...
+# Subtest: first-paint seed is generated from the exact admitted registry and shared migration parser
+ok 9 - first-paint seed is generated from the exact admitted registry and shared migration parser
+  ---
+  duration_ms: 473.836875
+  ...
+# Subtest: every admitted appearance paints exact paired tokens and frames before module execution
+ok 10 - every admitted appearance paints exact paired tokens and frames before module execution
+  ---
+  duration_ms: 284.70375
+  ...
+# Subtest: retained and current context pins paint their exact installed revision before runtime
+ok 11 - retained and current context pins paint their exact installed revision before runtime
+  ---
+  duration_ms: 82.629042
+  ...
+# Subtest: read-only startup matches runtime migration for new, existing, damaged and unavailable preferences
+ok 12 - read-only startup matches runtime migration for new, existing, damaged and unavailable preferences
+  ---
+  duration_ms: 23.914042
+  ...
+# Subtest: first-paint density, motion, legibility and cosmetic context use bounded canonical choices
+ok 13 - first-paint density, motion, legibility and cosmetic context use bounded canonical choices
+  ---
+  duration_ms: 7.954416
+  ...
+# Subtest: every production game, authoring and site entry seeds appearance before other scripts and styles
+ok 14 - every production game, authoring and site entry seeds appearance before other scripts and styles
+  ---
+  duration_ms: 769.473209
+  ...
+# Subtest: profile-owned players seed appearance without acquiring an auxiliary host lease
+ok 15 - profile-owned players seed appearance without acquiring an auxiliary host lease
+  ---
+  duration_ms: 74.216542
+  ...
+1..15
+# tests 15
+# suites 0
+# pass 15
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 2725.39425

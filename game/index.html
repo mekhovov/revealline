@@ -164,6 +164,7 @@
     <link rel="stylesheet" data-boot-href="ui/edition-play.css" />
     <link rel="stylesheet" data-boot-href="ui/menu-scenes.css" />
     <link rel="stylesheet" data-boot-href="ui/native-menu.css" />
+    <link rel="stylesheet" data-boot-href="ui/win-picture.css" />
     <link rel="icon" type="image/png" sizes="32x32" href="ui/art/identity/fpv-line/icon-32.png" />
   </head>
   <body class="field-kit">
@@ -769,14 +770,21 @@
                 <p id="journey-reactions" class="overlay-footnote" hidden></p>
               </div>
             </div>
+            <div id="win-picture-caption" class="win-picture-caption" hidden>
+              <span class="win-picture-mark" aria-hidden="true">✦</span>
+              <strong data-i18n="interface:winPictureComplete">Beautifully done.</strong>
+              <span data-i18n="interface:winPictureEnjoy">The whole picture is yours.</span>
+            </div>
             <button
               id="show-result"
               class="picture-return"
               type="button"
               hidden
-              data-i18n="interface:results"
+              data-i18n="interface:winPictureContinue"
+              data-i18n-aria-label="interface:winPictureContinueLabel"
+              aria-label="Continue to results"
             >
-              Results ↗
+              Continue →
             </button>
             <button
               id="skip-celebration"

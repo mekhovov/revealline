@@ -1,4 +1,3 @@
-import { campaignVictoryMotif } from '../journey/campaign-feedback.mjs';
 import { playerMovementBody } from './movement-profiles.mjs';
 import { getLocale } from '../i18n/index.mjs';
 import { CELL, DIRECTIONS } from '../core/registry.mjs';
@@ -216,7 +215,11 @@ export class FeedbackDirector {
       if (options.mode === 'versus' && event.type === 'run.completed') return;
       seen.add(key);
       if (seen.size > 512) seen.delete(seen.values().next().value);
-      if (event.type === 'run.completed' && campaignVictoryMotif(options.resultContext)) {
+      if (event.type === 'run.completed' && event.won !== false && event.status !== 'lost') {
+        // One victory owner, whether samples have decoded yet or not. This
+        // preserves published cues and campaign phrases while giving every
+        // ordinary win the same soft, audio-clocked picture reveal resolution.
+        for (const voice of [...this.sound.voices]) if (voice.radio) voice.stop();
         this.sound.event?.(event, {}, options.resultContext);
         return;
       }

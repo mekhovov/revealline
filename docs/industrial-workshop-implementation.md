@@ -11,7 +11,7 @@ and creator tools. Industrial Workshop is the application fallback for new profi
 existing preferences migrate without rewriting them on read. No Factorio assets
 are included. This is a local implementation, not a published release.
 
-Eight complete built-in families are available: Industrial Workshop, Vyshyvanka,
+Eight functional built-in families are available: Industrial Workshop, Vyshyvanka,
 Dnipro Porcelain, Tryzub, Desktop 98, DOS Navigator, Orchard Workshop and Neon Ruins.
 Legacy appearance stays available. Palette and material roles use the same engine
 contracts across communities; a community theme is not restricted to its source
@@ -46,7 +46,7 @@ and [the supplied Ukrainian palettes](https://github.com/mekhovov/swarmshared/tr
   snapshot, its interface/family/SIM bindings and the selected original files.
 - Open `/authoring/fpv-worlds/calibration.html` to compare real renderer output,
   all eight environments, camera views, quality presets and shared material
-  swatches. Desktop 98 and DOS Navigator are selectable production families with
+  swatches. Desktop 98 and DOS Navigator are selectable families with
   flat interface treatments and compatible SIM/arcade collections.
 
 ## Framework and interface
@@ -216,7 +216,9 @@ Porcelain, edits and saves a token, exports and validates an exact v2 runtime
 candidate, compares 35 arcade roles, and opens the same candidate in SIM calibration
 without writing player preferences.
 
-Academy's 8 MiB/64-file and World's 16 MiB/96-file policies remain unchanged.
+The initial implementation used Academy's 8 MiB/64-file and World's 16 MiB/96-file
+limits. Subsequent main integration inherited 72 and 104 file caps respectively;
+the byte limits are unchanged and this appearance continuation does not raise them.
 Shared SIM CSS/fonts are embedded from exact source assets, and new runtime logic
 is consolidated into admitted modules. Optional SIM resources remain outside the
 mandatory game cache. Use `node scripts/refresh-fpv-presentation-assets.mjs --check`

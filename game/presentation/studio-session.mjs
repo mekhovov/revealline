@@ -1,14 +1,20 @@
 import { createDefaultThemeBundle } from './catalog.mjs';
 import { isTeamRuntimeImageSlot } from './team-runtime-slots.mjs';
-import { FORMATS, validateThemeBundle, resolvePresentation } from './model.mjs';
+import {
+  FORMATS,
+  validateThemeBundle,
+  resolvePresentation,
+  validateStudioAppearanceBasis,
+} from './model.mjs';
 import { canonicalJSON, required } from '../data-json.mjs';
 
 const reference = (record) => ({ id: record.id, revision: record.revision });
 const same = (a, b) => a.id === b.id && a.revision === b.revision;
 /** A new theme starts from the visible snapshot, not the source theme ledger.
  * Exact asset revisions and their derivative parents retain their provenance. */
-export function duplicateStudioSnapshot(source, { id, name, tokens = {} } = {}) {
+export function duplicateStudioSnapshot(source, { id, name, tokens = {}, appearanceBasis } = {}) {
   const document = validateThemeBundle(source);
+  const basis = appearanceBasis ?? document.appearanceBasis;
   const presentation = resolvePresentation(document);
   const key = (record) => `${record.id}@${record.revision}`;
   const assets = new Map(document.assets.map((asset) => [key(asset), asset]));
@@ -29,7 +35,8 @@ export function duplicateStudioSnapshot(source, { id, name, tokens = {} } = {}) 
     bindings: presentation.bindings,
   };
   return validateThemeBundle({
-    format: FORMATS.bundle,
+    format: basis ? FORMATS.appearanceBundle : FORMATS.bundle,
+    ...(basis ? { appearanceBasis: validateStudioAppearanceBasis(basis) } : {}),
     id,
     revision: 1,
     slots: document.slots,
@@ -38,6 +45,21 @@ export function duplicateStudioSnapshot(source, { id, name, tokens = {} } = {}) 
     collections: [],
     selection: { base: reference(theme), theme: reference(theme), collection: null },
   });
+}
+export function setStudioAppearanceBasis(source, input) {
+  const previous = validateThemeBundle(source);
+  const appearanceBasis = validateStudioAppearanceBasis(input);
+  if (canonicalJSON(previous.appearanceBasis ?? null) === canonicalJSON(appearanceBasis))
+    return previous;
+  return validateThemeBundle(
+    {
+      ...previous,
+      format: FORMATS.appearanceBundle,
+      revision: previous.revision + 1,
+      appearanceBasis,
+    },
+    { previous, expectedRevision: previous.revision },
+  );
 }
 /** History belongs to exact slot bindings, not asset naming conventions.
  * Retain derivative sources for download, but only previously valid bindings

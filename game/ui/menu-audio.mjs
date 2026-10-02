@@ -1,6 +1,6 @@
 import { MOVEMENT_AUDIO_KEY } from './movement-audio.mjs';
 import { RADIO_AUDIO_KEY } from './radio-audio.mjs';
-import { t, localizedText } from '../i18n/index.mjs';
+import { t, localizedText, localizedAttribute } from '../i18n/index.mjs';
 export const MENU_AUDIO_KEY = 'revealline.menu-audio.v1';
 export function readMenuAudio(storage) {
   try {
@@ -94,7 +94,7 @@ function attachPreference(sound, doc, prefix, property, key, enableCopy, volumeC
   volume.max = '100';
   volume.step = '1';
   volume.value = String(Math.round(sound[property].volume * 100));
-  volume.setAttribute('aria-label', t(`common:${volumeCopy}`));
+  localizedAttribute(volume, 'aria-label', () => t(`common:${volumeCopy}`));
   const volumeText = doc.createElement('span');
   volumeText.id = `${prefix}-audio-volume-label`;
   const volumeCaption = () =>
