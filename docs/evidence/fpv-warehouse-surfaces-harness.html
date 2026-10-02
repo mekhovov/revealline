@@ -1,0 +1,1196 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Warehouse surfaces · before / after</title>
+    <style>
+      :root {
+        font: 15px system-ui;
+        color-scheme: dark;
+        background: #0b1724;
+        color: #e6eff4;
+      }
+      body {
+        margin: 20px;
+        max-width: 1400px;
+      }
+      h1 {
+        font-size: 23px;
+      }
+      p {
+        max-width: 105ch;
+        line-height: 1.45;
+      }
+      button,
+      select {
+        font: inherit;
+        min-height: 44px;
+        background: #1b3044;
+        color: inherit;
+        border: 1px solid #58778d;
+        border-radius: 6px;
+        padding: 8px 12px;
+      }
+      button:disabled {
+        opacity: 0.5;
+      }
+      .controls {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+        margin: 12px 0;
+        align-items: center;
+      }
+      label {
+        display: flex;
+        gap: 8px;
+        align-items: center;
+      }
+      .pair {
+        display: flex;
+        gap: 14px;
+        overflow: auto;
+      }
+      figure {
+        margin: 0;
+        flex: none;
+      }
+      figcaption {
+        padding: 8px;
+        font-weight: 600;
+      }
+      .screen,
+      .screen canvas {
+        width: 640px;
+        height: 360px;
+        display: block;
+        background: #101923;
+      }
+      .screen {
+        border: 1px solid #526878;
+      }
+      textarea {
+        width: 100%;
+        height: 240px;
+        background: #101923;
+        color: #dce8f0;
+        font: 12px monospace;
+      }
+      small {
+        color: #aac0ce;
+      }
+      #status {
+        min-height: 25px;
+      }
+      #provenance {
+        font: 12px monospace;
+        overflow-wrap: anywhere;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Warehouse storage and structure comparison</h1>
+    <p>
+      Frozen baseline and candidate use actual production WebGL renderers and built-in GLB scenery.
+      Inspect six unchanged solid storage blocks, shell surfaces, gates and moving actors at 1.5, 3,
+      6 and 8 metres, including the 2.5 m stack and 5 m beam clearance. Geometry and opaque
+      sightlines must match; Warehouse surface pixels should change.
+    </p>
+    <p>
+      <small
+        >Prepare using
+        <code
+          >node scripts/prepare-fpv-warehouse-surfaces-verification.mjs --out
+          dist/fpv-warehouse-surfaces-verification-NAME</code
+        >. No game progress or remote assets are used. Static observer poses are not flight proofs.
+        Keep this tab visible during verification.</small
+      >
+    </p>
+    <p id="provenance">Loading provenance…</p>
+    <div class="controls">
+      <button id="run" disabled>Run surface qualification</button
+      ><button id="preview" disabled>Show selected view</button
+      ><button id="download" disabled>Download receipt</button>
+    </div>
+    <div class="controls">
+      <label
+        >World<select id="course">
+          <option value="warehouse-07">Warehouse · crossing hazards</option>
+          <option value="beginner-36">Warehouse · stack and overhead beam</option>
+          <option value="beginner-38">Warehouse · aisle divider</option>
+          <option value="flight-05">Meadow regression</option>
+          <option value="courtyard-01">Courtyard regression</option>
+        </select></label
+      >
+      <label
+        >Quality<select id="quality">
+          <option value="low">Performance</option>
+          <option value="balanced" selected>Balanced</option>
+          <option value="high">Quality</option>
+        </select></label
+      >
+      <label
+        >Camera<select id="camera">
+          <option>fpv</option>
+          <option>chase</option>
+          <option>overview</option>
+        </select></label
+      >
+      <label
+        >Height<select id="height">
+          <option value="1.5">1.5 m · under low stack</option>
+          <option value="3" selected>3 m · over low stack</option>
+          <option value="6">6 m · overhead beam</option>
+          <option value="8">8 m · above storage</option>
+        </select></label
+      >
+      <label
+        >Facing<select id="pose">
+          <option value="storage">Close storage face</option>
+          <option value="stack">Low stack approach</option>
+          <option value="beam">Overhead beam approach</option>
+          <option value="aisle">Central aisle</option>
+          <option value="wall">Perimeter wall</option>
+          <option value="trail">Trail and objectives</option>
+          <option value="rear">Reverse trail</option>
+        </select></label
+      >
+    </div>
+    <p id="status">Preparing controls…</p>
+    <div class="pair">
+      <figure>
+        <figcaption>Before · frozen baseline</figcaption>
+        <div class="screen" id="before"></div>
+      </figure>
+      <figure>
+        <figcaption>After · frozen candidate</figcaption>
+        <div class="screen" id="after"></div>
+      </figure>
+    </div>
+    <p>
+      <small
+        >The harness briefly observes Three.js scene attachment during renderer construction, then
+        restores the original method. It never replaces production geometry, materials, shaders,
+        physics or render output. Pixel equality is same-browser evidence, not a cross-device golden
+        or FPS claim.</small
+      >
+    </p>
+    <textarea id="receipt" aria-label="Warehouse surface verification receipt" readonly></textarea>
+    <script type="module">
+      const $ = (id) => document.getElementById(id),
+        qualities = ['low', 'balanced', 'high'],
+        heights = [1.5, 3, 6, 8],
+        warehouseIds = ['warehouse-07', 'beginner-36', 'beginner-38'],
+        wait = () => new Promise(requestAnimationFrame),
+        encode = JSON.stringify,
+        clone = (value) => JSON.parse(JSON.stringify(value));
+      const sha = async (value) =>
+        [
+          ...new Uint8Array(
+            await crypto.subtle.digest(
+              'SHA-256',
+              typeof value === 'string' ? new TextEncoder().encode(value) : value,
+            ),
+          ),
+        ]
+          .map((x) => x.toString(16).padStart(2, '0'))
+          .join('');
+      let manifest,
+        modules,
+        receipt,
+        owners = [],
+        busy = false;
+      const errors = [];
+      addEventListener('error', (event) => errors.push(event.message));
+      addEventListener('unhandledrejection', (event) => errors.push(String(event.reason)));
+      function status(text) {
+        $('status').textContent = text;
+      }
+      function publish() {
+        window.fpvWarehouseSurfacesReceipt = receipt;
+        $('receipt').value = JSON.stringify(receipt, null, 2);
+        $('download').disabled = !receipt;
+      }
+      function check(passed, name, details = {}) {
+        receipt.checks.push({ name, passed: !!passed, ...details });
+        publish();
+        if (!passed) throw Error(name);
+      }
+      async function timeout(operation, label) {
+        let timer;
+        try {
+          return await Promise.race([
+            operation,
+            new Promise((_, reject) => {
+              timer = setTimeout(() => reject(Error('Timeout: ' + label)), 45000);
+            }),
+          ]);
+        } finally {
+          clearTimeout(timer);
+        }
+      }
+      async function verifyHashes() {
+        for (const [side, files] of Object.entries(manifest.files))
+          for (const [file, hash] of Object.entries(files)) {
+            const r = await fetch('./' + side + '/' + file, { cache: 'no-store' });
+            if (!r.ok || (await sha(await r.arrayBuffer())) !== hash)
+              throw Error('Frozen source mismatch: ' + side + '/' + file);
+          }
+        if (
+          (await sha(await (await fetch('./index.html', { cache: 'no-store' })).arrayBuffer())) !==
+          manifest.harnessSha256
+        )
+          throw Error('Harness mismatch');
+      }
+      async function initialize() {
+        manifest = await (await fetch('./fixture-manifest.json', { cache: 'no-store' })).json();
+        if (manifest.format !== 'FPVWarehouseSurfacesFixture.v1') throw Error('Unknown fixture');
+        $('provenance').textContent =
+          'Baseline ' +
+          manifest.baseline +
+          ' · Candidate ' +
+          manifest.candidate +
+          ' · renderer ' +
+          manifest.files.after['optional-practice/civilian-fpv/renderer.mjs'] +
+          ' · visuals ' +
+          manifest.files.after['optional-practice/civilian-fpv/world-visuals.mjs'];
+        modules = await Promise.all(
+          ['before', 'after'].map(async (side) => {
+            const base = new URL('./' + side + '/optional-practice/civilian-fpv/', location.href);
+            const [assets, catalogue, model, visuals, THREE, worldCatalogue, worldModel] =
+              await Promise.all(
+                [
+                  'world-assets.mjs',
+                  'catalogue.mjs',
+                  'model.mjs',
+                  'world-visuals.mjs',
+                  'vendor/three.module.js',
+                  'world-catalogue.mjs',
+                  'world-model.mjs',
+                ].map((name) => import(new URL(name, base))),
+              );
+            await worldModel.initWorldRuntime();
+            return { side, assets, catalogue, model, visuals, THREE, worldCatalogue, worldModel };
+          }),
+        );
+      }
+      function course(index, id) {
+        const c = [
+          ...modules[index].worldCatalogue.WORLD_CATALOGUE,
+          ...modules[index].worldCatalogue.BEGINNER_CATALOGUE,
+        ].find((row) => row.id === id)?.course;
+        if (!c) throw Error('Missing course ' + id);
+        return c;
+      }
+      function observation(id, height, pose) {
+        const c = course(0, id),
+          m = modules[0],
+          flight = (
+            c.format === 'FlightCourse.v2' ? m.worldModel.createWorldFlight : m.model.createFlight
+          )({ course: c, mode: 'acro' }),
+          state = flight.snapshot();
+        flight.dispose?.();
+        let x = 0,
+          z = 0,
+          yaw = 0,
+          pitch = 0;
+        if (c.environment === 'warehouse') {
+          if (pose === 'storage') {
+            x = 22;
+            z = -12;
+            if (height > 7) pitch = -0.3;
+          } else if (pose === 'stack') z = -6;
+          else if (pose === 'beam') z = -15;
+          else if (pose === 'aisle') {
+            x = 2;
+            z = 6;
+          } else if (pose === 'wall') {
+            z = c.bounds.max.z / 1000 - 5;
+            yaw = Math.PI;
+          }
+        }
+        if (pose === 'rear') yaw = Math.PI;
+        const q = new m.THREE.Quaternion().setFromEuler(new m.THREE.Euler(pitch, yaw, 0, 'YXZ'));
+        state.position = { x: x * 1000, y: height * 1000, z: z * 1000 };
+        state.orientation = q.toArray().map((n) => Math.round(n * 1e6));
+        state.ticks = 100;
+        return state;
+      }
+      function createOwners() {
+        owners = modules.map((row) => {
+          const canvas = document.createElement('canvas');
+          canvas.setAttribute('aria-label', row.side + ' actual warehouse scene');
+          $(row.side).replaceChildren(canvas);
+          let scene = null;
+          const proto = row.THREE.Object3D.prototype,
+            original = proto.add;
+          proto.add = function (...objects) {
+            if (!scene && this.isScene && objects.length === 8 && objects.every((o) => o.isGroup))
+              scene = this;
+            return original.apply(this, objects);
+          };
+          let runtime;
+          try {
+            runtime = row.assets.createFlightRenderer({
+              canvas,
+              window,
+              reducedMotion: true,
+              onContextLost: () => {
+                if (receipt && !receipt.disposing) receipt.contextLosses.push(row.side);
+              },
+            });
+          } finally {
+            proto.add = original;
+          }
+          if (!runtime.available || !scene) {
+            runtime.dispose();
+            throw Error(row.side + ' renderer/scene unavailable');
+          }
+          return {
+            ...row,
+            canvas,
+            runtime,
+            scene,
+            world: scene.children[0],
+            goals: scene.children[1],
+            actors: scene.children[4],
+            imported: scene.children[6],
+            gl: canvas.getContext('webgl2'),
+          };
+        });
+      }
+      function disposeOwners() {
+        if (receipt) receipt.disposing = true;
+        const result = owners.map((o) => {
+          o.runtime.dispose();
+          return { side: o.side, resources: o.runtime.resources() };
+        });
+        owners = [];
+        if (receipt) delete receipt.disposing;
+        return result;
+      }
+      async function load(id, quality, { theme = null } = {}) {
+        const result = [];
+        for (let i = 0; i < owners.length; i++) {
+          const o = owners[i],
+            c = clone(course(i, id));
+          if (theme) c.world = { ...c.world, theme };
+          o.runtime.setCourse(c, 'acro');
+          o.runtime.setQuality(quality);
+          o.runtime.setDrone('racer');
+          const glb = o.assets.builtinWorldScene(c);
+          let glbHash = null;
+          if (glb) {
+            glbHash = await sha(await glb.arrayBuffer());
+            await timeout(o.runtime.loadScene(glb), 'Actual GLB');
+          }
+          if ((await timeout(o.runtime.prepare(), 'Shader warmup')) === false)
+            throw Error('Shader preparation superseded');
+          o.scene.updateMatrixWorld(true);
+          result.push({ side: o.side, glbHash, importedChildren: o.imported.children.length });
+        }
+        return result;
+      }
+      function pixels(o, state, camera) {
+        const original = encode(state);
+        o.runtime.draw(state, { cameraMode: camera, cameraFov: 82, cameraTilt: 0 });
+        const g = o.gl,
+          rgba = new Uint8Array(g.drawingBufferWidth * g.drawingBufferHeight * 4);
+        g.readPixels(
+          0,
+          0,
+          g.drawingBufferWidth,
+          g.drawingBufferHeight,
+          g.RGBA,
+          g.UNSIGNED_BYTE,
+          rgba,
+        );
+        if (g.getError() !== g.NO_ERROR) throw Error(o.side + ' WebGL error');
+        if (encode(state) !== original) throw Error('Renderer mutated observer state');
+        return {
+          rgba,
+          width: g.drawingBufferWidth,
+          height: g.drawingBufferHeight,
+          resources: o.runtime.resources(),
+        };
+      }
+      async function pair(id, quality, camera, height, pose = 'storage') {
+        await wait();
+        const state = observation(id, height, pose),
+          a = pixels(owners[0], state, camera),
+          b = pixels(owners[1], state, camera);
+        if (a.rgba.length !== b.rgba.length) throw Error('Buffer mismatch');
+        let changed = 0,
+          nonBlack = 0,
+          total = 0;
+        for (let i = 0; i < a.rgba.length; i += 4) {
+          let d = 0;
+          for (let c = 0; c < 3; c++) d += Math.abs(a.rgba[i + c] - b.rgba[i + c]);
+          if (d) changed++;
+          total += d;
+          if (b.rgba[i] + b.rgba[i + 1] + b.rgba[i + 2]) nonBlack++;
+        }
+        return {
+          id,
+          quality,
+          camera,
+          height,
+          pose,
+          width: b.width,
+          heightPixels: b.height,
+          beforeHash: await sha(a.rgba),
+          afterHash: await sha(b.rgba),
+          changedPixels: changed,
+          changedFraction: changed / (a.rgba.length / 4),
+          meanChannelDifference: total / ((a.rgba.length / 4) * 3),
+          nonBlackPixels: nonBlack,
+          drawCalls: [a.resources.renderer.calls, b.resources.renderer.calls],
+          triangles: [a.resources.renderer.triangles, b.resources.renderer.triangles],
+          shaderPrograms: [a.resources.renderer.programs, b.resources.renderer.programs],
+        };
+      }
+      const active = (o) => {
+        for (let at = o; at; at = at.parent) if (!at.visible) return false;
+        return true;
+      };
+      async function inspect(owner, c) {
+        const { THREE } = owner,
+          geometry = [],
+          uv = [],
+          opacity = [],
+          materials = [],
+          maps = [],
+          seenMaps = new Map(),
+          storage = [],
+          plainSteel = [],
+          cladding = [],
+          labels = [],
+          seenUVs = new Set();
+        owner.scene.updateMatrixWorld(true);
+        for (const root of [owner.world, owner.imported, owner.goals, owner.actors])
+          root.traverse((item) => {
+            const g = item.geometry;
+            geometry.push({
+              type: item.type,
+              name: item.name,
+              visible: active(item),
+              matrix: item.matrixWorld.elements.slice(),
+              cast: item.castShadow,
+              receive: item.receiveShadow,
+              positions: g?.attributes.position ? Array.from(g.attributes.position.array) : null,
+              normals: g?.attributes.normal ? Array.from(g.attributes.normal.array) : null,
+              index: g?.index ? Array.from(g.index.array) : null,
+              groups: g?.groups,
+              instances: item.instanceMatrix ? Array.from(item.instanceMatrix.array) : null,
+              count: item.count,
+            });
+            if (g?.attributes.uv) {
+              uv.push(Array.from(g.attributes.uv.array));
+              seenUVs.add(g.attributes.uv.array);
+            }
+            const paints = Array.isArray(item.material) ? item.material : [item.material];
+            if (item.isMesh)
+              opacity.push(
+                paints.filter(Boolean).map((m) => ({
+                  transparent: m.transparent,
+                  opacity: m.opacity,
+                  alphaTest: m.alphaTest,
+                  side: m.side,
+                  depthWrite: m.depthWrite,
+                  displacementScale: m.displacementMap ? m.displacementScale : 0,
+                })),
+              );
+            for (const m of paints.filter(Boolean)) {
+              const mapped = {};
+              for (const key of ['map', 'normalMap', 'roughnessMap', 'metalnessMap', 'alphaMap'])
+                if (m[key]) {
+                  const t = m[key];
+                  if (!seenMaps.has(t)) seenMaps.set(t, seenMaps.size);
+                  mapped[key] = seenMaps.get(t);
+                }
+              materials.push({
+                type: m.type,
+                color: m.color?.getHex(),
+                emissive: m.emissive?.getHex(),
+                roughness: m.roughness,
+                metalness: m.metalness,
+                normalScale: m.normalScale?.toArray(),
+                opacity: m.opacity,
+                transparent: m.transparent,
+                ...mapped,
+              });
+            }
+            const surfaceKind = item.material?.map?.userData.surface?.kind;
+            if (item.isMesh && surfaceKind === 'painted-steel' && g?.attributes.uv) {
+              const vertices = [];
+              for (let i = 0; i < g.attributes.position.count; i++)
+                vertices.push({
+                  p: [
+                    g.attributes.position.getX(i),
+                    g.attributes.position.getY(i),
+                    g.attributes.position.getZ(i),
+                  ],
+                  n: [
+                    g.attributes.normal.getX(i),
+                    g.attributes.normal.getY(i),
+                    g.attributes.normal.getZ(i),
+                  ],
+                  uv: [g.attributes.uv.getX(i), g.attributes.uv.getY(i)],
+                });
+              cladding.push({
+                at: item.position.toArray(),
+                vertices,
+                repeat: item.material.map.repeat.toArray(),
+              });
+            }
+            if (
+              item.isMesh &&
+              item.userData.materialRole === 'enamel' &&
+              surfaceKind === 'storage-steel'
+            ) {
+              labels.push({
+                parent: item.parent.userData.collisionId,
+                vertices: g.attributes.uv ? Array.from(g.attributes.uv.array) : [],
+                geometryVertices: g.attributes.position.count,
+                sharesParentMap: item.material.map === item.parent.material.map,
+                viewerRightUV: Array.from({ length: 4 }, (_, side) => {
+                  const at = side * 6,
+                    positions = g.attributes.position,
+                    normals = g.attributes.normal,
+                    dx = positions.getX(at + 1) - positions.getX(at),
+                    dz = positions.getZ(at + 1) - positions.getZ(at);
+                  return (
+                    (dx * normals.getZ(at) - dz * normals.getX(at)) *
+                    (g.attributes.uv.getX(at + 1) - g.attributes.uv.getX(at))
+                  );
+                }),
+              });
+            }
+            if (
+              /^(rack-\d+-\d+|school-low-stack|school-overhead-beam|school-aisle-divider)$/.test(
+                item.userData.collisionId ?? '',
+              )
+            ) {
+              const positions = g.attributes.position,
+                normals = g.attributes.normal,
+                coords = g.attributes.uv,
+                vertices = [];
+              for (let i = 0; i < positions.count; i++)
+                vertices.push({
+                  p: [positions.getX(i), positions.getY(i), positions.getZ(i)],
+                  n: [normals.getX(i), normals.getY(i), normals.getZ(i)],
+                  uv: [coords.getX(i), coords.getY(i)],
+                });
+              (item.userData.collisionId.startsWith('rack-') ? storage : plainSteel).push({
+                id: item.userData.collisionId,
+                dimensions: [g.parameters?.width, g.parameters?.height, g.parameters?.depth],
+                kind: item.userData.surfaceKind,
+                vertices,
+                opaque: !item.material.transparent && item.material.opacity === 1,
+                displacement: !!item.material.displacementMap,
+              });
+            }
+          });
+        for (const [t, index] of seenMaps) {
+          const image = t.image;
+          maps.push({
+            index,
+            name: t.name,
+            kind: t.userData.surface?.kind ?? null,
+            size: [image?.width, image?.height],
+            mag: t.magFilter,
+            min: t.minFilter,
+            anisotropy: t.anisotropy,
+            repeat: t.repeat.toArray(),
+            mipmaps: t.generateMipmaps,
+            hash: image?.data ? await sha(image.data) : null,
+          });
+        }
+        const rays = [],
+          rayMeshes = [];
+        // Raycaster must never recurse into UI sprites. This is a geometric
+        // visibility comparison of visible opaque environment mesh triangles;
+        // alpha-mask holes and the readability of rendered cues are separate.
+        for (const root of [owner.world, owner.imported])
+          root.traverse((item) => {
+            const paints = Array.isArray(item.material) ? item.material : [item.material];
+            if (
+              item.isMesh &&
+              active(item) &&
+              paints.some((paint) => paint && !paint.transparent && paint.opacity > 0)
+            )
+              rayMeshes.push(item);
+          });
+        function ray(from, to, label) {
+          const a = new THREE.Vector3(...from),
+            d = new THREE.Vector3(...to).sub(a),
+            length = d.length();
+          if (length < 1e-8) return;
+          const hits = new THREE.Raycaster(a, d.normalize(), 0, length + 0.001).intersectObjects(
+            rayMeshes,
+            false,
+          );
+          rays.push({
+            label,
+            hit: hits[0]?.object.name ?? null,
+            distance: hits[0]?.distance ?? null,
+          });
+        }
+        for (const o of c.obstacles ?? [])
+          if (o.min && o.max) {
+            const x = (o.min.x + o.max.x) / 2000,
+              z = (o.min.z + o.max.z) / 2000,
+              top = o.max.y / 1000,
+              radiusX = (o.max.x - o.min.x) / 2000 + 3,
+              radiusZ = (o.max.z - o.min.z) / 2000 + 3;
+            for (const y of [...heights, top - 0.1, top + 0.1]) {
+              for (const [dx, dz] of [
+                [radiusX, 0],
+                [-radiusX, 0],
+                [0, radiusZ],
+                [0, -radiusZ],
+              ])
+                ray([x + dx, y, z + dz], [x, y, z], o.id + '/' + y + '/' + dx + '/' + dz);
+            }
+            ray([x, top + 2, z], [x, top - 0.1, z], o.id + '/top');
+          }
+        for (const [index, s] of (c.steps.acro ?? []).entries()) {
+          const target = s.min
+            ? ['x', 'y', 'z'].map((k) => (s.min[k] + s.max[k]) / 2000)
+            : s.type === 'gate'
+              ? [
+                  s.axis === 'x' ? s.at / 1000 : (s.minSide + s.maxSide) / 2000,
+                  (s.minY + s.maxY) / 2000,
+                  s.axis === 'z' ? s.at / 1000 : (s.minSide + s.maxSide) / 2000,
+                ]
+              : null;
+          if (target) ray([c.spawn.x / 1000, 3, c.spawn.z / 1000], target, 'objective-' + index);
+        }
+        for (const actor of c.actors ?? [])
+          for (const [index, p] of (actor.path ?? [actor.position]).entries())
+            ray(
+              [0, 3, 0],
+              [p.x / 1000, p.y / 1000 + (actor.height ?? 0) / 2000, p.z / 1000],
+              actor.id + '/' + index,
+            );
+        return {
+          geometryHash: await sha(encode(geometry)),
+          uvHash: await sha(encode(uv)),
+          opacityHash: await sha(encode(opacity)),
+          materialHash: await sha(encode(materials)),
+          mapHash: await sha(encode(maps)),
+          rayHash: await sha(encode(rays)),
+          rayCount: rays.length,
+          nodes: geometry.length,
+          uvBytes: [...seenUVs].reduce((total, values) => total + values.byteLength, 0),
+          storageCount: storage.length,
+          plainSteelCount: plainSteel.length,
+          claddingCount: cladding.length,
+          labelCount: labels.length,
+          maps,
+          storage,
+          plainSteel,
+          cladding,
+          labels,
+        };
+      }
+      function storageUV(inspection) {
+        return (
+          inspection.storage.length === 6 &&
+          inspection.storage.every((block) => {
+            const [width, height, depth] = block.dimensions;
+            return (
+              block.vertices.length === 24 &&
+              block.vertices.every(({ p, n, uv }) => {
+                const across = Math.abs(n[0]) > 0.5 ? p[2] / depth : p[0] / width;
+                const expected = [
+                  0.008 + (across + 0.5) * 0.484,
+                  Math.abs(n[1]) > 0.5
+                    ? 0.012 + (p[2] / depth + 0.5) * 0.025
+                    : 0.06 + (p[1] / height + 0.5) * 0.88,
+                ];
+                return uv.every(
+                  (value, i) => Number.isFinite(value) && Math.abs(value - expected[i]) < 1e-6,
+                );
+              })
+            );
+          })
+        );
+      }
+      function claddingUV(inspection, c) {
+        return (
+          inspection.cladding.length >= 4 &&
+          inspection.cladding.every(
+            ({ at, vertices, repeat }) =>
+              encode(repeat) === '[1,1]' &&
+              vertices.every(({ p, n, uv }) => {
+                const x = p[0] + at[0] - c.bounds.min.x / 1000,
+                  y = p[1] + at[1] - c.bounds.min.y / 1000,
+                  z = p[2] + at[2] - c.bounds.min.z / 1000;
+                const expected = [
+                  (Math.abs(n[0]) > 0.5 ? z : x) / 6,
+                  (Math.abs(n[1]) > 0.5 ? z : y) / 3,
+                ];
+                return uv.every((value, i) => Math.abs(value - expected[i]) < 2e-6);
+              }),
+          )
+        );
+      }
+      function plainSteelUV(inspection, c) {
+        return (
+          inspection.plainSteel.length ===
+            c.obstacles.filter((o) => /^school-/.test(o.id)).length &&
+          inspection.plainSteel.every((block) => {
+            const [width, height, depth] = block.dimensions;
+            return (
+              block.kind === 'storage-steel' &&
+              block.opaque &&
+              !block.displacement &&
+              block.vertices.length === 24 &&
+              block.vertices.every(({ p, n, uv }) => {
+                const across = Math.abs(n[0]) > 0.5 ? p[2] / depth : p[0] / width,
+                  expected = [
+                    0.07 + (across + 0.5) * 0.1,
+                    0.14 + (Math.abs(n[1]) > 0.5 ? p[2] / depth + 0.5 : p[1] / height + 0.5) * 0.12,
+                  ];
+                return uv.every(
+                  (value, i) => Number.isFinite(value) && Math.abs(value - expected[i]) < 1e-6,
+                );
+              })
+            );
+          })
+        );
+      }
+      function labelUV(inspection) {
+        return (
+          inspection.labels.length === 6 &&
+          inspection.labels.every((label) => {
+            const match = label.parent?.match(/^rack-([01])-([0-2])$/);
+            if (
+              !match ||
+              !label.sharesParentMap ||
+              !label.viewerRightUV.every((value) => value > 0) ||
+              label.geometryVertices !== 24 ||
+              label.vertices.length !== 48
+            )
+              return false;
+            const index = Number(match[1]) * 3 + Number(match[2]),
+              corners = [
+                [-1, -1],
+                [1, -1],
+                [1, 1],
+                [-1, -1],
+                [1, 1],
+                [-1, 1],
+              ];
+            return label.vertices.every((value, i) => {
+              const [u, v] = corners[Math.floor(i / 2) % 6],
+                expected =
+                  i % 2
+                    ? (Math.floor(index / 2) + 0.04 + (v + 1) * 0.46) / 3
+                    : 0.5 + ((index % 2) + 0.04 + (u + 1) * 0.46) / 4;
+              return Math.abs(value - expected) < 1e-6;
+            });
+          })
+        );
+      }
+      const resources = (o) => {
+        const r = o.runtime.resources();
+        return {
+          registered: r.registered,
+          geometries: r.renderer.geometries,
+          textures: r.renderer.textures,
+          programs: r.renderer.programs,
+        };
+      };
+      async function run() {
+        if (busy) return;
+        busy = true;
+        $('run').disabled = $('preview').disabled = true;
+        disposeOwners();
+        receipt = {
+          format: 'FPVWarehouseSurfacesBrowserEvidence.v1',
+          createdAt: new Date().toISOString(),
+          baseline: manifest.baseline,
+          candidate: manifest.candidate,
+          sourceFiles: manifest.files,
+          checks: [],
+          samples: [],
+          inspections: [],
+          resourceCycles: [],
+          contextLosses: [],
+          browser: { userAgent: navigator.userAgent, dpr: devicePixelRatio, canvasCss: [640, 360] },
+          limitations: [
+            'Same-browser frozen-source pixel comparisons; not cross-device goldens.',
+            'Static observer poses are not scored attempts or demonstration commands.',
+            'No FPS, sustained performance, physical-device or human art acceptance claim.',
+            'Disposal asserts registered ownership is empty, not zero driver memory; Three.js may retain internal lookup allocations until context release.',
+            'Sightline rays compare visible opaque mesh triangles; they do not resolve alpha-texture holes or certify human readability of rendered objective cues.',
+            'No additional unit-test coverage. Production scene observation restores the original method immediately after renderer creation.',
+          ],
+        };
+        try {
+          status('Checking frozen sources');
+          await verifyHashes();
+          check(true, 'Frozen source and harness hashes verified');
+          check(
+            encode(modules[0].worldCatalogue.WORLD_CATALOGUE) ===
+              encode(modules[1].worldCatalogue.WORLD_CATALOGUE) &&
+              encode(modules[0].worldCatalogue.BEGINNER_CATALOGUE) ===
+                encode(modules[1].worldCatalogue.BEGINNER_CATALOGUE),
+            'All authored courses, collisions, objectives and rules remain exact',
+          );
+          receipt.authoredCases = warehouseIds.map((id) => {
+            const c = course(0, id);
+            return {
+              id,
+              widthMetres: (c.bounds.max.x - c.bounds.min.x) / 1000,
+              depthMetres: (c.bounds.max.z - c.bounds.min.z) / 1000,
+              obstacles: c.obstacles.map((o) => o.id),
+            };
+          });
+          check(
+            encode(receipt.authoredCases.map((row) => [row.widthMetres, row.depthMetres])) ===
+              encode([
+                [76, 70],
+                [88, 88],
+                [88, 88],
+              ]) &&
+              receipt.authoredCases[1].obstacles.includes('school-low-stack') &&
+              receipt.authoredCases[1].obstacles.includes('school-overhead-beam') &&
+              receipt.authoredCases[2].obstacles.includes('school-aisle-divider'),
+            'Matrix covers both authored bounds plus stack, overhead beam and aisle divider',
+          );
+          for (const file of [
+            'world-assets.mjs',
+            'world-model.mjs',
+            'model.mjs',
+            'world-collision.mjs',
+          ])
+            check(
+              manifest.files.before['optional-practice/civilian-fpv/' + file] ===
+                manifest.files.after['optional-practice/civilian-fpv/' + file],
+              file + ' stays byte-identical to baseline',
+            );
+          createOwners();
+          for (const id of warehouseIds)
+            for (const quality of qualities) {
+              status(id + ' · ' + quality + ' · real GLB and surface inspection');
+              const loaded = await load(id, quality);
+              check(
+                loaded.every((x) => x.importedChildren > 0) &&
+                  loaded[0].glbHash === loaded[1].glbHash,
+                id + '/' + quality + ' loads identical actual warehouse GLB scenery',
+              );
+              await pair(id, quality, 'fpv', 3);
+              const a = await inspect(owners[0], course(0, id)),
+                b = await inspect(owners[1], course(1, id));
+              receipt.inspections.push({
+                id,
+                quality,
+                before: {
+                  ...a,
+                  storage: undefined,
+                  plainSteel: undefined,
+                  cladding: undefined,
+                  labels: undefined,
+                },
+                after: {
+                  ...b,
+                  storage: undefined,
+                  plainSteel: undefined,
+                  cladding: undefined,
+                  labels: undefined,
+                },
+                additionalUVBytes: b.uvBytes - a.uvBytes,
+                shaderPrograms: owners.map((o) => o.runtime.resources().renderer.programs),
+              });
+              check(
+                a.geometryHash === b.geometryHash &&
+                  a.opacityHash === b.opacityHash &&
+                  a.rayHash === b.rayHash,
+                id +
+                  '/' +
+                  quality +
+                  ' exact non-UV geometry, shadow flags, opaque surfaces and ' +
+                  b.rayCount +
+                  ' sightline rays',
+              );
+              check(
+                b.storage.length === 6 &&
+                  b.storage.every((t) => t.kind === 'storage-steel' && t.opaque && !t.displacement),
+                id + '/' + quality + ' all six storage blocks retain opaque exact collision faces',
+              );
+              check(
+                a.uvHash !== b.uvHash &&
+                  storageUV(b) &&
+                  claddingUV(b, course(1, id)) &&
+                  plainSteelUV(b, course(1, id)) &&
+                  labelUV(b),
+                id +
+                  '/' +
+                  quality +
+                  ' closed-body, bay-ID atlas and 6 by 3 metre shell UVs match contract',
+              );
+              check(
+                b.uvBytes - a.uvBytes === 1152,
+                id + '/' + quality + ' only six existing label planes add UV buffers (1152 bytes)',
+              );
+              check(
+                ['storage-steel', 'painted-steel'].every(
+                  (kind) => b.maps.filter((t) => t.kind === kind).length === 3,
+                ),
+                id +
+                  '/' +
+                  quality +
+                  ' existing color, normal and ORM map sets serve storage and shell',
+              );
+              check(
+                encode(owners[0].runtime.resources().registered) ===
+                  encode(owners[1].runtime.resources().registered),
+                id +
+                  '/' +
+                  quality +
+                  ' no additional registered geometry/material/texture ownership',
+              );
+              const changedMaps = b.maps.filter((t) => !a.maps.some((old) => old.hash === t.hash));
+              check(
+                changedMaps.length >= 3,
+                id + '/' + quality + ' actual surface map bytes change',
+              );
+              check(
+                changedMaps.every(
+                  (t) =>
+                    t.size[0] === 64 &&
+                    t.size[1] === 64 &&
+                    t.mag === owners[1].THREE.NearestFilter &&
+                    t.min === owners[1].THREE.NearestMipmapNearestFilter &&
+                    t.anisotropy === 1,
+                ),
+                id + '/' + quality + ' authored Pixel Circuit remains 64px nearest sampling',
+              );
+              for (const camera of ['fpv', 'chase', 'overview'])
+                for (const height of camera === 'overview' ? [3] : heights) {
+                  const row = await pair(id, quality, camera, height);
+                  receipt.samples.push(row);
+                  check(
+                    row.nonBlackPixels > 100 &&
+                      row.drawCalls.every((n) => n > 0) &&
+                      row.triangles.every((n) => n > 0) &&
+                      row.changedPixels > 0 &&
+                      row.drawCalls[0] === row.drawCalls[1] &&
+                      row.triangles[0] === row.triangles[1],
+                    id +
+                      '/' +
+                      quality +
+                      '/' +
+                      camera +
+                      '/' +
+                      height +
+                      'm surface pixels change with identical draw calls and triangles',
+                  );
+                }
+              for (const pose of [
+                'trail',
+                'rear',
+                'wall',
+                ...(id === 'beginner-36'
+                  ? ['stack', 'beam']
+                  : id === 'beginner-38'
+                    ? ['aisle']
+                    : []),
+              ]) {
+                const row = await pair(id, quality, 'fpv', 3, pose);
+                receipt.samples.push(row);
+                check(
+                  row.nonBlackPixels > 100 && row.changedPixels > 0,
+                  id +
+                    '/' +
+                    quality +
+                    '/' +
+                    pose +
+                    ' approach buffer renders; human readability remains a separate inspection',
+                );
+              }
+            }
+          for (const quality of qualities) {
+            await load('warehouse-07', quality, { theme: 'operations' });
+            const row = await pair('warehouse-07', quality, 'fpv', 3);
+            row.appearanceOverride = 'operations';
+            receipt.samples.push(row);
+            const a = await inspect(owners[0], course(0, 'warehouse-07')),
+              b = await inspect(owners[1], course(1, 'warehouse-07')),
+              changed = b.maps.filter((t) => !a.maps.some((old) => old.hash === t.hash)),
+              expected = { low: 128, balanced: 256, high: 512 }[quality];
+            check(
+              changed.length >= 3 &&
+                changed.every(
+                  (t) =>
+                    t.size[0] === expected &&
+                    t.size[1] === expected &&
+                    t.mag === owners[1].THREE.LinearFilter &&
+                    t.min === owners[1].THREE.LinearMipmapLinearFilter &&
+                    t.mipmaps,
+                ),
+              'Explicit linear Warehouse appearance follows ' + quality + ' sampling',
+            );
+            check(
+              a.geometryHash === b.geometryHash &&
+                a.opacityHash === b.opacityHash &&
+                a.rayHash === b.rayHash &&
+                row.changedPixels > 0 &&
+                row.drawCalls[0] === row.drawCalls[1] &&
+                row.triangles[0] === row.triangles[1],
+              'Explicit linear Warehouse appearance changes only surface pixels at ' + quality,
+            );
+          }
+          const other = new Map();
+          for (const row of [
+            ...modules[0].worldCatalogue.WORLD_CATALOGUE,
+            ...modules[0].worldCatalogue.BEGINNER_CATALOGUE,
+          ])
+            if (row.course.environment !== 'warehouse' && !other.has(row.course.environment))
+              other.set(row.course.environment, row.id);
+          for (const [environment, id] of other)
+            for (const quality of qualities) {
+              status('Exact regression · ' + environment + ' · ' + quality);
+              const loaded = await load(id, quality);
+              check(
+                loaded[0].glbHash === loaded[1].glbHash,
+                environment + '/' + quality + ' prepared GLB bytes unchanged',
+              );
+              const row = await pair(id, quality, 'fpv', 3, 'trail');
+              receipt.samples.push(row);
+              check(
+                row.changedPixels === 0 && row.beforeHash === row.afterHash,
+                environment + '/' + quality + ' exact pixel regression',
+              );
+              if (quality === 'balanced') {
+                const a = await inspect(owners[0], course(0, id)),
+                  b = await inspect(owners[1], course(1, id));
+                check(
+                  [
+                    'geometryHash',
+                    'uvHash',
+                    'opacityHash',
+                    'materialHash',
+                    'mapHash',
+                    'rayHash',
+                  ].every((key) => a[key] === b[key]),
+                  environment + ' actual geometry, UVs, materials, maps and rays unchanged',
+                );
+              }
+            }
+          check(
+            other.has('field') && other.has('courtyard') && other.size === 13,
+            'Regression matrix includes all 13 other environments including meadow and courtyard',
+          );
+          for (let cycle = 0; cycle < 3; cycle++) {
+            status('Resource reload cycle ' + (cycle + 1) + '/3');
+            const rows = {};
+            for (const id of ['courtyard-01', 'warehouse-07'])
+              for (const quality of qualities) {
+                await load(id, quality);
+                await pair(id, quality, 'fpv', 3);
+                rows[id + '/' + quality] = owners.map(resources);
+              }
+            receipt.resourceCycles.push(rows);
+          }
+          check(
+            encode(receipt.resourceCycles[1]) === encode(receipt.resourceCycles[2]),
+            'Geometry/material/texture/program counts plateau after repeated course and quality reloads',
+          );
+          receipt.disposal = disposeOwners();
+          check(
+            receipt.disposal.every(
+              (o) =>
+                o.resources.disposed && Object.values(o.resources.registered).every((n) => n === 0),
+            ),
+            'Both renderers release all registered resources',
+          );
+          check(
+            !errors.length && !receipt.contextLosses.length,
+            'No uncaught errors, unexpected context loss or GL errors',
+            { errors },
+          );
+          await verifyHashes();
+          check(true, 'Frozen sources and harness remain exact after execution');
+          receipt.passed = true;
+          status(
+            'PASS ' +
+              receipt.checks.length +
+              ' checks · ' +
+              receipt.samples.length +
+              ' image pairs',
+          );
+        } catch (error) {
+          receipt.passed = false;
+          receipt.error = error.stack;
+          status('FAIL · ' + error.message);
+        } finally {
+          if (owners.length) receipt.failureDisposal = disposeOwners();
+          busy = false;
+          $('run').disabled = $('preview').disabled = false;
+          publish();
+        }
+      }
+      async function preview() {
+        if (busy) return;
+        busy = true;
+        $('run').disabled = $('preview').disabled = true;
+        try {
+          disposeOwners();
+          createOwners();
+          const id = $('course').value,
+            q = $('quality').value;
+          await load(id, q);
+          const row = await pair(
+            id,
+            q,
+            $('camera').value,
+            Number($('height').value),
+            $('pose').value,
+          );
+          status(
+            'Human inspection · ' +
+              id +
+              ' · ' +
+              q +
+              ' · ' +
+              row.height +
+              'm · ' +
+              (row.changedFraction * 100).toFixed(1) +
+              '% changed pixels',
+          );
+        } catch (e) {
+          status('Preview failed: ' + e.message);
+        } finally {
+          busy = false;
+          $('run').disabled = $('preview').disabled = false;
+        }
+      }
+      $('run').onclick = run;
+      $('preview').onclick = preview;
+      $('download').onclick = () => {
+        if (!receipt) return;
+        const url = URL.createObjectURL(
+            new Blob([JSON.stringify(receipt, null, 2)], { type: 'application/json' }),
+          ),
+          a = document.createElement('a');
+        a.href = url;
+        a.download = 'fpv-warehouse-surfaces-evidence.json';
+        a.click();
+        URL.revokeObjectURL(url);
+      };
+      addEventListener('pagehide', disposeOwners);
+      try {
+        await initialize();
+        $('run').disabled = $('preview').disabled = false;
+        status('Ready · run qualification or show a selected view');
+      } catch (e) {
+        status('Initialization failed: ' + e.message);
+      }
+    </script>
+  </body>
+</html>
