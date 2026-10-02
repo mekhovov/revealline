@@ -1340,3 +1340,19 @@ merged content/ghost/reimport changes and ready Themes contract, followed by
 artist-authored landmarks/materials and named-device/player acceptance. CI and
 public publication stay separate from local functionality; inspect exact remote
 heads and checks before any protected merge.
+
+Frozen candidate `5daeb6b5b257f2eea689bf7a8720a9455406fded` passes all3
+optional-package admissions, committed-input and ZIP-member verification and2
+byte-identical builds. Receipt: `docs/evidence/fpv-adventures-package-20261002.json`.
+Existing size/file limits remain unchanged. Final actual WebGL checks pass13/13
+across270 course/preset/camera combinations with current fog/framing bytes.
+Actual built coastal and rail-depot player launch, localized EN/UK catalogue and
+mission briefings were inspected. Physical-device/mobile performance is not
+inferred from desktop rendering.
+
+Both existing reviewed-player and continuous-school paths now contain the87-file,
+14,069,673-byte build, SHA
+`1ca658410ee5e3ec22acb39720a949619c463b0bddd92658f33855a49a4e7880`.
+The separate world-adventures playtest has identical bytes. Original touch,
+self-level, Balanced and Chase settings are retained after inspection. Package
+qualification is local; protected CI/merge and public availability remain pending.
