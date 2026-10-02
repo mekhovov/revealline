@@ -1,0 +1,176 @@
+{
+  "format": "fpv-rear-diagram-math-verification.v1",
+  "createdAt": "2026-10-01T21:59:30.353Z",
+  "scope": "Real fixed-point quaternion math and actual v1 input integration; minimal DOM projection probe, not browser visual acceptance.",
+  "passed": true,
+  "checks": [
+    {
+      "case": "Neutral: symmetric level rear view; front is farther away",
+      "passed": true,
+      "projection": {
+        "inverted": false,
+        "referenceHeading": 0,
+        "front": [110, 52.35596389035547],
+        "rear": [110, 76.9218423307113],
+        "left": [80.48, 67],
+        "right": [139.52, 67]
+      }
+    },
+    {
+      "case": "Positive roll: right side drops",
+      "passed": true,
+      "projection": {
+        "inverted": false,
+        "referenceHeading": 0,
+        "front": [111.86747816140932, 52.830862133596014],
+        "rear": [112.58413539800783, 77.54118571564926],
+        "left": [83.56806973692781, 53.013507602907936],
+        "right": [134.75303978478038, 80.09810518221715]
+      }
+    },
+    {
+      "case": "Positive pitch: nose away/down, tail opposite",
+      "passed": true,
+      "projection": {
+        "inverted": false,
+        "referenceHeading": 0,
+        "front": [110, 66.43382736298393],
+        "rear": [110, 57.74621174595716],
+        "left": [80.48, 67],
+        "right": [139.52, 67]
+      }
+    },
+    {
+      "case": "Positive yaw remains visibly right of fixed start heading",
+      "passed": true,
+      "projection": {
+        "inverted": false,
+        "referenceHeading": 0,
+        "front": [142.71392391206703, 63.002043898680704],
+        "rear": [79.10327572275662, 63.002624490993476],
+        "left": [109.9993830265924, 56.73490532342404],
+        "right": [110.00083525152884, 80.89676753747095]
+      }
+    },
+    {
+      "case": "Negative roll: left side drops",
+      "passed": true,
+      "projection": {
+        "inverted": false,
+        "referenceHeading": 0,
+        "front": [108.13252183859068, 52.830862133596014],
+        "rear": [107.41586460199217, 77.54118571564926],
+        "left": [85.24696021521962, 80.09810518221715],
+        "right": [136.4319302630722, 53.013507602907936]
+      }
+    },
+    {
+      "case": "Negative pitch: nose back/up, tail opposite",
+      "passed": true,
+      "projection": {
+        "inverted": false,
+        "referenceHeading": 0,
+        "front": [110, 40.669422467907964],
+        "rear": [110, 92.07273259124023],
+        "left": [80.48, 67],
+        "right": [139.52, 67]
+      }
+    },
+    {
+      "case": "Negative yaw remains visibly left of fixed start heading",
+      "passed": true,
+      "projection": {
+        "inverted": false,
+        "referenceHeading": 0,
+        "front": [77.28607608793297, 63.002043898680704],
+        "rear": [140.89672427724338, 63.002624490993476],
+        "left": [109.99916474847116, 80.89676753747095],
+        "right": [110.0006169734076, 56.73490532342404]
+      }
+    },
+    {
+      "case": "Full Acro roll inversion remains inverted, without angle clipping",
+      "passed": true,
+      "projection": {
+        "inverted": true,
+        "referenceHeading": 0,
+        "front": [109.99991172939886, 59.337008436141346],
+        "rear": [109.99987856569787, 85.97326641513735],
+        "left": [139.51995351528345, 67.00064932089762],
+        "right": [80.47995353214061, 66.9993506770578]
+      }
+    },
+    {
+      "case": "Full Acro pitch inversion remains inverted, without angle clipping",
+      "passed": true,
+      "projection": {
+        "inverted": true,
+        "referenceHeading": 0,
+        "front": [110, 87.03084662337125],
+        "rear": [110, 59.89517583677282],
+        "left": [80.48, 67],
+        "right": [139.52, 67]
+      }
+    },
+    {
+      "case": "Arbitrary initial heading aligns rear view but preserves later local pitch",
+      "passed": true,
+      "projection": {
+        "inverted": false,
+        "referenceHeading": 1.5707722851887769,
+        "front": [110.00001934768723, 66.43382986376946],
+        "rear": [109.99996739842194, 57.74620854397392],
+        "left": [80.48000346090807, 67.00002214880003],
+        "right": [139.5200034608772, 66.99997785119479]
+      }
+    },
+    {
+      "case": "Actual v1 flight integrator positive roll agrees with projection",
+      "passed": true,
+      "orientation": [0, 0, -78811, 996890],
+      "projection": {
+        "inverted": false,
+        "referenceHeading": 0,
+        "front": [110.58746438372293, 52.40004035080754],
+        "rear": [110.81322294323905, 76.97934738256302],
+        "left": [80.54307015282889, 62.704513116867965],
+        "right": [138.85585120094328, 71.2078360161205]
+      }
+    },
+    {
+      "case": "Actual v1 flight integrator positive pitch agrees with projection",
+      "passed": true,
+      "orientation": [-78811, 0, 0, 996890],
+      "projection": {
+        "inverted": false,
+        "referenceHeading": 0,
+        "front": [110, 56.45851523160643],
+        "rear": [110, 71.21931527292672],
+        "left": [80.48, 67],
+        "right": [139.52, 67]
+      }
+    },
+    {
+      "case": "Actual v1 flight integrator positive yaw agrees with projection",
+      "passed": true,
+      "orientation": [0, -78811, 0, 996890],
+      "projection": {
+        "inverted": false,
+        "referenceHeading": 0,
+        "front": [114.41426736528031, 52.46953444855595],
+        "rear": [104.2521771829247, 76.71712443618503],
+        "left": [81.5193583863726, 65.18739903172647],
+        "right": [139.8584852938696, 68.9002914361646]
+      }
+    },
+    {
+      "case": "World velocity in initial forward direction projects away, after heading compensation",
+      "passed": true,
+      "drift": "M110.00 118.00L110.00 100.18M114.00 107.18L110.00 100.18L106.00 107.18"
+    },
+    {
+      "case": "FRONT label rendered; disposal removes shared SVG",
+      "passed": true
+    }
+  ]
+}

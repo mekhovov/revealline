@@ -81,6 +81,7 @@ self.addEventListener('message', (event) => {
       }
       event.ports[0].postMessage({
         ...report,
+        launcherBuildId: CONFIG.id,
         format: 'revealline.launcher-health.v1',
         requestId: event.data.requestId,
       });
@@ -90,12 +91,28 @@ self.addEventListener('message', (event) => {
 self.addEventListener('fetch', (event) => {
   if (event.request.method !== 'GET') return;
   const url = new URL(event.request.url);
-  if (!url.href.startsWith(scope)) return;
-  url.search = '';
-  url.hash = '';
-  if (url.pathname.endsWith('/')) url.pathname += 'index.html';
-  if (!CONFIG.files.some((file) => new URL(file.path, scope).href === url.href)) return;
+  if (url.origin !== new URL(scope).origin) return;
+  // Update management is an explicitly online action. Its document must come
+  // from the current publication, never the launcher's older frozen shell.
+  if (url.pathname === new URL('update.html', scope).pathname) {
+    event.respondWith(fetch(event.request, { cache: 'no-store' }));
+    return;
+  }
   event.respondWith(
-    (async () => (await (await caches.open(name)).match(url.href)) || fetch(event.request))(),
+    (async () => {
+      const client = event.clientId ? await self.clients.get(event.clientId) : null;
+      // The update document imports the newly published game modules. Its
+      // entire same-origin graph must bypass the HTTP cache as well as the old
+      // gameplay worker. Ordinary offline launcher requests keep their cache.
+      if (client && new URL(client.url).pathname === new URL('update.html', scope).pathname)
+        return fetch(event.request, { cache: 'no-store' });
+      if (!url.href.startsWith(scope)) return fetch(event.request);
+      url.search = '';
+      url.hash = '';
+      if (url.pathname.endsWith('/')) url.pathname += 'index.html';
+      if (!CONFIG.files.some((file) => new URL(file.path, scope).href === url.href))
+        return fetch(event.request);
+      return (await (await caches.open(name)).match(url.href)) || fetch(event.request);
+    })(),
   );
 });

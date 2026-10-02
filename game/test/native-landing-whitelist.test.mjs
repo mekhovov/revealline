@@ -70,6 +70,7 @@ function assertLanding(page, { root, actions, modes }) {
   }
 }
 const soloActions = [
+  'solo-fpv-sim',
   'shell-featured',
   'shell-play',
   'shell-options',
@@ -86,6 +87,7 @@ const soloSettings = {
   'shell-music': 'audio',
 };
 function assertSoloDestinations(page) {
+  assertContentDestinations(page, 'solo', 'settings');
   for (const [id, category] of Object.entries(soloSettings)) {
     assert.equal(page.$(id).closest('[role="tabpanel"]')?.id, `settings-panel-${category}`);
     assert.equal(page.doc.querySelectorAll(`#${id}`).length, 1, `${id} retains its real node`);
@@ -97,6 +99,16 @@ function assertSoloDestinations(page) {
       );
     else assert.equal(page.$(id).hidden, false, `${id} is available in its Settings category`);
   }
+}
+
+function assertContentDestinations(page, mode, prefix) {
+  for (const id of [`${mode}-communities`, 'game-check-updates']) {
+    const node = page.$(id);
+    assert.equal(node.closest('[role="tabpanel"]')?.id, `${prefix}-panel-content`);
+    assert.equal(node.closest('.native-menu-actions'), null);
+    assert.equal(node.getAttribute('target'), null, `${id} keeps same-window navigation`);
+  }
+  assert.equal(page.$(`${mode}-updates`), null, 'No separate landing update shortcut remains');
 }
 
 for (const search of ['', '?journey=legacy'])
@@ -185,6 +197,7 @@ test('Versus and Team keep their complete lobby actions within the same whitelis
     assertLanding(page, {
       root: 'race-main',
       actions: [
+        'versus-fpv-sim',
         'race-start',
         'race-chapters',
         'race-options',
@@ -193,6 +206,7 @@ test('Versus and Team keep their complete lobby actions within the same whitelis
       ],
       modes: ['solo', 'versus', 'team'],
     });
+    assertContentDestinations(page, 'versus', 'race-settings');
     assert.equal(
       page.$('race-help').closest('[role="tabpanel"]')?.id,
       'race-settings-panel-extras',
@@ -209,6 +223,7 @@ test('Versus and Team keep their complete lobby actions within the same whitelis
     assertLanding(page, {
       root: 'coop-menu',
       actions: [
+        'team-fpv-sim',
         'coop-start',
         'coop-discovery-open',
         'coop-settings-open',
@@ -217,6 +232,7 @@ test('Versus and Team keep their complete lobby actions within the same whitelis
       ],
       modes: ['solo', 'versus', 'team'],
     });
+    assertContentDestinations(page, 'team', 'coop-settings');
     assert.equal(
       page.$('coop-journey-pictures').closest('[role="tabpanel"]')?.id,
       'coop-settings-panel-data',

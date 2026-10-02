@@ -9,12 +9,15 @@ export function attachLauncherNavigation({
   window: win = globalThis.window,
   readPads,
   now = () => win.performance?.now?.() ?? Date.now(),
+  getDefaultFocus = null,
+  onBack = null,
 } = {}) {
   let frame = null,
     disposed = false,
     suspended = false;
   const foreground = () => !disposed && !suspended && !doc.hidden && doc.hasFocus?.() !== false;
   const preferred = () =>
+    getDefaultFocus?.() ??
     ['play', 'prepare', 'updates', 'check']
       .map((id) => doc.getElementById(id))
       .find((element) => element && !element.hidden && !element.disabled);
@@ -34,7 +37,7 @@ export function attachLauncherNavigation({
     ownsKeyboardEvent: () => !foreground(),
     onNativeInput: (event) => lifecycle.nativeInput(event),
     activateControl: (element) => guard.activate(element),
-    onBack: () => preferred()?.focus(),
+    onBack: () => (onBack ? onBack() : preferred()?.focus()),
   });
   const lifecycle = createControllerConfirmLifecycle({
     document: doc,

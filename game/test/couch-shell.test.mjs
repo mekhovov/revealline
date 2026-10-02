@@ -121,16 +121,21 @@ test('lobby, setup and children use reachable native controls and Back restores 
   assert.equal(f.$('race-setup').inert, true);
   const modes = f.$('race-mode-choices');
   assert.deepEqual(
-    modes.children.map((element) => element.dataset.gameMode),
-    ['solo', 'versus', 'team'],
+    modes.children.map((element) => element.dataset.gameMode ?? element.id),
+    ['solo', 'versus', 'team', 'versus-fpv-sim'],
   );
   const currentMode = modes.querySelector('[aria-current="page"]');
   assert.equal(currentMode.tagName, 'BUTTON');
   assert.equal(currentMode.tabIndex, 0);
   assert.equal(currentMode.getAttribute('href'), null);
   assert.equal(f.doc.activeElement.id, 'race-start');
-  // All three modes remain reachable while optional controls belong to Settings.
-  for (const node of [f.$('race-coop'), currentMode, f.$('race-solo-return')]) {
+  // Three arcade modes and the separate simulator stay reachable from the lobby.
+  for (const node of [
+    f.$('versus-fpv-sim'),
+    f.$('race-coop'),
+    currentMode,
+    f.$('race-solo-return'),
+  ]) {
     press(f, 'Tab', f.doc.activeElement, { shiftKey: true });
     assert.equal(f.doc.activeElement, node);
   }
@@ -143,6 +148,8 @@ test('lobby, setup and children use reachable native controls and Back restores 
     f.doc.activeElement.getAttribute('href'),
     'relay-rescue.html?journey=legacy&return=versus',
   );
+  press(f, 'Tab');
+  assert.equal(f.doc.activeElement.id, 'versus-fpv-sim');
   press(f, 'Tab');
   assert.equal(f.doc.activeElement.id, 'race-start');
   press(f, 'Tab');

@@ -1,9 +1,14 @@
-import { radioControlLabel, captureRadioControlSwitch } from './radio-controls.mjs';
+import { radioControlLabel, createRadioSwitchCapture } from './radio-controls.mjs';
 import { canonicalJSON } from '../../game/data-json.mjs';
+import { restoreVerifiedRadio } from './radio-session.mjs';
+import { mountRadioGuide } from './radio-guide.mjs';
 import {
   DEFAULT_RESPONSE,
   FLIGHT_CONTROLS,
   RADIO_FORMAT,
+  RADIO_LIBRARY_BYTES,
+  radioProfileKey,
+  radioSwitch,
   AXIS_RADIO_FORMAT,
   STICK_LAYOUTS,
   createFlightProfileStore,
@@ -67,15 +72,26 @@ const COPY = {
     offPosition: 'OFF position',
     onPosition: 'ON position',
     captureSwitch: 'Identify switch / button',
-    useSwitch: 'Use active switch / button',
+    useSwitch: 'Cancel detection',
     switchStart:
-      'First leave the chosen switch OFF (or release the button). Click Identify, then move only that switch ON and leave it there (or hold the button). Click Use active switch / button. For arming, use a maintained switch; for reset, use a momentary button if available.',
+      'Leave the switch OFF, start detection, then hold it ON and return OFF. Assignment finishes automatically. Use a maintained switch for Arm and a momentary button for Reset. For a three-position axis switch, use the opposite endpoint as ON.',
     switchMove:
-      'Move only the chosen switch to its active position and leave it there, then click Use active switch / button. Both button channels and separate switch axes are supported.',
+      'Listening… leave OFF briefly, hold ON, then return OFF. Move only this switch. If nothing changes, assign it to a USB channel in your radio model.',
+    switchReturn: 'ON detected. Return the switch OFF or release the button to finish.',
     switchAmbiguous:
-      'No single switch channel changed. Return it to OFF, click Identify again, then operate only that switch. Flight stick axes cannot also be used as switches.',
-    switchCaptured:
-      'Switch captured. Return it to OFF/released. Verify and save the profile to apply.',
+      'Detection stopped. Keep this page focused, leave the switch OFF and try again. Flight stick axes cannot also be switches.',
+    switchConflict:
+      'This switch also operates another action. Choose a different switch or clear the previous assignment in advanced fields.',
+    switchCaptured: 'Assigned and returned OFF. Check the live indicator, then save.',
+    library: 'Saved radios',
+    chooseSaved: 'Choose a saved calibration…',
+    download: 'Download all radio profiles',
+    share: 'Share this radio setup',
+    file: 'Import a setup file',
+    sharing:
+      'Share the downloaded setup file with your radio model, firmware, USB mode and computer/browser. Shared mappings need a local direction and switch check. Files are never uploaded automatically.',
+    imported:
+      'Imported as a draft. Check directions and Arm/Reset, then verify and save before flying.',
     threshold: 'Activation threshold',
     buttons: 'Buttons',
     arm: 'Arm/disarm — switch ON enables flight; OFF stops motors',
@@ -142,15 +158,26 @@ const COPY = {
     offPosition: 'Вимкнене положення',
     onPosition: 'Увімкнене положення',
     captureSwitch: 'Визначити перемикач / кнопку',
-    useSwitch: 'Використати активний перемикач / кнопку',
+    useSwitch: 'Скасувати визначення',
     switchStart:
-      'Залиште перемикач вимкненим або відпустіть кнопку. Натисніть Визначити, увімкніть лише цей перемикач або утримуйте кнопку та підтвердьте активне положення. Для моторів використовуйте перемикач із фіксацією, для скидання — кнопку без фіксації.',
+      'Залиште перемикач вимкненим, почніть визначення, утримайте увімкненим і вимкніть. Призначення завершиться автоматично. Для моторів — перемикач із фіксацією, для скидання — кнопка. Для осі з трьома положеннями використовуйте протилежне крайнє положення як УВІМК.',
     switchMove:
-      'Увімкніть лише вибраний перемикач або утримуйте кнопку й підтвердьте активне положення. Підтримуються канали кнопок та окремі осі перемикачів.',
+      'Очікування… ненадовго залиште вимкненим, утримайте увімкненим і вимкніть. Рухайте лише цей перемикач. Якщо сигналу немає, призначте USB-канал у моделі пульта.',
+    switchReturn: 'Увімкнення визначено. Вимкніть перемикач або відпустіть кнопку.',
     switchAmbiguous:
-      'Не вдалося визначити один канал кнопки. Поверніть перемикач у вимкнене положення, почніть визначення знову та рухайте лише його.',
-    switchCaptured:
-      'Перемикач визначено. Вимкніть його або відпустіть кнопку. Перевірте та збережіть профіль.',
+      'Визначення зупинено. Поверніться на цю сторінку, вимкніть перемикач і спробуйте знову. Осі стіків не можуть бути перемикачами.',
+    switchConflict:
+      'Цей перемикач також керує іншою дією. Виберіть інший або очистьте попереднє призначення в додаткових полях.',
+    switchCaptured: 'Призначено й вимкнено. Перевірте індикатор наживо та збережіть.',
+    library: 'Збережені пульти',
+    chooseSaved: 'Виберіть збережене калібрування…',
+    download: 'Завантажити всі профілі пультів',
+    share: 'Поділитися налаштуванням пульта',
+    file: 'Імпортувати файл налаштувань',
+    sharing:
+      'Поділіться файлом, указавши модель пульта, прошивку, режим USB та комп’ютер/браузер. Чужі призначення потребують місцевої перевірки напрямків і перемикачів. Файли не надсилаються автоматично.',
+    imported:
+      'Імпортовано як чернетку. Перевірте напрямки, мотори й скидання, підтвердьте та збережіть перед польотом.',
     threshold: 'Поріг спрацьовування',
     buttons: 'Кнопки',
     arm: 'Мотори — увімкнений перемикач дозволяє політ, вимкнений зупиняє мотори',
@@ -176,6 +203,7 @@ export function mountRadioSetup({
   locale = 'en',
   onProfile = () => {},
   onResponse = () => {},
+  onDone = () => {},
 }) {
   const doc = container.ownerDocument,
     copy = COPY[locale] ?? COPY.en;
@@ -186,6 +214,7 @@ export function mountRadioSetup({
     /* explicit session status below */
   }
   const store = createFlightProfileStore({ storage });
+  runtime.beginSetup();
   let verified = false,
     recording = false,
     identifying = null,
@@ -193,7 +222,10 @@ export function mountRadioSetup({
     travel = null,
     frame = null,
     disposed = false,
-    lastPaint = -Infinity;
+    lastPaint = -Infinity,
+    lastDiscovery = -Infinity,
+    importRevision = 0;
+  let guide = null;
   const listeners = [],
     rows = {},
     switchRows = {};
@@ -222,31 +254,49 @@ export function mountRadioSetup({
   };
   const status = el('p');
   status.setAttribute('role', 'status');
-  el('h2', copy.title);
-  el('p', copy.intro);
+  const heading = el('h2', copy.title);
+  const intro = el('p', copy.intro);
   const deviceLabel = el('label', copy.device),
     select = el('select', undefined, deviceLabel);
   const refresh = () => {
+    // Discovery may first expose a USB device after this user interaction.
+    // A pristine setup can restore its verified mapping; edited fields stay owned
+    // by the user until they explicitly verify and save them.
+    if (!runtime.status().profileDirty) {
+      runtime.endSetup();
+      restoreVerifiedRadio(runtime, store);
+      runtime.beginSetup();
+    }
     const previous = select.value,
       result = runtime.devices();
     select.replaceChildren();
     const empty = el(
       'option',
-      result.status === 'unavailable' ? copy.unavailable : copy.none,
+      result.status === 'unavailable'
+        ? copy.unavailable
+        : result.devices.length
+          ? locale === 'uk'
+            ? 'Виберіть пульт…'
+            : 'Choose your radio…'
+          : copy.none,
       select,
     );
     empty.value = '';
     for (const device of result.devices) {
-      const option = el(
-        'option',
-        `${device.id} · ${device.axes} axes / ${device.buttons} buttons · ${device.mapping || 'unmapped'}`,
-        select,
-      );
+      const option = el('option', device.id.replace(/\s*\(Vendor:.*\)$/i, ''), select);
       option.value = String(device.index);
     }
     if ([...select.options].some((option) => option.value === previous)) select.value = previous;
+    const current = runtime.status();
+    if (!current.profileDirty && current.selected && current.profile) {
+      select.value = String(current.selected.index);
+      loadProfile(JSON.parse(current.profile), { confirmed: current.verified });
+    } else if (!current.selected && !current.profileDirty && result.devices.length === 1) {
+      select.value = String(result.devices[0].index);
+      select.dispatchEvent(new win.Event('change'));
+    }
   };
-  button(copy.refresh, refresh);
+  const refreshButton = button(copy.refresh, refresh);
   const raw = el('pre', copy.raw);
   raw.setAttribute('aria-label', copy.raw);
   const layoutLabel = el('label', copy.layout),
@@ -265,7 +315,7 @@ export function mountRadioSetup({
     const option = el('option', text, throttle);
     option.value = id;
   }
-  el('p', copy.sign);
+  const sign = el('p', copy.sign);
   const channels = el('div');
   channels.className = 'radio-channels';
   for (const control of FLIGHT_CONTROLS) {
@@ -307,6 +357,7 @@ export function mountRadioSetup({
             invalidate();
           } else status.textContent = copy.ambiguous;
         } else {
+          invalidate();
           if (identifying) rows[identifying.control].identify.textContent = copy.identify;
           identifying = { control, min: [...pad.axes], max: [...pad.axes] };
           identify.textContent = copy.use;
@@ -316,10 +367,31 @@ export function mountRadioSetup({
     );
     rows[control] = { axis, min, center, max, invert, deadZone, identify, legend };
   }
-  function invalidate() {
+  function invalidate(markRuntime = true) {
+    importRevision++;
     verified = false;
+    if (markRuntime) runtime.editProfile();
     status.textContent = copy.incomplete;
   }
+  function stopCaptures() {
+    identifying = null;
+    recording = false;
+    travel = null;
+    switchCapture = null;
+    travelButton.textContent = copy.travel;
+    for (const row of Object.values(rows)) row.identify.textContent = copy.identify;
+    for (const row of Object.values(switchRows)) {
+      row.identify.textContent = copy.captureSwitch;
+      row.setCaptureState('idle');
+    }
+  }
+  listen(win, 'blur', () => {
+    if (!switchCapture) return;
+    const row = switchRows[switchCapture.action];
+    stopCaptures();
+    row.setCaptureState('error');
+    row.captureHint.textContent = status.textContent = copy.switchAmbiguous;
+  });
   const travelButton = button(copy.travel, () => {
     const pad = runtime.raw();
     if (!pad) {
@@ -331,7 +403,7 @@ export function mountRadioSetup({
     if (recording) travel = { min: [...pad.axes], max: [...pad.axes] };
     invalidate();
   });
-  button(copy.centre, () => {
+  const centreButton = button(copy.centre, () => {
     const pad = runtime.raw();
     if (!pad) return;
     for (const control of FLIGHT_CONTROLS)
@@ -342,10 +414,12 @@ export function mountRadioSetup({
       }
     invalidate();
   });
-  el('h3', copy.switches);
-  el('p', copy.switchStart);
+  const switchHeading = el('h3', copy.switches);
+  const switchIntro = el('p', copy.switchStart);
+  const switchFields = [];
   for (const action of ['arm', 'pause', 'reset']) {
     const field = el('fieldset');
+    switchFields.push(field);
     field.setAttribute('data-radio-switch', action);
     el('legend', copy[action === 'reset' ? 'resetAction' : action], field);
     const typeLabel = el('label', copy.switchType, field);
@@ -375,51 +449,43 @@ export function mountRadioSetup({
     threshold.max = '0.9';
     threshold.step = '0.05';
     const invert = label(copy.invert, 'checkbox', '', field);
+    const captureHint = el('p', '', field);
+    captureHint.setAttribute('role', 'status');
+    const indicator = el('output', '', field);
+    indicator.setAttribute('aria-label', locale === 'uk' ? 'Стан перемикача' : 'Switch state');
+    let captureState = 'idle';
+    function setCaptureState(value) {
+      captureState = value;
+      field.dataset.captureState = value;
+      if (value === 'idle') captureHint.textContent = '';
+    }
+    function startCapture() {
+      const pad = runtime.raw();
+      if (!pad) {
+        setCaptureState('error');
+        status.textContent = copy.pick;
+        return;
+      }
+      stopCaptures();
+      invalidate();
+      const flightAxes = Object.values(rows)
+        .filter((row) => row.axis.value.trim() !== '')
+        .map((row) => Number(row.axis.value));
+      switchCapture = {
+        action,
+        identity: canonicalJSON(radioDeviceIdentity(pad)),
+        index: pad.index,
+        detector: createRadioSwitchCapture({ flightAxes, holdMs: action === 'arm' ? 220 : 50 }),
+      };
+      setCaptureState('listening');
+      identify.textContent = copy.useSwitch;
+      captureHint.textContent = status.textContent = copy.switchMove;
+    }
     const identify = button(
       copy.captureSwitch,
       () => {
-        const pad = runtime.raw();
-        if (!pad) {
-          status.textContent = copy.pick;
-          return;
-        }
-        const identity = canonicalJSON(radioDeviceIdentity(pad));
-        const values = { buttons: pad.buttons.map((b) => b.value ?? b), axes: [...pad.axes] };
-        if (switchCapture?.action === action) {
-          const binding =
-            switchCapture.identity === identity
-              ? captureRadioControlSwitch(
-                  switchCapture.values,
-                  values,
-                  Object.values(rows).map((row) => Number(row.axis.value)),
-                )
-              : null;
-          switchCapture = null;
-          identify.textContent = copy.captureSwitch;
-          if (!binding) {
-            status.textContent = copy.switchAmbiguous;
-            return;
-          }
-          source.value = Object.hasOwn(binding, 'axis') ? 'axis' : 'button';
-          node.value = String(binding.axis ?? binding.button);
-          if (source.value === 'axis') {
-            off.value = String(binding.off);
-            on.value = String(binding.on);
-          } else {
-            threshold.value = String(binding.threshold);
-            invert.checked = binding.invert;
-          }
-          updateSwitchFields();
-          invalidate();
-          status.textContent = copy.switchCaptured;
-        } else {
-          if (switchCapture)
-            switchRows[switchCapture.action].identify.textContent = copy.captureSwitch;
-          invalidate();
-          switchCapture = { action, identity, values };
-          identify.textContent = copy.useSwitch;
-          status.textContent = copy.switchMove;
-        }
+        if (switchCapture?.action === action) stopCaptures();
+        else startCapture();
       },
       field,
     );
@@ -434,6 +500,16 @@ export function mountRadioSetup({
       invalidate();
     });
     updateSwitchFields();
+    const advanced = el('details', undefined, field);
+    el('summary', locale === 'uk' ? 'Додаткові поля каналу' : 'Advanced channel fields', advanced);
+    advanced.append(
+      typeLabel,
+      node.parentNode,
+      off.parentNode,
+      on.parentNode,
+      threshold.parentNode,
+      invert.parentNode,
+    );
     switchRows[action] = {
       button: node,
       threshold,
@@ -443,15 +519,70 @@ export function mountRadioSetup({
       off,
       on,
       updateSwitchFields,
+      startCapture,
+      captureStatus: () => captureState,
+      setCaptureState,
+      captureHint,
+      indicator,
     };
   }
+  const libraryLabel = el('label', copy.library),
+    librarySelect = el('select', undefined, libraryLabel);
+  function refreshLibrary() {
+    const selected = store.snapshot().radio;
+    librarySelect.replaceChildren();
+    el('option', copy.chooseSaved, librarySelect).value = '';
+    store.radios().forEach(({ key, profile }, index) => {
+      const option = el(
+        'option',
+        `${index + 1}. ${profile.name} · ${profile.verified ? (locale === 'uk' ? 'перевірено' : 'verified') : locale === 'uk' ? 'чернетка' : 'draft'}`,
+        librarySelect,
+      );
+      option.value = key;
+    });
+    librarySelect.value = selected ? radioProfileKey(selected) : '';
+    libraryLabel.hidden = !store.radios().length;
+  }
+  listen(librarySelect, 'change', () => {
+    importRevision++;
+    if (!librarySelect.value) return;
+    try {
+      const entry = store.radios().find(({ key }) => key === librarySelect.value);
+      const matches = runtime
+        .devices()
+        .devices.filter(
+          ({ index, ...device }) => canonicalJSON(device) === canonicalJSON(entry.profile.device),
+        );
+      if (matches.length !== 1)
+        throw new Error(
+          locale === 'uk'
+            ? 'Підключіть лише цей пульт, щоб завантажити профіль.'
+            : 'Connect exactly this radio to load its calibration.',
+        );
+      guide?.reset();
+      stopCaptures();
+      runtime.select(matches[0].index);
+      select.value = String(matches[0].index);
+      loadProfile(entry.profile, { confirmed: entry.profile.verified });
+      runtime.setProfile(entry.profile);
+      runtime.beginSetup();
+      const result = store.selectRadio(entry.key);
+      status.textContent = result.saved
+        ? entry.profile.verified
+          ? copy.verified
+          : copy.incomplete
+        : copy.session;
+    } catch (error) {
+      status.textContent = error.message;
+    }
+  });
   const sticks = el('div');
   sticks.className = 'radio-sticks';
   const stickNodes = ['left', 'right'].map((key) => {
     const node = el('div', undefined, sticks);
     node.className = 'radio-stick';
     node.setAttribute('aria-label', copy[key]);
-    return { label: el('span', copy[key], node), dot: el('i', undefined, node) };
+    return { node, label: el('span', copy[key], node), dot: el('i', undefined, node) };
   });
   function readProfile(confirmed = verified) {
     const pad = runtime.raw();
@@ -502,10 +633,14 @@ export function mountRadioSetup({
       ),
     });
   }
-  function loadProfile(p) {
+  function loadProfile(p, { confirmed = false } = {}) {
     if (!p) return;
+    importRevision++;
     switchCapture = null;
-    for (const row of Object.values(switchRows)) row.identify.textContent = copy.captureSwitch;
+    for (const row of Object.values(switchRows)) {
+      row.identify.textContent = copy.captureSwitch;
+      row.setCaptureState('idle');
+    }
     mode.value = String(p.stickMode);
     throttle.value = p.throttleStyle;
     for (const name of FLIGHT_CONTROLS) {
@@ -528,32 +663,44 @@ export function mountRadioSetup({
       row.invert.checked = p.switches[key]?.invert ?? false;
     }
     describeControls();
-    invalidate();
+    if (confirmed) {
+      verified = true;
+      status.textContent = copy.verified;
+    } else invalidate(false);
   }
-  button(copy.verify, () => {
+  function verifyProfile() {
     try {
-      if (recording || switchCapture) throw new Error(copy.incomplete);
+      if (recording || identifying || switchCapture) throw new Error(copy.incomplete);
       readProfile(true);
       verified = true;
       status.textContent = copy.verified;
+      return true;
     } catch (e) {
       status.textContent = e.message;
+      return false;
     }
-  });
-  button(copy.save, () => {
+  }
+  const verifyButton = button(copy.verify, verifyProfile);
+  function saveProfile() {
+    importRevision++;
     try {
-      if (!verified || recording || switchCapture) throw new Error(copy.incomplete);
+      if (!verified || recording || identifying || switchCapture) throw new Error(copy.incomplete);
       const p = readProfile(true);
       runtime.setProfile(p);
       runtime.verify();
       const result = store.save({ ...store.snapshot(), radio: p });
       status.textContent = result.saved ? copy.saved : `${copy.session} ${result.error}`;
+      refreshLibrary();
       onProfile(p);
+      return result;
     } catch (e) {
       status.textContent = e.message;
+      return null;
     }
-  });
+  }
+  const saveButton = button(copy.save, saveProfile);
   listen(select, 'change', () => {
+    guide?.reset();
     if (select.value === '') {
       runtime.select(null);
       invalidate();
@@ -565,7 +712,10 @@ export function mountRadioSetup({
     recording = false;
     identifying = null;
     switchCapture = null;
-    for (const row of Object.values(switchRows)) row.identify.textContent = copy.captureSwitch;
+    for (const row of Object.values(switchRows)) {
+      row.identify.textContent = copy.captureSwitch;
+      row.button.value = '';
+    }
     travelButton.textContent = copy.travel;
     for (const row of Object.values(rows)) {
       for (const key of ['axis', 'min', 'max', 'center']) row[key].value = '';
@@ -577,8 +727,16 @@ export function mountRadioSetup({
         runtime.devices().status === 'unavailable' ? copy.unavailable : copy.pick;
       return;
     }
-    const p = store.snapshot().radio ?? defaultRadioProfile();
-    if (p && canonicalJSON(p.device) === canonicalJSON(radioDeviceIdentity(pad))) loadProfile(p);
+    const matching = store
+      .radios()
+      .map(({ profile }) => profile)
+      .filter((p) => canonicalJSON(p.device) === canonicalJSON(radioDeviceIdentity(pad)));
+    const preferred = store.snapshot().radio;
+    const p =
+      matching.find((p) => preferred && radioProfileKey(p) === radioProfileKey(preferred)) ??
+      (matching.length === 1 ? matching[0] : matching.length ? null : defaultRadioProfile());
+    if (p && canonicalJSON(p.device) === canonicalJSON(radioDeviceIdentity(pad)))
+      loadProfile(p, { confirmed: p.verified });
   });
   for (const node of [
     mode,
@@ -592,7 +750,7 @@ export function mountRadioSetup({
   ])
     listen(node, 'change', invalidate);
 
-  el('h2', copy.response);
+  const responseHeading = el('h2', copy.response);
   const responseNodes = {};
   for (const [key, text, min, max] of [
     ['maxRate', 'rate', 60, 720],
@@ -630,8 +788,8 @@ export function mountRadioSetup({
     for (const [key, node] of Object.entries(responseNodes)) node.value = String(p[key]);
     paintCurve();
   };
-  button(copy.reset, () => loadResponse(DEFAULT_RESPONSE));
-  button(copy.apply, () => {
+  const resetResponse = button(copy.reset, () => loadResponse(DEFAULT_RESPONSE));
+  const applyResponse = button(copy.apply, () => {
     try {
       const p = readResponse(),
         result = store.save({ ...store.snapshot(), response: p });
@@ -644,38 +802,215 @@ export function mountRadioSetup({
   const transferLabel = el('label', copy.profile),
     transfer = el('textarea', undefined, transferLabel);
   transfer.rows = 5;
-  transfer.maxLength = 16384;
-  button(copy.export, () => {
-    transfer.value = store.export();
+  transfer.maxLength = RADIO_LIBRARY_BYTES;
+  const exportButton = button(copy.export, () => {
+    transfer.value = store.exportLibrary();
   });
-  button(copy.import, () => {
+  function importProfiles(text) {
+    importRevision++;
+    if (new TextEncoder().encode(text).length > RADIO_LIBRARY_BYTES)
+      throw new Error('Profile file exceeds 64 KiB');
+    const parsed = JSON.parse(text);
+    const draft = (p) => (p ? { ...validateRadioProfile(p), verified: false } : null);
+    let value;
+    if (parsed.format === RADIO_FORMAT || parsed.format === AXIS_RADIO_FORMAT) {
+      value = {
+        format: 'FlightProfiles.v1',
+        radio: draft(parsed),
+        response: store.snapshot().response,
+      };
+    } else {
+      value = { ...parsed, radio: draft(parsed.radio) };
+      if (Array.isArray(parsed.radios)) value.radios = parsed.radios.map(draft);
+    }
+    // An imported verified flag is not evidence of verification on this computer.
+    const result = store.import(value);
+    guide?.reset();
+    stopCaptures();
+    const imported = value.radio;
+    if (imported) loadProfile(imported);
+    loadResponse(store.snapshot().response);
+    runtime.editProfile();
+    onResponse(store.snapshot().response);
+    refreshLibrary();
+    status.textContent = `${copy.imported} ${result.saved ? copy.saved : copy.session}`;
+  }
+  const importButton = button(copy.import, () => {
     try {
-      const result = store.import(transfer.value);
-      loadProfile(store.snapshot().radio);
-      loadResponse(store.snapshot().response);
-      runtime.freeze('profile-changed');
-      onResponse(store.snapshot().response);
-      status.textContent = `${result.saved ? copy.saved : copy.session} ${copy.incomplete}`;
+      importProfiles(transfer.value);
     } catch (e) {
       status.textContent = e.message;
     }
   });
+  const removeProfile = button(
+    locale === 'uk' ? 'Видалити вибране калібрування' : 'Remove selected calibration',
+    () => {
+      try {
+        if (!librarySelect.value) return;
+        importRevision++;
+        const result = store.removeRadio(librarySelect.value);
+        stopCaptures();
+        runtime.editProfile();
+        verified = false;
+        refreshLibrary();
+        status.textContent = result.saved
+          ? locale === 'uk'
+            ? 'Калібрування видалено. Інші пульти збережено.'
+            : 'Calibration removed. Other radios are retained.'
+          : copy.session;
+      } catch (e) {
+        status.textContent = e.message;
+      }
+    },
+  );
+  const sharing = el('p', copy.sharing);
+  function download(text, name) {
+    const url = win.URL.createObjectURL(new win.Blob([text], { type: 'application/json' }));
+    const link = el('a');
+    link.href = url;
+    link.download = name;
+    link.click();
+    link.remove();
+    win.setTimeout(() => win.URL.revokeObjectURL(url), 1000);
+  }
+  const downloadButton = button(copy.download, () =>
+    download(store.exportLibrary(), 'fpv-radio-profiles.json'),
+  );
+  const shareButton = button(copy.share, () => {
+    try {
+      download(canonicalJSON({ ...readProfile(false), verified: false }), 'fpv-radio-setup.json');
+    } catch (e) {
+      status.textContent = e.message;
+    }
+  });
+  const fileLabel = el('label', copy.file),
+    file = el('input', undefined, fileLabel);
+  file.type = 'file';
+  file.accept = '.json,application/json';
+  listen(file, 'change', async () => {
+    const revision = ++importRevision;
+    try {
+      const selected = file.files?.[0];
+      if (!selected) return;
+      if (selected.size > RADIO_LIBRARY_BYTES) throw new Error('Profile file exceeds 64 KiB');
+      const text = await selected.text();
+      if (!disposed && revision === importRevision) {
+        file.value = '';
+        importProfiles(text);
+      }
+    } catch (e) {
+      if (!disposed && revision === importRevision) status.textContent = e.message;
+    }
+    if (revision === importRevision) file.value = '';
+  });
+  function sampleSwitchCapture(pad, now) {
+    if (!switchCapture) return;
+    const capture = switchCapture,
+      row = switchRows[capture.action];
+    if (
+      !pad ||
+      pad.index !== capture.index ||
+      canonicalJSON(radioDeviceIdentity(pad)) !== capture.identity ||
+      doc.hidden ||
+      (doc.hasFocus && !doc.hasFocus())
+    ) {
+      stopCaptures();
+      row.setCaptureState('error');
+      row.captureHint.textContent = status.textContent = copy.switchAmbiguous;
+      return;
+    }
+    const result = capture.detector.sample(pad, now);
+    row.setCaptureState(result.state);
+    if (result.state === 'return') row.captureHint.textContent = copy.switchReturn;
+    if (result.state !== 'done') return;
+    // Reject aliases as well as duplicate channel indices: another binding may
+    // observe this same physical switch via a separate axis or position button.
+    const conflict = Object.entries(switchRows).some(([action, other]) => {
+      if (action === capture.action || other.button.value === '') return false;
+      const binding =
+        other.source.value === 'axis'
+          ? {
+              axis: Number(other.button.value),
+              off: Number(other.off.value),
+              on: Number(other.on.value),
+            }
+          : {
+              button: Number(other.button.value),
+              threshold: Number(other.threshold.value),
+              invert: other.invert.checked,
+            };
+      const profile = { switches: { [action]: binding } };
+      return (
+        radioSwitch(profile, result.before, action) !== radioSwitch(profile, result.after, action)
+      );
+    });
+    switchCapture = null;
+    row.identify.textContent = copy.captureSwitch;
+    if (conflict) {
+      row.setCaptureState('error');
+      row.captureHint.textContent = status.textContent = copy.switchConflict;
+      return;
+    }
+    const binding = result.binding;
+    row.source.value = Object.hasOwn(binding, 'axis') ? 'axis' : 'button';
+    row.button.value = String(binding.axis ?? binding.button);
+    if (row.source.value === 'axis') {
+      row.off.value = String(binding.off);
+      row.on.value = String(binding.on);
+    } else {
+      row.threshold.value = String(binding.threshold);
+      row.invert.checked = binding.invert;
+    }
+    row.updateSwitchFields();
+    invalidate();
+    row.setCaptureState('done');
+    row.captureHint.textContent = status.textContent = copy.switchCaptured;
+  }
   function describeControls() {
     for (const control of FLIGHT_CONTROLS)
       rows[control].legend.textContent = radioControlLabel(control, Number(mode.value), locale);
-    throttleLabel.firstChild.textContent = radioControlLabel(
-      'throttle',
-      Number(mode.value),
-      locale,
-    );
+    throttleLabel.firstChild.textContent = locale === 'uk' ? 'Стік газу' : 'Throttle stick';
   }
   listen(mode, 'change', describeControls);
+  function clearSticks() {
+    for (const stick of stickNodes) {
+      stick.dot.style.transform = 'translate(0px, 0px)';
+      stick.dot.hidden = true;
+    }
+  }
   function paint(now) {
     if (disposed) return;
+    const capturePad = runtime.raw();
+    try {
+      sampleSwitchCapture(capturePad, now);
+    } catch {
+      const row = switchCapture ? switchRows[switchCapture.action] : null;
+      stopCaptures();
+      row?.setCaptureState('error');
+      if (row) row.captureHint.textContent = copy.switchConflict;
+      status.textContent = copy.switchConflict;
+    }
+    if (now - lastDiscovery >= 750) {
+      lastDiscovery = now;
+      if (!runtime.status().selected && !runtime.status().profileDirty && !guide?.captureActive())
+        refresh();
+    }
     if (now - lastPaint >= 100) {
       lastPaint = now;
       const pad = runtime.raw();
       if (pad) {
+        for (const [action, row] of Object.entries(switchRows)) {
+          try {
+            row.indicator.textContent =
+              row.button.value === ''
+                ? '—'
+                : radioSwitch(readProfile(false), pad, action)
+                  ? 'ON'
+                  : 'OFF';
+          } catch {
+            row.indicator.textContent = '—';
+          }
+        }
         raw.textContent = `${copy.raw}\n${pad.axes.map((x, i) => `${i}: ${Number(x).toFixed(3)}`).join('  ')}\n${copy.buttons}: ${pad.buttons.map((b, i) => `${i}: ${Number(b.value ?? b).toFixed(2)}`).join('  ')}`;
         for (const capture of [identifying, recording ? travel : null])
           if (capture)
@@ -697,25 +1032,88 @@ export function mountRadioSetup({
               vertical = layout[i * 2 + 1],
               y = vertical === 'throttle' ? input.throttle * 2 - 1 : input[vertical];
             stickNodes[i].dot.style.transform =
-              `translate(${input[horizontal] * 34}px, ${-y * 34}px)`;
-            stickNodes[i].label.textContent =
-              `${radioControlLabel(horizontal, Number(mode.value), locale)} · ${radioControlLabel(vertical, Number(mode.value), locale)}`;
+              `translate(${input[horizontal] * stickNodes[i].node.clientWidth * 0.34}px, ${-y * stickNodes[i].node.clientWidth * 0.34}px)`;
+            stickNodes[i].dot.hidden = false;
+            stickNodes[i].label.textContent = `${copy[horizontal]} / ${copy[vertical]}`;
+            stickNodes[i].node.setAttribute(
+              'aria-label',
+              `${copy[i === 0 ? 'left' : 'right']}: ${copy[horizontal]} ${Math.round(input[horizontal] * 100)}%, ${copy[vertical]} ${Math.round(input[vertical] * 100)}%`,
+            );
           }
         } catch {
-          /* Incomplete mapping is expected until all endpoints are captured. */
+          clearSticks();
         }
-      } else
+      } else {
         raw.textContent = runtime.devices().status === 'unavailable' ? copy.unavailable : copy.none;
+        clearSticks();
+      }
+      guide?.update(pad);
     }
     frame = win.requestAnimationFrame(paint);
   }
+  refreshLibrary();
   refresh();
   loadResponse(store.snapshot().response);
+  guide = mountRadioGuide({
+    container,
+    window: win,
+    runtime,
+    locale,
+    select,
+    refreshButton,
+    layoutLabel,
+    throttleLabel,
+    mode,
+    throttle,
+    status,
+    sticks,
+    rows,
+    switchRows,
+    readProfile,
+    loadProfile,
+    invalidate,
+    verifyProfile,
+    saveProfile,
+    stopCaptures,
+    externalCaptureActive: () => !!(recording || identifying || switchCapture),
+    onDone,
+    groups: {
+      manual: [sign, channels, travelButton, centreButton, verifyButton, saveButton],
+      switches: [switchIntro, ...switchFields],
+      response: [
+        ...Object.values(responseNodes).map((node) => node.parentNode),
+        curve,
+        resetResponse,
+        applyResponse,
+      ],
+      transfer: [
+        libraryLabel,
+        sharing,
+        downloadButton,
+        removeProfile,
+        shareButton,
+        fileLabel,
+        transferLabel,
+        exportButton,
+        importButton,
+      ],
+      diagnostics: [raw],
+    },
+  });
+  // Saved calibrations belong beside device selection, not inside JSON tools.
+  deviceLabel.after(libraryLabel);
+  heading.remove();
+  intro.remove();
+  switchHeading.remove();
+  responseHeading.remove();
   frame = win.requestAnimationFrame(paint);
   return {
     store,
+    captureActive: () => !!(recording || identifying || switchCapture || guide?.captureActive()),
     dispose() {
       disposed = true;
+      guide?.dispose();
+      runtime.endSetup();
       if (frame !== null) win.cancelAnimationFrame(frame);
       for (const remove of listeners) remove();
       container.replaceChildren();
