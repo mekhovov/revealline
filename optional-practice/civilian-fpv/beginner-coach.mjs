@@ -1,12 +1,55 @@
-import { STICK_LAYOUTS } from './radio-profile.mjs';
+import { STICK_LAYOUTS, DEFAULT_RESPONSE, neutralFlightInput } from './radio-profile.mjs';
+import { createFlight, FLIGHT_HZ } from './model.mjs';
+import { mountDroneDiagram } from './sim-presentation.mjs';
 import { ACRO_LESSON_ORDER, SELF_LEVEL_LESSON_ORDER } from './world-catalogue.mjs';
 
 const SVG_NS = 'http://www.w3.org/2000/svg';
 const AXES = ['throttle', 'yaw', 'pitch', 'roll'];
 const clamp = (n, a = -1, b = 1) => Math.max(a, Math.min(b, Number.isFinite(n) ? n : 0));
 
-/** An instructional view of the host's input and simulation. It never owns input,
- * advances a course objective, arms a flight or marks a recording verified. */
+/** A separate, unscored teaching sandbox using the unchanged flight integrator.
+ * It never receives the host flight or a recorder and cannot award completion. */
+export function createBeginnerPreview(mode = 'acro') {
+  const target = {
+    type: 'hold',
+    min: { x: 90000, y: 90000, z: 90000 },
+    max: { x: 95000, y: 95000, z: 95000 },
+    ticks: 500,
+    maxSpeed: 0,
+    maxTilt: 0,
+    minTilt: 0,
+    centred: true,
+    heading: null,
+  };
+  return createFlight({
+    mode,
+    response: DEFAULT_RESPONSE,
+    course: {
+      format: 'FlightCourse.v1',
+      id: 'coach-controls-preview',
+      revision: 'v1',
+      environment: 'field',
+      locales: {
+        en: {
+          title: 'Controls preview',
+          brief: 'Separate unscored preview.',
+          lesson: 'Explore controls.',
+        },
+        uk: {
+          title: 'Перегляд керування',
+          brief: 'Окремий перегляд без оцінювання.',
+          lesson: 'Досліджуйте керування.',
+        },
+      },
+      spawn: { x: 0, y: 0, z: 0 },
+      bounds: { min: { x: -30000, y: 0, z: -30000 }, max: { x: 30000, y: 30000, z: 30000 } },
+      obstacles: [],
+      steps: { 'self-level': [target], acro: [target] },
+    },
+  });
+}
+
+/** Guide-only input belongs to a separate sandbox; the host remains paused. */
 export function mountBeginnerCoach({
   root,
   window: win = globalThis.window,
@@ -17,6 +60,7 @@ export function mountBeginnerCoach({
   onNext = () => {},
   onExit = () => {},
   onRadio = () => {},
+  onFullscreen = () => {},
 }) {
   const doc = root.ownerDocument;
   let lesson = null,
@@ -30,6 +74,33 @@ export function mountBeginnerCoach({
     disposed = false,
     lastPaint = 0;
   let refs = {};
+  let labMode = 'example',
+    labSource = 'keyboard',
+    labRunning = false,
+    labFlight = null,
+    labInput = neutralFlightInput(),
+    labReason = '',
+    labFrameId = null,
+    labLastTime = null,
+    labAccumulator = 0,
+    diagram = null,
+    viewReleases = [];
+  const labKeys = new Set(),
+    blockedKeys = new Set();
+  const labTouch = neutralFlightInput();
+  let touchThrottleDirection = 0;
+  const movementKeys = new Set([
+    'KeyW',
+    'KeyS',
+    'KeyA',
+    'KeyD',
+    'KeyQ',
+    'KeyE',
+    'ArrowUp',
+    'ArrowDown',
+    'ShiftLeft',
+    'ShiftRight',
+  ]);
   const lang = () => ((typeof locale === 'function' ? locale() : locale) === 'uk' ? 'uk' : 'en');
   const t = (en, uk) => (lang() === 'uk' ? uk : en);
   const copy = (value) =>
@@ -135,6 +206,302 @@ export function mountBeginnerCoach({
       ]),
     );
   };
+  const labRadioAvailable = () =>
+    snapshot.radioAvailable ?? (snapshot.source === 'radio' && snapshot.monitorAvailable !== false);
+  const labRadioInput = () => {
+    const value = snapshot.radioMonitor ?? (snapshot.source === 'radio' ? snapshot.monitor : null);
+    const values = value?.controls ?? value?.input ?? value;
+    return Object.fromEntries(
+      AXES.map((axis) => [axis, clamp(values?.[axis], axis === 'throttle' ? 0 : -1, 1)]),
+    );
+  };
+  function clearLabInput({ block = true } = {}) {
+    if (block) for (const key of labKeys) blockedKeys.add(key);
+    labKeys.clear();
+    Object.assign(labTouch, neutralFlightInput());
+    touchThrottleDirection = 0;
+    labInput = neutralFlightInput();
+  }
+  function pausePreview(reason = 'stopped') {
+    labRunning = false;
+    labReason = reason;
+    labFlight?.pause();
+    clearLabInput();
+    if (labFrameId !== null) win.cancelAnimationFrame(labFrameId);
+    labFrameId = null;
+    labLastTime = null;
+    labAccumulator = 0;
+    paintLab();
+  }
+  function resetPreview() {
+    pausePreview('ready');
+    labFlight = createBeginnerPreview(mode());
+    paintLab();
+  }
+  function exampleInput(ticks) {
+    const seconds = ticks / FLIGHT_HZ;
+    const input = neutralFlightInput();
+    input.throttle = seconds < 1.5 ? 0.62 : 0.5;
+    const axis = displayedStep()?.axis;
+    if (axis === 'throttle')
+      input.throttle = seconds < 1.5 ? 0.62 : seconds < 3 ? 0.5 : seconds < 4.5 ? 0.39 : 0.54;
+    else if (seconds >= 1.8 && seconds < (mode() === 'acro' ? 2.45 : 3.2)) {
+      const selected = ['roll', 'pitch', 'yaw'].includes(axis) ? axis : 'pitch';
+      input[selected] =
+        (selected === 'yaw' ? 0.11 : mode() === 'acro' ? 0.07 : 0.25) *
+        (displayedStep()?.direction ?? 1);
+    }
+    return input;
+  }
+  function previewCommand() {
+    if (labMode === 'example') return exampleInput(labFlight.snapshot().ticks);
+    if (labSource === 'radio') return labRadioInput();
+    if (labSource === 'touch') {
+      labTouch.throttle = clamp(
+        labTouch.throttle + (touchThrottleDirection * 0.35) / FLIGHT_HZ,
+        0,
+        1,
+      );
+      return { ...labTouch };
+    }
+    const fine = labKeys.has('ShiftLeft') || labKeys.has('ShiftRight');
+    const gain = fine ? 0.18 : 0.5;
+    return {
+      throttle: clamp(
+        labInput.throttle +
+          ((Number(labKeys.has('ArrowUp')) - Number(labKeys.has('ArrowDown'))) *
+            (fine ? 0.1 : 0.35)) /
+            FLIGHT_HZ,
+        0,
+        1,
+      ),
+      roll: (Number(labKeys.has('KeyD')) - Number(labKeys.has('KeyA'))) * gain,
+      pitch: (Number(labKeys.has('KeyW')) - Number(labKeys.has('KeyS'))) * gain,
+      yaw: (Number(labKeys.has('KeyE')) - Number(labKeys.has('KeyQ'))) * gain,
+    };
+  }
+  function previewFrame(time) {
+    labFrameId = null;
+    if (!labRunning || stage !== 'guide' || disposed) return;
+    if (doc.hidden || (doc.hasFocus && !doc.hasFocus())) {
+      pausePreview('focus');
+      return;
+    }
+    if (labMode === 'try' && labSource === 'radio' && !labRadioAvailable()) {
+      pausePreview('radio');
+      return;
+    }
+    const elapsed = labLastTime === null ? 0 : time - labLastTime;
+    labLastTime = time;
+    if (elapsed > 150) {
+      pausePreview('stall');
+      return;
+    }
+    labAccumulator += Math.max(0, elapsed);
+    while (labAccumulator >= 1000 / FLIGHT_HZ) {
+      labAccumulator -= 1000 / FLIGHT_HZ;
+      labInput = previewCommand();
+      labFlight.step(labInput);
+      const state = labFlight.snapshot();
+      if (
+        state.ticks >= (labMode === 'example' ? 8 : 60) * FLIGHT_HZ ||
+        state.contacts > 0 ||
+        state.status !== 'active'
+      ) {
+        pausePreview(state.contacts ? 'boundary' : 'finished');
+        break;
+      }
+    }
+    paintLab();
+    if (labRunning) labFrameId = win.requestAnimationFrame(previewFrame);
+  }
+  function playPreview({ focus = true } = {}) {
+    if (!lesson || stage !== 'guide' || disposed) return;
+    if (!labFlight || labReason === 'finished' || labReason === 'boundary') resetPreview();
+    if (labMode === 'try' && labSource === 'radio' && !labRadioAvailable()) {
+      pausePreview('radio');
+      return;
+    }
+    labReason = '';
+    labRunning = true;
+    labFlight.arm();
+    labLastTime = null;
+    labAccumulator = 0;
+    if (labFrameId === null) labFrameId = win.requestAnimationFrame(previewFrame);
+    paintLab();
+    if (focus) refs.labFocus?.focus({ preventScroll: true });
+  }
+  function releaseView() {
+    for (const release of viewReleases) release();
+    viewReleases = [];
+    diagram?.dispose();
+    diagram = null;
+  }
+  function bindGimbal(drawing, horizontal, vertical) {
+    let pointer = null;
+    const move = (event) => {
+      if (pointer !== event.pointerId || !labRunning || labMode !== 'try' || labSource !== 'touch')
+        return;
+      const rect = drawing.getBoundingClientRect();
+      if (!rect.width || !rect.height) return;
+      labTouch[horizontal] = clamp(((event.clientX - rect.left) / rect.width - 0.5) * 3);
+      const verticalValue = clamp((0.5 - (event.clientY - rect.top) / rect.height) * 3);
+      labTouch[vertical] = vertical === 'throttle' ? (verticalValue + 1) / 2 : verticalValue;
+      event.preventDefault();
+    };
+    const release = () => {
+      const previous = pointer;
+      pointer = null;
+      if (previous !== null) {
+        try {
+          drawing.releasePointerCapture(previous);
+        } catch {
+          /* Pointer already released. */
+        }
+      }
+      pointer = null;
+      for (const axis of [horizontal, vertical]) if (axis !== 'throttle') labTouch[axis] = 0;
+    };
+    const down = (event) => {
+      if (labMode !== 'try' || labSource !== 'touch' || stage !== 'guide') return;
+      if (!labRunning) playPreview();
+      pointer = event.pointerId;
+      drawing.setPointerCapture(pointer);
+      move(event);
+    };
+    drawing.addEventListener('pointerdown', down);
+    drawing.addEventListener('pointermove', move);
+    drawing.addEventListener('pointerup', release);
+    drawing.addEventListener('pointercancel', release);
+    drawing.addEventListener('lostpointercapture', release);
+    viewReleases.push(() => {
+      release();
+      drawing.removeEventListener('pointerdown', down);
+      drawing.removeEventListener('pointermove', move);
+      drawing.removeEventListener('pointerup', release);
+      drawing.removeEventListener('pointercancel', release);
+      drawing.removeEventListener('lostpointercapture', release);
+    });
+  }
+  function makeDpad() {
+    const pad = node('div', 'coach-lab-dpad');
+    pad.setAttribute('role', 'group');
+    pad.setAttribute('aria-label', t('Touch control buttons', 'Сенсорні кнопки керування'));
+    for (const axis of AXES) {
+      const row = node('div', 'coach-dpad-axis');
+      row.append(node('strong', '', axisName(axis)));
+      for (const direction of [-1, 1]) {
+        const control = node('button', 'coach-dpad-button', direction < 0 ? '−' : '+');
+        control.type = 'button';
+        const directions = {
+          throttle: [
+            t('Throttle: less thrust', 'Газ: менше тяги'),
+            t('Throttle: more thrust', 'Газ: більше тяги'),
+          ],
+          yaw: [
+            t('Yaw: turn nose left', 'Рискання: повернути ніс ліворуч'),
+            t('Yaw: turn nose right', 'Рискання: повернути ніс праворуч'),
+          ],
+          pitch: [
+            t('Pitch: nose up', 'Тангаж: ніс угору'),
+            t('Pitch: nose down', 'Тангаж: ніс униз'),
+          ],
+          roll: [t('Roll left', 'Крен ліворуч'), t('Roll right', 'Крен праворуч')],
+        };
+        control.setAttribute('aria-label', directions[axis][direction < 0 ? 0 : 1]);
+        const down = (event) => {
+          if (labMode !== 'try' || labSource !== 'touch') return;
+          if (event.type === 'keydown' && ![' ', 'Enter'].includes(event.key)) return;
+          event.preventDefault();
+          if (!labRunning) playPreview({ focus: event.type !== 'keydown' });
+          if (event.pointerId !== undefined) control.setPointerCapture(event.pointerId);
+          if (axis === 'throttle') {
+            touchThrottleDirection = direction;
+            labTouch.throttle = clamp(labTouch.throttle + direction * 0.025, 0, 1);
+          } else labTouch[axis] = direction * 0.35;
+        };
+        const up = () => {
+          if (axis === 'throttle') touchThrottleDirection = 0;
+          else labTouch[axis] = 0;
+        };
+        for (const name of ['pointerdown', 'keydown']) control.addEventListener(name, down);
+        for (const name of ['pointerup', 'pointercancel', 'lostpointercapture', 'keyup', 'blur'])
+          control.addEventListener(name, up);
+        viewReleases.push(() => {
+          up();
+          for (const name of ['pointerdown', 'keydown']) control.removeEventListener(name, down);
+          for (const name of ['pointerup', 'pointercancel', 'lostpointercapture', 'keyup', 'blur'])
+            control.removeEventListener(name, up);
+        });
+        row.append(control);
+      }
+      pad.append(row);
+    }
+    return pad;
+  }
+  function paintLab() {
+    if (stage !== 'guide' || !labFlight) return;
+    const state = labFlight.snapshot();
+    const input = labRunning ? labInput : neutralFlightInput();
+    diagram?.update({
+      state,
+      detailScale: 1.5,
+      followHeading: true,
+      controls: input,
+      locale: lang(),
+      unavailable: labMode === 'try' && labSource === 'radio' && !labRadioAvailable(),
+    });
+    if (refs.labPlay)
+      refs.labPlay.textContent = labRunning
+        ? t('Stop preview', 'Зупинити перегляд')
+        : labMode === 'example'
+          ? t('Play example', 'Показати приклад')
+          : t('Resume controls', 'Продовжити керування');
+    if (refs.labStatus) {
+      const text = labRunning
+        ? labMode === 'example'
+          ? t(
+              'EXAMPLE · real physics · hollow dots are example commands',
+              'ПРИКЛАД · справжня фізика · порожні крапки — команди прикладу',
+            )
+          : t(
+              'YOUR CONTROLS · separate preview · real lesson stays paused',
+              'ВАШЕ КЕРУВАННЯ · окремий перегляд · урок залишається на паузі',
+            )
+        : labReason === 'radio'
+          ? t(
+              'Connect and select a radio/controller in Setup, then resume preview.',
+              'Під’єднайте та виберіть пульт у налаштуваннях і продовжте перегляд.',
+            )
+          : labReason === 'boundary'
+            ? t(
+                'Preview touched ground or its boundary. Reset to try again.',
+                'Перегляд торкнувся землі чи межі. Скиньте його та спробуйте знову.',
+              )
+            : labReason === 'finished'
+              ? t(
+                  'Preview finished. Reset or play again; no progress was awarded.',
+                  'Перегляд завершено. Скиньте або повторіть; поступ не зараховано.',
+                )
+              : t(
+                  'PREVIEW STOPPED · press Play / Resume to try; the lesson stays paused',
+                  'ПЕРЕГЛЯД ЗУПИНЕНО · натисніть показ / продовжити; урок залишається на паузі',
+                );
+      if (refs.labStatus.textContent !== text) refs.labStatus.textContent = text;
+    }
+    if (refs.labTelemetry)
+      refs.labTelemetry.textContent = `${(state.position.y / 1000).toFixed(1)} ${t('m height', 'м висоти')} · ${(Math.hypot(state.velocity.x, state.velocity.z) / 1000).toFixed(1)} ${t('m/s drift', 'м/с дрейфу')} · ${(Math.max(Math.abs(state.attitude.roll), Math.abs(state.attitude.pitch)) / 100).toFixed(1)}° ${t('tilt', 'нахилу')}`;
+    for (const stick of refs.sticks ?? []) {
+      const x = input[stick.h],
+        y = stick.v === 'throttle' ? input[stick.v] * 2 - 1 : input[stick.v];
+      stick.live.style.display = labMode === 'try' ? '' : 'none';
+      stick.suggestion.style.display = labMode === 'example' ? '' : 'none';
+      stick.live.setAttribute('cx', 90 + x * 60);
+      stick.live.setAttribute('cy', 90 - y * 60);
+      stick.suggestion.style.transform = `translate(${x * 60}px, ${-y * 60}px)`;
+      stick.readout.textContent = `${axisName(stick.h)} ${Math.round(x * 100)}% · ${axisName(stick.v)} ${Math.round(input[stick.v] * 100)}%`;
+    }
+  }
   function makeStick(side, layout, step) {
     const section = node('section', 'coach-stick'),
       h = layout[side * 2],
@@ -173,6 +540,9 @@ export function mountBeginnerCoach({
     suggestion.style.setProperty('--coach-target-y', `${targetY}px`);
     suggestion.append(svg('circle', { cx: 90, cy: 90, r: 11, class: 'coach-target-dot' }));
     const live = svg('circle', { cx: 90, cy: 90, r: 6, class: 'coach-live-dot' });
+    suggestion.style.animation = 'none';
+    drawing.classList.add('coach-stick-pad');
+    bindGimbal(drawing, h, v);
     drawing.append(suggestion, live);
     const labels = node('div', 'coach-stick-axes');
     for (const axis of [v, h]) {
@@ -181,122 +551,49 @@ export function mountBeginnerCoach({
       labels.append(label);
     }
     const readout = node('output', 'coach-stick-readout');
-    section.append(drawing, labels, readout);
-    refs.sticks.push({ live, readout, h, v });
+    readout.setAttribute('aria-live', 'off');
+    const directions = {
+      throttle: [t('More thrust', 'Більше тяги'), t('Less thrust', 'Менше тяги')],
+      yaw: [t('Nose right', 'Ніс праворуч'), t('Nose left', 'Ніс ліворуч')],
+      pitch: [t('Nose down', 'Ніс униз'), t('Nose up', 'Ніс угору')],
+      roll: [t('Right side down', 'Правий бік униз'), t('Left side down', 'Лівий бік униз')],
+    };
+    const gimbal = node('div', 'coach-gimbal-wrap');
+    gimbal.append(
+      node('span', 'coach-direction-up', directions[v][0]),
+      node('span', 'coach-direction-down', directions[v][1]),
+      node('span', 'coach-direction-left', directions[h][1]),
+      node('span', 'coach-direction-right', directions[h][0]),
+      drawing,
+    );
+    section.append(gimbal, labels, readout);
+    refs.sticks.push({ live, suggestion, readout, h, v });
     return section;
   }
-  function makeDrone(step) {
-    const motion = step.motion ?? 'hover',
-      figure = node('figure', 'coach-drone-figure'),
-      drawing = svg('svg', {
-        viewBox: '0 0 400 230',
-        role: 'img',
-        'aria-label': t('Illustration of drone movement', 'Ілюстрація руху дрона'),
-      });
-    drawing.dataset.motion = motion;
-    drawing.dataset.direction = String(step.direction ?? 1);
-    drawing.style.setProperty(
-      '--coach-direction',
-      String((step.direction ?? 1) * (motion === 'roll' ? -1 : 1)),
+  function makeDrone() {
+    const figure = node('figure', 'coach-drone-figure');
+    const drawing = node('div', 'coach-lab-drawing');
+    drawing.setAttribute('role', 'img');
+    drawing.setAttribute(
+      'aria-label',
+      t(
+        'Rear view follows the drone’s heading; ground arrow shows the starting direction. Amber front and thrust; cyan actual movement. Full tilt and inversion remain visible.',
+        'Вигляд ззаду стежить за курсом дрона; стрілка на землі показує початковий напрямок. Жовте — перед і тяга; блакитне — фактичний рух. Нахил і переворот залишаються видимими.',
+      ),
     );
-    if (motion === 'roll') drawing.dataset.direction = String(-(step.direction ?? 1));
-    const arrow = (d, color = 'thrust') =>
-      svg('path', { d, class: `coach-force coach-force-${color}` });
-    drawing.append(
-      svg('path', {
-        d: 'M20 195H380M60 195V205M120 195V205M180 195V205M240 195V205M300 195V205M360 195V205',
-        class: 'coach-ground',
-      }),
-      svg('path', { d: 'M25 60H375M25 110H375M25 160H375', class: 'coach-drone-grid' }),
-    );
-    const drone = svg('g', { class: 'coach-drone-body' });
-    if (motion === 'yaw') {
-      drone.append(svg('path', { d: 'M168 82L232 146M232 82L168 146', class: 'coach-drone-arm' }));
-      for (const [cx, cy] of [
-        [164, 78],
-        [236, 78],
-        [164, 150],
-        [236, 150],
-      ])
-        drone.append(
-          svg('circle', { cx, cy, r: 22, class: 'coach-prop' }),
-          svg('path', { d: `M${cx - 15} ${cy}h30`, class: 'coach-prop-line' }),
-        );
-      drone.append(
-        svg('rect', { x: 184, y: 92, width: 32, height: 45, rx: 5, class: 'coach-frame' }),
-        svg('path', { d: 'M188 88L200 73L212 88Z', class: 'coach-nose' }),
-      );
-      drawing.append(
-        arrow('M268 80Q305 122 268 156M268 156L270 141M268 156L283 153', 'motion'),
-        svg(
-          'text',
-          { x: 310, y: 119, class: 'coach-svg-label', 'text-anchor': 'middle' },
-          t('TURN', 'ПОВОРОТ'),
-        ),
-      );
-    } else {
-      drone.append(
-        svg('path', { d: 'M132 114H268', class: 'coach-drone-arm' }),
-        svg('rect', { x: 177, y: 104, width: 48, height: 21, rx: 5, class: 'coach-frame' }),
-        svg('rect', { x: 140, y: 100, width: 14, height: 22, rx: 2, class: 'coach-frame' }),
-        svg('rect', { x: 246, y: 100, width: 14, height: 22, rx: 2, class: 'coach-frame' }),
-        svg('ellipse', { cx: 147, cy: 99, rx: 32, ry: 5, class: 'coach-prop' }),
-        svg('ellipse', { cx: 253, cy: 99, rx: 32, ry: 5, class: 'coach-prop' }),
-        svg('path', { d: 'M184 125V134M216 125V134', class: 'coach-drone-arm' }),
-      );
-      if (motion !== 'roll')
-        drone.append(svg('path', { d: 'M224 108L235 113L224 119Z', class: 'coach-nose' }));
-      drone.append(
-        arrow('M160 91V52M153 60L160 52L167 60'),
-        arrow('M240 91V52M233 60L240 52L247 60'),
-      );
-      if (['pitch', 'roll', 'route'].includes(motion))
-        drawing.append(arrow('M267 164H340M331 157L340 164L331 171', 'motion'));
-      if (motion === 'brake')
-        drawing.append(
-          arrow('M255 173H341M332 166L341 173L332 180', 'motion'),
-          arrow('M145 65H73M82 58L73 65L82 72'),
-          svg(
-            'text',
-            { x: 300, y: 157, class: 'coach-svg-label', 'text-anchor': 'middle' },
-            t('MOMENTUM', 'ІНЕРЦІЯ'),
-          ),
-        );
-      if (['lift', 'hover', 'land'].includes(motion))
-        drawing.append(
-          arrow('M314 100V159M307 151L314 159L321 151', 'gravity'),
-          svg(
-            'text',
-            { x: 325, y: 177, class: 'coach-svg-label', 'text-anchor': 'middle' },
-            t('GRAVITY', 'ТЯЖІННЯ'),
-          ),
-        );
-      if (motion === 'acro')
-        drawing.append(
-          svg('path', { d: 'M118 145H282', class: 'coach-level-reference' }),
-          svg(
-            'text',
-            { x: 200, y: 181, class: 'coach-svg-label', 'text-anchor': 'middle' },
-            t('CENTRED STICK ≠ LEVEL DRONE', 'СТІК У ЦЕНТРІ ≠ РІВНИЙ ДРОН'),
-          ),
-        );
-    }
-    drawing.append(drone);
-    const view =
-      motion === 'yaw'
-        ? t('TOP VIEW', 'ВИГЛЯД ЗГОРИ')
-        : motion === 'roll'
-          ? t('FRONT VIEW', 'ВИГЛЯД СПЕРЕДУ')
-          : t('SIDE VIEW', 'ВИГЛЯД ЗБОКУ');
-    drawing.append(svg('text', { x: 20, y: 25, class: 'coach-svg-view' }, view));
+    drawing.tabIndex = 0;
+    refs.labFocus = drawing;
+    diagram = mountDroneDiagram({ root: drawing });
+    refs.labTelemetry = node('p', 'coach-lab-telemetry');
     figure.append(
       drawing,
+      refs.labTelemetry,
       node(
         'figcaption',
         '',
         t(
-          'Movement example · not a replay or a flight command',
-          'Приклад руху · це не запис і не команда польоту',
+          'Separate controls preview · your lesson stays paused · no score or lesson progress',
+          'Окремий перегляд керування · урок залишається на паузі · без балів і поступу уроку',
         ),
       ),
     );
@@ -409,9 +706,11 @@ export function mountBeginnerCoach({
   }
   function render() {
     if (!lesson || stage === 'closed' || disposed) return;
+    const focusLab = refs.labFocus === doc.activeElement;
     const focusAction = root.contains(doc.activeElement)
       ? doc.activeElement?.dataset.coachAction
       : null;
+    releaseView();
     refs = { sticks: [] };
     root.replaceChildren();
     root.hidden = false;
@@ -454,7 +753,11 @@ export function mountBeginnerCoach({
       const close = button('exit', '×', 'coach-exit');
       close.setAttribute('aria-label', t('Back to school', 'До школи'));
       close.title = t('Back to school', 'До школи');
-      heading.append(button('start', startLabel(), 'primary coach-start'), close);
+      heading.append(
+        button('fullscreen', t('Fullscreen', 'Повний екран')),
+        button('start', startLabel(), 'primary coach-start'),
+        close,
+      );
     }
     card.append(heading);
     if (stage === 'complete') {
@@ -505,8 +808,8 @@ export function mountBeginnerCoach({
           'p',
           'coach-pause-note',
           t(
-            'Read and explore with motors off, then start practice when you are ready.',
-            'Читайте й досліджуйте з вимкненими моторами, а коли будете готові — починайте практику.',
+            'Explore in a separate preview. The real lesson stays paused until you start practice.',
+            'Досліджуйте в окремому перегляді. Справжній урок залишається на паузі до початку практики.',
           ),
         ),
       );
@@ -538,9 +841,46 @@ export function mountBeginnerCoach({
         }
         card.append(picker);
       }
+      const labModes = node('div', 'coach-lab-mode');
+      labModes.setAttribute('role', 'group');
+      labModes.setAttribute('aria-label', t('Controls lab mode', 'Режим майданчика керування'));
+      for (const [value, en, uk] of [
+        ['example', 'Example', 'Приклад'],
+        ['try', 'Try controls', 'Спробувати керування'],
+      ]) {
+        const choice = button(`lab-${value}`, t(en, uk));
+        choice.setAttribute('aria-pressed', String(labMode === value));
+        labModes.append(choice);
+      }
+      card.append(labModes);
+      const sources = node('div', 'coach-lab-sources');
+      sources.setAttribute('role', 'group');
+      sources.setAttribute('aria-label', t('Preview controls', 'Керування переглядом'));
+      for (const [value, en, uk] of [
+        ['keyboard', 'Keyboard', 'Клавіатура'],
+        ['touch', 'Touch / D-pad', 'Дотик / кнопки'],
+        ['radio', 'Radio / controller', 'Пульт / контролер'],
+      ]) {
+        const choice = button(`source-${value}`, t(en, uk));
+        choice.setAttribute('aria-pressed', String(labSource === value));
+        choice.disabled = labMode !== 'try';
+        sources.append(choice);
+      }
+      card.append(sources);
       const visuals = node('div', 'coach-visuals'),
-        controller = node('section', 'coach-controller');
-      const stickMode = STICK_LAYOUTS[snapshot.stickMode] ? snapshot.stickMode : 2;
+        controller = node('section', 'coach-controller coach-radio-chassis');
+      const requestedMode =
+        labSource === 'radio'
+          ? (snapshot.radioStickMode ?? snapshot.stickMode)
+          : snapshot.stickMode;
+      const stickMode = STICK_LAYOUTS[requestedMode] ? requestedMode : 2;
+      controller.append(
+        node(
+          'div',
+          'coach-radio-top',
+          t('CONTROL LAB · PREVIEW ONLY', 'КЕРУВАННЯ · ЛИШЕ ПЕРЕГЛЯД'),
+        ),
+      );
       controller.append(
         node(
           'h3',
@@ -555,11 +895,7 @@ export function mountBeginnerCoach({
       controller.append(sticks);
       const legend = node('p', 'coach-dot-legend');
       legend.append(
-        node(
-          'span',
-          'coach-legend-live',
-          replay ? t('Recorded input', 'Записаний сигнал') : t('Your input', 'Ваш сигнал'),
-        ),
+        node('span', 'coach-legend-live', t('Your preview input', 'Ваш сигнал перегляду')),
         node('span', 'coach-legend-example', t('Example movement', 'Приклад руху')),
       );
       controller.append(
@@ -568,11 +904,12 @@ export function mountBeginnerCoach({
           'p',
           'coach-example-note',
           t(
-            'The hollow dot demonstrates one small movement, not autopilot. Watch the drone and adjust gently.',
-            'Порожня крапка показує один невеликий рух, а не автопілот. Стежте за дроном і коригуйте плавно.',
+            'Example uses hollow dots. Try controls uses solid dots and the same flight physics. The real lesson stays paused.',
+            'Приклад показує порожні крапки. Ваше керування — суцільні крапки й ту саму фізику. Справжній урок залишається на паузі.',
           ),
         ),
       );
+      if (labMode === 'try' && labSource === 'touch') controller.append(makeDpad());
       visuals.append(controller);
       const behavior = node('section', 'coach-behavior');
       behavior.append(
@@ -586,6 +923,24 @@ export function mountBeginnerCoach({
       );
       visuals.append(behavior);
       card.append(visuals);
+      const labActions = node('div', 'coach-lab-actions');
+      refs.labPlay = button('lab-play', '');
+      labActions.append(refs.labPlay, button('lab-reset', t('Reset preview', 'Скинути перегляд')));
+      refs.labStatus = node('p', 'coach-lab-status');
+      refs.labStatus.setAttribute('role', 'status');
+      refs.labStatus.setAttribute('aria-live', 'polite');
+      card.append(
+        labActions,
+        refs.labStatus,
+        node(
+          'p',
+          'coach-lab-help',
+          t(
+            'Try controls: focus the drone, then use W/S, A/D, Q/E and ↑/↓. Shift is gentle; throttle stays set. Escape stops the preview. Touch: drag the gimbals or hold the buttons.',
+            'Ваше керування: виберіть схему дрона, потім W/S, A/D, Q/E та ↑/↓. Shift — плавно; газ зберігається. Escape зупиняє перегляд. Дотик: рухайте стіки або утримуйте кнопки.',
+          ),
+        ),
+      );
       const keys = node('p', 'coach-keys');
       keys.append(node('strong', '', t('Keyboard: ', 'Клавіатура: ')));
       for (const [key, axis] of [
@@ -645,30 +1000,30 @@ export function mountBeginnerCoach({
     root.append(card);
     if (focusAction)
       root.querySelector(`[data-coach-action="${focusAction}"]`)?.focus({ preventScroll: true });
+    if (focusLab && labRunning) refs.labFocus?.focus({ preventScroll: true });
     paint();
   }
   function paint() {
     if (!lesson || !refs.sticks) return;
-    const input = controls();
+    const input = stage === 'guide' ? labInput : controls();
+    if (stage === 'guide') paintLab();
     if (refs.signal)
       refs.signal.textContent =
-        snapshot.source === 'radio'
-          ? snapshot.monitorAvailable === false
-            ? t('Radio disconnected · no live signal', 'Пульт відключено · живого сигналу немає')
-            : t(
-                'Move your radio sticks: the cyan dots follow the calibrated signal while the drone stays paused.',
-                'Рухайте стіки пульта: блакитні крапки показують калібрований сигнал, а дрон залишається на паузі.',
-              )
-          : replay
+        labMode === 'try' && labSource === 'radio'
+          ? labRadioAvailable()
             ? t(
-                'Cyan dots show the recorded commands.',
-                'Блакитні крапки показують записані команди.',
+                'Calibrated radio/controller signal drives only this preview. Arm switches cannot start the real lesson here.',
+                'Калібрований сигнал пульта керує лише переглядом. Перемикач увімкнення не запускає справжній урок тут.',
               )
             : t(
-                'While paused, the cyan dots show the last flight input. Explore the illustrated movement; keyboard and touch movement starts in practice.',
-                'На паузі блакитні крапки показують останній сигнал польоту. Дослідіть рух на ілюстрації; клавіатура й сенсорне керування працюють під час практики.',
-              );
-    for (const stick of refs.sticks) {
+                'No selected radio/controller signal. Use Setup, then resume the preview.',
+                'Немає сигналу вибраного пульта. Відкрийте налаштування та продовжте перегляд.',
+              )
+          : t(
+              'Choose Try controls to use keyboard, touch or a controller. Preview results never count toward the lesson.',
+              'Виберіть «Спробувати керування» для клавіатури, дотику чи пульта. Результати перегляду не зараховуються до уроку.',
+            );
+    for (const stick of stage === 'guide' ? [] : refs.sticks) {
       const x = input[stick.h],
         y = stick.v === 'throttle' ? input[stick.v] * 2 - 1 : input[stick.v];
       stick.live.setAttribute('cx', 90 + x * 60);
@@ -695,6 +1050,8 @@ export function mountBeginnerCoach({
     if (!lesson || disposed || stage === 'complete') return;
     onPause();
     stage = 'guide';
+    labMode = 'example';
+    resetPreview();
     viewedStep = activeStep();
     render();
     root.querySelector('[data-coach-action="start"]')?.focus({ preventScroll: true });
@@ -703,33 +1060,119 @@ export function mountBeginnerCoach({
     const action = event.target.closest?.('[data-coach-action]')?.dataset.coachAction;
     if (!action || !lesson || disposed) return;
     if (action === 'start') {
+      pausePreview();
       stage = 'live';
       render();
       onStart();
+    } else if (action === 'lab-example' || action === 'lab-try') {
+      labMode = action === 'lab-try' ? 'try' : 'example';
+      resetPreview();
+      render();
+      playPreview();
+    } else if (action === 'lab-play') {
+      if (labRunning) pausePreview();
+      else playPreview();
+    } else if (action === 'lab-reset') {
+      resetPreview();
+      paint();
+    } else if (
+      action.startsWith('source-') &&
+      ['keyboard', 'touch', 'radio'].includes(action.slice(7))
+    ) {
+      labSource = action.slice(7);
+      resetPreview();
+      render();
+      playPreview();
+    } else if (action === 'fullscreen') {
+      pausePreview();
+      onFullscreen();
     } else if (action === 'guide') showGuide();
     else if (action === 'radio') {
+      pausePreview();
       onPause();
       onRadio();
     } else if (action === 'retry') onRetry();
     else if (action === 'next') onNext();
     else if (action === 'exit') {
+      pausePreview();
       onPause();
       onExit();
     } else if (action.startsWith('axis-') && AXES.includes(action.slice(5))) {
       explored = action.slice(5);
+      resetPreview();
       render();
+      if (labMode === 'example') playPreview();
     } else if (action.startsWith('step-')) {
       viewedStep = clamp(Number(action.slice(5)), 0, lesson.steps.length - 1);
+      resetPreview();
       render();
     }
   }
+  const keyDown = (event) => {
+    if (blockedKeys.has(event.code)) {
+      event.preventDefault();
+      event.stopImmediatePropagation();
+      return;
+    }
+    if (!labRunning || stage !== 'guide' || disposed || !root.contains(event.target)) return;
+    if (event.code === 'Escape') {
+      event.preventDefault();
+      event.stopImmediatePropagation();
+      pausePreview();
+      return;
+    }
+    if (
+      labMode !== 'try' ||
+      labSource !== 'keyboard' ||
+      event.ctrlKey ||
+      event.metaKey ||
+      event.altKey ||
+      event.isComposing ||
+      ['INPUT', 'TEXTAREA', 'SELECT'].includes(event.target?.tagName) ||
+      event.target?.isContentEditable
+    )
+      return;
+    if (!movementKeys.has(event.code)) return;
+    event.preventDefault();
+    event.stopImmediatePropagation();
+    labKeys.add(event.code);
+  };
+  const keyUp = (event) => {
+    labKeys.delete(event.code);
+    blockedKeys.delete(event.code);
+  };
+  const loseFocus = () => {
+    pausePreview('focus');
+    blockedKeys.clear();
+  };
+  const visibility = () => {
+    if (doc.hidden) loseFocus();
+  };
+  const leaveLab = (event) => {
+    if (
+      stage === 'guide' &&
+      labRunning &&
+      event.relatedTarget &&
+      !root.contains(event.relatedTarget)
+    )
+      pausePreview('focus');
+  };
+  win.addEventListener('keydown', keyDown, true);
+  win.addEventListener('keyup', keyUp, true);
+  win.addEventListener('blur', loseFocus);
+  doc.addEventListener('visibilitychange', visibility);
+  root.addEventListener('focusout', leaveLab);
   root.addEventListener('click', click);
   root.hidden = true;
   return {
     open(value, options = {}) {
       if (disposed) return;
+      pausePreview();
       lesson = value;
       snapshot = {};
+      labMode = 'example';
+      labSource = 'keyboard';
+      resetPreview();
       replay = Boolean(options.replay);
       explored = 'throttle';
       viewedStep = 0;
@@ -741,8 +1184,12 @@ export function mountBeginnerCoach({
     },
     update(value) {
       if (!lesson || disposed || stage === 'closed') return;
+      const previousMode = mode();
       snapshot = { ...snapshot, ...value };
-      const key = `${lang()}|${activeStep()}|${snapshot.stickMode}|${snapshot.source}|${snapshot.monitorAvailable}|${snapshot.mode}|${Boolean(snapshot.reducedMotion)}`;
+      if (mode() !== previousMode) resetPreview();
+      if (labRunning && labMode === 'try' && labSource === 'radio' && !labRadioAvailable())
+        pausePreview('radio');
+      const key = `${lang()}|${activeStep()}|${snapshot.stickMode}|${snapshot.radioStickMode}|${snapshot.radioAvailable}|${snapshot.source}|${snapshot.monitorAvailable}|${snapshot.mode}|${Boolean(snapshot.reducedMotion)}`;
       if (key !== lastRender) {
         lastRender = key;
         render();
@@ -754,14 +1201,26 @@ export function mountBeginnerCoach({
       }
     },
     blocksArm: () => Boolean(lesson && stage === 'guide'),
+    pausePreview,
+    previewSource: () => (stage === 'guide' && labMode === 'try' ? labSource : null),
+    previewSnapshot: () => ({
+      mode: labMode,
+      source: labSource,
+      running: labRunning,
+      state: labFlight?.snapshot() ?? null,
+      controls: { ...labInput },
+    }),
     showGuide,
     complete({ verified, nextAvailable: hasNext = false } = {}) {
       if (!lesson || disposed || !verified) return;
+      pausePreview();
       nextAvailable = hasNext;
       stage = 'complete';
       render();
     },
     close() {
+      pausePreview();
+      releaseView();
       stage = 'closed';
       lesson = null;
       refs = {};
@@ -769,7 +1228,14 @@ export function mountBeginnerCoach({
       root.hidden = true;
     },
     dispose() {
+      pausePreview();
+      releaseView();
       disposed = true;
+      win.removeEventListener('keydown', keyDown, true);
+      win.removeEventListener('keyup', keyUp, true);
+      win.removeEventListener('blur', loseFocus);
+      doc.removeEventListener('visibilitychange', visibility);
+      root.removeEventListener('focusout', leaveLab);
       root.removeEventListener('click', click);
       root.replaceChildren();
       root.hidden = true;

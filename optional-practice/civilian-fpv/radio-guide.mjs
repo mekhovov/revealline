@@ -604,6 +604,7 @@ export function mountRadioGuide({
   update(runtime.raw());
   return {
     update,
+    captureActive: isMapping,
     reset() {
       phase = 'connect';
       identity = null;

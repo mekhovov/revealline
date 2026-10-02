@@ -24,7 +24,7 @@ import {
 } from './world-model.mjs';
 import { WORLD_COLLISION_BACKEND } from './world-collision.mjs';
 import { mountBeginnerCoach } from './beginner-coach.mjs';
-import { createFlightInput } from './input.mjs';
+import { createFlightInput, createFlightMenuNavigation } from './input.mjs';
 import { createRadioRuntime } from './radio-runtime.mjs';
 import { restoreVerifiedRadio } from './radio-session.mjs';
 import { mountRadioSetup } from './radio-setup.mjs';
@@ -65,6 +65,7 @@ import {
   mountSimPresentation,
   mountDroneResponse,
   mountSimAudioControls,
+  paintStickDirections,
 } from './sim-presentation.mjs';
 import { createWorldAudio } from './world-audio.mjs';
 import {
@@ -1105,7 +1106,10 @@ export function mountWorldApp({
     root: $('beginner-coach'),
     window: win,
     locale: () => locale,
-    onStart: () => $('world-arm').click(),
+    onStart: () => {
+      if (flight) updateHUD(flight.snapshot());
+      $('world-arm').click();
+    },
     onPause: () => pauseFlight(),
     onRetry: () => $('world-retry').click(),
     onNext: () => nextLearningFlight(),
@@ -1114,6 +1118,7 @@ export function mountWorldApp({
       showTab('learn');
     },
     onRadio: () => $('radio-setup-button').click(),
+    onFullscreen: () => immersive.toggle(),
   });
   function nextLearningFlight() {
     const next = nextLearningEntry(current);
@@ -1190,7 +1195,8 @@ export function mountWorldApp({
       touchActive = source === 'touch',
       display = $('flight-stick-display').value,
       monitor = $('world-touch'),
-      radioPreview = source === 'radio' ? radio.preview() : null,
+      radioPreview =
+        source === 'radio' || beginnerCoach.previewSource?.() === 'radio' ? radio.preview() : null,
       unavailable = source === 'radio' && !radioPreview?.controls,
       controls =
         source === 'radio'
@@ -1220,6 +1226,7 @@ export function mountWorldApp({
         x = controls[horizontal],
         y = vertical === 'throttle' ? controls[vertical] * 2 - 1 : controls[vertical],
         radius = node.clientWidth * 0.34;
+      paintStickDirections(node, { horizontal, vertical, locale });
       node.querySelector('i').style.transform = `translate(${x * radius}px, ${-y * radius}px)`;
       node.setAttribute(
         'aria-label',
@@ -1257,6 +1264,9 @@ export function mountWorldApp({
         stickMode: radioPreview?.stickMode ?? 2,
         monitor: source === 'radio' && unavailable ? neutralFlightInput() : controls,
         monitorAvailable: !(source === 'radio' && unavailable),
+        radioMonitor: radioPreview?.controls,
+        radioAvailable: Boolean(radioPreview?.verified),
+        radioStickMode: radioPreview?.stickMode ?? 2,
         mode: $('flight-mode').value,
         reducedMotion:
           $('sim-motion').value === 'reduced' ||
@@ -2383,6 +2393,7 @@ export function mountWorldApp({
   function pauseFlight(freezeRadio = true) {
     if (pausing) return;
     pausing = true;
+    beginnerCoach.pausePreview?.();
     if (fire) fireReleaseRequired = true;
     fire = false;
     audio.pause();
@@ -2638,7 +2649,11 @@ export function mountWorldApp({
       ? txt('Flight ended', 'Політ завершено')
       : `${Math.min(state.step + 1, state.total ?? current.course.steps[$('flight-mode').value].length)}/${current.course.steps[$('flight-mode').value].length} · ${target ? stepName(target) : state.status}${state.hold ? ` · ${state.hold}/${target?.ticks ?? 0}` : ''}`;
     $('world-arm').disabled =
-      !sceneReady || Boolean(ghostLookup) || terminal(state) || (Boolean(replayProof) && finished);
+      !sceneReady ||
+      Boolean(ghostLookup) ||
+      beginnerCoach.blocksArm() ||
+      terminal(state) ||
+      (Boolean(replayProof) && finished);
     $('world-arm').textContent = replayProof
       ? txt('Resume playback', 'Продовжити перегляд')
       : txt('Arm / resume', 'Увімкнути / продовжити');
@@ -2898,6 +2913,7 @@ export function mountWorldApp({
     }
   }
   function advanceFrame(now) {
+    pollMenu(now);
     if (!flight || !$('flight-dialog').open) return;
     if (
       !replayProof &&
@@ -3243,7 +3259,6 @@ export function mountWorldApp({
     abortSectorLookup();
     sceneReady = false;
     pauseFlight();
-    await immersive.exit({ focus: false });
     await saveRecovery();
     if (token !== flightToken || disposed) return;
     flight?.dispose?.();
@@ -3683,12 +3698,106 @@ export function mountWorldApp({
         : txt('Flight active.', 'Політ триває.');
     $('world-viewport').focus();
   });
+  const menuHint = doc.createElement('p');
+  menuHint.className = 'sim-menu-hint';
+  menuHint.id = 'sim-menu-hint';
+  doc.querySelector('main').append(menuHint);
+  function menuContext() {
+    const secondary = ['world-radio-dialog', 'drone-hangar', 'sim-settings']
+      .map($)
+      .find((node) => node.open);
+    if (secondary)
+      return {
+        root: secondary,
+        key: secondary.id,
+        blockRadio: secondary.id === 'world-radio-dialog',
+        blockDevices: secondary.id === 'world-radio-dialog' && Boolean(radioSetup?.captureActive()),
+      };
+    if ($('flight-dialog').open) {
+      if (beginnerCoach.previewSnapshot?.()?.running) return null;
+      if (beginnerCoach.blocksArm()) return { root: $('beginner-coach'), key: 'coach' };
+      if (flight?.snapshot().status === 'active') return null;
+      return { root: $('flight-dialog'), key: `flight:${$('flight-dialog').dataset.optionsOpen}` };
+    }
+    return { root: doc.body, key: `lobby:${win.location.hash}` };
+  }
+  const menuNavigation = createFlightMenuNavigation({
+    document: doc,
+    window: win,
+    locale: () => locale,
+    getContext: menuContext,
+    onHint(value) {
+      const context = menuContext();
+      if (!context) {
+        menuHint.hidden = true;
+        return;
+      }
+      const container = context.root === doc.body ? doc.querySelector('main') : context.root;
+      if (menuHint.parentElement !== container) container.append(menuHint);
+      menuHint.hidden = false;
+      if (menuHint.textContent !== value) menuHint.textContent = value;
+    },
+    onBack() {
+      if ($('world-radio-dialog').open) closeRadio();
+      else if ($('drone-hangar').open)
+        $('drone-hangar').querySelector('[data-close-hangar]').click();
+      else if ($('sim-settings').open) closeSettings();
+      else if ($('flight-dialog').open) {
+        if ($('flight-dialog').dataset.optionsOpen === 'true') $('flight-options').click();
+        else void closeFlight().catch(reportError);
+      } else if (immersive.active()) void immersive.exit();
+      else showTab('explore');
+    },
+  });
+  function pollMenu(now) {
+    if (!menuContext()) {
+      menuNavigation.poll({ now });
+      return;
+    }
+    let gamepads = [];
+    try {
+      gamepads = win.navigator.getGamepads?.() ?? [];
+    } catch {
+      /* Menus remain usable without device access. */
+    }
+    if (now - lastRadioDiscovery > 1000 && !$('world-radio-dialog').open) {
+      lastRadioDiscovery = now;
+      restoreRadio();
+    }
+    const observed = radio.preview();
+    menuNavigation.poll({
+      now,
+      gamepads,
+      radio: {
+        key: radio.status().selected?.key,
+        controls: observed.controls,
+        verified: observed.verified,
+        index: radio.status().selected?.index,
+      },
+    });
+  }
+  const fullscreenButtons = [];
+  for (const parent of [
+    doc.querySelector('.sim-utilities'),
+    ...doc.querySelectorAll('dialog > header'),
+  ]) {
+    if (parent.querySelector('#world-fullscreen')) continue;
+    const full = doc.createElement('button');
+    full.type = 'button';
+    full.dataset.simIcon = 'fullscreen';
+    full.className = 'sim-screen-fullscreen';
+    parent.append(full);
+    fullscreenButtons.push(full);
+  }
   const immersive = mountFlightFullscreen({
     document: doc,
     window: win,
     surface: $('flight-dialog'),
     viewport: $('world-viewport'),
     button: $('world-fullscreen'),
+    buttons: fullscreenButtons,
+    scope: 'application',
+    getFocusTarget: () => doc.activeElement,
     setupButton: $('radio-setup-button'),
     kind: 'worlds',
     locale: () => locale,
@@ -3828,6 +3937,8 @@ export function mountWorldApp({
     });
   on(win, 'keydown', (e) => {
     if (
+      e.defaultPrevented ||
+      beginnerCoach.blocksArm() ||
       !$('flight-dialog').open ||
       doc.querySelector('dialog[open]:not(#flight-dialog)') ||
       /^(INPUT|SELECT|TEXTAREA|BUTTON)$/.test(e.target.tagName)
@@ -3995,6 +4106,8 @@ export function mountWorldApp({
       await saveRecovery();
       win.cancelAnimationFrame(raf);
       for (const remove of listeners) remove();
+      menuNavigation.dispose();
+      menuHint.remove();
       input.dispose();
       radioSetup?.dispose();
       flight?.dispose?.();
