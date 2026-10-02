@@ -1,0 +1,1093 @@
+{
+  "generatedAt": "2026-09-30T22:27:23.852Z",
+  "sourceCommit": "3ce3b98ef9b150fde0f7211a0251bb09259b5b8f",
+  "generator": "authoring/fpv-worlds/demonstrations/generate-warehouse.mjs",
+  "qualification": "Fresh Node process; all saved quantized commands independently replayed against current exact authored course; browser presentation and target-device performance not qualified here.",
+  "response": {
+    "format": "FlightResponseProfile.v1",
+    "id": "demonstration-v2",
+    "name": "Demonstration response",
+    "maxRate": 180,
+    "maxTilt": 30,
+    "expo": 0,
+    "responseTicks": 4
+  },
+  "alignmentDefinition": "Each consecutive 20ms replay position pair; horizontal speed >= 1000 mm/s; compare displacement heading to current drone yaw. Forward means error <= 90 degrees; aligned means error <= 45 degrees. Metrics include braking and step transitions.",
+  "records": [
+    {
+      "id": "warehouse-01",
+      "mode": "self-level",
+      "file": "warehouse-01-self-level.json",
+      "sha256": "5ab14310486ad2522c6a4df33ebbc6e9094228e72ae1a85f0ed3661697b9c23c",
+      "bytes": 24809,
+      "proofBytes": 22173,
+      "courseSha256": "d411f34b8fca134ecfd569a8a84d3fea3498a819a48bbd66ecfd154234ee719b",
+      "model": "civilian-world-fixed.v2",
+      "backend": "rapier3d-compat-0.21.0:02dc6a4e2fffc013bab08fbb44fa68f501d8303615e9afe4c7d89ad4eedda0d0",
+      "courseIdentity": "b0ab361f4528dbea",
+      "worldIdentity": "be8f97708c6c9ac6",
+      "responseIdentity": "f91eeb500cf8bc2d",
+      "rulesIdentity": "d14e82944bb85c62",
+      "conditionsIdentity": "030d08b3879ad283",
+      "finalStateIdentity": "41db103acc80925b",
+      "status": "complete",
+      "ticks": 1210,
+      "durationSeconds": 24.2,
+      "health": 100,
+      "contacts": 0,
+      "heading": {
+        "movingSamples": 638,
+        "medianDegrees": 1.4249488229220333,
+        "p95Degrees": 16.813030020056658,
+        "maxDegrees": 41.80493401088199,
+        "forwardDistancePercent": 100,
+        "alignedWithin45DistancePercent": 100,
+        "fastReverseTicks": 0
+      },
+      "sourceIdentity": "8bcf631f885754bc",
+      "proofSha256": "c5397a69bbbb7e7079a24be51e260a35d8d8ab643209203f7f854288ca4249ca"
+    },
+    {
+      "id": "warehouse-01",
+      "mode": "acro",
+      "file": "warehouse-01-acro.json",
+      "sha256": "03a2fd40a4d857b6f3f39fd8da82a14726946abac8d9619d1d0932b43e62c3bc",
+      "bytes": 23443,
+      "proofBytes": 20807,
+      "courseSha256": "d411f34b8fca134ecfd569a8a84d3fea3498a819a48bbd66ecfd154234ee719b",
+      "model": "civilian-world-fixed.v2",
+      "backend": "rapier3d-compat-0.21.0:02dc6a4e2fffc013bab08fbb44fa68f501d8303615e9afe4c7d89ad4eedda0d0",
+      "courseIdentity": "b0ab361f4528dbea",
+      "worldIdentity": "be8f97708c6c9ac6",
+      "responseIdentity": "f91eeb500cf8bc2d",
+      "rulesIdentity": "d14e82944bb85c62",
+      "conditionsIdentity": "030d08b3879ad283",
+      "finalStateIdentity": "15d951253dc8d4d9",
+      "status": "complete",
+      "ticks": 1210,
+      "durationSeconds": 24.2,
+      "health": 100,
+      "contacts": 0,
+      "heading": {
+        "movingSamples": 642,
+        "medianDegrees": 1.313689006093682,
+        "p95Degrees": 16.90303002005669,
+        "maxDegrees": 44.324934010881975,
+        "forwardDistancePercent": 100,
+        "alignedWithin45DistancePercent": 100,
+        "fastReverseTicks": 0
+      },
+      "sourceIdentity": "8bcf631f885754bc",
+      "proofSha256": "e867cdc7a99139e63a4b26388b1f7d3c288b5d5687aa5fda0a3663d2f0ca4279"
+    },
+    {
+      "id": "warehouse-02",
+      "mode": "self-level",
+      "file": "warehouse-02-self-level.json",
+      "sha256": "c8f8c6f1d1f925d843a31d25388357912da5aefd2963f60672bc54d53a81eef4",
+      "bytes": 43540,
+      "proofBytes": 40321,
+      "courseSha256": "97583b15fb6c7dac69089f4696e8ffb3009398bbf9c8248974590bae2e222a49",
+      "model": "civilian-world-fixed.v2",
+      "backend": "rapier3d-compat-0.21.0:02dc6a4e2fffc013bab08fbb44fa68f501d8303615e9afe4c7d89ad4eedda0d0",
+      "courseIdentity": "9d4361a50ebfb229",
+      "worldIdentity": "be8f97708c6c9ac6",
+      "responseIdentity": "f91eeb500cf8bc2d",
+      "rulesIdentity": "d14b7e944bb61fbf",
+      "conditionsIdentity": "030d08b3879ad283",
+      "finalStateIdentity": "d518873da8cc66b5",
+      "status": "complete",
+      "ticks": 2405,
+      "durationSeconds": 48.1,
+      "health": 100,
+      "contacts": 0,
+      "heading": {
+        "movingSamples": 1605,
+        "medianDegrees": 0,
+        "p95Degrees": 1.1800000000000637,
+        "maxDegrees": 26.96240522611174,
+        "forwardDistancePercent": 100,
+        "alignedWithin45DistancePercent": 100,
+        "fastReverseTicks": 0
+      },
+      "sourceIdentity": "c2fa91b3230377aa",
+      "proofSha256": "cb28fd416644dbd81f74184f2eee70512f71356499254414309dc5f54130cfa9"
+    },
+    {
+      "id": "warehouse-02",
+      "mode": "acro",
+      "file": "warehouse-02-acro.json",
+      "sha256": "62879690acd5bb7f2e666a391507343444cfcfccfe3eb85cffdaf2fa83758f78",
+      "bytes": 42875,
+      "proofBytes": 39656,
+      "courseSha256": "97583b15fb6c7dac69089f4696e8ffb3009398bbf9c8248974590bae2e222a49",
+      "model": "civilian-world-fixed.v2",
+      "backend": "rapier3d-compat-0.21.0:02dc6a4e2fffc013bab08fbb44fa68f501d8303615e9afe4c7d89ad4eedda0d0",
+      "courseIdentity": "9d4361a50ebfb229",
+      "worldIdentity": "be8f97708c6c9ac6",
+      "responseIdentity": "f91eeb500cf8bc2d",
+      "rulesIdentity": "d14b7e944bb61fbf",
+      "conditionsIdentity": "030d08b3879ad283",
+      "finalStateIdentity": "85c8bac3a2033e45",
+      "status": "complete",
+      "ticks": 2421,
+      "durationSeconds": 48.42,
+      "health": 100,
+      "contacts": 0,
+      "heading": {
+        "movingSamples": 1620,
+        "medianDegrees": 0,
+        "p95Degrees": 1.2300000000000182,
+        "maxDegrees": 29.232405226111723,
+        "forwardDistancePercent": 100,
+        "alignedWithin45DistancePercent": 100,
+        "fastReverseTicks": 0
+      },
+      "sourceIdentity": "c2fa91b3230377aa",
+      "proofSha256": "83a5bcb80df8aec749e49c33778ddbeb8547131dfc447442e786ecd784ab864e"
+    },
+    {
+      "id": "warehouse-03",
+      "mode": "self-level",
+      "file": "warehouse-03-self-level.json",
+      "sha256": "af0a4cb1b106b43747287eb3ad8bf94311968810e3fc07a710a5dd091ab3fb1d",
+      "bytes": 54326,
+      "proofBytes": 51083,
+      "courseSha256": "2c925b1c2db9b83bb93cfd9cf236e4b9a3f15216fa3e06202c3a68ba92ce77ec",
+      "model": "civilian-world-fixed.v2",
+      "backend": "rapier3d-compat-0.21.0:02dc6a4e2fffc013bab08fbb44fa68f501d8303615e9afe4c7d89ad4eedda0d0",
+      "courseIdentity": "b99ebf98e61c260e",
+      "worldIdentity": "be8f97708c6c9ac6",
+      "responseIdentity": "f91eeb500cf8bc2d",
+      "rulesIdentity": "d1557e944bbe7444",
+      "conditionsIdentity": "030d08b3879ad283",
+      "finalStateIdentity": "66b0ecfef252cf72",
+      "status": "complete",
+      "ticks": 2786,
+      "durationSeconds": 55.72,
+      "health": 100,
+      "contacts": 0,
+      "heading": {
+        "movingSamples": 1879,
+        "medianDegrees": 2.4597002961021417,
+        "p95Degrees": 28.956122486375023,
+        "maxDegrees": 36.74000000000001,
+        "forwardDistancePercent": 100,
+        "alignedWithin45DistancePercent": 100,
+        "fastReverseTicks": 0
+      },
+      "sourceIdentity": "87bb468d38498e04",
+      "proofSha256": "6dfc10daa48a920b241a2fa7a9b2b5e1a39a942a7b6d8d3565ad61d7c0df567d"
+    },
+    {
+      "id": "warehouse-03",
+      "mode": "acro",
+      "file": "warehouse-03-acro.json",
+      "sha256": "f016f65147db8fd96ab162668aed3be6af2afcccdd8c5afe944c921bad7718aa",
+      "bytes": 52158,
+      "proofBytes": 48915,
+      "courseSha256": "2c925b1c2db9b83bb93cfd9cf236e4b9a3f15216fa3e06202c3a68ba92ce77ec",
+      "model": "civilian-world-fixed.v2",
+      "backend": "rapier3d-compat-0.21.0:02dc6a4e2fffc013bab08fbb44fa68f501d8303615e9afe4c7d89ad4eedda0d0",
+      "courseIdentity": "b99ebf98e61c260e",
+      "worldIdentity": "be8f97708c6c9ac6",
+      "responseIdentity": "f91eeb500cf8bc2d",
+      "rulesIdentity": "d1557e944bbe7444",
+      "conditionsIdentity": "030d08b3879ad283",
+      "finalStateIdentity": "bde7bda4e031151a",
+      "status": "complete",
+      "ticks": 2794,
+      "durationSeconds": 55.88,
+      "health": 100,
+      "contacts": 0,
+      "heading": {
+        "movingSamples": 1887,
+        "medianDegrees": 2.7374018382341774,
+        "p95Degrees": 28.857266409857914,
+        "maxDegrees": 36.59000000000003,
+        "forwardDistancePercent": 100,
+        "alignedWithin45DistancePercent": 100,
+        "fastReverseTicks": 0
+      },
+      "sourceIdentity": "87bb468d38498e04",
+      "proofSha256": "a4f9767760dd2b88bb831d92b5a3c53442989b399023e752760c05c269fa0591"
+    },
+    {
+      "id": "warehouse-04",
+      "mode": "self-level",
+      "file": "warehouse-04-self-level.json",
+      "sha256": "785b2c28dc2986e22821543004c729a8b0f1817b86b4be5d40ef7de8c930ad5e",
+      "bytes": 50621,
+      "proofBytes": 47189,
+      "courseSha256": "fc53a17c5cbfdd9b48f3e8f1a1ce0415e8aadf58ff9c51837e91c2045b6cb4e2",
+      "model": "civilian-world-fixed.v2",
+      "backend": "rapier3d-compat-0.21.0:02dc6a4e2fffc013bab08fbb44fa68f501d8303615e9afe4c7d89ad4eedda0d0",
+      "courseIdentity": "d7b23b106e65541f",
+      "worldIdentity": "be8f97708c6c9ac6",
+      "responseIdentity": "f91eeb500cf8bc2d",
+      "rulesIdentity": "d15282944bbc4539",
+      "conditionsIdentity": "030d08b3879ad283",
+      "finalStateIdentity": "a19ec1aba40becbd",
+      "status": "complete",
+      "ticks": 2538,
+      "durationSeconds": 50.76,
+      "health": 100,
+      "contacts": 0,
+      "heading": {
+        "movingSamples": 1661,
+        "medianDegrees": 2.145153531233973,
+        "p95Degrees": 25.82940201245765,
+        "maxDegrees": 31.710000000000036,
+        "forwardDistancePercent": 100,
+        "alignedWithin45DistancePercent": 100,
+        "fastReverseTicks": 0
+      },
+      "sourceIdentity": "02d9a79166ddda7f",
+      "proofSha256": "65ff59fa93e1cd8bb3a1c793b800593e12cc31cf868760e8afa0f840913ebb7a"
+    },
+    {
+      "id": "warehouse-04",
+      "mode": "acro",
+      "file": "warehouse-04-acro.json",
+      "sha256": "1ca43ea8e9a3ad0603fb0e2d1713af3bbf52e0795367d013443f945b5d8cb4ec",
+      "bytes": 47924,
+      "proofBytes": 44492,
+      "courseSha256": "fc53a17c5cbfdd9b48f3e8f1a1ce0415e8aadf58ff9c51837e91c2045b6cb4e2",
+      "model": "civilian-world-fixed.v2",
+      "backend": "rapier3d-compat-0.21.0:02dc6a4e2fffc013bab08fbb44fa68f501d8303615e9afe4c7d89ad4eedda0d0",
+      "courseIdentity": "d7b23b106e65541f",
+      "worldIdentity": "be8f97708c6c9ac6",
+      "responseIdentity": "f91eeb500cf8bc2d",
+      "rulesIdentity": "d15282944bbc4539",
+      "conditionsIdentity": "030d08b3879ad283",
+      "finalStateIdentity": "a0777336d75a5f36",
+      "status": "complete",
+      "ticks": 2546,
+      "durationSeconds": 50.92,
+      "health": 100,
+      "contacts": 0,
+      "heading": {
+        "movingSamples": 1668,
+        "medianDegrees": 2.417401838234241,
+        "p95Degrees": 25.979809198086627,
+        "maxDegrees": 31.720000000000027,
+        "forwardDistancePercent": 100,
+        "alignedWithin45DistancePercent": 100,
+        "fastReverseTicks": 0
+      },
+      "sourceIdentity": "02d9a79166ddda7f",
+      "proofSha256": "c1204d7369e865ae8a3f9865b5e601b19389aec444566dead6ee4b0905cf0912"
+    },
+    {
+      "id": "warehouse-05",
+      "mode": "self-level",
+      "file": "warehouse-05-self-level.json",
+      "sha256": "b0f4e1fb0ba7e2c983273962bf1cb97bad6a88d88bcadc082aff34224a37444d",
+      "bytes": 56085,
+      "proofBytes": 52840,
+      "courseSha256": "aeab1a114310a1f6f6a6c3b4ca0e0f4ac44441672ecf49c8b011945a2efdcda8",
+      "model": "civilian-world-fixed.v2",
+      "backend": "rapier3d-compat-0.21.0:02dc6a4e2fffc013bab08fbb44fa68f501d8303615e9afe4c7d89ad4eedda0d0",
+      "courseIdentity": "9ad44767f4fb82c9",
+      "worldIdentity": "be8f97708c6c9ac6",
+      "responseIdentity": "f91eeb500cf8bc2d",
+      "rulesIdentity": "d15c82944bc499be",
+      "conditionsIdentity": "030d08b3879ad283",
+      "finalStateIdentity": "36ef3ac03410ced6",
+      "status": "complete",
+      "ticks": 2823,
+      "durationSeconds": 56.46,
+      "health": 100,
+      "contacts": 0,
+      "heading": {
+        "movingSamples": 1902,
+        "medianDegrees": 2.509700296102096,
+        "p95Degrees": 29.276122486375016,
+        "maxDegrees": 37.25,
+        "forwardDistancePercent": 100,
+        "alignedWithin45DistancePercent": 100,
+        "fastReverseTicks": 0
+      },
+      "sourceIdentity": "0913f4dd9f2bd83b",
+      "proofSha256": "117cee75880e19b79a615b8b2ee48a50a2007389cb3aabfdf6a826e6bee21019"
+    },
+    {
+      "id": "warehouse-05",
+      "mode": "acro",
+      "file": "warehouse-05-acro.json",
+      "sha256": "edfae0ea0155c10fb5d861c575181a1b6262ebbf2dc18059e5a4c4aaab523c3b",
+      "bytes": 52384,
+      "proofBytes": 49139,
+      "courseSha256": "aeab1a114310a1f6f6a6c3b4ca0e0f4ac44441672ecf49c8b011945a2efdcda8",
+      "model": "civilian-world-fixed.v2",
+      "backend": "rapier3d-compat-0.21.0:02dc6a4e2fffc013bab08fbb44fa68f501d8303615e9afe4c7d89ad4eedda0d0",
+      "courseIdentity": "9ad44767f4fb82c9",
+      "worldIdentity": "be8f97708c6c9ac6",
+      "responseIdentity": "f91eeb500cf8bc2d",
+      "rulesIdentity": "d15c82944bc499be",
+      "conditionsIdentity": "030d08b3879ad283",
+      "finalStateIdentity": "eaa43473fd3d1b38",
+      "status": "complete",
+      "ticks": 2832,
+      "durationSeconds": 56.64,
+      "health": 100,
+      "contacts": 0,
+      "heading": {
+        "movingSamples": 1909,
+        "medianDegrees": 2.6597002961020735,
+        "p95Degrees": 28.96872556560777,
+        "maxDegrees": 37.180000000000064,
+        "forwardDistancePercent": 100,
+        "alignedWithin45DistancePercent": 100,
+        "fastReverseTicks": 0
+      },
+      "sourceIdentity": "0913f4dd9f2bd83b",
+      "proofSha256": "cda9d728bcad8cfa2ab2cb76f978e1f00557409af671671383b539830c176326"
+    },
+    {
+      "id": "warehouse-06",
+      "mode": "self-level",
+      "file": "warehouse-06-self-level.json",
+      "sha256": "39ad25d387f5883bbeba1702bac5d8ee3616463a93b11e21855c53e3f1ce9f66",
+      "bytes": 57764,
+      "proofBytes": 54744,
+      "courseSha256": "c9e8e47df08e4be55b44ace537b7f7b1a092d5a43a1e24862cf35da9f809fe40",
+      "model": "civilian-world-fixed.v2",
+      "backend": "rapier3d-compat-0.21.0:02dc6a4e2fffc013bab08fbb44fa68f501d8303615e9afe4c7d89ad4eedda0d0",
+      "courseIdentity": "e2508efc62d3cf48",
+      "worldIdentity": "be8f97708c6c9ac6",
+      "responseIdentity": "f91eeb500cf8bc2d",
+      "rulesIdentity": "d1597e944bc25d1b",
+      "conditionsIdentity": "030d08b3879ad283",
+      "finalStateIdentity": "ed2326d7dcf10c27",
+      "status": "complete",
+      "ticks": 2984,
+      "durationSeconds": 59.68,
+      "health": 100,
+      "contacts": 0,
+      "heading": {
+        "movingSamples": 1950,
+        "medianDegrees": 7.740000000000009,
+        "p95Degrees": 31.384541014435456,
+        "maxDegrees": 54.406334374997414,
+        "forwardDistancePercent": 100,
+        "alignedWithin45DistancePercent": 99.82,
+        "fastReverseTicks": 0
+      },
+      "sourceIdentity": "cffa6dfd26f1e843",
+      "proofSha256": "e37c275cc6accb65ce98ea504f5dd12bf56f578f69b496515ef97cea0c1b13c4"
+    },
+    {
+      "id": "warehouse-06",
+      "mode": "acro",
+      "file": "warehouse-06-acro.json",
+      "sha256": "909c7c910e0817b64bc29d63fb42007dafb8d512de99a99ee77527df417dc28b",
+      "bytes": 53818,
+      "proofBytes": 50798,
+      "courseSha256": "c9e8e47df08e4be55b44ace537b7f7b1a092d5a43a1e24862cf35da9f809fe40",
+      "model": "civilian-world-fixed.v2",
+      "backend": "rapier3d-compat-0.21.0:02dc6a4e2fffc013bab08fbb44fa68f501d8303615e9afe4c7d89ad4eedda0d0",
+      "courseIdentity": "e2508efc62d3cf48",
+      "worldIdentity": "be8f97708c6c9ac6",
+      "responseIdentity": "f91eeb500cf8bc2d",
+      "rulesIdentity": "d1597e944bc25d1b",
+      "conditionsIdentity": "030d08b3879ad283",
+      "finalStateIdentity": "e66baef405ba7adc",
+      "status": "complete",
+      "ticks": 2994,
+      "durationSeconds": 59.88,
+      "health": 100,
+      "contacts": 0,
+      "heading": {
+        "movingSamples": 1964,
+        "medianDegrees": 8.1681069356531,
+        "p95Degrees": 31.50454101443546,
+        "maxDegrees": 56.264934010881916,
+        "forwardDistancePercent": 100,
+        "alignedWithin45DistancePercent": 99.74,
+        "fastReverseTicks": 0
+      },
+      "sourceIdentity": "cffa6dfd26f1e843",
+      "proofSha256": "5a58ec6b5bf2e123a5d50285a5ccadacf53e13e75148b3eec7291727a829d417"
+    },
+    {
+      "id": "warehouse-07",
+      "mode": "self-level",
+      "file": "warehouse-07-self-level.json",
+      "sha256": "db89e5a7db4ff82ec49284c8582d9faf21ea2666ef67349b682e419ab83c0ca9",
+      "bytes": 50982,
+      "proofBytes": 47657,
+      "courseSha256": "f99017f026273c7c5d4fadac3f33633bbc1ee37ebc2d1ce07e5dfeb4d7ad0582",
+      "model": "civilian-world-fixed.v2",
+      "backend": "rapier3d-compat-0.21.0:02dc6a4e2fffc013bab08fbb44fa68f501d8303615e9afe4c7d89ad4eedda0d0",
+      "courseIdentity": "9b60ce129fcd0579",
+      "worldIdentity": "be8f97708c6c9ac6",
+      "responseIdentity": "f91eeb500cf8bc2d",
+      "rulesIdentity": "d1637e944bcab1a0",
+      "conditionsIdentity": "030d08b3879ad283",
+      "finalStateIdentity": "742f22d7565f1526",
+      "status": "complete",
+      "ticks": 2602,
+      "durationSeconds": 52.04,
+      "health": 100,
+      "contacts": 0,
+      "heading": {
+        "movingSamples": 1573,
+        "medianDegrees": 5.8799999999999955,
+        "p95Degrees": 34.90348942398202,
+        "maxDegrees": 61.59493401088196,
+        "forwardDistancePercent": 100,
+        "alignedWithin45DistancePercent": 99.34,
+        "fastReverseTicks": 0
+      },
+      "sourceIdentity": "e712b7ba20610cc5",
+      "proofSha256": "9479cf367277810925feef3391ae314262670e84d3a20722bd97079dddf73c93"
+    },
+    {
+      "id": "warehouse-07",
+      "mode": "acro",
+      "file": "warehouse-07-acro.json",
+      "sha256": "402df73ff5e1c829ca1d670cb54c00cb3a213313fa575a929aaa69f8d75035f3",
+      "bytes": 46632,
+      "proofBytes": 43307,
+      "courseSha256": "f99017f026273c7c5d4fadac3f33633bbc1ee37ebc2d1ce07e5dfeb4d7ad0582",
+      "model": "civilian-world-fixed.v2",
+      "backend": "rapier3d-compat-0.21.0:02dc6a4e2fffc013bab08fbb44fa68f501d8303615e9afe4c7d89ad4eedda0d0",
+      "courseIdentity": "9b60ce129fcd0579",
+      "worldIdentity": "be8f97708c6c9ac6",
+      "responseIdentity": "f91eeb500cf8bc2d",
+      "rulesIdentity": "d1637e944bcab1a0",
+      "conditionsIdentity": "030d08b3879ad283",
+      "finalStateIdentity": "876eadd302310117",
+      "status": "complete",
+      "ticks": 2608,
+      "durationSeconds": 52.16,
+      "health": 100,
+      "contacts": 0,
+      "heading": {
+        "movingSamples": 1587,
+        "medianDegrees": 6.2910005449385835,
+        "p95Degrees": 34.879999999999995,
+        "maxDegrees": 62.764934010881916,
+        "forwardDistancePercent": 100,
+        "alignedWithin45DistancePercent": 99.33,
+        "fastReverseTicks": 0
+      },
+      "sourceIdentity": "e712b7ba20610cc5",
+      "proofSha256": "2954d62c417d1792fa696fc5335e85e520368f284c3f5963703eb722379b3096"
+    },
+    {
+      "id": "warehouse-08",
+      "mode": "self-level",
+      "file": "warehouse-08-self-level.json",
+      "sha256": "686718e22987a354e7352a335edd29e22ba811736bedc6b5b11da390e2c138f8",
+      "bytes": 56599,
+      "proofBytes": 53408,
+      "courseSha256": "39648dc6c7f79108b99761f72a1873b569c482f983f322e6b517d62a9613c4c8",
+      "model": "civilian-world-fixed.v2",
+      "backend": "rapier3d-compat-0.21.0:02dc6a4e2fffc013bab08fbb44fa68f501d8303615e9afe4c7d89ad4eedda0d0",
+      "courseIdentity": "5194469ce22bf5fc",
+      "worldIdentity": "be8f97708c6c9ac6",
+      "responseIdentity": "f91eeb500cf8bc2d",
+      "rulesIdentity": "d15f82944bc6cf95",
+      "conditionsIdentity": "030d08b3879ad283",
+      "finalStateIdentity": "2e379faf2409bef2",
+      "status": "complete",
+      "ticks": 2918,
+      "durationSeconds": 58.36,
+      "health": 100,
+      "contacts": 0,
+      "heading": {
+        "movingSamples": 2017,
+        "medianDegrees": 1.4042371618248808,
+        "p95Degrees": 30.394541014435504,
+        "maxDegrees": 60.694074834290404,
+        "forwardDistancePercent": 100,
+        "alignedWithin45DistancePercent": 99.62,
+        "fastReverseTicks": 0
+      },
+      "sourceIdentity": "48d618aa4a97e0f4",
+      "proofSha256": "103b14a6005ad8cb832b2a90d467357cbd706d70d3375d0317f38029aa3deab5"
+    },
+    {
+      "id": "warehouse-08",
+      "mode": "acro",
+      "file": "warehouse-08-acro.json",
+      "sha256": "cddfea7a3b560105b09580a466105ef433bc7e970ce4471f27cbe8f29d5e5cc3",
+      "bytes": 54108,
+      "proofBytes": 50917,
+      "courseSha256": "39648dc6c7f79108b99761f72a1873b569c482f983f322e6b517d62a9613c4c8",
+      "model": "civilian-world-fixed.v2",
+      "backend": "rapier3d-compat-0.21.0:02dc6a4e2fffc013bab08fbb44fa68f501d8303615e9afe4c7d89ad4eedda0d0",
+      "courseIdentity": "5194469ce22bf5fc",
+      "worldIdentity": "be8f97708c6c9ac6",
+      "responseIdentity": "f91eeb500cf8bc2d",
+      "rulesIdentity": "d15f82944bc6cf95",
+      "conditionsIdentity": "030d08b3879ad283",
+      "finalStateIdentity": "2f8f89557acbeb08",
+      "status": "complete",
+      "ticks": 2932,
+      "durationSeconds": 58.64,
+      "health": 100,
+      "contacts": 0,
+      "heading": {
+        "movingSamples": 2033,
+        "medianDegrees": 1.7346433685914917,
+        "p95Degrees": 30.50999999999999,
+        "maxDegrees": 60.36493401088194,
+        "forwardDistancePercent": 100,
+        "alignedWithin45DistancePercent": 99.58,
+        "fastReverseTicks": 0
+      },
+      "sourceIdentity": "48d618aa4a97e0f4",
+      "proofSha256": "0d56cf12c6a9f21460c9f531901c59de01cdfddec204965c91e40365de110f4d"
+    }
+  ],
+  "generatorSha256": "65d86eee394d088770441522eccdb8c53567ae5cba2c47efc066dcd48eed691b",
+  "totalBytes": 768068,
+  "totalProofBytes": 717446,
+  "reproduction": {
+    "count": 16,
+    "result": "All sixteen complete course+proof artifact SHA256 hashes exactly reproduced by the installed repository-relative generator in a fresh Node process.",
+    "node": "v20.19.5"
+  },
+  "runtimeSourceHashes": [
+    {
+      "path": "optional-practice/civilian-fpv/world-catalogue.mjs",
+      "sha256": "7f76d8e1a713318f67bf147d486a6488768f44997b58999516402c492f8a17b5"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/model.mjs",
+      "sha256": "c8c562a61ecab4c1d6fdc60ec3ddc72a011b8a9a0c4c629450095103b0a976af"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/world-model.mjs",
+      "sha256": "348642a47e43f1cb621858d87d1584a7546c301230b4ac8ebf0707f29cc8b49a"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/world-collision.mjs",
+      "sha256": "2899c7c84f9eae14b9a3434f585a8e873f4a1361e8f3ce4026ef27f44bdeef32"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/math.mjs",
+      "sha256": "555c8b6ea170b46992133507d2a3d867f06185bca060239cab7db9c9b87f9f98"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/radio-profile.mjs",
+      "sha256": "75944a7c621d087618eae009b7daf3482cee4196df48f1843e540918eddb793a"
+    }
+  ],
+  "pilotingChoices": {
+    "gates": "Stage 4 m before each directed gate at centre height plus 0.9 m, settle within 0.45 m at speed below 0.8 m/s, then fly through toward a point 1.8 m beyond the plane. The extra height preserves separation from the physical pace rival.",
+    "warehouse07": "Return at 6.2 m over the moving hazard lanes and descend over the original landing pad.",
+    "limits": "Commands only; no courses, physics or rival paths altered; no combat steering. Browser evidence is reported separately below."
+  },
+  "format": "FPVWorldDemonstrationProvenance.v1",
+  "origin": "Original locally authored offline proportional/derivative command recorder; no third-party source or runtime autopilot.",
+  "runtimeModule": "optional-practice/civilian-fpv/world-demonstrations.mjs",
+  "runtimeModuleSha256": "9d84cf0d0ee6d237466a10031b144e937e910da7a77ea487e4b1aca6c4db6ec1",
+  "runtimeModuleRecordingCount": 48,
+  "runtimeModuleHashScope": "Snapshot at warehouse batch preparation. Later batches append records; per-proof hashes remain independently verifiable.",
+  "releaseQualified": false,
+  "previousProofsPreserved": {
+    "v1": 24,
+    "v2": 32,
+    "proofs": [
+      {
+        "id": "flight-01",
+        "mode": "self-level",
+        "sha256": "3ed2a52b4a597da21de599fe5989a8a3434749fd6754336503ea9619efff383b"
+      },
+      {
+        "id": "flight-01",
+        "mode": "acro",
+        "sha256": "cbe339c8db849d584a6bcc18ef2997c247d640b84cb9595dd6b6506d2bb1de43"
+      },
+      {
+        "id": "flight-02",
+        "mode": "self-level",
+        "sha256": "38bc8d1d2b52ea573fa262131b13ff721ea4011f878674cd7023c7c5cb1dbedf"
+      },
+      {
+        "id": "flight-02",
+        "mode": "acro",
+        "sha256": "0d47f0994382504aa8463afba49f3d93d69468e679050721c361f046eddd82e3"
+      },
+      {
+        "id": "flight-03",
+        "mode": "self-level",
+        "sha256": "ab58017440d3a6b74785c46a327d9b6e0e69821a1872538231eb1e7685b236ca"
+      },
+      {
+        "id": "flight-03",
+        "mode": "acro",
+        "sha256": "2ad55ff9b561850b4d9eb2e5f07ab2f2c73ff5ac8c7b79f6135c9b345f4e120b"
+      },
+      {
+        "id": "flight-04",
+        "mode": "self-level",
+        "sha256": "58745a84bb3cac5a4cb520edd2d24525807d5ae4c936f8a5e6926453108b55ea"
+      },
+      {
+        "id": "flight-04",
+        "mode": "acro",
+        "sha256": "aaabff64302f5a2ffa3c4e017c97de4292593b8c05ad22ff69e6230f339f40cc"
+      },
+      {
+        "id": "flight-05",
+        "mode": "self-level",
+        "sha256": "808797f792da7abb84faedf5f4406fbf520460bf0077988dfa81e23809e90daf"
+      },
+      {
+        "id": "flight-05",
+        "mode": "acro",
+        "sha256": "df9dd5fe940ca175de4e4d334e258ec45fb1e4b71577ca459cc69b2ec9e8674f"
+      },
+      {
+        "id": "flight-06",
+        "mode": "self-level",
+        "sha256": "fb7422e1b0e37f6e22f23a63433b07c5bb9d10819b28f82c2cdf0047632f6de2"
+      },
+      {
+        "id": "flight-06",
+        "mode": "acro",
+        "sha256": "4713720d38fbfde2caea5e489a82b3d740cb22b8e1f4788dde375d7fe742d0ac"
+      },
+      {
+        "id": "flight-07",
+        "mode": "self-level",
+        "sha256": "4c5afc4a064aad27e051d4bb744bf6e6ec2fad25636cfdb5c38dde0f89ccf37a"
+      },
+      {
+        "id": "flight-07",
+        "mode": "acro",
+        "sha256": "8423183c303621a51876807179f3e4c34a307b61f7976f66338e1b029b02aa81"
+      },
+      {
+        "id": "flight-08",
+        "mode": "self-level",
+        "sha256": "f04990c0921182c0f11f5a62445fec4759158a3a7082dcd065b5c828b376cdc1"
+      },
+      {
+        "id": "flight-08",
+        "mode": "acro",
+        "sha256": "ff8b31e6f4e81a363eb0630a776e50166babbd26f1199c4d0553972766f44f52"
+      },
+      {
+        "id": "flight-09",
+        "mode": "self-level",
+        "sha256": "42fdc87542197925b83474d031e44677314d32c5d7b784e24250b7553977036d"
+      },
+      {
+        "id": "flight-09",
+        "mode": "acro",
+        "sha256": "3658dd25e8c77c7826f74bb568db55db5929bfb50e135911c080073de02ab20d"
+      },
+      {
+        "id": "flight-10",
+        "mode": "self-level",
+        "sha256": "bfc18214357db7d50aaf4795e62c0e8ee21b6e6a482b5d49cf8b93bc0808fcc3"
+      },
+      {
+        "id": "flight-10",
+        "mode": "acro",
+        "sha256": "d4509e72e983fc3946ffd98b1d3d819369488531739d7083c2993274b0747e5b"
+      },
+      {
+        "id": "flight-11",
+        "mode": "self-level",
+        "sha256": "123fff0f89dedd2f683234cc6657a8a517726bab73df1e14aa484f2815b0a4e2"
+      },
+      {
+        "id": "flight-11",
+        "mode": "acro",
+        "sha256": "a04fddcc2757fcd1f62925b8cd3553ce0e577ea142d931386771e5f5020cdddf"
+      },
+      {
+        "id": "flight-12",
+        "mode": "self-level",
+        "sha256": "37617055d8c2d4179037fe3c5f3028a4aca627c5d86ced76898d615b92342c15"
+      },
+      {
+        "id": "flight-12",
+        "mode": "acro",
+        "sha256": "5010a05b8f23be9f2ea28897069f42b4d83dbca796373a4afac5eb0f13ca3d95"
+      },
+      {
+        "id": "woodland-01",
+        "mode": "self-level",
+        "sha256": "e3fa8c00f009b61cb147c6dcd12e60c837525c9d961da5b2cc8e21b985be7f85"
+      },
+      {
+        "id": "woodland-01",
+        "mode": "acro",
+        "sha256": "aa3abe1af6bebaf9804c860548dc14ee695da46b80d7e80ad400a72e0549b90e"
+      },
+      {
+        "id": "woodland-02",
+        "mode": "self-level",
+        "sha256": "a4e32f962ab214f0f5cdb1d22ce09b4145c76d27c9c4ebb12efe9aff40848276"
+      },
+      {
+        "id": "woodland-02",
+        "mode": "acro",
+        "sha256": "cc1e2565485f770f6d010ebe172f0d92ab58e03b37911b956c32656b60bccc28"
+      },
+      {
+        "id": "woodland-03",
+        "mode": "self-level",
+        "sha256": "791388ea478f7b838cc3e92800f41bbc6964153ab841c495f38796361a552067"
+      },
+      {
+        "id": "woodland-03",
+        "mode": "acro",
+        "sha256": "444ca01b2c66cb5211b231c26c91ec73c176025545965ee38c92be1eb6c4335a"
+      },
+      {
+        "id": "woodland-04",
+        "mode": "self-level",
+        "sha256": "f8eb42ff4135deabee9ceb087a4a409dc1414d1bbacbabd23f2f0b5e359f680b"
+      },
+      {
+        "id": "woodland-04",
+        "mode": "acro",
+        "sha256": "6a880dd931888d1cf71808253f9834d4304417e98b160cd9cba3295ab1ebb06b"
+      },
+      {
+        "id": "woodland-05",
+        "mode": "self-level",
+        "sha256": "1b0d263fa89832916bf5b5c474f2b118a670d5060afbfee20ada9a70b171bc32"
+      },
+      {
+        "id": "woodland-05",
+        "mode": "acro",
+        "sha256": "7c94bb9b2138517985a882a62ed8c104029b7ff4cd2f4dfa4cc0aaa7599e9ad6"
+      },
+      {
+        "id": "woodland-06",
+        "mode": "self-level",
+        "sha256": "132827a969119239ede2338cff07ef25a759ac273ba059d5767a8b7f664cae97"
+      },
+      {
+        "id": "woodland-06",
+        "mode": "acro",
+        "sha256": "4bc4d8b1922ef51752c4fa801e043ea3122c93fc6918f7a465efe0128dc4af6b"
+      },
+      {
+        "id": "woodland-07",
+        "mode": "self-level",
+        "sha256": "f2309bb8af886aeb4a0f3825b4d40e5bcde315f5195b83e450f76664c5f0ab6d"
+      },
+      {
+        "id": "woodland-07",
+        "mode": "acro",
+        "sha256": "8b8280184ad51c6a77fdaf718352f87b5a5f464089ee7bbe6b30883b43f04f05"
+      },
+      {
+        "id": "woodland-08",
+        "mode": "self-level",
+        "sha256": "4d204e25158e9a0ab981485c812d097cf580ec3b56f4fe3bfa84f646ead027bb"
+      },
+      {
+        "id": "woodland-08",
+        "mode": "acro",
+        "sha256": "a1e9d6d71d560cdf515182c4220522b1a9d27e1b872845ba87ec18e7723e581f"
+      },
+      {
+        "id": "courtyard-01",
+        "mode": "self-level",
+        "sha256": "804ccc00c49d11a91cd4d2bb452c5aa512f4c26f3a564d2a92aeaea84582fbb3"
+      },
+      {
+        "id": "courtyard-01",
+        "mode": "acro",
+        "sha256": "b0a1e1443300bcf3141f9c80417de5572a9ad21c85aa1bffec1faae619afa1fc"
+      },
+      {
+        "id": "courtyard-02",
+        "mode": "self-level",
+        "sha256": "30ab5704b1730fe39bbfb1f5546ad1a81a19a0f35fecef9f0710c0535a03b5d3"
+      },
+      {
+        "id": "courtyard-02",
+        "mode": "acro",
+        "sha256": "3bb23e05442c0fa5634c670a37bb334cae7ce1fca8f3151038c35edd6950ec16"
+      },
+      {
+        "id": "courtyard-03",
+        "mode": "self-level",
+        "sha256": "cec8f6de42f1ed8371810eb43cc4a262b009449768f523be8b87abd64140de2d"
+      },
+      {
+        "id": "courtyard-03",
+        "mode": "acro",
+        "sha256": "fa5d3291399f9cf4cef8715bdd8ed6535965ff941b16ef1e367bfca246ae700f"
+      },
+      {
+        "id": "courtyard-04",
+        "mode": "self-level",
+        "sha256": "780eff5f9aaaa1806919578a80ab4f0635bdbeccbd3d83a9d38f7b954c6ff770"
+      },
+      {
+        "id": "courtyard-04",
+        "mode": "acro",
+        "sha256": "1281af3d54e3393948e4dba4f2061a7af5d028bc9b8f8ac1747df99177c64eff"
+      },
+      {
+        "id": "courtyard-05",
+        "mode": "self-level",
+        "sha256": "521930d222deb4ff1898d8110b0ececd1d4459e158ce0d3b1aff6f7a948b1e9d"
+      },
+      {
+        "id": "courtyard-05",
+        "mode": "acro",
+        "sha256": "1c2d4fd9dba7361d9de4cbe256b69d9bc51dea93697b5e6dfef808f514bf4194"
+      },
+      {
+        "id": "courtyard-06",
+        "mode": "self-level",
+        "sha256": "5d898b91ef6ae2bec17dc6c445d3ae17b4ca01947616a0898bf309843d0ed30f"
+      },
+      {
+        "id": "courtyard-06",
+        "mode": "acro",
+        "sha256": "6bd3f3b0d931f34ba62e1645c27017ea4c2e896af60ed24bd24144177ee0a15d"
+      },
+      {
+        "id": "courtyard-07",
+        "mode": "self-level",
+        "sha256": "b642c1457100cfae8f42e6adce232e77e22edda19caf780a5a9207573bf60cd7"
+      },
+      {
+        "id": "courtyard-07",
+        "mode": "acro",
+        "sha256": "6afd5ea8f56d22efde2ad94b03df8d778441fd0bddffdaaaa688b0aded6f15ed"
+      },
+      {
+        "id": "courtyard-08",
+        "mode": "self-level",
+        "sha256": "462a9e5ca8fe561b7892d4462dedb67593bfce8104bb50560ca890215ec87b83"
+      },
+      {
+        "id": "courtyard-08",
+        "mode": "acro",
+        "sha256": "49f581cba7bfcc37420177214aeabfc4eb39a37c2ff69184be78a9a2179d1e8a"
+      }
+    ]
+  },
+  "browserVerification": {
+    "date": "2026-10-01",
+    "browser": "Chromium (installed Chrome channel) 154.0.8037.93, Playwright walkthrough",
+    "newProofsReplayed": 16,
+    "replays": [
+      {
+        "id": "warehouse-01",
+        "mode": "self-level",
+        "status": "complete",
+        "ticks": 1210,
+        "contacts": 0,
+        "health": 100,
+        "sectors": 3
+      },
+      {
+        "id": "warehouse-01",
+        "mode": "acro",
+        "status": "complete",
+        "ticks": 1210,
+        "contacts": 0,
+        "health": 100,
+        "sectors": 3
+      },
+      {
+        "id": "warehouse-02",
+        "mode": "self-level",
+        "status": "complete",
+        "ticks": 2405,
+        "contacts": 0,
+        "health": 100,
+        "sectors": 5
+      },
+      {
+        "id": "warehouse-02",
+        "mode": "acro",
+        "status": "complete",
+        "ticks": 2421,
+        "contacts": 0,
+        "health": 100,
+        "sectors": 5
+      },
+      {
+        "id": "warehouse-03",
+        "mode": "self-level",
+        "status": "complete",
+        "ticks": 2786,
+        "contacts": 0,
+        "health": 100,
+        "sectors": 5
+      },
+      {
+        "id": "warehouse-03",
+        "mode": "acro",
+        "status": "complete",
+        "ticks": 2794,
+        "contacts": 0,
+        "health": 100,
+        "sectors": 5
+      },
+      {
+        "id": "warehouse-04",
+        "mode": "self-level",
+        "status": "complete",
+        "ticks": 2538,
+        "contacts": 0,
+        "health": 100,
+        "sectors": 6
+      },
+      {
+        "id": "warehouse-04",
+        "mode": "acro",
+        "status": "complete",
+        "ticks": 2546,
+        "contacts": 0,
+        "health": 100,
+        "sectors": 6
+      },
+      {
+        "id": "warehouse-05",
+        "mode": "self-level",
+        "status": "complete",
+        "ticks": 2823,
+        "contacts": 0,
+        "health": 100,
+        "sectors": 5
+      },
+      {
+        "id": "warehouse-05",
+        "mode": "acro",
+        "status": "complete",
+        "ticks": 2832,
+        "contacts": 0,
+        "health": 100,
+        "sectors": 5
+      },
+      {
+        "id": "warehouse-06",
+        "mode": "self-level",
+        "status": "complete",
+        "ticks": 2984,
+        "contacts": 0,
+        "health": 100,
+        "sectors": 4
+      },
+      {
+        "id": "warehouse-06",
+        "mode": "acro",
+        "status": "complete",
+        "ticks": 2994,
+        "contacts": 0,
+        "health": 100,
+        "sectors": 4
+      },
+      {
+        "id": "warehouse-07",
+        "mode": "self-level",
+        "status": "complete",
+        "ticks": 2602,
+        "contacts": 0,
+        "health": 100,
+        "sectors": 4
+      },
+      {
+        "id": "warehouse-07",
+        "mode": "acro",
+        "status": "complete",
+        "ticks": 2608,
+        "contacts": 0,
+        "health": 100,
+        "sectors": 4
+      },
+      {
+        "id": "warehouse-08",
+        "mode": "self-level",
+        "status": "complete",
+        "ticks": 2918,
+        "contacts": 0,
+        "health": 100,
+        "sectors": 6
+      },
+      {
+        "id": "warehouse-08",
+        "mode": "acro",
+        "status": "complete",
+        "ticks": 2932,
+        "contacts": 0,
+        "health": 100,
+        "sectors": 6
+      }
+    ],
+    "allComplete": true,
+    "exampleLinks": 36,
+    "coverage": "72 recorded examples cover all 36 Academy, Woodland Park, Ukrainian Courtyard and Warehouse challenges in both modes. Examples for the remaining worlds are still in production.",
+    "uncoveredWorldExampleLinks": 0,
+    "completedPlayback": {
+      "id": "warehouse-02",
+      "ticks": 2405,
+      "status": "complete"
+    },
+    "restart": true,
+    "modeSwitch": true,
+    "halfSpeed": {
+      "before": 2,
+      "after": 14,
+      "replay": {
+        "kind": "demonstration",
+        "mode": "acro",
+        "rate": 0.5,
+        "frames": 2421,
+        "finished": false
+      }
+    },
+    "returnToDisarmedPractice": true,
+    "finalBuildVisuallyInspected": ["warehouse-02", "warehouse-04"],
+    "views": ["fpv", "chase"],
+    "visualFindings": [
+      "Central aisle: next gate marker and pace rival remain visible; the recorded drone stages above the rival flight line without contact.",
+      "Beam circuit: the drone slows to turn toward the orthogonal gate; the numbered target remains visible during the turn."
+    ],
+    "recordCountAfterPlayback": 0,
+    "offlineReload": true,
+    "offlineExampleLinks": 36,
+    "offlineCompleted": {
+      "id": "warehouse-01",
+      "ticks": 1210,
+      "status": "complete",
+      "recordCount": 0
+    },
+    "ukrainianMobile": {
+      "width": 390,
+      "scroll": 390,
+      "coverage": "72 записані приклади охоплюють усі 36 завдань Академії, Лісопарку, Українського подвір’я та Складу в обох режимах. Приклади для решти світів ще готуються."
+    },
+    "mobileFlight": {
+      "width": 390,
+      "scroll": 390,
+      "dialogWidth": 380,
+      "dialogScroll": 380,
+      "label": "ДЕМОНСТРАЦІЯ СВІТУ",
+      "status": "Відтворення на паузі. Натисніть «Продовжити»."
+    },
+    "javascriptErrors": [],
+    "unitCoverage": "deferred-to-final-phase",
+    "physicalDevicePerformanceQualified": false,
+    "build": {
+      "format": "FPVPlaytestBuild.v1",
+      "entry": "optional-practice/fpv-worlds/index.html",
+      "files": 75,
+      "bytes": 10900786,
+      "zipSha256": "5e9336a76edefbcd54028764efb11b8eb7f867f322127e85aa320dd28a49a20d",
+      "qualification": "development-playtest",
+      "unitTests": "deferred-to-final-phase",
+      "releaseQualified": false
+    }
+  }
+}
