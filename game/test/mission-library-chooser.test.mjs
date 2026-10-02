@@ -106,6 +106,78 @@ function setup(sources, options = {}) {
   return { doc, library, chooser, opener, $: (id) => doc.getElementById(id) };
 }
 
+test('Random level launches a ready alternative from the visible mission results', async () => {
+  let launched = null;
+  const source = owner({
+    entries: [
+      { ...row('current'), name: 'Current line' },
+      { ...row('alternative'), name: 'Alternative line' },
+      { ...row('last'), name: 'Last line' },
+    ],
+    launch: (entry) => {
+      launched = entry.id;
+      return true;
+    },
+  });
+  const current = createMissionLibrary([source]).missions[0];
+  const h = setup([source], {
+    getCurrentId: () => current.id,
+    random: () => 0,
+  });
+
+  assert.equal(h.$('journey-random-level').textContent, 'Random level');
+  assert.equal(h.$('journey-random-level').disabled, false);
+  h.$('journey-random-level').click();
+  await tick();
+
+  assert.equal(launched, 'alternative', 'the current level is excluded when another is ready');
+  assert.equal(h.$('journey-chooser').open, false);
+  h.chooser.destroy();
+});
+
+test('Random level respects visible filters, while the Pause action resets to current host levels', async () => {
+  const launches = [];
+  const sources = [
+    owner({
+      entries: [
+        { ...row('solo-one', ['solo']), name: 'Solo one' },
+        { ...row('solo-two', ['solo']), name: 'Solo two' },
+      ],
+      launch: (entry) => {
+        launches.push(entry.id);
+        return true;
+      },
+    }),
+    owner({
+      id: 'team-owner',
+      entries: [{ ...row('team-only', ['team']), name: 'Team only' }],
+      launch: (entry) => {
+        launches.push(entry.id);
+        return true;
+      },
+    }),
+  ];
+  const filtered = setup(sources, { random: () => 0 });
+  filtered.$('journey-search').value = 'Solo two';
+  filtered.$('journey-search').emit('input');
+  filtered.$('journey-random-level').click();
+  await tick();
+  assert.deepEqual(launches, ['solo-two']);
+  filtered.chooser.destroy();
+
+  const pause = setup(sources, {
+    random: () => 0,
+    readState: () => ({ mode: 'team', search: 'no result' }),
+  });
+  assert.equal(pause.$('journey-cards').children.length, 0);
+  assert.equal(pause.chooser.playRandom({ resetFilters: true }), true);
+  await tick();
+  assert.deepEqual(launches, ['solo-two', 'solo-one']);
+  assert.equal(pause.chooser.state().mode, 'solo');
+  assert.equal(pause.chooser.state().search, '');
+  pause.chooser.destroy();
+});
+
 test('Archive is explicit, retains exact launch ownership and reveals a saved historical mission', async () => {
   let launched;
   const archivedOwner = owner({
@@ -354,6 +426,35 @@ test('viewport reflow preserves the visible anchor without scrolling the focused
   f.chooser.destroy();
   assert.equal(f.view.listeners.get('resize')?.size, 0);
   assert.equal(f.view.listeners.get('blur')?.size, 0);
+});
+
+test('coalesced resize signals retain the pre-reflow anchor through layout scroll events', () => {
+  const f = resizeFixture(),
+    list = f.$('journey-cards'),
+    first = list.children[0],
+    second = list.children[1],
+    beforeFirstScroll = first.scrolled ?? 0,
+    beforeSecondScroll = second.scrolled ?? 0;
+  list._rect = { x: 0, y: 100, width: 320, height: 240 };
+  first._rect = { x: 0, y: 112, width: 150, height: 155 };
+  second._rect = { x: 0, y: 280, width: 150, height: 155 };
+  list.scrollTop = 96;
+  list.emit('scroll');
+
+  f.view.emit('resize');
+  assert.equal(f.frames.size, 1);
+  first._rect.y = -200;
+  second._rect.y = 110;
+  list.scrollTop = 999;
+  list.emit('scroll');
+  f.media.emit('change', { matches: true });
+  assert.equal(f.frames.size, 1, 'A later media signal replaces only the queued frame.');
+
+  f.frame();
+  assert.equal(list.scrollTop, 687, 'The original first-card offset wins over reflow scrolling.');
+  assert.equal(first.scrolled ?? 0, beforeFirstScroll);
+  assert.equal(second.scrolled ?? 0, beforeSecondScroll);
+  f.chooser.destroy();
 });
 
 test('phone viewport and rotation matrix retains the exact top mission, offset and focus', () => {
@@ -786,6 +887,19 @@ test('mission cards expose structured current, completion and availability state
   assert.equal(earned.dataset.bestStars, '2');
   assert.equal(download.dataset.availabilityState, 'download');
   assert.match(download.querySelector('.journey-card-action').textContent, /Download & play/);
+  chooser.destroy();
+});
+
+test('included bundled missions prepare on activation without a download badge', () => {
+  const source = owner({
+    entries: [row('included')],
+    availability: () => ({ state: 'download', bytes: 2048, included: true }),
+  });
+  const { $, chooser } = setup([source]);
+  const card = $('journey-cards').children[0];
+  assert.equal(card.dataset.availabilityState, 'included');
+  assert.equal(card.querySelector('.journey-card-action').hidden, true);
+  assert.equal(card.querySelector('.journey-card-action').textContent, '');
   chooser.destroy();
 });
 

@@ -2305,6 +2305,8 @@ try {
     }
   };
   $('race-journey-next').onclick = () => continueMission();
+  $('race-journey-random').onclick = () =>
+    openMissionLibrary($('race-journey-random'), { random: true });
   $('race-journey-find').onclick = () => openMissionLibrary($('race-journey-find'));
   if (!candidateJourney) {
     $('race-journey-difficulty-field').hidden = false;
@@ -3393,7 +3395,7 @@ try {
       missionLibraryLoading = null;
     }
   }
-  async function openMissionLibrary(opener) {
+  async function openMissionLibrary(opener, { random = false } = {}) {
     if (disposed || contentBusy || document.hidden || !document.hasFocus()) return;
     const visit = ++libraryOpenEpoch;
     pause();
@@ -3422,6 +3424,7 @@ try {
       opening.dispose();
       if (visit !== libraryOpenEpoch || !openingCurrent || !context.isCurrent()) return;
       journeyChooser.open(opener, { returnLabel: 'Back to race' });
+      if (random) journeyChooser.playRandom({ resetFilters: true });
     } catch (error) {
       if (visit === libraryOpenEpoch && context.isCurrent())
         localizedText($('race-message'), () =>
@@ -3766,6 +3769,7 @@ try {
     $('race-journey-controls').hidden = !!shell && shell.scope() !== 'main' && !running;
     $('race-journey-next').hidden = match.status !== 'finished' || libraryCompleteMatch === match;
     $('race-journey-next').disabled = contentBusy || !!libraryContinuation;
+    $('race-journey-random').disabled = contentBusy || !!libraryContinuation;
     localizedText($('race-journey-next'), () => {
       if (!candidateJourney?.owns(roundRecipe.entry)) return t('interface:nextMission2');
       const current = roundRecipe.entry.mission,

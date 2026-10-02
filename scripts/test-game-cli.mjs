@@ -167,6 +167,11 @@ test('real Git snapshot runs an older frozen entry through an aliased temp root 
     path.join(root, 'game/content/soundtrack-catalogue.mjs'),
     'export const SOUNDTRACK_BUNDLED_ASSETS = [];\n',
   );
+  await fs.mkdir(path.join(root, 'game/mission-library'), { recursive: true });
+  await fs.writeFile(
+    path.join(root, 'game/mission-library/included-bundled-pack.mjs'),
+    'export function isIncludedBundledMission() { return false; }\n',
+  );
   await fs.mkdir(path.join(root, 'game/i18n'), { recursive: true });
   await fs.writeFile(
     path.join(root, 'game/i18n/index.mjs'),
@@ -181,6 +186,10 @@ test('real Git snapshot runs an older frozen entry through an aliased temp root 
     'game/content-launch.mjs',
   ])
     await fs.copyFile(new URL(`../${relative}`, import.meta.url), path.join(root, relative));
+  await fs.writeFile(
+    path.join(root, 'scripts/offline-core-closure.mjs'),
+    'export function isOptionalSpatialAudioBody() { return false; }\n',
+  );
   // Retain the historical argv/URL guard in the archived entry. The real build
   // implementation runs behind it, so fixing only the current entry guard would
   // still fail this old-revision snapshot when TMPDIR contains a symlink.
@@ -1023,14 +1032,11 @@ test('public package has local entry, accurate storage notices and enforced prev
       .split(';')
       .find((value) => value.trim().startsWith('connect-src'))
       .trim(),
-    "connect-src 'self' https://mekhovov.github.io/revealline-soundtracks/",
-    'Local preview fetches may reach only the code-admitted soundtrack archive path.',
+    "connect-src 'self' https:",
+    'Optional sources require HTTPS catalogue access in packaged previews; the manager gates user-selected sources.',
   );
   assert.match(PUBLIC_SECURITY_HEADERS['Content-Security-Policy'], /connect-src 'self';/);
-  assert.match(
-    release.headers['content-security-policy'],
-    /media-src 'self' data: blob: https:\/\/github\.com https:\/\/release-assets\.githubusercontent\.com/,
-  );
+  assert.match(release.headers['content-security-policy'], /media-src 'self' data: blob: https:;/);
   assert.equal(release.headers['referrer-policy'], 'no-referrer');
   assert.equal(release.headers['cache-control'], 'no-cache');
   const entry = await getRaw(releaseServer.url, '/');

@@ -1,4 +1,3 @@
-import { campaignVictoryMotif } from '../journey/campaign-feedback.mjs';
 import { playerMovementBody } from './movement-profiles.mjs';
 import { getLocale } from '../i18n/index.mjs';
 import { CELL, DIRECTIONS } from '../core/registry.mjs';
@@ -17,10 +16,12 @@ import { terrainTransitionCaption } from './terrain-feedback.mjs';
 
 /** Owns only presentation objects. Decoding never schedules an old event. */
 export class FeedbackDirector {
-  constructor(sound) {
+  constructor(sound, { now = () => performance.now() } = {}) {
     this.sound = sound;
     this.buffers = new Map();
     this.pending = new Map();
+    this.retryAfter = new Map();
+    this.now = now;
     this.boards = new Map();
     this.seen = new WeakMap();
     this.serial = 0;
@@ -31,10 +32,13 @@ export class FeedbackDirector {
   }
   prepare() {
     if (!this.sound.context || this.closed || typeof globalThis.fetch !== 'function') return;
+    // Explicit audio activation may follow installation or reconnection.
+    this.retryAfter.clear();
     for (const name of Object.keys(EFFECT_BANK)) this.load(name);
   }
   load(name) {
     if (this.closed || this.buffers.has(name) || this.pending.has(name)) return;
+    if (this.now() < (this.retryAfter.get(name) ?? -Infinity)) return;
     const entry = EFFECT_BANK[name];
     if (!entry) return;
     const promise = (async () => {
@@ -48,7 +52,12 @@ export class FeedbackDirector {
       if (!this.closed && context === this.sound.context) this.buffers.set(name, buffer);
     })()
       .catch(() => {})
-      .finally(() => this.pending.delete(name));
+      .finally(() => {
+        this.pending.delete(name);
+        // Optional offline recordings may be absent. Do not retry each render frame.
+        if (!this.closed && !this.buffers.has(name)) this.retryAfter.set(name, this.now() + 5000);
+        else this.retryAfter.delete(name);
+      });
     this.pending.set(name, promise);
   }
   play(
@@ -206,7 +215,11 @@ export class FeedbackDirector {
       if (options.mode === 'versus' && event.type === 'run.completed') return;
       seen.add(key);
       if (seen.size > 512) seen.delete(seen.values().next().value);
-      if (event.type === 'run.completed' && campaignVictoryMotif(options.resultContext)) {
+      if (event.type === 'run.completed' && event.won !== false && event.status !== 'lost') {
+        // One victory owner, whether samples have decoded yet or not. This
+        // preserves published cues and campaign phrases while giving every
+        // ordinary win the same soft, audio-clocked picture reveal resolution.
+        for (const voice of [...this.sound.voices]) if (voice.radio) voice.stop();
         this.sound.event?.(event, {}, options.resultContext);
         return;
       }
@@ -521,5 +534,6 @@ export class FeedbackDirector {
     this.closed = true;
     this.reset();
     this.buffers.clear();
+    this.retryAfter.clear();
   }
 }

@@ -119,12 +119,16 @@ test('same events deduplicate within a run but not across boards; victory supers
   director.events(events, b, {}, { board: 1 });
   assert.equal(sound.voices.size, count * 2);
   director.reset();
+  const victories = [];
+  sound.event = (event) => victories.push(event);
   director.events(
     [...events, { type: 'cut.closed', tick: 1 }, { type: 'run.completed', tick: 1, status: 'won' }],
     a,
     {},
   );
-  assert.equal(sound.voices.size, 1);
+  assert.equal(sound.voices.size, 0);
+  assert.equal(victories.length, 1);
+  assert.equal(victories[0].type, 'run.completed');
 });
 test('enemy movement survives repeated render frames and stops on freeze and pause', () => {
   const { director, sound } = harness(),
@@ -653,4 +657,67 @@ test('owned campaign ending replaces capture and default victory once in every h
     assert.equal(calls[0][2], resultContext);
     assert.deepEqual(cues, []);
   }
+});
+
+for (const failure of ['http', 'network', 'decode', 'truncated'])
+  test(`${failure}: unavailable recordings back off and recover only for a fresh cue`, async (t) => {
+    const { sound } = harness();
+    let now = 0,
+      requests = 0,
+      available = false;
+    const director = new FeedbackDirector(sound, { now: () => now });
+    t.mock.method(globalThis, 'fetch', async () => {
+      requests++;
+      if (!available && failure === 'network') throw new Error('Offline');
+      return {
+        ok: available || failure !== 'http',
+        arrayBuffer: async () =>
+          new ArrayBuffer(!available && failure === 'truncated' ? 4 : EFFECT_BANK.rotor.bytes),
+      };
+    });
+    sound.context.decodeAudioData = async () => {
+      if (!available && failure === 'decode') throw new Error('Unsupported audio');
+      return { duration: 6 };
+    };
+    for (let frame = 0; frame < 120; frame++) {
+      director.play('rotor', { loop: true, movement: true });
+      await Promise.all(director.pending.values());
+      now += 1000 / 60;
+    }
+    assert.equal(requests, 1, 'Missing optional WAV must not fetch once per render frame.');
+    assert.equal(sound.voices.size, 0);
+    available = true;
+    now = 5001;
+    assert.equal(director.play('rotor', { loop: true, movement: true }), null);
+    await Promise.all(director.pending.values());
+    assert.equal(requests, 2);
+    assert.equal(sound.voices.size, 0, 'Recovery does not replay the old request.');
+    assert.ok(director.play('rotor', { loop: true, movement: true }));
+    director.close();
+  });
+
+test('explicit activation retries after installing a missing sound pack; closing retires retries', async (t) => {
+  const { director, sound } = harness();
+  director.buffers.delete('warning');
+  director.now = () => 0;
+  let requests = 0,
+    available = false;
+  t.mock.method(globalThis, 'fetch', async () => {
+    requests++;
+    return { ok: available, arrayBuffer: async () => new ArrayBuffer(EFFECT_BANK.warning.bytes) };
+  });
+  sound.context.decodeAudioData = async () => ({ duration: 1 });
+  director.play('warning');
+  await Promise.all(director.pending.values());
+  available = true;
+  director.prepare();
+  await Promise.all(director.pending.values());
+  assert.equal(requests, 2, 'Activation retries without waiting for the frame cooldown.');
+  assert.equal(sound.voices.size, 0);
+  assert.ok(director.play('warning'));
+  director.close();
+  director.prepare();
+  director.play('warning');
+  assert.equal(requests, 2);
+  assert.equal(director.retryAfter.size, 0);
 });

@@ -1,0 +1,27 @@
+{
+  "format": "revealline-practice-description.v1",
+  "id": "civilian-fpv",
+  "support": "https://github.com/mekhovov/revealline/issues",
+  "changelog": {
+    "en": "Initial directory release: localized launcher, offline verification, and player guide.",
+    "uk": "Перший випуск каталогу: локалізований запуск, перевірка офлайн і посібник гравця."
+  },
+  "copy": {
+    "en": {
+      "name": "FPV Flight Studio",
+      "description": "Focused flight lessons with self-level and Acro practice.",
+      "purpose": "Learn throttle, orientation and precise flight.",
+      "inputs": "Keyboard, touch or calibrated controller",
+      "requirements": "WebGL graphics required to fly",
+      "firstFlight": "Choose a drill and input source, watch its example, then start a fresh attempt and arm. Open the app’s controls guide for your current bindings."
+    },
+    "uk": {
+      "name": "Студія FPV-польотів",
+      "description": "Короткі льотні уроки з практикою самовирівнювання та Acro.",
+      "purpose": "Вивчайте газ, орієнтування та точний політ.",
+      "inputs": "Клавіатура, дотик або відкалібрований контролер",
+      "requirements": "Для польотів потрібна графіка WebGL",
+      "firstFlight": "Оберіть вправу й джерело керування, перегляньте приклад, почніть нову спробу та активуйте двигуни. Поточні прив’язки наведено в довідці застосунку."
+    }
+  }
+}

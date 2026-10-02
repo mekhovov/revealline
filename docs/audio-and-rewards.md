@@ -1,6 +1,6 @@
 # Original sound and picture rewards
 
-The game now generates five original music styles with Web Audio and gives each of the four world families a distinct, skippable picture celebration. It imports no music files, recorded samples, copyrighted riffs or artist-specific melodies. The arrangements use authored oscillator/noise voices and deterministic composition rules; pack descriptors select their genre, tempo, tonic and scale. The style names describe intended timbre and rhythm, not a claim that synthesized guitar is a recorded band.
+The game now generates five original music styles with Web Audio and gives each of the four world families a palette-matched, skippable confetti celebration. It imports no music files, recorded samples, copyrighted riffs or artist-specific melodies. The arrangements use authored oscillator/noise voices and deterministic composition rules; pack descriptors select their genre, tempo, tonic and scale. The style names describe intended timbre and rhythm, not a claim that synthesized guitar is a recorded band.
 
 The implementation is in `game/ui/audio.mjs`, `music.mjs`, `celebration.mjs`, `scene-art.mjs` and `render.mjs`. Simulation, input latency, score, collision, progression and replay identity do not depend on these presentation modules.
 
@@ -57,20 +57,15 @@ When restoring a profile with sound disabled, call `disable()` rather than toggl
 
 Music uses the audio clock with a 120 ms look-ahead and at most four score steps per update. A long scheduling gap restarts at the current clock instead of queuing missed beats. There is no background interval. Voices stop at authored envelope ends, disconnect after ending, and are capped at 64. Repeated effect bursts are coalesced; disabling sound, pausing, resetting or disposing removes scheduled voices. A quarter-second locally generated noise buffer supplies percussion. These are resource bounds, not a measured guarantee about every phone or browser.
 
-Tension reads live-cut state, trail length, one remaining life and boss warning/active state. It changes percussion density and note emphasis while leaving the track tempo and all gameplay state untouched. Failure uses a descending cue; victory uses an ascending phrase and sustained resolution. Heritage, retro and spend-network families vary the ending phrase or voice.
+Tension reads live-cut state, trail length, one remaining life and boss warning/active state. It changes percussion density and note emphasis while leaving the track tempo and all gameplay state untouched. Failure uses a descending cue. Picture victory uses a six-note phrase of soft sine chimes with quiet octave partials, followed by a warm sine-chord bloom; the ending releases after about 2.3 seconds. The fifteen scheduled voices use gentle attacks and exponential tails on the existing effects bus, with no percussion, square-wave fanfare or extra audio context. Heritage and spend-network families and accepted campaign feedback retain their distinctive phrases. All ordinary wins take this same path even after the sample bank has loaded; explicitly published victory audio still takes priority. Repeated result frames do not replay the cue, and mute, effects volume, pause, reset and disposal retain their existing control over the ending.
 
 ## Completed-picture animation
 
-The normal finale lasts 3.8 presentation seconds: a 0.85-second reveal opening, a short celebration, then a fade to the unobstructed image. These are new authored timings, not measurements copied from XPOSED Reloaded. Gameplay is already terminal and receives no extra ticks or rewards during this sequence.
+The normal finale lasts 3.8 presentation seconds: a 0.85-second reveal opening, a tiny 1.4% picture arrival ease over 1.35 seconds, then tumbling paper confetti that fades away. Gameplay is already terminal and receives no extra ticks or rewards during this sequence. All world families use the same gentle paper motion with their own palette; equipment silhouettes, smoke and radial explosions have been removed.
 
-| World | Finale |
-| --- | --- |
-| FPV Front | Small fictional equipment silhouettes dissolve into bounded smoke blocks and sparks; no people or graphic violence |
-| Ukraine Atlas | Cross-stitch motifs and a flower-like bloom spread around the picture |
-| 1994 Forever | Four staggered pixel fireworks with neon colors |
-| Spend Network | Connected cards, check marks and converging light nodes |
+The completed Solo picture fills the available game view with its original aspect ratio. Both Journey and ordinary campaigns stay on that picture indefinitely. The brief victory caption fades away and **Continue** opens results only when the player chooses it. **Keep picture** skips the effects without opening a menu. Returning through **View picture** keeps the exact earned artwork and does not repeat its celebration or award progress again.
 
-There is no full-screen white flash. At most 76 small particles plus three temporary equipment marks are generated. `Skip` immediately leaves the clear picture. Reduced effects bypasses moving particles and the reveal animation entirely. The finale has its own pause flag so a terminal game pause does not accidentally freeze it, while a hidden page/dialog can freeze the presentation deliberately.
+There is no full-screen flash or continuous zoom. At most 72 paper pieces and eight small edge glints are drawn, clipped to the board. Reduced effects immediately shows the still picture, without particles or scaling. The finale has its own pause flag so a terminal game pause does not accidentally freeze it, while a hidden page/dialog freezes the presentation deliberately. Sound remains governed by the existing sound/effects settings.
 
 ```js
 painter.setLevel(level, {seed}); // stable new picture, clears the previous finale

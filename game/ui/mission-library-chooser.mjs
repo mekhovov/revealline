@@ -57,6 +57,7 @@ export function attachMissionLibraryChooser({
   availableCollectionsOnly = false,
   goalPreferenceOptions = {},
   description = localizedMessage('interface:allMissionsOneLibraryJourneyClassicAndCustomKeepTheir'),
+  random = Math.random,
 }) {
   if (
     !Array.isArray(supportedModes) ||
@@ -64,6 +65,7 @@ export function attachMissionLibraryChooser({
     supportedModes.some((value) => !LIBRARY_MODES.includes(value))
   )
     throw new TypeError(t('interface:unknownMissionLibraryMode'));
+  if (typeof random !== 'function') throw new TypeError('A random number source is required.');
   const modes = [...new Set(supportedModes)];
   const collections = () =>
     availableCollectionsOnly
@@ -192,10 +194,19 @@ export function attachMissionLibraryChooser({
   list.className = 'journey-cards';
   const footer = node('div');
   footer.className = 'journey-footer';
+  const randomLevel = node(
+    'button',
+    'journey-random-level',
+    localizedMessage('interface:randomLevel'),
+  );
+  randomLevel.type = 'button';
+  randomLevel.className = 'button primary';
+  randomLevel.setAttribute('aria-controls', 'journey-cards');
+  localizedAttribute(randomLevel, 'title', () => t('interface:playRandomLevelFromVisibleResults'));
   const back = node('button', 'journey-back', localizedMessage('common:navigation.backToGame'));
   back.type = 'button';
   back.className = 'button secondary';
-  footer.append(back);
+  footer.append(randomLevel, back);
   dialog.append(heading, copy, filters, status, campaignRail, list, footer);
   doc.body.append(dialog);
   const cards = new Map(),
@@ -210,6 +221,7 @@ export function attachMissionLibraryChooser({
     destroyed = false,
     restoringCardFocus = false,
     resizeFrame = null,
+    resizeAnchor = null,
     viewportAnchor = null,
     message = '';
   let goal = null;
@@ -559,6 +571,56 @@ export function attachMissionLibraryChooser({
       }
     }
   }
+  function readyRandomRows() {
+    return library
+      .search(search.value || '', {
+        mode: modeFilter.value,
+        collection: collection.value,
+        lifecycle: lifecycle.value,
+      })
+      .filter((row) => library.availability(row, modeFilter.value).state === 'ready');
+  }
+  function playRandom({ resetFilters = false } = {}) {
+    if (destroyed || !dialog.open || doc.hidden || doc.hasFocus?.() === false) return false;
+    retirePendingSelection();
+    retirePreparations();
+    if (resetFilters) {
+      ++visit;
+      message = '';
+      search.value = '';
+      collection.value = '';
+      lifecycle.value = 'current';
+      modeFilter.value = mode;
+      selectedId = '';
+      savedScroll = 0;
+      list.scrollTop = 0;
+      pendingCampaign = '';
+      rebuildCampaigns();
+      invalidateDiagrams();
+      render();
+      remember({ captureFocus: false });
+    }
+    const ready = readyRandomRows();
+    const alternatives = ready.filter((row) => row.id !== getCurrentId());
+    const choices = alternatives.length ? alternatives : ready;
+    if (!choices.length) {
+      message = localizedMessage('interface:noReadyLevelsMatchTheseFilters');
+      render();
+      return false;
+    }
+    const draw = Number(random());
+    const bounded = Number.isFinite(draw) ? Math.min(Math.max(draw, 0), 1 - Number.EPSILON) : 0;
+    const row = choices[Math.floor(bounded * choices.length)];
+    const button = cards.get(row.id)?.button;
+    if (!button || button.disabled || !list.contains(button)) {
+      message = localizedMessage('interface:noReadyLevelsMatchTheseFilters');
+      render();
+      return false;
+    }
+    selectedId = row.id;
+    void activate(row, button);
+    return true;
+  }
   function makeCard(row) {
     const view = createLevelCardView({
       document: doc,
@@ -652,6 +714,9 @@ export function attachMissionLibraryChooser({
     // Campaigns are navigation anchors, never a hidden second filter. Every
     // matching campaign remains in this one scroll surface.
     const matches = railRows;
+    randomLevel.disabled = !matches.some(
+      (row) => library.availability(row, modeFilter.value).state === 'ready',
+    );
     localizedText(
       status,
       () =>
@@ -749,7 +814,9 @@ export function attachMissionLibraryChooser({
       card.completion = library.completion(row, modeFilter.value);
       card.button.dataset.campaignKey = row.campaignKey;
       card.button.dataset.campaignStart = String(previousCampaign !== row.campaignKey);
-      card.button.dataset.availabilityState = availability.state;
+      card.button.dataset.availabilityState = availability.included
+        ? 'included'
+        : availability.state;
       card.button.dataset.pictureState = card.completion?.state ?? 'unfinished';
       card.button.dataset.current = String(row.id === getCurrentId());
       card.campaignHeading.hidden = previousCampaign === row.campaignKey;
@@ -763,7 +830,7 @@ export function attachMissionLibraryChooser({
       );
       card.progress.hidden = !card.progress.textContent;
       localizedText(card.action, () =>
-        availability.state === 'ready'
+        availability.state === 'ready' || availability.included
           ? ''
           : availability.state === 'download'
             ? `${t('interface:downloadPlay')} · ${sizeLabel(availability.bytes)}`
@@ -776,7 +843,7 @@ export function attachMissionLibraryChooser({
                   { reason: availability.reason },
                 ),
       );
-      card.action.hidden = availability.state === 'ready';
+      card.action.hidden = availability.state === 'ready' || availability.included;
       localizedAttribute(card.button, 'aria-label', () => {
         const progressLabel =
           progressState.state === 'completed'
@@ -936,27 +1003,44 @@ export function attachMissionLibraryChooser({
     observer?.disconnect();
     for (const card of cards.values()) hidePreview(card);
   }
-  function cancelResizeScroll() {
+  function cancelResizeScroll({ retainAnchor = false } = {}) {
     if (resizeFrame !== null) view.cancelAnimationFrame?.(resizeFrame);
     resizeFrame = null;
+    if (!retainAnchor) resizeAnchor = null;
   }
   function preserveViewportAnchor() {
-    cancelResizeScroll();
-    if (destroyed || !dialog.open || doc.hidden || doc.hasFocus?.() === false) return;
-    if (!viewportAnchor) captureViewportAnchor();
-    const anchor = viewportAnchor && { ...viewportAnchor };
+    const eligible = !destroyed && dialog.open && !doc.hidden && doc.hasFocus?.() !== false;
+    cancelResizeScroll({ retainAnchor: eligible });
+    if (!eligible) return;
+    if (!resizeAnchor) {
+      if (!viewportAnchor) captureViewportAnchor();
+      resizeAnchor = viewportAnchor && { ...viewportAnchor };
+    }
+    const anchor = resizeAnchor && { ...resizeAnchor };
     if (!anchor) return;
     const ticket = visit;
     const restore = () => {
       resizeFrame = null;
-      if (destroyed || ticket !== visit || !dialog.open || doc.hidden || doc.hasFocus?.() === false)
+      if (
+        destroyed ||
+        ticket !== visit ||
+        !dialog.open ||
+        doc.hidden ||
+        doc.hasFocus?.() === false
+      ) {
+        resizeAnchor = null;
         return;
+      }
       const target = currentSelectionButton(anchor.id);
-      if (!target) return;
+      if (!target) {
+        resizeAnchor = null;
+        return;
+      }
       const bounds = list.getBoundingClientRect();
       const delta = target.getBoundingClientRect().top - bounds.top - anchor.offset;
       if (Number.isFinite(delta) && Math.abs(delta) >= 1) list.scrollTop += delta;
       viewportAnchor = anchor;
+      resizeAnchor = null;
     };
     if (view.requestAnimationFrame) resizeFrame = view.requestAnimationFrame(restore);
     else restore();
@@ -1111,6 +1195,7 @@ export function attachMissionLibraryChooser({
       remember();
     });
   back.onclick = close;
+  randomLevel.onclick = () => playRandom();
   dialog.addEventListener('close', () => {
     retirePendingSelection();
     invalidateDiagrams();
@@ -1179,6 +1264,7 @@ export function attachMissionLibraryChooser({
     select(id) {
       return revealExisting(id, mode, { focus: false });
     },
+    playRandom,
     // Incoming launch intent keeps its existing host-mode ownership rule.
     reveal: (id) => revealExisting(id, mode),
     refresh() {

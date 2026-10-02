@@ -268,6 +268,11 @@ test('compact CSS reserves mission space and retains accessible target sizing', 
   );
   assert.match(
     css,
+    /grid-template-areas:\s*'title'\s*'copy'\s*'filters'\s*'status'\s*'campaigns'\s*'cards'\s*'footer';[^}]*grid-template-rows: auto auto auto auto auto minmax\(0, 1fr\) auto;/s,
+    'Named rows keep hidden optional sections from shifting the footer into the gallery row.',
+  );
+  assert.match(
+    css,
     /@media \(min-width: 1200px\) and \(max-height: 720px\) \{\s*#journey-chooser\.mission-library-chooser \.journey-cards \{\s*grid-template-columns: repeat\(4, minmax\(0, 1fr\)\);/s,
     'Short handheld and desktop layouts keep mission names readable instead of forcing six narrow columns.',
   );
@@ -324,6 +329,21 @@ test('compact controls override inherited dialog panel spacing without shrinking
     compact,
     /#journey-chooser\.mission-library-chooser \.journey-footer > button \{[^}]*min-block-size: 44px;[^}]*margin: 0;/s,
   );
+  assert.match(
+    css,
+    /#journey-chooser\.mission-library-chooser \.journey-footer > \.journey-goal \{[^}]*flex: 0 0 auto;[^}]*flex-wrap: nowrap !important;[^}]*width: max-content !important;[^}]*min-block-size: 44px;/s,
+    'Mission-goal controls stay in the footer scroll strip instead of making the compact footer taller.',
+  );
+  assert.match(
+    css,
+    /#journey-chooser\.mission-library-chooser \.journey-footer > \.mission-library-setup \{[^}]*flex-basis: auto;[^}]*margin: 0;[^}]*padding: 0;[^}]*border: 0;/s,
+    'The setup disclosure cannot restore the legacy two-row footer at wider breakpoints.',
+  );
+  assert.match(
+    css,
+    /#journey-chooser\.mission-library-chooser \.journey-goal > p \{[^}]*max-width: 14rem;[^}]*text-overflow: ellipsis;[^}]*white-space: nowrap;/s,
+    'A long pinned mission remains accessible without consuming gallery height.',
+  );
 });
 
 test('narrow large-text and forced-colour layouts keep one readable column and native state cues', async () => {
@@ -370,8 +390,52 @@ test('short landscape setup fields scroll above an unchanged reachable footer', 
   );
   assert.match(
     landscape,
-    /@media \(max-height: 480px\) \{[^}]*\.journey-campaign-rail \{\s*display: none;[^}]*\}[^}]*\.mission-library-chooser\[open\] \{\s*grid-template-rows: auto auto minmax\(5\.5rem, 1fr\) minmax\(53\.6px, auto\);/s,
+    /@media \(max-height: 480px\) \{[^}]*\.journey-campaign-rail \{\s*display: none;[^}]*\}[^}]*\.mission-library-chooser\[open\] \{[^}]*grid-template-areas:\s*'filters'\s*'status'\s*'cards'\s*'footer';[^}]*grid-template-rows: auto auto minmax\(5\.5rem, 1fr\) auto;/s,
     'Short landscape keeps a minimum gallery and a reachable bottom control row.',
+  );
+});
+
+test('responsive action dock groups full-width goal controls without horizontal overflow', async () => {
+  const css = await readFile(new URL('../ui/journey.css', import.meta.url), 'utf8'),
+    dock = css.slice(css.indexOf('/* The action dock'));
+  assert.match(
+    dock,
+    /\.journey-goal \{[^}]*grid-template-columns: minmax\(10rem, 1fr\) auto;[^}]*flex: 999 1 40rem;/s,
+  );
+  assert.match(
+    dock,
+    /@media \(max-width: 899px\) \{[\s\S]*?\.journey-footer \{[^}]*grid-template-columns: repeat\(3, minmax\(0, 1fr\)\);[\s\S]*?\.journey-footer > button,[\s\S]*?min-height: 44px;[\s\S]*?\.journey-goal \{[^}]*grid-column: 1 \/ -1;/,
+    'Tablet portrait uses one compact action row plus one full-width goal row.',
+  );
+  assert.match(
+    dock,
+    /@media \(max-width: 600px\) \{[\s\S]*?\.journey-search-controls \{[^}]*grid-template-columns: minmax\(0, 1fr\) 44px;[\s\S]*?\.journey-footer \{[^}]*grid-template-columns: repeat\(3, minmax\(0, 1fr\)\);[\s\S]*?\.journey-goal \{[^}]*grid-template-columns: minmax\(0, 1fr\) auto;[^}]*grid-column: 1 \/ -1;[\s\S]*?\.journey-goal-actions \{[^}]*display: flex;[^}]*flex-wrap: wrap;/,
+    'Phone layouts keep search actions compact and place the mission goal in its own readable row.',
+  );
+  assert.match(
+    dock,
+    /#journey-search-clear::before \{\s*content: '×';/,
+    'The visual compact Clear affordance keeps its full localized accessible name in the DOM.',
+  );
+  assert.match(
+    dock,
+    /\.mission-library-setup > summary \{[^}]*font-size: 0;[^}]*\}[^}]*\.mission-library-setup > summary::before \{\s*content: '⚙';/s,
+    'Compact Setup remains a full-size named target without spending a row on its long label.',
+  );
+  assert.match(
+    dock,
+    /\.journey-goal-actions\s*>\s*:is\(#journey-goal-find, #journey-goal-clear\):disabled \{\s*display: none;/,
+    'Unavailable goal actions do not consume compact browsing space.',
+  );
+  assert.match(
+    dock,
+    /\.journey-footer > \.journey-goal \{[^}]*flex: 999 1 40rem;[^}]*width: auto !important;[^}]*max-width: 100%;/s,
+    'The responsive dock overrides the earlier max-content footer rule at equal specificity.',
+  );
+  assert.match(
+    dock,
+    /#journey-goal-status \{[^}]*max-width: none;[^}]*white-space: normal;/s,
+    'Goal text wraps instead of inheriting the earlier one-line footer constraint.',
   );
 });
 

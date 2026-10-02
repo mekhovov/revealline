@@ -1,0 +1,369 @@
+{
+  "format": "FPVCourtyardTerracesModelEvidence.v1",
+  "generatedAt": "2026-10-02T18:52:48.690Z",
+  "sourceHead": "1d0b359f75dfb48aa5729cdc619c2f93fe9ac65a",
+  "source": {
+    "optional-practice/civilian-fpv/world-assets.mjs": "7ec935731fb2404badde162930bf602ff49d24a9382623e582ce6cce199cc0aa",
+    "authoring/fpv-worlds/scenery-runtime.template.mjs": "6dbd93685b1a8d301038ae4ccd86f0924c780e5f80757166e8c6798a2fa83b63",
+    "authoring/fpv-worlds/assets/kenney/runtime-provenance.json": "e4650c245a124ae97655559e305b0e276ef88ca557a733d8a0eab343dd77ceea"
+  },
+  "library": {
+    "bytes": 861504,
+    "sha256": "6153c9c7e5dbe571e91a1ba54d021a95bf618db13873e7e661f1ea593c71573e",
+    "unchanged": true
+  },
+  "templateMatchesGeneratedRuntime": true,
+  "courtyards": [
+    {
+      "course": "courtyard-08",
+      "bounds": {
+        "min": {
+          "x": -38000,
+          "y": 0,
+          "z": -38000
+        },
+        "max": {
+          "x": 38000,
+          "y": 18000,
+          "z": 32000
+        }
+      },
+      "placements": 139,
+      "encodedMeshes": 139,
+      "batching": {
+        "sourceMeshes": 139,
+        "batches": 20,
+        "instances": 119,
+        "unbatched": 20,
+        "spatialGroups": 4
+      },
+      "buildingStacks": 48,
+      "alignedFloorsAndRoofs": true,
+      "bayGapsMetres": 0.04,
+      "minimumSceneryClearanceMetres": 1.199999979966286,
+      "minimumBuildingClearanceMetres": 8,
+      "clearanceNeverDecreased": true,
+      "sourceModelsAndGeometryUnchanged": true,
+      "actualInstanceChanges": "X/Z translation only",
+      "sha256": "fd467c7c2605c952b129529033bc84bf411510c2bda58cf95e9ad228e6172d05"
+    },
+    {
+      "course": "beginner-39",
+      "bounds": {
+        "min": {
+          "x": -44000,
+          "y": 0,
+          "z": -44000
+        },
+        "max": {
+          "x": 44000,
+          "y": 20000,
+          "z": 44000
+        }
+      },
+      "placements": 139,
+      "encodedMeshes": 139,
+      "batching": {
+        "sourceMeshes": 139,
+        "batches": 20,
+        "instances": 119,
+        "unbatched": 20,
+        "spatialGroups": 4
+      },
+      "buildingStacks": 48,
+      "alignedFloorsAndRoofs": true,
+      "bayGapsMetres": 0.04,
+      "minimumSceneryClearanceMetres": 1.199999979966286,
+      "minimumBuildingClearanceMetres": 8,
+      "clearanceNeverDecreased": true,
+      "sourceModelsAndGeometryUnchanged": true,
+      "actualInstanceChanges": "X/Z translation only",
+      "sha256": "5e07ca2f4dd385eb33fc97e3ec20ba293e259ebd2df13abf16462e084b99b90e"
+    },
+    {
+      "course": "beginner-52",
+      "bounds": {
+        "min": {
+          "x": -75000,
+          "y": 0,
+          "z": -75000
+        },
+        "max": {
+          "x": 75000,
+          "y": 100000,
+          "z": 75000
+        }
+      },
+      "placements": 139,
+      "encodedMeshes": 139,
+      "batching": {
+        "sourceMeshes": 139,
+        "batches": 20,
+        "instances": 119,
+        "unbatched": 20,
+        "spatialGroups": 4
+      },
+      "buildingStacks": 48,
+      "alignedFloorsAndRoofs": true,
+      "bayGapsMetres": 0.04,
+      "minimumSceneryClearanceMetres": 1.1999999799662788,
+      "minimumBuildingClearanceMetres": 8,
+      "clearanceNeverDecreased": true,
+      "sourceModelsAndGeometryUnchanged": true,
+      "actualInstanceChanges": "X/Z translation only",
+      "sha256": "aacc10a6fbcd9f5df473e6380b853a2f74cd040b2ed078b59f398546e7f29103"
+    }
+  ],
+  "otherPreparedWorldsExact": [
+    {
+      "environment": "woodland",
+      "course": "woodland-08",
+      "bounds": {
+        "min": {
+          "x": -38000,
+          "y": 0,
+          "z": -38000
+        },
+        "max": {
+          "x": 38000,
+          "y": 18000,
+          "z": 32000
+        }
+      },
+      "sha256": "ad3b790349f062d51aa16b7fec098c76ed55fa8435fb1fd3ddc833b32dcba763"
+    },
+    {
+      "environment": "woodland",
+      "course": "beginner-40",
+      "bounds": {
+        "min": {
+          "x": -44000,
+          "y": 0,
+          "z": -44000
+        },
+        "max": {
+          "x": 44000,
+          "y": 20000,
+          "z": 44000
+        }
+      },
+      "sha256": "54c78b6264bcc0ee1d24aa20530ccdd4ab24f44a0e4ae429fb46fa4558d44743"
+    },
+    {
+      "environment": "warehouse",
+      "course": "warehouse-08",
+      "bounds": {
+        "min": {
+          "x": -38000,
+          "y": 0,
+          "z": -38000
+        },
+        "max": {
+          "x": 38000,
+          "y": 18000,
+          "z": 32000
+        }
+      },
+      "sha256": "1162d45c73334db7d632d61371a11340b25a3a2b2f2f4f244848991ec414ac60"
+    },
+    {
+      "environment": "warehouse",
+      "course": "beginner-38",
+      "bounds": {
+        "min": {
+          "x": -44000,
+          "y": 0,
+          "z": -44000
+        },
+        "max": {
+          "x": 44000,
+          "y": 20000,
+          "z": 44000
+        }
+      },
+      "sha256": "3de7866a979164f467f72683da2fc672914ec07673e38260e1b8ab3805d4b149"
+    },
+    {
+      "environment": "stadium",
+      "course": "stadium-08",
+      "bounds": {
+        "min": {
+          "x": -38000,
+          "y": 0,
+          "z": -38000
+        },
+        "max": {
+          "x": 38000,
+          "y": 18000,
+          "z": 32000
+        }
+      },
+      "sha256": "56a00d69f772e181dc9289ff7485f43f7a151f65c14454909b6557c97b737e67"
+    },
+    {
+      "environment": "stadium",
+      "course": "beginner-42",
+      "bounds": {
+        "min": {
+          "x": -44000,
+          "y": 0,
+          "z": -44000
+        },
+        "max": {
+          "x": 44000,
+          "y": 20000,
+          "z": 44000
+        }
+      },
+      "sha256": "e39839773f9a3c12f96d1910c453b9fddc5e3ad51a52096966687cbbc6a1ac5a"
+    },
+    {
+      "environment": "stadium",
+      "course": "beginner-57",
+      "bounds": {
+        "min": {
+          "x": -75000,
+          "y": 0,
+          "z": -75000
+        },
+        "max": {
+          "x": 75000,
+          "y": 100000,
+          "z": 75000
+        }
+      },
+      "sha256": "fc7bffad9d382d295d682b2b9d8c2726608710bec276197c93a0426844ed53f4"
+    },
+    {
+      "environment": "container-yard",
+      "course": "container-yard-08",
+      "bounds": {
+        "min": {
+          "x": -38000,
+          "y": 0,
+          "z": -38000
+        },
+        "max": {
+          "x": 38000,
+          "y": 18000,
+          "z": 32000
+        }
+      },
+      "sha256": "910af4a0aa0dc5c1ee8a0a55f5aa8e0865182e400bba1d01a37d63099d78a476"
+    },
+    {
+      "environment": "container-yard",
+      "course": "beginner-37",
+      "bounds": {
+        "min": {
+          "x": -44000,
+          "y": 0,
+          "z": -44000
+        },
+        "max": {
+          "x": 44000,
+          "y": 20000,
+          "z": 44000
+        }
+      },
+      "sha256": "c99ad92bae03b474bc3dfcdfeb3441c412913c1a225cf6c3479faf1f25a3c844"
+    },
+    {
+      "environment": "garage",
+      "course": "garage-08",
+      "bounds": {
+        "min": {
+          "x": -38000,
+          "y": 0,
+          "z": -38000
+        },
+        "max": {
+          "x": 38000,
+          "y": 18000,
+          "z": 32000
+        }
+      },
+      "sha256": "719d040bd64a9e728e22623e4fe65f1ac36978f3e8fd9e83015fec806fc43bce"
+    },
+    {
+      "environment": "garage",
+      "course": "beginner-41",
+      "bounds": {
+        "min": {
+          "x": -44000,
+          "y": 0,
+          "z": -44000
+        },
+        "max": {
+          "x": 44000,
+          "y": 20000,
+          "z": 44000
+        }
+      },
+      "sha256": "e2c7b80d8cf8a4ae2f56995ec8ca0bec279b8338c9482cf64d23d84f876c9724"
+    }
+  ],
+  "replay": {
+    "method": "Reuse successful prior replay after verifying every bound runtime, catalogue and recording input is byte-identical. The changed module is presentation only and is not imported by either flight model.",
+    "priorSourceHead": "1975948b32aa4c3b016cb58b987a15b1f98e5661",
+    "priorReceiptSha256": "e974e03fd19f7218d2aa3b2254c0e90ec67c2c4097cdb2005d002cbf8dcc3db0",
+    "passed": 178,
+    "total": 178,
+    "frames": 327795,
+    "sourceBindings": {
+      "optional-practice/civilian-fpv/model.mjs": {
+        "bytes": 17641,
+        "sha256": "9e4cd11cfdde2dd43b437069b8cb7a359a8132495db806cb5f68e8674d48aaf6"
+      },
+      "optional-practice/civilian-fpv/world-model.mjs": {
+        "bytes": 53026,
+        "sha256": "d6e0939daf77a2a1459687dd8ba900719b78b02a1b3fe5fab862773bd6109551"
+      },
+      "optional-practice/civilian-fpv/world-collision.mjs": {
+        "bytes": 12256,
+        "sha256": "2899c7c84f9eae14b9a3434f585a8e873f4a1361e8f3ce4026ef27f44bdeef32"
+      },
+      "optional-practice/civilian-fpv/math.mjs": {
+        "bytes": 3062,
+        "sha256": "555c8b6ea170b46992133507d2a3d867f06185bca060239cab7db9c9b87f9f98"
+      },
+      "optional-practice/civilian-fpv/radio-profile.mjs": {
+        "bytes": 18097,
+        "sha256": "f588fd5cda96ed9627a483f49ca843ace8d99a68fae42b0a4239c2cd0ab81933"
+      },
+      "optional-practice/civilian-fpv/world-themes.mjs": {
+        "bytes": 7637,
+        "sha256": "8331dc6931299043e14620fe312affddd382b551607db5ff6fae85f14b627bc7"
+      },
+      "optional-practice/civilian-fpv/flight-sectors.mjs": {
+        "bytes": 2673,
+        "sha256": "5b1b54bde4e578e61da7d59f4a80a86db9aafbc78b4523d2ba2b540277a0a16d"
+      },
+      "optional-practice/civilian-fpv/catalogue.mjs": {
+        "bytes": 10565,
+        "sha256": "98338353d17eb585414538c9905040752fd5cd6699c48b17fa1706832b750997"
+      },
+      "optional-practice/civilian-fpv/world-catalogue.mjs": {
+        "bytes": 239978,
+        "sha256": "d901363b623193f4896100f9381c7579946796e741554f012581ebb93f9ea8a6"
+      },
+      "optional-practice/civilian-fpv/demonstrations.mjs": {
+        "bytes": 221646,
+        "sha256": "92bb4365c46d94f5c1fea9808ec4e24fb9014d35640ee488959c4e0f4b6c5cfa"
+      },
+      "optional-practice/civilian-fpv/world-demonstrations.mjs": {
+        "bytes": 2207074,
+        "sha256": "c9f2d0ee5c571507ae1dce4f48898554cb2ad179218f1905cdc8013db2e2c114"
+      },
+      "game/data-json.mjs": {
+        "bytes": 5594,
+        "sha256": "9ce33d6173f3cba8587ed7a7f1924c66e9d9c86ffa59b37a743764ea0b01f7bd"
+      }
+    }
+  },
+  "limits": [
+    "No additional unit-test coverage.",
+    "No new replay execution; prior 178-demo replay evidence is bound by identical source bytes.",
+    "CPU GLB transforms and geometry bounds only; browser/WebGL, visual readability, hardware performance and human art acceptance remain separate."
+  ]
+}

@@ -1,5 +1,7 @@
 # Spatial sound implementation record
 
+> Historical completion and remaining priorities as reviewed 1 October 2026: [audio plan snapshot](../../spatial-audio-plan.md). The entries below are chronological evidence; older blockers and packaging policies may be superseded.
+
 ## Phases
 
 1. Baseline: isolated managed checkout of current main `321408a3cfd75ae230d760f39fb692503652601a`; preserve the original working directory. Inspected runtime actors, capture and terrain events, replay ownership, multiplayer hosts and existing audio transport. Acquired three official CC0 packs and preserved used originals/licenses.
@@ -138,3 +140,12 @@ Full-suite triage: preserve the failing lifecycle diagnostic, stopped before new
 The combined PR contains all audio changes from this task. Merge/publication still depends on the repository's release-slot allocation; unallocated product PRs receive `release-train-hold` and fail the required release-ready check. Sustained human listening and physical/native-device qualification remain separately open. This implementation and its targeted evidence are available for review; an unallocated branch is not an accepted immutable release.
 
 User steering: preserve the previous original startup/retry (both byte-identical to 29467477b); 35 affected tests pass after restoration. The seven-scene native mix and reproduction receipt above preceded restoration and are historical candidate evidence. A new combined PR will incorporate frozen #795 head 81df80dda259ba8e1cef5378af1cec91260eb51e without modifying #795. Final standalone build was stopped before integration; combined-source build/receipts supersede it.
+
+## Installed audio follow-up — 30 September 2026
+
+After PR #851 merged, the [installed audio qualification](offline-ready-qualification.md)
+verified an exact-commit build with the optional spatial sound pack, origin-server-offline
+Solo capture/win/Next/damage, and zero missing/corrupt selected files. PR #858 also
+bounds failed recording retries: 120 frames now produce one failed request instead
+of 120. All 167 integration checks pass. Sustained listening, physical devices and
+canonical immutable release/public acceptance remain separate outstanding gates.

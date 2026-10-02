@@ -4,6 +4,8 @@ import { attachMenuScene, getMenuAnimation, setMenuAnimation } from './menu-scen
 import { attachFullscreen } from './fullscreen.mjs';
 import { mountLandingBrand, GAME_BRAND_NAME } from './brand-identity.mjs';
 import { attachMenuRetune } from './menu-retune.mjs';
+import { communityDirectoryURL } from '../community-routes.mjs';
+import { attachGameUpdates } from './game-updates.mjs';
 
 export const NATIVE_MENU_CATEGORIES = Object.freeze([
   ['gameplay', 'play'],
@@ -159,9 +161,17 @@ export function prepareNativeMenus({
       moveId(id, panels.content);
     move($('storage-retention-button')?.closest('section'), panels.content);
     moveId('shell-controller-lab', panels.controls);
+    moveId('shell-gallery', panels.data);
     moveId('shell-music', panels.audio);
     moveId('shell-worlds', panels.content);
-    for (const id of ['shell-demo', 'demo-availability', 'shell-workshop'])
+    for (const id of [
+      'shell-help',
+      'shell-home-fpv',
+      'shell-home-practice',
+      'shell-demo',
+      'demo-availability',
+      'shell-workshop',
+    ])
       moveId(id, panels.extras);
     move(settings.querySelector('.demo-settings'), panels.extras);
     move(doc.querySelector('.more-destinations a[href*="about.html"]'), panels.extras);
@@ -240,6 +250,35 @@ export function prepareNativeMenus({
     brandTitleDestroyed = true;
     hideBrandTitle();
   });
+  const updates = attachGameUpdates({
+    document: doc,
+    window: doc.defaultView,
+    container: panels.content,
+  });
+  listeners.push(() => updates.dispose());
+  const communities = make('a', 'button secondary');
+  communities.id = `${mode}-communities`;
+  // A compiled company app contains only its own catalogue and has a narrow
+  // manifest scope. The main app's community routes share its broad scope.
+  const standaloneEdition = !!doc.documentElement?.dataset.editionId;
+  communities.href = standaloneEdition
+    ? 'https://mekhovov.github.io/revealline/game/communities/'
+    : communityDirectoryURL(
+        doc.defaultView?.location?.href || new URL('../index.html', import.meta.url),
+        new URL('../community-routes.mjs', import.meta.url),
+      ).href;
+  localizedText(communities, () =>
+    t(
+      standaloneEdition
+        ? 'interface:communityDirectory.onlineMenuLabel'
+        : 'interface:communityDirectory.menuLabel',
+    ),
+  );
+  setMenuIcon(communities, 'team');
+  communities.hidden = new URL(
+    doc.defaultView?.location?.href || 'https://local.invalid/',
+  ).searchParams.has('course');
+  panels.content.append(communities);
   if (actions) {
     actions.classList.add('native-menu-actions');
     actions.dataset.menuLayout = 'vertical';
@@ -306,6 +345,9 @@ export function prepareNativeMenus({
           'shell-options': 'settings',
           'shell-sound': 'sound',
           'shell-gallery': 'collection',
+          'shell-help': 'help',
+          'shell-home-fpv': 'play',
+          'shell-home-practice': 'controls',
           'shell-workshop': 'controls',
         }
       : mode === 'versus'
