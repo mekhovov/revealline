@@ -22,8 +22,13 @@ import {
 } from '../presentation/industrial-arcade.mjs';
 import { FIELD_KIT_SPRITE_IDS, pixelArtForSlot } from '../presentation/pixel-art.mjs';
 import { TEAM_RUNTIME_IMAGE_SLOTS } from '../presentation/team-runtime-slots.mjs';
+import {
+  createWorkshopTexture,
+  getSimVisualCollection,
+} from '../../optional-practice/civilian-fpv/world-visuals.mjs';
 
-const additions = ['pocket-lcd', 'copper-observatory', 'sakura-station'];
+const darkAdditions = ['obsidian-reliquary', 'deep-space', 'moonlit-grove'];
+const additions = ['pocket-lcd', 'copper-observatory', 'sakura-station', ...darkAdditions];
 const digest = (value) => createHash('sha256').update(value).digest('hex');
 function spriteDigest(collection) {
   const hash = createHash('sha256');
@@ -125,6 +130,12 @@ test('each new family resolves complete interface, Arcade and SIM contracts with
               (state === 'disabled' ? 3 : highContrast ? 7 : 4.5),
             `${id}/${role}/${state}`,
           );
+      for (const surface of ['ink', 'panel', 'panelRaised'])
+        for (const cue of ['controlLine', 'focus'])
+          assert.ok(
+            contrastRatio(view.tokens[cue], view.tokens[surface]) >= 3,
+            `${id}: ${cue}/${surface}`,
+          );
     }
     for (const [fg, bg] of [
       ['onAccent', 'accent'],
@@ -159,4 +170,99 @@ test('new Arcade finishes are distinct, deterministic and leave alpha, dimension
     }
   }
   assert.equal(identities.size, additions.length);
+});
+
+test('dark additions retain dark reading surfaces and distinct complete SIM pixel libraries', () => {
+  const libraries = new Set(),
+    motifs = new Set();
+  for (const id of darkAdditions) {
+    assert.equal(resolvePresentation({ familyId: id }).colorScheme, 'dark');
+    const collection = getSimVisualCollection(id),
+      hash = createHash('sha256');
+    assert.deepEqual(Object.keys(collection.materials), SIM_MATERIAL_ROLES);
+    for (const role of SIM_MATERIAL_ROLES) {
+      const first = createWorkshopTexture(role, { collectionId: id, quality: 'low' }),
+        second = createWorkshopTexture(role, { collectionId: id, quality: 'high' });
+      assert.deepEqual(
+        first.image.data,
+        second.image.data,
+        'quality changes sampling, never source art',
+      );
+      assert.equal(first.image.width, 128);
+      assert.equal(first.image.height, 128);
+      assert.equal(first.generateMipmaps, true);
+      assert.equal(first.anisotropy, 1);
+      hash.update(first.image.data);
+      if (role === 'enamel') {
+        const values = first.image.data,
+          luminance = Array.from(
+            { length: values.length / 4 },
+            (_, index) => values[index * 4] + values[index * 4 + 1] + values[index * 4 + 2],
+          ),
+          mean = luminance.reduce((sum, value) => sum + value, 0) / luminance.length;
+        motifs.add(luminance.map((value) => (value > mean ? '1' : '0')).join(''));
+      }
+      first.dispose();
+      second.dispose();
+    }
+    libraries.add(hash.digest('hex'));
+  }
+  assert.equal(libraries.size, darkAdditions.length);
+  assert.equal(
+    motifs.size,
+    darkAdditions.length,
+    'the materials have different structure, not only different pigments',
+  );
+});
+
+test('new dark collections leave every previously installed exact interface, Arcade pixel and SIM material revision unchanged', () => {
+  // Captured before this addition at 5bf3b15dc. Resolve exact historical pins,
+  // so future current revisions may advance without erasing existing assets.
+  const previous = [
+    ['legacy', 'r2'],
+    ['industrial-workshop', 'r2'],
+    ['vyshyvanka', 'r2'],
+    ['dnipro-porcelain', 'r1'],
+    ['tryzub', 'r1'],
+    ['windows-classic', 'r2'],
+    ['dos', 'r2'],
+    ['orchard-workshop', 'r1'],
+    ['neon-ruins', 'r1'],
+    ['pocket-lcd', 'r1'],
+    ['copper-observatory', 'r1'],
+    ['sakura-station', 'r1'],
+  ];
+  const hash = createHash('sha256');
+  for (const [id, revision] of previous) {
+    const family = getThemeFamily(id, revision);
+    hash.update(JSON.stringify(family));
+    hash.update(JSON.stringify(getInterfaceTheme(family.interface.id, family.interface.revision)));
+    if (family.arcade)
+      for (const slot of FIELD_KIT_SPRITE_IDS)
+        hash.update(
+          industrialTexturePixels(
+            pixelArtForSlot(slot),
+            slot,
+            getArcadeCollection(family.arcade.id, family.arcade.revision),
+          ).rgba,
+        );
+    if (family.sim) {
+      const collectionId = family.sim.id;
+      hash.update(
+        JSON.stringify(
+          resolveSimVisualCollection({ collectionId, revision: family.sim.revision }).collection,
+        ),
+      );
+      hash.update(JSON.stringify(getSimVisualCollection(collectionId).materials));
+      for (const role of SIM_MATERIAL_ROLES) {
+        const texture = createWorkshopTexture(role, { collectionId });
+        hash.update(texture.image.data);
+        texture.dispose();
+      }
+    }
+  }
+  assert.equal(
+    hash.digest('hex'),
+    '27d078a53324ab337dc91537b8d620ee7dd8b87e24195a3d633753d4f4dd95d6',
+  );
 });
