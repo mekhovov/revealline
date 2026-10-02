@@ -1725,3 +1725,12 @@ receipts are `docs/evidence/fpv-touch-*`; controlled-fixture limitations are
 explicit. Physical iPhone, Steam Deck/native-app, radio and novice acceptance
 remain pending; no measured FPS or new unit coverage claim. Unit coverage stays
 in H/R7. Frozen package admission and focused publication follow this checkpoint.
+
+Frozen touch candidate `b4bc48365` passes all three optional package admissions,
+committed-input and ZIP-member verification, and two byte-identical builds.
+Source file counts35/68/100 remain within inherited64/72/104 limits; package
+bytes545,596/3,825,812/14,079,797 remain within8/8/16MiB. Receipt:
+`docs/evidence/fpv-touch-package-20261002.json`. Both normal local playtests are
+updated:92 runtime files/13,922,478 bytes; ZIP SHA256
+`6409a64a29bc5bc089a692009eeceff6eb265050773844e66ae85e154dbe50d9`.
+This is a local player build; protected publication/deployment remains separate.
