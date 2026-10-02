@@ -591,6 +591,9 @@ export function mountBeginnerCoach({
     labFlight?.pause();
     labState = labFlight?.snapshot() ?? null;
     clearLabInput();
+    // Stopping input ownership must not falsify a recorded example's last
+    // command. Keep its frozen transmitter pose aligned with the paused drone.
+    if (labMode === 'example') labInput = exampleInput();
     if (labFrameId !== null) win.cancelAnimationFrame(labFrameId);
     labFrameId = null;
     labLastTime = null;
@@ -1059,16 +1062,24 @@ export function mountBeginnerCoach({
     }
     return pad;
   }
+  function exampleInput() {
+    return Object.fromEntries(
+      AXES.map((axis) => [axis, (labState?.lastInput?.[axis] ?? 0) / 1000]),
+    );
+  }
+  function displayedPreviewInput() {
+    if (labMode === 'example') return exampleInput();
+    return labRunning ? previewCommand(false) : neutralFlightInput();
+  }
   function paintLab() {
     if (stage !== 'guide' || !labFlight) return;
     const state = labState;
     // Live controls are displayed on the next animation frame. Only the fixed
     // simulation loop advances throttle or physics; attitude is never predicted.
-    const input = labRunning
-      ? labMode === 'try'
-        ? previewCommand(false)
-        : labInput
-      : neutralFlightInput();
+    // A paused/selected step shows the command that reached its opening pose,
+    // including the preceding step's throttle. Only live input becomes neutral
+    // when ownership is released; examples are read-only, even while paused.
+    const input = displayedPreviewInput();
     diagram?.update({
       state,
       referenceOrientation: labReferenceOrientation,
@@ -2149,7 +2160,7 @@ export function mountBeginnerCoach({
         : (labPlan?.phase(labExampleTick) ?? null),
       viewedStep,
       completedPracticeSteps: labLesson ? (labState?.step ?? 0) : 0,
-      displayedInput: labRunning && labMode === 'try' ? previewCommand(false) : { ...labInput },
+      displayedInput: displayedPreviewInput(),
       exampleLoops,
       immersive: labImmersive,
     }),
