@@ -61,7 +61,11 @@ import { preparePracticeOffline } from './offline.mjs';
 import { dataIdentity } from '../../game/data-json.mjs';
 import { THEME_PROFILES, resolveThemeExperience } from './world-themes.mjs';
 import { mountWorldEditor } from './world-editor.mjs';
-import { mountSimPresentation, mountDroneResponse } from './sim-presentation.mjs';
+import {
+  mountSimPresentation,
+  mountDroneResponse,
+  mountSimAudioControls,
+} from './sim-presentation.mjs';
 import { createWorldAudio } from './world-audio.mjs';
 import {
   evaluateWorldResult,
@@ -121,6 +125,8 @@ const COPY_EN = {
   radioSetup: 'Radio setup',
   makeItYours: 'MAKE IT YOURS',
   settingsHelp: 'Your controls and flight preferences carry across worlds and playlists.',
+  audioMixHelp:
+    'Adjust sound without changing your master mute. Interface & feedback includes gate, impact and combat cues. Your mix is shared across simulator views.',
   textStyle: 'Text style',
   gameType: 'Game typography',
   plainType: 'Plain text',
@@ -282,6 +288,8 @@ const COPY_UK = {
   droneGuideOff: 'Вимкнено',
   radioSetup: 'Налаштувати пульт',
   makeItYours: 'НАЛАШТУЙТЕ ПІД СЕБЕ',
+  audioMixHelp:
+    'Змінюйте гучність незалежно від загального вимкнення звуку. Інтерфейс і сигнали включають ворота, удари та бойові ефекти. Рівні гучності спільні для режимів симулятора.',
   settingsHelp: 'Керування й параметри польоту зберігаються для всіх світів і добірок.',
   textStyle: 'Стиль тексту',
   gameType: 'Ігровий шрифт',
@@ -891,6 +899,15 @@ export function mountWorldApp({
   };
   const audio = createWorldAudio({ window: win, storage });
   const presentation = mountSimPresentation({ root: doc, window: win, enabled: audio.enabled() });
+  const audioControls = mountSimAudioControls({
+    root: $('sim-audio-mix'),
+    window: win,
+    locale: () => locale,
+    onChange(levels) {
+      audio.setVolumes(levels);
+      presentation.setVolume(levels.interface);
+    },
+  });
   const soundButton = button('', async () => {
     const enabled = !audio.enabled();
     await Promise.all([audio.setEnabled(enabled), presentation.setSoundEnabled(enabled)]);
@@ -992,6 +1009,7 @@ export function mountWorldApp({
     $('world-radio-title').textContent = txt('Radio setup', 'Налаштування пульта');
     immersive.refresh();
     updateSoundLabel();
+    audioControls.refresh();
     updateGhostHUD();
     for (const id of ['flight-mode', 'first-flight-mode']) {
       $(id).options[0].textContent = txt('Self-level', 'Самовирівнювання');
@@ -3988,6 +4006,7 @@ export function mountWorldApp({
       renderer?.dispose();
       hangar.dispose();
       actorEditor?.dispose();
+      audioControls.dispose();
       audio.dispose();
       presentation.dispose();
       droneResponse.dispose();

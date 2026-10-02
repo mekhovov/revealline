@@ -5,6 +5,9 @@ with the next independent item developed while source gates and deployment run.
 Additional unit coverage belongs in the final phase. Build, browser, replay,
 import/export and publication verification remain part of every applicable item.
 
+**Current checkpoint:** see “Reviewed continuation — creator repair, Acro school,
+graphics and audio” at the end of this log. Earlier tables and heads are history.
+
 ## Delivery queue
 
 | Item                                             | Branch / PR                                                                                      | Current state                                                                                                                               | Acceptance                                                                                                                                       |
@@ -259,3 +262,137 @@ current heading, roll/pitch horizon, altitude, speed and horizontal motion, and
 names the dominant control response. This keeps FPV-camera flying legible
 without adding a persistent tutorial. Players can turn it off in Flight options
 or use its close control; that preference persists.
+
+## Reviewed continuation — creator repair, Acro school, graphics and audio
+
+1 October 2026. The approved remaining scope and estimates are in
+[`fpv-reviewed-delivery-plan.md`](fpv-reviewed-delivery-plan.md). Source publication,
+functional verification and public availability are separate states. New unit
+coverage remains in R7; no physical-radio, five-novice or sustained hardware
+performance acceptance is claimed.
+
+### Published increments
+
+| Item                                  | PR / branch                                                                                 | Verified feature head                      |
+| ------------------------------------- | ------------------------------------------------------------------------------------------- | ------------------------------------------ |
+| R0 startup and transactional reimport | [#922](https://github.com/mekhovov/revealline/pull/922), `codex/fpv-reimport-reviewed`      | `b490f26337781b9a6b827f5348620763b8b4db41` |
+| Refreshed original school parent      | [#905](https://github.com/mekhovov/revealline/pull/905), `codex/fpv-beginner-flight-school` | `6424713474403b89e81580b07d6fe7336376a5a3` |
+| Refreshed original schematic parent   | [#907](https://github.com/mekhovov/revealline/pull/907), `codex/fpv-drone-response-overlay` | `86740c58bc7f0d4b347c6714a5692625a483adb3` |
+| R1 accurate shared drone guide        | [#923](https://github.com/mekhovov/revealline/pull/923), `codex/fpv-shared-flight-guide`    | `1f41a99328b303f53ec0d6df9ccc613f59d093aa` |
+| R2 primary Acro curriculum            | [#924](https://github.com/mekhovov/revealline/pull/924), `codex/fpv-acro-first-school`      | `17e862c2d06183aee34343fa0d547f9b5b655e9d` |
+| R4 graphics foundation                | [#925](https://github.com/mekhovov/revealline/pull/925), `codex/fpv-graphics-foundation`    | `f7e347c2ad47377e7772734dc848cd12f4ecbfc0` |
+| R3 separate audio levels              | [#926](https://github.com/mekhovov/revealline/pull/926), `codex/fpv-shared-audio-controls`  | `bae8729f17429cd321da45dde77b502ed26c407b` |
+
+This delivery-only checkpoint follows #926's feature head. Always obtain fresh
+remote heads before any lease, review or merge; never infer them from this table.
+The root worktree is on `codex/fpv-shared-audio-controls`; all feature work and
+verification evidence are committed. Native stack **#902** contains the open
+linear chain **#905 → #907 → #923 → #924 → #925 → #926**. Its older #899/#901/#904
+members are merged. Every newly created PR is attached to this chat. #922 is
+independent on main. Native content stack #889 and the Garage/ghost handoffs are
+preserved; do not assume its historical membership is current.
+
+#905/#907 retain `release-train-hold`. Their parent refresh used recovery refs and
+an atomic push with explicit old-head leases. No holds, global release authority
+or protection settings were changed. If #922 merges, coordinate a cascading
+rebase onto the new main with the same safeguards and preserve the feature bytes.
+Do not manually retarget native members or mix the next UI feature into #926.
+
+### Functional evidence
+
+- **R0:** 13 actual import/reimport/pack/ZIP cases and browser preview/apply/cancel
+  passed. A browser-exported editable ZIP was reopened independently: local wall,
+  spawn, 6 m gate width/direction −1 and actor health 80/x −6 m survived with
+  expected course identity `2e1a143094a18f30`. See
+  [`fpv-reimport-preservation.md`](fpv-reimport-preservation.md) on #922. Its frozen
+  `b79c04f18` candidate passed all three package admissions, committed inputs,
+  two identical builds and ZIP checks. The published successor changes docs only.
+- **R1:** observer-only quaternion attitude, command/thrust and measured motion
+  in World Studio and Academy; Off/Compact/Learning and text preferences persist.
+  Real demonstrations, EN/UK, pause/explain and World Studio 1280×720, 390×844 and
+  844×390 were checked. Frozen `1f41a993` passed all three package admissions and
+  reproducibility. Academy's phone-specific visual pass remains outstanding.
+  See [`fpv-shared-flight-guide.md`](fpv-shared-flight-guide.md).
+- **R2:** 14 primary Acro lessons, 12 optional self-level lessons, 122 guided
+  steps, 14 installed primary demonstrations and 86 authored challenges. All 14
+  primary recordings completed and independently replayed with unchanged 50 Hz
+  physics, Gentle response, zero contacts and full health. Browser checks covered
+  Acro/FPV entry, slow demonstration playback, no progress awarded for watching,
+  and restoring previous flight settings. Frozen `17e862c2` passed all three
+  admissions and reproducibility. Original course/evidence identities survive.
+  See [`fpv-beginner-flight-school.md`](fpv-beginner-flight-school.md).
+- **R4 foundation:** all 14 actual WebGL checks passed, including 216 world/
+  preset/view configurations, three-material GLB import, repeated resource
+  plateaus, stale preparation, abort and disposal. Verification found and fixed
+  the shared shadow-uniform texture leak; zero owned scene resources remain
+  after disposal. Internal Three.js LUT counters are documented, not reported as
+  measured VRAM. All three drone previews and rapid paused quality/aircraft
+  changes were checked. Frozen `5eea46503` passed all three admissions, committed
+  inputs, two identical builds and ZIP checks. See
+  [`fpv-graphics-foundation.md`](fpv-graphics-foundation.md) and committed receipts.
+- **R3 audio increment:** separate interface/feedback, motors and environment
+  levels persist without changing mute or activating audio. Production graph
+  routing/lifecycle verification, actual EN/UK sliders, cross-host preference
+  round trips and the combined Acro demonstration passed. Frozen `ce2ce2895`
+  passed all three admissions, committed inputs, two identical builds and ZIP
+  checks. See [`fpv-audio-controls.md`](fpv-audio-controls.md). Audible quality and
+  physical hardware remain unqualified.
+
+Academy remains 62 runtime / 64 source files; World Studio 94 / 96. The unused
+Academy wordmark dependency was removed without changing package limits. World
+Studio keeps that artwork. Receipts and source inventories remain available in
+the named `/tmp/fpv-*-final-20261001` outputs. Regenerable ZIP copies from earlier
+candidates were removed when disk space fell below 300 MiB; cleanup receipts
+retain their hashes. Source, recovery refs, browser exports and player builds
+were preserved. Check free space before another large build or worktree copy.
+
+### Local player build and publication
+
+Combined learning/guide/graphics/audio build:
+`http://127.0.0.1:8789/dist/fpv-reviewed-player-playtest/optional-practice/fpv-worlds/index.html`.
+It launched in the actual browser with all 26 learning challenges present.
+It contains 87 files / 12,386,802 bytes; ZIP SHA-256
+`95521b70c21eb07e1d46144351eff90be1c5971142b3e60c345880515222d842`.
+This package does not yet include the independent #922 transactional reimport
+patch; that repair was verified separately on port 8792. Integrate it through
+the coordinated main refresh before claiming the combined creator flow fixed.
+The preserved Stadium package still contains its 88 original demonstrations.
+
+The actual public SIM launch failed with `lastRadioDiscovery is not defined`.
+#922 contains the minimal declaration fix, also carried by the refreshed feature
+parents. The Pages capacity repair #911 is already merged; do not resurrect the
+obsolete gzip prerequisite. Public-marker access was blocked in the browser.
+No new feature or startup repair is claimed publicly live.
+
+At the final #922 gate snapshot all latest checks had completed: source
+`release-ready`, focused, optional-package, candidate, default-capacity, assembly
+and reconciliation passed. Build/test/stage were intentionally skipped, not
+passed. No review or hold existed. The protected exact-head asynchronous merge
+request was accepted with `bypass_rules: false`, UUID
+`132f8077-b712-409c-94e1-98d5b8b632c5`, expected head `b490f2633`.
+The first follow-up still reported OPEN/CLEAN with no merge commit. Enqueued is
+not merged or deployed. Leave publication running and inspect on the next
+heartbeat; do not repeatedly poll unchanged external work.
+
+### Next concrete work
+
+1. Confirm #922's protected merge and deployment identity, then launch the public
+   SIM. Refresh the held native stack linearly when required, preserving recovery
+   refs, active work, exact-head leases and existing review/hold requirements.
+2. Start **R3 shared menu navigation and HUD scaling** on a new branch above the
+   current compatible feature head. Keep paused-menu input separate from radio
+   flight input; implement consistent back/Escape/focus, larger text/targets,
+   clear next actions and localized recovery states.
+3. Continue R4 material selection/preparation and R5 eight-world art batches.
+   Current maps are procedural; no Poly Haven/ambientCG selection is claimed
+   shipped. Preserve licensing and package caps. Benchmark a realistic world
+   before claiming sustained 60/30 fps or choosing final detail budgets.
+4. R6 still needs the original 120 demonstrations, Garage's final 16, content
+   integration, exact-compatible #913 ghosts and targeted section practice.
+5. R7 retains new unit coverage, full regression, five first-time players,
+   final physical-radio acceptance and named-device performance/memory checks.
+
+The 8–10-working-week continuation estimate plus two contingency weeks remains
+a staffing-dependent planning baseline, not proof these remaining phases are
+complete. Re-estimate after the first realistic-world benchmark and novice
+sessions. Continue focused verified PRs while publication runs.
