@@ -1,0 +1,53 @@
+{
+  "baselineHead": "2f009d3357fc966b879c81a316909b9fa3e4d31e",
+  "baseline": {
+    "passed": 12,
+    "failed": 17,
+    "failures": [
+      "zero approved recordings creates no output directory or placeholder archive",
+      "approved exact MP3 is staged once with pinned runtime inventory, reproducible catalogue candidate and credits",
+      "identical approved recording bytes are deduplicated while both track credits remain pinned",
+      "archive restaging reads approved source delivery after hosted admission removes the local runtime payload",
+      "an allowed recording alias cannot stage audio narrowed by another trusted same-hash entry",
+      "refuses unreviewed before copying any MP3",
+      "refuses restricted before copying any MP3",
+      "refuses changed bytes before copying any MP3",
+      "refuses wrong MP3 metadata before copying any MP3",
+      "admission refuses non-project archive https://other.github.io/revealline-soundtracks-1/",
+      "admission refuses non-project archive https://mekhovov.github.io/other-1/",
+      "admission refuses non-project archive https://mekhovov.github.io/revealline-soundtracks-1/?q=x",
+      "admission refuses non-project archive http://mekhovov.github.io/revealline-soundtracks-1/",
+      "low free-space preflight creates no output",
+      "a failed write removes only its own new staging directory",
+      "CLI help and empty-publication staging are read-only and never invoke publication",
+      "real archived CLI builds reviewed soundtrack metadata without installed formatter dependencies"
+    ]
+  },
+  "candidate": {
+    "passed": 12,
+    "failed": 17,
+    "failures": [
+      "zero approved recordings creates no output directory or placeholder archive",
+      "approved exact MP3 is staged once with pinned runtime inventory, reproducible catalogue candidate and credits",
+      "identical approved recording bytes are deduplicated while both track credits remain pinned",
+      "archive restaging reads approved source delivery after hosted admission removes the local runtime payload",
+      "an allowed recording alias cannot stage audio narrowed by another trusted same-hash entry",
+      "refuses unreviewed before copying any MP3",
+      "refuses restricted before copying any MP3",
+      "refuses changed bytes before copying any MP3",
+      "refuses wrong MP3 metadata before copying any MP3",
+      "admission refuses non-project archive https://other.github.io/revealline-soundtracks-1/",
+      "admission refuses non-project archive https://mekhovov.github.io/other-1/",
+      "admission refuses non-project archive https://mekhovov.github.io/revealline-soundtracks-1/?q=x",
+      "admission refuses non-project archive http://mekhovov.github.io/revealline-soundtracks-1/",
+      "low free-space preflight creates no output",
+      "a failed write removes only its own new staging directory",
+      "CLI help and empty-publication staging are read-only and never invoke publication",
+      "real archived CLI builds reviewed soundtrack metadata without installed formatter dependencies"
+    ]
+  },
+  "identicalFailureNames": true,
+  "candidateRestored": true,
+  "recovery": "/tmp/compact-soundtrack-recovery-20261002-8f9b55",
+  "exitCode": 1
+}
