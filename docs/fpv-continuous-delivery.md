@@ -991,3 +991,40 @@ changes; continue R5 hangar/meadow environment/material polish on a separate
 branch, preserving this completed school PR. Human novice sessions, fluent-UK
 review, real controllers, sustained device measurements and R7 unit coverage are
 still qualification work; do not fabricate them or block independent art work.
+
+### 2 October — quieter motors and continuous readable stick cues
+
+Focused branch `codex/fpv-readable-stick-motion` begins at #940 head
+`963d55ab8475230d7bc9d32fc251770655067992`. The learning lab now uses constant
+0.5× recorded playback across objectives, exact filled example markers and an
+explicitly separate 80 ms hollow motion guide. Both SIM hosts share a bounded
+450 ms input trail with an origin ring and latest-direction chevron. Small
+counter-movements preserve their direction without amplifying input. Motor arcs
+are thinner and dimmer; cyan live input stays unsmoothed. Academy diagrams are
+outside its former 100 ms text-HUD throttle. See `fpv-readable-stick-motion.md`.
+
+Current browser receipts in `docs/evidence/fpv-stick-motion-*-20261002.json`:
+69/69 focused checks including all58 exact lesson replays and8 locale/layout
+combinations;119/119 complete lesson/takeover/manual-progression checks;4/4 actual
+Academy/World input-host checks with real renderer preparation. Synthetic key
+changes reached observed host dots in9.6–32.5 ms in this local run; this is a
+fixture observation, not physical-radio latency or sustained device performance.
+Current receipt input hashes match the source. Focused lint, formatting, syntax
+and diff checks pass; source review caught and corrected the short-reversal
+arrow direction before the final browser rerun. No additional unit coverage or
+new human/hardware qualification is claimed.
+
+Disk pressure initially required removing7 task-generated reproducible candidate
+ZIPs (47,825,325bytes):6 skills-final archives and1 reimport-playtest archive.
+Source, unpacked players, proofs, manifests and receipts were retained; unrelated
+radio/menu and graphics work is untouched. The host verification fixture needed
+one escaped script terminator corrected before its successful run; production
+validation was not weakened.
+
+Native stack902 still ends #938 → #939 → #940; parent remote head unchanged.
+Its current checks only show skipped unallocated-stage jobs, not passing merge
+gates. Preserve all upstream holds and stack889. Next: freeze/package this
+focused increment, rebuild both reviewed-player and continuous-school player
+URLs, publish/attach its child PR and append through the native API. Public
+availability still requires protected merge, deployment identity and actual
+public launch. The remaining R4–R7 art/qualification backlog is unchanged.

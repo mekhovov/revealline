@@ -1,6 +1,6 @@
 import { STICK_LAYOUTS, DEFAULT_RESPONSE, neutralFlightInput } from './radio-profile.mjs';
 import { createFlight, FLIGHT_HZ } from './model.mjs';
-import { mountDroneDiagram, practiceSkillFeedback } from './sim-presentation.mjs';
+import { mountDroneDiagram, mountStickTrace, practiceSkillFeedback } from './sim-presentation.mjs';
 import {
   ACRO_LESSON_ORDER,
   EXPERIENCED_LESSON_ORDER,
@@ -585,6 +585,7 @@ export function mountBeginnerCoach({
     labFrameId = null;
     labLastTime = null;
     labAccumulator = 0;
+    clearStickMotion();
     paintLab();
   }
   const recordedCommand = (frame) => ({
@@ -595,6 +596,7 @@ export function mountBeginnerCoach({
     actions: frame[4],
   });
   function prepareExample({ fromStep = viewedStep } = {}) {
+    clearStickMotion();
     labFlight?.dispose?.();
     labFlight = null;
     labLesson = labScope === 'lesson' && hasLessonPreview();
@@ -659,15 +661,15 @@ export function mountBeginnerCoach({
       AXES.map((axis) => [axis, (labState.lastInput?.[axis] ?? 0) / 1000]),
     );
   }
-  const examplePace = () =>
-    labLesson && lessonTimeline
-      ? Math.min(
-          0.5,
-          (lessonTimeline[viewedStep + 1] - lessonTimeline[viewedStep]) / (FLIGHT_HZ * 4),
-        )
-      : labPlan
-        ? 0.5
-        : EXAMPLE_PACE;
+  // One recorded clock across the whole manoeuvre. Objective boundaries must
+  // not accelerate/decelerate the drone or transmitter presentation.
+  const examplePace = () => (labLesson || labPlan ? 0.5 : EXAMPLE_PACE);
+  function clearStickMotion() {
+    for (const stick of refs.sticks ?? []) {
+      stick.trace?.reset();
+      stick.guide = null;
+    }
+  }
   function resetPreview() {
     pausePreview('ready');
     prepareExample();
@@ -689,6 +691,7 @@ export function mountBeginnerCoach({
       clearLabInput();
       labMode = 'try';
       labSource = source;
+      clearStickMotion();
       // Keyboard and touch take over the current preview without dropping its
       // throttle. Radio uses its actual calibrated value, never this handoff.
       labInput.throttle = throttle;
@@ -1124,17 +1127,59 @@ export function mountBeginnerCoach({
       const text = `${(state.position.y / 1000).toFixed(1)} ${t('m height', 'м висоти')} · ${(Math.hypot(state.velocity.x, state.velocity.z) / 1000).toFixed(1)} ${t('m/s drift', 'м/с дрейфу')} · ${(Math.max(Math.abs(state.attitude.roll), Math.abs(state.attitude.pitch)) / 100).toFixed(1)}° ${t('tilt', 'нахилу')}`;
       if (refs.labTelemetry.textContent !== text) refs.labTelemetry.textContent = text;
     }
-    for (const stick of refs.sticks ?? []) {
-      const x = input[stick.h],
-        y = stick.v === 'throttle' ? input[stick.v] * 2 - 1 : input[stick.v];
-      stick.live.style.display = labMode === 'try' ? '' : 'none';
-      stick.suggestion.style.display = labMode === 'example' ? '' : 'none';
-      stick.live.setAttribute('cx', 90 + x * 60);
-      stick.live.setAttribute('cy', 90 - y * 60);
-      stick.suggestion.style.transform = `translate(${x * 60}px, ${-y * 60}px)`;
-      const text = `${axisName(stick.h)} ${Math.round(x * 100)}% · ${axisName(stick.v)} ${Math.round(input[stick.v] * 100)}%`;
-      if (stick.readout.textContent !== text) stick.readout.textContent = text;
-    }
+    for (const stick of refs.sticks ?? []) paintStick(stick, input, true);
+  }
+  function paintStick(stick, input, preview = false) {
+    const x = input[stick.h],
+      y = stick.v === 'throttle' ? input[stick.v] * 2 - 1 : input[stick.v],
+      example = preview && labMode === 'example',
+      now = win.performance?.now?.() ?? Date.now(),
+      reducedMotion = Boolean(snapshot.reducedMotion);
+    // The small filled marker and readout always show the exact applied command.
+    // Only the separately labelled hollow movement guide eases between samples.
+    stick.live.style.display = example ? 'none' : '';
+    stick.exampleInput.style.display = example ? '' : 'none';
+    stick.suggestion.style.display = example && !reducedMotion ? '' : 'none';
+    stick.live.setAttribute('cx', 90 + x * 60);
+    stick.live.setAttribute('cy', 90 - y * 60);
+    stick.exampleInput.setAttribute('cx', 90 + x * 60);
+    stick.exampleInput.setAttribute('cy', 90 - y * 60);
+    let gx = x,
+      gy = y;
+    const guide = stick.guide;
+    if (
+      example &&
+      labRunning &&
+      !reducedMotion &&
+      guide &&
+      now >= guide.time &&
+      now - guide.time <= 150
+    ) {
+      const fraction = clamp((now - guide.started) / 80, 0, 1);
+      gx = guide.fromX + (guide.targetX - guide.fromX) * fraction;
+      gy = guide.fromY + (guide.targetY - guide.fromY) * fraction;
+      if (x !== guide.targetX || y !== guide.targetY) {
+        guide.fromX = gx;
+        guide.fromY = gy;
+        guide.targetX = x;
+        guide.targetY = y;
+        guide.started = now;
+      }
+      guide.time = now;
+    } else stick.guide = { fromX: x, fromY: y, targetX: x, targetY: y, started: now, time: now };
+    stick.suggestion.style.transform = `translate(${gx * 60}px, ${-gy * 60}px)`;
+    stick.trace.update({
+      x,
+      y,
+      now,
+      source: `${example ? 'example' : preview ? labSource : snapshot.source}:${stick.h}:${stick.v}`,
+      reducedMotion,
+      available: preview
+        ? labRunning
+        : !(snapshot.source === 'radio' && snapshot.monitorAvailable === false),
+    });
+    const text = `${axisName(stick.h)} ${Math.round(x * 100)}% · ${axisName(stick.v)} ${Math.round(input[stick.v] * 100)}%`;
+    if (stick.readout.textContent !== text) stick.readout.textContent = text;
   }
   function makeStick(side, layout, step) {
     const section = node('section', 'coach-stick'),
@@ -1173,11 +1218,14 @@ export function mountBeginnerCoach({
     suggestion.style.setProperty('--coach-target-x', `${targetX}px`);
     suggestion.style.setProperty('--coach-target-y', `${targetY}px`);
     suggestion.append(svg('circle', { cx: 90, cy: 90, r: 11, class: 'coach-target-dot' }));
+    const trace = mountStickTrace(drawing);
+    viewReleases.push(() => trace.dispose());
+    const exampleInput = svg('circle', { cx: 90, cy: 90, r: 4.5, class: 'coach-example-input' });
     const live = svg('circle', { cx: 90, cy: 90, r: 6, class: 'coach-live-dot' });
     suggestion.style.animation = 'none';
     drawing.classList.add('coach-stick-pad');
     bindGimbal(drawing, h, v);
-    drawing.append(suggestion, live);
+    drawing.append(suggestion, exampleInput, live);
     const labels = node('div', 'coach-stick-axes');
     for (const axis of [v, h]) {
       const label = node('p', axis === step.axis ? 'is-focus' : '');
@@ -1202,7 +1250,18 @@ export function mountBeginnerCoach({
       drawing,
     );
     section.append(gimbal, labels, readout);
-    refs.sticks.push({ live, suggestion, readout, h, v, section, labels });
+    refs.sticks.push({
+      live,
+      suggestion,
+      exampleInput,
+      trace,
+      readout,
+      h,
+      v,
+      section,
+      labels,
+      guide: null,
+    });
     return section;
   }
   function makeDrone() {
@@ -1524,7 +1583,8 @@ export function mountBeginnerCoach({
       const legend = node('p', 'coach-dot-legend');
       legend.append(
         node('span', 'coach-legend-live', t('Your preview input', 'Ваш сигнал перегляду')),
-        node('span', 'coach-legend-example', t('Example movement', 'Приклад руху')),
+        node('span', 'coach-legend-example-input', t('Example input', 'Сигнал прикладу')),
+        node('span', 'coach-legend-example', t('Movement guide', 'Підказка руху')),
       );
       controller.append(
         legend,
@@ -1532,16 +1592,8 @@ export function mountBeginnerCoach({
           'p',
           'coach-example-note',
           t(
-            isExploring()
-              ? 'Full travel shown slowly. Use small corrections in flight. Hollow dots show the example; solid dots show your actual input at normal speed.'
-              : labLesson
-                ? 'Hollow dots show the complete lesson’s recorded controls. Descriptions follow the actual objectives. Solid dots show your live input at normal speed.'
-                : 'Hollow dots show this step’s actual example commands. Small corrections are intentional. Solid dots show your live input at normal speed.',
-            isExploring()
-              ? 'Повний хід показано повільно. У польоті коригуйте малими рухами. Порожні крапки — приклад; суцільні — ваш справжній сигнал зі звичайною швидкістю.'
-              : labLesson
-                ? 'Порожні крапки показують записане керування повним уроком. Описи слідують за справжніми цілями. Суцільні — ваш сигнал зі звичайною швидкістю.'
-                : 'Порожні крапки показують справжні команди прикладу цього кроку. Малі поправки навмисні. Суцільні — ваш сигнал зі звичайною швидкістю.',
+            'The small amber dot shows exact example input; the hollow ring follows its movement. The short trail shows where the stick came from. Your cyan dot responds immediately.',
+            'Мала жовта крапка показує точний сигнал прикладу; порожнє коло допомагає простежити рух. Короткий слід показує, звідки рухався стік. Ваша блакитна крапка реагує відразу.',
           ),
         ),
       );
@@ -1689,14 +1741,7 @@ export function mountBeginnerCoach({
               'Use the keyboard, touch a gimbal or move a calibrated controller to take over. Preview results never count toward the lesson.',
               'Скористайтеся клавіатурою, торкніться джойстика або рухайте каліброваним пультом, щоб керувати. Результати перегляду не зараховуються до уроку.',
             );
-    for (const stick of stage === 'guide' ? [] : refs.sticks) {
-      const x = input[stick.h],
-        y = stick.v === 'throttle' ? input[stick.v] * 2 - 1 : input[stick.v];
-      stick.live.setAttribute('cx', 90 + x * 60);
-      stick.live.setAttribute('cy', 90 - y * 60);
-      const text = `${axisName(stick.h)} ${Math.round(x * 100)}% · ${axisName(stick.v)} ${Math.round(input[stick.v] * 100)}%`;
-      if (stick.readout.textContent !== text) stick.readout.textContent = text;
-    }
+    if (stage !== 'guide') for (const stick of refs.sticks) paintStick(stick, input);
     const state = stage === 'guide' && labLesson ? labState : snapshot.state,
       at = state?.attitude;
     const values = {
