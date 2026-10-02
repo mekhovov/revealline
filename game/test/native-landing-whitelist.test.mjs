@@ -56,6 +56,7 @@ function assertLanding(page, { root, actions, modes }) {
   assert.ok(song && !song.querySelector('button,a[href],input,select'));
 }
 const soloActions = [
+  'solo-fpv-sim',
   'shell-featured',
   'shell-play',
   'shell-options',
@@ -182,6 +183,7 @@ test('Versus and Team keep their complete lobby actions within the same whitelis
     assertLanding(page, {
       root: 'race-main',
       actions: [
+        'versus-fpv-sim',
         'race-start',
         'race-chapters',
         'race-options',
@@ -207,6 +209,7 @@ test('Versus and Team keep their complete lobby actions within the same whitelis
     assertLanding(page, {
       root: 'coop-menu',
       actions: [
+        'team-fpv-sim',
         'coop-start',
         'coop-discovery-open',
         'coop-settings-open',

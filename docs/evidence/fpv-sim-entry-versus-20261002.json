@@ -1,0 +1,91 @@
+{
+  "complete": true,
+  "passed": 6,
+  "total": 6,
+  "receipts": [
+    {
+      "mode": "versus",
+      "locale": "en",
+      "width": 390,
+      "repetition": 0,
+      "pass": true,
+      "launch": "http://127.0.0.1:8796/optional-practice/fpv-worlds/index.html?lang=en#learn",
+      "visibleEntries": [
+        "Solo",
+        "Versus",
+        "Team",
+        "FPV SIM"
+      ]
+    },
+    {
+      "mode": "versus",
+      "locale": "uk",
+      "width": 390,
+      "repetition": 0,
+      "pass": true,
+      "launch": "http://127.0.0.1:8796/optional-practice/fpv-worlds/index.html?lang=uk#learn",
+      "visibleEntries": [
+        "Соло",
+        "Дуель",
+        "Команда",
+        "FPV SIM"
+      ]
+    },
+    {
+      "mode": "versus",
+      "locale": "en",
+      "width": 390,
+      "repetition": 1,
+      "pass": true,
+      "launch": "http://127.0.0.1:8796/optional-practice/fpv-worlds/index.html?lang=en#learn",
+      "visibleEntries": [
+        "Solo",
+        "Versus",
+        "Team",
+        "FPV SIM"
+      ]
+    },
+    {
+      "mode": "versus",
+      "locale": "uk",
+      "width": 390,
+      "repetition": 1,
+      "pass": true,
+      "launch": "http://127.0.0.1:8796/optional-practice/fpv-worlds/index.html?lang=uk#learn",
+      "visibleEntries": [
+        "Соло",
+        "Дуель",
+        "Команда",
+        "FPV SIM"
+      ]
+    },
+    {
+      "mode": "versus",
+      "locale": "en",
+      "width": 390,
+      "repetition": 2,
+      "pass": true,
+      "launch": "http://127.0.0.1:8796/optional-practice/fpv-worlds/index.html?lang=en#learn",
+      "visibleEntries": [
+        "Solo",
+        "Versus",
+        "Team",
+        "FPV SIM"
+      ]
+    },
+    {
+      "mode": "versus",
+      "locale": "uk",
+      "width": 390,
+      "repetition": 2,
+      "pass": true,
+      "launch": "http://127.0.0.1:8796/optional-practice/fpv-worlds/index.html?lang=uk#learn",
+      "visibleEntries": [
+        "Соло",
+        "Дуель",
+        "Команда",
+        "FPV SIM"
+      ]
+    }
+  ]
+}
