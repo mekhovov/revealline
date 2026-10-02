@@ -1734,3 +1734,15 @@ bytes545,596/3,825,812/14,079,797 remain within8/8/16MiB. Receipt:
 updated:92 runtime files/13,922,478 bytes; ZIP SHA256
 `6409a64a29bc5bc089a692009eeceff6eb265050773844e66ae85e154dbe50d9`.
 This is a local player build; protected publication/deployment remains separate.
+
+Touch usability is published and attached as
+[PR #959](https://github.com/mekhovov/revealline/pull/959),
+`codex/fpv-touch-flight`, directly against main. Old stack957 is closed; no
+manual retargeting or redundant stack was created. The updated reviewed-player
+URL launched the real school in Self-level/Touch with no application errors;
+its phone view is captured at `/tmp/fpv-touch-final-player.png`. The player is
+left paused with mode and touch-response choices available. No public-live
+claim is made for959 until deployment identity and actual public launch pass.
+Next independent approved work remains C2 meadow exterior composition on current
+main; keep that work off this ready PR. Preserve Themes955 ownership and pending
+physical-device qualification. Inspect exact remote heads before any merge.
