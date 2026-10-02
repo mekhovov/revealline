@@ -883,3 +883,10 @@ unchanged. The actual rebuilt local player is87 files /12,680,675bytes,
 ZIP SHA-256 `bf4312b51e84a447a5a04d1394eee9d3487336c938af998621b3d2f5a838d307`.
 The reviewed-player URL is rebuilt from the same frozen runtime. Public merge
 and deployment remain separate protected gates.
+
+### 2 October — continuous school published for review
+
+- Focused PR [#938](https://github.com/mekhovov/revealline/pull/938) published from `codex/fpv-continuous-school`, runtime `b102350083203ac6f0f612b80c0e09eb085816ae`, qualified receipt head `e71bf713e4f8502c8fd556397aad2c789713a58f`.
+- Attached to this chat and appended through the native API to stack #902 directly after #935. Upstream holds and protections remain; this is review publication, not verified public deployment.
+- The user’s `dist/fpv-reviewed-player-playtest` local entry and `dist/fpv-continuous-school-playtest` contain the qualified package recorded above.
+- Next independent increment: 16 distinct Experienced/Advanced navigation and precision lessons, tier navigation and exact replay demonstrations, on `codex/fpv-navigation-school`. Pro/Master criterion extensions remain separate until their authored demonstrations qualify.
