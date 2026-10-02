@@ -1944,8 +1944,8 @@ const NEW_ACRO_LESSONS = Object.freeze([
           'Приберіть газ, центруйте решту осей і увімкніть мотори. Потримайте дрон нерухомо на майданчику перед додаванням тяги.',
         ],
         [
-          'Arming and adding throttle are separate actions. Inspect the live dots: they show your input, while the outlined dots illustrate an example.',
-          'Увімкнення моторів і додавання газу — різні дії. Суцільні точки показують ваші стіки, контурні — приклад.',
+          'Arming and adding throttle are separate actions. Cyan dots show your live input; amber dots show recorded example input. The hollow guide and short trail help you follow the movement.',
+          'Увімкнення моторів і додавання газу — різні дії. Блакитні крапки показують ваш сигнал, жовті — записаний приклад. Порожня підказка й короткий слід допомагають простежити рух.',
         ],
         'throttle',
         'hover',

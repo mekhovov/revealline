@@ -154,3 +154,15 @@ three optional packages passed frozen-input admission and reproducibility, and
 the rebuilt player URL was launched; no public live, physical-radio or human acceptance is claimed.
 See [FPV endless controls practice](fpv-endless-practice.md) for behavior and
 limits. R4–R7 estimates and scope, including deferred unit coverage, are unchanged.
+
+### Player feedback refinement — readable stick motion, 2 October 2026
+
+Deliver as a focused child of Pro/Master school #940: quieter motor arcs,
+short truthful stick trails and direction cues in both SIM hosts, constant
+whole-lesson playback pace, and an explicitly separate hollow movement guide
+for recorded examples. Keep live controls unsmoothed, preserve replay identities,
+and clear presentation history on pauses, seeking, loops and ownership changes.
+Estimate: **one working day**, including browser verification and publication.
+See [Readable FPV stick motion](fpv-readable-stick-motion.md) for the implementation,
+research and qualification boundaries. R4–R7 art, device/player acceptance and
+deferred unit coverage remain unchanged.
