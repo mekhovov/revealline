@@ -3,9 +3,9 @@
 The implementation is published on `codex/unified-appearance-20261002` against
 `main`. It includes the complete appearance changes rather than depending on the
 already merged personal-best ghost PR #913. Baseline route/harness repairs are a
-separate commit. The integration preserves main at `09b40cdfa`, including the new
+separate commit. The integration preserves main at `fc0eaf978`, including the new
 SIM entry/practice directory, mobile and pause geometry, flight lifecycle, radio
-and replay behavior, menu capture routes and garage demonstrations.
+and replay behavior, menu capture routes, garage demonstrations and hangar surfaces.
 
 ## Testable preview
 
@@ -21,7 +21,7 @@ historical receipts; they are not acceptance evidence for a later PR build.
 
 ## Integrated verification
 
-The source is integrated with main at `09b40cdfa`. The initial local verification
+The source is integrated with main at `fc0eaf978`. The initial local verification
 below predates the final capacity repair and main merge; the exact source identities
 are recorded in each receipt. Local checks use Node 20.19.5;
 the PR preview pins Node 22.13.1 and records its exact head and source tree.
@@ -41,7 +41,7 @@ the PR preview pins Node 22.13.1 and records its exact head and source tree.
 These suites overlap and should not be added into a unique-test total. Earlier
 full-suite failure classifications are retained as historical evidence; no
 full-suite pass is claimed. Current-main package limits remain unchanged at
-Academy 72 files / 8 MiB and World 104 files / 16 MiB, including source archives. Final admitted Academy uses 67 runtime / 69 source
+Academy 72 files / 8 MiB and World 104 files / 16 MiB, including source archives. Before the final hangar merge, admitted Academy uses 67 runtime / 69 source
 files (4,095,466 / 4,123,721 bytes); World uses 99 / 101 files
 (14,106,740 / 14,139,819 bytes).
 [Package closure receipt](publication/package-bounds.json).
@@ -67,7 +67,7 @@ pass 40; independent adversarial lexical review found no blocking issue.
 [runtime checks](publication/edition-runtime-indent.tap),
 [compiler checks](publication/edition-capacity-tests.tap).
 
-After the final main merge, clean source `ee855c377` produces **66,673,106 bytes**
+After the menu/garage main merge, clean source `ee855c377` produces **66,673,106 bytes**
 across 830 files, with **435,758 bytes remaining**. Archive admission, current/four
 retained presentation identities and all 77 selected media originals pass again.
 Runtime checks pass **15/15**, and the integrated menu suite passes **39/39**.
@@ -75,8 +75,27 @@ Runtime checks pass **15/15**, and the integrated menu suite passes **39/39**.
 [final runtime checks](publication/edition-runtime-indent-final.tap),
 [final menu checks](publication/menu-scenes-final.tap).
 
-The preview workflow now includes the two compiler/runtime suites as well as its
-initial appearance cohort. Later artifacts record their actual test list and head.
+The expanded 30-file preview cohort passed **279/279** in CI on `7b049aec6`,
+with successful game/Worlds archives, community candidate admission, default
+capacity and optional-package checks. That artifact predates the final narrow
+hangar integration; later artifacts record their actual test list and head.
+
+Main subsequently merged the hangar surface refinement. Its concrete slab scale,
+painted-steel panel projection and rubber service strips are preserved alongside
+the shared theme roles and bounded texture sampling. Authored appearance uses
+main’s surface recipe; explicitly selected collections retain their own material
+recipes. Runtime geometry and flight data remain outside this presentation change.
+
+The final hangar integration passes **36/36** focused visual/appearance checks.
+Authored rendering inputs match main exactly at all three quality presets; an
+independent review checks all eight collections and three presets for theme
+bindings, bounded sampling and one-time resource disposal. Academy now uses
+67/69 runtime/source files (4,098,781 / 4,127,036 bytes); World uses 99/101
+(14,360,707 / 14,393,786 bytes), within the unchanged caps. No new browser or
+physical-GPU acceptance is claimed.
+[Focused checks](publication/hangar-merge-tests.tap),
+[surface parity](publication/hangar-merge-surfaces.json),
+[package admission](publication/hangar-package-bounds.json).
 
 ## Scope delivered
 
