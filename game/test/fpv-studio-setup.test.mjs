@@ -166,6 +166,7 @@ test('Radio setup import, explicit verification and save retain switch threshold
   let next = 0,
     selected,
     saved,
+    profileDirty = false,
     missing = false;
   const pad = {
     id: 'Test USB radio',
@@ -210,6 +211,12 @@ test('Radio setup import, explicit verification and save retain switch threshold
     switches: { arm: { button: 0, threshold: 0.75, invert: true }, pause: null, reset: null },
   };
   const runtime = {
+    beginSetup() {},
+    endSetup() {},
+    editProfile() {
+      profileDirty = true;
+    },
+    status: () => ({ profileDirty, selected: null, profile: null }),
     devices: () => ({ status: 'available', devices: [{ ...pad, axes: 4, buttons: 2 }] }),
     raw: () => (missing ? null : pad),
     select: (id) => {
@@ -223,6 +230,11 @@ test('Radio setup import, explicit verification and save retain switch threshold
     freeze() {},
   };
   const setup = mountRadioSetup({ container: f.container, window: win, runtime });
+  const setupStatus = () =>
+    f.container
+      .querySelectorAll('[role="status"]')
+      .map((node) => node.textContent)
+      .join('\n');
   t.after(() => setup.dispose());
   const device = f.input('Device', 'select');
   device.value = '1';
@@ -243,14 +255,14 @@ test('Radio setup import, explicit verification and save retain switch threshold
   assert.deepEqual(saved.switches, profile.switches);
   missing = true;
   assert.doesNotThrow(() => device.emit('change'));
-  assert.match(f.container.querySelector('[role="status"]').textContent, /Choose a device/);
+  assert.match(setupStatus(), /Choose a device/);
   f.click('Save verified profile');
-  assert.match(f.container.querySelector('[role="status"]').textContent, /incomplete/);
+  assert.match(setupStatus(), /incomplete/);
   missing = false;
   device.emit('change');
   f.click('Record full travel');
   f.click('I checked the animated sticks and their direction');
-  assert.match(f.container.querySelector('[role="status"]').textContent, /incomplete/);
+  assert.match(setupStatus(), /incomplete/);
 });
 
 test('Acro notebook review chooses only evidence satisfying its mode rule', async (t) => {
