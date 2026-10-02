@@ -1186,3 +1186,14 @@ Receipt: `docs/evidence/fpv-step-boundary-package-20261002.json`. Both local pla
 paths now share the87-file/13,949,386-byte build and SHA above. The actual built
 turning lesson's paused second step was inspected with49% retained; screenshot
 `/tmp/fpv-step-input-continuity-20261002.png`. Ready for focused publication.
+
+### 2 October — lesson continuity fix published
+
+[#944](https://github.com/mekhovov/revealline/pull/944) is attached to this chat
+and appended via the native API to stack902 after #943. Qualification head:
+`674d88439da2d8e012b5e900d32b611beacca778`; frozen runtime remains a4df52c7.
+No upstream member was retargeted or rebased. CI/merge/public availability remain
+external follow-up; do not infer passing gates from skipped or absent checks.
+The corrected player is left on the paused coordinated-turn lesson for review.
+Next independent work remains the reviewed R5 art backlog, with physical-device
+acceptance and R7 coverage still outstanding; preserve all older stack holds.
