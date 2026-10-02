@@ -64,3 +64,25 @@ school URLs now contain integrated main plus C4, with92files/13,932,487bytes
 and identical ZIP SHA256
 `fc3ddb63c13c02f36968f75d384a2e12fee932e10c8eefe6cc126affec92fe13`.
 The dedicated woodland player remains paused at a ready Crossing trail flight.
+
+## Published continuation
+
+Published as [PR #964](https://github.com/mekhovov/revealline/pull/964). Merged
+Neon #883 and the subsequent Pages profile #965 without changing C4 rendering
+or simulation inputs. Latest frozen candidate
+`0f6313c0c891501cf236d3cbe5473a575639201b` passes all three optional admissions,
+committed-input/ZIP checks and two identical builds. All runtime members except the source-bound
+manifest and generated offline-worker identity match the earlier `589ddb664`
+candidate exactly (98 unchanged World Studio members). The dedicated EN/UK
+browser launch on that package remains applicable to rendering and controls;
+this is not a new installed/offline identity check. See the adjacent main883-player and
+main965-package receipts. Both launches stayed paused with zero throttle and no
+application errors. Temporary extracted verification copies are reproducible
+from the retained candidate and were cleaned to recover local disk space.
+
+Normal reviewed-player, continuous-school and dedicated woodland URLs were
+refreshed from the latest merged source. All three remain byte-identical to the
+qualified local ZIP above. CI/review and public deployment remain outstanding;
+this document does not claim that #964 is publicly live. The separate lossless
+capacity repair #963 preserves all 209 artwork owners after Neon and is required
+to resolve the unrelated whole-edition capacity failure.

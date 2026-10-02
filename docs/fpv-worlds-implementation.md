@@ -10,8 +10,10 @@ not the current catalogue count. Native content stack #889, reimport #922 and
 ghosts #913, World Adventures #947 and offline SIM #933 are integrated on the
 current main baseline. Section practice #951, lifecycle #952, all 178 original/
 school demonstrations #954, Hangar #956, touch/mode choice #959, meadow #960 and
-courtyard #961 are merged. The next focused increment is woodland bark and
-forest-floor presentation; follow the delivery log for qualification/publication.
+courtyard #961 are merged. Woodland bark and
+forest-floor presentation is published as #964 with source/package verification.
+The next focused increment is Warehouse storage-surface and UV refinement;
+follow the delivery log for exact qualification/publication status.
 Physical-device, novice-player and broader production-art acceptance remain open.
 
 The current workstream prioritizes functioning features and direct player
