@@ -20,8 +20,14 @@ import { createRadioRuntime } from './radio-runtime.mjs';
 import { restoreVerifiedRadio } from './radio-session.mjs';
 import { mountRadioSetup } from './radio-setup.mjs';
 import { mountFlightFullscreen } from './flight-fullscreen.mjs';
-import { mountSimPresentation } from './sim-presentation.mjs';
-import { createFlightInput } from './input.mjs';
+import {
+  mountSimPresentation,
+  mountDroneResponse,
+  mountSimAudioControls,
+  paintStickDirections,
+  mountStickTrace,
+} from './sim-presentation.mjs';
+import { createFlightInput, createFlightMenuNavigation, createFlightGamepad } from './input.mjs';
 import { createFlightRenderer } from './renderer.mjs';
 import { COPY } from './copy.mjs';
 import { mountFlightNotebook } from './notebook.mjs';
@@ -104,17 +110,26 @@ export function mountFlightApp({
     disposed = false,
     suspended = false,
     graphicsLost = false,
+    sceneReady = false,
+    sceneGeneration = 0,
+    scenePreparation = null,
+    pendingScene = Promise.resolve(false),
+    pauseGeneration = 0,
     focused = typeof doc.hasFocus === 'function' ? doc.hasFocus() : true,
     epoch = 0,
     lastRadioDiscovery = -Infinity,
     message = null;
   const c = () => COPY[locale],
     messageText = (key) =>
-      key === 'arm-switch-off'
+      key === 'preparingGraphics'
         ? locale === 'uk'
-          ? 'Перемкніть озброєння в УВІМК, щоб почати.'
-          : 'Move the arm switch ON to start.'
-        : (c()[key] ?? key),
+          ? 'Підготовка графіки…'
+          : 'Preparing graphics…'
+        : key === 'arm-switch-off'
+          ? locale === 'uk'
+            ? 'Перемкніть озброєння в УВІМК, щоб почати.'
+            : 'Move the arm switch ON to start.'
+          : (c()[key] ?? key),
     say = (value) => {
       if ($('status').textContent !== value) $('status').textContent = value;
     };
@@ -145,15 +160,28 @@ export function mountFlightApp({
     notebook: ['Notebook', 'Записник'],
     help: ['Flight guide', 'Довідник польоту'],
     controls: ['Controls', 'Керування'],
+    flightMenu: ['Menu', 'Меню'],
+    returnToFlight: ['Back to flight', 'До польоту'],
+    controller: ['Controller / Steam Deck', 'Контролер / Steam Deck'],
     radioSetup: ['Radio setup', 'Налаштувати пульт'],
     flightOptions: ['Flight options', 'Параметри польоту'],
     viewAndSound: ['View & sound', 'Вигляд і звук'],
+    audioMixHelp: [
+      'Volume is shared with World Studio. Muting keeps your chosen level.',
+      'Гучність спільна зі Студією світів. Вимкнення звуку зберігає вибраний рівень.',
+    ],
     optionsPause: [
       'Your flight pauses while you adjust the view.',
       'Поки ви змінюєте вигляд, політ на паузі.',
     ],
     stickDisplay: ['Live sticks', 'Стіки керування'],
     compact: ['Compact', 'Компактні'],
+    droneResponse: ['Drone response', 'Реакція дрона'],
+    learning: ['Learning', 'Навчальна'],
+    off: ['Off', 'Вимкнено'],
+    guideScale: ['Guide text', 'Текст схеми'],
+    standard: ['Standard', 'Стандартний'],
+    large: ['Large', 'Збільшений'],
     expanded: ['Expanded', 'Збільшені'],
     done: ['Done', 'Готово'],
     keyboardGuide: ['Keyboard controls', 'Клавіатура'],
@@ -183,11 +211,52 @@ export function mountFlightApp({
     preferenceKey: 'revealline.fpv.academy-menu-sound.v1',
     onSoundChange: updateSoundLabel,
   });
+  const audioControls = mountSimAudioControls({
+    root: $('academy-audio-mix'),
+    window: win,
+    locale: () => locale,
+    channels: ['interface'],
+    onChange: (levels) => presentation.setVolume(levels.interface),
+  });
   updateSoundLabel(presentation.soundEnabled());
+  const droneResponse = mountDroneResponse({
+    root: $('academy-drone-response'),
+    window: win,
+    onHide: () => {
+      $('academy-drone-guide').value = 'off';
+      saveGuidePreferences();
+      paint(true);
+    },
+  });
+  const stickTraces = ['left-dot', 'right-dot'].map((id) =>
+    mountStickTrace($(id).parentElement, { travel: 180 * 0.3 }),
+  );
+  const touchTraces = ['left-stick', 'right-stick'].map((id) =>
+    mountStickTrace($(id), { travel: 35 }),
+  );
+  const resetStickTraces = () => [...stickTraces, ...touchTraces].forEach((trace) => trace.reset());
+  let stickTraceLayout = '';
+  const saveGuidePreferences = () => {
+    try {
+      win.localStorage?.setItem(
+        'revealline.fpv.academy-guide.v1',
+        JSON.stringify({
+          display: $('academy-drone-guide').value,
+          scale: $('academy-guide-scale').value,
+        }),
+      );
+    } catch {
+      /* The guide is usable without storage. */
+    }
+  };
   try {
     const saved = win.localStorage?.getItem('revealline.fpv.academy-sticks.v1');
     if (['compact', 'expanded'].includes(saved) && $('academy-stick-display'))
       $('academy-stick-display').value = saved;
+    const guide = JSON.parse(win.localStorage?.getItem('revealline.fpv.academy-guide.v1') ?? '{}');
+    if (['compact', 'learning', 'off'].includes(guide.display))
+      $('academy-drone-guide').value = guide.display;
+    if (['standard', 'large'].includes(guide.scale)) $('academy-guide-scale').value = guide.scale;
   } catch {
     /* Display preferences remain available for this session. */
   }
@@ -195,8 +264,76 @@ export function mountFlightApp({
   const input = createFlightInput({
     window: win,
     document: doc,
-    onPause: (reason) => pause(reason),
+    onPause: (reason) => (reason === 'paused' ? setFlightMenu(true) : pause(reason)),
   });
+  const controllerHint = doc.createElement('p');
+  controllerHint.id = 'academy-controller-hint';
+  controllerHint.hidden = true;
+  $('academy-flight-options').append(controllerHint);
+  const gamepad = createFlightGamepad({ window: win, document: doc });
+  const flightMenuOpen = () => $('flight-app').dataset.flightMenuOpen === 'true';
+  function setFlightMenu(open) {
+    if (open) pause();
+    $('flight-app').dataset.flightMenuOpen = String(open);
+    if (!open) $('academy-flight-options').open = false;
+    paint(true);
+    (open ? $('academy-flight-close-menu') : $('academy-flight-resume'))?.focus({
+      preventScroll: true,
+    });
+  }
+  const gamepadHelp = () =>
+    locale === 'uk'
+      ? 'A — увімкнути / продовжити · Y — скинути · Menu / B — пауза. Лівий стік: поворот і зміна газу; правий: нахил. Відпустіть лівий стік, щоб утримувати газ. D-pad — нахил, LB/RB — поворот, LT/RT — менше/більше газу.'
+      : 'A / Cross: arm · Y / Triangle: reset · Menu / B: pause. Left stick: yaw and throttle adjustment; right: tilt. Release the left stick to hold throttle. D-pad: tilt, LB/RB: yaw, LT/RT: less/more throttle. Steam Input: use a Gamepad layout.';
+  function gamepadScope() {
+    if (
+      replay ||
+      !flight ||
+      !sceneReady ||
+      !inputAvailable() ||
+      modalOpen() ||
+      flightMenuOpen() ||
+      immersive.snapshot().toolsOpen
+    )
+      return 'blocked';
+    if (flight.snapshot().status === 'active')
+      return input.owner() === 'controller' ? 'flight' : 'blocked';
+    return ['disarmed', 'paused'].includes(flight.snapshot().status) &&
+      (input.owner() !== 'radio' || !radio.status().verified)
+      ? 'ready'
+      : 'blocked';
+  }
+  function readGamepad(now, scope = gamepadScope()) {
+    let pads = [];
+    try {
+      pads = win.navigator.getGamepads?.() ?? [];
+    } catch {
+      /* Touch and keyboard remain usable. */
+    }
+    return gamepad.poll({
+      gamepads: pads,
+      now,
+      scope,
+      excludeIndex: radio.status().verified ? radio.status().selected?.index : null,
+    });
+  }
+  function pollGamepad(now) {
+    const sampled = readGamepad(now);
+    for (const action of sampled.actions) {
+      if (action === 'arm') {
+        if (input.owner() !== 'controller') {
+          input.select('controller');
+          $('input-source').value = 'controller';
+          $('touch-controls').hidden = true;
+          doc.body.classList.remove('touch-mode');
+        }
+        arm();
+      } else if (action === 'reset') {
+        setFlightMenu(false);
+        reset();
+      } else if (action === 'pause' || action === 'back') setFlightMenu(true);
+    }
+  }
   const radio = createRadioRuntime({
     getGamepads:
       typeof win.navigator?.getGamepads === 'function'
@@ -230,11 +367,49 @@ export function mountFlightApp({
     reducedMotion: !!win.matchMedia?.('(prefers-reduced-motion: reduce)').matches,
     onContextLost() {
       graphicsLost = true;
+      sceneReady = false;
+      scenePreparation?.abort();
       pause('contextLost');
       $('fallback').hidden = false;
       $('fallback').textContent = c().contextLost;
     },
   });
+  function prepareScene() {
+    scenePreparation?.abort();
+    const controller = new AbortController(),
+      generation = ++sceneGeneration;
+    scenePreparation = controller;
+    sceneReady = false;
+    $('arm').disabled = true;
+    $('watch').disabled = true;
+    message = 'preparingGraphics';
+    pendingScene = (async () => {
+      try {
+        const result = await renderer.prepare?.({ signal: controller.signal });
+        if (
+          result === false ||
+          controller.signal.aborted ||
+          disposed ||
+          generation !== sceneGeneration ||
+          graphicsLost
+        )
+          return false;
+        sceneReady = !!renderer.available;
+        $('arm').disabled = !sceneReady;
+        $('watch').disabled = !sceneReady || !!authoringCourse;
+        if (message === 'preparingGraphics') message = null;
+        paint(true);
+        return sceneReady;
+      } catch (error) {
+        if (!disposed && generation === sceneGeneration && !controller.signal.aborted) {
+          message = `${locale === 'uk' ? 'Не вдалося підготувати графіку. Повторіть спробу.' : 'Graphics preparation failed. Retry the flight.'} ${error.message}`;
+          paint(true);
+        }
+        return false;
+      }
+    })();
+    return pendingScene;
+  }
   function reset(index = selected, nextMode = mode, previewCourse = authoringCourse) {
     const nextFlight = createFlight({
       course: previewCourse ?? courses[index],
@@ -243,6 +418,7 @@ export function mountFlightApp({
     });
     cancelReview();
     epoch++;
+    gamepad.reset();
     radio.reset({ notify: false });
     input.enable(false);
     accumulator = 0;
@@ -263,14 +439,16 @@ export function mountFlightApp({
     $('mode').value = mode;
     $('complete').hidden = true;
     $('try').hidden = !authoringCourse;
-    $('arm').disabled = !renderer.available || graphicsLost;
-    $('watch').disabled = !renderer.available || graphicsLost || !!authoringCourse;
     renderer.setCourse?.(flight.course(), mode);
     renderer.setPath?.([]);
+    void prepareScene();
     paint(true);
   }
   function pause(reason = 'paused') {
     if (disposed) return;
+    pauseGeneration++;
+    gamepad.reset();
+    resetStickTraces();
     cancelReview();
     flight?.pause();
     if (replay) replay.paused = true;
@@ -283,10 +461,12 @@ export function mountFlightApp({
     paint(true);
   }
   function arm() {
+    $('academy-flight-options').open = false;
     if (
       disposed ||
       suspended ||
       !renderer.available ||
+      !sceneReady ||
       graphicsLost ||
       modalOpen() ||
       !inputAvailable() ||
@@ -294,6 +474,7 @@ export function mountFlightApp({
     )
       return false;
     immersive.closeControls();
+    $('flight-app').dataset.flightMenuOpen = 'false';
     if (replay) {
       replay.paused = false;
       replay.flight.arm();
@@ -313,6 +494,15 @@ export function mountFlightApp({
         paint(true);
         return false;
       }
+    }
+    if (input.owner() === 'controller') readGamepad(win.performance.now(), 'ready');
+    if (input.owner() === 'controller' && !gamepad.status().canArm) {
+      message =
+        locale === 'uk'
+          ? 'Під’єднайте контролер і відпустіть стіки та кнопки.'
+          : 'Connect a controller, then centre the sticks and release all buttons.';
+      paint(true);
+      return false;
     }
     input.enable(true);
     flight.arm();
@@ -400,7 +590,7 @@ export function mountFlightApp({
         if (disposed || owner !== epoch) return null;
         reviewAbort = null;
         if (closeAfter) closeDialog(closeAfter);
-        showReview(proof, kind, index, checked);
+        await showReview(proof, kind, index, checked);
         return checked;
       } catch (error) {
         if (controller.signal.aborted || disposed || owner !== epoch) return null;
@@ -416,13 +606,14 @@ export function mountFlightApp({
     pendingReview = operation.catch(() => {});
     return operation;
   }
-  function showReview(proof, kind, index, checked) {
+  async function showReview(proof, kind, index, checked) {
     selected = index;
     mode = proof.mode;
     authoringCourse = null;
     const playback = createFlight({ course: courses[index], mode, response: proof.response });
-    playback.arm();
-    replay = { proof, kind, flight: playback, at: 0, paused: false };
+    replay = { proof, kind, flight: playback, at: 0, paused: true };
+    const requestedReplay = replay,
+      requestedPause = pauseGeneration;
     $('replay-controls').hidden = false;
     $('replay-rate').value = String(replayRate);
     $('mode').value = mode;
@@ -434,6 +625,15 @@ export function mountFlightApp({
     lastExecutionTime = null;
     renderer.setCourse?.(courses[index], mode);
     renderer.setPath?.(checked.path);
+    paint(true);
+    if (!(await prepareScene()) || replay !== requestedReplay || disposed) return;
+    if (requestedPause === pauseGeneration && inputAvailable() && !modalOpen() && !suspended) {
+      playback.arm();
+      replay.paused = false;
+      accumulator = 0;
+      lastTime = null;
+      lastExecutionTime = null;
+    }
     paint(true);
   }
   function translated() {
@@ -447,6 +647,7 @@ export function mountFlightApp({
     }
     presentation.refresh();
     updateSoundLabel(presentation.soundEnabled());
+    audioControls.refresh();
     for (const node of doc.querySelectorAll('[data-copy]'))
       if (c()[node.dataset.copy]) node.textContent = c()[node.dataset.copy];
     $('mode').options[0].textContent = locale === 'uk' ? 'Самовирівнювання' : 'Self-level';
@@ -491,11 +692,96 @@ export function mountFlightApp({
   function paint(force = false, now = 0) {
     if (!flight || disposed) return;
     const state = replay ? replay.flight.snapshot() : flight.snapshot();
+    $('flight-app').dataset.flightState = state.status;
+    if ($('academy-flight-resume')) {
+      $('academy-flight-resume').disabled =
+        !sceneReady || !['disarmed', 'paused'].includes(state.status);
+      $('academy-flight-resume').textContent = c().arm;
+    }
+    if ($('academy-controller-hint')) {
+      $('academy-controller-hint').textContent = gamepadHelp();
+      $('academy-controller-hint').hidden = input.owner() !== 'controller';
+    }
     renderer.draw?.(state, {
       cameraMode: $('camera').value || 'fpv',
       cameraFov: Number($('camera-fov').value) || 82,
       cameraTilt: Number($('camera-tilt').value) || 0,
     });
+    const radioPreview = !replay && input.owner() === 'radio' ? radio.preview() : null,
+      values = state.lastInput,
+      monitor = radioPreview
+        ? radioPreview.controls
+        : !replay && input.owner() === 'controller'
+          ? gamepad.preview().controls
+          : Object.fromEntries(FLIGHT_CONTROLS.map((key) => [key, values[key] / 1000])),
+      stickMode = radioPreview?.stickMode ?? 2,
+      layout = STICK_LAYOUTS[stickMode],
+      source = replay ? 'recording' : input.owner(),
+      traceLayout = `${epoch}:${source}:${layout.join(':')}`,
+      reducedMotion = Boolean(win.matchMedia?.('(prefers-reduced-motion: reduce)').matches),
+      traceTime = win.performance.now();
+    if (stickTraceLayout !== traceLayout) resetStickTraces();
+    stickTraceLayout = traceLayout;
+    droneResponse.update({
+      state,
+      controls: monitor ?? neutralFlightInput(),
+      source: replay ? 'recording' : input.owner(),
+      unavailable: !replay && input.owner() === 'radio' && !radioPreview?.controls,
+      locale,
+      mode,
+      display: $('academy-drone-guide').value,
+      scale: $('academy-guide-scale').value,
+      reducedMotion,
+    });
+    $('sticks').setAttribute(
+      'aria-label',
+      `${locale === 'uk' ? 'Органи керування' : 'Flight controls'} · Mode ${stickMode}`,
+    );
+    for (const [i, id] of ['left-dot', 'right-dot'].entries()) {
+      const dot = $(id),
+        horizontal = layout[i * 2],
+        vertical = layout[i * 2 + 1],
+        y = monitor ? (vertical === 'throttle' ? monitor.throttle * 2 - 1 : monitor[vertical]) : 0;
+      dot.hidden = !monitor;
+      const expanded = $('academy-stick-display')?.value === 'expanded';
+      $('sticks').classList.toggle('expanded-sticks', expanded);
+      paintStickDirections(dot.parentElement, { horizontal, vertical, locale });
+      const radius = dot.parentElement.clientWidth * 0.3;
+      dot.style.transform = `translate(${(monitor?.[horizontal] ?? 0) * radius}px, ${-y * radius}px)`;
+      stickTraces[i].update({
+        x: monitor?.[horizontal] ?? 0,
+        y,
+        now: traceTime,
+        source,
+        reducedMotion,
+        available:
+          Boolean(monitor) &&
+          !(source === 'radio' && !radioPreview?.controls) &&
+          state.status === 'active' &&
+          source !== 'touch',
+      });
+    }
+    if (input.owner() === 'touch') {
+      $('touch-throttle').value = String(Math.round(values.throttle / 10));
+      paintStickDirections($('left-stick'), { horizontal: 'yaw', vertical: 'throttle', locale });
+      paintStickDirections($('right-stick'), { horizontal: 'roll', vertical: 'pitch', locale });
+      $('left-stick').querySelector('i').style.transform =
+        `translate(${(values.yaw / 1000) * 35}px, ${(1 - values.throttle / 500) * 35}px)`;
+      $('right-stick').querySelector('i').style.transform =
+        `translate(${(values.roll / 1000) * 35}px, ${(-values.pitch / 1000) * 35}px)`;
+      for (const [index, pair] of [
+        [values.yaw / 1000, values.throttle / 500 - 1],
+        [values.roll / 1000, values.pitch / 1000],
+      ].entries())
+        touchTraces[index].update({
+          x: pair[0],
+          y: pair[1],
+          now: traceTime,
+          source,
+          reducedMotion,
+          available: state.status === 'active',
+        });
+    } else touchTraces.forEach((trace) => trace.reset());
     if (!force && now - lastHUD < 100) return;
     lastHUD = now;
     const course = currentCourse().locales[locale];
@@ -512,35 +798,6 @@ export function mountFlightApp({
     $('step-progress').max = state.total;
     $('step-progress').value = state.step;
     $('step-progress').setAttribute('aria-label', `${c().progress} ${state.step} / ${state.total}`);
-    const radioPreview = !replay && input.owner() === 'radio' ? radio.preview() : null,
-      values = state.lastInput,
-      monitor = radioPreview
-        ? radioPreview.controls
-        : Object.fromEntries(FLIGHT_CONTROLS.map((key) => [key, values[key] / 1000])),
-      stickMode = radioPreview?.stickMode ?? 2,
-      layout = STICK_LAYOUTS[stickMode];
-    $('sticks').setAttribute(
-      'aria-label',
-      `${locale === 'uk' ? 'Органи керування' : 'Flight controls'} · Mode ${stickMode}`,
-    );
-    for (const [i, id] of ['left-dot', 'right-dot'].entries()) {
-      const dot = $(id),
-        horizontal = layout[i * 2],
-        vertical = layout[i * 2 + 1],
-        y = monitor ? (vertical === 'throttle' ? monitor.throttle * 2 - 1 : monitor[vertical]) : 0;
-      dot.hidden = !monitor;
-      const expanded = $('academy-stick-display')?.value === 'expanded';
-      $('sticks').classList.toggle('expanded-sticks', expanded);
-      const radius = expanded ? 34 : 22;
-      dot.style.transform = `translate(${(monitor?.[horizontal] ?? 0) * radius}px, ${-y * radius}px)`;
-    }
-    if (input.owner() === 'touch') {
-      $('touch-throttle').value = String(Math.round(values.throttle / 10));
-      $('left-stick').querySelector('i').style.transform =
-        `translate(${(values.yaw / 1000) * 35}px, ${(1 - values.throttle / 500) * 35}px)`;
-      $('right-stick').querySelector('i').style.transform =
-        `translate(${(values.roll / 1000) * 35}px, ${(-values.pitch / 1000) * 35}px)`;
-    }
     say(
       reviewAbort
         ? c().verifying
@@ -598,6 +855,8 @@ export function mountFlightApp({
   }
   function frame(now) {
     if (disposed || suspended) return;
+    pollGamepad(now);
+    pollMenu(now);
     const delta = lastTime === null ? 0 : now - lastTime,
       executedAt = win.performance?.now?.() ?? now,
       executionDelta = lastExecutionTime === null ? 0 : executedAt - lastExecutionTime;
@@ -610,8 +869,10 @@ export function mountFlightApp({
       !reviewAbort &&
       inputAvailable() &&
       !modalOpen() &&
+      !flightMenuOpen() &&
       !immersive.snapshot().toolsOpen &&
       renderer.available &&
+      sceneReady &&
       !graphicsLost
     ) {
       let radioInput = neutralFlightInput();
@@ -654,7 +915,12 @@ export function mountFlightApp({
             accumulator = 0;
             break;
           }
-          const command = input.owner() === 'radio' ? radioInput : input.sample(1 / FLIGHT_HZ);
+          const command =
+            input.owner() === 'radio'
+              ? radioInput
+              : input.owner() === 'controller'
+                ? gamepad.sample(1 / FLIGHT_HZ)
+                : input.sample(1 / FLIGHT_HZ);
           const before = flight.snapshot().ticks;
           flight.step(command);
           if (flight.snapshot().ticks !== before) recorder.record(command);
@@ -665,6 +931,9 @@ export function mountFlightApp({
     paint(false, now);
     frameId = win.requestAnimationFrame(frame);
   }
+  listen($('academy-flight-menu'), 'click', () => setFlightMenu(true));
+  listen($('academy-flight-close-menu'), 'click', () => setFlightMenu(false));
+  listen($('academy-flight-resume'), 'click', () => arm());
   input.bindStick($('left-stick'), 'left');
   input.bindStick($('right-stick'), 'right');
   listen($('touch-throttle'), 'input', () =>
@@ -706,6 +975,11 @@ export function mountFlightApp({
     await presentation.setSoundEnabled(!presentation.soundEnabled());
     updateSoundLabel(presentation.soundEnabled());
   });
+  for (const id of ['academy-drone-guide', 'academy-guide-scale'])
+    listen($(id), 'change', () => {
+      saveGuidePreferences();
+      paint(true);
+    });
   listen($('arm'), 'click', arm);
   listen(win, 'blur', () => {
     focused = false;
@@ -788,12 +1062,89 @@ export function mountFlightApp({
   listen(win, 'gamepadconnected', () => {
     if (!replay && !modalOpen()) restoreRadio();
   });
+  const menuHint = doc.createElement('p');
+  menuHint.className = 'sim-menu-hint';
+  $('flight-app').append(menuHint);
+  const menuContext = () => {
+    const dialog = dialogIds.map($).find((node) => node.open);
+    if (dialog)
+      return {
+        root: dialog,
+        key: dialog.id,
+        blockRadio: dialog.id === 'setup-dialog',
+        blockDevices: dialog.id === 'setup-dialog' && Boolean(setup?.captureActive()),
+      };
+    if (flight.snapshot().status === 'active' && !modalOpen()) return null;
+    return {
+      root: $('flight-app'),
+      key: `academy:${modalOpen()}:${flightMenuOpen()}`,
+      blockDevices: gamepadScope() !== 'blocked',
+    };
+  };
+  const menuNavigation = createFlightMenuNavigation({
+    document: doc,
+    window: win,
+    locale: () => locale,
+    getContext: menuContext,
+    onHint(value) {
+      const context = menuContext();
+      menuHint.hidden = !context;
+      if (context && menuHint.parentElement !== context.root) context.root.append(menuHint);
+      if (menuHint.textContent !== value) menuHint.textContent = value;
+    },
+    onBack() {
+      const dialog = dialogIds.find((id) => $(id).open);
+      if (dialog) closeDialog(dialog);
+      else if (flightMenuOpen()) setFlightMenu(false);
+      else if ($('academy-flight-options').open) $('academy-flight-options').open = false;
+      else if (immersive.active()) void immersive.exit();
+      else openDialog('course-dialog');
+    },
+  });
+  function pollMenu(now) {
+    if (!menuContext()) {
+      menuNavigation.poll({ now });
+      return;
+    }
+    let gamepads = [];
+    try {
+      gamepads = win.navigator.getGamepads?.() ?? [];
+    } catch {
+      /* Menus remain usable without device access. */
+    }
+    if (now - lastRadioDiscovery > 1000 && !$('setup-dialog').open) {
+      lastRadioDiscovery = now;
+      restoreRadio();
+    }
+    const observed = radio.preview();
+    menuNavigation.poll({
+      now,
+      gamepads,
+      radio: {
+        key: radio.status().selected?.key,
+        controls: observed.controls,
+        verified: observed.verified,
+        index: radio.status().selected?.index,
+      },
+    });
+  }
+  const fullscreenButtons = [];
+  for (const dialog of dialogIds.map($)) {
+    const full = doc.createElement('button');
+    full.type = 'button';
+    full.className = 'sim-screen-fullscreen';
+    (dialog.querySelector('header') ?? dialog).append(full);
+    fullscreenButtons.push(full);
+  }
   const immersive = mountFlightFullscreen({
     document: doc,
     window: win,
     surface: $('flight-app'),
     viewport: $('viewport'),
     button: $('fullscreen'),
+    buttons: fullscreenButtons,
+    scope: 'application',
+    getFocusTarget: () => doc.activeElement,
     setupButton: $('setup'),
     kind: 'academy',
     locale: () => locale,
@@ -899,6 +1250,12 @@ export function mountFlightApp({
         if (!disposed) refreshOfflineControls();
       }
     });
+  if (win.matchMedia?.('(pointer: coarse)').matches) {
+    $('input-source').value = 'touch';
+    input.select('touch');
+    $('touch-controls').hidden = false;
+    doc.body.classList.add('touch-mode');
+  }
   reset();
   translated();
   $('fallback').hidden = !!renderer.available;
@@ -914,6 +1271,7 @@ export function mountFlightApp({
       await notebook?.ready;
       await pendingAttempt;
       await pendingReview;
+      await pendingScene;
     },
     snapshot: () => flight.snapshot(),
     exportAttempt: () => recorder.export(),
@@ -922,14 +1280,21 @@ export function mountFlightApp({
       pause();
       disposed = true;
       epoch++;
+      scenePreparation?.abort();
       if (frameId !== null) win.cancelAnimationFrame(frameId);
       setup?.dispose();
       void notebook?.dispose();
       studio?.dispose();
+      menuNavigation.dispose();
+      menuHint.remove();
       input.dispose();
+      gamepad.dispose();
       renderer.dispose();
       immersive.dispose();
+      audioControls.dispose();
       presentation.dispose();
+      droneResponse.dispose();
+      [...stickTraces, ...touchTraces].forEach((trace) => trace.dispose());
       for (const remove of listeners) remove();
       for (const button of courseButtons) {
         button.onclick = null;
