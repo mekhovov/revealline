@@ -1698,3 +1698,30 @@ Verify Garage's actual public launch before calling its120+58 demonstrations
 live. Resolve the independent958 pipeline, preserve any native stack rewrite,
 then continue C2 on `codex/fpv-meadow-groves`. Its starting tree includes the
 published Hangar change; no unfinished C2 runtime work is mixed into956.
+
+### 2 October — touch playability and unrestricted mode choice
+
+User-prioritized touch usability precedes C2. Branch `codex/fpv-touch-flight`
+now starts on current main `fc0eaf978` after native stack957 fully merged.
+Recovery ref `codex/fpv-touch-before-main-20261002` preserves its original base;
+main advancement had an identical tree and preserved all local feature changes.
+
+All148 catalogue levels keep the player's selected mode. Acro-only skill courses
+permit clearly labelled unscored Self-level practice, without proof/reward/recovery
+writes. Ordinary school completion names the actual mode; replay/checkpoint
+selection uses matching evidence or a safe fresh attempt. Both SIM hosts and the
+lab use relative thumb pickup, held throttle, shared Precise/Direct response,
+independent pointers and safe pause/clear on interruption or resize. Larger edge
+controls and brief labels preserve the central flight view. See
+`docs/fpv-touch-flight.md` for behavior and research.
+
+Functional browser evidence passes32/32 checks, including296 actual-host
+level/mode starts, pointer ownership/cancellation, mode/replay/checkpoint
+switching, zero paused touch display, and lab resize/capture-loss handling.
+All178 demonstrations replay unchanged (154v2+24v1;327,795 frames). Actual player
+checks cover390×844,844×390 and1280×800 layouts, EN/UK, real pointer capture in
+Academy and World, and retained54% throttle after release. Browser snapshots and
+receipts are `docs/evidence/fpv-touch-*`; controlled-fixture limitations are
+explicit. Physical iPhone, Steam Deck/native-app, radio and novice acceptance
+remain pending; no measured FPS or new unit coverage claim. Unit coverage stays
+in H/R7. Frozen package admission and focused publication follow this checkpoint.
