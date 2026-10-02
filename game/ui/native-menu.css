@@ -36,6 +36,9 @@ body.field-kit #coop-menu.native-landing:not([hidden]) {
   max-height: none;
   margin: 0;
   padding: clamp(24px, 5vw, 72px);
+  padding-top: max(clamp(24px, 5vw, 72px), var(--safe-top, env(safe-area-inset-top, 0px)));
+  padding-right: max(clamp(24px, 5vw, 72px), var(--safe-right, env(safe-area-inset-right, 0px)));
+  padding-left: max(clamp(24px, 5vw, 72px), var(--safe-left, env(safe-area-inset-left, 0px)));
   padding-bottom: max(64px, env(safe-area-inset-bottom));
   border: 0;
   border-image: none;
@@ -448,15 +451,32 @@ body.field-kit:has(#coop-menu.native-landing:not([hidden])) > main {
 body.field-kit
   :is(#settings-dialog, #race-options-panel, #coop-options).native-settings:not([hidden]),
 body.field-kit #settings-dialog.native-settings[open] {
+  --native-settings-gap: 16px;
+  --native-settings-top: max(
+    var(--native-settings-gap),
+    var(--safe-top, env(safe-area-inset-top, 0px))
+  );
+  --native-settings-right: max(
+    var(--native-settings-gap),
+    var(--safe-right, env(safe-area-inset-right, 0px))
+  );
+  --native-settings-bottom: max(
+    var(--native-settings-gap),
+    var(--safe-bottom, env(safe-area-inset-bottom, 0px))
+  );
+  --native-settings-left: max(
+    var(--native-settings-gap),
+    var(--safe-left, env(safe-area-inset-left, 0px))
+  );
   box-sizing: border-box;
   display: grid;
   grid-template-columns: minmax(210px, 30%) minmax(0, 1fr);
   grid-template-rows: auto auto minmax(0, 1fr);
   align-content: start;
   gap: 16px 28px;
-  width: min(1080px, calc(100vw - 32px));
+  width: min(1080px, calc(100vw - var(--native-settings-left) - var(--native-settings-right)));
   max-width: none;
-  max-height: calc(100dvh - 32px);
+  max-height: calc(100dvh - var(--native-settings-top) - var(--native-settings-bottom));
   padding: 24px;
   overflow: auto;
   color: #f3f5ef;
@@ -464,6 +484,16 @@ body.field-kit #settings-dialog.native-settings[open] {
   background-image: none;
   border: 1px solid #72808d;
   border-image: none;
+}
+/* Modal dialogs live in the top layer, outside the body's safe-area padding.
+   Bound the frame itself so the header/Back control cannot sit under iOS chrome.
+   Categories and panels already own their scrolling; the header stays put. */
+body.field-kit dialog:is(#settings-dialog, #coop-options).native-settings[open] {
+  position: fixed;
+  inset: var(--native-settings-top) var(--native-settings-right) var(--native-settings-bottom)
+    var(--native-settings-left);
+  margin: auto;
+  overflow: hidden;
 }
 body.field-kit
   dialog:is(#settings-dialog, #race-options-panel, #coop-options).native-settings:not([open]) {
@@ -643,7 +673,10 @@ body.field-kit[data-text-size='large']
   body.field-kit.game-shell #shell-home.native-landing[open],
   body.field-kit #race-main.native-landing:not([hidden]),
   body.field-kit #coop-menu.native-landing:not([hidden]) {
-    padding: max(24px, env(safe-area-inset-top)) 20px max(64px, env(safe-area-inset-bottom));
+    padding: max(24px, var(--safe-top, env(safe-area-inset-top, 0px)))
+      max(20px, var(--safe-right, env(safe-area-inset-right, 0px)))
+      max(64px, var(--safe-bottom, env(safe-area-inset-bottom, 0px)))
+      max(20px, var(--safe-left, env(safe-area-inset-left, 0px)));
     justify-content: safe center;
   }
   body.field-kit
@@ -669,8 +702,7 @@ body.field-kit[data-text-size='large']
   body.field-kit
     :is(#settings-dialog, #race-options-panel, #coop-options).native-settings:not([hidden]),
   body.field-kit #settings-dialog.native-settings[open] {
-    width: calc(100vw - 16px);
-    max-height: calc(100dvh - 16px);
+    --native-settings-gap: 8px;
     padding: 16px;
     grid-template-columns: minmax(0, 1fr);
     gap: 12px;
@@ -745,7 +777,8 @@ body.field-kit[data-text-size='large']
   body.field-kit.game-shell #shell-home.native-landing[open],
   body.field-kit #race-main.native-landing:not([hidden]),
   body.field-kit #coop-menu.native-landing:not([hidden]) {
-    padding-inline: 12px;
+    padding-inline: max(12px, var(--safe-left, env(safe-area-inset-left, 0px)))
+      max(12px, var(--safe-right, env(safe-area-inset-right, 0px)));
   }
   body.field-kit :is(#shell-home, #race-main, #coop-menu).native-landing .game-mode-choice {
     gap: 4px;
@@ -761,7 +794,10 @@ body.field-kit[data-text-size='large']
   body.field-kit.game-shell #shell-home.native-landing[open],
   body.field-kit #race-main.native-landing:not([hidden]),
   body.field-kit #coop-menu.native-landing:not([hidden]) {
-    padding: 20px 28px 48px;
+    padding: max(20px, var(--safe-top, env(safe-area-inset-top, 0px)))
+      max(28px, var(--safe-right, env(safe-area-inset-right, 0px)))
+      max(48px, var(--safe-bottom, env(safe-area-inset-bottom, 0px)))
+      max(28px, var(--safe-left, env(safe-area-inset-left, 0px)));
     justify-content: safe center;
   }
   body.field-kit
