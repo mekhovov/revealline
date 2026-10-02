@@ -305,3 +305,23 @@ the sampled views. Frozen admission/publication follows; physical-device and art
 acceptance remain open. Authored counts stay148 challenges/14 worlds. Continue
 woodland/shared-theme asset qualification after this focused increment; preserve
 #955's appearance ownership and the deferred H/R7 unit-coverage phase.
+
+### C4 woodland continuation — 2 October 2026
+
+Meadow #960 and Courtyard #961 are merged and verified in the public SIM on
+main descendant e48adf318. C4 now replaces the woodland's fine timber grain with
+root-aligned bark and adds quiet soil/moss/leaf detail to its existing ground.
+All six opaque trunk silhouettes, collision, routes and exterior scenery remain.
+Source verification passes211 checks/105 image pairs; package admission passes
+all three optional applications. See [woodland qualification](fpv-woodland-surfaces.md).
+Broad realistic-model production is still open; this is a surface refinement.
+
+A separate lossless picture-catalogue capacity repair is published as #963; it
+removes a recurring whole-edition size failure without dropping content or
+changing guards. It is independent of woodland and Themes #955.
+
+Next concrete C item is Warehouse/Stadium surface-scale and landmark readability,
+coordinated with #955 shared material ownership. Existing counts stay148 authored
+challenges/14worlds and178 original/school demonstrations. B physical hardware,
+D novice sessions, F creator/device-offline qualification, feedback-led G maps
+and H/R7 deferred unit coverage remain pending.

@@ -30,12 +30,37 @@ material factory or new appearance preference.
 
 ## Qualification
 
-Qualification is in progress. Source and packaged browser evidence, resource
-counts and frozen package admissions must be recorded before publication. Extra
-unit coverage remains in H/R7. Named-device frame times, physical controllers,
-novice sessions and production-art acceptance remain separate open work.
+Source WebGL qualification passes211 checks and105 rendered comparisons: both
+authored woodland bounds, three presets, FPV/chase/overview, heights1.5/3/6/9m,
+Pixel filtering, actual GLB assets and exact pixel/material regression across all
+13 other environments. Geometry, opaque faces and mesh ray distances remain
+identical. Rays do not model alpha-mask holes or certify human target readability.
+
+Three reload cycles plateau. Balanced Woodland retains234 registered geometries,
+131 materials and29 textures (39 GPU geometries/17 textures); all owned resources
+are released on disposal. No additional sampled draw calls or triangles appear.
+These observations do not establish sustained FPS or device-memory performance.
+
+The final player completes Crossing trail demonstration at49.4s. A separate
+focused audit replays all19 woodland demonstrations across39,645 ticks. The six
+existing square trunk colliders are unchanged; the closest recorded clearance is
+2.81m. No route, actor behavior, medal or collision editing is included.
+
+Frozen candidate `1ee7025eb9683c8d7ee0b6995cddd38b4bf6d058` passes all three
+optional package admissions, committed-input and ZIP checks, with two identical
+builds. Counts35/68/100 and545,596 /3,835,020 /14,089,806 bytes remain inside the
+existing64/72/104-file and8/8/16MiB limits. Additional unit coverage remains in
+H/R7. Named-device frame times, physical controllers, novice sessions and
+production-art acceptance remain separate open work.
 
 The 178 previously executed recordings remain applicable through exact equality
 of all twelve recorded runtime/catalogue/proof inputs; see
 `evidence/fpv-woodland-surfaces-replay-binding.json`. This binding is not a fresh
 178-recording execution.
+
+Packaged WebGL repeats211/211 checks and105 image comparisons using the
+extracted frozen World Studio ZIP. Both normal reviewed-player and continuous-
+school URLs now contain integrated main plus C4, with92files/13,932,487bytes
+and identical ZIP SHA256
+`fc3ddb63c13c02f36968f75d384a2e12fee932e10c8eefe6cc126affec92fe13`.
+The dedicated woodland player remains paused at a ready Crossing trail flight.
