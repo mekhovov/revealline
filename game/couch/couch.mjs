@@ -1,3 +1,10 @@
+import { missionBriefing } from '../mission-brief.mjs';
+import { createEncounterVariantPreferences } from '../hunt/preferences.mjs';
+import { attachEncounterVariantControls } from '../ui/encounter-variant-controls.mjs';
+import { attachHuntStatus } from '../ui/hunt-status.mjs';
+import { createHuntRecords } from '../hunt/records.mjs';
+import { attachContextualReactions } from '../ui/contextual-reactions.mjs';
+import { soloReactionDanger } from '../ui/reaction-danger.mjs';
 import { COUCH_RESTORE_KEY } from './controller-restore.mjs';
 import { createControllerSession } from './controller-session.mjs';
 import { mountControllerSetup } from './controller-setup.mjs';
@@ -30,7 +37,7 @@ import { creatorArtworkLoader } from '../creator/bundle.mjs';
 import { createCreatorStore } from '../creator/installed.mjs';
 import { creatorProfileKey } from '../creator/runtime.mjs';
 import { installedCreatorLibrarySources } from '../mission-library/creator-source.mjs';
-import { createCandidateVersusHost } from '../content-design/versus-host.mjs';
+import { createEncounterVersusHost as createCandidateVersusHost } from '../content-design/encounter-host.mjs';
 import {
   journeyActorThemeCandidates,
   createJourneyActorTheme,
@@ -215,6 +222,14 @@ const encounterDisplay = attachEncounterDisplayControls({
   getStorage: () => localStorage,
   prefix: 'race-',
 });
+const encounterChoices = createEncounterVariantPreferences({
+  window,
+  getStorage: () => localStorage,
+});
+let encounterVariantControls = null,
+  contextualReactions = null,
+  huntStatuses = [],
+  huntRecords = null;
 const displayRestoration = attachPreferenceRestoration({
   window,
   getSnapshot: () => displayPreferences.snapshot(),
@@ -317,6 +332,11 @@ const releaseArtwork = (event) => {
   displayRestoration.dispose();
   displayPreferences.dispose();
   encounterDisplay.dispose();
+  encounterChoices.dispose();
+  encounterVariantControls?.dispose();
+  contextualReactions?.dispose();
+  huntStatuses.forEach((status) => status.dispose());
+  huntRecords?.dispose();
   menuStyle.dispose();
   audioPreferences.dispose();
   artworkLifetime.abort();
@@ -478,6 +498,7 @@ try {
     journeyThemeSources = (await json('../content-design/themes.json')).themes;
     document.body.classList.add('candidate-journey');
     candidateJourney = createCandidateVersusHost(authoredRoute.source, {
+      getEncounterVariant: () => encounterChoices.snapshot().variant,
       themes: authoredJourneyUsesActorMaterials(authoredRoute.id)
         ? journeyActorThemeCandidates(journeyThemeSources, {
             includeOriginals: authoredRoute.preserveOriginalThemes === true,
@@ -746,11 +767,17 @@ try {
   const mode = (level) =>
     arcadeActionCapabilities(level).manualAbility ? t('interface:tactical') : t('interface:arcade');
   function showMaps() {
+    if (candidateJourney) {
+      candidateJourney.ensureVariant?.(encounterChoices.snapshot().variant);
+      const known = new Set(maps.map((row) => row.key));
+      maps.push(...candidateJourney.rows.filter((row) => !known.has(row.key)));
+    }
     $('race-level').replaceChildren(
       ...maps
         .filter((row) =>
           candidateJourney
-            ? row.difficulty === journeyPreferences.snapshot().difficulty
+            ? row.difficulty === journeyPreferences.snapshot().difficulty &&
+              row === candidateJourney.row(row.mission, row.difficulty)
             : !creatorVersusOwners.has(row) ||
               row.difficulty === browsingJourneyPreferences.snapshot().difficulty,
         )
@@ -764,8 +791,13 @@ try {
   }
   showMaps();
   const journeyCursor = candidateJourney?.catalog.find(journeyProfile?.snapshot().cursors.versus);
+  const cursorEntry =
+    journeyCursor && candidateJourney.row(journeyCursor, journeyPreferences.snapshot().difficulty);
+  const cursorReceiptId = cursorEntry
+    ? (candidateJourney.progressMission?.(cursorEntry)?.id ?? journeyCursor.id)
+    : journeyCursor?.id;
   const initialJourneyMission =
-    journeyCursor && Object.hasOwn(journeyProfile.snapshot().clears.versus, journeyCursor.id)
+    journeyCursor && Object.hasOwn(journeyProfile.snapshot().clears.versus, cursorReceiptId)
       ? (candidateJourney.next(journeyCursor.id) ?? journeyCursor)
       : (journeyCursor ?? candidateJourney?.catalog.missions[0]);
   $('race-level').value = candidateJourney
@@ -787,6 +819,29 @@ try {
     audioMaster,
   }));
   sound.configure({ master: 1 });
+  sound.setDestructionPreferences?.(() => encounterDisplay.snapshot());
+  contextualReactions = attachContextualReactions({
+    sound,
+    container: $('hunt-feedback'),
+    resultContainer: $('race-journey-reactions'),
+    settingsContainer: $('race-settings-panel-audio'),
+    getReduced: () => displayPreferences.snapshot().effectiveReducedEffects,
+    acquireGain: ({ factor }) => music?.player?.acquireGain({ factor }) ?? (() => {}),
+  });
+  huntRecords = createHuntRecords();
+  huntStatuses = [0, 1].flatMap((i) => [
+    attachHuntStatus({
+      container: $(`racer-stats-${i}`).parentElement,
+      mode: 'versus',
+      records: huntRecords,
+    }),
+    attachHuntStatus({
+      container: $(`race-result-${i}`).parentElement,
+      mode: 'versus',
+      records: huntRecords,
+      record: false,
+    }),
+  ]);
   music = attachCouchMusicHost({
     document,
     root: $('race-settings-panel-audio'),
@@ -945,7 +1000,8 @@ try {
     }
     showProgressProfileFor(roundRecipe.entry);
     // Race effects are independent of the music transport and its readiness.
-    void sound.enable();
+    contextualReactions?.resume();
+    void sound.enable().then(() => contextualReactions?.prepare());
     if (music) void music.start();
     localizedText($('race-message'), () => t('interface:makeYourLineCountFirstClearWins'));
     updateMenu();
@@ -955,7 +1011,14 @@ try {
   const preparationStatus = createOperationStatus($('race-preparation'), {
     isCurrent: () => !disposed,
   });
-  const journeyReactions = attachJourneyReactions({ prefix: 'race-' });
+  const resultReactions = attachJourneyReactions({ prefix: 'race-' });
+  const journeyReactions = {
+    ...resultReactions,
+    present(context) {
+      resultReactions.present(context);
+      contextualReactions?.result(context);
+    },
+  };
   let preparationDisplay = null;
   let actorJourneyIdentity = null,
     actorMissionIndex = null;
@@ -987,9 +1050,10 @@ try {
       actorJourneyIdentity ??= createJourneyVisualThemeIdentityAdapter(authoredRoute.source, {
         mode: 'versus',
       });
-      content = await (
-        await actorJourneyIdentity
-      ).prepareHostSelection(
+      const prepareIdentity = candidateJourney.prepareVisualIdentity
+        ? candidateJourney.prepareVisualIdentity
+        : (await actorJourneyIdentity).prepareHostSelection;
+      content = await prepareIdentity(
         {
           host: candidateJourney,
           selection: row,
@@ -1563,13 +1627,16 @@ try {
       actorStyle: fresh ? preference.actorStyle : roundRecipe.actorStyle,
       actorPreferenceRevision: fresh ? preference.revision : roundRecipe.actorPreferenceRevision,
       actorPresentation: fresh ? null : (actorLease?.pin().presentation ?? null),
-      tuning: creatorVersusOwners.has(target)
-        ? resolveGameplayTuning(
-            target.difficulty ?? browsingJourneyPreferences.snapshot().difficulty,
-          )
-        : gameplayTuning.snapshot(
-            target.difficulty ?? browsingJourneyPreferences.snapshot().difficulty,
-          ),
+      tuning:
+        sameMission && !fresh && roundRecipe.runtimeLevel?.classic?.hunt
+          ? roundRecipe.tuning
+          : creatorVersusOwners.has(target)
+            ? resolveGameplayTuning(
+                target.difficulty ?? browsingJourneyPreferences.snapshot().difficulty,
+              )
+            : gameplayTuning.snapshot(
+                target.difficulty ?? browsingJourneyPreferences.snapshot().difficulty,
+              ),
     };
     if (
       !nextAttempt ||
@@ -1784,6 +1851,7 @@ try {
     }
   }
   function pause() {
+    contextualReactions?.suspend();
     // Suspend and controller-loss paths also pass here. Picture preparation
     // may finish, but an interrupted gesture no longer authorizes a start.
     startIntentEpoch++;
@@ -2055,7 +2123,11 @@ try {
       return continueMission($('race-start'));
     return startRace(
       candidateJourney && match.status === 'finished'
-        ? candidateJourney.row(roundRecipe.entry.mission, journeyPreferences.snapshot().difficulty)
+        ? candidateJourney.row(
+            roundRecipe.entry.mission,
+            journeyPreferences.snapshot().difficulty,
+            { selection: roundRecipe.entry },
+          )
         : null,
     );
   };
@@ -2206,6 +2278,31 @@ try {
       }),
     );
   }
+  if (candidateJourney)
+    encounterVariantControls = attachEncounterVariantControls({
+      container: $('race-optional-setup'),
+      preferences: encounterChoices,
+      records: huntRecords,
+      getAvailable: () =>
+        candidateJourney.availableVariants?.(
+          roundRecipe?.entry.mission ?? initialJourneyMission,
+        ) ?? ['authored'],
+      onChange: async () => {
+        startIntentEpoch++;
+        cancelContent();
+        nextAttempt?.lease?.cancel();
+        nextAttempt = null;
+        const mission = roundRecipe?.entry.mission ?? initialJourneyMission;
+        showMaps();
+        const selected = candidateJourney.row(mission, journeyPreferences.snapshot().difficulty);
+        if (selected) $('race-level').value = selected.key;
+        if (match.status === 'ready' || match.status === 'finished') {
+          won = [0, 0];
+          await prepare();
+        }
+        updateMenu();
+      },
+    });
   if (candidateJourney) {
     let preferenceRevision = journeyPreferences.snapshot().revision,
       preferenceExportSequence = 0;
@@ -3214,7 +3311,7 @@ try {
         describe: ({ level }) => {
           const actual = normalizedLevel(level);
           return {
-            rules: `${Math.round(actual.goal.coverage * 100)}% coverage · ${actual.rules.lives} lives · ${actual.rules.moveSpeed} cells/s · Authored rules`,
+            rules: `${actual.classic?.hunt ? missionBriefing(actual).goal : `${Math.round(actual.goal.coverage * 100)}% coverage`} · ${actual.rules.lives} lives · ${actual.rules.moveSpeed} cells/s · Authored rules`,
           };
         },
         availabilityClassic: (row, pack) => {
@@ -3732,6 +3829,7 @@ try {
         ? []
         : [0, 1].flatMap((i) => [
             $(`racer-stats-${i}`).textContent,
+            $(`racer-stats-${i}`).parentElement.querySelector('.hunt-status')?.textContent,
             $(`racer-state-${i}`).textContent,
             $(`racer-input-${i}`).textContent,
             $(`racer-capture-${i}`).hidden,
@@ -4111,6 +4209,7 @@ try {
     updateMenu();
   }
   function suspend() {
+    contextualReactions?.suspend();
     if (libraryContinuation) cancelContent();
     ++libraryOpenEpoch;
     libraryIncomingController?.abort();
@@ -4254,6 +4353,18 @@ try {
           for (let i = 0; i < 2; i++)
             if (match.runs[i].tick !== before[i]) {
               painters[i].effectsFor(match.runs[i].events, match.runs[i]);
+              contextualReactions?.events(match.runs[i].events, {
+                attemptId: String(generation),
+                mode: 'versus',
+                board: i,
+                encounter: !!match.runs[i].level.classic?.hunt,
+                danger:
+                  soloReactionDanger(match.runs[i]) ||
+                  match.runs.some(
+                    (board) =>
+                      ['running', 'respawning'].includes(board.status) && soloReactionDanger(board),
+                  ),
+              });
               sound.events(match.runs[i].events, match.runs[i], theme, {
                 board: i,
                 mode: 'versus',
@@ -4308,6 +4419,8 @@ try {
         !roundRecipe.tuning.adminOverride &&
         match.runs.some((run) => run.status === 'won')
       ) {
+        const progressMission =
+          candidateJourney.progressMission?.(roundRecipe.entry) ?? roundRecipe.entry.mission;
         const runId = `${journeySessionId}:${generation}`,
           gameplayId = dataIdentity({
             ruleset: match.ruleset,
@@ -4319,7 +4432,7 @@ try {
           completion = {
             type: 'complete',
             mode: 'versus',
-            missionId: roundRecipe.entry.mission.id,
+            missionId: progressMission.id,
             runId,
             difficulty: roundRecipe.entry.difficulty,
             gameplayId,
@@ -4328,7 +4441,7 @@ try {
                   picture: {
                     mode: 'versus',
                     editionId: authoredRoute.id,
-                    missionId: roundRecipe.entry.mission.id,
+                    missionId: progressMission.id,
                     campaignKey: roundRecipe.entry.musicCampaignKey,
                     levelId: roundRecipe.entry.level.id,
                     levelRevision: String(roundRecipe.entry.level.revision),
@@ -4493,6 +4606,8 @@ try {
         returnRegion = $(`racer-capture-${i}`);
       localizedText(returnRegion, returnCaption);
       returnRegion.hidden = !returnCaption || match.status === 'finished';
+      huntStatuses[i * 2]?.render(run);
+      huntStatuses[i * 2 + 1]?.render(run);
       localizedText($(`racer-stats-${i}`), () => gameplayStatsLabel(run));
       localizedText($(`racer-state-${i}`), () =>
         gameplayStatusLabel(match.status === 'running' ? run.status : match.status),
@@ -4537,6 +4652,8 @@ try {
       painters[i].draw(contexts[i], run, Math.min(dt, 0.1), {
         displayCSSWidth: boardFootprints.width(i),
         showCombatScrap: encounterDisplay.snapshot().showRemains,
+        brutal: encounterDisplay.snapshot().brutal,
+        blood: encounterDisplay.snapshot().blood,
         textFace: displayPreferences.snapshot().textFace,
         paused: match.status !== 'running',
         reduced: displayPreferences.snapshot().effectiveReducedEffects,

@@ -42,6 +42,7 @@
       sizes="32x32"
       href="../ui/art/identity/fpv-line/icon-32.png"
     />
+    <link rel="stylesheet" href="../ui/hunt-feedback.css" />
   </head>
   <body class="field-kit field-kit-support" data-field-kit-page="couch">
     <div data-language-control data-language-launch></div>
@@ -108,6 +109,7 @@
           hidden
           data-i18n-aria-label="interface:currentMusic"
         ></div>
+        <div id="hunt-feedback" class="hunt-feedback"></div>
       </div>
       <div
         id="race-boards"
@@ -147,9 +149,11 @@
               data-i18n-aria-label="interface:player1RaceBoard"
             ></canvas>
           </div>
-          <p id="racer-stats-0" class="racer-stats" data-i18n="interface:003Lives0Points">
-            0.0% · 3 lives · 0 points
-          </p>
+          <div class="racer-readouts">
+            <p id="racer-stats-0" class="racer-stats" data-i18n="interface:003Lives0Points">
+              0.0% · 3 lives · 0 points
+            </p>
+          </div>
           <p
             id="racer-capture-0"
             class="racer-capture"
@@ -261,9 +265,11 @@
               data-i18n-aria-label="interface:player2RaceBoard"
             ></canvas>
           </div>
-          <p id="racer-stats-1" class="racer-stats" data-i18n="interface:003Lives0Points">
-            0.0% · 3 lives · 0 points
-          </p>
+          <div class="racer-readouts">
+            <p id="racer-stats-1" class="racer-stats" data-i18n="interface:003Lives0Points">
+              0.0% · 3 lives · 0 points
+            </p>
+          </div>
           <p
             id="racer-capture-1"
             class="racer-capture"
@@ -891,7 +897,8 @@
               class="race-footnote"
               data-i18n="interface:optionalCaptionsAfterCompletedJourneyMissionsNoVoiceOrAnimation"
             >
-              Optional captions after completed Journey missions. No voice or animation.
+              Optional character captions, sound and brief reactions during play and after Journey
+              missions. Sound follows your audio settings.
             </p>
             <p id="race-journey-reactions-status" class="race-footnote" role="status" hidden></p>
             <button

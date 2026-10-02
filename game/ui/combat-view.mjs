@@ -1,5 +1,12 @@
+import {
+  validateHuntDefinition,
+  huntTargetKind,
+  huntSummary,
+  HUNT_STATE_VERSION,
+  HUNT_MAX_RUNNER_SPEED,
+} from '../hunt/rules.mjs';
 import { t } from '../i18n/index.mjs';
-import { plainObject, stableId } from '../data-json.mjs';
+import { plainObject, stableId, boundedJSON, exactKeys } from '../data-json.mjs';
 import { CELL, FIXED_DT } from '../core/registry.mjs';
 import { EPS, pointAt } from '../core/geometry.mjs';
 import { classicDomainHit } from '../core/classic-motion.mjs';
@@ -64,9 +71,12 @@ function id(value) {
 }
 function velocity(value, speed) {
   const vx = own(value, 'vx'),
-    vy = own(value, 'vy');
+    vy = own(value, 'vy'),
+    limit = Math.max(12, speed);
   check(
-    finite(vx, -12, 12) && finite(vy, -12, 12) && Math.abs(Math.hypot(vx, vy) - speed) < 1e-7,
+    finite(vx, -limit, limit) &&
+      finite(vy, -limit, limit) &&
+      Math.abs(Math.hypot(vx, vy) - speed) < 1e-7,
     t('interface:invalidCombatVelocity'),
   );
   return { vx, vy };
@@ -102,7 +112,7 @@ function effect(state, kind, tick) {
   check(integer(from) && integer(until, from));
   return tick >= from && tick < until;
 }
-function recipes(definition) {
+function recipes(definition, hunt) {
   const values = dense(own(definition, 'actors'), 24),
     result = new Map();
   let sentries = 0;
@@ -111,7 +121,11 @@ function recipes(definition) {
     const key = id(source),
       role = own(source, 'role'),
       speed = own(source, 'speed');
-    check(!result.has(key) && ['scout', 'sentry'].includes(role) && finite(speed, 0.25, 8));
+    check(
+      !result.has(key) &&
+        ['scout', 'sentry'].includes(role) &&
+        finite(speed, 0.25, huntTargetKind(hunt, key) === 'runner' ? HUNT_MAX_RUNNER_SPEED : 8),
+    );
     const recipe = { id: key, role, speed };
     if (role === 'sentry') {
       check(++sentries <= 8);
@@ -151,6 +165,7 @@ export function combatView(run) {
       'xonix-core.v7': 'xonix-level.v6',
       'xonix-core.v8': 'xonix-level.v7',
       'xonix-core.v9': 'xonix-level.v8',
+      'xonix-core.v10': 'xonix-level.v9',
     };
     const ruleset = own(run, 'ruleset');
     check(
@@ -175,7 +190,11 @@ export function combatView(run) {
     check(['running', 'respawning', 'won', 'lost'].includes(status));
     const frozen = effect(state, 'enemy-freeze', tick),
       slow = effect(state, 'enemy-slow', tick);
-    const definitions = recipes(definition),
+    const hunt =
+      ruleset === 'xonix-core.v10'
+        ? validateHuntDefinition(own(classicDefinition, 'hunt'), own(definition, 'actors'))
+        : null;
+    const definitions = recipes(definition, hunt),
       domain = geometry(run);
     const combat = record(own(state, 'combatPatrols'));
     check(own(combat, 'version') === 'combat-patrol-state.v1');
@@ -251,6 +270,7 @@ export function combatView(run) {
         actors.push({
           id: key,
           role,
+          ...(huntTargetKind(hunt, key) ? { kind: huntTargetKind(hunt, key) } : {}),
           ...position,
           vx: motion.vx * factor,
           vy: motion.vy * factor,
@@ -295,9 +315,33 @@ export function combatView(run) {
       );
       check(position.x === actor.x && position.y === actor.y);
       eliminatedIds.add(key);
-      return { id: key, cause, ...position, tick: at };
+      return {
+        id: key,
+        cause,
+        ...position,
+        tick: at,
+        ...(huntTargetKind(hunt, key) ? { kind: huntTargetKind(hunt, key) } : {}),
+      };
     });
     check([...byId.values()].filter((actor) => !actor.alive).length === eliminatedIds.size);
+    let huntState = null;
+    if (hunt) {
+      huntState = boundedJSON(own(state, 'hunt'), { maxBytes: 1024, maxNodes: 10, maxDepth: 1 });
+      exactKeys(
+        huntState,
+        ['version', 'kills', 'touchKills', 'captureKills', 'score'],
+        'Hunt state',
+      );
+      const removed = eliminations.filter((mark) => mark.kind);
+      const touchKills = removed.filter((mark) => mark.cause === 'ram').length;
+      check(
+        huntState.version === HUNT_STATE_VERSION &&
+          huntState.kills === removed.length &&
+          huntState.touchKills === touchKills &&
+          huntState.captureKills === removed.length - touchKills &&
+          huntState.score === touchKills * 100 + (removed.length - touchKills) * 50,
+      );
+    }
     return freeze({
       valid: true,
       tick,
@@ -307,6 +351,7 @@ export function combatView(run) {
       actors,
       projectiles,
       eliminations,
+      ...(hunt ? { hunt: huntSummary(hunt, huntState) } : {}),
     });
   } catch (error) {
     return Object.freeze({

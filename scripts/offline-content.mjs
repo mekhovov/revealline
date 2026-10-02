@@ -8,6 +8,7 @@ import { classifyContent } from '../game/content-design/content-lifecycle.mjs';
 import { addAuthoredRuntimeSnapshots } from './authored-runtime-snapshots.mjs';
 import {
   isOptionalSpatialAudioBody,
+  isOptionalReactionVoiceBody,
   isOptionalTeamImportManifest,
   selectOfflineCore,
 } from './offline-core-closure.mjs';
@@ -394,6 +395,16 @@ export async function buildOfflineContent(
       (name) => name === 'game/ui/art/menu-scenes/droneaid-main-background.webp',
     ],
     ['spatial-audio', 'Optional spatial sound effects', isOptionalSpatialAudioBody],
+    [
+      'character-voices-en',
+      'Character voices · English',
+      (name) => isOptionalReactionVoiceBody(name) && name.endsWith('-en.m4a'),
+    ],
+    [
+      'character-voices-uk',
+      'Character voices · Ukrainian',
+      (name) => isOptionalReactionVoiceBody(name) && name.endsWith('-uk.m4a'),
+    ],
   ]) {
     const owned = files.filter((file) => matches(file.path)).map((file) => file.path);
     if (!owned.length) continue;

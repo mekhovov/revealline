@@ -1893,6 +1893,10 @@
               >Capturing field neutralizes its terrain; walls never close cuts.</span
             >
           </p>
+          <p class="note" data-i18n="tools:studio.hunt.legend">
+            Humanoid figures: huntable runners and guards. Touch or enclosure removes them; their
+            bodies never retain territory. Guards carry a weapon; their shots remain dangerous.
+          </p>
           <p id="geometry" class="note"></p>
           <label class="toggle"
             ><input id="show-capture" type="checkbox" checked /><span
@@ -2124,6 +2128,12 @@
                 <p id="actor-result" class="note" role="status"></p>
               </fieldset>
             </form>
+          </details>
+          <details id="hunt-editor-panel">
+            <summary data-i18n="interface:authorHuntingForThisMission">
+              Author hunting for this mission
+            </summary>
+            <div id="hunt-editor-mount"></div>
           </details>
           <details id="bonus-panel">
             <summary data-i18n="interface:placeOptionalBonuses">Place optional bonuses</summary>
@@ -3031,6 +3041,12 @@
             </form>
             <p id="discovery-result" class="note" role="status"></p>
             <div id="discovery-preview" aria-live="polite"></div>
+          </details>
+          <details id="reaction-voice-editor-panel">
+            <summary data-i18n="interface:characterVoiceRecordings">
+              Character voice recordings
+            </summary>
+            <div id="reaction-voice-editor-mount"></div>
           </details>
           <details id="structure-editor">
             <summary data-i18n="common:editor.organizeContent">

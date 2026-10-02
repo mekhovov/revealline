@@ -1,3 +1,4 @@
+import { huntTargetKind, recordHuntElimination, chooseHuntRunnerHeading } from '../hunt/rules.mjs';
 import { CELL } from './registry.mjs';
 import { EPS } from './geometry.mjs';
 import { classicEffectActive } from './classic-state.mjs';
@@ -117,6 +118,7 @@ export function eliminateCombatPatrol(state, actor, cause) {
     time: state.time,
   };
   state.classic.combatPatrols.eliminations.push(record);
+  recordHuntElimination(state.classic.hunt, state.level.classic.hunt, actor.id, cause);
   emit(state, 'eliminated', record);
   removeShots(state, (shot) => shot.actorId === actor.id, 'owner-eliminated');
 }
@@ -250,7 +252,18 @@ export function updateCombatPatrols(state) {
       }
     }
     if (actor.phase === 'cooldown' && tick >= actor.nextTurnTick) {
-      const [x, y] = directions[nextRandom(actor) % directions.length];
+      const rotation = nextRandom(actor);
+      const [x, y] =
+        huntTargetKind(state.level.classic.hunt, actor.id) === 'runner'
+          ? chooseHuntRunnerHeading({
+              actor,
+              players: state.status === 'running' ? [state.player] : [],
+              speed: def.speed * (classicEffectActive(state, 'enemy-slow') ? 0.5 : 1),
+              rotation,
+              clearance: (from, to) =>
+                classicDomainHit(state, from, to, actor.radius, CELL.FIELD)?.t ?? 1,
+            })
+          : directions[rotation % directions.length];
       velocity(actor, x, y, def.speed);
       actor.nextTurnTick = tick + def.turnTicks;
     }

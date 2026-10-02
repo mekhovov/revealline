@@ -1,3 +1,4 @@
+import { huntObjectiveSatisfied } from '../hunt/rules.mjs';
 import {
   nextLineImpactSeed,
   nextLineImpactEvent,
@@ -239,8 +240,14 @@ function firstFailure(candidates) {
   );
 }
 function won(state) {
+  if (state.level.classic?.hunt?.mode === 'hunt')
+    return huntObjectiveSatisfied(state.level.classic.hunt, state.classic.hunt, false);
   return (
-    state.coverage + EPS >= state.level.goal.coverage &&
+    huntObjectiveSatisfied(
+      state.level.classic?.hunt,
+      state.classic?.hunt,
+      state.coverage + EPS >= state.level.goal.coverage,
+    ) &&
     state.objectives.every((item) => !item.required || item.captured) &&
     (!state.encounter || state.encounter.defeated)
   );

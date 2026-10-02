@@ -1,3 +1,4 @@
+import { huntTargetKind } from '../hunt/rules.mjs';
 import { CELL } from './registry.mjs';
 import { EPS, movingCirclesTime, pointAt } from './geometry.mjs';
 import { positionAt, pathPoint } from './movement.mjs';
@@ -48,12 +49,16 @@ export function planCombatMotion(state, duration) {
   };
 }
 
-function bodyContact(state, paths, plan, trace, horizon, radius) {
+function bodyContact(state, paths, plan, trace, horizon, radius, huntTouch = false) {
   let earliest = null;
   for (const p of paths)
     for (const q of plan.paths) {
-      const lo = Math.max(p.t0, q.t0, state.player.cutting ? 0 : (trace.started ?? Infinity));
-      const hi = Math.min(p.t1, q.t1, horizon, trace.closure ?? Infinity);
+      const lo = Math.max(
+        p.t0,
+        q.t0,
+        huntTouch || state.player.cutting ? 0 : (trace.started ?? Infinity),
+      );
+      const hi = Math.min(p.t1, q.t1, horizon, huntTouch ? Infinity : (trace.closure ?? Infinity));
       if (lo > hi + EPS) continue;
       const t = movingCirclesTime(
         pathPoint(p, lo),
@@ -62,7 +67,17 @@ function bodyContact(state, paths, plan, trace, horizon, radius) {
         pathPoint(q, hi),
         radius + state.rules.playerRadius,
       );
-      if (t !== null) earliest = Math.min(earliest ?? Infinity, lo + (hi - lo) * t);
+      if (t !== null) {
+        const contactAt = lo + (hi - lo) * t;
+        // Hunt touch crosses the reclaimed boundary, never a wall or closed gate.
+        // Shot exposure and every historical scout/sentry contact keep their old gate.
+        if (
+          huntTouch &&
+          classicDomainHit(state, pathPoint(p, contactAt), pathPoint(q, contactAt), 0, null)
+        )
+          continue;
+        earliest = Math.min(earliest ?? Infinity, contactAt);
+      }
     }
   return earliest;
 }
@@ -73,7 +88,15 @@ export function combatContacts(state, playerPaths, plans, trace, horizon) {
   const rams = [],
     failures = [];
   for (const plan of plans.patrols) {
-    const time = bodyContact(state, playerPaths, plan, trace, horizon, plan.body.radius);
+    const time = bodyContact(
+      state,
+      playerPaths,
+      plan,
+      trace,
+      horizon,
+      plan.body.radius,
+      state.status === 'running' && huntTargetKind(state.level.classic.hunt, plan.body.id) !== null,
+    );
     if (time !== null) rams.push({ time, actor: plan.body });
   }
   if (!classicEffectActive(state, 'enemy-freeze') && state.player.graceUntil <= state.time + EPS)

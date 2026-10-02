@@ -21,7 +21,11 @@ import { BoardPainter, boardPaintSizeForRun } from '../ui/render.mjs';
 import { encounterView } from '../ui/encounter-view.mjs';
 import { attachReplayNavigation } from './navigation.mjs';
 import { createOperationStatus } from '../ui/operation-status.mjs';
-import { createEncounterDisplayPreferences } from '../encounter-display-preferences.mjs';
+import { attachEncounterDisplayControls } from '../ui/encounter-display-controls.mjs';
+import { attachContextualReactions } from '../ui/contextual-reactions.mjs';
+import { soloReactionDanger } from '../ui/reaction-danger.mjs';
+import { attachJourneyReactions } from '../ui/journey-reactions.mjs';
+import { attachHuntStatus } from '../ui/hunt-status.mjs';
 import { mountReplayDisplay } from './display.mjs';
 import { replayEventRecord, replayEventText } from './event-copy.mjs';
 
@@ -38,15 +42,26 @@ const releaseAudioLabel = replayMaster.subscribe(({ muted }) =>
 );
 $('replay-audio').addEventListener('click', () => {
   replayAudioPreferences.setMuted(!replayMaster.snapshot().muted);
-  if (!replayMaster.snapshot().muted) void replaySound.enable();
+  if (!replayMaster.snapshot().muted)
+    void replaySound.enable().then(() => replayReactions.prepare());
 });
 let theaterDisposed = false;
 let disposeRecording = () => {};
 const replayDisplay = mountReplayDisplay();
-const encounterDisplay = createEncounterDisplayPreferences({
+const encounterDisplay = attachEncounterDisplayControls({
   window,
+  prefix: 'replay-',
   getStorage: () => localStorage,
 });
+replaySound.setDestructionPreferences(() => encounterDisplay.snapshot());
+const replayReactionSettings = attachJourneyReactions({ prefix: 'replay-' });
+const replayReactions = attachContextualReactions({
+  sound: replaySound,
+  container: $('replay-hunt-feedback'),
+  settingsContainer: $('replay-presentation-settings'),
+  getReduced: () => replayDisplay.snapshot().effectiveReducedEffects,
+});
+const replayHuntStatus = attachHuntStatus({ container: $('replay-hunt-feedback'), record: false });
 const bootStatus = createOperationStatus($('boot-status'));
 const bootDisplay = bootStatus.begin({
   message: t('interface:preparingTheTheater'),
@@ -65,6 +80,9 @@ const closeTheater = (event = {}) => {
   disposeRecording();
   replayDisplay.dispose();
   encounterDisplay.dispose();
+  replayReactionSettings.dispose();
+  replayReactions.dispose();
+  replayHuntStatus.dispose();
   bootStatus.dispose();
   presentationFeedback.dispose();
   presentationPage?.close();
@@ -212,6 +230,7 @@ try {
     if (disposed) return;
     disposed = true;
     replaySound.reset();
+    painter?.dispose();
     controller?.abort();
     epoch++;
     importStatus.dispose();
@@ -291,6 +310,7 @@ try {
   function readouts() {
     if (!player) return;
     const { state, info } = player;
+    replayHuntStatus.render(state);
     const encounter = encounterView(state);
     $('encounter-cue').hidden = !encounter;
     localizedText($('encounter-title'), () => contentText(encounter, 'title') ?? '');
@@ -349,7 +369,16 @@ try {
   }
   function consume(result) {
     painter.effectsFor(result.events, player.state);
-    if (player.phase === 'playing') replaySound.events(result.events, player.state, chosenTheme());
+    if (player.phase === 'playing') {
+      replaySound.events(result.events, player.state, chosenTheme());
+      replayReactions.events(result.events, {
+        attemptId: `replay-${epoch}`,
+        mode: 'solo',
+        board: 0,
+        encounter: !!player.state.level.classic?.hunt,
+        danger: soloReactionDanger(player.state),
+      });
+    } else replayReactions.suspend();
     if (result.events.length) displayEvents(result.events);
     if (lastClass !== player.state.activeClassId) {
       lastClass = player.state.activeClassId;
@@ -389,6 +418,8 @@ try {
     controller = nextController;
     pending = true;
     player?.pause();
+    replaySound.stopVoices('sfx');
+    replayReactions.suspend();
     updateControls();
     const current = () => !disposed && ticket === epoch && !nextController.signal.aborted,
       loadLabel = () => clipped(typeof label === 'function' ? label() : label);
@@ -498,7 +529,10 @@ try {
       $('board').parentElement.style.setProperty('--board-ratio', String(size.width / size.height));
       $('board').parentElement.style.setProperty('--board-width', `${size.width}px`);
       player = nextPlayer;
+      replayReactions.reset(`replay-${epoch}`);
+      replayReactions.suspend();
       releasePresentationPainter?.();
+      painter?.dispose();
       actorLease?.release();
       pictureLease?.release();
       painter = nextPainter;
@@ -579,8 +613,14 @@ try {
   }
   function togglePlay() {
     if (!player || pending || ['complete', 'error'].includes(player.phase)) return;
-    if (player.phase !== 'playing' && !replayMaster.snapshot().muted) void replaySound.enable();
-    else replaySound.stopVoices('sfx');
+    if (player.phase !== 'playing') {
+      replayReactions.resume();
+      if (!replayMaster.snapshot().muted)
+        void replaySound.enable().then(() => replayReactions.prepare());
+    } else {
+      replaySound.stopVoices('sfx');
+      replayReactions.suspend();
+    }
     consume(player.phase === 'playing' ? player.pause() : player.play());
     lastFrame = 0;
     localizedText($('transport-status'), () =>
@@ -595,6 +635,8 @@ try {
       action();
     } catch (error) {
       player?.pause();
+      replaySound.stopVoices('sfx');
+      replayReactions.suspend();
       localizedText($('transport-status'), () => clipped(error.message, 300));
       updateControls();
       readouts();
@@ -628,6 +670,8 @@ try {
     safely(() => {
       if (!player || pending) return;
       replaySound.reset();
+      replayReactions.reset(`replay-${epoch}`);
+      replayReactions.suspend();
       player.reset();
       painter.setLevel(player.state.level, { seed: player.info.seed });
       eventHistory = [];
@@ -677,6 +721,7 @@ try {
     step: () => safely(step),
     onInactive: () => {
       replaySound.suspend();
+      replayReactions.suspend();
       lastFrame = 0;
       localizedText($('transport-status'), () => t('interface:playbackPausedChoosePlayToContinue'));
     },
@@ -714,6 +759,8 @@ try {
           paused: player.phase !== 'playing',
           reduced: display.effectiveReducedEffects,
           showCombatScrap: encounterDisplay.snapshot().showRemains,
+          brutal: encounterDisplay.snapshot().brutal,
+          blood: encounterDisplay.snapshot().blood,
           textFace: display.textFace,
           showGrid: $('grid').checked,
           fullReveal: player.phase === 'complete' && player.state.status === 'won',
