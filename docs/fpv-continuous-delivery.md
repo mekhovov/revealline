@@ -530,3 +530,91 @@ Continue independent R4/R5 art and R6 demonstration/ghost/practice work while
 publication runs. Integrate #922's dynamic reimport modal navigation during the
 coordinated main refresh, as noted above. Additional unit coverage and remaining
 human/device acceptance stay in R7.
+
+## Motion teaching feedback — 2 October 2026
+
+Development branch `codex/fpv-motion-teaching` starts from #929 at
+`00e7008d89de32400f93108c5f02894d26fd6f89`. The parent remains open and its observed
+optional-practice, candidate and release-ready checks succeeded. Native #902
+membership remains linear through #929; existing holds are preserved.
+
+Implemented this feedback as a separate increment: full-travel, both-direction
+looping examples at explicit 0.2× teaching speed; automatic deliberate
+keyboard/touch/calibrated-radio takeover; independent illustrative motor demand
+and propeller phases; true-position moving ground/height; and peripheral compact
+flight aids in World Studio and Academy. Expanded learning remains available.
+See `fpv-motion-teaching.md` for the command-mix convention and limitations.
+
+Functional evidence before packaging:
+
+- Actual browser: 15 teaching checks, including all eight mode/axis examples,
+  looping, touch/keyboard/radio ownership, reduced motion, and guide reentry with
+  held inputs. A synthetic pointer endpoint was corrected after its first
+  fractional-coordinate assertion failed; the final run passes all 15.
+- Actual browser: 25 shared diagram checks for six torque signs, all four
+  propeller outputs, phase/pause/seek/replay, ground movement, height, full
+  inversion, compact isolation and disposal.
+- Actual World Studio host: 16 checks with controlled TX15-shaped Gamepad data
+  and keyboard events. Verified profile restoration while Keyboard is selected,
+  no takeover from rest/jitter, deliberate takeover, no real-lesson mutation,
+  disconnect/reconnect pause, menu handoff, and keyboard takeoff after preview.
+- All 14 primary Acro lessons complete and independently replay with zero
+  contacts and full health. The integrator, scoring and recorded inputs are
+  unchanged.
+- Desktop, 700 px and 390 px browser layout inspection: compact diagram128×96,
+  passive gimbals50 px, touch96 px on mobile, no document horizontal overflow.
+  Mobile telemetry has its own bottom strip. Fullscreen entry/exit and explicit
+  pause remain functional. No physical device performance or user acceptance
+  inferred from browser viewport inspection.
+- Targeted ESLint, syntax and formatting checks passed. New unit coverage
+  remains deferred to R7. Receipts: `docs/evidence/fpv-motion-*-20261002.json`.
+
+Next gate: freeze committed inputs, admit all three optional packages, rebuild
+and launch the reviewed-player URL, then publish a focused native-stack child of
+#929. This checkpoint does not claim public deployment or physical-radio
+acceptance. Preserve #928, #922, #889, graphics WIP and Garage/ghost handoffs.
+
+### Frozen motion-teaching candidate
+
+Runtime source `cbed6e7e8c5509e2464403c6c43dff6f2f44f683` passed all three
+optional-package admissions, committed-input verification, two byte-identical
+builds and ZIP-member verification. Receipt:
+`docs/evidence/fpv-motion-package-20261002.json`; envelope SHA-256
+`2405001ddde11227d245911a2035ab7e8f8c15b62a9b6b5d10de367b085dda80`.
+Academy remains 62 runtime/64 source files; World Studio94/96. Limits unchanged.
+
+The reviewed-player build was rebuilt and launched at
+`http://127.0.0.1:8789/dist/fpv-reviewed-player-playtest/optional-practice/fpv-worlds/index.html#learn`.
+Its ZIP contains87 files /12,473,373 bytes; SHA-256
+`8ba1156d0105987be317e9d52289227cf4f54c5f70708b4d3de55fe3aa191e05`.
+The final packaged guide visibly showed full −100% pitch, moving ground, real
+height and differentiated motor demands; keyboard takeover and Replay example
+were verified through its UI. Browser error log was empty. This is a local
+player build, not a public deployment. Screenshots were captured locally as
+`/tmp/fpv-motion-learning-final.png`.
+
+Publish this frozen increment as a native #902 child of #929; subsequent
+checkpoint/evidence-only commits do not change the frozen runtime. Continue
+independent R4/R5 art and R6 demonstration/ghost/practice delivery while external
+checks run. Keep existing holds, #922 reimport navigation integration and the
+R7 deferred unit/human/device qualification backlog intact.
+
+### Motion-teaching publication
+
+[PR #932](https://github.com/mekhovov/revealline/pull/932) is published from
+`codex/fpv-motion-teaching`, attached to this chat, and appended with the native
+stack API to #902 after #929. Live open order at append:
+#905 → #907 → #923 → #924 → #925 → #926 → #929 → #932.
+No rebase, manual retarget, hold removal, merge bypass or release-authority
+change was used. The frozen runtime remains `cbed6e7e8`; the next commits only
+record qualification and publication. The PR retains milestone
+`v0.150.0 — Unified native experience`.
+
+Source and rebuilt reviewed-player URL are available for local testing. The
+player's prior USB-radio preference was restored after touch layout inspection;
+the final guide remains open. A compact touch-flight screenshot is also saved at
+`/tmp/fpv-motion-flight-final.png`. Public merge/deployment and exact-head CI are
+external pending gates, not new live-availability claims. Do not repeatedly poll
+unchanged checks. Next independent work remains the approved R4/R5 art foundation
+and R6 demonstrations/ghost/practice flow; read live stack membership before any
+coordinated refresh and preserve the creator-data and original-content holds.

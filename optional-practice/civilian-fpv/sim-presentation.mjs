@@ -158,6 +158,14 @@ export function mountDroneDiagram({ root }) {
     class: 'sim-response-shadow',
   });
   const drift = svg('path', { class: 'sim-response-drift' });
+  const heightLine = svg('path', { class: 'sim-response-height-line' });
+  const heightLabel = svg('text', { x: 9, y: 14, class: 'sim-response-height-label' });
+  const mixNote = svg('text', {
+    x: 110,
+    y: 184,
+    'text-anchor': 'middle',
+    class: 'sim-response-mix-note',
+  });
   const airframe = svg('g', { class: 'sim-response-airframe' });
   const lowerArms = svg('path', { class: 'sim-response-lower-arms' });
   const arms = svg('path', { class: 'sim-response-arms' });
@@ -168,6 +176,27 @@ export function mountDroneDiagram({ root }) {
   const motors = Array.from({ length: 4 }, (_, index) =>
     svg('path', {
       class: `sim-response-motor${index < 2 ? ' sim-response-motor-front' : ''}`,
+    }),
+  );
+  // Props-in Quad X, viewed from above: FL/RR clockwise, FR/RL anticlockwise.
+  // This is a teaching mix of commands, not simulated motor RPM or ESC output.
+  const motorNames = ['front-left', 'front-right', 'rear-left', 'rear-right'];
+  const yawMix = [-1, 1, 1, -1];
+  const propellers = motorNames.map((name, index) =>
+    svg('path', {
+      class: 'sim-response-propeller',
+      'data-motor': name,
+      'data-rotation': yawMix[index] > 0 ? 'ccw' : 'cw',
+    }),
+  );
+  const motorPower = motorNames.map((name) =>
+    svg('path', { class: 'sim-response-motor-power', 'data-motor': name }),
+  );
+  const motorLabels = motorNames.map((name) =>
+    svg('text', {
+      class: 'sim-response-motor-label',
+      'data-motor': name,
+      'text-anchor': 'middle',
     }),
   );
   const struts = svg('path', { class: 'sim-response-struts' });
@@ -181,11 +210,39 @@ export function mountDroneDiagram({ root }) {
     'text-anchor': 'middle',
     class: 'sim-response-rear-label',
   });
-  airframe.append(lowerArms, arms, ...sides, body, ...motors, struts, rear, nose, thrust);
-  drawing.append(ground, reference, shadow, drift, airframe, frontLeader, frontLabel, rearLabel);
+  airframe.append(
+    lowerArms,
+    arms,
+    ...sides,
+    body,
+    ...motors,
+    struts,
+    ...motorPower,
+    ...propellers,
+    rear,
+    nose,
+    thrust,
+  );
+  drawing.append(
+    ground,
+    reference,
+    shadow,
+    heightLine,
+    drift,
+    airframe,
+    frontLeader,
+    frontLabel,
+    rearLabel,
+    ...motorLabels,
+    heightLabel,
+    mixNote,
+  );
   root.append(drawing);
   let disposed = false,
-    lastHeading = null;
+    lastHeading = null,
+    lastTick = null;
+  const phases = [0, 0, 0, 0],
+    previousPower = [0, 0, 0, 0];
   const finite = (value) => (Number.isFinite(value) ? value : 0);
   const rotation = (orientation) => {
     const values =
@@ -209,6 +266,8 @@ export function mountDroneDiagram({ root }) {
       referenceOrientation,
       detailScale = 1,
       followHeading = false,
+      environmentMotion = false,
+      reducedMotion = false,
     } = {}) {
       if (disposed || !state) return;
       const rotate = rotation(state.orientation);
@@ -230,13 +289,21 @@ export function mountDroneDiagram({ root }) {
       const cosine = Math.cos(cameraHeading),
         sine = Math.sin(cameraHeading);
       const relative = ([x, y, z]) => [cosine * x + sine * z, y, -sine * x + cosine * z];
+      const height = Math.max(0, finite(state.position?.y) / 1000);
+      const floorY = environmentMotion ? 150 : 118;
+      // Smoothly auto-frame actual height so a high flight never clips out of
+      // the teaching view. This camera framing does not alter the measured m.
+      const bodyY = environmentMotion ? floorY - (96 * height) / (height + 4) : 67;
+      drawing.setAttribute('viewBox', environmentMotion ? '0 0 220 200' : '0 0 220 160');
+      drawing.dataset.environmentMotion = String(environmentMotion);
+      drawing.dataset.reducedMotion = String(reducedMotion);
       // The observer is behind (+Z) and slightly above the nose (-Z). Following
       // heading keeps that rear view through turns without levelling the body.
       // Perspective makes the rear motor pair visibly nearer; height and depth
       // remain independent, so pitch cannot read as a flat icon being squashed.
       const projectView = ([x, y, z], floor = false) => {
         const scale = (36 * 5) / (5 - z * 0.9165 - y * 0.4);
-        return [110 + x * scale, (floor ? 118 : 67) + (z * 0.4 - y * 0.9165) * scale];
+        return [110 + x * scale, (floor ? floorY : bodyY) + (z * 0.4 - y * 0.9165) * scale];
       };
       const project = (value, floor = false) => projectView(relative(value), floor);
       const bodyScale = Math.max(1, Math.min(1.5, finite(detailScale)));
@@ -259,35 +326,125 @@ export function mountDroneDiagram({ root }) {
               true,
             )
           : projectView([x, y, z], true);
-      ground.setAttribute(
-        'd',
-        [
-          path(
-            [
-              [-1.65, 0, -1.6],
-              [1.65, 0, -1.6],
-              [1.65, 0, 1.5],
-              [-1.65, 0, 1.5],
-            ].map(floorPoint),
+      let groundPaths = [
+        path(
+          [
+            [-1.65, 0, -1.6],
+            [1.65, 0, -1.6],
+            [1.65, 0, 1.5],
+            [-1.65, 0, 1.5],
+          ].map(floorPoint),
+          true,
+        ),
+        path(
+          [
+            [-1.65, 0, 0],
+            [1.65, 0, 0],
+          ].map(floorPoint),
+        ),
+        path(
+          [
+            [0, 0, 1.5],
+            [0, 0, -1.6],
+            [-0.13, 0, -1.25],
+            [0, 0, -1.6],
+            [0.13, 0, -1.25],
+          ].map(floorPoint),
+        ),
+      ];
+      const groundOffset = {
+        x:
+          (initialCosine * finite(state.position?.x) + initialSine * finite(state.position?.z)) /
+          1000,
+        z:
+          (-initialSine * finite(state.position?.x) + initialCosine * finite(state.position?.z)) /
+          1000,
+      };
+      let groundTile = null;
+      if (environmentMotion) {
+        // One metre tiles are anchored to the world, not integrated a second
+        // time from velocity. Camera translation subtracts the actual position.
+        // Clip in the ground plane before perspective to keep geometry bounded.
+        const groundView = ([x, z]) =>
+          relative([initialCosine * x - initialSine * z, 0, initialSine * x + initialCosine * z]);
+        const clipGround = (a, b) => {
+          let lo = 0,
+            hi = 1;
+          for (const [axis, min, max] of [
+            [0, -2.4, 2.4],
+            [2, -2.8, 1.4],
+          ]) {
+            const delta = b[axis] - a[axis];
+            if (Math.abs(delta) < 1e-8) {
+              if (a[axis] < min || a[axis] > max) return '';
+            } else {
+              const from = (min - a[axis]) / delta,
+                to = (max - a[axis]) / delta;
+              lo = Math.max(lo, Math.min(from, to));
+              hi = Math.min(hi, Math.max(from, to));
+              if (lo > hi) return '';
+            }
+          }
+          return path(
+            [lo, hi].map((amount) =>
+              projectView(
+                a.map((value, i) => value + (b[i] - value) * amount),
+                true,
+              ),
+            ),
+          );
+        };
+        const x = groundOffset.x - Math.floor(groundOffset.x),
+          z = groundOffset.z - Math.floor(groundOffset.z);
+        groundTile = {
+          x: Math.round(groundOffset.x),
+          z: Math.round(groundOffset.z),
+          screen: projectView(
+            groundView([
+              Math.round(groundOffset.x) - groundOffset.x,
+              Math.round(groundOffset.z) - groundOffset.z,
+            ]),
             true,
           ),
-          path(
-            [
-              [-1.65, 0, 0],
-              [1.65, 0, 0],
-            ].map(floorPoint),
-          ),
-          path(
-            [
-              [0, 0, 1.5],
-              [0, 0, -1.6],
-              [-0.13, 0, -1.25],
-              [0, 0, -1.6],
-              [0.13, 0, -1.25],
-            ].map(floorPoint),
-          ),
-        ].join(''),
+        };
+        groundPaths = [];
+        for (let line = -5; line <= 5; line++) {
+          groundPaths.push(clipGround(groundView([line - x, -6]), groundView([line - x, 6])));
+          groundPaths.push(clipGround(groundView([-6, line - z]), groundView([6, line - z])));
+        }
+      }
+      ground.setAttribute('d', groundPaths.join(''));
+      ground.dataset.offsetX = String(groundOffset.x);
+      ground.dataset.offsetZ = String(groundOffset.z);
+      shadow.setAttribute('cy', String(floorY));
+      shadow.setAttribute('rx', String(environmentMotion ? 30 / (1 + height / 18) : 30));
+      shadow.style.opacity = environmentMotion ? String(0.65 / (1 + height / 8)) : '';
+      heightLine.style.display =
+        heightLabel.style.display =
+        mixNote.style.display =
+          environmentMotion ? '' : 'none';
+      heightLine.setAttribute(
+        'd',
+        path([
+          [192, bodyY],
+          [192, floorY],
+        ]) +
+          path([
+            [188, bodyY],
+            [196, bodyY],
+          ]) +
+          path([
+            [188, floorY],
+            [196, floorY],
+          ]),
       );
+      heightLabel.textContent =
+        locale === 'uk'
+          ? `${height.toFixed(1)} м · авторамка висоти`
+          : `${height.toFixed(1)} m · height auto-framed`;
+      mixNote.textContent =
+        locale === 'uk' ? 'Умовний мікс команд · не об/хв' : 'Illustrative command mix · not RPM';
+      reference.setAttribute('y', environmentMotion ? '196' : '154');
       const corners = [
         [-0.82, 0, -0.82],
         [0.82, 0, -0.82],
@@ -322,6 +479,37 @@ export function mountDroneDiagram({ root }) {
         side.setAttribute('d', bodyPath([a, b, [b[0], -0.1, b[2]], [a[0], -0.1, a[2]]], true));
       });
       body.setAttribute('d', bodyPath(chassis, true));
+      const throttle = Math.min(1, Math.max(0, finite(controls.throttle)));
+      const axis = (name) => Math.max(-1, Math.min(1, finite(controls[name])));
+      const power = corners.map(([x, , z], index) =>
+        unavailable || throttle === 0
+          ? 0
+          : Math.max(
+              0,
+              Math.min(
+                1,
+                throttle +
+                  0.22 *
+                    (-Math.sign(x) * axis('roll') +
+                      Math.sign(z) * axis('pitch') +
+                      yawMix[index] * axis('yaw')),
+              ),
+            ),
+      );
+      const tick = Number.isSafeInteger(state.ticks) ? state.ticks : 0;
+      const delta = lastTick === null ? 0 : tick - lastTick;
+      if (delta < 0) phases.fill(0);
+      // Integrate display phase, not tick × the latest output. No phase jump
+      // when a command changes, no wall-clock drift while paused, and no long
+      // catch-up animation after a seek/stall. 50 Hz is the simulation clock.
+      if (!reducedMotion && delta > 0 && delta <= 5)
+        phases.forEach((phase, index) => {
+          const average = (power[index] + previousPower[index]) / 2;
+          const advance = (delta / 50) * average * 2 * Math.PI * 2.5 * -yawMix[index];
+          phases[index] = (((phase + advance) % (2 * Math.PI)) + 2 * Math.PI) % (2 * Math.PI);
+        });
+      lastTick = tick;
+      previousPower.splice(0, 4, ...power);
       motors.forEach((motor, index) => {
         const center = corners[index];
         motor.setAttribute(
@@ -334,6 +522,47 @@ export function mountDroneDiagram({ root }) {
             true,
           ),
         );
+        const rotorPoint = (angle, radius) => [
+          center[0] + Math.cos(angle) * radius,
+          0.105,
+          center[2] + Math.sin(angle) * radius,
+        ];
+        propellers[index].setAttribute(
+          'd',
+          Array.from({ length: 3 }, (_, blade) => {
+            const angle = phases[index] + (blade * Math.PI * 2) / 3;
+            return bodyPath(
+              [
+                rotorPoint(angle - 0.55, 0.025),
+                rotorPoint(angle - 0.16, 0.205),
+                rotorPoint(angle + 0.16, 0.205),
+                rotorPoint(angle + 0.55, 0.025),
+              ],
+              true,
+            );
+          }).join(''),
+        );
+        propellers[index].dataset.power = power[index].toFixed(4);
+        propellers[index].dataset.phase = phases[index].toFixed(6);
+        propellers[index].style.opacity = String(0.45 + power[index] * 0.55);
+        motorPower[index].setAttribute(
+          'd',
+          bodyPath(
+            Array.from({ length: 21 }, (_, part) =>
+              rotorPoint(-Math.PI / 2 + (Math.PI * 2 * power[index] * part) / 20, 0.24),
+            ),
+          ),
+        );
+        motorPower[index].style.opacity = power[index] ? '1' : '0';
+        const label = bodyPoint([center[0], 0.08, center[2]]);
+        motorLabels[index].setAttribute('x', label[0].toFixed(2));
+        motorLabels[index].setAttribute(
+          'y',
+          Math.min(environmentMotion ? 172 : 130, label[1] + 14).toFixed(2),
+        );
+        motorLabels[index].style.display = environmentMotion ? '' : 'none';
+        motorLabels[index].textContent =
+          `${yawMix[index] > 0 ? '↺' : '↻'} ${Math.round(power[index] * 100)}%`;
       });
       nose.setAttribute(
         'd',
@@ -355,12 +584,15 @@ export function mountDroneDiagram({ root }) {
       );
       const front = bodyPoint([0, 0.12, -0.9]),
         back = bodyPoint([0, 0.12, 0.85]);
-      const labelY = Math.min(109, Math.max(12, front[1] - 10));
+      const labelY = Math.min(environmentMotion ? 172 : 109, Math.max(12, front[1] - 10));
       frontLabel.setAttribute('x', front[0].toFixed(2));
       frontLabel.setAttribute('y', labelY.toFixed(2));
       frontLabel.textContent = locale === 'uk' ? 'ПЕРЕД' : 'FRONT';
       rearLabel.setAttribute('x', back[0].toFixed(2));
-      rearLabel.setAttribute('y', Math.min(112, Math.max(12, back[1] + 13)).toFixed(2));
+      rearLabel.setAttribute(
+        'y',
+        Math.min(environmentMotion ? 174 : 112, Math.max(12, back[1] + 13)).toFixed(2),
+      );
       rearLabel.textContent = locale === 'uk' ? 'ЗАД' : 'REAR';
       frontLeader.setAttribute('d', path([front, [front[0], labelY + 3]]));
       const up = rotate([0, 1, 0]),
@@ -374,7 +606,6 @@ export function mountDroneDiagram({ root }) {
         : locale === 'uk'
           ? 'Початковий напрямок ↑'
           : 'Start heading ↑';
-      const throttle = Math.min(1, Math.max(0, finite(controls.throttle)));
       const thrustEnd = 0.38 + throttle * 0.75;
       thrust.setAttribute(
         'd',
@@ -398,13 +629,13 @@ export function mountDroneDiagram({ root }) {
         true,
       );
       const dx = end[0] - 110,
-        dy = end[1] - 118,
+        dy = end[1] - floorY,
         length = Math.hypot(dx, dy) || 1;
       const ax = dx / length,
         ay = dy / length;
       drift.setAttribute(
         'd',
-        path([[110, 118], end]) +
+        path([[110, floorY], end]) +
           path([
             [end[0] - ax * 7 - ay * 4, end[1] - ay * 7 + ax * 4],
             end,
@@ -417,6 +648,16 @@ export function mountDroneDiagram({ root }) {
         referenceHeading,
         cameraHeading,
         headingDelta,
+        height,
+        groundOffset,
+        groundTile,
+        bodyCenter: [110, bodyY],
+        motorMix: motorNames.map((name, index) => ({
+          name,
+          power: power[index],
+          phase: phases[index],
+          rotation: yawMix[index] > 0 ? 'ccw' : 'cw',
+        })),
         front,
         rear: back,
         left: bodyPoint([-0.82, 0, 0]),
@@ -478,6 +719,7 @@ export function mountDroneResponse({ root, window: win = globalThis.window, onHi
       mode = 'self-level',
       guideOpen = false,
       referenceOrientation,
+      reducedMotion = false,
     } = {}) {
       if (disposed) return;
       root.hidden = !state || display === 'off';
@@ -491,7 +733,9 @@ export function mountDroneResponse({ root, window: win = globalThis.window, onHi
         locale,
         unavailable,
         referenceOrientation,
+        reducedMotion,
         followHeading: true,
+        detailScale: display === 'compact' ? 1.4 : 1,
       });
       const thrustValue = clamp(controls.throttle, 0, 1);
       const vx = finite(state.velocity?.x) / 1000,

@@ -1134,7 +1134,14 @@ export function mountWorldApp({
     paintLoadout();
   }
   function restoreRadio() {
-    if (replayProof || $('flight-source').value !== 'radio' || $('world-radio-dialog').open) return;
+    if (
+      replayProof ||
+      $('world-radio-dialog').open ||
+      ($('flight-source').value !== 'radio' &&
+        !beginnerCoach.wantsRadioPreview?.() &&
+        flight?.snapshot().status === 'active')
+    )
+      return;
     // Read the current saved profile: Setup and another simulator page may have
     // saved it through their own store instance since this page was mounted.
     restoreVerifiedRadio(radio, createFlightProfileStore({ storage }));
@@ -1196,7 +1203,7 @@ export function mountWorldApp({
       display = $('flight-stick-display').value,
       monitor = $('world-touch'),
       radioPreview =
-        source === 'radio' || beginnerCoach.previewSource?.() === 'radio' ? radio.preview() : null,
+        source === 'radio' || beginnerCoach.wantsRadioPreview?.() ? radio.preview() : null,
       unavailable = source === 'radio' && !radioPreview?.controls,
       controls =
         source === 'radio'
@@ -1307,6 +1314,9 @@ export function mountWorldApp({
       scale: $('flight-guide-scale').value,
       mode: $('flight-mode').value,
       guideOpen: beginnerCoach.blocksArm(),
+      reducedMotion:
+        $('sim-motion').value === 'reduced' ||
+        Boolean(win.matchMedia?.('(prefers-reduced-motion: reduce)').matches),
     });
   }
   const droneResponse = mountDroneResponse({
@@ -2917,7 +2927,7 @@ export function mountWorldApp({
     if (!flight || !$('flight-dialog').open) return;
     if (
       !replayProof &&
-      $('flight-source').value === 'radio' &&
+      ($('flight-source').value === 'radio' || beginnerCoach.wantsRadioPreview?.()) &&
       !radio.status().verified &&
       now - lastRadioDiscovery > 1000
     ) {
