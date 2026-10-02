@@ -50,8 +50,8 @@ export function missionBriefing(
           objective: required === 1 ? label : plural,
         })
       : t(level.classic?.coverage ? 'gameplay:brief.routeCoverage' : 'gameplay:brief.coverage', {
-+          coverage,
-+        });
+          coverage,
+        });
   const hunt = level.classic?.hunt;
   const goal = hunt
     ? t(
