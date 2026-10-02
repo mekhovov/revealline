@@ -531,15 +531,30 @@
             hash: image?.data ? await sha(image.data) : null,
           });
         }
-        const rays = [];
+        const rays = [],
+          rayMeshes = [];
+        // Raycaster must never recurse into UI sprites. This is a geometric
+        // visibility comparison of visible opaque environment mesh triangles;
+        // alpha-mask holes and the readability of rendered cues are separate.
+        for (const root of [owner.world, owner.imported])
+          root.traverse((item) => {
+            const paints = Array.isArray(item.material) ? item.material : [item.material];
+            if (
+              item.isMesh &&
+              active(item) &&
+              paints.some((paint) => paint && !paint.transparent && paint.opacity > 0)
+            )
+              rayMeshes.push(item);
+          });
         function ray(from, to, label) {
           const a = new THREE.Vector3(...from),
             d = new THREE.Vector3(...to).sub(a),
             length = d.length();
           if (length < 1e-8) return;
-          const hits = new THREE.Raycaster(a, d.normalize(), 0, length + 0.001)
-            .intersectObjects([owner.world, owner.imported], true)
-            .filter((hit) => hit.object.isMesh && active(hit.object));
+          const hits = new THREE.Raycaster(a, d.normalize(), 0, length + 0.001).intersectObjects(
+            rayMeshes,
+            false,
+          );
           rays.push({
             label,
             hit: hits[0]?.object.name ?? null,
@@ -647,6 +662,7 @@
             'Static observer poses are not scored attempts or demonstration commands.',
             'No FPS, sustained performance, physical-device or human art acceptance claim.',
             'Disposal asserts registered ownership is empty, not zero driver memory; Three.js may retain internal lookup allocations until context release.',
+            'Sightline rays compare visible opaque mesh triangles; they do not resolve alpha-texture holes or certify human readability of rendered objective cues.',
             'No additional unit-test coverage. Production scene observation restores the original method immediately after renderer creation.',
           ],
         };
