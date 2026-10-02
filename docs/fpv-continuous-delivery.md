@@ -1455,3 +1455,30 @@ approved art/Themes work while named-device and player sessions remain open.
 Garage's additive candidate preserves all138 existing v2 records and adds about
 251KB without changing148 challenges/14 worlds. Do not use the old school
 installer against the packed registry; preserve all existing rows and identities.
+
+### 2 October — A live; lifecycle rebased onto merged main
+
+#951 merged as `67c8de5cc346acf955a51289625e513f59a5a06f`. The public
+`main-deployment.json` identifies that exact merge. The public simulator and its
+Lighthouse flight launched successfully with no application errors. Public
+`world-progress.mjs` matches the merged source SHA256
+`032fa513f09104efde3a3e64f09d0534d889465bba9baa771ac6f0e1d830077c`.
+Checkpoint practice is now available publicly. Screenshot:
+`/tmp/fpv-checkpoint-live-player-20261002.png`.
+
+Before that merge completed, the automatic update had merged new main navigation
+and startup changes into #951. Recovery refs `codex/fpv-checkpoint-prelinear-20261002`
+and `codex/fpv-lifecycle-prelinear-20261002` preserve both remote heads. A linear
+parent with a byte-identical tree and its rebased child were pushed atomically
+with explicit remote-head leases. #951 then completed from its already-qualified
+merge head; B was rebased onto the resulting main (identical parent tree). No
+native stack was created or retargeted, and no newer changes were discarded.
+
+The combined main/navigation + B build passes source69/69, package69/69 and
+checkpoint17/17 browser checks. The fixture now freezes dependencies at unique
+URLs and uses real HTTP frames, removing stale module-cache ambiguity. Final
+frozen candidate `ca467a7cb438c9609f292856c4716262e646cac8` passes all three
+package admissions, ZIP/committed-input checks and two identical builds.
+Player SHA256 `f6093191d52c21e2f665fb50517272fa4dd6fb0bb50f61086d1d6ec3d3d7cc94`;
+87 runtime files /13,426,571 bytes. B can now target main directly. Its
+publication is separate from A's verified public availability.
