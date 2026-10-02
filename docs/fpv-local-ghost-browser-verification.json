@@ -1,0 +1,375 @@
+{
+  "format": "FPVLocalGhostVerification.v1",
+  "date": "2026-10-01",
+  "status": "passed",
+  "baseCommit": "80b68e7f86f62631b74661631d96b5c71b4a4907",
+  "sources": {
+    "optional-practice/civilian-fpv/world-app.mjs": "782c7f0e262608247b819fe97b772379d5ea91e9480cafbc3142ed06aab43d37",
+    "optional-practice/civilian-fpv/renderer.mjs": "abd9eaf3c633471b75d0626b8a80a0c33146f185db56f20ff59ffc0b92dd8910",
+    "optional-practice/fpv-worlds/index.html": "7431c110fe682749fb73c51d4a9c939bfc7a860bf37a9c5f5ef1d2d4662ccd81"
+  },
+  "build": {
+    "format": "FPVPlaytestBuild.v1",
+    "entry": "optional-practice/fpv-worlds/index.html",
+    "files": 75,
+    "bytes": 11687080,
+    "zipSha256": "0dedea4840e1b14482d9d6d378fe90f86618d33e6a01202c4f29518c5fb238de",
+    "qualification": "development-playtest",
+    "unitTests": "deferred-to-final-phase",
+    "releaseQualified": false
+  },
+  "environment": {
+    "browser": "Chrome via Playwright, headless WebGL",
+    "desktop": [1440, 1100],
+    "mobile": [390, 844],
+    "locales": ["en", "uk"],
+    "url": "http://127.0.0.1:8791/dist/fpv-local-ghost-playtest/optional-practice/fpv-worlds/index.html"
+  },
+  "checks": {
+    "defaultOffAndMissingPB": true,
+    "invalidFastestFallback": {
+      "selected": "d1b6a070da274849",
+      "sectorReference": "d1b6a070da274849",
+      "invalid": "f326d3ca1c8b839f"
+    },
+    "interpolation": {
+      "at": 700,
+      "expected": {
+        "position": {
+          "x": 99,
+          "y": 3010,
+          "z": 9833.2
+        },
+        "orientation": [4842.07349111942, 999025.5768574069, -33921.11602923026, 27817.42253271552]
+      },
+      "actual": {
+        "tick": 700,
+        "finished": false,
+        "position": {
+          "x": 99,
+          "y": 3010,
+          "z": 9833.2
+        },
+        "orientation": [4842.07349111942, 999025.5768574069, -33921.11602923026, 27817.42253271552]
+      }
+    },
+    "recovery": {
+      "ticks": 700,
+      "reference": "d1b6a070da274849",
+      "samples": 239,
+      "splitCount": 2
+    },
+    "pause": {
+      "ticks": 720,
+      "ghostTick": 720
+    },
+    "retryTick": 0,
+    "finishedReference": {
+      "attemptTick": 1283,
+      "ghost": {
+        "tick": 1184,
+        "finished": true,
+        "position": {
+          "x": 5,
+          "y": 2,
+          "z": 11987
+        },
+        "orientation": [
+          551.9997890345529, 999727.6179201731, 435.99983336787153, 23327.991084416757
+        ]
+      },
+      "hud": "Personal best finished · ghost holds its final position."
+    },
+    "staleCourseCancellation": {
+      "observed": true,
+      "course": "courtyard-01",
+      "presentation": {
+        "samples": 0,
+        "visible": false,
+        "trail": false,
+        "pose": null
+      }
+    },
+    "cancelButton": {
+      "observed": true,
+      "enabled": false,
+      "presentation": {
+        "samples": 0,
+        "visible": false,
+        "trail": false,
+        "pose": null
+      }
+    },
+    "modeAndResponseIsolation": {
+      "mode": true,
+      "response": true
+    },
+    "unscoredAndDemonstration": {
+      "previewDisabled": true,
+      "demonstrationDisabled": true,
+      "recordsBefore": 2,
+      "recordsAfter": 2
+    },
+    "resourceCycles": {
+      "count": 8,
+      "offRegistered": {
+        "geometries": 204,
+        "materials": 55,
+        "textures": 16
+      },
+      "eachOff": [
+        {
+          "registered": {
+            "geometries": 204,
+            "materials": 55,
+            "textures": 16
+          },
+          "renderer": {
+            "geometries": 133,
+            "textures": 15,
+            "programs": 9,
+            "contextLost": false
+          }
+        },
+        {
+          "registered": {
+            "geometries": 204,
+            "materials": 55,
+            "textures": 16
+          },
+          "renderer": {
+            "geometries": 133,
+            "textures": 15,
+            "programs": 9,
+            "contextLost": false
+          }
+        },
+        {
+          "registered": {
+            "geometries": 204,
+            "materials": 55,
+            "textures": 16
+          },
+          "renderer": {
+            "geometries": 133,
+            "textures": 15,
+            "programs": 9,
+            "contextLost": false
+          }
+        },
+        {
+          "registered": {
+            "geometries": 204,
+            "materials": 55,
+            "textures": 16
+          },
+          "renderer": {
+            "geometries": 133,
+            "textures": 15,
+            "programs": 9,
+            "contextLost": false
+          }
+        },
+        {
+          "registered": {
+            "geometries": 204,
+            "materials": 55,
+            "textures": 16
+          },
+          "renderer": {
+            "geometries": 133,
+            "textures": 15,
+            "programs": 9,
+            "contextLost": false
+          }
+        },
+        {
+          "registered": {
+            "geometries": 204,
+            "materials": 55,
+            "textures": 16
+          },
+          "renderer": {
+            "geometries": 133,
+            "textures": 15,
+            "programs": 9,
+            "contextLost": false
+          }
+        },
+        {
+          "registered": {
+            "geometries": 204,
+            "materials": 55,
+            "textures": 16
+          },
+          "renderer": {
+            "geometries": 133,
+            "textures": 15,
+            "programs": 9,
+            "contextLost": false
+          }
+        },
+        {
+          "registered": {
+            "geometries": 204,
+            "materials": 55,
+            "textures": 16
+          },
+          "renderer": {
+            "geometries": 133,
+            "textures": 15,
+            "programs": 9,
+            "contextLost": false
+          }
+        }
+      ]
+    },
+    "mobile": {
+      "width": 390,
+      "scroll": 390,
+      "dialog": 380,
+      "dialogScroll": 380,
+      "button": "Сховати особистий рекорд",
+      "hud": "Блакитна примара · той самий рекорд, що й для ділянок. Без зіткнень."
+    },
+    "offlineRecovery": {
+      "tick": 700,
+      "ghostTick": 700,
+      "reference": "d1b6a070da274849"
+    },
+    "legacy": {
+      "samples": 50,
+      "reference": "07e7cdc0edb0790a",
+      "sectorReference": "07e7cdc0edb0790a",
+      "tick": 31,
+      "ghostTick": 31
+    },
+    "mainThreadStall": {
+      "state": {
+        "ticks": 31,
+        "status": "paused",
+        "position": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "velocity": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "orientation": [0, 0, 0, 1000000],
+        "angular": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 0
+        },
+        "step": 0,
+        "hold": 0,
+        "contacts": 0,
+        "landingSpeed": 0,
+        "landingTilt": 0,
+        "lastInput": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 0,
+          "throttle": 0
+        },
+        "heightRange": {
+          "min": 0,
+          "max": 0
+        },
+        "total": 2,
+        "target": {
+          "type": "hold",
+          "min": {
+            "x": -1100,
+            "y": 1200,
+            "z": -1100
+          },
+          "max": {
+            "x": 1100,
+            "y": 2400,
+            "z": 1100
+          },
+          "ticks": 40,
+          "maxSpeed": 2200,
+          "maxTilt": 4500,
+          "minTilt": 0,
+          "centred": false,
+          "heading": null
+        },
+        "attitude": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 0,
+          "up": {
+            "x": 0,
+            "y": 1000000,
+            "z": 0
+          }
+        }
+      },
+      "ghost": {
+        "tick": 31,
+        "finished": false,
+        "position": {
+          "x": 0,
+          "y": 656,
+          "z": 0
+        },
+        "orientation": [0, 0, 0, 1000000]
+      }
+    },
+    "disposeWhileLoading": {
+      "pendingObserved": true,
+      "ghost": {
+        "enabled": false,
+        "loading": false,
+        "referenceId": null,
+        "presentation": {
+          "samples": 0,
+          "visible": false,
+          "trail": false,
+          "pose": null
+        },
+        "resources": {
+          "available": true,
+          "disposed": true,
+          "quality": "balanced",
+          "drone": "racer",
+          "registered": {
+            "geometries": 0,
+            "materials": 0,
+            "textures": 0
+          },
+          "renderer": {
+            "geometries": 0,
+            "textures": 1,
+            "programs": 1,
+            "contextLost": true
+          }
+        }
+      },
+      "records": 1
+    }
+  },
+  "errors": [],
+  "qualification": {
+    "unitCoverage": "Deferred to final phase; none added or run",
+    "focusedLint": "passed",
+    "format": "passed",
+    "releaseQualified": false
+  },
+  "localArtifacts": {
+    "scripts": ["/tmp/fpv-local-ghost-browser.mjs", "/tmp/fpv-local-ghost-legacy.mjs"],
+    "receipts": ["/tmp/fpv-local-ghost-browser.json", "/tmp/fpv-local-ghost-legacy.json"],
+    "screenshots": [
+      "/tmp/fpv-ghost-start-chase.png",
+      "/tmp/fpv-ghost-recovery-fpv.png",
+      "/tmp/fpv-ghost-recovery-chase.png",
+      "/tmp/fpv-ghost-uk-mobile.png",
+      "/tmp/fpv-ghost-offline-mobile.png"
+    ]
+  }
+}

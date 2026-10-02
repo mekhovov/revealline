@@ -13,6 +13,7 @@ import {
   validateFlightStudioBundle,
 } from '../../optional-practice/civilian-fpv/studio.mjs';
 import { mountRadioSetup } from '../../optional-practice/civilian-fpv/radio-setup.mjs';
+import { createRadioRuntime } from '../../optional-practice/civilian-fpv/radio-runtime.mjs';
 import {
   DEFAULT_RESPONSE,
   RADIO_FORMAT,
@@ -31,6 +32,12 @@ function dom(t) {
         node._text
           ? {
               nodeType: 3,
+              get textContent() {
+                return node._text;
+              },
+              set textContent(value) {
+                node._text = value;
+              },
               get nodeValue() {
                 return node._text;
               },
@@ -176,6 +183,7 @@ test('Radio setup import, explicit verification and save retain switch threshold
     buttons: [{ value: 1 }, { value: 0 }],
   };
   Object.assign(win, {
+    Event,
     localStorage: {
       getItem: (key) => values.get(key) ?? null,
       setItem: (key, value) => values.set(key, value),
@@ -209,22 +217,20 @@ test('Radio setup import, explicit verification and save retain switch threshold
     ),
     switches: { arm: { button: 0, threshold: 0.75, invert: true }, pause: null, reset: null },
   };
-  const runtime = {
-    devices: () => ({ status: 'available', devices: [{ ...pad, axes: 4, buttons: 2 }] }),
-    raw: () => (missing ? null : pad),
-    select: (id) => {
-      selected = id;
-      return !missing;
-    },
-    setProfile: (p) => {
-      saved = p;
-    },
-    verify() {},
-    freeze() {},
+  const runtime = createRadioRuntime({ getGamepads: () => (missing ? [] : [pad]) }),
+    selectRadio = runtime.select,
+    setRadioProfile = runtime.setProfile;
+  runtime.select = (id) => {
+    selected = id;
+    return selectRadio(id);
+  };
+  runtime.setProfile = (p, options) => {
+    saved = p;
+    return setRadioProfile(p, options);
   };
   const setup = mountRadioSetup({ container: f.container, window: win, runtime });
   t.after(() => setup.dispose());
-  const device = f.input('Device', 'select');
+  const device = f.input('Your radio', 'select');
   device.value = '1';
   device.emit('change');
   assert.equal(selected, 1);
@@ -243,14 +249,14 @@ test('Radio setup import, explicit verification and save retain switch threshold
   assert.deepEqual(saved.switches, profile.switches);
   missing = true;
   assert.doesNotThrow(() => device.emit('change'));
-  assert.match(f.container.querySelector('[role="status"]').textContent, /Choose a device/);
+  assert.match(f.container.querySelector('.radio-feedback').textContent, /Choose a device/);
   f.click('Save verified profile');
-  assert.match(f.container.querySelector('[role="status"]').textContent, /incomplete/);
+  assert.match(f.container.querySelector('.radio-feedback').textContent, /incomplete/);
   missing = false;
   device.emit('change');
   f.click('Record full travel');
   f.click('I checked the animated sticks and their direction');
-  assert.match(f.container.querySelector('[role="status"]').textContent, /incomplete/);
+  assert.match(f.container.querySelector('.radio-feedback').textContent, /incomplete/);
 });
 
 test('Acro notebook review chooses only evidence satisfying its mode rule', async (t) => {
