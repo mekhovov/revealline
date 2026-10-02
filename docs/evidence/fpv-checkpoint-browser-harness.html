@@ -1,0 +1,776 @@
+<!doctype html> <meta charset="utf-8" /><meta
+  name="viewport"
+  content="width=device-width,initial-scale=1"
+/>
+<title>Checkpoint practice · production host verification</title>
+<style>
+  body {
+    font: 15px system-ui;
+    background: #101923;
+    color: #eee;
+  }
+  button {
+    min-height: 44px;
+    padding: 8px 16px;
+  }
+  iframe {
+    width: 100%;
+    height: 760px;
+    border: 0;
+  }
+  pre {
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+  }
+</style>
+<h1>Checkpoint practice · actual host</h1>
+<p>
+  Production HTML and runtime, isolated native browser storage, actual fixed-step recordings and DOM
+  controls. No physical-device or player-acceptance claim.
+</p>
+<button id="run">Run checks</button>
+<button id="show-example">Show example section</button>
+<p id="status" role="status">Ready</p>
+<pre id="receipt"></pre>
+<iframe id="sim" title="Actual FPV simulator"></iframe>
+<script type="module">
+  import {
+    WORLD_CATALOGUE,
+    BEGINNER_CATALOGUE,
+  } from '../../optional-practice/civilian-fpv/world-catalogue.mjs';
+  import { WORLD_DEMONSTRATIONS } from '../../optional-practice/civilian-fpv/world-demonstrations.mjs';
+  import {
+    initWorldRuntime,
+    createWorldFlight,
+    createWorldRecorder,
+    validateWorldCourse,
+  } from '../../optional-practice/civilian-fpv/world-model.mjs';
+  import { openWorldRecords } from '../../optional-practice/civilian-fpv/world-records.mjs';
+  const $ = (id) => document.getElementById(id),
+    wait = (ms) => new Promise((r) => setTimeout(r, ms));
+  const must = (v, m) => {
+      if (!v) throw Error(m);
+    },
+    normalized = (s) => ({ ...s, status: 'active' });
+  const stable = (v) =>
+    JSON.stringify(v, (_, x) =>
+      x && typeof x === 'object' && !Array.isArray(x)
+        ? Object.fromEntries(Object.entries(x).sort(([a], [b]) => a.localeCompare(b)))
+        : x,
+    );
+  const eq = (a, b, m) => must(stable(a) === stable(b), m);
+  async function until(fn, label, timeout = 30000) {
+    const end = performance.now() + timeout;
+    while (!fn()) {
+      if (performance.now() > end)
+        throw Error('Timed out: ' + (typeof label === 'function' ? label() : label));
+      await wait(25);
+    }
+  }
+  const runtimeRoot = document.querySelector('meta[name="fixture-runtime-root"]')?.content ?? '/';
+  const runtimeURL = new URL(runtimeRoot, location.href);
+  async function sourceHashes() {
+    const paths = [
+      'optional-practice/fpv-worlds/index.html',
+      ...[
+        'world-app.mjs',
+        'world-progress.mjs',
+        'world-model.mjs',
+        'input.mjs',
+        'world-catalogue.mjs',
+        'world-demonstrations.mjs',
+      ].map((x) => 'optional-practice/civilian-fpv/' + x),
+    ];
+    return Object.fromEntries(
+      await Promise.all(
+        paths.map(async (p) => {
+          const result = await fetch(new URL(p, runtimeURL), { cache: 'no-store' });
+          must(result.ok, 'Missing runtime file: ' + result.url);
+          const bytes = await result.arrayBuffer();
+          return [
+            p,
+            Array.from(new Uint8Array(await crypto.subtle.digest('SHA-256', bytes)))
+              .map((x) => x.toString(16).padStart(2, '0'))
+              .join(''),
+          ];
+        }),
+      ),
+    );
+  }
+  $('show-example').onclick = async () => {
+    $('show-example').disabled = true;
+    try {
+      window.__checkpointFixture = {
+        prefix: 'fpv-checkpoint-manual-' + Date.now() + ':',
+        names: new Set(),
+        errors: [],
+      };
+      const loaded = new Promise((r) => $('sim').addEventListener('load', r, { once: true }));
+      $('sim').src = './simulator.html?manual=' + Date.now();
+      await loaded;
+      await until(() => $('sim').contentWindow.fpvWorldStudio, 'example host');
+      const w = $('sim').contentWindow,
+        app = w.fpvWorldStudio;
+      await app.ready;
+      const entry = BEGINNER_CATALOGUE.find((row) => row.id === 'beginner-52'),
+        proof = WORLD_DEMONSTRATIONS.find(
+          (row) => row.proof.course === entry.id && row.proof.mode === 'acro',
+        ).proof;
+      await app.startFlight(w.JSON.parse(JSON.stringify(entry)), {
+        checkpoint: w.JSON.parse(JSON.stringify({ mode: 'acro', index: 3, proof })),
+      });
+      $('status').textContent =
+        'Example section ready, paused. Choose controls and Arm to practise. The completed verification receipt remains below.';
+    } catch (error) {
+      $('status').textContent = String(error.stack);
+    } finally {
+      $('show-example').disabled = false;
+    }
+  };
+
+  $('run').onclick = async () => {
+    $('run').disabled = true;
+    const checks = [],
+      errors = [],
+      source = await sourceHashes(),
+      prefix = 'fpv-checkpoint-fixture-' + Date.now() + ':',
+      names = new Set();
+    window.__checkpointFixture = { prefix, names, errors };
+    const db = {
+      open(name, version) {
+        names.add(prefix + name);
+        return indexedDB.open(prefix + name, version);
+      },
+    };
+    let w, d, app, store, fixtureEntry, fixtureProof, partialProof, baseline;
+    const record = async (name, fn) => {
+      try {
+        $('status').textContent = name;
+        checks.push({ name, passed: true, ...(await fn()) });
+      } catch (e) {
+        checks.push({ name, passed: false, error: e.stack });
+      }
+    };
+    const inFrame = (value) => w.JSON.parse(JSON.stringify(value));
+    const state = () => app.snapshot().state;
+    const change = (id, value) => {
+      const node = d.getElementById(id);
+      node.value = value;
+      node.dispatchEvent(new w.Event('change', { bubbles: true }));
+    };
+    const button = (root, regex) =>
+      [...root.querySelectorAll('button')].find((n) => regex.test(n.textContent));
+    const saved = async () => ({
+      records: await store.list(),
+      session: await store.session(),
+      playlist: w.localStorage.getItem('revealline.fpv.playlists.v1'),
+    });
+    await record(
+      'Prepare real recorded two-objective flight and separate interrupted evidence',
+      async () => {
+        await initWorldRuntime();
+        const base = WORLD_CATALOGUE.find((r) => r.id === 'woodland-01');
+        const hold = (ticks) => ({
+          type: 'hold',
+          min: { x: -1000, y: 2000, z: -1000 },
+          max: { x: 1000, y: 4000, z: 1000 },
+          ticks,
+          maxSpeed: 5000,
+          maxTilt: 9000,
+          minTilt: 0,
+          centred: false,
+          heading: null,
+        });
+        const course = validateWorldCourse({
+          ...base.course,
+          id: 'checkpoint-browser-fixture',
+          revision: 'r1',
+          spawn: { x: 0, y: 3000, z: 0 },
+          obstacles: [],
+          actors: [],
+          steps: { 'self-level': [hold(5), hold(20)], acro: [hold(5), hold(20)] },
+        });
+        fixtureEntry = {
+          ...base,
+          id: course.id,
+          course,
+          legacy: false,
+          packIdentity: 'fixture:checkpoint',
+        };
+        const flight = createWorldFlight({ course });
+        flight.arm();
+        const recorder = createWorldRecorder(flight, { session: 'practice' });
+        try {
+          for (let tick = 0; tick < 25; tick++) {
+            flight.step({ roll: 0, pitch: 0, yaw: 0, throttle: 0.5, actions: 0 });
+            recorder.record();
+            if (tick === 23) partialProof = recorder.export();
+          }
+          fixtureProof = recorder.export();
+          must(flight.snapshot().status === 'complete', 'Fixture proof did not complete');
+        } finally {
+          flight.dispose();
+        }
+        store = await openWorldRecords(db);
+        await store.saveSession({
+          course,
+          proof: partialProof,
+          packIdentity: fixtureEntry.packIdentity,
+          preview: false,
+          sectorReferenceId: null,
+          ghostEnabled: false,
+        });
+        return { course: course.id, frames: fixtureProof.frames.length };
+      },
+    );
+    await record(
+      'Load production HTML with isolated native storage and no physical gamepads',
+      async () => {
+        const loaded = new Promise((r) => $('sim').addEventListener('load', r, { once: true }));
+        $('sim').src = './simulator.html?fixture=' + Date.now();
+        await loaded;
+        await until(() => $('sim').contentWindow.fpvWorldStudio, 'production mount');
+        w = $('sim').contentWindow;
+        d = w.document;
+        app = w.fpvWorldStudio;
+        await app.ready;
+        must(
+          d.querySelector('meta[name="fixture-source-sha256"]').content ===
+            source['optional-practice/fpv-worlds/index.html'],
+          'Regenerate the source HTML fixture',
+        );
+        w.localStorage.setItem(
+          'revealline.fpv.playlists.v1',
+          JSON.stringify({
+            playlists: [
+              {
+                format: 'FPVPlaylist.v1',
+                id: 'checkpoint-bookmark',
+                revision: 'r1',
+                title: { en: 'Fixture', uk: 'Перевірка' },
+                entries: [
+                  { packIdentity: fixtureEntry.packIdentity, levelId: fixtureEntry.id },
+                  { packIdentity: fixtureEntry.packIdentity, levelId: fixtureEntry.id },
+                ],
+              },
+            ],
+            bookmark: { id: 'checkpoint-bookmark', revision: 'r1', nextIndex: 1 },
+          }),
+        );
+        baseline = await saved();
+        return {
+          catalogue: app.snapshot().catalogue,
+          viewport: { width: w.innerWidth, height: w.innerHeight },
+        };
+      },
+    );
+    if (app) {
+      for (const [id, index] of [
+        ['beginner-52', 3],
+        ['beginner-52', 5],
+        ['beginner-53', 3],
+        ['beginner-56', 6],
+      ])
+        await record(
+          `Former blocked spawn ${id} section ${index + 1}: exact paused entry and retry`,
+          async () => {
+            const entry = BEGINNER_CATALOGUE.find((r) => r.id === id),
+              proof = WORLD_DEMONSTRATIONS.find(
+                (r) => r.proof.course === id && r.proof.mode === 'acro',
+              ).proof;
+            const f = createWorldFlight({
+              course: entry.course,
+              mode: 'acro',
+              response: proof.response,
+            });
+            f.arm();
+            let expected = f.snapshot();
+            try {
+              for (const frame of proof.frames) {
+                if (expected.step === index) break;
+                expected = f.step(
+                  Object.fromEntries(
+                    ['roll', 'pitch', 'yaw', 'throttle', 'actions'].map((k, i) => [k, frame[i]]),
+                  ),
+                  { quantized: true },
+                );
+              }
+            } finally {
+              f.dispose();
+            }
+            await app.startFlight(inFrame(entry), {
+              checkpoint: inFrame({ mode: 'acro', index, proof }),
+            });
+            must(
+              app.snapshot().checkpointPractice?.kind === 'checkpoint',
+              'Not a restored section',
+            );
+            eq(normalized(state()), normalized(expected), 'State differs from original prefix');
+            must(state().status === 'paused', 'Checkpoint autoarmed');
+            must(!app.snapshot().learning?.guideOpen, 'School guide owns practice input');
+            must(d.getElementById('export-flight').disabled, 'Proof export enabled');
+            must(d.getElementById('flight-mode').disabled, 'Mode can change exact checkpoint');
+            await wait(150);
+            must(state().ticks === expected.ticks, 'Paused state advanced');
+            d.getElementById('world-retry').click();
+            await until(
+              () =>
+                app.snapshot().checkpointPractice?.startTick === expected.ticks &&
+                !d.getElementById('world-arm').disabled,
+              'checkpoint retry',
+            );
+            eq(normalized(state()), normalized(expected), 'Retry changed entry');
+            eq(await saved(), baseline, 'Practice changed retained records, recovery or bookmark');
+            return {
+              startTick: expected.ticks,
+              orientation: expected.orientation,
+              velocity: expected.velocity,
+            };
+          },
+        );
+      await record(
+        'Missing proof is visibly labelled full-route unscored practice from original spawn',
+        async () => {
+          const entry = WORLD_CATALOGUE.find((r) => r.id === 'adventure-coast-01');
+          await app.startFlight(inFrame(entry), {
+            checkpoint: { mode: 'self-level', index: 1, proof: null },
+          });
+          must(
+            app.snapshot().checkpointPractice.kind === 'full-attempt',
+            'Missing recording did not fall back',
+          );
+          must(
+            state().ticks === 0 && state().step === 0 && state().status === 'paused',
+            'Fallback is not original paused start',
+          );
+          eq(state().position, entry.course.spawn, 'Fallback spawn changed');
+          must(
+            d.getElementById('flight-collection').textContent.includes('FULL ROUTE PRACTICE'),
+            'Fallback label missing',
+          );
+          eq(await saved(), baseline, 'Fallback altered storage');
+        },
+      );
+      await record(
+        'Actual ordinary-flight result offers targeted practice through its player button',
+        async () => {
+          change('flight-mode', 'self-level');
+          await app.startFlight(inFrame(fixtureEntry), { recover: inFrame(partialProof) });
+          d.getElementById('world-arm').click();
+          await until(
+            () =>
+              state()?.status === 'complete' &&
+              /Recording verified/.test(d.getElementById('result-panel').textContent),
+            'ordinary result',
+          );
+          must(
+            app.snapshot().records.length === baseline.records.length + 1,
+            'Ordinary verified attempt not saved',
+          );
+          const launch = button(
+            d.getElementById('result-panel'),
+            /Practise (longest section|biggest time loss)/,
+          );
+          must(launch, 'Practice button missing');
+          await store.saveSession({
+            course: fixtureEntry.course,
+            proof: partialProof,
+            packIdentity: fixtureEntry.packIdentity,
+            preview: false,
+            sectorReferenceId: null,
+            ghostEnabled: false,
+          });
+          baseline = await saved();
+          launch.click();
+          await until(
+            () =>
+              app.snapshot().checkpointPractice?.kind === 'checkpoint' &&
+              !d.getElementById('world-arm').disabled,
+            'result checkpoint',
+          );
+          must(
+            state().step === 1 && state().ticks === 5 && state().status === 'paused',
+            'Wrong longest section entry',
+          );
+          return { button: launch.textContent, startTick: state().ticks };
+        },
+      );
+      await record(
+        'Manual completion stops at selected goal without proof, recovery, medal or playlist changes',
+        async () => {
+          d.getElementById('world-arm').click();
+          await until(
+            () => state()?.status === 'complete' && !d.getElementById('result-panel').hidden,
+            'practice completion',
+          );
+          must(state().step === 2, 'Wrong practice endpoint');
+          must(
+            /Section complete/.test(d.getElementById('result-panel').textContent),
+            'Dedicated practice result missing',
+          );
+          must(
+            !/Medal|Score:|Recording verified/.test(d.getElementById('result-panel').textContent),
+            'Practice advertised scored evidence',
+          );
+          must(
+            d.getElementById('export-flight').disabled,
+            'Completed practice proof export enabled',
+          );
+          eq(await saved(), baseline, 'Practice completion changed persisted evidence');
+          const ticks = state().ticks;
+          await wait(100);
+          must(state().ticks === ticks, 'Completed practice keeps advancing');
+          return { result: d.getElementById('result-panel').textContent, ticks };
+        },
+      );
+      await record(
+        'Practise again reconstructs entry; full challenge returns to ordinary original launch',
+        async () => {
+          const again = button(d.getElementById('result-panel'), /Practise again/);
+          must(again, 'Practice retry missing');
+          again.click();
+          await until(
+            () =>
+              app.snapshot().checkpointPractice?.startTick === 5 &&
+              state()?.status === 'paused' &&
+              !d.getElementById('world-arm').disabled,
+            'practice again',
+          );
+          must(state().step === 1, 'Retry wrong step');
+          d.getElementById('world-arm').click();
+          await until(() => state()?.status === 'complete', 'second practice complete');
+          const full = button(d.getElementById('result-panel'), /Fly full challenge/);
+          must(full, 'Full challenge action missing');
+          full.click();
+          await until(
+            () => app.snapshot().checkpointPractice === null && state()?.ticks === 0,
+            'full challenge',
+          );
+          must(state().status === 'disarmed', 'Full challenge autoarmed');
+          eq(state().position, fixtureEntry.course.spawn, 'Full challenge spawn changed');
+          eq(await saved(), baseline, 'Full challenge launch changed records');
+        },
+      );
+      await record(
+        'Ukrainian checkpoint briefing and practice result retain unscored meaning',
+        async () => {
+          change('world-language', 'uk');
+          await app.startFlight(inFrame(fixtureEntry), {
+            checkpoint: inFrame({ mode: 'self-level', index: 1, proof: fixtureProof }),
+          });
+          must(
+            d.getElementById('flight-brief').textContent.includes('Тренуйте лише цю ціль'),
+            'Ukrainian checkpoint instruction missing',
+          );
+          d.getElementById('world-arm').click();
+          await until(() => state()?.status === 'complete', 'Ukrainian practice');
+          must(
+            d.getElementById('result-panel').textContent.includes('без'),
+            'Ukrainian unscored result missing',
+          );
+          eq(await saved(), baseline, 'Localized practice altered evidence');
+          return {
+            brief: d.getElementById('flight-brief').textContent,
+            result: d.getElementById('result-panel').textContent,
+          };
+        },
+      );
+      for (const sourceName of ['keyboard', 'touch', 'controller'])
+        await record(
+          'Controlled ' +
+            sourceName +
+            ' takeover preserves recorded throttle only after deliberate Arm',
+          async () => {
+            change('world-language', 'en');
+            const course = structuredClone(fixtureEntry.course);
+            course.id = 'checkpoint-controls-fixture';
+            for (const mode of ['self-level', 'acro']) course.steps[mode][1].ticks = 200;
+            const entry = { ...fixtureEntry, id: course.id, course };
+            const f = createWorldFlight({ course });
+            f.arm();
+            const recorder = createWorldRecorder(f, { session: 'practice' });
+            try {
+              for (let i = 0; i < 205; i++) {
+                f.step({ roll: 0, pitch: 0, yaw: 0, throttle: 0.5, actions: 0 });
+                recorder.record();
+              }
+            } finally {
+              fixtureProof = recorder.export();
+              f.dispose();
+            }
+            if (sourceName === 'controller')
+              w.fixturePads = inFrame([
+                {
+                  id: 'Checkpoint controlled standard pad',
+                  index: 0,
+                  mapping: 'standard',
+                  connected: true,
+                  axes: [0, 0, 0, 0],
+                  buttons: Array.from({ length: 17 }, () => ({
+                    value: 0,
+                    pressed: false,
+                    touched: false,
+                  })),
+                  timestamp: 0,
+                },
+              ]);
+            else w.fixturePads = [];
+            await app.startFlight(inFrame(entry), {
+              checkpoint: inFrame({ mode: 'self-level', index: 1, proof: fixtureProof }),
+            });
+            change('flight-source', sourceName);
+            w.focus();
+            d.getElementById('world-viewport').focus();
+            await wait(140);
+            must(state().ticks === 5 && state().status === 'paused', 'Source selection autoarmed');
+            d.getElementById('world-arm').click();
+            await until(() => state()?.ticks > 8, 'seeded ' + sourceName + ' flight');
+            must(
+              state().lastInput.throttle === 500,
+              'Recorded throttle was lost for ' + sourceName + ': ' + state().lastInput.throttle,
+            );
+            must(state().lastInput.actions === 0, 'Takeover fired');
+            const tick = state().ticks;
+            d.getElementById('world-pause').click();
+            await wait(100);
+            must(state().ticks === tick && state().status === 'paused', 'Pause advanced');
+            eq(await saved(), baseline, 'Control takeover changed evidence');
+            if (sourceName === 'controller') {
+              d.getElementById('radio-setup-button').click();
+              await until(() => d.getElementById('world-radio-dialog').open, 'radio settings');
+              const rate = [...d.querySelectorAll('#world-radio-dialog label')]
+                .find((n) => n.textContent.includes('Maximum angular rate'))
+                ?.querySelector('input');
+              must(rate, 'Rate field missing');
+              rate.value = '360';
+              rate.dispatchEvent(new w.Event('input', { bubbles: true }));
+              button(d.getElementById('world-radio-dialog'), /^Apply response$/).click();
+              await until(
+                () =>
+                  app.snapshot().checkpointPractice?.startTick === 5 &&
+                  !d.getElementById('world-arm').disabled,
+                'rate checkpoint restart',
+              );
+              must(
+                app.snapshot().checkpointPractice.response.maxRate === 240,
+                'Checkpoint changed verified response',
+              );
+              must(
+                d.getElementById('flight-brief').textContent.includes('response'),
+                'Proof response not explained',
+              );
+              d.getElementById('close-radio').click();
+            }
+            return { source: sourceName, throttle: 500, ticks: tick };
+          },
+        );
+      await record(
+        'Controlled TX15 requires exact stick pickup and a fresh OFF→ON edge; held arm/fire cannot resume',
+        async () => {
+          // The preceding Setup visit intentionally retains its unverified standard-pad
+          // draft. A fresh host isolates radio restoration without discarding that policy.
+          await app.dispose();
+          const radioLoaded = new Promise((resolve) =>
+            $('sim').addEventListener('load', resolve, { once: true }),
+          );
+          $('sim').src = './simulator.html?radio=' + Date.now();
+          await radioLoaded;
+          await until(() => $('sim').contentWindow.fpvWorldStudio, 'fresh radio host');
+          w = $('sim').contentWindow;
+          d = w.document;
+          app = w.fpvWorldStudio;
+          await app.ready;
+          w.localStorage.setItem('revealline.fpv.playlists.v1', baseline.playlist);
+          const course = structuredClone(fixtureEntry.course);
+          course.id = 'checkpoint-radio-fixture';
+          for (const mode of ['self-level', 'acro']) course.steps[mode][1].ticks = 200;
+          const entry = { ...fixtureEntry, id: course.id, course };
+          const f = createWorldFlight({ course });
+          f.arm();
+          const recorder = createWorldRecorder(f, { session: 'practice' });
+          for (let i = 0; i < 205; i++) {
+            f.step({ roll: 0, pitch: 0, yaw: 0, throttle: 0.5, actions: 0 });
+            recorder.record();
+          }
+          const proof = recorder.export();
+          f.dispose();
+          w.fixturePads = inFrame([
+            {
+              id: 'TX15 Joystick (Vendor: 1209 Product: 4f54)',
+              index: 0,
+              mapping: '',
+              connected: true,
+              axes: [0.004, 0.004, -1, 0.004, -1, 0, 0, 0],
+              buttons: Array.from({ length: 24 }, () => ({
+                value: 0,
+                pressed: false,
+                touched: false,
+              })),
+              timestamp: 0,
+            },
+          ]);
+          const pad = w.fixturePads[0];
+          await app.startFlight(inFrame(entry), {
+            checkpoint: inFrame({ mode: 'self-level', index: 1, proof }),
+          });
+          change('flight-source', 'radio');
+          w.focus();
+          const viewport = d.getElementById('world-viewport');
+          viewport.focus();
+          await until(
+            () => app.snapshot().radio.verified,
+            () => 'verified controlled TX15: ' + JSON.stringify(app.snapshot().radio),
+          );
+          await wait(100);
+          pad.axes[4] = 1;
+          await wait(100);
+          must(state().status === 'paused', 'Incorrect pickup armed');
+          must(
+            app.snapshot().radio.reason === 'pickup-controls',
+            'Incorrect pickup reason missing',
+          );
+          must(
+            d.getElementById('world-input-status').textContent.includes('50'),
+            'Numeric throttle pickup hidden',
+          );
+          pad.axes[2] = 0;
+          await wait(100);
+          must(state().status === 'paused', 'Matching while arm held bypassed fresh edge');
+          pad.axes[4] = -1;
+          await wait(100);
+          pad.axes[4] = 1;
+          await until(() => state()?.ticks > 8, 'matched radio arm');
+          must(
+            state().lastInput.throttle === 500 && state().lastInput.actions === 0,
+            'Radio pickup input mismatch',
+          );
+          viewport.dispatchEvent(
+            new w.KeyboardEvent('keydown', {
+              code: 'Space',
+              key: ' ',
+              bubbles: true,
+              cancelable: true,
+            }),
+          );
+          await wait(60);
+          must(state().lastInput.actions === 1, 'Auxiliary fire not exercised');
+          d.getElementById('world-pause').click();
+          const paused = state().ticks;
+          await wait(100);
+          must(
+            state().status === 'paused' && state().ticks === paused,
+            'Held arm resumed after pause',
+          );
+          pad.axes[4] = -1;
+          await wait(100);
+          pad.axes[4] = 1;
+          await until(() => state()?.ticks > paused, 'fresh resume');
+          viewport.dispatchEvent(
+            new w.KeyboardEvent('keydown', {
+              code: 'Space',
+              key: ' ',
+              repeat: true,
+              bubbles: true,
+              cancelable: true,
+            }),
+          );
+          await wait(80);
+          must(state().lastInput.actions === 0, 'Held fire resumed after pause');
+          viewport.dispatchEvent(
+            new w.KeyboardEvent('keyup', { code: 'Space', key: ' ', bubbles: true }),
+          );
+          d.getElementById('world-pause').click();
+          change('flight-source', 'keyboard');
+          d.getElementById('world-arm').click();
+          await until(() => state()?.status === 'active', 'keyboard takeover');
+          viewport.dispatchEvent(
+            new w.KeyboardEvent('keydown', {
+              code: 'ArrowUp',
+              key: 'ArrowUp',
+              bubbles: true,
+              cancelable: true,
+            }),
+          );
+          await wait(120);
+          viewport.dispatchEvent(
+            new w.KeyboardEvent('keyup', { code: 'ArrowUp', key: 'ArrowUp', bubbles: true }),
+          );
+          d.getElementById('world-pause').click();
+          const evolved = state().lastInput.throttle;
+          must(evolved > 500, 'Evolved throttle not exercised');
+          change('flight-source', 'radio');
+          eq(
+            app.snapshot().radio.pickup,
+            Object.fromEntries(
+              ['roll', 'pitch', 'yaw', 'throttle'].map((k) => [k, state().lastInput[k] / 1000]),
+            ),
+            'Source switch kept original pickup',
+          );
+          pad.axes[2] = evolved / 500 - 1;
+          pad.axes[4] = -1;
+          await wait(100);
+          pad.axes[4] = 1;
+          await until(() => state()?.status === 'active', 'evolved radio pickup');
+          d.getElementById('world-pause').click();
+          eq(await saved(), baseline, 'Radio practice changed evidence');
+          w.fixturePads = [];
+          change('flight-source', 'keyboard');
+          return {
+            device: 'Controlled TX15-shaped browser sample',
+            pickupThrottle: 500,
+            freshArmRequired: true,
+            heldFireCleared: true,
+          };
+        },
+      );
+
+      await record(
+        'Closing while a recorded prefix prepares cannot resurrect or arm the flight',
+        async () => {
+          const entry = BEGINNER_CATALOGUE.find((r) => r.id === 'beginner-58'),
+            proof = WORLD_DEMONSTRATIONS.find(
+              (r) => r.proof.course === entry.id && r.proof.mode === 'acro',
+            ).proof;
+          const opening = app.startFlight(inFrame(entry), {
+            checkpoint: inFrame({ mode: 'acro', index: entry.course.steps.acro.length - 1, proof }),
+          });
+          const close = d.getElementById('leave-flight');
+          must(close, 'Close action missing');
+          close.click();
+          await opening;
+          await wait(150);
+          must(
+            !d.getElementById('flight-dialog').open && !app.snapshot().state,
+            'Aborted preparation reopened flight',
+          );
+          eq(await saved(), baseline, 'Aborted practice altered evidence');
+        },
+      );
+      await app.dispose();
+    }
+    store?.close();
+    $('sim').src = 'about:blank';
+    await record('No application error and verified source bytes unchanged', async () => {
+      must(!errors.length, JSON.stringify(errors));
+      eq(await sourceHashes(), source, 'Source changed during browser qualification');
+    });
+    const receipt = {
+      format: 'FPVCheckpointHostEvidence.v1',
+      runtimeRoot,
+      proofGenerator:
+        'Repository source modules produce independent recorded-command fixtures; all simulator host HTML, imports and assets use runtimeRoot.',
+      createdAt: new Date().toISOString(),
+      passed: checks.every((c) => c.passed),
+      checks,
+      source,
+      errors,
+      scope:
+        'Actual production host and browser DOM; deterministic synthetic flight plus real bundled Acro recordings; isolated native IndexedDB/preferences. No physical-radio, player or deployment qualification.',
+    };
+    $('receipt').textContent = JSON.stringify(receipt, null, 2);
+    $('status').textContent =
+      `${receipt.passed ? 'PASS' : 'FAIL'} ${checks.filter((c) => c.passed).length}/${checks.length}`;
+    $('run').disabled = false;
+    for (const name of names) indexedDB.deleteDatabase(name);
+  };
+</script>

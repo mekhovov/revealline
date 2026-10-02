@@ -99,6 +99,13 @@ export function createFlightInput({ window: win, document: doc, onPause = () => 
       if (owner === 'touch' && enabled && Number.isFinite(value))
         touch.throttle = clamp(value, 0, 1);
     },
+    // Hosts may restore throttle only after a deliberate resume of an unscored
+    // checkpoint. This neither enables input nor restores held keys/actions.
+    seedThrottle(value) {
+      if (!enabled || !Number.isFinite(value)) return;
+      throttle = clamp(value, 0, 1);
+      touch.throttle = throttle;
+    },
     sample(seconds) {
       if (disposed || !enabled || ['radio', 'controller'].includes(owner))
         return neutralFlightInput();
@@ -299,10 +306,12 @@ export function createFlightGamepad({
         // state. Keep that pickup when its next frame becomes flight: a pilot
         // may raise throttle immediately after releasing Arm. Other scope
         // transitions still demand a fresh neutral pickup.
-        const armedPickup = scope === 'ready' && nextScope === 'flight' && ready && connected;
+        const armedPickup = scope === 'ready' && nextScope === 'flight' && ready && connected,
+          armedThrottle = throttle;
         clear(focused ? (nextScope === 'blocked' ? 'blocked' : 'neutral') : 'focus');
         scope = nextScope;
         if (armedPickup) {
+          throttle = armedThrottle;
           ready = true;
           reason = 'active';
         }

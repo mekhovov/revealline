@@ -1,14 +1,14 @@
 # FPV World Studio — implementation and player qualification
 
-Current continuation: **2 October 2026**, branch `codex/fpv-world-adventures`.
+Current continuation: **2 October 2026**, branch `codex/fpv-checkpoint-practice`.
 The latest catalogue has **14 worlds / 148 authored challenges**: the original
 60, 58 school lessons and 30 World Adventures. See [the current delivery
 plan](fpv-reviewed-delivery-plan.md) and [World Adventures](fpv-world-adventures.md)
 for exact feature, evidence and remaining-work status. The implementation table
 below records the original 30 September framework baseline; it is historical,
 not the current catalogue count. Native content stack #889, reimport #922 and
-ghosts #913 have merged upstream; their coordinated integration into this
-currently dependent branch is still pending.
+ghosts #913, World Adventures #947 and offline SIM #933 are integrated on the
+current main baseline. Section-practice reliability is the next focused increment.
 
 The current workstream prioritizes functioning features and direct player
 verification. **Additional unit-test coverage is deferred to the final phase**
