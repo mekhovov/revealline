@@ -246,10 +246,13 @@ and focused-button pause increment is implemented on `codex/fpv-world-lifecycle`
 see [lifecycle behavior and verification](fpv-world-lifecycle.md). It freezes
 before device actions or physics and requires deliberate resume. Physical-device
 and handheld sessions remain pending; this increment does not complete all of B.
-E’s previously referenced temporary Garage handoff was absent; a reproducible
-replacement has now been regenerated separately, with integration and browser
-playback still outstanding. Do not count it as installed yet.
+E's Garage increment is installed locally on `codex/fpv-garage-demonstrations`,
+with source and packaged playback qualification complete. See
+[Garage demonstrations](fpv-garage-demonstrations.md). Its focused PR and public
+deployment remain separate gates in the delivery log. The approved C art/Themes
+work can proceed while physical-device and unfamiliar-player sessions are pending.
 
-The catalogue remains 14 worlds / 148 challenges. Installed demonstrations remain
-104/120 original plus 58 school; the 60 Adventure authoring proofs are separate.
+The catalogue remains 14 worlds / 148 challenges. This branch installs
+120/120 original plus 58 school demonstrations; the 60 Adventure authoring proofs
+are separate. Main/public counts remain at 104 originals until this increment merges.
 Additional unit coverage stays in H/R7, with functional checks on every increment.
