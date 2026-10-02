@@ -1,3 +1,4 @@
+import { missionBriefing } from '../mission-brief.mjs';
 import { createEncounterVariantPreferences } from '../hunt/preferences.mjs';
 import { attachEncounterVariantControls } from '../ui/encounter-variant-controls.mjs';
 import { attachHuntStatus } from '../ui/hunt-status.mjs';
@@ -3306,7 +3307,7 @@ try {
         describe: ({ level }) => {
           const actual = normalizedLevel(level);
           return {
-            rules: `${Math.round(actual.goal.coverage * 100)}% coverage · ${actual.rules.lives} lives · ${actual.rules.moveSpeed} cells/s · Authored rules`,
+            rules: `${actual.classic?.hunt ? missionBriefing(actual).goal : `${Math.round(actual.goal.coverage * 100)}% coverage`} · ${actual.rules.lives} lives · ${actual.rules.moveSpeed} cells/s · Authored rules`,
           };
         },
         availabilityClassic: (row, pack) => {

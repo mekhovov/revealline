@@ -1,3 +1,4 @@
+import { dialogueChannel } from './dialogue-channel.mjs';
 import { campaignVictoryMotif } from '../journey/campaign-feedback.mjs';
 import { readMovementAudio } from './movement-audio.mjs';
 import { FeedbackDirector } from './feedback-director.mjs';
@@ -92,7 +93,7 @@ export class Soundscape {
     this.audioMaster = { muted: false, volume: 1 };
     this.releaseAudioMaster = audioMaster?.subscribe((state) => {
       this.audioMaster = state;
-      if (state.muted) {
+      if (state.muted || state.volume === 0) {
         this.stopVoices('sfx');
         this.stopVoices('menu');
         this.stopVoices('dialogue');
@@ -136,6 +137,7 @@ export class Soundscape {
       !buffer ||
       !this.enabled ||
       this.paused ||
+      this.gameplayPaused ||
       this.disposed ||
       this.audioMaster.muted ||
       this.audioMaster.volume === 0 ||
@@ -177,13 +179,19 @@ export class Soundscape {
         source.disconnect();
         gain.disconnect();
         this.voices.delete(voice);
-        onended();
+        dialogueChannel.release(voice);
+        try {
+          onended();
+        } catch {
+          /* Presentation observers cannot retain a voice. */
+        }
       },
       get ended() {
         return ended;
       },
     };
     source.onended = voice.stop;
+    dialogueChannel.claim(voice);
     this.voices.add(voice);
     try {
       source.start();
@@ -315,6 +323,7 @@ export class Soundscape {
       }
     }
     this.settings = next;
+    if (next.master === 0) this.stopVoices('dialogue');
     this.applyVolumes();
     return this.getSettings();
   }

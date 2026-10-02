@@ -1,3 +1,4 @@
+import { inspectReactionRecording } from './reaction-voice-cache.mjs';
 import { REACTION_VOICE_PILOT } from '../audio/reactions/pilot.mjs';
 import { REACTION_LINES } from './reactions.mjs';
 
@@ -16,10 +17,17 @@ const mimeTypes = new Set([
 ]);
 const lines = new Map(REACTION_LINES.map((entry) => [entry.id, entry]));
 const keyFor = (lineId, locale) => `${lineId}|${locale}`;
-const originals = new Map(
-  REACTION_VOICE_PILOT.map((entry) => [keyFor(entry.lineId, entry.locale), entry]),
+const pilot = Object.freeze(
+  REACTION_VOICE_PILOT.map((entry) =>
+    Object.freeze({ ...entry, provenance: Object.freeze({ ...entry.provenance }) }),
+  ),
 );
+const originals = new Map(pilot.map((entry) => [keyFor(entry.lineId, entry.locale), entry]));
 const clone = (value) => JSON.parse(JSON.stringify(value));
+const byteSize = (text) => new TextEncoder().encode(text).byteLength;
+const checkAbort = (signal) => {
+  if (signal?.aborted) throw new DOMException('Recording operation cancelled.', 'AbortError');
+};
 function bytesToBase64(bytes) {
   let text = '';
   for (let i = 0; i < bytes.length; i += 16384)
@@ -150,13 +158,15 @@ async function validateRecord(source) {
 export function createReactionVoiceLibrary({
   indexedDB = globalThis.indexedDB,
   fetch: fetcher = globalThis.fetch,
+  inspectRecording = inspectReactionRecording,
+  channelName = 'revealline-reaction-voices',
 } = {}) {
   let connection = null,
     closed = false;
   const listeners = new Set();
   let channel = null;
   try {
-    channel = new globalThis.BroadcastChannel('revealline-reaction-voices');
+    if (channelName) channel = new globalThis.BroadcastChannel(channelName);
   } catch {
     /* Optional cross-tab refresh. */
   }
@@ -170,26 +180,41 @@ export function createReactionVoiceLibrary({
         }
       }
     };
-  const database = () =>
-    (connection ??= new Promise((resolve, reject) => {
+  function database() {
+    if (connection) return connection;
+    let abandoned = false;
+    const opening = new Promise((resolve, reject) => {
       if (!indexedDB) {
         reject(new Error('Local recording storage is unavailable.'));
         return;
       }
       const request = indexedDB.open(DATABASE, 1);
+      const failed = (error) => {
+        abandoned = true;
+        reject(error);
+      };
       request.onupgradeneeded = () => request.result.createObjectStore(STORE, { keyPath: 'key' });
-      request.onerror = () => reject(request.error ?? new Error('Recording storage failed.'));
-      request.onblocked = () => reject(new Error('Close other recording editors and retry.'));
+      request.onerror = () => failed(request.error ?? new Error('Recording storage failed.'));
+      request.onblocked = () => failed(new Error('Close other recording editors and retry.'));
       request.onsuccess = () => {
-        if (closed) {
+        if (closed || abandoned) {
           request.result.close();
-          reject(new Error('Recording library closed.'));
+          failed(new Error('Recording library closed.'));
           return;
         }
-        request.result.onversionchange = () => request.result.close();
+        request.result.onversionchange = () => {
+          request.result.close();
+          connection = null;
+        };
         resolve(request.result);
       };
-    }));
+    });
+    connection = opening;
+    void opening.catch(() => {
+      if (connection === opening) connection = null;
+    });
+    return opening;
+  }
   async function transaction(mode, operation) {
     const db = await database();
     if (closed) throw new Error('Recording library closed.');
@@ -203,16 +228,37 @@ export function createReactionVoiceLibrary({
   }
   const read = (lineId, locale) =>
     transaction('readonly', (store) => store.get(keyFor(lineId, locale)));
-  async function writeChecked(changes) {
+  async function writeChecked(changes, { signal } = {}) {
+    checkAbort(signal);
     const db = await database();
+    checkAbort(signal);
     if (closed) throw new Error('Recording library closed.');
     await new Promise((resolve, reject) => {
       const tx = db.transaction(STORE, 'readwrite'),
         store = tx.objectStore(STORE);
       let failure = null;
-      tx.oncomplete = resolve;
-      tx.onerror = tx.onabort = () =>
+      const cancel = () => {
+        failure = new DOMException('Recording operation cancelled.', 'AbortError');
+        try {
+          tx.abort();
+        } catch {
+          /* The transaction already finished. */
+        }
+      };
+      const cleanup = () => signal?.removeEventListener('abort', cancel);
+      tx.oncomplete = () => {
+        cleanup();
+        resolve();
+      };
+      tx.onerror = tx.onabort = () => {
+        cleanup();
         reject(failure ?? tx.error ?? new Error('Recording could not be saved.'));
+      };
+      signal?.addEventListener('abort', cancel, { once: true });
+      if (signal?.aborted) {
+        cancel();
+        return;
+      }
       for (const { previous, next } of changes) {
         const request = store.get(next.key);
         request.onsuccess = () => {
@@ -228,32 +274,85 @@ export function createReactionVoiceLibrary({
     });
   }
   const notify = () => {
+    if (closed) return;
     for (const fn of listeners)
       try {
         fn();
       } catch {
         /* Presentation observers cannot invalidate a saved recording. */
       }
-    channel?.postMessage('updated');
+    try {
+      channel?.postMessage('updated');
+    } catch {
+      /* A committed recording stays saved after its editor closes. */
+    }
   };
-  async function readOriginal(lineId, locale) {
+  async function readOriginal(lineId, locale, { signal } = {}) {
+    checkAbort(signal);
     const original = originals.get(keyFor(lineId, locale));
     if (!original || typeof fetcher !== 'function') return null;
-    const response = await fetcher(new URL(`../audio/reactions/${original.file}`, import.meta.url));
+    const response = await fetcher(
+      new URL(`../audio/reactions/${original.file}`, import.meta.url),
+      { signal },
+    );
     if (!response.ok) return null;
-    const bytes = await response.arrayBuffer();
+    const declared = Number(response.headers?.get?.('content-length'));
+    if (Number.isFinite(declared) && declared > original.bytes) {
+      await response.body?.cancel?.();
+      return null;
+    }
+    let bytes;
+    if (response.body?.getReader) {
+      const reader = response.body.getReader(),
+        chunks = [];
+      let length = 0;
+      try {
+        while (true) {
+          checkAbort(signal);
+          const { value, done } = await reader.read();
+          if (done) break;
+          length += value.byteLength;
+          if (length > original.bytes || length > MAX_CLIP) {
+            await reader.cancel();
+            return null;
+          }
+          chunks.push(value);
+        }
+        const joined = new Uint8Array(length);
+        let offset = 0;
+        for (const chunk of chunks) {
+          joined.set(chunk, offset);
+          offset += chunk.byteLength;
+        }
+        bytes = joined.buffer;
+      } finally {
+        reader.releaseLock();
+      }
+    } else bytes = await response.arrayBuffer();
+    checkAbort(signal);
     if (bytes.byteLength !== original.bytes || (await digest(bytes)) !== original.sha256)
       return null;
     return { metadata: original, bytes };
   }
+  async function readRecordsBounded(keys) {
+    const records = [];
+    let total = 128;
+    for (const key of keys) {
+      const record = await transaction('readonly', (store) => store.get(key));
+      if (!record) continue;
+      total += byteSize(JSON.stringify(record)) + 1;
+      if (total > MAX_BUNDLE)
+        throw new Error('Voice records exceed the 32 MiB portable bundle limit.');
+      records.push(record);
+    }
+    return records;
+  }
   return Object.freeze({
-    originals: REACTION_VOICE_PILOT,
+    originals: pilot,
     async available(locale) {
       if (!['en', 'uk'].includes(locale)) return [];
       const admitted = new Set(
-        REACTION_VOICE_PILOT.filter((entry) => entry.locale === locale).map(
-          (entry) => entry.lineId,
-        ),
+        pilot.filter((entry) => entry.locale === locale).map((entry) => entry.lineId),
       );
       try {
         const keys = await transaction('readonly', (store) => store.getAllKeys());
@@ -268,13 +367,21 @@ export function createReactionVoiceLibrary({
     },
     async describe(lineId, locale) {
       lineFor(lineId, locale);
-      const record = await read(lineId, locale);
+      let record,
+        storageAvailable = true;
+      try {
+        record = await read(lineId, locale);
+      } catch {
+        storageAvailable = false;
+      }
       return {
+        storageAvailable,
         ...(record ?? { lineId, locale, active: null, revisions: [] }),
         original: record?.original ?? originals.get(keyFor(lineId, locale)) ?? null,
       };
     },
-    async resolve(lineId, locale) {
+    async resolve(lineId, locale, { signal, revision } = {}) {
+      checkAbort(signal);
       lineFor(lineId, locale);
       let record;
       try {
@@ -282,24 +389,36 @@ export function createReactionVoiceLibrary({
       } catch {
         /* Bundled voices work without writable storage. */
       }
-      const active = record?.revisions.find((entry) => entry.sha256 === record.active);
+      checkAbort(signal);
+      const selected = revision === undefined ? record?.active : revision;
+      const active = record?.revisions.find((entry) => entry.sha256 === selected);
+      if (revision && !active) throw new Error('Voice revision missing.');
       if (active)
         return {
           bytes: base64ToBytes(active.base64).buffer,
           sha256: active.sha256,
           duration: active.duration,
+          mime: active.mime,
         };
       if (record?.original)
         return {
           bytes: base64ToBytes(record.original.base64).buffer,
           sha256: record.original.sha256,
+          mime: record.original.mime,
         };
-      const original = await readOriginal(lineId, locale);
-      return original ? { bytes: original.bytes, sha256: original.metadata.sha256 } : null;
+      const original = await readOriginal(lineId, locale, { signal });
+      return original
+        ? { bytes: original.bytes, sha256: original.metadata.sha256, mime: original.metadata.mime }
+        : null;
     },
-    async replace({ lineId, locale, blob, kind, credit = '', duration }) {
+    async replace({ lineId, locale, blob, kind, credit = '', duration, signal }) {
+      checkAbort(signal);
       const line = lineFor(lineId, locale);
       if (!blob || blob.size > MAX_CLIP) throw new Error('Choose an audio recording under 2 MiB.');
+      const measured = await inspectRecording(blob, { signal });
+      checkAbort(signal);
+      if (!Number.isFinite(duration) || Math.abs(duration - measured.duration) > 0.5)
+        throw new Error('Recording duration does not match the inspected media.');
       const bytes = new Uint8Array(await blob.arrayBuffer());
       const stored = await read(lineId, locale);
       const previous = stored ?? {
@@ -311,7 +430,7 @@ export function createReactionVoiceLibrary({
       };
       let original = previous.original ?? null;
       if (!original && originals.has(keyFor(lineId, locale))) {
-        const archived = await readOriginal(lineId, locale);
+        const archived = await readOriginal(lineId, locale, { signal });
         if (!archived) throw new Error('Download the original recording before replacing it.');
         original = { ...archived.metadata, base64: bytesToBase64(new Uint8Array(archived.bytes)) };
       }
@@ -322,7 +441,7 @@ export function createReactionVoiceLibrary({
           sha256,
           bytes: bytes.length,
           base64: bytesToBase64(bytes),
-          mime: blob.type,
+          mime: measured.format === 'pcm-wav' ? 'audio/wav' : 'audio/mp4',
           transcript: line.text[locale],
           kind,
           credit: credit.trim(),
@@ -332,10 +451,11 @@ export function createReactionVoiceLibrary({
       );
       if (revisions.length > 8)
         throw new Error(
-          'Eight revisions retained. Export this library before starting a new line edition.',
+          'This line has eight retained revisions. Choose a retained take or export its bundle; no recording was replaced.',
         );
       const record = await validateRecord({ ...previous, active: sha256, revisions, original });
-      await writeChecked([{ previous: stored, next: record }]);
+      checkAbort(signal);
+      await writeChecked([{ previous: stored, next: record }], { signal });
       notify();
       return record;
     },
@@ -351,14 +471,17 @@ export function createReactionVoiceLibrary({
       notify();
     },
     async exportBundle() {
-      const records = await transaction('readonly', (store) => store.getAll());
+      const records = await readRecordsBounded(
+        await transaction('readonly', (store) => store.getAllKeys()),
+      );
       const value = JSON.stringify({ format: FORMAT, records });
-      if (value.length > MAX_BUNDLE)
+      if (byteSize(value) > MAX_BUNDLE)
         throw new Error('Voice library exceeds the portable bundle limit.');
       return value;
     },
-    async importBundle(text) {
-      if (typeof text !== 'string' || text.length > MAX_BUNDLE)
+    async importBundle(text, { signal } = {}) {
+      checkAbort(signal);
+      if (typeof text !== 'string' || text.length > MAX_BUNDLE || byteSize(text) > MAX_BUNDLE)
         throw new Error('Choose a voice bundle under 32 MiB.');
       const value = JSON.parse(text);
       if (
@@ -367,11 +490,27 @@ export function createReactionVoiceLibrary({
         value.records.length > REACTION_LINES.length * 2
       )
         throw new Error('Unsupported voice bundle.');
-      const incoming = await Promise.all(value.records.map(validateRecord));
+      const incoming = [];
+      for (const source of value.records) {
+        checkAbort(signal);
+        const record = await validateRecord(source);
+        for (const recording of [
+          ...record.revisions,
+          ...(record.original ? [record.original] : []),
+        ]) {
+          const measured = await inspectRecording(
+            new Blob([base64ToBytes(recording.base64)], { type: recording.mime }),
+            { signal },
+          );
+          if (recording.duration && Math.abs(recording.duration - measured.duration) > 0.5)
+            throw new Error('Recording duration does not match the inspected media.');
+        }
+        incoming.push(record);
+      }
       if (new Set(incoming.map((entry) => entry.key)).size !== incoming.length)
         throw new Error('Repeated line in voice bundle.');
       const existing = new Map(
-        (await transaction('readonly', (store) => store.getAll())).map((entry) => [
+        (await readRecordsBounded(incoming.map((entry) => entry.key))).map((entry) => [
           entry.key,
           entry,
         ]),
@@ -401,8 +540,10 @@ export function createReactionVoiceLibrary({
           revisions: [...revisions.values()],
         };
       });
+      checkAbort(signal);
       await writeChecked(
         merged.map((record) => ({ previous: existing.get(record.key), next: clone(record) })),
+        { signal },
       );
       notify();
       return merged.length;

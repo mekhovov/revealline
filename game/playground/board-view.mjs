@@ -1,3 +1,5 @@
+import { contentCombatMarkers, traceContentActor } from '../content-design/actor-marker.mjs';
+import { drawHumanoidPixelBody } from '../hunt/destruction.mjs';
 import { t } from '../i18n/index.mjs';
 import { geometryForLevel } from '../core/geometry.mjs';
 import { boardPaintSizeForLevel } from '../ui/render.mjs';
@@ -93,6 +95,20 @@ export function paintEditorMap(canvas, current) {
     c.beginPath();
     c.arc(e.x * s, e.y * s, e.type === 'lane-boss' ? 12 : 6, 0, Math.PI * 2);
     c.fill();
+  }
+  for (const actor of contentCombatMarkers(current.level)) {
+    c.save();
+    if (actor.inactive) c.globalAlpha = 0.5;
+    if (actor.huntKind) {
+      c.translate(actor.x * s - 8, actor.y * s - 8);
+      drawHumanoidPixelBody(c, { kind: actor.huntKind }, current.theme.palette);
+    } else {
+      c.fillStyle = current.theme.palette.accent;
+      c.beginPath();
+      traceContentActor(c, actor.type, actor.x * s, actor.y * s, 7);
+      c.fill();
+    }
+    c.restore();
   }
   for (const o of current.level.objectives) {
     c.strokeStyle = current.theme.palette.accent;

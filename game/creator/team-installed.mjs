@@ -21,7 +21,7 @@ import {
   isPreparedCreatorTeamMediaCampaign,
   creatorTeamMediaForLevel,
 } from './team-media.mjs';
-import { createCoop, startCoop, stepCoop } from '../coop/core.mjs';
+import { createCoop, releaseCoopInputs, startCoop, stepCoop } from '../coop/core.mjs';
 import {
   applyGameplayTuning,
   resolveGameplayTuning,
@@ -33,6 +33,7 @@ export const CREATOR_TEAM_EDITION_FORMAT = 'revealline-installed-team-edition.v1
 export const CREATOR_TEAM_PROGRESS_FORMAT = 'revealline-installed-team-progress.v1';
 export const CREATOR_TEAM_ATTEMPT_FORMAT = 'revealline-installed-team-attempt.v1';
 export const CREATOR_TEAM_VARIANT_ATTEMPT_FORMAT = 'revealline-installed-team-attempt.v2';
+export const CREATOR_TEAM_RELEASE_ATTEMPT_FORMAT = 'revealline-installed-team-attempt.v3';
 const DATABASE_VERSION = 1;
 const STORES = Object.freeze(['editions', 'progress', 'metadata']);
 const STATE_KEY = 'state';
@@ -156,7 +157,9 @@ export function validateInstalledTeamAttempt(source, editionId, levelId) {
       'tuning',
       'segments',
       'checkpoint',
-      ...(attempt.format === CREATOR_TEAM_VARIANT_ATTEMPT_FORMAT
+      ...([CREATOR_TEAM_VARIANT_ATTEMPT_FORMAT, CREATOR_TEAM_RELEASE_ATTEMPT_FORMAT].includes(
+        attempt.format,
+      )
         ? ['encounterVariant', 'encounterLevelIdentity']
         : []),
     ],
@@ -164,7 +167,11 @@ export function validateInstalledTeamAttempt(source, editionId, levelId) {
   );
   const tuning = validateGameplayTuning(attempt.tuning);
   required(
-    [CREATOR_TEAM_ATTEMPT_FORMAT, CREATOR_TEAM_VARIANT_ATTEMPT_FORMAT].includes(attempt.format) &&
+    [
+      CREATOR_TEAM_ATTEMPT_FORMAT,
+      CREATOR_TEAM_VARIANT_ATTEMPT_FORMAT,
+      CREATOR_TEAM_RELEASE_ATTEMPT_FORMAT,
+    ].includes(attempt.format) &&
       attempt.editionId === editionId &&
       attempt.levelId === levelId &&
       text(attempt.attemptId, 160) &&
@@ -177,16 +184,25 @@ export function validateInstalledTeamAttempt(source, editionId, levelId) {
       attempt.segments.length <= MAX_ATTEMPT_SEGMENTS,
     'Installed Team attempt is damaged.',
   );
-  if (attempt.format === CREATOR_TEAM_VARIANT_ATTEMPT_FORMAT)
+  if (
+    [CREATOR_TEAM_VARIANT_ATTEMPT_FORMAT, CREATOR_TEAM_RELEASE_ATTEMPT_FORMAT].includes(
+      attempt.format,
+    )
+  )
     required(
       ENCOUNTER_VARIANTS.includes(attempt.encounterVariant) &&
-        attempt.encounterVariant !== 'authored' &&
+        (attempt.format === CREATOR_TEAM_RELEASE_ATTEMPT_FORMAT ||
+          attempt.encounterVariant !== 'authored') &&
         typeof attempt.encounterLevelIdentity === 'string' &&
         /^[a-f0-9]{16}$/.test(attempt.encounterLevelIdentity),
       'Saved Team variant identity is damaged.',
     );
   let ticks = 0;
   for (const segment of attempt.segments) {
+    if (attempt.format === CREATOR_TEAM_RELEASE_ATTEMPT_FORMAT && segment.release === true) {
+      exactKeys(segment, ['release'], 'installed Team input release');
+      continue;
+    }
     exactKeys(segment, ['ticks', 'commands'], 'installed Team input segment');
     required(
       Number.isSafeInteger(segment.ticks) && segment.ticks > 0,
@@ -225,12 +241,21 @@ function replayAttempt(pack, source, editionId, levelId, { terminal = false } = 
     attempt.gameplayId === configured.gameplayId,
     'Saved Team attempt does not match the installed configuration.',
   );
-  for (const segment of attempt.segments)
+  for (const segment of attempt.segments) {
+    if (segment.release) {
+      releaseCoopInputs(run);
+      continue;
+    }
     for (let index = 0; index < segment.ticks; index++) {
       required(run.status === 'running', 'Saved Team inputs continue after the attempt ended.');
       stepCoop(run, segment.commands);
     }
-  if (attempt.format === CREATOR_TEAM_VARIANT_ATTEMPT_FORMAT)
+  }
+  if (
+    [CREATOR_TEAM_VARIANT_ATTEMPT_FORMAT, CREATOR_TEAM_RELEASE_ATTEMPT_FORMAT].includes(
+      attempt.format,
+    )
+  )
     required(
       attempt.encounterLevelIdentity === configured.encounterLevelIdentity,
       'Saved Team variant no longer matches its exact accepted recipe.',
@@ -301,9 +326,14 @@ export function createInstalledTeamAttemptSnapshot({
   encounterLevelIdentity,
 }) {
   const variant = encounterVariant !== 'authored';
+  const releases = segments.some((segment) => segment.release === true);
   const source = {
-    format: variant ? CREATOR_TEAM_VARIANT_ATTEMPT_FORMAT : CREATOR_TEAM_ATTEMPT_FORMAT,
-    ...(variant ? { encounterVariant, encounterLevelIdentity } : {}),
+    format: releases
+      ? CREATOR_TEAM_RELEASE_ATTEMPT_FORMAT
+      : variant
+        ? CREATOR_TEAM_VARIANT_ATTEMPT_FORMAT
+        : CREATOR_TEAM_ATTEMPT_FORMAT,
+    ...(variant || releases ? { encounterVariant, encounterLevelIdentity } : {}),
     editionId,
     levelId: run?.level?.id,
     attemptId,

@@ -14,9 +14,11 @@ import { prepareHuntLevel } from '../hunt/level.mjs';
 import {
   chooseHuntRunnerHeading,
   validateHuntDefinition,
+  validateHuntReachability,
   HUNT_RUNNER_SENSE_RADIUS,
 } from '../hunt/rules.mjs';
 import { combatView } from '../ui/combat-view.mjs';
+import { CLASSES } from '../core/registry.mjs';
 import { combatLevel, combat, patrol } from './helpers/combat-fixture.mjs';
 
 function huntLevel(role = 'scout', mode = 'bonus') {
@@ -205,4 +207,59 @@ test('successor replay includes exact hunt recipe and deterministic runner conti
   const verified = verifyReplay(replay);
   assert.equal(verified.match, true);
   assert.deepEqual(authoritativeCheckpoint(verified.state), authoritativeCheckpoint(run));
+});
+
+test('successor runner speed preserves the ratio at the maximum craft speed and admits the exact roster', () => {
+  const level = huntLevel();
+  level.rules.moveSpeed = 20;
+  level.classic.combatPatrols.actors[0].speed = 14;
+  assert.equal(validateLevel(level).valid, true);
+  assert.equal(combatView(createRun(level)).valid, true);
+  const historical = combatLevel('scout');
+  historical.classic.combatPatrols.actors[0].speed = 14;
+  assert.equal(validateLevel(historical).valid, false);
+  const recipes = structuredClone(CLASSES);
+  recipes[0].moveSpeedMultiplier = 0.5;
+  assert.throws(() => createRun(level, { classRecipes: recipes }), /70%/);
+  level.classic.combatPatrols.actors[0].speed = 7;
+  assert.equal(
+    createRun(level, { classRecipes: recipes }).classRecipes[0].moveSpeedMultiplier,
+    0.5,
+  );
+});
+
+test('Bonus mastery targets need a dry route; relay unlock dependencies cannot unlock themselves', () => {
+  const cells = Array(25).fill(CELL.WALL);
+  for (const index of [10, 11, 13, 14]) cells[index] = CELL.FIELD;
+  cells[10] = CELL.SAFE;
+  const definition = { quota: 0, targets: [{ id: 'runner' }] },
+    actors = [{ id: 'runner', x: 3.5, y: 2.5 }],
+    geometry = { width: 5, height: 5, cells, spawns: [{ x: 0.5, y: 2.5 }] };
+  assert.throws(() => validateHuntReachability(definition, actors, geometry), /Every Hunt target/);
+  assert.throws(
+    () =>
+      validateHuntReachability(definition, actors, {
+        ...geometry,
+        gates: [{ cells: [12], objective: { x: 3.5, y: 2.5 } }],
+      }),
+    /Every Hunt target/,
+  );
+  assert.deepEqual(
+    validateHuntReachability(definition, actors, {
+      ...geometry,
+      gates: [{ cells: [12], objective: { x: 1.5, y: 2.5 } }],
+    }),
+    ['runner'],
+  );
+  const terrain = Array(25).fill(0);
+  cells[12] = CELL.FIELD;
+  terrain[12] = 2;
+  assert.throws(
+    () => validateHuntReachability(definition, actors, { ...geometry, terrain }),
+    /Every Hunt target/,
+  );
+  cells[12] = CELL.SAFE;
+  assert.deepEqual(validateHuntReachability(definition, actors, { ...geometry, terrain }), [
+    'runner',
+  ]);
 });

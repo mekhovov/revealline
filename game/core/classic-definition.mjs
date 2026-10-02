@@ -3,7 +3,8 @@ import { ARCADE_ACTIONS_VERSION } from './arcade-actions.mjs';
 import { validateEnemyPressure } from './enemy-pressure.mjs';
 import { validateTimedBonuses } from './timed-bonuses.mjs';
 import { validateCombatPatrols } from './combat-definition.mjs';
-import { validateHuntDefinition } from '../hunt/rules.mjs';
+import { validateHuntDefinition, validateHuntReachability } from '../hunt/rules.mjs';
+import { DEFAULT_RULES } from './registry.mjs';
 
 export const CLASSIC_ENEMY_TYPES = Object.freeze([
   'bouncer',
@@ -159,6 +160,22 @@ export function resolveClassicDefinition(level, foundationGeometry = null) {
     validateHuntDefinition(value.hunt, value.combatPatrols?.actors, {
       ordinaryCount: level.enemies?.length ?? 0,
       enabled: value.combatPatrols?.enabled === true,
+      playerMoveSpeed: level.rules?.moveSpeed ?? DEFAULT_RULES.moveSpeed,
+    });
+    validateHuntReachability(value.hunt, value.combatPatrols.actors, {
+      width,
+      height,
+      cells: foundationGeometry.cells,
+      terrain,
+      spawns: [level.spawn],
+      gates: (foundationGeometry.gates ?? []).map((gate) => ({
+        cells: gate.cells,
+        objective: level.objectives.find(
+          (objective) =>
+            objective.id ===
+            level.relayGates.gates.find((definition) => definition.id === gate.id).objectiveId,
+        ),
+      })),
     });
   }
   for (const item of level.objectives ?? [])

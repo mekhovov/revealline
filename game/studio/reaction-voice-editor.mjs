@@ -1,3 +1,8 @@
+import {
+  inspectReactionRecording,
+  admitReactionDecode,
+  REACTION_VOICE_LIMITS,
+} from '../journey/reaction-voice-cache.mjs';
 import { REACTION_LINES, reactionLine } from '../journey/reactions.mjs';
 import { createReactionVoiceLibrary } from '../journey/reaction-voice-library.mjs';
 import { getLocale as currentLocale, onLocaleChange } from '../i18n/index.mjs';
@@ -13,7 +18,10 @@ const words = {
   line: ['Line', 'Репліка'],
   locale: ['Recording language', 'Мова запису'],
   transcript: ['Exact transcript', 'Точний текст'],
-  recording: ['Replacement audio, up to 15 seconds / 2 MiB', 'Новий запис, до 15 секунд / 2 МіБ'],
+  recording: [
+    'Replacement mono/stereo PCM WAV or AAC-LC M4A, up to 15 seconds / 2 MiB',
+    'Новий моно- чи стереозапис PCM WAV або AAC-LC M4A, до 15 секунд / 2 МіБ',
+  ],
   kind: ['Recording source', 'Джерело запису'],
   human: ['Human performance', 'Людське виконання'],
   generated: ['Generated speech', 'Синтезований голос'],
@@ -35,6 +43,11 @@ const words = {
     'Запису ще немає; гра показує субтитри.',
   ],
   ready: ['Recording ready.', 'Запис готовий.'],
+  storage: [
+    'Local recording storage is unavailable. Bundled previews remain available.',
+    'Локальне сховище записів недоступне. Початкові записи можна прослухати.',
+  ],
+  channels: ['Use a mono or stereo recording.', 'Використайте моно- чи стереозапис.'],
   saved: ['Recording saved locally.', 'Запис збережено локально.'],
   stopped: ['Playback stopped.', 'Відтворення зупинено.'],
   muted: [
@@ -103,7 +116,7 @@ export function createReactionVoiceEditor({
   fields.transcript.readOnly = true;
   fields.transcript.rows = 3;
   fields.recording.type = 'file';
-  fields.recording.accept = 'audio/wav,audio/mp4,audio/mpeg,audio/ogg,audio/webm';
+  fields.recording.accept = '.wav,.m4a,audio/wav,audio/x-wav,audio/mp4';
   fields.credit.type = 'text';
   fields.credit.maxLength = 240;
   for (const kind of ['human', 'generated']) {
@@ -119,9 +132,12 @@ export function createReactionVoiceEditor({
     revision = 0,
     player = null,
     owner = null,
-    playing = null;
+    playing = null,
+    inspection = null;
   function stop() {
     revision++;
+    inspection?.abort();
+    inspection = null;
     playing?.stop();
     playing = null;
     player?.dispose();
@@ -145,6 +161,7 @@ export function createReactionVoiceEditor({
     fields.transcript.value = reactionLine(lineId, locale)?.text ?? '';
     const description = await library.describe(lineId, locale);
     if (disposed || request !== revision) return;
+    if (!description.storageAvailable) status.textContent = tr('storage');
     fields.versions.replaceChildren();
     const original = node('option', tr('original'));
     original.value = '';
@@ -181,7 +198,8 @@ export function createReactionVoiceEditor({
         await action();
       } catch (error) {
         stop();
-        if (!disposed) status.textContent = `${tr('error')}${error.message}`;
+        if (!disposed && error.name !== 'AbortError')
+          status.textContent = `${tr('error')}${error.message}`;
       } finally {
         busy = false;
       }
@@ -195,31 +213,34 @@ export function createReactionVoiceEditor({
       sound = acquire(),
       { lineId, locale } = selection();
     const enabled = sound.enable();
-    // The selected historical revision is not persisted by audition.
-    const description = await library.describe(lineId, locale);
-    const selected = description.revisions.find((entry) => entry.sha256 === fields.versions.value);
-    let bytes;
-    if (selected)
-      bytes = Uint8Array.from(atob(selected.base64), (character) => character.charCodeAt(0)).buffer;
-    else if (fields.versions.value === '') {
-      const original = description.original;
-      if (original?.base64)
-        bytes = Uint8Array.from(atob(original.base64), (character) =>
-          character.charCodeAt(0),
-        ).buffer;
-      else if (original) {
-        const response = await fetch(
-          new URL(`../audio/reactions/${original.file}`, import.meta.url),
-        );
-        if (response.ok) bytes = await response.arrayBuffer();
-      }
-    }
+    // Resolve the chosen historical revision without changing its persisted selection.
+    inspection = new AbortController();
+    const signal = inspection.signal;
+    const recording = await library.resolve(lineId, locale, {
+      revision: fields.versions.value || null,
+      signal,
+    });
+    const bytes = recording?.bytes;
     if (!bytes) {
+      stop();
       status.textContent = tr('noRecording');
       return;
     }
     if (!(await enabled) || disposed || request !== revision) return;
+    const metadata = await inspectReactionRecording(new Blob([bytes], { type: recording.mime }), {
+      signal,
+      document: doc,
+    });
+    if (disposed || request !== revision) return;
+    admitReactionDecode(metadata, sound.context.sampleRate);
     const buffer = await sound.context.decodeAudioData(bytes.slice(0));
+    if (
+      buffer.duration <= 0 ||
+      buffer.duration > 15 ||
+      buffer.length * buffer.numberOfChannels * 4 > REACTION_VOICE_LIMITS.perDecodeBytes
+    )
+      throw new Error(tr('tooLong'));
+    if (buffer.numberOfChannels > REACTION_VOICE_LIMITS.channels) throw new Error(tr('channels'));
     if (disposed || request !== revision) return;
     playing = sound.playDialogue(buffer);
     status.textContent = sound.audioMaster.muted ? tr('muted') : tr('ready');
@@ -235,11 +256,29 @@ export function createReactionVoiceEditor({
       kind = fields.kind.value,
       credit = fields.credit.value,
       sound = acquire();
+    inspection = new AbortController();
+    const signal = inspection.signal;
+    const metadata = await inspectReactionRecording(file, { signal, document: doc });
+    if (disposed || request !== revision) return;
     if (!sound.setup()) throw new Error(tr('noRecording'));
+    admitReactionDecode(metadata, sound.context.sampleRate);
     const decoded = await sound.context.decodeAudioData(await file.arrayBuffer());
     if (disposed || request !== revision) return;
-    if (decoded.duration <= 0 || decoded.duration > 15) throw new Error(tr('tooLong'));
-    await library.replace({ ...selected, blob: file, kind, credit, duration: decoded.duration });
+    if (
+      decoded.duration <= 0 ||
+      decoded.duration > 15 ||
+      decoded.length * decoded.numberOfChannels * 4 > REACTION_VOICE_LIMITS.perDecodeBytes
+    )
+      throw new Error(tr('tooLong'));
+    if (decoded.numberOfChannels > REACTION_VOICE_LIMITS.channels) throw new Error(tr('channels'));
+    await library.replace({
+      ...selected,
+      blob: file,
+      kind,
+      credit,
+      duration: decoded.duration,
+      signal,
+    });
     if (disposed || request !== revision) return;
     onChanged();
     await sync();
@@ -286,14 +325,17 @@ export function createReactionVoiceEditor({
     if (!file || disposed || busy) return;
     busy = true;
     stop();
+    inspection = new AbortController();
+    const signal = inspection.signal;
     try {
       if (file.size > 32 * 1024 * 1024) throw new Error('Voice bundle exceeds 32 MiB.');
-      await library.importBundle(await file.text());
+      await library.importBundle(await file.text(), { signal });
       onChanged();
       await sync();
       status.textContent = tr('saved');
     } catch (error) {
-      if (!disposed) status.textContent = `${tr('error')}${error.message}`;
+      if (!disposed && error.name !== 'AbortError')
+        status.textContent = `${tr('error')}${error.message}`;
     } finally {
       busy = false;
       bundle.value = '';
@@ -333,6 +375,7 @@ export function createReactionVoiceEditor({
   };
   doc.addEventListener('visibilitychange', hidden);
   target?.addEventListener?.('pagehide', stop);
+  target?.addEventListener?.('blur', stop);
   root.append(metadata, status);
   container.append(root);
   void sync().catch((error) => {
@@ -354,6 +397,7 @@ export function createReactionVoiceEditor({
       bundle.onchange = null;
       doc.removeEventListener('visibilitychange', hidden);
       target?.removeEventListener?.('pagehide', stop);
+      target?.removeEventListener?.('blur', stop);
       root.remove();
     },
   });

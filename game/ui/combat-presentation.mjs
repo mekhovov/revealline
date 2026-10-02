@@ -1,3 +1,4 @@
+import { HUNT_PRESENTATION_CATALOG } from '../hunt/presentation-catalog.mjs';
 import { drawHumanoidPixelBody, drawHuntRemains } from '../hunt/destruction.mjs';
 import { t } from '../i18n/index.mjs';
 import {
@@ -244,17 +245,21 @@ export function drawCombatScrap(ctx, view, palette, options = {}) {
     c = colors(palette);
   ctx.save();
   ctx.globalAlpha = 1;
-  for (const mark of view.eliminations) {
+  const firstSettled = Math.max(
+    0,
+    view.eliminations.length - HUNT_PRESENTATION_CATALOG.budgets.settledClustersPerBoard,
+  );
+  for (const [index, mark] of view.eliminations.entries()) {
     const x = mark.x * CELL,
       y = mark.y * CELL;
-    if (options.showScrap !== false && (mark.kind || options.brutal)) {
+    if (index >= firstSettled && options.showScrap !== false && (mark.kind || options.brutal)) {
       drawHuntRemains(ctx, mark, {
         unit: u,
         brutal: options.brutal,
         blood: options.blood,
         color: c.body,
       });
-    } else if (options.showScrap !== false) {
+    } else if (index >= firstSettled && options.showScrap !== false) {
       pixel(ctx, c.plate, x - 4 * u, y - 2 * u, 8 * u, 4 * u);
       pixel(ctx, c.ink, x - 3 * u, y - u, 3 * u, u);
       pixel(ctx, c.body, x + u, y, 2 * u, u);

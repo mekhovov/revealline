@@ -509,8 +509,11 @@ function inspectBoard(trailCells = []) {
       rules: manifest.level.rules,
       actors: manifest.level.enemies,
       effectiveGameplay,
-      ...(manifest.level.classic?.combatPatrols
-        ? { combatPatrols: manifest.level.classic.combatPatrols }
+      ...((manifest.level.classic?.combatPatrols ?? manifest.level.combatPatrols)
+        ? { combatPatrols: manifest.level.classic?.combatPatrols ?? manifest.level.combatPatrols }
+        : {}),
+      ...((manifest.level.classic?.hunt ?? manifest.level.hunt)
+        ? { hunt: manifest.level.classic?.hunt ?? manifest.level.hunt }
         : {}),
       objectives: mission.objectives,
       terrain: authoredTerrain,
@@ -1297,6 +1300,7 @@ $('play').onclick = guarded(() =>
   launchPreview(session.current(), $('mission').value, $('difficulty').value),
 );
 async function launchPreview(source, missionId, difficulty) {
+  reactionVoiceEditor.suspend();
   const focusIntent = captureStudioActionFocus(document.activeElement);
   previewController?.abort();
   const controller = new AbortController();
@@ -1347,6 +1351,8 @@ async function launchPreview(source, missionId, difficulty) {
   if (showCombatScrap !== null)
     target.searchParams.set('preview-remains', showCombatScrap ? 'show' : 'hide');
   const url = target.href;
+  // Media preparation can yield while an author auditions another recording.
+  reactionVoiceEditor.suspend();
   $('preview').src = url;
   localizedText($('preview-status'), () =>
     studioPreviewLoadingText(previewProject, missionId, difficulty),

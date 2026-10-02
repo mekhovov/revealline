@@ -3,6 +3,7 @@ import {
   huntTargetKind,
   huntSummary,
   HUNT_STATE_VERSION,
+  HUNT_MAX_RUNNER_SPEED,
 } from '../hunt/rules.mjs';
 import { t } from '../i18n/index.mjs';
 import { plainObject, stableId, boundedJSON, exactKeys } from '../data-json.mjs';
@@ -70,9 +71,12 @@ function id(value) {
 }
 function velocity(value, speed) {
   const vx = own(value, 'vx'),
-    vy = own(value, 'vy');
+    vy = own(value, 'vy'),
+    limit = Math.max(12, speed);
   check(
-    finite(vx, -12, 12) && finite(vy, -12, 12) && Math.abs(Math.hypot(vx, vy) - speed) < 1e-7,
+    finite(vx, -limit, limit) &&
+      finite(vy, -limit, limit) &&
+      Math.abs(Math.hypot(vx, vy) - speed) < 1e-7,
     t('interface:invalidCombatVelocity'),
   );
   return { vx, vy };
@@ -108,7 +112,7 @@ function effect(state, kind, tick) {
   check(integer(from) && integer(until, from));
   return tick >= from && tick < until;
 }
-function recipes(definition) {
+function recipes(definition, hunt) {
   const values = dense(own(definition, 'actors'), 24),
     result = new Map();
   let sentries = 0;
@@ -117,7 +121,11 @@ function recipes(definition) {
     const key = id(source),
       role = own(source, 'role'),
       speed = own(source, 'speed');
-    check(!result.has(key) && ['scout', 'sentry'].includes(role) && finite(speed, 0.25, 8));
+    check(
+      !result.has(key) &&
+        ['scout', 'sentry'].includes(role) &&
+        finite(speed, 0.25, huntTargetKind(hunt, key) === 'runner' ? HUNT_MAX_RUNNER_SPEED : 8),
+    );
     const recipe = { id: key, role, speed };
     if (role === 'sentry') {
       check(++sentries <= 8);
@@ -182,12 +190,12 @@ export function combatView(run) {
     check(['running', 'respawning', 'won', 'lost'].includes(status));
     const frozen = effect(state, 'enemy-freeze', tick),
       slow = effect(state, 'enemy-slow', tick);
-    const definitions = recipes(definition),
-      domain = geometry(run);
     const hunt =
       ruleset === 'xonix-core.v10'
         ? validateHuntDefinition(own(classicDefinition, 'hunt'), own(definition, 'actors'))
         : null;
+    const definitions = recipes(definition, hunt),
+      domain = geometry(run);
     const combat = record(own(state, 'combatPatrols'));
     check(own(combat, 'version') === 'combat-patrol-state.v1');
     const sourceActors = dense(own(combat, 'actors'), 24);

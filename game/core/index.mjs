@@ -1,4 +1,4 @@
-import { huntSummary } from '../hunt/rules.mjs';
+import { huntSummary, validateHuntDefinition } from '../hunt/rules.mjs';
 import { clearLineImpacts } from './line-impact.mjs';
 import {
   CELL,
@@ -74,6 +74,14 @@ export function createRun(
   const validation = validateClassRecipes(classRecipes);
   if (!validation.valid)
     throw new TypeError(`Invalid classRecipes: ${validation.errors.join('; ')}`);
+  if (level.classic?.hunt)
+    validateHuntDefinition(level.classic.hunt, level.classic.combatPatrols.actors, {
+      ordinaryCount: level.enemies.length,
+      enabled: level.classic.combatPatrols.enabled,
+      playerMoveSpeed:
+        level.rules.moveSpeed *
+        Math.min(...classRecipes.map((recipe) => recipe.moveSpeedMultiplier ?? 1)),
+    });
   const recipe = classRecipes.find((c) => c.id === classId);
   if (!recipe) throw new TypeError('unsupported classId');
   const cells = new Uint8Array(geometry.cellCount);

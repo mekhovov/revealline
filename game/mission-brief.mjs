@@ -1,3 +1,4 @@
+import { huntText } from './hunt/copy.mjs';
 import { t, getLocale } from './i18n/index.mjs';
 import { contentText } from './i18n/content.mjs';
 const compact = (value, limit) => {
@@ -33,7 +34,7 @@ export function missionBriefing(
         ? `${label.slice(0, -1)}ies`
         : `${label}s`
       : label;
-  const goal = multiShield
+  const captureGoal = multiShield
     ? otherRequired
       ? t('gameplay:brief.shieldGoalObjectives', {
           coverage,
@@ -49,6 +50,18 @@ export function missionBriefing(
           objective: required === 1 ? label : plural,
         })
       : t('gameplay:brief.coverage', { coverage });
+  const hunt = level.classic?.hunt;
+  const goal = hunt
+    ? t(
+        `gameplay:brief.${hunt.mode === 'hunt' ? 'huntAll' : hunt.mode === 'capture-quota' ? 'huntQuota' : 'huntBonus'}`,
+        {
+          captureGoal,
+          count: hunt.targets.length,
+          quota: hunt.quota,
+          total: hunt.targets.length,
+        },
+      )
+    : captureGoal;
   const rules = level.rules || {};
   const limits = [
     rules.timeLimitSeconds > 0 ? t('gameplay:deadlineS', { value1: rules.timeLimitSeconds }) : '',
@@ -70,21 +83,23 @@ export function missionBriefing(
   const recommendation = recommendations.length
     ? t('gameplay:recommended', { value1: compact(recommendations.join(' / '), 68) })
     : '';
-  const encounterGoal = encounter
-    ? multiShield && shieldCount > 1
-      ? t('gameplay:brief.captureShields', {
-          count: shieldCount,
-          cells: encounter.minReleaseCutCells,
-        })
-      : t('gameplay:captureTheShieldRelayThenCloseNewTrailCellsDuring', {
-          value1: encounter.minReleaseCutCells,
-        })
-    : '';
+  const encounterGoal =
+    encounter && hunt?.mode !== 'hunt'
+      ? multiShield && shieldCount > 1
+        ? t('gameplay:brief.captureShields', {
+            count: shieldCount,
+            cells: encounter.minReleaseCutCells,
+          })
+        : t('gameplay:captureTheShieldRelayThenCloseNewTrailCellsDuring', {
+            value1: encounter.minReleaseCutCells,
+          })
+      : '';
   const foundations = [
     'xonix-level.v5',
     'xonix-level.v6',
     'xonix-level.v7',
     'xonix-level.v8',
+    'xonix-level.v9',
   ].includes(level.version);
   const combat = level.classic?.combatPatrols;
   const optionalRoles =
@@ -96,22 +111,27 @@ export function missionBriefing(
       : [];
   // Optional actors live outside level.enemies. Their authoring design is not
   // part of the playable scenario, so derive this lesson from enabled rules.
-  const optionalHint = optionalRoles.includes('sentry')
-    ? t('gameplay:brief.optionalSentry')
-    : optionalRoles.includes('scout')
-      ? t('gameplay:brief.optionalScout')
-      : '';
-  const optionalDetails = optionalRoles.includes('sentry')
-    ? t('gameplay:brief.optionalSentryDetails')
-    : optionalRoles.includes('scout')
-      ? t('gameplay:brief.optionalScoutDetails')
-      : '';
+  const optionalHint = hunt
+    ? huntText('hint')
+    : optionalRoles.includes('sentry')
+      ? t('gameplay:brief.optionalSentry')
+      : optionalRoles.includes('scout')
+        ? t('gameplay:brief.optionalScout')
+        : '';
+  const optionalDetails = hunt
+    ? t('gameplay:brief.huntDetails')
+    : optionalRoles.includes('sentry')
+      ? t('gameplay:brief.optionalSentryDetails')
+      : optionalRoles.includes('scout')
+        ? t('gameplay:brief.optionalScoutDetails')
+        : '';
   const classicHint = [
     'xonix-level.v4',
     'xonix-level.v5',
     'xonix-level.v6',
     'xonix-level.v7',
     'xonix-level.v8',
+    'xonix-level.v9',
   ].includes(level.version)
     ? [
         level.directionalFields?.zones?.length ? t('gameplay:brief.arrowFields') : '',
@@ -164,28 +184,32 @@ export function missionBriefing(
     fullTitle,
     goal,
     facts,
-    copy: intro
-      ? [
-          t('gameplay:leaveSafeGroundDrawALineAndReturnRevealBy', { value1: coverage }),
-          optionalHint,
-        ]
-          .filter(Boolean)
-          .join('\n')
-      : [facts, captureHint, optionalHint, impactHint, classicHint].filter(Boolean).join('\n'),
+    copy:
+      intro && !hunt
+        ? [
+            t('gameplay:leaveSafeGroundDrawALineAndReturnRevealBy', { value1: coverage }),
+            optionalHint,
+          ]
+            .filter(Boolean)
+            .join('\n')
+        : [facts, captureHint, optionalHint, impactHint, classicHint].filter(Boolean).join('\n'),
     fullBrief: [
+      hunt ? goal : '',
       authored || t('gameplay:brief.returnToSafeGroundToSecureEachLineRegionsWithout'),
       optionalDetails,
     ]
       .filter(Boolean)
       .join('\n\n'),
-    status: encounter
-      ? multiShield && shieldCount > 1
-        ? t('gameplay:brief.captureShieldsFirst', { count: shieldCount })
-        : t('gameplay:brief.captureTheShieldRelayFirstWatchThePatternedLaneBefore')
-      : intro
-        ? t('interface:yourFirstRouteFlyDownFromTheMarkedStartTo')
-        : level.classic?.enemyPressure?.actors?.length
-          ? t('gameplay:brief.cancelPursuit')
-          : t('gameplay:brief.chooseYourRouteOpenMissionsMissionBriefForGuidance'),
+    status: hunt
+      ? huntText('hint')
+      : encounter
+        ? multiShield && shieldCount > 1
+          ? t('gameplay:brief.captureShieldsFirst', { count: shieldCount })
+          : t('gameplay:brief.captureTheShieldRelayFirstWatchThePatternedLaneBefore')
+        : intro
+          ? t('interface:yourFirstRouteFlyDownFromTheMarkedStartTo')
+          : level.classic?.enemyPressure?.actors?.length
+            ? t('gameplay:brief.cancelPursuit')
+            : t('gameplay:brief.chooseYourRouteOpenMissionsMissionBriefForGuidance'),
   });
 }

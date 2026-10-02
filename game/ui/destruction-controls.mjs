@@ -62,10 +62,12 @@ export function attachDestructionControls({
   canvas.setAttribute('aria-hidden', 'true');
   root.append(canvas);
   container?.append(root);
-  const fx = createHuntDestruction();
+  const fx = createHuntDestruction({ preview: true, onPreempt: () => stopPreview() });
   let frame = null,
+    revision = 0,
     disposed = false;
   const stopPreview = () => {
+    revision++;
     if (frame !== null) win.cancelAnimationFrame(frame);
     frame = null;
     canvas.hidden = true;
@@ -79,12 +81,19 @@ export function attachDestructionControls({
     localizedText(status, () => (choice.durable ? '' : huntText('saving')));
     stopPreview();
   };
+  const visibility = () => {
+    if (doc.hidden) stopPreview();
+  };
+  const reducedMedia = win?.matchMedia?.('(prefers-reduced-motion: reduce)');
+  doc.addEventListener('visibilitychange', visibility);
+  reducedMedia?.addEventListener?.('change', stopPreview);
   const unsubscribe = preferences.subscribe(render);
   const chooseBrutal = () => preferences.set({ brutal: brutal.checked });
   const chooseBlood = () => preferences.set({ blood: blood.checked });
   const save = () => preferences.retry();
   const animate = () => {
     stopPreview();
+    const currentRevision = revision;
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
     canvas.hidden = false;
@@ -93,7 +102,10 @@ export function attachDestructionControls({
     const view = { valid: true, eliminations: [] },
       owner = {};
     const draw = (now) => {
-      if (disposed) return;
+      if (disposed || doc.hidden || currentRevision !== revision) {
+        stopPreview();
+        return;
+      }
       began ??= now;
       previous ??= now;
       const age = (now - began) / 1000,
@@ -103,6 +115,7 @@ export function attachDestructionControls({
           ? [{ id: 'preview-runner', kind: 'runner', cause: 'ram', x: 10, y: 3.75, tick: 1 }]
           : [];
       fx.advance(view, (now - previous) / 1000, { key: owner, ...choice, reduced: reduced() });
+      if (currentRevision !== revision) return;
       previous = now;
       ctx.fillStyle = '#181e25';
       ctx.fillRect(0, 0, canvas.width, canvas.height);
@@ -136,6 +149,8 @@ export function attachDestructionControls({
       retry.removeEventListener('click', save);
       preview.removeEventListener('click', animate);
       win?.removeEventListener?.('pagehide', stopPreview);
+      doc.removeEventListener('visibilitychange', visibility);
+      reducedMedia?.removeEventListener?.('change', stopPreview);
       root.remove();
     },
   });

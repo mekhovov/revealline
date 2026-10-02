@@ -139,7 +139,13 @@ export const HUNT_PRESENTATION_CATALOG = freeze({
     group: { delayStep: 0.018, maximumDelaySteps: 5, crowdedAt: 8, fragments: 2, opacity: 0.65 },
     settled: { fullPieces: 4, cleanPieces: 2, fullScale: 0.8, cleanScale: 0.6, poolOpacity: 0.74 },
   },
-  budgets: { pageParticles: 128, pageEnvelopes: 4, painters: 2, settledClustersPerBoard: 24 },
+  budgets: {
+    pageParticles: 128,
+    pageEnvelopes: 4,
+    painters: 2,
+    settledClustersPerBoard: 24,
+    staleFrameMs: 250,
+  },
 });
 export const huntActorPresentation = (kind) =>
   Object.hasOwn(HUNT_PRESENTATION_CATALOG.actors, kind)

@@ -1,4 +1,11 @@
 import { createHuntRecords } from '../hunt/records.mjs';
+import {
+  createTeamHuntAttemptStore,
+  createTeamHuntRecorder,
+  restoreTeamHuntAttempt,
+  teamHuntSourceIdentity,
+} from '../coop/hunt-attempts.mjs';
+import { attachTeamHuntSave, teamHuntSaveText } from '../ui/team-hunt-save.mjs';
 import { deriveEncounterLevel } from '../hunt/variants.mjs';
 import { ENCOUNTER_VARIANTS, createEncounterVariantPreferences } from '../hunt/preferences.mjs';
 import { attachEncounterVariantControls } from '../ui/encounter-variant-controls.mjs';
@@ -579,6 +586,10 @@ export function bootCoop({
   const installedTeamSourceIds = new Set();
   const installedTeamProgress = new Map();
   const installedTeamAttempts = new WeakMap();
+  const huntAttempts = new WeakMap();
+  const huntRetryOwners = new WeakMap();
+  const huntAttemptStore = createTeamHuntAttemptStore();
+  let huntSaveControls = null;
   let installedTeamRows = [],
     installedTeamEditions = new Map(),
     installedTeamGeneration = -1,
@@ -791,6 +802,81 @@ export function bootCoop({
     pack.levels.find((level) => level.id === $('coop-level').value) || pack.levels[0];
   const encounterChoices = new WeakMap();
   const huntRecords = createHuntRecords({ window, getStorage: () => localStorage });
+  huntSaveControls = attachTeamHuntSave({
+    container: $('coop-hunt-save'),
+    liveStatus: $('coop-hunt-attempt-status'),
+    store: huntAttemptStore,
+    findRow: (snapshot) =>
+      currentDiscoveryRows().find((row) => {
+        if (row.levelId !== snapshot.levelId) return false;
+        const source = teamHuntSourceIdentity(row.pack, row.level);
+        return source.pack === snapshot.source.pack && source.level === snapshot.source.level;
+      }),
+    async onContinue(saved, row, { signal, opener }) {
+      const interrupted = (code, message) => {
+        const error = new Error(message);
+        error.code = code;
+        return error;
+      };
+      if (disposed || signal.aborted)
+        throw new DOMException('Team Hunt Continue is closed.', 'AbortError');
+      if (inactive || !foreground())
+        throw interrupted('foregroundLost', 'Team Hunt Continue needs the foreground game.');
+      if (!canOpenDiscovery())
+        throw interrupted('continueInterrupted', 'Team Hunt Continue is unavailable.');
+      const ownerRun = run,
+        ownerGeneration = generation;
+      const restored = await restoreTeamHuntAttempt(saved.snapshot, {
+        pack: row.pack,
+        level: row.level,
+        signal,
+      });
+      if (disposed || signal.aborted)
+        throw new DOMException('Team Hunt Continue is closed.', 'AbortError');
+      if (inactive || !foreground())
+        throw interrupted('foregroundLost', 'Team Hunt Continue lost the foreground game.');
+      if (huntAttemptStore.read().raw !== saved.raw)
+        throw interrupted('saveChanged', 'Team Hunt checkpoint changed during verification.');
+      if (run !== ownerRun || generation !== ownerGeneration)
+        throw interrupted('continueInterrupted', 'Team Hunt attempt changed during verification.');
+      restored.raw = saved.raw;
+      try {
+        const activated = await activateDiscovery(row, {
+          signal,
+          isCurrent: () =>
+            !disposed && !signal.aborted && huntAttemptStore.read().raw === saved.raw,
+          onStatus: () => {},
+          opener,
+          restored,
+        });
+        if (!activated && !signal.aborted) {
+          const error = new Error('Team Hunt Continue did not activate the arena.');
+          error.code = 'continueInterrupted';
+          throw error;
+        }
+      } catch (error) {
+        if (error.name !== 'AbortError' || signal.aborted) throw error;
+        const reason = new Error(error.message);
+        reason.code =
+          huntAttemptStore.read().raw !== saved.raw
+            ? 'saveChanged'
+            : inactive || !foreground()
+              ? 'foregroundLost'
+              : 'continueInterrupted';
+        throw reason;
+      }
+    },
+    onDiscard(discarded) {
+      const record = run && huntAttempts.get(run);
+      if (record) {
+        record.disabled = discarded.snapshot?.attemptId === record.recorder.attemptId;
+        record.raw = null;
+        record.replaceAttemptId = null;
+        record.failed = false;
+      }
+      persistHuntAttempt(run, { force: true });
+    },
+  });
   const encounterControls = attachEncounterVariantControls({
     document,
     records: huntRecords,
@@ -1333,7 +1419,10 @@ export function bootCoop({
     batch.release();
     router.clear();
     navigation.clear();
-    if (run) releaseCoopInputs(run);
+    if (run) {
+      recordTeamInputRelease(run);
+      releaseCoopInputs(run);
+    }
     accumulator = 0;
   }
   const nativeMenu = prepareNativeMenus({
@@ -3504,7 +3593,7 @@ export function bootCoop({
           encounterLevel: recipe.encounterLevel,
           encounterVariant: recipe.encounterVariant,
           encounterPack: recipe.encounterPack,
-          adminOverride: false,
+          adminOverride: restored.snapshot.tuning.adminOverride,
           gameplayId: restored.snapshot.gameplayId,
           tuning: restored.snapshot.tuning,
         });
@@ -3525,14 +3614,16 @@ export function bootCoop({
           departure = ticket;
           localizedText($('coop-discard-title'), () => t('interface:startAnotherTeamArena'));
           localizedText($('coop-discard-copy'), () =>
-            t(
-              installedTeamAttempts.get(run)?.durable
-                ? 'interface:team.replaceAttemptSaved'
-                : 'interface:team.replaceAttempt',
-              {
-                mission: contentText(row, 'title'),
-              },
-            ),
+            durableHuntAttempt(run)
+              ? teamHuntSaveText('replaceSaved')
+              : t(
+                  installedTeamAttempts.get(run)?.durable
+                    ? 'interface:team.replaceAttemptSaved'
+                    : 'interface:team.replaceAttempt',
+                  {
+                    mission: contentText(row, 'title'),
+                  },
+                ),
           );
           localizedText($('coop-discard-confirm'), () => t('interface:replacePlay'));
           try {
@@ -3583,7 +3674,9 @@ export function bootCoop({
       knockdowns = [null, null];
       last = null;
       accumulator = 0;
-      beginInstalledTeamAttempt(candidate, selection, restored);
+      // Collect any release caused by publication callbacks, but keep both
+      // stores inert until every rollback-capable acceptance check passes.
+      beginInstalledTeamAttempt(candidate, selection, restored, { deferSave: true });
       if (row.pack === COOP_STARTER_PACK) lastBuiltInArena = row.levelId;
       try {
         $('coop-difficulty').value = candidate.difficulty;
@@ -3627,6 +3720,11 @@ export function bootCoop({
       completed = true;
       discoveryOperation = null;
       operation.detach();
+      const huntRecord = huntAttempts.get(candidate);
+      if (huntRecord) huntRecord.armed = true;
+      const installedRecord = installedTeamAttempts.get(candidate);
+      if (installedRecord) installedRecord.armed = true;
+      persistInstalledTeamAttempt(candidate, selection, { force: true });
       discoveryStarted = {
         run: candidate,
         generation: publishedGeneration,
@@ -3996,12 +4094,14 @@ export function bootCoop({
           }),
         );
         localizedText($('coop-discard-copy'), () =>
-          t(
-            installedTeamAttempts.get(run)?.durable
-              ? 'interface:team.openOriginalAttemptSaved'
-              : 'interface:team.openOriginalAttempt',
-            { mission: contentText(row, 'name') },
-          ),
+          durableHuntAttempt(run)
+            ? teamHuntSaveText('replaceSaved')
+            : t(
+                installedTeamAttempts.get(run)?.durable
+                  ? 'interface:team.openOriginalAttemptSaved'
+                  : 'interface:team.openOriginalAttempt',
+                { mission: contentText(row, 'name') },
+              ),
         );
         localizedText($('coop-discard-confirm'), () => t('interface:replacePlay'));
         departureDialog.showModal();
@@ -4707,9 +4807,11 @@ export function bootCoop({
     cancelPicture({ restore: false });
     if (!running()) return;
     persistInstalledTeamAttempt(run, acceptedPicture, { force: true });
+    recordTeamInputRelease(run);
     pauseCoop(run);
     contextualReactions?.suspend();
     clear();
+    persistHuntAttempt(run, { force: true });
     overlay({ focus });
     try {
       render();
@@ -4728,8 +4830,12 @@ export function bootCoop({
     contextualReactions?.suspend();
     closeEarnedPicture({ restore: false });
     cancelPicture({ restore: false });
-    if (running()) pauseCoop(run);
+    if (running()) {
+      recordTeamInputRelease(run);
+      pauseCoop(run);
+    }
     clear();
+    persistHuntAttempt(run, { force: true });
     cancelDeparture({ restore: false });
     overlay({ focus: false });
     $('coop-resume').hidden = true;
@@ -4757,6 +4863,7 @@ export function bootCoop({
       return;
     cancelPicture({ restore: false });
     clear();
+    recordTeamInputRelease(run);
     resumeCoop(run);
     contextualReactions?.resume();
     if (music) void music.start();
@@ -4967,26 +5074,26 @@ export function bootCoop({
     // Already-paused and faulted attempts also shed stale UI/flight input.
     clear();
     localizedText($('coop-discard-title'), () => t('interface:discardThisTeamAttempt'));
-    localizedText(
-      $('coop-discard-copy'),
-      () =>
-        `${t(
-          installedTeamAttempts.get(run)?.durable
-            ? 'interface:team.savedCheckpointDiscard'
-            : 'interface:thisUnfinishedAttemptIsNotSavedDiscardingItLosesIts',
-        )} ${
-          loopStopped
-            ? t('interface:stayKeepsThisStoppedAttemptOnScreenItCannotResume')
-            : t('interface:stayKeepsBothPlayersPausedResumeTogetherRemainsASeparate')
-        } ${
-          kind === 'retry'
-            ? t('interface:discardAndRetryStartsThisSameArenaAgainFromThe')
-            : kind === 'setup'
-              ? t('interface:discardAndChangeSetupClearsThisAttemptWithoutStartingAnother')
-              : kind === 'catalogue'
-                ? t('interface:discardAndSwitchJourneyOpensTheOtherTeamCatalogueAnd')
-                : t('interface:discardAndLeaveReturnsToTheLinkedModeAndLoses')
-        }`,
+    localizedText($('coop-discard-copy'), () =>
+      durableHuntAttempt(run)
+        ? teamHuntSaveText(kind === 'retry' ? 'retrySaved' : 'leaveSaved')
+        : `${t(
+            installedTeamAttempts.get(run)?.durable
+              ? 'interface:team.savedCheckpointDiscard'
+              : 'interface:thisUnfinishedAttemptIsNotSavedDiscardingItLosesIts',
+          )} ${
+            loopStopped
+              ? t('interface:stayKeepsThisStoppedAttemptOnScreenItCannotResume')
+              : t('interface:stayKeepsBothPlayersPausedResumeTogetherRemainsASeparate')
+          } ${
+            kind === 'retry'
+              ? t('interface:discardAndRetryStartsThisSameArenaAgainFromThe')
+              : kind === 'setup'
+                ? t('interface:discardAndChangeSetupClearsThisAttemptWithoutStartingAnother')
+                : kind === 'catalogue'
+                  ? t('interface:discardAndSwitchJourneyOpensTheOtherTeamCatalogueAnd')
+                  : t('interface:discardAndLeaveReturnsToTheLinkedModeAndLoses')
+          }`,
     );
     localizedText($('coop-discard-confirm'), () => t(departureLabelKeys[kind]));
     try {
@@ -5026,6 +5133,8 @@ export function bootCoop({
     try {
       if (ticket.kind === 'retry') {
         prepared = createTunedCoop(ticket.recipe);
+        const record = huntAttempts.get(ticket.run);
+        if (record) huntRetryOwners.set(prepared, record.recorder.attemptId);
       }
       const destination =
         ticket.kind === 'return'
@@ -5354,7 +5463,94 @@ export function bootCoop({
       height: asset.height,
     };
   }
-  function beginInstalledTeamAttempt(currentRun, picture, restored = null) {
+  function beginHuntAttempt(currentRun, picture, restored, { armed = true } = {}) {
+    const tuning = attemptTuning.get(currentRun);
+    if (!currentRun.level.hunt || !tuning) return;
+    const existing = huntAttemptStore.read();
+    const replaceAttemptId =
+      !restored &&
+      existing.snapshot &&
+      huntRetryOwners.get(currentRun) === existing.snapshot.attemptId
+        ? existing.snapshot.attemptId
+        : null;
+    const recorder = createTeamHuntRecorder({
+      run: currentRun,
+      pack: picture.sourcePack,
+      level: tuning.pictureLevel,
+      tuning: tuning.tuning,
+      encounterLevel: tuning.encounterLevel,
+      encounterVariant: tuning.encounterVariant,
+      attemptId: `${libraryVisit}:${picture.request.attemptId}`,
+      gameplayId: tuning.gameplayId,
+      restored,
+    });
+    huntAttempts.set(currentRun, {
+      recorder,
+      raw: restored?.raw ?? (replaceAttemptId ? existing.raw : null),
+      replaceAttemptId,
+      lastTick: restored?.snapshot.checkpoint.tick ?? -600,
+      failed: false,
+      armed,
+    });
+    huntSaveControls.refresh();
+  }
+  function recordTeamInputRelease(currentRun) {
+    if (!['running', 'paused'].includes(currentRun.status)) return;
+    huntAttempts.get(currentRun)?.recorder.release();
+    const installed = installedTeamAttempts.get(currentRun);
+    if (installed && !installed.segments.at(-1)?.release)
+      installed.segments.push({ release: true });
+  }
+  function persistHuntAttempt(currentRun, { force = false } = {}) {
+    const record = currentRun && huntAttempts.get(currentRun);
+    if (
+      !record ||
+      !record.armed ||
+      record.disabled ||
+      !['running', 'paused'].includes(currentRun.status) ||
+      (!force && currentRun.tick - record.lastTick < 600)
+    )
+      return;
+    record.lastTick = currentRun.tick;
+    try {
+      record.raw = huntAttemptStore.save(record.recorder.snapshot(), record.raw, {
+        replaceAttemptId: record.replaceAttemptId,
+      });
+      record.replaceAttemptId = null;
+      record.failed = false;
+      huntSaveControls.failure(false);
+    } catch {
+      record.failed = true;
+      huntSaveControls.failure(true);
+    }
+  }
+  function clearHuntAttempt(currentRun) {
+    const record = huntAttempts.get(currentRun);
+    if (!record?.raw) return;
+    try {
+      const saved = huntAttemptStore.read();
+      if (saved.snapshot?.attemptId !== record.recorder.attemptId) return;
+      huntAttemptStore.discard(record.raw);
+      record.raw = null;
+      huntSaveControls.failure(false);
+    } catch {
+      huntSaveControls.failure(true);
+    }
+  }
+  function durableHuntAttempt(currentRun) {
+    const record = currentRun && huntAttempts.get(currentRun);
+    const saved = record?.raw && huntAttemptStore.read();
+    return (
+      !!saved && saved.raw === record.raw && saved.snapshot?.attemptId === record.recorder.attemptId
+    );
+  }
+  function beginInstalledTeamAttempt(
+    currentRun,
+    picture,
+    restored = null,
+    { deferSave = false } = {},
+  ) {
+    beginHuntAttempt(currentRun, picture, restored, { armed: !deferSave });
     const editionId = picture?.installedEditionId,
       setup = installedPreset(currentRun),
       tuning = attemptTuning.get(currentRun);
@@ -5381,17 +5577,19 @@ export function bootCoop({
         lastQueuedTick: restored?.snapshot.checkpoint.tick ?? -1,
         chain: Promise.resolve(),
         failure: null,
-        durable: Boolean(restored),
+        durable: Boolean(restored && !restored.huntAttempt),
+        armed: !deferSave,
       };
     installedTeamAttempts.set(currentRun, record);
-    if (!restored) persistInstalledTeamAttempt(currentRun, picture, { force: true });
+    if (!restored && !deferSave) persistInstalledTeamAttempt(currentRun, picture, { force: true });
   }
   function appendInstalledTeamCommands(currentRun, commands) {
     const record = installedTeamAttempts.get(currentRun);
     if (!record) return;
     const copied = structuredClone(commands),
       previous = record.segments.at(-1);
-    if (previous && canonicalJSON(previous.commands) === canonicalJSON(copied)) previous.ticks++;
+    if (previous?.commands && canonicalJSON(previous.commands) === canonicalJSON(copied))
+      previous.ticks++;
     else record.segments.push({ ticks: 1, commands: copied });
   }
   function installedAttemptSnapshot(currentRun, record) {
@@ -5408,9 +5606,11 @@ export function bootCoop({
     });
   }
   function persistInstalledTeamAttempt(currentRun, picture, { force = false } = {}) {
+    persistHuntAttempt(currentRun, { force });
     const record = installedTeamAttempts.get(currentRun);
     if (
       !record ||
+      !record.armed ||
       record.failure ||
       currentRun.status !== 'running' ||
       (!force && currentRun.tick - record.lastQueuedTick < 600)
@@ -5565,6 +5765,7 @@ export function bootCoop({
         accumulator += elapsed;
         while (accumulator + 1e-9 >= FIXED_DT && running()) {
           const commands = batch.consume(input.consume());
+          huntAttempts.get(run)?.recorder.append(commands);
           appendInstalledTeamCommands(run, commands);
           stepCoop(run, commands, FIXED_DT);
           music?.sound.feedback(true, { family: acceptedPicture?.request.themeId ?? 'fpv' }, run, {
@@ -5576,6 +5777,7 @@ export function bootCoop({
           events();
           if (running()) persistInstalledTeamAttempt(run, acceptedPicture);
           if (!running()) {
+            clearHuntAttempt(run);
             const finishedAttempt = run,
               epoch = generation;
             if (run.status === 'won') {
@@ -5628,6 +5830,7 @@ export function bootCoop({
     gameplayTuningPanel?.refresh();
   }
   function setupNote({ level = selectedLevel(), experiment = selectedConfiguration() } = {}) {
+    huntSaveControls?.refresh();
     difficultyControls(level);
     const guidance = () => coopArenaGuidance(level, experiment);
     localizedText($('coop-closure-help'), () =>
@@ -6270,7 +6473,11 @@ export function bootCoop({
     if (settingsDialog.open) settingsDialog.close();
     // The shared page may already have retired its painter snapshot. Stop the
     // core without repainting during terminal cleanup. BFCache uses suspend.
-    if (running()) pauseCoop(run);
+    if (running()) {
+      recordTeamInputRelease(run);
+      pauseCoop(run);
+    }
+    persistHuntAttempt(run, { force: true });
     cancelImport({ forget: true });
     cancelDeparture({ restore: false });
     retirePicture();
@@ -6296,6 +6503,7 @@ export function bootCoop({
     huntStatus.dispose();
     huntResult.dispose();
     huntRecords.dispose();
+    huntSaveControls.dispose();
     gameplayTuningPanel?.dispose();
     gameplayTuning.dispose();
     candidatePreferenceRestoration?.dispose();
