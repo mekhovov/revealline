@@ -10,9 +10,13 @@ export function captureSeedEnemies(state, releaseBoss = false) {
       // Registered roamer-capable Team editions explicitly exclude reclaimed
       // roamers as field seeds. Earlier snapshots keep their historical contract.
       !(
-        ['revealline-coop.v6', 'revealline-coop.v7', 'revealline-coop.v8'].includes(
-          state.ruleset,
-        ) && enemy.type === 'claimed-rover'
+        [
+          'revealline-coop.v6',
+          'revealline-coop.v7',
+          'revealline-coop.v8',
+          'revealline-coop.v9',
+          'revealline-coop.v10',
+        ].includes(state.ruleset) && enemy.type === 'claimed-rover'
       ) &&
       !(enemy.type === 'relay-sentinel' && (releaseBoss || state.encounter?.defeated)),
   );
@@ -106,12 +110,12 @@ export function inspectCaptureSnapshot(state, { trailCells = [], releaseBoss = f
     )
     .map((objective) => objective.id);
   let combat = {};
-  if (state.level?.classic?.combatPatrols) {
+  if (state.level?.classic?.combatPatrols || state.level?.combatPatrols) {
     const reclaimed = Uint8Array.from(cells);
     for (const index of filledCells) reclaimed[index] = CELL.SAFE;
     const after = { ...snapshot, cells: reclaimed };
     combat = {
-      affectedCombatIds: (state.classic?.combatPatrols?.actors ?? [])
+      affectedCombatIds: ((state.classic?.combatPatrols ?? state.combatPatrols)?.actors ?? [])
         .filter(
           (actor) => actor.alive && !fitsClassicDomain(after, actor, actor.radius, CELL.FIELD),
         )

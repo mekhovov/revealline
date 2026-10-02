@@ -4,6 +4,8 @@ import { ARCADE_ACTIONS_VERSION } from './arcade-actions.mjs';
 import { validateEnemyPressure } from './enemy-pressure.mjs';
 import { validateTimedBonuses } from './timed-bonuses.mjs';
 import { validateCombatPatrols } from './combat-definition.mjs';
+import { validateHuntDefinition, validateHuntReachability } from '../hunt/rules.mjs';
+import { DEFAULT_RULES } from './registry.mjs';
 
 export const CLASSIC_ENEMY_TYPES = Object.freeze([
   'bouncer',
@@ -41,6 +43,7 @@ export function resolveClassicDefinition(level, foundationGeometry = null) {
       'timedBonuses',
       'combatPatrols',
       'coverage',
+      ...(level.version === 'xonix-level.v9' ? ['hunt'] : []),
     ],
     'classic',
   );
@@ -154,6 +157,29 @@ export function resolveClassicDefinition(level, foundationGeometry = null) {
     geometry: foundationGeometry,
   });
   validateCombatPatrols(level, { identity, walls, terrain, geometry: foundationGeometry });
+  if (level.version === 'xonix-level.v9') {
+    required(Object.hasOwn(value, 'hunt'), 'Hunt successor levels require explicit hunt rules.');
+    validateHuntDefinition(value.hunt, value.combatPatrols?.actors, {
+      ordinaryCount: level.enemies?.length ?? 0,
+      enabled: value.combatPatrols?.enabled === true,
+      playerMoveSpeed: level.rules?.moveSpeed ?? DEFAULT_RULES.moveSpeed,
+    });
+    validateHuntReachability(value.hunt, value.combatPatrols.actors, {
+      width,
+      height,
+      cells: foundationGeometry.cells,
+      terrain,
+      spawns: [level.spawn],
+      gates: (foundationGeometry.gates ?? []).map((gate) => ({
+        cells: gate.cells,
+        objective: level.objectives.find(
+          (objective) =>
+            objective.id ===
+            level.relayGates.gates.find((definition) => definition.id === gate.id).objectiveId,
+        ),
+      })),
+    });
+  }
   for (const item of level.objectives ?? [])
     required(
       terrain[Math.floor(item.y) * width + Math.floor(item.x)] !== 2,
@@ -226,8 +252,13 @@ export function resolveClassicDefinition(level, foundationGeometry = null) {
   if (Object.hasOwn(value, 'coverage')) {
     has(value.coverage, ['version'], 'coverage policy');
     required(value.coverage.version === ROUTE_COVERAGE, 'unsupported coverage policy');
+    const huntWithoutNewGeometry =
+      level.version === 'xonix-level.v9' &&
+      level.relayGates.gates.length === 0 &&
+      level.directionalFields.zones.length === 0 &&
+      level.encounter === null;
     required(
-      ['xonix-level.v4', 'xonix-level.v5'].includes(level.version),
+      ['xonix-level.v4', 'xonix-level.v5'].includes(level.version) || huntWithoutNewGeometry,
       'route coverage requires a classic level without relay gates',
     );
     const budget = analyzeRouteCoverage(level, foundationGeometry?.cells);

@@ -1,5 +1,6 @@
 import { createJourneyBackend, createJourneyProfileStore } from '../journey/profile.mjs';
 import { validateJourneyPicture } from '../journey/pictures.mjs';
+import { verifiedTeamHuntRestore } from '../coop/hunt-attempts.mjs';
 
 function availableBackend(profileKey) {
   // Resolve inside the store's bounded operation: a denied global getter is
@@ -46,6 +47,41 @@ export function createTeamJourneyProgress(
       }
     },
   });
+  function bind(row, run, { skipped = null, gameplayId = null, picture = null, attemptId = null }) {
+    const runId = attemptId ?? `${sessionId}/${++sequence}`,
+      exactGameplayId = gameplayId ?? row.simulationIdentity;
+    let exactPicture = null;
+    if (picture)
+      try {
+        exactPicture = validateJourneyPicture({
+          ...picture,
+          mode: 'team',
+          missionId: row.mission.id,
+          levelId: row.level.id,
+          levelRevision: String(row.level.revision),
+          runId,
+          gameplayId: exactGameplayId,
+          difficulty: row.difficulty,
+          name: row.mission.name,
+          campaignTitle: row.mission.campaignTitle,
+        });
+      } catch {
+        // A presentation mismatch cannot invalidate an otherwise legal Team
+        // attempt or invent a weaker picture receipt. The clear remains valid.
+      }
+    attempts.set(run, {
+      row,
+      runId,
+      gameplayId: exactGameplayId,
+      picture: exactPicture,
+      completed: false,
+    });
+    store.recordMany([
+      ...(skipped ? [{ type: 'skip', mode: 'team', missionId: skipped.mission.id }] : []),
+      { type: 'select', mode: 'team', missionId: row.mission.id },
+    ]);
+    return true;
+  }
   return Object.freeze({
     editionId: profileKey,
     load: () => store.load(),
@@ -69,11 +105,19 @@ export function createTeamJourneyProgress(
     started(
       row,
       run,
-      { skipped = null, gameplayId = null, adminOverride = false, picture = null } = {},
+      {
+        skipped = null,
+        gameplayId = null,
+        adminOverride = false,
+        picture = null,
+        attemptId = null,
+      } = {},
     ) {
       if (
         disposed ||
         adminOverride ||
+        (attemptId !== null &&
+          (typeof attemptId !== 'string' || attemptId.length === 0 || attemptId.length > 160)) ||
         (gameplayId !== null &&
           (typeof gameplayId !== 'string' || !/^[0-9a-f]{16}$/.test(gameplayId))) ||
         !journey.owns(row) ||
@@ -88,39 +132,28 @@ export function createTeamJourneyProgress(
         (skipped && (!journey.owns(skipped) || journey.destination(skipped).next !== row))
       )
         return false;
-      const runId = `${sessionId}/${++sequence}`,
-        exactGameplayId = gameplayId ?? row.simulationIdentity;
-      let exactPicture = null;
-      if (picture)
-        try {
-          exactPicture = validateJourneyPicture({
-            ...picture,
-            mode: 'team',
-            missionId: row.mission.id,
-            levelId: row.level.id,
-            levelRevision: String(row.level.revision),
-            runId,
-            gameplayId: exactGameplayId,
-            difficulty: row.difficulty,
-            name: row.mission.name,
-            campaignTitle: row.mission.campaignTitle,
-          });
-        } catch {
-          // A presentation mismatch cannot invalidate an otherwise legal Team
-          // attempt or invent a weaker picture receipt. The clear remains valid.
-        }
-      attempts.set(run, {
-        row,
-        runId,
-        gameplayId: exactGameplayId,
-        picture: exactPicture,
-        completed: false,
+      return bind(row, run, { skipped, gameplayId, picture, attemptId });
+    },
+    resumed(row, run, { gameplayId = null, adminOverride = false, picture = null } = {}) {
+      if (disposed || adminOverride || !journey.owns(row) || !run || attempts.has(run))
+        return false;
+      const verified = verifiedTeamHuntRestore(run, row);
+      if (
+        !verified ||
+        verified.adminOverride ||
+        verified.encounterVariant !== 'authored' ||
+        (gameplayId !== null && gameplayId !== verified.gameplayId) ||
+        run.level.id !== row.level.id ||
+        run.level.version !== row.level.version ||
+        run.ruleset !== row.pack.ruleset ||
+        run.difficulty !== row.difficulty
+      )
+        return false;
+      return bind(row, run, {
+        gameplayId: verified.gameplayId,
+        attemptId: verified.attemptId,
+        picture,
       });
-      store.recordMany([
-        ...(skipped ? [{ type: 'skip', mode: 'team', missionId: skipped.mission.id }] : []),
-        { type: 'select', mode: 'team', missionId: row.mission.id },
-      ]);
-      return true;
     },
     complete(run) {
       const attempt = attempts.get(run);

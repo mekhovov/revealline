@@ -1,3 +1,4 @@
+import { dialogueChannel } from './dialogue-channel.mjs';
 import { campaignVictoryMotif } from '../journey/campaign-feedback.mjs';
 import { readMovementAudio } from './movement-audio.mjs';
 import { FeedbackDirector } from './feedback-director.mjs';
@@ -65,6 +66,7 @@ export class Soundscape {
     this.menuSettings = readMenuAudio();
     this.radioSettings = readRadioAudio();
     this.movementSettings = readMovementAudio();
+    this.dialogueSettings = { enabled: false, volume: 0.65 };
     this.feedbackDirector = new FeedbackDirector(this);
     this.persistentMusic = persistentMusic;
     this.context = null;
@@ -91,9 +93,10 @@ export class Soundscape {
     this.audioMaster = { muted: false, volume: 1 };
     this.releaseAudioMaster = audioMaster?.subscribe((state) => {
       this.audioMaster = state;
-      if (state.muted) {
+      if (state.muted || state.volume === 0) {
         this.stopVoices('sfx');
         this.stopVoices('menu');
+        this.stopVoices('dialogue');
       }
       this.applyVolumes();
     });
@@ -111,6 +114,92 @@ export class Soundscape {
   }
   getSettings() {
     return { ...this.settings, trackId: this.track.id };
+  }
+  configureDialogue({
+    enabled = this.dialogueSettings.enabled,
+    volume = this.dialogueSettings.volume,
+  } = {}) {
+    if (typeof enabled !== 'boolean' || !Number.isFinite(volume) || volume < 0 || volume > 1)
+      throw new TypeError('Dialogue requires an enabled boolean and volume from zero to one.');
+    this.dialogueSettings = { enabled, volume };
+    if (!enabled || volume === 0) this.stopVoices('dialogue');
+    this.applyVolumes();
+  }
+  setDestructionPreferences(read) {
+    if (typeof read !== 'function')
+      throw new TypeError('A destruction preference reader is required.');
+    this.readDestruction = read;
+  }
+  /** Ready buffers only: loading never replays an event after it has expired. */
+  playDialogue(buffer, { onended = () => {} } = {}) {
+    const c = this.context;
+    if (
+      !buffer ||
+      !this.enabled ||
+      this.paused ||
+      this.gameplayPaused ||
+      this.disposed ||
+      this.audioMaster.muted ||
+      this.audioMaster.volume === 0 ||
+      this.settings.master === 0 ||
+      !this.dialogueSettings.enabled ||
+      this.dialogueSettings.volume === 0 ||
+      !c ||
+      c.state !== 'running' ||
+      !this.dialogueBus
+    )
+      return null;
+    if (
+      [...this.voices].some(
+        (voice) => voice.feedback && voice.priority >= 5 && voice.name === 'warning',
+      )
+    )
+      return null;
+    this.stopVoices('dialogue');
+    for (const voice of [...this.voices]) if (voice.radio) voice.stop();
+    const source = c.createBufferSource(),
+      gain = c.createGain();
+    source.buffer = buffer;
+    source.connect(gain);
+    gain.connect(this.dialogueBus);
+    let ended = false;
+    const voice = {
+      bus: 'dialogue',
+      dialogue: true,
+      priority: 1,
+      source,
+      stop: () => {
+        if (ended) return;
+        ended = true;
+        try {
+          source.stop();
+        } catch {
+          /* The source can already be ended. */
+        }
+        source.disconnect();
+        gain.disconnect();
+        this.voices.delete(voice);
+        dialogueChannel.release(voice);
+        try {
+          onended();
+        } catch {
+          /* Presentation observers cannot retain a voice. */
+        }
+      },
+      get ended() {
+        return ended;
+      },
+    };
+    source.onended = voice.stop;
+    dialogueChannel.claim(voice);
+    this.voices.add(voice);
+    try {
+      source.start();
+    } catch {
+      voice.stop();
+      return null;
+    }
+    return voice;
   }
   musicState() {
     return {
@@ -234,6 +323,7 @@ export class Soundscape {
       }
     }
     this.settings = next;
+    if (next.master === 0) this.stopVoices('dialogue');
     this.applyVolumes();
     return this.getSettings();
   }
@@ -292,6 +382,8 @@ export class Soundscape {
     this.movementBus.connect(this.sfxBus);
     this.radioBus = context.createGain();
     this.radioBus.connect(this.sfxBus);
+    this.dialogueBus = context.createGain();
+    this.dialogueBus.connect(this.master);
     this.menuBus.connect(this.master);
     this.musicBus.connect(this.master);
     this.sfxBus.connect(this.master);
@@ -332,6 +424,11 @@ export class Soundscape {
   applyVolumes() {
     if (!this.context) return;
     const time = this.context.currentTime;
+    this.dialogueBus?.gain.setTargetAtTime(
+      this.dialogueSettings.enabled ? this.dialogueSettings.volume : 0,
+      time,
+      0.015,
+    );
     this.movementBus?.gain.setTargetAtTime(
       this.movementSettings.enabled ? this.movementSettings.volume : 0,
       time,
@@ -419,6 +516,7 @@ export class Soundscape {
     return false;
   }
   pause() {
+    this.stopVoices('dialogue');
     if (this.persistentMusic) {
       this.gameplayPaused = true;
       this.cancelPreview();
@@ -462,6 +560,7 @@ export class Soundscape {
     }
   }
   reset() {
+    this.stopVoices('dialogue');
     this.feedbackDirector.reset();
     this.cancelPreview();
     this.stopVoices(this.persistentMusic ? 'sfx' : null);
@@ -492,6 +591,7 @@ export class Soundscape {
       this.sfxBus,
       this.menuBus,
       this.radioBus,
+      this.dialogueBus,
       this.movementBus,
       this.master,
       this.compressor,

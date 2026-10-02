@@ -1,0 +1,251 @@
+{
+  "format": "NeonPreservingPictureCapacity.v1",
+  "head": "bd2f59b1c650837f937c996d9822af3eb3ee33cf",
+  "workingTreeEvidence": true,
+  "sourceFiles": {
+    "scripts/generate-current-pictures.mjs": {
+      "sha256": "7eb42982cd1079f7bdbd1180aaf2e978586c300ce11489803c4f5b4aa474c9a5",
+      "bytes": 3422
+    },
+    "game/presentation/current-pictures.mjs": {
+      "sha256": "b771b4a14d79991ccb7efb0766e8b6a6d01f052638622eab8b7b9f44dfc19cf3",
+      "bytes": 25369
+    },
+    "game/presentation/current-art-sources.mjs": {
+      "sha256": "1c29050c1f151d4975e5c5b6682c68bb08eb9e01971fc5379a02a20eaa4b5ec0",
+      "bytes": 1817485
+    },
+    "game/presentation/current-picture-baselines.mjs": {
+      "sha256": "f36a077e33397110bcc34e98cd8ac526b836a46e71e999cff9cb7ef6241fe91d",
+      "bytes": 12897
+    },
+    "game/test/presentation-system.test.mjs": {
+      "sha256": "ffd61fdd2f834f05fe88f9598c5ab910b35e483e5c13a0cd0a2fe61b471a5172",
+      "bytes": 20037
+    },
+    "game/test/current-art.test.mjs": {
+      "sha256": "cfa71986e8280d1952891940beb3e59a975a6b9cfe3cc8b491943ccd45f8965c",
+      "bytes": 10022
+    }
+  },
+  "checks": {
+    "209 public objects exactly match complete authored inventory": true,
+    "All original155 owners labels dimensions strings and properties unchanged": true,
+    "Exactly54 additions preserve all Neon reference and mosaic owners": true,
+    "Public array remains shallow frozen and every dimensions array independent": true,
+    "Exact compact regeneration 1": true,
+    "Exact compact regeneration 2": true,
+    "Compact representation stable under repository formatter": true,
+    "All original155 locators sources images fit paths and metadata unchanged": true,
+    "209 art locators match fresh authored inventory": true,
+    "56FPV baselines and source fingerprint projection unchanged": true,
+    "Art locator snapshot not included in company runtime": true,
+    "No qualification source drift: scripts/generate-current-pictures.mjs": true,
+    "No qualification source drift: game/presentation/current-pictures.mjs": true,
+    "No qualification source drift: game/presentation/current-art-sources.mjs": true,
+    "No qualification source drift: game/presentation/current-picture-baselines.mjs": true,
+    "No qualification source drift: game/test/presentation-system.test.mjs": true,
+    "No qualification source drift: game/test/current-art.test.mjs": true
+  },
+  "owners": 209,
+  "previousOwners": 155,
+  "newNeonOwners": 54,
+  "fpvOwners": 56,
+  "currentArtBytes": 1817485,
+  "compactBytes": 25369,
+  "previous209TupleBytes": 36487,
+  "extraSavingsFromDictionaries": 11118,
+  "old209TupleCompile": {
+    "id": "droneaid-nl-community",
+    "files": 824,
+    "bytes": 67114561,
+    "overage": 5697
+  },
+  "editions": [
+    {
+      "id": "coupa-adventure",
+      "passed": true,
+      "files": 753,
+      "bytes": 28337219,
+      "headroom": 38771645
+    },
+    {
+      "id": "coupa-all",
+      "passed": true,
+      "files": 788,
+      "bytes": 62571519,
+      "headroom": 4537345
+    },
+    {
+      "id": "coupa-culture",
+      "passed": true,
+      "files": 752,
+      "bytes": 26718093,
+      "headroom": 40390771
+    },
+    {
+      "id": "coupa-developers",
+      "passed": true,
+      "files": 753,
+      "bytes": 30117403,
+      "headroom": 36991461
+    },
+    {
+      "id": "coupa-foundations",
+      "passed": true,
+      "files": 755,
+      "bytes": 29202865,
+      "headroom": 37905999
+    },
+    {
+      "id": "coupa-operations",
+      "passed": true,
+      "files": 753,
+      "bytes": 28292072,
+      "headroom": 38816792
+    },
+    {
+      "id": "droneaid-community",
+      "passed": true,
+      "files": 746,
+      "bytes": 27493587,
+      "headroom": 39615277
+    },
+    {
+      "id": "droneaid-nl-careful-handoff",
+      "passed": true,
+      "files": 756,
+      "bytes": 29717294,
+      "headroom": 37391570
+    },
+    {
+      "id": "droneaid-nl-community",
+      "passed": true,
+      "files": 824,
+      "bytes": 67103443,
+      "headroom": 5421
+    },
+    {
+      "id": "droneaid-nl-makers-together",
+      "passed": true,
+      "files": 756,
+      "bytes": 29592726,
+      "headroom": 37516138
+    },
+    {
+      "id": "droneaid-nl-parts-in-motion",
+      "passed": true,
+      "files": 758,
+      "bytes": 30110888,
+      "headroom": 36997976
+    },
+    {
+      "id": "droneaid-nl-shared-horizon",
+      "passed": true,
+      "files": 756,
+      "bytes": 29903712,
+      "headroom": 37205152
+    },
+    {
+      "id": "droneaid-nl-signals-of-support",
+      "passed": true,
+      "files": 756,
+      "bytes": 29704107,
+      "headroom": 37404757
+    },
+    {
+      "id": "droneaid-nl-workshop-lights",
+      "passed": true,
+      "files": 756,
+      "bytes": 28402192,
+      "headroom": 38706672
+    },
+    {
+      "id": "fpv-learning",
+      "passed": true,
+      "files": 838,
+      "bytes": 36217476,
+      "headroom": 30891388
+    },
+    {
+      "id": "social-drone-ua",
+      "passed": true,
+      "files": 770,
+      "bytes": 28422786,
+      "headroom": 38686078
+    },
+    {
+      "id": "ukraine-culture",
+      "passed": true,
+      "files": 813,
+      "bytes": 45104757,
+      "headroom": 22004107
+    },
+    {
+      "id": "victory-drones",
+      "passed": true,
+      "files": 762,
+      "bytes": 24697869,
+      "headroom": 42410995
+    }
+  ],
+  "passed": true,
+  "limits": {
+    "files": 2000,
+    "bytes": 67108864
+  },
+  "scope": "Actual working-tree sources, all18 ordinary in-memory production edition compiles. No new unit coverage. No content, assets, rules, guards, versions, publication policy or original owner identities altered. Frozen committed-input candidate admission is a separate root-owned step.",
+  "finalSourceFiles": {
+    "scripts/generate-current-pictures.mjs": {
+      "sha256": "7eb42982cd1079f7bdbd1180aaf2e978586c300ce11489803c4f5b4aa474c9a5",
+      "bytes": 3422
+    },
+    "game/presentation/current-pictures.mjs": {
+      "sha256": "b771b4a14d79991ccb7efb0766e8b6a6d01f052638622eab8b7b9f44dfc19cf3",
+      "bytes": 25369
+    },
+    "game/presentation/current-art-sources.mjs": {
+      "sha256": "07f7681c50919d0c9f214cc0864eb50923675dc91591d9e2b8623514fdf20e3c",
+      "bytes": 1705741
+    },
+    "game/presentation/current-picture-baselines.mjs": {
+      "sha256": "f36a077e33397110bcc34e98cd8ac526b836a46e71e999cff9cb7ef6241fe91d",
+      "bytes": 12897
+    },
+    "game/test/presentation-system.test.mjs": {
+      "sha256": "ffd61fdd2f834f05fe88f9598c5ab910b35e483e5c13a0cd0a2fe61b471a5172",
+      "bytes": 20037
+    },
+    "game/test/current-art.test.mjs": {
+      "sha256": "cfa71986e8280d1952891940beb3e59a975a6b9cfe3cc8b491943ccd45f8965c",
+      "bytes": 10022
+    }
+  },
+  "postQualificationFormatting": {
+    "path": "game/presentation/current-art-sources.mjs",
+    "beforeSha256": "1c29050c1f151d4975e5c5b6682c68bb08eb9e01971fc5379a02a20eaa4b5ec0",
+    "afterSha256": "07f7681c50919d0c9f214cc0864eb50923675dc91591d9e2b8623514fdf20e3c",
+    "beforeBytes": 1817485,
+    "afterBytes": 1705741,
+    "all209ObjectsOrderedAndEqual": true,
+    "excludedFromCompanyEngine": true,
+    "editionInputsChanged": false,
+    "prettierStable": true
+  },
+  "existingChecks": {
+    "matched": 2,
+    "passed": 2,
+    "failed": 0,
+    "skipped": 29,
+    "command": "node --test --test-name-pattern='every current base|trusted locator mapping' game/test/presentation-system.test.mjs game/test/current-art.test.mjs",
+    "additionalCoverage": false
+  },
+  "finalChecks": {
+    "node scripts/generate-current-pictures.mjs --check": "209 owners verified",
+    "node scripts/generate-picture-baselines.mjs --check": "56 exact fingerprints verified",
+    "syntax": "passed",
+    "eslintFiveOwnedFiles": "passed",
+    "prettierFiveOwnedFiles": "passed",
+    "git diff --check": "passed"
+  }
+}

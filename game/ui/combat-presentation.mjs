@@ -1,3 +1,5 @@
+import { HUNT_PRESENTATION_CATALOG } from '../hunt/presentation-catalog.mjs';
+import { drawHumanoidPixelBody, drawHuntRemains } from '../hunt/destruction.mjs';
 import { t } from '../i18n/index.mjs';
 import {
   actorDiameter,
@@ -62,19 +64,20 @@ export function createCombatPresentation({
 } = {}) {
   let paletteKey = '',
     sprites = new Map();
-  function sprite(role, pose, palette) {
+  function sprite(role, pose, palette, kind) {
     const key = JSON.stringify(colors(palette));
     if (paletteKey !== key) {
       paletteKey = key;
       sprites = new Map();
     }
-    const id = `${role}:${pose}`;
+    const id = `${kind ?? role}:${pose}`;
     if (!sprites.has(id)) {
       const canvas = createCanvas();
       canvas.width = canvas.height = 16;
       const ctx = canvas.getContext('2d');
       if (!ctx) throw new Error(t('interface:combatPixelPresentationRequiresA2dCanvas'));
-      drawCombatPixelBody(ctx, { role, pose }, palette);
+      if (kind) drawHumanoidPixelBody(ctx, { kind, pose }, palette);
+      else drawCombatPixelBody(ctx, { role, pose }, palette);
       sprites.set(id, canvas);
     }
     return sprites.get(id);
@@ -101,7 +104,19 @@ export function createCombatPresentation({
         const pose = moving ? 1 + (Math.floor(view.actorTick / 24) % 2) : 0;
         const x = actor.x * CELL,
           y = actor.y * CELL;
-        ctx.drawImage(sprite(actor.role, pose, palette), x - size / 2, y - size / 2, size, size);
+        ctx.drawImage(
+          sprite(actor.role, pose, palette, actor.kind),
+          x - size / 2,
+          y - size / 2,
+          size,
+          size,
+        );
+      }
+      // Draw every functional footprint after every enlarged body. Dense groups
+      // must not let a later sprite paint over an earlier target's exact center.
+      for (const actor of view.actors) {
+        const x = actor.x * CELL,
+          y = actor.y * CELL;
         // This exact collision footprint is separate from enlarged body artwork.
         ctx.setLineDash([]);
         for (const [ink, width] of [
@@ -236,16 +251,27 @@ export function drawCombatScrap(ctx, view, palette, options = {}) {
     c = colors(palette);
   ctx.save();
   ctx.globalAlpha = 1;
-  for (const mark of view.eliminations) {
+  const firstSettled = Math.max(
+    0,
+    view.eliminations.length - HUNT_PRESENTATION_CATALOG.budgets.settledClustersPerBoard,
+  );
+  for (const [index, mark] of view.eliminations.entries()) {
     const x = mark.x * CELL,
       y = mark.y * CELL;
-    if (options.showScrap !== false) {
+    if (index >= firstSettled && options.showScrap !== false && (mark.kind || options.brutal)) {
+      drawHuntRemains(ctx, mark, {
+        unit: u,
+        brutal: options.brutal,
+        blood: options.blood,
+        color: c.body,
+      });
+    } else if (index >= firstSettled && options.showScrap !== false) {
       pixel(ctx, c.plate, x - 4 * u, y - 2 * u, 8 * u, 4 * u);
       pixel(ctx, c.ink, x - 3 * u, y - u, 3 * u, u);
       pixel(ctx, c.body, x + u, y, 2 * u, u);
     }
     const age = view.tick - mark.tick;
-    if (!options.reduced && live(view) && age >= 0 && age < 30) {
+    if (!options.brutal && !options.reduced && live(view) && age >= 0 && age < 30) {
       const offset = (3 + Math.floor(age / 10)) * u;
       const points =
         mark.cause === 'ram'
