@@ -39,7 +39,9 @@ for (const kit of ['retro-urban', 'city-industrial']) {
 await output.transform(dedup(), unpartition());
 const binary = await io.writeBinary(output);
 const template = await readFile(path.join(directory, 'scenery-runtime.template.mjs'), 'utf8');
-const source = template.replace('__LIBRARY_BASE64__', Buffer.from(binary).toString('base64'));
+const source = template
+  .replace('__LIBRARY_BASE64__', Buffer.from(binary).toString('base64'))
+  .replace('const LIBRARY = ', 'const LIBRARY =\n  ');
 const runtime = path.resolve(directory, '../../optional-practice/civilian-fpv/world-assets.mjs');
 if (Buffer.byteLength(source) > 2 * 1024 * 1024) throw new Error('Scenery runtime exceeds 2 MiB');
 await writeFile(runtime, source);
@@ -54,7 +56,7 @@ await writeFile(
       tool: '@gltf-transform/core/functions/extensions 4.5.1',
       sources: sourceFiles,
       modifications:
-        'Embedded original textures, deduplicated shared geometry/materials/textures, centered source models at ground level. Runtime instances form original scenery layouts outside flight bounds. No source geometry changes.',
+        'Embedded original textures, deduplicated shared geometry/materials/textures, centered source models at ground level. Runtime instances form original environment-specific scenery layouts outside flight bounds. Repeated opaque/masked static models use per-side EXT_mesh_gpu_instancing batches; alpha-blended models retain individual sorting. No source geometry changes or new decoder.',
       runtime: path.relative(path.resolve(directory, '../..'), runtime),
       bytes: Buffer.byteLength(source),
       sha256: createHash('sha256').update(source).digest('hex'),
