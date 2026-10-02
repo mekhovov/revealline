@@ -68,8 +68,9 @@ function boundary({
       context,
     );
   }
-  function mount() {
+  async function mount() {
     document.emit('DOMContentLoaded');
+    await Promise.resolve();
   }
   function frame() {
     const callbacks = [...frames.values()];
@@ -106,10 +107,10 @@ function boundary({
   };
 }
 
-test('startup dialog owns keyboard/pad input without declaring boot ready', () => {
+test('startup dialog owns keyboard/pad input without declaring boot ready', async () => {
   const b = boundary({ importModuleDynamically: () => new Promise(() => {}) });
   b.run();
-  b.mount();
+  await b.mount();
   const boot = b.context.RevealLineBoot;
   b.control();
   const release = boot.suspendInput();
@@ -140,10 +141,10 @@ test('startup dialog owns keyboard/pad input without declaring boot ready', () =
     'neutral then fresh input returns to boot owner',
   );
 });
-test('nested input ownership and boot failure retain fail-closed cleanup', () => {
+test('nested input ownership and boot failure retain fail-closed cleanup', async () => {
   const b = boundary({ importModuleDynamically: () => new Promise(() => {}) });
   b.run();
-  b.mount();
+  await b.mount();
   b.control();
   const a = b.context.RevealLineBoot.suspendInput(),
     z = b.context.RevealLineBoot.suspendInput();

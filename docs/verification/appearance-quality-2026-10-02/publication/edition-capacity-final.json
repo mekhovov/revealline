@@ -1,0 +1,75 @@
+{
+  "editionId": "droneaid-nl-community",
+  "sourceRevision": "ee855c377f393492f5c601fe0524b39ab0741628",
+  "trackedChanges": "",
+  "output": {
+    "files": 830,
+    "bytes": 66673106
+  },
+  "budget": {
+    "files": 2000,
+    "bytes": 67108864
+  },
+  "remainingBytes": 435758,
+  "reproducibleBuilds": 1,
+  "admission": {
+    "format": "revealline-editions-admission.v1",
+    "version": "v0.142.4",
+    "sourceRevision": "ee855c377f393492f5c601fe0524b39ab0741628",
+    "sourceTree": "af589176779c159892aec607194a0fc5f03e6d0d",
+    "editions": [
+      {
+        "id": "droneaid-nl-community",
+        "files": 830,
+        "totalBytes": 66673106,
+        "distributionSha256": "ddbe8712ca47e5f045056941818998000acce5f00c1b80680622b708bcd650ed",
+        "sourceArchiveSha256": "1e127a8365037cd2de9945529aa9aeaedff7bc6aad6d3bcba22f83b5209c41a3"
+      }
+    ],
+    "status": "verified-candidate-members",
+    "zipMembersVerified": true,
+    "publicEligible": false
+  },
+  "presentationParity": {
+    "editionId": "droneaid-nl-community",
+    "authoredPresentationSha256": "d141c4a6b967be2089c08efb94c01e4560b51224a64d4ff076c039e2b8621a22",
+    "retained": [
+      {
+        "authoredPresentationSha256": "13bf4f80b1b055d9fb5abdc137dfc93b94fe4ba55072104e697fb29615374679"
+      },
+      {
+        "authoredPresentationSha256": "3445135910a80ceb5b5fdb862c431ead7db00a09631ede2ec28426119d907f67"
+      },
+      {
+        "authoredPresentationSha256": "389459b2b3b2a5b330a053b9eaf11918878a8f19688e035cd19b641744f98c85"
+      },
+      {
+        "authoredPresentationSha256": "8b53a415ac9b76ebd25aca2ac7b67464f026e43e39185970c59501e6f918e3cb"
+      }
+    ]
+  },
+  "selectedMediaOriginals": 77,
+  "projections": 595,
+  "candidateFiles": [
+    {
+      "path": "manifest-droneaid-nl-community.json",
+      "bytes": 114163,
+      "sha256": "e1dda885479d48ed67c9f787ca98810f0affb0c63a0c176792289c2099dd7c02"
+    },
+    {
+      "path": "distribution-droneaid-nl-community.zip",
+      "bytes": 66909797,
+      "sha256": "ddbe8712ca47e5f045056941818998000acce5f00c1b80680622b708bcd650ed"
+    },
+    {
+      "path": "source-inventory-droneaid-nl-community.json",
+      "bytes": 332301,
+      "sha256": "01a7eae2bb4f3e792c7fb4ef61abf6fb47b3ba81e3394d9420cf8973a26b99e3"
+    },
+    {
+      "path": "source-droneaid-nl-community.zip",
+      "bytes": 91895400,
+      "sha256": "1e127a8365037cd2de9945529aa9aeaedff7bc6aad6d3bcba22f83b5209c41a3"
+    }
+  ]
+}

@@ -122,6 +122,17 @@ export class Element extends Events {
       setProperty(name, value) {
         this[name] = String(value);
       },
+      getPropertyValue(name) {
+        return this[name] ?? '';
+      },
+      getPropertyPriority() {
+        return '';
+      },
+      removeProperty(name) {
+        const prior = this[name] ?? '';
+        delete this[name];
+        return prior;
+      },
     };
     this.hidden = false;
     this.disabled = false;

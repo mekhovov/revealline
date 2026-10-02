@@ -1,156 +1,159 @@
-:root {
-  color-scheme: dark;
-  font-family: system-ui, sans-serif;
-  background: #0b111a;
-  color: #edf5f7;
-  line-height: 1.6;
-}
-* {
-  box-sizing: border-box;
-}
-body {
-  margin: 0;
-}
-.directory-header,
-main,
-footer {
-  width: min(1100px, 90vw);
-  margin-inline: auto;
-}
-.directory-header {
-  min-height: 110px;
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
-  padding-block: 1.5rem;
-  border-bottom: 1px solid #293642;
-}
-.directory-brand {
-  font-size: 1.1rem;
-  font-weight: 850;
-  letter-spacing: 0.12em;
-  white-space: nowrap;
-}
-.directory-brand span {
-  color: #63d9ee;
-}
-main {
-  padding-block: clamp(2.5rem, 6vw, 5rem) 3rem;
-}
-.eyebrow {
-  color: #7dcfe0;
-  font-size: 0.75rem;
-  font-weight: 750;
-  letter-spacing: 0.18em;
-}
-h1 {
-  font-size: clamp(2.4rem, 6vw, 4.7rem);
-  letter-spacing: -0.055em;
-  line-height: 1.06;
-  margin: 1rem 0 1.4rem;
-}
-.intro {
-  max-width: 42rem;
-  color: #bdcbd7;
-  font-size: 1.15rem;
-  margin-bottom: 2.8rem;
-}
-.communities {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 1.5rem;
-}
-.community-card {
-  --accent: #f46531;
-  display: flex;
-  flex-direction: column;
-  padding: clamp(1.25rem, 3vw, 2.5rem);
-  background: #141d27;
-  border: 1px solid #30414f;
-  border-top: 3px solid var(--accent);
-}
-.community-card--coupa {
-  --accent: #79cfff;
-}
-.card-identity {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  color: #bac9d5;
-}
-.card-number {
-  color: var(--accent);
-  font:
-    0.9rem ui-monospace,
-    monospace;
-}
-.card-category {
-  font-size: 0.65rem;
-  font-weight: 750;
-  letter-spacing: 0.1em;
-}
-.community-card h2 {
-  font-size: clamp(2rem, 4vw, 3rem);
-  line-height: 1.1;
-  letter-spacing: -0.04em;
-  margin: 2rem 0 0.8rem;
-}
-.community-card p {
-  color: #bdcbd7;
-  margin: 0 0 2.2rem;
-}
-.community-entry {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
-  margin-top: auto;
-  min-height: 52px;
-  padding: 0.8rem 1.1rem;
-  background: var(--accent);
-  color: #09131c;
-  font-weight: 750;
-  text-decoration: none;
-}
-.community-entry:hover {
-  filter: brightness(1.12);
-}
-a:focus-visible {
-  outline: 3px solid #fff;
-  outline-offset: 5px;
-}
-.directory-note {
-  margin-top: 2.5rem;
-  padding-left: 1.3rem;
-  border-left: 2px solid #405361;
-}
-.directory-note h2 {
-  font-size: 1rem;
-  margin: 0 0 0.3rem;
-}
-.directory-note p {
-  max-width: 45rem;
-  color: #a8bac8;
-  margin: 0;
-}
-footer {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  gap: 1rem;
-  border-top: 1px solid #293642;
-  padding-block: 1.6rem;
-  font-size: 0.8rem;
-  color: #a8bac8;
-}
-footer a {
-  color: #b6dce9;
-  text-underline-offset: 0.25em;
-}
-@media (max-width: 650px) {
+/* Legacy layout and paint share one cascade layer. Theme recipes own opt-in appearance. */
+@layer legacy {
+  :root {
+    color-scheme: dark;
+    font-family: system-ui, sans-serif;
+    background: #0b111a;
+    color: #edf5f7;
+    line-height: 1.6;
+  }
+  * {
+    box-sizing: border-box;
+  }
+  body {
+    margin: 0;
+  }
+  .directory-header,
+  main,
+  footer {
+    width: min(1100px, 90vw);
+    margin-inline: auto;
+  }
+  .directory-header {
+    min-height: 110px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding-block: 1.5rem;
+    border-bottom: 1px solid #293642;
+  }
+  .directory-brand {
+    font-size: 1.1rem;
+    font-weight: 850;
+    letter-spacing: 0.12em;
+    white-space: nowrap;
+  }
+  .directory-brand span {
+    color: #63d9ee;
+  }
+  main {
+    padding-block: clamp(2.5rem, 6vw, 5rem) 3rem;
+  }
+  .eyebrow {
+    color: #7dcfe0;
+    font-size: 0.75rem;
+    font-weight: 750;
+    letter-spacing: 0.18em;
+  }
+  h1 {
+    font-size: clamp(2.4rem, 6vw, 4.7rem);
+    letter-spacing: -0.055em;
+    line-height: 1.06;
+    margin: 1rem 0 1.4rem;
+  }
+  .intro {
+    max-width: 42rem;
+    color: #bdcbd7;
+    font-size: 1.15rem;
+    margin-bottom: 2.8rem;
+  }
   .communities {
-    grid-template-columns: 1fr;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.5rem;
+  }
+  .community-card {
+    --accent: #f46531;
+    display: flex;
+    flex-direction: column;
+    padding: clamp(1.25rem, 3vw, 2.5rem);
+    background: #141d27;
+    border: 1px solid #30414f;
+    border-top: 3px solid var(--accent);
+  }
+  .community-card--coupa {
+    --accent: #79cfff;
+  }
+  .card-identity {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    color: #bac9d5;
+  }
+  .card-number {
+    color: var(--accent);
+    font:
+      0.9rem ui-monospace,
+      monospace;
+  }
+  .card-category {
+    font-size: 0.65rem;
+    font-weight: 750;
+    letter-spacing: 0.1em;
+  }
+  .community-card h2 {
+    font-size: clamp(2rem, 4vw, 3rem);
+    line-height: 1.1;
+    letter-spacing: -0.04em;
+    margin: 2rem 0 0.8rem;
+  }
+  .community-card p {
+    color: #bdcbd7;
+    margin: 0 0 2.2rem;
+  }
+  .community-entry {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-top: auto;
+    min-height: 52px;
+    padding: 0.8rem 1.1rem;
+    background: var(--accent);
+    color: #09131c;
+    font-weight: 750;
+    text-decoration: none;
+  }
+  .community-entry:hover {
+    filter: brightness(1.12);
+  }
+  a:focus-visible {
+    outline: 3px solid #fff;
+    outline-offset: 5px;
+  }
+  .directory-note {
+    margin-top: 2.5rem;
+    padding-left: 1.3rem;
+    border-left: 2px solid #405361;
+  }
+  .directory-note h2 {
+    font-size: 1rem;
+    margin: 0 0 0.3rem;
+  }
+  .directory-note p {
+    max-width: 45rem;
+    color: #a8bac8;
+    margin: 0;
+  }
+  footer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 1rem;
+    border-top: 1px solid #293642;
+    padding-block: 1.6rem;
+    font-size: 0.8rem;
+    color: #a8bac8;
+  }
+  footer a {
+    color: #b6dce9;
+    text-underline-offset: 0.25em;
+  }
+  @media (max-width: 650px) {
+    .communities {
+      grid-template-columns: 1fr;
+    }
   }
 }

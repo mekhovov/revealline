@@ -215,6 +215,82 @@ test('final offline edition budget counts every generated worker and manifest', 
   );
 });
 
+test('compacted engine bytes keep candidate provenance, offline hashes and authored content exact', async () => {
+  const f = fixture();
+  const enginePath = 'game/engine-fixture.mjs';
+  const original = Buffer.from('export function value() {\n    return `  exact literal`;\n}\n');
+  const entry = Buffer.from(
+    '<html><head><script type="module" src="./engine-fixture.mjs"></script></head><body></body></html>',
+  );
+  f.files.set(enginePath, original);
+  f.files.set('game/company.html', entry);
+  const options = {
+    ...f,
+    editionIds: ['coupa-public'],
+    enginePaths: ['game/company.html', enginePath],
+    version: '1.0.0',
+    sourceRevision: 'a'.repeat(40),
+    offline: { basePath: '/verification/' },
+  };
+  const compiled = await compileEdition(options);
+  assert.deepEqual((await compileEdition(options)).files, compiled.files);
+  const projected = compiled.files.get(enginePath);
+  assert.ok(projected.length < original.length);
+  assert.deepEqual(f.files.get(enginePath), original);
+  assert.equal(
+    (await import(`data:text/javascript;base64,${projected.toString('base64')}`)).value(),
+    '  exact literal',
+  );
+  const pin = { path: enginePath, bytes: projected.length, sha256: digest(projected) };
+  const offline = JSON.parse(compiled.files.get('offline-cache.json'));
+  assert.deepEqual(
+    offline.files.find((row) => row.path === enginePath),
+    pin,
+  );
+  const selected = await collectEditionSelectedFiles({
+    catalog: f.catalog,
+    editionIds: options.editionIds,
+    read: async (name) => f.files.get(name),
+  });
+  const sourceFiles = new Map([...selected, [enginePath, original], ['game/company.html', entry]]);
+  const candidate = createEditionCandidate({
+    compiled,
+    sourceFiles,
+    version: 'v1.0.0',
+    sourceRevision: options.sourceRevision,
+    sourceTree: 'b'.repeat(40),
+  });
+  const inventory = JSON.parse(candidate.files.get(candidate.edition.sourceInventory.path));
+  assert.deepEqual(
+    inventory.projections.find((row) => row.original.path === enginePath),
+    {
+      kind: 'selected-runtime-imports',
+      original: { path: enginePath, bytes: original.length, sha256: digest(original) },
+      output: pin,
+    },
+  );
+  for (const archive of [
+    candidate.edition.distribution.path,
+    candidate.edition.sourceArchive.path,
+  ]) {
+    const members = readEditionZip(candidate.files.get(archive));
+    assert.deepEqual(members.get(enginePath), projected);
+    for (const name of ['game/content/coupa.json', 'game/editions/assets/coupa.png'])
+      assert.deepEqual(members.get(name), f.files.get(name), name);
+  }
+  const admission = await validateEditionAdmission(
+    {
+      format: 'revealline-editions.v1',
+      version: 'v1.0.0',
+      sourceRevision: options.sourceRevision,
+      sourceTree: 'b'.repeat(40),
+      editions: [candidate.edition],
+    },
+    { read: async (row) => candidate.files.get(row.path) },
+  );
+  assert.equal(admission.zipMembersVerified, true);
+});
+
 async function retainedFixture() {
   const f = fixture(),
     catalog = structuredClone(f.catalog);
@@ -1078,7 +1154,11 @@ test('actual canonical and tool HTML brand first paint without replacing loader 
     'interface:playOnline',
   ])
     assert.ok(boot.includes(`data-i18n="${key}"`));
-  assert.ok(main.includes('html[data-edition-id] #boot-screen{background:var(--ink)'));
+  assert.ok(
+    main.includes(
+      'html[data-edition-id]:not([data-theme-styled="true"]) #boot-screen{background:var(--ink)',
+    ),
+  );
   for (const entry of entries.slice(2)) {
     const html = result.files.get(entry).toString();
     assert.match(

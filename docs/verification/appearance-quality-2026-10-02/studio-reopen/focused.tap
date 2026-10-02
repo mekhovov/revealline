@@ -1,0 +1,185 @@
+TAP version 13
+# Subtest: whole-game preview verifies the report, every artifact byte and exact selected draft
+ok 1 - whole-game preview verifies the report, every artifact byte and exact selected draft
+  ---
+  duration_ms: 545.015334
+  ...
+# Subtest: a self-consistent compiler report cannot omit or add curated theme definitions behind matching pins
+ok 2 - a self-consistent compiler report cannot omit or add curated theme definitions behind matching pins
+  ---
+  duration_ms: 1802.31575
+  ...
+# Subtest: changed executable bytes, report totals/exclusions and invented approval cannot pass preview verification
+ok 3 - changed executable bytes, report totals/exclusions and invented approval cannot pass preview verification
+  ---
+  duration_ms: 334.974792
+  ...
+# Subtest: preview verification stops before activation on cancellation and oversized streamed bytes
+ok 4 - preview verification stops before activation on cancellation and oversized streamed bytes
+  ---
+  duration_ms: 141.558209
+  ...
+# Subtest: overlong artifact and pending-read abort reject despite nonsettling transport cancellation
+ok 5 - overlong artifact and pending-read abort reject despite nonsettling transport cancellation
+  ---
+  duration_ms: 108.274
+  ...
+# Subtest: focused Coupa and Netherlands previews accept canonical theme projection but reject selected edits
+ok 6 - focused Coupa and Netherlands previews accept canonical theme projection but reject selected edits
+  ---
+  duration_ms: 53253.791833
+  ...
+# Subtest: new-company starter loads the current Solo host and First Flight with complete neutral classes
+ok 7 - new-company starter loads the current Solo host and First Flight with complete neutral classes
+  ---
+  duration_ms: 131.920792
+  ...
+# Subtest: Studio CLI creates missing workspace parents while preserving new-only destinations
+ok 8 - Studio CLI creates missing workspace parents while preserving new-only destinations
+  ---
+  duration_ms: 1298.913833
+  ...
+# Subtest: Studio import/export preserves original retained JSON text and rejects modified, parsed or missing snapshots
+ok 9 - Studio import/export preserves original retained JSON text and rejects modified, parsed or missing snapshots
+  ---
+  duration_ms: 410.003708
+  ...
+# Subtest: Studio preview verifies historical-only media and immutable snapshots in its inventory and totals
+ok 10 - Studio preview verifies historical-only media and immutable snapshots in its inventory and totals
+  ---
+  duration_ms: 593.922583
+  ...
+# Subtest: saved workspace, duplicate, native and runtime exports retain dnipro-porcelain@r1
+ok 11 - saved workspace, duplicate, native and runtime exports retain dnipro-porcelain@r1
+  ---
+  duration_ms: 5336.630333
+  ...
+# Subtest: saved workspace, duplicate, native and runtime exports retain industrial-workshop@r1
+ok 12 - saved workspace, duplicate, native and runtime exports retain industrial-workshop@r1
+  ---
+  duration_ms: 5811.541584
+  ...
+# Subtest: missing exact basis stays portable and editable without silently becoming latest Industrial
+ok 13 - missing exact basis stays portable and editable without silently becoming latest Industrial
+  ---
+  duration_ms: 1589.077458
+  ...
+# Subtest: v1 native data remains exact and malformed or unversioned basis metadata is rejected
+ok 14 - v1 native data remains exact and malformed or unversioned basis metadata is rejected
+  ---
+  duration_ms: 861.1585
+  ...
+# Subtest: workbench reload shows the saved exact basis, stages changes and visibly blocks unavailable exports
+ok 15 - workbench reload shows the saved exact basis, stages changes and visibly blocks unavailable exports
+  ---
+  duration_ms: 1001.470834
+  ...
+# Subtest: compact runtime preserves selected revisions/provenance while pruning authoring and unbound files
+ok 16 - compact runtime preserves selected revisions/provenance while pruning authoring and unbound files
+  ---
+  duration_ms: 3940.278708
+  ...
+# Subtest: RLRUN1 files remain readable without inventing missing cross-domain descriptors
+ok 17 - RLRUN1 files remain readable without inventing missing cross-domain descriptors
+  ---
+  duration_ms: 972.912583
+  ...
+# Subtest: v2 verifies the envelope checksum and binds candidate identity/tokens/SIM to the selected snapshot
+ok 18 - v2 verifies the envelope checksum and binds candidate identity/tokens/SIM to the selected snapshot
+  ---
+  duration_ms: 1483.019875
+  ...
+# Subtest: runtime reader rejects tampered, truncated and trailing bytes before exposing a snapshot
+ok 19 - runtime reader rejects tampered, truncated and trailing bytes before exposing a snapshot
+  ---
+  duration_ms: 1866.415625
+  ...
+# Subtest: runtime snapshots retain collection identity and the resolved binding priority
+ok 20 - runtime snapshots retain collection identity and the resolved binding priority
+  ---
+  duration_ms: 2483.22675
+  ...
+# Subtest: duplicate flattens selected appearance without carrying theme history
+ok 21 - duplicate flattens selected appearance without carrying theme history
+  ---
+  duration_ms: 1517.156833
+  ...
+# Subtest: workspace migration is atomic, idempotent and leaves the legacy recovery copy
+ok 22 - workspace migration is atomic, idempotent and leaves the legacy recovery copy
+  ---
+  duration_ms: 3625.732375
+  ...
+# Subtest: independent workspaces reject identity collisions and stale saves without growing each other
+ok 23 - independent workspaces reject identity collisions and stale saves without growing each other
+  ---
+  duration_ms: 3098.312833
+  ...
+# Subtest: failed independent workspace creation publishes neither entry nor bytes
+ok 24 - failed independent workspace creation publishes neither entry nor bytes
+  ---
+  duration_ms: 509.240333
+  ...
+# Subtest: explicit replacement preserves imported identity and a recoverable prior generation
+ok 25 - explicit replacement preserves imported identity and a recoverable prior generation
+  ---
+  duration_ms: 4311.7735
+  ...
+# Subtest: inspection reports exact role provenance and token contrast without claiming visual approval
+ok 26 - inspection reports exact role provenance and token contrast without claiming visual approval
+  ---
+  duration_ms: 222.621459
+  ...
+# Subtest: maximum-length identities migrate and replace into bounded loadable recovery IDs
+ok 27 - maximum-length identities migrate and replace into bounded loadable recovery IDs
+  ---
+  duration_ms: 2298.654458
+  ...
+# Subtest: snapshot drops unbound historical assets while preserving derivative provenance
+ok 28 - snapshot drops unbound historical assets while preserving derivative provenance
+  ---
+  duration_ms: 432.239458
+  ...
+# Subtest: all registered candidate families pin exact interface revisions and edited paired colors
+ok 29 - all registered candidate families pin exact interface revisions and edited paired colors
+  ---
+  duration_ms: 1232.737625
+  ...
+# Subtest: original candidate envelopes retain their r1 interface after the builtin upgrade
+ok 30 - original candidate envelopes retain their r1 interface after the builtin upgrade
+  ---
+  duration_ms: 1672.662167
+  ...
+# Subtest: candidate preview and runtime interface derive the same source tokens with separate immutable identities
+ok 31 - candidate preview and runtime interface derive the same source tokens with separate immutable identities
+  ---
+  duration_ms: 1083.335667
+  ...
+# Subtest: one bounded same-tab payload hands off the candidate once without touching player preferences
+ok 32 - one bounded same-tab payload hands off the candidate once without touching player preferences
+  ---
+  duration_ms: 272.993
+  ...
+# Subtest: malformed, oversized, expired and substituted resource payloads fail closed and are consumed
+ok 33 - malformed, oversized, expired and substituted resource payloads fail closed and are consumed
+  ---
+  duration_ms: 183.889833
+  ...
+# Subtest: failed handoff preserves the previous usable candidate
+ok 34 - failed handoff preserves the previous usable candidate
+  ---
+  duration_ms: 239.383958
+  ...
+# Subtest: edited Studio theme survives two real compiled community entries and verified cache-only reload
+ok 35 - edited Studio theme survives two real compiled community entries and verified cache-only reload
+  ---
+  duration_ms: 27469.671292
+  ...
+1..35
+# tests 35
+# suites 0
+# pass 35
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 60903.110458

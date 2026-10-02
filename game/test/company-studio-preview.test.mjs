@@ -14,7 +14,11 @@ import {
   declaredJSONPaths,
   validateStudioDraft,
   validateStudioHistory,
+  withStudioAppearanceTheme,
+  withStudioAppearanceDefault,
 } from '../../authoring/company-studio/model.mjs';
+import { createDefaultThemeBundle } from '../presentation/catalog.mjs';
+import { createThemeCandidate } from '../presentation/theme-preview.mjs';
 import { retainedEditionFixture } from './helpers/retained-edition-fixture.mjs';
 import { canonicalJSON } from '../data-json.mjs';
 import { createHash } from 'node:crypto';
@@ -37,8 +41,21 @@ function fetchFiles(files, requests = []) {
       : new Response('Missing', { status: 404 });
   };
 }
-async function neutral() {
+async function neutral({ appearanceCandidate } = {}) {
   const source = createCompanyWorkspaceFiles({ brandId: 'acme', name: 'Acme' });
+  if (appearanceCandidate) {
+    source.catalog = withStudioAppearanceDefault(
+      withStudioAppearanceTheme(source.catalog, appearanceCandidate),
+      {
+        scope: 'community',
+        id: 'acme',
+        appearanceDefault: {
+          familyId: appearanceCandidate.family.id,
+          revision: appearanceCandidate.family.revision,
+        },
+      },
+    );
+  }
   source.files.set(
     'game/company.html',
     Buffer.from('<!doctype html><html><head><title>Company</title></head><body></body></html>'),
@@ -87,6 +104,45 @@ test('whole-game preview verifies the report, every artifact byte and exact sele
     f.report.checks.find((check) => check.id === 'playability').status,
     'review-required',
   );
+});
+
+test('a self-consistent compiler report cannot omit or add curated theme definitions behind matching pins', async () => {
+  const appearanceCandidate = createThemeCandidate(createDefaultThemeBundle());
+  const f = await neutral({ appearanceCandidate });
+  await verifyStudioPreview(f.input);
+  for (const appearanceThemes of [
+    [],
+    [appearanceCandidate, createThemeCandidate(createDefaultThemeBundle(), { familyId: 'tryzub' })],
+  ]) {
+    const files = new Map(f.result.files);
+    const catalog = JSON.parse(files.get('edition-catalog.json'));
+    catalog.appearanceThemes = appearanceThemes;
+    const catalogBytes = Buffer.from(canonicalJSON(catalog) + '\n');
+    files.set('edition-catalog.json', catalogBytes);
+    const manifest = JSON.parse(files.get('edition-build.json'));
+    const hash = (bytes) => createHash('sha256').update(bytes).digest('hex');
+    manifest.catalogSha256 = hash(catalogBytes);
+    Object.assign(
+      manifest.files.find((row) => row.path === 'edition-catalog.json'),
+      {
+        bytes: catalogBytes.length,
+        sha256: hash(catalogBytes),
+      },
+    );
+    const manifestBytes = Buffer.from(canonicalJSON(manifest) + '\n');
+    files.set('edition-build.json', manifestBytes);
+    const report = structuredClone(f.report);
+    report.artifact = {
+      path: 'edition-build.json',
+      bytes: manifestBytes.length,
+      sha256: hash(manifestBytes),
+    };
+    report.summary.runtimeBytes = [...files.values()].reduce((sum, bytes) => sum + bytes.length, 0);
+    await assert.rejects(
+      verifyStudioPreview({ ...f.input, report, fetcher: fetchFiles(files) }),
+      /preview appearance differs/,
+    );
+  }
 });
 
 test('changed executable bytes, report totals/exclusions and invented approval cannot pass preview verification', async () => {

@@ -1,10 +1,23 @@
 import * as THREE from './vendor/three.module.js';
+import { buildWorldVisuals, buildDroneVisual } from './world-visuals.mjs';
 import {
-  buildWorldVisuals,
-  buildDroneVisual,
-  themeForCourse,
+  normalizeSimPresentation,
+  resolveSimThemeProfile,
+  resolveSimEffects,
+} from './world-themes.mjs';
+import {
+  configureSimTextureSampling,
+  createWorkshopMaterials,
+  bindSimModelRole,
+  instanceSimDetails,
+  applySimMaterialBindings,
+  ownedSimMaterials,
+  simCollectionIdForProfile,
   setSurfaceQuality,
   createEnvironmentLight,
+  simObjectiveLabelStyle,
+  simObjectiveLabelLayout,
+  createSimGateCueFactory,
 } from './world-visuals.mjs';
 
 const QUALITIES = Object.freeze({
@@ -46,6 +59,30 @@ const safePath = (value) =>
   !/^(?:[a-z]+:|\/|\\)/i.test(value) &&
   !value.split(/[\\/]/).includes('..');
 
+/** Embedded/local world images use the existing img-src permission. The default
+ * ImageBitmapLoader fetches blob URLs and instead requires connect-src blob:.
+ * Keep the pinned GLTF parser, sampler/color-space rules and resource manager. */
+export function configureWorldGLTFLoader(loader, { onImageError = () => {} } = {}) {
+  return loader.register((parser) => ({
+    name: 'REVEALLINE_WORLD_IMAGE_ELEMENT',
+    beforeRoot() {
+      const images = new THREE.TextureLoader(parser.options.manager)
+        .setCrossOrigin(parser.options.crossOrigin)
+        .setRequestHeader(parser.options.requestHeader);
+      const load = images.load.bind(images);
+      images.load = (url, onLoad, onProgress, onError) =>
+        load(url, onLoad, onProgress, (error) => {
+          // GLTFLoader revokes embedded blob URLs on success, but not on error.
+          // Provided sidecar URLs belong to loadScene's existing finally block.
+          if (url.startsWith('blob:')) URL.revokeObjectURL(url);
+          onImageError(error);
+          onError?.(error);
+        });
+      parser.textureLoader = images;
+    },
+  }));
+}
+
 /** Presentation only. All world/actor positions are canonical millimetres.
  * Decorative structures remain outside the course; criteria are holograms. */
 export function createFlightRenderer({
@@ -55,6 +92,7 @@ export function createFlightRenderer({
   reducedMotion = false,
   loadGLTF = null,
   loadTransformControls = null,
+  presentation: initialPresentation = {},
 }) {
   let renderer;
   try {
@@ -111,6 +149,7 @@ export function createFlightRenderer({
     tilt = 10,
     quality = 'balanced',
     droneKind = 'racer',
+    cosmeticColor = null,
     currentStep = -1,
     disposed = false,
     lastWidth = 0,
@@ -127,14 +166,19 @@ export function createFlightRenderer({
     importGeneration = 0,
     importedMixer = null,
     importedClips = [],
+    importedMaterialBindings = { applied: 0, diagnostics: [] },
     obstacleMaps = null,
     obstacleSurface = null,
     environmentSurfaceKind = null,
     lastActorState = null,
     importedAnimationTick = null,
     environmentLight = null,
-    cosmeticColor = null,
     themeProfile = null,
+    effectPalette = resolveSimEffects(null),
+    goalMaterialKit = null,
+    gateCueFactory = null,
+    pendingPresentation = normalizeSimPresentation(initialPresentation),
+    activePresentation = pendingPresentation,
     sceneryFallback = null,
     editor = null,
     editorListener = null,
@@ -159,6 +203,7 @@ export function createFlightRenderer({
     cameraTiltRotation = new THREE.Quaternion(),
     cameraTiltAxis = new THREE.Vector3(1, 0, 0),
     pulseTransform = new THREE.Matrix4();
+  const labelPosition = new THREE.Vector3();
   const texturesOf = (paint) => Object.values(paint ?? {}).filter((value) => value?.isTexture);
   function ownShadowMaterial(item) {
     if (!item.isMesh || item.customDepthMaterial || Array.isArray(item.material)) return;
@@ -177,7 +222,10 @@ export function createFlightRenderer({
     root.traverse((item) => {
       ownShadowMaterial(item);
       if (item.geometry) geometry.add(item.geometry);
-      for (const paint of Array.isArray(item.material) ? item.material : [item.material])
+      for (const paint of [
+        ...(Array.isArray(item.material) ? item.material : [item.material]),
+        ...ownedSimMaterials(item),
+      ])
         if (paint) materials.add(paint);
     });
   const material = (color, extras = {}) => {
@@ -207,11 +255,11 @@ export function createFlightRenderer({
     for (const root of roots)
       root.traverse((item) => {
         if (item.geometry) shapes.add(item.geometry);
-        if (item.skeleton) skeletons.add(item.skeleton);
         if (item.isInstancedMesh) instances.add(item);
+        if (item.skeleton) skeletons.add(item.skeleton);
         for (const paint of [
           ...(Array.isArray(item.material) ? item.material : [item.material]),
-          ...(item.userData?.ownedMaterials ?? []),
+          ...ownedSimMaterials(item),
           item.customDepthMaterial,
           item.customDistanceMaterial,
         ])
@@ -219,6 +267,7 @@ export function createFlightRenderer({
             paints.add(paint);
             for (const texture of texturesOf(paint)) textures.add(texture);
           }
+        if (item.userData?.ownedMaterials) item.userData.ownedMaterials = [];
       });
     for (const value of textures) {
       value.source?.data?.close?.();
@@ -249,6 +298,7 @@ export function createFlightRenderer({
       importedMixer = null;
     }
     importedClips = [];
+    importedMaterialBindings = { applied: 0, diagnostics: [] };
     importedAnimationTick = null;
     releaseGroup(imported);
   }
@@ -262,21 +312,26 @@ export function createFlightRenderer({
       sunlight.shadow[key] = null;
     }
   }
-  function label(text, color, parent, size = 0.8) {
+  function label(text, color, parent, size = 0.8, objective = false) {
     const surface = canvas.ownerDocument.createElement('canvas');
     surface.width = 128;
     surface.height = 128;
     const context = surface.getContext('2d');
     if (!context) return null;
-    context.fillStyle = '#132b39';
+    const legibility = objective ? simObjectiveLabelStyle(themeProfile) : null;
+    context.fillStyle =
+      legibility?.background ??
+      (themeProfile ? `#${themeProfile.palette.wall.toString(16).padStart(6, '0')}` : '#132b39');
     context.beginPath();
     context.arc(64, 64, 59, 0, Math.PI * 2);
     context.fill();
     context.lineWidth = 6;
     context.strokeStyle = color;
     context.stroke();
-    context.fillStyle = '#f1f9e8';
-    context.font = `700 ${text.length > 2 ? 32 : 66}px sans-serif`;
+    context.fillStyle = legibility?.foreground ?? '#f1f9e8';
+    context.font = legibility
+      ? `800 ${text.length > 2 ? 38 : 76}px sans-serif`
+      : `700 ${text.length > 2 ? 32 : 66}px sans-serif`;
     context.textAlign = 'center';
     context.textBaseline = 'middle';
     context.fillText(text, 64, 68);
@@ -285,12 +340,14 @@ export function createFlightRenderer({
     const paint = new THREE.SpriteMaterial({
       map: texture,
       transparent: true,
+      depthTest: true,
       depthWrite: false,
       toneMapped: false,
     });
     materials.add(paint);
     const sprite = new THREE.Sprite(paint);
     sprite.scale.set(size, size, 1);
+    if (legibility) sprite.userData.objectiveLabelBaseSize = size;
     parent.add(sprite);
     return sprite;
   }
@@ -310,6 +367,9 @@ export function createFlightRenderer({
       sunlight.shadow.mapSize.set(selected.shadowSize, selected.shadowSize);
     }
     renderer.shadowMap.needsUpdate = true;
+    for (const texture of new Set([...materials].flatMap(texturesOf)))
+      if (texture.userData?.simSurface)
+        configureSimTextureSampling(texture, quality, renderer.capabilities.getMaxAnisotropy());
     const visuals = world.userData.visuals;
     if (visuals) {
       const baseAmbient = visuals.indoor ? 2.0 : 1.55;
@@ -345,14 +405,32 @@ export function createFlightRenderer({
     presentationGeneration++;
     droneKind = value;
     releaseGroup(aircraft);
-    droneVisual = buildDroneVisual({ parent: aircraft, mesh, material, box, kind: value, quality });
+    droneVisual = buildDroneVisual({
+      parent: aircraft,
+      mesh,
+      material,
+      box,
+      kind: value,
+      profile: themeProfile ?? resolveSimThemeProfile({}, activePresentation),
+      quality,
+      maxAnisotropy: renderer.capabilities.getMaxAnisotropy(),
+    });
     if (cosmeticColor) droneVisual.tint.color.set(cosmeticColor);
     for (const [index, rotor] of droneVisual.rotors.entries())
       rotor.rotation.y = rotorPhase * (index === 0 || index === 3 ? -1 : 1);
     setSurfaceQuality(materials, quality, renderer.capabilities.getMaxAnisotropy());
   }
+  function setPresentation(value) {
+    // A prepared choice takes effect only when the owner installs a fresh course.
+    pendingPresentation = normalizeSimPresentation(value);
+    return pendingPresentation;
+  }
   function lineVolume(step, index) {
     const group = new THREE.Group();
+    group.userData.modelRole = step.type === 'gate' ? 'gate' : 'marker';
+    group.userData.assetRole = themeProfile?.assets?.[step.type === 'gate' ? 'gate' : 'marker'];
+    if (goalMaterialKit)
+      bindSimModelRole(group, group.userData.modelRole, goalMaterialKit.collectionId);
     goals.add(group);
     let size, position;
     if (step.type === 'actor-track-v1') {
@@ -380,7 +458,7 @@ export function createFlightRenderer({
       group.add(marker);
       const light = material(0xffca76, { transparent: true, opacity: 1 });
       group.userData.ownedMaterials = [light];
-      const badge = label(String(index + 1).padStart(2, '0'), '#ffca76', group, 0.48);
+      const badge = label(String(index + 1).padStart(2, '0'), '#ffca76', group, 0.48, true);
       if (badge) badge.position.y = 0.92;
       group.visible = false;
       goalRows.push({ group, paint, light, marker, badge, index, actorId: step.actorId });
@@ -403,7 +481,7 @@ export function createFlightRenderer({
     shape.dispose();
     geometry.add(edges);
     const paint = new THREE.LineBasicMaterial({
-      color: 0x8beafc,
+      color: effectPalette.goalOutline,
       transparent: true,
       opacity: 0.3,
       toneMapped: false,
@@ -411,13 +489,14 @@ export function createFlightRenderer({
     materials.add(paint);
     group.add(new THREE.LineSegments(edges, paint));
     group.position.set(...position);
-    const light = material(0xa8e9dd, {
-      emissive: 0x82e1d5,
+    const light = material(effectPalette.goalGlow, {
+      emissive: effectPalette.goalEmissive,
       emissiveIntensity: 0.75,
       transparent: true,
       opacity: 0.4,
       depthWrite: false,
     });
+    let gateCue = null;
     if (step.type === 'gate') {
       const gateStyle = themeProfile?.assets?.gate ?? 'builtin:gate';
       group.userData.themeAsset = gateStyle;
@@ -466,13 +545,48 @@ export function createFlightRenderer({
         );
         lintel.position.y = (side * size[1]) / 2;
       }
+      if (goalMaterialKit) {
+        // Fastener plates occupy the existing 45 mm frame, never its clear opening.
+        const matrices = [];
+        for (const side of [-1, 1])
+          for (const top of [-1, 1])
+            matrices.push(
+              new THREE.Matrix4().makeTranslation(
+                horizontal ? (side * span) / 2 : 0,
+                (top * size[1]) / 2,
+                horizontal ? 0 : (side * span) / 2,
+              ),
+            );
+        instanceSimDetails({
+          shape: new THREE.BoxGeometry(0.034, 0.034, 0.034),
+          paint: goalMaterialKit.paint('steel'),
+          parent: group,
+          matrices,
+          mesh,
+        });
+      }
+      gateCue = gateCueFactory?.({ axis: step.axis, span, height: size[1] }) ?? null;
+      if (gateCue) {
+        register(gateCue);
+        group.add(gateCue);
+      }
     }
-    const marker = mesh(new THREE.TorusGeometry(0.35, 0.045, 6, 24), light, group);
+    const marker = mesh(
+      new THREE.TorusGeometry(0.35, 0.045, 6, goalMaterialKit ? 8 : 24),
+      light,
+      group,
+    );
     marker.rotation.x = Math.PI / 2;
     marker.position.y = -position[1] + (step.type === 'land' ? step.min.y / 1000 : 0) + 0.05;
-    const badge = label(String(index + 1).padStart(2, '0'), '#a5e7d4', group, 0.72);
+    const badge = label(
+      String(index + 1).padStart(2, '0'),
+      `#${effectPalette.goalBadge.toString(16).padStart(6, '0')}`,
+      group,
+      0.72,
+      true,
+    );
     if (badge) badge.position.set(0, size[1] / 2 + 0.5, 0);
-    const row = { group, paint, light, marker, badge, index };
+    const row = { group, paint, light, marker, badge, gateCue, index };
     // These are holographic instructions, never collision geometry. Their group
     // shares the criterion's zone centre, so editor translations move all parts.
     const point = (world) =>
@@ -587,7 +701,7 @@ export function createFlightRenderer({
         direction,
         new THREE.Vector3(0, -position[1] + 0.1, 0).addScaledVector(direction, -1.1),
         0.8,
-        0xe8eab0,
+        effectPalette.directionArrow,
         0.25,
         0.18,
       );
@@ -693,7 +807,7 @@ export function createFlightRenderer({
     qualityDetails.push(panelsMesh);
   }
   function renderObstacle(obstacle, index) {
-    const theme = themeForCourse(course),
+    const theme = themeProfile.palette,
       kind = obstacleSurfaceKind(obstacle);
     const maps = obstacleSurface?.(kind) ?? obstacleMaps;
     const paint = material(
@@ -749,6 +863,10 @@ export function createFlightRenderer({
     }
     value.name = obstacle.id;
     value.userData.collisionId = obstacle.id;
+    if (goalMaterialKit) bindSimModelRole(value, 'obstacle', goalMaterialKit.collectionId);
+    value.userData.materialRole = ['field', 'woodland'].includes(course.environment)
+      ? 'timber'
+      : 'steel';
     value.userData.surfaceKind = kind;
     if (kind === 'bark') value.userData.materialRole = 'timber';
     value.castShadow = value.receiveShadow = true;
@@ -807,8 +925,10 @@ export function createFlightRenderer({
     materials.add(edgePaint);
     value.add(new THREE.LineSegments(edges, edgePaint));
   }
-  function setCourse(value, selectedMode = 'self-level') {
+  function setCourse(value, selectedMode = 'self-level', options = {}) {
     if (disposed) return;
+    if (options.presentation) setPresentation(options.presentation);
+    activePresentation = pendingPresentation;
     sceneGeneration++;
     presentationGeneration++;
     rotorTick = null;
@@ -829,10 +949,30 @@ export function createFlightRenderer({
     qualityDetails.length = 0;
     lastActorState = null;
     pulseRows.clear();
-    const surroundings = buildWorldVisuals({ course, world, mesh, material, box });
+    const surroundings = buildWorldVisuals({
+      course,
+      world,
+      mesh,
+      material,
+      box,
+      presentation: activePresentation,
+      quality,
+      maxAnisotropy: renderer.capabilities.getMaxAnisotropy(),
+    });
     register(world);
     const theme = surroundings.theme;
     themeProfile = surroundings.profile;
+    effectPalette = resolveSimEffects(themeProfile);
+    gateCueFactory = createSimGateCueFactory(themeProfile);
+    goalMaterialKit = simCollectionIdForProfile(themeProfile)
+      ? createWorkshopMaterials({
+          collectionId: simCollectionIdForProfile(themeProfile),
+          material,
+          quality,
+          maxAnisotropy: renderer.capabilities.getMaxAnisotropy(),
+        })
+      : null;
+    setDrone(droneKind);
     sceneryFallback = surroundings.backdrop;
     obstacleMaps = surroundings.obstacleMaps;
     obstacleSurface = surroundings.obstacleSurface ?? null;
@@ -911,17 +1051,33 @@ export function createFlightRenderer({
     group.userData.themeAsset = slot ?? 'builtin:sentry';
     if (actor.position)
       group.position.set(actor.position.x / 1000, actor.position.y / 1000, actor.position.z / 1000);
-    const armor = material(
-      friendly ? 0x74bfc0 : pixel ? 0xa785cb : civilian ? 0x839c9d : 0x778b86,
-      { metalness: civilian ? 0.08 : 0.35, roughness: civilian ? 0.84 : 0.55 },
-    );
+    const kit = simCollectionIdForProfile(themeProfile)
+      ? createWorkshopMaterials({
+          collectionId: simCollectionIdForProfile(themeProfile),
+          material,
+          quality,
+          maxAnisotropy: renderer.capabilities.getMaxAnisotropy(),
+        })
+      : null;
+    group.userData.modelRole = actor.type === 'vehicle' ? 'vehicle' : 'enemy';
+    group.userData.assetRole = themeProfile?.assets?.[group.userData.modelRole];
+    if (kit) bindSimModelRole(group, group.userData.modelRole, kit.collectionId);
+    const armor = kit
+      ? kit.paint('steel')
+      : material(friendly ? 0x74bfc0 : pixel ? 0xa785cb : civilian ? 0x839c9d : 0x778b86, {
+          metalness: civilian ? 0.08 : 0.35,
+          roughness: civilian ? 0.84 : 0.55,
+        });
     const threat = material(friendly ? 0x77ebe0 : 0xf1ae75, {
       emissive: friendly ? 0x249eaa : 0xb86231,
       emissiveIntensity: 0.5,
     });
-    const dark = material(0x283e47, { roughness: 0.78 });
-    const metal =
-      quality === 'low' ? dark : material(0xa9b7b8, { metalness: 0.72, roughness: 0.34 });
+    const dark = kit ? kit.paint('rubber') : material(0x283e47, { roughness: 0.78 });
+    const metal = kit
+      ? kit.paint('copper')
+      : quality === 'low'
+        ? dark
+        : material(0xa9b7b8, { metalness: 0.72, roughness: 0.34 });
     const glass =
       quality === 'low' ? dark : material(0x456975, { metalness: 0.25, roughness: 0.17 });
     group.userData.ownedMaterials = [armor, threat, dark, metal, glass];
@@ -949,6 +1105,8 @@ export function createFlightRenderer({
         box,
         kind,
         quality: quality === 'high' ? 'balanced' : 'low',
+        profile: themeProfile,
+        maxAnisotropy: renderer.capabilities.getMaxAnisotropy(),
       });
       visual.tint.color.setHex(friendly ? 0x77ebe0 : 0xe6a16b);
       animated.rotors = visual.rotors;
@@ -1125,6 +1283,22 @@ export function createFlightRenderer({
           { part: arm, side: -side, amount: 0.24 },
         );
       }
+      if (kit) {
+        const plate = part(
+          new THREE.BoxGeometry(radius * 0.65, height * 0.14, radius * 0.025),
+          kit.paint('enamel'),
+          [0, height * 0.59, -radius * 0.6],
+        );
+        plate.userData.cosmeticDetail = true;
+        plate.castShadow = false;
+        const vent = part(
+          new THREE.BoxGeometry(radius * 0.42, height * 0.025, radius * 0.03),
+          kit.paint('rubber'),
+          [0, height * 0.61, -radius * 0.62],
+        );
+        vent.userData.cosmeticDetail = true;
+        vent.castShadow = false;
+      }
       if (!friendly)
         part(new THREE.BoxGeometry(radius * 0.35, height * 0.085, radius * 1.2), threat, [
           radius * 0.47,
@@ -1171,7 +1345,7 @@ export function createFlightRenderer({
     const key = owner === 'player' ? 'player' : 'other';
     let batch = pulseRows.get(key);
     if (!batch) {
-      const color = key === 'player' ? 0x8ce4e3 : 0xf7b071;
+      const color = key === 'player' ? effectPalette.playerPulse : effectPalette.hostilePulse;
       batch = new THREE.InstancedMesh(
         new THREE.SphereGeometry(0.055, 6, 4),
         material(color, { emissive: color, emissiveIntensity: 1.4, roughness: 0.2 }),
@@ -1367,11 +1541,18 @@ export function createFlightRenderer({
       for (const row of goalRows) {
         const active = row.index === state.step,
           complete = row.index < state.step;
-        row.paint.color.setHex(complete ? 0x95aa9e : active ? 0xe8f1a7 : 0x7fa9b4);
+        row.paint.color.setHex(
+          complete
+            ? effectPalette.goalComplete
+            : active
+              ? effectPalette.goalActive
+              : effectPalette.goalInactive,
+        );
         row.paint.opacity = active ? 1 : 0.18;
-        row.light.color.setHex(active ? 0xe8f1a7 : 0x89c9c5);
+        row.light.color.setHex(active ? effectPalette.goalActive : effectPalette.goalGlowInactive);
         row.light.opacity = active ? 0.9 : 0.17;
         row.marker.visible = active;
+        if (row.gateCue) row.gateCue.visible = active;
         if (row.badge) row.badge.material.opacity = active ? 1 : 0.35;
       }
     }
@@ -1397,6 +1578,23 @@ export function createFlightRenderer({
         subject.position.z / 1000,
       );
       row.group.quaternion.copy(camera.quaternion);
+    }
+    // Use the current lens and CSS viewport, independently of graphics pixel ratio.
+    // The authored/legacy path keeps its original texture, size and visibility.
+    camera.updateMatrixWorld();
+    for (const row of goalRows) {
+      const baseSize = row.badge?.userData.objectiveLabelBaseSize;
+      if (!baseSize) continue;
+      row.badge.getWorldPosition(labelPosition).applyMatrix4(camera.matrixWorldInverse);
+      const layout = simObjectiveLabelLayout({
+        baseSize,
+        active: row.index === state.step,
+        viewDepth: -labelPosition.z,
+        projectionY: camera.projectionMatrix.elements[5],
+        viewportHeight: rect.height,
+      });
+      row.badge.scale.set(layout.size, layout.size, 1);
+      row.badge.center.set(0.5, layout.centerY);
     }
     if (view === 'editor') {
       aircraft.visible = false;
@@ -1436,7 +1634,7 @@ export function createFlightRenderer({
     );
     pathLine = new THREE.Line(
       new THREE.BufferGeometry().setFromPoints(points),
-      new THREE.LineBasicMaterial({ color: 0x95e9ef, transparent: true, opacity: 0.65 }),
+      new THREE.LineBasicMaterial({ color: effectPalette.trail, transparent: true, opacity: 0.65 }),
     );
     scene.add(pathLine);
   }
@@ -1475,15 +1673,20 @@ export function createFlightRenderer({
       mesh,
       box,
       material: () =>
-        material(0x95e9ef, {
-          emissive: 0x247880,
+        material(effectPalette.ghost, {
+          emissive: effectPalette.ghostEmissive,
           emissiveIntensity: 0.65,
           transparent: true,
           opacity: 0.48,
           depthWrite: false,
         }),
     });
-    const badge = label('PB', '#95e9ef', ghostAircraft, 0.48);
+    const badge = label(
+      'PB',
+      `#${effectPalette.ghost.toString(16).padStart(6, '0')}`,
+      ghostAircraft,
+      0.48,
+    );
     if (badge) badge.position.y = 0.4;
     ghostAircraft.traverse((item) => {
       item.castShadow = false;
@@ -1630,15 +1833,21 @@ export function createFlightRenderer({
       if (url.startsWith('blob:') || url.startsWith('data:')) return url;
       throw new Error('World preview requested an unprovided resource');
     });
-    let result;
+    let result,
+      imageFailed = false;
     try {
-      result = await new GLTFLoader(manager).parseAsync(
+      result = await configureWorldGLTFLoader(new GLTFLoader(manager), {
+        onImageError: () => {
+          imageFailed = true;
+        },
+      }).parseAsync(
         binary
           ? bytes.buffer.slice(bytes.byteOffset, bytes.byteOffset + bytes.byteLength)
           : new TextDecoder().decode(bytes),
         '',
       );
       if (
+        imageFailed ||
         disposed ||
         generation !== sceneGeneration ||
         request !== importGeneration ||
@@ -1648,9 +1857,18 @@ export function createFlightRenderer({
         rejected.add(...result.scenes);
         releaseGroup(rejected);
         signal?.throwIfAborted();
+        if (imageFailed)
+          throw new Error('World image could not be decoded. The previous scene is unchanged.');
         throw new Error('World preview changed during loading');
       }
       clearImported();
+      importedMaterialBindings = applySimMaterialBindings(result.scene, {
+        collectionId: simCollectionIdForProfile(themeProfile) ?? 'authored',
+        quality,
+        maxAnisotropy: renderer.capabilities.getMaxAnisotropy(),
+        associations: result.parser?.associations,
+        material,
+      });
       imported.add(result.scene);
       if (
         json.asset?.extras?.fpvScenery === true &&
@@ -1687,6 +1905,7 @@ export function createFlightRenderer({
         nodes: json.nodes?.length ?? 0,
         animations: result.animations.map((clip) => clip.name),
         objects,
+        materialBindings: structuredClone(importedMaterialBindings),
       };
     } finally {
       for (const url of urls.values()) URL.revokeObjectURL(url);
@@ -1908,6 +2127,7 @@ export function createFlightRenderer({
   return {
     available: true,
     setCourse,
+    setPresentation,
     setQuality,
     setDrone,
     setPath,
@@ -1977,6 +2197,8 @@ export function createFlightRenderer({
         quality,
         drone: droneKind,
         presentation: {
+          ...activePresentation,
+          profileId: themeProfile?.id ?? null,
           actors: [...actorRows].map(([id, row]) => ({
             id,
             quality: row.quality,
@@ -2005,12 +2227,16 @@ export function createFlightRenderer({
           ),
           surfaceDetailGroups: qualityDetails.length,
         },
+        effects: { ...effectPalette },
+        importedMaterialBindings: structuredClone(importedMaterialBindings),
         registered: {
           geometries: geometry.size + (pathLine ? 1 : 0),
           materials: materials.size + (pathLine ? 1 : 0),
           textures: new Set([...materials].flatMap(texturesOf)).size,
         },
         renderer: {
+          calls: renderer.info.render.calls,
+          triangles: renderer.info.render.triangles,
           geometries: renderer.info.memory.geometries,
           textures: renderer.info.memory.textures,
           programs: renderer.info.programs?.length ?? 0,

@@ -1,0 +1,1306 @@
+@import url('../ui/field-kit-fonts.css');
+
+/* Shared appearance recipes. Existing screen layout is in @layer legacy so
+   component paint has one authority, independent of a screen's ID selectors.
+   The aliases below are the migration boundary for existing semantic classes;
+   new components should use data-ui-surface / data-ui-action / data-ui-tone. */
+[data-theme-styled='true'] {
+  color-scheme: var(--iw-color-scheme, dark);
+  color: var(--iw-text);
+  background: var(--iw-ink);
+  font-family: var(--iw-font-ui);
+  --ui-shadow: color-mix(in srgb, var(--iw-ink) 78%, black);
+  --ui-hover: color-mix(in srgb, var(--iw-panel-raised) 90%, var(--iw-text));
+  --ui-disabled: var(--iw-muted);
+  --ui-control-border: var(--iw-control-line);
+}
+/* Rebind older semantic variables on their owning scope. Authored image, video,
+   Canvas and 3D assets remain in their own renderer; none are filtered/recolored. */
+[data-theme-styled='true'],
+[data-theme-styled='true']
+  :where(
+    body,
+    .field-kit,
+    dialog,
+    .race-screen,
+    .race-shell,
+    .overlay-card,
+    .native-landing,
+    .native-settings,
+    [data-ui-surface]
+  ) {
+  --fk-bg: var(--iw-ink);
+  --fk-panel: var(--iw-panel);
+  --fk-panel-raised: var(--iw-panel-raised);
+  --fk-text: var(--iw-text);
+  --fk-muted: var(--iw-muted);
+  --fk-line: var(--iw-line);
+  --fk-control-line: var(--iw-control-line);
+  --fk-cyan: var(--iw-accent);
+  --fk-amber: var(--iw-amber);
+  --fk-hazard: var(--iw-hazard);
+  --fk-success: var(--iw-safe);
+  --fk-accent: var(--iw-accent);
+  --fk-on-accent: var(--iw-on-accent, var(--iw-ink));
+  --fk-focus: var(--iw-focus, var(--iw-control-line));
+  --fk-font-ui: var(--iw-font-ui);
+  --fk-font-pixel: var(--iw-font-ui);
+  --fk-font-mono: var(--iw-font-mono);
+  --fk-font-display: var(--iw-font-display);
+  --fk-text-body: var(--iw-text-size);
+  --fk-text-control: var(--iw-text-size);
+  --fk-text-secondary: max(14px, calc(var(--iw-text-size) - 2px));
+  --fk-target-size: var(--iw-target);
+  --rl-menu-skin-bg: var(--iw-ink);
+  --rl-menu-skin-panel: var(--iw-panel);
+  --rl-menu-skin-panel-raised: var(--iw-panel-raised);
+  --rl-menu-skin-text: var(--iw-text);
+  --rl-menu-skin-muted: var(--iw-muted);
+  --rl-menu-skin-line: var(--iw-line);
+  --rl-menu-skin-control-line: var(--iw-control-line);
+  --rl-menu-skin-cyan: var(--iw-accent);
+  --rl-menu-skin-amber: var(--iw-amber);
+  --rl-menu-skin-hazard: var(--iw-hazard);
+  --rl-menu-skin-decorative: var(--iw-line);
+  --native-ink: var(--iw-ink);
+  --native-panel: var(--iw-panel);
+  --native-surface: var(--iw-panel-raised);
+  --paper: var(--iw-ink);
+  --ink: var(--iw-text);
+  --bg: var(--iw-ink);
+  --panel: var(--iw-panel);
+  --panel-raised: var(--iw-panel-raised);
+  --text: var(--iw-text);
+  --muted: var(--iw-muted);
+  --line: var(--iw-line);
+  --accent: var(--iw-accent);
+  --safe: var(--iw-safe);
+  --danger: var(--iw-hazard);
+  --sky: var(--iw-accent);
+  --sun: var(--iw-amber);
+  --mint: var(--iw-safe);
+}
+[data-theme-styled='true']
+  :where(
+    body,
+    .access-gate,
+    .launch-screen,
+    .native-landing,
+    .native-mission-library,
+    .race-screen,
+    .race-shell,
+    #coop-menu,
+    [data-ui-surface='page']
+  ) {
+  color: var(--iw-text);
+  background: var(--iw-ink);
+  font-family: var(--iw-font-ui);
+  color-scheme: inherit;
+}
+[data-theme-styled='true']
+  :where(p, li, dd, dt, label, legend, summary, h1, h2, h3, h4, h5, h6, strong, b, em, span) {
+  color: inherit;
+  text-shadow: none;
+}
+[data-theme-styled='true'] :where(h1, .display-heading, .native-game-title) {
+  color: var(--iw-text);
+  font-family: var(--iw-font-display);
+  letter-spacing: 0.02em;
+}
+[data-theme-styled='true'] :where(h2, h3, h4, legend, label, summary) {
+  font-family: var(--iw-font-ui);
+}
+[data-theme-styled='true'] :where(a) {
+  color: var(--iw-link, var(--iw-accent));
+  text-underline-offset: 0.2em;
+}
+[data-theme-styled='true']
+  :where(
+    .micro-note,
+    .muted,
+    small,
+    .help,
+    .description,
+    .quiet,
+    .smallprint,
+    .race-footnote,
+    .race-menu-status,
+    .soundtrack-advanced-description,
+    .native-menu-footer,
+    #demo-status,
+    #demo-picture-note,
+    #demo-audio-artist,
+    .demo-audio-status,
+    .sidebar-note,
+    [data-ui-tone='muted']
+  ) {
+  color: var(--iw-muted);
+}
+[data-theme-styled='true']
+  :where(.eyebrow, .launch-kicker, .access-gate-eyebrow, [data-ui-tone='accent']) {
+  color: var(--iw-accent);
+}
+[data-theme-styled='true'] :where(kbd, code, pre, .telemetry, .hud-value, .metric-value) {
+  font-family: var(--iw-font-mono);
+}
+
+/* Reading surfaces stay quiet. Material identity comes from the palette and
+   light-catching rim; decorative nine-slices belong to authored outer frames,
+   never repeated around each card or control. */
+[data-theme-styled='true']
+  :where(
+    dialog,
+    .overlay-card,
+    .panel,
+    .field-kit-panel,
+    .inspection-card,
+    .mission-detail,
+    .settings-group,
+    .inspector,
+    .tool-panel,
+    .editor-panel,
+    .launch-card,
+    .access-gate-card,
+    .hud-card,
+    .sim-panel,
+    .workshop-card,
+    .iw-panel,
+    .studio-panel,
+    .sidebar,
+    .creator-inspector,
+    .controller-settings-section,
+    .settings-section,
+    .settings-card,
+    .info-card,
+    .choice-card,
+    .mission-card,
+    .campaign-card,
+    .library-card,
+    .community-card,
+    .candidate-entry,
+    .version-control,
+    .pack-instructions,
+    .content-card,
+    .pack-card,
+    .profile-card,
+    .recovery-card,
+    .download-card,
+    .story-card,
+    .flight-dialog,
+    .soundtrack-section,
+    .soundtrack-now-card,
+    .soundtrack-listen-card,
+    .soundtrack-online-card,
+    .soundtrack-settings-style-card,
+    .soundtrack-source-row,
+    .first-flight-card,
+    .school-lesson-card,
+    .school-after,
+    .coach-card,
+    .result-panel,
+    .sim-academy #complete,
+    .sim-academy #fallback,
+    .optional-world-card,
+    .team-level-card,
+    .team-review-card,
+    .creator-media-card,
+    .creator-mission-review-card,
+    .batch-card,
+    .watch,
+    [role='tooltip'],
+    [data-component='panel'],
+    [data-ui-surface='panel'],
+    [data-ui-surface='dialog']
+  ) {
+  color: var(--iw-text);
+  font-family: var(--iw-font-ui);
+  background: var(--iw-panel);
+  border: 2px solid var(--iw-line);
+  border-image: none;
+  border-radius: 0;
+  box-shadow:
+    inset 0 1px 0 color-mix(in srgb, var(--iw-text) 8%, transparent),
+    0 2px 0 var(--ui-shadow),
+    0 8px 18px #0002;
+}
+[data-theme-styled='true']
+  :where(
+    .masthead,
+    .shell-bar,
+    body > header,
+    .toolbar,
+    .studio-toolbar,
+    .authoring-input-rail,
+    .authoring-section-menu,
+    .sim-toolbar,
+    .hud,
+    .telemetry,
+    .workspace-bar,
+    .studio-header,
+    .flight-controls,
+    .flight-immersive-bar,
+    .sim-drone-response,
+    .flight-instruments,
+    .flight-coaching,
+    .coaching,
+    .sim-menu-hint,
+    .coach-heading,
+    .coach-lab-toolbar,
+    .coach-lab-telemetry,
+    .coach-drone-figure figcaption,
+    .handheld-flight-identity,
+    .sim-worlds #flight-objective,
+    .sim-worlds .flight-brief p,
+    .beginner-coach[data-stage='live'] :is(.coach-target, .coach-explain),
+    .settings-heading,
+    .dialog-header,
+    .dialog-footer,
+    .field-kit-settings-tabs,
+    .soundtrack-footer,
+    #soundtrack-operation,
+    .optional-worlds-top,
+    .race-heading,
+    .reading-toolbar,
+    .shell-dialog-heading,
+    .demo-panel,
+    .demo-notes,
+    .demo-transport,
+    #demo-audio,
+    [data-ui-surface='toolbar']
+  ) {
+  color: var(--iw-text);
+  background: var(--iw-panel);
+  border-color: var(--iw-line);
+  border-image: none;
+  text-shadow: none;
+}
+[data-theme-styled='true']
+  :where(
+    fieldset,
+    details,
+    .drop,
+    .drop-zone,
+    .setting-row,
+    .settings-row,
+    .settings-preset,
+    .device-card,
+    .controller-card,
+    .controller-mapping,
+    .range-field,
+    .settings-metric,
+    .settings-note,
+    .settings-warning,
+    .mission-brief,
+    .enemy-guide,
+    .soundtrack-choice,
+    .soundtrack-advanced,
+    .soundtrack-online-results,
+    .school-flight-map,
+    .replay-controls,
+    .radio-device-card,
+    .radio-monitor,
+    .coach-tip,
+    .checkpoint,
+    .encounter-cue,
+    .demo-board,
+    .demo-settings,
+    .seat,
+    .control-card,
+    .batch-card-media,
+    .creator-media-poster,
+    .creator-poster-option,
+    #mission-brief-reading,
+    [data-ui-surface='inset']
+  ) {
+  color: var(--iw-text);
+  background: var(--iw-ink);
+  border-color: var(--iw-line);
+  border-image: none;
+  border-radius: 0;
+}
+[data-theme-styled='true'] :where(table, .asset-grid, .inventory-grid, [data-ui-surface='table']) {
+  color: var(--iw-text);
+  background: var(--iw-panel);
+}
+[data-theme-styled='true'] :where(th, td, hr) {
+  color: inherit;
+  border-color: var(--iw-line);
+}
+[data-theme-styled='true'] :where(th, thead) {
+  background: var(--iw-panel-raised);
+}
+[data-theme-styled='true']
+  :where(tr[aria-selected='true'], [data-ui-surface='slot'][aria-selected='true']) {
+  color: var(--iw-on-selection, var(--iw-text));
+  background: var(--iw-selection, var(--iw-panel-raised));
+  box-shadow: inset 3px 0 var(--iw-focus, var(--iw-accent));
+}
+
+/* Each action chooses paired local roles; one painter handles every state. */
+[data-theme-styled='true']
+  :where(
+    button,
+    .button,
+    .button-link,
+    #profile-recovery-root a,
+    .action,
+    .community-entry,
+    [role='button'],
+    [data-ui-action],
+    .launch-action,
+    .file-button,
+    .native-menu-actions > a,
+    .game-mode-choice > a
+  ) {
+  --ui-action-fill: var(--iw-button-default-background, var(--iw-panel-raised));
+  --ui-action-ink: var(--iw-button-default-foreground, var(--iw-text));
+  --ui-action-hover-fill: var(--iw-button-hover-background, var(--iw-panel-raised));
+  --ui-action-hover-ink: var(--iw-button-hover-foreground, var(--iw-text));
+  --ui-action-pressed-fill: var(--iw-button-pressed-background, var(--iw-selection));
+  --ui-action-pressed-ink: var(--iw-button-pressed-foreground, var(--iw-on-selection));
+  --ui-action-edge: var(--iw-control-line);
+  color: var(--ui-action-ink);
+  background: var(--ui-action-fill);
+  border: 2px solid var(--ui-action-edge);
+  border-image: none;
+  border-radius: 0;
+  min-height: var(--iw-target);
+  box-sizing: border-box;
+  padding: 8px 14px;
+  font-family: var(--iw-font-ui);
+  font-size: var(--iw-text-size);
+  font-weight: 600;
+  line-height: 1.35;
+  text-shadow: none;
+  text-decoration: none;
+  box-shadow:
+    inset 0 1px 0 color-mix(in srgb, var(--ui-action-ink) 12%, transparent),
+    inset 0 -1px 0 #0002,
+    0 2px 0 var(--ui-shadow);
+  cursor: pointer;
+}
+[data-theme-styled='true']
+  :where(
+    .primary,
+    .primary-action,
+    .field-kit-primary,
+    .race-primary,
+    .soundtrack-primary-action,
+    .community-entry,
+    [data-ui-action='primary']
+  ) {
+  --ui-action-fill: var(--iw-primary-default-background, var(--iw-accent));
+  --ui-action-ink: var(--iw-primary-default-foreground, var(--iw-on-accent, var(--iw-ink)));
+  --ui-action-hover-fill: var(--iw-primary-hover-background, var(--iw-accent));
+  --ui-action-hover-ink: var(--iw-primary-hover-foreground, var(--iw-on-accent, var(--iw-ink)));
+  --ui-action-pressed-fill: var(--iw-primary-pressed-background, var(--iw-selection));
+  --ui-action-pressed-ink: var(--iw-primary-pressed-foreground, var(--iw-on-selection));
+  --ui-action-edge: var(--iw-accent);
+}
+[data-theme-styled='true'] :where(.danger, .danger-action, [data-ui-action='danger']) {
+  --ui-action-fill: var(--iw-danger-default-background, var(--iw-hazard));
+  --ui-action-ink: var(--iw-danger-default-foreground, var(--iw-on-hazard));
+  --ui-action-hover-fill: var(--iw-danger-hover-background, var(--iw-hazard));
+  --ui-action-hover-ink: var(--iw-danger-hover-foreground, var(--iw-on-hazard));
+  --ui-action-pressed-fill: var(--iw-danger-pressed-background, var(--iw-selection));
+  --ui-action-pressed-ink: var(--iw-danger-pressed-foreground, var(--iw-on-selection));
+  --ui-action-edge: var(--iw-hazard);
+}
+[data-theme-styled='true']
+  :where(
+    button,
+    .button,
+    .button-link,
+    #profile-recovery-root a,
+    .action,
+    .community-entry,
+    [role='button'],
+    [data-ui-action],
+    .launch-action,
+    .file-button,
+    .native-menu-actions > a,
+    .game-mode-choice > a
+  ):is(:hover, [data-state='hover']):not(:disabled, [aria-disabled='true']) {
+  background: var(--ui-action-hover-fill);
+  color: var(--ui-action-hover-ink);
+  box-shadow:
+    inset 0 0 0 1px var(--ui-action-edge),
+    0 2px 0 var(--ui-shadow);
+}
+[data-theme-styled='true']
+  :where(
+    button,
+    .button,
+    .button-link,
+    #profile-recovery-root a,
+    .action,
+    .community-entry,
+    [role='button'],
+    [data-ui-action],
+    .launch-action,
+    .file-button,
+    .native-menu-actions > a,
+    .game-mode-choice > a
+  ):is(:active, [data-state='pressed']):not(:disabled, [aria-disabled='true']) {
+  background: var(--ui-action-pressed-fill);
+  color: var(--ui-action-pressed-ink);
+  box-shadow: inset 0 2px 3px #0005;
+}
+[data-theme-styled='true']
+  :where(button, .button, [role='button'], a, [role='tab']):is(
+    [aria-pressed='true'],
+    [aria-selected='true'],
+    [aria-current]:not([aria-current='false']),
+    .selected,
+    .active-tab
+  ) {
+  --ui-action-fill: var(--iw-selection, var(--iw-panel-raised));
+  --ui-action-ink: var(--iw-on-selection, var(--iw-text));
+  color: var(--ui-action-ink);
+  background: var(--ui-action-fill);
+  border-color: var(--iw-focus, var(--iw-accent));
+  border-image: none;
+  box-shadow: inset 3px 0 var(--iw-focus, var(--iw-accent));
+  text-decoration-thickness: 2px;
+}
+[data-theme-styled='true']
+  :where(
+    button,
+    input,
+    select,
+    textarea,
+    a,
+    .button,
+    .button-link,
+    [role='button'],
+    [role='tab'],
+    [data-ui-action]
+  ):is(:disabled, [aria-disabled='true']) {
+  color: var(--iw-muted);
+  background: var(--iw-panel);
+  border-color: var(--iw-line);
+  border-style: dashed;
+  border-image: none;
+  opacity: 1;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+[data-theme-styled='true']
+  :where(button, .button, [role='button'])
+  :where(span, strong, em, small) {
+  color: inherit;
+}
+
+/* Native value controls retain browser semantics and keyboard operation. */
+[data-theme-styled='true'] :where(input, select, textarea) {
+  color: var(--iw-input-text, var(--iw-text));
+  background: var(--iw-input, var(--iw-ink));
+  border: 2px solid var(--iw-control-line);
+  border-image: none;
+  border-radius: 0;
+  font-family: var(--iw-font-ui);
+  font-size: var(--iw-text-size);
+  accent-color: var(--iw-accent);
+  box-shadow: inset 0 1px 2px #0003;
+}
+[data-theme-styled='true']
+  :where(
+    select,
+    textarea,
+    input:not([type='checkbox'], [type='radio'], [type='range'], [type='color'])
+  ) {
+  min-height: var(--iw-target);
+  box-sizing: border-box;
+  padding: 6px 10px;
+}
+[data-theme-styled='true'] :where(input, textarea)::placeholder {
+  color: var(--iw-muted);
+  opacity: 1;
+}
+[data-theme-styled='true'] :where(option, optgroup) {
+  color: var(--iw-input-text, var(--iw-text));
+  background: var(--iw-input, var(--iw-ink));
+}
+[data-theme-styled='true'] :where(input[type='checkbox'], input[type='radio']) {
+  appearance: none;
+  display: inline-grid;
+  place-content: center;
+  inline-size: 22px;
+  block-size: 22px;
+  min-inline-size: 22px;
+  min-block-size: 22px;
+  flex: 0 0 22px;
+  padding: 0;
+  vertical-align: middle;
+  background: var(--iw-ink);
+  border: 2px solid var(--iw-control-line);
+  border-image: none;
+  box-shadow: none;
+}
+[data-theme-styled='true'] input[type='radio'] {
+  border-radius: 50%;
+}
+[data-theme-styled='true'] :where(input[type='checkbox'], input[type='radio'])::before {
+  content: '';
+  display: block;
+  width: 12px;
+  height: 12px;
+  background: var(--iw-on-accent, var(--iw-ink));
+  transform: scale(0);
+  clip-path: polygon(0 43%, 17% 26%, 40% 51%, 83% 4%, 100% 20%, 41% 87%);
+}
+[data-theme-styled='true'] input[type='radio']::before {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  clip-path: none;
+}
+[data-theme-styled='true'] :where(input[type='checkbox'], input[type='radio']):checked {
+  background: var(--iw-accent);
+  border-color: var(--iw-accent);
+  outline: none;
+  box-shadow: none;
+}
+[data-theme-styled='true'] :where(input[type='checkbox'], input[type='radio']):checked::before {
+  transform: scale(1);
+}
+[data-theme-styled='true'] :where(input[type='checkbox'], input[type='radio']):disabled {
+  background: var(--iw-panel);
+  border-color: var(--iw-muted);
+  border-style: dashed;
+  cursor: not-allowed;
+}
+[data-theme-styled='true'] :where(input[type='checkbox'], input[type='radio']):disabled::before {
+  background: var(--iw-muted);
+}
+[data-theme-styled='true'] input[type='checkbox']:indeterminate::before {
+  transform: scale(1);
+  clip-path: inset(40% 0);
+  background: var(--iw-accent);
+}
+[data-theme-styled='true'] label:has(> input:is([type='checkbox'], [type='radio'])) {
+  min-height: var(--iw-target);
+  align-items: center;
+  cursor: pointer;
+}
+[data-theme-styled='true'] input[type='range'] {
+  appearance: none;
+  min-height: var(--iw-target);
+  padding: 0;
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+  cursor: pointer;
+}
+[data-theme-styled='true'] input[type='range']::-webkit-slider-runnable-track {
+  height: 6px;
+  border: 1px solid var(--iw-control-line);
+  background: var(--iw-ink);
+  border-radius: 0;
+}
+[data-theme-styled='true'] input[type='range']::-moz-range-track {
+  height: 4px;
+  border: 1px solid var(--iw-control-line);
+  background: var(--iw-ink);
+  border-radius: 0;
+}
+[data-theme-styled='true'] input[type='range']::-webkit-slider-thumb {
+  appearance: none;
+  width: 24px;
+  height: 24px;
+  margin-top: -10px;
+  background: var(--iw-accent);
+  border: 2px solid var(--iw-on-accent, var(--iw-ink));
+  border-radius: 0;
+  box-shadow: 0 0 0 1px var(--iw-control-line);
+}
+[data-theme-styled='true'] input[type='range']::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  background: var(--iw-accent);
+  border: 2px solid var(--iw-on-accent, var(--iw-ink));
+  border-radius: 0;
+  box-shadow: 0 0 0 1px var(--iw-control-line);
+}
+[data-theme-styled='true'] input[type='range']:disabled {
+  cursor: not-allowed;
+  opacity: 0.65;
+}
+[data-theme-styled='true'] :where(progress, meter) {
+  accent-color: var(--iw-accent);
+  color: var(--iw-accent);
+  background: var(--iw-ink);
+  border: 1px solid var(--iw-control-line);
+  border-image: none;
+  border-radius: 0;
+}
+[data-theme-styled='true'] progress::-webkit-progress-bar {
+  background: var(--iw-ink);
+}
+[data-theme-styled='true'] progress::-webkit-progress-value {
+  background: var(--iw-accent);
+}
+[data-theme-styled='true'] progress::-moz-progress-bar {
+  background: var(--iw-accent);
+}
+[data-theme-styled='true'] :where(*) {
+  scrollbar-color: var(--iw-control-line) var(--iw-ink);
+}
+[data-theme-styled='true'] ::-webkit-scrollbar-thumb {
+  background: var(--iw-control-line);
+  border: 2px solid var(--iw-ink);
+}
+[data-theme-styled='true'] ::-webkit-scrollbar-track {
+  background: var(--iw-ink);
+}
+
+/* Compiled icon silhouettes are reusable geometry, never a fixed cyan pigment. */
+[data-theme-styled='true'] [data-presentation-icon]:not([data-menu-icon])::before {
+  color: inherit;
+  content: '';
+  display: inline-block;
+  inline-size: 24px;
+  block-size: 24px;
+  flex: 0 0 24px;
+  background: currentColor;
+  mask: var(--fk-current-icon, linear-gradient(transparent, transparent)) center / contain no-repeat;
+  -webkit-mask: var(--fk-current-icon, linear-gradient(transparent, transparent)) center / contain
+    no-repeat;
+  clip-path: none;
+  image-rendering: pixelated;
+}
+[data-theme-styled='true']
+  :where([data-presentation-control], [data-presentation-hud], [data-presentation-reward])::before {
+  background: currentColor;
+  color: inherit;
+  mask: var(--fk-current-glyph, linear-gradient(transparent, transparent)) center / contain
+    no-repeat;
+  -webkit-mask: var(--fk-current-glyph, linear-gradient(transparent, transparent)) center / contain
+    no-repeat;
+}
+[data-theme-styled='true'] :where([data-menu-icon])::before {
+  background: currentColor;
+  mask: var(--native-menu-icon, linear-gradient(transparent, transparent)) center / contain
+    no-repeat;
+  -webkit-mask: var(--native-menu-icon, linear-gradient(transparent, transparent)) center / contain
+    no-repeat;
+}
+[data-theme-styled='true'] :where(.meter > span, .launch-signal i) {
+  background: var(--iw-accent);
+}
+[data-theme-styled='true'] :where(.meter, [role='progressbar']) {
+  color: var(--iw-text);
+  background: var(--iw-ink);
+  border-color: var(--iw-control-line);
+  border-image: none;
+}
+
+/* Focus and state cues retain a shape in every palette. */
+[data-theme-styled='true'] :is(:focus-visible, .controller-focus, [data-state='focus']) {
+  outline: 3px solid var(--iw-focus, var(--iw-control-line));
+  outline-offset: 3px;
+  scroll-margin: 12px;
+}
+[data-theme-styled='true'] :where([aria-invalid='true'], .error, [data-ui-tone='danger']) {
+  color: var(--iw-hazard);
+  border-color: var(--iw-hazard);
+  border-image: none;
+}
+[data-theme-styled='true'] :where([data-ui-tone='success'], .success) {
+  color: var(--iw-safe);
+}
+[data-theme-styled='true'] :where([data-ui-tone='warning'], .warning) {
+  color: var(--iw-amber);
+}
+[data-theme-styled='true'] ::selection {
+  color: var(--iw-on-selection, var(--iw-ink));
+  background: var(--iw-selection, var(--iw-accent));
+}
+[data-theme-styled='true'] :where(dialog)::backdrop {
+  background: color-mix(in srgb, var(--iw-ink) 78%, transparent);
+}
+
+/* Source art stays intact; only its reading veil follows the interface. */
+[data-theme-styled='true'] .menu-scene::after {
+  background:
+    linear-gradient(
+      90deg,
+      color-mix(in srgb, var(--iw-ink) 94%, transparent),
+      color-mix(in srgb, var(--iw-ink) 75%, transparent) 28%,
+      color-mix(in srgb, var(--iw-ink) 22%, transparent) 63%,
+      transparent
+    ),
+    linear-gradient(0deg, color-mix(in srgb, var(--iw-ink) 65%, transparent), transparent 30%);
+}
+[data-theme-styled='true'] .menu-scene {
+  --scene-ink: var(--iw-ink);
+  --scene-accent: var(--iw-panel-raised);
+}
+[data-theme-styled='true'] :where(.menu-ornament, .menu-scene-decoration) {
+  color: var(--iw-line);
+}
+[data-theme-texture='off'] :where(.menu-ornament, .menu-scene-decoration, .menu-retune-layer) {
+  display: none;
+}
+[data-theme-surface='flat']
+  :where(
+    button,
+    .button,
+    .action,
+    .community-entry,
+    [role='button'],
+    [data-ui-action],
+    dialog,
+    .panel,
+    .field-kit-panel,
+    .iw-panel,
+    [data-component='panel'],
+    [data-ui-surface]
+  ) {
+  border-image: none;
+  box-shadow: none;
+}
+[data-theme-hud='opaque']
+  :where(
+    .hud,
+    .hud-card,
+    .hud-panel,
+    .telemetry,
+    .sim-hud,
+    .flight-hud,
+    .flight-instruments,
+    .flight-coaching,
+    .flight-brief p,
+    .scene-heading,
+    #hud,
+    [data-hud]
+  ) {
+  background: var(--iw-ink);
+  color: var(--iw-text);
+  text-shadow: none;
+  backdrop-filter: none;
+  opacity: 1;
+}
+[data-theme-motion='reduced']
+  :where(
+    .menu-ornament,
+    .edition-propeller,
+    .theme-decoration,
+    .menu-scene-decoration,
+    .operation-status-signal i,
+    .win-picture-caption
+  ) {
+  animation: none;
+  transition: none;
+  transform: none;
+}
+[data-theme-motion='reduced'] .menu-retune-layer {
+  display: none;
+}
+[data-theme-text-size='large']:not([data-interface-theme='legacy'])
+  :where(p, label, button, select, input, textarea, .micro-note) {
+  font-size: max(18px, 1em);
+}
+
+.theme-family-controls {
+  display: grid;
+  gap: 12px;
+  margin-block: 16px;
+  padding-block: 12px;
+  border-block: 1px solid var(--fk-line, #737c69);
+}
+.theme-family-controls label {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  justify-content: space-between;
+}
+.theme-family-controls label:has(> input[type='checkbox']) {
+  justify-content: flex-start;
+  min-height: var(--iw-target, 44px);
+}
+.theme-family-controls select {
+  max-width: 100%;
+}
+.theme-family-controls [role='status']:empty {
+  display: none;
+}
+.sim-appearance-controls {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 16px;
+  min-width: 0;
+  max-width: 100%;
+}
+.sim-appearance-controls label {
+  display: grid;
+  gap: 6px;
+  min-width: 0;
+  max-width: 100%;
+}
+.sim-appearance-controls select {
+  min-width: 0;
+  max-width: 100%;
+}
+.sim-appearance-controls [role='status'] {
+  flex-basis: 100%;
+}
+.sim-worlds .flight-controls > .sim-appearance-controls {
+  flex: 1 0 100%;
+  box-sizing: border-box;
+  margin-inline: 0;
+}
+[data-theme-styled='true'] .sim-worlds .flight-dialog > header {
+  z-index: 10;
+  background: var(--iw-panel);
+  box-shadow: 0 0 0 8px var(--iw-panel);
+}
+@media (pointer: coarse) {
+  [data-theme-density='studio'] {
+    --iw-target: 44px;
+  }
+}
+@media (orientation: portrait) {
+  [data-theme-styled='true'] .menu-scene::after {
+    background: linear-gradient(
+      0deg,
+      color-mix(in srgb, var(--iw-ink) 94%, transparent),
+      color-mix(in srgb, var(--iw-ink) 73%, transparent) 35%,
+      color-mix(in srgb, var(--iw-ink) 23%, transparent) 80%
+    );
+  }
+}
+@media (forced-colors: active) {
+  [data-theme-styled='true']
+    :where(button, .button, input, select, textarea, dialog, .panel, [data-ui-surface]) {
+    border-image: none;
+    box-shadow: none;
+    border-color: ButtonText;
+    forced-color-adjust: auto;
+  }
+  [data-theme-styled='true'] :where(input[type='checkbox'], input[type='radio']) {
+    appearance: auto;
+  }
+  [data-theme-styled='true'] :where(input[type='checkbox'], input[type='radio'])::before {
+    display: none;
+  }
+  [data-theme-styled='true'] :is(:focus-visible, .controller-focus) {
+    outline-color: Highlight;
+  }
+}
+
+/* A filled raster swaps atomically. Interpolating its label separately can
+   briefly create dark-on-dark text while a selected tab changes state. */
+[data-theme-styled='true']
+  :where(button, .button, [role='button'], .native-menu-actions > a, .game-mode-choice > a) {
+  transition:
+    box-shadow 100ms ease,
+    outline-color 100ms ease;
+}
+/* The game's motion preference applies even when the operating system allows
+   animation. Keep this override after the common action transition recipe. */
+[data-theme-motion='reduced']
+  :where(button, .button, [role='button'], .native-menu-actions > a, .game-mode-choice > a) {
+  transition: none;
+}
+[data-theme-styled='true'] label:has(> input:is([type='checkbox'], [type='radio'])) {
+  color: var(--iw-text);
+  background-color: var(--iw-panel-raised);
+  border-color: var(--iw-line);
+  border-image: none;
+  border-radius: 0;
+}
+.theme-gallery {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+.theme-gallery .theme-preview-card {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 8px;
+  align-content: start;
+  min-width: 0;
+  text-align: left;
+  padding: 12px;
+  border-image: none;
+  background: var(--iw-panel, var(--fk-panel));
+  color: var(--iw-text, var(--fk-text));
+  box-shadow: none;
+}
+.theme-preview-swatches {
+  display: grid;
+  grid-template-columns: 2fr 2fr 1fr 1fr;
+  gap: 0;
+  overflow: hidden;
+  border: 1px solid var(--iw-control-line, var(--fk-line));
+}
+.theme-preview-swatches span {
+  display: block;
+  min-width: 0;
+  height: 44px;
+  border: 0;
+}
+.theme-preview-card small {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.45;
+  opacity: 0.9;
+}
+.theme-gallery .theme-preview-card[aria-pressed='true'] {
+  color: var(--iw-on-selection, var(--fk-text));
+  background: var(--iw-selection, var(--fk-panel));
+  outline: 2px solid var(--iw-focus, var(--fk-focus));
+  outline-offset: 2px;
+}
+.theme-gallery .theme-preview-card:is(:focus-visible, .controller-focus) {
+  outline: 3px solid var(--iw-focus, var(--fk-focus));
+  outline-offset: 5px;
+}
+.theme-preview-card[aria-pressed='true'] strong::after {
+  content: ' ✓';
+}
+.theme-accessibility {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 20px;
+}
+.theme-family-controls > details {
+  padding: 12px;
+}
+.theme-family-controls > details > summary {
+  min-height: var(--iw-target, 44px);
+  cursor: pointer;
+}
+@media (max-width: 600px) {
+  .theme-gallery {
+    grid-template-columns: 1fr;
+  }
+}
+/* Compact Settings deliberately gives Back a fixed icon slot. Typography
+   overrides, including Large text, must not reveal its label over the arrow.
+   The real text/accessible name and the 44px target remain intact. */
+@media (max-width: 700px) {
+  [data-theme-styled='true'] .native-settings [data-menu-icon='back'] {
+    font-size: 0;
+    flex: 0 0 44px;
+    width: 44px;
+    min-width: 44px;
+    height: 44px;
+    min-height: 44px;
+    padding: 8px;
+    gap: 0;
+  }
+}
+/* Keep the compiled icon-only controls' real labels available to assistive
+   technology without drawing fallback text beside their replacement glyphs. */
+[data-theme-styled='true']
+  :is(.dialog-close, .icon-button)[data-presentation-icon][aria-label]:not([data-menu-icon]),
+[data-theme-styled='true']
+  :is(
+    [data-presentation-control='up'],
+    [data-presentation-control='down'],
+    [data-presentation-control='left'],
+    [data-presentation-control='right']
+  )[aria-label] {
+  font-size: 0;
+  gap: 0;
+  min-inline-size: var(--iw-target);
+}
+@media (prefers-reduced-motion: reduce) {
+  [data-theme-styled='true']
+    :where(button, .button, [role='button'], .native-menu-actions > a, .game-mode-choice > a) {
+    transition: none;
+  }
+}
+
+[data-theme-styled='true'] [data-ui-surface='section-title'] {
+  color: var(--iw-muted);
+  background: var(--iw-ink);
+  border-color: var(--iw-line);
+  border-image: none;
+}
+
+/* Earned media keeps its authored picture. Only the overlaid reading and
+   control surfaces share the active interface's paired colors. */
+[data-theme-styled='true']
+  :where(
+    .story-controls,
+    .story-notice,
+    .story-dialog--immersive > p:not(:empty),
+    .win-picture-caption,
+    #demo-dialog[data-reward='expanded'] .demo-header,
+    #demo-dialog[data-reward='expanded'] .demo-panel
+  ) {
+  color: var(--iw-text);
+  background: var(--iw-panel);
+  border-color: var(--iw-line);
+  border-image: none;
+  border-radius: 0;
+  text-shadow: none;
+  backdrop-filter: none;
+}
+[data-theme-styled='true']
+  :where(.story-dialog--immersive, .creator-player[data-earned-view='on'] #earned) {
+  background: var(--iw-ink);
+  border: 0;
+  border-image: none;
+  box-shadow: none;
+}
+/* The image element fills the viewport, including its contain-fit letterbox.
+   Theme only that backing; the authored pixels and fitting remain unchanged. */
+[data-theme-styled='true'] .creator-player #earned-picture {
+  background-color: var(--iw-ink);
+}
+[data-theme-styled='true'] .win-picture-caption {
+  width: fit-content;
+  max-width: calc(100% - 32px);
+  box-sizing: border-box;
+  margin-inline: auto;
+  padding: 12px 20px;
+  border: 1px solid var(--iw-line);
+}
+[data-theme-styled='true'] .win-picture-mark {
+  color: var(--iw-accent);
+}
+[data-theme-styled='true'] [data-win-picture] #shell-menu {
+  padding: 0;
+}
+[data-theme-styled='true'] [data-win-picture] #shell-menu::before {
+  color: inherit;
+}
+
+/* Status, badges and callouts are shared reading surfaces, including tools. */
+[data-theme-styled='true']
+  :where(
+    [role='status'],
+    [role='alert'],
+    .operation-status,
+    .callout,
+    .notice,
+    .pill,
+    .chip,
+    .status,
+    .skip-link,
+    pre
+  ) {
+  color: var(--iw-text);
+  background-color: var(--iw-panel);
+  border-color: var(--iw-line);
+  border-image: none;
+  border-radius: 0;
+}
+[data-theme-styled='true']
+  :where(.status-ready, [role='status'].success, [data-ui-tone='success']) {
+  color: var(--iw-safe);
+}
+[data-theme-styled='true']
+  :where(.status-building, [role='status'].warning, [data-ui-tone='warning']) {
+  color: var(--iw-amber);
+}
+[data-theme-styled='true']
+  :where(
+    [role='alert'],
+    [role='status'].error,
+    [role='status'][data-error='true'],
+    [data-ui-tone='danger']
+  ) {
+  color: var(--iw-hazard);
+}
+[data-theme-styled='true'] :where([role='status'][data-error='true'], [role='status'].error) {
+  border-inline-start: 3px solid var(--iw-hazard);
+  padding-inline-start: 0.75rem;
+}
+[data-theme-styled='true'] .operation-status[data-state='error'] {
+  color: var(--iw-hazard);
+  border-inline-start: 3px solid var(--iw-hazard);
+  padding-inline-start: 0.75rem;
+}
+[data-theme-styled='true'] .operation-status:is([data-state='cancelled'], [data-state='detached']) {
+  color: var(--iw-amber);
+}
+[data-theme-styled='true'] .operation-status .operation-status-label {
+  color: inherit;
+  background: transparent;
+}
+
+/* Deep dialogs and tool results are part of the same interface. Never leave a
+   legacy navy/teal well behind a newly resolved light-theme text color. */
+[data-theme-styled='true'] :where(.soundtrack-quick-status, .race-start-cue strong) {
+  color: var(--iw-on-accent);
+  background: var(--iw-accent);
+  border-color: var(--iw-accent);
+  border-image: none;
+}
+[data-theme-styled='true'] .journey-card-action {
+  color: var(--iw-on-accent);
+  background: var(--iw-accent);
+  border-color: var(--iw-accent);
+  font-size: 0.75rem;
+}
+[data-theme-styled='true'] .soundtrack-now-card::after {
+  background: var(--iw-accent);
+}
+[data-theme-styled='true'] .soundtrack-advanced-summary::after {
+  color: inherit;
+}
+[data-theme-styled='true'] .soundtrack-online-track {
+  border-color: var(--iw-line);
+}
+[data-theme-styled='true'] .soundtrack-online-track:is(:hover, :focus-within) {
+  color: var(--iw-text);
+  background: var(--iw-panel-raised);
+}
+[data-theme-styled='true'] :where(.soundtrack-online-style, .creator-poster-option):focus-within {
+  outline: 3px solid var(--iw-focus);
+  outline-offset: 2px;
+}
+[data-theme-styled='true'] :where(.batch-card-error, .creator-media-card-error) {
+  border-color: var(--iw-hazard);
+  border-image: none;
+}
+[data-theme-styled='true'] :where(.batch-card-preparing, .optional-world-current) {
+  outline: 2px solid var(--iw-focus);
+  outline-offset: 2px;
+}
+[data-theme-styled='true']
+  :where(
+    .asset-row.selected,
+    .candidate-entry.selected,
+    [aria-selected='true'],
+    [aria-pressed='true']
+  )
+  :where(.muted, .micro-note, small) {
+  color: inherit;
+}
+[data-theme-styled='true'] input[type='file']::file-selector-button {
+  color: var(--iw-text);
+  background: var(--iw-panel-raised);
+  border: 1px solid var(--iw-control-line);
+  border-radius: 0;
+  padding: 6px 10px;
+  margin-inline-end: 10px;
+  font: inherit;
+  cursor: pointer;
+}
+/* Reading state belongs to the message, not a permanent empty painted bar. */
+[data-theme-styled='true'] :where([role='status'], [role='alert']):empty {
+  background: transparent;
+}
+[data-theme-styled='true'] label:has(> input:is([type='checkbox'], [type='radio'])) {
+  padding: 6px 10px;
+  box-sizing: border-box;
+  gap: 10px;
+}
+[data-theme-styled='true'] :where(.soundtrack-dialog, .optional-worlds-dialog) .micro-note {
+  font-size: var(--fk-text-secondary);
+}
+/* Session transport is one control group. Its volume label must not run into
+   the last button when a long translation or enlarged text wraps the row. */
+[data-theme-styled='true'] [data-couch-music] {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+}
+[data-theme-styled='true'] [data-couch-music] > :where(h3, p, label, input, section, details) {
+  flex: 1 0 100%;
+  min-width: 0;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+[data-theme-styled='true'] [data-couch-music] > :where(h3, p) {
+  margin-block: 8px;
+}
+[data-theme-styled='true'] [data-couch-music] > label {
+  margin-top: 8px;
+}
+[data-theme-styled='true'] #soundtrack-now-sources {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 16px;
+  margin-block: 12px;
+}
+[data-theme-styled='true'] :where(.page-head, .masthead) > a + a {
+  margin-inline-start: 12px;
+}
+
+[data-theme-styled='true'] :where(.asset-row.selected, .candidate-entry.selected) {
+  color: var(--iw-on-selection);
+  background: var(--iw-selection);
+  border-color: var(--iw-focus);
+  box-shadow: inset 3px 0 var(--iw-focus);
+}
+
+/* Only the application-owned menu backdrop changes with the interface. Authored
+   campaign/edition scenery and logos are separate content and remain visible. */
+[data-theme-styled='true'] .menu-scene[data-backdrop='interface'] {
+  background: var(--iw-ink);
+}
+[data-theme-styled='true']
+  .menu-scene[data-backdrop='interface']
+  > :where(.menu-scene-art-plane, .menu-scene-signal) {
+  display: none;
+}
+[data-theme-styled='true'] .menu-scene[data-backdrop='interface']::before {
+  content: '';
+  position: absolute;
+  inset: 24px 24px auto auto;
+  inline-size: min(24vw, 192px);
+  block-size: 96px;
+  pointer-events: none;
+  background-image: var(--ui-scene-motif, none);
+  background-size: var(--ui-scene-motif-size, 48px 48px);
+  background-position: right top;
+  background-repeat: no-repeat;
+  opacity: 0.18;
+}
+[data-theme-material='linen'] {
+  --ui-scene-motif: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='64' height='64' shape-rendering='crispEdges'%3E%3Cg fill='none' stroke='%23f48686' stroke-width='2'%3E%3Cpath d='M32 10l22 22-22 22L10 32zM24 24l16 16m0-16L24 40'/%3E%3C/g%3E%3Cpath fill='%23e1ddcf' d='M0 0h2v2H0zm62 0h2v2h-2zM0 62h2v2H0zm62 0h2v2h-2z'/%3E%3C/svg%3E");
+  --ui-scene-motif-size: 64px 64px;
+}
+[data-theme-material='porcelain'] {
+  --ui-scene-motif: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='96'%3E%3Cg fill='none' stroke='%230057b7'%3E%3Cpath d='M-30 24q30-28 60 0t60 0t60 0M-30 72q30-28 60 0t60 0t60 0'/%3E%3Cpath d='M60 30q-12 10 0 20q12-10 0-20m0 20v8'/%3E%3C/g%3E%3C/svg%3E");
+  --ui-scene-motif-size: 120px 96px;
+}
+[data-theme-material='brass'],
+[data-theme-material='copper'] {
+  --ui-scene-motif:
+    repeating-linear-gradient(90deg, transparent 0 95px, var(--iw-line) 95px 96px),
+    repeating-linear-gradient(0deg, transparent 0 95px, var(--iw-line) 95px 96px);
+  --ui-scene-motif-size: 96px 96px;
+}
+[data-theme-material='wood'] {
+  --ui-scene-motif:
+    repeating-linear-gradient(
+      0deg,
+      transparent 0 7px,
+      var(--iw-line) 7px 8px,
+      transparent 8px 62px,
+      var(--iw-line) 62px 64px
+    ),
+    repeating-linear-gradient(90deg, transparent 0 191px, var(--iw-line) 191px 192px);
+  --ui-scene-motif-size: 192px 64px;
+}
+[data-theme-material='composite'] {
+  --ui-scene-motif:
+    linear-gradient(30deg, transparent 0 48%, var(--iw-accent) 49% 50%, transparent 51%),
+    linear-gradient(150deg, transparent 0 48%, var(--iw-line) 49% 50%, transparent 51%);
+  --ui-scene-motif-size: 96px 64px;
+}
+[data-theme-material='classic'],
+[data-theme-material='terminal'],
+[data-theme-material='lcd'] {
+  --ui-scene-motif: none;
+}
+[data-theme-material='classic'] .menu-scene[data-backdrop='interface']::after,
+[data-theme-material='terminal'] .menu-scene[data-backdrop='interface']::after,
+[data-theme-material='lcd'] .menu-scene[data-backdrop='interface']::after {
+  background: none;
+}
+[data-theme-texture='off'] .menu-scene[data-backdrop='interface']::before {
+  background-image: none;
+}

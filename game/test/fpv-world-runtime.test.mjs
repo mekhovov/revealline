@@ -80,7 +80,7 @@ test('world validation rejects unsupported rules, duplicate actors, malformed ge
           },
         }),
       ),
-    /existing combat/,
+    /existing hostile targets/,
   );
   assert.throws(
     () =>

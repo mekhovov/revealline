@@ -1,0 +1,105 @@
+TAP version 13
+# Subtest: initial exact Relay Yard preparation stays passive, then Ready and only explicit Start draws the accepted original
+ok 1 - initial exact Relay Yard preparation stays passive, then Ready and only explicit Start draws the accepted original # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.543042
+  ...
+# Subtest: actual arena selection prepares Relay Yard independently and releases the unadopted First Connection picture once
+ok 2 - actual arena selection prepares Relay Yard independently and releases the unadopted First Connection picture once # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.069834
+  ...
+# Subtest: Back cancels the initial actual picture read; late bytes cannot ready the arena and explicit Retry retains the exact identity
+ok 3 - Back cancels the initial actual picture read; late bytes cannot ready the arena and explicit Retry retains the exact identity # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.050375
+  ...
+# Subtest: Cancel during decode releases only that image; its late decode cannot replace or release a newer Retry
+ok 4 - Cancel during decode releases only that image; its late decode cannot replace or release a newer Retry # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.038625
+  ...
+# Subtest: a new actual arena choice supersedes a held old read without adopting or focusing from its late completion
+ok 5 - a new actual arena choice supersedes a held old read without adopting or focusing from its late completion # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.041167
+  ...
+# Subtest: blur retires preparation and cannot revive Start or focus after returning
+ok 6 - blur retires preparation and cannot revive Start or focus after returning # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.031667
+  ...
+# Subtest: hidden retires preparation and cannot revive Start or focus after returning
+ok 7 - hidden retires preparation and cannot revive Start or focus after returning # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.102875
+  ...
+# Subtest: pagehide retires preparation and cannot revive Start or focus after returning
+ok 8 - pagehide retires preparation and cannot revive Start or focus after returning # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.048542
+  ...
+# Subtest: deliberate keyboard traversal away from pending Cancel keeps its chosen mode link when Ready
+ok 9 - deliberate keyboard traversal away from pending Cancel keeps its chosen mode link when Ready # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.146625
+  ...
+# Subtest: fresh pointer intent without a focus change vetoes the pending Ready focus handoff
+ok 10 - fresh pointer intent without a focus change vetoes the pending Ready focus handoff # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.092333
+  ...
+# Subtest: fresh keyboard intent without a focus change vetoes the pending Ready focus handoff
+ok 11 - fresh keyboard intent without a focus change vetoes the pending Ready focus handoff # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.03975
+  ...
+# Subtest: required decode failure exposes Retry with no procedural fallback or automatic start
+ok 12 - required decode failure exposes Retry with no procedural fallback or automatic start # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.0345
+  ...
+# Subtest: confirmed Retry retains the immutable authored arena and exact accepted picture after live enemy mutation
+ok 13 - confirmed Retry retains the immutable authored arena and exact accepted picture after live enemy mutation # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.028459
+  ...
+# Subtest: changed accepted asset authority refuses Retry before replacing the paused run or image
+ok 14 - changed accepted asset authority refuses Retry before replacing the paused run or image # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.079959
+  ...
+# Subtest: changed starter imports leave the ready arena intact; renamed historical imports receive the approved generic picture
+ok 15 - changed starter imports leave the ready arena intact; renamed historical imports receive the approved generic picture # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.030208
+  ...
+# Subtest: BFCache suspension keeps accepted artwork and shared preferences; terminal cleanup releases it exactly once
+ok 16 - BFCache suspension keeps accepted artwork and shared preferences; terminal cleanup releases it exactly once # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.093875
+  ...
+# Subtest: paused menu/display edits retain HUD continuity and the accepted picture with only shared preference reads/writes
+ok 17 - paused menu/display edits retain HUD continuity and the accepted picture with only shared preference reads/writes
+  ---
+  duration_ms: 1091.26
+  ...
+# Subtest: picture waiting and checked mode departure have separate owners with reachable Cancel and fixed links
+ok 18 - picture waiting and checked mode departure have separate owners with reachable Cancel and fixed links # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.082875
+  ...
+# Subtest: terminal pagehide during decode releases candidate resources and never focuses or adopts late completion
+ok 19 - terminal pagehide during decode releases candidate resources and never focuses or adopts late completion # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.031
+  ...
+1..19
+# tests 19
+# suites 0
+# pass 1
+# fail 0
+# cancelled 0
+# skipped 18
+# todo 0
+# duration_ms 8402.45725

@@ -136,7 +136,7 @@ test('an installation pointer is recorded only after a verified worker activates
   assert.equal(callbacks.size, 0);
 });
 
-function launcher(fetcher) {
+function launcher(fetcher, query = '', { storage = memory(), offlineReady = false } = {}) {
   const elements = Object.fromEntries(
     ['locale', 'title', 'check', 'open', 'prepare', 'previous', 'status'].map((id) => [
       id,
@@ -144,12 +144,16 @@ function launcher(fetcher) {
     ]),
   );
   const events = new Map(),
-    timers = new Map();
+    timers = new Map(),
+    locations = [];
   const context = {
     document: { documentElement: {}, getElementById: (id) => elements[id] },
     navigator: { language: 'en' },
-    localStorage: memory(),
-    location: { href: 'https://example.test' + root + 'app/' },
+    localStorage: storage,
+    location: {
+      href: 'https://example.test' + root + 'app/' + query,
+      assign: (url) => locations.push(url),
+    },
     fetch: fetcher,
     AbortController,
     TextDecoder,
@@ -157,6 +161,7 @@ function launcher(fetcher) {
     URL,
     optionalInstallationKey,
     validateOptionalInstallationReference,
+    inspectOptionalOffline: async () => offlineReady,
     setTimeout(callback) {
       timers.set(callback, callback);
       return callback;
@@ -169,11 +174,91 @@ function launcher(fetcher) {
     },
   };
   const ready = runInNewContext(
-    `(${installOptionalLauncher.toString()})(${JSON.stringify({ packageId, root })}, { optionalInstallationKey, validateOptionalInstallationReference })`,
+    `(${installOptionalLauncher.toString()})(${JSON.stringify({ packageId, root })}, { optionalInstallationKey, validateOptionalInstallationReference, inspectOptionalOffline })`,
     context,
   );
-  return { elements, events, timers, ready };
+  return { elements, events, timers, locations, ready };
 }
+
+test('stable launcher forwards a bounded cosmetic pin without admitting navigation or storage context', async () => {
+  const current = {
+    id: packageId,
+    version: 'v1.2.3',
+    scope: '../releases/v1.2.3/site/',
+    entry: 'optional-practice/civilian-flight/index.html',
+  };
+  const fetcher = async () => new Response(JSON.stringify(current));
+  const valid = launcher(
+    fetcher,
+    '?appearanceFamily=tryzub&appearanceRevision=r1&edition=foreign&script=remote',
+  );
+  await valid.ready;
+  await valid.elements.check.onclick();
+  const target = new URL(valid.elements.prepare.href);
+  assert.deepEqual(
+    [...target.searchParams],
+    [
+      ['lang', 'en'],
+      ['appearanceFamily', 'tryzub'],
+      ['appearanceRevision', 'r1'],
+    ],
+  );
+  for (const query of [
+    '?appearanceFamily=tryzub',
+    '?appearanceFamily=../private&appearanceRevision=r1',
+    '?appearanceFamily=tryzub&appearanceFamily=dos&appearanceRevision=r1',
+  ]) {
+    const invalid = launcher(fetcher, query);
+    await invalid.ready;
+    await invalid.elements.check.onclick();
+    assert.equal(new URL(invalid.elements.prepare.href).search, '?lang=en');
+  }
+});
+
+test('stable launcher keeps locale and appearance on auto-play and verified offline fallback', async () => {
+  const current = {
+    id: packageId,
+    version: 'v1.2.3',
+    scope: '../releases/v1.2.3/site/',
+    entry: 'optional-practice/civilian-flight/index.html',
+  };
+  const query = '?action=play&lang=uk&appearanceFamily=dnipro-porcelain&appearanceRevision=r1';
+  const online = launcher(async () => new Response(JSON.stringify(current)), query);
+  await online.ready;
+  assert.equal(online.locations.length, 1);
+  const storage = memory();
+  recordOptionalInstallation({ packageId, storage, location: locationFor('v1.2.2') });
+  const saved = storage.getItem(optionalInstallationKey(packageId, root));
+  const offline = launcher(
+    async () => {
+      throw new Error('Unavailable');
+    },
+    query,
+    {
+      storage,
+      offlineReady: true,
+    },
+  );
+  await offline.ready;
+  assert.equal(offline.locations.length, 1);
+  for (const [href, version] of [
+    [online.locations[0], 'v1.2.3'],
+    [offline.locations[0], 'v1.2.2'],
+  ]) {
+    const target = new URL(href);
+    assert.equal(target.pathname, root + `releases/${version}/site/` + current.entry);
+    assert.deepEqual(
+      [...target.searchParams],
+      [
+        ['lang', 'uk'],
+        ['appearanceFamily', 'dnipro-porcelain'],
+        ['appearanceRevision', 'r1'],
+      ],
+    );
+  }
+  assert.equal(offline.elements.open.href, offline.locations[0]);
+  assert.equal(storage.getItem(optionalInstallationKey(packageId, root)), saved);
+});
 
 test('stable launcher reads only a bounded explicit pointer and cancels abandoned checks', async () => {
   const requests = [];

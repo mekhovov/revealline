@@ -144,6 +144,8 @@
     "docs/verification/fpv-redesign/baseline",
     "docs/presentation-system.md",
     "authoring/asset-studio",
+    "authoring/fpv-worlds/calibration.html",
+    "authoring/fpv-worlds/calibration.mjs",
     "docs/asset-studio.md",
     "docs/field-kit-production.md",
     "docs/field-kit-title-v2.md",

@@ -480,7 +480,7 @@ test('native preview metadata statuses do not adopt procedural playback captions
   const pendingStatus = draft.status.textContent;
   await a.play();
   master.setMuted(false);
-  assert.match(saved.status.textContent, /ready/);
+  assert.match(saved.status.textContent, /\bReady$/);
   assert.equal(draft.status.textContent, pendingStatus);
   assert.equal(a.plays, 1);
   draft.surface.querySelector('audio').emit('error');
@@ -490,6 +490,6 @@ test('native preview metadata statuses do not adopt procedural playback captions
   master.setMuted(true);
   master.setVolume(0.5);
   assert.equal(draft.status.textContent, failure);
-  assert.match(saved.status.textContent, /ready/);
+  assert.match(saved.status.textContent, /\bReady$/);
   assert.equal(a.plays, 1, 'Native transport remains governed by its own controls.');
 });

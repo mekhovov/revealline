@@ -1,0 +1,155 @@
+TAP version 13
+# Subtest: company startup presentation block supplies the admitted candidate and waits for its resources
+ok 1 - company startup presentation block supplies the admitted candidate and waits for its resources
+  ---
+  duration_ms: 575.074042
+  ...
+# Subtest: actual custom campaign adoption latches interface and exact arcade dependency
+ok 2 - actual custom campaign adoption latches interface and exact arcade dependency
+  ---
+  duration_ms: 3957.285167
+  ...
+# Subtest: actual custom campaign adoption latches interface and exact arcade dependency while preserving the personal choice
+ok 3 - actual custom campaign adoption latches interface and exact arcade dependency while preserving the personal choice
+  ---
+  duration_ms: 1493.747625
+  ...
+# Subtest: a cancelled custom campaign load preserves the active run, interface and SIM pin
+ok 4 - a cancelled custom campaign load preserves the active run, interface and SIM pin
+  ---
+  duration_ms: 1902.353291
+  ...
+# Mission preparation failed. Error: Review fixture custom theme font decode failed.
+#     at TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/game/test/curated-community-theme-host.test.mjs:216:19)
+#     at async Test.run (node:internal/test_runner/test:797:9)
+#     at async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+# Subtest: a failed custom campaign load preserves the active run, interface and SIM pin
+ok 5 - a failed custom campaign load preserves the active run, interface and SIM pin
+  ---
+  duration_ms: 1425.74725
+  ...
+# Subtest: three Sentinel Download & play choices preserve an unrelated cut through Stay and retain distinct earned owners through backup/restart
+    # Subtest: three explicit downloads, independent real wins and exact metadata backup
+    ok 1 - three explicit downloads, independent real wins and exact metadata backup
+      ---
+      duration_ms: 332920.306417
+      ...
+    # Subtest: new app retains exact first-earned still/null-story pins and authenticates all three editions
+    ok 2 - new app retains exact first-earned still/null-story pins and authenticates all three editions
+      ---
+      duration_ms: 62884.250667
+      ...
+    1..2
+ok 6 - three Sentinel Download & play choices preserve an unrelated cut through Stay and retain distinct earned owners through backup/restart
+  ---
+  duration_ms: 395807.700125
+  ...
+# Subtest: unavailable exact family revision reports EN/UK at the UI boundary without changing accepted presentation
+ok 7 - unavailable exact family revision reports EN/UK at the UI boundary without changing accepted presentation
+  ---
+  duration_ms: 88.077458
+  ...
+# Subtest: failed stylesheet load reports EN/UK at the UI boundary without changing accepted presentation
+ok 8 - failed stylesheet load reports EN/UK at the UI boundary without changing accepted presentation
+  ---
+  duration_ms: 19.937875
+  ...
+# Subtest: read-only preferences reports EN/UK at the UI boundary without changing accepted presentation
+ok 9 - read-only preferences reports EN/UK at the UI boundary without changing accepted presentation
+  ---
+  duration_ms: 73.831792
+  ...
+# Subtest: denied appearance storage reports EN/UK at the UI boundary without changing accepted presentation
+ok 10 - denied appearance storage reports EN/UK at the UI boundary without changing accepted presentation
+  ---
+  duration_ms: 35.878125
+  ...
+# Subtest: denied SIM appearance storage reports EN/UK at the UI boundary without changing accepted presentation
+ok 11 - denied SIM appearance storage reports EN/UK at the UI boundary without changing accepted presentation
+  ---
+  duration_ms: 41.094708
+  ...
+# Subtest: unknown validator diagnostics remain exact instead of changing pure contract error text
+ok 12 - unknown validator diagnostics remain exact instead of changing pure contract error text
+  ---
+  duration_ms: 10.36175
+  ...
+# Subtest: prepared context leaves the accepted interface and preferences unchanged until a synchronous single-use commit
+ok 13 - prepared context leaves the accepted interface and preferences unchanged until a synchronous single-use commit
+  ---
+  duration_ms: 109.645667
+  ...
+# Subtest: prepared context rejects stale highContrast intent and leaves the current context in charge
+ok 14 - prepared context rejects stale highContrast intent and leaves the current context in charge
+  ---
+  duration_ms: 29.839958
+  ...
+# Subtest: prepared context rejects stale arcadeArt intent and leaves the current context in charge
+ok 15 - prepared context rejects stale arcadeArt intent and leaves the current context in charge
+  ---
+  duration_ms: 18.644209
+  ...
+# Subtest: prepared context rejects an intervening different context or a disposed owner
+ok 16 - prepared context rejects an intervening different context or a disposed owner
+  ---
+  duration_ms: 23.518166
+  ...
+# Subtest: failed font preparation retains the exact accepted context and lets a later preparation recover
+ok 17 - failed font preparation retains the exact accepted context and lets a later preparation recover
+  ---
+  duration_ms: 17.159166
+  ...
+# Subtest: failed stylesheet preparation never adopts its requested context and the original context recovers
+ok 18 - failed stylesheet preparation never adopts its requested context and the original context recovers
+  ---
+  duration_ms: 17.046291
+  ...
+# Subtest: a late earlier refresh cannot overwrite a synchronously committed prepared context
+ok 19 - a late earlier refresh cannot overwrite a synchronously committed prepared context
+  ---
+  duration_ms: 23.096042
+  ...
+# Subtest: an old context family pin reaches Arcade unchanged and a later context uses its own revision
+ok 20 - an old context family pin reaches Arcade unchanged and a later context uses its own revision
+  ---
+  duration_ms: 15.372833
+  ...
+# Subtest: a draft card choice survives accessibility and detail changes until explicit Apply
+ok 21 - a draft card choice survives accessibility and detail changes until explicit Apply
+  ---
+  duration_ms: 29.927458
+  ...
+# Subtest: v1 preference migration is read-only, preserves unknown intent and permits explicit recovery
+ok 22 - v1 preference migration is read-only, preserves unknown intent and permits explicit recovery
+  ---
+  duration_ms: 14.090583
+  ...
+# Subtest: complete Apply clears independent SIM appearance but preserves accessibility and legacy records
+ok 23 - complete Apply clears independent SIM appearance but preserves accessibility and legacy records
+  ---
+  duration_ms: 0.292458
+  ...
+# Subtest: all eight Arcade treatments preserve native sprite coverage and source ownership
+ok 24 - all eight Arcade treatments preserve native sprite coverage and source ownership
+  ---
+  duration_ms: 421.330834
+  ...
+# Subtest: theme cache isolates eight variants and retained Industrial history without touching original media
+ok 25 - theme cache isolates eight variants and retained Industrial history without touching original media
+  ---
+  duration_ms: 7.291208
+  ...
+# Subtest: an already failed preload is replaced and fetched before the host accepts a theme
+ok 26 - an already failed preload is replaced and fetched before the host accepts a theme
+  ---
+  duration_ms: 10.575666
+  ...
+1..26
+# tests 28
+# suites 0
+# pass 28
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 427181.443791

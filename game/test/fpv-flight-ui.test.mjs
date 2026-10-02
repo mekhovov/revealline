@@ -23,7 +23,7 @@ const html = parse(
     'utf8',
   ),
 );
-function fixture(
+async function fixture(
   t,
   {
     available = true,
@@ -38,6 +38,7 @@ function fixture(
     frames = new Map(),
     deliveries = [],
     renders = [];
+  doc.createElementNS = (_namespace, name) => doc.createElement(name);
   const body = html.childNodes
     .find((node) => node.tagName === 'html')
     .childNodes.find((node) => node.tagName === 'body');
@@ -61,6 +62,7 @@ function fixture(
     pads = [];
   Object.assign(win, {
     location: new URL(url),
+    performance: { now: () => 0 },
     navigator: { getGamepads: () => pads, ...(serviceWorker ? { serviceWorker } : {}) },
     requestAnimationFrame: (fn) => {
       frames.set(++id, fn);
@@ -102,6 +104,7 @@ function fixture(
     ...factories,
   });
   t.after(() => view.dispose());
+  await view.settled();
   return {
     doc,
     win,
@@ -154,8 +157,80 @@ function radioProfile(pad) {
   };
 }
 
-test('native optional shell lists twelve drills, uses exclusive keyboard input, and neutralizes blur/dialog/reset', (t) => {
-  const f = fixture(t);
+test('SIM world selection freezes on first arm and applies queued preference only on reset', async (t) => {
+  const h = await fixture(t);
+  const select = h.$('sim-appearance-world');
+  select.value = 'industrial-workshop';
+  select.emit('change');
+  assert.equal(h.view.appearance().accepted.collectionId, 'industrial-workshop');
+  await h.view.settled();
+  assert.equal(h.view.arm(), true);
+  h.view.pause();
+  select.value = 'authored';
+  select.emit('change');
+  assert.equal(h.view.appearance().accepted.collectionId, 'industrial-workshop');
+  assert.equal(h.view.appearance().pending, true);
+  assert.equal(h.view.appearance().appearance.collectionId, 'authored');
+  const saved = h.view.exportRecording();
+  assert.equal(saved.presentation.collectionId, 'industrial-workshop');
+  assert.deepEqual(saved.proof, h.view.exportAttempt());
+  h.view.reset();
+  assert.equal(h.view.appearance().accepted.collectionId, 'authored');
+  assert.equal(h.view.appearance().pending, false);
+});
+
+test('a superseded appearance preparation cannot arm or overwrite the newer flight appearance', async (t) => {
+  const preparations = [];
+  let initial = true;
+  const h = await fixture(t, {
+    rendererFactory: () => ({
+      available: true,
+      setCourse() {},
+      prepare({ signal }) {
+        if (initial) {
+          initial = false;
+          return true;
+        }
+        return new Promise((resolve) => preparations.push({ signal, resolve }));
+      },
+      dispose() {},
+    }),
+  });
+  const select = h.$('sim-appearance-world');
+  select.value = 'industrial-workshop';
+  select.emit('change');
+  assert.equal(h.view.arm(), false, 'graphics must be ready before the first arm');
+  select.value = 'dos';
+  select.emit('change');
+  assert.equal(preparations[0].signal.aborted, true);
+  preparations[1].resolve(true);
+  await h.view.settled();
+  assert.equal(h.view.appearance().accepted.collectionId, 'dos');
+  assert.equal(h.view.arm(), true);
+  preparations[0].resolve(true);
+  await Promise.resolve();
+  assert.equal(h.view.exportRecording().presentation.collectionId, 'dos');
+  assert.equal(h.view.snapshot().status, 'active');
+});
+
+test('unavailable recorded appearance remains visible after graphics preparation without altering its proof', async (t) => {
+  const h = await fixture(t);
+  const proof = FLIGHT_DEMONSTRATIONS[0];
+  const recording = {
+    format: 'FlightRecording.v1',
+    proof: structuredClone(proof),
+    presentation: { collectionId: 'industrial-workshop', revision: 'missing-r2' },
+  };
+  await h.view.review(recording);
+  assert.match(h.$('status').textContent, /Recorded appearance unavailable/);
+  assert.deepEqual(recording.proof, proof);
+  assert.equal(h.view.appearance().accepted.revision, 'missing-r2');
+  assert.equal(h.view.exportAttempt().frames.length, 0);
+  assert.deepEqual(h.deliveries, []);
+});
+
+test('native optional shell lists twelve drills, uses exclusive keyboard input, and neutralizes blur/dialog/reset', async (t) => {
+  const f = await fixture(t);
   assert.equal(f.$('course-list').children.length, 12);
   assert.equal(f.$('fallback').hidden, true);
   f.$('arm').click();
@@ -183,6 +258,7 @@ test('native optional shell lists twelve drills, uses exclusive keyboard input, 
   assert.equal(f.view.snapshot().status, 'paused');
   f.$('input-source').value = 'touch';
   f.$('input-source').emit('change');
+  await f.view.settled();
   assert.equal(f.view.snapshot().ticks, 0);
   f.$('arm').click();
   f.tick();
@@ -200,7 +276,7 @@ test('native optional shell lists twelve drills, uses exclusive keyboard input, 
 });
 
 test('synthetic USB samples drive the real shell/model to one verified practice completion; reviewing and demonstrations never deliver evidence', async (t) => {
-  const f = fixture(t),
+  const f = await fixture(t),
     pad = {
       id: 'Fixture USB',
       index: 0,
@@ -212,6 +288,7 @@ test('synthetic USB samples drive the real shell/model to one verified practice 
   f.setPads([pad]);
   f.$('input-source').value = 'radio';
   f.$('input-source').emit('change');
+  await f.view.settled();
   f.view.radio.select(0);
   f.view.radio.setProfile(radioProfile(pad));
   f.view.radio.verify();
@@ -237,6 +314,7 @@ test('synthetic USB samples drive the real shell/model to one verified practice 
   f.tick(example.frames.length + 4);
   assert.equal(f.deliveries.length, 1);
   f.$('try').click();
+  await f.view.settled();
   assert.equal(f.view.snapshot().ticks, 0);
   assert.equal(f.view.snapshot().status, 'disarmed');
   f.$('watch').click();
@@ -245,11 +323,12 @@ test('synthetic USB samples drive the real shell/model to one verified practice 
   assert.equal(f.deliveries.length, 1);
   assert.match(f.$('status').textContent, /Replay finished/);
   f.$('try').click();
+  await f.view.settled();
   assert.equal(f.view.exportAttempt().frames.length, 0);
 });
 
-test('radio switch edges while blurred or hidden cannot rearm; return requires a fresh visible OFF then ON', (t) => {
-  const f = fixture(t),
+test('radio switch edges while blurred or hidden cannot rearm; return requires a fresh visible OFF then ON', async (t) => {
+  const f = await fixture(t),
     pad = {
       id: 'Fixture USB',
       index: 0,
@@ -263,6 +342,7 @@ test('radio switch edges while blurred or hidden cannot rearm; return requires a
   f.setPads([pad]);
   f.$('input-source').value = 'radio';
   f.$('input-source').emit('change');
+  await f.view.settled();
   f.view.radio.select(0);
   f.view.radio.setProfile(profile);
   f.view.radio.verify();
@@ -302,7 +382,7 @@ test('radio switch edges while blurred or hidden cannot rearm; return requires a
 
 test('immediate Retry preserves the completed proof while notebook verification yields', async (t) => {
   let release, book;
-  const f = fixture(t, {
+  const f = await fixture(t, {
       notebookFactory(options) {
         book = mountFlightNotebook(options);
         return {
@@ -325,6 +405,7 @@ test('immediate Retry preserves the completed proof while notebook verification 
   f.setPads([pad]);
   f.$('input-source').value = 'radio';
   f.$('input-source').emit('change');
+  await f.view.settled();
   f.view.radio.select(0);
   f.view.radio.setProfile(radioProfile(pad));
   f.view.radio.verify();
@@ -353,8 +434,8 @@ test('immediate Retry preserves the completed proof while notebook verification 
   assert.equal(f.view.exportAttempt().frames.length, 0);
 });
 
-test('Controls camera chooser and toolbar stay synchronized for the narrow layout', (t) => {
-  const f = fixture(t);
+test('Controls camera chooser and toolbar stay synchronized for the narrow layout', async (t) => {
+  const f = await fixture(t);
   f.$('help').click();
   f.$('camera-help').value = 'overview';
   f.$('camera-help').emit('change');
@@ -368,7 +449,7 @@ test('Controls camera chooser and toolbar stay synchronized for the narrow layou
 test('Studio preview runs the actual course as authoring and never reaches the notebook earning callback', async (t) => {
   let preview;
   const accepted = [],
-    f = fixture(t, {
+    f = await fixture(t, {
       studioFactory({ onPreview }) {
         preview = onPreview;
         return { dispose() {}, setLocale() {} };
@@ -388,6 +469,7 @@ test('Studio preview runs the actual course as authoring and never reaches the n
   f.setPads([pad]);
   f.$('input-source').value = 'radio';
   f.$('input-source').emit('change');
+  await f.view.settled();
   f.view.radio.select(0);
   f.view.radio.setProfile(radioProfile(pad));
   f.view.radio.verify();
@@ -397,6 +479,7 @@ test('Studio preview runs the actual course as authoring and never reaches the n
   const course = structuredClone(FLIGHT_COURSES[0]);
   course.revision = 'authoring-r2';
   preview(course);
+  await f.view.settled();
   assert.equal(f.$('studio-dialog').open, false);
   assert.equal(f.view.exportAttempt().session, 'authoring');
   assert.equal(f.$('try').hidden, false);
@@ -415,12 +498,13 @@ test('Studio preview runs the actual course as authoring and never reaches the n
   assert.equal(accepted.length, 0);
   assert.equal(f.deliveries.length, 0);
   f.$('try').click();
+  await f.view.settled();
   assert.equal(f.view.exportAttempt().session, 'practice');
   assert.equal(f.view.snapshot().status, 'disarmed');
 });
 
-test('radio loss pauses instead of borrowing keyboard and reset drops old throttle pickup', (t) => {
-  const f = fixture(t),
+test('radio loss pauses instead of borrowing keyboard and reset drops old throttle pickup', async (t) => {
+  const f = await fixture(t),
     pad = {
       id: 'Fixture USB',
       index: 0,
@@ -432,6 +516,7 @@ test('radio loss pauses instead of borrowing keyboard and reset drops old thrott
   f.setPads([pad]);
   f.$('input-source').value = 'radio';
   f.$('input-source').emit('change');
+  await f.view.settled();
   f.view.radio.select(0);
   f.view.radio.setProfile(radioProfile(pad));
   f.view.radio.verify();
@@ -451,6 +536,7 @@ test('radio loss pauses instead of borrowing keyboard and reset drops old thrott
   f.setPads([pad]);
   f.view.radio.verify();
   f.$('reset').click();
+  await f.view.settled();
   assert.equal(f.view.radio.status().pickup, null);
   assert.equal(f.view.arm(), false);
   assert.equal(f.view.radio.status().reason, 'throttle-high');
@@ -458,15 +544,15 @@ test('radio loss pauses instead of borrowing keyboard and reset drops old thrott
   assert.equal(f.view.arm(), true);
 });
 
-test('graphics failure leaves readable choices and never advances; context loss freezes an existing attempt', (t) => {
-  const fallback = fixture(t, { available: false });
+test('graphics failure leaves readable choices and never advances; context loss freezes an existing attempt', async (t) => {
+  const fallback = await fixture(t, { available: false });
   assert.equal(fallback.$('fallback').hidden, false);
   assert.match(fallback.$('fallback').textContent, /WebGL/);
   fallback.$('arm').click();
   fallback.tick(5);
   assert.equal(fallback.view.snapshot().ticks, 0);
   assert.throws(() => fallback.view.review(FLIGHT_DEMONSTRATIONS[0]), /WebGL/);
-  const live = fixture(t);
+  const live = await fixture(t);
   live.$('arm').click();
   live.tick(3);
   live.contextLoss();
@@ -480,7 +566,7 @@ test('graphics failure leaves readable choices and never advances; context loss 
 });
 
 test('replay owns a verified clone, rejects forged course data and cannot be used as a practice source', async (t) => {
-  const f = fixture(t),
+  const f = await fixture(t),
     proof = structuredClone(FLIGHT_DEMONSTRATIONS[0]);
   const pending = f.view.review(proof);
   proof.frames[0] = [1000, 1000, 1000, 1000];
@@ -496,6 +582,7 @@ test('replay owns a verified clone, rejects forged course data and cannot be use
   f.$('language').emit('change');
   assert.match(f.$('course-title').textContent, /Підйом/);
   f.$('try').click();
+  await f.view.settled();
   assert.equal(f.view.exportAttempt().session, 'practice');
   assert.equal(f.view.exportAttempt().frames.length, 0);
 });
@@ -515,7 +602,10 @@ test('touch release holds throttle, centers yaw, and cancellation clears all inp
   input.bindStick(node, 'left');
   input.select('touch');
   input.enable(true);
-  node.emit('pointerdown', { pointerId: 1, clientX: 75, clientY: 25 });
+  input.touchResponse('direct');
+  node.emit('pointerdown', { pointerId: 1, clientX: 50, clientY: 75 });
+  assert.deepEqual(input.sample(0.02), { yaw: 0, throttle: 0, pitch: 0, roll: 0 });
+  node.emit('pointermove', { pointerId: 1, clientX: 67, clientY: 24 });
   assert.deepEqual(input.sample(0.02), { yaw: 0.5, throttle: 0.75, pitch: 0, roll: 0 });
   node.emit('pointerup', { pointerId: 1 });
   assert.equal(input.sample(0.02).throttle, 0.75);
@@ -534,7 +624,7 @@ test('touch release holds throttle, centers yaw, and cancellation clears all inp
 
 test('full-length replay admission yields through the shared verifier and cannot earn a practice receipt', async (t) => {
   let yields = 0;
-  const f = fixture(t, {
+  const f = await fixture(t, {
       reviewYieldControl: async () => {
         yields++;
       },
@@ -559,7 +649,7 @@ test('pending review aborts on reset, input change, dialog close and disposal wi
   for (const action of ['reset', 'source', 'close', 'dispose']) {
     let release,
       yields = 0;
-    const f = fixture(t, {
+    const f = await fixture(t, {
       reviewYieldControl: () => {
         yields++;
         return new Promise((resolve) => {
@@ -598,7 +688,7 @@ test('pending review aborts on reset, input change, dialog close and disposal wi
 test('closing a replay import during file reading prevents verification and late playback', async (t) => {
   let release,
     yields = 0;
-  const f = fixture(t, {
+  const f = await fixture(t, {
     reviewYieldControl: async () => {
       yields++;
     },
@@ -623,7 +713,7 @@ test('closing a replay import during file reading prevents verification and late
   assert.equal(f.deliveries.length, 0);
 });
 
-test('actual renderer detects unavailable WebGL without allocating a running fallback simulation', (t) => {
+test('actual renderer detects unavailable WebGL without allocating a running fallback simulation', async (t) => {
   t.mock.method(console, 'error', () => {});
   const document = new Document(),
     canvas = document.createElement('canvas');
@@ -633,8 +723,8 @@ test('actual renderer detects unavailable WebGL without allocating a running fal
   result.dispose();
 });
 
-test('disposing releases generated course callbacks; retained old buttons are inert and unrelated host content remains', (t) => {
-  const f = fixture(t),
+test('disposing releases generated course callbacks; retained old buttons are inert and unrelated host content remains', async (t) => {
+  const f = await fixture(t),
     old = f.$('course-list').children[1];
   let hostClicks = 0;
   const host = f.doc.createElement('button');
@@ -651,10 +741,10 @@ test('disposing releases generated course callbacks; retained old buttons are in
   assert.equal(hostClicks, 1);
 });
 
-test('stale queued animation timestamps cannot advance after a long execution gap; explicit resume keeps input ownership', (t) => {
+test('stale queued animation timestamps cannot advance after a long execution gap; explicit resume keeps input ownership', async (t) => {
   for (const mode of ['self-level', 'acro'])
     for (const owner of ['keyboard', 'radio']) {
-      const f = fixture(t),
+      const f = await fixture(t),
         pad = {
           id: 'Stall fixture USB',
           index: 0,
@@ -669,6 +759,7 @@ test('stale queued animation timestamps cannot advance after a long execution ga
       f.$('mode').emit('change');
       f.$('input-source').value = owner;
       f.$('input-source').emit('change');
+      await f.view.settled();
       if (owner === 'radio') {
         f.setPads([pad]);
         f.view.radio.select(0);
@@ -710,8 +801,8 @@ test('stale queued animation timestamps cannot advance after a long execution ga
     }
 });
 
-test('cached Back restore preserves paused flight and requires explicit resume without duplicate frames', (t) => {
-  const f = fixture(t, { notebookFactory: null, studioFactory: null });
+test('cached Back restore preserves paused flight and requires explicit resume without duplicate frames', async (t) => {
+  const f = await fixture(t, { notebookFactory: null, studioFactory: null });
   f.$('arm').click();
   f.key('KeyE');
   f.tick(5);
@@ -741,8 +832,8 @@ test('cached Back restore preserves paused flight and requires explicit resume w
   assert.equal(f.deliveries.length, 0);
 });
 
-test('cached radio restore requires a fresh arm edge and matching control pickup', (t) => {
-  const f = fixture(t, { notebookFactory: null, studioFactory: null }),
+test('cached radio restore requires a fresh arm edge and matching control pickup', async (t) => {
+  const f = await fixture(t, { notebookFactory: null, studioFactory: null }),
     pad = {
       id: 'Cached radio fixture',
       index: 0,
@@ -756,6 +847,7 @@ test('cached radio restore requires a fresh arm edge and matching control pickup
   f.setPads([pad]);
   f.$('input-source').value = 'radio';
   f.$('input-source').emit('change');
+  await f.view.settled();
   f.view.radio.select(0);
   f.view.radio.setProfile(profile);
   f.view.radio.verify();
@@ -814,7 +906,7 @@ test('game return keeps scoped offline controls available and serializes prepara
       unregisters++;
     },
   };
-  const f = fixture(t, {
+  const f = await fixture(t, {
     url: base + 'index.html?lang=en&game-return=%2Fgame%2Findex.html',
     notebookFactory: null,
     studioFactory: null,
@@ -868,12 +960,12 @@ test('unavailable offline capability stays explanatory and a failed prepare neve
     {},
     { url: 'file:///optional-practice/civilian-fpv/index.html', serviceWorker: {} },
   ]) {
-    const f = fixture(t, { notebookFactory: null, studioFactory: null, ...options });
+    const f = await fixture(t, { notebookFactory: null, studioFactory: null, ...options });
     assert.equal(f.$('install-offline').disabled, true);
     assert.equal(f.$('remove-offline').disabled, true);
     assert.equal(f.$('offline-unavailable').hidden, false);
   }
-  const f = fixture(t, {
+  const f = await fixture(t, {
     notebookFactory: null,
     studioFactory: null,
     serviceWorker: {
@@ -889,8 +981,8 @@ test('unavailable offline capability stays explanatory and a failed prepare neve
   assert.equal(f.$('remove-offline').disabled, false);
 });
 
-test('ordinary unload disposes permanently and a late pageshow cannot revive it', (t) => {
-  const f = fixture(t, { notebookFactory: null, studioFactory: null });
+test('ordinary unload disposes permanently and a late pageshow cannot revive it', async (t) => {
+  const f = await fixture(t, { notebookFactory: null, studioFactory: null });
   f.$('arm').click();
   f.tick(2);
   f.win.emit('pagehide', { persisted: false });
@@ -904,7 +996,7 @@ test('ordinary unload disposes permanently and a late pageshow cannot revive it'
   assert.deepEqual(f.view.snapshot(), stopped);
 });
 
-test('selecting USB radio restores saved axis arm and button reset after reload', (t) => {
+test('selecting USB radio restores saved axis arm and button reset after reload', async (t) => {
   const data = new Map();
   const storage = {
     getItem: (key) => data.get(key) ?? null,
@@ -924,10 +1016,11 @@ test('selecting USB radio restores saved axis arm and button reset after reload'
   profile.switches.reset = { button: 0, threshold: 0.5, invert: false };
   const store = createFlightProfileStore({ storage });
   store.save({ ...store.snapshot(), radio: profile });
-  const f = fixture(t, { storage });
+  const f = await fixture(t, { storage });
   f.setPads([pad]);
   f.$('input-source').value = 'radio';
   f.$('input-source').emit('change');
+  await f.view.settled();
   f.tick();
   assert.equal(f.view.radio.status().verified, true);
   pad.axes[4] = 1;
@@ -941,7 +1034,7 @@ test('selecting USB radio restores saved axis arm and button reset after reload'
   assert.equal(f.view.snapshot().ticks, 0);
 });
 
-test('tested TX15 default loads without saved calibration and does not auto-arm', (t) => {
+test('tested TX15 default loads without saved calibration and does not auto-arm', async (t) => {
   const storage = { getItem: () => null, setItem() {} };
   const profile = defaultRadioProfile();
   const pad = {
@@ -952,10 +1045,11 @@ test('tested TX15 default loads without saved calibration and does not auto-arm'
     axes: [0.004, 0.004, -1, 0.004, -1, 0, 0, 0],
     buttons: Array.from({ length: 24 }, () => ({ value: 0, pressed: false })),
   };
-  const f = fixture(t, { storage });
+  const f = await fixture(t, { storage });
   f.setPads([pad]);
   f.$('input-source').value = 'radio';
   f.$('input-source').emit('change');
+  await f.view.settled();
   f.tick();
   assert.equal(f.view.radio.status().verified, true);
   assert.equal(f.view.snapshot().status, 'disarmed');
@@ -964,8 +1058,8 @@ test('tested TX15 default loads without saved calibration and does not auto-arm'
   assert.equal(f.view.snapshot().status, 'active');
 });
 
-test('TX15 default does not match an unrelated joystick', (t) => {
-  const f = fixture(t, { storage: { getItem: () => null, setItem() {} } });
+test('TX15 default does not match an unrelated joystick', async (t) => {
+  const f = await fixture(t, { storage: { getItem: () => null, setItem() {} } });
   f.setPads([
     {
       index: 0,
@@ -978,17 +1072,19 @@ test('TX15 default does not match an unrelated joystick', (t) => {
   ]);
   f.$('input-source').value = 'radio';
   f.$('input-source').emit('change');
+  await f.view.settled();
   f.tick();
   assert.equal(f.view.radio.status().profile, null);
   assert.equal(f.view.snapshot().status, 'disarmed');
 });
 
-test('camera focus preserves global pause for keyboard, touch and radio owners without resuming held input', (t) => {
+test('camera focus preserves global pause for keyboard, touch and radio owners without resuming held input', async (t) => {
   for (const owner of ['keyboard', 'touch', 'radio']) {
     for (const code of ['KeyP', 'Escape']) {
-      const f = fixture(t);
+      const f = await fixture(t);
       f.$('input-source').value = owner;
       f.$('input-source').emit('change');
+      await f.view.settled();
       if (owner === 'radio') {
         const pad = {
           id: 'Pause fixture USB',

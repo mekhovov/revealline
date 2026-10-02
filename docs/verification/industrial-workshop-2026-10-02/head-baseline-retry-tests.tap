@@ -1,0 +1,182 @@
+TAP version 13
+# Subtest: first-connection: explicit Retry recovers a failed release presentation without replacing selection or automatically starting
+not ok 1 - first-connection: explicit Retry recovers a failed release presentation without replacing selection or automatically starting
+  ---
+  duration_ms: 10649.487209
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/game/test/coop-presentation-bootstrap-retry.test.mjs:69:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    Retry acknowledges the new preparation immediately.
+    + actual - expected
+    
+    + 'error'
+    - 'preparing'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'preparing'
+  actual: 'error'
+  operator: 'strictEqual'
+  stack: |-
+    retry (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/game/test/coop-presentation-bootstrap-retry.test.mjs:35:10)
+    TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/game/test/coop-presentation-bootstrap-retry.test.mjs:80:5)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: relay-yard: explicit Retry recovers a failed release presentation without replacing selection or automatically starting
+not ok 2 - relay-yard: explicit Retry recovers a failed release presentation without replacing selection or automatically starting
+  ---
+  duration_ms: 791.517375
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/game/test/coop-presentation-bootstrap-retry.test.mjs:69:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    Retry acknowledges the new preparation immediately.
+    + actual - expected
+    
+    + 'error'
+    - 'preparing'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'preparing'
+  actual: 'error'
+  operator: 'strictEqual'
+  stack: |-
+    retry (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/game/test/coop-presentation-bootstrap-retry.test.mjs:35:10)
+    TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/game/test/coop-presentation-bootstrap-retry.test.mjs:80:5)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: cancelling a held presentation Retry fences late readiness; a fresh Retry prepares the same arena without automatic Start
+not ok 3 - cancelling a held presentation Retry fences late readiness; a fresh Retry prepares the same arena without automatic Start
+  ---
+  duration_ms: 435.264792
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/game/test/coop-presentation-bootstrap-retry.test.mjs:127:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Retry acknowledges the new preparation immediately.
+    + actual - expected
+    
+    + 'error'
+    - 'preparing'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'preparing'
+  actual: 'error'
+  operator: 'strictEqual'
+  stack: |-
+    retry (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/game/test/coop-presentation-bootstrap-retry.test.mjs:35:10)
+    TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/game/test/coop-presentation-bootstrap-retry.test.mjs:137:3)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: another failed bootstrap Retry remains actionable and a later explicit Retry recovers without a background retry loop
+not ok 4 - another failed bootstrap Retry remains actionable and a later explicit Retry recovers without a background retry loop
+  ---
+  duration_ms: 555.795459
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/game/test/coop-presentation-bootstrap-retry.test.mjs:179:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Retry acknowledges the new preparation immediately.
+    + actual - expected
+    
+    + 'error'
+    - 'preparing'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'preparing'
+  actual: 'error'
+  operator: 'strictEqual'
+  stack: |-
+    retry (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/game/test/coop-presentation-bootstrap-retry.test.mjs:35:10)
+    TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/game/test/coop-presentation-bootstrap-retry.test.mjs:186:3)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: recovered presentation leaves explicit Neon Arcade UI skin independent while unsupported Team artwork stays blocked
+not ok 5 - recovered presentation leaves explicit Neon Arcade UI skin independent while unsupported Team artwork stays blocked
+  ---
+  duration_ms: 576.133959
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/game/test/coop-presentation-bootstrap-retry.test.mjs:209:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Retry acknowledges the new preparation immediately.
+    + actual - expected
+    
+    + 'error'
+    - 'preparing'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'preparing'
+  actual: 'error'
+  operator: 'strictEqual'
+  stack: |-
+    retry (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/game/test/coop-presentation-bootstrap-retry.test.mjs:35:10)
+    TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/game/test/coop-presentation-bootstrap-retry.test.mjs:220:3)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: fpv: real terminal failure is visible before menu; only wreck age advances
+ok 6 - fpv: real terminal failure is visible before menu; only wreck age advances
+  ---
+  duration_ms: 33077.609458
+  ...
+# Subtest: ukraine: real terminal failure is visible before menu; only wreck age advances
+ok 7 - ukraine: real terminal failure is visible before menu; only wreck age advances
+  ---
+  duration_ms: 7080.56775
+  ...
+# Subtest: retro: real terminal failure is visible before menu; only wreck age advances
+ok 8 - retro: real terminal failure is visible before menu; only wreck age advances
+  ---
+  duration_ms: 8216.390958
+  ...
+# Subtest: coupa: real terminal failure is visible before menu; only wreck age advances
+ok 9 - coupa: real terminal failure is visible before menu; only wreck age advances
+  ---
+  duration_ms: 7906.039459
+  ...
+# Subtest: Classic traveling-front defeat, reduced effects, focus loss and explicit skip preserve the terminal run
+ok 10 - Classic traveling-front defeat, reduced effects, focus loss and explicit skip preserve the terminal run
+  ---
+  duration_ms: 37373.913458
+  ...
+# Subtest: controller skip cannot carry held Confirm into Retry
+not ok 11 - controller skip cannot carry held Confirm into Retry
+  ---
+  duration_ms: 7509.356833
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/game/test/defeat-presentation-host.test.mjs:177:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + 'ready'
+    - 'lost'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'lost'
+  actual: 'ready'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/game/test/defeat-presentation-host.test.mjs:194:10)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: nonterminal wreck follows ordinary recovery; Pause holds both recovery and effect until explicit Resume
+ok 12 - nonterminal wreck follows ordinary recovery; Pause holds both recovery and effect until explicit Resume
+  ---
+  duration_ms: 21137.717959
+  ...
+# Subtest: terminal Pause freezes the brief cue; mouse/touch skip reaches results without a gameplay tick
+ok 13 - terminal Pause freezes the brief cue; mouse/touch skip reaches results without a gameplay tick
+  ---
+  duration_ms: 9535.652708
+  ...
+1..13
+# tests 13
+# suites 0
+# pass 7
+# fail 6
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 140147.518709

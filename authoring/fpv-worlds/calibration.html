@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>SIM material and model calibration</title>
+    <script src="../../game/presentation/theme-bootstrap.mjs"></script>
+    <link
+      rel="stylesheet"
+      href="../../game/presentation/industrial-workshop.css"
+      data-industrial-workshop
+    />
+    <link rel="stylesheet" href="../../game/ui/field-kit-fonts.css" />
+    <style>
+      :root {
+        color-scheme: dark;
+        font: 16px var(--iw-font-ui, system-ui);
+        background: var(--iw-ink, #191e20);
+        color: var(--iw-text, #f0e9d8);
+      }
+      body {
+        max-width: 1400px;
+        margin: auto;
+        padding: 24px;
+      }
+      h1 {
+        font-family: var(--iw-font-display, inherit);
+        font-size: 28px;
+        margin-bottom: 8px;
+      }
+      p {
+        color: var(--iw-muted, #bfc7c5);
+        max-width: 75ch;
+      }
+      header {
+        border-bottom: 1px solid var(--iw-line, #657173);
+        margin-bottom: 20px;
+        padding-bottom: 12px;
+      }
+      section {
+        border: 1px solid var(--iw-line, #657173);
+        background-color: var(--iw-panel, #282f32);
+        box-shadow: inset 0 1px 0 color-mix(in srgb, var(--iw-text) 8%, transparent);
+        padding: 18px;
+        margin: 20px 0;
+      }
+      h2 {
+        margin-top: 0;
+        font-size: 20px;
+      }
+      label {
+        display: inline-flex;
+        flex-direction: column;
+        gap: 5px;
+        margin: 0 14px 12px 0;
+      }
+      select,
+      button,
+      a {
+        font: inherit;
+      }
+      select,
+      button {
+        min-height: 44px;
+        padding: 8px 12px;
+        border: 1px solid var(--iw-control-line, #8e9695);
+        background: var(--iw-panel-raised, #394246);
+        color: var(--iw-text, #f0e9d8);
+      }
+      button {
+        background: var(--iw-accent, #d6ab5d);
+        color: var(--iw-ink, #202527);
+        font-weight: 700;
+        cursor: pointer;
+      }
+      :focus-visible {
+        outline: 3px solid var(--iw-focus, #9dcce9);
+        outline-offset: 3px;
+      }
+      canvas {
+        display: block;
+        width: 100%;
+        height: 420px;
+        background: #131719;
+      }
+      #materials {
+        height: 320px;
+        max-width: 1000px;
+        margin: auto;
+      }
+      output,
+      pre {
+        display: block;
+        padding: 12px 0;
+        font:
+          13px ui-monospace,
+          monospace;
+        white-space: pre-wrap;
+        color: var(--iw-text, #d4dcd7);
+      }
+      .swatches {
+        display: grid;
+        grid-template-columns: repeat(8, 1fr);
+        text-align: center;
+        font-size: 13px;
+        margin: 12px auto;
+        max-width: 1000px;
+      }
+      a {
+        color: var(--iw-accent, #9dcce9);
+      }
+      @media (max-width: 600px) {
+        body {
+          padding: 12px;
+        }
+        canvas {
+          height: 300px;
+        }
+        .swatches {
+          font-size: 10px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>SIM material &amp; model calibration</h1>
+      <p>
+        Original SIM material collections in the actual game renderer. This isolated authoring
+        preview does not save appearance preferences, run flight physics, or award progress.
+      </p>
+      <p id="candidate-status" role="status" hidden></p>
+    </header>
+    <section>
+      <h2>Flight scene</h2>
+      <label
+        >Collection<select id="collection">
+          <option value="industrial-workshop">Industrial Workshop</option>
+          <option value="authored">Authored appearance</option>
+        </select></label
+      >
+      <label>Environment<select id="environment"></select></label>
+      <label>Course<select id="course"></select></label>
+      <label
+        >Camera<select id="camera">
+          <option value="overview">Overview</option>
+          <option value="chase">Drone inspection</option>
+          <option value="fpv">Moving FPV view</option>
+        </select></label
+      >
+      <label
+        >Quality<select id="quality">
+          <option value="low">Low</option>
+          <option value="balanced" selected>Balanced</option>
+          <option value="high">High</option>
+        </select></label
+      >
+      <button id="compare" type="button">Compare 120 frames per collection</button>
+      <canvas id="flight" aria-label="Rendered flight scene"></canvas>
+      <output id="scene-stats" aria-live="off"></output>
+      <pre id="comparison" aria-live="polite"></pre>
+    </section>
+    <section>
+      <h2>Material library and shared drone model</h2>
+      <label
+        >Specimen<select id="specimen">
+          <option value="industrial-workshop">Industrial Workshop</option>
+          <option value="windows-classic">Windows Classic specimen</option>
+          <option value="dos">DOS specimen</option>
+        </select></label
+      >
+      <canvas id="materials" aria-label="Material swatches and shared drone model"></canvas>
+      <div class="swatches">
+        <span>Steel</span><span>Rubber</span><span>Copper</span><span>Concrete</span
+        ><span>Enamel</span><span>Timber</span><span>Grass</span><span>Beveled steel</span>
+      </div>
+      <p>
+        The last swatch uses an original linear tangent-space bevel normal map only for calibration.
+        All installed collections use the same geometry and semantic material roles. Their surface
+        recipes, ornaments and calibrated roughness vary independently; flight shapes and controls
+        stay fixed.
+      </p>
+    </section>
+    <script type="module" src="./calibration.mjs"></script>
+  </body>
+</html>

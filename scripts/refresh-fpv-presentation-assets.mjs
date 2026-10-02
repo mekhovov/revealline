@@ -9,6 +9,8 @@ const target = path.join(root, 'optional-practice/civilian-fpv/sim-presentation.
 const rows = [
   ['ui', 'game/ui/fonts/field-kit/exo2-ui-400-600.woff2', 'OFL-1.1'],
   ['pixel', 'game/ui/fonts/departure-mono/DepartureMono-Regular.woff2', 'OFL-1.1'],
+  ['mono', 'game/ui/fonts/field-kit/ibm-plex-mono-500.woff2', 'OFL-1.1'],
+  ['display', 'game/ui/fonts/field-kit/handjet-display-600.woff2', 'OFL-1.1'],
   ['focus', 'game/audio/effects/focus.wav', 'CC0-1.0'],
   ['confirm', 'game/audio/effects/confirm.wav', 'CC0-1.0'],
   ['cancel', 'game/audio/effects/cancel.wav', 'CC0-1.0'],
@@ -37,7 +39,15 @@ const source = await readFile(target, 'utf8');
 const first = source.indexOf(start);
 const last = source.indexOf(end);
 if (first < 0 || last < first) throw new Error('Shared asset generation markers are missing.');
-const generated = `${start}\n// prettier-ignore\nconst SHARED_ASSETS = ${JSON.stringify(assets, null, 2)};\n${end}`;
+const themeCSS = (
+  await readFile(path.join(root, 'game/presentation/industrial-workshop.css'), 'utf8')
+).replace(/^@import url\('\.\.\/ui\/field-kit-fonts\.css'\);\s*/, '');
+// Original inline motifs have no file or network dependency. All external URLs
+// remain forbidden so the optional package retains a complete offline closure.
+const resourceFreeCSS = themeCSS.replace(/url\("data:image\/svg\+xml,[^"]*"\)/g, '');
+if (/@import|url\(/.test(resourceFreeCSS))
+  throw new Error('Embedded SIM theme CSS must have no external resources.');
+const generated = `${start}\n// prettier-ignore\nconst SHARED_ASSETS = ${JSON.stringify(assets, null, 2)};\n// Exact shared material sheet; fonts are acquired from the embedded source assets.\n// prettier-ignore\nconst SHARED_THEME_CSS = ${JSON.stringify(themeCSS)};\n${end}`;
 const updated = source.slice(0, first) + generated + source.slice(last + end.length);
 const check = process.argv.includes('--check');
 if (process.argv.slice(2).some((argument) => argument !== '--check'))
@@ -46,6 +56,29 @@ if (process.argv.slice(2).some((argument) => argument !== '--check'))
 if (check && source.slice(first, last + end.length) !== generated)
   throw new Error('Simulator shared assets differ; run the refresh command.');
 if (!check) await writeFile(target, updated);
+// Keep standalone runtime AND source archives under their existing file caps.
+// Exact shared styles are embedded, with this command checking their provenance.
+const cssTarget = path.join(root, 'optional-practice/civilian-fpv/style.css');
+let cssSource = await readFile(cssTarget, 'utf8');
+let cssUpdated = cssSource.replace("@import url('../../game/ui/field-kit-tokens.css');\n", '');
+for (const [name, file, position] of [
+  ['TOKENS', 'game/ui/field-kit-tokens.css', 'start'],
+  ['FULLSCREEN', 'optional-practice/civilian-fpv/flight-fullscreen.css', 'end'],
+]) {
+  const marker = `/* BEGIN SHARED SIM ${name} */`,
+    finish = `/* END SHARED SIM ${name} */`;
+  const body = `${marker}\n${(await readFile(path.join(root, file), 'utf8')).trim()}\n${finish}`;
+  const from = cssUpdated.indexOf(marker),
+    to = cssUpdated.indexOf(finish);
+  if (from >= 0 && to >= from)
+    cssUpdated = cssUpdated.slice(0, from) + body + cssUpdated.slice(to + finish.length);
+  else
+    cssUpdated =
+      position === 'start' ? body + '\n' + cssUpdated : cssUpdated.trimEnd() + '\n' + body + '\n';
+}
+if (check && cssSource !== cssUpdated)
+  throw new Error('SIM style projection differs; run the refresh command.');
+if (!check) await writeFile(cssTarget, cssUpdated);
 console.log(
   JSON.stringify({
     status: check ? 'verified-byte-identical' : 'refreshed',
