@@ -4,8 +4,11 @@ Approved priority updated 29 September 2026: **A → B → C → remaining work*
 A is current characters and reliable play; B is optional encounter variety; C is
 one finished Ukrainian/FPV artwork cohort. Required authoring/verification travels
 with each feature; additional editions and broad tools follow. C2's formal human
-benchmark remains last. Start with the [current completed/remaining explanation](plan-review-2026-09-30.md)
-for phase status, benefits, deferral impacts, blockers and planning ranges. The
+benchmark remains last. The [1 October historical review and priority choices](plan-priorities-2026-10-01.md)
+for completed/remaining work, player benefits and the cost of postponement. Its
+core-game-first refinement is a recommendation for user review, not a change to
+existing deferrals. The [30 September review](plan-review-2026-09-30.md) retains
+the earlier phase inventory and conditional effort ranges. The
 [daily register](plan-status-2026-09-30.md) preserves dated integration evidence.
 
 ## Latest instruction: defer production review

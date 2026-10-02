@@ -1,0 +1,25 @@
+{
+  "kind": "independent-source-and-ui-review",
+  "reviewedAt": "2026-09-30T23:55:40.357176+00:00",
+  "base": "ac7d06f12da617d098c63c8c47979974631a75fb",
+  "acceptedMain": "e870684598ca2767e24320573caff400eb930f46",
+  "reviewers": [
+    "archive_inventory_publication (archive transfer and immutable inventories)",
+    "audit_local_soundtrack_work (source/player/storage review)",
+    "review_admission_architecture (UI lifecycle/final fixes review)"
+  ],
+  "resolvedFindings": [
+    "Merge bounded styles/collections and preserve source attribution for identical remote hashes.",
+    "Conflicting rights or attribution cannot grant installation or Recording mode.",
+    "Recheck source/rights authority after asynchronous download, hash and MP3 probe before staging.",
+    "Reindex both completed and pending local MP3 preloads after remote queue removal.",
+    "Preserve focused source controls across save/refresh/removal without stealing later user focus.",
+    "English and Ukrainian copy refer to enabled sources, including when all sources are off."
+  ],
+  "remainingCodeReviewBlockers": [],
+  "limitations": [
+    "Independent reviews are code review, not human musical or physical-device approval.",
+    "Browser URL validation does not pin DNS or control native media redirects.",
+    "Aggregate production --check remains blocked by stale revision ledger; no full build or release qualification claimed."
+  ]
+}

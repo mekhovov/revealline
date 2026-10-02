@@ -1,0 +1,246 @@
+{
+  "format": "fpv-sim-entry-frozen-verification.v1",
+  "runtimeCommit": "e936e94f91e96286a9f6ebc28f5d91758095218e",
+  "parentHead": "23c790154dfe35f11c4c7a7b239c7c8ead61c03a",
+  "capturedAt": "2026-10-02T04:38:28.421467+00:00",
+  "sourceFiles": [
+    {
+      "path": "game/couch/couch-shell.mjs",
+      "bytes": 26162,
+      "sha256": "4299a755c3eee38141c15d650c1167d83a8e2366a88eae4996ee33aa8fc14245"
+    },
+    {
+      "path": "game/couch/relay-rescue.mjs",
+      "bytes": 238456,
+      "sha256": "7c45a810e8b2e7c0a175bd38a7d4d42dc77024de383d2fd8d1c697f5372691ed"
+    },
+    {
+      "path": "game/fpv-entry.mjs",
+      "bytes": 1911,
+      "sha256": "264aed5590d128d87e33b06892f7df5e69e5289a96ae7d5f93e6839385e2eb01"
+    },
+    {
+      "path": "game/i18n/catalogs.mjs",
+      "bytes": 1085715,
+      "sha256": "fc6c3209d2f31e873757fbc746a886382ce0f5b884f1013adcd9ef4747f79ebf"
+    },
+    {
+      "path": "game/locales/en/interface.json",
+      "bytes": 488612,
+      "sha256": "e56c7ce21581aae14e76748cba76a9227dc07eb1c8a95dd8d31609131a533145"
+    },
+    {
+      "path": "game/locales/uk/interface.json",
+      "bytes": 795025,
+      "sha256": "56322ad7e3aa161b71db91ed1e0cf175909c5b6070eef136b3ed3e4be47a5dec"
+    },
+    {
+      "path": "game/optional-practice-catalog.mjs",
+      "bytes": 4168,
+      "sha256": "dd07e384e117d38cec2297bf7ebc9e8af1a5636d6c15dd1eb527ecdff711cce3"
+    },
+    {
+      "path": "game/optional-practice-preview.mjs",
+      "bytes": 1523,
+      "sha256": "dc5495017b7d0b3d35e62d5f65f389239f661ae973e59102239e115912aa33d4"
+    },
+    {
+      "path": "game/test/couch-shell.test.mjs",
+      "bytes": 30179,
+      "sha256": "46168322ca0587e95d365b7fc2156123c807428e47ce89d3af6d6a7508990154"
+    },
+    {
+      "path": "game/test/manual/native-landing-whitelist-workflow.mjs",
+      "bytes": 12232,
+      "sha256": "47768ae57deab0978d03441889e30351b1a9d0ce78cec2d82ce62ff7023ce80d"
+    },
+    {
+      "path": "game/test/native-landing-whitelist.test.mjs",
+      "bytes": 10080,
+      "sha256": "91ecdd8eb3c816734dc9833057862db464ca88b40caadcf7e3480c009589ab10"
+    },
+    {
+      "path": "game/ui/game-shell.mjs",
+      "bytes": 31778,
+      "sha256": "6fad49ac7d985c52b3b6e82c77ea2b086375a065e5a81fc554b24cdacf5651b9"
+    },
+    {
+      "path": "game/ui/mode-choice.css",
+      "bytes": 1711,
+      "sha256": "c876d5e70da0bc2abc598567196f1fe560f8f635ced4a5c092411d3004cb7f35"
+    },
+    {
+      "path": "game/ui/mode-choice.mjs",
+      "bytes": 2996,
+      "sha256": "3bfff024c1cdf214fdaf0b441711043c08f40c18d416277ee8dbe404b30d9795"
+    },
+    {
+      "path": "game/ui/native-menu-icons.mjs",
+      "bytes": 1866,
+      "sha256": "d710daff089fbbfe262ed0738b89e31f2494789b02c326f130e6eb32d248b731"
+    },
+    {
+      "path": "game/ui/native-menu.css",
+      "bytes": 29450,
+      "sha256": "7df464249578f90f0910d29015ef567d13f32d07c58992ef8bf91723e243c195"
+    },
+    {
+      "path": "game/ui/optional-practice-panel.mjs",
+      "bytes": 8702,
+      "sha256": "9b0cae07633e4dfd9261710ae0803cf82be7a240b2f82aec34fdf46b8418fee3"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/world-app.mjs",
+      "bytes": 170258,
+      "sha256": "e6f965e690d34355ba71cd2301486c89a449a6daa8663a4a7ec51cf22479daa3"
+    }
+  ],
+  "mainBuild": {
+    "path": "/private/tmp/fpv-sim-entry-qualified-20261002",
+    "exitCode": 0,
+    "version": "0.142.4",
+    "files": 2719,
+    "totalBytes": 958859084,
+    "distributionSha256": "2750c1df69f5fd147648a4b82065d315052679a8a83eacf0855233a2c43e0ca4",
+    "manifestSourceRevision": null,
+    "qualification": "Builder default does not stamp a revision. Clean source was frozen at runtimeCommit; every changed emitted runtime file independently matches byte-for-byte."
+  },
+  "emittedRuntimeInputs": [
+    {
+      "path": "game/couch/couch-shell.mjs",
+      "sourceSha256": "4299a755c3eee38141c15d650c1167d83a8e2366a88eae4996ee33aa8fc14245",
+      "buildSha256": "4299a755c3eee38141c15d650c1167d83a8e2366a88eae4996ee33aa8fc14245",
+      "same": true
+    },
+    {
+      "path": "game/couch/relay-rescue.mjs",
+      "sourceSha256": "7c45a810e8b2e7c0a175bd38a7d4d42dc77024de383d2fd8d1c697f5372691ed",
+      "buildSha256": "7c45a810e8b2e7c0a175bd38a7d4d42dc77024de383d2fd8d1c697f5372691ed",
+      "same": true
+    },
+    {
+      "path": "game/fpv-entry.mjs",
+      "sourceSha256": "264aed5590d128d87e33b06892f7df5e69e5289a96ae7d5f93e6839385e2eb01",
+      "buildSha256": "264aed5590d128d87e33b06892f7df5e69e5289a96ae7d5f93e6839385e2eb01",
+      "same": true
+    },
+    {
+      "path": "game/i18n/catalogs.mjs",
+      "sourceSha256": "fc6c3209d2f31e873757fbc746a886382ce0f5b884f1013adcd9ef4747f79ebf",
+      "buildSha256": "fc6c3209d2f31e873757fbc746a886382ce0f5b884f1013adcd9ef4747f79ebf",
+      "same": true
+    },
+    {
+      "path": "game/locales/en/interface.json",
+      "sourceSha256": "e56c7ce21581aae14e76748cba76a9227dc07eb1c8a95dd8d31609131a533145",
+      "buildSha256": "e56c7ce21581aae14e76748cba76a9227dc07eb1c8a95dd8d31609131a533145",
+      "same": true
+    },
+    {
+      "path": "game/locales/uk/interface.json",
+      "sourceSha256": "56322ad7e3aa161b71db91ed1e0cf175909c5b6070eef136b3ed3e4be47a5dec",
+      "buildSha256": "56322ad7e3aa161b71db91ed1e0cf175909c5b6070eef136b3ed3e4be47a5dec",
+      "same": true
+    },
+    {
+      "path": "game/optional-practice-catalog.mjs",
+      "sourceSha256": "dd07e384e117d38cec2297bf7ebc9e8af1a5636d6c15dd1eb527ecdff711cce3",
+      "buildSha256": "dd07e384e117d38cec2297bf7ebc9e8af1a5636d6c15dd1eb527ecdff711cce3",
+      "same": true
+    },
+    {
+      "path": "game/optional-practice-preview.mjs",
+      "sourceSha256": "dc5495017b7d0b3d35e62d5f65f389239f661ae973e59102239e115912aa33d4",
+      "buildSha256": "dc5495017b7d0b3d35e62d5f65f389239f661ae973e59102239e115912aa33d4",
+      "same": true
+    },
+    {
+      "path": "game/ui/game-shell.mjs",
+      "sourceSha256": "6fad49ac7d985c52b3b6e82c77ea2b086375a065e5a81fc554b24cdacf5651b9",
+      "buildSha256": "6fad49ac7d985c52b3b6e82c77ea2b086375a065e5a81fc554b24cdacf5651b9",
+      "same": true
+    },
+    {
+      "path": "game/ui/mode-choice.css",
+      "sourceSha256": "c876d5e70da0bc2abc598567196f1fe560f8f635ced4a5c092411d3004cb7f35",
+      "buildSha256": "c876d5e70da0bc2abc598567196f1fe560f8f635ced4a5c092411d3004cb7f35",
+      "same": true
+    },
+    {
+      "path": "game/ui/mode-choice.mjs",
+      "sourceSha256": "3bfff024c1cdf214fdaf0b441711043c08f40c18d416277ee8dbe404b30d9795",
+      "buildSha256": "3bfff024c1cdf214fdaf0b441711043c08f40c18d416277ee8dbe404b30d9795",
+      "same": true
+    },
+    {
+      "path": "game/ui/native-menu-icons.mjs",
+      "sourceSha256": "d710daff089fbbfe262ed0738b89e31f2494789b02c326f130e6eb32d248b731",
+      "buildSha256": "d710daff089fbbfe262ed0738b89e31f2494789b02c326f130e6eb32d248b731",
+      "same": true
+    },
+    {
+      "path": "game/ui/native-menu.css",
+      "sourceSha256": "7df464249578f90f0910d29015ef567d13f32d07c58992ef8bf91723e243c195",
+      "buildSha256": "7df464249578f90f0910d29015ef567d13f32d07c58992ef8bf91723e243c195",
+      "same": true
+    },
+    {
+      "path": "game/ui/optional-practice-panel.mjs",
+      "sourceSha256": "9b0cae07633e4dfd9261710ae0803cf82be7a240b2f82aec34fdf46b8418fee3",
+      "buildSha256": "9b0cae07633e4dfd9261710ae0803cf82be7a240b2f82aec34fdf46b8418fee3",
+      "same": true
+    },
+    {
+      "path": "optional-practice/civilian-fpv/world-app.mjs",
+      "sourceSha256": "e6f965e690d34355ba71cd2301486c89a449a6daa8663a4a7ec51cf22479daa3",
+      "buildSha256": "e6f965e690d34355ba71cd2301486c89a449a6daa8663a4a7ec51cf22479daa3",
+      "same": true
+    }
+  ],
+  "browser": {
+    "menuChecks": {
+      "passed": 12,
+      "total": 12,
+      "receipt": "fpv-sim-entry-browser-20261002.json"
+    },
+    "controllerLaunches": {
+      "passed": 2,
+      "total": 2,
+      "locales": ["en", "uk"],
+      "width": 390,
+      "actualSchoolCards": 58,
+      "receipts": [
+        "fpv-sim-entry-controller-en-20261002.json",
+        "fpv-sim-entry-controller-uk-20261002.json"
+      ]
+    }
+  },
+  "existingChecks": {
+    "passed": 62,
+    "newUnitCoverage": false
+  },
+  "functionalBoundaryChecks": {
+    "passed": 28
+  },
+  "localization": {
+    "locales": ["en", "uk"],
+    "messages": 12027,
+    "references": 8871,
+    "passed": true
+  },
+  "focusedLintFormatSyntax": "passed",
+  "sourceReview": "No new blocker; fallback package links retain pre-existing blank target and are not included in same-window controller-launch qualification.",
+  "localPlaytest": {
+    "paths": ["dist/fpv-reviewed-player-playtest", "dist/fpv-continuous-school-playtest"],
+    "files": 87,
+    "bytes": 13948767,
+    "zipSha256": "2c3acf4cc67c49b67a7e1bec084a6e2d8b0403cd3a8f5841b9e37eb514fc87a6",
+    "actualLaunch": "Continuous school built player; first lesson, portrait 390x844, touch controls, flight then paused menu inspected.",
+    "screenshot": "/tmp/fpv-handheld-player-final-20261002.png"
+  },
+  "limitations": [
+    "No physical iPhone, WKWebView, Steam Deck, controller or radio acceptance.",
+    "Additional unit coverage deferred to R7.",
+    "No public-live, protected merge or hardware performance claim."
+  ]
+}

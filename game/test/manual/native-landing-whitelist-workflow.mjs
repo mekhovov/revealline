@@ -85,7 +85,13 @@ const workflow = (edition) => async (p) => {
     );
     const primary = ['shell-featured', 'shell-continue'].map((id) => $(`#${id}`)).filter(shown);
     assert(primary.length === 1, 'Expected exactly one Start/Continue action.');
-    const actions = [primary[0], $('#shell-play'), $('#shell-options'), $('#shell-sound')];
+    const actions = [
+      primary[0],
+      $('#shell-play'),
+      $('#shell-options'),
+      $('#shell-sound'),
+      $('#solo-fpv-sim'),
+    ];
     assert(actions.every(shown), 'A required landing action is missing.');
     if (shown($('#shell-fullscreen'))) actions.push($('#shell-fullscreen'));
     const expected = [...modes, ...actions],

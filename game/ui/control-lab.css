@@ -1,7 +1,7 @@
 .control-lab-dialog {
-  width: min(74rem, calc(100vw - 2rem));
-  max-width: calc(100vw - 2rem);
-  max-height: calc(100dvh - 2rem);
+  width: min(74rem, calc(var(--dialog-viewport-width, 100vw) - 2rem));
+  max-width: calc(var(--dialog-viewport-width, 100vw) - 2rem);
+  max-height: calc(var(--dialog-viewport-height, 100dvh) - 2rem);
   overflow: auto;
   box-sizing: border-box;
   padding: clamp(1rem, 3vw, 2rem);
@@ -183,8 +183,8 @@
 }
 @media (max-width: 640px) {
   .control-lab-dialog {
-    width: calc(100vw - 1rem);
-    max-width: calc(100vw - 1rem);
+    width: calc(var(--dialog-viewport-width, 100vw) - 1rem);
+    max-width: calc(var(--dialog-viewport-width, 100vw) - 1rem);
     padding: 0.75rem;
   }
   .control-lab-grid {

@@ -9,11 +9,13 @@ export async function optionalPackageFixture({
   sourceRevision = 'a'.repeat(40),
   sourceTree = 'b'.repeat(40),
   basePath = '/revealline/',
+  packageId = 'civilian-flight',
 } = {}) {
   const built = await buildOptionalPractice(new URL('../', import.meta.url).pathname, {
     engineCommit: sourceRevision,
     engineTree: sourceTree,
     basePath,
+    packageId,
   });
   const candidate = createOptionalPackageCandidate({ built, version, sourceRevision, sourceTree });
   const envelope = {
@@ -51,8 +53,8 @@ export async function optionalPackageFixture({
       basePath,
       envelopeSha256: editionHash(envelopeBytes),
       reviewSha256: editionHash(reviewBytes),
-      packageIds: ['civilian-flight'],
-      activePackageIds: ['civilian-flight'],
+      packageIds: [packageId],
+      activePackageIds: [packageId],
     },
   };
 }
