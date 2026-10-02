@@ -1,0 +1,150 @@
+{
+  "format": "FPVLegacyReplayVerification.v1",
+  "passed": 24,
+  "results": [
+    {
+      "course": "flight-01",
+      "mode": "self-level",
+      "status": "complete",
+      "ticks": 239
+    },
+    {
+      "course": "flight-01",
+      "mode": "acro",
+      "status": "complete",
+      "ticks": 239
+    },
+    {
+      "course": "flight-02",
+      "mode": "self-level",
+      "status": "complete",
+      "ticks": 383
+    },
+    {
+      "course": "flight-02",
+      "mode": "acro",
+      "status": "complete",
+      "ticks": 383
+    },
+    {
+      "course": "flight-03",
+      "mode": "self-level",
+      "status": "complete",
+      "ticks": 433
+    },
+    {
+      "course": "flight-03",
+      "mode": "acro",
+      "status": "complete",
+      "ticks": 433
+    },
+    {
+      "course": "flight-04",
+      "mode": "self-level",
+      "status": "complete",
+      "ticks": 433
+    },
+    {
+      "course": "flight-04",
+      "mode": "acro",
+      "status": "complete",
+      "ticks": 433
+    },
+    {
+      "course": "flight-05",
+      "mode": "self-level",
+      "status": "complete",
+      "ticks": 435
+    },
+    {
+      "course": "flight-05",
+      "mode": "acro",
+      "status": "complete",
+      "ticks": 435
+    },
+    {
+      "course": "flight-06",
+      "mode": "self-level",
+      "status": "complete",
+      "ticks": 899
+    },
+    {
+      "course": "flight-06",
+      "mode": "acro",
+      "status": "complete",
+      "ticks": 900
+    },
+    {
+      "course": "flight-07",
+      "mode": "self-level",
+      "status": "complete",
+      "ticks": 498
+    },
+    {
+      "course": "flight-07",
+      "mode": "acro",
+      "status": "complete",
+      "ticks": 488
+    },
+    {
+      "course": "flight-08",
+      "mode": "self-level",
+      "status": "complete",
+      "ticks": 491
+    },
+    {
+      "course": "flight-08",
+      "mode": "acro",
+      "status": "complete",
+      "ticks": 491
+    },
+    {
+      "course": "flight-09",
+      "mode": "self-level",
+      "status": "complete",
+      "ticks": 638
+    },
+    {
+      "course": "flight-09",
+      "mode": "acro",
+      "status": "complete",
+      "ticks": 638
+    },
+    {
+      "course": "flight-10",
+      "mode": "self-level",
+      "status": "complete",
+      "ticks": 610
+    },
+    {
+      "course": "flight-10",
+      "mode": "acro",
+      "status": "complete",
+      "ticks": 610
+    },
+    {
+      "course": "flight-11",
+      "mode": "self-level",
+      "status": "complete",
+      "ticks": 1243
+    },
+    {
+      "course": "flight-11",
+      "mode": "acro",
+      "status": "complete",
+      "ticks": 1243
+    },
+    {
+      "course": "flight-12",
+      "mode": "self-level",
+      "status": "complete",
+      "ticks": 1126
+    },
+    {
+      "course": "flight-12",
+      "mode": "acro",
+      "status": "complete",
+      "ticks": 1126
+    }
+  ]
+}
