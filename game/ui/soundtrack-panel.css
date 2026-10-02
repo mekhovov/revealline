@@ -1,8 +1,8 @@
 .soundtrack-dialog {
   box-sizing: border-box;
-  width: min(1120px, calc(100vw - 24px));
+  width: min(1120px, calc(var(--dialog-viewport-width, 100vw) - 24px));
   max-width: none;
-  max-height: calc(100dvh - 24px);
+  max-height: calc(var(--dialog-viewport-height, 100dvh) - 24px);
   margin: auto;
   padding: clamp(12px, 2vw, 24px);
   color: #eaf2ff;
@@ -432,8 +432,8 @@
     text-align: left;
   }
   .soundtrack-dialog {
-    width: calc(100vw - 12px);
-    max-height: calc(100dvh - 12px);
+    width: calc(var(--dialog-viewport-width, 100vw) - 12px);
+    max-height: calc(var(--dialog-viewport-height, 100dvh) - 12px);
     padding: 12px;
   }
   .soundtrack-section {

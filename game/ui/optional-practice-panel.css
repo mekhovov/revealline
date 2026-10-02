@@ -1,7 +1,7 @@
 .optional-practice-dialog {
   box-sizing: border-box;
-  width: min(46rem, calc(100vw - 2rem));
-  max-height: calc(100dvh - 2rem);
+  width: min(46rem, calc(var(--dialog-viewport-width, 100vw) - 2rem));
+  max-height: calc(var(--dialog-viewport-height, 100dvh) - 2rem);
   padding: 0;
   border: 1px solid var(--line, #345365);
   border-radius: 1rem;
@@ -85,8 +85,8 @@
 }
 @media (max-width: 420px), (max-height: 480px) {
   .optional-practice-dialog {
-    width: calc(100vw - 1rem);
-    max-height: calc(100dvh - 1rem);
+    width: calc(var(--dialog-viewport-width, 100vw) - 1rem);
+    max-height: calc(var(--dialog-viewport-height, 100dvh) - 1rem);
   }
   .optional-practice-dialog > header,
   .optional-practice-dialog > footer {
