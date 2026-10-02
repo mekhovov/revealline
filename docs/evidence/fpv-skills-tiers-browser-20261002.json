@@ -1,0 +1,182 @@
+{
+  "format": "FPVSchoolTierBrowserEvidence.v1",
+  "passed": true,
+  "createdAt": "2026-10-02T02:32:55.906Z",
+  "lessonCount": 58,
+  "primaryCount": 46,
+  "checks": [
+    {
+      "name": "Prepare isolated exact-revision completion evidence",
+      "passed": true,
+      "verified": 17,
+      "primaryCompletions": 14,
+      "wrongRevisionExcluded": "beginner-27",
+      "demonstrationExcluded": "beginner-35"
+    },
+    {
+      "name": "Load production source with the isolated profile",
+      "passed": true,
+      "catalogue": 118,
+      "frameUrl": "http://127.0.0.1:8789/optional-practice/fpv-worlds/#learn",
+      "productionHtmlSha256": "20c6330cc050d3c0a4ba78c5f45243bcc68ded1a6baa0ddcd851cf9a003d55a9"
+    },
+    {
+      "name": "Primary progress matches current catalogue; old14 completions survive and unrelated evidence does not count",
+      "passed": true,
+      "title": "14 of 46 Acro lessons complete",
+      "continue": "Continue · Braking marks"
+    },
+    {
+      "name": "Filter beginner preserves exact lesson order and open access",
+      "passed": true,
+      "ids": [
+        "beginner-15",
+        "beginner-16",
+        "beginner-13",
+        "beginner-17",
+        "beginner-14",
+        "beginner-18",
+        "beginner-19",
+        "beginner-20",
+        "beginner-21",
+        "beginner-22",
+        "beginner-23",
+        "beginner-24",
+        "beginner-25",
+        "beginner-26"
+      ]
+    },
+    {
+      "name": "Filter experienced preserves exact lesson order and open access",
+      "passed": true,
+      "ids": [
+        "beginner-27",
+        "beginner-28",
+        "beginner-29",
+        "beginner-30",
+        "beginner-31",
+        "beginner-32",
+        "beginner-33",
+        "beginner-34"
+      ]
+    },
+    {
+      "name": "Filter advanced preserves exact lesson order and open access",
+      "passed": true,
+      "ids": [
+        "beginner-35",
+        "beginner-36",
+        "beginner-37",
+        "beginner-38",
+        "beginner-39",
+        "beginner-40",
+        "beginner-41",
+        "beginner-42"
+      ]
+    },
+    {
+      "name": "Filter pro preserves exact lesson order and open access",
+      "passed": true,
+      "ids": [
+        "beginner-43",
+        "beginner-44",
+        "beginner-45",
+        "beginner-46",
+        "beginner-47",
+        "beginner-48",
+        "beginner-49",
+        "beginner-50"
+      ]
+    },
+    {
+      "name": "Filter master preserves exact lesson order and open access",
+      "passed": true,
+      "ids": [
+        "beginner-51",
+        "beginner-52",
+        "beginner-53",
+        "beginner-54",
+        "beginner-55",
+        "beginner-56",
+        "beginner-57",
+        "beginner-58"
+      ]
+    },
+    {
+      "name": "Filter self-level preserves exact lesson order and open access",
+      "passed": true,
+      "ids": [
+        "beginner-01",
+        "beginner-02",
+        "beginner-03",
+        "beginner-04",
+        "beginner-05",
+        "beginner-06",
+        "beginner-07",
+        "beginner-08",
+        "beginner-09",
+        "beginner-10",
+        "beginner-11",
+        "beginner-12"
+      ]
+    },
+    {
+      "name": "All lessons groups beginner chapters then experienced, advanced, pro, master and optional",
+      "passed": true,
+      "groups": [
+        "beginner",
+        "beginner",
+        "beginner",
+        "beginner",
+        "experienced",
+        "advanced",
+        "pro",
+        "master",
+        "self-level"
+      ]
+    },
+    {
+      "name": "Continue crosses into Experienced without altering filter or arming real flight",
+      "passed": true,
+      "heading": "EXPERIENCED · 01/8 · ACRO 15/46"
+    },
+    {
+      "name": "Exiting a filtered lesson restores preferences and keyboard focus",
+      "passed": true,
+      "focusTrace": [
+        {
+          "tag": "H1",
+          "id": "",
+          "text": "Every pilot starts here."
+        },
+        {
+          "tag": "BUTTON",
+          "id": "school-continue",
+          "text": "Continue · Braking marks"
+        }
+      ],
+      "active": {
+        "tag": "BUTTON",
+        "id": "school-continue",
+        "text": "Continue · Braking marks"
+      }
+    },
+    {
+      "name": "Ukrainian tier labels, counts and newest lesson header",
+      "passed": true,
+      "heading": "MASTER · МАЙСТЕРНІСТЬ · 08/8 · ACRO 46/46",
+      "title": "Майстерний політ"
+    },
+    {
+      "name": "Guide fullscreen callback remains isolated; closing preserves primary progress",
+      "passed": true
+    }
+  ],
+  "inputs": {
+    "optional-practice/civilian-fpv/world-app.mjs": "fb4315da221d0999f378ce596b2f26a3168f1a45c0d80b624bbd846abb0e517e",
+    "optional-practice/civilian-fpv/beginner-coach.mjs": "e3e368ecd50e28808941f334fff0ae9ee89475ecd39a8c47c1cbbcb346899ebb",
+    "optional-practice/civilian-fpv/world-catalogue.mjs": "a0111508d84e19da88bdb78c1834e8a05950d5ee04a59819dd8545209d2698fb",
+    "optional-practice/fpv-worlds/index.html": "20c6330cc050d3c0a4ba78c5f45243bcc68ded1a6baa0ddcd851cf9a003d55a9"
+  },
+  "scope": "Production source/real browser DOM, isolated IndexedDB and preferences, independently verified seed proofs. No physical-radio or player acceptance claim."
+}
