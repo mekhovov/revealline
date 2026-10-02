@@ -1817,3 +1817,26 @@ Source remains independent of ready #960. If960 merges first, reconcile new main
 with a recovery ref, preserve both log appends, and requalify combined package
 inputs before refreshing normal playtests. Native stacks are only needed if a
 new feature actually depends on an unmerged one.
+
+C3 is published and attached as [PR #961](https://github.com/mekhovov/revealline/pull/961),
+`codex/fpv-courtyard-terraces`, initially at `af24f6ce3`, directly against main.
+No native stack is needed: C2 and C3 change independent scenery areas. Themes was
+sent the exact template/placement handoff with both PR links under the user's
+existing coordination authorization. Do not overwrite its appearance work.
+
+At final inspection, unrelated rewards #906 advanced main to `c78258e24`.
+Repository automation already merged that main into meadow #960 as `989a4840e`;
+its required current-head checks are running. Preserve this remote merge history,
+not a force-rewritten linear approximation. Courtyard #961 is still at `af24f6ce3`
+and behind new main; inspect its exact remote head before any update because the
+same automation may reconcile it. No merge/live availability for960/961 is
+claimed. The frozen evidence identifies the earlier candidates honestly. If new
+main changes optional package inputs, repeat applicable frozen admission and
+browser checks before reporting the updated candidate qualified.
+
+Next concrete item: woodland/shared-theme asset readability. First reconcile
+#955 material-role ownership and determine visual/collision rules for the six
+existing tall timber-like tree colliders; avoid adding a solid-looking broad
+canopy in a flyable opening. Preserve completed960/961 and normal C2+touch builds
+while working on a new independent branch. Keep hardware/novice qualification
+and deferred unit coverage explicitly open.

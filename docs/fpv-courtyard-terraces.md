@@ -64,3 +64,8 @@ bytes remain within 8/8/16 MiB. The packaged player independently repeats all
 124 browser checks and 59 comparisons. See the package and packaged-browser
 receipts. This independent candidate includes merged touch #959; C2 meadow is
 published separately and has not been copied into this PR.
+
+Published as [PR #961](https://github.com/mekhovov/revealline/pull/961), independently
+of meadow #960. Required CI and public deployment remain pending. The dedicated
+local courtyard playtest is available without replacing the normal C2+touch
+builds before an integrated candidate is qualified.
