@@ -1028,3 +1028,13 @@ focused increment, rebuild both reviewed-player and continuous-school player
 URLs, publish/attach its child PR and append through the native API. Public
 availability still requires protected merge, deployment identity and actual
 public launch. The remaining R4–R7 art/qualification backlog is unchanged.
+
+Frozen runtime `21a5310a42ef520d3f788ec2d644fa464b9e2e86` passes all three
+optional package admissions, committed inputs/ZIP membership and two byte-identical
+builds; receipt `docs/evidence/fpv-stick-motion-package-20261002.json`.
+Both local player URLs were rebuilt and launched with the new markers and58
+lessons. Each has87 files/13,903,830bytes, ZIP SHA-256
+`9f58693c11cff70aa2e904136b3fd23bec908af4f4603e659411634af98bf012`.
+The source and built turning lesson were visually inspected; compact390px lesson
+layout remains usable. Screenshot `/tmp/fpv-readable-stick-motion-20261002.png`.
+No public-live or new hardware acceptance claim. Ready for focused publication.
