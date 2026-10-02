@@ -1,7 +1,7 @@
 import { readAssetStore } from './storage.mjs';
 import { offlineAvailability, prepareOffline, checkOffline } from './offline.mjs';
 import { createOfficialDownloads } from './official-downloads.mjs';
-import { downloadFiles } from './download-catalogue.mjs';
+import { downloadFiles, validateDownloadCatalogue } from './download-catalogue.mjs';
 import {
   readOfflineDestination,
   continueOfflineDestination,
@@ -802,6 +802,7 @@ async function initialize() {
       return response.json();
     }),
   );
+  validateDownloadCatalogue(catalogue);
   navigationRequest = readOfflineDestination({
     pageURL: location.href,
     scope: baseURL,
