@@ -128,18 +128,314 @@ export function mountSimAudioControls({
   };
 }
 
+/** Shared observer. Following heading moves the camera, never the drone's full
+ * quaternion or its pitch/roll. Rendering cannot mutate supplied flight state. */
+export function mountDroneDiagram({ root }) {
+  const doc = root.ownerDocument;
+  const svg = (tag, attributes = {}) => {
+    const element = doc.createElementNS('http://www.w3.org/2000/svg', tag);
+    for (const [key, value] of Object.entries(attributes)) element.setAttribute(key, String(value));
+    return element;
+  };
+  const drawing = svg('svg', {
+    viewBox: '0 0 220 160',
+    class: 'sim-response-drawing',
+    'aria-hidden': 'true',
+    focusable: 'false',
+  });
+  const ground = svg('path', { class: 'sim-response-ground' });
+  const reference = svg('text', {
+    x: 110,
+    y: 154,
+    'text-anchor': 'middle',
+    class: 'sim-response-north',
+  });
+  const shadow = svg('ellipse', {
+    cx: 110,
+    cy: 118,
+    rx: 30,
+    ry: 8,
+    class: 'sim-response-shadow',
+  });
+  const drift = svg('path', { class: 'sim-response-drift' });
+  const airframe = svg('g', { class: 'sim-response-airframe' });
+  const lowerArms = svg('path', { class: 'sim-response-lower-arms' });
+  const arms = svg('path', { class: 'sim-response-arms' });
+  const sides = Array.from({ length: 4 }, () => svg('path', { class: 'sim-response-body-side' }));
+  const body = svg('path', { class: 'sim-response-body' });
+  const nose = svg('path', { class: 'sim-response-nose' });
+  const rear = svg('path', { class: 'sim-response-rear' });
+  const motors = Array.from({ length: 4 }, (_, index) =>
+    svg('path', {
+      class: `sim-response-motor${index < 2 ? ' sim-response-motor-front' : ''}`,
+    }),
+  );
+  const struts = svg('path', { class: 'sim-response-struts' });
+  const thrust = svg('path', { class: 'sim-response-thrust' });
+  const frontLeader = svg('path', { class: 'sim-response-front-leader' });
+  const frontLabel = svg('text', {
+    'text-anchor': 'middle',
+    class: 'sim-response-front-label',
+  });
+  const rearLabel = svg('text', {
+    'text-anchor': 'middle',
+    class: 'sim-response-rear-label',
+  });
+  airframe.append(lowerArms, arms, ...sides, body, ...motors, struts, rear, nose, thrust);
+  drawing.append(ground, reference, shadow, drift, airframe, frontLeader, frontLabel, rearLabel);
+  root.append(drawing);
+  let disposed = false,
+    lastHeading = null;
+  const finite = (value) => (Number.isFinite(value) ? value : 0);
+  const rotation = (orientation) => {
+    const values =
+      Array.isArray(orientation) && orientation.length === 4
+        ? orientation.map(finite)
+        : [0, 0, 0, 1];
+    const length = Math.hypot(...values);
+    const [x, y, z, w] = length ? values.map((value) => value / length) : [0, 0, 0, 1];
+    return ([a, b, c]) => [
+      (1 - 2 * (y * y + z * z)) * a + 2 * (x * y - z * w) * b + 2 * (x * z + y * w) * c,
+      2 * (x * y + z * w) * a + (1 - 2 * (x * x + z * z)) * b + 2 * (y * z - x * w) * c,
+      2 * (x * z - y * w) * a + 2 * (y * z + x * w) * b + (1 - 2 * (x * x + y * y)) * c,
+    ];
+  };
+  return {
+    update({
+      state,
+      controls = {},
+      locale = 'en',
+      unavailable = false,
+      referenceOrientation,
+      detailScale = 1,
+      followHeading = false,
+    } = {}) {
+      if (disposed || !state) return;
+      const rotate = rotation(state.orientation);
+      const initialForward = rotation(referenceOrientation)([0, 0, -1]);
+      const referenceHeading =
+        Math.hypot(initialForward[0], initialForward[2]) > 0.0001
+          ? Math.atan2(initialForward[0], -initialForward[2])
+          : 0;
+      const forward = rotate([0, 0, -1]);
+      // A vertical nose has no horizontal heading. Keep the last valid camera
+      // heading through this small singular region instead of spinning it.
+      if (Math.hypot(forward[0], forward[2]) > 0.04)
+        lastHeading = Math.atan2(forward[0], -forward[2]);
+      const cameraHeading = followHeading ? (lastHeading ?? referenceHeading) : referenceHeading;
+      const headingDelta = Math.atan2(
+        Math.sin(cameraHeading - referenceHeading),
+        Math.cos(cameraHeading - referenceHeading),
+      );
+      const cosine = Math.cos(cameraHeading),
+        sine = Math.sin(cameraHeading);
+      const relative = ([x, y, z]) => [cosine * x + sine * z, y, -sine * x + cosine * z];
+      // The observer is behind (+Z) and slightly above the nose (-Z). Following
+      // heading keeps that rear view through turns without levelling the body.
+      // Perspective makes the rear motor pair visibly nearer; height and depth
+      // remain independent, so pitch cannot read as a flat icon being squashed.
+      const projectView = ([x, y, z], floor = false) => {
+        const scale = (36 * 5) / (5 - z * 0.9165 - y * 0.4);
+        return [110 + x * scale, (floor ? 118 : 67) + (z * 0.4 - y * 0.9165) * scale];
+      };
+      const project = (value, floor = false) => projectView(relative(value), floor);
+      const bodyScale = Math.max(1, Math.min(1.5, finite(detailScale)));
+      const bodyPoint = (value) => project(rotate(value.map((n) => n * bodyScale)));
+      const pair = (value) => value.map((number) => number.toFixed(2)).join(' ');
+      const path = (points, close = false) => `M${points.map(pair).join('L')}${close ? 'Z' : ''}`;
+      const bodyPath = (points, close = false) => path(points.map(bodyPoint), close);
+      const initialCosine = Math.cos(referenceHeading),
+        initialSine = Math.sin(referenceHeading);
+      // The ground arrow stays aligned to the starting world heading while the
+      // camera follows the nose; its rotation makes yaw visible independently.
+      const floorPoint = ([x, y, z]) =>
+        followHeading
+          ? project(
+              [
+                (initialCosine * x - initialSine * z) * 0.55,
+                y,
+                (initialSine * x + initialCosine * z) * 0.55,
+              ],
+              true,
+            )
+          : projectView([x, y, z], true);
+      ground.setAttribute(
+        'd',
+        [
+          path(
+            [
+              [-1.65, 0, -1.6],
+              [1.65, 0, -1.6],
+              [1.65, 0, 1.5],
+              [-1.65, 0, 1.5],
+            ].map(floorPoint),
+            true,
+          ),
+          path(
+            [
+              [-1.65, 0, 0],
+              [1.65, 0, 0],
+            ].map(floorPoint),
+          ),
+          path(
+            [
+              [0, 0, 1.5],
+              [0, 0, -1.6],
+              [-0.13, 0, -1.25],
+              [0, 0, -1.6],
+              [0.13, 0, -1.25],
+            ].map(floorPoint),
+          ),
+        ].join(''),
+      );
+      const corners = [
+        [-0.82, 0, -0.82],
+        [0.82, 0, -0.82],
+        [-0.82, 0, 0.82],
+        [0.82, 0, 0.82],
+      ];
+      const crosses = (height) =>
+        bodyPath([corners[0], corners[3]].map(([x, , z]) => [x, height, z])) +
+        bodyPath([corners[1], corners[2]].map(([x, , z]) => [x, height, z]));
+      arms.setAttribute('d', crosses(0.04));
+      lowerArms.setAttribute('d', crosses(-0.09));
+      struts.setAttribute(
+        'd',
+        corners
+          .map(([x, , z]) =>
+            bodyPath([
+              [x, -0.09, z],
+              [x, 0.08, z],
+            ]),
+          )
+          .join(''),
+      );
+      const chassis = [
+        [-0.25, 0.1, -0.43],
+        [0.25, 0.1, -0.43],
+        [0.25, 0.1, 0.43],
+        [-0.25, 0.1, 0.43],
+      ];
+      sides.forEach((side, index) => {
+        const a = chassis[index],
+          b = chassis[(index + 1) % 4];
+        side.setAttribute('d', bodyPath([a, b, [b[0], -0.1, b[2]], [a[0], -0.1, a[2]]], true));
+      });
+      body.setAttribute('d', bodyPath(chassis, true));
+      motors.forEach((motor, index) => {
+        const center = corners[index];
+        motor.setAttribute(
+          'd',
+          bodyPath(
+            Array.from({ length: 20 }, (_, segment) => {
+              const angle = (segment * Math.PI) / 10;
+              return [center[0] + Math.cos(angle) * 0.19, 0.08, center[2] + Math.sin(angle) * 0.19];
+            }),
+            true,
+          ),
+        );
+      });
+      nose.setAttribute(
+        'd',
+        bodyPath(
+          [
+            [-0.22, 0.12, -0.45],
+            [0, 0.12, -0.76],
+            [0.22, 0.12, -0.45],
+          ],
+          true,
+        ),
+      );
+      rear.setAttribute(
+        'd',
+        bodyPath([
+          [-0.22, 0.12, 0.44],
+          [0.22, 0.12, 0.44],
+        ]),
+      );
+      const front = bodyPoint([0, 0.12, -0.9]),
+        back = bodyPoint([0, 0.12, 0.85]);
+      const labelY = Math.min(109, Math.max(12, front[1] - 10));
+      frontLabel.setAttribute('x', front[0].toFixed(2));
+      frontLabel.setAttribute('y', labelY.toFixed(2));
+      frontLabel.textContent = locale === 'uk' ? 'ПЕРЕД' : 'FRONT';
+      rearLabel.setAttribute('x', back[0].toFixed(2));
+      rearLabel.setAttribute('y', Math.min(112, Math.max(12, back[1] + 13)).toFixed(2));
+      rearLabel.textContent = locale === 'uk' ? 'ЗАД' : 'REAR';
+      frontLeader.setAttribute('d', path([front, [front[0], labelY + 3]]));
+      const up = rotate([0, 1, 0]),
+        inverted = up[1] < 0;
+      drawing.dataset.inverted = String(inverted);
+      drawing.dataset.referenceHeading = String((referenceHeading * 180) / Math.PI);
+      drawing.dataset.cameraHeading = String((cameraHeading * 180) / Math.PI);
+      const headingDegrees = Math.round((headingDelta * 180) / Math.PI);
+      reference.textContent = followHeading
+        ? `${locale === 'uk' ? 'Поворот від старту' : 'Turn from start'} ${headingDegrees > 0 ? '+' : ''}${headingDegrees}°`
+        : locale === 'uk'
+          ? 'Початковий напрямок ↑'
+          : 'Start heading ↑';
+      const throttle = Math.min(1, Math.max(0, finite(controls.throttle)));
+      const thrustEnd = 0.38 + throttle * 0.75;
+      thrust.setAttribute(
+        'd',
+        bodyPath([
+          [0, 0, 0],
+          [0, thrustEnd, 0],
+        ]) +
+          bodyPath([
+            [-0.1, thrustEnd - 0.15, 0],
+            [0, thrustEnd, 0],
+            [0.1, thrustEnd - 0.15, 0],
+          ]),
+      );
+      thrust.style.opacity = unavailable ? '0' : String(0.25 + throttle * 0.75);
+      const vx = finite(state.velocity?.x) / 1000,
+        vz = finite(state.velocity?.z) / 1000;
+      const speed = Math.hypot(vx, vz),
+        distance = Math.min(1.6, speed / 4);
+      const end = project(
+        speed > 0.05 ? [(vx / speed) * distance, 0, (vz / speed) * distance] : [0, 0, 0],
+        true,
+      );
+      const dx = end[0] - 110,
+        dy = end[1] - 118,
+        length = Math.hypot(dx, dy) || 1;
+      const ax = dx / length,
+        ay = dy / length;
+      drift.setAttribute(
+        'd',
+        path([[110, 118], end]) +
+          path([
+            [end[0] - ax * 7 - ay * 4, end[1] - ay * 7 + ax * 4],
+            end,
+            [end[0] - ax * 7 + ay * 4, end[1] - ay * 7 - ax * 4],
+          ]),
+      );
+      drift.style.opacity = speed > 0.05 ? '1' : '0';
+      return {
+        inverted,
+        referenceHeading,
+        cameraHeading,
+        headingDelta,
+        front,
+        rear: back,
+        left: bodyPoint([-0.82, 0, 0]),
+        right: bodyPoint([0.82, 0, 0]),
+      };
+    },
+    dispose() {
+      disposed = true;
+      drawing.remove();
+    },
+  };
+}
+
 /** Read-only view: quaternion geometry and measured motion, never flight input. */
 export function mountDroneResponse({ root, window: win = globalThis.window, onHide = () => {} }) {
   const doc = root.ownerDocument;
-  const ns = 'http://www.w3.org/2000/svg';
   const node = (tag, className) => {
     const value = doc.createElement(tag);
     if (className) value.className = className;
-    return value;
-  };
-  const svg = (tag, attributes = {}) => {
-    const value = doc.createElementNS(ns, tag);
-    for (const [key, item] of Object.entries(attributes)) value.setAttribute(key, String(item));
     return value;
   };
   const set = (element, value) => {
@@ -153,24 +449,8 @@ export function mountDroneResponse({ root, window: win = globalThis.window, onHi
   close.type = 'button';
   close.textContent = '×';
   heading.append(title, close);
-  const drawing = svg('svg', { viewBox: '0 0 220 142', 'aria-hidden': 'true' });
-  const ground = svg('path', {
-    d: 'M24 105L104 71L196 110L116 140ZM64 88L156 128M70 125L150 91',
-    class: 'sim-response-ground',
-  });
-  const north = svg('text', { x: 176, y: 95, class: 'sim-response-north' });
-  const shadow = svg('ellipse', { cx: 110, cy: 105, rx: 28, ry: 9, class: 'sim-response-shadow' });
-  const drift = svg('path', { class: 'sim-response-drift' });
-  const airframe = svg('g', { class: 'sim-response-airframe' });
-  const arms = svg('path', { class: 'sim-response-arms' });
-  const body = svg('path', { class: 'sim-response-body' });
-  const nose = svg('path', { class: 'sim-response-nose' });
-  const motors = Array.from({ length: 4 }, () =>
-    svg('ellipse', { rx: 7, ry: 4, class: 'sim-response-motor' }),
-  );
-  const thrust = svg('path', { class: 'sim-response-thrust' });
-  airframe.append(arms, ...motors, body, nose, thrust);
-  drawing.append(ground, north, shadow, drift, airframe);
+  const drawing = node('div', 'sim-response-visual');
+  const diagram = mountDroneDiagram({ root: drawing });
   const viewLabel = node('p', 'sim-response-view');
   const inputLabel = node('p', 'sim-response-input');
   const motion = node('p', 'sim-response-motion');
@@ -197,6 +477,7 @@ export function mountDroneResponse({ root, window: win = globalThis.window, onHi
       scale = 'standard',
       mode = 'self-level',
       guideOpen = false,
+      referenceOrientation,
     } = {}) {
       if (disposed) return;
       root.hidden = !state || display === 'off';
@@ -204,74 +485,19 @@ export function mountDroneResponse({ root, window: win = globalThis.window, onHi
       const t = (en, uk) => (locale === 'uk' ? uk : en);
       const finite = (value) => (Number.isFinite(value) ? value : 0);
       const clamp = (value, min, max) => Math.min(max, Math.max(min, finite(value)));
-      const orientation = state.orientation ?? [0, 0, 0, 1000000];
-      const length = Math.hypot(...orientation) || 1;
-      const [x, y, z, w] = orientation.map((value) => finite(value) / length);
-      const rotate = ([a, b, c]) => [
-        (1 - 2 * (y * y + z * z)) * a + 2 * (x * y - z * w) * b + 2 * (x * z + y * w) * c,
-        2 * (x * y + z * w) * a + (1 - 2 * (x * x + z * z)) * b + 2 * (y * z - x * w) * c,
-        2 * (x * z - y * w) * a + 2 * (y * z + x * w) * b + (1 - 2 * (x * x + y * y)) * c,
-      ];
-      const project = ([a, b, c], floor = false) => [
-        110 + (a - c) * 29,
-        (floor ? 106 : 63) + (a + c) * 12 - b * 31,
-      ];
-      const point = (v) =>
-        project(rotate(v))
-          .map((n) => n.toFixed(2))
-          .join(' ');
-      const corners = [
-        [-0.82, 0, -0.82],
-        [0.82, 0, -0.82],
-        [-0.82, 0, 0.82],
-        [0.82, 0, 0.82],
-      ];
-      arms.setAttribute(
-        'd',
-        `M${point(corners[0])}L${point(corners[3])}M${point(corners[1])}L${point(corners[2])}`,
-      );
-      motors.forEach((motor, index) => {
-        const position = project(rotate(corners[index]));
-        motor.setAttribute('cx', position[0].toFixed(2));
-        motor.setAttribute('cy', position[1].toFixed(2));
+      const { inverted } = diagram.update({
+        state,
+        controls,
+        locale,
+        unavailable,
+        referenceOrientation,
+        followHeading: true,
       });
-      body.setAttribute(
-        'd',
-        `M${point([-0.25, 0, -0.43])}L${point([0.25, 0, -0.43])}L${point([0.25, 0, 0.43])}L${point([-0.25, 0, 0.43])}Z`,
-      );
-      nose.setAttribute(
-        'd',
-        `M${point([-0.22, 0.04, -0.45])}L${point([0, 0.04, -0.76])}L${point([0.22, 0.04, -0.45])}Z`,
-      );
-      const up = rotate([0, 1, 0]);
-      const inverted = up[1] < 0;
       const thrustValue = clamp(controls.throttle, 0, 1);
-      const thrustEnd = 0.38 + thrustValue * 0.75;
-      thrust.setAttribute(
-        'd',
-        `M${point([0, 0, 0])}L${point([0, thrustEnd, 0])}M${point([-0.1, thrustEnd - 0.15, 0])}L${point([0, thrustEnd, 0])}L${point([0.1, thrustEnd - 0.15, 0])}`,
-      );
-      thrust.style.opacity = unavailable ? '0' : String(0.25 + thrustValue * 0.75);
       const vx = finite(state.velocity?.x) / 1000,
         vy = finite(state.velocity?.y) / 1000,
         vz = finite(state.velocity?.z) / 1000;
       const speed = Math.hypot(vx, vz);
-      const direction = speed > 0.05 ? [vx / speed, 0, vz / speed] : [0, 0, 0];
-      const distance = Math.min(1.6, speed / 4);
-      const end = project(
-        direction.map((n) => n * distance),
-        true,
-      );
-      const dx = end[0] - 110,
-        dy = end[1] - 106,
-        arrowLength = Math.hypot(dx, dy) || 1;
-      const ax = dx / arrowLength,
-        ay = dy / arrowLength;
-      drift.setAttribute(
-        'd',
-        `M110 106L${end[0]} ${end[1]}M${end[0] - ax * 7 - ay * 4} ${end[1] - ay * 7 + ax * 4}L${end[0]} ${end[1]}L${end[0] - ax * 7 + ay * 4} ${end[1] - ay * 7 - ax * 4}`,
-      );
-      drift.style.opacity = speed > 0.05 ? '1' : '0';
       const angular = ['pitch', 'roll', 'yaw'].filter(
         (key) => Math.abs(finite(controls[key])) >= 0.08,
       );
@@ -307,10 +533,9 @@ export function mountDroneResponse({ root, window: win = globalThis.window, onHi
       root.classList.toggle('input-unavailable', unavailable);
       set(title, t('Drone response', 'Реакція дрона'));
       close.setAttribute('aria-label', t('Hide drone response', 'Приховати реакцію дрона'));
-      set(north, t('N', 'Пн'));
       set(
         viewLabel,
-        `${inverted ? t('INVERTED · ', 'ДОГОРИ ДНОМ · ') : ''}${t('Ground fixed · amber nose', 'Земля нерухома · ніс жовтий')}`,
+        `${inverted ? t('INVERTED · ', 'ДОГОРИ ДНОМ · ') : ''}${t('Rear view · camera follows heading · amber front', 'Вигляд ззаду · камера стежить за курсом · перед жовтий')}`,
       );
       set(
         inputLabel,
@@ -355,6 +580,7 @@ export function mountDroneResponse({ root, window: win = globalThis.window, onHi
     dispose() {
       disposed = true;
       close.removeEventListener('click', hide);
+      diagram.dispose();
       root.replaceChildren();
       root.hidden = true;
     },
@@ -707,3 +933,31 @@ const SHARED_ASSETS = {
   }
 };
 // END SHARED SIM ASSETS
+
+/** Static axis legends share calibrated Mode 1–4 layout; never generate input. */
+export function paintStickDirections(element, { horizontal, vertical, locale = 'en' }) {
+  const key = `${horizontal}:${vertical}:${locale}`;
+  if (element.dataset.stickLegend === key) return;
+  element.dataset.stickLegend = key;
+  element.classList.add('sim-labelled-stick');
+  for (const old of element.querySelectorAll('.sim-stick-direction')) old.remove();
+  const uk = locale === 'uk';
+  const labels = {
+    throttle: uk ? ['Тяга +', 'Тяга −'] : ['Thrust +', 'Thrust −'],
+    pitch: uk ? ['Ніс униз', 'Ніс угору'] : ['Nose down', 'Nose up'],
+    yaw: uk ? ['Поворот ←', '→ Поворот'] : ['Turn ←', '→ Turn'],
+    roll: uk ? ['Крен ←', '→ Крен'] : ['Bank ←', '→ Bank'],
+  };
+  for (const [direction, text] of [
+    ['up', `↑ ${labels[vertical][0]}`],
+    ['down', `↓ ${labels[vertical][1]}`],
+    ['left', labels[horizontal][0]],
+    ['right', labels[horizontal][1]],
+  ]) {
+    const label = element.ownerDocument.createElement('b');
+    label.className = `sim-stick-direction sim-stick-${direction}`;
+    label.textContent = text;
+    label.setAttribute('aria-hidden', 'true');
+    element.append(label);
+  }
+}

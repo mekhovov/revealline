@@ -396,3 +396,137 @@ The 8–10-working-week continuation estimate plus two contingency weeks remains
 a staffing-dependent planning baseline, not proof these remaining phases are
 complete. Re-estimate after the first realistic-world benchmark and novice
 sessions. Continue focused verified PRs while publication runs.
+
+## Controls feedback checkpoint — 2 October 2026
+
+Current branch: `codex/fpv-controls-learning-lab`, a new focused child of #926
+at `a76abd56f2097552f435b79d0be09c36710eeb7f`. The remote parent and live native
+stack #902 were checked again before publication: open linear membership remains
+#905 → #907 → #923 → #924 → #925 → #926. Preserve existing holds. No parent was
+rebased or retargeted in this increment. The completed UI/graphics/audio work,
+Garage handoff, #913 ghost work and #889 content stack remain intact.
+
+Implemented the user's screenshot corrections and live controls request:
+
+- Shared rear-reference quaternion diagram in lesson explanations and both SIM
+  hosts, with amber front, visible body depth, correctly signed roll and distinct
+  pitch. Full Acro/yaw and measured movement remain truthful.
+- Isolated Example / Try controls lab, schematic radio, labelled Mode 1–4
+  gimbals, keyboard/touch/D-pad/calibrated-radio input, explicit stop/reset and
+  safe input release. The paused lesson and recording remain unchanged.
+- Larger directional flight sticks; shared navy/amber/cyan surfaces; fixed
+  keyboard flight when a HUD button holds focus; truthful disabled Arm state
+  while an explanation owns input.
+- Keyboard, standard-controller and calibrated-radio paused-menu navigation,
+  release/hold gates, editable selects/sliders, capture ownership and Back.
+  Fullscreen across SIM screens, nested dialogs and lobby return; explicit
+  full-window fallback and root Escape exit.
+
+See [feature and verification notes](fpv-controls-learning-lab.md) and the updated
+[delivery plan](fpv-reviewed-delivery-plan.md). Browser receipts cover 15 lab,
+7 actual World Studio host, 19 menu and 15 rear-geometry checks. They use controlled
+input; they do not assert physical TX15, novice or hardware-performance acceptance.
+All 14 Acro proofs completed/replayed again. Final frozen package admission and
+publication identities are appended below after the source commit.
+
+The independent main-game preset is published as
+[#928](https://github.com/mekhovov/revealline/pull/928), head
+`b02a227ea0284a687448d4ea90992539384488d4`, branch `codex/tx15-full-radio-menus`,
+based on current main `937aead7287814b7886082dda9be55f295641476`. It lives in
+`/tmp/fpv-radio-menu-20261002` and does not depend on the FPV stack. An explicit
+Solo preset adds guarded yaw Confirm/Back to the established tested TX15
+mapping. Localization, syntax/lint/format, runtime and 12 actual-browser component
+checks passed. Full game entry on port 8794 stops at its existing password gate;
+full-lobby and physical-radio acceptance are not claimed. No gate was bypassed.
+
+#922 remains OPEN at `b490f26337781b9a6b827f5348620763b8b4db41` with no merge
+commit at this checkpoint. Its earlier protected asynchronous merge request is
+not proof of merging or deployment. Do not enqueue repeatedly. The new controls
+build is local/PR work, not claimed publicly live.
+
+Next concrete work:
+
+1. Finish the frozen controls candidate and append its focused PR to #902. Keep
+   its source separate from further art or course changes.
+2. During coordinated integration of #922, give its new dynamic reimport-review
+   dialog exclusive menu navigation and guarded cancel/Back ownership. This
+   modal is absent from the current branch, whose existing dialogs are handled.
+3. Continue R4/R5 art and realistic materials; retain existing provenance/package
+   limits and qualify a named-device benchmark. Complete R6 demonstrations,
+   compatible ghosts and targeted practice. R7 retains new unit coverage and
+   human/device acceptance. Never substitute controlled-input checks for those.
+
+### Frozen controls candidate
+
+Source `183690e94f5035fbcdd2c03c6001930c039aa182` passed all three admissions,
+committed inputs, two byte-identical builds and ZIP-member checks in
+`/tmp/fpv-controls-final-20261002`. The committed receipt is
+`docs/evidence/fpv-controls-package-20261002.json`. Academy is 62 runtime/64 source
+files and World Studio 94/96 under unchanged limits. The following evidence-only
+commit leaves all runtime inputs unchanged.
+
+The reviewed-player build is refreshed at the user's existing URL:
+`http://127.0.0.1:8789/dist/fpv-reviewed-player-playtest/optional-practice/fpv-worlds/index.html#learn`.
+Its 87 files total 12,444,906 bytes; ZIP SHA-256
+`b758497d615673cc05930909d5f9caf8cb103a95ad42e4d667f4363a52481f38`.
+The actual packaged browser launched the final lesson, correctly disabled real
+arming during its guide, ran the pitch example and exited root fullscreen with
+Escape. Academy's nested radio Back preserved fullscreen and root Escape exited
+it. Browser console errors were absent. Local screenshots are retained at
+`/tmp/fpv-controls-lab-final-20261002.png` and
+`/tmp/fpv-controls-lab-mobile.jpg`.
+
+#928's first observed CI snapshot contains an optional-practice failure and a
+release-ready failure. Independent investigation is running in its dedicated
+worktree; do not claim check completion or merge eligibility from its successful
+component verification alone. The FPV frozen candidate above has passed its own
+package admission independently.
+
+### Final controls publication — rear view follows turns
+
+The user's request requires remaining behind the drone after a turn. The final
+refinement follows current heading in the HUD and lab instead of fixing the
+camera to the starting heading. The full quaternion still drives body, pitch,
+roll, thrust and inversion. The ground/start arrow rotates and a signed angle
+shows yaw. Near a vertical nose the last usable camera heading is retained.
+This supersedes the initial fixed-heading description above.
+
+Final source `1b03e39d1bd9d0a6a15e196135f9edfda5aa4c7a` passed all three frozen
+package admissions, committed inputs, two byte-identical builds and ZIP checks in
+`/tmp/fpv-controls-follow-final-20261002`; receipt
+`docs/evidence/fpv-controls-follow-package-20261002.json`. New browser projection
+verification passed 27 checks, including every quarter/half turn with both pitch
+and roll signs, inversion, near-vertical stability and ground bounds every 15°.
+The 15 live-lab browser checks were repeated and passed. Other host/menu evidence
+is unchanged. All runtime changes are in that frozen source; its following
+checkpoint commit changes documentation/evidence formatting only.
+
+The final local player ZIP has 87 files / 12,446,804 bytes and SHA-256
+`1384f7f7620c255d81867b14d5f44a3e03f15201675a1b9a14c34b2db4c52e91`.
+The existing reviewed-player URL is rebuilt and was launched with the final
+heading-follow guide. No public deployment is claimed.
+
+Focused [PR #929](https://github.com/mekhovov/revealline/pull/929) is attached and
+was appended through the native stack API to #902 after #926. Open membership:
+#905 → #907 → #923 → #924 → #925 → #926 → #929. Exact final runtime head is
+`1b03e39d1`; the subsequent docs-only head is available on the PR. Preserve all
+holds and exact-head checks; no rebase, manual retarget or bypass was performed.
+CI was still running at the publication checkpoint. Wait for external completion
+without repeated unchanged polling before any protected merge decision.
+
+Independent [PR #928](https://github.com/mekhovov/revealline/pull/928) is now at
+`17ca14565d1594e94d3c59bc9ee96b216a497853`. Its source-cap failure was reproduced
+and fixed by reusing the stack's exact minimal Academy wordmark scoping change
+(`72b508f53`), preserving the wordmark in World Studio and all package limits.
+The corrected main-based candidate passed all three admissions, committed inputs,
+ZIP members and two identical builds. Evidence remains in
+`/tmp/fpv-radio-menu-20261002/.cache/tx15-optional-corrected/`; envelope SHA-256
+`a0937caf8cbb98fe36803a9417be9d25a6774f6f4d2f7348f90b02a2fd297411`.
+Remote CI is pending; the earlier release-ready failure belonged to a cancelled,
+superseded run. No release policy/version change was made. Full lobby and new
+physical-radio acceptance remain unverified.
+
+Continue independent R4/R5 art and R6 demonstration/ghost/practice work while
+publication runs. Integrate #922's dynamic reimport modal navigation during the
+coordinated main refresh, as noted above. Additional unit coverage and remaining
+human/device acceptance stay in R7.

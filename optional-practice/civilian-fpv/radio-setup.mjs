@@ -808,6 +808,7 @@ export function mountRadioSetup({
   frame = win.requestAnimationFrame(paint);
   return {
     store,
+    captureActive: () => !!(recording || identifying || switchCapture || guide?.captureActive()),
     dispose() {
       disposed = true;
       guide?.dispose();
