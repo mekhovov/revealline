@@ -121,6 +121,7 @@ test('earned-original fallback fails concealed and releases mismatched or cancel
         },
       });
       assert.equal(result.pictureVisibility, 'blurred', failure);
+      assert.equal(result.previewAvailable, false, failure);
       assert.equal(result.backdrop, null, failure);
       result.dispose();
       assert.equal(releases, failure === 'decode-error' ? 0 : 1);
@@ -197,6 +198,7 @@ test('earned session originals use their combined view adapter while explicit ac
     wrongPin = true;
     const mismatch = await resolveDemoPicture(options);
     assert.equal(mismatch.pictureVisibility, 'blurred');
+    assert.equal(mismatch.previewAvailable, false);
     assert.equal(mismatch.backdrop, null);
     assert.equal(releases, 2, 'The view adapter cannot authorize a different decoded original.');
     const overridden = await resolveDemoPicture({
@@ -206,6 +208,7 @@ test('earned session originals use their combined view adapter while explicit ac
       },
     });
     assert.equal(overridden.pictureVisibility, 'blurred');
+    assert.equal(overridden.previewAvailable, false);
     assert.equal(overridden.backdrop, null);
     assert.equal(
       acquisitions,
@@ -224,10 +227,16 @@ test('only the exact earned assignment reveals a picture, including shared Stand
     const result = await resolveDemoPicture(request(f, 'standard'));
     assert.equal(result.pictureVisibility, 'clear');
     assert.equal(result.backdrop.pin.sha256, f.receipt.presentationPin.sha256);
+    assert.equal(result.previewAvailable, true);
     assert.equal(JSON.stringify(f.profile), before);
     result.dispose();
     const unearned = await resolveDemoPicture({ ...request(f), library: { gallery: [] } });
     assert.equal(unearned.pictureVisibility, 'blurred');
+    assert.equal(
+      unearned.previewAvailable,
+      true,
+      'A verified unearned original permits an explicit demo preview.',
+    );
     assert.ok(
       unearned.backdrop,
       'the actual unearned art is available only to the protected renderer',
@@ -259,6 +268,7 @@ test('a later current assignment stays blurred even when its map has an earned o
     const result = await resolveDemoPicture(request(f));
     assert.equal(result.backdrop.pin.presentationRevision, 2);
     assert.equal(result.pictureVisibility, 'blurred');
+    assert.equal(result.previewAvailable, true);
     result.dispose();
   } finally {
     f.manager.close();
@@ -313,6 +323,51 @@ test('read failures, foreign pins and invalid earned receipts never authorize cl
     const result = await resolveDemoPicture({ ...base, library });
     assert.equal(result.pictureVisibility, 'blurred');
     result.dispose();
+  } finally {
+    f.manager.close();
+  }
+});
+
+test('preview eligibility requires installed identity and verified art without granting an earned picture', async () => {
+  const f = await earnedPictureFixture();
+  try {
+    const base = { ...request(f), library: { gallery: [] } };
+    const before = JSON.stringify({ profile: f.profile, metadata: f.metadata });
+    const legacy = await resolveDemoPicture({ ...base, readMedia: undefined });
+    assert.equal(
+      legacy.previewAvailable,
+      true,
+      'An installed procedural original is also a valid preview.',
+    );
+    assert.equal(legacy.pictureVisibility, 'blurred');
+    assert.equal(legacy.backdrop, null);
+    legacy.dispose();
+    const foreign = structuredClone(f.receipt.presentationPin);
+    foreign.identity.themeId = 'retro';
+    const cases = [
+      { entries: [] },
+      { level: { ...base.level, revision: 'uninstalled-revision' } },
+      { currentPin: foreign },
+      {
+        readMedia: async () => {
+          throw Error('Unavailable');
+        },
+      },
+      {
+        acquire: async () => {
+          throw Error('Decode failure');
+        },
+      },
+      { acquire: async ({ pin }) => ({ pin, image: null, release() {} }) },
+    ];
+    for (const invalid of cases) {
+      const picture = await resolveDemoPicture({ ...base, ...invalid });
+      assert.equal(picture.previewAvailable, false);
+      assert.equal(picture.pictureVisibility, 'blurred');
+      assert.equal(picture.backdrop, null);
+      picture.dispose();
+    }
+    assert.equal(JSON.stringify({ profile: f.profile, metadata: f.metadata }), before);
   } finally {
     f.manager.close();
   }
