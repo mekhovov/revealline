@@ -25,6 +25,11 @@ Package closure measurements are recorded separately by the publication check.
 
 ## Fresh checks
 
+- `practice.tap`: final standard `practice:test` suite on `3fdad96df` after the
+  final main merge (`89e25c726`): **224 passed**, no failures, skips or cancellations.
+  The exact package command includes Academy model/input/replay tests, optional
+  installation, publishing/admission, source/archive checks and the focused SIM
+  host suites. No baseline failure exceptions were needed.
 - `world.tap`: **62 passed**, no failures or skips. Covers World runtime/content,
   appearance preferences/recording metadata, host lifecycle, editor handoff and
   semantic materials. Material geometry checks now include all **14** current
