@@ -295,7 +295,7 @@ export function validateLevel(level) {
       maxBytes: 128 * 1024,
       maxNodes: 10000,
       maxDepth: 12,
-      maxArray: 100,
+      maxArray: 512,
     });
     exactKeys(
       owned,
@@ -396,7 +396,7 @@ export function normalizedLevel(level) {
       maxBytes: 128 * 1024,
       maxNodes: 10000,
       maxDepth: 12,
-      maxArray: 100,
+      maxArray: 512,
     });
   const result = validateLevel(level);
   if (!result.valid) throw new TypeError(`Invalid level: ${result.errors.join('; ')}`);

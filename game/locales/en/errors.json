@@ -621,7 +621,7 @@
   "content.textBudget": "{{path}} exceeds the 4096-character text budget.",
   "content.plainJson": "{{path}} must contain plain JSON data.",
   "content.cycle": "{{path}} must not contain a cycle.",
-  "content.arrayBudget": "{{path}} exceeds the 256-item array budget.",
+  "content.arrayBudget": "{{path}} exceeds the {{limit}}-item array budget.",
   "content.fieldBudget": "{{path}} has too many fields.",
   "content.symbolKeys": "{{path}} must not contain symbol keys.",
   "content.arrayProperties": "{{path}} must not contain custom array properties.",
