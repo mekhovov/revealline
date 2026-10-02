@@ -695,6 +695,8 @@ export function mountWorldApp({
     flightToken = 0,
     finished = false,
     sceneReady = false,
+    scenePreparationGeneration = 0,
+    qualityPreparing = false,
     fire = false,
     fireReleaseRequired = false,
     pausing = false,
@@ -2976,6 +2978,8 @@ export function mountWorldApp({
   async function startFlight(entry, options = {}) {
     if (disposed) return;
     const token = ++flightToken;
+    qualityPreparing = false;
+    scenePreparationGeneration++;
     abortSectorLookup();
     sceneReady = false;
     pauseFlight();
@@ -3066,6 +3070,7 @@ export function mountWorldApp({
         window: win,
         onContextLost: () => {
           sceneReady = false;
+          qualityPreparing = false;
           pauseFlight();
           $('flight-status').textContent = txt(
             'Graphics context lost. Retry after graphics recover.',
@@ -3173,6 +3178,21 @@ export function mountWorldApp({
       );
     }
     if (disposed || token !== flightToken) return;
+    // A preset can change while assets or shaders are loading. Prepare the latest
+    // scene again when that renderer revision supersedes the pending compilation.
+    for (let attempt = 0; attempt < 3; attempt++) {
+      const prepared = await renderer.prepare?.();
+      if (disposed || token !== flightToken || !renderer.available) return;
+      if (prepared !== false) break;
+      if (attempt === 2)
+        throw new Error(
+          txt(
+            'Graphics changed during preparation. Retry the flight.',
+            'Графіка змінилася під час підготовки. Повторіть політ.',
+          ),
+        );
+    }
+    if (disposed || token !== flightToken) return;
     if (ghostEnabled) await loadGhost();
     if (token !== flightToken || disposed) return;
     sceneReady = true;
@@ -3200,6 +3220,8 @@ export function mountWorldApp({
   }
   async function closeFlight() {
     const token = ++flightToken;
+    qualityPreparing = false;
+    scenePreparationGeneration++;
     abortSectorLookup();
     sceneReady = false;
     pauseFlight();
@@ -3727,8 +3749,52 @@ export function mountWorldApp({
   on($('flight-stick-display'), 'change', () => paintInput(flight?.snapshot()));
   on($('flight-drone-guide'), 'change', () => paintInput(flight?.snapshot()));
   on($('flight-guide-scale'), 'change', () => paintInput(flight?.snapshot()));
-  on($('flight-quality'), 'change', () => renderer?.setQuality?.($('flight-quality').value));
-  on($('drone-look'), 'change', () => renderer?.setDrone?.($('drone-look').value));
+  async function changeFlightVisuals(update) {
+    const ready = sceneReady || qualityPreparing;
+    pauseFlight();
+    update();
+    // A loading course prepares its final assets before enabling the arm control.
+    if (!ready || !renderer || !flight) return;
+    qualityPreparing = true;
+    sceneReady = false;
+    const token = flightToken,
+      generation = ++scenePreparationGeneration;
+    updateHUD(flight.snapshot());
+    $('flight-status').textContent = txt('Preparing graphics…', 'Підготовка графіки…');
+    try {
+      let prepared = false;
+      for (let attempt = 0; attempt < 3 && !prepared; attempt++) {
+        prepared = (await renderer.prepare?.()) !== false;
+        if (disposed || token !== flightToken || generation !== scenePreparationGeneration) return;
+      }
+      if (!prepared)
+        throw new Error(
+          txt(
+            'Graphics changed during preparation. Retry the flight.',
+            'Графіка змінилася під час підготовки. Повторіть політ.',
+          ),
+        );
+      if (disposed || token !== flightToken || generation !== scenePreparationGeneration) return;
+      qualityPreparing = false;
+      sceneReady = true;
+      updateHUD(flight.snapshot());
+      $('flight-status').textContent = txt(
+        'Graphics ready. Arm / resume when ready.',
+        'Графіка готова. Увімкніть або продовжте політ, коли будете готові.',
+      );
+    } catch (error) {
+      if (!disposed && token === flightToken && generation === scenePreparationGeneration) {
+        qualityPreparing = false;
+        reportError(error);
+      }
+    }
+  }
+  on($('flight-quality'), 'change', () =>
+    changeFlightVisuals(() => renderer?.setQuality?.($('flight-quality').value)),
+  );
+  on($('drone-look'), 'change', () =>
+    changeFlightVisuals(() => renderer?.setDrone?.($('drone-look').value)),
+  );
   on($('world-fire'), 'pointerdown', (e) => {
     e.preventDefault();
     if (!replayProof && flight?.snapshot().status === 'active') {

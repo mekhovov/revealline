@@ -104,17 +104,26 @@ export function mountFlightApp({
     disposed = false,
     suspended = false,
     graphicsLost = false,
+    sceneReady = false,
+    sceneGeneration = 0,
+    scenePreparation = null,
+    pendingScene = Promise.resolve(false),
+    pauseGeneration = 0,
     focused = typeof doc.hasFocus === 'function' ? doc.hasFocus() : true,
     epoch = 0,
     lastRadioDiscovery = -Infinity,
     message = null;
   const c = () => COPY[locale],
     messageText = (key) =>
-      key === 'arm-switch-off'
+      key === 'preparingGraphics'
         ? locale === 'uk'
-          ? 'Перемкніть озброєння в УВІМК, щоб почати.'
-          : 'Move the arm switch ON to start.'
-        : (c()[key] ?? key),
+          ? 'Підготовка графіки…'
+          : 'Preparing graphics…'
+        : key === 'arm-switch-off'
+          ? locale === 'uk'
+            ? 'Перемкніть озброєння в УВІМК, щоб почати.'
+            : 'Move the arm switch ON to start.'
+          : (c()[key] ?? key),
     say = (value) => {
       if ($('status').textContent !== value) $('status').textContent = value;
     };
@@ -262,11 +271,49 @@ export function mountFlightApp({
     reducedMotion: !!win.matchMedia?.('(prefers-reduced-motion: reduce)').matches,
     onContextLost() {
       graphicsLost = true;
+      sceneReady = false;
+      scenePreparation?.abort();
       pause('contextLost');
       $('fallback').hidden = false;
       $('fallback').textContent = c().contextLost;
     },
   });
+  function prepareScene() {
+    scenePreparation?.abort();
+    const controller = new AbortController(),
+      generation = ++sceneGeneration;
+    scenePreparation = controller;
+    sceneReady = false;
+    $('arm').disabled = true;
+    $('watch').disabled = true;
+    message = 'preparingGraphics';
+    pendingScene = (async () => {
+      try {
+        const result = await renderer.prepare?.({ signal: controller.signal });
+        if (
+          result === false ||
+          controller.signal.aborted ||
+          disposed ||
+          generation !== sceneGeneration ||
+          graphicsLost
+        )
+          return false;
+        sceneReady = !!renderer.available;
+        $('arm').disabled = !sceneReady;
+        $('watch').disabled = !sceneReady || !!authoringCourse;
+        if (message === 'preparingGraphics') message = null;
+        paint(true);
+        return sceneReady;
+      } catch (error) {
+        if (!disposed && generation === sceneGeneration && !controller.signal.aborted) {
+          message = `${locale === 'uk' ? 'Не вдалося підготувати графіку. Повторіть спробу.' : 'Graphics preparation failed. Retry the flight.'} ${error.message}`;
+          paint(true);
+        }
+        return false;
+      }
+    })();
+    return pendingScene;
+  }
   function reset(index = selected, nextMode = mode, previewCourse = authoringCourse) {
     const nextFlight = createFlight({
       course: previewCourse ?? courses[index],
@@ -295,14 +342,14 @@ export function mountFlightApp({
     $('mode').value = mode;
     $('complete').hidden = true;
     $('try').hidden = !authoringCourse;
-    $('arm').disabled = !renderer.available || graphicsLost;
-    $('watch').disabled = !renderer.available || graphicsLost || !!authoringCourse;
     renderer.setCourse?.(flight.course(), mode);
     renderer.setPath?.([]);
+    void prepareScene();
     paint(true);
   }
   function pause(reason = 'paused') {
     if (disposed) return;
+    pauseGeneration++;
     cancelReview();
     flight?.pause();
     if (replay) replay.paused = true;
@@ -319,6 +366,7 @@ export function mountFlightApp({
       disposed ||
       suspended ||
       !renderer.available ||
+      !sceneReady ||
       graphicsLost ||
       modalOpen() ||
       !inputAvailable() ||
@@ -432,7 +480,7 @@ export function mountFlightApp({
         if (disposed || owner !== epoch) return null;
         reviewAbort = null;
         if (closeAfter) closeDialog(closeAfter);
-        showReview(proof, kind, index, checked);
+        await showReview(proof, kind, index, checked);
         return checked;
       } catch (error) {
         if (controller.signal.aborted || disposed || owner !== epoch) return null;
@@ -448,13 +496,14 @@ export function mountFlightApp({
     pendingReview = operation.catch(() => {});
     return operation;
   }
-  function showReview(proof, kind, index, checked) {
+  async function showReview(proof, kind, index, checked) {
     selected = index;
     mode = proof.mode;
     authoringCourse = null;
     const playback = createFlight({ course: courses[index], mode, response: proof.response });
-    playback.arm();
-    replay = { proof, kind, flight: playback, at: 0, paused: false };
+    replay = { proof, kind, flight: playback, at: 0, paused: true };
+    const requestedReplay = replay,
+      requestedPause = pauseGeneration;
     $('replay-controls').hidden = false;
     $('replay-rate').value = String(replayRate);
     $('mode').value = mode;
@@ -466,6 +515,15 @@ export function mountFlightApp({
     lastExecutionTime = null;
     renderer.setCourse?.(courses[index], mode);
     renderer.setPath?.(checked.path);
+    paint(true);
+    if (!(await prepareScene()) || replay !== requestedReplay || disposed) return;
+    if (requestedPause === pauseGeneration && inputAvailable() && !modalOpen() && !suspended) {
+      playback.arm();
+      replay.paused = false;
+      accumulator = 0;
+      lastTime = null;
+      lastExecutionTime = null;
+    }
     paint(true);
   }
   function translated() {
@@ -654,6 +712,7 @@ export function mountFlightApp({
       !modalOpen() &&
       !immersive.snapshot().toolsOpen &&
       renderer.available &&
+      sceneReady &&
       !graphicsLost
     ) {
       let radioInput = neutralFlightInput();
@@ -961,6 +1020,7 @@ export function mountFlightApp({
       await notebook?.ready;
       await pendingAttempt;
       await pendingReview;
+      await pendingScene;
     },
     snapshot: () => flight.snapshot(),
     exportAttempt: () => recorder.export(),
@@ -969,6 +1029,7 @@ export function mountFlightApp({
       pause();
       disposed = true;
       epoch++;
+      scenePreparation?.abort();
       if (frameId !== null) win.cancelAnimationFrame(frameId);
       setup?.dispose();
       void notebook?.dispose();
