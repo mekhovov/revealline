@@ -1,0 +1,944 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Woodland surfaces · before / after</title>
+    <style>
+      :root {
+        font: 15px system-ui;
+        color-scheme: dark;
+        background: #0b1724;
+        color: #e6eff4;
+      }
+      body {
+        margin: 20px;
+        max-width: 1400px;
+      }
+      h1 {
+        font-size: 23px;
+      }
+      p {
+        max-width: 105ch;
+        line-height: 1.45;
+      }
+      button,
+      select {
+        font: inherit;
+        min-height: 44px;
+        background: #1b3044;
+        color: inherit;
+        border: 1px solid #58778d;
+        border-radius: 6px;
+        padding: 8px 12px;
+      }
+      button:disabled {
+        opacity: 0.5;
+      }
+      .controls {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+        margin: 12px 0;
+        align-items: center;
+      }
+      label {
+        display: flex;
+        gap: 8px;
+        align-items: center;
+      }
+      .pair {
+        display: flex;
+        gap: 14px;
+        overflow: auto;
+      }
+      figure {
+        margin: 0;
+        flex: none;
+      }
+      figcaption {
+        padding: 8px;
+        font-weight: 600;
+      }
+      .screen,
+      .screen canvas {
+        width: 640px;
+        height: 360px;
+        display: block;
+        background: #101923;
+      }
+      .screen {
+        border: 1px solid #526878;
+      }
+      textarea {
+        width: 100%;
+        height: 240px;
+        background: #101923;
+        color: #dce8f0;
+        font: 12px monospace;
+      }
+      small {
+        color: #aac0ce;
+      }
+      #status {
+        min-height: 25px;
+      }
+      #provenance {
+        font: 12px monospace;
+        overflow-wrap: anywhere;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Woodland bark and floor comparison</h1>
+    <p>
+      Frozen baseline and candidate use actual production WebGL renderers and built-in GLB scenery.
+      Inspect the six unchanged solid trunks, forest floor, gates and moving actors at 1.5, 3, 6 and
+      9 metres. Geometry and opaque sightlines must match; bark and ground surface pixels should
+      change.
+    </p>
+    <p>
+      <small
+        >Prepare using
+        <code
+          >node scripts/prepare-fpv-woodland-surfaces-verification.mjs --out
+          dist/fpv-woodland-surfaces-verification-NAME</code
+        >. No game progress or remote assets are used. Static observer poses are not flight proofs.
+        Keep this tab visible during verification.</small
+      >
+    </p>
+    <p id="provenance">Loading provenance…</p>
+    <div class="controls">
+      <button id="run" disabled>Run surface qualification</button
+      ><button id="preview" disabled>Show selected view</button
+      ><button id="download" disabled>Download receipt</button>
+    </div>
+    <div class="controls">
+      <label
+        >World<select id="course">
+          <option value="woodland-06">Woodland · crossing hazards</option>
+          <option value="beginner-31">Woodland · larger school arena</option>
+          <option value="flight-05">Meadow regression</option>
+          <option value="courtyard-01">Courtyard regression</option>
+        </select></label
+      >
+      <label
+        >Quality<select id="quality">
+          <option value="low">Performance</option>
+          <option value="balanced" selected>Balanced</option>
+          <option value="high">Quality</option>
+        </select></label
+      >
+      <label
+        >Camera<select id="camera">
+          <option>fpv</option>
+          <option>chase</option>
+          <option>overview</option>
+        </select></label
+      >
+      <label
+        >Height<select id="height">
+          <option value="1.5">1.5 m · root</option>
+          <option value="3" selected>3 m · trunk</option>
+          <option value="6">6 m · upper trunk</option>
+          <option value="9">9 m · above top</option>
+        </select></label
+      >
+      <label
+        >Facing<select id="pose">
+          <option value="trunk">Close trunk</option>
+          <option value="trail">Trail and objectives</option>
+          <option value="rear">Reverse trail</option>
+        </select></label
+      >
+    </div>
+    <p id="status">Preparing controls…</p>
+    <div class="pair">
+      <figure>
+        <figcaption>Before · frozen baseline</figcaption>
+        <div class="screen" id="before"></div>
+      </figure>
+      <figure>
+        <figcaption>After · frozen candidate</figcaption>
+        <div class="screen" id="after"></div>
+      </figure>
+    </div>
+    <p>
+      <small
+        >The harness briefly observes Three.js scene attachment during renderer construction, then
+        restores the original method. It never replaces production geometry, materials, shaders,
+        physics or render output. Pixel equality is same-browser evidence, not a cross-device golden
+        or FPS claim.</small
+      >
+    </p>
+    <textarea id="receipt" aria-label="Woodland surface verification receipt" readonly></textarea>
+    <script type="module">
+      const $ = (id) => document.getElementById(id),
+        qualities = ['low', 'balanced', 'high'],
+        heights = [1.5, 3, 6, 9],
+        woodlandIds = ['woodland-06', 'beginner-31'],
+        wait = () => new Promise(requestAnimationFrame),
+        encode = JSON.stringify,
+        clone = (value) => JSON.parse(JSON.stringify(value));
+      const sha = async (value) =>
+        [
+          ...new Uint8Array(
+            await crypto.subtle.digest(
+              'SHA-256',
+              typeof value === 'string' ? new TextEncoder().encode(value) : value,
+            ),
+          ),
+        ]
+          .map((x) => x.toString(16).padStart(2, '0'))
+          .join('');
+      let manifest,
+        modules,
+        receipt,
+        owners = [],
+        busy = false;
+      const errors = [];
+      addEventListener('error', (event) => errors.push(event.message));
+      addEventListener('unhandledrejection', (event) => errors.push(String(event.reason)));
+      function status(text) {
+        $('status').textContent = text;
+      }
+      function publish() {
+        window.fpvWoodlandSurfacesReceipt = receipt;
+        $('receipt').value = JSON.stringify(receipt, null, 2);
+        $('download').disabled = !receipt;
+      }
+      function check(passed, name, details = {}) {
+        receipt.checks.push({ name, passed: !!passed, ...details });
+        publish();
+        if (!passed) throw Error(name);
+      }
+      async function timeout(operation, label) {
+        let timer;
+        try {
+          return await Promise.race([
+            operation,
+            new Promise((_, reject) => {
+              timer = setTimeout(() => reject(Error('Timeout: ' + label)), 45000);
+            }),
+          ]);
+        } finally {
+          clearTimeout(timer);
+        }
+      }
+      async function verifyHashes() {
+        for (const [side, files] of Object.entries(manifest.files))
+          for (const [file, hash] of Object.entries(files)) {
+            const r = await fetch('./' + side + '/' + file, { cache: 'no-store' });
+            if (!r.ok || (await sha(await r.arrayBuffer())) !== hash)
+              throw Error('Frozen source mismatch: ' + side + '/' + file);
+          }
+        if (
+          (await sha(await (await fetch('./index.html', { cache: 'no-store' })).arrayBuffer())) !==
+          manifest.harnessSha256
+        )
+          throw Error('Harness mismatch');
+      }
+      async function initialize() {
+        manifest = await (await fetch('./fixture-manifest.json', { cache: 'no-store' })).json();
+        if (manifest.format !== 'FPVWoodlandSurfacesFixture.v1') throw Error('Unknown fixture');
+        $('provenance').textContent =
+          'Baseline ' +
+          manifest.baseline +
+          ' · Candidate ' +
+          manifest.candidate +
+          ' · renderer ' +
+          manifest.files.after['optional-practice/civilian-fpv/renderer.mjs'] +
+          ' · visuals ' +
+          manifest.files.after['optional-practice/civilian-fpv/world-visuals.mjs'];
+        modules = await Promise.all(
+          ['before', 'after'].map(async (side) => {
+            const base = new URL('./' + side + '/optional-practice/civilian-fpv/', location.href);
+            const [assets, catalogue, model, visuals, THREE, worldCatalogue, worldModel] =
+              await Promise.all(
+                [
+                  'world-assets.mjs',
+                  'catalogue.mjs',
+                  'model.mjs',
+                  'world-visuals.mjs',
+                  'vendor/three.module.js',
+                  'world-catalogue.mjs',
+                  'world-model.mjs',
+                ].map((name) => import(new URL(name, base))),
+              );
+            await worldModel.initWorldRuntime();
+            return { side, assets, catalogue, model, visuals, THREE, worldCatalogue, worldModel };
+          }),
+        );
+      }
+      function course(index, id) {
+        const c = [
+          ...modules[index].worldCatalogue.WORLD_CATALOGUE,
+          ...modules[index].worldCatalogue.BEGINNER_CATALOGUE,
+        ].find((row) => row.id === id)?.course;
+        if (!c) throw Error('Missing course ' + id);
+        return c;
+      }
+      function observation(id, height, pose) {
+        const c = course(0, id),
+          m = modules[0],
+          flight = (
+            c.format === 'FlightCourse.v2' ? m.worldModel.createWorldFlight : m.model.createFlight
+          )({ course: c, mode: 'acro' }),
+          state = flight.snapshot();
+        flight.dispose?.();
+        let x = 0,
+          z = 0,
+          yaw = 0,
+          pitch = 0;
+        if (pose === 'trunk' && c.environment === 'woodland') {
+          x = -16;
+          z = -7;
+          if (height > 8) pitch = -0.42;
+        } else if (pose === 'rear') yaw = Math.PI;
+        const q = new m.THREE.Quaternion().setFromEuler(new m.THREE.Euler(pitch, yaw, 0, 'YXZ'));
+        state.position = { x: x * 1000, y: height * 1000, z: z * 1000 };
+        state.orientation = q.toArray().map((n) => Math.round(n * 1e6));
+        state.ticks = 100;
+        return state;
+      }
+      function createOwners() {
+        owners = modules.map((row) => {
+          const canvas = document.createElement('canvas');
+          canvas.setAttribute('aria-label', row.side + ' actual woodland scene');
+          $(row.side).replaceChildren(canvas);
+          let scene = null;
+          const proto = row.THREE.Object3D.prototype,
+            original = proto.add;
+          proto.add = function (...objects) {
+            if (!scene && this.isScene && objects.length === 8 && objects.every((o) => o.isGroup))
+              scene = this;
+            return original.apply(this, objects);
+          };
+          let runtime;
+          try {
+            runtime = row.assets.createFlightRenderer({
+              canvas,
+              window,
+              reducedMotion: true,
+              onContextLost: () => {
+                if (receipt && !receipt.disposing) receipt.contextLosses.push(row.side);
+              },
+            });
+          } finally {
+            proto.add = original;
+          }
+          if (!runtime.available || !scene) {
+            runtime.dispose();
+            throw Error(row.side + ' renderer/scene unavailable');
+          }
+          return {
+            ...row,
+            canvas,
+            runtime,
+            scene,
+            world: scene.children[0],
+            goals: scene.children[1],
+            actors: scene.children[4],
+            imported: scene.children[6],
+            gl: canvas.getContext('webgl2'),
+          };
+        });
+      }
+      function disposeOwners() {
+        if (receipt) receipt.disposing = true;
+        const result = owners.map((o) => {
+          o.runtime.dispose();
+          return { side: o.side, resources: o.runtime.resources() };
+        });
+        owners = [];
+        if (receipt) delete receipt.disposing;
+        return result;
+      }
+      async function load(id, quality, { pixel = false } = {}) {
+        const result = [];
+        for (let i = 0; i < owners.length; i++) {
+          const o = owners[i],
+            c = clone(course(i, id));
+          if (pixel) c.world = { ...c.world, theme: 'pixel' };
+          o.runtime.setCourse(c, 'acro');
+          o.runtime.setQuality(quality);
+          o.runtime.setDrone('racer');
+          const glb = o.assets.builtinWorldScene(c);
+          let glbHash = null;
+          if (glb) {
+            glbHash = await sha(await glb.arrayBuffer());
+            await timeout(o.runtime.loadScene(glb), 'Actual GLB');
+          }
+          if ((await timeout(o.runtime.prepare(), 'Shader warmup')) === false)
+            throw Error('Shader preparation superseded');
+          o.scene.updateMatrixWorld(true);
+          result.push({ side: o.side, glbHash, importedChildren: o.imported.children.length });
+        }
+        return result;
+      }
+      function pixels(o, state, camera) {
+        const original = encode(state);
+        o.runtime.draw(state, { cameraMode: camera, cameraFov: 82, cameraTilt: 0 });
+        const g = o.gl,
+          rgba = new Uint8Array(g.drawingBufferWidth * g.drawingBufferHeight * 4);
+        g.readPixels(
+          0,
+          0,
+          g.drawingBufferWidth,
+          g.drawingBufferHeight,
+          g.RGBA,
+          g.UNSIGNED_BYTE,
+          rgba,
+        );
+        if (g.getError() !== g.NO_ERROR) throw Error(o.side + ' WebGL error');
+        if (encode(state) !== original) throw Error('Renderer mutated observer state');
+        return {
+          rgba,
+          width: g.drawingBufferWidth,
+          height: g.drawingBufferHeight,
+          resources: o.runtime.resources(),
+        };
+      }
+      async function pair(id, quality, camera, height, pose = 'trunk') {
+        await wait();
+        const state = observation(id, height, pose),
+          a = pixels(owners[0], state, camera),
+          b = pixels(owners[1], state, camera);
+        if (a.rgba.length !== b.rgba.length) throw Error('Buffer mismatch');
+        let changed = 0,
+          nonBlack = 0,
+          total = 0;
+        for (let i = 0; i < a.rgba.length; i += 4) {
+          let d = 0;
+          for (let c = 0; c < 3; c++) d += Math.abs(a.rgba[i + c] - b.rgba[i + c]);
+          if (d) changed++;
+          total += d;
+          if (b.rgba[i] + b.rgba[i + 1] + b.rgba[i + 2]) nonBlack++;
+        }
+        return {
+          id,
+          quality,
+          camera,
+          height,
+          pose,
+          width: b.width,
+          heightPixels: b.height,
+          beforeHash: await sha(a.rgba),
+          afterHash: await sha(b.rgba),
+          changedPixels: changed,
+          changedFraction: changed / (a.rgba.length / 4),
+          meanChannelDifference: total / ((a.rgba.length / 4) * 3),
+          nonBlackPixels: nonBlack,
+          drawCalls: [a.resources.renderer.calls, b.resources.renderer.calls],
+          triangles: [a.resources.renderer.triangles, b.resources.renderer.triangles],
+        };
+      }
+      const active = (o) => {
+        for (let at = o; at; at = at.parent) if (!at.visible) return false;
+        return true;
+      };
+      async function inspect(owner, c) {
+        const { THREE } = owner,
+          geometry = [],
+          uv = [],
+          opacity = [],
+          materials = [],
+          maps = [],
+          seenMaps = new Map(),
+          trunks = [];
+        owner.scene.updateMatrixWorld(true);
+        for (const root of [owner.world, owner.imported])
+          root.traverse((item) => {
+            const g = item.geometry;
+            geometry.push({
+              type: item.type,
+              name: item.name,
+              visible: active(item),
+              matrix: item.matrixWorld.elements.slice(),
+              cast: item.castShadow,
+              receive: item.receiveShadow,
+              positions: g?.attributes.position ? Array.from(g.attributes.position.array) : null,
+              normals: g?.attributes.normal ? Array.from(g.attributes.normal.array) : null,
+              index: g?.index ? Array.from(g.index.array) : null,
+              groups: g?.groups,
+              instances: item.instanceMatrix ? Array.from(item.instanceMatrix.array) : null,
+              count: item.count,
+            });
+            if (g?.attributes.uv) uv.push(Array.from(g.attributes.uv.array));
+            const paints = Array.isArray(item.material) ? item.material : [item.material];
+            if (item.isMesh)
+              opacity.push(
+                paints.filter(Boolean).map((m) => ({
+                  transparent: m.transparent,
+                  opacity: m.opacity,
+                  alphaTest: m.alphaTest,
+                  side: m.side,
+                  depthWrite: m.depthWrite,
+                  displacementScale: m.displacementMap ? m.displacementScale : 0,
+                })),
+              );
+            for (const m of paints.filter(Boolean)) {
+              const mapped = {};
+              for (const key of ['map', 'normalMap', 'roughnessMap', 'metalnessMap', 'alphaMap'])
+                if (m[key]) {
+                  const t = m[key];
+                  if (!seenMaps.has(t)) seenMaps.set(t, seenMaps.size);
+                  mapped[key] = seenMaps.get(t);
+                }
+              materials.push({
+                type: m.type,
+                color: m.color?.getHex(),
+                emissive: m.emissive?.getHex(),
+                roughness: m.roughness,
+                metalness: m.metalness,
+                normalScale: m.normalScale?.toArray(),
+                opacity: m.opacity,
+                transparent: m.transparent,
+                ...mapped,
+              });
+            }
+            if (/^tree-\d+$/.test(item.userData.collisionId ?? '')) {
+              const positions = g.attributes.position,
+                normals = g.attributes.normal,
+                coords = g.attributes.uv,
+                vertices = [];
+              for (let i = 0; i < positions.count; i++)
+                vertices.push({
+                  p: [positions.getX(i), positions.getY(i), positions.getZ(i)],
+                  n: [normals.getX(i), normals.getY(i), normals.getZ(i)],
+                  uv: [coords.getX(i), coords.getY(i)],
+                });
+              trunks.push({
+                id: item.userData.collisionId,
+                kind: item.userData.surfaceKind,
+                vertices,
+                opaque: !item.material.transparent && item.material.opacity === 1,
+                displacement: !!item.material.displacementMap,
+              });
+            }
+          });
+        for (const [t, index] of seenMaps) {
+          const image = t.image;
+          maps.push({
+            index,
+            kind: t.userData.surface?.kind ?? null,
+            size: [image?.width, image?.height],
+            mag: t.magFilter,
+            min: t.minFilter,
+            anisotropy: t.anisotropy,
+            repeat: t.repeat.toArray(),
+            mipmaps: t.generateMipmaps,
+            hash: image?.data ? await sha(image.data) : null,
+          });
+        }
+        const rays = [];
+        function ray(from, to, label) {
+          const a = new THREE.Vector3(...from),
+            d = new THREE.Vector3(...to).sub(a),
+            length = d.length();
+          if (length < 1e-8) return;
+          const hits = new THREE.Raycaster(a, d.normalize(), 0, length + 0.001)
+            .intersectObjects([owner.world, owner.imported], true)
+            .filter((hit) => hit.object.isMesh && active(hit.object));
+          rays.push({
+            label,
+            hit: hits[0]?.object.name ?? null,
+            distance: hits[0]?.distance ?? null,
+          });
+        }
+        for (const o of c.obstacles ?? [])
+          if (/^tree-\d+$/.test(o.id)) {
+            const x = (o.min.x + o.max.x) / 2000,
+              z = (o.min.z + o.max.z) / 2000;
+            for (const y of heights) {
+              for (const [dx, dz] of [
+                [3, 0],
+                [-3, 0],
+                [0, 3],
+                [0, -3],
+              ])
+                ray([x + dx, y, z + dz], [x, y, z], o.id + '/' + y + '/' + dx + '/' + dz);
+              if (y > 8) ray([x, y, z], [x, 7, z], o.id + '/cap');
+            }
+          }
+        for (const [index, s] of (c.steps.acro ?? []).entries()) {
+          const target = s.min
+            ? ['x', 'y', 'z'].map((k) => (s.min[k] + s.max[k]) / 2000)
+            : s.type === 'gate'
+              ? [
+                  s.axis === 'x' ? s.at / 1000 : (s.minSide + s.maxSide) / 2000,
+                  (s.minY + s.maxY) / 2000,
+                  s.axis === 'z' ? s.at / 1000 : (s.minSide + s.maxSide) / 2000,
+                ]
+              : null;
+          if (target) ray([c.spawn.x / 1000, 3, c.spawn.z / 1000], target, 'objective-' + index);
+        }
+        for (const actor of c.actors ?? [])
+          for (const [index, p] of (actor.path ?? [actor.position]).entries())
+            ray(
+              [0, 3, 0],
+              [p.x / 1000, p.y / 1000 + (actor.height ?? 0) / 2000, p.z / 1000],
+              actor.id + '/' + index,
+            );
+        return {
+          geometryHash: await sha(encode(geometry)),
+          uvHash: await sha(encode(uv)),
+          opacityHash: await sha(encode(opacity)),
+          materialHash: await sha(encode(materials)),
+          mapHash: await sha(encode(maps)),
+          rayHash: await sha(encode(rays)),
+          rayCount: rays.length,
+          nodes: geometry.length,
+          maps,
+          trunks,
+        };
+      }
+      function barkUV(inspection) {
+        let sides = 0,
+          caps = 0;
+        for (const trunk of inspection.trunks)
+          for (const v of trunk.vertices) {
+            if (!v.uv.every(Number.isFinite)) return false;
+            const [nx, ny, nz] = v.n,
+              cross = Math.abs(nx) > 0.5 ? v.p[2] : v.p[0],
+              phase = nx > 0.5 ? 0.17 : nx < -0.5 ? 0.42 : nz < -0.5 ? 0.71 : 0,
+              expectedU = cross + 0.5 + phase,
+              expectedV =
+                Math.abs(ny) > 0.5
+                  ? (ny > 0 ? 0.92 : 0.02) + (v.p[2] + 0.5) * 0.05
+                  : 0.005 + ((v.p[1] + 4) / 8) * 0.99;
+            if (Math.abs(v.uv[0] - expectedU) > 1e-6 || Math.abs(v.uv[1] - expectedV) > 1e-6)
+              return false;
+            if (Math.abs(v.n[1]) < 0.5) {
+              if (v.uv[1] < 0 || v.uv[1] > 1) return false;
+              sides++;
+            } else caps++;
+          }
+        return sides === 96 && caps === 48;
+      }
+      const resources = (o) => {
+        const r = o.runtime.resources();
+        return {
+          registered: r.registered,
+          geometries: r.renderer.geometries,
+          textures: r.renderer.textures,
+          programs: r.renderer.programs,
+        };
+      };
+      async function run() {
+        if (busy) return;
+        busy = true;
+        $('run').disabled = $('preview').disabled = true;
+        disposeOwners();
+        receipt = {
+          format: 'FPVWoodlandSurfacesBrowserEvidence.v1',
+          createdAt: new Date().toISOString(),
+          baseline: manifest.baseline,
+          candidate: manifest.candidate,
+          sourceFiles: manifest.files,
+          checks: [],
+          samples: [],
+          inspections: [],
+          resourceCycles: [],
+          contextLosses: [],
+          browser: { userAgent: navigator.userAgent, dpr: devicePixelRatio, canvasCss: [640, 360] },
+          limitations: [
+            'Same-browser frozen-source pixel comparisons; not cross-device goldens.',
+            'Static observer poses are not scored attempts or demonstration commands.',
+            'No FPS, sustained performance, physical-device or human art acceptance claim.',
+            'Disposal asserts registered ownership is empty, not zero driver memory; Three.js may retain internal lookup allocations until context release.',
+            'No additional unit-test coverage. Production scene observation restores the original method immediately after renderer creation.',
+          ],
+        };
+        try {
+          status('Checking frozen sources');
+          await verifyHashes();
+          check(true, 'Frozen source and harness hashes verified');
+          check(
+            encode(modules[0].worldCatalogue.WORLD_CATALOGUE) ===
+              encode(modules[1].worldCatalogue.WORLD_CATALOGUE) &&
+              encode(modules[0].worldCatalogue.BEGINNER_CATALOGUE) ===
+                encode(modules[1].worldCatalogue.BEGINNER_CATALOGUE),
+            'All authored courses, collisions, objectives and rules remain exact',
+          );
+          for (const file of [
+            'world-assets.mjs',
+            'world-model.mjs',
+            'model.mjs',
+            'world-collision.mjs',
+          ])
+            check(
+              manifest.files.before['optional-practice/civilian-fpv/' + file] ===
+                manifest.files.after['optional-practice/civilian-fpv/' + file],
+              file + ' stays byte-identical to baseline',
+            );
+          createOwners();
+          for (const id of woodlandIds)
+            for (const quality of qualities) {
+              status(id + ' · ' + quality + ' · real GLB and surface inspection');
+              const loaded = await load(id, quality);
+              check(
+                loaded.every((x) => x.importedChildren > 0) &&
+                  loaded[0].glbHash === loaded[1].glbHash,
+                id + '/' + quality + ' loads identical actual woodland GLB scenery',
+              );
+              await pair(id, quality, 'fpv', 3);
+              const a = await inspect(owners[0], course(0, id)),
+                b = await inspect(owners[1], course(1, id));
+              receipt.inspections.push({
+                id,
+                quality,
+                before: { ...a, trunks: undefined },
+                after: { ...b, trunks: undefined },
+              });
+              check(
+                a.geometryHash === b.geometryHash &&
+                  a.opacityHash === b.opacityHash &&
+                  a.rayHash === b.rayHash,
+                id +
+                  '/' +
+                  quality +
+                  ' exact non-UV geometry, shadow flags, opaque surfaces and ' +
+                  b.rayCount +
+                  ' sightline rays',
+              );
+              check(
+                b.trunks.length === 6 &&
+                  b.trunks.every((t) => t.kind === 'bark' && t.opaque && !t.displacement),
+                id + '/' + quality + ' all six bark surfaces retain opaque exact collision faces',
+              );
+              check(
+                a.uvHash !== b.uvHash && barkUV(b),
+                id +
+                  '/' +
+                  quality +
+                  ' actual trunk side/root/cap UVs match the root-anchored atlas contract',
+              );
+              check(
+                ['bark', 'forest-floor'].every(
+                  (kind) => b.maps.filter((t) => t.kind === kind).length === 3,
+                ),
+                id +
+                  '/' +
+                  quality +
+                  ' replaces existing color/normal/roughness maps for bark and forest floor',
+              );
+              check(
+                encode(owners[0].runtime.resources().registered) ===
+                  encode(owners[1].runtime.resources().registered),
+                id +
+                  '/' +
+                  quality +
+                  ' no additional registered geometry/material/texture ownership',
+              );
+              const expected = { low: 128, balanced: 256, high: 512 }[quality];
+              check(
+                b.maps
+                  .filter((t) => ['bark', 'forest-floor'].includes(t.kind))
+                  .every(
+                    (t) =>
+                      t.size[0] === expected &&
+                      t.size[1] === expected &&
+                      t.mag === owners[1].THREE.LinearFilter &&
+                      t.min === owners[1].THREE.LinearMipmapLinearFilter &&
+                      t.mipmaps,
+                  ),
+                id + '/' + quality + ' surface resolution and linear mip filters follow preset',
+              );
+              for (const camera of ['fpv', 'chase', 'overview'])
+                for (const height of camera === 'overview' ? [3] : heights) {
+                  const row = await pair(id, quality, camera, height);
+                  receipt.samples.push(row);
+                  check(
+                    row.nonBlackPixels > 100 &&
+                      row.drawCalls.every((n) => n > 0) &&
+                      row.triangles.every((n) => n > 0) &&
+                      row.changedPixels > 0,
+                    id +
+                      '/' +
+                      quality +
+                      '/' +
+                      camera +
+                      '/' +
+                      height +
+                      'm actual surface pixels change in populated WebGL buffers',
+                  );
+                }
+              for (const pose of ['trail', 'rear']) {
+                const row = await pair(id, quality, 'fpv', 3, pose);
+                receipt.samples.push(row);
+                check(
+                  row.nonBlackPixels > 100 && row.changedPixels > 0,
+                  id +
+                    '/' +
+                    quality +
+                    '/' +
+                    pose +
+                    ' objective and actor approach remains rendered',
+                );
+              }
+            }
+          await load('woodland-06', 'high', { pixel: true });
+          await pair('woodland-06', 'high', 'fpv', 3);
+          const pixel = await inspect(owners[1], course(1, 'woodland-06'));
+          check(
+            pixel.maps
+              .filter((t) => ['bark', 'forest-floor'].includes(t.kind))
+              .every(
+                (t) =>
+                  t.size[0] === 64 &&
+                  t.mag === owners[1].THREE.NearestFilter &&
+                  t.min === owners[1].THREE.NearestMipmapNearestFilter &&
+                  t.anisotropy === 1,
+              ),
+            'Pixel woodland keeps64px nearest filtering and anisotropy1',
+          );
+          const other = new Map();
+          for (const row of [
+            ...modules[0].worldCatalogue.WORLD_CATALOGUE,
+            ...modules[0].worldCatalogue.BEGINNER_CATALOGUE,
+          ])
+            if (row.course.environment !== 'woodland' && !other.has(row.course.environment))
+              other.set(row.course.environment, row.id);
+          for (const [environment, id] of other)
+            for (const quality of qualities) {
+              status('Exact regression · ' + environment + ' · ' + quality);
+              const loaded = await load(id, quality);
+              check(
+                loaded[0].glbHash === loaded[1].glbHash,
+                environment + '/' + quality + ' prepared GLB bytes unchanged',
+              );
+              const row = await pair(id, quality, 'fpv', 3, 'trail');
+              receipt.samples.push(row);
+              check(
+                row.changedPixels === 0 && row.beforeHash === row.afterHash,
+                environment + '/' + quality + ' exact pixel regression',
+              );
+              if (quality === 'balanced') {
+                const a = await inspect(owners[0], course(0, id)),
+                  b = await inspect(owners[1], course(1, id));
+                check(
+                  [
+                    'geometryHash',
+                    'uvHash',
+                    'opacityHash',
+                    'materialHash',
+                    'mapHash',
+                    'rayHash',
+                  ].every((key) => a[key] === b[key]),
+                  environment + ' actual geometry, UVs, materials, maps and rays unchanged',
+                );
+              }
+            }
+          check(
+            other.has('field') && other.has('courtyard') && other.size === 13,
+            'Regression matrix includes all13 other environments including meadow and courtyard',
+          );
+          for (let cycle = 0; cycle < 3; cycle++) {
+            status('Resource reload cycle ' + (cycle + 1) + '/3');
+            const rows = {};
+            for (const id of ['courtyard-01', 'woodland-06'])
+              for (const quality of qualities) {
+                await load(id, quality);
+                await pair(id, quality, 'fpv', 3);
+                rows[id + '/' + quality] = owners.map(resources);
+              }
+            receipt.resourceCycles.push(rows);
+          }
+          check(
+            encode(receipt.resourceCycles[1]) === encode(receipt.resourceCycles[2]),
+            'Geometry/material/texture/program counts plateau after repeated course and quality reloads',
+          );
+          receipt.disposal = disposeOwners();
+          check(
+            receipt.disposal.every(
+              (o) =>
+                o.resources.disposed && Object.values(o.resources.registered).every((n) => n === 0),
+            ),
+            'Both renderers release all registered resources',
+          );
+          check(
+            !errors.length && !receipt.contextLosses.length,
+            'No browser errors, unexpected context loss or GL errors',
+            { errors },
+          );
+          await verifyHashes();
+          check(true, 'Frozen sources and harness remain exact after execution');
+          receipt.passed = true;
+          status(
+            'PASS ' +
+              receipt.checks.length +
+              ' checks · ' +
+              receipt.samples.length +
+              ' image pairs',
+          );
+        } catch (error) {
+          receipt.passed = false;
+          receipt.error = error.stack;
+          status('FAIL · ' + error.message);
+        } finally {
+          if (owners.length) receipt.failureDisposal = disposeOwners();
+          busy = false;
+          $('run').disabled = $('preview').disabled = false;
+          publish();
+        }
+      }
+      async function preview() {
+        if (busy) return;
+        busy = true;
+        $('run').disabled = $('preview').disabled = true;
+        try {
+          disposeOwners();
+          createOwners();
+          const id = $('course').value,
+            q = $('quality').value;
+          await load(id, q);
+          const row = await pair(
+            id,
+            q,
+            $('camera').value,
+            Number($('height').value),
+            $('pose').value,
+          );
+          status(
+            'Human inspection · ' +
+              id +
+              ' · ' +
+              q +
+              ' · ' +
+              row.height +
+              'm · ' +
+              (row.changedFraction * 100).toFixed(1) +
+              '% changed pixels',
+          );
+        } catch (e) {
+          status('Preview failed: ' + e.message);
+        } finally {
+          busy = false;
+          $('run').disabled = $('preview').disabled = false;
+        }
+      }
+      $('run').onclick = run;
+      $('preview').onclick = preview;
+      $('download').onclick = () => {
+        if (!receipt) return;
+        const url = URL.createObjectURL(
+            new Blob([JSON.stringify(receipt, null, 2)], { type: 'application/json' }),
+          ),
+          a = document.createElement('a');
+        a.href = url;
+        a.download = 'fpv-woodland-surfaces-evidence.json';
+        a.click();
+        URL.revokeObjectURL(url);
+      };
+      addEventListener('pagehide', disposeOwners);
+      try {
+        await initialize();
+        $('run').disabled = $('preview').disabled = false;
+        status('Ready · run qualification or show a selected view');
+      } catch (e) {
+        status('Initialization failed: ' + e.message);
+      }
+    </script>
+  </body>
+</html>
