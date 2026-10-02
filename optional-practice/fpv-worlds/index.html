@@ -26,6 +26,7 @@
         <button data-tab="explore" class="selected" data-i18n="explore" data-sim-icon="play">
           Fly
         </button>
+        <button data-tab="learn" data-i18n="learn" data-sim-icon="missions">Learn to fly</button>
         <button data-tab="playlists" data-i18n="playlists" data-sim-icon="collection">
           Playlists
         </button>
@@ -93,6 +94,14 @@
             >
           </div>
           <div class="button-row">
+            <button
+              id="begin-learning"
+              class="primary"
+              data-sim-icon="play"
+              data-i18n="beginLearning"
+            >
+              Start Flight School
+            </button>
             <select id="first-flight-mode" aria-label="First flight mode">
               <option value="self-level">Self-level</option>
               <option value="acro">Acro</option>
@@ -134,6 +143,99 @@
         </details>
         <div id="world-grid" class="world-grid"></div>
         <p id="empty-library" hidden data-i18n="empty">No challenges match these filters.</p>
+      </section>
+      <section id="learn" class="tab-panel flight-school" hidden>
+        <div class="school-hero">
+          <div class="school-hero-copy">
+            <p class="eyebrow" data-i18n="schoolEyebrow">
+              FLIGHT SCHOOL · FROM ZERO TO YOUR FIRST ROUTE
+            </p>
+            <h1 data-i18n="schoolTitle">Every pilot starts here.</h1>
+            <p class="school-intro" data-i18n="schoolIntro">
+              One control at a time. See the movement, understand the drone, then try it for
+              yourself.
+            </p>
+            <div class="button-row">
+              <button id="school-continue" class="primary" data-sim-icon="play"></button
+              ><button id="school-recover" hidden>Resume saved lesson</button>
+              <button id="school-radio" data-sim-icon="controls" data-i18n="connectRadio">
+                Set up your radio
+              </button>
+            </div>
+            <p class="school-reassurance" data-i18n="schoolReassurance">
+              No experience needed. No locked lessons. Repeat anything, at your own pace.
+            </p>
+          </div>
+          <div class="school-flight-map" aria-hidden="true">
+            <svg viewBox="0 0 440 260" focusable="false">
+              <defs>
+                <pattern id="school-grid" width="24" height="24" patternUnits="userSpaceOnUse">
+                  <path d="M24 0H0V24" fill="none" stroke="currentColor" stroke-width=".5" />
+                </pattern>
+              </defs>
+              <rect width="440" height="260" fill="url(#school-grid)" opacity=".15" />
+              <path
+                class="school-path"
+                d="M40 205C90 205 86 75 162 75S226 205 300 185S325 52 400 52"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="3"
+                stroke-dasharray="5 9"
+              />
+              <g fill="var(--school-bg,#101b25)" stroke="currentColor" stroke-width="3">
+                <circle cx="40" cy="205" r="16" />
+                <rect x="144" y="49" width="36" height="50" rx="3" />
+                <rect x="282" y="161" width="36" height="50" rx="3" />
+                <circle cx="400" cy="52" r="16" />
+              </g>
+              <g class="school-map-quad" transform="translate(219 117) rotate(24)">
+                <path d="M-30-25L30 25M30-25L-30 25" stroke="#ffca6a" stroke-width="9" />
+                <g fill="#101b25" stroke="#ffca6a" stroke-width="3">
+                  <ellipse cx="-31" cy="-25" rx="20" ry="8" />
+                  <ellipse cx="31" cy="-25" rx="20" ry="8" />
+                  <ellipse cx="-31" cy="25" rx="20" ry="8" />
+                  <ellipse cx="31" cy="25" rx="20" ry="8" />
+                  <rect x="-12" y="-22" width="24" height="45" rx="5" />
+                </g>
+                <path d="M-5-28L0-39L5-28" fill="#dff7f4" />
+              </g>
+            </svg>
+            <div class="school-map-legend">
+              <span data-i18n="schoolLift">01 · Lift</span
+              ><span data-i18n="schoolControl">02 · Control</span
+              ><span data-i18n="schoolExplore">03 · Explore</span>
+            </div>
+          </div>
+        </div>
+        <div class="school-progress-bar">
+          <div>
+            <strong id="school-progress-title"></strong>
+            <p id="school-progress-copy"></p>
+          </div>
+          <progress
+            id="school-progress"
+            max="14"
+            value="0"
+            aria-label="Flight School progress"
+          ></progress>
+        </div>
+        <div class="school-method" aria-label="How lessons work">
+          <span><b>01</b><strong data-i18n="schoolSee">See the control</strong></span
+          ><span><b>02</b><strong data-i18n="schoolUnderstand">Watch the response</strong></span
+          ><span><b>03</b><strong data-i18n="schoolTry">Fly it yourself</strong></span>
+        </div>
+        <div id="school-lessons"></div>
+        <div class="school-after">
+          <div>
+            <h2 data-i18n="schoolAfterTitle">Your next adventure is waiting.</h2>
+            <p data-i18n="schoolAfterHelp">
+              Use what you learned in Academy drills, open exploration and your first races.
+            </p>
+          </div>
+          <button id="school-worlds" data-sim-icon="missions" data-i18n="chooseWorld">
+            Choose a world
+          </button>
+        </div>
       </section>
       <section id="playlists" class="tab-panel" hidden>
         <p class="eyebrow" data-i18n="yourSequence">YOUR FLIGHT SEQUENCE</p>
@@ -428,6 +530,7 @@
             <i aria-hidden="true"></i><span id="world-right-label"></span>
           </div>
         </div>
+        <aside id="beginner-coach" hidden></aside>
         <div id="result-panel" class="result-panel" hidden></div>
       </section>
       <section id="sector-panel" class="sector-panel" aria-label="Sector timing" aria-live="polite">
