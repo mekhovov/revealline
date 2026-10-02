@@ -1,0 +1,273 @@
+{
+  "format": "FPVMotionTeachingBrowserVerification.v1",
+  "passed": true,
+  "createdAt": "2026-10-01T22:58:15.568Z",
+  "checks": [
+    {
+      "name": "acro: real full-travel throttle in both directions, no contacts",
+      "passed": true,
+      "minCommand": 0,
+      "maxCommand": 1,
+      "minHeight": 4,
+      "maxHeight": 4138,
+      "lastAttitude": {
+        "roll": 0,
+        "pitch": 0,
+        "yaw": 0,
+        "up": {
+          "x": 0,
+          "y": 1000000,
+          "z": 0
+        }
+      }
+    },
+    {
+      "name": "acro: real full-travel pitch in both directions, no contacts",
+      "passed": true,
+      "minCommand": -1,
+      "maxCommand": 1,
+      "minHeight": 4,
+      "maxHeight": 6464,
+      "lastAttitude": {
+        "roll": 0,
+        "pitch": -82,
+        "yaw": 0,
+        "up": {
+          "x": 0,
+          "y": 999898,
+          "z": 14304
+        }
+      }
+    },
+    {
+      "name": "acro: real full-travel roll in both directions, no contacts",
+      "passed": true,
+      "minCommand": -1,
+      "maxCommand": 1,
+      "minHeight": 4,
+      "maxHeight": 6464,
+      "lastAttitude": {
+        "roll": -82,
+        "pitch": 0,
+        "yaw": 0,
+        "up": {
+          "x": -14304,
+          "y": 999898,
+          "z": 0
+        }
+      }
+    },
+    {
+      "name": "acro: real full-travel yaw in both directions, no contacts",
+      "passed": true,
+      "minCommand": -1,
+      "maxCommand": 1,
+      "minHeight": 4,
+      "maxHeight": 9774,
+      "lastAttitude": {
+        "roll": 0,
+        "pitch": 0,
+        "yaw": -82,
+        "up": {
+          "x": 0,
+          "y": 1000000,
+          "z": 0
+        }
+      }
+    },
+    {
+      "name": "self-level: real full-travel throttle in both directions, no contacts",
+      "passed": true,
+      "minCommand": 0,
+      "maxCommand": 1,
+      "minHeight": 4,
+      "maxHeight": 4138,
+      "lastAttitude": {
+        "roll": 0,
+        "pitch": 0,
+        "yaw": 0,
+        "up": {
+          "x": 0,
+          "y": 1000000,
+          "z": 0
+        }
+      }
+    },
+    {
+      "name": "self-level: real full-travel pitch in both directions, no contacts",
+      "passed": true,
+      "minCommand": -1,
+      "maxCommand": 1,
+      "minHeight": 4,
+      "maxHeight": 9358,
+      "lastAttitude": {
+        "roll": 0,
+        "pitch": 433,
+        "yaw": 0,
+        "up": {
+          "x": 0,
+          "y": 997158,
+          "z": -75344
+        }
+      }
+    },
+    {
+      "name": "self-level: real full-travel roll in both directions, no contacts",
+      "passed": true,
+      "minCommand": -1,
+      "maxCommand": 1,
+      "minHeight": 4,
+      "maxHeight": 9358,
+      "lastAttitude": {
+        "roll": 433,
+        "pitch": 0,
+        "yaw": 0,
+        "up": {
+          "x": 75344,
+          "y": 997158,
+          "z": 0
+        }
+      }
+    },
+    {
+      "name": "self-level: real full-travel yaw in both directions, no contacts",
+      "passed": true,
+      "minCommand": -1,
+      "maxCommand": 1,
+      "minHeight": 4,
+      "maxHeight": 9774,
+      "lastAttitude": {
+        "roll": 0,
+        "pitch": 0,
+        "yaw": -82,
+        "up": {
+          "x": 0,
+          "y": 1000000,
+          "z": 0
+        }
+      }
+    },
+    {
+      "name": "Automatic example, no mode/source selector, 0.2× pace, repeated loops",
+      "passed": true,
+      "snapshot": {
+        "mode": "example",
+        "source": "keyboard",
+        "running": true,
+        "state": {
+          "ticks": 4,
+          "status": "active",
+          "position": {
+            "x": 0,
+            "y": 40,
+            "z": 0
+          },
+          "velocity": {
+            "x": 0,
+            "y": 778,
+            "z": 0
+          },
+          "orientation": [0, 0, 0, 1000000],
+          "angular": {
+            "roll": 0,
+            "pitch": 0,
+            "yaw": 0
+          },
+          "step": 0,
+          "hold": 0,
+          "contacts": 0,
+          "landingSpeed": 0,
+          "landingTilt": 0,
+          "lastInput": {
+            "roll": 0,
+            "pitch": 0,
+            "yaw": 0,
+            "throttle": 1000
+          },
+          "heightRange": {
+            "min": 0,
+            "max": 40
+          },
+          "total": 1,
+          "target": {
+            "type": "hold",
+            "min": {
+              "x": 90000,
+              "y": 90000,
+              "z": 90000
+            },
+            "max": {
+              "x": 95000,
+              "y": 95000,
+              "z": 95000
+            },
+            "ticks": 500,
+            "maxSpeed": 0,
+            "maxTilt": 0,
+            "minTilt": 0,
+            "centred": true,
+            "heading": null
+          },
+          "attitude": {
+            "roll": 0,
+            "pitch": 0,
+            "yaw": 0,
+            "up": {
+              "x": 0,
+              "y": 1000000,
+              "z": 0
+            }
+          }
+        },
+        "controls": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 0,
+          "throttle": 1
+        },
+        "teachingPace": 0.2,
+        "exampleLoops": 1
+      },
+      "status": "EXAMPLE · 0.2× teaching pace · real full-travel commands · loops from the starting pose"
+    },
+    {
+      "name": "Keyboard takes over immediately at normal speed without scoring host",
+      "passed": true,
+      "source": "keyboard",
+      "teachingPace": 1
+    },
+    {
+      "name": "Escape pauses for menu arrows; no automatic return after manual input",
+      "passed": true
+    },
+    {
+      "name": "Radio baseline ignores resting throttle/noise and accepts deliberate calibrated signal",
+      "passed": true,
+      "applied": {
+        "throttle": 0.8,
+        "yaw": 0,
+        "pitch": 0.35,
+        "roll": 0
+      }
+    },
+    {
+      "name": "Reopening guide captures held radio baseline and rejects stale keyboard repeats",
+      "passed": true
+    },
+    {
+      "name": "Direct touch gimbal takes over; pointer release and disposal are bounded",
+      "passed": true
+    },
+    {
+      "name": "Reduced motion stays paused; explicit localized example plays once",
+      "passed": true,
+      "status": "Перегляд завершено. Скиньте або повторіть; поступ не зараховано."
+    }
+  ],
+  "inputs": {
+    "beginner-coach.mjs": "0107427317c47a98b57cd06ba14756c49e7ab13e669f3350477ab02d8b107e29",
+    "sim-presentation.mjs": "abe4b0b40860acb503f39c4ea44fe99d224d56001d14ab5365ed25657d1679bc",
+    "model.mjs": "c8c562a61ecab4c1d6fdc60ec3ddc72a011b8a9a0c4c629450095103b0a976af"
+  },
+  "scope": "Actual browser DOM, SVG layout and production physics; controlled clock, synthetic inputs and stubbed synthetic-pointer capture; no physical radio, touch hardware, wall-time performance or player acceptance claim."
+}

@@ -179,12 +179,15 @@ test('credits are text-only and source links reject unsafe schemes and credentia
   });
   assert.equal(f.$('title').textContent, '<img src=x onerror=bad()>');
   assert.equal(f.root.querySelectorAll('img').length, 0);
-  assert.equal(f.$('source').getAttribute('href'), 'https://artist.example/song');
-  assert.equal(f.$('source').getAttribute('target'), '_blank');
-  assert.equal(f.$('source').getAttribute('rel'), 'noopener noreferrer');
+  assert.equal(
+    f.$('source').querySelector('a').getAttribute('href'),
+    'https://artist.example/song',
+  );
+  assert.equal(f.$('source').querySelector('a').getAttribute('target'), '_blank');
+  assert.equal(f.$('source').querySelector('a').getAttribute('rel'), 'noopener noreferrer');
   f.emit({ track: { title: 'Offline composition', rights: { source: 'plain credit text' } } });
   assert.equal(f.$('source').hidden, true);
-  assert.equal(f.$('source').getAttribute('href'), null);
+  assert.equal(f.$('source').querySelector('a'), null);
 });
 
 test('blocked audio retries inside activation and unavailable audio remains usable UI', (context) => {
@@ -267,4 +270,33 @@ test('missing playback capability retains master sound controls without offering
   assert.equal(f.$('status').textContent, t('demo:audio.unavailable'));
   f.$('mute').click();
   assert.deepEqual(f.calls, [['muted', true]]);
+});
+
+test('demo credits select creator resources rather than licence or provenance and retain their link node', (context) => {
+  const f = setup();
+  context.after(() => f.view.dispose());
+  const track = {
+    title: 'Creator recording',
+    artist: 'Composer',
+    websites: [
+      { label: 'CC BY 4.0 International', url: 'https://creativecommons.org/licenses/by/4.0/' },
+      { label: 'Recording provenance', url: 'https://history.example/recording' },
+      { label: 'Creator source and recording license', url: 'https://composer.example/song' },
+    ],
+    rights: { source: 'https://composer.example/song' },
+  };
+  f.emit({ track });
+  const link = f.$('source').querySelector('a');
+  assert.equal(link.getAttribute('href'), 'https://composer.example/song');
+  assert.equal(link.getAttribute('target'), '_blank');
+  assert.equal(link.getAttribute('rel'), 'noopener noreferrer');
+  assert.equal(f.$('source').querySelectorAll('a').length, 1);
+  link.focus();
+  f.emit({ track: { ...track, title: 'Another title' }, positionSeconds: 15 });
+  assert.equal(f.$('source').querySelector('a'), link);
+  assert.equal(f.doc.activeElement, link);
+  assert.deepEqual(f.calls, []);
+  f.emit({ track: { title: 'Licence only', websites: [track.websites[0], track.websites[1]] } });
+  assert.equal(f.$('source').hidden, true);
+  assert.equal(f.$('source').querySelector('a'), null);
 });

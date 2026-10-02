@@ -1,5 +1,7 @@
 # Controller, radio and FPV delivery plan
 
+> **Historical snapshot:** this document records the 1 October 2026 planning review. Queue, deployment, pull-request status, capacity figures and recommendations below are dated evidence, not current instructions or current repository status.
+
 Reviewed 1 October 2026 against main
 `955c539a757c08c534c9038500785b20e64abb36` and the current GitHub PR/issue
 state. This plan covers the
