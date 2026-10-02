@@ -132,15 +132,16 @@ export async function buildThemeBootstrap() {
   let coarse = false, reduced = display?.reducedEffects === true;
   try { coarse = globalThis.matchMedia?.('(pointer: coarse)').matches === true; reduced ||= globalThis.matchMedia?.('(prefers-reduced-motion: reduce)').matches === true; } catch { /* Optional media-query API. */ }
   const high = intent.highContrast;
+  const styled = id !== 'legacy' || seed.revision !== 'r1' || high;
   const textured = seed.textured && intent.ornaments !== 'off' && !high;
   const variables = { ...seed.variables, ...(textured ? seed.material : seed.quietMaterial), ...(high ? contrast : {}) };
   if (plain) variables['--iw-font-display'] = variables['--iw-font-ui'] = "'Field Kit UI', 'Exo 2', sans-serif";
   variables['--iw-target'] = studio && !coarse && !large ? '32px' : '44px';
   variables['--iw-text-size'] = large ? '20px' : '16px';
   for (const [key, value] of Object.entries(variables)) root.style.setProperty(key, value);
-  Object.assign(root.dataset, { interfaceTheme: id, themeFamily: id, themeStyled: String(id !== 'legacy' || high), themeContrast: high ? 'high' : 'normal', themeTexture: textured ? 'on' : 'off', themeSurface: high ? 'flat' : seed.surface, themeMaterial: seed.materialStyle, themeHud: high || intent.opaqueHud ? 'opaque' : 'normal', themeMotion: reduced ? 'reduced' : 'full', themeDensity: studio ? 'studio' : 'player', themeTextSize: large ? 'large' : 'standard', themeBootstrapped: 'true' });
+  Object.assign(root.dataset, { interfaceTheme: id, themeFamily: id, themeStyled: String(styled), themeContrast: high ? 'high' : 'normal', themeTexture: textured ? 'on' : 'off', themeSurface: high ? 'flat' : seed.surface, themeMaterial: seed.materialStyle, themeHud: high || intent.opaqueHud ? 'opaque' : 'normal', themeMotion: reduced ? 'reduced' : 'full', themeDensity: studio ? 'studio' : 'player', themeTextSize: large ? 'large' : 'standard', themeBootstrapped: 'true' });
   const meta = doc.querySelector?.('meta[name="theme-color"]');
-  if (meta && id !== 'legacy') meta.setAttribute('content', variables['--iw-ink']);
+  if (meta && styled) meta.setAttribute('content', variables['--iw-ink']);
 })();`,
     { parser: 'babel', singleQuote: true, printWidth: 96 },
   );

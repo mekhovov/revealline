@@ -48,7 +48,9 @@ export function mountThemeWorkbench({ document, window, onAction, onWarning }) {
     for (const family of BUILTIN_THEME_FAMILIES) {
       const option = node('option');
       option.value = family.id;
-      option.textContent = family.name;
+      localizedText(option, () =>
+        t(`interface:workshop.theme.${family.id}`, { defaultValue: family.name }),
+      );
       input.append(option);
     }
     return input;
@@ -105,7 +107,11 @@ export function mountThemeWorkbench({ document, window, onAction, onWarning }) {
   candidateFamily.value = 'industrial-workshop';
   for (const option of candidateFamily.options) {
     const family = getThemeFamily(option.value);
-    option.textContent = `${family.name} (${family.revision})`;
+    localizedText(
+      option,
+      () =>
+        `${t(`interface:workshop.theme.${family.id}`, { defaultValue: family.name })} (${family.revision})`,
+    );
   }
   const basisStatus = node('p', null, 'support-copy');
   basisStatus.id = 'theme-candidate-basis-status';
@@ -126,11 +132,8 @@ export function mountThemeWorkbench({ document, window, onAction, onWarning }) {
   defaults.onclick = () => onAction('configure-defaults', candidateOptions());
   section.append(defaults);
   const interfaceRow = node('div', null, 'theme-library-controls');
-  const family = familySelect('studio-theme-family');
-  const follow = node('option');
-  follow.value = 'follow-game';
-  localizedText(follow, () => copy('followContext'));
-  family.prepend(follow);
+  const family = select([], 'studio-theme-family');
+  const editorChoices = new Map();
   const contrast = node('input');
   contrast.type = 'checkbox';
   const opaque = node('input');
@@ -138,12 +141,40 @@ export function mountThemeWorkbench({ document, window, onAction, onWarning }) {
   const notice = node('p', null, 'support-copy');
   notice.setAttribute('role', 'status');
   const host = installThemeHost({ document, window, studio: true });
+  const syncEditorThemes = () => {
+    const choices = host.availableThemeChoices(),
+      ids = new Set(choices.map((item) => item.id));
+    for (const [id, option] of editorChoices) {
+      if (ids.has(id)) continue;
+      option.remove();
+      editorChoices.delete(id);
+    }
+    for (const [index, item] of choices.entries()) {
+      let option = editorChoices.get(item.id);
+      if (!option) {
+        option = node('option');
+        option.value = item.id;
+        editorChoices.set(item.id, option);
+      }
+      localizedText(option, () =>
+        item.id === 'follow-game'
+          ? t('interface:workshop.followContext')
+          : BUILTIN_THEME_FAMILIES.some((value) => value.id === item.id)
+            ? t(`interface:workshop.theme.${item.id}`, { defaultValue: item.family.name })
+            : `${item.family.name} · ${item.family.revision}`,
+      );
+      if (family.children[index] !== option)
+        family.insertBefore(option, family.children[index] ?? null);
+    }
+    family.value = host.preferences.snapshot().familyId;
+  };
+  syncEditorThemes();
   const stopHostStatus = host.subscribeStatus((message) => {
     notice.textContent = message;
     if (message) onWarning?.(message);
   });
   const stopHost = host.subscribe((resolved) => {
-    family.value = host.preferences.snapshot().familyId;
+    syncEditorThemes();
     contrast.checked = host.preferences.snapshot().highContrast;
     opaque.checked = host.preferences.snapshot().opaqueHud;
     renderSpecimen();

@@ -3917,19 +3917,8 @@ try {
     'race-journey-reactions-retry',
     'race-text-face',
     'race-text-size',
-    'race-theme-apply',
     'race-theme-customize',
     'race-theme-ornaments',
-    ...[
-      'industrial-workshop',
-      'vyshyvanka',
-      'dnipro-porcelain',
-      'tryzub',
-      'windows-classic',
-      'dos',
-      'orchard-workshop',
-      'neon-ruins',
-    ].map((id) => `race-theme-card-${id}`),
     'race-theme-familyId',
     'race-theme-arcadeArt',
     'race-theme-highContrast',
@@ -3989,6 +3978,8 @@ try {
         !!element.closest('#race-music-now-playing, #race-music-menu-now-playing')) ||
       element.hasAttribute('data-language-select') ||
       menuIds.has(element.id) ||
+      (element.matches('button[data-theme-preview]') &&
+        !!element.closest('[data-theme-controls]')) ||
       !!element.closest(
         '#journey-chooser, #journey-backup, #race-gameplay-tuning, [data-journey-mode-pictures], .multiplayer-controllers',
       ),

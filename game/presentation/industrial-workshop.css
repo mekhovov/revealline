@@ -144,7 +144,9 @@
   font-family: var(--iw-font-mono);
 }
 
-/* Surface roles share the material, foreground, frame and shadow as one recipe. */
+/* Reading surfaces stay quiet. Material identity comes from the palette and
+   light-catching rim; decorative nine-slices belong to authored outer frames,
+   never repeated around each card or control. */
 [data-theme-styled='true']
   :where(
     dialog,
@@ -214,9 +216,10 @@
   font-family: var(--iw-font-ui);
   background: var(--iw-panel);
   border: 2px solid var(--iw-line);
-  border-image: var(--iw-material-panel, none) 6 fill / 6px / 0 repeat;
+  border-image: none;
   border-radius: 0;
   box-shadow:
+    inset 0 1px 0 color-mix(in srgb, var(--iw-text) 8%, transparent),
     0 2px 0 var(--ui-shadow),
     0 8px 18px #0002;
 }
@@ -355,12 +358,11 @@
   --ui-action-hover-ink: var(--iw-button-hover-foreground, var(--iw-text));
   --ui-action-pressed-fill: var(--iw-button-pressed-background, var(--iw-selection));
   --ui-action-pressed-ink: var(--iw-button-pressed-foreground, var(--iw-on-selection));
-  --ui-action-frame: var(--iw-material-raised, none);
   --ui-action-edge: var(--iw-control-line);
   color: var(--ui-action-ink);
   background: var(--ui-action-fill);
   border: 2px solid var(--ui-action-edge);
-  border-image: var(--ui-action-frame) 6 fill / 6px / 0 repeat;
+  border-image: none;
   border-radius: 0;
   min-height: var(--iw-target);
   box-sizing: border-box;
@@ -371,7 +373,10 @@
   line-height: 1.35;
   text-shadow: none;
   text-decoration: none;
-  box-shadow: 0 2px 0 var(--ui-shadow);
+  box-shadow:
+    inset 0 1px 0 color-mix(in srgb, var(--ui-action-ink) 12%, transparent),
+    inset 0 -1px 0 #0002,
+    0 2px 0 var(--ui-shadow);
   cursor: pointer;
 }
 [data-theme-styled='true']
@@ -390,7 +395,6 @@
   --ui-action-hover-ink: var(--iw-primary-hover-foreground, var(--iw-on-accent, var(--iw-ink)));
   --ui-action-pressed-fill: var(--iw-primary-pressed-background, var(--iw-selection));
   --ui-action-pressed-ink: var(--iw-primary-pressed-foreground, var(--iw-on-selection));
-  --ui-action-frame: var(--iw-material-primary, none);
   --ui-action-edge: var(--iw-accent);
 }
 [data-theme-styled='true'] :where(.danger, .danger-action, [data-ui-action='danger']) {
@@ -400,7 +404,6 @@
   --ui-action-hover-ink: var(--iw-danger-hover-foreground, var(--iw-on-hazard));
   --ui-action-pressed-fill: var(--iw-danger-pressed-background, var(--iw-selection));
   --ui-action-pressed-ink: var(--iw-danger-pressed-foreground, var(--iw-on-selection));
-  --ui-action-frame: none;
   --ui-action-edge: var(--iw-hazard);
 }
 [data-theme-styled='true']
@@ -418,7 +421,6 @@
     .native-menu-actions > a,
     .game-mode-choice > a
   ):is(:hover, [data-state='hover']):not(:disabled, [aria-disabled='true']) {
-  border-image-slice: 6;
   background: var(--ui-action-hover-fill);
   color: var(--ui-action-hover-ink);
   box-shadow:
@@ -440,7 +442,6 @@
     .native-menu-actions > a,
     .game-mode-choice > a
   ):is(:active, [data-state='pressed']):not(:disabled, [aria-disabled='true']) {
-  border-image-slice: 6;
   background: var(--ui-action-pressed-fill);
   color: var(--ui-action-pressed-ink);
   box-shadow: inset 0 2px 3px #0005;
@@ -455,7 +456,6 @@
   ) {
   --ui-action-fill: var(--iw-selection, var(--iw-panel-raised));
   --ui-action-ink: var(--iw-on-selection, var(--iw-text));
-  --ui-action-frame: none;
   color: var(--ui-action-ink);
   background: var(--ui-action-fill);
   border-color: var(--iw-focus, var(--iw-accent));
@@ -926,16 +926,23 @@
   min-width: 0;
   text-align: left;
   padding: 12px;
+  border-image: none;
+  background: var(--iw-panel, var(--fk-panel));
+  color: var(--iw-text, var(--fk-text));
+  box-shadow: none;
 }
 .theme-preview-swatches {
-  display: flex;
-  gap: 4px;
+  display: grid;
+  grid-template-columns: 2fr 2fr 1fr 1fr;
+  gap: 0;
+  overflow: hidden;
+  border: 1px solid var(--iw-control-line, var(--fk-line));
 }
 .theme-preview-swatches span {
   display: block;
-  width: 24px;
-  height: 24px;
-  border: 1px solid currentColor;
+  min-width: 0;
+  height: 44px;
+  border: 0;
 }
 .theme-preview-card small {
   font-size: 14px;
@@ -944,6 +951,8 @@
   opacity: 0.9;
 }
 .theme-gallery .theme-preview-card[aria-pressed='true'] {
+  color: var(--iw-on-selection, var(--fk-text));
+  background: var(--iw-selection, var(--fk-panel));
   outline: 2px solid var(--iw-focus, var(--fk-focus));
   outline-offset: 2px;
 }
@@ -1239,12 +1248,15 @@
 [data-theme-styled='true'] .menu-scene[data-backdrop='interface']::before {
   content: '';
   position: absolute;
-  inset: 0;
+  inset: 24px 24px auto auto;
+  inline-size: min(24vw, 192px);
+  block-size: 96px;
   pointer-events: none;
   background-image: var(--ui-scene-motif, none);
   background-size: var(--ui-scene-motif-size, 48px 48px);
   background-position: right top;
-  opacity: 0.3;
+  background-repeat: no-repeat;
+  opacity: 0.18;
 }
 [data-theme-material='linen'] {
   --ui-scene-motif: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='64' height='64' shape-rendering='crispEdges'%3E%3Cg fill='none' stroke='%23f48686' stroke-width='2'%3E%3Cpath d='M32 10l22 22-22 22L10 32zM24 24l16 16m0-16L24 40'/%3E%3C/g%3E%3Cpath fill='%23e1ddcf' d='M0 0h2v2H0zm62 0h2v2h-2zM0 62h2v2H0zm62 0h2v2h-2z'/%3E%3C/svg%3E");
@@ -1254,7 +1266,8 @@
   --ui-scene-motif: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='96'%3E%3Cg fill='none' stroke='%230057b7'%3E%3Cpath d='M-30 24q30-28 60 0t60 0t60 0M-30 72q30-28 60 0t60 0t60 0'/%3E%3Cpath d='M60 30q-12 10 0 20q12-10 0-20m0 20v8'/%3E%3C/g%3E%3C/svg%3E");
   --ui-scene-motif-size: 120px 96px;
 }
-[data-theme-material='brass'] {
+[data-theme-material='brass'],
+[data-theme-material='copper'] {
   --ui-scene-motif:
     repeating-linear-gradient(90deg, transparent 0 95px, var(--iw-line) 95px 96px),
     repeating-linear-gradient(0deg, transparent 0 95px, var(--iw-line) 95px 96px);
@@ -1279,11 +1292,13 @@
   --ui-scene-motif-size: 96px 64px;
 }
 [data-theme-material='classic'],
-[data-theme-material='terminal'] {
+[data-theme-material='terminal'],
+[data-theme-material='lcd'] {
   --ui-scene-motif: none;
 }
 [data-theme-material='classic'] .menu-scene[data-backdrop='interface']::after,
-[data-theme-material='terminal'] .menu-scene[data-backdrop='interface']::after {
+[data-theme-material='terminal'] .menu-scene[data-backdrop='interface']::after,
+[data-theme-material='lcd'] .menu-scene[data-backdrop='interface']::after {
   background: none;
 }
 [data-theme-texture='off'] .menu-scene[data-backdrop='interface']::before {

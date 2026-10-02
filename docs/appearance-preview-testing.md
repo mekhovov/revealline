@@ -43,10 +43,11 @@ this PR are listed separately in `preview-identity.json` and `focused-tests.tap`
 
 ## Focused review
 
-1. **Theme and reading controls.** Preview and Apply Industrial, Dnipro and one
-   other family. Check Cancel, explicit personal choice, Follow campaign/community,
-   high contrast, opaque HUD, narrow layout and keyboard focus. Reload and verify
-   only applied preferences persist.
+1. **Theme and reading controls.** Choose Industrial, Vyshyvanka and one new
+   family by card and dropdown. Both should apply immediately without an Apply
+   button. Check matching inventories, Classic Field Kit, Follow campaign/community,
+   high contrast, opaque HUD, narrow layout and retained keyboard focus. Reload
+   and verify the accepted choice persists; failed loads keep the previous theme.
 2. **Game and menus.** Start, pause and retry a mission; open Music, Settings and a
    replay. Check text, selected/disabled/error states, semantic colors and focus.
    Existing authored pictures and gameplay behavior should remain intact.

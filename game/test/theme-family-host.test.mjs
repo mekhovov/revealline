@@ -58,13 +58,13 @@ test('Versus controller commits and cancels family controls without starting or 
   );
   family.focus();
   page.pulse(0, 0);
-  page.pulse(0, 13); // Existing appearance
+  page.pulse(0, 13); // Original FPV Field Kit
   page.pulse(0, 13); // Industrial Workshop
   page.pulse(0, 0);
   assert.equal(family.value, 'industrial-workshop');
-  assert.equal(storage.getItem(THEME_PREFERENCES_KEY), null, 'Previewing is read-only.');
-  page.focus('race-theme-apply');
-  page.pulse(0, 0);
+  assert.equal(JSON.parse(storage.getItem(THEME_PREFERENCES_KEY)).familyId, 'industrial-workshop');
+  assert.equal(page.doc.activeElement, family, 'Committing the native select keeps its focus.');
+  assert.equal(page.doc.getElementById('race-theme-apply'), null);
   assert.equal(artwork.value, 'follow-game');
   for (const key of ['highContrast', 'opaqueHud']) {
     const toggle = page.doc.querySelector(`[data-theme-preference="${key}"]`);
@@ -77,6 +77,19 @@ test('Versus controller commits and cancels family controls without starting or 
   assert.equal(saved.arcadeArt, 'follow-game');
   assert.equal(saved.highContrast, true);
   assert.equal(saved.opaqueHud, true);
+  for (const id of ['legacy', 'follow-game']) {
+    const card = page.doc.getElementById(`race-theme-card-${id}`);
+    card.focus();
+    assert.equal(card.matches('button[data-theme-preview]'), true);
+    assert.ok(card.closest('[data-theme-controls]'));
+    page.button(0, 0, true);
+    page.frame();
+    assert.equal(page.doc.activeElement, card, 'Controller recognizes the theme card.');
+    page.button(0, 0, false);
+    page.frame();
+    assert.equal(JSON.parse(storage.getItem(THEME_PREFERENCES_KEY)).familyId, id);
+    assert.equal(page.doc.activeElement, card, 'Controller card activation retains focus.');
+  }
   family.focus();
   const nativeArrow = family.emit('keydown', {
     key: 'ArrowDown',
@@ -90,6 +103,7 @@ test('Versus controller commits and cancels family controls without starting or 
   );
   assert.equal(page.doc.activeElement.id, family.id);
   family.emit('keyup', { key: 'ArrowDown', code: 'ArrowDown' });
+  page.frame(); // Observe neutral input before changing from keyboard to the pad.
   assert.equal(page.state(), 'ready');
   assert.deepEqual(page.checkpoint(), before);
   assert.ok(

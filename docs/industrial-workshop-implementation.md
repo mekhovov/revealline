@@ -1,6 +1,10 @@
 # Unified appearance implementation
 
-The latest [runtime continuation](verification/appearance-runtime-2026-10-02/README.md)
+The latest [theme-selection review](verification/appearance-theme-selection-2026-10-03/README.md)
+records immediate matching selectors, quieter controls, crimson Vyshyvanka,
+Classic Field Kit and three additional shared families.
+
+The preceding [runtime continuation](verification/appearance-runtime-2026-10-02/README.md)
 records distant gate cues, packaged embedded-texture loading, Replay recovery,
 independent asset rendering and the remaining production/device acceptance gates.
 
@@ -19,9 +23,10 @@ and creator tools. Industrial Workshop is the application fallback for new profi
 existing preferences migrate without rewriting them on read. No Factorio assets
 are included. This is a local implementation, not a published release.
 
-Eight functional built-in families are available: Industrial Workshop, Vyshyvanka,
-Dnipro Porcelain, Tryzub, Desktop 98, DOS Navigator, Orchard Workshop and Neon Ruins.
-Legacy appearance stays available. Palette and material roles use the same engine
+Eleven coordinated built-in families are available: Industrial Workshop, Vyshyvanka,
+Dnipro Porcelain, Tryzub, Desktop 98, DOS Navigator, Orchard Workshop, Neon Ruins,
+Pocket LCD, Copper Observatory and Sakura Station. Classic Field Kit is also
+available; exact older revisions remain loadable. Palette and material roles use the same engine
 contracts across communities; a community theme is not restricted to its source
 campaign. Ukrainian palette research used the user's Swarmshared palette examples
 at commit `da1c1f3c4b985ead2b8d306c9d883cb0dbcd1521`. Dnipro Porcelain is an original
@@ -38,14 +43,14 @@ and [the supplied Ukrainian palettes](https://github.com/mekhovov/swarmshared/tr
 ## Try it
 
 - Run `npm run dev`, open Settings → Display & Language → Appearance. Pick a
-  gallery card or theme from the selector, then **Apply complete theme**. Selection
-  is staged until Apply. **Follow campaign / community** uses the campaign default,
+  gallery card or theme from the selector to apply immediately. Both controls
+  expose the same complete inventory, including community themes. **Follow campaign / community** uses the campaign default,
   then community default, then Industrial Workshop. An explicit personal choice
   wins globally. **Customize** retains independent mission-art and decorative-detail
-  overrides; complete Apply resets those and SIM overrides to Follow. Accessibility
+  overrides; choosing a complete theme resets those and SIM overrides to Follow. Accessibility
   preferences are preserved.
 - In Academy or World flight options, choose the interface and world appearance
-  separately. Follow game, Authored and all eight collections preserve independent
+  separately. Follow game, Authored and all eleven collections preserve independent
   preferences. World/model changes after the first successful arm take effect
   on Retry or a new flight; interface and accessibility changes remain immediate.
 - Open `/authoring/asset-studio/`, expand **Theme workbench**, and create an
@@ -74,7 +79,8 @@ The optional SIM host embeds the same stylesheet and font sources to preserve
 offline closure and the existing file caps.
 
 The material system provides charcoal panels, painted steel, inset controls,
-amber accents, restrained edge wear and filled nine-slice surfaces. Text centers
+amber accents and restrained material depth. Repeated decorative nine-slice borders
+are removed from ordinary controls; sparse motifs stay at page edges. Text centers
 stay quiet. Exo 2 is the interface face, IBM Plex Mono provides telemetry, and
 Handjet is reserved for display headings. DOS uses a flat mono interface; the
 light Desktop 98 family exercises a different palette and geometry. Primary,

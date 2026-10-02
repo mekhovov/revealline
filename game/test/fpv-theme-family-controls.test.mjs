@@ -8,6 +8,7 @@ import {
 } from '../../optional-practice/civilian-fpv/sim-presentation.mjs';
 import {
   BUILTIN_THEME_FAMILIES,
+  BUILTIN_SIM_VISUAL_COLLECTIONS,
   DEFAULT_THEME_PREFERENCES,
   THEME_PREFERENCES_KEY,
 } from '../presentation/theme-system.mjs';
@@ -70,7 +71,11 @@ test('SIM follows context or personal family, preserves independent overrides, a
   });
   assert.equal(controls.resolve().appearance.collectionId, 'tryzub');
   const select = f.document.getElementById('sim-appearance-world');
-  assert.equal(select.children.length, 10, 'follow, authored and eight production choices');
+  assert.equal(
+    select.children.length,
+    Object.keys(BUILTIN_SIM_VISUAL_COLLECTIONS).length + 1,
+    'follow plus every installed collection, including authored',
+  );
   controls.preferences.set({ interface: 'dos', world: 'vyshyvanka' });
   assert.equal(controls.resolve().appearance.collectionId, 'vyshyvanka');
   assert.equal(f.document.documentElement.dataset.interfaceTheme, 'dos');
@@ -167,4 +172,51 @@ test('complete apply from another tab updates SIM intent while preserving the ar
   assert.equal(session.pending(), true);
   controls.dispose();
   assert.equal(f.window.listeners.get('storage').size, 0);
+});
+
+test('SIM offers fixed Classic Field Kit separately from Authored without changing the selected world', () => {
+  const f = fixture(),
+    received = [];
+  const controls = mountSimAppearanceControls({
+    ...f,
+    container: f.document.body,
+    onChange: (appearance) => received.push(appearance),
+  });
+  const input = f.document.getElementById('sim-appearance-interface');
+  const world = f.document.getElementById('sim-appearance-world');
+  assert.deepEqual(
+    Array.from(input.children, (option) => option.value),
+    ['follow-game', 'authored', ...BUILTIN_THEME_FAMILIES.map((family) => family.id)],
+  );
+  assert.equal(
+    Array.from(world.children).some((option) => option.value === 'legacy'),
+    false,
+    'Classic has no world collection and must not be advertised as one.',
+  );
+  const original = controls.resolve().appearance;
+  const changes = received.length;
+  input.focus();
+  input.value = 'legacy';
+  input.emit('change');
+  assert.equal(controls.preferences.snapshot().interface, 'legacy');
+  assert.equal(f.document.documentElement.dataset.interfaceTheme, 'legacy');
+  assert.equal(f.document.documentElement.dataset.themeStyled, 'true');
+  assert.equal(f.document.activeElement, input);
+  input.value = 'authored';
+  input.emit('change');
+  assert.equal(
+    f.document.documentElement.dataset.themeStyled,
+    'false',
+    'Authored retains the pinned r1 adapter.',
+  );
+  input.value = 'follow-game';
+  input.emit('change');
+  assert.equal(f.document.documentElement.dataset.interfaceTheme, 'tryzub');
+  assert.deepEqual(controls.resolve().appearance, original);
+  assert.equal(
+    received.length,
+    changes,
+    'Interface-only changes do not request a new world or release the armed appearance.',
+  );
+  controls.dispose();
 });

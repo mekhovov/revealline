@@ -9,6 +9,9 @@ import {
   createThemePreferences,
 } from '../presentation/theme-system.mjs';
 import { installThemeHost } from '../presentation/theme-host.mjs';
+import { createDefaultThemeBundle } from '../presentation/catalog.mjs';
+import { duplicateStudioSnapshot, reviseStudioTheme } from '../presentation/studio-session.mjs';
+import { createThemeCandidate } from '../presentation/theme-preview.mjs';
 import { attachThemeFamilyControls } from '../ui/theme-family-controls.mjs';
 import {
   INDUSTRIAL_ARCADE_COLLECTION,
@@ -228,7 +231,7 @@ test('an old context family pin reaches Arcade unchanged and a later context use
   assert.equal(retained.revision, 'r1', 'a captured attempt keeps its original collection object');
 });
 
-test('a draft card choice survives accessibility and detail changes until explicit Apply', async (t) => {
+test('cards and the selector immediately apply the same complete choice without replacing focused controls', async (t) => {
   const { document, host, storage } = hostFixture(t);
   await host.ready;
   const controls = attachThemeFamilyControls({
@@ -238,36 +241,158 @@ test('a draft card choice survives accessibility and detail changes until explic
     prefix: 'review-',
   });
   t.after(() => controls.dispose());
-  document.getElementById('review-theme-card-vyshyvanka').emit('click');
-  const family = document.getElementById('review-theme-familyId');
+  const card = document.getElementById('review-theme-card-vyshyvanka'),
+    family = document.getElementById('review-theme-familyId');
+  assert.equal(document.getElementById('review-theme-apply'), null);
+  assert.deepEqual(
+    [...family.options].map((option) => option.value),
+    [...document.querySelectorAll('[data-theme-preview]')].map(
+      (button) => button.dataset.themePreview,
+    ),
+  );
+  card.focus();
+  card.click();
+  assert.equal(host.preferences.snapshot().familyId, 'vyshyvanka');
+  assert.equal(JSON.parse(storage.getItem(THEME_PREFERENCES_KEY)).familyId, 'vyshyvanka');
+  await host.ready;
+  assert.equal(host.snapshot().familyId, 'vyshyvanka');
   assert.equal(family.value, 'vyshyvanka');
-  assert.equal(storage.writes.length, 0, 'preview itself never writes preferences');
+  assert.equal(card.getAttribute('aria-pressed'), 'true');
+  assert.equal(document.activeElement, card);
   const contrast = document.getElementById('review-theme-highContrast');
   contrast.checked = true;
   contrast.emit('change');
   const ornaments = document.getElementById('review-theme-ornaments');
   ornaments.value = 'off';
   ornaments.emit('change');
-  assert.equal(family.value, 'vyshyvanka');
-  assert.equal(
-    host.preferences.snapshot().familyId,
-    'follow-game',
-    'the draft is not yet committed',
-  );
-  assert.equal(
-    document.getElementById('review-theme-card-vyshyvanka').getAttribute('aria-pressed'),
-    'true',
-  );
-  document.getElementById('review-theme-apply').emit('click');
+  family.focus();
+  family.value = 'dnipro-porcelain';
+  family.emit('change');
+  assert.equal(host.preferences.snapshot().familyId, 'dnipro-porcelain');
   await host.ready;
-  assert.equal(host.preferences.snapshot().familyId, 'vyshyvanka');
-  assert.equal(host.snapshot().familyId, 'vyshyvanka');
+  assert.equal(host.snapshot().familyId, 'dnipro-porcelain');
   assert.equal(host.preferences.snapshot().highContrast, true);
   assert.equal(
     host.preferences.snapshot().ornaments,
     'theme',
-    'complete Apply resets independent material detail',
+    'A new complete choice resets optional detail.',
   );
+  assert.equal(document.activeElement, family);
+  assert.equal(
+    document.getElementById(card.id),
+    card,
+    'Existing gallery controls retain identity.',
+  );
+  assert.equal(card.getAttribute('aria-pressed'), 'false');
+});
+
+test('Follow, original Field Kit and curated revisions have matching cards/options and exact context/custom colors', async (t) => {
+  const candidate = createThemeCandidate(
+    reviseStudioTheme(
+      duplicateStudioSnapshot(createDefaultThemeBundle(), {
+        id: 'controls-curated',
+        name: 'Community Workshop',
+      }),
+      { tokens: { panel: '#282428' } },
+    ),
+    { familyId: 'vyshyvanka' },
+  );
+  const { document, host, storage } = hostFixture(t, {
+    appearanceThemes: [candidate],
+    appearanceDefault: { familyId: candidate.family.id, revision: candidate.family.revision },
+  });
+  await host.ready;
+  const controls = attachThemeFamilyControls({ document, root: document.body, host });
+  t.after(() => controls.dispose());
+  const family = document.getElementById('theme-familyId'),
+    follow = document.getElementById('theme-card-follow-game'),
+    original = document.getElementById('theme-card-legacy'),
+    custom = document.getElementById(`theme-card-${candidate.family.id}`);
+  assert.ok(follow && original && custom);
+  assert.deepEqual(storage.writes, [], 'Rendering choices never writes a preference.');
+  for (const button of [follow, original, custom]) {
+    const option = [...family.options].find(
+      (option) => option.value === button.dataset.themePreview,
+    );
+    assert.equal(button.querySelector('strong').textContent, option.textContent);
+    assert.ok(button.querySelector('small').textContent);
+  }
+  for (const button of [follow, custom])
+    assert.equal(
+      button
+        .querySelector('.theme-preview-swatches')
+        .children[1].style.getPropertyValue('background-color'),
+      candidate.interfaceTheme.tokens.panel,
+    );
+  custom.focus();
+  custom.click();
+  await host.ready;
+  assert.equal(host.snapshot().familyId, candidate.family.id);
+  assert.equal(host.snapshot().familyRevision, candidate.family.revision);
+  assert.equal(host.snapshot().tokens.panel, candidate.interfaceTheme.tokens.panel);
+  assert.equal(document.activeElement, custom);
+  original.click();
+  await host.ready;
+  assert.equal(host.snapshot().familyId, 'legacy');
+  follow.focus();
+  follow.click();
+  await host.ready;
+  assert.equal(host.preferences.snapshot().familyId, 'follow-game');
+  assert.equal(host.snapshot().familyId, candidate.family.id);
+  await host.setDefault({ familyId: 'dnipro-porcelain', revision: 'r1' });
+  assert.equal(host.snapshot().familyId, 'dnipro-porcelain');
+  assert.equal(document.activeElement, follow);
+  assert.equal(document.getElementById(custom.id), custom);
+  assert.equal(
+    follow
+      .querySelector('.theme-preview-swatches')
+      .children[1].style.getPropertyValue('background-color'),
+    host.snapshot().tokens.panel,
+  );
+});
+
+test('rapid immediate choices retain the accepted theme until resources load, ignore superseded loads and preserve newest focus on failure', async (t) => {
+  const { document, host } = hostFixture(t);
+  await host.ready;
+  const accepted = host.snapshot(),
+    controls = attachThemeFamilyControls({ document, root: document.body, host });
+  t.after(() => controls.dispose());
+  const older = deferred();
+  document.fonts = { load: () => older.promise };
+  const first = document.getElementById('theme-card-vyshyvanka');
+  first.focus();
+  first.click();
+  const previousLoad = host.ready;
+  await nextTask();
+  assert.equal(host.snapshot(), accepted);
+  const latest = deferred();
+  document.fonts.load = () => latest.promise;
+  const last = document.getElementById('theme-card-dnipro-porcelain');
+  last.focus();
+  last.click();
+  await nextTask();
+  assert.equal(document.getElementById('theme-familyId').value, 'dnipro-porcelain');
+  latest.resolve([]);
+  await host.ready;
+  const resolved = host.snapshot();
+  assert.equal(resolved.familyId, 'dnipro-porcelain');
+  older.resolve([]);
+  await previousLoad;
+  assert.equal(host.snapshot(), resolved);
+  assert.equal(document.activeElement, last);
+  assert.equal(last.getAttribute('aria-pressed'), 'true');
+  document.fonts.load = () => Promise.reject(new Error('Font decode failed'));
+  first.focus();
+  first.click();
+  await host.ready;
+  assert.equal(host.snapshot(), resolved, 'Failure retains the last accepted presentation.');
+  assert.equal(document.activeElement, first);
+  assert.match(host.getWarning(), /Font decode failed/);
+  document.fonts.load = () => Promise.resolve([]);
+  first.click();
+  await host.ready;
+  assert.equal(host.snapshot().familyId, 'vyshyvanka');
+  assert.equal(host.getWarning(), '');
 });
 
 test('v1 preference migration is read-only, preserves unknown intent and permits explicit recovery', async (t) => {
@@ -301,6 +426,41 @@ test('v1 preference migration is read-only, preserves unknown intent and permits
     highContrast: true,
     opaqueHud: true,
   });
+});
+
+test('Classic Field Kit paints its advertised palette independently of old menu skins, while exact r1 stays legacy', async (t) => {
+  for (const palette of ['auto', 'ukrainian']) {
+    const menu = JSON.stringify({ palette, ornaments: 'subtle' });
+    const storage = memoryStorage({
+      'revealline.menu-style.v1': menu,
+      [THEME_PREFERENCES_KEY]: JSON.stringify({ ...DEFAULT_THEME_PREFERENCES, familyId: 'legacy' }),
+    });
+    const { host, document } = hostFixture(t, { storage });
+    await host.ready;
+    const classic = host.availableThemeChoices().find((choice) => choice.id === 'legacy');
+    assert.equal(host.snapshot().revision, 'r2');
+    assert.equal(document.documentElement.dataset.themeStyled, 'true');
+    for (const role of ['ink', 'panel', 'text', 'accent'])
+      assert.equal(
+        document.documentElement.style.getPropertyValue(`--iw-${role}`),
+        classic.interfaceTheme.tokens[role],
+      );
+    assert.deepEqual(storage.writes, [], 'Startup does not rewrite either preference format.');
+    assert.equal(storage.getItem('revealline.menu-style.v1'), menu);
+    await host.applyComplete('follow-game');
+    await host.setDefault({ familyId: 'legacy', revision: 'r1' });
+    assert.equal(host.snapshot().revision, 'r1');
+    assert.equal(document.documentElement.dataset.themeStyled, 'false');
+    const writes = storage.writes.length;
+    await host.setDefault({ familyId: 'legacy', revision: 'r2' });
+    assert.equal(document.documentElement.dataset.themeStyled, 'true');
+    assert.equal(
+      storage.writes.length,
+      writes,
+      'Changing an exact context pin never persists personal intent.',
+    );
+    assert.equal(storage.getItem('revealline.menu-style.v1'), menu);
+  }
 });
 
 test('complete Apply clears independent SIM appearance but preserves accessibility and legacy records', () => {
@@ -345,9 +505,9 @@ test('complete Apply clears independent SIM appearance but preserves accessibili
   }
 });
 
-test('all eight Arcade treatments preserve native sprite coverage and source ownership', () => {
+test('all installed Arcade treatments preserve native sprite coverage and source ownership', () => {
   const families = BUILTIN_THEME_FAMILIES.filter((family) => family.arcade);
-  assert.equal(families.length, 8);
+  assert.ok(families.length >= 8, 'Original families remain available alongside new ones.');
   for (const family of families) {
     const collection = selectedArcadeCollection({
       familyId: family.id,
@@ -407,7 +567,7 @@ function spriteFixture() {
   return { slot, base, original, canvases, canvasFactory };
 }
 
-test('theme cache isolates eight variants and retained Industrial history without touching original media', () => {
+test('theme cache isolates all installed variants and retained Industrial history without touching original media', () => {
   const f = spriteFixture(),
     adapter = createArcadeAdapter({ canvasFactory: f.canvasFactory });
   const legacy = adapter.resolve(f.base, INDUSTRIAL_ARCADE_COLLECTION),
@@ -426,11 +586,11 @@ test('theme cache isolates eight variants and retained Industrial history withou
     assert.equal(frame.asset, f.original.asset);
     variants.push(frame.image);
   }
-  assert.equal(new Set(variants).size, 8);
+  assert.equal(new Set(variants).size, variants.length);
   assert.equal(
     f.canvases.length,
-    9,
-    'eight current variants plus one retained historical revision',
+    variants.length + 1,
+    'each current variant plus one retained historical revision',
   );
   assert.deepEqual(oldFrame.image.pixels, oldPixels);
   assert.equal(adapter.resolve(f.base, INDUSTRIAL_ARCADE_COLLECTION), legacy);

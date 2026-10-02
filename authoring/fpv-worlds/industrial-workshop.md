@@ -1,11 +1,12 @@
 # Themeable SIM source kit
 
-The eight collections are original procedural source art shared by Academy, World,
+The installed collections are original procedural source art shared by Academy, World,
 replay presentation and the drone hangar. It extends the existing meshes; it does
 not replace collision geometry or flight rules. Imported GLB scenery retains its
 author's materials by default; explicit compatible bindings can replace selected
 materials. Industrial Workshop, Vyshyvanka, Dnipro Porcelain, Tryzub, Desktop 98,
-DOS Navigator, Orchard Workshop and Neon Ruins are selectable collections;
+DOS Navigator, Orchard Workshop, Neon Ruins, Pocket LCD, Copper Observatory and
+Sakura Station are selectable collections;
 Authored remains available independently.
 
 ## Runtime contract
@@ -28,7 +29,7 @@ uses the same `buildDroneVisual` source as the flight renderer.
 
 The shared `game/presentation/theme-system.mjs` publishes bounded
 `SimVisualCollection.v1` source descriptors, re-exported by `world-themes.mjs`
-for Authored and all eight theme families. Each revision has complete model, asset,
+for Authored and all installed theme families. Each revision has complete model, asset,
 material and effect role bindings plus local source provenance. The registry drives profile
 selection and appearance fallback; the material builder consumes the same
 collection descriptor. `validateSimVisualCollection` admits immutable plain data
@@ -100,7 +101,7 @@ Start the normal local server, then open
 This unlocked authoring route uses the actual flight renderer. It runs no physics,
 does not award progress and does not modify player preferences. Select environment,
 camera and quality, and compare the selected collection against Authored. The
-material canvas and flight scene both expose all eight collections and share the
+material canvas and flight scene both expose all installed collections and share the
 same production materials and drone geometry.
 
 The Compare button warms 30 frames and samples 120 identical view frames for each

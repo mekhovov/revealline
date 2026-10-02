@@ -136,8 +136,10 @@ export function installThemeHost({
   };
   let customThemes = validateThemes(appearanceThemes ?? []),
     acceptedFamily = null;
-  const resolveSelection = (appearanceDefault) => {
-    const intent = familyId ?? preferences.snapshot().familyId;
+  const resolveSelection = (
+    appearanceDefault,
+    intent = familyId ?? preferences.snapshot().familyId,
+  ) => {
     const requested = intent === 'follow-game' ? appearanceDefault : { familyId: intent };
     let custom = customThemes.find(
       (row) =>
@@ -209,7 +211,7 @@ export function installThemeHost({
         throw error;
       });
     await styles;
-    if (resolved.interfaceId !== 'legacy' && doc.fonts?.load) {
+    if ((resolved.interfaceId !== 'legacy' || resolved.revision !== 'r1') && doc.fonts?.load) {
       await Promise.all(
         Object.entries(resolved.fonts).map(([role, stack]) =>
           doc.fonts.load(
@@ -358,6 +360,34 @@ export function installThemeHost({
           ...BUILTIN_THEME_FAMILIES,
           ...customThemes.map((row) => row.family),
         ],
+        // The controls use the same entries for cards and the native selector.
+        // Follow previews its context even while a personal family is active.
+        availableThemeChoices: () => {
+          const follow = resolveSelection(contextDefault, 'follow-game'),
+            active = resolveSelection(contextDefault),
+            candidates = [...customThemes];
+          if (active.candidate && !candidates.some((row) => row.family.id === active.family.id))
+            candidates.push(active.candidate);
+          return [
+            {
+              id: 'follow-game',
+              family: follow.family,
+              interfaceTheme:
+                follow.interfaceTheme ??
+                getInterfaceTheme(follow.family.interface.id, follow.family.interface.revision),
+            },
+            ...BUILTIN_THEME_FAMILIES.map((family) => ({
+              id: family.id,
+              family,
+              interfaceTheme: getInterfaceTheme(family.interface.id, family.interface.revision),
+            })),
+            ...candidates.map(({ family, interfaceTheme }) => ({
+              id: family.id,
+              family,
+              interfaceTheme,
+            })),
+          ];
+        },
         prepareDefault,
         applyComplete(id) {
           override = null;

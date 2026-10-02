@@ -39,6 +39,7 @@ on:
       - 'game/test/creator-player-menu.test.mjs'
       - 'game/test/creator-player-victory-story.test.mjs'
       - 'game/test/menu-audio-localization.test.mjs'
+      - 'game/test/menu-style-host.test.mjs'
       - 'game/test/win-picture-host.test.mjs'
       - 'game/test/demo-reward.test.mjs'
       - 'optional-practice/civilian-fpv/*.mjs'
@@ -88,6 +89,7 @@ jobs:
       # This requested preview cohort is explicit; the global release-suite waiver is unchanged.
       APPEARANCE_TEST_FILES: >-
         game/test/theme-system.test.mjs
+        game/test/theme-collection-expansion.test.mjs
         game/test/unified-appearance.test.mjs
         game/test/theme-bootstrap.test.mjs
         game/test/story-dialog.test.mjs
@@ -109,6 +111,7 @@ jobs:
         game/test/edition-runtime.test.mjs
         game/test/editions.test.mjs
         game/test/menu-audio-localization.test.mjs
+        game/test/menu-style-host.test.mjs
         game/test/fpv-acceptance-workflow.test.mjs
         game/test/win-picture-host.test.mjs
         game/test/demo-reward.test.mjs

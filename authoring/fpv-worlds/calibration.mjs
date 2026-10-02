@@ -9,6 +9,7 @@ import { createFlightRenderer } from '../../optional-practice/civilian-fpv/rende
 import { FLIGHT_COURSES } from '../../optional-practice/civilian-fpv/catalogue.mjs';
 import {
   WORLD_COURSES,
+  ADVENTURE_COURSES,
   FLIGHT_WORLDS,
 } from '../../optional-practice/civilian-fpv/world-catalogue.mjs';
 import { buildDroneVisual } from '../../optional-practice/civilian-fpv/world-visuals.mjs';
@@ -19,7 +20,10 @@ import {
 } from '../../optional-practice/civilian-fpv/world-visuals.mjs';
 
 const $ = (id) => document.getElementById(id),
-  courses = [...FLIGHT_COURSES, ...WORLD_COURSES],
+  courses = [...FLIGHT_COURSES, ...WORLD_COURSES, ...ADVENTURE_COURSES],
+  environments = FLIGHT_WORLDS.filter((world) =>
+    courses.some((course) => course.environment === world.id),
+  ),
   flight = createFlightRenderer({ canvas: $('flight') }),
   materialRenderer = new THREE.WebGLRenderer({ canvas: $('materials'), antialias: true });
 for (const id of ['collection', 'specimen']) {
@@ -78,23 +82,38 @@ let selectedCourse,
   step = 0,
   comparing = false,
   disposed = false;
-for (const world of FLIGHT_WORLDS) {
+for (const world of environments) {
   const option = document.createElement('option');
   option.value = world.id;
   option.textContent = world.title.en;
   $('environment').append(option);
 }
 function listCourses() {
+  const environment =
+    environments.find((world) => world.id === $('environment').value) ?? environments[0];
+  if (!environment) throw new Error('No calibration environment has a course.');
+  $('environment').value = environment.id;
+  const previous = $('course').value,
+    available = courses.filter((item) => item.environment === environment.id);
   $('course').replaceChildren();
-  for (const course of courses.filter((item) => item.environment === $('environment').value)) {
+  for (const course of available) {
     const option = document.createElement('option');
     option.value = course.id;
     option.textContent = course.locales.en.title;
     $('course').append(option);
   }
+  $('course').value = available.find((course) => course.id === previous)?.id ?? available[0].id;
 }
 function installScene(collectionId = $('collection').value) {
-  selectedCourse = courses.find((course) => course.id === $('course').value);
+  const selected = () =>
+    courses.find(
+      (course) => course.id === $('course').value && course.environment === $('environment').value,
+    );
+  selectedCourse = selected();
+  if (!selectedCourse) {
+    listCourses();
+    selectedCourse = selected();
+  }
   const binding = candidate?.simDependency?.collection;
   flight.setPresentation({
     collectionId,

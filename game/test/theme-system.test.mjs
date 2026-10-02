@@ -1,5 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import { readFileSync } from 'node:fs';
 import {
   resolvePresentation,
   validateInterfaceTheme,
@@ -7,6 +8,7 @@ import {
   canvasInterfaceFonts,
   validateThemeFamily,
   BUILTIN_THEME_FAMILIES,
+  getThemeFamily,
   validatePresentationCoverage,
   contrastRatio,
   applyResolvedPresentation,
@@ -76,6 +78,97 @@ test('ornaments Off removes frame wear and interface sampling never chooses SIM 
   assert.equal(detailed.sampling.sim, 'mipmapped');
   assert.equal('course' in detailed, false);
   assert.equal('pictures' in detailed, false);
+});
+test('ornaments Off suppresses texture for every installed family without removing semantic state cues', () => {
+  for (const family of BUILTIN_THEME_FAMILIES) {
+    const plain = resolvePresentation({ familyId: family.id, ornaments: 'off' });
+    const doc = new Document();
+    const release = applyResolvedPresentation(doc.documentElement, plain);
+    assert.equal(plain.textured, false, family.id);
+    assert.equal(doc.documentElement.dataset.themeTexture, 'off', family.id);
+    assert.equal(plain.components.button.selection.cue, 'selected');
+    assert.equal(plain.components.button.focus.width, 3);
+    assert.equal(validatePresentationCoverage(plain).valid, true, family.id);
+    release();
+  }
+});
+
+// Inspect the shared stylesheet itself: palette validation cannot catch a
+// repeating border image painted over an otherwise accessible token pair.
+function surfaceRules() {
+  const css = readFileSync(
+    new URL('../presentation/industrial-workshop.css', import.meta.url),
+    'utf8',
+  ).replace(/\/\*[\s\S]*?\*\//g, '');
+  return [...css.matchAll(/([^{}]+)\{([^{}]*)\}/g)].map(([, selector, body]) => ({
+    selector: selector.trim(),
+    properties: Object.fromEntries(
+      body
+        .split(';')
+        .map((declaration) => declaration.trim().match(/^([\w-]+):\s*([\s\S]*)$/))
+        .filter(Boolean)
+        .map(([, property, value]) => [property, value.trim()]),
+    ),
+  }));
+}
+
+test('shared controls and reading cards use quiet fills while preserving bevel, focus and selection', () => {
+  const rules = surfaceRules();
+  const panels = rules.find(
+    (rule) => rule.selector.includes('.overlay-card') && rule.properties.border,
+  );
+  const actions = rules.find(
+    (rule) => rule.properties['--ui-action-fill'] && rule.properties.padding,
+  );
+  const inputs = rules.find((rule) => rule.selector.endsWith(':where(input, select, textarea)'));
+  for (const rule of [panels, actions, inputs]) {
+    assert.ok(rule);
+    assert.equal(rule.properties['border-image'], 'none');
+    assert.doesNotMatch(rule.properties.background, /url\(|gradient\(|material/);
+    assert.match(rule.properties.border, /solid var\(/);
+    assert.match(rule.properties['box-shadow'], /inset/);
+  }
+  const selected = rules.find(
+    (rule) =>
+      rule.selector.includes("[aria-pressed='true']") && rule.properties['--ui-action-fill'],
+  );
+  assert.match(selected.properties['border-color'], /--iw-focus/);
+  assert.match(selected.properties['box-shadow'], /inset 3px/);
+  for (const state of ['hover', 'pressed']) {
+    const rule = rules.find(
+      (item) => item.properties.background === `var(--ui-action-${state}-fill)`,
+    );
+    assert.equal(rule.properties.color, `var(--ui-action-${state}-ink)`);
+  }
+  assert.ok(
+    rules.some(
+      (rule) => rule.selector.includes(':focus-visible') && /3px/.test(rule.properties.outline),
+    ),
+  );
+  const flat = rules.find((rule) => rule.selector.startsWith("[data-theme-surface='flat']"));
+  assert.equal(flat.properties['box-shadow'], 'none');
+});
+
+test('gallery previews are uninterrupted palette strips and ornament is confined to a single outer accent', () => {
+  const rules = surfaceRules();
+  const card = rules.find((rule) => rule.selector === '.theme-gallery .theme-preview-card');
+  assert.equal(card.properties['border-image'], 'none');
+  assert.equal(card.properties['box-shadow'], 'none');
+  const swatches = rules.find((rule) => rule.selector === '.theme-preview-swatches');
+  assert.equal(swatches.properties.display, 'grid');
+  assert.equal(swatches.properties.gap, '0');
+  const accent = rules.find(
+    (rule) =>
+      rule.selector === "[data-theme-styled='true'] .menu-scene[data-backdrop='interface']::before",
+  );
+  assert.equal(accent.properties['background-repeat'], 'no-repeat');
+  assert.match(accent.properties.inset, /auto auto$/);
+  assert.match(accent.properties['inline-size'], /min\(/);
+  const off = rules.find(
+    (rule) =>
+      rule.selector === "[data-theme-texture='off'] .menu-scene[data-backdrop='interface']::before",
+  );
+  assert.equal(off.properties['background-image'], 'none');
 });
 test('interface validation rejects executable styles, unknown fields and missing provenance', () => {
   const source = structuredClone(BUILTIN_INTERFACE_THEMES[1]);
@@ -244,7 +337,14 @@ test('DOS uses a mono stack before the Plain accessibility override', () => {
 });
 
 test('Canvas consumes interface fonts independently from authored arcade artwork', () => {
-  assert.equal(canvasInterfaceFonts(resolvePresentation()), null);
+  assert.equal(
+    canvasInterfaceFonts(resolvePresentation({ themeFamily: getThemeFamily('legacy', 'r1') })),
+    null,
+  );
+  assert.ok(
+    canvasInterfaceFonts(resolvePresentation({ familyId: 'legacy' })),
+    'Current Classic Field Kit consumes its declared typography.',
+  );
   const resolved = resolvePresentation({ familyId: 'industrial-workshop' });
   const fonts = canvasInterfaceFonts(resolved);
   assert.deepEqual(fonts, { ui: resolved.fonts.ui, numeric: resolved.fonts.mono });

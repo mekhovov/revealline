@@ -65,9 +65,6 @@ function reflects(page, prefix, familyId, ornaments) {
       'legacy selectors are no longer navigation targets',
     );
 }
-function apply(page, prefix = '') {
-  page.$(`${prefix}theme-apply`).click();
-}
 function customize(page, prefix = '') {
   const summary = page.$(`${prefix}theme-customize`);
   if (!summary.parentElement.open) summary.click();
@@ -204,10 +201,9 @@ for (const turnPolicy of ['immediate', 'grid-center']) {
     reaches(page, 'theme-familyId');
     const beforeWrites = store.writes.length;
     change(page, 'theme-familyId', 'vyshyvanka');
-    assert.equal(store.writes.length, beforeWrites, 'Staged family selection is read-only.');
+    assert.ok(store.writes.length > beforeWrites, 'Selecting a family saves it immediately.');
+    assert.equal(raw(store).familyId, 'vyshyvanka');
     assert.deepEqual(authoritativeCheckpoint(run), checkpoint);
-    reaches(page, 'theme-apply');
-    apply(page);
     reaches(page, 'theme-customize');
     customize(page);
     reaches(page, 'theme-ornaments');
@@ -256,15 +252,15 @@ test('unified appearance survives Solo, Team, Versus and Solo return without alt
     DISPLAY_PREFERENCES_KEY,
     JSON.stringify({ textFace: 'plain', textSize: 'large', reducedEffects: true }),
   );
-  await t.test('Solo previews then applies its complete family from real Settings', async (t) => {
+  await t.test('Solo immediately applies its complete family from real Settings', async (t) => {
     const page = await soloPage(t, { campaign, storage: store, titleScreen: true });
     page.$('shell-options').click();
     page.$('settings-tab-display').click();
     const records = unrelated(store),
       writes = store.writes.length;
     change(page, 'theme-familyId', 'vyshyvanka');
-    assert.equal(store.writes.length, writes);
-    apply(page);
+    assert.ok(store.writes.length > writes);
+    assert.equal(raw(store).familyId, 'vyshyvanka');
     customize(page);
     change(page, 'theme-ornaments', 'rich');
     assert.deepEqual(unrelated(store), records);
@@ -290,10 +286,9 @@ test('unified appearance survives Solo, Team, Versus and Solo return without alt
       reaches(page, 'coop-theme-familyId');
       const writes = store.writes.length;
       change(page, 'coop-theme-familyId', 'dnipro-porcelain');
-      assert.equal(store.writes.length, writes);
+      assert.ok(store.writes.length > writes);
+      assert.equal(raw(store).familyId, 'dnipro-porcelain');
       assert.deepEqual(page.geometry(), geometry);
-      reaches(page, 'coop-theme-apply');
-      apply(page, 'coop-');
       reaches(page, 'coop-theme-customize');
       customize(page, 'coop-');
       reaches(page, 'coop-theme-ornaments');
@@ -334,9 +329,8 @@ test('unified appearance survives Solo, Team, Versus and Solo return without alt
       reaches(page, 'race-theme-familyId');
       const writes = store.writes.length;
       change(page, 'race-theme-familyId', 'tryzub');
-      assert.equal(store.writes.length, writes);
-      reaches(page, 'race-theme-apply');
-      apply(page, 'race-');
+      assert.ok(store.writes.length > writes);
+      assert.equal(raw(store).familyId, 'tryzub');
       reaches(page, 'race-theme-customize');
       customize(page, 'race-');
       reaches(page, 'race-theme-ornaments');
@@ -371,7 +365,7 @@ test('unified appearance survives Solo, Team, Versus and Solo return without alt
   });
 });
 
-test('controller can cancel a draft, stage a family and Apply without changing Ready', async (t) => {
+test('controller can cancel native editing or immediately select a family without changing Ready', async (t) => {
   const store = memoryStorage(),
     pad = {
       index: 0,
@@ -405,9 +399,8 @@ test('controller can cancel a draft, stage a family and Apply without changing R
   assert.equal(page.editors().length, 0);
   assert.equal(page.$('race-theme-familyId').value, 'industrial-workshop');
   assert.equal(page.doc.activeElement.id, 'race-theme-familyId');
-  assert.equal(store.writes.length, writes, 'Committing the selector stages the draft only.');
-  page.focus('race-theme-apply');
-  page.pulse(0, 0);
+  assert.ok(store.writes.length > writes, 'Native selector confirmation applies immediately.');
+  assert.equal(page.$('race-theme-apply'), null);
   assert.equal(raw(store).familyId, 'industrial-workshop');
   page.focus('race-theme-customize');
   page.pulse(0, 0);
@@ -444,7 +437,6 @@ test('denied appearance saving leaves Team local choice usable without replacing
   };
   page.$('coop-settings-open').click();
   change(page, 'coop-theme-familyId', 'vyshyvanka');
-  apply(page, 'coop-');
   customize(page, 'coop-');
   change(page, 'coop-theme-ornaments', 'off');
   reflects(page, 'coop-', 'vyshyvanka', 'off');

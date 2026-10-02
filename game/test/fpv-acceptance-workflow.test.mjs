@@ -16,6 +16,156 @@ import {
   prepareAcceptance,
 } from '../../scripts/prepare-sim-appearance-acceptance.mjs';
 
+test('calibration initializes a valid course and renders every offered Academy, World and Adventure environment', async () => {
+  const [THREE, visuals, catalogue, worlds, themes, { Document, Events }] = await Promise.all([
+    import('../../optional-practice/civilian-fpv/vendor/three.module.js'),
+    import('../../optional-practice/civilian-fpv/world-visuals.mjs'),
+    import('../../optional-practice/civilian-fpv/catalogue.mjs'),
+    import('../../optional-practice/civilian-fpv/world-catalogue.mjs'),
+    import('../presentation/theme-system.mjs'),
+    import('./helpers/couch-dom.mjs'),
+  ]);
+  let source = await fs.readFile(
+    new URL('../../authoring/fpv-worlds/calibration.mjs', import.meta.url),
+    'utf8',
+  );
+  const ast = parseModule(source, { ecmaVersion: 'latest', sourceType: 'module' });
+  for (const declaration of ast.body.filter((node) => node.type === 'ImportDeclaration').reverse())
+    source = source.slice(0, declaration.start) + source.slice(declaration.end);
+  source = source
+    .replaceAll('export function ', 'function ')
+    .replaceAll('export async function ', 'async function ');
+  const document = new Document(),
+    window = new Events(),
+    installed = [],
+    drawn = [];
+  const values = {
+    collection: 'industrial-workshop',
+    specimen: 'industrial-workshop',
+    environment: '',
+    course: '',
+    camera: 'overview',
+    quality: 'balanced',
+  };
+  for (const id of [
+    ...Object.keys(values),
+    'candidate-status',
+    'compare',
+    'comparison',
+    'scene-stats',
+    'flight',
+    'materials',
+  ]) {
+    const element = document.createElement(Object.hasOwn(values, id) ? 'select' : 'div');
+    element.id = id;
+    element.value = values[id] ?? '';
+    element.clientWidth = 800;
+    element.clientHeight = 420;
+    document.body.append(element);
+  }
+  let nextFrame,
+    selected,
+    disposed = false;
+  const flight = {
+    available: true,
+    setPresentation() {},
+    setDrone() {},
+    setQuality() {},
+    setCourse(course) {
+      assert.ok(
+        course?.spawn && course?.steps,
+        'the actual initial setCourse receives a complete course',
+      );
+      selected = course;
+      installed.push(course);
+    },
+    draw(state) {
+      assert.ok(['x', 'y', 'z'].every((axis) => Number.isFinite(state.position[axis])));
+      drawn.push(selected.id);
+    },
+    resources: () => ({
+      presentation: { profileId: 'industrial-workshop' },
+      renderer: { calls: 1, triangles: 12, textures: 0 },
+    }),
+    dispose() {
+      disposed = true;
+    },
+  };
+  class Renderer {
+    capabilities = { getMaxAnisotropy: () => 1 };
+    info = { memory: {}, programs: [] };
+    setSize() {}
+    render() {}
+    dispose() {}
+    forceContextLoss() {}
+  }
+  const allCourses = [
+      ...catalogue.FLIGHT_COURSES,
+      ...worlds.WORLD_COURSES,
+      ...worlds.ADVENTURE_COURSES,
+    ],
+    before = JSON.stringify(allCourses);
+  vm.runInNewContext(source, {
+    ...catalogue,
+    ...worlds,
+    ...themes,
+    ...visuals,
+    FLIGHT_WORLDS: [
+      ...worlds.FLIGHT_WORLDS,
+      { id: 'empty-test-environment', title: { en: 'No courses' } },
+    ],
+    THREE: { ...THREE, WebGLRenderer: Renderer },
+    document,
+    window,
+    location: { href: 'https://example.test/authoring/fpv-worlds/calibration.html' },
+    URL,
+    performance: { now: () => 0 },
+    createFlightRenderer: () => flight,
+    requestAnimationFrame: (callback) => {
+      nextFrame = callback;
+      return 1;
+    },
+    cancelAnimationFrame() {},
+  });
+  const environment = document.getElementById('environment'),
+    courseSelect = document.getElementById('course');
+  assert.deepEqual(
+    environment.children.map((option) => option.value),
+    worlds.FLIGHT_WORLDS.map((world) => world.id),
+    'all currently shipped environments are offered; empty additions are not',
+  );
+  assert.equal(installed[0].environment, worlds.FLIGHT_WORLDS[0].id);
+  assert.equal(drawn[0], installed[0].id, 'the initial frame reaches the real page render path');
+  for (const world of worlds.FLIGHT_WORLDS) {
+    environment.value = world.id;
+    environment.emit('change');
+    const expected = allCourses.filter((course) => course.environment === world.id);
+    assert.deepEqual(
+      courseSelect.children.map((option) => option.value),
+      expected.map((course) => course.id),
+    );
+    assert.equal(installed.at(-1).environment, world.id);
+    nextFrame();
+    assert.equal(drawn.at(-1), installed.at(-1).id);
+    courseSelect.value = expected.at(-1).id;
+    courseSelect.emit('change');
+    document.getElementById('quality').emit('change');
+    assert.equal(
+      installed.at(-1).id,
+      expected.at(-1).id,
+      'a valid explicit course survives other control changes',
+    );
+  }
+  environment.value = 'missing';
+  courseSelect.value = 'stale';
+  environment.emit('change');
+  assert.equal(environment.value, worlds.FLIGHT_WORLDS[0].id);
+  assert.equal(installed.at(-1).environment, environment.value);
+  assert.equal(JSON.stringify(allCourses), before);
+  window.emit('pagehide');
+  assert.equal(disposed, true);
+});
+
 test('fixed acceptance routes cover every current environment without changing course data', () => {
   assert.equal(ACCEPTANCE_CASES.length, 14);
   for (const { course } of ACCEPTANCE_CASES) {
