@@ -1819,3 +1819,13 @@ terraces with intentional alleys, preserving model counts and exterior route
 clearance. It belongs in `scenery-runtime.template.mjs` plus its regenerated
 runtime/provenance, not in C2's visual loop or Themes' appearance contracts.
 Review source and generated ownership before edits and publish separately.
+
+C2 is published and attached as [PR #960](https://github.com/mekhovov/revealline/pull/960),
+`codex/fpv-meadow-groves`, initially at `6386be8b3`, directly against main.
+The two normal local player builds now include both merged touch #959 and C2,
+with the same final ZIP identity above. Current-head CI/public deployment remain
+separate; no protected gate was bypassed and no new native stack was needed.
+Next work uses independent `codex/fpv-courtyard-terraces` from current main;
+keep unfinished C3 out of ready #960. Preserve Themes #955 and C2 placement when
+integrating branches. Do not report remaining physical-device/art qualification
+or deferred unit coverage as complete.
