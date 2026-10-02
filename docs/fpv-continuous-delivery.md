@@ -1179,3 +1179,10 @@ Actual turning-lesson step2 now shows49% while paused. Next: frozen optional
 package qualification, refresh reviewed-player too, and publish a focused child
 PR after #943 through native stack902. Preserve existing holds and external CI;
 no public-live or new hardware claim. Other R5–R7 work remains separate.
+
+Frozen runtime `a4df52c790e3c41449a3f0a48be235e8a9edf48d` passes all3 optional
+package admissions, committed inputs/ZIP verification and2 byte-identical builds.
+Receipt: `docs/evidence/fpv-step-boundary-package-20261002.json`. Both local player
+paths now share the87-file/13,949,386-byte build and SHA above. The actual built
+turning lesson's paused second step was inspected with49% retained; screenshot
+`/tmp/fpv-step-input-continuity-20261002.png`. Ready for focused publication.
