@@ -13,7 +13,7 @@ export function coopArenaGuidance(level, { jointCuts = true } = {}) {
   const roamers = level.enemies.some((enemy) => enemy.type === 'claimed-rover');
   const relays = Boolean(level.strongholds?.length);
   const trailImpacts = hasTeamLineImpacts(level) && level.enemies.length > 0;
-  const requiredCores = level.goal.cores?.length ?? 0;
+  const requiredCores = level.hunt?.mode === 'hunt' ? 0 : (level.goal.cores?.length ?? 0);
   const patrols = level.combatPatrols?.enabled ? level.combatPatrols.actors : [];
   const humanoids = Boolean(level.hunt);
   const guards = patrols.some((actor) => actor.role === 'sentry');
@@ -87,7 +87,11 @@ export function coopArenaGuidance(level, { jointCuts = true } = {}) {
       : t('interface:relayDefenses'),
     strongholdText:
       t('gameplay:team.strongholdAdvice') +
-      (requiredCores ? '' : ' ' + t('interface:yourGoalIsTheCoverageTarget') + ''),
+      (level.hunt?.mode === 'hunt'
+        ? ' ' + huntText('huntGoal')
+        : requiredCores
+          ? ''
+          : ' ' + t('interface:yourGoalIsTheCoverageTarget')),
     briefingTitle: humanoids
       ? huntText(level.hunt.mode)
       : requiredCores > 1

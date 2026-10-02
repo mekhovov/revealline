@@ -2,6 +2,7 @@ import { boundedJSON, canonicalJSON, exactKeys, required } from '../data-json.mj
 import { TURN_POLICIES } from '../core/registry.mjs';
 import { ENCOUNTER_VARIANTS } from '../hunt/preferences.mjs';
 import { encounterVariantSource, placeHuntPopulation } from '../hunt/variants.mjs';
+import { encounterVariantManifest } from '../hunt/variant-guidance.mjs';
 import { compileMapDesign } from './map.mjs';
 import { compileContentProject } from './project.mjs';
 import { createCandidateSoloHost } from './solo-host.mjs';
@@ -105,7 +106,7 @@ function createEncounterHost(source, { getEncounterVariant = () => 'authored', .
       let record = byKey.get(key);
       if (!record) {
         record = { item, original, variant, variants: [] };
-        const selection = Object.freeze({
+        const view = {
           ...original,
           ...(!solo
             ? {
@@ -117,7 +118,16 @@ function createEncounterHost(source, { getEncounterVariant = () => 'authored', .
           get encounterVariants() {
             return Object.freeze([...record.variants]);
           },
-        });
+        };
+        if (solo && variant !== 'authored')
+          Object.defineProperty(view, 'manifests', {
+            enumerable: true,
+            get: () =>
+              Object.freeze(
+                original.manifests.map((manifest) => encounterVariantManifest(manifest, variant)),
+              ),
+          });
+        const selection = Object.freeze(view);
         record.selection = selection;
         records.push(record);
         byKey.set(key, record);
@@ -269,7 +279,20 @@ function createEncounterHost(source, { getEncounterVariant = () => 'authored', .
     card(mission, difficulty = 'standard', controls) {
       const selection = select(mission, difficulty, controls),
         record = owned.get(selection);
-      return record?.item.host.card(record.item.host.catalog.find(mission.id), difficulty) ?? null;
+      if (!record) return null;
+      const inner = record.item.host.catalog.find(mission.id),
+        card = record.item.host.card(inner, difficulty);
+      if (!card || record.variant === 'authored') return card;
+      const manifest = solo
+        ? selection.manifests.find((item) => item.missionId === mission.levelId)
+        : encounterVariantManifest(record.item.host.manifest(inner, difficulty), record.variant);
+      return card && manifest
+        ? Object.freeze({
+            ...card,
+            route: manifest.design.routeDecision,
+            mastery: manifest.design.mastery,
+          })
+        : card;
     },
     visualThemeSelection(selection, level) {
       const record = owned.get(selection);
@@ -306,9 +329,12 @@ function createEncounterHost(source, { getEncounterVariant = () => 'authored', .
       manifest(mission, difficulty = 'standard', controls) {
         const selection = select(mission, difficulty, controls),
           record = owned.get(selection);
-        return (
-          record?.item.host.manifest(record.item.host.catalog.find(mission.id), difficulty) ?? null
-        );
+        return record
+          ? encounterVariantManifest(
+              record.item.host.manifest(record.item.host.catalog.find(mission.id), difficulty),
+              record.variant,
+            )
+          : null;
       },
     });
   let prepared = null,

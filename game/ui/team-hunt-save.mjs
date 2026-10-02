@@ -20,6 +20,8 @@ const copy = {
       'The saved data cannot be read by this edition. It has been kept. Export it before discarding it.',
     failed: 'This attempt could not update its save. The previous saved data is kept.',
     busy: 'Checking the exact saved inputs and preparing the arena…',
+    exporting: 'Preparing the backup export…',
+    importing: 'Reading the backup file…',
     error: 'Continue or backup could not finish. The saved data is kept.',
     sourceChanged:
       'This save needs its original mission source and difficulty. The saved data is kept.',
@@ -38,6 +40,10 @@ const copy = {
     continueInterrupted:
       'Continue was interrupted before the arena opened. The save is kept. Try Continue again.',
     exported: 'Export requested. Check your download or share dialog.',
+    shared: 'Backup shared with the selected app. Check that destination for your file.',
+    exportCancelled: 'Export cancelled. The saved hunt is kept.',
+    exportFailed: 'The backup could not be exported. The saved hunt is kept. Try again.',
+    importFailed: 'This backup could not be imported. Existing saved data is kept.',
     imported: 'Saved hunt imported. Continue verifies its inputs before play.',
     leaveSaved:
       'This Team hunt has a saved checkpoint. Leaving or changing setup keeps it under Saved Team hunt. A different hunt cannot replace it until you explicitly discard the save. Stay keeps both pilots paused.',
@@ -63,6 +69,8 @@ const copy = {
       'Ця версія не може прочитати збережені дані. Їх залишено без змін. Експортуйте їх перед видаленням.',
     failed: 'Не вдалося оновити збереження цієї спроби. Попередні дані залишено без змін.',
     busy: 'Перевірка точних збережених команд і підготовка арени…',
+    exporting: 'Підготовка експорту резервної копії…',
+    importing: 'Читання файлу резервної копії…',
     error:
       'Не вдалося завершити продовження або резервне копіювання. Збережені дані залишено без змін.',
     sourceChanged:
@@ -81,6 +89,12 @@ const copy = {
     continueInterrupted:
       'Продовження перервано до відкриття арени. Збереження залишено без змін. Повторіть спробу.',
     exported: 'Експорт запитано. Перевірте завантаження або вікно поширення.',
+    shared: 'Резервну копію передано вибраному застосунку. Перевірте файл у ньому.',
+    exportCancelled: 'Експорт скасовано. Збережене полювання залишено без змін.',
+    exportFailed:
+      'Не вдалося експортувати резервну копію. Збережене полювання залишено без змін. Повторіть спробу.',
+    importFailed:
+      'Не вдалося імпортувати цю резервну копію. Наявні збережені дані залишено без змін.',
     imported: 'Полювання імпортовано. Перед продовженням команди буде перевірено.',
     leaveSaved:
       'Контрольну точку командного полювання збережено. Вихід або зміна налаштувань залишає її в розділі збереженого полювання. Інше полювання не замінить її без явного видалення. «Залишитися» тримає обох пілотів на паузі.',
@@ -98,10 +112,12 @@ export function attachTeamHuntSave({
   liveStatus,
   store,
   findRow,
+  canContinue = () => true,
   onContinue,
   onDiscard,
   document: doc = globalThis.document,
   window: win = globalThis.window,
+  exportFile = exportJSONFile,
 }) {
   const root = doc.createElement('section');
   root.className = 'team-hunt-save';
@@ -137,14 +153,17 @@ export function attachTeamHuntSave({
     busy = false,
     confirmation = null,
     operation = '',
+    actionKind = '',
     failed = false;
   const controller = new AbortController();
   const refresh = () => {
     if (disposed) return;
     const saved = store.read();
     const row = saved.snapshot && findRow(saved.snapshot);
+    root.dataset.operation = busy ? actionKind : 'idle';
+    root.dataset.outcome = operation || 'none';
     next.hidden = !saved.snapshot;
-    next.disabled = busy || !row;
+    next.disabled = busy || !row || !canContinue();
     discard.hidden = saved.raw === null;
     discard.disabled = busy;
     cancel.hidden = confirmation === null;
@@ -153,7 +172,15 @@ export function attachTeamHuntSave({
     localizedText(discard, () => text(confirmation === null ? 'discard' : 'confirm'));
     localizedText(status, () =>
       [
-        busy ? text('busy') : operation && text(operation),
+        busy
+          ? text(
+              actionKind === 'export'
+                ? 'exporting'
+                : actionKind === 'import'
+                  ? 'importing'
+                  : 'busy',
+            )
+          : operation && text(operation),
         failed && text('failed'),
         saved.error
           ? text('damaged')
@@ -173,16 +200,20 @@ export function attachTeamHuntSave({
       localizedText(liveStatus, () => (failed ? text('failed') : ''));
     }
   };
-  async function perform(action) {
+  async function perform(action, kind = 'continue') {
     if (busy || disposed) return;
     busy = true;
+    actionKind = kind;
     operation = '';
     confirmation = null;
     refresh();
     try {
       operation = (await action()) ?? '';
     } catch (error) {
-      if (error.name !== 'AbortError')
+      if (kind === 'export')
+        operation = error?.name === 'AbortError' ? 'exportCancelled' : 'exportFailed';
+      else if (kind === 'import') operation = error?.name === 'AbortError' ? '' : 'importFailed';
+      else if (error?.name !== 'AbortError')
         operation = [
           'sourceChanged',
           'recipeChanged',
@@ -197,16 +228,22 @@ export function attachTeamHuntSave({
           : 'error';
     } finally {
       busy = false;
+      actionKind = '';
       refresh();
     }
   }
-  next.onclick = () =>
-    perform(async () => {
+  next.onclick = () => {
+    if (!canContinue()) {
+      refresh();
+      return;
+    }
+    return perform(async () => {
       const saved = store.read();
       const row = saved.snapshot && findRow(saved.snapshot);
       if (!row) throw new Error('Saved Team Hunt source is unavailable.');
       await onContinue(saved, row, { signal: controller.signal, opener: next });
     });
+  };
   discard.onclick = () => {
     if (busy || disposed) return;
     if (confirmation === null) {
@@ -233,13 +270,16 @@ export function attachTeamHuntSave({
   backup.onclick = () =>
     perform(async () => {
       const saved = store.read();
-      await exportJSONFile(
+      const result = await exportFile(
         saved.snapshot ?? { format: 'revealline-team-hunt-recovery-bytes.v1', raw: saved.raw },
         'revealline-team-hunt.json',
         { documentRef: doc },
       );
-      return 'exported';
-    });
+      if (result?.status === 'requested') return 'exported';
+      if (result?.status === 'shared') return 'shared';
+      if (result?.status === 'cancelled') return 'exportCancelled';
+      throw new Error('The backup exporter returned no recognized outcome.');
+    }, 'export');
   importInput.onchange = () =>
     perform(async () => {
       const file = importInput.files?.[0];
@@ -251,7 +291,7 @@ export function attachTeamHuntSave({
       if (disposed) return;
       store.save(source, null);
       return 'imported';
-    });
+    }, 'import');
   const changed = (event) => {
     if (!event.key || event.key === TEAM_HUNT_ATTEMPT_KEY) refresh();
   };
@@ -259,6 +299,9 @@ export function attachTeamHuntSave({
   refresh();
   return Object.freeze({
     refresh,
+    state() {
+      return Object.freeze({ busy, action: actionKind, outcome: operation, saveFailed: failed });
+    },
     failure(value) {
       failed = value;
       refresh();

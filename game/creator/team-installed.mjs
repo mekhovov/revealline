@@ -22,6 +22,7 @@ import {
   creatorTeamMediaForLevel,
 } from './team-media.mjs';
 import { createCoop, releaseCoopInputs, startCoop, stepCoop } from '../coop/core.mjs';
+import { teamInputHistoryExtends } from '../coop/attempt-history.mjs';
 import {
   applyGameplayTuning,
   resolveGameplayTuning,
@@ -272,6 +273,16 @@ function replayAttempt(pack, source, editionId, levelId, { terminal = false } = 
       : 'Only an unfinished Team attempt can be recovered.',
   );
   return { attempt, run };
+}
+
+function extendsSavedAttempt(completed, saved) {
+  return (
+    ['attemptId', 'gameplayId', 'difficulty', 'presetId'].every(
+      (key) => completed[key] === saved[key],
+    ) &&
+    canonicalJSON(completed.tuning) === canonicalJSON(saved.tuning) &&
+    teamInputHistoryExtends(completed.segments, saved.segments)
+  );
 }
 
 function installedTeamConfiguration(
@@ -1135,13 +1146,20 @@ export function createInstalledTeamCampaignStore({
               presetId,
               ...(picture ? { reward: picture } : {}),
             };
-          if (previous?.runId === runId) {
+          const duplicate = previous?.runId === runId,
+            pending = progress.attempts[levelId];
+          if (duplicate) {
             required(
               canonicalJSON(previous) === canonicalJSON(receipt),
               t('errors:creator.teamRunIdentityChanged'),
             );
-            result = structuredClone(progress);
-            return;
+            // Old Retry checkpoints could reuse their picture lease's run ID.
+            // An ordinary duplicate remains a no-op. Cleaning that historical
+            // checkpoint requires the current owner and another exact win replay.
+            if (pending?.attemptId !== runId || expectedGeneration === undefined) {
+              result = structuredClone(progress);
+              return;
+            }
           }
           if (expectedGeneration !== undefined)
             required(
@@ -1158,7 +1176,12 @@ export function createInstalledTeamCampaignStore({
               replayed.attempt.presetId === presetId,
             'Team completion differs from its exact replayed attempt.',
           );
-          progress.clears[levelId] = receipt;
+          if (duplicate)
+            required(
+              extendsSavedAttempt(replayed.attempt, pending),
+              'A newer installed Team attempt replaced this checkpoint.',
+            );
+          else progress.clears[levelId] = receipt;
           delete progress.attempts[levelId];
           progress.generation++;
           progressStore.put(progress, editionId);

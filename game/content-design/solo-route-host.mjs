@@ -2,6 +2,7 @@ import { createEncounterSoloHost } from './encounter-host.mjs';
 import { publishedRouteViews } from './published-journey.mjs';
 import { loadPublishedChapter } from './route-snapshot.mjs';
 import { createCandidateSequence } from './sequence.mjs';
+import { journeyMissionDetails } from '../mission-library/journey-presentation.mjs';
 
 /** Old source hosts retain their exact contract; publication hosts materialize
  * complete packs into an append-only registry without replacing active entries. */
@@ -164,6 +165,15 @@ export async function createSoloRouteHost(route, options = {}) {
       return item
         ? item.host.card(item.host.catalog.find(mission.id), difficulty, options)
         : view.card(mission, difficulty);
+    },
+    details(mission, difficulty = 'standard', options) {
+      if (!missionFor(mission)) return null;
+      const item = loaded.get(mission.packId);
+      if (!item) return view.details(mission, difficulty);
+      const entry = item.host.select(item.host.catalog.find(mission.id), difficulty, options),
+        manifest = entry?.manifests.find((value) => value.missionId === mission.levelId);
+      syncEntries(item);
+      return manifest ? journeyMissionDetails(manifest) : view.details(mission, difficulty);
     },
     select(mission, difficulty, options) {
       if (!missionFor(mission)) return null;

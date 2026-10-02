@@ -29,7 +29,13 @@ export function attachHuntStatus({
         : stats.mode === 'hunt'
           ? huntText('huntGoal')
           : huntText('quotaGoal');
-    return `${goal} ${huntText('targets')}: ${stats.kills}/${stats.mode === 'capture-quota' ? stats.quota : stats.total} · ${huntText('remaining')}: ${stats.remaining} · ${huntText('score')}: ${stats.score} · ${huntText('touch')}: ${stats.touchKills} · ${huntText('enclosed')}: ${stats.captureKills}${best ? ` · ${huntText('best')}: ${best.score}` : ''}${current.status === 'won' && best ? ` · ${[best.all && huntText('all'), best.contact && huntText('contactMastery'), best.clean && huntText('clean')].filter(Boolean).join(' · ')}` : ''}`;
+    const detail = `${goal} ${huntText('targets')}: ${stats.kills}/${stats.mode === 'capture-quota' ? stats.quota : stats.total} · ${huntText('remaining')}: ${stats.remaining} · ${huntText('score')}: ${stats.score} · ${huntText('touch')}: ${stats.touchKills} · ${huntText('enclosed')}: ${stats.captureKills}${best ? ` · ${huntText('best')}: ${best.score}` : ''}${current.status === 'won' && best ? ` · ${[best.all && huntText('all'), best.contact && huntText('contactMastery'), best.clean && huntText('clean')].filter(Boolean).join(' · ')}` : ''}`;
+    const terminal = !['ready', 'running', 'respawning', 'paused'].includes(current.status);
+    node.dataset.huntDetail = terminal ? 'result' : 'live';
+    if (node.title !== detail) node.title = detail;
+    return terminal
+      ? detail
+      : `${huntText(stats.mode)} · ${stats.kills}/${stats.mode === 'capture-quota' ? stats.quota : stats.total} · ${huntText('score')}: ${stats.score}`;
   };
   return Object.freeze({
     render(run) {

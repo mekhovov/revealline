@@ -13,6 +13,22 @@ const huntModes = ['bonus', 'capture-quota', 'hunt'];
 const slowest = Math.min(...CLASSES.map((entry) => entry.moveSpeedMultiplier ?? 1));
 const actorIsOptional = (actor) => ['optional-scout', 'optional-sentry'].includes(actor.role);
 const revision = (value, variant) => `hunt-${dataIdentity({ value, variant })}`;
+function removeHuntVersion(level) {
+  if (level.version !== 'xonix-level.v9') return;
+  if (level.classic.coverage) {
+    // The Hunt validator admits route coverage only on inherited v5 geometry.
+    // Preserve its denominator when returning to a historical non-Hunt edition.
+    required(
+      level.relayGates?.gates?.length === 0 &&
+        level.directionalFields?.zones?.length === 0 &&
+        level.encounter === null,
+      'Route-coverage variants require the inherited classic geometry.',
+    );
+    level.version = 'xonix-level.v5';
+    delete level.relayGates;
+    delete level.directionalFields;
+  } else level.version = 'xonix-level.v8';
+}
 
 /** Authoring-time placement only. The resulting positions, population and rules
  * are serialized into an immutable variant before a run is created. */
@@ -157,7 +173,7 @@ export function deriveEncounterLevel(source, variant, { mode = 'solo', count = 6
     if (!original.combatPatrols && !original.hunt) return source;
     delete original.hunt;
     delete original.combatPatrols;
-    if (!team && level.version === 'xonix-level.v9') level.version = 'xonix-level.v8';
+    if (!team) removeHuntVersion(level);
     level.revision = revision(source, variant);
     if (team) {
       const result = validateCoopLevel(level);
@@ -204,7 +220,7 @@ export function deriveEncounterLevel(source, variant, { mode = 'solo', count = 6
     );
   level.revision = revision(source, variant);
   delete level.classic.hunt;
-  if (level.version === 'xonix-level.v9') level.version = 'xonix-level.v8';
+  removeHuntVersion(level);
   level.classic.combatPatrols = { version: 'combat-patrols.v1', enabled: true, actors };
   return freezeDesign(normalizedLevel(level));
 }

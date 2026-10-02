@@ -10,6 +10,7 @@ export const DEFAULT_REACTION_OPTIONS = Object.freeze({
   background: true,
 });
 const format = 'ReactionPresentationV1';
+const pageObservers = new WeakMap();
 export function validateReactionOptions(input) {
   const value = boundedJSON(input, { maxBytes: 1024, maxNodes: 12, maxDepth: 1 });
   exactKeys(value, ['format', ...Object.keys(DEFAULT_REACTION_OPTIONS)], 'Reaction presentation');
@@ -37,6 +38,9 @@ export function createReactionOptions({
     pending = false,
     disposed = false;
   const listeners = new Set();
+  const pageKey = target && ['object', 'function'].includes(typeof target) ? target : null;
+  const peers = (pageKey && pageObservers.get(pageKey)) ?? new Set();
+  if (pageKey) pageObservers.set(pageKey, peers);
   const snapshot = () => ({ ...options, durable });
   const read = () => {
     const storage = getStorage();
@@ -63,6 +67,14 @@ export function createReactionOptions({
     for (const fn of listeners) fn(snapshot());
     return snapshot();
   };
+  const receivePageChoice = (choice) => {
+    if (disposed || pending) return;
+    options = { ...choice };
+    delete options.durable;
+    durable = choice.durable;
+    notify();
+  };
+  peers.add(receivePageChoice);
   const save = () => {
     try {
       const { storage } = read();
@@ -75,7 +87,9 @@ export function createReactionOptions({
     } catch {
       durable = false;
     }
-    return notify();
+    const result = notify();
+    for (const receive of peers) if (receive !== receivePageChoice) receive(result);
+    return result;
   };
   const receive = (event) => {
     if (disposed || pending) return;
@@ -116,6 +130,8 @@ export function createReactionOptions({
     dispose() {
       disposed = true;
       listeners.clear();
+      peers.delete(receivePageChoice);
+      if (pageKey && !peers.size) pageObservers.delete(pageKey);
       target?.removeEventListener?.('storage', receive);
       target?.removeEventListener?.('pageshow', receive);
     },
