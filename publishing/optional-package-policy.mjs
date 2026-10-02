@@ -83,7 +83,6 @@ const BASE_OPTIONAL_PACKAGE_POLICIES = Object.freeze({
       'game/fpv-entry.mjs',
       'game/ui/field-kit-tokens.css',
       'game/ui/native-menu-icons.mjs',
-      'game/ui/art/identity/fpv-line/wordmark.png',
       'game/key-bindings.mjs',
       'game/i18n/index.mjs',
       'game/i18n/bootstrap.mjs',
@@ -182,6 +181,8 @@ export const OPTIONAL_PACKAGE_POLICIES = Object.freeze({
         .map((name) => legacyFPV.root + name),
       ...legacyFPV.sharedFiles,
       'optional-practice/civilian-fpv/README.md',
+      // World Studio renders the image wordmark; Academy uses its text brand.
+      'game/ui/art/identity/fpv-line/wordmark.png',
       'game/ui/art/menu-scenes/fpv.webp',
       'game/ui/art/menu-scenes/fpv-portrait.webp',
       ...[
