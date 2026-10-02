@@ -959,3 +959,9 @@ Focused runtime freeze/package admission and PR publication follow. Preserve
 native stack902 linearity, upstream holds, stack889 and all unrelated handoffs.
 Unit coverage, novice/fluent-UK acceptance, real TX15/controller qualification and
 named-device performance remain outstanding; no public-live claim.
+
+Frozen Pro/Master runtime `e1db800b440bf9cc90d3c9229f4b36fff1ac5440`
+passes all three optional package admissions, committed input/ZIP membership and
+two byte-identical builds. Receipt `docs/evidence/fpv-skills-package-20261002.json`.
+The reviewed-player and skills-school local builds match:87 files/13,894,752bytes,
+ZIP SHA `83b785dd5c4ad07b8615880a581597ed35926642694fc06934ce4168da3aed7f`.

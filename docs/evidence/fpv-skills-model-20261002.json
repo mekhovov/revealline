@@ -1,12 +1,12 @@
 {
   "format": "FPVSkillsModelQualification.v1",
-  "createdAt": "2026-10-02T02:24:44.986099+00:00",
+  "createdAt": "2026-10-02T02:42:02.965306+00:00",
   "passed": true,
   "parent": "351ddf050b414a9f31e82b59cb052f62e48abf72",
   "sourceHashes": {
     "world-model": "692f95aa2eef7f9fd8be04e20799e928b5c4fb917daae8128306e9fe66b07cc2",
     "world-catalogue": "a0111508d84e19da88bdb78c1834e8a05950d5ee04a59819dd8545209d2698fb",
-    "world-demonstrations": "d99ab7316e0f570fc07f7ac813c34eb656e807e774619c5de64907f8a2855528"
+    "world-demonstrations": "4de24b61664163cff3652894e326930c3a217ecc651233f132240d56e325d985"
   },
   "summary": {
     "oldSchoolDefinitionsUnchanged": 42,
