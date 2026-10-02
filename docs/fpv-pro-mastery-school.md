@@ -108,3 +108,15 @@ mobile touch/device coverage and sustained graphics/performance measurements
 remain human/device qualification. Additional unit coverage is deferred to the
 final phase. Pro/Master are simulator curriculum names, not professional or
 real-world flight certifications.
+
+## Frozen player build
+
+Runtime `e1db800b440bf9cc90d3c9229f4b36fff1ac5440` passes all three optional
+package admissions, committed-input and ZIP-member verification, and two
+byte-identical builds; [package receipt](evidence/fpv-skills-package-20261002.json).
+Academy62 runtime/64 source files and World Studio94/96 remain within unchanged
+policies. Both `dist/fpv-skills-school-playtest` and the existing
+`dist/fpv-reviewed-player-playtest` are rebuilt from that runtime:87 player files,
+13,894,752bytes, ZIP SHA-256
+`83b785dd5c4ad07b8615880a581597ed35926642694fc06934ce4168da3aed7f`.
+This is a local development playtest, not release or public-deployment acceptance.
