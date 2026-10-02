@@ -49,6 +49,7 @@ export async function prepareBenchmarkScene(
     catalog,
     presets,
     classId = 'scout',
+    runningEnemies = false,
     signal,
     onStep = () => {},
     onComparisonStatus = () => {},
@@ -79,6 +80,7 @@ export async function prepareBenchmarkScene(
     signal.throwIfAborted();
     session = createBenchmarkSession(entry.manifest, {
       classId,
+      runningEnemies,
       onStep(events, run) {
         for (const painter of painters) painter.effectsFor(events, run);
         onStep(events, run);
