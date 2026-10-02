@@ -16,9 +16,9 @@
 }
 dialog.shared-settings {
   box-sizing: border-box;
-  inline-size: min(1040px, calc(100vw - 32px));
+  inline-size: min(1040px, calc(var(--dialog-viewport-width, 100vw) - 32px));
   max-inline-size: none;
-  max-block-size: calc(100dvh - 32px);
+  max-block-size: calc(var(--dialog-viewport-height, 100dvh) - 32px);
   overflow: auto;
   padding: clamp(20px, 4vw, 40px);
   border: 2px solid var(--fk-line);

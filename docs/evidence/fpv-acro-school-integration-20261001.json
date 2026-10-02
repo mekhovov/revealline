@@ -13,9 +13,9 @@
   },
   "hashes": {
     "optional-practice/civilian-fpv/world-catalogue.mjs": "1e722ace5004b1fd3afbbd34e3c38b0c8b2800c225e419204f7dbb55ce51717c",
-    "optional-practice/civilian-fpv/world-app.mjs": "3a36a658f8530745d53e26743481af055e064af077a6c759489b99276b88e98f",
-    "optional-practice/civilian-fpv/world-demonstrations.mjs": "4be45009ae224be74ea59263e333c15f5a24b4dbb21be55faff98cf01fc469a3",
-    "optional-practice/fpv-worlds/index.html": "8540514b2f845664ad7f5db1503088e16a6c3a50deca51e45e04666e32ee18ea"
+    "optional-practice/civilian-fpv/world-app.mjs": "3c75d61ee075ea0b533b80e23dfdf4ec5078d909f9f80f5ed71141ef85a9f3a1",
+    "optional-practice/civilian-fpv/world-demonstrations.mjs": "bcacba2236cf939f1a15bd46614a99444caf77a76fa76656505490760ed9eee9",
+    "optional-practice/fpv-worlds/index.html": "ab9d730d42ef6830b4515640f3086817a2d338627815bea27c6bb62fdfe5e218"
   },
   "packageSourceInventory": {
     "files": 83,
