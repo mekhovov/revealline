@@ -84,8 +84,8 @@
               Watch a hover. Then try it yourself.
             </h2>
             <p data-i18n="firstFlightHelp">
-              Start with the Academy: raise throttle gently, hold inside the marker, then land.
-              Self-level helps you stay upright; Acro keeps the angle you set.
+              Start with beginner Acro lessons and clear live control diagrams. Continue into
+              precision, navigation and raised landings when you are ready. Every lesson is open.
             </p>
             <small data-i18n="demoCoverage"
               >104 recorded examples cover all 52 Academy, Woodland Park, Ukrainian Courtyard,
@@ -148,12 +148,13 @@
         <div class="school-hero">
           <div class="school-hero-copy">
             <p class="eyebrow" data-i18n="schoolEyebrow">
-              ACRO FLIGHT SCHOOL · FROM ZERO TO YOUR FIRST ROUTE
+              ACRO FLIGHT SCHOOL · BEGINNER TO ADVANCED
             </p>
             <h1 data-i18n="schoolTitle">Every pilot starts here.</h1>
             <p class="school-intro" data-i18n="schoolIntro">
-              Learn Acro through 14 guided flights. Watch a real demonstration, understand the
-              controls, then fly it yourself. Self-level practice is optional below.
+              Build your skills through beginner, experienced and advanced Acro lessons. Watch the
+              complete route, take control and practise each real objective. Optional self-level
+              lessons are also open.
             </p>
             <div class="button-row">
               <button id="school-continue" class="primary" data-sim-icon="play"></button
@@ -215,7 +216,7 @@
           </div>
           <progress
             id="school-progress"
-            max="14"
+            max="30"
             value="0"
             aria-label="Flight School progress"
           ></progress>
@@ -224,6 +225,18 @@
           <span><b>01</b><strong data-i18n="schoolSee">See the control</strong></span
           ><span><b>02</b><strong data-i18n="schoolUnderstand">Watch the response</strong></span
           ><span><b>03</b><strong data-i18n="schoolTry">Fly it yourself</strong></span>
+        </div>
+        <div class="toolbar school-filter">
+          <label for="school-tier">
+            <span data-i18n="schoolFilterLabel">Choose a learning tier</span>
+            <select id="school-tier">
+              <option value="all">All lessons</option>
+              <option value="beginner">Beginner</option>
+              <option value="experienced">Experienced</option>
+              <option value="advanced">Advanced</option>
+              <option value="self-level">Optional self-level</option>
+            </select>
+          </label>
         </div>
         <div id="school-lessons"></div>
         <div class="school-after">
