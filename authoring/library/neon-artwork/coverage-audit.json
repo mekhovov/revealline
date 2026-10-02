@@ -1,0 +1,438 @@
+{
+  "policy": "reachable-routes.v1",
+  "scope": "Geometry and capture accounting; enemy seeds fixed. This is not a moving-enemy playthrough or a timing/balance guarantee.",
+  "levels": [
+    {
+      "id": "neon-channels-pack",
+      "reachableCells": 2114,
+      "bonusCells": 188,
+      "cutsToGoal": 1474,
+      "longestCut": 2,
+      "geometryGoalReached": true
+    },
+    {
+      "id": "neon-crossroads-pack",
+      "reachableCells": 2176,
+      "bonusCells": 0,
+      "cutsToGoal": 1147,
+      "longestCut": 1,
+      "geometryGoalReached": true
+    },
+    {
+      "id": "neon-hearts-pack",
+      "reachableCells": 1905,
+      "bonusCells": 276,
+      "cutsToGoal": 1419,
+      "longestCut": 2,
+      "geometryGoalReached": true
+    },
+    {
+      "id": "neon-labyrinth-pack",
+      "reachableCells": 1353,
+      "bonusCells": 741,
+      "cutsToGoal": 362,
+      "longestCut": 3,
+      "geometryGoalReached": true
+    },
+    {
+      "id": "neon-arrows-pack",
+      "reachableCells": 1767,
+      "bonusCells": 556,
+      "cutsToGoal": 1035,
+      "longestCut": 6,
+      "geometryGoalReached": true
+    },
+    {
+      "id": "neon-chambers-pack",
+      "reachableCells": 1903,
+      "bonusCells": 0,
+      "cutsToGoal": 927,
+      "longestCut": 3,
+      "geometryGoalReached": true
+    },
+    {
+      "id": "neon-crossgrid-pack",
+      "reachableCells": 1459,
+      "bonusCells": 504,
+      "cutsToGoal": 289,
+      "longestCut": 17,
+      "geometryGoalReached": true
+    },
+    {
+      "id": "neon-switchback-pack",
+      "reachableCells": 1588,
+      "bonusCells": 668,
+      "cutsToGoal": 653,
+      "longestCut": 10,
+      "geometryGoalReached": true
+    },
+    {
+      "id": "neon-spirals-pack",
+      "reachableCells": 1216,
+      "bonusCells": 1164,
+      "cutsToGoal": 674,
+      "longestCut": 2,
+      "geometryGoalReached": true
+    },
+    {
+      "id": "neon-crossfire-pack",
+      "reachableCells": 1317,
+      "bonusCells": 723,
+      "cutsToGoal": 689,
+      "longestCut": 12,
+      "geometryGoalReached": true
+    },
+    {
+      "id": "neon-pinwheels-pack",
+      "reachableCells": 1600,
+      "bonusCells": 780,
+      "cutsToGoal": 1010,
+      "longestCut": 9,
+      "geometryGoalReached": true
+    },
+    {
+      "id": "neon-wavebands-pack",
+      "reachableCells": 1614,
+      "bonusCells": 766,
+      "cutsToGoal": 795,
+      "longestCut": 2,
+      "geometryGoalReached": true
+    },
+    {
+      "id": "neon-conduit-pack",
+      "reachableCells": 1768,
+      "bonusCells": 432,
+      "cutsToGoal": 1168,
+      "longestCut": 13,
+      "geometryGoalReached": true
+    },
+    {
+      "id": "neon-switchyards-pack",
+      "reachableCells": 1518,
+      "bonusCells": 392,
+      "cutsToGoal": 120,
+      "longestCut": 57,
+      "geometryGoalReached": true
+    },
+    {
+      "id": "neon-spines-pack",
+      "reachableCells": 1928,
+      "bonusCells": 304,
+      "cutsToGoal": 921,
+      "longestCut": 3,
+      "geometryGoalReached": true
+    },
+    {
+      "id": "neon-prism-pack",
+      "reachableCells": 1760,
+      "bonusCells": 620,
+      "cutsToGoal": 1032,
+      "longestCut": 2,
+      "geometryGoalReached": true
+    },
+    {
+      "id": "neon-fpv-pack",
+      "reachableCells": 2113,
+      "bonusCells": 195,
+      "cutsToGoal": 1583,
+      "longestCut": 2,
+      "geometryGoalReached": true
+    },
+    {
+      "id": "neon-ukraine-pack",
+      "reachableCells": 2011,
+      "bonusCells": 317,
+      "cutsToGoal": 1509,
+      "longestCut": 11,
+      "geometryGoalReached": true
+    },
+    {
+      "id": "neon-drone-aid-pack",
+      "reachableCells": 1946,
+      "bonusCells": 398,
+      "cutsToGoal": 1460,
+      "longestCut": 2,
+      "geometryGoalReached": true
+    },
+    {
+      "id": "neon-coupa-pack",
+      "reachableCells": 1907,
+      "bonusCells": 418,
+      "cutsToGoal": 1427,
+      "longestCut": 2,
+      "geometryGoalReached": true
+    },
+    {
+      "id": "neon-social-drone-pack",
+      "reachableCells": 1978,
+      "bonusCells": 346,
+      "cutsToGoal": 1484,
+      "longestCut": 2,
+      "geometryGoalReached": true
+    },
+    {
+      "id": "neon-sdua-pack",
+      "reachableCells": 1981,
+      "bonusCells": 350,
+      "cutsToGoal": 1486,
+      "longestCut": 2,
+      "geometryGoalReached": true
+    },
+    {
+      "id": "neon-victory-drones-pack",
+      "reachableCells": 1937,
+      "bonusCells": 388,
+      "cutsToGoal": 1453,
+      "longestCut": 6,
+      "geometryGoalReached": true
+    },
+    {
+      "id": "neon-vd-pack",
+      "reachableCells": 2129,
+      "bonusCells": 187,
+      "cutsToGoal": 1597,
+      "longestCut": 2,
+      "geometryGoalReached": true
+    },
+    {
+      "id": "neon-fpv-line-pack",
+      "reachableCells": 2044,
+      "bonusCells": 225,
+      "cutsToGoal": 1524,
+      "longestCut": 2,
+      "geometryGoalReached": true
+    },
+    {
+      "id": "neon-reveal-pack",
+      "reachableCells": 2066,
+      "bonusCells": 262,
+      "cutsToGoal": 1550,
+      "longestCut": 2,
+      "geometryGoalReached": true
+    },
+    {
+      "id": "neon-fly-free-pack",
+      "reachableCells": 2086,
+      "bonusCells": 223,
+      "cutsToGoal": 1565,
+      "longestCut": 2,
+      "geometryGoalReached": true
+    },
+    {
+      "id": "neon-fpv-drone-pack",
+      "reachableCells": 1948,
+      "bonusCells": 381,
+      "cutsToGoal": 1460,
+      "longestCut": 2,
+      "geometryGoalReached": true
+    },
+    {
+      "id": "neon-tryzub-pack",
+      "reachableCells": 2158,
+      "bonusCells": 180,
+      "cutsToGoal": 1614,
+      "longestCut": 1,
+      "geometryGoalReached": true
+    },
+    {
+      "id": "neon-vyshyvanka-pack",
+      "reachableCells": 1982,
+      "bonusCells": 342,
+      "cutsToGoal": 1487,
+      "longestCut": 2,
+      "geometryGoalReached": true
+    },
+    {
+      "id": "neon-ruzha-pack",
+      "reachableCells": 2139,
+      "bonusCells": 171,
+      "cutsToGoal": 1605,
+      "longestCut": 2,
+      "geometryGoalReached": true
+    },
+    {
+      "id": "neon-kalyna-pack",
+      "reachableCells": 2091,
+      "bonusCells": 247,
+      "cutsToGoal": 1386,
+      "longestCut": 1,
+      "geometryGoalReached": true
+    },
+    {
+      "id": "neon-tree-of-life-pack",
+      "reachableCells": 1902,
+      "bonusCells": 413,
+      "cutsToGoal": 1425,
+      "longestCut": 2,
+      "geometryGoalReached": true
+    },
+    {
+      "id": "neon-pysanka-pack",
+      "reachableCells": 1990,
+      "bonusCells": 322,
+      "cutsToGoal": 1489,
+      "longestCut": 2,
+      "geometryGoalReached": true
+    },
+    {
+      "id": "neon-barvinok-pack",
+      "reachableCells": 2057,
+      "bonusCells": 245,
+      "cutsToGoal": 1543,
+      "longestCut": 1,
+      "geometryGoalReached": true
+    },
+    {
+      "id": "neon-wheat-pack",
+      "reachableCells": 2155,
+      "bonusCells": 135,
+      "cutsToGoal": 1611,
+      "longestCut": 2,
+      "geometryGoalReached": true
+    },
+    {
+      "id": "neon-vinok-pack",
+      "reachableCells": 1912,
+      "bonusCells": 424,
+      "cutsToGoal": 1434,
+      "longestCut": 1,
+      "geometryGoalReached": true
+    },
+    {
+      "id": "neon-didukh-pack",
+      "reachableCells": 1998,
+      "bonusCells": 283,
+      "cutsToGoal": 1489,
+      "longestCut": 2,
+      "geometryGoalReached": true
+    },
+    {
+      "id": "neon-rushnyk-pack",
+      "reachableCells": 2054,
+      "bonusCells": 268,
+      "cutsToGoal": 1541,
+      "longestCut": 27,
+      "geometryGoalReached": true
+    },
+    {
+      "id": "neon-bandura-pack",
+      "reachableCells": 1994,
+      "bonusCells": 308,
+      "cutsToGoal": 1217,
+      "longestCut": 1,
+      "geometryGoalReached": true
+    },
+    {
+      "id": "neon-trembita-pack",
+      "reachableCells": 2167,
+      "bonusCells": 157,
+      "cutsToGoal": 1615,
+      "longestCut": 1,
+      "geometryGoalReached": true
+    },
+    {
+      "id": "neon-tsymbaly-pack",
+      "reachableCells": 1815,
+      "bonusCells": 517,
+      "cutsToGoal": 1362,
+      "longestCut": 1,
+      "geometryGoalReached": true
+    },
+    {
+      "id": "neon-kosiv-pitcher-pack",
+      "reachableCells": 1887,
+      "bonusCells": 386,
+      "cutsToGoal": 1410,
+      "longestCut": 2,
+      "geometryGoalReached": true
+    },
+    {
+      "id": "neon-opishnia-ram-pack",
+      "reachableCells": 2029,
+      "bonusCells": 301,
+      "cutsToGoal": 1522,
+      "longestCut": 1,
+      "geometryGoalReached": true
+    },
+    {
+      "id": "neon-petrykivka-pack",
+      "reachableCells": 2128,
+      "bonusCells": 206,
+      "cutsToGoal": 1596,
+      "longestCut": 2,
+      "geometryGoalReached": true
+    },
+    {
+      "id": "neon-oak-pack",
+      "reachableCells": 2156,
+      "bonusCells": 166,
+      "cutsToGoal": 1263,
+      "longestCut": 1,
+      "geometryGoalReached": true
+    },
+    {
+      "id": "neon-stork-pack",
+      "reachableCells": 2144,
+      "bonusCells": 192,
+      "cutsToGoal": 1605,
+      "longestCut": 1,
+      "geometryGoalReached": true
+    },
+    {
+      "id": "neon-swallow-pack",
+      "reachableCells": 2009,
+      "bonusCells": 301,
+      "cutsToGoal": 1056,
+      "longestCut": 1,
+      "geometryGoalReached": true
+    },
+    {
+      "id": "neon-horse-pack",
+      "reachableCells": 2062,
+      "bonusCells": 266,
+      "cutsToGoal": 1547,
+      "longestCut": 2,
+      "geometryGoalReached": true
+    },
+    {
+      "id": "neon-deer-pack",
+      "reachableCells": 2050,
+      "bonusCells": 278,
+      "cutsToGoal": 1538,
+      "longestCut": 2,
+      "geometryGoalReached": true
+    },
+    {
+      "id": "neon-fish-pack",
+      "reachableCells": 1895,
+      "bonusCells": 431,
+      "cutsToGoal": 1420,
+      "longestCut": 2,
+      "geometryGoalReached": true
+    },
+    {
+      "id": "neon-berehynia-pack",
+      "reachableCells": 2136,
+      "bonusCells": 188,
+      "cutsToGoal": 1602,
+      "longestCut": 2,
+      "geometryGoalReached": true
+    },
+    {
+      "id": "neon-bezkonechnyk-pack",
+      "reachableCells": 1799,
+      "bonusCells": 513,
+      "cutsToGoal": 1343,
+      "longestCut": 2,
+      "geometryGoalReached": true
+    },
+    {
+      "id": "neon-ornek-tulip-pack",
+      "reachableCells": 2040,
+      "bonusCells": 270,
+      "cutsToGoal": 1508,
+      "longestCut": 2,
+      "geometryGoalReached": true
+    }
+  ]
+}

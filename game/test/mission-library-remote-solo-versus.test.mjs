@@ -35,7 +35,7 @@ function reader(seen, replace = (path, text) => text) {
   };
 }
 
-test('remote Solo/Versus inventory preserves 91 current, forty-eight prior and 188 Classic identities without images or saving', async (t) => {
+test('remote Solo/Versus inventory preserves 91 current, forty-eight prior and 296 Classic identities without images or saving', async (t) => {
   const reads = [],
     launches = [];
   const owner = await createRemoteSoloVersusLibrarySources({
@@ -50,9 +50,9 @@ test('remote Solo/Versus inventory preserves 91 current, forty-eight prior and 1
   t.after(owner.dispose);
   const library = createMissionLibrary(owner.sources);
   assert.equal(reads.length, 4);
-  assert.equal(library.missions.length, 327);
-  assert.equal(library.forMode('solo').length, 327);
-  assert.equal(library.forMode('versus').length, 327);
+  assert.equal(library.missions.length, 435);
+  assert.equal(library.forMode('solo').length, 435);
+  assert.equal(library.forMode('versus').length, 435);
   assert.equal(library.forMode('team').length, 0);
   const route = await loadAuthoredJourneyRoute('whole-spatial-v25');
   const versus = createCandidateVersusHost(route.source, {
