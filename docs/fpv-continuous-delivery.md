@@ -1089,3 +1089,20 @@ the separately reviewed fourth FPV SIM landing choice on a child branch. Keep
 older native stack holds/protections and remaining R5–R7 work intact. Public
 availability remains conditional on permitted merge, deployment identity and
 actual public launch; these local receipts do not claim live deployment.
+
+### 2 October — handheld/controller PR published
+
+[#942](https://github.com/mekhovov/revealline/pull/942) is attached and appended
+through the native API to stack902 after #941. No stack member was retargeted or
+rebased. Both local player URLs were rebuilt with87 files/13,948,137bytes and ZIP
+SHA `e49c8364280ddb87134769274447aa29795013cf260e765bdbedfc1d32dee843`.
+The existing source Academy entry also has the handheld UI and controller adapter.
+CI/merge/public deployment remain separate from these local results.
+
+Next branch `codex/fpv-sim-mode-entry` carries only the completed landing change:
+Solo / Versus / Team / FPV SIM, same-build World Studio availability and the
+existing validated optional-package fallback. Initial browser checks found a
+fixture readiness/focus cascade; the isolated repeated Versus390 rerun passes6/6
+without production changes, and the full12 host/locale/width pass succeeds.
+A final same-window controller launch is being qualified to avoid popup permission
+requirements. Keep this work separate from the ready #942 runtime.
