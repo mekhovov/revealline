@@ -1245,3 +1245,33 @@ no upstream member was retargeted and no existing hold was lifted. Next: inspect
 exact PR heads/checks before permitted protected publication, obtain physical
 Arm/Reset acceptance, and continue the independent R5 art backlog. Preserve R7
 unit-coverage deferral and all prior learning/content acceptance limitations.
+
+### 2 October — eight-world environment art increment
+
+Current feature branch: `codex/fpv-environment-art-pass`, based on #945 at
+b49979e17. Runtime commit b1bea780a improves all eight world surfaces and
+composition, uses theme appearance slots, enriches moving actor models and
+preserves exact collision/physics/course identities. Repeated trusted static
+scenery uses spatial GPU batches; creator scene hierarchies remain intact.
+Projectile rendering has bounded pools and actor detail follows quality changes.
+
+Final actual-WebGL comparison passes10/10 checks/432 renderer configurations;
+actor quality, replay pose and projectile lifetime pass10/10; shared geometry
+and material probes pass43/43. Six GLBs have zero core-validator errors/warnings;
+the validator's unsupported instancing extension is separately exercised by the
+pinned loader in actual WebGL. Syntax/lint/format pass. Extra unit coverage stays
+in R7. No physical-device FPS or human art acceptance is claimed.
+
+Both existing local player paths now contain the87-file/14,018,764-byte build,
+SHA8ed4759ee6c6e215fc189c701a682631a6a89293d6ebb35249f19dc05f64ff0a.
+Details and research: `docs/fpv-environment-art-pass.md`. Primary checkout's
+parallel Industrial Workshop/Themes work remains preserved; a user-authorized
+coordination request was sent and its semantic material/session contract read.
+Do not replace its renderer/material files wholesale during integration.
+
+Next: qualify frozen packages, complete packaged-player inspection, publish a
+focused child of #945 in native stack902. Last inspected open stack begins at
+#934 and ends at #945; #932 has merged. Do not retarget/rebase upstream members
+or infer passing checks from #945's empty current check list. Afterwards continue
+shared-theme integration and artist/device acceptance, preserving R7 deferral
+and earlier course/reimport/content holds.

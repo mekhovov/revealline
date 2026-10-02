@@ -94,3 +94,18 @@ claim. The shared-Three geometry/material probe passes43/43 checks across eight
 worlds, larger and elevated bounds. Six prepared GLBs have zero validator errors
 or warnings; the validator does not validate the instancing extension, so the
 pinned-loader browser run is required separately.
+
+The final browser comparison passes10/10 acceptance checks and432 renderer
+configurations (216 before/after pairs). Chrome154/WebGL2,1280×720 viewport,
+DPR2,640×360 canvases; GPU vendor is generic WebKit. Balanced median draw calls
+across the matched view samples: courtyard852→337, stadium696→174,
+warehouse606→450 and garage506→445. Woodland295→323 and yard232→240 show the
+cost of richer detail; hangar/meadow add only3/2 calls. These are submission
+counts, not FPS claims. Repeated resource counts plateau, all fallbacks load,
+source bytes stay fixed, and no context loss or graphics errors occur.
+
+Evidence: `docs/evidence/fpv-environment-browser-20261002.json`,
+`fpv-environment-actors-20261002.json`, `fpv-environment-art-probe-20261002.json`
+and `fpv-environment-scenery-20261002.json`. The browser fixture and a bounded,
+hash-verified baseline preparation command are retained alongside the receipts;
+see `fpv-environment-browser-readme.md` for reproduction and measurement limits.
