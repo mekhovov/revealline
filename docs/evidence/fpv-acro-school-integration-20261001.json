@@ -1,0 +1,32 @@
+{
+  "format": "FPVAcroSchoolIntegrationEvidence.v1",
+  "base": "e4c9c5db3",
+  "checks": {
+    "original14LessonsAndEntriesUnchanged": true,
+    "originalWorldCatalogueUnchanged": true,
+    "originalWorldDemonstrationsUnchanged": true,
+    "primaryAcroLessons": 14,
+    "optionalSelfLevelLessons": 12,
+    "totalCatalogueEntries": 86,
+    "installedPrimaryDemonstrations": 14,
+    "installedDemonstrationsIndependentlyReplayed": 14
+  },
+  "hashes": {
+    "optional-practice/civilian-fpv/world-catalogue.mjs": "1e722ace5004b1fd3afbbd34e3c38b0c8b2800c225e419204f7dbb55ce51717c",
+    "optional-practice/civilian-fpv/world-app.mjs": "3c75d61ee075ea0b533b80e23dfdf4ec5078d909f9f80f5ed71141ef85a9f3a1",
+    "optional-practice/civilian-fpv/world-demonstrations.mjs": "bcacba2236cf939f1a15bd46614a99444caf77a76fa76656505490760ed9eee9",
+    "optional-practice/fpv-worlds/index.html": "ab9d730d42ef6830b4515640f3086817a2d338627815bea27c6bb62fdfe5e218"
+  },
+  "packageSourceInventory": {
+    "files": 83,
+    "bytes": 13291279,
+    "fileLimit": 96,
+    "byteLimit": 16777216,
+    "note": "Static admitted sources only; generated icons/locales/worker/launcher and compressed archive require separate build admission."
+  },
+  "limitations": [
+    "Browser observations are recorded separately by the parent agent; this receipt covers source preservation and installed proof replay only.",
+    "Full package build in sparse worktree is unavailable until unrelated game-cli content dependencies are restored. Root integrates and admits the full build.",
+    "New unit-test coverage remains deferred to final qualification. Novice and physical-radio acceptance remain separate."
+  ]
+}

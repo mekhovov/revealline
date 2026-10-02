@@ -102,7 +102,13 @@ test('Pause owns the compact action set and each child restores its exact opener
   assert.equal(page.doc.querySelector('.shell-bar #shell-fullscreen'), null);
   assert.deepEqual(
     [...page.$('overlay-restart').parentElement.children].map((item) => item.id),
-    ['overlay-restart', 'journey-skip', 'overlay-missions', 'pause-mission-info'],
+    [
+      'overlay-restart',
+      'journey-skip',
+      'overlay-random-level',
+      'overlay-missions',
+      'pause-mission-info',
+    ],
     'mission commands keep row-major visual and focus order',
   );
   assert.deepEqual(
@@ -117,6 +123,7 @@ test('Pause owns the compact action set and each child restores its exact opener
     'start-button',
     'overlay-restart',
     'journey-skip',
+    'overlay-random-level',
     'overlay-missions',
     'pause-mission-info-toggle',
     'overlay-sound',

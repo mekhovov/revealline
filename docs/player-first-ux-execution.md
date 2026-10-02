@@ -4,8 +4,11 @@
 > Use that dated rollup for current priorities, release status and acceptance limits.
 > The older checkpoints below retain their historical scope.
 
-> **Current status:** use the [30 September completed/remaining review](plan-review-2026-09-30.md)
-> and [daily source register](plan-status-2026-09-30.md). These distinguish integrated
+> **Historical reference:** the [1 October historical review and priority choices](plan-priorities-2026-10-01.md).
+> The recommendation is presented for user review; existing approvals/deferrals
+> remain intact. The [30 September completed/remaining review](plan-review-2026-09-30.md)
+> and [daily source register](plan-status-2026-09-30.md) preserve the earlier snapshots.
+> These distinguish integrated
 > UX foundations, current owner corrections, continuous-main Pages, immutable
 > releases, prepared artwork and unfinished device/public acceptance. The dated
 > checkpoints below retain historical evidence; old serial version allocations,

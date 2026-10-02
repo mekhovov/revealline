@@ -1,5 +1,7 @@
 # RevealLine audio plan — reviewed 1 October 2026
 
+> **Historical snapshot:** this document records the 1 October 2026 audio review. Queue, deployment, pull-request status, release, capacity and recommendation statements below are dated evidence, not current instructions or current repository status.
+
 This is the current audio-only plan. It reconciles the original five phases with
 implemented source, retained verification and the user's listening decisions.
 The chronological [implementation record](verification/spatial-audio/implementation.md)
