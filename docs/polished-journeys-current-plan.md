@@ -1,5 +1,9 @@
 # Learning journeys and FPV: review and priority choices
 
+> Retained excerpt after an ownership migration. Historical totals and verification statements describe the original scope; this excerpt is not a current release qualification. Original bytes and removed material are preserved separately.
+
+> **Historical snapshot:** this document records the 1 October 2026 planning review. Queue, deployment, pull-request status, release, capacity and recommendation statements below are dated evidence, not current instructions or current repository status.
+
 Reviewed **1 October 2026 (Europe/Berlin)** against main
 `955c539a7` and the identified open PRs below. This is the current planning view
 for the company/discovery and revised Phase 2 → 3 → 4 → 6 work. It supersedes

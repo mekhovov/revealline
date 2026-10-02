@@ -1,0 +1,3667 @@
+{
+  "format": "FPVSkillSemanticTraceAudit.v1",
+  "createdAt": "2026-10-02T02:23:51.674Z",
+  "runtimeSha256": "692f95aa2eef7f9fd8be04e20799e928b5c4fb917daae8128306e9fe66b07cc2",
+  "passed": true,
+  "results": [
+    {
+      "id": "beginner-43",
+      "ticks": 1657,
+      "steps": [
+        {
+          "index": 1,
+          "type": "rotation-v1",
+          "axis": "roll",
+          "plane": null,
+          "startTick": 415,
+          "start": {
+            "x": 0,
+            "y": 34630,
+            "z": 0
+          },
+          "startVelocity": {
+            "x": 0,
+            "y": 286,
+            "z": 0
+          },
+          "startUp": {
+            "x": 0,
+            "y": 1000000,
+            "z": 0
+          },
+          "startForward": {
+            "x": 0,
+            "y": 0,
+            "z": -1000000
+          },
+          "startOrientation": [0, 0, 0, 1000000],
+          "min": {
+            "x": 0,
+            "y": 25723,
+            "z": 0
+          },
+          "max": {
+            "x": 3539,
+            "y": 34682,
+            "z": 0
+          },
+          "maxSpeed": 8381.371785095804,
+          "resets": [],
+          "observedEntries": 1,
+          "completed": true,
+          "endTick": 532,
+          "end": {
+            "x": 2074,
+            "y": 25723,
+            "z": 0
+          },
+          "endVelocity": {
+            "x": -2190,
+            "y": -2529,
+            "z": 0
+          },
+          "endUp": {
+            "x": -23678,
+            "y": 999720,
+            "z": 0
+          },
+          "endForward": {
+            "x": 0,
+            "y": 0,
+            "z": -1000000
+          },
+          "endOrientation": [0, 0, -11840, -999930],
+          "progress": {
+            "index": 1,
+            "status": "complete",
+            "reason": null,
+            "ticks": 117,
+            "dwell": 8,
+            "entry": [0, 0, 0, 1000000],
+            "startAxis": 34630,
+            "rotation": {
+              "angle": 35864,
+              "reverse": 0,
+              "other": 0,
+              "checkpoint": 4
+            },
+            "path": {
+              "winding": 0,
+              "reverse": 0,
+              "checkpoint": 0,
+              "sample": null
+            }
+          },
+          "delta": {
+            "x": 2074,
+            "y": -8907,
+            "z": 0
+          }
+        },
+        {
+          "index": 3,
+          "type": "rotation-v1",
+          "axis": "roll",
+          "plane": null,
+          "startTick": 815,
+          "start": {
+            "x": 139,
+            "y": 34625,
+            "z": 0
+          },
+          "startVelocity": {
+            "x": -68,
+            "y": 289,
+            "z": 0
+          },
+          "startUp": {
+            "x": 2524,
+            "y": 999996,
+            "z": 0
+          },
+          "startForward": {
+            "x": 0,
+            "y": 0,
+            "z": -1000000
+          },
+          "startOrientation": [0, 0, 1262, -1000000],
+          "min": {
+            "x": -3465,
+            "y": 25722,
+            "z": 0
+          },
+          "max": {
+            "x": 139,
+            "y": 34678,
+            "z": 0
+          },
+          "maxSpeed": 8389.336862946917,
+          "resets": [],
+          "observedEntries": 1,
+          "completed": true,
+          "endTick": 932,
+          "end": {
+            "x": -2005,
+            "y": 25722,
+            "z": 0
+          },
+          "endVelocity": {
+            "x": 2211,
+            "y": -2531,
+            "z": 0
+          },
+          "endUp": {
+            "x": 26894,
+            "y": 999638,
+            "z": 0
+          },
+          "endForward": {
+            "x": 0,
+            "y": 0,
+            "z": -1000000
+          },
+          "endOrientation": [0, 0, -13448, 999910],
+          "progress": {
+            "index": 3,
+            "status": "complete",
+            "reason": null,
+            "ticks": 117,
+            "dwell": 8,
+            "entry": [0, 0, 1262, -1000000],
+            "startAxis": 34625,
+            "rotation": {
+              "angle": 35860,
+              "reverse": 0,
+              "other": 0,
+              "checkpoint": 4
+            },
+            "path": {
+              "winding": 0,
+              "reverse": 0,
+              "checkpoint": 0,
+              "sample": null
+            }
+          },
+          "delta": {
+            "x": -2144,
+            "y": -8903,
+            "z": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "beginner-44",
+      "ticks": 1657,
+      "steps": [
+        {
+          "index": 1,
+          "type": "rotation-v1",
+          "axis": "pitch",
+          "plane": null,
+          "startTick": 415,
+          "start": {
+            "x": 0,
+            "y": 34630,
+            "z": 0
+          },
+          "startVelocity": {
+            "x": 0,
+            "y": 286,
+            "z": 0
+          },
+          "startUp": {
+            "x": 0,
+            "y": 1000000,
+            "z": 0
+          },
+          "startForward": {
+            "x": 0,
+            "y": 0,
+            "z": -1000000
+          },
+          "startOrientation": [0, 0, 0, 1000000],
+          "min": {
+            "x": 0,
+            "y": 25723,
+            "z": -3539
+          },
+          "max": {
+            "x": 0,
+            "y": 34682,
+            "z": 0
+          },
+          "maxSpeed": 8381.371785095804,
+          "resets": [],
+          "observedEntries": 1,
+          "completed": true,
+          "endTick": 532,
+          "end": {
+            "x": 0,
+            "y": 25723,
+            "z": -2074
+          },
+          "endVelocity": {
+            "x": 0,
+            "y": -2529,
+            "z": 2190
+          },
+          "endUp": {
+            "x": 0,
+            "y": 999720,
+            "z": 23678
+          },
+          "endForward": {
+            "x": 0,
+            "y": 23678,
+            "z": -999720
+          },
+          "endOrientation": [-11840, 0, 0, -999930],
+          "progress": {
+            "index": 1,
+            "status": "complete",
+            "reason": null,
+            "ticks": 117,
+            "dwell": 8,
+            "entry": [0, 0, 0, 1000000],
+            "startAxis": 34630,
+            "rotation": {
+              "angle": 35864,
+              "reverse": 0,
+              "other": 0,
+              "checkpoint": 4
+            },
+            "path": {
+              "winding": 0,
+              "reverse": 0,
+              "checkpoint": 0,
+              "sample": null
+            }
+          },
+          "delta": {
+            "x": 0,
+            "y": -8907,
+            "z": -2074
+          }
+        },
+        {
+          "index": 3,
+          "type": "rotation-v1",
+          "axis": "pitch",
+          "plane": null,
+          "startTick": 815,
+          "start": {
+            "x": 0,
+            "y": 34625,
+            "z": -139
+          },
+          "startVelocity": {
+            "x": 0,
+            "y": 289,
+            "z": 68
+          },
+          "startUp": {
+            "x": 0,
+            "y": 999996,
+            "z": -2524
+          },
+          "startForward": {
+            "x": 0,
+            "y": -2524,
+            "z": -999996
+          },
+          "startOrientation": [1262, 0, 0, -1000000],
+          "min": {
+            "x": 0,
+            "y": 25722,
+            "z": -139
+          },
+          "max": {
+            "x": 0,
+            "y": 34678,
+            "z": 3465
+          },
+          "maxSpeed": 8389.336862946917,
+          "resets": [],
+          "observedEntries": 1,
+          "completed": true,
+          "endTick": 932,
+          "end": {
+            "x": 0,
+            "y": 25722,
+            "z": 2005
+          },
+          "endVelocity": {
+            "x": 0,
+            "y": -2531,
+            "z": -2211
+          },
+          "endUp": {
+            "x": 0,
+            "y": 999638,
+            "z": -26894
+          },
+          "endForward": {
+            "x": 0,
+            "y": -26894,
+            "z": -999638
+          },
+          "endOrientation": [-13448, 0, 0, 999910],
+          "progress": {
+            "index": 3,
+            "status": "complete",
+            "reason": null,
+            "ticks": 117,
+            "dwell": 8,
+            "entry": [1262, 0, 0, -1000000],
+            "startAxis": 34625,
+            "rotation": {
+              "angle": 35860,
+              "reverse": 0,
+              "other": 0,
+              "checkpoint": 4
+            },
+            "path": {
+              "winding": 0,
+              "reverse": 0,
+              "checkpoint": 0,
+              "sample": null
+            }
+          },
+          "delta": {
+            "x": 0,
+            "y": -8903,
+            "z": 2144
+          }
+        }
+      ]
+    },
+    {
+      "id": "beginner-45",
+      "ticks": 1045,
+      "steps": [
+        {
+          "index": 1,
+          "type": "rotation-v1",
+          "axis": "yaw",
+          "plane": null,
+          "startTick": 300,
+          "start": {
+            "x": 0,
+            "y": 14626,
+            "z": 0
+          },
+          "startVelocity": {
+            "x": 0,
+            "y": 288,
+            "z": 0
+          },
+          "startUp": {
+            "x": 0,
+            "y": 1000000,
+            "z": 0
+          },
+          "startForward": {
+            "x": 0,
+            "y": 0,
+            "z": -1000000
+          },
+          "startOrientation": [0, 0, 0, 1000000],
+          "min": {
+            "x": 0,
+            "y": 14626,
+            "z": 0
+          },
+          "max": {
+            "x": 0,
+            "y": 14697,
+            "z": 0
+          },
+          "maxSpeed": 271,
+          "resets": [],
+          "observedEntries": 1,
+          "completed": true,
+          "endTick": 417,
+          "end": {
+            "x": 0,
+            "y": 14648,
+            "z": 0
+          },
+          "endVelocity": {
+            "x": 0,
+            "y": -24,
+            "z": 0
+          },
+          "endUp": {
+            "x": 0,
+            "y": 1000000,
+            "z": 0
+          },
+          "endForward": {
+            "x": -23678,
+            "y": 0,
+            "z": -999720
+          },
+          "endOrientation": [0, -11840, 0, -999930],
+          "progress": {
+            "index": 1,
+            "status": "complete",
+            "reason": null,
+            "ticks": 117,
+            "dwell": 8,
+            "entry": [0, 0, 0, 1000000],
+            "startAxis": 14626,
+            "rotation": {
+              "angle": 35864,
+              "reverse": 0,
+              "other": 0,
+              "checkpoint": 4
+            },
+            "path": {
+              "winding": 0,
+              "reverse": 0,
+              "checkpoint": 0,
+              "sample": null
+            }
+          },
+          "delta": {
+            "x": 0,
+            "y": 22,
+            "z": 0
+          }
+        },
+        {
+          "index": 3,
+          "type": "rotation-v1",
+          "axis": "yaw",
+          "plane": null,
+          "startTick": 467,
+          "start": {
+            "x": 0,
+            "y": 14768,
+            "z": 0
+          },
+          "startVelocity": {
+            "x": 0,
+            "y": 144,
+            "z": 0
+          },
+          "startUp": {
+            "x": 0,
+            "y": 1000000,
+            "z": 0
+          },
+          "startForward": {
+            "x": -2714,
+            "y": 0,
+            "z": -999996
+          },
+          "startOrientation": [0, -1357, 0, -1000000],
+          "min": {
+            "x": 0,
+            "y": 14768,
+            "z": 0
+          },
+          "max": {
+            "x": 0,
+            "y": 14803,
+            "z": 0
+          },
+          "maxSpeed": 135,
+          "resets": [],
+          "observedEntries": 1,
+          "completed": true,
+          "endTick": 584,
+          "end": {
+            "x": 0,
+            "y": 14803,
+            "z": 0
+          },
+          "endVelocity": {
+            "x": 0,
+            "y": -12,
+            "z": 0
+          },
+          "endUp": {
+            "x": 0,
+            "y": 1000000,
+            "z": 0
+          },
+          "endForward": {
+            "x": 21672,
+            "y": 0,
+            "z": -999766
+          },
+          "endOrientation": [0, -10837, 0, 999942],
+          "progress": {
+            "index": 3,
+            "status": "complete",
+            "reason": null,
+            "ticks": 117,
+            "dwell": 8,
+            "entry": [0, -1357, 0, -1000000],
+            "startAxis": 14768,
+            "rotation": {
+              "angle": 35860,
+              "reverse": 0,
+              "other": 0,
+              "checkpoint": 4
+            },
+            "path": {
+              "winding": 0,
+              "reverse": 0,
+              "checkpoint": 0,
+              "sample": null
+            }
+          },
+          "delta": {
+            "x": 0,
+            "y": 35,
+            "z": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "beginner-46",
+      "ticks": 1527,
+      "steps": [
+        {
+          "index": 1,
+          "type": "rotation-v1",
+          "axis": "roll",
+          "plane": null,
+          "startTick": 438,
+          "start": {
+            "x": 0,
+            "y": 39630,
+            "z": 0
+          },
+          "startVelocity": {
+            "x": 0,
+            "y": 286,
+            "z": 0
+          },
+          "startUp": {
+            "x": 0,
+            "y": 1000000,
+            "z": 0
+          },
+          "startForward": {
+            "x": 0,
+            "y": 0,
+            "z": -1000000
+          },
+          "startOrientation": [0, 0, 0, 1000000],
+          "min": {
+            "x": 0,
+            "y": 33875,
+            "z": 0
+          },
+          "max": {
+            "x": 4011,
+            "y": 39682,
+            "z": 0
+          },
+          "maxSpeed": 10060.812094458379,
+          "resets": [],
+          "observedEntries": 1,
+          "completed": true,
+          "endTick": 517,
+          "end": {
+            "x": 4011,
+            "y": 33875,
+            "z": 0
+          },
+          "endVelocity": {
+            "x": 2832,
+            "y": -9654,
+            "z": 0
+          },
+          "endUp": {
+            "x": 24412,
+            "y": -999704,
+            "z": 0
+          },
+          "endForward": {
+            "x": 0,
+            "y": 0,
+            "z": -1000000
+          },
+          "endOrientation": [0, 0, -999926, 12207],
+          "progress": {
+            "index": 1,
+            "status": "complete",
+            "reason": null,
+            "ticks": 79,
+            "dwell": 8,
+            "entry": [0, 0, 0, 1000000],
+            "startAxis": 39630,
+            "rotation": {
+              "angle": 17860,
+              "reverse": 0,
+              "other": 0,
+              "checkpoint": 2
+            },
+            "path": {
+              "winding": 0,
+              "reverse": 0,
+              "checkpoint": 0,
+              "sample": null
+            }
+          },
+          "delta": {
+            "x": 4011,
+            "y": -5755,
+            "z": 0
+          }
+        },
+        {
+          "index": 2,
+          "type": "attitude-v1",
+          "axis": null,
+          "plane": null,
+          "startTick": 517,
+          "start": {
+            "x": 4011,
+            "y": 33875,
+            "z": 0
+          },
+          "startVelocity": {
+            "x": 2832,
+            "y": -9654,
+            "z": 0
+          },
+          "startUp": {
+            "x": 24412,
+            "y": -999704,
+            "z": 0
+          },
+          "startForward": {
+            "x": 0,
+            "y": 0,
+            "z": -1000000
+          },
+          "startOrientation": [0, 0, -999926, 12207],
+          "min": {
+            "x": 4011,
+            "y": 32225,
+            "z": 0
+          },
+          "max": {
+            "x": 4454,
+            "y": 33875,
+            "z": 0
+          },
+          "maxSpeed": 11152.768983530503,
+          "resets": [],
+          "observedEntries": 1,
+          "completed": true,
+          "endTick": 525,
+          "end": {
+            "x": 4454,
+            "y": 32225,
+            "z": 0
+          },
+          "endVelocity": {
+            "x": 2720,
+            "y": -10816,
+            "z": 0
+          },
+          "endUp": {
+            "x": 13940,
+            "y": -999904,
+            "z": 0
+          },
+          "endForward": {
+            "x": 0,
+            "y": 0,
+            "z": -1000000
+          },
+          "endOrientation": [0, 0, -999976, 6970],
+          "progress": {
+            "index": 2,
+            "status": "complete",
+            "reason": null,
+            "ticks": 8,
+            "dwell": 8,
+            "entry": [0, 0, -999926, 12207],
+            "startAxis": 33875,
+            "rotation": {
+              "angle": 0,
+              "reverse": 0,
+              "other": 0,
+              "checkpoint": 0
+            },
+            "path": {
+              "winding": 0,
+              "reverse": 0,
+              "checkpoint": 0,
+              "sample": null
+            }
+          },
+          "delta": {
+            "x": 443,
+            "y": -1650,
+            "z": 0
+          }
+        },
+        {
+          "index": 3,
+          "type": "rotation-v1",
+          "axis": "roll",
+          "plane": null,
+          "startTick": 525,
+          "start": {
+            "x": 4454,
+            "y": 32225,
+            "z": 0
+          },
+          "startVelocity": {
+            "x": 2720,
+            "y": -10816,
+            "z": 0
+          },
+          "startUp": {
+            "x": 13940,
+            "y": -999904,
+            "z": 0
+          },
+          "startForward": {
+            "x": 0,
+            "y": 0,
+            "z": -1000000
+          },
+          "startOrientation": [0, 0, -999976, 6970],
+          "min": {
+            "x": 4253,
+            "y": 13295,
+            "z": 0
+          },
+          "max": {
+            "x": 6099,
+            "y": 32225,
+            "z": 0
+          },
+          "maxSpeed": 14963.259070135757,
+          "resets": [],
+          "observedEntries": 1,
+          "completed": true,
+          "endTick": 604,
+          "end": {
+            "x": 4253,
+            "y": 13295,
+            "z": 0
+          },
+          "endVelocity": {
+            "x": -2704,
+            "y": -8005,
+            "z": 0
+          },
+          "endUp": {
+            "x": -38002,
+            "y": 999278,
+            "z": 0
+          },
+          "endForward": {
+            "x": 0,
+            "y": 0,
+            "z": -1000000
+          },
+          "endOrientation": [0, 0, -19004, -999820],
+          "progress": {
+            "index": 3,
+            "status": "complete",
+            "reason": null,
+            "ticks": 79,
+            "dwell": 8,
+            "entry": [0, 0, -999976, 6970],
+            "startAxis": 32225,
+            "rotation": {
+              "angle": 17862,
+              "reverse": 0,
+              "other": 0,
+              "checkpoint": 2
+            },
+            "path": {
+              "winding": 0,
+              "reverse": 0,
+              "checkpoint": 0,
+              "sample": null
+            }
+          },
+          "delta": {
+            "x": -201,
+            "y": -18930,
+            "z": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "beginner-47",
+      "ticks": 1678,
+      "steps": [
+        {
+          "index": 2,
+          "type": "rotation-v1",
+          "axis": "roll",
+          "plane": null,
+          "startTick": 526,
+          "start": {
+            "x": 0,
+            "y": 67400,
+            "z": -266
+          },
+          "startVelocity": {
+            "x": 0,
+            "y": 14687,
+            "z": -15574
+          },
+          "startUp": {
+            "x": 0,
+            "y": 944710,
+            "z": -327906
+          },
+          "startForward": {
+            "x": 0,
+            "y": -327906,
+            "z": -944710
+          },
+          "startOrientation": [-166267, 0, 0, 986081],
+          "min": {
+            "x": 0,
+            "y": 67400,
+            "z": -21493
+          },
+          "max": {
+            "x": 2359,
+            "y": 78426,
+            "z": -266
+          },
+          "maxSpeed": 21265.480596497226,
+          "resets": [],
+          "observedEntries": 1,
+          "completed": true,
+          "endTick": 605,
+          "end": {
+            "x": 2359,
+            "y": 78334,
+            "z": -21493
+          },
+          "endVelocity": {
+            "x": 1661,
+            "y": -1239,
+            "z": -11075
+          },
+          "endUp": {
+            "x": 24410,
+            "y": -944432,
+            "z": 327806
+          },
+          "endForward": {
+            "x": -2,
+            "y": -327902,
+            "z": -944712
+          },
+          "endOrientation": [-2030, -166253, -986008, 12036],
+          "progress": {
+            "index": 2,
+            "status": "complete",
+            "reason": null,
+            "ticks": 79,
+            "dwell": 8,
+            "entry": [-166267, 0, 0, 986081],
+            "startAxis": 67400,
+            "rotation": {
+              "angle": 17860,
+              "reverse": 0,
+              "other": 0,
+              "checkpoint": 2
+            },
+            "path": {
+              "winding": 0,
+              "reverse": 0,
+              "checkpoint": 0,
+              "sample": null
+            }
+          },
+          "delta": {
+            "x": 2359,
+            "y": 10934,
+            "z": -21227
+          }
+        },
+        {
+          "index": 3,
+          "type": "path-v1",
+          "axis": null,
+          "plane": "yz",
+          "startTick": 605,
+          "start": {
+            "x": 2359,
+            "y": 78334,
+            "z": -21493
+          },
+          "startVelocity": {
+            "x": 1661,
+            "y": -1239,
+            "z": -11075
+          },
+          "startUp": {
+            "x": 24410,
+            "y": -944432,
+            "z": 327806
+          },
+          "startForward": {
+            "x": -2,
+            "y": -327902,
+            "z": -944712
+          },
+          "startOrientation": [-2030, -166253, -986008, 12036],
+          "min": {
+            "x": 2359,
+            "y": 63424,
+            "z": -29214
+          },
+          "max": {
+            "x": 5654,
+            "y": 78334,
+            "z": -20591
+          },
+          "maxSpeed": 11225.398968410878,
+          "resets": [],
+          "observedEntries": 1,
+          "completed": true,
+          "endTick": 758,
+          "end": {
+            "x": 5654,
+            "y": 63560,
+            "z": -20591
+          },
+          "endVelocity": {
+            "x": 538,
+            "y": 1028,
+            "z": 6434
+          },
+          "endUp": {
+            "x": -10978,
+            "y": 999936,
+            "z": -2858
+          },
+          "endForward": {
+            "x": 98,
+            "y": 2858,
+            "z": 999996
+          },
+          "endOrientation": [5489, -999984, 1429, 57],
+          "progress": {
+            "index": 3,
+            "status": "complete",
+            "reason": null,
+            "ticks": 153,
+            "dwell": 0,
+            "entry": [-2030, -166253, -986008, 12036],
+            "startAxis": 2359,
+            "rotation": {
+              "angle": 16102,
+              "reverse": 0,
+              "other": 86,
+              "checkpoint": 2
+            },
+            "path": {
+              "winding": 18774,
+              "reverse": 0,
+              "checkpoint": 2,
+              "sample": {
+                "a": -6740,
+                "b": 909,
+                "bearing": 17231
+              }
+            }
+          },
+          "delta": {
+            "x": 3295,
+            "y": -14774,
+            "z": 902
+          }
+        }
+      ]
+    },
+    {
+      "id": "beginner-48",
+      "ticks": 1845,
+      "steps": [
+        {
+          "index": 2,
+          "type": "path-v1",
+          "axis": null,
+          "plane": "yz",
+          "startTick": 576,
+          "start": {
+            "x": 0,
+            "y": 19983,
+            "z": -134
+          },
+          "startVelocity": {
+            "x": 0,
+            "y": 16,
+            "z": -8897
+          },
+          "startUp": {
+            "x": 0,
+            "y": 977114,
+            "z": -212716
+          },
+          "startForward": {
+            "x": 0,
+            "y": -212716,
+            "z": -977114
+          },
+          "startOrientation": [-106972, 0, 0, 994263],
+          "min": {
+            "x": 0,
+            "y": 19983,
+            "z": -14079
+          },
+          "max": {
+            "x": 0,
+            "y": 49446,
+            "z": 3519
+          },
+          "maxSpeed": 14329.705230743582,
+          "resets": [],
+          "observedEntries": 1,
+          "completed": true,
+          "endTick": 793,
+          "end": {
+            "x": 0,
+            "y": 48902,
+            "z": 3519
+          },
+          "endVelocity": {
+            "x": 0,
+            "y": -4794,
+            "z": 13504
+          },
+          "endUp": {
+            "x": 0,
+            "y": -917364,
+            "z": 398052
+          },
+          "endForward": {
+            "x": 0,
+            "y": 398052,
+            "z": 917364
+          },
+          "endOrientation": [979123, 0, 0, 203270],
+          "progress": {
+            "index": 2,
+            "status": "complete",
+            "reason": null,
+            "ticks": 217,
+            "dwell": 0,
+            "entry": [-106972, 0, 0, 994263],
+            "startAxis": 0,
+            "rotation": {
+              "angle": 16882,
+              "reverse": 0,
+              "other": 0,
+              "checkpoint": 2
+            },
+            "path": {
+              "winding": 19478,
+              "reverse": 0,
+              "checkpoint": 2,
+              "sample": {
+                "a": 12902,
+                "b": 3519,
+                "bearing": 1526
+              }
+            }
+          },
+          "delta": {
+            "x": 0,
+            "y": 28919,
+            "z": 3653
+          }
+        },
+        {
+          "index": 3,
+          "type": "rotation-v1",
+          "axis": "roll",
+          "plane": null,
+          "startTick": 793,
+          "start": {
+            "x": 0,
+            "y": 48902,
+            "z": 3519
+          },
+          "startVelocity": {
+            "x": 0,
+            "y": -4794,
+            "z": 13504
+          },
+          "startUp": {
+            "x": 0,
+            "y": -917364,
+            "z": 398052
+          },
+          "startForward": {
+            "x": 0,
+            "y": 398052,
+            "z": 917364
+          },
+          "startOrientation": [979123, 0, 0, 203270],
+          "min": {
+            "x": 0,
+            "y": 30193,
+            "z": 3519
+          },
+          "max": {
+            "x": 3671,
+            "y": 48902,
+            "z": 25466
+          },
+          "maxSpeed": 16408.325021159228,
+          "resets": [],
+          "observedEntries": 1,
+          "completed": true,
+          "endTick": 894,
+          "end": {
+            "x": 3671,
+            "y": 30193,
+            "z": 25466
+          },
+          "endVelocity": {
+            "x": 4388,
+            "y": -6362,
+            "z": 9347
+          },
+          "endUp": {
+            "x": 24422,
+            "y": 994514,
+            "z": 101718
+          },
+          "endForward": {
+            "x": 5280,
+            "y": -101874,
+            "z": 994786
+          },
+          "endOrientation": [12062, 998623, 50968, -3259],
+          "progress": {
+            "index": 3,
+            "status": "complete",
+            "reason": null,
+            "ticks": 79,
+            "dwell": 8,
+            "entry": [999262, 0, 0, -38423],
+            "startAxis": 45950,
+            "rotation": {
+              "angle": 17860,
+              "reverse": 0,
+              "other": 154,
+              "checkpoint": 2
+            },
+            "path": {
+              "winding": 0,
+              "reverse": 0,
+              "checkpoint": 0,
+              "sample": null
+            }
+          },
+          "delta": {
+            "x": 3671,
+            "y": -18709,
+            "z": 21947
+          }
+        }
+      ]
+    },
+    {
+      "id": "beginner-49",
+      "ticks": 1752,
+      "steps": [
+        {
+          "index": 1,
+          "type": "rotation-v1",
+          "axis": "pitch",
+          "plane": null,
+          "startTick": 537,
+          "start": {
+            "x": 0,
+            "y": 64626,
+            "z": 0
+          },
+          "startVelocity": {
+            "x": 0,
+            "y": 288,
+            "z": 0
+          },
+          "startUp": {
+            "x": 0,
+            "y": 1000000,
+            "z": 0
+          },
+          "startForward": {
+            "x": 0,
+            "y": 0,
+            "z": -1000000
+          },
+          "startOrientation": [0, 0, 0, 1000000],
+          "min": {
+            "x": 0,
+            "y": 63008,
+            "z": -4800
+          },
+          "max": {
+            "x": 0,
+            "y": 64680,
+            "z": 0
+          },
+          "maxSpeed": 8183.736677093173,
+          "resets": [],
+          "observedEntries": 1,
+          "completed": true,
+          "endTick": 597,
+          "end": {
+            "x": 0,
+            "y": 63008,
+            "z": -4800
+          },
+          "endVelocity": {
+            "x": 0,
+            "y": -5289,
+            "z": -6245
+          },
+          "endUp": {
+            "x": 0,
+            "y": 24410,
+            "z": -999704
+          },
+          "endForward": {
+            "x": 0,
+            "y": -999704,
+            "z": -24410
+          },
+          "endOrientation": [-698423, 0, 0, 715687],
+          "progress": {
+            "index": 1,
+            "status": "complete",
+            "reason": null,
+            "ticks": 60,
+            "dwell": 8,
+            "entry": [0, 0, 0, 1000000],
+            "startAxis": 64626,
+            "rotation": {
+              "angle": 8860,
+              "reverse": 0,
+              "other": 0,
+              "checkpoint": 1
+            },
+            "path": {
+              "winding": 0,
+              "reverse": 0,
+              "checkpoint": 0,
+              "sample": null
+            }
+          },
+          "delta": {
+            "x": 0,
+            "y": -1618,
+            "z": -4800
+          }
+        },
+        {
+          "index": 2,
+          "type": "crossing-v1",
+          "axis": "y",
+          "plane": null,
+          "startTick": 597,
+          "start": {
+            "x": 0,
+            "y": 63008,
+            "z": -4800
+          },
+          "startVelocity": {
+            "x": 0,
+            "y": -5289,
+            "z": -6245
+          },
+          "startUp": {
+            "x": 0,
+            "y": 24410,
+            "z": -999704
+          },
+          "startForward": {
+            "x": 0,
+            "y": -999704,
+            "z": -24410
+          },
+          "startOrientation": [-698423, 0, 0, 715687],
+          "min": {
+            "x": 0,
+            "y": 54980,
+            "z": -9819
+          },
+          "max": {
+            "x": 0,
+            "y": 63008,
+            "z": -4800
+          },
+          "maxSpeed": 13120.48112684897,
+          "resets": [],
+          "observedEntries": 1,
+          "completed": true,
+          "endTick": 642,
+          "end": {
+            "x": 0,
+            "y": 54980,
+            "z": -9819
+          },
+          "endVelocity": {
+            "x": 0,
+            "y": -12137,
+            "z": -4984
+          },
+          "endUp": {
+            "x": 0,
+            "y": 9398,
+            "z": -999958
+          },
+          "endForward": {
+            "x": 0,
+            "y": -999958,
+            "z": -9398
+          },
+          "endOrientation": [-703776, 0, 0, 710423],
+          "progress": {
+            "index": 2,
+            "status": "complete",
+            "reason": null,
+            "ticks": 45,
+            "dwell": 0,
+            "entry": [-698423, 0, 0, 715687],
+            "startAxis": 63008,
+            "rotation": {
+              "angle": 0,
+              "reverse": 0,
+              "other": 0,
+              "checkpoint": 0
+            },
+            "path": {
+              "winding": 0,
+              "reverse": 0,
+              "checkpoint": 0,
+              "sample": null
+            }
+          },
+          "delta": {
+            "x": 0,
+            "y": -8028,
+            "z": -5019
+          }
+        },
+        {
+          "index": 3,
+          "type": "rotation-v1",
+          "axis": "pitch",
+          "plane": null,
+          "startTick": 642,
+          "start": {
+            "x": 0,
+            "y": 54980,
+            "z": -9819
+          },
+          "startVelocity": {
+            "x": 0,
+            "y": -12137,
+            "z": -4984
+          },
+          "startUp": {
+            "x": 0,
+            "y": 9398,
+            "z": -999958
+          },
+          "startForward": {
+            "x": 0,
+            "y": -999958,
+            "z": -9398
+          },
+          "startOrientation": [-703776, 0, 0, 710423],
+          "min": {
+            "x": 0,
+            "y": 42519,
+            "z": -19421
+          },
+          "max": {
+            "x": 0,
+            "y": 54980,
+            "z": -9819
+          },
+          "maxSpeed": 14682.212537625246,
+          "resets": [],
+          "observedEntries": 1,
+          "completed": true,
+          "endTick": 702,
+          "end": {
+            "x": 0,
+            "y": 42519,
+            "z": -19421
+          },
+          "endVelocity": {
+            "x": 0,
+            "y": -6602,
+            "z": -8653
+          },
+          "endUp": {
+            "x": 0,
+            "y": 999866,
+            "z": -16416
+          },
+          "endForward": {
+            "x": 0,
+            "y": -16416,
+            "z": -999866
+          },
+          "endOrientation": [-8208, 0, 0, 999967],
+          "progress": {
+            "index": 3,
+            "status": "complete",
+            "reason": null,
+            "ticks": 60,
+            "dwell": 8,
+            "entry": [-703776, 0, 0, 710423],
+            "startAxis": 54980,
+            "rotation": {
+              "angle": 8852,
+              "reverse": 0,
+              "other": 0,
+              "checkpoint": 1
+            },
+            "path": {
+              "winding": 0,
+              "reverse": 0,
+              "checkpoint": 0,
+              "sample": null
+            }
+          },
+          "delta": {
+            "x": 0,
+            "y": -12461,
+            "z": -9602
+          }
+        }
+      ]
+    },
+    {
+      "id": "beginner-50",
+      "ticks": 1846,
+      "steps": [
+        {
+          "index": 2,
+          "type": "path-v1",
+          "axis": null,
+          "plane": "yz",
+          "startTick": 576,
+          "start": {
+            "x": 0,
+            "y": 19983,
+            "z": -134
+          },
+          "startVelocity": {
+            "x": 0,
+            "y": 16,
+            "z": -8897
+          },
+          "startUp": {
+            "x": 0,
+            "y": 977114,
+            "z": -212716
+          },
+          "startForward": {
+            "x": 0,
+            "y": -212716,
+            "z": -977114
+          },
+          "startOrientation": [-106972, 0, 0, 994263],
+          "min": {
+            "x": 0,
+            "y": 19983,
+            "z": -14079
+          },
+          "max": {
+            "x": 0,
+            "y": 49446,
+            "z": 14053
+          },
+          "maxSpeed": 12599.854364237706,
+          "resets": [],
+          "observedEntries": 1,
+          "completed": true,
+          "endTick": 986,
+          "end": {
+            "x": 0,
+            "y": 22002,
+            "z": -133
+          },
+          "endVelocity": {
+            "x": 0,
+            "y": 81,
+            "z": -9103
+          },
+          "endUp": {
+            "x": 0,
+            "y": 988408,
+            "z": -151826
+          },
+          "endForward": {
+            "x": 0,
+            "y": -151826,
+            "z": -988408
+          },
+          "endOrientation": [76134, 0, 0, -997098],
+          "progress": {
+            "index": 2,
+            "status": "complete",
+            "reason": null,
+            "ticks": 410,
+            "dwell": 0,
+            "entry": [-106972, 0, 0, 994263],
+            "startAxis": 0,
+            "rotation": {
+              "angle": 36354,
+              "reverse": 88,
+              "other": 0,
+              "checkpoint": 4
+            },
+            "path": {
+              "winding": 36007,
+              "reverse": 0,
+              "checkpoint": 4,
+              "sample": {
+                "a": -13998,
+                "b": -133,
+                "bearing": -17945
+              }
+            }
+          },
+          "delta": {
+            "x": 0,
+            "y": 2019,
+            "z": 1
+          }
+        }
+      ]
+    },
+    {
+      "id": "beginner-51",
+      "ticks": 2018,
+      "steps": [
+        {
+          "index": 2,
+          "type": "path-v1",
+          "axis": null,
+          "plane": "xy",
+          "startTick": 743,
+          "start": {
+            "x": 143,
+            "y": 19983,
+            "z": -4970
+          },
+          "startVelocity": {
+            "x": 8901,
+            "y": 16,
+            "z": -3388
+          },
+          "startUp": {
+            "x": 221008,
+            "y": 971474,
+            "z": -85988
+          },
+          "startForward": {
+            "x": 3450,
+            "y": -88948,
+            "z": -996032
+          },
+          "startOrientation": [-44050, -6663, -111007, 992821],
+          "min": {
+            "x": -14050,
+            "y": 19983,
+            "z": -33636
+          },
+          "max": {
+            "x": 14086,
+            "y": 49408,
+            "z": -4970
+          },
+          "maxSpeed": 13120.802871775797,
+          "resets": [],
+          "observedEntries": 1,
+          "completed": true,
+          "endTick": 1153,
+          "end": {
+            "x": 126,
+            "y": 21966,
+            "z": -33636
+          },
+          "endVelocity": {
+            "x": 9101,
+            "y": 70,
+            "z": -3470
+          },
+          "endUp": {
+            "x": 151252,
+            "y": 984626,
+            "z": -87396
+          },
+          "endForward": {
+            "x": 3442,
+            "y": -88936,
+            "z": -996032
+          },
+          "endOrientation": [44254, 5091, 75693, -996136],
+          "progress": {
+            "index": 2,
+            "status": "complete",
+            "reason": null,
+            "ticks": 410,
+            "dwell": 0,
+            "entry": [-44050, -6663, -111007, 992821],
+            "startAxis": -4970,
+            "rotation": {
+              "angle": 36406,
+              "reverse": 84,
+              "other": 0,
+              "checkpoint": 4
+            },
+            "path": {
+              "winding": 36000,
+              "reverse": 0,
+              "checkpoint": 4,
+              "sample": {
+                "a": 126,
+                "b": -14034,
+                "bearing": -8949
+              }
+            }
+          },
+          "delta": {
+            "x": -17,
+            "y": 1983,
+            "z": -28666
+          }
+        }
+      ]
+    },
+    {
+      "id": "beginner-52",
+      "ticks": 2793,
+      "steps": [
+        {
+          "index": 2,
+          "type": "path-v1",
+          "axis": null,
+          "plane": "xz",
+          "startTick": 461,
+          "start": {
+            "x": 10000,
+            "y": 24921,
+            "z": 0
+          },
+          "startVelocity": {
+            "x": 0,
+            "y": 68,
+            "z": 0
+          },
+          "startUp": {
+            "x": 0,
+            "y": 1000000,
+            "z": 0
+          },
+          "startForward": {
+            "x": -999380,
+            "y": 0,
+            "z": -35228
+          },
+          "startOrientation": [0, 694540, 0, 719454],
+          "min": {
+            "x": -6791,
+            "y": 24921,
+            "z": -6894
+          },
+          "max": {
+            "x": 10000,
+            "y": 24937,
+            "z": 7501
+          },
+          "maxSpeed": 3736.485246859674,
+          "resets": [],
+          "observedEntries": 1,
+          "completed": true,
+          "endTick": 1198,
+          "end": {
+            "x": 6962,
+            "y": 24937,
+            "z": 26
+          },
+          "endVelocity": {
+            "x": 11,
+            "y": -7,
+            "z": 3458
+          },
+          "endUp": {
+            "x": -171804,
+            "y": 981120,
+            "z": 88808
+          },
+          "endForward": {
+            "x": -942142,
+            "y": -189976,
+            "z": 276190
+          },
+          "endOrientation": [42493, -797677, -87374, -595208],
+          "progress": {
+            "index": 2,
+            "status": "complete",
+            "reason": null,
+            "ticks": 737,
+            "dwell": 0,
+            "entry": [0, 694540, 0, 719454],
+            "startAxis": 24921,
+            "rotation": {
+              "angle": 0,
+              "reverse": 0,
+              "other": 0,
+              "checkpoint": 0
+            },
+            "path": {
+              "winding": 36022,
+              "reverse": 0,
+              "checkpoint": 4,
+              "sample": {
+                "a": 6962,
+                "b": 26,
+                "bearing": 22
+              }
+            }
+          },
+          "delta": {
+            "x": -3038,
+            "y": 16,
+            "z": 26
+          }
+        },
+        {
+          "index": 4,
+          "type": "path-v1",
+          "axis": null,
+          "plane": "xz",
+          "startTick": 1386,
+          "start": {
+            "x": 9235,
+            "y": 24975,
+            "z": 891
+          },
+          "startVelocity": {
+            "x": 313,
+            "y": 21,
+            "z": -383
+          },
+          "startUp": {
+            "x": -2778,
+            "y": 999664,
+            "z": 25764
+          },
+          "startForward": {
+            "x": -999986,
+            "y": -2900,
+            "z": 4712
+          },
+          "startOrientation": [-8103, -708724, -10111, -705368],
+          "min": {
+            "x": -6812,
+            "y": 24975,
+            "z": -7425
+          },
+          "max": {
+            "x": 9543,
+            "y": 24975,
+            "z": 6905
+          },
+          "maxSpeed": 3715.507233205178,
+          "resets": [],
+          "observedEntries": 1,
+          "completed": true,
+          "endTick": 2123,
+          "end": {
+            "x": 6932,
+            "y": 24975,
+            "z": 628
+          },
+          "endVelocity": {
+            "x": 340,
+            "y": 3,
+            "z": -3441
+          },
+          "endUp": {
+            "x": -161732,
+            "y": 981342,
+            "z": -103980
+          },
+          "endForward": {
+            "x": -910992,
+            "y": -188980,
+            "z": -366584
+          },
+          "endOrientation": [-88697, 555735, 38238, 825731],
+          "progress": {
+            "index": 4,
+            "status": "complete",
+            "reason": null,
+            "ticks": 737,
+            "dwell": 0,
+            "entry": [-8103, -708724, -10111, -705368],
+            "startAxis": 24975,
+            "rotation": {
+              "angle": 0,
+              "reverse": 0,
+              "other": 0,
+              "checkpoint": 0
+            },
+            "path": {
+              "winding": 36034,
+              "reverse": 0,
+              "checkpoint": 4,
+              "sample": {
+                "a": 6932,
+                "b": 628,
+                "bearing": 518
+              }
+            }
+          },
+          "delta": {
+            "x": -2303,
+            "y": 0,
+            "z": -263
+          }
+        }
+      ]
+    },
+    {
+      "id": "beginner-53",
+      "ticks": 2491,
+      "steps": [
+        {
+          "index": 2,
+          "type": "path-v1",
+          "axis": null,
+          "plane": "xz",
+          "startTick": 432,
+          "start": {
+            "x": 10000,
+            "y": 19921,
+            "z": 0
+          },
+          "startVelocity": {
+            "x": 0,
+            "y": 68,
+            "z": 0
+          },
+          "startUp": {
+            "x": 0,
+            "y": 1000000,
+            "z": 0
+          },
+          "startForward": {
+            "x": -999380,
+            "y": 0,
+            "z": -35228
+          },
+          "startOrientation": [0, 694540, 0, 719454],
+          "min": {
+            "x": -6929,
+            "y": 19921,
+            "z": -6920
+          },
+          "max": {
+            "x": 10000,
+            "y": 28782,
+            "z": 7497
+          },
+          "maxSpeed": 3749.515702060734,
+          "resets": [],
+          "observedEntries": 1,
+          "completed": true,
+          "endTick": 1797,
+          "end": {
+            "x": 6960,
+            "y": 28782,
+            "z": 11
+          },
+          "endVelocity": {
+            "x": 27,
+            "y": 106,
+            "z": 3452
+          },
+          "endUp": {
+            "x": -172326,
+            "y": 980990,
+            "z": 89238
+          },
+          "endForward": {
+            "x": -941058,
+            "y": -190722,
+            "z": 279350
+          },
+          "endOrientation": [-42724, 798655, 87635, 593840],
+          "progress": {
+            "index": 2,
+            "status": "complete",
+            "reason": null,
+            "ticks": 1365,
+            "dwell": 0,
+            "entry": [0, 694540, 0, 719454],
+            "startAxis": 19921,
+            "rotation": {
+              "angle": 0,
+              "reverse": 0,
+              "other": 0,
+              "checkpoint": 0
+            },
+            "path": {
+              "winding": 72010,
+              "reverse": 0,
+              "checkpoint": 8,
+              "sample": {
+                "a": 6960,
+                "b": 11,
+                "bearing": 10
+              }
+            }
+          },
+          "delta": {
+            "x": -3040,
+            "y": 8861,
+            "z": 11
+          }
+        }
+      ]
+    },
+    {
+      "id": "beginner-54",
+      "ticks": 1542,
+      "steps": [
+        {
+          "index": 1,
+          "type": "crossing-v1",
+          "axis": "y",
+          "plane": null,
+          "startTick": 300,
+          "start": {
+            "x": 0,
+            "y": 14626,
+            "z": 0
+          },
+          "startVelocity": {
+            "x": 0,
+            "y": 288,
+            "z": 0
+          },
+          "startUp": {
+            "x": 0,
+            "y": 1000000,
+            "z": 0
+          },
+          "startForward": {
+            "x": 0,
+            "y": 0,
+            "z": -1000000
+          },
+          "startOrientation": [0, 0, 0, 1000000],
+          "min": {
+            "x": 0,
+            "y": 14626,
+            "z": 0
+          },
+          "max": {
+            "x": 0,
+            "y": 50373,
+            "z": 0
+          },
+          "maxSpeed": 20853,
+          "resets": [],
+          "observedEntries": 1,
+          "completed": true,
+          "endTick": 450,
+          "end": {
+            "x": 0,
+            "y": 50373,
+            "z": 0
+          },
+          "endVelocity": {
+            "x": 0,
+            "y": 20853,
+            "z": 0
+          },
+          "endUp": {
+            "x": 0,
+            "y": 1000000,
+            "z": 0
+          },
+          "endForward": {
+            "x": 0,
+            "y": 0,
+            "z": -1000000
+          },
+          "endOrientation": [0, 0, 0, 1000000],
+          "progress": {
+            "index": 1,
+            "status": "complete",
+            "reason": null,
+            "ticks": 150,
+            "dwell": 0,
+            "entry": [0, 0, 0, 1000000],
+            "startAxis": 14626,
+            "rotation": {
+              "angle": 0,
+              "reverse": 0,
+              "other": 0,
+              "checkpoint": 0
+            },
+            "path": {
+              "winding": 0,
+              "reverse": 0,
+              "checkpoint": 0,
+              "sample": null
+            }
+          },
+          "delta": {
+            "x": 0,
+            "y": 35747,
+            "z": 0
+          }
+        },
+        {
+          "index": 2,
+          "type": "rotation-v1",
+          "axis": "roll",
+          "plane": null,
+          "startTick": 450,
+          "start": {
+            "x": 0,
+            "y": 50373,
+            "z": 0
+          },
+          "startVelocity": {
+            "x": 0,
+            "y": 20853,
+            "z": 0
+          },
+          "startUp": {
+            "x": 0,
+            "y": 1000000,
+            "z": 0
+          },
+          "startForward": {
+            "x": 0,
+            "y": 0,
+            "z": -1000000
+          },
+          "startOrientation": [0, 0, 0, 1000000],
+          "min": {
+            "x": 0,
+            "y": 50373,
+            "z": 0
+          },
+          "max": {
+            "x": 2593,
+            "y": 69383,
+            "z": 0
+          },
+          "maxSpeed": 20659,
+          "resets": [],
+          "observedEntries": 1,
+          "completed": true,
+          "endTick": 529,
+          "end": {
+            "x": 2593,
+            "y": 69383,
+            "z": 0
+          },
+          "endVelocity": {
+            "x": 1856,
+            "y": 2955,
+            "z": 0
+          },
+          "endUp": {
+            "x": 24412,
+            "y": -999704,
+            "z": 0
+          },
+          "endForward": {
+            "x": 0,
+            "y": 0,
+            "z": -1000000
+          },
+          "endOrientation": [0, 0, -999926, 12207],
+          "progress": {
+            "index": 2,
+            "status": "complete",
+            "reason": null,
+            "ticks": 79,
+            "dwell": 8,
+            "entry": [0, 0, 0, 1000000],
+            "startAxis": 50373,
+            "rotation": {
+              "angle": 17860,
+              "reverse": 0,
+              "other": 0,
+              "checkpoint": 2
+            },
+            "path": {
+              "winding": 0,
+              "reverse": 0,
+              "checkpoint": 0,
+              "sample": null
+            }
+          },
+          "delta": {
+            "x": 2593,
+            "y": 19010,
+            "z": 0
+          }
+        },
+        {
+          "index": 3,
+          "type": "rotation-v1",
+          "axis": "yaw",
+          "plane": null,
+          "startTick": 529,
+          "start": {
+            "x": 2593,
+            "y": 69383,
+            "z": 0
+          },
+          "startVelocity": {
+            "x": 1856,
+            "y": 2955,
+            "z": 0
+          },
+          "startUp": {
+            "x": 24412,
+            "y": -999704,
+            "z": 0
+          },
+          "startForward": {
+            "x": 0,
+            "y": 0,
+            "z": -1000000
+          },
+          "startOrientation": [0, 0, -999926, 12207],
+          "min": {
+            "x": 2593,
+            "y": 62308,
+            "z": 0
+          },
+          "max": {
+            "x": 5009,
+            "y": 69778,
+            "z": 0
+          },
+          "maxSpeed": 10901.898917161176,
+          "resets": [],
+          "observedEntries": 1,
+          "completed": true,
+          "endTick": 608,
+          "end": {
+            "x": 5009,
+            "y": 62308,
+            "z": 0
+          },
+          "endVelocity": {
+            "x": 1250,
+            "y": -10830,
+            "z": 0
+          },
+          "endUp": {
+            "x": 10262,
+            "y": -999946,
+            "z": 3108
+          },
+          "endForward": {
+            "x": -24442,
+            "y": 2856,
+            "z": 999702
+          },
+          "endOrientation": [-999912, -5149, -12214, -1491],
+          "progress": {
+            "index": 3,
+            "status": "complete",
+            "reason": null,
+            "ticks": 79,
+            "dwell": 8,
+            "entry": [0, 0, -999926, 12207],
+            "startAxis": 69383,
+            "rotation": {
+              "angle": 17860,
+              "reverse": 0,
+              "other": 86,
+              "checkpoint": 2
+            },
+            "path": {
+              "winding": 0,
+              "reverse": 0,
+              "checkpoint": 0,
+              "sample": null
+            }
+          },
+          "delta": {
+            "x": 2416,
+            "y": -7075,
+            "z": 0
+          }
+        },
+        {
+          "index": 4,
+          "type": "rotation-v1",
+          "axis": "roll",
+          "plane": null,
+          "startTick": 608,
+          "start": {
+            "x": 5009,
+            "y": 62308,
+            "z": 0
+          },
+          "startVelocity": {
+            "x": 1250,
+            "y": -10830,
+            "z": 0
+          },
+          "startUp": {
+            "x": 10262,
+            "y": -999946,
+            "z": 3108
+          },
+          "startForward": {
+            "x": -24442,
+            "y": 2856,
+            "z": 999702
+          },
+          "startOrientation": [-999912, -5149, -12214, -1491],
+          "min": {
+            "x": 5009,
+            "y": 43503,
+            "z": 0
+          },
+          "max": {
+            "x": 10569,
+            "y": 62308,
+            "z": 0
+          },
+          "maxSpeed": 14773.027144089325,
+          "resets": [],
+          "observedEntries": 1,
+          "completed": true,
+          "endTick": 687,
+          "end": {
+            "x": 10569,
+            "y": 43503,
+            "z": 0
+          },
+          "endVelocity": {
+            "x": 5379,
+            "y": -7891,
+            "z": -21
+          },
+          "endUp": {
+            "x": 14190,
+            "y": 999884,
+            "z": -5470
+          },
+          "endForward": {
+            "x": -10144,
+            "y": 5614,
+            "z": 999936
+          },
+          "endOrientation": [-7081, -999959, 2771, -5092],
+          "progress": {
+            "index": 4,
+            "status": "complete",
+            "reason": null,
+            "ticks": 79,
+            "dwell": 8,
+            "entry": [-999912, -5149, -12214, -1491],
+            "startAxis": 62308,
+            "rotation": {
+              "angle": 17860,
+              "reverse": 0,
+              "other": 86,
+              "checkpoint": 2
+            },
+            "path": {
+              "winding": 0,
+              "reverse": 0,
+              "checkpoint": 0,
+              "sample": null
+            }
+          },
+          "delta": {
+            "x": 5560,
+            "y": -18805,
+            "z": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "beginner-55",
+      "ticks": 2075,
+      "steps": [
+        {
+          "index": 2,
+          "type": "path-v1",
+          "axis": null,
+          "plane": "yz",
+          "startTick": 576,
+          "start": {
+            "x": 0,
+            "y": 19983,
+            "z": -134
+          },
+          "startVelocity": {
+            "x": 0,
+            "y": 16,
+            "z": -8897
+          },
+          "startUp": {
+            "x": 0,
+            "y": 977114,
+            "z": -212716
+          },
+          "startForward": {
+            "x": 0,
+            "y": -212716,
+            "z": -977114
+          },
+          "startOrientation": [-106972, 0, 0, 994263],
+          "min": {
+            "x": 0,
+            "y": 19983,
+            "z": -14079
+          },
+          "max": {
+            "x": 0,
+            "y": 49446,
+            "z": 14053
+          },
+          "maxSpeed": 12599.854364237706,
+          "resets": [],
+          "observedEntries": 1,
+          "completed": true,
+          "endTick": 986,
+          "end": {
+            "x": 0,
+            "y": 22002,
+            "z": -133
+          },
+          "endVelocity": {
+            "x": 0,
+            "y": 81,
+            "z": -9103
+          },
+          "endUp": {
+            "x": 0,
+            "y": 988408,
+            "z": -151826
+          },
+          "endForward": {
+            "x": 0,
+            "y": -151826,
+            "z": -988408
+          },
+          "endOrientation": [76134, 0, 0, -997098],
+          "progress": {
+            "index": 2,
+            "status": "complete",
+            "reason": null,
+            "ticks": 410,
+            "dwell": 0,
+            "entry": [-106972, 0, 0, 994263],
+            "startAxis": 0,
+            "rotation": {
+              "angle": 36354,
+              "reverse": 88,
+              "other": 0,
+              "checkpoint": 4
+            },
+            "path": {
+              "winding": 36007,
+              "reverse": 0,
+              "checkpoint": 4,
+              "sample": {
+                "a": -13998,
+                "b": -133,
+                "bearing": -17945
+              }
+            }
+          },
+          "delta": {
+            "x": 0,
+            "y": 2019,
+            "z": 1
+          }
+        },
+        {
+          "index": 4,
+          "type": "rotation-v1",
+          "axis": "roll",
+          "plane": null,
+          "startTick": 1305,
+          "start": {
+            "x": 13738,
+            "y": 34787,
+            "z": -10180
+          },
+          "startVelocity": {
+            "x": 589,
+            "y": 171,
+            "z": 73
+          },
+          "startUp": {
+            "x": -14776,
+            "y": 999888,
+            "z": 2374
+          },
+          "startForward": {
+            "x": 3288,
+            "y": 2422,
+            "z": -999992
+          },
+          "startOrientation": [-1199, 1653, -7386, -999971],
+          "min": {
+            "x": 11152,
+            "y": 25735,
+            "z": -10180
+          },
+          "max": {
+            "x": 13839,
+            "y": 34815,
+            "z": -10016
+          },
+          "maxSpeed": 8247.74344896833,
+          "resets": [],
+          "observedEntries": 1,
+          "completed": true,
+          "endTick": 1422,
+          "end": {
+            "x": 12989,
+            "y": 25735,
+            "z": -10016
+          },
+          "endVelocity": {
+            "x": 2506,
+            "y": -2559,
+            "z": 101
+          },
+          "endUp": {
+            "x": 9612,
+            "y": 999952,
+            "z": 2448
+          },
+          "endForward": {
+            "x": 3290,
+            "y": 2416,
+            "z": -999992
+          },
+          "endOrientation": [1216, -1639, -4808, 999987],
+          "progress": {
+            "index": 4,
+            "status": "complete",
+            "reason": null,
+            "ticks": 117,
+            "dwell": 8,
+            "entry": [-1199, 1653, -7386, -999971],
+            "startAxis": 34787,
+            "rotation": {
+              "angle": 35860,
+              "reverse": 0,
+              "other": 0,
+              "checkpoint": 4
+            },
+            "path": {
+              "winding": 0,
+              "reverse": 0,
+              "checkpoint": 0,
+              "sample": null
+            }
+          },
+          "delta": {
+            "x": -749,
+            "y": -9052,
+            "z": 164
+          }
+        }
+      ]
+    },
+    {
+      "id": "beginner-56",
+      "ticks": 2622,
+      "steps": [
+        {
+          "index": 2,
+          "type": "rotation-v1",
+          "axis": "roll",
+          "plane": null,
+          "startTick": 526,
+          "start": {
+            "x": 0,
+            "y": 67400,
+            "z": -266
+          },
+          "startVelocity": {
+            "x": 0,
+            "y": 14687,
+            "z": -15574
+          },
+          "startUp": {
+            "x": 0,
+            "y": 944710,
+            "z": -327906
+          },
+          "startForward": {
+            "x": 0,
+            "y": -327906,
+            "z": -944710
+          },
+          "startOrientation": [-166267, 0, 0, 986081],
+          "min": {
+            "x": 0,
+            "y": 67400,
+            "z": -21493
+          },
+          "max": {
+            "x": 2359,
+            "y": 78426,
+            "z": -266
+          },
+          "maxSpeed": 21265.480596497226,
+          "resets": [],
+          "observedEntries": 1,
+          "completed": true,
+          "endTick": 605,
+          "end": {
+            "x": 2359,
+            "y": 78334,
+            "z": -21493
+          },
+          "endVelocity": {
+            "x": 1661,
+            "y": -1239,
+            "z": -11075
+          },
+          "endUp": {
+            "x": 24410,
+            "y": -944432,
+            "z": 327806
+          },
+          "endForward": {
+            "x": -2,
+            "y": -327902,
+            "z": -944712
+          },
+          "endOrientation": [-2030, -166253, -986008, 12036],
+          "progress": {
+            "index": 2,
+            "status": "complete",
+            "reason": null,
+            "ticks": 79,
+            "dwell": 8,
+            "entry": [-166267, 0, 0, 986081],
+            "startAxis": 67400,
+            "rotation": {
+              "angle": 17860,
+              "reverse": 0,
+              "other": 0,
+              "checkpoint": 2
+            },
+            "path": {
+              "winding": 0,
+              "reverse": 0,
+              "checkpoint": 0,
+              "sample": null
+            }
+          },
+          "delta": {
+            "x": 2359,
+            "y": 10934,
+            "z": -21227
+          }
+        },
+        {
+          "index": 3,
+          "type": "path-v1",
+          "axis": null,
+          "plane": "yz",
+          "startTick": 605,
+          "start": {
+            "x": 2359,
+            "y": 78334,
+            "z": -21493
+          },
+          "startVelocity": {
+            "x": 1661,
+            "y": -1239,
+            "z": -11075
+          },
+          "startUp": {
+            "x": 24410,
+            "y": -944432,
+            "z": 327806
+          },
+          "startForward": {
+            "x": -2,
+            "y": -327902,
+            "z": -944712
+          },
+          "startOrientation": [-2030, -166253, -986008, 12036],
+          "min": {
+            "x": 2359,
+            "y": 63424,
+            "z": -29214
+          },
+          "max": {
+            "x": 5654,
+            "y": 78334,
+            "z": -20591
+          },
+          "maxSpeed": 11225.398968410878,
+          "resets": [],
+          "observedEntries": 1,
+          "completed": true,
+          "endTick": 758,
+          "end": {
+            "x": 5654,
+            "y": 63560,
+            "z": -20591
+          },
+          "endVelocity": {
+            "x": 538,
+            "y": 1028,
+            "z": 6434
+          },
+          "endUp": {
+            "x": -10978,
+            "y": 999936,
+            "z": -2858
+          },
+          "endForward": {
+            "x": 98,
+            "y": 2858,
+            "z": 999996
+          },
+          "endOrientation": [5489, -999984, 1429, 57],
+          "progress": {
+            "index": 3,
+            "status": "complete",
+            "reason": null,
+            "ticks": 153,
+            "dwell": 0,
+            "entry": [-2030, -166253, -986008, 12036],
+            "startAxis": 2359,
+            "rotation": {
+              "angle": 16102,
+              "reverse": 0,
+              "other": 86,
+              "checkpoint": 2
+            },
+            "path": {
+              "winding": 18774,
+              "reverse": 0,
+              "checkpoint": 2,
+              "sample": {
+                "a": -6740,
+                "b": 909,
+                "bearing": 17231
+              }
+            }
+          },
+          "delta": {
+            "x": 3295,
+            "y": -14774,
+            "z": 902
+          }
+        },
+        {
+          "index": 5,
+          "type": "path-v1",
+          "axis": null,
+          "plane": "xz",
+          "startTick": 1178,
+          "start": {
+            "x": 9897,
+            "y": 30371,
+            "z": -17840
+          },
+          "startVelocity": {
+            "x": 64,
+            "y": -287,
+            "z": -297
+          },
+          "startUp": {
+            "x": -2892,
+            "y": 999966,
+            "z": 7668
+          },
+          "startForward": {
+            "x": -999994,
+            "y": -2888,
+            "z": -804
+          },
+          "startOrientation": [-1690, -706820, -3733, -707381],
+          "min": {
+            "x": -6795,
+            "y": 30300,
+            "z": -25387
+          },
+          "max": {
+            "x": 9921,
+            "y": 30371,
+            "z": -10935
+          },
+          "maxSpeed": 3729.6502516992127,
+          "resets": [],
+          "observedEntries": 1,
+          "completed": true,
+          "endTick": 1915,
+          "end": {
+            "x": 6931,
+            "y": 30346,
+            "z": -17990
+          },
+          "endVelocity": {
+            "x": -224,
+            "y": 21,
+            "z": 3451
+          },
+          "endUp": {
+            "x": -176626,
+            "y": 981402,
+            "z": 75200
+          },
+          "endForward": {
+            "x": -958792,
+            "y": -188820,
+            "z": 212284
+          },
+          "endOrientation": [-45682, 777210, 84926, 621809],
+          "progress": {
+            "index": 5,
+            "status": "complete",
+            "reason": null,
+            "ticks": 737,
+            "dwell": 0,
+            "entry": [-1690, -706820, -3733, -707381],
+            "startAxis": 30371,
+            "rotation": {
+              "angle": 0,
+              "reverse": 0,
+              "other": 0,
+              "checkpoint": 0
+            },
+            "path": {
+              "winding": 36039,
+              "reverse": 58,
+              "checkpoint": 4,
+              "sample": {
+                "a": 6931,
+                "b": 510,
+                "bearing": 421
+              }
+            }
+          },
+          "delta": {
+            "x": -2966,
+            "y": -25,
+            "z": -150
+          }
+        }
+      ]
+    },
+    {
+      "id": "beginner-57",
+      "ticks": 3212,
+      "steps": [
+        {
+          "index": 4,
+          "type": "rotation-v1",
+          "axis": "roll",
+          "plane": null,
+          "startTick": 1155,
+          "start": {
+            "x": 629,
+            "y": 34979,
+            "z": -22711
+          },
+          "startVelocity": {
+            "x": -283,
+            "y": 13,
+            "z": -601
+          },
+          "startUp": {
+            "x": 62,
+            "y": 999974,
+            "z": 7150
+          },
+          "startForward": {
+            "x": -3204,
+            "y": 7150,
+            "z": -999968
+          },
+          "startOrientation": [3575, 1602, -25, 999993],
+          "min": {
+            "x": 590,
+            "y": 25906,
+            "z": -23693
+          },
+          "max": {
+            "x": 3894,
+            "y": 34979,
+            "z": -22711
+          },
+          "maxSpeed": 8392.37820882734,
+          "resets": [],
+          "observedEntries": 1,
+          "completed": true,
+          "endTick": 1272,
+          "end": {
+            "x": 2329,
+            "y": 25906,
+            "z": -23693
+          },
+          "endVelocity": {
+            "x": -2299,
+            "y": -2569,
+            "z": -231
+          },
+          "endUp": {
+            "x": -23622,
+            "y": 999694,
+            "z": 7230
+          },
+          "endForward": {
+            "x": -3212,
+            "y": 7158,
+            "z": -999970
+          },
+          "endOrientation": [-3597, -1563, -11818, -999923],
+          "progress": {
+            "index": 4,
+            "status": "complete",
+            "reason": null,
+            "ticks": 117,
+            "dwell": 8,
+            "entry": [3575, 1602, -25, 999993],
+            "startAxis": 34979,
+            "rotation": {
+              "angle": 35864,
+              "reverse": 0,
+              "other": 0,
+              "checkpoint": 4
+            },
+            "path": {
+              "winding": 0,
+              "reverse": 0,
+              "checkpoint": 0,
+              "sample": null
+            }
+          },
+          "delta": {
+            "x": 1700,
+            "y": -9073,
+            "z": -982
+          }
+        },
+        {
+          "index": 6,
+          "type": "rotation-v1",
+          "axis": "pitch",
+          "plane": null,
+          "startTick": 1735,
+          "start": {
+            "x": 11732,
+            "y": 64629,
+            "z": -23935
+          },
+          "startVelocity": {
+            "x": 109,
+            "y": 287,
+            "z": -16
+          },
+          "startUp": {
+            "x": -2294,
+            "y": 999998,
+            "z": 918
+          },
+          "startForward": {
+            "x": -4352,
+            "y": 910,
+            "z": -999990
+          },
+          "startOrientation": [-457, -2175, -1148, -999997],
+          "min": {
+            "x": 11732,
+            "y": 63014,
+            "z": -28747
+          },
+          "max": {
+            "x": 11817,
+            "y": 64683,
+            "z": -23935
+          },
+          "maxSpeed": 8190.902575418658,
+          "resets": [],
+          "observedEntries": 1,
+          "completed": true,
+          "endTick": 1795,
+          "end": {
+            "x": 11817,
+            "y": 63014,
+            "z": -28747
+          },
+          "endVelocity": {
+            "x": 54,
+            "y": -5288,
+            "z": -6255
+          },
+          "endUp": {
+            "x": -4410,
+            "y": 25328,
+            "z": -999670
+          },
+          "endForward": {
+            "x": 2188,
+            "y": -999678,
+            "z": -25336
+          },
+          "endOrientation": [698091, -756, -2342, -716006],
+          "progress": {
+            "index": 6,
+            "status": "complete",
+            "reason": null,
+            "ticks": 60,
+            "dwell": 8,
+            "entry": [-457, -2175, -1148, -999997],
+            "startAxis": 64629,
+            "rotation": {
+              "angle": 8860,
+              "reverse": 0,
+              "other": 0,
+              "checkpoint": 1
+            },
+            "path": {
+              "winding": 0,
+              "reverse": 0,
+              "checkpoint": 0,
+              "sample": null
+            }
+          },
+          "delta": {
+            "x": 85,
+            "y": -1615,
+            "z": -4812
+          }
+        },
+        {
+          "index": 7,
+          "type": "crossing-v1",
+          "axis": "y",
+          "plane": null,
+          "startTick": 1795,
+          "start": {
+            "x": 11817,
+            "y": 63014,
+            "z": -28747
+          },
+          "startVelocity": {
+            "x": 54,
+            "y": -5288,
+            "z": -6255
+          },
+          "startUp": {
+            "x": -4410,
+            "y": 25328,
+            "z": -999670
+          },
+          "startForward": {
+            "x": 2188,
+            "y": -999678,
+            "z": -25336
+          },
+          "startOrientation": [698091, -756, -2342, -716006],
+          "min": {
+            "x": 11817,
+            "y": 54986,
+            "z": -33774
+          },
+          "max": {
+            "x": 11862,
+            "y": 63014,
+            "z": -28747
+          },
+          "maxSpeed": 13123.088851333743,
+          "resets": [],
+          "observedEntries": 1,
+          "completed": true,
+          "endTick": 1840,
+          "end": {
+            "x": 11862,
+            "y": 54986,
+            "z": -33774
+          },
+          "endVelocity": {
+            "x": 54,
+            "y": -12136,
+            "z": -4993
+          },
+          "endUp": {
+            "x": -4378,
+            "y": 10308,
+            "z": -999938
+          },
+          "endForward": {
+            "x": 2246,
+            "y": -999946,
+            "z": -10318
+          },
+          "endOrientation": [703449, -742, -2346, -710742],
+          "progress": {
+            "index": 7,
+            "status": "complete",
+            "reason": null,
+            "ticks": 45,
+            "dwell": 0,
+            "entry": [698091, -756, -2342, -716006],
+            "startAxis": 63014,
+            "rotation": {
+              "angle": 0,
+              "reverse": 0,
+              "other": 0,
+              "checkpoint": 0
+            },
+            "path": {
+              "winding": 0,
+              "reverse": 0,
+              "checkpoint": 0,
+              "sample": null
+            }
+          },
+          "delta": {
+            "x": 45,
+            "y": -8028,
+            "z": -5027
+          }
+        },
+        {
+          "index": 8,
+          "type": "rotation-v1",
+          "axis": "pitch",
+          "plane": null,
+          "startTick": 1840,
+          "start": {
+            "x": 11862,
+            "y": 54986,
+            "z": -33774
+          },
+          "startVelocity": {
+            "x": 54,
+            "y": -12136,
+            "z": -4993
+          },
+          "startUp": {
+            "x": -4378,
+            "y": 10308,
+            "z": -999938
+          },
+          "startForward": {
+            "x": 2246,
+            "y": -999946,
+            "z": -10318
+          },
+          "startOrientation": [703449, -742, -2346, -710742],
+          "min": {
+            "x": 11862,
+            "y": 42533,
+            "z": -43376
+          },
+          "max": {
+            "x": 11886,
+            "y": 54986,
+            "z": -33774
+          },
+          "maxSpeed": 14681.551450715284,
+          "resets": [],
+          "observedEntries": 1,
+          "completed": true,
+          "endTick": 1900,
+          "end": {
+            "x": 11886,
+            "y": 42533,
+            "z": -43376
+          },
+          "endVelocity": {
+            "x": -11,
+            "y": -6594,
+            "z": -8642
+          },
+          "endUp": {
+            "x": -2354,
+            "y": 999878,
+            "z": -15494
+          },
+          "endForward": {
+            "x": -4316,
+            "y": -15506,
+            "z": -999870
+          },
+          "endOrientation": [7750, -2167, -1160, -999967],
+          "progress": {
+            "index": 8,
+            "status": "complete",
+            "reason": null,
+            "ticks": 60,
+            "dwell": 8,
+            "entry": [703449, -742, -2346, -710742],
+            "startAxis": 54986,
+            "rotation": {
+              "angle": 8852,
+              "reverse": 0,
+              "other": 0,
+              "checkpoint": 1
+            },
+            "path": {
+              "winding": 0,
+              "reverse": 0,
+              "checkpoint": 0,
+              "sample": null
+            }
+          },
+          "delta": {
+            "x": 24,
+            "y": -12453,
+            "z": -9602
+          }
+        }
+      ]
+    },
+    {
+      "id": "beginner-58",
+      "ticks": 5285,
+      "steps": [
+        {
+          "index": 2,
+          "type": "path-v1",
+          "axis": null,
+          "plane": "yz",
+          "startTick": 576,
+          "start": {
+            "x": 0,
+            "y": 19983,
+            "z": -134
+          },
+          "startVelocity": {
+            "x": 0,
+            "y": 16,
+            "z": -8897
+          },
+          "startUp": {
+            "x": 0,
+            "y": 977114,
+            "z": -212716
+          },
+          "startForward": {
+            "x": 0,
+            "y": -212716,
+            "z": -977114
+          },
+          "startOrientation": [-106972, 0, 0, 994263],
+          "min": {
+            "x": 0,
+            "y": 19983,
+            "z": -14079
+          },
+          "max": {
+            "x": 0,
+            "y": 49446,
+            "z": 3519
+          },
+          "maxSpeed": 14329.705230743582,
+          "resets": [],
+          "observedEntries": 1,
+          "completed": true,
+          "endTick": 793,
+          "end": {
+            "x": 0,
+            "y": 48902,
+            "z": 3519
+          },
+          "endVelocity": {
+            "x": 0,
+            "y": -4794,
+            "z": 13504
+          },
+          "endUp": {
+            "x": 0,
+            "y": -917364,
+            "z": 398052
+          },
+          "endForward": {
+            "x": 0,
+            "y": 398052,
+            "z": 917364
+          },
+          "endOrientation": [979123, 0, 0, 203270],
+          "progress": {
+            "index": 2,
+            "status": "complete",
+            "reason": null,
+            "ticks": 217,
+            "dwell": 0,
+            "entry": [-106972, 0, 0, 994263],
+            "startAxis": 0,
+            "rotation": {
+              "angle": 16882,
+              "reverse": 0,
+              "other": 0,
+              "checkpoint": 2
+            },
+            "path": {
+              "winding": 19478,
+              "reverse": 0,
+              "checkpoint": 2,
+              "sample": {
+                "a": 12902,
+                "b": 3519,
+                "bearing": 1526
+              }
+            }
+          },
+          "delta": {
+            "x": 0,
+            "y": 28919,
+            "z": 3653
+          }
+        },
+        {
+          "index": 3,
+          "type": "rotation-v1",
+          "axis": "roll",
+          "plane": null,
+          "startTick": 793,
+          "start": {
+            "x": 0,
+            "y": 48902,
+            "z": 3519
+          },
+          "startVelocity": {
+            "x": 0,
+            "y": -4794,
+            "z": 13504
+          },
+          "startUp": {
+            "x": 0,
+            "y": -917364,
+            "z": 398052
+          },
+          "startForward": {
+            "x": 0,
+            "y": 398052,
+            "z": 917364
+          },
+          "startOrientation": [979123, 0, 0, 203270],
+          "min": {
+            "x": 0,
+            "y": 30193,
+            "z": 3519
+          },
+          "max": {
+            "x": 3671,
+            "y": 48902,
+            "z": 25466
+          },
+          "maxSpeed": 16408.325021159228,
+          "resets": [],
+          "observedEntries": 1,
+          "completed": true,
+          "endTick": 894,
+          "end": {
+            "x": 3671,
+            "y": 30193,
+            "z": 25466
+          },
+          "endVelocity": {
+            "x": 4388,
+            "y": -6362,
+            "z": 9347
+          },
+          "endUp": {
+            "x": 24422,
+            "y": 994514,
+            "z": 101718
+          },
+          "endForward": {
+            "x": 5280,
+            "y": -101874,
+            "z": 994786
+          },
+          "endOrientation": [12062, 998623, 50968, -3259],
+          "progress": {
+            "index": 3,
+            "status": "complete",
+            "reason": null,
+            "ticks": 79,
+            "dwell": 8,
+            "entry": [999262, 0, 0, -38423],
+            "startAxis": 45950,
+            "rotation": {
+              "angle": 17860,
+              "reverse": 0,
+              "other": 154,
+              "checkpoint": 2
+            },
+            "path": {
+              "winding": 0,
+              "reverse": 0,
+              "checkpoint": 0,
+              "sample": null
+            }
+          },
+          "delta": {
+            "x": 3671,
+            "y": -18709,
+            "z": 21947
+          }
+        },
+        {
+          "index": 9,
+          "type": "rotation-v1",
+          "axis": "roll",
+          "plane": null,
+          "startTick": 2765,
+          "start": {
+            "x": -456,
+            "y": 66434,
+            "z": -63
+          },
+          "startVelocity": {
+            "x": -101,
+            "y": 14602,
+            "z": -15601
+          },
+          "startUp": {
+            "x": -1908,
+            "y": 944668,
+            "z": -328020
+          },
+          "startForward": {
+            "x": 3772,
+            "y": -328012,
+            "z": -944666
+          },
+          "startOrientation": [-166325, -1701, 1254, 986069],
+          "min": {
+            "x": -468,
+            "y": 66434,
+            "z": -21315
+          },
+          "max": {
+            "x": 1764,
+            "y": 77363,
+            "z": -63
+          },
+          "maxSpeed": 21227.536856639774,
+          "resets": [],
+          "observedEntries": 1,
+          "completed": true,
+          "endTick": 2844,
+          "end": {
+            "x": 1764,
+            "y": 77264,
+            "z": -21315
+          },
+          "endVelocity": {
+            "x": 1590,
+            "y": -1283,
+            "z": -11086
+          },
+          "endUp": {
+            "x": 25980,
+            "y": -944324,
+            "z": 327994
+          },
+          "endForward": {
+            "x": 3764,
+            "y": -328010,
+            "z": -944668
+          },
+          "endOrientation": [-305, -166332, -985983, 13123],
+          "progress": {
+            "index": 9,
+            "status": "complete",
+            "reason": null,
+            "ticks": 79,
+            "dwell": 8,
+            "entry": [-166325, -1701, 1254, 986069],
+            "startAxis": 66434,
+            "rotation": {
+              "angle": 17862,
+              "reverse": 0,
+              "other": 0,
+              "checkpoint": 2
+            },
+            "path": {
+              "winding": 0,
+              "reverse": 0,
+              "checkpoint": 0,
+              "sample": null
+            }
+          },
+          "delta": {
+            "x": 2220,
+            "y": 10830,
+            "z": -21252
+          }
+        },
+        {
+          "index": 10,
+          "type": "path-v1",
+          "axis": null,
+          "plane": "yz",
+          "startTick": 2844,
+          "start": {
+            "x": 1764,
+            "y": 77264,
+            "z": -21315
+          },
+          "startVelocity": {
+            "x": 1590,
+            "y": -1283,
+            "z": -11086
+          },
+          "startUp": {
+            "x": 25980,
+            "y": -944324,
+            "z": 327994
+          },
+          "startForward": {
+            "x": 3764,
+            "y": -328010,
+            "z": -944668
+          },
+          "startOrientation": [-305, -166332, -985983, 13123],
+          "min": {
+            "x": 1764,
+            "y": 62934,
+            "z": -29185
+          },
+          "max": {
+            "x": 4756,
+            "y": 77264,
+            "z": -20689
+          },
+          "maxSpeed": 11234.693142226894,
+          "resets": [],
+          "observedEntries": 1,
+          "completed": true,
+          "endTick": 2997,
+          "end": {
+            "x": 4756,
+            "y": 63100,
+            "z": -20689
+          },
+          "endVelocity": {
+            "x": 407,
+            "y": 1169,
+            "z": 6440
+          },
+          "endUp": {
+            "x": -13830,
+            "y": 999900,
+            "z": 2940
+          },
+          "endForward": {
+            "x": -3020,
+            "y": -2984,
+            "z": 999992
+          },
+          "endOrientation": [6913, -999974, -1481, -1520],
+          "progress": {
+            "index": 10,
+            "status": "complete",
+            "reason": null,
+            "ticks": 153,
+            "dwell": 0,
+            "entry": [-305, -166332, -985983, 13123],
+            "startAxis": 1764,
+            "rotation": {
+              "angle": 16068,
+              "reverse": 0,
+              "other": 86,
+              "checkpoint": 2
+            },
+            "path": {
+              "winding": 18796,
+              "reverse": 0,
+              "checkpoint": 2,
+              "sample": {
+                "a": -7200,
+                "b": 811,
+                "bearing": 17357
+              }
+            }
+          },
+          "delta": {
+            "x": 2992,
+            "y": -14164,
+            "z": 626
+          }
+        },
+        {
+          "index": 14,
+          "type": "path-v1",
+          "axis": null,
+          "plane": "yz",
+          "startTick": 4107,
+          "start": {
+            "x": 210,
+            "y": 20023,
+            "z": -78
+          },
+          "startVelocity": {
+            "x": 53,
+            "y": -13,
+            "z": -8910
+          },
+          "startUp": {
+            "x": 2756,
+            "y": 977542,
+            "z": -210726
+          },
+          "startForward": {
+            "x": -1466,
+            "y": -210722,
+            "z": -977546
+          },
+          "startOrientation": [105959, -583, 1448, -994370],
+          "min": {
+            "x": 210,
+            "y": 20023,
+            "z": -14073
+          },
+          "max": {
+            "x": 1009,
+            "y": 49460,
+            "z": 14055
+          },
+          "maxSpeed": 12601.399327058882,
+          "resets": [],
+          "observedEntries": 1,
+          "completed": true,
+          "endTick": 4517,
+          "end": {
+            "x": 1009,
+            "y": 22004,
+            "z": -86
+          },
+          "endVelocity": {
+            "x": 101,
+            "y": 49,
+            "z": -9102
+          },
+          "endUp": {
+            "x": 2828,
+            "y": 988284,
+            "z": -152598
+          },
+          "endForward": {
+            "x": -1288,
+            "y": -152594,
+            "z": -988288
+          },
+          "endOrientation": [-76522, 534, -1459, 997067],
+          "progress": {
+            "index": 14,
+            "status": "complete",
+            "reason": null,
+            "ticks": 410,
+            "dwell": 0,
+            "entry": [105959, -583, 1448, -994370],
+            "startAxis": 210,
+            "rotation": {
+              "angle": 36338,
+              "reverse": 90,
+              "other": 0,
+              "checkpoint": 4
+            },
+            "path": {
+              "winding": 36008,
+              "reverse": 0,
+              "checkpoint": 4,
+              "sample": {
+                "a": -13996,
+                "b": -86,
+                "bearing": -17964
+              }
+            }
+          },
+          "delta": {
+            "x": 799,
+            "y": 1981,
+            "z": -8
+          }
+        }
+      ]
+    }
+  ],
+  "scope": "Independent replay of all16 canonical command recordings through actual live skill runtime; raw state extrema and attempted/reset progression. No state manipulation, browser or human acceptance."
+}

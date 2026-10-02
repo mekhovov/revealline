@@ -30,19 +30,14 @@ export const PUBLIC_SECURITY_HEADERS = Object.freeze({
   'Permissions-Policy': 'camera=(), microphone=(), geolocation=(), payment=(), usb=()',
   'Cache-Control': 'no-cache',
 });
-// Public Pages and the soundtrack archive share an origin. Local packaged
-// previews need only this code-admitted archive path added for verified fetches.
+// Packaged previews allow HTTPS media/catalogue requests for explicitly added
+// soundtrack sources. Script/style/native package policy remains self-only; the
+// source manager validates user-selected URLs and recording identities before use.
 export const PREVIEW_SECURITY_HEADERS = Object.freeze({
   ...PUBLIC_SECURITY_HEADERS,
   'Content-Security-Policy': PUBLIC_SECURITY_HEADERS['Content-Security-Policy']
-    .replace(
-      "connect-src 'self';",
-      "connect-src 'self' https://mekhovov.github.io/revealline-soundtracks/;",
-    )
-    .replace(
-      "media-src 'self' data: blob:;",
-      "media-src 'self' data: blob: https://github.com https://release-assets.githubusercontent.com;",
-    ),
+    .replace("connect-src 'self';", "connect-src 'self' https:;")
+    .replace("media-src 'self' data: blob:;", "media-src 'self' data: blob: https:;"),
 });
 const MIME = {
   '.html': 'text/html; charset=utf-8',
@@ -573,7 +568,10 @@ export function applyPublicationProfile(entries, catalogue, profile, optionalArt
     fail('Main Pages profile would orphan a mission download group.');
   entries.splice(0, entries.length, ...entries.filter((entry) => !omittedPaths.has(entry.name)));
   catalogue.files = catalogue.files.filter((file) => !omittedPaths.has(file.path));
-  catalogue.groups = retainedGroups;
+  catalogue.groups = retainedGroups.map((group) => ({
+    ...group,
+    files: group.files.filter((path) => !omittedPaths.has(path)),
+  }));
   // The summary promises that every listed original is hosted. The lean rolling
   // channel therefore omits it together with its exclusive preview-only files.
   // Exact originals remain in Git and in full release distributions.

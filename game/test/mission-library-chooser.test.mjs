@@ -106,6 +106,78 @@ function setup(sources, options = {}) {
   return { doc, library, chooser, opener, $: (id) => doc.getElementById(id) };
 }
 
+test('Random level launches a ready alternative from the visible mission results', async () => {
+  let launched = null;
+  const source = owner({
+    entries: [
+      { ...row('current'), name: 'Current line' },
+      { ...row('alternative'), name: 'Alternative line' },
+      { ...row('last'), name: 'Last line' },
+    ],
+    launch: (entry) => {
+      launched = entry.id;
+      return true;
+    },
+  });
+  const current = createMissionLibrary([source]).missions[0];
+  const h = setup([source], {
+    getCurrentId: () => current.id,
+    random: () => 0,
+  });
+
+  assert.equal(h.$('journey-random-level').textContent, 'Random level');
+  assert.equal(h.$('journey-random-level').disabled, false);
+  h.$('journey-random-level').click();
+  await tick();
+
+  assert.equal(launched, 'alternative', 'the current level is excluded when another is ready');
+  assert.equal(h.$('journey-chooser').open, false);
+  h.chooser.destroy();
+});
+
+test('Random level respects visible filters, while the Pause action resets to current host levels', async () => {
+  const launches = [];
+  const sources = [
+    owner({
+      entries: [
+        { ...row('solo-one', ['solo']), name: 'Solo one' },
+        { ...row('solo-two', ['solo']), name: 'Solo two' },
+      ],
+      launch: (entry) => {
+        launches.push(entry.id);
+        return true;
+      },
+    }),
+    owner({
+      id: 'team-owner',
+      entries: [{ ...row('team-only', ['team']), name: 'Team only' }],
+      launch: (entry) => {
+        launches.push(entry.id);
+        return true;
+      },
+    }),
+  ];
+  const filtered = setup(sources, { random: () => 0 });
+  filtered.$('journey-search').value = 'Solo two';
+  filtered.$('journey-search').emit('input');
+  filtered.$('journey-random-level').click();
+  await tick();
+  assert.deepEqual(launches, ['solo-two']);
+  filtered.chooser.destroy();
+
+  const pause = setup(sources, {
+    random: () => 0,
+    readState: () => ({ mode: 'team', search: 'no result' }),
+  });
+  assert.equal(pause.$('journey-cards').children.length, 0);
+  assert.equal(pause.chooser.playRandom({ resetFilters: true }), true);
+  await tick();
+  assert.deepEqual(launches, ['solo-two', 'solo-one']);
+  assert.equal(pause.chooser.state().mode, 'solo');
+  assert.equal(pause.chooser.state().search, '');
+  pause.chooser.destroy();
+});
+
 test('Archive is explicit, retains exact launch ownership and reveals a saved historical mission', async () => {
   let launched;
   const archivedOwner = owner({

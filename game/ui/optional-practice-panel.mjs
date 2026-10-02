@@ -5,8 +5,8 @@ import {
 } from '../optional-practice-catalog.mjs';
 import { optionalPracticeSourcePreviews } from '../optional-practice-preview.mjs';
 
-/** A shared explicit exit to an independently installed optional package. No
- * package content, progress store or simulation is admitted to the core game. */
+/** Explicit simulator navigation. Only a bounded entry page and the public
+ * launcher catalog are inspected; the game never opens simulator storage or runs it. */
 export function mountOptionalPracticePanel({
   document: doc,
   container,
@@ -14,28 +14,37 @@ export function mountOptionalPracticePanel({
   href,
   fetcher,
   timeoutMs = 10000,
+  opener: existingOpener = null,
+  packageId = null,
+  bundledHref = null,
+  idPrefix = 'optional-practice',
 }) {
   const indexURL = href && optionalPracticeCatalogURL(href);
-  if (!container || !indexURL) return { dispose() {} };
-  const sourcePreviews = optionalPracticeSourcePreviews(href);
+  if (!container || (!indexURL && !bundledHref)) return { dispose() {} };
+  const sourcePreviews = optionalPracticeSourcePreviews(href, { packageId }).filter(
+    (item) => !packageId || item.id === packageId,
+  );
   const tr = (key) => t('interface:optionalPractice.' + key);
   const node = (tag, key) => {
     const element = doc.createElement(tag);
     if (key) localizedText(element, () => tr(key));
     return element;
   };
-  const opener = node('button', 'title');
-  opener.type = 'button';
-  opener.className = 'button secondary';
-  opener.id = 'shell-optional-practice';
-  container.append(opener);
+  const opener = existingOpener ?? node('button', 'title');
+  if (!existingOpener) {
+    opener.type = 'button';
+    opener.className = 'button secondary';
+    opener.id = 'shell-optional-practice';
+    container.append(opener);
+  }
   const dialog = node('dialog');
   dialog.className = 'optional-practice-dialog';
-  dialog.id = 'optional-practice-dialog';
-  dialog.setAttribute('aria-labelledby', 'optional-practice-title');
-  const title = node('h2', 'title');
-  title.id = 'optional-practice-title';
-  const note = node('p', 'note'),
+  dialog.dataset.menuScope = idPrefix;
+  dialog.id = `${idPrefix}-dialog`;
+  dialog.setAttribute('aria-labelledby', `${idPrefix}-title`);
+  const title = node('h2', packageId ? 'simTitle' : 'title');
+  title.id = `${idPrefix}-title`;
+  const note = node('p', packageId ? 'simNote' : 'note'),
     list = node('ul'),
     status = node('p');
   list.className = 'optional-practice-packages';
@@ -43,8 +52,8 @@ export function mountOptionalPracticePanel({
   status.setAttribute('aria-live', 'polite');
   const retry = node('button', 'refresh'),
     close = node('button', 'back');
-  retry.id = 'optional-practice-refresh';
-  close.id = 'optional-practice-close';
+  retry.id = `${idPrefix}-refresh`;
+  close.id = `${idPrefix}-close`;
   for (const button of [retry, close]) {
     button.type = 'button';
     button.className = 'button secondary';
@@ -92,6 +101,54 @@ export function mountOptionalPracticePanel({
     request = null;
     retry.disabled = false;
   }
+  async function bundledEntry(signal) {
+    if (!bundledHref) return null;
+    const target = new URL(bundledHref),
+      current = new URL(href);
+    if (
+      target.origin !== current.origin ||
+      target.protocol !== current.protocol ||
+      target.username ||
+      target.password
+    )
+      return null;
+    target.hash = '';
+    const response = await (fetcher ?? globalThis.fetch)(target.href, {
+      signal,
+      cache: 'no-cache',
+      credentials: 'omit',
+      redirect: 'error',
+    });
+    if (!response.ok) return null;
+    const limit = 128 * 1024,
+      reader = response.body?.getReader();
+    if (!reader) return null;
+    if (Number(response.headers?.get('content-length') || 0) > limit) {
+      await reader.cancel().catch(() => {});
+      return null;
+    }
+    const decoder = new TextDecoder('utf-8', { fatal: true });
+    let size = 0,
+      html = '';
+    try {
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+        size += value.byteLength;
+        if (signal.aborted || size > limit) return null;
+        html += decoder.decode(value, { stream: true });
+      }
+      html += decoder.decode();
+    } finally {
+      await reader.cancel().catch(() => {});
+    }
+    if (
+      !html.includes('data-fpv-worlds="true"') ||
+      !html.includes('src="../civilian-fpv/world-app.mjs"')
+    )
+      return null;
+    return bundledHref;
+  }
   async function load() {
     cancel();
     const ticket = visit,
@@ -102,10 +159,38 @@ export function mountOptionalPracticePanel({
     retry.disabled = true;
     list.replaceChildren();
     try {
-      const packages = await loadOptionalPracticeCatalog(indexURL, {
-        fetcher,
-        signal: controller.signal,
-      });
+      let bundled = null;
+      try {
+        bundled = await bundledEntry(controller.signal);
+      } catch {
+        /* Fall back to the separately published launcher. */
+      }
+      if (disposed || ticket !== visit || !dialog.open) return;
+      if (bundled) {
+        const row = node('li'),
+          link = node('a', 'simOpen');
+        const target = new URL(bundled);
+        target.searchParams.set('lang', doc.documentElement.lang === 'uk' ? 'uk' : 'en');
+        link.href = target.href;
+        link.onclick = () => {
+          target.searchParams.set('lang', doc.documentElement.lang === 'uk' ? 'uk' : 'en');
+          link.href = target.href;
+        };
+        // Gamepad polling is not a browser popup gesture. The checked bundled
+        // destination can navigate this window after the host has paused.
+        link.target = '_self';
+        row.append(link);
+        list.append(row);
+        localizedText(status, () => tr('simReady'));
+        return;
+      }
+      if (!indexURL) throw new Error('No published package catalog is available for this host.');
+      const packages = (
+        await loadOptionalPracticeCatalog(indexURL, {
+          fetcher,
+          signal: controller.signal,
+        })
+      ).filter((item) => !packageId || item.id === packageId);
       if (disposed || ticket !== visit || !dialog.open) return;
       for (const item of packages) {
         const row = node('li'),
@@ -165,6 +250,8 @@ export function mountOptionalPracticePanel({
   dialog.addEventListener('close', onClose);
   return {
     open,
+    root: () => (dialog.open ? dialog : null),
+    primary: () => close,
     close({ restoreFocus = true } = {}) {
       restoreOnClose = restoreFocus;
       cancel();
@@ -176,7 +263,7 @@ export function mountOptionalPracticePanel({
       dialog.removeEventListener('close', onClose);
       dialog.remove();
       opener.onclick = null;
-      opener.remove();
+      if (!existingOpener) opener.remove();
     },
   };
 }

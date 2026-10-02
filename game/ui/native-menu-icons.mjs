@@ -9,6 +9,8 @@ const paths = Object.freeze({
   versus:
     'M1 1h2v2h2v2h2v2h2V5h2V3h2V1h2v4h-2v2h-2v2H9v2h2v2h2v2h-2v-2H9v-2H7v2H5v2H3v-2h2v-2h2V9H5V7H3V5H1z',
   team: 'M2 1h4v4H2zm8 0h4v4h-4zM0 7h8v5H6v3H2v-3H0zm8 0h8v5h-2v3h-4v-3H8z',
+  simulator:
+    'M1 1h4v2H3v2H1zm10 0h4v4h-2V3h-2zM1 11h2v2h2v2H1zm12 0h2v4h-4v-2h2zM6 5h4v1h2v4h-2v1H6v-1H4V6h2zm1 2v2h2V7z',
   controls: 'M3 3h10v2h2v8h-4v-2H5v2H1V5h2zm1 3v2H2v2h2v2h2v-2h2V8H6V6zm7 1v2h2V7z',
   display: 'M1 1h14v11H9v2h3v2H4v-2h3v-2H1zm2 2v7h10V3z',
   fullscreen: 'M1 1h6v2H3v4H1zm8 0h6v6h-2V3H9zM1 9h2v4h4v2H1zm12 0h2v6H9v-2h4z',
