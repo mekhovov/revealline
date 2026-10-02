@@ -8,6 +8,7 @@ import {
   RELAY_VERSIONS,
   DIRECTIONAL_VERSIONS,
   SENTINEL_VERSIONS,
+  HUNT_VERSIONS,
   versionsForCampaign,
 } from './core/versions.mjs';
 import {
@@ -26,6 +27,7 @@ import {
   RELAY_SCENARIO_VERSION,
   DIRECTIONAL_SCENARIO_VERSION,
   SENTINEL_SCENARIO_VERSION,
+  HUNT_SCENARIO_VERSION,
 } from './content.mjs';
 import { browserDecodeImage } from './imports.mjs';
 import {
@@ -49,6 +51,7 @@ export const FOUNDATION_PACK_VERSION = 'xonix-pack.v6';
 export const RELAY_PACK_VERSION = 'xonix-pack.v7';
 export const DIRECTIONAL_PACK_VERSION = 'xonix-pack.v8';
 export const SENTINEL_PACK_VERSION = 'xonix-pack.v9';
+export const HUNT_PACK_VERSION = 'xonix-pack.v10';
 export const PACK_LIBRARY_VERSION = 'xonix-pack-library.v1';
 export const OFFICIAL_PACK_LIBRARY_VERSION = 'revealline-pack-references.v1';
 const officialReferences = new WeakMap();
@@ -131,7 +134,8 @@ const levelKeys = [
 ];
 function packChecks(candidate) {
   const pack = boundedPack(candidate);
-  const sentinel = pack.format === SENTINEL_PACK_VERSION;
+  const hunt = pack.format === HUNT_PACK_VERSION;
+  const sentinel = pack.format === SENTINEL_PACK_VERSION || hunt;
   const directional = pack.format === DIRECTIONAL_PACK_VERSION || sentinel;
   const relays = pack.format === RELAY_PACK_VERSION || directional;
   const foundations = pack.format === FOUNDATION_PACK_VERSION || relays;
@@ -139,21 +143,23 @@ function packChecks(candidate) {
   const wide = pack.format === WIDE_PACK_VERSION;
   const encounter = pack.format === ENCOUNTER_PACK_VERSION;
   const authoredMasteries = pack.format === MASTERY_PACK_VERSION || encounter || wide || classic;
-  const versions = sentinel
-    ? SENTINEL_VERSIONS
-    : directional
-      ? DIRECTIONAL_VERSIONS
-      : relays
-        ? RELAY_VERSIONS
-        : foundations
-          ? FOUNDATION_VERSIONS
-          : classic
-            ? CLASSIC_VERSIONS
-            : wide
-              ? WIDE_VERSIONS
-              : encounter
-                ? ENCOUNTER_VERSIONS
-                : LEGACY_VERSIONS;
+  const versions = hunt
+    ? HUNT_VERSIONS
+    : sentinel
+      ? SENTINEL_VERSIONS
+      : directional
+        ? DIRECTIONAL_VERSIONS
+        : relays
+          ? RELAY_VERSIONS
+          : foundations
+            ? FOUNDATION_VERSIONS
+            : classic
+              ? CLASSIC_VERSIONS
+              : wide
+                ? WIDE_VERSIONS
+                : encounter
+                  ? ENCOUNTER_VERSIONS
+                  : LEGACY_VERSIONS;
   exactKeys(
     pack,
     [
@@ -186,6 +192,7 @@ function packChecks(candidate) {
       RELAY_PACK_VERSION,
       DIRECTIONAL_PACK_VERSION,
       SENTINEL_PACK_VERSION,
+      HUNT_PACK_VERSION,
     ].includes(pack.format) &&
       stableId(pack.id) &&
       semver(pack.version),
@@ -349,21 +356,23 @@ function packChecks(candidate) {
         packError('levelUnknownMusic'),
       );
       const scenario = {
-        format: sentinel
-          ? SENTINEL_SCENARIO_VERSION
-          : directional
-            ? DIRECTIONAL_SCENARIO_VERSION
-            : relays
-              ? RELAY_SCENARIO_VERSION
-              : foundations
-                ? FOUNDATION_SCENARIO_VERSION
-                : classic
-                  ? CLASSIC_SCENARIO_VERSION
-                  : wide
-                    ? WIDE_SCENARIO_VERSION
-                    : encounter
-                      ? ENCOUNTER_SCENARIO_VERSION
-                      : SCENARIO_VERSION,
+        format: hunt
+          ? HUNT_SCENARIO_VERSION
+          : sentinel
+            ? SENTINEL_SCENARIO_VERSION
+            : directional
+              ? DIRECTIONAL_SCENARIO_VERSION
+              : relays
+                ? RELAY_SCENARIO_VERSION
+                : foundations
+                  ? FOUNDATION_SCENARIO_VERSION
+                  : classic
+                    ? CLASSIC_SCENARIO_VERSION
+                    : wide
+                      ? WIDE_SCENARIO_VERSION
+                      : encounter
+                        ? ENCOUNTER_SCENARIO_VERSION
+                        : SCENARIO_VERSION,
         level,
         theme: themes.get(level.themeId ?? campaign.themeId) ?? pack.themes[0],
         settings: {
@@ -448,6 +457,7 @@ function packChecks(candidate) {
             RELAY_PACK_VERSION,
             DIRECTIONAL_PACK_VERSION,
             SENTINEL_PACK_VERSION,
+            HUNT_PACK_VERSION,
           ].includes(pack.format) &&
             CLASSIC_VISUAL_ROLES.includes(role)),
         packError('unknownVisualRole'),
@@ -774,23 +784,25 @@ export function scenarioFromPack(
   };
   const scenario = {
     format:
-      pack.format === SENTINEL_PACK_VERSION
-        ? SENTINEL_SCENARIO_VERSION
-        : pack.format === DIRECTIONAL_PACK_VERSION
-          ? DIRECTIONAL_SCENARIO_VERSION
-          : pack.format === RELAY_PACK_VERSION
-            ? RELAY_SCENARIO_VERSION
-            : pack.format === FOUNDATION_PACK_VERSION
-              ? FOUNDATION_SCENARIO_VERSION
-              : pack.format === CLASSIC_PACK_VERSION
-                ? CLASSIC_SCENARIO_VERSION
-                : pack.format === WIDE_PACK_VERSION
-                  ? WIDE_SCENARIO_VERSION
-                  : pack.format === ENCOUNTER_PACK_VERSION
-                    ? ENCOUNTER_SCENARIO_VERSION
-                    : pack.format === MASTERY_PACK_VERSION
-                      ? MASTERY_SCENARIO_VERSION
-                      : SCENARIO_VERSION,
+      pack.format === HUNT_PACK_VERSION
+        ? HUNT_SCENARIO_VERSION
+        : pack.format === SENTINEL_PACK_VERSION
+          ? SENTINEL_SCENARIO_VERSION
+          : pack.format === DIRECTIONAL_PACK_VERSION
+            ? DIRECTIONAL_SCENARIO_VERSION
+            : pack.format === RELAY_PACK_VERSION
+              ? RELAY_SCENARIO_VERSION
+              : pack.format === FOUNDATION_PACK_VERSION
+                ? FOUNDATION_SCENARIO_VERSION
+                : pack.format === CLASSIC_PACK_VERSION
+                  ? CLASSIC_SCENARIO_VERSION
+                  : pack.format === WIDE_PACK_VERSION
+                    ? WIDE_SCENARIO_VERSION
+                    : pack.format === ENCOUNTER_PACK_VERSION
+                      ? ENCOUNTER_SCENARIO_VERSION
+                      : pack.format === MASTERY_PACK_VERSION
+                        ? MASTERY_SCENARIO_VERSION
+                        : SCENARIO_VERSION,
     level,
     theme,
     classRecipes: resolved.classRecipes,

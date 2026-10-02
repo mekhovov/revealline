@@ -1,0 +1,50 @@
+{
+  "format": "revealline-default-build-inspection-summary.v1",
+  "version": "0.142.4",
+  "sourceRevision": "9cb659d3cde6efb0275ec28f4ffedc6d8371e6f0",
+  "publicEligible": false,
+  "promotable": false,
+  "completeHostedOutput": false,
+  "publicationAssessment": "not-performed",
+  "payloadBytesIncludingManifest": 989957084,
+  "manifestDescriptor": {
+    "path": "manifest.json",
+    "bytes": 410785,
+    "sha256": "dc728cd84640b726d75fb6101c92ebe192699d3fb741eae2a536e222c2bddbd1"
+  },
+  "missingComponents": [
+    "Pages root routes and publication metadata",
+    "Hosted edition versions, stable launchers and company hub",
+    "Hosted optional packages, launchers and any other generated files"
+  ],
+  "sourceTree": "48e9a5c44d0aa7491376036ce54c5515074dcb2e",
+  "includedInputs": {
+    "format": "revealline-default-build-inputs.v1",
+    "sourceRevision": "9cb659d3cde6efb0275ec28f4ffedc6d8371e6f0",
+    "sourceTree": "48e9a5c44d0aa7491376036ce54c5515074dcb2e",
+    "files": 2586,
+    "bytes": 778464824,
+    "note": "Included originals only; transitive producer inputs are checked by normal build preparation."
+  },
+  "availableCommittedSources": {
+    "files": 23882,
+    "bytes": 2301483559,
+    "absentTrackedFiles": 0,
+    "inventorySha256": "3e66bd96cbcff171fe6a2f89b0c88eb5b52eb4c53e0488e2c9ad659da2a09a5e"
+  },
+  "sourceEligibility": {
+    "status": "verified",
+    "format": "revealline-public-source-eligibility.v1",
+    "files": 23882,
+    "assets": 346
+  },
+  "includedInputsVerified": true,
+  "availableCommittedSourcesVerified": true,
+  "reproducibleBuilds": 0,
+  "note": "One normal build preparation, without ZIP or expanded-site writes. Not frozen release, archive verification, human review or whole-site qualification.",
+  "fullReport": {
+    "path": "/tmp/fpv-capacity-neon-209-default.json",
+    "bytes": 533537,
+    "sha256": "e73cf0456c8cac09f7f906a3d5edfd45be0afbc81687d4ec54d97e2c2d950985"
+  }
+}

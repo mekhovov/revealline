@@ -39,6 +39,7 @@ import {
 } from '../publishing/edition-admission.mjs';
 import { buildEditionOfflineFiles } from './edition-offline.mjs';
 import { projectEditionLocalization } from './edition-localization.mjs';
+import { projectEditionCodeIndentation } from './edition-code-indentation.mjs';
 import {
   EDITION_RUNTIME_ADAPTERS,
   EDITION_RUNTIME_PAGES,
@@ -570,7 +571,7 @@ export async function compileEdition({
       'Build-time company registries cannot enter a player edition.',
     );
     required(
-      (!/\.(?:png|jpe?g|webp|svg|ttf|otf|woff2?|mp3|ogg|wav|mp4|webm|vtt)$/i.test(file) &&
+      (!/\.(?:png|jpe?g|webp|svg|ttf|otf|woff2?|mp3|ogg|wav|m4a|mp4|webm|vtt)$/i.test(file) &&
         !/^game\/editions\/assets\/.*\.txt$/i.test(file)) ||
         selectedMedia.has(file),
       'Player media must belong to the approved asset closure.',
@@ -891,6 +892,7 @@ html[data-edition-id] .edition-boot-logo{display:inline-block;width:auto;height:
       editionIds,
     }),
   );
+  files = projectEditionCodeIndentation(files);
   if (offline !== null) {
     required(
       editionIds.length === 1,

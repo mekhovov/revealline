@@ -71,10 +71,25 @@ export function bindStudioPreviewCopy(document, project, mission, preview) {
 export function studioRulesText(project, mission, preview) {
   const { manifest } = preview;
   const preset = journeyPreset(manifest.difficulty, project.difficultyCatalogId);
+  const hunt = manifest.level.classic?.hunt ?? manifest.level.hunt;
+  const objective = t(
+    hunt?.mode === 'hunt'
+      ? 'tools:studio.hunt.allTargets'
+      : hunt?.mode === 'capture-quota'
+        ? 'tools:studio.hunt.captureQuota'
+        : hunt?.mode === 'bonus'
+          ? 'tools:studio.hunt.bonusCapture'
+          : 'tools:studio.hunt.capture',
+    {
+      coverage: Math.round(mission.coverage * 100),
+      total: hunt?.targets.length,
+      quota: hunt?.quota,
+    },
+  );
   return t(manifest.mode === 'team' ? 'tools:studio.rules.team' : 'tools:studio.rules.solo', {
     count: manifest.level.rules.lives ?? preset.lives,
     speed: manifest.level.rules.moveSpeed,
-    coverage: Math.round(mission.coverage * 100),
+    objective,
     countdown: t(
       mission.timeLimitSeconds ? 'tools:studio.rules.countdown' : 'tools:studio.rules.noCountdown',
     ),
@@ -191,9 +206,11 @@ export function studioGeometryText(mission, preview) {
             x: objective.x,
             y: objective.y,
             requirement: t(
-              objective.required
-                ? 'tools:studio.geometry.required'
-                : 'tools:studio.geometry.optional',
+              (manifest.level.classic?.hunt ?? manifest.level.hunt)?.mode === 'hunt'
+                ? 'tools:studio.geometry.optionalInHunt'
+                : objective.required
+                  ? 'tools:studio.geometry.required'
+                  : 'tools:studio.geometry.optional',
             ),
             visibility: t(
               objective.hidden ? 'tools:studio.geometry.hidden' : 'tools:studio.geometry.visible',

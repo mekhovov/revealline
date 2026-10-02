@@ -735,6 +735,28 @@ export function createFlightRenderer({
     }
     shape.setAttribute('uv', new THREE.BufferAttribute(uv, 2));
   }
+  function woodlandTrunkUV(shape, size) {
+    const positions = shape.getAttribute('position'),
+      normals = shape.getAttribute('normal'),
+      uv = shape.getAttribute('uv'),
+      [width, height, depth] = size;
+    for (let i = 0; i < positions.count; i++) {
+      const nx = normals.getX(i),
+        ny = normals.getY(i),
+        nz = normals.getZ(i),
+        cross = Math.abs(nx) > 0.5 ? positions.getZ(i) / depth : positions.getX(i) / width,
+        phase = nx > 0.5 ? 0.17 : nx < -0.5 ? 0.42 : nz < -0.5 ? 0.71 : 0;
+      // One root-anchored atlas per trunk, not a repeating moss band. Caps use
+      // the existing atlas's end strips; no extra geometry, material or texture.
+      uv.setXY(
+        i,
+        cross + 0.5 + phase,
+        Math.abs(ny) > 0.5
+          ? (ny > 0 ? 0.92 : 0.02) + (positions.getZ(i) / depth + 0.5) * 0.05
+          : 0.005 + ((positions.getY(i) + height / 2) / height) * 0.99,
+      );
+    }
+  }
   function addFlushPanels(parent, panels, color, minimumQuality = 'balanced') {
     if (!panels.length) return;
     const positions = [],
@@ -827,7 +849,8 @@ export function createFlightRenderer({
     } else if (obstacle.min && obstacle.max) {
       size = ['x', 'y', 'z'].map((key) => (obstacle.max[key] - obstacle.min[key]) / 1000);
       const shape = new THREE.BoxGeometry(...size);
-      if (obstacleSurface) worldScaleUV(shape);
+      if (kind === 'bark') woodlandTrunkUV(shape, size);
+      else if (obstacleSurface) worldScaleUV(shape);
       value = mesh(shape, paint);
       value.position.set(
         ...['x', 'y', 'z'].map((key) => (obstacle.max[key] + obstacle.min[key]) / 2000),
@@ -845,6 +868,7 @@ export function createFlightRenderer({
       ? 'timber'
       : 'steel';
     value.userData.surfaceKind = kind;
+    if (kind === 'bark') value.userData.materialRole = 'timber';
     value.castShadow = value.receiveShadow = true;
     if (size && size[1] > 0.5) {
       const panels = [],
@@ -894,9 +918,9 @@ export function createFlightRenderer({
     const edges = new THREE.EdgesGeometry(value.geometry, 30);
     geometry.add(edges);
     const edgePaint = new THREE.LineBasicMaterial({
-      color: theme.warm,
+      color: kind === 'bark' ? 0x625747 : theme.warm,
       transparent: true,
-      opacity: 0.22,
+      opacity: kind === 'bark' ? 0.12 : 0.22,
     });
     materials.add(edgePaint);
     value.add(new THREE.LineSegments(edges, edgePaint));

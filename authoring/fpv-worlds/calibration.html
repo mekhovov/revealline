@@ -40,7 +40,7 @@
       section {
         border: 1px solid var(--iw-line, #657173);
         background-color: var(--iw-panel, #282f32);
-        border-image: var(--iw-material-panel, none) 6 fill / 6px / 0 repeat;
+        box-shadow: inset 0 1px 0 color-mix(in srgb, var(--iw-text) 8%, transparent);
         padding: 18px;
         margin: 20px 0;
       }
@@ -126,7 +126,7 @@
     <header>
       <h1>SIM material &amp; model calibration</h1>
       <p>
-        Eight original SIM material collections in the actual game renderer. This isolated authoring
+        Original SIM material collections in the actual game renderer. This isolated authoring
         preview does not save appearance preferences, run flight physics, or award progress.
       </p>
       <p id="candidate-status" role="status" hidden></p>
