@@ -1221,3 +1221,15 @@ Syntax/lint/format pass; extra unit coverage remains deferred. Browser setup
 was inspected at desktop and390px with no horizontal overflow. Actual public
 release and physical radio acceptance are not claimed. Next: freeze inputs,
 qualify all optional packages, refresh both player URLs, publish after #944.
+
+Frozen runtime `bb16ba61e9f0a0529cbf0438382f09494e33b15b` passes all3 optional
+package admissions, committed inputs and ZIP members, with2 byte-identical
+builds. Receipt: `docs/evidence/fpv-radio-package-20261002.json`. Limits remain
+unchanged. Both reviewed-player and continuous-school builds are87 files,
+13,986,906bytes, SHA
+`d21ed535d784fb14df05cf7a685f53b68c5cd26bac1574c2f7a6fe70c824c405`.
+Actual Academy and built World Studio setup launch successfully and show the
+existing saved calibration without rewriting it. The desktop/mobile switch
+cards and opaque scrolling header were inspected; no new hardware acceptance.
+Stack902's current open members begin at #932 and end at #944. Publication is
+ready as its next dependent member; upstream holds are preserved.
