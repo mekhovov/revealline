@@ -332,3 +332,22 @@ focused Warehouse storage-surface/UV increment followed by Stadium display and
 stand surfaces, keeping solid collision and Pixel readability. See the latest
 delivery-log checkpoint for exact candidates, capacity #963 and open human/device
 qualification. Keep unfinished C5 separate from the ready woodland PR.
+
+
+### C5 Warehouse continuation — 3 October 2026
+
+Woodland #964 and capacity repair #963 are merged. C5 improves the six closed
+storage blocks and Warehouse shell surfaces across all ten existing courses,
+including the two larger school layouts. Geometry/collision, visibility,
+lighting, Pixel filtering and objectives stay exact. Shared maps avoid new
+texture allocations; six readable bay labels use existing planes (+1,152 UV
+bytes). Source WebGL passes 307 checks / 159 comparisons, all18 Warehouse
+recordings replay, and all13 other environments remain unchanged.
+See [C5 qualification](fpv-warehouse-surfaces.md) and the delivery log for package,
+PR and public status. This surface increment does not close broader C art work.
+
+Next: C6 Stadium's static scoreboard and stand surfaces, then yard/garage.
+Keep Themes #955's shared factory/semantic ownership. Counts remain148 challenges,
+14worlds and178 original/school demonstrations. B physical TX15/iPhone/Steam Deck,
+D player sessions, F creator/device-offline, feedback-led G maps and H/R7 deferred
+unit coverage remain open.
