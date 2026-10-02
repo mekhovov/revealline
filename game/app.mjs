@@ -5,6 +5,11 @@ import { createHuntRecords } from './hunt/records.mjs';
 import { huntText } from './hunt/copy.mjs';
 import { attachContextualReactions } from './ui/contextual-reactions.mjs';
 import { soloReactionDanger } from './ui/reaction-danger.mjs';
+import {
+  REWARD_BOARD_SECONDS,
+  advanceRewardAge,
+  animateRewardArrival,
+} from './ui/reward-arrival.mjs';
 import { loadCompanyStartup } from './ui/company-startup.mjs';
 import { createStudioPreviewSession } from './studio-preview-session.mjs';
 import { editionDepartureDestinationAllowed } from './editions/departure-destination.mjs';
@@ -1081,6 +1086,7 @@ try {
     journeyBestResult = null,
     journeyPerformanceActive = true,
     celebrationActive = false,
+    winRevealAge = 0,
     defeatActive = false,
     defeatPaused = false,
     defeatRemaining = 0,
@@ -1488,7 +1494,9 @@ try {
   localizedText(victoryStoryButton, () => t('interface:victoryStory'));
   victoryStoryButton.hidden = true;
   document.querySelector('.overlay-actions').append(victoryStoryButton);
-  victoryStoryButton.onclick = () => {
+  let presentedVictoryRun = null;
+  victoryStoryButton.onclick = () => openVictoryStory();
+  function openVictoryStory({ autoplay = false } = {}) {
     if (practice || run.status !== 'won' || completionWarning) return;
     cancelResultAttempt();
     const notify = flightInformation.captureWarning('host.story', { allowTerminal: true });
@@ -1506,20 +1514,23 @@ try {
       const size = boardPaintSizeForLevel(run.level),
         args = { theme, level: run.level, seed, image: backdrop.image, fit: backdrop.fit, ...size };
       void storyDialog
-        .open({
-          pin,
-          title: run.level.name,
-          drawPoster(canvas) {
-            canvas.width = size.width;
-            canvas.height = size.height;
-            new BoardPainter(presets).drawGallery(canvas.getContext('2d'), args);
+        .open(
+          {
+            pin,
+            title: run.level.name,
+            drawPoster(canvas) {
+              canvas.width = size.width;
+              canvas.height = size.height;
+              new BoardPainter(presets).drawGallery(canvas.getContext('2d'), args);
+            },
           },
-        })
+          { immersive: true, autoplay },
+        )
         .catch((error) => notify(error.message));
     } catch (error) {
       notify(error.message);
     }
-  };
+  }
   const legacyPictureButton = document.createElement('button');
   legacyPictureButton.id = 'picture-use-legacy';
   localizedText(legacyPictureButton, () => t('interface:useOriginalPackArtwork'));
@@ -7495,12 +7506,35 @@ try {
       finishDefeatPresentation();
       return;
     }
+    winRevealAge = REWARD_BOARD_SECONDS;
     painter.skipCelebration?.();
+    enjoyCompletedPicture();
+  };
+  function enjoyCompletedPicture() {
+    if (run?.status !== 'won') return;
+    const returnFocus =
+      !dialogOpen() &&
+      (document.activeElement === $('skip-celebration') ||
+        document.activeElement === document.body ||
+        document.activeElement === $('game-canvas'));
     celebrationActive = false;
     show('skip-celebration', false);
     show('game-overlay', false);
     show('show-result', true);
-  };
+    refreshHUD();
+    if (returnFocus) $('show-result').focus({ preventScroll: true });
+    if (
+      presentedVictoryRun !== run &&
+      !practice &&
+      !completionWarning &&
+      !dialogOpen() &&
+      flightPictures?.pins() &&
+      storyPinForTheme(flightPictures.pins(), theme.id)
+    ) {
+      presentedVictoryRun = run;
+      openVictoryStory({ autoplay: true });
+    }
+  }
   function focusPauseToolReturn(id) {
     const target = $(id);
     if (controllerScope() === 'paused' && availableFocusTarget(target))
@@ -9730,6 +9764,27 @@ try {
             : t('interface:tacticalEdition'),
     );
     document.body.dataset.pictureState = flightPictures?.ready(theme.id) ? 'ready' : 'pending';
+    const enjoyingPicture = run.status === 'won' && $('game-overlay').hidden;
+    const previousPicturePhase = document.body.dataset.winPicture;
+    const phase = enjoyingPicture
+      ? celebrationActive && winRevealAge < REWARD_BOARD_SECONDS
+        ? 'revealing'
+        : celebrationActive
+          ? 'celebrating'
+          : 'settled'
+      : 'off';
+    const arrival =
+      previousPicturePhase === 'revealing' && ['celebrating', 'settled'].includes(phase)
+        ? $('game-canvas').getBoundingClientRect()
+        : null;
+    document.body.dataset.winPicture = phase;
+    if (arrival)
+      animateRewardArrival(
+        $('game-canvas'),
+        arrival,
+        displayPreferences.snapshot().effectiveReducedEffects,
+      );
+    show('win-picture-caption', enjoyingPicture && phase !== 'revealing');
     document.body.dataset.flightState =
       defeatActive || celebrationActive || (run.status === 'won' && !$('show-result').hidden)
         ? 'picture'
@@ -10002,6 +10057,7 @@ try {
             warning(
               {
                 'self-contact': t('interface:yourLineCrossedItselfChooseANewRoute'),
+                'combat-projectile': t('interface:failure.combatProjectile'),
                 'mission-timeout': t('interface:theMissionClockRanOutTryAFasterRoute'),
                 'cut-timeout': t('interface:yourLiveLineStayedOpenTooLongMakeAShorter'),
                 'cable-limit': t('interface:yourCableBudgetRanOutCloseAShorterLine'),
@@ -10602,21 +10658,18 @@ try {
             seed,
             reduced: displayPreferences.snapshot().effectiveReducedEffects,
           });
+          winRevealAge = 0;
           celebrationActive = true;
           show('game-overlay', false);
           show('skip-celebration', true);
           show('show-result', false);
+          $('skip-celebration').focus({ preventScroll: true });
           warning(
             journeyRewardFailure ||
               localizedMessage('interface:pictureUnlockedAWholeWorldFromOneBraveLine'),
             null,
             'host.won',
           );
-          if (journeyEnabled && journeyMission() && !practice) {
-            celebrationActive = false;
-            show('skip-celebration', false);
-            overlay('won');
-          }
         } else {
           defeatActive = true;
           defeatPaused = false;
@@ -10637,10 +10690,18 @@ try {
       pendingAction = false;
       pendingPickup = false;
     }
-    if (celebrationActive && !painter.celebrationStatus?.active) {
-      celebrationActive = false;
-      show('skip-celebration', false);
-      overlay('won');
+    if (celebrationActive)
+      winRevealAge = advanceRewardAge(
+        winRevealAge,
+        elapsed,
+        document.hidden || !document.hasFocus() || dialogOpen(),
+      );
+    if (
+      celebrationActive &&
+      winRevealAge >= REWARD_BOARD_SECONDS &&
+      !painter.celebrationStatus?.active
+    ) {
+      enjoyCompletedPicture();
     }
     sound.feedback(!paused && started, theme, run, {
       bodyId: flightActorLease?.pin().style === 'fpv' ? `fpv-${run.activeClassId}` : bodyId,
@@ -10914,14 +10975,15 @@ try {
   $('view-picture').onclick = () => {
     if (run.status !== 'won') return;
     cancelResultAttempt();
-    show('game-overlay', false);
-    show('show-result', true);
+    enjoyCompletedPicture();
     $('show-result').focus({ preventScroll: true });
   };
   $('show-result').onclick = () => {
     if (run.status === 'won') {
+      const returningToResults = $('game-overlay').dataset.kind === 'won';
       overlay('won');
-      $('view-picture').focus({ preventScroll: true });
+      (returningToResults ? $('view-picture') : controllerFocus()).focus({ preventScroll: true });
+      refreshHUD();
     }
   };
   $('next-button').onclick = () => {
@@ -11378,7 +11440,7 @@ try {
           brutal: encounterDisplay.snapshot().brutal,
           blood: encounterDisplay.snapshot().blood,
           backdrop: flightPictures?.current(),
-          celebrationPaused: document.hidden || dialogOpen(),
+          celebrationPaused: document.hidden || !document.hasFocus() || dialogOpen(),
           defeatEffectsRunning: defeatEffectsRunning(),
           signalReception:
             run.status === 'won'
@@ -12701,6 +12763,7 @@ try {
   demoHost = attachDemoHost({
     presets,
     audio: demoAudio,
+    audioMaster,
     getContext: () => ({
       entries: executionEntries(),
       library,

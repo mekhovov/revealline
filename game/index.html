@@ -157,6 +157,7 @@
     <link rel="stylesheet" data-boot-href="ui/edition-play.css" />
     <link rel="stylesheet" data-boot-href="ui/menu-scenes.css" />
     <link rel="stylesheet" data-boot-href="ui/native-menu.css" />
+    <link rel="stylesheet" data-boot-href="ui/win-picture.css" />
     <link rel="icon" type="image/png" sizes="32x32" href="ui/art/identity/fpv-line/icon-32.png" />
   </head>
   <body class="field-kit">
@@ -740,14 +741,21 @@
                 <p id="journey-reactions" class="overlay-footnote" hidden></p>
               </div>
             </div>
+            <div id="win-picture-caption" class="win-picture-caption" hidden>
+              <span class="win-picture-mark" aria-hidden="true">✦</span>
+              <strong data-i18n="interface:winPictureComplete">Beautifully done.</strong>
+              <span data-i18n="interface:winPictureEnjoy">The whole picture is yours.</span>
+            </div>
             <button
               id="show-result"
               class="picture-return"
               type="button"
               hidden
-              data-i18n="interface:results"
+              data-i18n="interface:winPictureContinue"
+              data-i18n-aria-label="interface:winPictureContinueLabel"
+              aria-label="Continue to results"
             >
-              Results ↗
+              Continue →
             </button>
             <button
               id="skip-celebration"
@@ -2142,6 +2150,12 @@
               >Hide every demo picture behind signal noise</span
             ></label
           >
+          <label
+            ><input id="demo-show-all-pictures" type="checkbox" /><span
+              data-i18n="demo:showAllPictures"
+              >Show all demo pictures without noise</span
+            ></label
+          >
           <p class="micro-note" data-i18n="demo:localOnly">
             Recordings stay on this device. The disposable demo cache holds up to 12 recordings / 32
             MiB and is separate from saved flights.
@@ -2896,6 +2910,12 @@ No offline check yet.</pre
           </button>
         </div>
         <div id="demo-audio" data-demo-ui></div>
+        <label class="demo-picture-setting" data-demo-ui
+          ><input id="demo-show-all-pictures-live" type="checkbox" /><span
+            data-i18n="demo:showAllPictures"
+            >Show all demo pictures without noise</span
+          ></label
+        >
         <div class="demo-notes">
           <p id="demo-caption"></p>
           <p id="demo-status"></p>

@@ -634,6 +634,8 @@ export class Soundscape {
               chip: 'square',
               guitar: 'sawtooth',
               bell: 'sine',
+              chime: 'sine',
+              bloom: 'sine',
             }[note.voice] || 'triangle';
       const freq = clamp(note.frequency || 120, 30, 5000);
       source.frequency.setValueAtTime(note.kind === 'kick' ? 145 : freq, start);
@@ -658,7 +660,7 @@ export class Soundscape {
     const destination = bus === 'music' ? this.musicBus : this.sfxBus,
       drive = bus === 'music' ? this.musicDrive : this.sfxDrive;
     gain.connect(note.voice === 'guitar' && drive ? drive : destination);
-    const attack = note.voice === 'pad' ? 0.07 : 0.005,
+    const attack = { pad: 0.07, chime: 0.012, bloom: 0.12 }[note.voice] ?? 0.005,
       volume = clamp(note.volume ?? 0.035, 0.001, 0.3);
     gain.gain.setValueAtTime(0.0001, start);
     gain.gain.linearRampToValueAtTime(volume, start + Math.min(attack, duration / 3));
@@ -711,6 +713,7 @@ export class Soundscape {
       !event ||
       !this.enabled ||
       this.paused ||
+      this.audioMaster.muted ||
       (this.persistentMusic && this.gameplayPaused) ||
       !this.context
     )
@@ -765,17 +768,37 @@ export class Soundscape {
             : this.themeFamily === 'navi'
               ? [0, 4, 9, 7, 12, 16]
               : [0, 4, 7, 12, 7, 12]);
-        cue(phrase, this.themeFamily === 'retro' ? 'chip' : 'bell', 0.13, 0.4);
-        for (const n of [0, 4, 7])
+        // A small hand-played rise opens into the finished picture. Quiet octave
+        // partials give the sine bells a glassy edge without a sharp square/saw
+        // fanfare, percussion, downloaded assets or a second audio context.
+        const timing = [0.025, 0.16, 0.31, 0.47, 0.65, 0.86];
+        phrase.forEach((n, index) => {
+          const last = index === phrase.length - 1;
+          for (const [octave, volume, duration] of [
+            [0, last ? 0.07 : 0.06, last ? 1.12 : 0.66],
+            [12, 0.012, 0.24],
+          ])
+            this.play(
+              {
+                kind: 'tone',
+                frequency: midiFrequency(base + n + octave),
+                voice: 'chime',
+                volume,
+                duration,
+              },
+              now + timing[index],
+            );
+        });
+        for (const n of [-12, 4, 7])
           this.play(
             {
               kind: 'tone',
               frequency: midiFrequency(base + n),
-              voice: 'pad',
-              volume: 0.045,
-              duration: 1.1,
+              voice: 'bloom',
+              volume: 0.03,
+              duration: 1.4,
             },
-            now + 0.68,
+            now + 0.88,
           );
       }
     } else if (event.type === 'player.failed') cue([0, -5, -12], 'lead', 0.065, 0.17);

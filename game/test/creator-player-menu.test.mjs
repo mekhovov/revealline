@@ -385,3 +385,18 @@ test('loading to ready retires the temporary primary Up override and keeps the c
   navigation.handle({ direction: 'down' });
   assert.equal(doc.activeElement, $('start'));
 });
+
+test('winning presentation keeps the original board in place until Continue releases it', (t) => {
+  const { state, menu, $ } = fixture(t, { initial: { paused: false, attempt: {} } });
+  assert.equal($('creator-home').hidden, true);
+  state.ended = true;
+  state.paused = true;
+  state.presenting = true;
+  menu.refresh();
+  assert.equal($('creator-home').hidden, true, 'A win cannot insert the menu above its board.');
+  assert.equal($('creator-game').hidden, false);
+  assert.equal($('earned').parentElement, $('creator-game'));
+  state.presenting = false;
+  menu.refresh();
+  assert.equal($('creator-home').hidden, false);
+});

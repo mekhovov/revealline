@@ -503,3 +503,8 @@ export function createCreatorDraftBackend(store) {
     },
   });
 }
+
+/** Strip private source inventory annotations at the strict portable bundle boundary. */
+export function creatorBundleAssets(assets) {
+  return assets.map(({ sha256, blob }) => ({ sha256, blob }));
+}

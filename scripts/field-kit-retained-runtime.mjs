@@ -5,6 +5,20 @@ import { verifyPresentationDependencies } from '../game/presentation/dependencie
 
 // Original committed bytes, not a reserialization of the revision ledger.
 // New retained revisions require explicit inputs and separately reviewed policy.
+export const FIELD_KIT_RETAINED_RUNTIME_38 = Object.freeze({
+  path: 'authoring/library/fpv-field-kit/retained/runtime.a0ad21cd1412fed07b73dbf0e1ec31ded747a8210a97ccc1efeb1e2c26b24584.json',
+  sha256: 'a0ad21cd1412fed07b73dbf0e1ec31ded747a8210a97ccc1efeb1e2c26b24584',
+  bytes: 968465,
+  commit: '432110b51c570b838cdae390790b67dfa76f0785',
+  originalPath: 'game/presentation/compiled/runtime.json',
+});
+export const FIELD_KIT_RETAINED_RUNTIME_50 = Object.freeze({
+  path: 'authoring/library/fpv-field-kit/retained/runtime.29298673ed6cc49222b1d52d77efc4f8968abe42a29df5c29b2861bd8f9ce1ed.json',
+  sha256: '29298673ed6cc49222b1d52d77efc4f8968abe42a29df5c29b2861bd8f9ce1ed',
+  bytes: 977958,
+  commit: 'e9434d03feb30bf8767051b2832a4ab987b2fa41',
+  originalPath: 'game/presentation/compiled/runtime.json',
+});
 export const FIELD_KIT_RETAINED_RUNTIME = Object.freeze({
   path: 'authoring/library/fpv-field-kit/retained/runtime.91a3d66966e1b1a3c2e9b5c68aebcc4be284edff4e7b9b272731a769a4f66ace.json',
   sha256: '91a3d66966e1b1a3c2e9b5c68aebcc4be284edff4e7b9b272731a769a4f66ace',
@@ -133,11 +147,16 @@ async function readPinnedOutput({ read, assets }, pin, revision) {
   return files;
 }
 
-/** Preserve exact committed54, accepted58, retained60/62 and both101–103 lineages
+/** Preserve published38/50 imports, committed54, accepted58, retained60/62 and both101–103 lineages
  * by manifest identity, with their complete lazy
  * dependencies. New ledger revisions never authorize implicit output-directory IO. */
 export async function readFieldKitRetainedOutput(options) {
-  const legacy = await readPinnedOutput(options, FIELD_KIT_RETAINED_RUNTIME, 54);
+  const historical38 = await readPinnedOutput(options, FIELD_KIT_RETAINED_RUNTIME_38, 38);
+  const historical50 = await readPinnedOutput(options, FIELD_KIT_RETAINED_RUNTIME_50, 50);
+  const legacy = await retainPresentationOutput(
+    await readPinnedOutput(options, FIELD_KIT_RETAINED_RUNTIME, 54),
+    await retainPresentationOutput(historical50, historical38),
+  );
   const accepted = await readPinnedOutput(options, FIELD_KIT_RETAINED_RUNTIME_58, 58);
   const held = await readPinnedOutput(options, FIELD_KIT_RETAINED_RUNTIME_60, 60);
   const actors = await readPinnedOutput(options, FIELD_KIT_RETAINED_RUNTIME_62, 62);

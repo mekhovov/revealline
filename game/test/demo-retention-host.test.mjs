@@ -172,6 +172,7 @@ async function completeOrdinary(f) {
   assert.equal(earned.scores.length, 1, 'The ordinary win still earns its score.');
   assert.equal(page.storage.getItem(SESSION), null, 'Only the completed owned save is cleared.');
   page.$('skip-celebration').click();
+  page.$('show-result').click();
   assert.equal(page.$('game-overlay').dataset.kind, 'won');
   return { checkpoint, earned };
 }

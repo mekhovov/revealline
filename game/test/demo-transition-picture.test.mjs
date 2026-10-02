@@ -139,3 +139,39 @@ test('reduced effects and invalid transition inputs skip transition work, and fa
   assert.equal(attempts, 1, 'An unavailable transition canvas is not retried every frame.');
   f.painter.dispose();
 });
+
+test('clear demo previews bypass transition and jammer noise without altering simulation or ordinary rendering', () => {
+  const run = createRun(level),
+    f = painter();
+  run.signal = { zoneIds: ['jammer'], speedFactor: 0.5, boostBlocked: true };
+  const before = authoritativeCheckpoint(run);
+  const clear = surface();
+  f.painter.draw(clear.ctx, run, 0, {
+    paused: true,
+    pictureVisibility: 'clear',
+    pictureInterference: false,
+    demoTransition: 1,
+  });
+  assert.equal(pictureCall(clear).args[0], f.painter.background);
+  assert.equal(f.transition.length, 0, 'No noisy bitmap is prepared for the clear preview.');
+  assert.deepEqual(authoritativeCheckpoint(run), before);
+  const ordinary = surface();
+  f.painter.draw(ordinary.ctx, run, 0, { paused: true });
+  assert.equal(
+    pictureCall(ordinary).args[0],
+    f.transition[0],
+    'Ordinary gameplay still shows jammer interference.',
+  );
+  const concealed = surface();
+  f.painter.draw(concealed.ctx, run, 0, {
+    paused: true,
+    pictureVisibility: 'blurred',
+    pictureInterference: false,
+  });
+  assert.equal(
+    pictureCall(concealed).args[0],
+    f.concealed[0],
+    'The noise preference cannot override picture eligibility.',
+  );
+  f.painter.dispose();
+});

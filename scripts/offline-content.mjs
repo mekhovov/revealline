@@ -9,6 +9,7 @@ import { addAuthoredRuntimeSnapshots } from './authored-runtime-snapshots.mjs';
 import {
   isOptionalSpatialAudioBody,
   isOptionalReactionVoiceBody,
+  isOptionalTeamImportManifest,
   selectOfflineCore,
 } from './offline-core-closure.mjs';
 import { downloadFiles, validateDownloadCatalogue } from '../game/download-catalogue.mjs';
@@ -56,6 +57,32 @@ export async function buildOfflineContent(
   for (const item of snapshots?.routes || [])
     excluded.add(`game/content-design/${item.descriptor.path}`);
   const byPath = new Map(entries.map((entry) => [entry.name, entry]));
+  const teamImportManifests = entries.filter((entry) => isOptionalTeamImportManifest(entry.name));
+  const teamImportAssets = new Set();
+  for (const entry of teamImportManifests) {
+    if (
+      entries.filter((item) => item.name === entry.name).length !== 1 ||
+      entry.name !== `game/presentation/compiled/runtime.${digest(entry.bytes)}.json`
+    )
+      throw new Error('Older Team import theme differs from its exact shipped manifest.');
+    const manifest = JSON.parse(entry.bytes);
+    for (const asset of Object.values(manifest.resolved.assets)) {
+      if (!asset.file) continue;
+      const relative = manifest.urls[asset.file.sha256];
+      if (!/^\.\/assets\/[a-f0-9]{64}\.(?:png|woff2)$/.test(relative))
+        throw new Error('Older Team import theme has an unsupported asset dependency.');
+      const name = `game/presentation/compiled/${relative.slice(2)}`;
+      const body = byPath.get(name);
+      if (
+        entries.filter((item) => item.name === name).length !== 1 ||
+        body?.bytes.length !== asset.file.bytes ||
+        digest(body.bytes) !== asset.file.sha256
+      )
+        throw new Error(`Older Team import theme has no exact shipped asset: ${name}`);
+      teamImportAssets.add(name);
+    }
+    excluded.add(entry.name);
+  }
   const parse = (name, fallback) =>
     byPath.has(name) ? JSON.parse(byPath.get(name).bytes) : fallback;
   const classicIndex = parse('game/content/mission-library-index.json', { missions: [] });
@@ -309,7 +336,11 @@ export async function buildOfflineContent(
         files,
       });
     }
-  const toolingPaths = new Set((coreGraph?.optional || []).filter((path) => !modePaths.has(path)));
+  const toolingPaths = new Set(
+    (coreGraph?.optional || []).filter(
+      (path) => !modePaths.has(path) && !isOptionalTeamImportManifest(path),
+    ),
+  );
   if (toolingPaths.size) {
     for (const name of toolingPaths) excluded.add(name);
     groups.push({
@@ -334,6 +365,23 @@ export async function buildOfflineContent(
   // Hosted extras are not shared runtime dependencies. Keep them selectable
   // without charging every starter/chapter download for their optional bodies.
   const extraPaths = new Set();
+  if (teamImportManifests.length) {
+    const owned = teamImportManifests.map((entry) => entry.name);
+    owned.forEach((name) => extraPaths.add(name));
+    groups.push({
+      id: 'archive:team-import-themes',
+      title: 'Older Team import themes',
+      kind: 'gameplay',
+      category: 'archive',
+      current: false,
+      modes: ['team'],
+      requires: [
+        'shared',
+        ...(groups.some((group) => group.id === 'runtime:team') ? ['runtime:team'] : []),
+      ],
+      files: owned,
+    });
+  }
   for (const [id, title, matches] of [
     ['practice', 'Optional flight practice', (name) => name.startsWith('optional-practice/')],
     [
@@ -411,6 +459,14 @@ export async function buildOfflineContent(
       )
       .map((file) => file.path),
   });
+  const teamRuntimeFiles = new Set(
+    groups
+      .filter((group) => ['shared', 'runtime:team'].includes(group.id))
+      .flatMap((group) => group.files),
+  );
+  for (const name of teamImportAssets)
+    if (excluded.has(name) && !teamRuntimeFiles.has(name))
+      throw new Error(`Older Team import asset is outside its offline dependencies: ${name}`);
   if (snapshots)
     groups.unshift({
       id: 'base',

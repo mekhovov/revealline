@@ -5843,5 +5843,12 @@
   "optionalPractice.simRetry": "Спробувати відкрити SIM знову",
   "optionalPractice.simUnavailable": "Не вдалося відкрити SIM із цієї копії. Під’єднайся до мережі для гри онлайн або підготуй необов’язкове автономне завантаження. Основна гра залишається доступною.",
   "authorHuntingForThisMission": "Створити полювання для цієї місії",
-  "characterVoiceRecordings": "Записи голосів персонажів"
+  "characterVoiceRecordings": "Записи голосів персонажів",
+  "winPictureComplete": "Чудова робота.",
+  "winPictureEnjoy": "Тепер уся картина — ваша.",
+  "winPictureContinue": "Далі →",
+  "winPictureContinueLabel": "Перейти до результатів",
+  "creator.socialDroneExampleHelp": "Спробуйте готовий рівень із відеонагородою, а потім відредагуйте його, щоб дізнатися, як працюють зображення та відео перемоги.",
+  "creator.socialDroneExampleOpen": "Відкрити відеоприклад Social Drone",
+  "creator.socialDroneExampleUnavailable": "Не вдалося завантажити приклад Social Drone. Спробуйте ще раз."
 }

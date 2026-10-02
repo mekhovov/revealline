@@ -836,7 +836,10 @@ export function createWorldFlight({
   const hasActorTracking = MODES.some((mode) =>
     source.steps[mode].some((step) => step.type === 'actor-track-v1'),
   );
-  required(!hasSkills || mode === 'acro', 'Skill courses require Acro mode');
+  required(
+    !hasSkills || mode === 'acro' || unscoredPractice,
+    'Skill courses require Acro mode for scored flight',
+  );
   const rules = source.rules;
   const gameplay = { ...source };
   delete gameplay.locales;
