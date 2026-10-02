@@ -51,3 +51,8 @@ checks and 178 replays, all three package admissions, committed-input/ZIP checks
 and two reproducible builds. Source file counts remain 35/68/100 under the
 inherited 64/72/104 limits; bytes remain within 8/8/16 MiB. Final receipts use the
 `fpv-meadow-groves-*main959*` names. Public deployment is a separate gate.
+
+Published as [PR #960](https://github.com/mekhovov/revealline/pull/960) directly
+against main. Both normal local playtest URLs include the merged touch changes
+and this scenery pass; public availability still requires protected publication
+and actual deployment/launch verification.
