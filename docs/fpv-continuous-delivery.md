@@ -1419,3 +1419,39 @@ builds. World Studio remains94 source /87 runtime files. Playtest SHA256
 `a72309c609044ed6969dab13d3bd9769a88d2ba752e4a11f182fb60ee10bf4e3`.
 The ready feature is being published independently against main; inspect its
 current PR/head and checks before merging. No new public deployment is claimed.
+
+### 2 October — A published; B lifecycle increment qualified
+
+Checkpoint practice is published and attached as
+[#951](https://github.com/mekhovov/revealline/pull/951), head
+`02ac74d42a3f332f262da06c7d3911c9301dd39e`, branch
+`codex/fpv-checkpoint-practice`. Latest inspection found source release-ready and
+optional-package checks passing, company candidate still running, and the branch
+behind current main. Preserve exact-head gates; no merge or public claim yet.
+
+The next branch `codex/fpv-world-lifecycle` contains only B's callback-stall and
+focused-button pause repair above A. A real callback clock now freezes before
+input polling; watchdog resets retain their current-clock baseline, including
+arming inside controller polling. Paused simulation has no catch-up. Native
+Space keeps button activation, while P pauses from a focused flight button.
+
+Source and packaged host verification each pass69/69. The old host reproduces
+the stale-timestamp defect (12/12 baseline checks). Actual rendered-player
+Space/Arm and P/Menu interactions were also inspected without application errors;
+original Touch/Self-level/Chase preferences were restored. See
+`fpv-world-lifecycle.md` and its receipts. Controlled input samples are not
+physical-device acceptance or sustained performance measurements.
+
+Frozen runtime candidate `ed8880c7c1135e5b6e124300c88cc658f3b9fc77` passes all
+three admissions, committed-input and ZIP-member checks, and two identical
+builds. The player contains87 runtime files /13,424,448 bytes, SHA256
+`51329637f6f02e783e5760f006bff0d158fd782f7c66929c0ddb1abafeeef748`.
+New unit coverage stays in R7. Publish this focused child, creating a fresh
+native stack if #951 is still open; closed stacks889/902 must not be reused.
+
+Next independent work: install and visually qualify the preserved Garage16
+proofs as their own increment (currently not installed), then continue the
+approved art/Themes work while named-device and player sessions remain open.
+Garage's additive candidate preserves all138 existing v2 records and adds about
+251KB without changing148 challenges/14 worlds. Do not use the old school
+installer against the packed registry; preserve all existing rows and identities.
