@@ -1,0 +1,98 @@
+{
+  "format": "fpv-main-radio-menu-runtime-verification.v1",
+  "createdAt": "2026-10-01T22:17:22.740Z",
+  "scope": "Manual functional probe of actual existing Solo radio session/router and new opt-in preset. No browser, physical-radio acceptance or unit-coverage claim. Setup UI boundary is a minimal DOM probe, not actual browser acceptance.",
+  "passed": true,
+  "checks": [
+    {
+      "name": "Preset creation preserves raw hardware snapshot and existing shared-stick mapping",
+      "passed": true
+    },
+    {
+      "name": "Confirm/back use only tested yaw axis with measured centre/endpoints",
+      "passed": true
+    },
+    {
+      "name": "Other hardware descriptor is rejected rather than silently mapped",
+      "passed": true
+    },
+    {
+      "name": "Initial held Confirm cannot join or activate; neutral joins without selecting",
+      "passed": true
+    },
+    {
+      "name": "Four menu directions use right stick and preserve calibrated vertical direction",
+      "passed": true
+    },
+    {
+      "name": "Yaw right confirms once; read-only native guard observes hold; release rearms",
+      "passed": true
+    },
+    {
+      "name": "Yaw left produces Back once per deliberate deflection",
+      "passed": true
+    },
+    {
+      "name": "Changing menu context while Confirm is held requires release",
+      "passed": true
+    },
+    {
+      "name": "Throttle and all buttons/auxiliary axes cannot activate menu actions",
+      "passed": true
+    },
+    {
+      "name": "Flight retains right-stick movement; yaw never becomes an attack, pause, pickup or boost",
+      "passed": true
+    },
+    {
+      "name": "Entering menus from flight with held yaw requires neutral before Confirm",
+      "passed": true
+    },
+    {
+      "name": "Disconnect and reappearance with held Confirm do not activate",
+      "passed": true
+    },
+    {
+      "name": "Raw profile capture suppresses radio menus and requires neutral after capture",
+      "passed": true
+    },
+    {
+      "name": "Semantic actions survive remapped standard gamepad Confirm/Back indices",
+      "passed": true
+    }
+  ],
+  "inputs": {
+    "game/couch/tx15-presets.mjs": "236e45b15810ec59e7ea3a8ec84380e863d9786482a8d448adf68c65619c30e9",
+    "game/couch/controller-setup.mjs": "9c6d6fd2cf9241fbd90ddf07ecb1bf1509fee14e42bec09670d4ec48a473fd4f",
+    "game/locales/en/interface.json": "ec9fa4d8ac6e96541f2e3729602a71bd876ca6c12d0b09b9eaa6674f74936bea",
+    "game/locales/uk/interface.json": "332c9aeafb545afabb44c61bf0d0559a6b16d77b75692475493354a553837f27",
+    "game/i18n/catalogs.mjs": "8bb09c78eab0e6ad09ec21ec2f1c5f9c3d18057bf590d882625f05e1c5b5a34d"
+  },
+  "uiBoundaryChecks": [
+    {
+      "name": "Solo setup shows localized opt-in and applies preset",
+      "passed": true
+    },
+    {
+      "name": "English and Ukrainian labels render (Solo)",
+      "passed": true
+    },
+    {
+      "name": "Unknown hardware disables opt-in (Solo)",
+      "passed": true
+    },
+    {
+      "name": "Shared setup hides opt-in and cannot apply it",
+      "passed": true
+    },
+    {
+      "name": "English and Ukrainian labels render (shared)",
+      "passed": true
+    },
+    {
+      "name": "Unknown hardware disables opt-in (shared)",
+      "passed": true
+    }
+  ],
+  "baseCommit": "937aead7287814b7886082dda9be55f295641476"
+}
