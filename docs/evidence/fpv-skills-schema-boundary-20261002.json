@@ -1,0 +1,101 @@
+{
+  "format": "FPVSkillSchemaBoundaryReview.v1",
+  "createdAt": "2026-10-02T02:23:41.338Z",
+  "passed": true,
+  "sourceHash": "692f95aa2eef7f9fd8be04e20799e928b5c4fb917daae8128306e9fe66b07cc2",
+  "checks": [
+    {
+      "name": "valid signed coupled path admitted as data",
+      "accepted": true
+    },
+    {
+      "name": "unknown version",
+      "rejected": true
+    },
+    {
+      "name": "script callback field",
+      "rejected": true
+    },
+    {
+      "name": "function payload",
+      "rejected": true
+    },
+    {
+      "name": "infinite angle",
+      "rejected": true
+    },
+    {
+      "name": "fractional angle",
+      "rejected": true
+    },
+    {
+      "name": "unsafe integer angle",
+      "rejected": true
+    },
+    {
+      "name": "over-budget duration",
+      "rejected": true
+    },
+    {
+      "name": "invalid axis source text",
+      "rejected": true
+    },
+    {
+      "name": "oversized tolerance",
+      "rejected": true
+    },
+    {
+      "name": "invalid plane",
+      "rejected": true
+    },
+    {
+      "name": "oversized radius",
+      "rejected": true
+    },
+    {
+      "name": "fractional center",
+      "rejected": true
+    },
+    {
+      "name": "oversized phase",
+      "rejected": true
+    },
+    {
+      "name": "extra nested callback",
+      "rejected": true
+    },
+    {
+      "name": "rotation dwell longer than its attempt window",
+      "rejected": true
+    },
+    {
+      "name": "rotation dwell exactly at the duration bound is structurally admitted",
+      "accepted": true
+    },
+    {
+      "name": "accessor rejected without evaluating it",
+      "rejected": true
+    },
+    {
+      "name": "nonplain prototype rejected",
+      "rejected": true
+    },
+    {
+      "name": "JSON prototype field rejected",
+      "rejected": true
+    }
+  ],
+  "invokedImportedCode": 0,
+  "numericReview": {
+    "coordinateMillimetres": 100000,
+    "maxObjectivesPerMode": 64,
+    "maxSkillTicks": 5000,
+    "maxCommandRateDegreesPerSecond": 720,
+    "maxSweepCentidegrees": 72000,
+    "maxRadiusMillimetres": 100000,
+    "sweptDiscontinuityLimitMillimetres": 2000,
+    "conservativeLargestSkillIntermediate": 400000000000000,
+    "safeIntegerMaximum": 9007199254740991
+  },
+  "scope": "Actual live validator with malformed data samples and descriptor boundary checks; bounded-arithmetic code review, no additional permanent unit suite or general security audit."
+}

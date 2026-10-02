@@ -34,6 +34,11 @@ export function createWorldAudio(options = {}) {
   let motorStyle = 'quad';
   let gateStyle = 'chime';
   const effects = new Set();
+  const volume = (value) =>
+    typeof value === 'number' && Number.isFinite(value) ? clamp(value, 0, 1) : 1;
+  let levels = Object.fromEntries(
+    ['interface', 'motor', 'ambience'].map((key) => [key, volume(options.volumes?.[key])]),
+  );
 
   function ramp(parameter, value, seconds = 0.04) {
     parameter.setTargetAtTime(value, context.currentTime, seconds);
@@ -62,12 +67,20 @@ export function createWorldAudio(options = {}) {
       const master = candidate.createGain();
       master.gain.value = 0.7;
       master.connect(candidate.destination);
+      const buses = Object.fromEntries(
+        Object.entries(levels).map(([key, level]) => {
+          const bus = candidate.createGain();
+          bus.gain.value = level;
+          bus.connect(master);
+          return [key, bus];
+        }),
+      );
       const motor = candidate.createGain();
       motor.gain.value = 0;
       const motorFilter = candidate.createBiquadFilter();
       motorFilter.type = 'lowpass';
       motorFilter.frequency.value = 1200;
-      motor.connect(motorFilter).connect(master);
+      motor.connect(motorFilter).connect(buses.motor);
       const rotors = [1, 1.013, 2.007].map((ratio, index) => {
         const oscillator = candidate.createOscillator();
         oscillator.type = index === 2 ? 'sine' : 'triangle';
@@ -95,17 +108,17 @@ export function createWorldAudio(options = {}) {
       windFilter.frequency.value = ambience.filter;
       const wind = candidate.createGain();
       wind.gain.value = 0;
-      noise.connect(windFilter).connect(wind).connect(master);
+      noise.connect(windFilter).connect(wind).connect(buses.ambience);
       noise.start();
       const hum = candidate.createOscillator();
       hum.type = 'sine';
       hum.frequency.value = ambience.hum;
       const humGain = candidate.createGain();
       humGain.gain.value = 0;
-      hum.connect(humGain).connect(master);
+      hum.connect(humGain).connect(buses.ambience);
       hum.start();
       context = candidate;
-      graph = { master, motor, motorFilter, rotors, noise, windFilter, wind, hum, humGain };
+      graph = { master, buses, motor, motorFilter, rotors, noise, windFilter, wind, hum, humGain };
       return true;
     } catch {
       candidate?.close().catch(() => {});
@@ -114,7 +127,8 @@ export function createWorldAudio(options = {}) {
   }
 
   function tone({ from, to = from, duration = 0.12, gain = 0.05, delay = 0, type = 'sine' }) {
-    if (!graph || effects.size >= 12 || !wanted || context.state !== 'running') return;
+    if (!graph || !levels.interface || effects.size >= 12 || !wanted || context.state !== 'running')
+      return;
     const oscillator = context.createOscillator();
     const envelope = context.createGain();
     const start = context.currentTime + delay;
@@ -125,7 +139,7 @@ export function createWorldAudio(options = {}) {
     envelope.gain.setValueAtTime(0, start);
     envelope.gain.linearRampToValueAtTime(gain, start + 0.008);
     envelope.gain.exponentialRampToValueAtTime(0.0001, start + duration);
-    oscillator.connect(envelope).connect(graph.master);
+    oscillator.connect(envelope).connect(graph.buses.interface);
     let stopped = false;
     const effect = {
       stop() {
@@ -193,8 +207,25 @@ export function createWorldAudio(options = {}) {
 
   return {
     enabled: () => enabled,
+    volumes: () => ({ ...levels }),
+    setVolumes(values = {}) {
+      if (disposed) return;
+      levels = Object.fromEntries(
+        Object.keys(levels).map((key) => [
+          key,
+          Object.hasOwn(values, key) ? volume(values[key]) : levels[key],
+        ]),
+      );
+      if (!graph || context.state === 'closed') return;
+      for (const [key, bus] of Object.entries(graph.buses)) {
+        bus.gain.cancelScheduledValues(context.currentTime);
+        ramp(bus.gain, levels[key], 0.025);
+      }
+      if (!levels.interface) stopEffects();
+    },
     status: () => ({
       enabled,
+      volumes: { ...levels },
       available: Boolean(AudioContext) && !disposed,
       running: Boolean(wanted && context?.state === 'running'),
     }),
@@ -298,6 +329,7 @@ export function createWorldAudio(options = {}) {
         graph.windFilter,
         graph.wind,
         graph.humGain,
+        ...Object.values(graph.buses),
         graph.master,
       ])
         node.disconnect();

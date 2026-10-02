@@ -1,6 +1,6 @@
 # Reveal Line: completed work and remaining programme
 
-> **Current review — 1 October:** use the [plain-language remaining work and priority choices](plan-priorities-2026-10-01.md). It updates merged/public/queued status, explains benefits and deferral costs, and distinguishes the proposed core-game-first refinement from the still-approved A → B → C order. The dated record below is preserved history.
+> **Historical review — 1 October:** use the [plain-language remaining work and priority choices](plan-priorities-2026-10-01.md). It updates merged/public/queued status, explains benefits and deferral costs, and distinguishes the proposed core-game-first refinement from the still-approved A → B → C order. The dated record below is preserved history.
 
 Reviewed 30 September 2026, 18:49 UTC. This is the current explanation and priority
 map for the character/game-feel and player-first plans. Earlier dated batch

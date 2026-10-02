@@ -1,8 +1,10 @@
 # Reveal Line: remaining work explained for reprioritization
 
+> **Historical snapshot:** this document records the 1 October review against its pinned main revision. Its queue, deployment, PR-status and recommendation statements are preserved as dated evidence, not current instructions.
+
 Reviewed **1 October 2026, 22:30 CEST (Europe/Berlin)** against main
 `955c539a757c08c534c9038500785b20e64abb36` and fresh GitHub/public metadata.
-This is a decision aid and current status update, not new gameplay qualification.
+This is a historical decision aid and dated status update, not new gameplay qualification.
 It supersedes queue and recommendation statements in the
 [30 September actor review](plan-review-2026-09-30.md), while retaining its
 implementation evidence and the [whole-product scope](delivery-status.md).
