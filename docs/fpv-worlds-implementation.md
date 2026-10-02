@@ -1,6 +1,6 @@
 # FPV World Studio — implementation and player qualification
 
-Current continuation: **2 October 2026**, branch `codex/fpv-woodland-surfaces`.
+Current continuation: **3 October 2026**, branch `codex/fpv-warehouse-surfaces`.
 The latest catalogue has **14 worlds / 148 authored challenges**: the original
 60, 58 school lessons and 30 World Adventures. See [the current delivery
 plan](fpv-reviewed-delivery-plan.md) and [World Adventures](fpv-world-adventures.md)
@@ -11,8 +11,9 @@ ghosts #913, World Adventures #947 and offline SIM #933 are integrated on the
 current main baseline. Section practice #951, lifecycle #952, all 178 original/
 school demonstrations #954, Hangar #956, touch/mode choice #959, meadow #960 and
 courtyard #961 are merged. Woodland bark and
-forest-floor presentation is published as #964 with source/package verification.
-The next focused increment is Warehouse storage-surface and UV refinement;
+forest-floor presentation #964 is merged. Warehouse closed storage panels, bay
+labels and metre-scaled shell UVs now pass source verification; the next focused
+increment is Stadium display/stand surfaces;
 follow the delivery log for exact qualification/publication status.
 Physical-device, novice-player and broader production-art acceptance remain open.
 

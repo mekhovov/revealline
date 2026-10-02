@@ -158,6 +158,16 @@ function surfacePixels(kind, color, seed, size, pixel) {
   };
   const broad = noise(5),
     fine = noise(19);
+  // Original 3×5 bay numerals share the storage surface atlas; no font, canvas
+  // or separate decal texture is needed. Rows run from glyph top to bottom.
+  const bayDigits = [
+    '010110010010111',
+    '110001010100111',
+    '110001010001110',
+    '101101111001001',
+    '111100110001110',
+    '011100110101010',
+  ];
   const woodlandSurface = kind === 'bark' || kind === 'forest-floor',
     earth = woodlandSurface ? new THREE.Color(0x695946).lerp(base, 0.3) : null,
     moss = woodlandSurface ? new THREE.Color(0x576747).lerp(base, 0.3) : null,
@@ -234,6 +244,49 @@ function surfacePixels(kind, color, seed, size, pixel) {
         shade = seam ? 0.79 : 0.98 + panel + patch * 0.28 + mottling * 0.018;
         relief = seam ? -0.032 : mottling * 0.006;
         roughness = seam ? 0.86 : 0.57 + grain * 0.055 + broad(u, v) * 0.075;
+      }
+      if (kind === 'storage-steel') {
+        // Left half: closed steel panels, never empty shelving or dark openings.
+        // Right half: six restrained bay labels on the existing flush plates.
+        if (u < 0.5) {
+          const across = u * 2,
+            frame = Math.min(across, 1 - across) < 0.035 || v < 0.07 || v > 0.93,
+            joint =
+              Math.abs(across - 0.5) < 0.012 ||
+              Math.abs(v - 0.35) < 0.01 ||
+              Math.abs(v - 0.65) < 0.01,
+            handle = Math.abs(across - 0.46) < 0.025 && Math.abs(v - 0.49) < 0.012,
+            fastener =
+              Math.hypot(
+                Math.min(Math.abs(across - 0.1), Math.abs(across - 0.9)),
+                Math.min(Math.abs(v - 0.12), Math.abs(v - 0.88)),
+              ) < 0.012;
+          shade =
+            0.99 +
+            patch * 0.24 +
+            mottling * 0.015 -
+            (frame ? 0.16 : joint ? 0.13 : 0) +
+            (handle ? 0.16 : 0) -
+            (fastener ? 0.12 : 0);
+          relief = (frame || joint ? -0.035 : 0) + (handle ? 0.015 : 0) + mottling * 0.003;
+          roughness = 0.59 + grain * 0.035 + broad(u, v) * 0.045;
+        } else {
+          const cellX = Math.min(1, Math.floor((u - 0.5) * 4)),
+            cellY = Math.min(2, Math.floor(v * 3)),
+            x = (u - 0.5) * 4 - cellX,
+            y = v * 3 - cellY,
+            column = Math.floor(((x - 0.3) / 0.4) * 3),
+            row = Math.floor(((0.8 - y) / 0.6) * 5),
+            glyph =
+              column >= 0 &&
+              column < 3 &&
+              row >= 0 &&
+              row < 5 &&
+              bayDigits[cellY * 2 + cellX][row * 3 + column] === '1';
+          shade = glyph ? 2.1 : 0.75;
+          relief = 0;
+          roughness = 0.68;
+        }
       }
       if (kind === 'rubber') {
         shade = 0.94 + patch * 0.35 + mottling * 0.08;
@@ -412,6 +465,8 @@ function surfaceMaps(kind, color, { pixel = false, seed = 971 } = {}) {
     // Generated base colors are already linear. Normal/ORM are data, not colors.
     texture.colorSpace = index === 0 ? THREE.LinearSRGBColorSpace : THREE.NoColorSpace;
     texture.userData.surface = surface;
+    if (kind === 'storage-steel')
+      texture.name = `warehouse-storage-steel-${['albedo', 'normal', 'orm'][index]}`;
     if (kind === 'bark' || kind === 'forest-floor')
       texture.name = `woodland-${kind}-${['albedo', 'normal', 'orm'][index]}`;
     return texture;
@@ -900,7 +955,9 @@ export function buildWorldVisuals({
   surfaceDetail.name = 'surface-detail';
   world.add(surfaceDetail);
   const pixel = profile.textureFilter === 'nearest';
-  const hangar = environment === 'gym';
+  const hangar = environment === 'gym',
+    warehouse = environment === 'warehouse',
+    steelCladding = hangar || warehouse;
   const floorKind =
     adventure?.floor ??
     (hangar
@@ -960,6 +1017,7 @@ export function buildWorldVisuals({
   ground.userData.materialRole = natural ? 'grass' : 'concrete';
   ground.position.set(cx, min.y - 0.01, cz);
   ground.receiveShadow = true;
+  if (warehouse) ground.userData.materialRole = 'concrete';
   const accent = material(theme.accent, {
     roughness: 0.5,
     emissive: theme.accent,
@@ -969,7 +1027,7 @@ export function buildWorldVisuals({
     ? { map: kit.texture(natural ? 'timber' : 'steel') }
     : surfaceMaps(
         adventure?.wall ??
-          (hangar
+          (steelCladding
             ? 'painted-steel'
             : environment === 'courtyard'
               ? 'brick'
@@ -980,7 +1038,7 @@ export function buildWorldVisuals({
         { pixel },
       );
   for (const texture of new Set(Object.values(wallMaps)))
-    texture.repeat.set(hangar ? 1 : 3, hangar ? 1 : 2);
+    texture.repeat.set(steelCladding ? 1 : 3, steelCladding ? 1 : 2);
   const wallMap = wallMaps.map;
   const walls = material(0xffffff, {
     ...wallMaps,
@@ -1009,6 +1067,7 @@ export function buildWorldVisuals({
       plaster: theme.wall,
       brick: environment === 'courtyard' ? 0xb99e83 : theme.wall,
       metal: theme.wall,
+      'storage-steel': theme.wall,
       stone: 0xa18a6d,
       foliage: 0x587d49,
       solar: 0x263e5d,
@@ -1033,7 +1092,7 @@ export function buildWorldVisuals({
   };
   const structure = (size, at, paint = walls) => {
     const shape = new THREE.BoxGeometry(...size);
-    if (hangar && (paint === walls || paint === serviceBand)) {
+    if (steelCladding && (paint === walls || (hangar && paint === serviceBand))) {
       // UV-only projection keeps all existing faces, bounds and silhouettes.
       // A shared map retains the same material scale on differently sized walls.
       const positions = shape.attributes.position,
@@ -1052,6 +1111,8 @@ export function buildWorldVisuals({
     }
     const value = mesh(shape, paint, indoor ? world : backdrop);
     value.position.set(...at);
+    if (warehouse && (paint === walls || paint === serviceBand))
+      value.userData.materialRole = paint === walls ? 'steel' : 'enamel';
     value.castShadow = value.receiveShadow = true;
     value.userData.materialRole =
       hangar && paint === serviceBand ? 'rubber' : natural ? 'timber' : 'steel';
@@ -1440,6 +1501,14 @@ export function buildWorldVisuals({
     obstacleSurface,
     obstacleSurfaceKind(obstacle) {
       const id = obstacle.id ?? '';
+      if (
+        warehouse &&
+        /^(rack-[01]-[0-2]|school-low-stack|school-overhead-beam|school-aisle-divider)$/.test(id) &&
+        !obstacle.type &&
+        obstacle.min &&
+        obstacle.max
+      )
+        return 'storage-steel';
       if (
         environment === 'woodland' &&
         /^tree-\d+$/.test(id) &&
