@@ -119,7 +119,7 @@ const chapter = (library) =>
 test('remote installed Classic remains exact, validates raw snapshot at handoff, and never decodes while browsing', async (t) => {
   const f = await fixture(t, [recipe]);
   assert.equal(f.owner.state().ready, true);
-  assert.equal(f.library.missions.length, 327);
+  assert.equal(f.library.missions.length, 435);
   assert.equal(f.reads.length, 5);
   const row = chapter(f.library).at(-1);
   assert.ok(row);
@@ -169,7 +169,7 @@ test('modified same-ID artwork is Custom, has distinct exact IDs, and refreshed 
     fit: 'contain',
   };
   const f = await fixture(t, [modified]);
-  assert.equal(f.library.missions.length, 330);
+  assert.equal(f.library.missions.length, 438);
   const original = chapter(f.library)[0];
   assert.match(f.library.availability(original).reason, /different edition/);
   const custom = f.library.missions.filter((row) => row.collection === 'Custom');
