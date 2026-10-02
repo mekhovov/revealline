@@ -1559,3 +1559,33 @@ Hangar pass on current published SIM contracts, while the broader shared Themes
 integration remains owned by its active chat. Do not add unfinished Hangar edits
 to #954. If the Hangar PR is ready while #954 is open and remains dependent,
 create a fresh linear native stack; never revive stacks889/902.
+
+### 2 October — integrate new practice publishing without blocking C
+
+Upstream #930 (practice discovery/launcher/offline) and #953 (main-game demo
+routes) merged while Garage #954 was validating. Recovery refs
+`codex/fpv-garage-pre-integration-20261002` and
+`codex/fpv-hangar-pre-integration-20261002` preserve both local heads. Garage is
+rebased on `f236bb71a`; all upstream runtime, publication and offline changes
+are preserved. Warehouse/Stadium authoring guidance removed by #930's older
+README was restored alongside Garage; their source/recording bytes were retained
+upstream. No unrelated change was reverted.
+
+The upstream practice-discovery policy now allows72 Academy /104 World source
+files (Flight remains64), adding admitted preview/guide/navigation resources.
+These inherited caps were changed by #930, not by this SIM increment. Byte limits
+remain8/8/16MiB. Earlier64/96-file receipts remain historical evidence for their
+frozen candidates; fresh integrated package receipts are required and recorded
+separately. No release version or global release authority was changed here.
+
+C1 is implemented and retained on the separate Hangar branch: texture/UV-only
+wall panels, six-metre concrete slab alignment and subdued service strips.
+Actual browser75/75 checks cover30 image pairs, three presets, camera poses,
+exact meadow pixels, fixed geometry/rays and resource plateaus/disposal. All154
+v2 plus24 legacy recordings replay. Its active work will be rebased after Garage
+integration, preserving a linear dependency if both PRs remain open.
+
+A temporary disk-full condition was resolved by deleting only two generated
+`distribution.zip` duplicates under `/tmp/fpv-sim-entry-build-20261002` and
+`/tmp/fpv-sim-entry-qualified-20261002`; extracted builds, checksum manifests,
+source and recorded evidence remain. No user assets or checkout were removed.
