@@ -1,6 +1,10 @@
 # Unified appearance implementation
 
-The latest [continuation report](verification/appearance-continuation-2026-10-02/README.md)
+The latest [runtime continuation](verification/appearance-runtime-2026-10-02/README.md)
+records distant gate cues, packaged embedded-texture loading, Replay recovery,
+independent asset rendering and the remaining production/device acceptance gates.
+
+The preceding [continuation report](verification/appearance-continuation-2026-10-02/README.md)
 records the subsequent Industrial state, Neon entrypoint, SIM badge and original
 marking-kit work, with scoped browser evidence and prioritized remaining gates.
 

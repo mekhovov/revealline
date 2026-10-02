@@ -1,0 +1,111 @@
+{
+  "outcome": "loaded",
+  "packageRevision": "a53d045d84f62202a119b8d85dce53906379b4753d367c2b5001af926dbbf8f0",
+  "markingSource": "industrial-gate-pad@r1",
+  "rawGLBSha256": "57da4671dbb4c3a2aafb96785eb1bf83d14719106279e6fd0f9720800f9a5bf2",
+  "collection": {
+    "collectionId": "authored",
+    "revision": "r1"
+  },
+  "courseOriginalUnchanged": true,
+  "renderer": {
+    "available": true,
+    "disposed": false,
+    "quality": "balanced",
+    "drone": "racer",
+    "presentation": {
+      "collectionId": "authored",
+      "revision": "r1",
+      "profileId": "academy",
+      "actors": [],
+      "actorGoals": [],
+      "projectileBatches": 0,
+      "activeProjectiles": 0,
+      "surfaceDetailGroups": 0
+    },
+    "effects": {
+      "playerPulse": 9233635,
+      "hostilePulse": 16232561,
+      "ghost": 9824751,
+      "ghostEmissive": 2390144,
+      "trail": 9824751,
+      "goalOutline": 9169660,
+      "goalActive": 15266215,
+      "goalComplete": 9808542,
+      "goalInactive": 8366516,
+      "goalGlow": 11069917,
+      "goalGlowInactive": 9030085,
+      "goalEmissive": 8577493,
+      "goalBadge": 10872788,
+      "directionArrow": 15264432
+    },
+    "importedMaterialBindings": {
+      "applied": 0,
+      "diagnostics": [],
+      "diagnosticsTruncated": 0
+    },
+    "registered": {
+      "geometries": 85,
+      "materials": 63,
+      "textures": 17
+    },
+    "renderer": {
+      "calls": 45,
+      "triangles": 436,
+      "geometries": 30,
+      "textures": 15,
+      "programs": 8,
+      "contextLost": false
+    }
+  },
+  "editor": {
+    "available": true,
+    "disposed": false,
+    "quality": "low",
+    "drone": "racer",
+    "presentation": {
+      "collectionId": "authored",
+      "revision": "r1",
+      "profileId": "academy",
+      "actors": [],
+      "actorGoals": [],
+      "projectileBatches": 0,
+      "activeProjectiles": 0,
+      "surfaceDetailGroups": 0
+    },
+    "effects": {
+      "playerPulse": 9233635,
+      "hostilePulse": 16232561,
+      "ghost": 9824751,
+      "ghostEmissive": 2390144,
+      "trail": 9824751,
+      "goalOutline": 9169660,
+      "goalActive": 15266215,
+      "goalComplete": 9808542,
+      "goalInactive": 8366516,
+      "goalGlow": 11069917,
+      "goalGlowInactive": 9030085,
+      "goalEmissive": 8577493,
+      "goalBadge": 10872788,
+      "directionArrow": 15264432
+    },
+    "importedMaterialBindings": {
+      "applied": 0,
+      "diagnostics": [],
+      "diagnosticsTruncated": 0
+    },
+    "registered": {
+      "geometries": 85,
+      "materials": 63,
+      "textures": 14
+    },
+    "renderer": {
+      "calls": 33,
+      "triangles": 1308,
+      "geometries": 30,
+      "textures": 15,
+      "programs": 4,
+      "contextLost": false
+    }
+  }
+}

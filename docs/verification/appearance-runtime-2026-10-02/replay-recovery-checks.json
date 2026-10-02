@@ -1,0 +1,106 @@
+{
+  "format": "FocusedAppearanceChecks.v1",
+  "node": "v20.19.5",
+  "scope": "Replay import feedback, cancellation focus recovery and locale continuity",
+  "checks": [
+    {
+      "kind": "actual-host-tests",
+      "result": "passed",
+      "tests": 37,
+      "pass": 37,
+      "fail": 0,
+      "skipped": 0,
+      "log": "replay-recovery-tests.tap",
+      "note": "Related full cohort before final one-line data-ui-tone error-paint addition; no other behavior changed afterward."
+    },
+    {
+      "kind": "final-local-feedback-handler",
+      "result": "passed",
+      "pass": 1,
+      "fail": 0,
+      "skipped": 17,
+      "log": "replay-local-feedback-final.tap",
+      "note": "Name-filtered actual import/recovery test verifies final danger-to-neutral semantic state; 17 other cases intentionally not rerun."
+    },
+    {
+      "kind": "eslint",
+      "result": "passed",
+      "files": [
+        "game/replay-theater/app.mjs",
+        "game/replay-theater/navigation.mjs",
+        "game/test/replay-theater-navigation.test.mjs",
+        "game/test/replay-theater-display-host.test.mjs"
+      ],
+      "log": "replay-lint.log"
+    },
+    {
+      "kind": "format",
+      "result": "passed",
+      "log": "replay-format.log"
+    },
+    {
+      "kind": "localization",
+      "result": "passed",
+      "log": "replay-localization.log"
+    },
+    {
+      "kind": "diff-whitespace",
+      "result": "passed",
+      "log": "replay-diff-check.log"
+    }
+  ],
+  "source": [
+    {
+      "path": ".github/workflows/appearance-preview.yml",
+      "bytes": 12408,
+      "sha256": "dbfb70309557cd0c710aa34ddafd99b6a77ee826e451d9f32041c80527da1be3"
+    },
+    {
+      "path": "game/replay-theater/app.mjs",
+      "bytes": 29207,
+      "sha256": "c1b271b5c6e60a3be39df91e82802cc4f8889e165077f0e9312dbd4a3764e124"
+    },
+    {
+      "path": "game/replay-theater/navigation.mjs",
+      "bytes": 8201,
+      "sha256": "76398878f3377bed57354409558b87f25f3e246b6fed48c178bf1c92b400f969"
+    },
+    {
+      "path": "game/replay-theater/index.html",
+      "bytes": 14690,
+      "sha256": "c64cfeccedff1003e8d5e18842e2c02e420f2ec165af5027d805ea0aaf2098af"
+    },
+    {
+      "path": "game/test/replay-theater-navigation.test.mjs",
+      "bytes": 34236,
+      "sha256": "5d71a9b0ed599ae49814f09081c3789c3e651afda413de5eba7854d957e1c3d3"
+    },
+    {
+      "path": "game/test/replay-theater-display-host.test.mjs",
+      "bytes": 25083,
+      "sha256": "3ad1041ab38716f787b041f81945444ce945d210ca2ab015522e0c231504979b"
+    },
+    {
+      "path": "game/test/replay-theater-actor-appearance.test.mjs",
+      "bytes": 23298,
+      "sha256": "cdea7f8cf4cc3057114320365be725f8e3420db3eb0f65587ec2647196540333"
+    },
+    {
+      "path": "game/locales/en/interface.json",
+      "bytes": 496216,
+      "sha256": "fc475a576405bae93e4c187f228597e4bac9814efe19f9340f5e17c38a9cf0f6"
+    },
+    {
+      "path": "game/locales/uk/interface.json",
+      "bytes": 806777,
+      "sha256": "8c1360e929e91fc6402920dd6694c05957a9f9a8fc5b026704b2126e8c3ba8f7"
+    },
+    {
+      "path": "game/i18n/catalogs.mjs",
+      "bytes": 1128003,
+      "sha256": "90a8b1041bcce75a4c3f82e4522f4d2eacd860b78b7e257cb3f3f3e86109a6c7"
+    }
+  ],
+  "browserEvidence": "Root agent performs actual browser checks separately; no browser/device result inferred from these tests.",
+  "completeWholeGameQualification": false
+}

@@ -64,6 +64,66 @@ export function simObjectiveLabelLayout({
       : base;
   return { size, centerY: base / (2 * size) };
 }
+
+/** Static objective brackets, not a replacement model or a larger gate opening.
+ * The two contrasting strips sit wholly outside the existing 45 mm frame.
+ * Geometry and paints are shared by every gate in this ownership group. */
+export function createSimGateCueFactory(profile) {
+  if (!simCollectionIdForProfile(profile)) return null;
+  let shape, paints;
+  return ({ axis, span, height }) => {
+    if (
+      !['x', 'z'].includes(axis) ||
+      ![span, height].every((value) => Number.isFinite(value) && value > 0)
+    )
+      return null;
+    shape ??= new THREE.BoxGeometry(1, 1, 1);
+    paints ??= [0x101820, 0xf1f9e8].map(
+      (color) =>
+        new THREE.MeshBasicMaterial({
+          color,
+          transparent: true,
+          opacity: 1,
+          depthTest: true,
+          depthWrite: false,
+          toneMapped: false,
+          fog: true,
+        }),
+    );
+    const cue = new THREE.Group();
+    cue.name = 'active-gate-corner-cue';
+    cue.visible = false;
+    const frameHalf = 0.045 / 2,
+      strip = 0.06,
+      across = Math.min(0.32, span / 4),
+      vertical = Math.min(0.32, height / 4),
+      transform = new THREE.Matrix4(),
+      scale = new THREE.Vector3(),
+      position = new THREE.Vector3(),
+      rotation = new THREE.Quaternion();
+    for (const [band, paint] of paints.entries()) {
+      const batch = new THREE.InstancedMesh(shape, paint, 8);
+      let index = 0;
+      for (const side of [-1, 1])
+        for (const top of [-1, 1]) {
+          const outer = (band + 1) * strip,
+            middle = (band + 0.5) * strip;
+          for (const upright of [true, false]) {
+            const width = upright ? strip : across + outer,
+              tall = upright ? vertical + outer : strip,
+              x = side * (span / 2 + frameHalf + (upright ? middle : (outer - across) / 2)),
+              y = top * (height / 2 + frameHalf + (upright ? (outer - vertical) / 2 : middle));
+            position.set(axis === 'z' ? x : 0, y, axis === 'z' ? 0 : x);
+            scale.set(axis === 'z' ? width : 0.045, tall, axis === 'z' ? 0.045 : width);
+            transform.compose(position, rotation, scale);
+            batch.setMatrixAt(index++, transform);
+          }
+        }
+      cue.add(batch);
+    }
+    return cue;
+  };
+}
 function random(seed) {
   let value = seed >>> 0;
   return () => {

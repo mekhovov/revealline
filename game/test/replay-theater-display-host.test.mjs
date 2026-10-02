@@ -12,6 +12,10 @@ import { BoardPainter } from '../ui/render.mjs';
 import { attachFieldKitSurfaces } from '../ui/field-kit-surfaces.mjs';
 import { ENCOUNTER_DISPLAY_PREFERENCES_KEY } from '../encounter-display-preferences.mjs';
 import { DISPLAY_PREFERENCES_KEY } from '../display-preferences.mjs';
+import {
+  THEME_PREFERENCES_KEY,
+  LEGACY_THEME_PREFERENCES_KEY,
+} from '../presentation/theme-system.mjs';
 import { Document, Element, Events } from './helpers/couch-dom.mjs';
 import { editionProviderFixture } from './helpers/edition-provider-fixture.mjs';
 import { loadRuntimeContentProvider } from '../runtime-content-provider.mjs';
@@ -301,6 +305,35 @@ test('edition theater reports unavailable catalog through its ordinary boot stat
   assert.match(p.$('boot-status').textContent, /could not start/i);
   assert.equal(p.frames.size, 0);
 });
+
+test('an empty edition recovers a focused Cancel to Verify because bundled examples are unavailable', async (t) => {
+  const p = fixture(t, { edition: await editionProviderFixture() });
+  await p.loading;
+  const cancel = p.$('cancel-load');
+  let finish,
+    hidden = cancel.hidden;
+  Object.defineProperty(cancel, 'hidden', {
+    configurable: true,
+    get: () => hidden,
+    set: (value) => {
+      hidden = value;
+      if (value && p.doc.activeElement === cancel) p.doc.body.focus();
+    },
+  });
+  p.$('replay-file').files = [
+    { name: 'invalid.json', size: 2, text: () => new Promise((resolve) => (finish = resolve)) },
+  ];
+  p.$('replay-file').emit('change');
+  await until(() => finish, 'file read began');
+  cancel.focus();
+  finish('{}');
+  await until(() => cancel.hidden, 'file rejected');
+  assert.equal(p.$('load-example').disabled, true);
+  assert.equal(p.doc.activeElement, p.$('load-text'));
+  assert.equal(p.$('replay-import-feedback').dataset.error, 'true');
+  assert.equal(p.$('play-pause').disabled, true);
+  noPlayerAccess(p);
+});
 async function ready(page) {
   await page.loading;
   await until(
@@ -321,8 +354,12 @@ function noPlayerAccess(page) {
         MENU_AUDIO_KEY,
         RADIO_AUDIO_KEY,
         MOVEMENT_AUDIO_KEY,
+        THEME_PREFERENCES_KEY,
+        LEGACY_THEME_PREFERENCES_KEY,
+        'revealline.menu-style.v1',
       ].includes(key),
     ),
+    `Unexpected reads: ${JSON.stringify([...new Set(page.reads)])}`,
   );
   assert.ok(
     page.writes.every(({ key }) =>

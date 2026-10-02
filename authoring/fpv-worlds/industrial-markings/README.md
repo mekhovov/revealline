@@ -77,12 +77,14 @@ server. The viewer verifies the emitted GLB hash, then uses the **same pinned Th
 GLTFLoader as the game** to decode the embedded PNG and geometry. It does not claim
 an independent viewer. Khronos' standards validator is a separate implementation;
 glTF Transform also reads the binary back and checks the embedded texture bytes.
-The authoring viewer explicitly selects the loader's `TextureLoader` image-element
-decoder. This uses the existing `img-src blob:` permission for the embedded PNG;
+The authoring viewer and World renderer now share the loader's `TextureLoader`
+image-element decoder. This uses the existing `img-src blob:` permission for the embedded PNG;
 the default `ImageBitmapLoader` instead fetches blob URLs, which the ordinary
 server's `connect-src` policy rejects. No CSP, vendor code, or GLB bytes are changed.
-This decoder selection is a viewer configuration, not evidence that every runtime
-host already accepts textured GLBs under its own CSP.
+The shared runtime integration also rejects failed image decoding before replacing
+the accepted imported scene. The pinned parser still owns glTF color-space,
+sampler and alpha handling. The separate packaged fixture below qualifies the
+actual runtime path rather than assuming the viewer establishes it.
 
 Compare whole kit, gate, gate detail, pad and grazing views. The thin gray rectangle
 and plain host disk are viewer reference geometry only. Toggle **Unlit color
@@ -108,10 +110,38 @@ texture grays visibly aligned with their reference swatches. See the scoped
 The produced source manifest remains unchanged and records its original
 pre-review stage; later review evidence lives outside that immutable receipt.
 
+The official Khronos renderer also loaded the exact retained GLB, with six meshes,
+twelve triangles and zero validation errors, warnings or informational issues.
+Its base-color diagnostic showed the five gray levels and role palette. See the
+[independent static rendering receipt](../../../docs/verification/appearance-runtime-2026-10-02/independent-marking-render.md).
+This is a separate rendering implementation; lighting was not matched and it is
+not pixel-equivalence or device certification.
+
 Actual in-flight placement, readability at distance, temporal sampling,
-GPU/resource plateau, physical-device checks and an independent rendering-engine
-comparison remain **unqualified**. In particular, the default runtime embedded-PNG
-loader still needs a CSP-compatible integration before this kit can be adopted.
+GPU/resource plateau and physical-device checks remain **unqualified**.
 Runtime adoption needs a new
 reviewed collection revision, exact dependency closure and preserved authored
 fallback; it must not replace the installed r1 collection in place.
+
+## Packaged runtime image acceptance
+
+```sh
+node --test game/test/fpv-world-textures.test.mjs scripts/test-world-texture-acceptance.mjs
+node scripts/prepare-world-texture-acceptance.mjs --name UNIQUE-NAME
+```
+
+The builder emits the ordinary development World optional-package bytes plus an
+isolated `authoring/fpv-worlds/industrial-markings/runtime.html` inspection route.
+It does not build the full game, duplicate the ZIP on disk, install the marking
+kit, or modify a source course. Its manifest records exact package/source hashes
+and whether the inputs include working-tree edits. Serve the output directory
+with the existing ordinary server and CSP.
+
+The page verifies the emitted renderer and original GLB, uses the real importer,
+World renderer and spatial editor, and offers exact reload, corrupt-image
+rejection and cancellation checks. Authored, Industrial and Dnipro selection
+must retain unbound imported artwork. The Node tests reproduce the blocked
+default bitmap-fetch protocol, exercise the supported image-element path, retain
+sampler/alpha/color metadata, reject remote resources, test exact opt-in material
+bindings and verify disposal/previous-scene preservation. Their final browser
+image callback is modeled; browser review remains separate evidence.

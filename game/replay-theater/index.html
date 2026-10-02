@@ -2,7 +2,11 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <script src="../presentation/theme-bootstrap.mjs" data-theme-density="player" data-theme-follow-context="true"></script>
+    <script
+      src="../presentation/theme-bootstrap.mjs"
+      data-theme-density="player"
+      data-theme-follow-context="true"
+    ></script>
     <link
       rel="stylesheet"
       href="../presentation/industrial-workshop.css"
@@ -275,7 +279,12 @@
               identity or an authentic performance.
             </p>
             <label for="replay-file" data-i18n="interface:replayFile">Replay file</label>
-            <input id="replay-file" type="file" accept=".json,application/json" />
+            <input
+              id="replay-file"
+              type="file"
+              accept=".json,application/json"
+              aria-describedby="replay-import-feedback"
+            />
             <label for="replay-text" data-i18n="interface:orPasteReplayJson"
               >Or paste replay JSON</label
             >
@@ -286,10 +295,17 @@
               spellcheck="false"
               placeholder='{"version":"xonix-replay.v3", …}'
               data-i18n-placeholder="interface:versionXonixReplayV3"
+              aria-describedby="replay-import-feedback"
             ></textarea>
-            <button id="load-text" type="button" data-i18n="interface:verifyAndLoadJson">
+            <button
+              id="load-text"
+              type="button"
+              data-i18n="interface:verifyAndLoadJson"
+              aria-describedby="replay-import-feedback"
+            >
               Verify and load JSON
             </button>
+            <p id="replay-import-feedback" class="notice" aria-live="off" hidden></p>
           </details>
         </section>
         <section class="panel" aria-labelledby="look-heading">
