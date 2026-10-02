@@ -991,3 +991,69 @@ changes; continue R5 hangar/meadow environment/material polish on a separate
 branch, preserving this completed school PR. Human novice sessions, fluent-UK
 review, real controllers, sustained device measurements and R7 unit coverage are
 still qualification work; do not fabricate them or block independent art work.
+
+### 2 October — quieter motors and continuous readable stick cues
+
+Focused branch `codex/fpv-readable-stick-motion` begins at #940 head
+`963d55ab8475230d7bc9d32fc251770655067992`. The learning lab now uses constant
+0.5× recorded playback across objectives, exact filled example markers and an
+explicitly separate 80 ms hollow motion guide. Both SIM hosts share a bounded
+450 ms input trail with an origin ring and latest-direction chevron. Small
+counter-movements preserve their direction without amplifying input. Motor arcs
+are thinner and dimmer; cyan live input stays unsmoothed. Academy diagrams are
+outside its former 100 ms text-HUD throttle. See `fpv-readable-stick-motion.md`.
+
+Current browser receipts in `docs/evidence/fpv-stick-motion-*-20261002.json`:
+69/69 focused checks including all58 exact lesson replays and8 locale/layout
+combinations;119/119 complete lesson/takeover/manual-progression checks;4/4 actual
+Academy/World input-host checks with real renderer preparation. Synthetic key
+changes reached observed host dots in9.6–32.5 ms in this local run; this is a
+fixture observation, not physical-radio latency or sustained device performance.
+Current receipt input hashes match the source. Focused lint, formatting, syntax
+and diff checks pass; source review caught and corrected the short-reversal
+arrow direction before the final browser rerun. No additional unit coverage or
+new human/hardware qualification is claimed.
+
+Disk pressure initially required removing7 task-generated reproducible candidate
+ZIPs (47,825,325bytes):6 skills-final archives and1 reimport-playtest archive.
+Source, unpacked players, proofs, manifests and receipts were retained; unrelated
+radio/menu and graphics work is untouched. The host verification fixture needed
+one escaped script terminator corrected before its successful run; production
+validation was not weakened.
+
+Native stack902 still ends #938 → #939 → #940; parent remote head unchanged.
+Its current checks only show skipped unallocated-stage jobs, not passing merge
+gates. Preserve all upstream holds and stack889. Next: freeze/package this
+focused increment, rebuild both reviewed-player and continuous-school player
+URLs, publish/attach its child PR and append through the native API. Public
+availability still requires protected merge, deployment identity and actual
+public launch. The remaining R4–R7 art/qualification backlog is unchanged.
+
+Frozen runtime `21a5310a42ef520d3f788ec2d644fa464b9e2e86` passes all three
+optional package admissions, committed inputs/ZIP membership and two byte-identical
+builds; receipt `docs/evidence/fpv-stick-motion-package-20261002.json`.
+Both local player URLs were rebuilt and launched with the new markers and58
+lessons. Each has87 files/13,903,830bytes, ZIP SHA-256
+`9f58693c11cff70aa2e904136b3fd23bec908af4f4603e659411634af98bf012`.
+The source and built turning lesson were visually inspected; compact390px lesson
+layout remains usable. Screenshot `/tmp/fpv-readable-stick-motion-20261002.png`.
+No public-live or new hardware acceptance claim. Ready for focused publication.
+
+### 2 October — stick-motion refinement published
+
+Focused PR [#941](https://github.com/mekhovov/revealline/pull/941) is attached to
+this chat and appended through the native API to stack902 after #940. Qualified
+receipt head: `477d6146cae5b8f951a73cf99d3a42b24cf7b071`; runtime remains the
+frozen21a5310a build above. Live membership now shows #905 and #907 merged at
+02:54 and03:04 UTC respectively. Open members start #923 and continue linearly
+through #941; preserve all remaining review/protection requirements.
+
+At receipt head477d6146, candidate workflow36959354936 has optional-practice
+SUCCESS, with default-capacity/candidate still running. Unallocated-stage jobs
+are skipped. This is not complete merge qualification; retain external CI state
+for the next delivery heartbeat rather than polling unchanged jobs. No protected
+merge or public deployment of this increment was attempted or claimed.
+
+The current request is complete locally and published for review. Next authorized
+independent work remains R5 hangar/meadow art, after reconciling #925 and the
+preserved radio-menu work. Keep new feature changes off this finished PR.
