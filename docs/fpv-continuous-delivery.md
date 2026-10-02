@@ -1746,3 +1746,20 @@ claim is made for959 until deployment identity and actual public launch pass.
 Next independent approved work remains C2 meadow exterior composition on current
 main; keep that work off this ready PR. Preserve Themes955 ownership and pending
 physical-device qualification. Inspect exact remote heads before any merge.
+
+Main advanced during publication: capacity repair958 merged as `07f227f50`.
+The touch branch was linearly rebased with recovery ref
+`codex/fpv-touch-before-main958-20261002`; only the upstream soundtrack compaction
+and its evidence differ. Frozen candidate `80807bd78` again passes all three
+admissions, committed-input/ZIP verification and two identical builds. The
+final32-check browser fixture revalidates the exact unchanged62 dependency
+hashes, including host `79daf2e114f95b362da70c7cd7a7f00e7174e30150f1e8f0ced7198e0caa30b0`.
+Receipt: `docs/evidence/fpv-touch-package-main958-20261002.json`. The explicit
+remote-head lease rejected a concurrent repository-automation update safely.
+Automation had merged the same main as `3984e8185`; its tree matched our rebased
+candidate apart from these new evidence records. That remote history is retained,
+and this evidence is applied on top without a force-push. Recovery refs
+`codex/fpv-touch-local-rebased-20261002` and
+`codex/fpv-touch-automation-main958-20261002` preserve both histories.
+No new native stack is needed. Public deployment and current-head checks remain
+external pending work; keep the ready increment separate from C2.
