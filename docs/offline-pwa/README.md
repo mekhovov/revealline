@@ -9,6 +9,9 @@ For the new in-game update and community controls, see
 [installed-app updates and communities](updates-and-communities.md), including
 publication and device-verification limitations.
 
+For the optional SIM and whole-community selection flow, see
+[SIM and community downloads](sim-and-community-downloads.md).
+
 For current completion status and priorities, use the
 [reviewed offline/content plan](../content-offline/PLAN-REVIEW-2026-09-30.md).
 The manual Verify / Use this edition sequence below records the original
