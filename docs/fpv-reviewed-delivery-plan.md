@@ -258,3 +258,17 @@ The catalogue remains 14 worlds / 148 challenges. This branch installs
 120/120 original plus 58 school demonstrations; the 60 Adventure authoring proofs
 are separate. Main/public counts remain at 104 originals until this increment merges.
 Additional unit coverage stays in H/R7, with functional checks on every increment.
+
+
+### Approved A–H continuation checkpoint — 2 October
+
+A's checkpoint practice (#951) and B's lifecycle/keyboard-pause repair (#952)
+are merged and their public player launches are verified. E's Garage16
+increment (#954) completes the120 original demonstration set plus58 school
+proofs; it is published but held by a whole-edition size-check failure.
+C1's Hangar surface/UV refinement is complete and locally qualified, awaiting
+focused publication behind E. Broader C art/shared Themes integration, B actual
+hardware qualification, D player sessions, F creator workflow, G feedback-led
+map growth and H deferred unit/regression/device work remain. The current
+package file caps inherited from #930 are64/72/104; byte caps remain8/8/16MiB.
+Follow the latest delivery log for exact heads and publication evidence.

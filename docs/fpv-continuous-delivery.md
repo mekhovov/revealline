@@ -1596,3 +1596,22 @@ checks and two identical builds. Admitted complete source counts are35/68/100
 for Flight/Academy/World; World bytes14,064,140. Exact source runtime from the
 Garage playback receipts is unchanged; new discovery/worker helpers are inherited
 from reviewed #930. See `fpv-garage-integrated-package-verification.json`.
+
+
+### 2 October — C1 integrated qualification and inherited edition-size gate
+
+C1 candidate `294c9abe89e04cfb60b9e463dc88400832bace33` passes75/75 actual
+browser checks again after integrating #930/#953. All178 installed proofs
+replay. All three optional packages pass committed-input admission/ZIP checks
+and two identical builds:35/68/100 files, World14,067,328 bytes. A separate
+origin-unavailable browser check reopens the prepared launcher, reports Ready
+offline and launches the Hangar with enabled Arm/resume and no application
+errors. Physical devices and sustained performance remain unqualified.
+See `fpv-hangar-surfaces.md` and its evidence receipts.
+
+Garage #954 remains open at `59f20aaf0923a68b2c11f55e80641756bc9c83bd`.
+Its exact-head optional-practice and release-ready checks pass, but candidate
+run37034459099 fails the whole-edition guard:820 files/67,116,517 bytes,
+7,653 bytes above64MiB. Do not merge or increase the guard. Next publication
+step is a bounded lossless reduction followed by exact-head requalification,
+then a fresh native stack if C1 still depends on open #954. C1 stays separate.
