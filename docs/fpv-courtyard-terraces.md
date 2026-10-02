@@ -56,3 +56,11 @@ and registered geometry/material/texture allocations reach zero on disposal.
 These are bounded rendering observations on the Codex browser, not sustained
 device FPS. Added unit coverage remains in H/R7; human art acceptance and
 physical-device performance remain open.
+
+Frozen candidate `b00fe336338cdf9a351f5851346f93c29ccdd003` passes all three
+optional-package admissions, committed-input and ZIP checks, and two identical
+builds. Counts remain 35/68/100 source files within the inherited 64/72/104 caps;
+bytes remain within 8/8/16 MiB. The packaged player independently repeats all
+124 browser checks and 59 comparisons. See the package and packaged-browser
+receipts. This independent candidate includes merged touch #959; C2 meadow is
+published separately and has not been copied into this PR.
