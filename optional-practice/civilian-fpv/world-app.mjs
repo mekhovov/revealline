@@ -723,6 +723,7 @@ export function mountWorldApp({
     fireReleaseRequired = false,
     pausing = false,
     lastTime = null,
+    lastExecutionTime = null,
     accumulator = 0,
     raf = 0,
     radioSetup = null,
@@ -2651,6 +2652,7 @@ export function mountWorldApp({
     if (freezeRadio) radio.freeze('paused');
     if (flight) flight.pause();
     lastTime = null;
+    lastExecutionTime = win.performance?.now?.() ?? null;
     accumulator = 0;
     pausing = false;
     if (current) {
@@ -3228,8 +3230,21 @@ export function mountWorldApp({
     }
   }
   function advanceFrame(now) {
-    pollGamepad(now);
-    pollMenu(now);
+    const executedAt = win.performance?.now?.() ?? now,
+      executionDelta = lastExecutionTime === null ? 0 : executedAt - lastExecutionTime;
+    lastExecutionTime = executedAt;
+    // A queued rAF may retain a pre-stall timestamp. Freeze before polling
+    // device actions or advancing flight, actors and projectiles in that callback.
+    if (
+      flight &&
+      $('flight-dialog').open &&
+      (executionDelta > 250 || (lastTime !== null && now - lastTime > 250))
+    ) {
+      pauseFlight();
+      return;
+    }
+    pollGamepad(executedAt);
+    pollMenu(executedAt);
     if (!flight || !$('flight-dialog').open) return;
     if (
       !replayProof &&
@@ -3444,6 +3459,7 @@ export function mountWorldApp({
     updateSectorHUD();
     fire = false;
     lastTime = null;
+    lastExecutionTime = win.performance?.now?.() ?? null;
     accumulator = 0;
     $('result-panel').hidden = true;
     $('flight-title').textContent = label(entry);
@@ -4138,6 +4154,7 @@ export function mountWorldApp({
     void audio.resume().catch(reportError);
     fire = false;
     lastTime = null;
+    lastExecutionTime = win.performance?.now?.() ?? null;
     flight.arm();
     $('flight-status').textContent = replayProof
       ? txt('Playback active · no rewards.', 'Відтворення триває · без нагород.')
@@ -4291,6 +4308,7 @@ export function mountWorldApp({
     if (![0.25, 0.5, 1].includes(selected)) return;
     replayRate = selected;
     lastTime = null;
+    lastExecutionTime = win.performance?.now?.() ?? null;
     accumulator = 0;
   });
   on($('world-next'), 'click', () => {
@@ -4418,10 +4436,13 @@ export function mountWorldApp({
       beginnerCoach.blocksArm() ||
       !$('flight-dialog').open ||
       doc.querySelector('dialog[open]:not(#flight-dialog)') ||
-      /^(INPUT|SELECT|TEXTAREA|BUTTON)$/.test(e.target.tagName)
+      /^(INPUT|SELECT|TEXTAREA)$/.test(e.target.tagName) ||
+      e.target.isContentEditable
     )
       return;
     if (e.code === 'Space') {
+      // Space on a focused button belongs to its native activation behavior.
+      if (e.target.tagName === 'BUTTON') return;
       e.preventDefault();
       if (
         !replayProof &&
