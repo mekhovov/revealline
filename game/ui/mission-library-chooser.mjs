@@ -57,6 +57,7 @@ export function attachMissionLibraryChooser({
   availableCollectionsOnly = false,
   goalPreferenceOptions = {},
   description = localizedMessage('interface:allMissionsOneLibraryJourneyClassicAndCustomKeepTheir'),
+  random = Math.random,
 }) {
   if (
     !Array.isArray(supportedModes) ||
@@ -64,6 +65,7 @@ export function attachMissionLibraryChooser({
     supportedModes.some((value) => !LIBRARY_MODES.includes(value))
   )
     throw new TypeError(t('interface:unknownMissionLibraryMode'));
+  if (typeof random !== 'function') throw new TypeError('A random number source is required.');
   const modes = [...new Set(supportedModes)];
   const collections = () =>
     availableCollectionsOnly
@@ -192,10 +194,19 @@ export function attachMissionLibraryChooser({
   list.className = 'journey-cards';
   const footer = node('div');
   footer.className = 'journey-footer';
+  const randomLevel = node(
+    'button',
+    'journey-random-level',
+    localizedMessage('interface:randomLevel'),
+  );
+  randomLevel.type = 'button';
+  randomLevel.className = 'button primary';
+  randomLevel.setAttribute('aria-controls', 'journey-cards');
+  localizedAttribute(randomLevel, 'title', () => t('interface:playRandomLevelFromVisibleResults'));
   const back = node('button', 'journey-back', localizedMessage('common:navigation.backToGame'));
   back.type = 'button';
   back.className = 'button secondary';
-  footer.append(back);
+  footer.append(randomLevel, back);
   dialog.append(heading, copy, filters, status, campaignRail, list, footer);
   doc.body.append(dialog);
   const cards = new Map(),
@@ -560,6 +571,56 @@ export function attachMissionLibraryChooser({
       }
     }
   }
+  function readyRandomRows() {
+    return library
+      .search(search.value || '', {
+        mode: modeFilter.value,
+        collection: collection.value,
+        lifecycle: lifecycle.value,
+      })
+      .filter((row) => library.availability(row, modeFilter.value).state === 'ready');
+  }
+  function playRandom({ resetFilters = false } = {}) {
+    if (destroyed || !dialog.open || doc.hidden || doc.hasFocus?.() === false) return false;
+    retirePendingSelection();
+    retirePreparations();
+    if (resetFilters) {
+      ++visit;
+      message = '';
+      search.value = '';
+      collection.value = '';
+      lifecycle.value = 'current';
+      modeFilter.value = mode;
+      selectedId = '';
+      savedScroll = 0;
+      list.scrollTop = 0;
+      pendingCampaign = '';
+      rebuildCampaigns();
+      invalidateDiagrams();
+      render();
+      remember({ captureFocus: false });
+    }
+    const ready = readyRandomRows();
+    const alternatives = ready.filter((row) => row.id !== getCurrentId());
+    const choices = alternatives.length ? alternatives : ready;
+    if (!choices.length) {
+      message = localizedMessage('interface:noReadyLevelsMatchTheseFilters');
+      render();
+      return false;
+    }
+    const draw = Number(random());
+    const bounded = Number.isFinite(draw) ? Math.min(Math.max(draw, 0), 1 - Number.EPSILON) : 0;
+    const row = choices[Math.floor(bounded * choices.length)];
+    const button = cards.get(row.id)?.button;
+    if (!button || button.disabled || !list.contains(button)) {
+      message = localizedMessage('interface:noReadyLevelsMatchTheseFilters');
+      render();
+      return false;
+    }
+    selectedId = row.id;
+    void activate(row, button);
+    return true;
+  }
   function makeCard(row) {
     const view = createLevelCardView({
       document: doc,
@@ -653,6 +714,9 @@ export function attachMissionLibraryChooser({
     // Campaigns are navigation anchors, never a hidden second filter. Every
     // matching campaign remains in this one scroll surface.
     const matches = railRows;
+    randomLevel.disabled = !matches.some(
+      (row) => library.availability(row, modeFilter.value).state === 'ready',
+    );
     localizedText(
       status,
       () =>
@@ -1131,6 +1195,7 @@ export function attachMissionLibraryChooser({
       remember();
     });
   back.onclick = close;
+  randomLevel.onclick = () => playRandom();
   dialog.addEventListener('close', () => {
     retirePendingSelection();
     invalidateDiagrams();
@@ -1199,6 +1264,7 @@ export function attachMissionLibraryChooser({
     select(id) {
       return revealExisting(id, mode, { focus: false });
     },
+    playRandom,
     // Incoming launch intent keeps its existing host-mode ownership rule.
     reveal: (id) => revealExisting(id, mode),
     refresh() {

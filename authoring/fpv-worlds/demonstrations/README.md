@@ -1,11 +1,11 @@
 # World demonstration authoring
 
-`generate-woodland.mjs` and `generate-courtyard.mjs` are original offline authoring tools. They fly the actual
+`generate-woodland.mjs`, `generate-courtyard.mjs`, `generate-warehouse.mjs` and `generate-stadium.mjs` are original offline authoring tools. They fly the actual
 fixed-step v2 runtime, record the quantized commands consumed by that runtime,
 and replay the result. They are not shipped with the player application and add no
 autopilot to gameplay.
 
-From the repository root, generate all eight woodland challenges in both modes:
+From the repository root, generate a world’s eight challenges in both modes:
 
 ```sh
 node authoring/fpv-worlds/demonstrations/generate-woodland.mjs \
@@ -15,11 +15,18 @@ node authoring/fpv-worlds/demonstrations/generate-woodland.mjs \
 node authoring/fpv-worlds/demonstrations/generate-courtyard.mjs \
   courtyard-01,courtyard-02,courtyard-03,courtyard-04,courtyard-05,courtyard-06,courtyard-07,courtyard-08 \
   /tmp/fpv-courtyard-recordings
+
+node authoring/fpv-worlds/demonstrations/generate-warehouse.mjs \
+  warehouse-01,warehouse-02,warehouse-03,warehouse-04,warehouse-05,warehouse-06,warehouse-07,warehouse-08 \
+  /tmp/fpv-warehouse-recordings
+
+node authoring/fpv-worlds/demonstrations/generate-stadium.mjs \
+  stadium-01,stadium-02,stadium-03,stadium-04,stadium-05,stadium-06,stadium-07,stadium-08 \
+  /tmp/fpv-stadium-recordings
 ```
 
 Both arguments are optional. Each generator defaults to all eight courses in its
-world and a destination named `fpv-woodland-demonstrations` or
-`fpv-courtyard-demonstrations` in the current directory.
+world and a destination named `fpv-<world>-demonstrations` in the current directory.
 Each output is a JSON object containing the unchanged course and its v2 proof.
 The process exits unsuccessfully if an attempt does not complete with full health
 and zero contacts. Generation uses the response profile and piloting parameters
@@ -28,7 +35,7 @@ declared in the script.
 The recorded pilot turns toward its next leg before accelerating. Woodland 06
 returns at a 6.2 m cruise height to clear its moving hazards; Woodland 07 keeps its
 lower route beneath the branch. These are piloting choices in the recording,
-not course, collider, enemy or physics changes. These controllers are qualified for
+not course, collider, enemy or physics changes. The woodland and courtyard controllers are qualified for
 their current world-specific hold/land/hazard tasks only. Their gate handling is
 experimental, and combat objectives are deliberately unsupported.
 
@@ -38,7 +45,15 @@ descends to the original hold, then returns at 6.2 m. Its objectives and collisi
 geometry are unchanged. The other courtyard recordings use the authored routes
 directly.
 
-`woodland-provenance.json` and `courtyard-provenance.json` record the original source commit, generator hashes,
+The warehouse and stadium controllers each handle their eight authored gate-racing routes.
+Each stages 4 m before each directed gate and settles within 0.45 m at less than
+0.8 m/s before crossing toward a point 1.8 m beyond the plane. The flight line is
+0.9 m above the gate centre to separate it from the physical pace rival.
+Warehouse 07 and Stadium 07 return above their moving hazard lanes at 6.2 m, then descend onto
+the original pad. These are recorded control choices; gate dimensions, objectives,
+actors, collisions and physics remain unchanged. Combat is unsupported.
+
+`woodland-provenance.json`, `courtyard-provenance.json`, `warehouse-provenance.json` and `stadium-provenance.json` record the original source commit, generator hashes,
 per-artifact and per-proof SHA-256 hashes, exact runtime/course identities,
 completion evidence, and heading alignment measurements. The checked-in portable
 generators reproduce the artifact hashes after their imports and output paths
@@ -59,3 +74,21 @@ Runtime availability checks the normalized source fingerprint, model/backend
 pins and response identity. Starting playback performs full v2 replay validation,
 including rules, conditions and final-state identity. A changed course revision
 does not silently reuse a stale recording.
+
+## Container Yard operations examples
+
+```sh
+node authoring/fpv-worlds/demonstrations/generate-container-yard.mjs \
+  container-yard-01,container-yard-02,container-yard-03,container-yard-04,container-yard-05,container-yard-06,container-yard-07,container-yard-08 \
+  /tmp/fpv-container-yard-recordings
+```
+
+This separate generator also supports the Yard's fictional pulse encounters. It
+flies toward explicit approach points, settles, leads moving targets and records
+real quantized fire commands. Opponents remain active; their incoming projectiles
+can reduce shields. The recordings finish at 85–100 health with zero contacts,
+and every fired player pulse hits. No authored course, actor, scoring or physics
+settings are changed. `container-yard-provenance.json` retains per-shot ranges,
+incoming fire, damage and landing observations as well as exact artifact hashes.
+The six noncombat recordings preserve their earlier prepared bytes; ten combat
+recordings use the closer, visually reviewed approaches.
