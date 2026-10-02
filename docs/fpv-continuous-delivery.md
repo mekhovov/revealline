@@ -1902,3 +1902,53 @@ existing tall timber-like tree colliders; avoid adding a solid-looking broad
 canopy in a flyable opening. Preserve completed960/961 and normal C2+touch builds
 while working on a new independent branch. Keep hardware/novice qualification
 and deferred unit coverage explicitly open.
+
+### C4 woodland continuation — 2 October 2026
+
+#960 and #961 are merged. Public marker e48adf3185dc7536555d142fe3d1165de31c05f9
+is a verified descendant of both; actual public Roofline survey launches with
+Ready status and enabled arm, without captured errors. See
+`docs/evidence/fpv-scenery-public-20261002.json`. No new physical acceptance.
+
+C4 is independent on `codex/fpv-woodland-surfaces`, based on that main. It changes
+only woodland bark/floor maps, trunk UVs and quiet edge presentation. All six
+1×1×8m boxes, opaque silhouettes, actors, objectives, imported assets and other
+worlds are preserved. A first leaf-texture draft was refined after actual flight
+review to avoid bright uniformly spread marks. The final runtime SHA256 values
+are visuals a724e26f05ab59d24a0fb5493eacabdd6b38690bfc0b90ddee7ae8c8117c31a1
+and renderer f16d9170e59a06976f1780d0ca4e55d8c8046fcfdb5a92a313053b2c32f1d1eb.
+
+Source browser qualification passes211/211 checks and105 image pairs, including
+actual GLB loading, geometry/UV/material/ray inspection,13 other environment
+regressions and three disposal cycles. There are no added sampled draw calls,
+triangles or resource counts. A fixture-only Sprite ray error was corrected by
+limiting rays to opaque environment meshes; no runtime workaround was required.
+All19 focused woodland demos replay, and178 prior demo results remain bound by
+exact input hashes. Final actual Crossing trail playback completes at49.4s.
+
+Frozen candidate1ee7025eb9683c8d7ee0b6995cddd38b4bf6d058 passes all three package
+admissions, committed inputs/ZIP members and two identical builds. The dedicated
+player has92files/13,932,487bytes; ZIP SHA256
+fc3ddb63c13c02f36968f75d384a2e12fee932e10c8eefe6cc126affec92fe13.
+Packaged-browser qualification/publication follow; no C4 public availability
+is claimed yet. Additional unit coverage stays deferred to H/R7.
+
+The independent capacity repair is [PR #963](https://github.com/mekhovov/revealline/pull/963),
+branch `codex/picture-catalogue-capacity`, published head d28ffc4c5. It saves22,377
+bytes from the generated picture-owner inventory, retaining all155 records. All18
+ordinary in-memory compiles pass; the formerly failing community edition also
+passes frozen ZIP/admission and two builds at11b3d9e43. This does not change
+content, limits or release authority. Preserve that ready branch while C4 finishes.
+
+Themes #955 retains material ownership; reconcile these narrow surface/UV hunks
+without overwriting C2 groveSlots or C3 terrace placements. Next C item is
+Warehouse/Stadium surface scale and flight-line readability, then yard/garage.
+Physical hardware, novice/art sessions, creator/device-offline and feedback-led
+map growth remain open. Native stacks are unnecessary for these independent PRs.
+
+C4 packaged WebGL also passes211/211 checks and105 comparisons; see the packaged
+receipt. The final normal reviewed-player and continuous-school builds now include
+merged C2+C3+touch and C4, byte-identical to the dedicated woodland playtest
+(fc3ddb63…92fe13). Actual Crossing trail demonstration completes, and a new attempt
+is left paused/ready with zero throttle. Publication is the remaining gate for
+this focused surface increment; broader C and human/device work remain open.
