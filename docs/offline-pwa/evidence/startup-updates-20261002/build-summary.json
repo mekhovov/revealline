@@ -1,0 +1,44 @@
+{
+  "format": "revealline-default-build-inspection.v1",
+  "version": "0.142.4",
+  "sourceRevision": null,
+  "publicEligible": false,
+  "promotable": false,
+  "completeHostedOutput": false,
+  "publicationAssessment": "not-performed",
+  "payloadBytesIncludingManifest": 958840304,
+  "manifestDescriptor": {
+    "path": "manifest.json",
+    "bytes": 407312,
+    "sha256": "bca02f89e3cf82807be7f8910b60ce013f306d43e65351eff291b47c50b5d920"
+  },
+  "missingComponents": [
+    "Pages root routes and publication metadata",
+    "Hosted edition versions, stable launchers and company hub",
+    "Hosted optional packages, launchers and any other generated files"
+  ],
+  "baseMain": "3f16c1d53",
+  "files": 2725,
+  "changedRuntimeAssets": [
+    {
+      "path": "game/boot-updates.mjs",
+      "bytes": 4091,
+      "sha256": "2e1223d9f0a03c59d7adc62a1112f0e2dc7122dc2eaab1c8ee627d455fd8c450"
+    },
+    {
+      "path": "game/boot.mjs",
+      "bytes": 10894,
+      "sha256": "f9250dd56d6a695da5e269bb48482acfdd00f08dd19050bfc3b83cc3364c934a"
+    },
+    {
+      "path": "game/i18n/catalogs.mjs",
+      "bytes": 1088703,
+      "sha256": "1f952ce245f7f7b4d6c0dbd0eef5dc1948e731e3c82e1bbcc2c02381b12ae705"
+    },
+    {
+      "path": "game/index.html",
+      "bytes": 138859,
+      "sha256": "1e1993cea9532c8fa10fbd19b6e02ae58d46f12fc9c4f4e4cb596cb9adee9d45"
+    }
+  ]
+}

@@ -10,6 +10,7 @@ import { installPracticeWorker as installPackageWorker } from '../optional-pract
 
 import { buildOptionalLauncher } from './optional-launcher.mjs';
 import { OPTIONAL_PACKAGE_POLICIES } from '../publishing/optional-package-policy.mjs';
+import { validatePracticeDescription } from '../game/optional-practice-details.mjs';
 export const OPTIONAL_PRACTICE_ROOT = OPTIONAL_PACKAGE_POLICIES['civilian-flight'].root;
 export const OPTIONAL_PRACTICE_LIMITS = OPTIONAL_PACKAGE_POLICIES['civilian-flight'].limits;
 const workers = new Map([
@@ -262,6 +263,21 @@ export async function buildOptionalPractice(
     pending.push(...resourceReferences(name, bytes));
   }
   let installation;
+  validatePracticeDescription(
+    entries.get(packageRoot + 'package-info.json').toString('utf8'),
+    packageId,
+  );
+  requireValid(
+    entries.get(packageRoot + 'preview.png').length <= 300000,
+    'Practice preview must be at most 300 KB',
+  );
+  requireValid(
+    entries
+      .get(packageRoot + 'preview.png')
+      .subarray(0, 8)
+      .toString('hex') === '89504e470d0a1a0a',
+    'Practice preview must be PNG',
+  );
   if (engineCommit) {
     const launcherTemplate = await readInput(policy.launcherTemplate);
     requireValid(
