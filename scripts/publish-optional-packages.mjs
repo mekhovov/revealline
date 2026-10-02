@@ -22,11 +22,18 @@ import {
 const [command, ...args] = process.argv.slice(2),
   options = {};
 if (
-  !['review-template', 'verify', 'upload-draft', 'sync-selector', 'select-retained'].includes(
-    command,
-  )
+  ![
+    'review-template',
+    'verify',
+    'upload-draft',
+    'sync-selector',
+    'select-retained',
+    'stage-pages',
+  ].includes(command)
 )
-  throw new Error('Use review-template, verify, upload-draft, sync-selector or select-retained.');
+  throw new Error(
+    'Use review-template, verify, upload-draft, sync-selector, select-retained or stage-pages.',
+  );
 for (let index = 0; index < args.length; index += 2) {
   if (
     ![
@@ -38,6 +45,7 @@ for (let index = 0; index < args.length; index += 2) {
       '--version',
       '--packages',
       '--release-id',
+      '--out',
     ].includes(args[index]) ||
     !args[index + 1] ||
     options[args[index]]
@@ -131,6 +139,46 @@ async function replaceSelector(file, original, updated) {
     throw error;
   }
 }
+if (command === 'stage-pages') {
+  if (
+    !options['--out'] ||
+    !options['--selector'] ||
+    options['--bundle'] ||
+    options['--review'] ||
+    options['--version'] ||
+    options['--packages']
+  )
+    throw new Error('Pages staging needs an existing output directory and a reviewed selector.');
+  const output = path.resolve(options['--out']);
+  if (!(await fs.lstat(output)).isDirectory() || (await fs.lstat(output)).isSymbolicLink())
+    throw new Error('Pages output must be an ordinary existing directory.');
+  const files = await frozenOptionalPackageOverlay(
+    parse(await readJSON(options['--selector'])),
+    remoteReader(),
+  );
+  // A complete optional overlay is additive: never replace the main game or a
+  // previously staged practice tree. The caller checks combined hosted capacity.
+  try {
+    await fs.lstat(path.join(output, 'practice'));
+    throw new Error('Pages practice directory already exists.');
+  } catch (error) {
+    if (error.code !== 'ENOENT') throw error;
+  }
+  for (const [name, bytes] of files) {
+    const target = path.join(output, name);
+    await fs.mkdir(path.dirname(target), { recursive: true });
+    await fs.writeFile(target, bytes, { flag: 'wx' });
+  }
+  console.log(
+    JSON.stringify({
+      optionalFiles: files.size,
+      optionalBytes: [...files.values()].reduce((sum, bytes) => sum + bytes.length, 0),
+      index: 'practice/index.json',
+    }),
+  );
+  process.exit(0);
+}
+if (options['--out']) throw new Error('--out belongs only to stage-pages.');
 if (command === 'select-retained') {
   if (
     !options['--selector'] ||

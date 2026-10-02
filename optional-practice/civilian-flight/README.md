@@ -74,3 +74,15 @@ The distinction between stick assignment and flight-mode response follows
 and [PX4's flight-mode documentation](https://docs.px4.io/main/en/flight_modes_mc/manual_stabilized).
 The gym's assisted rules are authored simplifications, not assertions about those
 flight controllers. Real device calibration and operational flying are excluded.
+
+# Directory and offline guide
+
+Open [the bilingual player guide](guide.html) for choosing an app, first flight,
+offline preparation, home-screen installation, updates, removal and recovery.
+Use the maintained in-app control guide for exact input bindings.
+Maintainers: [register and publish packages](../../docs/flight-practice-maintainer.md).
+
+The package's `preview.png` is an actual local gameplay screenshot captured from
+RevealLine source plus the SIM owner's startup correction on 2026-10-02. It is
+not generated artwork and contains no privately imported world. Underlying
+artwork/code retains the asset licenses documented in this package's inventory.

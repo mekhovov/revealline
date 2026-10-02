@@ -9,6 +9,7 @@ import {
 import { preparePracticeOffline } from '../../optional-practice/civilian-flight/offline.mjs';
 import { installOptionalLauncher } from '../../optional-practice/launcher-template.mjs';
 import { runInNewContext } from 'node:vm';
+import { waitFor } from './helpers/wait-for.mjs';
 
 const packageId = 'civilian-flight';
 const root = '/revealline/practice/civilian-flight/';
@@ -85,18 +86,33 @@ test('an installation pointer is recorded only after a verified worker activates
     callbacks = new Set();
   const worker = {
     state: 'installing',
+    scriptURL: new URL('worker.js', locationFor('v1.2.3').href).href,
+    postMessage(data, ports) {
+      if (data.type === 'practice-status')
+        ports[0].postMessage({ type: 'practice-status', ready: true, scope: registration.scope });
+    },
     addEventListener: (_, callback) => callbacks.add(callback),
     removeEventListener: (_, callback) => callbacks.delete(callback),
   };
-  const registration = { installing: worker };
+  const registration = {
+    installing: worker,
+    scope: new URL('./', locationFor('v1.2.3').href).href,
+  };
+  const navigator = {
+    serviceWorker: {
+      register: async () => registration,
+      getRegistration: async () => registration,
+    },
+  };
   const pending = preparePracticeOffline({
     storage,
     location: locationFor('v1.2.3'),
-    navigator: { serviceWorker: { register: async () => registration } },
+    navigator,
   });
-  await Promise.resolve();
+  await waitFor(() => callbacks.size > 0);
   assert.equal(storage.values.size, 0);
   worker.state = 'activated';
+  registration.active = worker;
   for (const callback of [...callbacks]) callback();
   await pending;
   assert.equal(
@@ -106,12 +122,13 @@ test('an installation pointer is recorded only after a verified worker activates
   assert.equal(callbacks.size, 0);
   const failedStorage = memory();
   worker.state = 'installing';
+  registration.active = null;
   const failed = preparePracticeOffline({
     storage: failedStorage,
     location: locationFor('v1.2.3'),
-    navigator: { serviceWorker: { register: async () => registration } },
+    navigator,
   });
-  await Promise.resolve();
+  await waitFor(() => callbacks.size > 0);
   worker.state = 'redundant';
   for (const callback of [...callbacks]) callback();
   await assert.rejects(failed, /verification failed/);
@@ -151,11 +168,11 @@ function launcher(fetcher) {
       events.set(name, callback);
     },
   };
-  runInNewContext(
+  const ready = runInNewContext(
     `(${installOptionalLauncher.toString()})(${JSON.stringify({ packageId, root })}, { optionalInstallationKey, validateOptionalInstallationReference })`,
     context,
   );
-  return { elements, events, timers };
+  return { elements, events, timers, ready };
 }
 
 test('stable launcher reads only a bounded explicit pointer and cancels abandoned checks', async () => {
@@ -171,18 +188,18 @@ test('stable launcher reads only a bounded explicit pointer and cancels abandone
     return new Response(JSON.stringify(current));
   });
   assert.equal(requests.length, 0);
-  await first.elements.check.onclick();
+  await first.ready;
   assert.equal(requests.length, 1);
   assert.equal(requests[0].options.redirect, 'error');
   assert.equal(requests[0].options.credentials, 'omit');
   assert.equal(
     first.elements.prepare.href,
-    'https://example.test' + root + 'releases/v1.2.3/site/' + current.entry,
+    'https://example.test' + root + 'releases/v1.2.3/site/' + current.entry + '?lang=en',
   );
   assert.equal(first.elements.prepare.hidden, false);
   assert.equal(first.timers.size, 0);
   const oversized = launcher(async () => new Response(' '.repeat(4097)));
-  await oversized.elements.check.onclick();
+  await oversized.ready;
   assert.equal(oversized.elements.prepare.hidden, true);
   assert.equal(oversized.elements.check.disabled, false);
   assert.match(oversized.elements.status.textContent, /unavailable/);
@@ -193,7 +210,8 @@ test('stable launcher reads only a bounded explicit pointer and cancels abandone
       finish = resolve;
     });
   });
-  const pending = abandoned.elements.check.onclick();
+  const pending = abandoned.ready;
+  await waitFor(() => !!signal);
   abandoned.events.get('pagehide')();
   assert.equal(signal.aborted, true);
   finish(new Response(JSON.stringify(current)));
