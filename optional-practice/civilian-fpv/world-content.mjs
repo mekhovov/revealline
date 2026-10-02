@@ -1,4 +1,4 @@
-import { compileContentProject } from './content-definitions.mjs';
+import { assertCriterionAnchorTranslation, compileContentProject } from './content-definitions.mjs';
 /** Browser/Node boundary for user-owned FPV worlds. No network or renderer dependencies. */
 export const WORLD_PROJECT_FORMAT = 'FPVWorldProject.v1';
 export const WORLD_PACK_FORMAT = 'FPVWorldPack.v2';
@@ -1167,6 +1167,7 @@ export function previewReimport(input, imported, { createCourse, createCollider,
           );
           continue;
         }
+        assertCriterionAnchorTranslation(local, beforeAnchors.get(id), afterAnchors.get(id));
         course.steps[mode][index] = mergeValue(local, before, after, `${course.id}/${mode}/${id}`);
       }
     return validateCourse(course);

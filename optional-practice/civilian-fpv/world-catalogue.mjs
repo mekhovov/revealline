@@ -4079,10 +4079,1032 @@ const MASTERY_LESSONS = Object.freeze([
   ),
 ]);
 
+// Separately identified skill courses keep earlier school revisions executable.
+const SKILL_LESSONS = (() => {
+  function hold(x, y, z, heading = null) {
+    return {
+      type: 'hold',
+      min: p(x - 2, Math.max(0, y - 0.8), z - 2),
+      max: p(x + 2, y + 0.8, z + 2),
+      ticks: 50,
+      maxSpeed: 1200,
+      maxTilt: 1800,
+      minTilt: 0,
+      centred: false,
+      heading,
+    };
+  }
+  function land(x = 0, z = 0, y = 0, surface = '$floor') {
+    return { ...hold(x, y, z), type: 'land', surface, ticks: 30, maxSpeed: 1200, maxTilt: 1500 };
+  }
+  function rotation(axis, direction, angle = 36000, entryUp = 'upright', zone = {}) {
+    return {
+      type: 'rotation-v1',
+      min: p(-35, 4, -35),
+      max: p(35, 75, 35),
+      maxTicks: 1500,
+      axis,
+      direction,
+      angle,
+      maxReverse: 1500,
+      maxOther: 6000,
+      tolerance: 1500,
+      entryUp,
+      settleTicks: 8,
+      maxAngular: 1200,
+      ...zone,
+    };
+  }
+  function attitude(up) {
+    return {
+      type: 'attitude-v1',
+      min: p(-35, 4, -35),
+      max: p(35, 75, 35),
+      maxTicks: 500,
+      up,
+      tolerance: 1500,
+      ticks: 8,
+      maxAngular: 1200,
+      maxSpeed: 60000,
+    };
+  }
+  function course(id, steps, overrides = {}) {
+    const base = structuredClone(MASTERY_LESSONS[0].course);
+    return {
+      ...base,
+      id,
+      environment: 'field',
+      world: { id: 'field', theme: 'academy', style: 'meadow' },
+      spawn: p(0, 0, 0),
+      bounds: { min: p(-75, 0, -75), max: p(75, 80, 75) },
+      obstacles: [],
+      steps: { 'self-level': structuredClone(steps), acro: steps },
+      ...overrides,
+    };
+  }
+  function path(plane, center, direction = 1, sweep = 36000, options = {}) {
+    return {
+      type: 'path-v1',
+      min: p(-70, 3, -70),
+      max: p(70, 76, 70),
+      maxTicks: 3000,
+      plane,
+      center,
+      entryUp: plane === 'yz' && direction < 0 ? 'inverted' : 'upright',
+      entryBearing: plane === 'yz' ? (direction < 0 ? 0 : 18000) : plane === 'xy' ? -9000 : null,
+      entryTolerance: plane === 'yz' && direction < 0 ? 2000 : 1800,
+      maxAngular: 2000,
+      radiusMin: 6000,
+      radiusMax: 14000,
+      direction,
+      sweep,
+      maxReverse: 2000,
+      noseToward: false,
+      headingTolerance: 4500,
+      axialMin: 0,
+      axialMax: 0,
+      axialTolerance: 1500,
+      coupled: null,
+      ...options,
+    };
+  }
+  function crossing(axis, at, direction, minSpeed = 1000, forwardTolerance = 1500, options = {}) {
+    return {
+      type: 'crossing-v1',
+      min: p(-50, 3, -50),
+      max: p(50, 76, 50),
+      maxTicks: 1000,
+      axis,
+      at: at * 1000,
+      direction,
+      minA: -30000,
+      maxA: 30000,
+      minB: -30000,
+      maxB: 30000,
+      minSpeed,
+      forwardTolerance,
+      ...options,
+    };
+  }
+
+  const p = (x, y, z) => ({ x: x * 1000, y: y * 1000, z: z * 1000 }),
+    txt = (en, uk) => ({ en, uk });
+  const note = (target, title, instruction, why) => ({
+    target,
+    note: {
+      title: txt(...title),
+      instruction: txt(...instruction),
+      why: txt(
+        ...(why ?? [
+          'Follow the actual drone and its path. Small inputs control the rotation rate; centring the sticks does not automatically level or stop it.',
+          'Стежте за справжньою орієнтацією та траєкторією дрона. Малі рухи стіків керують швидкістю обертання; центрування не вирівнює й не зупиняє дрон автоматично.',
+        ]),
+      ),
+      axis:
+        target.type === 'rotation-v1' ? target.axis : target.type === 'land' ? 'throttle' : 'mixed',
+      motion:
+        target.type === 'rotation-v1' ? target.axis : target.type === 'land' ? 'land' : 'route',
+      direction: target.type === 'rotation-v1' ? target.direction : 1,
+      target: target.type === 'land' ? 0.44 : 0.12,
+      tip: txt(
+        'Watch the example slowly if the sequence is unclear. Keep enough height to recover; pause whenever you need to inspect the diagram.',
+        'Якщо послідовність незрозуміла, перегляньте приклад повільно. Залишайте висоту для відновлення; робіть паузу, щоб розглянути схему.',
+      ),
+    },
+  });
+  const stop = (
+    x,
+    y,
+    z,
+    title = ['Settle before the next movement', 'Стабілізуйтеся до наступного маневру'],
+    heading = null,
+  ) =>
+    note(hold(x, y, z, heading), title, [
+      `Brake into the marked area at ${y} m. Level the drone, stop the drift and check the next target.`,
+      `Загальмуйте в позначеній зоні на ${y} м. Вирівняйте дрон, погасіть дрейф і перевірте наступну ціль.`,
+    ]);
+  const lift = (x, y, z) =>
+    stop(x, y, z, ['Climb to the recovery height', 'Підніміться на висоту із запасом']);
+  const finish = (x = 0, z = 0, y = 0, surface = '$floor') =>
+    note(
+      land(x, z, y, surface),
+      ['Finish with a soft landing', 'Завершіть м’якою посадкою'],
+      [
+        'Approach the marked pad, stop the drift and descend gently. Reduce throttle fully after the drone touches the physical surface.',
+        'Підійдіть до позначеного майданчика, погасіть дрейф і плавно спускайтеся. Повністю приберіть газ після торкання опорної поверхні.',
+      ],
+    );
+  const rot = (axis, direction, angle, entryUp, title, instruction, zone = {}) =>
+    note(rotation(axis, direction, angle, entryUp, zone), title, instruction, [
+      'The checkpoint follows the full signed rotation and its intermediate attitudes. A matching final view alone does not qualify.',
+      'Перевірка враховує повний оберт у потрібний бік і проміжні положення. Самого схожого вигляду наприкінці недостатньо.',
+    ]);
+  const gate = (axis, at, side, direction, y, width = 5) => ({
+    type: 'gate',
+    axis,
+    at: at * 1000,
+    direction,
+    minSide: (side - width / 2) * 1000,
+    maxSide: (side + width / 2) * 1000,
+    minY: Math.round((y - 1.6) * 1000),
+    maxY: Math.round((y + 1.6) * 1000),
+  });
+  const gateNote = (target, title, instruction) => note(target, title, instruction);
+  const loopEntry = {
+    type: 'gate',
+    axis: 'z',
+    at: 0,
+    direction: -1,
+    minSide: -2000,
+    maxSide: 2000,
+    minY: 18000,
+    maxY: 22000,
+  };
+  const splitEntry = {
+    type: 'gate',
+    axis: 'z',
+    at: 0,
+    direction: -1,
+    minSide: -2000,
+    maxSide: 2000,
+    minY: 15000,
+    maxY: 75000,
+  };
+  const coupling = (axis, direction, angle = 36000, tolerance = 1500) => ({
+    axis,
+    direction,
+    angle,
+    maxReverse: 3000,
+    maxOther: 6000,
+    tolerance,
+    phaseTolerance: 9000,
+  });
+  const fullLoop = () =>
+    path('yz', p(0, 36, 0), 1, 36000, {
+      min: p(-6, 3, -70),
+      max: p(6, 76, 70),
+      radiusMin: 11000,
+      radiusMax: 23000,
+      coupled: coupling('pitch', -1),
+    });
+  const climbLoop = () =>
+    path('yz', p(0, 36, 0), 1, 18000, {
+      min: p(-6, 3, -70),
+      max: p(6, 76, 70),
+      radiusMin: 11000,
+      radiusMax: 23000,
+      coupled: coupling('pitch', -1, 18000),
+    });
+  const splitLoop = () =>
+    path('yz', p(0, 70.3, -21.5), -1, 18000, {
+      radiusMin: 5000,
+      radiusMax: 11000,
+      min: p(-8, 3, -70),
+      max: p(8, 95, 70),
+      coupled: coupling('pitch', -1, 18000, 2000),
+    });
+  const orbit = (center = p(0, 25, 0), direction = 1) =>
+    path('xz', center, direction, 36000, {
+      min: { x: center.x - 16000, y: center.y - 2000, z: center.z - 16000 },
+      max: { x: center.x + 16000, y: center.y + 2000, z: center.z + 16000 },
+      noseToward: true,
+    });
+  const beam = (id, y, z) => [
+    { id, min: p(-8, y - 1, z - 1), max: p(8, y + 1, z + 1) },
+    { id: id + '-left', min: p(-9, 0, z - 1), max: p(-8, y + 1, z + 1) },
+    { id: id + '-right', min: p(8, 0, z - 1), max: p(9, y + 1, z + 1) },
+  ];
+  const powerStages = () => [
+    lift(0, 20, 30),
+    gateNote(
+      loopEntry,
+      ['Build a clear entry line', 'Підготуйте вільну лінію входу'],
+      [
+        'Fly north through the entry gate with room to pitch back into the loop.',
+        'Пройдіть на північ крізь вхідні ворота із запасом для петлі тангажем назад.',
+      ],
+    ),
+    note(
+      fullLoop(),
+      ['Loop around the beam', 'Виконайте петлю навколо балки'],
+      [
+        'Pitch back through a complete loop over and beneath the beam. Follow the broad path and recover into the exit below it.',
+        'Тангажем назад виконайте повну петлю над балкою й під нею. Дотримуйтеся широкої траєкторії та вийдіть із петлі знизу.',
+      ],
+      [
+        'Both your pitch rotation and your path around the beam must complete together. A flip in place or a simple overflight does not qualify.',
+        'Оберт за тангажем і траєкторія навколо балки мають завершитися разом. Сальто на місці чи простий проліт зверху не зараховуються.',
+      ],
+    ),
+  ];
+  const splitStages = () => [
+    lift(0, 5, 60),
+    gateNote(
+      splitEntry,
+      ['Build forward and upward momentum', 'Наберіть рух уперед і вгору'],
+      [
+        'Climb on the northbound approach before the entry gate. The following half-roll needs height and a continuing forward path.',
+        'Набирайте висоту на північному заході до вхідних воріт. Наступна півбочка потребує висоти й продовження руху вперед.',
+      ],
+    ),
+    rot(
+      'roll',
+      1,
+      18000,
+      'upright',
+      ['Roll inverted first', 'Спершу переверніться креном'],
+      [
+        'Make a controlled right half-roll and stop inverted. Keep the forward path; the pitch phase follows next.',
+        'Виконайте керовану праву півбочку й зупиніть обертання догори дном. Збережіть рух уперед; далі йде фаза тангажу.',
+      ],
+      { max: p(35, 95, 35), tolerance: 2000 },
+    ),
+    note(
+      splitLoop(),
+      ['Pull through the descending half-loop', 'Пройдіть низхідну півпетлю'],
+      [
+        'From inverted, pitch back through the lower half of the route and leave in the opposite direction below the entry.',
+        'Із перевернутого положення тангажем назад пройдіть нижню частину маршруту й вийдіть у протилежному напрямку нижче входу.',
+      ],
+      [
+        'The ordered half-roll, descending pitch path and reversed exit distinguish Split-S from a flat yaw turn.',
+        'Послідовні півбочка, низхідна траєкторія тангажу й зворотний вихід відрізняють Split-S від плоского повороту за курсом.',
+      ],
+    ),
+  ];
+  const diveStages = (x = 0, z = 0) => [
+    lift(x, 65, z),
+    rot(
+      'pitch',
+      1,
+      9000,
+      'upright',
+      ['Point the nose down', 'Спрямуйте ніс униз'],
+      [
+        'Rotate forward toward a nose-down attitude. Preserve the marked recovery height below you.',
+        'Поверніть ніс уперед і вниз. Залишайте позначений запас висоти для виходу.',
+      ],
+      { min: p(x - 25, 4, z - 32), max: p(x + 25, 75, z + 32) },
+    ),
+    note(
+      crossing('y', 55, -1, 2000, 2000, {
+        minA: (x - 10) * 1000,
+        maxA: (x + 10) * 1000,
+        minB: (z - 10) * 1000,
+        maxB: (z + 10) * 1000,
+      }),
+      ['Cross the dive marker', 'Перетніть позначку пікірування'],
+      [
+        'Descend nose-first through the marked height. Begin the recovery sequence as soon as this checkpoint confirms.',
+        'Пройдіть носом униз крізь позначену висоту. Починайте послідовність виходу одразу після підтвердження.',
+      ],
+      [
+        'The check uses actual downward travel and nose direction. Falling upright does not demonstrate a dive.',
+        'Перевірка враховує справжній рух униз і напрямок носа. Падіння в рівному положенні не є пікіруванням.',
+      ],
+    ),
+    rot(
+      'pitch',
+      -1,
+      9000,
+      'any',
+      ['Recover before the lower boundary', 'Вийдіть до нижньої межі'],
+      [
+        'Pitch back toward level, then add thrust to stop the downward speed. Do not wait for the ground to fill the view.',
+        'Тангажем назад поверніться до горизонту, потім додайте тягу для зупинки спуску. Не чекайте, доки земля заповнить кадр.',
+      ],
+      { min: p(x - 25, 4, z - 32), max: p(x + 25, 75, z + 32) },
+    ),
+  ];
+  const lessons = [];
+  function add(
+    title,
+    summary,
+    environment,
+    tier,
+    tags,
+    stages,
+    { spawn = p(0, 0, 0), obstacles = [], duration = 7, concept } = {},
+  ) {
+    const index = 42 + lessons.length,
+      id = `beginner-${index + 1}`,
+      world = FLIGHT_WORLDS.find((w) => w.id === environment);
+    const description = concept ?? [
+      'Practise this sequence at a comfortable pace. The course checks actual attitude and travel together, then a controlled recovery.',
+      'Відпрацьовуйте послідовність у зручному темпі. Урок перевіряє справжню орієнтацію й рух разом, а потім кероване відновлення польоту.',
+    ];
+    const c = course(
+      id,
+      stages.map((s) => s.target),
+      {
+        environment,
+        world: { id: world.id, theme: world.theme, style: world.style },
+        spawn,
+        bounds: { min: p(-75, 0, -75), max: p(75, 100, 75) },
+        obstacles: [...worldObstacles(environment), ...obstacles],
+        locales: {
+          en: { title: title[0], brief: summary[0], lesson: description[0] },
+          uk: { title: title[1], brief: summary[1], lesson: description[1] },
+        },
+      },
+    );
+    lessons.push({
+      id,
+      index,
+      title: txt(...title),
+      summary: txt(...summary),
+      concept: txt(...description),
+      duration,
+      chapter: tier,
+      tier,
+      skillTags: tags,
+      mode: 'acro',
+      requiresMode: 'acro',
+      camera: 'fpv',
+      recommendedPrerequisites: [`beginner-${index}`],
+      course: c,
+      steps: stages.map((s) => s.note),
+    });
+  }
+  add(
+    ['Roll and recover', 'Бочка та відновлення'],
+    [
+      'Complete a full roll each way and recover between them.',
+      'Виконайте повну бочку в обидва боки з відновленням між ними.',
+    ],
+    'field',
+    'pro',
+    ['roll', 'rotation', 'recovery'],
+    [
+      lift(0, 35, 0),
+      rot(
+        'roll',
+        1,
+        36000,
+        'upright',
+        ['Full right roll', 'Повна бочка праворуч'],
+        [
+          'Roll all the way around to the right, then stop the rotation and recover.',
+          'Виконайте повний оберт праворуч, потім зупиніть обертання й відновіть політ.',
+        ],
+      ),
+      stop(0, 35, 0),
+      rot(
+        'roll',
+        -1,
+        36000,
+        'upright',
+        ['Full left roll', 'Повна бочка ліворуч'],
+        [
+          'Complete a full left roll. Use the horizon and the drone diagram to judge the upright recovery.',
+          'Виконайте повну бочку ліворуч. За горизонтом і схемою дрона визначайте повернення до рівного польоту.',
+        ],
+      ),
+      stop(0, 30, 0),
+      finish(),
+    ],
+  );
+  add(
+    ['Forward and backward flip', 'Сальто вперед і назад'],
+    [
+      'Learn full pitch rotations in both directions, with a calm recovery.',
+      'Навчіться повних обертів за тангажем в обидва боки зі спокійним відновленням.',
+    ],
+    'field',
+    'pro',
+    ['pitch', 'rotation', 'recovery'],
+    [
+      lift(0, 35, 0),
+      rot(
+        'pitch',
+        1,
+        36000,
+        'upright',
+        ['Forward flip', 'Сальто вперед'],
+        [
+          'Rotate the nose forward through a complete flip and stop when upright again.',
+          'Поверніть ніс уперед через повне сальто й зупиніть обертання після вирівнювання.',
+        ],
+      ),
+      stop(0, 35, 0),
+      rot(
+        'pitch',
+        -1,
+        36000,
+        'upright',
+        ['Backward flip', 'Сальто назад'],
+        [
+          'Rotate the nose backward through a complete flip, then recover into the marked space.',
+          'Поверніть ніс назад через повне сальто й відновіть політ у позначеній зоні.',
+        ],
+      ),
+      stop(0, 30, 0),
+      finish(),
+    ],
+  );
+  add(
+    ['Yaw through 360 degrees', 'Повний оберт за курсом'],
+    [
+      'Turn the heading around each way while keeping a restrained position.',
+      'Поверніть курс навколо в обидва боки, зберігаючи обмежений простір руху.',
+    ],
+    'stadium',
+    'pro',
+    ['yaw', 'heading', 'precision'],
+    [
+      lift(0, 15, 0),
+      rot(
+        'yaw',
+        1,
+        36000,
+        'upright',
+        ['Full right yaw', 'Повний поворот носа праворуч'],
+        [
+          'Turn the nose around to the right while staying upright inside the marked column.',
+          'Поверніть ніс навколо праворуч, залишаючись рівно в позначеному стовпі.',
+        ],
+        { min: p(-4, 12, -4), max: p(4, 18, 4) },
+      ),
+      stop(0, 15, 0),
+      rot(
+        'yaw',
+        -1,
+        36000,
+        'upright',
+        ['Full left yaw', 'Повний поворот носа ліворуч'],
+        [
+          'Turn fully left while keeping height and drift under control.',
+          'Виконайте повний поворот ліворуч, контролюючи висоту та дрейф.',
+        ],
+        { min: p(-4, 12, -4), max: p(4, 18, 4) },
+      ),
+      stop(0, 15, 0),
+      finish(),
+    ],
+  );
+  add(
+    ['Recognize inverted, recover', 'Впізнайте переворот і відновіть політ'],
+    [
+      'Pause the rotation upside down briefly, then recover through the instructed side.',
+      'Коротко зупиніть обертання догори дном, потім відновіть політ через вказаний бік.',
+    ],
+    'field',
+    'pro',
+    ['inversion', 'roll', 'recovery'],
+    [
+      lift(0, 40, 0),
+      rot(
+        'roll',
+        1,
+        18000,
+        'upright',
+        ['Half-roll into inversion', 'Півбочка до перевороту'],
+        [
+          'Roll halfway to the right and stop rotating upside down.',
+          'Виконайте півбочку праворуч і зупиніть обертання догори дном.',
+        ],
+      ),
+      note(
+        attitude('inverted'),
+        ['Recognize the inverted view', 'Упізнайте перевернутий вигляд'],
+        [
+          'Centre the rotation controls briefly and observe the inverted body. This is a short falling phase, not inverted hover.',
+          'Коротко центруйте осі обертання й помітьте перевернутий корпус. Це коротка фаза падіння, а не зависання догори дном.',
+        ],
+      ),
+      rot(
+        'roll',
+        1,
+        18000,
+        'inverted',
+        ['Finish the right-side recovery', 'Завершіть відновлення праворуч'],
+        [
+          'Continue rolling right to upright, then recover the downward motion.',
+          'Продовжіть крен праворуч до рівного положення, потім зупиніть спуск.',
+        ],
+      ),
+      stop(0, 30, 0),
+      finish(),
+    ],
+  );
+  add(
+    ['Split-S return', 'Розворот Split-S'],
+    [
+      'Roll inverted, descend through a half-loop and leave in the opposite direction.',
+      'Переверніться креном, пройдіть низхідну півпетлю й вийдіть у протилежному напрямку.',
+    ],
+    'field',
+    'pro',
+    ['split-s', 'rotation', 'trajectory'],
+    [
+      ...splitStages(),
+      stop(
+        0,
+        30,
+        -18.5,
+        ['Settle after the reverse exit', 'Стабілізуйтеся після зворотного виходу'],
+        18000,
+      ),
+      finish(0, -18.5),
+    ],
+    { spawn: p(0, 0, 60), obstacles: beam('split-reference', 70.3, -21.5), duration: 9 },
+  );
+  add(
+    ['Immelmann climb-out', 'Набір висоти з розворотом Іммельмана'],
+    [
+      'Climb through a half-loop, then roll upright into the reversed exit.',
+      'Підніміться півпетлею, потім вирівняйтеся креном на зворотному виході.',
+    ],
+    'field',
+    'pro',
+    ['immelmann', 'climb', 'trajectory'],
+    [
+      lift(0, 20, 30),
+      gateNote(
+        loopEntry,
+        ['Enter below the beam', 'Увійдіть нижче балки'],
+        [
+          'Establish the northbound entry line below the reference beam.',
+          'Займіть північну лінію входу нижче опорної балки.',
+        ],
+      ),
+      note(
+        climbLoop(),
+        ['Climbing half-loop first', 'Спершу висхідна півпетля'],
+        [
+          'Pitch back into a climbing half-loop and finish inverted above the beam.',
+          'Тангажем назад увійдіть у висхідну півпетлю й завершіть її догори дном над балкою.',
+        ],
+      ),
+      rot(
+        'roll',
+        1,
+        18000,
+        'inverted',
+        ['Roll upright at the top', 'Вирівняйтеся креном угорі'],
+        [
+          'Roll right halfway to upright while continuing the reversed exit.',
+          'Виконайте півбочку праворуч до рівного положення, продовжуючи зворотний вихід.',
+        ],
+      ),
+      stop(0, 30, 20, ['Recover clear of the beam', 'Відновіть політ подалі від балки'], 18000),
+      finish(0, 20),
+    ],
+    { spawn: p(0, 0, 30), obstacles: beam('climb-reference', 36, 0), duration: 8 },
+  );
+  add(
+    ['Dive, judge, pull out', 'Пікірування й вихід'],
+    [
+      'Use a clear dive marker, then recover with height still available.',
+      'Пройдіть чітку позначку пікірування й відновіть політ із запасом висоти.',
+    ],
+    'field',
+    'pro',
+    ['dive', 'pitch', 'recovery'],
+    [...diveStages(), stop(0, 30, 0), finish()],
+    { duration: 8 },
+  );
+  add(
+    ['First power loop', 'Перша силова петля'],
+    [
+      'Complete a real loop around a broad beam and recover below it.',
+      'Виконайте справжню петлю навколо широкої балки й відновіть політ під нею.',
+    ],
+    'field',
+    'pro',
+    ['power-loop', 'pitch', 'trajectory'],
+    [...powerStages(), stop(0, 20, 0), finish()],
+    { spawn: p(0, 0, 30), obstacles: beam('loop-reference', 36, 0), duration: 8 },
+  );
+  const barrel = path('xy', p(0, 36, 0), 1, 36000, {
+    radiusMin: 11000,
+    radiusMax: 23000,
+    axialMin: -40000,
+    axialMax: -18000,
+    axialTolerance: 5000,
+    coupled: coupling('roll', -1, 36000, 1800),
+  });
+  add(
+    ['Barrel path', 'Спіральна бочка'],
+    [
+      'Combine a full roll with a spatial spiral and continuing forward travel.',
+      'Поєднайте повну бочку з просторовою спіраллю та рухом уперед.',
+    ],
+    'field',
+    'master',
+    ['barrel', 'trajectory', 'momentum'],
+    [
+      lift(-60, 20, 20),
+      gateNote(
+        {
+          type: 'gate',
+          axis: 'x',
+          at: 0,
+          direction: 1,
+          minSide: -6000,
+          maxSide: 6000,
+          minY: 18000,
+          maxY: 22000,
+        },
+        ['Diagonal moving entry', 'Діагональний рухомий вхід'],
+        [
+          'Build rightward and forward travel into the broad entry, leaving room for the rising spiral.',
+          'Наберіть рух праворуч і вперед до широкого входу, залишаючи місце для висхідної спіралі.',
+        ],
+      ),
+      note(
+        barrel,
+        ['Roll around the lane', 'Виконайте бочку навколо лінії'],
+        [
+          'Follow the rising circular path while rolling left and travelling forward along the lane. Recover after one complete spiral.',
+          'Рухайтеся висхідною круговою траєкторією, виконуючи бочку ліворуч і продовжуючи рух уперед. Відновіть політ після одного повного витка.',
+        ],
+        [
+          'Body rotation, spatial winding and forward progress are checked together. Rolling in place does not satisfy this route.',
+          'Оберт корпусу, просторова спіраль і рух уперед перевіряються разом. Бочка на місці не виконує цей маршрут.',
+        ],
+      ),
+      stop(0, 20, -20),
+      finish(0, -20),
+    ],
+    { spawn: p(-60, 0, 20), duration: 9 },
+  );
+  add(
+    ['Orbit the landmark', 'Орбіта навколо орієнтира'],
+    [
+      'Circle a landmark in both directions while keeping the nose generally toward it.',
+      'Облетіть орієнтир в обидва боки, тримаючи ніс переважно до нього.',
+    ],
+    'courtyard',
+    'master',
+    ['orbit', 'heading', 'trajectory'],
+    [
+      lift(10, 25, 0),
+      stop(10, 25, 0, ['Face the landmark', 'Спрямуйте ніс до орієнтира'], -9000),
+      note(
+        orbit(),
+        ['Complete the first orbit', 'Завершіть першу орбіту'],
+        [
+          'Circle the central landmark through all four sectors, keeping the marked distance and height.',
+          'Облетіть центральний орієнтир через усі чотири сектори, зберігаючи позначену відстань і висоту.',
+        ],
+      ),
+      stop(10, 25, 0, ['Settle before reversing', 'Стабілізуйтеся до зміни напрямку'], -9000),
+      note(
+        orbit(p(0, 25, 0), -1),
+        ['Orbit in the other direction', 'Орбіта у протилежному напрямку'],
+        [
+          'Reverse the orbit direction and keep pointing generally toward the central landmark.',
+          'Змініть напрямок обльоту й продовжуйте тримати ніс переважно до центрального орієнтира.',
+        ],
+      ),
+      stop(10, 10, 0),
+      finish(10, 0),
+    ],
+    {
+      spawn: p(10, 0, 0),
+      obstacles: [{ id: 'orbit-landmark', min: p(-1, 0, -1), max: p(1, 28, 1) }],
+      duration: 9,
+    },
+  );
+  add(
+    ['Climbing corkscrew', 'Висхідна спіраль'],
+    [
+      'Make two full circuits around the training tower while steadily gaining height.',
+      'Виконайте два повні обльоти навчальної вежі з поступовим набором висоти.',
+    ],
+    'field',
+    'master',
+    ['spiral', 'height', 'trajectory'],
+    [
+      lift(10, 20, 0),
+      stop(10, 20, 0, ['Face the tower', 'Спрямуйте ніс до вежі'], -9000),
+      note(
+        path('xz', p(0, 20, 0), 1, 72000, {
+          min: p(-16, 18, -16),
+          max: p(16, 32, 16),
+          noseToward: true,
+          axialMin: 8000,
+          axialMax: 10000,
+          axialTolerance: 2000,
+        }),
+        ['Climb through two turns', 'Наберіть висоту за два оберти'],
+        [
+          'Circle twice while climbing along the marked spiral. Keep the tower ahead and stay inside the distance band.',
+          'Виконайте два обльоти з набором висоти по позначеній спіралі. Тримайте вежу попереду й залишайтеся в межах заданої відстані.',
+        ],
+        [
+          'Height gain must develop along the winding path. Two flat circles followed by a separate climb do not count.',
+          'Висота має зростати вздовж спіральної траєкторії. Два горизонтальні кола з окремим підйомом потім не зараховуються.',
+        ],
+      ),
+      stop(10, 30, 0),
+      finish(10, 0),
+    ],
+    {
+      spawn: p(10, 0, 0),
+      obstacles: [{ id: 'spiral-tower', min: p(-1, 0, -1), max: p(1, 34, 1) }],
+      duration: 9,
+    },
+  );
+  add(
+    ['Inverted turn and exit', 'Розворот у перевернутому положенні'],
+    [
+      'Use upward momentum, then link a half-roll, inverted yaw and controlled recovery.',
+      'Використайте рух угору, потім поєднайте півбочку, поворот носа догори дном і кероване відновлення.',
+    ],
+    'field',
+    'master',
+    ['inverted-yaw', 'combination', 'recovery'],
+    [
+      lift(0, 15, 0),
+      note(
+        crossing('y', 50, 1, 15000, 9000, { minA: -4000, maxA: 4000, minB: -4000, maxB: 4000 }),
+        ['Build the upward reserve', 'Наберіть запас руху вгору'],
+        [
+          'Climb firmly through the upper marker before beginning the inverted sequence. Keep the drone upright and centred over the entry.',
+          'Упевнено наберіть висоту крізь верхню позначку до початку перевернутої послідовності. Тримайте дрон рівно над входом.',
+        ],
+      ),
+      rot(
+        'roll',
+        1,
+        18000,
+        'upright',
+        ['First half-roll', 'Перша півбочка'],
+        [
+          'Roll right to inverted and centre the rotation controls.',
+          'Виконайте півбочку праворуч до перевернутого положення й центруйте осі обертання.',
+        ],
+      ),
+      rot(
+        'yaw',
+        1,
+        18000,
+        'inverted',
+        ['Yaw while inverted', 'Поверніть ніс догори дном'],
+        [
+          'Turn through a half yaw rotation while inverted. Watch the ground reference: body-axis yaw now has a different world-view effect.',
+          'Виконайте півоберта за курсом у перевернутому положенні. Стежте за землею: оберт навколо осі корпусу тепер інакше змінює світ у кадрі.',
+        ],
+      ),
+      rot(
+        'roll',
+        1,
+        18000,
+        'inverted',
+        ['Recover through the final half-roll', 'Відновіть політ останньою півбочкою'],
+        [
+          'Continue through the instructed roll to upright, then stop the remaining descent.',
+          'Виконайте вказану півбочку до рівного положення, потім зупиніть залишковий спуск.',
+        ],
+      ),
+      stop(0, 20, 0, ['Finish facing the reverse heading', 'Завершіть на зворотному курсі'], 18000),
+      finish(),
+    ],
+    { duration: 9 },
+  );
+  add(
+    ['Loop into a roll', 'Петля з переходом у бочку'],
+    [
+      'Join a power loop to a separate roll zone without resetting the flight.',
+      'З’єднайте силову петлю з окремою зоною бочки без скидання польоту.',
+    ],
+    'field',
+    'master',
+    ['combination', 'power-loop', 'roll'],
+    [
+      ...powerStages(),
+      stop(15, 35, -10, ['Prepare the second manoeuvre', 'Підготуйте другий маневр']),
+      rot(
+        'roll',
+        -1,
+        36000,
+        'upright',
+        ['Roll through the exit zone', 'Виконайте бочку в зоні виходу'],
+        [
+          'Perform a full left roll in the open exit zone, then regain a steady flight.',
+          'Виконайте повну бочку ліворуч у відкритій зоні виходу, потім відновіть стабільний політ.',
+        ],
+        { min: p(5, 8, -25), max: p(30, 70, 5) },
+      ),
+      stop(15, 15, -10),
+      finish(15, -10),
+    ],
+    { spawn: p(0, 0, 30), obstacles: beam('linked-loop-reference', 36, 0), duration: 10 },
+  );
+  add(
+    ['Split-S into an orbit', 'Split-S з переходом на орбіту'],
+    [
+      'Use the descending reverse exit to prepare a full landmark orbit.',
+      'Використайте низхідний зворотний вихід для підготовки повного обльоту орієнтира.',
+    ],
+    'field',
+    'master',
+    ['combination', 'split-s', 'orbit'],
+    [
+      ...splitStages(),
+      stop(10, 30, -18.5, ['Join the orbit entry', 'Увійдіть на орбіту'], -9000),
+      note(
+        orbit(p(0, 30, -18.5)),
+        ['Continue around the landmark', 'Продовжіть навколо орієнтира'],
+        [
+          'Complete one full orbit with the landmark ahead, then leave toward the landing area.',
+          'Виконайте один повний обліт з орієнтиром попереду, потім вийдіть до посадкової зони.',
+        ],
+      ),
+      stop(10, 10, -18.5),
+      finish(10, -18.5),
+    ],
+    {
+      spawn: p(0, 0, 60),
+      obstacles: [
+        ...beam('linked-split-reference', 70.3, -21.5),
+        { id: 'linked-orbit-marker', min: p(-1, 0, -19.5), max: p(1, 33, -17.5) },
+      ],
+      duration: 11,
+    },
+  );
+  add(
+    ['Race line with trick zones', 'Гоночна траєкторія з зонами трюків'],
+    [
+      'Fly a slalom, a marked roll zone and a controlled dive before the return gates.',
+      'Пройдіть слалом, позначену зону бочки й кероване пікірування перед зворотними воротами.',
+    ],
+    'stadium',
+    'master',
+    ['race', 'roll', 'dive', 'combination'],
+    [
+      lift(0, 35, 0),
+      gateNote(
+        gate('z', -8, -4, -1, 35),
+        ['First race gate', 'Перші гоночні ворота'],
+        [
+          'Move left through the first opening while reading the next gate.',
+          'Пройдіть ліворуч крізь перший отвір, помічаючи наступні ворота.',
+        ],
+      ),
+      gateNote(
+        gate('z', -16, 4, -1, 35),
+        ['Second race gate', 'Другі гоночні ворота'],
+        [
+          'Change the bank and align with the offset opening.',
+          'Змініть крен і вирівняйтеся зі зміщеним отвором.',
+        ],
+      ),
+      stop(0, 35, -24, ['Prepare the roll zone', 'Підготуйте зону бочки']),
+      rot(
+        'roll',
+        1,
+        36000,
+        'upright',
+        ['Roll inside the marked zone', 'Бочка в позначеній зоні'],
+        [
+          'Complete one full right roll inside the open zone and regain control before moving on.',
+          'Виконайте повну бочку праворуч у відкритій зоні й відновіть керування перед продовженням.',
+        ],
+        { min: p(-15, 10, -35), max: p(15, 70, -10) },
+      ),
+      ...diveStages(12, -24),
+      gateNote(
+        gate('x', 4, -24, -1, 30),
+        ['Return toward the race line', 'Поверніться до гоночної лінії'],
+        [
+          'After recovering, turn west through the high return gate.',
+          'Після відновлення поверніть на захід крізь високі зворотні ворота.',
+        ],
+      ),
+      gateNote(
+        gate('z', -5, 0, 1, 3),
+        ['Final descent and gate', 'Останній спуск і ворота'],
+        [
+          'Descend into the final southern gate, then brake toward the finish.',
+          'Спустіться в останні південні ворота, потім загальмуйте до фінішу.',
+        ],
+      ),
+      finish(),
+    ],
+    { duration: 11 },
+  );
+  add(
+    ['Master flight', 'Майстерний політ'],
+    [
+      'Combine an Immelmann, high slalom, Split-S, power loop and physical platform landing.',
+      'Поєднайте Іммельман, висотний слалом, Split-S, силову петлю й посадку на фізичну платформу.',
+    ],
+    'field',
+    'master',
+    ['capstone', 'combination', 'precision'],
+    [
+      lift(0, 20, 30),
+      gateNote(
+        loopEntry,
+        ['Climb-out entry', 'Вхід у набір висоти'],
+        [
+          'Use the lower northbound line to begin the climbing half-loop.',
+          'Використайте нижню північну лінію для початку висхідної півпетлі.',
+        ],
+      ),
+      note(
+        climbLoop(),
+        ['Climb through the half-loop', 'Підніміться півпетлею'],
+        [
+          'Complete the climbing half-loop above the beam.',
+          'Завершіть висхідну півпетлю над балкою.',
+        ],
+      ),
+      rot(
+        'roll',
+        1,
+        18000,
+        'inverted',
+        ['Recover upright at the top', 'Вирівняйтеся угорі'],
+        [
+          'Half-roll right to upright and read the high slalom beyond the beam.',
+          'Виконайте півбочку праворуч до горизонту й знайдіть висотний слалом за балкою.',
+        ],
+      ),
+      stop(0, 25, 15, ['Prepare the high slalom', 'Підготуйте висотний слалом'], 18000),
+      gateNote(
+        gate('z', 22, 5, 1, 25),
+        ['First high slalom gate', 'Перші високі ворота слалому'],
+        [
+          'Fly south through the offset gate and prepare the opposite bank.',
+          'Летіть на південь крізь зміщені ворота й підготуйте протилежний крен.',
+        ],
+      ),
+      gateNote(
+        gate('z', 30, -5, 1, 25),
+        ['Second high slalom gate', 'Другі високі ворота слалому'],
+        [
+          'Change direction smoothly through the second opening.',
+          'Плавно змініть напрямок крізь другий отвір.',
+        ],
+      ),
+      ...splitStages(),
+      stop(20, 40, 0, ['Reposition clear of the structures', 'Перейдіть подалі від конструкцій']),
+      ...powerStages(),
+      stop(15, 5, 7, ['Prepare the raised finish', 'Підготуйте піднятий фініш']),
+      finish(15, 7, 3, 'master-finish-platform'),
+    ],
+    {
+      spawn: p(0, 0, 30),
+      obstacles: [
+        ...beam('master-loop-reference', 36, 0),
+        ...beam('master-split-reference', 70.3, -21.5),
+        { id: 'master-finish-platform', min: p(11, 0, 3), max: p(19, 3, 11) },
+      ],
+      duration: 12,
+    },
+  );
+  return Object.freeze(lessons);
+})();
+
 export const BEGINNER_LESSONS = Object.freeze([
   ...ORIGINAL_BEGINNER_LESSONS,
   ...NEW_ACRO_LESSONS,
   ...MASTERY_LESSONS,
+  ...SKILL_LESSONS,
 ]);
 export const ACRO_LESSON_ORDER = Object.freeze(
   [15, 16, 13, 17, 14, 18, 19, 20, 21, 22, 23, 24, 25, 26].map(
@@ -4098,11 +5120,20 @@ export const EXPERIENCED_LESSON_ORDER = Object.freeze(
 export const ADVANCED_LESSON_ORDER = Object.freeze(
   MASTERY_LESSONS.filter((lesson) => lesson.tier === 'advanced').map((lesson) => lesson.id),
 );
+export const PRO_LESSON_ORDER = Object.freeze(
+  SKILL_LESSONS.filter((lesson) => lesson.tier === 'pro').map((lesson) => lesson.id),
+);
+export const MASTER_LESSON_ORDER = Object.freeze(
+  SKILL_LESSONS.filter((lesson) => lesson.tier === 'master').map((lesson) => lesson.id),
+);
 export const PRIMARY_LESSON_ORDER = Object.freeze([
   ...ACRO_LESSON_ORDER,
   ...EXPERIENCED_LESSON_ORDER,
   ...ADVANCED_LESSON_ORDER,
+  ...PRO_LESSON_ORDER,
+  ...MASTER_LESSON_ORDER,
 ]);
+const SKILL_IDENTITY = `fpv-skills-school:${dataIdentity(SKILL_LESSONS.map((lesson) => lesson.course))}`;
 const MASTERY_IDENTITY = `fpv-navigation-school:${dataIdentity(MASTERY_LESSONS.map((lesson) => lesson.course))}`;
 const ACRO_IDENTITY = `fpv-acro-school:${dataIdentity(NEW_ACRO_LESSONS.map((lesson) => lesson.course))}`;
 export const BEGINNER_CATALOGUE = Object.freeze(
@@ -4113,16 +5144,22 @@ export const BEGINNER_CATALOGUE = Object.freeze(
     world: lesson.course.environment,
     theme: lesson.course.world.theme,
     activity: 'academy',
-    difficulty:
-      lesson.tier === 'advanced'
-        ? 'advanced'
-        : lesson.tier === 'experienced'
-          ? 'intermediate'
-          : 'beginner',
+    difficulty: ['advanced', 'pro', 'master'].includes(lesson.tier)
+      ? 'advanced'
+      : lesson.tier === 'experienced'
+        ? 'intermediate'
+        : 'beginner',
     ...(lesson.tier ? { tier: lesson.tier, skillTags: lesson.skillTags } : {}),
+    ...(lesson.requiresMode ? { requiresMode: lesson.requiresMode } : {}),
     duration: lesson.duration,
     packIdentity:
-      lesson.index < 14 ? BEGINNER_IDENTITY : lesson.index < 26 ? ACRO_IDENTITY : MASTERY_IDENTITY,
+      lesson.index < 14
+        ? BEGINNER_IDENTITY
+        : lesson.index < 26
+          ? ACRO_IDENTITY
+          : lesson.index < 42
+            ? MASTERY_IDENTITY
+            : SKILL_IDENTITY,
     legacy: false,
   })),
 );

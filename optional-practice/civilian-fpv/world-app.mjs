@@ -5,6 +5,8 @@ import {
   ACRO_LESSON_ORDER,
   EXPERIENCED_LESSON_ORDER,
   ADVANCED_LESSON_ORDER,
+  PRO_LESSON_ORDER,
+  MASTER_LESSON_ORDER,
   PRIMARY_LESSON_ORDER,
   SELF_LEVEL_LESSON_ORDER,
   WORLD_THEMES,
@@ -23,6 +25,7 @@ import {
   replayWorldFlight,
   recoverWorldFlight,
   validateWorldCourse,
+  worldCourseRequiresAcro,
   WORLD_FLIGHT_MODEL,
 } from './world-model.mjs';
 import { WORLD_COLLISION_BACKEND } from './world-collision.mjs';
@@ -77,7 +80,12 @@ import {
   compatibleGhost,
   checkpointPractice,
 } from './world-progress.mjs';
-import { splitCourseDefinition, compileContentProject } from './content-definitions.mjs';
+import {
+  splitCourseDefinition,
+  compileContentProject,
+  criterionPosition,
+  translateCriterion,
+} from './content-definitions.mjs';
 import { builtinWorldScene, createFlightRenderer } from './world-assets.mjs';
 import { mountDroneHangar } from './world-hangar.mjs';
 import { mountActorEditor } from './world-actor-editor.mjs';
@@ -85,9 +93,9 @@ import { mountActorEditor } from './world-actor-editor.mjs';
 const COPY_EN = {
   learn: 'Learn to fly',
   beginLearning: 'Start Flight School',
-  schoolEyebrow: 'ACRO FLIGHT SCHOOL · BEGINNER TO ADVANCED',
+  schoolEyebrow: 'ACRO FLIGHT SCHOOL · BUILD YOUR MASTERY',
   schoolTitle: 'Every pilot starts here.',
-  schoolIntro: `Build your skills through ${PRIMARY_LESSON_ORDER.length} guided Acro lessons: beginner, experienced and advanced. Watch the complete route, take control and practise each real objective. ${SELF_LEVEL_LESSON_ORDER.length} optional self-level lessons are also open.`,
+  schoolIntro: `Build your skills through ${PRIMARY_LESSON_ORDER.length} guided Acro lessons across Beginner, Experienced, Advanced, Pro and Master tiers. Watch the complete route, take control and practise each real objective. ${SELF_LEVEL_LESSON_ORDER.length} optional self-level lessons are also open.`,
   schoolFilterLabel: 'Choose a learning tier',
   schoolReassurance:
     'Acro · FPV view · Gentle response. Your usual settings return when you leave. All lessons are open.',
@@ -247,9 +255,9 @@ const COPY_EN = {
 const COPY_UK = {
   learn: 'Навчитися літати',
   beginLearning: 'Почати льотну школу',
-  schoolEyebrow: 'ШКОЛА ACRO · ВІД ОСНОВ ДО СКЛАДНИХ МАРШРУТІВ',
+  schoolEyebrow: 'ШКОЛА ACRO · РОЗВИВАЙТЕ МАЙСТЕРНІСТЬ',
   schoolTitle: 'Тут починається ваш політ.',
-  schoolIntro: `Розвивайте навички у ${PRIMARY_LESSON_ORDER.length} уроках Acro: початкових, для досвідчених та поглиблених. Перегляньте весь маршрут, перехопіть керування й виконайте справжні цілі. Також відкрито ${SELF_LEVEL_LESSON_ORDER.length} додаткових уроків самовирівнювання.`,
+  schoolIntro: `Розвивайте навички у ${PRIMARY_LESSON_ORDER.length} уроках Acro: від початкових до рівнів Pro та Master. Перегляньте весь маршрут, перехопіть керування й виконайте справжні цілі. Також відкрито ${SELF_LEVEL_LESSON_ORDER.length} додаткових уроків самовирівнювання.`,
   schoolFilterLabel: 'Виберіть рівень навчання',
   schoolReassurance:
     'Acro · вигляд FPV · плавне керування. Після виходу ваші налаштування повернуться. Усі уроки відкриті.',
@@ -455,38 +463,17 @@ export function synchronizeDefinitions(project) {
 }
 
 export function criterionCentre(step) {
-  if (step?.min && step.max)
-    return Object.fromEntries(
-      coordinates.map((k) => [k, Math.round((step.min[k] + step.max[k]) / 2)]),
-    );
-  if (step?.type === 'gate')
-    return {
-      x: step.axis === 'x' ? step.at : Math.round((step.minSide + step.maxSide) / 2),
-      y: Math.round((step.minY + step.maxY) / 2),
-      z: step.axis === 'z' ? step.at : Math.round((step.minSide + step.maxSide) / 2),
-    };
-  return null;
+  return criterionPosition(step);
 }
 export function moveCriterion(step, position) {
   const before = criterionCentre(step);
   if (!before) throw new Error('This objective has no position; edit its parameters in JSON.');
   if (!coordinates.every((k) => Number.isSafeInteger(position[k])))
     throw new Error('Coordinates must be finite millimetres.');
-  const out = clone(step),
-    delta = Object.fromEntries(coordinates.map((k) => [k, position[k] - before[k]]));
-  if (out.min)
-    for (const k of coordinates) {
-      out.min[k] += delta[k];
-      out.max[k] += delta[k];
-    }
-  else {
-    out.at += delta[out.axis];
-    out.minSide += delta[out.axis === 'x' ? 'z' : 'x'];
-    out.maxSide += delta[out.axis === 'x' ? 'z' : 'x'];
-    out.minY += delta.y;
-    out.maxY += delta.y;
-  }
-  return out;
+  return translateCriterion(
+    step,
+    Object.fromEntries(coordinates.map((k) => [k, position[k] - before[k]])),
+  );
 }
 
 /** Bake all eight transformed corners, retaining nested rotation and nonuniform scale. */
@@ -741,7 +728,8 @@ export function mountWorldApp({
   const sessionLearningComplete = new Set();
   let selectedWorld = null,
     learningPreferences = null,
-    learningResponse = null;
+    learningResponse = null,
+    requiredModePreference = null;
   const sectors = createSectorTracker();
   let storage;
   try {
@@ -789,7 +777,12 @@ export function mountWorldApp({
         'revealline.fpv.world-settings.v1',
         JSON.stringify(
           Object.fromEntries(
-            preferenceIds.map((id) => [id, learningPreferences?.[id] ?? $(id).value]),
+            preferenceIds.map((id) => [
+              id,
+              learningPreferences?.[id] ??
+                (id === 'flight-mode' ? requiredModePreference : null) ??
+                $(id).value,
+            ]),
           ),
         ),
       );
@@ -858,6 +851,13 @@ export function mountWorldApp({
       land: ['Land', 'Сідайте'],
       eliminate: ['Disable targets', 'Вимкніть мішені'],
       survive: ['Stay airborne', 'Тримайтеся в повітрі'],
+      'rotation-v1': ['Complete the rotation', 'Виконайте повний поворот'],
+      'attitude-v1': ['Hold the required attitude', 'Утримуйте потрібне положення'],
+      'path-v1': ['Follow the manoeuvre path', 'Виконайте траєкторію маневру'],
+      'crossing-v1': [
+        'Cross with the nose aligned',
+        'Перетніть площину з правильним напрямком носа',
+      ],
     };
     return txt(...(names[step?.type] ?? [step?.type ?? '', step?.type ?? '']));
   };
@@ -1149,6 +1149,11 @@ export function mountWorldApp({
     learningPreferences = null;
     paintLoadout();
   }
+  function restoreRequiredMode() {
+    if (requiredModePreference === null) return;
+    $('flight-mode').value = requiredModePreference;
+    requiredModePreference = null;
+  }
   function restoreRadio() {
     if (
       replayProof ||
@@ -1427,6 +1432,8 @@ export function mountWorldApp({
       beginner: txt('Beginner', 'Початковий'),
       experienced: txt('Experienced', 'Для досвідчених'),
       advanced: txt('Advanced', 'Поглиблений'),
+      pro: txt('Pro', 'Pro · Профі'),
+      master: txt('Master', 'Master · Майстерність'),
       'self-level': txt('Optional self-level', 'Додаткове самовирівнювання'),
     };
     const tierCounts = {
@@ -1434,6 +1441,8 @@ export function mountWorldApp({
       beginner: ACRO_LESSON_ORDER.length,
       experienced: EXPERIENCED_LESSON_ORDER.length,
       advanced: ADVANCED_LESSON_ORDER.length,
+      pro: PRO_LESSON_ORDER.length,
+      master: MASTER_LESSON_ORDER.length,
       'self-level': SELF_LEVEL_LESSON_ORDER.length,
     };
     const selectedTier = $('school-tier').value;
@@ -1478,6 +1487,18 @@ export function mountWorldApp({
         'Advanced · Find the line through complex spaces.',
         'Поглиблений · Знайдіть маршрут у складному просторі.',
         'advanced',
+      ],
+      [
+        PRO_LESSON_ORDER,
+        'Pro · Refine demanding flight techniques.',
+        'Pro · Удосконалюйте складні прийоми пілотування.',
+        'pro',
+      ],
+      [
+        MASTER_LESSON_ORDER,
+        'Master · Bring your skills together.',
+        'Master · Поєднуйте всі свої навички.',
+        'master',
       ],
       [
         SELF_LEVEL_LESSON_ORDER,
@@ -2389,6 +2410,7 @@ export function mountWorldApp({
         createCourse: courseFromProject,
         createCollider: colliderFromAnchor,
         validateCourse: validateWorldCourse,
+
       });
       next = review.project;
       diagnostics = review.diagnostics;
@@ -3114,6 +3136,8 @@ export function mountWorldApp({
     flight?.dispose?.();
     flight = null;
     current = entry;
+    restoreRequiredMode();
+    const needsAcro = !entry.legacy && worldCourseRequiresAcro(entry.course);
     const learning = learningById.get(entry.beginner);
     if (learning) {
       learningPreferences ??= {
@@ -3132,6 +3156,10 @@ export function mountWorldApp({
     } else {
       beginnerCoach.close();
       restoreLearningPreferences();
+      if (needsAcro) {
+        requiredModePreference = $('flight-mode').value;
+        $('flight-mode').value = 'acro';
+      }
     }
     $('flight-dialog').classList.toggle('learning-flight', Boolean(learning));
     preview = Boolean(options.replayProof) || (options.preview ?? false);
@@ -3157,7 +3185,7 @@ export function mountWorldApp({
         : txt('RECORDED FLIGHT', 'ЗАПИСАНИЙ ПОЛІТ');
     $('world-replay-rate').value = String(replayRate);
     $('flight-mode').disabled =
-      Boolean(learning) || (Boolean(replayProof) && replayKind !== 'demonstration');
+      Boolean(learning) || needsAcro || (Boolean(replayProof) && replayKind !== 'demonstration');
     $('flight-source').disabled = Boolean(replayProof);
     $('radio-setup-button').disabled = Boolean(replayProof);
     $('world-touch').hidden = Boolean(replayProof) || $('flight-source').value !== 'touch';
@@ -3358,6 +3386,7 @@ export function mountWorldApp({
     current = null;
     beginnerCoach.close();
     restoreLearningPreferences();
+    restoreRequiredMode();
     $('flight-dialog').classList.remove('learning-flight');
     sectorReferenceProof = null;
     $('flight-dialog').close();
