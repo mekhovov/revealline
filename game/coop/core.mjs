@@ -1,3 +1,8 @@
+import {
+  TEAM_RUNNING_LEVEL_VERSION,
+  TEAM_RUNNING_RULESET,
+  inheritedRunningTeamLevel,
+} from './running-enemies.mjs';
 import { EPS, movingCirclesTime } from '../core/geometry.mjs';
 import { validFieldCourse, steerFieldCourse } from '../core/field-course.mjs';
 import { JOURNEY_POLICY, journeyPreset } from '../content-design/catalogs.mjs';
@@ -128,6 +133,21 @@ function buildGrid(level) {
 
 /** Validate before adopting content; the engine owns its copy and never changes the caller's level. */
 export function validateCoopLevel(level) {
+  if (
+    Object.getOwnPropertyDescriptor(level ?? {}, 'version')?.value === TEAM_RUNNING_LEVEL_VERSION
+  ) {
+    try {
+      const inherited = inheritedRunningTeamLevel(level);
+      const validation = validateCoopLevel(inherited);
+      if (!validation.valid) return validation;
+      validateCoopCombat(level, buildGrid(inherited));
+      if (Object.hasOwn(level, 'timedBonuses'))
+        validateCoopTimedBonuses(level, compileCoopFoundationGeometry(level));
+      return { valid: true, errors: [] };
+    } catch (error) {
+      return { valid: false, errors: [error.message] };
+    }
+  }
   const errors = [];
   const check = (condition, message) => {
     if (!condition) errors.push(message);
@@ -466,7 +486,12 @@ export function createCoop(
   const owned = structuredClone(level);
   const cells = buildGrid(owned);
   const run = {
-    ruleset: isJourneyTeamLevel(owned) ? journeyTeamPackEdition(owned).ruleset : COOP_RULESET,
+    ruleset:
+      owned.version === TEAM_RUNNING_LEVEL_VERSION
+        ? TEAM_RUNNING_RULESET
+        : isJourneyTeamLevel(owned)
+          ? journeyTeamPackEdition(owned).ruleset
+          : COOP_RULESET,
     level: owned,
     width: owned.width,
     height: owned.height,
@@ -636,7 +661,11 @@ function knockDown(run, player, cause, commands, enemy = null) {
   clearCoopPlayerBonus(run, player);
   player.downedUntil =
     run.time +
-    (isJourneyTeamRuleset(run.ruleset)
+    ((
+      run.level.version === TEAM_RUNNING_LEVEL_VERSION
+        ? isJourneyTeamLevel(run.level)
+        : isJourneyTeamRuleset(run.ruleset)
+    )
       ? JOURNEY_POLICY.rules.respawnSeconds
       : COOP_TIMING[run.difficulty].recovery);
   player.downedClaimedAt = run.claimedCount;

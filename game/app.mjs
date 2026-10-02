@@ -1,4 +1,12 @@
 import { createEncounterVariantPreferences } from './hunt/preferences.mjs';
+import { createRunningEnemyPreferences } from './hunt/running-enemy-preferences.mjs';
+import {
+  prepareRunningEnemyLevel,
+  runningEnemyBaseLevel,
+  matchRunningEnemyLevel,
+} from './hunt/running-enemies.mjs';
+import { versionsForLevel } from './core/versions.mjs';
+import { mountRunningEnemyControls } from './ui/running-enemy-controls.mjs';
 import { attachEncounterVariantControls } from './ui/encounter-variant-controls.mjs';
 import { attachHuntStatus } from './ui/hunt-status.mjs';
 import { createHuntRecords } from './hunt/records.mjs';
@@ -589,6 +597,18 @@ try {
     getStorage: () => localStorage,
     writable: () => !practiceSession,
   });
+  const runningEnemyPreferences = createRunningEnemyPreferences({
+    window,
+    getStorage: profileStorage,
+  });
+  const runningEnemyControls = [];
+  let runningEnemyNeedsPreparation = false;
+  const withRunningEnemies = (
+    level,
+    classes = classRegistry,
+    enabled = runningEnemyPreferences.snapshot().enabled,
+  ) => (enabled ? prepareRunningEnemyLevel(level, { classes }) : level);
+  const refreshRunningEnemies = () => runningEnemyControls.forEach((control) => control.refresh());
   let encounterVariantControls = null,
     contextualReactions = null,
     huntRecords = null,
@@ -1615,7 +1635,11 @@ try {
     return pictureEntry;
   }
   function pictureLevelForRun(nextRun, entry, pictureEntry = pictureExecutionForEntry(entry)) {
-    if (!entry.classicRulesSourceCampaignKey && !recoverGameplayTuning(nextRun.level))
+    if (
+      !entry.classicRulesSourceCampaignKey &&
+      !recoverGameplayTuning(nextRun.level) &&
+      !nextRun.level.runningEnemies
+    )
       return nextRun.level;
     // Difficulty changes simulation, not the ownership of an original picture.
     const levels = pictureEntry.campaign.levels;
@@ -3203,6 +3227,8 @@ try {
       encounterDisplay.dispose();
       encounterVariantControls?.dispose();
       encounterChoices.dispose();
+      runningEnemyControls.forEach((control) => control.dispose());
+      runningEnemyPreferences.dispose();
       contextualReactions?.dispose();
       huntStatus?.dispose();
       huntResultStatus?.dispose();
@@ -4518,7 +4544,13 @@ try {
         () => worldAttemptCurrent(ticket),
       );
       assertCurrent();
-      const nextRun = createRun(applyGameplayTuning(level, nextGameplayTuning(entry)), options);
+      const nextRun = createRun(
+        withRunningEnemies(
+          applyGameplayTuning(level, nextGameplayTuning(entry)),
+          options.classRecipes,
+        ),
+        options,
+      );
       const nextRunId = crypto.randomUUID?.() || `${Date.now()}-${Math.random()}`;
       const nextRecorder = createRecorder(nextRun.level, options, buildVersion);
       ticket.pictures = newFlightPictures({
@@ -6639,9 +6671,13 @@ try {
         campaignKey: campaignKey(entry.campaign),
         signal: controller.signal,
         mediaIdentityCatalog: candidate?.presentationPins ? pictureIdentity() : undefined,
-        masteryDefinition:
-          masteryFor(campaignKey(entry.campaign), candidate?.replay?.level?.id, masteryCatalog) ??
-          undefined,
+        masteryDefinition: candidate?.replay?.level?.runningEnemies
+          ? undefined
+          : (masteryFor(
+              campaignKey(entry.campaign),
+              candidate?.replay?.level?.id,
+              masteryCatalog,
+            ) ?? undefined),
       });
       if (controller.signal.aborted)
         throw new DOMException(
@@ -7476,6 +7512,48 @@ try {
     root: $('gameplay-tuning'),
     controller: gameplayTuning,
     getDifficulty: () => browsingJourneyPreferences.snapshot().difficulty,
+  });
+  for (const container of new Set([
+    $('enemy-remains')?.closest('section') ?? $('settings-panel-display'),
+    $('menu-difficulty').closest('label')?.parentElement,
+  ])) {
+    if (!container) continue;
+    runningEnemyControls.push(
+      mountRunningEnemyControls({
+        container,
+        document,
+        window,
+        preferences: runningEnemyPreferences,
+        getCurrentEnabled: () =>
+          run ? !!(run.level.runningEnemies || run.level.classic?.hunt) : null,
+        getAcceptedEnabled: () =>
+          started && run
+            ? run.level.classic?.hunt
+              ? runningEnemyPreferences.snapshot().enabled
+              : !!run.level.runningEnemies
+            : null,
+        onRestart: () => requestRestart(document.activeElement),
+      }),
+    );
+  }
+  let runningEnemyChoice = runningEnemyPreferences.snapshot().enabled;
+  runningEnemyPreferences.subscribe(({ enabled }) => {
+    if (enabled === runningEnemyChoice) return;
+    runningEnemyChoice = enabled;
+    runningEnemyNeedsPreparation = !started;
+    cancelResultAttempt();
+    cancelSkipForContentChange();
+    cancelWorldAttempt();
+    cancelTitleFlight();
+    clearInput();
+    if (!started && !sessionBusy && !contentSwitchBusy && !backupBusy) {
+      try {
+        prepare();
+      } catch (error) {
+        warning(error.message);
+      }
+    }
+    refreshRunningEnemies();
   });
   gameplayTuning.subscribe(() => {
     cancelResultAttempt();
@@ -8959,7 +9037,12 @@ try {
         if (!destinationEntry)
           throw new Error(t('interface:thisMissionIsUnavailableInTheCurrentEdition'));
       }
-      const retainHunt = kind === 'retry' && !!ticket.run.level.classic?.hunt;
+      const retainHunt =
+        kind === 'retry' && !!(ticket.run.level.classic?.hunt || ticket.run.level.runningEnemies);
+      const runningEnemiesEnabled =
+        kind === 'retry'
+          ? !!ticket.run.level.runningEnemies
+          : runningEnemyPreferences.snapshot().enabled;
       const entry =
           (retainHunt ? ticket.entry : null) ||
           destinationEntry ||
@@ -9020,6 +9103,7 @@ try {
             signal: ticket.controller.signal,
             onStatus: ticket.feedback.update,
             gameplayTuning: nextGameplayTuning(entry),
+            runningEnemies: runningEnemiesEnabled,
           },
         );
         if (!resultAttemptCurrent(ticket)) {
@@ -9032,7 +9116,14 @@ try {
       const nextRun = retainHunt
           ? createRun(ticket.run.level, options)
           : (candidateAttempt?.run ??
-            createRun(applyGameplayTuning(level, nextGameplayTuning(entry)), options)),
+            createRun(
+              withRunningEnemies(
+                applyGameplayTuning(level, nextGameplayTuning(entry)),
+                options.classRecipes,
+                runningEnemiesEnabled,
+              ),
+              options,
+            )),
         nextRunId = crypto.randomUUID?.() || `${Date.now()}-${Math.random()}`,
         nextRecorder = retainHunt
           ? createRecorder(nextRun.level, options, buildVersion)
@@ -9183,10 +9274,53 @@ try {
     difficulty,
     preparedAttempt = null,
     retainAttemptAppearance = false,
+    retainAcceptedAttempt = false,
   } = {}) {
     if (practiceRenderFailure.failed) return false;
-    const retainedHunt = retainAttemptAppearance && run?.level.classic?.hunt ? run : null;
+    const retainedRun =
+      retainAcceptedAttempt ||
+      (retainAttemptAppearance &&
+        (run?.level.classic?.hunt ||
+          (run?.level.runningEnemies && runningEnemyPreferences.snapshot().enabled)))
+        ? run
+        : null;
     if (courseEntry || (courseSession && ['leaving', 'ended'].includes(coursePhase))) return;
+    // Admission can reject custom geometry. Prepare the complete simulation before
+    // releasing the current flight's pictures, controls, or accepted population.
+    const previousSelection = { activeEntry, campaign, classRegistry, classId, progress };
+    let nextRun;
+    try {
+      if (!preparedAttempt && !restoreAdoption && !retainedRun) applyNextDifficulty(difficulty);
+      nextRun =
+        preparedAttempt?.run ||
+        createRun(
+          retainedRun?.level ??
+            (restoreAdoption
+              ? scenario?.level || campaign.levels[levelIndex]
+              : withRunningEnemies(
+                  scenario || practice || courseSession
+                    ? scenario?.level || campaign.levels[levelIndex]
+                    : applyGameplayTuning(campaign.levels[levelIndex], nextGameplayTuning()),
+                  scenario?.classRecipes || classRegistry,
+                )),
+          retainedRun
+            ? {
+                seed: retainedRun.seed,
+                turnPolicy: retainedRun.turnPolicy,
+                classId: retainedRun.classId,
+                classRecipes: retainedRun.classRecipes,
+              }
+            : {
+                seed,
+                turnPolicy,
+                classId,
+                classRecipes: scenario?.classRecipes || classRegistry,
+              },
+        );
+    } catch (error) {
+      ({ activeEntry, campaign, classRegistry, classId, progress } = previousSelection);
+      throw error;
+    }
     if (preparedAttempt) {
       const current = () =>
         preparedAttempt.kind === 'world-play'
@@ -9217,7 +9351,6 @@ try {
       if (courseSession) coursePhase = 'ready';
       if (!restoreAdoption) {
         cancelRestore();
-        if (!retainedHunt) applyNextDifficulty(difficulty);
       }
       cancelPictureStart();
       storyDialog.close();
@@ -9324,34 +9457,20 @@ try {
     painter.skipCelebration?.();
     show('skip-celebration', false);
     clearInput({ resetDirection: true });
-    run =
-      preparedAttempt?.run ||
-      createRun(
-        retainedHunt?.level ??
-          (scenario || practice || courseSession || restoreAdoption
-            ? scenario?.level || campaign.levels[levelIndex]
-            : applyGameplayTuning(campaign.levels[levelIndex], nextGameplayTuning())),
-        retainedHunt
-          ? {
-              seed: retainedHunt.seed,
-              turnPolicy: retainedHunt.turnPolicy,
-              classId: retainedHunt.classId,
-              classRecipes: retainedHunt.classRecipes,
-            }
-          : {
-              seed,
-              turnPolicy,
-              classId,
-              classRecipes: scenario?.classRecipes || classRegistry,
-            },
-      );
-    if (retainedHunt || (preparedAttempt?.ticket.kind === 'retry' && run.level.classic?.hunt)) {
+    run = nextRun;
+    runningEnemyNeedsPreparation = false;
+    if (
+      retainedRun ||
+      (preparedAttempt?.ticket.kind === 'retry' &&
+        (run.level.classic?.hunt || run.level.runningEnemies))
+    ) {
       seed = run.seed;
       turnPolicy = run.turnPolicy;
       classId = run.classId;
       classRegistry = run.classRecipes;
     }
     runId = preparedAttempt?.runId || crypto.randomUUID?.() || `${Date.now()}-${Math.random()}`;
+    refreshRunningEnemies();
     const informationOwner = flightInformation.adopt(run, runId);
     courseObserver = null;
     courseUnavailable = null;
@@ -9535,6 +9654,14 @@ try {
     if (document.hidden || !document.hasFocus()) return;
     if (courseBlocked()) return;
     if (!run || (campaignOverview && !practice) || ['won', 'lost'].includes(run.status)) return;
+    if (!started && runningEnemyNeedsPreparation) {
+      try {
+        if (!prepare({ contentSwitchTicket })) return;
+      } catch (error) {
+        warning(error.message);
+        return;
+      }
+    }
     if (librarySkipResolution) cancelSkipResolution({ announce: false });
     if (journeySkipArmed !== null) {
       clearSkipConfirmation();
@@ -10008,7 +10135,7 @@ try {
       attemptId: runId,
       mode: 'solo',
       board: 0,
-      encounter: !!run?.level?.classic?.hunt,
+      encounter: !!(run?.level?.classic?.hunt || run?.level?.runningEnemies),
       danger: soloReactionDanger(run),
     });
     const ticket = flightInformation.begin(run, events);
@@ -10615,7 +10742,12 @@ try {
               const tuning = recoverGameplayTuning(run.level);
               if (tuning) {
                 const authored = campaign.levels.find((level) => level.id === run.levelId);
-                if (tuning.adminOverride || !matchRecordedGameplayTuning(authored, run.level))
+                if (
+                  tuning.adminOverride ||
+                  !matchRecordedGameplayTuning(authored, run.level, {
+                    classes: run.classRecipes,
+                  })
+                )
                   throw new Error(
                     t('interface:thisPlaytestDoesNotQualifyForAuthoredCollectionProgress'),
                   );
@@ -10623,6 +10755,17 @@ try {
                 // Exact reconstruction also preserves restored native gp4 runs;
                 // arbitrary replay revisions never reach the authored award path.
                 result.revision = authored.revision;
+              }
+              if (run.level.runningEnemies) {
+                const authored = campaign.levels.find((level) => level.id === run.levelId);
+                if (
+                  !tuning &&
+                  !matchRunningEnemyLevel(authored, run.level, {
+                    classes: run.classRecipes,
+                  })
+                )
+                  throw new Error('The running-enemy recipe differs from this mission.');
+                result.ruleset = versionsForLevel(runningEnemyBaseLevel(run.level)).ruleset;
               }
               library = recordLibraryCompletion(library, {
                 campaign,
@@ -11012,8 +11155,12 @@ try {
     if ($('shell-workshop-dialog').open) $('shell-workshop-dialog').close();
     if ($('shell-home').open) $('shell-home').close();
     demo = false;
-    prepare({ retainAttemptAppearance: true });
-    resume();
+    try {
+      prepare({ retainAttemptAppearance: true });
+      resume();
+    } catch (error) {
+      warning(error.message);
+    }
   };
   $('retry-button').onclick = () => {
     if (defeatActive || courseBlocked()) return;
@@ -11022,8 +11169,12 @@ try {
       return;
     }
     demo = false;
-    prepare();
-    resume();
+    try {
+      prepare({ retainAcceptedAttempt: true, retainAttemptAppearance: true });
+      resume();
+    } catch (error) {
+      warning(error.message);
+    }
   };
   $('view-picture').onclick = () => {
     if (run.status !== 'won') return;
@@ -11622,7 +11773,13 @@ try {
         classRecipes: entry.classRecipes,
       };
       const pictures = newFlightPictures({
-        nextRun: createRun(applyGameplayTuning(level, nextGameplayTuning(entry)), options),
+        nextRun: createRun(
+          withRunningEnemies(
+            applyGameplayTuning(level, nextGameplayTuning(entry)),
+            options.classRecipes,
+          ),
+          options,
+        ),
         nextRunId: crypto.randomUUID(),
         entry,
         nextThemeId: nextTheme.id,
