@@ -484,6 +484,10 @@ export function createSoundtrackPlayer({
       emit();
     }
     if (track.kind === 'remote') {
+      required(
+        isResolvedOnlineSoundtrackTrack(track),
+        t('interface:invalidOnlineSoundtrackRecording'),
+      );
       throwIfSoundtrackAborted(signal);
       installDeckURL(deck, track, track.url, { owned: false });
       return true;
@@ -1225,7 +1229,7 @@ export function createSoundtrackPlayer({
       t('interface:chooseAtLeastOneOnlineSoundtrack'),
     );
     const ids = new Set();
-    const validated = owned.map((track) => {
+    const validated = owned.map((track, index) => {
       required(
         track?.kind === 'remote' &&
           /^online\.[a-f0-9]{64}$/.test(track.id) &&
@@ -1241,7 +1245,9 @@ export function createSoundtrackPlayer({
         t('interface:invalidOnlineSoundtrackRecording'),
       );
       ids.add(track.id);
-      return Object.freeze({ ...track, websites: Object.freeze(track.websites ?? []) });
+      // Retain the immutable resolved object and its canonical-fetch provenance.
+      // A later catalogue refresh can then revoke a stale remote queue entry.
+      return value[index];
     });
     const eligibleTracks = library.listening?.recordingMode
       ? validated.filter(onlineSoundtrackRecordingAllowed)
@@ -1396,6 +1402,10 @@ export function createSoundtrackPlayer({
           }
           soundscape.resumeMusic();
         } else {
+          required(
+            current.kind !== 'remote' || isResolvedOnlineSoundtrackTrack(current),
+            t('interface:invalidOnlineSoundtrackRecording'),
+          );
           const enabled = soundscape.enable();
           if (
             current.kind === 'published' &&
