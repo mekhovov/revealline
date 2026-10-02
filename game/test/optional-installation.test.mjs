@@ -9,6 +9,7 @@ import {
 import { preparePracticeOffline } from '../../optional-practice/civilian-flight/offline.mjs';
 import { installOptionalLauncher } from '../../optional-practice/launcher-template.mjs';
 import { runInNewContext } from 'node:vm';
+import { waitFor } from './helpers/wait-for.mjs';
 
 const packageId = 'civilian-flight';
 const root = '/revealline/practice/civilian-flight/';
@@ -85,18 +86,33 @@ test('an installation pointer is recorded only after a verified worker activates
     callbacks = new Set();
   const worker = {
     state: 'installing',
+    scriptURL: new URL('worker.js', locationFor('v1.2.3').href).href,
+    postMessage(data, ports) {
+      if (data.type === 'practice-status')
+        ports[0].postMessage({ type: 'practice-status', ready: true, scope: registration.scope });
+    },
     addEventListener: (_, callback) => callbacks.add(callback),
     removeEventListener: (_, callback) => callbacks.delete(callback),
   };
-  const registration = { installing: worker };
+  const registration = {
+    installing: worker,
+    scope: new URL('./', locationFor('v1.2.3').href).href,
+  };
+  const navigator = {
+    serviceWorker: {
+      register: async () => registration,
+      getRegistration: async () => registration,
+    },
+  };
   const pending = preparePracticeOffline({
     storage,
     location: locationFor('v1.2.3'),
-    navigator: { serviceWorker: { register: async () => registration } },
+    navigator,
   });
-  await Promise.resolve();
+  await waitFor(() => callbacks.size > 0);
   assert.equal(storage.values.size, 0);
   worker.state = 'activated';
+  registration.active = worker;
   for (const callback of [...callbacks]) callback();
   await pending;
   assert.equal(
@@ -106,12 +122,13 @@ test('an installation pointer is recorded only after a verified worker activates
   assert.equal(callbacks.size, 0);
   const failedStorage = memory();
   worker.state = 'installing';
+  registration.active = null;
   const failed = preparePracticeOffline({
     storage: failedStorage,
     location: locationFor('v1.2.3'),
-    navigator: { serviceWorker: { register: async () => registration } },
+    navigator,
   });
-  await Promise.resolve();
+  await waitFor(() => callbacks.size > 0);
   worker.state = 'redundant';
   for (const callback of [...callbacks]) callback();
   await assert.rejects(failed, /verification failed/);
@@ -119,7 +136,7 @@ test('an installation pointer is recorded only after a verified worker activates
   assert.equal(callbacks.size, 0);
 });
 
-function launcher(fetcher, query = '') {
+function launcher(fetcher, query = '', { storage = memory(), offlineReady = false } = {}) {
   const elements = Object.fromEntries(
     ['locale', 'title', 'check', 'open', 'prepare', 'previous', 'status'].map((id) => [
       id,
@@ -127,12 +144,16 @@ function launcher(fetcher, query = '') {
     ]),
   );
   const events = new Map(),
-    timers = new Map();
+    timers = new Map(),
+    locations = [];
   const context = {
     document: { documentElement: {}, getElementById: (id) => elements[id] },
     navigator: { language: 'en' },
-    localStorage: memory(),
-    location: { href: 'https://example.test' + root + 'app/' + query },
+    localStorage: storage,
+    location: {
+      href: 'https://example.test' + root + 'app/' + query,
+      assign: (url) => locations.push(url),
+    },
     fetch: fetcher,
     AbortController,
     TextDecoder,
@@ -140,6 +161,7 @@ function launcher(fetcher, query = '') {
     URL,
     optionalInstallationKey,
     validateOptionalInstallationReference,
+    inspectOptionalOffline: async () => offlineReady,
     setTimeout(callback) {
       timers.set(callback, callback);
       return callback;
@@ -151,11 +173,11 @@ function launcher(fetcher, query = '') {
       events.set(name, callback);
     },
   };
-  runInNewContext(
-    `(${installOptionalLauncher.toString()})(${JSON.stringify({ packageId, root })}, { optionalInstallationKey, validateOptionalInstallationReference })`,
+  const ready = runInNewContext(
+    `(${installOptionalLauncher.toString()})(${JSON.stringify({ packageId, root })}, { optionalInstallationKey, validateOptionalInstallationReference, inspectOptionalOffline })`,
     context,
   );
-  return { elements, events, timers };
+  return { elements, events, timers, locations, ready };
 }
 
 test('stable launcher forwards a bounded cosmetic pin without admitting navigation or storage context', async () => {
@@ -170,11 +192,13 @@ test('stable launcher forwards a bounded cosmetic pin without admitting navigati
     fetcher,
     '?appearanceFamily=tryzub&appearanceRevision=r1&edition=foreign&script=remote',
   );
+  await valid.ready;
   await valid.elements.check.onclick();
   const target = new URL(valid.elements.prepare.href);
   assert.deepEqual(
     [...target.searchParams],
     [
+      ['lang', 'en'],
       ['appearanceFamily', 'tryzub'],
       ['appearanceRevision', 'r1'],
     ],
@@ -185,9 +209,55 @@ test('stable launcher forwards a bounded cosmetic pin without admitting navigati
     '?appearanceFamily=tryzub&appearanceFamily=dos&appearanceRevision=r1',
   ]) {
     const invalid = launcher(fetcher, query);
+    await invalid.ready;
     await invalid.elements.check.onclick();
-    assert.equal(new URL(invalid.elements.prepare.href).search, '');
+    assert.equal(new URL(invalid.elements.prepare.href).search, '?lang=en');
   }
+});
+
+test('stable launcher keeps locale and appearance on auto-play and verified offline fallback', async () => {
+  const current = {
+    id: packageId,
+    version: 'v1.2.3',
+    scope: '../releases/v1.2.3/site/',
+    entry: 'optional-practice/civilian-flight/index.html',
+  };
+  const query = '?action=play&lang=uk&appearanceFamily=dnipro-porcelain&appearanceRevision=r1';
+  const online = launcher(async () => new Response(JSON.stringify(current)), query);
+  await online.ready;
+  assert.equal(online.locations.length, 1);
+  const storage = memory();
+  recordOptionalInstallation({ packageId, storage, location: locationFor('v1.2.2') });
+  const saved = storage.getItem(optionalInstallationKey(packageId, root));
+  const offline = launcher(
+    async () => {
+      throw new Error('Unavailable');
+    },
+    query,
+    {
+      storage,
+      offlineReady: true,
+    },
+  );
+  await offline.ready;
+  assert.equal(offline.locations.length, 1);
+  for (const [href, version] of [
+    [online.locations[0], 'v1.2.3'],
+    [offline.locations[0], 'v1.2.2'],
+  ]) {
+    const target = new URL(href);
+    assert.equal(target.pathname, root + `releases/${version}/site/` + current.entry);
+    assert.deepEqual(
+      [...target.searchParams],
+      [
+        ['lang', 'uk'],
+        ['appearanceFamily', 'dnipro-porcelain'],
+        ['appearanceRevision', 'r1'],
+      ],
+    );
+  }
+  assert.equal(offline.elements.open.href, offline.locations[0]);
+  assert.equal(storage.getItem(optionalInstallationKey(packageId, root)), saved);
 });
 
 test('stable launcher reads only a bounded explicit pointer and cancels abandoned checks', async () => {
@@ -203,18 +273,18 @@ test('stable launcher reads only a bounded explicit pointer and cancels abandone
     return new Response(JSON.stringify(current));
   });
   assert.equal(requests.length, 0);
-  await first.elements.check.onclick();
+  await first.ready;
   assert.equal(requests.length, 1);
   assert.equal(requests[0].options.redirect, 'error');
   assert.equal(requests[0].options.credentials, 'omit');
   assert.equal(
     first.elements.prepare.href,
-    'https://example.test' + root + 'releases/v1.2.3/site/' + current.entry,
+    'https://example.test' + root + 'releases/v1.2.3/site/' + current.entry + '?lang=en',
   );
   assert.equal(first.elements.prepare.hidden, false);
   assert.equal(first.timers.size, 0);
   const oversized = launcher(async () => new Response(' '.repeat(4097)));
-  await oversized.elements.check.onclick();
+  await oversized.ready;
   assert.equal(oversized.elements.prepare.hidden, true);
   assert.equal(oversized.elements.check.disabled, false);
   assert.match(oversized.elements.status.textContent, /unavailable/);
@@ -225,7 +295,8 @@ test('stable launcher reads only a bounded explicit pointer and cancels abandone
       finish = resolve;
     });
   });
-  const pending = abandoned.elements.check.onclick();
+  const pending = abandoned.ready;
+  await waitFor(() => !!signal);
   abandoned.events.get('pagehide')();
   assert.equal(signal.aborted, true);
   finish(new Response(JSON.stringify(current)));

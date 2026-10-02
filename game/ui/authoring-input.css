@@ -37,7 +37,7 @@
 
   .authoring-reference-rail {
     position: sticky;
-    top: 0;
+    top: env(safe-area-inset-top, 0px);
     z-index: 25;
   }
   .authoring-reference-rail a {
@@ -67,8 +67,8 @@
   .authoring-source-dialog,
   .authoring-sections-dialog {
     box-sizing: border-box;
-    width: min(620px, calc(100vw - 24px));
-    max-height: calc(100dvh - 24px);
+    width: min(620px, calc(var(--dialog-viewport-width, 100vw) - 24px));
+    max-height: calc(var(--dialog-viewport-height, 100dvh) - 24px);
     overflow: auto;
     padding: 20px;
     color: #f0f4ff;

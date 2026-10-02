@@ -1,5 +1,5 @@
 import * as THREE from './vendor/three.module.js';
-import { buildDroneVisual } from './world-visuals.mjs';
+import { buildDroneVisual, createEnvironmentLight, setSurfaceQuality } from './world-visuals.mjs';
 import { resolveSimThemeProfile } from './world-themes.mjs';
 import {
   createWorkshopMaterials,
@@ -23,10 +23,11 @@ export function mountDroneHangar({
     scene = null,
     camera = null,
     drone = null,
+    environment = null,
     frame = 0,
     disposed = false,
     drag = null,
-    angle = -0.5,
+    angle = 2.6,
     elevation = 0.35,
     distance = 0.7;
   const listeners = [];
@@ -37,6 +38,12 @@ export function mountDroneHangar({
   const disposeScene = () => {
     if (!scene) return;
     disposeSimVisualGroup(scene);
+    scene.environment = null;
+    environment?.dispose();
+    environment = null;
+    drone = null;
+    camera = null;
+    scene = null;
   };
   function build() {
     if (!renderer) {
@@ -53,6 +60,13 @@ export function mountDroneHangar({
       quality = getQuality(),
       maxAnisotropy = renderer.capabilities.getMaxAnisotropy();
     scene.background = new THREE.Color(collectionId ? profile.palette.wall : 0x14292f);
+    environment = createEnvironmentLight(renderer, {
+      sky: 0x9baebb,
+      ground: 0x253a3d,
+      indoor: true,
+    });
+    scene.environment = environment.texture;
+    scene.environmentIntensity = 0.75;
     camera = new THREE.PerspectiveCamera(45, 1, 0.01, 10);
     scene.add(new THREE.HemisphereLight(0xe1faff, 0x394346, 2.5));
     const key = new THREE.DirectionalLight(0xffffff, 4);
@@ -81,6 +95,11 @@ export function mountDroneHangar({
     const kit = collectionId
       ? createWorkshopMaterials({ material, quality, maxAnisotropy, collectionId })
       : null;
+    const paints = new Set();
+    drone.traverse((item) => {
+      if (item.material) paints.add(item.material);
+    });
+    setSurfaceQuality(paints, quality, maxAnisotropy);
     const pad = new THREE.Mesh(
       new THREE.CylinderGeometry(0.28, 0.3, 0.025, 64),
       kit ? kit.paint('concrete') : material(0x2c4349, { metalness: 0.4, roughness: 0.4 }),
@@ -108,7 +127,7 @@ export function mountDroneHangar({
   function open() {
     if (disposed || dialog.open) return;
     onOpen();
-    angle = -0.5;
+    angle = 2.6;
     elevation = 0.35;
     distance = 0.7;
     build();

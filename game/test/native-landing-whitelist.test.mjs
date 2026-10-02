@@ -35,8 +35,11 @@ function assertLanding(page, { root, actions, modes }) {
     controls = [...landing.querySelectorAll('button,a[href],input,select,textarea,summary')].filter(
       displayed,
     ),
+    creatorLinks = controls.filter((node) => node.closest('[data-landing-song]')),
     modeControls = controls.filter((node) => node.dataset.gameMode),
-    actionControls = controls.filter((node) => !node.dataset.gameMode);
+    actionControls = controls.filter(
+      (node) => !node.dataset.gameMode && !creatorLinks.includes(node),
+    );
   assert.deepEqual(
     new Set(actionControls.map((node) => node.id)),
     new Set(actions),
@@ -51,11 +54,23 @@ function assertLanding(page, { root, actions, modes }) {
     1,
   );
   assert.equal(landing.querySelector('.quick-music-controls'), null);
-  for (const node of controls) assert.ok(node.dataset.menuIcon, `${node.id} has its action icon`);
+  for (const node of controls.filter((node) => !creatorLinks.includes(node)))
+    assert.ok(node.dataset.menuIcon, `${node.id} has its action icon`);
   const song = landing.querySelector('[data-landing-song]');
-  assert.ok(song && !song.querySelector('button,a[href],input,select'));
+  assert.ok(song && !song.querySelector('button,input,select'));
+  assert.ok(
+    creatorLinks.length <= 1,
+    'The passive footer may link its current artist, but adds no transport.',
+  );
+  for (const link of creatorLinks) {
+    assert.equal(link.tagName, 'A');
+    assert.match(link.getAttribute('href'), /^https?:\/\//);
+    assert.equal(link.getAttribute('target'), '_blank');
+    assert.equal(link.getAttribute('rel'), 'noopener noreferrer');
+  }
 }
 const soloActions = [
+  'solo-fpv-sim',
   'shell-featured',
   'shell-play',
   'shell-options',
@@ -182,6 +197,7 @@ test('Versus and Team keep their complete lobby actions within the same whitelis
     assertLanding(page, {
       root: 'race-main',
       actions: [
+        'versus-fpv-sim',
         'race-start',
         'race-chapters',
         'race-options',
@@ -207,6 +223,7 @@ test('Versus and Team keep their complete lobby actions within the same whitelis
     assertLanding(page, {
       root: 'coop-menu',
       actions: [
+        'team-fpv-sim',
         'coop-start',
         'coop-discovery-open',
         'coop-settings-open',

@@ -2,8 +2,8 @@
 @layer legacy {
   .enemy-catalog-dialog {
     box-sizing: border-box;
-    width: min(760px, 96vw);
-    max-height: 94dvh;
+    width: min(760px, 96vw, var(--dialog-viewport-width, 100vw));
+    max-height: min(94dvh, var(--dialog-viewport-height, 100dvh));
     padding: 20px;
     border: 2px solid #81c6d2;
     background: #101526;

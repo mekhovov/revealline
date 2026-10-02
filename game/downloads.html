@@ -95,9 +95,45 @@
         <label
           ><input id="all-game" type="checkbox" />
           <span data-i18n="interface:downloads.allGameplay"
-            >All current levels and modes</span
+            >All current levels, modes and communities</span
           ></label
         >
+        <div id="experience-choices">
+          <h3 data-i18n="interface:downloads.communitiesHeading">Communities</h3>
+          <p data-i18n="interface:downloads.communitiesHelp">
+            Choose communities to keep on this device, then switch between them here or in Settings
+            → Content &amp; Offline → Communities. Community rewards include their pictures and
+            listening activities. Soundtrack albums remain optional. Online play needs no download.
+          </p>
+          <div class="actions">
+            <button
+              id="select-communities"
+              type="button"
+              data-i18n="interface:downloads.selectCommunities"
+            >
+              Select all communities
+            </button>
+            <button
+              id="select-everything"
+              type="button"
+              data-i18n="interface:downloads.selectEverything"
+            >
+              Select all games, communities, SIM &amp; extras
+            </button>
+          </div>
+          <p data-i18n="interface:downloads.selectEverythingHelp">
+            Selection only: review the total below, then confirm the download. Soundtracks, archives
+            and authoring tools stay separate.
+          </p>
+          <div id="communities"></div>
+          <h3 data-i18n="interface:downloads.simHeading">Simulator &amp; flight practice</h3>
+          <div id="experiences"></div>
+          <p data-i18n="interface:downloads.simHelp">
+            Includes the published simulator, built-in worlds and local assets. Use touch, keyboard
+            or a supported controller. 3D flight requires WebGL 2. User-imported worlds remain in
+            their own library.
+          </p>
+        </div>
         <p id="game-size"></p>
         <p data-i18n="interface:downloads.sizeHelp">
           Choose the size that suits your connection; mobile data charges may apply. Keep this app

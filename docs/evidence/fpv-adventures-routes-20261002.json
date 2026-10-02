@@ -1,0 +1,1667 @@
+{
+  "format": "FPVAdventureRouteAudit.v1",
+  "createdAt": "2026-10-02T06:53:46.469Z",
+  "passed": true,
+  "checks": [
+    {
+      "name": "adventure-coast-01: objective apertures and named landing support",
+      "passed": true,
+      "samples": 90,
+      "namedPads": 1
+    },
+    {
+      "name": "adventure-coast-01: moving actors finish at least one authored loop without blocking or wrong-floor support",
+      "passed": true,
+      "ticks": 4621,
+      "actors": 1
+    },
+    {
+      "name": "adventure-coast-02: objective apertures and named landing support",
+      "passed": true,
+      "samples": 90,
+      "namedPads": 1
+    },
+    {
+      "name": "adventure-coast-02: moving actors finish at least one authored loop without blocking or wrong-floor support",
+      "passed": true,
+      "ticks": 2678,
+      "actors": 1
+    },
+    {
+      "name": "adventure-coast-03: objective apertures and named landing support",
+      "passed": true,
+      "samples": 36,
+      "namedPads": 1
+    },
+    {
+      "name": "adventure-coast-03: moving actors finish at least one authored loop without blocking or wrong-floor support",
+      "passed": true,
+      "ticks": 2678,
+      "actors": 1
+    },
+    {
+      "name": "adventure-coast-04: objective apertures and named landing support",
+      "passed": true,
+      "samples": 63,
+      "namedPads": 1
+    },
+    {
+      "name": "adventure-coast-04: moving actors finish at least one authored loop without blocking or wrong-floor support",
+      "passed": true,
+      "ticks": 2965,
+      "actors": 1
+    },
+    {
+      "name": "adventure-coast-05: objective apertures and named landing support",
+      "passed": true,
+      "samples": 117,
+      "namedPads": 4
+    },
+    {
+      "name": "adventure-coast-05: moving actors finish at least one authored loop without blocking or wrong-floor support",
+      "passed": true,
+      "ticks": 1000,
+      "actors": 0
+    },
+    {
+      "name": "adventure-quarry-01: objective apertures and named landing support",
+      "passed": true,
+      "samples": 117,
+      "namedPads": 1
+    },
+    {
+      "name": "adventure-quarry-01: moving actors finish at least one authored loop without blocking or wrong-floor support",
+      "passed": true,
+      "ticks": 2965,
+      "actors": 1
+    },
+    {
+      "name": "adventure-quarry-02: objective apertures and named landing support",
+      "passed": true,
+      "samples": 117,
+      "namedPads": 1
+    },
+    {
+      "name": "adventure-quarry-02: moving actors finish at least one authored loop without blocking or wrong-floor support",
+      "passed": true,
+      "ticks": 1327,
+      "actors": 2
+    },
+    {
+      "name": "adventure-quarry-03: objective apertures and named landing support",
+      "passed": true,
+      "samples": 36,
+      "namedPads": 1
+    },
+    {
+      "name": "adventure-quarry-03: moving actors finish at least one authored loop without blocking or wrong-floor support",
+      "passed": true,
+      "ticks": 2965,
+      "actors": 1
+    },
+    {
+      "name": "adventure-quarry-04: objective apertures and named landing support",
+      "passed": true,
+      "samples": 36,
+      "namedPads": 1
+    },
+    {
+      "name": "adventure-quarry-04: moving actors finish at least one authored loop without blocking or wrong-floor support",
+      "passed": true,
+      "ticks": 2817,
+      "actors": 3
+    },
+    {
+      "name": "adventure-quarry-05: objective apertures and named landing support",
+      "passed": true,
+      "samples": 90,
+      "namedPads": 2
+    },
+    {
+      "name": "adventure-quarry-05: moving actors finish at least one authored loop without blocking or wrong-floor support",
+      "passed": true,
+      "ticks": 1000,
+      "actors": 0
+    },
+    {
+      "name": "adventure-rooftops-01: objective apertures and named landing support",
+      "passed": true,
+      "samples": 117,
+      "namedPads": 1
+    },
+    {
+      "name": "adventure-rooftops-01: moving actors finish at least one authored loop without blocking or wrong-floor support",
+      "passed": true,
+      "ticks": 2619,
+      "actors": 1
+    },
+    {
+      "name": "adventure-rooftops-02: objective apertures and named landing support",
+      "passed": true,
+      "samples": 99,
+      "namedPads": 1
+    },
+    {
+      "name": "adventure-rooftops-02: moving actors finish at least one authored loop without blocking or wrong-floor support",
+      "passed": true,
+      "ticks": 1000,
+      "actors": 0
+    },
+    {
+      "name": "adventure-rooftops-03: objective apertures and named landing support",
+      "passed": true,
+      "samples": 36,
+      "namedPads": 1
+    },
+    {
+      "name": "adventure-rooftops-03: moving actors finish at least one authored loop without blocking or wrong-floor support",
+      "passed": true,
+      "ticks": 2619,
+      "actors": 1
+    },
+    {
+      "name": "adventure-rooftops-04: objective apertures and named landing support",
+      "passed": true,
+      "samples": 117,
+      "namedPads": 4
+    },
+    {
+      "name": "adventure-rooftops-04: moving actors finish at least one authored loop without blocking or wrong-floor support",
+      "passed": true,
+      "ticks": 1000,
+      "actors": 0
+    },
+    {
+      "name": "adventure-rooftops-05: objective apertures and named landing support",
+      "passed": true,
+      "samples": 117,
+      "namedPads": 1
+    },
+    {
+      "name": "adventure-rooftops-05: moving actors finish at least one authored loop without blocking or wrong-floor support",
+      "passed": true,
+      "ticks": 1562,
+      "actors": 2
+    },
+    {
+      "name": "adventure-orchard-01: objective apertures and named landing support",
+      "passed": true,
+      "samples": 117,
+      "namedPads": 1
+    },
+    {
+      "name": "adventure-orchard-01: moving actors finish at least one authored loop without blocking or wrong-floor support",
+      "passed": true,
+      "ticks": 4621,
+      "actors": 1
+    },
+    {
+      "name": "adventure-orchard-02: objective apertures and named landing support",
+      "passed": true,
+      "samples": 144,
+      "namedPads": 1
+    },
+    {
+      "name": "adventure-orchard-02: moving actors finish at least one authored loop without blocking or wrong-floor support",
+      "passed": true,
+      "ticks": 2965,
+      "actors": 1
+    },
+    {
+      "name": "adventure-orchard-03: objective apertures and named landing support",
+      "passed": true,
+      "samples": 63,
+      "namedPads": 1
+    },
+    {
+      "name": "adventure-orchard-03: moving actors finish at least one authored loop without blocking or wrong-floor support",
+      "passed": true,
+      "ticks": 2965,
+      "actors": 1
+    },
+    {
+      "name": "adventure-orchard-04: objective apertures and named landing support",
+      "passed": true,
+      "samples": 36,
+      "namedPads": 1
+    },
+    {
+      "name": "adventure-orchard-04: moving actors finish at least one authored loop without blocking or wrong-floor support",
+      "passed": true,
+      "ticks": 4621,
+      "actors": 1
+    },
+    {
+      "name": "adventure-orchard-05: objective apertures and named landing support",
+      "passed": true,
+      "samples": 72,
+      "namedPads": 2
+    },
+    {
+      "name": "adventure-orchard-05: moving actors finish at least one authored loop without blocking or wrong-floor support",
+      "passed": true,
+      "ticks": 1000,
+      "actors": 0
+    },
+    {
+      "name": "adventure-solar-farm-01: objective apertures and named landing support",
+      "passed": true,
+      "samples": 117,
+      "namedPads": 1
+    },
+    {
+      "name": "adventure-solar-farm-01: moving actors finish at least one authored loop without blocking or wrong-floor support",
+      "passed": true,
+      "ticks": 2965,
+      "actors": 1
+    },
+    {
+      "name": "adventure-solar-farm-02: objective apertures and named landing support",
+      "passed": true,
+      "samples": 99,
+      "namedPads": 2
+    },
+    {
+      "name": "adventure-solar-farm-02: moving actors finish at least one authored loop without blocking or wrong-floor support",
+      "passed": true,
+      "ticks": 1000,
+      "actors": 0
+    },
+    {
+      "name": "adventure-solar-farm-03: objective apertures and named landing support",
+      "passed": true,
+      "samples": 63,
+      "namedPads": 1
+    },
+    {
+      "name": "adventure-solar-farm-03: moving actors finish at least one authored loop without blocking or wrong-floor support",
+      "passed": true,
+      "ticks": 2965,
+      "actors": 1
+    },
+    {
+      "name": "adventure-solar-farm-04: objective apertures and named landing support",
+      "passed": true,
+      "samples": 81,
+      "namedPads": 1
+    },
+    {
+      "name": "adventure-solar-farm-04: moving actors finish at least one authored loop without blocking or wrong-floor support",
+      "passed": true,
+      "ticks": 1327,
+      "actors": 2
+    },
+    {
+      "name": "adventure-solar-farm-05: objective apertures and named landing support",
+      "passed": true,
+      "samples": 36,
+      "namedPads": 1
+    },
+    {
+      "name": "adventure-solar-farm-05: moving actors finish at least one authored loop without blocking or wrong-floor support",
+      "passed": true,
+      "ticks": 2817,
+      "actors": 3
+    },
+    {
+      "name": "adventure-rail-depot-01: objective apertures and named landing support",
+      "passed": true,
+      "samples": 90,
+      "namedPads": 1
+    },
+    {
+      "name": "adventure-rail-depot-01: moving actors finish at least one authored loop without blocking or wrong-floor support",
+      "passed": true,
+      "ticks": 2965,
+      "actors": 1
+    },
+    {
+      "name": "adventure-rail-depot-02: objective apertures and named landing support",
+      "passed": true,
+      "samples": 99,
+      "namedPads": 1
+    },
+    {
+      "name": "adventure-rail-depot-02: moving actors finish at least one authored loop without blocking or wrong-floor support",
+      "passed": true,
+      "ticks": 2471,
+      "actors": 1
+    },
+    {
+      "name": "adventure-rail-depot-03: objective apertures and named landing support",
+      "passed": true,
+      "samples": 36,
+      "namedPads": 1
+    },
+    {
+      "name": "adventure-rail-depot-03: moving actors finish at least one authored loop without blocking or wrong-floor support",
+      "passed": true,
+      "ticks": 2965,
+      "actors": 1
+    },
+    {
+      "name": "adventure-rail-depot-04: objective apertures and named landing support",
+      "passed": true,
+      "samples": 117,
+      "namedPads": 1
+    },
+    {
+      "name": "adventure-rail-depot-04: moving actors finish at least one authored loop without blocking or wrong-floor support",
+      "passed": true,
+      "ticks": 1327,
+      "actors": 2
+    },
+    {
+      "name": "adventure-rail-depot-05: objective apertures and named landing support",
+      "passed": true,
+      "samples": 36,
+      "namedPads": 1
+    },
+    {
+      "name": "adventure-rail-depot-05: moving actors finish at least one authored loop without blocking or wrong-floor support",
+      "passed": true,
+      "ticks": 2817,
+      "actors": 3
+    }
+  ],
+  "routes": [
+    {
+      "course": "adventure-coast-01",
+      "straightLineSegmentsNeedingPilotRouting": []
+    },
+    {
+      "course": "adventure-coast-02",
+      "straightLineSegmentsNeedingPilotRouting": []
+    },
+    {
+      "course": "adventure-coast-03",
+      "straightLineSegmentsNeedingPilotRouting": []
+    },
+    {
+      "course": "adventure-coast-04",
+      "straightLineSegmentsNeedingPilotRouting": []
+    },
+    {
+      "course": "adventure-coast-05",
+      "straightLineSegmentsNeedingPilotRouting": [
+        {
+          "step": 3,
+          "from": {
+            "x": -32000,
+            "y": 2000,
+            "z": 10000
+          },
+          "to": {
+            "x": 0,
+            "y": 6000,
+            "z": -34000
+          },
+          "obstacles": [
+            "coast-deck-west"
+          ]
+        },
+        {
+          "step": 4,
+          "from": {
+            "x": 0,
+            "y": 6000,
+            "z": -34000
+          },
+          "to": {
+            "x": 0,
+            "y": 3000,
+            "z": -44000
+          },
+          "obstacles": [
+            "coast-deck-lookout"
+          ]
+        },
+        {
+          "step": 6,
+          "from": {
+            "x": 32000,
+            "y": 5000,
+            "z": -16000
+          },
+          "to": {
+            "x": 32000,
+            "y": 2000,
+            "z": -10000
+          },
+          "obstacles": [
+            "coast-pier-east"
+          ]
+        },
+        {
+          "step": 7,
+          "from": {
+            "x": 32000,
+            "y": 2000,
+            "z": -10000
+          },
+          "to": {
+            "x": 0,
+            "y": 1,
+            "z": 48000
+          },
+          "obstacles": [
+            "coast-pier-east"
+          ]
+        }
+      ]
+    },
+    {
+      "course": "adventure-quarry-01",
+      "straightLineSegmentsNeedingPilotRouting": []
+    },
+    {
+      "course": "adventure-quarry-02",
+      "straightLineSegmentsNeedingPilotRouting": []
+    },
+    {
+      "course": "adventure-quarry-03",
+      "straightLineSegmentsNeedingPilotRouting": []
+    },
+    {
+      "course": "adventure-quarry-04",
+      "straightLineSegmentsNeedingPilotRouting": []
+    },
+    {
+      "course": "adventure-quarry-05",
+      "straightLineSegmentsNeedingPilotRouting": [
+        {
+          "step": 6,
+          "from": {
+            "x": 21000,
+            "y": 10000,
+            "z": -20000
+          },
+          "to": {
+            "x": -23000,
+            "y": 9000,
+            "z": -44000
+          },
+          "obstacles": [
+            "rock-central-spire"
+          ]
+        },
+        {
+          "step": 8,
+          "from": {
+            "x": -23000,
+            "y": 5000,
+            "z": -44000
+          },
+          "to": {
+            "x": 0,
+            "y": 1,
+            "z": 48000
+          },
+          "obstacles": [
+            "rock-landing-ledge"
+          ]
+        }
+      ]
+    },
+    {
+      "course": "adventure-rooftops-01",
+      "straightLineSegmentsNeedingPilotRouting": []
+    },
+    {
+      "course": "adventure-rooftops-02",
+      "straightLineSegmentsNeedingPilotRouting": []
+    },
+    {
+      "course": "adventure-rooftops-03",
+      "straightLineSegmentsNeedingPilotRouting": []
+    },
+    {
+      "course": "adventure-rooftops-04",
+      "straightLineSegmentsNeedingPilotRouting": [
+        {
+          "step": 7,
+          "from": {
+            "x": -33000,
+            "y": 19000,
+            "z": -24000
+          },
+          "to": {
+            "x": 0,
+            "y": 1,
+            "z": 48000
+          },
+          "obstacles": [
+            "building-west-high"
+          ]
+        }
+      ]
+    },
+    {
+      "course": "adventure-rooftops-05",
+      "straightLineSegmentsNeedingPilotRouting": []
+    },
+    {
+      "course": "adventure-orchard-01",
+      "straightLineSegmentsNeedingPilotRouting": []
+    },
+    {
+      "course": "adventure-orchard-02",
+      "straightLineSegmentsNeedingPilotRouting": []
+    },
+    {
+      "course": "adventure-orchard-03",
+      "straightLineSegmentsNeedingPilotRouting": []
+    },
+    {
+      "course": "adventure-orchard-04",
+      "straightLineSegmentsNeedingPilotRouting": []
+    },
+    {
+      "course": "adventure-orchard-05",
+      "straightLineSegmentsNeedingPilotRouting": [
+        {
+          "step": 1,
+          "from": {
+            "x": 0,
+            "y": 3000,
+            "z": 48000
+          },
+          "to": {
+            "x": -27000,
+            "y": 4000,
+            "z": -42000
+          },
+          "obstacles": [
+            "tree-canopy-1-1"
+          ]
+        },
+        {
+          "step": 2,
+          "from": {
+            "x": -27000,
+            "y": 4000,
+            "z": -42000
+          },
+          "to": {
+            "x": 0,
+            "y": 10000,
+            "z": -24000
+          },
+          "obstacles": [
+            "tree-canopy-1-0"
+          ]
+        },
+        {
+          "step": 3,
+          "from": {
+            "x": 0,
+            "y": 10000,
+            "z": -24000
+          },
+          "to": {
+            "x": 0,
+            "y": 1500,
+            "z": -43000
+          },
+          "obstacles": [
+            "rock-survey-plinth"
+          ]
+        },
+        {
+          "step": 4,
+          "from": {
+            "x": 0,
+            "y": 1500,
+            "z": -43000
+          },
+          "to": {
+            "x": 0,
+            "y": 1,
+            "z": 48000
+          },
+          "obstacles": [
+            "rock-survey-plinth"
+          ]
+        }
+      ]
+    },
+    {
+      "course": "adventure-solar-farm-01",
+      "straightLineSegmentsNeedingPilotRouting": []
+    },
+    {
+      "course": "adventure-solar-farm-02",
+      "straightLineSegmentsNeedingPilotRouting": [
+        {
+          "step": 5,
+          "from": {
+            "x": -14000,
+            "y": 1200,
+            "z": 38000
+          },
+          "to": {
+            "x": 0,
+            "y": 1,
+            "z": 48000
+          },
+          "obstacles": [
+            "coast-deck-service"
+          ]
+        }
+      ]
+    },
+    {
+      "course": "adventure-solar-farm-03",
+      "straightLineSegmentsNeedingPilotRouting": []
+    },
+    {
+      "course": "adventure-solar-farm-04",
+      "straightLineSegmentsNeedingPilotRouting": []
+    },
+    {
+      "course": "adventure-solar-farm-05",
+      "straightLineSegmentsNeedingPilotRouting": []
+    },
+    {
+      "course": "adventure-rail-depot-01",
+      "straightLineSegmentsNeedingPilotRouting": [
+        {
+          "step": 4,
+          "from": {
+            "x": 18000,
+            "y": 5000,
+            "z": 12000
+          },
+          "to": {
+            "x": 0,
+            "y": 1,
+            "z": 48000
+          },
+          "obstacles": [
+            "rail-gantry-south-east"
+          ]
+        }
+      ]
+    },
+    {
+      "course": "adventure-rail-depot-02",
+      "straightLineSegmentsNeedingPilotRouting": []
+    },
+    {
+      "course": "adventure-rail-depot-03",
+      "straightLineSegmentsNeedingPilotRouting": []
+    },
+    {
+      "course": "adventure-rail-depot-04",
+      "straightLineSegmentsNeedingPilotRouting": []
+    },
+    {
+      "course": "adventure-rail-depot-05",
+      "straightLineSegmentsNeedingPilotRouting": []
+    }
+  ],
+  "actors": [
+    {
+      "course": "adventure-coast-01",
+      "ticks": 4621,
+      "actors": [
+        {
+          "id": "guide",
+          "type": "patrol",
+          "blockedTicks": 0,
+          "totalTravel": 78558.61625012598,
+          "movingTicks": 4621,
+          "minY": 0,
+          "maxY": 0,
+          "supports": [
+            "$floor"
+          ],
+          "last": {
+            "x": -5364,
+            "y": 0,
+            "z": 13982
+          },
+          "pathIndices": [
+            1,
+            2,
+            3,
+            0
+          ],
+          "expectedPathLength": 76000,
+          "speed": 850
+        }
+      ]
+    },
+    {
+      "course": "adventure-coast-02",
+      "ticks": 2678,
+      "actors": [
+        {
+          "id": "courier",
+          "type": "drone",
+          "blockedTicks": 0,
+          "totalTravel": 101803.02793373168,
+          "movingTicks": 2678,
+          "minY": 5000,
+          "maxY": 6000,
+          "supports": [],
+          "last": {
+            "x": -5224,
+            "y": 5000,
+            "z": 17992
+          },
+          "pathIndices": [
+            1,
+            2,
+            3,
+            0
+          ],
+          "expectedPathLength": 96038.44732503075,
+          "speed": 1900
+        }
+      ]
+    },
+    {
+      "course": "adventure-coast-03",
+      "ticks": 2678,
+      "actors": [
+        {
+          "id": "courier",
+          "type": "drone",
+          "blockedTicks": 0,
+          "totalTravel": 101803.02793373168,
+          "movingTicks": 2678,
+          "minY": 5000,
+          "maxY": 6000,
+          "supports": [],
+          "last": {
+            "x": -5224,
+            "y": 5000,
+            "z": 17992
+          },
+          "pathIndices": [
+            1,
+            2,
+            3,
+            0
+          ],
+          "expectedPathLength": 96038.44732503075,
+          "speed": 1900
+        }
+      ]
+    },
+    {
+      "course": "adventure-coast-04",
+      "ticks": 2965,
+      "actors": [
+        {
+          "id": "harbour-rover",
+          "type": "vehicle",
+          "blockedTicks": 0,
+          "totalTravel": 80055.99965729944,
+          "movingTicks": 2965,
+          "minY": 0,
+          "maxY": 0,
+          "supports": [
+            "$floor"
+          ],
+          "last": {
+            "x": -3869,
+            "y": 0,
+            "z": 13978
+          },
+          "pathIndices": [
+            1,
+            2,
+            3,
+            0
+          ],
+          "expectedPathLength": 76000,
+          "speed": 1350
+        }
+      ]
+    },
+    {
+      "course": "adventure-coast-05",
+      "ticks": 1000,
+      "actors": []
+    },
+    {
+      "course": "adventure-quarry-01",
+      "ticks": 2965,
+      "actors": [
+        {
+          "id": "haul-rover",
+          "type": "vehicle",
+          "blockedTicks": 0,
+          "totalTravel": 80055.99965729944,
+          "movingTicks": 2965,
+          "minY": 0,
+          "maxY": 0,
+          "supports": [
+            "$floor"
+          ],
+          "last": {
+            "x": -3869,
+            "y": 0,
+            "z": 13978
+          },
+          "pathIndices": [
+            1,
+            2,
+            3,
+            0
+          ],
+          "expectedPathLength": 76000,
+          "speed": 1350
+        }
+      ]
+    },
+    {
+      "course": "adventure-quarry-02",
+      "ticks": 1327,
+      "actors": [
+        {
+          "id": "crossing-west",
+          "type": "hazard",
+          "blockedTicks": 0,
+          "totalTravel": 45118,
+          "movingTicks": 1327,
+          "minY": 3000,
+          "maxY": 3000,
+          "supports": [],
+          "last": {
+            "x": -4866,
+            "y": 3000,
+            "z": 8000
+          },
+          "pathIndices": [
+            1,
+            0
+          ],
+          "expectedPathLength": 40000,
+          "speed": 1700
+        },
+        {
+          "id": "crossing-north",
+          "type": "hazard",
+          "blockedTicks": 0,
+          "totalTravel": 45118,
+          "movingTicks": 1327,
+          "minY": 4000,
+          "maxY": 4000,
+          "supports": [],
+          "last": {
+            "x": 4866,
+            "y": 4000,
+            "z": -4000
+          },
+          "pathIndices": [
+            1,
+            0
+          ],
+          "expectedPathLength": 40000,
+          "speed": 1700
+        }
+      ]
+    },
+    {
+      "course": "adventure-quarry-03",
+      "ticks": 2965,
+      "actors": [
+        {
+          "id": "haul-rover",
+          "type": "vehicle",
+          "blockedTicks": 0,
+          "totalTravel": 80055.99965729944,
+          "movingTicks": 2965,
+          "minY": 0,
+          "maxY": 0,
+          "supports": [
+            "$floor"
+          ],
+          "last": {
+            "x": -3869,
+            "y": 0,
+            "z": 13978
+          },
+          "pathIndices": [
+            1,
+            2,
+            3,
+            0
+          ],
+          "expectedPathLength": 76000,
+          "speed": 1350
+        }
+      ]
+    },
+    {
+      "course": "adventure-quarry-04",
+      "ticks": 2817,
+      "actors": [
+        {
+          "id": "quarry-drone",
+          "type": "drone",
+          "blockedTicks": 0,
+          "totalTravel": 53523,
+          "movingTicks": 2817,
+          "minY": 5000,
+          "maxY": 5000,
+          "supports": [],
+          "last": {
+            "x": 8613,
+            "y": 5000,
+            "z": -9000
+          },
+          "pathIndices": [
+            1,
+            0
+          ],
+          "expectedPathLength": 36000,
+          "speed": 950
+        },
+        {
+          "id": "quarry-rover",
+          "type": "vehicle",
+          "blockedTicks": 0,
+          "totalTravel": 33804,
+          "movingTicks": 2817,
+          "minY": 0,
+          "maxY": 0,
+          "supports": [
+            "$floor"
+          ],
+          "last": {
+            "x": 6092,
+            "y": 0,
+            "z": 16000
+          },
+          "pathIndices": [
+            1,
+            0
+          ],
+          "expectedPathLength": 32000,
+          "speed": 600
+        },
+        {
+          "id": "quarry-sentry",
+          "type": "sentry",
+          "blockedTicks": 0,
+          "totalTravel": 0,
+          "movingTicks": 0,
+          "minY": 0,
+          "maxY": 0,
+          "supports": [
+            "$floor"
+          ],
+          "last": {
+            "x": -17000,
+            "y": 0,
+            "z": -19000
+          },
+          "pathIndices": [
+            0
+          ],
+          "expectedPathLength": 0,
+          "speed": 1000
+        }
+      ]
+    },
+    {
+      "course": "adventure-quarry-05",
+      "ticks": 1000,
+      "actors": []
+    },
+    {
+      "course": "adventure-rooftops-01",
+      "ticks": 2619,
+      "actors": [
+        {
+          "id": "courier",
+          "type": "drone",
+          "blockedTicks": 0,
+          "totalTravel": 99553.24945080632,
+          "movingTicks": 2619,
+          "minY": 7000,
+          "maxY": 15999,
+          "supports": [],
+          "last": {
+            "x": -4339,
+            "y": 8382,
+            "z": 17975
+          },
+          "pathIndices": [
+            1,
+            2,
+            3,
+            0
+          ],
+          "expectedPathLength": 93793.90364813872,
+          "speed": 1900
+        }
+      ]
+    },
+    {
+      "course": "adventure-rooftops-02",
+      "ticks": 1000,
+      "actors": []
+    },
+    {
+      "course": "adventure-rooftops-03",
+      "ticks": 2619,
+      "actors": [
+        {
+          "id": "courier",
+          "type": "drone",
+          "blockedTicks": 0,
+          "totalTravel": 99553.24945080632,
+          "movingTicks": 2619,
+          "minY": 7000,
+          "maxY": 15999,
+          "supports": [],
+          "last": {
+            "x": -4339,
+            "y": 8382,
+            "z": 17975
+          },
+          "pathIndices": [
+            1,
+            2,
+            3,
+            0
+          ],
+          "expectedPathLength": 93793.90364813872,
+          "speed": 1900
+        }
+      ]
+    },
+    {
+      "course": "adventure-rooftops-04",
+      "ticks": 1000,
+      "actors": []
+    },
+    {
+      "course": "adventure-rooftops-05",
+      "ticks": 1562,
+      "actors": [
+        {
+          "id": "bridge-crossing",
+          "type": "hazard",
+          "blockedTicks": 0,
+          "totalTravel": 53108,
+          "movingTicks": 1562,
+          "minY": 6000,
+          "maxY": 6000,
+          "supports": [],
+          "last": {
+            "x": 8136,
+            "y": 6000,
+            "z": -10000
+          },
+          "pathIndices": [
+            1,
+            0
+          ],
+          "expectedPathLength": 36000,
+          "speed": 1700
+        },
+        {
+          "id": "upper-crossing",
+          "type": "hazard",
+          "blockedTicks": 0,
+          "totalTravel": 53108,
+          "movingTicks": 1562,
+          "minY": 15000,
+          "maxY": 15000,
+          "supports": [],
+          "last": {
+            "x": 6832,
+            "y": 15000,
+            "z": 4000
+          },
+          "pathIndices": [
+            1,
+            0
+          ],
+          "expectedPathLength": 48000,
+          "speed": 1700
+        }
+      ]
+    },
+    {
+      "course": "adventure-orchard-01",
+      "ticks": 4621,
+      "actors": [
+        {
+          "id": "orchard-guide",
+          "type": "patrol",
+          "blockedTicks": 0,
+          "totalTravel": 78558.61625012598,
+          "movingTicks": 4621,
+          "minY": 0,
+          "maxY": 0,
+          "supports": [
+            "$floor"
+          ],
+          "last": {
+            "x": -5364,
+            "y": 0,
+            "z": 13982
+          },
+          "pathIndices": [
+            1,
+            2,
+            3,
+            0
+          ],
+          "expectedPathLength": 76000,
+          "speed": 850
+        }
+      ]
+    },
+    {
+      "course": "adventure-orchard-02",
+      "ticks": 2965,
+      "actors": [
+        {
+          "id": "harvest-cart",
+          "type": "vehicle",
+          "blockedTicks": 0,
+          "totalTravel": 80055.99965729944,
+          "movingTicks": 2965,
+          "minY": 0,
+          "maxY": 0,
+          "supports": [
+            "$floor"
+          ],
+          "last": {
+            "x": -3869,
+            "y": 0,
+            "z": 13978
+          },
+          "pathIndices": [
+            1,
+            2,
+            3,
+            0
+          ],
+          "expectedPathLength": 76000,
+          "speed": 1350
+        }
+      ]
+    },
+    {
+      "course": "adventure-orchard-03",
+      "ticks": 2965,
+      "actors": [
+        {
+          "id": "harvest-cart",
+          "type": "vehicle",
+          "blockedTicks": 0,
+          "totalTravel": 80055.99965729944,
+          "movingTicks": 2965,
+          "minY": 0,
+          "maxY": 0,
+          "supports": [
+            "$floor"
+          ],
+          "last": {
+            "x": -3869,
+            "y": 0,
+            "z": 13978
+          },
+          "pathIndices": [
+            1,
+            2,
+            3,
+            0
+          ],
+          "expectedPathLength": 76000,
+          "speed": 1350
+        }
+      ]
+    },
+    {
+      "course": "adventure-orchard-04",
+      "ticks": 4621,
+      "actors": [
+        {
+          "id": "orchard-guide",
+          "type": "patrol",
+          "blockedTicks": 0,
+          "totalTravel": 78558.61625012598,
+          "movingTicks": 4621,
+          "minY": 0,
+          "maxY": 0,
+          "supports": [
+            "$floor"
+          ],
+          "last": {
+            "x": -5364,
+            "y": 0,
+            "z": 13982
+          },
+          "pathIndices": [
+            1,
+            2,
+            3,
+            0
+          ],
+          "expectedPathLength": 76000,
+          "speed": 850
+        }
+      ]
+    },
+    {
+      "course": "adventure-orchard-05",
+      "ticks": 1000,
+      "actors": []
+    },
+    {
+      "course": "adventure-solar-farm-01",
+      "ticks": 2965,
+      "actors": [
+        {
+          "id": "service-rover",
+          "type": "vehicle",
+          "blockedTicks": 0,
+          "totalTravel": 80055.99965729944,
+          "movingTicks": 2965,
+          "minY": 0,
+          "maxY": 0,
+          "supports": [
+            "$floor"
+          ],
+          "last": {
+            "x": -3869,
+            "y": 0,
+            "z": 13978
+          },
+          "pathIndices": [
+            1,
+            2,
+            3,
+            0
+          ],
+          "expectedPathLength": 76000,
+          "speed": 1350
+        }
+      ]
+    },
+    {
+      "course": "adventure-solar-farm-02",
+      "ticks": 1000,
+      "actors": []
+    },
+    {
+      "course": "adventure-solar-farm-03",
+      "ticks": 2965,
+      "actors": [
+        {
+          "id": "service-rover",
+          "type": "vehicle",
+          "blockedTicks": 0,
+          "totalTravel": 80055.99965729944,
+          "movingTicks": 2965,
+          "minY": 0,
+          "maxY": 0,
+          "supports": [
+            "$floor"
+          ],
+          "last": {
+            "x": -3869,
+            "y": 0,
+            "z": 13978
+          },
+          "pathIndices": [
+            1,
+            2,
+            3,
+            0
+          ],
+          "expectedPathLength": 76000,
+          "speed": 1350
+        }
+      ]
+    },
+    {
+      "course": "adventure-solar-farm-04",
+      "ticks": 1327,
+      "actors": [
+        {
+          "id": "solar-crossing-a",
+          "type": "hazard",
+          "blockedTicks": 0,
+          "totalTravel": 45118,
+          "movingTicks": 1327,
+          "minY": 4000,
+          "maxY": 4000,
+          "supports": [],
+          "last": {
+            "x": -4866,
+            "y": 4000,
+            "z": 14000
+          },
+          "pathIndices": [
+            1,
+            0
+          ],
+          "expectedPathLength": 40000,
+          "speed": 1700
+        },
+        {
+          "id": "solar-crossing-b",
+          "type": "hazard",
+          "blockedTicks": 0,
+          "totalTravel": 45118,
+          "movingTicks": 1327,
+          "minY": 4000,
+          "maxY": 4000,
+          "supports": [],
+          "last": {
+            "x": 4866,
+            "y": 4000,
+            "z": -4000
+          },
+          "pathIndices": [
+            1,
+            0
+          ],
+          "expectedPathLength": 40000,
+          "speed": 1700
+        }
+      ]
+    },
+    {
+      "course": "adventure-solar-farm-05",
+      "ticks": 2817,
+      "actors": [
+        {
+          "id": "solar-drone",
+          "type": "drone",
+          "blockedTicks": 0,
+          "totalTravel": 53523,
+          "movingTicks": 2817,
+          "minY": 5000,
+          "maxY": 5000,
+          "supports": [],
+          "last": {
+            "x": 8613,
+            "y": 5000,
+            "z": -9000
+          },
+          "pathIndices": [
+            1,
+            0
+          ],
+          "expectedPathLength": 36000,
+          "speed": 950
+        },
+        {
+          "id": "solar-rover",
+          "type": "vehicle",
+          "blockedTicks": 0,
+          "totalTravel": 33804,
+          "movingTicks": 2817,
+          "minY": 0,
+          "maxY": 0,
+          "supports": [
+            "$floor"
+          ],
+          "last": {
+            "x": 6092,
+            "y": 0,
+            "z": 16000
+          },
+          "pathIndices": [
+            1,
+            0
+          ],
+          "expectedPathLength": 32000,
+          "speed": 600
+        },
+        {
+          "id": "solar-sentry",
+          "type": "sentry",
+          "blockedTicks": 0,
+          "totalTravel": 0,
+          "movingTicks": 0,
+          "minY": 0,
+          "maxY": 0,
+          "supports": [
+            "$floor"
+          ],
+          "last": {
+            "x": -17000,
+            "y": 0,
+            "z": -19000
+          },
+          "pathIndices": [
+            0
+          ],
+          "expectedPathLength": 0,
+          "speed": 1000
+        }
+      ]
+    },
+    {
+      "course": "adventure-rail-depot-01",
+      "ticks": 2965,
+      "actors": [
+        {
+          "id": "inspection-rover",
+          "type": "vehicle",
+          "blockedTicks": 0,
+          "totalTravel": 80055.99965729944,
+          "movingTicks": 2965,
+          "minY": 0,
+          "maxY": 0,
+          "supports": [
+            "$floor"
+          ],
+          "last": {
+            "x": -3869,
+            "y": 0,
+            "z": 13978
+          },
+          "pathIndices": [
+            1,
+            2,
+            3,
+            0
+          ],
+          "expectedPathLength": 76000,
+          "speed": 1350
+        }
+      ]
+    },
+    {
+      "course": "adventure-rail-depot-02",
+      "ticks": 2471,
+      "actors": [
+        {
+          "id": "courier",
+          "type": "drone",
+          "blockedTicks": 0,
+          "totalTravel": 94067.10389417982,
+          "movingTicks": 2471,
+          "minY": 5000,
+          "maxY": 7000,
+          "supports": [],
+          "last": {
+            "x": -4034,
+            "y": 5002,
+            "z": 13978
+          },
+          "pathIndices": [
+            1,
+            2,
+            3,
+            0
+          ],
+          "expectedPathLength": 88166.37831516918,
+          "speed": 1900
+        }
+      ]
+    },
+    {
+      "course": "adventure-rail-depot-03",
+      "ticks": 2965,
+      "actors": [
+        {
+          "id": "inspection-rover",
+          "type": "vehicle",
+          "blockedTicks": 0,
+          "totalTravel": 80055.99965729944,
+          "movingTicks": 2965,
+          "minY": 0,
+          "maxY": 0,
+          "supports": [
+            "$floor"
+          ],
+          "last": {
+            "x": -3869,
+            "y": 0,
+            "z": 13978
+          },
+          "pathIndices": [
+            1,
+            2,
+            3,
+            0
+          ],
+          "expectedPathLength": 76000,
+          "speed": 1350
+        }
+      ]
+    },
+    {
+      "course": "adventure-rail-depot-04",
+      "ticks": 1327,
+      "actors": [
+        {
+          "id": "depot-south",
+          "type": "hazard",
+          "blockedTicks": 0,
+          "totalTravel": 45118,
+          "movingTicks": 1327,
+          "minY": 3000,
+          "maxY": 3000,
+          "supports": [],
+          "last": {
+            "x": -4866,
+            "y": 3000,
+            "z": 18000
+          },
+          "pathIndices": [
+            1,
+            0
+          ],
+          "expectedPathLength": 40000,
+          "speed": 1700
+        },
+        {
+          "id": "depot-north",
+          "type": "hazard",
+          "blockedTicks": 0,
+          "totalTravel": 45118,
+          "movingTicks": 1327,
+          "minY": 5000,
+          "maxY": 5000,
+          "supports": [],
+          "last": {
+            "x": 4866,
+            "y": 5000,
+            "z": -8000
+          },
+          "pathIndices": [
+            1,
+            0
+          ],
+          "expectedPathLength": 40000,
+          "speed": 1700
+        }
+      ]
+    },
+    {
+      "course": "adventure-rail-depot-05",
+      "ticks": 2817,
+      "actors": [
+        {
+          "id": "rail-drone",
+          "type": "drone",
+          "blockedTicks": 0,
+          "totalTravel": 53523,
+          "movingTicks": 2817,
+          "minY": 5000,
+          "maxY": 5000,
+          "supports": [],
+          "last": {
+            "x": 8613,
+            "y": 5000,
+            "z": -9000
+          },
+          "pathIndices": [
+            1,
+            0
+          ],
+          "expectedPathLength": 36000,
+          "speed": 950
+        },
+        {
+          "id": "rail-rover",
+          "type": "vehicle",
+          "blockedTicks": 0,
+          "totalTravel": 33804,
+          "movingTicks": 2817,
+          "minY": 0,
+          "maxY": 0,
+          "supports": [
+            "$floor"
+          ],
+          "last": {
+            "x": 6092,
+            "y": 0,
+            "z": 16000
+          },
+          "pathIndices": [
+            1,
+            0
+          ],
+          "expectedPathLength": 32000,
+          "speed": 600
+        },
+        {
+          "id": "rail-sentry",
+          "type": "sentry",
+          "blockedTicks": 0,
+          "totalTravel": 0,
+          "movingTicks": 0,
+          "minY": 0,
+          "maxY": 0,
+          "supports": [
+            "$floor"
+          ],
+          "last": {
+            "x": -17000,
+            "y": 0,
+            "z": -19000
+          },
+          "pathIndices": [
+            0
+          ],
+          "expectedPathLength": 0,
+          "speed": 1000
+        }
+      ]
+    }
+  ],
+  "findings": [],
+  "sourceHashes": {
+    "world-catalogue.mjs": "d901363b623193f4896100f9381c7579946796e741554f012581ebb93f9ea8a6",
+    "world-model.mjs": "78f606f2d7acc02c0cacccfcf6566996658854666b1ad453a906e2fa94ed7208",
+    "world-collision.mjs": "2899c7c84f9eae14b9a3434f585a8e873f4a1361e8f3ce4026ef27f44bdeef32"
+  },
+  "limits": "Actual Rapier static queries and fixed-step actor runtime. Straight lines are diagnostic, not asserted navigable: multi-height tasks require piloted climb/routing. Does not replace completed full-flight proofs, GPU/browser readability or human acceptance."
+}

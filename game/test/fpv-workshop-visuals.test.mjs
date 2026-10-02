@@ -17,6 +17,7 @@ import {
 } from '../../optional-practice/civilian-fpv/world-themes.mjs';
 import {
   WORLD_COURSES,
+  ADVENTURE_COURSES,
   FLIGHT_WORLDS,
 } from '../../optional-practice/civilian-fpv/world-catalogue.mjs';
 import { FLIGHT_COURSES } from '../../optional-practice/civilian-fpv/catalogue.mjs';
@@ -38,7 +39,7 @@ import {
 } from '../../optional-practice/civilian-fpv/world-visuals.mjs';
 
 const presentation = { collectionId: 'industrial-workshop', revision: 'r1' };
-const courses = [...FLIGHT_COURSES, ...WORLD_COURSES];
+const courses = [...FLIGHT_COURSES, ...WORLD_COURSES, ...ADVENTURE_COURSES];
 function builders(parent = new THREE.Group()) {
   const material = (color, props = {}) => new THREE.MeshStandardMaterial({ color, ...props });
   const mesh = (geometry, paint, target = parent) => {
@@ -185,7 +186,7 @@ test('bevel calibration normals are bounded deterministic linear tangent-space d
   second.dispose();
 });
 
-test('all eight built-in environments have industrial materials without moving world geometry', () => {
+test('all built-in environments have industrial materials without moving world geometry', () => {
   const shape = (group) => {
     const rows = [];
     group.traverse((item) => {
@@ -210,7 +211,7 @@ test('all eight built-in environments have industrial materials without moving w
     assert.equal(result.obstacleMap.userData.simSurface, true);
     assert.equal(
       result.obstacleMap.userData.materialRole,
-      ['field', 'woodland'].includes(world.id) ? 'timber' : 'steel',
+      ['field', 'woodland', 'orchard'].includes(world.id) ? 'timber' : 'steel',
     );
     assert.equal(JSON.stringify(course), before);
     disposeSimVisualGroup(original.world);

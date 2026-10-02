@@ -3,9 +3,9 @@
   /* This dialog allocates its reader without changing the live arena or field cues. */
   #flight-details-dialog {
     box-sizing: border-box;
-    width: min(46rem, calc(100vw - 1rem));
-    height: min(46rem, calc(100dvh - 1rem));
-    max-height: calc(100dvh - 1rem);
+    width: min(46rem, calc(var(--dialog-viewport-width, 100vw) - 1rem));
+    height: min(46rem, calc(var(--dialog-viewport-height, 100dvh) - 1rem));
+    max-height: calc(var(--dialog-viewport-height, 100dvh) - 1rem);
     padding: clamp(12px, 2vw, 24px);
     overflow: auto;
     overscroll-behavior: contain;

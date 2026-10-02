@@ -1,4 +1,4 @@
-import { createFlightRenderer } from './world-renderer.mjs';
+import { createFlightRenderer } from './world-assets.mjs';
 
 /** Lightweight spatial authoring view. The host owns validated source, undo/redo,
  * and persistence. This view never creates or steps a simulation. */

@@ -1,0 +1,182 @@
+{
+  "format": "FPVAcroSchoolPhysicsEvidence.v1",
+  "source": {
+    "path": "optional-practice/civilian-fpv/world-catalogue.mjs",
+    "sha256": "1e722ace5004b1fd3afbbd34e3c38b0c8b2800c225e419204f7dbb55ce51717c"
+  },
+  "response": {
+    "format": "FlightResponseProfile.v1",
+    "id": "gentle-v1",
+    "name": "Gentle",
+    "maxRate": 240,
+    "maxTilt": 30,
+    "expo": 30,
+    "responseTicks": 8
+  },
+  "method": "Offline pilot supplies normalized commands to the unchanged 50 Hz runtime; each exported demonstration is independently replayed against exact course and response. No state or course advancement is injected.",
+  "summary": {
+    "lessons": 14,
+    "completed": 14,
+    "independentlyReplayed": 14
+  },
+  "limitations": [
+    "Controlled-input reachability is not novice usability or physical-radio acceptance.",
+    "Unit coverage remains deferred. Public deployment and hardware performance are separate gates."
+  ],
+  "results": [
+    {
+      "id": "beginner-15",
+      "mode": "acro",
+      "status": "complete",
+      "ticks": 360,
+      "contacts": 0,
+      "health": 100,
+      "packIdentity": "fpv-acro-school:376562a567e6ba93",
+      "finalStateIdentity": "a263ee9df3245fc6",
+      "proofSha256": "3ed59a7e4222388df0d53febaacf5025fdfec463e44b75272065dc182c8ae98b"
+    },
+    {
+      "id": "beginner-16",
+      "mode": "acro",
+      "status": "complete",
+      "ticks": 712,
+      "contacts": 0,
+      "health": 100,
+      "packIdentity": "fpv-acro-school:376562a567e6ba93",
+      "finalStateIdentity": "98a71c96624ef754",
+      "proofSha256": "8cd46017b3c075ec19e4ce4cd247d3e4525fe72a7c952819773edcabb30a7573"
+    },
+    {
+      "id": "beginner-13",
+      "mode": "acro",
+      "status": "complete",
+      "ticks": 654,
+      "contacts": 0,
+      "health": 100,
+      "packIdentity": "fpv-beginner:654387e76ace406c",
+      "finalStateIdentity": "11f9978ff8f10766",
+      "proofSha256": "876516643e3a31ec48301628be3354701d26ffabaa589f933ca7a6aaf9fd4440"
+    },
+    {
+      "id": "beginner-17",
+      "mode": "acro",
+      "status": "complete",
+      "ticks": 608,
+      "contacts": 0,
+      "health": 100,
+      "packIdentity": "fpv-acro-school:376562a567e6ba93",
+      "finalStateIdentity": "e31f382df014b710",
+      "proofSha256": "5fd570aa5ac91314980efb96996251deea5d67c3cfa8dbfdee1d0fe959f235d4"
+    },
+    {
+      "id": "beginner-14",
+      "mode": "acro",
+      "status": "complete",
+      "ticks": 757,
+      "contacts": 0,
+      "health": 100,
+      "packIdentity": "fpv-beginner:654387e76ace406c",
+      "finalStateIdentity": "fe32539fa7036a87",
+      "proofSha256": "f0db3202ff6d611e4f7512e96a49d25ca5b408c1ac0ac44708ee658c2d51b911"
+    },
+    {
+      "id": "beginner-18",
+      "mode": "acro",
+      "status": "complete",
+      "ticks": 961,
+      "contacts": 0,
+      "health": 100,
+      "packIdentity": "fpv-acro-school:376562a567e6ba93",
+      "finalStateIdentity": "c3cb25ef47210af2",
+      "proofSha256": "428cf745c8a65f522849f6a0dc47e477f8309a423a89f7021dc49f8d88cae2f1"
+    },
+    {
+      "id": "beginner-19",
+      "mode": "acro",
+      "status": "complete",
+      "ticks": 973,
+      "contacts": 0,
+      "health": 100,
+      "packIdentity": "fpv-acro-school:376562a567e6ba93",
+      "finalStateIdentity": "4278125617729278",
+      "proofSha256": "5dbcc4a561bbacc663f91bb1e3a3da34703b3fa406a073edd827abfd24394d4d"
+    },
+    {
+      "id": "beginner-20",
+      "mode": "acro",
+      "status": "complete",
+      "ticks": 908,
+      "contacts": 0,
+      "health": 100,
+      "packIdentity": "fpv-acro-school:376562a567e6ba93",
+      "finalStateIdentity": "85322821714cc6d5",
+      "proofSha256": "aeabb623a470a0acf50255ffb5731f0c8aca2a3a9aa599d793c1a80c9d076c60"
+    },
+    {
+      "id": "beginner-21",
+      "mode": "acro",
+      "status": "complete",
+      "ticks": 959,
+      "contacts": 0,
+      "health": 100,
+      "packIdentity": "fpv-acro-school:376562a567e6ba93",
+      "finalStateIdentity": "f68bc332fde2cd48",
+      "proofSha256": "624f193e9823260e21105a2ca901bc04b12f7d2663a9fe063959c0fbe0e85841"
+    },
+    {
+      "id": "beginner-22",
+      "mode": "acro",
+      "status": "complete",
+      "ticks": 1763,
+      "contacts": 0,
+      "health": 100,
+      "packIdentity": "fpv-acro-school:376562a567e6ba93",
+      "finalStateIdentity": "1eed4ab679368ff7",
+      "proofSha256": "ea6c166f4a2b896094e8f4bcdd3734a80dbf7eea9e1ffd8a7816cc55297f0eaf"
+    },
+    {
+      "id": "beginner-23",
+      "mode": "acro",
+      "status": "complete",
+      "ticks": 1057,
+      "contacts": 0,
+      "health": 100,
+      "packIdentity": "fpv-acro-school:376562a567e6ba93",
+      "finalStateIdentity": "2845a2ff4aec8315",
+      "proofSha256": "69b9077a0eb337e58e2344e7d8cfd02aef48f5cffcef5cd45bd1653b99b67a20"
+    },
+    {
+      "id": "beginner-24",
+      "mode": "acro",
+      "status": "complete",
+      "ticks": 1031,
+      "contacts": 0,
+      "health": 100,
+      "packIdentity": "fpv-acro-school:376562a567e6ba93",
+      "finalStateIdentity": "7524261f630f7a40",
+      "proofSha256": "dff84c72c1440440a44e4055f35ff36992994ce9e3157d4ce856d9d512cb0e6b"
+    },
+    {
+      "id": "beginner-25",
+      "mode": "acro",
+      "status": "complete",
+      "ticks": 676,
+      "contacts": 0,
+      "health": 100,
+      "packIdentity": "fpv-acro-school:376562a567e6ba93",
+      "finalStateIdentity": "d8840ecf804778f1",
+      "proofSha256": "eb959e97d04a86b3e77ff4451a9a00b784ab23a09a3458a7f0487076e9a5c249"
+    },
+    {
+      "id": "beginner-26",
+      "mode": "acro",
+      "status": "complete",
+      "ticks": 1407,
+      "contacts": 0,
+      "health": 100,
+      "packIdentity": "fpv-acro-school:376562a567e6ba93",
+      "finalStateIdentity": "e0364f091e3eb2a4",
+      "proofSha256": "b40ecb8ca37caa6027dbec9d883e5d742c6a13a8d8c95acc0c1ef2026ab471a0"
+    }
+  ]
+}

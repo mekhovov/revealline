@@ -4,7 +4,7 @@
    Canvas sizing, native modal state, input controls and save handlers stay owned
    by their existing hosts. */
   .field-kit.game-shell :is(#settings-dialog, #collection-dialog, #library-dialog, #help-dialog) {
-    width: min(1040px, calc(100vw - 32px));
+    width: min(1040px, calc(var(--dialog-viewport-width, 100vw) - 32px));
     max-width: none;
     padding: clamp(20px, 4vw, 40px);
   }
@@ -131,7 +131,7 @@
     color: var(--fk-muted);
   }
   .field-kit.game-shell #gallery-view-dialog {
-    width: min(1200px, calc(100vw - 24px));
+    width: min(1200px, calc(var(--dialog-viewport-width, 100vw) - 24px));
   }
   .field-kit.game-shell #gallery-canvas {
     display: block;
@@ -402,7 +402,7 @@
   }
   @media (max-width: 600px) {
     .field-kit.game-shell :is(#settings-dialog, #collection-dialog, #library-dialog, #help-dialog) {
-      width: calc(100vw - 16px);
+      width: calc(var(--dialog-viewport-width, 100vw) - 16px);
       padding: 20px 16px;
     }
     .field-kit.game-shell .field-kit-settings-tabs > button {

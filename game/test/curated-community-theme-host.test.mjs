@@ -36,6 +36,14 @@ const pin = (value) => ({ familyId: value.family.id, revision: value.family.revi
 
 async function fixtureWithCustomCampaigns() {
   const fixture = await editionProviderFixture();
+  const originalFetcher = fixture.fetcher;
+  fixture.fetcher = async (url, options) =>
+    new URL(url, 'http://localhost/game/').pathname === '/optional-practice/fpv-worlds/index.html'
+      ? new Response(
+          await readFile(new URL('../../optional-practice/fpv-worlds/index.html', import.meta.url)),
+        )
+      : originalFetcher(url, options);
+
   const catalog = structuredClone(fixture.catalog);
   catalog.format = 'revealline-edition-catalog.v3';
   catalog.appearanceThemes = [first, second];
@@ -181,7 +189,10 @@ for (const personal of [null, 'tryzub']) {
     page.win.location.assign = (href) => {
       destination = new URL(href);
     };
-    page.$('shell-home-fpv').onclick();
+    destination = undefined;
+    page.$('shell-menu').click();
+    page.$('solo-fpv-sim').click();
+    await settle(() => destination);
     assert.equal(destination.searchParams.get('appearanceFamily'), second.family.id);
     assert.equal(destination.searchParams.get('appearanceRevision'), second.family.revision);
     assert.equal(destination.searchParams.get('edition'), null);
@@ -237,7 +248,10 @@ for (const outcome of ['cancel', 'failure']) {
     page.win.location.assign = (href) => {
       destination = new URL(href);
     };
-    page.$('shell-home-fpv').onclick();
+    destination = undefined;
+    page.$('shell-menu').click();
+    page.$('solo-fpv-sim').click();
+    await settle(() => destination);
     assert.equal(destination.searchParams.get('appearanceFamily'), first.family.id);
     assert.equal(page.storage.getItem(THEME_PREFERENCES_KEY), null);
   });

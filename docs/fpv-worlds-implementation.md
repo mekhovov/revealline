@@ -1,6 +1,14 @@
 # FPV World Studio — implementation and player qualification
 
-Updated 2026-09-30. Branch: `codex/fpv-world-framework`.
+Current continuation: **2 October 2026**, branch `codex/fpv-checkpoint-practice`.
+The latest catalogue has **14 worlds / 148 authored challenges**: the original
+60, 58 school lessons and 30 World Adventures. See [the current delivery
+plan](fpv-reviewed-delivery-plan.md) and [World Adventures](fpv-world-adventures.md)
+for exact feature, evidence and remaining-work status. The implementation table
+below records the original 30 September framework baseline; it is historical,
+not the current catalogue count. Native content stack #889, reimport #922 and
+ghosts #913, World Adventures #947 and offline SIM #933 are integrated on the
+current main baseline. Section-practice reliability is the next focused increment.
 
 The current workstream prioritizes functioning features and direct player
 verification. **Additional unit-test coverage is deferred to the final phase**
@@ -126,7 +134,12 @@ and memory on named desktop/mobile reference devices. The 60/30 fps targets are
 targets until those measurements exist. No hardware baseline or ETA is inferred
 from a fast local browser walkthrough.
 
-The original 22–26 working-week production estimate remains a planning baseline
+The approved October continuation and remaining 8–10-week workstream are recorded
+in [`fpv-reviewed-delivery-plan.md`](fpv-reviewed-delivery-plan.md). The estimates
+there replace the old remaining-work baseline. Its R7 keeps additional unit
+coverage last while requiring functional verification in every phase.
+
+The original 22–26 working-week production estimate remains a historical baseline
 for two developers, an environment artist and regular QA. This implementation
 accelerates the functional workstream; it does not erase content-production and
 human qualification work or establish a new completion date.
@@ -147,3 +160,13 @@ Scenery attribution and original files are retained in
 `authoring/fpv-worlds/assets/kenney`; runtime license/provenance files are shipped
 with the package. Sources: [Kenney Industrial Kit](https://kenney.nl/assets/city-kit-industrial)
 and [Kenney Retro Urban Kit](https://opengameart.org/content/retro-urban-kit).
+
+## 2 October handheld/controller update
+
+Both hosts now prioritize the FPV viewport on phones and handheld dimensions;
+secondary controls live in a paused menu. Standard browser controllers supply
+flight axes, Arm, Reset, Pause and combat Fire, with exclusive menu/radio ownership.
+The isolated learning lab supports controller takeover. Functional receipts and
+research are in [Handheld flight](fpv-handheld-flight.md). Physical device and
+sustained performance qualification remain in R7; additional unit coverage stays
+deferred. The next focused increment adds FPV SIM after Solo/Versus/Team.

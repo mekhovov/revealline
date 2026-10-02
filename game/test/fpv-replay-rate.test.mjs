@@ -17,12 +17,13 @@ const html = parse(
   ),
 );
 
-function fixture(t, locale = 'en') {
+async function fixture(t, locale = 'en') {
   const doc = new Document(),
     win = new Events(),
     frames = new Map(),
     renders = [],
     admissions = [];
+  doc.createElementNS = (_namespace, name) => doc.createElement(name);
   const body = html.childNodes
     .find((node) => node.tagName === 'html')
     .childNodes.find((node) => node.tagName === 'body');
@@ -42,7 +43,12 @@ function fixture(t, locale = 'en') {
   let serial = 0,
     now = 0;
   Object.assign(win, {
+    MutationObserver: class {
+      observe() {}
+      disconnect() {}
+    },
     location: new URL(`https://example.test/optional-practice/civilian-fpv/?lang=${locale}`),
+    performance: { now: () => 0 },
     navigator: {},
     requestAnimationFrame: (callback) => {
       frames.set(++serial, callback);
@@ -73,6 +79,7 @@ function fixture(t, locale = 'en') {
     onAttempt: (attempt) => admissions.push(attempt),
   });
   t.after(() => app.dispose());
+  await app.settled();
   const $ = (id) => doc.getElementById(id);
   return {
     app,
@@ -100,7 +107,7 @@ function fixture(t, locale = 'en') {
 for (const mode of ['self-level', 'acro']) {
   for (const rate of [0.5, 1]) {
     test(`${rate}x ${mode} review displays every fixed model step, reaches the verified outcome and cannot earn`, async (t) => {
-      const f = fixture(t),
+      const f = await fixture(t),
         proof = FLIGHT_DEMONSTRATIONS.find(
           (item) => item.course === 'flight-01' && item.mode === mode,
         ),
@@ -137,6 +144,7 @@ for (const mode of ['self-level', 'acro']) {
       assert.equal(f.app.exportAttempt().frames.length, 0);
       assert.deepEqual(f.admissions, []);
       f.$('try').click();
+      await f.app.settled();
       assert.equal(f.$('replay-controls').hidden, true);
       assert.equal(
         f.doc.activeElement,
@@ -155,7 +163,7 @@ for (const mode of ['self-level', 'acro']) {
 }
 
 test('changing review speed preserves pause and blur recovery, rejects foreign rates, and never buffers a catch-up', async (t) => {
-  const f = fixture(t),
+  const f = await fixture(t),
     proof = FLIGHT_DEMONSTRATIONS.find(
       (item) => item.course === 'flight-01' && item.mode === 'self-level',
     );
@@ -204,9 +212,9 @@ test('changing review speed preserves pause and blur recovery, rejects foreign r
   assert.deepEqual(f.admissions, []);
 });
 
-test('replay speed is localized and cannot change practice or start a replay by itself', (t) => {
+test('replay speed is localized and cannot change practice or start a replay by itself', async (t) => {
   for (const locale of ['en', 'uk']) {
-    const f = fixture(t, locale);
+    const f = await fixture(t, locale);
     assert.equal(
       f.$('replay-controls').querySelector('[data-copy="replayRate"]').textContent,
       COPY[locale].replayRate,

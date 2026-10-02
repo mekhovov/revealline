@@ -1,0 +1,167 @@
+{
+  "format": "revealline-production-ledger-diagnosis.v1",
+  "measuredAt": "2026-09-30T23:57:07.277Z",
+  "status": "Scoped audio dependency omission repaired. Existing aggregate production-ledger drift remains unresolved; no review or release approval is granted.",
+  "baselineCommit": "e870684598ca2767e24320573caff400eb930f46",
+  "checkoutHeadAtMeasurement": "ac7d06f12da617d098c63c8c47979974631a75fb",
+  "measurementScope": "Current working-tree bytes including the two-path producer change; these fingerprints are measurements, not approval declarations.",
+  "algorithm": "SHA-256 of ordered raw dependency bytes concatenated, matching fieldKitRecipeSources.",
+  "producer": {
+    "path": "scripts/produce-field-kit-theme.mjs",
+    "dependencyListLine": 48,
+    "checkFailureLine": 1072
+  },
+  "audioDependencyRepair": {
+    "beforeInputCount": 50,
+    "beforeSHA256": "5c97320ad48f4bf94cdd6055a0569b1b663df887c380b09454ea9e40ed87c407",
+    "afterInputCount": 52,
+    "afterSHA256": "6c4531dbb5c31f67e2e09a64ceec2ded0a2aaa5e70d532559da10b4a8a807b1f",
+    "insertionAfter": "game/online-soundtrack-catalogue.mjs",
+    "addedInputs": [
+      {
+        "path": "game/online-soundtrack-sources.mjs",
+        "bytes": 8662,
+        "sha256": "6ebc25da9d4067669f18e0447938e89812639eecde82b51bf2f53483c1ce841e"
+      },
+      {
+        "path": "game/online-soundtrack-source-store.mjs",
+        "bytes": 622,
+        "sha256": "55c9c650455f6b381cf3419275c547f295c1904a45305446c32b758abe9b81b8"
+      }
+    ]
+  },
+  "groups": [
+    {
+      "group": "ui",
+      "baselineInputCount": 7,
+      "baselineSHA256": "681df05a5885995d476b28d9609cbf7ca5daeafffe7eb3a33d650d747ce327a7",
+      "currentBeforeRepairInputCount": 7,
+      "currentBeforeRepairSHA256": "681df05a5885995d476b28d9609cbf7ca5daeafffe7eb3a33d650d747ce327a7",
+      "currentAfterRepairInputCount": 7,
+      "currentAfterRepairSHA256": "681df05a5885995d476b28d9609cbf7ca5daeafffe7eb3a33d650d747ce327a7",
+      "existingInputsChangedSinceBaseline": [],
+      "selectedRetainedRecipeCount": 24,
+      "selectedRetainedFingerprintSHA256": [
+        "c0038df428a29111169b2e3f852811bd0785410315c58981db2bb869e2639e5e"
+      ],
+      "baselineMatchesRetainedFingerprints": false
+    },
+    {
+      "group": "screens",
+      "baselineInputCount": 4,
+      "baselineSHA256": "af463b140a15b5c2fdb27cf89c689b44923960f59697e6001d4d0fdf6a973121",
+      "currentBeforeRepairInputCount": 4,
+      "currentBeforeRepairSHA256": "af463b140a15b5c2fdb27cf89c689b44923960f59697e6001d4d0fdf6a973121",
+      "currentAfterRepairInputCount": 4,
+      "currentAfterRepairSHA256": "af463b140a15b5c2fdb27cf89c689b44923960f59697e6001d4d0fdf6a973121",
+      "existingInputsChangedSinceBaseline": [],
+      "selectedRetainedRecipeCount": 7,
+      "selectedRetainedFingerprintSHA256": [
+        "52a6145755fc879c7759d8c3845741bb20c7f5009b77b4da66b6987194185f53"
+      ],
+      "baselineMatchesRetainedFingerprints": false
+    },
+    {
+      "group": "motion",
+      "baselineInputCount": 17,
+      "baselineSHA256": "5e092fb45edd0d320eed96dadc195eeca9dc15ce7b07e7a103a9f7eabbd204d8",
+      "currentBeforeRepairInputCount": 17,
+      "currentBeforeRepairSHA256": "5e092fb45edd0d320eed96dadc195eeca9dc15ce7b07e7a103a9f7eabbd204d8",
+      "currentAfterRepairInputCount": 17,
+      "currentAfterRepairSHA256": "5e092fb45edd0d320eed96dadc195eeca9dc15ce7b07e7a103a9f7eabbd204d8",
+      "existingInputsChangedSinceBaseline": [],
+      "selectedRetainedRecipeCount": 7,
+      "selectedRetainedFingerprintSHA256": [
+        "5e32f549e39ecdabc7a5449b320f703c40aa23a87889ea27b3594187e69f2f7f"
+      ],
+      "baselineMatchesRetainedFingerprints": false
+    },
+    {
+      "group": "effects",
+      "baselineInputCount": 27,
+      "baselineSHA256": "35cd4d82e13920678d320ccbe89ad65419f2df6c02f2897f715937abe136fa20",
+      "currentBeforeRepairInputCount": 27,
+      "currentBeforeRepairSHA256": "35cd4d82e13920678d320ccbe89ad65419f2df6c02f2897f715937abe136fa20",
+      "currentAfterRepairInputCount": 27,
+      "currentAfterRepairSHA256": "35cd4d82e13920678d320ccbe89ad65419f2df6c02f2897f715937abe136fa20",
+      "existingInputsChangedSinceBaseline": [],
+      "selectedRetainedRecipeCount": 10,
+      "selectedRetainedFingerprintSHA256": [
+        "b7aa3a6b9bc2302df0309e90acddf899766a9b9406f93bd266a94b685940a5eb"
+      ],
+      "baselineMatchesRetainedFingerprints": false
+    },
+    {
+      "group": "team",
+      "baselineInputCount": 35,
+      "baselineSHA256": "d117d023b097472e8975a7fa6e0384ba72bcc194ee84405e7afbe3753df14605",
+      "currentBeforeRepairInputCount": 35,
+      "currentBeforeRepairSHA256": "d117d023b097472e8975a7fa6e0384ba72bcc194ee84405e7afbe3753df14605",
+      "currentAfterRepairInputCount": 35,
+      "currentAfterRepairSHA256": "d117d023b097472e8975a7fa6e0384ba72bcc194ee84405e7afbe3753df14605",
+      "existingInputsChangedSinceBaseline": [],
+      "selectedRetainedRecipeCount": 37,
+      "selectedRetainedFingerprintSHA256": [
+        "c162660dcc177f6d975704920513d8171a9190ea708c61b1a5189adbb3b67980"
+      ],
+      "baselineMatchesRetainedFingerprints": false
+    },
+    {
+      "group": "audio",
+      "baselineInputCount": 50,
+      "baselineSHA256": "07a0b150c21bc4a25cb360683508700e834b5ac65a1b5693b9cd7d7671b713fc",
+      "currentBeforeRepairInputCount": 50,
+      "currentBeforeRepairSHA256": "5c97320ad48f4bf94cdd6055a0569b1b663df887c380b09454ea9e40ed87c407",
+      "currentAfterRepairInputCount": 52,
+      "currentAfterRepairSHA256": "6c4531dbb5c31f67e2e09a64ceec2ded0a2aaa5e70d532559da10b4a8a807b1f",
+      "existingInputsChangedSinceBaseline": [
+        "game/couch/couch-music-host.mjs",
+        "game/ui/soundtrack-player.mjs",
+        "game/ui/soundtrack-panel.mjs",
+        "game/ui/soundtrack-panel.css",
+        "game/online-soundtrack-catalogue.mjs",
+        "game/managed-media-store.mjs"
+      ],
+      "selectedRetainedRecipeCount": 8,
+      "selectedRetainedFingerprintSHA256": [
+        "b3ab688c9818ac2d35aff830a0700b0869c8065c08ebd49c0316cefe3faa7e2d"
+      ],
+      "baselineMatchesRetainedFingerprints": false
+    }
+  ],
+  "retainedLedger": {
+    "path": "authoring/library/fpv-field-kit/production.rltheme",
+    "bytes": 8738394,
+    "sha256": "4261eeef1c68f604ceff393968ea4fc98345fa5847e0acbeb813c472ab2fcff1",
+    "baselineSHA256": "4261eeef1c68f604ceff393968ea4fc98345fa5847e0acbeb813c472ab2fcff1",
+    "unchangedFromBaseline": true,
+    "compiledDocumentRevision": 104
+  },
+  "aggregateCheck": {
+    "command": "node scripts/produce-field-kit-theme.mjs --check",
+    "runDuringThisDiagnosis": false,
+    "previousFailureReportedByParent": "Stale production revision ledger. Run --write to append compatible revisions.",
+    "cause": "The producer reconstructs desired source-bound assets, retains immutable history, then compares serialized ledger bytes before compiling output. Baseline source fingerprints already differ from the retained selected recipes across all six groups.",
+    "releaseStatus": "Aggregate Field Kit reproduction remains blocked; the scoped dependency repair is not an aggregate pass."
+  },
+  "validation": {
+    "command": "node --test game/test/field-kit-audio-source-dependencies.test.mjs",
+    "passed": 2,
+    "failed": 0,
+    "scope": "Each newly declared source module changes the audio fingerprint independently while all other group fingerprints stay unchanged."
+  },
+  "requiredFollowUp": [
+    "Preserve historical review hashes, immutable ledger records and original payloads.",
+    "Reconcile existing aggregate source drift through truthful scoped evidence or source-stage successors before claiming aggregate reproduction or readiness.",
+    "After authorized retained-history generation, rerun the production check and appropriate readiness checks. A blanket write would absorb unrelated baseline drift."
+  ],
+  "limits": {
+    "ledgerWritten": false,
+    "compiledPresentationWritten": false,
+    "historicalReviewPinsChanged": false,
+    "reviewApprovalGranted": false,
+    "heavyBuildRun": false,
+    "audioDownloaded": false,
+    "listeningPerformed": false
+  }
+}

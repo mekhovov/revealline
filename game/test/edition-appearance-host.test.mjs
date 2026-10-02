@@ -1,5 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import { readFile } from 'node:fs/promises';
 import { soloPage, settle, memoryStorage } from './helpers/solo-dom.mjs';
 import { managedIndexedDB } from './helpers/managed-idb.mjs';
 import { editionProviderFixture } from './helpers/edition-provider-fixture.mjs';
@@ -10,6 +11,14 @@ import { selectedArcadeCollection } from '../presentation/industrial-arcade.mjs'
 
 async function appearanceFixture() {
   const fixture = await editionProviderFixture();
+  const originalFetcher = fixture.fetcher;
+  fixture.fetcher = async (url, options) =>
+    new URL(url, 'http://localhost/game/').pathname === '/optional-practice/fpv-worlds/index.html'
+      ? new Response(
+          await readFile(new URL('../../optional-practice/fpv-worlds/index.html', import.meta.url)),
+        )
+      : originalFetcher(url, options);
+
   const catalog = structuredClone(fixture.catalog);
   catalog.format = 'revealline-edition-catalog.v2';
   catalog.brands[0].format = 'revealline-brand-pack.v2';
@@ -67,7 +76,10 @@ for (const personal of [null, 'tryzub']) {
     page.win.location.assign = (href) => {
       destination = new URL(href);
     };
-    page.$('shell-home-fpv').onclick();
+    destination = undefined;
+    page.$('shell-menu').click();
+    page.$('solo-fpv-sim').click();
+    await settle(() => destination);
     assert.equal(destination.searchParams.get('appearanceFamily'), 'vyshyvanka');
 
     await openMissionLibrary(page, 'shell-play');
@@ -109,7 +121,10 @@ for (const personal of [null, 'tryzub']) {
       },
       'The painter and interface accept the same family at mission adoption.',
     );
-    page.$('shell-home-fpv').onclick();
+    destination = undefined;
+    page.$('shell-menu').click();
+    page.$('solo-fpv-sim').click();
+    await settle(() => destination);
     assert.equal(destination.searchParams.get('appearanceFamily'), 'dnipro-porcelain');
     assert.equal(destination.searchParams.get('appearanceRevision'), 'r1');
     assert.equal(
@@ -169,7 +184,10 @@ for (const outcome of ['cancel', 'failure']) {
     page.win.location.assign = (href) => {
       destination = new URL(href);
     };
-    page.$('shell-home-fpv').onclick();
+    destination = undefined;
+    page.$('shell-menu').click();
+    page.$('solo-fpv-sim').click();
+    await settle(() => destination);
     assert.equal(destination.searchParams.get('appearanceFamily'), 'vyshyvanka');
     assert.equal(page.storage.getItem(THEME_PREFERENCES_KEY), null);
   });

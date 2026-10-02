@@ -327,10 +327,10 @@
   .game-shell dialog:not(.shell-home) {
     font-family: var(--pixel-font);
     font-size: 20px;
-    width: min(1120px, 100vw);
-    max-width: 100vw;
-    height: 100dvh;
-    max-height: 100dvh;
+    width: min(1120px, var(--dialog-viewport-width, 100vw));
+    max-width: var(--dialog-viewport-width, 100vw);
+    height: var(--dialog-viewport-height, 100dvh);
+    max-height: var(--dialog-viewport-height, 100dvh);
     margin: 0 auto;
     padding: clamp(20px, 4vw, 48px);
     border: 0;
