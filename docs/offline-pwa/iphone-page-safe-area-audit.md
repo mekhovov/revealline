@@ -91,8 +91,12 @@ downloads or a physical Safari Home Screen installation.
 
 ## Validation and release gate
 
-Run required lint, repository validation, formatting, whitespace checking and
-in-memory build inspection after the final changes. Automated suites remain
+Final ESLint, repository validation, changed-file formatting, whitespace checking
+and in-memory build inspection passed after rebasing onto `main` at `3f097ad2b`.
+The [build summary](evidence/iphone-menu-safe-area-20261002/all-pages-build-summary.json)
+records 2,719 output files and 958,771,488 bytes including the manifest. This is
+the full distribution inventory, not the rolling Pages size or a release
+publication assessment. Automated suites remain
 **WAIVED_SKIPPED_NOT_PASSED** under the existing owner-authorized policy.
 
 Schedule this correction independently from SIM/community download PR #933 in
