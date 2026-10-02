@@ -1303,3 +1303,40 @@ Next concrete work: shared-theme integration after the Themes handoff is ready,
 then selected artist-authored material/landmark upgrades and named-device
 performance/readability qualification. Preserve parallel primary-checkout work,
 remaining original demonstrations/reimport holds and R7 coverage deferral.
+
+### 2 October — World Adventures implementation and qualification
+
+Current branch: `codex/fpv-world-adventures`, based on #946 at
+`bcad075c21fb0e29d0b9b673d10c4218d293f1f1`. Six original worlds and 30 authored
+challenges add coastal piers, quarry terraces, campus roofs, orchard avenues,
+solar lanes and railworks. Catalogue:14 worlds/148 challenges. Real follow and
+observation objectives use subject motion, range, relative speed, nose alignment
+and collision line of sight. New courses have a separate pack identity;
+original world/school course bytes and all four original curated playlists are
+unchanged. Full detail and research: `docs/fpv-world-adventures.md`.
+
+All60 new course/mode attempts complete with identical independent replay,
+253,011 recorded ticks and zero contacts. Evidence and deterministic raw proof
+archive are retained under docs/evidence and authoring/fpv-worlds/demonstrations.
+These authoring proofs are not yet an installed player demonstration library.
+Tracking20/20, new art38/38, retained art43/43, route/actor geometry60/60 and
+actual actor-editor10/10 checks pass. Final actual WebGL qualification and
+frozen package admission follow before publication. R7 additional unit coverage
+remains deferred. No novice acceptance, physical-radio/Steam Deck/iPhone FPS,
+sustained performance or public live availability is claimed.
+
+Reconciled upstream state: native content stack889 is fully merged/closed;
+reimport #922 and personal-best ghost #913 have merged. Earlier log holds for
+those items are historical. This dependent branch still needs coordinated
+upstream integration, preserving newer learning/radio/art work and the Garage
+handoff. Installed original proofs here remain56 plus58 school proofs; the
+original120 target is unchanged. Stack902 last inspected open membership was
+939→940→941→942→943→944→945→946. No upstream refs were rewritten. Primary
+checkout Themes/Industrial Workshop work remains untouched.
+
+Next: complete frozen admission, refresh both existing local player builds,
+publish after #946 and append through the native stack API. Then integrate the
+merged content/ghost/reimport changes and ready Themes contract, followed by
+artist-authored landmarks/materials and named-device/player acceptance. CI and
+public publication stay separate from local functionality; inspect exact remote
+heads and checks before any protected merge.

@@ -1,0 +1,4271 @@
+{
+  "format": "FPVAdventuresPhysicsEvidence.v1",
+  "startedAt": "2026-10-02T06:56:46.295Z",
+  "sources": {
+    "world-catalogue.mjs": "d901363b623193f4896100f9381c7579946796e741554f012581ebb93f9ea8a6",
+    "world-model.mjs": "78f606f2d7acc02c0cacccfcf6566996658854666b1ad453a906e2fa94ed7208",
+    "world-collision.mjs": "2899c7c84f9eae14b9a3434f585a8e873f4a1361e8f3ce4026ef27f44bdeef32",
+    "model.mjs": "9e4cd11cfdde2dd43b437069b8cb7a359a8132495db806cb5f68e8674d48aaf6",
+    "radio-profile.mjs": "f588fd5cda96ed9627a483f49ca843ace8d99a68fae42b0a4239c2cd0ab81933",
+    "math.mjs": "555c8b6ea170b46992133507d2a3d867f06185bca060239cab7db9c9b87f9f98",
+    "flight-sectors.mjs": "5b1b54bde4e578e61da7d59f4a80a86db9aafbc78b4523d2ba2b540277a0a16d",
+    "world-themes.mjs": "8331dc6931299043e14620fe312affddd382b551607db5ff6fae85f14b627bc7",
+    "vendor/rapier/rapier.mjs": "02dc6a4e2fffc013bab08fbb44fa68f501d8303615e9afe4c7d89ad4eedda0d0",
+    "qualify-fpv-adventures.mjs": "cc24b5a389bd6875b8e3361c189ecea0348a7e86da827e393423c519ae2fa646"
+  },
+  "response": {
+    "format": "FlightResponseProfile.v1",
+    "id": "gentle-v1",
+    "name": "Gentle",
+    "maxRate": 240,
+    "maxTilt": 30,
+    "expo": 30,
+    "responseTicks": 8
+  },
+  "packIdentity": "fpv-adventures:7a780beda75af567",
+  "method": "Ordinary normalized pilot commands advance the actual 50Hz flight runtime. Recorder consumes only the exact applied command. Every completed proof is independently replayed; no state, objectives, actor positions or course rules are injected.",
+  "limitations": [
+    "Offline reachability/replay evidence is not player usability, physical-controller acceptance or hardware qualification.",
+    "Additional unit coverage is deferred; this is an offline authoring and functional qualification command."
+  ],
+  "results": [
+    {
+      "id": "adventure-coast-01",
+      "mode": "self-level",
+      "completed": true,
+      "replayed": true,
+      "milestones": [
+        {
+          "tick": 0,
+          "step": 0,
+          "position": {
+            "x": 0,
+            "y": 0,
+            "z": 48000
+          }
+        },
+        {
+          "tick": 502,
+          "step": 1,
+          "position": {
+            "x": -15474,
+            "y": 3845,
+            "z": 26711
+          }
+        },
+        {
+          "tick": 1301,
+          "step": 2,
+          "position": {
+            "x": 15367,
+            "y": 5950,
+            "z": -3371
+          }
+        },
+        {
+          "tick": 1874,
+          "step": 3,
+          "position": {
+            "x": 21817,
+            "y": 10836,
+            "z": -33133
+          }
+        }
+      ],
+      "status": "complete",
+      "ticks": 4843,
+      "step": 4,
+      "total": 4,
+      "contacts": 0,
+      "health": 100,
+      "maxHealth": 100,
+      "shots": 0,
+      "hits": 0,
+      "sourceIdentity": "d393d9dc2cdbf8ac",
+      "finalStateIdentity": "927ca0248786dd14",
+      "proofSha256": "a06e954a1208df9d1e347420d693ac08635d1c264d23002ca8c80c3132b76870",
+      "proofFile": "adventure-coast-01-self-level.json"
+    },
+    {
+      "id": "adventure-coast-01",
+      "mode": "acro",
+      "completed": true,
+      "replayed": true,
+      "milestones": [
+        {
+          "tick": 0,
+          "step": 0,
+          "position": {
+            "x": 0,
+            "y": 0,
+            "z": 48000
+          }
+        },
+        {
+          "tick": 507,
+          "step": 1,
+          "position": {
+            "x": -15579,
+            "y": 3848,
+            "z": 26553
+          }
+        },
+        {
+          "tick": 1304,
+          "step": 2,
+          "position": {
+            "x": 15505,
+            "y": 5951,
+            "z": -3502
+          }
+        },
+        {
+          "tick": 1881,
+          "step": 3,
+          "position": {
+            "x": 21865,
+            "y": 10848,
+            "z": -33329
+          }
+        }
+      ],
+      "status": "complete",
+      "ticks": 4843,
+      "step": 4,
+      "total": 4,
+      "contacts": 0,
+      "health": 100,
+      "maxHealth": 100,
+      "shots": 0,
+      "hits": 0,
+      "sourceIdentity": "d393d9dc2cdbf8ac",
+      "finalStateIdentity": "2a8b70b9435283a4",
+      "proofSha256": "2ddd4c535560a2e43ff8dc02199c192c535717a8968f4cb86eec32933ee98434",
+      "proofFile": "adventure-coast-01-acro.json"
+    },
+    {
+      "id": "adventure-coast-02",
+      "mode": "self-level",
+      "completed": true,
+      "replayed": true,
+      "milestones": [
+        {
+          "tick": 0,
+          "step": 0,
+          "position": {
+            "x": 0,
+            "y": 0,
+            "z": 48000
+          }
+        },
+        {
+          "tick": 189,
+          "step": 1,
+          "position": {
+            "x": 0,
+            "y": 2682,
+            "z": 39858
+          }
+        },
+        {
+          "tick": 485,
+          "step": 2,
+          "position": {
+            "x": 0,
+            "y": 3829,
+            "z": 23963
+          }
+        },
+        {
+          "tick": 918,
+          "step": 3,
+          "position": {
+            "x": -11717,
+            "y": 4977,
+            "z": 3950
+          }
+        },
+        {
+          "tick": 1328,
+          "step": 4,
+          "position": {
+            "x": -5272,
+            "y": 4020,
+            "z": -18055
+          }
+        },
+        {
+          "tick": 1752,
+          "step": 5,
+          "position": {
+            "x": 12020,
+            "y": 7890,
+            "z": -31711
+          }
+        },
+        {
+          "tick": 2458,
+          "step": 6,
+          "position": {
+            "x": 17766,
+            "y": 5162,
+            "z": 6014
+          }
+        },
+        {
+          "tick": 3013,
+          "step": 7,
+          "position": {
+            "x": 5278,
+            "y": 3048,
+            "z": 34040
+          }
+        }
+      ],
+      "status": "complete",
+      "ticks": 3748,
+      "step": 8,
+      "total": 8,
+      "contacts": 0,
+      "health": 100,
+      "maxHealth": 100,
+      "shots": 0,
+      "hits": 0,
+      "sourceIdentity": "3b4dfcf92ac24b24",
+      "finalStateIdentity": "0d2d060b9c07f5cd",
+      "proofSha256": "08fe2c1cbb3f7709927c49c0ebdf92a18a36ec225b6ef1848f7af504d12097e2",
+      "proofFile": "adventure-coast-02-self-level.json"
+    },
+    {
+      "id": "adventure-coast-02",
+      "mode": "acro",
+      "completed": true,
+      "replayed": true,
+      "milestones": [
+        {
+          "tick": 0,
+          "step": 0,
+          "position": {
+            "x": 0,
+            "y": 0,
+            "z": 48000
+          }
+        },
+        {
+          "tick": 189,
+          "step": 1,
+          "position": {
+            "x": 0,
+            "y": 2675,
+            "z": 39811
+          }
+        },
+        {
+          "tick": 486,
+          "step": 2,
+          "position": {
+            "x": 0,
+            "y": 3833,
+            "z": 23989
+          }
+        },
+        {
+          "tick": 919,
+          "step": 3,
+          "position": {
+            "x": -11703,
+            "y": 4982,
+            "z": 3942
+          }
+        },
+        {
+          "tick": 1327,
+          "step": 4,
+          "position": {
+            "x": -5282,
+            "y": 4021,
+            "z": -18026
+          }
+        },
+        {
+          "tick": 1754,
+          "step": 5,
+          "position": {
+            "x": 12036,
+            "y": 7898,
+            "z": -31710
+          }
+        },
+        {
+          "tick": 2460,
+          "step": 6,
+          "position": {
+            "x": 17736,
+            "y": 5165,
+            "z": 6004
+          }
+        },
+        {
+          "tick": 3016,
+          "step": 7,
+          "position": {
+            "x": 5284,
+            "y": 3049,
+            "z": 34019
+          }
+        }
+      ],
+      "status": "complete",
+      "ticks": 3740,
+      "step": 8,
+      "total": 8,
+      "contacts": 0,
+      "health": 100,
+      "maxHealth": 100,
+      "shots": 0,
+      "hits": 0,
+      "sourceIdentity": "3b4dfcf92ac24b24",
+      "finalStateIdentity": "d25371f27f994de8",
+      "proofSha256": "c165ee7cd1bb1796692e133dc8a80c3eadca1be59acbe947e1b6381b3c3816cc",
+      "proofFile": "adventure-coast-02-acro.json"
+    },
+    {
+      "id": "adventure-coast-03",
+      "mode": "self-level",
+      "completed": true,
+      "replayed": true,
+      "milestones": [
+        {
+          "tick": 0,
+          "step": 0,
+          "position": {
+            "x": 0,
+            "y": 0,
+            "z": 48000
+          }
+        },
+        {
+          "tick": 383,
+          "step": 1,
+          "position": {
+            "x": 0,
+            "y": 3802,
+            "z": 28875
+          }
+        },
+        {
+          "tick": 1004,
+          "step": 2,
+          "position": {
+            "x": 7592,
+            "y": 6201,
+            "z": 12324
+          }
+        }
+      ],
+      "subjectCompletions": [
+        {
+          "tick": 1004,
+          "index": 1,
+          "status": "complete",
+          "reason": null,
+          "travel": 15200,
+          "distance": 11024,
+          "relativeSpeed": 29
+        }
+      ],
+      "status": "complete",
+      "ticks": 2577,
+      "step": 3,
+      "total": 3,
+      "contacts": 0,
+      "health": 100,
+      "maxHealth": 100,
+      "shots": 0,
+      "hits": 0,
+      "sourceIdentity": "d4e57d46b263b9b3",
+      "finalStateIdentity": "d19205ce91c6bf0a",
+      "proofSha256": "be622065d9b4846fec4f4a0e944bb4b6db2fba47e7c0582966d4edbb3eeb5935",
+      "proofFile": "adventure-coast-03-self-level.json"
+    },
+    {
+      "id": "adventure-coast-03",
+      "mode": "acro",
+      "completed": true,
+      "replayed": true,
+      "milestones": [
+        {
+          "tick": 0,
+          "step": 0,
+          "position": {
+            "x": 0,
+            "y": 0,
+            "z": 48000
+          }
+        },
+        {
+          "tick": 387,
+          "step": 1,
+          "position": {
+            "x": 0,
+            "y": 3809,
+            "z": 28699
+          }
+        },
+        {
+          "tick": 1064,
+          "step": 2,
+          "position": {
+            "x": 7397,
+            "y": 6291,
+            "z": 9961
+          }
+        }
+      ],
+      "subjectCompletions": [
+        {
+          "tick": 1064,
+          "index": 1,
+          "status": "complete",
+          "reason": null,
+          "travel": 15200,
+          "distance": 11007,
+          "relativeSpeed": 29
+        }
+      ],
+      "status": "complete",
+      "ticks": 2685,
+      "step": 3,
+      "total": 3,
+      "contacts": 0,
+      "health": 100,
+      "maxHealth": 100,
+      "shots": 0,
+      "hits": 0,
+      "sourceIdentity": "d4e57d46b263b9b3",
+      "finalStateIdentity": "ac0f784d4eb59625",
+      "proofSha256": "f93d8854b52fe415f8209060a0ff236b03dbd2fb0d244a0a728857f2ebaaa9c5",
+      "proofFile": "adventure-coast-03-acro.json"
+    },
+    {
+      "id": "adventure-coast-04",
+      "mode": "self-level",
+      "completed": true,
+      "replayed": true,
+      "milestones": [
+        {
+          "tick": 0,
+          "step": 0,
+          "position": {
+            "x": 0,
+            "y": 0,
+            "z": 48000
+          }
+        },
+        {
+          "tick": 489,
+          "step": 1,
+          "position": {
+            "x": 0,
+            "y": 3843,
+            "z": 22882
+          }
+        },
+        {
+          "tick": 689,
+          "step": 2,
+          "position": {
+            "x": 2548,
+            "y": 1202,
+            "z": 20990
+          }
+        },
+        {
+          "tick": 1348,
+          "step": 3,
+          "position": {
+            "x": 56,
+            "y": 3913,
+            "z": -15113
+          }
+        },
+        {
+          "tick": 1574,
+          "step": 4,
+          "position": {
+            "x": -3920,
+            "y": 1169,
+            "z": -16126
+          }
+        }
+      ],
+      "subjectCompletions": [
+        {
+          "tick": 689,
+          "index": 1,
+          "status": "complete",
+          "reason": null,
+          "travel": 5400,
+          "distance": 11052,
+          "relativeSpeed": 238
+        },
+        {
+          "tick": 1574,
+          "index": 3,
+          "status": "complete",
+          "reason": null,
+          "travel": 5400,
+          "distance": 11006,
+          "relativeSpeed": 83
+        }
+      ],
+      "status": "complete",
+      "ticks": 3093,
+      "step": 5,
+      "total": 5,
+      "contacts": 0,
+      "health": 100,
+      "maxHealth": 100,
+      "shots": 0,
+      "hits": 0,
+      "sourceIdentity": "210391f9a173f079",
+      "finalStateIdentity": "f6ecd28c8c2fc3dd",
+      "proofSha256": "58429ba213cd2ae27e7dca2118fb067d803cb16013b5cb3238172c312946c13b",
+      "proofFile": "adventure-coast-04-self-level.json"
+    },
+    {
+      "id": "adventure-coast-04",
+      "mode": "acro",
+      "completed": true,
+      "replayed": true,
+      "milestones": [
+        {
+          "tick": 0,
+          "step": 0,
+          "position": {
+            "x": 0,
+            "y": 0,
+            "z": 48000
+          }
+        },
+        {
+          "tick": 490,
+          "step": 1,
+          "position": {
+            "x": 0,
+            "y": 3850,
+            "z": 22692
+          }
+        },
+        {
+          "tick": 690,
+          "step": 2,
+          "position": {
+            "x": 2407,
+            "y": 1201,
+            "z": 20857
+          }
+        },
+        {
+          "tick": 1350,
+          "step": 3,
+          "position": {
+            "x": 60,
+            "y": 3922,
+            "z": -15309
+          }
+        },
+        {
+          "tick": 1576,
+          "step": 4,
+          "position": {
+            "x": -3953,
+            "y": 1171,
+            "z": -16160
+          }
+        }
+      ],
+      "subjectCompletions": [
+        {
+          "tick": 690,
+          "index": 1,
+          "status": "complete",
+          "reason": null,
+          "travel": 5400,
+          "distance": 11030,
+          "relativeSpeed": 794
+        },
+        {
+          "tick": 1576,
+          "index": 3,
+          "status": "complete",
+          "reason": null,
+          "travel": 5400,
+          "distance": 11018,
+          "relativeSpeed": 194
+        }
+      ],
+      "status": "complete",
+      "ticks": 3089,
+      "step": 5,
+      "total": 5,
+      "contacts": 0,
+      "health": 100,
+      "maxHealth": 100,
+      "shots": 0,
+      "hits": 0,
+      "sourceIdentity": "210391f9a173f079",
+      "finalStateIdentity": "882f6968e4036ed6",
+      "proofSha256": "bcfc396f6539749cd924fed923fecad0c0bd0959f29f1c37df480f15ba9e9da0",
+      "proofFile": "adventure-coast-04-acro.json"
+    },
+    {
+      "id": "adventure-coast-05",
+      "mode": "self-level",
+      "completed": true,
+      "replayed": true,
+      "milestones": [
+        {
+          "tick": 0,
+          "step": 0,
+          "position": {
+            "x": 0,
+            "y": 0,
+            "z": 48000
+          }
+        },
+        {
+          "tick": 844,
+          "step": 1,
+          "position": {
+            "x": -31400,
+            "y": 4882,
+            "z": 14636
+          }
+        },
+        {
+          "tick": 1401,
+          "step": 2,
+          "position": {
+            "x": -31984,
+            "y": 2002,
+            "z": 10007
+          }
+        },
+        {
+          "tick": 2537,
+          "step": 3,
+          "position": {
+            "x": -434,
+            "y": 5949,
+            "z": -33229
+          }
+        },
+        {
+          "tick": 3206,
+          "step": 4,
+          "position": {
+            "x": -7,
+            "y": 3002,
+            "z": -43996
+          }
+        },
+        {
+          "tick": 4102,
+          "step": 5,
+          "position": {
+            "x": 31340,
+            "y": 5028,
+            "z": -16584
+          }
+        },
+        {
+          "tick": 4709,
+          "step": 6,
+          "position": {
+            "x": 31988,
+            "y": 2002,
+            "z": -10017
+          }
+        }
+      ],
+      "status": "complete",
+      "ticks": 6644,
+      "step": 7,
+      "total": 7,
+      "contacts": 0,
+      "health": 100,
+      "maxHealth": 100,
+      "shots": 0,
+      "hits": 0,
+      "sourceIdentity": "923d46f923372d2d",
+      "finalStateIdentity": "2faf59b7419ced33",
+      "proofSha256": "8b47b15a7004a2a98dc6353faedcef612ffb33bba96a7b8787aad5340cef7955",
+      "proofFile": "adventure-coast-05-self-level.json"
+    },
+    {
+      "id": "adventure-coast-05",
+      "mode": "acro",
+      "completed": true,
+      "replayed": true,
+      "milestones": [
+        {
+          "tick": 0,
+          "step": 0,
+          "position": {
+            "x": 0,
+            "y": 0,
+            "z": 48000
+          }
+        },
+        {
+          "tick": 844,
+          "step": 1,
+          "position": {
+            "x": -31508,
+            "y": 4884,
+            "z": 14497
+          }
+        },
+        {
+          "tick": 1392,
+          "step": 2,
+          "position": {
+            "x": -32012,
+            "y": 2002,
+            "z": 9995
+          }
+        },
+        {
+          "tick": 2531,
+          "step": 3,
+          "position": {
+            "x": -352,
+            "y": 5951,
+            "z": -33396
+          }
+        },
+        {
+          "tick": 3190,
+          "step": 4,
+          "position": {
+            "x": 11,
+            "y": 3002,
+            "z": -44006
+          }
+        },
+        {
+          "tick": 4088,
+          "step": 5,
+          "position": {
+            "x": 31452,
+            "y": 5022,
+            "z": -16464
+          }
+        },
+        {
+          "tick": 4681,
+          "step": 6,
+          "position": {
+            "x": 32016,
+            "y": 2002,
+            "z": -10000
+          }
+        }
+      ],
+      "status": "complete",
+      "ticks": 6606,
+      "step": 7,
+      "total": 7,
+      "contacts": 0,
+      "health": 100,
+      "maxHealth": 100,
+      "shots": 0,
+      "hits": 0,
+      "sourceIdentity": "923d46f923372d2d",
+      "finalStateIdentity": "5c485b6711e9fe14",
+      "proofSha256": "a7e7b1c7ab5c1b946845547fdea6496ae6f23badc2d365ccdc2e6e2c196016b8",
+      "proofFile": "adventure-coast-05-acro.json"
+    },
+    {
+      "id": "adventure-quarry-01",
+      "mode": "self-level",
+      "completed": true,
+      "replayed": true,
+      "milestones": [
+        {
+          "tick": 0,
+          "step": 0,
+          "position": {
+            "x": 0,
+            "y": 0,
+            "z": 48000
+          }
+        },
+        {
+          "tick": 631,
+          "step": 1,
+          "position": {
+            "x": -19497,
+            "y": 4844,
+            "z": 20729
+          }
+        },
+        {
+          "tick": 1373,
+          "step": 2,
+          "position": {
+            "x": -21938,
+            "y": 11829,
+            "z": -19103
+          }
+        },
+        {
+          "tick": 2174,
+          "step": 3,
+          "position": {
+            "x": 21108,
+            "y": 10056,
+            "z": -23926
+          }
+        },
+        {
+          "tick": 3095,
+          "step": 4,
+          "position": {
+            "x": 14134,
+            "y": 4123,
+            "z": 25108
+          }
+        }
+      ],
+      "status": "complete",
+      "ticks": 4192,
+      "step": 5,
+      "total": 5,
+      "contacts": 0,
+      "health": 100,
+      "maxHealth": 100,
+      "shots": 0,
+      "hits": 0,
+      "sourceIdentity": "3fa340eba3f435b4",
+      "finalStateIdentity": "5c7c51ceca5128cd",
+      "proofSha256": "6bc352429346ba7a0d11474a149eb44a019502a7991ab96ab1051b7139d8c524",
+      "proofFile": "adventure-quarry-01-self-level.json"
+    },
+    {
+      "id": "adventure-quarry-01",
+      "mode": "acro",
+      "completed": true,
+      "replayed": true,
+      "milestones": [
+        {
+          "tick": 0,
+          "step": 0,
+          "position": {
+            "x": 0,
+            "y": 0,
+            "z": 48000
+          }
+        },
+        {
+          "tick": 635,
+          "step": 1,
+          "position": {
+            "x": -19592,
+            "y": 4850,
+            "z": 20571
+          }
+        },
+        {
+          "tick": 1381,
+          "step": 2,
+          "position": {
+            "x": -21946,
+            "y": 11840,
+            "z": -19314
+          }
+        },
+        {
+          "tick": 2188,
+          "step": 3,
+          "position": {
+            "x": 21325,
+            "y": 10045,
+            "z": -23930
+          }
+        },
+        {
+          "tick": 3114,
+          "step": 4,
+          "position": {
+            "x": 14120,
+            "y": 4117,
+            "z": 25297
+          }
+        }
+      ],
+      "status": "complete",
+      "ticks": 4198,
+      "step": 5,
+      "total": 5,
+      "contacts": 0,
+      "health": 100,
+      "maxHealth": 100,
+      "shots": 0,
+      "hits": 0,
+      "sourceIdentity": "3fa340eba3f435b4",
+      "finalStateIdentity": "ab06c4fc86493bb4",
+      "proofSha256": "a33e120c8b1755d122065f54d36ec8c49a19f696b663680284d3f2f9f2be0067",
+      "proofFile": "adventure-quarry-01-acro.json"
+    },
+    {
+      "id": "adventure-quarry-02",
+      "mode": "self-level",
+      "completed": true,
+      "replayed": true,
+      "milestones": [
+        {
+          "tick": 0,
+          "step": 0,
+          "position": {
+            "x": 0,
+            "y": 0,
+            "z": 48000
+          }
+        },
+        {
+          "tick": 554,
+          "step": 1,
+          "position": {
+            "x": 0,
+            "y": 3853,
+            "z": 18892
+          }
+        },
+        {
+          "tick": 934,
+          "step": 2,
+          "position": {
+            "x": -6115,
+            "y": 4311,
+            "z": 2889
+          }
+        },
+        {
+          "tick": 1774,
+          "step": 3,
+          "position": {
+            "x": 7222,
+            "y": 4904,
+            "z": -17552
+          }
+        },
+        {
+          "tick": 2586,
+          "step": 4,
+          "position": {
+            "x": 17850,
+            "y": 4020,
+            "z": 24112
+          }
+        }
+      ],
+      "status": "complete",
+      "ticks": 3726,
+      "step": 5,
+      "total": 5,
+      "contacts": 0,
+      "health": 100,
+      "maxHealth": 100,
+      "shots": 0,
+      "hits": 0,
+      "sourceIdentity": "6d4d3cd2ff691c81",
+      "finalStateIdentity": "439474dfcb4bbe96",
+      "proofSha256": "5426c2195ec9f07ba8b2051303fb34e70f1c33c1c8baec37e9b50050fb1dd0fa",
+      "proofFile": "adventure-quarry-02-self-level.json"
+    },
+    {
+      "id": "adventure-quarry-02",
+      "mode": "acro",
+      "completed": true,
+      "replayed": true,
+      "milestones": [
+        {
+          "tick": 0,
+          "step": 0,
+          "position": {
+            "x": 0,
+            "y": 0,
+            "z": 48000
+          }
+        },
+        {
+          "tick": 560,
+          "step": 1,
+          "position": {
+            "x": 0,
+            "y": 3862,
+            "z": 18683
+          }
+        },
+        {
+          "tick": 943,
+          "step": 2,
+          "position": {
+            "x": -6079,
+            "y": 4302,
+            "z": 2700
+          }
+        },
+        {
+          "tick": 2009,
+          "step": 3,
+          "position": {
+            "x": 7398,
+            "y": 4923,
+            "z": -17674
+          }
+        },
+        {
+          "tick": 2824,
+          "step": 4,
+          "position": {
+            "x": 17895,
+            "y": 4018,
+            "z": 24277
+          }
+        }
+      ],
+      "status": "complete",
+      "ticks": 3951,
+      "step": 5,
+      "total": 5,
+      "contacts": 0,
+      "health": 100,
+      "maxHealth": 100,
+      "shots": 0,
+      "hits": 0,
+      "sourceIdentity": "6d4d3cd2ff691c81",
+      "finalStateIdentity": "38f7834ee333bbe2",
+      "proofSha256": "3d62843d840cc4e91d52af96598627d15a95ceda75d31cf97b79f17832573f1b",
+      "proofFile": "adventure-quarry-02-acro.json"
+    },
+    {
+      "id": "adventure-quarry-03",
+      "mode": "self-level",
+      "completed": true,
+      "replayed": true,
+      "milestones": [
+        {
+          "tick": 0,
+          "step": 0,
+          "position": {
+            "x": 0,
+            "y": 0,
+            "z": 48000
+          }
+        },
+        {
+          "tick": 383,
+          "step": 1,
+          "position": {
+            "x": 0,
+            "y": 3802,
+            "z": 28875
+          }
+        },
+        {
+          "tick": 1016,
+          "step": 2,
+          "position": {
+            "x": 6286,
+            "y": 1145,
+            "z": 13434
+          }
+        }
+      ],
+      "subjectCompletions": [
+        {
+          "tick": 1016,
+          "index": 1,
+          "status": "complete",
+          "reason": null,
+          "travel": 10800,
+          "distance": 11023,
+          "relativeSpeed": 19
+        }
+      ],
+      "status": "complete",
+      "ticks": 2052,
+      "step": 3,
+      "total": 3,
+      "contacts": 0,
+      "health": 100,
+      "maxHealth": 100,
+      "shots": 0,
+      "hits": 0,
+      "sourceIdentity": "9a113e46e3713a55",
+      "finalStateIdentity": "85ee5bde1fcd6b94",
+      "proofSha256": "971cba89cb54c0c92fe55535a39a985105c48127db0abb294596fa47caf82ea7",
+      "proofFile": "adventure-quarry-03-self-level.json"
+    },
+    {
+      "id": "adventure-quarry-03",
+      "mode": "acro",
+      "completed": true,
+      "replayed": true,
+      "milestones": [
+        {
+          "tick": 0,
+          "step": 0,
+          "position": {
+            "x": 0,
+            "y": 0,
+            "z": 48000
+          }
+        },
+        {
+          "tick": 387,
+          "step": 1,
+          "position": {
+            "x": 0,
+            "y": 3809,
+            "z": 28699
+          }
+        },
+        {
+          "tick": 1077,
+          "step": 2,
+          "position": {
+            "x": 6160,
+            "y": 1144,
+            "z": 11751
+          }
+        }
+      ],
+      "subjectCompletions": [
+        {
+          "tick": 1077,
+          "index": 1,
+          "status": "complete",
+          "reason": null,
+          "travel": 10800,
+          "distance": 11008,
+          "relativeSpeed": 23
+        }
+      ],
+      "status": "complete",
+      "ticks": 2137,
+      "step": 3,
+      "total": 3,
+      "contacts": 0,
+      "health": 100,
+      "maxHealth": 100,
+      "shots": 0,
+      "hits": 0,
+      "sourceIdentity": "9a113e46e3713a55",
+      "finalStateIdentity": "f1e65cd3eca506ee",
+      "proofSha256": "d499e45dbeaa52a0d047306f0fa94826ca23292dcb73d8a88a25c1237a7e05a5",
+      "proofFile": "adventure-quarry-03-acro.json"
+    },
+    {
+      "id": "adventure-quarry-04",
+      "mode": "self-level",
+      "completed": true,
+      "replayed": true,
+      "milestones": [
+        {
+          "tick": 0,
+          "step": 0,
+          "position": {
+            "x": 0,
+            "y": 0,
+            "z": 48000
+          }
+        },
+        {
+          "tick": 386,
+          "step": 1,
+          "position": {
+            "x": 0,
+            "y": 4759,
+            "z": 28893
+          }
+        },
+        {
+          "tick": 1669,
+          "step": 2,
+          "position": {
+            "x": -11751,
+            "y": 700,
+            "z": -10420
+          }
+        }
+      ],
+      "status": "complete",
+      "ticks": 3121,
+      "step": 3,
+      "total": 3,
+      "contacts": 0,
+      "health": 97,
+      "maxHealth": 100,
+      "shots": 17,
+      "hits": 7,
+      "sourceIdentity": "1caf2b5b48a5bdd2",
+      "finalStateIdentity": "fd7c3d2fb71f5ab4",
+      "proofSha256": "5d0e730fb213dd46ba075129dea7e54ab2cb7dc4045a1469cda09341b71aa59b",
+      "proofFile": "adventure-quarry-04-self-level.json"
+    },
+    {
+      "id": "adventure-quarry-04",
+      "mode": "acro",
+      "completed": true,
+      "replayed": true,
+      "milestones": [
+        {
+          "tick": 0,
+          "step": 0,
+          "position": {
+            "x": 0,
+            "y": 0,
+            "z": 48000
+          }
+        },
+        {
+          "tick": 389,
+          "step": 1,
+          "position": {
+            "x": 0,
+            "y": 4770,
+            "z": 28694
+          }
+        },
+        {
+          "tick": 1886,
+          "step": 2,
+          "position": {
+            "x": -12357,
+            "y": 710,
+            "z": -10359
+          }
+        }
+      ],
+      "status": "complete",
+      "ticks": 3327,
+      "step": 3,
+      "total": 3,
+      "contacts": 0,
+      "health": 94,
+      "maxHealth": 100,
+      "shots": 17,
+      "hits": 7,
+      "sourceIdentity": "1caf2b5b48a5bdd2",
+      "finalStateIdentity": "f770173470f4cc24",
+      "proofSha256": "f00132cb5ff3548b7d53e047afde68b21fbb4b1efc01f30310524f0d509b77fc",
+      "proofFile": "adventure-quarry-04-acro.json"
+    },
+    {
+      "id": "adventure-quarry-05",
+      "mode": "self-level",
+      "completed": true,
+      "replayed": true,
+      "milestones": [
+        {
+          "tick": 0,
+          "step": 0,
+          "position": {
+            "x": 0,
+            "y": 0,
+            "z": 48000
+          }
+        },
+        {
+          "tick": 770,
+          "step": 1,
+          "position": {
+            "x": -19723,
+            "y": 7866,
+            "z": 11962
+          }
+        },
+        {
+          "tick": 1438,
+          "step": 2,
+          "position": {
+            "x": -20909,
+            "y": 9834,
+            "z": -26054
+          }
+        },
+        {
+          "tick": 1828,
+          "step": 3,
+          "position": {
+            "x": -18224,
+            "y": 11829,
+            "z": -48003
+          }
+        },
+        {
+          "tick": 2528,
+          "step": 4,
+          "position": {
+            "x": 20004,
+            "y": 11972,
+            "z": -46223
+          }
+        },
+        {
+          "tick": 3018,
+          "step": 5,
+          "position": {
+            "x": 21034,
+            "y": 10149,
+            "z": -19972
+          }
+        },
+        {
+          "tick": 4057,
+          "step": 6,
+          "position": {
+            "x": -22428,
+            "y": 9035,
+            "z": -43311
+          }
+        },
+        {
+          "tick": 4656,
+          "step": 7,
+          "position": {
+            "x": -23000,
+            "y": 5002,
+            "z": -44000
+          }
+        }
+      ],
+      "status": "complete",
+      "ticks": 7476,
+      "step": 8,
+      "total": 8,
+      "contacts": 0,
+      "health": 100,
+      "maxHealth": 100,
+      "shots": 0,
+      "hits": 0,
+      "sourceIdentity": "a7cbbf241ab8c431",
+      "finalStateIdentity": "f36457d8db2c47cc",
+      "proofSha256": "fec4c06ded87da02726420579391d347e96074cf24d7394bd2fe4f6161e5553e",
+      "proofFile": "adventure-quarry-05-self-level.json"
+    },
+    {
+      "id": "adventure-quarry-05",
+      "mode": "acro",
+      "completed": true,
+      "replayed": true,
+      "milestones": [
+        {
+          "tick": 0,
+          "step": 0,
+          "position": {
+            "x": 0,
+            "y": 0,
+            "z": 48000
+          }
+        },
+        {
+          "tick": 773,
+          "step": 1,
+          "position": {
+            "x": -19723,
+            "y": 7865,
+            "z": 11953
+          }
+        },
+        {
+          "tick": 1440,
+          "step": 2,
+          "position": {
+            "x": -20899,
+            "y": 9837,
+            "z": -26044
+          }
+        },
+        {
+          "tick": 1830,
+          "step": 3,
+          "position": {
+            "x": -18266,
+            "y": 11830,
+            "z": -48011
+          }
+        },
+        {
+          "tick": 2533,
+          "step": 4,
+          "position": {
+            "x": 20022,
+            "y": 11971,
+            "z": -46232
+          }
+        },
+        {
+          "tick": 3026,
+          "step": 5,
+          "position": {
+            "x": 20992,
+            "y": 10148,
+            "z": -19961
+          }
+        },
+        {
+          "tick": 4071,
+          "step": 6,
+          "position": {
+            "x": -22549,
+            "y": 9019,
+            "z": -43458
+          }
+        },
+        {
+          "tick": 4653,
+          "step": 7,
+          "position": {
+            "x": -23001,
+            "y": 5002,
+            "z": -44003
+          }
+        }
+      ],
+      "status": "complete",
+      "ticks": 7463,
+      "step": 8,
+      "total": 8,
+      "contacts": 0,
+      "health": 100,
+      "maxHealth": 100,
+      "shots": 0,
+      "hits": 0,
+      "sourceIdentity": "a7cbbf241ab8c431",
+      "finalStateIdentity": "ff70053d90d79993",
+      "proofSha256": "c02cd30e273dfd932eae0691068372a4b8076afd3928b979cc032d1303dd5b14",
+      "proofFile": "adventure-quarry-05-acro.json"
+    },
+    {
+      "id": "adventure-rooftops-01",
+      "mode": "self-level",
+      "completed": true,
+      "replayed": true,
+      "milestones": [
+        {
+          "tick": 0,
+          "step": 0,
+          "position": {
+            "x": 0,
+            "y": 0,
+            "z": 48000
+          }
+        },
+        {
+          "tick": 639,
+          "step": 1,
+          "position": {
+            "x": -17637,
+            "y": 6855,
+            "z": 20810
+          }
+        },
+        {
+          "tick": 1316,
+          "step": 2,
+          "position": {
+            "x": 17110,
+            "y": 16716,
+            "z": 20002
+          }
+        },
+        {
+          "tick": 2116,
+          "step": 3,
+          "position": {
+            "x": 16014,
+            "y": 16972,
+            "z": -23101
+          }
+        },
+        {
+          "tick": 2758,
+          "step": 4,
+          "position": {
+            "x": -15157,
+            "y": 8264,
+            "z": -12311
+          }
+        }
+      ],
+      "status": "complete",
+      "ticks": 5002,
+      "step": 5,
+      "total": 5,
+      "contacts": 0,
+      "health": 100,
+      "maxHealth": 100,
+      "shots": 0,
+      "hits": 0,
+      "sourceIdentity": "637c54bc7f16fbad",
+      "finalStateIdentity": "72dea915e36540ae",
+      "proofSha256": "260a7bbcc9d387bac6560fff9b9a03e5b34074f1df45084f95a9d6523d1d53c0",
+      "proofFile": "adventure-rooftops-01-self-level.json"
+    },
+    {
+      "id": "adventure-rooftops-01",
+      "mode": "acro",
+      "completed": true,
+      "replayed": true,
+      "milestones": [
+        {
+          "tick": 0,
+          "step": 0,
+          "position": {
+            "x": 0,
+            "y": 0,
+            "z": 48000
+          }
+        },
+        {
+          "tick": 642,
+          "step": 1,
+          "position": {
+            "x": -17698,
+            "y": 6860,
+            "z": 20669
+          }
+        },
+        {
+          "tick": 1325,
+          "step": 2,
+          "position": {
+            "x": 17318,
+            "y": 16737,
+            "z": 19985
+          }
+        },
+        {
+          "tick": 2130,
+          "step": 3,
+          "position": {
+            "x": 16019,
+            "y": 16974,
+            "z": -23299
+          }
+        },
+        {
+          "tick": 2776,
+          "step": 4,
+          "position": {
+            "x": -15320,
+            "y": 8259,
+            "z": -12248
+          }
+        }
+      ],
+      "status": "complete",
+      "ticks": 5010,
+      "step": 5,
+      "total": 5,
+      "contacts": 0,
+      "health": 100,
+      "maxHealth": 100,
+      "shots": 0,
+      "hits": 0,
+      "sourceIdentity": "637c54bc7f16fbad",
+      "finalStateIdentity": "f77f53e334bc2b73",
+      "proofSha256": "580f63409fc5e07fe04c648ed1315589cea34390b8bee021b34517f11a3d1002",
+      "proofFile": "adventure-rooftops-01-acro.json"
+    },
+    {
+      "id": "adventure-rooftops-02",
+      "mode": "self-level",
+      "completed": true,
+      "replayed": true,
+      "milestones": [
+        {
+          "tick": 0,
+          "step": 0,
+          "position": {
+            "x": 0,
+            "y": 0,
+            "z": 48000
+          }
+        },
+        {
+          "tick": 189,
+          "step": 1,
+          "position": {
+            "x": 0,
+            "y": 2682,
+            "z": 39858
+          }
+        },
+        {
+          "tick": 419,
+          "step": 2,
+          "position": {
+            "x": 0,
+            "y": 4801,
+            "z": 27995
+          }
+        },
+        {
+          "tick": 916,
+          "step": 3,
+          "position": {
+            "x": -9726,
+            "y": 5981,
+            "z": 1954
+          }
+        },
+        {
+          "tick": 1373,
+          "step": 4,
+          "position": {
+            "x": -9983,
+            "y": 5981,
+            "z": -24048
+          }
+        },
+        {
+          "tick": 1818,
+          "step": 5,
+          "position": {
+            "x": -145,
+            "y": 16798,
+            "z": -42008
+          }
+        },
+        {
+          "tick": 2263,
+          "step": 6,
+          "position": {
+            "x": 9714,
+            "y": 16965,
+            "z": -23976
+          }
+        },
+        {
+          "tick": 2763,
+          "step": 7,
+          "position": {
+            "x": 9991,
+            "y": 12199,
+            "z": 4045
+          }
+        },
+        {
+          "tick": 3345,
+          "step": 8,
+          "position": {
+            "x": 233,
+            "y": 4204,
+            "z": 34051
+          }
+        }
+      ],
+      "status": "complete",
+      "ticks": 4206,
+      "step": 9,
+      "total": 9,
+      "contacts": 0,
+      "health": 100,
+      "maxHealth": 100,
+      "shots": 0,
+      "hits": 0,
+      "sourceIdentity": "6b01dcda04f018d9",
+      "finalStateIdentity": "8d04b8c54dd4d9b3",
+      "proofSha256": "cd59c5bf883f537b3e223da9cf850d6a1977e212b030aa3b9d73fb4ef1840b11",
+      "proofFile": "adventure-rooftops-02-self-level.json"
+    },
+    {
+      "id": "adventure-rooftops-02",
+      "mode": "acro",
+      "completed": true,
+      "replayed": true,
+      "milestones": [
+        {
+          "tick": 0,
+          "step": 0,
+          "position": {
+            "x": 0,
+            "y": 0,
+            "z": 48000
+          }
+        },
+        {
+          "tick": 189,
+          "step": 1,
+          "position": {
+            "x": 0,
+            "y": 2675,
+            "z": 39811
+          }
+        },
+        {
+          "tick": 421,
+          "step": 2,
+          "position": {
+            "x": 0,
+            "y": 4802,
+            "z": 27947
+          }
+        },
+        {
+          "tick": 918,
+          "step": 3,
+          "position": {
+            "x": -9711,
+            "y": 5976,
+            "z": 1985
+          }
+        },
+        {
+          "tick": 1375,
+          "step": 4,
+          "position": {
+            "x": -9985,
+            "y": 5976,
+            "z": -24039
+          }
+        },
+        {
+          "tick": 1822,
+          "step": 5,
+          "position": {
+            "x": -147,
+            "y": 16801,
+            "z": -42005
+          }
+        },
+        {
+          "tick": 2280,
+          "step": 6,
+          "position": {
+            "x": 9708,
+            "y": 16968,
+            "z": -23988
+          }
+        },
+        {
+          "tick": 2779,
+          "step": 7,
+          "position": {
+            "x": 9985,
+            "y": 12198,
+            "z": 4003
+          }
+        },
+        {
+          "tick": 3362,
+          "step": 8,
+          "position": {
+            "x": 247,
+            "y": 4199,
+            "z": 34044
+          }
+        }
+      ],
+      "status": "complete",
+      "ticks": 4211,
+      "step": 9,
+      "total": 9,
+      "contacts": 0,
+      "health": 100,
+      "maxHealth": 100,
+      "shots": 0,
+      "hits": 0,
+      "sourceIdentity": "6b01dcda04f018d9",
+      "finalStateIdentity": "d9e9e72ca881083e",
+      "proofSha256": "d5806f7984a76adb760b32af67d052da24a857888c81cfac4b3d366e65d95412",
+      "proofFile": "adventure-rooftops-02-acro.json"
+    },
+    {
+      "id": "adventure-rooftops-03",
+      "mode": "self-level",
+      "completed": true,
+      "replayed": true,
+      "milestones": [
+        {
+          "tick": 0,
+          "step": 0,
+          "position": {
+            "x": 0,
+            "y": 0,
+            "z": 48000
+          }
+        },
+        {
+          "tick": 383,
+          "step": 1,
+          "position": {
+            "x": 0,
+            "y": 3802,
+            "z": 28875
+          }
+        },
+        {
+          "tick": 1142,
+          "step": 2,
+          "position": {
+            "x": 6052,
+            "y": 16139,
+            "z": 5415
+          }
+        }
+      ],
+      "subjectCompletions": [
+        {
+          "tick": 1142,
+          "index": 1,
+          "status": "complete",
+          "reason": null,
+          "travel": 15200,
+          "distance": 11025,
+          "relativeSpeed": 28
+        }
+      ],
+      "status": "complete",
+      "ticks": 4073,
+      "step": 3,
+      "total": 3,
+      "contacts": 0,
+      "health": 100,
+      "maxHealth": 100,
+      "shots": 0,
+      "hits": 0,
+      "sourceIdentity": "7c70b3d832650381",
+      "finalStateIdentity": "bc9507244812d096",
+      "proofSha256": "ed6ef46a96b9799aaf82436af69c860faee4b845f091a1834ab0cb06de17e50e",
+      "proofFile": "adventure-rooftops-03-self-level.json"
+    },
+    {
+      "id": "adventure-rooftops-03",
+      "mode": "acro",
+      "completed": true,
+      "replayed": true,
+      "milestones": [
+        {
+          "tick": 0,
+          "step": 0,
+          "position": {
+            "x": 0,
+            "y": 0,
+            "z": 48000
+          }
+        },
+        {
+          "tick": 387,
+          "step": 1,
+          "position": {
+            "x": 0,
+            "y": 3809,
+            "z": 28699
+          }
+        },
+        {
+          "tick": 1175,
+          "step": 2,
+          "position": {
+            "x": 5860,
+            "y": 16322,
+            "z": 4064
+          }
+        }
+      ],
+      "subjectCompletions": [
+        {
+          "tick": 1175,
+          "index": 1,
+          "status": "complete",
+          "reason": null,
+          "travel": 15200,
+          "distance": 11004,
+          "relativeSpeed": 28
+        }
+      ],
+      "status": "complete",
+      "ticks": 4145,
+      "step": 3,
+      "total": 3,
+      "contacts": 0,
+      "health": 100,
+      "maxHealth": 100,
+      "shots": 0,
+      "hits": 0,
+      "sourceIdentity": "7c70b3d832650381",
+      "finalStateIdentity": "62eb221b4ded1740",
+      "proofSha256": "60d4ae359b13e1119ca7965ac71cf0d2e3071a53bec2a56de1213e7292049b9a",
+      "proofFile": "adventure-rooftops-03-acro.json"
+    },
+    {
+      "id": "adventure-rooftops-04",
+      "mode": "self-level",
+      "completed": true,
+      "replayed": true,
+      "milestones": [
+        {
+          "tick": 0,
+          "step": 0,
+          "position": {
+            "x": 0,
+            "y": 0,
+            "z": 48000
+          }
+        },
+        {
+          "tick": 788,
+          "step": 1,
+          "position": {
+            "x": -32348,
+            "y": 12755,
+            "z": 22587
+          }
+        },
+        {
+          "tick": 1355,
+          "step": 2,
+          "position": {
+            "x": -32994,
+            "y": 9002,
+            "z": 22006
+          }
+        },
+        {
+          "tick": 2669,
+          "step": 3,
+          "position": {
+            "x": 32117,
+            "y": 17902,
+            "z": 22006
+          }
+        },
+        {
+          "tick": 3251,
+          "step": 4,
+          "position": {
+            "x": 33000,
+            "y": 14002,
+            "z": 22006
+          }
+        },
+        {
+          "tick": 4835,
+          "step": 5,
+          "position": {
+            "x": -32274,
+            "y": 23909,
+            "z": -23500
+          }
+        },
+        {
+          "tick": 5544,
+          "step": 6,
+          "position": {
+            "x": -32969,
+            "y": 19002,
+            "z": -23997
+          }
+        }
+      ],
+      "status": "complete",
+      "ticks": 9826,
+      "step": 7,
+      "total": 7,
+      "contacts": 0,
+      "health": 100,
+      "maxHealth": 100,
+      "shots": 0,
+      "hits": 0,
+      "sourceIdentity": "5ed1fecffb664a97",
+      "finalStateIdentity": "f4eb024a93fed485",
+      "proofSha256": "e87df8511cccaa0cafb9bbb771d84683a2f9f46b13984359b9288e0569765f6f",
+      "proofFile": "adventure-rooftops-04-self-level.json"
+    },
+    {
+      "id": "adventure-rooftops-04",
+      "mode": "acro",
+      "completed": true,
+      "replayed": true,
+      "milestones": [
+        {
+          "tick": 0,
+          "step": 0,
+          "position": {
+            "x": 0,
+            "y": 0,
+            "z": 48000
+          }
+        },
+        {
+          "tick": 793,
+          "step": 1,
+          "position": {
+            "x": -32500,
+            "y": 12767,
+            "z": 22450
+          }
+        },
+        {
+          "tick": 1351,
+          "step": 2,
+          "position": {
+            "x": -33002,
+            "y": 9002,
+            "z": 22003
+          }
+        },
+        {
+          "tick": 2670,
+          "step": 3,
+          "position": {
+            "x": 32316,
+            "y": 17908,
+            "z": 22003
+          }
+        },
+        {
+          "tick": 3242,
+          "step": 4,
+          "position": {
+            "x": 33017,
+            "y": 14002,
+            "z": 22003
+          }
+        },
+        {
+          "tick": 4822,
+          "step": 5,
+          "position": {
+            "x": -32396,
+            "y": 23909,
+            "z": -23602
+          }
+        },
+        {
+          "tick": 5521,
+          "step": 6,
+          "position": {
+            "x": -33004,
+            "y": 19002,
+            "z": -24000
+          }
+        }
+      ],
+      "status": "complete",
+      "ticks": 9793,
+      "step": 7,
+      "total": 7,
+      "contacts": 0,
+      "health": 100,
+      "maxHealth": 100,
+      "shots": 0,
+      "hits": 0,
+      "sourceIdentity": "5ed1fecffb664a97",
+      "finalStateIdentity": "c90d44f6a589595d",
+      "proofSha256": "6fa942080cc6874c75736f1403a32f0c991162109f8fb53e4e6aa12e70e8a083",
+      "proofFile": "adventure-rooftops-04-acro.json"
+    },
+    {
+      "id": "adventure-rooftops-05",
+      "mode": "self-level",
+      "completed": true,
+      "replayed": true,
+      "milestones": [
+        {
+          "tick": 0,
+          "step": 0,
+          "position": {
+            "x": 0,
+            "y": 0,
+            "z": 48000
+          }
+        },
+        {
+          "tick": 667,
+          "step": 1,
+          "position": {
+            "x": 0,
+            "y": 4856,
+            "z": 12888
+          }
+        },
+        {
+          "tick": 1544,
+          "step": 2,
+          "position": {
+            "x": -510,
+            "y": 5941,
+            "z": -23270
+          }
+        },
+        {
+          "tick": 1992,
+          "step": 3,
+          "position": {
+            "x": 14544,
+            "y": 15639,
+            "z": -8467
+          }
+        },
+        {
+          "tick": 2764,
+          "step": 4,
+          "position": {
+            "x": 320,
+            "y": 5250,
+            "z": 29156
+          }
+        }
+      ],
+      "status": "complete",
+      "ticks": 3857,
+      "step": 5,
+      "total": 5,
+      "contacts": 0,
+      "health": 100,
+      "maxHealth": 100,
+      "shots": 0,
+      "hits": 0,
+      "sourceIdentity": "4003a54d1fd34302",
+      "finalStateIdentity": "2c13da132a35cbda",
+      "proofSha256": "d7814a0bf7921cdb8abededa0ad48073e4b232349b9a6fe52f267070a4dfa367",
+      "proofFile": "adventure-rooftops-05-self-level.json"
+    },
+    {
+      "id": "adventure-rooftops-05",
+      "mode": "acro",
+      "completed": true,
+      "replayed": true,
+      "milestones": [
+        {
+          "tick": 0,
+          "step": 0,
+          "position": {
+            "x": 0,
+            "y": 0,
+            "z": 48000
+          }
+        },
+        {
+          "tick": 665,
+          "step": 1,
+          "position": {
+            "x": 0,
+            "y": 4864,
+            "z": 12691
+          }
+        },
+        {
+          "tick": 1554,
+          "step": 2,
+          "position": {
+            "x": -390,
+            "y": 5947,
+            "z": -23426
+          }
+        },
+        {
+          "tick": 2002,
+          "step": 3,
+          "position": {
+            "x": 14670,
+            "y": 15646,
+            "z": -8348
+          }
+        },
+        {
+          "tick": 2776,
+          "step": 4,
+          "position": {
+            "x": 262,
+            "y": 5242,
+            "z": 29313
+          }
+        }
+      ],
+      "status": "complete",
+      "ticks": 3859,
+      "step": 5,
+      "total": 5,
+      "contacts": 0,
+      "health": 100,
+      "maxHealth": 100,
+      "shots": 0,
+      "hits": 0,
+      "sourceIdentity": "4003a54d1fd34302",
+      "finalStateIdentity": "cc814c72d3c4e79b",
+      "proofSha256": "7e9c5483cff40e36bc967ca33ec535502f99091e8f4c1dac70c425d7a6857766",
+      "proofFile": "adventure-rooftops-05-acro.json"
+    },
+    {
+      "id": "adventure-orchard-01",
+      "mode": "self-level",
+      "completed": true,
+      "replayed": true,
+      "milestones": [
+        {
+          "tick": 0,
+          "step": 0,
+          "position": {
+            "x": 0,
+            "y": 0,
+            "z": 48000
+          }
+        },
+        {
+          "tick": 382,
+          "step": 1,
+          "position": {
+            "x": 0,
+            "y": 2844,
+            "z": 28876
+          }
+        },
+        {
+          "tick": 1340,
+          "step": 2,
+          "position": {
+            "x": -7873,
+            "y": 3975,
+            "z": -23124
+          }
+        },
+        {
+          "tick": 1981,
+          "step": 3,
+          "position": {
+            "x": 26100,
+            "y": 3978,
+            "z": -23998
+          }
+        },
+        {
+          "tick": 2640,
+          "step": 4,
+          "position": {
+            "x": 26963,
+            "y": 3978,
+            "z": 11102
+          }
+        }
+      ],
+      "status": "complete",
+      "ticks": 4130,
+      "step": 5,
+      "total": 5,
+      "contacts": 0,
+      "health": 100,
+      "maxHealth": 100,
+      "shots": 0,
+      "hits": 0,
+      "sourceIdentity": "39243be8ab62510e",
+      "finalStateIdentity": "d6baeb61e5aa9f6e",
+      "proofSha256": "e8d3b15a65c7caf6963041a0165276264df11082b7449b1cb80bd362f81a4f3e",
+      "proofFile": "adventure-orchard-01-self-level.json"
+    },
+    {
+      "id": "adventure-orchard-01",
+      "mode": "acro",
+      "completed": true,
+      "replayed": true,
+      "milestones": [
+        {
+          "tick": 0,
+          "step": 0,
+          "position": {
+            "x": 0,
+            "y": 0,
+            "z": 48000
+          }
+        },
+        {
+          "tick": 385,
+          "step": 1,
+          "position": {
+            "x": 0,
+            "y": 2846,
+            "z": 28679
+          }
+        },
+        {
+          "tick": 1346,
+          "step": 2,
+          "position": {
+            "x": -7909,
+            "y": 3979,
+            "z": -23320
+          }
+        },
+        {
+          "tick": 1992,
+          "step": 3,
+          "position": {
+            "x": 26294,
+            "y": 3979,
+            "z": -24011
+          }
+        },
+        {
+          "tick": 2656,
+          "step": 4,
+          "position": {
+            "x": 27002,
+            "y": 3979,
+            "z": 11290
+          }
+        }
+      ],
+      "status": "complete",
+      "ticks": 4136,
+      "step": 5,
+      "total": 5,
+      "contacts": 0,
+      "health": 100,
+      "maxHealth": 100,
+      "shots": 0,
+      "hits": 0,
+      "sourceIdentity": "39243be8ab62510e",
+      "finalStateIdentity": "8471c4ea6ea22c3c",
+      "proofSha256": "005f6c02ab3b6812075bf7349d5a10ee2c70bf1854a781e64bd2841796251ce6",
+      "proofFile": "adventure-orchard-01-acro.json"
+    },
+    {
+      "id": "adventure-orchard-02",
+      "mode": "self-level",
+      "completed": true,
+      "replayed": true,
+      "milestones": [
+        {
+          "tick": 0,
+          "step": 0,
+          "position": {
+            "x": 0,
+            "y": 0,
+            "z": 48000
+          }
+        },
+        {
+          "tick": 611,
+          "step": 1,
+          "position": {
+            "x": -26290,
+            "y": 2901,
+            "z": 28526
+          }
+        },
+        {
+          "tick": 1552,
+          "step": 2,
+          "position": {
+            "x": -26993,
+            "y": 2970,
+            "z": -23100
+          }
+        },
+        {
+          "tick": 2096,
+          "step": 3,
+          "position": {
+            "x": -812,
+            "y": 9766,
+            "z": -33686
+          }
+        },
+        {
+          "tick": 2644,
+          "step": 4,
+          "position": {
+            "x": 26145,
+            "y": 3233,
+            "z": -24303
+          }
+        },
+        {
+          "tick": 3584,
+          "step": 5,
+          "position": {
+            "x": 26994,
+            "y": 3024,
+            "z": 27098
+          }
+        }
+      ],
+      "status": "complete",
+      "ticks": 4678,
+      "step": 6,
+      "total": 6,
+      "contacts": 0,
+      "health": 100,
+      "maxHealth": 100,
+      "shots": 0,
+      "hits": 0,
+      "sourceIdentity": "1c45351e324ce4f8",
+      "finalStateIdentity": "015360130a762ec2",
+      "proofSha256": "4810ecc851c9d02005003dd47a8f91cb90e79ef16987c45e5b6cdf2e6e5718cf",
+      "proofFile": "adventure-orchard-02-self-level.json"
+    },
+    {
+      "id": "adventure-orchard-02",
+      "mode": "acro",
+      "completed": true,
+      "replayed": true,
+      "milestones": [
+        {
+          "tick": 0,
+          "step": 0,
+          "position": {
+            "x": 0,
+            "y": 0,
+            "z": 48000
+          }
+        },
+        {
+          "tick": 616,
+          "step": 1,
+          "position": {
+            "x": -26453,
+            "y": 2910,
+            "z": 28394
+          }
+        },
+        {
+          "tick": 1561,
+          "step": 2,
+          "position": {
+            "x": -26984,
+            "y": 2973,
+            "z": -23301
+          }
+        },
+        {
+          "tick": 2108,
+          "step": 3,
+          "position": {
+            "x": -659,
+            "y": 9777,
+            "z": -33745
+          }
+        },
+        {
+          "tick": 2659,
+          "step": 4,
+          "position": {
+            "x": 26338,
+            "y": 3213,
+            "z": -24235
+          }
+        },
+        {
+          "tick": 3604,
+          "step": 5,
+          "position": {
+            "x": 27005,
+            "y": 3022,
+            "z": 27297
+          }
+        }
+      ],
+      "status": "complete",
+      "ticks": 4683,
+      "step": 6,
+      "total": 6,
+      "contacts": 0,
+      "health": 100,
+      "maxHealth": 100,
+      "shots": 0,
+      "hits": 0,
+      "sourceIdentity": "1c45351e324ce4f8",
+      "finalStateIdentity": "450b2601ea3ea731",
+      "proofSha256": "d6d0c78b1a3dc69e34544f68ff6813e19e4913cc3cf947ed2a716cb3b8f2af50",
+      "proofFile": "adventure-orchard-02-acro.json"
+    },
+    {
+      "id": "adventure-orchard-03",
+      "mode": "self-level",
+      "completed": true,
+      "replayed": true,
+      "milestones": [
+        {
+          "tick": 0,
+          "step": 0,
+          "position": {
+            "x": 0,
+            "y": 0,
+            "z": 48000
+          }
+        },
+        {
+          "tick": 449,
+          "step": 1,
+          "position": {
+            "x": 0,
+            "y": 2876,
+            "z": 24881
+          }
+        },
+        {
+          "tick": 649,
+          "step": 2,
+          "position": {
+            "x": 4550,
+            "y": 1171,
+            "z": 23235
+          }
+        },
+        {
+          "tick": 1345,
+          "step": 3,
+          "position": {
+            "x": 101,
+            "y": 2952,
+            "z": -15112
+          }
+        },
+        {
+          "tick": 1574,
+          "step": 4,
+          "position": {
+            "x": -3853,
+            "y": 1144,
+            "z": -16203
+          }
+        }
+      ],
+      "subjectCompletions": [
+        {
+          "tick": 649,
+          "index": 1,
+          "status": "complete",
+          "reason": null,
+          "travel": 5400,
+          "distance": 11318,
+          "relativeSpeed": 804
+        },
+        {
+          "tick": 1574,
+          "index": 3,
+          "status": "complete",
+          "reason": null,
+          "travel": 5400,
+          "distance": 11018,
+          "relativeSpeed": 81
+        }
+      ],
+      "status": "complete",
+      "ticks": 3094,
+      "step": 5,
+      "total": 5,
+      "contacts": 0,
+      "health": 100,
+      "maxHealth": 100,
+      "shots": 0,
+      "hits": 0,
+      "sourceIdentity": "b1ab510e63c8bb46",
+      "finalStateIdentity": "76e3a16388dc7515",
+      "proofSha256": "319e3ef7825b3f3f3a7ef1f506cd2cb7dc8365915dd8430d6d7ce53d066666f0",
+      "proofFile": "adventure-orchard-03-self-level.json"
+    },
+    {
+      "id": "adventure-orchard-03",
+      "mode": "acro",
+      "completed": true,
+      "replayed": true,
+      "milestones": [
+        {
+          "tick": 0,
+          "step": 0,
+          "position": {
+            "x": 0,
+            "y": 0,
+            "z": 48000
+          }
+        },
+        {
+          "tick": 454,
+          "step": 1,
+          "position": {
+            "x": 0,
+            "y": 2878,
+            "z": 24693
+          }
+        },
+        {
+          "tick": 654,
+          "step": 2,
+          "position": {
+            "x": 4473,
+            "y": 1172,
+            "z": 23141
+          }
+        },
+        {
+          "tick": 1349,
+          "step": 3,
+          "position": {
+            "x": 91,
+            "y": 2955,
+            "z": -15315
+          }
+        },
+        {
+          "tick": 1578,
+          "step": 4,
+          "position": {
+            "x": -3969,
+            "y": 1145,
+            "z": -16185
+          }
+        }
+      ],
+      "subjectCompletions": [
+        {
+          "tick": 654,
+          "index": 1,
+          "status": "complete",
+          "reason": null,
+          "travel": 5400,
+          "distance": 11381,
+          "relativeSpeed": 816
+        },
+        {
+          "tick": 1578,
+          "index": 3,
+          "status": "complete",
+          "reason": null,
+          "travel": 5400,
+          "distance": 11010,
+          "relativeSpeed": 183
+        }
+      ],
+      "status": "complete",
+      "ticks": 3092,
+      "step": 5,
+      "total": 5,
+      "contacts": 0,
+      "health": 100,
+      "maxHealth": 100,
+      "shots": 0,
+      "hits": 0,
+      "sourceIdentity": "b1ab510e63c8bb46",
+      "finalStateIdentity": "6a777b0f622ec947",
+      "proofSha256": "1cf7ca08cc290f6256b1c5bdf7a2ffe44703501566acefc0c430feeb2cf9aa5c",
+      "proofFile": "adventure-orchard-03-acro.json"
+    },
+    {
+      "id": "adventure-orchard-04",
+      "mode": "self-level",
+      "completed": true,
+      "replayed": true,
+      "milestones": [
+        {
+          "tick": 0,
+          "step": 0,
+          "position": {
+            "x": 0,
+            "y": 0,
+            "z": 48000
+          }
+        },
+        {
+          "tick": 383,
+          "step": 1,
+          "position": {
+            "x": 0,
+            "y": 3802,
+            "z": 28875
+          }
+        },
+        {
+          "tick": 903,
+          "step": 2,
+          "position": {
+            "x": 8451,
+            "y": 1147,
+            "z": 24957
+          }
+        }
+      ],
+      "subjectCompletions": [
+        {
+          "tick": 903,
+          "index": 1,
+          "status": "complete",
+          "reason": null,
+          "travel": 6800,
+          "distance": 11021,
+          "relativeSpeed": 24
+        }
+      ],
+      "status": "complete",
+      "ticks": 1731,
+      "step": 3,
+      "total": 3,
+      "contacts": 0,
+      "health": 100,
+      "maxHealth": 100,
+      "shots": 0,
+      "hits": 0,
+      "sourceIdentity": "66d8d85351118e23",
+      "finalStateIdentity": "c4581d9ec6b7d7b7",
+      "proofSha256": "e81c14225831ead3ef0f2770f16140f3737e067e0dd8d165fd0cfd047cfaf7b3",
+      "proofFile": "adventure-orchard-04-self-level.json"
+    },
+    {
+      "id": "adventure-orchard-04",
+      "mode": "acro",
+      "completed": true,
+      "replayed": true,
+      "milestones": [
+        {
+          "tick": 0,
+          "step": 0,
+          "position": {
+            "x": 0,
+            "y": 0,
+            "z": 48000
+          }
+        },
+        {
+          "tick": 387,
+          "step": 1,
+          "position": {
+            "x": 0,
+            "y": 3809,
+            "z": 28699
+          }
+        },
+        {
+          "tick": 908,
+          "step": 2,
+          "position": {
+            "x": 8491,
+            "y": 1142,
+            "z": 24944
+          }
+        }
+      ],
+      "subjectCompletions": [
+        {
+          "tick": 908,
+          "index": 1,
+          "status": "complete",
+          "reason": null,
+          "travel": 6800,
+          "distance": 11004,
+          "relativeSpeed": 24
+        }
+      ],
+      "status": "complete",
+      "ticks": 1726,
+      "step": 3,
+      "total": 3,
+      "contacts": 0,
+      "health": 100,
+      "maxHealth": 100,
+      "shots": 0,
+      "hits": 0,
+      "sourceIdentity": "66d8d85351118e23",
+      "finalStateIdentity": "617a5262ac470e27",
+      "proofSha256": "e1af468d9726d78cf952f375dd3f3a22fba7a457f3490474b9d2124bbc055c14",
+      "proofFile": "adventure-orchard-04-acro.json"
+    },
+    {
+      "id": "adventure-orchard-05",
+      "mode": "self-level",
+      "completed": true,
+      "replayed": true,
+      "milestones": [
+        {
+          "tick": 0,
+          "step": 0,
+          "position": {
+            "x": 0,
+            "y": 0,
+            "z": 48000
+          }
+        },
+        {
+          "tick": 1681,
+          "step": 1,
+          "position": {
+            "x": -26788,
+            "y": 3902,
+            "z": -41143
+          }
+        },
+        {
+          "tick": 2311,
+          "step": 2,
+          "position": {
+            "x": -731,
+            "y": 9979,
+            "z": -24514
+          }
+        },
+        {
+          "tick": 3826,
+          "step": 3,
+          "position": {
+            "x": -8,
+            "y": 1502,
+            "z": -42959
+          }
+        }
+      ],
+      "status": "complete",
+      "ticks": 6132,
+      "step": 4,
+      "total": 4,
+      "contacts": 0,
+      "health": 100,
+      "maxHealth": 100,
+      "shots": 0,
+      "hits": 0,
+      "sourceIdentity": "53fcb2e424178960",
+      "finalStateIdentity": "82d5683f1d0ddd49",
+      "proofSha256": "48faad2929020dcd0cd238bd1b3e6f22e28245bac9ffde668e4bfe77ad14df3b",
+      "proofFile": "adventure-orchard-05-self-level.json"
+    },
+    {
+      "id": "adventure-orchard-05",
+      "mode": "acro",
+      "completed": true,
+      "replayed": true,
+      "milestones": [
+        {
+          "tick": 0,
+          "step": 0,
+          "position": {
+            "x": 0,
+            "y": 0,
+            "z": 48000
+          }
+        },
+        {
+          "tick": 1686,
+          "step": 1,
+          "position": {
+            "x": -26833,
+            "y": 3909,
+            "z": -41338
+          }
+        },
+        {
+          "tick": 2319,
+          "step": 2,
+          "position": {
+            "x": -545,
+            "y": 9980,
+            "z": -24417
+          }
+        },
+        {
+          "tick": 3825,
+          "step": 3,
+          "position": {
+            "x": -6,
+            "y": 1502,
+            "z": -42981
+          }
+        }
+      ],
+      "status": "complete",
+      "ticks": 6123,
+      "step": 4,
+      "total": 4,
+      "contacts": 0,
+      "health": 100,
+      "maxHealth": 100,
+      "shots": 0,
+      "hits": 0,
+      "sourceIdentity": "53fcb2e424178960",
+      "finalStateIdentity": "091a63dd5b560bae",
+      "proofSha256": "117136e7fb13e5c4e8dd0af481a49a26d7da1b27c19d367da2b1382bdf43f68a",
+      "proofFile": "adventure-orchard-05-acro.json"
+    },
+    {
+      "id": "adventure-solar-farm-01",
+      "mode": "self-level",
+      "completed": true,
+      "replayed": true,
+      "milestones": [
+        {
+          "tick": 0,
+          "step": 0,
+          "position": {
+            "x": 0,
+            "y": 0,
+            "z": 48000
+          }
+        },
+        {
+          "tick": 437,
+          "step": 1,
+          "position": {
+            "x": -11551,
+            "y": 3831,
+            "z": 28757
+          }
+        },
+        {
+          "tick": 1116,
+          "step": 2,
+          "position": {
+            "x": 11415,
+            "y": 4975,
+            "z": 689
+          }
+        },
+        {
+          "tick": 1794,
+          "step": 3,
+          "position": {
+            "x": -11416,
+            "y": 5966,
+            "z": -27308
+          }
+        },
+        {
+          "tick": 2075,
+          "step": 4,
+          "position": {
+            "x": -712,
+            "y": 8787,
+            "z": -35491
+          }
+        }
+      ],
+      "status": "complete",
+      "ticks": 4771,
+      "step": 5,
+      "total": 5,
+      "contacts": 0,
+      "health": 100,
+      "maxHealth": 100,
+      "shots": 0,
+      "hits": 0,
+      "sourceIdentity": "b77f58c7950920dd",
+      "finalStateIdentity": "d22fc8c9faceec6d",
+      "proofSha256": "14528e1b0a82f80f0272c1e39b654facc2917af2c111edd874a495abf5a5bdb2",
+      "proofFile": "adventure-solar-farm-01-self-level.json"
+    },
+    {
+      "id": "adventure-solar-farm-01",
+      "mode": "acro",
+      "completed": true,
+      "replayed": true,
+      "milestones": [
+        {
+          "tick": 0,
+          "step": 0,
+          "position": {
+            "x": 0,
+            "y": 0,
+            "z": 48000
+          }
+        },
+        {
+          "tick": 439,
+          "step": 1,
+          "position": {
+            "x": -11646,
+            "y": 3835,
+            "z": 28596
+          }
+        },
+        {
+          "tick": 1112,
+          "step": 2,
+          "position": {
+            "x": 11564,
+            "y": 4979,
+            "z": 525
+          }
+        },
+        {
+          "tick": 1784,
+          "step": 3,
+          "position": {
+            "x": -11554,
+            "y": 5979,
+            "z": -27470
+          }
+        },
+        {
+          "tick": 2069,
+          "step": 4,
+          "position": {
+            "x": -556,
+            "y": 8792,
+            "z": -35604
+          }
+        }
+      ],
+      "status": "complete",
+      "ticks": 4757,
+      "step": 5,
+      "total": 5,
+      "contacts": 0,
+      "health": 100,
+      "maxHealth": 100,
+      "shots": 0,
+      "hits": 0,
+      "sourceIdentity": "b77f58c7950920dd",
+      "finalStateIdentity": "08ed129c4e0d24fd",
+      "proofSha256": "35c4bd5e6adf032d2f8e937082e5d17aa5f87d6d8fa2313791e1b1f7377b881f",
+      "proofFile": "adventure-solar-farm-01-acro.json"
+    },
+    {
+      "id": "adventure-solar-farm-02",
+      "mode": "self-level",
+      "completed": true,
+      "replayed": true,
+      "milestones": [
+        {
+          "tick": 0,
+          "step": 0,
+          "position": {
+            "x": 0,
+            "y": 0,
+            "z": 48000
+          }
+        },
+        {
+          "tick": 658,
+          "step": 1,
+          "position": {
+            "x": -13886,
+            "y": 3955,
+            "z": 18242
+          }
+        },
+        {
+          "tick": 1414,
+          "step": 2,
+          "position": {
+            "x": 13755,
+            "y": 3966,
+            "z": -9754
+          }
+        },
+        {
+          "tick": 1975,
+          "step": 3,
+          "position": {
+            "x": 138,
+            "y": 7943,
+            "z": -33757
+          }
+        },
+        {
+          "tick": 4226,
+          "step": 4,
+          "position": {
+            "x": -13992,
+            "y": 1202,
+            "z": 37972
+          }
+        }
+      ],
+      "status": "complete",
+      "ticks": 5197,
+      "step": 5,
+      "total": 5,
+      "contacts": 0,
+      "health": 100,
+      "maxHealth": 100,
+      "shots": 0,
+      "hits": 0,
+      "sourceIdentity": "1f47af7d5f8a2e2f",
+      "finalStateIdentity": "81aaa8bae32b487b",
+      "proofSha256": "e8d3440d5cb74484b705b44a9e91a56e147b8019e91615cf64401820db5460c1",
+      "proofFile": "adventure-solar-farm-02-self-level.json"
+    },
+    {
+      "id": "adventure-solar-farm-02",
+      "mode": "acro",
+      "completed": true,
+      "replayed": true,
+      "milestones": [
+        {
+          "tick": 0,
+          "step": 0,
+          "position": {
+            "x": 0,
+            "y": 0,
+            "z": 48000
+          }
+        },
+        {
+          "tick": 658,
+          "step": 1,
+          "position": {
+            "x": -13910,
+            "y": 3954,
+            "z": 18180
+          }
+        },
+        {
+          "tick": 1415,
+          "step": 2,
+          "position": {
+            "x": 13831,
+            "y": 3966,
+            "z": -9838
+          }
+        },
+        {
+          "tick": 1978,
+          "step": 3,
+          "position": {
+            "x": 104,
+            "y": 7946,
+            "z": -33827
+          }
+        },
+        {
+          "tick": 4219,
+          "step": 4,
+          "position": {
+            "x": -14009,
+            "y": 1202,
+            "z": 38000
+          }
+        }
+      ],
+      "status": "complete",
+      "ticks": 5181,
+      "step": 5,
+      "total": 5,
+      "contacts": 0,
+      "health": 100,
+      "maxHealth": 100,
+      "shots": 0,
+      "hits": 0,
+      "sourceIdentity": "1f47af7d5f8a2e2f",
+      "finalStateIdentity": "188d259e37b469e3",
+      "proofSha256": "303957b13c8068c766bd18efdd29aaca1088dae6cce35e7292d6e20b093026b2",
+      "proofFile": "adventure-solar-farm-02-acro.json"
+    },
+    {
+      "id": "adventure-solar-farm-03",
+      "mode": "self-level",
+      "completed": true,
+      "replayed": true,
+      "milestones": [
+        {
+          "tick": 0,
+          "step": 0,
+          "position": {
+            "x": 0,
+            "y": 0,
+            "z": 48000
+          }
+        },
+        {
+          "tick": 489,
+          "step": 1,
+          "position": {
+            "x": 0,
+            "y": 3843,
+            "z": 22882
+          }
+        },
+        {
+          "tick": 689,
+          "step": 2,
+          "position": {
+            "x": 2548,
+            "y": 1202,
+            "z": 20990
+          }
+        },
+        {
+          "tick": 1348,
+          "step": 3,
+          "position": {
+            "x": 56,
+            "y": 3913,
+            "z": -15113
+          }
+        },
+        {
+          "tick": 1574,
+          "step": 4,
+          "position": {
+            "x": -3920,
+            "y": 1169,
+            "z": -16126
+          }
+        }
+      ],
+      "subjectCompletions": [
+        {
+          "tick": 689,
+          "index": 1,
+          "status": "complete",
+          "reason": null,
+          "travel": 5400,
+          "distance": 11052,
+          "relativeSpeed": 238
+        },
+        {
+          "tick": 1574,
+          "index": 3,
+          "status": "complete",
+          "reason": null,
+          "travel": 5400,
+          "distance": 11006,
+          "relativeSpeed": 83
+        }
+      ],
+      "status": "complete",
+      "ticks": 3093,
+      "step": 5,
+      "total": 5,
+      "contacts": 0,
+      "health": 100,
+      "maxHealth": 100,
+      "shots": 0,
+      "hits": 0,
+      "sourceIdentity": "bb72971048dde3c3",
+      "finalStateIdentity": "b9bfc376260d2b0c",
+      "proofSha256": "b859301130ea35217a06b471fe538bc2cc21dcde100c1742c2e1402ff9efc21b",
+      "proofFile": "adventure-solar-farm-03-self-level.json"
+    },
+    {
+      "id": "adventure-solar-farm-03",
+      "mode": "acro",
+      "completed": true,
+      "replayed": true,
+      "milestones": [
+        {
+          "tick": 0,
+          "step": 0,
+          "position": {
+            "x": 0,
+            "y": 0,
+            "z": 48000
+          }
+        },
+        {
+          "tick": 490,
+          "step": 1,
+          "position": {
+            "x": 0,
+            "y": 3850,
+            "z": 22692
+          }
+        },
+        {
+          "tick": 690,
+          "step": 2,
+          "position": {
+            "x": 2407,
+            "y": 1201,
+            "z": 20857
+          }
+        },
+        {
+          "tick": 1350,
+          "step": 3,
+          "position": {
+            "x": 60,
+            "y": 3922,
+            "z": -15309
+          }
+        },
+        {
+          "tick": 1576,
+          "step": 4,
+          "position": {
+            "x": -3953,
+            "y": 1171,
+            "z": -16160
+          }
+        }
+      ],
+      "subjectCompletions": [
+        {
+          "tick": 690,
+          "index": 1,
+          "status": "complete",
+          "reason": null,
+          "travel": 5400,
+          "distance": 11030,
+          "relativeSpeed": 794
+        },
+        {
+          "tick": 1576,
+          "index": 3,
+          "status": "complete",
+          "reason": null,
+          "travel": 5400,
+          "distance": 11018,
+          "relativeSpeed": 194
+        }
+      ],
+      "status": "complete",
+      "ticks": 3089,
+      "step": 5,
+      "total": 5,
+      "contacts": 0,
+      "health": 100,
+      "maxHealth": 100,
+      "shots": 0,
+      "hits": 0,
+      "sourceIdentity": "bb72971048dde3c3",
+      "finalStateIdentity": "d695ffbbd11f1c3d",
+      "proofSha256": "f99034eaadf171929002cf03977f3b174a70231e101db91aced3e27c40633b59",
+      "proofFile": "adventure-solar-farm-03-acro.json"
+    },
+    {
+      "id": "adventure-solar-farm-04",
+      "mode": "self-level",
+      "completed": true,
+      "replayed": true,
+      "milestones": [
+        {
+          "tick": 0,
+          "step": 0,
+          "position": {
+            "x": 0,
+            "y": 0,
+            "z": 48000
+          }
+        },
+        {
+          "tick": 189,
+          "step": 1,
+          "position": {
+            "x": 0,
+            "y": 2682,
+            "z": 39858
+          }
+        },
+        {
+          "tick": 485,
+          "step": 2,
+          "position": {
+            "x": 0,
+            "y": 3829,
+            "z": 23963
+          }
+        },
+        {
+          "tick": 973,
+          "step": 3,
+          "position": {
+            "x": -8297,
+            "y": 3941,
+            "z": 5963
+          }
+        },
+        {
+          "tick": 1576,
+          "step": 4,
+          "position": {
+            "x": 8290,
+            "y": 3929,
+            "z": -14043
+          }
+        },
+        {
+          "tick": 1912,
+          "step": 5,
+          "position": {
+            "x": 280,
+            "y": 5924,
+            "z": -30006
+          }
+        },
+        {
+          "tick": 2991,
+          "step": 6,
+          "position": {
+            "x": 12069,
+            "y": 5203,
+            "z": 24043
+          }
+        }
+      ],
+      "status": "complete",
+      "ticks": 4207,
+      "step": 7,
+      "total": 7,
+      "contacts": 0,
+      "health": 100,
+      "maxHealth": 100,
+      "shots": 0,
+      "hits": 0,
+      "sourceIdentity": "1c63fbf497207a55",
+      "finalStateIdentity": "65a0bc7cd641018b",
+      "proofSha256": "4d443967f0eee166350b3d42ab6cc9f6528277df6c3363dda373885b39a5dd65",
+      "proofFile": "adventure-solar-farm-04-self-level.json"
+    },
+    {
+      "id": "adventure-solar-farm-04",
+      "mode": "acro",
+      "completed": true,
+      "replayed": true,
+      "milestones": [
+        {
+          "tick": 0,
+          "step": 0,
+          "position": {
+            "x": 0,
+            "y": 0,
+            "z": 48000
+          }
+        },
+        {
+          "tick": 189,
+          "step": 1,
+          "position": {
+            "x": 0,
+            "y": 2675,
+            "z": 39811
+          }
+        },
+        {
+          "tick": 486,
+          "step": 2,
+          "position": {
+            "x": 0,
+            "y": 3833,
+            "z": 23989
+          }
+        },
+        {
+          "tick": 980,
+          "step": 3,
+          "position": {
+            "x": -8259,
+            "y": 3936,
+            "z": 5965
+          }
+        },
+        {
+          "tick": 1588,
+          "step": 4,
+          "position": {
+            "x": 8266,
+            "y": 3928,
+            "z": -14042
+          }
+        },
+        {
+          "tick": 1925,
+          "step": 5,
+          "position": {
+            "x": 287,
+            "y": 5923,
+            "z": -30057
+          }
+        },
+        {
+          "tick": 3099,
+          "step": 6,
+          "position": {
+            "x": 12117,
+            "y": 5203,
+            "z": 24006
+          }
+        }
+      ],
+      "status": "complete",
+      "ticks": 4304,
+      "step": 7,
+      "total": 7,
+      "contacts": 0,
+      "health": 100,
+      "maxHealth": 100,
+      "shots": 0,
+      "hits": 0,
+      "sourceIdentity": "1c63fbf497207a55",
+      "finalStateIdentity": "1e2ad59a5b974f4b",
+      "proofSha256": "4e4c7f6f4a82bcda1b6d9fe33060de3bca1bb332831f67deeea033fe7113f84c",
+      "proofFile": "adventure-solar-farm-04-acro.json"
+    },
+    {
+      "id": "adventure-solar-farm-05",
+      "mode": "self-level",
+      "completed": true,
+      "replayed": true,
+      "milestones": [
+        {
+          "tick": 0,
+          "step": 0,
+          "position": {
+            "x": 0,
+            "y": 0,
+            "z": 48000
+          }
+        },
+        {
+          "tick": 419,
+          "step": 1,
+          "position": {
+            "x": 0,
+            "y": 4770,
+            "z": 26879
+          }
+        },
+        {
+          "tick": 1664,
+          "step": 2,
+          "position": {
+            "x": -11744,
+            "y": 713,
+            "z": -10424
+          }
+        }
+      ],
+      "status": "complete",
+      "ticks": 3117,
+      "step": 3,
+      "total": 3,
+      "contacts": 0,
+      "health": 97,
+      "maxHealth": 100,
+      "shots": 17,
+      "hits": 7,
+      "sourceIdentity": "db63feaa5ca42699",
+      "finalStateIdentity": "a8419a6705f442d0",
+      "proofSha256": "969212ae9e6227399f677ec2df30b2d2da771190f40426a3b242bc05321869c9",
+      "proofFile": "adventure-solar-farm-05-self-level.json"
+    },
+    {
+      "id": "adventure-solar-farm-05",
+      "mode": "acro",
+      "completed": true,
+      "replayed": true,
+      "milestones": [
+        {
+          "tick": 0,
+          "step": 0,
+          "position": {
+            "x": 0,
+            "y": 0,
+            "z": 48000
+          }
+        },
+        {
+          "tick": 424,
+          "step": 1,
+          "position": {
+            "x": 0,
+            "y": 4784,
+            "z": 26687
+          }
+        },
+        {
+          "tick": 1708,
+          "step": 2,
+          "position": {
+            "x": -11978,
+            "y": 705,
+            "z": -10573
+          }
+        }
+      ],
+      "status": "complete",
+      "ticks": 3151,
+      "step": 3,
+      "total": 3,
+      "contacts": 0,
+      "health": 97,
+      "maxHealth": 100,
+      "shots": 15,
+      "hits": 7,
+      "sourceIdentity": "db63feaa5ca42699",
+      "finalStateIdentity": "d2eefe7ad72cb5e0",
+      "proofSha256": "1270e5263f7fe8c58a1228052f11b05c297a57b8b94d2f2744818ad4c4f3392d",
+      "proofFile": "adventure-solar-farm-05-acro.json"
+    },
+    {
+      "id": "adventure-rail-depot-01",
+      "mode": "self-level",
+      "completed": true,
+      "replayed": true,
+      "milestones": [
+        {
+          "tick": 0,
+          "step": 0,
+          "position": {
+            "x": 0,
+            "y": 0,
+            "z": 48000
+          }
+        },
+        {
+          "tick": 487,
+          "step": 1,
+          "position": {
+            "x": -16416,
+            "y": 3839,
+            "z": 28683
+          }
+        },
+        {
+          "tick": 1587,
+          "step": 2,
+          "position": {
+            "x": -248,
+            "y": 5947,
+            "z": -29149
+          }
+        },
+        {
+          "tick": 2419,
+          "step": 3,
+          "position": {
+            "x": 17639,
+            "y": 5020,
+            "z": 11172
+          }
+        }
+      ],
+      "status": "complete",
+      "ticks": 3957,
+      "step": 4,
+      "total": 4,
+      "contacts": 0,
+      "health": 100,
+      "maxHealth": 100,
+      "shots": 0,
+      "hits": 0,
+      "sourceIdentity": "0ee57e4f5ae6e36a",
+      "finalStateIdentity": "952698febe1c3c5f",
+      "proofSha256": "782bd62331337b07cf05501648e6a422c86d0451360bf17c07ae78463ddc3b1d",
+      "proofFile": "adventure-rail-depot-01-self-level.json"
+    },
+    {
+      "id": "adventure-rail-depot-01",
+      "mode": "acro",
+      "completed": true,
+      "replayed": true,
+      "milestones": [
+        {
+          "tick": 0,
+          "step": 0,
+          "position": {
+            "x": 0,
+            "y": 0,
+            "z": 48000
+          }
+        },
+        {
+          "tick": 489,
+          "step": 1,
+          "position": {
+            "x": -16534,
+            "y": 3844,
+            "z": 28565
+          }
+        },
+        {
+          "tick": 1577,
+          "step": 2,
+          "position": {
+            "x": -188,
+            "y": 5982,
+            "z": -29337
+          }
+        },
+        {
+          "tick": 2414,
+          "step": 3,
+          "position": {
+            "x": 17726,
+            "y": 5019,
+            "z": 11345
+          }
+        }
+      ],
+      "status": "complete",
+      "ticks": 3938,
+      "step": 4,
+      "total": 4,
+      "contacts": 0,
+      "health": 100,
+      "maxHealth": 100,
+      "shots": 0,
+      "hits": 0,
+      "sourceIdentity": "0ee57e4f5ae6e36a",
+      "finalStateIdentity": "4da28c88b89f2c42",
+      "proofSha256": "1ff3ac925db13be31046a6cfd2f936d77bfab3f97a68cd6d624f2f94e1fb7aff",
+      "proofFile": "adventure-rail-depot-01-acro.json"
+    },
+    {
+      "id": "adventure-rail-depot-02",
+      "mode": "self-level",
+      "completed": true,
+      "replayed": true,
+      "milestones": [
+        {
+          "tick": 0,
+          "step": 0,
+          "position": {
+            "x": 0,
+            "y": 0,
+            "z": 48000
+          }
+        },
+        {
+          "tick": 189,
+          "step": 1,
+          "position": {
+            "x": 0,
+            "y": 2682,
+            "z": 39858
+          }
+        },
+        {
+          "tick": 521,
+          "step": 2,
+          "position": {
+            "x": 0,
+            "y": 4812,
+            "z": 21992
+          }
+        },
+        {
+          "tick": 881,
+          "step": 3,
+          "position": {
+            "x": -7719,
+            "y": 4983,
+            "z": 3981
+          }
+        },
+        {
+          "tick": 1373,
+          "step": 4,
+          "position": {
+            "x": -7963,
+            "y": 5928,
+            "z": -24018
+          }
+        },
+        {
+          "tick": 1707,
+          "step": 5,
+          "position": {
+            "x": -279,
+            "y": 7923,
+            "z": -40055
+          }
+        },
+        {
+          "tick": 2107,
+          "step": 6,
+          "position": {
+            "x": 7716,
+            "y": 6064,
+            "z": -23991
+          }
+        },
+        {
+          "tick": 3042,
+          "step": 7,
+          "position": {
+            "x": 7988,
+            "y": 5067,
+            "z": 22023
+          }
+        },
+        {
+          "tick": 3375,
+          "step": 8,
+          "position": {
+            "x": 291,
+            "y": 4032,
+            "z": 38019
+          }
+        }
+      ],
+      "status": "complete",
+      "ticks": 4147,
+      "step": 9,
+      "total": 9,
+      "contacts": 0,
+      "health": 100,
+      "maxHealth": 100,
+      "shots": 0,
+      "hits": 0,
+      "sourceIdentity": "d47ea721585bd9a1",
+      "finalStateIdentity": "6284066d8c45e0d6",
+      "proofSha256": "a723d9d6aa501fb16f09ffedb4dc37fca57625948329bc687ce78cfac3605cab",
+      "proofFile": "adventure-rail-depot-02-self-level.json"
+    },
+    {
+      "id": "adventure-rail-depot-02",
+      "mode": "acro",
+      "completed": true,
+      "replayed": true,
+      "milestones": [
+        {
+          "tick": 0,
+          "step": 0,
+          "position": {
+            "x": 0,
+            "y": 0,
+            "z": 48000
+          }
+        },
+        {
+          "tick": 189,
+          "step": 1,
+          "position": {
+            "x": 0,
+            "y": 2675,
+            "z": 39811
+          }
+        },
+        {
+          "tick": 523,
+          "step": 2,
+          "position": {
+            "x": 0,
+            "y": 4809,
+            "z": 21955
+          }
+        },
+        {
+          "tick": 883,
+          "step": 3,
+          "position": {
+            "x": -7719,
+            "y": 4971,
+            "z": 3998
+          }
+        },
+        {
+          "tick": 1375,
+          "step": 4,
+          "position": {
+            "x": -7947,
+            "y": 5919,
+            "z": -24046
+          }
+        },
+        {
+          "tick": 1709,
+          "step": 5,
+          "position": {
+            "x": -280,
+            "y": 7925,
+            "z": -40044
+          }
+        },
+        {
+          "tick": 2118,
+          "step": 6,
+          "position": {
+            "x": 7708,
+            "y": 6065,
+            "z": -23999
+          }
+        },
+        {
+          "tick": 3045,
+          "step": 7,
+          "position": {
+            "x": 7935,
+            "y": 5061,
+            "z": 22016
+          }
+        },
+        {
+          "tick": 3379,
+          "step": 8,
+          "position": {
+            "x": 287,
+            "y": 4031,
+            "z": 38043
+          }
+        }
+      ],
+      "status": "complete",
+      "ticks": 4138,
+      "step": 9,
+      "total": 9,
+      "contacts": 0,
+      "health": 100,
+      "maxHealth": 100,
+      "shots": 0,
+      "hits": 0,
+      "sourceIdentity": "d47ea721585bd9a1",
+      "finalStateIdentity": "a92906509bba905b",
+      "proofSha256": "2dc3166e04298da234685c5ec1bc4e96dba1fcbe94c381ec206c8732e8725df0",
+      "proofFile": "adventure-rail-depot-02-acro.json"
+    },
+    {
+      "id": "adventure-rail-depot-03",
+      "mode": "self-level",
+      "completed": true,
+      "replayed": true,
+      "milestones": [
+        {
+          "tick": 0,
+          "step": 0,
+          "position": {
+            "x": 0,
+            "y": 0,
+            "z": 48000
+          }
+        },
+        {
+          "tick": 383,
+          "step": 1,
+          "position": {
+            "x": 0,
+            "y": 3802,
+            "z": 28875
+          }
+        },
+        {
+          "tick": 1016,
+          "step": 2,
+          "position": {
+            "x": 6286,
+            "y": 1145,
+            "z": 13434
+          }
+        }
+      ],
+      "subjectCompletions": [
+        {
+          "tick": 1016,
+          "index": 1,
+          "status": "complete",
+          "reason": null,
+          "travel": 10800,
+          "distance": 11023,
+          "relativeSpeed": 19
+        }
+      ],
+      "status": "complete",
+      "ticks": 2052,
+      "step": 3,
+      "total": 3,
+      "contacts": 0,
+      "health": 100,
+      "maxHealth": 100,
+      "shots": 0,
+      "hits": 0,
+      "sourceIdentity": "214fcba8a95ee419",
+      "finalStateIdentity": "ff0bad57fe3984a8",
+      "proofSha256": "8b1b881d1f5b4574ea71ff66a4e2ad4fd4254e64a1ae1b0a8a5c17ae59cb2aef",
+      "proofFile": "adventure-rail-depot-03-self-level.json"
+    },
+    {
+      "id": "adventure-rail-depot-03",
+      "mode": "acro",
+      "completed": true,
+      "replayed": true,
+      "milestones": [
+        {
+          "tick": 0,
+          "step": 0,
+          "position": {
+            "x": 0,
+            "y": 0,
+            "z": 48000
+          }
+        },
+        {
+          "tick": 387,
+          "step": 1,
+          "position": {
+            "x": 0,
+            "y": 3809,
+            "z": 28699
+          }
+        },
+        {
+          "tick": 1077,
+          "step": 2,
+          "position": {
+            "x": 6160,
+            "y": 1144,
+            "z": 11751
+          }
+        }
+      ],
+      "subjectCompletions": [
+        {
+          "tick": 1077,
+          "index": 1,
+          "status": "complete",
+          "reason": null,
+          "travel": 10800,
+          "distance": 11008,
+          "relativeSpeed": 23
+        }
+      ],
+      "status": "complete",
+      "ticks": 2137,
+      "step": 3,
+      "total": 3,
+      "contacts": 0,
+      "health": 100,
+      "maxHealth": 100,
+      "shots": 0,
+      "hits": 0,
+      "sourceIdentity": "214fcba8a95ee419",
+      "finalStateIdentity": "e7182fdc666631a2",
+      "proofSha256": "df76cb0b775944df1364679b5dfd81a81feeeab7ee19b83dcb0f0b69bfb3d2c9",
+      "proofFile": "adventure-rail-depot-03-acro.json"
+    },
+    {
+      "id": "adventure-rail-depot-04",
+      "mode": "self-level",
+      "completed": true,
+      "replayed": true,
+      "milestones": [
+        {
+          "tick": 0,
+          "step": 0,
+          "position": {
+            "x": 0,
+            "y": 0,
+            "z": 48000
+          }
+        },
+        {
+          "tick": 347,
+          "step": 1,
+          "position": {
+            "x": 0,
+            "y": 3776,
+            "z": 30887
+          }
+        },
+        {
+          "tick": 861,
+          "step": 2,
+          "position": {
+            "x": -6455,
+            "y": 4095,
+            "z": 8770
+          }
+        },
+        {
+          "tick": 1509,
+          "step": 3,
+          "position": {
+            "x": 6929,
+            "y": 5707,
+            "z": -11779
+          }
+        },
+        {
+          "tick": 1941,
+          "step": 4,
+          "position": {
+            "x": 248,
+            "y": 5019,
+            "z": -33126
+          }
+        }
+      ],
+      "status": "complete",
+      "ticks": 4146,
+      "step": 5,
+      "total": 5,
+      "contacts": 0,
+      "health": 100,
+      "maxHealth": 100,
+      "shots": 0,
+      "hits": 0,
+      "sourceIdentity": "eb40f955ccd4288b",
+      "finalStateIdentity": "23e20114f0592c78",
+      "proofSha256": "41aa5b2724393e7d20130179eb8de2a7667d62f4bdb9dae6103e7811eb5b3cd1",
+      "proofFile": "adventure-rail-depot-04-self-level.json"
+    },
+    {
+      "id": "adventure-rail-depot-04",
+      "mode": "acro",
+      "completed": true,
+      "replayed": true,
+      "milestones": [
+        {
+          "tick": 0,
+          "step": 0,
+          "position": {
+            "x": 0,
+            "y": 0,
+            "z": 48000
+          }
+        },
+        {
+          "tick": 352,
+          "step": 1,
+          "position": {
+            "x": 0,
+            "y": 3795,
+            "z": 30691
+          }
+        },
+        {
+          "tick": 869,
+          "step": 2,
+          "position": {
+            "x": -6403,
+            "y": 4096,
+            "z": 8632
+          }
+        },
+        {
+          "tick": 1530,
+          "step": 3,
+          "position": {
+            "x": 6491,
+            "y": 5777,
+            "z": -11883
+          }
+        },
+        {
+          "tick": 1964,
+          "step": 4,
+          "position": {
+            "x": 201,
+            "y": 5029,
+            "z": -33344
+          }
+        }
+      ],
+      "status": "complete",
+      "ticks": 4163,
+      "step": 5,
+      "total": 5,
+      "contacts": 0,
+      "health": 100,
+      "maxHealth": 100,
+      "shots": 0,
+      "hits": 0,
+      "sourceIdentity": "eb40f955ccd4288b",
+      "finalStateIdentity": "3aa627806fd670f7",
+      "proofSha256": "8076d97dc3e6b71d869584744dfa7157caba03c48e2f6a77e96dfba0a37fff5c",
+      "proofFile": "adventure-rail-depot-04-acro.json"
+    },
+    {
+      "id": "adventure-rail-depot-05",
+      "mode": "self-level",
+      "completed": true,
+      "replayed": true,
+      "milestones": [
+        {
+          "tick": 0,
+          "step": 0,
+          "position": {
+            "x": 0,
+            "y": 0,
+            "z": 48000
+          }
+        },
+        {
+          "tick": 386,
+          "step": 1,
+          "position": {
+            "x": 0,
+            "y": 4759,
+            "z": 28893
+          }
+        },
+        {
+          "tick": 1669,
+          "step": 2,
+          "position": {
+            "x": -11751,
+            "y": 700,
+            "z": -10420
+          }
+        }
+      ],
+      "status": "complete",
+      "ticks": 3121,
+      "step": 3,
+      "total": 3,
+      "contacts": 0,
+      "health": 97,
+      "maxHealth": 100,
+      "shots": 17,
+      "hits": 7,
+      "sourceIdentity": "229a0544f2a84658",
+      "finalStateIdentity": "b94c1dd1ff9ce63a",
+      "proofSha256": "695657fd7680b9ea89f653e49010c2fdf93cdba249983366a5f34155df9a7b88",
+      "proofFile": "adventure-rail-depot-05-self-level.json"
+    },
+    {
+      "id": "adventure-rail-depot-05",
+      "mode": "acro",
+      "completed": true,
+      "replayed": true,
+      "milestones": [
+        {
+          "tick": 0,
+          "step": 0,
+          "position": {
+            "x": 0,
+            "y": 0,
+            "z": 48000
+          }
+        },
+        {
+          "tick": 389,
+          "step": 1,
+          "position": {
+            "x": 0,
+            "y": 4770,
+            "z": 28694
+          }
+        },
+        {
+          "tick": 1886,
+          "step": 2,
+          "position": {
+            "x": -12357,
+            "y": 710,
+            "z": -10359
+          }
+        }
+      ],
+      "status": "complete",
+      "ticks": 3327,
+      "step": 3,
+      "total": 3,
+      "contacts": 0,
+      "health": 94,
+      "maxHealth": 100,
+      "shots": 17,
+      "hits": 7,
+      "sourceIdentity": "229a0544f2a84658",
+      "finalStateIdentity": "f0ddef099753eb92",
+      "proofSha256": "cb2d764a678ea6a98c5968df2e55e427cd5e235b44f3192bb742de0f2a2e106e",
+      "proofFile": "adventure-rail-depot-05-acro.json"
+    }
+  ],
+  "summary": {
+    "courses": 30,
+    "modePairs": 60,
+    "completed": 60,
+    "replayed": 60,
+    "failed": 0,
+    "clean": 54,
+    "totalTicks": 253011
+  },
+  "finishedAt": "2026-10-02T06:57:10.188Z",
+  "changedSources": [],
+  "passed": true
+}
