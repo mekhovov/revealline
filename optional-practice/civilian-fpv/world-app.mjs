@@ -44,7 +44,8 @@ import {
   inspectImport,
   projectFromImport,
   compilePlayable,
-  mergeReimport,
+  previewReimport,
+  canonicalWorldJSON,
   preparePack,
   inspectPack,
   installPack,
@@ -353,7 +354,7 @@ const unique = (prefix) =>
   `${prefix}-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 7)}`;
 const terminal = (state) => ['complete', 'expired', 'failed', 'destroyed'].includes(state.status);
 const coordinates = ['x', 'y', 'z'];
-function synchronizeDefinitions(project) {
+export function synchronizeDefinitions(project) {
   const definitions = project.definitions ?? {
     worlds: [],
     layouts: [],
@@ -660,7 +661,7 @@ export function mountWorldApp({
     ghostError = false,
     sectorReferenceId = null,
     sectorReferenceStatus = 'none',
-    sectorLookup = null;
+    sectorLookup = null,
     lastRadioDiscovery = -Infinity;
   let selectedWorld = null;
   const sectors = createSectorTracker();
@@ -845,7 +846,13 @@ export function mountWorldApp({
   folderLabel.append(folderText, folderInput);
   $('import-world').closest('label').after(folderLabel);
   translatedNodes.push({ node: folderText, key: 'chooseFolder', fallback: 'Choose scene folder' });
-  on(folderInput, 'change', (e) => importScene(e.target.files));
+  on(folderInput, 'change', async (e) => {
+    try {
+      await importScene(e.target.files);
+    } finally {
+      e.target.value = '';
+    }
+  });
   const newWorldButton = button(txt('Start a new world', 'Почати новий світ'), () => {
     editingProject = null;
     projectAssets = new Map();
@@ -1847,6 +1854,84 @@ export function mountWorldApp({
     for (const id of ['preview-world', 'export-project', 'export-pack', 'install-project'])
       $(id).disabled = !editingProject;
   }
+  function reviewReimport({ changes, diagnostics }) {
+    return new Promise((resolve) => {
+      const previousFocus = doc.activeElement,
+        dialog = el('dialog'),
+        heading = el('h2', txt('Review world update', 'Перегляньте оновлення світу')),
+        summary = el(
+          'p',
+          txt(
+            'Your draft is unchanged until you apply. Local edits and removed source items are retained when they need review.',
+            'Чернетка не зміниться до застосування. Локальні зміни та вилучені об’єкти джерела зберігаються для перевірки.',
+          ),
+        ),
+        list = el('ul'),
+        actions = el('div', undefined, 'button-row');
+      dialog.id = 'reimport-review';
+      heading.id = 'reimport-review-title';
+      dialog.setAttribute('aria-labelledby', heading.id);
+      dialog.style.width = 'min(44rem, calc(100vw - 2rem))';
+      dialog.style.overflowWrap = 'anywhere';
+      const actionNames = {
+        added: txt('Added', 'Додано'),
+        changed: txt('Changed', 'Змінено'),
+        removed: txt('Removed from source', 'Вилучено з джерела'),
+      };
+      for (const change of changes)
+        list.append(el('li', `${actionNames[change.action]} · ${change.kind} · ${change.id}`));
+      if (!changes.length)
+        list.append(
+          el('li', txt('No semantic source changes.', 'Семантичних змін у джерелі немає.')),
+        );
+      const diagnosticCopy = {
+        'local-conflict': 'Джерело й локальні дані змінено; збережено локальний варіант.',
+        'local-id-conflict':
+          'Новий ID джерела збігається з локальним об’єктом; збережено локальний варіант.',
+        'removed-source-retained':
+          'Джерело вилучило об’єкт; його авторську версію збережено для перевірки.',
+        'local-deletion-preserved': 'Збережено локальне вилучення об’єкта.',
+        'missing-spawn-binding':
+          'Вибраний стартовий маркер відсутній або змінив тип; збережено авторську позицію старту.',
+        'missing-route-binding':
+          'Маркер маршруту відсутній або змінив тип; збережено авторське завдання.',
+        'unplaced-marker': 'Доступний новий маркер; порядок поточного маршруту збережено.',
+        'orphan-override': 'Джерело вилучило маркер; його локальні зміни збережено для перевірки.',
+        'override-preserved': 'Джерело змінилося; локальні зміни залишаються чинними.',
+      };
+      for (const diagnostic of diagnostics)
+        list.append(
+          el(
+            'li',
+            locale === 'uk' && diagnosticCopy[diagnostic.code]
+              ? `${diagnostic.id}: ${diagnosticCopy[diagnostic.code]}`
+              : `${diagnostic.severity}: ${diagnostic.message}`,
+          ),
+        );
+      const finish = (accepted) => {
+        dialog.close();
+        dialog.remove();
+        previousFocus?.focus?.();
+        resolve(accepted);
+      };
+      const cancel = button(txt('Keep current draft', 'Залишити поточну чернетку'), () =>
+          finish(false),
+        ),
+        apply = button(txt('Apply reviewed update', 'Застосувати перевірене оновлення'), () =>
+          finish(true),
+        );
+      cancel.autofocus = true;
+      actions.append(cancel, apply);
+      dialog.append(heading, summary, list, actions);
+      dialog.addEventListener('cancel', (event) => {
+        event.preventDefault();
+        finish(false);
+      });
+      doc.body.append(dialog);
+      dialog.showModal();
+      cancel.focus();
+    });
+  }
   async function installProject() {
     if (!worldStore)
       throw new Error(
@@ -1866,7 +1951,9 @@ export function mountWorldApp({
     await refreshStorage();
     status(txt('World pack is ready to fly.', 'Пакунок світу готовий до польоту.'));
   }
+  let importRequest = 0;
   async function importScene(files) {
+    const request = ++importRequest;
     const list = Array.from(files),
       models = list.filter((f) => /\.(glb|gltf)$/i.test(f.name));
     if (models.length !== 1)
@@ -1876,7 +1963,10 @@ export function mountWorldApp({
           'Виберіть один GLB або glTF та його ресурси.',
         ),
       );
-    const prior = editingProject?.world.modelAsset ? editingProject : null,
+    syncProject();
+    const draft = editingProject,
+      draftIdentity = draft ? canonicalWorldJSON(draft) : null,
+      prior = draft?.world.modelAsset ? clone(draft) : null,
       name = models[0].name,
       id = prior?.id ?? unique('world');
     const inspected = await inspectImport({
@@ -1891,46 +1981,16 @@ export function mountWorldApp({
       },
     });
     let next,
+      review = null,
       diagnostics = [...inspected.metadata.diagnostics];
     if (prior) {
-      const merged = mergeReimport(prior, inspected);
-      next = merged.project;
-      diagnostics = merged.diagnostics;
-      const oldWorld = compilePlayable(prior).world,
-        newWorld = compilePlayable(next).world;
-      const oldAnchors = new Map(oldWorld.anchors.map((a) => [a.id, a])),
-        newAnchors = new Map(newWorld.anchors.map((a) => [a.id, a]));
-      next.courses = next.courses.map((source) => {
-        const c = clone(source);
-        c.obstacles = newWorld.colliders.map(colliderFromAnchor);
-        for (const mode of ['self-level', 'acro'])
-          for (const [i, anchorId] of (next.routeBindings?.[c.id]?.[mode] ?? []).entries()) {
-            const before = oldAnchors.get(anchorId),
-              after = newAnchors.get(anchorId),
-              centre = criterionCentre(c.steps[mode][i]);
-            if (before && after && centre)
-              c.steps[mode][i] = moveCriterion(
-                c.steps[mode][i],
-                Object.fromEntries(
-                  coordinates.map((k) => [
-                    k,
-                    centre[k] + Math.round((after.position[k] - before.position[k]) * 1000),
-                  ]),
-                ),
-              );
-            else if (before && !after)
-              diagnostics.push({
-                severity: 'warning',
-                message: `${anchorId}: source marker removed; authored objective retained for review.`,
-              });
-          }
-        const before = oldWorld.anchors.find((a) => a.kind === 'spawn'),
-          after = newWorld.anchors.find((a) => a.kind === 'spawn');
-        if (before && after)
-          for (const k of coordinates)
-            c.spawn[k] += Math.round((after.position[k] - before.position[k]) * 1000);
-        return validateWorldCourse(c);
+      review = previewReimport(prior, inspected, {
+        createCourse: courseFromProject,
+        createCollider: colliderFromAnchor,
+        validateCourse: validateWorldCourse,
       });
+      next = review.project;
+      diagnostics = review.diagnostics;
     } else {
       next = projectFromImport(inspected);
       next.courses = [courseFromProject(next)];
@@ -1944,6 +2004,8 @@ export function mountWorldApp({
           acro: next.courses[0].steps.acro.map((_, i) => ids[i] ?? null),
         },
       };
+      const spawnId = compilePlayable(next).world.anchors.find((a) => a.kind === 'spawn')?.id;
+      if (spawnId) next.spawnBindings = { [next.courses[0].id]: spawnId };
     }
     // Commit the editor state only after the entire source and every playable
     // challenge validates; a rejected reimport leaves the previous draft intact.
@@ -1954,10 +2016,30 @@ export function mountWorldApp({
       { asset: next.world.modelAsset, license: inspected.license },
     ];
     synchronizeDefinitions(next);
+    if (request !== importRequest) return;
+    if (review && !(await reviewReimport(review))) {
+      $('import-report').textContent = txt(
+        'Update cancelled. Your draft is unchanged.',
+        'Оновлення скасовано. Чернетка не змінилася.',
+      );
+      return;
+    }
+    const generation = worldStore ? await worldStore.generation() : null;
+    if (
+      request !== importRequest ||
+      editingProject !== draft ||
+      (draft && canonicalWorldJSON(draft) !== draftIdentity)
+    )
+      throw new Error(
+        txt(
+          'The draft changed while this import was prepared. Import again to review against the latest draft.',
+          'Чернетка змінилася під час підготовки імпорту. Повторіть імпорт для перевірки останньої версії.',
+        ),
+      );
     editingProject = next;
     projectAssets = assets;
-    setEditor(next.courses[0]);
-    projectGeneration = worldStore ? await worldStore.generation() : null;
+    setEditor(next.courses.find((course) => course.id === editor?.id) ?? next.courses[0]);
+    projectGeneration = generation;
     updateImportControls();
     $('import-report').textContent = [
       `${name}: ${(inspected.modelBlob.size / 1024).toFixed(1)} KiB`,
@@ -3032,7 +3114,13 @@ export function mountWorldApp({
     if (!editor) throw new Error('Create a challenge first.');
     download(editor, `${editor.id}.json`);
   });
-  on($('import-world'), 'change', (e) => importScene(e.target.files));
+  on($('import-world'), 'change', async (e) => {
+    try {
+      await importScene(e.target.files);
+    } finally {
+      e.target.value = '';
+    }
+  });
   on($('preview-world'), 'click', () => {
     syncProject();
     return startFlight(customEntry(editingProject.courses[0]), { preview: true });

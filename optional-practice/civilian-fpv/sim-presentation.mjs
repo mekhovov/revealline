@@ -1,11 +1,6 @@
 import { setMenuIcon } from '../../game/ui/native-menu-icons.mjs';
 
 /** Presentation only: shared game fonts, icons and short menu cues. No simulation input. */
-export const SIM_WORDMARK_URL = new URL(
-  '../../game/ui/art/identity/fpv-line/wordmark.png',
-  import.meta.url,
-).href;
-
 const fontOwners = new WeakMap();
 const cueNames = new Set(['focus', 'confirm', 'cancel']);
 const now = (win) => win.performance?.now?.() ?? Date.now();
