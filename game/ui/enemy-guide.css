@@ -1,6 +1,6 @@
 .enemy-guide-dialog {
-  width: min(720px, calc(100vw - 24px));
-  max-height: calc(100dvh - 24px);
+  width: min(720px, calc(var(--dialog-viewport-width, 100vw) - 24px));
+  max-height: calc(var(--dialog-viewport-height, 100dvh) - 24px);
   padding: 20px;
   box-sizing: border-box;
   color: #e4eef1;
@@ -79,8 +79,8 @@
 @media (max-width: 480px) {
   .enemy-guide-dialog {
     padding: 12px;
-    width: calc(100vw - 12px);
-    max-height: calc(100dvh - 12px);
+    width: calc(var(--dialog-viewport-width, 100vw) - 12px);
+    max-height: calc(var(--dialog-viewport-height, 100dvh) - 12px);
   }
   .enemy-guide-choices {
     grid-template-columns: 1fr;

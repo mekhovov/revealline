@@ -807,8 +807,9 @@ export function bootCoop({
         })
       : null;
   const modeChoices = $('coop-mode-actions');
-  mountModeChoices({
+  const modeNavigation = mountModeChoices({
     root: modeChoices,
+    pause: () => pause({ focus: false }),
     current: 'team',
     actions: { solo: $('coop-solo'), versus: $('coop-versus') },
   });
@@ -886,6 +887,10 @@ export function bootCoop({
     showTouch();
   }
   function back() {
+    if (modeNavigation.simulatorRoot()) {
+      modeNavigation.closeSimulator();
+      return;
+    }
     if (installOfflinePanel?.isOpen()) {
       installOfflinePanel.close();
       return;
@@ -974,59 +979,63 @@ export function bootCoop({
   for (const id of ['coop-offline-main', 'coop-offline'])
     if ($(id)) $(id).onclick = () => installOfflinePanel?.open();
   const scope = () =>
-    installOfflinePanel?.isOpen()
-      ? 'coop-install-offline'
-      : music?.root()
-        ? 'coop-music-library'
-        : journeyPictures?.root()
-          ? 'coop-journey-pictures'
-          : settingsDialog.open
-            ? `coop-settings:${settingsPanels?.selected() || 'display'}`
-            : earnedDialog.open
-              ? 'coop-earned-picture'
-              : departure
-                ? 'coop-discard'
-                : discovery?.isOpen()
-                  ? 'coop-discovery'
-                  : running()
-                    ? 'flight'
-                    : run
-                      ? `coop-${run.status}`
-                      : 'coop-lobby';
+    modeNavigation.simulatorRoot()
+      ? 'coop-fpv-sim'
+      : installOfflinePanel?.isOpen()
+        ? 'coop-install-offline'
+        : music?.root()
+          ? 'coop-music-library'
+          : journeyPictures?.root()
+            ? 'coop-journey-pictures'
+            : settingsDialog.open
+              ? `coop-settings:${settingsPanels?.selected() || 'display'}`
+              : earnedDialog.open
+                ? 'coop-earned-picture'
+                : departure
+                  ? 'coop-discard'
+                  : discovery?.isOpen()
+                    ? 'coop-discovery'
+                    : running()
+                      ? 'flight'
+                      : run
+                        ? `coop-${run.status}`
+                        : 'coop-lobby';
   const primary = () =>
-    installOfflinePanel?.isOpen()
-      ? $('install-offline-downloads')
-      : music?.root()
-        ? music.primary()
-        : journeyPictures?.root()
-          ? journeyPictures.primary()
-          : settingsDialog.open
-            ? settingsPanels?.primary() || $('coop-settings-close')
-            : earnedDialog.open
-              ? $('coop-picture-return')
-              : departure
-                ? $('coop-discard-stay')
-                : discovery?.isOpen()
-                  ? discovery.primary()
-                  : nextOperation
-                    ? $('coop-next-cancel')
-                    : importOperation
-                      ? $('coop-pack-cancel')
-                      : pictureOperation
-                        ? pictureOperation.passive
-                          ? $('coop-optional-setup-toggle')
-                          : $('coop-picture-cancel')
-                        : !run && pictureSelection?.state !== 'ready'
-                          ? $('coop-picture-retry')
-                          : !run
-                            ? $('coop-start')
-                            : run.status === 'paused' && !loopStopped
-                              ? $('coop-resume')
-                              : run.status === 'won' && !loopStopped
-                                ? teamDestination()?.next
-                                  ? $('coop-next')
-                                  : $('coop-discovery-paused')
-                                : $('coop-retry');
+    modeNavigation.simulatorRoot()
+      ? modeNavigation.simulatorPrimary()
+      : installOfflinePanel?.isOpen()
+        ? $('install-offline-downloads')
+        : music?.root()
+          ? music.primary()
+          : journeyPictures?.root()
+            ? journeyPictures.primary()
+            : settingsDialog.open
+              ? settingsPanels?.primary() || $('coop-settings-close')
+              : earnedDialog.open
+                ? $('coop-picture-return')
+                : departure
+                  ? $('coop-discard-stay')
+                  : discovery?.isOpen()
+                    ? discovery.primary()
+                    : nextOperation
+                      ? $('coop-next-cancel')
+                      : importOperation
+                        ? $('coop-pack-cancel')
+                        : pictureOperation
+                          ? pictureOperation.passive
+                            ? $('coop-optional-setup-toggle')
+                            : $('coop-picture-cancel')
+                          : !run && pictureSelection?.state !== 'ready'
+                            ? $('coop-picture-retry')
+                            : !run
+                              ? $('coop-start')
+                              : run.status === 'paused' && !loopStopped
+                                ? $('coop-resume')
+                                : run.status === 'won' && !loopStopped
+                                  ? teamDestination()?.next
+                                    ? $('coop-next')
+                                    : $('coop-discovery-paused')
+                                  : $('coop-retry');
   // Preference updates can reflow a focused select beyond the Settings scroller
   // without a window resize. Keep only that current action visible, never focus
   // it again or resume. Initial display application runs before this owner exists.
@@ -1127,6 +1136,7 @@ export function bootCoop({
     getRoot: () => {
       if (installOfflinePanel?.frameFocused()) return null;
       const modal =
+        modeNavigation.simulatorRoot() ||
         installOfflinePanel?.root() ||
         music?.root() ||
         journeyPictures?.root() ||
@@ -1157,6 +1167,7 @@ export function bootCoop({
     onBack: back,
     onMenu: () => {
       if (
+        modeNavigation.simulatorRoot() ||
         installOfflinePanel?.isOpen() ||
         music?.root() ||
         journeyPictures?.root() ||
@@ -5977,6 +5988,7 @@ export function bootCoop({
     if (disposed) return;
     $('coop-field-details').onclick = null;
     installOfflinePanel?.dispose();
+    modeNavigation.dispose();
     stopActorView();
     actorPreferences.dispose();
     $('coop-actor-style').onchange = null;
