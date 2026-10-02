@@ -33,3 +33,25 @@ Design follows the same [Valve controller-completeness guidance](https://partner
 used for the handheld work and reuses the game's existing navigation rather than
 creating a competing launcher style. The public site already redirects into this
 landing page, so no duplicate top-level route is necessary.
+
+## Completed qualification — 2 October 2026
+
+Runtime `e936e94f91e96286a9f6ebc28f5d91758095218e` passes the full main build
+(2,719 files), with all 15 changed emitted runtime files matching the frozen
+source. All three optional packages pass admission, committed-input and ZIP
+checks and two byte-identical builds. The final receipt is
+`docs/evidence/fpv-sim-entry-final-20261002.json`; it supersedes pending items
+in the earlier working-source receipt without treating earlier builds as final.
+
+Actual-browser checks pass for all three landing hosts, EN/UK and 390/1280px
+widths (12 cases). Two additional controlled-gamepad runs navigate Solo →
+FPV SIM → Flight School without pointer input, retain EN/UK and display all58
+lessons. This caught and fixed World Studio ignoring an explicit launch locale;
+changing language in the simulator also updates that explicit URL preference.
+Package fallback links retain their existing new-window behavior, so this
+controller-launch evidence applies to the checked same-build route.
+
+The 62 applicable existing assertions,28 functional boundary checks, locale scan,
+focused lint/format/syntax and independent source review pass. The refreshed
+continuous-school player was opened at390×844, flown using its touch entry and
+left safely paused. Hardware/browser-engine acceptance remains outstanding.
