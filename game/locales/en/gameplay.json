@@ -363,6 +363,7 @@
   "tuning.raceNote": "Next fresh race: {{difficulty}}. {{description}} {{rules}} Both current boards keep their rules.",
   "tuning.teamNote": "{{guidance}} Next fresh attempt: {{description}} Resume keeps its rules.",
   "hud.coverageValue": "{{coverage}} percent revealed; target {{target}} percent",
+  "hud.huntCoverageValue": "{{coverage}} percent revealed; Hunt targets eliminated {{kills}} of {{total}}",
   "hud.lives_one": "{{count}} lives",
   "hud.lives_other": "{{count}} lives",
   "hud.cooldown": "{{seconds}}s cooldown",

@@ -1,4 +1,6 @@
-import { getLocale, localizedText } from '../i18n/index.mjs';
+import { createReactionOptions } from '../journey/reaction-options.mjs';
+import { claimJourneyReactionCaption, renderResultReactionCaption } from './reaction-caption.mjs';
+import { getLocale, localizedText, onLocaleChange } from '../i18n/index.mjs';
 import { journeyResultReaction } from '../journey/reactions.mjs';
 import { createReactionPreferences } from '../journey/reaction-preferences.mjs';
 
@@ -20,6 +22,11 @@ export function attachJourneyReactions({
     getLocale,
     ...(getStorage ? { getStorage } : {}),
   });
+  const options = createReactionOptions({
+    window: eventTarget,
+    ...(getStorage ? { getStorage } : {}),
+  });
+  const releaseCaption = claimJourneyReactionCaption(caption);
   let current = null,
     disposed = false;
   const render = () => {
@@ -30,24 +37,21 @@ export function attachJourneyReactions({
       localizedText(status, () => preferences.snapshot().error);
     status.hidden = choice.durable;
     retry.hidden = choice.durable;
-    caption.hidden = !choice.enabled || !journeyResultReaction(current);
-    const copy = () => {
-      const reaction = choice.enabled && journeyResultReaction(current, getLocale());
-      if (reaction?.speaker) caption.dataset.reactionSpeaker = reaction.speaker;
-      else delete caption.dataset.reactionSpeaker;
-      return reaction
-        ? reaction.name
-          ? `${reaction.name} — ${reaction.text}`
-          : reaction.text
-        : '';
-    };
-    if (caption.textContent !== copy()) localizedText(caption, copy);
+    renderResultReactionCaption(
+      caption,
+      journeyResultReaction(current, getLocale()),
+      options.snapshot(),
+      choice.enabled,
+      getLocale(),
+    );
   };
   const choose = () => preferences.choose(control.checked);
   const save = () => preferences.retry();
   control.addEventListener('change', choose);
   retry.addEventListener('click', save);
   const unsubscribe = preferences.subscribe(render);
+  const unoptions = options.subscribe(render);
+  const unlocale = onLocaleChange(render);
   return Object.freeze({
     present(context) {
       if (!disposed) {
@@ -59,7 +63,11 @@ export function attachJourneyReactions({
       disposed = true;
       current = null;
       caption.hidden = true;
-      localizedText(caption, () => '');
+      caption.textContent = '';
+      releaseCaption();
+      unoptions();
+      unlocale();
+      options.dispose();
       control.removeEventListener('change', choose);
       retry.removeEventListener('click', save);
       unsubscribe();

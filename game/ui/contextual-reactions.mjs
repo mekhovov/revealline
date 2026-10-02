@@ -1,3 +1,9 @@
+import { attachHuntFeedbackLayout } from './hunt-feedback-layout.mjs';
+import {
+  journeyOwnsReactionCaption,
+  reactionCaptionText,
+  renderResultReactionCaption,
+} from './reaction-caption.mjs';
 import { createReactionVoiceCache } from '../journey/reaction-voice-cache.mjs';
 import { getLocale as currentLocale, onLocaleChange } from '../i18n/index.mjs';
 import {
@@ -220,29 +226,20 @@ export function attachContextualReactions({
   const panel = create('div'),
     portrait = create('img'),
     caption = create('span');
-  const portraitStyle = create(
-    'style',
-    '[data-reaction-speaker]::before{content:"";display:inline-block;width:3rem;height:3rem;margin-inline-end:.65rem;border-radius:.4rem;vertical-align:middle;background-size:contain;background-repeat:no-repeat;image-rendering:pixelated}' +
-      Object.entries(REACTION_PORTRAITS)
-        .map(
-          ([speaker, value]) =>
-            `[data-reaction-speaker="${speaker}"]::before{background-image:url("${value.idle}")}`,
-        )
-        .join(''),
-  );
-  container.append(portraitStyle);
   panel.dataset.characterReaction = 'true';
+  panel.className = 'reaction-live-caption';
   panel.hidden = true;
   panel.style.cssText =
     'display:none;align-items:center;gap:.65rem;max-width:100%;padding:.5rem .7rem;border-radius:.4rem;box-sizing:border-box;pointer-events:none;';
   portrait.setAttribute('aria-hidden', 'true');
   portrait.alt = '';
   portrait.style.cssText =
-    'display:block;flex:0 0 3rem;width:3rem;height:3rem;border-radius:.4rem;image-rendering:pixelated;';
+    'display:block;flex:0 0 var(--reaction-portrait-size,3rem);width:var(--reaction-portrait-size,3rem);height:var(--reaction-portrait-size,3rem);border-radius:.4rem;image-rendering:pixelated;';
   caption.style.cssText =
-    'font-family:system-ui,sans-serif;line-height:1.45;overflow-wrap:anywhere;';
+    'font-family:system-ui,sans-serif;line-height:1.45;overflow-wrap:anywhere;min-width:0;';
   panel.append(portrait, caption);
   container.append(panel);
+  const releaseFeedbackLayout = attachHuntFeedbackLayout({ container, window: target });
   const preferences = createReactionPreferences({
     window: target,
     getLocale,
@@ -263,7 +260,9 @@ export function attachContextualReactions({
     controlLabels = new Map();
   let settings = null,
     status = null,
-    pilot = null;
+    pilot = null,
+    previewSample = null,
+    previewVisible = false;
   const release = () => {
     try {
       if (typeof lease === 'function') lease();
@@ -325,6 +324,14 @@ export function attachContextualReactions({
       preview.disabled = !enabled || !state.subtitles;
       settings.querySelector('[data-reaction-retry]').textContent = tr('retry');
     }
+    if (previewVisible && previewSample)
+      renderResultReactionCaption(
+        previewSample,
+        reactionLine('journey-reaction.v1/guide/0', getLocale()),
+        state,
+        enabled,
+        getLocale(),
+      );
     if (status) {
       status.textContent = state.durable ? '' : tr('unavailable');
       status.hidden = state.durable;
@@ -337,19 +344,15 @@ export function attachContextualReactions({
         (current.line.resultContext
           ? journeyResultReaction(current.line.resultContext, getLocale())
           : reactionLine(current.line.id, getLocale())) ?? current.line;
-      const board = current.line.board ? ` (${current.line.board})` : '';
-      const player = Number.isInteger(current.line.player)
-        ? ` · ${getLocale() === 'uk' ? 'Гравець' : 'Player'} ${current.line.player + 1}`
-        : '';
-      caption.textContent = `${localized.name ? `${localized.name}${board}${player} — ` : ''}${localized.text}`;
-      const visible = enabled && state.subtitles;
+      caption.textContent = reactionCaptionText(
+        { ...localized, board: current.line.board, player: current.line.player },
+        getLocale(),
+      );
+      const visible = enabled && state.subtitles && (!current.terminal || !resultContainer);
       panel.hidden = !visible;
       panel.style.display = visible ? 'flex' : 'none';
-      if (current.terminal && resultContainer) {
-        resultContainer.hidden = !enabled;
-        resultContainer.textContent = caption.textContent;
-        resultContainer.dataset.reactionSpeaker = localized.speaker;
-      }
+      if (current.terminal && resultContainer && !journeyOwnsReactionCaption(resultContainer))
+        renderResultReactionCaption(resultContainer, localized, state, enabled, getLocale());
     }
   }
   function prepare() {
@@ -483,12 +486,14 @@ export function attachContextualReactions({
     const preview = create('button', tr('preview'));
     preview.type = 'button';
     preview.dataset.reactionPreview = 'true';
-    preview.onclick = () =>
-      present(reactionLine('journey-reaction.v1/guide/0', getLocale()), {
-        terminal: false,
-        duration: 5000,
-        speak: false,
-      });
+    previewSample = create('p');
+    previewSample.dataset.reactionSettingsPreview = 'true';
+    previewSample.hidden = true;
+    previewSample.setAttribute('role', 'status');
+    preview.onclick = () => {
+      previewVisible = true;
+      render();
+    };
     const retry = create('button', tr('retry'));
     retry.type = 'button';
     retry.dataset.reactionRetry = 'true';
@@ -496,7 +501,7 @@ export function attachContextualReactions({
     status = create('p');
     status.setAttribute('role', 'status');
     pilot = create('p', tr('pilot'));
-    settings.append(preview, retry, status, pilot);
+    settings.append(preview, previewSample, retry, status, pilot);
     settingsContainer.append(settings);
   }
   const unsubPrefs = preferences.subscribe(render),
@@ -581,7 +586,7 @@ export function attachContextualReactions({
       for (const control of controls.values()) control.onchange = null;
       settings?.remove();
       panel.remove();
-      portraitStyle.remove();
+      releaseFeedbackLayout();
     },
   });
 }

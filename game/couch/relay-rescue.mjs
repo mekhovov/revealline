@@ -1,8 +1,10 @@
 import { createHuntRecords } from '../hunt/records.mjs';
+import { createTeamAttemptIdentity } from '../coop/attempt-identity.mjs';
 import {
   createTeamHuntAttemptStore,
   createTeamHuntRecorder,
   restoreTeamHuntAttempt,
+  matchingTeamHuntMirror,
   teamHuntSourceIdentity,
 } from '../coop/hunt-attempts.mjs';
 import { attachTeamHuntSave, teamHuntSaveText } from '../ui/team-hunt-save.mjs';
@@ -598,6 +600,7 @@ export function bootCoop({
     mode: 'team',
   });
   const libraryVisit = crypto.randomUUID();
+  const teamPersistenceId = createTeamAttemptIdentity(libraryVisit);
   const discoveryRows = (sourcePack, artworkSource, prefix, teamMedia = null) =>
     sourcePack.levels.map((level) =>
       Object.freeze({
@@ -806,6 +809,7 @@ export function bootCoop({
     container: $('coop-hunt-save'),
     liveStatus: $('coop-hunt-attempt-status'),
     store: huntAttemptStore,
+    canContinue: () => pictureSelection !== null && canOpenDiscovery(),
     findRow: (snapshot) =>
       currentDiscoveryRows().find((row) => {
         if (row.levelId !== snapshot.levelId) return false;
@@ -3037,6 +3041,7 @@ export function bootCoop({
       if (!adopted(candidate)) return;
       candidateProgress?.started(selection.journeyRow, candidate, {
         ...attemptTuning.get(candidate),
+        attemptId: teamPersistenceId(candidate),
         adminOverride:
           attemptTuning.get(candidate).adminOverride ||
           attemptTuning.get(candidate).encounterVariant !== 'authored',
@@ -3211,6 +3216,7 @@ export function bootCoop({
       const button = $(id);
       if (button) button.disabled = !canOpenDiscovery();
     }
+    huntSaveControls?.refresh();
   }
   function cancelDiscoveryPreparation(operation = discoveryOperation) {
     if (!operation || operation.cancelled) return;
@@ -3735,13 +3741,18 @@ export function bootCoop({
       for (const old of new Set([previous.picture, previous.selection]))
         if (old && old !== acceptedPicture && old !== pictureSelection) old.lease?.dispose();
       if (run === candidate && running() && foreground() && !disposed)
-        candidateProgress?.started(selection.journeyRow, candidate, {
-          ...attemptTuning.get(candidate),
-          adminOverride:
-            attemptTuning.get(candidate).adminOverride ||
-            attemptTuning.get(candidate).encounterVariant !== 'authored',
-          picture: earnedTeamPicture(selection, selection.binding),
-        });
+        candidateProgress?.[restored?.huntAttempt ? 'resumed' : 'started'](
+          selection.journeyRow,
+          candidate,
+          {
+            ...attemptTuning.get(candidate),
+            attemptId: teamPersistenceId(candidate),
+            adminOverride:
+              attemptTuning.get(candidate).adminOverride ||
+              attemptTuning.get(candidate).encounterVariant !== 'authored',
+            picture: earnedTeamPicture(selection, selection.binding),
+          },
+        );
       return run === candidate && running() && foreground() && !disposed;
     } finally {
       if (discoveryOperation === operation) discoveryOperation = null;
@@ -3825,12 +3836,39 @@ export function bootCoop({
       canonicalJSON(loaded.prepared.pack) !== canonicalJSON(edition.pack)
     )
       throw new Error(t('interface:missionLibrary.team.installedEditionChanged'));
-    const saved = installedTeamProgress.get(edition.editionId)?.attempts?.[row.levelId],
-      restored = saved
-        ? await installedTeamStore.restoreAttempt(edition.editionId, row.levelId, {
-            signal: context.signal,
-          })
-        : null;
+    const saved = installedTeamProgress.get(edition.editionId)?.attempts?.[row.levelId];
+    let restored = saved
+      ? await installedTeamStore.restoreAttempt(edition.editionId, row.levelId, {
+          signal: context.signal,
+        })
+      : null;
+    if (restored?.run.level.hunt) {
+      const mirror = await matchingTeamHuntMirror(restored, {
+        pack: row.pack,
+        level: row.level,
+        saved: huntAttemptStore.read(),
+        signal: context.signal,
+      });
+      if (mirror) {
+        const promoted = mirror.promotion;
+        restored = {
+          ...restored,
+          raw: mirror.raw,
+          ...(promoted
+            ? {
+                run: promoted.run,
+                snapshot: createInstalledTeamAttemptSnapshot({
+                  ...restored.snapshot,
+                  run: promoted.run,
+                  segments: promoted.snapshot.segments,
+                  encounterVariant: promoted.snapshot.encounterVariant,
+                  encounterLevelIdentity: promoted.snapshot.encounterLevelIdentity,
+                }),
+              }
+            : {}),
+        };
+      }
+    }
     if (!context.isCurrent()) return false;
     return launchTeamLibraryRow(row, { ...context, restored, teamMedia: loaded.media });
   }
@@ -4140,6 +4178,7 @@ export function bootCoop({
             progress: candidateProgress,
             gameplayIdentity: normalGameplayIdentity,
             difficulty: libraryDifficulty,
+            encounterVariant: () => encounterPreferences.snapshot().variant,
             launch: (row, context) =>
               launchTeamLibraryRow(
                 candidateDiscoveryRows.find((entry) => entry.journeyRow === row),
@@ -4200,6 +4239,7 @@ export function bootCoop({
           registerTeamSource(
             teamJourneyLibrarySource({
               journey: libraryRemoteJourney,
+              encounterVariant: () => encounterPreferences.snapshot().variant,
               launch: launchRemoteTeamRow,
             }),
             () => null,
@@ -4789,6 +4829,7 @@ export function bootCoop({
     if (!disposed && run === next && running() && foreground())
       candidateProgress?.started(selection.journeyRow, next, {
         ...attemptTuning.get(next),
+        attemptId: teamPersistenceId(next),
         adminOverride:
           attemptTuning.get(next).adminOverride ||
           attemptTuning.get(next).encounterVariant !== 'authored',
@@ -5463,7 +5504,7 @@ export function bootCoop({
       height: asset.height,
     };
   }
-  function beginHuntAttempt(currentRun, picture, restored, { armed = true } = {}) {
+  function beginHuntAttempt(currentRun, picture, restored, { armed = true, attemptId } = {}) {
     const tuning = attemptTuning.get(currentRun);
     if (!currentRun.level.hunt || !tuning) return;
     const existing = huntAttemptStore.read();
@@ -5480,7 +5521,7 @@ export function bootCoop({
       tuning: tuning.tuning,
       encounterLevel: tuning.encounterLevel,
       encounterVariant: tuning.encounterVariant,
-      attemptId: `${libraryVisit}:${picture.request.attemptId}`,
+      attemptId,
       gameplayId: tuning.gameplayId,
       restored,
     });
@@ -5550,7 +5591,8 @@ export function bootCoop({
     restored = null,
     { deferSave = false } = {},
   ) {
-    beginHuntAttempt(currentRun, picture, restored, { armed: !deferSave });
+    const attemptId = teamPersistenceId(currentRun, restored);
+    beginHuntAttempt(currentRun, picture, restored, { armed: !deferSave, attemptId });
     const editionId = picture?.installedEditionId,
       setup = installedPreset(currentRun),
       tuning = attemptTuning.get(currentRun);
@@ -5566,7 +5608,7 @@ export function bootCoop({
       record = {
         editionId,
         levelId: currentRun.level.id,
-        attemptId: restored?.snapshot.attemptId ?? `${libraryVisit}:${picture.request.attemptId}`,
+        attemptId,
         gameplayId: tuning.gameplayId,
         presetId: setup.id,
         tuning: tuning.tuning,
@@ -5832,6 +5874,16 @@ export function bootCoop({
   function setupNote({ level = selectedLevel(), experiment = selectedConfiguration() } = {}) {
     huntSaveControls?.refresh();
     difficultyControls(level);
+    if (run) level = run.level;
+    else {
+      try {
+        level =
+          deriveEncounterLevel(level, encounterPreferences.snapshot().variant, { mode: 'team' }) ??
+          level;
+      } catch {
+        // Unavailable prospective variants retain the authored setup guidance.
+      }
+    }
     const guidance = () => coopArenaGuidance(level, experiment);
     localizedText($('coop-closure-help'), () =>
       t('gameplay:team.closeLoop', { context: coopGroundContext(level) }),
@@ -5855,17 +5907,7 @@ export function bootCoop({
     $('coop-stronghold-help').hidden = !guidance().showStrongholds;
     localizedText($('coop-stronghold-title'), () => guidance().strongholdTitle);
     localizedText($('coop-stronghold-copy'), () => guidance().strongholdText);
-    let goalLevel = run?.level ?? level;
-    if (!run) {
-      try {
-        goalLevel =
-          deriveEncounterLevel(level, encounterPreferences.snapshot().variant, { mode: 'team' }) ??
-          level;
-      } catch {
-        // Unavailable prospective variants cannot prevent the authored menu opening.
-      }
-    }
-    localizedText($('coop-menu-goal'), () => coopGoalLabel(goalLevel));
+    localizedText($('coop-menu-goal'), () => coopGoalLabel(level));
     localizedText($('coop-briefing-title'), () => guidance().briefingTitle);
     localizedText($('coop-stage'), () => contentText(level, 'name').toUpperCase());
     refreshGameplayTuningNote(level, experiment);

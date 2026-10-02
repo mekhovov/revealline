@@ -111,6 +111,12 @@ export function createCombatPresentation({
           size,
           size,
         );
+      }
+      // Draw every functional footprint after every enlarged body. Dense groups
+      // must not let a later sprite paint over an earlier target's exact center.
+      for (const actor of view.actors) {
+        const x = actor.x * CELL,
+          y = actor.y * CELL;
         // This exact collision footprint is separate from enlarged body artwork.
         ctx.setLineDash([]);
         for (const [ink, width] of [

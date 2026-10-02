@@ -25,7 +25,7 @@ export function prepareHuntLevel(source, { id, revision, actors, hunt }) {
     maxBytes: 128 * 1024,
     maxNodes: 10000,
     maxDepth: 12,
-    maxArray: 100,
+    maxArray: 512,
   });
   level.version = HUNT_VERSIONS.levelVersion;
   level.id = id;

@@ -217,6 +217,12 @@ export function createRun(
     ].includes(level.version)
   ) {
     state.classic = createClassicState(level, cells);
+    if (level.classic.coverage) {
+      const budget = analyzeRouteCoverage(level, cells);
+      state.classic.coverageEligible = Array.from(budget.eligible);
+      state.classic.coverageExcluded = budget.excluded;
+      state.totalClaimable = budget.total;
+    }
     initializeClassicActors(state);
   }
   state._loadouts[classId] = state.ability;

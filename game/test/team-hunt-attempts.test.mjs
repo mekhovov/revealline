@@ -10,6 +10,7 @@ import {
   createTeamHuntAttemptStore,
   createTeamHuntRecorder,
   restoreTeamHuntAttempt,
+  matchingTeamHuntMirror,
   TEAM_HUNT_ATTEMPT_KEY,
 } from '../coop/hunt-attempts.mjs';
 
@@ -163,4 +164,140 @@ test('early initialized-level identities migrate only after the complete checkpo
   await assert.rejects(restoreTeamHuntAttempt({ ...early, gameplayId: '0000000000000000' }, row), {
     code: 'rulesChanged',
   });
+});
+
+test('installed Continue adopts only a replay-verified older Hunt mirror from its exact history', async () => {
+  const { run, recorder, row, tick } = attempt();
+  while (run.tick < 100) tick('down', true);
+  const earlier = recorder.snapshot();
+  while (run.tick < 120) tick('down', true);
+  const current = recorder.snapshot();
+  const installed = createInstalledTeamAttemptSnapshot({
+    editionId: 'a'.repeat(64),
+    attemptId: current.attemptId,
+    gameplayId: current.gameplayId,
+    presetId: 'full',
+    run,
+    tuning: current.tuning,
+    segments: current.segments,
+    encounterLevelIdentity: current.encounterLevelIdentity,
+  });
+  const restored = { run: (await restoreTeamHuntAttempt(current, row)).run, snapshot: installed };
+  const saved = { snapshot: earlier, raw: JSON.stringify(earlier) };
+  assert.equal((await matchingTeamHuntMirror(restored, { ...row, saved }))?.raw, saved.raw);
+  assert.equal(
+    await matchingTeamHuntMirror(restored, {
+      ...row,
+      saved: { ...saved, snapshot: { ...earlier, attemptId: 'foreign' } },
+    }),
+    null,
+  );
+  const damaged = {
+    ...earlier,
+    checkpoint: { ...earlier.checkpoint, stateIdentity: '0000000000000000' },
+  };
+  assert.equal(
+    await matchingTeamHuntMirror(restored, {
+      ...row,
+      saved: { snapshot: damaged, raw: JSON.stringify(damaged) },
+    }),
+    null,
+  );
+  while (run.tick < 140) tick('down', true);
+  const newer = recorder.snapshot();
+  assert.equal(
+    await matchingTeamHuntMirror(restored, {
+      ...row,
+      saved: { snapshot: newer, raw: JSON.stringify(newer) },
+    }),
+    null,
+  );
+  assert.equal(
+    await matchingTeamHuntMirror(restored, {
+      ...row,
+      saved: { snapshot: null, raw: '{future}' },
+    }),
+    null,
+  );
+  const memory = new Map([[TEAM_HUNT_ATTEMPT_KEY, saved.raw]]);
+  const store = createTeamHuntAttemptStore({
+    getStorage: () => ({
+      getItem: (key) => memory.get(key) ?? null,
+      setItem: (key, value) => memory.set(key, value),
+      removeItem: (key) => memory.delete(key),
+    }),
+  });
+  const adopted = (await matchingTeamHuntMirror(restored, { ...row, saved: store.read() }))?.raw;
+  const foreign = JSON.stringify({ ...earlier, attemptId: 'another-tab' });
+  memory.set(TEAM_HUNT_ATTEMPT_KEY, foreign);
+  assert.throws(() => store.save(current, adopted), /Another Team Hunt save/);
+  assert.throws(() => store.discard(adopted), /another tab/);
+  assert.equal(store.read().raw, foreign);
+});
+
+test('installed Continue promotes only an exactly verified same-tick pause release into both journals', async () => {
+  const { run, recorder, row, tick } = attempt();
+  while (run.tick < 100) tick('down', true);
+  const before = recorder.snapshot();
+  const installed = createInstalledTeamAttemptSnapshot({
+    editionId: 'a'.repeat(64),
+    attemptId: before.attemptId,
+    gameplayId: before.gameplayId,
+    presetId: 'full',
+    run,
+    tuning: before.tuning,
+    segments: before.segments,
+    encounterLevelIdentity: before.encounterLevelIdentity,
+  });
+  const restored = {
+    run: (await restoreTeamHuntAttempt(before, row)).run,
+    snapshot: installed,
+    generation: 8,
+  };
+  recorder.release();
+  pauseCoop(run);
+  const paused = recorder.snapshot(),
+    saved = { snapshot: paused, raw: JSON.stringify(paused) };
+  const mirror = await matchingTeamHuntMirror(restored, { ...row, saved });
+  assert.equal(mirror.raw, saved.raw);
+  assert.ok(mirror.promotion);
+  assert.deepEqual(mirror.promotion.run.needsNeutral, [true, true]);
+  const promoted = {
+    ...restored,
+    raw: mirror.raw,
+    run: mirror.promotion.run,
+    snapshot: createInstalledTeamAttemptSnapshot({
+      ...installed,
+      run: mirror.promotion.run,
+      segments: mirror.promotion.snapshot.segments,
+      encounterVariant: mirror.promotion.snapshot.encounterVariant,
+      encounterLevelIdentity: mirror.promotion.snapshot.encounterLevelIdentity,
+    }),
+  };
+  assert.equal(promoted.generation, 8);
+  assert.equal(promoted.snapshot.attemptId, installed.attemptId);
+  assert.equal(promoted.snapshot.format, 'revealline-installed-team-attempt.v3');
+  assert.deepEqual(promoted.snapshot.segments, paused.segments);
+  const continued = createTeamHuntRecorder({
+    run: promoted.run,
+    pack: row.pack,
+    level: row.level,
+    tuning: before.tuning,
+    encounterLevel: row.level,
+    encounterVariant: 'authored',
+    gameplayId: before.gameplayId,
+    restored: promoted,
+  });
+  assert.deepEqual((await restoreTeamHuntAttempt(continued.snapshot(), row)).run, promoted.run);
+  const corrupt = {
+    ...paused,
+    checkpoint: { ...paused.checkpoint, stateIdentity: '0000000000000000' },
+  };
+  assert.equal(
+    await matchingTeamHuntMirror(restored, {
+      ...row,
+      saved: { raw: JSON.stringify(corrupt), snapshot: corrupt },
+    }),
+    null,
+  );
 });

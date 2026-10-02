@@ -3825,6 +3825,7 @@ try {
         ? []
         : [0, 1].flatMap((i) => [
             $(`racer-stats-${i}`).textContent,
+            $(`racer-stats-${i}`).parentElement.querySelector('.hunt-status')?.textContent,
             $(`racer-state-${i}`).textContent,
             $(`racer-input-${i}`).textContent,
             $(`racer-capture-${i}`).hidden,

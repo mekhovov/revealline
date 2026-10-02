@@ -3,6 +3,7 @@ import { deriveEncounterLevel } from '../hunt/variants.mjs';
 import { ENCOUNTER_VARIANTS } from '../hunt/preferences.mjs';
 import { applyGameplayTuning, validateGameplayTuning } from '../gameplay-tuning.mjs';
 import { createCoop, releaseCoopInputs, startCoop, stepCoop } from './core.mjs';
+import { teamInputHistoryExtends } from './attempt-history.mjs';
 
 export const TEAM_HUNT_ATTEMPT_KEY = 'revealline.team-hunt-attempt.v1';
 export const TEAM_HUNT_ATTEMPT_FORMAT = 'revealline-team-hunt-attempt.v1';
@@ -11,6 +12,7 @@ const MAX_SEGMENTS = 8192;
 const MAX_TICKS = 240000;
 const identity = (value) => typeof value === 'string' && /^[a-f0-9]{16}$/.test(value);
 const packIdentities = new WeakMap();
+const verifiedRestores = new WeakMap();
 function requireRestorable(condition, code, message) {
   if (condition) return;
   const error = new TypeError(message);
@@ -256,7 +258,76 @@ export async function restoreTeamHuntAttempt(
     'Saved Team Hunt failed exact replay verification.',
   );
   snapshot.gameplayId = gameplayId;
+  verifiedRestores.set(run, {
+    source: { ...snapshot.source },
+    levelId: snapshot.levelId,
+    checkpoint: { ...snapshot.checkpoint },
+    receipt: Object.freeze({
+      attemptId: snapshot.attemptId,
+      gameplayId,
+      encounterVariant: snapshot.encounterVariant,
+      adminOverride: snapshot.tuning.adminOverride,
+    }),
+  });
   return { run, snapshot, huntAttempt: true };
+}
+
+/** A receipt is available only for this exact, unchanged replay-verified core.
+ * Matching IDs or a copied run cannot grant campaign-progress authority. */
+export function verifiedTeamHuntRestore(run, { pack, level }) {
+  const verified = verifiedRestores.get(run);
+  if (!verified || run.status !== 'running' || run.tick !== verified.checkpoint.tick) return null;
+  const source = teamHuntSourceIdentity(pack, level);
+  if (
+    level.id !== verified.levelId ||
+    source.pack !== verified.source.pack ||
+    source.level !== verified.source.level ||
+    checkpoint(run).stateIdentity !== verified.checkpoint.stateIdentity
+  )
+    return null;
+  return verified.receipt;
+}
+
+/** An installed Continue may reclaim its older mirrored Hunt checkpoint only
+ * after its complete saved history verifies against the same accepted recipe.
+ * A same-tick trailing release can promote the verified neutral-input core and
+ * journal together. Callers supply a verified installed restore; no storage changes. */
+export async function matchingTeamHuntMirror(
+  restored,
+  { pack, level, saved, signal, yieldControl },
+) {
+  if (!restored?.run.level.hunt || !saved?.snapshot || saved.raw === null) return null;
+  const previous = saved.snapshot,
+    snapshot = restored.snapshot,
+    source = teamHuntSourceIdentity(pack, level);
+  if (
+    previous.attemptId !== snapshot.attemptId ||
+    previous.levelId !== level.id ||
+    previous.source.pack !== source.pack ||
+    previous.source.level !== source.level ||
+    previous.seed !== restored.run.seed ||
+    previous.ruleset !== restored.run.ruleset ||
+    previous.difficulty !== snapshot.difficulty ||
+    previous.encounterVariant !== (snapshot.encounterVariant ?? 'authored') ||
+    dataIdentity(previous.tuning) !== dataIdentity(snapshot.tuning) ||
+    dataIdentity(previous.config) !== dataIdentity(restored.run.config)
+  )
+    return null;
+  const covered = teamInputHistoryExtends(snapshot.segments, previous.segments);
+  const releaseOnly =
+    previous.checkpoint.tick === snapshot.checkpoint.tick &&
+    previous.segments.length > snapshot.segments.length &&
+    teamInputHistoryExtends(previous.segments, snapshot.segments) &&
+    previous.segments.slice(snapshot.segments.length).every((segment) => segment.release === true);
+  if (!covered && !releaseOnly) return null;
+  try {
+    const verified = await restoreTeamHuntAttempt(previous, { pack, level, signal, yieldControl });
+    if (verified.snapshot.gameplayId !== snapshot.gameplayId) return null;
+    return { raw: saved.raw, promotion: releaseOnly ? verified : null };
+  } catch (error) {
+    if (error.name === 'AbortError') throw error;
+    return null;
+  }
 }
 
 /** One bounded slot, with compare-and-swap ownership. Unknown/corrupt bytes are never replaced. */

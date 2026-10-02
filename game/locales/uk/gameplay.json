@@ -377,6 +377,7 @@
   "tuning.raceNote": "Наступні нові перегони: {{difficulty}}. {{description}} {{rules}} Обидва поточні поля зберігають свої правила.",
   "tuning.teamNote": "{{guidance}} Наступна нова спроба: {{description}} «Продовжити» зберігає її правила.",
   "hud.coverageValue": "Відкрито {{coverage}} відсотка; ціль — {{target}} відсотків",
+  "hud.huntCoverageValue": "Відкрито {{coverage}} відсотків; знищено цілей полювання {{kills}} із {{total}}",
   "hud.lives_one": "{{count}} життя",
   "hud.lives_few": "{{count}} життя",
   "hud.lives_many": "{{count}} життів",

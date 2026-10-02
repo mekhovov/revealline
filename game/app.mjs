@@ -2987,7 +2987,6 @@ try {
       const capabilities = arcadeActionCapabilities(run.level),
         acceptedLevel = structuredClone(run.level),
         acceptedTheme = structuredClone(theme),
-        coverage = run.level.goal.coverage * 100,
         stopOnCapture = run.rules.stopOnCapture,
         actions = [],
         acceptedKeys = resolveKeyBindings(library.preferences.keyboardBindings),
@@ -3034,12 +3033,9 @@ try {
       return {
         mission: () => contentText(acceptedLevel, 'name'),
         goal: () =>
-          t('interface:flightDetails.reveal', {
-            coverage: formatNumber(coverage, {
-              minimumFractionDigits: 1,
-              maximumFractionDigits: 1,
-            }),
-          }),
+          missionBriefing(acceptedLevel, {
+            objectiveLabel: contentText(acceptedTheme, 'labels.objective'),
+          }).goal,
         steering: () =>
           `${t('interface:flightDetails.steering')}${stopOnCapture ? ' ' + t('interface:closingACutStopsYourCraftChooseAFreshDirection') : ''}`,
         objectiveLabel: () => contentText(acceptedTheme, 'labels.objective'),
@@ -9798,10 +9794,17 @@ try {
     $('coverage').innerHTML = `${(run.coverage * 100).toFixed(1)}<small>%</small>`;
     $('coverage').setAttribute('aria-valuenow', (run.coverage * 100).toFixed(1));
     localizedAttribute($('coverage'), 'aria-valuetext', () =>
-      t('gameplay:hud.coverageValue', {
-        coverage: formatNumber(run.coverage * 100, { maximumFractionDigits: 1 }),
-        target: Math.round(run.level.goal.coverage * 100),
-      }),
+      t(
+        run.level.classic?.hunt?.mode === 'hunt'
+          ? 'gameplay:hud.huntCoverageValue'
+          : 'gameplay:hud.coverageValue',
+        {
+          coverage: formatNumber(run.coverage * 100, { maximumFractionDigits: 1 }),
+          target: Math.round(run.level.goal.coverage * 100),
+          kills: run.classic?.hunt?.kills ?? 0,
+          total: run.level.classic?.hunt?.targets.length ?? 0,
+        },
+      ),
     );
     $('coverage-bar').style.width = `${run.coverage * 100}%`;
     $('goal-marker').style.left = `${run.level.goal.coverage * 100}%`;
