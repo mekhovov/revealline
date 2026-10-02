@@ -1,7 +1,7 @@
 # SIM integration handoff
 
 Publication branch: `codex/unified-appearance-20261002`, integrated with main at
-`89e25c726`. The earlier `codex/fpv-personal-best-ghost` PR #913 is already merged;
+`09b40cdfa`. The earlier `codex/fpv-personal-best-ghost` PR #913 is already merged;
 it does not contain this appearance implementation. Use the new appearance PR
 and its exact-head preview artifact described in the [publication report](publication.md).
 

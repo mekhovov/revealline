@@ -3,9 +3,9 @@
 The implementation is published on `codex/unified-appearance-20261002` against
 `main`. It includes the complete appearance changes rather than depending on the
 already merged personal-best ghost PR #913. Baseline route/harness repairs are a
-separate commit. The integration preserves main at `89e25c726`, including the new
+separate commit. The integration preserves main at `09b40cdfa`, including the new
 SIM entry/practice directory, mobile and pause geometry, flight lifecycle, radio
-and replay behavior.
+and replay behavior, menu capture routes and garage demonstrations.
 
 ## Testable preview
 
@@ -21,7 +21,9 @@ historical receipts; they are not acceptance evidence for a later PR build.
 
 ## Integrated verification
 
-The source is integrated with main at `89e25c726`. Local checks use Node 20.19.5;
+The source is integrated with main at `09b40cdfa`. The initial local verification
+below predates the final capacity repair and main merge; the exact source identities
+are recorded in each receipt. Local checks use Node 20.19.5;
 the PR preview pins Node 22.13.1 and records its exact head and source tree.
 
 - Exact 28-file PR preview cohort: **235 passed**, no skips or failures
@@ -64,6 +66,14 @@ pass 40; independent adversarial lexical review found no blocking issue.
 [Capacity receipt](publication/edition-capacity-fix.json),
 [runtime checks](publication/edition-runtime-indent.tap),
 [compiler checks](publication/edition-capacity-tests.tap).
+
+After the final main merge, clean source `ee855c377` produces **66,673,106 bytes**
+across 830 files, with **435,758 bytes remaining**. Archive admission, current/four
+retained presentation identities and all 77 selected media originals pass again.
+Runtime checks pass **15/15**, and the integrated menu suite passes **39/39**.
+[Final capacity receipt](publication/edition-capacity-final.json),
+[final runtime checks](publication/edition-runtime-indent-final.tap),
+[final menu checks](publication/menu-scenes-final.tap).
 
 The preview workflow now includes the two compiler/runtime suites as well as its
 initial appearance cohort. Later artifacts record their actual test list and head.
