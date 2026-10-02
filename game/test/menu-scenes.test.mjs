@@ -266,15 +266,18 @@ for (const world of modeWorlds)
     assert.equal(receiver.disposed, 1);
   });
 
-test('every scene retains bounded artwork anchors and one shared image/canvas plane without moving stickers', () => {
+test('every scene retains bounded artwork anchors, one shared image plane and an authored capture route', () => {
   const f = fixture();
   const plane = f.scene.querySelector('.menu-scene-art-plane');
   const image = f.scene.querySelector('.menu-scene-art');
   const canvas = f.scene.querySelector('canvas');
   const reception = f.scene.querySelector('.menu-scene-reception');
+  const route = f.scene.querySelector('.menu-scene-route');
+  const routeTrail = f.scene.querySelector('.menu-scene-route-trail');
   const signal = f.scene.querySelector('.menu-scene-signal');
-  assert.deepEqual(f.scene.children, [plane, signal]);
+  assert.deepEqual(f.scene.children, [plane, route, signal]);
   assert.deepEqual(plane.children, [image, canvas, reception]);
+  assert.equal(route.querySelectorAll('svg').length, 1);
   assert.equal(image.alt, '');
   assert.equal(image.draggable, false);
   for (const profile of Object.values(MENU_SCENES)) {
@@ -283,6 +286,16 @@ test('every scene retains bounded artwork anchors and one shared image/canvas pl
       f.portrait.matches = vertical;
       f.api.update();
       f.load(vertical ? 540 : 960, vertical ? 960 : 540);
+      assert.ok(Object.isFrozen(profile.route));
+      assert.equal(route.dataset.variant, profile.route.variant);
+      assert.equal(route.style['--scene-route-left'], `${profile.route.left}%`);
+      assert.equal(route.style['--scene-route-top'], `${profile.route.top}%`);
+      assert.equal(route.style['--scene-route-width'], `${profile.route.width}%`);
+      assert.equal(route.style['--scene-route-opacity'], String(profile.route.opacity));
+      assert.equal(route.style['--scene-route-portrait-left'], `${profile.route.portraitLeft}%`);
+      assert.equal(route.style['--scene-route-portrait-top'], `${profile.route.portraitTop}%`);
+      assert.equal(route.style['--scene-route-portrait-width'], `${profile.route.portraitWidth}%`);
+      assert.match(routeTrail.getAttribute('d'), /^M\d/);
       const layers = vertical ? profile.portraitEnvironment : profile.environment;
       if (profile.id === 'droneaid-nl-community') {
         assert.deepEqual(layers, [], 'The supplied photograph has no authored motion regions.');
