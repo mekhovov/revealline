@@ -1376,3 +1376,38 @@ Next concrete item: integrate merged content/reimport/ghost changes without
 losing new school/control/art work, then apply the ready Themes appearance
 contract and continue landmark/art/player qualification. Preserve the Garage
 handoff and R7 unit-coverage deferral. Do not repeatedly poll unchanged CI.
+
+## Approved continuation — checkpoint practice, 2 October 2026
+
+The owner approved the reviewed A–H delivery sequence. Managed worktree
+`fpv-world-framework/go_test` now uses `codex/fpv-checkpoint-practice`, based on
+main `3616200cf87fe490dabc9fa75cd50e5019b85dfb`. Recovery branch
+`codex/fpv-adventures-recovery-20261002` retains the old local Adventures head.
+The primary checkout remains owned by the parallel Themes workstream. Native
+stacks #889 and #902 are fully merged/closed; do not append to either.
+
+A replaces fabricated checkpoint spawns with verified command-prefix restoration,
+scoped unscored results, exact retry and original-route fallback. The full school
+coach stays closed. Practice cannot create a proof or replace records, medals,
+playlist progress or an interrupted attempt. Controller throttle survives the
+ready-to-flight transition; response changes retain the recorded section and
+radio source changes match the current frozen controls.
+
+Evidence: `fpv-checkpoint-functional-verification.json` passes all 1,331 supported
+positions (716 recorded restorations / 615 fallback positions), including all
+four old collision failures. `fpv-checkpoint-browser-verification.json` passes
+17 actual-host checks in Chromium, using isolated browser storage and controlled
+keyboard/touch/gamepad/TX15-shaped samples. All 138 v2 and original24 v1 examples
+replayed unchanged. This is functional evidence, not new unit coverage, physical
+radio acceptance, hardware performance or public availability.
+
+Next independent increment B: World flight callback-stall handling and keyboard
+pause on focused HUD controls. Academy already checks actual callback time;
+World currently trusts only the queued animation timestamp. Prepare a separate
+branch after A publication so unfinished lifecycle changes never enter A.
+
+Garage's previously referenced temporary handoff is absent. A fresh, repeatable
+16-proof replacement is preserved in `/tmp/fpv-garage-regeneration-20261002`: all
+16 complete and independently replay, zero contacts, three identical authoring
+runs. It is **not installed** until separate playback/package qualification.
+Current installed examples remain original104 + school58.

@@ -821,11 +821,17 @@ export function createWorldFlight({
   mode = 'self-level',
   response = DEFAULT_RESPONSE,
   unscoredPractice = false,
+  practiceEndStep = null,
 }) {
   required(typeof unscoredPractice === 'boolean', 'Invalid world practice policy');
   const source = validateWorldCourse(course);
   const rates = validateFlightResponse(response);
   required(MODES.includes(mode), 'Unsupported flight mode');
+  required(
+    practiceEndStep === null ||
+      (unscoredPractice && int(practiceEndStep, 1, source.steps[mode].length)),
+    'A practice endpoint requires an unscored flight and a valid objective',
+  );
   const hasSkills = worldCourseRequiresAcro(source);
   const hasActorTracking = MODES.some((mode) =>
     source.steps[mode].some((step) => step.type === 'actor-track-v1'),
@@ -1162,7 +1168,11 @@ export function createWorldFlight({
       state.events.push({ type: 'objective', index: state.step });
       state.step++;
       state.hold = 0;
-      if (!unscoredPractice && state.step === source.steps[mode].length) state.status = 'complete';
+      if (
+        (!unscoredPractice && state.step === source.steps[mode].length) ||
+        (unscoredPractice && state.step === practiceEndStep)
+      )
+        state.status = 'complete';
     }
   }
   function step(input, { quantized = false } = {}) {
