@@ -30,8 +30,8 @@ remain original procedural artwork with no downloaded asset or runtime decoder.
 
 Themes #955 owns shared appearance/material factories. Keep this increment to
 narrow surface recipes and UVs beneath semantic steel/enamel/concrete ownership;
-no separate selector, preference or theme factory. Preserve Woodland #964's
-independent bark/floor work when reconciling main.
+no separate selector, preference or theme factory. Woodland #964 is now merged; its bark/floor work is preserved in this
+combined candidate.
 
 ## Qualification boundaries
 
@@ -46,3 +46,32 @@ A synthetic view matrix does not qualify physical devices, sustained FPS, novice
 learning or production-art acceptance. Public availability requires the merged
 source's deployment marker and an actual public simulator launch. Exact receipts
 and publication identity will be appended after verification.
+
+## Completed source qualification — 3 October 2026
+
+The final candidate includes merged main `fe6ff1b7a2585aa969b945d5fcb7699aa6b04460`.
+It reuses the storage surfaces' three maps for panel bodies and six numbered
+flush plates. School beams, stacks and dividers sample a plain region of that
+same atlas. All four sides have outward-readable labels. No mesh, triangle,
+material or texture was added; label UV buffers add exactly 1,152 bytes.
+
+- [CPU/resource receipt](evidence/fpv-warehouse-surfaces-cpu.json): 76 existing
+  texture outputs, 85 preset cycles and 96 label-orientation assertions pass.
+- [Merged-main parity](evidence/fpv-warehouse-surfaces-merge.json): the four
+  Warehouse extent/profile cases remain exact against the pre-merge candidate.
+- [Actual source browser](evidence/fpv-warehouse-surfaces-browser-source.json):
+  307 checks and 159 image pairs pass, including 13 unaffected environments,
+  actual imported scenery, geometry/opaque rays and disposal/resource plateaus.
+- [Route replay](evidence/fpv-warehouse-surfaces-route.json): all 18 Warehouse
+  recordings across ten courses replay through 44,168 ticks, with zero contacts
+  or blocked actors. Closest sampled continuous-segment clearance is 1.831m to
+  solid scenery, 0.299m to a racing rival and 1.242m to a freight hazard.
+
+The browser matrix uses Chrome 154 in the Codex in-app browser on this Mac,
+640×360 CSS canvases at DPR 2. It measures equivalence and ownership; it is not
+sustained frame-time or hardware qualification. The existing 178-result broader
+replay receipt is still bound by exact input hashes, not claimed as a fresh rerun.
+
+Final production SHA256: renderer `2e0896fa2b5acc3b71a05b729e277b48f16aaa57b43b960c12406d495de88346`;
+world visuals `02eb4dc0c156316bf7634fad51d61365e48e4a5dac81ad62a032b1efc2e0172d`.
+Frozen package and publication evidence follow separately.

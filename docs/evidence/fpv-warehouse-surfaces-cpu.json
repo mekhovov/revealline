@@ -1,8 +1,8 @@
 {
-  "baseline": "ae4624f6e",
-  "worldVisualsSha256": "c5002e802f4847f56431d832d62e0393697c2da8a37d930d77b2a554ee021a6b",
-  "rendererSha256": "84eee8822b6accda1414784a31bbca3d61f3322e8e95267271409715be8d3974",
-  "originalPixelComparisons": 68,
+  "baseline": "fe6ff1b7a2585aa969b945d5fcb7699aa6b04460",
+  "worldVisualsSha256": "02eb4dc0c156316bf7634fad51d61365e48e4a5dac81ad62a032b1efc2e0172d",
+  "rendererSha256": "2e0896fa2b5acc3b71a05b729e277b48f16aaa57b43b960c12406d495de88346",
+  "originalPixelComparisons": 76,
   "allOriginalPixelsExact": true,
   "all13NonwarehouseExact": true,
   "allGeometryPositionsNormalsIndicesTransformsExact": true,
@@ -789,7 +789,7 @@
           "nonWarehouseExact": true,
           "surfaces": [
             {
-              "kind": "grass",
+              "kind": "forest-floor",
               "size": 128,
               "filters": [
                 [
@@ -831,7 +831,7 @@
               ]
             },
             {
-              "kind": "wood",
+              "kind": "bark",
               "size": 128,
               "filters": [
                 [
@@ -862,7 +862,7 @@
           "nonWarehouseExact": true,
           "surfaces": [
             {
-              "kind": "grass",
+              "kind": "forest-floor",
               "size": 256,
               "filters": [
                 [
@@ -904,7 +904,7 @@
               ]
             },
             {
-              "kind": "wood",
+              "kind": "bark",
               "size": 256,
               "filters": [
                 [
@@ -935,7 +935,7 @@
           "nonWarehouseExact": true,
           "surfaces": [
             {
-              "kind": "grass",
+              "kind": "forest-floor",
               "size": 512,
               "filters": [
                 [
@@ -977,7 +977,7 @@
               ]
             },
             {
-              "kind": "wood",
+              "kind": "bark",
               "size": 512,
               "filters": [
                 [
@@ -1008,7 +1008,7 @@
           "nonWarehouseExact": true,
           "surfaces": [
             {
-              "kind": "grass",
+              "kind": "forest-floor",
               "size": 256,
               "filters": [
                 [
@@ -1050,7 +1050,7 @@
               ]
             },
             {
-              "kind": "wood",
+              "kind": "bark",
               "size": 256,
               "filters": [
                 [
@@ -1081,7 +1081,7 @@
           "nonWarehouseExact": true,
           "surfaces": [
             {
-              "kind": "grass",
+              "kind": "forest-floor",
               "size": 128,
               "filters": [
                 [
@@ -1123,7 +1123,7 @@
               ]
             },
             {
-              "kind": "wood",
+              "kind": "bark",
               "size": 128,
               "filters": [
                 [

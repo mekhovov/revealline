@@ -1,11 +1,11 @@
 {
   "format": "FPVWarehouseSurfacesBrowserEvidence.v1",
-  "createdAt": "2026-10-02T22:15:33.195Z",
-  "baseline": "ae4624f6eeb473031e1e660012f6a717dde6c2cc",
+  "createdAt": "2026-10-02T22:20:52.490Z",
+  "baseline": "fe6ff1b7a2585aa969b945d5fcb7699aa6b04460",
   "candidate": ".",
   "sourceFiles": {
     "before": {
-      "optional-practice/civilian-fpv/world-visuals.mjs": "95ab637bd5b50c20dd15ec8fd6d0886b4f142a1102857ae804aee7d54a9fbdae",
+      "optional-practice/civilian-fpv/world-visuals.mjs": "a724e26f05ab59d24a0fb5493eacabdd6b38690bfc0b90ddee7ae8c8117c31a1",
       "optional-practice/civilian-fpv/vendor/three.module.js": "9052042d676cb0fdc1ddfefe193053f34b7ac0513a616fdac4535d49987812ea",
       "optional-practice/civilian-fpv/vendor/three.core.js": "9edde002b066a9a05676a6127f67735b62baf399bdea529f2f7e31657da769e6",
       "optional-practice/civilian-fpv/world-themes.mjs": "8331dc6931299043e14620fe312affddd382b551607db5ff6fae85f14b627bc7",
@@ -25,14 +25,14 @@
       "optional-practice/civilian-fpv/world-catalogue.mjs": "d901363b623193f4896100f9381c7579946796e741554f012581ebb93f9ea8a6",
       "optional-practice/civilian-fpv/catalogue.mjs": "98338353d17eb585414538c9905040752fd5cd6699c48b17fa1706832b750997",
       "optional-practice/civilian-fpv/world-assets.mjs": "7ec935731fb2404badde162930bf602ff49d24a9382623e582ce6cce199cc0aa",
-      "optional-practice/civilian-fpv/renderer.mjs": "207cb6068ea24a527365433cdea30b4797799065b0abf0e05b823c3fe4ee12be",
+      "optional-practice/civilian-fpv/renderer.mjs": "f16d9170e59a06976f1780d0ca4e55d8c8046fcfdb5a92a313053b2c32f1d1eb",
       "optional-practice/civilian-fpv/vendor/addons/loaders/GLTFLoader.js": "03952cb129d558f92b8e6c757fbf7c1f718b3126c4d34f264d574b40ea36054f",
       "optional-practice/civilian-fpv/vendor/addons/utils/BufferGeometryUtils.js": "259085a7dac89e0840393a9347c77123fbc4206ec2146bf0c29ffc72e14a2800",
       "optional-practice/civilian-fpv/vendor/addons/utils/SkeletonUtils.js": "28017bf37d0ecb0c4be6048db759ff14df729a562464830b064d4cc239c5af17",
       "optional-practice/civilian-fpv/vendor/addons/controls/TransformControls.js": "10f6d3e4c108dff62110f61a76749f9a1826c9781df9c3eb4ca0b5d9d2f5c4a8"
     },
     "after": {
-      "optional-practice/civilian-fpv/world-visuals.mjs": "c5002e802f4847f56431d832d62e0393697c2da8a37d930d77b2a554ee021a6b",
+      "optional-practice/civilian-fpv/world-visuals.mjs": "02eb4dc0c156316bf7634fad51d61365e48e4a5dac81ad62a032b1efc2e0172d",
       "optional-practice/civilian-fpv/vendor/three.module.js": "9052042d676cb0fdc1ddfefe193053f34b7ac0513a616fdac4535d49987812ea",
       "optional-practice/civilian-fpv/vendor/three.core.js": "9edde002b066a9a05676a6127f67735b62baf399bdea529f2f7e31657da769e6",
       "optional-practice/civilian-fpv/world-themes.mjs": "8331dc6931299043e14620fe312affddd382b551607db5ff6fae85f14b627bc7",
@@ -52,7 +52,7 @@
       "optional-practice/civilian-fpv/world-catalogue.mjs": "d901363b623193f4896100f9381c7579946796e741554f012581ebb93f9ea8a6",
       "optional-practice/civilian-fpv/catalogue.mjs": "98338353d17eb585414538c9905040752fd5cd6699c48b17fa1706832b750997",
       "optional-practice/civilian-fpv/world-assets.mjs": "7ec935731fb2404badde162930bf602ff49d24a9382623e582ce6cce199cc0aa",
-      "optional-practice/civilian-fpv/renderer.mjs": "84eee8822b6accda1414784a31bbca3d61f3322e8e95267271409715be8d3974",
+      "optional-practice/civilian-fpv/renderer.mjs": "2e0896fa2b5acc3b71a05b729e277b48f16aaa57b43b960c12406d495de88346",
       "optional-practice/civilian-fpv/vendor/addons/loaders/GLTFLoader.js": "03952cb129d558f92b8e6c757fbf7c1f718b3126c4d34f264d574b40ea36054f",
       "optional-practice/civilian-fpv/vendor/addons/utils/BufferGeometryUtils.js": "259085a7dac89e0840393a9347c77123fbc4206ec2146bf0c29ffc72e14a2800",
       "optional-practice/civilian-fpv/vendor/addons/utils/SkeletonUtils.js": "28017bf37d0ecb0c4be6048db759ff14df729a562464830b064d4cc239c5af17",
@@ -5190,8 +5190,8 @@
       "pose": "trail",
       "width": 640,
       "heightPixels": 360,
-      "beforeHash": "2e14f972941b9093ac1d8173b1aa54593f21d051aceaaba13f1ef05fc2c5d4c6",
-      "afterHash": "2e14f972941b9093ac1d8173b1aa54593f21d051aceaaba13f1ef05fc2c5d4c6",
+      "beforeHash": "06273ada33364d7db59d32517339bff09051d171d0cd6ac291f11964e63ec08e",
+      "afterHash": "06273ada33364d7db59d32517339bff09051d171d0cd6ac291f11964e63ec08e",
       "changedPixels": 0,
       "changedFraction": 0,
       "meanChannelDifference": 0,
@@ -5217,8 +5217,8 @@
       "pose": "trail",
       "width": 960,
       "heightPixels": 540,
-      "beforeHash": "407b27e8cfdc92171bb53f6a1e80664474eccf1323bc9c5b8e74ae6b18cf43a4",
-      "afterHash": "407b27e8cfdc92171bb53f6a1e80664474eccf1323bc9c5b8e74ae6b18cf43a4",
+      "beforeHash": "5da168741d5f46c98b6a8cef58d7e2d18cda7c423def96a153c61cbf0d583bd5",
+      "afterHash": "5da168741d5f46c98b6a8cef58d7e2d18cda7c423def96a153c61cbf0d583bd5",
       "changedPixels": 0,
       "changedFraction": 0,
       "meanChannelDifference": 0,
@@ -5244,8 +5244,8 @@
       "pose": "trail",
       "width": 1280,
       "heightPixels": 720,
-      "beforeHash": "21010c346869603bed29153a55f225ec693e3401a3786d86e8fac724181c75c9",
-      "afterHash": "21010c346869603bed29153a55f225ec693e3401a3786d86e8fac724181c75c9",
+      "beforeHash": "37ad01e3ec4380f9f22c82ec2cf4d42daf9cd83aa68921243201238867f7d8ca",
+      "afterHash": "37ad01e3ec4380f9f22c82ec2cf4d42daf9cd83aa68921243201238867f7d8ca",
       "changedPixels": 0,
       "changedFraction": 0,
       "meanChannelDifference": 0,
@@ -7622,4 +7622,7633 @@
           {
             "index": 7,
             "name": "",
-            "kind"[Truncated]
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 8,
+            "name": "",
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 9,
+            "name": "",
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 10,
+            "name": "",
+            "kind": "metal",
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1003,
+            "min": 1004,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": "b051f4138dbc82e2f522488999918503938faf0083a8fcc5f355182fa8a0dc32"
+          },
+          {
+            "index": 11,
+            "name": "",
+            "kind": "metal",
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1003,
+            "min": 1004,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": "be7f04b0761f29947c1a25c4558e9bc01c8a9ef84cb652e6a4bfe987b21ac2ba"
+          },
+          {
+            "index": 12,
+            "name": "",
+            "kind": "metal",
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1003,
+            "min": 1004,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": "8755da5c32ecffbdb89d2ec704d93be67e49bc8518f9cddc66ae76935bb7818f"
+          },
+          {
+            "index": 13,
+            "name": "colormap",
+            "kind": null,
+            "size": [
+              512,
+              512
+            ],
+            "mag": 1003,
+            "min": 1004,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 14,
+            "name": "metal",
+            "kind": null,
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1003,
+            "min": 1004,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 15,
+            "name": "truck_alien",
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1003,
+            "min": 1004,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 16,
+            "name": "planks",
+            "kind": null,
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1003,
+            "min": 1004,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 17,
+            "name": "windows",
+            "kind": null,
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1003,
+            "min": 1004,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 18,
+            "name": "wall_lines",
+            "kind": null,
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1003,
+            "min": 1004,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 19,
+            "name": "",
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 20,
+            "name": "",
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 21,
+            "name": "",
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 22,
+            "name": "",
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 23,
+            "name": "",
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 24,
+            "name": "",
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          }
+        ]
+      },
+      "after": {
+        "geometryHash": "7171b83ca122af5d1859fe8b498c3c8e63bbbf37b59ee6ffcf8d4894b12d6118",
+        "uvHash": "12caed471e68c8ca4130eef58c014e7b92ae5e58a3074bae1122b907326661ea",
+        "opacityHash": "dc6dc685360917df909de358e1dbe4ccfbd988ec833c14f9365b5fe77ce74c57",
+        "materialHash": "ac7007d21bfc5dd932c832da9f877f4789164cc6e89d9e67957537812a9f0726",
+        "mapHash": "d8f9aaab265631682e378e8afad7717f86aaf45289ef5ef5a642b4e72a3858b3",
+        "rayHash": "cb51e335de3d96054aaf9c0dc2f09dfd3aac25f3e22e62cfa8fec7e833d86604",
+        "rayCount": 158,
+        "nodes": 257,
+        "uvBytes": 558176,
+        "storageCount": 6,
+        "plainSteelCount": 0,
+        "claddingCount": 55,
+        "labelCount": 6,
+        "maps": [
+          {
+            "index": 0,
+            "name": "",
+            "kind": "concrete",
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1003,
+            "min": 1004,
+            "anisotropy": 1,
+            "repeat": [
+              29.333333333333332,
+              28.333333333333332
+            ],
+            "mipmaps": true,
+            "hash": "65fb631662e1f644c069fea0235e7cfd017ca7c2a7b2527458b62a3343376c23"
+          },
+          {
+            "index": 1,
+            "name": "",
+            "kind": "concrete",
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1003,
+            "min": 1004,
+            "anisotropy": 1,
+            "repeat": [
+              29.333333333333332,
+              28.333333333333332
+            ],
+            "mipmaps": true,
+            "hash": "035e0ae214b9c7d179aff2e5fa60fbb61edb00c0efc8b3ed7b9ec18935838707"
+          },
+          {
+            "index": 2,
+            "name": "",
+            "kind": "concrete",
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1003,
+            "min": 1004,
+            "anisotropy": 1,
+            "repeat": [
+              29.333333333333332,
+              28.333333333333332
+            ],
+            "mipmaps": true,
+            "hash": "ec09d7a2fe02d44cbaa973fc4c85a67555e60dca4fa941517b5a7b71d52283d0"
+          },
+          {
+            "index": 3,
+            "name": "",
+            "kind": "painted-steel",
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1003,
+            "min": 1004,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": "806846b815ca3e4a827bda04eef47ef4dc5e74b89d67d50939b0a45c9e273636"
+          },
+          {
+            "index": 4,
+            "name": "",
+            "kind": "painted-steel",
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1003,
+            "min": 1004,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": "4d9f093edc38af3bd8ecfce2e4f6c6f0da2ac86daca1c944b97b03060c7484cc"
+          },
+          {
+            "index": 5,
+            "name": "",
+            "kind": "painted-steel",
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1003,
+            "min": 1004,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": "5e964dd56d3513b6db860c26e1d1248b8b736abc1cf07462c92b0222f7247876"
+          },
+          {
+            "index": 6,
+            "name": "",
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 7,
+            "name": "",
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 8,
+            "name": "",
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 9,
+            "name": "",
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 10,
+            "name": "warehouse-storage-steel-albedo",
+            "kind": "storage-steel",
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1003,
+            "min": 1004,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": "0004ed236443560a301f6ccf80b332764659ef6bee0207b877f26d20d75d299c"
+          },
+          {
+            "index": 11,
+            "name": "warehouse-storage-steel-normal",
+            "kind": "storage-steel",
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1003,
+            "min": 1004,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": "95d134b9c336be34c68947a00fc81bb54aa6324d7153885c86397498aff520b0"
+          },
+          {
+            "index": 12,
+            "name": "warehouse-storage-steel-orm",
+            "kind": "storage-steel",
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1003,
+            "min": 1004,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": "c30b4a310bbf96115f1c14c05be7f1c0df9f9dfa2295337e244343a114f9a9b1"
+          },
+          {
+            "index": 13,
+            "name": "colormap",
+            "kind": null,
+            "size": [
+              512,
+              512
+            ],
+            "mag": 1003,
+            "min": 1004,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 14,
+            "name": "metal",
+            "kind": null,
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1003,
+            "min": 1004,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 15,
+            "name": "truck_alien",
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1003,
+            "min": 1004,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 16,
+            "name": "planks",
+            "kind": null,
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1003,
+            "min": 1004,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 17,
+            "name": "windows",
+            "kind": null,
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1003,
+            "min": 1004,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 18,
+            "name": "wall_lines",
+            "kind": null,
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1003,
+            "min": 1004,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 19,
+            "name": "",
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 20,
+            "name": "",
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 21,
+            "name": "",
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 22,
+            "name": "",
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 23,
+            "name": "",
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 24,
+            "name": "",
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          }
+        ]
+      },
+      "additionalUVBytes": 1152,
+      "shaderPrograms": [
+        16,
+        16
+      ]
+    },
+    {
+      "id": "beginner-36",
+      "quality": "low",
+      "before": {
+        "geometryHash": "3c67ce3026289464ee33d1baaa5332484fe39ed7e4a4a8040716eacd3ea8c88b",
+        "uvHash": "004f53c917ee81fabb251a764c9c003bd88720a4b17a6637fdea79b1e913c48b",
+        "opacityHash": "f83f36041cf64bff575c344dde1d7ea76e9257b790d724baa7a601000c50ee33",
+        "materialHash": "d704568fc4c7b3e655ff75cff12bac912051ddcf0a235a6100c3676bde24fc01",
+        "mapHash": "c1e3f655897eeb8c6998f06c19e4e3de2020c39da6b01d16a690ccd14ce17aca",
+        "rayHash": "c749044c0af40c1708cc2088b1ba59fc503485babc607f49598de38ea4a356c7",
+        "rayCount": 209,
+        "nodes": 347,
+        "uvBytes": 569664,
+        "storageCount": 6,
+        "plainSteelCount": 2,
+        "claddingCount": 0,
+        "labelCount": 0,
+        "maps": [
+          {
+            "index": 0,
+            "name": "",
+            "kind": "concrete",
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1003,
+            "min": 1004,
+            "anisotropy": 1,
+            "repeat": [
+              31.333333333333332,
+              31.333333333333332
+            ],
+            "mipmaps": true,
+            "hash": "65fb631662e1f644c069fea0235e7cfd017ca7c2a7b2527458b62a3343376c23"
+          },
+          {
+            "index": 1,
+            "name": "",
+            "kind": "concrete",
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1003,
+            "min": 1004,
+            "anisotropy": 1,
+            "repeat": [
+              31.333333333333332,
+              31.333333333333332
+            ],
+            "mipmaps": true,
+            "hash": "035e0ae214b9c7d179aff2e5fa60fbb61edb00c0efc8b3ed7b9ec18935838707"
+          },
+          {
+            "index": 2,
+            "name": "",
+            "kind": "concrete",
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1003,
+            "min": 1004,
+            "anisotropy": 1,
+            "repeat": [
+              31.333333333333332,
+              31.333333333333332
+            ],
+            "mipmaps": true,
+            "hash": "ec09d7a2fe02d44cbaa973fc4c85a67555e60dca4fa941517b5a7b71d52283d0"
+          },
+          {
+            "index": 3,
+            "name": "",
+            "kind": "metal",
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1003,
+            "min": 1004,
+            "anisotropy": 1,
+            "repeat": [
+              3,
+              2
+            ],
+            "mipmaps": true,
+            "hash": "b051f4138dbc82e2f522488999918503938faf0083a8fcc5f355182fa8a0dc32"
+          },
+          {
+            "index": 4,
+            "name": "",
+            "kind": "metal",
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1003,
+            "min": 1004,
+            "anisotropy": 1,
+            "repeat": [
+              3,
+              2
+            ],
+            "mipmaps": true,
+            "hash": "be7f04b0761f29947c1a25c4558e9bc01c8a9ef84cb652e6a4bfe987b21ac2ba"
+          },
+          {
+            "index": 5,
+            "name": "",
+            "kind": "metal",
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1003,
+            "min": 1004,
+            "anisotropy": 1,
+            "repeat": [
+              3,
+              2
+            ],
+            "mipmaps": true,
+            "hash": "8755da5c32ecffbdb89d2ec704d93be67e49bc8518f9cddc66ae76935bb7818f"
+          },
+          {
+            "index": 6,
+            "name": "",
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 7,
+            "name": "",
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 8,
+            "name": "",
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 9,
+            "name": "",
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 10,
+            "name": "",
+            "kind": "metal",
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1003,
+            "min": 1004,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": "b051f4138dbc82e2f522488999918503938faf0083a8fcc5f355182fa8a0dc32"
+          },
+          {
+            "index": 11,
+            "name": "",
+            "kind": "metal",
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1003,
+            "min": 1004,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": "be7f04b0761f29947c1a25c4558e9bc01c8a9ef84cb652e6a4bfe987b21ac2ba"
+          },
+          {
+            "index": 12,
+            "name": "",
+            "kind": "metal",
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1003,
+            "min": 1004,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": "8755da5c32ecffbdb89d2ec704d93be67e49bc8518f9cddc66ae76935bb7818f"
+          },
+          {
+            "index": 13,
+            "name": "colormap",
+            "kind": null,
+            "size": [
+              512,
+              512
+            ],
+            "mag": 1003,
+            "min": 1004,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 14,
+            "name": "metal",
+            "kind": null,
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1003,
+            "min": 1004,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 15,
+            "name": "truck_alien",
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1003,
+            "min": 1004,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 16,
+            "name": "planks",
+            "kind": null,
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1003,
+            "min": 1004,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 17,
+            "name": "windows",
+            "kind": null,
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1003,
+            "min": 1004,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 18,
+            "name": "wall_lines",
+            "kind": null,
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1003,
+            "min": 1004,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 19,
+            "name": "",
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 20,
+            "name": "",
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 21,
+            "name": "",
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 22,
+            "name": "",
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 23,
+            "name": "",
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 24,
+            "name": "",
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 25,
+            "name": "",
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 26,
+            "name": "",
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 27,
+            "name": "",
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          }
+        ]
+      },
+      "after": {
+        "geometryHash": "3c67ce3026289464ee33d1baaa5332484fe39ed7e4a4a8040716eacd3ea8c88b",
+        "uvHash": "5909f932de9cea4a3fb2b185a12c679636da074516a37f20ed0c1775b47b9968",
+        "opacityHash": "f83f36041cf64bff575c344dde1d7ea76e9257b790d724baa7a601000c50ee33",
+        "materialHash": "5b2f5fad8f4f9771c88df1167258c9320d63a3bc427e3193d98136ab41104d5a",
+        "mapHash": "dead5175c7b422a64255c37810b51c8615991851bb2b4425aa3a231eacbedb5e",
+        "rayHash": "c749044c0af40c1708cc2088b1ba59fc503485babc607f49598de38ea4a356c7",
+        "rayCount": 209,
+        "nodes": 347,
+        "uvBytes": 570816,
+        "storageCount": 6,
+        "plainSteelCount": 2,
+        "claddingCount": 67,
+        "labelCount": 6,
+        "maps": [
+          {
+            "index": 0,
+            "name": "",
+            "kind": "concrete",
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1003,
+            "min": 1004,
+            "anisotropy": 1,
+            "repeat": [
+              31.333333333333332,
+              31.333333333333332
+            ],
+            "mipmaps": true,
+            "hash": "65fb631662e1f644c069fea0235e7cfd017ca7c2a7b2527458b62a3343376c23"
+          },
+          {
+            "index": 1,
+            "name": "",
+            "kind": "concrete",
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1003,
+            "min": 1004,
+            "anisotropy": 1,
+            "repeat": [
+              31.333333333333332,
+              31.333333333333332
+            ],
+            "mipmaps": true,
+            "hash": "035e0ae214b9c7d179aff2e5fa60fbb61edb00c0efc8b3ed7b9ec18935838707"
+          },
+          {
+            "index": 2,
+            "name": "",
+            "kind": "concrete",
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1003,
+            "min": 1004,
+            "anisotropy": 1,
+            "repeat": [
+              31.333333333333332,
+              31.333333333333332
+            ],
+            "mipmaps": true,
+            "hash": "ec09d7a2fe02d44cbaa973fc4c85a67555e60dca4fa941517b5a7b71d52283d0"
+          },
+          {
+            "index": 3,
+            "name": "",
+            "kind": "painted-steel",
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1003,
+            "min": 1004,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": "806846b815ca3e4a827bda04eef47ef4dc5e74b89d67d50939b0a45c9e273636"
+          },
+          {
+            "index": 4,
+            "name": "",
+            "kind": "painted-steel",
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1003,
+            "min": 1004,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": "4d9f093edc38af3bd8ecfce2e4f6c6f0da2ac86daca1c944b97b03060c7484cc"
+          },
+          {
+            "index": 5,
+            "name": "",
+            "kind": "painted-steel",
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1003,
+            "min": 1004,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": "5e964dd56d3513b6db860c26e1d1248b8b736abc1cf07462c92b0222f7247876"
+          },
+          {
+            "index": 6,
+            "name": "",
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 7,
+            "name": "",
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 8,
+            "name": "",
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 9,
+            "name": "",
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 10,
+            "name": "warehouse-storage-steel-albedo",
+            "kind": "storage-steel",
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1003,
+            "min": 1004,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": "0004ed236443560a301f6ccf80b332764659ef6bee0207b877f26d20d75d299c"
+          },
+          {
+            "index": 11,
+            "name": "warehouse-storage-steel-normal",
+            "kind": "storage-steel",
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1003,
+            "min": 1004,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": "95d134b9c336be34c68947a00fc81bb54aa6324d7153885c86397498aff520b0"
+          },
+          {
+            "index": 12,
+            "name": "warehouse-storage-steel-orm",
+            "kind": "storage-steel",
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1003,
+            "min": 1004,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": "c30b4a310bbf96115f1c14c05be7f1c0df9f9dfa2295337e244343a114f9a9b1"
+          },
+          {
+            "index": 13,
+            "name": "colormap",
+            "kind": null,
+            "size": [
+              512,
+              512
+            ],
+            "mag": 1003,
+            "min": 1004,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 14,
+            "name": "metal",
+            "kind": null,
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1003,
+            "min": 1004,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 15,
+            "name": "truck_alien",
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1003,
+            "min": 1004,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 16,
+            "name": "planks",
+            "kind": null,
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1003,
+            "min": 1004,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 17,
+            "name": "windows",
+            "kind": null,
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1003,
+            "min": 1004,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 18,
+            "name": "wall_lines",
+            "kind": null,
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1003,
+            "min": 1004,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 19,
+            "name": "",
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 20,
+            "name": "",
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 21,
+            "name": "",
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 22,
+            "name": "",
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 23,
+            "name": "",
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 24,
+            "name": "",
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 25,
+            "name": "",
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 26,
+            "name": "",
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 27,
+            "name": "",
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          }
+        ]
+      },
+      "additionalUVBytes": 1152,
+      "shaderPrograms": [
+        14,
+        14
+      ]
+    },
+    {
+      "id": "beginner-36",
+      "quality": "balanced",
+      "before": {
+        "geometryHash": "d49e13f86ee4676f3c421df364dee7e378d089485e42c25e3a2284d40860b8c0",
+        "uvHash": "004f53c917ee81fabb251a764c9c003bd88720a4b17a6637fdea79b1e913c48b",
+        "opacityHash": "f83f36041cf64bff575c344dde1d7ea76e9257b790d724baa7a601000c50ee33",
+        "materialHash": "d704568fc4c7b3e655ff75cff12bac912051ddcf0a235a6100c3676bde24fc01",
+        "mapHash": "c1e3f655897eeb8c6998f06c19e4e3de2020c39da6b01d16a690ccd14ce17aca",
+        "rayHash": "c749044c0af40c1708cc2088b1ba59fc503485babc607f49598de38ea4a356c7",
+        "rayCount": 209,
+        "nodes": 347,
+        "uvBytes": 569664,
+        "storageCount": 6,
+        "plainSteelCount": 2,
+        "claddingCount": 0,
+        "labelCount": 0,
+        "maps": [
+          {
+            "index": 0,
+            "name": "",
+            "kind": "concrete",
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1003,
+            "min": 1004,
+            "anisotropy": 1,
+            "repeat": [
+              31.333333333333332,
+              31.333333333333332
+            ],
+            "mipmaps": true,
+            "hash": "65fb631662e1f644c069fea0235e7cfd017ca7c2a7b2527458b62a3343376c23"
+          },
+          {
+            "index": 1,
+            "name": "",
+            "kind": "concrete",
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1003,
+            "min": 1004,
+            "anisotropy": 1,
+            "repeat": [
+              31.333333333333332,
+              31.333333333333332
+            ],
+            "mipmaps": true,
+            "hash": "035e0ae214b9c7d179aff2e5fa60fbb61edb00c0efc8b3ed7b9ec18935838707"
+          },
+          {
+            "index": 2,
+            "name": "",
+            "kind": "concrete",
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1003,
+            "min": 1004,
+            "anisotropy": 1,
+            "repeat": [
+              31.333333333333332,
+              31.333333333333332
+            ],
+            "mipmaps": true,
+            "hash": "ec09d7a2fe02d44cbaa973fc4c85a67555e60dca4fa941517b5a7b71d52283d0"
+          },
+          {
+            "index": 3,
+            "name": "",
+            "kind": "metal",
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1003,
+            "min": 1004,
+            "anisotropy": 1,
+            "repeat": [
+              3,
+              2
+            ],
+            "mipmaps": true,
+            "hash": "b051f4138dbc82e2f522488999918503938faf0083a8fcc5f355182fa8a0dc32"
+          },
+          {
+            "index": 4,
+            "name": "",
+            "kind": "metal",
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1003,
+            "min": 1004,
+            "anisotropy": 1,
+            "repeat": [
+              3,
+              2
+            ],
+            "mipmaps": true,
+            "hash": "be7f04b0761f29947c1a25c4558e9bc01c8a9ef84cb652e6a4bfe987b21ac2ba"
+          },
+          {
+            "index": 5,
+            "name": "",
+            "kind": "metal",
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1003,
+            "min": 1004,
+            "anisotropy": 1,
+            "repeat": [
+              3,
+              2
+            ],
+            "mipmaps": true,
+            "hash": "8755da5c32ecffbdb89d2ec704d93be67e49bc8518f9cddc66ae76935bb7818f"
+          },
+          {
+            "index": 6,
+            "name": "",
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 7,
+            "name": "",
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 8,
+            "name": "",
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 9,
+            "name": "",
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 10,
+            "name": "",
+            "kind": "metal",
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1003,
+            "min": 1004,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": "b051f4138dbc82e2f522488999918503938faf0083a8fcc5f355182fa8a0dc32"
+          },
+          {
+            "index": 11,
+            "name": "",
+            "kind": "metal",
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1003,
+            "min": 1004,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": "be7f04b0761f29947c1a25c4558e9bc01c8a9ef84cb652e6a4bfe987b21ac2ba"
+          },
+          {
+            "index": 12,
+            "name": "",
+            "kind": "metal",
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1003,
+            "min": 1004,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": "8755da5c32ecffbdb89d2ec704d93be67e49bc8518f9cddc66ae76935bb7818f"
+          },
+          {
+            "index": 13,
+            "name": "colormap",
+            "kind": null,
+            "size": [
+              512,
+              512
+            ],
+            "mag": 1003,
+            "min": 1004,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 14,
+            "name": "metal",
+            "kind": null,
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1003,
+            "min": 1004,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 15,
+            "name": "truck_alien",
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1003,
+            "min": 1004,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 16,
+            "name": "planks",
+            "kind": null,
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1003,
+            "min": 1004,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 17,
+            "name": "windows",
+            "kind": null,
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1003,
+            "min": 1004,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 18,
+            "name": "wall_lines",
+            "kind": null,
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1003,
+            "min": 1004,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 19,
+            "name": "",
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 20,
+            "name": "",
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 21,
+            "name": "",
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 22,
+            "name": "",
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 23,
+            "name": "",
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 24,
+            "name": "",
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 25,
+            "name": "",
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 26,
+            "name": "",
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 27,
+            "name": "",
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          }
+        ]
+      },
+      "after": {
+        "geometryHash": "d49e13f86ee4676f3c421df364dee7e378d089485e42c25e3a2284d40860b8c0",
+        "uvHash": "5909f932de9cea4a3fb2b185a12c679636da074516a37f20ed0c1775b47b9968",
+        "opacityHash": "f83f36041cf64bff575c344dde1d7ea76e9257b790d724baa7a601000c50ee33",
+        "materialHash": "5b2f5fad8f4f9771c88df1167258c9320d63a3bc427e3193d98136ab41104d5a",
+        "mapHash": "dead5175c7b422a64255c37810b51c8615991851bb2b4425aa3a231eacbedb5e",
+        "rayHash": "c749044c0af40c1708cc2088b1ba59fc503485babc607f49598de38ea4a356c7",
+        "rayCount": 209,
+        "nodes": 347,
+        "uvBytes": 570816,
+        "storageCount": 6,
+        "plainSteelCount": 2,
+        "claddingCount": 67,
+        "labelCount": 6,
+        "maps": [
+          {
+            "index": 0,
+            "name": "",
+            "kind": "concrete",
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1003,
+            "min": 1004,
+            "anisotropy": 1,
+            "repeat": [
+              31.333333333333332,
+              31.333333333333332
+            ],
+            "mipmaps": true,
+            "hash": "65fb631662e1f644c069fea0235e7cfd017ca7c2a7b2527458b62a3343376c23"
+          },
+          {
+            "index": 1,
+            "name": "",
+            "kind": "concrete",
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1003,
+            "min": 1004,
+            "anisotropy": 1,
+            "repeat": [
+              31.333333333333332,
+              31.333333333333332
+            ],
+            "mipmaps": true,
+            "hash": "035e0ae214b9c7d179aff2e5fa60fbb61edb00c0efc8b3ed7b9ec18935838707"
+          },
+          {
+            "index": 2,
+            "name": "",
+            "kind": "concrete",
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1003,
+            "min": 1004,
+            "anisotropy": 1,
+            "repeat": [
+              31.333333333333332,
+              31.333333333333332
+            ],
+            "mipmaps": true,
+            "hash": "ec09d7a2fe02d44cbaa973fc4c85a67555e60dca4fa941517b5a7b71d52283d0"
+          },
+          {
+            "index": 3,
+            "name": "",
+            "kind": "painted-steel",
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1003,
+            "min": 1004,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": "806846b815ca3e4a827bda04eef47ef4dc5e74b89d67d50939b0a45c9e273636"
+          },
+          {
+            "index": 4,
+            "name": "",
+            "kind": "painted-steel",
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1003,
+            "min": 1004,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": "4d9f093edc38af3bd8ecfce2e4f6c6f0da2ac86daca1c944b97b03060c7484cc"
+          },
+          {
+            "index": 5,
+            "name": "",
+            "kind": "painted-steel",
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1003,
+            "min": 1004,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": "5e964dd56d3513b6db860c26e1d1248b8b736abc1cf07462c92b0222f7247876"
+          },
+          {
+            "index": 6,
+            "name": "",
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 7,
+            "name": "",
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 8,
+            "name": "",
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 9,
+            "name": "",
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 10,
+            "name": "warehouse-storage-steel-albedo",
+            "kind": "storage-steel",
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1003,
+            "min": 1004,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": "0004ed236443560a301f6ccf80b332764659ef6bee0207b877f26d20d75d299c"
+          },
+          {
+            "index": 11,
+            "name": "warehouse-storage-steel-normal",
+            "kind": "storage-steel",
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1003,
+            "min": 1004,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": "95d134b9c336be34c68947a00fc81bb54aa6324d7153885c86397498aff520b0"
+          },
+          {
+            "index": 12,
+            "name": "warehouse-storage-steel-orm",
+            "kind": "storage-steel",
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1003,
+            "min": 1004,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": "c30b4a310bbf96115f1c14c05be7f1c0df9f9dfa2295337e244343a114f9a9b1"
+          },
+          {
+            "index": 13,
+            "name": "colormap",
+            "kind": null,
+            "size": [
+              512,
+              512
+            ],
+            "mag": 1003,
+            "min": 1004,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 14,
+            "name": "metal",
+            "kind": null,
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1003,
+            "min": 1004,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 15,
+            "name": "truck_alien",
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1003,
+            "min": 1004,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 16,
+            "name": "planks",
+            "kind": null,
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1003,
+            "min": 1004,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 17,
+            "name": "windows",
+            "kind": null,
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1003,
+            "min": 1004,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 18,
+            "name": "wall_lines",
+            "kind": null,
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1003,
+            "min": 1004,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 19,
+            "name": "",
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 20,
+            "name": "",
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 21,
+            "name": "",
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 22,
+            "name": "",
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 23,
+            "name": "",
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 24,
+            "name": "",
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 25,
+            "name": "",
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 26,
+            "name": "",
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 27,
+            "name": "",
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          }
+        ]
+      },
+      "additionalUVBytes": 1152,
+      "shaderPrograms": [
+        18,
+        18
+      ]
+    },
+    {
+      "id": "beginner-36",
+      "quality": "high",
+      "before": {
+        "geometryHash": "7fd15725d53dbd92781b5a3e45f44cc4f8905762364f5784473e2226fafa7270",
+        "uvHash": "004f53c917ee81fabb251a764c9c003bd88720a4b17a6637fdea79b1e913c48b",
+        "opacityHash": "f83f36041cf64bff575c344dde1d7ea76e9257b790d724baa7a601000c50ee33",
+        "materialHash": "d704568fc4c7b3e655ff75cff12bac912051ddcf0a235a6100c3676bde24fc01",
+        "mapHash": "c1e3f655897eeb8c6998f06c19e4e3de2020c39da6b01d16a690ccd14ce17aca",
+        "rayHash": "c749044c0af40c1708cc2088b1ba59fc503485babc607f49598de38ea4a356c7",
+        "rayCount": 209,
+        "nodes": 347,
+        "uvBytes": 569664,
+        "storageCount": 6,
+        "plainSteelCount": 2,
+        "claddingCount": 0,
+        "labelCount": 0,
+        "maps": [
+          {
+            "index": 0,
+            "name": "",
+            "kind": "concrete",
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1003,
+            "min": 1004,
+            "anisotropy": 1,
+            "repeat": [
+              31.333333333333332,
+              31.333333333333332
+            ],
+            "mipmaps": true,
+            "hash": "65fb631662e1f644c069fea0235e7cfd017ca7c2a7b2527458b62a3343376c23"
+          },
+          {
+            "index": 1,
+            "name": "",
+            "kind": "concrete",
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1003,
+            "min": 1004,
+            "anisotropy": 1,
+            "repeat": [
+              31.333333333333332,
+              31.333333333333332
+            ],
+            "mipmaps": true,
+            "hash": "035e0ae214b9c7d179aff2e5fa60fbb61edb00c0efc8b3ed7b9ec18935838707"
+          },
+          {
+            "index": 2,
+            "name": "",
+            "kind": "concrete",
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1003,
+            "min": 1004,
+            "anisotropy": 1,
+            "repeat": [
+              31.333333333333332,
+              31.333333333333332
+            ],
+            "mipmaps": true,
+            "hash": "ec09d7a2fe02d44cbaa973fc4c85a67555e60dca4fa941517b5a7b71d52283d0"
+          },
+          {
+            "index": 3,
+            "name": "",
+            "kind": "metal",
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1003,
+            "min": 1004,
+            "anisotropy": 1,
+            "repeat": [
+              3,
+              2
+            ],
+            "mipmaps": true,
+            "hash": "b051f4138dbc82e2f522488999918503938faf0083a8fcc5f355182fa8a0dc32"
+          },
+          {
+            "index": 4,
+            "name": "",
+            "kind": "metal",
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1003,
+            "min": 1004,
+            "anisotropy": 1,
+            "repeat": [
+              3,
+              2
+            ],
+            "mipmaps": true,
+            "hash": "be7f04b0761f29947c1a25c4558e9bc01c8a9ef84cb652e6a4bfe987b21ac2ba"
+          },
+          {
+            "index": 5,
+            "name": "",
+            "kind": "metal",
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1003,
+            "min": 1004,
+            "anisotropy": 1,
+            "repeat": [
+              3,
+              2
+            ],
+            "mipmaps": true,
+            "hash": "8755da5c32ecffbdb89d2ec704d93be67e49bc8518f9cddc66ae76935bb7818f"
+          },
+          {
+            "index": 6,
+            "name": "",
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 7,
+            "name": "",
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 8,
+            "name": "",
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 9,
+            "name": "",
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 10,
+            "name": "",
+            "kind": "metal",
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1003,
+            "min": 1004,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": "b051f4138dbc82e2f522488999918503938faf0083a8fcc5f355182fa8a0dc32"
+          },
+          {
+            "index": 11,
+            "name": "",
+            "kind": "metal",
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1003,
+            "min": 1004,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": "be7f04b0761f29947c1a25c4558e9bc01c8a9ef84cb652e6a4bfe987b21ac2ba"
+          },
+          {
+            "index": 12,
+            "name": "",
+            "kind": "metal",
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1003,
+            "min": 1004,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": "8755da5c32ecffbdb89d2ec704d93be67e49bc8518f9cddc66ae76935bb7818f"
+          },
+          {
+            "index": 13,
+            "name": "colormap",
+            "kind": null,
+            "size": [
+              512,
+              512
+            ],
+            "mag": 1003,
+            "min": 1004,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 14,
+            "name": "metal",
+            "kind": null,
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1003,
+            "min": 1004,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 15,
+            "name": "truck_alien",
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1003,
+            "min": 1004,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 16,
+            "name": "planks",
+            "kind": null,
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1003,
+            "min": 1004,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 17,
+            "name": "windows",
+            "kind": null,
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1003,
+            "min": 1004,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 18,
+            "name": "wall_lines",
+            "kind": null,
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1003,
+            "min": 1004,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 19,
+            "name": "",
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 20,
+            "name": "",
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 21,
+            "name": "",
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 22,
+            "name": "",
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 23,
+            "name": "",
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 24,
+            "name": "",
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 25,
+            "name": "",
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 26,
+            "name": "",
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 27,
+            "name": "",
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          }
+        ]
+      },
+      "after": {
+        "geometryHash": "7fd15725d53dbd92781b5a3e45f44cc4f8905762364f5784473e2226fafa7270",
+        "uvHash": "5909f932de9cea4a3fb2b185a12c679636da074516a37f20ed0c1775b47b9968",
+        "opacityHash": "f83f36041cf64bff575c344dde1d7ea76e9257b790d724baa7a601000c50ee33",
+        "materialHash": "5b2f5fad8f4f9771c88df1167258c9320d63a3bc427e3193d98136ab41104d5a",
+        "mapHash": "dead5175c7b422a64255c37810b51c8615991851bb2b4425aa3a231eacbedb5e",
+        "rayHash": "c749044c0af40c1708cc2088b1ba59fc503485babc607f49598de38ea4a356c7",
+        "rayCount": 209,
+        "nodes": 347,
+        "uvBytes": 570816,
+        "storageCount": 6,
+        "plainSteelCount": 2,
+        "claddingCount": 67,
+        "labelCount": 6,
+        "maps": [
+          {
+            "index": 0,
+            "name": "",
+            "kind": "concrete",
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1003,
+            "min": 1004,
+            "anisotropy": 1,
+            "repeat": [
+              31.333333333333332,
+              31.333333333333332
+            ],
+            "mipmaps": true,
+            "hash": "65fb631662e1f644c069fea0235e7cfd017ca7c2a7b2527458b62a3343376c23"
+          },
+          {
+            "index": 1,
+            "name": "",
+            "kind": "concrete",
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1003,
+            "min": 1004,
+            "anisotropy": 1,
+            "repeat": [
+              31.333333333333332,
+              31.333333333333332
+            ],
+            "mipmaps": true,
+            "hash": "035e0ae214b9c7d179aff2e5fa60fbb61edb00c0efc8b3ed7b9ec18935838707"
+          },
+          {
+            "index": 2,
+            "name": "",
+            "kind": "concrete",
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1003,
+            "min": 1004,
+            "anisotropy": 1,
+            "repeat": [
+              31.333333333333332,
+              31.333333333333332
+            ],
+            "mipmaps": true,
+            "hash": "ec09d7a2fe02d44cbaa973fc4c85a67555e60dca4fa941517b5a7b71d52283d0"
+          },
+          {
+            "index": 3,
+            "name": "",
+            "kind": "painted-steel",
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1003,
+            "min": 1004,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": "806846b815ca3e4a827bda04eef47ef4dc5e74b89d67d50939b0a45c9e273636"
+          },
+          {
+            "index": 4,
+            "name": "",
+            "kind": "painted-steel",
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1003,
+            "min": 1004,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": "4d9f093edc38af3bd8ecfce2e4f6c6f0da2ac86daca1c944b97b03060c7484cc"
+          },
+          {
+            "index": 5,
+            "name": "",
+            "kind": "painted-steel",
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1003,
+            "min": 1004,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": "5e964dd56d3513b6db860c26e1d1248b8b736abc1cf07462c92b0222f7247876"
+          },
+          {
+            "index": 6,
+            "name": "",
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 7,
+            "name": "",
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 8,
+            "name": "",
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 9,
+            "name": "",
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 10,
+            "name": "warehouse-storage-steel-albedo",
+            "kind": "storage-steel",
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1003,
+            "min": 1004,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": "0004ed236443560a301f6ccf80b332764659ef6bee0207b877f26d20d75d299c"
+          },
+          {
+            "index": 11,
+            "name": "warehouse-storage-steel-normal",
+            "kind": "storage-steel",
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1003,
+            "min": 1004,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": "95d134b9c336be34c68947a00fc81bb54aa6324d7153885c86397498aff520b0"
+          },
+          {
+            "index": 12,
+            "name": "warehouse-storage-steel-orm",
+            "kind": "storage-steel",
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1003,
+            "min": 1004,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": "c30b4a310bbf96115f1c14c05be7f1c0df9f9dfa2295337e244343a114f9a9b1"
+          },
+          {
+            "index": 13,
+            "name": "colormap",
+            "kind": null,
+            "size": [
+              512,
+              512
+            ],
+            "mag": 1003,
+            "min": 1004,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 14,
+            "name": "metal",
+            "kind": null,
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1003,
+            "min": 1004,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 15,
+            "name": "truck_alien",
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1003,
+            "min": 1004,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 16,
+            "name": "planks",
+            "kind": null,
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1003,
+            "min": 1004,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 17,
+            "name": "windows",
+            "kind": null,
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1003,
+            "min": 1004,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 18,
+            "name": "wall_lines",
+            "kind": null,
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1003,
+            "min": 1004,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 19,
+            "name": "",
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 20,
+            "name": "",
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 21,
+            "name": "",
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 22,
+            "name": "",
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 23,
+            "name": "",
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 24,
+            "name": "",
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 25,
+            "name": "",
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 26,
+            "name": "",
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 27,
+            "name": "",
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          }
+        ]
+      },
+      "additionalUVBytes": 1152,
+      "shaderPrograms": [
+        18,
+        18
+      ]
+    },
+    {
+      "id": "beginner-38",
+      "quality": "low",
+      "before": {
+        "geometryHash": "cb00437ba217187f512b44237aaa73821d0a9142b50310ef5c74a13b448dce1c",
+        "uvHash": "27708edf3becec247e6df23609040613a5df1df16016d8ce9bf792816814dcda",
+        "opacityHash": "2b5b745cd2ed6a38b721a22dcaf086b75733076926139c16bf6b62ec851b69ba",
+        "materialHash": "4bd898e5b18eede806dee8349ce2e190720b6f3e12c74ee3451876ec2b2821f5",
+        "mapHash": "c1e3f655897eeb8c6998f06c19e4e3de2020c39da6b01d16a690ccd14ce17aca",
+        "rayHash": "6093a89724472265ce11c6d653318af261f5627801766987dda7942744154232",
+        "rayCount": 183,
+        "nodes": 344,
+        "uvBytes": 569472,
+        "storageCount": 6,
+        "plainSteelCount": 1,
+        "claddingCount": 0,
+        "labelCount": 0,
+        "maps": [
+          {
+            "index": 0,
+            "name": "",
+            "kind": "concrete",
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1003,
+            "min": 1004,
+            "anisotropy": 1,
+            "repeat": [
+              31.333333333333332,
+              31.333333333333332
+            ],
+            "mipmaps": true,
+            "hash": "65fb631662e1f644c069fea0235e7cfd017ca7c2a7b2527458b62a3343376c23"
+          },
+          {
+            "index": 1,
+            "name": "",
+            "kind": "concrete",
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1003,
+            "min": 1004,
+            "anisotropy": 1,
+            "repeat": [
+              31.333333333333332,
+              31.333333333333332
+            ],
+            "mipmaps": true,
+            "hash": "035e0ae214b9c7d179aff2e5fa60fbb61edb00c0efc8b3ed7b9ec18935838707"
+          },
+          {
+            "index": 2,
+            "name": "",
+            "kind": "concrete",
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1003,
+            "min": 1004,
+            "anisotropy": 1,
+            "repeat": [
+              31.333333333333332,
+              31.333333333333332
+            ],
+            "mipmaps": true,
+            "hash": "ec09d7a2fe02d44cbaa973fc4c85a67555e60dca4fa941517b5a7b71d52283d0"
+          },
+          {
+            "index": 3,
+            "name": "",
+            "kind": "metal",
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1003,
+            "min": 1004,
+            "anisotropy": 1,
+            "repeat": [
+              3,
+              2
+            ],
+            "mipmaps": true,
+            "hash": "b051f4138dbc82e2f522488999918503938faf0083a8fcc5f355182fa8a0dc32"
+          },
+          {
+            "index": 4,
+            "name": "",
+            "kind": "metal",
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1003,
+            "min": 1004,
+            "anisotropy": 1,
+            "repeat": [
+              3,
+              2
+            ],
+            "mipmaps": true,
+            "hash": "be7f04b0761f29947c1a25c4558e9bc01c8a9ef84cb652e6a4bfe987b21ac2ba"
+          },
+          {
+            "index": 5,
+            "name": "",
+            "kind": "metal",
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1003,
+            "min": 1004,
+            "anisotropy": 1,
+            "repeat": [
+              3,
+              2
+            ],
+            "mipmaps": true,
+            "hash": "8755da5c32ecffbdb89d2ec704d93be67e49bc8518f9cddc66ae76935bb7818f"
+          },
+          {
+            "index": 6,
+            "name": "",
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 7,
+            "name": "",
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 8,
+            "name": "",
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 9,
+            "name": "",
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 10,
+            "name": "",
+            "kind": "metal",
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1003,
+            "min": 1004,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": "b051f4138dbc82e2f522488999918503938faf0083a8fcc5f355182fa8a0dc32"
+          },
+          {
+            "index": 11,
+            "name": "",
+            "kind": "metal",
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1003,
+            "min": 1004,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": "be7f04b0761f29947c1a25c4558e9bc01c8a9ef84cb652e6a4bfe987b21ac2ba"
+          },
+          {
+            "index": 12,
+            "name": "",
+            "kind": "metal",
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1003,
+            "min": 1004,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": "8755da5c32ecffbdb89d2ec704d93be67e49bc8518f9cddc66ae76935bb7818f"
+          },
+          {
+            "index": 13,
+            "name": "colormap",
+            "kind": null,
+            "size": [
+              512,
+              512
+            ],
+            "mag": 1003,
+            "min": 1004,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 14,
+            "name": "metal",
+            "kind": null,
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1003,
+            "min": 1004,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 15,
+            "name": "truck_alien",
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1003,
+            "min": 1004,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 16,
+            "name": "planks",
+            "kind": null,
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1003,
+            "min": 1004,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 17,
+            "name": "windows",
+            "kind": null,
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1003,
+            "min": 1004,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 18,
+            "name": "wall_lines",
+            "kind": null,
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1003,
+            "min": 1004,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 19,
+            "name": "",
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 20,
+            "name": "",
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 21,
+            "name": "",
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 22,
+            "name": "",
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 23,
+            "name": "",
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 24,
+            "name": "",
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 25,
+            "name": "",
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 26,
+            "name": "",
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 27,
+            "name": "",
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          }
+        ]
+      },
+      "after": {
+        "geometryHash": "cb00437ba217187f512b44237aaa73821d0a9142b50310ef5c74a13b448dce1c",
+        "uvHash": "f48a0cdd4e589412fdfeefc4c039dcf3f6554fb2b110018244d344ecb2b6e45f",
+        "opacityHash": "2b5b745cd2ed6a38b721a22dcaf086b75733076926139c16bf6b62ec851b69ba",
+        "materialHash": "8bcc6ee1a444cabc80213fedd2f34aa3ba7e039b656fe3cbc889fde1582521ff",
+        "mapHash": "dead5175c7b422a64255c37810b51c8615991851bb2b4425aa3a231eacbedb5e",
+        "rayHash": "6093a89724472265ce11c6d653318af261f5627801766987dda7942744154232",
+        "rayCount": 183,
+        "nodes": 344,
+        "uvBytes": 570624,
+        "storageCount": 6,
+        "plainSteelCount": 1,
+        "claddingCount": 67,
+        "labelCount": 6,
+        "maps": [
+          {
+            "index": 0,
+            "name": "",
+            "kind": "concrete",
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1003,
+            "min": 1004,
+            "anisotropy": 1,
+            "repeat": [
+              31.333333333333332,
+              31.333333333333332
+            ],
+            "mipmaps": true,
+            "hash": "65fb631662e1f644c069fea0235e7cfd017ca7c2a7b2527458b62a3343376c23"
+          },
+          {
+            "index": 1,
+            "name": "",
+            "kind": "concrete",
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1003,
+            "min": 1004,
+            "anisotropy": 1,
+            "repeat": [
+              31.333333333333332,
+              31.333333333333332
+            ],
+            "mipmaps": true,
+            "hash": "035e0ae214b9c7d179aff2e5fa60fbb61edb00c0efc8b3ed7b9ec18935838707"
+          },
+          {
+            "index": 2,
+            "name": "",
+            "kind": "concrete",
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1003,
+            "min": 1004,
+            "anisotropy": 1,
+            "repeat": [
+              31.333333333333332,
+              31.333333333333332
+            ],
+            "mipmaps": true,
+            "hash": "ec09d7a2fe02d44cbaa973fc4c85a67555e60dca4fa941517b5a7b71d52283d0"
+          },
+          {
+            "index": 3,
+            "name": "",
+            "kind": "painted-steel",
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1003,
+            "min": 1004,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": "806846b815ca3e4a827bda04eef47ef4dc5e74b89d67d50939b0a45c9e273636"
+          },
+          {
+            "index": 4,
+            "name": "",
+            "kind": "painted-steel",
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1003,
+            "min": 1004,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": "4d9f093edc38af3bd8ecfce2e4f6c6f0da2ac86daca1c944b97b03060c7484cc"
+          },
+          {
+            "index": 5,
+            "name": "",
+            "kind": "painted-steel",
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1003,
+            "min": 1004,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": "5e964dd56d3513b6db860c26e1d1248b8b736abc1cf07462c92b0222f7247876"
+          },
+          {
+            "index": 6,
+            "name": "",
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 7,
+            "name": "",
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 8,
+            "name": "",
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 9,
+            "name": "",
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 10,
+            "name": "warehouse-storage-steel-albedo",
+            "kind": "storage-steel",
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1003,
+            "min": 1004,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": "0004ed236443560a301f6ccf80b332764659ef6bee0207b877f26d20d75d299c"
+          },
+          {
+            "index": 11,
+            "name": "warehouse-storage-steel-normal",
+            "kind": "storage-steel",
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1003,
+            "min": 1004,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": "95d134b9c336be34c68947a00fc81bb54aa6324d7153885c86397498aff520b0"
+          },
+          {
+            "index": 12,
+            "name": "warehouse-storage-steel-orm",
+            "kind": "storage-steel",
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1003,
+            "min": 1004,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": "c30b4a310bbf96115f1c14c05be7f1c0df9f9dfa2295337e244343a114f9a9b1"
+          },
+          {
+            "index": 13,
+            "name": "colormap",
+            "kind": null,
+            "size": [
+              512,
+              512
+            ],
+            "mag": 1003,
+            "min": 1004,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 14,
+            "name": "metal",
+            "kind": null,
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1003,
+            "min": 1004,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 15,
+            "name": "truck_alien",
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1003,
+            "min": 1004,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 16,
+            "name": "planks",
+            "kind": null,
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1003,
+            "min": 1004,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 17,
+            "name": "windows",
+            "kind": null,
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1003,
+            "min": 1004,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 18,
+            "name": "wall_lines",
+            "kind": null,
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1003,
+            "min": 1004,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 19,
+            "name": "",
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 20,
+            "name": "",
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 21,
+            "name": "",
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 22,
+            "name": "",
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 23,
+            "name": "",
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 24,
+            "name": "",
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 25,
+            "name": "",
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 26,
+            "name": "",
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 27,
+            "name": "",
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          }
+        ]
+      },
+      "additionalUVBytes": 1152,
+      "shaderPrograms": [
+        14,
+        14
+      ]
+    },
+    {
+      "id": "beginner-38",
+      "quality": "balanced",
+      "before": {
+        "geometryHash": "027beb8a3f519d59ac1f42c1f81dc211b71f17ba37452e9cd2ecede7ddef3d80",
+        "uvHash": "27708edf3becec247e6df23609040613a5df1df16016d8ce9bf792816814dcda",
+        "opacityHash": "2b5b745cd2ed6a38b721a22dcaf086b75733076926139c16bf6b62ec851b69ba",
+        "materialHash": "4bd898e5b18eede806dee8349ce2e190720b6f3e12c74ee3451876ec2b2821f5",
+        "mapHash": "c1e3f655897eeb8c6998f06c19e4e3de2020c39da6b01d16a690ccd14ce17aca",
+        "rayHash": "6093a89724472265ce11c6d653318af261f5627801766987dda7942744154232",
+        "rayCount": 183,
+        "nodes": 344,
+        "uvBytes": 569472,
+        "storageCount": 6,
+        "plainSteelCount": 1,
+        "claddingCount": 0,
+        "labelCount": 0,
+        "maps": [
+          {
+            "index": 0,
+            "name": "",
+            "kind": "concrete",
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1003,
+            "min": 1004,
+            "anisotropy": 1,
+            "repeat": [
+              31.333333333333332,
+              31.333333333333332
+            ],
+            "mipmaps": true,
+            "hash": "65fb631662e1f644c069fea0235e7cfd017ca7c2a7b2527458b62a3343376c23"
+          },
+          {
+            "index": 1,
+            "name": "",
+            "kind": "concrete",
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1003,
+            "min": 1004,
+            "anisotropy": 1,
+            "repeat": [
+              31.333333333333332,
+              31.333333333333332
+            ],
+            "mipmaps": true,
+            "hash": "035e0ae214b9c7d179aff2e5fa60fbb61edb00c0efc8b3ed7b9ec18935838707"
+          },
+          {
+            "index": 2,
+            "name": "",
+            "kind": "concrete",
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1003,
+            "min": 1004,
+            "anisotropy": 1,
+            "repeat": [
+              31.333333333333332,
+              31.333333333333332
+            ],
+            "mipmaps": true,
+            "hash": "ec09d7a2fe02d44cbaa973fc4c85a67555e60dca4fa941517b5a7b71d52283d0"
+          },
+          {
+            "index": 3,
+            "name": "",
+            "kind": "metal",
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1003,
+            "min": 1004,
+            "anisotropy": 1,
+            "repeat": [
+              3,
+              2
+            ],
+            "mipmaps": true,
+            "hash": "b051f4138dbc82e2f522488999918503938faf0083a8fcc5f355182fa8a0dc32"
+          },
+          {
+            "index": 4,
+            "name": "",
+            "kind": "metal",
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1003,
+            "min": 1004,
+            "anisotropy": 1,
+            "repeat": [
+              3,
+              2
+            ],
+            "mipmaps": true,
+            "hash": "be7f04b0761f29947c1a25c4558e9bc01c8a9ef84cb652e6a4bfe987b21ac2ba"
+          },
+          {
+            "index": 5,
+            "name": "",
+            "kind": "metal",
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1003,
+            "min": 1004,
+            "anisotropy": 1,
+            "repeat": [
+              3,
+              2
+            ],
+            "mipmaps": true,
+            "hash": "8755da5c32ecffbdb89d2ec704d93be67e49bc8518f9cddc66ae76935bb7818f"
+          },
+          {
+            "index": 6,
+            "name": "",
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 7,
+            "name": "",
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 8,
+            "name": "",
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 9,
+            "name": "",
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 10,
+            "name": "",
+            "kind": "metal",
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1003,
+            "min": 1004,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": "b051f4138dbc82e2f522488999918503938faf0083a8fcc5f355182fa8a0dc32"
+          },
+          {
+            "index": 11,
+            "name": "",
+            "kind": "metal",
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1003,
+            "min": 1004,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": "be7f04b0761f29947c1a25c4558e9bc01c8a9ef84cb652e6a4bfe987b21ac2ba"
+          },
+          {
+            "index": 12,
+            "name": "",
+            "kind": "metal",
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1003,
+            "min": 1004,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": "8755da5c32ecffbdb89d2ec704d93be67e49bc8518f9cddc66ae76935bb7818f"
+          },
+          {
+            "index": 13,
+            "name": "colormap",
+            "kind": null,
+            "size": [
+              512,
+              512
+            ],
+            "mag": 1003,
+            "min": 1004,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 14,
+            "name": "metal",
+            "kind": null,
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1003,
+            "min": 1004,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 15,
+            "name": "truck_alien",
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1003,
+            "min": 1004,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 16,
+            "name": "planks",
+            "kind": null,
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1003,
+            "min": 1004,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 17,
+            "name": "windows",
+            "kind": null,
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1003,
+            "min": 1004,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 18,
+            "name": "wall_lines",
+            "kind": null,
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1003,
+            "min": 1004,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 19,
+            "name": "",
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 20,
+            "name": "",
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 21,
+            "name": "",
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 22,
+            "name": "",
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 23,
+            "name": "",
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 24,
+            "name": "",
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 25,
+            "name": "",
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 26,
+            "name": "",
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 27,
+            "name": "",
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          }
+        ]
+      },
+      "after": {
+        "geometryHash": "027beb8a3f519d59ac1f42c1f81dc211b71f17ba37452e9cd2ecede7ddef3d80",
+        "uvHash": "f48a0cdd4e589412fdfeefc4c039dcf3f6554fb2b110018244d344ecb2b6e45f",
+        "opacityHash": "2b5b745cd2ed6a38b721a22dcaf086b75733076926139c16bf6b62ec851b69ba",
+        "materialHash": "8bcc6ee1a444cabc80213fedd2f34aa3ba7e039b656fe3cbc889fde1582521ff",
+        "mapHash": "dead5175c7b422a64255c37810b51c8615991851bb2b4425aa3a231eacbedb5e",
+        "rayHash": "6093a89724472265ce11c6d653318af261f5627801766987dda7942744154232",
+        "rayCount": 183,
+        "nodes": 344,
+        "uvBytes": 570624,
+        "storageCount": 6,
+        "plainSteelCount": 1,
+        "claddingCount": 67,
+        "labelCount": 6,
+        "maps": [
+          {
+            "index": 0,
+            "name": "",
+            "kind": "concrete",
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1003,
+            "min": 1004,
+            "anisotropy": 1,
+            "repeat": [
+              31.333333333333332,
+              31.333333333333332
+            ],
+            "mipmaps": true,
+            "hash": "65fb631662e1f644c069fea0235e7cfd017ca7c2a7b2527458b62a3343376c23"
+          },
+          {
+            "index": 1,
+            "name": "",
+            "kind": "concrete",
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1003,
+            "min": 1004,
+            "anisotropy": 1,
+            "repeat": [
+              31.333333333333332,
+              31.333333333333332
+            ],
+            "mipmaps": true,
+            "hash": "035e0ae214b9c7d179aff2e5fa60fbb61edb00c0efc8b3ed7b9ec18935838707"
+          },
+          {
+            "index": 2,
+            "name": "",
+            "kind": "concrete",
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1003,
+            "min": 1004,
+            "anisotropy": 1,
+            "repeat": [
+              31.333333333333332,
+              31.333333333333332
+            ],
+            "mipmaps": true,
+            "hash": "ec09d7a2fe02d44cbaa973fc4c85a67555e60dca4fa941517b5a7b71d52283d0"
+          },
+          {
+            "index": 3,
+            "name": "",
+            "kind": "painted-steel",
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1003,
+            "min": 1004,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": "806846b815ca3e4a827bda04eef47ef4dc5e74b89d67d50939b0a45c9e273636"
+          },
+          {
+            "index": 4,
+            "name": "",
+            "kind": "painted-steel",
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1003,
+            "min": 1004,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": "4d9f093edc38af3bd8ecfce2e4f6c6f0da2ac86daca1c944b97b03060c7484cc"
+          },
+          {
+            "index": 5,
+            "name": "",
+            "kind": "painted-steel",
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1003,
+            "min": 1004,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": "5e964dd56d3513b6db860c26e1d1248b8b736abc1cf07462c92b0222f7247876"
+          },
+          {
+            "index": 6,
+            "name": "",
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 7,
+            "name": "",
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 8,
+            "name": "",
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 9,
+            "name": "",
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 10,
+            "name": "warehouse-storage-steel-albedo",
+            "kind": "storage-steel",
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1003,
+            "min": 1004,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": "0004ed236443560a301f6ccf80b332764659ef6bee0207b877f26d20d75d299c"
+          },
+          {
+            "index": 11,
+            "name": "warehouse-storage-steel-normal",
+            "kind": "storage-steel",
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1003,
+            "min": 1004,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": "95d134b9c336be34c68947a00fc81bb54aa6324d7153885c86397498aff520b0"
+          },
+          {
+            "index": 12,
+            "name": "warehouse-storage-steel-orm",
+            "kind": "storage-steel",
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1003,
+            "min": 1004,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": "c30b4a310bbf96115f1c14c05be7f1c0df9f9dfa2295337e244343a114f9a9b1"
+          },
+          {
+            "index": 13,
+            "name": "colormap",
+            "kind": null,
+            "size": [
+              512,
+              512
+            ],
+            "mag": 1003,
+            "min": 1004,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 14,
+            "name": "metal",
+            "kind": null,
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1003,
+            "min": 1004,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 15,
+            "name": "truck_alien",
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1003,
+            "min": 1004,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 16,
+            "name": "planks",
+            "kind": null,
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1003,
+            "min": 1004,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 17,
+            "name": "windows",
+            "kind": null,
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1003,
+            "min": 1004,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 18,
+            "name": "wall_lines",
+            "kind": null,
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1003,
+            "min": 1004,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 19,
+            "name": "",
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 20,
+            "name": "",
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 21,
+            "name": "",
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 22,
+            "name": "",
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 23,
+            "name": "",
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 24,
+            "name": "",
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 25,
+            "name": "",
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 26,
+            "name": "",
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 27,
+            "name": "",
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          }
+        ]
+      },
+      "additionalUVBytes": 1152,
+      "shaderPrograms": [
+        18,
+        18
+      ]
+    },
+    {
+      "id": "beginner-38",
+      "quality": "high",
+      "before": {
+        "geometryHash": "2dbe407299c5f952cc9910d7050e9ed67a0e4568edff4a0e074d62be749ec9b5",
+        "uvHash": "27708edf3becec247e6df23609040613a5df1df16016d8ce9bf792816814dcda",
+        "opacityHash": "2b5b745cd2ed6a38b721a22dcaf086b75733076926139c16bf6b62ec851b69ba",
+        "materialHash": "4bd898e5b18eede806dee8349ce2e190720b6f3e12c74ee3451876ec2b2821f5",
+        "mapHash": "c1e3f655897eeb8c6998f06c19e4e3de2020c39da6b01d16a690ccd14ce17aca",
+        "rayHash": "6093a89724472265ce11c6d653318af261f5627801766987dda7942744154232",
+        "rayCount": 183,
+        "nodes": 344,
+        "uvBytes": 569472,
+        "storageCount": 6,
+        "plainSteelCount": 1,
+        "claddingCount": 0,
+        "labelCount": 0,
+        "maps": [
+          {
+            "index": 0,
+            "name": "",
+            "kind": "concrete",
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1003,
+            "min": 1004,
+            "anisotropy": 1,
+            "repeat": [
+              31.333333333333332,
+              31.333333333333332
+            ],
+            "mipmaps": true,
+            "hash": "65fb631662e1f644c069fea0235e7cfd017ca7c2a7b2527458b62a3343376c23"
+          },
+          {
+            "index": 1,
+            "name": "",
+            "kind": "concrete",
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1003,
+            "min": 1004,
+            "anisotropy": 1,
+            "repeat": [
+              31.333333333333332,
+              31.333333333333332
+            ],
+            "mipmaps": true,
+            "hash": "035e0ae214b9c7d179aff2e5fa60fbb61edb00c0efc8b3ed7b9ec18935838707"
+          },
+          {
+            "index": 2,
+            "name": "",
+            "kind": "concrete",
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1003,
+            "min": 1004,
+            "anisotropy": 1,
+            "repeat": [
+              31.333333333333332,
+              31.333333333333332
+            ],
+            "mipmaps": true,
+            "hash": "ec09d7a2fe02d44cbaa973fc4c85a67555e60dca4fa941517b5a7b71d52283d0"
+          },
+          {
+            "index": 3,
+            "name": "",
+            "kind": "metal",
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1003,
+            "min": 1004,
+            "anisotropy": 1,
+            "repeat": [
+              3,
+              2
+            ],
+            "mipmaps": true,
+            "hash": "b051f4138dbc82e2f522488999918503938faf0083a8fcc5f355182fa8a0dc32"
+          },
+          {
+            "index": 4,
+            "name": "",
+            "kind": "metal",
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1003,
+            "min": 1004,
+            "anisotropy": 1,
+            "repeat": [
+              3,
+              2
+            ],
+            "mipmaps": true,
+            "hash": "be7f04b0761f29947c1a25c4558e9bc01c8a9ef84cb652e6a4bfe987b21ac2ba"
+          },
+          {
+            "index": 5,
+            "name": "",
+            "kind": "metal",
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1003,
+            "min": 1004,
+            "anisotropy": 1,
+            "repeat": [
+              3,
+              2
+            ],
+            "mipmaps": true,
+            "hash": "8755da5c32ecffbdb89d2ec704d93be67e49bc8518f9cddc66ae76935bb7818f"
+          },
+          {
+            "index": 6,
+            "name": "",
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 7,
+            "name": "",
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 8,
+            "name": "",
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 9,
+            "name": "",
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 10,
+            "name": "",
+            "kind": "metal",
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1003,
+            "min": 1004,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": "b051f4138dbc82e2f522488999918503938faf0083a8fcc5f355182fa8a0dc32"
+          },
+          {
+            "index": 11,
+            "name": "",
+            "kind": "metal",
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1003,
+            "min": 1004,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": "be7f04b0761f29947c1a25c4558e9bc01c8a9ef84cb652e6a4bfe987b21ac2ba"
+          },
+          {
+            "index": 12,
+            "name": "",
+            "kind": "metal",
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1003,
+            "min": 1004,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": "8755da5c32ecffbdb89d2ec704d93be67e49bc8518f9cddc66ae76935bb7818f"
+          },
+          {
+            "index": 13,
+            "name": "colormap",
+            "kind": null,
+            "size": [
+              512,
+              512
+            ],
+            "mag": 1003,
+            "min": 1004,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 14,
+            "name": "metal",
+            "kind": null,
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1003,
+            "min": 1004,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 15,
+            "name": "truck_alien",
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1003,
+            "min": 1004,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 16,
+            "name": "planks",
+            "kind": null,
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1003,
+            "min": 1004,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 17,
+            "name": "windows",
+            "kind": null,
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1003,
+            "min": 1004,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 18,
+            "name": "wall_lines",
+            "kind": null,
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1003,
+            "min": 1004,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 19,
+            "name": "",
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 20,
+            "name": "",
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 21,
+            "name": "",
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 22,
+            "name": "",
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 23,
+            "name": "",
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 24,
+            "name": "",
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 25,
+            "name": "",
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 26,
+            "name": "",
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 27,
+            "name": "",
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          }
+        ]
+      },
+      "after": {
+        "geometryHash": "2dbe407299c5f952cc9910d7050e9ed67a0e4568edff4a0e074d62be749ec9b5",
+        "uvHash": "f48a0cdd4e589412fdfeefc4c039dcf3f6554fb2b110018244d344ecb2b6e45f",
+        "opacityHash": "2b5b745cd2ed6a38b721a22dcaf086b75733076926139c16bf6b62ec851b69ba",
+        "materialHash": "8bcc6ee1a444cabc80213fedd2f34aa3ba7e039b656fe3cbc889fde1582521ff",
+        "mapHash": "dead5175c7b422a64255c37810b51c8615991851bb2b4425aa3a231eacbedb5e",
+        "rayHash": "6093a89724472265ce11c6d653318af261f5627801766987dda7942744154232",
+        "rayCount": 183,
+        "nodes": 344,
+        "uvBytes": 570624,
+        "storageCount": 6,
+        "plainSteelCount": 1,
+        "claddingCount": 67,
+        "labelCount": 6,
+        "maps": [
+          {
+            "index": 0,
+            "name": "",
+            "kind": "concrete",
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1003,
+            "min": 1004,
+            "anisotropy": 1,
+            "repeat": [
+              31.333333333333332,
+              31.333333333333332
+            ],
+            "mipmaps": true,
+            "hash": "65fb631662e1f644c069fea0235e7cfd017ca7c2a7b2527458b62a3343376c23"
+          },
+          {
+            "index": 1,
+            "name": "",
+            "kind": "concrete",
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1003,
+            "min": 1004,
+            "anisotropy": 1,
+            "repeat": [
+              31.333333333333332,
+              31.333333333333332
+            ],
+            "mipmaps": true,
+            "hash": "035e0ae214b9c7d179aff2e5fa60fbb61edb00c0efc8b3ed7b9ec18935838707"
+          },
+          {
+            "index": 2,
+            "name": "",
+            "kind": "concrete",
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1003,
+            "min": 1004,
+            "anisotropy": 1,
+            "repeat": [
+              31.333333333333332,
+              31.333333333333332
+            ],
+            "mipmaps": true,
+            "hash": "ec09d7a2fe02d44cbaa973fc4c85a67555e60dca4fa941517b5a7b71d52283d0"
+          },
+          {
+            "index": 3,
+            "name": "",
+            "kind": "painted-steel",
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1003,
+            "min": 1004,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": "806846b815ca3e4a827bda04eef47ef4dc5e74b89d67d50939b0a45c9e273636"
+          },
+          {
+            "index": 4,
+            "name": "",
+            "kind": "painted-steel",
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1003,
+            "min": 1004,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": "4d9f093edc38af3bd8ecfce2e4f6c6f0da2ac86daca1c944b97b03060c7484cc"
+          },
+          {
+            "index": 5,
+            "name": "",
+            "kind": "painted-steel",
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1003,
+            "min": 1004,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": "5e964dd56d3513b6db860c26e1d1248b8b736abc1cf07462c92b0222f7247876"
+          },
+          {
+            "index": 6,
+            "name": "",
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 7,
+            "name": "",
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 8,
+            "name": "",
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 9,
+            "name": "",
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 10,
+            "name": "warehouse-storage-steel-albedo",
+            "kind": "storage-steel",
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1003,
+            "min": 1004,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": "0004ed236443560a301f6ccf80b332764659ef6bee0207b877f26d20d75d299c"
+          },
+          {
+            "index": 11,
+            "name": "warehouse-storage-steel-normal",
+            "kind": "storage-steel",
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1003,
+            "min": 1004,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": "95d134b9c336be34c68947a00fc81bb54aa6324d7153885c86397498aff520b0"
+          },
+          {
+            "index": 12,
+            "name": "warehouse-storage-steel-orm",
+            "kind": "storage-steel",
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1003,
+            "min": 1004,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": "c30b4a310bbf96115f1c14c05be7f1c0df9f9dfa2295337e244343a114f9a9b1"
+          },
+          {
+            "index": 13,
+            "name": "colormap",
+            "kind": null,
+            "size": [
+              512,
+              512
+            ],
+            "mag": 1003,
+            "min": 1004,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 14,
+            "name": "metal",
+            "kind": null,
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1003,
+            "min": 1004,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 15,
+            "name": "truck_alien",
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1003,
+            "min": 1004,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 16,
+            "name": "planks",
+            "kind": null,
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1003,
+            "min": 1004,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 17,
+            "name": "windows",
+            "kind": null,
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1003,
+            "min": 1004,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 18,
+            "name": "wall_lines",
+            "kind": null,
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1003,
+            "min": 1004,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 19,
+            "name": "",
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 20,
+            "name": "",
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 21,
+            "name": "",
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 22,
+            "name": "",
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 23,
+            "name": "",
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 24,
+            "name": "",
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 25,
+            "name": "",
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 26,
+            "name": "",
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 27,
+            "name": "",
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          }
+        ]
+      },
+      "additionalUVBytes": 1152,
+      "shaderPrograms": [
+        18,
+        18
+      ]
+    }
+  ],
+  "resourceCycles": [
+    {
+      "courtyard-01/low": [
+        {
+          "registered": {
+            "geometries": 197,
+            "materials": 130,
+            "textures": 34
+          },
+          "geometries": 40,
+          "textures": 26,
+          "programs": 12
+        },
+        {
+          "registered": {
+            "geometries": 197,
+            "materials": 130,
+            "textures": 34
+          },
+          "geometries": 40,
+          "textures": 26,
+          "programs": 12
+        }
+      ],
+      "courtyard-01/balanced": [
+        {
+          "registered": {
+            "geometries": 199,
+            "materials": 132,
+            "textures": 37
+          },
+          "geometries": 52,
+          "textures": 28,
+          "programs": 15
+        },
+        {
+          "registered": {
+            "geometries": 199,
+            "materials": 132,
+            "textures": 37
+          },
+          "geometries": 52,
+          "textures": 28,
+          "programs": 15
+        }
+      ],
+      "courtyard-01/high": [
+        {
+          "registered": {
+            "geometries": 245,
+            "materials": 138,
+            "textures": 37
+          },
+          "geometries": 59,
+          "textures": 28,
+          "programs": 15
+        },
+        {
+          "registered": {
+            "geometries": 245,
+            "materials": 138,
+            "textures": 37
+          },
+          "geometries": 59,
+          "textures": 28,
+          "programs": 15
+        }
+      ],
+      "warehouse-07/low": [
+        {
+          "registered": {
+            "geometries": 222,
+            "materials": 143,
+            "textures": 25
+          },
+          "geometries": 62,
+          "textures": 18,
+          "programs": 12
+        },
+        {
+          "registered": {
+            "geometries": 222,
+            "materials": 143,
+            "textures": 25
+          },
+          "geometries": 62,
+          "textures": 18,
+          "programs": 12
+        }
+      ],
+      "warehouse-07/balanced": [
+        {
+          "registered": {
+            "geometries": 222,
+            "materials": 147,
+            "textures": 28
+          },
+          "geometries": 141,
+          "textures": 21,
+          "programs": 16
+        },
+        {
+          "registered": {
+            "geometries": 222,
+            "materials": 147,
+            "textures": 28
+          },
+          "geometries": 141,
+          "textures": 21,
+          "programs": 16
+        }
+      ],
+      "warehouse-07/high": [
+        {
+          "registered": {
+            "geometries": 264,
+            "materials": 153,
+            "textures": 28
+          },
+          "geometries": 143,
+          "textures": 21,
+          "programs": 16
+        },
+        {
+          "registered": {
+            "geometries": 264,
+            "materials": 153,
+            "textures": 28
+          },
+          "geometries": 143,
+          "textures": 21,
+          "programs": 16
+        }
+      ]
+    },
+    {
+      "courtyard-01/low": [
+        {
+          "registered": {
+            "geometries": 197,
+            "materials": 130,
+            "textures": 34
+          },
+          "geometries": 40,
+          "textures": 26,
+          "programs": 12
+        },
+        {
+          "registered": {
+            "geometries": 197,
+            "materials": 130,
+            "textures": 34
+          },
+          "geometries": 40,
+          "textures": 26,
+          "programs": 12
+        }
+      ],
+      "courtyard-01/balanced": [
+        {
+          "registered": {
+            "geometries": 199,
+            "materials": 132,
+            "textures": 37
+          },
+          "geometries": 52,
+          "textures": 28,
+          "programs": 15
+        },
+        {
+          "registered": {
+            "geometries": 199,
+            "materials": 132,
+            "textures": 37
+          },
+          "geometries": 52,
+          "textures": 28,
+          "programs": 15
+        }
+      ],
+      "courtyard-01/high": [
+        {
+          "registered": {
+            "geometries": 245,
+            "materials": 138,
+            "textures": 37
+          },
+          "geometries": 59,
+          "textures": 28,
+          "programs": 15
+        },
+        {
+          "registered": {
+            "geometries": 245,
+            "materials": 138,
+            "textures": 37
+          },
+          "geometries": 59,
+          "textures": 28,
+          "programs": 15
+        }
+      ],
+      "warehouse-07/low": [
+        {
+          "registered": {
+            "geometries": 222,
+            "materials": 143,
+            "textures": 25
+          },
+          "geometries": 62,
+          "textures": 18,
+          "programs": 12
+        },
+        {
+          "registered": {
+            "geometries": 222,
+            "materials": 143,
+            "textures": 25
+          },
+          "geometries": 62,
+          "textures": 18,
+          "programs": 12
+        }
+      ],
+      "warehouse-07/balanced": [
+        {
+          "registered": {
+            "geometries": 222,
+            "materials": 147,
+            "textures": 28
+          },
+          "geometries": 141,
+          "textures": 21,
+          "programs": 16
+        },
+        {
+          "registered": {
+            "geometries": 222,
+            "materials": 147,
+            "textures": 28
+          },
+          "geometries": 141,
+          "textures": 21,
+          "programs": 16
+        }
+      ],
+      "warehouse-07/high": [
+        {
+          "registered": {
+            "geometries": 264,
+            "materials": 153,
+            "textures": 28
+          },
+          "geometries": 143,
+          "textures": 21,
+          "programs": 16
+        },
+        {
+          "registered": {
+            "geometries": 264,
+            "materials": 153,
+            "textures": 28
+          },
+          "geometries": 143,
+          "textures": 21,
+          "programs": 16
+        }
+      ]
+    },
+    {
+      "courtyard-01/low": [
+        {
+          "registered": {
+            "geometries": 197,
+            "materials": 130,
+            "textures": 34
+          },
+          "geometries": 40,
+          "textures": 26,
+          "programs": 12
+        },
+        {
+          "registered": {
+            "geometries": 197,
+            "materials": 130,
+            "textures": 34
+          },
+          "geometries": 40,
+          "textures": 26,
+          "programs": 12
+        }
+      ],
+      "courtyard-01/balanced": [
+        {
+          "registered": {
+            "geometries": 199,
+            "materials": 132,
+            "textures": 37
+          },
+          "geometries": 52,
+          "textures": 28,
+          "programs": 15
+        },
+        {
+          "registered": {
+            "geometries": 199,
+            "materials": 132,
+            "textures": 37
+          },
+          "geometries": 52,
+          "textures": 28,
+          "programs": 15
+        }
+      ],
+      "courtyard-01/high": [
+        {
+          "registered": {
+            "geometries": 245,
+            "materials": 138,
+            "textures": 37
+          },
+          "geometries": 59,
+          "textures": 28,
+          "programs": 15
+        },
+        {
+          "registered": {
+            "geometries": 245,
+            "materials": 138,
+            "textures": 37
+          },
+          "geometries": 59,
+          "textures": 28,
+          "programs": 15
+        }
+      ],
+      "warehouse-07/low": [
+        {
+          "registered": {
+            "geometries": 222,
+            "materials": 143,
+            "textures": 25
+          },
+          "geometries": 62,
+          "textures": 18,
+          "programs": 12
+        },
+        {
+          "registered": {
+            "geometries": 222,
+            "materials": 143,
+            "textures": 25
+          },
+          "geometries": 62,
+          "textures": 18,
+          "programs": 12
+        }
+      ],
+      "warehouse-07/balanced": [
+        {
+          "registered": {
+            "geometries": 222,
+            "materials": 147,
+            "textures": 28
+          },
+          "geometries": 141,
+          "textures": 21,
+          "programs": 16
+        },
+        {
+          "registered": {
+            "geometries": 222,
+            "materials": 147,
+            "textures": 28
+          },
+          "geometries": 141,
+          "textures": 21,
+          "programs": 16
+        }
+      ],
+      "warehouse-07/high": [
+        {
+          "registered": {
+            "geometries": 264,
+            "materials": 153,
+            "textures": 28
+          },
+          "geometries": 143,
+          "textures": 21,
+          "programs": 16
+        },
+        {
+          "registered": {
+            "geometries": 264,
+            "materials": 153,
+            "textures": 28
+          },
+          "geometries": 143,
+          "textures": 21,
+          "programs": 16
+        }
+      ]
+    }
+  ],
+  "contextLosses": [],
+  "browser": {
+    "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36",
+    "dpr": 2,
+    "canvasCss": [
+      640,
+      360
+    ]
+  },
+  "limitations": [
+    "Same-browser frozen-source pixel comparisons; not cross-device goldens.",
+    "Static observer poses are not scored attempts or demonstration commands.",
+    "No FPS, sustained performance, physical-device or human art acceptance claim.",
+    "Disposal asserts registered ownership is empty, not zero driver memory; Three.js may retain internal lookup allocations until context release.",
+    "Sightline rays compare visible opaque mesh triangles; they do not resolve alpha-texture holes or certify human readability of rendered objective cues.",
+    "No additional unit-test coverage. Production scene observation restores the original method immediately after renderer creation."
+  ],
+  "authoredCases": [
+    {
+      "id": "warehouse-07",
+      "widthMetres": 76,
+      "depthMetres": 70,
+      "obstacles": [
+        "rack-0-0",
+        "rack-0-1",
+        "rack-0-2",
+        "rack-1-0",
+        "rack-1-1",
+        "rack-1-2"
+      ]
+    },
+    {
+      "id": "beginner-36",
+      "widthMetres": 88,
+      "depthMetres": 88,
+      "obstacles": [
+        "rack-0-0",
+        "rack-0-1",
+        "rack-0-2",
+        "rack-1-0",
+        "rack-1-1",
+        "rack-1-2",
+        "school-low-stack",
+        "school-overhead-beam"
+      ]
+    },
+    {
+      "id": "beginner-38",
+      "widthMetres": 88,
+      "depthMetres": 88,
+      "obstacles": [
+        "rack-0-0",
+        "rack-0-1",
+        "rack-0-2",
+        "rack-1-0",
+        "rack-1-1",
+        "rack-1-2",
+        "school-aisle-divider"
+      ]
+    }
+  ],
+  "disposal": [
+    {
+      "side": "before",
+      "resources": {
+        "available": true,
+        "disposed": true,
+        "quality": "high",
+        "drone": "racer",
+        "presentation": {
+          "actors": [],
+          "actorGoals": [],
+          "projectileBatches": 0,
+          "activeProjectiles": 0,
+          "surfaceDetailGroups": 0
+        },
+        "registered": {
+          "geometries": 0,
+          "materials": 0,
+          "textures": 0
+        },
+        "renderer": {
+          "geometries": 0,
+          "textures": 1,
+          "programs": 0,
+          "contextLost": true,
+          "calls": 213,
+          "triangles": 21764
+        }
+      }
+    },
+    {
+      "side": "after",
+      "resources": {
+        "available": true,
+        "disposed": true,
+        "quality": "high",
+        "drone": "racer",
+        "presentation": {
+          "actors": [],
+          "actorGoals": [],
+          "projectileBatches": 0,
+          "activeProjectiles": 0,
+          "surfaceDetailGroups": 0
+        },
+        "registered": {
+          "geometries": 0,
+          "materials": 0,
+          "textures": 0
+        },
+        "renderer": {
+          "geometries": 0,
+          "textures": 1,
+          "programs": 0,
+          "contextLost": true,
+          "calls": 213,
+          "triangles": 21764
+        }
+      }
+    }
+  ],
+  "passed": true
+}
