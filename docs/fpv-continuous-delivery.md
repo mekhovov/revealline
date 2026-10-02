@@ -827,3 +827,66 @@ available for feedback. Exact-head CI, protected stack merge and subsequent
 public deployment remain external gates; retain them for the next delivery
 checkpoint instead of repeatedly polling. Continue independent R4/R5 environment
 art and R6 remaining demonstrations/practice flow, preserving other handoffs.
+
+## Continuous whole-lesson lab and larger props — 2 October 2026
+
+Current feature branch `codex/fpv-continuous-school` follows #935 at
+`805f55776750023c3bd74cbe87dbff583557316c`. Native stack #902 was re-read and
+still ends #929 → #932 → #934 → #935; existing holds remain in force.
+
+All26 school lessons now use a complete verified demonstration in the lab,
+automatically changing instructions at actual objective transitions without
+resetting the drone between steps. Whole lessons loop at the end; individual
+step selection reconstructs its exact command prefix. Keyboard/touch/calibrated
+radio takeover retains the current flight, and real objective completion advances
+practice instructions automatically. Final completion leaves indefinite free
+practice. This is explicitly unscored and cannot create a proof; a fresh recorded
+lesson remains separate. Added12 self-level recordings; all prior proof bytes and
+course identities remain unchanged.
+
+The rear-view schematic now has large three-blade10-inch proportions and a slim
+central body, retaining independent props and cyan demand arcs. Position-aware
+practice cues show the actual target with distance and height. Fullscreen keeps
+the automatically changing step number, title and instructions visible. Actual
+player verification caught and fixed initialization order and keyboard focus
+before publication.
+
+Evidence under `docs/evidence/fpv-continuous-*`: all26/122 objective boundaries;
+21,875 exact ordinary/practice state comparisons; free practice through39,100ticks
+and recorder rejection; all46 prior bundled v2 proofs still replay;12 self-level
+proofs reproduced identically by the maintained offline authoring pilot;
+55/55 actual-browser whole-lesson/seek/takeover checks and18/18 geometry/target
+checks. Initial measured maximum open/seek costs were30.1/27ms on this in-app
+browser, not physical input latency or target-device performance. EN/UK packaged
+player and responsive fullscreen instructions were inspected. Additional unit
+coverage remains deferred.
+
+The expanded [school plan](fpv-mastery-school-plan.md) defines32 new lessons:
+16 current-objective navigation/precision lessons, followed by16 Pro/Master
+lessons requiring versioned rotation/trajectory criteria and verified recordings.
+Their drafts are prepared separately in `/tmp`; do not mix them into this ready
+continuous-lab PR. Next increment starts a separate dependent branch after this
+feature's publication. Preserve #928, #922, #889 and art/demonstration handoffs.
+
+Local disk exhaustion was resolved by removing30 reproducible temporary source/
+distribution ZIPs from five older `/tmp/fpv-*-final-20261002` candidates, reclaiming
+164,540,751bytes. All manifests, hashes, source inventories, admission receipts,
+source trees and player builds were retained. No player content or unrelated
+work was removed. Public deployment is not claimed by this local verification.
+
+### Frozen continuous-lab package
+
+Runtime `b102350083203ac6f0f612b80c0e09eb085816ae` passes all three package
+admissions, committed-input and ZIP-member checks, and two byte-identical builds;
+receipt `docs/evidence/fpv-continuous-package-20261002.json`. File caps remain
+unchanged. The actual rebuilt local player is87 files /12,680,675bytes,
+ZIP SHA-256 `bf4312b51e84a447a5a04d1394eee9d3487336c938af998621b3d2f5a838d307`.
+The reviewed-player URL is rebuilt from the same frozen runtime. Public merge
+and deployment remain separate protected gates.
+
+### 2 October — continuous school published for review
+
+- Focused PR [#938](https://github.com/mekhovov/revealline/pull/938) published from `codex/fpv-continuous-school`, runtime `b102350083203ac6f0f612b80c0e09eb085816ae`, qualified receipt head `e71bf713e4f8502c8fd556397aad2c789713a58f`.
+- Attached to this chat and appended through the native API to stack #902 directly after #935. Upstream holds and protections remain; this is review publication, not verified public deployment.
+- The user’s `dist/fpv-reviewed-player-playtest` local entry and `dist/fpv-continuous-school-playtest` contain the qualified package recorded above.
+- Next independent increment: 16 distinct Experienced/Advanced navigation and precision lessons, tier navigation and exact replay demonstrations, on `codex/fpv-navigation-school`. Pro/Master criterion extensions remain separate until their authored demonstrations qualify.

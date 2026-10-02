@@ -3644,8 +3644,8 @@ html:not([data-fpv-immersive])
 }
 .sim-worlds .beginner-coach[data-stage='guide'][data-lab-immersive='true'] .coach-card {
   display: grid;
-  grid-template-areas: 'toolbar' 'axis' 'stage' 'status';
-  grid-template-rows: auto auto minmax(0, 1fr) auto;
+  grid-template-areas: 'toolbar' 'instruction' 'axis' 'stage' 'status';
+  grid-template-rows: auto auto auto minmax(0, 1fr) auto;
   width: 100%;
   height: 100%;
   max-width: none;
@@ -3657,8 +3657,40 @@ html:not([data-fpv-immersive])
 .sim-worlds
   .beginner-coach[data-lab-immersive='true']
   .coach-card
-  > :not(.coach-lab-toolbar, .coach-axis-picker, .coach-grid, .coach-lab-status) {
+  > :not(.coach-lab-toolbar, .coach-step-copy, .coach-axis-picker, .coach-grid, .coach-lab-status) {
   display: none;
+}
+.sim-worlds .beginner-coach[data-lab-immersive='true'] .coach-step-copy {
+  grid-area: instruction;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 4px 12px;
+  margin: 0;
+  padding: 8px 16px;
+  max-height: 25dvh;
+  overflow: auto;
+  border: 0;
+  border-bottom: 1px solid var(--fk-line);
+  background: var(--fk-panel);
+}
+.sim-worlds .beginner-coach[data-lab-immersive='true'] .coach-step-copy .coach-step-label {
+  display: block;
+  margin: 0;
+  color: var(--fk-amber);
+  font-size: 12px;
+  line-height: 1.5;
+}
+.sim-worlds .beginner-coach[data-lab-immersive='true'] .coach-step-copy h3 {
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.3;
+}
+.sim-worlds .beginner-coach[data-lab-immersive='true'] .coach-step-copy .coach-instruction {
+  grid-column: 1 / -1;
+  margin: 0;
+  max-width: 100ch;
+  font-size: 13px;
+  line-height: 1.4;
 }
 .sim-worlds .beginner-coach[data-lab-immersive='true'] .coach-lab-toolbar {
   grid-area: toolbar;
