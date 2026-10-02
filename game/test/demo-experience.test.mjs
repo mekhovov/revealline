@@ -40,22 +40,25 @@ test('reduced-motion default is manual; malformed preferences fail safely', () =
     collect: false,
     gameSounds: false,
     hidePictures: false,
+    showAllPictures: false,
   });
   assert.deepEqual(readDemoSettings(storage('{broken'), 'demo'), {
     auto: true,
     collect: false,
     gameSounds: false,
     hidePictures: false,
+    showAllPictures: false,
   });
   assert.deepEqual(readDemoSettings(storage('{"version":1,"auto":false,"collect":true}'), 'demo'), {
     auto: false,
     collect: true,
     gameSounds: false,
     hidePictures: false,
+    showAllPictures: false,
   });
   assert.deepEqual(
     readDemoSettings(storage('{"version":1,"auto":true,"collect":true,"extra":1}'), 'demo', true),
-    { auto: false, collect: false, gameSounds: false, hidePictures: false },
+    { auto: false, collect: false, gameSounds: false, hidePictures: false, showAllPictures: false },
   );
 });
 
@@ -67,6 +70,7 @@ test('demo sound preference is opt-in and preserves existing v1 settings', () =>
     collect: true,
     gameSounds: true,
     hidePictures: false,
+    showAllPictures: false,
   });
   stored.gameSounds = 'yes';
   assert.deepEqual(readDemoSettings(storage, 'demo'), {
@@ -74,6 +78,7 @@ test('demo sound preference is opt-in and preserves existing v1 settings', () =>
     collect: false,
     gameSounds: false,
     hidePictures: false,
+    showAllPictures: false,
   });
 });
 
@@ -85,6 +90,7 @@ test('demo picture privacy is opt-in and survives existing v1 settings', () => {
     collect: false,
     gameSounds: false,
     hidePictures: true,
+    showAllPictures: false,
   });
   stored.hidePictures = 'yes';
   assert.deepEqual(readDemoSettings(storage, 'demo'), {
@@ -92,7 +98,49 @@ test('demo picture privacy is opt-in and survives existing v1 settings', () => {
     collect: false,
     gameSounds: false,
     hidePictures: false,
+    showAllPictures: false,
   });
+});
+
+test('clear picture previews are opt-in, accept v1 booleans, and preserve privacy on conflicting saves', () => {
+  const saved = { version: 1, auto: false, collect: true, gameSounds: true };
+  const storage = { getItem: () => JSON.stringify(saved) };
+  assert.equal(readDemoSettings(storage, 'demo').showAllPictures, false);
+  saved.showAllPictures = true;
+  assert.deepEqual(readDemoSettings(storage, 'demo'), {
+    auto: false,
+    collect: true,
+    gameSounds: true,
+    hidePictures: false,
+    showAllPictures: true,
+  });
+  saved.hidePictures = true;
+  assert.deepEqual(readDemoSettings(storage, 'demo'), {
+    auto: false,
+    collect: true,
+    gameSounds: true,
+    hidePictures: true,
+    showAllPictures: false,
+  });
+});
+
+test('malformed clear-picture preferences fail closed without coercion', () => {
+  for (const showAllPictures of [null, 0, 1, 'false', 'true', [], {}]) {
+    const storage = {
+      getItem: () => JSON.stringify({ version: 1, auto: true, collect: true, showAllPictures }),
+    };
+    assert.deepEqual(
+      readDemoSettings(storage, 'demo', true),
+      {
+        auto: false,
+        collect: false,
+        gameSounds: false,
+        hidePictures: false,
+        showAllPictures: false,
+      },
+      JSON.stringify(showAllPictures),
+    );
+  }
 });
 
 test('practice waits for fresh steering, consumes input at real ticks, and suspends long gaps', () => {
