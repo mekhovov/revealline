@@ -2283,3 +2283,387 @@ html[data-fpv-immersive='academy'] .sim-academy [data-immersive-controls='true']
     display: none !important;
   }
 }
+
+/* Handheld flight keeps the scene full size; pause menus own detailed controls. */
+.handheld-flight-actions,
+.handheld-flight-close-menu,
+.handheld-flight-identity {
+  display: none;
+}
+@media (max-width: 760px),
+  (max-height: 600px),
+  (max-width: 1280px) and (max-height: 800px),
+  (pointer: coarse) and (max-width: 1366px) {
+  .field-kit {
+    --flight-safe-top: max(10px, env(safe-area-inset-top));
+    --flight-safe-right: max(12px, env(safe-area-inset-right));
+    --flight-safe-bottom: max(12px, env(safe-area-inset-bottom));
+    --flight-safe-left: max(12px, env(safe-area-inset-left));
+  }
+  html body.sim-academy #flight-app,
+  html body.sim-worlds #flight-dialog[open] {
+    position: fixed;
+    inset: 0;
+    display: block;
+    width: 100%;
+    max-width: none;
+    height: 100vh;
+    height: 100dvh;
+    min-height: 0;
+    max-height: none;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    overflow: hidden;
+    overscroll-behavior: none;
+  }
+  html
+    body.sim-academy
+    #flight-app:not([data-flight-menu-open='true'])
+    > :is(.flight-header, .flight-toolbar, .academy-footer, .flight-immersive-bar),
+  html
+    body.sim-worlds
+    #flight-dialog:not([data-flight-menu-open='true'])
+    > :is(
+      header,
+      .flight-controls,
+      #world-replay-controls,
+      #sector-panel,
+      footer,
+      .flight-immersive-bar
+    ) {
+    display: none !important;
+  }
+  html body.sim-academy #flight-app #viewport,
+  html body.sim-worlds #flight-dialog #world-viewport {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    min-height: 0;
+    max-height: none;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    overflow: hidden;
+  }
+  html body.field-kit .handheld-flight-actions {
+    position: absolute;
+    inset: 0;
+    z-index: 20;
+    display: block;
+    pointer-events: none;
+  }
+  html body.field-kit .handheld-flight-actions > button {
+    position: absolute;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 44px;
+    min-height: 44px;
+    margin: 0;
+    padding: 9px 12px;
+    border: 1px solid #a5b2bb66;
+    border-radius: 6px;
+    background: #101923d9;
+    color: var(--fk-text);
+    font: 600 13px/1.2 var(--fk-font-ui);
+    box-shadow: 0 2px 10px #0003;
+    pointer-events: auto;
+  }
+  html body.field-kit .handheld-flight-actions > .handheld-flight-menu {
+    top: var(--flight-safe-top);
+    right: var(--flight-safe-right);
+  }
+  html body.field-kit .handheld-flight-actions > .handheld-flight-resume {
+    bottom: calc(var(--flight-safe-bottom) + 116px);
+    left: 50%;
+    max-width: min(240px, calc(100% - 220px));
+    min-width: 104px;
+    transform: translateX(-50%);
+    border-color: var(--fk-cyan);
+    background: #102b36ed;
+    color: var(--fk-cyan);
+  }
+  html body.field-kit [data-flight-state='active'] .handheld-flight-resume,
+  html body.field-kit [data-flight-state='complete'] .handheld-flight-resume,
+  html body.field-kit [data-flight-state='failed'] .handheld-flight-resume {
+    display: none;
+  }
+  html body.field-kit .handheld-flight-actions > .handheld-flight-fire {
+    right: calc(var(--flight-safe-right) + 18px);
+    bottom: calc(var(--flight-safe-bottom) + 116px);
+    border-color: var(--fk-amber);
+    color: var(--fk-amber);
+  }
+  html body.field-kit :is(#flight-app, #flight-dialog) > .sim-menu-hint {
+    position: absolute;
+    z-index: 22;
+    right: var(--flight-safe-right);
+    bottom: var(--flight-safe-bottom);
+    left: var(--flight-safe-left);
+    width: fit-content;
+    max-width: calc(100% - var(--flight-safe-left) - var(--flight-safe-right));
+    margin: 0 auto;
+    padding: 5px 9px;
+    background: #101923e6;
+    border-radius: 5px;
+    font-size: 12px;
+    line-height: 1.35;
+    text-align: center;
+    pointer-events: none;
+  }
+  html
+    body.field-kit
+    :is(#flight-app, #flight-dialog)[data-flight-state='active']
+    > .sim-menu-hint {
+    display: none;
+  }
+  html
+    body.field-kit
+    :is(#flight-app, #flight-dialog):not([data-flight-menu-open='true']):not(
+      :has(.beginner-coach[data-stage='guide'])
+    )
+    > .sim-menu-hint {
+    display: none;
+  }
+  html body.sim-academy #viewport .scene-heading {
+    inset: var(--flight-safe-top) calc(var(--flight-safe-right) + 92px) auto var(--flight-safe-left);
+    max-width: none;
+    padding: 0;
+    text-shadow: 0 1px 4px #000;
+    pointer-events: none;
+  }
+  html body.sim-academy #viewport .scene-heading h1 {
+    margin: 0;
+    overflow: hidden;
+    color: var(--fk-text);
+    font: 600 14px/1.4 var(--fk-font-ui);
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  html body.sim-academy #viewport .scene-heading :is(#course-number, #brief) {
+    display: none;
+  }
+  html body.sim-academy #viewport .coaching {
+    display: contents;
+  }
+  html body.sim-academy #viewport #target {
+    position: absolute;
+    inset: calc(var(--flight-safe-top) + 23px) calc(var(--flight-safe-right) + 92px) auto
+      var(--flight-safe-left);
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    color: var(--fk-cyan);
+    font: 12px/1.4 var(--fk-font-ui);
+    text-overflow: ellipsis;
+    text-shadow: 0 1px 4px #000;
+    text-align: left;
+    white-space: normal;
+    display: -webkit-box;
+    max-height: 34px;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    pointer-events: none;
+  }
+  html body.sim-academy #viewport #step-progress {
+    display: none;
+  }
+  html body.sim-academy #viewport #status {
+    position: absolute;
+    inset: auto var(--flight-safe-right) calc(var(--flight-safe-bottom) + 172px)
+      var(--flight-safe-left);
+    max-width: 640px;
+    margin: 0 auto;
+    padding: 6px 10px;
+    border-radius: 5px;
+    background: #101923d9;
+    color: var(--fk-text);
+    font: 12px/1.45 var(--fk-font-ui);
+    text-align: center;
+    pointer-events: none;
+  }
+  html body.sim-academy #flight-app[data-flight-state='active'] #status {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    overflow: hidden;
+    clip-path: inset(50%);
+  }
+  html body.sim-academy #viewport .telemetry {
+    inset: calc(var(--flight-safe-top) + 76px) auto auto var(--flight-safe-left);
+    display: flex;
+    gap: 10px;
+    padding: 3px 6px;
+    border: 0;
+    border-radius: 4px;
+    background: #10192399;
+    font: 12px/1.4 var(--fk-font-mono);
+    pointer-events: none;
+  }
+  html body.sim-academy #viewport .telemetry :is(#power, #contact-count) {
+    display: none;
+  }
+  html body.sim-academy #viewport #sticks,
+  html body.sim-academy #viewport #sticks.expanded-sticks {
+    inset: auto var(--flight-safe-right) calc(var(--flight-safe-bottom) + 8px) auto;
+    gap: 12px;
+    width: auto;
+    justify-content: initial;
+  }
+  html body.sim-academy #viewport #sticks > div {
+    width: 48px;
+    height: 48px;
+  }
+  html body.sim-academy #viewport #sticks.expanded-sticks > div {
+    width: 60px;
+    height: 60px;
+  }
+  html body.sim-academy #viewport :is(#sticks, #touch-controls) .sim-stick-direction,
+  html body.sim-academy #viewport #touch-controls > div > span,
+  html body.sim-academy #viewport #touch-controls .throttle-slider {
+    display: none;
+  }
+  html body.sim-academy #viewport #touch-controls {
+    inset: auto var(--flight-safe-right) var(--flight-safe-bottom) var(--flight-safe-left);
+    gap: 0;
+    align-items: end;
+    pointer-events: none;
+  }
+  html body.sim-academy #viewport #touch-controls .touch-stick {
+    width: clamp(92px, 24vw, 112px);
+    height: clamp(92px, 24vw, 112px);
+    pointer-events: auto;
+    background-color: #1019232b;
+    border-color: #b4c6d166;
+    box-shadow: inset 0 0 0 2px #10192338;
+  }
+  html body.sim-academy #viewport .sim-drone-response[data-display='compact'] {
+    inset: auto auto var(--flight-safe-bottom) var(--flight-safe-left);
+    width: 104px;
+    height: 78px;
+    transform: none;
+  }
+  html body.sim-academy #viewport .sim-drone-response[data-display='compact'][data-scale='large'] {
+    width: 122px;
+    height: 90px;
+  }
+  html body.sim-academy.touch-mode #viewport .sim-drone-response[data-display='compact'] {
+    left: 50%;
+    width: 96px;
+    height: 72px;
+    transform: translateX(-50%);
+  }
+  html body.sim-academy #viewport .sim-drone-response[data-display='learning'] {
+    inset: auto auto calc(var(--flight-safe-bottom) + 132px) var(--flight-safe-left);
+    width: min(260px, calc(100% - var(--flight-safe-left) - var(--flight-safe-right)));
+    max-height: min(260px, calc(100% - 230px));
+  }
+  html body.sim-academy #viewport:has(#complete:not([hidden])) .handheld-flight-resume {
+    display: none;
+  }
+  html body.sim-academy #viewport #complete {
+    inset: 50% auto auto 50%;
+    width: min(540px, calc(100% - var(--flight-safe-left) - var(--flight-safe-right)));
+    max-height: calc(100% - var(--flight-safe-top) - var(--flight-safe-bottom));
+    overflow: auto;
+    transform: translate(-50%, -50%);
+    padding: 18px;
+  }
+  /* A scrollable paused screen keeps every existing option reachable. */
+  html body.sim-academy #flight-app[data-flight-menu-open='true'] {
+    overflow: auto;
+    padding: var(--flight-safe-top) var(--flight-safe-right) var(--flight-safe-bottom)
+      var(--flight-safe-left);
+    background: var(--fk-bg);
+  }
+  html body.sim-academy #flight-app[data-flight-menu-open='true'] #viewport,
+  html body.sim-academy #flight-app[data-flight-menu-open='true'] .flight-immersive-bar {
+    display: none !important;
+  }
+  html
+    body.sim-academy
+    #flight-app[data-flight-menu-open='true']
+    > :is(.flight-header, .flight-toolbar, .academy-footer) {
+    display: flex !important;
+    position: static;
+    flex-wrap: wrap;
+    width: 100%;
+    gap: 16px;
+    margin: 0;
+    padding: 16px 4px;
+  }
+  html body.sim-academy #flight-app[data-flight-menu-open='true'] .flight-header nav {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    overflow: visible;
+    gap: 8px;
+  }
+  html body.sim-academy #flight-app[data-flight-menu-open='true'] .flight-toolbar > * {
+    display: flex;
+  }
+  html body.sim-academy #flight-app[data-flight-menu-open='true'] .academy-input-controls {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    width: 100%;
+    gap: 12px;
+    align-items: end;
+  }
+  html
+    body.sim-academy
+    #flight-app[data-flight-menu-open='true']
+    .academy-input-controls
+    :is(select, button) {
+    width: 100%;
+    max-width: none !important;
+  }
+  html body.sim-academy #flight-app[data-flight-menu-open='true'] .academy-options {
+    display: block;
+    width: 100%;
+    margin: 0;
+  }
+  html body.sim-academy #flight-app[data-flight-menu-open='true'] .academy-options-panel {
+    position: static;
+    width: 100%;
+    max-height: none;
+    margin-top: 12px;
+    padding: 16px;
+    overflow: visible;
+    box-shadow: none;
+  }
+  html body.sim-academy #flight-app[data-flight-menu-open='true'] .academy-footer {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr);
+  }
+  html body.sim-academy #flight-app[data-flight-menu-open='true'] .academy-key-guide {
+    max-width: none;
+  }
+  html
+    body.sim-academy
+    #flight-app[data-flight-menu-open='true']
+    :is(button, select, summary, nav a) {
+    min-height: 44px;
+    padding: 10px 12px;
+    font-size: 14px;
+    white-space: normal;
+  }
+  html body.sim-academy #flight-app[data-flight-menu-open='true'] > .sim-menu-hint {
+    position: static;
+    width: 100%;
+    max-width: none;
+    margin-top: 12px;
+  }
+  html body.sim-academy #flight-app[data-flight-menu-open='true'] .handheld-flight-close-menu {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    order: -1;
+    border-color: var(--fk-cyan);
+    color: var(--fk-cyan);
+  }
+}
