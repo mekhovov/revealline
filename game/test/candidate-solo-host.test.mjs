@@ -399,9 +399,11 @@ for (const route of ['opening', 'authored'])
     for (const row of rows) {
       const [id] = row;
       playRoute(p, row);
-      assert.equal(p.$('game-overlay').dataset.kind, 'won');
+      assert.equal(p.$('game-overlay').hidden, true, 'Every clear first keeps its full picture.');
       assert.equal(p.$('journey-chooser').open, false);
       if (!p.$('skip-celebration').hidden) p.$('skip-celebration').click();
+      p.$('show-result').click();
+      assert.equal(p.$('game-overlay').dataset.kind, 'won');
       await settle(() => !p.$('next-button').disabled);
       if (id !== rows.at(-1)[0]) {
         p.$('next-button').click();
@@ -468,6 +470,8 @@ for (const row of optionalRoutes)
     missionCard(p, 'authored', row[0]).click();
     await running(p, row[0]);
     playRoute(p, row);
+    if (!p.$('skip-celebration').hidden) p.$('skip-celebration').click();
+    p.$('show-result').click();
     assert.equal(p.$('next-button').textContent, 'Browse missions →');
     const completed = p.rendered.run,
       picture = p.rendered.backdrop,
@@ -547,6 +551,8 @@ test('authored result Retry applies Expert without managed-media pins or changin
   await running(p, 'first-return');
   playRoute(p, tunedRoutes[0]);
   assert.equal(p.rendered.run.status, 'won');
+  if (!p.$('skip-celebration').hidden) p.$('skip-celebration').click();
+  p.$('show-result').click();
   const picture = p.rendered.backdrop;
   p.change('difficulty-select', 'expert');
   p.$('retry-button').click();
