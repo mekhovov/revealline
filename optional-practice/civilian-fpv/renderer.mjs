@@ -125,6 +125,7 @@ export function createFlightRenderer({
     importedClips = [],
     obstacleMaps = null,
     obstacleSurface = null,
+    environmentSurfaceKind = null,
     lastActorState = null,
     importedAnimationTick = null,
     environmentLight = null,
@@ -350,6 +351,37 @@ export function createFlightRenderer({
     const group = new THREE.Group();
     goals.add(group);
     let size, position;
+    if (step.type === 'actor-track-v1') {
+      // Small observer-only subject bracket. Range and visibility are evaluated
+      // by the fixed-step runtime, independent of camera and quality settings.
+      const shape = new THREE.BufferGeometry().setFromPoints([
+        new THREE.Vector3(-0.65, 0.3, 0),
+        new THREE.Vector3(-0.65, 0.65, 0),
+        new THREE.Vector3(-0.65, 0.65, 0),
+        new THREE.Vector3(-0.3, 0.65, 0),
+        new THREE.Vector3(0.65, 0.3, 0),
+        new THREE.Vector3(0.65, 0.65, 0),
+        new THREE.Vector3(0.65, 0.65, 0),
+        new THREE.Vector3(0.3, 0.65, 0),
+      ]);
+      geometry.add(shape);
+      const paint = new THREE.LineBasicMaterial({
+        color: 0xffca76,
+        transparent: true,
+        opacity: 1,
+        toneMapped: false,
+      });
+      materials.add(paint);
+      const marker = new THREE.LineSegments(shape, paint);
+      group.add(marker);
+      const light = material(0xffca76, { transparent: true, opacity: 1 });
+      group.userData.ownedMaterials = [light];
+      const badge = label(String(index + 1).padStart(2, '0'), '#ffca76', group, 0.48);
+      if (badge) badge.position.y = 0.92;
+      group.visible = false;
+      goalRows.push({ group, paint, light, marker, badge, index, actorId: step.actorId });
+      return;
+    }
     if (step.type === 'gate') {
       const span = (step.maxSide - step.minSide) / 1000,
         height = (step.maxY - step.minY) / 1000;
@@ -560,6 +592,8 @@ export function createFlightRenderer({
     }
   }
   function obstacleSurfaceKind(obstacle) {
+    const authored = environmentSurfaceKind?.(obstacle);
+    if (authored) return authored;
     const id = obstacle.id ?? '';
     if (/tree|timber|crate/.test(id) || course.environment === 'woodland') return 'wood';
     if (/house/.test(id) && course.environment === 'courtyard') return 'plaster';
@@ -648,8 +682,8 @@ export function createFlightRenderer({
           kind === 'plaster' ? 0.13 : 0.3,
           kind === 'plaster' ? 0.13 : 0.3,
         ),
-        roughness: kind === 'metal' ? 0.66 : 0.9,
-        metalness: kind === 'metal' ? 0.28 : 0,
+        roughness: kind === 'solar' ? 0.3 : kind === 'metal' ? 0.66 : 0.9,
+        metalness: kind === 'solar' ? 0.35 : kind === 'metal' ? 0.28 : 0,
       },
     );
     let value, size;
@@ -773,9 +807,13 @@ export function createFlightRenderer({
     sceneryFallback = surroundings.backdrop;
     obstacleMaps = surroundings.obstacleMaps;
     obstacleSurface = surroundings.obstacleSurface ?? null;
+    environmentSurfaceKind = surroundings.obstacleSurfaceKind ?? null;
     scene.background = new THREE.Color(surroundings.indoor ? theme.wall : theme.sky);
     // Visibility is a course property, identical across graphics presets.
-    scene.fog = new THREE.Fog(theme.fog, surroundings.indoor ? 55 : 85, 210);
+    scene.fog = new THREE.Fog(
+      theme.fog,
+      ...(surroundings.fogRange ?? [surroundings.indoor ? 55 : 85, 210]),
+    );
     hemisphere.groundColor
       .copy(surroundings.groundColor ?? new THREE.Color(theme.ground))
       .multiplyScalar(0.4);
@@ -1226,8 +1264,18 @@ export function createFlightRenderer({
       lastWidth = width;
       lastHeight = height;
     }
-    if (camera.fov !== fov) {
-      camera.fov = fov;
+    // A map view frames the arena instead of inheriting a wide FPV lens.
+    // Preserve the player's lens and fit narrow portrait views horizontally.
+    const mapView = view === 'overview' || view === 'editor';
+    const displayFov = mapView
+      ? Math.min(
+          120,
+          (2 * Math.atan(Math.tan((58 * Math.PI) / 360) / Math.min(1, camera.aspect)) * 180) /
+            Math.PI,
+        )
+      : fov;
+    if (camera.fov !== displayFov) {
+      camera.fov = displayFov;
       camera.updateProjectionMatrix();
     }
     const position = framePosition.set(
@@ -1308,6 +1356,19 @@ export function createFlightRenderer({
         else row.skillCue.quaternion.identity();
       }
     updateActors(state);
+    for (const row of goalRows) {
+      if (!row.actorId) continue;
+      const subject = state.actors?.find((actor) => actor.id === row.actorId);
+      row.group.visible = row.index === state.step && Boolean(subject && subject.health > 0);
+      if (!row.group.visible) continue;
+      const definition = actorDefinitions.get(row.actorId);
+      row.group.position.set(
+        subject.position.x / 1000,
+        (subject.position.y + (definition?.height ?? 1000)) / 1000 + 0.25,
+        subject.position.z / 1000,
+      );
+      row.group.quaternion.copy(camera.quaternion);
+    }
     if (view === 'editor') {
       aircraft.visible = false;
       for (const row of editRows)
@@ -1791,7 +1852,21 @@ export function createFlightRenderer({
             themeAsset: row.group.userData.themeAsset,
             heading: row.group.rotation.y,
             moving: row.moving,
+            position: row.group.position.toArray(),
+            rotors: row.animated.rotors.map((rotor) => rotor.rotation.y),
+            wheels: row.animated.wheels.map((wheel) => wheel.rotation.x),
+            limbs: row.animated.limbs.map((limb) => limb.part.rotation.x),
           })),
+          actorGoals: goalRows
+            .filter((row) => row.actorId)
+            .map((row) => ({
+              index: row.index,
+              actorId: row.actorId,
+              visible: row.group.visible,
+              position: row.group.position.toArray(),
+              markerScale: row.marker.scale.toArray(),
+              facingCamera: Math.abs(row.group.quaternion.dot(camera.quaternion)) > 0.99999,
+            })),
           projectileBatches: pulseRows.size,
           activeProjectiles: [...pulseRows.values()].reduce(
             (total, batch) => total + batch.count,

@@ -4322,3 +4322,20 @@ html:not([data-fpv-immersive])
     color: var(--fk-cyan);
   }
 }
+
+/* Full instructions stay available in the paused menu without covering flight. */
+.sim-worlds .mission-briefing {
+  max-width: 60ch;
+  margin-top: 12px;
+  color: var(--fk-text);
+  font-size: 14px;
+  line-height: 1.55;
+}
+.sim-worlds .mission-briefing summary {
+  min-height: 44px;
+  cursor: pointer;
+  color: var(--fk-cyan);
+}
+.sim-worlds .mission-briefing p {
+  margin: 0 0 12px;
+}

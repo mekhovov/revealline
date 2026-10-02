@@ -254,13 +254,14 @@ export function mountActorEditor({ container, getCourse, onChange, locale = 'en'
     const id = selected;
     return change((course, bindings) => {
       course.actors = course.actors.filter((actor) => actor.id !== id);
-      removeTargetReferences(course, bindings, id);
+      removeTargetReferences(course, bindings, id, { removeTracking: true });
       selected = course.actors[0]?.id ?? null;
     }, 'removed');
   }
-  function removeTargetReferences(course, bindings, id) {
+  function removeTargetReferences(course, bindings, id, { removeTracking = false } = {}) {
     for (const mode of MODES)
       alterSteps(course, bindings, mode, (step) => {
+        if (removeTracking && step.type === 'actor-track-v1' && step.actorId === id) return null;
         if (step.type !== 'eliminate') return step;
         const targets = step.targets.filter((target) => target !== id);
         return targets.length ? { ...step, targets } : null;
