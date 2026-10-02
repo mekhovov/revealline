@@ -1806,3 +1806,14 @@ complete. Next work is woodland readability and shared-theme material/asset
 qualification; do not add wide decorative canopies across narrow flight gaps
 without matching authored visual/collision rules. B/D/F/G/H hardware, novice,
 creator/offline, feedback-led maps and deferred unit-coverage work remain open.
+
+C3 frozen candidate `b00fe336338cdf9a351f5851346f93c29ccdd003` passes all3
+optional-package admissions, committed-input and ZIP checks, and2 identical
+builds. Counts35/68/100 and bytes545,596 /3,825,812 /14,080,598 remain under the
+inherited guards. Packaged WebGL repeats124/124 checks and59 comparisons.
+C3 local build is92files/13,923,279bytes, ZIP SHA256
+`8d82a3e83798fc79adfcf9c048ad704a5de45eae18141ad0f9de3e571a681f03`.
+Source remains independent of ready #960. If960 merges first, reconcile new main
+with a recovery ref, preserve both log appends, and requalify combined package
+inputs before refreshing normal playtests. Native stacks are only needed if a
+new feature actually depends on an unmerged one.
