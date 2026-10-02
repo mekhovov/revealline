@@ -1,47 +1,9 @@
-import { recordOptionalInstallation, removeOptionalInstallation } from '../install-context.mjs';
+import { prepareOptionalOffline, removeOptionalInstallation } from '../install-context.mjs';
 export const PRACTICE_CACHE_PREFIX = 'revealline.optional.package.v1:';
 export const practiceCachePrefix = (location) =>
   `${PRACTICE_CACHE_PREFIX}${new URL('./', location.href).pathname}:`;
-export async function preparePracticeOffline({
-  packageId = 'civilian-fpv',
-  navigator = globalThis.navigator,
-  location = globalThis.location,
-  storage = globalThis.localStorage,
-} = {}) {
-  if (!navigator?.serviceWorker) throw new Error('Service workers unavailable');
-  const base = new URL('./', location.href);
-  const registration = await navigator.serviceWorker.register(new URL('worker.js', base), {
-    scope: base.pathname,
-  });
-  const worker = registration.installing ?? registration.waiting ?? registration.active;
-  if (!worker) throw new Error('Optional practice worker unavailable');
-  const record = () => {
-    recordOptionalInstallation({ packageId, location, storage });
-    return true;
-  };
-  if (worker.state === 'activated') return record();
-  return new Promise((resolve, reject) => {
-    const timer = setTimeout(() => finish(new Error('Optional practice install timed out')), 15000);
-    const change = () => {
-      if (worker.state === 'activated') finish();
-      else if (worker.state === 'redundant')
-        finish(new Error('Optional practice verification failed'));
-    };
-    const finish = (error) => {
-      clearTimeout(timer);
-      worker.removeEventListener('statechange', change);
-      if (error) reject(error);
-      else {
-        try {
-          resolve(record());
-        } catch (failure) {
-          reject(failure);
-        }
-      }
-    };
-    worker.addEventListener('statechange', change);
-    change();
-  });
+export function preparePracticeOffline(options = {}) {
+  return prepareOptionalOffline({ packageId: 'civilian-fpv', ...options });
 }
 export async function removePracticeOffline({
   packageId = 'civilian-fpv',

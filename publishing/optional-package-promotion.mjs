@@ -1,6 +1,11 @@
 import { editionHash, inspectEditionZip } from './edition-zip.mjs';
 import { OPTIONAL_PACKAGE_POLICIES } from './optional-package-policy.mjs';
 import { verifyOptionalPackageReview } from './optional-package-admission.mjs';
+import {
+  validatePracticeDescription,
+  PRACTICE_DETAILS_FORMAT,
+} from '../game/optional-practice-details.mjs';
+import { practiceDirectoryHTML, PRACTICE_DIRECTORY_SCRIPT } from './practice-directory.mjs';
 const fail = (message) => {
   throw new Error(message);
 };
@@ -54,7 +59,8 @@ export async function frozenOptionalPackageOverlay(
     fail('Optional package belongs to another deployment target.');
   const output = new Map(),
     downloads = new Map(),
-    launches = [];
+    launches = [],
+    details = [];
   let total = 0;
   const put = (name, bytes) => {
     total += bytes.length;
@@ -139,10 +145,28 @@ export async function frozenOptionalPackageOverlay(
           version: release.version,
           revision: manifest.revision,
         });
+        // Historical v1 archives do not contain descriptions: keep their basic links.
+        const descriptionBytes = members.get(`optional-practice/${id}/package-info.json`);
+        if (descriptionBytes) {
+          const description = validatePracticeDescription(parse(descriptionBytes), id);
+          const packageBase = `${id}/releases/${release.version}/site/optional-practice/${id}/`;
+          for (const name of ['preview.png', 'guide.html'])
+            if (!members.has(`optional-practice/${id}/${name}`))
+              fail('Practice discovery asset missing.');
+          details.push({
+            id,
+            revision: manifest.revision,
+            description,
+            preview: packageBase + 'preview.png',
+            guide: packageBase + 'guide.html',
+            downloadBytes: item.distribution.bytes,
+            offlineBytes: manifest.files.reduce((sum, file) => sum + file.bytes, 0),
+          });
+        }
       }
     }
   }
-  if (launches.length) {
+  {
     put(
       'practice/index.json',
       Buffer.from(
@@ -150,17 +174,12 @@ export async function frozenOptionalPackageOverlay(
           '\n',
       ),
     );
-    const escape = (value) =>
-      String(value).replace(
-        /[&<>"']/g,
-        (char) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[char],
-      );
     put(
-      'practice/index.html',
-      Buffer.from(
-        `<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Optional practice / Додаткова практика</title><style>body{font:1.2rem system-ui;max-width:60rem;padding:2rem;margin:auto}li{padding:1rem}a:focus-visible{outline:3px solid #146}</style><h1>Optional practice / Додаткова практика</h1><p>Each package is opened explicitly and keeps separate installation storage.<br>Кожен пакет відкривається окремо та має власне сховище встановлення.</p><ul>${launches.map((row) => `<li><a href="${escape(row.href)}">${escape(row.name)}</a> · ${escape(row.version)}</li>`).join('')}</ul></html>`,
-      ),
+      'practice/details.json',
+      Buffer.from(JSON.stringify({ format: PRACTICE_DETAILS_FORMAT, packages: details }) + '\n'),
     );
+    put('practice/directory.mjs', Buffer.from(PRACTICE_DIRECTORY_SCRIPT));
+    put('practice/index.html', Buffer.from(practiceDirectoryHTML(launches, details)));
   }
   return output;
 }
