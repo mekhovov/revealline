@@ -2032,7 +2032,7 @@ export function mountWorldApp({
       banner.id = 'recovery-banner';
       $('explore').prepend(banner);
       const b = button(
-        txt("Resume interrupted flight", "Відновити перерваний політ"),
+        txt('Resume interrupted flight', 'Відновити перерваний політ'),
         resumeInterruptedFlight,
       );
       b.id = 'resume-flight';
@@ -3108,7 +3108,7 @@ export function mountWorldApp({
     current = null;
     beginnerCoach.close();
     restoreLearningPreferences();
-    $("flight-dialog").classList.remove("learning-flight");
+    $('flight-dialog').classList.remove('learning-flight');
     sectorReferenceProof = null;
     $('flight-dialog').close();
     replayProof = null;
