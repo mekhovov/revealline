@@ -1,7 +1,7 @@
 # SIM integration handoff
 
 Publication branch: `codex/unified-appearance-20261002`, integrated with main at
-`d4b284819`. The earlier `codex/fpv-personal-best-ghost` PR #913 is already merged;
+`89e25c726`. The earlier `codex/fpv-personal-best-ghost` PR #913 is already merged;
 it does not contain this appearance implementation. Use the new appearance PR
 and its exact-head preview artifact described in the [publication report](publication.md).
 
@@ -43,7 +43,8 @@ and PR artifact receipts for measured closure sizes.
 After shared CSS/font changes, run `node scripts/refresh-fpv-presentation-assets.mjs`
 and its `--check` form. After first-paint changes, refresh/check
 `scripts/refresh-theme-bootstrap.mjs`. Run both standard practice and explicit
-World/appearance suites. Current results are 207 and 62 passing tests respectively;
-[the follow-up report](README.md) records exact scope and remaining art/device gates.
+World/appearance suites. The pre-integration 207/62 results are historical; the
+[publication report](publication.md) and [current SIM review](main-integration/sim-review.md)
+record integrated results and remaining art/device gates.
 Theme revisions promised to recordings must remain available when new art revisions
 are introduced; authored fallback is recovery behavior, not a retention policy.

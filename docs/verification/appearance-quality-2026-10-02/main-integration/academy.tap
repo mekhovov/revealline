@@ -1,0 +1,215 @@
+TAP version 13
+# Subtest: SIM world selection freezes on first arm and applies queued preference only on reset
+ok 1 - SIM world selection freezes on first arm and applies queued preference only on reset
+  ---
+  duration_ms: 59.388875
+  ...
+# Subtest: a superseded appearance preparation cannot arm or overwrite the newer flight appearance
+ok 2 - a superseded appearance preparation cannot arm or overwrite the newer flight appearance
+  ---
+  duration_ms: 29.162416
+  ...
+# Subtest: unavailable recorded appearance remains visible after graphics preparation without altering its proof
+ok 3 - unavailable recorded appearance remains visible after graphics preparation without altering its proof
+  ---
+  duration_ms: 41.558833
+  ...
+# Subtest: native optional shell lists twelve drills, uses exclusive keyboard input, and neutralizes blur/dialog/reset
+ok 4 - native optional shell lists twelve drills, uses exclusive keyboard input, and neutralizes blur/dialog/reset
+  ---
+  duration_ms: 118.178959
+  ...
+# Subtest: synthetic USB samples drive the real shell/model to one verified practice completion; reviewing and demonstrations never deliver evidence
+ok 5 - synthetic USB samples drive the real shell/model to one verified practice completion; reviewing and demonstrations never deliver evidence
+  ---
+  duration_ms: 1358.388416
+  ...
+# Subtest: radio switch edges while blurred or hidden cannot rearm; return requires a fresh visible OFF then ON
+ok 6 - radio switch edges while blurred or hidden cannot rearm; return requires a fresh visible OFF then ON
+  ---
+  duration_ms: 76.689167
+  ...
+# Subtest: immediate Retry preserves the completed proof while notebook verification yields
+ok 7 - immediate Retry preserves the completed proof while notebook verification yields
+  ---
+  duration_ms: 492.362917
+  ...
+# Subtest: Controls camera chooser and toolbar stay synchronized for the narrow layout
+ok 8 - Controls camera chooser and toolbar stay synchronized for the narrow layout
+  ---
+  duration_ms: 21.918625
+  ...
+# Subtest: Studio preview runs the actual course as authoring and never reaches the notebook earning callback
+ok 9 - Studio preview runs the actual course as authoring and never reaches the notebook earning callback
+  ---
+  duration_ms: 456.884125
+  ...
+# Subtest: radio loss pauses instead of borrowing keyboard and reset drops old throttle pickup
+ok 10 - radio loss pauses instead of borrowing keyboard and reset drops old throttle pickup
+  ---
+  duration_ms: 46.557791
+  ...
+# Subtest: graphics failure leaves readable choices and never advances; context loss freezes an existing attempt
+ok 11 - graphics failure leaves readable choices and never advances; context loss freezes an existing attempt
+  ---
+  duration_ms: 66.980583
+  ...
+# Subtest: replay owns a verified clone, rejects forged course data and cannot be used as a practice source
+ok 12 - replay owns a verified clone, rejects forged course data and cannot be used as a practice source
+  ---
+  duration_ms: 44.959708
+  ...
+# Subtest: touch release holds throttle, centers yaw, and cancellation clears all input and listener ownership
+ok 13 - touch release holds throttle, centers yaw, and cancellation clears all input and listener ownership
+  ---
+  duration_ms: 0.288
+  ...
+# Subtest: full-length replay admission yields through the shared verifier and cannot earn a practice receipt
+ok 14 - full-length replay admission yields through the shared verifier and cannot earn a practice receipt
+  ---
+  duration_ms: 1070.908542
+  ...
+# Subtest: pending review aborts on reset, input change, dialog close and disposal without late playback
+ok 15 - pending review aborts on reset, input change, dialog close and disposal without late playback
+  ---
+  duration_ms: 92.78375
+  ...
+# Subtest: closing a replay import during file reading prevents verification and late playback
+ok 16 - closing a replay import during file reading prevents verification and late playback
+  ---
+  duration_ms: 20.271833
+  ...
+# Subtest: actual renderer detects unavailable WebGL without allocating a running fallback simulation
+ok 17 - actual renderer detects unavailable WebGL without allocating a running fallback simulation
+  ---
+  duration_ms: 0.951917
+  ...
+# Subtest: disposing releases generated course callbacks; retained old buttons are inert and unrelated host content remains
+ok 18 - disposing releases generated course callbacks; retained old buttons are inert and unrelated host content remains
+  ---
+  duration_ms: 19.074542
+  ...
+# Subtest: stale queued animation timestamps cannot advance after a long execution gap; explicit resume keeps input ownership
+ok 19 - stale queued animation timestamps cannot advance after a long execution gap; explicit resume keeps input ownership
+  ---
+  duration_ms: 174.601958
+  ...
+# Subtest: cached Back restore preserves paused flight and requires explicit resume without duplicate frames
+ok 20 - cached Back restore preserves paused flight and requires explicit resume without duplicate frames
+  ---
+  duration_ms: 39.128875
+  ...
+# Subtest: cached radio restore requires a fresh arm edge and matching control pickup
+ok 21 - cached radio restore requires a fresh arm edge and matching control pickup
+  ---
+  duration_ms: 57.066
+  ...
+# Subtest: game return keeps scoped offline controls available and serializes preparation/removal
+ok 22 - game return keeps scoped offline controls available and serializes preparation/removal
+  ---
+  duration_ms: 24.623958
+  ...
+# Subtest: unavailable offline capability stays explanatory and a failed prepare never reports ready
+ok 23 - unavailable offline capability stays explanatory and a failed prepare never reports ready
+  ---
+  duration_ms: 28.652708
+  ...
+# Subtest: ordinary unload disposes permanently and a late pageshow cannot revive it
+ok 24 - ordinary unload disposes permanently and a late pageshow cannot revive it
+  ---
+  duration_ms: 13.304958
+  ...
+# Subtest: selecting USB radio restores saved axis arm and button reset after reload
+ok 25 - selecting USB radio restores saved axis arm and button reset after reload
+  ---
+  duration_ms: 44.243875
+  ...
+# Subtest: tested TX15 default loads without saved calibration and does not auto-arm
+ok 26 - tested TX15 default loads without saved calibration and does not auto-arm
+  ---
+  duration_ms: 27.487625
+  ...
+# Subtest: TX15 default does not match an unrelated joystick
+ok 27 - TX15 default does not match an unrelated joystick
+  ---
+  duration_ms: 24.175458
+  ...
+# Subtest: camera focus preserves global pause for keyboard, touch and radio owners without resuming held input
+ok 28 - camera focus preserves global pause for keyboard, touch and radio owners without resuming held input
+  ---
+  duration_ms: 232.020125
+  ...
+# Subtest: pause shortcuts release local controls but preserve text, dialogs and modified browser keys
+ok 29 - pause shortcuts release local controls but preserve text, dialogs and modified browser keys
+  ---
+  duration_ms: 0.453791
+  ...
+# Subtest: 0.5x self-level review displays every fixed model step, reaches the verified outcome and cannot earn
+ok 30 - 0.5x self-level review displays every fixed model step, reaches the verified outcome and cannot earn
+  ---
+  duration_ms: 815.253709
+  ...
+# Subtest: 1x self-level review displays every fixed model step, reaches the verified outcome and cannot earn
+ok 31 - 1x self-level review displays every fixed model step, reaches the verified outcome and cannot earn
+  ---
+  duration_ms: 484.582334
+  ...
+# Subtest: 0.5x acro review displays every fixed model step, reaches the verified outcome and cannot earn
+ok 32 - 0.5x acro review displays every fixed model step, reaches the verified outcome and cannot earn
+  ---
+  duration_ms: 752.09275
+  ...
+# Subtest: 1x acro review displays every fixed model step, reaches the verified outcome and cannot earn
+ok 33 - 1x acro review displays every fixed model step, reaches the verified outcome and cannot earn
+  ---
+  duration_ms: 432.952375
+  ...
+# Subtest: changing review speed preserves pause and blur recovery, rejects foreign rates, and never buffers a catch-up
+ok 34 - changing review speed preserves pause and blur recovery, rejects foreign rates, and never buffers a catch-up
+  ---
+  duration_ms: 132.118125
+  ...
+# Subtest: replay speed is localized and cannot change practice or start a replay by itself
+ok 35 - replay speed is localized and cannot change practice or start a replay by itself
+  ---
+  duration_ms: 90.942375
+  ...
+# Subtest: Flight Studio actual import/export preserves authored rewards and locale switches keep unapplied fields
+ok 36 - Flight Studio actual import/export preserves authored rewards and locale switches keep unapplied fields
+  ---
+  duration_ms: 43.583166
+  ...
+# Subtest: practice studio rejects foreign ownership, unsupported dependencies and unchanged rebind revisions
+ok 37 - practice studio rejects foreign ownership, unsupported dependencies and unchanged rebind revisions
+  ---
+  duration_ms: 9.037875
+  ...
+# Subtest: Radio setup import, explicit verification and save retain switch threshold and inversion
+ok 38 - Radio setup import, explicit verification and save retain switch threshold and inversion
+  ---
+  duration_ms: 16.604084
+  ...
+# Subtest: Acro notebook review chooses only evidence satisfying its mode rule
+ok 39 - Acro notebook review chooses only evidence satisfying its mode rule
+  ---
+  duration_ms: 36.579458
+  ...
+# Subtest: a custom imported course remains selectable with its exact reward and demonstration slot
+ok 40 - a custom imported course remains selectable with its exact reward and demonstration slot
+  ---
+  duration_ms: 6.421
+  ...
+# Subtest: notebook import has a neutral localized Cancel action and disposal aborts a pending transfer
+ok 41 - notebook import has a neutral localized Cancel action and disposal aborts a pending transfer
+  ---
+  duration_ms: 13.115208
+  ...
+1..41
+# tests 41
+# suites 0
+# pass 41
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 4929.164875
