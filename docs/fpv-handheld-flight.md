@@ -62,3 +62,9 @@ TX15/Xbox/DualSense hardware, real touch ergonomics or sustained performance.
 Additional unit coverage remains in R7. No physics, scoring, replay identities,
 package limits or asset licenses are changed. Public release still requires
 protected PR checks, merge, deployment identity verification and a public launch.
+
+The final whole-school browser regression passes119/119 checks across58 lessons
+and374 guided steps. Frozen runtime `ad75299b528d082dd754233de25bccbae6be882a`
+passes all3 package admissions, committed-source/ZIP verification and two
+byte-identical builds. Academy remains62 runtime files; World Studio94, within
+the unchanged source/runtime policies. See `fpv-handheld-package-20261002.json`.
