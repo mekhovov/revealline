@@ -79,7 +79,7 @@ import {
   evaluateWorldResult,
   createSectorTracker,
   compatibleGhost,
-  checkpointPractice,
+  prepareCheckpointPractice,
 } from './world-progress.mjs';
 import {
   splitCourseDefinition,
@@ -711,6 +711,9 @@ export function mountWorldApp({
     recorder = null,
     current = null,
     preview = false,
+    checkpointRequest = null,
+    checkpointSession = null,
+    checkpointPreparation = null,
     flightToken = 0,
     finished = false,
     sceneReady = false,
@@ -1206,6 +1209,7 @@ export function mountWorldApp({
           playlist: playingPlaylist,
           index: playlistIndex,
           replayProof,
+          checkpoint: checkpointRequest,
           demonstration: replayKind === 'demonstration',
         }).catch(reportError);
     },
@@ -1411,7 +1415,14 @@ export function mountWorldApp({
                   'Keyboard · W/S pitch · A/D roll · Q/E yaw · ↑/↓ throttle.',
                   'Клавіатура · W/S тангаж · A/D крен · Q/E рискання · ↑/↓ газ.',
                 );
-    if (status.textContent !== text) status.textContent = text;
+    const pickup =
+      source === 'radio' && checkpointSession && state?.status === 'paused'
+        ? radio.status().pickup
+        : null;
+    const detail = pickup
+      ? `${text} · ${txt('Match recorded controls', 'Сумістіть із записаним керуванням')}: ${['roll', 'pitch', 'yaw', 'throttle'].map((key) => `${controlName(key)} ${Math.round(pickup[key] * 100)}%`).join(' · ')}`
+      : text;
+    if (status.textContent !== detail) status.textContent = detail;
     status.dataset.source = source;
     monitor.dataset.source = source;
     paintDroneResponse(state, controls, { source, unavailable });
@@ -1454,7 +1465,7 @@ export function mountWorldApp({
               (state?.lastInput?.[key] ?? 0) / 1000,
             ]),
           );
-    if (current?.beginner)
+    if (current?.beginner && !checkpointSession)
       beginnerCoach.update({
         state,
         source,
@@ -2543,7 +2554,6 @@ export function mountWorldApp({
         createCourse: courseFromProject,
         createCollider: colliderFromAnchor,
         validateCourse: validateWorldCourse,
-
       });
       next = review.project;
       diagnostics = review.diagnostics;
@@ -2749,6 +2759,7 @@ export function mountWorldApp({
     node.classList.toggle('sector-behind', value !== null && value > 0);
   }
   function updateSectorHUD() {
+    $('sector-panel').hidden = Boolean(checkpointSession);
     const latest = sectors.latest(sectorReference?.sectors),
       title = latest
         ? `${txt('Sector', 'Ділянка')} ${latest.index + 1} · ${seconds(latest.ticks)}`
@@ -2884,10 +2895,13 @@ export function mountWorldApp({
     updateGhostHUD();
     const target = current.course.steps[$('flight-mode').value][state.step];
     $('flight-instruments').textContent =
-      `${(state.position.y / 1000).toFixed(1)} m · ${(Math.hypot(state.velocity.x, state.velocity.y, state.velocity.z) / 1000) | 0} m/s · ${(state.ticks / 50).toFixed(1)} s${state.health !== undefined ? ` · ♥ ${state.health}` : ''}`;
+      `${(state.position.y / 1000).toFixed(1)} m · ${(Math.hypot(state.velocity.x, state.velocity.y, state.velocity.z) / 1000) | 0} m/s · ${((state.ticks - (checkpointSession?.startTick ?? 0)) / 50).toFixed(1)} s${state.health !== undefined ? ` · ♥ ${state.health}` : ''}`;
     $('flight-objective').textContent = terminal(state)
       ? txt('Flight ended', 'Політ завершено')
       : `${Math.min(state.step + 1, state.total ?? current.course.steps[$('flight-mode').value].length)}/${current.course.steps[$('flight-mode').value].length} · ${target ? stepName(target) : state.status}${state.hold ? ` · ${target?.type === 'actor-track-v1' ? `${(state.hold / 50).toFixed(1)}/${(target.ticks / 50).toFixed(1)} s` : `${state.hold}/${target?.ticks ?? 0}`}` : ''}`;
+    if (checkpointSession && !terminal(state))
+      $('flight-objective').textContent =
+        `${txt('Unscored practice', 'Тренування без заліку')} · ${checkpointSession.kind === 'checkpoint' ? `${txt('Section', 'Ділянка')} ${checkpointSession.index + 1} · ` : ''}${target ? stepName(target) : state.status}${state.hold ? ` · ${state.hold}/${target?.ticks ?? 0}` : ''}`;
     if (target?.type === 'actor-track-v1' && !terminal(state)) {
       const hints = {
         'acquire-subject': ['Find the marked subject', 'Знайдіть позначений об’єкт'],
@@ -2919,7 +2933,10 @@ export function mountWorldApp({
       ? txt('Restart playback', 'Переглянути спочатку')
       : txt('Retry', 'Ще раз');
     $('world-watch-demo').hidden =
-      Boolean(replayProof) || !demonstrationFor(current, $('flight-mode').value);
+      Boolean(replayProof) ||
+      Boolean(checkpointSession) ||
+      !demonstrationFor(current, $('flight-mode').value);
+    $('export-flight').disabled = Boolean(checkpointSession);
     $('world-fire').hidden =
       Boolean(replayProof) ||
       current.legacy ||
@@ -2930,7 +2947,9 @@ export function mountWorldApp({
     $('world-flight-resume').textContent = $('world-arm').textContent;
     $('world-flight-fire').hidden = $('world-fire').hidden || $('flight-source').value !== 'touch';
     $('world-next').disabled =
-      !playingPlaylist || playlistIndex + 1 >= playingPlaylist.entries.length;
+      Boolean(checkpointSession) ||
+      !playingPlaylist ||
+      playlistIndex + 1 >= playingPlaylist.entries.length;
   }
   async function finishFlight(token) {
     if (finished || token !== flightToken) return;
@@ -2942,6 +2961,46 @@ export function mountWorldApp({
     input.enable(false);
     fire = false;
     radio.freeze('finished');
+    if (checkpointSession) {
+      const state = flight.snapshot(),
+        entry = current,
+        request = checkpointRequest,
+        section = checkpointSession.kind === 'checkpoint';
+      $('result-panel').hidden = false;
+      $('result-panel').replaceChildren(
+        el(
+          'h2',
+          state.status === 'complete'
+            ? section
+              ? txt('Section complete', 'Ділянку виконано')
+              : txt('Practice complete', 'Тренування завершено')
+            : txt('Practice ended', 'Тренування завершено'),
+        ),
+        el(
+          'p',
+          txt(
+            'Unscored practice. Completion records, medals and playlists are unchanged.',
+            'Тренування без заліку. Записи виконання, медалі та списки польотів не змінюються.',
+          ),
+        ),
+        el(
+          'p',
+          `${((state.ticks - checkpointSession.startTick) / 50).toFixed(2)} ${txt('s', 'с')}`,
+        ),
+        button(
+          txt('Practise again', 'Тренуватися ще раз'),
+          () => startFlight(entry, { checkpoint: request }),
+          'primary',
+        ),
+        button(txt('Fly full challenge', 'Летіти повне завдання'), () => startFlight(entry)),
+        button(txt('Back to lobby', 'До меню'), () => closeFlight()),
+      );
+      $('flight-status').textContent = txt(
+        'Practice finished · no rewards or recording.',
+        'Тренування завершено · без нагород і запису.',
+      );
+      return;
+    }
     const entry = current,
       proof = recorder.export(),
       state = flight.snapshot(),
@@ -3058,18 +3117,13 @@ export function mountWorldApp({
               ? txt('Practise biggest time loss', 'Тренувати ділянку з найбільшою втратою часу')
               : txt('Practise longest section', 'Тренувати найдовшу ділянку'),
             () =>
-              startFlight(
-                {
-                  ...entry,
-                  course: checkpointPractice(
-                    entry.course,
-                    proof.mode,
-                    lostSector?.index ?? resultSummary.weakest,
-                  ),
-                  legacy: false,
+              startFlight(entry, {
+                checkpoint: {
+                  mode: proof.mode,
+                  index: lostSector?.index ?? resultSummary.weakest,
+                  proof,
                 },
-                { preview: true },
-              ),
+              }),
           ),
         );
       const resultActions = el('div', undefined, 'button-row');
@@ -3258,9 +3312,11 @@ export function mountWorldApp({
               },
         );
         if (flight.snapshot().ticks > before) {
-          if (current.legacy) recorder.record(controls);
-          else recorder.record();
-          sectors.consume(flight.snapshot());
+          if (recorder) {
+            if (current.legacy) recorder.record(controls);
+            else recorder.record();
+            sectors.consume(flight.snapshot());
+          }
           if (flight.snapshot().ticks % 250 === 0) void saveRecovery().catch(reportError);
         }
       }
@@ -3292,6 +3348,8 @@ export function mountWorldApp({
   async function startFlight(entry, options = {}) {
     if (disposed) return;
     const token = ++flightToken;
+    checkpointPreparation?.abort();
+    checkpointPreparation = null;
     $('flight-dialog').dataset.flightMenuOpen = 'false';
     qualityPreparing = false;
     scenePreparationGeneration++;
@@ -3308,9 +3366,12 @@ export function mountWorldApp({
     flight?.dispose?.();
     flight = null;
     current = entry;
+    recorder = null;
+    checkpointRequest = options.checkpoint ?? null;
+    checkpointSession = null;
     restoreRequiredMode();
     const needsAcro = !entry.legacy && worldCourseRequiresAcro(entry.course);
-    const learning = learningById.get(entry.beginner);
+    const learning = !checkpointRequest && learningById.get(entry.beginner);
     if (learning) {
       learningPreferences ??= {
         'flight-mode': $('flight-mode').value,
@@ -3333,9 +3394,14 @@ export function mountWorldApp({
         $('flight-mode').value = 'acro';
       }
     }
+    if (checkpointRequest) {
+      requiredModePreference ??= $('flight-mode').value;
+      $('flight-mode').value = checkpointRequest.mode;
+    }
     $('flight-dialog').classList.toggle('learning-flight', Boolean(learning));
-    preview = Boolean(options.replayProof) || (options.preview ?? false);
-    playingPlaylist = options.playlist ?? null;
+    preview =
+      Boolean(checkpointRequest) || Boolean(options.replayProof) || (options.preview ?? false);
+    playingPlaylist = checkpointRequest ? null : (options.playlist ?? null);
     playlistIndex = options.index ?? 0;
     finished = false;
     sceneReady = false;
@@ -3357,7 +3423,10 @@ export function mountWorldApp({
         : txt('RECORDED FLIGHT', 'ЗАПИСАНИЙ ПОЛІТ');
     $('world-replay-rate').value = String(replayRate);
     $('flight-mode').disabled =
-      Boolean(learning) || needsAcro || (Boolean(replayProof) && replayKind !== 'demonstration');
+      Boolean(checkpointRequest) ||
+      Boolean(learning) ||
+      needsAcro ||
+      (Boolean(replayProof) && replayKind !== 'demonstration');
     $('flight-source').disabled = Boolean(replayProof);
     $('radio-setup-button').disabled = Boolean(replayProof);
     $('world-touch').hidden = Boolean(replayProof) || $('flight-source').value !== 'touch';
@@ -3380,11 +3449,13 @@ export function mountWorldApp({
     $('flight-title').textContent = label(entry);
     $('flight-collection').textContent = replayProof
       ? $('world-replay-label').textContent
-      : preview
-        ? txt('AUTHORING PREVIEW', 'АВТОРСЬКИЙ ПЕРЕГЛЯД')
-        : learning
-          ? txt('FLIGHT SCHOOL', 'ЛЬОТНА ШКОЛА')
-          : localized(WORLD_THEMES.find((t) => t.id === entry.theme)?.title) || entry.world;
+      : checkpointRequest
+        ? txt('SECTION PRACTICE · UNSCORED', 'ТРЕНУВАННЯ ДІЛЯНКИ · БЕЗ ЗАЛІКУ')
+        : preview
+          ? txt('AUTHORING PREVIEW', 'АВТОРСЬКИЙ ПЕРЕГЛЯД')
+          : learning
+            ? txt('FLIGHT SCHOOL', 'ЛЬОТНА ШКОЛА')
+            : localized(WORLD_THEMES.find((t) => t.id === entry.theme)?.title) || entry.world;
     $('flight-brief').textContent = entry.course.locales[locale].brief;
     $('flight-menu-brief').textContent = entry.course.locales[locale].brief;
     $('flight-status').textContent = txt('Preparing scene…', 'Підготовка сцени…');
@@ -3429,7 +3500,51 @@ export function mountWorldApp({
         );
       $('flight-mode').value = proof.mode;
     }
-    if (options.recover) {
+    if (checkpointRequest) {
+      const controller = new AbortController();
+      checkpointPreparation = controller;
+      $('flight-status').textContent = txt(
+        'Restoring recorded section…',
+        'Відновлення записаної ділянки…',
+      );
+      let prepared;
+      try {
+        prepared = await prepareCheckpointPractice(
+          entry.course,
+          checkpointRequest.mode,
+          checkpointRequest.index,
+          {
+            proof: checkpointRequest.proof,
+            response,
+            signal: controller.signal,
+          },
+        );
+      } catch (error) {
+        if (controller.signal.aborted) return;
+        throw error;
+      } finally {
+        if (checkpointPreparation === controller) checkpointPreparation = null;
+      }
+      if (disposed || token !== flightToken) {
+        prepared.flight.dispose();
+        return;
+      }
+      ({ flight, ...checkpointSession } = prepared);
+      radio.reset({ notify: false, pickup: prepared.pickup });
+      const selected = entry.course.steps[prepared.mode][prepared.index];
+      $('flight-brief').textContent = $('flight-menu-brief').textContent =
+        prepared.kind === 'checkpoint'
+          ? `${txt('Practise only this objective', 'Тренуйте лише цю ціль')}: ${stepName(selected)}. ${txt('The recorded orientation, momentum, response settings and world state are restored.', 'Відновлено записані орієнтацію, імпульс, параметри чутливості та стан світу.')}`
+          : txt(
+              'A verified entry recording is unavailable. Practise the complete route from its original launch point, without rewards.',
+              'Немає перевіреного запису входу. Тренуйте весь маршрут із початкового місця без нагород.',
+            );
+      if (prepared.kind !== 'checkpoint')
+        $('flight-collection').textContent = txt(
+          'FULL ROUTE PRACTICE · UNSCORED',
+          'ТРЕНУВАННЯ ПОВНОГО МАРШРУТУ · БЕЗ ЗАЛІКУ',
+        );
+    } else if (options.recover) {
       const recovered = await recoverWorldFlight(entry.course, options.recover, {
         includeSectors: true,
       });
@@ -3521,10 +3636,15 @@ export function mountWorldApp({
     if (ghostEnabled) await loadGhost();
     if (token !== flightToken || disposed) return;
     sceneReady = true;
-    $('flight-status').textContent = txt(
-      'Ready. Choose your controls, then arm.',
-      'Готово. Виберіть керування та натисніть «Увімкнути».',
-    );
+    $('flight-status').textContent = checkpointSession
+      ? txt(
+          'Practice paused. Arm to take over. Keyboard, touch and controller retain the recorded throttle; radio requires matching the recorded sticks.',
+          'Тренування на паузі. Увімкніть, щоб перебрати керування. Клавіатура, дотик і контролер зберігають записаний газ; на пульті сумістіть стіки із записаним положенням.',
+        )
+      : txt(
+          'Ready. Choose your controls, then arm.',
+          'Готово. Виберіть керування та натисніть «Увімкнути».',
+        );
     input.select($('flight-source').value);
     restoreRadio();
     paintInput(flight.snapshot());
@@ -3546,6 +3666,8 @@ export function mountWorldApp({
   }
   async function closeFlight() {
     const token = ++flightToken;
+    checkpointPreparation?.abort();
+    checkpointPreparation = null;
     qualityPreparing = false;
     scenePreparationGeneration++;
     abortSectorLookup();
@@ -3557,6 +3679,9 @@ export function mountWorldApp({
     flight = null;
     const closedLesson = current?.beginner;
     current = null;
+    recorder = null;
+    checkpointSession = null;
+    checkpointRequest = null;
     beginnerCoach.close();
     restoreLearningPreferences();
     restoreRequiredMode();
@@ -4005,15 +4130,25 @@ export function mountWorldApp({
       }
     }
     input.enable(!replayProof);
+    if (checkpointSession) {
+      const throttle = flight.snapshot().lastInput.throttle / 1000;
+      input.seedThrottle(throttle);
+      gamepad.seedThrottle(throttle);
+    }
     void audio.resume().catch(reportError);
     fire = false;
     lastTime = null;
     flight.arm();
     $('flight-status').textContent = replayProof
       ? txt('Playback active · no rewards.', 'Відтворення триває · без нагород.')
-      : preview
-        ? txt('Preview: completion does not earn rewards.', 'Перегляд: виконання не дає нагород.')
-        : txt('Flight active.', 'Політ триває.');
+      : checkpointSession
+        ? txt(
+            'Section practice active · no rewards or recording.',
+            'Тренування ділянки триває · без нагород і запису.',
+          )
+        : preview
+          ? txt('Preview: completion does not earn rewards.', 'Перегляд: виконання не дає нагород.')
+          : txt('Flight active.', 'Політ триває.');
     $('world-viewport').focus();
   });
   const menuHint = doc.createElement('p');
@@ -4134,6 +4269,7 @@ export function mountWorldApp({
       playlist: playingPlaylist,
       index: playlistIndex,
       replayProof,
+      checkpoint: checkpointRequest,
       demonstration: replayKind === 'demonstration',
     }),
   );
@@ -4186,10 +4322,24 @@ export function mountWorldApp({
     if (replayProof) return;
     pauseFlight();
     input.select($('flight-source').value);
+    if (checkpointSession && $('flight-source').value === 'radio')
+      radio.reset({
+        notify: false,
+        pickup: Object.fromEntries(
+          ['roll', 'pitch', 'yaw', 'throttle'].map((key) => [
+            key,
+            flight.snapshot().lastInput[key] / 1000,
+          ]),
+        ),
+      });
     restoreRadio();
     paintInput(flight?.snapshot());
   });
   on($('flight-mode'), 'change', () => {
+    if (checkpointRequest) {
+      $('flight-mode').value = checkpointRequest.mode;
+      return;
+    }
     if (replayProof) {
       if (replayKind === 'demonstration') return watchDemonstration(current);
       $('flight-mode').value = replayProof.mode;
@@ -4316,6 +4466,7 @@ export function mountWorldApp({
             preview,
             playlist: playingPlaylist,
             index: playlistIndex,
+            checkpoint: checkpointRequest,
           }).catch(reportError);
       },
     });
@@ -4409,6 +4560,7 @@ export function mountWorldApp({
         presentation: renderer?.ghostSnapshot?.() ?? null,
         resources: renderer?.resources?.() ?? null,
       },
+      checkpointPractice: checkpointSession ? clone(checkpointSession) : null,
       records: clone(records),
       catalogue: catalogue.length,
       learning: current?.beginner
@@ -4428,6 +4580,8 @@ export function mountWorldApp({
       await saveRecovery();
       disposed = true;
       ++flightToken;
+      checkpointPreparation?.abort();
+      checkpointPreparation = null;
       abortSectorLookup();
       pauseFlight();
       await saveRecovery();
