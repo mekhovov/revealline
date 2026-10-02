@@ -113,3 +113,19 @@ checkpoint and feature notes for qualification and exact publication heads.
 Existing holds, CI, protected merging and public deployment remain separate gates.
 Physical radio, unfamiliar-player and sustained hardware acceptance remain open.
 The R4–R7 art, original demonstration and qualification backlog is unchanged.
+
+### Player feedback refinement — 2 October 2026
+
+This replaces the earlier **Example / Try controls** selector with automatic
+input takeover. Implement the current feedback as one focused child of #929:
+
+| Work                                                | Estimate                    | Acceptance                                                                                                                                               |
+| --------------------------------------------------- | --------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Full-travel looping examples and automatic takeover | 1 working day               | Both signs in Acro/self-level; real slow example commands; normal-speed keyboard/touch/calibrated radio; no host progress changes; safe pause/reconnect. |
+| Four-prop schematic and ground motion               | 1 working day, parallel     | Independent illustrative motor signs; tick-based animation; real-position ground and height; full attitude and reduced motion.                           |
+| Peripheral gameplay aids                            | 0.5–1 working day, parallel | Small transparent HUD, larger touch targets, uncluttered objectives, desktop/mobile/fullscreen and both hosts.                                           |
+| Functional qualification and focused publication    | After the increment         | Actual browser input/lifecycle checks, original lesson replay, frozen package admission and rebuilt player URL.                                          |
+
+See `fpv-motion-teaching.md` for the behavior and its motor-mix limitations.
+These estimates cover the feedback refinement only; the R4–R7 art, content,
+deferred unit coverage and human/device qualification backlog is retained.

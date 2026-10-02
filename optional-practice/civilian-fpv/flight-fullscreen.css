@@ -127,10 +127,6 @@ html[data-fpv-immersive] [data-immersive-controls='true'] .flight-controls {
     overflow: hidden;
     clip-path: inset(50%);
   }
-  html[data-fpv-immersive='worlds'] .world-touch,
-  html[data-fpv-immersive='worlds'] .world-touch.compact-sticks {
-    bottom: 110px;
-  }
   html[data-fpv-immersive='academy'] .scene-heading {
     right: 145px;
     max-width: calc(100% - 160px);
