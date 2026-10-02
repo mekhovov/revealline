@@ -1038,3 +1038,22 @@ lessons. Each has87 files/13,903,830bytes, ZIP SHA-256
 The source and built turning lesson were visually inspected; compact390px lesson
 layout remains usable. Screenshot `/tmp/fpv-readable-stick-motion-20261002.png`.
 No public-live or new hardware acceptance claim. Ready for focused publication.
+
+### 2 October — stick-motion refinement published
+
+Focused PR [#941](https://github.com/mekhovov/revealline/pull/941) is attached to
+this chat and appended through the native API to stack902 after #940. Qualified
+receipt head: `477d6146cae5b8f951a73cf99d3a42b24cf7b071`; runtime remains the
+frozen21a5310a build above. Live membership now shows #905 and #907 merged at
+02:54 and03:04 UTC respectively. Open members start #923 and continue linearly
+through #941; preserve all remaining review/protection requirements.
+
+At receipt head477d6146, candidate workflow36959354936 has optional-practice
+SUCCESS, with default-capacity/candidate still running. Unallocated-stage jobs
+are skipped. This is not complete merge qualification; retain external CI state
+for the next delivery heartbeat rather than polling unchanged jobs. No protected
+merge or public deployment of this increment was attempted or claimed.
+
+The current request is complete locally and published for review. Next authorized
+independent work remains R5 hangar/meadow art, after reconciling #925 and the
+preserved radio-menu work. Keep new feature changes off this finished PR.
