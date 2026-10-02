@@ -26,6 +26,10 @@ on:
       - 'optional-practice/launcher-template.mjs'
       - 'publishing/optional-package-policy.mjs'
       - 'scripts/compile-edition.mjs'
+      - 'scripts/edition-runtime.mjs'
+      - 'publishing/edition-candidate.mjs'
+      - 'game/test/edition-runtime.test.mjs'
+      - 'game/test/editions.test.mjs'
       - 'scripts/refresh-theme-bootstrap.mjs'
       - 'game/test/theme-*.test.mjs'
       - 'game/test/unified-appearance.test.mjs'
@@ -68,6 +72,8 @@ jobs:
         game/test/curated-community-theme-host.test.mjs
         game/test/edition-appearance-host.test.mjs
         game/test/edition-retained-presentation.test.mjs
+        game/test/edition-runtime.test.mjs
+        game/test/editions.test.mjs
         game/test/company-studio-ui.test.mjs
         game/test/fpv-appearance.test.mjs
         game/test/fpv-theme-family-controls.test.mjs

@@ -46,6 +46,7 @@ import {
   EDITION_RUNTIME_ASSET_LEDGER,
   EDITION_HOST_JSON_REQUESTS,
   projectEditionRuntimeImports,
+  projectEditionRuntimeIndentation,
   projectEditionMenuResourcePaths,
   editionMenuSceneResources,
   projectEditionMenuScenes,
@@ -751,6 +752,9 @@ html[data-edition-id] .edition-boot-logo{display:inline-block;width:auto;height:
       files.set(entry, Buffer.from(html));
     }
   files = projectEditionLocalization(files);
+  for (const file of enginePaths) {
+    if (files.has(file)) files.set(file, projectEditionRuntimeIndentation(file, files.get(file)));
+  }
   if (files.has('game/index.html')) {
     files.set('game/build-config.json', jsonBytes({ version, entry: 'game/company.html' }));
     files.set(
