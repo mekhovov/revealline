@@ -9,7 +9,9 @@ export function currentGameplayGroups(catalogue) {
 }
 export function gameplaySelection(catalogue, { all = false, selected = [] } = {}) {
   const choices = new Set(['base', ...selected]);
-  if (all) currentGameplayGroups(catalogue).forEach((group) => choices.add(group.id));
+  // All-current intent adds new current packages without dropping previously
+  // chosen extras (SIM, archived chapters, tools). Music has its own consent.
+  if (all) for (const group of currentGameplayGroups(catalogue)) choices.add(group.id);
   return catalogue.groups
     .filter((group) => group.kind === 'gameplay' && choices.has(group.id))
     .map((group) => group.id);

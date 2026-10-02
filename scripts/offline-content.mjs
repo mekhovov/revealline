@@ -7,7 +7,8 @@ import { authoredPackageId } from '../game/content-design/offline-packages.mjs';
 import { classifyContent } from '../game/content-design/content-lifecycle.mjs';
 import { addAuthoredRuntimeSnapshots } from './authored-runtime-snapshots.mjs';
 import { isOptionalSpatialAudioBody, selectOfflineCore } from './offline-core-closure.mjs';
-import { downloadFiles } from '../game/download-catalogue.mjs';
+import { downloadFiles, validateDownloadCatalogue } from '../game/download-catalogue.mjs';
+import { validateInstalledSelection } from '../game/installed-app.mjs';
 import { buildOfflineDestinations, buildNavigationBootstraps } from './offline-destinations.mjs';
 import { readFileSync } from 'node:fs';
 import { addOfflineExperiences } from './offline-experiences.mjs';
@@ -476,7 +477,12 @@ export async function buildOfflineContent(
     }
     if (offset !== entry.bytes.length) throw new Error('Official media bundle has trailing bytes.');
   }
-  return {
+  // Every selectable gameplay package must fit the installed-state contract,
+  // including archives/tools that a player can opt into individually.
+  validateInstalledSelection(
+    groups.filter((group) => group.kind === 'gameplay').map((group) => group.id),
+  );
+  return validateDownloadCatalogue({
     format: snapshots ? 'revealline-offline-content.v2' : 'revealline-offline-content.v1',
     version,
     files,
@@ -522,7 +528,7 @@ export async function buildOfflineContent(
     ],
     sharedPolicy:
       'The current lightweight catalogue keeps every mission visible. Original artwork belongs to its chapter; archives and soundtracks are separate optional downloads.',
-  };
+  });
 }
 
 /** Publication evidence, generated after the worker to avoid a recursive content hash. */
