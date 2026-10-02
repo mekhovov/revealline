@@ -432,8 +432,21 @@
       </section>
       <p id="studio-status" role="status" aria-live="polite"></p>
     </main>
-    <dialog id="flight-dialog" class="flight-dialog">
+    <dialog
+      id="flight-dialog"
+      class="flight-dialog"
+      data-flight-state="ready"
+      data-flight-menu-open="false"
+    >
       <header>
+        <button
+          id="world-flight-close-menu"
+          class="handheld-flight-close-menu"
+          type="button"
+          data-i18n="returnToFlight"
+        >
+          Return to flight
+        </button>
         <div>
           <small id="flight-collection"></small><strong id="flight-title"></strong>
           <p id="flight-loadout" class="flight-loadout"></p>
@@ -467,6 +480,7 @@
           ><select id="flight-source" aria-label="Control source">
             <option value="keyboard" data-i18n="keyboard">Keyboard</option>
             <option value="touch" data-i18n="touch">Touch</option>
+            <option value="controller" data-i18n="controller">Controller</option>
             <option value="radio" data-i18n="radio">USB radio</option>
           </select></label
         >
@@ -545,6 +559,35 @@
       </div>
       <section id="world-viewport" tabindex="0">
         <canvas id="world-canvas"></canvas>
+        <p id="world-flight-identity" class="handheld-flight-identity"></p>
+        <div class="handheld-flight-actions">
+          <button
+            id="world-flight-menu"
+            class="handheld-flight-menu"
+            type="button"
+            data-i18n="flightMenu"
+            aria-expanded="false"
+          >
+            Menu
+          </button>
+          <button
+            id="world-flight-resume"
+            class="handheld-flight-resume"
+            type="button"
+            data-i18n="arm"
+          >
+            Arm / resume
+          </button>
+          <button
+            id="world-flight-fire"
+            class="handheld-flight-fire"
+            type="button"
+            data-i18n="fire"
+            hidden
+          >
+            Fire
+          </button>
+        </div>
         <div class="flight-brief"><p id="flight-brief"></p></div>
         <div id="aim-reticle" class="aim-reticle" aria-hidden="true">+</div>
         <div id="flight-instruments" class="flight-instruments"></div>
