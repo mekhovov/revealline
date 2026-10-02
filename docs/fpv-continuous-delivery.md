@@ -715,3 +715,115 @@ Exact-head CI, protected merge and public deployment are pending external gates;
 no public live claim is made. Do not repeatedly poll unchanged checks. Read the
 latest stack state before the next increment and continue the approved R4/R5
 art/environment and R6 demonstration/ghost/practice backlog independently.
+
+## 2 October — lesson/example alignment and display response
+
+Player feedback exposed a curriculum mismatch: the lab's generic fallback
+mapped every combined-control step to pitch and ignored step direction. The
+focused child `codex/fpv-lesson-preview-response` starts at exact #934 head
+`f8e3f170cdba36676bb5656d48accae56f5bd3ad`. Live native #902 membership was read;
+its existing open chain remains #905 → #907 → #923 → #924 → #925 → #926 → #929 →
+#932 → #934. Parent exact-head checks are successful/skipped; upstream review
+holds and protected merge rules remain in force.
+
+The new helper uses actual command-driven examples for each of 122 learning
+steps across 26 lessons. Direction, task, initial/target heading, landing,
+braking and lateral gate alignment now follow the lesson metadata. The original
+first-lesson full-range explorer remains; other examples are clearly labelled
+control techniques rather than full-route proof playback. Both EN/UK include
+phase captions, including fullscreen. Independent review corrected stale ground,
+climb/descent, recovery, gate-alignment and figure-eight hints. All 26 course and
+pack identities remain unchanged and all 14 bundled Acro proofs replay. The
+12 optional self-level lessons still lack bundled full-route proofs.
+
+Responsiveness work samples active radio input within the lab frame, displays
+current commands without waiting for the next physics tick, avoids repeated
+state clones and skips covered WebGL/HUD rendering. Shared SVG geometry and
+unchanged values are cached; actual quaternion/position changes remain immediate.
+Gray prop surrounds and default percentages are removed, with cyan demand arcs
+and independent readable prop speeds retained. The Gentle integrator and scored
+recording contract are unchanged. See `fpv-lesson-preview-response.md`.
+
+Local functional checks include all 122 physical technique profiles, 13 browser
+checks spanning the curriculum and live-input layouts, 13 shared propeller checks,
+14 prolonged-practice/lifecycle checks and 19 production-host checks with
+controlled inputs. Final source-bound receipts, alternating component benchmark,
+committed-input package admissions and rebuilt-player inspection follow below.
+No unit-coverage, physical-radio, novice-player, native permission, public-live
+or sustained target-hardware performance claim is made.
+
+This player-feedback correction is inserted before the independent R4/R5 art
+and R6 content backlog; R7 still owns deferred unit coverage and final human /
+hardware qualification. Next: freeze the verified increment, attach a focused
+native #902 child of #934 and leave upstream holds intact. Preserve #928, #922,
+#889, graphics WIP and Garage/ghost handoffs. Do not poll unchanged external CI.
+
+### Visualization measurement and curriculum receipts
+
+Final all-step browser receipt passes **14/14 checks and122/122 steps**, including
+EN/UK fullscreen phase captions and Modes1–4. All122 actual-model technique
+checks pass; preparation peaks at295 of the500 permitted ticks. Lesson9's left
+example reaches north from east and counter-rolls to level. The shared component
+has13/13 browser checks, including immediate pose/input changes, zero SVG writes
+for100 repeated identical frames, and a visible4× phase-speed difference between
+20% and80% illustrative motor demand. Full lesson isolation remains intact.
+
+Final alternating component benchmark: Codex in-app browser reporting
+Chrome154.0.0.0 on macOS, viewport1002×1309, DPR2; eight workloads,32 ABBA runs,
+96 measured samples per baseline/candidate workload. Mean combined coach script
+cost fell from0.517 to0.411ms inline (20.4%) and0.585 to0.485ms immersive (17.1%).
+Unchanged-frame SVG work fell96–97%; stationary geometry with advancing props
+fell51–62%. Fully moving isolated diagram costs were approximately unchanged
+inline (0.310→0.315ms) and increased0.037ms immersive (0.370→0.407ms).
+RAF p95 remained9.3–9.9ms; no measured frames exceeded25ms. This is a bounded
+component measurement, not physical-input latency or desktop/mobile device
+qualification. Covered-world rendering savings are not included in these numbers.
+
+Receipts: `docs/evidence/fpv-response-{lesson-audit,identity-replay,step-model,
+lessons-browser,propeller-browser,endless-browser,host-browser,browser-benchmark}-20261002.*`.
+The full-range explorer remains visibly slow by design; manual inputs always run
+at normal speed. No change to actual physics, rates, response curves or proofs.
+
+### Frozen package and rebuilt player
+
+Runtime candidate `f1b8f65a82c84374a709bce4e414d1b351d41f51` passed all three
+optional-package admissions, committed-input validation, ZIP-member validation
+and two byte-identical builds. See `fpv-response-package-20261002.json`.
+Existing package file limits are unchanged (Academy62 runtime/64 source;
+World Studio94/96). The reviewed-player build has87 files /12,510,913 bytes;
+ZIP SHA-256 `8e99fe737fe02921a4312c5fda5f21e837aea0d0b7b02205927d3091b4e70f7f`.
+
+Opened the actual rebuilt player URL, selected lesson9 / step4, inspected the
+corrected left-turn phase, bare props and cyan motor arcs, entered fullscreen
+practice, and confirmed keyboard takeover reports continuous manual control.
+Browser error log is empty. EN/UK phase captions are visible in the full-window
+practice view. At390×844 the Ukrainian toolbar has four44px targets within the
+viewport, its phase/status remains visible, and there is no horizontal document
+overflow. The in-app screenshot capture scales that mobile tab inconsistently;
+mobile bounds are DOM-verified, not a new native-device screenshot certification.
+Desktop evidence: `/tmp/fpv-lesson-response-final-fullscreen.png`.
+
+No new native OS-fullscreen permission or physical-radio acceptance is claimed;
+controlled lifecycle/controller evidence and the full-window fallback pass.
+The player entry is local, not publicly deployed:
+`http://127.0.0.1:8789/dist/fpv-reviewed-player-playtest/optional-practice/fpv-worlds/index.html#learn`.
+The user's prior USB-radio source and English locale are preserved. Subsequent
+commits only record delivery evidence and publication status.
+
+### Lesson-preview response publication
+
+[PR #935](https://github.com/mekhovov/revealline/pull/935) is published from
+`codex/fpv-lesson-preview-response`, attached to this chat and appended through
+the native stack #902 API after #934. Initial published head is
+`822588858dbf91a327891ad9a35919621a0bc409`; runtime remains frozen at`f1b8f65a8`.
+The open stack sequence now ends #929 → #932 → #934 → #935. No rebase, manual
+retarget, hold removal or merge bypass was used. Milestone remains
+`v0.150.0 — Unified native experience`.
+
+The actual rebuilt player tab is left on the corrected lesson9 left-turn lab;
+Replay example starts its loop and any deliberate input takes over indefinitely.
+Focus-loss pauses remain intentional. The source and packaged local player are
+available for feedback. Exact-head CI, protected stack merge and subsequent
+public deployment remain external gates; retain them for the next delivery
+checkpoint instead of repeatedly polling. Continue independent R4/R5 environment
+art and R6 remaining demonstrations/practice flow, preserving other handoffs.

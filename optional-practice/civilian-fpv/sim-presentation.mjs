@@ -132,9 +132,28 @@ export function mountSimAudioControls({
  * quaternion or its pitch/roll. Rendering cannot mutate supplied flight state. */
 export function mountDroneDiagram({ root }) {
   const doc = root.ownerDocument;
+  const attributes = new WeakMap();
+  const attr = (element, name, value) => {
+    let values = attributes.get(element);
+    if (!values) attributes.set(element, (values = new Map()));
+    const text = String(value);
+    if (values.get(name) === text) return;
+    values.set(name, text);
+    element.setAttribute(name, text);
+  };
+  const style = (element, name, value) => {
+    if (element.style[name] !== value) element.style[name] = value;
+  };
+  const data = (element, name, value) => {
+    const text = String(value);
+    if (element.dataset[name] !== text) element.dataset[name] = text;
+  };
+  const text = (element, value) => {
+    if (element.textContent !== value) element.textContent = value;
+  };
   const svg = (tag, attributes = {}) => {
     const element = doc.createElementNS('http://www.w3.org/2000/svg', tag);
-    for (const [key, value] of Object.entries(attributes)) element.setAttribute(key, String(value));
+    for (const [key, value] of Object.entries(attributes)) attr(element, key, value);
     return element;
   };
   const drawing = svg('svg', {
@@ -175,11 +194,6 @@ export function mountDroneDiagram({ root }) {
   const body = svg('path', { class: 'sim-response-body' });
   const nose = svg('path', { class: 'sim-response-nose' });
   const rear = svg('path', { class: 'sim-response-rear' });
-  const motors = Array.from({ length: 4 }, (_, index) =>
-    svg('path', {
-      class: `sim-response-motor${index < 2 ? ' sim-response-motor-front' : ''}`,
-    }),
-  );
   // Props-in Quad X, viewed from above: FL/RR clockwise, FR/RL anticlockwise.
   // This is a teaching mix of commands, not simulated motor RPM or ESC output.
   const motorNames = ['front-left', 'front-right', 'rear-left', 'rear-right'];
@@ -217,7 +231,6 @@ export function mountDroneDiagram({ root }) {
     arms,
     ...sides,
     body,
-    ...motors,
     struts,
     ...motorPower,
     ...propellers,
@@ -244,9 +257,23 @@ export function mountDroneDiagram({ root }) {
   root.append(drawing);
   let disposed = false,
     lastHeading = null,
-    lastTick = null;
+    lastTick = null,
+    lastUpdateKey = '',
+    lastPoseKey = '',
+    lastGroundKey = '',
+    lastThrustKey = '',
+    lastDriftKey = '',
+    lastResult,
+    cachedGroundTile = null;
   const phases = [0, 0, 0, 0],
-    previousPower = [0, 0, 0, 0];
+    previousPower = [0, 0, 0, 0],
+    drawnPhases = [NaN, NaN, NaN, NaN];
+  const corners = [
+    [-0.82, 0, -0.82],
+    [0.82, 0, -0.82],
+    [-0.82, 0, 0.82],
+    [0.82, 0, 0.82],
+  ];
   const finite = (value) => (Number.isFinite(value) ? value : 0);
   const rotation = (orientation) => {
     const values =
@@ -255,10 +282,19 @@ export function mountDroneDiagram({ root }) {
         : [0, 0, 0, 1];
     const length = Math.hypot(...values);
     const [x, y, z, w] = length ? values.map((value) => value / length) : [0, 0, 0, 1];
+    const xx = 1 - 2 * (y * y + z * z),
+      xy = 2 * (x * y - z * w),
+      xz = 2 * (x * z + y * w),
+      yx = 2 * (x * y + z * w),
+      yy = 1 - 2 * (x * x + z * z),
+      yz = 2 * (y * z - x * w),
+      zx = 2 * (x * z - y * w),
+      zy = 2 * (y * z + x * w),
+      zz = 1 - 2 * (x * x + y * y);
     return ([a, b, c]) => [
-      (1 - 2 * (y * y + z * z)) * a + 2 * (x * y - z * w) * b + 2 * (x * z + y * w) * c,
-      2 * (x * y + z * w) * a + (1 - 2 * (x * x + z * z)) * b + 2 * (y * z - x * w) * c,
-      2 * (x * z - y * w) * a + 2 * (y * z + x * w) * b + (1 - 2 * (x * x + y * y)) * c,
+      xx * a + xy * b + xz * c,
+      yx * a + yy * b + yz * c,
+      zx * a + zy * b + zz * c,
     ];
   };
   return {
@@ -273,9 +309,35 @@ export function mountDroneDiagram({ root }) {
       environmentMotion = false,
       reducedMotion = false,
       immersivePractice = false,
+      showMotorDetails = false,
     } = {}) {
       if (disposed || !state) return;
       environmentMotion ||= immersivePractice;
+      const updateKey = [
+        state.ticks,
+        ...(state.orientation ?? []),
+        ...(referenceOrientation ?? []),
+        state.position?.x,
+        state.position?.y,
+        state.position?.z,
+        state.velocity?.x,
+        state.velocity?.z,
+        controls.throttle,
+        controls.roll,
+        controls.pitch,
+        controls.yaw,
+        locale,
+        unavailable,
+        detailScale,
+        followHeading,
+        environmentMotion,
+        reducedMotion,
+        immersivePractice,
+        showMotorDetails,
+      ].join('|');
+      // Hosts may paint more often than the fixed simulation clock. Repeated
+      // samples perform no SVG work; changed attitude/position is never delayed.
+      if (updateKey === lastUpdateKey) return lastResult;
       const rotate = rotation(state.orientation);
       const initialForward = rotation(referenceOrientation)([0, 0, -1]);
       const referenceHeading =
@@ -302,13 +364,14 @@ export function mountDroneDiagram({ root }) {
       // Smoothly auto-frame actual height so a high flight never clips out of
       // the teaching view. This camera framing does not alter the measured m.
       const bodyY = environmentMotion ? floorY - (96 * height) / (height + 4) : 67;
-      drawing.setAttribute(
+      attr(
+        drawing,
         'viewBox',
         immersivePractice ? '0 0 640 360' : environmentMotion ? '0 0 220 200' : '0 0 220 160',
       );
-      drawing.dataset.environmentMotion = String(environmentMotion);
-      drawing.dataset.reducedMotion = String(reducedMotion);
-      drawing.dataset.immersivePractice = String(immersivePractice);
+      data(drawing, 'environmentMotion', String(environmentMotion));
+      data(drawing, 'reducedMotion', String(reducedMotion));
+      data(drawing, 'immersivePractice', String(immersivePractice));
       // The observer is behind (+Z) and slightly above the nose (-Z). Following
       // heading keeps that rear view through turns without levelling the body.
       // Perspective makes the rear motor pair visibly nearer; height and depth
@@ -338,32 +401,6 @@ export function mountDroneDiagram({ root }) {
               true,
             )
           : projectView([x, y, z], true);
-      let groundPaths = [
-        path(
-          [
-            [-1.65, 0, -1.6],
-            [1.65, 0, -1.6],
-            [1.65, 0, 1.5],
-            [-1.65, 0, 1.5],
-          ].map(floorPoint),
-          true,
-        ),
-        path(
-          [
-            [-1.65, 0, 0],
-            [1.65, 0, 0],
-          ].map(floorPoint),
-        ),
-        path(
-          [
-            [0, 0, 1.5],
-            [0, 0, -1.6],
-            [-0.13, 0, -1.25],
-            [0, 0, -1.6],
-            [0.13, 0, -1.25],
-          ].map(floorPoint),
-        ),
-      ];
       const groundOffset = {
         x:
           (initialCosine * finite(state.position?.x) + initialSine * finite(state.position?.z)) /
@@ -372,116 +409,157 @@ export function mountDroneDiagram({ root }) {
           (-initialSine * finite(state.position?.x) + initialCosine * finite(state.position?.z)) /
           1000,
       };
-      let groundTile = null;
-      const farPaths = [];
-      if (environmentMotion) {
-        // One metre tiles are anchored to the world, not integrated a second
-        // time from velocity. Camera translation subtracts the actual position.
-        // Clip in the ground plane before perspective to keep geometry bounded.
-        const groundView = ([x, z]) =>
-          relative([initialCosine * x - initialSine * z, 0, initialSine * x + initialCosine * z]);
-        const clipGround = (a, b, far = false) => {
-          let lo = 0,
-            hi = 1;
-          for (const [axis, min, max] of [
-            [0, immersivePractice ? -12 : -2.4, immersivePractice ? 12 : 2.4],
+      const groundKey = [
+        cameraHeading,
+        referenceHeading,
+        environmentMotion ? groundOffset.x : 0,
+        environmentMotion ? groundOffset.z : 0,
+        followHeading,
+        environmentMotion,
+        immersivePractice,
+      ].join('|');
+      let groundTile = cachedGroundTile;
+      if (groundKey !== lastGroundKey) {
+        let groundPaths = [
+          path(
             [
-              2,
-              immersivePractice ? (far ? -16 : -5) : -2.8,
-              immersivePractice ? (far ? -5 : 2.4) : 1.4,
-            ],
-          ]) {
-            const delta = b[axis] - a[axis];
-            if (Math.abs(delta) < 1e-8) {
-              if (a[axis] < min || a[axis] > max) return '';
-            } else {
-              const from = (min - a[axis]) / delta,
-                to = (max - a[axis]) / delta;
-              lo = Math.max(lo, Math.min(from, to));
-              hi = Math.min(hi, Math.max(from, to));
-              if (lo > hi) return '';
-            }
-          }
-          const ends = [lo, hi].map((amount) =>
-            projectView(
-              a.map((value, i) => value + (b[i] - value) * amount),
-              true,
-            ),
-          );
-          if (!immersivePractice) return path(ends);
-          // The wider world grid must stay inside the SVG at every heading.
-          // Clip the projected segment rather than squeezing world coordinates.
-          let first = 0,
-            last = 1;
-          for (const [axis, min, max] of [
-            [0, 16, 624],
-            [1, 16, 314],
-          ]) {
-            const delta = ends[1][axis] - ends[0][axis];
-            if (Math.abs(delta) < 1e-8) {
-              if (ends[0][axis] < min || ends[0][axis] > max) return '';
-            } else {
-              const from = (min - ends[0][axis]) / delta,
-                to = (max - ends[0][axis]) / delta;
-              first = Math.max(first, Math.min(from, to));
-              last = Math.min(last, Math.max(from, to));
-              if (first > last) return '';
-            }
-          }
-          return path(
-            [first, last].map((amount) =>
-              ends[0].map((value, i) => value + (ends[1][i] - value) * amount),
-            ),
-          );
-        };
-        const x = groundOffset.x - Math.floor(groundOffset.x),
-          z = groundOffset.z - Math.floor(groundOffset.z);
-        groundTile = {
-          x: Math.round(groundOffset.x),
-          z: Math.round(groundOffset.z),
-          screen: projectView(
-            groundView([
-              Math.round(groundOffset.x) - groundOffset.x,
-              Math.round(groundOffset.z) - groundOffset.z,
-            ]),
+              [-1.65, 0, -1.6],
+              [1.65, 0, -1.6],
+              [1.65, 0, 1.5],
+              [-1.65, 0, 1.5],
+            ].map(floorPoint),
             true,
           ),
-        };
-        groundPaths = [];
-        const range = immersivePractice ? 22 : 5,
-          span = immersivePractice ? 24 : 6;
-        for (let line = -range; line <= range; line++) {
-          const segments = [
-            [groundView([line - x, -span]), groundView([line - x, span])],
-            [groundView([-span, line - z]), groundView([span, line - z])],
-          ];
-          for (const [a, b] of segments) {
-            groundPaths.push(clipGround(a, b));
-            if (immersivePractice) farPaths.push(clipGround(a, b, true));
+          path(
+            [
+              [-1.65, 0, 0],
+              [1.65, 0, 0],
+            ].map(floorPoint),
+          ),
+          path(
+            [
+              [0, 0, 1.5],
+              [0, 0, -1.6],
+              [-0.13, 0, -1.25],
+              [0, 0, -1.6],
+              [0.13, 0, -1.25],
+            ].map(floorPoint),
+          ),
+        ];
+        groundTile = null;
+        const farPaths = [];
+        if (environmentMotion) {
+          // One metre tiles are anchored to the world, not integrated a second
+          // time from velocity. Camera translation subtracts the actual position.
+          // Clip in the ground plane before perspective to keep geometry bounded.
+          const groundView = ([x, z]) =>
+            relative([initialCosine * x - initialSine * z, 0, initialSine * x + initialCosine * z]);
+          const clipGround = (a, b, far = false) => {
+            let lo = 0,
+              hi = 1;
+            for (const [axis, min, max] of [
+              [0, immersivePractice ? -12 : -2.4, immersivePractice ? 12 : 2.4],
+              [
+                2,
+                immersivePractice ? (far ? -16 : -5) : -2.8,
+                immersivePractice ? (far ? -5 : 2.4) : 1.4,
+              ],
+            ]) {
+              const delta = b[axis] - a[axis];
+              if (Math.abs(delta) < 1e-8) {
+                if (a[axis] < min || a[axis] > max) return '';
+              } else {
+                const from = (min - a[axis]) / delta,
+                  to = (max - a[axis]) / delta;
+                lo = Math.max(lo, Math.min(from, to));
+                hi = Math.min(hi, Math.max(from, to));
+                if (lo > hi) return '';
+              }
+            }
+            const ends = [lo, hi].map((amount) =>
+              projectView(
+                a.map((value, i) => value + (b[i] - value) * amount),
+                true,
+              ),
+            );
+            if (!immersivePractice) return path(ends);
+            // The wider world grid must stay inside the SVG at every heading.
+            // Clip the projected segment rather than squeezing world coordinates.
+            let first = 0,
+              last = 1;
+            for (const [axis, min, max] of [
+              [0, 16, 624],
+              [1, 16, 314],
+            ]) {
+              const delta = ends[1][axis] - ends[0][axis];
+              if (Math.abs(delta) < 1e-8) {
+                if (ends[0][axis] < min || ends[0][axis] > max) return '';
+              } else {
+                const from = (min - ends[0][axis]) / delta,
+                  to = (max - ends[0][axis]) / delta;
+                first = Math.max(first, Math.min(from, to));
+                last = Math.min(last, Math.max(from, to));
+                if (first > last) return '';
+              }
+            }
+            return path(
+              [first, last].map((amount) =>
+                ends[0].map((value, i) => value + (ends[1][i] - value) * amount),
+              ),
+            );
+          };
+          const x = groundOffset.x - Math.floor(groundOffset.x),
+            z = groundOffset.z - Math.floor(groundOffset.z);
+          groundTile = {
+            x: Math.round(groundOffset.x),
+            z: Math.round(groundOffset.z),
+            screen: projectView(
+              groundView([
+                Math.round(groundOffset.x) - groundOffset.x,
+                Math.round(groundOffset.z) - groundOffset.z,
+              ]),
+              true,
+            ),
+          };
+          groundPaths = [];
+          const range = immersivePractice ? 22 : 5,
+            span = immersivePractice ? 24 : 6;
+          for (let line = -range; line <= range; line++) {
+            const segments = [
+              [groundView([line - x, -span]), groundView([line - x, span])],
+              [groundView([-span, line - z]), groundView([span, line - z])],
+            ];
+            for (const [a, b] of segments) {
+              groundPaths.push(clipGround(a, b));
+              if (immersivePractice) farPaths.push(clipGround(a, b, true));
+            }
           }
         }
+        attr(ground, 'd', groundPaths.join(''));
+        attr(groundFar, 'd', farPaths.join(''));
+        style(groundFar, 'display', immersivePractice ? '' : 'none');
+        style(horizon, 'display', immersivePractice ? '' : 'none');
+        const horizonY = floorY - (projectionScale * 5 * 0.4) / 0.9165;
+        attr(horizon, 'd', immersivePractice ? `M16 ${horizonY.toFixed(2)}H624` : '');
+        lastGroundKey = groundKey;
+        cachedGroundTile = groundTile;
       }
-      ground.setAttribute('d', groundPaths.join(''));
-      groundFar.setAttribute('d', farPaths.join(''));
-      groundFar.style.display = horizon.style.display = immersivePractice ? '' : 'none';
-      const horizonY = floorY - (projectionScale * 5 * 0.4) / 0.9165;
-      horizon.setAttribute('d', immersivePractice ? `M16 ${horizonY.toFixed(2)}H624` : '');
-      ground.dataset.offsetX = String(groundOffset.x);
-      ground.dataset.offsetZ = String(groundOffset.z);
-      shadow.setAttribute('cx', String(centerX));
-      shadow.setAttribute('cy', String(floorY));
-      shadow.setAttribute(
+      data(ground, 'offsetX', String(groundOffset.x));
+      data(ground, 'offsetZ', String(groundOffset.z));
+      attr(shadow, 'cx', String(centerX));
+      attr(shadow, 'cy', String(floorY));
+      attr(
+        shadow,
         'rx',
         String(environmentMotion ? (immersivePractice ? 45 : 30) / (1 + height / 18) : 30),
       );
-      shadow.setAttribute('ry', immersivePractice ? '12' : '8');
-      shadow.style.opacity = environmentMotion ? String(0.65 / (1 + height / 8)) : '';
-      heightLine.style.display =
-        heightLabel.style.display =
-        mixNote.style.display =
-          environmentMotion ? '' : 'none';
+      attr(shadow, 'ry', immersivePractice ? '12' : '8');
+      style(shadow, 'opacity', environmentMotion ? String(0.65 / (1 + height / 8)) : '');
+      for (const element of [heightLine, heightLabel, mixNote])
+        style(element, 'display', environmentMotion ? '' : 'none');
       const heightX = immersivePractice ? 574 : 192;
-      heightLine.setAttribute(
+      attr(
+        heightLine,
         'd',
         path([
           [heightX, bodyY],
@@ -496,52 +574,62 @@ export function mountDroneDiagram({ root }) {
             [heightX + 4, floorY],
           ]),
       );
-      heightLabel.setAttribute('x', immersivePractice ? '20' : '9');
-      heightLabel.setAttribute('y', immersivePractice ? '28' : '14');
-      heightLabel.textContent =
+      attr(heightLabel, 'x', immersivePractice ? '20' : '9');
+      attr(heightLabel, 'y', immersivePractice ? '28' : '14');
+      text(
+        heightLabel,
         locale === 'uk'
           ? `${height.toFixed(1)} м · авторамка висоти`
-          : `${height.toFixed(1)} m · height auto-framed`;
-      mixNote.textContent =
-        locale === 'uk' ? 'Умовний мікс команд · не об/хв' : 'Illustrative command mix · not RPM';
-      mixNote.setAttribute('x', String(centerX));
-      mixNote.setAttribute('y', immersivePractice ? '324' : '184');
-      reference.setAttribute('x', String(centerX));
-      reference.setAttribute('y', immersivePractice ? '345' : environmentMotion ? '196' : '154');
-      const corners = [
-        [-0.82, 0, -0.82],
-        [0.82, 0, -0.82],
-        [-0.82, 0, 0.82],
-        [0.82, 0, 0.82],
-      ];
-      const crosses = (height) =>
-        bodyPath([corners[0], corners[3]].map(([x, , z]) => [x, height, z])) +
-        bodyPath([corners[1], corners[2]].map(([x, , z]) => [x, height, z]));
-      arms.setAttribute('d', crosses(0.04));
-      lowerArms.setAttribute('d', crosses(-0.09));
-      struts.setAttribute(
-        'd',
-        corners
-          .map(([x, , z]) =>
-            bodyPath([
-              [x, -0.09, z],
-              [x, 0.08, z],
-            ]),
-          )
-          .join(''),
+          : `${height.toFixed(1)} m · height auto-framed`,
       );
-      const chassis = [
-        [-0.25, 0.1, -0.43],
-        [0.25, 0.1, -0.43],
-        [0.25, 0.1, 0.43],
-        [-0.25, 0.1, 0.43],
-      ];
-      sides.forEach((side, index) => {
-        const a = chassis[index],
-          b = chassis[(index + 1) % 4];
-        side.setAttribute('d', bodyPath([a, b, [b[0], -0.1, b[2]], [a[0], -0.1, a[2]]], true));
-      });
-      body.setAttribute('d', bodyPath(chassis, true));
+      text(
+        mixNote,
+        locale === 'uk' ? 'Умовний мікс команд · не об/хв' : 'Illustrative command mix · not RPM',
+      );
+      attr(mixNote, 'x', String(centerX));
+      attr(mixNote, 'y', immersivePractice ? '324' : '184');
+      attr(reference, 'x', String(centerX));
+      attr(reference, 'y', immersivePractice ? '345' : environmentMotion ? '196' : '154');
+      const poseKey = [
+        ...(state.orientation ?? []),
+        cameraHeading,
+        bodyY,
+        bodyScale,
+        immersivePractice,
+        environmentMotion,
+      ].join('|');
+      const poseChanged = poseKey !== lastPoseKey;
+      if (poseChanged) {
+        const crosses = (height) =>
+          bodyPath([corners[0], corners[3]].map(([x, , z]) => [x, height, z])) +
+          bodyPath([corners[1], corners[2]].map(([x, , z]) => [x, height, z]));
+        attr(arms, 'd', crosses(0.04));
+        attr(lowerArms, 'd', crosses(-0.09));
+        attr(
+          struts,
+          'd',
+          corners
+            .map(([x, , z]) =>
+              bodyPath([
+                [x, -0.09, z],
+                [x, 0.08, z],
+              ]),
+            )
+            .join(''),
+        );
+        const chassis = [
+          [-0.25, 0.1, -0.43],
+          [0.25, 0.1, -0.43],
+          [0.25, 0.1, 0.43],
+          [-0.25, 0.1, 0.43],
+        ];
+        sides.forEach((side, index) => {
+          const a = chassis[index],
+            b = chassis[(index + 1) % 4];
+          attr(side, 'd', bodyPath([a, b, [b[0], -0.1, b[2]], [a[0], -0.1, a[2]]], true));
+        });
+        attr(body, 'd', bodyPath(chassis, true));
+      }
       const throttle = Math.min(1, Math.max(0, finite(controls.throttle)));
       const axis = (name) => Math.max(-1, Math.min(1, finite(controls[name])));
       const power = corners.map(([x, , z], index) =>
@@ -559,162 +647,189 @@ export function mountDroneDiagram({ root }) {
               ),
             ),
       );
+      const powerChanged = power.map((value, index) => value !== previousPower[index]);
       const tick = Number.isSafeInteger(state.ticks) ? state.ticks : 0;
       const delta = lastTick === null ? 0 : tick - lastTick;
       if (delta < 0) phases.fill(0);
       // Integrate display phase, not tick × the latest output. No phase jump
       // when a command changes, no wall-clock drift while paused, and no long
       // catch-up animation after a seek/stall. 50 Hz is the simulation clock.
+      // Max 1.5 illustrative revolutions/s keeps a three-blade step below half
+      // its repeated shape (60 degrees), even at a 100ms display interval.
+      // This deliberately readable animation is not physical motor speed.
       if (!reducedMotion && delta > 0 && delta <= 5)
         phases.forEach((phase, index) => {
           const average = (power[index] + previousPower[index]) / 2;
-          const advance = (delta / 50) * average * 2 * Math.PI * 2.5 * -yawMix[index];
+          const advance = (delta / 50) * average * 2 * Math.PI * 1.5 * -yawMix[index];
           phases[index] = (((phase + advance) % (2 * Math.PI)) + 2 * Math.PI) % (2 * Math.PI);
         });
       lastTick = tick;
       previousPower.splice(0, 4, ...power);
-      motors.forEach((motor, index) => {
+      propellers.forEach((propeller, index) => {
         const center = corners[index];
-        motor.setAttribute(
-          'd',
-          bodyPath(
-            Array.from({ length: 20 }, (_, segment) => {
-              const angle = (segment * Math.PI) / 10;
-              return [center[0] + Math.cos(angle) * 0.19, 0.08, center[2] + Math.sin(angle) * 0.19];
-            }),
-            true,
-          ),
-        );
         const rotorPoint = (angle, radius) => [
           center[0] + Math.cos(angle) * radius,
           0.105,
           center[2] + Math.sin(angle) * radius,
         ];
-        propellers[index].setAttribute(
-          'd',
-          Array.from({ length: 3 }, (_, blade) => {
-            const angle = phases[index] + (blade * Math.PI * 2) / 3;
-            return bodyPath(
-              [
-                rotorPoint(angle - 0.55, 0.025),
-                rotorPoint(angle - 0.16, 0.205),
-                rotorPoint(angle + 0.16, 0.205),
-                rotorPoint(angle + 0.55, 0.025),
-              ],
-              true,
-            );
-          }).join(''),
-        );
-        propellers[index].dataset.power = power[index].toFixed(4);
-        propellers[index].dataset.phase = phases[index].toFixed(6);
-        propellers[index].style.opacity = String(0.45 + power[index] * 0.55);
-        motorPower[index].setAttribute(
+        if (poseChanged || phases[index] !== drawnPhases[index]) {
+          attr(
+            propeller,
+            'd',
+            Array.from({ length: 3 }, (_, blade) => {
+              const angle = phases[index] + (blade * Math.PI * 2) / 3;
+              return bodyPath(
+                [
+                  rotorPoint(angle - 0.55, 0.025),
+                  rotorPoint(angle - 0.16, 0.205),
+                  rotorPoint(angle + 0.16, 0.205),
+                  rotorPoint(angle + 0.55, 0.025),
+                ],
+                true,
+              );
+            }).join(''),
+          );
+          drawnPhases[index] = phases[index];
+        }
+        data(propellers[index], 'power', power[index].toFixed(4));
+        data(propellers[index], 'phase', phases[index].toFixed(6));
+        style(propellers[index], 'opacity', String(0.45 + power[index] * 0.55));
+        if (poseChanged || powerChanged[index])
+          attr(
+            motorPower[index],
+            'd',
+            bodyPath(
+              Array.from({ length: 21 }, (_, part) =>
+                rotorPoint(-Math.PI / 2 + (Math.PI * 2 * power[index] * part) / 20, 0.24),
+              ),
+            ),
+          );
+        style(motorPower[index], 'opacity', power[index] ? '1' : '0');
+        style(motorLabels[index], 'display', showMotorDetails && environmentMotion ? '' : 'none');
+        if (showMotorDetails && environmentMotion) {
+          const label = bodyPoint([center[0], 0.08, center[2]]);
+          attr(motorLabels[index], 'x', label[0].toFixed(2));
+          attr(
+            motorLabels[index],
+            'y',
+            Math.min(
+              immersivePractice ? 314 : environmentMotion ? 172 : 130,
+              label[1] + 14,
+            ).toFixed(2),
+          );
+
+          text(
+            motorLabels[index],
+            `${yawMix[index] > 0 ? '↺' : '↻'} ${Math.round(power[index] * 100)}%`,
+          );
+        }
+      });
+      if (poseChanged) {
+        attr(
+          nose,
           'd',
           bodyPath(
-            Array.from({ length: 21 }, (_, part) =>
-              rotorPoint(-Math.PI / 2 + (Math.PI * 2 * power[index] * part) / 20, 0.24),
-            ),
+            [
+              [-0.22, 0.12, -0.45],
+              [0, 0.12, -0.76],
+              [0.22, 0.12, -0.45],
+            ],
+            true,
           ),
         );
-        motorPower[index].style.opacity = power[index] ? '1' : '0';
-        const label = bodyPoint([center[0], 0.08, center[2]]);
-        motorLabels[index].setAttribute('x', label[0].toFixed(2));
-        motorLabels[index].setAttribute(
-          'y',
-          Math.min(immersivePractice ? 314 : environmentMotion ? 172 : 130, label[1] + 14).toFixed(
-            2,
-          ),
+        attr(
+          rear,
+          'd',
+          bodyPath([
+            [-0.22, 0.12, 0.44],
+            [0.22, 0.12, 0.44],
+          ]),
         );
-        motorLabels[index].style.display = environmentMotion ? '' : 'none';
-        motorLabels[index].textContent =
-          `${yawMix[index] > 0 ? '↺' : '↻'} ${Math.round(power[index] * 100)}%`;
-      });
-      nose.setAttribute(
-        'd',
-        bodyPath(
-          [
-            [-0.22, 0.12, -0.45],
-            [0, 0.12, -0.76],
-            [0.22, 0.12, -0.45],
-          ],
-          true,
-        ),
-      );
-      rear.setAttribute(
-        'd',
-        bodyPath([
-          [-0.22, 0.12, 0.44],
-          [0.22, 0.12, 0.44],
-        ]),
-      );
+      }
       const front = bodyPoint([0, 0.12, -0.9]),
         back = bodyPoint([0, 0.12, 0.85]);
       const labelY = Math.min(
         immersivePractice ? 314 : environmentMotion ? 172 : 109,
         Math.max(12, front[1] - 10),
       );
-      frontLabel.setAttribute('x', front[0].toFixed(2));
-      frontLabel.setAttribute('y', labelY.toFixed(2));
-      frontLabel.textContent = locale === 'uk' ? 'ПЕРЕД' : 'FRONT';
-      rearLabel.setAttribute('x', back[0].toFixed(2));
-      rearLabel.setAttribute(
+      attr(frontLabel, 'x', front[0].toFixed(2));
+      attr(frontLabel, 'y', labelY.toFixed(2));
+      text(frontLabel, locale === 'uk' ? 'ПЕРЕД' : 'FRONT');
+      attr(rearLabel, 'x', back[0].toFixed(2));
+      attr(
+        rearLabel,
         'y',
         Math.min(
           immersivePractice ? 316 : environmentMotion ? 174 : 112,
           Math.max(12, back[1] + 13),
         ).toFixed(2),
       );
-      rearLabel.textContent = locale === 'uk' ? 'ЗАД' : 'REAR';
-      frontLeader.setAttribute('d', path([front, [front[0], labelY + 3]]));
+      text(rearLabel, locale === 'uk' ? 'ЗАД' : 'REAR');
+      attr(frontLeader, 'd', path([front, [front[0], labelY + 3]]));
       const up = rotate([0, 1, 0]),
         inverted = up[1] < 0;
-      drawing.dataset.inverted = String(inverted);
-      drawing.dataset.referenceHeading = String((referenceHeading * 180) / Math.PI);
-      drawing.dataset.cameraHeading = String((cameraHeading * 180) / Math.PI);
+      data(drawing, 'inverted', String(inverted));
+      data(drawing, 'referenceHeading', String((referenceHeading * 180) / Math.PI));
+      data(drawing, 'cameraHeading', String((cameraHeading * 180) / Math.PI));
       const headingDegrees = Math.round((headingDelta * 180) / Math.PI);
-      reference.textContent = followHeading
-        ? `${locale === 'uk' ? 'Поворот від старту' : 'Turn from start'} ${headingDegrees > 0 ? '+' : ''}${headingDegrees}°`
-        : locale === 'uk'
-          ? 'Початковий напрямок ↑'
-          : 'Start heading ↑';
-      const thrustEnd = 0.38 + throttle * 0.75;
-      thrust.setAttribute(
-        'd',
-        bodyPath([
-          [0, 0, 0],
-          [0, thrustEnd, 0],
-        ]) +
-          bodyPath([
-            [-0.1, thrustEnd - 0.15, 0],
-            [0, thrustEnd, 0],
-            [0.1, thrustEnd - 0.15, 0],
-          ]),
+      text(
+        reference,
+        followHeading
+          ? `${locale === 'uk' ? 'Поворот від старту' : 'Turn from start'} ${headingDegrees > 0 ? '+' : ''}${headingDegrees}°`
+          : locale === 'uk'
+            ? 'Початковий напрямок ↑'
+            : 'Start heading ↑',
       );
-      thrust.style.opacity = unavailable ? '0' : String(0.25 + throttle * 0.75);
+      const thrustKey = `${poseKey}|${throttle}`;
+      if (thrustKey !== lastThrustKey) {
+        const thrustEnd = 0.38 + throttle * 0.75;
+        attr(
+          thrust,
+          'd',
+          bodyPath([
+            [0, 0, 0],
+            [0, thrustEnd, 0],
+          ]) +
+            bodyPath([
+              [-0.1, thrustEnd - 0.15, 0],
+              [0, thrustEnd, 0],
+              [0.1, thrustEnd - 0.15, 0],
+            ]),
+        );
+        lastThrustKey = thrustKey;
+      }
+      style(thrust, 'opacity', unavailable ? '0' : String(0.25 + throttle * 0.75));
       const vx = finite(state.velocity?.x) / 1000,
         vz = finite(state.velocity?.z) / 1000;
-      const speed = Math.hypot(vx, vz),
-        distance = Math.min(1.6, speed / 4);
-      const end = project(
-        speed > 0.05 ? [(vx / speed) * distance, 0, (vz / speed) * distance] : [0, 0, 0],
-        true,
-      );
-      const dx = end[0] - centerX,
-        dy = end[1] - floorY,
-        length = Math.hypot(dx, dy) || 1;
-      const ax = dx / length,
-        ay = dy / length;
-      drift.setAttribute(
-        'd',
-        path([[centerX, floorY], end]) +
-          path([
-            [end[0] - ax * 7 - ay * 4, end[1] - ay * 7 + ax * 4],
-            end,
-            [end[0] - ax * 7 + ay * 4, end[1] - ay * 7 - ax * 4],
-          ]),
-      );
-      drift.style.opacity = speed > 0.05 ? '1' : '0';
-      return {
+      const driftKey = `${groundKey}|${vx}|${vz}`;
+      if (driftKey !== lastDriftKey) {
+        const speed = Math.hypot(vx, vz),
+          distance = Math.min(1.6, speed / 4);
+        const end = project(
+          speed > 0.05 ? [(vx / speed) * distance, 0, (vz / speed) * distance] : [0, 0, 0],
+          true,
+        );
+        const dx = end[0] - centerX,
+          dy = end[1] - floorY,
+          length = Math.hypot(dx, dy) || 1;
+        const ax = dx / length,
+          ay = dy / length;
+        attr(
+          drift,
+          'd',
+          path([[centerX, floorY], end]) +
+            path([
+              [end[0] - ax * 7 - ay * 4, end[1] - ay * 7 + ax * 4],
+              end,
+              [end[0] - ax * 7 + ay * 4, end[1] - ay * 7 - ax * 4],
+            ]),
+        );
+        style(drift, 'opacity', speed > 0.05 ? '1' : '0');
+        lastDriftKey = driftKey;
+      }
+      lastUpdateKey = updateKey;
+      lastPoseKey = poseKey;
+      lastResult = {
         inverted,
         referenceHeading,
         cameraHeading,
@@ -734,6 +849,7 @@ export function mountDroneDiagram({ root }) {
         left: bodyPoint([-0.82, 0, 0]),
         right: bodyPoint([0.82, 0, 0]),
       };
+      return lastResult;
     },
     dispose() {
       disposed = true;
