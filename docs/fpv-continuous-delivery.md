@@ -1902,3 +1902,105 @@ existing tall timber-like tree colliders; avoid adding a solid-looking broad
 canopy in a flyable opening. Preserve completed960/961 and normal C2+touch builds
 while working on a new independent branch. Keep hardware/novice qualification
 and deferred unit coverage explicitly open.
+
+### C4 woodland continuation — 2 October 2026
+
+#960 and #961 are merged. Public marker e48adf3185dc7536555d142fe3d1165de31c05f9
+is a verified descendant of both; actual public Roofline survey launches with
+Ready status and enabled arm, without captured errors. See
+`docs/evidence/fpv-scenery-public-20261002.json`. No new physical acceptance.
+
+C4 is independent on `codex/fpv-woodland-surfaces`, based on that main. It changes
+only woodland bark/floor maps, trunk UVs and quiet edge presentation. All six
+1×1×8m boxes, opaque silhouettes, actors, objectives, imported assets and other
+worlds are preserved. A first leaf-texture draft was refined after actual flight
+review to avoid bright uniformly spread marks. The final runtime SHA256 values
+are visuals a724e26f05ab59d24a0fb5493eacabdd6b38690bfc0b90ddee7ae8c8117c31a1
+and renderer f16d9170e59a06976f1780d0ca4e55d8c8046fcfdb5a92a313053b2c32f1d1eb.
+
+Source browser qualification passes211/211 checks and105 image pairs, including
+actual GLB loading, geometry/UV/material/ray inspection,13 other environment
+regressions and three disposal cycles. There are no added sampled draw calls,
+triangles or resource counts. A fixture-only Sprite ray error was corrected by
+limiting rays to opaque environment meshes; no runtime workaround was required.
+All19 focused woodland demos replay, and178 prior demo results remain bound by
+exact input hashes. Final actual Crossing trail playback completes at49.4s.
+
+Frozen candidate1ee7025eb9683c8d7ee0b6995cddd38b4bf6d058 passes all three package
+admissions, committed inputs/ZIP members and two identical builds. The dedicated
+player has92files/13,932,487bytes; ZIP SHA256
+fc3ddb63c13c02f36968f75d384a2e12fee932e10c8eefe6cc126affec92fe13.
+Packaged-browser qualification/publication follow; no C4 public availability
+is claimed yet. Additional unit coverage stays deferred to H/R7.
+
+The independent capacity repair is [PR #963](https://github.com/mekhovov/revealline/pull/963),
+branch `codex/picture-catalogue-capacity`, published head d28ffc4c5. It saves22,377
+bytes from the generated picture-owner inventory, retaining all155 records. All18
+ordinary in-memory compiles pass; the formerly failing community edition also
+passes frozen ZIP/admission and two builds at11b3d9e43. This does not change
+content, limits or release authority. Preserve that ready branch while C4 finishes.
+
+Themes #955 retains material ownership; reconcile these narrow surface/UV hunks
+without overwriting C2 groveSlots or C3 terrace placements. Next C item is
+Warehouse/Stadium surface scale and flight-line readability, then yard/garage.
+Physical hardware, novice/art sessions, creator/device-offline and feedback-led
+map growth remain open. Native stacks are unnecessary for these independent PRs.
+
+C4 packaged WebGL also passes211/211 checks and105 comparisons; see the packaged
+receipt. The final normal reviewed-player and continuous-school builds now include
+merged C2+C3+touch and C4, byte-identical to the dedicated woodland playtest
+(fc3ddb63…92fe13). Actual Crossing trail demonstration completes, and a new attempt
+is left paused/ready with zero throttle. Publication is the remaining gate for
+this focused surface increment; broader C and human/device work remain open.
+
+### C4 publication and next item — 2 October 2026
+
+Woodland is published and attached as [#964](https://github.com/mekhovov/revealline/pull/964),
+`codex/fpv-woodland-surfaces`, independently against main. Latest qualified
+candidate `0f6313c0c891501cf236d3cbe5473a575639201b` incorporates Neon #883 and
+Pages profile #965. All three optional packages pass committed-input/ZIP
+admission and two identical builds. Only source-bound manifests and generated worker identities differ from
+qualified `589ddb664`; all other runtime members are identical. This preserves
+rendering/controls evidence, not an installed/offline identity claim. Actual
+EN/UK Crossing trail launches are recorded in
+`docs/evidence/fpv-woodland-surfaces-main883-player.json`. Source/package rendering
+receipts remain 211 checks / 105 comparisons each, with unchanged renderer and
+world-visuals bytes. All three normal local playtests were refreshed and retain
+ZIP `fc3ddb63c13c02f36968f75d384a2e12fee932e10c8eefe6cc126affec92fe13`.
+
+Independent capacity [#963](https://github.com/mekhovov/revealline/pull/963) is on
+`codex/picture-catalogue-capacity`, last pushed as `b7d2d01c5`. It preserves all
+209 owners after Neon (155 original + 54 new), exact original art locators and
+56 FPV fingerprints. All 18 editions compile within current limits; largest
+67,103,443 bytes / 824 files, 5,421 bytes of headroom. Frozen candidate `9cb659d3c`
+passes ZIP/presentation admission and two identical builds. Repository automation
+then merged #965; current CI must qualify its new rolling Pages profile. Do not
+present the earlier 989,957,084-byte full-default inspection as that profile's
+measurement. A local disk-space failure was resolved by deleting obsolete
+reproducible FPV verification outputs; source, handoffs, receipts and normal
+player builds remain intact. No package guard or release authority was changed.
+
+Inspect current remote heads before the next push: automation reconciles main.
+At the last snapshot, #964's whole-edition candidate failed on the separate
+capacity problem; optional admission was successful. Both PRs still need current
+checks/reviews and public deployment verification. No C4 public live availability
+is claimed. No native stack is needed for these independent changes. Existing
+closed stacks remain closed. Themes was sent the narrow C4 hunks, both PRs and
+next-item ownership constraints under the user's coordination authorization.
+
+**Next concrete item: C5 Warehouse storage surfaces**, then a separate Stadium
+pass. Warehouse's six solid `rack-*` boxes should read as closed storage modules,
+with painted steel faces, restrained joints/bands and quiet bay identification.
+Apply metre-scaled shell UVs to avoid stretched wall/sill/beam surfaces. Keep
+Pixel palettes/filtering, geometry, lighting, collision and objective colours.
+Never depict open shelves or fly-through gaps through those solid colliders.
+Cover `warehouse-01…08`, `beginner-36` and `beginner-38`, both authored bounds,
+all presets, views around the 2.5m stack and beam starting at 5m, resources and
+non-Warehouse regression. Coordinate semantic steel/enamel/concrete roles with
+Themes #955; do not add another factory or selector. Stadium's existing scoreboard
+can receive a static event-display face later, without invented live lap data.
+
+Keep C5 on a separate branch and out of ready #964. B physical TX15/iPhone/Steam
+Deck acceptance, D novice/experienced sessions, F creator/device-offline work,
+feedback-led G map growth and H/R7 unit coverage remain open. Catalogue counts
+remain 148 challenges / 14 worlds; visuals do not create extra levels.

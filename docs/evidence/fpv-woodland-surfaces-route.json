@@ -1,0 +1,197 @@
+{
+  "format": "FPVWoodlandRouteAudit.v1",
+  "createdAt": "2026-10-02T20:34:55.296Z",
+  "sourceHead": "e48adf3185dc7536555d142fe3d1165de31c05f9",
+  "source": {
+    "world-catalogue.mjs": "d901363b623193f4896100f9381c7579946796e741554f012581ebb93f9ea8a6",
+    "world-model.mjs": "d6e0939daf77a2a1459687dd8ba900719b78b02a1b3fe5fab862773bd6109551",
+    "world-collision.mjs": "2899c7c84f9eae14b9a3434f585a8e873f4a1361e8f3ce4026ef27f44bdeef32",
+    "world-demonstrations.mjs": "c9f2d0ee5c571507ae1dce4f48898554cb2ad179218f1905cdc8013db2e2c114",
+    "math.mjs": "555c8b6ea170b46992133507d2a3d867f06185bca060239cab7db9c9b87f9f98",
+    "radio-profile.mjs": "f588fd5cda96ed9627a483f49ca843ace8d99a68fae42b0a4239c2cd0ab81933"
+  },
+  "scope": "Production replay validation of19 installed woodland demonstrations, sampling every recorded tick to measure point-to-authored-box distance minus the configured/default drone radius. No physics edits or injected flight states.",
+  "courses": [
+    "woodland-01",
+    "woodland-02",
+    "woodland-03",
+    "woodland-04",
+    "woodland-05",
+    "woodland-06",
+    "woodland-07",
+    "woodland-08",
+    "beginner-31",
+    "beginner-34",
+    "beginner-40"
+  ],
+  "identicalSixBoxes": true,
+  "passed": 19,
+  "total": 19,
+  "frames": 39645,
+  "minimum": {
+    "course": "beginner-31",
+    "mode": "acro",
+    "tick": 900,
+    "tree": "tree-5",
+    "metres": 2.8089603827055907
+  },
+  "results": [
+    {
+      "course": "woodland-01",
+      "mode": "self-level",
+      "status": "complete",
+      "ticks": 1184,
+      "recordedFinalStateIdentity": "560de860d30125d5",
+      "minimumTrunkClearanceMetres": 13.703420018084637
+    },
+    {
+      "course": "woodland-01",
+      "mode": "acro",
+      "status": "complete",
+      "ticks": 1186,
+      "recordedFinalStateIdentity": "ace617d5f8f16fe2",
+      "minimumTrunkClearanceMetres": 13.7068908949557
+    },
+    {
+      "course": "woodland-02",
+      "mode": "self-level",
+      "status": "complete",
+      "ticks": 2020,
+      "recordedFinalStateIdentity": "12d706863c6dd530",
+      "minimumTrunkClearanceMetres": 6.511875295933518
+    },
+    {
+      "course": "woodland-02",
+      "mode": "acro",
+      "status": "complete",
+      "ticks": 2018,
+      "recordedFinalStateIdentity": "ac8a69cecd009860",
+      "minimumTrunkClearanceMetres": 6.498968745276317
+    },
+    {
+      "course": "woodland-03",
+      "mode": "self-level",
+      "status": "complete",
+      "ticks": 2271,
+      "recordedFinalStateIdentity": "c0544887083cd5de",
+      "minimumTrunkClearanceMetres": 5.351590796173029
+    },
+    {
+      "course": "woodland-03",
+      "mode": "acro",
+      "status": "complete",
+      "ticks": 2274,
+      "recordedFinalStateIdentity": "3551e9a798ce311a",
+      "minimumTrunkClearanceMetres": 5.340758581344816
+    },
+    {
+      "course": "woodland-04",
+      "mode": "self-level",
+      "status": "complete",
+      "ticks": 1732,
+      "recordedFinalStateIdentity": "27808821fde2c647",
+      "minimumTrunkClearanceMetres": 7.5468156280421645
+    },
+    {
+      "course": "woodland-04",
+      "mode": "acro",
+      "status": "complete",
+      "ticks": 1738,
+      "recordedFinalStateIdentity": "026b368003db28e8",
+      "minimumTrunkClearanceMetres": 7.5456907612909765
+    },
+    {
+      "course": "woodland-05",
+      "mode": "self-level",
+      "status": "complete",
+      "ticks": 2582,
+      "recordedFinalStateIdentity": "b901838a3ead4945",
+      "minimumTrunkClearanceMetres": 4.085375825639383
+    },
+    {
+      "course": "woodland-05",
+      "mode": "acro",
+      "status": "complete",
+      "ticks": 2586,
+      "recordedFinalStateIdentity": "e4771796064b5c62",
+      "minimumTrunkClearanceMetres": 4.128246773125922
+    },
+    {
+      "course": "woodland-06",
+      "mode": "self-level",
+      "status": "complete",
+      "ticks": 2468,
+      "recordedFinalStateIdentity": "601ae64f9c03c7ef",
+      "minimumTrunkClearanceMetres": 5.672257716699092
+    },
+    {
+      "course": "woodland-06",
+      "mode": "acro",
+      "status": "complete",
+      "ticks": 2469,
+      "recordedFinalStateIdentity": "569400443beef1b1",
+      "minimumTrunkClearanceMetres": 5.67209682540944
+    },
+    {
+      "course": "woodland-07",
+      "mode": "self-level",
+      "status": "complete",
+      "ticks": 2178,
+      "recordedFinalStateIdentity": "4065f81960dd5a68",
+      "minimumTrunkClearanceMetres": 9.348679114694985
+    },
+    {
+      "course": "woodland-07",
+      "mode": "acro",
+      "status": "complete",
+      "ticks": 2183,
+      "recordedFinalStateIdentity": "27ba751d6a29c6bf",
+      "minimumTrunkClearanceMetres": 9.338734016594456
+    },
+    {
+      "course": "woodland-08",
+      "mode": "self-level",
+      "status": "complete",
+      "ticks": 2230,
+      "recordedFinalStateIdentity": "4c868574cbad50c1",
+      "minimumTrunkClearanceMetres": 5.788304253281454
+    },
+    {
+      "course": "woodland-08",
+      "mode": "acro",
+      "status": "complete",
+      "ticks": 2233,
+      "recordedFinalStateIdentity": "9fcd10c956824dbe",
+      "minimumTrunkClearanceMetres": 5.786902446352862
+    },
+    {
+      "course": "beginner-31",
+      "mode": "acro",
+      "status": "complete",
+      "ticks": 1840,
+      "recordedFinalStateIdentity": "a9d39bddf15619d9",
+      "minimumTrunkClearanceMetres": 2.8089603827055907
+    },
+    {
+      "course": "beginner-34",
+      "mode": "acro",
+      "status": "complete",
+      "ticks": 2446,
+      "recordedFinalStateIdentity": "783d9ac33d8dd03f",
+      "minimumTrunkClearanceMetres": 4.834379981758395
+    },
+    {
+      "course": "beginner-40",
+      "mode": "acro",
+      "status": "complete",
+      "ticks": 2007,
+      "recordedFinalStateIdentity": "7c4a810a0a8ab6e0",
+      "minimumTrunkClearanceMetres": 6.093697252798871
+    }
+  ],
+  "limitations": [
+    "Focused woodland replay only; not a new178-demo replay claim.",
+    "Recorded routes are examples, not clearance permission for expanded scenery.",
+    "No new unit coverage, browser/GPU, player or hardware qualification."
+  ]
+}

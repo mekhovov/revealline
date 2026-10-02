@@ -1,0 +1,166 @@
+{
+  "format": "ReadOnlyEditionCapacityProposal.v1",
+  "sourceRevision": "e48adf3185dc7536555d142fe3d1165de31c05f9",
+  "file": "game/presentation/current-pictures.mjs",
+  "baselineSha256": "8f5e54c7e68d5f5870dbce6695db713516c0f732ce4aee984f5de50170f51a95",
+  "candidateSha256": "eaafe4d7ec8cf9204a02145fbd0f19a8e4fb730557306ea49fabff4c49b6bb33",
+  "beforeBytes": 49810,
+  "afterBytes": 27433,
+  "savedBytes": 22377,
+  "checks": {
+    "all155OrderedValuesAndStringsEqual": true,
+    "topLevelFreezeUnchanged": true,
+    "authoredInventoryExact": true,
+    "prettierStable": true,
+    "regenerationExact": true,
+    "originalSourceUnchanged": true
+  },
+  "baselineFailure": {
+    "id": "droneaid-nl-community",
+    "files": 823,
+    "bytes": 67114878,
+    "overage": 6014
+  },
+  "editions": [
+    {
+      "id": "coupa-adventure",
+      "passed": true,
+      "files": 752,
+      "bytes": 28326277,
+      "headroom": 38782587
+    },
+    {
+      "id": "coupa-all",
+      "passed": true,
+      "files": 787,
+      "bytes": 62560577,
+      "headroom": 4548287
+    },
+    {
+      "id": "coupa-culture",
+      "passed": true,
+      "files": 751,
+      "bytes": 26707151,
+      "headroom": 40401713
+    },
+    {
+      "id": "coupa-developers",
+      "passed": true,
+      "files": 752,
+      "bytes": 30106461,
+      "headroom": 37002403
+    },
+    {
+      "id": "coupa-foundations",
+      "passed": true,
+      "files": 754,
+      "bytes": 29191923,
+      "headroom": 37916941
+    },
+    {
+      "id": "coupa-operations",
+      "passed": true,
+      "files": 752,
+      "bytes": 28281130,
+      "headroom": 38827734
+    },
+    {
+      "id": "droneaid-community",
+      "passed": true,
+      "files": 745,
+      "bytes": 27482645,
+      "headroom": 39626219
+    },
+    {
+      "id": "droneaid-nl-careful-handoff",
+      "passed": true,
+      "files": 755,
+      "bytes": 29706352,
+      "headroom": 37402512
+    },
+    {
+      "id": "droneaid-nl-community",
+      "passed": true,
+      "files": 823,
+      "bytes": 67092501,
+      "headroom": 16363
+    },
+    {
+      "id": "droneaid-nl-makers-together",
+      "passed": true,
+      "files": 755,
+      "bytes": 29581784,
+      "headroom": 37527080
+    },
+    {
+      "id": "droneaid-nl-parts-in-motion",
+      "passed": true,
+      "files": 757,
+      "bytes": 30099946,
+      "headroom": 37008918
+    },
+    {
+      "id": "droneaid-nl-shared-horizon",
+      "passed": true,
+      "files": 755,
+      "bytes": 29892770,
+      "headroom": 37216094
+    },
+    {
+      "id": "droneaid-nl-signals-of-support",
+      "passed": true,
+      "files": 755,
+      "bytes": 29693165,
+      "headroom": 37415699
+    },
+    {
+      "id": "droneaid-nl-workshop-lights",
+      "passed": true,
+      "files": 755,
+      "bytes": 28391250,
+      "headroom": 38717614
+    },
+    {
+      "id": "fpv-learning",
+      "passed": true,
+      "files": 837,
+      "bytes": 36206534,
+      "headroom": 30902330
+    },
+    {
+      "id": "social-drone-ua",
+      "passed": true,
+      "files": 769,
+      "bytes": 28411844,
+      "headroom": 38697020
+    },
+    {
+      "id": "ukraine-culture",
+      "passed": true,
+      "files": 812,
+      "bytes": 45093815,
+      "headroom": 22015049
+    },
+    {
+      "id": "victory-drones",
+      "passed": true,
+      "files": 761,
+      "bytes": 24686927,
+      "headroom": 42421937
+    }
+  ],
+  "passed": true,
+  "limits": {
+    "files": 2000,
+    "bytes": 67108864
+  },
+  "scope": "Proposal only. All source and Git state unchanged. Ordinary compile validation runs in memory; no distribution output or new unit tests. Frozen committed-input admission, protected publication and browser qualification remain separate.",
+  "validation": {
+    "nodeSyntaxBothFiles": "passed",
+    "eslintBothFilesViaExpectedStdinFilenames": "passed",
+    "savedGeneratorReproducesExactCandidate": "passed",
+    "patchApplyCheck": "passed",
+    "additionalUnitCoverage": "not added",
+    "productionFilesModified": false
+  }
+}
