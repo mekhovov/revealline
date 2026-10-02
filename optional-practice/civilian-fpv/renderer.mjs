@@ -757,10 +757,43 @@ export function createFlightRenderer({
       );
     }
   }
-  function addFlushPanels(parent, panels, color, minimumQuality = 'balanced') {
+  function storageModuleUV(shape, size, plainSteel = false) {
+    const positions = shape.getAttribute('position'),
+      normals = shape.getAttribute('normal'),
+      uv = shape.getAttribute('uv'),
+      [width, height, depth] = size;
+    for (let i = 0; i < positions.count; i++) {
+      const across =
+        Math.abs(normals.getX(i)) > 0.5 ? positions.getZ(i) / depth : positions.getX(i) / width;
+      // School beams/dividers are plain painted steel, not scaled-down doors.
+      if (plainSteel) {
+        uv.setXY(
+          i,
+          0.07 + (across + 0.5) * 0.1,
+          0.14 +
+            (Math.abs(normals.getY(i)) > 0.5
+              ? positions.getZ(i) / depth + 0.5
+              : positions.getY(i) / height + 0.5) *
+              0.12,
+        );
+        continue;
+      }
+      // Keep the body inside the atlas's left half, away from label gutters.
+      // The cap uses a plain end strip, so no bay numerals appear on the roof.
+      uv.setXY(
+        i,
+        0.008 + (across + 0.5) * 0.484,
+        Math.abs(normals.getY(i)) > 0.5
+          ? 0.012 + (positions.getZ(i) / depth + 0.5) * 0.025
+          : 0.06 + (positions.getY(i) / height + 0.5) * 0.88,
+      );
+    }
+  }
+  function addFlushPanels(parent, panels, color, minimumQuality = 'balanced', bayLabel = null) {
     if (!panels.length) return;
     const positions = [],
-      normals = [];
+      normals = [],
+      uvs = [];
     for (const panel of panels) {
       const [side, along, elevation, width, height, half] = panel;
       const corners = [
@@ -772,6 +805,11 @@ export function createFlightRenderer({
         [-1, 1],
       ];
       for (const [u, v] of corners) {
+        if (bayLabel)
+          uvs.push(
+            0.5 + ((bayLabel.index % 2) + 0.04 + (u + 1) * 0.46) / 4,
+            (Math.floor(bayLabel.index / 2) + 0.04 + (v + 1) * 0.46) / 3,
+          );
         const a = along + (u * width) / 2,
           y = elevation + (v * height) / 2;
         if (side === 0) {
@@ -792,7 +830,9 @@ export function createFlightRenderer({
     const shape = new THREE.BufferGeometry();
     shape.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3));
     shape.setAttribute('normal', new THREE.Float32BufferAttribute(normals, 3));
+    if (bayLabel) shape.setAttribute('uv', new THREE.Float32BufferAttribute(uvs, 2));
     const paint = material(color, {
+      ...(bayLabel ? { map: bayLabel.map } : {}),
       roughness: 0.62,
       metalness: 0.15,
       side: THREE.DoubleSide,
@@ -802,6 +842,7 @@ export function createFlightRenderer({
     });
     const panelsMesh = mesh(shape, paint, parent);
     panelsMesh.name = 'flush-surface-markings';
+    if (bayLabel) panelsMesh.userData.materialRole = 'enamel';
     panelsMesh.userData.minimumQuality = minimumQuality;
     panelsMesh.visible = quality === 'high' || (minimumQuality === 'balanced' && quality !== 'low');
     qualityDetails.push(panelsMesh);
@@ -822,8 +863,10 @@ export function createFlightRenderer({
           kind === 'plaster' ? 0.13 : 0.3,
           kind === 'plaster' ? 0.13 : 0.3,
         ),
-        roughness: kind === 'solar' ? 0.3 : kind === 'metal' ? 0.66 : 0.9,
-        metalness: kind === 'solar' ? 0.35 : kind === 'metal' ? 0.28 : 0,
+        roughness:
+          kind === 'solar' ? 0.3 : kind === 'metal' ? 0.66 : kind === 'storage-steel' ? 0.74 : 0.9,
+        metalness:
+          kind === 'solar' ? 0.35 : kind === 'metal' ? 0.28 : kind === 'storage-steel' ? 0.18 : 0,
       },
     );
     let value, size;
@@ -849,7 +892,9 @@ export function createFlightRenderer({
     } else if (obstacle.min && obstacle.max) {
       size = ['x', 'y', 'z'].map((key) => (obstacle.max[key] - obstacle.min[key]) / 1000);
       const shape = new THREE.BoxGeometry(...size);
-      if (kind === 'bark') woodlandTrunkUV(shape, size);
+      if (kind === 'storage-steel')
+        storageModuleUV(shape, size, !/^rack-[01]-[0-2]$/.test(obstacle.id));
+      else if (kind === 'bark') woodlandTrunkUV(shape, size);
       else if (obstacleSurface) worldScaleUV(shape);
       value = mesh(shape, paint);
       value.position.set(
@@ -868,6 +913,7 @@ export function createFlightRenderer({
       ? 'timber'
       : 'steel';
     value.userData.surfaceKind = kind;
+    if (kind === 'storage-steel') value.userData.materialRole = 'steel';
     if (kind === 'bark') value.userData.materialRole = 'timber';
     value.castShadow = value.receiveShadow = true;
     if (size && size[1] > 0.5) {
@@ -890,7 +936,7 @@ export function createFlightRenderer({
                 half,
               ]);
           accents.push([side, 0, -height / 2 + 0.25, span, 0.24, half]);
-        } else if (kind === 'metal' && span > 1) {
+        } else if ((kind === 'metal' || kind === 'storage-steel') && span > 1) {
           accents.push([side, 0, -height * 0.34, span * 0.96, Math.min(0.12, height * 0.08), half]);
           if (/container|rack/.test(obstacle.id))
             panels.push([
@@ -912,7 +958,14 @@ export function createFlightRenderer({
           ]);
         }
       }
-      addFlushPanels(value, panels, kind === 'plaster' ? 0x456475 : 0xe7e7cf);
+      const bay = kind === 'storage-steel' ? obstacle.id.match(/^rack-([01])-([0-2])$/) : null;
+      addFlushPanels(
+        value,
+        panels,
+        kind === 'plaster' ? 0x456475 : 0xe7e7cf,
+        'balanced',
+        bay ? { map: maps.map, index: Number(bay[1]) * 3 + Number(bay[2]) } : null,
+      );
       addFlushPanels(value, accents, kind === 'plaster' ? 0x8c7863 : theme.warm, 'high');
     }
     const edges = new THREE.EdgesGeometry(value.geometry, 30);

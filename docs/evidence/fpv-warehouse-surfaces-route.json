@@ -1,0 +1,812 @@
+{
+  "format": "FPVWarehouseRouteAudit.v1",
+  "generatedAt": "2026-10-02T22:06:26.580Z",
+  "scope": "Focused installed Warehouse demonstrations with continuous tick-segment clearance; prior 178-proof replay preserved through exact 12-file binding, not rerun",
+  "source": {
+    "optional-practice/civilian-fpv/model.mjs": {
+      "bytes": 17641,
+      "sha256": "9e4cd11cfdde2dd43b437069b8cb7a359a8132495db806cb5f68e8674d48aaf6"
+    },
+    "optional-practice/civilian-fpv/world-model.mjs": {
+      "bytes": 53026,
+      "sha256": "d6e0939daf77a2a1459687dd8ba900719b78b02a1b3fe5fab862773bd6109551"
+    },
+    "optional-practice/civilian-fpv/world-collision.mjs": {
+      "bytes": 12256,
+      "sha256": "2899c7c84f9eae14b9a3434f585a8e873f4a1361e8f3ce4026ef27f44bdeef32"
+    },
+    "optional-practice/civilian-fpv/math.mjs": {
+      "bytes": 3062,
+      "sha256": "555c8b6ea170b46992133507d2a3d867f06185bca060239cab7db9c9b87f9f98"
+    },
+    "optional-practice/civilian-fpv/radio-profile.mjs": {
+      "bytes": 18097,
+      "sha256": "f588fd5cda96ed9627a483f49ca843ace8d99a68fae42b0a4239c2cd0ab81933"
+    },
+    "optional-practice/civilian-fpv/world-themes.mjs": {
+      "bytes": 7637,
+      "sha256": "8331dc6931299043e14620fe312affddd382b551607db5ff6fae85f14b627bc7"
+    },
+    "optional-practice/civilian-fpv/flight-sectors.mjs": {
+      "bytes": 2673,
+      "sha256": "5b1b54bde4e578e61da7d59f4a80a86db9aafbc78b4523d2ba2b540277a0a16d"
+    },
+    "optional-practice/civilian-fpv/catalogue.mjs": {
+      "bytes": 10565,
+      "sha256": "98338353d17eb585414538c9905040752fd5cd6699c48b17fa1706832b750997"
+    },
+    "optional-practice/civilian-fpv/world-catalogue.mjs": {
+      "bytes": 239978,
+      "sha256": "d901363b623193f4896100f9381c7579946796e741554f012581ebb93f9ea8a6"
+    },
+    "optional-practice/civilian-fpv/demonstrations.mjs": {
+      "bytes": 221646,
+      "sha256": "92bb4365c46d94f5c1fea9808ec4e24fb9014d35640ee488959c4e0f4b6c5cfa"
+    },
+    "optional-practice/civilian-fpv/world-demonstrations.mjs": {
+      "bytes": 2207074,
+      "sha256": "c9f2d0ee5c571507ae1dce4f48898554cb2ad179218f1905cdc8013db2e2c114"
+    },
+    "game/data-json.mjs": {
+      "bytes": 5594,
+      "sha256": "9ce33d6173f3cba8587ed7a7f1924c66e9d9c86ffa59b37a743764ea0b01f7bd"
+    }
+  },
+  "priorEvidence": {
+    "path": "docs/evidence/fpv-meadow-groves-replay-main959.json",
+    "passed": 178,
+    "total": 178,
+    "sourceBoundFiles": 12,
+    "unchanged": true
+  },
+  "limits": [
+    "No human/hardware/GPU performance or unit-coverage claim",
+    "Clearance measures model spherical bodies against authored axis-aligned rack boxes; floor/outer bounds excluded",
+    "Minimum clearance over each straight fixed-tick segment; renderer decoration may differ and is separately qualified",
+    "School36/38 install only Acro demonstrations; no self-level demonstration availability claim"
+  ],
+  "catalogue": [
+    {
+      "id": "warehouse-01",
+      "title": "Loading bay",
+      "bounds": {
+        "min": {
+          "x": -38000,
+          "y": 0,
+          "z": -38000
+        },
+        "max": {
+          "x": 38000,
+          "y": 18000,
+          "z": 32000
+        }
+      },
+      "obstacles": 6,
+      "actors": [],
+      "availableModes": [
+        "self-level",
+        "acro"
+      ]
+    },
+    {
+      "id": "warehouse-02",
+      "title": "Central aisle",
+      "bounds": {
+        "min": {
+          "x": -38000,
+          "y": 0,
+          "z": -38000
+        },
+        "max": {
+          "x": 38000,
+          "y": 18000,
+          "z": 32000
+        }
+      },
+      "obstacles": 6,
+      "actors": [
+        {
+          "id": "pace-rival",
+          "type": "drone",
+          "speed": 2600,
+          "radius": 300
+        }
+      ],
+      "availableModes": [
+        "self-level",
+        "acro"
+      ]
+    },
+    {
+      "id": "warehouse-03",
+      "title": "Pallet switchback",
+      "bounds": {
+        "min": {
+          "x": -38000,
+          "y": 0,
+          "z": -38000
+        },
+        "max": {
+          "x": 38000,
+          "y": 18000,
+          "z": 32000
+        }
+      },
+      "obstacles": 6,
+      "actors": [
+        {
+          "id": "pace-rival",
+          "type": "drone",
+          "speed": 2600,
+          "radius": 300
+        }
+      ],
+      "availableModes": [
+        "self-level",
+        "acro"
+      ]
+    },
+    {
+      "id": "warehouse-04",
+      "title": "Beam circuit",
+      "bounds": {
+        "min": {
+          "x": -38000,
+          "y": 0,
+          "z": -38000
+        },
+        "max": {
+          "x": 38000,
+          "y": 18000,
+          "z": 32000
+        }
+      },
+      "obstacles": 6,
+      "actors": [
+        {
+          "id": "pace-rival",
+          "type": "drone",
+          "speed": 2600,
+          "radius": 300
+        }
+      ],
+      "availableModes": [
+        "self-level",
+        "acro"
+      ]
+    },
+    {
+      "id": "warehouse-05",
+      "title": "High-low sprint",
+      "bounds": {
+        "min": {
+          "x": -38000,
+          "y": 0,
+          "z": -38000
+        },
+        "max": {
+          "x": 38000,
+          "y": 18000,
+          "z": 32000
+        }
+      },
+      "obstacles": 6,
+      "actors": [
+        {
+          "id": "pace-rival",
+          "type": "drone",
+          "speed": 2600,
+          "radius": 300
+        }
+      ],
+      "availableModes": [
+        "self-level",
+        "acro"
+      ]
+    },
+    {
+      "id": "warehouse-06",
+      "title": "Shelf clearance",
+      "bounds": {
+        "min": {
+          "x": -38000,
+          "y": 0,
+          "z": -38000
+        },
+        "max": {
+          "x": 38000,
+          "y": 18000,
+          "z": 32000
+        }
+      },
+      "obstacles": 6,
+      "actors": [],
+      "availableModes": [
+        "self-level",
+        "acro"
+      ]
+    },
+    {
+      "id": "warehouse-07",
+      "title": "Moving freight",
+      "bounds": {
+        "min": {
+          "x": -38000,
+          "y": 0,
+          "z": -38000
+        },
+        "max": {
+          "x": 38000,
+          "y": 18000,
+          "z": 32000
+        }
+      },
+      "obstacles": 6,
+      "actors": [
+        {
+          "id": "crossing-1",
+          "type": "hazard",
+          "speed": 2300,
+          "radius": 1100
+        },
+        {
+          "id": "crossing-2",
+          "type": "hazard",
+          "speed": 1700,
+          "radius": 1000
+        }
+      ],
+      "availableModes": [
+        "self-level",
+        "acro"
+      ]
+    },
+    {
+      "id": "warehouse-08",
+      "title": "Warehouse circuit",
+      "bounds": {
+        "min": {
+          "x": -38000,
+          "y": 0,
+          "z": -38000
+        },
+        "max": {
+          "x": 38000,
+          "y": 18000,
+          "z": 32000
+        }
+      },
+      "obstacles": 6,
+      "actors": [],
+      "availableModes": [
+        "self-level",
+        "acro"
+      ]
+    },
+    {
+      "id": "beginner-36",
+      "title": "High–low ribbon",
+      "bounds": {
+        "min": {
+          "x": -44000,
+          "y": 0,
+          "z": -44000
+        },
+        "max": {
+          "x": 44000,
+          "y": 20000,
+          "z": 44000
+        }
+      },
+      "obstacles": 8,
+      "actors": [],
+      "availableModes": [
+        "acro"
+      ]
+    },
+    {
+      "id": "beginner-38",
+      "title": "Corridor turnaround",
+      "bounds": {
+        "min": {
+          "x": -44000,
+          "y": 0,
+          "z": -44000
+        },
+        "max": {
+          "x": 44000,
+          "y": 20000,
+          "z": 44000
+        }
+      },
+      "obstacles": 7,
+      "actors": [],
+      "availableModes": [
+        "acro"
+      ]
+    }
+  ],
+  "passed": 18,
+  "total": 18,
+  "frames": 44168,
+  "results": [
+    {
+      "course": "warehouse-01",
+      "title": "Loading bay",
+      "mode": "self-level",
+      "frames": 1210,
+      "complete": true,
+      "finalStateIdentity": "41db103acc80925b",
+      "contacts": 0,
+      "nearestRack": {
+        "clearanceMm": 10631,
+        "tick": 457,
+        "obstacle": "rack-1-1"
+      },
+      "nearestActor": null,
+      "nearestActorRack": null,
+      "actors": {}
+    },
+    {
+      "course": "warehouse-01",
+      "title": "Loading bay",
+      "mode": "acro",
+      "frames": 1210,
+      "complete": true,
+      "finalStateIdentity": "15d951253dc8d4d9",
+      "contacts": 0,
+      "nearestRack": {
+        "clearanceMm": 10671,
+        "tick": 460,
+        "obstacle": "rack-1-1"
+      },
+      "nearestActor": null,
+      "nearestActorRack": null,
+      "actors": {}
+    },
+    {
+      "course": "warehouse-02",
+      "title": "Central aisle",
+      "mode": "self-level",
+      "frames": 2405,
+      "complete": true,
+      "finalStateIdentity": "d518873da8cc66b5",
+      "contacts": 0,
+      "nearestRack": {
+        "clearanceMm": 19257,
+        "tick": 1104,
+        "obstacle": "rack-0-0"
+      },
+      "nearestActor": {
+        "clearanceMm": 300,
+        "tick": 881,
+        "actor": "pace-rival"
+      },
+      "nearestActorRack": {
+        "clearanceMm": 16200,
+        "tick": 1,
+        "actor": "pace-rival",
+        "obstacle": "rack-0-2"
+      },
+      "actors": {
+        "pace-rival": {
+          "type": "drone",
+          "travelMm": 124979.19,
+          "blockedTicks": 0,
+          "pathTransitions": 6
+        }
+      }
+    },
+    {
+      "course": "warehouse-02",
+      "title": "Central aisle",
+      "mode": "acro",
+      "frames": 2421,
+      "complete": true,
+      "finalStateIdentity": "85c8bac3a2033e45",
+      "contacts": 0,
+      "nearestRack": {
+        "clearanceMm": 19250,
+        "tick": 1184,
+        "obstacle": "rack-1-0"
+      },
+      "nearestActor": {
+        "clearanceMm": 299,
+        "tick": 882,
+        "actor": "pace-rival"
+      },
+      "nearestActorRack": {
+        "clearanceMm": 16200,
+        "tick": 1,
+        "actor": "pace-rival",
+        "obstacle": "rack-0-2"
+      },
+      "actors": {
+        "pace-rival": {
+          "type": "drone",
+          "travelMm": 125811.19,
+          "blockedTicks": 0,
+          "pathTransitions": 6
+        }
+      }
+    },
+    {
+      "course": "warehouse-03",
+      "title": "Pallet switchback",
+      "mode": "self-level",
+      "frames": 2786,
+      "complete": true,
+      "finalStateIdentity": "66b0ecfef252cf72",
+      "contacts": 0,
+      "nearestRack": {
+        "clearanceMm": 11301,
+        "tick": 1494,
+        "obstacle": "rack-0-0"
+      },
+      "nearestActor": {
+        "clearanceMm": 4221.98,
+        "tick": 1,
+        "actor": "pace-rival"
+      },
+      "nearestActorRack": {
+        "clearanceMm": 11209.16,
+        "tick": 1522,
+        "actor": "pace-rival",
+        "obstacle": "rack-0-1"
+      },
+      "actors": {
+        "pace-rival": {
+          "type": "drone",
+          "travelMm": 144876.57,
+          "blockedTicks": 0,
+          "pathTransitions": 6
+        }
+      }
+    },
+    {
+      "course": "warehouse-03",
+      "title": "Pallet switchback",
+      "mode": "acro",
+      "frames": 2794,
+      "complete": true,
+      "finalStateIdentity": "bde7bda4e031151a",
+      "contacts": 0,
+      "nearestRack": {
+        "clearanceMm": 11305,
+        "tick": 1496,
+        "obstacle": "rack-0-0"
+      },
+      "nearestActor": {
+        "clearanceMm": 4221.98,
+        "tick": 1,
+        "actor": "pace-rival"
+      },
+      "nearestActorRack": {
+        "clearanceMm": 11209.16,
+        "tick": 1522,
+        "actor": "pace-rival",
+        "obstacle": "rack-0-1"
+      },
+      "actors": {
+        "pace-rival": {
+          "type": "drone",
+          "travelMm": 145292.57,
+          "blockedTicks": 0,
+          "pathTransitions": 6
+        }
+      }
+    },
+    {
+      "course": "warehouse-04",
+      "title": "Beam circuit",
+      "mode": "self-level",
+      "frames": 2538,
+      "complete": true,
+      "finalStateIdentity": "a19ec1aba40becbd",
+      "contacts": 0,
+      "nearestRack": {
+        "clearanceMm": 9283,
+        "tick": 1394,
+        "obstacle": "rack-1-1"
+      },
+      "nearestActor": {
+        "clearanceMm": 3838.32,
+        "tick": 297,
+        "actor": "pace-rival"
+      },
+      "nearestActorRack": {
+        "clearanceMm": 9200,
+        "tick": 1742,
+        "actor": "pace-rival",
+        "obstacle": "rack-0-1"
+      },
+      "actors": {
+        "pace-rival": {
+          "type": "drone",
+          "travelMm": 131415.79,
+          "blockedTicks": 0,
+          "pathTransitions": 6
+        }
+      }
+    },
+    {
+      "course": "warehouse-04",
+      "title": "Beam circuit",
+      "mode": "acro",
+      "frames": 2546,
+      "complete": true,
+      "finalStateIdentity": "a0777336d75a5f36",
+      "contacts": 0,
+      "nearestRack": {
+        "clearanceMm": 9284,
+        "tick": 1391,
+        "obstacle": "rack-1-1"
+      },
+      "nearestActor": {
+        "clearanceMm": 3880.17,
+        "tick": 296,
+        "actor": "pace-rival"
+      },
+      "nearestActorRack": {
+        "clearanceMm": 9200,
+        "tick": 1742,
+        "actor": "pace-rival",
+        "obstacle": "rack-0-1"
+      },
+      "actors": {
+        "pace-rival": {
+          "type": "drone",
+          "travelMm": 131827.23,
+          "blockedTicks": 0,
+          "pathTransitions": 6
+        }
+      }
+    },
+    {
+      "course": "warehouse-05",
+      "title": "High-low sprint",
+      "mode": "self-level",
+      "frames": 2823,
+      "complete": true,
+      "finalStateIdentity": "36ef3ac03410ced6",
+      "contacts": 0,
+      "nearestRack": {
+        "clearanceMm": 11303,
+        "tick": 1493,
+        "obstacle": "rack-1-0"
+      },
+      "nearestActor": {
+        "clearanceMm": 1424,
+        "tick": 83,
+        "actor": "pace-rival"
+      },
+      "nearestActorRack": {
+        "clearanceMm": 11200,
+        "tick": 1131,
+        "actor": "pace-rival",
+        "obstacle": "rack-1-0"
+      },
+      "actors": {
+        "pace-rival": {
+          "type": "drone",
+          "travelMm": 146478.9,
+          "blockedTicks": 0,
+          "pathTransitions": 6
+        }
+      }
+    },
+    {
+      "course": "warehouse-05",
+      "title": "High-low sprint",
+      "mode": "acro",
+      "frames": 2832,
+      "complete": true,
+      "finalStateIdentity": "eaa43473fd3d1b38",
+      "contacts": 0,
+      "nearestRack": {
+        "clearanceMm": 11305,
+        "tick": 1498,
+        "obstacle": "rack-1-0"
+      },
+      "nearestActor": {
+        "clearanceMm": 1420.4,
+        "tick": 81,
+        "actor": "pace-rival"
+      },
+      "nearestActorRack": {
+        "clearanceMm": 11200,
+        "tick": 1131,
+        "actor": "pace-rival",
+        "obstacle": "rack-1-0"
+      },
+      "actors": {
+        "pace-rival": {
+          "type": "drone",
+          "travelMm": 146946.9,
+          "blockedTicks": 0,
+          "pathTransitions": 6
+        }
+      }
+    },
+    {
+      "course": "warehouse-06",
+      "title": "Shelf clearance",
+      "mode": "self-level",
+      "frames": 2984,
+      "complete": true,
+      "finalStateIdentity": "ed2326d7dcf10c27",
+      "contacts": 0,
+      "nearestRack": {
+        "clearanceMm": 5369,
+        "tick": 1789,
+        "obstacle": "rack-0-0"
+      },
+      "nearestActor": null,
+      "nearestActorRack": null,
+      "actors": {}
+    },
+    {
+      "course": "warehouse-06",
+      "title": "Shelf clearance",
+      "mode": "acro",
+      "frames": 2994,
+      "complete": true,
+      "finalStateIdentity": "e66baef405ba7adc",
+      "contacts": 0,
+      "nearestRack": {
+        "clearanceMm": 5357,
+        "tick": 1796,
+        "obstacle": "rack-0-0"
+      },
+      "nearestActor": null,
+      "nearestActorRack": null,
+      "actors": {}
+    },
+    {
+      "course": "warehouse-07",
+      "title": "Moving freight",
+      "mode": "self-level",
+      "frames": 2602,
+      "complete": true,
+      "finalStateIdentity": "742f22d7565f1526",
+      "contacts": 0,
+      "nearestRack": {
+        "clearanceMm": 9828,
+        "tick": 1056,
+        "obstacle": "rack-1-0"
+      },
+      "nearestActor": {
+        "clearanceMm": 1241.68,
+        "tick": 1205,
+        "actor": "crossing-2"
+      },
+      "nearestActorRack": {
+        "clearanceMm": 6400,
+        "tick": 1,
+        "actor": "crossing-1",
+        "obstacle": "rack-0-1"
+      },
+      "actors": {
+        "crossing-1": {
+          "type": "hazard",
+          "travelMm": 119644,
+          "blockedTicks": 0,
+          "pathTransitions": 5
+        },
+        "crossing-2": {
+          "type": "hazard",
+          "travelMm": 88468,
+          "blockedTicks": 0,
+          "pathTransitions": 4
+        }
+      }
+    },
+    {
+      "course": "warehouse-07",
+      "title": "Moving freight",
+      "mode": "acro",
+      "frames": 2608,
+      "complete": true,
+      "finalStateIdentity": "876eadd302310117",
+      "contacts": 0,
+      "nearestRack": {
+        "clearanceMm": 9840,
+        "tick": 1062,
+        "obstacle": "rack-1-0"
+      },
+      "nearestActor": {
+        "clearanceMm": 1251.59,
+        "tick": 1208,
+        "actor": "crossing-2"
+      },
+      "nearestActorRack": {
+        "clearanceMm": 6400,
+        "tick": 1,
+        "actor": "crossing-1",
+        "obstacle": "rack-0-1"
+      },
+      "actors": {
+        "crossing-1": {
+          "type": "hazard",
+          "travelMm": 119920,
+          "blockedTicks": 0,
+          "pathTransitions": 5
+        },
+        "crossing-2": {
+          "type": "hazard",
+          "travelMm": 88672,
+          "blockedTicks": 0,
+          "pathTransitions": 4
+        }
+      }
+    },
+    {
+      "course": "warehouse-08",
+      "title": "Warehouse circuit",
+      "mode": "self-level",
+      "frames": 2918,
+      "complete": true,
+      "finalStateIdentity": "2e379faf2409bef2",
+      "contacts": 0,
+      "nearestRack": {
+        "clearanceMm": 8425,
+        "tick": 1571,
+        "obstacle": "rack-0-0"
+      },
+      "nearestActor": null,
+      "nearestActorRack": null,
+      "actors": {}
+    },
+    {
+      "course": "warehouse-08",
+      "title": "Warehouse circuit",
+      "mode": "acro",
+      "frames": 2932,
+      "complete": true,
+      "finalStateIdentity": "2f8f89557acbeb08",
+      "contacts": 0,
+      "nearestRack": {
+        "clearanceMm": 8465,
+        "tick": 1584,
+        "obstacle": "rack-0-0"
+      },
+      "nearestActor": null,
+      "nearestActorRack": null,
+      "actors": {}
+    },
+    {
+      "course": "beginner-36",
+      "title": "High–low ribbon",
+      "mode": "acro",
+      "frames": 1796,
+      "complete": true,
+      "finalStateIdentity": "ad7aa5de2e99f9fe",
+      "contacts": 0,
+      "nearestRack": {
+        "clearanceMm": 1831.27,
+        "tick": 779,
+        "obstacle": "school-overhead-beam"
+      },
+      "nearestActor": null,
+      "nearestActorRack": null,
+      "actors": {}
+    },
+    {
+      "course": "beginner-38",
+      "title": "Corridor turnaround",
+      "mode": "acro",
+      "frames": 1769,
+      "complete": true,
+      "finalStateIdentity": "cabf135da49422b0",
+      "contacts": 0,
+      "nearestRack": {
+        "clearanceMm": 4125.8,
+        "tick": 785,
+        "obstacle": "school-aisle-divider"
+      },
+      "nearestActor": null,
+      "nearestActorRack": null,
+      "actors": {}
+    }
+  ]
+}
