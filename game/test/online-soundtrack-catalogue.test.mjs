@@ -4,6 +4,7 @@ import {
   ONLINE_SOUNDTRACK_CATALOGUE_URL,
   fetchOnlineSoundtrackCatalogue,
   fetchVerifiedOnlineSoundtrack,
+  isResolvedOnlineSoundtrackTrack,
   resolveOnlineSoundtrackCatalogue,
 } from '../online-soundtrack-catalogue.mjs';
 import { setLocale } from '../i18n/index.mjs';
@@ -205,7 +206,7 @@ test('online catalogue accepts legacy entries and validates mirrored structured 
     );
 });
 
-test('online catalogue preserves uploader-confirmed unknown rights without forging a licence', () => {
+test('uploader-confirmed unknown rights cannot grant an online recording', () => {
   const credit = 'Song by Creator. Rights confirmed by uploader.';
   const rights = {
     licenseId: 'UNKNOWN',
@@ -234,11 +235,108 @@ test('online catalogue preserves uploader-confirmed unknown rights without forgi
         recordingModeEligible: false,
       },
     ],
-  }).tracks[0];
-  assert.equal(resolved.rights.license, 'Unknown — uploader-confirmed rights');
-  assert.equal(resolved.rights.evidence.permissionBasis, rights.permissionBasis);
-  assert.equal(resolved.websites.length, 1);
-  assert.deepEqual(resolved.collections, ['Creator album', 'Metal action']);
+  });
+  assert.deepEqual(resolved.tracks, []);
+  assert.equal(resolved.counts.uniqueRecordings, 1, 'retained source counts are not admission');
+});
+
+function withTracks(tracks) {
+  return {
+    ...catalogue,
+    tracks,
+    counts: {
+      declaredTracks: tracks.length,
+      uniqueRecordings: tracks.length,
+      duplicateAliases: 0,
+      audioBytes: tracks.reduce((sum, entry) => sum + entry.audio.bytes, 0),
+    },
+  };
+}
+
+test('missing, unknown and unsupported licences quarantine only their own catalogue rows', () => {
+  const changes = [
+    { license: undefined },
+    { license: null },
+    { license: '' },
+    { license: '   ' },
+    { licenseURL: undefined },
+    { licenseURL: null },
+    { licenseURL: '' },
+    { license: 'Unknown', licenseURL: track.licenseURL },
+    { license: 'UNKNOWN', licenseURL: null },
+    { licenseURL: 'https://example.com/custom' },
+  ];
+  const excluded = changes.map((change, index) => {
+    const hash = (index + 1).toString(16).padStart(64, '0');
+    return {
+      ...track,
+      id: `creator.unlicensed-${index}`,
+      ...change,
+      audio: { ...track.audio, path: `objects/${hash}.mp3`, sha256: hash },
+    };
+  });
+  const resolved = resolveOnlineSoundtrackCatalogue(
+    JSON.stringify(withTracks([...excluded, track])),
+  );
+  assert.deepEqual(
+    resolved.tracks.map((entry) => entry.archiveTrackId),
+    [track.id],
+  );
+  assert.equal(resolved.counts.audioBytes, 1234 * 11);
+  assert(isResolvedOnlineSoundtrackTrack(resolved.tracks[0]));
+  assert.throws(
+    () =>
+      resolveOnlineSoundtrackCatalogue(
+        JSON.stringify({
+          ...withTracks([...excluded, track]),
+          counts: catalogue.counts,
+        }),
+      ),
+    /counts differ/,
+    'excluded rows cannot bypass the declared source inventory',
+  );
+});
+
+test('permitted legacy CC0 and CC BY versions stay available', () => {
+  for (const [license, licenseURL] of [
+    ['CC0 1.0 Universal', 'https://creativecommons.org/publicdomain/zero/1.0/'],
+    ['CC BY 3.0 Unported', 'https://creativecommons.org/licenses/by/3.0/'],
+    ['CC BY 4.0 International', 'https://creativecommons.org/licenses/by/4.0/'],
+  ]) {
+    const resolved = resolveOnlineSoundtrackCatalogue(
+      withTracks([{ ...track, license, licenseURL }]),
+    );
+    assert.equal(resolved.tracks.length, 1);
+    assert.equal(resolved.tracks[0].rights.license, license);
+  }
+});
+
+test('known legacy labels cannot admit unknown or missing structured licences', () => {
+  const hash = 'b'.repeat(64);
+  for (const rights of [
+    {
+      licenseId: 'UNKNOWN',
+      licenseVersion: null,
+      licenseURL: null,
+      permissionBasis: 'uploader-confirmed-public-redistribution-and-web-playback',
+    },
+    { licenseId: 'UNKNOWN', licenseURL: track.licenseURL },
+    { licenseId: 'CC-BY', licenseURL: null },
+    { licenseId: 'CC-BY' },
+    { licenseURL: track.licenseURL },
+  ]) {
+    const excluded = {
+      ...track,
+      id: 'creator.unlicensed',
+      rights,
+      audio: { ...track.audio, sha256: hash, path: `objects/${hash}.mp3` },
+    };
+    const resolved = resolveOnlineSoundtrackCatalogue(withTracks([excluded, track]));
+    assert.deepEqual(
+      resolved.tracks.map((entry) => entry.archiveTrackId),
+      [track.id],
+    );
+  }
 });
 
 test('online catalogue normalizes accidental edge whitespace in source and credit metadata', () => {
@@ -251,18 +349,17 @@ test('online catalogue normalizes accidental edge whitespace in source and credi
         ...track,
         source: `${source}\n`,
         credit: `${credit}\n`,
-        license: 'Unknown — uploader-confirmed rights',
-        licenseURL: null,
+        license: track.license,
+        licenseURL: track.licenseURL,
         rights: {
-          licenseId: 'UNKNOWN',
-          licenseVersion: null,
-          licenseURL: null,
+          licenseId: 'CC-BY',
+          licenseVersion: '4.0',
+          licenseURL: track.licenseURL,
           rightsEvidenceURL: `${source}\n`,
           attribution: `${credit}\n`,
           derivativeChangeNotice: 'Exact submitted bytes retained.',
-          permissionBasis: 'uploader-confirmed-public-redistribution-and-web-playback',
           shareAlike: {
-            required: null,
+            required: false,
             deliveryLicenseId: null,
             deliveryLicenseVersion: null,
             deliveryLicenseURL: null,
@@ -339,7 +436,6 @@ test('online catalogue cannot grant game admission or escape its hash path', () 
   for (const changed of [
     { ...track, gameCatalogueAdmission: true },
     { ...track, audio: { ...track.audio, path: `objects/${'b'.repeat(64)}.mp3` } },
-    { ...track, licenseURL: 'https://example.com/custom' },
     { ...track, recordingModeEligible: true },
     { ...track, default: true },
   ])

@@ -29,10 +29,11 @@ export async function resolveDemoPicture({
   acquire,
 } = {}) {
   let backdrop = null;
-  const result = (pictureVisibility = 'blurred', artSeed = null, storyPin = null) => {
+  const result = (pictureVisibility = 'blurred', artSeed = null, previewAvailable = false, storyPin = null) => {
     let disposed = false;
     return Object.freeze({
       pictureVisibility,
+      previewAvailable,
       storyPin,
       backdrop,
       artSeed,
@@ -138,7 +139,9 @@ export async function resolveDemoPicture({
         return result();
       }
     }
-    return result(earnedPicture ? 'clear' : 'blurred', artSeed, storyPin);
+    // Preview availability proves this scene's exact picture is valid, independently
+    // of the earned-only default. Failed identity or acquisition paths never opt in.
+    return result(earnedPicture ? 'clear' : 'blurred', artSeed, true, storyPin);
   } catch (error) {
     backdrop?.release?.();
     backdrop = null;

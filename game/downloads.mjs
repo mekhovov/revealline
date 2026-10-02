@@ -1,7 +1,7 @@
 import { readAssetStore } from './storage.mjs';
 import { offlineAvailability, prepareOffline, checkOffline } from './offline.mjs';
 import { createOfficialDownloads } from './official-downloads.mjs';
-import { downloadFiles } from './download-catalogue.mjs';
+import { downloadFiles, validateDownloadCatalogue } from './download-catalogue.mjs';
 import {
   readOfflineDestination,
   continueOfflineDestination,
@@ -23,6 +23,7 @@ import { createManagedMediaStore } from './managed-media-store.mjs';
 import { SOUNDTRACK_CATALOGUE, SOUNDTRACK_ARCHIVES } from './content/soundtrack-catalogue.mjs';
 import {
   installedAppURL,
+  validateInstalledEdition,
   readInstalledState,
   stageInstalledEdition,
   activateInstalledEdition,
@@ -58,6 +59,17 @@ const errorText = (error) => downloadErrorMessage(error, t);
 const available = offlineAvailability();
 const updateContext = readGameUpdateContext();
 const store = createOfficialDownloads();
+const experienceStatuses = new Map();
+const groupInputs = () => document.querySelectorAll('input[data-group]');
+function syncGroupInputs() {
+  for (const input of groupInputs()) {
+    const group = catalogue.groups.find((item) => item.id === input.dataset.group);
+    input.checked =
+      selected.has(group.id) ||
+      (group.category === 'community' &&
+        ($('all-game').checked || group.requires.every((id) => selected.has(id))));
+  }
+}
 let controller,
   catalogue,
   core,
@@ -77,6 +89,7 @@ let controller,
   navigationRequest = null,
   panelController = new AbortController();
 const embedded = new URL(location.href).searchParams.has('embedded') && window.parent !== window;
+document.body.dataset.embedded = String(embedded);
 const panelProtocol = 'revealline.offline-panel.v1';
 const notifyHost = (action, fields = {}) => {
   if (embedded)
@@ -222,9 +235,17 @@ function readyMessage() {
   };
 }
 function busy(value) {
-  for (const id of ['download-game', 'verify-game', 'remove-chapters', 'all-music', 'all-game'])
+  for (const id of [
+    'download-game',
+    'verify-game',
+    'remove-chapters',
+    'all-music',
+    'all-game',
+    'select-communities',
+    'select-everything',
+  ])
     $(id).disabled = value;
-  for (const button of document.querySelectorAll('#albums button, #chapters input'))
+  for (const button of document.querySelectorAll('#albums button, input[data-group]'))
     button.disabled = value;
   $('pause').disabled = $('cancel').disabled = !value || musicJob;
   $('pause-music').disabled = $('cancel-music').disabled = !value || !musicJob;
@@ -313,6 +334,19 @@ async function health({ verify = true, signal } = {}) {
   signal?.throwIfAborted();
   if (sequence !== healthSequence || JSON.stringify(ids) !== JSON.stringify(gameIDs())) return;
   runtimeHealth = runtime;
+  for (const [id, element] of experienceStatuses) {
+    const report = await store.inspect(downloadFiles(catalogue, [id]), { verify, signal });
+    if (sequence !== healthSequence) return;
+    localizedText(element, () =>
+      t('interface:downloads.experienceStatus', {
+        size: size(report.totalBytes + core.files.reduce((sum, file) => sum + file.bytes, 0)),
+        status:
+          report.ready && runtime.status === 'ready'
+            ? t('interface:downloads.readyOffline')
+            : t('interface:downloads.notPrepared'),
+      }),
+    );
+  }
   ready =
     gameplay.ready &&
     runtime.status === 'ready' &&
@@ -483,7 +517,8 @@ window.addEventListener('pagehide', (event) => {
     navigation.dispose();
   }
 });
-$('all-game').onchange = () => {
+function selectionChanged() {
+  syncGroupInputs();
   resumeApprovedGame = null;
   yieldedToPlay = false;
   ready = false;
@@ -491,6 +526,30 @@ $('all-game').onchange = () => {
   $('download-game').disabled = true;
   $('activate').hidden = true;
   void health().catch((error) => operation(() => errorText(error)));
+}
+$('all-game').onchange = selectionChanged;
+$('select-communities').onclick = () => {
+  if (!catalogue || controller) return;
+  catalogue.groups
+    .filter((group) => group.category === 'community')
+    .forEach((group) => selected.add(group.id));
+  syncGroupInputs();
+  selectionChanged();
+};
+$('select-everything').onclick = () => {
+  if (!catalogue || controller) return;
+  selected.clear();
+  catalogue.groups
+    .filter(
+      (group) =>
+        group.kind === 'gameplay' &&
+        !group.hidden &&
+        !['archive', 'tooling', 'destination'].includes(group.category),
+    )
+    .forEach((group) => selected.add(group.id));
+  $('all-game').checked = true;
+  syncGroupInputs();
+  selectionChanged();
 };
 $('download-game').onclick = () => {
   if (!lastEstimate || controller) return;
@@ -503,6 +562,9 @@ $('download-game').onclick = () => {
 };
 function downloadApprovedGame(approval) {
   return run(async (signal) => {
+    // Reject an unusable installation before transferring bytes, not after a
+    // completed download. Activation still repeats validation under its locks.
+    installationCandidate(approval.ids, approval.all);
     playing.clear();
     activity?.postMessage({ probe: true });
     if (activity) await new Promise((resolve) => setTimeout(resolve, 100));
@@ -625,8 +687,7 @@ $('remove-chapters').onclick = () =>
     await updateInstalledSelection(baseURL, selection);
     selected.clear();
     selection.forEach((id) => selected.add(id));
-    for (const input of document.querySelectorAll('#chapters input'))
-      input.checked = selected.has(input.dataset.group);
+    for (const input of groupInputs()) input.checked = selected.has(input.dataset.group);
     return () => t('interface:downloads.removalUpdated');
   });
 $('retain').onclick = async () => {
@@ -643,6 +704,15 @@ $('retain').onclick = async () => {
     localizedText($('retention-status'), () => errorText(error));
   }
 };
+function installationCandidate(ids, all) {
+  return validateInstalledEdition({
+    version: catalogue.version,
+    buildId: available.buildId,
+    scope: baseURL,
+    selection: ids,
+    allGameplay: all,
+  });
+}
 async function selectEdition({
   ids = gameIDs(),
   all = $('all-game').checked,
@@ -652,13 +722,7 @@ async function selectEdition({
   return finishOfflineSelection({
     signal,
     activate: async () => {
-      const candidate = {
-        version: catalogue.version,
-        buildId: available.buildId,
-        scope: baseURL,
-        selection: ids,
-        allGameplay: all,
-      };
+      const candidate = installationCandidate(ids, all);
       await stageInstalledEdition(candidate);
       signal.throwIfAborted();
       const result = embedded
@@ -743,8 +807,7 @@ async function selectRequestedPackage(groupId) {
   requestedPackage = groupId;
   selected.add(groupId);
   $('all-game').checked = false;
-  for (const input of document.querySelectorAll('#chapters input'))
-    input.checked = selected.has(input.dataset.group);
+  for (const input of groupInputs()) input.checked = selected.has(input.dataset.group);
   ready = false;
   await health({ verify: true, signal });
   signal.throwIfAborted();
@@ -795,6 +858,7 @@ async function initialize() {
       return response.json();
     }),
   );
+  validateDownloadCatalogue(catalogue);
   navigationRequest = readOfflineDestination({
     pageURL: location.href,
     scope: baseURL,
@@ -810,6 +874,7 @@ async function initialize() {
     $('starter-choice').hidden = true;
     $('all-game').parentElement.hidden = true;
     $('chapter-choices').hidden = true;
+    $('experience-choices').hidden = true;
     $('remove-chapters').hidden = true;
     localizedText($('cancel'), () => t('interface:downloads.cancelReturn'));
   }
@@ -840,6 +905,7 @@ async function initialize() {
   for (const group of catalogue.groups) {
     if (
       group.kind === 'gameplay' &&
+      !group.hidden &&
       group.category !== 'destination' &&
       !['shared', 'base'].includes(group.id)
     ) {
@@ -852,12 +918,21 @@ async function initialize() {
         resumeApprovedGame = null;
         yieldedToPlay = false;
         if (input.checked) selected.add(group.id);
-        else selected.delete(group.id);
-        $('all-game').checked = false;
+        else {
+          if ($('all-game').checked && group.category === 'community') {
+            gameIDs().forEach((id) => selected.add(id));
+            $('all-game').checked = false;
+          }
+          selected.delete(group.id);
+          if (group.category === 'community') group.requires.forEach((id) => selected.delete(id));
+        }
+        if (!['community', 'experience', 'extra'].includes(group.category))
+          $('all-game').checked = false;
         ready = false;
         lastEstimate = null;
         $('download-game').disabled = true;
         $('activate').hidden = true;
+        syncGroupInputs();
         void health().catch((error) => operation(() => errorText(error)));
       };
       const caption = document.createElement('span');
@@ -869,7 +944,23 @@ async function initialize() {
             : groupTitle(group),
       );
       label.append(input, caption);
-      $('chapters').append(label);
+      if (['community', 'experience'].includes(group.category)) {
+        const row = document.createElement('div'),
+          status = document.createElement('p'),
+          play = document.createElement('a');
+        row.className = 'experience';
+        const target = new URL(group.launchPath, baseURL);
+        if (group.category === 'experience')
+          target.searchParams.set('game-return', new URL('game/', baseURL).pathname);
+        play.href = target.href;
+        play.target = '_top';
+        localizedText(play, () =>
+          t('interface:downloads.playExperience', { title: groupTitle(group) }),
+        );
+        experienceStatuses.set(group.id, status);
+        row.append(label, status, play);
+        $(group.category === 'community' ? 'communities' : 'experiences').append(row);
+      } else $('chapters').append(label);
     } else if (group.kind === 'soundtrack') {
       const row = document.createElement('div'),
         title = document.createElement('h3'),
@@ -899,6 +990,15 @@ async function initialize() {
     }
   }
   busy(false);
+  syncGroupInputs();
+  const community = new URL(location.href).searchParams.get('community');
+  const requestedCommunity = catalogue.groups.find(
+    (group) => group.category === 'community' && group.id === `community:${community}`,
+  );
+  if (requestedCommunity) {
+    selected.add(requestedCommunity.id);
+    syncGroupInputs();
+  }
   if (!navigationRequest) launcherHealth = await checkInstalledLauncher({ timeout: 1500 });
   if (requestedPackage) await selectRequestedPackage(requestedPackage);
   await health();

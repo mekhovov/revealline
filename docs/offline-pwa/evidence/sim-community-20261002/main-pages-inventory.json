@@ -1,0 +1,54 @@
+{
+  "version": "0.142.4",
+  "publicationProfile": "main-pages",
+  "buildId": "dc7d5ce1c459541438502969ef5d334efa0d9e3b00ce68f32b0779297ea011a5",
+  "payloadBytes": 950112942,
+  "coreBytes": 65083999,
+  "experiences": [
+    {
+      "id": "community:social-drone-ua",
+      "files": 21,
+      "bytesWithCore": 72227671
+    },
+    {
+      "id": "community:victory-drones",
+      "files": 15,
+      "bytesWithCore": 68877012
+    },
+    {
+      "id": "community:ukraine-culture",
+      "files": 52,
+      "bytesWithCore": 86351366
+    },
+    {
+      "id": "community:fpv-learning",
+      "files": 70,
+      "bytesWithCore": 75975036
+    },
+    {
+      "id": "community:coupa",
+      "files": 37,
+      "bytesWithCore": 107474938
+    },
+    {
+      "id": "community:droneaid",
+      "files": 40,
+      "bytesWithCore": 78092317
+    },
+    {
+      "id": "community:droneaid-community",
+      "files": 9,
+      "bytesWithCore": 73571125
+    },
+    {
+      "id": "extras:civilian-fpv",
+      "files": 34,
+      "bytesWithCore": 67962295
+    },
+    {
+      "id": "extras:sim-fpv",
+      "files": 65,
+      "bytesWithCore": 77763632
+    }
+  ]
+}

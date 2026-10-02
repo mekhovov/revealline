@@ -3,6 +3,7 @@ import { isDeepStrictEqual } from 'node:util';
 import { editionHash, inspectEditionZip } from './edition-zip.mjs';
 import { OPTIONAL_PACKAGE_POLICIES, optionalRuntimePaths } from './optional-package-policy.mjs';
 import { validatePublicSourceEligibility } from './edition-admission.mjs';
+import { validatePracticeDescription } from '../game/optional-practice-details.mjs';
 
 const editionDescriptor = (path, bytes) => ({
   path,
@@ -209,6 +210,14 @@ export async function validateOptionalPackageAdmission(envelope, { read } = {}) 
         fail('Optional app and launcher installation identities differ.');
     }
     const inventory = parse(loaded.sourceInventory);
+    validatePracticeDescription(parse(runtime.get(policy.root + 'package-info.json')), item.id);
+    const preview = runtime.get(policy.root + 'preview.png');
+    if (
+      !preview ||
+      preview.length > 300000 ||
+      Buffer.from(preview).subarray(0, 8).toString('hex') !== '89504e470d0a1a0a'
+    )
+      fail('Invalid or oversized practice preview.');
     keys(
       inventory,
       [
@@ -325,7 +334,7 @@ export async function validateOptionalPackageAdmission(envelope, { read } = {}) 
     if (launcherStart < 0) fail('Optional launcher template is missing its registered entry.');
     const launcherFunction = launcherTemplate.slice(launcherStart + 'export '.length).trim();
     const launcherApp = Buffer.from(
-      `import { optionalInstallationKey, validateOptionalInstallationReference } from './context.mjs';\n(${launcherFunction})(${JSON.stringify({ packageId: item.id, root: installation.id })}, { optionalInstallationKey, validateOptionalInstallationReference });\n`,
+      `import { optionalInstallationKey, validateOptionalInstallationReference, inspectOptionalOffline, prepareOptionalOffline, removeOptionalOffline } from './context.mjs';\nimport { mountPracticeNavigation } from './navigation.mjs';\n(${launcherFunction})(${JSON.stringify({ packageId: item.id, root: installation.id, description: parse(runtime.get(policy.root + 'package-info.json')) })}, { optionalInstallationKey, validateOptionalInstallationReference, inspectOptionalOffline, prepareOptionalOffline, removeOptionalOffline, mountPracticeNavigation });\n`,
     );
     if (
       !launcherFunction.endsWith('}') ||
@@ -338,6 +347,12 @@ export async function validateOptionalPackageAdmission(envelope, { read } = {}) 
       )
     )
       fail('Optional launcher context differs from the shared installation adapter.');
+    if (
+      !Buffer.from(runtime.get('launcher/navigation.mjs')).equals(
+        Buffer.from(source.get('optional-practice/navigation.mjs')),
+      )
+    )
+      fail('Optional launcher navigation differs from its admitted source.');
     for (const size of [192, 512])
       if (
         !Buffer.from(runtime.get(`launcher/icons/icon-${size}.png`)).equals(
@@ -349,6 +364,7 @@ export async function validateOptionalPackageAdmission(envelope, { read } = {}) 
       'index.html',
       'app.mjs',
       'context.mjs',
+      'navigation.mjs',
       'app.webmanifest',
       'icons/icon-192.png',
       'icons/icon-512.png',
