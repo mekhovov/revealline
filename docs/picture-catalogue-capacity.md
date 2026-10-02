@@ -25,3 +25,12 @@ module and regenerated inventory, and formatting is stable. The largest edition
 has 16,363 bytes of headroom; continued content growth still needs ordinary
 capacity checks. Frozen committed-input/ZIP admission is a separate receipt.
 This introduces no unit-test coverage or new browser/device qualification.
+
+Frozen candidate `11b3d9e438104f641ee98f95abcaef9f0a6a333e` passes normal
+committed-input, ZIP member, presentation and admission checks for the formerly
+failing `droneaid-nl-community` edition, including two reproducible builds. See
+`evidence/picture-catalogue-capacity-package.json`. All18 compile evidence remains
+the earlier exact-source in-memory audit; it is not18 frozen ZIP admissions.
+Nested local authoring dependencies were temporarily parked outside the source
+inventory and restored after this check; no source-eligibility rule was altered.
+Protected CI/review and deployment are still required.
