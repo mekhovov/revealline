@@ -7513,6 +7513,15 @@ try {
       'settings-offline',
     ])
       if ($(id)) $(id).hidden = true;
+    // Public communities share the containing game's download catalogue. Keep
+    // preparation explicit and leave this host before changing installation state.
+    const community = communityRouteFromURL(location.href);
+    if (community && !previewSession && $('settings-offline')) {
+      const target = new URL('./downloads.html', import.meta.url);
+      target.searchParams.set('community', community.slug);
+      $('settings-offline').href = target.href;
+      $('settings-offline').hidden = false;
+    }
   }
   window.addEventListener('pagehide', (event) => {
     if (!event.persisted) {
