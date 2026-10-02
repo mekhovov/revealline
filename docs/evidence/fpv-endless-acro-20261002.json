@@ -1,0 +1,20 @@
+{
+  "createdAt": "2026-10-01T23:29:09.537Z",
+  "command": "node scripts/qualify-fpv-acro-school.mjs --output /tmp/fpv-endless-practice-acro-20261002-2319",
+  "summary": {
+    "lessons": 14,
+    "completed": 14,
+    "independentlyReplayed": 14
+  },
+  "allContactsZero": true,
+  "allHealth100": true,
+  "receipt": "/tmp/fpv-endless-practice-acro-20261002-2319/fpv-acro-school-physics-20261001.json",
+  "inputs": {
+    "optional-practice/civilian-fpv/model.mjs": "9e4cd11cfdde2dd43b437069b8cb7a359a8132495db806cb5f68e8674d48aaf6",
+    "optional-practice/civilian-fpv/beginner-coach.mjs": "394be70672d932038b0f353fa1f6fa03d6e41ee18b3a18c63df0f041038957fc",
+    "optional-practice/civilian-fpv/world-model.mjs": "348642a47e43f1cb621858d87d1584a7546c301230b4ac8ebf0707f29cc8b49a",
+    "optional-practice/civilian-fpv/world-catalogue.mjs": "1e722ace5004b1fd3afbbd34e3c38b0c8b2800c225e419204f7dbb55ce51717c",
+    "scripts/qualify-fpv-acro-school.mjs": "3153620fc326b43b5bc5618f77c33551b4d67d404783937a890b67a3d69aa15f"
+  },
+  "limitation": "Existing normalized-command authoring qualification with independent replay; no new unit coverage or novice/physical-radio acceptance."
+}

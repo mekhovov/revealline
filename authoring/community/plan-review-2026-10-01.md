@@ -1,5 +1,7 @@
 # Media campaigns: decisions for the next batch
 
+> **Historical snapshot:** this document records the 1 October 2026 review. Queue, deployment, pull-request status, release, capacity and recommendation statements below are dated evidence, not current instructions or current repository status.
+
 Review date: 1 October 2026. Scope: creating playable campaigns from personal images/videos and
 sharing them. Proposed priorities await the user's review. The [delivery register](delivery-plan.md)
 contains the source checkpoint, phase status and evidence links.

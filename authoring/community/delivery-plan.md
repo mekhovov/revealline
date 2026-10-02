@@ -1,107 +1,127 @@
 # Media campaign delivery register
 
-Approved feature direction: browser-first, local and account-free creation; images are reveal
-rewards; portable campaign files before a free self-hosted community store. This register covers
-media → generated levels → campaigns → sharing. Whole-game art, music, native-app and FPV projects
-have their own plans.
+Approved 24 September 2026. Browser-first, local and account-free creation; images are reveal rewards; Solo first; portable files before a free self-hosted community store. This register implements the approved sequence and does not supersede another task's release ownership.
 
-## Review checkpoint — 1 October 2026
+| Phase | Deliverable                                                                                   | Acceptance gate                                                                                                 | Status                                                                                                                                                                                                    |
+| ----- | --------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 0     | Beginner guide, framework reference, maintainer handoff, owned examples                       | Reproduce current preview/install/share distinction                                                             | Released and accepted                                                                                                                                                                                     |
+| 1     | Single image, six verified layout families, review/approval, `.rlpack`, installed Custom play | Actual download installs in clean profile; ordinary legal win, earned picture after reload, unfinished recovery | Released in `v0.141.0`; ordinary installed play and recovery accepted in the built-in browser                                                                                                             |
+| 2     | Batch images, ordering/pacing, groups, checkpoints and bulk approval                          | 1/12/50 items, duplicates, portraits, per-item failure, cancellation, bounded memory and capacity splitting     | Released in `v0.141.0`; the bounded batch, recovery, ordering and split cases are accepted                                                                                                                |
+| 3     | Mixed media, pairing, three posters, frame capture, playback range and victory story          | Paired and video-only wins, audio, Skip/Replay, unsupported codecs, exact poster and portable recovery          | Released in `v0.141.0`; image, video and exact portable-recovery paths are accepted in the built-in browser                                                                                               |
+| 4     | Self-hosted accounts, resumable uploads, validation jobs, automatic publication and catalog   | Ownership, corrupt upload rejection, restarts, listing and database/blob restore                                | Service source released in `v0.141.0`; deployment preflight, exact tus fault recovery and source-to-target restore rehearsal tooling released in `v0.141.2`; live execution remains environment-dependent |
+| 5     | Integrated store, discovery, publish/install/update/offline and removal                       | Two-user full journey, exact immutable saves/rewards across updates and offloading                              | Static client and exact-edition offload/reinstall released; the bounded two-user deployment runner and moderation console released in `v0.141.2`; their live run awaits the community environment         |
+| 6     | Versus qualification                                                                          | Both boards, equal conditions, results, Retry/Next and transfer                                                 | Released and accepted in the built-in browser with exact installed editions, progress, pictures, reload and results-screen Next                                                                           |
+| 7     | Purposeful Team templates                                                                     | Both players contribute; failure/retry and every advertised preset/path                                         | Released; exact attempts/rewards, picture/video packages, browser assembly/review/install and shared managed-media accounting are accepted                                                                |
+| 8     | Optional physical trimming, resizing, compression and conversion                              | Inspect actual exported/decoded bytes, timing, orientation, sound sync and playback                             | Released for the bounded formats; Firefox, Safari, broader codecs, physical speakers and physical mobile remain environment-dependent acceptance follow-ups                                               |
 
-Reviewed source: `4b2bdff335a61104bcdfcf2bde4c9a427e21e928`. GitHub still lists
-[v0.142.3](https://github.com/mekhovov/revealline/releases/tag/v0.142.3) as the latest published
-non-draft release. Newer merged main code and continuous Pages deployments are separate delivery
-states; this review did not exercise today's deployed creator or certify its bytes.
+The implementation phases retain separate documentation and acceptance records. The complete local
+creator stack was published as one feature in `v0.141.0`; the community hardening and deployment
+runners are included in later releases. Only the environment-dependent activation and compatibility
+acceptance below remains open.
 
-[PR #873](https://github.com/mekhovov/revealline/pull/873) (previous plan refresh) and
-[PR #869](https://github.com/mekhovov/revealline/pull/869) (offline verification repair) merged
-on 30 September. Neither remains an unimplemented task. The v0.150.0 milestone is a release target,
-not a statement that every assigned change is published. Historical test counts in linked records
-apply only to their recorded sources. No gameplay tests or browser acceptance were rerun for this
-planning change; the repository's automated-suite waiver remains explicit.
+## Plan review — 30 September 2026
 
-The local workflow has released implementation and recorded browser acceptance. Public community
-availability is still unaccepted. Calling all phases simply "complete" hides that distinction, and
-calling production hosting an unconditional P0 assumes a product priority the user is now reviewing.
+The latest immutable GitHub release is
+[`v0.142.3`](https://github.com/mekhovov/revealline/releases/tag/v0.142.3), source
+`b5ab06e12542f72e33c45b973ba693a5e1509c1c`. Git ancestry confirms that it contains the creator
+hardening from PR #564, the community hardening from PR #675, and the verified production-session
+automation from merged PR #723. This advances the release identity recorded by the earlier plan; it
+does not replace the exact v0.141.6 creator/public acceptance record.
 
-## Completed capabilities and remaining phase gates
+No additional software phase is required to satisfy the original local workflow: a user can select
+images or videos, generate levels with enemies and collision obstacles, review or edit them, approve
+and install an immutable campaign, export/import `.rlpack`, resume unfinished play, earn exact
+pictures, and use optional victory video. Solo, Versus, Team, batch creation and the bounded media
+editor are implemented and accepted in the built-in-browser scope.
 
-| Phase                  | What a user gets                                                                                            | Established status                                                                | What remains                                                                                           |
-| ---------------------- | ----------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------ |
-| 0 — Guides             | Beginner instructions, format reference, examples and maintainer instructions.                              | Released documentation, with ongoing maintenance.                                 | Keep instructions aligned with the current screens.                                                    |
-| 1 — One image          | Generate a level, review, approve, install, play, save and export `.rlpack`.                                | Released baseline with ordinary Custom play/recovery evidence.                    | Refresh current-build acceptance in R1; a separate origin is not a clean physical browser profile.     |
-| 2 — Batch images       | Order and group missions, change pacing, regenerate, exclude failures, autosave and split large packs.      | Recorded 1/12/50-item and recovery/capacity coverage.                             | Human review of usefulness/variety in R1; measured peak memory in R5.                                  |
-| 3 — Videos             | Pair a picture and video, capture a poster, select a playback range and watch Play/Skip/Replay after a win. | Released paired/video-only paths and actual portable-file recovery evidence.      | Broader browser/device/audio acceptance in R4. A playback range still includes the whole source video. |
-| 4 — Submission service | Accounts, resumable uploads, validation and automatic publication.                                          | Service source and hosted container rehearsal exist.                              | Selected-host deployment, email and real account acceptance in R2. Public launch is not complete.      |
-| 5 — Community store    | Discover, install, update, report and remove downloads while retaining saves/rewards.                       | Client/service implementation and local exact-edition offload/reinstall accepted. | Public two-user journey plus moderation/restore on the chosen host in R2–R3.                           |
-| 6 — Versus             | Generated campaign play on equal boards, exact rewards and continuation.                                    | Recorded browser/host qualification for supported variants.                       | Include a representative case in current-release R1; broader devices in R4.                            |
-| 7 — Team               | Purposeful cooperative templates, picture/video packages and saved attempts.                                | Released creator/package/runtime scope with recorded browser evidence.            | Current-release R1; separate historical Team import repair is not completed by this baseline.          |
-| 8 — Optional editor    | Physical trimming, bounded conversion, resizing/compression and output verification.                        | Supported-format implementation and recorded built-in-browser acceptance.         | Additional codecs and browsers are unqualified; prioritize them through R4.                            |
+The remaining work is activation and compatibility qualification. Estimates are focused work after
+the named external dependency is available; they are not calendar promises.
 
-Generation currently selects among six families and twelve bounded variants with obstacles and a
-moving enemy. Replaying a successful route proves feasibility for an exact configuration. It does
-not establish that a 50-level campaign feels varied or well balanced, or that arbitrary Studio edits
-remain solvable. The empty-board report is addressed in the released generation baseline; no new
-regression reproduction is claimed by this review.
+| Priority    | Workstream                              | What is complete                                                                                                                                                                                                                        | Remaining gate and why it is needed                                                                                                                                                                                                                                                                                                                                | Impact if deferred                                                                                                                                | Focused ETA                                                                      |
+| ----------- | --------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------- |
+| P0          | Production community activation         | Fastify, Better Auth, PostgreSQL jobs, tus, filesystem storage, isolated validation, catalog, moderation, backup/restore tooling and bounded production-session runners are released. Hosted Linux Compose and MinIO rehearsals passed. | Select a host/domain and mail provider; deploy the same-origin stack; configure TLS and trusted proxy settings; create verified creator/admin accounts; run the two-user publish/install/play/report/unlist journey; rehearse filesystem backup and restore on the selected volumes. This is the gate that turns the shipped service into a real public community. | Local creation, files and installed campaigns keep working, but public accounts, upload, automatic publication and moderation remain unavailable. | 0.5–1 day after the host, DNS/TLS, mail and short-lived actor credentials exist. |
+| P1          | Operator cutover evidence               | The runner can stop after publishing a disposable edition and emit a release/origin-bound seed receipt; the browser moderation UI and bounded verifier are implemented.                                                                 | Have an administrator inspect the exact preview, unlist/resolve the report, verify public removal, then record the production backup/restore result. This proves the real operator path rather than only service APIs.                                                                                                                                             | The service may run, but production moderation and recovery cannot be claimed as accepted.                                                        | About 0.5 day after P0.                                                          |
+| P2          | AWS/S3 qualification                    | The S3 adapter, multipart limits, readiness checks, immutable publication, cleanup and portable recovery are implemented; the MinIO path passed.                                                                                        | Run the credentialed smoke/recovery gate against a private bucket with scoped IAM actors. This qualifies the optional multi-host/AWS storage path.                                                                                                                                                                                                                 | Initial single-host filesystem deployment remains supported; AWS scaling and disaster-recovery claims remain unqualified.                         | 0.5–1 day after a bucket and IAM credentials exist.                              |
+| P2          | Browser/device media matrix             | Built-in-browser image/video creation, AVC+AAC playback, poster selection, victory controls and bounded conversion passed. Unsupported formats fail closed.                                                                             | Run Firefox, Safari, physical mobile, physical speakers and the broader codec matrix. These checks determine the honest support statement for each environment.                                                                                                                                                                                                    | The verified browser/codec boundary remains narrower; affected users may receive an unsupported-media error rather than broad compatibility.      | 1–2 days when those browsers and devices are available.                          |
+| P3          | Destructive storage and memory evidence | Deterministic tests cover quota rollback, missing originals, exact-package recovery, reservations and interrupted commits.                                                                                                              | Measure genuine browser-wide quota exhaustion, deliberate IndexedDB corruption and peak memory for large batches where the browser permits controlled reproduction.                                                                                                                                                                                                | Recovery logic remains tested, but worst-case device capacity and corruption claims stay unmeasured.                                              | 0.5–1 day in a controllable test environment.                                    |
+| Maintenance | Current release train                   | The media workflow is already released. PR #869 updates edition/offline verification after optional-media projection and is scheduled with the v0.150.0 aggregate.                                                                      | Merge qualified maintenance through the existing release coordinator. Treat it as compatibility upkeep rather than a new creator phase.                                                                                                                                                                                                                            | Future edition checks can drift from current optional-media policy even though existing creator releases remain usable.                           | Release-queue dependent.                                                         |
 
-## Proposed priorities for user review
+### Recommended execution order
 
-These are recommendations, not newly approved deployment, spending or support commitments. The
-[detailed review](plan-review-2026-10-01.md) explains each item, its benefit, deferral impact and
-completion condition. Estimates are initial hands-on effort, exclude waiting/provisioning/release
-queues, and expand if a defect is found.
+1. **Choose the production target.** Record host, domain, mail delivery, administrator identity,
+   filesystem volume layout and backup destination. This is the only missing decision that blocks
+   the core community launch.
+2. **Run production activation and operator cutover together.** Reuse the released runners and
+   publish one acceptance record. Create a corrective patch release only if the real environment
+   exposes a source defect.
+3. **Decide whether AWS is actually needed.** Keep filesystem storage for the initial one-host
+   launch. Qualify S3 when multi-host operation or AWS deployment is an approved requirement.
+4. **Run the browser/device matrix in parallel with live-service observation.** Publish support only
+   for environments that actually pass.
+5. **Collect destructive storage/memory evidence last.** It improves confidence but does not block
+   ordinary creation, portable sharing or the initial community deployment.
 
-| ID  | Recommendation                                                              | Next result                                                                                                                                             | Initial effort and dependency                                                                              |
-| --- | --------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------- |
-| R1  | Do next                                                                     | Recheck today's create → review → share → install → play/reload journey and editor Back/Forward behavior; review a small sample for fun and repetition. | 0.5–1 day for a bounded review on a fixed candidate; fixes estimated separately.                           |
-| R2  | Next only if public publishing is the chosen goal                           | A small deployed community pilot with real signup, verification email, resumed upload and a second account installing the result.                       | 0.5–1 day acceptance after host/domain/mail/access exist; setup and operating costs are not yet estimated. |
-| R3  | Required before opening that pilot to public submissions                    | Administrator report/unlist workflow and restore rehearsal on an isolated recovery target.                                                              | 0.5–1 day after R2; combine with launch acceptance rather than double-counting the same journey.           |
-| R4  | After R1; move ahead of hosting if target players use phones/Safari/Firefox | A truthful support matrix for target browsers, playback, touch, audio and a fresh profile.                                                              | 1–2 days for an agreed small matrix once environments exist; codec implementation fixes separate.          |
-| R5  | Targeted early check for heavy imports; full destructive cases later        | Measured memory/storage behavior for large video packs, low-space cancellation and recovery.                                                            | 0.5–1 day investigation on a disposable profile; difficult corruption cases may need more instrumentation. |
-| R6  | Defer unless the deployment actually uses S3                                | Real AWS bucket/IAM, interrupted-upload and recovery acceptance for the existing adapter.                                                               | 0.5–1 day after scoped AWS access; not required for a filesystem-backed single-host pilot.                 |
-| R7  | Keep in the existing release lane                                           | Qualify and publish the selected integrated batch, maintaining clear main/Pages/tag evidence.                                                           | Coordinator/CI dependent; no defensible calendar ETA at this review.                                       |
+### Inputs required before P0 can start
 
-Recommended sequence: **R1 → user chooses local-sharing or community focus → R2 + R3 if community
-wins**, with R4 scheduled around the intended audience. Run a representative R5 large-video check
-alongside R1 if large imports are common. Keep R6 deferred unless the selected host requires it.
-A local-sharing-first choice leaves accounts and infrastructure deferred without taking away portable
-campaign sharing.
+- A reachable deployment host and domain with permission to configure DNS and TLS.
+- A mail provider or captured-delivery environment for verification and password reset.
+- Short-lived creator and administrator test identities.
+- The production filesystem volume and backup destination, plus authority to perform one restore
+  rehearsal.
 
-## Dependencies and boundaries
+Until those inputs exist, more local feature work would add scope without advancing the launch gate.
+The recommended action is to keep released creator behavior stable and direct engineering effort to
+the production activation above.
 
-- R2 needs a chosen host/domain, mail delivery and access to configure the service. R3 needs a
-  designated operator and an isolated database/blob restore target. Test credentials should be
-  supplied through the deployment's secret mechanism, never committed or pasted into plan records.
-- Capturing an email in a test harness proves the software flow, not delivery to a real mailbox.
-  Both are relevant before claiming production signup and account recovery work.
-- R4 follows the user's earlier instruction to use the built-in browser for current work. Safari,
-  Firefox, physical phone and speaker acceptance remains pending, not silently waived as supported.
-- R1 includes [#826](https://github.com/mekhovov/revealline/issues/826) reconciliation: current source
-  now has Discovery/lesson suspension and persisted-page handling. The old issue's "missing suspend"
-  description is stale; inspect and exercise the remaining actual Back/Forward journey before
-  implementing more code or closing the issue.
-- [#868](https://github.com/mekhovov/revealline/pull/868) is a separate held repair for two historical
-  Team imports and projectile feedback. Its reported size/fingerprint failures belong to its dated
-  candidate; remeasure the integrated candidate rather than treating those numbers as today's main.
-- [#865](https://github.com/mekhovov/revealline/issues/865) concerns native app staging capacity. It
-  does not by itself block browser campaign creation. If native distribution becomes a priority,
-  select a reviewed package scope and verify it without silently dropping assets or raising limits.
-- Whole-game deferred verification/preserved overlaps in
-  [#813](https://github.com/mekhovov/revealline/issues/813) and
-  [#824](https://github.com/mekhovov/revealline/issues/824) are not closed by this creator plan.
-- Optional media outside the starter offline cache can still consume full distribution space.
-  Keep the 64 MiB core-cache budget, managed-media budget, total Pages payload and native staging
-  budgets distinct. A pass for one does not prove the others fit.
+The published `v0.141.2` community hardening release includes a production-safe Compose overlay,
+executable deployment preflight, administrator moderation console, exact interrupted-tus fault
+proxy, source-to-target database/blob recovery rehearsal, and a bounded deployed two-user journey.
+The cumulative community suite passes 105/105 checks on PR #709. The deployment runner proves exact
+publication/download, owner
+isolation, install, legal completion persistence, installed picture-asset binding, report/unlist,
+and offline replay without exposing credentials. These commands are ready; their live execution is
+tracked in [deployment-acceptance.md](deployment-acceptance.md).
 
-## Evidence and execution references
+## Remaining environment-dependent acceptance and concerns
 
-- [Creator guide](creator-guide.md): supported file workflow and generator limits.
-- [Combined acceptance](combined-release-acceptance.md): exact release identities and historical
-  creator, video, Team, Versus and recovery results. Its evidence is not a fresh current-main run.
-- [Deployment acceptance](deployment-acceptance.md): executable account, interrupted upload,
-  two-user, browser moderation and isolated restore procedures.
-- [Maintainer guide](maintainer-guide.md): service and framework delivery boundaries.
-- [Feature delivery policy](../../docs/feature-delivery-workflow.md): coordinator, qualification,
-  immutable release and public verification. Subsequent user campaigns require no game release.
+- The released local creator, package, installed gameplay, Team, Versus and bounded media paths have
+  no remaining PR, release or Pages gate.
+- The community API still needs a selected deployment environment. PR #709's hosted Linux run now
+  proves the production-shaped PostgreSQL, migrations, preflight, filesystem package/tus volumes,
+  hardened worker, interrupted upload, restart persistence and complete disposable-actor journey.
+  The supported initial Phase 4/5 target remains one host. Real proxy/TLS addressing, mail delivery,
+  Better Auth creator/administrator sessions, filesystem restore/cutover and browser UI acceptance
+  require 0.5–1 day once that infrastructure and three short-lived actor credential sets are
+  available.
+- S3 is a separate post-deployment workstream for multi-host or AWS operation; it does not block the
+  initial single-host launch. The runtime/configuration slice is implemented: package bytes are
+  staged and verified before immutable publication, the maintained tus S3 datastore has bounded
+  multipart work and deterministic completed-upload cleanup, readiness proves object plus
+  multipart operations, and disaster recovery streams and re-verifies exact completed packages.
+  Normal restarts preserve resumable uploads; portable disaster restore explicitly expires
+  provider-bound multipart sessions and records their count. The path-filtered hosted MinIO job
+  passed. The real AWS smoke run remains 0.5–1 day after a private bucket and scoped IAM credentials
+  are available. The upstream official MinIO repository is archived, so the deterministic harness
+  builds its pinned official source commit; that pin needs deliberate maintenance if the S3 test
+  environment changes.
+- Firefox, Safari, physical mobile playback, physical-speaker confirmation and broader-codec
+  qualification require 1–2 days once those environments and devices are available. Current broad
+  media inputs continue to fail closed outside the released, verified format boundary.
+- Deterministic tests cover quota rollback, missing originals, exact-package recovery and removal of
+  phantom reservations. Genuine browser-wide quota exhaustion, deliberate IndexedDB corruption and
+  measured peak-memory acceptance remain unclaimed because supported browser controls cannot force
+  those conditions reliably.
+- `v0.142.3` is the highest published immutable GitHub release at this review. It contains the
+  creator and community implementation by Git ancestry. The latest completed creator-specific
+  exact public acceptance record remains the v0.141.6
+  [`docs/community-v01416-public-acceptance.md`](../../docs/community-v01416-public-acceptance.md)
+  record; later release acceptance must not be inferred from ancestry alone. The active v0.150.0
+  aggregate is a separate maintenance/release train, not a new media-campaign phase.
+- PR #700 moved the active workflow action runtime to Node 24. Historical runs retain their earlier
+  Node 20 notices; no active release gate is blocked by them.
+- The v0.141.5 source receipt records `qualified-with-test-waiver`: all five non-test release gates
+  passed and the scoped community suite passed 103/103 locally, while the repository-wide suites
+  remain explicitly waived by the committed fast-release policy rather than being claimed as run.
 
 ## Contracts to preserve
 

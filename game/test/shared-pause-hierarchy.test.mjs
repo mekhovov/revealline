@@ -27,6 +27,8 @@ test('Versus Pause exposes the shared player actions and retries with one delibe
       ['race-home', true, 'Home'],
     ],
   );
+  assert.equal(visible(page.$('race-journey-random')), true);
+  assert.equal(page.$('race-journey-random').textContent.trim(), 'Random level');
   assert.equal(page.$('race-optional-setup').hidden, true);
 
   const paused = page.checkpoint(),
@@ -82,6 +84,7 @@ test('Team Pause puts Help, Settings, Sound and Home in the direct shared hierar
   for (const id of [
     'coop-resume',
     'coop-retry',
+    'coop-random-level',
     'coop-discovery-paused',
     'coop-settings-open',
     'coop-quick-sound',
