@@ -74,3 +74,21 @@ Runtime availability checks the normalized source fingerprint, model/backend
 pins and response identity. Starting playback performs full v2 replay validation,
 including rules, conditions and final-state identity. A changed course revision
 does not silently reuse a stale recording.
+
+## Container Yard operations examples
+
+```sh
+node authoring/fpv-worlds/demonstrations/generate-container-yard.mjs \
+  container-yard-01,container-yard-02,container-yard-03,container-yard-04,container-yard-05,container-yard-06,container-yard-07,container-yard-08 \
+  /tmp/fpv-container-yard-recordings
+```
+
+This separate generator also supports the Yard's fictional pulse encounters. It
+flies toward explicit approach points, settles, leads moving targets and records
+real quantized fire commands. Opponents remain active; their incoming projectiles
+can reduce shields. The recordings finish at 85–100 health with zero contacts,
+and every fired player pulse hits. No authored course, actor, scoring or physics
+settings are changed. `container-yard-provenance.json` retains per-shot ranges,
+incoming fire, damage and landing observations as well as exact artifact hashes.
+The six noncombat recordings preserve their earlier prepared bytes; ten combat
+recordings use the closer, visually reviewed approaches.
