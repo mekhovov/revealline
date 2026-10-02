@@ -61,3 +61,10 @@ source, committed evidence, handoffs and normal player builds; the unchanged
 candidate then passed. Ignored authoring dependencies were temporarily parked
 and restored around qualification without changing source eligibility rules.
 The current #963 PR remains subject to exact-head CI, review and deployment.
+
+Repository automation subsequently merged Pages profile #965 into this branch.
+Its four-file change affects the rolling-site profile and inspection workflow;
+the frozen edition and picture inputs above remain unchanged. Preserve the
+recorded candidate identity: the 989,957,084-byte observation is the older full
+default preparation, not the new rolling-profile size. Current exact-head CI
+must qualify the newly merged `main-pages` profile against its operating limit.
