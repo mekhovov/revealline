@@ -97,3 +97,21 @@ Two package attempts hit local disk exhaustion before output creation. Removing
 superseded task-generated verification snapshots and a redundant old SIM-entry
 build restored space; source, handoffs, qualified archives and user playtests
 were preserved. The subsequent frozen package and browser qualification passed.
+
+### Publication and main reconciliation
+
+Published as [PR #966](https://github.com/mekhovov/revealline/pull/966), independently
+against main, and attached to the FPV chat. After Hunt #962 merged, candidate
+`065026f0d3b30e23d168feb2b0d3b50811331b1d` incorporates main `adfa2d799` and
+passes all three optional admissions again, including committed input/ZIP checks
+and two reproducible builds. See [latest package receipt](evidence/fpv-warehouse-surfaces-package-main962.json).
+[Exact ZIP-member comparison](evidence/fpv-warehouse-surfaces-main962-binding.json)
+finds only source-bound manifests and generated worker identities changed.
+All renderer, input, translation and asset members remain byte-identical to the
+browser-qualified package. This preserves rendering/player evidence; it does
+not qualify the new installed/offline identity or public deployment.
+
+At the first publication snapshot, optional admission/preflight passed, broader
+candidate/capacity/focused checks were running and release-ready had failed in a
+superseded cancelled run. The reconciled head requires fresh checks/reviews.
+No approval label or required check is bypassed. Public availability is pending.
