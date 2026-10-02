@@ -1,0 +1,2877 @@
+{
+  "complete": true,
+  "passed": 10,
+  "total": 10,
+  "qualification": "Actual WebGL with controlled renderer snapshots; not physical frame-time or authoritative physics acceptance.",
+  "checks": [
+    {
+      "name": "All actors rebuild for low",
+      "pass": true,
+      "calls": 406
+    },
+    {
+      "name": "All actors rebuild for balanced",
+      "pass": true,
+      "calls": 761
+    },
+    {
+      "name": "All actors rebuild for high",
+      "pass": true,
+      "calls": 952
+    },
+    {
+      "name": "All actors rebuild for low",
+      "pass": true,
+      "calls": 406
+    },
+    {
+      "name": "All actors rebuild for high",
+      "pass": true,
+      "calls": 952
+    },
+    {
+      "name": "Repeated same-tick presentation stays stable",
+      "pass": true
+    },
+    {
+      "name": "Five complete 64-projectile turnover cycles retain fixed resources",
+      "pass": true
+    },
+    {
+      "name": "Backward tick seek restores the same authored direction",
+      "pass": true
+    },
+    {
+      "name": "Course replacement clears pools and preserves authored input",
+      "pass": true
+    },
+    {
+      "name": "Disposal releases all registered resources",
+      "pass": true
+    }
+  ],
+  "samples": [
+    {
+      "available": true,
+      "disposed": false,
+      "quality": "low",
+      "drone": "racer",
+      "presentation": {
+        "actors": [
+          {
+            "id": "presentation-0",
+            "quality": "low",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-1",
+            "quality": "low",
+            "themeAsset": "builtin:patrol-rover",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-2",
+            "quality": "low",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-3",
+            "quality": "low",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-4",
+            "quality": "low",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-5",
+            "quality": "low",
+            "themeAsset": "builtin:patrol-rover",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-6",
+            "quality": "low",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-7",
+            "quality": "low",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-8",
+            "quality": "low",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-9",
+            "quality": "low",
+            "themeAsset": "builtin:patrol-rover",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-10",
+            "quality": "low",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-11",
+            "quality": "low",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-12",
+            "quality": "low",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-13",
+            "quality": "low",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-14",
+            "quality": "low",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-15",
+            "quality": "low",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-16",
+            "quality": "low",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-17",
+            "quality": "low",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-18",
+            "quality": "low",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-19",
+            "quality": "low",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          }
+        ],
+        "projectileBatches": 0,
+        "activeProjectiles": 0,
+        "surfaceDetailGroups": 12
+      },
+      "registered": {
+        "geometries": 394,
+        "materials": 294,
+        "textures": 36
+      },
+      "renderer": {
+        "geometries": 380,
+        "textures": 36,
+        "programs": 20,
+        "contextLost": false,
+        "calls": 406,
+        "triangles": 15216
+      }
+    },
+    {
+      "available": true,
+      "disposed": false,
+      "quality": "balanced",
+      "drone": "racer",
+      "presentation": {
+        "actors": [
+          {
+            "id": "presentation-0",
+            "quality": "balanced",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-1",
+            "quality": "balanced",
+            "themeAsset": "builtin:patrol-rover",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-2",
+            "quality": "balanced",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-3",
+            "quality": "balanced",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-4",
+            "quality": "balanced",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-5",
+            "quality": "balanced",
+            "themeAsset": "builtin:patrol-rover",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-6",
+            "quality": "balanced",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-7",
+            "quality": "balanced",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-8",
+            "quality": "balanced",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-9",
+            "quality": "balanced",
+            "themeAsset": "builtin:patrol-rover",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-10",
+            "quality": "balanced",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-11",
+            "quality": "balanced",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-12",
+            "quality": "balanced",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-13",
+            "quality": "balanced",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-14",
+            "quality": "balanced",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-15",
+            "quality": "balanced",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-16",
+            "quality": "balanced",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-17",
+            "quality": "balanced",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-18",
+            "quality": "balanced",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-19",
+            "quality": "balanced",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          }
+        ],
+        "projectileBatches": 0,
+        "activeProjectiles": 0,
+        "surfaceDetailGroups": 12
+      },
+      "registered": {
+        "geometries": 427,
+        "materials": 337,
+        "textures": 39
+      },
+      "renderer": {
+        "geometries": 419,
+        "textures": 41,
+        "programs": 22,
+        "contextLost": false,
+        "calls": 761,
+        "triangles": 30724
+      }
+    },
+    {
+      "available": true,
+      "disposed": false,
+      "quality": "high",
+      "drone": "racer",
+      "presentation": {
+        "actors": [
+          {
+            "id": "presentation-0",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-1",
+            "quality": "high",
+            "themeAsset": "builtin:patrol-rover",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-2",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-3",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-4",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-5",
+            "quality": "high",
+            "themeAsset": "builtin:patrol-rover",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-6",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-7",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-8",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-9",
+            "quality": "high",
+            "themeAsset": "builtin:patrol-rover",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-10",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-11",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-12",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-13",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-14",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-15",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-16",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-17",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-18",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-19",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          }
+        ],
+        "projectileBatches": 0,
+        "activeProjectiles": 0,
+        "surfaceDetailGroups": 12
+      },
+      "registered": {
+        "geometries": 519,
+        "materials": 346,
+        "textures": 48
+      },
+      "renderer": {
+        "geometries": 518,
+        "textures": 50,
+        "programs": 22,
+        "contextLost": false,
+        "calls": 952,
+        "triangles": 39260
+      }
+    },
+    {
+      "available": true,
+      "disposed": false,
+      "quality": "low",
+      "drone": "racer",
+      "presentation": {
+        "actors": [
+          {
+            "id": "presentation-0",
+            "quality": "low",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-1",
+            "quality": "low",
+            "themeAsset": "builtin:patrol-rover",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-2",
+            "quality": "low",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-3",
+            "quality": "low",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-4",
+            "quality": "low",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-5",
+            "quality": "low",
+            "themeAsset": "builtin:patrol-rover",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-6",
+            "quality": "low",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-7",
+            "quality": "low",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-8",
+            "quality": "low",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-9",
+            "quality": "low",
+            "themeAsset": "builtin:patrol-rover",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-10",
+            "quality": "low",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-11",
+            "quality": "low",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-12",
+            "quality": "low",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-13",
+            "quality": "low",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-14",
+            "quality": "low",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-15",
+            "quality": "low",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-16",
+            "quality": "low",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-17",
+            "quality": "low",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-18",
+            "quality": "low",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-19",
+            "quality": "low",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          }
+        ],
+        "projectileBatches": 0,
+        "activeProjectiles": 0,
+        "surfaceDetailGroups": 12
+      },
+      "registered": {
+        "geometries": 394,
+        "materials": 294,
+        "textures": 36
+      },
+      "renderer": {
+        "geometries": 393,
+        "textures": 36,
+        "programs": 22,
+        "contextLost": false,
+        "calls": 406,
+        "triangles": 15216
+      }
+    },
+    {
+      "available": true,
+      "disposed": false,
+      "quality": "high",
+      "drone": "racer",
+      "presentation": {
+        "actors": [
+          {
+            "id": "presentation-0",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-1",
+            "quality": "high",
+            "themeAsset": "builtin:patrol-rover",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-2",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-3",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-4",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-5",
+            "quality": "high",
+            "themeAsset": "builtin:patrol-rover",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-6",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-7",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-8",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-9",
+            "quality": "high",
+            "themeAsset": "builtin:patrol-rover",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-10",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-11",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-12",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-13",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-14",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-15",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-16",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-17",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-18",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-19",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          }
+        ],
+        "projectileBatches": 0,
+        "activeProjectiles": 0,
+        "surfaceDetailGroups": 12
+      },
+      "registered": {
+        "geometries": 519,
+        "materials": 346,
+        "textures": 48
+      },
+      "renderer": {
+        "geometries": 518,
+        "textures": 50,
+        "programs": 22,
+        "contextLost": false,
+        "calls": 952,
+        "triangles": 39260
+      }
+    },
+    {
+      "available": true,
+      "disposed": false,
+      "quality": "high",
+      "drone": "racer",
+      "presentation": {
+        "actors": [
+          {
+            "id": "presentation-0",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-1",
+            "quality": "high",
+            "themeAsset": "builtin:patrol-rover",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-2",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-3",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-4",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-5",
+            "quality": "high",
+            "themeAsset": "builtin:patrol-rover",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-6",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-7",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-8",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-9",
+            "quality": "high",
+            "themeAsset": "builtin:patrol-rover",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-10",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-11",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-12",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-13",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-14",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-15",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-16",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-17",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-18",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-19",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          }
+        ],
+        "projectileBatches": 0,
+        "activeProjectiles": 0,
+        "surfaceDetailGroups": 12
+      },
+      "registered": {
+        "geometries": 519,
+        "materials": 346,
+        "textures": 48
+      },
+      "renderer": {
+        "geometries": 518,
+        "textures": 50,
+        "programs": 22,
+        "contextLost": false,
+        "calls": 952,
+        "triangles": 39260
+      }
+    },
+    {
+      "available": true,
+      "disposed": false,
+      "quality": "high",
+      "drone": "racer",
+      "presentation": {
+        "actors": [
+          {
+            "id": "presentation-0",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-1",
+            "quality": "high",
+            "themeAsset": "builtin:patrol-rover",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-2",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-3",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-4",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-5",
+            "quality": "high",
+            "themeAsset": "builtin:patrol-rover",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-6",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-7",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-8",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-9",
+            "quality": "high",
+            "themeAsset": "builtin:patrol-rover",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-10",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-11",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-12",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-13",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-14",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-15",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-16",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-17",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-18",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-19",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          }
+        ],
+        "projectileBatches": 2,
+        "activeProjectiles": 64,
+        "surfaceDetailGroups": 12
+      },
+      "registered": {
+        "geometries": 521,
+        "materials": 350,
+        "textures": 48
+      },
+      "renderer": {
+        "geometries": 520,
+        "textures": 50,
+        "programs": 22,
+        "contextLost": false,
+        "calls": 954,
+        "triangles": 41564
+      }
+    },
+    {
+      "available": true,
+      "disposed": false,
+      "quality": "high",
+      "drone": "racer",
+      "presentation": {
+        "actors": [
+          {
+            "id": "presentation-0",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-1",
+            "quality": "high",
+            "themeAsset": "builtin:patrol-rover",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-2",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-3",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-4",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-5",
+            "quality": "high",
+            "themeAsset": "builtin:patrol-rover",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-6",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-7",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-8",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-9",
+            "quality": "high",
+            "themeAsset": "builtin:patrol-rover",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-10",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-11",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-12",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-13",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-14",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-15",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-16",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-17",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-18",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-19",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          }
+        ],
+        "projectileBatches": 2,
+        "activeProjectiles": 0,
+        "surfaceDetailGroups": 12
+      },
+      "registered": {
+        "geometries": 521,
+        "materials": 350,
+        "textures": 48
+      },
+      "renderer": {
+        "geometries": 520,
+        "textures": 50,
+        "programs": 22,
+        "contextLost": false,
+        "calls": 952,
+        "triangles": 39260
+      }
+    },
+    {
+      "available": true,
+      "disposed": false,
+      "quality": "high",
+      "drone": "racer",
+      "presentation": {
+        "actors": [
+          {
+            "id": "presentation-0",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-1",
+            "quality": "high",
+            "themeAsset": "builtin:patrol-rover",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-2",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-3",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-4",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-5",
+            "quality": "high",
+            "themeAsset": "builtin:patrol-rover",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-6",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-7",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-8",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-9",
+            "quality": "high",
+            "themeAsset": "builtin:patrol-rover",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-10",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-11",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-12",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-13",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-14",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-15",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-16",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-17",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-18",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-19",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          }
+        ],
+        "projectileBatches": 2,
+        "activeProjectiles": 64,
+        "surfaceDetailGroups": 12
+      },
+      "registered": {
+        "geometries": 521,
+        "materials": 350,
+        "textures": 48
+      },
+      "renderer": {
+        "geometries": 520,
+        "textures": 50,
+        "programs": 22,
+        "contextLost": false,
+        "calls": 954,
+        "triangles": 41564
+      }
+    },
+    {
+      "available": true,
+      "disposed": false,
+      "quality": "high",
+      "drone": "racer",
+      "presentation": {
+        "actors": [
+          {
+            "id": "presentation-0",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-1",
+            "quality": "high",
+            "themeAsset": "builtin:patrol-rover",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-2",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-3",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-4",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-5",
+            "quality": "high",
+            "themeAsset": "builtin:patrol-rover",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-6",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-7",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-8",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-9",
+            "quality": "high",
+            "themeAsset": "builtin:patrol-rover",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-10",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-11",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-12",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-13",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-14",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-15",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-16",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-17",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-18",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-19",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          }
+        ],
+        "projectileBatches": 2,
+        "activeProjectiles": 0,
+        "surfaceDetailGroups": 12
+      },
+      "registered": {
+        "geometries": 521,
+        "materials": 350,
+        "textures": 48
+      },
+      "renderer": {
+        "geometries": 520,
+        "textures": 50,
+        "programs": 22,
+        "contextLost": false,
+        "calls": 952,
+        "triangles": 39260
+      }
+    },
+    {
+      "available": true,
+      "disposed": false,
+      "quality": "high",
+      "drone": "racer",
+      "presentation": {
+        "actors": [
+          {
+            "id": "presentation-0",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-1",
+            "quality": "high",
+            "themeAsset": "builtin:patrol-rover",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-2",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-3",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-4",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-5",
+            "quality": "high",
+            "themeAsset": "builtin:patrol-rover",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-6",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-7",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-8",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-9",
+            "quality": "high",
+            "themeAsset": "builtin:patrol-rover",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-10",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-11",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-12",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-13",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-14",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-15",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-16",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-17",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-18",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-19",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          }
+        ],
+        "projectileBatches": 2,
+        "activeProjectiles": 64,
+        "surfaceDetailGroups": 12
+      },
+      "registered": {
+        "geometries": 521,
+        "materials": 350,
+        "textures": 48
+      },
+      "renderer": {
+        "geometries": 520,
+        "textures": 50,
+        "programs": 22,
+        "contextLost": false,
+        "calls": 954,
+        "triangles": 41564
+      }
+    },
+    {
+      "available": true,
+      "disposed": false,
+      "quality": "high",
+      "drone": "racer",
+      "presentation": {
+        "actors": [
+          {
+            "id": "presentation-0",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-1",
+            "quality": "high",
+            "themeAsset": "builtin:patrol-rover",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-2",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-3",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-4",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-5",
+            "quality": "high",
+            "themeAsset": "builtin:patrol-rover",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-6",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-7",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-8",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-9",
+            "quality": "high",
+            "themeAsset": "builtin:patrol-rover",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-10",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-11",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-12",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-13",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-14",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-15",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-16",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-17",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-18",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-19",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          }
+        ],
+        "projectileBatches": 2,
+        "activeProjectiles": 0,
+        "surfaceDetailGroups": 12
+      },
+      "registered": {
+        "geometries": 521,
+        "materials": 350,
+        "textures": 48
+      },
+      "renderer": {
+        "geometries": 520,
+        "textures": 50,
+        "programs": 22,
+        "contextLost": false,
+        "calls": 952,
+        "triangles": 39260
+      }
+    },
+    {
+      "available": true,
+      "disposed": false,
+      "quality": "high",
+      "drone": "racer",
+      "presentation": {
+        "actors": [
+          {
+            "id": "presentation-0",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-1",
+            "quality": "high",
+            "themeAsset": "builtin:patrol-rover",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-2",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-3",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-4",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-5",
+            "quality": "high",
+            "themeAsset": "builtin:patrol-rover",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-6",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-7",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-8",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-9",
+            "quality": "high",
+            "themeAsset": "builtin:patrol-rover",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-10",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-11",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-12",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-13",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-14",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-15",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-16",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-17",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-18",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-19",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          }
+        ],
+        "projectileBatches": 2,
+        "activeProjectiles": 64,
+        "surfaceDetailGroups": 12
+      },
+      "registered": {
+        "geometries": 521,
+        "materials": 350,
+        "textures": 48
+      },
+      "renderer": {
+        "geometries": 520,
+        "textures": 50,
+        "programs": 22,
+        "contextLost": false,
+        "calls": 954,
+        "triangles": 41564
+      }
+    },
+    {
+      "available": true,
+      "disposed": false,
+      "quality": "high",
+      "drone": "racer",
+      "presentation": {
+        "actors": [
+          {
+            "id": "presentation-0",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-1",
+            "quality": "high",
+            "themeAsset": "builtin:patrol-rover",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-2",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-3",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-4",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-5",
+            "quality": "high",
+            "themeAsset": "builtin:patrol-rover",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-6",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-7",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-8",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-9",
+            "quality": "high",
+            "themeAsset": "builtin:patrol-rover",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-10",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-11",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-12",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-13",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-14",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-15",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-16",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-17",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-18",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-19",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          }
+        ],
+        "projectileBatches": 2,
+        "activeProjectiles": 0,
+        "surfaceDetailGroups": 12
+      },
+      "registered": {
+        "geometries": 521,
+        "materials": 350,
+        "textures": 48
+      },
+      "renderer": {
+        "geometries": 520,
+        "textures": 50,
+        "programs": 22,
+        "contextLost": false,
+        "calls": 952,
+        "triangles": 39260
+      }
+    },
+    {
+      "available": true,
+      "disposed": false,
+      "quality": "high",
+      "drone": "racer",
+      "presentation": {
+        "actors": [
+          {
+            "id": "presentation-0",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-1",
+            "quality": "high",
+            "themeAsset": "builtin:patrol-rover",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-2",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-3",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-4",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-5",
+            "quality": "high",
+            "themeAsset": "builtin:patrol-rover",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-6",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-7",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-8",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-9",
+            "quality": "high",
+            "themeAsset": "builtin:patrol-rover",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-10",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-11",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-12",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-13",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-14",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-15",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-16",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-17",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-18",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-19",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          }
+        ],
+        "projectileBatches": 2,
+        "activeProjectiles": 64,
+        "surfaceDetailGroups": 12
+      },
+      "registered": {
+        "geometries": 521,
+        "materials": 350,
+        "textures": 48
+      },
+      "renderer": {
+        "geometries": 520,
+        "textures": 50,
+        "programs": 22,
+        "contextLost": false,
+        "calls": 954,
+        "triangles": 41564
+      }
+    },
+    {
+      "available": true,
+      "disposed": false,
+      "quality": "high",
+      "drone": "racer",
+      "presentation": {
+        "actors": [
+          {
+            "id": "presentation-0",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-1",
+            "quality": "high",
+            "themeAsset": "builtin:patrol-rover",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-2",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-3",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-4",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-5",
+            "quality": "high",
+            "themeAsset": "builtin:patrol-rover",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-6",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-7",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-8",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-9",
+            "quality": "high",
+            "themeAsset": "builtin:patrol-rover",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-10",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-11",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-12",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-13",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-14",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-15",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-16",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-17",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-18",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-19",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          }
+        ],
+        "projectileBatches": 2,
+        "activeProjectiles": 0,
+        "surfaceDetailGroups": 12
+      },
+      "registered": {
+        "geometries": 521,
+        "materials": 350,
+        "textures": 48
+      },
+      "renderer": {
+        "geometries": 520,
+        "textures": 50,
+        "programs": 22,
+        "contextLost": false,
+        "calls": 952,
+        "triangles": 39260
+      }
+    },
+    {
+      "available": true,
+      "disposed": false,
+      "quality": "high",
+      "drone": "racer",
+      "presentation": {
+        "actors": [
+          {
+            "id": "presentation-0",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-1",
+            "quality": "high",
+            "themeAsset": "builtin:patrol-rover",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-2",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-3",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-4",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-5",
+            "quality": "high",
+            "themeAsset": "builtin:patrol-rover",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-6",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-7",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-8",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-9",
+            "quality": "high",
+            "themeAsset": "builtin:patrol-rover",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-10",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-11",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-12",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-13",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-14",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-15",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-16",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-17",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-18",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          },
+          {
+            "id": "presentation-19",
+            "quality": "high",
+            "themeAsset": "builtin:sentry",
+            "heading": 0,
+            "moving": true
+          }
+        ],
+        "projectileBatches": 2,
+        "activeProjectiles": 0,
+        "surfaceDetailGroups": 12
+      },
+      "registered": {
+        "geometries": 521,
+        "materials": 350,
+        "textures": 48
+      },
+      "renderer": {
+        "geometries": 520,
+        "textures": 50,
+        "programs": 22,
+        "contextLost": false,
+        "calls": 952,
+        "triangles": 39260
+      }
+    }
+  ]
+}

@@ -59,8 +59,8 @@
   outline-offset: 3px;
 }
 .field-kit dialog.team-discovery {
-  width: min(860px, calc(100% - 24px));
-  max-height: calc(100svh - 24px);
+  width: min(860px, calc(var(--dialog-viewport-width) - 24px));
+  max-height: calc(var(--dialog-small-height) - 24px);
   overflow: auto;
   color: var(--fk-text);
   background: var(--fk-panel);
@@ -208,7 +208,7 @@
   display: grid;
   grid-template-rows: auto minmax(0, 1fr);
   gap: 8px;
-  height: min(720px, calc(100svh - 24px));
+  height: min(720px, calc(var(--dialog-small-height) - 24px));
   box-sizing: border-box;
   padding: 12px;
   overflow: auto;

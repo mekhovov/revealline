@@ -1,6 +1,6 @@
 # Spatial sound implementation record
 
-> Current completion and remaining priorities: [audio plan reviewed 30 September 2026](../../spatial-audio-plan.md). The entries below are chronological evidence; older blockers and packaging policies may be superseded.
+> Historical completion and remaining priorities as reviewed 1 October 2026: [audio plan snapshot](../../spatial-audio-plan.md). The entries below are chronological evidence; older blockers and packaging policies may be superseded.
 
 ## Phases
 
