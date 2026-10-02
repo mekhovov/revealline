@@ -56,10 +56,24 @@ jobs:
           node-version: '22.13.1'
           cache: npm
       - run: npm ci
-      - name: Inspect complete default-build dependencies and capacity
+      - name: Inspect complete default-build dependencies and rolling Pages capacity
         run: |
           mkdir -p .cache/default-capacity
           node scripts/inspect-default-build.mjs --out .cache/default-capacity/default-inspection.json
+          node --input-type=module <<'NODE'
+          import fs from 'node:fs';
+          const report = JSON.parse(fs.readFileSync('.cache/default-capacity/default-inspection.json'));
+          if (report.publicationProfile !== 'main-pages')
+            throw new Error('Capacity inspection did not use the rolling main Pages profile.');
+          const operatingLimit = 950_000_000;
+          if (report.payloadBytesIncludingManifest > operatingLimit)
+            throw new Error(
+              `Rolling main Pages profile exceeds ${operatingLimit} bytes before separately staged metadata/packages: ${report.payloadBytesIncludingManifest}`,
+            );
+          console.log(
+            `Rolling main Pages profile: ${report.payloadBytesIncludingManifest} / ${operatingLimit} bytes.`,
+          );
+          NODE
       - uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
         with:
           name: default-capacity-${{ github.event.pull_request.head.sha || github.sha }}
@@ -68,8 +82,8 @@ jobs:
           retention-days: 14
       - name: Report inspection boundary
         run: |
-          echo 'The complete checkout passed exact-source default dependency preparation and capacity inspection.' >> "$GITHUB_STEP_SUMMARY"
-          echo 'This small inventory is not a frozen default ZIP, installation receipt, full hosted-size verdict or permission to promote.' >> "$GITHUB_STEP_SUMMARY"
+          echo 'The complete checkout passed exact-source dependency preparation and the rolling main Pages profile stayed below the 950 MB operating threshold.' >> "$GITHUB_STEP_SUMMARY"
+          echo 'The 25 MB margin protects the 975 MB hard limit for separately staged metadata/packages. This small inventory is not a frozen default ZIP, installation receipt or permission to promote.' >> "$GITHUB_STEP_SUMMARY"
   optional-practice:
     runs-on: ubuntu-latest
     timeout-minutes: 8
