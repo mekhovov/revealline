@@ -1921,7 +1921,11 @@ export function mountWorldApp({
           'Для відновлення встановіть точний пакунок світу.',
         ),
       );
-    await startFlight(entry, { preview: recovery.preview, recover: recovery.proof });
+    await startFlight(entry, {
+      preview: recovery.preview,
+      recover: recovery.proof,
+      sectorReferenceId: recovery.sectorReferenceId,
+    });
   }
   function renderPacks() {
     $('recovery-banner')?.remove();
