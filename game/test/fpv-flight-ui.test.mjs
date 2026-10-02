@@ -602,7 +602,10 @@ test('touch release holds throttle, centers yaw, and cancellation clears all inp
   input.bindStick(node, 'left');
   input.select('touch');
   input.enable(true);
-  node.emit('pointerdown', { pointerId: 1, clientX: 75, clientY: 25 });
+  input.touchResponse('direct');
+  node.emit('pointerdown', { pointerId: 1, clientX: 50, clientY: 75 });
+  assert.deepEqual(input.sample(0.02), { yaw: 0, throttle: 0, pitch: 0, roll: 0 });
+  node.emit('pointermove', { pointerId: 1, clientX: 67, clientY: 24 });
   assert.deepEqual(input.sample(0.02), { yaw: 0.5, throttle: 0.75, pitch: 0, roll: 0 });
   node.emit('pointerup', { pointerId: 1 });
   assert.equal(input.sample(0.02).throttle, 0.75);

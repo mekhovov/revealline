@@ -54,12 +54,13 @@ export function mountArcadeSpecimen({
   assets,
   interfacePresentation,
   familyId = 'industrial-workshop',
+  familyRevision,
 }) {
   let closed = false,
     host;
   const adapter = createArcadeAdapter(),
     painters = [],
-    family = getThemeFamily(familyId),
+    family = getThemeFamily(familyId, familyRevision),
     collection = family?.arcade
       ? getArcadeCollection(family.arcade.id, family.arcade.revision)
       : null;

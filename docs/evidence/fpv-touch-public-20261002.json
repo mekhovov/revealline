@@ -1,0 +1,20 @@
+{
+  "format": "FPVPublicLaunchEvidence.v1",
+  "observationDateUtc": "2026-10-02",
+  "sourceRevision": "1d0b359f75dfb48aa5729cdc619c2f93fe9ac65a",
+  "markerUrl": "https://mekhovov.github.io/revealline/main-deployment.json",
+  "playerUrl": "https://mekhovov.github.io/revealline/optional-practice/fpv-worlds/index.html",
+  "observations": [
+    "Public deployment marker identifies touch PR959 merge revision.",
+    "Actual public player catalogue displays148 challenges and14 worlds.",
+    "Lighthouse approach launches in real browser with Arm/resume enabled.",
+    "Flight options expose Self-level and Acro mode choices.",
+    "Touch selection exposes Precise and Direct response choices.",
+    "No captured application warnings or errors during this launch."
+  ],
+  "screenshot": "/tmp/fpv-touch-public-20261002.png",
+  "limitations": [
+    "Browser launch only; no new physical touch/controller/radio or FPS acceptance.",
+    "Does not certify later PR960 meadow or courtyard changes as publicly deployed."
+  ]
+}

@@ -1,5 +1,12 @@
 # Appearance PR publication and next work
 
+The [acceptance continuation](../appearance-acceptance-2026-10-02/README.md)
+supersedes this historical status for the next PR update. It records exact Studio
+basis preservation, two-community compiled-package reuse, additional interface
+repairs, and source-pinned SIM measurements plus the resulting material leak fix.
+Its current integration includes main `e48adf318`; earlier CI artifacts below
+continue to identify their own source revisions.
+
 The implementation is published on `codex/unified-appearance-20261002` against
 `main`. It includes the complete appearance changes rather than depending on the
 already merged personal-best ghost PR #913. Baseline route/harness repairs are a

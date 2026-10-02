@@ -57,6 +57,7 @@ for (const admin of [false, true]) {
     for (let i = 0; i < 900 && p.rendered.run.status !== 'won'; i++) p.frame();
     assert.equal(p.rendered.run.status, 'won');
     if (!p.$('skip-celebration').hidden) p.$('skip-celebration').click();
+    if (!p.$('show-result').hidden) p.$('show-result').click();
     p.frame(0);
     assert.equal(p.$('game-overlay').dataset.kind, 'won');
     const saved = loadLibrary(p.storage, profileKey, { campaigns: [campaign] }).library;

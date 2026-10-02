@@ -585,6 +585,13 @@ test('actual Studio handlers show startup/read/encode stages, cancel a late uplo
   );
   assert.match(currentAudio.textContent, /Playing the registered/);
   assert.equal(auditionContexts[0].context.state, 'running');
+  assert.equal(
+    auditionContexts[0].sources.length,
+    0,
+    'Unmute does not replay a previously muted one-shot cue.',
+  );
+  await currentAudio.querySelectorAll('button')[0].onclick();
+  await until(() => auditionContexts[0].sources.length > 0);
   assert.ok(auditionContexts[0].sources.length > 0);
   const visibleMarker = currentAudio.previewMarker;
   window.emit('blur');

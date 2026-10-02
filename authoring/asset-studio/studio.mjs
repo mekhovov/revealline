@@ -38,6 +38,7 @@ import {
 } from '../../game/presentation/bundle.mjs';
 import {
   reviseStudioTheme,
+  setStudioAppearanceBasis,
   replaceStudioCollection,
   adoptStudioBundle,
   generateAssetPrompt,
@@ -1444,6 +1445,17 @@ function acceptWorkspace(record, id) {
   rememberView();
 }
 function workspaceAction(action, options = {}) {
+  if (action === 'set-basis') {
+    operation(t('tools:studio.themes.preparing'), () => {
+      requireSettled();
+      stage(
+        setStudioAppearanceBasis(working.document, options),
+        working.assets,
+        t('tools:studio.themes.basisStaged'),
+      );
+    });
+    return;
+  }
   if (action === 'configure-defaults') {
     operation(t('tools:studio.themes.preparing'), async (task) => {
       requireSavedWorkspace();
@@ -1492,6 +1504,9 @@ function workspaceAction(action, options = {}) {
       const bundle = await exportRuntimeTheme(source, working.assets, {
         signal: task.signal,
         familyId: options.familyId,
+        familyRevision: options.familyRevision,
+        interfaceId: options.interfaceId,
+        interfaceRevision: options.interfaceRevision,
       });
       task.check();
       download(bundle, `revealline-${source.id}-r${source.revision}.rlruntime`);
@@ -1538,7 +1553,11 @@ function workspaceAction(action, options = {}) {
         task.update(t('tools:loadingAndVerifyingTheCurrentReleaseCollection'), 'downloading');
         const published = await loadPublishedStudio({ signal: task.signal });
         task.check();
-        const family = getThemeFamily(options.familyId ?? 'industrial-workshop');
+        const family = getThemeFamily(
+          options.familyId ?? 'industrial-workshop',
+          options.familyRevision,
+        );
+        if (!family) throw new Error(t('tools:studio.themes.basisUnavailable'));
         const tokens = getInterfaceTheme(family.interface.id, family.interface.revision).tokens;
         const shared = Object.fromEntries(
           Object.entries(tokens).filter(([name]) => Object.hasOwn(TOKEN_DEFAULTS, name)),
@@ -1547,6 +1566,12 @@ function workspaceAction(action, options = {}) {
           id: identity(),
           name: options.name,
           tokens: { ...shared, amber: tokens.accent, success: tokens.safe },
+          appearanceBasis: {
+            familyId: family.id,
+            familyRevision: family.revision,
+            interfaceId: family.interface.id,
+            interfaceRevision: family.interface.revision,
+          },
         });
         assets = published?.assets ?? new Map();
       }

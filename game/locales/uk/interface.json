@@ -5883,5 +5883,12 @@
   "workshop.notice.readOnly": "Тему застосовано для цього сеансу; збереження тут вимкнено.",
   "workshop.notice.saveFailed": "Тему застосовано для цього сеансу, але зберегти її не вдалося.",
   "workshop.notice.simSaveFailed": "Тему застосовано тут, але зберегти оформлення SIM не вдалося.",
-  "workshop.notice.themeUnavailable": "Тема недоступна: {{theme}}"
+  "workshop.notice.themeUnavailable": "Тема недоступна: {{theme}}",
+  "winPictureComplete": "Чудова робота.",
+  "winPictureEnjoy": "Тепер уся картина — ваша.",
+  "winPictureContinue": "Далі →",
+  "winPictureContinueLabel": "Перейти до результатів",
+  "creator.socialDroneExampleHelp": "Спробуйте готовий рівень із відеонагородою, а потім відредагуйте його, щоб дізнатися, як працюють зображення та відео перемоги.",
+  "creator.socialDroneExampleOpen": "Відкрити відеоприклад Social Drone",
+  "creator.socialDroneExampleUnavailable": "Не вдалося завантажити приклад Social Drone. Спробуйте ще раз."
 }

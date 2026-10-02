@@ -687,6 +687,9 @@
   .world-touch.touch-active .touch-stick {
     pointer-events: auto;
   }
+  .world-touch:not(.touch-active) .touch-throttle-readout {
+    display: none;
+  }
   .world-touch .touch-stick span {
     position: absolute;
     top: 100%;
@@ -4049,7 +4052,8 @@
     }
     html body.sim-worlds #world-viewport #flight-status {
       position: absolute;
-      inset: auto var(--flight-safe-right) calc(var(--flight-safe-bottom) + 172px)
+      inset: auto var(--flight-safe-right)
+        calc(var(--flight-safe-bottom) + var(--flight-lower-controls) + 56px)
         var(--flight-safe-left);
       max-width: 640px;
       margin: 0 auto;
@@ -4103,24 +4107,48 @@
       height: 60px;
     }
     html body.sim-worlds #world-viewport .world-touch.touch-active {
-      inset: auto var(--flight-safe-right) var(--flight-safe-bottom) var(--flight-safe-left);
+      inset: auto var(--flight-safe-right)
+        calc(var(--flight-safe-bottom) + var(--flight-touch-gutter)) var(--flight-safe-left);
       gap: 0;
       pointer-events: none;
     }
     html body.sim-worlds #world-viewport .world-touch.touch-active .touch-stick {
-      width: clamp(92px, 24vw, 112px);
-      height: clamp(92px, 24vw, 112px);
-      background-color: #1019232b;
+      width: var(--flight-touch-size);
+      height: var(--flight-touch-size);
+      background-color: #1019231f;
       border-color: #b4c6d166;
-      box-shadow: inset 0 0 0 2px #10192338;
+      box-shadow: inset 0 0 0 2px #10192326;
       pointer-events: auto;
+    }
+    html body.sim-worlds #world-viewport .world-touch.touch-active .touch-stick::before,
+    html body.sim-worlds #world-viewport .world-touch.touch-active .touch-stick::after {
+      background: #b4c6d129;
+    }
+    html body.sim-worlds #world-viewport .world-touch .sim-stick-direction,
+    html body.sim-worlds #world-viewport .world-touch:not(.touch-active) .touch-stick > span {
+      display: none;
     }
     html
       body.sim-worlds
       #world-viewport
-      .world-touch
-      :is(.sim-stick-direction, .touch-stick > span) {
-      display: none;
+      .world-touch.touch-active
+      .touch-stick
+      > span:not(.sim-stick-direction) {
+      top: auto;
+      bottom: calc(100% + 5px);
+      left: 50%;
+      transform: translateX(-50%);
+      display: block;
+      width: max-content;
+      max-width: 100%;
+      padding: 1px 4px;
+      border-radius: 3px;
+      background: #10192399;
+      color: var(--fk-text);
+      font: 12px/1.3 var(--fk-font-ui);
+      text-align: center;
+      white-space: nowrap;
+      pointer-events: none;
     }
     html body.sim-worlds #world-viewport .sim-drone-response[data-display='compact'] {
       inset: auto auto var(--flight-safe-bottom) var(--flight-safe-left);
@@ -4140,12 +4168,20 @@
       #world-viewport:has(.world-touch.touch-active)
       .sim-drone-response[data-display='compact'] {
       left: 50%;
-      width: 96px;
-      height: 72px;
+      width: min(
+        96px,
+        calc(
+          100% - var(--flight-touch-size) - var(--flight-touch-size) - var(--flight-safe-left) -
+            var(--flight-safe-right) - 12px
+        )
+      );
+      height: auto;
+      aspect-ratio: 4 / 3;
       transform: translateX(-50%);
     }
     html body.sim-worlds #world-viewport .sim-drone-response[data-display='learning'] {
-      inset: auto auto calc(var(--flight-safe-bottom) + 132px) var(--flight-safe-left);
+      inset: auto auto calc(var(--flight-safe-bottom) + var(--flight-lower-controls) + 16px)
+        var(--flight-safe-left);
       width: min(260px, calc(100% - var(--flight-safe-left) - var(--flight-safe-right)));
       max-height: min(260px, calc(100% - 230px));
     }
@@ -4285,7 +4321,14 @@
     }
     html body.sim-worlds #flight-dialog[data-flight-menu-open='true'] .camera-settings {
       display: flex;
+      flex-wrap: wrap;
       width: 100%;
+      gap: 12px;
+    }
+    html body.sim-worlds #flight-dialog[data-flight-menu-open='true'] .flight-controls select {
+      min-width: 0;
+      width: 100%;
+      max-width: 100%;
     }
     html body.sim-worlds #flight-dialog[data-flight-menu-open='true'] .camera-settings label {
       flex: 1 1 200px;

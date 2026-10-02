@@ -10,6 +10,7 @@ import {
   freezeEdition,
   resolveEditionSelection,
   resolveEditionAssets,
+  resolveEditionAppearanceThemes,
   validateEditionRuntimeCatalog,
   validateAppearanceDefault,
   EDITION_FORMATS,
@@ -31,7 +32,10 @@ import { projectEditionThemeSelection } from '../../game/editions/selected-prese
 import { validateCompanyLessons } from '../../game/company-campaigns/learning.mjs';
 import { validateTheme } from '../../game/content.mjs';
 import { getThemeFamily, BUILTIN_THEME_FAMILIES } from '../../game/presentation/theme-system.mjs';
-import { validateCuratedThemeQuality } from '../../game/presentation/theme-system.mjs';
+import {
+  validateCuratedThemeQuality,
+  validateCuratedAppearanceInventory,
+} from '../../game/presentation/theme-system.mjs';
 import { validateAnimationRecipes } from '../motion-lab/animation.mjs';
 import {
   validateEditionPresetMotion,
@@ -394,6 +398,12 @@ export function assertMatchingStudioSelection(draft, built, editionId, files = n
       canonicalJSON(a[key]) === canonicalJSON(b[key]),
       'The compiled preview differs from this applied draft. Compile and import a fresh report.',
     );
+  const expectedThemes = resolveEditionAppearanceThemes(draft, { editionIds: [editionId] });
+  required(
+    canonicalJSON(expectedThemes) === canonicalJSON(built.appearanceThemes ?? []),
+    'The compiled preview appearance differs from this applied draft. Compile a fresh report.',
+  );
+  validateCuratedAppearanceInventory(built, { selectedOnly: true });
   return b;
 }
 

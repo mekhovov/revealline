@@ -5,6 +5,8 @@ import {
   resolvePresentation as resolveInterface,
   BUILTIN_THEME_FAMILIES,
   COMPONENT_ROLES,
+  getThemeFamily,
+  getInterfaceTheme,
 } from '../../game/presentation/theme-system.mjs';
 import { createThemeCandidate } from '../../game/presentation/theme-preview.mjs';
 import { inspectStudioTheme } from '../../game/presentation/studio-inspection.mjs';
@@ -70,7 +72,7 @@ export function mountThemeWorkbench({ document, window, onAction, onWarning }) {
   const create = (duplicate) =>
     onAction(duplicate ? 'duplicate' : 'create', {
       name: name.value.trim() || copy('untitled'),
-      familyId: candidateFamily.value,
+      ...candidateOptions(),
     });
   library.append(
     label('workspace', workspaces),
@@ -101,12 +103,19 @@ export function mountThemeWorkbench({ document, window, onAction, onWarning }) {
   section.append(library, importing, node('p', 'libraryHelp', 'support-copy'));
   const candidateFamily = familySelect('theme-candidate-family');
   candidateFamily.value = 'industrial-workshop';
+  for (const option of candidateFamily.options) {
+    const family = getThemeFamily(option.value);
+    option.textContent = `${family.name} (${family.revision})`;
+  }
+  const basisStatus = node('p', null, 'support-copy');
+  basisStatus.id = 'theme-candidate-basis-status';
+  basisStatus.setAttribute('role', 'status');
   const basisLabel = node('label');
   const basisTitle = node('span', 'candidateFamily');
   basisLabel.append(basisTitle, candidateFamily);
-  section.append(basisLabel);
+  section.append(basisLabel, basisStatus);
   const runtimeExport = button('exportRuntime', () =>
-    onAction('export-runtime', { familyId: candidateFamily.value }),
+    onAction('export-runtime', candidateOptions()),
   );
   runtimeExport.id = 'theme-export-runtime';
   section.append(runtimeExport, node('p', 'runtimeExportHelp', 'support-copy'));
@@ -114,7 +123,7 @@ export function mountThemeWorkbench({ document, window, onAction, onWarning }) {
   defaults.type = 'button';
   defaults.id = 'theme-community-defaults';
   localizedText(defaults, () => copy('defaults'));
-  defaults.onclick = () => onAction('configure-defaults', { familyId: candidateFamily.value });
+  defaults.onclick = () => onAction('configure-defaults', candidateOptions());
   section.append(defaults);
   const interfaceRow = node('div', null, 'theme-library-controls');
   const family = familySelect('studio-theme-family');
@@ -252,7 +261,7 @@ export function mountThemeWorkbench({ document, window, onAction, onWarning }) {
       source: current.document,
       assets: current.assets,
       interfacePresentation: candidateInterface(),
-      familyId: candidateFamily.value,
+      ...candidateOptions(),
     });
   });
   previewLinks.append(arcadeButton);
@@ -260,7 +269,8 @@ export function mountThemeWorkbench({ document, window, onAction, onWarning }) {
   sim.href = '../fpv-worlds/calibration.html';
   sim.onclick = (event) => {
     event.preventDefault();
-    onAction('preview-sim', { familyId: candidateFamily.value });
+    if (!basisAvailable()) return;
+    onAction('preview-sim', candidateOptions());
   };
   previewLinks.append(sim);
   specimen.append(previewLinks, node('p', 'simHelp', 'support-copy'));
@@ -291,16 +301,19 @@ export function mountThemeWorkbench({ document, window, onAction, onWarning }) {
   section.append(report);
   fixture.onchange = renderSpecimen;
   candidateFamily.onchange = () => {
-    closeArcadeSpecimen?.();
-    closeArcadeSpecimen = null;
-    inspectedDocument = null;
-    if (current) refreshInspection(current.document, inspectedSlot);
-    renderSpecimen();
+    const family = getThemeFamily(candidateFamily.value);
+    if (!family) return;
+    onAction('set-basis', {
+      familyId: family.id,
+      familyRevision: family.revision,
+      interfaceId: family.interface.id,
+      interfaceRevision: family.interface.revision,
+    });
   };
   let inspectedDocument = null,
     inspectedSlot = null;
   function candidateInterface() {
-    const candidate = createThemeCandidate(current.document, { familyId: candidateFamily.value });
+    const candidate = createThemeCandidate(current.document, candidateOptions());
     return resolveInterface({
       themeFamily: candidate.family,
       interfaceTheme: candidate.interfaceTheme,
@@ -308,10 +321,68 @@ export function mountThemeWorkbench({ document, window, onAction, onWarning }) {
       accessibility: host.snapshot()?.accessibility ?? {},
     });
   }
+  function candidateOptions() {
+    return current?.document.appearanceBasis ?? { familyId: candidateFamily.value };
+  }
+  function basisAvailable() {
+    const basis = candidateOptions();
+    const family = getThemeFamily(basis.familyId, basis.familyRevision);
+    return !!(
+      family &&
+      getInterfaceTheme(
+        basis.interfaceId ?? family.interface.id,
+        basis.interfaceRevision ?? family.interface.revision,
+      )
+    );
+  }
+  function showBasis(source) {
+    for (const option of [...candidateFamily.options])
+      if (option.dataset.savedBasis) option.remove();
+    const basis = source.appearanceBasis;
+    if (basis) {
+      const currentFamily = getThemeFamily(basis.familyId);
+      if (
+        currentFamily?.revision === basis.familyRevision &&
+        currentFamily.interface.id === basis.interfaceId &&
+        currentFamily.interface.revision === basis.interfaceRevision
+      ) {
+        candidateFamily.value = basis.familyId;
+      } else {
+        const option = node('option');
+        option.dataset.savedBasis = 'true';
+        option.value = `${basis.familyId}@${basis.familyRevision}`;
+        option.textContent = `${getThemeFamily(basis.familyId, basis.familyRevision)?.name ?? basis.familyId} (${basis.familyRevision}; ${basis.interfaceId}@${basis.interfaceRevision})`;
+        candidateFamily.append(option);
+        candidateFamily.value = option.value;
+      }
+    } else candidateFamily.value = 'industrial-workshop';
+    const available = basisAvailable();
+    runtimeExport.disabled = defaults.disabled = arcadeButton.disabled = !available;
+    sim.setAttribute('aria-disabled', String(!available));
+    localizedText(basisStatus, () =>
+      available
+        ? basis
+          ? copy('basisSaved', {
+              family: basis.familyId,
+              revision: basis.familyRevision,
+              interface: basis.interfaceId,
+              interfaceRevision: basis.interfaceRevision,
+            })
+          : ''
+        : copy('basisUnavailable'),
+    );
+    return available;
+  }
   function renderSpecimen() {
     if (!current || disposed) return;
     const choice = fixture.value;
     const accepted = host.snapshot();
+    if (choice === 'workspace' && !basisAvailable()) {
+      removeSpecimen?.();
+      removeSpecimen = null;
+      recipePreview.replaceChildren(node('p', 'basisUnavailable'));
+      return;
+    }
     const resolved =
       choice === 'workspace'
         ? candidateInterface()
@@ -378,7 +449,14 @@ export function mountThemeWorkbench({ document, window, onAction, onWarning }) {
     recipePreview.replaceChildren(sample);
   }
   function refreshInspection(source, selected) {
-    inspection = inspectStudioTheme(source, selected, { familyId: candidateFamily.value });
+    if (!basisAvailable()) {
+      inspection = null;
+      facts.textContent = contrastReport.textContent = '';
+      role.textContent = JSON.stringify({ appearanceBasis: source.appearanceBasis }, null, 2);
+      download.dispose();
+      return;
+    }
+    inspection = inspectStudioTheme(source, selected, candidateOptions());
     const counts = inspection.coverage.counts;
     localizedText(facts, () =>
       copy('facts', {
@@ -412,6 +490,7 @@ export function mountThemeWorkbench({ document, window, onAction, onWarning }) {
         closeArcadeSpecimen = null;
       }
       current = { document: source, assets };
+      showBasis(source);
       const before = [...workspaces.options]
         .map((option) => `${option.value}:${option.textContent}`)
         .join('|');

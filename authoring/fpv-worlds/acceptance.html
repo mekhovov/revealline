@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>SIM appearance acceptance</title>
+    <script src="../../game/presentation/theme-bootstrap.mjs"></script>
+    <link
+      rel="stylesheet"
+      href="../../game/presentation/industrial-workshop.css"
+      data-industrial-workshop
+    />
+    <style>
+      :root {
+        color-scheme: dark;
+        font: 16px var(--iw-font-ui, system-ui);
+        color: var(--iw-text, #f0e9d8);
+        background: var(--iw-bg, #191e20);
+      }
+      body {
+        margin: auto;
+        max-width: 1200px;
+        padding: 24px;
+      }
+      p {
+        line-height: 1.5;
+        max-width: 85ch;
+      }
+      section {
+        padding: 16px;
+        margin-block: 16px;
+        border: 1px solid var(--iw-line, #657173);
+        background: var(--iw-panel, #282f32);
+      }
+      label {
+        display: inline-flex;
+        flex-direction: column;
+        gap: 6px;
+        margin: 0 12px 12px 0;
+      }
+      button,
+      select,
+      input,
+      textarea {
+        font: inherit;
+        color: var(--iw-text, #f0e9d8);
+        background: var(--iw-panel-raised, #394246);
+        border: 1px solid var(--iw-control-line, #8e9695);
+        padding: 8px 12px;
+        min-height: 44px;
+      }
+      button {
+        cursor: pointer;
+        margin: 0 6px 8px 0;
+      }
+      button:disabled {
+        opacity: 0.6;
+        cursor: default;
+      }
+      :focus-visible {
+        outline: 3px solid var(--iw-focus, #9dcce9);
+        outline-offset: 3px;
+      }
+      canvas {
+        display: block;
+        width: 100%;
+        height: min(56.25vw, 600px);
+        min-height: 240px;
+        background: #111;
+      }
+      output,
+      pre {
+        display: block;
+        white-space: pre-wrap;
+        overflow-wrap: anywhere;
+        font:
+          13px/1.45 ui-monospace,
+          monospace;
+      }
+      textarea {
+        width: min(100%, 650px);
+        box-sizing: border-box;
+      }
+      a {
+        color: var(--iw-focus, #9dcce9);
+      }
+      .row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        align-items: end;
+      }
+      [hidden] {
+        display: none !important;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>SIM appearance acceptance</h1>
+    <p>
+      Review the same authored scene and themed scene at fixed near, far, grazing, landing and drone
+      views. The shared game renderer loads the built-in World scenery. These are synthetic visual
+      routes; they do not run physics or earn progress.
+    </p>
+    <p>
+      Run from an immutable prepared snapshot. Keep this tab visible, window size unchanged and
+      other graphics work idle. Browser frame cadence and CPU draw time are separate measurements;
+      neither certifies physical-device GPU performance.
+    </p>
+    <output id="identity" role="status">Checking source identity…</output>
+    <section>
+      <div class="row">
+        <label>Environment<select id="environment" disabled></select></label>
+        <label>Theme<select id="collection" disabled></select></label>
+        <label
+          >Quality<select id="quality" disabled>
+            <option>low</option>
+            <option selected>balanced</option>
+            <option>high</option>
+          </select></label
+        >
+        <label>Fixed view<select id="view" disabled></select></label>
+      </div>
+      <button id="show-authored" disabled>Show authored</button>
+      <button id="show-theme" disabled>Show theme</button>
+      <button id="capture" disabled>Save current view PNG</button>
+      <canvas id="flight" aria-label="Actual SIM renderer with fixed acceptance route"></canvas>
+      <output id="view-description"></output>
+    </section>
+    <section>
+      <h2>Readability review</h2>
+      <p>
+        Inspect openings and targets, labels and landing marks, drone direction and texture shimmer.
+        Check more than one angle. A recorded judgment applies only to the current environment,
+        theme, quality and fixed view. Front-facing drone inspection remains available in the
+        material calibration page.
+      </p>
+      <label
+        >Decision<select id="verdict">
+          <option value="unreviewed">Not reviewed</option>
+          <option value="pass">Readable</option>
+          <option value="fail">Needs work</option>
+        </select></label
+      >
+      <label
+        >Observed issue / evidence<textarea id="notes" rows="2" maxlength="1000"></textarea>
+      </label>
+      <button id="record-review" disabled>Record this view review</button>
+    </section>
+    <section>
+      <h2>Paired frame comparison</h2>
+      <p>
+        60 warm-up frames and 240 measured frames per run, in authored → theme → theme → authored
+        order. Both pairs must stay within the planned 10% p95 browser frame-time margin. The
+        stationary view above does not affect this fixed route.
+      </p>
+      <button id="measure" disabled>Compare current quality</button>
+      <button id="cancel" disabled>Cancel</button>
+      <button id="export" disabled>Export evidence JSON</button>
+      <output id="status" role="status"></output>
+      <pre id="results"></pre>
+    </section>
+    <script type="module" src="./acceptance.mjs"></script>
+  </body>
+</html>

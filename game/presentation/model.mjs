@@ -8,6 +8,7 @@ import {
 
 export const FORMATS = Object.freeze({
   bundle: 'revealline-theme-bundle.v1',
+  appearanceBundle: 'revealline-theme-bundle.v2',
   theme: 'revealline-presentation-theme.v1',
   slot: 'revealline-asset-slot.v1',
   asset: 'revealline-asset-revision.v1',
@@ -144,6 +145,20 @@ function identity(value, format, label) {
 function ref(value) {
   fields(value, 'id revision', 'asset reference');
   required(stableId(value.id) && integer(value.revision), 'Invalid revision reference.');
+}
+/** Portable authoring intent. Missing installed revisions remain editable; the
+ * candidate/export boundary resolves these exact references before rendering. */
+export function validateStudioAppearanceBasis(value) {
+  const basis = boundedJSON(value, { maxBytes: 1024, maxNodes: 12, maxDepth: 2 });
+  fields(basis, 'familyId familyRevision interfaceId interfaceRevision', 'appearance basis');
+  required(
+    stableId(basis.familyId) &&
+      stableId(basis.interfaceId) &&
+      /^r[1-9][0-9]{0,8}$/.test(basis.familyRevision) &&
+      /^r[1-9][0-9]{0,8}$/.test(basis.interfaceRevision),
+    'Invalid exact appearance basis.',
+  );
+  return Object.freeze(basis);
 }
 function list(value, max, check, label) {
   required(Array.isArray(value) && value.length <= max, `Invalid ${label} list.`);
@@ -585,8 +600,14 @@ export function validateThemeBundle(source, { previous = null, expectedRevision 
     typeof source === 'string'
       ? decodePresentationDocument(source)
       : ownPresentationDocument(source);
-  fields(value, 'format id revision slots assets themes collections selection', 'theme bundle');
-  identity(value, FORMATS.bundle, 'bundle');
+  const appearance = value.format === FORMATS.appearanceBundle;
+  fields(
+    value,
+    `format id revision slots assets themes collections selection${appearance ? ' appearanceBasis' : ''}`,
+    'theme bundle',
+  );
+  identity(value, appearance ? FORMATS.appearanceBundle : FORMATS.bundle, 'bundle');
+  if (appearance) validateStudioAppearanceBasis(value.appearanceBasis);
   indexed(value.slots, slotCheck, LIMITS.slots, 'slots');
   required(
     value.slots.length > 0 && new Set(value.slots.map((s) => s.id)).size === value.slots.length,
@@ -668,6 +689,10 @@ export function validateThemeBundle(source, { previous = null, expectedRevision 
   }
   if (previous) {
     const old = validateThemeBundle(previous);
+    required(
+      !old.appearanceBasis || appearance,
+      'An edit cannot discard its saved appearance basis.',
+    );
     required(
       expectedRevision === undefined || expectedRevision === old.revision,
       'Stale expected revision.',

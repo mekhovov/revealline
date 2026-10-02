@@ -9,6 +9,7 @@ import {
 } from '../ui/combat-presentation.mjs';
 import { PRESENTATION_INK, PRESENTATION_PLATE } from '../ui/actor-presentation.mjs';
 import { combatView } from '../ui/combat-view.mjs';
+import { BoardPainter } from '../ui/render.mjs';
 import { createRun } from '../core/index.mjs';
 import { authoritativeCheckpoint } from '../replay.mjs';
 import { combatLevel, ticks } from './helpers/combat-fixture.mjs';
@@ -304,6 +305,35 @@ test('terminal views hide live threats but retain optional inert scrap', () => {
     assert.equal(s.calls.length, 0);
     assert(drawCombatScrap(s.ctx, v, palette));
     assert.equal(fills(s).length, 3);
+  }
+});
+
+test('the full completed picture removes combat scrap in normal and reduced-effects views', () => {
+  const run = createRun(combatLevel('scout'));
+  ticks(run, 846, 'right');
+  assert.equal(run.status, 'won');
+  assert.equal(
+    combatView(run).eliminations.length,
+    1,
+    'The winning run retains actual combat scrap.',
+  );
+  const before = authoritativeCheckpoint(run);
+  for (const reduced of [false, true]) {
+    const board = new BoardPainter({}),
+      s = surface();
+    board.theme = { id: 'fpv', family: 'fpv', palette: { ...palette, field: '#102831' } };
+    board.background = { width: 1152, height: 576 };
+    board.startCelebration({ levelId: run.levelId, seed: run.seed, reduced });
+    board.skipCelebration();
+    board.draw(s.ctx, run, 0.016, { fullReveal: true, reduced, showCombatScrap: true });
+    assert.deepEqual(
+      fills(s).map((call) => call.args),
+      [[0, 0, 1152, 576]],
+      'Only the picture backing is filled; inert scrap cannot cover the finished artwork.',
+    );
+    assert.equal(s.calls.filter((call) => call.name === 'drawImage').length, 1);
+    assert.equal(board.celebrationStatus.finished, true);
+    assert.deepEqual(authoritativeCheckpoint(run), before);
   }
 });
 

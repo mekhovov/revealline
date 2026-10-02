@@ -110,7 +110,7 @@ const COPY_EN = {
   schoolIntro: `Build your skills through ${PRIMARY_LESSON_ORDER.length} guided Acro lessons across Beginner, Experienced, Advanced, Pro and Master tiers. Watch the complete route, take control and practise each real objective. ${SELF_LEVEL_LESSON_ORDER.length} optional self-level lessons are also open.`,
   schoolFilterLabel: 'Choose a learning tier',
   schoolReassurance:
-    'Acro · FPV view · Gentle response. Your usual settings return when you leave. All lessons are open.',
+    'Choose Self-level or Acro. Your mode choice is kept; your usual camera and response settings return when you leave. All lessons are open.',
   schoolLift: '01 · Lift',
   schoolControl: '02 · Control',
   schoolExplore: '03 · Explore',
@@ -135,6 +135,9 @@ const COPY_EN = {
   backToLobby: 'Back to lobby',
   flightMode: 'Flight mode',
   controlSource: 'Controls',
+  touchResponse: 'Touch response',
+  touchPrecise: 'Precise — small corrections',
+  touchDirect: 'Direct — linear response',
   cameraLabel: 'Camera',
   aircraftLabel: 'Aircraft',
   graphicsLabel: 'Graphics',
@@ -277,7 +280,7 @@ const COPY_UK = {
   schoolIntro: `Розвивайте навички у ${PRIMARY_LESSON_ORDER.length} уроках Acro: від початкових до рівнів Pro та Master. Перегляньте весь маршрут, перехопіть керування й виконайте справжні цілі. Також відкрито ${SELF_LEVEL_LESSON_ORDER.length} додаткових уроків самовирівнювання.`,
   schoolFilterLabel: 'Виберіть рівень навчання',
   schoolReassurance:
-    'Acro · вигляд FPV · плавне керування. Після виходу ваші налаштування повернуться. Усі уроки відкриті.',
+    'Оберіть самовирівнювання або Acro. Вибраний режим зберігається; після виходу відновлюються ваші звичні камера та чутливість. Усі уроки відкриті.',
   schoolLift: '01 · Зліт',
   schoolControl: '02 · Керування',
   schoolExplore: '03 · Відкриття',
@@ -303,6 +306,9 @@ const COPY_UK = {
   backToLobby: 'До меню',
   flightMode: 'Режим польоту',
   controlSource: 'Керування',
+  touchResponse: 'Чутливість дотику',
+  touchPrecise: 'Точна — малі корекції',
+  touchDirect: 'Пряма — лінійна реакція',
   cameraLabel: 'Камера',
   aircraftLabel: 'Квадрокоптер',
   graphicsLabel: 'Графіка',
@@ -774,11 +780,11 @@ export function mountWorldApp({
       index = sequence.indexOf(entry?.id);
     return index < 0 ? null : learningEntries.get(sequence[index + 1]);
   };
-  const sessionLearningComplete = new Set();
+  const sessionLearningComplete = new Map();
   let selectedWorld = null,
     learningPreferences = null,
     learningResponse = null,
-    requiredModePreference = null;
+    modePractice = false;
   const sectors = createSectorTracker();
   let storage;
   try {
@@ -793,6 +799,7 @@ export function mountWorldApp({
     'world-language',
     'flight-mode',
     'flight-source',
+    'flight-touch-response',
     'flight-camera',
     'drone-look',
     'flight-quality',
@@ -818,6 +825,9 @@ export function mountWorldApp({
               : Number(saved[id]) >= Number(node.min) && Number(saved[id]) <= Number(node.max);
         if (valid) node.value = saved[id];
       }
+    const touchResponse = storage?.getItem('revealline.fpv.touch-response.v1');
+    if (['precise', 'direct'].includes(touchResponse))
+      $('flight-touch-response').value = touchResponse;
     locale = $('world-language').value;
   } catch {
     /* Invalid preferences use the visible defaults. */
@@ -837,12 +847,7 @@ export function mountWorldApp({
         'revealline.fpv.world-settings.v1',
         JSON.stringify(
           Object.fromEntries(
-            preferenceIds.map((id) => [
-              id,
-              learningPreferences?.[id] ??
-                (id === 'flight-mode' ? requiredModePreference : null) ??
-                $(id).value,
-            ]),
+            preferenceIds.map((id) => [id, learningPreferences?.[id] ?? $(id).value]),
           ),
         ),
       );
@@ -1191,6 +1196,7 @@ export function mountWorldApp({
     },
   });
   const input = createFlightInput({ window: win, document: doc, onPause: () => pauseFlight() });
+  input.touchResponse($('flight-touch-response').value);
   const gamepad = createFlightGamepad({ window: win, document: doc });
   const flightMenuOpen = () => $('flight-dialog').dataset.flightMenuOpen === 'true';
   function setFlightMenu(open) {
@@ -1324,11 +1330,6 @@ export function mountWorldApp({
     learningPreferences = null;
     paintLoadout();
   }
-  function restoreRequiredMode() {
-    if (requiredModePreference === null) return;
-    $('flight-mode').value = requiredModePreference;
-    requiredModePreference = null;
-  }
   function restoreRadio() {
     if (
       replayProof ||
@@ -1410,13 +1411,15 @@ export function mountWorldApp({
           ? (radioPreview?.controls ?? neutralFlightInput())
           : source === 'controller'
             ? gamepad.preview().controls
-            : Object.fromEntries(
-                ['roll', 'pitch', 'yaw', 'throttle'].map((k) => [
-                  k,
-                  (state?.lastInput?.[k] ?? 0) / 1000,
-                ]),
-              ),
-      layout = STICK_LAYOUTS[radioPreview?.stickMode ?? 2],
+            : source === 'touch' && state?.status !== 'active'
+              ? input.sample(0)
+              : Object.fromEntries(
+                  ['roll', 'pitch', 'yaw', 'throttle'].map((k) => [
+                    k,
+                    (state?.lastInput?.[k] ?? 0) / 1000,
+                  ]),
+                ),
+      layout = STICK_LAYOUTS[source === 'radio' ? (radioPreview?.stickMode ?? 2) : 2],
       traceLayout = `${flightToken}:${source}:${layout.join(':')}`,
       reducedMotion =
         $('sim-motion').value === 'reduced' ||
@@ -1459,6 +1462,8 @@ export function mountWorldApp({
       $(`world-${side}-label`).textContent =
         `${controlName(horizontal)} / ${controlName(vertical)}`;
     }
+    $('world-touch-throttle').textContent =
+      `${Math.round(controls.throttle * 100)}%${touchActive && $('world-left-stick').dataset.touchActive !== 'true' ? ` · ${txt('held', 'утримується')}` : ''}`;
     const status = $('world-input-status');
     const text =
       source === 'radio'
@@ -1541,6 +1546,8 @@ export function mountWorldApp({
         radioIndex: radio.status().selected?.index,
         radioStickMode: radioPreview?.stickMode ?? 2,
         mode: $('flight-mode').value,
+        touchResponse: $('flight-touch-response').value,
+        modePractice,
         reducedMotion:
           $('sim-motion').value === 'reduced' ||
           Boolean(win.matchMedia?.('(prefers-reduced-motion: reduce)').matches),
@@ -1599,17 +1606,32 @@ export function mountWorldApp({
           (r) =>
             r.status === 'verified' &&
             r.diagnostic === 'complete' &&
-            r.proof.session === 'practice' &&
-            (!learningById.has(r.course.id) || learningById.get(r.course.id).mode === r.proof.mode),
+            r.proof.session === 'practice',
         )
         .map((r) => `${r.packIdentity}:${r.course.id}`),
     );
-    for (const key of sessionLearningComplete) complete.add(key);
+    for (const key of sessionLearningComplete.keys()) complete.add(key);
     for (const attempt of notebook.snapshot().attempts) {
       const entry = catalogue.find((e) => e.legacy && e.id === attempt.course);
       if (entry) complete.add(keyOf(entry));
     }
     return complete;
+  }
+  function completedLearningModes(entry) {
+    const modes = new Set(sessionLearningComplete.get(keyOf(entry)) ?? []);
+    for (const record of records)
+      if (
+        record.packIdentity === entry.packIdentity &&
+        record.course.id === entry.id &&
+        record.status === 'verified' &&
+        record.diagnostic === 'complete' &&
+        record.proof.session === 'practice'
+      )
+        modes.add(record.proof.mode);
+    return ['self-level', 'acro']
+      .filter((mode) => modes.has(mode))
+      .map((mode) => (mode === 'acro' ? 'Acro' : txt('Self-level', 'Самовирівнювання')))
+      .join(' · ');
   }
   function renderSchool() {
     const complete = completedKeys();
@@ -1761,7 +1783,7 @@ export function mountWorldApp({
           el(
             'span',
             complete.has(keyOf(entry))
-              ? txt('✓ Completed', '✓ Виконано')
+              ? `${txt('✓ Completed', '✓ Виконано')} · ${completedLearningModes(entry)}`
               : lesson.mode === 'acro'
                 ? `ACRO · ${tierNames[tier]}`
                 : txt('SELF-LEVEL', 'САМОВИРІВНЮВАННЯ'),
@@ -2837,7 +2859,7 @@ export function mountWorldApp({
     node.classList.toggle('sector-behind', value !== null && value > 0);
   }
   function updateSectorHUD() {
-    $('sector-panel').hidden = Boolean(checkpointSession);
+    $('sector-panel').hidden = Boolean(checkpointSession) || modePractice;
     const latest = sectors.latest(sectorReference?.sectors),
       title = latest
         ? `${txt('Sector', 'Ділянка')} ${latest.index + 1} · ${seconds(latest.ticks)}`
@@ -2998,6 +3020,9 @@ export function mountWorldApp({
       const hint = hints[state.actorTrack?.reason];
       if (hint) $('flight-objective').textContent += ` · ${txt(...hint)}`;
     }
+    if (modePractice)
+      $('flight-objective').textContent =
+        `${modePracticeNotice()} · ${$('flight-objective').textContent}`;
     $('world-arm').disabled =
       !sceneReady ||
       Boolean(ghostLookup) ||
@@ -3014,7 +3039,7 @@ export function mountWorldApp({
       Boolean(replayProof) ||
       Boolean(checkpointSession) ||
       !demonstrationFor(current, $('flight-mode').value);
-    $('export-flight').disabled = Boolean(checkpointSession);
+    $('export-flight').disabled = Boolean(checkpointSession) || modePractice;
     $('world-fire').hidden =
       Boolean(replayProof) ||
       current.legacy ||
@@ -3026,6 +3051,7 @@ export function mountWorldApp({
     $('world-flight-fire').hidden = $('world-fire').hidden || $('flight-source').value !== 'touch';
     $('world-next').disabled =
       Boolean(checkpointSession) ||
+      modePractice ||
       !playingPlaylist ||
       playlistIndex + 1 >= playingPlaylist.entries.length;
   }
@@ -3039,6 +3065,24 @@ export function mountWorldApp({
     input.enable(false);
     fire = false;
     radio.freeze('finished');
+    if (modePractice && !checkpointSession) {
+      $('result-panel').hidden = false;
+      $('result-panel').replaceChildren(
+        el('h2', txt('Practice ended', 'Тренування завершено')),
+        el('p', modePracticeNotice()),
+        el(
+          'p',
+          txt(
+            'No completion record, medal or recording was saved.',
+            'Запис виконання, медаль і запис польоту не збережено.',
+          ),
+        ),
+        button(txt('Practise again', 'Тренуватися ще раз'), () => startFlight(current), 'primary'),
+        button(txt('Back to lobby', 'До меню'), () => closeFlight()),
+      );
+      $('flight-status').textContent = modePracticeNotice();
+      return;
+    }
     if (checkpointSession) {
       const state = flight.snapshot(),
         entry = current,
@@ -3137,10 +3181,12 @@ export function mountWorldApp({
         !isPreview &&
         entry.beginner &&
         state.status === 'complete' &&
-        proof.session === 'practice' &&
-        proof.mode === learningById.get(entry.beginner)?.mode
-      )
-        sessionLearningComplete.add(keyOf(entry));
+        proof.session === 'practice'
+      ) {
+        const modes = sessionLearningComplete.get(keyOf(entry)) ?? new Set();
+        modes.add(proof.mode);
+        sessionLearningComplete.set(keyOf(entry), modes);
+      }
       await refreshStorage();
       if (token !== flightToken) return;
       if (entry.beginner)
@@ -3438,8 +3484,19 @@ export function mountWorldApp({
     paintInput(state);
     if (terminal(state)) void finishFlight(flightToken).catch(reportError);
   }
+  const modePracticeNotice = () =>
+    txt(
+      'Self-level practice · no score. Acro is needed for these manoeuvres.',
+      'Практика із самовирівнюванням · без заліку. Для цих маневрів потрібен Acro.',
+    );
   async function startFlight(entry, options = {}) {
     if (disposed) return;
+    const requestedMode =
+      options.mode ??
+      options.replayProof?.mode ??
+      options.recover?.mode ??
+      options.checkpoint?.mode ??
+      $('flight-mode').value;
     const token = ++flightToken;
     checkpointPreparation?.abort();
     checkpointPreparation = null;
@@ -3488,39 +3545,35 @@ export function mountWorldApp({
     recorder = null;
     checkpointRequest = options.checkpoint ?? null;
     checkpointSession = null;
-    restoreRequiredMode();
+    $('flight-mode').value = requestedMode;
     const needsAcro = !entry.legacy && worldCourseRequiresAcro(entry.course);
+    modePractice = needsAcro && requestedMode === 'self-level';
     const learning = !checkpointRequest && learningById.get(entry.beginner);
     if (learning) {
       learningPreferences ??= {
-        'flight-mode': $('flight-mode').value,
         'flight-camera': $('flight-camera').value,
       };
       learningResponse ??= { ...response };
       response = { ...DEFAULT_RESPONSE };
-      $('flight-mode').value = options.replayProof?.mode ?? options.recover?.mode ?? learning.mode;
-      $('flight-camera').value = learning.mode === 'acro' ? 'fpv' : learning.camera;
+      $('flight-camera').value = requestedMode === 'acro' ? 'fpv' : learning.camera;
       beginnerCoach.open(learning, {
-        demonstration: demonstrationFor(entry, learning.mode),
+        mode: requestedMode,
+        modePractice,
+        demonstration: demonstrationFor(entry, requestedMode),
         practice: Boolean(options.recover),
         replay: Boolean(options.replayProof),
       });
     } else {
       beginnerCoach.close();
       restoreLearningPreferences();
-      if (needsAcro) {
-        requiredModePreference = $('flight-mode').value;
-        $('flight-mode').value = 'acro';
-      }
-    }
-    if (checkpointRequest) {
-      requiredModePreference ??= $('flight-mode').value;
-      $('flight-mode').value = checkpointRequest.mode;
     }
     $('flight-dialog').classList.toggle('learning-flight', Boolean(learning));
     preview =
-      Boolean(checkpointRequest) || Boolean(options.replayProof) || (options.preview ?? false);
-    playingPlaylist = checkpointRequest ? null : (options.playlist ?? null);
+      modePractice ||
+      Boolean(checkpointRequest) ||
+      Boolean(options.replayProof) ||
+      (options.preview ?? false);
+    playingPlaylist = checkpointRequest || modePractice ? null : (options.playlist ?? null);
     playlistIndex = options.index ?? 0;
     finished = false;
     sceneReady = false;
@@ -3541,11 +3594,7 @@ export function mountWorldApp({
             : txt('WORLD DEMONSTRATION', 'ДЕМОНСТРАЦІЯ СВІТУ')
         : txt('RECORDED FLIGHT', 'ЗАПИСАНИЙ ПОЛІТ');
     $('world-replay-rate').value = String(replayRate);
-    $('flight-mode').disabled =
-      Boolean(checkpointRequest) ||
-      Boolean(learning) ||
-      needsAcro ||
-      (Boolean(replayProof) && replayKind !== 'demonstration');
+    $('flight-mode').disabled = false;
     $('flight-source').disabled = Boolean(replayProof);
     $('radio-setup-button').disabled = Boolean(replayProof);
     $('world-touch').hidden = Boolean(replayProof) || $('flight-source').value !== 'touch';
@@ -3571,13 +3620,15 @@ export function mountWorldApp({
       ? $('world-replay-label').textContent
       : checkpointRequest
         ? txt('SECTION PRACTICE · UNSCORED', 'ТРЕНУВАННЯ ДІЛЯНКИ · БЕЗ ЗАЛІКУ')
-        : preview
-          ? txt('AUTHORING PREVIEW', 'АВТОРСЬКИЙ ПЕРЕГЛЯД')
-          : learning
-            ? txt('FLIGHT SCHOOL', 'ЛЬОТНА ШКОЛА')
-            : localized(WORLD_THEMES.find((t) => t.id === entry.theme)?.title) || entry.world;
-    $('flight-brief').textContent = entry.course.locales[locale].brief;
-    $('flight-menu-brief').textContent = entry.course.locales[locale].brief;
+        : modePractice
+          ? txt('SELF-LEVEL PRACTICE · UNSCORED', 'ПРАКТИКА ІЗ САМОВИРІВНЮВАННЯМ · БЕЗ ЗАЛІКУ')
+          : preview
+            ? txt('AUTHORING PREVIEW', 'АВТОРСЬКИЙ ПЕРЕГЛЯД')
+            : learning
+              ? txt('FLIGHT SCHOOL', 'ЛЬОТНА ШКОЛА')
+              : localized(WORLD_THEMES.find((t) => t.id === entry.theme)?.title) || entry.world;
+    $('flight-brief').textContent = $('flight-menu-brief').textContent =
+      `${modePractice ? `${modePracticeNotice()} ` : ''}${entry.course.locales[locale].brief}`;
     $('flight-status').textContent = txt('Preparing scene…', 'Підготовка сцени…');
     paintLoadout();
     if (!$('flight-dialog').open) $('flight-dialog').showModal();
@@ -3690,16 +3741,19 @@ export function mountWorldApp({
         course: entry.course,
         mode: $('flight-mode').value,
         response: replayProof?.response ?? response,
+        unscoredPractice: modePractice,
       });
-      recorder = (entry.legacy ? createFlightRecorder : createWorldRecorder)(flight, {
-        session: replayProof
-          ? replayKind === 'demonstration'
-            ? 'demonstration'
-            : 'replay'
-          : preview
-            ? 'authoring'
-            : 'practice',
-      });
+      recorder = modePractice
+        ? null
+        : (entry.legacy ? createFlightRecorder : createWorldRecorder)(flight, {
+            session: replayProof
+              ? replayKind === 'demonstration'
+                ? 'demonstration'
+                : 'replay'
+              : preview
+                ? 'authoring'
+                : 'practice',
+          });
     }
     renderer.setPresentation?.(playableAppearance.appearance);
     renderer.setCourse(entry.course, $('flight-mode').value);
@@ -3781,7 +3835,7 @@ export function mountWorldApp({
       if (beginnerCoach.blocksArm()) beginnerCoach.focusPreview();
       else $('world-viewport').focus();
     }
-    if (replayProof) {
+    if (replayProof && !options.paused) {
       input.enable(false);
       flight.arm();
       $('flight-status').textContent = txt(
@@ -3821,9 +3875,9 @@ export function mountWorldApp({
     recorder = null;
     checkpointSession = null;
     checkpointRequest = null;
+    modePractice = false;
     beginnerCoach.close();
     restoreLearningPreferences();
-    restoreRequiredMode();
     $('flight-dialog').classList.remove('learning-flight');
     sectorReferenceProof = null;
     $('flight-dialog').close();
@@ -4494,17 +4548,41 @@ export function mountWorldApp({
     paintInput(flight?.snapshot());
   });
   on($('flight-mode'), 'change', () => {
+    const selectedMode = $('flight-mode').value;
     if (checkpointRequest) {
-      $('flight-mode').value = checkpointRequest.mode;
-      return;
+      const hasSection = checkpointRequest.index < current.course.steps[selectedMode].length;
+      return startFlight(current, {
+        checkpoint: {
+          ...checkpointRequest,
+          mode: selectedMode,
+          index: hasSection ? checkpointRequest.index : 0,
+          proof: hasSection ? demonstrationFor(current, selectedMode) : null,
+        },
+      });
     }
     if (replayProof) {
-      if (replayKind === 'demonstration') return watchDemonstration(current);
-      $('flight-mode').value = replayProof.mode;
-      return;
+      const proof = replayKind === 'demonstration' ? demonstrationFor(current, selectedMode) : null;
+      return startFlight(
+        current,
+        proof ? { preview: true, replayProof: proof, demonstration: true, paused: true } : {},
+      );
     }
     if (current && $('flight-dialog').open)
-      return startFlight(current, { preview, playlist: playingPlaylist, index: playlistIndex });
+      return startFlight(current, {
+        preview: preview && !modePractice,
+        playlist: playingPlaylist,
+        index: playlistIndex,
+      });
+  });
+  on($('flight-touch-response'), 'change', () => {
+    pauseFlight();
+    input.touchResponse($('flight-touch-response').value);
+    try {
+      storage?.setItem('revealline.fpv.touch-response.v1', $('flight-touch-response').value);
+    } catch {
+      /* Touch response remains usable if browser storage is unavailable. */
+    }
+    if (flight) paintInput(flight.snapshot());
   });
   on($('flight-stick-display'), 'change', () => paintInput(flight?.snapshot()));
   on($('flight-drone-guide'), 'change', () => paintInput(flight?.snapshot()));
@@ -4729,6 +4807,7 @@ export function mountWorldApp({
       },
       editorPresentation: spatialEditor?.resources?.().presentation ?? null,
       checkpointPractice: checkpointSession ? clone(checkpointSession) : null,
+      modePractice,
       records: clone(records),
       catalogue: catalogue.length,
       learning: current?.beginner

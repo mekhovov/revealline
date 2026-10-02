@@ -19,6 +19,11 @@ on:
       - 'authoring/asset-studio/**'
       - 'authoring/company-studio/model.mjs'
       - 'authoring/company-studio/studio.mjs'
+      - 'authoring/fpv-worlds/**'
+      - 'scripts/prepare-sim-appearance-acceptance.mjs'
+      - 'game/test/menu-audio-localization.test.mjs'
+      - 'game/test/win-picture-host.test.mjs'
+      - 'game/test/demo-reward.test.mjs'
       - 'optional-practice/civilian-fpv/*.mjs'
       - 'optional-practice/civilian-fpv/*.css'
       - 'optional-practice/civilian-fpv/index.html'
@@ -42,6 +47,11 @@ on:
       - 'game/test/mode-choice-appearance.test.mjs'
       - 'scripts/test-optional-fpv-package.mjs'
       - 'scripts/test-sparse-publisher-imports.mjs'
+      - 'scripts/check-curated-appearance-package.mjs'
+      - 'scripts/test-curated-appearance-package.mjs'
+      - 'game/test/studio-appearance-basis.test.mjs'
+      - 'game/test/asset-studio-host-loading.test.mjs'
+      - 'game/test/company-studio-preview.test.mjs'
 
 permissions:
   contents: read
@@ -74,7 +84,15 @@ jobs:
         game/test/edition-retained-presentation.test.mjs
         game/test/edition-runtime.test.mjs
         game/test/editions.test.mjs
+        game/test/menu-audio-localization.test.mjs
+        game/test/fpv-acceptance-workflow.test.mjs
+        game/test/win-picture-host.test.mjs
+        game/test/demo-reward.test.mjs
         game/test/company-studio-ui.test.mjs
+        game/test/company-studio-preview.test.mjs
+        game/test/studio-appearance-basis.test.mjs
+        game/test/asset-studio-host-loading.test.mjs
+        scripts/test-curated-appearance-package.mjs
         game/test/fpv-appearance.test.mjs
         game/test/fpv-theme-family-controls.test.mjs
         game/test/fpv-world-appearance-ui.test.mjs

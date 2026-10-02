@@ -3090,5 +3090,8 @@
   "studio.appearance.authored": "Authored appearance",
   "studio.appearance.handoffUnavailable": "The Studio theme preview is unavailable or expired. Reopen it from Asset Studio. This draft and its appearance defaults are unchanged.",
   "studio.themes.assignmentUnsupported": "This interface theme cannot include edited asset slots: {{slots}}. Publish those images, textures, fonts or sounds through their asset workflow, or restore the installed assets before assigning this theme.",
-  "studio.appearance.candidateIncluded": "Included Studio theme: {{name}} ({{revision}}). Its custom interface uses the installed Arcade collection {{arcade}} and SIM collection {{sim}}. Compile and review this draft before publication. Player settings are unchanged."
+  "studio.appearance.candidateIncluded": "Included Studio theme: {{name}} ({{revision}}). Its custom interface uses the installed Arcade collection {{arcade}} and SIM collection {{sim}}. Compile and review this draft before publication. Player settings are unchanged.",
+  "studio.themes.basisSaved": "Saved basis: {{family}} {{revision}}; interface {{interface}} {{interfaceRevision}}.",
+  "studio.themes.basisStaged": "Theme basis staged. Save the workspace to keep this exact family and interface revision.",
+  "studio.themes.basisUnavailable": "This saved family or interface revision is unavailable. Choose an installed family and save before previewing or assigning it. You can still export the original workspace."
 }

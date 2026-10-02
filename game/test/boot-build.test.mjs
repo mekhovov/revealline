@@ -15,6 +15,7 @@ import {
 const sourceRoot = new URL('../', import.meta.url);
 const digest = (bytes) => createHash('sha256').update(bytes).digest('hex');
 const playerPresentationFiles = [
+  'game/ui/win-picture.css',
   'game/presentation/theme-bootstrap.mjs',
   'game/presentation/theme-entry.mjs',
   'game/presentation/industrial-workshop.css',

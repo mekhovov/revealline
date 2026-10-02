@@ -5773,5 +5773,12 @@
   "workshop.notice.readOnly": "Theme applies to this session; saving is disabled here.",
   "workshop.notice.saveFailed": "Theme applies to this session, but could not be saved.",
   "workshop.notice.simSaveFailed": "Theme applies here, but SIM appearance could not be saved.",
-  "workshop.notice.themeUnavailable": "Theme unavailable: {{theme}}"
+  "workshop.notice.themeUnavailable": "Theme unavailable: {{theme}}",
+  "winPictureComplete": "Beautifully done.",
+  "winPictureEnjoy": "The whole picture is yours.",
+  "winPictureContinue": "Continue →",
+  "winPictureContinueLabel": "Continue to results",
+  "creator.socialDroneExampleHelp": "Try a complete video-reward level, then edit it to learn how posters and victory clips work.",
+  "creator.socialDroneExampleOpen": "Open Social Drone video example",
+  "creator.socialDroneExampleUnavailable": "The Social Drone example could not be loaded. Try again."
 }

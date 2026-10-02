@@ -63,6 +63,7 @@ test('actual unified Journey chooser supersedes held Next artwork without a stal
   assert.equal(p.rendered.run.status, 'won');
   const completed = p.rendered.run;
   if (!p.$('skip-celebration').hidden) p.$('skip-celebration').click();
+  if (!p.$('show-result').hidden) p.$('show-result').click();
   await settle(() => !p.$('next-button').disabled);
   holdNext = true;
   p.$('next-button').click();

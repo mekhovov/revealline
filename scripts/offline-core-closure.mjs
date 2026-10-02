@@ -32,6 +32,15 @@ const PUBLISHED_SOLO_BOUNDARIES = new Set([
 export const isOptionalSpatialAudioBody = (name) =>
   /^game\/audio\/effects\/[a-z0-9][a-z0-9-]*\.wav$/i.test(name);
 
+// These exact older Team import themes are selectable recovery dependencies,
+// not part of every fresh installation. Other retained manifests stay core.
+export const OPTIONAL_TEAM_IMPORT_MANIFESTS = Object.freeze([
+  'game/presentation/compiled/runtime.a0ad21cd1412fed07b73dbf0e1ec31ded747a8210a97ccc1efeb1e2c26b24584.json',
+  'game/presentation/compiled/runtime.29298673ed6cc49222b1d52d77efc4f8968abe42a29df5c29b2861bd8f9ce1ed.json',
+]);
+const optionalTeamImportManifests = new Set(OPTIONAL_TEAM_IMPORT_MANIFESTS);
+export const isOptionalTeamImportManifest = (name) => optionalTeamImportManifests.has(name);
+
 /** Resolve local file references, never external addresses or speculative URLs. */
 function targets(value, owner, byPath) {
   if (typeof value !== 'string' || /^(?:[a-z]+:|\/|#)/i.test(value)) return [];
@@ -74,6 +83,7 @@ export function selectOfflineCore(entries, excluded, { mode = 'solo' } = {}) {
       !/^game\/ui\/art\/menu-scenes\/[a-z0-9][a-z0-9-]*\.(?:png|webp)$/.test(name) &&
       name !== 'game/ui/art/identity/fpv-line/icon-master.png' &&
       !isOptionalSpatialAudioBody(name) &&
+      !isOptionalTeamImportManifest(name) &&
       !retained.has(name) &&
       !(mode === 'solo' && PUBLISHED_SOLO_BOUNDARIES.has(name))
     ) {

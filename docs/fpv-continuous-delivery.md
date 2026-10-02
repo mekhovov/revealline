@@ -1698,3 +1698,207 @@ Verify Garage's actual public launch before calling its120+58 demonstrations
 live. Resolve the independent958 pipeline, preserve any native stack rewrite,
 then continue C2 on `codex/fpv-meadow-groves`. Its starting tree includes the
 published Hangar change; no unfinished C2 runtime work is mixed into956.
+
+### 2 October — touch playability and unrestricted mode choice
+
+User-prioritized touch usability precedes C2. Branch `codex/fpv-touch-flight`
+now starts on current main `fc0eaf978` after native stack957 fully merged.
+Recovery ref `codex/fpv-touch-before-main-20261002` preserves its original base;
+main advancement had an identical tree and preserved all local feature changes.
+
+All148 catalogue levels keep the player's selected mode. Acro-only skill courses
+permit clearly labelled unscored Self-level practice, without proof/reward/recovery
+writes. Ordinary school completion names the actual mode; replay/checkpoint
+selection uses matching evidence or a safe fresh attempt. Both SIM hosts and the
+lab use relative thumb pickup, held throttle, shared Precise/Direct response,
+independent pointers and safe pause/clear on interruption or resize. Larger edge
+controls and brief labels preserve the central flight view. See
+`docs/fpv-touch-flight.md` for behavior and research.
+
+Functional browser evidence passes32/32 checks, including296 actual-host
+level/mode starts, pointer ownership/cancellation, mode/replay/checkpoint
+switching, zero paused touch display, and lab resize/capture-loss handling.
+All178 demonstrations replay unchanged (154v2+24v1;327,795 frames). Actual player
+checks cover390×844,844×390 and1280×800 layouts, EN/UK, real pointer capture in
+Academy and World, and retained54% throttle after release. Browser snapshots and
+receipts are `docs/evidence/fpv-touch-*`; controlled-fixture limitations are
+explicit. Physical iPhone, Steam Deck/native-app, radio and novice acceptance
+remain pending; no measured FPS or new unit coverage claim. Unit coverage stays
+in H/R7. Frozen package admission and focused publication follow this checkpoint.
+
+Frozen touch candidate `b4bc48365` passes all three optional package admissions,
+committed-input and ZIP-member verification, and two byte-identical builds.
+Source file counts35/68/100 remain within inherited64/72/104 limits; package
+bytes545,596/3,825,812/14,079,797 remain within8/8/16MiB. Receipt:
+`docs/evidence/fpv-touch-package-20261002.json`. Both normal local playtests are
+updated:92 runtime files/13,922,478 bytes; ZIP SHA256
+`6409a64a29bc5bc089a692009eeceff6eb265050773844e66ae85e154dbe50d9`.
+This is a local player build; protected publication/deployment remains separate.
+
+Touch usability is published and attached as
+[PR #959](https://github.com/mekhovov/revealline/pull/959),
+`codex/fpv-touch-flight`, directly against main. Old stack957 is closed; no
+manual retargeting or redundant stack was created. The updated reviewed-player
+URL launched the real school in Self-level/Touch with no application errors;
+its phone view is captured at `/tmp/fpv-touch-final-player.png`. The player is
+left paused with mode and touch-response choices available. No public-live
+claim is made for959 until deployment identity and actual public launch pass.
+Next independent approved work remains C2 meadow exterior composition on current
+main; keep that work off this ready PR. Preserve Themes955 ownership and pending
+physical-device qualification. Inspect exact remote heads before any merge.
+
+Main advanced during publication: capacity repair958 merged as `07f227f50`.
+The touch branch was linearly rebased with recovery ref
+`codex/fpv-touch-before-main958-20261002`; only the upstream soundtrack compaction
+and its evidence differ. Frozen candidate `80807bd78` again passes all three
+admissions, committed-input/ZIP verification and two identical builds. The
+final32-check browser fixture revalidates the exact unchanged62 dependency
+hashes, including host `79daf2e114f95b362da70c7cd7a7f00e7174e30150f1e8f0ced7198e0caa30b0`.
+Receipt: `docs/evidence/fpv-touch-package-main958-20261002.json`. The explicit
+remote-head lease rejected a concurrent repository-automation update safely.
+Automation had merged the same main as `3984e8185`; its tree matched our rebased
+candidate apart from these new evidence records. That remote history is retained,
+and this evidence is applied on top without a force-push. Recovery refs
+`codex/fpv-touch-local-rebased-20261002` and
+`codex/fpv-touch-automation-main958-20261002` preserve both histories.
+No new native stack is needed. Public deployment and current-head checks remain
+external pending work; keep the ready increment separate from C2.
+Preserved-history candidate `e18d14aa7` also passes all three admissions and
+reproducibility checks; the main958 receipt now names that published-history
+candidate. Runtime and browser-fixture bytes are unchanged.
+
+### C2 meadow continuation — 2 October 2026
+
+Reconciled current main `07f227f5042364a73cbbc66cc783e40c93baea9a`:
+Garage #954, Hangar #956 and capacity repair #958 are merged. Native stack957
+is closed. The public marker identifies this main and Pages37043109731 passed;
+this continuation has not independently launched the public player, so it makes
+no new live claim. Touch/mode-choice #959 is separate at `8260a64e3`, with
+required checks still running at inspection. Preserve its completed changes and
+the normal reviewed/continuous playtest URLs; do not overwrite them with an
+independent C2 build lacking that increment.
+
+`codex/fpv-meadow-groves` advanced cleanly to current main and implements C2
+as a placement-only change. It reuses32 tree pairs in four irregular groves,
+keeps crowns at least10.1m beyond flight bounds, and preserves all geometry,
+materials, routes, objectives and actor behavior. The43 field-backed challenges
+share this scenery. Other13 environments compare exactly. Source WebGL passes
+147/147 checks and45 image pairs; all178 demonstrations replay over327,795ticks.
+Draw calls vary with newly visible scenery; no sustained FPS claim is made.
+
+The separate local C2 build is `dist/fpv-meadow-groves-playtest`:
+92runtime files/13,912,833bytes, ZIP
+`e0b3f9d031ec470689145a14894300f675c72e9526b1ab9206bd2e976d43dd51`.
+Frozen package admission and focused PR publication follow below. No new native
+stack is needed for this independent increment. Additional unit coverage stays
+in H/R7; physical device, novice and art acceptance remain open.
+
+Themes draft #955 remains owned by the Themes chat. Its latest inspected head
+`ca608cda584a44103284ba20e0a65defe0b53801` includes the Hangar fix. Integrate only
+C2 placement hunks with its shared material bindings; do not copy full visual
+modules or introduce a competing appearance preference. After C2 publication,
+continue C3 courtyard/woodland composition and surface-scale work on a separate
+branch while required CI runs.
+
+Touch #959 subsequently merged as `1d0b359f7`. Recovery ref
+`codex/fpv-meadow-before-touch-main-20261002` preserves C2's pre-integration
+history. Only the delivery-log append conflicted; both histories were retained.
+The two unpublished C2 commits were rebased onto current main. Frozen candidate
+`1975948b32aa4c3b016cb58b987a15b1f98e5661` passes all three admissions,
+committed-input/ZIP checks, two identical builds,147 WebGL checks/45 image pairs
+and all178 replays again. Integrated receipts use `*main959*` names.
+Final local C2 playtest has92files/13,925,302bytes and ZIP SHA256
+`5dc034998be3d0c6aa7fc0f0698479bf51ccae0eb076e98f42fc9f2e53768ecc`.
+It now includes the merged touch increment and can refresh normal player URLs.
+The bounded WebGL workload has up to23 more visible draw calls due to closer
+groves; no asset-count growth, reload leak or gameplay identity change is found.
+
+C3's concrete independent candidate is courtyard street-front composition:
+assemble the existing Kenney facade/roof modules into connected three-bay
+terraces with intentional alleys, preserving model counts and exterior route
+clearance. It belongs in `scenery-runtime.template.mjs` plus its regenerated
+runtime/provenance, not in C2's visual loop or Themes' appearance contracts.
+Review source and generated ownership before edits and publish separately.
+
+C2 is published and attached as [PR #960](https://github.com/mekhovov/revealline/pull/960),
+`codex/fpv-meadow-groves`, initially at `6386be8b3`, directly against main.
+The two normal local player builds now include both merged touch #959 and C2,
+with the same final ZIP identity above. Current-head CI/public deployment remain
+separate; no protected gate was bypassed and no new native stack was needed.
+Next work uses independent `codex/fpv-courtyard-terraces` from current main;
+keep unfinished C3 out of ready #960. Preserve Themes #955 and C2 placement when
+integrating branches. Do not report remaining physical-device/art qualification
+or deferred unit coverage as complete.
+### C3 courtyard continuation — 2 October 2026
+
+C2 meadow composition is published separately as
+[PR #960](https://github.com/mekhovov/revealline/pull/960), last inspected at
+`4507c4636` with required checks running. Branch `codex/fpv-meadow-groves` and its
+qualified normal player builds are preserved; no unfinished courtyard work was
+added there. C3 uses independent `codex/fpv-courtyard-terraces` from current main
+`1d0b359f75dfb48aa5729cdc619c2f93fe9ac65a`.
+
+The public marker identifies this merged touch #959 revision. Actual public SIM
+launch and Lighthouse approach succeed, exposing both flight modes and
+Precise/Direct touch response without application errors. This now verifies #959
+live; see `docs/evidence/fpv-touch-public-20261002.json`. It does not certify C2 or
+C3 publicly deployed, or new physical-device/hardware acceptance.
+
+C3 groups existing courtyard wall/roof modules into connected three-bay terraces
+with uneven alleys and setbacks. All139 placements,20 batches,119 instances and
+23-source-model library remain; only courtyard X/Z placement changes. Roof/floor
+alignment and ≥8m building clearance pass all3 actual bounds. Small creator
+sides under64m retain the old layout. Other5 prepared environments compare exactly
+across11 authored bounds/theme cases. Runtime grows801bytes; two offline source
+regenerations are identical and the embedded library hash is unchanged.
+
+Actual GLB/browser checks pass124/124 with59 image pairs, no increased sampled
+draw calls and stable reload/disposal counts. The real player completes Roofline
+survey at50.6s. Prior178-demo replay evidence remains applicable via exact equality
+of all12 bound runtime/catalogue/proof inputs; do not call this a new replay run.
+See `docs/fpv-courtyard-terraces.md` and adjacent model/browser receipts. Frozen
+packages/publication follow. Normal C2+touch player URLs stay untouched until an
+integrated C2+C3 build is qualified. Separate C3 URL is
+`dist/fpv-courtyard-terraces-playtest/optional-practice/fpv-worlds/index.html`.
+
+Themes #955 retains shared appearance/material-role ownership. C3 is a template
+placement hunk with offline-generated runtime/provenance only; preserve its
+contracts and C2 meadow visuals during integration. Broad C realistic art is not
+complete. Next work is woodland readability and shared-theme material/asset
+qualification; do not add wide decorative canopies across narrow flight gaps
+without matching authored visual/collision rules. B/D/F/G/H hardware, novice,
+creator/offline, feedback-led maps and deferred unit-coverage work remain open.
+
+C3 frozen candidate `b00fe336338cdf9a351f5851346f93c29ccdd003` passes all3
+optional-package admissions, committed-input and ZIP checks, and2 identical
+builds. Counts35/68/100 and bytes545,596 /3,825,812 /14,080,598 remain under the
+inherited guards. Packaged WebGL repeats124/124 checks and59 comparisons.
+C3 local build is92files/13,923,279bytes, ZIP SHA256
+`8d82a3e83798fc79adfcf9c048ad704a5de45eae18141ad0f9de3e571a681f03`.
+Source remains independent of ready #960. If960 merges first, reconcile new main
+with a recovery ref, preserve both log appends, and requalify combined package
+inputs before refreshing normal playtests. Native stacks are only needed if a
+new feature actually depends on an unmerged one.
+
+C3 is published and attached as [PR #961](https://github.com/mekhovov/revealline/pull/961),
+`codex/fpv-courtyard-terraces`, initially at `af24f6ce3`, directly against main.
+No native stack is needed: C2 and C3 change independent scenery areas. Themes was
+sent the exact template/placement handoff with both PR links under the user's
+existing coordination authorization. Do not overwrite its appearance work.
+
+At final inspection, unrelated rewards #906 advanced main to `c78258e24`.
+Repository automation already merged that main into meadow #960 as `989a4840e`;
+its required current-head checks are running. Preserve this remote merge history,
+not a force-rewritten linear approximation. Courtyard #961 is still at `af24f6ce3`
+and behind new main; inspect its exact remote head before any update because the
+same automation may reconcile it. No merge/live availability for960/961 is
+claimed. The frozen evidence identifies the earlier candidates honestly. If new
+main changes optional package inputs, repeat applicable frozen admission and
+browser checks before reporting the updated candidate qualified.
+
+Next concrete item: woodland/shared-theme asset readability. First reconcile
+#955 material-role ownership and determine visual/collision rules for the six
+existing tall timber-like tree colliders; avoid adding a solid-looking broad
+canopy in a flyable opening. Preserve completed960/961 and normal C2+touch builds
+while working on a new independent branch. Keep hardware/novice qualification
+and deferred unit coverage explicitly open.

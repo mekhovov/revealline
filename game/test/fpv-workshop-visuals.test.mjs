@@ -36,6 +36,8 @@ import {
   bindSimModelRole,
   validateSimMaterialBinding,
   applySimMaterialBindings,
+  instanceSimDetails,
+  ownedSimMaterials,
 } from '../../optional-practice/civilian-fpv/world-visuals.mjs';
 
 const presentation = { collectionId: 'industrial-workshop', revision: 'r1' };
@@ -276,6 +278,66 @@ test('container detail batches retain all fittings outside flight bounds without
   }
   disposeSimVisualGroup(build.world);
   assert.equal(released, 2);
+});
+
+test('instanced replacements retain and release registered shadow owners without a later world traversal', () => {
+  for (const collectionId of Object.keys(SIM_VISUAL_COLLECTIONS)) {
+    for (const quality of ['low', 'balanced', 'high']) {
+      const parent = new THREE.Group(),
+        registered = new Set(),
+        shadowOwners = new WeakMap();
+      const own = (paint) => {
+        registered.add(paint);
+        return paint;
+      };
+      const material = (color, options = {}) =>
+        own(new THREE.MeshStandardMaterial({ color, ...options }));
+      const mesh = (shape, paint, target = parent) => {
+        const object = new THREE.Mesh(shape, paint);
+        if (!shadowOwners.has(paint))
+          shadowOwners.set(paint, {
+            depth: own(new THREE.MeshDepthMaterial()),
+            distance: own(new THREE.MeshDistanceMaterial()),
+          });
+        object.customDepthMaterial = shadowOwners.get(paint).depth;
+        object.customDistanceMaterial = shadowOwners.get(paint).distance;
+        target.add(object);
+        return object;
+      };
+      buildDroneVisual({ parent, material, mesh, kind: 'utility', collectionId, quality });
+      // Gate fittings use the same replacement path after the world registration pass.
+      instanceSimDetails({
+        shape: new THREE.BoxGeometry(0.034, 0.034, 0.034),
+        paint: material(0xffffff),
+        parent,
+        matrices: [new THREE.Matrix4()],
+        mesh,
+      });
+      const reachable = new Set();
+      parent.traverse((item) => {
+        for (const paint of [
+          item.material,
+          ...ownedSimMaterials(item),
+          item.customDepthMaterial,
+          item.customDistanceMaterial,
+        ])
+          if (paint) reachable.add(paint);
+      });
+      assert.deepEqual(
+        reachable,
+        registered,
+        `${collectionId}/${quality}: every owner is reachable`,
+      );
+      const releases = new Map([...registered].map((paint) => [paint, 0]));
+      for (const paint of registered)
+        paint.addEventListener('dispose', () => releases.set(paint, releases.get(paint) + 1));
+      disposeSimVisualGroup(parent);
+      assert.ok(
+        [...releases.values()].every((count) => count === 1),
+        `${collectionId}/${quality}: each owner releases once`,
+      );
+    }
+  }
 });
 
 test('specimen collections bind the same model roles and geometry to distinct material palettes', () => {
