@@ -12,6 +12,9 @@ import { attachBenchmarkInput } from './controls.mjs';
 import { createPreviewLifecycle } from '../game-feel-lab/lifecycle.mjs';
 import { createBenchmarkPerformance, candidateMemory } from './performance.mjs';
 import { outcomeMessage } from './outcome.mjs';
+import { createRunningEnemyPreferences } from '../../game/hunt/running-enemy-preferences.mjs';
+import { mountRunningEnemyControls } from '../../game/ui/running-enemy-controls.mjs';
+import { huntText } from '../../game/hunt/copy.mjs';
 
 const $ = (id) => document.getElementById(id);
 const canvases = [$('reference'), $('comparison')];
@@ -36,6 +39,9 @@ let startup = null;
 let lastSummary = '';
 let lastEvents = '';
 let loadingFocus = null;
+let activationGeneration = 0;
+const runningEnemyPreferences = createRunningEnemyPreferences({ window });
+let runningEnemyControls = null;
 const measurements = createBenchmarkPerformance({ capacity: 120 });
 let measuredFrame = null;
 let lastMeasurementOutput = 0;
@@ -50,6 +56,7 @@ function measurementOutput() {
       mission: current?.entry.id ?? null,
       comparison: current?.comparison.body ?? null,
       classId: current?.session.setup.classId ?? null,
+      setup: current?.session.setup ?? null,
       comparisonVisible: $('show-comparison').checked,
       referenceReduced: $('reference-reduced').checked,
       comparisonReduced: current?.comparison.reduced ?? null,
@@ -105,6 +112,7 @@ function controls() {
       (current?.session.setup.classId ?? 'scout') !== 'scout' && /^v[345]-/.test(option.value);
   for (const id of ['comparison-reduced', 'capture-pulse', 'event-flashes', 'contact-style'])
     $(id).disabled = !current || pending;
+  runningEnemyControls?.refresh();
 }
 function comparisonDetails() {
   const current = selection.current;
@@ -154,7 +162,11 @@ function refresh() {
       : summary.tick
         ? 'Paused'
         : 'Ready';
-  const text = `${state} · ${(summary.coverage * 100).toFixed(1)}% / ${(session.run.level.goal.coverage * 100).toFixed(0)}% target · ${summary.lives} lives · ${summary.score} points · ${summary.time.toFixed(2)} s · tick ${summary.tick}`;
+  const hunt = summary.hunt;
+  const huntStatus = hunt
+    ? ` · ${huntText(hunt.mode)} ${hunt.kills}/${hunt.total} · ${huntText('score')} ${hunt.score}`
+    : '';
+  const text = `${state} · ${(summary.coverage * 100).toFixed(1)}% / ${(session.run.level.goal.coverage * 100).toFixed(0)}% target · ${summary.lives} lives · ${summary.score} points${huntStatus} · ${summary.time.toFixed(2)} s · tick ${summary.tick}`;
   if (text !== lastSummary) {
     $('summary').textContent = text;
     lastSummary = text;
@@ -197,6 +209,7 @@ function paint(dt = 0, measure = false) {
   return drawCosts;
 }
 function hold(message) {
+  activationGeneration++;
   endMeasurementSegment();
   readyCue.cancel();
   resultFocus.cancel();
@@ -210,9 +223,10 @@ function hold(message) {
   }
 }
 const selection = createBenchmarkSelection({
-  prepare: ({ entry, classId }, { signal }) =>
+  prepare: ({ entry, classId, runningEnemies }, { signal }) =>
     prepareBenchmarkScene(entry, {
       classId,
+      runningEnemies,
       catalog,
       presets,
       signal,
@@ -302,7 +316,14 @@ const input = attachBenchmarkInput({
 });
 
 const readyCue = createReadyCue((current) => {
-  if (disposed || !lifecycle.active || selection.pending || selection.current !== current) return;
+  if (
+    disposed ||
+    !lifecycle.active ||
+    !document.hasFocus() ||
+    selection.pending ||
+    selection.current !== current
+  )
+    return;
   input.clear();
   current.session.start();
   $('arena').focus({ preventScroll: true });
@@ -324,7 +345,7 @@ const resultFocus = createResultFocusCue({
   },
 });
 
-async function select(id, opener = null) {
+async function select(id, opener = null, { classId = $('craft').value || 'scout' } = {}) {
   const entry = catalog?.entries.find((item) => item.id === id);
   if (!entry || disposed) return;
   hold();
@@ -332,7 +353,13 @@ async function select(id, opener = null) {
   selection.current?.comparison.cancel();
   const owner = { opener };
   loadingFocus = owner;
-  const accepted = await selection.select({ entry, classId: $('craft').value || 'scout' });
+  // Capture once at the load boundary. A later preference change cannot mutate
+  // either painter's accepted attempt or a scene still preparing asynchronously.
+  const accepted = await selection.select({
+    entry,
+    classId,
+    runningEnemies: runningEnemyPreferences.snapshot().enabled,
+  });
   if (loadingFocus === owner) loadingFocus = null;
   if (disposed) return;
   if (!accepted && !selection.pending) {
@@ -342,7 +369,63 @@ async function select(id, opener = null) {
     }
     controls();
   }
+  return accepted;
 }
+const runningEnemyContainer = document.createElement('fieldset');
+const runningEnemyLegend = document.createElement('legend');
+runningEnemyLegend.textContent = 'Next loaded attempt';
+runningEnemyContainer.append(runningEnemyLegend);
+$('load').closest('.controls').after(runningEnemyContainer);
+runningEnemyControls = mountRunningEnemyControls({
+  container: runningEnemyContainer,
+  document,
+  window,
+  preferences: runningEnemyPreferences,
+  getCurrentEnabled: () => {
+    const level = selection.current?.session.run.level;
+    return level ? Boolean(level.runningEnemies || level.classic?.hunt) : null;
+  },
+  getAcceptedEnabled: () => {
+    const current = selection.current;
+    if (!current || selection.pending || (!current.session.playing && !current.session.run.tick))
+      return null;
+    // Authored Hunt objectives remain present for either preference value.
+    return current.session.run.level.classic?.hunt && !current.session.run.level.runningEnemies
+      ? runningEnemyPreferences.snapshot().enabled
+      : current.session.setup.runningEnemies;
+  },
+  async onRestart() {
+    const current = selection.current;
+    if (
+      !current ||
+      selection.pending ||
+      current.comparison.pending ||
+      !lifecycle.active ||
+      !document.hasFocus()
+    )
+      return;
+    const preparation = select(current.entry.id, document.activeElement, {
+      classId: current.session.setup.classId,
+    });
+    // select() performs its own hold synchronously. Capture after that boundary;
+    // any later hold (including blur followed by refocus) retires this activation.
+    const activation = activationGeneration;
+    const accepted = await preparation;
+    if (
+      accepted &&
+      activation === activationGeneration &&
+      !disposed &&
+      lifecycle.active &&
+      document.hasFocus()
+    )
+      retry();
+  },
+});
+const runningEnemyLoadHelp = document.createElement('p');
+runningEnemyLoadHelp.className = 'note';
+runningEnemyLoadHelp.textContent =
+  'Load selected applies this setting to a ready scene. Start, Resume and Retry keep the loaded setup. Both views always share the same enemies.';
+runningEnemyContainer.append(runningEnemyLoadHelp);
 $('mission').onchange = () => void select($('mission').value, $('mission'));
 $('craft').onchange = () => void select($('mission').value, $('craft'));
 $('start').onclick = () => {
@@ -562,6 +645,8 @@ function pagehide(event) {
     input.destroy();
     retryGuard.destroy();
     resultFocus.destroy();
+    runningEnemyControls.dispose();
+    runningEnemyPreferences.dispose();
     selection.dispose();
     document.removeEventListener('visibilitychange', visibility);
     window.removeEventListener('blur', blur);

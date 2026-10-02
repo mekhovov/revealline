@@ -1,0 +1,52 @@
+{
+  "observedAt": "2026-10-02T23:53:38.036Z",
+  "method": "Direct bounded in-memory generated Creator bundle preparation/export/import, explicit runtime starts, 30 legal down ticks, pause, replay-verified On v2 and Off v1 restoration, accepted-selection Retry, fresh Off, and at most 2400 further legal down ticks. No test runner or automated suite; native image decode replaced only by actual PNG header dimension reader.",
+  "editionId": "0b27d155c825072cb8f50da4cbb5013085053b010a39a89fc85d70d143873a5e",
+  "bundleBytes": 30841,
+  "initial": {
+    "offVersion": "xonix-level.v5",
+    "onVersion": "xonix-level.v10",
+    "addedRunners": 6,
+    "sameGoal": true,
+    "exactUnderlyingLevel": true,
+    "samePicture": true,
+    "acceptedOff": false,
+    "acceptedOn": true
+  },
+  "continuation": {
+    "format": "revealline-creator-attempt.v2",
+    "flag": true,
+    "runIdRetained": true,
+    "exactCoreState": true,
+    "tick": 30,
+    "acceptedFlag": true,
+    "runnerStateCount": 6
+  },
+  "legacyOffContinuation": {
+    "format": "revealline-creator-attempt.v1",
+    "acceptedFlag": false,
+    "exactCoreState": true,
+    "runIdRetained": true
+  },
+  "retry": {
+    "acceptedFlag": true,
+    "exactLevel": true,
+    "sameSeed": true,
+    "freshRunId": true,
+    "tick": 0,
+    "freshOffHasNoOverlay": true
+  },
+  "completion": {
+    "status": "won",
+    "tick": 414,
+    "coverage": 0.7985212569316081,
+    "verified": true,
+    "missionId": "picture-1",
+    "editionIdentity": true,
+    "retainedRunId": true
+  },
+  "codeSHA256": {
+    "game/creator/runtime.mjs": "c3583065cc0f6c03f41121936ecef5b2c82874a62f04ff644388212a988c1bf5"
+  },
+  "scope": "Production runtime and bundle validation only. This is not native image rendering, IndexedDB installation, browser controls, or exhaustive generated-template qualification."
+}
