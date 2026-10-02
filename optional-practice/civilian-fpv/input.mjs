@@ -21,12 +21,30 @@ const textEntry = (target) =>
   (target?.tagName === 'INPUT' &&
     !['range', 'checkbox', 'radio', 'button', 'submit', 'reset'].includes(target.type));
 
+/** Spatial response only: no smoothing queue or additional input latency.
+ * A new thumb contact starts at neutral rotation and the retained throttle.
+ * The actual applied command (not finger position) belongs in the stick HUD. */
+export function touchStickValues({ side, dx, dy, travel, throttle = 0, response = 'precise' }) {
+  if (!['left', 'right'].includes(side) || !Number.isFinite(travel) || travel <= 0)
+    throw new TypeError('Invalid touch stick geometry');
+  const axis = (distance) => {
+    const value = clamp(Number.isFinite(distance) ? distance / travel : 0, -1, 1);
+    if (response === 'direct') return value;
+    const magnitude = Math.max(0, (Math.abs(value) - 0.03) / 0.97);
+    return Math.sign(value) * (0.35 * magnitude + 0.65 * magnitude ** 3);
+  };
+  return side === 'left'
+    ? { yaw: axis(dx), throttle: clamp(throttle + dy / (travel * 2), 0, 1) }
+    : { roll: axis(dx), pitch: axis(dy) };
+}
+
 /** One active owner. Throttle is a position, not an automatic altitude command.
  * Losing ownership releases all local controls; radio pickup is owned by its adapter. */
 export function createFlightInput({ window: win, document: doc, onPause = () => {} }) {
   let owner = 'keyboard',
     enabled = false,
     throttle = 0,
+    touchResponse = 'precise',
     disposed = false;
   const keys = new Set(),
     touch = neutralFlightInput(),
@@ -81,6 +99,10 @@ export function createFlightInput({ window: win, document: doc, onPause = () => 
   listen(doc, 'visibilitychange', () => {
     if (doc.hidden || doc.visibilityState === 'hidden') lose();
   });
+  listen(win, 'resize', () => {
+    // Reacquire a fresh thumb origin after rotation/fullscreen changes.
+    if (owner === 'touch' && enabled) lose();
+  });
   return {
     clear,
     select(value) {
@@ -95,6 +117,11 @@ export function createFlightInput({ window: win, document: doc, onPause = () => 
       if (!enabled) clear();
     },
     owner: () => owner,
+    touchResponse(value) {
+      if (!['precise', 'direct'].includes(value)) throw new TypeError('Unknown touch response');
+      if (value !== touchResponse) clear();
+      touchResponse = value;
+    },
     throttle(value) {
       if (owner === 'touch' && enabled && Number.isFinite(value))
         touch.throttle = clamp(value, 0, 1);
@@ -128,10 +155,13 @@ export function createFlightInput({ window: win, document: doc, onPause = () => 
       };
     },
     bindStick(element, side) {
-      let pointer = null;
+      let pointer = null,
+        pickup = null;
       const release = () => {
         const previous = pointer;
         pointer = null;
+        pickup = null;
+        element.dataset.touchActive = 'false';
         if (previous !== null) {
           try {
             element.releasePointerCapture(previous);
@@ -148,23 +178,39 @@ export function createFlightInput({ window: win, document: doc, onPause = () => 
       releases.push(release);
       const move = (event) => {
         if (pointer !== event.pointerId || owner !== 'touch' || !enabled) return;
-        const rect = element.getBoundingClientRect();
-        if (!rect.width || !rect.height) return;
-        const x = clamp(((event.clientX - rect.left) / rect.width) * 2 - 1, -1, 1),
-          y = clamp(1 - ((event.clientY - rect.top) / rect.height) * 2, -1, 1);
-        if (side === 'left') {
-          touch.yaw = x;
-          touch.throttle = (y + 1) / 2;
-        } else {
-          touch.roll = x;
-          touch.pitch = y;
-        }
+        if (!pickup) return;
+        Object.assign(
+          touch,
+          touchStickValues({
+            side,
+            dx: event.clientX - pickup.x,
+            dy: pickup.y - event.clientY,
+            travel: pickup.travel,
+            throttle: pickup.throttle,
+            response: touchResponse,
+          }),
+        );
         event.preventDefault();
       };
       listen(element, 'pointerdown', (event) => {
         if (owner !== 'touch' || !enabled || pointer !== null) return;
+        if (event.button !== undefined && event.button !== 0) return;
+        const rect = element.getBoundingClientRect();
+        if (!rect.width || !rect.height) return;
+        pickup = {
+          x: event.clientX,
+          y: event.clientY,
+          travel: rect.width * 0.34,
+          throttle: touch.throttle,
+        };
         pointer = event.pointerId;
-        element.setPointerCapture(pointer);
+        try {
+          element.setPointerCapture(pointer);
+        } catch {
+          release();
+          return;
+        }
+        element.dataset.touchActive = 'true';
         move(event);
       });
       listen(element, 'pointermove', move);

@@ -186,6 +186,9 @@ export function mountFlightApp({
     done: ['Done', 'Готово'],
     keyboardGuide: ['Keyboard controls', 'Клавіатура'],
     touchGuide: ['Touch controls', 'Сенсорне керування'],
+    touchResponse: ['Touch response', 'Чутливість дотику'],
+    touchPrecise: ['Precise — small corrections', 'Точна — малі корекції'],
+    touchDirect: ['Direct — linear response', 'Пряма — лінійна реакція'],
     flyingBasics: ['Flying basics', 'Основи польоту'],
     yourFlights: ['Your flights', 'Ваші польоти'],
     workshopAndOffline: ['Workshop & offline', 'Майстерня й автономний запуск'],
@@ -232,7 +235,7 @@ export function mountFlightApp({
     mountStickTrace($(id).parentElement, { travel: 180 * 0.3 }),
   );
   const touchTraces = ['left-stick', 'right-stick'].map((id) =>
-    mountStickTrace($(id), { travel: 35 }),
+    mountStickTrace($(id), { travel: 180 * 0.34 }),
   );
   const resetStickTraces = () => [...stickTraces, ...touchTraces].forEach((trace) => trace.reset());
   let stickTraceLayout = '';
@@ -250,6 +253,8 @@ export function mountFlightApp({
     }
   };
   try {
+    const touchResponse = win.localStorage?.getItem('revealline.fpv.touch-response.v1');
+    if (['precise', 'direct'].includes(touchResponse)) $('touch-response').value = touchResponse;
     const saved = win.localStorage?.getItem('revealline.fpv.academy-sticks.v1');
     if (['compact', 'expanded'].includes(saved) && $('academy-stick-display'))
       $('academy-stick-display').value = saved;
@@ -266,6 +271,7 @@ export function mountFlightApp({
     document: doc,
     onPause: (reason) => (reason === 'paused' ? setFlightMenu(true) : pause(reason)),
   });
+  input.touchResponse($('touch-response').value);
   const controllerHint = doc.createElement('p');
   controllerHint.id = 'academy-controller-hint';
   controllerHint.hidden = true;
@@ -708,7 +714,15 @@ export function mountFlightApp({
       cameraTilt: Number($('camera-tilt').value) || 0,
     });
     const radioPreview = !replay && input.owner() === 'radio' ? radio.preview() : null,
-      values = state.lastInput,
+      values =
+        !replay && input.owner() === 'touch' && state.status !== 'active'
+          ? Object.fromEntries(
+              Object.entries(input.sample(0)).map(([axis, value]) => [
+                axis,
+                Math.round(value * 1000),
+              ]),
+            )
+          : state.lastInput,
       monitor = radioPreview
         ? radioPreview.controls
         : !replay && input.owner() === 'controller'
@@ -765,10 +779,19 @@ export function mountFlightApp({
       $('touch-throttle').value = String(Math.round(values.throttle / 10));
       paintStickDirections($('left-stick'), { horizontal: 'yaw', vertical: 'throttle', locale });
       paintStickDirections($('right-stick'), { horizontal: 'roll', vertical: 'pitch', locale });
+      const leftTravel = $('left-stick').clientWidth * 0.34,
+        rightTravel = $('right-stick').clientWidth * 0.34;
       $('left-stick').querySelector('i').style.transform =
-        `translate(${(values.yaw / 1000) * 35}px, ${(1 - values.throttle / 500) * 35}px)`;
+        `translate(${(values.yaw / 1000) * leftTravel}px, ${(1 - values.throttle / 500) * leftTravel}px)`;
       $('right-stick').querySelector('i').style.transform =
-        `translate(${(values.roll / 1000) * 35}px, ${(-values.pitch / 1000) * 35}px)`;
+        `translate(${(values.roll / 1000) * rightTravel}px, ${(-values.pitch / 1000) * rightTravel}px)`;
+      $('touch-throttle-readout').textContent = `${Math.round(values.throttle / 10)}%${
+        $('left-stick').dataset.touchActive === 'true'
+          ? ''
+          : locale === 'uk'
+            ? ' · тримає'
+            : ' · held'
+      }`;
       for (const [index, pair] of [
         [values.yaw / 1000, values.throttle / 500 - 1],
         [values.roll / 1000, values.pitch / 1000],
@@ -1031,6 +1054,16 @@ export function mountFlightApp({
     reset();
     $('touch-controls').hidden = input.owner() !== 'touch';
     doc.body.classList.toggle('touch-mode', input.owner() === 'touch');
+  });
+  listen($('touch-response'), 'change', () => {
+    pause();
+    input.touchResponse($('touch-response').value);
+    try {
+      win.localStorage?.setItem('revealline.fpv.touch-response.v1', $('touch-response').value);
+    } catch {
+      /* Touch response remains available when preference storage is denied. */
+    }
+    paint(true);
   });
   listen($('language'), 'change', () => {
     pause();
