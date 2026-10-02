@@ -1,0 +1,927 @@
+{
+  "format": "FPVSkillsModelQualification.v1",
+  "createdAt": "2026-10-02T02:24:44.986099+00:00",
+  "passed": true,
+  "parent": "351ddf050b414a9f31e82b59cb052f62e48abf72",
+  "sourceHashes": {
+    "world-model": "692f95aa2eef7f9fd8be04e20799e928b5c4fb917daae8128306e9fe66b07cc2",
+    "world-catalogue": "a0111508d84e19da88bdb78c1834e8a05950d5ee04a59819dd8545209d2698fb",
+    "world-demonstrations": "d99ab7316e0f570fc07f7ac813c34eb656e807e774619c5de64907f8a2855528"
+  },
+  "summary": {
+    "oldSchoolDefinitionsUnchanged": 42,
+    "oldSchoolCatalogueIdentitiesUnchanged": 42,
+    "oldWorldProofBytesUnchanged": 74,
+    "legacySnapshotsCompared": 121178,
+    "legacyProofsReplayed": 74,
+    "newProofsReplayed": 16,
+    "academyV1ProofsReplayed": 24,
+    "runtimeCriteriaChecks": 21,
+    "semanticCounterexampleChecks": 6,
+    "positiveSkillTracesWithoutReset": 16,
+    "newCanonicalCommandsUnchanged": 35045,
+    "schemaBoundaryChecks": 20
+  },
+  "criteriaChecks": [
+    {
+      "name": "legacy normalization, identities and every replayed state stay unchanged",
+      "passed": true,
+      "ticks": 250
+    },
+    {
+      "name": "full actual roll and replay qualify with ordered quaternion checkpoints",
+      "passed": true,
+      "ticks": 58,
+      "angle": 36000,
+      "finalStateIdentity": "5134996aee92a6be"
+    },
+    {
+      "name": "actual forward pitch flip qualifies independently",
+      "passed": true,
+      "ticks": 58
+    },
+    {
+      "name": "neutral upright endpoint cannot count as rotation",
+      "passed": true
+    },
+    {
+      "name": "wrong-sign full rotation is rejected",
+      "passed": true
+    },
+    {
+      "name": "wrong-axis full yaw cannot qualify as roll",
+      "passed": true
+    },
+    {
+      "name": "alternating quarter-roll wobble cannot farm full rotation",
+      "passed": true
+    },
+    {
+      "name": "actual half roll followed by inverted dwell qualifies attitude",
+      "passed": true,
+      "ticks": 33,
+      "upY": -1000000
+    },
+    {
+      "name": "upright drift cannot satisfy inverted recognition",
+      "passed": true
+    },
+    {
+      "name": "downward y-plane crossing requires actual nose-down descent",
+      "passed": true,
+      "ticks": 33,
+      "position": {
+        "x": 0,
+        "y": 27914,
+        "z": 0
+      },
+      "velocity": {
+        "x": 0,
+        "y": -5975,
+        "z": 0
+      }
+    },
+    {
+      "name": "vertical drop with upright nose cannot satisfy a dive",
+      "passed": true
+    },
+    {
+      "name": "actual command-driven full spatial orbit qualifies and replays",
+      "passed": true,
+      "ticks": 738,
+      "winding": 36012,
+      "finalStateIdentity": "5cb05fdb0912496b"
+    },
+    {
+      "name": "flat spatial orbit cannot satisfy required axial climb",
+      "passed": true
+    },
+    {
+      "name": "command-driven rising orbit meets progress-linked axial displacement",
+      "passed": true,
+      "ticks": 738,
+      "height": 39844
+    },
+    {
+      "name": "wrong entry bearing does not capture a fresh orbit attempt",
+      "passed": true
+    },
+    {
+      "name": "upright pose cannot enter an inverted half-loop",
+      "passed": true
+    },
+    {
+      "name": "spinning in place cannot satisfy position orbit",
+      "passed": true
+    },
+    {
+      "name": "upright orbit without coupled rotation cannot satisfy power loop/barrel",
+      "passed": true
+    },
+    {
+      "name": "pause adds no progress; partial rotation recovers from exact proof prefix",
+      "passed": true,
+      "prefixTicks": 20
+    },
+    {
+      "name": "skill courses reject self-level and malformed versioned criteria",
+      "passed": true
+    },
+    {
+      "name": "ground contact cannot preserve an unfinished rotational attempt",
+      "passed": true,
+      "contacts": 1,
+      "grounded": true,
+      "reason": "airborne-clearance"
+    }
+  ],
+  "semanticCounterexamples": [
+    {
+      "name": "same canonical16 recordings still complete with stricter authored envelopes",
+      "passed": true,
+      "lessons": 16,
+      "unchangedFrames": 35045
+    },
+    {
+      "name": "off-beam loop counterexample accepted by old envelope is rejected by corrected corridor",
+      "passed": true,
+      "actualFlightOffsetMm": 30000,
+      "oldStatus": "complete",
+      "fixedStatus": "active",
+      "reason": "airborne-clearance"
+    },
+    {
+      "name": "orbit ten metres above instructed height no longer qualifies",
+      "passed": true,
+      "heightMm": 35000,
+      "ticks": 741,
+      "fixedReason": "outside-zone"
+    },
+    {
+      "name": "roll commands cannot satisfy a pitch-coupled loop in the wrong world plane",
+      "passed": true,
+      "step": 2,
+      "status": "active",
+      "reason": "outside-zone"
+    },
+    {
+      "name": "opposite commanded roll cannot satisfy the explicitly right-roll objective",
+      "passed": true,
+      "step": 1,
+      "status": "active"
+    },
+    {
+      "name": "leaving the path band discards previous winding and requires a fresh full circuit",
+      "passed": true,
+      "ticks": 1573,
+      "newEntryWinding": -6,
+      "finalWinding": 36034
+    }
+  ],
+  "replayResults": [
+    {
+      "id": "woodland-01",
+      "mode": "self-level",
+      "ticks": 1184,
+      "legacy": true,
+      "sourceIdentity": "1c47c14d883b740f",
+      "finalStateIdentity": "560de860d30125d5"
+    },
+    {
+      "id": "woodland-01",
+      "mode": "acro",
+      "ticks": 1186,
+      "legacy": true,
+      "sourceIdentity": "1c47c14d883b740f",
+      "finalStateIdentity": "ace617d5f8f16fe2"
+    },
+    {
+      "id": "woodland-02",
+      "mode": "self-level",
+      "ticks": 2020,
+      "legacy": true,
+      "sourceIdentity": "eb1d529b3d3e00a0",
+      "finalStateIdentity": "12d706863c6dd530"
+    },
+    {
+      "id": "woodland-02",
+      "mode": "acro",
+      "ticks": 2018,
+      "legacy": true,
+      "sourceIdentity": "eb1d529b3d3e00a0",
+      "finalStateIdentity": "ac8a69cecd009860"
+    },
+    {
+      "id": "woodland-03",
+      "mode": "self-level",
+      "ticks": 2271,
+      "legacy": true,
+      "sourceIdentity": "c56634122985257f",
+      "finalStateIdentity": "c0544887083cd5de"
+    },
+    {
+      "id": "woodland-03",
+      "mode": "acro",
+      "ticks": 2274,
+      "legacy": true,
+      "sourceIdentity": "c56634122985257f",
+      "finalStateIdentity": "3551e9a798ce311a"
+    },
+    {
+      "id": "woodland-04",
+      "mode": "self-level",
+      "ticks": 1732,
+      "legacy": true,
+      "sourceIdentity": "816eb9ccbee739d6",
+      "finalStateIdentity": "27808821fde2c647"
+    },
+    {
+      "id": "woodland-04",
+      "mode": "acro",
+      "ticks": 1738,
+      "legacy": true,
+      "sourceIdentity": "816eb9ccbee739d6",
+      "finalStateIdentity": "026b368003db28e8"
+    },
+    {
+      "id": "woodland-05",
+      "mode": "self-level",
+      "ticks": 2582,
+      "legacy": true,
+      "sourceIdentity": "6ac551684372a2d6",
+      "finalStateIdentity": "b901838a3ead4945"
+    },
+    {
+      "id": "woodland-05",
+      "mode": "acro",
+      "ticks": 2586,
+      "legacy": true,
+      "sourceIdentity": "6ac551684372a2d6",
+      "finalStateIdentity": "e4771796064b5c62"
+    },
+    {
+      "id": "woodland-06",
+      "mode": "self-level",
+      "ticks": 2468,
+      "legacy": true,
+      "sourceIdentity": "2103471b771e85f4",
+      "finalStateIdentity": "601ae64f9c03c7ef"
+    },
+    {
+      "id": "woodland-06",
+      "mode": "acro",
+      "ticks": 2469,
+      "legacy": true,
+      "sourceIdentity": "2103471b771e85f4",
+      "finalStateIdentity": "569400443beef1b1"
+    },
+    {
+      "id": "woodland-07",
+      "mode": "self-level",
+      "ticks": 2178,
+      "legacy": true,
+      "sourceIdentity": "284f18928f5e8d4b",
+      "finalStateIdentity": "4065f81960dd5a68"
+    },
+    {
+      "id": "woodland-07",
+      "mode": "acro",
+      "ticks": 2183,
+      "legacy": true,
+      "sourceIdentity": "284f18928f5e8d4b",
+      "finalStateIdentity": "27ba751d6a29c6bf"
+    },
+    {
+      "id": "woodland-08",
+      "mode": "self-level",
+      "ticks": 2230,
+      "legacy": true,
+      "sourceIdentity": "24b24db9621baec9",
+      "finalStateIdentity": "4c868574cbad50c1"
+    },
+    {
+      "id": "woodland-08",
+      "mode": "acro",
+      "ticks": 2233,
+      "legacy": true,
+      "sourceIdentity": "24b24db9621baec9",
+      "finalStateIdentity": "9fcd10c956824dbe"
+    },
+    {
+      "id": "courtyard-01",
+      "mode": "self-level",
+      "ticks": 1207,
+      "legacy": true,
+      "sourceIdentity": "12fe004c06475577",
+      "finalStateIdentity": "8911b4283479fcc6"
+    },
+    {
+      "id": "courtyard-01",
+      "mode": "acro",
+      "ticks": 1207,
+      "legacy": true,
+      "sourceIdentity": "12fe004c06475577",
+      "finalStateIdentity": "d7fde3f672df5f0d"
+    },
+    {
+      "id": "courtyard-02",
+      "mode": "self-level",
+      "ticks": 2238,
+      "legacy": true,
+      "sourceIdentity": "72f2754a35002534",
+      "finalStateIdentity": "3113c2b1d8710607"
+    },
+    {
+      "id": "courtyard-02",
+      "mode": "acro",
+      "ticks": 2238,
+      "legacy": true,
+      "sourceIdentity": "72f2754a35002534",
+      "finalStateIdentity": "03463677bc1321e7"
+    },
+    {
+      "id": "courtyard-03",
+      "mode": "self-level",
+      "ticks": 2528,
+      "legacy": true,
+      "sourceIdentity": "f7065fd14eb2f7b5",
+      "finalStateIdentity": "2839f1e407724222"
+    },
+    {
+      "id": "courtyard-03",
+      "mode": "acro",
+      "ticks": 2519,
+      "legacy": true,
+      "sourceIdentity": "f7065fd14eb2f7b5",
+      "finalStateIdentity": "25446be8b4b1648e"
+    },
+    {
+      "id": "courtyard-04",
+      "mode": "self-level",
+      "ticks": 1891,
+      "legacy": true,
+      "sourceIdentity": "8ec54c3b11e729cd",
+      "finalStateIdentity": "5199d9ccfa5d72df"
+    },
+    {
+      "id": "courtyard-04",
+      "mode": "acro",
+      "ticks": 1895,
+      "legacy": true,
+      "sourceIdentity": "8ec54c3b11e729cd",
+      "finalStateIdentity": "877d78092b581238"
+    },
+    {
+      "id": "courtyard-05",
+      "mode": "self-level",
+      "ticks": 2482,
+      "legacy": true,
+      "sourceIdentity": "17f7577ed3a93f23",
+      "finalStateIdentity": "df8c48177890d68c"
+    },
+    {
+      "id": "courtyard-05",
+      "mode": "acro",
+      "ticks": 2480,
+      "legacy": true,
+      "sourceIdentity": "17f7577ed3a93f23",
+      "finalStateIdentity": "9b05732bb716360e"
+    },
+    {
+      "id": "courtyard-06",
+      "mode": "self-level",
+      "ticks": 2832,
+      "legacy": true,
+      "sourceIdentity": "5691d8d404d3a9a8",
+      "finalStateIdentity": "6bbdd386e3d6ded3"
+    },
+    {
+      "id": "courtyard-06",
+      "mode": "acro",
+      "ticks": 2849,
+      "legacy": true,
+      "sourceIdentity": "5691d8d404d3a9a8",
+      "finalStateIdentity": "c29bd2c2087b7dee"
+    },
+    {
+      "id": "courtyard-07",
+      "mode": "self-level",
+      "ticks": 2397,
+      "legacy": true,
+      "sourceIdentity": "406edf13dca1efa3",
+      "finalStateIdentity": "f53d7be347d8057c"
+    },
+    {
+      "id": "courtyard-07",
+      "mode": "acro",
+      "ticks": 2400,
+      "legacy": true,
+      "sourceIdentity": "406edf13dca1efa3",
+      "finalStateIdentity": "74ab30c5bd5d693c"
+    },
+    {
+      "id": "courtyard-08",
+      "mode": "self-level",
+      "ticks": 2095,
+      "legacy": true,
+      "sourceIdentity": "7984cad0355a7c02",
+      "finalStateIdentity": "e8b1abdd29eeb18e"
+    },
+    {
+      "id": "courtyard-08",
+      "mode": "acro",
+      "ticks": 2095,
+      "legacy": true,
+      "sourceIdentity": "7984cad0355a7c02",
+      "finalStateIdentity": "77d4322cef539ad7"
+    },
+    {
+      "id": "beginner-15",
+      "mode": "acro",
+      "ticks": 360,
+      "legacy": true,
+      "sourceIdentity": "451ad6d46ab40e85",
+      "finalStateIdentity": "a263ee9df3245fc6"
+    },
+    {
+      "id": "beginner-16",
+      "mode": "acro",
+      "ticks": 712,
+      "legacy": true,
+      "sourceIdentity": "5f480be5552a4896",
+      "finalStateIdentity": "98a71c96624ef754"
+    },
+    {
+      "id": "beginner-13",
+      "mode": "acro",
+      "ticks": 654,
+      "legacy": true,
+      "sourceIdentity": "69bdf9a4ac73a31e",
+      "finalStateIdentity": "11f9978ff8f10766"
+    },
+    {
+      "id": "beginner-17",
+      "mode": "acro",
+      "ticks": 608,
+      "legacy": true,
+      "sourceIdentity": "1cefa1a39dc2964d",
+      "finalStateIdentity": "e31f382df014b710"
+    },
+    {
+      "id": "beginner-14",
+      "mode": "acro",
+      "ticks": 757,
+      "legacy": true,
+      "sourceIdentity": "cea3c2b2d9a5dc24",
+      "finalStateIdentity": "fe32539fa7036a87"
+    },
+    {
+      "id": "beginner-18",
+      "mode": "acro",
+      "ticks": 961,
+      "legacy": true,
+      "sourceIdentity": "01b84b1aaae8d520",
+      "finalStateIdentity": "c3cb25ef47210af2"
+    },
+    {
+      "id": "beginner-19",
+      "mode": "acro",
+      "ticks": 973,
+      "legacy": true,
+      "sourceIdentity": "80dc8d60a229d28f",
+      "finalStateIdentity": "4278125617729278"
+    },
+    {
+      "id": "beginner-20",
+      "mode": "acro",
+      "ticks": 908,
+      "legacy": true,
+      "sourceIdentity": "1b0ad0ea2b94f32f",
+      "finalStateIdentity": "85322821714cc6d5"
+    },
+    {
+      "id": "beginner-21",
+      "mode": "acro",
+      "ticks": 959,
+      "legacy": true,
+      "sourceIdentity": "6e525e60ae7a9fd7",
+      "finalStateIdentity": "f68bc332fde2cd48"
+    },
+    {
+      "id": "beginner-22",
+      "mode": "acro",
+      "ticks": 1763,
+      "legacy": true,
+      "sourceIdentity": "f2fee45d782060e4",
+      "finalStateIdentity": "1eed4ab679368ff7"
+    },
+    {
+      "id": "beginner-23",
+      "mode": "acro",
+      "ticks": 1057,
+      "legacy": true,
+      "sourceIdentity": "ed45d8e143324668",
+      "finalStateIdentity": "2845a2ff4aec8315"
+    },
+    {
+      "id": "beginner-24",
+      "mode": "acro",
+      "ticks": 1031,
+      "legacy": true,
+      "sourceIdentity": "89edd7ed96c134ec",
+      "finalStateIdentity": "7524261f630f7a40"
+    },
+    {
+      "id": "beginner-25",
+      "mode": "acro",
+      "ticks": 676,
+      "legacy": true,
+      "sourceIdentity": "5b7fdad9ec9b8949",
+      "finalStateIdentity": "d8840ecf804778f1"
+    },
+    {
+      "id": "beginner-26",
+      "mode": "acro",
+      "ticks": 1407,
+      "legacy": true,
+      "sourceIdentity": "616326c6a2c3dcc6",
+      "finalStateIdentity": "e0364f091e3eb2a4"
+    },
+    {
+      "id": "beginner-01",
+      "mode": "self-level",
+      "ticks": 360,
+      "legacy": true,
+      "sourceIdentity": "5b7652234b696e5a",
+      "finalStateIdentity": "9c5c44ff0f549053"
+    },
+    {
+      "id": "beginner-02",
+      "mode": "self-level",
+      "ticks": 564,
+      "legacy": true,
+      "sourceIdentity": "e50fcbdb6764bd0f",
+      "finalStateIdentity": "f79e1ebe9e9f5a3b"
+    },
+    {
+      "id": "beginner-03",
+      "mode": "self-level",
+      "ticks": 561,
+      "legacy": true,
+      "sourceIdentity": "20c47db382d75bc5",
+      "finalStateIdentity": "df7c0c7ddcbe98f8"
+    },
+    {
+      "id": "beginner-04",
+      "mode": "self-level",
+      "ticks": 696,
+      "legacy": true,
+      "sourceIdentity": "bbce5a92237477b8",
+      "finalStateIdentity": "2b02d54e3f436aa4"
+    },
+    {
+      "id": "beginner-05",
+      "mode": "self-level",
+      "ticks": 654,
+      "legacy": true,
+      "sourceIdentity": "29eb33e8d0941bc0",
+      "finalStateIdentity": "7b57e5174cee28c4"
+    },
+    {
+      "id": "beginner-06",
+      "mode": "self-level",
+      "ticks": 828,
+      "legacy": true,
+      "sourceIdentity": "e1520c67b8bab038",
+      "finalStateIdentity": "e2cdac9d77db8835"
+    },
+    {
+      "id": "beginner-07",
+      "mode": "self-level",
+      "ticks": 948,
+      "legacy": true,
+      "sourceIdentity": "96b61727c33609cb",
+      "finalStateIdentity": "52ca8f0f6d942fda"
+    },
+    {
+      "id": "beginner-08",
+      "mode": "self-level",
+      "ticks": 830,
+      "legacy": true,
+      "sourceIdentity": "df81ed3f34a3b642",
+      "finalStateIdentity": "502bfd5fba0dd1fa"
+    },
+    {
+      "id": "beginner-09",
+      "mode": "self-level",
+      "ticks": 899,
+      "legacy": true,
+      "sourceIdentity": "a76f372299d61107",
+      "finalStateIdentity": "fd81a13164a8da78"
+    },
+    {
+      "id": "beginner-10",
+      "mode": "self-level",
+      "ticks": 732,
+      "legacy": true,
+      "sourceIdentity": "6c6745619ebc45cf",
+      "finalStateIdentity": "573b969949ebedb6"
+    },
+    {
+      "id": "beginner-11",
+      "mode": "self-level",
+      "ticks": 945,
+      "legacy": true,
+      "sourceIdentity": "6cdbd35333c04b69",
+      "finalStateIdentity": "d22d2c0ed2f3769e"
+    },
+    {
+      "id": "beginner-12",
+      "mode": "self-level",
+      "ticks": 1032,
+      "legacy": true,
+      "sourceIdentity": "43f761053d0d99c5",
+      "finalStateIdentity": "4d5e90cdbe3cccac"
+    },
+    {
+      "id": "beginner-27",
+      "mode": "acro",
+      "ticks": 1379,
+      "legacy": true,
+      "sourceIdentity": "61cef0ae26829648",
+      "finalStateIdentity": "a18a122f726dfe48"
+    },
+    {
+      "id": "beginner-28",
+      "mode": "acro",
+      "ticks": 1151,
+      "legacy": true,
+      "sourceIdentity": "98ef9c7fc4ecf757",
+      "finalStateIdentity": "4126e0a2e80d49ae"
+    },
+    {
+      "id": "beginner-29",
+      "mode": "acro",
+      "ticks": 1597,
+      "legacy": true,
+      "sourceIdentity": "d6b2a77138cf3647",
+      "finalStateIdentity": "cc775be8808698bd"
+    },
+    {
+      "id": "beginner-30",
+      "mode": "acro",
+      "ticks": 1277,
+      "legacy": true,
+      "sourceIdentity": "f64b398a00779157",
+      "finalStateIdentity": "12ff1f943cd2eccf"
+    },
+    {
+      "id": "beginner-31",
+      "mode": "acro",
+      "ticks": 1840,
+      "legacy": true,
+      "sourceIdentity": "f1cdd1513c0ee9f3",
+      "finalStateIdentity": "a9d39bddf15619d9"
+    },
+    {
+      "id": "beginner-32",
+      "mode": "acro",
+      "ticks": 1709,
+      "legacy": true,
+      "sourceIdentity": "9e197dcf42162e29",
+      "finalStateIdentity": "77c17e1155019e55"
+    },
+    {
+      "id": "beginner-33",
+      "mode": "acro",
+      "ticks": 2091,
+      "legacy": true,
+      "sourceIdentity": "72d00097adedbf2a",
+      "finalStateIdentity": "88d6cc9efa4bbd1a"
+    },
+    {
+      "id": "beginner-34",
+      "mode": "acro",
+      "ticks": 2446,
+      "legacy": true,
+      "sourceIdentity": "ca13700fe66c2268",
+      "finalStateIdentity": "783d9ac33d8dd03f"
+    },
+    {
+      "id": "beginner-35",
+      "mode": "acro",
+      "ticks": 1902,
+      "legacy": true,
+      "sourceIdentity": "61eba51d4d1f67f9",
+      "finalStateIdentity": "8c29b29d69e761ab"
+    },
+    {
+      "id": "beginner-36",
+      "mode": "acro",
+      "ticks": 1796,
+      "legacy": true,
+      "sourceIdentity": "dc42d2fa3d3c4baa",
+      "finalStateIdentity": "ad7aa5de2e99f9fe"
+    },
+    {
+      "id": "beginner-37",
+      "mode": "acro",
+      "ticks": 2312,
+      "legacy": true,
+      "sourceIdentity": "50a60434c3e9d920",
+      "finalStateIdentity": "c4496bc85f21f7b4"
+    },
+    {
+      "id": "beginner-38",
+      "mode": "acro",
+      "ticks": 1769,
+      "legacy": true,
+      "sourceIdentity": "3c13e4acdfc93df4",
+      "finalStateIdentity": "cabf135da49422b0"
+    },
+    {
+      "id": "beginner-39",
+      "mode": "acro",
+      "ticks": 2028,
+      "legacy": true,
+      "sourceIdentity": "e7465341f53c8e7c",
+      "finalStateIdentity": "c3c3eed9622e8f82"
+    },
+    {
+      "id": "beginner-40",
+      "mode": "acro",
+      "ticks": 2007,
+      "legacy": true,
+      "sourceIdentity": "f1542163caf3e49f",
+      "finalStateIdentity": "7c4a810a0a8ab6e0"
+    },
+    {
+      "id": "beginner-41",
+      "mode": "acro",
+      "ticks": 2510,
+      "legacy": true,
+      "sourceIdentity": "3f038022f908f6c6",
+      "finalStateIdentity": "3d33e5a01e58079c"
+    },
+    {
+      "id": "beginner-42",
+      "mode": "acro",
+      "ticks": 2784,
+      "legacy": true,
+      "sourceIdentity": "54080d3efd75e5d8",
+      "finalStateIdentity": "52dc63ca74fabe94"
+    },
+    {
+      "id": "beginner-43",
+      "mode": "acro",
+      "ticks": 1657,
+      "legacy": false,
+      "sourceIdentity": "5873933e67fe81af",
+      "finalStateIdentity": "c272e62e0a9e6d02",
+      "contacts": 0
+    },
+    {
+      "id": "beginner-44",
+      "mode": "acro",
+      "ticks": 1657,
+      "legacy": false,
+      "sourceIdentity": "5f4e0c788f1171c3",
+      "finalStateIdentity": "774cd1ede8a1f63e",
+      "contacts": 0
+    },
+    {
+      "id": "beginner-45",
+      "mode": "acro",
+      "ticks": 1045,
+      "legacy": false,
+      "sourceIdentity": "56713a5aa945fe30",
+      "finalStateIdentity": "23393f68b2059498",
+      "contacts": 0
+    },
+    {
+      "id": "beginner-46",
+      "mode": "acro",
+      "ticks": 1527,
+      "legacy": false,
+      "sourceIdentity": "0c9d849f3be4be28",
+      "finalStateIdentity": "21110474859f0887",
+      "contacts": 0
+    },
+    {
+      "id": "beginner-47",
+      "mode": "acro",
+      "ticks": 1678,
+      "legacy": false,
+      "sourceIdentity": "bc9b796f6f708d31",
+      "finalStateIdentity": "9c8306ffaf6dcc89",
+      "contacts": 0
+    },
+    {
+      "id": "beginner-48",
+      "mode": "acro",
+      "ticks": 1845,
+      "legacy": false,
+      "sourceIdentity": "411698d0d162f643",
+      "finalStateIdentity": "b58df5e614999bda",
+      "contacts": 0
+    },
+    {
+      "id": "beginner-49",
+      "mode": "acro",
+      "ticks": 1752,
+      "legacy": false,
+      "sourceIdentity": "89c87f6188de63fa",
+      "finalStateIdentity": "ce1234ce0817c6b8",
+      "contacts": 0
+    },
+    {
+      "id": "beginner-50",
+      "mode": "acro",
+      "ticks": 1846,
+      "legacy": false,
+      "sourceIdentity": "dee283da2f49063b",
+      "finalStateIdentity": "5d1a9e28acad2504",
+      "contacts": 0
+    },
+    {
+      "id": "beginner-51",
+      "mode": "acro",
+      "ticks": 2018,
+      "legacy": false,
+      "sourceIdentity": "f2b8ec6f56c3353a",
+      "finalStateIdentity": "7a49fb39bcb506c3",
+      "contacts": 0
+    },
+    {
+      "id": "beginner-52",
+      "mode": "acro",
+      "ticks": 2793,
+      "legacy": false,
+      "sourceIdentity": "65adb09bd2b16dde",
+      "finalStateIdentity": "83ec857c83cdb077",
+      "contacts": 0
+    },
+    {
+      "id": "beginner-53",
+      "mode": "acro",
+      "ticks": 2491,
+      "legacy": false,
+      "sourceIdentity": "3c6264a46bcd9d85",
+      "finalStateIdentity": "83168bd78a32adf5",
+      "contacts": 0
+    },
+    {
+      "id": "beginner-54",
+      "mode": "acro",
+      "ticks": 1542,
+      "legacy": false,
+      "sourceIdentity": "1acb62e68122fa51",
+      "finalStateIdentity": "2f94f3b6491254c7",
+      "contacts": 0
+    },
+    {
+      "id": "beginner-55",
+      "mode": "acro",
+      "ticks": 2075,
+      "legacy": false,
+      "sourceIdentity": "82f7b51474cc2fec",
+      "finalStateIdentity": "ffe2815daa8a832f",
+      "contacts": 0
+    },
+    {
+      "id": "beginner-56",
+      "mode": "acro",
+      "ticks": 2622,
+      "legacy": false,
+      "sourceIdentity": "999d17dd9a263cd2",
+      "finalStateIdentity": "863576bd05ea03e6",
+      "contacts": 0
+    },
+    {
+      "id": "beginner-57",
+      "mode": "acro",
+      "ticks": 3212,
+      "legacy": false,
+      "sourceIdentity": "472b0aa21b2fca36",
+      "finalStateIdentity": "def0ca53a5dcd820",
+      "contacts": 0
+    },
+    {
+      "id": "beginner-58",
+      "mode": "acro",
+      "ticks": 5285,
+      "legacy": false,
+      "sourceIdentity": "b11704875488ce3a",
+      "finalStateIdentity": "19644e21a6648a57",
+      "contacts": 0
+    }
+  ],
+  "skillTraceEvidence": "fpv-skills-semantic-traces-20261002.json",
+  "limits": [
+    "Manual functional qualification using actual runtime and recorded ordinary commands; additional permanent unit coverage remains deferred.",
+    "No browser, physical-controller, unfamiliar-player, translation or hardware-performance acceptance claim.",
+    "Old model identity is preserved; new skill criterion types own changed course identities.",
+    "Path entry speed is not globally constrained: angular readiness, zone, radius and contact requirements apply; recovery velocity is checked by the following authored hold/landing."
+  ],
+  "schemaBoundaryEvidence": "fpv-skills-schema-boundary-20261002.json"
+}

@@ -1,5 +1,254 @@
 import { setMenuIcon } from '../../game/ui/native-menu-icons.mjs';
 
+/** Read-only teaching feedback from the runtime's matching criterion state. */
+export function practiceSkillFeedback(target, state, locale = 'en') {
+  if (!['rotation-v1', 'attitude-v1', 'path-v1', 'crossing-v1'].includes(target?.type)) return null;
+  const t = (en, uk) => (locale === 'uk' ? uk : en);
+  const clamp = (value) => Math.max(0, Math.min(1, Number.isFinite(value) ? value : 0));
+  const deg = (value) => Math.round((value ?? 0) / 100);
+  const m = (value) => ((value ?? 0) / 1000).toFixed(1);
+  const seconds = (ticks) => ((ticks ?? 0) / 50).toFixed(1);
+  const skill = state?.skill && state.skill.index === state.step ? state.skill : null;
+  const active = skill?.status === 'active' || skill?.status === 'complete';
+  const height = `${m(target.min.y)}–${m(target.max.y)}`;
+  const pose = (up) =>
+    up === 'inverted'
+      ? t('inverted', 'догори дном')
+      : up === 'upright'
+        ? t('upright', 'рівно')
+        : t('at the shown entry attitude', 'у показаному положенні входу');
+  const rotationName = (spec) =>
+    spec.axis === 'roll'
+      ? spec.direction > 0
+        ? t('Roll right', 'Крен праворуч')
+        : t('Roll left', 'Крен ліворуч')
+      : spec.axis === 'pitch'
+        ? spec.direction > 0
+          ? t('Pitch forward', 'Тангаж уперед')
+          : t('Pitch back', 'Тангаж назад')
+        : spec.direction > 0
+          ? t('Yaw right', 'Курс праворуч')
+          : t('Yaw left', 'Курс ліворуч');
+  const direction = (axis, sign) =>
+    axis === 'y'
+      ? sign > 0
+        ? t('up', 'угору')
+        : t('down', 'униз')
+      : axis === 'x'
+        ? sign > 0
+          ? t('east', 'на схід')
+          : t('west', 'на захід')
+        : sign > 0
+          ? t('south', 'на південь')
+          : t('north', 'на північ');
+  let label,
+    objective,
+    detail,
+    progress = 0;
+  let hint = t(
+    'Stay airborne inside the marked zone and follow the demonstrated sequence.',
+    'Залишайтеся в повітрі в позначеній зоні та виконуйте показану послідовність.',
+  );
+  if (target.type === 'rotation-v1') {
+    label = `${rotationName(target)} ${deg(target.angle)}°`;
+    objective = t(
+      `${label}. Enter ${pose(target.entryUp)} at ${height} m. Complete the whole rotation, then stop rotating for ${seconds(target.settleTicks)} s.`,
+      `${label}. Почніть ${pose(target.entryUp)} на ${height} м. Виконайте весь оберт, потім зупиніть обертання на ${seconds(target.settleTicks)} с.`,
+    );
+    const amount = Math.max(0, skill?.rotation?.angle ?? 0);
+    detail = `${deg(amount)}° / ${deg(target.angle)}° · ${t('steady', 'стабільно')} ${seconds(skill?.dwell)} / ${seconds(target.settleTicks)} ${t('s', 'с')}`;
+    progress = active
+      ? 0.9 *
+          Math.min(
+            clamp(amount / target.angle),
+            clamp((skill?.rotation?.checkpoint ?? 0) / (target.angle / 9000)),
+          ) +
+        0.1 * clamp((skill?.dwell ?? 0) / target.settleTicks)
+      : 0;
+    hint =
+      skill?.status === 'entry'
+        ? t(
+            `Return to the zone ${pose(target.entryUp)} and stop rotating before trying again.`,
+            `Поверніться в зону ${pose(target.entryUp)} й зупиніть обертання перед повтором.`,
+          )
+        : (skill?.rotation?.checkpoint ?? 0) >= target.angle / 9000
+          ? t(
+              'The rotation is traced. Ease the rotation stick toward centre and settle at the exit attitude.',
+              'Оберт пройдено. Поверніть стік обертання до центру й стабілізуйте положення виходу.',
+            )
+          : t(
+              'Follow the complete rotation. A matching final view alone does not count.',
+              'Виконайте повний оберт. Самого схожого вигляду наприкінці недостатньо.',
+            );
+  } else if (target.type === 'attitude-v1') {
+    label =
+      target.up === 'inverted'
+        ? t('Inverted recognition', 'Перевернуте положення')
+        : t('Upright recovery', 'Рівне положення');
+    objective = t(
+      `Remain ${pose(target.up)} at ${height} m for ${seconds(target.ticks)} s, with rotation settled.`,
+      `Залишайтеся ${pose(target.up)} на ${height} м протягом ${seconds(target.ticks)} с без обертання.`,
+    );
+    detail = `${seconds(skill?.dwell)} / ${seconds(target.ticks)} ${t('s steady', 'с стабільно')}`;
+    progress = active ? clamp((skill?.dwell ?? 0) / target.ticks) : 0;
+    hint =
+      target.up === 'inverted'
+        ? t(
+            'This is a brief inverted falling phase, not inverted hover. Keep recovery height available.',
+            'Це коротка фаза падіння догори дном, а не перевернуте зависання. Залишайте висоту для відновлення.',
+          )
+        : t(
+            'Settle the rotation and slow the drift inside the zone.',
+            'Зупиніть обертання й уповільніть дрейф у зоні.',
+          );
+  } else if (target.type === 'path-v1') {
+    label =
+      target.plane === 'xz'
+        ? t('Orbit path', 'Орбітальна траєкторія')
+        : t('Loop path', 'Траєкторія петлі');
+    objective = t(
+      `${label}: ${deg(target.sweep)}° in the marked direction, ${m(target.radiusMin)}–${m(target.radiusMax)} m from the centre; stay at ${height} m.`,
+      `${label}: ${deg(target.sweep)}° у позначеному напрямку, ${m(target.radiusMin)}–${m(target.radiusMax)} м від центра; висота ${height} м.`,
+    );
+    if (target.entryBearing !== null)
+      objective += t(' Begin at the marked entry.', ' Почніть у позначеному вході.');
+    if (target.noseToward)
+      objective += t(' Keep the nose toward the landmark.', ' Тримайте ніс до орієнтира.');
+    if (target.coupled)
+      objective += ` ${rotationName(target.coupled)} ${deg(target.coupled.angle)}° ${t('along the path.', 'уздовж траєкторії.')}`;
+    const winding = Math.max(0, skill?.path?.winding ?? 0);
+    progress = active
+      ? Math.min(
+          clamp(winding / target.sweep),
+          clamp((skill?.path?.checkpoint ?? 0) / (target.sweep / 9000)),
+        )
+      : 0;
+    detail = `${deg(winding)}° / ${deg(target.sweep)}° ${t('path', 'траєкторії')}`;
+    if (target.coupled) {
+      detail += ` · ${deg(skill?.rotation?.angle)}° / ${deg(target.coupled.angle)}° ${t('body', 'корпусу')}`;
+      progress = Math.min(progress, clamp((skill?.rotation?.angle ?? 0) / target.coupled.angle));
+    }
+    if (target.axialMin || target.axialMax) {
+      const axis = ['x', 'y', 'z'].find((value) => !target.plane.includes(value));
+      const sign = target.axialMax <= 0 ? -1 : 1;
+      const low = sign < 0 ? -target.axialMax : target.axialMin;
+      const high = sign < 0 ? -target.axialMin : target.axialMax;
+      const travel = active ? ((state?.position?.[axis] ?? 0) - skill.startAxis) * sign : 0;
+      const travelLabel = direction(axis, sign);
+      objective += t(
+        ` Gain ${m(low)}–${m(high)} m ${travelLabel} gradually through the path.`,
+        ` Поступово пройдіть ${m(low)}–${m(high)} м ${travelLabel} вздовж траєкторії.`,
+      );
+      detail += ` · ${m(travel)} ${t('m', 'м')} ${travelLabel}`;
+    }
+    hint = t(
+      'Keep the path, nose direction and body rotation together. Return to the entry if progress resets.',
+      'Поєднуйте траєкторію, напрямок носа й оберт корпусу. Якщо поступ скинувся, поверніться до входу.',
+    );
+  } else {
+    label = t(
+      `Cross ${direction(target.axis, target.direction)}`,
+      `Перетніть ${direction(target.axis, target.direction)}`,
+    );
+    const location =
+      target.axis === 'y'
+        ? t(`at ${m(target.at)} m height`, `на висоті ${m(target.at)} м`)
+        : t('through the marked plane', 'крізь позначену площину');
+    const nose =
+      target.forwardTolerance === 9000
+        ? t('without pointing the nose against travel', 'не спрямовуючи ніс проти руху')
+        : t(
+            `with the nose within ${deg(target.forwardTolerance)}° of travel`,
+            `з носом у межах ${deg(target.forwardTolerance)}° від напрямку руху`,
+          );
+    objective = t(
+      `${label} ${location}, ${nose}, at least ${m(target.minSpeed)} m/s. Stay inside the marked opening.`,
+      `${label} ${location}, ${nose}, щонайменше ${m(target.minSpeed)} м/с. Залишайтеся в позначеному отворі.`,
+    );
+    const remaining = ((target.at ?? 0) - (state?.position?.[target.axis] ?? 0)) * target.direction;
+    detail =
+      remaining >= 0
+        ? t(`${m(remaining)} m to the plane`, `${m(remaining)} м до площини`)
+        : t('Return to the approach side to retry', 'Поверніться на бік заходу для повтору');
+    hint =
+      target.forwardTolerance === 9000
+        ? t(
+            'Cross from the approach side in the shown direction. A level nose is allowed; do not point it against travel.',
+            'Перетніть із боку заходу у вказаному напрямку. Ніс може бути горизонтальним; не спрямовуйте його проти руху.',
+          )
+        : t(
+            'Cross from the approach side with both travel and nose in the shown direction. Falling in another attitude does not qualify.',
+            'Перетніть із боку заходу: рух і ніс мають бути у вказаному напрямку. Падіння в іншому положенні не зараховується.',
+          );
+  }
+  const reasons = {
+    'enter-zone': t(
+      'Enter the marked airborne zone to begin.',
+      'Увійдіть у позначену зону в повітрі.',
+    ),
+    'airborne-clearance': t(
+      'Ground or obstacle contact interrupted the movement. Recover into clear air before retrying.',
+      'Контакт із землею чи перешкодою перервав маневр. Відновіть політ у вільному просторі перед повтором.',
+    ),
+    'outside-zone': t(
+      'You left the practice zone. Return to its entry before retrying.',
+      'Ви вийшли з навчальної зони. Поверніться до входу перед повтором.',
+    ),
+    'entry-attitude': t(
+      `Start ${pose(target.entryUp)} with rotation settled, inside the marked path band.`,
+      `Почніть ${pose(target.entryUp)} без обертання, у позначеній смузі траєкторії.`,
+    ),
+    'entry-bearing': t(
+      'Return to the marked starting point on the path.',
+      'Поверніться до позначеної початкової точки траєкторії.',
+    ),
+    'time-window': t(
+      'This attempt took too long. Return to the entry and try the sequence again.',
+      'Спроба тривала надто довго. Поверніться до входу й повторіть послідовність.',
+    ),
+    'rotation-purity': t(
+      'Too much reverse or cross-axis rotation. Settle at the entry and follow the shown rotation axis.',
+      'Забагато зворотного обертання чи руху іншими осями. Стабілізуйтеся на вході й обертайтеся навколо показаної осі.',
+    ),
+    'missed-attitude': t(
+      'A required intermediate attitude was missed. Return to the entry and follow the full rotation.',
+      'Пропущено потрібне проміжне положення. Поверніться до входу й виконайте повний оберт.',
+    ),
+    'path-envelope': t(
+      'Keep the marked distance from the centre and the requested nose direction. Re-enter at the starting point.',
+      'Тримайте позначену відстань від центра й потрібний напрямок носа. Почніть знову з точки входу.',
+    ),
+    'path-direction': t(
+      'The path reversed too far. Return to the entry and follow the marked direction.',
+      'Траєкторія надто змінилася у зворотний бік. Поверніться до входу й рухайтеся в позначеному напрямку.',
+    ),
+    'path-axial-progress': t(
+      'Travel along the route must develop with the turn. Re-enter and combine both movements.',
+      'Рух уздовж маршруту має зростати разом із поворотом. Почніть знову й поєднайте обидва рухи.',
+    ),
+    'rotation-path-phase': t(
+      'Body rotation and path drifted apart. Re-enter and coordinate them through the whole movement.',
+      'Оберт корпусу й траєкторія розійшлися. Почніть знову й узгоджуйте їх протягом усього маневру.',
+    ),
+    'ambiguous-path': t(
+      'The path could not be followed continuously. Return to the entry to begin again.',
+      'Не вдалося простежити безперервну траєкторію. Поверніться до входу для повтору.',
+    ),
+  };
+  if (skill?.reason && reasons[skill.reason]) hint = reasons[skill.reason];
+  if (skill?.status === 'complete') progress = 1;
+  else progress = Math.min(0.99, progress);
+  return {
+    label,
+    objective,
+    detail,
+    hint,
+    progress,
+    status: skill?.status ?? 'entry',
+    reason: skill?.reason ?? null,
+  };
+}
+
 /** Presentation only: shared game fonts, icons and short menu cues. No simulation input. */
 const fontOwners = new WeakMap();
 const cueNames = new Set(['focus', 'confirm', 'cancel']);
@@ -251,7 +500,14 @@ export function mountDroneDiagram({ root }) {
     'paint-order': 'stroke',
     'font-family': 'var(--fk-font-mono, monospace)',
   });
-  targetCue.append(targetOutline, targetMarker, targetLabel);
+  const targetProgress = svg('path', {
+    class: 'sim-response-target-progress',
+    fill: 'none',
+    stroke: 'var(--fk-amber, #ffd27c)',
+    'stroke-width': 2,
+    'stroke-linecap': 'round',
+  });
+  targetCue.append(targetOutline, targetMarker, targetLabel, targetProgress);
   airframe.append(
     lowerArms,
     arms,
@@ -375,6 +631,38 @@ export function mountDroneDiagram({ root }) {
         practiceTarget?.maxSide,
         practiceTarget?.minY,
         practiceTarget?.maxY,
+        practiceTarget?.direction,
+        practiceTarget?.angle,
+        practiceTarget?.up,
+        practiceTarget?.entryUp,
+        practiceTarget?.entryBearing,
+        practiceTarget?.ticks,
+        practiceTarget?.settleTicks,
+        practiceTarget?.plane,
+        practiceTarget?.sweep,
+        practiceTarget?.radiusMin,
+        practiceTarget?.radiusMax,
+        practiceTarget?.noseToward,
+        practiceTarget?.axialMin,
+        practiceTarget?.axialMax,
+        practiceTarget?.minA,
+        practiceTarget?.maxA,
+        practiceTarget?.minB,
+        practiceTarget?.maxB,
+        practiceTarget?.coupled?.axis,
+        practiceTarget?.coupled?.direction,
+        practiceTarget?.coupled?.angle,
+        state.step,
+        state.skill?.index,
+        state.skill?.status,
+        state.skill?.reason,
+        state.skill?.rotation?.angle,
+        state.skill?.rotation?.checkpoint,
+        state.skill?.path?.winding,
+        state.skill?.path?.checkpoint,
+        state.skill?.dwell,
+        state.skill?.startAxis,
+        ...['x', 'y', 'z'].map((axis) => practiceTarget?.center?.[axis]),
         ...['x', 'y', 'z'].flatMap((axis) => [
           practiceTarget?.min?.[axis],
           practiceTarget?.max?.[axis],
@@ -637,6 +925,7 @@ export function mountDroneDiagram({ root }) {
       attr(reference, 'y', immersivePractice ? '345' : environmentMotion ? '196' : '154');
       let targetResult = null;
       const target = practiceTarget;
+      const skillFeedback = practiceSkillFeedback(target, state, locale);
       let bounds = null;
       if (target?.type === 'gate' && ['x', 'z'].includes(target.axis)) {
         const side = target.axis === 'x' ? 'z' : 'x';
@@ -644,7 +933,13 @@ export function mountDroneDiagram({ root }) {
           min: { [target.axis]: target.at, [side]: target.minSide, y: target.minY },
           max: { [target.axis]: target.at, [side]: target.maxSide, y: target.maxY },
         };
-      } else if (['hold', 'land'].includes(target?.type)) bounds = target;
+      } else if (target?.type === 'crossing-v1') {
+        const [a, b] = ['x', 'y', 'z'].filter((axis) => axis !== target.axis);
+        bounds = {
+          min: { [target.axis]: target.at, [a]: target.minA, [b]: target.minB },
+          max: { [target.axis]: target.at, [a]: target.maxA, [b]: target.maxB },
+        };
+      } else if (['hold', 'land'].includes(target?.type) || skillFeedback) bounds = target;
       const validBounds =
         bounds &&
         ['x', 'y', 'z'].every(
@@ -663,6 +958,15 @@ export function mountDroneDiagram({ root }) {
               : (bounds.min[axis] + bounds.max[axis]) / 2) / 1000,
           ]),
         );
+        if (target.type === 'path-v1') {
+          for (const axis of target.plane) center[axis] = target.center[axis] / 1000;
+          const normal = ['x', 'y', 'z'].find((axis) => !target.plane.includes(axis));
+          center[normal] =
+            Math.max(
+              bounds.min[normal],
+              Math.min(bounds.max[normal], finite(state.position?.[normal])),
+            ) / 1000;
+        }
         const targetView = (point) => {
           const [x, , z] = relative([
             point.x - finite(state.position?.x) / 1000,
@@ -743,7 +1047,7 @@ export function mountDroneDiagram({ root }) {
           );
         // Draw actual target extents only when the entire outline is in view;
         // distant/near-plane volumes use the bounded centre/direction cue.
-        const corners =
+        let corners =
           target.type === 'gate'
             ? [
                 { x: bounds.min.x, y: bounds.min.y, z: bounds.min.z },
@@ -761,6 +1065,39 @@ export function mountDroneDiagram({ root }) {
                 { x: bounds.max.x / 1000, y: center.y, z: bounds.max.z / 1000 },
                 { x: bounds.min.x / 1000, y: center.y, z: bounds.max.z / 1000 },
               ];
+        if (target.type === 'crossing-v1') {
+          const [a, b] = ['x', 'y', 'z'].filter((axis) => axis !== target.axis);
+          corners = [
+            [target.minA, target.minB],
+            [target.maxA, target.minB],
+            [target.maxA, target.maxB],
+            [target.minA, target.maxB],
+          ].map(([av, bv]) => ({
+            [target.axis]: target.at / 1000,
+            [a]: av / 1000,
+            [b]: bv / 1000,
+          }));
+        } else if (target.type === 'path-v1') {
+          const [a, b] = [...target.plane];
+          const normal = ['x', 'y', 'z'].find((axis) => !target.plane.includes(axis));
+          const radius = (target.radiusMin + target.radiusMax) / 2000;
+          const start = ((target.entryBearing ?? 0) * Math.PI) / 18000;
+          const sweep = (Math.min(36000, target.sweep) * Math.PI) / 18000;
+          // A diagram slice of the real path band; the world renderer supplies
+          // its full corridor. Use the actual normal-axis location, not a fake pose.
+          corners = Array.from({ length: 25 }, (_, index) => {
+            const angle = start + (target.direction * sweep * index) / 24;
+            return {
+              [a]: target.center[a] / 1000 + Math.cos(angle) * radius,
+              [b]: target.center[b] / 1000 + Math.sin(angle) * radius,
+              [normal]:
+                Math.max(
+                  bounds.min[normal],
+                  Math.min(bounds.max[normal], finite(state.position?.[normal])),
+                ) / 1000,
+            };
+          });
+        }
         const outline = corners.map(targetView);
         attr(
           targetOutline,
@@ -768,10 +1105,28 @@ export function mountDroneDiagram({ root }) {
           !offscreen && outline.every(inside)
             ? path(
                 outline.map((point) => point.point),
-                true,
+                target.type !== 'path-v1' || target.sweep >= 36000,
               )
             : '',
         );
+        if (target.type === 'path-v1' && !offscreen && outline.slice(0, 3).every(inside)) {
+          const start = outline[0].point,
+            end = outline[2].point;
+          const length = Math.hypot(end[0] - start[0], end[1] - start[1]);
+          if (length > 0.01) {
+            const dx = (end[0] - start[0]) / length,
+              dy = (end[1] - start[1]) / length;
+            attr(
+              targetMarker,
+              'd',
+              path([
+                [end[0] - dx * 8 - dy * 4, end[1] - dy * 8 + dx * 4],
+                end,
+                [end[0] - dx * 8 + dy * 4, end[1] - dy * 8 - dx * 4],
+              ]),
+            );
+          }
+        }
         const distance = Math.hypot(
           center.x - finite(state.position?.x) / 1000,
           center.y - finite(state.position?.y) / 1000,
@@ -792,16 +1147,37 @@ export function mountDroneDiagram({ root }) {
         const unit = locale === 'uk' ? 'м' : 'm';
         text(
           targetLabel,
-          `${name} ${distance.toFixed(1)}${unit} · ↑${(bounds.min.y / 1000).toFixed(1)}–${(bounds.max.y / 1000).toFixed(1)}${unit}`,
+          skillFeedback
+            ? `${skillFeedback.label} · ${Math.floor(skillFeedback.progress * 100)}% · ↑${(bounds.min.y / 1000).toFixed(1)}–${(bounds.max.y / 1000).toFixed(1)}${unit}`
+            : `${name} ${distance.toFixed(1)}${unit} · ↑${(bounds.min.y / 1000).toFixed(1)}–${(bounds.max.y / 1000).toFixed(1)}${unit}`,
         );
         // Keep instructions in the quiet header. Only the target marker moves:
         // following it with text would obscure the drone and FRONT annotation.
         attr(targetLabel, 'x', centerX);
         attr(targetLabel, 'y', immersivePractice ? 44 : 30);
         attr(targetLabel, 'font-size', immersivePractice ? 11 : 8);
+        style(targetProgress, 'display', skillFeedback ? '' : 'none');
+        if (skillFeedback) {
+          const barY = immersivePractice ? 50 : 35;
+          attr(
+            targetProgress,
+            'd',
+            path([
+              [centerX - 40, barY],
+              [centerX - 40 + 80 * skillFeedback.progress, barY],
+            ]),
+          );
+        }
         data(targetCue, 'offscreen', offscreen);
         data(targetCue, 'type', target.type);
-        targetResult = { type: target.type, center, screen, distance, offscreen };
+        targetResult = {
+          type: target.type,
+          center,
+          screen,
+          distance,
+          offscreen,
+          ...(skillFeedback ? { skill: skillFeedback } : {}),
+        };
       }
       const poseKey = [
         ...(state.orientation ?? []),

@@ -1,10 +1,12 @@
 import { STICK_LAYOUTS, DEFAULT_RESPONSE, neutralFlightInput } from './radio-profile.mjs';
 import { createFlight, FLIGHT_HZ } from './model.mjs';
-import { mountDroneDiagram } from './sim-presentation.mjs';
+import { mountDroneDiagram, practiceSkillFeedback } from './sim-presentation.mjs';
 import {
   ACRO_LESSON_ORDER,
   EXPERIENCED_LESSON_ORDER,
   ADVANCED_LESSON_ORDER,
+  PRO_LESSON_ORDER,
+  MASTER_LESSON_ORDER,
   PRIMARY_LESSON_ORDER,
   SELF_LEVEL_LESSON_ORDER,
 } from './world-catalogue.mjs';
@@ -520,6 +522,8 @@ export function mountBeginnerCoach({
       beginner: [ACRO_LESSON_ORDER, t('BEGINNER', 'ПОЧАТКОВИЙ')],
       experienced: [EXPERIENCED_LESSON_ORDER, t('EXPERIENCED', 'ДЛЯ ДОСВІДЧЕНИХ')],
       advanced: [ADVANCED_LESSON_ORDER, t('ADVANCED', 'ПОГЛИБЛЕНИЙ')],
+      pro: [PRO_LESSON_ORDER, t('PRO', 'PRO · ПРОФІ')],
+      master: [MASTER_LESSON_ORDER, t('MASTER', 'MASTER · МАЙСТЕРНІСТЬ')],
     };
     const [ids, name] = tiers[lesson.tier] ?? tiers.beginner;
     const withinTier = Math.max(0, ids.indexOf(lesson.id)) + 1;
@@ -1231,6 +1235,8 @@ export function mountBeginnerCoach({
     return figure;
   }
   function objectiveText(target) {
+    const skill = practiceSkillFeedback(target, null, lang());
+    if (skill) return skill.objective;
     if (!target)
       return t(
         'Follow the highlighted objective in the world.',
@@ -1263,6 +1269,8 @@ export function mountBeginnerCoach({
           'All practice objectives complete. Keep flying, or Watch lesson to repeat. No score was recorded.',
           'Усі цілі практики виконано. Літайте далі або повторіть урок. Бали не записано.',
         );
+      const skill = practiceSkillFeedback(target, state, lang());
+      if (skill && labMode !== 'example') return skill.hint;
       return labMode === 'example'
         ? t(
             'Watch the recorded controls and the next target. Move a control to continue from this exact point.',
@@ -1305,6 +1313,8 @@ export function mountBeginnerCoach({
         'Every pilot retries. Open the guide, then try the small movement again.',
         'Кожен пілот пробує знову. Відкрийте пояснення й повторіть невеликий рух.',
       );
+    const skill = practiceSkillFeedback(target, state, lang());
+    if (skill) return skill.hint;
     if (state.hold > 0)
       return t(
         'You are in the right place. Keep it gentle while the ring fills.',
@@ -1621,6 +1631,9 @@ export function mountBeginnerCoach({
       notes.append(tip);
     } else card.append(node('p', 'coach-instruction', copy(step?.instruction)));
     const target = (refs.target = node('p', 'coach-target', objectiveText(criterion(index))));
+    refs.skillProgress = node('p', 'coach-skill-progress');
+    refs.skillProgress.setAttribute('aria-live', 'off');
+    refs.skillProgress.hidden = true;
     refs.hint = node('p', 'coach-live-hint');
     refs.hint.setAttribute('role', 'status');
     refs.hint.setAttribute('aria-live', 'polite');
@@ -1628,7 +1641,7 @@ export function mountBeginnerCoach({
     refs.hold = node('div', 'coach-hold-fill');
     hold.append(refs.hold);
     hold.setAttribute('aria-hidden', 'true');
-    (notes ?? card).append(target, makeTelemetry(), hold, refs.hint);
+    (notes ?? card).append(target, refs.skillProgress, makeTelemetry(), hold, refs.hint);
     if (notes) card.append(notes);
     if (stage === 'guide') {
       const actions = node('div', 'coach-actions');
@@ -1698,8 +1711,15 @@ export function mountBeginnerCoach({
       const text = hint();
       if (refs.hint.textContent !== text) refs.hint.textContent = text;
     }
+    const target = stage === 'guide' && labLesson ? labState.target : criterion();
+    const skill = practiceSkillFeedback(target, state, lang());
+    if (refs.skillProgress) {
+      refs.skillProgress.hidden = !skill;
+      if (skill && refs.skillProgress.textContent !== skill.detail)
+        refs.skillProgress.textContent = skill.detail;
+    }
     if (refs.hold)
-      refs.hold.style.width = `${clamp((state?.hold ?? 0) / ((stage === 'guide' && labLesson ? labState.target : criterion())?.ticks || 1), 0, 1) * 100}%`;
+      refs.hold.style.width = `${(skill ? skill.progress : clamp((state?.hold ?? 0) / (target?.ticks || 1), 0, 1)) * 100}%`;
   }
   function setPracticeView(enabled, { resume = true } = {}) {
     if (enabled && (!lesson || stage !== 'guide' || disposed)) return;

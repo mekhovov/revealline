@@ -383,6 +383,109 @@ export function createFlightRenderer({
     const badge = label(String(index + 1).padStart(2, '0'), '#a5e7d4', group, 0.72);
     if (badge) badge.position.set(0, size[1] / 2 + 0.5, 0);
     const row = { group, paint, light, marker, badge, index };
+    // These are holographic instructions, never collision geometry. Their group
+    // shares the criterion's zone centre, so editor translations move all parts.
+    const point = (world) =>
+      new THREE.Vector3(...['x', 'y', 'z'].map((axis, i) => world[axis] / 1000 - position[i]));
+    const line = (points, parent = group) => {
+      const shape = new THREE.BufferGeometry().setFromPoints(points);
+      geometry.add(shape);
+      parent.add(new THREE.Line(shape, paint));
+    };
+    const cueArrow = (direction, start, length, parent = group) => {
+      const arrow = new THREE.ArrowHelper(
+        direction.clone().normalize(),
+        start,
+        length,
+        0x8beafc,
+        Math.min(0.35, length * 0.3),
+        Math.min(0.22, length * 0.2),
+      );
+      // Share registered goal materials so inactive/complete cues dim uniformly.
+      arrow.line.material.dispose();
+      arrow.cone.material.dispose();
+      arrow.line.material = paint;
+      arrow.cone.material = light;
+      parent.add(arrow);
+      register(arrow);
+    };
+    if (step.type === 'path-v1') {
+      const [a, b] = step.plane,
+        radius = (step.radiusMin + step.radiusMax) / 2000;
+      const at = (angle, r) =>
+        point({
+          ...step.center,
+          [a]: step.center[a] + Math.cos(angle) * r * 1000,
+          [b]: step.center[b] + Math.sin(angle) * r * 1000,
+        });
+      const bearing = ((step.entryBearing ?? 0) * Math.PI) / 18000,
+        sweep = (Math.min(36000, step.sweep) * Math.PI) / 18000;
+      for (const r of [step.radiusMin / 1000, step.radiusMax / 1000])
+        line(
+          Array.from({ length: 65 }, (_, i) => at(bearing + (step.direction * i * sweep) / 64, r)),
+        );
+      for (const fraction of [0.2, 0.7]) {
+        const angle = bearing + step.direction * sweep * fraction,
+          tangent = new THREE.Vector3();
+        tangent[a] = -Math.sin(angle) * step.direction;
+        tangent[b] = Math.cos(angle) * step.direction;
+        cueArrow(tangent, at(angle, radius), Math.min(1.8, radius * 0.3));
+      }
+      if (step.entryBearing !== null)
+        line([at(bearing, step.radiusMin / 1000), at(bearing, step.radiusMax / 1000)]);
+      // The annulus is shown on the authored reference plane. Actual axial
+      // displacement is entry-relative and remains bounded by the visible zone.
+      row.skillShape = 'path-band';
+    } else if (step.type === 'crossing-v1') {
+      const [a, b] = ['x', 'y', 'z'].filter((axis) => axis !== step.axis),
+        world = {
+          [step.axis]: step.at,
+          [a]: (step.minA + step.maxA) / 2,
+          [b]: (step.minB + step.maxB) / 2,
+        },
+        corners = [
+          [step.minA, step.minB],
+          [step.maxA, step.minB],
+          [step.maxA, step.maxB],
+          [step.minA, step.maxB],
+          [step.minA, step.minB],
+        ].map(([av, bv]) => point({ [step.axis]: step.at, [a]: av, [b]: bv })),
+        direction = new THREE.Vector3();
+      line(corners);
+      direction[step.axis] = step.direction;
+      cueArrow(direction, point(world).addScaledVector(direction, -0.9), 1.8);
+      row.skillShape = 'crossing-plane';
+    } else if (step.type === 'rotation-v1') {
+      const cue = new THREE.Group(),
+        radius = Math.max(0.6, Math.min(1.8, ...size.map((v) => v * 0.25))),
+        // Positive commands integrate a negative right-hand body-axis angle.
+        plane = { pitch: 'yz', yaw: 'xz', roll: 'xy' }[step.axis],
+        [a, b] = plane,
+        sign = step.direction * (step.axis === 'yaw' ? 1 : -1),
+        at = (angle) => {
+          const v = new THREE.Vector3();
+          v[a] = Math.cos(angle) * radius;
+          v[b] = Math.sin(angle) * radius;
+          return v;
+        },
+        points = Array.from({ length: 41 }, (_, i) => at((sign * i * Math.PI * 1.7) / 40)),
+        end = sign * Math.PI * 1.7,
+        tangent = new THREE.Vector3();
+      group.add(cue);
+      line(points, cue);
+      tangent[a] = -Math.sin(end) * sign;
+      tangent[b] = Math.cos(end) * sign;
+      cueArrow(tangent, points.at(-1), radius * 0.4, cue);
+      row.skillCue = cue;
+      row.skillShape = 'body-rotation';
+    } else if (step.type === 'attitude-v1') {
+      cueArrow(
+        new THREE.Vector3(0, step.up === 'inverted' ? -1 : 1, 0),
+        new THREE.Vector3(),
+        Math.max(0.6, Math.min(1.8, size[1] * 0.25)),
+      );
+      row.skillShape = 'body-up';
+    }
     goalRows.push(row);
     if (step.type === 'gate') {
       const direction = new THREE.Vector3(
@@ -835,6 +938,15 @@ export function createFlightRenderer({
         if (row.badge) row.badge.material.opacity = active ? 1 : 0.35;
       }
     }
+    // A body-axis rotation cue uses the actual captured entry frame, not an
+    // assumed world heading. Before entry it is only a neutral schematic cue.
+    for (const row of goalRows)
+      if (row.skillCue) {
+        const entry = state.skill?.index === row.index ? state.skill.entry : null;
+        if (entry)
+          row.skillCue.quaternion.fromArray(entry.map((value) => value / 1000000)).normalize();
+        else row.skillCue.quaternion.identity();
+      }
     updateActors(state);
     if (view === 'editor') {
       aircraft.visible = false;
@@ -1094,7 +1206,13 @@ export function createFlightRenderer({
             ? { x: (step.minSide + step.maxSide) / 2, y: (step.minY + step.maxY) / 2, z: step.at }
             : { x: step.at, y: (step.minY + step.maxY) / 2, z: (step.minSide + step.maxSide) / 2 },
         );
-      else if (step.min && step.max)
+      else if (
+        ['hold', 'land', 'rotation-v1', 'attitude-v1', 'path-v1', 'crossing-v1'].includes(
+          step.type,
+        ) &&
+        step.min &&
+        step.max
+      )
         add(
           { kind: 'criterion', index },
           Object.fromEntries(

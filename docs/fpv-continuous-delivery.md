@@ -926,3 +926,36 @@ attached to this chat and appended to native stack #902 directly after #938.
 Qualified receipt head `b80425d55`; upstream review/protection holds retained.
 Next branch: `codex/fpv-pro-mastery-school`, containing only the skill criteria,
 Pro/Master lessons and required presentation/editor adapters after they qualify.
+
+### 2 October — Pro/Master course verified locally
+
+On `codex/fpv-pro-mastery-school`, added16 distinct Pro/Master lessons and115
+steps, bringing the school to58/374 (46 primary Acro plus12 optional self-level)
+and the full catalogue to118. New pack `fpv-skills-school:ccdbc4f61adad55a`.
+Four versioned criteria measure real rotations, attitudes, spatial paths and
+nose/velocity-qualified crossings. Hints, drawn targets, editor translation,
+reimport and generic imported-course Acro selection follow those contracts.
+A review corrected misleading nose-first copy for the90° upward-pop tolerance.
+
+All90 v2 and24 legacy v1 proofs replay; previous74 proof rows,42 course identities
+and121,178 legacy snapshots survive. All16 authored flights regenerate exactly
+from35,045 ordinary frames, zero contacts. Final actual-browser evidence:
+119/119 continuous58-lesson checks,14/14 tier checks and70/70 integrated host
+checks including all new Fly/School/playlist entries, EN/UK, exact export,
+creator pack import, backup and fresh-host proof retention. Geometry14/schema20
+checks and16,734 localized feedback samples also pass. Local maximum synchronous
+coach preparation93.5ms / last-step seek90.5ms are operation observations, not
+physical input latency or sustained hardware performance.
+
+Browser verification initially encountered disk exhaustion and fixture-only
+cross-realm IndexedDB/plain-object and JSON key-order comparisons. Corrected the
+fixture's native iframe storage and canonical comparison; did not loosen runtime
+validation. Retained failure diagnostics under `/tmp`. Removed12 reproducible
+continuous/navigation candidate ZIPs (67,855,450bytes) and13 obsolete generated
+playtest ZIPs (139,323,314bytes), preserving all unpacked players, sources,
+proofs, inventories and receipts. No user storage or unrelated work was deleted.
+
+Focused runtime freeze/package admission and PR publication follow. Preserve
+native stack902 linearity, upstream holds, stack889 and all unrelated handoffs.
+Unit coverage, novice/fluent-UK acceptance, real TX15/controller qualification and
+named-device performance remain outstanding; no public-live claim.
