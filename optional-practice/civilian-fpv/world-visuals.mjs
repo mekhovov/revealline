@@ -1931,6 +1931,73 @@ const collectionSources = {
       },
     ),
   },
+  'obsidian-reliquary': {
+    pattern: 'reliquary',
+    ornament: 0xc5a563,
+    paper: 0xeee5d4,
+    materials: themedMaterials(
+      {
+        steel: 0x494249,
+        rubber: 0x231f26,
+        copper: 0x9b8050,
+        concrete: 0x5e575b,
+        enamel: 0x54303e,
+        timber: 0x625047,
+        grass: 0x4e5b48,
+      },
+      {
+        steel: { roughness: 0.84, metalness: 0.25 },
+        copper: { roughness: 0.52, metalness: 0.6 },
+        concrete: { roughness: 0.98 },
+        enamel: { roughness: 0.66, metalness: 0.08 },
+        timber: { roughness: 0.94 },
+      },
+    ),
+  },
+  'deep-space': {
+    pattern: 'orbital',
+    ornament: 0x99d5ed,
+    paper: 0xe5eff5,
+    materials: themedMaterials(
+      {
+        steel: 0x43576b,
+        rubber: 0x202b38,
+        copper: 0x8d9398,
+        concrete: 0x69747c,
+        enamel: 0x314962,
+        timber: 0x716a65,
+        grass: 0x586e63,
+      },
+      {
+        steel: { roughness: 0.66, metalness: 0.42 },
+        copper: { roughness: 0.48, metalness: 0.7 },
+        enamel: { roughness: 0.58, metalness: 0.12 },
+        rubber: { roughness: 0.98 },
+      },
+    ),
+  },
+  'moonlit-grove': {
+    pattern: 'moonlit',
+    ornament: 0xc0b6e2,
+    paper: 0xe6ece1,
+    materials: themedMaterials(
+      {
+        steel: 0x4a5e54,
+        rubber: 0x22332b,
+        copper: 0x989c87,
+        concrete: 0x667469,
+        enamel: 0x3e5945,
+        timber: 0x655c52,
+        grass: 0x4e714e,
+      },
+      {
+        steel: { roughness: 0.82, metalness: 0.2 },
+        copper: { roughness: 0.54, metalness: 0.58 },
+        enamel: { roughness: 0.75, metalness: 0.04 },
+        timber: { roughness: 0.96 },
+      },
+    ),
+  },
 };
 export const SIM_VISUAL_COLLECTIONS = Object.freeze(
   Object.fromEntries(
@@ -2055,6 +2122,31 @@ function familySurface(pattern, role, x, y, grain) {
         petalY = Math.abs(v - 12);
       if (role === 'enamel' && petalX + petalY < 8 && Math.abs(petalX - petalY) > 2) mark = 1;
     }
+  } else if (pattern === 'reliquary') {
+    // Shallow cut-stone corners and aged inlay, with no symbols or busy centre.
+    if (solid) {
+      const corner = Math.min(u + v, 63 - u + v, u + 63 - v, 126 - u - v);
+      shade *= corner < 8 ? 0.71 : edge < 2 ? 0.8 : 1;
+      if (role === 'enamel' && (v === 8 || v === 55) && u > 15 && u < 48) mark = 1;
+    }
+    if (role === 'concrete') shade *= 0.94 + Math.abs(Math.sin(x * 0.027 + y * 0.016)) * 0.055;
+  } else if (pattern === 'orbital') {
+    // Offset access-panel joins and a small status strip, never a target decal.
+    if (solid) {
+      shade *= edge < 2 ? 0.72 : 1;
+      if (role === 'enamel' && ((u === 9 && v > 12 && v < 51) || (v === 12 && u > 9 && u < 27)))
+        shade *= 0.66;
+      if (role === 'enamel' && v > 48 && v < 52 && u >= 42 && u < 54) mark = 1;
+    }
+    if (role === 'copper') shade *= 0.99 + Math.sin(y * 0.098) * 0.015;
+  } else if (pattern === 'moonlit') {
+    // A restrained crescent stamp at the frame corner; quiet moonlit enamel.
+    if (solid) {
+      shade *= edge < 2 ? 0.83 : 1;
+      if (role === 'enamel' && Math.hypot(u - 15, v - 15) < 7 && Math.hypot(u - 18, v - 13) > 6)
+        mark = 2;
+    }
+    if (role === 'timber') shade *= u < 2 ? 0.82 : 1;
   } else if (pattern === 'etched') {
     if (solid) {
       shade *= edge < 3 ? 0.67 : 1;
