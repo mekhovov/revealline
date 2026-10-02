@@ -260,11 +260,78 @@ export const responseIdentity = (input) => dataIdentity(validateFlightResponse(i
 export const exportRadioProfile = (input) => canonicalJSON(validateRadioProfile(input));
 export const exportFlightResponse = (input) => canonicalJSON(validateFlightResponse(input));
 
+export const FLIGHT_PROFILE_LIBRARY_FORMAT = 'FlightProfiles.v2';
+export const RADIO_LIBRARY_LIMIT = 16;
+export const RADIO_LIBRARY_BYTES = 64 * 1024;
+export const radioProfileKey = (input) => dataIdentity(validateRadioProfile(input));
+const calibrationKey = ({ id, name, verified, format, ...calibration }) =>
+  canonicalJSON(calibration);
+const profileLibraryPlain = (input) =>
+  boundedJSON(input, {
+    maxBytes: RADIO_LIBRARY_BYTES,
+    maxNodes: 12000,
+    maxArray: RADIO_LIBRARY_LIMIT,
+    maxDepth: 9,
+  });
+function uniqueRadioProfiles(profiles, preferVerified = false) {
+  const byKey = new Map();
+  for (const input of profiles) {
+    const profile = validateRadioProfile(input),
+      key = radioProfileKey(profile),
+      previous = byKey.get(key);
+    if (preferVerified) {
+      const equivalent = [...byKey.entries()].filter(
+        ([, item]) => calibrationKey(item) === calibrationKey(profile),
+      );
+      // Importing the same mapping as an untrusted suggestion must not replace
+      // a calibration already verified on this computer. A later local check
+      // upgrades its draft without accumulating a duplicate unverified entry.
+      if (!profile.verified && equivalent.some(([, item]) => item.verified)) continue;
+      if (profile.verified)
+        for (const [draftKey, item] of equivalent) if (!item.verified) byKey.delete(draftKey);
+    }
+    required(
+      !previous || canonicalJSON(previous) === canonicalJSON(profile),
+      'Radio profile identity collision',
+    );
+    byKey.set(key, profile);
+  }
+  required(byKey.size <= RADIO_LIBRARY_LIMIT, 'Radio library is full; remove a profile first');
+  return [...byKey.values()];
+}
+/** Portable local backup, not a certification of somebody else's hardware. */
+export function validateFlightProfileLibrary(input) {
+  const value = profileLibraryPlain(input);
+  exactKeys(value, ['format', 'radio', 'response', 'radios'], 'flight profile library');
+  required(
+    value.format === FLIGHT_PROFILE_LIBRARY_FORMAT && Array.isArray(value.radios),
+    'Unsupported flight profile library',
+  );
+  const radio = value.radio === null ? null : validateRadioProfile(value.radio),
+    radios = uniqueRadioProfiles(value.radios);
+  required(radios.length === value.radios.length, 'Repeated radio profile');
+  required(
+    radio === null || radios.some((item) => canonicalJSON(item) === canonicalJSON(radio)),
+    'Selected radio is missing from the library',
+  );
+  return {
+    format: FLIGHT_PROFILE_LIBRARY_FORMAT,
+    radio,
+    response: validateFlightResponse(value.response),
+    radios,
+  };
+}
+
 /** User preferences only, separate from Journey and proof storage. Failed writes stay visible. */
 export function createFlightProfileStore({ storage, key = 'revealline.flight-profiles.v1' }) {
+  const libraryKey = `${key}.library.v2`;
+  const persistedProfileKeys = new Set();
   let current = { format: 'FlightProfiles.v1', radio: null, response: { ...DEFAULT_RESPONSE } },
+    radios = [],
     saved = false,
-    error = null;
+    error = null,
+    unreadableLibrary = false,
+    libraryObserved = false;
   const validate = (input) => {
     const value = plain(input);
     exactKeys(value, ['format', 'radio', 'response'], 'flight profiles');
@@ -275,35 +342,155 @@ export function createFlightProfileStore({ storage, key = 'revealline.flight-pro
       response: validateFlightResponse(value.response),
     };
   };
+  const decode = (input) => {
+    const value = profileLibraryPlain(input);
+    if (value.format === FLIGHT_PROFILE_LIBRARY_FORMAT) return validateFlightProfileLibrary(value);
+    const legacy = validate(value);
+    return {
+      ...legacy,
+      format: FLIGHT_PROFILE_LIBRARY_FORMAT,
+      radios: legacy.radio ? [legacy.radio] : [],
+    };
+  };
+  const library = () => ({ ...current, format: FLIGHT_PROFILE_LIBRARY_FORMAT, radios });
   try {
-    const text = storage?.getItem(key);
-    if (text) {
-      current = validate(text);
-      saved = true;
+    // The old entry remains untouched, including after migration, so a player
+    // rolling back to an older build retains its original calibrated radio.
+    const primary = storage?.getItem(libraryKey),
+      text = primary ?? storage?.getItem(key);
+    libraryObserved = primary !== null && primary !== undefined;
+    if (text !== null && text !== undefined) {
+      try {
+        const value = decode(text);
+        current = validate({
+          format: 'FlightProfiles.v1',
+          radio: value.radio,
+          response: value.response,
+        });
+        radios = value.radios;
+        for (const profile of radios) persistedProfileKeys.add(radioProfileKey(profile));
+        saved = true;
+      } catch (failure) {
+        unreadableLibrary = primary !== null && primary !== undefined;
+        throw failure;
+      }
     }
   } catch (failure) {
     error = failure.message;
   }
-  const save = (value) => {
-    current = validate(value);
+  const commit = (value, nextRadios, { removeKey = null, importedKeys = [] } = {}) => {
+    let next = validate(value);
+    const retainedKeys = new Set(nextRadios.map(radioProfileKey));
+    for (const profileKey of persistedProfileKeys)
+      if (!retainedKeys.has(profileKey)) persistedProfileKeys.delete(profileKey);
+    // Refresh before each write: separate settings views must not overwrite a
+    // calibration saved through another store instance since they were opened.
+    // Previously persisted entries are not local additions: retaining a stale
+    // copy must not resurrect a calibration another settings view removed.
+    let persisted = [];
+    try {
+      const text = storage?.getItem(libraryKey);
+      if (text !== null && text !== undefined) {
+        persisted = validateFlightProfileLibrary(text).radios;
+        libraryObserved = true;
+        for (const profile of persisted) persistedProfileKeys.add(radioProfileKey(profile));
+      } else if (!libraryObserved)
+        persisted = radios.filter((profile) => persistedProfileKeys.has(radioProfileKey(profile)));
+    } catch (failure) {
+      persisted = radios;
+      unreadableLibrary = true;
+      error = failure.message;
+    }
+    const merged = uniqueRadioProfiles(
+      [
+        ...persisted,
+        ...nextRadios.filter((item) => {
+          const profileKey = radioProfileKey(item);
+          return !persistedProfileKeys.has(profileKey) || importedKeys.includes(profileKey);
+        }),
+      ].filter((item) => radioProfileKey(item) !== removeKey),
+      true,
+    );
+    if (
+      next.radio &&
+      !merged.some((item) => radioProfileKey(item) === radioProfileKey(next.radio))
+    ) {
+      const verified = merged.find(
+        (item) => item.verified && calibrationKey(item) === calibrationKey(next.radio),
+      );
+      next = { ...next, radio: verified ?? null };
+    }
+    const checked = validateFlightProfileLibrary({
+      ...next,
+      format: FLIGHT_PROFILE_LIBRARY_FORMAT,
+      radios: merged,
+    });
+    current = next;
+    radios = checked.radios;
     saved = false;
+    if (unreadableLibrary)
+      return {
+        saved,
+        error: (error = 'Saved radio library is unreadable; its bytes were preserved'),
+      };
     error = null;
     try {
       required(storage?.setItem, 'Profile storage unavailable');
-      const text = canonicalJSON(current);
-      storage.setItem(key, text);
-      required(storage.getItem(key) === text, 'Profile save could not be verified');
+      const text = canonicalJSON(checked);
+      storage.setItem(libraryKey, text);
+      required(storage.getItem(libraryKey) === text, 'Profile save could not be verified');
+      libraryObserved = true;
+      persistedProfileKeys.clear();
+      for (const profile of checked.radios) persistedProfileKeys.add(radioProfileKey(profile));
       saved = true;
     } catch (failure) {
       error = failure.message;
     }
     return { saved, error };
   };
+  const save = (input) => {
+    const value = validate(input);
+    return commit(value, [...radios, ...(value.radio ? [value.radio] : [])]);
+  };
   return {
     snapshot: () => structuredClone(current),
-    status: () => ({ saved, error }),
+    status: () => ({ saved, error, unreadable: unreadableLibrary }),
+    radios: () =>
+      radios.map((profile) => ({
+        key: radioProfileKey(profile),
+        profile: structuredClone(profile),
+      })),
+    library: () => structuredClone(library()),
     save,
-    import: save,
+    import(input) {
+      const value = decode(input);
+      return commit(
+        { format: 'FlightProfiles.v1', radio: value.radio, response: value.response },
+        [...radios, ...value.radios],
+        { importedKeys: value.radios.map(radioProfileKey) },
+      );
+    },
+    selectRadio(profileKey) {
+      const profile = radios.find((item) => radioProfileKey(item) === profileKey);
+      required(profile, 'Radio profile is not in this library');
+      return save({ ...current, radio: profile });
+    },
+    removeRadio(profileKey) {
+      required(
+        radios.some((item) => radioProfileKey(item) === profileKey),
+        'Radio profile is not in this library',
+      );
+      return commit(
+        {
+          ...current,
+          radio:
+            current.radio && radioProfileKey(current.radio) === profileKey ? null : current.radio,
+        },
+        radios.filter((item) => radioProfileKey(item) !== profileKey),
+        { removeKey: profileKey },
+      );
+    },
     export: () => canonicalJSON(current),
+    exportLibrary: () => canonicalJSON(library()),
   };
 }

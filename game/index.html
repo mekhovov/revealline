@@ -1,10 +1,22 @@
 <!doctype html>
-<html lang="en" data-build-version="__REVEALLINE_VERSION__" data-boot-state="loading">
+<html
+  lang="en"
+  data-build-version="__REVEALLINE_VERSION__"
+  data-boot-state="loading"
+  data-access-state="locked"
+>
   <head>
     <meta charset="utf-8" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <meta name="theme-color" content="#070914" />
+    <meta name="revealline-access-id" content="revealline" />
+    <meta name="revealline-access-title" content="FPV / LINE" />
+    <meta
+      name="revealline-access-salt"
+      content="bWVraG92b3YuZ2l0aHViLmlvL3JldmVhbGxpbmUvYWNjZXNzL3Yx"
+    />
+    <meta name="revealline-access-verifier" content="fD62nYJ5uj8yGLsEBEAn2Blq8lcesFrR_gdebUswlxg" />
     <!-- Safari uses these when a player adds the game to the Home Screen. -->
     <meta name="mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -20,7 +32,7 @@
         background: #070914;
         color: #edf2ff;
       }
-      html:not([data-boot-state='ready']) body > :not(#boot-screen):not(script) {
+      html:not([data-boot-state='ready']) body > :not(#boot-screen):not(#access-gate):not(script) {
         display: none !important;
       }
       #boot-screen {
@@ -102,6 +114,8 @@
       }
     </style>
     <link rel="stylesheet" data-boot-href="./i18n/style.css" />
+    <link rel="stylesheet" href="access-gate.css" />
+    <script src="access-gate.mjs" defer></script>
     <script src="./vendor/i18next-26.4.2.min.js"></script>
     <script src="./i18n/catalogs.mjs"></script>
     <script src="./i18n/bootstrap.mjs"></script>
@@ -830,14 +844,7 @@
           </div>
           <p id="game-now-playing" class="game-now-playing micro-note" hidden>
             <span id="game-now-playing-title"></span>
-            <a
-              id="game-now-playing-source"
-              target="_blank"
-              rel="noopener noreferrer"
-              hidden
-              data-i18n="interface:artistWebsite"
-              >Artist website ↗</a
-            >
+            <span id="game-now-playing-source" hidden></span>
           </p>
           <div id="touch-indicator" aria-hidden="true" hidden><i></i></div>
           <section
@@ -3216,14 +3223,7 @@ No offline check yet.</pre
         </aside>
         <p id="shell-now-playing" class="game-now-playing micro-note" hidden>
           <span id="shell-now-playing-title"></span>
-          <a
-            id="shell-now-playing-source"
-            target="_blank"
-            rel="noopener noreferrer"
-            hidden
-            data-i18n="interface:artistWebsite2"
-            >Artist website</a
-          >
+          <span id="shell-now-playing-source" hidden></span>
         </p>
       </div>
       <p class="home-art-caption" aria-hidden="true" data-i18n-rich="interface:hangar01">

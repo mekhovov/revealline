@@ -10,6 +10,8 @@
 }
 body {
   margin: 0;
+  padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom)
+    env(safe-area-inset-left);
 }
 .directory-header,
 main,
@@ -32,6 +34,13 @@ footer {
   font-weight: 850;
   letter-spacing: 0.12em;
   white-space: nowrap;
+}
+.directory-return {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  color: #b6dce9;
+  text-underline-offset: 0.25em;
 }
 .directory-brand span {
   color: #63d9ee;

@@ -1,0 +1,449 @@
+{
+  "format": "FPVStickMotionBrowserEvidence.v1",
+  "createdAt": "2026-10-02T03:05:48.873Z",
+  "parent": "963d55ab8475230d7bc9d32fc251770655067992",
+  "passed": true,
+  "checks": [
+    {
+      "name": "Trace is thresholded, bounded to 12 points and expires after450ms",
+      "passed": true,
+      "maxObservedPoints": 10
+    },
+    {
+      "name": "Small4% motion stays exact and sub40ms reversals point the latest direction",
+      "passed": true,
+      "reversalTimesMs": [
+        0,
+        10,
+        20
+      ],
+      "smallNormalizedInput": 0.04,
+      "smallRenderedPixels": 2.4
+    },
+    {
+      "name": "Trace source, reduced motion, unavailable, reset and HTML ownership",
+      "passed": true
+    },
+    {
+      "name": "Automatic objective transition retains DOM, true state and constant0.5pace",
+      "passed": true,
+      "tick": 40
+    },
+    {
+      "name": "Exact example marker is immediate while separate hollow ring follows",
+      "passed": true,
+      "tick": 41
+    },
+    {
+      "name": "Hollow ring reaches an unchanged command within80ms",
+      "passed": true,
+      "tick": 419
+    },
+    {
+      "name": "Keyboard takeover is immediate, unsmoothed and preserves physics",
+      "passed": true
+    },
+    {
+      "name": "Pause, seek, loop and reduced motion clear stale histories",
+      "passed": true,
+      "loopTick": 0
+    },
+    {
+      "name": "Both locales and Modes1–4 retain exact axis placement",
+      "passed": true,
+      "combinations": 8
+    },
+    {
+      "name": "Quieter motor arcs preserve readable independent propellers",
+      "passed": true,
+      "computed": [
+        {
+          "strokeWidth": 1.2,
+          "opacity": 1,
+          "strokeOpacity": 0.4,
+          "stroke": "rgb(120, 220, 232)"
+        },
+        {
+          "strokeWidth": 1.2,
+          "opacity": 1,
+          "strokeOpacity": 0.4,
+          "stroke": "rgb(120, 220, 232)"
+        },
+        {
+          "strokeWidth": 1.2,
+          "opacity": 1,
+          "strokeOpacity": 0.4,
+          "stroke": "rgb(120, 220, 232)"
+        },
+        {
+          "strokeWidth": 1.2,
+          "opacity": 1,
+          "strokeOpacity": 0.4,
+          "stroke": "rgb(120, 220, 232)"
+        }
+      ]
+    },
+    {
+      "name": "beginner-01 unchanged exact demonstration replay",
+      "passed": true,
+      "ticks": 360,
+      "finalStateIdentity": "9c5c44ff0f549053"
+    },
+    {
+      "name": "beginner-02 unchanged exact demonstration replay",
+      "passed": true,
+      "ticks": 564,
+      "finalStateIdentity": "f79e1ebe9e9f5a3b"
+    },
+    {
+      "name": "beginner-03 unchanged exact demonstration replay",
+      "passed": true,
+      "ticks": 561,
+      "finalStateIdentity": "df7c0c7ddcbe98f8"
+    },
+    {
+      "name": "beginner-04 unchanged exact demonstration replay",
+      "passed": true,
+      "ticks": 696,
+      "finalStateIdentity": "2b02d54e3f436aa4"
+    },
+    {
+      "name": "beginner-05 unchanged exact demonstration replay",
+      "passed": true,
+      "ticks": 654,
+      "finalStateIdentity": "7b57e5174cee28c4"
+    },
+    {
+      "name": "beginner-06 unchanged exact demonstration replay",
+      "passed": true,
+      "ticks": 828,
+      "finalStateIdentity": "e2cdac9d77db8835"
+    },
+    {
+      "name": "beginner-07 unchanged exact demonstration replay",
+      "passed": true,
+      "ticks": 948,
+      "finalStateIdentity": "52ca8f0f6d942fda"
+    },
+    {
+      "name": "beginner-08 unchanged exact demonstration replay",
+      "passed": true,
+      "ticks": 830,
+      "finalStateIdentity": "502bfd5fba0dd1fa"
+    },
+    {
+      "name": "beginner-09 unchanged exact demonstration replay",
+      "passed": true,
+      "ticks": 899,
+      "finalStateIdentity": "fd81a13164a8da78"
+    },
+    {
+      "name": "beginner-10 unchanged exact demonstration replay",
+      "passed": true,
+      "ticks": 732,
+      "finalStateIdentity": "573b969949ebedb6"
+    },
+    {
+      "name": "beginner-11 unchanged exact demonstration replay",
+      "passed": true,
+      "ticks": 945,
+      "finalStateIdentity": "d22d2c0ed2f3769e"
+    },
+    {
+      "name": "beginner-12 unchanged exact demonstration replay",
+      "passed": true,
+      "ticks": 1032,
+      "finalStateIdentity": "4d5e90cdbe3cccac"
+    },
+    {
+      "name": "beginner-13 unchanged exact demonstration replay",
+      "passed": true,
+      "ticks": 654,
+      "finalStateIdentity": "11f9978ff8f10766"
+    },
+    {
+      "name": "beginner-14 unchanged exact demonstration replay",
+      "passed": true,
+      "ticks": 757,
+      "finalStateIdentity": "fe32539fa7036a87"
+    },
+    {
+      "name": "beginner-15 unchanged exact demonstration replay",
+      "passed": true,
+      "ticks": 360,
+      "finalStateIdentity": "a263ee9df3245fc6"
+    },
+    {
+      "name": "beginner-16 unchanged exact demonstration replay",
+      "passed": true,
+      "ticks": 712,
+      "finalStateIdentity": "98a71c96624ef754"
+    },
+    {
+      "name": "beginner-17 unchanged exact demonstration replay",
+      "passed": true,
+      "ticks": 608,
+      "finalStateIdentity": "e31f382df014b710"
+    },
+    {
+      "name": "beginner-18 unchanged exact demonstration replay",
+      "passed": true,
+      "ticks": 961,
+      "finalStateIdentity": "c3cb25ef47210af2"
+    },
+    {
+      "name": "beginner-19 unchanged exact demonstration replay",
+      "passed": true,
+      "ticks": 973,
+      "finalStateIdentity": "4278125617729278"
+    },
+    {
+      "name": "beginner-20 unchanged exact demonstration replay",
+      "passed": true,
+      "ticks": 908,
+      "finalStateIdentity": "85322821714cc6d5"
+    },
+    {
+      "name": "beginner-21 unchanged exact demonstration replay",
+      "passed": true,
+      "ticks": 959,
+      "finalStateIdentity": "f68bc332fde2cd48"
+    },
+    {
+      "name": "beginner-22 unchanged exact demonstration replay",
+      "passed": true,
+      "ticks": 1763,
+      "finalStateIdentity": "1eed4ab679368ff7"
+    },
+    {
+      "name": "beginner-23 unchanged exact demonstration replay",
+      "passed": true,
+      "ticks": 1057,
+      "finalStateIdentity": "2845a2ff4aec8315"
+    },
+    {
+      "name": "beginner-24 unchanged exact demonstration replay",
+      "passed": true,
+      "ticks": 1031,
+      "finalStateIdentity": "7524261f630f7a40"
+    },
+    {
+      "name": "beginner-25 unchanged exact demonstration replay",
+      "passed": true,
+      "ticks": 676,
+      "finalStateIdentity": "d8840ecf804778f1"
+    },
+    {
+      "name": "beginner-26 unchanged exact demonstration replay",
+      "passed": true,
+      "ticks": 1407,
+      "finalStateIdentity": "e0364f091e3eb2a4"
+    },
+    {
+      "name": "beginner-27 unchanged exact demonstration replay",
+      "passed": true,
+      "ticks": 1379,
+      "finalStateIdentity": "a18a122f726dfe48"
+    },
+    {
+      "name": "beginner-28 unchanged exact demonstration replay",
+      "passed": true,
+      "ticks": 1151,
+      "finalStateIdentity": "4126e0a2e80d49ae"
+    },
+    {
+      "name": "beginner-29 unchanged exact demonstration replay",
+      "passed": true,
+      "ticks": 1597,
+      "finalStateIdentity": "cc775be8808698bd"
+    },
+    {
+      "name": "beginner-30 unchanged exact demonstration replay",
+      "passed": true,
+      "ticks": 1277,
+      "finalStateIdentity": "12ff1f943cd2eccf"
+    },
+    {
+      "name": "beginner-31 unchanged exact demonstration replay",
+      "passed": true,
+      "ticks": 1840,
+      "finalStateIdentity": "a9d39bddf15619d9"
+    },
+    {
+      "name": "beginner-32 unchanged exact demonstration replay",
+      "passed": true,
+      "ticks": 1709,
+      "finalStateIdentity": "77c17e1155019e55"
+    },
+    {
+      "name": "beginner-33 unchanged exact demonstration replay",
+      "passed": true,
+      "ticks": 2091,
+      "finalStateIdentity": "88d6cc9efa4bbd1a"
+    },
+    {
+      "name": "beginner-34 unchanged exact demonstration replay",
+      "passed": true,
+      "ticks": 2446,
+      "finalStateIdentity": "783d9ac33d8dd03f"
+    },
+    {
+      "name": "beginner-35 unchanged exact demonstration replay",
+      "passed": true,
+      "ticks": 1902,
+      "finalStateIdentity": "8c29b29d69e761ab"
+    },
+    {
+      "name": "beginner-36 unchanged exact demonstration replay",
+      "passed": true,
+      "ticks": 1796,
+      "finalStateIdentity": "ad7aa5de2e99f9fe"
+    },
+    {
+      "name": "beginner-37 unchanged exact demonstration replay",
+      "passed": true,
+      "ticks": 2312,
+      "finalStateIdentity": "c4496bc85f21f7b4"
+    },
+    {
+      "name": "beginner-38 unchanged exact demonstration replay",
+      "passed": true,
+      "ticks": 1769,
+      "finalStateIdentity": "cabf135da49422b0"
+    },
+    {
+      "name": "beginner-39 unchanged exact demonstration replay",
+      "passed": true,
+      "ticks": 2028,
+      "finalStateIdentity": "c3c3eed9622e8f82"
+    },
+    {
+      "name": "beginner-40 unchanged exact demonstration replay",
+      "passed": true,
+      "ticks": 2007,
+      "finalStateIdentity": "7c4a810a0a8ab6e0"
+    },
+    {
+      "name": "beginner-41 unchanged exact demonstration replay",
+      "passed": true,
+      "ticks": 2510,
+      "finalStateIdentity": "3d33e5a01e58079c"
+    },
+    {
+      "name": "beginner-42 unchanged exact demonstration replay",
+      "passed": true,
+      "ticks": 2784,
+      "finalStateIdentity": "52dc63ca74fabe94"
+    },
+    {
+      "name": "beginner-43 unchanged exact demonstration replay",
+      "passed": true,
+      "ticks": 1657,
+      "finalStateIdentity": "c272e62e0a9e6d02"
+    },
+    {
+      "name": "beginner-44 unchanged exact demonstration replay",
+      "passed": true,
+      "ticks": 1657,
+      "finalStateIdentity": "774cd1ede8a1f63e"
+    },
+    {
+      "name": "beginner-45 unchanged exact demonstration replay",
+      "passed": true,
+      "ticks": 1045,
+      "finalStateIdentity": "23393f68b2059498"
+    },
+    {
+      "name": "beginner-46 unchanged exact demonstration replay",
+      "passed": true,
+      "ticks": 1527,
+      "finalStateIdentity": "21110474859f0887"
+    },
+    {
+      "name": "beginner-47 unchanged exact demonstration replay",
+      "passed": true,
+      "ticks": 1678,
+      "finalStateIdentity": "9c8306ffaf6dcc89"
+    },
+    {
+      "name": "beginner-48 unchanged exact demonstration replay",
+      "passed": true,
+      "ticks": 1845,
+      "finalStateIdentity": "b58df5e614999bda"
+    },
+    {
+      "name": "beginner-49 unchanged exact demonstration replay",
+      "passed": true,
+      "ticks": 1752,
+      "finalStateIdentity": "ce1234ce0817c6b8"
+    },
+    {
+      "name": "beginner-50 unchanged exact demonstration replay",
+      "passed": true,
+      "ticks": 1846,
+      "finalStateIdentity": "5d1a9e28acad2504"
+    },
+    {
+      "name": "beginner-51 unchanged exact demonstration replay",
+      "passed": true,
+      "ticks": 2018,
+      "finalStateIdentity": "7a49fb39bcb506c3"
+    },
+    {
+      "name": "beginner-52 unchanged exact demonstration replay",
+      "passed": true,
+      "ticks": 2793,
+      "finalStateIdentity": "83ec857c83cdb077"
+    },
+    {
+      "name": "beginner-53 unchanged exact demonstration replay",
+      "passed": true,
+      "ticks": 2491,
+      "finalStateIdentity": "83168bd78a32adf5"
+    },
+    {
+      "name": "beginner-54 unchanged exact demonstration replay",
+      "passed": true,
+      "ticks": 1542,
+      "finalStateIdentity": "2f94f3b6491254c7"
+    },
+    {
+      "name": "beginner-55 unchanged exact demonstration replay",
+      "passed": true,
+      "ticks": 2075,
+      "finalStateIdentity": "ffe2815daa8a832f"
+    },
+    {
+      "name": "beginner-56 unchanged exact demonstration replay",
+      "passed": true,
+      "ticks": 2622,
+      "finalStateIdentity": "863576bd05ea03e6"
+    },
+    {
+      "name": "beginner-57 unchanged exact demonstration replay",
+      "passed": true,
+      "ticks": 3212,
+      "finalStateIdentity": "def0ca53a5dcd820"
+    },
+    {
+      "name": "beginner-58 unchanged exact demonstration replay",
+      "passed": true,
+      "ticks": 5285,
+      "finalStateIdentity": "19644e21a6648a57"
+    },
+    {
+      "name": "No host progress, pending callbacks or disposal artifacts",
+      "passed": true
+    }
+  ],
+  "inputs": {
+    "beginner-coach.mjs": "72667ae2611a1f2bbed23a18adb900bb9da7a6b76ad6c8632541e6ea2c7c5248",
+    "sim-presentation.mjs": "3ab238301da0ac4becac88a1970d9d73e4d0b17a5a7a45ac42a423990e84aafd",
+    "world-model.mjs": "692f95aa2eef7f9fd8be04e20799e928b5c4fb917daae8128306e9fe66b07cc2",
+    "world-catalogue.mjs": "1eb0940fdf2edd1d6dd6412e0781f77d65fe14459cfefc1408c3d94a3357ec24",
+    "world-demonstrations.mjs": "4de24b61664163cff3652894e326930c3a217ecc651233f132240d56e325d985",
+    "style.css": "6d67bd2b760745eb1b33a8887e92def6114ba58d55aeaf25ddb13634e13cd631",
+    "world-style.css": "9d5a69b8db4eedc774eacffcbe0eff1e3334ac5798810424152d6858ef3aee09"
+  },
+  "scope": "Production browser DOM, shared stick trace and58 exact recorded lesson replays. Controlled frame clock and synthetic keyboard input; no physical radio, human acceptance, GPU/FPS or added unit coverage claim."
+}
