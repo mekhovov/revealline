@@ -1057,3 +1057,52 @@ merge or public deployment of this increment was attempted or claimed.
 The current request is complete locally and published for review. Next authorized
 independent work remains R5 hangar/meadow art, after reconciling #925 and the
 preserved radio-menu work. Keep new feature changes off this finished PR.
+
+### 2 October — handheld flight and controller increment qualified
+
+Current focused branch `codex/fpv-handheld-flight` begins at #941 head
+`130f80f5bbeebf60620b2d1e346eea4e58c975db`. Runtime commit
+`ad75299b528d082dd754233de25bccbae6be882a` makes both SIM hosts flight-first on
+phones/handhelds: compact edge HUD, touch corners, paused menu, explicit return
+without arming. Standard controllers support arm, reset, pause, all flight axes,
+D-pad/shoulder fallbacks and World fire; the learning lab supports safe takeover.
+Current-neutral UI arming and immediate post-Arm input were checked and corrected.
+See `docs/fpv-handheld-flight.md` for mapping, references and limits.
+
+Browser evidence under `docs/evidence/fpv-handheld-*`:96 actual-host layout checks,
+24 actual-host controller checks,18 adapter checks,13 preview checks and119 full
+school continuity checks pass. Samples/media queries are controlled; no new
+physical iPhone/WKWebView, Steam Deck or radio acceptance and no new unit coverage.
+The handheld package candidate passes all3 admissions, committed inputs/ZIPs and
+2 identical builds, with62 Academy /94 World runtime files. Frozen candidate:
+`/tmp/fpv-handheld-final-20261002`. Existing limits and gameplay contracts remain.
+
+Landing entry work remains separate in17 uncommitted game files. The candidate
+builder requires a clean whole tree, so those owned edits were snapshotted and
+restored byte-for-byte around qualification. Recovery stash
+`74adcf08ef4dd80c3f7c431ed3c37e01ad21fefc` remains; preservation receipt is
+`/tmp/fpv-handheld-source-preservation-20261002.json`. No unrelated edits changed.
+First candidate attempt correctly rejected a dirty tree; no check was bypassed.
+
+Next: publish/attach this focused PR after #941 in native stack902, then complete
+the separately reviewed fourth FPV SIM landing choice on a child branch. Keep
+older native stack holds/protections and remaining R5–R7 work intact. Public
+availability remains conditional on permitted merge, deployment identity and
+actual public launch; these local receipts do not claim live deployment.
+
+### 2 October — handheld/controller PR published
+
+[#942](https://github.com/mekhovov/revealline/pull/942) is attached and appended
+through the native API to stack902 after #941. No stack member was retargeted or
+rebased. Both local player URLs were rebuilt with87 files/13,948,137bytes and ZIP
+SHA `e49c8364280ddb87134769274447aa29795013cf260e765bdbedfc1d32dee843`.
+The existing source Academy entry also has the handheld UI and controller adapter.
+CI/merge/public deployment remain separate from these local results.
+
+Next branch `codex/fpv-sim-mode-entry` carries only the completed landing change:
+Solo / Versus / Team / FPV SIM, same-build World Studio availability and the
+existing validated optional-package fallback. Initial browser checks found a
+fixture readiness/focus cascade; the isolated repeated Versus390 rerun passes6/6
+without production changes, and the full12 host/locale/width pass succeeds.
+A final same-window controller launch is being qualified to avoid popup permission
+requirements. Keep this work separate from the ready #942 runtime.

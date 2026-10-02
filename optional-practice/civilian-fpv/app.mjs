@@ -27,7 +27,7 @@ import {
   paintStickDirections,
   mountStickTrace,
 } from './sim-presentation.mjs';
-import { createFlightInput, createFlightMenuNavigation } from './input.mjs';
+import { createFlightInput, createFlightMenuNavigation, createFlightGamepad } from './input.mjs';
 import { createFlightRenderer } from './renderer.mjs';
 import { COPY } from './copy.mjs';
 import { mountFlightNotebook } from './notebook.mjs';
@@ -160,6 +160,9 @@ export function mountFlightApp({
     notebook: ['Notebook', 'Записник'],
     help: ['Flight guide', 'Довідник польоту'],
     controls: ['Controls', 'Керування'],
+    flightMenu: ['Menu', 'Меню'],
+    returnToFlight: ['Back to flight', 'До польоту'],
+    controller: ['Controller / Steam Deck', 'Контролер / Steam Deck'],
     radioSetup: ['Radio setup', 'Налаштувати пульт'],
     flightOptions: ['Flight options', 'Параметри польоту'],
     viewAndSound: ['View & sound', 'Вигляд і звук'],
@@ -261,8 +264,76 @@ export function mountFlightApp({
   const input = createFlightInput({
     window: win,
     document: doc,
-    onPause: (reason) => pause(reason),
+    onPause: (reason) => (reason === 'paused' ? setFlightMenu(true) : pause(reason)),
   });
+  const controllerHint = doc.createElement('p');
+  controllerHint.id = 'academy-controller-hint';
+  controllerHint.hidden = true;
+  $('academy-flight-options').append(controllerHint);
+  const gamepad = createFlightGamepad({ window: win, document: doc });
+  const flightMenuOpen = () => $('flight-app').dataset.flightMenuOpen === 'true';
+  function setFlightMenu(open) {
+    if (open) pause();
+    $('flight-app').dataset.flightMenuOpen = String(open);
+    if (!open) $('academy-flight-options').open = false;
+    paint(true);
+    (open ? $('academy-flight-close-menu') : $('academy-flight-resume'))?.focus({
+      preventScroll: true,
+    });
+  }
+  const gamepadHelp = () =>
+    locale === 'uk'
+      ? 'A — увімкнути / продовжити · Y — скинути · Menu / B — пауза. Лівий стік: поворот і зміна газу; правий: нахил. Відпустіть лівий стік, щоб утримувати газ. D-pad — нахил, LB/RB — поворот, LT/RT — менше/більше газу.'
+      : 'A / Cross: arm · Y / Triangle: reset · Menu / B: pause. Left stick: yaw and throttle adjustment; right: tilt. Release the left stick to hold throttle. D-pad: tilt, LB/RB: yaw, LT/RT: less/more throttle. Steam Input: use a Gamepad layout.';
+  function gamepadScope() {
+    if (
+      replay ||
+      !flight ||
+      !sceneReady ||
+      !inputAvailable() ||
+      modalOpen() ||
+      flightMenuOpen() ||
+      immersive.snapshot().toolsOpen
+    )
+      return 'blocked';
+    if (flight.snapshot().status === 'active')
+      return input.owner() === 'controller' ? 'flight' : 'blocked';
+    return ['disarmed', 'paused'].includes(flight.snapshot().status) &&
+      (input.owner() !== 'radio' || !radio.status().verified)
+      ? 'ready'
+      : 'blocked';
+  }
+  function readGamepad(now, scope = gamepadScope()) {
+    let pads = [];
+    try {
+      pads = win.navigator.getGamepads?.() ?? [];
+    } catch {
+      /* Touch and keyboard remain usable. */
+    }
+    return gamepad.poll({
+      gamepads: pads,
+      now,
+      scope,
+      excludeIndex: radio.status().verified ? radio.status().selected?.index : null,
+    });
+  }
+  function pollGamepad(now) {
+    const sampled = readGamepad(now);
+    for (const action of sampled.actions) {
+      if (action === 'arm') {
+        if (input.owner() !== 'controller') {
+          input.select('controller');
+          $('input-source').value = 'controller';
+          $('touch-controls').hidden = true;
+          doc.body.classList.remove('touch-mode');
+        }
+        arm();
+      } else if (action === 'reset') {
+        setFlightMenu(false);
+        reset();
+      } else if (action === 'pause' || action === 'back') setFlightMenu(true);
+    }
+  }
   const radio = createRadioRuntime({
     getGamepads:
       typeof win.navigator?.getGamepads === 'function'
@@ -347,6 +418,7 @@ export function mountFlightApp({
     });
     cancelReview();
     epoch++;
+    gamepad.reset();
     radio.reset({ notify: false });
     input.enable(false);
     accumulator = 0;
@@ -375,6 +447,7 @@ export function mountFlightApp({
   function pause(reason = 'paused') {
     if (disposed) return;
     pauseGeneration++;
+    gamepad.reset();
     resetStickTraces();
     cancelReview();
     flight?.pause();
@@ -388,6 +461,7 @@ export function mountFlightApp({
     paint(true);
   }
   function arm() {
+    $('academy-flight-options').open = false;
     if (
       disposed ||
       suspended ||
@@ -400,6 +474,7 @@ export function mountFlightApp({
     )
       return false;
     immersive.closeControls();
+    $('flight-app').dataset.flightMenuOpen = 'false';
     if (replay) {
       replay.paused = false;
       replay.flight.arm();
@@ -419,6 +494,15 @@ export function mountFlightApp({
         paint(true);
         return false;
       }
+    }
+    if (input.owner() === 'controller') readGamepad(win.performance.now(), 'ready');
+    if (input.owner() === 'controller' && !gamepad.status().canArm) {
+      message =
+        locale === 'uk'
+          ? 'Під’єднайте контролер і відпустіть стіки та кнопки.'
+          : 'Connect a controller, then centre the sticks and release all buttons.';
+      paint(true);
+      return false;
     }
     input.enable(true);
     flight.arm();
@@ -608,6 +692,16 @@ export function mountFlightApp({
   function paint(force = false, now = 0) {
     if (!flight || disposed) return;
     const state = replay ? replay.flight.snapshot() : flight.snapshot();
+    $('flight-app').dataset.flightState = state.status;
+    if ($('academy-flight-resume')) {
+      $('academy-flight-resume').disabled =
+        !sceneReady || !['disarmed', 'paused'].includes(state.status);
+      $('academy-flight-resume').textContent = c().arm;
+    }
+    if ($('academy-controller-hint')) {
+      $('academy-controller-hint').textContent = gamepadHelp();
+      $('academy-controller-hint').hidden = input.owner() !== 'controller';
+    }
     renderer.draw?.(state, {
       cameraMode: $('camera').value || 'fpv',
       cameraFov: Number($('camera-fov').value) || 82,
@@ -617,7 +711,9 @@ export function mountFlightApp({
       values = state.lastInput,
       monitor = radioPreview
         ? radioPreview.controls
-        : Object.fromEntries(FLIGHT_CONTROLS.map((key) => [key, values[key] / 1000])),
+        : !replay && input.owner() === 'controller'
+          ? gamepad.preview().controls
+          : Object.fromEntries(FLIGHT_CONTROLS.map((key) => [key, values[key] / 1000])),
       stickMode = radioPreview?.stickMode ?? 2,
       layout = STICK_LAYOUTS[stickMode],
       source = replay ? 'recording' : input.owner(),
@@ -759,6 +855,7 @@ export function mountFlightApp({
   }
   function frame(now) {
     if (disposed || suspended) return;
+    pollGamepad(now);
     pollMenu(now);
     const delta = lastTime === null ? 0 : now - lastTime,
       executedAt = win.performance?.now?.() ?? now,
@@ -772,6 +869,7 @@ export function mountFlightApp({
       !reviewAbort &&
       inputAvailable() &&
       !modalOpen() &&
+      !flightMenuOpen() &&
       !immersive.snapshot().toolsOpen &&
       renderer.available &&
       sceneReady &&
@@ -817,7 +915,12 @@ export function mountFlightApp({
             accumulator = 0;
             break;
           }
-          const command = input.owner() === 'radio' ? radioInput : input.sample(1 / FLIGHT_HZ);
+          const command =
+            input.owner() === 'radio'
+              ? radioInput
+              : input.owner() === 'controller'
+                ? gamepad.sample(1 / FLIGHT_HZ)
+                : input.sample(1 / FLIGHT_HZ);
           const before = flight.snapshot().ticks;
           flight.step(command);
           if (flight.snapshot().ticks !== before) recorder.record(command);
@@ -828,6 +931,9 @@ export function mountFlightApp({
     paint(false, now);
     frameId = win.requestAnimationFrame(frame);
   }
+  listen($('academy-flight-menu'), 'click', () => setFlightMenu(true));
+  listen($('academy-flight-close-menu'), 'click', () => setFlightMenu(false));
+  listen($('academy-flight-resume'), 'click', () => arm());
   input.bindStick($('left-stick'), 'left');
   input.bindStick($('right-stick'), 'right');
   listen($('touch-throttle'), 'input', () =>
@@ -969,7 +1075,11 @@ export function mountFlightApp({
         blockDevices: dialog.id === 'setup-dialog' && Boolean(setup?.captureActive()),
       };
     if (flight.snapshot().status === 'active' && !modalOpen()) return null;
-    return { root: $('flight-app'), key: `academy:${modalOpen()}` };
+    return {
+      root: $('flight-app'),
+      key: `academy:${modalOpen()}:${flightMenuOpen()}`,
+      blockDevices: gamepadScope() !== 'blocked',
+    };
   };
   const menuNavigation = createFlightMenuNavigation({
     document: doc,
@@ -985,6 +1095,7 @@ export function mountFlightApp({
     onBack() {
       const dialog = dialogIds.find((id) => $(id).open);
       if (dialog) closeDialog(dialog);
+      else if (flightMenuOpen()) setFlightMenu(false);
       else if ($('academy-flight-options').open) $('academy-flight-options').open = false;
       else if (immersive.active()) void immersive.exit();
       else openDialog('course-dialog');
@@ -1139,6 +1250,12 @@ export function mountFlightApp({
         if (!disposed) refreshOfflineControls();
       }
     });
+  if (win.matchMedia?.('(pointer: coarse)').matches) {
+    $('input-source').value = 'touch';
+    input.select('touch');
+    $('touch-controls').hidden = false;
+    doc.body.classList.add('touch-mode');
+  }
   reset();
   translated();
   $('fallback').hidden = !!renderer.available;
@@ -1171,6 +1288,7 @@ export function mountFlightApp({
       menuNavigation.dispose();
       menuHint.remove();
       input.dispose();
+      gamepad.dispose();
       renderer.dispose();
       immersive.dispose();
       audioControls.dispose();
