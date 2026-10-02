@@ -11,6 +11,7 @@ import { downloadFiles, validateDownloadCatalogue } from '../game/download-catal
 import { validateInstalledSelection } from '../game/installed-app.mjs';
 import { buildOfflineDestinations, buildNavigationBootstraps } from './offline-destinations.mjs';
 import { readFileSync } from 'node:fs';
+import { addOfflineExperiences } from './offline-experiences.mjs';
 
 const contentMessages = JSON.parse(
   readFileSync(new URL('../game/locales/en/content.json', import.meta.url), 'utf8'),
@@ -39,7 +40,12 @@ export const CULTURAL_TEAM_OFFLINE_PROJECT_FACTORIES = Object.freeze(
 
 const digest = (bytes) => createHash('sha256').update(bytes).digest('hex');
 /** Built from the exact frozen bytes, never a second, independently maintained asset list. */
-export async function buildOfflineContent(entries, excluded, version) {
+export async function buildOfflineContent(
+  entries,
+  excluded,
+  version,
+  { bundledPackages = [] } = {},
+) {
   const snapshots = await addAuthoredRuntimeSnapshots(entries);
   for (const chapter of snapshots?.chapters || [])
     if (!chapter.descriptor.core) excluded.add(chapter.path);
@@ -420,6 +426,7 @@ export async function buildOfflineContent(entries, excluded, version) {
         files: tracks.map((track) => `soundtrack:${track.id}`),
       });
   }
+  addOfflineExperiences(groups, files, bundledPackages, coreGraph?.retained);
   // Stable sort preserves authored chapter order within a mode while keeping
   // historical editions and Studio packages below current playable choices.
   const groupRank = (group) =>
