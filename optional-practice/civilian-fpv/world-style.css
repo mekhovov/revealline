@@ -3627,3 +3627,311 @@ html:not([data-fpv-immersive])
     height: 76px;
   }
 }
+
+/* Practice focus is its own stage; the full lesson stays intact behind it. */
+.sim-worlds .beginner-coach[data-stage='guide'][data-lab-immersive='true'] {
+  position: fixed;
+  inset: 0;
+  z-index: 1200;
+  width: 100%;
+  height: 100dvh;
+  max-height: none;
+  box-sizing: border-box;
+  padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom)
+    env(safe-area-inset-left);
+  background: var(--fk-bg);
+  overflow: hidden;
+}
+.sim-worlds .beginner-coach[data-stage='guide'][data-lab-immersive='true'] .coach-card {
+  display: grid;
+  grid-template-areas: 'toolbar' 'axis' 'stage' 'status';
+  grid-template-rows: auto auto minmax(0, 1fr) auto;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  margin: 0;
+  padding: 0;
+  border-radius: 0;
+  overflow: hidden;
+}
+.sim-worlds
+  .beginner-coach[data-lab-immersive='true']
+  .coach-card
+  > :not(.coach-lab-toolbar, .coach-axis-picker, .coach-grid, .coach-lab-status) {
+  display: none;
+}
+.sim-worlds .beginner-coach[data-lab-immersive='true'] .coach-lab-toolbar {
+  grid-area: toolbar;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 6px;
+  margin: 0;
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--fk-line);
+  background: var(--fk-panel);
+  z-index: 4;
+}
+.sim-worlds .beginner-coach[data-lab-immersive='true'] .coach-lab-toolbar button {
+  min-height: 44px;
+  max-width: 100%;
+  padding: 8px 12px;
+  white-space: normal;
+  font-size: 12px;
+}
+.sim-worlds
+  .beginner-coach[data-lab-immersive='true']
+  .coach-lab-toolbar
+  [data-coach-action='lab-immersive'] {
+  margin-right: auto;
+  border-color: var(--fk-cyan);
+  color: var(--fk-cyan);
+}
+.sim-worlds .beginner-coach[data-stage='guide'][data-lab-immersive='true'] .coach-axis-picker {
+  grid-area: axis;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 4px;
+  width: min(100%, 520px);
+  justify-self: center;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 4px 12px;
+}
+.sim-worlds
+  .beginner-coach[data-stage='guide'][data-lab-immersive='true']
+  .coach-axis-picker
+  button {
+  min-width: 0;
+  min-height: 44px;
+  padding: 6px;
+  font-size: 12px;
+}
+.sim-worlds .beginner-coach[data-stage='guide'][data-lab-immersive='true'] .coach-grid {
+  grid-area: stage;
+  position: relative;
+  display: block;
+  min-width: 0;
+  min-height: 0;
+  margin: 0;
+  overflow: hidden;
+  background: radial-gradient(ellipse at 50% 40%, #29465d55, transparent 68%), var(--fk-bg);
+}
+.sim-worlds .beginner-coach[data-lab-immersive='true'] .coach-controller {
+  display: contents;
+}
+.sim-worlds
+  .beginner-coach[data-lab-immersive='true']
+  .coach-controller
+  > :not(.coach-sticks, .coach-lab-touch-controls) {
+  display: none;
+}
+.sim-worlds .beginner-coach[data-lab-immersive='true'] .coach-sticks {
+  position: absolute;
+  inset: auto 22px 70px;
+  z-index: 3;
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  pointer-events: none;
+}
+.sim-worlds .beginner-coach[data-lab-immersive='true'] .coach-stick {
+  width: 120px;
+  min-width: 0;
+  pointer-events: auto;
+}
+.sim-worlds .beginner-coach[data-lab-immersive='true'] .coach-stick h4 {
+  margin-bottom: 6px;
+  font-size: 11px;
+  text-shadow: 0 1px 2px #000;
+}
+.sim-worlds .beginner-coach[data-lab-immersive='true'] .coach-gimbal-wrap {
+  padding: 0;
+  margin: 0;
+}
+.sim-worlds
+  .beginner-coach[data-lab-immersive='true']
+  :is(.coach-gimbal-wrap > span, .coach-stick-axes, .coach-stick-readout) {
+  display: none;
+}
+.sim-worlds .beginner-coach[data-stage='guide'][data-lab-immersive='true'] .coach-stick svg {
+  width: 100%;
+  max-height: none;
+}
+.sim-worlds .beginner-coach[data-stage='guide'][data-lab-immersive='true'] .coach-drone {
+  position: absolute;
+  inset: 0;
+  display: block;
+  min-height: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+}
+.sim-worlds .beginner-coach[data-lab-immersive='true'] .coach-drone > :not(.coach-drone-figure) {
+  display: none;
+}
+.sim-worlds .beginner-coach[data-lab-immersive='true'] .coach-drone-figure {
+  display: grid;
+  grid-template-rows: minmax(0, 1fr) auto auto;
+  height: 100%;
+  min-height: 0;
+  margin: 0;
+}
+.sim-worlds .beginner-coach[data-stage='guide'][data-lab-immersive='true'] .coach-lab-drawing {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: minmax(0, 1fr);
+  place-items: center;
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+  border-radius: 0;
+}
+.sim-worlds .beginner-coach[data-stage='guide'][data-lab-immersive='true'] .sim-response-drawing {
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  max-height: none;
+}
+.sim-worlds .beginner-coach[data-lab-immersive='true'] .sim-response-horizon,
+.sim-worlds .beginner-coach[data-lab-immersive='true'] .sim-response-ground-far {
+  fill: none;
+  stroke: #819da82e;
+  stroke-width: 0.75;
+}
+.sim-worlds .beginner-coach[data-lab-immersive='true'] .sim-response-horizon {
+  stroke: #83c6d140;
+  stroke-width: 1;
+}
+.sim-worlds
+  .beginner-coach[data-lab-immersive='true']
+  :is(.sim-response-motor-label, .sim-response-front-label, .sim-response-rear-label) {
+  font-size: 12px;
+}
+.sim-worlds .beginner-coach[data-lab-immersive='true'] .sim-response-height-label {
+  font-size: 14px;
+}
+.sim-worlds
+  .beginner-coach[data-lab-immersive='true']
+  :is(.sim-response-north, .sim-response-mix-note) {
+  font-size: 11px;
+}
+.sim-worlds .beginner-coach[data-lab-immersive='true'] .coach-lab-telemetry {
+  margin: 0;
+  padding: 5px 14px;
+  font-size: 12px;
+  text-align: center;
+  background: #10192380;
+}
+.sim-worlds .beginner-coach[data-lab-immersive='true'] .coach-drone-figure figcaption {
+  margin: 0;
+  padding: 2px 14px 6px;
+  font-size: 10px;
+  text-align: center;
+  background: #10192380;
+}
+.sim-worlds .beginner-coach[data-lab-immersive='true'] .coach-lab-status {
+  grid-area: status;
+  margin: 0;
+  padding: 7px 14px;
+  border: 0;
+  border-top: 1px solid var(--fk-line);
+  background: var(--fk-panel);
+  color: var(--fk-muted);
+  font-size: 12px;
+  line-height: 1.4;
+  text-align: center;
+}
+.sim-worlds .beginner-coach[data-lab-immersive='true'] .coach-lab-touch-controls {
+  position: absolute;
+  bottom: 70px;
+  left: 50%;
+  z-index: 4;
+  max-width: calc(100% - 320px);
+  margin: 0;
+  padding: 0 10px;
+  border: 0;
+  border-radius: 4px;
+  transform: translateX(-50%);
+}
+.sim-worlds .beginner-coach[data-lab-immersive='true'] .coach-lab-touch-controls[open] {
+  width: min(440px, calc(100% - 28px));
+  max-width: calc(100% - 28px);
+  max-height: min(300px, 45dvh);
+  padding: 0 12px 12px;
+  overflow: auto;
+  background: var(--fk-panel);
+  border: 1px solid var(--fk-line);
+}
+.sim-worlds .beginner-coach[data-lab-immersive='true'] .coach-lab-touch-controls > summary {
+  text-align: center;
+  font-size: 12px;
+}
+.sim-worlds:has(.beginner-coach[data-lab-immersive='true']) .flight-immersive-bar {
+  display: none;
+}
+@media (max-width: 600px) {
+  .sim-worlds .beginner-coach[data-lab-immersive='true'] .coach-lab-toolbar {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 4px;
+    padding: 6px 8px;
+  }
+  .sim-worlds
+    .beginner-coach[data-lab-immersive='true']
+    .coach-lab-toolbar
+    [data-coach-action='lab-immersive'] {
+    margin-right: 0;
+  }
+  .sim-worlds .beginner-coach[data-lab-immersive='true'] .coach-sticks {
+    inset-inline: 12px;
+    bottom: 84px;
+  }
+  .sim-worlds .beginner-coach[data-lab-immersive='true'] .coach-stick {
+    width: 96px;
+  }
+  .sim-worlds .beginner-coach[data-stage='guide'][data-lab-immersive='true'] .sim-response-drawing {
+    width: max(100%, 560px);
+    max-width: none;
+  }
+  .sim-worlds
+    .beginner-coach[data-lab-immersive='true']
+    :is(.sim-response-height-label, .sim-response-height-line) {
+    display: none;
+  }
+  .sim-worlds .beginner-coach[data-lab-immersive='true'] .coach-lab-touch-controls {
+    bottom: 84px;
+    max-width: calc(100% - 232px);
+    padding-inline: 4px;
+  }
+  .sim-worlds .beginner-coach[data-lab-immersive='true'] .coach-lab-touch-controls[open] {
+    bottom: 202px;
+    max-width: calc(100% - 24px);
+  }
+  .sim-worlds .beginner-coach[data-lab-immersive='true'] .coach-lab-telemetry,
+  .sim-worlds .beginner-coach[data-lab-immersive='true'] .coach-lab-status {
+    font-size: 11px;
+  }
+}
+@media (max-height: 500px) and (orientation: landscape) {
+  .sim-worlds .beginner-coach[data-lab-immersive='true'] .coach-lab-toolbar {
+    padding-block: 3px;
+  }
+  .sim-worlds .beginner-coach[data-stage='guide'][data-lab-immersive='true'] .coach-axis-picker {
+    padding-block: 0;
+  }
+  .sim-worlds .beginner-coach[data-lab-immersive='true'] .coach-sticks {
+    inset-inline: 12px;
+    bottom: 52px;
+  }
+  .sim-worlds .beginner-coach[data-lab-immersive='true'] .coach-stick {
+    width: 80px;
+  }
+  .sim-worlds .beginner-coach[data-lab-immersive='true'] .coach-lab-touch-controls {
+    bottom: 52px;
+  }
+  .sim-worlds .beginner-coach[data-lab-immersive='true'] .coach-lab-status {
+    padding-block: 4px;
+    font-size: 11px;
+  }
+}

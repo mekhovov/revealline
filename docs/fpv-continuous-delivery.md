@@ -618,3 +618,100 @@ external pending gates, not new live-availability claims. Do not repeatedly poll
 unchanged checks. Next independent work remains the approved R4/R5 art foundation
 and R6 demonstrations/ghost/practice flow; read live stack membership before any
 coordinated refresh and preserve the creator-data and original-content holds.
+
+## Continuous lab practice and dedicated fullscreen — 2 October 2026
+
+Current branch `codex/fpv-endless-practice` starts at #932's exact remote head
+`6cebb1eaac5a7d1fe4788a153260751bfa1c5e29`. Parent source/admission/candidate
+checks passed; it remains open in native #902. Open membership is still
+#905 → #907 → #923 → #924 → #925 → #926 → #929 → #932. Existing holds remain.
+
+Implemented the player's latest request as a focused child: manual lab flight
+no longer stops at contact, after one minute, or at the underlying 12-minute
+scored-attempt cap. Only the isolated unscored runtime bypasses expiry; it cannot
+create proof bytes. Scored flight identities, physics, expiry, rewards and
+recording limits are unchanged. The lab volume is ±80 m horizontally / 0–80 m
+vertically. Reset during active practice continues immediately.
+
+Fullscreen practice centres the enlarged rear-follow schematic, adds wider
+ground/horizon, moves gimbals to lower corners and hides verbose explanations.
+EN/UK controls, native fullscreen and a full-window fallback remain available.
+Back restores the inline guide paused, preserves pre-existing app fullscreen,
+and leaves the real lesson untouched. Async completion cannot override a newer
+pause, focus change, session or disposal. See `fpv-endless-practice.md`.
+
+Functional qualification on the frozen candidate inputs before package build:
+
+- 14 actual-browser coach checks, including 39,100 simulated ticks / 782 seconds,
+  ceiling/ground contacts, reset, mode transitions, disconnection, focus loss,
+  delayed fullscreen rejection, explicit pause ownership and disposal.
+- 19 production-host browser checks with controlled TX15-shaped Gamepad input
+  and keyboard events: source ownership, fullscreen isolation, normal flight
+  state preservation and actual keyboard takeoff after preview.
+- 27 model checks: both modes exceed 13 minutes only when unscored; default
+  expiry/identity/snapshots match parent and all 24 original proofs replay.
+- All 14 primary Acro demonstrations complete and independently replay with
+  zero contacts and full health.
+- 16 actual-browser shared diagram checks including 1,200 quaternion poses,
+  movement/height signs, expanded ground and unchanged compact/inline output.
+- Desktop, portrait and short landscape inspected; final Ukrainian portrait
+  390×844 has no document horizontal overflow, complete drone, corner controls
+  and visible Back/Pause/Reset/Replay. Native permission denial was explicitly
+  simulated in an ignored fixture; fallback works. A cropped peripheral height
+  label was hidden on narrow screens; telemetry retains actual height.
+- Targeted syntax, ESLint, formatting and diff checks pass. No new unit coverage,
+  physical-radio, novice-player or sustained hardware performance claim.
+
+Receipts: `docs/evidence/fpv-endless-*-20261002.json`. Next: committed-input
+package admission, rebuild/launch the reviewed-player URL, and publish a focused
+native #902 child of #932. Preserve #928, #922, #889, graphics WIP and Garage/ghost
+handoffs. The R4/R5 art and R6 demonstration/practice backlog and R7 deferred unit
+and human/device qualification remain independent next work. No public-live claim.
+
+### Frozen continuous-practice candidate
+
+Runtime source `0fe2bc45ae41d7ccfd691623573142cb0476e6e2` passed all three
+optional-package admissions, committed-input verification, ZIP-member verification
+and two byte-identical builds. Receipt:
+`docs/evidence/fpv-endless-package-20261002.json`; envelope SHA-256
+`be2c01f3d228eb5501a2a276e875cc4068261f88ed088489702b230acf3883aa`.
+Academy remains62 runtime/64 source files; World Studio94/96. Limits unchanged.
+
+Rebuilt and launched the actual reviewed-player URL:
+`http://127.0.0.1:8789/dist/fpv-reviewed-player-playtest/optional-practice/fpv-worlds/index.html#learn`.
+ZIP:87 files /12,490,158 bytes; SHA-256
+`cca1bd53aceef4d2163561226968f1dfe9c11a1d631c8ad18c3e836c96fe4310`.
+The packaged view visibly centres the large drone over extended ground, accepts
+keyboard takeover and shows “no time limit”; Reset continues active practice.
+Browser error log is empty. Final screenshot: `/tmp/fpv-endless-practice-final.png`;
+Ukrainian mobile screenshot: `/tmp/fpv-endless-practice-mobile-uk.png`.
+
+Source-browser checks also verified that a pre-existing application fullscreen
+session survives entering/leaving dedicated practice. The inspected in-app browser
+reported `document.fullscreenElement` absent and used the full-window fallback;
+this is not a new native OS-fullscreen permission certification. Native-event
+lifecycle is covered by the controlled fixture. Hardware/radio acceptance and
+public deployment remain unclaimed.
+
+The runtime is now frozen; subsequent documentation/evidence-only commits record
+publication. Publish as native #902 child of #932. Continue independent approved
+art/content work while exact-head CI and held-stack review remain external gates.
+
+### Continuous-practice publication
+
+[PR #934](https://github.com/mekhovov/revealline/pull/934) is published from
+`codex/fpv-endless-practice`, attached to this chat, and appended to native #902
+after #932 using the stack API. The open sequence is now
+#905 → #907 → #923 → #924 → #925 → #926 → #929 → #932 → #934.
+No rebase, manual retarget, hold removal, global policy change or merge bypass
+was used. Runtime source remains `0fe2bc45a`; later commits contain only delivery
+and qualification documentation. The scheduled milestone remains
+`v0.150.0 — Unified native experience`.
+
+The rebuilt reviewed-player tab is left open in dedicated practice with keyboard
+takeover and active Reset verified. Existing USB-radio flight preference is
+preserved. Local source and packaged playtest are ready for player feedback.
+Exact-head CI, protected merge and public deployment are pending external gates;
+no public live claim is made. Do not repeatedly poll unchanged checks. Read the
+latest stack state before the next increment and continue the approved R4/R5
+art/environment and R6 demonstration/ghost/practice backlog independently.
