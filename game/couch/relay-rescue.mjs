@@ -63,7 +63,7 @@ import { attachCouchInput } from './couch-input.mjs';
 import { createCoopPainter } from './coop-view.mjs';
 import { coopCueOverflowEntries, hasCoopCueOverflow } from './coop-cue-overflow.mjs';
 import { mountPresentationPage } from '../presentation/page.mjs';
-import { createCoopPresentation } from './coop-presentation.mjs';
+import { createOwnedCoopPresentation } from './coop-owned-presentation.mjs';
 import {
   candidateTeamPictureFrame,
   createCandidateTeamPictures,
@@ -1386,7 +1386,7 @@ export function bootCoop({
     musicPublished = attachPublishedAudio({
       sound: music.sound,
       ready: presentationPage.ready,
-      getHost: () => presentationPage,
+      getHost: () => (acceptedPicture?.lease?.readAudio ? acceptedPicture.lease : presentationPage),
       cues: true,
       allowMusic: () =>
         !acceptedPicture?.artworkSource && (acceptedPicture?.request.themeId ?? 'fpv') === 'fpv',
@@ -1764,6 +1764,26 @@ export function bootCoop({
     );
     if (focus) primary().focus({ preventScroll: true });
   }
+  function syncAcceptedPresentationAudio() {
+    // Host selection follows acceptedPicture. Rebind in the same transition,
+    // including lobby/rollback paths where render() has no arena to paint.
+    musicPublished?.setPresentation(
+      acceptedPicture?.binding?.snapshot ?? presentationPage.current(),
+    );
+  }
+  function paintPreparedTeam(state, options, temporary = false) {
+    const previous = painter.presentation;
+    const snapshot = options.picture?.snapshot ?? presentationPage.current();
+    try {
+      if (painter.presentation !== snapshot) painter.setPresentation(snapshot);
+      painter.paint(state, options);
+      if (!temporary) musicPublished?.setPresentation(snapshot);
+    } finally {
+      // Preflight painting must not replace the retained attempt's presentation.
+      // The caller adopts gameplay/picture references only after it succeeds.
+      if (temporary && painter.presentation !== previous) painter.setPresentation(previous);
+    }
+  }
   function render() {
     if (!run) return;
     localizedText(
@@ -1781,7 +1801,7 @@ export function bootCoop({
       () => coopBonusDetails(bonusView) || t('interface:noPickupOrEffectWindowActive'),
     );
     localizedText($('coop-bonus-help'), () => (bonusView ? teamBonusHelp() : ''));
-    painter.paint(run, {
+    paintPreparedTeam(run, {
       reduced: displayPreferences.snapshot().effectiveReducedEffects,
       showRemains: encounterDisplay.snapshot().showRemains,
       brutal: encounterDisplay.snapshot().brutal,
@@ -2239,7 +2259,8 @@ export function bootCoop({
               owns: candidateJourney.owns,
               getSnapshot: presentationPage.current,
             })
-          : createCoopPresentation({
+          : createOwnedCoopPresentation({
+              artworkSource,
               bindings: COOP_SUPPORTED_PICTURE_BINDINGS,
               historicalImportPolicy: COOP_HISTORICAL_IMPORT_PICTURE_POLICIES,
               getSnapshot: presentationPage.current,
@@ -2794,17 +2815,21 @@ export function bootCoop({
       startCoop(candidate);
       if (!current()) return;
       // First paint is tested while the completed attempt still owns its image.
-      painter.paint(candidate, {
-        reduced: displayPreferences.snapshot().effectiveReducedEffects,
-        textFace: displayPreferences.snapshot().textFace,
-        picture: selection.binding,
-        actorAppearance: selection.actorAppearance,
-        pictureLevel: attemptTuning.get(candidate).pictureLevel,
-        encounterLevel: attemptTuning.get(candidate).encounterLevel,
-        showRemains: encounterDisplay.snapshot().showRemains,
-        brutal: encounterDisplay.snapshot().brutal,
-        blood: encounterDisplay.snapshot().blood,
-      });
+      paintPreparedTeam(
+        candidate,
+        {
+          reduced: displayPreferences.snapshot().effectiveReducedEffects,
+          textFace: displayPreferences.snapshot().textFace,
+          picture: selection.binding,
+          actorAppearance: selection.actorAppearance,
+          pictureLevel: attemptTuning.get(candidate).pictureLevel,
+          encounterLevel: attemptTuning.get(candidate).encounterLevel,
+          showRemains: encounterDisplay.snapshot().showRemains,
+          brutal: encounterDisplay.snapshot().brutal,
+          blood: encounterDisplay.snapshot().blood,
+        },
+        true,
+      );
       if (!current()) {
         if (!disposed && run === operation.run) render();
         return;
@@ -2875,11 +2900,18 @@ export function bootCoop({
           knockdowns = previous.knockdowns;
           last = previous.last;
           accumulator = previous.accumulator;
-          generation++;
+          const epoch = ++generation;
           lastBuiltInArena = previous.lastBuiltInArena;
+          syncAcceptedPresentationAudio();
+          if (
+            disposed ||
+            generation !== epoch ||
+            run !== previous.run ||
+            acceptedPicture !== previous.picture
+          )
+            return;
           if (nextPack) {
             packArtworkSource = previous.artworkSource;
-            const epoch = generation;
             showPack(
               previous.setupPack,
               previous.arena,
@@ -3191,7 +3223,7 @@ export function bootCoop({
             owns: candidateJourney.owns,
             getSnapshot: leaseOptions.getSnapshot,
           })
-        : createCoopPresentation(leaseOptions);
+        : createOwnedCoopPresentation({ ...leaseOptions, artworkSource: row.artworkSource });
     const release = () => {
       if (released) return;
       released = true;
@@ -3414,6 +3446,8 @@ export function bootCoop({
       lastBuiltInArena = previous.lastBuiltInArena;
       const epoch = ++generation;
       const owns = () => !disposed && generation === epoch && run === previous.run;
+      syncAcceptedPresentationAudio();
+      if (!owns()) return;
       $('coop-difficulty').value = previous.difficulty;
       $('coop-experiment').value = previous.configuration;
       showPack(previous.pack, previous.arena, owns);
@@ -3518,17 +3552,21 @@ export function bootCoop({
       }
       check();
       selection.binding = selection.lease.confirm(selection.request);
-      painter.paint(candidate, {
-        reduced: displayPreferences.snapshot().effectiveReducedEffects,
-        textFace: displayPreferences.snapshot().textFace,
-        picture: selection.binding,
-        actorAppearance: selection.actorAppearance,
-        pictureLevel: attemptTuning.get(candidate).pictureLevel,
-        encounterLevel: attemptTuning.get(candidate).encounterLevel,
-        showRemains: encounterDisplay.snapshot().showRemains,
-        brutal: encounterDisplay.snapshot().brutal,
-        blood: encounterDisplay.snapshot().blood,
-      });
+      paintPreparedTeam(
+        candidate,
+        {
+          reduced: displayPreferences.snapshot().effectiveReducedEffects,
+          textFace: displayPreferences.snapshot().textFace,
+          picture: selection.binding,
+          actorAppearance: selection.actorAppearance,
+          pictureLevel: attemptTuning.get(candidate).pictureLevel,
+          encounterLevel: attemptTuning.get(candidate).encounterLevel,
+          showRemains: encounterDisplay.snapshot().showRemains,
+          brutal: encounterDisplay.snapshot().brutal,
+          blood: encounterDisplay.snapshot().blood,
+        },
+        true,
+      );
       check();
       clear();
       check();
@@ -4826,10 +4864,12 @@ export function bootCoop({
       retirePicture();
       acceptedPicture = null;
       run = null;
-      updateCueOverflow();
       attemptLevel = null;
       attemptPack = null;
-      generation++;
+      const epoch = ++generation;
+      syncAcceptedPresentationAudio();
+      if (disposed || generation !== epoch || run || acceptedPicture) return;
+      updateCueOverflow();
       document.body.classList.remove('playing');
       $('coop-play').hidden = true;
       $('coop-menu').hidden = false;
@@ -6185,6 +6225,9 @@ export function bootCoop({
     .catch((error) => console.error(t('interface:nativeLifecycleUnavailable'), error));
   const dispose = () => {
     if (disposed) return;
+    // Invalidate cue/track readers before any owned host or page snapshot retires.
+    // closeAudio() later repeats this idempotently with the remaining audio cleanup.
+    musicPublished?.close();
     $('coop-field-details').onclick = null;
     installOfflinePanel?.dispose();
     modeNavigation.dispose();

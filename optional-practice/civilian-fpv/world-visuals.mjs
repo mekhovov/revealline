@@ -66,6 +66,36 @@ function surfacePixels(kind, color, seed, size, pixel) {
         relief += joint ? -0.075 : patch * 0.1;
         roughness = 0.76 + grain * 0.2;
       }
+      if (kind === 'hangar-concrete') {
+        // One six-metre slab, aligned to the facility's existing floor joints.
+        // Broad wear changes roughness more than colour, keeping route cues quiet.
+        const edge = Math.min(u, 1 - u, v, 1 - v),
+          joint = edge < 0.004,
+          lip = Math.max(0, 1 - edge / 0.035),
+          wear = Math.max(0, broad(u, v) - 0.42),
+          aggregate = grain < 0.025 ? 0.08 : 0;
+        shade = joint ? 0.65 : 0.96 + patch * 0.7 + mottling * 0.025 - lip * 0.035 - aggregate;
+        relief = joint ? -0.085 : mottling * 0.014 + grain * 0.008 - lip * 0.006;
+        roughness = joint ? 0.98 : 0.88 - wear * 0.24 + grain * 0.055;
+      }
+      if (kind === 'painted-steel') {
+        const column = Math.floor(u * 3),
+          row = Math.floor(v * 3),
+          panelU = (u * 3) % 1,
+          panelV = (v * 3) % 1,
+          seam = Math.min(panelU, 1 - panelU, panelV, 1 - panelV) < 0.012,
+          panel = Math.sin(column * 17 + row * 31) * 0.026;
+        // Six by three metres per tile: readable 2×1 m painted panels instead
+        // of corrugation stretched across an entire hangar wall or ceiling beam.
+        shade = seam ? 0.79 : 0.98 + panel + patch * 0.28 + mottling * 0.018;
+        relief = seam ? -0.032 : mottling * 0.006;
+        roughness = seam ? 0.86 : 0.57 + grain * 0.055 + broad(u, v) * 0.075;
+      }
+      if (kind === 'rubber') {
+        shade = 0.94 + patch * 0.35 + mottling * 0.08;
+        relief = mottling * 0.014 + grain * 0.006;
+        roughness = 0.94 + grain * 0.05;
+      }
       if (kind === 'asphalt') {
         shade *= 0.94 + patch + mottling * 0.08;
         relief += grain * 0.03;
@@ -645,15 +675,18 @@ export function buildWorldVisuals({ course, world, mesh, material, box }) {
   detail.name = 'surface-detail';
   world.add(detail);
   const pixel = profile.textureFilter === 'nearest';
+  const hangar = environment === 'gym';
   const floorKind =
     adventure?.floor ??
-    (natural
-      ? 'grass'
-      : environment === 'courtyard'
-        ? 'paving'
-        : environment === 'container-yard' || environment === 'stadium'
-          ? 'asphalt'
-          : 'concrete');
+    (hangar
+      ? 'hangar-concrete'
+      : natural
+        ? 'grass'
+        : environment === 'courtyard'
+          ? 'paving'
+          : environment === 'container-yard' || environment === 'stadium'
+            ? 'asphalt'
+            : 'concrete');
   const floorColor =
     natural || pixel
       ? new THREE.Color(theme.ground)
@@ -674,9 +707,19 @@ export function buildWorldVisuals({ course, world, mesh, material, box }) {
   // Repeat in metres across the entire ground, including its outer apron.
   const floorTile = natural ? 12 : environment === 'courtyard' ? 4 : 6;
   for (const texture of new Set(Object.values(floorMaps)))
-    texture.repeat.set((width + 100) / floorTile, (depth + 100) / floorTile);
+    texture.repeat.set(
+      hangar ? 1 : (width + 100) / floorTile,
+      hangar ? 1 : (depth + 100) / floorTile,
+    );
+  const floorGeometry = new THREE.PlaneGeometry(width + 100, depth + 100);
+  if (hangar) {
+    const positions = floorGeometry.attributes.position,
+      uv = floorGeometry.attributes.uv;
+    for (let i = 0; i < positions.count; i++)
+      uv.setXY(i, (positions.getX(i) + cx - min.x) / 6, (-positions.getY(i) + cz - min.z) / 6);
+  }
   const ground = mesh(
-    new THREE.PlaneGeometry(width + 100, depth + 100),
+    floorGeometry,
     material(0xffffff, {
       ...floorMaps,
       normalScale: new THREE.Vector2(natural ? 0.18 : 0.3, natural ? 0.18 : 0.3),
@@ -692,11 +735,19 @@ export function buildWorldVisuals({ course, world, mesh, material, box }) {
     emissiveIntensity: 0.1,
   });
   const wallMaps = surfaceMaps(
-    adventure?.wall ?? (environment === 'courtyard' ? 'brick' : natural ? 'wood' : 'metal'),
+    adventure?.wall ??
+      (hangar
+        ? 'painted-steel'
+        : environment === 'courtyard'
+          ? 'brick'
+          : natural
+            ? 'wood'
+            : 'metal'),
     natural ? 0x857763 : theme.wall,
     { pixel },
   );
-  for (const texture of new Set(Object.values(wallMaps))) texture.repeat.set(3, 2);
+  for (const texture of new Set(Object.values(wallMaps)))
+    texture.repeat.set(hangar ? 1 : 3, hangar ? 1 : 2);
   const wallMap = wallMaps.map;
   const walls = material(0xffffff, {
     ...wallMaps,
@@ -705,6 +756,14 @@ export function buildWorldVisuals({ course, world, mesh, material, box }) {
     metalness: indoor ? 0.18 : 0.05,
   });
   world.userData.ownedMaterials = [accent, walls];
+  const serviceBand = hangar
+    ? material(0xffffff, {
+        ...surfaceMaps('rubber', new THREE.Color(theme.wall).multiplyScalar(0.2), { pixel }),
+        normalScale: new THREE.Vector2(0.18, 0.18),
+        roughness: 1,
+      })
+    : accent;
+  if (hangar) world.userData.ownedMaterials.push(serviceBand);
   const obstacleSurfaces = new Map();
   const obstacleSurface = (kind = 'concrete') => {
     const colors = {
@@ -728,7 +787,25 @@ export function buildWorldVisuals({ course, world, mesh, material, box }) {
     return obstacleSurfaces.get(kind);
   };
   const structure = (size, at, paint = walls) => {
-    const value = mesh(new THREE.BoxGeometry(...size), paint, indoor ? world : backdrop);
+    const shape = new THREE.BoxGeometry(...size);
+    if (hangar && (paint === walls || paint === serviceBand)) {
+      // UV-only projection keeps all existing faces, bounds and silhouettes.
+      // A shared map retains the same material scale on differently sized walls.
+      const positions = shape.attributes.position,
+        normals = shape.attributes.normal,
+        uv = shape.attributes.uv;
+      for (let i = 0; i < positions.count; i++) {
+        const x = positions.getX(i) + at[0] - min.x,
+          y = positions.getY(i) + at[1] - min.y,
+          z = positions.getZ(i) + at[2] - min.z;
+        uv.setXY(
+          i,
+          (Math.abs(normals.getX(i)) > 0.5 ? z : x) / 6,
+          (Math.abs(normals.getY(i)) > 0.5 ? z : y) / 3,
+        );
+      }
+    }
+    const value = mesh(shape, paint, indoor ? world : backdrop);
     value.position.set(...at);
     value.castShadow = value.receiveShadow = true;
     return value;
@@ -792,7 +869,7 @@ export function buildWorldVisuals({ course, world, mesh, material, box }) {
         structure([3.2, 0.025, 0.28], [x, max.y - 0.001, z], beamLight);
       }
     for (const z of [min.z + 0.012, max.z - 0.012]) {
-      structure([width, 0.35, 0.015], [cx, 1.6, z], accent);
+      structure([width, 0.35, 0.015], [cx, 1.6, z], serviceBand);
       for (let x = min.x + 3; x < max.x - 2; x += 7)
         structure([3, 1.4, 0.015], [x, max.y * 0.7, z], windowPaint);
     }
@@ -876,12 +953,96 @@ export function buildWorldVisuals({ course, world, mesh, material, box }) {
     const radius = Math.hypot(width, depth) / 2 + 10;
     const leaves = [material(0x496b50), material(0x345749), material(0x7c905d)],
       bark = material(0x63554a);
+    // Meadow groves frame a clearing instead of repeating a circular tree fence.
+    // Unequal groups and staggered depth leave broad openings. Their spread is
+    // capped in metres so larger school arenas retain recognizable silhouettes.
+    const groveSlots =
+      environment === 'field'
+        ? [
+            {
+              side: 'north',
+              anchor: min.x + width * 0.12,
+              span: Math.min(28, Math.max(18, width * 0.45)),
+              offsets: [
+                [-0.42, 9],
+                [-0.1, 11],
+                [0.05, 0],
+                [0.35, 1],
+                [0.22, 16],
+                [-0.22, 3],
+                [-0.3, 18],
+                [-0.47, 1],
+                [0.48, 6],
+                [0.43, 17],
+                [0.05, 8],
+                [-0.49, 15],
+                [0.04, 23],
+              ],
+            },
+            {
+              side: 'east',
+              anchor: min.z + depth * 0.22,
+              span: Math.min(24, Math.max(16, depth * 0.35)),
+              offsets: [
+                [-0.4, 5],
+                [-0.05, 8],
+                [0.2, 2],
+                [0.32, 14],
+                [-0.3, 16],
+                [0.44, 7],
+                [0.05, 18],
+                [-0.5, 0],
+                [0, 0],
+              ],
+            },
+            {
+              side: 'west',
+              anchor: min.z + depth * 0.8,
+              span: Math.min(22, Math.max(14, depth * 0.28)),
+              offsets: [
+                [-0.45, 1],
+                [-0.12, 0],
+                [0.17, 8],
+                [0.45, 1],
+                [-0.3, 12],
+                [0.37, 14],
+                [0, 17],
+              ],
+            },
+            {
+              side: 'south',
+              anchor: min.x + width * 0.76,
+              span: Math.min(14, Math.max(10, width * 0.16)),
+              offsets: [
+                [-0.45, 6],
+                [0.05, 12],
+                [0.5, 0],
+              ],
+            },
+          ].flatMap(({ side, anchor, span, offsets }) =>
+            offsets.map(([along, outward]) => ({ side, along: anchor + along * span, outward })),
+          )
+        : null;
     for (let i = 0; i < count; i++) {
       const angle = (i / count) * Math.PI * 2,
         r = radius + rng() * 24,
         height = 5 + rng() * 7;
-      const x = cx + Math.cos(angle) * r,
+      let x = cx + Math.cos(angle) * r,
         z = cz + Math.sin(angle) * r;
+      if (groveSlots) {
+        const slot = groveSlots[i],
+          // Preserve both random draws, every tree height and all geometry.
+          // The full crown stays at least ten metres outside one bounds face;
+          // the extra tenth also covers geometry attribute float rounding.
+          offset = 10.1 + height * 0.3 + slot.outward;
+        if (slot.side === 'north' || slot.side === 'south') {
+          x = slot.along;
+          z = slot.side === 'north' ? min.z - offset : max.z + offset;
+        } else {
+          x = slot.side === 'west' ? min.x - offset : max.x + offset;
+          z = slot.along;
+        }
+      }
       const trunk = mesh(new THREE.CylinderGeometry(0.14, 0.24, height * 0.7, 6), bark, backdrop);
       trunk.position.set(x, height * 0.35, z);
       trunk.castShadow = true;

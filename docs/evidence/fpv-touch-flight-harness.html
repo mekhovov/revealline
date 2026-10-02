@@ -1,0 +1,860 @@
+<!doctype html>
+<html lang="en">
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>FPV touch flight functional verification</title>
+  <style>
+    body {
+      font: 16px system-ui;
+      background: #101b2c;
+      color: #edf5ff;
+      margin: 18px;
+    }
+    button {
+      font: inherit;
+      min-height: 44px;
+      padding: 10px 16px;
+    }
+    p {
+      max-width: 950px;
+    }
+    .sticks {
+      display: flex;
+      gap: 24px;
+      margin: 18px 0;
+    }
+    .stick {
+      width: 160px;
+      height: 160px;
+      border: 2px solid #73dbdd;
+      border-radius: 50%;
+      touch-action: none;
+      display: grid;
+      place-items: center;
+      box-sizing: border-box;
+    }
+    .stick[data-touch-active='true'] {
+      background: #174046;
+    }
+    textarea {
+      width: 100%;
+      height: 250px;
+      box-sizing: border-box;
+      font: 12px monospace;
+    }
+    iframe {
+      width: 100%;
+      height: 720px;
+      border: 1px solid #789;
+    }
+    #status {
+      min-height: 24px;
+    }
+  </style>
+  <h1>Touch flight · actual input and host</h1>
+  <p>
+    Real DOM PointerEvents and production input adapter. Synthetic events use a capture-ownership
+    shim because synthetic contacts cannot acquire native device capture. The actual World host uses
+    its real model/storage with a renderer stub and controlled animation callbacks. This does not
+    qualify native touch hardware, physical radios, graphics performance, or unit-test coverage.
+  </p>
+  <button id="run">Run functional verification</button
+  ><button id="focus">Non-editing HUD button</button>
+  <div class="sticks">
+    <div class="stick" id="left" aria-label="Left stick">Yaw · throttle</div>
+    <div class="stick" id="right" aria-label="Right stick">Roll · pitch</div>
+  </div>
+  <p id="status">Ready</p>
+  <textarea id="receipt" readonly aria-label="Verification receipt"></textarea>
+  <iframe id="sim" title="Isolated actual simulator host"></iframe>
+  <script type="module">
+    const $ = (id) => document.getElementById(id),
+      wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+    const eq = (a, b, label) => {
+      if (JSON.stringify(a) !== JSON.stringify(b))
+        throw Error(`${label}: expected ${JSON.stringify(b)}, got ${JSON.stringify(a)}`);
+    };
+    const near = (a, b, label) => {
+      if (Math.abs(a - b) > 1e-8) throw Error(`${label}: expected ${b}, got ${a}`);
+    };
+    const must = (value, label) => {
+      if (!value) throw Error(label);
+    };
+    const neutral = { roll: 0, pitch: 0, yaw: 0, throttle: 0 };
+    const sha = async (bytes) =>
+      [...new Uint8Array(await crypto.subtle.digest('SHA-256', bytes))]
+        .map((n) => n.toString(16).padStart(2, '0'))
+        .join('');
+    let active = null;
+    $('run').onclick = async () => {
+      $('run').disabled = true;
+      const checks = [],
+        errors = [],
+        captures = new Map(),
+        captureEvents = [],
+        pauses = [],
+        hostRows = [];
+      let manifest, input, ctx;
+      const progress = (label) => {
+        $('status').textContent = label;
+        $('receipt').value = JSON.stringify({ status: 'running', label, checks }, null, 2);
+      };
+      const record = async (name, fn) => {
+        progress(name);
+        const begin = performance.now();
+        try {
+          const detail = await fn();
+          checks.push({
+            name,
+            passed: true,
+            milliseconds: Math.round(performance.now() - begin),
+            ...(detail ? { detail } : {}),
+          });
+        } catch (error) {
+          checks.push({ name, passed: false, error: String(error.stack) });
+        }
+        progress(name);
+      };
+      const until = async (fn, label, timeout = 30000) => {
+        const start = performance.now();
+        while (!fn()) {
+          if (performance.now() - start > timeout) throw Error('Timeout: ' + label);
+          await wait(20);
+        }
+      };
+      const pointer = (node, type, id, x, y) =>
+        node.dispatchEvent(
+          new PointerEvent(type, {
+            bubbles: true,
+            cancelable: true,
+            pointerId: id,
+            pointerType: 'touch',
+            isPrimary: id === 1,
+            button: 0,
+            buttons: type === 'pointerup' ? 0 : 1,
+            clientX: x,
+            clientY: y,
+          }),
+        );
+      const point = (node, x = 0.5, y = 0.5) => {
+        const r = node.getBoundingClientRect();
+        return { x: r.left + r.width * x, y: r.top + r.height * y, travel: r.width * 0.34 };
+      };
+      const down = (node, id, p) => pointer(node, 'pointerdown', id, p.x, p.y),
+        move = (node, id, p, dx, dy) => pointer(node, 'pointermove', id, p.x + dx, p.y - dy),
+        up = (node, id, p) => pointer(node, 'pointerup', id, p.x, p.y);
+      const left = $('left'),
+        right = $('right');
+      for (const node of [left, right]) {
+        node.setPointerCapture = (id) => {
+          captures.set(node, id);
+          captureEvents.push(['capture', node.id, id]);
+        };
+        node.releasePointerCapture = (id) => {
+          if (captures.get(node) === id) captures.delete(node);
+          captureEvents.push(['release', node.id, id]);
+        };
+        node.hasPointerCapture = (id) => captures.get(node) === id;
+      }
+      const reset = (response = 'precise', throttle = 0) => {
+        input.select('touch');
+        input.touchResponse(response);
+        input.enable(true);
+        input.throttle(throttle);
+        pauses.length = 0;
+      };
+      const sample = () => input.sample(0.02);
+      try {
+        manifest = await fetch('./fixture-manifest.json', { cache: 'no-store' }).then((r) => {
+          if (!r.ok) throw Error('Manifest missing');
+          return r.json();
+        });
+        await record('Frozen fixture and production dependency hashes match', async () => {
+          for (const [name, expected] of Object.entries(manifest.fixtureFiles)) {
+            const r = await fetch('./' + name, { cache: 'no-store' });
+            must(r.ok, 'Fixture fetch ' + name);
+            eq(await sha(await r.arrayBuffer()), expected, 'Fixture hash ' + name);
+          }
+          for (const [name, expected] of Object.entries(manifest.sourceFiles)) {
+            const r = await fetch(manifest.candidateBase + '/' + name, { cache: 'no-store' });
+            must(r.ok, 'Module fetch ' + name);
+            eq(await sha(await r.arrayBuffer()), expected, 'Module hash ' + name);
+          }
+          return { modules: manifest.modules, bytes: manifest.bytes };
+        });
+        const { createFlightInput } = await import(
+          manifest.candidateBase + '/optional-practice/civilian-fpv/input.mjs'
+        );
+        input = createFlightInput({ window, document, onPause: (reason) => pauses.push(reason) });
+        input.bindStick(left, 'left');
+        input.bindStick(right, 'right');
+        await record(
+          'Off-centre contact on both sticks does not jump axes or retained throttle',
+          () => {
+            reset('precise', 0.6);
+            const a = point(left, 0.12, 0.88),
+              b = point(right, 0.86, 0.14);
+            down(left, 1, a);
+            down(right, 2, b);
+            eq(sample(), { ...neutral, throttle: 0.6 }, 'Contact command');
+            must(left.hasPointerCapture(1) && right.hasPointerCapture(2), 'Both contacts captured');
+            return { command: sample() };
+          },
+        );
+        await record('Precise response gives immediate finer rotation and full endpoints', () => {
+          reset();
+          const p = point(right);
+          down(right, 2, p);
+          move(right, 2, p, p.travel * 0.5, p.travel * 0.5);
+          const middle = sample();
+          must(
+            middle.roll > 0 && middle.roll < 0.5 && middle.pitch === middle.roll,
+            'Precise midpoint',
+          );
+          move(right, 2, p, p.travel, p.travel);
+          near(sample().roll, 1, 'Roll endpoint');
+          near(sample().pitch, 1, 'Pitch endpoint');
+          move(right, 2, p, -p.travel, -p.travel);
+          near(sample().roll, -1, 'Negative roll');
+          near(sample().pitch, -1, 'Negative pitch');
+          return { middle, endpoint: sample() };
+        });
+        await record('Direct response is linear immediately, including full endpoints', () => {
+          reset('direct');
+          const p = point(right);
+          down(right, 2, p);
+          move(right, 2, p, p.travel * 0.5, -p.travel * 0.5);
+          near(sample().roll, 0.5, 'Direct roll');
+          near(sample().pitch, -0.5, 'Direct pitch');
+          move(right, 2, p, p.travel * 2, p.travel * 2);
+          near(sample().roll, 1, 'Clamped roll');
+          near(sample().pitch, 1, 'Clamped pitch');
+          return { command: sample() };
+        });
+        await record('Precise neutral zone removes small spatial noise without delay', () => {
+          reset();
+          const p = point(right);
+          down(right, 2, p);
+          move(right, 2, p, p.travel * 0.02, -p.travel * 0.02);
+          eq(sample(), neutral, 'Neutral zone');
+          move(right, 2, p, p.travel, 0);
+          near(sample().roll, 1, 'Immediate endpoint');
+          move(right, 2, p, 0, 0);
+          near(sample().roll, 0, 'Immediate centre');
+        });
+        await record('Two owning pointers independently control all four axes', () => {
+          reset('direct', 0.4);
+          const a = point(left),
+            b = point(right);
+          down(left, 1, a);
+          down(right, 2, b);
+          move(left, 1, a, a.travel * 0.5, a.travel * 0.6);
+          move(right, 2, b, -b.travel * 0.7, b.travel * 0.3);
+          const s = sample();
+          near(s.yaw, 0.5, 'Yaw');
+          near(s.throttle, 0.7, 'Throttle');
+          near(s.roll, -0.7, 'Roll');
+          near(s.pitch, 0.3, 'Pitch');
+          return { command: s };
+        });
+        await record(
+          'Stray pointer down/move/up/cancel cannot steal or release either stick',
+          () => {
+            const before = sample(),
+              p = point(left);
+            for (const type of [
+              'pointerdown',
+              'pointermove',
+              'pointerup',
+              'pointercancel',
+              'lostpointercapture',
+            ])
+              pointer(left, type, 77, p.x + 50, p.y - 50);
+            eq(sample(), before, 'Stray pointer');
+            must(left.hasPointerCapture(1) && right.hasPointerCapture(2), 'Owners retained');
+            eq(pauses, [], 'Stray cancellation cannot pause');
+          },
+        );
+        await record('Release recentres only its rotational axes and retains throttle', () => {
+          const a = point(left),
+            b = point(right);
+          up(right, 2, b);
+          const s = sample();
+          near(s.roll, 0, 'Roll release');
+          near(s.pitch, 0, 'Pitch release');
+          near(s.yaw, 0.5, 'Other stick remains');
+          near(s.throttle, 0.7, 'Throttle retained');
+          up(left, 1, a);
+          near(sample().yaw, 0, 'Yaw release');
+          near(sample().throttle, 0.7, 'Released throttle retained');
+          eq(captures.size, 0, 'Capture released');
+        });
+        await record('Retouch at a new place preserves throttle until relative movement', () => {
+          const p = point(left, 0.9, 0.1);
+          down(left, 3, p);
+          near(sample().throttle, 0.7, 'Retouch');
+          near(sample().yaw, 0, 'Retouch yaw');
+          move(left, 3, p, 0, -p.travel * 0.4);
+          near(sample().throttle, 0.5, 'Relative descent');
+          up(left, 3, p);
+          return { command: sample() };
+        });
+        for (const type of ['pointercancel', 'lostpointercapture'])
+          await record(type + ' pauses and clears all contacts; no silent resume', () => {
+            reset('direct', 0.6);
+            const a = point(left),
+              b = point(right);
+            down(left, 1, a);
+            down(right, 2, b);
+            move(right, 2, b, b.travel, b.travel);
+            pointer(left, type, 1, a.x, a.y);
+            eq(sample(), neutral, 'Cleared command');
+            eq(pauses, ['input-lost'], 'Pause reason');
+            eq(captures.size, 0, 'All captures cleared');
+            down(right, 3, b);
+            eq(sample(), neutral, 'Disabled after interruption');
+            eq(captures.size, 0, 'No disabled capture');
+          });
+        await record('Blur clears input, releases contacts and requires explicit enable', () => {
+          reset('direct', 0.7);
+          const p = point(left);
+          down(left, 1, p);
+          window.dispatchEvent(new Event('blur'));
+          eq(sample(), neutral, 'Blur cleared');
+          eq(pauses, ['focus-lost'], 'Blur pause');
+          eq(captures.size, 0, 'Blur capture');
+          down(left, 1, p);
+          eq(captures.size, 0, 'Blur stays disabled');
+        });
+        await record('Menu disable clears held touches and re-enable starts neutral', () => {
+          reset('direct', 0.6);
+          const p = point(left);
+          down(left, 1, p);
+          input.enable(false);
+          eq(captures.size, 0, 'Menu capture');
+          eq(sample(), neutral, 'Menu neutral');
+          input.enable(true);
+          eq(sample(), neutral, 'Resume neutral');
+          move(left, 1, p, p.travel, p.travel);
+          eq(sample(), neutral, 'Old touch cannot resume');
+        });
+        await record('Layout resize pauses active touch and releases cached geometry', () => {
+          reset('direct', 0.6);
+          const p = point(right);
+          down(right, 2, p);
+          window.dispatchEvent(new Event('resize'));
+          eq(pauses, ['focus-lost'], 'Resize pause');
+          eq(sample(), neutral, 'Resize cleared');
+          eq(captures.size, 0, 'Resize capture');
+          input.enable(true);
+          down(right, 2, p);
+          move(right, 2, p, p.travel, 0);
+          near(sample().roll, 1, 'Fresh geometry works');
+        });
+        await record('Changing touch response releases contacts without retaining axes', () => {
+          reset('precise', 0.6);
+          const p = point(right);
+          down(right, 2, p);
+          move(right, 2, p, p.travel, 0);
+          input.touchResponse('direct');
+          eq(sample(), neutral, 'Response reset');
+          eq(captures.size, 0, 'Response releases');
+        });
+        await record('Capture rejection safely rejects a synthetic contact', () => {
+          reset('direct', 0.4);
+          const original = left.setPointerCapture;
+          left.setPointerCapture = () => {
+            throw new DOMException('Not active', 'NotFoundError');
+          };
+          try {
+            down(left, 1, point(left));
+            eq(sample(), { ...neutral, throttle: 0.4 }, 'Rejected contact neutral');
+            eq(left.dataset.touchActive, 'false', 'Rejected contact visual');
+          } finally {
+            left.setPointerCapture = original;
+          }
+        });
+        await record(
+          'Keyboard movement and fine control remain responsive from HUD button focus',
+          () => {
+            input.select('keyboard');
+            input.enable(true);
+            $('focus').focus();
+            const key = (type, code) =>
+              $('focus').dispatchEvent(
+                new KeyboardEvent(type, { code, bubbles: true, cancelable: true }),
+              );
+            key('keydown', 'KeyW');
+            key('keydown', 'KeyD');
+            key('keydown', 'KeyE');
+            key('keydown', 'ArrowUp');
+            const s = sample();
+            near(s.pitch, 0.5, 'Keyboard pitch');
+            near(s.roll, 0.5, 'Keyboard roll');
+            near(s.yaw, 0.5, 'Keyboard yaw');
+            near(s.throttle, 0.007, 'Keyboard throttle');
+            key('keydown', 'ShiftLeft');
+            near(sample().pitch, 0.18, 'Fine keyboard');
+            for (const code of ['KeyW', 'KeyD', 'KeyE', 'ArrowUp', 'ShiftLeft']) key('keyup', code);
+            input.enable(false);
+            eq(sample(), neutral, 'Keyboard disabled');
+            return { command: s };
+          },
+        );
+        await record('Radio/controller ownership ignores local touch and keyboard commands', () => {
+          for (const source of ['radio', 'controller']) {
+            input.select(source);
+            input.enable(true);
+            const p = point(left);
+            down(left, 1, p);
+            move(left, 1, p, p.travel, p.travel);
+            window.dispatchEvent(
+              new KeyboardEvent('keydown', { code: 'KeyW', bubbles: true, cancelable: true }),
+            );
+            eq(sample(), neutral, source + ' local command');
+            eq(captures.size, 0, source + ' captures');
+          }
+          return { scope: 'Local adapter isolation only; physical radio acceptance excluded' };
+        });
+        input.dispose();
+        input = null;
+        window.fixturePrefix = 'fpv-touch-' + Date.now() + ':';
+        window.fixtureNames = new Set();
+        progress('Loading isolated actual simulator host');
+        const frame = $('sim'),
+          loaded = new Promise((resolve) =>
+            frame.addEventListener('load', resolve, { once: true }),
+          );
+        frame.src = './player.html?token=' + encodeURIComponent(fixturePrefix);
+        await loaded;
+        await until(() => frame.contentWindow.fixtureApp, 'Host mount');
+        const w = frame.contentWindow,
+          d = w.document,
+          app = w.fixtureApp,
+          cat = w.fixtureCatalogue;
+        ctx = active = { w, d, app };
+        await app.ready;
+        const id = (name) => d.getElementById(name),
+          change = (name, value) => {
+            id(name).value = value;
+            id(name).dispatchEvent(new w.Event('change', { bubbles: true }));
+          };
+        const close = async () => {
+          if (id('flight-dialog').open) {
+            id('leave-flight').click();
+            await until(() => !id('flight-dialog').open, 'Close flight');
+          }
+        };
+        const proof = (entry, mode) =>
+          cat.proofs.find((row) => row.proof.course === entry.id && row.proof.mode === mode)?.proof;
+        const pump = async (n = 2) => {
+          for (let i = 0; i < n; i++) {
+            await wait(22);
+            w.fixtureRAF.deliver();
+          }
+        };
+        const ready = async () => {
+          await pump();
+          await until(
+            () => app.snapshot().state && !id('flight-mode').disabled,
+            'Flight available',
+          );
+        };
+        const start = async (entry, mode, options = {}) => {
+          await close();
+          id('flight-mode').value = mode;
+          await app.startFlight(entry, options);
+          await ready();
+        };
+        const baselineRecords = JSON.stringify(app.snapshot().records);
+        await record(
+          'All 148 installed levels preserve both selected flight modes and keep the selector available',
+          async () => {
+            eq(cat.school.length, 58, 'Current school size');
+            eq(cat.worlds.length, 90, 'Current world catalogue size');
+            for (const entry of [...cat.school, ...cat.worlds])
+              for (const mode of ['self-level', 'acro']) {
+                progress(`${entry.id} · ${mode}`);
+                await start(entry, mode);
+                const s = app.snapshot();
+                eq(s.course, entry.id, 'Selected lesson');
+                eq(id('flight-mode').value, mode, 'Selected mode ' + entry.id);
+                must(!id('flight-mode').disabled, 'Mode selector enabled');
+                eq(
+                  s.modePractice,
+                  mode === 'self-level' && cat.requiresAcro(entry.course),
+                  'Unscored skill status',
+                );
+                must(['disarmed', 'paused'].includes(s.state.status), 'Level must not auto-arm');
+                hostRows.push({
+                  course: entry.id,
+                  mode,
+                  modePractice: s.modePractice,
+                  legacy: Boolean(entry.legacy),
+                  lesson: Boolean(entry.beginner),
+                  status: s.state.status,
+                });
+              }
+            return {
+              starts: hostRows.length,
+              lessonStarts: hostRows.filter((r) => r.lesson).length,
+              legacyStarts: hostRows.filter((r) => r.legacy).length,
+              unscoredSkillStarts: hostRows.filter((r) => r.modePractice).length,
+            };
+          },
+        );
+        const skill = cat.school.find((e) => cat.requiresAcro(e.course)),
+          world = cat.worlds.find((e) => !e.legacy && proof(e, 'acro') && proof(e, 'self-level'));
+        await record(
+          'Self-level skill practice is explicitly unscored and cannot export evidence',
+          async () => {
+            await start(skill, 'self-level');
+            must(app.snapshot().modePractice, 'Unscored skill practice');
+            must(id('export-flight').disabled, 'Proof export disabled');
+            must(
+              /no score|unscored/i.test(
+                id('flight-objective').textContent + ' ' + id('flight-brief').textContent,
+              ),
+              'Visible unscored explanation',
+            );
+            eq(
+              JSON.stringify(app.snapshot().records),
+              baselineRecords,
+              'Mode browsing cannot award progress',
+            );
+            return { course: skill.id, objective: id('flight-objective').textContent };
+          },
+        );
+        await record(
+          'Actual mode selector restarts the same lesson safely in the chosen mode',
+          async () => {
+            const before = app.snapshot();
+            change('flight-mode', 'acro');
+            await until(
+              () => !app.snapshot().modePractice && app.snapshot().course === skill.id,
+              'Acro restart',
+            );
+            await ready();
+            must(!id('flight-mode').disabled, 'Selector still available');
+            must(
+              ['disarmed', 'paused'].includes(app.snapshot().state.status),
+              'Mode switch must stay unarmed',
+            );
+            eq(app.snapshot().course, before.course, 'Same lesson');
+            eq(app.snapshot().state.ticks, 0, 'Fresh mode state');
+          },
+        );
+        await record(
+          'Demonstration mode switch selects matching proof and stays paused',
+          async () => {
+            must(world, 'A dual-mode world proof is required');
+            const original = proof(world, 'acro');
+            await start(world, 'self-level', {
+              preview: true,
+              replayProof: original,
+              demonstration: true,
+              paused: true,
+            });
+            eq(id('flight-mode').value, 'acro', 'Explicit proof mode');
+            change('flight-mode', 'self-level');
+            await until(
+              () => app.snapshot().replay?.mode === 'self-level',
+              'Matching demonstration mode',
+            );
+            await ready();
+            eq(app.snapshot().replay.kind, 'demonstration', 'Still demonstration');
+            must(
+              ['paused', 'disarmed'].includes(app.snapshot().state.status),
+              'Switched replay stays paused',
+            );
+            eq(original.mode, 'acro', 'Original proof unchanged');
+            return { course: world.id };
+          },
+        );
+        await record(
+          'Missing self-level skill demonstration starts fresh unscored practice transparently',
+          async () => {
+            must(!proof(skill, 'self-level'), 'Fixture expects Acro-only skill demonstration');
+            await start(skill, 'acro', {
+              replayProof: proof(skill, 'acro'),
+              demonstration: true,
+              paused: true,
+            });
+            change('flight-mode', 'self-level');
+            await until(
+              () => app.snapshot().modePractice && !app.snapshot().replay,
+              'Safe self-level fallback',
+            );
+            await ready();
+            eq(id('flight-mode').value, 'self-level', 'Requested fallback mode');
+            eq(app.snapshot().state.ticks, 0, 'Fresh fallback');
+            must(id('export-flight').disabled, 'Fallback has no proof');
+          },
+        );
+        await record(
+          'Personal recording mode stays immutable while selector starts an ordinary attempt',
+          async () => {
+            const original = proof(world, 'acro'),
+              identity = JSON.stringify(original);
+            await start(world, 'acro', { replayProof: original, paused: true });
+            eq(app.snapshot().replay.kind, 'recording', 'Personal playback path');
+            change('flight-mode', 'self-level');
+            await until(
+              () => !app.snapshot().replay && id('flight-mode').value === 'self-level',
+              'Fresh ordinary flight',
+            );
+            await ready();
+            eq(JSON.stringify(original), identity, 'Recording bytes unchanged');
+            eq(app.snapshot().state.ticks, 0, 'Fresh ordinary state');
+            must(
+              ['disarmed', 'paused'].includes(app.snapshot().state.status),
+              'Fresh ordinary state unarmed',
+            );
+          },
+        );
+        await record(
+          'Checkpoint selector changes mode using a matching proof without scoring',
+          async () => {
+            await start(world, 'acro', {
+              checkpoint: { mode: 'acro', index: 1, proof: proof(world, 'acro') },
+            });
+            must(app.snapshot().checkpointPractice, 'Checkpoint exists');
+            change('flight-mode', 'self-level');
+            await until(
+              () => app.snapshot().checkpointPractice?.mode === 'self-level',
+              'Reprepared checkpoint',
+            );
+            await ready();
+            eq(app.snapshot().checkpointPractice.requestedIndex, 1, 'Selected checkpoint retained');
+            must(id('export-flight').disabled, 'Checkpoint proof disabled');
+            eq(app.snapshot().state.status, 'paused', 'Checkpoint paused');
+            return { practice: app.snapshot().checkpointPractice };
+          },
+        );
+        await record(
+          'Checkpoint lacking selected-mode proof uses an explicit unscored full-route fallback',
+          async () => {
+            await start(skill, 'acro', {
+              checkpoint: { mode: 'acro', index: 1, proof: proof(skill, 'acro') },
+            });
+            change('flight-mode', 'self-level');
+            await until(
+              () => app.snapshot().checkpointPractice?.mode === 'self-level',
+              'Fallback prepared',
+            );
+            await ready();
+            eq(app.snapshot().checkpointPractice.kind, 'full-attempt', 'Safe full-route fallback');
+            eq(
+              app.snapshot().checkpointPractice.reason,
+              'missing-proof',
+              'Missing proof explained',
+            );
+            eq(app.snapshot().state.ticks, 0, 'Original spawn state');
+            must(id('export-flight').disabled, 'Fallback proof disabled');
+          },
+        );
+        await record(
+          'Actual host response changes pause flight and both touch presets remain selectable',
+          async () => {
+            await start(world, 'self-level', { preview: true });
+            id('world-arm').click();
+            await pump();
+            eq(app.snapshot().state.status, 'active', 'Flight armed');
+            change('flight-touch-response', 'direct');
+            await pump();
+            eq(app.snapshot().state.status, 'paused', 'Response change pauses');
+            eq(id('flight-touch-response').value, 'direct', 'Direct selected');
+            change('flight-touch-response', 'precise');
+            await pump();
+            eq(id('flight-touch-response').value, 'precise', 'Precise selected');
+            must(!id('flight-mode').disabled, 'Mode selector remains enabled');
+          },
+        );
+        await record(
+          'Actual flight touch readout retains active throttle and clears to zero on pause',
+          async () => {
+            await start(world, 'self-level', { preview: true });
+            change('flight-source', 'touch');
+            id('world-arm').click();
+            await pump();
+            eq(app.snapshot().state.status, 'active', 'Touch flight armed');
+            const pad = id('world-left-stick'),
+              held = new Set();
+            pad.setPointerCapture = (value) => held.add(value);
+            pad.releasePointerCapture = (value) => held.delete(value);
+            const p = point(pad),
+              send = (type, y = p.y) =>
+                pad.dispatchEvent(
+                  new w.PointerEvent(type, {
+                    bubbles: true,
+                    cancelable: true,
+                    pointerId: 21,
+                    pointerType: 'touch',
+                    button: 0,
+                    buttons: type === 'pointerup' ? 0 : 1,
+                    clientX: p.x,
+                    clientY: y,
+                  }),
+                );
+            send('pointerdown');
+            send('pointermove', p.y - p.travel * 1.08);
+            await pump(3);
+            near(app.snapshot().state.lastInput.throttle, 540, 'Applied active throttle');
+            send('pointerup');
+            await pump(3);
+            const retained = id('world-touch-throttle').textContent;
+            must(/^54%.*held/i.test(retained), 'Active held throttle readout: ' + retained);
+            near(app.snapshot().state.lastInput.throttle, 540, 'Released throttle remains applied');
+            id('world-pause').click();
+            await pump(3);
+            eq(app.snapshot().state.status, 'paused', 'Actual flight paused');
+            const cleared = id('world-touch-throttle').textContent;
+            must(/^0%/.test(cleared), 'Paused touch readout must be zero: ' + cleared);
+            eq(held.size, 0, 'No held capture after pause');
+            return {
+              retained,
+              cleared,
+              recordedLastInput: app.snapshot().state.lastInput.throttle,
+            };
+          },
+        );
+        for (const interruption of ['pointercancel', 'lostpointercapture', 'resize'])
+          await record(
+            'Actual lesson preview clears both touch pads on ' + interruption,
+            async () => {
+              const lesson = cat.school.find((entry) => entry.id === 'beginner-01');
+              await start(lesson, 'self-level');
+              must(app.snapshot().learning.guideOpen, 'Learning preview open');
+              const pads = [...d.querySelectorAll('#beginner-coach .coach-stick-pad')];
+              eq(pads.length, 2, 'Two actual preview gimbals');
+              const held = new Map();
+              for (const pad of pads) {
+                pad.setPointerCapture = (value) => held.set(pad, value);
+                pad.releasePointerCapture = (value) => {
+                  if (held.get(pad) === value) held.delete(pad);
+                };
+              }
+              const send = (index, type, dx = 0, dy = 0) => {
+                const pad = pads[index],
+                  p = point(pad);
+                pad.dispatchEvent(
+                  new w.PointerEvent(type, {
+                    bubbles: true,
+                    cancelable: true,
+                    pointerId: 31 + index,
+                    pointerType: 'touch',
+                    button: 0,
+                    buttons: type === 'pointerup' ? 0 : 1,
+                    clientX: p.x + dx * p.travel,
+                    clientY: p.y - dy * p.travel,
+                  }),
+                );
+              };
+              send(0, 'pointerdown');
+              send(1, 'pointerdown');
+              send(0, 'pointermove', 0, 0.5);
+              send(1, 'pointermove', 0.7, 0.4);
+              await pump(3);
+              const outputs = () =>
+                [...d.querySelectorAll('#beginner-coach .coach-stick-readout')].map(
+                  (node) => node.textContent,
+                );
+              const moving = outputs();
+              must(
+                moving.some((text) =>
+                  (text.match(/-?\d+(?=%)/g) ?? []).some((value) => Number(value) !== 0),
+                ),
+                'Preview displays applied touch input',
+              );
+              must(
+                /YOUR CONTROLS/.test(
+                  d.querySelector('#beginner-coach .coach-lab-status').textContent,
+                ),
+                'Preview is running manual touch',
+              );
+              eq(held.size, 2, 'Both preview contacts captured');
+              if (interruption === 'resize') w.dispatchEvent(new w.Event('resize'));
+              else send(0, interruption);
+              await pump(2);
+              const cleared = outputs();
+              must(
+                cleared.length === 2 &&
+                  cleared.every((text) => {
+                    const values = text.match(/-?\d+(?=%)/g) ?? [];
+                    return values.length === 2 && values.every((value) => Number(value) === 0);
+                  }),
+                'Paused preview readouts cleared: ' + cleared.join(' / '),
+              );
+              eq(held.size, 0, 'Both preview captures released');
+              must(
+                pads.every((pad) => pad.dataset.touchActive === 'false'),
+                'Touch visuals inactive',
+              );
+              must(
+                /PREVIEW PAUSED/.test(
+                  d.querySelector('#beginner-coach .coach-lab-status').textContent,
+                ),
+                'Interruption pauses preview',
+              );
+              send(0, 'pointermove', 1, 1);
+              send(1, 'pointermove', 1, 1);
+              await pump(2);
+              eq(outputs(), cleared, 'Old pointer moves cannot resume preview');
+              must(
+                ['disarmed', 'paused'].includes(app.snapshot().state.status),
+                'Real lesson remains unarmed',
+              );
+              eq(app.snapshot().state.ticks, 0, 'Preview cannot advance real lesson');
+              return { moving, cleared, actualFlight: app.snapshot().state.status };
+            },
+          );
+        await record(
+          'Mode/replay/checkpoint practice produces no awards or unexpected host errors',
+          async () => {
+            await close();
+            eq(
+              JSON.stringify(app.snapshot().records),
+              baselineRecords,
+              'Completion records unchanged',
+            );
+            eq(w.fixtureErrors, [], 'No host errors');
+            return { catalogue: app.snapshot().catalogue, school: cat.school.length };
+          },
+        );
+      } catch (error) {
+        errors.push(String(error.stack));
+      } finally {
+        input?.dispose();
+        if (active) {
+          try {
+            await active.app.dispose();
+          } catch (error) {
+            errors.push(String(error.stack));
+          }
+          active = null;
+        }
+        if (window.fixtureNames) {
+          for (const name of fixtureNames) indexedDB.deleteDatabase(name);
+        }
+        const result = {
+          format: 'FPVTouchFlightVerification.v1',
+          passed: errors.length === 0 && checks.every((c) => c.passed),
+          checksPassed: checks.filter((c) => c.passed).length,
+          checksTotal: checks.length,
+          checks,
+          errors,
+          hostStarts: hostRows,
+          captureEvents,
+          sourceFiles: manifest?.sourceFiles,
+          fixtureFiles: manifest?.fixtureFiles,
+          scope: manifest?.scope,
+          physicalHardware: false,
+          unitCoverageClaimed: false,
+        };
+        $('receipt').value = JSON.stringify(result, null, 2);
+        $('status').textContent =
+          `${result.passed ? 'PASS' : 'FAIL'} · ${result.checksPassed}/${result.checksTotal} checks`;
+        $('run').disabled = false;
+      }
+    };
+  </script>
+</html>

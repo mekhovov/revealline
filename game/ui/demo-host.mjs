@@ -1,3 +1,10 @@
+import { createDemoReward } from './demo-reward.mjs';
+import {
+  REWARD_BOARD_SECONDS,
+  REWARD_STORY_SECONDS,
+  animateRewardArrival,
+  advanceRewardAge,
+} from './reward-arrival.mjs';
 import { contentText } from '../i18n/content.mjs';
 import { t, onLocaleChange } from '../i18n/index.mjs';
 import { createRun } from '../core/index.mjs';
@@ -50,11 +57,13 @@ export function attachDemoHost({
   setCollect = () => {},
   clearRecordings = async () => {},
   audio = null,
+  audioMaster = null,
 }) {
   const $ = (id) => doc.getElementById(id),
     dialog = $('demo-dialog'),
     canvas = $('demo-canvas');
   if (!dialog || !canvas) return null;
+  const reward = createDemoReward({ document: doc, canvas, readMedia, audioMaster });
   const fullscreen = attachDemoFullscreen({ document: doc, dialog, button: $('demo-fullscreen') });
   const idle = createDemoIdle(),
     captions = createDemoCaptions();
@@ -73,6 +82,8 @@ export function attachDemoHost({
     picture = null,
     source = null,
     dwell = 0,
+    rewardTail = 0,
+    rewardAge = 0,
     caption = 'demo:tipStart',
     error = '',
     origin = null,
@@ -93,8 +104,14 @@ export function attachDemoHost({
     if ($(id).textContent !== value) $(id).textContent = value;
   };
   const currentRun = () => practice?.state ?? director?.player?.state;
+  const allPicturesPreview = () =>
+    settings.showAllPictures && !settings.hidePictures && picture?.previewAvailable === true;
   const pictureVisibility = () =>
-    settings.hidePictures ? 'blurred' : (picture?.pictureVisibility ?? 'blurred');
+    settings.hidePictures
+      ? 'blurred'
+      : allPicturesPreview()
+        ? 'clear'
+        : (picture?.pictureVisibility ?? 'blurred');
   const foreground = () => !doc.hidden && doc.hasFocus();
   const ownsUI = () => !!doc.activeElement?.closest?.('[data-demo-ui]');
   const watching = () => active && !practice && !interrupted && !busy;
@@ -155,9 +172,11 @@ export function attachDemoHost({
       t(
         settings.hidePictures
           ? 'demo:hiddenPicture'
-          : pictureVisibility() === 'clear'
-            ? 'demo:earnedPicture'
-            : 'demo:blurredPicture',
+          : allPicturesPreview()
+            ? 'demo:previewPicture'
+            : pictureVisibility() === 'clear'
+              ? 'demo:earnedPicture'
+              : 'demo:blurredPicture',
       ),
     );
     $('demo-actions').hidden = !interrupted && !practice;
@@ -218,6 +237,7 @@ export function attachDemoHost({
   function interrupt({ focus = true } = {}) {
     if (!active) return;
     interrupted = true;
+    reward.pause();
     clock.reset();
     armed = false;
     director?.pause();
@@ -227,6 +247,7 @@ export function attachDemoHost({
     if (focus) $('demo-fresh').focus({ preventScroll: true });
   }
   function foregroundLost() {
+    reward.pause();
     idle.activity();
     clear();
     if (practice || handoffPending) suspend();
@@ -249,6 +270,8 @@ export function attachDemoHost({
   function close({ handoff = false } = {}) {
     if (!active) return;
     active = false;
+    reward.reset();
+    delete dialog.dataset.reward;
     clock.stop();
     audio?.cancelPending?.();
     audioControls.reset();
@@ -365,6 +388,8 @@ export function attachDemoHost({
   function changed(snapshot) {
     if (!active) return;
     if (snapshot.phase === 'loading') {
+      reward.reset();
+      delete dialog.dataset.reward;
       clock.reset();
       source = painter = picture = context = adoptedPlayer = null;
       caption = 'demo:tipStart';
@@ -385,6 +410,8 @@ export function attachDemoHost({
       captions.reset();
       caption = 'demo:tipStart';
       dwell = 0;
+      rewardTail = 0;
+      rewardAge = 0;
       error = '';
     }
     if (snapshot.phase === 'unavailable') {
@@ -446,6 +473,8 @@ export function attachDemoHost({
     }
   }
   function startPractice(run, intent = null) {
+    reward.reset();
+    delete dialog.dataset.reward;
     switchClass = null;
     clock.stop();
     practice = createDemoPractice(run);
@@ -628,28 +657,49 @@ export function attachDemoHost({
   });
   for (const type of ['keydown', 'pointerdown', 'wheel'])
     listen(doc, type, () => idle.activity(), true);
+  const showAllPictureControls = [
+    $('demo-show-all-pictures'),
+    $('demo-show-all-pictures-live'),
+  ].filter(Boolean);
   const saveSettings = () => {
     settings = {
       ...settings,
       auto: $('demo-auto').checked,
       collect: $('demo-collect').checked,
       hidePictures: $('demo-hide-pictures').checked,
+      showAllPictures:
+        showAllPictureControls.some((control) => control.checked) &&
+        !$('demo-hide-pictures').checked,
     };
     setCollect(settings.collect);
+    if (settings.hidePictures) reward.reset();
+    paint(0);
     idle.activity();
     try {
       if (canWrite()) storage.setItem(settingsKey, JSON.stringify({ version: 1, ...settings }));
     } catch {
       text('demo-settings-status', t('demo:settingsSessionOnly'));
     }
+    paint(0);
   };
   $('demo-auto').checked = settings.auto;
   $('demo-collect').checked = settings.collect;
   $('demo-hide-pictures').checked = settings.hidePictures;
+  for (const control of showAllPictureControls) control.checked = settings.showAllPictures;
   setCollect(settings.collect);
   listen($('demo-auto'), 'change', saveSettings);
   listen($('demo-collect'), 'change', saveSettings);
-  listen($('demo-hide-pictures'), 'change', saveSettings);
+  listen($('demo-hide-pictures'), 'change', () => {
+    if ($('demo-hide-pictures').checked)
+      for (const control of showAllPictureControls) control.checked = false;
+    saveSettings();
+  });
+  for (const control of showAllPictureControls)
+    listen(control, 'change', () => {
+      for (const other of showAllPictureControls) other.checked = control.checked;
+      if (control.checked) $('demo-hide-pictures').checked = false;
+      saveSettings();
+    });
   listen($('demo-clear'), 'click', async () => {
     try {
       await clearRecordings();
@@ -696,16 +746,38 @@ export function attachDemoHost({
     if (!doc.hidden) renderControls();
     if (!practice && !interrupted && director.phase === 'complete') {
       dwell += Math.min(seconds, 0.25);
-      if (dwell >= 4) {
+      const holding = reward.update({
+        won: state.status === 'won',
+        age: rewardAge,
+        allowed: pictureVisibility() === 'clear',
+        pin: picture?.storyPin,
+        paused: interrupted || !foreground(),
+        reduced: getContext().reduced,
+        volume: getContext().library.cinematicVolume ?? 0.7,
+        muted: !settings.gameSounds,
+      });
+      if (!holding && (foreground() ? rewardAge : dwell) >= REWARD_STORY_SECONDS)
+        rewardTail += Math.min(seconds, 0.25);
+      else rewardTail = 0;
+      if (state.status === 'won' ? rewardTail >= 2.2 : dwell >= 4) {
         dwell = 0;
         void director.next();
       }
     }
   }
+
   function paint(seconds) {
     const state = currentRun();
     if (!active || !painter || !state || doc.hidden) return;
     renderControls();
+    if (state.status === 'won')
+      rewardAge = advanceRewardAge(rewardAge, seconds, interrupted || !foreground());
+    const expanded = state.status === 'won' && rewardAge >= REWARD_BOARD_SECONDS && !practice;
+    if (expanded && dialog.dataset.reward !== 'expanded') {
+      const from = canvas.getBoundingClientRect();
+      dialog.dataset.reward = 'expanded';
+      animateRewardArrival(canvas, from, getContext().reduced);
+    } else if (!expanded) delete dialog.dataset.reward;
     context ??= canvas.getContext('2d');
     if (context)
       painter.draw(context, state, Math.min(seconds, 0.1), {
@@ -718,8 +790,10 @@ export function attachDemoHost({
         fullReveal: state.status === 'won',
         backdrop: picture?.backdrop,
         pictureVisibility: pictureVisibility(),
+        pictureInterference: !allPicturesPreview(),
         celebrationPaused: interrupted,
-        demoTransition: getContext().reduced ? 0 : Math.max(0, 1 - transitionAge / 0.3),
+        demoTransition:
+          getContext().reduced || allPicturesPreview() ? 0 : Math.max(0, 1 - transitionAge / 0.3),
       });
   }
   function updateAudio() {

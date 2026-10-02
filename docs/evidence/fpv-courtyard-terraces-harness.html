@@ -1,0 +1,852 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Courtyard terraces · before / after</title>
+    <style>
+      :root {
+        font: 15px system-ui;
+        color-scheme: dark;
+        background: #0b1724;
+        color: #e6eff4;
+      }
+      body {
+        margin: 20px;
+        max-width: 1400px;
+      }
+      h1 {
+        font-size: 23px;
+      }
+      p {
+        max-width: 105ch;
+        line-height: 1.45;
+      }
+      button,
+      select {
+        font: inherit;
+        min-height: 44px;
+        background: #1b3044;
+        color: inherit;
+        border: 1px solid #58778d;
+        border-radius: 6px;
+        padding: 8px 12px;
+      }
+      button:disabled {
+        opacity: 0.5;
+      }
+      .controls {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+        margin: 12px 0;
+        align-items: center;
+      }
+      label {
+        display: flex;
+        gap: 8px;
+        align-items: center;
+      }
+      .pair {
+        display: flex;
+        gap: 14px;
+        overflow: auto;
+      }
+      figure {
+        margin: 0;
+        flex: none;
+      }
+      figcaption {
+        padding: 8px;
+        font-weight: 600;
+      }
+      .screen,
+      .screen canvas {
+        width: 640px;
+        height: 360px;
+        display: block;
+        background: #101923;
+      }
+      .screen {
+        border: 1px solid #526878;
+      }
+      textarea {
+        width: 100%;
+        height: 240px;
+        background: #101923;
+        color: #dce8f0;
+        font: 12px monospace;
+      }
+      small {
+        color: #aac0ce;
+      }
+      #status {
+        min-height: 25px;
+      }
+      #provenance {
+        font: 12px monospace;
+        overflow-wrap: anywhere;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Courtyard terrace comparison</h1>
+    <p>
+      Frozen baseline and candidate with actual GLB library loading, identical courses and static
+      inspection poses. Compare three authored courtyard sizes, terrace gaps and all five other
+      prepared environments. This qualifies rendering and resource behavior; it does not certify
+      artistic quality, sustained FPS, physical devices or flying skill.
+    </p>
+    <p>
+      <small
+        >Prepare with
+        <code
+          >node scripts/prepare-fpv-courtyard-terraces-verification.mjs --out
+          dist/fpv-courtyard-terraces-verification-NAME</code
+        >. No network assets or game progress are written. Keep the page visible while
+        running.</small
+      >
+    </p>
+    <p id="provenance">Loading provenance…</p>
+    <div class="controls">
+      <button id="run" disabled>Run GLB qualification</button
+      ><button id="preview" disabled>Show selected view</button
+      ><button id="download" disabled>Download receipt</button>
+    </div>
+    <div class="controls">
+      <label
+        >World<select id="course">
+          <option value="courtyard-01">Courtyard · 76×70 m · Courtyard welcome</option>
+          <option value="beginner-33">Courtyard · 88 m · Three landing approaches</option>
+          <option value="beginner-52">Courtyard · 150 m · Orbit the landmark</option>
+          <option value="woodland-01">Woodland regression</option>
+          <option value="warehouse-01">Warehouse regression</option>
+          <option value="stadium-01">Stadium regression</option>
+          <option value="container-yard-01">Container yard regression</option>
+          <option value="garage-01">Garage regression</option>
+        </select></label
+      ><label
+        >Quality<select id="quality">
+          <option value="low">Performance</option>
+          <option value="balanced" selected>Balanced</option>
+          <option value="high">Quality</option>
+        </select></label
+      ><label
+        >Camera<select id="camera">
+          <option>fpv</option>
+          <option>chase</option>
+          <option>overview</option>
+        </select></label
+      ><label
+        >Facing<select id="pose">
+          <option value="front">Forward</option>
+          <option value="rear">Rear</option>
+          <option value="left">Left</option>
+          <option value="right">Right</option>
+        </select></label
+      >
+    </div>
+    <p id="status">Preparing controls…</p>
+    <div class="pair">
+      <figure>
+        <figcaption>Before · frozen baseline</figcaption>
+        <div class="screen" id="before"></div>
+      </figure>
+      <figure>
+        <figcaption>After · frozen candidate</figcaption>
+        <div class="screen" id="after"></div>
+      </figure>
+    </div>
+    <p>
+      <small
+        >Inspection poses place an observer at 2.6 m facing the selected side. They are not
+        demonstration commands or scored flights. Actual prepared GLBs load through the production
+        loader. Hash/count checks preserve source assets and compare placement outside the flight
+        volume; human review remains necessary for aesthetics and readability.</small
+      >
+    </p>
+    <textarea id="receipt" aria-label="Courtyard verification receipt" readonly></textarea>
+    <script type="module">
+      const $ = (id) => document.getElementById(id),
+        qualities = ['low', 'balanced', 'high'],
+        cameras = ['fpv', 'chase', 'overview'],
+        courtyardIds = ['courtyard-01', 'beginner-33', 'beginner-52'],
+        otherIds = ['woodland-01', 'warehouse-01', 'stadium-01', 'container-yard-01', 'garage-01'],
+        preparedWorlds = [
+          'courtyard',
+          'woodland',
+          'warehouse',
+          'stadium',
+          'container-yard',
+          'garage',
+        ],
+        wait = () => new Promise(requestAnimationFrame);
+      const sha = async (bytes) =>
+        [
+          ...new Uint8Array(
+            await crypto.subtle.digest(
+              'SHA-256',
+              typeof bytes === 'string' ? new TextEncoder().encode(bytes) : bytes,
+            ),
+          ),
+        ]
+          .map((x) => x.toString(16).padStart(2, '0'))
+          .join('');
+      const clone = (value) => JSON.parse(JSON.stringify(value));
+      const encode = (value) => JSON.stringify(value);
+      let manifest,
+        modules,
+        owners = [],
+        receipt,
+        busy = false;
+      const errors = [];
+      addEventListener('error', (event) => errors.push(event.message));
+      addEventListener('unhandledrejection', (event) => errors.push(String(event.reason)));
+      function status(text) {
+        $('status').textContent = text;
+      }
+      function publish() {
+        window.fpvCourtyardTerracesReceipt = receipt;
+        $('receipt').value = JSON.stringify(receipt, null, 2);
+        $('download').disabled = !receipt;
+      }
+      function check(ok, name, details = {}) {
+        receipt.checks.push({ name, passed: !!ok, ...details });
+        publish();
+        if (!ok) throw Error(name);
+      }
+      async function timeout(operation, label) {
+        let timer;
+        try {
+          return await Promise.race([
+            operation,
+            new Promise(
+              (_, reject) => (timer = setTimeout(() => reject(Error('Timeout: ' + label)), 45000)),
+            ),
+          ]);
+        } finally {
+          clearTimeout(timer);
+        }
+      }
+      async function verifyHashes() {
+        for (const [side, files] of Object.entries(manifest.files))
+          for (const [file, hash] of Object.entries(files)) {
+            const response = await fetch(new URL('./' + side + '/' + file, location.href), {
+              cache: 'no-store',
+            });
+            if (!response.ok || (await sha(await response.arrayBuffer())) !== hash)
+              throw Error('Frozen input mismatch: ' + side + '/' + file);
+          }
+        if (
+          (await sha(await (await fetch('./index.html', { cache: 'no-store' })).arrayBuffer())) !==
+          manifest.harnessSha256
+        )
+          throw Error('Harness input mismatch');
+      }
+      async function initialize() {
+        manifest = await (await fetch('./fixture-manifest.json', { cache: 'no-store' })).json();
+        if (manifest.format !== 'FPVCourtyardTerracesFixture.v1') throw Error('Unknown fixture');
+        $('provenance').textContent =
+          'Baseline ' +
+          manifest.baseline +
+          ' · Candidate ' +
+          manifest.candidate +
+          ' · world-assets ' +
+          manifest.files.after['optional-practice/civilian-fpv/world-assets.mjs'];
+        modules = await Promise.all(
+          ['before', 'after'].map(async (side) => {
+            const base = new URL('./' + side + '/optional-practice/civilian-fpv/', location.href);
+            const [assets, catalogue, model, visuals, THREE, worldCatalogue, worldModel] =
+              await Promise.all(
+                [
+                  'world-assets.mjs',
+                  'catalogue.mjs',
+                  'model.mjs',
+                  'world-visuals.mjs',
+                  'vendor/three.module.js',
+                  'world-catalogue.mjs',
+                  'world-model.mjs',
+                ].map((name) => import(new URL(name, base))),
+              );
+            await worldModel.initWorldRuntime();
+            return { side, assets, catalogue, model, visuals, THREE, worldCatalogue, worldModel };
+          }),
+        );
+      }
+      function course(index, id) {
+        const found = [
+          ...modules[index].worldCatalogue.WORLD_CATALOGUE,
+          ...modules[index].worldCatalogue.BEGINNER_CATALOGUE,
+        ].find((row) => row.id === id)?.course;
+        if (!found) throw Error('Missing ' + id);
+        return found;
+      }
+      function observation(id, pose) {
+        const c = course(0, id),
+          flight = (
+            c.format === 'FlightCourse.v2'
+              ? modules[0].worldModel.createWorldFlight
+              : modules[0].model.createFlight
+          )({ course: c, mode: 'acro' });
+        const value = flight.snapshot();
+        flight.dispose?.();
+        const yaw = { front: 0, rear: Math.PI, left: Math.PI / 2, right: -Math.PI / 2 }[pose];
+        value.position = { x: 0, y: 2600, z: 0 };
+        value.orientation = [
+          0,
+          Math.round(Math.sin(yaw / 2) * 1e6),
+          0,
+          Math.round(Math.cos(yaw / 2) * 1e6),
+        ];
+        value.ticks = 100;
+        return value;
+      }
+      function createOwners() {
+        owners = modules.map((row) => {
+          const canvas = document.createElement('canvas');
+          canvas.setAttribute('aria-label', row.side + ' actual simulator scene');
+          $(row.side).replaceChildren(canvas);
+          const runtime = row.assets.createFlightRenderer({
+            canvas,
+            window,
+            reducedMotion: true,
+            onContextLost: () => {
+              if (receipt && !receipt.disposing) receipt.contextLosses.push(row.side);
+            },
+          });
+          if (!runtime.available) throw Error(row.side + ' WebGL unavailable');
+          return { ...row, canvas, runtime, gl: canvas.getContext('webgl2') };
+        });
+      }
+      function disposeOwners() {
+        const rows = [];
+        if (receipt) receipt.disposing = true;
+        for (const owner of owners) {
+          owner.runtime.dispose();
+          rows.push({ side: owner.side, resources: clone(owner.runtime.resources()) });
+        }
+        owners = [];
+        if (receipt) delete receipt.disposing;
+        return rows;
+      }
+      async function load(id, quality, imported = true) {
+        const result = {};
+        for (let index = 0; index < owners.length; index++) {
+          const owner = owners[index],
+            c = course(index, id);
+          owner.runtime.setCourse(c, 'acro');
+          owner.runtime.setQuality(quality);
+          owner.runtime.setDrone('racer');
+          let loaded = { nodes: 0, objects: [] };
+          if (imported)
+            loaded = await timeout(
+              owner.runtime.loadScene(owner.assets.builtinWorldScene(c)),
+              'Actual GLB load',
+            );
+          if ((await timeout(owner.runtime.prepare(), 'Shaders')) === false)
+            throw Error('Shader preparation superseded');
+          result[owner.side] = {
+            nodes: loaded.nodes,
+            objects: loaded.objects.length,
+            registered: clone(owner.runtime.resources().registered),
+          };
+        }
+        return result;
+      }
+      function pixels(owner, state, camera) {
+        const text = encode(state),
+          at = performance.now();
+        owner.runtime.draw(state, { cameraMode: camera, cameraFov: 82, cameraTilt: 0 });
+        const submitMs = performance.now() - at,
+          gl = owner.gl,
+          rgba = new Uint8Array(gl.drawingBufferWidth * gl.drawingBufferHeight * 4);
+        gl.readPixels(
+          0,
+          0,
+          gl.drawingBufferWidth,
+          gl.drawingBufferHeight,
+          gl.RGBA,
+          gl.UNSIGNED_BYTE,
+          rgba,
+        );
+        const glError = gl.getError();
+        if (glError !== gl.NO_ERROR) throw Error(owner.side + ' WebGL error ' + glError);
+        if (text !== encode(state)) throw Error('Renderer mutated supplied pose');
+        return {
+          rgba,
+          width: gl.drawingBufferWidth,
+          height: gl.drawingBufferHeight,
+          submitMs,
+          resources: clone(owner.runtime.resources()),
+        };
+      }
+      async function pair(id, quality, camera, pose) {
+        await wait();
+        const state = observation(id, pose),
+          before = pixels(owners[0], state, camera),
+          after = pixels(owners[1], state, camera);
+        if (before.rgba.length !== after.rgba.length) throw Error('Mismatched buffers');
+        let changed = 0,
+          total = 0,
+          max = 0,
+          nonBlack = 0;
+        for (let i = 0; i < before.rgba.length; i += 4) {
+          let delta = 0;
+          for (let c = 0; c < 3; c++) {
+            const d = Math.abs(before.rgba[i + c] - after.rgba[i + c]);
+            delta += d;
+            max = Math.max(max, d);
+          }
+          if (delta) changed++;
+          total += delta;
+          if (after.rgba[i] + after.rgba[i + 1] + after.rgba[i + 2] > 0) nonBlack++;
+        }
+        return {
+          id,
+          quality,
+          camera,
+          pose,
+          width: after.width,
+          height: after.height,
+          beforeHash: await sha(before.rgba),
+          afterHash: await sha(after.rgba),
+          changedPixels: changed,
+          changedFraction: changed / (after.rgba.length / 4),
+          meanChannelDifference: total / ((after.rgba.length / 4) * 3),
+          maxChannelDifference: max,
+          nonBlackPixels: nonBlack,
+          drawCalls: [before.resources.renderer.calls, after.resources.renderer.calls],
+          triangles: [before.resources.renderer.triangles, after.resources.renderer.triangles],
+          submitMs: [before.submitMs, after.submitMs],
+          resources: [before.resources, after.resources],
+        };
+      }
+      async function inspectGLB(index, c) {
+        const blob = modules[index].assets.builtinWorldScene(c);
+        if (!blob) throw Error('Missing prepared GLB for ' + c.id);
+        const buffer = await blob.arrayBuffer(),
+          view = new DataView(buffer);
+        if (
+          view.getUint32(0, true) !== 0x46546c67 ||
+          view.getUint32(4, true) !== 2 ||
+          view.getUint32(8, true) !== buffer.byteLength
+        )
+          throw Error('Invalid generated GLB');
+        const jsonLength = view.getUint32(12, true),
+          json = JSON.parse(new TextDecoder().decode(new Uint8Array(buffer, 20, jsonLength))),
+          binOffset = 28 + jsonLength,
+          bin = new Uint8Array(buffer, binOffset),
+          placements = json.asset.extras.placements;
+        const attrs = json.nodes.flatMap((node) =>
+          Object.values(node.extensions?.EXT_mesh_gpu_instancing?.attributes ?? {}),
+        );
+        const instanceStart = Math.min(
+          ...attrs.map((i) => json.bufferViews[json.accessors[i].bufferView].byteOffset ?? 0),
+          bin.byteLength,
+        );
+        const assetHash = await sha(
+          encode({
+            meshes: json.meshes,
+            materials: json.materials,
+            images: json.images,
+            textures: json.textures,
+            samplers: json.samplers,
+          }),
+        );
+        const fixedPlacement = placements.map((p) => ({
+          model: p.model,
+          side: p.side,
+          y: [p.bounds.min[1], p.bounds.max[1]],
+          size: p.bounds.max.map((v, i) => Math.round((v - p.bounds.min[i]) * 1e6) / 1e6),
+        }));
+        const terrain = c.bounds,
+          clearance = placements.map((p) =>
+            Math.hypot(
+              Math.max(
+                terrain.min.x / 1000 - p.bounds.max[0],
+                p.bounds.min[0] - terrain.max.x / 1000,
+                0,
+              ),
+              Math.max(
+                terrain.min.z / 1000 - p.bounds.max[2],
+                p.bounds.min[2] - terrain.max.z / 1000,
+                0,
+              ),
+            ),
+          );
+        const facadeGaps = [];
+        for (let side = 0; side < 4; side++) {
+          const axis = side % 2 ? 2 : 0,
+            ground = placements
+              .filter(
+                (p) =>
+                  p.side === side &&
+                  /\/wall-a-(window|door|garage)$/.test(p.model) &&
+                  Math.abs(p.bounds.min[1] - terrain.min.y / 1000) < 1e-6,
+              )
+              .sort((a, b) => a.bounds.min[axis] - b.bounds.min[axis]);
+          const groups = [];
+          for (let i = 0; i < ground.length; i += 3) {
+            const rows = ground.slice(i, i + 3);
+            groups.push({
+              min: rows[0]?.bounds.min[axis],
+              max: rows.at(-1)?.bounds.max[axis],
+              centres: rows.map((p) => (p.bounds.min[axis] + p.bounds.max[axis]) / 2),
+            });
+          }
+          facadeGaps.push({
+            side,
+            groundBays: ground.length,
+            bayDistances: groups.flatMap((g) => g.centres.slice(1).map((v, i) => v - g.centres[i])),
+            alleyWidths: groups.slice(1).map((g, i) => g.min - groups[i].max),
+          });
+        }
+        const fixedInstances = [];
+        for (const node of json.nodes) {
+          const attributes = node.extensions?.EXT_mesh_gpu_instancing?.attributes;
+          if (!attributes) continue;
+          const values = { mesh: node.mesh, name: node.name };
+          for (const [kind, id] of Object.entries(attributes)) {
+            const accessor = json.accessors[id],
+              bufferView = json.bufferViews[accessor.bufferView],
+              offset = (bufferView.byteOffset ?? 0) + (accessor.byteOffset ?? 0),
+              width = kind === 'ROTATION' ? 4 : 3;
+            const raw = bin.subarray(offset, offset + accessor.count * width * 4);
+            if (kind === 'TRANSLATION') {
+              const data = new DataView(raw.buffer, raw.byteOffset, raw.byteLength);
+              values.translationY = Array.from({ length: accessor.count }, (_, i) =>
+                data.getFloat32((i * 3 + 1) * 4, true),
+              );
+            } else values[kind] = await sha(raw);
+          }
+          fixedInstances.push(values);
+        }
+        const extras = json.asset.extras;
+        return {
+          blob,
+          summary: {
+            bytes: buffer.byteLength,
+            sha256: await sha(buffer),
+            placements: placements.length,
+            placementsHash: await sha(encode(placements)),
+            fixedPlacementHash: await sha(encode(fixedPlacement)),
+            fixedInstanceTransformsHash: await sha(encode(fixedInstances)),
+            nonFacadePlacementsHash: await sha(
+              encode(
+                placements.filter((p) => !/\/wall-a-(window|door|garage|roof)$/.test(p.model)),
+              ),
+            ),
+            assetHash,
+            sourceBinaryHash: await sha(bin.subarray(0, instanceStart)),
+            nodes: json.nodes.length,
+            meshes: json.meshes.length,
+            materials: json.materials.length,
+            images: json.images.length,
+            accessors: json.accessors.length,
+            bufferViews: json.bufferViews.length,
+            batching: extras.batching,
+            fpvScenery: extras.fpvScenery,
+            environment: extras.environment,
+            minimumExteriorClearance: Math.min(...clearance),
+            facadeGaps,
+          },
+        };
+      }
+      const resourceKey = (r) => ({
+        registered: r.registered,
+        geometries: r.renderer.geometries,
+        textures: r.renderer.textures,
+        programs: r.renderer.programs,
+      });
+      async function run() {
+        if (busy) return;
+        busy = true;
+        $('run').disabled = $('preview').disabled = true;
+        disposeOwners();
+        receipt = {
+          format: 'FPVCourtyardTerracesBrowserEvidence.v1',
+          createdAt: new Date().toISOString(),
+          baseline: manifest.baseline,
+          candidate: manifest.candidate,
+          sourceFiles: manifest.files,
+          checks: [],
+          samples: [],
+          resourceCycles: [],
+          contextLosses: [],
+          browser: { userAgent: navigator.userAgent, dpr: devicePixelRatio, canvasCss: [640, 360] },
+          limitations: [
+            'Exact pixels are same-browser frozen-input comparisons, not cross-device goldens.',
+            'Submit timings include CPU/driver work and readback is diagnostic; no FPS, GPU-time, physical-device or human-acceptance claim.',
+            'Static observer poses are not flight proofs. No unit coverage added.',
+          ],
+        };
+        try {
+          status('Verifying frozen hashes…');
+          await verifyHashes();
+          check(true, 'Frozen renderer/module and harness hashes match provenance');
+          check(
+            encode(modules[0].worldCatalogue.WORLD_CATALOGUE) ===
+              encode(modules[1].worldCatalogue.WORLD_CATALOGUE) &&
+              encode(modules[0].worldCatalogue.BEGINNER_CATALOGUE) ===
+                encode(modules[1].worldCatalogue.BEGINNER_CATALOGUE),
+            'All authored catalogue/course/collision/objective identities are unchanged',
+          );
+          receipt.assetComparisons = [];
+          for (const id of courtyardIds) {
+            status('Actual courtyard GLB · ' + id);
+            const before = (await inspectGLB(0, course(0, id))).summary,
+              after = (await inspectGLB(1, course(1, id))).summary;
+            receipt.assetComparisons.push({ id, bounds: course(1, id).bounds, before, after });
+            check(
+              before.placements === 139 && after.placements === 139,
+              id + ' retains139 original prepared placements',
+            );
+            check(
+              before.assetHash === after.assetHash &&
+                before.sourceBinaryHash === after.sourceBinaryHash &&
+                before.fixedPlacementHash === after.fixedPlacementHash &&
+                before.fixedInstanceTransformsHash === after.fixedInstanceTransformsHash &&
+                before.nonFacadePlacementsHash === after.nonFacadePlacementsHash,
+              id +
+                ' retains exact source geometry/material/image bytes, models, side assignments, heights and dimensions',
+            );
+            check(
+              ['nodes', 'meshes', 'materials', 'images', 'accessors', 'bufferViews'].every(
+                (key) => before[key] === after[key],
+              ) && encode(before.batching) === encode(after.batching),
+              id + ' retains native GLB node/material/instancing counts',
+            );
+            check(
+              before.placementsHash !== after.placementsHash,
+              id + ' changes courtyard placement transforms',
+            );
+            check(
+              after.minimumExteriorClearance > 0,
+              id + ' all imported placements stay outside flight volume',
+              { minimumMetres: after.minimumExteriorClearance },
+            );
+            check(
+              after.facadeGaps.every(
+                (side) =>
+                  side.groundBays === 12 &&
+                  side.bayDistances.length === 8 &&
+                  side.bayDistances.every((value) => Math.abs(value - 4.04) < 1e-5) &&
+                  side.alleyWidths.length === 3 &&
+                  side.alleyWidths.every((value) => value >= 3),
+              ),
+              id + ' four three-bay terraces per side retain compact spacing and at least3m alleys',
+              { minimumAlley: Math.min(...after.facadeGaps.flatMap((side) => side.alleyWidths)) },
+            );
+          }
+          receipt.otherWorlds = [];
+          const distinct = new Map();
+          for (const entry of [
+            ...modules[0].worldCatalogue.WORLD_CATALOGUE,
+            ...modules[0].worldCatalogue.BEGINNER_CATALOGUE,
+          ])
+            if (
+              preparedWorlds.includes(entry.course.environment) &&
+              entry.course.environment !== 'courtyard'
+            )
+              distinct.set(entry.course.environment + encode(entry.course.bounds), entry.id);
+          const covered = new Set();
+          for (const id of distinct.values()) {
+            const before = (await inspectGLB(0, course(0, id))).summary,
+              after = (await inspectGLB(1, course(1, id))).summary;
+            check(
+              before.sha256 === after.sha256,
+              id + ' exact GLB bytes/transforms/assets unchanged',
+            );
+            receipt.otherWorlds.push({
+              id,
+              environment: after.environment,
+              bounds: course(1, id).bounds,
+              sha256: after.sha256,
+              placements: after.placements,
+            });
+            covered.add(after.environment);
+          }
+          check(
+            covered.size === 5,
+            'All five other prepared environments retain exact assets for every authored bounds variant',
+          );
+          const small = clone(course(1, 'courtyard-01'));
+          small.bounds = {
+            min: { x: -22000, y: 0, z: -22000 },
+            max: { x: 22000, y: 18000, z: 22000 },
+          };
+          const smallBefore = (await inspectGLB(0, small)).summary,
+            smallAfter = (await inspectGLB(1, small)).summary;
+          check(
+            smallBefore.sha256 === smallAfter.sha256,
+            'Small44×44m creator courtyard keeps its original valid layout',
+          );
+          createOwners();
+          receipt.sceneLoads = [];
+          for (const id of courtyardIds)
+            for (const quality of qualities) {
+              status(id + ' · ' + quality + ' · loaded GLB WebGL views');
+              const loaded = await load(id, quality);
+              receipt.sceneLoads.push({ id, quality, ...loaded });
+              check(
+                loaded.before.nodes > 0 &&
+                  loaded.after.nodes > 0 &&
+                  loaded.before.objects > 0 &&
+                  loaded.after.objects > 0,
+                id + ' ' + quality + ' actual GLBs parsed and installed by production loader',
+              );
+              check(
+                encode(loaded.before.registered) === encode(loaded.after.registered),
+                id + ' ' + quality + ' unchanged registered geometry/material/texture allocation',
+              );
+              let changed = 0;
+              const views = [
+                ['fpv', 'front'],
+                ['fpv', 'rear'],
+                ['fpv', 'left'],
+                ['fpv', 'right'],
+                ['chase', 'front'],
+                ['overview', 'front'],
+              ];
+              for (const [camera, pose] of views) {
+                const row = await pair(id, quality, camera, pose);
+                receipt.samples.push(row);
+                changed += row.changedPixels;
+                check(
+                  row.nonBlackPixels > 100 &&
+                    row.drawCalls.every((n) => n > 0) &&
+                    row.triangles.every((n) => n > 0),
+                  id + ' ' + quality + '/' + camera + '/' + pose + ' populated actual GLB view',
+                );
+              }
+              check(
+                changed > 0,
+                id + ' ' + quality + ' terrace placement visibly changes inspected views',
+                { changedPixels: changed },
+              );
+            }
+          for (const id of otherIds) {
+            await load(id, 'balanced');
+            const row = await pair(id, 'balanced', 'fpv', 'front');
+            receipt.samples.push(row);
+            check(
+              row.changedPixels === 0 && row.beforeHash === row.afterHash,
+              id + ' loaded GLB exact rendered pixel regression',
+            );
+          }
+          await load('courtyard-01', 'balanced');
+          const loaded = await pair('courtyard-01', 'balanced', 'fpv', 'front');
+          await load('courtyard-01', 'balanced', false);
+          const fallback = await pair('courtyard-01', 'balanced', 'fpv', 'front');
+          check(
+            loaded.beforeHash !== fallback.beforeHash && loaded.afterHash !== fallback.afterHash,
+            'Actual imported library rendering differs from procedural fallback in both revisions',
+          );
+          for (let cycle = 0; cycle < 3; cycle++) {
+            status('Actual GLB resource reload cycle ' + (cycle + 1) + '/3');
+            const rows = {};
+            for (const id of [...courtyardIds, 'warehouse-01'])
+              for (const quality of qualities) {
+                await load(id, quality);
+                await pair(id, quality, 'fpv', 'front');
+                rows[id + '/' + quality] = owners.map((owner) =>
+                  resourceKey(owner.runtime.resources()),
+                );
+              }
+            receipt.resourceCycles.push(rows);
+          }
+          check(
+            encode(receipt.resourceCycles[1]) === encode(receipt.resourceCycles[2]),
+            'Geometry/material/texture/program counts plateau across repeated actual GLB bounds/quality reloads',
+          );
+          const disposed = disposeOwners();
+          receipt.disposal = disposed;
+          check(
+            disposed.every(
+              (row) =>
+                row.resources.disposed &&
+                Object.values(row.resources.registered).every((n) => n === 0),
+            ),
+            'Both renderers release all registered geometry/material/texture ownership on disposal',
+          );
+          check(
+            !errors.length && !receipt.contextLosses.length,
+            'No browser errors or unexpected context loss',
+            { errors },
+          );
+          await verifyHashes();
+          check(true, 'Frozen inputs remain exact after qualification');
+          receipt.passed = true;
+          status(
+            'PASS ' +
+              receipt.checks.length +
+              ' checks · ' +
+              receipt.samples.length +
+              ' image pairs; use Show selected view for human review',
+          );
+        } catch (error) {
+          receipt.passed = false;
+          receipt.error = error.stack;
+          status('FAIL · ' + error.message);
+        } finally {
+          if (owners.length) receipt.failureDisposal = disposeOwners();
+          busy = false;
+          $('run').disabled = $('preview').disabled = false;
+          publish();
+        }
+      }
+      async function preview() {
+        if (busy) return;
+        busy = true;
+        $('run').disabled = $('preview').disabled = true;
+        try {
+          disposeOwners();
+          createOwners();
+          const id = $('course').value,
+            quality = $('quality').value;
+          await load(id, quality);
+          const row = await pair(id, quality, $('camera').value, $('pose').value);
+          status(
+            'Human comparison · ' +
+              id +
+              ' · ' +
+              quality +
+              ' · ' +
+              $('camera').value +
+              ' · ' +
+              $('pose').value +
+              ' · changed ' +
+              (row.changedFraction * 100).toFixed(1) +
+              '% of pixels',
+          );
+        } catch (error) {
+          status('Preview failed: ' + error.message);
+        } finally {
+          busy = false;
+          $('run').disabled = $('preview').disabled = false;
+        }
+      }
+      $('run').onclick = run;
+      $('preview').onclick = preview;
+      $('download').onclick = () => {
+        if (!receipt) return;
+        const url = URL.createObjectURL(
+            new Blob([JSON.stringify(receipt, null, 2)], { type: 'application/json' }),
+          ),
+          a = document.createElement('a');
+        a.href = url;
+        a.download = 'fpv-courtyard-terraces-evidence.json';
+        a.click();
+        URL.revokeObjectURL(url);
+      };
+      addEventListener('pagehide', disposeOwners);
+      try {
+        await initialize();
+        $('run').disabled = $('preview').disabled = false;
+        status('Ready · run qualification or show a selected view');
+      } catch (error) {
+        status('Initialization failed: ' + error.message);
+      }
+    </script>
+  </body>
+</html>
