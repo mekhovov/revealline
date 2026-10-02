@@ -101,6 +101,9 @@ async function win(page) {
   assert.equal(verifyReplay(exportReplay(recorder, reference)).match, true);
   page.frame(0);
   assert.equal(page.rendered.run.status, 'won');
+  assert.equal(page.$('game-overlay').hidden, true);
+  if (!page.$('skip-celebration').hidden) page.$('skip-celebration').click();
+  page.$('show-result').click();
 }
 
 test(

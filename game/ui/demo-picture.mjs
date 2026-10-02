@@ -1,3 +1,4 @@
+import { resolveStoryReceipts } from '../story-receipts.mjs';
 import { canonicalJSON } from '../data-json.mjs';
 import { campaignKey } from '../library.mjs';
 import { createExecutionCatalog } from '../campaign-contexts.mjs';
@@ -28,11 +29,12 @@ export async function resolveDemoPicture({
   acquire,
 } = {}) {
   let backdrop = null;
-  const result = (pictureVisibility = 'blurred', artSeed = null, previewAvailable = false) => {
+  const result = (pictureVisibility = 'blurred', artSeed = null, previewAvailable = false, storyPin = null) => {
     let disposed = false;
     return Object.freeze({
       pictureVisibility,
       previewAvailable,
+      storyPin,
       backdrop,
       artSeed,
       dispose() {
@@ -80,7 +82,8 @@ export async function resolveDemoPicture({
     // an explicit current choice still needs its own matching earned receipt.
     const useEarnedOriginal = !currentPin && pin.kind === 'legacy';
     let earnedPicture = false,
-      artSeed = null;
+      artSeed = null,
+      storyPin = null;
     for (const item of library?.gallery ?? []) {
       if (item.levelId !== level.id || item.themeId !== theme.id) continue;
       try {
@@ -106,6 +109,14 @@ export async function resolveDemoPicture({
         if (useEarnedOriginal || canonicalJSON(earnedPin) === canonicalJSON(pin)) {
           pin = snapshotPictureChoice(earnedPin);
           earnedPicture = true;
+          const story = library.storyReceipts?.find((row) => row.galleryKey === item.key);
+          if (story && earned.receipt) {
+            try {
+              storyPin = resolveStoryReceipts([story], [earned.receipt], [item])[0].storyPin;
+            } catch {
+              storyPin = null;
+            }
+          }
           artSeed = pin.kind === 'legacy' ? earned.item.seed : null;
           break;
         }
@@ -130,7 +141,7 @@ export async function resolveDemoPicture({
     }
     // Preview availability proves this scene's exact picture is valid, independently
     // of the earned-only default. Failed identity or acquisition paths never opt in.
-    return result(earnedPicture ? 'clear' : 'blurred', artSeed, true);
+    return result(earnedPicture ? 'clear' : 'blurred', artSeed, true, storyPin);
   } catch (error) {
     backdrop?.release?.();
     backdrop = null;
