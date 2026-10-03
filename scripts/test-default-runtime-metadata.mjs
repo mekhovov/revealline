@@ -90,6 +90,65 @@ test('default host packing changes only its verified whitespace and leaves other
   assert.equal(module.value(), undefined, 'Automatic semicolon insertion stays intact.');
 });
 
+test('expanded default UI packing stays bounded to reviewed hosts and preserves source text', async () => {
+  const hosts = [
+    'game/couch/relay-rescue.mjs',
+    'game/couch/couch.mjs',
+    'game/ui/soundtrack-panel.mjs',
+    'game/ui/library-panel.mjs',
+    'game/ui/soundtrack-player.mjs',
+    'game/couch/coop-view.mjs',
+    'game/ui/optional-chapters-panel.mjs',
+    'game/ui/render.mjs',
+    'game/ui/controller-navigation.mjs',
+    'game/snake/classic-app.mjs',
+    'game/ui/mission-library-chooser.mjs',
+    'game/ui/actor-presentation.mjs',
+    'game/ui/edition-rewards.mjs',
+    'game/ui/audio.mjs',
+    'game/ui/still-media-panel.mjs',
+    'game/studio/studio.mjs',
+    'game/ui/classic-view.mjs',
+    'game/couch/couch-installed-chapters.mjs',
+    'game/ui/demo-host.mjs',
+    'game/ui/still-story-panel.mjs',
+  ];
+  const exact = [
+    'game/core.mjs',
+    'game/coop/core.mjs',
+    'game/snake/classic-core-v3.mjs',
+    'game/presentation/current-art-sources.mjs',
+    'game/ui/future-host.mjs',
+  ];
+  const source = Buffer.from(
+    '// Keep  licensed comment.\r\n' +
+      'export const caption = "Сигнал  збережено";\r\n' +
+      'export const body = `row\n  second row`;\r\n' +
+      'export function result() {\r\n    return\r\n      9;\r\n}\r\n',
+  );
+  const before = Buffer.from(source);
+  const entries = [...hosts, ...exact].map((name) => ({ name, bytes: source }));
+  await projectDefaultRuntimeMetadata(root, entries);
+  assert.deepEqual(source, before, 'Canonical input buffers are never mutated.');
+  for (const entry of entries) {
+    if (exact.includes(entry.name)) {
+      assert.equal(entry.bytes, source, entry.name);
+      continue;
+    }
+    assert.ok(entry.bytes.length < source.length, entry.name);
+    const module = await import(`data:text/javascript;base64,${entry.bytes.toString('base64')}`);
+    assert.equal(module.caption, 'Сигнал  збережено');
+    assert.equal(module.body, 'row\n  second row');
+    assert.equal(module.result(), undefined);
+    assert.match(entry.bytes.toString(), /Keep  licensed comment/);
+    assert.deepEqual(entry.bytes.toString().match(/[\r\n]/g), source.toString().match(/[\r\n]/g));
+  }
+  const mapped = Buffer.from(`${source}//# sourceMappingURL=host.mjs.map\n`);
+  const mappedEntry = { name: hosts[0], bytes: mapped };
+  await projectDefaultRuntimeMetadata(root, [mappedEntry]);
+  assert.equal(mappedEntry.bytes, mapped, 'Source-map columns retain their exact bytes.');
+});
+
 test('versioned actor voices remain optional in every core while catalogs and captions stay available', () => {
   for (const locale of ['en', 'uk']) {
     const path = `game/audio/reactions/actors-v1/runner-alert-${locale}.m4a`;

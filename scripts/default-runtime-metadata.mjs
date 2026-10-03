@@ -10,6 +10,32 @@ const codecPath = 'game/vendor/lz-string-1.5.0.min.js';
 const licensePath = 'game/vendor/LZ-STRING-LICENSE.txt';
 const codecHash = '95f4d1cbf099f57161b664bc048426ec3df92637801a4c79116e83315aa787e7';
 const licenseHash = '433fc9dfe659dbfb1e91eed8351f13651e97bfa3ac6d03394c3d63f61d4bbc80';
+// Explicit UI hosts only. The merged mode/content additions exceeded the core
+// cache budget; reuse Company's verified whitespace projection instead of
+// changing authored content, artwork, recipes or admission limits.
+const defaultUIHosts = new Set([
+  'game/app.mjs',
+  'game/couch/relay-rescue.mjs',
+  'game/couch/couch.mjs',
+  'game/ui/soundtrack-panel.mjs',
+  'game/ui/library-panel.mjs',
+  'game/ui/soundtrack-player.mjs',
+  'game/couch/coop-view.mjs',
+  'game/ui/optional-chapters-panel.mjs',
+  'game/ui/render.mjs',
+  'game/ui/controller-navigation.mjs',
+  'game/snake/classic-app.mjs',
+  'game/ui/mission-library-chooser.mjs',
+  'game/ui/actor-presentation.mjs',
+  'game/ui/edition-rewards.mjs',
+  'game/ui/audio.mjs',
+  'game/ui/still-media-panel.mjs',
+  'game/studio/studio.mjs',
+  'game/ui/classic-view.mjs',
+  'game/couch/couch-installed-chapters.mjs',
+  'game/ui/demo-host.mjs',
+  'game/ui/still-story-panel.mjs',
+]);
 
 /** Encode only the existing generated data tuples, never execute source. The
  * exact known wrapper is required so a future generator change cannot silently
@@ -54,11 +80,11 @@ export function projectDefaultContentRegistry(bytes, { codec, license }) {
  * hashes. Never compact byte-pinned recovery catalogs, mission bodies or artwork.
  * Canonical repository files and authoring exports retain their original bytes. */
 export async function projectDefaultRuntimeMetadata(root, entries) {
-  // The main UI host is distribution code, not a pinned gameplay recipe. Reuse
-  // the existing exact AST/token/comment/newline check for this one owned path;
-  // no CSS, authored content, other modules or canonical source are rewritten.
-  const host = entries.find((entry) => entry.name === 'game/app.mjs');
-  if (host) host.bytes = projectEditionModuleIndentation(host.name, host.bytes);
+  // Distribution copies only; the projector checks exact AST, tokens, comments
+  // and line terminators. Its source-map/vendor exclusions remain authoritative.
+  for (const host of entries)
+    if (defaultUIHosts.has(host.name))
+      host.bytes = projectEditionModuleIndentation(host.name, host.bytes);
   const registry = entries.find((entry) => entry.name === 'game/i18n/content-registry.mjs');
   if (registry) {
     const [codec, license] = await Promise.all([
