@@ -67,6 +67,7 @@ export async function buildThemeBootstrap() {
           textured: resolved.textured,
           surface: resolved.surface,
           materialStyle: resolved.materialStyle,
+          materialVariant: resolved.materialVariant,
           revision: family.revision,
         },
       ];
@@ -121,7 +122,10 @@ export async function buildThemeBootstrap() {
         const svg = decodeURIComponent(value.slice(24, -2));
         return ${String.raw`/^<svg xmlns="http:\/\/www\.w3\.org\/2000\/svg" width="48" height="48" shape-rendering="crispEdges">(?:<path(?: (?:fill="(?:#[a-f0-9]{6}|none)"|stroke="#[a-f0-9]{6}"|opacity="(?:0?\.[0-9]+|1)"|d="[MmLlHhVvQqTtZz0-9 .,-]+")){1,5}\/>)+<\/svg>$/i`}.test(svg);
       });
-      if (exact(seed, ['familyId', 'revision', 'variables', 'material', 'quietMaterial', 'textured', 'surface', 'materialStyle']) && /^candidate-[a-z0-9-]{1,54}$/.test(seed.familyId) && seed.revision === 'r1' && !Object.hasOwn(seeds, seed.familyId) && exact(seed.variables, Object.keys(template.variables)) && Object.entries(seed.variables).every(([key, value]) => validVariable(key, value)) && material(seed.material) && material(seed.quietMaterial) && typeof seed.textured === 'boolean' && ['flat', 'bevel'].includes(seed.surface) && Object.values(seeds).some(entry => entry.materialStyle === seed.materialStyle)) seeds[seed.familyId] = seed;
+      const seedKeys = ['familyId', 'revision', 'variables', 'material', 'quietMaterial', 'textured', 'surface', 'materialStyle'];
+      const hasVariant = Object.hasOwn(seed ?? {}, 'materialVariant');
+      const validVariant = !hasVariant || Object.values(seeds).some(entry => entry.materialStyle === seed.materialStyle && entry.materialVariant === seed.materialVariant);
+      if (exact(seed, hasVariant ? [...seedKeys, 'materialVariant'] : seedKeys) && validVariant && /^candidate-[a-z0-9-]{1,54}$/.test(seed.familyId) && seed.revision === 'r1' && !Object.hasOwn(seeds, seed.familyId) && exact(seed.variables, Object.keys(template.variables)) && Object.entries(seed.variables).every(([key, value]) => validVariable(key, value)) && material(seed.material) && material(seed.quietMaterial) && typeof seed.textured === 'boolean' && ['flat', 'bevel'].includes(seed.surface) && Object.values(seeds).some(entry => entry.materialStyle === seed.materialStyle)) seeds[seed.familyId] = seed;
     }
     }
   } catch { /* Damaged compiled hint keeps the app fallback until runtime admission. */ }
@@ -167,7 +171,7 @@ export async function buildThemeBootstrap() {
   variables['--iw-target'] = studio && !coarse && !large ? '32px' : '44px';
   variables['--iw-text-size'] = large ? '20px' : '16px';
   for (const [key, value] of Object.entries(variables)) root.style.setProperty(key, value);
-  Object.assign(root.dataset, { interfaceTheme: id, themeFamily: id, themeStyled: String(styled), themeContrast: high ? 'high' : 'normal', themeTexture: textured ? 'on' : 'off', themeSurface: high ? 'flat' : seed.surface, themeMaterial: seed.materialStyle, themeHud: high || intent.opaqueHud ? 'opaque' : 'normal', themeMotion: reduced ? 'reduced' : 'full', themeDensity: studio ? 'studio' : 'player', themeTextSize: large ? 'large' : 'standard', themeBootstrapped: 'true' });
+  Object.assign(root.dataset, { interfaceTheme: id, themeFamily: id, themeStyled: String(styled), themeContrast: high ? 'high' : 'normal', themeTexture: textured ? 'on' : 'off', themeSurface: high ? 'flat' : seed.surface, themeMaterial: seed.materialStyle, themeFinish: seed.materialVariant ?? seed.materialStyle, themeHud: high || intent.opaqueHud ? 'opaque' : 'normal', themeMotion: reduced ? 'reduced' : 'full', themeDensity: studio ? 'studio' : 'player', themeTextSize: large ? 'large' : 'standard', themeBootstrapped: 'true' });
   const meta = doc.querySelector?.('meta[name="theme-color"]');
   if (meta && styled) meta.setAttribute('content', variables['--iw-ink']);
 })();`,
