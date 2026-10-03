@@ -2735,7 +2735,6 @@ performance still pending; (3) remaining environment pairs starting Stadium/Gara
 qualification. Feedback does not block implementation; no device acceptance is
 invented. Keep finished PRs separate from new work.
 inspect those failures next without weakening admission guards.
-||||||| b3b23a76b
 
 
 ### D1 Woodland foliage surfaces — 3 October 2026
