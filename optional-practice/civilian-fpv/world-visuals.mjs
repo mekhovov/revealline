@@ -1473,8 +1473,22 @@ export function buildWorldVisuals({
         : null;
     // Keep spatial sectors independently culled: a single forest-wide batch
     // would submit every crown even when the camera sees only one edge.
-    const canopyBatches = new Map();
-    const canopyShape = environment === 'woodland' ? new THREE.IcosahedronGeometry(1, 1) : null;
+    const canopyBatches = new Map(),
+      branchBatches = new Map(),
+      organicCanopy = environment === 'woodland' && !pixel && !kit,
+      canopyShape = environment === 'woodland' ? new THREE.IcosahedronGeometry(1, 1) : null,
+      branchShape = organicCanopy ? new THREE.CylinderGeometry(0.035, 0.08, 1, 5) : null;
+    // Every lobe fits inside the old unit-sphere envelope. These cosmetic trees
+    // stay outside the arena and cannot introduce an obstacle into a flight line.
+    const crownLobes = organicCanopy
+      ? [
+          [0, 0.33, 0, 0.58, 0.62, 0.58],
+          [-0.32, -0.05, -0.18, 0.56, 0.6, 0.6],
+          [0.29, -0.12, 0.24, 0.58, 0.56, 0.54],
+          [-0.2, -0.3, 0.26, 0.5, 0.5, 0.5],
+          [0.26, 0.1, -0.3, 0.55, 0.57, 0.55],
+        ]
+      : [[0, 0, 0, 1, 1, 1]];
     if (naturalWoodland) {
       const positions = canopyShape.attributes.position,
         colors = new Float32Array(positions.count * 3);
@@ -1515,15 +1529,46 @@ export function buildWorldVisuals({
           key = `${sector}:${i % 3}`;
         if (!canopyBatches.has(key)) canopyBatches.set(key, { paint, matrices: [] });
         const radius = height * 0.3;
-        canopyBatches
-          .get(key)
-          .matrices.push(
-            new THREE.Matrix4().compose(
-              new THREE.Vector3(x, height * 0.75, z),
-              new THREE.Quaternion(),
-              new THREE.Vector3(radius, radius, radius),
-            ),
-          );
+        const turn = organicCanopy ? i * 2.399963229728653 : 0,
+          rotation = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0, 1, 0), turn);
+        for (const [lx, ly, lz, sx, sy, sz] of crownLobes) {
+          const offset = new THREE.Vector3(lx, ly, lz)
+            .multiplyScalar(radius)
+            .applyQuaternion(rotation);
+          canopyBatches
+            .get(key)
+            .matrices.push(
+              new THREE.Matrix4().compose(
+                offset.add(new THREE.Vector3(x, height * 0.75, z)),
+                rotation,
+                new THREE.Vector3(sx * radius, sy * radius, sz * radius),
+              ),
+            );
+        }
+        if (branchShape) {
+          if (!branchBatches.has(sector)) branchBatches.set(sector, []);
+          for (const lobe of crownLobes.slice(1, 4)) {
+            const start = new THREE.Vector3(x, height * 0.53, z),
+              end = new THREE.Vector3(lobe[0], lobe[1], lobe[2])
+                .multiplyScalar(radius)
+                .applyQuaternion(rotation)
+                .add(new THREE.Vector3(x, height * 0.75, z)),
+              direction = end.clone().sub(start),
+              length = direction.length();
+            branchBatches
+              .get(sector)
+              .push(
+                new THREE.Matrix4().compose(
+                  start.add(end).multiplyScalar(0.5),
+                  new THREE.Quaternion().setFromUnitVectors(
+                    new THREE.Vector3(0, 1, 0),
+                    direction.normalize(),
+                  ),
+                  new THREE.Vector3(1, length, 1),
+                ),
+              );
+          }
+        }
       } else {
         const crown = mesh(
           new THREE.ConeGeometry(height * 0.3, height * 0.75, 7),
@@ -1533,6 +1578,20 @@ export function buildWorldVisuals({
         crown.position.set(x, height * 0.75, z);
         crown.castShadow = true;
       }
+    }
+    for (const matrices of branchBatches.values()) {
+      const forks = instanceSimDetails({
+        shape: branchShape,
+        paint: bark,
+        parent: backdrop,
+        matrices,
+        mesh,
+      });
+      forks.name = 'woodland-branch-sector';
+      forks.castShadow = true;
+      forks.receiveShadow = false;
+      forks.computeBoundingBox();
+      forks.computeBoundingSphere();
     }
     for (const { paint, matrices } of canopyBatches.values()) {
       const canopy = instanceSimDetails({
