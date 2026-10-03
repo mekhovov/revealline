@@ -60,3 +60,14 @@ Player-feedback sessions, physical controls and sustained device performance
 remain pending and do not block implementation. Additional unit coverage stays
 in H/R7. Frozen package and publication evidence are recorded separately below
 when completed.
+
+## Packaged candidate
+
+Standalone candidate `aa05d0b93` targets main `742d25225`. All three optional
+packages pass committed-input and ZIP verification with two identical builds.
+World Studio uses **99 source files / 14,451,645 bytes**, under the unchanged
+104-file / 16 MiB policy. The actual packaged Workshop repeats **63/63** browser
+checks. See [package admission](fpv-tracking-editor-package-verification.json)
+and [packaged browser receipt](fpv-tracking-editor-packaged-browser-verification.json).
+These receipts establish functional development readiness, not public release
+eligibility or completed human/device review.
