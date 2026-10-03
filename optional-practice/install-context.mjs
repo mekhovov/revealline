@@ -212,6 +212,7 @@ export async function prepareOptionalOffline({
   storage = globalThis.localStorage,
   signal,
   onProgress,
+  progressParent,
   document: doc = globalThis.document,
 } = {}) {
   if (!idPattern.test(packageId) || packageId.length > 64)
@@ -227,20 +228,37 @@ export async function prepareOptionalOffline({
   doc?.defaultView?.addEventListener?.('pagehide', cancel);
   if (signal?.aborted) abort.abort();
   const uk = doc?.documentElement?.lang === 'uk';
-  let panel, progress;
+  let panel, progress, progressOwner;
+  const previousFocus = doc?.activeElement;
   if (doc?.body && !onProgress) {
+    // A body-level overlay is inert behind a native modal, regardless of z-index.
+    // Resolve ownership now: hosts can move their settings into a dialog after mount.
+    const parent = progressParent ?? previousFocus?.closest?.('dialog[open]') ?? doc.body;
+    progressOwner = parent.closest?.('dialog');
     panel = doc.createElement('section');
+    panel.setAttribute('data-optional-offline-progress', '');
     panel.setAttribute('aria-label', uk ? 'Підготовка офлайн' : 'Offline download');
     panel.style.cssText =
-      'position:fixed;bottom:1rem;left:1rem;right:1rem;z-index:10000;padding:1rem;background:#10263b;color:#fff;border:2px solid #68b2ff';
+      (progressOwner
+        ? 'position:sticky;bottom:0;z-index:1;'
+        : 'position:fixed;bottom:1rem;left:1rem;right:1rem;z-index:10000;') +
+      'padding:1rem;background:#10263b;color:#fff;border:2px solid #68b2ff';
     progress = doc.createElement('p');
     progress.setAttribute('role', 'status');
+    progress.textContent = uk ? 'Перевірка офлайн-файлів…' : 'Checking offline files…';
     const button = doc.createElement('button');
     button.type = 'button';
     button.textContent = uk ? 'Скасувати' : 'Cancel download';
+    button.style.minHeight = '44px';
     button.onclick = cancel;
     panel.append(progress, button);
-    doc.body.append(panel);
+    parent.append(panel);
+    progressOwner?.addEventListener('close', cancel);
+    if (progressOwner && !progressOwner.open) cancel();
+    if (!abort.signal.aborted) {
+      button.focus?.({ preventScroll: true });
+      if (progressOwner) button.scrollIntoView?.({ block: 'nearest' });
+    }
   }
   const report = (data) => {
     if (abort.signal.aborted) return;
@@ -360,7 +378,16 @@ export async function prepareOptionalOffline({
     );
   } finally {
     port?.close();
+    const restoreFocus = panel?.contains(doc?.activeElement);
     panel?.remove();
+    progressOwner?.removeEventListener('close', cancel);
+    if (
+      restoreFocus &&
+      previousFocus?.isConnected &&
+      !previousFocus.disabled &&
+      (!progressOwner || progressOwner.open)
+    )
+      previousFocus.focus?.({ preventScroll: true });
     signal?.removeEventListener('abort', cancel);
     doc?.defaultView?.removeEventListener?.('pagehide', cancel);
     owners.delete(abort);

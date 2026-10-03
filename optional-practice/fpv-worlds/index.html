@@ -425,10 +425,17 @@
             ><span data-i18n="restoreProofs">Restore flight records</span
             ><input id="import-proofs" type="file" accept=".json" /></label
           ><button id="prepare-runtime" data-i18n="prepareRuntime">Prepare simulator offline</button
+          ><button id="remove-runtime" data-i18n="removeRuntime">
+            Remove offline simulator files</button
           ><button id="persistent-storage" data-i18n="keepOffline">
             Request persistent storage
           </button>
         </div>
+        <p data-i18n="runtimeOfflineHelp">
+          Removal keeps your installed worlds and flight records. Download again before playing
+          offline.
+        </p>
+        <p id="runtime-offline-status" role="status" aria-live="polite"></p>
         <p id="storage-status"></p>
         <h2 data-i18n="installedWorlds">Installed worlds</h2>
         <div id="installed-packs"></div>

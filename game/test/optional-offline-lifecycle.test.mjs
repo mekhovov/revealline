@@ -13,6 +13,7 @@ import { removePracticeOffline as removeFPV } from '../../optional-practice/civi
 import { installPracticeWorker as installFlight } from '../../optional-practice/civilian-flight/worker-template.mjs';
 import { installPracticeWorker as installFPV } from '../../optional-practice/worker-template.mjs';
 import { waitFor } from './helpers/wait-for.mjs';
+import { Document } from './helpers/couch-dom.mjs';
 
 const deferred = () => {
   let resolve;
@@ -159,6 +160,110 @@ test('pagehide cancels its package operation and a fresh owner can reinstall', a
     JSON.parse(f.storage.getItem(optionalInstallationKey(f.packageId, f.root))).active.version,
     'v1.2.3',
   );
+});
+
+test('default progress belongs to the invoking native modal and Cancel restores its focus', async () => {
+  const f = fixture(),
+    doc = new Document(),
+    dialog = doc.createElement('dialog'),
+    prepare = doc.createElement('button');
+  doc.body.append(dialog);
+  dialog.append(prepare);
+  dialog.showModal();
+  prepare.focus();
+  f.activate();
+  const pending = prepareOptionalOffline({ ...f.options, document: doc });
+  const rejected = assert.rejects(pending, { name: 'AbortError' });
+  await waitFor(() => f.ports.length === 1);
+  const panel = dialog.querySelector('[data-optional-offline-progress]');
+  assert(panel, 'Cancel must share the active modal top layer, not the inert body');
+  assert.equal(panel.parentNode, dialog);
+  assert.match(panel.querySelector('[role="status"]').textContent, /Checking offline files/);
+  assert.equal(doc.activeElement, panel.querySelector('button'));
+  panel.querySelector('button').click();
+  f.reply();
+  await rejected;
+  assert.equal(doc.querySelector('[data-optional-offline-progress]'), null);
+  assert.equal(doc.activeElement, prepare);
+  assert.equal(f.values.size, 0);
+  assert(!f.messages.includes('practice-cancel'), 'Read-only status does not stop active play');
+});
+
+test('closing a moved settings owner cancels its download without reclaiming focus', async () => {
+  const f = fixture(),
+    doc = new Document(),
+    previous = doc.createElement('button'),
+    settings = doc.createElement('section'),
+    dialog = doc.createElement('dialog');
+  doc.body.append(previous, settings, dialog);
+  previous.focus();
+  // The shell moves settings after construction; ownership is resolved at Prepare.
+  dialog.append(settings);
+  dialog.showModal();
+  f.activate();
+  const pending = prepareOptionalOffline({
+    ...f.options,
+    document: doc,
+    progressParent: settings,
+  });
+  const rejected = assert.rejects(pending, { name: 'AbortError' });
+  await waitFor(() => f.ports.length === 1);
+  assert.equal(settings.querySelector('[data-optional-offline-progress]').parentNode, settings);
+  dialog.close();
+  f.reply();
+  await rejected;
+  assert.equal(doc.activeElement, previous);
+  assert.equal(dialog.listeners.get('close')?.size, 0);
+  assert.equal(f.values.size, 0);
+});
+
+test('successful preparation removes progress without stealing focus from another control', async () => {
+  const f = fixture(),
+    doc = new Document(),
+    other = doc.createElement('button');
+  doc.body.append(other);
+  f.activate();
+  const pending = prepareOptionalOffline({ ...f.options, document: doc });
+  await waitFor(() => f.ports.length === 1);
+  other.focus();
+  f.reply();
+  assert.equal(await pending, true);
+  assert.equal(doc.activeElement, other);
+  assert.equal(doc.querySelector('[data-optional-offline-progress]'), null);
+});
+
+test('custom progress keeps caller-owned UI, focus and dialog lifetime unchanged', async () => {
+  const f = fixture(),
+    doc = new Document(),
+    dialog = doc.createElement('dialog');
+  doc.body.append(dialog);
+  dialog.showModal();
+  f.activate();
+  const pending = prepareOptionalOffline({
+    ...f.options,
+    document: doc,
+    progressParent: dialog,
+    onProgress() {},
+  });
+  await waitFor(() => f.ports.length === 1);
+  assert.equal(doc.querySelector('[data-optional-offline-progress]'), null);
+  assert.equal(doc.activeElement, dialog);
+  dialog.close();
+  f.reply();
+  assert.equal(await pending, true, 'A custom caller owns cancellation through its signal');
+});
+
+test('a closed explicit progress owner cannot start a hidden download', async () => {
+  const f = fixture(),
+    doc = new Document(),
+    dialog = doc.createElement('dialog');
+  doc.body.append(dialog);
+  await assert.rejects(
+    prepareOptionalOffline({ ...f.options, document: doc, progressParent: dialog }),
+    { name: 'AbortError' },
+  );
+  assert.equal(f.registrations(), 0);
+  assert.equal(doc.querySelector('[data-optional-offline-progress]'), null);
 });
 
 test('late registration is cancelled and cannot recreate an installation receipt', async () => {

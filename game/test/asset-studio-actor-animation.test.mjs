@@ -65,8 +65,10 @@ const fixture = () => {
     },
   };
 };
+const canvases = (node) => (node.tag === 'canvas' ? [node] : node.children.flatMap(canvases));
+const previewBytes = (48 + 56 + 64 + 144) * 144 * 4;
 const settle = async () => {
-  for (let i = 0; i < 24; i++) await Promise.resolve();
+  for (let i = 0; i < 80; i++) await Promise.resolve();
 };
 function decoder(t, fn) {
   const old = Object.getOwnPropertyDescriptor(globalThis, 'createImageBitmap');
@@ -102,7 +104,7 @@ test('Studio refresh and disposal release preview leases and refuse a stale Stag
   const buttons = f.after.next.children.filter((node) => node.tag === 'button');
   buttons[0].onclick();
   await settle();
-  assert.equal(pageActorArtPool(f.document).stats().leases, 2);
+  assert.equal(pageActorArtPool(f.document).stats().leases, 5);
   f.setContext({ ...f.getContext(), document: {} });
   controls.refresh();
   assert.equal(pageActorArtPool(f.document).stats().reservedBytes, 0);
@@ -156,28 +158,73 @@ test('animation preview backing storage is accounted, released on collapse and r
       onError: (error) => errors.push(error),
     }),
     root = f.after.next,
-    canvas = root.children.find((node) => node.tag === 'canvas'),
+    canvas = canvases(root)[0],
     buttons = root.children.filter((node) => node.tag === 'button'),
     pool = pageActorArtPool(f.document);
   assert.equal(canvas.width, 0);
   assert.equal(pool.stats().reservedBytes, 0);
   buttons[0].onclick();
   await settle();
-  assert.equal(canvas.width, 512);
-  assert.equal(canvas.height, 160);
-  assert.equal(pool.stats().reservedBytes, 512 * 160 * 4 + 64);
+  assert.equal(canvas.width, 48);
+  assert.equal(canvas.height, 144);
+  assert.equal(pool.stats().reservedBytes, previewBytes + 64);
   root.open = false;
   root.listeners.get('toggle')();
   assert.equal(canvas.width, 0);
   assert.equal(pool.stats().reservedBytes, 0);
   buttons[1].onclick();
   await settle();
-  assert.equal(canvas.width, 512);
-  assert.equal(pool.stats().reservedBytes, 512 * 160 * 4 + 64);
+  assert.equal(canvas.width, 48);
+  assert.equal(pool.stats().reservedBytes, previewBytes + 64);
   controls.dispose();
   assert.equal(canvas.width, 0);
   assert.equal(pool.stats().reservedBytes, 0);
   assert.deepEqual(errors, []);
+});
+
+test('narrow Studio panels wrap pooled specimens without shrinking labelled native actor sizes', async () => {
+  const f = fixture(),
+    draws = [];
+  f.asset.animation = createSoldierAnimation('studio-native-size-review', ['torso']);
+  const controls = mountActorAnimationControls({
+    ...f,
+    drawActor(...args) {
+      draws.push({ x: args[1], y: args[2], size: args[3] });
+    },
+    onApply() {},
+    onError(error) {
+      throw error;
+    },
+  });
+  const root = f.after.next,
+    group = root.children.find((node) => node.tag === 'div');
+  group.clientWidth = 224;
+  root.children.find((node) => node.tag === 'button').onclick();
+  await settle();
+  assert.equal(group.style.display, 'flex');
+  assert.equal(group.style.flexWrap, 'wrap');
+  assert.deepEqual(
+    draws.map(({ size }) => size),
+    [16, 24, 32, 112],
+  );
+  const previews = canvases(root);
+  assert.equal(previews.length, 4);
+  for (const [index, preview] of previews.entries()) {
+    assert.equal(parseFloat(preview.style.width), preview.width);
+    assert.equal(parseFloat(preview.style.height), preview.height);
+    assert.equal(preview.style.maxWidth, 'none');
+    assert.ok(
+      preview.width <= group.clientWidth,
+      'Each independent specimen fits the narrow panel',
+    );
+    assert.ok(draws[index].x + draws[index].size < preview.width);
+    assert.equal(group.children[index].style.flex, '0 0 144px');
+  }
+  assert.equal(pageActorArtPool(f.document).stats().reservedBytes, previewBytes);
+  controls.suspend();
+  assert.ok(previews.every((canvas) => canvas.width === 0 && canvas.height === 0));
+  assert.equal(pageActorArtPool(f.document).stats().reservedBytes, 0);
+  controls.dispose();
 });
 
 test('a nearly full page refuses the animation canvas before decoding an atlas and recovers after offload', async (t) => {
@@ -202,7 +249,7 @@ test('a nearly full page refuses the animation canvas before decoding an atlas a
       load: () => ({ width: 1, height }),
     }),
     root = f.after.next,
-    canvas = root.children.find((node) => node.tag === 'canvas'),
+    canvas = canvases(root)[0],
     buttons = root.children.filter((node) => node.tag === 'button');
   buttons[0].onclick();
   await settle();
@@ -215,7 +262,7 @@ test('a nearly full page refuses the animation canvas before decoding an atlas a
   buttons[1].onclick();
   await settle();
   assert.equal(decoded, 1);
-  assert.equal(canvas.width, 512);
+  assert.equal(canvas.width, 48);
   controls.dispose();
   assert.equal(pool.stats().reservedBytes, 0);
 });
@@ -240,7 +287,7 @@ test('rapid animation owner replacement waits for the old codec without losing t
       onError: (error) => errors.push(error),
     }),
     root = f.after.next,
-    canvas = root.children.find((node) => node.tag === 'canvas'),
+    canvas = canvases(root)[0],
     load = root.children.find((node) => node.tag === 'button');
   load.onclick();
   await settle();
@@ -254,8 +301,8 @@ test('rapid animation owner replacement waits for the old codec without losing t
   await settle();
   assert.equal(decoded, 2);
   assert.equal(closed, 1);
-  assert.equal(canvas.width, 512);
-  assert.equal(pageActorArtPool(f.document).stats().leases, 2);
+  assert.equal(canvas.width, 48);
+  assert.equal(pageActorArtPool(f.document).stats().leases, 5);
   assert.deepEqual(errors, []);
   controls.dispose();
   assert.equal(closed, 2);
@@ -291,7 +338,7 @@ test('a retired animation decoder failure cannot replace the new owner with an e
   await settle();
   assert.equal(decoded, 2);
   assert.deepEqual(errors, []);
-  assert.equal(root.children.find((node) => node.tag === 'canvas').width, 512);
+  assert.equal(canvases(root)[0].width, 48);
   controls.dispose();
   assert.equal(pageActorArtPool(f.document).stats().reservedBytes, 0);
 });
