@@ -52,6 +52,19 @@ Quality presets must preserve collision, relevant sight lines and objective acto
 Measure frame times, loading and resource disposal before claiming performance.
 No multiplayer, online publishing or universal commercial-map conversion is added.
 
+### Coastal lighthouse qualification — 4 October 2026
+
+Courtyard #1012 and Warehouse #1014 are merged; current integration includes main
+`0aeb0c2b4342715ba9a19b976114d7d905fed7bd`. The bounded Coastal airfield lighthouse
+finish now has accepted harbour/lantern views, 97 source and 97 packaged browser
+checks with 56 identical image pairs, ten fresh retained-proof replays through
+41,868 ticks, all three source-bound package admissions and an actual complete
+102-file admitted-player render/arm/pause. See [qualification](fpv-coast-lighthouse.md).
+Publish this focused increment through protected checks, then continue Quarry on
+a separate branch. The count remains 196 challenges / 14 worlds; this art pass
+adds neither a world nor an installed demonstration. D5 still targets 228 / 18.
+Physical-device observations and broader finished-world claims remain separate.
+
 ### Latest delivery priority — 3 October 2026, evening
 
 This checkpoint supersedes the dated pending statuses below; older evidence remains historical.
