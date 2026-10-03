@@ -1,0 +1,687 @@
+<!doctype html>
+<html lang="en">
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Section replay · actual host verification</title>
+  <style>
+    body {
+      font: 15px system-ui;
+      background: #101923;
+      color: #eef4f4;
+      margin: 16px;
+    }
+    button {
+      font: inherit;
+      min-height: 44px;
+      padding: 8px 16px;
+    }
+    iframe {
+      display: block;
+      width: 1280px;
+      height: 800px;
+      border: 1px solid #56717a;
+      max-width: none;
+    }
+    textarea {
+      width: 100%;
+      height: 230px;
+      font: 12px monospace;
+    }
+    p {
+      max-width: 100ch;
+    }
+  </style>
+  <h1>Section replay · actual production host</h1>
+  <p>
+    Actual WebGL renderer and frozen runtime modules in an isolated HTTP frame. Controlled animation
+    timestamps accelerate recorded commands; this is functional playback, not measured FPS, physical
+    input or player acceptance. Storage is isolated from player data.
+  </p>
+  <button id="run">Run section replay checks</button
+  ><button id="show">Show section preview</button>
+  <p id="status" role="status">Ready</p>
+  <textarea id="receipt" readonly aria-label="Section replay qualification receipt"></textarea
+  ><iframe id="sim" title="Actual FPV World player"></iframe>
+  <script type="module">
+    const $ = (id) => document.getElementById(id),
+      frame = $('sim'),
+      wait = (ms) => new Promise((r) => setTimeout(r, ms));
+    let active = null,
+      manualCleanup = null;
+    const digest = async (text) =>
+      [...new Uint8Array(await crypto.subtle.digest('SHA-256', new TextEncoder().encode(text)))]
+        .map((n) => n.toString(16).padStart(2, '0'))
+        .join('');
+    const stable = (value) =>
+      JSON.stringify(value, (_, v) =>
+        v && typeof v === 'object' && !Array.isArray(v)
+          ? Object.fromEntries(Object.entries(v).sort(([a], [b]) => a.localeCompare(b)))
+          : v,
+      );
+    const normal = (value) => ({ ...JSON.parse(JSON.stringify(value)), status: 'active' });
+    async function execute(manual = false) {
+      if (manualCleanup) {
+        await manualCleanup();
+        manualCleanup = null;
+      }
+      const checks = [],
+        phases = [],
+        names = new Set(),
+        prefix = 'fpv-section-' + Date.now() + ':',
+        started = performance.now();
+      let manifest,
+        data,
+        w,
+        d,
+        app,
+        store,
+        failed = null,
+        phase = 'Prepare',
+        baseline;
+      const progress = (label) => {
+        phase = label;
+        phases.push({ ms: Math.round(performance.now() - started), label });
+        $('status').textContent = label;
+        $('receipt').value = JSON.stringify({ status: 'running', phase, checks }, null, 2);
+      };
+      const must = (ok, name, extra = {}) => {
+        checks.push({ name, passed: !!ok, ...extra });
+        if (!ok) throw Error(name);
+      };
+      const eq = (a, b, name) => must(stable(a) === stable(b), name);
+      async function bounded(operation, label, ms = 30000) {
+        let timer;
+        try {
+          return await Promise.race([
+            operation,
+            new Promise(
+              (_, reject) => (timer = setTimeout(() => reject(Error('Timeout: ' + label)), ms)),
+            ),
+          ]);
+        } finally {
+          clearTimeout(timer);
+        }
+      }
+      async function until(fn, label, ms = 30000) {
+        const start = performance.now();
+        while (!fn()) {
+          if (performance.now() - start > ms)
+            throw Error(
+              'Timeout ' + label + '; ' + (d?.getElementById('flight-status')?.textContent ?? ''),
+            );
+          await wait(15);
+          if (w?.fixtureRAF && app) w.fixtureRAF.deliver(0);
+        }
+      }
+      const memory = new Map([
+        [
+          'revealline.fpv.world-settings.v1',
+          JSON.stringify({
+            'world-language': 'en',
+            'flight-source': 'keyboard',
+            'flight-mode': 'self-level',
+            'flight-camera': 'fpv',
+            'flight-quality': 'low',
+            'sim-motion': 'reduced',
+          }),
+        ],
+        [
+          'revealline.fpv.playlists.v1',
+          JSON.stringify({
+            playlists: [],
+            bookmark: { id: 'retained-section-bookmark', revision: 'r1', nextIndex: 2 },
+          }),
+        ],
+      ]);
+      window.fixtureStorage = {
+        getItem: (k) => memory.get(k) ?? null,
+        setItem: (k, v) => memory.set(k, String(v)),
+        removeItem: (k) => memory.delete(k),
+      };
+      window.fixtureDB = {
+        open(name, version) {
+          const full = prefix + name;
+          names.add(full);
+          return version === undefined ? indexedDB.open(full) : indexedDB.open(full, version);
+        },
+        deleteDatabase: (name) => indexedDB.deleteDatabase(prefix + name),
+        cmp: indexedDB.cmp.bind(indexedDB),
+      };
+      const state = () => app.snapshot().state,
+        copy = (value) => w.JSON.parse(JSON.stringify(value));
+      const set = (id, value) => {
+        const node = d.getElementById(id);
+        if (!node) throw Error('Missing select ' + id);
+        node.value = value;
+        node.dispatchEvent(new w.Event('change', { bubbles: true }));
+      };
+      const click = (node) => {
+        if (!node || node.disabled) throw Error('Missing or disabled public button');
+        node.click();
+      };
+      const button = (root, pattern) =>
+        [...root.querySelectorAll('button')].find((n) => pattern.test(n.textContent));
+      async function pulse(delta = 100) {
+        w.fixtureRAF.deliver(delta);
+        await wait(0);
+      }
+      async function saved() {
+        return {
+          records: await store.list(),
+          recovery: await store.session(),
+          playlist: memory.get('revealline.fpv.playlists.v1'),
+          rewardStorage: [...memory].filter(([key]) =>
+            /reward|attempt|notebook|school|learning/.test(key),
+          ),
+        };
+      }
+      async function ready() {
+        await until(
+          () => state() && !d.getElementById('world-arm').disabled,
+          'scene and controls ready',
+          60000,
+        );
+        d.getElementById('world-viewport').focus();
+        await pulse(0);
+      }
+      async function resume() {
+        d.getElementById('world-viewport').focus();
+        await pulse(0);
+        if (state().status !== 'active') click(d.getElementById('world-arm'));
+        await pulse(0);
+        must(state().status === 'active', 'Deliberate resume starts playback');
+      }
+      async function watch(entry, proof, index) {
+        await bounded(
+          app.startFlight(copy(entry), {
+            checkpoint: copy({ mode: proof?.mode ?? 'self-level', index, proof, watch: true }),
+            paused: true,
+          }),
+          'prepare section',
+          60000,
+        );
+        await ready();
+        app.pause();
+        await pulse(0);
+      }
+      async function finish() {
+        for (let i = 0; i < 10000 && !app.snapshot().sectionReplay?.finished; i++) await pulse(200);
+        await until(
+          () => app.snapshot().sectionReplay?.finished && !d.getElementById('result-panel').hidden,
+          'section end',
+        );
+      }
+      const command = (f) =>
+        Object.fromEntries(
+          ['roll', 'pitch', 'yaw', 'throttle', 'actions'].map((key, i) => [key, f[i]]),
+        );
+      function independent(entry, proof, index) {
+        const f = data.model.createWorldFlight({
+          course: entry.course,
+          mode: proof.mode,
+          response: proof.response,
+        });
+        f.arm();
+        let start = index === 0 ? f.snapshot() : null,
+          end = null,
+          state = f.snapshot();
+        try {
+          for (const row of proof.frames) {
+            state = f.step(command(row), { quantized: true });
+            if (!start && state.step === index) start = state;
+            if (!end && state.step > index) end = state;
+          }
+          if (data.model.worldStateIdentity(state) !== proof.finalStateIdentity)
+            throw Error('Independent proof rejected');
+          return { start, end: end ?? state, finished: !!end };
+        } finally {
+          f.dispose();
+        }
+      }
+      function makeShort(expired = false) {
+        const base = data.catalogue.WORLD_CATALOGUE.find((e) => e.id === 'woodland-01'),
+          hold = (ticks) => ({
+            type: 'hold',
+            min: { x: -1000, y: 2000, z: -1000 },
+            max: { x: 1000, y: 4000, z: 1000 },
+            ticks,
+            maxSpeed: 5000,
+            maxTilt: 9000,
+            minTilt: 0,
+            centred: false,
+            heading: null,
+          }),
+          steps = [hold(5), hold(40), hold(15)];
+        const course = data.model.validateWorldCourse({
+            ...base.course,
+            id: 'section-replay-browser',
+            revision: expired ? 'expired' : 'complete',
+            spawn: { x: 0, y: 3000, z: 0 },
+            obstacles: [],
+            actors: [],
+            rules: { ...base.course.rules, maxTicks: expired ? 12 : 500 },
+            steps: { 'self-level': steps, acro: structuredClone(steps) },
+          }),
+          entry = {
+            ...base,
+            id: course.id,
+            course,
+            packIdentity: 'fixture:section-replay',
+            legacy: false,
+          };
+        const f = data.model.createWorldFlight({ course });
+        f.arm();
+        const recorder = data.model.createWorldRecorder(f, { session: 'practice' });
+        let partial = null;
+        try {
+          while (f.snapshot().status === 'active') {
+            f.step({ roll: 0, pitch: 0, yaw: 0, throttle: 0.5, actions: 0 });
+            recorder.record();
+            if (f.snapshot().ticks === 59) partial = recorder.export();
+          }
+          return { entry, proof: recorder.export(), partial };
+        } finally {
+          f.dispose();
+        }
+      }
+      async function cleanup() {
+        if (active) {
+          const old = active;
+          active = null;
+          await bounded(old.dispose(), 'Dispose host', 5000);
+        }
+        store?.close();
+        frame.src = 'about:blank';
+        await wait(20);
+        for (const name of names)
+          await bounded(
+            new Promise((resolve) => {
+              const r = indexedDB.deleteDatabase(name);
+              r.onsuccess = resolve;
+              r.onerror = resolve;
+              r.onblocked = resolve;
+            }),
+            'Remove isolated database',
+            2000,
+          );
+      }
+      try {
+        progress('Verify immutable fixture inputs');
+        manifest = await (await fetch('./fixture-manifest.json', { cache: 'no-store' })).json();
+        for (const [url, sha] of Object.entries({
+          ...Object.fromEntries(
+            Object.entries(manifest.fixtureFiles).map(([p, h]) => [
+              new URL(p, location.href).href,
+              h,
+            ]),
+          ),
+          ...manifest.currentSources,
+        })) {
+          const r = await fetch(url, { cache: 'no-store' });
+          if (!r.ok || (await digest(await r.text())) !== sha)
+            throw Error('Frozen source mismatch ' + url);
+        }
+        must(true, 'Frozen host, dependencies and harness match prepared hashes');
+        const load = (name) =>
+          import(manifest.candidateBase + '/optional-practice/civilian-fpv/' + name);
+        const [catalogue, demos, model, records] = await Promise.all(
+          [
+            'world-catalogue.mjs',
+            'world-demonstrations.mjs',
+            'world-model.mjs',
+            'world-records.mjs',
+          ].map(load),
+        );
+        data = { catalogue, demos, model };
+        await model.initWorldRuntime();
+        const short = makeShort(),
+          expired = makeShort(true),
+          shortExpected = independent(short.entry, short.proof, 1),
+          all = [...catalogue.WORLD_CATALOGUE, ...catalogue.BEGINNER_CATALOGUE];
+        const representativeIds = ['beginner-52', 'garage-07'];
+        const representatives = representativeIds.map((id) => {
+          const entry = all.find((e) => e.id === id),
+            proof = demos.WORLD_DEMONSTRATIONS.find(
+              (r) => r.proof.course === id && r.proof.mode === 'acro',
+            ).proof,
+            index = id === 'beginner-52' ? 3 : 0;
+          return { entry, proof, index, expected: independent(entry, proof, index) };
+        });
+        store = await records.openWorldRecords(window.fixtureDB);
+        await store.saveSession({
+          course: short.entry.course,
+          proof: short.partial,
+          packIdentity: short.entry.packIdentity,
+          preview: false,
+          sectorReferenceId: null,
+          ghostEnabled: false,
+        });
+        progress('Mount actual HTTP player and WebGL renderer');
+        if (active) {
+          await bounded(active.dispose(), 'Dispose prior host', 5000);
+          active = null;
+        }
+        const url = new URL('./player.html', location.href);
+        url.searchParams.set('token', prefix);
+        url.searchParams.set('clock', manual ? 'native' : 'controlled');
+        const loaded = new Promise((r) => frame.addEventListener('load', r, { once: true }));
+        frame.src = url.href;
+        await bounded(loaded, 'HTTP frame');
+        await until(
+          () => frame.contentWindow?.fixtureLoadToken === prefix && frame.contentWindow?.fixtureApp,
+          'actual mount',
+        );
+        w = frame.contentWindow;
+        d = w.document;
+        app = active = w.fixtureApp;
+        await bounded(app.ready, 'Host ready');
+        w.focus();
+        baseline = await saved();
+        must(app.snapshot().catalogue === 148, 'Retained 148-challenge catalogue');
+        if (manual) {
+          const row = representatives[0];
+          await app.startFlight(copy(row.entry), {
+            checkpoint: copy({
+              mode: row.proof.mode,
+              index: row.index,
+              proof: row.proof,
+              watch: true,
+            }),
+          });
+          $('status').textContent =
+            'Actual section preview. Pause, change speed, then practise this section; isolated storage only.';
+          manualCleanup = cleanup;
+          return;
+        }
+        progress('Result action selects the measured longest section');
+        await app.startFlight(copy(short.entry), { recover: copy(short.partial) });
+        await ready();
+        await resume();
+        for (let i = 0; i < 10 && state().status !== 'complete'; i++) await pulse(40);
+        await until(
+          () => /Recording verified/.test(d.getElementById('result-panel').textContent),
+          'ordinary verified result',
+        );
+        must(
+          app.snapshot().records.length === baseline.records.length + 1,
+          'Ordinary full attempt saves one verified record',
+        );
+        const launch = button(d.getElementById('result-panel'), /^Watch /);
+        must(!!launch, 'Actual result offers Watch section');
+        await store.saveSession({
+          course: short.entry.course,
+          proof: short.partial,
+          packIdentity: short.entry.packIdentity,
+          preview: false,
+          sectorReferenceId: null,
+          ghostEnabled: false,
+        });
+        baseline = await saved();
+        click(launch);
+        await until(() => app.snapshot().sectionReplay?.index === 1, 'result section selection');
+        await ready();
+        app.pause();
+        await pulse(0);
+        eq(
+          normal(state()),
+          normal(shortExpected.start),
+          'Result Watch uses exact recorded entry for longest section',
+        );
+        must(
+          app.snapshot().sectionReplay.startTick === 5 &&
+            app.snapshot().sectionReplay.endTick === 45,
+          'Selected section has actual recorded 5…45 bounds',
+        );
+        must(
+          d.getElementById('export-flight').disabled,
+          'Section viewing cannot export a new proof',
+        );
+        progress('Pause, slow playback and held live-input isolation');
+        const paused = state();
+        await pulse(100);
+        eq(state(), paused, 'Paused playback does not advance');
+        set('world-replay-rate', '0.25');
+        must(app.snapshot().replay.rate === 0.25, 'Quarter-speed selector updates playback');
+        await resume();
+        d.getElementById('world-viewport').dispatchEvent(
+          new w.KeyboardEvent('keydown', { code: 'KeyD', key: 'd', bubbles: true }),
+        );
+        d.getElementById('world-viewport').dispatchEvent(
+          new w.KeyboardEvent('keydown', { code: 'Space', key: ' ', bubbles: true }),
+        );
+        const at = state().ticks;
+        await pulse(80);
+        must(state().ticks === at + 1, 'Quarter-speed 80ms consumes one 50Hz recorded tick');
+        set('world-replay-rate', '1');
+        await finish();
+        for (const code of ['KeyD', 'Space'])
+          d.getElementById('world-viewport').dispatchEvent(
+            new w.KeyboardEvent('keyup', {
+              code,
+              key: code === 'Space' ? ' ' : 'd',
+              bubbles: true,
+            }),
+          );
+        eq(
+          normal(state()),
+          normal(shortExpected.end),
+          'Playback endpoint exactly matches independent replay despite live keys',
+        );
+        must(
+          !/Medal|Score:|Recording verified/.test(d.getElementById('result-panel').textContent),
+          'Section result does not advertise a scored attempt',
+        );
+        eq(
+          await saved(),
+          baseline,
+          'Watching leaves recordings, recovery, rewards and playlist untouched',
+        );
+        progress('Watch to practice restores same section and recorded response');
+        const practise =
+          button(d.getElementById('result-panel'), /^Practise /) ??
+          d.getElementById('fly-after-replay');
+        click(practise);
+        await until(
+          () =>
+            app.snapshot().checkpointPractice?.kind === 'checkpoint' &&
+            !app.snapshot().sectionReplay,
+          'practice takeover',
+        );
+        await ready();
+        eq(
+          normal(state()),
+          normal(shortExpected.start),
+          'Practice begins at same exact recorded entry',
+        );
+        must(state().status === 'paused', 'Watch to practice requires deliberate arm');
+        await resume();
+        for (let i = 0; i < 20 && state().status !== 'complete'; i++) await pulse(100);
+        await until(
+          () => /Section complete/.test(d.getElementById('result-panel').textContent),
+          'unscored practice completion',
+        );
+        eq(
+          await saved(),
+          baseline,
+          'Manual section completion cannot create rewards, proof, recovery or playlist movement',
+        );
+        progress(
+          'Actual installed skill and combat sections retain full actor and quaternion state',
+        );
+        for (const row of representatives) {
+          await watch(row.entry, row.proof, row.index);
+          eq(normal(state()), normal(row.expected.start), row.entry.id + ' exact prefix');
+          await resume();
+          await finish();
+          eq(normal(state()), normal(row.expected.end), row.entry.id + ' exact endpoint');
+          eq(await saved(), baseline, row.entry.id + ' storage isolation');
+        }
+        progress('Reached unfinished recording retains actual end and truthful result');
+        await watch(expired.entry, expired.proof, 1);
+        const partial = app.snapshot().sectionReplay;
+        must(
+          partial?.sectionComplete === false && partial.recordedStatus === 'expired',
+          'Expired evidence is labelled as incomplete section',
+        );
+        await resume();
+        await finish();
+        must(state().ticks === 12, 'Incomplete playback stops at exact recorded tick');
+        must(
+          /unfinished|not complete|incomplete/i.test(
+            d.getElementById('result-panel').textContent +
+              ' ' +
+              d.getElementById('flight-status').textContent,
+          ),
+          'Unfinished section is explained without a completion claim',
+        );
+        eq(await saved(), baseline, 'Incomplete playback changes no progress');
+        progress('Invalid or unreached evidence falls back visibly and remains paused');
+        for (const [name, proof, index] of [
+          ['invalid', { ...short.proof, finalStateIdentity: 'invalid' }, 1],
+          ['wrong mode', { ...short.proof, mode: 'acro' }, 1],
+          ['unreached', expired.proof, 2],
+          ['missing', null, 1],
+        ]) {
+          await app.startFlight(copy(name === 'unreached' ? expired.entry : short.entry), {
+            checkpoint: copy({ mode: 'self-level', index, proof, watch: true }),
+          });
+          await ready();
+          must(
+            !app.snapshot().sectionReplay &&
+              app.snapshot().checkpointPractice?.kind === 'full-attempt',
+            name + ' cannot pretend to be watchable',
+          );
+          must(
+            state().ticks === 0 && state().status === 'paused',
+            name + ' stays at paused original start',
+          );
+        }
+        progress('English/Ukrainian controls and narrow menu remain usable');
+        for (const locale of ['en', 'uk']) {
+          set('world-language', locale);
+          await watch(short.entry, short.proof, 1);
+          click(d.getElementById('world-flight-menu'));
+          frame.style.width = '390px';
+          frame.style.height = '844px';
+          await wait(80);
+          const title = d.getElementById('world-replay-label').textContent,
+            caption = d.getElementById('fly-after-replay').textContent;
+          must(
+            locale === 'en'
+              ? /section/i.test(title + ' ' + caption)
+              : /ділян/i.test(title + ' ' + caption),
+            locale + ' section controls are localized',
+          );
+          const rate = d.getElementById('world-replay-rate').getBoundingClientRect();
+          must(
+            rate.width > 0 && rate.left >= -1 && rate.right <= 391,
+            locale + ' playback speed fits 390px',
+          );
+          must(
+            d.documentElement.scrollWidth <= w.innerWidth + 1,
+            locale + ' host has no horizontal overflow',
+          );
+        }
+        frame.style.width = '1280px';
+        frame.style.height = '800px';
+        set('world-language', 'en');
+        progress(
+          'A newer launch cancels pending section preparation without re-opening stale playback',
+        );
+        const pending = app.startFlight(copy(representatives[0].entry), {
+          checkpoint: copy({
+            mode: 'acro',
+            index: 3,
+            proof: representatives[0].proof,
+            watch: true,
+          }),
+        });
+        await app.startFlight(copy(short.entry), {
+          checkpoint: copy({ mode: 'self-level', index: 1, proof: short.proof, watch: true }),
+        });
+        await bounded(pending, 'superseded request');
+        await ready();
+        must(
+          app.snapshot().course === short.entry.id && app.snapshot().sectionReplay?.startTick === 5,
+          'Newer section owns the host',
+        );
+        must(state().status === 'active', 'An uninterrupted section starts playback automatically');
+        await app.startFlight(copy(short.entry), { replayProof: copy(short.proof) });
+        await ready();
+        must(state().status === 'active', 'An uninterrupted full recording starts automatically');
+        progress('Pausing during asynchronous preparation prevents automatic playback');
+        const preparing = app.startFlight(copy(representatives[0].entry), {
+          checkpoint: copy({
+            mode: 'acro',
+            index: 3,
+            proof: representatives[0].proof,
+            watch: true,
+          }),
+        });
+        app.pause();
+        await bounded(preparing, 'Paused preparation');
+        await ready();
+        must(state().status === 'paused', 'Pause during preparation is retained');
+        const held = state().ticks;
+        await pulse(100);
+        must(state().ticks === held, 'Preparation cannot catch up after pause');
+        progress('Disposal cancels a pending section without writing progress');
+        const closing = app.startFlight(copy(representatives[0].entry), {
+          checkpoint: copy({
+            mode: 'acro',
+            index: 3,
+            proof: representatives[0].proof,
+            watch: true,
+          }),
+        });
+        await bounded(app.dispose(), 'Dispose pending host', 10000);
+        active = null;
+        await bounded(closing, 'Disposed preparation');
+        eq(await saved(), baseline, 'Disposal preserves retained progress');
+        must(w.fixtureErrors.length === 0, 'Actual host produces no uncaught errors', {
+          errors: w.fixtureErrors,
+        });
+      } catch (error) {
+        failed = String(error.stack ?? error);
+        checks.push({ name: phase, passed: false, error: failed });
+      } finally {
+        if (!manual) {
+          try {
+            await cleanup();
+          } catch (error) {
+            checks.push({ name: 'Bounded cleanup', passed: false, error: String(error) });
+          }
+          const receipt = {
+            format: 'FPVSectionReplayBrowser.v1',
+            generatedAt: new Date().toISOString(),
+            sourceFiles: manifest?.sourceFiles,
+            candidateHostSha256: manifest?.candidateHostSha256,
+            scope:
+              'Frozen actual host and WebGL renderer; controlled RAF, programmatic public DOM controls and isolated browser storage. No physical-device, performance or human acceptance claim.',
+            passed: checks.filter((c) => c.passed).length,
+            total: checks.length,
+            checks,
+            phases,
+            error: failed,
+          };
+          window.fpvSectionReplayReceipt = receipt;
+          $('receipt').value = JSON.stringify(receipt, null, 2);
+          $('status').textContent = `${receipt.passed}/${receipt.total} checks passed`;
+        }
+      }
+    }
+    for (const [id, manual] of [
+      ['run', false],
+      ['show', true],
+    ])
+      $(id).onclick = async () => {
+        $('run').disabled = $('show').disabled = true;
+        try {
+          await execute(manual);
+        } catch (error) {
+          $('status').textContent = String(error.stack ?? error);
+        } finally {
+          $('run').disabled = $('show').disabled = false;
+        }
+      };
+  </script>
+</html>

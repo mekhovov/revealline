@@ -1,21 +1,19 @@
 # FPV World Studio — implementation and player qualification
 
-Current continuation: **3 October 2026**, branch `codex/fpv-warehouse-surfaces`.
-The latest catalogue has **14 worlds / 148 authored challenges**: the original
-60, 58 school lessons and 30 World Adventures. See [the current delivery
-plan](fpv-reviewed-delivery-plan.md) and [World Adventures](fpv-world-adventures.md)
-for exact feature, evidence and remaining-work status. The implementation table
-below records the original 30 September framework baseline; it is historical,
-not the current catalogue count. Native content stack #889, reimport #922 and
-ghosts #913, World Adventures #947 and offline SIM #933 are integrated on the
-current main baseline. Section practice #951, lifecycle #952, all 178 original/
-school demonstrations #954, Hangar #956, touch/mode choice #959, meadow #960 and
-courtyard #961 are merged. Woodland bark and
-forest-floor presentation #964 is merged. Warehouse closed storage panels, bay
-labels and metre-scaled shell UVs now pass source verification; the next focused
-increment is Stadium display/stand surfaces;
-follow the delivery log for exact qualification/publication status.
-Physical-device, novice-player and broader production-art acceptance remain open.
+Current continuation: **3 October 2026**, branch `codex/fpv-section-replay`.
+The catalogue has **14 worlds / 148 authored challenges**: the original 60,
+58 school lessons and 30 World Adventures. All 120 original mode-specific
+recordings plus 58 recommended-mode school examples are installed. Main includes
+Themes #955 and Warehouse #966. Content, reimport, ghosts, section practice,
+continuous learning, control/mobile improvements and Hangar/Meadow/Courtyard/
+Woodland/Warehouse refinements are merged. The current focused increment completes
+the recorded-section watch → practice loop. See [the current delivery plan](fpv-reviewed-delivery-plan.md)
+and [delivery log](fpv-continuous-delivery.md) for exact evidence and publication.
+
+Player-feedback sessions no longer block implementation at the owner's request.
+Physical-device, novice-player and broader production-art acceptance remain
+pending, separately from functional qualification. Historical tables below record
+the original 30 September framework baseline, not current catalogue counts.
 
 The current workstream prioritizes functioning features and direct player
 verification. **Additional unit-test coverage is deferred to the final phase**
@@ -69,8 +67,9 @@ the release importer profile, as specified in the approved plan.
 Editable ZIP currently accepts STORE entries from the supplied exporter; it is
 not a universal ZIP importer. Browser imports are capped at 16 MiB per model;
 prepared world packs at 64 MiB, below the plan's 256 MiB outer archive ceiling.
-The executable application has a separate 16 MiB / 96-file allowance. The
-original Academy policy remains 8 MiB / 64 files.
+The executable World Studio application has a separate 16 MiB / 104-file
+allowance. Academy has an 8 MiB / 72-file allowance; civilian flight remains
+8 MiB / 64 files.
 
 See [authoring instructions](../authoring/fpv-worlds/README.md), including pinned
 glTF Transform and Khronos tools, Blender exporter and original starter fixture.
@@ -134,8 +133,9 @@ shared-prefab propagation, controller reconnect coverage, full EN/UK review and
 the original legacy fixtures. Restore the repository's required test policy
 through its reviewed process before describing a build as release-qualified.
 
-Produce and verify every requested mode-specific demonstration (120 total),
-review each route with unfamiliar players, tune medals separately per mode,
+The original 120 mode-specific demonstrations are complete. Deliver alternate
+school-mode and optional Adventure examples; review routes with unfamiliar
+players when sessions become available, tune medals separately per mode,
 complete environmental art and animation polish, and measure sustained rendering
 and memory on named desktop/mobile reference devices. The 60/30 fps targets are
 targets until those measurements exist. No hardware baseline or ETA is inferred
