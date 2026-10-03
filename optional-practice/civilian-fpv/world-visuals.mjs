@@ -1227,8 +1227,43 @@ export function buildWorldVisuals({
   }
   if (indoor) {
     const sill = environment === 'gym' ? max.y : 2.5;
-    structure([width + 1, sill, 0.35], [cx, sill / 2, min.z - 0.18]);
-    structure([width + 1, sill, 0.35], [cx, sill / 2, max.z + 0.18]);
+    const northWall = structure([width + 1, sill, 0.35], [cx, sill / 2, min.z - 0.18]),
+      southWall = structure([width + 1, sill, 0.35], [cx, sill / 2, max.z + 0.18]);
+    if (hangar) {
+      const paints = new Map();
+      for (const [wall, side] of [
+        [northWall, 'north'],
+        [southWall, 'south'],
+      ])
+        for (const { role, layer, geometry } of buildHangarBayGeometry(
+          [width + 1, sill, 0.35],
+          side,
+        )) {
+          if (!paints.has(role)) {
+            const source =
+              role === 'rubber'
+                ? serviceBand
+                : kit
+                  ? kit.paint('enamel')
+                  : material(0xe4ddc3, { roughness: 0.82 });
+            const paint = source.clone();
+            paint.polygonOffset = true;
+            paint.polygonOffsetFactor = -layer;
+            paint.polygonOffsetUnits = -layer;
+            // Clones share maps with their source; retain both until this world
+            // is released. No texture or material belongs to an objective actor.
+            world.userData.ownedMaterials.push(source, paint);
+            paints.set(role, paint);
+          }
+          const markings = mesh(geometry, paints.get(role), wall);
+          markings.name = `hangar-${side}-bay-${role}`;
+          markings.userData.role = 'hangar-bay-landmark';
+          markings.userData.materialRole = role;
+          markings.userData.cosmeticDetail = true;
+          markings.castShadow = false;
+          markings.receiveShadow = true;
+        }
+    }
     for (const x of [min.x - 0.18, max.x + 0.18]) structure([0.35, sill, depth], [x, sill / 2, cz]);
     if (sill < max.y) {
       // Transparent perimeter glazing exposes the authored industrial skyline.
@@ -1746,6 +1781,80 @@ export function buildWorldVisuals({
       surfaceDetail.visible = value === 'high';
     },
   };
+}
+
+/** Bay paint sits exactly on the inward face of the two generated Hangar walls. */
+export function buildHangarBayGeometry([width, height, depth], side) {
+  if (
+    !['north', 'south'].includes(side) ||
+    ![width, height, depth].every(Number.isFinite) ||
+    width < 20 ||
+    height < 4 ||
+    depth <= 0
+  )
+    return [];
+  const batches = new Map(),
+    direction = side === 'north' ? 1 : -1,
+    point = (x, y) => [x * direction, y - height / 2, (depth * direction) / 2],
+    rectangle = (role, left, bottom, right, top) => {
+      if (!batches.has(role)) batches.set(role, []);
+      const points = [
+        point(left, bottom),
+        point(right, bottom),
+        point(right, top),
+        point(left, top),
+      ];
+      for (const index of [0, 1, 2, 0, 2, 3]) batches.get(role).push(...points[index]);
+    },
+    digits = [
+      '111101101101111',
+      '010110010010111',
+      '110001010100111',
+      '110001010001110',
+      '101101111001001',
+      '111100110001110',
+      '011100110101010',
+      '111001010010010',
+      '111101111101111',
+      '111101111001110',
+    ];
+  for (let bay = 0; bay < 4; bay++) {
+    const x = (width - 1) * ((bay + 0.5) / 4 - 0.5),
+      label = String(bay + (side === 'north' ? 1 : 5)).padStart(2, '0');
+    rectangle('rubber', x - 0.75, 2.5, x + 0.75, 3.7);
+    for (let digit = 0; digit < label.length; digit++)
+      for (let row = 0; row < 5; row++)
+        for (let column = 0; column < 3; column++)
+          if (digits[Number(label[digit])][row * 3 + column] === '1') {
+            const left = x - 0.53 + digit * 0.58 + column * 0.15,
+              top = 3.5 - row * 0.15;
+            rectangle('enamel', left, top - 0.15, left + 0.15, top);
+          }
+    rectangle('enamel', x - 0.43, 2.59, x + 0.43, 2.64);
+    // A painted service-cover outline and vents give the blank wall scale.
+    // These closed marks do not depict a doorway or change its physical face.
+    const left = x + 1.3,
+      right = x + 2.65,
+      bottom = 2.14,
+      top = 3.6,
+      stroke = 0.035;
+    rectangle('rubber', left, bottom, right, bottom + stroke);
+    rectangle('rubber', left, top - stroke, right, top);
+    rectangle('rubber', left, bottom + stroke, left + stroke, top - stroke);
+    rectangle('rubber', right - stroke, bottom + stroke, right, top - stroke);
+    for (let vent = 0; vent < 4; vent++)
+      rectangle('rubber', left + 0.26, 3.3 - vent * 0.14, right - 0.26, 3.33 - vent * 0.14);
+    rectangle('rubber', right - 0.2, 2.55, right - 0.14, 2.82);
+  }
+  return [...batches].map(([role, positions]) => {
+    const geometry = new THREE.BufferGeometry();
+    geometry.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3));
+    geometry.computeVertexNormals();
+    const uv = [];
+    for (let i = 0; i < positions.length; i += 3) uv.push(positions[i] / 6, positions[i + 1] / 3);
+    geometry.setAttribute('uv', new THREE.Float32BufferAttribute(uv, 2));
+    return { role, layer: role === 'rubber' ? 1 : 2, geometry };
+  });
 }
 
 /** Cosmetic meshes share one draw call and the parent's existing transform. */
