@@ -34,7 +34,7 @@ not add challenges or increase the default installed-example count.
 | Complete / merged #975 | Visual Follow/Observe objective inspector | Delivered | Author, move subject, edit criteria, export/reopen and reimport without losing settings |
 | Merged and live #977 | Pack-removal impact and recovery guidance | Source/package verified; public launch verified | 90 browser checks in each build, exact restore and preserved recording/session/playlist evidence |
 | Parallel | Stadium, then yard/garage art using shared Themes materials | 3–5 days per bounded batch | Readability, collision/visibility parity, resource disposal and source/packaged rendering |
-| Merged #979 | 14 optional Self-level foundation examples; Adventure next | 109 browser checks per build | Correct mode/revision, complete replay and bounded optional delivery |
+| Merged #979 | 14 optional Self-level foundation examples; Adventure next | 117 browser checks per build | Correct mode/revision, complete replay and bounded optional delivery |
 | 5 | Further distinct practice worlds and moving-subject challenges | 3–5 days per pair | Authored routes/objectives, both-mode access and verified demonstrations |
 | Last | H/R7 deferred unit coverage and broad qualification | 5–10 days, excluding external sessions | Required regression, replay/storage failures, named-device performance and separately recorded human acceptance |
 

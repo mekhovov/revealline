@@ -43,13 +43,13 @@ no proof is applied to a presentation-mutated course.
 - `fpv-optional-examples-original-recordings.json`: original 154 v2/24 v1 registry
   bytes retained; regenerated 14 original Acro proofs are identical.
 - `fpv-optional-examples-source-browser.json` and
-  `fpv-optional-examples-packaged-browser.json`: **109/109** checks each against
+  `fpv-optional-examples-packaged-browser.json`: **117/117** checks each against
   the actual HTTP/WebGL host. Includes all 14 full rendered replays, whole-lesson
   lab playback, selected-mode catalogue, section replay, rejection of wrong
   dependencies, retained-record reload, partial transaction failure, duplicate
   import, a real second-connection pin race and disposal. No uncaught errors.
 - `fpv-optional-examples-package.json`: frozen candidate
-  `eee011acdc6b5ed739289b0576334ef1f1d38241`, all three admissions, exact committed
+  `9ca502490094d7c9db8b5d66fae6c90d7895eea3`, all three admissions, exact committed
   inputs/ZIP membership and two byte-identical builds. World: 102 runtime files /
   14,513,098 bytes; source archive uses 104 files under unchanged limits.
 
@@ -81,7 +81,8 @@ qualification still requires a reviewed capacity repair; no guard was increased 
 
 Main #977 merged after initial publication. The combined host preserves exact pack
 restore and optional-example selection. Source and immutable packaged builds
-each repeat the90-check recovery workflow alongside the109-check examples flow.
+each repeat the90-check recovery workflow; the final examples flow now passes
+117 checks with eight additional native session-read failure assertions.
 Retained completed proofs and interrupted prefixes replay independently.
 Receipts: `fpv-optional-examples-recovery-source.json`,
 `fpv-optional-examples-recovery-packaged.json`, and
@@ -92,3 +93,9 @@ and deletions now still invalidate the lookup cache and appear in the Library.
 The session failure remains visible; previously known recovery data is retained.
 Disposal suppresses stale rendering. The merge was a normal forward update;
 no native stack, force-push or protection bypass was needed.
+
+The follow-up explicitly aborts one native readonly `session` transaction in a
+private fixture database. Both source and packaged runs show the deleted example
+disappearing from the Library, School and catalogue, the session read error
+remaining visible, and the saved interrupted flight/notebook/bookmark unchanged.
+This is actual browser storage failure injection, not an additional unit suite.
