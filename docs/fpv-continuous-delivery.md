@@ -2290,3 +2290,15 @@ refine the existing stand/board solids through shared Themes factories, preserve
 collision and the beginner42 landing platform's plain material region. Then
 continue yard/Garage art, distinct maps and final H/R7 qualification. Player
 feedback remains nonblocking and pending; all existing limits/gates remain.
+
+
+Pack-recovery frozen candidate `e64e53be5a144919d32c71f3cbce91666f8c4345`
+passes all three optional admissions, committed-input/ZIP validation and two
+identical builds. World Studio is99 source files/14,465,716bytes. Packaged actual
+HTTP/WebGL qualification also passes90/90. The largest edition independently
+passes frozen admission and reproducibility at895files/67,094,087bytes, leaving
+only14,777bytes beneath64MiB; plan additional demo data delivery separately and
+retain this guard. Authoring dependencies were temporarily moved to ignored
+.cache for source eligibility and restored by an EXIT trap. Runtime hashes match
+the source-qualified candidate. Publish as an independent focused PR on main;
+no native stack is needed for this item. Public deployment remains unverified.

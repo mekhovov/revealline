@@ -45,7 +45,17 @@ identical hash across the removal and restoration flow. See the
 The fixture's first runs exposed two fixture-only issues: objects crossing frame
 realms and ambiguous playlist navigation. The final run uses document-native
 IndexedDB and visible, named controls; production validation was not weakened.
-Packaged qualification is recorded separately after freezing the candidate.
+Frozen candidate `e64e53be5` passes all three optional package admissions,
+committed-input/ZIP checks and two byte-identical builds. World Studio uses
+99 source files / 14,465,716 bytes under its unchanged 104-file / 16 MiB limits.
+The actual packaged host also passes **90/90** browser checks. The largest
+edition candidate passes admission and reproducibility at 895 files /
+67,094,087 bytes, with 14,777 bytes remaining under the existing 64 MiB guard.
+See [package admission](evidence/fpv-pack-removal-package.json),
+[packaged browser](evidence/fpv-pack-removal-packaged-browser.json), and
+[largest-edition admission](evidence/fpv-pack-removal-largest-edition.json).
+These receipts bind the frozen candidate; later documentation does not qualify
+new runtime bytes by inference.
 No additional unit suite is introduced; coverage remains in H/R7. Physical
 devices, user feedback and long-term browser retention are separate pending
 acceptance items. Existing package and storage limits remain unchanged.
