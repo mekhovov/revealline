@@ -128,7 +128,7 @@ packaged modules. A source receipt does not qualify a package or public launch.
 
 Local `npm run validate`, `npm run lint`, changed-file formatting and the manual
 functional command passed. The retained CPU receipt is
-[`fpv-garage-surfaces-cpu.json`](evidence/fpv-garage-surfaces-cpu.json): 148 checks,
+[`fpv-garage-surfaces-main-cpu.json`](evidence/fpv-garage-surfaces-main-cpu.json): 148 checks,
 17 exact demonstration results, 30 support probes and three elevated
 landing/departure witnesses, including four matched crest vertices with equal
 paint UV phase. The bounded browser fixture prepares successfully;
@@ -138,8 +138,12 @@ Candidate `79c68c0c8` passed all three optional package admissions with two
 reproducible builds, committed input verification and ZIP member checks. Its
 packaged browser fixture passed 528 checks and 249 image pairs; 32 frozen candidate
 modules matched the player and admitted Worlds ZIP exactly. These receipts remain
-bound to that pre-Woodland-integration candidate. Final integrated package admission
-and observer review are reported separately by the integration owner. Physical-device
+bound to that pre-Woodland-integration candidate. Final runtime candidate
+`866b0f9d93416603d95b2f8329d7a6484b861a43` (tree
+`43a66b2f6234c4cdeb84878d4ffef23657b84f65`) also passes all three committed
+package admissions with two reproducible builds. Its player contains 94 files
+and 15,409,007 bytes. Final targeted observer review and actual player launch
+passed as recorded below. Physical-device
 performance, novice-player sessions, broader art acceptance and deferred
 regression/unit coverage remain open; no public launch is inferred from the
 package fixture.
@@ -177,3 +181,50 @@ three presets, authored/Pixel/shared Themes) and all 100 generated non-Woodland
 GLBs exactly. The refreshed Garage qualifier passes 148 checks and all 30
 existing scoped visual/acceptance checks pass. These semantic comparisons support
 a bounded final observer review; they are not a new full browser-matrix receipt.
+
+## Retained evidence
+
+- [Packaged full-matrix browser summary](evidence/fpv-garage-surfaces-package-browser.json):
+  all 528 checks and 249 image-pair count for `79c68c0c8`, with original source
+  inventories and complete-capture SHA.
+- [Historical source observations](evidence/fpv-garage-surfaces-source-observations.json):
+  both original runs and the refreshed one-pixel control failure, with every
+  original check retained. Failed controls remain non-passes.
+- [Renderer determinism diagnostics](evidence/fpv-garage-surfaces-render-diagnostics.json):
+  70 focused draws, semantic submission-order comparison and the full
+  baseline-duplicate history. These diagnostics do not qualify the Garage feature.
+- [Current-main integration](evidence/fpv-garage-surfaces-main-integration.json) and
+  [CPU qualification](evidence/fpv-garage-surfaces-main-cpu.json): final runtime
+  hashes, 162 unchanged Garage cases, 100 unchanged non-Woodland GLBs and all
+  17 exact replays. The earlier `fpv-garage-surfaces-cpu.json` remains historical.
+- [Final committed admission](evidence/fpv-garage-surfaces-admission.json) and
+  [package byte audit](evidence/fpv-garage-surfaces-package-byte-audit.json):
+  128 committed inputs and 32 fixture modules matched to the final player and
+  admitted Worlds ZIP.
+- [Ramp comparison](evidence/fpv-garage-ramp-comparison.png),
+  [column comparison](evidence/fpv-garage-column-comparison.png) and
+  [player before final main integration](evidence/fpv-garage-player-79c68.png).
+
+The browser summaries retain every original check and source digest inventory;
+raw per-object/per-frame payloads are omitted as documented, never cut mid-JSON.
+Full local capture digests bind each summary to its source. The final checkpoint
+does not relabel an older browser run as a measurement of a later commit.
+
+## Final targeted observer and publication checkpoint
+
+The integration owner reviewed final runtime `866b0f9d9` in the packaged player.
+Upper deck survey launched, armed and paused after approximately 0.2 seconds; the
+visible status was “Paused. Arm deliberately to continue.” Targeted observer views
+covered Garage 02 ramp crest at 5.5 m, column and ramp toe at 1.5 m, Pixel and
+Industrial Workshop style retention, and the unchanged separate Beginner 41
+school platform at 5.5 m. See the [targeted receipt](evidence/fpv-garage-surfaces-final-observer.json),
+[final player](evidence/fpv-garage-player-final.png),
+[column](evidence/fpv-garage-final-column.png),
+[ramp](evidence/fpv-garage-final-ramp.png) and
+[school platform](evidence/fpv-garage-final-platform.png) screenshots.
+
+This is a targeted final review, not a newly executed 528-check matrix. The full
+packaged pass belongs to `79c68c0c8`; the current CPU, integration and package
+receipts bind the final runtime independently. The documentation checkpoint does
+not change runtime bytes. Protected PR checks, merge and public deployment remain
+separate publication gates.
