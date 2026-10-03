@@ -5,6 +5,7 @@ import {
   buildWorldVisuals,
   buildDroneVisual,
   buildContainerVisualGeometry,
+  buildStadiumStructureGeometry,
 } from './world-visuals.mjs';
 import {
   normalizeSimPresentation,
@@ -185,6 +186,7 @@ export function createFlightRenderer({
     themeProfile = null,
     effectPalette = resolveSimEffects(null),
     goalMaterialKit = null,
+    stadiumMaterial = null,
     gateCueFactory = null,
     pendingPresentation = normalizeSimPresentation(initialPresentation),
     activePresentation = pendingPresentation,
@@ -206,6 +208,7 @@ export function createFlightRenderer({
     huntTargets = new Map(),
     seenActors = new Set(),
     pulseRows = new Map(),
+    stadiumDetailMaterials = new Map(),
     qualityDetails = [];
   const framePosition = new THREE.Vector3(),
     frameRotation = new THREE.Quaternion(),
@@ -805,6 +808,58 @@ export function createFlightRenderer({
       );
     }
   }
+  function stadiumStructureUV(shape, kind) {
+    const positions = shape.getAttribute('position'),
+      normals = shape.getAttribute('normal'),
+      uv = shape.getAttribute('uv');
+    for (let i = 0; i < positions.count; i++) {
+      const side = Math.abs(normals.getX(i)) > 0.5,
+        cap = Math.abs(normals.getY(i)) > 0.5;
+      uv.setXY(
+        i,
+        (side ? positions.getZ(i) : positions.getX(i)) / 6,
+        (cap ? positions.getZ(i) : positions.getY(i)) / (kind === 'stadium-concrete' ? 2 : 3),
+      );
+    }
+  }
+  function stadiumStructureDetail(parent, size) {
+    for (const { role, layer, geometry: shape } of buildStadiumStructureGeometry(
+      parent.name,
+      size,
+    )) {
+      const key = `${role}:${layer}`;
+      if (!stadiumDetailMaterials.has(key)) {
+        const source = stadiumMaterial?.(role),
+          palette = themeProfile.palette,
+          color =
+            role === 'rubber'
+              ? new THREE.Color(palette.wall).multiplyScalar(0.18)
+              : role === 'enamel'
+                ? new THREE.Color(palette.accent).lerp(new THREE.Color(0xe0e1d8), 0.55)
+                : new THREE.Color(palette.wall).lerp(new THREE.Color(palette.warm), 0.12),
+          paint = source
+            ? source.clone()
+            : material(color, { roughness: role === 'rubber' ? 0.96 : 0.7 });
+        materials.add(paint);
+        paint.name = `stadium-${role}`;
+        paint.polygonOffset = true;
+        paint.polygonOffsetFactor = -layer;
+        paint.polygonOffsetUnits = -layer;
+        paint.userData = { ...paint.userData, materialRole: role };
+        stadiumDetailMaterials.set(key, paint);
+      }
+      const detail = mesh(shape, stadiumDetailMaterials.get(key), parent);
+      detail.name = 'stadium-structure-detail';
+      detail.userData = {
+        role: 'stadium-structure-detail',
+        obstacleId: parent.name,
+        materialRole: role,
+        cosmeticDetail: true,
+      };
+      detail.castShadow = false;
+      detail.receiveShadow = true;
+    }
+  }
   function addFlushPanels(parent, panels, color, minimumQuality = 'balanced', bayLabel = null) {
     if (!panels.length) return;
     const positions = [],
@@ -888,7 +943,7 @@ export function createFlightRenderer({
           ? 0.82
           : kind === 'solar'
             ? 0.3
-            : kind === 'metal'
+            : kind === 'metal' || kind === 'stadium-steel'
               ? 0.66
               : kind === 'storage-steel'
                 ? 0.74
@@ -897,7 +952,7 @@ export function createFlightRenderer({
           ? 0.12
           : kind === 'solar'
             ? 0.35
-            : kind === 'metal'
+            : kind === 'metal' || kind === 'stadium-steel'
               ? 0.28
               : kind === 'storage-steel'
                 ? 0.18
@@ -931,6 +986,8 @@ export function createFlightRenderer({
       containerHardware = container?.hardware;
       if (kind === 'storage-steel')
         storageModuleUV(shape, size, !/^rack-[01]-[0-2]$/.test(obstacle.id));
+      else if (kind === 'stadium-concrete' || kind === 'stadium-steel')
+        stadiumStructureUV(shape, kind);
       else if (kind === 'bark') woodlandTrunkUV(shape, size);
       else if (obstacleSurface) worldScaleUV(shape);
       value = mesh(shape, paint);
@@ -952,7 +1009,10 @@ export function createFlightRenderer({
     value.userData.surfaceKind = kind;
     if (kind === 'storage-steel') value.userData.materialRole = 'steel';
     if (kind === 'bark') value.userData.materialRole = 'timber';
+    if (kind === 'stadium-concrete') value.userData.materialRole = 'concrete';
     value.castShadow = value.receiveShadow = true;
+    if (size && (kind === 'stadium-concrete' || kind === 'stadium-steel'))
+      stadiumStructureDetail(value, size);
     if (containerHardware) {
       worldScaleUV(containerHardware);
       // Brushed fittings must read against painted doors without emissive
@@ -1061,6 +1121,7 @@ export function createFlightRenderer({
     environmentLight?.dispose();
     environmentLight = null;
     for (const group of [world, goals, actors, projectiles]) releaseGroup(group);
+    stadiumDetailMaterials.clear();
     goalRows.length = 0;
     actorRows.clear();
     actorDefinitions.clear();
@@ -1095,6 +1156,7 @@ export function createFlightRenderer({
     obstacleMaps = surroundings.obstacleMaps;
     obstacleSurface = surroundings.obstacleSurface ?? null;
     obstacleFittingsMaterial = surroundings.obstacleFittingsMaterial ?? null;
+    stadiumMaterial = surroundings.stadiumDetailMaterial ?? null;
     environmentSurfaceKind = surroundings.obstacleSurfaceKind ?? null;
     scene.background = new THREE.Color(surroundings.indoor ? theme.wall : theme.sky);
     // Visibility is a course property, identical across graphics presets.
@@ -2574,10 +2636,12 @@ export function createFlightRenderer({
       qualityDetails.length = 0;
       lastActorState = null;
       pulseRows.clear();
+      stadiumDetailMaterials.clear();
       droneVisual = null;
       obstacleMaps = null;
       obstacleSurface = null;
       obstacleFittingsMaterial = null;
+      stadiumMaterial = null;
       sceneryFallback = null;
       themeProfile = null;
       course = null;
