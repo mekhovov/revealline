@@ -111,3 +111,20 @@ test('Next, hide media and Pause cancel pending preparation without late autopla
     f.reward.reset();
   }
 });
+
+test('scene departure retains only a decoded, displayed reward video frame', async () => {
+  const f = setup(),
+    original = f.reward.departureFrame();
+  f.reward.update(f.config);
+  await flush();
+  const video = f.options.document.createElement('video');
+  video.readyState = 1;
+  f.options.container.append(video);
+  assert.equal(f.reward.departureFrame(), original);
+  video.readyState = 2;
+  assert.equal(f.reward.departureFrame(), video);
+  f.reward.pause();
+  assert.equal(f.reward.departureFrame(), video);
+  f.reward.reset();
+  assert.equal(f.reward.departureFrame(), original);
+});
