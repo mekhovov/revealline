@@ -318,20 +318,6 @@ export function builtinWorldScene(course) {
     // Distinct industrial settings, not the same mirrored row on every side.
     const yard = environment === 'container-yard';
     const garage = environment === 'garage';
-    // Each yard edge has a recognizable skyline: tower depot, storage stacks,
-    // tank-side sheds and truck services. Existing models/counts stay bounded.
-    const yardFrontages = [
-      { along: [0.12, 0.31, 0.52], heights: [12, 17, 11], gap: 19 },
-      { along: [0.2, 0.51, 0.81], heights: [10, 12, 16], gap: 23 },
-      { along: [0.32, 0.59, 0.83], heights: [10, 11, 13], gap: 16 },
-      { along: [0.13, 0.36, 0.6], heights: [16, 11, 10], gap: 20 },
-    ];
-    const yardStacks = [
-      [0.12, 0.24, 0.5, 0.62],
-      [0.22, 0.34, 0.46, 0.58],
-      [0.27, 0.39, 0.61, 0.73],
-      [0.12, 0.24, 0.4, 0.52],
-    ];
     for (let side = 0; side < 4; side++) {
       if (yard || side % 2 === 0) {
         const buildings = garage
@@ -341,15 +327,15 @@ export function builtinWorldScene(course) {
           industrial(
             name,
             side,
-            yard ? yardFrontages[side].along[i] : (i + 0.5) / buildings.length,
-            yard ? yardFrontages[side].heights[i] : (garage ? 14 : 10) + i * 2 + side,
-            yard ? yardFrontages[side].gap : garage ? 24 : 14,
+            (i + 0.5) / buildings.length,
+            (garage ? 14 : 10) + i * 2 + side,
+            garage ? 24 : 14,
           ),
         );
       }
       if (!garage && (yard || side === 1)) {
         for (let i = 0; i < (yard ? 4 : 2); i++) {
-          const along = yard ? yardStacks[side][i] : 0.16 + i * 0.17;
+          const along = 0.16 + i * 0.17;
           const name = (side + i) % 2 ? 'shipping-container-a' : 'shipping-container-b';
           industrial(name, side, along, 2.8, 1.5 + (i % 2) * 0.4);
           if (yard && (i + side) % 3 !== 0)

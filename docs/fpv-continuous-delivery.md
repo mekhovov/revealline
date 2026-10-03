@@ -2620,17 +2620,6 @@ Published as [PR #990](https://github.com/mekhovov/revealline/pull/990), head
 16c5809a0de11735d4d4e6b45e7b1f7cba077856 before this log-only update. Required
 CI is pending; no live deployment claim. Capacity #989 now passes focused and
 default-capacity checks, but its preview and edition candidate jobs failed;
-inspect those failures next without weakening admission guards.
-### D1 Container Yard frontages — 3 October 2026
-
-Independent branch `codex/fpv-yard-landmark-composition`, baseline b43b0ce12,
-changes only primary imported Yard composition. Three arena sizes pass actual
-GLTFLoader vertex clearance, with unchanged sampled draw/triangle counts and
-five other GLBs byte-identical. Package passes at 94 files/15,384,159 bytes.
-29/30 existing checks pass; shared-theme enamel motif uniqueness remains open.
-See `docs/fpv-yard-landmarks.md`. Next: isolate that existing qualification failure,
-then continue primary material depth and remaining world art. D1 remains open.
-
 
 ### D0 approved capacity increment — 3 October 2026
 
@@ -2858,23 +2847,3 @@ qualification hold is resolved; preserve the earlier 29/30 result as history.
 Return #993 to ready and use protected merge-commit auto-merge only after normal
 head-specific checks. No native stack, admission guard, release tag or public
 deployment is changed by this refresh. See the new maince6 qualification receipt.
-
-
-### Yard draft refreshed onto integrated Woodland main — 3 October 2026
-
-#998 runtime candidate ec760db263041be23f60f4450381dc4ec88ec402 integrates main
-a1cb86c85, including #1006, without replacing concurrent feature work. The existing
-30 checks pass; the scenery template/runtime match. All three frozen optional
-admissions pass with committed input/ZIP identity and two reproducible builds.
-Frozen current-main browser review and normal full CI remain pending. The sparse
-local checkout cannot run complete global validation because unrelated content
-assets are omitted. See docs/fpv-yard-landmarks.md and its new bounded receipts.
-Keep #998 draft until the browser review is complete; no human/device or public
-acceptance is inferred.
-
-The current-main Yard browser review then passed all three arena cases with
-58 placements, 98,880 clear vertices and unchanged sampled draw/triangle counts
-per scene. Five other environment GLBs remain byte-identical; the comparison
-views were inspected. This completes the local draft qualification. Publish the
-reviewed #998 head through normal exact-head protected CI; public deployment and
-physical-device/artist acceptance remain separate.
