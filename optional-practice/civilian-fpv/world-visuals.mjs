@@ -197,8 +197,30 @@ function surfacePixels(kind, color, seed, size, pixel) {
     pale = woodlandSurface ? new THREE.Color(0x92917b).lerp(base, 0.3) : null,
     leaf = kind === 'forest-floor' ? new THREE.Color(0x82735a).lerp(base, 0.3) : null;
   const quarryStone = kind === 'quarry-stone',
-    paleStone = quarryStone ? new THREE.Color(0xd0b48b) : null,
-    darkStone = quarryStone ? new THREE.Color(0x927253) : null;
+    quarryBeds = quarryStone
+      ? Array.from({ length: size }, (_, x) =>
+          [0.1, 0.23, 0.46, 0.58, 0.82].map((level, index) => {
+            const u = x / size,
+              phase = (index + 0.5) / 6;
+            return [
+              level + (broad(u, phase) - 0.5) * 0.095 + (fine(u, phase) - 0.5) * 0.018,
+              Math.max(0, Math.min(1, (broad(u, (phase + 0.37) % 1) - 0.38) * 3)),
+            ];
+          }),
+        )
+      : null,
+    quarryTones = quarryStone ? [-0.008, 0.018, -0.015, 0.025, -0.008, -0.008] : null,
+    quarryFractures = quarryStone
+      ? [
+          [0.12, 0.06, 0.22, 0.24],
+          [0.22, 0.24, 0.15, 0.46],
+          [0.54, 0.39, 0.62, 0.59],
+          [0.79, 0.72, 0.7, 0.97],
+          [0.76, 0.85, 0.94, 0.88],
+          [0.43, 0.13, 0.56, 0.29],
+          [0.62, 0.59, 0.82, 0.63],
+        ]
+      : null;
   const meadow = kind === 'meadow-grass',
     soil = meadow ? new THREE.Color(0x75634b).lerp(base, 0.18) : null,
     dryGrass = meadow ? new THREE.Color(0xa49b68).lerp(base, 0.48) : null,
@@ -376,24 +398,33 @@ function surfacePixels(kind, color, seed, size, pixel) {
         roughness = 0.92 + grain * 0.07;
       }
       if (quarryStone) {
-        // Six-metre repeat: broad mineral beds carry from a distance. Thin
-        // bedding and short fractures read only near the existing closed face.
-        const phase = v * tau * 2 + Math.sin(u * tau) * 0.12,
-          layer = 0.5 + Math.sin(phase) * 0.5,
-          mix = layer * layer * (3 - 2 * layer),
-          bed = Math.max(0, 1 - Math.abs(Math.sin(phase)) * 24),
-          segment = (v * 3) % 1,
-          fracture =
-            segment > 0.3 && segment < 0.74
-              ? Math.max(0, 1 - Math.abs(Math.sin(u * tau * 3 + Math.sin(v * tau) * 0.3)) * 48)
-              : 0;
-        red = darkStone.r + (paleStone.r - darkStone.r) * mix;
-        green = darkStone.g + (paleStone.g - darkStone.g) * mix;
-        blue = darkStone.b + (paleStone.b - darkStone.b) * mix;
+        // Unequal mineral beds wander and fade along the six-metre tile.
+        // Keep the original rock grain dominant; bedding is not a colour ramp.
+        let bed = 0,
+          layer = 0,
+          fracture = 0;
+        for (const [level, strength] of quarryBeds[x]) {
+          if (v > level) layer++;
+          bed = Math.max(bed, Math.max(0, 1 - Math.abs(v - level) / 0.005) * strength);
+        }
+        for (const [ax, ay, bx, by] of quarryFractures) {
+          const dx = bx - ax,
+            dy = by - ay,
+            px = u + mottling * 0.006 - ax,
+            py = v + patch * 0.05 - ay,
+            along = Math.max(0, Math.min(1, (px * dx + py * dy) / (dx * dx + dy * dy)));
+          fracture = Math.max(
+            fracture,
+            Math.max(0, 1 - Math.hypot(px - dx * along, py - dy * along) / 0.0045),
+          );
+        }
         shade =
-          0.97 + patch * 0.55 + mottling * 0.045 + grain * 0.025 - bed * 0.12 - fracture * 0.13;
-        relief = mix * 0.018 + mottling * 0.012 + grain * 0.003 - bed * 0.025 - fracture * 0.03;
-        roughness = 0.93 + grain * 0.045 + bed * 0.015;
+          (0.91 + grain * 0.16) * (0.95 + patch * 1.5 + mottling * 0.16) +
+          quarryTones[layer] -
+          bed * 0.13 -
+          fracture * 0.17;
+        relief = grain * 0.025 + mottling * 0.09 - bed * 0.045 - fracture * 0.04;
+        roughness = 0.92 + grain * 0.07;
       }
       if (kind === 'ballast') {
         shade *= 0.89 + patch + mottling * 0.24 + grain * 0.2;

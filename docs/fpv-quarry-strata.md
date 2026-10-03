@@ -1,7 +1,7 @@
 # Amber quarry: authored rock strata
 
 This bounded D2 candidate replaces the generic stone finish on the six existing
-Quarry rock masses with broad amber mineral beds, thin bedding lines and sparse
+Quarry rock masses with fine retained rock grain, irregular faint mineral beds and sparse
 short fractures. The normal and roughness response remains restrained. The
 renderer reuses its existing world-aligned six-metre projection so the strata
 share height across different rock masses. No position, vertex normal, index, box size,
@@ -32,13 +32,13 @@ shared-theme stone metadata or appearance.
 The pass replaces the already-owned albedo, normal and packed-property maps.
 It adds zero textures, materials, meshes, triangles, instance batches or shadow
 passes. Existing quality sizes and sampling limits remain unchanged. Runtime
-source growth is 3070 bytes across world-visuals and renderer, below the agreed
+source growth is 3907 bytes across world-visuals and renderer, below the agreed
 4 KiB increment budget. Quarry has no built-in GLB: the actual procedural world
 and its authored obstacle meshes are the target, not an imported substitute.
 
 ## Functional checkpoint
 
-The [manual CPU receipt](evidence/fpv-quarry-strata-cpu.json) passes 444 checks
+The [v4 manual CPU receipt](evidence/fpv-quarry-strata-cpu-v4.json) passes 444 checks
 across 83 scene cases against main
 `0aeb0c2b4342715ba9a19b976114d7d905fed7bd`. It executes source-extracted
 `renderObstacle` and the real helpers to inspect actual box UVs, edge meshes and
@@ -55,23 +55,41 @@ are ownership counts, not hardware frame-time measurements.
 
 Frozen candidate module SHA-256 values:
 
-- world-visuals: `9fcc926c537457702ec70f5839ec760904ba1e9bb4f695e4b8daa1a3c01fe742`
+- world-visuals: `ab8306298c6e2517a21106952b99098b9181b5cfbaf2d7359d92f72958a360c8`
 - renderer: `28baf7f257c7beb8a8d166aae24d25335e7bf778b53a63d63aace281f50b5b43`
 
 The frozen actual-renderer preview is
-`dist/fpv-quarry-strata-verification-source-v3/index.html`: West terrace and
-Central spire views with FPV, chase and overview controls. The bounded matrix
+`dist/fpv-quarry-strata-verification-source-v4/index.html`: West terrace at
+11 m, a preview-only close terrace pose at 3 m, and Central spire at about 26 m,
+with FPV, chase and overview controls. The bounded matrix
 covers the authored appearance plus exact Pixel/shared-theme images, a real
 imported Courtyard control and a procedural Coast control. Source modules and
 harness hashes are pinned. Human visual acceptance, actual-browser results,
 fresh retained-proof replay and package admission are pending. No readiness,
 finished-world, physical-device or public-deployment claim is made here.
 
+## Rejected visual revision retained
+
+V3 passed the [mechanical CPU checks](evidence/fpv-quarry-strata-cpu.json), but
+human review rejected its smooth, regular beige/brown banding and lost rock
+grain. The [rejected West terrace capture](evidence/fpv-quarry-strata-v3-rejected.png)
+and frozen `dist/fpv-quarry-strata-verification-source-v3` remain preserved.
+Its world-visuals SHA-256 was
+`9fcc926c537457702ec70f5839ec760904ba1e9bb4f695e4b8daa1a3c01fe742`;
+renderer bytes were identical to v4. No package or publication was attempted.
+
+V4 restores the original stone grain and mottling amplitudes, keeps the base
+stone colour, and adds faint unequal beds with noisy, fading seams and short
+branched fractures. Mechanical qualification still passes 444 checks in 83
+scene cases. This does not establish visual acceptance: close, distant and
+upper-surface inspection remain pending before package work.
+
 ## Published work preserved
 
-Lighthouse #1015 remains ready at
-`3de9318f7e4e99c53832e3b480febfb64bee469d`, on its separate branch and recovery
-ref, with accepted source/package/player evidence. Quarry is independent and
+Lighthouse #1015 merged normally at
+`287eec95c81687fb8a6d176f750f7c65a60e1fe3`, with its published branch and recovery
+ref preserved alongside accepted source/package/player evidence. Public deployment
+of that merge was still pending at this checkpoint. Quarry is independent and
 does not alter that PR or its frozen outputs.
 
 Root separately verified Courtyard #1012 and Warehouse #1014 at public marker
