@@ -5747,7 +5747,7 @@
   "workshop.followGame": "Follow theme",
   "workshop.highContrast": "High contrast",
   "workshop.opaqueHud": "Opaque HUD background",
-  "workshop.help": "Choose a card or change Theme to apply immediately. Mission visuals change on a new attempt; SIM world changes wait for Retry or a new flight. Story pictures stay as authored.",
+  "workshop.help": "Choose a theme card to apply it immediately. Mission visuals change on a new attempt; SIM world changes wait for Retry or a new flight. Story pictures stay as authored.",
   "workshop.appearance": "Appearance",
   "workshop.ornaments": "Decorative detail",
   "workshop.followContext": "Follow campaign / community",

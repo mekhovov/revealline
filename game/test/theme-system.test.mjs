@@ -21,7 +21,12 @@ import { installThemeHost } from '../presentation/theme-host.mjs';
 import { createThemeCandidate } from '../presentation/theme-preview.mjs';
 import { createDefaultThemeBundle } from '../presentation/catalog.mjs';
 import { Document, Events } from './helpers/couch-dom.mjs';
-import { createMaterialSamples, MATERIAL_SAMPLE_CASES } from './fixtures/appearance-materials.mjs';
+import {
+  createMaterialSamples,
+  createMaterialCloseUp,
+  evaluateMaterialSemantics,
+  MATERIAL_SAMPLE_CASES,
+} from './fixtures/appearance-materials.mjs';
 
 function memory() {
   const values = new Map(),
@@ -83,6 +88,137 @@ test('rendered-material fixture uses matched native control pairs without replac
   for (const id of ['sample-muted-panel', 'sample-muted-panel-twin'])
     assert.equal(container.querySelector(`#${id}`).querySelector('span').dataset.uiTone, 'muted');
   assert.equal(container.querySelector('#sample-disabled').disabled, true);
+});
+test('material semantic checks reject active disabled paint and a pressed danger recolored as selection', () => {
+  const tokens = resolvePresentation({ familyId: 'industrial-workshop' }).tokens,
+    samples = [false, true].flatMap((twin) => [
+      {
+        id: `sample-selected-disabled${twin ? '-twin' : ''}`,
+        background: tokens.panel,
+        foreground: tokens.muted,
+        shadow: 'none',
+        borderImage: 'none',
+        finish: 'none',
+      },
+      {
+        id: `sample-danger-pressed${twin ? '-twin' : ''}`,
+        background: tokens.hazard,
+        foreground: tokens.onHazard,
+        borderImage: 'none',
+      },
+    ]);
+  const report = evaluateMaterialSemantics(samples, tokens);
+  assert.equal(report.status, 'passed');
+  assert.equal(report.checks.length, 16);
+  for (const [sampleId, property, value] of [
+    ['sample-selected-disabled', 'background', tokens.selection],
+    ['sample-selected-disabled-twin', 'foreground', tokens.onSelection],
+    ['sample-selected-disabled', 'shadow', 'rgb(0, 0, 0) 0px 4px 0px'],
+    ['sample-selected-disabled', 'finish', 'linear-gradient(white, black)'],
+    ['sample-selected-disabled', 'borderImage', 'url("amber-frame.svg")'],
+    ['sample-danger-pressed', 'background', tokens.selection],
+    ['sample-danger-pressed-twin', 'borderImage', 'url("amber-frame.svg")'],
+  ]) {
+    const changed = samples.map((sample) =>
+        sample.id === sampleId ? { ...sample, [property]: value } : sample,
+      ),
+      result = evaluateMaterialSemantics(changed, tokens);
+    assert.equal(result.status, 'failed', `${sampleId}.${property}`);
+    assert.ok(
+      result.checks.some((check) => check.id === `${sampleId}.${property}` && !check.passed),
+    );
+  }
+  assert.equal(
+    evaluateMaterialSemantics(samples.slice(1), tokens).status,
+    'failed',
+    'missing samples fail closed',
+  );
+  const rgb = (color) =>
+      color.replace(
+        /^#(..)(..)(..)$/,
+        (_, red, green, blue) =>
+          `rgb(${parseInt(red, 16)}, ${parseInt(green, 16)}, ${parseInt(blue, 16)})`,
+      ),
+    computed = samples.map((sample) => ({
+      ...sample,
+      background: rgb(sample.background),
+      foreground: rgb(sample.foreground),
+    }));
+  assert.equal(
+    evaluateMaterialSemantics(computed, tokens).status,
+    'passed',
+    'browser RGB serialization matches hex tokens',
+  );
+  for (const options of [{ forcedColors: true }, { styled: false }]) {
+    const skipped = evaluateMaterialSemantics(samples, tokens, options);
+    assert.equal(skipped.status, 'skipped');
+    assert.ok(skipped.reason);
+    assert.deepEqual(skipped.checks, []);
+  }
+});
+test('material close-up composes native player, Studio and tall-card surfaces without replacing paint', () => {
+  const document = new Document(),
+    container = document.createElement('section'),
+    { studio } = createMaterialCloseUp(document, container);
+  assert.ok(studio.className.includes('material-close-up-studio'));
+  assert.equal(studio.dataset.uiSurface, 'panel');
+  const controls = container.querySelectorAll('[data-close-up-control]');
+  assert.equal(controls.length, 8);
+  for (const control of controls) {
+    assert.ok(['BUTTON', 'INPUT'].includes(control.tagName));
+    for (const property of [
+      'background',
+      'backgroundImage',
+      'color',
+      'borderImageSource',
+      'boxShadow',
+    ])
+      assert.ok(
+        !control.style[property],
+        `${control.dataset.closeUpControl}: runtime owns ${property}`,
+      );
+    assert.equal(
+      control.dataset.materialSample,
+      undefined,
+      'close-ups do not alter the 19 contrast pairs',
+    );
+  }
+  assert.equal(
+    container.querySelector('[data-close-up-control="selected-card"]').getAttribute('aria-pressed'),
+    'true',
+  );
+  assert.equal(container.querySelector('[data-close-up-control="studio-disabled"]').disabled, true);
+});
+test('danger pressed and disabled recipes retain their semantic pairs across themes and contrast preferences', () => {
+  for (const family of BUILTIN_THEME_FAMILIES)
+    for (const highContrast of [false, true]) {
+      const resolved = resolvePresentation({
+        familyId: family.id,
+        accessibility: { highContrast },
+      });
+      assert.equal(
+        resolved.components.danger.states.pressed.background,
+        resolved.tokens.hazard,
+        `${family.id}: hazard fill`,
+      );
+      assert.equal(
+        resolved.components.danger.states.pressed.foreground,
+        resolved.tokens.onHazard,
+        `${family.id}: hazard foreground`,
+      );
+      for (const role of ['button', 'primary', 'danger']) {
+        assert.equal(
+          resolved.components[role].states.disabled.background,
+          resolved.tokens.panel,
+          `${family.id} ${role}: disabled fill`,
+        );
+        assert.equal(
+          resolved.components[role].states.disabled.foreground,
+          resolved.tokens.muted,
+          `${family.id} ${role}: disabled foreground`,
+        );
+      }
+    }
 });
 test('all production and future specimen interfaces validate and meet text contrast', () => {
   for (const theme of BUILTIN_INTERFACE_THEMES) {
@@ -292,7 +428,13 @@ test('decorative face recipes require their own enabled texture and contrast sco
 
 test('gallery and nested backdrops consume their nearest scope material while retaining palette and focus cues', () => {
   const rules = surfaceRules();
-  const card = rules.find((rule) => rule.selector === '.theme-gallery .theme-preview-card');
+  const gallery = rules.find((rule) => rule.selector === '.theme-gallery'),
+    card = rules.find((rule) => rule.selector === '.theme-gallery .theme-preview-card');
+  assert.equal(
+    gallery.properties['grid-template-columns'],
+    'repeat(auto-fit, minmax(min(100%, 240px), 1fr))',
+  );
+  assert.equal(gallery.properties.gap, '8px');
   assert.equal(card.properties['border-image'], 'var(--ui-raised-frame, none)');
   assert.equal(card.properties['box-shadow'], 'var(--ui-gallery-depth, none)');
   assert.ok(card.properties.background.startsWith('var(--ui-control-finish, none),'));
@@ -324,6 +466,8 @@ test('gallery and nested backdrops consume their nearest scope material while re
   const swatches = rules.find((rule) => rule.selector === '.theme-preview-swatches');
   assert.equal(swatches.properties.display, 'grid');
   assert.equal(swatches.properties.gap, '0');
+  const swatch = rules.find((rule) => rule.selector === '.theme-preview-swatches span');
+  assert.equal(swatch.properties.height, '28px');
   const accent = rules.find(
     (rule) =>
       rule.selector === "[data-theme-styled='true'] .menu-scene[data-backdrop='interface']::before",
