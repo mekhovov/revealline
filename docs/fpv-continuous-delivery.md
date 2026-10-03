@@ -2572,3 +2572,11 @@ activation and post-activation rollback also passed at72MiB. See core/rollback
 receipts. During qualification #986 advanced externally to
 cba2532f73ac078b8d013bd5341c1acd836cdeac via a main merge; preserve that work.
 #987 remains e808af302f1bf1480471646240d54371feb9b607.
+
+Refreshed onto main4074b12f7, retaining merged Neon sharing and workflow fixes.
+Final runtime candidate8162e7d4d62999a630b4daf43721f613b3b3ef8f passes committed
+source-bound core preparation:67,073,221bytes/1,328files,8,424,251bytes headroom.
+All18editions and132focused checks pass again. Registry preserves6,297current
+identities and saves308,129bytes. Browser72MiB activation/rollback evidence uses
+the identical production worker; the refreshed registry also passed browser
+equality. Only evidence/docs change after this candidate.
