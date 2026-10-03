@@ -397,6 +397,23 @@ test('World terminal preview offers Retry and prepares a fresh disarmed attempt'
   h.$('worlds-shell-action-menu').click();
   assert.equal(h.$('worlds-shell-action-primary').textContent, 'Retry');
   assert.equal(h.$('worlds-shell-action-pause').disabled, true);
+  const completedState = h.app.snapshot().state,
+    nativeOutcome = h.$('result-panel');
+  h.$('worlds-shell-action-home-results').click();
+  assert.equal(h.$('worlds-shell-home-dialog').open, false);
+  assert.equal(h.$('worlds-shell-results-dialog').open, false);
+  assert.equal(h.$('flight-dialog').open, true);
+  assert.equal(h.$('result-panel'), nativeOutcome);
+  assert.equal(nativeOutcome.hidden, false);
+  assert.equal(h.doc.activeElement, nativeOutcome);
+  h.tick(3);
+  assert.deepEqual(h.app.snapshot().state, completedState);
+  h.$('worlds-shell-action-menu').click();
+  h.$('worlds-shell-home-dialog').emit('cancel', { bubbles: false });
+  assert.equal(h.$('worlds-shell-home-dialog').open, false);
+  assert.equal(h.doc.activeElement, nativeOutcome);
+  assert.deepEqual(h.app.snapshot().state, completedState);
+  h.$('worlds-shell-action-menu').click();
   h.$('worlds-shell-action-primary').click();
   for (let i = 0; i < 100; i++) {
     await new Promise((resolve) => setImmediate(resolve));

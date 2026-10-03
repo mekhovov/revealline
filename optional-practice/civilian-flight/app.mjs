@@ -441,6 +441,13 @@ export function mountCivilianPractice({ document: doc, window: win }) {
       },
       open(surface) {
         if (model.snapshot().status === 'active') pause();
+        if (surface === 'results') {
+          // The completed board and discovery remain the native result scene.
+          playShell.enterPlay();
+          $('discovery').setAttribute('tabindex', '-1');
+          $('discovery').focus();
+          return false;
+        }
         if (surface === 'briefing') render();
         if (surface === 'workshop' || surface === 'help') {
           $('help').click();

@@ -105,6 +105,25 @@ test('explicit Start closes all preparation surfaces before the host starts its 
   active.dispose();
 });
 
+test('Main menu retires stacked preparation dialogs even when the title remains open underneath', () => {
+  const surfaces = [];
+  const h = fixture({ onSurfaceChange: (surface) => surfaces.push(surface) });
+  h.shell.elements.buttons.missions.click();
+  h.shell.elements.buttons['missions-expert'].click();
+  assert.equal(h.shell.elements.home.open, true);
+  assert.equal(h.shell.topDialog(), h.shell.elements.dialogs.expert);
+  h.shell.openHome();
+  assert.equal(h.shell.elements.dialogs.missions.open, false);
+  assert.equal(h.shell.elements.dialogs.expert.open, false);
+  assert.equal(h.shell.topDialog(), h.shell.elements.home);
+  assert.equal(h.document.activeElement, h.shell.elements.buttons.primary);
+  assert.equal(surfaces.at(-1), 'home');
+  assert.deepEqual(h.calls, [], 'Returning to the title must not start, resume or retry.');
+  h.shell.elements.buttons.missions.click();
+  assert.equal(h.shell.topDialog(), h.shell.elements.dialogs.missions);
+  h.shell.dispose();
+});
+
 test('a host pause callback can reopen the shared pause surface without recursion or duplicate pause', () => {
   let shell,
     pauses = 0;
