@@ -15,7 +15,7 @@ import { FLIGHT_DEMONSTRATIONS } from '../optional-practice/civilian-fpv/demonst
 import { resolveSimThemeProfile } from '../optional-practice/civilian-fpv/world-themes.mjs';
 import { dataIdentity } from '../game/data-json.mjs';
 
-const baseline = '25700b699cc3c6e2b56d1917803dd7c4e6933b42',
+const baseline = 'cd2e6bc5dc0e8af7d1d30705632697cc97562dc1',
   root = new URL('../', import.meta.url),
   prefix = 'optional-practice/civilian-fpv/',
   visualPath = prefix + 'world-visuals.mjs',
