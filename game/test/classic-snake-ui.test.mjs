@@ -444,9 +444,16 @@ test('final-moves playback freezes behind a newer menu and only returns to Resul
   for (let now = 480; now <= 3120; now += 240) state.frame(now);
   assert.equal(state.shell.topDialog(), state.shell.elements.dialogs.settings);
   assert.equal(state.drawings.at(-1).run.tick, visibleTick);
-  state.shell.open('results');
+  state.shell.elements.buttons['settings-back'].click();
+  assert.equal(state.shell.topDialog(), state.shell.elements.home);
+  assert.equal(state.shell.elements.buttons['home-results'].hidden, false);
+  state.shell.elements.buttons['home-results'].click();
+  assert.equal(state.shell.topDialog(), state.shell.elements.dialogs.results);
+  state.frame(3360);
+  assert.equal(state.drawings.at(-1).run.tick, visibleTick);
+  assert.equal(state.document.body.dataset.playing, 'false');
   state.$('review').click();
-  for (let now = 3360; now <= 5760; now += 240) state.frame(now);
+  for (let now = 3600; now <= 6000; now += 240) state.frame(now);
   assert.equal(state.shell.topDialog(), state.shell.elements.dialogs.results);
   assert.equal(state.document.body.dataset.playing, 'false');
 });

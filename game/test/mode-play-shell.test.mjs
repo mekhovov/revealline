@@ -236,6 +236,31 @@ test('a result title offers a fresh retry even if old saved progress remains ava
   h.shell.dispose();
 });
 
+test('completed-run home returns to Results by button or Escape without resuming or retrying', () => {
+  const h = fixture();
+  const resultsButton = h.shell.elements.buttons['home-results'];
+  assert.equal(resultsButton.hidden, true);
+  h.shell.update({ phase: 'results', canResume: false });
+  assert.equal(resultsButton.hidden, false);
+  assert.equal(resultsButton.textContent, 'Results');
+  resultsButton.click();
+  assert.equal(h.shell.topDialog(), h.shell.elements.dialogs.results);
+  h.shell.elements.buttons['results-back'].click();
+  assert.equal(h.shell.topDialog(), h.shell.elements.home);
+  const cancel = h.shell.elements.home.emit('cancel');
+  assert.equal(cancel.defaultPrevented, true);
+  assert.equal(h.shell.topDialog(), h.shell.elements.dialogs.results);
+  h.shell.elements.buttons['results-back'].click();
+  h.shell.setLocale('uk');
+  assert.equal(resultsButton.textContent, 'Результати');
+  assert.equal(h.shell.back(), true);
+  assert.equal(h.shell.topDialog(), h.shell.elements.dialogs.results);
+  assert.deepEqual(h.calls, [], 'Returning to Results never invokes a gameplay activation.');
+  h.shell.update({ phase: 'paused', canResume: true });
+  assert.equal(resultsButton.hidden, true);
+  h.shell.dispose();
+});
+
 test('a Pause pointer press stays paused when focus loss updates host phase before click', () => {
   const h = fixture({ initial: 'play', actions: { canResume: () => true } });
   h.shell.update({ phase: 'playing' });

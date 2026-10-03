@@ -243,6 +243,7 @@ export function mountModePlayShell({
       true,
       'primary',
     ),
+    button('results', () => open('results'), false, 'home-results'),
     button('missions', () => open('missions')),
     button('settings', () => open('settings')),
     button('fullscreen', () => actions.fullscreen?.()),
@@ -335,6 +336,7 @@ export function mountModePlayShell({
     put(buttons.pause, 'disabled', !['playing', 'paused'].includes(state.phase));
     attribute(buttons.sound, 'aria-pressed', String(!state.muted));
     put(retryHome, 'hidden', state.phase !== 'paused');
+    put(buttons['home-results'], 'hidden', state.phase !== 'results');
   }
   function enterPlay() {
     if (!alive) return;
@@ -389,6 +391,7 @@ export function mountModePlayShell({
     const dialog = topDialog();
     if (!dialog || !Object.values(dialogs).includes(dialog)) return false;
     if (dialog === dialogs.home) {
+      if (state.phase === 'results') return open('results');
       if (!resumable()) return false;
       enterPlay();
       return true;
