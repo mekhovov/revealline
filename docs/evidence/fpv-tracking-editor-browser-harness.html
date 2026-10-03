@@ -80,6 +80,7 @@
         w,
         d,
         app,
+        recordsStore,
         data,
         failed = null,
         phase = 'Prepare',
@@ -324,6 +325,8 @@
           active = null;
           await bounded(old.dispose(), 'host disposal', 5000);
         }
+        recordsStore?.close();
+        recordsStore = null;
         frame.src = 'about:blank';
         await wait(20);
         for (const name of names)
@@ -535,6 +538,7 @@
         );
         await history('undo-edit', independent, 'Undo restores exact independent modes');
         await history('redo-edit', moved, 'Redo restores exact reorder');
+        await chooseTracking('self-level:0');
         await action('down');
         eq(course(), independent, 'Move down restores original route');
         await chooseTracking('self-level:1');
@@ -745,7 +749,7 @@
         set(d.getElementById('world-language'), 'en');
         frame.style.width = '1280px';
         frame.style.height = '800px';
-        const recordsStore = await records.openWorldRecords(window.fixtureDB);
+        recordsStore = await records.openWorldRecords(window.fixtureDB);
         const savedBefore = await recordsStore.list();
         click(d.getElementById('preview-challenge'));
         await until(
@@ -771,6 +775,7 @@
         const endRecords = await recordsStore.list();
         eq(endRecords, savedBefore, 'Workshop authoring and preview do not add scored recordings');
         recordsStore.close();
+        recordsStore = null;
         must(w.fixtureErrors.length === 0, 'No uncaught host errors', { errors: w.fixtureErrors });
         if (manual) {
           click(d.getElementById('leave-flight'));
