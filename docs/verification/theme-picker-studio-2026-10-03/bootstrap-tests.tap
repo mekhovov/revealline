@@ -1,0 +1,50 @@
+TAP version 13
+# Subtest: first-paint seed is generated from the exact admitted registry and shared migration parser
+ok 1 - first-paint seed is generated from the exact admitted registry and shared migration parser
+  ---
+  duration_ms: 236.66875
+  ...
+# Subtest: every admitted appearance paints exact paired tokens and frames before module execution
+ok 2 - every admitted appearance paints exact paired tokens and frames before module execution
+  ---
+  duration_ms: 156.597333
+  ...
+# Subtest: retained and current context pins paint exact material bytes through every accessibility override
+ok 3 - retained and current context pins paint exact material bytes through every accessibility override
+  ---
+  duration_ms: 409.742667
+  ...
+# Subtest: read-only startup matches runtime migration for new, existing, damaged and unavailable preferences
+ok 4 - read-only startup matches runtime migration for new, existing, damaged and unavailable preferences
+  ---
+  duration_ms: 9.148875
+  ...
+# Subtest: first-paint density, motion, legibility and cosmetic context use bounded canonical choices
+ok 5 - first-paint density, motion, legibility and cosmetic context use bounded canonical choices
+  ---
+  duration_ms: 6.986625
+  ...
+# Subtest: every production game, authoring and site entry seeds appearance before other scripts and styles
+ok 6 - every production game, authoring and site entry seeds appearance before other scripts and styles
+  ---
+  duration_ms: 213.627458
+  ...
+# Subtest: Neon gallery generators retain shared appearance and exact authored image references on regeneration
+ok 7 - Neon gallery generators retain shared appearance and exact authored image references on regeneration
+  ---
+  duration_ms: 12.008917
+  ...
+# Subtest: profile-owned players seed appearance without acquiring an auxiliary host lease
+ok 8 - profile-owned players seed appearance without acquiring an auxiliary host lease
+  ---
+  duration_ms: 3.544
+  ...
+1..8
+# tests 8
+# suites 0
+# pass 8
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1405.319959
