@@ -2244,3 +2244,49 @@ separate; no native stack was necessary. Public deployment/launch of either
 new feature is not yet claimed. Next implementation: pack-removal impact and
 recovery guidance on a separate branch from current main. Preserve pending
 editor CI/review and current qualification receipts while progressing that item.
+
+
+### Pack removal and exact recovery — 3 October 2026
+
+Section replay #972 is merged. The independently published Follow/Observe
+editor #975 remains open at last inspected remote head
+`51b4a6deb972d2c599090028ecf35423bc747922`; no failed actionable checks or
+holds were present in that snapshot. Preserve its newer remote commits and the
+local `codex/fpv-tracking-objective-editor` recovery state. Do not infer live
+availability from local completion. The public marker was last observed at
+`742d25225bcd792075d2a44a3e4c813f6dff9464`, before section replay; no fresh
+public launch of section replay or the editor is claimed.
+
+Current independent branch: **codex/fpv-pack-removal-guidance**, based on main
+`9546597aaeaef3149c4ef44532b4bb58ffec745e`. Pack removal now reviews exact
+active/retained revisions and affected records, pins, playlists/bookmark,
+interrupted flight and draft. A read-only atomic generation snapshot binds the
+confirmation; a stale review requires a new choice. Exact exports refuse a hash
+mismatch, bounded proof parts preserve evidence, and missing dependencies have
+an exact-pack restore picker. Ordinary .rlpack imports now install the inspected
+identity directly instead of silently rewriting through Creator. Original pack
+files remain necessary when noncanonical archive bytes cannot be reproduced.
+
+Final source host SHA256 is
+`b65ef74310dc1c23b7c23385428211b0cb28174eead31dda6d29c4c531894e02`;
+store SHA256 is
+`4b8c2fe165868f38eb297d678ea5aca232d61d2dd2a05b79db9d20145f3d0cfa`.
+The actual source HTTP/WebGL host passes90/90 checks, including preservation,
+rollback/conflict/error paths, wrong/exact restore, paused prefix recovery,
+EN/UK mobile layout and controlled controller dialog ownership. Three completed
+proofs and three prefixes independently replay. The final visible Cancel lives
+beside the review title; destructive confirmation follows the impact details.
+See `docs/fpv-pack-removal-recovery.md` and its bound receipts. Syntax/lint/format
+pass. Frozen/package qualification and focused PR publication follow; no new
+unit coverage, physical hardware or human acceptance is claimed.
+
+Next concrete content increment: matching Self-level examples for the14 primary
+Acro foundation lessons, then bounded optional Adventure examples. Existing178
+installed examples include no alternate-mode school recordings; the60 archived
+Adventure proofs are not installed. Sixteen advanced Acro skill lessons retain
+unscored Self-level practice; do not invent completable Self-level trick demos.
+C6 Stadium remains the parallel art slice:13 courses/21 bundled examples;
+refine the existing stand/board solids through shared Themes factories, preserve
+collision and the beginner42 landing platform's plain material region. Then
+continue yard/Garage art, distinct maps and final H/R7 qualification. Player
+feedback remains nonblocking and pending; all existing limits/gates remain.
