@@ -48,17 +48,18 @@ export function attachThemeFamilyControls({
     controls.set(key, input);
     return input;
   };
-  const family = select('familyId', []);
+  const themeHeading = doc.createElement('h4');
+  themeHeading.id = `${prefix}theme-family-heading`;
+  text(themeHeading, 'familyId');
+  group.append(themeHeading);
   const gallery = doc.createElement('div');
   gallery.className = 'theme-gallery';
   gallery.setAttribute('role', 'group');
-  localizedAttribute(gallery, 'aria-label', () => t('interface:workshop.previewThemes'));
+  gallery.setAttribute('aria-labelledby', themeHeading.id);
+  localizedAttribute(gallery, 'aria-description', () => t('interface:workshop.previewThemes'));
   group.append(gallery);
   const builtinIds = new Set(BUILTIN_THEME_FAMILIES.map((item) => item.id));
   const choose = (id) => host.applyComplete(id);
-  const chooseFamily = () => choose(family.value);
-  family.addEventListener('change', chooseFamily);
-  release.push(() => family.removeEventListener('change', chooseFamily));
   const syncChoices = () => {
     const choices = host.availableThemeChoices();
     const known = new Set(choices.map((item) => item.id));
@@ -66,18 +67,15 @@ export function attachThemeFamilyControls({
       if (known.has(id)) continue;
       card.stop();
       card.button.remove();
-      card.option.remove();
       cards.delete(id);
     }
     for (const [index, item] of choices.entries()) {
       let card = cards.get(item.id);
       if (!card) {
-        const option = doc.createElement('option'),
-          button = doc.createElement('button'),
+        const button = doc.createElement('button'),
           title = doc.createElement('strong'),
           swatches = doc.createElement('span'),
           description = doc.createElement('small');
-        option.value = item.id;
         button.type = 'button';
         button.id = `${prefix}theme-card-${item.id}`;
         button.className = 'theme-preview-card';
@@ -88,7 +86,6 @@ export function attachThemeFamilyControls({
         const activate = () => choose(item.id);
         button.addEventListener('click', activate);
         card = {
-          option,
           button,
           title,
           swatches,
@@ -99,8 +96,6 @@ export function attachThemeFamilyControls({
       }
       // Stable nodes preserve keyboard/controller focus through loading, status
       // updates and accessibility changes; only changed inventories move nodes.
-      if (family.children[index] !== card.option)
-        family.insertBefore(card.option, family.children[index] ?? null);
       if (gallery.children[index] !== card.button)
         gallery.insertBefore(card.button, gallery.children[index] ?? null);
       const label = () =>
@@ -109,7 +104,6 @@ export function attachThemeFamilyControls({
           : builtinIds.has(item.id)
             ? t(`interface:workshop.theme.${item.id}`)
             : `${item.family.name} · ${item.family.revision}`;
-      localizedText(card.option, label);
       localizedText(card.title, label);
       localizedText(card.description, () =>
         builtinIds.has(item.id) || item.id === 'follow-game'
@@ -192,7 +186,6 @@ export function attachThemeFamilyControls({
   else root.append(group);
   const render = (state) => {
     syncChoices();
-    family.value = state.familyId;
     for (const [id, card] of cards)
       card.button.setAttribute('aria-pressed', String(id === state.familyId));
     for (const [key, input] of controls)
