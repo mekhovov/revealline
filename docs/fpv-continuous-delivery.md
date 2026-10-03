@@ -2244,3 +2244,40 @@ separate; no native stack was necessary. Public deployment/launch of either
 new feature is not yet claimed. Next implementation: pack-removal impact and
 recovery guidance on a separate branch from current main. Preserve pending
 editor CI/review and current qualification receipts while progressing that item.
+
+
+### Matching-mode optional examples — 3 October 2026
+
+Independent branch **codex/fpv-optional-mode-examples**, based on main7d64e9ba8.
+Main Snake#973 adds24challenges; current catalogue172challenges/14worlds/58school
+lessons. Original178bundled demonstrations remain byte-identical. Fourteen
+Self-level foundation examples are now generated/replayed/exported/imported and
+replayed again, as a260391-byte optional archive outside the core download.
+Player instructions and the archive are in
+`authoring/fpv-worlds/demonstrations/optional/`.
+
+Source and immutable packaged hosts each pass109/109 actual HTTP/WebGL checks.
+This uncovered and repaired appearance-derived course lookup hiding lesson
+examples: lab and Watch now use their exact authored source/recorded presentation
+without changing player preferences. Imported examples are replay-verified, never
+award progress, preserve pins including a concurrent-tab pin, and disappear from
+Watch when removed. School/catalogue Watch follows selected flight mode.
+
+Frozen candidate d4e27bd9400b0e5b872cbf0a019a52e2b048ff25 passes all three optional
+admissions, committed inputs/ZIP checks and two identical builds. World102runtime
+files/14476115bytes and104sourcefiles fit unchanged limits. Required closure
+cleanup commit6086768bb removes only three unreachable inherited modules from
+World admission. Academy and Civilian Flight retain their original dependencies.
+See `docs/fpv-optional-mode-examples.md` and its bound receipts. No unit coverage,
+physical-device, offline-network, novice-session or sustained-FPS claim.
+
+Recovery PR#977 is assigned the already authorized milestone57. Its sole automatic
+unallocated hold was removed after verifying that scheduling requirement. The
+remote owner merged main into that branch atdb272c51c; preserve it. Its updated
+optional-package failure is the same file-count issue fixed by6086768bb. The
+company edition remains independently over64MiB by25634bytes, with zero FPV
+runtime modules in that engine closure. Keep the guard and publication hold;
+do not change immutable assets or global release authority as a shortcut.
+
+Next: finish focused publication/recovery package repair, then60optional Adventure
+examples and Stadium/yard/Garage art. Player feedback remains nonblocking.

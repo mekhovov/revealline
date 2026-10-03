@@ -42,7 +42,22 @@ no proof is applied to a presentation-mutated course.
   full health; 14 independent replays and 14 archive-import replays agree.
 - `fpv-optional-examples-original-recordings.json`: original 154 v2/24 v1 registry
   bytes retained; regenerated 14 original Acro proofs are identical.
-- Actual source/package browser and frozen capacity receipts follow qualification.
+- `fpv-optional-examples-source-browser.json` and
+  `fpv-optional-examples-packaged-browser.json`: **109/109** checks each against
+  the actual HTTP/WebGL host. Includes all 14 full rendered replays, whole-lesson
+  lab playback, selected-mode catalogue, section replay, rejection of wrong
+  dependencies, retained-record reload, partial transaction failure, duplicate
+  import, a real second-connection pin race and disposal. No uncaught errors.
+- `fpv-optional-examples-package.json`: frozen candidate
+  `d4e27bd9400b0e5b872cbf0a019a52e2b048ff25`, all three admissions, exact committed
+  inputs/ZIP membership and two byte-identical builds. World: 102 runtime files /
+  14,476,115 bytes; source archive uses 104 files under unchanged limits.
+
+The source and packaged host SHA-256 is
+`ef622d43653d3c882de949ce3b5ae8ff63eafc67372f91902cdfd2151a49600f`.
+Retained reload was verified with live HTTP; this receipt does not claim an
+offline-network simulation. Browser fixtures use private databases and never
+clear player storage.
 
 New unit coverage remains deferred to H/R7. Physical controllers, novice sessions
 and named-device performance remain unverified. Public availability requires
@@ -55,3 +70,9 @@ This is independent of pack recovery PR #977. Current main includes Snake conten
 remain intact even if publication needs a separate lossless capacity repair.
 Next: convert the 60 Adventure authoring proofs into bounded optional examples,
 then Stadium and yard/Garage art and further distinct practice worlds.
+
+The integrated World file-count issue is repaired by excluding three unreachable
+Academy-only modules from its package; all features/assets/licenses remain. The
+separate company engine contains zero FPV runtime files and still exceeds64MiB
+by25,634 bytes after main's Snake content integration. This blocks combined
+publication until a reviewed capacity repair; no guard was increased or bypassed.

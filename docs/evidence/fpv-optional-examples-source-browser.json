@@ -1,0 +1,575 @@
+{
+  "format": "FPVOptionalExamplesBrowserReceipt.v1",
+  "status": "passed",
+  "candidateHostSha256": "ef622d43653d3c882de949ce3b5ae8ff63eafc67372f91902cdfd2151a49600f",
+  "sourceFiles": {
+    "optional-practice/civilian-fpv/world-app.mjs": "ef622d43653d3c882de949ce3b5ae8ff63eafc67372f91902cdfd2151a49600f",
+    "optional-practice/civilian-fpv/world-catalogue.mjs": "b1addc910ee42044c88a3d103bb3e89c24cb0b51b418206da71ebab3decf6275",
+    "game/data-json.mjs": "9ce33d6173f3cba8587ed7a7f1924c66e9d9c86ffa59b37a743764ea0b01f7bd",
+    "game/i18n/index.mjs": "29f40a6d92826ced1eb53283ed32e342ac6e95920abbf8d549f2d78e65b48d07",
+    "game/vendor/i18next-26.4.2.min.js": "eb0dd6d72e8f756b90faf864853af2a17870fe97b54473b7c34494870c65901c",
+    "game/i18n/catalogs.mjs": "bd365ea6d68128adc9b1446578dc1c76334efc77ef1904b186d7f428c9c057ce",
+    "game/i18n/bootstrap.mjs": "242e4791b2202d2644b91df5aa76355019890525af774ee2e795c937988b0395",
+    "optional-practice/civilian-fpv/catalogue.mjs": "98338353d17eb585414538c9905040752fd5cd6699c48b17fa1706832b750997",
+    "optional-practice/civilian-fpv/model.mjs": "9e4cd11cfdde2dd43b437069b8cb7a359a8132495db806cb5f68e8674d48aaf6",
+    "optional-practice/civilian-fpv/radio-profile.mjs": "f588fd5cda96ed9627a483f49ca843ace8d99a68fae42b0a4239c2cd0ab81933",
+    "optional-practice/civilian-fpv/math.mjs": "555c8b6ea170b46992133507d2a3d867f06185bca060239cab7db9c9b87f9f98",
+    "optional-practice/civilian-fpv/rotation-table.mjs": "2ddab304ac99a2e70fc7e84fc6c27eedb49f1f3dac976baed680effa659cef41",
+    "optional-practice/civilian-fpv/flight-sectors.mjs": "5b1b54bde4e578e61da7d59f4a80a86db9aafbc78b4523d2ba2b540277a0a16d",
+    "optional-practice/civilian-fpv/snake-hunt-catalogue.mjs": "9b9ba8106125ac6baff0881360967ce3cc8fcbbdc5cf9e50db32ca987aeba35a",
+    "optional-practice/civilian-fpv/snake-hunt-presentation.mjs": "81f63fc3a5deb0f40c294a4083c743a091ae4012e1f1ec5f6c8bce9bd1348f61",
+    "game/hunt/presentation-catalog.mjs": "ae5b9fd2502c268aadeb45bad9f22e3e082c24e5724b680c091905491927ee4c",
+    "game/hunt/preferences.mjs": "103f0cf5ec674a9e5d9c8795c64e186f0f58cadb8bd1b85998effa6727e96a43",
+    "game/encounter-display-preferences.mjs": "6cd94187c299eaaa4cb14790c12d84388fb8d8dd4a5b48902dadd74dc6475b03",
+    "optional-practice/civilian-fpv/demonstrations.mjs": "92bb4365c46d94f5c1fea9808ec4e24fb9014d35640ee488959c4e0f4b6c5cfa",
+    "optional-practice/civilian-fpv/world-demonstrations.mjs": "c9f2d0ee5c571507ae1dce4f48898554cb2ad179218f1905cdc8013db2e2c114",
+    "optional-practice/civilian-fpv/world-model.mjs": "ce94192472f8cc0be1a70ec2dcdf7dc728956f55f589bb84335c851737f54d3e",
+    "optional-practice/civilian-fpv/world-themes.mjs": "67abda8ff53ba18e9aede45c57a8f9ec599dc0ddf7c977ce1d8ad2524e6c5549",
+    "game/presentation/theme-system.mjs": "bf5b10cd7b1e9ea037bdb62aeb6aa401eedfd296891a3c64f514bd6ce86fb1ee",
+    "optional-practice/civilian-fpv/snake-hunt.mjs": "39ce47e8aaae6d7f3e70b8708d52fe2d22e90119318383f8298d8d0c4cc568da",
+    "optional-practice/civilian-fpv/world-collision.mjs": "2899c7c84f9eae14b9a3434f585a8e873f4a1361e8f3ce4026ef27f44bdeef32",
+    "optional-practice/civilian-fpv/vendor/rapier/rapier.mjs": "02dc6a4e2fffc013bab08fbb44fa68f501d8303615e9afe4c7d89ad4eedda0d0",
+    "optional-practice/civilian-fpv/beginner-coach.mjs": "65198813dec5b51fc91eca77f38b04c06f6f2b1acb322e3033238d9fea7d1f97",
+    "optional-practice/civilian-fpv/input.mjs": "e80b8c16e93516fb5bce96e67a3d0472fed166c8be2e79af16f81182722e05b1",
+    "optional-practice/civilian-fpv/sim-presentation.mjs": "e851f66fc07acf79fd33a6b14d96d2266ec58afe3f2b687e2cdd65ad02044b9f",
+    "game/ui/native-menu-icons.mjs": "d710daff089fbbfe262ed0738b89e31f2494789b02c326f130e6eb32d248b731",
+    "optional-practice/civilian-fpv/radio-runtime.mjs": "3d908c7f6f1295fddacb952fadfc327206153248dbf5222ef31677eb4ff8f71b",
+    "optional-practice/civilian-fpv/radio-session.mjs": "98fdd029f1deb9eb6b51f2ae2f8fb5c441e2b3a7a2aca520a7e9ce5e267e80ef",
+    "optional-practice/civilian-fpv/radio-setup.mjs": "d4c091a8539221e71e39a12436af45a681a21e13f5468b8b4ecccd1b4c05e7d6",
+    "optional-practice/civilian-fpv/radio-controls.mjs": "ec81c8b2d7cfe8586a7b73ef0887972019c7c1c39e64e6f32ea0d39437d7d4fb",
+    "optional-practice/civilian-fpv/radio-guide.mjs": "52685411b2099492a1bb26ffed12911c2a006fae971229a08147c0ddfd81a2b1",
+    "optional-practice/civilian-fpv/flight-fullscreen.mjs": "c5a0eb8ddcc0f6cd9ef81c548b9a7284050b4a896cf747c5705bcbd009a5c63e",
+    "optional-practice/civilian-fpv/notebook.mjs": "74159518b1c79be1c2858503cd8ddee79aed8796e9b21bf6a9a8721d5099a129",
+    "game/rewards/model.mjs": "1f7ac62d4c5e9a01d1435e93116d7b59eb9bac8c4714769a9abaaba98d790d92",
+    "game/rewards/learning-profiles.mjs": "f24f81f972c921c7d3f89713c8a470086affd0b420783c1ab97cb15c6de4dc1d",
+    "game/rewards/exploration.mjs": "e997a52802aee1410f06faa75ca4984958fd979d495b1b34b0ee2582c5628ccd",
+    "game/rewards/audio-groups.mjs": "85e1340e57dc925927830d6dd436d7b3da4b459f781e5f989d8efbbe54a44b6b",
+    "game/rewards/store.mjs": "0d12e0e1b83e55a8103c9efe9bfde90291005150dac766af7ee42bd51f91521f",
+    "game/profile-storage.mjs": "7f0e6cc3a957ddc00a032d41e8bea782907b901f714708de5385667fe5fbbaec",
+    "game/profile-database.mjs": "6a843fc68c3d639ca6d3bac8c77228eccf21cd72a525872245bd5cbbd9d68a1c",
+    "game/ui/reward-knowledge.mjs": "77232a28c5112c0d20c291ca629bebbd908ca9945344bb997e0a4b392a8e931b",
+    "optional-practice/civilian-fpv/attempts.mjs": "5353e993c615dbb7091ab5d50497db82e71d3970f1587e6bb1398cc565be2494",
+    "optional-practice/civilian-fpv/playlists.mjs": "ed81b450bc268cf8096fe14a7c1a46e9a5fca0c32ff8fdedad3c356955280a77",
+    "optional-practice/civilian-fpv/world-records.mjs": "8fb720ec1a1a1e5cbc7ec5b253d14b6d76d680e6c03dc5f2c92b3e2e407d4c27",
+    "optional-practice/civilian-fpv/world-content.mjs": "aa3788b42d2e6379be68a4d76abb10667e7adb260fe00580a963ab09324f0df0",
+    "optional-practice/civilian-fpv/content-definitions.mjs": "e3808d22cc3dc294311533a16164aced16f342eb9d4b1b22b77d279b2e8dcbfd",
+    "optional-practice/civilian-fpv/world-zip.mjs": "874b371c817810a5869bc3ba37c94ff6fae4fc5cd418298f35340d2ce09039c8",
+    "optional-practice/civilian-fpv/world-store.mjs": "ff207fba00f037e079f8fbe2f4f49e3309ab7526b8c2efba6617175f5a1bb57f",
+    "optional-practice/civilian-fpv/offline.mjs": "7baa069758975eaa133ca9625e8ff0b903a92089f5e7ed0f172ba5e525a6f444",
+    "optional-practice/install-context.mjs": "b07afe79491b3f58775b131d59986c581d8df1275ae9d3d148f0a5bd49ea85a3",
+    "optional-practice/civilian-fpv/world-editor.mjs": "0c062d6587b7a25cc3c9470401051b622ca22ba088256d2c6f3364f80ad6feff",
+    "optional-practice/civilian-fpv/world-assets.mjs": "7ec935731fb2404badde162930bf602ff49d24a9382623e582ce6cce199cc0aa",
+    "optional-practice/civilian-fpv/renderer.mjs": "13cf72d6a1511347c83f108654bfec5532ac8c29c20c0e52f86f7da7f787faa6",
+    "optional-practice/civilian-fpv/vendor/three.module.js": "9052042d676cb0fdc1ddfefe193053f34b7ac0513a616fdac4535d49987812ea",
+    "optional-practice/civilian-fpv/vendor/three.core.js": "9edde002b066a9a05676a6127f67735b62baf399bdea529f2f7e31657da769e6",
+    "optional-practice/civilian-fpv/world-visuals.mjs": "f10dc35f2d22c88fac1e37c0369e38cdf5675010a34787873c34f76279d8b730",
+    "optional-practice/civilian-fpv/vendor/addons/loaders/GLTFLoader.js": "03952cb129d558f92b8e6c757fbf7c1f718b3126c4d34f264d574b40ea36054f",
+    "optional-practice/civilian-fpv/vendor/addons/utils/BufferGeometryUtils.js": "259085a7dac89e0840393a9347c77123fbc4206ec2146bf0c29ffc72e14a2800",
+    "optional-practice/civilian-fpv/vendor/addons/utils/SkeletonUtils.js": "28017bf37d0ecb0c4be6048db759ff14df729a562464830b064d4cc239c5af17",
+    "optional-practice/civilian-fpv/vendor/addons/controls/TransformControls.js": "10f6d3e4c108dff62110f61a76749f9a1826c9781df9c3eb4ca0b5d9d2f5c4a8",
+    "optional-practice/civilian-fpv/world-audio.mjs": "ff36801a18fbc2026ca9f8809e8e0c91620befcd6402b68ddd942f84f65c432a",
+    "optional-practice/civilian-fpv/world-progress.mjs": "c7de9e847bc3dbbb8e1aee6da39887ab4778769c33476a428c4186c57b5c845d",
+    "optional-practice/civilian-fpv/world-hangar.mjs": "759d21e034e65e99600df72ef7e04a2fdff8359ec9119baa401323b248ec85ef",
+    "optional-practice/civilian-fpv/world-actor-editor.mjs": "4495cd582f9b8c01026e5b3e13a177d752862db98db64719156975afc37e74ce",
+    "game/fpv-entry.mjs": "3713b9d9ae2376fd5b59f805b808964522c1ec7afa4303ac9b5227a02f32ae0b",
+    "optional-practice/fpv-worlds/index.html": "3051aac26469272b4e0551031948f13a65a7c933a6b94c76dd2e2b93fac064f0"
+  },
+  "proofArchive": {
+    "sha256": "715a45515c572ab559ca95362585f5665f6297f7fcd410b3c4d7474cf8ac36aa",
+    "bytes": 260391,
+    "records": 14
+  },
+  "fixtureFiles": {
+    "index.html": "780bd2120a8cd98c367d11d73e60a4912da38febb89fef6240def376b0fc419a",
+    "examples.json": "715a45515c572ab559ca95362585f5665f6297f7fcd410b3c4d7474cf8ac36aa",
+    "player.html": "d4f39fbde57414cadbc869c2a8b7163ba299cd10094ac5edeff6f16578a96da5"
+  },
+  "elapsedMs": 25354,
+  "passed": 109,
+  "total": 109,
+  "checks": [
+    {
+      "name": "Frozen host, dependencies, HTML, harness and optional archive hashes match",
+      "passed": true
+    },
+    {
+      "name": "Archive contains 14 distinct self-level primary examples",
+      "passed": true
+    },
+    {
+      "name": "Full current catalogue retained, including merged Snake additions",
+      "passed": true,
+      "catalogue": 172
+    },
+    {
+      "name": "Selected self-level mode initially has no optional school Watch actions",
+      "passed": true
+    },
+    {
+      "name": "Different exact pack remains missing-dependency",
+      "passed": true
+    },
+    {
+      "name": "Changed course snapshot is rejected by actual import verification",
+      "passed": true
+    },
+    {
+      "name": "Incorrect final replay identity is rejected despite a valid archive hash",
+      "passed": true
+    },
+    {
+      "name": "Invalid and missing examples cannot unlock Watch actions",
+      "passed": true
+    },
+    {
+      "name": "Unusable imports preserve notebook, rewards, interrupted flight and bookmark",
+      "passed": true
+    },
+    {
+      "name": "Partial save failure is reported honestly",
+      "passed": true,
+      "status": "Imported 1/2 records or examples; 2 verified. Flight storage failed"
+    },
+    {
+      "name": "First save survives while failed second save leaves prior data intact",
+      "passed": true
+    },
+    {
+      "name": "Partial import refreshes only usable example availability",
+      "passed": true
+    },
+    {
+      "name": "Partial import changes no player progress or recovery",
+      "passed": true
+    },
+    {
+      "name": "All fourteen archive rows were processed",
+      "passed": true,
+      "status": "Imported 14/14 records or examples; 14 verified."
+    },
+    {
+      "name": "All imported examples independently replay to complete",
+      "passed": true
+    },
+    {
+      "name": "All fourteen selected-mode school Watch actions become available",
+      "passed": true
+    },
+    {
+      "name": "Importing demonstrations awards no notebook progress or medals",
+      "passed": true
+    },
+    {
+      "name": "beginner-15 catalogue offers the selected self-level example",
+      "passed": true
+    },
+    {
+      "name": "beginner-16 catalogue offers the selected self-level example",
+      "passed": true
+    },
+    {
+      "name": "beginner-13 catalogue offers the selected self-level example",
+      "passed": true
+    },
+    {
+      "name": "beginner-17 catalogue offers the selected self-level example",
+      "passed": true
+    },
+    {
+      "name": "beginner-14 catalogue offers the selected self-level example",
+      "passed": true
+    },
+    {
+      "name": "beginner-18 catalogue offers the selected self-level example",
+      "passed": true
+    },
+    {
+      "name": "beginner-19 catalogue offers the selected self-level example",
+      "passed": true
+    },
+    {
+      "name": "beginner-20 catalogue offers the selected self-level example",
+      "passed": true
+    },
+    {
+      "name": "beginner-21 catalogue offers the selected self-level example",
+      "passed": true
+    },
+    {
+      "name": "beginner-22 catalogue offers the selected self-level example",
+      "passed": true
+    },
+    {
+      "name": "beginner-23 catalogue offers the selected self-level example",
+      "passed": true
+    },
+    {
+      "name": "beginner-24 catalogue offers the selected self-level example",
+      "passed": true
+    },
+    {
+      "name": "beginner-25 catalogue offers the selected self-level example",
+      "passed": true
+    },
+    {
+      "name": "beginner-26 catalogue offers the selected self-level example",
+      "passed": true
+    },
+    {
+      "name": "Imported examples do not mark school lessons completed",
+      "passed": true
+    },
+    {
+      "name": "Repeat import preserves every existing byte including pins and saved time",
+      "passed": true
+    },
+    {
+      "name": "beginner-15 lab uses self-level example while real flight remains paused",
+      "passed": true
+    },
+    {
+      "name": "Playback resumes through actual Arm/Resume button",
+      "passed": true
+    },
+    {
+      "name": "beginner-15 actual rendered playback reaches exact recorded final identity",
+      "passed": true
+    },
+    {
+      "name": "beginner-15 selected mode and unscored result remain explicit",
+      "passed": true
+    },
+    {
+      "name": "beginner-16 lab uses self-level example while real flight remains paused",
+      "passed": true
+    },
+    {
+      "name": "Playback resumes through actual Arm/Resume button",
+      "passed": true
+    },
+    {
+      "name": "beginner-16 actual rendered playback reaches exact recorded final identity",
+      "passed": true
+    },
+    {
+      "name": "beginner-16 selected mode and unscored result remain explicit",
+      "passed": true
+    },
+    {
+      "name": "beginner-13 lab uses self-level example while real flight remains paused",
+      "passed": true
+    },
+    {
+      "name": "Playback resumes through actual Arm/Resume button",
+      "passed": true
+    },
+    {
+      "name": "beginner-13 actual rendered playback reaches exact recorded final identity",
+      "passed": true
+    },
+    {
+      "name": "beginner-13 selected mode and unscored result remain explicit",
+      "passed": true
+    },
+    {
+      "name": "beginner-17 lab uses self-level example while real flight remains paused",
+      "passed": true
+    },
+    {
+      "name": "Playback resumes through actual Arm/Resume button",
+      "passed": true
+    },
+    {
+      "name": "beginner-17 actual rendered playback reaches exact recorded final identity",
+      "passed": true
+    },
+    {
+      "name": "beginner-17 selected mode and unscored result remain explicit",
+      "passed": true
+    },
+    {
+      "name": "beginner-14 lab uses self-level example while real flight remains paused",
+      "passed": true
+    },
+    {
+      "name": "Playback resumes through actual Arm/Resume button",
+      "passed": true
+    },
+    {
+      "name": "beginner-14 actual rendered playback reaches exact recorded final identity",
+      "passed": true
+    },
+    {
+      "name": "beginner-14 selected mode and unscored result remain explicit",
+      "passed": true
+    },
+    {
+      "name": "beginner-18 lab uses self-level example while real flight remains paused",
+      "passed": true
+    },
+    {
+      "name": "Playback resumes through actual Arm/Resume button",
+      "passed": true
+    },
+    {
+      "name": "beginner-18 actual rendered playback reaches exact recorded final identity",
+      "passed": true
+    },
+    {
+      "name": "beginner-18 selected mode and unscored result remain explicit",
+      "passed": true
+    },
+    {
+      "name": "beginner-19 lab uses self-level example while real flight remains paused",
+      "passed": true
+    },
+    {
+      "name": "Playback resumes through actual Arm/Resume button",
+      "passed": true
+    },
+    {
+      "name": "beginner-19 actual rendered playback reaches exact recorded final identity",
+      "passed": true
+    },
+    {
+      "name": "beginner-19 selected mode and unscored result remain explicit",
+      "passed": true
+    },
+    {
+      "name": "beginner-20 lab uses self-level example while real flight remains paused",
+      "passed": true
+    },
+    {
+      "name": "Playback resumes through actual Arm/Resume button",
+      "passed": true
+    },
+    {
+      "name": "beginner-20 actual rendered playback reaches exact recorded final identity",
+      "passed": true
+    },
+    {
+      "name": "beginner-20 selected mode and unscored result remain explicit",
+      "passed": true
+    },
+    {
+      "name": "beginner-21 lab uses self-level example while real flight remains paused",
+      "passed": true
+    },
+    {
+      "name": "Playback resumes through actual Arm/Resume button",
+      "passed": true
+    },
+    {
+      "name": "beginner-21 actual rendered playback reaches exact recorded final identity",
+      "passed": true
+    },
+    {
+      "name": "beginner-21 selected mode and unscored result remain explicit",
+      "passed": true
+    },
+    {
+      "name": "beginner-22 lab uses self-level example while real flight remains paused",
+      "passed": true
+    },
+    {
+      "name": "Playback resumes through actual Arm/Resume button",
+      "passed": true
+    },
+    {
+      "name": "beginner-22 actual rendered playback reaches exact recorded final identity",
+      "passed": true
+    },
+    {
+      "name": "beginner-22 selected mode and unscored result remain explicit",
+      "passed": true
+    },
+    {
+      "name": "beginner-23 lab uses self-level example while real flight remains paused",
+      "passed": true
+    },
+    {
+      "name": "Playback resumes through actual Arm/Resume button",
+      "passed": true
+    },
+    {
+      "name": "beginner-23 actual rendered playback reaches exact recorded final identity",
+      "passed": true
+    },
+    {
+      "name": "beginner-23 selected mode and unscored result remain explicit",
+      "passed": true
+    },
+    {
+      "name": "beginner-24 lab uses self-level example while real flight remains paused",
+      "passed": true
+    },
+    {
+      "name": "Playback resumes through actual Arm/Resume button",
+      "passed": true
+    },
+    {
+      "name": "beginner-24 actual rendered playback reaches exact recorded final identity",
+      "passed": true
+    },
+    {
+      "name": "beginner-24 selected mode and unscored result remain explicit",
+      "passed": true
+    },
+    {
+      "name": "beginner-25 lab uses self-level example while real flight remains paused",
+      "passed": true
+    },
+    {
+      "name": "Playback resumes through actual Arm/Resume button",
+      "passed": true
+    },
+    {
+      "name": "beginner-25 actual rendered playback reaches exact recorded final identity",
+      "passed": true
+    },
+    {
+      "name": "beginner-25 selected mode and unscored result remain explicit",
+      "passed": true
+    },
+    {
+      "name": "beginner-26 lab uses self-level example while real flight remains paused",
+      "passed": true
+    },
+    {
+      "name": "Playback resumes through actual Arm/Resume button",
+      "passed": true
+    },
+    {
+      "name": "beginner-26 actual rendered playback reaches exact recorded final identity",
+      "passed": true
+    },
+    {
+      "name": "beginner-26 selected mode and unscored result remain explicit",
+      "passed": true
+    },
+    {
+      "name": "Watching all fourteen preserves saved proof bytes and pins",
+      "passed": true
+    },
+    {
+      "name": "All labs and full playback preserve notebook, rewards, recovery and bookmark",
+      "passed": true
+    },
+    {
+      "name": "Watching every example never marks school lessons completed",
+      "passed": true
+    },
+    {
+      "name": "Playback resumes through actual Arm/Resume button",
+      "passed": true
+    },
+    {
+      "name": "Imported optional example supports exact selected section playback",
+      "passed": true
+    },
+    {
+      "name": "Section watch cannot export a new scored attempt",
+      "passed": true
+    },
+    {
+      "name": "Switching mode retains original bundled Acro demonstrations",
+      "passed": true
+    },
+    {
+      "name": "Section viewing and mode changes preserve player progress",
+      "passed": true
+    },
+    {
+      "name": "Removing the only optional example clears a previously populated availability cache",
+      "passed": true
+    },
+    {
+      "name": "Separate real connection pins newly saved proof before in-flight verification finishes",
+      "passed": true
+    },
+    {
+      "name": "Import preserves concurrent pin absent from its initial record snapshot",
+      "passed": true
+    },
+    {
+      "name": "Reimport restores exact optional example availability",
+      "passed": true
+    },
+    {
+      "name": "HTTP reload retains exact imported example records without reimport",
+      "passed": true
+    },
+    {
+      "name": "Reload reconstructs all optional availability from local IndexedDB",
+      "passed": true
+    },
+    {
+      "name": "Reload preserves interrupted flight, bookmark and notebook",
+      "passed": true
+    },
+    {
+      "name": "Ukrainian school exposes the same selected-mode examples",
+      "passed": true
+    },
+    {
+      "name": "Ukrainian recording rows identify examples",
+      "passed": true
+    },
+    {
+      "name": "No record writes occur after dispose resolves",
+      "passed": true
+    },
+    {
+      "name": "Disposal cancels the remaining multi-record import",
+      "passed": true,
+      "savedBeforeDisposal": 1
+    },
+    {
+      "name": "No runtime errors or unhandled rejections across import, playback and disposal",
+      "passed": true,
+      "errors": []
+    }
+  ],
+  "phases": [
+    {
+      "ms": 0,
+      "label": "Verify frozen source and optional archive"
+    },
+    {
+      "ms": 822,
+      "label": "Reject unusable dependencies, changed course and invalid replay"
+    },
+    {
+      "ms": 916,
+      "label": "Partial real IndexedDB failure retains only completed saves"
+    },
+    {
+      "ms": 1003,
+      "label": "Import all 14 through actual File input"
+    },
+    {
+      "ms": 1557,
+      "label": "Pinned repeat import is byte-identical"
+    },
+    {
+      "ms": 2360,
+      "label": "Selected-mode whole-lesson lab and exact full playback"
+    },
+    {
+      "ms": 23506,
+      "label": "Recorded section playback and mode selection"
+    },
+    {
+      "ms": 23980,
+      "label": "Removal invalidates availability and local reload restores retained examples"
+    },
+    {
+      "ms": 24593,
+      "label": "Disposal during import does not produce late writes"
+    }
+  ],
+  "errors": [],
+  "failure": null,
+  "offline": "Not measured: reload uses live HTTP; only IndexedDB persistence was checked.",
+  "controls": "Scripted File inputs, buttons and controlled animation clock; no physical-device or player acceptance claim."
+}
