@@ -2210,3 +2210,13 @@ source and normal user playtest builds remain. A retry fetched the newer parent
 without auto-maintenance; main673ac3fc4 is preserved. Source browser63/63 and
 section53/53 were rerun against that integration. User feedback stays nonblocking;
 physical/human qualification and deferred unit coverage remain explicitly open.
+
+The editor has no runtime dependency on section replay. To preserve independent
+publication while #972 receives concurrent main reconciliations, its three local
+commits were rebased onto current main742d25225. A recovery ref preserves the
+combined qualified candidate. Only the editor's two runtime files and its
+qualification/docs remain in the diff; no remote branch was force-pushed and no
+native stack was created. The 53-check section receipt is integration evidence
+for the preserved combined candidate, not a claim that pending #972 is on main.
+Fresh standalone source/package qualification follows this rebase. Next item
+remains pack-removal impact and recovery guidance.
