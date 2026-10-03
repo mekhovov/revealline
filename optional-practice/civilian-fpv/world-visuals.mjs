@@ -1817,7 +1817,7 @@ export function buildCourtyardFacadeGeometry(course) {
   for (const obstacle of course.obstacles ?? []) {
     const expected =
       obstacle.id === 'house-west' ? [8, 8, 20] : obstacle.id === 'house-east' ? [8, 7, 26] : null;
-    if (!expected || obstacle.type || !obstacle.min || !obstacle.max) continue;
+    if (!expected || obstacle.type || obstacle.rotation || !obstacle.min || !obstacle.max) continue;
     const min = ['x', 'y', 'z'].map((axis) => obstacle.min[axis] / 1000),
       max = ['x', 'y', 'z'].map((axis) => obstacle.max[axis] / 1000);
     if (
