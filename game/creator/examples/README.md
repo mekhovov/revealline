@@ -11,14 +11,14 @@ Island chain mission on Standard. Its verified completion route is also checked
 for all supported Solo presets and equal-board Versus configurations. Full-view
 video rewards are enabled in Solo; Versus retains its existing results behavior.
 
-The complete clip is included as a 2,467,021-byte 720p H.264/AAC MP4. Studio's
+The complete clip is included as a 1,982,771-byte 720p H.264/AAC MP4. Studio's
 mobile preparation keeps the original AAC soundtrack, creates a high-quality
 mobile video track and moves the playback index to the front for iPhone:
-`ea033ebd2b205098b4b06567394f07d16887143b92f608030b1b1ddfde1fa656`.
+`919fa23b4427b313e19e88784599455feaad022afc128dc93024acdeb988cc21`.
 The full clip plays from 0 to 9.476133 seconds. Its supplied background image hash
 is `b731f135fd42400dc1b3217a9deb5fb511b09815b77743dd48024f5f468e3b53`;
 the studio creates a 1280×640 contain-fit PNG derivative, retaining the whole image.
-The 3,473,220-byte `.rlpack` carries that derivative, prepared video, credits, mission
+The 2,988,970-byte `.rlpack` carries that derivative, prepared video, credits, mission
 and route evidence, without private source image originals or player progress.
 
 Source filename: `594188 lancet 5 ОШБ вполювали БпЛА «Ланцет».mp4`.

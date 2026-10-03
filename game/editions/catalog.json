@@ -2645,12 +2645,12 @@
     },
     {
       "approved": true,
-      "bytes": 2467021,
+      "bytes": 1982771,
       "dependencies": [],
       "id": "social-drone-sky-watch-video-v2",
       "path": "game/editions/assets/social-drone/sky-watch-v2.mp4",
       "publication": "public",
-      "sha256": "ea033ebd2b205098b4b06567394f07d16887143b92f608030b1b1ddfde1fa656"
+      "sha256": "919fa23b4427b313e19e88784599455feaad022afc128dc93024acdeb988cc21"
     },
     {
       "approved": true,

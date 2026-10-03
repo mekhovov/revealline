@@ -36,7 +36,7 @@ test('Social Drone video pack survives source backup and produces its exact stor
   const story = pack.manifest.content.media.stories[0];
   assert.equal(
     story.video.sha256,
-    'ea033ebd2b205098b4b06567394f07d16887143b92f608030b1b1ddfde1fa656',
+    '919fa23b4427b313e19e88784599455feaad022afc128dc93024acdeb988cc21',
   );
   assert.equal(
     story.poster.origin.sourceImageSha256,
@@ -70,7 +70,7 @@ test('Social Drone video pack survives source backup and produces its exact stor
     const earned = await runtime.prepareVictoryStory(receipt, { inspectVideo });
     assert.equal(earned.prepared.descriptor.source.sha256, story.video.sha256);
     assert.equal(earned.picturePin.sha256, story.poster.sha256);
-    assert.equal(earned.prepared.original.size, 2467021);
+    assert.equal(earned.prepared.original.size, 1982771);
     assert.equal(runtime.nextMissionId(receipt.missionId), null);
   } finally {
     runtime.dispose();
