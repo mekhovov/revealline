@@ -1,6 +1,6 @@
 # FPV Snake pursuit integration — 3 October 2026
 
-This is candidate-source evidence, not public release qualification. Product version remains 0.142.4. The original 48 grid recipes, 24 flight course recipes and historical replay interpretation remain unchanged.
+This is candidate-source evidence, not public release qualification. Product version remains 0.142.4. The expansion was integrated on main merge 7d64e9ba8 after the earlier Snake PR #973 merged during implementation; the new-main theme bootstrap and simulator/editor changes are retained. Both Snake pages keep the first-paint theme bootstrap; the explicit Classic/hub owner controls runtime preferences without a competing generic theme entry. The original 48 grid recipes, 24 flight course recipes and historical replay interpretation remain unchanged.
 
 ## Implemented scope
 
@@ -24,13 +24,13 @@ These observations call production preparation/simulation or exercise the browse
 - First Baffle opened with Moving-target remix and displayed fleeing targets. Retry keeps the accepted recipe and seed; New route changes the seed explicitly.
 - Small-screen observations used measured CSS pixels (the browser had an existing zoom setting): 320×569 Versus, 360×640 Ukrainian Team with direction pads, 390×844 Solo, and 640×360 landscape. No horizontal overflow was observed. At 320px Versus, both boards were approximately 212×159px, turn buttons 56px and Pause/Retry approximately 44px. At 360px Team, direction buttons were 52px. Layout changes paused the running round before reflow.
 - Simulator hub navigation opened the new Patrol interception playlist with its six correct course names and an exact safe return to the Snake hub.
-- Shared asset closure: 823 Company runtime files, 46,064,640 bytes; 728 retained offline files. All twenty inspected Snake/shared dependencies and both immutable sprite hashes were present.
+- Shared asset closure: 824 Company runtime files, 46,108,413 bytes; 729 retained offline files. All twenty inspected Snake/shared dependencies and both immutable sprite hashes were present.
 
 ## Verification policy
 
 Automated suites are **WAIVED_SKIPPED_NOT_PASSED**. Relevant core, session, progression, launcher, compatibility and packaging regressions were authored or updated without running them.
 
-Repository lint and validation passed. Validation reported only the existing generated-site navigation warnings. Changed source formatting and whitespace checks passed. The repository-wide formatting check was executed and reported 25 files; every warned file was byte-identical to parent aa7ef6ec2c9791d7367f4e53a0ff80fa1c9c0c06. See [the baseline receipt](format-baseline.json). These unrelated formatting warnings were not silently fixed or presented as a green global check.
+Repository lint and validation passed. Validation reported only the existing generated-site navigation warnings. Changed source formatting and whitespace checks passed. The repository-wide formatting check was executed and reported 25 files; every warned file was byte-identical to integrated main parent 7d64e9ba8adbab90f731eb964e1ef138323868b5. See [the baseline receipt](format-baseline.json). These unrelated formatting warnings were not silently fixed or presented as a green global check.
 
 The final committed-source default-build inspection is recorded separately beside this file. It inspects the normal build preparation without publishing, writing a ZIP, or claiming merged-main release qualification.
 

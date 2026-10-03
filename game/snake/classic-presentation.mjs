@@ -33,25 +33,34 @@ export const CLASSIC_PRESENTATION = Object.freeze({
   ]),
 });
 
-/** Carry only a validated cosmetic family hint from the shared launcher. */
+/** Query pins, compiled edition defaults and accepted context are cosmetic only.
+ * Match bootstrap precedence without giving the generic page entry a second
+ * display-preference owner before Classic installs its explicit host. */
 export function classicAppearanceContext(win = globalThis.window) {
+  const pin = (familyId, revision) =>
+    /^[a-z][a-z0-9-]{0,63}$/.test(familyId ?? '') && /^r[1-9][0-9]{0,8}$/.test(revision ?? '')
+      ? { familyId, revision }
+      : null;
   let accepted = null,
     requested = null;
   try {
-    const params = new URL(win.location.href).searchParams,
-      familyId = params.get('appearanceFamily'),
-      revision = params.get('appearanceRevision');
+    const params = new URL(win.location.href).searchParams;
     if (
       params.getAll('appearanceFamily').length === 1 &&
-      params.getAll('appearanceRevision').length === 1 &&
-      /^[a-z][a-z0-9-]{0,63}$/.test(familyId ?? '') &&
-      /^r[1-9][0-9]{0,8}$/.test(revision ?? '')
+      params.getAll('appearanceRevision').length === 1
     )
-      requested = { familyId, revision };
-    accepted = loadAcceptedAppearance(win.sessionStorage);
+      requested = pin(params.get('appearanceFamily'), params.get('appearanceRevision'));
+  } catch {
+    /* Embedded callers may omit a location. */
+  }
+  const compiled = win?.document?.documentElement?.dataset ?? {};
+  requested ??= pin(compiled.appearanceFamily, compiled.appearanceRevision);
+  try {
+    accepted = loadAcceptedAppearance(win?.sessionStorage);
   } catch {
     /* Denied storage still permits installed, code-owned themes. */
   }
+  requested ??= accepted ? pin(accepted.family.id, accepted.family.revision) : null;
   return {
     appearanceDefault: requested,
     appearanceThemes:

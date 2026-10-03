@@ -422,6 +422,11 @@ function buildPads() {
 }
 function renderProgress() {
   const chapterEntries = CLASSIC_SNAKE_LEVELS.filter((item) => item.chapterId === entry.chapterId);
+  for (const [index, item] of chapterEntries.entries()) {
+    const option = $('mission').children[index];
+    if (option?.value === item.id)
+      option.textContent = `${records.cleared(item.id) ? '✓ ' : ''}${index + 1}. ${item.title[locale]}`;
+  }
   $('progress-summary').textContent = text('progress', {
     done: records.chapter(chapterEntries),
     all: CLASSIC_SNAKE_LEVELS.filter((item) => records.cleared(item.id)).length,
