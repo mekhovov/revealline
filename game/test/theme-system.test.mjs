@@ -18,6 +18,8 @@ import {
   THEME_PREFERENCES_KEY,
 } from '../presentation/theme-preferences.mjs';
 import { installThemeHost } from '../presentation/theme-host.mjs';
+import { createThemeCandidate } from '../presentation/theme-preview.mjs';
+import { createDefaultThemeBundle } from '../presentation/catalog.mjs';
 import { Document, Events } from './helpers/couch-dom.mjs';
 
 function memory() {
@@ -112,8 +114,47 @@ function surfaceRules() {
   }));
 }
 
-test('shared controls and reading cards use quiet fills while preserving bevel, focus and selection', () => {
+test('shared controls keep exact quiet centers while Industrial alone opts into unfilled material rims', () => {
   const rules = surfaceRules();
+  const defaults = rules.find((rule) => rule.properties['--ui-panel-frame'] === 'none');
+  assert.equal(defaults.selector, '[data-theme-family]', 'nested scopes reset inherited finish');
+  for (const frame of ['panel', 'raised', 'primary'])
+    assert.equal(defaults.properties[`--ui-${frame}-frame`], 'none');
+  const industrial = rules.find((rule) =>
+    rule.properties['--ui-panel-frame']?.includes('material'),
+  );
+  for (const condition of [
+    "[data-theme-material='steel']",
+    "[data-theme-material='industrial-workshop']",
+    "[data-theme-texture='on']",
+    "[data-theme-contrast='normal']",
+    "[data-theme-surface='bevel']",
+  ])
+    assert.ok(industrial.selector.includes(condition), condition);
+  const candidate = createThemeCandidate(createDefaultThemeBundle(), {
+    familyId: 'industrial-workshop',
+  });
+  const authored = resolvePresentation({
+    themeFamily: candidate.family,
+    interfaceTheme: candidate.interfaceTheme,
+  });
+  assert.notEqual(authored.familyId, 'industrial-workshop');
+  assert.equal(authored.materialStyle, 'steel');
+  assert.ok(industrial.selector.includes(`[data-theme-material='${authored.materialStyle}']`));
+  const retained = resolvePresentation({
+    themeFamily: getThemeFamily('industrial-workshop', 'r1'),
+  });
+  assert.ok(industrial.selector.includes(`[data-theme-material='${retained.materialStyle}']`));
+  assert.doesNotMatch(
+    industrial.selector,
+    /data-theme-family/,
+    'authored identities inherit their basis finish',
+  );
+  for (const frame of ['panel', 'raised', 'primary']) {
+    const image = industrial.properties[`--ui-${frame}-frame`];
+    assert.match(image, /6 \/ 6px \/ 0 repeat$/);
+    assert.doesNotMatch(image, /fill/, 'texture may never paint the semantic reading center');
+  }
   const panels = rules.find(
     (rule) => rule.selector.includes('.overlay-card') && rule.properties.border,
   );
@@ -123,7 +164,7 @@ test('shared controls and reading cards use quiet fills while preserving bevel, 
   const inputs = rules.find((rule) => rule.selector.endsWith(':where(input, select, textarea)'));
   for (const rule of [panels, actions, inputs]) {
     assert.ok(rule);
-    assert.equal(rule.properties['border-image'], 'none');
+    assert.match(rule.properties['border-image'], /^(none|var\(--ui-[\w-]+, none\))$/);
     assert.doesNotMatch(rule.properties.background, /url\(|gradient\(|material/);
     assert.match(rule.properties.border, /solid var\(/);
     assert.match(rule.properties['box-shadow'], /inset/);
@@ -134,6 +175,9 @@ test('shared controls and reading cards use quiet fills while preserving bevel, 
   );
   assert.match(selected.properties['border-color'], /--iw-focus/);
   assert.match(selected.properties['box-shadow'], /inset 3px/);
+  assert.equal(selected.properties['border-image'], 'var(--ui-primary-frame, none)');
+  const danger = rules.find((rule) => rule.properties['--ui-action-fill']?.includes('danger'));
+  assert.equal(danger.properties['--ui-action-frame'], 'none', 'amber material cannot cover red');
   for (const state of ['hover', 'pressed']) {
     const rule = rules.find(
       (item) => item.properties.background === `var(--ui-action-${state}-fill)`,
@@ -146,14 +190,25 @@ test('shared controls and reading cards use quiet fills while preserving bevel, 
     ),
   );
   const flat = rules.find((rule) => rule.selector.startsWith("[data-theme-surface='flat']"));
-  assert.equal(flat.properties['box-shadow'], 'none');
+  assert.equal(
+    flat.selector,
+    "[data-theme-surface='flat']",
+    'flat chrome cannot flatten descendants with their own presentation',
+  );
+  for (const role of ['panel', 'action', 'hover', 'pressed', 'selected', 'gallery']) {
+    assert.equal(flat.properties[`--ui-${role}-depth`], 'none');
+    assert.equal(
+      defaults.properties[`--ui-${role}-depth`],
+      role === 'gallery' ? 'none' : 'initial',
+    );
+  }
 });
 
-test('gallery previews are uninterrupted palette strips and ornament is confined to a single outer accent', () => {
+test('gallery previews preserve palette strips and other themes retain one quiet outer accent', () => {
   const rules = surfaceRules();
   const card = rules.find((rule) => rule.selector === '.theme-gallery .theme-preview-card');
-  assert.equal(card.properties['border-image'], 'none');
-  assert.equal(card.properties['box-shadow'], 'none');
+  assert.equal(card.properties['border-image'], 'var(--ui-raised-frame, none)');
+  assert.equal(card.properties['box-shadow'], 'var(--ui-gallery-depth, none)');
   const swatches = rules.find((rule) => rule.selector === '.theme-preview-swatches');
   assert.equal(swatches.properties.display, 'grid');
   assert.equal(swatches.properties.gap, '0');
@@ -161,14 +216,25 @@ test('gallery previews are uninterrupted palette strips and ornament is confined
     (rule) =>
       rule.selector === "[data-theme-styled='true'] .menu-scene[data-backdrop='interface']::before",
   );
-  assert.equal(accent.properties['background-repeat'], 'no-repeat');
-  assert.match(accent.properties.inset, /auto auto$/);
-  assert.match(accent.properties['inline-size'], /min\(/);
-  const off = rules.find(
+  const defaults = rules.find((rule) => rule.selector === '[data-theme-family]');
+  assert.equal(accent.properties['background-repeat'], 'var(--ui-scene-repeat)');
+  assert.equal(defaults.properties['--ui-scene-repeat'], 'no-repeat');
+  assert.match(defaults.properties['--ui-scene-inset'], /auto auto$/);
+  assert.match(defaults.properties['--ui-scene-width'], /min\(/);
+  assert.equal(defaults.properties['--ui-scene-motif'], 'none');
+  const industrial = rules.find(
     (rule) =>
-      rule.selector === "[data-theme-texture='off'] .menu-scene[data-backdrop='interface']::before",
+      rule.selector.includes("[data-theme-material='steel']") &&
+      rule.properties['--ui-scene-motif']?.includes('linear-gradient'),
   );
-  assert.equal(off.properties['background-image'], 'none');
+  assert.ok(industrial.selector.endsWith("[data-theme-surface='bevel']"));
+  assert.doesNotMatch(
+    industrial.selector,
+    /\.menu-scene/,
+    'backdrop material belongs to its nearest presentation scope',
+  );
+  const off = rules.find((rule) => rule.selector === "[data-theme-texture='off']");
+  assert.equal(off.properties['--ui-scene-motif'], 'none');
 });
 test('interface validation rejects executable styles, unknown fields and missing provenance', () => {
   const source = structuredClone(BUILTIN_INTERFACE_THEMES[1]);
