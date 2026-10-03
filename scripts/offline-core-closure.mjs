@@ -7,6 +7,8 @@ const PLAY_ENTRIES = [
   'game/replay-theater/index.html',
   'game/downloads.html',
   'game/profile-recovery.html',
+  'game/snake/index.html',
+  'game/snake/play.html',
   'credits.html',
   'privacy.html',
 ];

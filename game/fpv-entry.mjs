@@ -79,7 +79,7 @@ export function fpvWorldLaunchURL(href, locale = 'en', appearanceDefault = null)
   )
     return null;
   const match =
-    /^(.*\/)game\/(?:(?:index|company)\.html|couch\/(?:index\.html|relay-rescue\.html)?)?$/.exec(
+    /^(.*\/)game\/(?:(?:index|company)\.html|couch\/(?:index\.html|relay-rescue\.html)?|snake\/(?:(?:index|play)\.html)?)?$/.exec(
       game.pathname,
     );
   if (!match) return null;
@@ -109,6 +109,9 @@ export function fpvReturnURL(href) {
         'couch/',
         'couch/index.html',
         'couch/relay-rescue.html',
+        'snake/',
+        'snake/index.html',
+        'snake/play.html',
       ].some((name) => target.pathname === gameRoot.pathname + name)
     )
       return null;
@@ -116,6 +119,32 @@ export function fpvReturnURL(href) {
   } catch {
     return null;
   }
+}
+
+/** The bundled Classic destination retains the selected seat arrangement. */
+export function snakeLaunchURL(href, mode = 'solo', locale = 'en', appearanceDefault = null) {
+  let current;
+  try {
+    current = new URL(href);
+  } catch {
+    return null;
+  }
+  if (
+    !['http:', 'https:', 'file:', 'capacitor:'].includes(current.protocol) ||
+    current.username ||
+    current.password ||
+    !['solo', 'versus', 'team'].includes(mode)
+  )
+    return null;
+  const match =
+    /^(.*\/)game\/(?:(?:index|company)\.html|couch\/(?:index\.html|relay-rescue\.html)?|snake\/(?:(?:index|play)\.html)?)?$/.exec(
+      current.pathname,
+    );
+  if (!match) return null;
+  const target = new URL(`${match[1]}game/snake/play.html`, current);
+  target.searchParams.set('mode', mode);
+  target.searchParams.set('lang', locale === 'uk' ? 'uk' : 'en');
+  return appearanceLaunchURL(target.href, appearanceDefault);
 }
 
 /** Standalone SIM visits also need an exit without relying on browser chrome. */

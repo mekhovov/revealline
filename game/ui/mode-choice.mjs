@@ -1,7 +1,7 @@
-import { t, localizedText, localizedAttribute } from '../i18n/index.mjs';
+import { t, localizedText, localizedAttribute, getLocale } from '../i18n/index.mjs';
 import { setMenuIcon } from './native-menu-icons.mjs';
 import { mountOptionalPracticePanel } from './optional-practice-panel.mjs';
-import { fpvWorldLaunchURL } from '../fpv-entry.mjs';
+import { fpvWorldLaunchURL, snakeLaunchURL } from '../fpv-entry.mjs';
 import { loadAcceptedAppearance } from '../presentation/theme-system.mjs';
 const MODES = Object.freeze([['solo'], ['versus'], ['team']]);
 
@@ -69,7 +69,35 @@ export function mountModeChoices({
   localizedText(simulatorLabel, () => t('interface:nativeMenu.fpvSim'));
   simulator.append(simulatorLabel);
   setMenuIcon(simulator, 'simulator');
-  root.replaceChildren(...choices, simulator);
+  const snake = document.createElement('a');
+  snake.id = `${current}-snake`;
+  snake.dataset.snakeEntry = 'true';
+  const snakeLabel = document.createElement('strong');
+  localizedText(snakeLabel, () => (getLocale() === 'uk' ? 'Змійка' : 'Snake'));
+  snake.append(snakeLabel);
+  setMenuIcon(snake, 'controls');
+  const snakeURL = () =>
+    snakeLaunchURL(
+      document.defaultView?.location?.href ?? globalThis.location?.href,
+      current,
+      document.documentElement.lang,
+      getAppearanceDefault(),
+    );
+  const initialSnakeURL = snakeLaunchURL(
+    document.defaultView?.location?.href ?? globalThis.location?.href,
+    current,
+    document.documentElement.lang,
+  );
+  if (initialSnakeURL) snake.href = initialSnakeURL;
+  else snake.hidden = true;
+  const enterSnake = (event) => {
+    const href = snakeURL();
+    if (!href) return event.preventDefault();
+    snake.href = href;
+    pause();
+  };
+  snake.addEventListener('click', enterSnake);
+  root.replaceChildren(...choices, simulator, snake);
   const panel = mountOptionalPracticePanel({
     document,
     getAppearanceDefault,
@@ -98,6 +126,8 @@ export function mountModeChoices({
     dispose() {
       panel.dispose();
       simulator.remove();
+      snake.removeEventListener('click', enterSnake);
+      snake.remove();
     },
   };
 }

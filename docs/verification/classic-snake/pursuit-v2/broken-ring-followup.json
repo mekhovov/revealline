@@ -1,0 +1,24 @@
+{
+  "id": "classic-pursuit-broken-ring",
+  "attempt": 2,
+  "controller": "Visible-state BFS with reachable-free-area preference when the next head would have fewer than body.length+8 free cells. No future RNG/AI or state mutation.",
+  "status": "won",
+  "tick": 207,
+  "catches": 12,
+  "goal": 12,
+  "restoredExactly": true,
+  "before": {
+    "game/snake/classic-core.mjs": "f9a4361b85bfc8d4cba8e8889109b893bbca8de65e91863b93c7d5ddc0435f74",
+    "game/snake/classic-core-v2.mjs": "79d8da0cb894def4d09b5e664f8a28ec6bf18cac1b8fd4c7d43c16b74decd92f",
+    "game/snake/classic-match.mjs": "02d904912c0df723bbe7ec760c07c489939298f109817d6542bfd38e1d287d77",
+    "game/snake/classic-catalogue-v2.mjs": "7da35f440d8b9ca30345f468844142e00517c0fbfaa9501b068a95b48c073531"
+  },
+  "after": {
+    "game/snake/classic-core.mjs": "f9a4361b85bfc8d4cba8e8889109b893bbca8de65e91863b93c7d5ddc0435f74",
+    "game/snake/classic-core-v2.mjs": "79d8da0cb894def4d09b5e664f8a28ec6bf18cac1b8fd4c7d43c16b74decd92f",
+    "game/snake/classic-match.mjs": "02d904912c0df723bbe7ec760c07c489939298f109817d6542bfd38e1d287d77",
+    "game/snake/classic-catalogue-v2.mjs": "7da35f440d8b9ca30345f468844142e00517c0fbfaa9501b068a95b48c073531"
+  },
+  "replay": "classic-pursuit-broken-ring-space-aware.json",
+  "sha256": "5b6dcc787fee44288c53a1ba2b84e2e1deb1dc221e261782f9c0324975cd6cec"
+}
