@@ -7,7 +7,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { parse } from 'acorn';
 const ROOT = fileURLToPath(new URL('../', import.meta.url));
-const BASELINE = '53907d8dbe489890eb0e346de40762284eedac9a';
+const BASELINE = 'b3b23a76b4a4f41cd97e228ae1400fce96abcde8';
 const ENTRY = 'optional-practice/civilian-fpv/';
 const MAX_FILE = 6 * 1024 * 1024,
   MAX_TOTAL = 40 * 1024 * 1024,
@@ -43,7 +43,7 @@ function dependencies(source, owner) {
   return found;
 }
 async function main() {
-  let output = 'dist/fpv-garage-surfaces-verification',
+  let output = 'dist/fpv-stadium-structures-verification',
     candidate = '',
     verifyOnly = false;
   const args = process.argv.slice(2);
@@ -53,15 +53,15 @@ async function main() {
     else if (args[i] === '--verify-only') verifyOnly = true;
     else if (args[i] === '--help') {
       console.log(
-        'Usage: node scripts/prepare-fpv-garage-surfaces-verification.mjs [--out dist/fpv-garage-surfaces-verification-NAME] [--candidate-base dist/PACKAGE] [--verify-only]\nPins baseline ' +
+        'Usage: node scripts/prepare-fpv-stadium-structures-verification.mjs [--out dist/fpv-stadium-structures-verification-NAME] [--candidate-base dist/PACKAGE] [--verify-only]\nPins baseline ' +
           BASELINE +
           '. Copies current candidate and import closure into unique URLs. Existing outputs never overwritten; no fetching or Git writes.',
       );
       return;
     } else fail('Unknown/incomplete option: ' + args[i]);
   }
-  if (!/^dist\/fpv-garage-surfaces-verification(?:-[a-z0-9-]{1,64})?$/.test(output))
-    fail('Use a named dist/fpv-garage-surfaces-verification directory.');
+  if (!/^dist\/fpv-stadium-structures-verification(?:-[a-z0-9-]{1,64})?$/.test(output))
+    fail('Use a named dist/fpv-stadium-structures-verification directory.');
   if (candidate && !/^dist\/[a-zA-Z0-9_/-]+$/.test(candidate))
     fail('Candidate must be a prepared directory under dist.');
   const realRoot = await fs.realpath(ROOT),
@@ -75,7 +75,6 @@ async function main() {
     const files = new Map(),
       pending = [
         'world-assets.mjs',
-        'world-demonstrations.mjs',
         'catalogue.mjs',
         'world-catalogue.mjs',
         'model.mjs',
@@ -112,17 +111,17 @@ async function main() {
     trees[side] = files;
     hashes[side] = Object.fromEntries([...files].map(([p, b]) => [p, sha(b)]));
   }
-  const html = await fs.readFile(path.join(ROOT, 'docs/evidence/fpv-garage-surfaces-harness.html'));
+  const html = await fs.readFile(
+    path.join(ROOT, 'docs/evidence/fpv-stadium-structures-harness.html'),
+  );
   const manifest = {
-    format: 'FPVGarageSurfacesFixture.v1',
+    format: 'FPVStadiumStructuresFixture.v1',
     baseline: BASELINE,
-    integratedMain: BASELINE,
-    originalBaseline: '822188e9bebdcf3d46119b48bfd0558e708eb051',
     candidate: candidate || '.',
     files: hashes,
     harnessSha256: sha(html),
     scope:
-      'Frozen unmodified source or packaged module closures; actual WebGL renderers, all 9 canonical Garage courses and 9 Snake Garage regressions, exact collision-body geometry and ray inspection, authored Operations, actual Pixel and shared Themes, three quality presets and cameras, actual GLB loading, bounded resource cycling. Static observer evidence is not gameplay or physical-device performance qualification.',
+      'Frozen unmodified source or packaged module closures; actual WebGL renderers, all 13 canonical Stadium structure courses and 14 Snake Stadium regressions, exact collision-body geometry and ray inspection, authored Pixel and shared Themes, three quality presets and cameras, actual GLB loading, bounded resource cycling. Static observer evidence is not gameplay or physical-device performance qualification.',
   };
   for (const [relative, expected] of Object.entries(hashes.after)) {
     if (sha(await fs.readFile(path.join(candidateRoot, relative))) !== expected)
@@ -172,7 +171,7 @@ async function main() {
   console.log(
     JSON.stringify({
       prepared: true,
-      url: 'http://127.0.0.1:8836/' + output + '/index.html',
+      url: 'http://127.0.0.1:8834/' + output + '/index.html',
       modules: Object.fromEntries(Object.entries(trees).map(([s, t]) => [s, t.size])),
       bytes: total,
       note: 'Run through approved browser UI. Preparation alone is not visual verification.',
