@@ -108,7 +108,7 @@ function fixture(t) {
   };
   const app = mountWorldApp({ document: doc, window: win, rendererFactory: () => renderer });
   t.after(() => app.dispose());
-  return { app, doc, rendered, $: (id) => doc.getElementById(id) };
+  return { app, doc, win, rendered, $: (id) => doc.getElementById(id) };
 }
 
 test('World app prepares a pinned appearance and queues drone/theme changes after arming', async (t) => {
@@ -303,4 +303,66 @@ test('World pre-arm appearance refresh keeps focus on the control the player is 
   assert.equal(h.rendered.at(-1).profile.id, 'industrial-workshop');
   assert.match(h.$('flight-status').textContent, /^Ready/);
   assert.equal(h.doc.activeElement, select);
+});
+
+test('World title retains connected catalogue nodes and transfers the common bar into native flight', async (t) => {
+  const h = fixture(t);
+  await h.app.ready;
+  assert.equal(h.$('worlds-shell-home-dialog').open, true);
+  assert.ok(h.doc.querySelector('#worlds-shell-home-dialog img'));
+  assert.ok(h.$('theme-tabs').isConnected);
+  h.$('worlds-shell-action-missions').click();
+  assert.equal(h.$('worlds-shell-missions-dialog').open, true);
+  assert.ok(h.$('world-grid').isConnected);
+  const entry = WORLD_CATALOGUE.find((item) => !item.legacy);
+  await h.app.startFlight(entry);
+  assert.equal(h.$('worlds-shell-home-dialog').open, false);
+  assert.equal(h.$('worlds-shell-missions-dialog').open, false);
+  assert.equal(h.$('worlds-shell-action-menu').closest('dialog'), h.$('flight-dialog'));
+  h.$('world-arm').click();
+  assert.equal(h.app.snapshot().state.status, 'active');
+  h.$('worlds-shell-action-menu').click();
+  assert.equal(h.app.snapshot().state.status, 'paused');
+  assert.equal(h.$('worlds-shell-home-dialog').open, true);
+});
+
+test('World menu Back dismisses the visible surface without closing its paused native flight', async (t) => {
+  const h = fixture(t);
+  await h.app.ready;
+  await h.app.startFlight(WORLD_CATALOGUE.find((item) => !item.legacy));
+  h.$('world-arm').click();
+  h.$('worlds-shell-action-menu').click();
+  const paused = h.app.snapshot().state;
+  const escape = (element) => {
+    element.emit('keydown', { key: 'Escape', code: 'Escape' });
+    element.emit('keyup', { key: 'Escape', code: 'Escape' });
+  };
+  h.doc.emit('keydown', { key: 'Shift', code: 'ShiftLeft' });
+  const hint = h.$('worlds-shell-home-dialog').querySelector('.sim-menu-hint');
+  const instructions = hint.textContent;
+  assert.ok(instructions.length > 0);
+  h.win.emit('blur');
+  assert.equal(hint.textContent, instructions, 'suspension must not collapse the menu hint');
+  assert.equal(hint.hidden, false);
+  h.doc.emit('keydown', { key: 'Shift', code: 'ShiftLeft' });
+  assert.equal(hint.textContent, instructions, 'input reacquisition keeps the same hint geometry');
+  // The hidden catalogue button is not the action bridge for an in-flight menu.
+  h.$('lobby-settings').click = () => assert.fail('Settings must use its shared native action');
+  h.$('worlds-shell-action-settings').click();
+  assert.equal(h.$('sim-settings').open, true);
+  assert.equal(h.$('sim-flight-controls').parentElement, h.$('sim-settings-controls'));
+  escape(h.$('sim-settings').querySelector('button'));
+  assert.equal(h.$('sim-settings').open, false);
+  assert.equal(h.$('worlds-shell-home-dialog').open, true);
+  assert.equal(h.$('flight-dialog').open, true);
+  escape(h.$('worlds-shell-action-primary'));
+  assert.equal(h.$('worlds-shell-home-dialog').open, false);
+  assert.equal(h.$('flight-dialog').open, true);
+  assert.deepEqual(h.app.snapshot().state, paused);
+
+  h.$('worlds-shell-action-menu').click();
+  h.$('flight-dialog').emit('cancel', { bubbles: false });
+  assert.equal(h.$('worlds-shell-home-dialog').open, false);
+  assert.equal(h.$('flight-dialog').open, true);
+  assert.deepEqual(h.app.snapshot().state, paused);
 });

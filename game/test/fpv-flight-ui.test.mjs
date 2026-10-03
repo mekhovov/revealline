@@ -30,6 +30,7 @@ async function fixture(
     storage,
     url = 'https://example.test/optional-practice/civilian-fpv/?lang=en',
     serviceWorker,
+    home = false,
     ...factories
   } = {},
 ) {
@@ -105,6 +106,9 @@ async function fixture(
   });
   t.after(() => view.dispose());
   await view.settled();
+  // Existing flight-domain tests enter the prepared, disarmed scene explicitly.
+  // Title-shell regressions opt in to retaining the initial menu.
+  if (!home) doc.getElementById('academy-shell-home-dialog').close();
   return {
     doc,
     win,
@@ -1162,4 +1166,35 @@ test('pause shortcuts release local controls but preserve text, dialogs and modi
   } finally {
     input.dispose();
   }
+});
+
+test('Academy shell keeps menu input out of native flight and requires explicit Start', async (t) => {
+  const f = await fixture(t, { home: true });
+  assert.equal(f.$('academy-shell-home-dialog').open, true);
+  assert.equal(f.view.snapshot().status, 'disarmed');
+  f.$('academy-shell-action-settings').click();
+  assert.equal(f.$('academy-shell-settings-dialog').open, true);
+  assert.equal(f.view.arm(), false);
+  f.tick(4);
+  assert.equal(f.view.snapshot().ticks, 0);
+  f.$('academy-shell-action-settings-back').click();
+  f.$('academy-shell-action-primary').click();
+  assert.equal(f.$('academy-shell-briefing-dialog').open, true);
+  f.$('academy-shell-action-start').click();
+  assert.equal(f.view.snapshot().status, 'active');
+  f.$('academy-flight-menu').click();
+  assert.equal(f.$('academy-shell-home-dialog').open, true);
+  assert.equal(f.view.snapshot().status, 'paused');
+  const paused = f.view.snapshot();
+  f.tick(4);
+  assert.deepEqual(f.view.snapshot(), paused);
+  const hint = f.$('academy-shell-home-dialog').querySelector('.sim-menu-hint');
+  const instructions = hint.textContent;
+  assert.ok(instructions.length > 0);
+  f.win.emit('blur');
+  assert.equal(hint.textContent, instructions, 'blur must not move the shared menu controls');
+  assert.equal(hint.hidden, false);
+  f.win.emit('focus');
+  f.tick(2);
+  assert.equal(hint.textContent, instructions);
 });

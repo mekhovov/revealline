@@ -5,6 +5,7 @@ import { actorFieldGuide, ACTOR_CASTS } from '../hunt/actor-catalog.mjs';
 import { renderEnemyFieldGuide } from '../ui/enemy-field-guide.mjs';
 import { createProfileRecordBackend } from '../profile-storage.mjs';
 import { boundedJSON, required } from '../data-json.mjs';
+import { contentStudioLinks } from '../ui/content-studio-navigation.mjs';
 import {
   CLASSIC_PACKAGE_FORMAT,
   validateClassicSnakePackage,
@@ -26,9 +27,13 @@ const el = (tag, text, attrs = {}) => {
   return node;
 };
 const nav = el('nav');
+const links = contentStudioLinks(location.href);
+const snakePlay = new URL('snake/play.html', links.game);
+snakePlay.searchParams.set('lang', language);
 nav.append(
-  el('a', words('Content Studio', 'Майстерня контенту'), { href: `./?lang=${language}` }),
-  el('a', 'Snake', { href: `../snake/?lang=${language}` }),
+  el('a', words('Main game', 'Головна гра'), { href: links.game }),
+  el('a', words('Content Studio', 'Майстерня контенту'), { href: links.studio }),
+  el('a', 'Snake', { href: snakePlay.href }),
 );
 root.append(
   nav,
@@ -598,6 +603,7 @@ for (const mode of ['solo', 'versus', 'team'])
         community: installed.identity,
         level: installed.entries[active].id,
         lang: language,
+        studio: 'snake',
       }).toString();
       location.assign(url.href);
     }),

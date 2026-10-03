@@ -1092,6 +1092,7 @@ export function bootCoop({
       modeNavigation.closeSimulator();
       return;
     }
+    if (modeNavigation.closeMore()) return;
     if (installOfflinePanel?.isOpen()) {
       installOfflinePanel.close();
       return;
