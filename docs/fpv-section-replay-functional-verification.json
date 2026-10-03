@@ -1,0 +1,103 @@
+{
+  "format": "FPVSectionReplayFunctional.v1",
+  "generatedAt": "2026-10-02T23:58:54.281Z",
+  "sourceHead": "8896c4976afec6991c0a34b31ccf28e50dfebf96",
+  "sourceFiles": {
+    "world-model.mjs": {
+      "bytes": 53026,
+      "sha256": "d6e0939daf77a2a1459687dd8ba900719b78b02a1b3fe5fab862773bd6109551"
+    },
+    "world-progress.mjs": {
+      "bytes": 7785,
+      "sha256": "bc51a58aa8e068e5e74ee8ad03b2e4dd08ca672fc6dd2bada6521e5df66de89f"
+    },
+    "world-collision.mjs": {
+      "bytes": 12256,
+      "sha256": "2899c7c84f9eae14b9a3434f585a8e873f4a1361e8f3ce4026ef27f44bdeef32"
+    },
+    "world-catalogue.mjs": {
+      "bytes": 239978,
+      "sha256": "d901363b623193f4896100f9381c7579946796e741554f012581ebb93f9ea8a6"
+    },
+    "world-demonstrations.mjs": {
+      "bytes": 2207074,
+      "sha256": "c9f2d0ee5c571507ae1dce4f48898554cb2ad179218f1905cdc8013db2e2c114"
+    }
+  },
+  "scope": "Actual fixed-step simulation and exact portable recordings. Manual functional qualifier, not new unit coverage, browser acceptance, physical controls or deployment.",
+  "passed": 7,
+  "total": 7,
+  "results": [
+    {
+      "name": "Independently replay every installed v2 recording and retain exact section boundaries",
+      "pass": true,
+      "proofs": 154,
+      "frames": 312948
+    },
+    {
+      "name": "Every recorded section restores its exact prefix and stops at the exact selected objective",
+      "pass": true,
+      "sections": 768,
+      "actorSections": 312,
+      "combatSections": 20,
+      "consumedSectionFrames": 312948,
+      "worlds": {
+        "woodland": 93,
+        "courtyard": 92,
+        "warehouse": 94,
+        "stadium": 130,
+        "container-yard": 59,
+        "field": 205,
+        "gym": 32,
+        "garage": 63
+      }
+    },
+    {
+      "name": "Interrupted, expired and failed recordings watch only reached evidence with honest incomplete metadata",
+      "pass": true,
+      "recordings": [
+        {
+          "status": "active",
+          "startTick": 5,
+          "endTick": 6
+        },
+        {
+          "status": "expired",
+          "startTick": 5,
+          "endTick": 12
+        },
+        {
+          "status": "failed",
+          "startTick": 5,
+          "endTick": 33
+        }
+      ]
+    },
+    {
+      "name": "Missing, incompatible, corrupted and unreached recordings never masquerade as section playback",
+      "pass": true,
+      "cases": 5,
+      "invalidIndices": 3
+    },
+    {
+      "name": "Watching and practice use the same recorded entry, rate profile and immutable caller evidence",
+      "pass": true,
+      "course": "woodland-01",
+      "index": 2,
+      "yields": 8
+    },
+    {
+      "name": "Cancellation during validation or prefix reconstruction returns no usable flight",
+      "pass": true,
+      "cooperativeYields": 8,
+      "abortPositions": [
+        1,
+        8
+      ]
+    },
+    {
+      "name": "Source bytes remain bound to this qualification",
+      "pass": true
+    }
+  ]
+}
