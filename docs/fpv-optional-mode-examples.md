@@ -49,9 +49,9 @@ no proof is applied to a presentation-mutated course.
   dependencies, retained-record reload, partial transaction failure, duplicate
   import, a real second-connection pin race and disposal. No uncaught errors.
 - `fpv-optional-examples-package.json`: frozen candidate
-  `ad89386f92ac5c1eebe31becf3995a16b89140d9`, all three admissions, exact committed
+  `eee011acdc6b5ed739289b0576334ef1f1d38241`, all three admissions, exact committed
   inputs/ZIP membership and two byte-identical builds. World: 102 runtime files /
-  14,500,997 bytes; source archive uses 104 files under unchanged limits.
+  14,513,098 bytes; source archive uses 104 files under unchanged limits.
 
 The source and packaged host SHA-256 is
 `52cbfac9012bf2a7127ec1cfd85142ead184166aadb8a97818d886623c7db8f2`.
@@ -74,7 +74,7 @@ then Stadium and yard/Garage art and further distinct practice worlds.
 The integrated World file-count issue is repaired by excluding three unreachable
 Academy-only modules from its package; all features/assets/licenses remain. The
 separate company engine contains zero FPV runtime files and still exceeds64MiB
-by25,634 bytes after main's Snake content integration. Whole-edition
+by292,326 bytes after main's #978 Snake content integration. Whole-edition
 qualification still requires a reviewed capacity repair; no guard was increased or bypassed.
 
 ## Recovery integration
