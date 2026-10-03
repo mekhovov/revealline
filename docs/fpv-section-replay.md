@@ -58,3 +58,16 @@ fixture also passes **51/51** checks. See [package receipt](fpv-section-replay-p
 and [packaged browser receipt](fpv-section-replay-packaged-browser-verification.json).
 Later source reconciliation is recorded separately in the delivery checkpoint.
 A local player build or open PR does not establish public availability.
+
+### Publication qualification correction — 3 October 2026
+
+Appearance preview exposed an internal radio reset that invalidated the new
+asynchronous pause guard. The reset now happens before the guard is captured;
+watched sections do not perform a hardware pickup reset. Uninterrupted full and
+section playback start automatically, while an actual pause during preparation
+is retained. The current source browser receipt passes **53/53**, including both
+autoplay cases and pause/disposal/supersession. The two affected existing test
+files pass **16/16**; the preview tampering fixture now changes compiled bytes at
+equal length so it still verifies the hash guard after whitespace projection.
+The frozen/package receipts above describe the earlier candidate; fresh CI and
+the next combined frozen candidate must qualify the corrected runtime bytes.

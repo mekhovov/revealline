@@ -604,6 +604,10 @@
           app.snapshot().course === short.entry.id && app.snapshot().sectionReplay?.startTick === 5,
           'Newer section owns the host',
         );
+        must(state().status === 'active', 'An uninterrupted section starts playback automatically');
+        await app.startFlight(copy(short.entry), { replayProof: copy(short.proof) });
+        await ready();
+        must(state().status === 'active', 'An uninterrupted full recording starts automatically');
         progress('Pausing during asynchronous preparation prevents automatic playback');
         const preparing = app.startFlight(copy(representatives[0].entry), {
           checkpoint: copy({
