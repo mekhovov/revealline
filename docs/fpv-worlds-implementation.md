@@ -1,13 +1,13 @@
 # FPV World Studio — implementation and player qualification
 
-Current continuation: **3 October 2026**, branch `codex/fpv-section-replay`.
+Current continuation: **3 October 2026**, branch `codex/fpv-tracking-objective-editor`.
 The catalogue has **14 worlds / 148 authored challenges**: the original 60,
 58 school lessons and 30 World Adventures. All 120 original mode-specific
 recordings plus 58 recommended-mode school examples are installed. Main includes
 Themes #955 and Warehouse #966. Content, reimport, ghosts, section practice,
 continuous learning, control/mobile improvements and Hangar/Meadow/Courtyard/
-Woodland/Warehouse refinements are merged. The current focused increment completes
-the recorded-section watch → practice loop. See [the current delivery plan](fpv-reviewed-delivery-plan.md)
+Woodland/Warehouse refinements are merged. The recorded-section watch → practice loop is merged as #972. The current
+focused increment adds visual Follow/Observe objective editing. See [the current delivery plan](fpv-reviewed-delivery-plan.md)
 and [delivery log](fpv-continuous-delivery.md) for exact evidence and publication.
 
 Player-feedback sessions no longer block implementation at the owner's request.
