@@ -17,6 +17,29 @@ const ADVENTURE_SURFACES = Object.freeze({
   'rail-depot': { floor: 'ballast', color: 0x777773, wall: 'metal' },
 });
 
+/** The six closed Quarry solids share one finish; creator variants stay generic. */
+export function isQuarryStrataObstacle(obstacle) {
+  const expected = {
+    'rock-west-terrace': [22000, 7000, 76000],
+    'rock-east-terrace': [22000, 9000, 76000],
+    'rock-west-rim': [8000, 16000, 82000],
+    'rock-east-rim': [8000, 19000, 82000],
+    'rock-central-spire': [12000, 20000, 12000],
+    'rock-landing-ledge': [8000, 5000, 8000],
+  }[obstacle?.id];
+  return Boolean(
+    expected &&
+      obstacle.type === undefined &&
+      obstacle.rotation === undefined &&
+      ['x', 'y', 'z'].every(
+        (axis, index) =>
+          Number.isFinite(obstacle.min?.[axis]) &&
+          Number.isFinite(obstacle.max?.[axis]) &&
+          obstacle.max[axis] - obstacle.min[axis] === expected[index],
+      ),
+  );
+}
+
 // Original procedural artwork. Textures are deterministic and entirely local;
 // only authored obstacle geometry is placed inside the flyable volume.
 export function themeForCourse(course, presentation) {
@@ -173,6 +196,31 @@ function surfacePixels(kind, color, seed, size, pixel) {
     moss = woodlandSurface ? new THREE.Color(0x576747).lerp(base, 0.3) : null,
     pale = woodlandSurface ? new THREE.Color(0x92917b).lerp(base, 0.3) : null,
     leaf = kind === 'forest-floor' ? new THREE.Color(0x82735a).lerp(base, 0.3) : null;
+  const quarryStone = kind === 'quarry-stone',
+    quarryBeds = quarryStone
+      ? Array.from({ length: size }, (_, x) =>
+          [0.1, 0.23, 0.46, 0.58, 0.82].map((level, index) => {
+            const u = x / size,
+              phase = (index + 0.5) / 6;
+            return [
+              level + (broad(u, phase) - 0.5) * 0.095 + (fine(u, phase) - 0.5) * 0.018,
+              Math.max(0, Math.min(1, (broad(u, (phase + 0.37) % 1) - 0.38) * 3)),
+            ];
+          }),
+        )
+      : null,
+    quarryTones = quarryStone ? [-0.008, 0.018, -0.015, 0.025, -0.008, -0.008] : null,
+    quarryFractures = quarryStone
+      ? [
+          [0.12, 0.06, 0.22, 0.24],
+          [0.22, 0.24, 0.15, 0.46],
+          [0.54, 0.39, 0.62, 0.59],
+          [0.79, 0.72, 0.7, 0.97],
+          [0.76, 0.85, 0.94, 0.88],
+          [0.43, 0.13, 0.56, 0.29],
+          [0.62, 0.59, 0.82, 0.63],
+        ]
+      : null;
   const meadow = kind === 'meadow-grass',
     soil = meadow ? new THREE.Color(0x75634b).lerp(base, 0.18) : null,
     dryGrass = meadow ? new THREE.Color(0xa49b68).lerp(base, 0.48) : null,
@@ -349,6 +397,35 @@ function surfacePixels(kind, color, seed, size, pixel) {
         relief += mottling * 0.09 - (seam < 0.035 ? 0.05 : 0);
         roughness = 0.92 + grain * 0.07;
       }
+      if (quarryStone) {
+        // Unequal mineral beds wander and fade along the six-metre tile.
+        // Keep the original rock grain dominant; bedding is not a colour ramp.
+        let bed = 0,
+          layer = 0,
+          fracture = 0;
+        for (const [level, strength] of quarryBeds[x]) {
+          if (v > level) layer++;
+          bed = Math.max(bed, Math.max(0, 1 - Math.abs(v - level) / 0.005) * strength);
+        }
+        for (const [ax, ay, bx, by] of quarryFractures) {
+          const dx = bx - ax,
+            dy = by - ay,
+            px = u + mottling * 0.006 - ax,
+            py = v + patch * 0.05 - ay,
+            along = Math.max(0, Math.min(1, (px * dx + py * dy) / (dx * dx + dy * dy)));
+          fracture = Math.max(
+            fracture,
+            Math.max(0, 1 - Math.hypot(px - dx * along, py - dy * along) / 0.0045),
+          );
+        }
+        shade =
+          (0.91 + grain * 0.16) * (0.95 + patch * 1.5 + mottling * 0.16) +
+          quarryTones[layer] -
+          bed * 0.13 -
+          fracture * 0.17;
+        relief = grain * 0.025 + mottling * 0.09 - bed * 0.045 - fracture * 0.04;
+        roughness = 0.92 + grain * 0.07;
+      }
       if (kind === 'ballast') {
         shade *= 0.89 + patch + mottling * 0.24 + grain * 0.2;
         relief += mottling * 0.12;
@@ -519,7 +596,11 @@ function surfacePixels(kind, color, seed, size, pixel) {
       properties[at + 3] = 255;
     }
   const reliefScale =
-    woodlandSurface || kind === 'woodland-canopy' ? size / 64 : meadow ? size / 128 : 2;
+    woodlandSurface || kind === 'woodland-canopy'
+      ? size / 64
+      : meadow || quarryStone
+        ? size / 128
+        : 2;
   for (let y = 0; y < size; y++)
     for (let x = 0; x < size; x++) {
       const at = (y * size + x) * 4;
@@ -1040,6 +1121,18 @@ export function buildWorldVisuals({
   surfaceDetail.name = 'surface-detail';
   world.add(surfaceDetail);
   const pixel = profile.textureFilter === 'nearest';
+  const quarryRocks =
+      environment === 'quarry'
+        ? (course.obstacles ?? []).filter(
+            (item) => !/^(rail-gantry|rail-car|solar-hut)-/.test(item.id ?? ''),
+          )
+        : [],
+    quarryStrata =
+      !pixel &&
+      !kit &&
+      quarryRocks.length === 6 &&
+      new Set(quarryRocks.map((item) => item.id)).size === 6 &&
+      quarryRocks.every(isQuarryStrataObstacle);
   const hangar = environment === 'gym',
     warehouse = environment === 'warehouse',
     steelCladding = hangar || warehouse;
@@ -1159,6 +1252,7 @@ export function buildWorldVisuals({
       metal: theme.wall,
       'storage-steel': theme.wall,
       stone: 0xa18a6d,
+      'quarry-stone': 0xa18a6d,
       foliage: 0x587d49,
       solar: 0x263e5d,
     };
@@ -1169,7 +1263,14 @@ export function buildWorldVisuals({
           ? 'timber'
           : kind === 'foliage'
             ? 'grass'
-            : ['concrete', 'garage-concrete', 'stadium-concrete', 'stone', 'plaster'].includes(kind)
+            : [
+                  'concrete',
+                  'garage-concrete',
+                  'stadium-concrete',
+                  'stone',
+                  'quarry-stone',
+                  'plaster',
+                ].includes(kind)
               ? 'concrete'
               : 'steel';
       const maps = kit
@@ -1183,6 +1284,34 @@ export function buildWorldVisuals({
     return obstacleSurfaces.get(kind);
   };
   const garagePaints = new Map();
+  if (environment === 'coast' && !pixel) {
+    const paints = new Map();
+    for (const obstacle of course.obstacles ?? [])
+      for (const { role, layer, geometry } of buildCoastLighthouseGeometry(obstacle)) {
+        const materialRole = role === 'pane' || role === 'trim' ? 'steel' : 'concrete';
+        if (!paints.has(role)) {
+          const colors = { shell: 0xffedcc, band: 0xd95b42, pane: 0x18313b, trim: 0xfff4db },
+            maps = kit ? { map: kit.texture(materialRole) } : obstacleSurface('concrete'),
+            paint = material(kit && role === 'band' ? theme.accent : colors[role], {
+              ...maps,
+              roughness: role === 'pane' ? 0.38 : 0.85,
+              metalness: role === 'trim' ? 0.15 : 0,
+              polygonOffset: true,
+              polygonOffsetFactor: -layer,
+              polygonOffsetUnits: -layer,
+            });
+          // Both maps already belong to this world. No actor or imported scene
+          // owns the lighthouse finish; retain paints through world disposal.
+          world.userData.ownedMaterials.push(paint);
+          paints.set(role, paint);
+        }
+        const finish = mesh(geometry, paints.get(role), world);
+        finish.name = `coast-lighthouse-${role}`;
+        finish.userData = { role: 'coast-lighthouse-landmark', materialRole, cosmeticDetail: true };
+        finish.castShadow = false;
+        finish.receiveShadow = true;
+      }
+  }
   const garageDetailMaterial = (role) => {
     if (!garagePaints.has(role)) {
       const paint = kit
@@ -1839,6 +1968,7 @@ export function buildWorldVisuals({
         return 'bark';
       if (!adventure) return null;
       if (/^(rail-gantry|rail-car|solar-hut)-/.test(id)) return 'metal';
+      if (quarryStrata && isQuarryStrataObstacle(obstacle)) return 'quarry-stone';
       if (environment === 'quarry' || /^rock-/.test(id)) return 'stone';
       if (/^tree-canopy-/.test(id)) return 'foliage';
       if (/^tree-trunk-|timber|crate/.test(id)) return 'wood';
@@ -1854,6 +1984,72 @@ export function buildWorldVisuals({
       surfaceDetail.visible = value === 'high';
     },
   };
+}
+
+/** Closed lantern panes and paint stay on the four faces of the existing tower. */
+export function buildCoastLighthouseGeometry(obstacle) {
+  if (
+    obstacle?.id !== 'coast-tower-lighthouse' ||
+    obstacle.type !== undefined ||
+    obstacle.rotation !== undefined ||
+    !['x', 'y', 'z'].every(
+      (axis, index) =>
+        Number.isFinite(obstacle.min?.[axis]) &&
+        Number.isFinite(obstacle.max?.[axis]) &&
+        obstacle.max[axis] - obstacle.min[axis] === [6000, 22000, 6000][index],
+    )
+  )
+    return [];
+  const min = Object.fromEntries(
+      Object.entries(obstacle.min).map(([key, value]) => [key, value / 1000]),
+    ),
+    max = Object.fromEntries(
+      Object.entries(obstacle.max).map(([key, value]) => [key, value / 1000]),
+    ),
+    cx = (min.x + max.x) / 2,
+    cz = (min.z + max.z) / 2,
+    batches = new Map(),
+    points = [
+      (u, y) => [cx + u, min.y + y, max.z],
+      (u, y) => [max.x, min.y + y, cz - u],
+      (u, y) => [cx - u, min.y + y, min.z],
+      (u, y) => [min.x, min.y + y, cz + u],
+    ],
+    rectangle = (role, point, left, bottom, right, top) => {
+      if (!batches.has(role)) batches.set(role, { positions: [], uv: [] });
+      const row = batches.get(role),
+        corners = [
+          [left, bottom],
+          [right, bottom],
+          [right, top],
+          [left, top],
+        ];
+      for (const index of [0, 1, 2, 0, 2, 3]) {
+        const [u, y] = corners[index];
+        row.positions.push(...point(u, y));
+        row.uv.push(u / 4, y / 4);
+      }
+    };
+  for (const point of points) {
+    rectangle('shell', point, -3, 0, 3, 22);
+    for (const bottom of [4.5, 9.5, 14.5, 21])
+      rectangle('band', point, -3, bottom, 3, Math.min(bottom + 1.3, 22));
+    rectangle('pane', point, -2.35, 18.3, 2.35, 20.7);
+    for (const bottom of [18.3, 20.58])
+      rectangle('trim', point, -2.35, bottom, 2.35, bottom + 0.12);
+    for (const left of [-2.35, -1.2, -0.06, 1.08, 2.23])
+      rectangle('trim', point, left, 18.3, left + 0.12, 20.7);
+  }
+  // A closed, solid service door faces the harbour. It never suggests a tunnel.
+  rectangle('pane', points[0], -0.85, 0.05, 0.85, 2.8);
+  rectangle('trim', points[0], 0.54, 1.1, 0.62, 1.42);
+  return [...batches].map(([role, { positions, uv }]) => {
+    const geometry = new THREE.BufferGeometry();
+    geometry.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3));
+    geometry.setAttribute('uv', new THREE.Float32BufferAttribute(uv, 2));
+    geometry.computeVertexNormals();
+    return { role, layer: ['shell', 'band', 'pane', 'trim'].indexOf(role) + 1, geometry };
+  });
 }
 
 /** Original closed-house artwork, flush with the authored box faces.

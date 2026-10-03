@@ -1038,6 +1038,9 @@ export function createFlightRenderer({
         stadiumStructureUV(shape, kind);
       else if (kind === 'bark') woodlandTrunkUV(shape, size);
       else if (kind === 'garage-concrete') garageStructureUV(shape, obstacle);
+      // Reuse the same world-metre projection so mineral beds share height
+      // across the six canonical Quarry masses; only their UVs are replaced.
+      else if (kind === 'quarry-stone') garageStructureUV(shape, obstacle);
       else if (obstacleSurface) worldScaleUV(shape);
       value = mesh(shape, paint);
       value.position.set(
@@ -1060,6 +1063,7 @@ export function createFlightRenderer({
     if (kind === 'bark') value.userData.materialRole = 'timber';
     if (kind === 'garage-concrete') value.userData.materialRole = 'concrete';
     if (kind === 'stadium-concrete') value.userData.materialRole = 'concrete';
+    if (kind === 'quarry-stone') value.userData.materialRole = 'concrete';
     value.castShadow = value.receiveShadow = true;
     if (kind === 'garage-concrete' && garageDetailMaterial)
       addGarageSurfaceDetails(value, obstacle);
