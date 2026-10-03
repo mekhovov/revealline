@@ -267,6 +267,7 @@ export function createArcadeAdapter({
   canvasFactory = defaultCanvas,
   reviewRevision = actorArtReviewRevision(),
 } = {}) {
+  if (reviewRevision === 'industrial-overhead-v2') reviewRevision = INDUSTRIAL_MATERIAL_REVISION;
   let snapshots = new WeakMap();
   const canvases = new Set();
   return {

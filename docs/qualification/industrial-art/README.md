@@ -6,10 +6,10 @@ The [implementation register](../../unified-industrial-plan.md) separates implem
 ## Open the sample
 
 Run the repository development server, then open `/authoring/industrial-art-review/`.
-The current local review server uses <http://127.0.0.1:8787/authoring/industrial-art-review/>.
-Use Pause, Facing, State and Reduced effects to compare released and candidate silhouettes at actual 16/24/32 px and enlarged sizes. EN/UK copy and native play links are provided. Each defeat preview is explicitly triggered by its labeled button.
+The current local review server uses <http://127.0.0.1:8790/authoring/industrial-art-review/>.
+Use Pause, Facing, Appearance kit, State and Reduced effects to compare previous and corrected silhouettes at actual 16/24/32 px and enlarged sizes. EN/UK copy and native play links are provided. Each defeat preview is explicitly triggered by its labeled button.
 
-The four candidates are original procedural revisions. They allocate no decoded atlas bitmap. The displayed 64/32 MiB ceiling is shared-provider capacity, not a measured process-memory number. Machine and material details are opt-in review specimens; default machinery bindings remain unchanged. Candidate 02 adds shared concrete/earth/metal samples, six deliberate audio samples and the downloadable twelve-frame Studio collection. The FPV drone, connected Retro body and destruction use existing shared renderers.
+Candidate 03 covers twelve families and three appearances using original procedural rigs; [the perspective audit](overhead-v2/README.md) records the changes, scope and limitations. Candidate 02 observations below remain historical evidence. They allocate no decoded atlas bitmap. The displayed 64/32 MiB ceiling is shared-provider capacity, not a measured process-memory number. Machine and material details are opt-in review specimens; default machinery bindings remain unchanged. Candidate 02 adds shared concrete/earth/metal samples, six deliberate audio samples and the downloadable twelve-frame Studio collection. The FPV drone, connected Retro body and destruction use existing shared renderers.
 
 ![Released and candidate character specimens](character-comparison.jpg)
 
@@ -55,7 +55,7 @@ Automated regression sources cover bounded decoding, cancellation, sharing, atla
 - Measured low-end frame rate/peak memory and simultaneous two-board effects.
 - Pause/Retry/restore/seeking across all represented modes, completed pinned-seed routes and human play review.
 
-The plan requires Phase C approval before full-roster/36-appearance mass production. Independent engine, recording and private-room correctness work can proceed.
+The all-family corrected overhead rig is a perspective review, not approval of full-roster/36-appearance production artwork. The plan still requires Phase C approval before mass production. Independent engine, recording and private-room correctness work can proceed.
 
 ## Source gates for candidate 02
 

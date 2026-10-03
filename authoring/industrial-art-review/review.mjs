@@ -1,7 +1,7 @@
 import { createHuntDestruction, drawHuntRemains } from '../../game/hunt/destruction.mjs';
 import { exportJSONFile } from '../../game/platform.mjs';
-import { drawHuntActor, INDUSTRIAL_ACTOR_SAMPLES } from '../../game/hunt/actor-art.mjs';
-import { actorDefinition } from '../../game/hunt/actor-catalog.mjs';
+import { drawHuntActor, OVERHEAD_ACTOR_SAMPLES } from '../../game/hunt/actor-art.mjs';
+import { actorDefinition, ACTOR_FAMILIES, ACTOR_CASTS } from '../../game/hunt/actor-catalog.mjs';
 import {
   drawClassicDrone,
   drawClassicCable,
@@ -23,12 +23,13 @@ let paused = false,
   clock = 0,
   last = null,
   flight;
-const rows = Object.keys(INDUSTRIAL_ACTOR_SAMPLES).map((family) => {
+const rows = ACTOR_FAMILIES.map(({ id: family }) => {
   const row = document.createElement('article'),
     title = document.createElement('h2'),
+    rules = document.createElement('p'),
     pair = document.createElement('div');
   pair.className = 'actor-pair';
-  const panels = ['released', 'industrial-pilot-v1'].map((revision) => {
+  const panels = ['industrial-pilot-v1', 'industrial-overhead-v2'].map((revision) => {
     const panel = document.createElement('div'),
       label = document.createElement('h3'),
       canvas = document.createElement('canvas');
@@ -36,22 +37,22 @@ const rows = Object.keys(INDUSTRIAL_ACTOR_SAMPLES).map((family) => {
     pair.append(panel);
     return { revision, label, canvas };
   });
-  row.append(title, pair);
+  row.append(title, rules, pair);
   $('actors').append(row);
-  return { family, title, panels };
+  return { family, title, rules, panels };
 });
 const copy = {
   en: {
     text: {
       'page-title': 'Industrial field kit',
-      eyebrow: 'ORIGINAL ART · REVIEW CANDIDATE 02',
+      eyebrow: 'ORIGINAL ART · OVERHEAD REVIEW 03',
       'nav-studio': 'Asset Studio',
       'nav-motion': 'Motion Lab',
       'nav-guide': 'Enemy field guide',
       intro:
-        'Transparent overhead silhouettes, readable equipment and stronger motion. This sample awaits artistic approval and does not replace saved appearances.',
+        'Directly overhead bodies: helmet crowns overlap shoulders, equipment sits on the back or sides, and short strides stay on the ground plane. Compare every family and direction before approving the new artwork.',
       sizes:
-        'Each row: released → candidate; actual 16 / 24 / 32 px and enlarged. Dark and light grounds are comparison surfaces, not sprite backgrounds.',
+        'All 12 families, with three appearance kits. Previous → corrected overhead; actual 16 / 24 / 32 px, enlarged, and all eight headings. Comparison grounds are separate from the transparent sprites.',
       'hardware-title': 'Flight and machinery',
       'hardware-note':
         'Existing FPV rig and connected body; candidate surface detail on the utility car and tank. Vehicle shapes retain their current game rules.',
@@ -66,7 +67,7 @@ const copy = {
       'effects-title': 'Defeat treatments',
       'play-title': 'Review in the native game',
       scope:
-        'These links opt into four overhead character samples and the Military Field material sample. Other character families retain released artwork. Native SIM models and complete chapter adoption have separate review gates.',
+        'Board links use the corrected overhead rig for all twelve families, shared by Capture, Snake and Studio. Native SIM retains its separate 3D models. The preview does not change collision, speed, weapons or vulnerability.',
       'studio-title': 'Animation authoring in Studio',
       'studio-copy':
         'Import the review collection into a separate Studio workspace, select enemy.bouncer, then open Actor animation · advanced → Load current actor. The original transparent atlas contains twelve 32×32 poses (48 KiB decoded). Native movement, warning, recovery and blocked states select admitted clips. Notice and caught remain Studio previews for this actor. Export/import retains both the atlas and its original parent.',
@@ -75,6 +76,7 @@ const copy = {
       'atlas-guide': 'Import and review instructions',
       'atlas-provenance': 'Artwork provenance and exact sizes',
       'facing-label': 'Facing',
+      'cast-label': 'Appearance kit',
       'state-label': 'State',
       'reduced-label': 'Reduced effects',
       'language-label': 'Language',
@@ -101,8 +103,8 @@ const copy = {
     states: ['Moving', 'Notice', 'Warning', 'Recovery', 'Blocked'],
     pause: 'Pause motion',
     resume: 'Resume motion',
-    released: 'Released',
-    candidate: 'Candidate',
+    released: 'Previous · angled figure',
+    candidate: 'Corrected · directly overhead',
     links: [
       'Capture Solo',
       'Capture Versus',
@@ -118,14 +120,14 @@ const copy = {
   uk: {
     text: {
       'page-title': 'Промисловий польовий набір',
-      eyebrow: 'ОРИГІНАЛЬНІ РЕСУРСИ · КАНДИДАТ 02',
+      eyebrow: 'ОРИГІНАЛЬНІ РЕСУРСИ · ВИГЛЯД ЗГОРИ 03',
       'nav-studio': 'Студія ресурсів',
       'nav-motion': 'Лабораторія руху',
       'nav-guide': 'Довідник ворогів',
       intro:
-        'Прозорі силуети згори, помітне спорядження та виразніший рух. Зразок очікує художнього схвалення й не замінює збережений вигляд.',
+        'Персонажі прямо згори: верх шолома перекриває плечі, спорядження розташоване на спині або збоку, короткі кроки йдуть площиною землі. Порівняйте всі родини й напрямки перед схваленням нового вигляду.',
       sizes:
-        'У кожному рядку: поточний → кандидат; справжні 16 / 24 / 32 пікселі та збільшення. Світлі й темні поверхні призначені для порівняння, це не тло спрайтів.',
+        'Усі 12 родин у трьох комплектах спорядження. Попередній → виправлений вигляд згори; справжні 16 / 24 / 32 пікселі, збільшення та всі вісім напрямків. Порівняльні поверхні відокремлені від прозорих спрайтів.',
       'hardware-title': 'Політ і техніка',
       'hardware-note':
         'Наявний FPV-дрон і з’єднане тіло; пробна деталізація автомобіля й танка. Ігрові правила техніки не змінюються.',
@@ -140,7 +142,7 @@ const copy = {
       'effects-title': 'Ефекти знищення',
       'play-title': 'Перегляд у грі',
       scope:
-        'Посилання вмикають чотири пробні персонажі згори та матеріали Military Field. Інші родини зберігають поточний вигляд. Моделі SIM і цілі розділи мають окреме схвалення.',
+        'Посилання на поля вмикають виправлений вигляд згори всіх дванадцяти родин у Захопленні, Змійці та Студії. Нативний SIM зберігає окремі 3D-моделі. Перегляд не змінює зіткнення, швидкість, зброю чи вразливість.',
       'studio-title': 'Створення анімації у Студії',
       'studio-copy':
         'Імпортуйте пробну колекцію в окремий простір Студії, оберіть enemy.bouncer, відкрийте розширену анімацію та завантажте поточного персонажа. Оригінальний прозорий атлас містить дванадцять поз 32×32 (48 КіБ після декодування). Рух, попередження, відновлення та блокування обирають відповідні кліпи. Помічання та знищення тут доступні як перегляд у Студії. Експорт та імпорт зберігають атлас і оригінал.',
@@ -149,6 +151,7 @@ const copy = {
       'atlas-guide': 'Інструкції імпорту та перегляду',
       'atlas-provenance': 'Походження ресурсів і точні розміри',
       'facing-label': 'Напрямок',
+      'cast-label': 'Комплект спорядження',
       'state-label': 'Стан',
       'reduced-label': 'Менше ефектів',
       'language-label': 'Мова',
@@ -175,8 +178,8 @@ const copy = {
     states: ['Рух', 'Помітив', 'Попередження', 'Відновлення', 'Заблокований'],
     pause: 'Зупинити рух',
     resume: 'Продовжити рух',
-    released: 'Поточний',
-    candidate: 'Кандидат',
+    released: 'Попередній · похила фігура',
+    candidate: 'Виправлений · прямо згори',
     links: [
       'Захоплення соло',
       'Захоплення проти',
@@ -267,6 +270,12 @@ function language() {
   const locale = $('language').value,
     words = copy[locale];
   document.documentElement.lang = locale;
+  for (const id of ['nav-studio', 'nav-motion', 'nav-guide']) {
+    const url = new URL($(id).getAttribute('href'), location.href);
+    url.searchParams.set('artReview', 'industrial-overhead-v2');
+    url.searchParams.set('lang', locale);
+    $(id).href = url.href;
+  }
   $('actors').setAttribute('aria-label', words.labels.actors);
   $('hardware').setAttribute('aria-label', words.labels.hardware);
   document.querySelector('.atlas-sheet').alt = words.labels.atlas;
@@ -283,6 +292,9 @@ function language() {
     option.textContent = words.treatments[i];
   });
   updateAudio();
+  [...$('cast').options].forEach((option) => {
+    option.textContent = ACTOR_CASTS.find((entry) => entry.id === option.value).name[locale];
+  });
   [...$('heading').options].forEach((option, i) => {
     option.textContent = words.headings[i];
   });
@@ -291,9 +303,21 @@ function language() {
   });
   $('pause').textContent = paused ? words.resume : words.pause;
   for (const row of rows) {
-    row.title.textContent = actorDefinition(row.family)?.name?.[locale] ?? row.family;
+    const definition = actorDefinition(row.family);
+    row.title.textContent = definition?.name?.[locale] ?? row.family;
+    const engines = Object.entries(definition.capabilities)
+      .filter(([, value]) => value)
+      .map(
+        ([engine]) =>
+          ({
+            capture: locale === 'uk' ? 'Захоплення' : 'Capture',
+            snake: locale === 'uk' ? 'Змійка' : 'Snake',
+            flight: 'SIM (3D)',
+          })[engine],
+      );
+    row.rules.textContent = `${engines.join(' · ')}. ${definition.guide[locale].counter}`;
     for (const panel of row.panels) {
-      const label = panel.revision === 'released' ? words.released : words.candidate;
+      const label = panel.revision === 'industrial-pilot-v1' ? words.released : words.candidate;
       panel.label.textContent = label;
       panel.canvas.setAttribute(
         'aria-label',
@@ -306,7 +330,7 @@ function language() {
     ...paths.map((path, i) => {
       const link = document.createElement('a'),
         url = new URL(path, location.href);
-      url.searchParams.set('artReview', 'industrial-pilot-v1');
+      url.searchParams.set('artReview', i === 5 ? 'industrial-pilot-v1' : 'industrial-overhead-v2');
       url.searchParams.set('appearanceFamily', 'military-field');
       url.searchParams.set('appearanceRevision', 'r1');
       url.searchParams.set('lang', locale);
@@ -330,7 +354,7 @@ $('pause').onclick = () => {
   language();
 };
 $('export').onclick = () =>
-  void exportJSONFile(INDUSTRIAL_ACTOR_SAMPLES, 'industrial-pilot-animations.json');
+  void exportJSONFile(OVERHEAD_ACTOR_SAMPLES, 'industrial-overhead-v2-animations.json');
 
 const vehicles = ['enemy.bouncer', 'enemy.eroder'].map((slot) => {
   const pixels = militaryFieldPixels({ width: 32, height: 32 }, slot, {
@@ -399,7 +423,7 @@ function draw(now) {
     for (const panel of row.panels) {
       const width = Math.max(160, Math.floor(panel.canvas.parentElement.clientWidth)),
         stacked = width < 380,
-        height = stacked ? 244 : 180;
+        height = stacked ? 390 : 320;
       if (panel.canvas.width !== width || panel.canvas.height !== height) {
         panel.canvas.width = width;
         panel.canvas.height = height;
@@ -427,7 +451,7 @@ function draw(now) {
         }
         drawHuntActor(ctx, x, y, size, Math.floor(clock / 100), {
           family: row.family,
-          cast: 'tactical',
+          cast: $('cast').value,
           artRevision: panel.revision,
           heading: $('heading').value,
           state: $('state').value,
@@ -440,6 +464,39 @@ function draw(now) {
         ctx.font = '12px sans-serif';
         ctx.fillText(`${size}px`, x, y + size + 22);
       }
+      const compassY = stacked ? 276 : 204;
+      ['up', 'right', 'down', 'left'].forEach((heading, index) => {
+        const x = 16 + index * 64;
+        drawHuntActor(ctx, x, compassY, 32, Math.floor(clock / 100), {
+          family: row.family,
+          cast: $('cast').value,
+          artRevision: panel.revision,
+          heading,
+          state: $('state').value,
+          phase: $('state').value === 'warning' ? 'warning' : undefined,
+          timeMs: clock,
+          reducedEffects: reduced,
+          armed: row.family === 'guard',
+        });
+        ctx.fillStyle = '#b8c9c8';
+        ctx.fillText(['↑', '→', '↓', '←'][index], x + 12, compassY - 8);
+      });
+      ['↗', '↘', '↙', '↖'].forEach((symbol, index) => {
+        const x = 16 + index * 64;
+        drawHuntActor(ctx, x, compassY + 56, 32, Math.floor(clock / 100), {
+          family: row.family,
+          cast: $('cast').value,
+          artRevision: panel.revision,
+          facingRadians: Math.PI / 4 + (index * Math.PI) / 2,
+          state: $('state').value,
+          phase: $('state').value === 'warning' ? 'warning' : undefined,
+          timeMs: clock,
+          reducedEffects: reduced,
+          armed: row.family === 'guard',
+        });
+        ctx.fillStyle = '#b8c9c8';
+        ctx.fillText(symbol, x + 12, compassY + 48);
+      });
     }
   }
   const ctx = $('hardware').getContext('2d');

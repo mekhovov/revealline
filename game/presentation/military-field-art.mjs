@@ -54,6 +54,7 @@ export function drawMilitaryVehicleMotion(ctx, frame, role, diameter) {
 /** No clocks, randomness, physics or DOM access. Keep the original sprite frame
  * and pivot while using transparent air around every vehicle silhouette. */
 export function militaryFieldPixels({ width, height }, slot, { revision = null } = {}) {
+  if (revision === 'industrial-overhead-v2') revision = INDUSTRIAL_MATERIAL_REVISION;
   const role = MILITARY_FIELD_ROLES[slot];
   if (!role) return null;
   if (revision === INDUSTRIAL_MATERIAL_REVISION && INDUSTRIAL_TERRAIN_MATERIALS[slot])

@@ -180,8 +180,8 @@ export function actorArtReviewRevision(location = globalThis.location) {
   try {
     const params = new URL(location.href).searchParams;
     return params.getAll('artReview').length === 1 &&
-      params.get('artReview') === 'industrial-pilot-v1'
-      ? 'industrial-pilot-v1'
+      ['industrial-pilot-v1', 'industrial-overhead-v2'].includes(params.get('artReview'))
+      ? params.get('artReview')
       : null;
   } catch {
     return null;

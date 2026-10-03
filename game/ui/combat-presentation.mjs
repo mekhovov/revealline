@@ -152,11 +152,20 @@ export function createCombatPresentation({
         const drawing = actor.kind
           ? {
               ...actor,
+              // Ordinary prey rotates once at its world position below. Keep
+              // its cached body north-facing even when successor pursuit state
+              // carries a heading; only specialists bake their armored front.
+              pursuit:
+                actor.pursuit && !specialist
+                  ? { ...actor.pursuit, heading: 'up', nextHeading: null }
+                  : actor.pursuit,
               state,
               frozen: view.frozen,
               reducedEffects: !!options.reduced,
               locomotionPhase: pose / 6,
-              timeMs: pose * 300,
+              // Movement descriptors contain six 100 ms stride frames. Using
+              // idle's 300 ms cadence here aliases every step to a neutral pose.
+              timeMs: pose * (moving ? 100 : 300),
               facingRadians: specialist ? actor.facingRadians : 0,
               heading: specialist ? actor.pursuit.heading : 'up',
             }

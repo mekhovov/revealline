@@ -1490,6 +1490,7 @@ function frame(now) {
       ? review.frames[i][Math.min(review.frames[i].length - 1, Math.floor(review.time / 240))]
       : run;
     drawClassicBoard(boards[i].canvas, shown, {
+      attemptKey: review ?? match,
       effects: review ? null : effects[i],
       ...choice,
       showRemains: remains.snapshot().showRemains,
