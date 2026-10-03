@@ -1,4 +1,8 @@
-import { NATIVE_PURSUIT_CATALOGUE, NATIVE_PURSUIT_PLAYLIST } from './native-pursuit-courses.mjs';
+import {
+  NATIVE_PURSUIT_CATALOGUE,
+  NATIVE_PURSUIT_V2_CATALOGUE,
+  NATIVE_PURSUIT_PLAYLIST,
+} from './native-pursuit-courses.mjs';
 import { dataIdentity } from '../../game/data-json.mjs';
 import { FLIGHT_COURSES } from './catalogue.mjs';
 import { SNAKE_HUNT_CATALOGUE, SNAKE_HUNT_PLAYLISTS } from './snake-hunt-catalogue.mjs';
@@ -1631,6 +1635,7 @@ export const ADVENTURE_CATALOGUE = Object.freeze(
 
 export const WORLD_CATALOGUE = Object.freeze([
   ...SNAKE_HUNT_CATALOGUE,
+  ...NATIVE_PURSUIT_V2_CATALOGUE,
   ...NATIVE_PURSUIT_CATALOGUE,
   ...ADVENTURE_CATALOGUE,
   ...FLIGHT_COURSES.map((course, index) => ({

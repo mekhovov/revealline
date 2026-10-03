@@ -120,6 +120,7 @@ function workerFixture({ corrupt = false, quota = false, existing = false, stall
     },
     caches: {
       keys: async () => [...stores.keys()],
+      match: async (url, { cacheName }) => stores.get(cacheName)?.get(url)?.clone(),
       delete: async (name) => {
         deleted.push(name);
         return stores.delete(name);

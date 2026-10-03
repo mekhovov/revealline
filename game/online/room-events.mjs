@@ -49,6 +49,28 @@ export function createRoomEventCursor() {
   };
 }
 
+/** Browser audio activation can finish after reconnect/Ready. Retire its mixer
+ * transition on suspension; an older promise must never pause a newer owner. */
+export function createRoomAudioActivation({ sound, active, onEnabled }) {
+  let epoch = 0;
+  return Object.freeze({
+    async enable() {
+      const owner = ++epoch;
+      const enabled = await sound.enable();
+      if (owner !== epoch) return;
+      if (!active()) {
+        sound.pause();
+        return;
+      }
+      if (enabled) onEnabled();
+    },
+    suspend() {
+      epoch++;
+      sound.suspend();
+    },
+  });
+}
+
 /** The shared Team painter reads run.status as its pause clock. Room pause is
  * transport-owned, so project it without overwriting the authoritative run.
  * A new/recovered view primes its event tick silently; settled state is kept. */

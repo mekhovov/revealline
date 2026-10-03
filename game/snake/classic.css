@@ -578,19 +578,48 @@ body[data-mode='versus'] #boards[data-arrangement='paired'] {
     font-size: 12px;
   }
 }
-@media (max-height: 500px) and (orientation: landscape) and (pointer: coarse) {
+/* In a short viewport the pads flank the field, preserving its height. This
+   also covers windowed keyboards/hybrid devices with visible touch controls. */
+@media (max-height: 500px) and (orientation: landscape) and (max-width: 899px),
+  (max-height: 500px) and (orientation: landscape) and (pointer: coarse) {
   .arena {
-    grid-template: auto minmax(0, 1fr) / minmax(0, 1fr) auto;
+    grid-template: auto minmax(0, 1fr) / auto minmax(0, 1fr) auto;
   }
   .level-strip {
     grid-column: 1 / -1;
   }
-  #pads {
-    flex-direction: column;
-    align-self: center;
+  #boards {
+    grid-area: 2 / 2;
   }
-  .pad {
+  #pads {
+    display: contents;
+  }
+  #pads > div {
+    grid-row: 2;
+    align-self: center;
+    opacity: var(--snake-pad-opacity);
+  }
+  #pads > div:first-child {
+    grid-column: 1;
+  }
+  #pads > div:last-child {
+    grid-column: 3;
+  }
+  .pad,
+  body:not([data-mode='solo']) .pad {
     --pad: 44px;
+  }
+  body[data-mode='solo'] .arena {
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+  body[data-mode='solo'] #boards {
+    grid-column: 1;
+  }
+  body[data-mode='solo'] #pads > div {
+    grid-column: 2;
+  }
+  .board-stats {
+    flex-wrap: wrap;
   }
 }
 @media (prefers-reduced-motion: reduce) {

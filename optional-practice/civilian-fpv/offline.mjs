@@ -1,21 +1,10 @@
-import { prepareOptionalOffline, removeOptionalInstallation } from '../install-context.mjs';
+import { prepareOptionalOffline, removeOptionalOffline } from '../install-context.mjs';
 export const PRACTICE_CACHE_PREFIX = 'revealline.optional.package.v1:';
 export const practiceCachePrefix = (location) =>
   `${PRACTICE_CACHE_PREFIX}${new URL('./', location.href).pathname}:`;
 export function preparePracticeOffline(options = {}) {
   return prepareOptionalOffline({ packageId: 'civilian-fpv', ...options });
 }
-export async function removePracticeOffline({
-  packageId = 'civilian-fpv',
-  navigator = globalThis.navigator,
-  caches = globalThis.caches,
-  location = globalThis.location,
-  storage = globalThis.localStorage,
-} = {}) {
-  const base = new URL('./', location.href);
-  const registration = await navigator?.serviceWorker?.getRegistration(base.href);
-  if (registration?.scope === base.href) await registration.unregister();
-  for (const name of (await caches?.keys?.()) ?? [])
-    if (name.startsWith(practiceCachePrefix(location))) await caches.delete(name);
-  removeOptionalInstallation({ packageId, location, storage });
+export function removePracticeOffline(options = {}) {
+  return removeOptionalOffline({ packageId: 'civilian-fpv', ...options });
 }

@@ -128,6 +128,25 @@
         >
         <details>
           <summary data-word="displaySettings"></summary>
+          <div id="snake-display-reading">
+            <label
+              ><span data-i18n="interface:textStyle">Text style</span
+              ><select id="snake-text-face">
+                <option value="pixel" data-i18n="interface:themeFont">Theme font</option>
+                <option value="plain" data-i18n="common:text.plain">Plain</option>
+              </select></label
+            >
+            <label
+              ><span data-i18n="interface:textSize">Text size</span
+              ><select id="snake-text-size">
+                <option value="standard" data-i18n="interface:display.textSize.standard">
+                  Standard
+                </option>
+                <option value="large" data-i18n="interface:large">Large</option>
+              </select></label
+            >
+            <p id="snake-display-status" class="micro-note" role="status"></p>
+          </div>
           <label
             ><span data-word="boardAppearance"></span
             ><select id="board-style">

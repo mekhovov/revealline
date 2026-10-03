@@ -50,6 +50,8 @@ import {
   PURSUIT_COURSE,
   WORLD_VEHICLE_MODELS,
   PURSUIT_MODEL,
+  PURSUIT_MODEL_V2,
+  pursuitModel,
   PURSUIT_RULES,
   validateFlightPursuit,
   admitFlightPursuit,
@@ -888,7 +890,10 @@ export function createWorldFlight({
   const rules = source.rules;
   const contactHunt = huntContact(source, mode);
   const contactTargets = new Set(contactHunt?.targets ?? []);
-  const pursuit = source.format === PURSUIT_COURSE ? createPursuitController(source.pursuit) : null;
+  const pursuit =
+    source.format === PURSUIT_COURSE
+      ? createPursuitController(source.pursuit, source.actors)
+      : null;
   const pursuitPolicies = new Map((source.pursuit?.actors ?? []).map((p) => [p.id, p]));
   const couriers = new Set(
     (source.pursuit?.actors ?? []).filter((p) => p.family === 'courier').map((p) => p.id),
@@ -898,7 +903,11 @@ export function createWorldFlight({
   delete gameplay.environment;
   delete gameplay.world;
   const identity = Object.freeze({
-    model: pursuit ? PURSUIT_MODEL : contactHunt ? HUNT_FLIGHT_MODEL : WORLD_FLIGHT_MODEL,
+    model: pursuit
+      ? pursuitModel(source.pursuit)
+      : contactHunt
+        ? HUNT_FLIGHT_MODEL
+        : WORLD_FLIGHT_MODEL,
     backend: WORLD_COLLISION_BACKEND,
     course: source.id,
     courseIdentity: dataIdentity(gameplay),
@@ -1505,7 +1514,9 @@ export function createWorldRecorder(flight, { session = 'practice', prefix = [] 
         'Unrecorded flight ticks cannot be exported',
       );
       return {
-        format: flight.identity.model === PURSUIT_MODEL ? 'FlightAttempt.v3' : 'FlightAttempt.v2',
+        format: [PURSUIT_MODEL, PURSUIT_MODEL_V2].includes(flight.identity.model)
+          ? 'FlightAttempt.v3'
+          : 'FlightAttempt.v2',
         session,
         ...flight.identity,
         response: flight.response(),

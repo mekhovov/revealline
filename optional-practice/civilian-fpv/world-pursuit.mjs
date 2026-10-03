@@ -4,6 +4,10 @@ import { isqrt, roundDiv } from './math.mjs';
 export const PURSUIT_COURSE = 'FlightCourse.v3';
 export const PURSUIT_MODEL = 'civilian-world-pursuit.v1';
 export const PURSUIT_FORMAT = 'FlightPursuit.v1';
+export const PURSUIT_MODEL_V2 = 'civilian-world-pursuit.v2';
+export const PURSUIT_FORMAT_V2 = 'FlightPursuit.v2';
+export const pursuitModel = (source) =>
+  source.format === PURSUIT_FORMAT_V2 ? PURSUIT_MODEL_V2 : PURSUIT_MODEL;
 export const WORLD_VEHICLE_MODELS = Object.freeze([
   'field-utility',
   'cargo-truck',
@@ -52,7 +56,10 @@ const heading = (from, to) => {
 /** Only accepted graph data controls native pursuit. No imported AI or input prediction. */
 export function validateFlightPursuit(value, course) {
   exactKeys(value, ['format', 'nodes', 'edges', 'actors'], 'flight pursuit');
-  required(value.format === PURSUIT_FORMAT, 'Unsupported flight pursuit policy');
+  required(
+    [PURSUIT_FORMAT, PURSUIT_FORMAT_V2].includes(value.format),
+    'Unsupported flight pursuit policy',
+  );
   required(
     Array.isArray(value.nodes) && value.nodes.length >= 2 && value.nodes.length <= 64,
     'Pursuit needs 2–64 graph nodes',
@@ -165,6 +172,7 @@ export function validateFlightPursuit(value, course) {
         pair[0].goals[0] === pair[1].goals[0],
       'Rendezvous needs exactly two actors sharing one reachable meeting node',
     );
+  if (value.format === PURSUIT_FORMAT_V2) pairArrivals(value, course.actors, graphFor(value));
   return value;
 }
 
@@ -241,13 +249,13 @@ function graphFor(source) {
     links.get(to).push(from);
   }
   for (const list of links.values()) list.sort(compare);
-  function distances(start) {
+  function distances(start, excluded = null) {
     const result = new Map([...nodes.keys()].map((id) => [id, id === start ? 0 : Infinity]));
-    const remaining = new Set(nodes.keys());
+    const remaining = new Set([...nodes.keys()].filter((id) => id !== excluded));
     while (remaining.size) {
       const id = [...remaining].sort((a, b) => result.get(a) - result.get(b) || compare(a, b))[0];
       remaining.delete(id);
-      for (const next of links.get(id))
+      for (const next of links.get(id).filter((next) => next !== excluded))
         result.set(
           next,
           Math.min(result.get(next), result.get(id) + distance(nodes.get(id), nodes.get(next))),
@@ -255,16 +263,137 @@ function graphFor(source) {
     }
     return result;
   }
+  const route = (from, to, excluded = null) => {
+    const costs = distances(to, excluded),
+      path = [];
+    if (from === excluded || !Number.isFinite(costs.get(from))) return null;
+    while (from !== to) {
+      from = links
+        .get(from)
+        .filter((id) => id !== excluded)
+        .sort(
+          (a, b) =>
+            costs.get(a) +
+              distance(nodes.get(from), nodes.get(a)) -
+              costs.get(b) -
+              distance(nodes.get(from), nodes.get(b)) || compare(a, b),
+        )[0];
+      path.push(from);
+      if (path.length > nodes.size) return null;
+    }
+    return path;
+  };
   return {
     nodes,
     links,
     distances,
+    route,
     nearest: (position) =>
       [...nodes.keys()].sort(
         (a, b) =>
           distance(nodes.get(a), position) - distance(nodes.get(b), position) || compare(a, b),
       )[0],
   };
+}
+
+const pointSegmentDistance = (point, start, end) => {
+  const dx = end.x - start.x,
+    dz = end.z - start.z,
+    length = dx * dx + dz * dz;
+  const t = length
+    ? Math.max(0, Math.min(1, ((point.x - start.x) * dx + (point.z - start.z) * dz) / length))
+    : 0;
+  return Math.hypot(point.x - start.x - t * dx, point.z - start.z - t * dz);
+};
+const segmentDistance = (a, b, c, d) => {
+  const cross = (one, two, three) =>
+    (two.x - one.x) * (three.z - one.z) - (two.z - one.z) * (three.x - one.x);
+  if (cross(a, b, c) * cross(a, b, d) < 0 && cross(c, d, a) * cross(c, d, b) < 0) return 0;
+  return Math.min(
+    pointSegmentDistance(a, c, d),
+    pointSegmentDistance(b, c, d),
+    pointSegmentDistance(c, a, b),
+    pointSegmentDistance(d, a, b),
+  );
+};
+const separateApproaches = (first, second, clearance) => {
+  // A stationary participant still owns its body's footprint at the meeting.
+  if (first.length === 1) first = [first[0], first[0]];
+  if (second.length === 1) second = [second[0], second[0]];
+  return first
+    .slice(1)
+    .every((end, index) =>
+      second
+        .slice(1)
+        .every((other, i) => segmentDistance(first[index], end, second[i], other) >= clearance),
+    );
+};
+
+/** V2 pairs reserve a meeting node and a separate point on an admitted approach
+ * edge. Their complete XZ approach corridors must remain body-separated. Reject unworkable meetings during authoring, not during a flight. */
+function pairArrivals(source, actors, graph) {
+  const result = new Map(),
+    pairs = new Map();
+  for (const policy of source.actors)
+    if (policy.family === 'rendezvous-pair')
+      pairs.set(policy.pair, [...(pairs.get(policy.pair) ?? []), policy]);
+  for (const pair of pairs.values()) {
+    const meeting = pair[0].goals[0];
+    pair.sort(
+      (a, b) => Number(b.start === meeting) - Number(a.start === meeting) || compare(a.id, b.id),
+    );
+    const [first, second] = pair,
+      firstPath = new Set([first.start, ...graph.route(first.start, meeting)]);
+    const firstBody = actors.find((actor) => actor.id === first.id),
+      secondBody = actors.find((actor) => actor.id === second.id),
+      separation = firstBody.radius + secondBody.radius + 100,
+      firstRoute = [...firstPath].map((id) => graph.nodes.get(id));
+    const stoppingPoint = (node) => {
+      const from = graph.nodes.get(node),
+        target = graph.nodes.get(meeting),
+        length = horizontal(from, target);
+      return Object.fromEntries(
+        axes.map((axis) => [
+          axis,
+          target[axis] + roundDiv((from[axis] - target[axis]) * separation, length),
+        ]),
+      );
+    };
+    const options = graph.links
+      .get(meeting)
+      .map((node) => ({
+        node,
+        path: graph.route(second.start, node, meeting),
+      }))
+      .filter(
+        ({ node, path }) =>
+          path &&
+          !firstPath.has(second.start) &&
+          !path.some((id) => firstPath.has(id)) &&
+          !firstPath.has(node) &&
+          horizontal(graph.nodes.get(node), graph.nodes.get(meeting)) > separation + 60 &&
+          separateApproaches(
+            firstRoute,
+            [second.start, ...path].map((id) => graph.nodes.get(id)).concat(stoppingPoint(node)),
+            separation - 40,
+          ),
+      );
+    options.sort(
+      (a, b) =>
+        graph.distances(a.node, meeting).get(second.start) -
+          graph.distances(b.node, meeting).get(second.start) || compare(a.node, b.node),
+    );
+    required(
+      options.length,
+      'Rendezvous needs two clear, separate graph approaches to its meeting',
+    );
+    const approach = options[0].node,
+      target = graph.nodes.get(meeting),
+      position = stoppingPoint(approach);
+    result.set(first.id, { node: meeting, meeting, position: target, excluded: null });
+    result.set(second.id, { node: approach, meeting, position, excluded: meeting });
+  }
+  return result;
 }
 
 export function createPursuitActorState(policy, source) {
@@ -298,9 +427,11 @@ export function pursuitContactProtected(actor, playerPosition) {
   );
 }
 
-export function createPursuitController(source) {
+export function createPursuitController(source, actors = []) {
+  const successor = source.format === PURSUIT_FORMAT_V2;
   const graph = graphFor(source),
-    policies = new Map(source.actors.map((p) => [p.id, p]));
+    policies = new Map(source.actors.map((p) => [p.id, p])),
+    arrivals = successor ? pairArrivals(source, actors, graph) : new Map();
   const allDistances = new Map([...graph.nodes.keys()].map((id) => [id, graph.distances(id)]));
   const toward = (node, goal) => {
     const d = allDistances.get(goal);
@@ -340,6 +471,43 @@ export function createPursuitController(source) {
       p.phase = 'idle';
       p.phaseTicks = 0;
       p.decision = 0;
+      if (successor) {
+        if (p.arrived && arrivals.get(actor.id).excluded) p.next = arrivals.get(actor.id).meeting;
+        delete p.arrived;
+        delete p.meetingUntil;
+      }
+    }
+    if (successor && p.family === 'rendezvous-pair') {
+      const arrival = arrivals.get(actor.id);
+      const partner = state.actors.find(
+        (other) =>
+          other.id !== actor.id &&
+          other.status === 'active' &&
+          policies.get(other.id)?.pair === policy.pair,
+      );
+      if (horizontal(actor.position, arrival.position) <= 30) p.arrived = true;
+      if (p.arrived && partner.pursuit.arrived && p.meetingUntil === undefined) {
+        p.meetingUntil = state.ticks + 80;
+        partner.pursuit.meetingUntil = p.meetingUntil;
+      }
+      if (p.meetingUntil !== undefined) {
+        p.phaseTicks = Math.max(0, p.meetingUntil - state.ticks);
+        p.phase = p.phaseTicks ? 'recovering' : 'waiting';
+        return 0;
+      }
+      if (p.arrived) {
+        p.phase = 'waiting';
+        return 0;
+      }
+      p.goal = arrival.meeting;
+      if (!p.next) {
+        if (p.node === arrival.node) p.next = arrival.meeting;
+        else p.next = graph.route(p.node, arrival.node, arrival.excluded)[0];
+        const target = p.next === arrival.meeting ? arrival.position : graph.nodes.get(p.next);
+        p.heading = heading(actor.position, target);
+      }
+      p.phase = 'committed';
+      return 1500;
     }
     if (p.phaseTicks > 0) p.phaseTicks--;
     if (p.decision > 0) p.decision--;
@@ -369,7 +537,10 @@ export function createPursuitController(source) {
       p.phase = 'committed';
       p.decision = 40;
     }
-    if (p.family === 'switchback' && p.phase === 'warning') {
+    if (
+      (p.family === 'switchback' || (successor && p.family === 'refuge-seeker')) &&
+      p.phase === 'warning'
+    ) {
       if (p.phaseTicks > 0) return 0;
       p.phase = 'committed';
       p.decision = 25;
@@ -394,9 +565,12 @@ export function createPursuitController(source) {
           ? flee()
           : graph.links.get(p.node)[state.ticks % graph.links.get(p.node).length];
       else if (p.family === 'refuge-seeker') {
-        p.goal = [...policy.goals].sort(
-          (a, b) => fromPlayer.get(b) - fromPlayer.get(a) || compare(a, b),
-        )[0];
+        const committed = successor && p.phase === 'committed' && p.goal !== p.node;
+        const choices = successor ? policy.goals.filter((id) => id !== p.node) : policy.goals;
+        if (!committed)
+          p.goal = [...(choices.length ? choices : policy.goals)].sort(
+            (a, b) => fromPlayer.get(b) - fromPlayer.get(a) || compare(a, b),
+          )[0];
       } else if (p.family === 'rendezvous-pair') p.goal = policy.goals[0];
       else if (p.family === 'switchback') {
         const choices = graph.links.get(p.node).filter((id) => id !== p.previous);
@@ -423,7 +597,10 @@ export function createPursuitController(source) {
         return 0;
       }
       p.heading = nextHeading;
-      if (p.family === 'switchback') {
+      if (
+        p.family === 'switchback' ||
+        (successor && p.family === 'refuge-seeker' && p.phase !== 'committed')
+      ) {
         p.phase = 'warning';
         p.phaseTicks = 40;
         return 0;
@@ -438,7 +615,9 @@ export function createPursuitController(source) {
         speed = plan(actor, state, collision);
       actor.blocked = false;
       if (!speed || !p.next) return;
-      const target = graph.nodes.get(p.next),
+      const arrival = successor && p.family === 'rendezvous-pair' ? arrivals.get(actor.id) : null;
+      const target =
+          arrival && p.next === arrival.meeting ? arrival.position : graph.nodes.get(p.next),
         delta = Object.fromEntries(axes.map((k) => [k, target[k] - actor.position[k]]));
       const length = Math.max(1, distance(target, actor.position)),
         travel = Math.min(length, speed / 50);
@@ -466,8 +645,13 @@ export function createPursuitController(source) {
       actor.position = candidate;
       if (horizontal(candidate, target) <= 30 && Math.abs(candidate.y - target.y) <= 220) {
         p.previous = p.node;
-        p.node = p.next;
+        if (!arrival?.excluded || p.next !== arrival.meeting) p.node = p.next;
         p.next = null;
+        if (arrival && horizontal(target, arrival.position) <= 30) {
+          p.arrived = true;
+          p.phase = 'waiting';
+          return;
+        }
         if (p.node === p.goal) {
           if (p.family === 'courier') {
             p.delivered++;

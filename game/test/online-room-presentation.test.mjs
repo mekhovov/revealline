@@ -2,7 +2,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { attachRoomSupport } from '../online/room-controls.mjs';
-import { createRoomBoardPresentation } from '../online/room-events.mjs';
+import { createRoomAudioActivation, createRoomBoardPresentation } from '../online/room-events.mjs';
 import { createCoopCaptureFeedback } from '../couch/coop-terrain-trail.mjs';
 import { createTeamOutcomeFeedback } from '../couch/coop-outcome-presentation.mjs';
 
@@ -105,6 +105,52 @@ test('room Support respects native menu editing and non-Team Space pause ownersh
   document.fire('keydown', { repeat: true });
   assert.equal(state.pauses, 1);
   support.dispose();
+});
+
+test('a delayed room audio unlock cannot silence a newer Ready activation', async () => {
+  const pending = [],
+    calls = [];
+  let active = true;
+  const activation = createRoomAudioActivation({
+    sound: {
+      enable: () => new Promise((resolve) => pending.push(resolve)),
+      pause: () => calls.push('pause'),
+      suspend: () => calls.push('suspend'),
+    },
+    active: () => active,
+    onEnabled: () => calls.push('enabled'),
+  });
+  const previous = activation.enable();
+  active = false;
+  activation.suspend();
+  active = true;
+  const current = activation.enable();
+  pending[1](true);
+  await current;
+  pending[0](true);
+  await previous;
+  assert.deepEqual(calls, ['suspend', 'enabled']);
+  const abandoned = activation.enable();
+  active = false;
+  activation.suspend();
+  pending[2](true);
+  await abandoned;
+  assert.deepEqual(calls, ['suspend', 'enabled', 'suspend']);
+});
+
+test('room activation keeps audio paused while the second Ready is pending', async () => {
+  const calls = [];
+  const activation = createRoomAudioActivation({
+    sound: {
+      enable: async () => true,
+      pause: () => calls.push('pause'),
+      suspend: () => calls.push('suspend'),
+    },
+    active: () => false,
+    onEnabled: () => calls.push('enabled'),
+  });
+  await activation.enable();
+  assert.deepEqual(calls, ['pause']);
 });
 
 const teamRun = () => ({

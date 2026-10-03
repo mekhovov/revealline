@@ -15,7 +15,7 @@ const sourceHashes = {
   'optional-practice/civilian-fpv/world-actor-editor.mjs':
     'c50efa46f36f0464e3e16dcf0795ff409f31ba0fa03218cdc306f403c2ed3349',
   'optional-practice/civilian-fpv/world-pursuit-editor.mjs':
-    '170a9ee6dd9bfa2bfe77f900d243a38df35b5620f1d18794be88ffdbad7cf723',
+    'c1ab754353a095a4c6206d4d353e0d500fd30440d2ed73b2aa426d0ec9b75270',
   'optional-practice/civilian-fpv/world-progress.mjs':
     'f3e8dd54fa7dd4d4ad6d66d07fcdbda2604b50694a808310d6351c3a51a075cd',
   'optional-practice/civilian-fpv/world-hunt-reactions.mjs':
@@ -1566,7 +1566,7 @@ modules['optional-practice/civilian-fpv/world-hangar.mjs'] = (() => {
 })();
 modules['optional-practice/civilian-fpv/world-pursuit-editor.mjs'] = (() => {
   const PURSUIT_COURSE = external4['PURSUIT_COURSE'];
-  const PURSUIT_FORMAT = external4['PURSUIT_FORMAT'];
+  const PURSUIT_FORMAT_V2 = external4['PURSUIT_FORMAT_V2'];
   const PURSUIT_FAMILIES = external4['PURSUIT_FAMILIES'];
 
   /** Remove policy ownership with the same transaction as native actor/objective edits. */
@@ -1612,7 +1612,7 @@ modules['optional-practice/civilian-fpv/world-pursuit-editor.mjs'] = (() => {
     if (nodes.length > 2) edges.push({ from: nodes.at(-1).id, to: nodes[0].id });
     course.format = PURSUIT_COURSE;
     course.pursuit = {
-      format: PURSUIT_FORMAT,
+      format: PURSUIT_FORMAT_V2,
       nodes,
       edges,
       actors: [{ id, family, start: nodes[0].id, goals: nodes.map((node) => node.id), pair: null }],
@@ -1666,8 +1666,8 @@ modules['optional-practice/civilian-fpv/world-pursuit-editor.mjs'] = (() => {
     const explanation = el(
       'p',
       text(
-        `Graph: at most 64 nodes / 128 undirected edges, millimetres. Policies: ${PURSUIT_FAMILIES.join(', ')}. Each actor starts at its node; clear its ordinary path. Required targets remain in Contact Hunt objectives; couriers must be optional. Rendezvous uses two actors with the same pair ID and one identical goal. All edits below apply together.`,
-        `Граф: до 64 вузлів / 128 ненапрямлених ребер, міліметри. Політики: ${PURSUIT_FAMILIES.join(', ')}. Персонаж починає у своєму вузлі без звичайного маршруту. Обов’язкові цілі залишаються в завданнях полювання; кур’єри необов’язкові. Пара має спільний pair та одну однакову ціль. Усі зміни застосовуються разом.`,
+        `Graph: at most 64 nodes / 128 undirected edges, millimetres. Policies: ${PURSUIT_FAMILIES.join(', ')}. Each actor starts at its node; clear its ordinary path. Required targets remain in Contact Hunt objectives; couriers must be optional. Rendezvous uses two actors with the same pair ID and one identical goal. V2 requires separate graph approaches for their bodies; refuge goals remain committed through intermediate nodes. All edits below apply together.`,
+        `Граф: до 64 вузлів / 128 ненапрямлених ребер, міліметри. Політики: ${PURSUIT_FAMILIES.join(', ')}. Персонаж починає у своєму вузлі без звичайного маршруту. Обов’язкові цілі залишаються в завданнях полювання; кур’єри необов’язкові. Пара має спільний pair та одну однакову ціль. V2 потребує окремих підходів для тіл; ціль укриття зберігається між проміжними вузлами. Усі зміни застосовуються разом.`,
       ),
     );
     const input = el('textarea');
@@ -1700,6 +1700,24 @@ modules['optional-practice/civilian-fpv/world-pursuit-editor.mjs'] = (() => {
         'Незастосовані зміни. Застосуйте їх перед редагуванням інших панелей.',
       );
     });
+    if (course.pursuit.format !== PURSUIT_FORMAT_V2)
+      panel.append(
+        button(
+          text('Upgrade to committed pursuit v2', 'Оновити до узгодженого переслідування v2'),
+          () => {
+            if (dirty) {
+              status.textContent = text(
+                'Apply or discard graph edits before upgrading.',
+                'Застосуйте або скасуйте зміни графа перед оновленням.',
+              );
+              return;
+            }
+            return change((next) => {
+              next.pursuit.format = PURSUIT_FORMAT_V2;
+            });
+          },
+        ),
+      );
     panel.append(
       explanation,
       input,
