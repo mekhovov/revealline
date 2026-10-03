@@ -2361,3 +2361,55 @@
     min-height: 44px;
   }
 }
+
+/* Earned community clips use the same picture-sized stage as the win reveal. */
+.earned-video-dialog {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100dvh;
+  max-width: none;
+  max-height: none;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  overflow: hidden;
+}
+.earned-video-dialog::backdrop {
+  background: transparent;
+}
+.earned-video-close {
+  position: absolute;
+  top: max(1rem, env(safe-area-inset-top));
+  right: max(1rem, env(safe-area-inset-right));
+  z-index: 3;
+}
+.reward-media-cinematic {
+  position: absolute;
+  inset: 0;
+}
+.reward-media-cinematic > img,
+.reward-media-cinematic > video {
+  position: absolute;
+  inset: 0;
+  height: 100%;
+  object-fit: contain;
+}
+.reward-media-cinematic > div,
+.reward-media-cinematic > p,
+.reward-media-cinematic > details {
+  position: relative;
+  z-index: 2;
+  width: fit-content;
+  max-width: calc(100% - 2rem);
+  margin: 0.5rem 1rem;
+  background: #070914d9;
+}
+.reward-media-cinematic > div {
+  margin-top: max(1rem, env(safe-area-inset-top));
+}
+.reward-media-cinematic > details[open] {
+  max-height: 40vh;
+  overflow: auto;
+}
