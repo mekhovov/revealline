@@ -2246,43 +2246,6 @@ recovery guidance on a separate branch from current main. Preserve pending
 editor CI/review and current qualification receipts while progressing that item.
 
 
-### Matching-mode optional examples — 3 October 2026
-
-Independent branch **codex/fpv-optional-mode-examples**, based on main7d64e9ba8.
-Main Snake#973 adds24challenges; current catalogue172challenges/14worlds/58school
-lessons. Original178bundled demonstrations remain byte-identical. Fourteen
-Self-level foundation examples are now generated/replayed/exported/imported and
-replayed again, as a260391-byte optional archive outside the core download.
-Player instructions and the archive are in
-`authoring/fpv-worlds/demonstrations/optional/`.
-
-Source and immutable packaged hosts each pass109/109 actual HTTP/WebGL checks.
-This uncovered and repaired appearance-derived course lookup hiding lesson
-examples: lab and Watch now use their exact authored source/recorded presentation
-without changing player preferences. Imported examples are replay-verified, never
-award progress, preserve pins including a concurrent-tab pin, and disappear from
-Watch when removed. School/catalogue Watch follows selected flight mode.
-
-Frozen candidate d4e27bd9400b0e5b872cbf0a019a52e2b048ff25 passes all three optional
-admissions, committed inputs/ZIP checks and two identical builds. World102runtime
-files/14476115bytes and104sourcefiles fit unchanged limits. Required closure
-cleanup commit6086768bb removes only three unreachable inherited modules from
-World admission. Academy and Civilian Flight retain their original dependencies.
-See `docs/fpv-optional-mode-examples.md` and its bound receipts. No unit coverage,
-physical-device, offline-network, novice-session or sustained-FPS claim.
-
-Recovery PR#977 is assigned the already authorized milestone57. Its sole automatic
-unallocated hold was removed after verifying that scheduling requirement. The
-remote owner merged main into that branch atdb272c51c; preserve it. Its updated
-optional-package failure is the same file-count issue fixed by6086768bb. The
-company edition remains independently over64MiB by25634bytes, with zero FPV
-runtime modules in that engine closure. Keep the guard and publication hold;
-do not change immutable assets or global release authority as a shortcut.
-
-Next: finish focused publication/recovery package repair, then60optional Adventure
-examples and Stadium/yard/Garage art. Player feedback remains nonblocking.
-
-
 ### Pack removal and exact recovery — 3 October 2026
 
 Section replay #972 is merged. The independently published Follow/Observe
@@ -2377,3 +2340,154 @@ remote state before later integration. No public deployment claim for #977.
 Next independent work is matching-mode school demonstrations and bounded
 optional example import/selection. Player feedback remains nonblocking; physical
 radio, novice acceptance and named-device performance remain unverified.
+
+
+### Matching-mode optional examples — 3 October 2026
+
+Independent branch **codex/fpv-optional-mode-examples**, based on main7d64e9ba8.
+Main Snake#973 adds24challenges; current catalogue172challenges/14worlds/58school
+lessons. Original178bundled demonstrations remain byte-identical. Fourteen
+Self-level foundation examples are now generated/replayed/exported/imported and
+replayed again, as a260391-byte optional archive outside the core download.
+Player instructions and the archive are in
+`authoring/fpv-worlds/demonstrations/optional/`.
+
+Source and immutable packaged hosts each pass109/109 actual HTTP/WebGL checks.
+This uncovered and repaired appearance-derived course lookup hiding lesson
+examples: lab and Watch now use their exact authored source/recorded presentation
+without changing player preferences. Imported examples are replay-verified, never
+award progress, preserve pins including a concurrent-tab pin, and disappear from
+Watch when removed. School/catalogue Watch follows selected flight mode.
+
+Frozen candidate d4e27bd9400b0e5b872cbf0a019a52e2b048ff25 passes all three optional
+admissions, committed inputs/ZIP checks and two identical builds. World102runtime
+files/14476115bytes and104sourcefiles fit unchanged limits. Required closure
+cleanup commit6086768bb removes only three unreachable inherited modules from
+World admission. Academy and Civilian Flight retain their original dependencies.
+See `docs/fpv-optional-mode-examples.md` and its bound receipts. No unit coverage,
+physical-device, offline-network, novice-session or sustained-FPS claim.
+
+Recovery PR#977 is assigned the already authorized milestone57. Its sole automatic
+unallocated hold was removed after verifying that scheduling requirement. The
+remote owner merged main into that branch atdb272c51c; preserve it. Its updated
+optional-package failure is the same file-count issue fixed by6086768bb. The
+company edition remains independently over64MiB by25634bytes, with zero FPV
+runtime modules in that engine closure. Keep the guard and publication hold;
+do not change immutable assets or global release authority as a shortcut.
+
+Next: finish focused publication/recovery package repair, then60optional Adventure
+examples and Stadium/yard/Garage art. Player feedback remains nonblocking.
+
+
+
+### Recovery merged; matching-mode examples published — 3 October 2026
+
+Recovery #977 merged at main f0d950864df3dd0de3960d398f5f40e7457de3ac.
+The owner merged the newer Snake content first; that history is preserved.
+Pages run37090715866 succeeded and the public marker identifies that exact main.
+Browser launch remains separately required before claiming live availability.
+
+Matching-mode examples are published as [PR #979](https://github.com/mekhovov/revealline/pull/979),
+initial head9aba53763c95a242b9a21adffacaae255c9f674a, attached to this chat and
+assigned the existing milestone57. Its local player build is
+`dist/fpv-optional-examples-playtest`, ZIP SHA256
+`8550173bd2954b49e5e9a56314b755eae4b6a47111d6ac9618fb190926d20568`.
+The optional14-example archive is imported through Library; it is not silently
+installed into player records. Main recovery was merged into this independent
+branch to resolve the new host conflict. Fresh combined qualification follows.
+
+The three-module closure correction ships in #979; #977 is already closed and
+will not be rewritten. Main's company edition remains25634bytes over64MiB.
+Optional-package success does not imply whole-edition capacity or release readiness.
+
+Public verification: opened the actual deployed World Studio and completed the
+Starting grid Self-level demonstration at26.6s with no browser error entries.
+Pages run37090715866 and public marker both identify f0d950864, which contains
+#977. Recovery is therefore live; #979 remains a separate pending PR. Screenshot:
+`/tmp/fpv-public-recovery-20261003.png`. This launch does not qualify company
+edition capacity or physical input hardware.
+
+### Concurrent main preserved; optional examples requalified — 3 October 2026
+
+The owner concurrently updated #979 to a4221046c with main #978. Both remote
+commits are preserved by a normal merge; no force-push or native-stack retarget
+was used. Main now has184challenges (36Snake Hunt) in14worlds. The source and
+runtime World archives remain within unchanged104-file/16MiB limits: frozen
+candidate eee011acdc6b5ed739289b0576334ef1f1d38241 has102runtime files /
+14513098bytes and104source files, all three admissions and two identical builds.
+
+Source/package examples are being rerun with an explicit Ready-state wait before
+the lab click. One early-click qualification run paused on initial reduced-motion
+publication while renderer preparation finished; no timeout or proof check was
+relaxed. Preserve that failed receipt at /tmp/fpv-optional-examples-source-6-failure.json.
+The complete source recovery flow passes90/90 on this same runtime graph.
+
+The latest observed company candidate after #978 is921files/67401190bytes,
+292326bytes over64MiB (run37091698383). This supersedes the25634-byte observation;
+no FPV package limit or whole-edition guard has been changed. A public launch was
+verified at f0d950864; later main deployment must be checked separately.
+
+Next content is prepared in /tmp/fpv-adventure-example-audit:60Adventure proofs,
+byte-identical to prior qualified proof envelopes, all complete/replayed and
+export/import/replayed. Six optional world archives or one combined archive are
+available. They still need a maintained exporter, player instructions and actual
+browser import/playback qualification before a separate focused PR. None are
+silently added to the core178examples. Continue Stadium/yard/Garage art after
+this bounded data increment. Human feedback remains nonblocking.
+
+Final combined verification: source and immutable packaged examples109/109 each,
+recovery90/90 each, three completed and three interrupted recordings replayed
+with matching identities. The fixture now waits for the visible Ready state and
+initial host frame before starting the example; production replay checks are
+unchanged. Host SHA25652cbfac9012bf2a7127ec1cfd85142ead184166aadb8a97818d886623c7db8f2.
+Fresh local build: `dist/fpv-optional-examples-current-playtest`,94files/
+14355327bytes, ZIP6126d9fd523e62a82cc4b76a185a278cec0f03c6650f89a328b0da48a5dc5661.
+This development player includes the preserved #977/#978 main work and #979.
+
+
+### Optional examples merged; focused recovery-refresh follow-up — 3 October 2026
+
+The owner merged #979 at a6775a478cd9bfcbbd968ab247af7bfa307ec570 while final
+integration evidence was being recorded. The merge included remote a4221046c.
+The later forward push7bfcbf032 preserved all owner commits but happened after
+that closure; it does not put the final12-line recovery-read fix on main.
+The follow-up therefore lives independently on `codex/fpv-example-recovery-refresh`,
+merged with current main. Its runtime delta only keeps fresh example records/cache
+and rendered Library available when the independent interrupted-session read
+fails, then reports that error while retaining known recovery data.
+
+An explicit native IndexedDB session-read-abort scenario is being added to the
+existing browser workflow before publishing that small fix. Preserve #979 as
+merged; do not reopen or rewrite it. Optional14-example delivery is already in
+main, but its public deployment/launch has not yet been checked.
+
+Follow-up candidate9ca502490094d7c9db8b5d66fae6c90d7895eea3: source and immutable
+packaged examples each pass117/117, including the native session-read abort and
+retained recovery checks. All three frozen optional admissions pass, exact
+committed inputs/ZIP members verified, two byte-identical builds; unchanged
+World102runtime/104sourcefiles and14513098bytes. Package recovery90/90 receipts
+remain bound to the identical runtime files and all retained proofs replay.
+Source/packaged receipts have been refreshed; no human/device/performance claim.
+Only three superseded reproducible /tmp qualification bundle directories were
+removed under disk pressure; their committed receipts and player builds remain.
+The current frozen bundle is /tmp/fpv-example-recovery-refresh-qualified-01.
+
+### Recovery-refresh follow-up published — 3 October 2026
+
+[PR #981](https://github.com/mekhovov/revealline/pull/981) is published and attached,
+initial head7278451eca86a18c8b0dd2948296ba27ce6eea60, milestone57. It is independent
+against main because parents #977/#979 are merged; no native stack is needed.
+Source/package117/117 and combined recovery90/90 evidence is committed. Current
+local player remains `dist/fpv-optional-examples-current-playtest` and uses the
+same qualified production host. Public launch verified #977; #979/#981 public
+availability is not yet claimed. Checks were running at publication, with an
+older cancelled workflow's release-ready failure superseded by the scheduled
+run still in progress; do not interpret that observation as a passed gate.
+
+Next: inspect exact current head/checks and main deployment once; preserve owner
+updates. Continue the60optional Adventure example delivery from current main on
+a separate branch while #981 publication runs. The generator/archives/audit are
+in /tmp/fpv-adventure-example-audit; choose six world downloads, add maintained
+export safeguards, run actual import/playback, then publish a focused PR. No
+unit coverage or human feedback prerequisite is added. Remaining artwork is
+Stadium, container yard and Garage; remaining new distinct worlds and H/R7 follow.

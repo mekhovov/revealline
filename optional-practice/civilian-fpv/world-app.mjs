@@ -2494,14 +2494,22 @@ export function mountWorldApp({
         }
       }
     }
-    if (recordStore) {
-      [records, recovery] = await Promise.all([recordStore.list(), recordStore.session()]);
-    }
+    if (recordStore) records = await recordStore.list();
     demonstrationCache = new WeakMap();
+    let recoveryError = null;
+    if (recordStore) {
+      try {
+        recovery = await recordStore.session();
+      } catch (error) {
+        recoveryError = error;
+      }
+    }
+    if (disposed) return;
     renderFilters();
     renderCatalogue();
     renderPlaylist();
     renderPacks();
+    if (recoveryError) throw recoveryError;
   }
   function dependencyAvailable(packIdentity, courseId) {
     return catalogue.some((entry) => entry.packIdentity === packIdentity && entry.id === courseId);
