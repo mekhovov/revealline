@@ -16,7 +16,6 @@ import {
 } from './pack-indexes.mjs';
 import { SOUNDTRACK_BUNDLED_ASSETS } from '../game/content/soundtrack-catalogue.mjs';
 import { generatedBrandIcons } from './brand-icons.mjs';
-import { writeBuildEntry } from './build-entry-writer.mjs';
 import {
   isOptionalSpatialAudioBody,
   isOptionalReactionVoiceBody,
@@ -649,8 +648,6 @@ export async function addOfflineEntries(
   publicationProfile = null,
 ) {
   if (!entries.some((e) => e.name === 'game/offline.mjs')) return;
-  const { projectDefaultRuntimeMetadata } = await import('./default-runtime-metadata.mjs');
-  await projectDefaultRuntimeMetadata(root, entries);
   if (optionalArtwork) {
     const { verifyOptionalArtworkEntries } = await import('./optional-artwork.mjs');
     verifyOptionalArtworkEntries(optionalArtwork, entries);
@@ -758,7 +755,17 @@ export async function addOfflineEntries(
       .filter(
         (entry) =>
           (entry.name.startsWith('game/demo-data/') && entry.name.endsWith('.replay.json')) ||
-          entry.name === 'game/ui/art/menu-scenes/droneaid-main-background.webp',
+          entry.name === 'game/ui/art/menu-scenes/droneaid-main-background.webp' ||
+          // The current Social Drone reward uses the mobile-prepared v2 clip.
+          // Keep v1 hosted for retained presentations without charging every
+          // offline installation for both versions of the same recording.
+          entry.name === 'game/editions/assets/social-drone/sky-watch-v1.mp4' ||
+          // Creator examples are fetched only when the player explicitly opens
+          // one in Studio; the downloadable pack remains hosted and exact.
+          entry.name === 'game/creator/examples/social-drone-sky-watch.rlpack' ||
+          // Motion Lab source sheets are authoring inputs, while the prepared
+          // runtime artwork remains in the core game. Load sources on demand.
+          entry.name.startsWith('authoring/motion-lab/assets/'),
       )
       .map((entry) => entry.name),
     // Recorded spatial effects stay hosted for online play and exact optional
@@ -1113,7 +1120,7 @@ export async function buildProject({
     for (const entry of entries) {
       const target = path.join(staging, entry.name);
       await fs.mkdir(path.dirname(target), { recursive: true });
-      await writeBuildEntry(path.join(root, entry.name), target, entry.bytes);
+      await fs.writeFile(target, entry.bytes);
     }
     await fs.writeFile(path.join(staging, 'distribution.zip'), zip);
     await fs.writeFile(
