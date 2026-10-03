@@ -1,0 +1,90 @@
+{
+  "format": "FPVWoodlandTreeFormsMergeQualification.v1",
+  "date": "2026-10-03T16:21:27.651Z",
+  "base": "822188e9bebdcf3d46119b48bfd0558e708eb051",
+  "scope": "Read-only Node checks of merged source; no new browser, GPU, device or public-deployment claim.",
+  "sourceSha256": {
+    "world-visuals.mjs": "1ba59e90056afce60209a9f2c3094582f33d435032a96f5fb14769299eacdff3",
+    "world-assets.mjs": "13a5711d9002e0eefb91c9899d02f7ded9b11d0fc6755c8957f9d5dbcb61cac7"
+  },
+  "procedural": [
+    {
+      "course": "woodland-08",
+      "theme": "authored",
+      "crownInstances": 330,
+      "branchInstances": 198,
+      "verticesWithinEnvelopes": 85932,
+      "disposedResources": 145
+    },
+    {
+      "course": "woodland-08",
+      "theme": "pixel",
+      "crownInstances": 66,
+      "branchInstances": 0,
+      "verticesWithinEnvelopes": 15840,
+      "disposedResources": 130
+    },
+    {
+      "course": "woodland-08",
+      "theme": "industrial-workshop",
+      "crownInstances": 66,
+      "branchInstances": 0,
+      "verticesWithinEnvelopes": 15840,
+      "disposedResources": 131
+    },
+    {
+      "course": "beginner-40",
+      "theme": "authored",
+      "crownInstances": 330,
+      "branchInstances": 198,
+      "verticesWithinEnvelopes": 85932,
+      "disposedResources": 145
+    },
+    {
+      "course": "beginner-40",
+      "theme": "pixel",
+      "crownInstances": 66,
+      "branchInstances": 0,
+      "verticesWithinEnvelopes": 15840,
+      "disposedResources": 130
+    },
+    {
+      "course": "beginner-40",
+      "theme": "industrial-workshop",
+      "crownInstances": 66,
+      "branchInstances": 0,
+      "verticesWithinEnvelopes": 15840,
+      "disposedResources": 131
+    }
+  ],
+  "imported": [
+    {
+      "course": "woodland-08",
+      "verticesOutsideArena": 16080,
+      "placements": 52,
+      "minClearanceMetres": 1.200001691845351
+    },
+    {
+      "course": "beginner-40",
+      "verticesOutsideArena": 16080,
+      "placements": 52,
+      "minClearanceMetres": 1.200001691845351
+    }
+  ],
+  "templateRuntimeEqual": true,
+  "existingChecks": {
+    "passed": 29,
+    "total": 30,
+    "outstanding": "Shared-theme enamel uniqueness: 16 motifs for 17 collections, unchanged main; repair tracked by PR #999."
+  },
+  "package": {
+    "format": "FPVPlaytestBuild.v1",
+    "entry": "optional-practice/fpv-worlds/index.html",
+    "files": 94,
+    "bytes": 15388669,
+    "zipSha256": "cca7ace51fa8fe6d77ae85b1ffb7cb653e4f0519312105b58f149847e96f391f",
+    "qualification": "development-playtest",
+    "unitTests": "deferred-to-final-phase",
+    "releaseQualified": false
+  }
+}
