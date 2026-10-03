@@ -52,6 +52,26 @@ Quality presets must preserve collision, relevant sight lines and objective acto
 Measure frame times, loading and resource disposal before claiming performance.
 No multiplayer, online publishing or universal commercial-map conversion is added.
 
+### Quarry continuation checkpoint — 4 October 2026
+
+Courtyard #1012 and Warehouse #1014 are merged and now have actual public-player
+render/arm/pause observations at marker `0aeb0c2b4342715ba9a19b976114d7d905fed7bd`,
+with empty warning/error logs. Coastal lighthouse #1015 is published ready at
+`3de9318f7e4e99c53832e3b480febfb64bee469d`: source/package browser
+qualification with 97 checks and 56 image pairs, ten fresh retained-proof replays / 41,868 ticks, three package
+admissions and the complete 102-file local admitted player are documented there.
+Its protected CI/merge and later public deployment remain separate.
+
+Quarry's next bounded candidate improves the six existing rock solids with
+world-aligned authored strata and fine fractures. It changes no collision volume,
+route or geometry, and creates no additional texture set. Pixel, shared Themes
+and unsupported creator layouts retain their prior finish. Actual visual review
+and functional qualification decide readiness; no finished-world or hardware
+claim follows from surface detail alone. Continue the remaining D2 worlds before
+D3 examples/coaching, D4 creator, D5's four worlds and D6 additional unit coverage.
+The catalogue remains 196 unique challenges / 14 worlds: 60 original, 30 Adventure,
+48 Snake Hunt and 58 School, with 374 authored steps. D5 still targets 228 / 18.
+
 ### Latest delivery priority — 3 October 2026, evening
 
 This checkpoint supersedes the dated pending statuses below; older evidence remains historical.
