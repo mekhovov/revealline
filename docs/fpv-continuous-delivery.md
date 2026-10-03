@@ -2220,3 +2220,12 @@ native stack was created. The 53-check section receipt is integration evidence
 for the preserved combined candidate, not a claim that pending #972 is on main.
 Fresh standalone source/package qualification follows this rebase. Next item
 remains pack-removal impact and recovery guidance.
+
+Standalone editor candidateaa05d0b93 passes all three frozen optional admissions,
+exact committed inputs/ZIP members and two identical builds. World Studio99files/
+14,451,645bytes remains inside104files/16MiB. Fresh source and fresh packaged
+browser workflows each pass63/63, and the exact UI-authored data completes and
+replays in both modes. Dedicated build: `dist/fpv-tracking-editor-main-playtest`.
+The earlier combined build remains `dist/fpv-tracking-editor-playtest`; it includes
+pending section replay and is preserved separately. Native stacks remain unused
+because both focused features can merge independently.
