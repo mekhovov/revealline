@@ -56,12 +56,22 @@ All 30 existing acceptance, texture and workshop checks, changed-file lint/forma
 syntax and template/runtime equality pass. The bounded current-main browser
 fixture has 27 source files / 5,450,028 bytes read directly from this committed
 tree. Its source manifest and functional receipt are retained separately from the
-historical browser evidence. Fresh browser review is pending.
+historical browser evidence.
+
+The frozen current-main browser review passed on candidate `9a3cae088` against
+`2dbbe0a0`: actual GLTFLoader checks preserve 52 placements and 16,080 clear
+vertices in both arenas. Sampled calls/triangles remain 24/2,594 for Woodland-08
+and 22/2,342 for Beginner-40. Five Pixel override forms retain exact GLB bytes.
+The side-by-side views were inspected: corrected planters darken with coherent
+surface response and bench wood keeps readable contrast. This is the bounded
+fixture's material/clearance evidence, not a production lifecycle, artist or
+hardware FPS acceptance. Its receipt and screenshot retain the original candidate
+identity.
 
 The all-three source-bound optional admission attempt currently fails with
 `Optional package exceeds its byte budget.` The same failure affects #996 after
 Garage integration; shared capacity repair is being handled independently.
-Keep #1001 draft until normal admission and browser review pass. Sparse local
+Keep #1001 draft until normal admission passes; the scoped browser review is complete. Sparse local
 full global validation also remains incomplete because unrelated content packs
 are absent; current exact-head CI must establish it. No guard or assertion is
 weakened, and no new unit, physical-device FPS, human-art or live claim is made.
