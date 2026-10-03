@@ -108,9 +108,40 @@ modules match both the admitted ZIP and player; compared with source, only the
 intentionally generated locale catalogue differs. Candidate/playtest/packaged
 fixture directories retain suffix `c452dd215` under `dist/`.
 
-Packaged browser and actual-player observations remain pending at this checkpoint.
-No Courtyard PR is published before those observations pass. `publicEligible`
-and `releaseQualified` remain false in the local candidate/player receipts;
-these are not public-deployment identities.
+The actual packaged browser passes all 261 checks / 163 image pairs. Its complete
+check and image-sample arrays equal the accepted source arrays exactly. Packaged
+receipt SHA-256: `0eb9d1723b14aeb986bbff22cb8b7ca50f6257a7912455f7ada1179c4054e4fc`.
+The actual Courtyard welcome player rendered both finished facades, armed,
+advanced flight ticks and paused. The retained screenshot captures its rendered
+0.4-second flight. These observations qualify this bounded art increment; they
+are not a finished-world or physical-device performance claim.
+
+## Current-main integration
+
+Main's Woodland composition #996 merged at
+`e40809f25ea8fe248dea6f8443876d811d21a777` and was integrated normally as
+`6b81d2120ddb1f5b5e8ec86adb94686b9acf65cb`, tree
+`c0e69a635165eb0e95c06c7fb680d5a0792ffc23`. The scoped integration audit passes
+280 checks. The facade, renderer, collision/replay inputs and 54 retained runtime
+modules are exact to the accepted candidate; only the scenery composition module
+changes. All 22 Courtyard authored/Pixel GLBs and 178 other non-Woodland GLBs are
+byte-identical; the 22 Woodland variants alone change. No repeated full browser
+matrix is claimed for this merge.
+
+The clean integrated candidate passes fresh Node 22 source-bound admission for
+all three packages, two identical builds, committed inputs and ZIP members. The
+Flight and FPV packages retain 48 / 679,266 and 69 / 4,384,679 admitted files/bytes;
+World Studio has 102 / 15,537,256. Its 95 original inputs total 16,743,418 bytes,
+leaving 33,798 bytes under the unchanged 16 MiB guard. All 15 checksums were
+independently reread.
+Its World Studio distribution ZIP SHA-256 is
+`294a938f8f422e51864f04e192047d5cb5cafa6df2cb059d4e38040b550f50e0`.
+The integrated player has 94 files / 15,379,485 bytes; all 31 rendering modules
+match its admitted ZIP, and 30 remain exact to the accepted player. The sole
+changed module produces the exact Courtyard GLBs proven above. Candidate and
+player directory suffixes are `6b81d2120`.
+
+`publicEligible` and `releaseQualified` remain false in local receipts. Protected
+source CI, merge and public deployment remain separate publication boundaries.
 
 Human, physical-device performance and final artist acceptance remain open.
