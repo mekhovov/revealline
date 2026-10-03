@@ -594,6 +594,40 @@ test('replay owns a verified clone, rejects forged course data and cannot be use
   assert.equal(f.view.exportAttempt().frames.length, 0);
 });
 
+test('Academy shared menu resumes paused playback without restarting or granting practice evidence', async (t) => {
+  const f = await fixture(t);
+  await f.view.review(FLIGHT_DEMONSTRATIONS[0]);
+  f.tick(5);
+  const shell = f.doc.querySelector('[data-mode-play-shell]');
+  f.$('academy-flight-menu').click();
+  const paused = f.renders.at(-1);
+  assert.ok(paused.ticks > 0);
+  assert.equal(shell.dataset.phase, 'paused');
+  assert.equal(f.$('academy-shell-action-primary').textContent, 'Continue');
+  f.tick(4);
+  assert.deepEqual(f.renders.at(-1), paused);
+
+  f.$('academy-shell-action-primary').click();
+  assert.equal(f.$('academy-shell-home-dialog').open, false);
+  assert.equal(f.$('academy-shell-briefing-dialog').open, false);
+  assert.equal(shell.dataset.phase, 'playing');
+  f.tick(4);
+  assert.ok(f.renders.at(-1).ticks > paused.ticks, 'Continue advances the retained playback');
+
+  f.$('academy-flight-menu').click();
+  const pausedAgain = f.renders.at(-1);
+  f.$('academy-shell-home-dialog').emit('cancel');
+  assert.equal(f.$('academy-shell-home-dialog').open, false);
+  f.tick(4);
+  assert.deepEqual(f.renders.at(-1), pausedAgain, 'Back never resumes the recording');
+  assert.equal(f.$('academy-shell-action-pause').textContent, 'Resume');
+  f.$('academy-shell-action-pause').click();
+  f.tick(4);
+  assert.ok(f.renders.at(-1).ticks > pausedAgain.ticks);
+  assert.equal(f.deliveries.length, 0);
+  assert.equal(f.view.exportAttempt().frames.length, 0);
+});
+
 test('touch release holds throttle, centers yaw, and cancellation clears all input and listener ownership', () => {
   const doc = new Document(),
     win = new Events(),

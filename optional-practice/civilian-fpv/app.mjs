@@ -773,17 +773,25 @@ export function mountFlightApp({
   function paint(force = false, now = 0) {
     if (!flight || disposed) return;
     const state = replay ? replay.flight.snapshot() : flight.snapshot();
+    const terminal = ['complete', 'expired'].includes(state.status);
+    // Playback retains the recorded model's status when its presentation clock
+    // pauses. The shared menu must follow that clock, not the live-flight model.
+    const pausedReplay =
+      !!replay && replay.paused && replay.at < replay.proof.frames.length && !terminal;
     $('flight-app').dataset.flightState = state.status;
     playShell?.update({
-      phase:
-        state.status === 'active'
-          ? 'playing'
-          : ['complete', 'expired'].includes(state.status)
-            ? 'results'
+      phase: terminal
+        ? 'results'
+        : pausedReplay
+          ? 'paused'
+          : state.status === 'active'
+            ? 'playing'
             : state.status,
       missionName: currentCourse().locales[locale].title,
       summary: currentCourse().locales[locale].brief,
-      canResume: state.ticks > 0 && ['paused', 'disarmed'].includes(state.status),
+      canResume: replay
+        ? pausedReplay
+        : state.ticks > 0 && ['paused', 'disarmed'].includes(state.status),
       muted: !audio.enabled(),
     });
     if ($('academy-flight-resume')) {
