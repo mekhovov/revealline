@@ -1,0 +1,461 @@
+[
+  {
+    "mode": "high",
+    "family": "legacy",
+    "checks": 56,
+    "actionFailures": [],
+    "fieldFailures": [],
+    "textureImages": [],
+    "moving": []
+  },
+  {
+    "mode": "high",
+    "family": "industrial-workshop",
+    "checks": 56,
+    "actionFailures": [],
+    "fieldFailures": [],
+    "textureImages": [],
+    "moving": []
+  },
+  {
+    "mode": "high",
+    "family": "ember-foundry",
+    "checks": 56,
+    "actionFailures": [],
+    "fieldFailures": [],
+    "textureImages": [],
+    "moving": []
+  },
+  {
+    "mode": "high",
+    "family": "polar-relay",
+    "checks": 56,
+    "actionFailures": [],
+    "fieldFailures": [],
+    "textureImages": [],
+    "moving": []
+  },
+  {
+    "mode": "high",
+    "family": "vyshyvanka",
+    "checks": 56,
+    "actionFailures": [],
+    "fieldFailures": [],
+    "textureImages": [],
+    "moving": []
+  },
+  {
+    "mode": "high",
+    "family": "dnipro-porcelain",
+    "checks": 56,
+    "actionFailures": [],
+    "fieldFailures": [],
+    "textureImages": [],
+    "moving": []
+  },
+  {
+    "mode": "high",
+    "family": "tryzub",
+    "checks": 56,
+    "actionFailures": [],
+    "fieldFailures": [],
+    "textureImages": [],
+    "moving": []
+  },
+  {
+    "mode": "high",
+    "family": "windows-classic",
+    "checks": 56,
+    "actionFailures": [],
+    "fieldFailures": [],
+    "textureImages": [],
+    "moving": []
+  },
+  {
+    "mode": "high",
+    "family": "dos",
+    "checks": 56,
+    "actionFailures": [],
+    "fieldFailures": [],
+    "textureImages": [],
+    "moving": []
+  },
+  {
+    "mode": "high",
+    "family": "orchard-workshop",
+    "checks": 56,
+    "actionFailures": [],
+    "fieldFailures": [],
+    "textureImages": [],
+    "moving": []
+  },
+  {
+    "mode": "high",
+    "family": "neon-ruins",
+    "checks": 56,
+    "actionFailures": [],
+    "fieldFailures": [],
+    "textureImages": [],
+    "moving": []
+  },
+  {
+    "mode": "high",
+    "family": "pocket-lcd",
+    "checks": 56,
+    "actionFailures": [],
+    "fieldFailures": [],
+    "textureImages": [],
+    "moving": []
+  },
+  {
+    "mode": "high",
+    "family": "copper-observatory",
+    "checks": 56,
+    "actionFailures": [],
+    "fieldFailures": [],
+    "textureImages": [],
+    "moving": []
+  },
+  {
+    "mode": "high",
+    "family": "sakura-station",
+    "checks": 56,
+    "actionFailures": [],
+    "fieldFailures": [],
+    "textureImages": [],
+    "moving": []
+  },
+  {
+    "mode": "high",
+    "family": "obsidian-reliquary",
+    "checks": 56,
+    "actionFailures": [],
+    "fieldFailures": [],
+    "textureImages": [],
+    "moving": []
+  },
+  {
+    "mode": "high",
+    "family": "deep-space",
+    "checks": 56,
+    "actionFailures": [],
+    "fieldFailures": [],
+    "textureImages": [],
+    "moving": []
+  },
+  {
+    "mode": "high",
+    "family": "moonlit-grove",
+    "checks": 56,
+    "actionFailures": [],
+    "fieldFailures": [],
+    "textureImages": [],
+    "moving": []
+  },
+  {
+    "mode": "off",
+    "family": "legacy",
+    "checks": 56,
+    "actionFailures": [],
+    "fieldFailures": [],
+    "textureImages": [],
+    "moving": []
+  },
+  {
+    "mode": "off",
+    "family": "industrial-workshop",
+    "checks": 56,
+    "actionFailures": [],
+    "fieldFailures": [],
+    "textureImages": [],
+    "moving": []
+  },
+  {
+    "mode": "off",
+    "family": "ember-foundry",
+    "checks": 56,
+    "actionFailures": [],
+    "fieldFailures": [],
+    "textureImages": [],
+    "moving": []
+  },
+  {
+    "mode": "off",
+    "family": "polar-relay",
+    "checks": 56,
+    "actionFailures": [],
+    "fieldFailures": [],
+    "textureImages": [],
+    "moving": []
+  },
+  {
+    "mode": "off",
+    "family": "vyshyvanka",
+    "checks": 56,
+    "actionFailures": [],
+    "fieldFailures": [],
+    "textureImages": [],
+    "moving": []
+  },
+  {
+    "mode": "off",
+    "family": "dnipro-porcelain",
+    "checks": 56,
+    "actionFailures": [],
+    "fieldFailures": [],
+    "textureImages": [],
+    "moving": []
+  },
+  {
+    "mode": "off",
+    "family": "tryzub",
+    "checks": 56,
+    "actionFailures": [],
+    "fieldFailures": [],
+    "textureImages": [],
+    "moving": []
+  },
+  {
+    "mode": "off",
+    "family": "windows-classic",
+    "checks": 56,
+    "actionFailures": [],
+    "fieldFailures": [],
+    "textureImages": [],
+    "moving": []
+  },
+  {
+    "mode": "off",
+    "family": "dos",
+    "checks": 56,
+    "actionFailures": [],
+    "fieldFailures": [],
+    "textureImages": [],
+    "moving": []
+  },
+  {
+    "mode": "off",
+    "family": "orchard-workshop",
+    "checks": 56,
+    "actionFailures": [],
+    "fieldFailures": [],
+    "textureImages": [],
+    "moving": []
+  },
+  {
+    "mode": "off",
+    "family": "neon-ruins",
+    "checks": 56,
+    "actionFailures": [],
+    "fieldFailures": [],
+    "textureImages": [],
+    "moving": []
+  },
+  {
+    "mode": "off",
+    "family": "pocket-lcd",
+    "checks": 56,
+    "actionFailures": [],
+    "fieldFailures": [],
+    "textureImages": [],
+    "moving": []
+  },
+  {
+    "mode": "off",
+    "family": "copper-observatory",
+    "checks": 56,
+    "actionFailures": [],
+    "fieldFailures": [],
+    "textureImages": [],
+    "moving": []
+  },
+  {
+    "mode": "off",
+    "family": "sakura-station",
+    "checks": 56,
+    "actionFailures": [],
+    "fieldFailures": [],
+    "textureImages": [],
+    "moving": []
+  },
+  {
+    "mode": "off",
+    "family": "obsidian-reliquary",
+    "checks": 56,
+    "actionFailures": [],
+    "fieldFailures": [],
+    "textureImages": [],
+    "moving": []
+  },
+  {
+    "mode": "off",
+    "family": "deep-space",
+    "checks": 56,
+    "actionFailures": [],
+    "fieldFailures": [],
+    "textureImages": [],
+    "moving": []
+  },
+  {
+    "mode": "off",
+    "family": "moonlit-grove",
+    "checks": 56,
+    "actionFailures": [],
+    "fieldFailures": [],
+    "textureImages": [],
+    "moving": []
+  },
+  {
+    "mode": "reduced",
+    "family": "legacy",
+    "checks": 56,
+    "actionFailures": [],
+    "fieldFailures": [],
+    "textureImages": [],
+    "moving": []
+  },
+  {
+    "mode": "reduced",
+    "family": "industrial-workshop",
+    "checks": 56,
+    "actionFailures": [],
+    "fieldFailures": [],
+    "textureImages": [],
+    "moving": []
+  },
+  {
+    "mode": "reduced",
+    "family": "ember-foundry",
+    "checks": 56,
+    "actionFailures": [],
+    "fieldFailures": [],
+    "textureImages": [],
+    "moving": []
+  },
+  {
+    "mode": "reduced",
+    "family": "polar-relay",
+    "checks": 56,
+    "actionFailures": [],
+    "fieldFailures": [],
+    "textureImages": [],
+    "moving": []
+  },
+  {
+    "mode": "reduced",
+    "family": "vyshyvanka",
+    "checks": 56,
+    "actionFailures": [],
+    "fieldFailures": [],
+    "textureImages": [],
+    "moving": []
+  },
+  {
+    "mode": "reduced",
+    "family": "dnipro-porcelain",
+    "checks": 56,
+    "actionFailures": [],
+    "fieldFailures": [],
+    "textureImages": [],
+    "moving": []
+  },
+  {
+    "mode": "reduced",
+    "family": "tryzub",
+    "checks": 56,
+    "actionFailures": [],
+    "fieldFailures": [],
+    "textureImages": [],
+    "moving": []
+  },
+  {
+    "mode": "reduced",
+    "family": "windows-classic",
+    "checks": 56,
+    "actionFailures": [],
+    "fieldFailures": [],
+    "textureImages": [],
+    "moving": []
+  },
+  {
+    "mode": "reduced",
+    "family": "dos",
+    "checks": 56,
+    "actionFailures": [],
+    "fieldFailures": [],
+    "textureImages": [],
+    "moving": []
+  },
+  {
+    "mode": "reduced",
+    "family": "orchard-workshop",
+    "checks": 56,
+    "actionFailures": [],
+    "fieldFailures": [],
+    "textureImages": [],
+    "moving": []
+  },
+  {
+    "mode": "reduced",
+    "family": "neon-ruins",
+    "checks": 56,
+    "actionFailures": [],
+    "fieldFailures": [],
+    "textureImages": [],
+    "moving": []
+  },
+  {
+    "mode": "reduced",
+    "family": "pocket-lcd",
+    "checks": 56,
+    "actionFailures": [],
+    "fieldFailures": [],
+    "textureImages": [],
+    "moving": []
+  },
+  {
+    "mode": "reduced",
+    "family": "copper-observatory",
+    "checks": 56,
+    "actionFailures": [],
+    "fieldFailures": [],
+    "textureImages": [],
+    "moving": []
+  },
+  {
+    "mode": "reduced",
+    "family": "sakura-station",
+    "checks": 56,
+    "actionFailures": [],
+    "fieldFailures": [],
+    "textureImages": [],
+    "moving": []
+  },
+  {
+    "mode": "reduced",
+    "family": "obsidian-reliquary",
+    "checks": 56,
+    "actionFailures": [],
+    "fieldFailures": [],
+    "textureImages": [],
+    "moving": []
+  },
+  {
+    "mode": "reduced",
+    "family": "deep-space",
+    "checks": 56,
+    "actionFailures": [],
+    "fieldFailures": [],
+    "textureImages": [],
+    "moving": []
+  },
+  {
+    "mode": "reduced",
+    "family": "moonlit-grove",
+    "checks": 56,
+    "actionFailures": [],
+    "fieldFailures": [],
+    "textureImages": [],
+    "moving": []
+  }
+]

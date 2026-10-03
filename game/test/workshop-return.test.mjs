@@ -8,6 +8,7 @@ import {
   readWorkshopReturn,
   clearWorkshopReturn,
   mountToolReturnLinks,
+  workshopPageTool,
 } from '../ui/workshop-return.mjs';
 import { soloPage, SoloElement } from './helpers/solo-dom.mjs';
 import { authoritativeCheckpoint } from '../replay.mjs';
@@ -75,16 +76,19 @@ for (const prefix of [
   'https://example.test/releases/v0.69.3/site/',
   'https://example.test/archive/releases/v0.68.2/site/',
 ]) {
-  test(`all nine tools retain exact edition routes under ${prefix}`, () => {
-    assert.equal(WORKSHOP_TOOLS.length, 9);
-    for (const { id, path, opener } of WORKSHOP_TOOLS) {
+  test(`all ten tools retain exact edition routes under ${prefix}`, () => {
+    assert.equal(WORKSHOP_TOOLS.length, 10);
+    for (const { id, path, opener, studio } of WORKSHOP_TOOLS) {
       assert.ok(opener.startsWith('shell-'));
       for (const index of ['', 'index.html']) {
         const target = workshopToolHref(
           `${prefix}game/${index}?journey=opening&pack=other#old`,
           id,
         );
-        assert.equal(target, `${prefix}${path}?journey=opening`);
+        assert.equal(
+          target,
+          `${prefix}${path}?journey=opening${studio ? `&studio=${studio}` : ''}`,
+        );
         const returns = workshopReturnLinks(
           `${prefix}${path}${index}?journey=opening&other=discard`,
           id,
@@ -131,9 +135,39 @@ test('finite tools and competing launch owners cannot be overridden by a return 
     assert.equal(
       new URL(workshopToolHref('https://example.test/game/?journey=opening&journey=other', id))
         .search,
-      '',
+      id === 'theme-studio' ? '?studio=themes' : '',
     );
   }
+});
+
+test('Theme Studio is a fixed shared-editor view with its own return owner', () => {
+  for (const root of ['https://example.test/', 'https://example.test/releases/v2/site/']) {
+    const href = workshopToolHref(
+      `${root}game/?journey=opening&edition=example&studio=other`,
+      'theme-studio',
+    );
+    assert.equal(
+      href,
+      `${root}authoring/asset-studio/?journey=opening&edition=example&studio=themes`,
+    );
+    assert.equal(workshopPageTool(href, 'asset-studio'), 'theme-studio');
+    assert.equal(workshopPageTool(href, 'motion-lab'), 'motion-lab');
+    assert.equal(
+      readWorkshopReturn(new URL(workshopReturnLinks(href, 'theme-studio').workshop).search).opener,
+      'shell-theme-studio',
+    );
+    for (const query of [
+      'studio=other',
+      'studio=themes&studio=themes',
+      'studio=themes&studio=other',
+    ])
+      assert.equal(
+        workshopPageTool(`${root}authoring/asset-studio/?${query}`, 'asset-studio'),
+        'asset-studio',
+      );
+    assert.equal(workshopPageTool(`${root}game/?studio=themes`, 'asset-studio'), 'asset-studio');
+  }
+  assert.equal(workshopPageTool('invalid', 'asset-studio'), 'asset-studio');
 });
 
 test('history consumption preserves unrelated route and state and tolerates unavailable history', () => {
@@ -170,17 +204,24 @@ test('every standalone tool keeps a same-edition game exit before any module loa
 test('all standalone pages prepare both returns before enabling and retain cross-tool hints', async () => {
   for (const entry of WORKSHOP_TOOLS) {
     const html = await readFile(new URL(`../../${entry.path}index.html`, import.meta.url), 'utf8');
-    assert.match(html, new RegExp(`data-workshop-tool="${entry.id}"`));
+    assert.match(
+      html,
+      new RegExp(`data-workshop-tool="${entry.studio ? 'asset-studio' : entry.id}"`),
+    );
     assert.match(html, /workshop-return-entry\.mjs/);
     assert.match(html, /workshop-return\.css/);
-    if (entry.id === 'video-poster') assert.match(html, /cancels work or returns to Workshop\./);
+    if (entry.id === 'video-poster') assert.match(html, /cancels\s+work or returns to Workshop\./);
     for (const role of ['workshop', 'game'])
       assert.match(html, new RegExp(`data-workshop-return="${role}"`));
     for (const anchor of html.matchAll(/<a\b[^>]*>/g)) {
       const href = anchor[0].match(/href="([^"]+)"/)?.[1];
       if (!href || href.startsWith('#')) continue;
       const resolved = new URL(href, `https://example.test/${entry.path}`);
-      const destination = WORKSHOP_TOOLS.find((tool) => resolved.pathname === `/${tool.path}`);
+      const destination = WORKSHOP_TOOLS.find(
+        (tool) =>
+          resolved.pathname === `/${tool.path}` &&
+          (tool.studio ?? null) === resolved.searchParams.get('studio'),
+      );
       if (destination)
         assert.match(anchor[0], new RegExp(`data-workshop-tool="${destination.id}"`));
     }
