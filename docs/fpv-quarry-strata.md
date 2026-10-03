@@ -156,7 +156,7 @@ free-call observation is not a memory-plateau or hardware measurement.
 Quarry 04 historically finishes at 94/100 health in acro and 97/100 in self-level,
 with 17 shots and seven hits in each. Those outcomes are preserved exactly.
 An initial copied Coast probe incorrectly required full health; its
-[failure log](evidence/fpv-quarry-strata-replay-v1-assumption-failure.log) and
+[failure log](evidence/fpv-quarry-strata-replay-v1-assumption-failure.txt) and
 [probe](evidence/fpv-quarry-strata-replay-v1-probe.mjs) remain historical. The
 [corrected executed probe](evidence/fpv-quarry-strata-replay-probe.mjs) checks exact
 archival outcomes without changing the runtime, controls or proofs. The
