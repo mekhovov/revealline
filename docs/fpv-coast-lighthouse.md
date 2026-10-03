@@ -56,8 +56,8 @@ Ten historical Coast proofs / 41,868 ticks are authenticated against the retaine
 archive, not freshly replayed.
 
 The runtime, qualifier and fixture pass focused lint/format, and the embedded
-harness parses. Human visual acceptance, completed actual-browser receipt and
-source-bound package admission are pending. Do not publish this
+harness parses. Final human acceptance, actual-browser results and package qualification are
+recorded below. Do not publish this
 feature as qualified on the strength of fixture preparation alone. No new unit
 coverage was introduced; manual functional qualification stays within D2.
 
@@ -81,12 +81,91 @@ per side / 19,747,475 bytes. The original v1 visual is retained as history.
 
 Node 22 `npm run validate` passed on the guarded source before this inactive
 Courtyard merge; the final runtime, manual qualifier and fixture pass focused
-lint/format and embedded-script parsing. No package build, actual-browser matrix
-or human visual acceptance has yet been claimed. The next step is review of the
-final source preview, then its bounded matrix and source-bound package admission
-if the appearance is accepted. Recovery ref
+lint/format and embedded-script parsing. This was the pre-Warehouse integration checkpoint; the subsequently accepted
+source preview, completed browser matrix and package admission are recorded below. Recovery ref
 `codex/fpv-coast-lighthouse-source-checkpoint` preserves the pre-merge candidate;
 published Warehouse and earlier frozen players remain untouched.
+
+## Fresh retained-proof replay
+
+The [new replay receipt](evidence/fpv-coast-lighthouse-replay.json) executes all ten
+complete, authenticated Coast recordings against candidate
+`1949ff56fa46727deb04b88ecc86a2e237e22f98`: both modes across all five courses,
+41,868 ticks, 237 checks. This supersedes the initial authenticate-only checkpoint.
+All original controls, normalized course identities, runtime/world/mode/response/
+rules/conditions identities and final-state identities match. Every objective
+completes with zero contacts and full health; no actor is blocked in the final
+state. The original archive remains pinned by its previously published digest.
+
+Transparent wrappers observe ten actual Rapier collision worlds created and
+freed exactly once, with peak live count one and final count zero. The wrappers
+forward unchanged calls and are restored in `finally`. Source bytes remain stable
+through the replay. This is a functional replay/resource observation, not a process
+memory plateau or hardware claim. Path samples are one-second snapshots, and
+actor blockage is checked in the final state; no continuous swept-clearance claim
+is made.
+
+The [exact executed probe](evidence/fpv-coast-lighthouse-replay-probe.mjs) and
+[compressed authenticated inputs](evidence/fpv-coast-lighthouse-replay-inputs.json.gz)
+are retained for review. The probe preserves its historical checkout and temporary
+archive paths rather than presenting itself as a portable automated test. The
+receipt binds both probe and uncompressed input hashes. No installed demo, newly
+generated recording or unit coverage is added.
+
+## Warehouse integration and admitted package
+
+Normal integration of main `0aeb0c2b4342715ba9a19b976114d7d905fed7bd` produced
+clean package candidate `1949ff56fa46727deb04b88ecc86a2e237e22f98`, tree
+`6ec046350e3b04236a188739d6a5da749c853306`. The incoming production change is
+Warehouse-only imported placement composition; D1 evidence changes are documents.
+The [23-check scope audit](evidence/fpv-coast-lighthouse-warehouse-integration.json)
+proves Lighthouse visuals, renderer, courses, physics and demos remain exact;
+Coast/Quarry still return no built-in GLB, and other imported worlds preserve both
+Authored and Pixel GLB bytes. This leaves every frozen Lighthouse matrix case
+unchanged without repeating it solely for unrelated incoming artwork.
+
+[Source-bound admission](evidence/fpv-coast-lighthouse-admission.json) passes for
+all three packages, each built twice with identical output, verified committed
+inputs and verified ZIP members under unchanged guards:
+
+| Package | Files | Uncompressed bytes |
+| ------- | ----: | -----------------: |
+| Flight  |    48 |            679,266 |
+| FPV     |    69 |          4,391,024 |
+| World   |   102 |         15,546,099 |
+
+The 95 original World inputs total 16,752,261 bytes, leaving 24,955 bytes below
+16 MiB. All 15 artifact checksums were reread. The complete admitted World ZIP was
+extracted and all 102 members byte-verified, including the launcher and package
+metadata; this is not the smaller development playtest staging. Its SHA-256 is
+`1d798e7184a235ec67ee33395f6d62c16bb5bf475a40ffdf1b248f69fe72ea72`.
+The [player inventory](evidence/fpv-coast-lighthouse-admitted-player.json) binds
+`dist/fpv-coast-lighthouse-admitted-player-1949ff56f` to that exact ZIP.
+
+The [source/package closure audit](evidence/fpv-coast-lighthouse-source-package-closure.json)
+checks all 31 packaged comparison modules against the admitted player. The only
+source-to-package differences are selected locale projection and the audited,
+inactive Warehouse asset composition. The harness is identical. The packaged
+fixture is `dist/fpv-coast-lighthouse-verification-package-1949ff56f`.
+
+Human review accepts the actual source [harbour approach](evidence/fpv-coast-lighthouse-harbour.png)
+and [upper lantern gallery](evidence/fpv-coast-lighthouse-lantern.png) as a bounded
+visual improvement. Final [source](evidence/fpv-coast-lighthouse-source-browser.json) and
+[package](evidence/fpv-coast-lighthouse-package-browser.json) actual-browser
+receipts each pass **97 checks / 56 image pairs**. Every check and image-sample
+record is JSON-identical between source and package. Pixel pixels remain exact;
+Coast uses the actual procedural scene, Courtyard control explicitly loads its
+actual imported GLB, and Quarry remains procedural. Existing geometry, three
+stable resource cycles, final zero registered ownership, and no unexpected
+context loss or application error pass. Raw pixel buffers are not retained;
+complete per-view hashes/counts and all checks are preserved without truncation.
+
+The [complete 102-file admitted player](evidence/fpv-coast-lighthouse-player.png)
+loaded Lighthouse approach, rendered the scene, armed and advanced 0.2 seconds,
+then Pause returned to the menu. Warning/error logs were empty. This player
+uses the exact admitted ZIP inventory above, not development staging. No
+hardware-performance, installed/offline-identity or public-availability claim is
+made by package admission.
 
 ## Next Quarry boundary
 
