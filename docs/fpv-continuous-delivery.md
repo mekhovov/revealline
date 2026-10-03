@@ -2719,3 +2719,16 @@ three unaffected styles remain pixel-identical. Fifteen unload cycles plateau.
 Next: publish this surface increment and immediately continue original branching
 and canopy composition on a separate branch. Do not treat this increment as D1
 completion. Continue approved phases without another go-ahead.
+
+### Yard publication and material qualification repair — 3 October 2026
+
+Yard composition is published as draft #998, independent of Woodland #996.
+Immediately continued on `codex/fpv-field-surface-identity` to resolve the shared
+qualification failure. Military-field's foundry recipe collapsed to the DOS
+light/dark motif. Dedicated recessed panels restore distinct identity without
+changing 112 maps across the other 16 collections. All 30 existing checks and
+browser map comparisons pass; package admission passes at 94files/15,383,912bytes.
+See `docs/fpv-field-surface-identity.md`. Next: publish this focused repair, refresh
+art PRs after protected integration, continue D1 material depth; do not call D1
+complete or public availability verified. Preserve concurrent capacity/Theme work.
+inspect those failures next without weakening admission guards.
