@@ -1,4 +1,4 @@
-# Reuse the current environment light
+# Reuse environment lighting and release graphics ownership before Retry
 
 The historical bounded D1 profile found repeated PMREM generation inside course
 installation (up to 101.1 ms in that observation). This increment reuses one
@@ -36,8 +36,8 @@ missing `sharedActorAppearance` VM binding. The exact baseline renderer reproduc
 that failure. No new unit coverage or assertion relaxation is included; additional
 coverage remains D6. The four additional appearance/UI suites report 10 passes and 33 failures;
 the exact baseline renderer substitution reproduces identical failure signatures.
-These include existing DOM-fixture `null.remove` errors, archive expectations and
-unavailable `fake-indexeddb`. These suites do not qualify this change.
+These include existing DOM-fixture `null.remove` errors and unavailable
+`fake-indexeddb` in archive fixtures. These suites do not qualify this change.
 
 Candidate `083ac67bf68f33a03f01730c80dec39ee98a3654` passes full `npm run validate`,
 changed-file lint/format and all three source-bound optional admissions, including
@@ -151,3 +151,79 @@ bounded actual-WebGL fixture covers both imported and procedural scenes, visible
 models and ghost reinstallation, full aggregate GL error counts (without truncating
 the count), and final cleanup. Fresh source admission and actual recovery
 acceptance remain pending; the original failed receipts remain unchanged.
+
+## Source admission and recovery ownership follow-up
+
+Source `8a2f700b468998f524027f491458b9049bce022b`, with renderer bytes exactly
+`acc9ccbfc21e7f8f5f4a72283ad523a8f62d1fbd`, passes all three package admissions,
+95 committed inputs, ZIP members and two byte-identical builds. Original inputs
+are 16,749,524 bytes, leaving 27,692 bytes under 16 MiB on the recorded `0aeb`
+parent. All 95 input hashes equal the runtime commit; only the renderer differs
+from that parent. Full validate also passes. The full audit is retained in
+`docs/evidence/fpv-environment-light-final-admission.json`.
+
+The v4 actual browser run compares reuse-only `083ac67bf` with cleanup candidate
+`acc9ccbfc`: all four candidate imported/procedural cases have zero aggregate GL
+errors, exact restored images, visible rebuilt aircraft and retained cosmetics,
+ghost and presentation choices. All PMREM targets and optional Hunt owners are
+released once. Baseline still produces 1,073 procedural / 838 imported GL errors.
+The candidate fails two overly broad assertions that treated every JavaScript
+geometry object as an exclusive single-generation resource. This failed receipt
+is retained; it is not relabelled as an all-pass run.
+
+Exact CPU identity tracing with the real world visuals reproduced the browser's
+466-object procedural census. Index 146 is Three's shared Sprite quad, used in
+world, goal and ghost groups; it emits three disposal events per generation.
+Indices 223/225 are Three's shared ArrowHelper line/cone, emitting one per
+generation. These same three JavaScript geometry objects are used again after
+Retry. Every other old object is disposed exactly once. The pinned vendor's
+`WebGLGeometries.onGeometryDispose` removes its listener/cache entry after the
+first event; `WebGLAttributes.remove` removes each buffer mapping. Uploading the
+shared geometry again creates a new GPU allocation lifetime. A lifetime-wide
+"already disposed" set would incorrectly suppress subsequent cleanup.
+
+The separate v5 fixture identifies exactly these three vendor singleton objects
+and preserves every original disposal event. It checks owned resources exactly
+once and GL buffer deletion by allocation epoch. Both candidate cases pass all
+ownership/epoch checks with zero GL errors. All observed handles are deleted
+once: 793 per epoch for procedural and 612 per epoch for imported, with no unknown,
+duplicate or stale-epoch deletion. These are observed API attempts, not a claim
+that physical GPU memory survives context loss. Procedural pixels remain exact.
+One imported restored image has a different hash despite identical resource and
+model reports; that visual discrepancy remains open for the v6 retained-pixel,
+semantic-scene and draw-order diagnostic. No pixel assertion is loosened.
+
+The final normal matrix compares exact `acc9` committed source with the full
+admitted `8a2` distribution. It passes all 72 image/draw/registered-resource pairs,
+repeat resource plateaus and at-most-one-target ownership; no errors are recorded.
+This is source/package parity, distinct from the historical `0aeb`→`083` comparison.
+The static AST audit confirms that `acc9` preserves all 35 other named functions
+and every operation/order after the two new `setCourse` lifecycle guards. Its
+cleanup is the original final-cleanup sequence plus clearing the optional Hunt
+reference and editor rows. This scope proof is in
+`docs/evidence/fpv-environment-light-healthy-path-audit.json`.
+
+Root review then identified the reachable notebook cosmetic setter while the
+scene is cleared. Runtime commit `e76c07374` adds only optional chaining at the
+live tint update while always retaining a valid `cosmeticColor`. The manual
+qualifier now chooses a valid then invalid color while lost, checks that ownership
+stays empty, and verifies Retry rebuilds with the latest valid color. All 48 manual
+checks and the existing 30 checks pass. The frozen browser receipts above precede
+this one-byte guard; new source admission and actual-host Retry acceptance follow.
+No claim of new device FPS or resolution of the historical 15–17 second stalls is
+made.
+
+### Lossless receipt archives
+
+All archives use gzip with zero modification time. `gzip -dc FILE.json.gz`
+reconstructs the exact original JSON; verify the uncompressed SHA-256 below.
+
+| Receipt             | Raw bytes / SHA-256                                                            | Gzip bytes / SHA-256                                                        |
+| ------------------- | ------------------------------------------------------------------------------ | --------------------------------------------------------------------------- |
+| v4 recovery         | 630,827 / `71c4754f1926971db6ddd99f691f7cbbd31be63efb1588b6181d203e97a1bc20`   | 20,762 / `faa3fe0158c77d0a59834b1b4760658bbe1feb9bf9c7f7a5086e6262cdb1cf41` |
+| v5 ownership        | 2,004,960 / `fe9c22928df4520dcae89c8900f2e2f230d31df6a7a932bc96089f3e9b9ed5be` | 56,261 / `56bf453f19b84c699a4207aff1366f0eec519fc91f59a4594539261125fcf286` |
+| Final normal parity | 853,536 / `459ac5cd3654087a70cfdee0ba0402eb4e3ee1a2886889ab3ff9bd6b2d81ecb1`   | 43,712 / `2f236c7699077ad524ca2222e133280a755ba237d38aeb7f802d801fcfd8bb36` |
+
+Archives are under `docs/evidence/fpv-environment-light-*-browser.json.gz`; the
+v4/v5 and final normal harnesses are preserved separately. Larger raw receipts and
+immutable local fixtures are not default Pages assets.
