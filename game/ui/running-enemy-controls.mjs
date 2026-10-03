@@ -1,4 +1,3 @@
-import { snakeText } from '../snake/copy.mjs';
 import { getLocale, onLocaleChange } from '../i18n/index.mjs';
 import { createRunningEnemyPreferences } from '../hunt/running-enemy-preferences.mjs';
 import { sharedActorAppearance } from '../hunt/preferences.mjs';
@@ -8,6 +7,7 @@ import { renderEnemyFieldGuide } from './enemy-field-guide.mjs';
 const copy = {
   en: {
     title: 'Running enemies',
+    campaigns: 'New pursuit campaigns',
     help: 'Adds humanoids to hunt by touch. Applies when starting or restarting a level. Blood is optional.',
     objective:
       'Your original mission objective stays the same; hunting adds bonus points. Off keeps the level as designed.',
@@ -36,6 +36,7 @@ const copy = {
   },
   uk: {
     title: 'Рухливі вороги',
+    campaigns: 'Нові кампанії переслідування',
     help: 'Додає гуманоїдів, яких можна знищувати дотиком. Діє після початку або перезапуску рівня. Кров необов’язкова.',
     objective:
       'Початкова мета місії не змінюється; полювання додає бонусні бали. Вимкнення залишає рівень у початковому вигляді.',
@@ -196,7 +197,7 @@ export function mountRunningEnemyControls({
       cast: appearance.snapshot().cast === 'authored' ? 'rivals' : appearance.snapshot().cast,
     });
     text(heading, words.title);
-    text(campaigns, snakeText('campaigns'));
+    text(campaigns, words.campaigns);
     text(help, words.help);
     text(objective, words.objective);
     const currentText =
