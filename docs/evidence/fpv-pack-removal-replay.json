@@ -1,13 +1,13 @@
 {
   "format": "FPVPackRemovalFunctionalEvidence.v1",
   "status": "passed",
-  "browserReceiptSha256": "fcaa7b32b95a890abf3aadbf421118f35598f1ba9cefee4cd69bc639fddc9094",
+  "browserReceiptSha256": "179525c0aaf02c831db5c293024c775b9b2ed92487e3776cbec9ff7d54b3a861",
   "browserChecks": 90,
   "preservationSnapshots": 13,
   "sources": {
     "optional-practice/civilian-fpv/world-model.mjs": "d6e0939daf77a2a1459687dd8ba900719b78b02a1b3fe5fab862773bd6109551",
     "optional-practice/civilian-fpv/world-store.mjs": "4b8c2fe165868f38eb297d678ea5aca232d61d2dd2a05b79db9d20145f3d0cfa",
-    "optional-practice/civilian-fpv/world-app.mjs": "b65ef74310dc1c23b7c23385428211b0cb28174eead31dda6d29c4c531894e02",
+    "optional-practice/civilian-fpv/world-app.mjs": "c3f2a71d5e44ffe1e26110b6712ae1f8fb9032a78337567ecb0e945c71e6e776",
     "scripts/qualify-fpv-pack-removal.mjs": "99bf8182ca58bc704eda530a377e6d79f12a26dc4ab1dbced7a9b40cd25d20e4"
   },
   "results": [

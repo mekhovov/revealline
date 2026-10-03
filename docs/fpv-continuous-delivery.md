@@ -2302,3 +2302,18 @@ retain this guard. Authoring dependencies were temporarily moved to ignored
 .cache for source eligibility and restored by an EXIT trap. Runtime hashes match
 the source-qualified candidate. Publish as an independent focused PR on main;
 no native stack is needed for this item. Public deployment remains unverified.
+
+
+Before publication, main advanced to21dbd1014 with merged editor#975, Themes#974
+and WASM CSP#976. Recovery ref `codex/recovery/pack-removal-before-main-20261003`
+preserves the earlier candidate. The unpublished branch was rebased linearly;
+only additive delivery-log/plan conflicts required resolution, preserving both
+histories. Runtime merged without conflicts. New source and packaged browser
+fixtures both pass90/90; independent completed/prefix replay passes again.
+Frozen candidate4bc19760ac2f89f1bbb73de94fa909718105fa7a passes all three optional
+admissions and two identical builds, plus the largest edition. World Studio is
+99files/14495347bytes; largest edition67,105,391bytes leaves3,473bytes
+under64MiB. Keep subsequent example data separately delivered and verify current
+capacity rather than expanding any limit. Current host SHA256:
+`c3f2a71d5e44ffe1e26110b6712ae1f8fb9032a78337567ecb0e945c71e6e776`. Updated receipts replace prior
+candidate receipts in the feature document; earlier evidence remains in Git.

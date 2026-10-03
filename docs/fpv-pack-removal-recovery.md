@@ -45,12 +45,12 @@ identical hash across the removal and restoration flow. See the
 The fixture's first runs exposed two fixture-only issues: objects crossing frame
 realms and ambiguous playlist navigation. The final run uses document-native
 IndexedDB and visible, named controls; production validation was not weakened.
-Frozen candidate `e64e53be5` passes all three optional package admissions,
+Frozen candidate `4bc19760a` (reconciled with main `21dbd1014`) passes all three optional package admissions,
 committed-input/ZIP checks and two byte-identical builds. World Studio uses
-99 source files / 14,465,716 bytes under its unchanged 104-file / 16 MiB limits.
+99 source files / 14,495,347 bytes under its unchanged 104-file / 16 MiB limits.
 The actual packaged host also passes **90/90** browser checks. The largest
 edition candidate passes admission and reproducibility at 895 files /
-67,094,087 bytes, with 14,777 bytes remaining under the existing 64 MiB guard.
+67,105,391 bytes, with 3,473 bytes remaining under the existing 64 MiB guard.
 See [package admission](evidence/fpv-pack-removal-package.json),
 [packaged browser](evidence/fpv-pack-removal-packaged-browser.json), and
 [largest-edition admission](evidence/fpv-pack-removal-largest-edition.json).
