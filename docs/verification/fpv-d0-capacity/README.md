@@ -1,5 +1,3 @@
-> Retained historical excerpt after an ownership migration. Exact originals are preserved separately. This excerpt is not the original complete record or a release qualification.
-
 > Retained historical excerpt after an ownership migration. Exact original bytes are preserved separately. Original totals and verification statements describe the original scope; this excerpt is not a current qualification or a complete test result.
 
 # Approved offline capacity increment — 3 October 2026
@@ -14,9 +12,9 @@ raised.
 - Match the core builder, generated worker, company builder/final-output guard,
   company receipt validator and capacity qualification tools at 72 MiB.
 - Losslessly encode the generated content translation registry with the already
-  pinned lz-string decoder. Preserve all 6,295 identities, exact fields/strings,
+  pinned lz-string decoder. Preserve all 6,297 identities, exact fields/strings,
   ordering and shared records. Keep the smaller plain encoding for small inputs.
-- Registry size: 554,343 → 246,439 bytes (307,904 bytes saved).
+- Registry size: 554,428 → 246,299 bytes (308,129 bytes saved).
 - Updated existing budget assertions. Repaired two stale packaging fixtures:
   the reaction-audio export stub and the newly required update-context import.
   No additional unit coverage was introduced.
@@ -26,9 +24,9 @@ raised.
 - Existing localization/offline/edition checks: 100 passed.
 - Existing game CLI checks: 32 passed after fixture dependency repairs.
 - Exact original registry equality in Node and actual browser; canonical value
-  SHA-256 `92af529692ad02d255ba35842a4f41b57753251f5b781cc18a80b385798ba66e`.
+  SHA-256 `c0193c283bce452517b4d309ee6459404efb8b80cc1a6bfe7968bb939c11a5a8`.
 - All 18 editions compile with normal guards; unchanged working-tree source
-  capture. Largest: droneaid-nl-community, 67,460,880 bytes / 923 files.
+  capture. Largest: droneaid-nl-community, 67,464,716 bytes / 924 files.
   See `editions.json`. These are in-memory compilations, not published archives.
 - Actual Codex in-app browser and production worker installed exactly 75,497,472
   bytes, then staged a second verified version while preserving the active first
@@ -40,7 +38,7 @@ raised.
   passed check. In-memory checks avoid weakening any admission guard.
 
 The browser exercise establishes boundary installation, staged update and failure
-fallback. It does not establish iPhone/Steam Deck memory, quota or performance,
+fallback. It does not establish iPhone/Steam Deck memory, quota or performance.
 Existing offline regressions cover
 scope isolation, failed installs, quota recovery and update behavior. Public
 availability requires protected checks, merge and deployment/launch verification.
@@ -56,7 +54,12 @@ remove the verification cache afterwards. This verifies a synthetic boundary
 payload with the production worker, not physical-device acceptance.
 
 `core.json` binds preparation to committed candidate
-`649887eed17b1a704715cae2205f57b82875584b`: 1,327 files / 67,094,501 bytes,
-8,402,971 bytes headroom at 72 MiB. Available committed source bytes were checked
+`8162e7d4d62999a630b4daf43721f613b3b3ef8f`: 1,328 files / 67,073,221 bytes,
+8,424,251 bytes headroom at 72 MiB. Available committed source bytes were checked
 before and after preparation. The receipt is for in-memory preparation, not a
 published distribution or public deployment.
+
+Latest main4074b12f7 was preserved by rebase; the regenerated registry and all132
+focused checks were reverified afterwards. Core and18-edition receipts above
+reflect that refreshed candidate. Earlier observations in the delivery log are
+historical, not exact-head publication claims.
