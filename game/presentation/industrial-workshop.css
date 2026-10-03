@@ -14,6 +14,36 @@
   --ui-disabled: var(--iw-muted);
   --ui-control-border: var(--iw-control-line);
 }
+[data-theme-family] {
+  /* Each presentation owns its finish, including nested Studio specimens.
+     Material paint never leaks from an enclosing theme or accessibility mode. */
+  --ui-panel-finish: none;
+  --ui-control-finish: none;
+  --ui-active-finish: none;
+  --ui-inset-finish: none;
+  --ui-toolbar-finish: none;
+  --ui-thumb-finish: none;
+  --ui-inset-depth: initial;
+  --ui-hover-face: initial;
+  --ui-hover-ink: initial;
+  --ui-hover-frame: initial;
+  --ui-panel-frame: none;
+  --ui-raised-frame: none;
+  --ui-primary-frame: none;
+  --ui-panel-depth: initial;
+  --ui-action-depth: initial;
+  --ui-hover-depth: initial;
+  --ui-pressed-depth: initial;
+  --ui-selected-depth: initial;
+  --ui-gallery-depth: none;
+  --ui-scene-motif: none;
+  --ui-scene-motif-size: 48px 48px;
+  --ui-scene-inset: 24px 24px auto auto;
+  --ui-scene-width: min(24vw, 192px);
+  --ui-scene-height: 96px;
+  --ui-scene-repeat: no-repeat;
+  --ui-scene-opacity: 0.18;
+}
 /* Rebind older semantic variables on their owning scope. Authored image, video,
    Canvas and 3D assets remain in their own renderer; none are filtered/recolored. */
 [data-theme-styled='true'],
@@ -144,9 +174,8 @@
   font-family: var(--iw-font-mono);
 }
 
-/* Reading surfaces stay quiet. Material identity comes from the palette and
-   light-catching rim; decorative nine-slices belong to authored outer frames,
-   never repeated around each card or control. */
+/* Reading surfaces receive a bounded material finish over semantic colors.
+   Asset frames supply the edges; their opaque nine-slice centers are not used. */
 [data-theme-styled='true']
   :where(
     dialog,
@@ -214,14 +243,16 @@
   ) {
   color: var(--iw-text);
   font-family: var(--iw-font-ui);
-  background: var(--iw-panel);
+  background: var(--ui-panel-finish, none), var(--iw-panel);
   border: 2px solid var(--iw-line);
-  border-image: none;
+  border-image: var(--ui-panel-frame, none);
   border-radius: 0;
-  box-shadow:
+  box-shadow: var(
+    --ui-panel-depth,
     inset 0 1px 0 color-mix(in srgb, var(--iw-text) 8%, transparent),
     0 2px 0 var(--ui-shadow),
-    0 8px 18px #0002;
+    0 8px 18px #0002
+  );
 }
 [data-theme-styled='true']
   :where(
@@ -269,7 +300,7 @@
     [data-ui-surface='toolbar']
   ) {
   color: var(--iw-text);
-  background: var(--iw-panel);
+  background: var(--ui-toolbar-finish, none), var(--iw-panel);
   border-color: var(--iw-line);
   border-image: none;
   text-shadow: none;
@@ -313,14 +344,15 @@
     [data-ui-surface='inset']
   ) {
   color: var(--iw-text);
-  background: var(--iw-ink);
+  background: var(--ui-inset-finish, none), var(--iw-ink);
   border-color: var(--iw-line);
   border-image: none;
   border-radius: 0;
+  box-shadow: var(--ui-inset-depth, none);
 }
 [data-theme-styled='true'] :where(table, .asset-grid, .inventory-grid, [data-ui-surface='table']) {
   color: var(--iw-text);
-  background: var(--iw-panel);
+  background: var(--ui-panel-finish, none), var(--iw-panel);
 }
 [data-theme-styled='true'] :where(th, td, hr) {
   color: inherit;
@@ -354,15 +386,20 @@
   ) {
   --ui-action-fill: var(--iw-button-default-background, var(--iw-panel-raised));
   --ui-action-ink: var(--iw-button-default-foreground, var(--iw-text));
-  --ui-action-hover-fill: var(--iw-button-hover-background, var(--iw-panel-raised));
-  --ui-action-hover-ink: var(--iw-button-hover-foreground, var(--iw-text));
+  --ui-action-hover-fill: var(
+    --ui-hover-face,
+    var(--iw-button-hover-background, var(--iw-panel-raised))
+  );
+  --ui-action-hover-ink: var(--ui-hover-ink, var(--iw-button-hover-foreground, var(--iw-text)));
   --ui-action-pressed-fill: var(--iw-button-pressed-background, var(--iw-selection));
   --ui-action-pressed-ink: var(--iw-button-pressed-foreground, var(--iw-on-selection));
   --ui-action-edge: var(--iw-control-line);
+  --ui-action-frame: var(--ui-raised-frame, none);
+  --ui-action-hover-frame: var(--ui-hover-frame, var(--ui-raised-frame, none));
   color: var(--ui-action-ink);
-  background: var(--ui-action-fill);
+  background: var(--ui-control-finish, none), var(--ui-action-fill);
   border: 2px solid var(--ui-action-edge);
-  border-image: none;
+  border-image: var(--ui-action-frame, none);
   border-radius: 0;
   min-height: var(--iw-target);
   box-sizing: border-box;
@@ -373,10 +410,12 @@
   line-height: 1.35;
   text-shadow: none;
   text-decoration: none;
-  box-shadow:
+  box-shadow: var(
+    --ui-action-depth,
     inset 0 1px 0 color-mix(in srgb, var(--ui-action-ink) 12%, transparent),
     inset 0 -1px 0 #0002,
-    0 2px 0 var(--ui-shadow);
+    0 2px 0 var(--ui-shadow)
+  );
   cursor: pointer;
 }
 [data-theme-styled='true']
@@ -396,6 +435,8 @@
   --ui-action-pressed-fill: var(--iw-primary-pressed-background, var(--iw-selection));
   --ui-action-pressed-ink: var(--iw-primary-pressed-foreground, var(--iw-on-selection));
   --ui-action-edge: var(--iw-accent);
+  --ui-action-frame: var(--ui-primary-frame, none);
+  --ui-action-hover-frame: var(--ui-primary-frame, none);
 }
 [data-theme-styled='true'] :where(.danger, .danger-action, [data-ui-action='danger']) {
   --ui-action-fill: var(--iw-danger-default-background, var(--iw-hazard));
@@ -405,6 +446,8 @@
   --ui-action-pressed-fill: var(--iw-danger-pressed-background, var(--iw-selection));
   --ui-action-pressed-ink: var(--iw-danger-pressed-foreground, var(--iw-on-selection));
   --ui-action-edge: var(--iw-hazard);
+  --ui-action-frame: none;
+  --ui-action-hover-frame: none;
 }
 [data-theme-styled='true']
   :where(
@@ -421,11 +464,14 @@
     .native-menu-actions > a,
     .game-mode-choice > a
   ):is(:hover, [data-state='hover']):not(:disabled, [aria-disabled='true']) {
-  background: var(--ui-action-hover-fill);
+  background: var(--ui-control-finish, none), var(--ui-action-hover-fill);
+  border-image: var(--ui-action-hover-frame, none);
   color: var(--ui-action-hover-ink);
-  box-shadow:
+  box-shadow: var(
+    --ui-hover-depth,
     inset 0 0 0 1px var(--ui-action-edge),
-    0 2px 0 var(--ui-shadow);
+    0 2px 0 var(--ui-shadow)
+  );
 }
 [data-theme-styled='true']
   :where(
@@ -442,9 +488,10 @@
     .native-menu-actions > a,
     .game-mode-choice > a
   ):is(:active, [data-state='pressed']):not(:disabled, [aria-disabled='true']) {
-  background: var(--ui-action-pressed-fill);
+  background: var(--ui-active-finish, none), var(--ui-action-pressed-fill);
   color: var(--ui-action-pressed-ink);
-  box-shadow: inset 0 2px 3px #0005;
+  border-image: var(--ui-primary-frame, none);
+  box-shadow: var(--ui-pressed-depth, inset 0 2px 3px #0005);
 }
 [data-theme-styled='true']
   :where(button, .button, [role='button'], a, [role='tab']):is(
@@ -456,12 +503,24 @@
   ) {
   --ui-action-fill: var(--iw-selection, var(--iw-panel-raised));
   --ui-action-ink: var(--iw-on-selection, var(--iw-text));
+  --ui-action-hover-fill: var(--ui-action-fill);
+  --ui-action-hover-ink: var(--ui-action-ink);
   color: var(--ui-action-ink);
-  background: var(--ui-action-fill);
+  background: var(--ui-active-finish, none), var(--ui-action-fill);
   border-color: var(--iw-focus, var(--iw-accent));
-  border-image: none;
-  box-shadow: inset 3px 0 var(--iw-focus, var(--iw-accent));
+  border-image: var(--ui-primary-frame, none);
+  box-shadow: var(--ui-selected-depth, inset 3px 0 var(--iw-focus, var(--iw-accent)));
   text-decoration-thickness: 2px;
+}
+[data-theme-styled='true']
+  :where(button, .button, [role='button'], a, [role='tab']):is(
+    [aria-pressed='true'],
+    [aria-selected='true'],
+    [aria-current]:not([aria-current='false']),
+    .selected,
+    .active-tab
+  ):is(:active, [data-state='pressed']):not(:disabled, [aria-disabled='true']) {
+  box-shadow: var(--ui-pressed-depth, inset 0 2px 3px #0005);
 }
 [data-theme-styled='true']
   :where(
@@ -494,14 +553,14 @@
 /* Native value controls retain browser semantics and keyboard operation. */
 [data-theme-styled='true'] :where(input, select, textarea) {
   color: var(--iw-input-text, var(--iw-text));
-  background: var(--iw-input, var(--iw-ink));
+  background: var(--ui-inset-finish, none), var(--iw-input, var(--iw-ink));
   border: 2px solid var(--iw-control-line);
   border-image: none;
   border-radius: 0;
   font-family: var(--iw-font-ui);
   font-size: var(--iw-text-size);
   accent-color: var(--iw-accent);
-  box-shadow: inset 0 1px 2px #0003;
+  box-shadow: var(--ui-inset-depth, inset 0 1px 2px #0003);
 }
 [data-theme-styled='true']
   :where(
@@ -532,10 +591,10 @@
   flex: 0 0 22px;
   padding: 0;
   vertical-align: middle;
-  background: var(--iw-ink);
+  background: var(--ui-inset-finish, none), var(--iw-ink);
   border: 2px solid var(--iw-control-line);
   border-image: none;
-  box-shadow: none;
+  box-shadow: var(--ui-inset-depth, none);
 }
 [data-theme-styled='true'] input[type='radio'] {
   border-radius: 50%;
@@ -556,16 +615,16 @@
   clip-path: none;
 }
 [data-theme-styled='true'] :where(input[type='checkbox'], input[type='radio']):checked {
-  background: var(--iw-accent);
+  background: var(--ui-active-finish, none), var(--iw-accent);
   border-color: var(--iw-accent);
   outline: none;
-  box-shadow: none;
+  box-shadow: var(--ui-inset-depth, none);
 }
 [data-theme-styled='true'] :where(input[type='checkbox'], input[type='radio']):checked::before {
   transform: scale(1);
 }
 [data-theme-styled='true'] :where(input[type='checkbox'], input[type='radio']):disabled {
-  background: var(--iw-panel);
+  background: var(--ui-panel-finish, none), var(--iw-panel);
   border-color: var(--iw-muted);
   border-style: dashed;
   cursor: not-allowed;
@@ -609,7 +668,7 @@
   width: 24px;
   height: 24px;
   margin-top: -10px;
-  background: var(--iw-accent);
+  background: var(--ui-thumb-finish, none), var(--iw-accent);
   border: 2px solid var(--iw-on-accent, var(--iw-ink));
   border-radius: 0;
   box-shadow: 0 0 0 1px var(--iw-control-line);
@@ -617,7 +676,7 @@
 [data-theme-styled='true'] input[type='range']::-moz-range-thumb {
   width: 20px;
   height: 20px;
-  background: var(--iw-accent);
+  background: var(--ui-thumb-finish, none), var(--iw-accent);
   border: 2px solid var(--iw-on-accent, var(--iw-ink));
   border-radius: 0;
   box-shadow: 0 0 0 1px var(--iw-control-line);
@@ -638,10 +697,10 @@
   background: var(--iw-ink);
 }
 [data-theme-styled='true'] progress::-webkit-progress-value {
-  background: var(--iw-accent);
+  background: var(--ui-active-finish, none), var(--iw-accent);
 }
 [data-theme-styled='true'] progress::-moz-progress-bar {
-  background: var(--iw-accent);
+  background: var(--ui-active-finish, none), var(--iw-accent);
 }
 [data-theme-styled='true'] :where(*) {
   scrollbar-color: var(--iw-control-line) var(--iw-ink);
@@ -742,23 +801,16 @@
 [data-theme-texture='off'] :where(.menu-ornament, .menu-scene-decoration, .menu-retune-layer) {
   display: none;
 }
-[data-theme-surface='flat']
-  :where(
-    button,
-    .button,
-    .action,
-    .community-entry,
-    [role='button'],
-    [data-ui-action],
-    dialog,
-    .panel,
-    .field-kit-panel,
-    .iw-panel,
-    [data-component='panel'],
-    [data-ui-surface]
-  ) {
-  border-image: none;
-  box-shadow: none;
+[data-theme-surface='flat'] {
+  --ui-panel-frame: none;
+  --ui-raised-frame: none;
+  --ui-primary-frame: none;
+  --ui-panel-depth: none;
+  --ui-action-depth: none;
+  --ui-hover-depth: none;
+  --ui-pressed-depth: none;
+  --ui-selected-depth: none;
+  --ui-gallery-depth: none;
 }
 [data-theme-hud='opaque']
   :where(
@@ -855,7 +907,7 @@
 }
 [data-theme-styled='true'] .sim-worlds .flight-dialog > header {
   z-index: 10;
-  background: var(--iw-panel);
+  background: var(--ui-panel-finish, none), var(--iw-panel);
   box-shadow: 0 0 0 8px var(--iw-panel);
 }
 @media (pointer: coarse) {
@@ -874,6 +926,15 @@
   }
 }
 @media (forced-colors: active) {
+  [data-theme-family][data-theme-material] {
+    --ui-panel-finish: none;
+    --ui-control-finish: none;
+    --ui-active-finish: none;
+    --ui-inset-finish: none;
+    --ui-toolbar-finish: none;
+    --ui-thumb-finish: none;
+    --ui-scene-motif: none;
+  }
   [data-theme-styled='true']
     :where(button, .button, input, select, textarea, dialog, .panel, [data-ui-surface]) {
     border-image: none;
@@ -926,10 +987,10 @@
   min-width: 0;
   text-align: left;
   padding: 12px;
-  border-image: none;
-  background: var(--iw-panel, var(--fk-panel));
+  border-image: var(--ui-raised-frame, none);
+  background: var(--ui-control-finish, none), var(--iw-panel, var(--fk-panel));
   color: var(--iw-text, var(--fk-text));
-  box-shadow: none;
+  box-shadow: var(--ui-gallery-depth, none);
 }
 .theme-preview-swatches {
   display: grid;
@@ -950,15 +1011,42 @@
   line-height: 1.45;
   opacity: 0.9;
 }
+.theme-gallery
+  .theme-preview-card:hover:not(
+    [aria-pressed='true'],
+    :disabled,
+    [aria-disabled='true'],
+    :active,
+    [data-state='pressed']
+  ) {
+  background: var(--ui-control-finish, none), var(--ui-action-hover-fill);
+  color: var(--ui-action-hover-ink);
+  border-image: var(--ui-action-hover-frame, none);
+  box-shadow: var(--ui-hover-depth, none);
+}
 .theme-gallery .theme-preview-card[aria-pressed='true'] {
   color: var(--iw-on-selection, var(--fk-text));
-  background: var(--iw-selection, var(--fk-panel));
+  background: var(--ui-active-finish, none), var(--iw-selection, var(--fk-panel));
+  border-image: var(--ui-primary-frame, none);
   outline: 2px solid var(--iw-focus, var(--fk-focus));
   outline-offset: 2px;
+}
+.theme-gallery
+  .theme-preview-card:is(:active, [data-state='pressed']):not(:disabled, [aria-disabled='true']) {
+  color: var(--ui-action-pressed-ink);
+  background: var(--ui-active-finish, none), var(--ui-action-pressed-fill);
+  border-image: var(--ui-primary-frame, none);
+  box-shadow: var(--ui-pressed-depth, inset 0 2px 3px #0005);
 }
 .theme-gallery .theme-preview-card:is(:focus-visible, .controller-focus) {
   outline: 3px solid var(--iw-focus, var(--fk-focus));
   outline-offset: 5px;
+}
+.theme-gallery .theme-preview-card:is(:disabled, [aria-disabled='true']) {
+  color: var(--iw-muted);
+  background: var(--iw-panel);
+  border-image: none;
+  box-shadow: none;
 }
 .theme-preview-card[aria-pressed='true'] strong::after {
   content: ' ✓';
@@ -1036,7 +1124,7 @@
     #demo-dialog[data-reward='expanded'] .demo-panel
   ) {
   color: var(--iw-text);
-  background: var(--iw-panel);
+  background: var(--ui-panel-finish, none), var(--iw-panel);
   border-color: var(--iw-line);
   border-image: none;
   border-radius: 0;
@@ -1248,15 +1336,15 @@
 [data-theme-styled='true'] .menu-scene[data-backdrop='interface']::before {
   content: '';
   position: absolute;
-  inset: 24px 24px auto auto;
-  inline-size: min(24vw, 192px);
-  block-size: 96px;
+  inset: var(--ui-scene-inset);
+  inline-size: var(--ui-scene-width);
+  block-size: var(--ui-scene-height);
   pointer-events: none;
   background-image: var(--ui-scene-motif, none);
   background-size: var(--ui-scene-motif-size, 48px 48px);
   background-position: right top;
-  background-repeat: no-repeat;
-  opacity: 0.18;
+  background-repeat: var(--ui-scene-repeat);
+  opacity: var(--ui-scene-opacity);
 }
 [data-theme-material='linen'] {
   --ui-scene-motif: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='64' height='64' shape-rendering='crispEdges'%3E%3Cg fill='none' stroke='%23f48686' stroke-width='2'%3E%3Cpath d='M32 10l22 22-22 22L10 32zM24 24l16 16m0-16L24 40'/%3E%3C/g%3E%3Cpath fill='%23e1ddcf' d='M0 0h2v2H0zm62 0h2v2h-2zM0 62h2v2H0zm62 0h2v2h-2z'/%3E%3C/svg%3E");
@@ -1301,6 +1389,343 @@
 [data-theme-material='lcd'] .menu-scene[data-backdrop='interface']::after {
   background: none;
 }
-[data-theme-texture='off'] .menu-scene[data-backdrop='interface']::before {
-  background-image: none;
+[data-theme-texture='off'] {
+  --ui-scene-motif: none;
+}
+
+/* Material finishes are independent of the immutable asset frames. The opaque
+   semantic base always supplies the text/state pair; these original, static
+   layers add restrained grain across the face and stronger light at its edges.
+   Grain is not stretched nine-slice art: it contains no screws, seams or labels. */
+@media (forced-colors: none) {
+  [data-theme-texture='on'][data-theme-contrast='normal'][data-theme-surface='bevel'] {
+    --ui-control-finish: linear-gradient(180deg, #ffffff0a, transparent 22%, #00000008);
+    --ui-active-finish: linear-gradient(180deg, #00000008, transparent 40%, #ffffff08);
+    --ui-inset-finish: linear-gradient(180deg, #00000012, transparent 12px);
+    --ui-inset-depth: inset 0 2px 3px #0005, inset 0 -1px 0 #ffffff0c;
+    --ui-toolbar-finish: linear-gradient(180deg, #ffffff08, transparent 8px, #00000008);
+    --ui-action-depth: inset 1px 1px 0 #ffffff20, inset -1px -1px 0 #0005, 0 2px 0 var(--ui-shadow);
+    --ui-hover-depth:
+      inset 0 0 0 1px var(--iw-accent), inset 0 2px 0 #ffffff20, 0 2px 0 var(--ui-shadow);
+    --ui-pressed-depth: inset 0 2px 3px #0005, inset 0 -1px 0 #ffffff14;
+    --ui-selected-depth: inset 3px 0 var(--iw-focus), inset 0 1px 0 #ffffff18, inset 0 -2px 0 #0003;
+    --ui-gallery-depth: var(--ui-action-depth);
+  }
+
+  /* Steel: powder-coated face, rolled edge, dark socket and amber activation.
+     Four riveted corners belong to frames; wear never crosses the label. */
+  :is(
+      [data-theme-material='steel'],
+      [data-theme-material='industrial-workshop']
+    )[data-theme-texture='on'][data-theme-contrast='normal'][data-theme-surface='bevel'] {
+    --ui-grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='96' height='64'%3E%3Cpath fill='%23fff' opacity='.026' d='M3 2h7v1H3zm24 7h3v1h-3zm35-5h12v1H62zM10 19h2v1h-2zm35-4h6v1h-6zm38 10h9v1h-9zM1 35h11v1H1zm24-5h3v1h-3zm31 8h7v1h-7zm28-1h4v1h-4zM9 54h9v1H9zm28-7h3v1h-3zm27 9h10v1H64zm23 4h5v1h-5z'/%3E%3Cpath fill='%23000' opacity='.055' d='M15 5h9v1h-9zm30 4h3v1h-3zm37 4h5v1h-5zM2 25h4v1H2zm30-6h9v1h-9zm30 8h4v1h-4zM16 40h12v1H16zm25-6h2v1h-2zm32 11h10v1H73zM3 60h4v1H3zm25-8h8v1h-8zm20 8h7v1h-7zm30-5h4v1h-4z'/%3E%3C/svg%3E")
+      left top / 96px 64px repeat;
+    --ui-panel-finish:
+      repeating-linear-gradient(90deg, #0004 0 1px, #ffffff12 1px 2px, transparent 2px 4px) right
+        16px top 7px / 112px 4px no-repeat,
+      var(--ui-grain), linear-gradient(90deg, #ffffff08, transparent 24%, #00000006 78%, #00000012),
+      linear-gradient(180deg, #ffffff14, #ffffff04 10px, transparent 68px, #00000008);
+    --ui-control-finish:
+      var(--ui-grain),
+      linear-gradient(90deg, #ffffff08, transparent 16%, transparent 84%, #0000000c),
+      linear-gradient(180deg, #ffffff30, #ffffff0b 5px, #ffffff05 42%, #0000000a 70%, #00000030);
+    --ui-active-finish:
+      var(--ui-grain), linear-gradient(180deg, #00000016, transparent 5px, #ffffff09 52%, #ffffff18);
+    --ui-inset-finish:
+      var(--ui-grain), linear-gradient(180deg, #00000038, #0000000a 7px, transparent 70%, #ffffff06);
+    --ui-toolbar-finish:
+      var(--ui-grain), linear-gradient(180deg, #ffffff12, #ffffff04 7px, transparent 70%, #00000018);
+    --ui-thumb-finish:
+      repeating-linear-gradient(90deg, transparent 0 3px, #0005 3px 4px, #fff3 4px 5px),
+      linear-gradient(180deg, #fff3, transparent 40%, #0003);
+    --ui-panel-frame: var(--iw-material-panel) 6 / 6px / 0 repeat;
+    --ui-raised-frame: var(--iw-material-raised) 6 / 6px / 0 repeat;
+    --ui-primary-frame: var(--iw-material-primary) 6 / 6px / 0 repeat;
+    --ui-hover-frame: var(--ui-primary-frame);
+    --ui-hover-face: var(--iw-accent);
+    --ui-hover-ink: var(--iw-on-accent);
+    --ui-panel-depth:
+      inset 1px 1px 0 #ffffff18, inset -1px -2px 0 #0008, 0 0 0 1px #0007, 0 4px 0 var(--ui-shadow),
+      0 16px 28px #0006;
+    --ui-action-depth:
+      inset 0 2px 0 #ffffff25, inset 2px 0 0 #ffffff12, inset 0 -3px 0 #0006, inset -2px 0 0 #0003,
+      0 0 0 1px #0008, 0 4px 0 var(--ui-shadow), 0 5px 7px #0004;
+    --ui-hover-depth:
+      inset 0 2px 0 #ffffff65, inset 2px 0 0 #ffffff35, inset 0 -3px 0 #0005, inset -2px 0 0 #0002,
+      0 0 0 1px #0008, 0 4px 0 var(--ui-shadow),
+      0 0 10px color-mix(in srgb, var(--iw-accent) 18%, transparent);
+    --ui-pressed-depth:
+      inset 0 3px 4px #0006, inset 2px 0 0 #0003, inset 0 -1px 0 #ffffff50, 0 0 0 1px #0009,
+      0 1px 0 var(--ui-shadow);
+    --ui-selected-depth:
+      inset 0 2px 0 #ffffff45, inset 3px 0 0 #ffffff30, inset 0 -2px 0 #0004, 0 0 0 1px #0008,
+      0 2px 0 var(--ui-shadow);
+    --ui-inset-depth:
+      inset 0 3px 4px #0007, inset 1px 0 0 #0006, inset 0 -1px 0 #ffffff1c, 0 1px 0 #ffffff10;
+    --ui-scene-inset: 0;
+    --ui-scene-width: auto;
+    --ui-scene-height: auto;
+    --ui-scene-motif:
+      linear-gradient(
+        135deg,
+        transparent 35%,
+        color-mix(in srgb, var(--iw-accent) 7%, transparent)
+      ),
+      repeating-linear-gradient(
+        0deg,
+        transparent 0 190px,
+        #0007 190px 191px,
+        color-mix(in srgb, var(--iw-line) 28%, transparent) 191px 192px
+      ),
+      repeating-linear-gradient(
+        90deg,
+        transparent 0 190px,
+        #0007 190px 191px,
+        color-mix(in srgb, var(--iw-line) 28%, transparent) 191px 192px
+      );
+    --ui-scene-motif-size: 100% 100%, 192px 192px, 192px 192px;
+    --ui-scene-repeat: no-repeat, repeat, repeat;
+    --ui-scene-opacity: 0.6;
+  }
+
+  /* Cloth keeps its stitches on the panel seam. Buttons are woven fabric,
+     never embroidered borders repeated through every navigation row. */
+  [data-theme-material='linen'][data-theme-texture='on'][data-theme-contrast='normal'] {
+    --ui-weave:
+      repeating-linear-gradient(0deg, transparent 0 3px, #ffffff04 3px 4px),
+      repeating-linear-gradient(90deg, transparent 0 3px, #0000000a 3px 4px);
+    --ui-panel-finish:
+      repeating-linear-gradient(
+          90deg,
+          color-mix(in srgb, var(--iw-accent) 48%, transparent) 0 3px,
+          transparent 3px 9px
+        )
+        left 12px top 3px / calc(100% - 24px) 2px no-repeat,
+      var(--ui-weave), linear-gradient(180deg, #ffffff06, transparent 72px);
+    --ui-control-finish: var(--ui-weave), linear-gradient(180deg, #ffffff0a, transparent 65%);
+    --ui-toolbar-finish: var(--ui-weave);
+    --ui-panel-depth:
+      inset 0 2px 0 color-mix(in srgb, var(--iw-accent) 65%, transparent),
+      inset 0 -1px 0 color-mix(in srgb, var(--iw-accent) 32%, transparent), 0 6px 14px #0004;
+    --ui-hover-depth:
+      inset 3px 0 var(--iw-accent), inset 0 1px 0 #ffffff12, 0 2px 0 var(--ui-shadow);
+  }
+
+  /* Porcelain: a glazed face and cobalt double lip. Sakura is warmer satin. */
+  :is(
+      [data-theme-material='porcelain'],
+      [data-theme-material='sakura']
+    )[data-theme-texture='on'][data-theme-contrast='normal'] {
+    --ui-panel-finish: linear-gradient(115deg, #ffffff28, transparent 44%, #00000003);
+    --ui-control-finish: linear-gradient(
+      180deg,
+      #ffffff55,
+      #ffffff08 6px,
+      transparent 45%,
+      #00000009
+    );
+    --ui-toolbar-finish: linear-gradient(180deg, #ffffff20, transparent);
+    --ui-panel-depth:
+      inset 0 0 0 2px color-mix(in srgb, var(--iw-accent) 24%, transparent),
+      inset 0 0 0 5px #ffffff24, 0 4px 0 color-mix(in srgb, var(--iw-line) 28%, transparent),
+      0 8px 18px #0001;
+    --ui-action-depth:
+      inset 0 2px 0 #ffffff80, inset 0 -2px 0 #00000018,
+      0 2px 0 color-mix(in srgb, var(--iw-line) 40%, transparent);
+    --ui-hover-depth:
+      inset 0 0 0 1px var(--iw-accent), inset 0 2px 0 #ffffff80,
+      0 2px 0 color-mix(in srgb, var(--iw-accent) 45%, transparent);
+  }
+  [data-theme-material='sakura'][data-theme-texture='on'][data-theme-contrast='normal'] {
+    --ui-panel-finish: linear-gradient(135deg, #ffffff18, transparent 70%);
+    --ui-control-finish: linear-gradient(180deg, #ffffff28, transparent 48%, #00000006);
+    --ui-panel-depth:
+      inset 0 2px 0 color-mix(in srgb, var(--iw-accent) 42%, transparent), inset 0 -1px 0 #00000015,
+      0 4px 14px #0001;
+  }
+
+  /* Enamel and instrument copper: hairline inlays, directional satin, no
+     repeated chevrons. Obsidian overrides the enamel with cut stone below. */
+  :is(
+      [data-theme-material='brass'],
+      [data-theme-material='copper']
+    )[data-theme-texture='on'][data-theme-contrast='normal'] {
+    --ui-panel-finish:
+      linear-gradient(125deg, #ffffff08, transparent 40%, #00000006),
+      repeating-linear-gradient(0deg, transparent 0 7px, #ffffff02 7px 8px);
+    --ui-control-finish: linear-gradient(180deg, #ffffff12, transparent 34%, #0000000a);
+    --ui-toolbar-finish: linear-gradient(180deg, #ffffff0c, transparent);
+    --ui-panel-depth:
+      inset 0 1px 0 color-mix(in srgb, var(--iw-accent) 45%, transparent),
+      inset 0 0 0 4px #00000018,
+      inset 0 -1px 0 color-mix(in srgb, var(--iw-accent) 22%, transparent),
+      0 4px 0 var(--ui-shadow), 0 10px 20px #0003;
+    --ui-hover-depth:
+      inset 0 2px 0 var(--iw-accent), inset 0 -1px 0 #0005, 0 2px 0 var(--ui-shadow);
+  }
+  [data-theme-material='copper'][data-theme-texture='on'][data-theme-contrast='normal'] {
+    --ui-control-finish:
+      repeating-linear-gradient(0deg, transparent 0 3px, #ffffff04 3px 4px),
+      linear-gradient(105deg, #ffffff0a, transparent 30%, #00000008);
+    --ui-scene-motif: repeating-radial-gradient(
+      circle at 100% 0,
+      transparent 0 27px,
+      var(--iw-accent) 28px 29px,
+      transparent 30px 44px
+    );
+    --ui-scene-motif-size: 192px 96px;
+  }
+
+  /* Fine timber grain remains broad and sparse enough for small labels. */
+  [data-theme-material='wood'][data-theme-texture='on'][data-theme-contrast='normal'] {
+    --ui-woodgrain: repeating-linear-gradient(
+      1deg,
+      transparent 0 9px,
+      #00000005 10px 11px,
+      transparent 12px 27px,
+      #ffffff0a 28px 29px,
+      transparent 30px 63px
+    );
+    --ui-panel-finish: var(--ui-woodgrain), linear-gradient(180deg, #ffffff0c, transparent 84px);
+    --ui-control-finish:
+      var(--ui-woodgrain), linear-gradient(180deg, #ffffff18, transparent 40%, #00000010);
+    --ui-toolbar-finish: var(--ui-woodgrain);
+    --ui-panel-depth:
+      inset 0 3px 0 #ffffff20, inset 0 -4px 0 #00000022, inset 2px 0 0 #ffffff10,
+      0 4px 0 color-mix(in srgb, var(--iw-line) 50%, transparent), 0 8px 16px #0002;
+    --ui-action-depth: inset 0 2px 0 #ffffff30, inset 0 -2px 0 #00000030, 0 3px 0 var(--ui-shadow);
+    --ui-hover-depth:
+      inset 0 2px 0 color-mix(in srgb, var(--iw-accent) 60%, transparent), inset 0 -2px 0 #00000030,
+      0 3px 0 var(--ui-shadow);
+  }
+  [data-theme-material='composite'][data-theme-texture='on'][data-theme-contrast='normal'] {
+    --ui-panel-finish: linear-gradient(
+      135deg,
+      #ffffff05,
+      transparent 34%,
+      #00000007 34%,
+      transparent 68%
+    );
+    --ui-control-finish: linear-gradient(
+      145deg,
+      #ffffff0c,
+      transparent 45%,
+      #00000008 46%,
+      transparent 85%
+    );
+    --ui-panel-depth:
+      inset 2px 0 0 color-mix(in srgb, var(--iw-accent) 28%, transparent), inset 0 1px 0 #ffffff12,
+      inset 0 -2px 0 #0004, 0 4px 0 var(--ui-shadow), 0 10px 24px #0003;
+    --ui-hover-depth:
+      inset 0 0 0 1px var(--iw-accent), 0 2px 0 var(--ui-shadow),
+      0 0 8px color-mix(in srgb, var(--iw-accent) 10%, transparent);
+  }
+  [data-theme-material='lcd'][data-theme-texture='on'][data-theme-contrast='normal'] {
+    --ui-panel-finish:
+      repeating-linear-gradient(0deg, transparent 0 3px, #00000003 3px 4px),
+      repeating-linear-gradient(90deg, transparent 0 3px, #00000003 3px 4px);
+    --ui-control-finish: linear-gradient(180deg, #ffffff15, transparent 50%, #00000009);
+    --ui-panel-depth:
+      inset 0 3px 5px #0003, inset 0 -2px 0 #ffffff35,
+      0 0 0 3px color-mix(in srgb, var(--iw-line) 25%, transparent);
+  }
+
+  /* These variants are resolved from the interface basis, including Studio
+     descendants, rather than testing the current campaign or family name. */
+  [data-theme-finish='obsidian-reliquary'][data-theme-texture='on'][data-theme-contrast='normal'] {
+    --ui-panel-finish:
+      repeating-linear-gradient(
+        117deg,
+        transparent 0 47px,
+        #ffffff03 48px 49px,
+        transparent 50px 113px
+      ),
+      linear-gradient(30deg, #0000000a, transparent 45%, #ffffff05);
+    --ui-control-finish: linear-gradient(
+      135deg,
+      #ffffff10,
+      transparent 32%,
+      #0000000a 33%,
+      transparent 80%
+    );
+    --ui-panel-depth:
+      inset 2px 2px 0 color-mix(in srgb, var(--iw-accent) 28%, transparent),
+      inset -3px -3px 0 #0006, 0 5px 0 var(--ui-shadow), 0 10px 20px #0005;
+    --ui-action-depth: inset 2px 2px 0 #ffffff18, inset -2px -2px 0 #0006, 0 3px 0 var(--ui-shadow);
+    --ui-scene-motif: linear-gradient(
+      135deg,
+      transparent 42%,
+      var(--iw-accent) 43% 44%,
+      transparent 45% 52%,
+      var(--iw-accent) 53% 54%,
+      transparent 55%
+    );
+    --ui-scene-motif-size: 144px 96px;
+  }
+  [data-theme-finish='deep-space'][data-theme-texture='on'][data-theme-contrast='normal'] {
+    --ui-panel-finish:
+      repeating-linear-gradient(0deg, transparent 0 5px, #ffffff03 5px 6px),
+      linear-gradient(180deg, #ffffff08, transparent 84px);
+    --ui-control-finish: linear-gradient(180deg, #ffffff12, transparent 6px, #00000008);
+    --ui-panel-depth:
+      inset 0 2px 0 #ffffff18, inset 0 -3px 0 #0007, inset 3px 0 0 #0003, 0 3px 0 var(--ui-shadow),
+      0 8px 20px #0004;
+    --ui-hover-depth:
+      inset 0 -2px 0 var(--iw-accent), inset 0 1px 0 #ffffff20, 0 2px 0 var(--ui-shadow);
+    --ui-scene-motif:
+      linear-gradient(0deg, transparent 0 46px, var(--iw-line) 46px 48px, transparent 48px),
+      linear-gradient(90deg, transparent 0 130px, var(--iw-accent) 130px 138px, transparent 138px);
+    --ui-scene-motif-size: 192px 96px;
+  }
+  [data-theme-finish='moonlit-grove'][data-theme-texture='on'][data-theme-contrast='normal'] {
+    --ui-control-finish:
+      repeating-linear-gradient(
+        89deg,
+        transparent 0 7px,
+        #ffffff03 8px 9px,
+        transparent 10px 23px,
+        #00000005 24px 25px,
+        transparent 26px 58px
+      ),
+      linear-gradient(180deg, #ffffff12, transparent 45%, #0000000a);
+
+    --ui-woodgrain: repeating-linear-gradient(
+      88deg,
+      transparent 0 13px,
+      #ffffff04 14px 15px,
+      transparent 16px 46px,
+      #00000008 47px 49px,
+      transparent 50px 83px
+    );
+    --ui-panel-finish: var(--ui-woodgrain), linear-gradient(120deg, #ffffff06, transparent 48%);
+    --ui-panel-depth:
+      inset 1px 1px 0 #ffffff18, inset -2px -3px 0 #0006, 0 4px 0 var(--ui-shadow),
+      0 12px 24px #0003;
+    --ui-scene-motif:
+      radial-gradient(
+        ellipse at 75% 22%,
+        transparent 25px,
+        var(--iw-accent) 26px 28px,
+        transparent 29px
+      ),
+      linear-gradient(120deg, transparent 64%, var(--iw-line) 65% 66%, transparent 67%);
+    --ui-scene-motif-size: 144px 96px;
+  }
+
+  /* Texture-free systems still have intentional construction. Native desktop
+     bevels and terminal double rules are geometry, not decorative texture. */
+  [data-theme-material='classic'][data-theme-contrast='normal'] {
+    --ui-panel-depth: inset 1px 1px white, inset -1px -1px #404040, 1px 1px 0 #000;
+    --ui-action-depth: inset 1px 1px white, inset -1px -1px #404040, 1px 1px 0 #000;
+    --ui-hover-depth: var(--ui-action-depth);
+    --ui-pressed-depth: inset 1px 1px #404040, inset -1px -1px white;
+    --ui-selected-depth: var(--ui-pressed-depth);
+    --ui-inset-depth: inset 1px 1px #404040, inset -1px -1px white;
+    --ui-gallery-depth: var(--ui-action-depth);
+  }
+  [data-theme-material='terminal'][data-theme-contrast='normal'] {
+    --ui-panel-depth: inset 0 0 0 1px var(--iw-panel), inset 0 0 0 2px var(--iw-control-line);
+    --ui-hover-face: var(--iw-selection);
+    --ui-hover-ink: var(--iw-on-selection);
+  }
 }
