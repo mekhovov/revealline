@@ -755,6 +755,9 @@ test('stale queued animation timestamps cannot advance after a long execution ga
         };
       let clock = 0;
       f.win.performance = { now: () => clock };
+      // This lifecycle fixture exercises the original KeyE yaw mapping.
+      f.$('keyboard-preset').value = 'classic';
+      f.$('keyboard-preset').emit('change');
       f.$('mode').value = mode;
       f.$('mode').emit('change');
       f.$('input-source').value = owner;
