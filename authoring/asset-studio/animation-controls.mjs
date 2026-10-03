@@ -7,6 +7,7 @@ import {
 } from '../../game/presentation/actor-animation.mjs';
 import { pageActorArtPool } from '../../game/presentation/actor-art-pool.mjs';
 import { drawHuntActor } from '../../game/hunt/actor-art.mjs';
+import { actorArtReviewRevision } from '../../game/hunt/preferences.mjs';
 
 export function sameActorAnimationContext(owner, next) {
   return (
@@ -22,7 +23,14 @@ export function sameActorAnimationContext(owner, next) {
 
 /** Edits the existing immutable Asset Studio document. Save, undo, .rltheme
  * export/import and theme ownership remain the parent Studio's responsibility. */
-export function mountActorAnimationControls({ document, after, getContext, onApply, onError }) {
+export function mountActorAnimationControls({
+  document,
+  after,
+  getContext,
+  onApply,
+  onError,
+  drawActor = drawHuntActor,
+}) {
   const root = document.createElement('details');
   const words = (en, uk) => () => (getLocale() === 'uk' ? uk : en);
   const node = (tag, en, uk = en) => {
@@ -134,15 +142,35 @@ export function mountActorAnimationControls({ document, after, getContext, onApp
     ]) {
       ctx.fillStyle = x === 96 || x === 280 ? '#d4dcc5' : '#101923';
       ctx.fillRect(x - 8, 12, size + 16, 136);
-      if (descriptor.rig === 'overhead-soldier.v1')
-        drawHuntActor(ctx, x, 35, size, 0, {
+      if (descriptor.rig === 'overhead-soldier.v1') {
+        const clip = ACTOR_CLIPS.includes(clips.value) ? clips.value : 'idle',
+          stationaryAim = clip === 'aim' || clip === 'fire';
+        // The selected clip controls only this preview's descriptor sampler.
+        // Pose vocabulary stays separate from native gameplay vulnerability.
+        drawActor(ctx, x, 35, size, 0, {
           animation: descriptor,
+          animationClip: clip,
           timeMs: Number(time.value),
-          state: clips.value === 'move' ? 'walk' : clips.value,
+          state:
+            clip === 'move'
+              ? 'walk'
+              : clip === 'recovery'
+                ? 'recover'
+                : clip === 'anticipation' || stationaryAim
+                  ? 'warning'
+                  : clip,
+          phase:
+            clip === 'anticipation'
+              ? 'warning'
+              : clip === 'recovery'
+                ? 'rest'
+                : stationaryAim
+                  ? clip
+                  : undefined,
           heading: heading.value,
-          artRevision: 'industrial-pilot-v1',
+          artRevision: actorArtReviewRevision() ?? 'industrial-pilot-v1',
         });
-      else if (lease) {
+      } else if (lease) {
         const frame = sampleActorAnimation(descriptor, {
           clip: clips.value,
           timeMs: Number(time.value),

@@ -128,6 +128,96 @@ test('absent, disabled and explicitly invalid projections have no canvas or cach
   assert.equal(p.images.length, 0);
 });
 
+test('successor ordinary prey rotates once outside its north-facing sprite in every direction', () => {
+  for (const [heading, facingRadians] of [
+    ['up', 0],
+    ['right', Math.PI / 2],
+    ['down', Math.PI],
+    ['left', -Math.PI / 2],
+    ['right', Math.PI / 4],
+  ]) {
+    const p = painter(),
+      s = surface(),
+      v = view();
+    v.actors = [
+      {
+        ...v.actors[0],
+        kind: 'runner',
+        facingRadians,
+        pursuit: { behavior: 'courier', heading, nextHeading: null, phase: 'committed' },
+      },
+    ];
+    const before = structuredClone(v);
+    p.drawActors(s.ctx, v, palette, { reduced: true });
+    assert.equal(p.images[0].calls.find(({ name }) => name === 'rotate').args[0], 0);
+    assert.deepEqual(
+      s.calls.filter(({ name }) => name === 'rotate').map(({ args }) => args[0]),
+      [facingRadians],
+    );
+    assert.equal(s.calls.find(({ name }) => name === 'arc').args[2], v.actors[0].radius * 16);
+    assert.deepEqual(v, before);
+  }
+});
+
+test('specialists retain their current armored heading without an outer or pending-turn rotation', () => {
+  for (const behavior of ['shield', 'brace']) {
+    const p = painter(),
+      s = surface(),
+      v = view();
+    v.actors = [
+      {
+        ...v.actors[0],
+        kind: 'runner',
+        facingRadians: -Math.PI / 2,
+        pursuit: { behavior, heading: 'left', nextHeading: 'right', phase: 'warning' },
+      },
+    ];
+    const before = structuredClone(v);
+    p.drawActors(s.ctx, v, palette, { reduced: true });
+    assert.equal(p.images[0].calls.find(({ name }) => name === 'rotate').args[0], -Math.PI / 2);
+    assert.equal(s.calls.filter(({ name }) => name === 'rotate').length, 0);
+    assert.deepEqual(v, before);
+  }
+});
+
+test('industrial compact Capture gait advances through stride poses and freezes for reduced effects', () => {
+  const previous = Object.getOwnPropertyDescriptor(globalThis, 'location');
+  try {
+    for (const revision of ['industrial-pilot-v1', 'industrial-overhead-v2']) {
+      Object.defineProperty(globalThis, 'location', {
+        configurable: true,
+        value: { href: `https://example.test/game/?artReview=${revision}` },
+      });
+      const p = painter(),
+        s = surface(),
+        v = view(),
+        signatures = new Set();
+      v.actors = [{ ...v.actors[0], kind: 'runner', facingRadians: Math.PI / 2 }];
+      const before = structuredClone(v.actors);
+      for (const tick of [0, 20, 40, 60, 80, 100]) {
+        v.actorTick = tick;
+        p.drawActors(s.ctx, v, palette);
+        const image = s.calls.filter(({ name }) => name === 'drawImage').at(-1).args[0];
+        signatures.add(
+          JSON.stringify(
+            image.calls.filter(({ name }) => name === 'fillRect').map(({ args }) => args),
+          ),
+        );
+      }
+      assert.ok(signatures.size >= 3, `${revision} must show alternating compact footsteps.`);
+      p.drawActors(s.ctx, v, palette, { reduced: true });
+      const frozen = s.calls.filter(({ name }) => name === 'drawImage').at(-1).args[0];
+      v.actorTick += 100;
+      p.drawActors(s.ctx, v, palette, { reduced: true });
+      assert.strictEqual(s.calls.filter(({ name }) => name === 'drawImage').at(-1).args[0], frozen);
+      assert.deepEqual(v.actors, before);
+    }
+  } finally {
+    if (previous) Object.defineProperty(globalThis, 'location', previous);
+    else delete globalThis.location;
+  }
+});
+
 for (const width of [200, 240, 294, 390, 600, 1152])
   test(`pixel body size, accurate footprint and opaque mandatory cues at ${width}px`, () => {
     const s = surface(),

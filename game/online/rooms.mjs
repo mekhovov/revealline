@@ -666,6 +666,7 @@ function frame(time) {
           })),
         });
         drawClassicBoard(canvas, run, {
+          attemptKey: `${state.roomId}:${state.generation}`,
           presentation: presentation.snapshot(),
           effects: effects[index],
           boardStyle: roomUI.boardStyle(),
