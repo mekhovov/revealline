@@ -29,6 +29,12 @@ The [59-file integrated cohort](integrated-checks.json) ran 542 tests: 540 passe
 
 English/Ukrainian localization checks, ESLint, Prettier, deterministic material generation, first-paint generation, byte-identical embedded SIM stylesheet validation and `git diff --check` pass.
 
+The final display-only Creator name alias also passes the [editor appearance check](creator-label-validation.tap) and a fresh localization check.
+
 Ten generated SVG material tiles total **11,086 source bytes** (the four new structural tiles add 2,041 bytes). The shared stylesheet is **75,032 bytes** and the synchronous first-paint seed is **88,504 bytes**, within the existing 100 KiB test limit. Optional SIM assets remain in the optional collection path. The embedded SIM stylesheet is regenerated from the shared source; no package limits were increased.
+
+**PR #980 remains draft.** CI's complete optional bundle check exposed a pre-existing FPV Worlds file-count overflow: **105 runtime files against the current 104-file cap**, reproduced with [base-branch source](package-parent-baseline.json). These theme changes add **zero package paths and 10,319 bytes** to Worlds, which still has over 2 MiB of byte headroom. Academy and civilian-flight outputs fit their current limits. Curated-theme package tests above do not establish that the complete Worlds application can be distributed.
+
+Removing two unused Academy helpers was investigated but not retained: it would still leave the source archive over its separate complete-output count, and current exact-inventory admission would reject older archives containing those helpers. No quota or dependency validation was weakened. A packaging change that preserves historical admission is the next release prerequisite. The repository also holds product PRs without an assigned release slot; this PR is published for review and has not been promoted to a release.
 
 Broader release qualification still includes physical touch/controller use and target-device p95 frame-time/resource measurements. This change provides the default industrial identity and two complete palette/material collections; it does not claim new photorealistic meshes or completion of every milestone in the original whole-game redesign plan.
