@@ -2565,3 +2565,10 @@ Let protected CI qualify it, then refresh #986/#987 on current main without
 mixing incomplete D1 artwork into either. Continue Container Yard / Woodland
 rendering baseline independently. Full post-activation rollback and device
 qualification remain explicitly separate from the staging/fallback exercise.
+
+Candidate649887eed completed committed-source verification and default in-memory
+preparation:67,094,501bytes/1,327files,8,402,971bytes headroom. Browser normal
+activation and post-activation rollback also passed at72MiB. See core/rollback
+receipts. During qualification #986 advanced externally to
+cba2532f73ac078b8d013bd5341c1acd836cdeac via a main merge; preserve that work.
+#987 remains e808af302f1bf1480471646240d54371feb9b607.
