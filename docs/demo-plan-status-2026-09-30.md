@@ -4,6 +4,10 @@
 
 This document reconciles the original six numbered phases (Phase 0 through Phase 5) with the implementation and retained qualification evidence. **Complete** means the planned behavior exists and its automated checks pass. It does not substitute for the physical-device, audible-output or human-viewer acceptance called out below. The 1 October review also separates public-release blockers from recommended product validation and optional expansion so the remaining work can be reprioritized without reopening completed implementation.
 
+## Later presentation follow-up — 3 October 2026
+
+The current follow-up preserves gameplay jammer effects in clear-picture previews, adopts ordinary actor/presentation leases and gore/display settings, makes the board fill the viewport, and adds cancellable scene fades. Focused automated checks pass; password-gated visual review and physical acceptance remain open. See [implementation, verification and remaining priorities](verification/demo-cinema-parity-2026-10-03.md). The historical review below is unchanged.
+
 ## Executive status
 
 The feature implementation is substantially complete. Real levels run through the ordinary simulation, reviewed recordings and qualified live autoplay share one director, installed Standard levels receive replay-verified improvised coverage, and Demo/practice remain isolated from progression. The remaining work is release qualification rather than another broad feature build.

@@ -2184,7 +2184,7 @@
           <label
             ><input id="demo-show-all-pictures" type="checkbox" /><span
               data-i18n="demo:showAllPictures"
-              >Show all demo pictures without noise</span
+              >Reveal all demo pictures (gameplay effects remain)</span
             ></label
           >
           <p class="micro-note" data-i18n="demo:localOnly">
@@ -2940,18 +2940,24 @@ No offline check yet.</pre
             Want to play?
           </button>
         </div>
-        <div id="demo-audio" data-demo-ui></div>
-        <label class="demo-picture-setting" data-demo-ui
-          ><input id="demo-show-all-pictures-live" type="checkbox" /><span
-            data-i18n="demo:showAllPictures"
-            >Show all demo pictures without noise</span
-          ></label
-        >
-        <div class="demo-notes">
-          <p id="demo-caption"></p>
-          <p id="demo-status"></p>
-          <p id="demo-picture-note"></p>
-        </div>
+        <p id="demo-caption" class="demo-compact-caption"></p>
+        <details id="demo-details" data-demo-ui>
+          <summary>
+            <span data-i18n="demo:details">Audio &amp; details</span
+            ><span id="demo-now-playing"></span>
+          </summary>
+          <div id="demo-audio" data-demo-ui></div>
+          <label class="demo-picture-setting" data-demo-ui
+            ><input id="demo-show-all-pictures-live" type="checkbox" /><span
+              data-i18n="demo:showAllPictures"
+              >Reveal all demo pictures (gameplay effects remain)</span
+            ></label
+          >
+          <div class="demo-notes">
+            <p id="demo-status"></p>
+            <p id="demo-picture-note"></p>
+          </div>
+        </details>
         <div id="demo-actions" class="demo-actions" data-demo-ui hidden>
           <button id="demo-fresh" class="button primary" type="button" data-i18n="demo:fresh">
             Play from beginning

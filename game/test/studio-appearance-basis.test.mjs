@@ -10,7 +10,7 @@ import {
 import { exportThemeBundle, importThemeBundle } from '../presentation/bundle.mjs';
 import { exportRuntimeTheme, importRuntimeTheme } from '../presentation/runtime-transfer.mjs';
 import { createThemeCandidate } from '../presentation/theme-preview.mjs';
-import { getThemeFamily } from '../presentation/theme-system.mjs';
+import { COMPONENT_ROLES, getThemeFamily } from '../presentation/theme-system.mjs';
 import { installThemeHost } from '../presentation/theme-host.mjs';
 import { createStudioStore } from '../presentation/studio-store.mjs';
 import { memoryIndexedDB } from './helpers/soundtrack-fixtures.mjs';
@@ -220,4 +220,84 @@ test('Studio chrome lists and immediately applies admitted custom themes without
   assert.equal(JSON.stringify(source), before);
   workbench.dispose();
   host.dispose();
+});
+
+test('role inspector uses runtime semantics without inline paint or stealing selector focus', (t) => {
+  const document = new Document(),
+    header = document.createElement('header');
+  header.className = 'studio-header';
+  document.body.append(header);
+  const source = setStudioAppearanceBasis(createDefaultThemeBundle(), basis('industrial-workshop'));
+  const workbench = mountThemeWorkbench({
+    document,
+    window: document.defaultView,
+    onAction() {},
+  });
+  t.after(() => workbench.dispose());
+  workbench.update({
+    library: { entries: [] },
+    activeId: null,
+    document: source,
+    assets: new Map(),
+    selected: source.slots[0].id,
+  });
+  const role = document.getElementById('theme-recipe-role'),
+    state = document.getElementById('theme-recipe-state'),
+    preview = document.getElementById('theme-recipe-preview');
+  for (const name of COMPONENT_ROLES) {
+    role.focus();
+    role.value = name;
+    role.onchange();
+    assert.equal(document.activeElement, role);
+    for (const value of ['default', 'hover', 'focus', 'pressed', 'selected', 'disabled', 'error']) {
+      state.focus();
+      state.value = value;
+      state.onchange();
+      assert.equal(document.activeElement, state, 'Simulated focus must not steal actual focus');
+      const sample = preview.querySelector(`[data-component='${name}']`);
+      assert.ok(sample, name);
+      assert.equal(sample.dataset.state, value);
+      for (const property of [
+        'backgroundColor',
+        'backgroundImage',
+        'color',
+        'borderColor',
+        'borderImageSource',
+        'borderImageSlice',
+        'outline',
+        'minHeight',
+      ])
+        assert.equal(sample.style[property] ?? '', '', `${name}/${value}: ${property}`);
+      if (['primary', 'danger'].includes(name)) assert.equal(sample.dataset.uiAction, name);
+      if (name === 'panel') assert.equal(sample.dataset.uiSurface, 'panel');
+      if (['checkbox', 'radio'].includes(name)) {
+        assert.equal(sample.type, name);
+        assert.equal(sample.checked, value === 'selected');
+        assert.equal(sample.parentNode.tagName, 'LABEL');
+      }
+      if (name === 'tab') {
+        assert.equal(sample.getAttribute('role'), 'tab');
+        assert.equal(sample.getAttribute('aria-selected'), String(value === 'selected'));
+        assert.equal(sample.getAttribute('aria-pressed'), null);
+        assert.equal(sample.parentNode.getAttribute('role'), 'tablist');
+      }
+      if (name === 'slider') {
+        assert.equal(sample.type, 'range');
+        assert.equal(sample.value, '68');
+      }
+      if (value === 'disabled' && ['BUTTON', 'INPUT'].includes(sample.tagName))
+        assert.equal(sample.disabled, true);
+    }
+  }
+  role.value = 'button';
+  state.value = 'default';
+  role.onchange();
+  const before = preview.querySelector('[data-component="button"]');
+  before.focus();
+  const family = document.getElementById('theme-specimen-family');
+  family.value = 'tryzub';
+  family.onchange();
+  const after = preview.querySelector('[data-component="button"]');
+  assert.notEqual(after, before);
+  assert.equal(document.activeElement, after, 'Repainting preserves the focused sample');
 });
