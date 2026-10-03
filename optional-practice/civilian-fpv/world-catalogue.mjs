@@ -1739,8 +1739,8 @@ const schoolLift = (height = 2.5) => [
     'lift',
     0.58,
     [
-      'Use small changes. Follow the throttle keys in your selected keyboard layout; hold Shift for finer adjustments. Releasing the key keeps its current setting.',
-      'Робіть малі зміни. Користуйтеся клавішами газу вибраної розкладки; Shift дає точніше керування. Після відпускання клавіші газ зберігається.',
+      'Use small changes. Keyboard: ↑/↓ changes throttle; hold Shift for finer adjustments. Releasing the key keeps its current setting.',
+      'Робіть малі зміни. На клавіатурі ↑/↓ змінює газ; Shift дає точніше керування. Після відпускання клавіші газ зберігається.',
     ],
   ),
 ];
@@ -1972,8 +1972,8 @@ const ORIGINAL_BEGINNER_LESSONS = Object.freeze([
           'yaw',
           0.25,
           [
-            'Use the yaw keys shown in your selected keyboard layout; Shift makes a gentler turn.',
-            'Користуйтеся клавішами рискання вибраної розкладки; Shift робить поворот плавнішим.',
+            'Keyboard: Q turns left, E turns right; Shift makes a gentler turn.',
+            'Клавіатура: Q повертає ліворуч, E — праворуч; Shift робить поворот плавнішим.',
           ],
           direction,
         ),
@@ -2014,8 +2014,8 @@ const ORIGINAL_BEGINNER_LESSONS = Object.freeze([
           'pitch',
           0.25,
           [
-            'Use the forward/back pitch keys shown in your selected keyboard layout. Small taps with Shift are easier to learn.',
-            'Користуйтеся клавішами нахилу вперед/назад вибраної розкладки. Легше вчитися з короткими натисканнями та Shift.',
+            'Keyboard: W tilts forward; S tilts back. Small taps with Shift are easier to learn.',
+            'Клавіатура: W нахиляє вперед, S — назад. Легше вчитися з короткими натисканнями та Shift.',
           ],
         ),
       ],

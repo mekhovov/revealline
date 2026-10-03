@@ -34,14 +34,7 @@ import {
 } from './world-model.mjs';
 import { WORLD_COLLISION_BACKEND } from './world-collision.mjs';
 import { mountBeginnerCoach } from './beginner-coach.mjs';
-import {
-  createFlightInput,
-  createFlightMenuNavigation,
-  createFlightGamepad,
-  keyboardFlightPreset,
-  keyboardFlightHelp,
-  KEYBOARD_PRESET_KEY,
-} from './input.mjs';
+import { createFlightInput, createFlightMenuNavigation, createFlightGamepad } from './input.mjs';
 import { createRadioRuntime } from './radio-runtime.mjs';
 import { restoreVerifiedRadio } from './radio-session.mjs';
 import { mountRadioSetup } from './radio-setup.mjs';
@@ -149,9 +142,6 @@ const COPY_EN = {
   flightMode: 'Flight mode',
   controlSource: 'Controls',
   touchResponse: 'Touch response',
-  keyboardPreset: 'Keyboard layout',
-  keyboardTwoStick: 'Two-stick · WASD + arrows',
-  keyboardClassic: 'Classic · W/S pitch',
   touchPrecise: 'Precise — small corrections',
   touchDirect: 'Direct — linear response',
   cameraLabel: 'Camera',
@@ -285,7 +275,7 @@ const COPY_EN = {
   next: 'Next in playlist',
   exportProof: 'Export recording',
   tilt: 'Camera tilt',
-  keys: keyboardFlightHelp('two-stick', 'en', { combat: true }),
+  keys: 'W/S pitch · A/D roll · Q/E yaw · ↑/↓ throttle · P pause · Space fire',
 };
 const COPY_UK = {
   backToGame: 'Повернутися до FPV / LINE',
@@ -323,9 +313,6 @@ const COPY_UK = {
   flightMode: 'Режим польоту',
   controlSource: 'Керування',
   touchResponse: 'Чутливість дотику',
-  keyboardPreset: 'Розкладка клавіатури',
-  keyboardTwoStick: 'Два стіки · WASD + стрілки',
-  keyboardClassic: 'Класична · W/S — тангаж',
   touchPrecise: 'Точна — малі корекції',
   touchDirect: 'Пряма — лінійна реакція',
   cameraLabel: 'Камера',
@@ -453,7 +440,7 @@ const COPY_UK = {
   next: 'Наступне завдання',
   exportProof: 'Експорт запису',
   tilt: 'Нахил камери',
-  keys: keyboardFlightHelp('two-stick', 'uk', { combat: true }),
+  keys: 'W/S тангаж · A/D крен · Q/E поворот · ↑/↓ газ · P пауза · Пробіл вогонь',
   themePreview: 'Авторська тема',
   snap: 'Прив’язка',
   resetView: 'Скинути огляд',
@@ -772,7 +759,6 @@ export function mountWorldApp({
     qualityPreparing = false,
     fire = false,
     fireReleaseRequired = false,
-    keyboardFireKey = null,
     pausing = false,
     pauseRevision = 0,
     lastTime = null,
@@ -852,9 +838,6 @@ export function mountWorldApp({
     const touchResponse = storage?.getItem('revealline.fpv.touch-response.v1');
     if (['precise', 'direct'].includes(touchResponse))
       $('flight-touch-response').value = touchResponse;
-    $('flight-keyboard-preset').value = keyboardFlightPreset(
-      storage?.getItem(KEYBOARD_PRESET_KEY),
-    ).id;
     locale = $('world-language').value;
   } catch {
     /* Invalid preferences use the visible defaults. */
@@ -1015,7 +998,7 @@ export function mountWorldApp({
     status(error.message ?? error);
     if ($('flight-dialog').open) $('flight-status').textContent = error.message ?? error;
   };
-  const on = (node, event, callback, options) => {
+  const on = (node, event, callback) => {
     const fn = (...args) => {
       try {
         Promise.resolve(callback(...args)).catch(reportError);
@@ -1023,8 +1006,8 @@ export function mountWorldApp({
         reportError(error);
       }
     };
-    node?.addEventListener(event, fn, options);
-    listeners.push(() => node?.removeEventListener(event, fn, options));
+    node?.addEventListener(event, fn);
+    listeners.push(() => node?.removeEventListener(event, fn));
   };
   const button = (text, action, className) => {
     const b = el('button', text, className);
@@ -1182,9 +1165,7 @@ export function mountWorldApp({
     doc.documentElement.lang = locale;
     for (const { node, key, fallback } of translatedNodes)
       node.textContent =
-        key === 'keys'
-          ? keyboardFlightHelp($('flight-keyboard-preset').value, locale, { combat: true })
-          : ((locale === 'uk' ? COPY_UK[key] : COPY_EN[key]) ?? COPY_EN[key] ?? fallback);
+        (locale === 'uk' ? COPY_UK[key] : COPY_EN[key]) ?? COPY_EN[key] ?? fallback;
     $('world-radio-title').textContent = txt('Radio setup', 'Налаштування пульта');
     immersive.refresh();
     updateSoundLabel();
@@ -1288,7 +1269,6 @@ export function mountWorldApp({
   });
   const input = createFlightInput({ window: win, document: doc, onPause: () => pauseFlight() });
   input.touchResponse($('flight-touch-response').value);
-  input.keyboardPreset($('flight-keyboard-preset').value);
   const gamepad = createFlightGamepad({ window: win, document: doc });
   const flightMenuOpen = () => $('flight-dialog').dataset.flightMenuOpen === 'true';
   function setFlightMenu(open) {
@@ -1574,7 +1554,10 @@ export function mountWorldApp({
                   'Touch controls · left: yaw/throttle, right: roll/pitch.',
                   'Сенсорне керування · ліворуч: рискання/газ, праворуч: крен/тангаж.',
                 )
-              : keyboardFlightHelp($('flight-keyboard-preset').value, locale, { actions: false });
+              : txt(
+                  'Keyboard · W/S pitch · A/D roll · Q/E yaw · ↑/↓ throttle.',
+                  'Клавіатура · W/S тангаж · A/D крен · Q/E рискання · ↑/↓ газ.',
+                );
     const pickup =
       source === 'radio' && checkpointSession && state?.status === 'paused'
         ? radio.status().pickup
@@ -1590,8 +1573,8 @@ export function mountWorldApp({
     $('world-keys-hint').textContent =
       source === 'radio'
         ? txt(
-            `Radio sticks control flight · P pauses · ${keyboardFlightPreset($('flight-keyboard-preset').value).fire === 'Space' ? 'Space' : 'F'} or Fire shoots.`,
-            `Стіки пульта керують польотом · P — пауза · ${keyboardFlightPreset($('flight-keyboard-preset').value).fire === 'Space' ? 'Пробіл' : 'F'} або «Вогонь» — постріл.`,
+            'Radio sticks control flight · P pauses · Space or Fire shoots.',
+            'Стіки пульта керують польотом · P — пауза · Пробіл або «Вогонь» — постріл.',
           )
         : source === 'controller'
           ? gamepadHelp()
@@ -1605,7 +1588,9 @@ export function mountWorldApp({
                   'The sticks show recorded commands. Pause, slow down or switch views to study them.',
                   'Стіки показують записані команди. Зупиняйте, сповільнюйте або змінюйте камеру, щоб їх роздивитися.',
                 )
-              : keyboardFlightHelp($('flight-keyboard-preset').value, locale, { combat: true });
+              : locale === 'uk'
+                ? COPY_UK.keys
+                : COPY_EN.keys;
     $('flight-stick-display').setAttribute(
       'aria-label',
       txt('Stick display', 'Відображення стіків'),
@@ -1636,7 +1621,6 @@ export function mountWorldApp({
         radioStickMode: radioPreview?.stickMode ?? 2,
         mode: $('flight-mode').value,
         touchResponse: $('flight-touch-response').value,
-        keyboardPreset: $('flight-keyboard-preset').value,
         modePractice,
         reducedMotion:
           $('sim-motion').value === 'reduced' ||
@@ -4255,7 +4239,6 @@ export function mountWorldApp({
       $('flight-camera').value = requestedMode === 'acro' ? 'fpv' : learning.camera;
       beginnerCoach.open(learning, {
         mode: requestedMode,
-        keyboardPreset: $('flight-keyboard-preset').value,
         modePractice,
         demonstration: demonstrationFor({ ...entry, course: learning.course }, requestedMode),
         practice: Boolean(options.recover),
@@ -5250,18 +5233,16 @@ export function mountWorldApp({
     secondaryDialogOpen: () => !!doc.querySelector('dialog[open]:not(#flight-dialog)'),
   });
   on($('world-pause'), 'click', () => pauseFlight());
-  function retryFlight({ paused = false } = {}) {
-    return startFlight(current, {
+  on($('world-retry'), 'click', () =>
+    startFlight(current, {
       preview,
       playlist: playingPlaylist,
       index: playlistIndex,
       replayProof,
       checkpoint: checkpointRequest,
       demonstration: replayKind === 'demonstration',
-      paused,
-    });
-  }
-  on($('world-retry'), 'click', () => retryFlight());
+    }),
+  );
   on($('world-watch-demo'), 'click', () => current && watchDemonstration(current));
   on($('watch-first-flight'), 'click', () =>
     watchDemonstration(
@@ -5380,16 +5361,6 @@ export function mountWorldApp({
     }
     if (flight) paintInput(flight.snapshot());
   });
-  on($('flight-keyboard-preset'), 'change', () => {
-    pauseFlight();
-    input.keyboardPreset($('flight-keyboard-preset').value);
-    try {
-      storage?.setItem(KEYBOARD_PRESET_KEY, $('flight-keyboard-preset').value);
-    } catch {
-      /* Session controls remain usable without storage. */
-    }
-    if (flight) paintInput(flight.snapshot());
-  });
   on($('flight-stick-display'), 'change', () => paintInput(flight?.snapshot()));
   on($('flight-drone-guide'), 'change', () => paintInput(flight?.snapshot()));
   on($('flight-guide-scale'), 'change', () => paintInput(flight?.snapshot()));
@@ -5455,75 +5426,36 @@ export function mountWorldApp({
   on(win, 'keydown', (e) => {
     if (
       e.defaultPrevented ||
-      disposed ||
-      doc.visibilityState === 'hidden' ||
-      (doc.hasFocus && !doc.hasFocus()) ||
-      e.isComposing ||
-      e.ctrlKey ||
-      e.metaKey ||
-      e.altKey ||
       beginnerCoach.blocksArm() ||
       !$('flight-dialog').open ||
       doc.querySelector('dialog[open]:not(#flight-dialog)') ||
-      /^(INPUT|SELECT|TEXTAREA)$/.test(e.target?.tagName) ||
-      e.target?.isContentEditable
+      /^(INPUT|SELECT|TEXTAREA)$/.test(e.target.tagName) ||
+      e.target.isContentEditable
     )
       return;
-    if (e.code === 'KeyP') {
-      e.preventDefault();
-      if (!e.repeat) setFlightMenu(true);
-      return;
-    }
-    // Native buttons, links and summaries retain Space/keyboard activation.
-    // Menus never own flight actions, even when a viewport still has focus.
-    if (
-      /^(BUTTON|A|SUMMARY)$/.test(e.target?.tagName) ||
-      flightMenuOpen() ||
-      $('flight-dialog').dataset.optionsOpen === 'true' ||
-      immersive.snapshot().toolsOpen
-    )
-      return;
-    const preset = keyboardFlightPreset($('flight-keyboard-preset').value);
-    if (
-      [preset.arm, preset.reset].includes(e.code) &&
-      (!$('world-viewport').contains(e.target) || !$('world-viewport').contains(doc.activeElement))
-    )
-      return;
-    if (e.code === preset.arm) {
-      e.preventDefault();
-      if (e.repeat) return;
-      if (flight?.snapshot().status === 'active') pauseFlight();
-      else $('world-arm').click();
-    } else if (e.code === preset.reset) {
-      e.preventDefault();
-      if (!e.repeat) return retryFlight({ paused: true });
-    } else if (e.code === preset.fire) {
+    if (e.code === 'Space') {
+      // Space on a focused button belongs to its native activation behavior.
+      if (e.target.tagName === 'BUTTON') return;
       e.preventDefault();
       if (
         !replayProof &&
         !e.repeat &&
         !fireReleaseRequired &&
         flight?.snapshot().status === 'active'
-      ) {
-        keyboardFireKey = e.code;
+      )
         fire = true;
-      }
+    }
+    if (e.code === 'KeyP') {
+      e.preventDefault();
+      setFlightMenu(true);
     }
   });
-  // Menu navigation suppresses the release of keys held across its boundary.
-  // Observe our own release first; this only relinquishes input, never fires.
-  on(
-    win,
-    'keyup',
-    (e) => {
-      if (e.code === keyboardFireKey) {
-        keyboardFireKey = null;
-        fire = false;
-        fireReleaseRequired = false;
-      }
-    },
-    true,
-  );
+  on(win, 'keyup', (e) => {
+    if (e.code === 'Space') {
+      fire = false;
+      fireReleaseRequired = false;
+    }
+  });
   on($('radio-setup-button'), 'click', () => {
     if (replayProof) return;
     pauseFlight();

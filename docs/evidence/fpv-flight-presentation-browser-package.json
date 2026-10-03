@@ -1,0 +1,5945 @@
+{
+  "format": "FPVFlightPresentationBrowser.v1",
+  "manifest": {
+    "format": "FPVFlightPresentationFixture.v1",
+    "baseline": "cf0b62e53d352c620f1793a3539c251e8932674b",
+    "candidate": "dist/fpv-flight-presentation-playtest",
+    "changedSupportingFiles": ["game/i18n/catalogs.mjs"],
+    "files": {
+      "before": {
+        "optional-practice/civilian-fpv/world-visuals.mjs": "d0c0268ba822700a728c4a1cd425151c00334f384432f714d1aa6a696da5865d",
+        "optional-practice/civilian-fpv/vendor/three.module.js": "9052042d676cb0fdc1ddfefe193053f34b7ac0513a616fdac4535d49987812ea",
+        "optional-practice/civilian-fpv/vendor/three.core.js": "9edde002b066a9a05676a6127f67735b62baf399bdea529f2f7e31657da769e6",
+        "optional-practice/civilian-fpv/world-themes.mjs": "67abda8ff53ba18e9aede45c57a8f9ec599dc0ddf7c977ce1d8ad2524e6c5549",
+        "game/data-json.mjs": "9ce33d6173f3cba8587ed7a7f1924c66e9d9c86ffa59b37a743764ea0b01f7bd",
+        "game/i18n/index.mjs": "29f40a6d92826ced1eb53283ed32e342ac6e95920abbf8d549f2d78e65b48d07",
+        "game/vendor/i18next-26.4.2.min.js": "eb0dd6d72e8f756b90faf864853af2a17870fe97b54473b7c34494870c65901c",
+        "game/i18n/catalogs.mjs": "403f877da3575975940844bb3f3f0462311b6f8ba33a8cb670040451ff4efe53",
+        "game/i18n/bootstrap.mjs": "242e4791b2202d2644b91df5aa76355019890525af774ee2e795c937988b0395",
+        "game/presentation/theme-system.mjs": "c8e82d70f513a5313b16a9536c5b2359b677b9626b862ed77ecf6d3057b79229",
+        "optional-practice/civilian-fpv/world-model.mjs": "ce94192472f8cc0be1a70ec2dcdf7dc728956f55f589bb84335c851737f54d3e",
+        "optional-practice/civilian-fpv/radio-profile.mjs": "f588fd5cda96ed9627a483f49ca843ace8d99a68fae42b0a4239c2cd0ab81933",
+        "optional-practice/civilian-fpv/math.mjs": "555c8b6ea170b46992133507d2a3d867f06185bca060239cab7db9c9b87f9f98",
+        "optional-practice/civilian-fpv/rotation-table.mjs": "2ddab304ac99a2e70fc7e84fc6c27eedb49f1f3dac976baed680effa659cef41",
+        "optional-practice/civilian-fpv/model.mjs": "9e4cd11cfdde2dd43b437069b8cb7a359a8132495db806cb5f68e8674d48aaf6",
+        "optional-practice/civilian-fpv/flight-sectors.mjs": "5b1b54bde4e578e61da7d59f4a80a86db9aafbc78b4523d2ba2b540277a0a16d",
+        "optional-practice/civilian-fpv/snake-hunt.mjs": "39ce47e8aaae6d7f3e70b8708d52fe2d22e90119318383f8298d8d0c4cc568da",
+        "optional-practice/civilian-fpv/world-collision.mjs": "2899c7c84f9eae14b9a3434f585a8e873f4a1361e8f3ce4026ef27f44bdeef32",
+        "optional-practice/civilian-fpv/vendor/rapier/rapier.mjs": "02dc6a4e2fffc013bab08fbb44fa68f501d8303615e9afe4c7d89ad4eedda0d0",
+        "optional-practice/civilian-fpv/world-catalogue.mjs": "b1addc910ee42044c88a3d103bb3e89c24cb0b51b418206da71ebab3decf6275",
+        "optional-practice/civilian-fpv/catalogue.mjs": "98338353d17eb585414538c9905040752fd5cd6699c48b17fa1706832b750997",
+        "optional-practice/civilian-fpv/snake-hunt-catalogue.mjs": "3668cf4bad75425e92f9bd426ecfea825b809f41b7cb5ba45d6f3adaa709960b",
+        "optional-practice/civilian-fpv/world-assets.mjs": "7ec935731fb2404badde162930bf602ff49d24a9382623e582ce6cce199cc0aa",
+        "optional-practice/civilian-fpv/renderer.mjs": "13cf72d6a1511347c83f108654bfec5532ac8c29c20c0e52f86f7da7f787faa6",
+        "optional-practice/civilian-fpv/vendor/addons/loaders/GLTFLoader.js": "03952cb129d558f92b8e6c757fbf7c1f718b3126c4d34f264d574b40ea36054f",
+        "optional-practice/civilian-fpv/vendor/addons/utils/BufferGeometryUtils.js": "259085a7dac89e0840393a9347c77123fbc4206ec2146bf0c29ffc72e14a2800",
+        "optional-practice/civilian-fpv/vendor/addons/utils/SkeletonUtils.js": "28017bf37d0ecb0c4be6048db759ff14df729a562464830b064d4cc239c5af17",
+        "optional-practice/civilian-fpv/vendor/addons/controls/TransformControls.js": "10f6d3e4c108dff62110f61a76749f9a1826c9781df9c3eb4ca0b5d9d2f5c4a8"
+      },
+      "after": {
+        "optional-practice/civilian-fpv/world-visuals.mjs": "ed102bc426eca18307b89d5ba862254edeafa63ea22c98433b9432d80eba7fa3",
+        "optional-practice/civilian-fpv/vendor/three.module.js": "9052042d676cb0fdc1ddfefe193053f34b7ac0513a616fdac4535d49987812ea",
+        "optional-practice/civilian-fpv/vendor/three.core.js": "9edde002b066a9a05676a6127f67735b62baf399bdea529f2f7e31657da769e6",
+        "optional-practice/civilian-fpv/world-themes.mjs": "67abda8ff53ba18e9aede45c57a8f9ec599dc0ddf7c977ce1d8ad2524e6c5549",
+        "game/data-json.mjs": "9ce33d6173f3cba8587ed7a7f1924c66e9d9c86ffa59b37a743764ea0b01f7bd",
+        "game/i18n/index.mjs": "29f40a6d92826ced1eb53283ed32e342ac6e95920abbf8d549f2d78e65b48d07",
+        "game/vendor/i18next-26.4.2.min.js": "eb0dd6d72e8f756b90faf864853af2a17870fe97b54473b7c34494870c65901c",
+        "game/i18n/catalogs.mjs": "150f60e0ee7d0c281f026ccf76b11d02d73b6022e0097dec89875987e844fb3b",
+        "game/i18n/bootstrap.mjs": "242e4791b2202d2644b91df5aa76355019890525af774ee2e795c937988b0395",
+        "game/presentation/theme-system.mjs": "c8e82d70f513a5313b16a9536c5b2359b677b9626b862ed77ecf6d3057b79229",
+        "optional-practice/civilian-fpv/world-model.mjs": "ce94192472f8cc0be1a70ec2dcdf7dc728956f55f589bb84335c851737f54d3e",
+        "optional-practice/civilian-fpv/radio-profile.mjs": "f588fd5cda96ed9627a483f49ca843ace8d99a68fae42b0a4239c2cd0ab81933",
+        "optional-practice/civilian-fpv/math.mjs": "555c8b6ea170b46992133507d2a3d867f06185bca060239cab7db9c9b87f9f98",
+        "optional-practice/civilian-fpv/rotation-table.mjs": "2ddab304ac99a2e70fc7e84fc6c27eedb49f1f3dac976baed680effa659cef41",
+        "optional-practice/civilian-fpv/model.mjs": "9e4cd11cfdde2dd43b437069b8cb7a359a8132495db806cb5f68e8674d48aaf6",
+        "optional-practice/civilian-fpv/flight-sectors.mjs": "5b1b54bde4e578e61da7d59f4a80a86db9aafbc78b4523d2ba2b540277a0a16d",
+        "optional-practice/civilian-fpv/snake-hunt.mjs": "39ce47e8aaae6d7f3e70b8708d52fe2d22e90119318383f8298d8d0c4cc568da",
+        "optional-practice/civilian-fpv/world-collision.mjs": "2899c7c84f9eae14b9a3434f585a8e873f4a1361e8f3ce4026ef27f44bdeef32",
+        "optional-practice/civilian-fpv/vendor/rapier/rapier.mjs": "02dc6a4e2fffc013bab08fbb44fa68f501d8303615e9afe4c7d89ad4eedda0d0",
+        "optional-practice/civilian-fpv/world-catalogue.mjs": "b1addc910ee42044c88a3d103bb3e89c24cb0b51b418206da71ebab3decf6275",
+        "optional-practice/civilian-fpv/catalogue.mjs": "98338353d17eb585414538c9905040752fd5cd6699c48b17fa1706832b750997",
+        "optional-practice/civilian-fpv/snake-hunt-catalogue.mjs": "3668cf4bad75425e92f9bd426ecfea825b809f41b7cb5ba45d6f3adaa709960b",
+        "optional-practice/civilian-fpv/world-assets.mjs": "7ec935731fb2404badde162930bf602ff49d24a9382623e582ce6cce199cc0aa",
+        "optional-practice/civilian-fpv/renderer.mjs": "0949fde59ee6fd5331940c167d5eef23ff2396fdd66cf79ae610ac863d252a97",
+        "optional-practice/civilian-fpv/vendor/addons/loaders/GLTFLoader.js": "03952cb129d558f92b8e6c757fbf7c1f718b3126c4d34f264d574b40ea36054f",
+        "optional-practice/civilian-fpv/vendor/addons/utils/BufferGeometryUtils.js": "259085a7dac89e0840393a9347c77123fbc4206ec2146bf0c29ffc72e14a2800",
+        "optional-practice/civilian-fpv/vendor/addons/utils/SkeletonUtils.js": "28017bf37d0ecb0c4be6048db759ff14df729a562464830b064d4cc239c5af17",
+        "optional-practice/civilian-fpv/vendor/addons/controls/TransformControls.js": "10f6d3e4c108dff62110f61a76749f9a1826c9781df9c3eb4ca0b5d9d2f5c4a8"
+      }
+    },
+    "harnessSha256": "359a19d8998c5e80441f5fe30bcfae1eaf57a17194e323e12c550381a4dc3254",
+    "scope": "Frozen unmodified production renderers and model factories; actual built-in GLB loading, close-up drone and near-field Container Yard views, other-world geometry/material comparison, bounded resource cycling. Static camera fixtures; no physical-device, sustained FPS or flight acceptance qualification."
+  },
+  "started": "2026-10-03T05:59:43.415Z",
+  "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36",
+  "checks": [
+    {
+      "name": "Exact installed scenery loaded",
+      "passed": true,
+      "quality": "low",
+      "appearance": "authored",
+      "loaded": [
+        {
+          "side": "before",
+          "glbHash": "910af4a0aa0dc5c1ee8a0a55f5aa8e0865182e400bba1d01a37d63099d78a476",
+          "importedChildren": 1,
+          "fallbackVisible": false
+        },
+        {
+          "side": "after",
+          "glbHash": "910af4a0aa0dc5c1ee8a0a55f5aa8e0865182e400bba1d01a37d63099d78a476",
+          "importedChildren": 1,
+          "fallbackVisible": false
+        }
+      ]
+    },
+    {
+      "name": "Six closed container bodies with distinct world-owned steel fittings and no new textures",
+      "passed": true,
+      "quality": "low",
+      "appearance": "authored",
+      "rows": [
+        {
+          "id": "container-0-0",
+          "visible": true,
+          "inside": true,
+          "opaque": true,
+          "hardware": true,
+          "distinctFinish": true,
+          "noNewTexture": true,
+          "steelRole": true,
+          "shellFinish": {
+            "roughness": 0.82,
+            "metalness": 0.12,
+            "normalScale": [0.08, 0.08]
+          },
+          "hardwareFinish": {
+            "color": [0.24228112245478564, 0.3049873140591091, 0.3277780980458375],
+            "roughness": 0.48,
+            "metalness": 0.7,
+            "mapName": null,
+            "collectionId": null
+          },
+          "vertices": 3396,
+          "position": [-25, 1.3, -18]
+        },
+        {
+          "id": "container-0-1",
+          "visible": true,
+          "inside": true,
+          "opaque": true,
+          "hardware": true,
+          "distinctFinish": true,
+          "noNewTexture": true,
+          "steelRole": true,
+          "shellFinish": {
+            "roughness": 0.82,
+            "metalness": 0.12,
+            "normalScale": [0.08, 0.08]
+          },
+          "hardwareFinish": {
+            "color": [0.24228112245478564, 0.3049873140591091, 0.3277780980458375],
+            "roughness": 0.48,
+            "metalness": 0.7,
+            "mapName": null,
+            "collectionId": null
+          },
+          "vertices": 6792,
+          "position": [-25, 2.6, 0]
+        },
+        {
+          "id": "container-0-2",
+          "visible": true,
+          "inside": true,
+          "opaque": true,
+          "hardware": true,
+          "distinctFinish": true,
+          "noNewTexture": true,
+          "steelRole": true,
+          "shellFinish": {
+            "roughness": 0.82,
+            "metalness": 0.12,
+            "normalScale": [0.08, 0.08]
+          },
+          "hardwareFinish": {
+            "color": [0.24228112245478564, 0.3049873140591091, 0.3277780980458375],
+            "roughness": 0.48,
+            "metalness": 0.7,
+            "mapName": null,
+            "collectionId": null
+          },
+          "vertices": 3396,
+          "position": [-25, 1.3, 18]
+        },
+        {
+          "id": "container-1-0",
+          "visible": true,
+          "inside": true,
+          "opaque": true,
+          "hardware": true,
+          "distinctFinish": true,
+          "noNewTexture": true,
+          "steelRole": true,
+          "shellFinish": {
+            "roughness": 0.82,
+            "metalness": 0.12,
+            "normalScale": [0.08, 0.08]
+          },
+          "hardwareFinish": {
+            "color": [0.24228112245478564, 0.3049873140591091, 0.3277780980458375],
+            "roughness": 0.48,
+            "metalness": 0.7,
+            "mapName": null,
+            "collectionId": null
+          },
+          "vertices": 3396,
+          "position": [25, 1.3, -18]
+        },
+        {
+          "id": "container-1-1",
+          "visible": true,
+          "inside": true,
+          "opaque": true,
+          "hardware": true,
+          "distinctFinish": true,
+          "noNewTexture": true,
+          "steelRole": true,
+          "shellFinish": {
+            "roughness": 0.82,
+            "metalness": 0.12,
+            "normalScale": [0.08, 0.08]
+          },
+          "hardwareFinish": {
+            "color": [0.24228112245478564, 0.3049873140591091, 0.3277780980458375],
+            "roughness": 0.48,
+            "metalness": 0.7,
+            "mapName": null,
+            "collectionId": null
+          },
+          "vertices": 6792,
+          "position": [25, 2.6, 0]
+        },
+        {
+          "id": "container-1-2",
+          "visible": true,
+          "inside": true,
+          "opaque": true,
+          "hardware": true,
+          "distinctFinish": true,
+          "noNewTexture": true,
+          "steelRole": true,
+          "shellFinish": {
+            "roughness": 0.82,
+            "metalness": 0.12,
+            "normalScale": [0.08, 0.08]
+          },
+          "hardwareFinish": {
+            "color": [0.24228112245478564, 0.3049873140591091, 0.3277780980458375],
+            "roughness": 0.48,
+            "metalness": 0.7,
+            "mapName": null,
+            "collectionId": null
+          },
+          "vertices": 3396,
+          "position": [25, 1.3, 18]
+        }
+      ]
+    },
+    {
+      "name": "Imported scenery hides only exterior fallback",
+      "passed": true,
+      "quality": "low",
+      "appearance": "authored"
+    },
+    {
+      "name": "Visible yard/drone presentation change",
+      "passed": true,
+      "quality": "low",
+      "appearance": "authored",
+      "camera": "fpv",
+      "pose": "front",
+      "changedPixels": 22855
+    },
+    {
+      "name": "Visible yard/drone presentation change",
+      "passed": true,
+      "quality": "low",
+      "appearance": "authored",
+      "camera": "fpv",
+      "pose": "side",
+      "changedPixels": 99380
+    },
+    {
+      "name": "Visible yard/drone presentation change",
+      "passed": true,
+      "quality": "low",
+      "appearance": "authored",
+      "camera": "chase",
+      "pose": "rear",
+      "changedPixels": 73441
+    },
+    {
+      "name": "Visible yard/drone presentation change",
+      "passed": true,
+      "quality": "low",
+      "appearance": "authored",
+      "camera": "overview",
+      "pose": "front",
+      "changedPixels": 7190
+    },
+    {
+      "name": "Exact installed scenery loaded",
+      "passed": true,
+      "quality": "balanced",
+      "appearance": "authored",
+      "loaded": [
+        {
+          "side": "before",
+          "glbHash": "910af4a0aa0dc5c1ee8a0a55f5aa8e0865182e400bba1d01a37d63099d78a476",
+          "importedChildren": 1,
+          "fallbackVisible": false
+        },
+        {
+          "side": "after",
+          "glbHash": "910af4a0aa0dc5c1ee8a0a55f5aa8e0865182e400bba1d01a37d63099d78a476",
+          "importedChildren": 1,
+          "fallbackVisible": false
+        }
+      ]
+    },
+    {
+      "name": "Six closed container bodies with distinct world-owned steel fittings and no new textures",
+      "passed": true,
+      "quality": "balanced",
+      "appearance": "authored",
+      "rows": [
+        {
+          "id": "container-0-0",
+          "visible": true,
+          "inside": true,
+          "opaque": true,
+          "hardware": true,
+          "distinctFinish": true,
+          "noNewTexture": true,
+          "steelRole": true,
+          "shellFinish": {
+            "roughness": 0.82,
+            "metalness": 0.12,
+            "normalScale": [0.08, 0.08]
+          },
+          "hardwareFinish": {
+            "color": [0.24228112245478564, 0.3049873140591091, 0.3277780980458375],
+            "roughness": 0.48,
+            "metalness": 0.7,
+            "mapName": null,
+            "collectionId": null
+          },
+          "vertices": 3396,
+          "position": [-25, 1.3, -18]
+        },
+        {
+          "id": "container-0-1",
+          "visible": true,
+          "inside": true,
+          "opaque": true,
+          "hardware": true,
+          "distinctFinish": true,
+          "noNewTexture": true,
+          "steelRole": true,
+          "shellFinish": {
+            "roughness": 0.82,
+            "metalness": 0.12,
+            "normalScale": [0.08, 0.08]
+          },
+          "hardwareFinish": {
+            "color": [0.24228112245478564, 0.3049873140591091, 0.3277780980458375],
+            "roughness": 0.48,
+            "metalness": 0.7,
+            "mapName": null,
+            "collectionId": null
+          },
+          "vertices": 6792,
+          "position": [-25, 2.6, 0]
+        },
+        {
+          "id": "container-0-2",
+          "visible": true,
+          "inside": true,
+          "opaque": true,
+          "hardware": true,
+          "distinctFinish": true,
+          "noNewTexture": true,
+          "steelRole": true,
+          "shellFinish": {
+            "roughness": 0.82,
+            "metalness": 0.12,
+            "normalScale": [0.08, 0.08]
+          },
+          "hardwareFinish": {
+            "color": [0.24228112245478564, 0.3049873140591091, 0.3277780980458375],
+            "roughness": 0.48,
+            "metalness": 0.7,
+            "mapName": null,
+            "collectionId": null
+          },
+          "vertices": 3396,
+          "position": [-25, 1.3, 18]
+        },
+        {
+          "id": "container-1-0",
+          "visible": true,
+          "inside": true,
+          "opaque": true,
+          "hardware": true,
+          "distinctFinish": true,
+          "noNewTexture": true,
+          "steelRole": true,
+          "shellFinish": {
+            "roughness": 0.82,
+            "metalness": 0.12,
+            "normalScale": [0.08, 0.08]
+          },
+          "hardwareFinish": {
+            "color": [0.24228112245478564, 0.3049873140591091, 0.3277780980458375],
+            "roughness": 0.48,
+            "metalness": 0.7,
+            "mapName": null,
+            "collectionId": null
+          },
+          "vertices": 3396,
+          "position": [25, 1.3, -18]
+        },
+        {
+          "id": "container-1-1",
+          "visible": true,
+          "inside": true,
+          "opaque": true,
+          "hardware": true,
+          "distinctFinish": true,
+          "noNewTexture": true,
+          "steelRole": true,
+          "shellFinish": {
+            "roughness": 0.82,
+            "metalness": 0.12,
+            "normalScale": [0.08, 0.08]
+          },
+          "hardwareFinish": {
+            "color": [0.24228112245478564, 0.3049873140591091, 0.3277780980458375],
+            "roughness": 0.48,
+            "metalness": 0.7,
+            "mapName": null,
+            "collectionId": null
+          },
+          "vertices": 6792,
+          "position": [25, 2.6, 0]
+        },
+        {
+          "id": "container-1-2",
+          "visible": true,
+          "inside": true,
+          "opaque": true,
+          "hardware": true,
+          "distinctFinish": true,
+          "noNewTexture": true,
+          "steelRole": true,
+          "shellFinish": {
+            "roughness": 0.82,
+            "metalness": 0.12,
+            "normalScale": [0.08, 0.08]
+          },
+          "hardwareFinish": {
+            "color": [0.24228112245478564, 0.3049873140591091, 0.3277780980458375],
+            "roughness": 0.48,
+            "metalness": 0.7,
+            "mapName": null,
+            "collectionId": null
+          },
+          "vertices": 3396,
+          "position": [25, 1.3, 18]
+        }
+      ]
+    },
+    {
+      "name": "Imported scenery hides only exterior fallback",
+      "passed": true,
+      "quality": "balanced",
+      "appearance": "authored"
+    },
+    {
+      "name": "Visible yard/drone presentation change",
+      "passed": true,
+      "quality": "balanced",
+      "appearance": "authored",
+      "camera": "fpv",
+      "pose": "front",
+      "changedPixels": 50188
+    },
+    {
+      "name": "Visible yard/drone presentation change",
+      "passed": true,
+      "quality": "balanced",
+      "appearance": "authored",
+      "camera": "fpv",
+      "pose": "side",
+      "changedPixels": 222705
+    },
+    {
+      "name": "Visible yard/drone presentation change",
+      "passed": true,
+      "quality": "balanced",
+      "appearance": "authored",
+      "camera": "chase",
+      "pose": "rear",
+      "changedPixels": 163970
+    },
+    {
+      "name": "Visible yard/drone presentation change",
+      "passed": true,
+      "quality": "balanced",
+      "appearance": "authored",
+      "camera": "overview",
+      "pose": "front",
+      "changedPixels": 15790
+    },
+    {
+      "name": "Exact installed scenery loaded",
+      "passed": true,
+      "quality": "high",
+      "appearance": "authored",
+      "loaded": [
+        {
+          "side": "before",
+          "glbHash": "910af4a0aa0dc5c1ee8a0a55f5aa8e0865182e400bba1d01a37d63099d78a476",
+          "importedChildren": 1,
+          "fallbackVisible": false
+        },
+        {
+          "side": "after",
+          "glbHash": "910af4a0aa0dc5c1ee8a0a55f5aa8e0865182e400bba1d01a37d63099d78a476",
+          "importedChildren": 1,
+          "fallbackVisible": false
+        }
+      ]
+    },
+    {
+      "name": "Six closed container bodies with distinct world-owned steel fittings and no new textures",
+      "passed": true,
+      "quality": "high",
+      "appearance": "authored",
+      "rows": [
+        {
+          "id": "container-0-0",
+          "visible": true,
+          "inside": true,
+          "opaque": true,
+          "hardware": true,
+          "distinctFinish": true,
+          "noNewTexture": true,
+          "steelRole": true,
+          "shellFinish": {
+            "roughness": 0.82,
+            "metalness": 0.12,
+            "normalScale": [0.08, 0.08]
+          },
+          "hardwareFinish": {
+            "color": [0.24228112245478564, 0.3049873140591091, 0.3277780980458375],
+            "roughness": 0.48,
+            "metalness": 0.7,
+            "mapName": null,
+            "collectionId": null
+          },
+          "vertices": 3396,
+          "position": [-25, 1.3, -18]
+        },
+        {
+          "id": "container-0-1",
+          "visible": true,
+          "inside": true,
+          "opaque": true,
+          "hardware": true,
+          "distinctFinish": true,
+          "noNewTexture": true,
+          "steelRole": true,
+          "shellFinish": {
+            "roughness": 0.82,
+            "metalness": 0.12,
+            "normalScale": [0.08, 0.08]
+          },
+          "hardwareFinish": {
+            "color": [0.24228112245478564, 0.3049873140591091, 0.3277780980458375],
+            "roughness": 0.48,
+            "metalness": 0.7,
+            "mapName": null,
+            "collectionId": null
+          },
+          "vertices": 6792,
+          "position": [-25, 2.6, 0]
+        },
+        {
+          "id": "container-0-2",
+          "visible": true,
+          "inside": true,
+          "opaque": true,
+          "hardware": true,
+          "distinctFinish": true,
+          "noNewTexture": true,
+          "steelRole": true,
+          "shellFinish": {
+            "roughness": 0.82,
+            "metalness": 0.12,
+            "normalScale": [0.08, 0.08]
+          },
+          "hardwareFinish": {
+            "color": [0.24228112245478564, 0.3049873140591091, 0.3277780980458375],
+            "roughness": 0.48,
+            "metalness": 0.7,
+            "mapName": null,
+            "collectionId": null
+          },
+          "vertices": 3396,
+          "position": [-25, 1.3, 18]
+        },
+        {
+          "id": "container-1-0",
+          "visible": true,
+          "inside": true,
+          "opaque": true,
+          "hardware": true,
+          "distinctFinish": true,
+          "noNewTexture": true,
+          "steelRole": true,
+          "shellFinish": {
+            "roughness": 0.82,
+            "metalness": 0.12,
+            "normalScale": [0.08, 0.08]
+          },
+          "hardwareFinish": {
+            "color": [0.24228112245478564, 0.3049873140591091, 0.3277780980458375],
+            "roughness": 0.48,
+            "metalness": 0.7,
+            "mapName": null,
+            "collectionId": null
+          },
+          "vertices": 3396,
+          "position": [25, 1.3, -18]
+        },
+        {
+          "id": "container-1-1",
+          "visible": true,
+          "inside": true,
+          "opaque": true,
+          "hardware": true,
+          "distinctFinish": true,
+          "noNewTexture": true,
+          "steelRole": true,
+          "shellFinish": {
+            "roughness": 0.82,
+            "metalness": 0.12,
+            "normalScale": [0.08, 0.08]
+          },
+          "hardwareFinish": {
+            "color": [0.24228112245478564, 0.3049873140591091, 0.3277780980458375],
+            "roughness": 0.48,
+            "metalness": 0.7,
+            "mapName": null,
+            "collectionId": null
+          },
+          "vertices": 6792,
+          "position": [25, 2.6, 0]
+        },
+        {
+          "id": "container-1-2",
+          "visible": true,
+          "inside": true,
+          "opaque": true,
+          "hardware": true,
+          "distinctFinish": true,
+          "noNewTexture": true,
+          "steelRole": true,
+          "shellFinish": {
+            "roughness": 0.82,
+            "metalness": 0.12,
+            "normalScale": [0.08, 0.08]
+          },
+          "hardwareFinish": {
+            "color": [0.24228112245478564, 0.3049873140591091, 0.3277780980458375],
+            "roughness": 0.48,
+            "metalness": 0.7,
+            "mapName": null,
+            "collectionId": null
+          },
+          "vertices": 3396,
+          "position": [25, 1.3, 18]
+        }
+      ]
+    },
+    {
+      "name": "Imported scenery hides only exterior fallback",
+      "passed": true,
+      "quality": "high",
+      "appearance": "authored"
+    },
+    {
+      "name": "Visible yard/drone presentation change",
+      "passed": true,
+      "quality": "high",
+      "appearance": "authored",
+      "camera": "fpv",
+      "pose": "front",
+      "changedPixels": 89217
+    },
+    {
+      "name": "Visible yard/drone presentation change",
+      "passed": true,
+      "quality": "high",
+      "appearance": "authored",
+      "camera": "fpv",
+      "pose": "side",
+      "changedPixels": 397094
+    },
+    {
+      "name": "Visible yard/drone presentation change",
+      "passed": true,
+      "quality": "high",
+      "appearance": "authored",
+      "camera": "chase",
+      "pose": "rear",
+      "changedPixels": 290919
+    },
+    {
+      "name": "Visible yard/drone presentation change",
+      "passed": true,
+      "quality": "high",
+      "appearance": "authored",
+      "camera": "overview",
+      "pose": "front",
+      "changedPixels": 27710
+    },
+    {
+      "name": "Exact installed scenery loaded",
+      "passed": true,
+      "quality": "low",
+      "appearance": "industrial-workshop",
+      "loaded": [
+        {
+          "side": "before",
+          "glbHash": "910af4a0aa0dc5c1ee8a0a55f5aa8e0865182e400bba1d01a37d63099d78a476",
+          "importedChildren": 1,
+          "fallbackVisible": false
+        },
+        {
+          "side": "after",
+          "glbHash": "910af4a0aa0dc5c1ee8a0a55f5aa8e0865182e400bba1d01a37d63099d78a476",
+          "importedChildren": 1,
+          "fallbackVisible": false
+        }
+      ]
+    },
+    {
+      "name": "Six closed container bodies with distinct world-owned steel fittings and no new textures",
+      "passed": true,
+      "quality": "low",
+      "appearance": "industrial-workshop",
+      "rows": [
+        {
+          "id": "container-0-0",
+          "visible": true,
+          "inside": true,
+          "opaque": true,
+          "hardware": true,
+          "distinctFinish": true,
+          "noNewTexture": true,
+          "steelRole": true,
+          "shellFinish": {
+            "roughness": 0.82,
+            "metalness": 0.12,
+            "normalScale": [0.08, 0.08]
+          },
+          "hardwareFinish": {
+            "color": [1, 1, 1],
+            "roughness": 0.76,
+            "metalness": 0.45,
+            "mapName": "workshop-steel-r1",
+            "collectionId": "industrial-workshop"
+          },
+          "vertices": 3396,
+          "position": [-25, 1.3, -18]
+        },
+        {
+          "id": "container-0-1",
+          "visible": true,
+          "inside": true,
+          "opaque": true,
+          "hardware": true,
+          "distinctFinish": true,
+          "noNewTexture": true,
+          "steelRole": true,
+          "shellFinish": {
+            "roughness": 0.82,
+            "metalness": 0.12,
+            "normalScale": [0.08, 0.08]
+          },
+          "hardwareFinish": {
+            "color": [1, 1, 1],
+            "roughness": 0.76,
+            "metalness": 0.45,
+            "mapName": "workshop-steel-r1",
+            "collectionId": "industrial-workshop"
+          },
+          "vertices": 6792,
+          "position": [-25, 2.6, 0]
+        },
+        {
+          "id": "container-0-2",
+          "visible": true,
+          "inside": true,
+          "opaque": true,
+          "hardware": true,
+          "distinctFinish": true,
+          "noNewTexture": true,
+          "steelRole": true,
+          "shellFinish": {
+            "roughness": 0.82,
+            "metalness": 0.12,
+            "normalScale": [0.08, 0.08]
+          },
+          "hardwareFinish": {
+            "color": [1, 1, 1],
+            "roughness": 0.76,
+            "metalness": 0.45,
+            "mapName": "workshop-steel-r1",
+            "collectionId": "industrial-workshop"
+          },
+          "vertices": 3396,
+          "position": [-25, 1.3, 18]
+        },
+        {
+          "id": "container-1-0",
+          "visible": true,
+          "inside": true,
+          "opaque": true,
+          "hardware": true,
+          "distinctFinish": true,
+          "noNewTexture": true,
+          "steelRole": true,
+          "shellFinish": {
+            "roughness": 0.82,
+            "metalness": 0.12,
+            "normalScale": [0.08, 0.08]
+          },
+          "hardwareFinish": {
+            "color": [1, 1, 1],
+            "roughness": 0.76,
+            "metalness": 0.45,
+            "mapName": "workshop-steel-r1",
+            "collectionId": "industrial-workshop"
+          },
+          "vertices": 3396,
+          "position": [25, 1.3, -18]
+        },
+        {
+          "id": "container-1-1",
+          "visible": true,
+          "inside": true,
+          "opaque": true,
+          "hardware": true,
+          "distinctFinish": true,
+          "noNewTexture": true,
+          "steelRole": true,
+          "shellFinish": {
+            "roughness": 0.82,
+            "metalness": 0.12,
+            "normalScale": [0.08, 0.08]
+          },
+          "hardwareFinish": {
+            "color": [1, 1, 1],
+            "roughness": 0.76,
+            "metalness": 0.45,
+            "mapName": "workshop-steel-r1",
+            "collectionId": "industrial-workshop"
+          },
+          "vertices": 6792,
+          "position": [25, 2.6, 0]
+        },
+        {
+          "id": "container-1-2",
+          "visible": true,
+          "inside": true,
+          "opaque": true,
+          "hardware": true,
+          "distinctFinish": true,
+          "noNewTexture": true,
+          "steelRole": true,
+          "shellFinish": {
+            "roughness": 0.82,
+            "metalness": 0.12,
+            "normalScale": [0.08, 0.08]
+          },
+          "hardwareFinish": {
+            "color": [1, 1, 1],
+            "roughness": 0.76,
+            "metalness": 0.45,
+            "mapName": "workshop-steel-r1",
+            "collectionId": "industrial-workshop"
+          },
+          "vertices": 3396,
+          "position": [25, 1.3, 18]
+        }
+      ]
+    },
+    {
+      "name": "Imported scenery hides only exterior fallback",
+      "passed": true,
+      "quality": "low",
+      "appearance": "industrial-workshop"
+    },
+    {
+      "name": "Visible yard/drone presentation change",
+      "passed": true,
+      "quality": "low",
+      "appearance": "industrial-workshop",
+      "camera": "fpv",
+      "pose": "front",
+      "changedPixels": 22841
+    },
+    {
+      "name": "Visible yard/drone presentation change",
+      "passed": true,
+      "quality": "low",
+      "appearance": "industrial-workshop",
+      "camera": "fpv",
+      "pose": "side",
+      "changedPixels": 99736
+    },
+    {
+      "name": "Visible yard/drone presentation change",
+      "passed": true,
+      "quality": "low",
+      "appearance": "industrial-workshop",
+      "camera": "chase",
+      "pose": "rear",
+      "changedPixels": 73438
+    },
+    {
+      "name": "Visible yard/drone presentation change",
+      "passed": true,
+      "quality": "low",
+      "appearance": "industrial-workshop",
+      "camera": "overview",
+      "pose": "front",
+      "changedPixels": 7191
+    },
+    {
+      "name": "Exact installed scenery loaded",
+      "passed": true,
+      "quality": "balanced",
+      "appearance": "industrial-workshop",
+      "loaded": [
+        {
+          "side": "before",
+          "glbHash": "910af4a0aa0dc5c1ee8a0a55f5aa8e0865182e400bba1d01a37d63099d78a476",
+          "importedChildren": 1,
+          "fallbackVisible": false
+        },
+        {
+          "side": "after",
+          "glbHash": "910af4a0aa0dc5c1ee8a0a55f5aa8e0865182e400bba1d01a37d63099d78a476",
+          "importedChildren": 1,
+          "fallbackVisible": false
+        }
+      ]
+    },
+    {
+      "name": "Six closed container bodies with distinct world-owned steel fittings and no new textures",
+      "passed": true,
+      "quality": "balanced",
+      "appearance": "industrial-workshop",
+      "rows": [
+        {
+          "id": "container-0-0",
+          "visible": true,
+          "inside": true,
+          "opaque": true,
+          "hardware": true,
+          "distinctFinish": true,
+          "noNewTexture": true,
+          "steelRole": true,
+          "shellFinish": {
+            "roughness": 0.82,
+            "metalness": 0.12,
+            "normalScale": [0.08, 0.08]
+          },
+          "hardwareFinish": {
+            "color": [1, 1, 1],
+            "roughness": 0.76,
+            "metalness": 0.45,
+            "mapName": "workshop-steel-r1",
+            "collectionId": "industrial-workshop"
+          },
+          "vertices": 3396,
+          "position": [-25, 1.3, -18]
+        },
+        {
+          "id": "container-0-1",
+          "visible": true,
+          "inside": true,
+          "opaque": true,
+          "hardware": true,
+          "distinctFinish": true,
+          "noNewTexture": true,
+          "steelRole": true,
+          "shellFinish": {
+            "roughness": 0.82,
+            "metalness": 0.12,
+            "normalScale": [0.08, 0.08]
+          },
+          "hardwareFinish": {
+            "color": [1, 1, 1],
+            "roughness": 0.76,
+            "metalness": 0.45,
+            "mapName": "workshop-steel-r1",
+            "collectionId": "industrial-workshop"
+          },
+          "vertices": 6792,
+          "position": [-25, 2.6, 0]
+        },
+        {
+          "id": "container-0-2",
+          "visible": true,
+          "inside": true,
+          "opaque": true,
+          "hardware": true,
+          "distinctFinish": true,
+          "noNewTexture": true,
+          "steelRole": true,
+          "shellFinish": {
+            "roughness": 0.82,
+            "metalness": 0.12,
+            "normalScale": [0.08, 0.08]
+          },
+          "hardwareFinish": {
+            "color": [1, 1, 1],
+            "roughness": 0.76,
+            "metalness": 0.45,
+            "mapName": "workshop-steel-r1",
+            "collectionId": "industrial-workshop"
+          },
+          "vertices": 3396,
+          "position": [-25, 1.3, 18]
+        },
+        {
+          "id": "container-1-0",
+          "visible": true,
+          "inside": true,
+          "opaque": true,
+          "hardware": true,
+          "distinctFinish": true,
+          "noNewTexture": true,
+          "steelRole": true,
+          "shellFinish": {
+            "roughness": 0.82,
+            "metalness": 0.12,
+            "normalScale": [0.08, 0.08]
+          },
+          "hardwareFinish": {
+            "color": [1, 1, 1],
+            "roughness": 0.76,
+            "metalness": 0.45,
+            "mapName": "workshop-steel-r1",
+            "collectionId": "industrial-workshop"
+          },
+          "vertices": 3396,
+          "position": [25, 1.3, -18]
+        },
+        {
+          "id": "container-1-1",
+          "visible": true,
+          "inside": true,
+          "opaque": true,
+          "hardware": true,
+          "distinctFinish": true,
+          "noNewTexture": true,
+          "steelRole": true,
+          "shellFinish": {
+            "roughness": 0.82,
+            "metalness": 0.12,
+            "normalScale": [0.08, 0.08]
+          },
+          "hardwareFinish": {
+            "color": [1, 1, 1],
+            "roughness": 0.76,
+            "metalness": 0.45,
+            "mapName": "workshop-steel-r1",
+            "collectionId": "industrial-workshop"
+          },
+          "vertices": 6792,
+          "position": [25, 2.6, 0]
+        },
+        {
+          "id": "container-1-2",
+          "visible": true,
+          "inside": true,
+          "opaque": true,
+          "hardware": true,
+          "distinctFinish": true,
+          "noNewTexture": true,
+          "steelRole": true,
+          "shellFinish": {
+            "roughness": 0.82,
+            "metalness": 0.12,
+            "normalScale": [0.08, 0.08]
+          },
+          "hardwareFinish": {
+            "color": [1, 1, 1],
+            "roughness": 0.76,
+            "metalness": 0.45,
+            "mapName": "workshop-steel-r1",
+            "collectionId": "industrial-workshop"
+          },
+          "vertices": 3396,
+          "position": [25, 1.3, 18]
+        }
+      ]
+    },
+    {
+      "name": "Imported scenery hides only exterior fallback",
+      "passed": true,
+      "quality": "balanced",
+      "appearance": "industrial-workshop"
+    },
+    {
+      "name": "Visible yard/drone presentation change",
+      "passed": true,
+      "quality": "balanced",
+      "appearance": "industrial-workshop",
+      "camera": "fpv",
+      "pose": "front",
+      "changedPixels": 49903
+    },
+    {
+      "name": "Visible yard/drone presentation change",
+      "passed": true,
+      "quality": "balanced",
+      "appearance": "industrial-workshop",
+      "camera": "fpv",
+      "pose": "side",
+      "changedPixels": 214869
+    },
+    {
+      "name": "Visible yard/drone presentation change",
+      "passed": true,
+      "quality": "balanced",
+      "appearance": "industrial-workshop",
+      "camera": "chase",
+      "pose": "rear",
+      "changedPixels": 163723
+    },
+    {
+      "name": "Visible yard/drone presentation change",
+      "passed": true,
+      "quality": "balanced",
+      "appearance": "industrial-workshop",
+      "camera": "overview",
+      "pose": "front",
+      "changedPixels": 15789
+    },
+    {
+      "name": "Exact installed scenery loaded",
+      "passed": true,
+      "quality": "high",
+      "appearance": "industrial-workshop",
+      "loaded": [
+        {
+          "side": "before",
+          "glbHash": "910af4a0aa0dc5c1ee8a0a55f5aa8e0865182e400bba1d01a37d63099d78a476",
+          "importedChildren": 1,
+          "fallbackVisible": false
+        },
+        {
+          "side": "after",
+          "glbHash": "910af4a0aa0dc5c1ee8a0a55f5aa8e0865182e400bba1d01a37d63099d78a476",
+          "importedChildren": 1,
+          "fallbackVisible": false
+        }
+      ]
+    },
+    {
+      "name": "Six closed container bodies with distinct world-owned steel fittings and no new textures",
+      "passed": true,
+      "quality": "high",
+      "appearance": "industrial-workshop",
+      "rows": [
+        {
+          "id": "container-0-0",
+          "visible": true,
+          "inside": true,
+          "opaque": true,
+          "hardware": true,
+          "distinctFinish": true,
+          "noNewTexture": true,
+          "steelRole": true,
+          "shellFinish": {
+            "roughness": 0.82,
+            "metalness": 0.12,
+            "normalScale": [0.08, 0.08]
+          },
+          "hardwareFinish": {
+            "color": [1, 1, 1],
+            "roughness": 0.76,
+            "metalness": 0.45,
+            "mapName": "workshop-steel-r1",
+            "collectionId": "industrial-workshop"
+          },
+          "vertices": 3396,
+          "position": [-25, 1.3, -18]
+        },
+        {
+          "id": "container-0-1",
+          "visible": true,
+          "inside": true,
+          "opaque": true,
+          "hardware": true,
+          "distinctFinish": true,
+          "noNewTexture": true,
+          "steelRole": true,
+          "shellFinish": {
+            "roughness": 0.82,
+            "metalness": 0.12,
+            "normalScale": [0.08, 0.08]
+          },
+          "hardwareFinish": {
+            "color": [1, 1, 1],
+            "roughness": 0.76,
+            "metalness": 0.45,
+            "mapName": "workshop-steel-r1",
+            "collectionId": "industrial-workshop"
+          },
+          "vertices": 6792,
+          "position": [-25, 2.6, 0]
+        },
+        {
+          "id": "container-0-2",
+          "visible": true,
+          "inside": true,
+          "opaque": true,
+          "hardware": true,
+          "distinctFinish": true,
+          "noNewTexture": true,
+          "steelRole": true,
+          "shellFinish": {
+            "roughness": 0.82,
+            "metalness": 0.12,
+            "normalScale": [0.08, 0.08]
+          },
+          "hardwareFinish": {
+            "color": [1, 1, 1],
+            "roughness": 0.76,
+            "metalness": 0.45,
+            "mapName": "workshop-steel-r1",
+            "collectionId": "industrial-workshop"
+          },
+          "vertices": 3396,
+          "position": [-25, 1.3, 18]
+        },
+        {
+          "id": "container-1-0",
+          "visible": true,
+          "inside": true,
+          "opaque": true,
+          "hardware": true,
+          "distinctFinish": true,
+          "noNewTexture": true,
+          "steelRole": true,
+          "shellFinish": {
+            "roughness": 0.82,
+            "metalness": 0.12,
+            "normalScale": [0.08, 0.08]
+          },
+          "hardwareFinish": {
+            "color": [1, 1, 1],
+            "roughness": 0.76,
+            "metalness": 0.45,
+            "mapName": "workshop-steel-r1",
+            "collectionId": "industrial-workshop"
+          },
+          "vertices": 3396,
+          "position": [25, 1.3, -18]
+        },
+        {
+          "id": "container-1-1",
+          "visible": true,
+          "inside": true,
+          "opaque": true,
+          "hardware": true,
+          "distinctFinish": true,
+          "noNewTexture": true,
+          "steelRole": true,
+          "shellFinish": {
+            "roughness": 0.82,
+            "metalness": 0.12,
+            "normalScale": [0.08, 0.08]
+          },
+          "hardwareFinish": {
+            "color": [1, 1, 1],
+            "roughness": 0.76,
+            "metalness": 0.45,
+            "mapName": "workshop-steel-r1",
+            "collectionId": "industrial-workshop"
+          },
+          "vertices": 6792,
+          "position": [25, 2.6, 0]
+        },
+        {
+          "id": "container-1-2",
+          "visible": true,
+          "inside": true,
+          "opaque": true,
+          "hardware": true,
+          "distinctFinish": true,
+          "noNewTexture": true,
+          "steelRole": true,
+          "shellFinish": {
+            "roughness": 0.82,
+            "metalness": 0.12,
+            "normalScale": [0.08, 0.08]
+          },
+          "hardwareFinish": {
+            "color": [1, 1, 1],
+            "roughness": 0.76,
+            "metalness": 0.45,
+            "mapName": "workshop-steel-r1",
+            "collectionId": "industrial-workshop"
+          },
+          "vertices": 3396,
+          "position": [25, 1.3, 18]
+        }
+      ]
+    },
+    {
+      "name": "Imported scenery hides only exterior fallback",
+      "passed": true,
+      "quality": "high",
+      "appearance": "industrial-workshop"
+    },
+    {
+      "name": "Visible yard/drone presentation change",
+      "passed": true,
+      "quality": "high",
+      "appearance": "industrial-workshop",
+      "camera": "fpv",
+      "pose": "front",
+      "changedPixels": 88617
+    },
+    {
+      "name": "Visible yard/drone presentation change",
+      "passed": true,
+      "quality": "high",
+      "appearance": "industrial-workshop",
+      "camera": "fpv",
+      "pose": "side",
+      "changedPixels": 388756
+    },
+    {
+      "name": "Visible yard/drone presentation change",
+      "passed": true,
+      "quality": "high",
+      "appearance": "industrial-workshop",
+      "camera": "chase",
+      "pose": "rear",
+      "changedPixels": 290535
+    },
+    {
+      "name": "Visible yard/drone presentation change",
+      "passed": true,
+      "quality": "high",
+      "appearance": "industrial-workshop",
+      "camera": "overview",
+      "pose": "front",
+      "changedPixels": 27701
+    },
+    {
+      "name": "Other world static geometry, transforms and materials remain exact",
+      "passed": true,
+      "environment": "stadium",
+      "signatures": [
+        "8c18d4f4b9870ecb232be854fc343e7f5d0718be9af2a3ae4490e7c03b376303",
+        "8c18d4f4b9870ecb232be854fc343e7f5d0718be9af2a3ae4490e7c03b376303"
+      ]
+    },
+    {
+      "name": "Other world static geometry, transforms and materials remain exact",
+      "passed": true,
+      "environment": "warehouse",
+      "signatures": [
+        "57cee9e8b9fe7a8663082a74caacf124341cd007f98a748a0744eba1886a8059",
+        "57cee9e8b9fe7a8663082a74caacf124341cd007f98a748a0744eba1886a8059"
+      ]
+    },
+    {
+      "name": "Other world static geometry, transforms and materials remain exact",
+      "passed": true,
+      "environment": "garage",
+      "signatures": [
+        "3318f744532c71c22f5e2dbdbb6f88c2e4a7a84e42c6111afe049fc023e0d360",
+        "3318f744532c71c22f5e2dbdbb6f88c2e4a7a84e42c6111afe049fc023e0d360"
+      ]
+    },
+    {
+      "name": "Other world static geometry, transforms and materials remain exact",
+      "passed": true,
+      "environment": "coast",
+      "signatures": [
+        "b774a5837d8eb178da0916455f705cac6486cce3e804801a20675a67c09700a1",
+        "b774a5837d8eb178da0916455f705cac6486cce3e804801a20675a67c09700a1"
+      ]
+    },
+    {
+      "name": "Other world static geometry, transforms and materials remain exact",
+      "passed": true,
+      "environment": "quarry",
+      "signatures": [
+        "daeb8e8605375592ea6540957579603acf7350c8e30ccf5b7af4b405cb00e287",
+        "daeb8e8605375592ea6540957579603acf7350c8e30ccf5b7af4b405cb00e287"
+      ]
+    },
+    {
+      "name": "Other world static geometry, transforms and materials remain exact",
+      "passed": true,
+      "environment": "rooftops",
+      "signatures": [
+        "4f933aa2162943dbe0810ebfb078366dd4bf46f83d321dc2c864654b1e84f919",
+        "4f933aa2162943dbe0810ebfb078366dd4bf46f83d321dc2c864654b1e84f919"
+      ]
+    },
+    {
+      "name": "Other world static geometry, transforms and materials remain exact",
+      "passed": true,
+      "environment": "orchard",
+      "signatures": [
+        "fb51b8daa7faacd72d2146a01096aa473085863d1ced765514dae8dbd076ecb0",
+        "fb51b8daa7faacd72d2146a01096aa473085863d1ced765514dae8dbd076ecb0"
+      ]
+    },
+    {
+      "name": "Other world static geometry, transforms and materials remain exact",
+      "passed": true,
+      "environment": "solar-farm",
+      "signatures": [
+        "3cd85ca194e54031c4ebd98442153c746897571e75399d0d415877ccec128e03",
+        "3cd85ca194e54031c4ebd98442153c746897571e75399d0d415877ccec128e03"
+      ]
+    },
+    {
+      "name": "Other world static geometry, transforms and materials remain exact",
+      "passed": true,
+      "environment": "rail-depot",
+      "signatures": [
+        "80d1108ef194500a5bf701a4c6a4d21e274b5fc4cc2b20b51180ed43050fcb32",
+        "80d1108ef194500a5bf701a4c6a4d21e274b5fc4cc2b20b51180ed43050fcb32"
+      ]
+    },
+    {
+      "name": "Other world static geometry, transforms and materials remain exact",
+      "passed": true,
+      "environment": "gym",
+      "signatures": [
+        "92376c526dbc3aa47b487e69cebbf002c3e9a18ad1a8c94a0290347a49b35010",
+        "92376c526dbc3aa47b487e69cebbf002c3e9a18ad1a8c94a0290347a49b35010"
+      ]
+    },
+    {
+      "name": "Unchanged non-yard FPV pixels",
+      "passed": true,
+      "environment": "gym"
+    },
+    {
+      "name": "Other world static geometry, transforms and materials remain exact",
+      "passed": true,
+      "environment": "field",
+      "signatures": [
+        "5eab27c3aca37bb787cdd473700cd5b712896d953635041b114de1aaed35b7d6",
+        "5eab27c3aca37bb787cdd473700cd5b712896d953635041b114de1aaed35b7d6"
+      ]
+    },
+    {
+      "name": "Unchanged non-yard FPV pixels",
+      "passed": true,
+      "environment": "field"
+    },
+    {
+      "name": "Other world static geometry, transforms and materials remain exact",
+      "passed": true,
+      "environment": "woodland",
+      "signatures": [
+        "908ed9d57f7cd27446b67e42da308eefb473be51a642d86b9455b43e64f42ef4",
+        "908ed9d57f7cd27446b67e42da308eefb473be51a642d86b9455b43e64f42ef4"
+      ]
+    },
+    {
+      "name": "Other world static geometry, transforms and materials remain exact",
+      "passed": true,
+      "environment": "courtyard",
+      "signatures": [
+        "b0480db74150396a49edf1ab953aad12930493b7872536822fecbd04d12c1f03",
+        "b0480db74150396a49edf1ab953aad12930493b7872536822fecbd04d12c1f03"
+      ]
+    },
+    {
+      "name": "Repeated quality/reload resources plateau after warmup",
+      "passed": true
+    },
+    {
+      "name": "Production renderers release all registered resources",
+      "passed": true,
+      "released": [
+        {
+          "side": "before",
+          "resources": {
+            "available": true,
+            "disposed": true,
+            "quality": "high",
+            "drone": "racer",
+            "presentation": {
+              "collectionId": "industrial-workshop",
+              "revision": "r1",
+              "profileId": null,
+              "actors": [],
+              "actorGoals": [],
+              "projectileBatches": 0,
+              "activeProjectiles": 0,
+              "surfaceDetailGroups": 0
+            },
+            "effects": {
+              "playerPulse": 10211269,
+              "hostilePulse": 15708281,
+              "ghost": 10668760,
+              "ghostEmissive": 3563113,
+              "trail": 10668760,
+              "goalOutline": 10143181,
+              "goalActive": 16765572,
+              "goalComplete": 9808542,
+              "goalInactive": 8366516,
+              "goalGlow": 15250524,
+              "goalGlowInactive": 9092023,
+              "goalEmissive": 11829819,
+              "goalBadge": 15250524,
+              "directionArrow": 15390635
+            },
+            "hunt": null,
+            "importedMaterialBindings": {
+              "applied": 0,
+              "diagnostics": []
+            },
+            "registered": {
+              "geometries": 0,
+              "materials": 0,
+              "textures": 0
+            },
+            "renderer": {
+              "calls": 77,
+              "triangles": 46810,
+              "geometries": 0,
+              "textures": 1,
+              "programs": 0,
+              "contextLost": true
+            }
+          }
+        },
+        {
+          "side": "after",
+          "resources": {
+            "available": true,
+            "disposed": true,
+            "quality": "high",
+            "drone": "racer",
+            "presentation": {
+              "collectionId": "industrial-workshop",
+              "revision": "r1",
+              "profileId": null,
+              "actors": [],
+              "actorGoals": [],
+              "projectileBatches": 0,
+              "activeProjectiles": 0,
+              "surfaceDetailGroups": 0
+            },
+            "effects": {
+              "playerPulse": 10211269,
+              "hostilePulse": 15708281,
+              "ghost": 10668760,
+              "ghostEmissive": 3563113,
+              "trail": 10668760,
+              "goalOutline": 10143181,
+              "goalActive": 16765572,
+              "goalComplete": 9808542,
+              "goalInactive": 8366516,
+              "goalGlow": 15250524,
+              "goalGlowInactive": 9092023,
+              "goalEmissive": 11829819,
+              "goalBadge": 15250524,
+              "directionArrow": 15390635
+            },
+            "hunt": null,
+            "importedMaterialBindings": {
+              "applied": 0,
+              "diagnostics": []
+            },
+            "registered": {
+              "geometries": 0,
+              "materials": 0,
+              "textures": 0
+            },
+            "renderer": {
+              "calls": 83,
+              "triangles": 59930,
+              "geometries": 0,
+              "textures": 1,
+              "programs": 0,
+              "contextLost": true
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Drone close-up visible; Pixel unchanged",
+      "passed": true,
+      "kind": "racer",
+      "quality": "low",
+      "appearance": "authored",
+      "changedPixels": 22355,
+      "drawCalls": [50, 45]
+    },
+    {
+      "name": "Refined model does not increase draw calls",
+      "passed": true,
+      "kind": "racer",
+      "quality": "low",
+      "appearance": "authored",
+      "drawCalls": [50, 45]
+    },
+    {
+      "name": "Drone close-up visible; Pixel unchanged",
+      "passed": true,
+      "kind": "racer",
+      "quality": "balanced",
+      "appearance": "authored",
+      "changedPixels": 26640,
+      "drawCalls": [83, 81]
+    },
+    {
+      "name": "Refined model does not increase draw calls",
+      "passed": true,
+      "kind": "racer",
+      "quality": "balanced",
+      "appearance": "authored",
+      "drawCalls": [83, 81]
+    },
+    {
+      "name": "Drone close-up visible; Pixel unchanged",
+      "passed": true,
+      "kind": "racer",
+      "quality": "high",
+      "appearance": "authored",
+      "changedPixels": 26972,
+      "drawCalls": [167, 102]
+    },
+    {
+      "name": "Refined model does not increase draw calls",
+      "passed": true,
+      "kind": "racer",
+      "quality": "high",
+      "appearance": "authored",
+      "drawCalls": [167, 102]
+    },
+    {
+      "name": "Drone close-up visible; Pixel unchanged",
+      "passed": true,
+      "kind": "utility",
+      "quality": "low",
+      "appearance": "authored",
+      "changedPixels": 26320,
+      "drawCalls": [54, 49]
+    },
+    {
+      "name": "Refined model does not increase draw calls",
+      "passed": true,
+      "kind": "utility",
+      "quality": "low",
+      "appearance": "authored",
+      "drawCalls": [54, 49]
+    },
+    {
+      "name": "Drone close-up visible; Pixel unchanged",
+      "passed": true,
+      "kind": "utility",
+      "quality": "balanced",
+      "appearance": "authored",
+      "changedPixels": 29346,
+      "drawCalls": [91, 89]
+    },
+    {
+      "name": "Refined model does not increase draw calls",
+      "passed": true,
+      "kind": "utility",
+      "quality": "balanced",
+      "appearance": "authored",
+      "drawCalls": [91, 89]
+    },
+    {
+      "name": "Drone close-up visible; Pixel unchanged",
+      "passed": true,
+      "kind": "utility",
+      "quality": "high",
+      "appearance": "authored",
+      "changedPixels": 29603,
+      "drawCalls": [175, 110]
+    },
+    {
+      "name": "Refined model does not increase draw calls",
+      "passed": true,
+      "kind": "utility",
+      "quality": "high",
+      "appearance": "authored",
+      "drawCalls": [175, 110]
+    },
+    {
+      "name": "Drone close-up visible; Pixel unchanged",
+      "passed": true,
+      "kind": "pixel",
+      "quality": "low",
+      "appearance": "authored",
+      "changedPixels": 0,
+      "drawCalls": [49, 49]
+    },
+    {
+      "name": "Drone close-up visible; Pixel unchanged",
+      "passed": true,
+      "kind": "pixel",
+      "quality": "balanced",
+      "appearance": "authored",
+      "changedPixels": 0,
+      "drawCalls": [81, 81]
+    },
+    {
+      "name": "Drone close-up visible; Pixel unchanged",
+      "passed": true,
+      "kind": "pixel",
+      "quality": "high",
+      "appearance": "authored",
+      "changedPixels": 0,
+      "drawCalls": [81, 81]
+    },
+    {
+      "name": "Drone close-up visible; Pixel unchanged",
+      "passed": true,
+      "kind": "racer",
+      "quality": "low",
+      "appearance": "industrial-workshop",
+      "changedPixels": 22084,
+      "drawCalls": [52, 47]
+    },
+    {
+      "name": "Refined model does not increase draw calls",
+      "passed": true,
+      "kind": "racer",
+      "quality": "low",
+      "appearance": "industrial-workshop",
+      "drawCalls": [52, 47]
+    },
+    {
+      "name": "Drone close-up visible; Pixel unchanged",
+      "passed": true,
+      "kind": "racer",
+      "quality": "balanced",
+      "appearance": "industrial-workshop",
+      "changedPixels": 26776,
+      "drawCalls": [85, 83]
+    },
+    {
+      "name": "Refined model does not increase draw calls",
+      "passed": true,
+      "kind": "racer",
+      "quality": "balanced",
+      "appearance": "industrial-workshop",
+      "drawCalls": [85, 83]
+    },
+    {
+      "name": "Drone close-up visible; Pixel unchanged",
+      "passed": true,
+      "kind": "racer",
+      "quality": "high",
+      "appearance": "industrial-workshop",
+      "changedPixels": 27123,
+      "drawCalls": [169, 104]
+    },
+    {
+      "name": "Refined model does not increase draw calls",
+      "passed": true,
+      "kind": "racer",
+      "quality": "high",
+      "appearance": "industrial-workshop",
+      "drawCalls": [169, 104]
+    },
+    {
+      "name": "Drone close-up visible; Pixel unchanged",
+      "passed": true,
+      "kind": "utility",
+      "quality": "low",
+      "appearance": "industrial-workshop",
+      "changedPixels": 18937,
+      "drawCalls": [56, 51]
+    },
+    {
+      "name": "Refined model does not increase draw calls",
+      "passed": true,
+      "kind": "utility",
+      "quality": "low",
+      "appearance": "industrial-workshop",
+      "drawCalls": [56, 51]
+    },
+    {
+      "name": "Drone close-up visible; Pixel unchanged",
+      "passed": true,
+      "kind": "utility",
+      "quality": "balanced",
+      "appearance": "industrial-workshop",
+      "changedPixels": 22471,
+      "drawCalls": [93, 91]
+    },
+    {
+      "name": "Refined model does not increase draw calls",
+      "passed": true,
+      "kind": "utility",
+      "quality": "balanced",
+      "appearance": "industrial-workshop",
+      "drawCalls": [93, 91]
+    },
+    {
+      "name": "Drone close-up visible; Pixel unchanged",
+      "passed": true,
+      "kind": "utility",
+      "quality": "high",
+      "appearance": "industrial-workshop",
+      "changedPixels": 22809,
+      "drawCalls": [177, 112]
+    },
+    {
+      "name": "Refined model does not increase draw calls",
+      "passed": true,
+      "kind": "utility",
+      "quality": "high",
+      "appearance": "industrial-workshop",
+      "drawCalls": [177, 112]
+    },
+    {
+      "name": "Drone close-up visible; Pixel unchanged",
+      "passed": true,
+      "kind": "pixel",
+      "quality": "low",
+      "appearance": "industrial-workshop",
+      "changedPixels": 0,
+      "drawCalls": [51, 51]
+    },
+    {
+      "name": "Drone close-up visible; Pixel unchanged",
+      "passed": true,
+      "kind": "pixel",
+      "quality": "balanced",
+      "appearance": "industrial-workshop",
+      "changedPixels": 0,
+      "drawCalls": [83, 83]
+    },
+    {
+      "name": "Drone close-up visible; Pixel unchanged",
+      "passed": true,
+      "kind": "pixel",
+      "quality": "high",
+      "appearance": "industrial-workshop",
+      "changedPixels": 0,
+      "drawCalls": [83, 83]
+    },
+    {
+      "name": "No application/WebGL context errors",
+      "passed": true,
+      "errors": []
+    }
+  ],
+  "views": [
+    {
+      "environment": "container-yard",
+      "quality": "low",
+      "camera": "fpv",
+      "pose": "front",
+      "appearance": "authored",
+      "drone": "racer",
+      "changedPixels": 22855,
+      "litPixels": 230399,
+      "pixelHashes": [
+        "0a8efbb43916054d4fb2e583c658fa656ddad594d5ec87618a4f45756d123cab",
+        "064adddbe2bf4d5a55aaae6245fd5db004d9cc8ca9fac27a2c1ade4237f0a995"
+      ],
+      "drawCalls": [26, 26],
+      "triangles": [13782, 14902],
+      "submitMs": [15.899999991059303, 15.099999994039536],
+      "resources": [
+        {
+          "available": true,
+          "disposed": false,
+          "quality": "low",
+          "drone": "racer",
+          "presentation": {
+            "collectionId": "authored",
+            "revision": "r1",
+            "profileId": "operations",
+            "actors": [],
+            "actorGoals": [],
+            "projectileBatches": 0,
+            "activeProjectiles": 0,
+            "surfaceDetailGroups": 12
+          },
+          "effects": {
+            "playerPulse": 9233635,
+            "hostilePulse": 16232561,
+            "ghost": 9824751,
+            "ghostEmissive": 2390144,
+            "trail": 9824751,
+            "goalOutline": 9169660,
+            "goalActive": 15266215,
+            "goalComplete": 9808542,
+            "goalInactive": 8366516,
+            "goalGlow": 11069917,
+            "goalGlowInactive": 9030085,
+            "goalEmissive": 8577493,
+            "goalBadge": 10872788,
+            "directionArrow": 15264432
+          },
+          "hunt": null,
+          "importedMaterialBindings": {
+            "applied": 0,
+            "diagnostics": [],
+            "diagnosticsTruncated": 0
+          },
+          "registered": {
+            "geometries": 167,
+            "materials": 119,
+            "textures": 20
+          },
+          "renderer": {
+            "calls": 26,
+            "triangles": 13782,
+            "geometries": 20,
+            "textures": 12,
+            "programs": 14,
+            "contextLost": false
+          }
+        },
+        {
+          "available": true,
+          "disposed": false,
+          "quality": "low",
+          "drone": "racer",
+          "presentation": {
+            "collectionId": "authored",
+            "revision": "r1",
+            "profileId": "operations",
+            "actors": [],
+            "actorGoals": [],
+            "projectileBatches": 0,
+            "activeProjectiles": 0,
+            "surfaceDetailGroups": 12
+          },
+          "effects": {
+            "playerPulse": 9233635,
+            "hostilePulse": 16232561,
+            "ghost": 9824751,
+            "ghostEmissive": 2390144,
+            "trail": 9824751,
+            "goalOutline": 9169660,
+            "goalActive": 15266215,
+            "goalComplete": 9808542,
+            "goalInactive": 8366516,
+            "goalGlow": 11069917,
+            "goalGlowInactive": 9030085,
+            "goalEmissive": 8577493,
+            "goalBadge": 10872788,
+            "directionArrow": 15264432
+          },
+          "hunt": null,
+          "importedMaterialBindings": {
+            "applied": 0,
+            "diagnostics": [],
+            "diagnosticsTruncated": 0
+          },
+          "registered": {
+            "geometries": 153,
+            "materials": 107,
+            "textures": 20
+          },
+          "renderer": {
+            "calls": 26,
+            "triangles": 14902,
+            "geometries": 20,
+            "textures": 12,
+            "programs": 14,
+            "contextLost": false
+          }
+        }
+      ]
+    },
+    {
+      "environment": "container-yard",
+      "quality": "low",
+      "camera": "fpv",
+      "pose": "side",
+      "appearance": "authored",
+      "drone": "racer",
+      "changedPixels": 99380,
+      "litPixels": 230400,
+      "pixelHashes": [
+        "abf6d7d2820e1174c9a7811050c25c9f279c1b3fe3886eeb19038e3871ad3d42",
+        "3bc98900c755e7be3fa303fab875958c1f884eb0a70a93ddd46415b30d60d6de"
+      ],
+      "drawCalls": [22, 22],
+      "triangles": [7912, 11284],
+      "submitMs": [0.7999999970197678, 1],
+      "resources": [
+        {
+          "available": true,
+          "disposed": false,
+          "quality": "low",
+          "drone": "racer",
+          "presentation": {
+            "collectionId": "authored",
+            "revision": "r1",
+            "profileId": "operations",
+            "actors": [],
+            "actorGoals": [],
+            "projectileBatches": 0,
+            "activeProjectiles": 0,
+            "surfaceDetailGroups": 12
+          },
+          "effects": {
+            "playerPulse": 9233635,
+            "hostilePulse": 16232561,
+            "ghost": 9824751,
+            "ghostEmissive": 2390144,
+            "trail": 9824751,
+            "goalOutline": 9169660,
+            "goalActive": 15266215,
+            "goalComplete": 9808542,
+            "goalInactive": 8366516,
+            "goalGlow": 11069917,
+            "goalGlowInactive": 9030085,
+            "goalEmissive": 8577493,
+            "goalBadge": 10872788,
+            "directionArrow": 15264432
+          },
+          "hunt": null,
+          "importedMaterialBindings": {
+            "applied": 0,
+            "diagnostics": [],
+            "diagnosticsTruncated": 0
+          },
+          "registered": {
+            "geometries": 167,
+            "materials": 119,
+            "textures": 20
+          },
+          "renderer": {
+            "calls": 22,
+            "triangles": 7912,
+            "geometries": 24,
+            "textures": 14,
+            "programs": 14,
+            "contextLost": false
+          }
+        },
+        {
+          "available": true,
+          "disposed": false,
+          "quality": "low",
+          "drone": "racer",
+          "presentation": {
+            "collectionId": "authored",
+            "revision": "r1",
+            "profileId": "operations",
+            "actors": [],
+            "actorGoals": [],
+            "projectileBatches": 0,
+            "activeProjectiles": 0,
+            "surfaceDetailGroups": 12
+          },
+          "effects": {
+            "playerPulse": 9233635,
+            "hostilePulse": 16232561,
+            "ghost": 9824751,
+            "ghostEmissive": 2390144,
+            "trail": 9824751,
+            "goalOutline": 9169660,
+            "goalActive": 15266215,
+            "goalComplete": 9808542,
+            "goalInactive": 8366516,
+            "goalGlow": 11069917,
+            "goalGlowInactive": 9030085,
+            "goalEmissive": 8577493,
+            "goalBadge": 10872788,
+            "directionArrow": 15264432
+          },
+          "hunt": null,
+          "importedMaterialBindings": {
+            "applied": 0,
+            "diagnostics": [],
+            "diagnosticsTruncated": 0
+          },
+          "registered": {
+            "geometries": 153,
+            "materials": 107,
+            "textures": 20
+          },
+          "renderer": {
+            "calls": 22,
+            "triangles": 11284,
+            "geometries": 24,
+            "textures": 14,
+            "programs": 14,
+            "contextLost": false
+          }
+        }
+      ]
+    },
+    {
+      "environment": "container-yard",
+      "quality": "low",
+      "camera": "chase",
+      "pose": "rear",
+      "appearance": "authored",
+      "drone": "racer",
+      "changedPixels": 73441,
+      "litPixels": 230400,
+      "pixelHashes": [
+        "c58a604285ebe167cc37648d00662f0b068a6107c81f0e95104ab26b2303f303",
+        "17ef7a20aef3f869b52de8593fb113693829d6bc84a38690257bc1c3a4f04504"
+      ],
+      "drawCalls": [90, 85],
+      "triangles": [17960, 24768],
+      "submitMs": [4.700000002980232, 3],
+      "resources": [
+        {
+          "available": true,
+          "disposed": false,
+          "quality": "low",
+          "drone": "racer",
+          "presentation": {
+            "collectionId": "authored",
+            "revision": "r1",
+            "profileId": "operations",
+            "actors": [],
+            "actorGoals": [],
+            "projectileBatches": 0,
+            "activeProjectiles": 0,
+            "surfaceDetailGroups": 12
+          },
+          "effects": {
+            "playerPulse": 9233635,
+            "hostilePulse": 16232561,
+            "ghost": 9824751,
+            "ghostEmissive": 2390144,
+            "trail": 9824751,
+            "goalOutline": 9169660,
+            "goalActive": 15266215,
+            "goalComplete": 9808542,
+            "goalInactive": 8366516,
+            "goalGlow": 11069917,
+            "goalGlowInactive": 9030085,
+            "goalEmissive": 8577493,
+            "goalBadge": 10872788,
+            "directionArrow": 15264432
+          },
+          "hunt": null,
+          "importedMaterialBindings": {
+            "applied": 0,
+            "diagnostics": [],
+            "diagnosticsTruncated": 0
+          },
+          "registered": {
+            "geometries": 167,
+            "materials": 119,
+            "textures": 20
+          },
+          "renderer": {
+            "calls": 90,
+            "triangles": 17960,
+            "geometries": 82,
+            "textures": 16,
+            "programs": 14,
+            "contextLost": false
+          }
+        },
+        {
+          "available": true,
+          "disposed": false,
+          "quality": "low",
+          "drone": "racer",
+          "presentation": {
+            "collectionId": "authored",
+            "revision": "r1",
+            "profileId": "operations",
+            "actors": [],
+            "actorGoals": [],
+            "projectileBatches": 0,
+            "activeProjectiles": 0,
+            "surfaceDetailGroups": 12
+          },
+          "effects": {
+            "playerPulse": 9233635,
+            "hostilePulse": 16232561,
+            "ghost": 9824751,
+            "ghostEmissive": 2390144,
+            "trail": 9824751,
+            "goalOutline": 9169660,
+            "goalActive": 15266215,
+            "goalComplete": 9808542,
+            "goalInactive": 8366516,
+            "goalGlow": 11069917,
+            "goalGlowInactive": 9030085,
+            "goalEmissive": 8577493,
+            "goalBadge": 10872788,
+            "directionArrow": 15264432
+          },
+          "hunt": null,
+          "importedMaterialBindings": {
+            "applied": 0,
+            "diagnostics": [],
+            "diagnosticsTruncated": 0
+          },
+          "registered": {
+            "geometries": 153,
+            "materials": 107,
+            "textures": 20
+          },
+          "renderer": {
+            "calls": 85,
+            "triangles": 24768,
+            "geometries": 68,
+            "textures": 16,
+            "programs": 14,
+            "contextLost": false
+          }
+        }
+      ]
+    },
+    {
+      "environment": "container-yard",
+      "quality": "low",
+      "camera": "overview",
+      "pose": "front",
+      "appearance": "authored",
+      "drone": "racer",
+      "changedPixels": 7190,
+      "litPixels": 230400,
+      "pixelHashes": [
+        "d8f0bb4baa4b7fbdf130e83c0c344c0c0783deba81de0990ddfa387297832fd8",
+        "834b8cae9babc9a54091820f37dd74421a8ae145393e49db08692d7bcf977665"
+      ],
+      "drawCalls": [132, 127],
+      "triangles": [36338, 46518],
+      "submitMs": [3.9000000059604645, 2.0999999940395355],
+      "resources": [
+        {
+          "available": true,
+          "disposed": false,
+          "quality": "low",
+          "drone": "racer",
+          "presentation": {
+            "collectionId": "authored",
+            "revision": "r1",
+            "profileId": "operations",
+            "actors": [],
+            "actorGoals": [],
+            "projectileBatches": 0,
+            "activeProjectiles": 0,
+            "surfaceDetailGroups": 12
+          },
+          "effects": {
+            "playerPulse": 9233635,
+            "hostilePulse": 16232561,
+            "ghost": 9824751,
+            "ghostEmissive": 2390144,
+            "trail": 9824751,
+            "goalOutline": 9169660,
+            "goalActive": 15266215,
+            "goalComplete": 9808542,
+            "goalInactive": 8366516,
+            "goalGlow": 11069917,
+            "goalGlowInactive": 9030085,
+            "goalEmissive": 8577493,
+            "goalBadge": 10872788,
+            "directionArrow": 15264432
+          },
+          "hunt": null,
+          "importedMaterialBindings": {
+            "applied": 0,
+            "diagnostics": [],
+            "diagnosticsTruncated": 0
+          },
+          "registered": {
+            "geometries": 167,
+            "materials": 119,
+            "textures": 20
+          },
+          "renderer": {
+            "calls": 132,
+            "triangles": 36338,
+            "geometries": 93,
+            "textures": 19,
+            "programs": 14,
+            "contextLost": false
+          }
+        },
+        {
+          "available": true,
+          "disposed": false,
+          "quality": "low",
+          "drone": "racer",
+          "presentation": {
+            "collectionId": "authored",
+            "revision": "r1",
+            "profileId": "operations",
+            "actors": [],
+            "actorGoals": [],
+            "projectileBatches": 0,
+            "activeProjectiles": 0,
+            "surfaceDetailGroups": 12
+          },
+          "effects": {
+            "playerPulse": 9233635,
+            "hostilePulse": 16232561,
+            "ghost": 9824751,
+            "ghostEmissive": 2390144,
+            "trail": 9824751,
+            "goalOutline": 9169660,
+            "goalActive": 15266215,
+            "goalComplete": 9808542,
+            "goalInactive": 8366516,
+            "goalGlow": 11069917,
+            "goalGlowInactive": 9030085,
+            "goalEmissive": 8577493,
+            "goalBadge": 10872788,
+            "directionArrow": 15264432
+          },
+          "hunt": null,
+          "importedMaterialBindings": {
+            "applied": 0,
+            "diagnostics": [],
+            "diagnosticsTruncated": 0
+          },
+          "registered": {
+            "geometries": 153,
+            "materials": 107,
+            "textures": 20
+          },
+          "renderer": {
+            "calls": 127,
+            "triangles": 46518,
+            "geometries": 79,
+            "textures": 19,
+            "programs": 14,
+            "contextLost": false
+          }
+        }
+      ]
+    },
+    {
+      "environment": "container-yard",
+      "quality": "balanced",
+      "camera": "fpv",
+      "pose": "front",
+      "appearance": "authored",
+      "drone": "racer",
+      "changedPixels": 50188,
+      "litPixels": 518400,
+      "pixelHashes": [
+        "840168948c595f8f192fe9b5a3a587a9e316b795a7dfb491a41d620653195581",
+        "3fca4fc58c0fac9daead441c5e2969f883015c022a5214cad3ad68f1c1ab4b7d"
+      ],
+      "drawCalls": [75, 82],
+      "triangles": [43202, 56330],
+      "submitMs": [28.30000001192093, 25.19999998807907],
+      "resources": [
+        {
+          "available": true,
+          "disposed": false,
+          "quality": "balanced",
+          "drone": "racer",
+          "presentation": {
+            "collectionId": "authored",
+            "revision": "r1",
+            "profileId": "operations",
+            "actors": [],
+            "actorGoals": [],
+            "projectileBatches": 0,
+            "activeProjectiles": 0,
+            "surfaceDetailGroups": 12
+          },
+          "effects": {
+            "playerPulse": 9233635,
+            "hostilePulse": 16232561,
+            "ghost": 9824751,
+            "ghostEmissive": 2390144,
+            "trail": 9824751,
+            "goalOutline": 9169660,
+            "goalActive": 15266215,
+            "goalComplete": 9808542,
+            "goalInactive": 8366516,
+            "goalGlow": 11069917,
+            "goalGlowInactive": 9030085,
+            "goalEmissive": 8577493,
+            "goalBadge": 10872788,
+            "directionArrow": 15264432
+          },
+          "hunt": null,
+          "importedMaterialBindings": {
+            "applied": 0,
+            "diagnostics": [],
+            "diagnosticsTruncated": 0
+          },
+          "registered": {
+            "geometries": 167,
+            "materials": 119,
+            "textures": 23
+          },
+          "renderer": {
+            "calls": 75,
+            "triangles": 43202,
+            "geometries": 29,
+            "textures": 15,
+            "programs": 18,
+            "contextLost": false
+          }
+        },
+        {
+          "available": true,
+          "disposed": false,
+          "quality": "balanced",
+          "drone": "racer",
+          "presentation": {
+            "collectionId": "authored",
+            "revision": "r1",
+            "profileId": "operations",
+            "actors": [],
+            "actorGoals": [],
+            "projectileBatches": 0,
+            "activeProjectiles": 0,
+            "surfaceDetailGroups": 12
+          },
+          "effects": {
+            "playerPulse": 9233635,
+            "hostilePulse": 16232561,
+            "ghost": 9824751,
+            "ghostEmissive": 2390144,
+            "trail": 9824751,
+            "goalOutline": 9169660,
+            "goalActive": 15266215,
+            "goalComplete": 9808542,
+            "goalInactive": 8366516,
+            "goalGlow": 11069917,
+            "goalGlowInactive": 9030085,
+            "goalEmissive": 8577493,
+            "goalBadge": 10872788,
+            "directionArrow": 15264432
+          },
+          "hunt": null,
+          "importedMaterialBindings": {
+            "applied": 0,
+            "diagnostics": [],
+            "diagnosticsTruncated": 0
+          },
+          "registered": {
+            "geometries": 153,
+            "materials": 107,
+            "textures": 23
+          },
+          "renderer": {
+            "calls": 82,
+            "triangles": 56330,
+            "geometries": 35,
+            "textures": 15,
+            "programs": 19,
+            "contextLost": false
+          }
+        }
+      ]
+    },
+    {
+      "environment": "container-yard",
+      "quality": "balanced",
+      "camera": "fpv",
+      "pose": "side",
+      "appearance": "authored",
+      "drone": "racer",
+      "changedPixels": 222705,
+      "litPixels": 518400,
+      "pixelHashes": [
+        "c3cc5142a2c88f2f2b71a2d8261f37e2eaf96cb135203bb290b3115d3fe5e189",
+        "f4958b615c585d8472c638b651544887a99e71268ec17e24486976920fe9d310"
+      ],
+      "drawCalls": [72, 80],
+      "triangles": [37340, 53392],
+      "submitMs": [1.4000000059604645, 1],
+      "resources": [
+        {
+          "available": true,
+          "disposed": false,
+          "quality": "balanced",
+          "drone": "racer",
+          "presentation": {
+            "collectionId": "authored",
+            "revision": "r1",
+            "profileId": "operations",
+            "actors": [],
+            "actorGoals": [],
+            "projectileBatches": 0,
+            "activeProjectiles": 0,
+            "surfaceDetailGroups": 12
+          },
+          "effects": {
+            "playerPulse": 9233635,
+            "hostilePulse": 16232561,
+            "ghost": 9824751,
+            "ghostEmissive": 2390144,
+            "trail": 9824751,
+            "goalOutline": 9169660,
+            "goalActive": 15266215,
+            "goalComplete": 9808542,
+            "goalInactive": 8366516,
+            "goalGlow": 11069917,
+            "goalGlowInactive": 9030085,
+            "goalEmissive": 8577493,
+            "goalBadge": 10872788,
+            "directionArrow": 15264432
+          },
+          "hunt": null,
+          "importedMaterialBindings": {
+            "applied": 0,
+            "diagnostics": [],
+            "diagnosticsTruncated": 0
+          },
+          "registered": {
+            "geometries": 167,
+            "materials": 119,
+            "textures": 23
+          },
+          "renderer": {
+            "calls": 72,
+            "triangles": 37340,
+            "geometries": 31,
+            "textures": 16,
+            "programs": 18,
+            "contextLost": false
+          }
+        },
+        {
+          "available": true,
+          "disposed": false,
+          "quality": "balanced",
+          "drone": "racer",
+          "presentation": {
+            "collectionId": "authored",
+            "revision": "r1",
+            "profileId": "operations",
+            "actors": [],
+            "actorGoals": [],
+            "projectileBatches": 0,
+            "activeProjectiles": 0,
+            "surfaceDetailGroups": 12
+          },
+          "effects": {
+            "playerPulse": 9233635,
+            "hostilePulse": 16232561,
+            "ghost": 9824751,
+            "ghostEmissive": 2390144,
+            "trail": 9824751,
+            "goalOutline": 9169660,
+            "goalActive": 15266215,
+            "goalComplete": 9808542,
+            "goalInactive": 8366516,
+            "goalGlow": 11069917,
+            "goalGlowInactive": 9030085,
+            "goalEmissive": 8577493,
+            "goalBadge": 10872788,
+            "directionArrow": 15264432
+          },
+          "hunt": null,
+          "importedMaterialBindings": {
+            "applied": 0,
+            "diagnostics": [],
+            "diagnosticsTruncated": 0
+          },
+          "registered": {
+            "geometries": 153,
+            "materials": 107,
+            "textures": 23
+          },
+          "renderer": {
+            "calls": 80,
+            "triangles": 53392,
+            "geometries": 37,
+            "textures": 16,
+            "programs": 19,
+            "contextLost": false
+          }
+        }
+      ]
+    },
+    {
+      "environment": "container-yard",
+      "quality": "balanced",
+      "camera": "chase",
+      "pose": "rear",
+      "appearance": "authored",
+      "drone": "racer",
+      "changedPixels": 163970,
+      "litPixels": 518400,
+      "pixelHashes": [
+        "68ed9ed98d11715b58c3c5eff5ce5268c371ef868552f78d382ff690e3cffea2",
+        "de06f6dc195d71b795b95b6e9b17c0431329ac0897655cebff04e0e07e4818b4"
+      ],
+      "drawCalls": [175, 183],
+      "triangles": [48512, 69436],
+      "submitMs": [6.399999991059303, 7.5],
+      "resources": [
+        {
+          "available": true,
+          "disposed": false,
+          "quality": "balanced",
+          "drone": "racer",
+          "presentation": {
+            "collectionId": "authored",
+            "revision": "r1",
+            "profileId": "operations",
+            "actors": [],
+            "actorGoals": [],
+            "projectileBatches": 0,
+            "activeProjectiles": 0,
+            "surfaceDetailGroups": 12
+          },
+          "effects": {
+            "playerPulse": 9233635,
+            "hostilePulse": 16232561,
+            "ghost": 9824751,
+            "ghostEmissive": 2390144,
+            "trail": 9824751,
+            "goalOutline": 9169660,
+            "goalActive": 15266215,
+            "goalComplete": 9808542,
+            "goalInactive": 8366516,
+            "goalGlow": 11069917,
+            "goalGlowInactive": 9030085,
+            "goalEmissive": 8577493,
+            "goalBadge": 10872788,
+            "directionArrow": 15264432
+          },
+          "hunt": null,
+          "importedMaterialBindings": {
+            "applied": 0,
+            "diagnostics": [],
+            "diagnosticsTruncated": 0
+          },
+          "registered": {
+            "geometries": 167,
+            "materials": 119,
+            "textures": 23
+          },
+          "renderer": {
+            "calls": 175,
+            "triangles": 48512,
+            "geometries": 89,
+            "textures": 21,
+            "programs": 19,
+            "contextLost": false
+          }
+        },
+        {
+          "available": true,
+          "disposed": false,
+          "quality": "balanced",
+          "drone": "racer",
+          "presentation": {
+            "collectionId": "authored",
+            "revision": "r1",
+            "profileId": "operations",
+            "actors": [],
+            "actorGoals": [],
+            "projectileBatches": 0,
+            "activeProjectiles": 0,
+            "surfaceDetailGroups": 12
+          },
+          "effects": {
+            "playerPulse": 9233635,
+            "hostilePulse": 16232561,
+            "ghost": 9824751,
+            "ghostEmissive": 2390144,
+            "trail": 9824751,
+            "goalOutline": 9169660,
+            "goalActive": 15266215,
+            "goalComplete": 9808542,
+            "goalInactive": 8366516,
+            "goalGlow": 11069917,
+            "goalGlowInactive": 9030085,
+            "goalEmissive": 8577493,
+            "goalBadge": 10872788,
+            "directionArrow": 15264432
+          },
+          "hunt": null,
+          "importedMaterialBindings": {
+            "applied": 0,
+            "diagnostics": [],
+            "diagnosticsTruncated": 0
+          },
+          "registered": {
+            "geometries": 153,
+            "materials": 107,
+            "textures": 23
+          },
+          "renderer": {
+            "calls": 183,
+            "triangles": 69436,
+            "geometries": 81,
+            "textures": 21,
+            "programs": 20,
+            "contextLost": false
+          }
+        }
+      ]
+    },
+    {
+      "environment": "container-yard",
+      "quality": "balanced",
+      "camera": "overview",
+      "pose": "front",
+      "appearance": "authored",
+      "drone": "racer",
+      "changedPixels": 15790,
+      "litPixels": 518400,
+      "pixelHashes": [
+        "1ed236e082c558010e491fbcd117b67b2ea29c36cf7614332b3188fd394f2944",
+        "b9fbb9d566e64f7c749d529300fc3be84885e5dbabe1badb6a22664d0232d363"
+      ],
+      "drawCalls": [219, 229],
+      "triangles": [66906, 92210],
+      "submitMs": [3.7000000029802322, 2.1000000089406967],
+      "resources": [
+        {
+          "available": true,
+          "disposed": false,
+          "quality": "balanced",
+          "drone": "racer",
+          "presentation": {
+            "collectionId": "authored",
+            "revision": "r1",
+            "profileId": "operations",
+            "actors": [],
+            "actorGoals": [],
+            "projectileBatches": 0,
+            "activeProjectiles": 0,
+            "surfaceDetailGroups": 12
+          },
+          "effects": {
+            "playerPulse": 9233635,
+            "hostilePulse": 16232561,
+            "ghost": 9824751,
+            "ghostEmissive": 2390144,
+            "trail": 9824751,
+            "goalOutline": 9169660,
+            "goalActive": 15266215,
+            "goalComplete": 9808542,
+            "goalInactive": 8366516,
+            "goalGlow": 11069917,
+            "goalGlowInactive": 9030085,
+            "goalEmissive": 8577493,
+            "goalBadge": 10872788,
+            "directionArrow": 15264432
+          },
+          "hunt": null,
+          "importedMaterialBindings": {
+            "applied": 0,
+            "diagnostics": [],
+            "diagnosticsTruncated": 0
+          },
+          "registered": {
+            "geometries": 167,
+            "materials": 119,
+            "textures": 23
+          },
+          "renderer": {
+            "calls": 219,
+            "triangles": 66906,
+            "geometries": 99,
+            "textures": 24,
+            "programs": 19,
+            "contextLost": false
+          }
+        },
+        {
+          "available": true,
+          "disposed": false,
+          "quality": "balanced",
+          "drone": "racer",
+          "presentation": {
+            "collectionId": "authored",
+            "revision": "r1",
+            "profileId": "operations",
+            "actors": [],
+            "actorGoals": [],
+            "projectileBatches": 0,
+            "activeProjectiles": 0,
+            "surfaceDetailGroups": 12
+          },
+          "effects": {
+            "playerPulse": 9233635,
+            "hostilePulse": 16232561,
+            "ghost": 9824751,
+            "ghostEmissive": 2390144,
+            "trail": 9824751,
+            "goalOutline": 9169660,
+            "goalActive": 15266215,
+            "goalComplete": 9808542,
+            "goalInactive": 8366516,
+            "goalGlow": 11069917,
+            "goalGlowInactive": 9030085,
+            "goalEmissive": 8577493,
+            "goalBadge": 10872788,
+            "directionArrow": 15264432
+          },
+          "hunt": null,
+          "importedMaterialBindings": {
+            "applied": 0,
+            "diagnostics": [],
+            "diagnosticsTruncated": 0
+          },
+          "registered": {
+            "geometries": 153,
+            "materials": 107,
+            "textures": 23
+          },
+          "renderer": {
+            "calls": 229,
+            "triangles": 92210,
+            "geometries": 91,
+            "textures": 24,
+            "programs": 20,
+            "contextLost": false
+          }
+        }
+      ]
+    },
+    {
+      "environment": "container-yard",
+      "quality": "high",
+      "camera": "fpv",
+      "pose": "front",
+      "appearance": "authored",
+      "drone": "racer",
+      "changedPixels": 89217,
+      "litPixels": 921600,
+      "pixelHashes": [
+        "7018612f48841ddc96e04bdd1e0a8771a09127039cc446ab54c35eb76a2ad486",
+        "b3f927671f6a5900a6a1c08b6a725e72923a017e16fb73fbf66b3d50d30707db"
+      ],
+      "drawCalls": [77, 83],
+      "triangles": [46810, 59930],
+      "submitMs": [33, 24.400000005960464],
+      "resources": [
+        {
+          "available": true,
+          "disposed": false,
+          "quality": "high",
+          "drone": "racer",
+          "presentation": {
+            "collectionId": "authored",
+            "revision": "r1",
+            "profileId": "operations",
+            "actors": [],
+            "actorGoals": [],
+            "projectileBatches": 0,
+            "activeProjectiles": 0,
+            "surfaceDetailGroups": 12
+          },
+          "effects": {
+            "playerPulse": 9233635,
+            "hostilePulse": 16232561,
+            "ghost": 9824751,
+            "ghostEmissive": 2390144,
+            "trail": 9824751,
+            "goalOutline": 9169660,
+            "goalActive": 15266215,
+            "goalComplete": 9808542,
+            "goalInactive": 8366516,
+            "goalGlow": 11069917,
+            "goalGlowInactive": 9030085,
+            "goalEmissive": 8577493,
+            "goalBadge": 10872788,
+            "directionArrow": 15264432
+          },
+          "hunt": null,
+          "importedMaterialBindings": {
+            "applied": 0,
+            "diagnostics": [],
+            "diagnosticsTruncated": 0
+          },
+          "registered": {
+            "geometries": 209,
+            "materials": 125,
+            "textures": 23
+          },
+          "renderer": {
+            "calls": 77,
+            "triangles": 46810,
+            "geometries": 31,
+            "textures": 15,
+            "programs": 18,
+            "contextLost": false
+          }
+        },
+        {
+          "available": true,
+          "disposed": false,
+          "quality": "high",
+          "drone": "racer",
+          "presentation": {
+            "collectionId": "authored",
+            "revision": "r1",
+            "profileId": "operations",
+            "actors": [],
+            "actorGoals": [],
+            "projectileBatches": 0,
+            "activeProjectiles": 0,
+            "surfaceDetailGroups": 12
+          },
+          "effects": {
+            "playerPulse": 9233635,
+            "hostilePulse": 16232561,
+            "ghost": 9824751,
+            "ghostEmissive": 2390144,
+            "trail": 9824751,
+            "goalOutline": 9169660,
+            "goalActive": 15266215,
+            "goalComplete": 9808542,
+            "goalInactive": 8366516,
+            "goalGlow": 11069917,
+            "goalGlowInactive": 9030085,
+            "goalEmissive": 8577493,
+            "goalBadge": 10872788,
+            "directionArrow": 15264432
+          },
+          "hunt": null,
+          "importedMaterialBindings": {
+            "applied": 0,
+            "diagnostics": [],
+            "diagnosticsTruncated": 0
+          },
+          "registered": {
+            "geometries": 164,
+            "materials": 113,
+            "textures": 23
+          },
+          "renderer": {
+            "calls": 83,
+            "triangles": 59930,
+            "geometries": 36,
+            "textures": 15,
+            "programs": 19,
+            "contextLost": false
+          }
+        }
+      ]
+    },
+    {
+      "environment": "container-yard",
+      "quality": "high",
+      "camera": "fpv",
+      "pose": "side",
+      "appearance": "authored",
+      "drone": "racer",
+      "changedPixels": 397094,
+      "litPixels": 921600,
+      "pixelHashes": [
+        "d98524acff0e00a79e880b315b545e07573212d9560847e4d8d4d1f2bd3ad8d8",
+        "6df0632e0f76f2b6566f56804e857c5de195a423c56b797f6fa7639368436231"
+      ],
+      "drawCalls": [75, 81],
+      "triangles": [40956, 56992],
+      "submitMs": [0.7999999970197678, 0.9000000059604645],
+      "resources": [
+        {
+          "available": true,
+          "disposed": false,
+          "quality": "high",
+          "drone": "racer",
+          "presentation": {
+            "collectionId": "authored",
+            "revision": "r1",
+            "profileId": "operations",
+            "actors": [],
+            "actorGoals": [],
+            "projectileBatches": 0,
+            "activeProjectiles": 0,
+            "surfaceDetailGroups": 12
+          },
+          "effects": {
+            "playerPulse": 9233635,
+            "hostilePulse": 16232561,
+            "ghost": 9824751,
+            "ghostEmissive": 2390144,
+            "trail": 9824751,
+            "goalOutline": 9169660,
+            "goalActive": 15266215,
+            "goalComplete": 9808542,
+            "goalInactive": 8366516,
+            "goalGlow": 11069917,
+            "goalGlowInactive": 9030085,
+            "goalEmissive": 8577493,
+            "goalBadge": 10872788,
+            "directionArrow": 15264432
+          },
+          "hunt": null,
+          "importedMaterialBindings": {
+            "applied": 0,
+            "diagnostics": [],
+            "diagnosticsTruncated": 0
+          },
+          "registered": {
+            "geometries": 209,
+            "materials": 125,
+            "textures": 23
+          },
+          "renderer": {
+            "calls": 75,
+            "triangles": 40956,
+            "geometries": 34,
+            "textures": 16,
+            "programs": 18,
+            "contextLost": false
+          }
+        },
+        {
+          "available": true,
+          "disposed": false,
+          "quality": "high",
+          "drone": "racer",
+          "presentation": {
+            "collectionId": "authored",
+            "revision": "r1",
+            "profileId": "operations",
+            "actors": [],
+            "actorGoals": [],
+            "projectileBatches": 0,
+            "activeProjectiles": 0,
+            "surfaceDetailGroups": 12
+          },
+          "effects": {
+            "playerPulse": 9233635,
+            "hostilePulse": 16232561,
+            "ghost": 9824751,
+            "ghostEmissive": 2390144,
+            "trail": 9824751,
+            "goalOutline": 9169660,
+            "goalActive": 15266215,
+            "goalComplete": 9808542,
+            "goalInactive": 8366516,
+            "goalGlow": 11069917,
+            "goalGlowInactive": 9030085,
+            "goalEmissive": 8577493,
+            "goalBadge": 10872788,
+            "directionArrow": 15264432
+          },
+          "hunt": null,
+          "importedMaterialBindings": {
+            "applied": 0,
+            "diagnostics": [],
+            "diagnosticsTruncated": 0
+          },
+          "registered": {
+            "geometries": 164,
+            "materials": 113,
+            "textures": 23
+          },
+          "renderer": {
+            "calls": 81,
+            "triangles": 56992,
+            "geometries": 38,
+            "textures": 16,
+            "programs": 19,
+            "contextLost": false
+          }
+        }
+      ]
+    },
+    {
+      "environment": "container-yard",
+      "quality": "high",
+      "camera": "chase",
+      "pose": "rear",
+      "appearance": "authored",
+      "drone": "racer",
+      "changedPixels": 290919,
+      "litPixels": 921600,
+      "pixelHashes": [
+        "1664652a299bbabd27a7a785115f145ac30d91222aa2b10fb58088052ee7de08",
+        "7882d2b28f2dfe09b080316ad70375e01d5be08a7b0c75addfe684c4dcf2d874"
+      ],
+      "drawCalls": [264, 205],
+      "triangles": [54344, 75732],
+      "submitMs": [8.099999994039536, 7.200000002980232],
+      "resources": [
+        {
+          "available": true,
+          "disposed": false,
+          "quality": "high",
+          "drone": "racer",
+          "presentation": {
+            "collectionId": "authored",
+            "revision": "r1",
+            "profileId": "operations",
+            "actors": [],
+            "actorGoals": [],
+            "projectileBatches": 0,
+            "activeProjectiles": 0,
+            "surfaceDetailGroups": 12
+          },
+          "effects": {
+            "playerPulse": 9233635,
+            "hostilePulse": 16232561,
+            "ghost": 9824751,
+            "ghostEmissive": 2390144,
+            "trail": 9824751,
+            "goalOutline": 9169660,
+            "goalActive": 15266215,
+            "goalComplete": 9808542,
+            "goalInactive": 8366516,
+            "goalGlow": 11069917,
+            "goalGlowInactive": 9030085,
+            "goalEmissive": 8577493,
+            "goalBadge": 10872788,
+            "directionArrow": 15264432
+          },
+          "hunt": null,
+          "importedMaterialBindings": {
+            "applied": 0,
+            "diagnostics": [],
+            "diagnosticsTruncated": 0
+          },
+          "registered": {
+            "geometries": 209,
+            "materials": 125,
+            "textures": 23
+          },
+          "renderer": {
+            "calls": 264,
+            "triangles": 54344,
+            "geometries": 137,
+            "textures": 21,
+            "programs": 19,
+            "contextLost": false
+          }
+        },
+        {
+          "available": true,
+          "disposed": false,
+          "quality": "high",
+          "drone": "racer",
+          "presentation": {
+            "collectionId": "authored",
+            "revision": "r1",
+            "profileId": "operations",
+            "actors": [],
+            "actorGoals": [],
+            "projectileBatches": 0,
+            "activeProjectiles": 0,
+            "surfaceDetailGroups": 12
+          },
+          "effects": {
+            "playerPulse": 9233635,
+            "hostilePulse": 16232561,
+            "ghost": 9824751,
+            "ghostEmissive": 2390144,
+            "trail": 9824751,
+            "goalOutline": 9169660,
+            "goalActive": 15266215,
+            "goalComplete": 9808542,
+            "goalInactive": 8366516,
+            "goalGlow": 11069917,
+            "goalGlowInactive": 9030085,
+            "goalEmissive": 8577493,
+            "goalBadge": 10872788,
+            "directionArrow": 15264432
+          },
+          "hunt": null,
+          "importedMaterialBindings": {
+            "applied": 0,
+            "diagnostics": [],
+            "diagnosticsTruncated": 0
+          },
+          "registered": {
+            "geometries": 164,
+            "materials": 113,
+            "textures": 23
+          },
+          "renderer": {
+            "calls": 205,
+            "triangles": 75732,
+            "geometries": 93,
+            "textures": 21,
+            "programs": 20,
+            "contextLost": false
+          }
+        }
+      ]
+    },
+    {
+      "environment": "container-yard",
+      "quality": "high",
+      "camera": "overview",
+      "pose": "front",
+      "appearance": "authored",
+      "drone": "racer",
+      "changedPixels": 27710,
+      "litPixels": 921600,
+      "pixelHashes": [
+        "8b21096e4d483f150cc20256d6fad4507e9d98175e451a731b986b90904e4dfb",
+        "fe1a6875b0920707c0d0728e444013ea5477a9f279eedd2974c0b4d95c3625ff"
+      ],
+      "drawCalls": [310, 251],
+      "triangles": [72754, 98506],
+      "submitMs": [4.699999988079071, 2.2000000029802322],
+      "resources": [
+        {
+          "available": true,
+          "disposed": false,
+          "quality": "high",
+          "drone": "racer",
+          "presentation": {
+            "collectionId": "authored",
+            "revision": "r1",
+            "profileId": "operations",
+            "actors": [],
+            "actorGoals": [],
+            "projectileBatches": 0,
+            "activeProjectiles": 0,
+            "surfaceDetailGroups": 12
+          },
+          "effects": {
+            "playerPulse": 9233635,
+            "hostilePulse": 16232561,
+            "ghost": 9824751,
+            "ghostEmissive": 2390144,
+            "trail": 9824751,
+            "goalOutline": 9169660,
+            "goalActive": 15266215,
+            "goalComplete": 9808542,
+            "goalInactive": 8366516,
+            "goalGlow": 11069917,
+            "goalGlowInactive": 9030085,
+            "goalEmissive": 8577493,
+            "goalBadge": 10872788,
+            "directionArrow": 15264432
+          },
+          "hunt": null,
+          "importedMaterialBindings": {
+            "applied": 0,
+            "diagnostics": [],
+            "diagnosticsTruncated": 0
+          },
+          "registered": {
+            "geometries": 209,
+            "materials": 125,
+            "textures": 23
+          },
+          "renderer": {
+            "calls": 310,
+            "triangles": 72754,
+            "geometries": 148,
+            "textures": 24,
+            "programs": 19,
+            "contextLost": false
+          }
+        },
+        {
+          "available": true,
+          "disposed": false,
+          "quality": "high",
+          "drone": "racer",
+          "presentation": {
+            "collectionId": "authored",
+            "revision": "r1",
+            "profileId": "operations",
+            "actors": [],
+            "actorGoals": [],
+            "projectileBatches": 0,
+            "activeProjectiles": 0,
+            "surfaceDetailGroups": 12
+          },
+          "effects": {
+            "playerPulse": 9233635,
+            "hostilePulse": 16232561,
+            "ghost": 9824751,
+            "ghostEmissive": 2390144,
+            "trail": 9824751,
+            "goalOutline": 9169660,
+            "goalActive": 15266215,
+            "goalComplete": 9808542,
+            "goalInactive": 8366516,
+            "goalGlow": 11069917,
+            "goalGlowInactive": 9030085,
+            "goalEmissive": 8577493,
+            "goalBadge": 10872788,
+            "directionArrow": 15264432
+          },
+          "hunt": null,
+          "importedMaterialBindings": {
+            "applied": 0,
+            "diagnostics": [],
+            "diagnosticsTruncated": 0
+          },
+          "registered": {
+            "geometries": 164,
+            "materials": 113,
+            "textures": 23
+          },
+          "renderer": {
+            "calls": 251,
+            "triangles": 98506,
+            "geometries": 103,
+            "textures": 24,
+            "programs": 20,
+            "contextLost": false
+          }
+        }
+      ]
+    },
+    {
+      "environment": "container-yard",
+      "quality": "low",
+      "camera": "fpv",
+      "pose": "front",
+      "appearance": "industrial-workshop",
+      "drone": "racer",
+      "changedPixels": 22841,
+      "litPixels": 230400,
+      "pixelHashes": [
+        "843e92ddbed87cdf138fbb007d7175e7681b7cd8d6a7a54f94f8d99b4ebbe0ce",
+        "6f5d66a926c1b582a558b8e6ef9f7e28ae55f3f488618b6c24bc0b89fd3628c1"
+      ],
+      "drawCalls": [26, 26],
+      "triangles": [13782, 14902],
+      "submitMs": [9.700000002980232, 11.199999988079071],
+      "resources": [
+        {
+          "available": true,
+          "disposed": false,
+          "quality": "low",
+          "drone": "racer",
+          "presentation": {
+            "collectionId": "industrial-workshop",
+            "revision": "r1",
+            "profileId": "industrial-workshop",
+            "actors": [],
+            "actorGoals": [],
+            "projectileBatches": 0,
+            "activeProjectiles": 0,
+            "surfaceDetailGroups": 12
+          },
+          "effects": {
+            "playerPulse": 10211269,
+            "hostilePulse": 15708281,
+            "ghost": 10668760,
+            "ghostEmissive": 3563113,
+            "trail": 10668760,
+            "goalOutline": 10143181,
+            "goalActive": 16765572,
+            "goalComplete": 9808542,
+            "goalInactive": 8366516,
+            "goalGlow": 15250524,
+            "goalGlowInactive": 9092023,
+            "goalEmissive": 11829819,
+            "goalBadge": 15250524,
+            "directionArrow": 15390635
+          },
+          "hunt": null,
+          "importedMaterialBindings": {
+            "applied": 0,
+            "diagnostics": [],
+            "diagnosticsTruncated": 0
+          },
+          "registered": {
+            "geometries": 172,
+            "materials": 121,
+            "textures": 19
+          },
+          "renderer": {
+            "calls": 26,
+            "triangles": 13782,
+            "geometries": 20,
+            "textures": 8,
+            "programs": 13,
+            "contextLost": false
+          }
+        },
+        {
+          "available": true,
+          "disposed": false,
+          "quality": "low",
+          "drone": "racer",
+          "presentation": {
+            "collectionId": "industrial-workshop",
+            "revision": "r1",
+            "profileId": "industrial-workshop",
+            "actors": [],
+            "actorGoals": [],
+            "projectileBatches": 0,
+            "activeProjectiles": 0,
+            "surfaceDetailGroups": 12
+          },
+          "effects": {
+            "playerPulse": 10211269,
+            "hostilePulse": 15708281,
+            "ghost": 10668760,
+            "ghostEmissive": 3563113,
+            "trail": 10668760,
+            "goalOutline": 10143181,
+            "goalActive": 16765572,
+            "goalComplete": 9808542,
+            "goalInactive": 8366516,
+            "goalGlow": 15250524,
+            "goalGlowInactive": 9092023,
+            "goalEmissive": 11829819,
+            "goalBadge": 15250524,
+            "directionArrow": 15390635
+          },
+          "hunt": null,
+          "importedMaterialBindings": {
+            "applied": 0,
+            "diagnostics": [],
+            "diagnosticsTruncated": 0
+          },
+          "registered": {
+            "geometries": 158,
+            "materials": 109,
+            "textures": 19
+          },
+          "renderer": {
+            "calls": 26,
+            "triangles": 14902,
+            "geometries": 20,
+            "textures": 8,
+            "programs": 13,
+            "contextLost": false
+          }
+        }
+      ]
+    },
+    {
+      "environment": "container-yard",
+      "quality": "low",
+      "camera": "fpv",
+      "pose": "side",
+      "appearance": "industrial-workshop",
+      "drone": "racer",
+      "changedPixels": 99736,
+      "litPixels": 230400,
+      "pixelHashes": [
+        "ba7de4da2afe71d015d82e1e7a9f13c6aad1b0672617f3b2c9a7489182c0c8d2",
+        "ffac04d01567046ff42580848681f38655f0768f22ddc216f23fd0e0f6cd3495"
+      ],
+      "drawCalls": [22, 22],
+      "triangles": [7912, 11284],
+      "submitMs": [0.7000000029802322, 0.7000000029802322],
+      "resources": [
+        {
+          "available": true,
+          "disposed": false,
+          "quality": "low",
+          "drone": "racer",
+          "presentation": {
+            "collectionId": "industrial-workshop",
+            "revision": "r1",
+            "profileId": "industrial-workshop",
+            "actors": [],
+            "actorGoals": [],
+            "projectileBatches": 0,
+            "activeProjectiles": 0,
+            "surfaceDetailGroups": 12
+          },
+          "effects": {
+            "playerPulse": 10211269,
+            "hostilePulse": 15708281,
+            "ghost": 10668760,
+            "ghostEmissive": 3563113,
+            "trail": 10668760,
+            "goalOutline": 10143181,
+            "goalActive": 16765572,
+            "goalComplete": 9808542,
+            "goalInactive": 8366516,
+            "goalGlow": 15250524,
+            "goalGlowInactive": 9092023,
+            "goalEmissive": 11829819,
+            "goalBadge": 15250524,
+            "directionArrow": 15390635
+          },
+          "hunt": null,
+          "importedMaterialBindings": {
+            "applied": 0,
+            "diagnostics": [],
+            "diagnosticsTruncated": 0
+          },
+          "registered": {
+            "geometries": 172,
+            "materials": 121,
+            "textures": 19
+          },
+          "renderer": {
+            "calls": 22,
+            "triangles": 7912,
+            "geometries": 24,
+            "textures": 10,
+            "programs": 13,
+            "contextLost": false
+          }
+        },
+        {
+          "available": true,
+          "disposed": false,
+          "quality": "low",
+          "drone": "racer",
+          "presentation": {
+            "collectionId": "industrial-workshop",
+            "revision": "r1",
+            "profileId": "industrial-workshop",
+            "actors": [],
+            "actorGoals": [],
+            "projectileBatches": 0,
+            "activeProjectiles": 0,
+            "surfaceDetailGroups": 12
+          },
+          "effects": {
+            "playerPulse": 10211269,
+            "hostilePulse": 15708281,
+            "ghost": 10668760,
+            "ghostEmissive": 3563113,
+            "trail": 10668760,
+            "goalOutline": 10143181,
+            "goalActive": 16765572,
+            "goalComplete": 9808542,
+            "goalInactive": 8366516,
+            "goalGlow": 15250524,
+            "goalGlowInactive": 9092023,
+            "goalEmissive": 11829819,
+            "goalBadge": 15250524,
+            "directionArrow": 15390635
+          },
+          "hunt": null,
+          "importedMaterialBindings": {
+            "applied": 0,
+            "diagnostics": [],
+            "diagnosticsTruncated": 0
+          },
+          "registered": {
+            "geometries": 158,
+            "materials": 109,
+            "textures": 19
+          },
+          "renderer": {
+            "calls": 22,
+            "triangles": 11284,
+            "geometries": 24,
+            "textures": 10,
+            "programs": 13,
+            "contextLost": false
+          }
+        }
+      ]
+    },
+    {
+      "environment": "container-yard",
+      "quality": "low",
+      "camera": "chase",
+      "pose": "rear",
+      "appearance": "industrial-workshop",
+      "drone": "racer",
+      "changedPixels": 73438,
+      "litPixels": 230400,
+      "pixelHashes": [
+        "a9d6b87495128651aae5fd426bd505214330676f8d8c89f1e9710b9341fcf72b",
+        "fac4feec6620068a0020955daa575e0da9a6879addef090c0f6154da5d267828"
+      ],
+      "drawCalls": [92, 87],
+      "triangles": [18068, 24876],
+      "submitMs": [5.299999997019768, 3.4000000059604645],
+      "resources": [
+        {
+          "available": true,
+          "disposed": false,
+          "quality": "low",
+          "drone": "racer",
+          "presentation": {
+            "collectionId": "industrial-workshop",
+            "revision": "r1",
+            "profileId": "industrial-workshop",
+            "actors": [],
+            "actorGoals": [],
+            "projectileBatches": 0,
+            "activeProjectiles": 0,
+            "surfaceDetailGroups": 12
+          },
+          "effects": {
+            "playerPulse": 10211269,
+            "hostilePulse": 15708281,
+            "ghost": 10668760,
+            "ghostEmissive": 3563113,
+            "trail": 10668760,
+            "goalOutline": 10143181,
+            "goalActive": 16765572,
+            "goalComplete": 9808542,
+            "goalInactive": 8366516,
+            "goalGlow": 15250524,
+            "goalGlowInactive": 9092023,
+            "goalEmissive": 11829819,
+            "goalBadge": 15250524,
+            "directionArrow": 15390635
+          },
+          "hunt": null,
+          "importedMaterialBindings": {
+            "applied": 0,
+            "diagnostics": [],
+            "diagnosticsTruncated": 0
+          },
+          "registered": {
+            "geometries": 172,
+            "materials": 121,
+            "textures": 19
+          },
+          "renderer": {
+            "calls": 92,
+            "triangles": 18068,
+            "geometries": 84,
+            "textures": 16,
+            "programs": 13,
+            "contextLost": false
+          }
+        },
+        {
+          "available": true,
+          "disposed": false,
+          "quality": "low",
+          "drone": "racer",
+          "presentation": {
+            "collectionId": "industrial-workshop",
+            "revision": "r1",
+            "profileId": "industrial-workshop",
+            "actors": [],
+            "actorGoals": [],
+            "projectileBatches": 0,
+            "activeProjectiles": 0,
+            "surfaceDetailGroups": 12
+          },
+          "effects": {
+            "playerPulse": 10211269,
+            "hostilePulse": 15708281,
+            "ghost": 10668760,
+            "ghostEmissive": 3563113,
+            "trail": 10668760,
+            "goalOutline": 10143181,
+            "goalActive": 16765572,
+            "goalComplete": 9808542,
+            "goalInactive": 8366516,
+            "goalGlow": 15250524,
+            "goalGlowInactive": 9092023,
+            "goalEmissive": 11829819,
+            "goalBadge": 15250524,
+            "directionArrow": 15390635
+          },
+          "hunt": null,
+          "importedMaterialBindings": {
+            "applied": 0,
+            "diagnostics": [],
+            "diagnosticsTruncated": 0
+          },
+          "registered": {
+            "geometries": 158,
+            "materials": 109,
+            "textures": 19
+          },
+          "renderer": {
+            "calls": 87,
+            "triangles": 24876,
+            "geometries": 70,
+            "textures": 16,
+            "programs": 13,
+            "contextLost": false
+          }
+        }
+      ]
+    },
+    {
+      "environment": "container-yard",
+      "quality": "low",
+      "camera": "overview",
+      "pose": "front",
+      "appearance": "industrial-workshop",
+      "drone": "racer",
+      "changedPixels": 7191,
+      "litPixels": 230400,
+      "pixelHashes": [
+        "efb103858090399a7bec440b97420e2f734455ec964c625ba566c3baf44afcb8",
+        "b643e397cd3e3cc2e2980bc4a3ae0109684c3eaba3a32e695c77d5d2baed6259"
+      ],
+      "drawCalls": [135, 130],
+      "triangles": [36446, 46626],
+      "submitMs": [4, 1.7000000029802322],
+      "resources": [
+        {
+          "available": true,
+          "disposed": false,
+          "quality": "low",
+          "drone": "racer",
+          "presentation": {
+            "collectionId": "industrial-workshop",
+            "revision": "r1",
+            "profileId": "industrial-workshop",
+            "actors": [],
+            "actorGoals": [],
+            "projectileBatches": 0,
+            "activeProjectiles": 0,
+            "surfaceDetailGroups": 12
+          },
+          "effects": {
+            "playerPulse": 10211269,
+            "hostilePulse": 15708281,
+            "ghost": 10668760,
+            "ghostEmissive": 3563113,
+            "trail": 10668760,
+            "goalOutline": 10143181,
+            "goalActive": 16765572,
+            "goalComplete": 9808542,
+            "goalInactive": 8366516,
+            "goalGlow": 15250524,
+            "goalGlowInactive": 9092023,
+            "goalEmissive": 11829819,
+            "goalBadge": 15250524,
+            "directionArrow": 15390635
+          },
+          "hunt": null,
+          "importedMaterialBindings": {
+            "applied": 0,
+            "diagnostics": [],
+            "diagnosticsTruncated": 0
+          },
+          "registered": {
+            "geometries": 172,
+            "materials": 121,
+            "textures": 19
+          },
+          "renderer": {
+            "calls": 135,
+            "triangles": 36446,
+            "geometries": 96,
+            "textures": 21,
+            "programs": 13,
+            "contextLost": false
+          }
+        },
+        {
+          "available": true,
+          "disposed": false,
+          "quality": "low",
+          "drone": "racer",
+          "presentation": {
+            "collectionId": "industrial-workshop",
+            "revision": "r1",
+            "profileId": "industrial-workshop",
+            "actors": [],
+            "actorGoals": [],
+            "projectileBatches": 0,
+            "activeProjectiles": 0,
+            "surfaceDetailGroups": 12
+          },
+          "effects": {
+            "playerPulse": 10211269,
+            "hostilePulse": 15708281,
+            "ghost": 10668760,
+            "ghostEmissive": 3563113,
+            "trail": 10668760,
+            "goalOutline": 10143181,
+            "goalActive": 16765572,
+            "goalComplete": 9808542,
+            "goalInactive": 8366516,
+            "goalGlow": 15250524,
+            "goalGlowInactive": 9092023,
+            "goalEmissive": 11829819,
+            "goalBadge": 15250524,
+            "directionArrow": 15390635
+          },
+          "hunt": null,
+          "importedMaterialBindings": {
+            "applied": 0,
+            "diagnostics": [],
+            "diagnosticsTruncated": 0
+          },
+          "registered": {
+            "geometries": 158,
+            "materials": 109,
+            "textures": 19
+          },
+          "renderer": {
+            "calls": 130,
+            "triangles": 46626,
+            "geometries": 82,
+            "textures": 21,
+            "programs": 13,
+            "contextLost": false
+          }
+        }
+      ]
+    },
+    {
+      "environment": "container-yard",
+      "quality": "balanced",
+      "camera": "fpv",
+      "pose": "front",
+      "appearance": "industrial-workshop",
+      "drone": "racer",
+      "changedPixels": 49903,
+      "litPixels": 518400,
+      "pixelHashes": [
+        "17cbbcb8496e7544e0d20e6f8a4e1645cb4dfdb5010e85e57ecbfa6e260f2d29",
+        "057c1ea60ae5c8dceb76e565be6d15f14c9f42cbbc4243e6b081267036c2ea42"
+      ],
+      "drawCalls": [75, 82],
+      "triangles": [43202, 56330],
+      "submitMs": [33.79999999701977, 20.299999997019768],
+      "resources": [
+        {
+          "available": true,
+          "disposed": false,
+          "quality": "balanced",
+          "drone": "racer",
+          "presentation": {
+            "collectionId": "industrial-workshop",
+            "revision": "r1",
+            "profileId": "industrial-workshop",
+            "actors": [],
+            "actorGoals": [],
+            "projectileBatches": 0,
+            "activeProjectiles": 0,
+            "surfaceDetailGroups": 12
+          },
+          "effects": {
+            "playerPulse": 10211269,
+            "hostilePulse": 15708281,
+            "ghost": 10668760,
+            "ghostEmissive": 3563113,
+            "trail": 10668760,
+            "goalOutline": 10143181,
+            "goalActive": 16765572,
+            "goalComplete": 9808542,
+            "goalInactive": 8366516,
+            "goalGlow": 15250524,
+            "goalGlowInactive": 9092023,
+            "goalEmissive": 11829819,
+            "goalBadge": 15250524,
+            "directionArrow": 15390635
+          },
+          "hunt": null,
+          "importedMaterialBindings": {
+            "applied": 0,
+            "diagnostics": [],
+            "diagnosticsTruncated": 0
+          },
+          "registered": {
+            "geometries": 172,
+            "materials": 121,
+            "textures": 19
+          },
+          "renderer": {
+            "calls": 75,
+            "triangles": 43202,
+            "geometries": 29,
+            "textures": 11,
+            "programs": 17,
+            "contextLost": false
+          }
+        },
+        {
+          "available": true,
+          "disposed": false,
+          "quality": "balanced",
+          "drone": "racer",
+          "presentation": {
+            "collectionId": "industrial-workshop",
+            "revision": "r1",
+            "profileId": "industrial-workshop",
+            "actors": [],
+            "actorGoals": [],
+            "projectileBatches": 0,
+            "activeProjectiles": 0,
+            "surfaceDetailGroups": 12
+          },
+          "effects": {
+            "playerPulse": 10211269,
+            "hostilePulse": 15708281,
+            "ghost": 10668760,
+            "ghostEmissive": 3563113,
+            "trail": 10668760,
+            "goalOutline": 10143181,
+            "goalActive": 16765572,
+            "goalComplete": 9808542,
+            "goalInactive": 8366516,
+            "goalGlow": 15250524,
+            "goalGlowInactive": 9092023,
+            "goalEmissive": 11829819,
+            "goalBadge": 15250524,
+            "directionArrow": 15390635
+          },
+          "hunt": null,
+          "importedMaterialBindings": {
+            "applied": 0,
+            "diagnostics": [],
+            "diagnosticsTruncated": 0
+          },
+          "registered": {
+            "geometries": 158,
+            "materials": 109,
+            "textures": 19
+          },
+          "renderer": {
+            "calls": 82,
+            "triangles": 56330,
+            "geometries": 35,
+            "textures": 11,
+            "programs": 17,
+            "contextLost": false
+          }
+        }
+      ]
+    },
+    {
+      "environment": "container-yard",
+      "quality": "balanced",
+      "camera": "fpv",
+      "pose": "side",
+      "appearance": "industrial-workshop",
+      "drone": "racer",
+      "changedPixels": 214869,
+      "litPixels": 518400,
+      "pixelHashes": [
+        "d5d1e71d8e467bb85676648bc953d1907690aebd72a0e0ce3a93d565e7aeb1e8",
+        "a08c0185c6ba94a5e791d905e9cb48eacee3eb58ef3fe6c4ae39defc8d9cefc1"
+      ],
+      "drawCalls": [72, 80],
+      "triangles": [37340, 53392],
+      "submitMs": [0.9000000059604645, 0.7999999970197678],
+      "resources": [
+        {
+          "available": true,
+          "disposed": false,
+          "quality": "balanced",
+          "drone": "racer",
+          "presentation": {
+            "collectionId": "industrial-workshop",
+            "revision": "r1",
+            "profileId": "industrial-workshop",
+            "actors": [],
+            "actorGoals": [],
+            "projectileBatches": 0,
+            "activeProjectiles": 0,
+            "surfaceDetailGroups": 12
+          },
+          "effects": {
+            "playerPulse": 10211269,
+            "hostilePulse": 15708281,
+            "ghost": 10668760,
+            "ghostEmissive": 3563113,
+            "trail": 10668760,
+            "goalOutline": 10143181,
+            "goalActive": 16765572,
+            "goalComplete": 9808542,
+            "goalInactive": 8366516,
+            "goalGlow": 15250524,
+            "goalGlowInactive": 9092023,
+            "goalEmissive": 11829819,
+            "goalBadge": 15250524,
+            "directionArrow": 15390635
+          },
+          "hunt": null,
+          "importedMaterialBindings": {
+            "applied": 0,
+            "diagnostics": [],
+            "diagnosticsTruncated": 0
+          },
+          "registered": {
+            "geometries": 172,
+            "materials": 121,
+            "textures": 19
+          },
+          "renderer": {
+            "calls": 72,
+            "triangles": 37340,
+            "geometries": 31,
+            "textures": 12,
+            "programs": 17,
+            "contextLost": false
+          }
+        },
+        {
+          "available": true,
+          "disposed": false,
+          "quality": "balanced",
+          "drone": "racer",
+          "presentation": {
+            "collectionId": "industrial-workshop",
+            "revision": "r1",
+            "profileId": "industrial-workshop",
+            "actors": [],
+            "actorGoals": [],
+            "projectileBatches": 0,
+            "activeProjectiles": 0,
+            "surfaceDetailGroups": 12
+          },
+          "effects": {
+            "playerPulse": 10211269,
+            "hostilePulse": 15708281,
+            "ghost": 10668760,
+            "ghostEmissive": 3563113,
+            "trail": 10668760,
+            "goalOutline": 10143181,
+            "goalActive": 16765572,
+            "goalComplete": 9808542,
+            "goalInactive": 8366516,
+            "goalGlow": 15250524,
+            "goalGlowInactive": 9092023,
+            "goalEmissive": 11829819,
+            "goalBadge": 15250524,
+            "directionArrow": 15390635
+          },
+          "hunt": null,
+          "importedMaterialBindings": {
+            "applied": 0,
+            "diagnostics": [],
+            "diagnosticsTruncated": 0
+          },
+          "registered": {
+            "geometries": 158,
+            "materials": 109,
+            "textures": 19
+          },
+          "renderer": {
+            "calls": 80,
+            "triangles": 53392,
+            "geometries": 37,
+            "textures": 12,
+            "programs": 17,
+            "contextLost": false
+          }
+        }
+      ]
+    },
+    {
+      "environment": "container-yard",
+      "quality": "balanced",
+      "camera": "chase",
+      "pose": "rear",
+      "appearance": "industrial-workshop",
+      "drone": "racer",
+      "changedPixels": 163723,
+      "litPixels": 518400,
+      "pixelHashes": [
+        "b17da170b267e6126a7c0e08543999b19913c3341e1bdb49672f022eb110b188",
+        "eb923ac88a248eb7aad03bbdc0383577c0f5bfd3665efe9d5e0bc7a39bc9e76d"
+      ],
+      "drawCalls": [177, 185],
+      "triangles": [48620, 69544],
+      "submitMs": [9, 7],
+      "resources": [
+        {
+          "available": true,
+          "disposed": false,
+          "quality": "balanced",
+          "drone": "racer",
+          "presentation": {
+            "collectionId": "industrial-workshop",
+            "revision": "r1",
+            "profileId": "industrial-workshop",
+            "actors": [],
+            "actorGoals": [],
+            "projectileBatches": 0,
+            "activeProjectiles": 0,
+            "surfaceDetailGroups": 12
+          },
+          "effects": {
+            "playerPulse": 10211269,
+            "hostilePulse": 15708281,
+            "ghost": 10668760,
+            "ghostEmissive": 3563113,
+            "trail": 10668760,
+            "goalOutline": 10143181,
+            "goalActive": 16765572,
+            "goalComplete": 9808542,
+            "goalInactive": 8366516,
+            "goalGlow": 15250524,
+            "goalGlowInactive": 9092023,
+            "goalEmissive": 11829819,
+            "goalBadge": 15250524,
+            "directionArrow": 15390635
+          },
+          "hunt": null,
+          "importedMaterialBindings": {
+            "applied": 0,
+            "diagnostics": [],
+            "diagnosticsTruncated": 0
+          },
+          "registered": {
+            "geometries": 172,
+            "materials": 121,
+            "textures": 19
+          },
+          "renderer": {
+            "calls": 177,
+            "triangles": 48620,
+            "geometries": 91,
+            "textures": 18,
+            "programs": 18,
+            "contextLost": false
+          }
+        },
+        {
+          "available": true,
+          "disposed": false,
+          "quality": "balanced",
+          "drone": "racer",
+          "presentation": {
+            "collectionId": "industrial-workshop",
+            "revision": "r1",
+            "profileId": "industrial-workshop",
+            "actors": [],
+            "actorGoals": [],
+            "projectileBatches": 0,
+            "activeProjectiles": 0,
+            "surfaceDetailGroups": 12
+          },
+          "effects": {
+            "playerPulse": 10211269,
+            "hostilePulse": 15708281,
+            "ghost": 10668760,
+            "ghostEmissive": 3563113,
+            "trail": 10668760,
+            "goalOutline": 10143181,
+            "goalActive": 16765572,
+            "goalComplete": 9808542,
+            "goalInactive": 8366516,
+            "goalGlow": 15250524,
+            "goalGlowInactive": 9092023,
+            "goalEmissive": 11829819,
+            "goalBadge": 15250524,
+            "directionArrow": 15390635
+          },
+          "hunt": null,
+          "importedMaterialBindings": {
+            "applied": 0,
+            "diagnostics": [],
+            "diagnosticsTruncated": 0
+          },
+          "registered": {
+            "geometries": 158,
+            "materials": 109,
+            "textures": 19
+          },
+          "renderer": {
+            "calls": 185,
+            "triangles": 69544,
+            "geometries": 83,
+            "textures": 18,
+            "programs": 18,
+            "contextLost": false
+          }
+        }
+      ]
+    },
+    {
+      "environment": "container-yard",
+      "quality": "balanced",
+      "camera": "overview",
+      "pose": "front",
+      "appearance": "industrial-workshop",
+      "drone": "racer",
+      "changedPixels": 15789,
+      "litPixels": 518400,
+      "pixelHashes": [
+        "be674e80809fbb1c601a21434f8173820fd366022db56c7aeac37137c9e0d974",
+        "163f8da4080775cd736981a969be7372e43c689c19141dbef5f08bd087c987e8"
+      ],
+      "drawCalls": [222, 232],
+      "triangles": [67014, 92318],
+      "submitMs": [4.0999999940395355, 1.9000000059604645],
+      "resources": [
+        {
+          "available": true,
+          "disposed": false,
+          "quality": "balanced",
+          "drone": "racer",
+          "presentation": {
+            "collectionId": "industrial-workshop",
+            "revision": "r1",
+            "profileId": "industrial-workshop",
+            "actors": [],
+            "actorGoals": [],
+            "projectileBatches": 0,
+            "activeProjectiles": 0,
+            "surfaceDetailGroups": 12
+          },
+          "effects": {
+            "playerPulse": 10211269,
+            "hostilePulse": 15708281,
+            "ghost": 10668760,
+            "ghostEmissive": 3563113,
+            "trail": 10668760,
+            "goalOutline": 10143181,
+            "goalActive": 16765572,
+            "goalComplete": 9808542,
+            "goalInactive": 8366516,
+            "goalGlow": 15250524,
+            "goalGlowInactive": 9092023,
+            "goalEmissive": 11829819,
+            "goalBadge": 15250524,
+            "directionArrow": 15390635
+          },
+          "hunt": null,
+          "importedMaterialBindings": {
+            "applied": 0,
+            "diagnostics": [],
+            "diagnosticsTruncated": 0
+          },
+          "registered": {
+            "geometries": 172,
+            "materials": 121,
+            "textures": 19
+          },
+          "renderer": {
+            "calls": 222,
+            "triangles": 67014,
+            "geometries": 102,
+            "textures": 23,
+            "programs": 18,
+            "contextLost": false
+          }
+        },
+        {
+          "available": true,
+          "disposed": false,
+          "quality": "balanced",
+          "drone": "racer",
+          "presentation": {
+            "collectionId": "industrial-workshop",
+            "revision": "r1",
+            "profileId": "industrial-workshop",
+            "actors": [],
+            "actorGoals": [],
+            "projectileBatches": 0,
+            "activeProjectiles": 0,
+            "surfaceDetailGroups": 12
+          },
+          "effects": {
+            "playerPulse": 10211269,
+            "hostilePulse": 15708281,
+            "ghost": 10668760,
+            "ghostEmissive": 3563113,
+            "trail": 10668760,
+            "goalOutline": 10143181,
+            "goalActive": 16765572,
+            "goalComplete": 9808542,
+            "goalInactive": 8366516,
+            "goalGlow": 15250524,
+            "goalGlowInactive": 9092023,
+            "goalEmissive": 11829819,
+            "goalBadge": 15250524,
+            "directionArrow": 15390635
+          },
+          "hunt": null,
+          "importedMaterialBindings": {
+            "applied": 0,
+            "diagnostics": [],
+            "diagnosticsTruncated": 0
+          },
+          "registered": {
+            "geometries": 158,
+            "materials": 109,
+            "textures": 19
+          },
+          "renderer": {
+            "calls": 232,
+            "triangles": 92318,
+            "geometries": 94,
+            "textures": 23,
+            "programs": 18,
+            "contextLost": false
+          }
+        }
+      ]
+    },
+    {
+      "environment": "container-yard",
+      "quality": "high",
+      "camera": "fpv",
+      "pose": "front",
+      "appearance": "industrial-workshop",
+      "drone": "racer",
+      "changedPixels": 88617,
+      "litPixels": 921600,
+      "pixelHashes": [
+        "707c6420c46accd36331802c5eca949748a87381e7e79ff48d15ae7e52bc4e49",
+        "5d9529734eb23712d69e8bbf143e7a4104c04a2c35d83c13f7253d3fb446bcec"
+      ],
+      "drawCalls": [77, 83],
+      "triangles": [46810, 59930],
+      "submitMs": [37.6000000089407, 24],
+      "resources": [
+        {
+          "available": true,
+          "disposed": false,
+          "quality": "high",
+          "drone": "racer",
+          "presentation": {
+            "collectionId": "industrial-workshop",
+            "revision": "r1",
+            "profileId": "industrial-workshop",
+            "actors": [],
+            "actorGoals": [],
+            "projectileBatches": 0,
+            "activeProjectiles": 0,
+            "surfaceDetailGroups": 12
+          },
+          "effects": {
+            "playerPulse": 10211269,
+            "hostilePulse": 15708281,
+            "ghost": 10668760,
+            "ghostEmissive": 3563113,
+            "trail": 10668760,
+            "goalOutline": 10143181,
+            "goalActive": 16765572,
+            "goalComplete": 9808542,
+            "goalInactive": 8366516,
+            "goalGlow": 15250524,
+            "goalGlowInactive": 9092023,
+            "goalEmissive": 11829819,
+            "goalBadge": 15250524,
+            "directionArrow": 15390635
+          },
+          "hunt": null,
+          "importedMaterialBindings": {
+            "applied": 0,
+            "diagnostics": [],
+            "diagnosticsTruncated": 0
+          },
+          "registered": {
+            "geometries": 214,
+            "materials": 125,
+            "textures": 19
+          },
+          "renderer": {
+            "calls": 77,
+            "triangles": 46810,
+            "geometries": 31,
+            "textures": 12,
+            "programs": 17,
+            "contextLost": false
+          }
+        },
+        {
+          "available": true,
+          "disposed": false,
+          "quality": "high",
+          "drone": "racer",
+          "presentation": {
+            "collectionId": "industrial-workshop",
+            "revision": "r1",
+            "profileId": "industrial-workshop",
+            "actors": [],
+            "actorGoals": [],
+            "projectileBatches": 0,
+            "activeProjectiles": 0,
+            "surfaceDetailGroups": 12
+          },
+          "effects": {
+            "playerPulse": 10211269,
+            "hostilePulse": 15708281,
+            "ghost": 10668760,
+            "ghostEmissive": 3563113,
+            "trail": 10668760,
+            "goalOutline": 10143181,
+            "goalActive": 16765572,
+            "goalComplete": 9808542,
+            "goalInactive": 8366516,
+            "goalGlow": 15250524,
+            "goalGlowInactive": 9092023,
+            "goalEmissive": 11829819,
+            "goalBadge": 15250524,
+            "directionArrow": 15390635
+          },
+          "hunt": null,
+          "importedMaterialBindings": {
+            "applied": 0,
+            "diagnostics": [],
+            "diagnosticsTruncated": 0
+          },
+          "registered": {
+            "geometries": 169,
+            "materials": 113,
+            "textures": 19
+          },
+          "renderer": {
+            "calls": 83,
+            "triangles": 59930,
+            "geometries": 36,
+            "textures": 12,
+            "programs": 17,
+            "contextLost": false
+          }
+        }
+      ]
+    },
+    {
+      "environment": "container-yard",
+      "quality": "high",
+      "camera": "fpv",
+      "pose": "side",
+      "appearance": "industrial-workshop",
+      "drone": "racer",
+      "changedPixels": 388756,
+      "litPixels": 921600,
+      "pixelHashes": [
+        "cff337c48cf733b2c7cc01524716eec9f46548b94ae76ee95bd59609458a15c4",
+        "86ca5964ee34a24c596c231e10e3105efacd789acd59467055f75e9d47cef8d6"
+      ],
+      "drawCalls": [75, 81],
+      "triangles": [40956, 56992],
+      "submitMs": [0.5, 0.7000000029802322],
+      "resources": [
+        {
+          "available": true,
+          "disposed": false,
+          "quality": "high",
+          "drone": "racer",
+          "presentation": {
+            "collectionId": "industrial-workshop",
+            "revision": "r1",
+            "profileId": "industrial-workshop",
+            "actors": [],
+            "actorGoals": [],
+            "projectileBatches": 0,
+            "activeProjectiles": 0,
+            "surfaceDetailGroups": 12
+          },
+          "effects": {
+            "playerPulse": 10211269,
+            "hostilePulse": 15708281,
+            "ghost": 10668760,
+            "ghostEmissive": 3563113,
+            "trail": 10668760,
+            "goalOutline": 10143181,
+            "goalActive": 16765572,
+            "goalComplete": 9808542,
+            "goalInactive": 8366516,
+            "goalGlow": 15250524,
+            "goalGlowInactive": 9092023,
+            "goalEmissive": 11829819,
+            "goalBadge": 15250524,
+            "directionArrow": 15390635
+          },
+          "hunt": null,
+          "importedMaterialBindings": {
+            "applied": 0,
+            "diagnostics": [],
+            "diagnosticsTruncated": 0
+          },
+          "registered": {
+            "geometries": 214,
+            "materials": 125,
+            "textures": 19
+          },
+          "renderer": {
+            "calls": 75,
+            "triangles": 40956,
+            "geometries": 34,
+            "textures": 13,
+            "programs": 17,
+            "contextLost": false
+          }
+        },
+        {
+          "available": true,
+          "disposed": false,
+          "quality": "high",
+          "drone": "racer",
+          "presentation": {
+            "collectionId": "industrial-workshop",
+            "revision": "r1",
+            "profileId": "industrial-workshop",
+            "actors": [],
+            "actorGoals": [],
+            "projectileBatches": 0,
+            "activeProjectiles": 0,
+            "surfaceDetailGroups": 12
+          },
+          "effects": {
+            "playerPulse": 10211269,
+            "hostilePulse": 15708281,
+            "ghost": 10668760,
+            "ghostEmissive": 3563113,
+            "trail": 10668760,
+            "goalOutline": 10143181,
+            "goalActive": 16765572,
+            "goalComplete": 9808542,
+            "goalInactive": 8366516,
+            "goalGlow": 15250524,
+            "goalGlowInactive": 9092023,
+            "goalEmissive": 11829819,
+            "goalBadge": 15250524,
+            "directionArrow": 15390635
+          },
+          "hunt": null,
+          "importedMaterialBindings": {
+            "applied": 0,
+            "diagnostics": [],
+            "diagnosticsTruncated": 0
+          },
+          "registered": {
+            "geometries": 169,
+            "materials": 113,
+            "textures": 19
+          },
+          "renderer": {
+            "calls": 81,
+            "triangles": 56992,
+            "geometries": 38,
+            "textures": 13,
+            "programs": 17,
+            "contextLost": false
+          }
+        }
+      ]
+    },
+    {
+      "environment": "container-yard",
+      "quality": "high",
+      "camera": "chase",
+      "pose": "rear",
+      "appearance": "industrial-workshop",
+      "drone": "racer",
+      "changedPixels": 290535,
+      "litPixels": 921600,
+      "pixelHashes": [
+        "6d115eb3238ff65f9e242bd4a411712976ab7e172362b00733c5f62629a09a08",
+        "c4fe05c0c2c0c9ec2336229cdbe48aa673b5153a592d98404eaf8b9ceea61578"
+      ],
+      "drawCalls": [266, 207],
+      "triangles": [54452, 75840],
+      "submitMs": [7.699999988079071, 5.699999988079071],
+      "resources": [
+        {
+          "available": true,
+          "disposed": false,
+          "quality": "high",
+          "drone": "racer",
+          "presentation": {
+            "collectionId": "industrial-workshop",
+            "revision": "r1",
+            "profileId": "industrial-workshop",
+            "actors": [],
+            "actorGoals": [],
+            "projectileBatches": 0,
+            "activeProjectiles": 0,
+            "surfaceDetailGroups": 12
+          },
+          "effects": {
+            "playerPulse": 10211269,
+            "hostilePulse": 15708281,
+            "ghost": 10668760,
+            "ghostEmissive": 3563113,
+            "trail": 10668760,
+            "goalOutline": 10143181,
+            "goalActive": 16765572,
+            "goalComplete": 9808542,
+            "goalInactive": 8366516,
+            "goalGlow": 15250524,
+            "goalGlowInactive": 9092023,
+            "goalEmissive": 11829819,
+            "goalBadge": 15250524,
+            "directionArrow": 15390635
+          },
+          "hunt": null,
+          "importedMaterialBindings": {
+            "applied": 0,
+            "diagnostics": [],
+            "diagnosticsTruncated": 0
+          },
+          "registered": {
+            "geometries": 214,
+            "materials": 125,
+            "textures": 19
+          },
+          "renderer": {
+            "calls": 266,
+            "triangles": 54452,
+            "geometries": 139,
+            "textures": 19,
+            "programs": 18,
+            "contextLost": false
+          }
+        },
+        {
+          "available": true,
+          "disposed": false,
+          "quality": "high",
+          "drone": "racer",
+          "presentation": {
+            "collectionId": "industrial-workshop",
+            "revision": "r1",
+            "profileId": "industrial-workshop",
+            "actors": [],
+            "actorGoals": [],
+            "projectileBatches": 0,
+            "activeProjectiles": 0,
+            "surfaceDetailGroups": 12
+          },
+          "effects": {
+            "playerPulse": 10211269,
+            "hostilePulse": 15708281,
+            "ghost": 10668760,
+            "ghostEmissive": 3563113,
+            "trail": 10668760,
+            "goalOutline": 10143181,
+            "goalActive": 16765572,
+            "goalComplete": 9808542,
+            "goalInactive": 8366516,
+            "goalGlow": 15250524,
+            "goalGlowInactive": 9092023,
+            "goalEmissive": 11829819,
+            "goalBadge": 15250524,
+            "directionArrow": 15390635
+          },
+          "hunt": null,
+          "importedMaterialBindings": {
+            "applied": 0,
+            "diagnostics": [],
+            "diagnosticsTruncated": 0
+          },
+          "registered": {
+            "geometries": 169,
+            "materials": 113,
+            "textures": 19
+          },
+          "renderer": {
+            "calls": 207,
+            "triangles": 75840,
+            "geometries": 95,
+            "textures": 19,
+            "programs": 18,
+            "contextLost": false
+          }
+        }
+      ]
+    },
+    {
+      "environment": "container-yard",
+      "quality": "high",
+      "camera": "overview",
+      "pose": "front",
+      "appearance": "industrial-workshop",
+      "drone": "racer",
+      "changedPixels": 27701,
+      "litPixels": 921600,
+      "pixelHashes": [
+        "bb00a2a7055b901c55bbb77fd72b7906553770caefa591582293c82d305a90a1",
+        "5c8206d2a00c724d43bf0bed059c259696a1bb71b77d76ee513e2d08c2b7e04e"
+      ],
+      "drawCalls": [313, 254],
+      "triangles": [72862, 98614],
+      "submitMs": [3.5, 1.9000000059604645],
+      "resources": [
+        {
+          "available": true,
+          "disposed": false,
+          "quality": "high",
+          "drone": "racer",
+          "presentation": {
+            "collectionId": "industrial-workshop",
+            "revision": "r1",
+            "profileId": "industrial-workshop",
+            "actors": [],
+            "actorGoals": [],
+            "projectileBatches": 0,
+            "activeProjectiles": 0,
+            "surfaceDetailGroups": 12
+          },
+          "effects": {
+            "playerPulse": 10211269,
+            "hostilePulse": 15708281,
+            "ghost": 10668760,
+            "ghostEmissive": 3563113,
+            "trail": 10668760,
+            "goalOutline": 10143181,
+            "goalActive": 16765572,
+            "goalComplete": 9808542,
+            "goalInactive": 8366516,
+            "goalGlow": 15250524,
+            "goalGlowInactive": 9092023,
+            "goalEmissive": 11829819,
+            "goalBadge": 15250524,
+            "directionArrow": 15390635
+          },
+          "hunt": null,
+          "importedMaterialBindings": {
+            "applied": 0,
+            "diagnostics": [],
+            "diagnosticsTruncated": 0
+          },
+          "registered": {
+            "geometries": 214,
+            "materials": 125,
+            "textures": 19
+          },
+          "renderer": {
+            "calls": 313,
+            "triangles": 72862,
+            "geometries": 151,
+            "textures": 23,
+            "programs": 18,
+            "contextLost": false
+          }
+        },
+        {
+          "available": true,
+          "disposed": false,
+          "quality": "high",
+          "drone": "racer",
+          "presentation": {
+            "collectionId": "industrial-workshop",
+            "revision": "r1",
+            "profileId": "industrial-workshop",
+            "actors": [],
+            "actorGoals": [],
+            "projectileBatches": 0,
+            "activeProjectiles": 0,
+            "surfaceDetailGroups": 12
+          },
+          "effects": {
+            "playerPulse": 10211269,
+            "hostilePulse": 15708281,
+            "ghost": 10668760,
+            "ghostEmissive": 3563113,
+            "trail": 10668760,
+            "goalOutline": 10143181,
+            "goalActive": 16765572,
+            "goalComplete": 9808542,
+            "goalInactive": 8366516,
+            "goalGlow": 15250524,
+            "goalGlowInactive": 9092023,
+            "goalEmissive": 11829819,
+            "goalBadge": 15250524,
+            "directionArrow": 15390635
+          },
+          "hunt": null,
+          "importedMaterialBindings": {
+            "applied": 0,
+            "diagnostics": [],
+            "diagnosticsTruncated": 0
+          },
+          "registered": {
+            "geometries": 169,
+            "materials": 113,
+            "textures": 19
+          },
+          "renderer": {
+            "calls": 254,
+            "triangles": 98614,
+            "geometries": 106,
+            "textures": 23,
+            "programs": 18,
+            "contextLost": false
+          }
+        }
+      ]
+    },
+    {
+      "environment": "gym",
+      "quality": "balanced",
+      "camera": "fpv",
+      "pose": "front",
+      "appearance": "authored",
+      "drone": "racer",
+      "changedPixels": 0,
+      "litPixels": 518400,
+      "pixelHashes": [
+        "607c3b3ec69b088c18d205f3ecc570ca6111df12a6a65afb75db1a8a2bd90f68",
+        "607c3b3ec69b088c18d205f3ecc570ca6111df12a6a65afb75db1a8a2bd90f68"
+      ],
+      "drawCalls": [73, 73],
+      "triangles": [970, 970],
+      "submitMs": [29.799999997019768, 10.099999994039536],
+      "resources": [
+        {
+          "available": true,
+          "disposed": false,
+          "quality": "balanced",
+          "drone": "racer",
+          "presentation": {
+            "collectionId": "authored",
+            "revision": "r1",
+            "profileId": "academy",
+            "actors": [],
+            "actorGoals": [],
+            "projectileBatches": 0,
+            "activeProjectiles": 0,
+            "surfaceDetailGroups": 0
+          },
+          "effects": {
+            "playerPulse": 9233635,
+            "hostilePulse": 16232561,
+            "ghost": 9824751,
+            "ghostEmissive": 2390144,
+            "trail": 9824751,
+            "goalOutline": 9169660,
+            "goalActive": 15266215,
+            "goalComplete": 9808542,
+            "goalInactive": 8366516,
+            "goalGlow": 11069917,
+            "goalGlowInactive": 9030085,
+            "goalEmissive": 8577493,
+            "goalBadge": 10872788,
+            "directionArrow": 15264432
+          },
+          "hunt": null,
+          "importedMaterialBindings": {
+            "applied": 0,
+            "diagnostics": []
+          },
+          "registered": {
+            "geometries": 108,
+            "materials": 69,
+            "textures": 18
+          },
+          "renderer": {
+            "calls": 73,
+            "triangles": 970,
+            "geometries": 51,
+            "textures": 15,
+            "programs": 9,
+            "contextLost": false
+          }
+        },
+        {
+          "available": true,
+          "disposed": false,
+          "quality": "balanced",
+          "drone": "racer",
+          "presentation": {
+            "collectionId": "authored",
+            "revision": "r1",
+            "profileId": "academy",
+            "actors": [],
+            "actorGoals": [],
+            "projectileBatches": 0,
+            "activeProjectiles": 0,
+            "surfaceDetailGroups": 0
+          },
+          "effects": {
+            "playerPulse": 9233635,
+            "hostilePulse": 16232561,
+            "ghost": 9824751,
+            "ghostEmissive": 2390144,
+            "trail": 9824751,
+            "goalOutline": 9169660,
+            "goalActive": 15266215,
+            "goalComplete": 9808542,
+            "goalInactive": 8366516,
+            "goalGlow": 11069917,
+            "goalGlowInactive": 9030085,
+            "goalEmissive": 8577493,
+            "goalBadge": 10872788,
+            "directionArrow": 15264432
+          },
+          "hunt": null,
+          "importedMaterialBindings": {
+            "applied": 0,
+            "diagnostics": []
+          },
+          "registered": {
+            "geometries": 94,
+            "materials": 69,
+            "textures": 18
+          },
+          "renderer": {
+            "calls": 73,
+            "triangles": 970,
+            "geometries": 51,
+            "textures": 15,
+            "programs": 9,
+            "contextLost": false
+          }
+        }
+      ]
+    },
+    {
+      "environment": "field",
+      "quality": "balanced",
+      "camera": "fpv",
+      "pose": "front",
+      "appearance": "authored",
+      "drone": "racer",
+      "changedPixels": 0,
+      "litPixels": 518400,
+      "pixelHashes": [
+        "29b6d21168a1fbf5826bf866200fb8541149614b800af2ad4ea7155b51119d3d",
+        "29b6d21168a1fbf5826bf866200fb8541149614b800af2ad4ea7155b51119d3d"
+      ],
+      "drawCalls": [45, 45],
+      "triangles": [2388, 2388],
+      "submitMs": [25.700000002980232, 9],
+      "resources": [
+        {
+          "available": true,
+          "disposed": false,
+          "quality": "balanced",
+          "drone": "racer",
+          "presentation": {
+            "collectionId": "authored",
+            "revision": "r1",
+            "profileId": "academy",
+            "actors": [],
+            "actorGoals": [],
+            "projectileBatches": 0,
+            "activeProjectiles": 0,
+            "surfaceDetailGroups": 0
+          },
+          "effects": {
+            "playerPulse": 9233635,
+            "hostilePulse": 16232561,
+            "ghost": 9824751,
+            "ghostEmissive": 2390144,
+            "trail": 9824751,
+            "goalOutline": 9169660,
+            "goalActive": 15266215,
+            "goalComplete": 9808542,
+            "goalInactive": 8366516,
+            "goalGlow": 11069917,
+            "goalGlowInactive": 9030085,
+            "goalEmissive": 8577493,
+            "goalBadge": 10872788,
+            "directionArrow": 15264432
+          },
+          "hunt": null,
+          "importedMaterialBindings": {
+            "applied": 0,
+            "diagnostics": []
+          },
+          "registered": {
+            "geometries": 139,
+            "materials": 78,
+            "textures": 17
+          },
+          "renderer": {
+            "calls": 45,
+            "triangles": 2388,
+            "geometries": 44,
+            "textures": 9,
+            "programs": 9,
+            "contextLost": false
+          }
+        },
+        {
+          "available": true,
+          "disposed": false,
+          "quality": "balanced",
+          "drone": "racer",
+          "presentation": {
+            "collectionId": "authored",
+            "revision": "r1",
+            "profileId": "academy",
+            "actors": [],
+            "actorGoals": [],
+            "projectileBatches": 0,
+            "activeProjectiles": 0,
+            "surfaceDetailGroups": 0
+          },
+          "effects": {
+            "playerPulse": 9233635,
+            "hostilePulse": 16232561,
+            "ghost": 9824751,
+            "ghostEmissive": 2390144,
+            "trail": 9824751,
+            "goalOutline": 9169660,
+            "goalActive": 15266215,
+            "goalComplete": 9808542,
+            "goalInactive": 8366516,
+            "goalGlow": 11069917,
+            "goalGlowInactive": 9030085,
+            "goalEmissive": 8577493,
+            "goalBadge": 10872788,
+            "directionArrow": 15264432
+          },
+          "hunt": null,
+          "importedMaterialBindings": {
+            "applied": 0,
+            "diagnostics": []
+          },
+          "registered": {
+            "geometries": 125,
+            "materials": 78,
+            "textures": 17
+          },
+          "renderer": {
+            "calls": 45,
+            "triangles": 2388,
+            "geometries": 44,
+            "textures": 9,
+            "programs": 9,
+            "contextLost": false
+          }
+        }
+      ]
+    },
+    {
+      "environment": "drone",
+      "quality": "low",
+      "camera": "chase",
+      "pose": "front",
+      "appearance": "authored",
+      "drone": "racer",
+      "changedPixels": 22355,
+      "litPixels": 230400,
+      "pixelHashes": [
+        "e92f277a1a738126ea1cd8c448b084c155bbe548843ad933580c046b44e30b4c",
+        "b5190596b8d1b393add5b49cfd615a1bb5a37a15e40f91d06d39b31e7c9db540"
+      ],
+      "drawCalls": [50, 45],
+      "triangles": [1254, 2450],
+      "submitMs": [2, 2.0999999940395355],
+      "resources": [
+        {
+          "renderer": {
+            "calls": 50,
+            "triangles": 1254,
+            "textures": 1,
+            "geometries": 50
+          }
+        },
+        {
+          "renderer": {
+            "calls": 45,
+            "triangles": 2450,
+            "textures": 1,
+            "geometries": 36
+          }
+        }
+      ]
+    },
+    {
+      "environment": "drone",
+      "quality": "balanced",
+      "camera": "chase",
+      "pose": "front",
+      "appearance": "authored",
+      "drone": "racer",
+      "changedPixels": 26640,
+      "litPixels": 230400,
+      "pixelHashes": [
+        "9011e51148dc5356272e66f701fe69f31d471c96a71ae47412c6ff1cd090ec37",
+        "5190162d176a822f56472ec72581f316f9e48f01e97c53b39e7597c8be4d8566"
+      ],
+      "drawCalls": [83, 81],
+      "triangles": [2362, 4322],
+      "submitMs": [7.4000000059604645, 12.100000008940697],
+      "resources": [
+        {
+          "renderer": {
+            "calls": 83,
+            "triangles": 2362,
+            "textures": 7,
+            "geometries": 50
+          }
+        },
+        {
+          "renderer": {
+            "calls": 81,
+            "triangles": 4322,
+            "textures": 7,
+            "geometries": 36
+          }
+        }
+      ]
+    },
+    {
+      "environment": "drone",
+      "quality": "high",
+      "camera": "chase",
+      "pose": "front",
+      "appearance": "authored",
+      "drone": "racer",
+      "changedPixels": 26972,
+      "litPixels": 230400,
+      "pixelHashes": [
+        "6eaf72b8464a005bcb1c5b7e0fd6917d71afd9d327c4d53e2318ac39f6a35fb3",
+        "3083057be73a140d17a56cd04132e9f349acffc047ed1e718508a6db6b7c2597"
+      ],
+      "drawCalls": [167, 102],
+      "triangles": [4562, 7018],
+      "submitMs": [6.100000008940697, 10.799999997019768],
+      "resources": [
+        {
+          "renderer": {
+            "calls": 167,
+            "triangles": 4562,
+            "textures": 7,
+            "geometries": 92
+          }
+        },
+        {
+          "renderer": {
+            "calls": 102,
+            "triangles": 7018,
+            "textures": 7,
+            "geometries": 47
+          }
+        }
+      ]
+    },
+    {
+      "environment": "drone",
+      "quality": "low",
+      "camera": "chase",
+      "pose": "front",
+      "appearance": "authored",
+      "drone": "utility",
+      "changedPixels": 26320,
+      "litPixels": 230400,
+      "pixelHashes": [
+        "844ed5482abfe004d24bd9ea5de1807d918c0ffb52cdad706e192e0037eecb92",
+        "6384ca3e5606c5f76b955c700e830994964e6644a1fcac7e962895b2d3380f52"
+      ],
+      "drawCalls": [54, 49],
+      "triangles": [2406, 3602],
+      "submitMs": [2.4000000059604645, 1.8999999910593033],
+      "resources": [
+        {
+          "renderer": {
+            "calls": 54,
+            "triangles": 2406,
+            "textures": 1,
+            "geometries": 54
+          }
+        },
+        {
+          "renderer": {
+            "calls": 49,
+            "triangles": 3602,
+            "textures": 1,
+            "geometries": 40
+          }
+        }
+      ]
+    },
+    {
+      "environment": "drone",
+      "quality": "balanced",
+      "camera": "chase",
+      "pose": "front",
+      "appearance": "authored",
+      "drone": "utility",
+      "changedPixels": 29346,
+      "litPixels": 230400,
+      "pixelHashes": [
+        "44c3481ba827c26d5af04f3be944503bf585cb1f47e9dd76424077c7582ec9d3",
+        "252006720c55324b23bd6712e5f7900942894a4534863aa59bf0ad150205e6de"
+      ],
+      "drawCalls": [91, 89],
+      "triangles": [4666, 6626],
+      "submitMs": [6.600000008940697, 10.600000008940697],
+      "resources": [
+        {
+          "renderer": {
+            "calls": 91,
+            "triangles": 4666,
+            "textures": 7,
+            "geometries": 54
+          }
+        },
+        {
+          "renderer": {
+            "calls": 89,
+            "triangles": 6626,
+            "textures": 7,
+            "geometries": 40
+          }
+        }
+      ]
+    },
+    {
+      "environment": "drone",
+      "quality": "high",
+      "camera": "chase",
+      "pose": "front",
+      "appearance": "authored",
+      "drone": "utility",
+      "changedPixels": 29603,
+      "litPixels": 230400,
+      "pixelHashes": [
+        "bb97e43a97ec91c461a32567b592da3b1973c05de3e5792e9b6098c8d7b3545e",
+        "08985c5ee3a0e6fa04d56df40417c88c00ea5255d0c5b5c86b374538ffa395a1"
+      ],
+      "drawCalls": [175, 110],
+      "triangles": [6866, 9322],
+      "submitMs": [6.600000008940697, 13.100000008940697],
+      "resources": [
+        {
+          "renderer": {
+            "calls": 175,
+            "triangles": 6866,
+            "textures": 7,
+            "geometries": 96
+          }
+        },
+        {
+          "renderer": {
+            "calls": 110,
+            "triangles": 9322,
+            "textures": 7,
+            "geometries": 51
+          }
+        }
+      ]
+    },
+    {
+      "environment": "drone",
+      "quality": "low",
+      "camera": "chase",
+      "pose": "front",
+      "appearance": "authored",
+      "drone": "pixel",
+      "changedPixels": 0,
+      "litPixels": 230400,
+      "pixelHashes": [
+        "19dfad73d02647d97e7fe8f9f98e762e6b7332286b091ff6b7cdf3506e53d848",
+        "19dfad73d02647d97e7fe8f9f98e762e6b7332286b091ff6b7cdf3506e53d848"
+      ],
+      "drawCalls": [49, 49],
+      "triangles": [902, 902],
+      "submitMs": [1.2999999970197678, 2.7999999970197678],
+      "resources": [
+        {
+          "renderer": {
+            "calls": 49,
+            "triangles": 902,
+            "textures": 1,
+            "geometries": 49
+          }
+        },
+        {
+          "renderer": {
+            "calls": 49,
+            "triangles": 902,
+            "textures": 1,
+            "geometries": 49
+          }
+        }
+      ]
+    },
+    {
+      "environment": "drone",
+      "quality": "balanced",
+      "camera": "chase",
+      "pose": "front",
+      "appearance": "authored",
+      "drone": "pixel",
+      "changedPixels": 0,
+      "litPixels": 230400,
+      "pixelHashes": [
+        "88448e6cc8305adbbf765a10982a7c7a2bf56f0e121ff1ad602165b5eabd5aa2",
+        "88448e6cc8305adbbf765a10982a7c7a2bf56f0e121ff1ad602165b5eabd5aa2"
+      ],
+      "drawCalls": [81, 81],
+      "triangles": [1530, 1530],
+      "submitMs": [5.299999997019768, 5.700000002980232],
+      "resources": [
+        {
+          "renderer": {
+            "calls": 81,
+            "triangles": 1530,
+            "textures": 4,
+            "geometries": 49
+          }
+        },
+        {
+          "renderer": {
+            "calls": 81,
+            "triangles": 1530,
+            "textures": 4,
+            "geometries": 49
+          }
+        }
+      ]
+    },
+    {
+      "environment": "drone",
+      "quality": "high",
+      "camera": "chase",
+      "pose": "front",
+      "appearance": "authored",
+      "drone": "pixel",
+      "changedPixels": 0,
+      "litPixels": 230400,
+      "pixelHashes": [
+        "88448e6cc8305adbbf765a10982a7c7a2bf56f0e121ff1ad602165b5eabd5aa2",
+        "88448e6cc8305adbbf765a10982a7c7a2bf56f0e121ff1ad602165b5eabd5aa2"
+      ],
+      "drawCalls": [81, 81],
+      "triangles": [1530, 1530],
+      "submitMs": [3.5999999940395355, 3.6000000089406967],
+      "resources": [
+        {
+          "renderer": {
+            "calls": 81,
+            "triangles": 1530,
+            "textures": 4,
+            "geometries": 49
+          }
+        },
+        {
+          "renderer": {
+            "calls": 81,
+            "triangles": 1530,
+            "textures": 4,
+            "geometries": 49
+          }
+        }
+      ]
+    },
+    {
+      "environment": "drone",
+      "quality": "low",
+      "camera": "chase",
+      "pose": "front",
+      "appearance": "industrial-workshop",
+      "drone": "racer",
+      "changedPixels": 22084,
+      "litPixels": 230400,
+      "pixelHashes": [
+        "fb7e7587e54445037c0295eb27935a450be176e77d646dfac5545ee06f15e240",
+        "11e7fba9b60cf81aa1e9ff1981aef8fc674be7a809f999626531edb629ba87de"
+      ],
+      "drawCalls": [52, 47],
+      "triangles": [1362, 2558],
+      "submitMs": [3.7999999970197678, 3.3999999910593033],
+      "resources": [
+        {
+          "renderer": {
+            "calls": 52,
+            "triangles": 1362,
+            "textures": 5,
+            "geometries": 52
+          }
+        },
+        {
+          "renderer": {
+            "calls": 47,
+            "triangles": 2558,
+            "textures": 5,
+            "geometries": 38
+          }
+        }
+      ]
+    },
+    {
+      "environment": "drone",
+      "quality": "balanced",
+      "camera": "chase",
+      "pose": "front",
+      "appearance": "industrial-workshop",
+      "drone": "racer",
+      "changedPixels": 26776,
+      "litPixels": 230400,
+      "pixelHashes": [
+        "08cc4de0cb5e2bd6923288e644a1120e5fd13348437d97c812a20c04e9458bae",
+        "aba8053330b9a9427748c99f40ed9a148453e2ece4ebfc7ec5bea184cd86cf09"
+      ],
+      "drawCalls": [85, 83],
+      "triangles": [2470, 4430],
+      "submitMs": [7, 11.5],
+      "resources": [
+        {
+          "renderer": {
+            "calls": 85,
+            "triangles": 2470,
+            "textures": 8,
+            "geometries": 52
+          }
+        },
+        {
+          "renderer": {
+            "calls": 83,
+            "triangles": 4430,
+            "textures": 8,
+            "geometries": 38
+          }
+        }
+      ]
+    },
+    {
+      "environment": "drone",
+      "quality": "high",
+      "camera": "chase",
+      "pose": "front",
+      "appearance": "industrial-workshop",
+      "drone": "racer",
+      "changedPixels": 27123,
+      "litPixels": 230400,
+      "pixelHashes": [
+        "d965b25b4c20a8c71b40600ba27265ae2fa678a46d0b6d9d42959ff590ad8315",
+        "d56a965e00943324a264945f5f19b9d0be9e7d20e68c40a3198311c8be97ef25"
+      ],
+      "drawCalls": [169, 104],
+      "triangles": [4670, 7126],
+      "submitMs": [9.399999991059303, 12.700000002980232],
+      "resources": [
+        {
+          "renderer": {
+            "calls": 169,
+            "triangles": 4670,
+            "textures": 8,
+            "geometries": 94
+          }
+        },
+        {
+          "renderer": {
+            "calls": 104,
+            "triangles": 7126,
+            "textures": 8,
+            "geometries": 49
+          }
+        }
+      ]
+    },
+    {
+      "environment": "drone",
+      "quality": "low",
+      "camera": "chase",
+      "pose": "front",
+      "appearance": "industrial-workshop",
+      "drone": "utility",
+      "changedPixels": 18937,
+      "litPixels": 230400,
+      "pixelHashes": [
+        "3704fa713aa6266e60e73f6697548be20dfe975ca190458a3a01775ed24623a4",
+        "baf7d0449fc8b4a42447aea7136fa6f3bd87f0dc00eb1979b742f6f77fab5675"
+      ],
+      "drawCalls": [56, 51],
+      "triangles": [2514, 3710],
+      "submitMs": [3.5, 4],
+      "resources": [
+        {
+          "renderer": {
+            "calls": 56,
+            "triangles": 2514,
+            "textures": 5,
+            "geometries": 56
+          }
+        },
+        {
+          "renderer": {
+            "calls": 51,
+            "triangles": 3710,
+            "textures": 5,
+            "geometries": 42
+          }
+        }
+      ]
+    },
+    {
+      "environment": "drone",
+      "quality": "balanced",
+      "camera": "chase",
+      "pose": "front",
+      "appearance": "industrial-workshop",
+      "drone": "utility",
+      "changedPixels": 22471,
+      "litPixels": 230400,
+      "pixelHashes": [
+        "37f76074d8aceb72fd09259a236e4b5a9763d898e052b6a7c2d1ae2355d12c20",
+        "7d23eb71ecefaa1b85d5164e13a80e4c63c06d6db02318d6e914689c5b160d7d"
+      ],
+      "drawCalls": [93, 91],
+      "triangles": [4774, 6734],
+      "submitMs": [8.200000002980232, 11.700000002980232],
+      "resources": [
+        {
+          "renderer": {
+            "calls": 93,
+            "triangles": 4774,
+            "textures": 8,
+            "geometries": 56
+          }
+        },
+        {
+          "renderer": {
+            "calls": 91,
+            "triangles": 6734,
+            "textures": 8,
+            "geometries": 42
+          }
+        }
+      ]
+    },
+    {
+      "environment": "drone",
+      "quality": "high",
+      "camera": "chase",
+      "pose": "front",
+      "appearance": "industrial-workshop",
+      "drone": "utility",
+      "changedPixels": 22809,
+      "litPixels": 230400,
+      "pixelHashes": [
+        "13879ab10c764bbb47996c3d40d9fe21a2eb681c220237da12af23e410fb6b91",
+        "7ee65f6ede9d216131120f861d3e91e1a5cb1d503c6535cb57f28113e207a094"
+      ],
+      "drawCalls": [177, 112],
+      "triangles": [6974, 9430],
+      "submitMs": [11.599999994039536, 12.100000008940697],
+      "resources": [
+        {
+          "renderer": {
+            "calls": 177,
+            "triangles": 6974,
+            "textures": 8,
+            "geometries": 98
+          }
+        },
+        {
+          "renderer": {
+            "calls": 112,
+            "triangles": 9430,
+            "textures": 8,
+            "geometries": 53
+          }
+        }
+      ]
+    },
+    {
+      "environment": "drone",
+      "quality": "low",
+      "camera": "chase",
+      "pose": "front",
+      "appearance": "industrial-workshop",
+      "drone": "pixel",
+      "changedPixels": 0,
+      "litPixels": 230400,
+      "pixelHashes": [
+        "471d1fc6e1fc2332710c7707cbb6bfedb72066154cc0f77dee1895d092410d81",
+        "471d1fc6e1fc2332710c7707cbb6bfedb72066154cc0f77dee1895d092410d81"
+      ],
+      "drawCalls": [51, 51],
+      "triangles": [1010, 1010],
+      "submitMs": [4.200000002980232, 3.9000000059604645],
+      "resources": [
+        {
+          "renderer": {
+            "calls": 51,
+            "triangles": 1010,
+            "textures": 5,
+            "geometries": 51
+          }
+        },
+        {
+          "renderer": {
+            "calls": 51,
+            "triangles": 1010,
+            "textures": 5,
+            "geometries": 51
+          }
+        }
+      ]
+    },
+    {
+      "environment": "drone",
+      "quality": "balanced",
+      "camera": "chase",
+      "pose": "front",
+      "appearance": "industrial-workshop",
+      "drone": "pixel",
+      "changedPixels": 0,
+      "litPixels": 230400,
+      "pixelHashes": [
+        "6749330c26c2e627d92156544d23303c24dab4aa5f21a1b75befeb2eddccd0a6",
+        "6749330c26c2e627d92156544d23303c24dab4aa5f21a1b75befeb2eddccd0a6"
+      ],
+      "drawCalls": [83, 83],
+      "triangles": [1638, 1638],
+      "submitMs": [7.4000000059604645, 7.100000008940697],
+      "resources": [
+        {
+          "renderer": {
+            "calls": 83,
+            "triangles": 1638,
+            "textures": 8,
+            "geometries": 51
+          }
+        },
+        {
+          "renderer": {
+            "calls": 83,
+            "triangles": 1638,
+            "textures": 8,
+            "geometries": 51
+          }
+        }
+      ]
+    },
+    {
+      "environment": "drone",
+      "quality": "high",
+      "camera": "chase",
+      "pose": "front",
+      "appearance": "industrial-workshop",
+      "drone": "pixel",
+      "changedPixels": 0,
+      "litPixels": 230400,
+      "pixelHashes": [
+        "3edd84778431831e6ddf8e0580f4a741a293cc03d56dcb4044f1f289a8bc6333",
+        "3edd84778431831e6ddf8e0580f4a741a293cc03d56dcb4044f1f289a8bc6333"
+      ],
+      "drawCalls": [83, 83],
+      "triangles": [1638, 1638],
+      "submitMs": [5.5, 7.799999997019768],
+      "resources": [
+        {
+          "renderer": {
+            "calls": 83,
+            "triangles": 1638,
+            "textures": 8,
+            "geometries": 51
+          }
+        },
+        {
+          "renderer": {
+            "calls": 83,
+            "triangles": 1638,
+            "textures": 8,
+            "geometries": 51
+          }
+        }
+      ]
+    }
+  ],
+  "cycles": [
+    [
+      [
+        {
+          "registered": {
+            "geometries": 172,
+            "materials": 121,
+            "textures": 19
+          },
+          "renderer": {
+            "calls": 26,
+            "triangles": 13782,
+            "geometries": 20,
+            "textures": 8,
+            "programs": 13,
+            "contextLost": false
+          }
+        },
+        {
+          "registered": {
+            "geometries": 158,
+            "materials": 109,
+            "textures": 19
+          },
+          "renderer": {
+            "calls": 26,
+            "triangles": 14902,
+            "geometries": 20,
+            "textures": 8,
+            "programs": 13,
+            "contextLost": false
+          }
+        }
+      ],
+      [
+        {
+          "registered": {
+            "geometries": 172,
+            "materials": 121,
+            "textures": 19
+          },
+          "renderer": {
+            "calls": 75,
+            "triangles": 43202,
+            "geometries": 29,
+            "textures": 11,
+            "programs": 17,
+            "contextLost": false
+          }
+        },
+        {
+          "registered": {
+            "geometries": 158,
+            "materials": 109,
+            "textures": 19
+          },
+          "renderer": {
+            "calls": 82,
+            "triangles": 56330,
+            "geometries": 35,
+            "textures": 11,
+            "programs": 17,
+            "contextLost": false
+          }
+        }
+      ],
+      [
+        {
+          "registered": {
+            "geometries": 214,
+            "materials": 125,
+            "textures": 19
+          },
+          "renderer": {
+            "calls": 77,
+            "triangles": 46810,
+            "geometries": 31,
+            "textures": 12,
+            "programs": 17,
+            "contextLost": false
+          }
+        },
+        {
+          "registered": {
+            "geometries": 169,
+            "materials": 113,
+            "textures": 19
+          },
+          "renderer": {
+            "calls": 83,
+            "triangles": 59930,
+            "geometries": 36,
+            "textures": 12,
+            "programs": 17,
+            "contextLost": false
+          }
+        }
+      ]
+    ],
+    [
+      [
+        {
+          "registered": {
+            "geometries": 172,
+            "materials": 121,
+            "textures": 19
+          },
+          "renderer": {
+            "calls": 26,
+            "triangles": 13782,
+            "geometries": 20,
+            "textures": 8,
+            "programs": 13,
+            "contextLost": false
+          }
+        },
+        {
+          "registered": {
+            "geometries": 158,
+            "materials": 109,
+            "textures": 19
+          },
+          "renderer": {
+            "calls": 26,
+            "triangles": 14902,
+            "geometries": 20,
+            "textures": 8,
+            "programs": 13,
+            "contextLost": false
+          }
+        }
+      ],
+      [
+        {
+          "registered": {
+            "geometries": 172,
+            "materials": 121,
+            "textures": 19
+          },
+          "renderer": {
+            "calls": 75,
+            "triangles": 43202,
+            "geometries": 29,
+            "textures": 11,
+            "programs": 17,
+            "contextLost": false
+          }
+        },
+        {
+          "registered": {
+            "geometries": 158,
+            "materials": 109,
+            "textures": 19
+          },
+          "renderer": {
+            "calls": 82,
+            "triangles": 56330,
+            "geometries": 35,
+            "textures": 11,
+            "programs": 17,
+            "contextLost": false
+          }
+        }
+      ],
+      [
+        {
+          "registered": {
+            "geometries": 214,
+            "materials": 125,
+            "textures": 19
+          },
+          "renderer": {
+            "calls": 77,
+            "triangles": 46810,
+            "geometries": 31,
+            "textures": 12,
+            "programs": 17,
+            "contextLost": false
+          }
+        },
+        {
+          "registered": {
+            "geometries": 169,
+            "materials": 113,
+            "textures": 19
+          },
+          "renderer": {
+            "calls": 83,
+            "triangles": 59930,
+            "geometries": 36,
+            "textures": 12,
+            "programs": 17,
+            "contextLost": false
+          }
+        }
+      ]
+    ],
+    [
+      [
+        {
+          "registered": {
+            "geometries": 172,
+            "materials": 121,
+            "textures": 19
+          },
+          "renderer": {
+            "calls": 26,
+            "triangles": 13782,
+            "geometries": 20,
+            "textures": 8,
+            "programs": 13,
+            "contextLost": false
+          }
+        },
+        {
+          "registered": {
+            "geometries": 158,
+            "materials": 109,
+            "textures": 19
+          },
+          "renderer": {
+            "calls": 26,
+            "triangles": 14902,
+            "geometries": 20,
+            "textures": 8,
+            "programs": 13,
+            "contextLost": false
+          }
+        }
+      ],
+      [
+        {
+          "registered": {
+            "geometries": 172,
+            "materials": 121,
+            "textures": 19
+          },
+          "renderer": {
+            "calls": 75,
+            "triangles": 43202,
+            "geometries": 29,
+            "textures": 11,
+            "programs": 17,
+            "contextLost": false
+          }
+        },
+        {
+          "registered": {
+            "geometries": 158,
+            "materials": 109,
+            "textures": 19
+          },
+          "renderer": {
+            "calls": 82,
+            "triangles": 56330,
+            "geometries": 35,
+            "textures": 11,
+            "programs": 17,
+            "contextLost": false
+          }
+        }
+      ],
+      [
+        {
+          "registered": {
+            "geometries": 214,
+            "materials": 125,
+            "textures": 19
+          },
+          "renderer": {
+            "calls": 77,
+            "triangles": 46810,
+            "geometries": 31,
+            "textures": 12,
+            "programs": 17,
+            "contextLost": false
+          }
+        },
+        {
+          "registered": {
+            "geometries": 169,
+            "materials": 113,
+            "textures": 19
+          },
+          "renderer": {
+            "calls": 83,
+            "triangles": 59930,
+            "geometries": 36,
+            "textures": 12,
+            "programs": 17,
+            "contextLost": false
+          }
+        }
+      ]
+    ]
+  ],
+  "contextLosses": [],
+  "limitations": [
+    "Static synthetic inspection poses; no gameplay completion or human art acceptance implied.",
+    "CPU submission timings and WebGL counts are diagnostic, not sustained FPS or GPU timing.",
+    "No named physical-device, controller, radio or novice qualification."
+  ],
+  "complete": true,
+  "finished": "2026-10-03T06:00:02.380Z"
+}

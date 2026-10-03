@@ -250,8 +250,6 @@
         d = w.document;
         app = w.fpvWorldStudio;
         await app.ready;
-        // These original checkpoint cases deliberately retain Classic key bindings.
-        change('flight-keyboard-preset', 'classic');
         must(
           d.querySelector('meta[name="fixture-source-sha256"]').content ===
             source['optional-practice/fpv-worlds/index.html'],
@@ -598,7 +596,6 @@
           d = w.document;
           app = w.fpvWorldStudio;
           await app.ready;
-          change('flight-keyboard-preset', 'classic');
           w.localStorage.setItem('revealline.fpv.playlists.v1', baseline.playlist);
           const course = structuredClone(fixtureEntry.course);
           course.id = 'checkpoint-radio-fixture';
