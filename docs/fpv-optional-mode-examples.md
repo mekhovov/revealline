@@ -43,18 +43,18 @@ no proof is applied to a presentation-mutated course.
 - `fpv-optional-examples-original-recordings.json`: original 154 v2/24 v1 registry
   bytes retained; regenerated 14 original Acro proofs are identical.
 - `fpv-optional-examples-source-browser.json` and
-  `fpv-optional-examples-packaged-browser.json`: **109/109** checks each against
+  `fpv-optional-examples-packaged-browser.json`: **117/117** checks each against
   the actual HTTP/WebGL host. Includes all 14 full rendered replays, whole-lesson
   lab playback, selected-mode catalogue, section replay, rejection of wrong
   dependencies, retained-record reload, partial transaction failure, duplicate
   import, a real second-connection pin race and disposal. No uncaught errors.
 - `fpv-optional-examples-package.json`: frozen candidate
-  `d4e27bd9400b0e5b872cbf0a019a52e2b048ff25`, all three admissions, exact committed
+  `9ca502490094d7c9db8b5d66fae6c90d7895eea3`, all three admissions, exact committed
   inputs/ZIP membership and two byte-identical builds. World: 102 runtime files /
-  14,476,115 bytes; source archive uses 104 files under unchanged limits.
+  14,513,098 bytes; source archive uses 104 files under unchanged limits.
 
 The source and packaged host SHA-256 is
-`ef622d43653d3c882de949ce3b5ae8ff63eafc67372f91902cdfd2151a49600f`.
+`52cbfac9012bf2a7127ec1cfd85142ead184166aadb8a97818d886623c7db8f2`.
 Retained reload was verified with live HTTP; this receipt does not claim an
 offline-network simulation. Browser fixtures use private databases and never
 clear player storage.
@@ -65,8 +65,8 @@ protected merge, deployment marker and actual public launch.
 
 ## Delivery and next batch
 
-This is independent of pack recovery PR #977. Current main includes Snake content
-#973; integrated package/edition capacity must be measured again. Existing caps
+This feature is published as PR #979. Main includes Snake content #973 and pack
+recovery #977; both are preserved in the current integrated candidate. Existing caps
 remain intact even if publication needs a separate lossless capacity repair.
 Next: convert the 60 Adventure authoring proofs into bounded optional examples,
 then Stadium and yard/Garage art and further distinct practice worlds.
@@ -74,5 +74,28 @@ then Stadium and yard/Garage art and further distinct practice worlds.
 The integrated World file-count issue is repaired by excluding three unreachable
 Academy-only modules from its package; all features/assets/licenses remain. The
 separate company engine contains zero FPV runtime files and still exceeds64MiB
-by25,634 bytes after main's Snake content integration. This blocks combined
-publication until a reviewed capacity repair; no guard was increased or bypassed.
+by292,326 bytes after main's #978 Snake content integration. Whole-edition
+qualification still requires a reviewed capacity repair; no guard was increased or bypassed.
+
+## Recovery integration
+
+Main #977 merged after initial publication. The combined host preserves exact pack
+restore and optional-example selection. Source and immutable packaged builds
+each repeat the90-check recovery workflow; the final examples flow now passes
+117 checks with eight additional native session-read failure assertions.
+Retained completed proofs and interrupted prefixes replay independently.
+Receipts: `fpv-optional-examples-recovery-source.json`,
+`fpv-optional-examples-recovery-packaged.json`, and
+`fpv-optional-examples-recovery-replay.json`.
+
+If the interrupted-session read fails after recordings refresh, fresh examples
+and deletions now still invalidate the lookup cache and appear in the Library.
+The session failure remains visible; previously known recovery data is retained.
+Disposal suppresses stale rendering. The merge was a normal forward update;
+no native stack, force-push or protection bypass was needed.
+
+The follow-up explicitly aborts one native readonly `session` transaction in a
+private fixture database. Both source and packaged runs show the deleted example
+disappearing from the Library, School and catalogue, the session read error
+remaining visible, and the saved interrupted flight/notebook/bookmark unchanged.
+This is actual browser storage failure injection, not an additional unit suite.

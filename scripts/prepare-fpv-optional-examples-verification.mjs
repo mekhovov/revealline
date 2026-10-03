@@ -67,6 +67,9 @@ function buildPlayer(html, sourceBase, frozenBase) {
     window.fixtureRecordWriteFault={after:null,count:0};
     const nativePut=IDBObjectStore.prototype.put;
     IDBObjectStore.prototype.put=function(...args){const fault=fixtureRecordWriteFault;if(this.name==='records'&&fault.after!==null&&fault.count++===fault.after){fault.after=null;const result=nativePut.apply(this,args);this.transaction.abort();return result}return nativePut.apply(this,args)};
+    const nativeGet=IDBObjectStore.prototype.get;
+    window.fixtureSessionReadFault={armed:false,count:0,restore(){this.armed=false;IDBObjectStore.prototype.get=nativeGet}};
+    IDBObjectStore.prototype.get=function(...args){const request=nativeGet.apply(this,args),fault=fixtureSessionReadFault;if(fault.armed&&this.name==='session'&&this.transaction.mode==='readonly'&&this.transaction.db.name===prefix+'revealline.fpv.world-records.v1'&&args[0]==='active'){fault.count++;fault.restore();this.transaction.abort()}return request};
     Object.defineProperty(navigator,'getGamepads',{value:()=>[]});
     window.fixtureYieldDelay=0;const nativeTimeout=window.setTimeout.bind(window);window.setTimeout=(callback,delay,...args)=>nativeTimeout(callback,delay===0&&fixtureYieldDelay?fixtureYieldDelay:delay,...args);
     if(query.get('clock')==='controlled'){
