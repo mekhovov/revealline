@@ -41,7 +41,7 @@ export function createEditionCandidate({
     const output = runtime.get(name);
     if (!output || editionHash(original) === editionHash(output)) continue;
     const kind =
-      /^game\/(?:company\.html|index\.html|(?:controller-lab|replay-theater)\/index\.html)$/.test(
+      /^game\/(?:company\.html|index\.html|(?:controller-lab|replay-theater|snake)\/index\.html|snake\/play\.html)$/.test(
         name,
       )
         ? 'selected-entry'
