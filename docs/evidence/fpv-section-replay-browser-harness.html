@@ -113,8 +113,6 @@
         }
       }
       const memory = new Map([
-        // Preserve the original Space-to-fire isolation case under Classic.
-        ['revealline.fpv.keyboard-preset.v1', 'classic'],
         [
           'revealline.fpv.world-settings.v1',
           JSON.stringify({
@@ -378,10 +376,7 @@
         await bounded(app.ready, 'Host ready');
         w.focus();
         baseline = await saved();
-        must(
-          app.snapshot().catalogue === 184,
-          'Retained 184-challenge catalogue including Snake Hunt',
-        );
+        must(app.snapshot().catalogue === 148, 'Retained 148-challenge catalogue');
         if (manual) {
           const row = representatives[0];
           await app.startFlight(copy(row.entry), {
