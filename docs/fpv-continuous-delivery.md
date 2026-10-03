@@ -2471,3 +2471,23 @@ Source/packaged receipts have been refreshed; no human/device/performance claim.
 Only three superseded reproducible /tmp qualification bundle directories were
 removed under disk pressure; their committed receipts and player builds remain.
 The current frozen bundle is /tmp/fpv-example-recovery-refresh-qualified-01.
+
+### Recovery-refresh follow-up published — 3 October 2026
+
+[PR #981](https://github.com/mekhovov/revealline/pull/981) is published and attached,
+initial head7278451eca86a18c8b0dd2948296ba27ce6eea60, milestone57. It is independent
+against main because parents #977/#979 are merged; no native stack is needed.
+Source/package117/117 and combined recovery90/90 evidence is committed. Current
+local player remains `dist/fpv-optional-examples-current-playtest` and uses the
+same qualified production host. Public launch verified #977; #979/#981 public
+availability is not yet claimed. Checks were running at publication, with an
+older cancelled workflow's release-ready failure superseded by the scheduled
+run still in progress; do not interpret that observation as a passed gate.
+
+Next: inspect exact current head/checks and main deployment once; preserve owner
+updates. Continue the60optional Adventure example delivery from current main on
+a separate branch while #981 publication runs. The generator/archives/audit are
+in /tmp/fpv-adventure-example-audit; choose six world downloads, add maintained
+export safeguards, run actual import/playback, then publish a focused PR. No
+unit coverage or human feedback prerequisite is added. Remaining artwork is
+Stadium, container yard and Garage; remaining new distinct worlds and H/R7 follow.
