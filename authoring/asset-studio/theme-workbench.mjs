@@ -12,6 +12,8 @@ import { createThemeCandidate } from '../../game/presentation/theme-preview.mjs'
 import { inspectStudioTheme } from '../../game/presentation/studio-inspection.mjs';
 import { createStudioDownload } from './download.mjs';
 import { mountArcadeSpecimen } from './arcade-specimen.mjs';
+import { mountThemeMaterialPreview } from '../../game/ui/theme-material-preview.mjs';
+import { workshopPageTool } from '../../game/ui/workshop-return.mjs';
 
 const copy = (key, values) => t(`tools:studio.themes.${key}`, values);
 /** Editor chrome follows the accepted global choice. Candidate materials are
@@ -21,7 +23,10 @@ export function mountThemeWorkbench({ document, window, onAction, onWarning }) {
     inspection = null,
     closeArcadeSpecimen = null,
     removeSpecimen = null,
+    materialPreview = null,
     disposed = false;
+  const galleryPreviews = [];
+  const themeEntry = workshopPageTool(window.location?.href, 'asset-studio') === 'theme-studio';
   const node = (tag, key, className = '') => {
     const element = document.createElement(tag);
     element.className = className;
@@ -64,7 +69,28 @@ export function mountThemeWorkbench({ document, window, onAction, onWarning }) {
   const section = node('details', null, 'theme-workbench');
   section.id = 'theme-workbench';
   section.append(node('summary', 'title'));
+  section.open = themeEntry;
+  if (themeEntry) {
+    for (const [selector, key] of [
+      ['title', 'pageTitle'],
+      ['.studio-header h1', 'studioTitle'],
+    ]) {
+      const title = document.querySelector(selector);
+      if (title) {
+        title.setAttribute('data-i18n', `tools:studio.themes.${key}`);
+        localizedText(title, () => copy(key));
+      }
+    }
+    const entry = document.getElementById('studio-theme-entry');
+    if (entry) {
+      entry.removeAttribute('data-workshop-tool');
+      entry.href = '#inventory-title';
+      entry.setAttribute('data-i18n', 'tools:studio.themes.openAssetTools');
+      localizedText(entry, () => copy('openAssetTools'));
+    }
+  }
   document.querySelector('.studio-header').after(section);
+  section.append(node('p', 'intro', 'support-copy'));
   const library = node('div', null, 'theme-library-controls');
   const workspaces = select([], 'theme-workspace');
   const name = node('input');
@@ -203,6 +229,7 @@ export function mountThemeWorkbench({ document, window, onAction, onWarning }) {
   section.append(interfaceRow, node('p', 'editorHelp', 'support-copy'), notice);
 
   const specimen = node('details');
+  specimen.open = themeEntry;
   specimen.append(node('summary', 'specimen'));
   const fixture = familySelect('theme-specimen-family', [['workspace', 'workspaceCandidate']]);
   specimen.append(label('specimenTheme', fixture), node('p', 'specimenHelp', 'support-copy'));
@@ -230,29 +257,9 @@ export function mountThemeWorkbench({ document, window, onAction, onWarning }) {
   localizedAttribute(meter, 'aria-label', () => copy('progress'));
   mission.append(meter);
   surface.append(mission);
-  const states = node('div', null, 'theme-state-grid');
-  for (const state of [
-    'default',
-    'hover',
-    'focus',
-    'pressed',
-    'selected',
-    'disabled',
-    'loading',
-    'error',
-  ]) {
-    const card = node('div', null, 'theme-state-card');
-    const control = button(`state.${state}`, () => {});
-    control.dataset.component = 'button';
-    control.dataset.state = state;
-    if (state === 'disabled') control.disabled = true;
-    if (state === 'selected') control.setAttribute('aria-pressed', 'true');
-    if (state === 'loading') control.setAttribute('aria-busy', 'true');
-    if (state === 'error') control.setAttribute('aria-invalid', 'true');
-    card.append(control);
-    states.append(card);
-  }
-  surface.append(states);
+  const materials = node('div', null, 'theme-workbench-materials');
+  materials.id = 'theme-material-preview';
+  surface.append(materials);
   const input = node('input');
   input.type = 'text';
   input.dataset.component = 'input';
@@ -308,6 +315,18 @@ export function mountThemeWorkbench({ document, window, onAction, onWarning }) {
   specimen.append(previewLinks, node('p', 'simHelp', 'support-copy'));
   specimen.append(arcadePreview);
   section.append(specimen);
+
+  const gallery = node('details', null, 'theme-workbench-gallery');
+  gallery.id = 'theme-material-gallery';
+  gallery.append(node('summary', 'gallery'), node('p', 'galleryHelp', 'support-copy'));
+  const galleryGrid = node('div', null, 'theme-material-gallery-grid');
+  gallery.append(galleryGrid);
+  // The full comparison is created only when requested. These isolated controls
+  // are preview samples; they do not stage edits or write player preferences.
+  gallery.addEventListener('toggle', () => {
+    if (gallery.open) renderGallery();
+  });
+  section.append(gallery);
 
   const report = node('details');
   report.append(node('summary', 'report'));
@@ -408,11 +427,14 @@ export function mountThemeWorkbench({ document, window, onAction, onWarning }) {
   }
   function renderSpecimen() {
     if (!current || disposed) return;
+    if (gallery.open) renderGallery();
     const choice = fixture.value;
     const accepted = host.snapshot();
     if (choice === 'workspace' && !basisAvailable()) {
       removeSpecimen?.();
       removeSpecimen = null;
+      materialPreview?.dispose();
+      materialPreview = null;
       recipePreview.replaceChildren(node('p', 'basisUnavailable'));
       return;
     }
@@ -426,7 +448,31 @@ export function mountThemeWorkbench({ document, window, onAction, onWarning }) {
           });
     removeSpecimen?.();
     removeSpecimen = applyResolvedPresentation(surface, resolved);
+    if (materialPreview) materialPreview.update(resolved);
+    else materialPreview = mountThemeMaterialPreview({ document, root: materials, resolved });
     renderRecipe();
+  }
+  function renderGallery() {
+    if (disposed) return;
+    const accessibility = host.snapshot()?.accessibility ?? {};
+    for (const [index, family] of BUILTIN_THEME_FAMILIES.entries()) {
+      const resolved = resolveInterface({ familyId: family.id, density: 'player', accessibility });
+      if (galleryPreviews[index]) {
+        galleryPreviews[index].update(resolved);
+        continue;
+      }
+      const card = node('section', null, 'theme-material-gallery-card'),
+        heading = node('h3'),
+        preview = node('div');
+      heading.id = `theme-gallery-${family.id}`;
+      localizedText(heading, () =>
+        t(`interface:workshop.theme.${family.id}`, { defaultValue: family.name }),
+      );
+      card.setAttribute('aria-labelledby', heading.id);
+      card.append(heading, preview);
+      galleryGrid.append(card);
+      galleryPreviews.push(mountThemeMaterialPreview({ document, root: preview, resolved }));
+    }
   }
   function renderRecipe() {
     const role = recipeRole.value || COMPONENT_ROLES[0],
@@ -581,6 +627,8 @@ export function mountThemeWorkbench({ document, window, onAction, onWarning }) {
       if (disposed) return;
       disposed = true;
       removeSpecimen?.();
+      materialPreview?.dispose();
+      for (const preview of galleryPreviews) preview.dispose();
       closeArcadeSpecimen?.();
       stopHost();
       stopHostStatus();

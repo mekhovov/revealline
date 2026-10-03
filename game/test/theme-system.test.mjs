@@ -363,7 +363,10 @@ test('shared material layers preserve semantic state colors and reset at every p
   );
   const flat = rules.find((rule) => rule.selector === "[data-theme-surface='flat']");
   for (const role of ['panel', 'action', 'hover', 'pressed', 'selected', 'gallery']) {
-    assert.equal(flat.properties[`--ui-${role}-depth`], 'none');
+    assert.equal(
+      flat.properties[`--ui-${role}-depth`],
+      ['panel', 'gallery'].includes(role) ? 'none' : '0 0 0 0 transparent',
+    );
     assert.equal(
       defaults.properties[`--ui-${role}-depth`],
       role === 'gallery' ? 'none' : 'initial',
@@ -407,7 +410,7 @@ test('authored and retained Industrial identities keep their own material capabi
 test('decorative face recipes require their own enabled texture and contrast scope', () => {
   const recipes = surfaceRules().filter((rule) =>
     Object.entries(rule.properties).some(
-      ([name, value]) => /^--ui-.*-finish$/.test(name) && value !== 'none',
+      ([name, value]) => /^--ui-.*-finish$/.test(name) && !['none', 'initial'].includes(value),
     ),
   );
   assert.ok(recipes.length >= 10, 'each material family declares its own face treatment');

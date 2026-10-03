@@ -1,0 +1,123 @@
+TAP version 13
+# Subtest: edition navigation retains the exact tool-return owner inside its installed root
+ok 1 - edition navigation retains the exact tool-return owner inside its installed root # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.542625
+  ...
+# Subtest: retained presentation stays scoped across game and replay/controller tool returns
+ok 2 - retained presentation stays scoped across game and replay/controller tool returns # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.047875
+  ...
+# Subtest: all nine tools retain exact edition routes under http://localhost/
+ok 3 - all nine tools retain exact edition routes under http://localhost/ # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.038875
+  ...
+# Subtest: all nine tools retain exact edition routes under https://example.test/releases/v0.69.3/site/
+ok 4 - all nine tools retain exact edition routes under https://example.test/releases/v0.69.3/site/ # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.037834
+  ...
+# Subtest: all nine tools retain exact edition routes under https://example.test/archive/releases/v0.68.2/site/
+ok 5 - all nine tools retain exact edition routes under https://example.test/archive/releases/v0.68.2/site/ # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.0475
+  ...
+# Subtest: finite tools and competing launch owners cannot be overridden by a return hint
+ok 6 - finite tools and competing launch owners cannot be overridden by a return hint # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.034583
+  ...
+# Subtest: history consumption preserves unrelated route and state and tolerates unavailable history
+ok 7 - history consumption preserves unrelated route and state and tolerates unavailable history # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.097834
+  ...
+# Subtest: every standalone tool keeps a same-edition game exit before any module loads
+ok 8 - every standalone tool keeps a same-edition game exit before any module loads # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.041458
+  ...
+# Subtest: all standalone pages prepare both returns before enabling and retain cross-tool hints
+ok 9 - all standalone pages prepare both returns before enabling and retain cross-tool hints # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.144958
+  ...
+# Subtest: actual Solo boot returns asset-studio to its own Workshop opener without advancing or saving
+ok 10 - actual Solo boot returns asset-studio to its own Workshop opener without advancing or saving # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.103292
+  ...
+# Subtest: actual Solo boot returns playground to its own Workshop opener without advancing or saving
+ok 11 - actual Solo boot returns playground to its own Workshop opener without advancing or saving # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.0475
+  ...
+# Subtest: actual Solo boot returns enemy-catalog to its own Workshop opener without advancing or saving
+ok 12 - actual Solo boot returns enemy-catalog to its own Workshop opener without advancing or saving # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.077958
+  ...
+# Subtest: actual Solo boot returns motion-lab to its own Workshop opener without advancing or saving
+ok 13 - actual Solo boot returns motion-lab to its own Workshop opener without advancing or saving # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.037916
+  ...
+# Subtest: actual Solo boot returns still-media to its own Workshop opener without advancing or saving
+ok 14 - actual Solo boot returns still-media to its own Workshop opener without advancing or saving # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.108792
+  ...
+# Subtest: actual Solo boot returns video-poster to its own Workshop opener without advancing or saving
+ok 15 - actual Solo boot returns video-poster to its own Workshop opener without advancing or saving # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.042125
+  ...
+# Subtest: actual Solo boot returns design-atlas to its own Workshop opener without advancing or saving
+ok 16 - actual Solo boot returns design-atlas to its own Workshop opener without advancing or saving # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.353792
+  ...
+# Subtest: actual Solo boot returns replay-theater to its own Workshop opener without advancing or saving
+ok 17 - actual Solo boot returns replay-theater to its own Workshop opener without advancing or saving # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.04825
+  ...
+# Subtest: actual Solo boot returns controller-lab to its own Workshop opener without advancing or saving
+not ok 18 - actual Solo boot returns controller-lab to its own Workshop opener without advancing or saving
+  ---
+  duration_ms: 1480.464459
+  location: '/private/tmp/theme-studio-baseline-i9w055aw/game/test/workshop-return.test.mjs:245:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + 'shell-guide'
+    - 'shell-controller-lab'
+             ^
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'shell-controller-lab'
+  actual: 'shell-guide'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///private/tmp/theme-studio-baseline-i9w055aw/game/test/workshop-return.test.mjs:250:12)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: company tool routes retain only a valid single edition through exact-release return
+ok 19 - company tool routes retain only a valid single edition through exact-release return # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.401167
+  ...
+1..19
+# tests 19
+# suites 0
+# pass 0
+# fail 1
+# cancelled 0
+# skipped 18
+# todo 0
+# duration_ms 8960.638584

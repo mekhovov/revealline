@@ -1,5 +1,18 @@
 # Asset Studio artwork candidates
 
+Open **Workshop → Theme Studio** in the game, or the dedicated
+[Theme Studio view](index.html?studio=themes), to create and manage themes. It uses
+the same editor, workspace database and native exports as Asset Studio. Returning
+to Workshop restores the Theme Studio entry for the current game edition.
+
+The open component specimen uses the same live material-preview component as the
+player theme selector. **Explore built-in themes** loads an interactive comparison
+of every built-in theme: buttons, material states, fields and telemetry controls.
+These sample controls do not change your game appearance or workspace. The
+component recipe inspector and runtime/SIM previews remain available alongside
+them. **Open asset tools** leads to the shared asset inventory for editing source
+assets and theme tokens.
+
 The **Theme library and specimens** workbench keeps independent theme workspaces.
 **New industrial theme** starts from a flattened snapshot of the verified current
 release, preserving original asset bytes and provenance without copying its full
