@@ -33,3 +33,35 @@ No public-live claim or new unit coverage.
 Review correction: use resolveSimThemeProfile for the natural-material guard.
 The five Pixel cases include themeId and nested world.themeProfile overrides.
 Both previously bypassed the hand-written guard; actual browser checks now pass.
+
+## Current-main refresh — 3 October 2026
+
+Candidate `9a3cae0886a1712deb09ed97e9ad23246c56d6a2` integrates published main
+`2dbbe0a0f26684eae0a2bdb0b7cbda087627457f`, preserving Yard, Stadium, Hangar,
+Garage and replacement Woodland tree forms. The implementation remains the
+33-line known-material override and theme resolver import in the matching scenery
+template/generated runtime. Creator-import handling and the embedded original
+library are unchanged.
+
+The new functional receipt proves both Woodland arena GLBs change only the eight
+specified materials: geometry, binary texture payload, scene structure and
+placements remain exact. All 18 other imported environment/arena GLBs and ten
+Pixel cases (five override forms per Woodland arena) are byte-identical. The
+original browser receipt also covered five Pixel forms; older PR wording saying
+three and the older 15,384,550-byte package figure were stale. The historical
+feature document records the later 15,384,640-byte build; neither is current
+admission evidence.
+
+All 30 existing acceptance, texture and workshop checks, changed-file lint/format,
+syntax and template/runtime equality pass. The bounded current-main browser
+fixture has 27 source files / 5,450,028 bytes read directly from this committed
+tree. Its source manifest and functional receipt are retained separately from the
+historical browser evidence. Fresh browser review is pending.
+
+The all-three source-bound optional admission attempt currently fails with
+`Optional package exceeds its byte budget.` The same failure affects #996 after
+Garage integration; shared capacity repair is being handled independently.
+Keep #1001 draft until normal admission and browser review pass. Sparse local
+full global validation also remains incomplete because unrelated content packs
+are absent; current exact-head CI must establish it. No guard or assertion is
+weakened, and no new unit, physical-device FPS, human-art or live claim is made.
