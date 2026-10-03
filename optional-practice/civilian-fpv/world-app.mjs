@@ -3641,13 +3641,21 @@ export function mountWorldApp({
       .join(' · ');
   }
   function updateHUD(state) {
+    // Section/unfinished recordings may stop in a paused simulation state.
+    // Their playback result must not offer an impossible Continue action.
+    const playbackEnded = Boolean(replayProof && finished);
     $('flight-dialog').dataset.flightState = state.status;
     $('world-flight-identity').textContent = $('flight-title').textContent;
     playShell?.update({
-      phase: state.status === 'active' ? 'playing' : terminal(state) ? 'results' : state.status,
+      phase:
+        terminal(state) || playbackEnded
+          ? 'results'
+          : state.status === 'active'
+            ? 'playing'
+            : state.status,
       missionName: $('flight-title').textContent,
       summary: $('flight-menu-brief').textContent,
-      canResume: ['paused', 'disarmed'].includes(state.status),
+      canResume: !playbackEnded && ['paused', 'disarmed'].includes(state.status),
       muted: !audio.enabled(),
     });
     updateSectorHUD();

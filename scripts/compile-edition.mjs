@@ -61,6 +61,7 @@ import {
   projectEditionGuideScenario,
 } from '../game/editions/selected-presentation.mjs';
 import { validateRetainedPresentation } from '../game/editions/retained-presentation.mjs';
+import { assertCompanyPackageBudget } from '../game/editions/package-budget.mjs';
 
 const hash = (bytes) => createHash('sha256').update(bytes).digest('hex');
 const jsonBytes = (value) => Buffer.from(canonicalJSON(value) + '\n');
@@ -950,13 +951,7 @@ html[data-edition-id] .edition-boot-logo{display:inline-block;width:auto;height:
   files.set('edition-build.json', jsonBytes(manifest));
   if (offline !== null) {
     const totalBytes = [...files.values()].reduce((sum, bytes) => sum + bytes.byteLength, 0);
-    if (files.size > 2000 || totalBytes > 64 * 1024 * 1024)
-      throw Object.assign(
-        new TypeError(
-          `Final edition output exceeds 2000 files or 64 MiB (${files.size} files / ${totalBytes} bytes).`,
-        ),
-        { outputFiles: files.size, outputBytes: totalBytes },
-      );
+    assertCompanyPackageBudget(files.size, totalBytes, 'Final edition output');
   }
   return Object.freeze({ files, runtimeCatalog, manifest, eligibility });
 }
