@@ -98,13 +98,53 @@ package admissions, two identical builds, committed-input and ZIP-member checks:
 
 All 15 artifact checksums were independently reread. The 95 original World inputs
 total 16,737,740 bytes, leaving 39,476 bytes under the unchanged 16 MiB guard.
-The separate player has 94 files / 15,373,807 bytes, ZIP SHA-256
+The separate development playtest has 94 files / 15,373,807 bytes, ZIP SHA-256
 `2215ae22ac2f1a1a6df4ee72b180061cd8aefb3a1b1a1e43f88f896a24cda2f5`.
 All 31 packaged rendering modules match the admitted ZIP, player and fixture.
 Only the intended generated locale catalogue differs from source. The corrected
 source/package harness bytes are identical and add no production code.
 
-Final source/package browser qualification and actual-player observations remain
-pending. Local `publicEligible` and `releaseQualified` remain false; protected
-publication, public deployment and physical-device qualification remain separate.
-No ready PR is published for unfinished work.
+The final actual source and packaged WebGL runs each pass 437 checks / 221 image
+pairs. Their complete check arrays and sample arrays match exactly. Source receipt
+SHA-256: `48ccd758a921b9269c6477527966ba953541686184d4e327bc801e97341a112b`;
+package: `d3b951b3986c23d58b7985b06fc87f827da4a024bbb28afffaddc5044d472372`.
+These complete receipts remain bound to frozen runtime `1191d5…` and candidate
+`fcd075a55`; later main integration is qualified separately below.
+
+The 94-file development playtest is not the complete admitted distribution. A
+full ZIP comparison finds 91 common files exact, eight launcher files only in
+the 102-file distribution, and three different install/cache/source metadata
+files: `optional-package.json`, `app.webmanifest` and `worker.js`. This difference
+does not affect the 31 rendering modules used by the packaged browser fixture.
+
+For actual-player acceptance, all 102 original distribution ZIP entries were
+separately extracted, bounded and independently reread without modification:
+15,531,578 bytes, distribution ZIP SHA-256
+`82f5edb5a3fb78317485b40351a901ffbc90d6a0cd0f6239f9caf0f38e575f99`.
+That admitted player opened Loading bay, rendered the reviewed composition,
+armed to 0.3 seconds and paused, with no captured warning or error. The retained
+screenshot and complete byte inventory identify this actual 102-file player.
+Installation/offline identity is not claimed by this local launch.
+
+## Current-main integration
+
+Main `25700b699cc3c6e2b56d1917803dd7c4e6933b42` was merged normally at
+`20c5235cda960da57f6a84d0801b4e52c28ee0ba`. Incoming Meadow surfaces and Woodland
+material response remain preserved. The generator reproduces the merged runtime
+exactly; its provenance metadata is refreshed to 1,168,270 bytes, SHA-256
+`e1b987e2580b8b1e2d1afdfa3e9f0bc2d36a37e0bf516681cb0e94f045afd34c`.
+The original embedded library remains exact. The manual qualifier is rebound to
+this current main and again passes all 416 checks / 18 recordings / 44,168 ticks.
+It preserves the original pre-integration receipt separately.
+
+The separate scoped integration audit passes 225 checks. All 58 Warehouse
+authored/Pixel GLBs across 29 courses are byte-identical to the accepted frozen
+candidate. Twelve full scene snapshots across four bounds and authored, Pixel
+and Industrial Workshop retain geometry, UVs, transforms, materials, texture
+pixels and exactly-once resource ownership. The 3,812-byte Warehouse composition
+block is exact in both template and generated module; renderer, replay, collision,
+catalogue and recording inputs are unchanged. No full matrix is repeated solely
+for these inactive incoming branches. Fresh integrated admission follows before
+publication. Local `publicEligible` and `releaseQualified` remain false;
+protected publication, public deployment and physical-device qualification remain
+separate.
