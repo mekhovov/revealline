@@ -24,6 +24,19 @@
     "passed": false,
     "reason": "Sparse verification checkout omits unrelated global content inputs. npm run validate stops during localization with missing game/content/packs/neon-reference-pack.json. No passing full validation is claimed; normal CI must qualify the pushed head."
   },
-  "browser": "Frozen current-main fixture prepared; review pending. Original feature browser receipt remains bound to its original baseline.",
+  "browser": {
+    "passed": true,
+    "candidate": "ec760db263041be23f60f4450381dc4ec88ec402",
+    "baseline": "a1cb86c85cd52db7256ad2ed16c30c8f40f90c32",
+    "arenaCases": 3,
+    "placementsPerScene": 58,
+    "verticesCheckedPerScene": 98880,
+    "drawCallsPerScene": 61,
+    "trianglesUnchanged": true,
+    "unaffectedEnvironmentGlbsByteEqual": 5,
+    "visualReview": "Before/after views inspected by the agent in the root chat; not human artist acceptance.",
+    "receipt": "fpv-yard-landmarks-main-browser.json",
+    "comparison": "fpv-yard-landmarks-main-comparison.png"
+  },
   "additionalUnitCoverage": false
 }
