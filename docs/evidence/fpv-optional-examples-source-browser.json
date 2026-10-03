@@ -1,9 +1,9 @@
 {
   "format": "FPVOptionalExamplesBrowserReceipt.v1",
   "status": "passed",
-  "candidateHostSha256": "ef622d43653d3c882de949ce3b5ae8ff63eafc67372f91902cdfd2151a49600f",
+  "candidateHostSha256": "52cbfac9012bf2a7127ec1cfd85142ead184166aadb8a97818d886623c7db8f2",
   "sourceFiles": {
-    "optional-practice/civilian-fpv/world-app.mjs": "ef622d43653d3c882de949ce3b5ae8ff63eafc67372f91902cdfd2151a49600f",
+    "optional-practice/civilian-fpv/world-app.mjs": "52cbfac9012bf2a7127ec1cfd85142ead184166aadb8a97818d886623c7db8f2",
     "optional-practice/civilian-fpv/world-catalogue.mjs": "b1addc910ee42044c88a3d103bb3e89c24cb0b51b418206da71ebab3decf6275",
     "game/data-json.mjs": "9ce33d6173f3cba8587ed7a7f1924c66e9d9c86ffa59b37a743764ea0b01f7bd",
     "game/i18n/index.mjs": "29f40a6d92826ced1eb53283ed32e342ac6e95920abbf8d549f2d78e65b48d07",
@@ -54,7 +54,7 @@
     "optional-practice/civilian-fpv/world-content.mjs": "aa3788b42d2e6379be68a4d76abb10667e7adb260fe00580a963ab09324f0df0",
     "optional-practice/civilian-fpv/content-definitions.mjs": "e3808d22cc3dc294311533a16164aced16f342eb9d4b1b22b77d279b2e8dcbfd",
     "optional-practice/civilian-fpv/world-zip.mjs": "874b371c817810a5869bc3ba37c94ff6fae4fc5cd418298f35340d2ce09039c8",
-    "optional-practice/civilian-fpv/world-store.mjs": "ff207fba00f037e079f8fbe2f4f49e3309ab7526b8c2efba6617175f5a1bb57f",
+    "optional-practice/civilian-fpv/world-store.mjs": "4b8c2fe165868f38eb297d678ea5aca232d61d2dd2a05b79db9d20145f3d0cfa",
     "optional-practice/civilian-fpv/offline.mjs": "7baa069758975eaa133ca9625e8ff0b903a92089f5e7ed0f172ba5e525a6f444",
     "optional-practice/install-context.mjs": "b07afe79491b3f58775b131d59986c581d8df1275ae9d3d148f0a5bd49ea85a3",
     "optional-practice/civilian-fpv/world-editor.mjs": "0c062d6587b7a25cc3c9470401051b622ca22ba088256d2c6f3364f80ad6feff",
@@ -82,9 +82,9 @@
   "fixtureFiles": {
     "index.html": "780bd2120a8cd98c367d11d73e60a4912da38febb89fef6240def376b0fc419a",
     "examples.json": "715a45515c572ab559ca95362585f5665f6297f7fcd410b3c4d7474cf8ac36aa",
-    "player.html": "d4f39fbde57414cadbc869c2a8b7163ba299cd10094ac5edeff6f16578a96da5"
+    "player.html": "73bdb653926d0a1185b3ea5ad57a588508ecef7f2b3724465bcd7854669d80dc"
   },
-  "elapsedMs": 25354,
+  "elapsedMs": 26025,
   "passed": 109,
   "total": 109,
   "checks": [
@@ -536,35 +536,35 @@
       "label": "Verify frozen source and optional archive"
     },
     {
-      "ms": 822,
+      "ms": 972,
       "label": "Reject unusable dependencies, changed course and invalid replay"
     },
     {
-      "ms": 916,
+      "ms": 1073,
       "label": "Partial real IndexedDB failure retains only completed saves"
     },
     {
-      "ms": 1003,
+      "ms": 1170,
       "label": "Import all 14 through actual File input"
     },
     {
-      "ms": 1557,
+      "ms": 1728,
       "label": "Pinned repeat import is byte-identical"
     },
     {
-      "ms": 2360,
+      "ms": 2544,
       "label": "Selected-mode whole-lesson lab and exact full playback"
     },
     {
-      "ms": 23506,
+      "ms": 24116,
       "label": "Recorded section playback and mode selection"
     },
     {
-      "ms": 23980,
+      "ms": 24628,
       "label": "Removal invalidates availability and local reload restores retained examples"
     },
     {
-      "ms": 24593,
+      "ms": 25233,
       "label": "Disposal during import does not produce late writes"
     }
   ],
