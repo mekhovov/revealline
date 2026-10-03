@@ -176,9 +176,23 @@ const RUNTIME_PACKAGE_POLICIES = Object.freeze({
     ]),
     sharedFiles: Object.freeze([
       ...legacyFPV.localFiles
-        .filter((name) => !['index.html', 'app.mjs', 'app.webmanifest', 'README.md'].includes(name))
+        // World has its own UI copy and course editor; the Academy-only modules
+        // are not reachable from this application's explicit dependency graph.
+        .filter(
+          (name) =>
+            ![
+              'index.html',
+              'app.mjs',
+              'app.webmanifest',
+              'README.md',
+              'copy.mjs',
+              'studio.mjs',
+            ].includes(name),
+        )
         .map((name) => legacyFPV.root + name),
-      ...legacyFPV.sharedFiles,
+      // The FPV input runtime owns its bindings. This older helper is used only
+      // by civilian-flight, whose independent package continues to admit it.
+      ...legacyFPV.sharedFiles.filter((name) => name !== 'game/key-bindings.mjs'),
       'optional-practice/civilian-fpv/README.md',
       // World Studio renders the image wordmark; Academy uses its text brand.
       'game/ui/art/identity/fpv-line/wordmark.png',

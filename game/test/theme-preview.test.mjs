@@ -71,7 +71,7 @@ test('original candidate envelopes retain their r1 interface after the builtin u
     );
   }
   const current = createThemeCandidate(createDefaultThemeBundle());
-  assert.equal(current.basis.interfaceRevision, 'r2');
+  assert.equal(current.basis.interfaceRevision, 'r3');
   const unavailable = structuredClone(current);
   unavailable.basis.interfaceRevision = 'r999';
   assert.throws(() => validateThemeCandidate(unavailable), /Unavailable candidate basis/);

@@ -1790,6 +1790,48 @@ const themedMaterials = (colors, overrides = {}) =>
     ),
   );
 const collectionSources = {
+  'ember-foundry': {
+    pattern: 'foundry',
+    ornament: 0xf0a266,
+    paper: 0xf8ecd9,
+    materials: themedMaterials(
+      {
+        steel: 0x65564b,
+        rubber: 0x302824,
+        copper: 0xbd835a,
+        concrete: 0x807365,
+        enamel: 0x9e613d,
+        timber: 0x82705a,
+        grass: 0x6d7556,
+      },
+      {
+        steel: { roughness: 0.78, metalness: 0.48 },
+        copper: { roughness: 0.52, metalness: 0.7 },
+        enamel: { roughness: 0.66, metalness: 0.12 },
+      },
+    ),
+  },
+  'polar-relay': {
+    pattern: 'relay',
+    ornament: 0x91d5e3,
+    paper: 0xeaf2ee,
+    materials: themedMaterials(
+      {
+        steel: 0x647f8c,
+        rubber: 0x29373e,
+        copper: 0xadb5ad,
+        concrete: 0x87989b,
+        enamel: 0x4e7687,
+        timber: 0x7e8174,
+        grass: 0x637e70,
+      },
+      {
+        steel: { roughness: 0.64, metalness: 0.48 },
+        copper: { roughness: 0.5, metalness: 0.65 },
+        enamel: { roughness: 0.58, metalness: 0.18 },
+      },
+    ),
+  },
   'industrial-workshop': {
     materials: WORKSHOP_MATERIALS,
     pattern: 'riveted',
@@ -2123,7 +2165,22 @@ function familySurface(pattern, role, x, y, grain) {
       0.92 + Math.sin(x * 0.38 + Math.sin(y * 0.049) * 2) * 0.055 + surfaceMottle(x, y) * 0.1;
   if (role === 'concrete') shade *= edge < 1 ? 0.85 : 0.96 + surfaceMottle(x, y) * 0.07;
   if (role === 'rubber') shade *= (x + y) % 16 < 2 ? 0.91 : 1;
-  if (pattern === 'stitched') {
+  if (pattern === 'foundry') {
+    // Bolted, heat-darkened access plates with short edge machining marks.
+    if (solid) {
+      shade *= edge < 2 ? 0.71 : edge === 3 ? 1.12 : 1;
+      if ((u === 7 || u === 56) && (v === 7 || v === 56)) shade *= 1.2;
+      if (role === 'enamel' && v === 7 && u > 17 && u < 30) mark = 1;
+    }
+    if (role === 'copper') shade *= 0.96 + surfaceMottle(x, y, 16) * 0.06;
+  } else if (pattern === 'relay') {
+    // Chilled alloy cassettes with two isolated instrument ticks near the rim.
+    if (solid) {
+      shade *= edge < 2 ? 0.75 : u === 3 || v === 3 ? 1.1 : 1;
+      if (role === 'enamel' && u === 8 && ((v > 13 && v < 19) || (v > 23 && v < 29))) mark = 2;
+      if (role === 'steel' && u === 55 && v > 45 && v < 52) shade *= 0.73;
+    }
+  } else if (pattern === 'stitched') {
     if (role === 'rubber') shade *= x % 4 < 2 === y % 4 < 2 ? 1.025 : 0.975;
     if (role === 'enamel') {
       const diamond = Math.abs((x % 24) - 12) + Math.abs((y % 24) - 12);

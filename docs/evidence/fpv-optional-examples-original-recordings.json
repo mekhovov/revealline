@@ -1,0 +1,75 @@
+{
+  "format": "FPVSchoolModeAuthoringRegression.v1",
+  "originalV2": 154,
+  "originalV1": 24,
+  "originalRegistry": [
+    {
+      "file": "optional-practice/civilian-fpv/world-demonstrations.mjs",
+      "sha256": "c9f2d0ee5c571507ae1dce4f48898554cb2ad179218f1905cdc8013db2e2c114",
+      "sameAsHEAD": true
+    },
+    {
+      "file": "optional-practice/civilian-fpv/demonstrations.mjs",
+      "sha256": "92bb4365c46d94f5c1fea9808ec4e24fb9014d35640ee488959c4e0f4b6c5cfa",
+      "sameAsHEAD": true
+    }
+  ],
+  "regeneratedPrimaryAcro": [
+    {
+      "id": "beginner-15",
+      "equal": true
+    },
+    {
+      "id": "beginner-16",
+      "equal": true
+    },
+    {
+      "id": "beginner-13",
+      "equal": true
+    },
+    {
+      "id": "beginner-17",
+      "equal": true
+    },
+    {
+      "id": "beginner-14",
+      "equal": true
+    },
+    {
+      "id": "beginner-18",
+      "equal": true
+    },
+    {
+      "id": "beginner-19",
+      "equal": true
+    },
+    {
+      "id": "beginner-20",
+      "equal": true
+    },
+    {
+      "id": "beginner-21",
+      "equal": true
+    },
+    {
+      "id": "beginner-22",
+      "equal": true
+    },
+    {
+      "id": "beginner-23",
+      "equal": true
+    },
+    {
+      "id": "beginner-24",
+      "equal": true
+    },
+    {
+      "id": "beginner-25",
+      "equal": true
+    },
+    {
+      "id": "beginner-26",
+      "equal": true
+    }
+  ]
+}
