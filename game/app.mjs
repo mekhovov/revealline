@@ -12823,12 +12823,28 @@ try {
     presets,
     audio: demoAudio,
     audioMaster,
+    prepareActors: (entry, level, themeId, options) =>
+      prepareAttemptActors(entry, level, themeId, options),
+    preparePresentation: async (demoPainter, entry, level, themeId, options) => {
+      const lease = await prepareFreshAttemptVisuals(entry, level, themeId, options);
+      demoPainter.setPresentation(lease?.snapshot ?? pagePresentationSnapshot);
+      demoPainter.setArcadeProvider(() => menuStyle.themeHost.effectivePreferences());
+      demoPainter.setInterfaceProvider(() => menuStyle.themeHost.snapshot());
+      return lease;
+    },
     getContext: () => ({
       entries: executionEntries(),
       library,
       preferences: library.preferences,
       themeId: theme.id,
       reduced: displayPreferences.snapshot().effectiveReducedEffects,
+      renderOptions: {
+        textFace: displayPreferences.snapshot().textFace,
+        showGrid: library.preferences.showGrid,
+        showCombatScrap: encounterDisplay.snapshot().showRemains,
+        brutal: encounterDisplay.snapshot().brutal,
+        blood: encounterDisplay.snapshot().blood,
+      },
       controller: controllerFrame?.assigned,
       touchSettings: touchPreferences.snapshot(),
       tapSteering: $('tap-steering').checked,

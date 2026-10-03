@@ -140,7 +140,7 @@ test('reduced effects and invalid transition inputs skip transition work, and fa
   f.painter.dispose();
 });
 
-test('clear demo previews bypass transition and jammer noise without altering simulation or ordinary rendering', () => {
+test('clear previews cannot disable active gameplay jammers; protected images retain the same mechanic', () => {
   const run = createRun(level),
     f = painter();
   run.signal = { zoneIds: ['jammer'], speedFactor: 0.5, boostBlocked: true };
@@ -152,8 +152,8 @@ test('clear demo previews bypass transition and jammer noise without altering si
     pictureInterference: false,
     demoTransition: 1,
   });
-  assert.equal(pictureCall(clear).args[0], f.painter.background);
-  assert.equal(f.transition.length, 0, 'No noisy bitmap is prepared for the clear preview.');
+  assert.equal(pictureCall(clear).args[0], f.transition[0]);
+  assert.equal(f.transition[0].original, f.painter.background);
   assert.deepEqual(authoritativeCheckpoint(run), before);
   const ordinary = surface();
   f.painter.draw(ordinary.ctx, run, 0, { paused: true });
@@ -170,8 +170,17 @@ test('clear demo previews bypass transition and jammer noise without altering si
   });
   assert.equal(
     pictureCall(concealed).args[0],
-    f.concealed[0],
-    'The noise preference cannot override picture eligibility.',
+    f.transition.at(-1),
+    'Gameplay interference is applied after concealment.',
   );
+  assert.equal(f.transition.at(-1).original, f.concealed[0]);
+  run.signal = null;
+  const recovered = surface();
+  f.painter.draw(recovered.ctx, run, 0, {
+    paused: true,
+    pictureVisibility: 'clear',
+    pictureInterference: false,
+  });
+  assert.equal(pictureCall(recovered).args[0], f.painter.background);
   f.painter.dispose();
 });
