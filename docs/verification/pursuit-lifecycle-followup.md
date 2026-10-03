@@ -55,8 +55,25 @@ courses keep their prior qualification status. No new layouts are counted here.
   delayed controls, recovery and terminal errors. They remain **unrun** under
   `publishing/test-policy.json`; no automated-suite pass is claimed.
 
-Committed-source identity, full production archive and optional-package admission
-receipts are recorded with their exact input commit after the source commit.
+The following receipts bind source commit `48a09f3bc7c2a18094f7d7e4cf5d9020ab505ef7`, tree
+`50d44bb0ac9c99b9f029e749284141aa503be748`. Later evidence-only commits do not relabel those inputs.
+
+- [Source identity](./pursuit-lifecycle-followup-source.json): **25,046
+  tracked files / 2,357,907,814 bytes**, raw contents and modes plus
+  independently verified immutable Git blobs.
+- [Full production archive](./pursuit-lifecycle-followup-build.json):
+  **2,984 files / 1,000,030,935 ZIP bytes**. Every ZIP member
+  matches the manifest's length and SHA-256; the exact member set and CRCs pass.
+  Core totals **66,923,179 bytes**, leaving
+  **185,685 bytes** within its unchanged 64 MiB allowance.
+- [All three optional FPV packages](./pursuit-lifecycle-followup-packages.json)
+  pass independent archive admission within existing policies. World Studio
+  remains at 102 runtime / 104 complete-source files and has 1,181,277 bytes of
+  source-package byte headroom.
+
+The full-game build explicitly uses planned version `v0.150.0`; optional package
+candidates retain repository version `v0.142.4`. Neither updates a published
+version or grants public eligibility.
 Public promotion, deployment and merge remain separate actions.
 
 Deferred: actual human completion routes and readability, physical phone/controller
