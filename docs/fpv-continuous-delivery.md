@@ -2460,3 +2460,14 @@ An explicit native IndexedDB session-read-abort scenario is being added to the
 existing browser workflow before publishing that small fix. Preserve #979 as
 merged; do not reopen or rewrite it. Optional14-example delivery is already in
 main, but its public deployment/launch has not yet been checked.
+
+Follow-up candidate9ca502490094d7c9db8b5d66fae6c90d7895eea3: source and immutable
+packaged examples each pass117/117, including the native session-read abort and
+retained recovery checks. All three frozen optional admissions pass, exact
+committed inputs/ZIP members verified, two byte-identical builds; unchanged
+World102runtime/104sourcefiles and14513098bytes. Package recovery90/90 receipts
+remain bound to the identical runtime files and all retained proofs replay.
+Source/packaged receipts have been refreshed; no human/device/performance claim.
+Only three superseded reproducible /tmp qualification bundle directories were
+removed under disk pressure; their committed receipts and player builds remain.
+The current frozen bundle is /tmp/fpv-example-recovery-refresh-qualified-01.

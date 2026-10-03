@@ -80,13 +80,13 @@
     "records": 14
   },
   "fixtureFiles": {
-    "index.html": "59a83b3aaf9f1d6afe7f1b45448e26d91005cf762471a64d7062c0ab18092fa3",
+    "index.html": "b76ac3330ed1cf1bd1f9029a53d5fb17905e834d6c52e5f836ef78c204df38db",
     "examples.json": "715a45515c572ab559ca95362585f5665f6297f7fcd410b3c4d7474cf8ac36aa",
-    "player.html": "cd8aafc51ca40cd498acb8bce5d7b478a7dd7fcdc3824c5e63143406e5a2a220"
+    "player.html": "f579d07cb62a894c5640fd76f00fb64d33829c067be91d9b7a764dee020519a6"
   },
-  "elapsedMs": 35189,
-  "passed": 109,
-  "total": 109,
+  "elapsedMs": 26456,
+  "passed": 117,
+  "total": 117,
   "checks": [
     {
       "name": "Frozen host, dependencies, HTML, harness and optional archive hashes match",
@@ -480,7 +480,40 @@
       "passed": true
     },
     {
+      "name": "Example availability and cached interrupted recovery exist before session read fault",
+      "passed": true
+    },
+    {
+      "name": "Exactly one isolated native readonly session transaction aborts",
+      "passed": true
+    },
+    {
+      "name": "Successful example deletion still reports the independent recovery read failure",
+      "passed": true,
+      "status": "Flight storage failed"
+    },
+    {
+      "name": "Deleted example is absent from both real IndexedDB and the refreshed Library",
+      "passed": true
+    },
+    {
       "name": "Removing the only optional example clears a previously populated availability cache",
+      "passed": true
+    },
+    {
+      "name": "Catalogue Watch also disappears despite the unrelated session read failure",
+      "passed": true
+    },
+    {
+      "name": "Cached interrupted recovery remains available after its read fails",
+      "passed": true
+    },
+    {
+      "name": "One-shot fault restores native reads and leaves interrupted session bytes unchanged",
+      "passed": true
+    },
+    {
+      "name": "Example deletion with session read failure preserves progress, recovery and bookmark",
       "passed": true
     },
     {
@@ -536,35 +569,35 @@
       "label": "Verify frozen source and optional archive"
     },
     {
-      "ms": 4572,
+      "ms": 1653,
       "label": "Reject unusable dependencies, changed course and invalid replay"
     },
     {
-      "ms": 4702,
+      "ms": 1749,
       "label": "Partial real IndexedDB failure retains only completed saves"
     },
     {
-      "ms": 4821,
+      "ms": 1834,
       "label": "Import all 14 through actual File input"
     },
     {
-      "ms": 5509,
+      "ms": 2366,
       "label": "Pinned repeat import is byte-identical"
     },
     {
-      "ms": 7535,
+      "ms": 3158,
       "label": "Selected-mode whole-lesson lab and exact full playback"
     },
     {
-      "ms": 33147,
+      "ms": 24656,
       "label": "Recorded section playback and mode selection"
     },
     {
-      "ms": 33664,
+      "ms": 25112,
       "label": "Removal invalidates availability and local reload restores retained examples"
     },
     {
-      "ms": 34357,
+      "ms": 25684,
       "label": "Disposal during import does not produce late writes"
     }
   ],
