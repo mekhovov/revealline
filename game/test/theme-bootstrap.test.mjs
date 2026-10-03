@@ -366,6 +366,8 @@ test('profile-owned players seed appearance without acquiring an auxiliary host 
     'game/company.html',
     'game/couch/index.html',
     'game/couch/relay-rescue.html',
+    'game/snake/index.html',
+    'game/snake/play.html',
     'authoring/asset-studio/index.html',
     'game/offline/app.html',
   ]) {

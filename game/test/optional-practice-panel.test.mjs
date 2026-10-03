@@ -28,6 +28,9 @@ test('optional navigation resolves source and frozen default/edition hosts witho
     'game/index.html',
     'releases/v1.2.3/site/game/index.html',
     'editions/coupa-all/releases/v1.2.3/site/game/company.html',
+    'game/snake/',
+    'game/snake/play.html',
+    'editions/coupa-all/releases/v1.2.3/site/game/snake/index.html',
     'game/controller-lab/',
     'game/controller-lab/index.html',
     'releases/v1.2.3/site/game/controller-lab/',
@@ -78,6 +81,29 @@ test('unqualified source previews are limited to the loopback source entry', () 
     'invalid',
   ])
     assert.deepEqual(optionalPracticeSourcePreviews(href), [], href);
+});
+
+test('Snake offers the exact World source preview only at a loopback source root', () => {
+  for (const page of ['index.html', 'play.html', '']) {
+    assert.deepEqual(
+      optionalPracticeSourcePreviews(`http://127.0.0.1:8768/game/snake/${page}?lang=uk`, {
+        packageId: 'fpv-worlds',
+      }),
+      [
+        {
+          id: 'fpv-worlds',
+          titleKey: 'worldsSourcePreview',
+          url: 'http://127.0.0.1:8768/optional-practice/fpv-worlds/',
+        },
+      ],
+    );
+  }
+  for (const href of [
+    'https://example.test/game/snake/',
+    'http://127.0.0.1:8768/releases/v1.2.3/site/game/snake/',
+    'http://127.0.0.1:8768/game/snake/unknown.html',
+  ])
+    assert.deepEqual(optionalPracticeSourcePreviews(href, { packageId: 'fpv-worlds' }), []);
 });
 
 test('launcher catalog rejects external links, encoded paths, duplicates and oversized responses', async () => {

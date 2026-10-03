@@ -1,3 +1,5 @@
+import { CLASSIC_SNAKE_V2_CHAPTERS, CLASSIC_SNAKE_V2_LEVELS } from './classic-catalogue-v2.mjs';
+
 /**
  * Classic grid-Snake catalogue v1. Geometry is pinned from the forty-eight
  * original Snake Hunt layouts; the earlier capture campaigns remain unchanged.
@@ -706,7 +708,7 @@ function projectWalls(rectangles, first) {
     .map((cell) => ({ x: cell % WIDTH, y: Math.floor(cell / WIDTH) }));
 }
 
-export const CLASSIC_SNAKE_CHAPTERS = freeze(
+const FOUNDATION_CHAPTERS = freeze(
   CHAPTER_ROWS.map(([id, en, uk, descriptionEn, descriptionUk]) => ({
     id: 'classic-snake-' + id,
     title: bilingual(en, uk),
@@ -714,7 +716,7 @@ export const CLASSIC_SNAKE_CHAPTERS = freeze(
   })),
 );
 
-export const CLASSIC_SNAKE_LEVELS = freeze(
+const FOUNDATION_LEVELS = freeze(
   LAYOUT_ROWS.map(([sourceId, en, uk, descriptionEn, descriptionUk, rectangles], index) => {
     const chapterIndex = Math.floor(index / 6);
     const withinChapter = index % 6;
@@ -726,7 +728,7 @@ export const CLASSIC_SNAKE_LEVELS = freeze(
     const speedupEvery = chapterIndex >= 5 ? 4 : 0;
     return {
       id,
-      chapterId: CLASSIC_SNAKE_CHAPTERS[chapterIndex].id,
+      chapterId: FOUNDATION_CHAPTERS[chapterIndex].id,
       title: bilingual(en, uk),
       description: bilingual(descriptionEn, descriptionUk),
       level: {
@@ -749,6 +751,63 @@ export const CLASSIC_SNAKE_LEVELS = freeze(
         targetMovement: moving ? 'flee' : 'still',
         fleeEvery: moving ? (withinChapter < 3 ? 5 : 4) : 3,
       },
+    };
+  }),
+);
+
+export const CLASSIC_SNAKE_CHAPTERS = freeze([
+  ...FOUNDATION_CHAPTERS,
+  ...CLASSIC_SNAKE_V2_CHAPTERS,
+]);
+export const CLASSIC_SNAKE_LEVELS = freeze([...FOUNDATION_LEVELS, ...CLASSIC_SNAKE_V2_LEVELS]);
+export const CLASSIC_SNAKE_CAMPAIGNS = freeze([
+  {
+    id: 'classic-foundations-v1',
+    title: bilingual('Classic', 'Класика'),
+    description: bilingual(
+      'The original forty-eight grid missions.',
+      'Початкові сорок вісім місій на сітці.',
+    ),
+    chapterIds: FOUNDATION_CHAPTERS.map((chapter) => chapter.id),
+  },
+  {
+    id: 'classic-pure-pursuit-v1',
+    title: bilingual('Pure Pursuit', 'Чисте переслідування'),
+    description: bilingual(
+      'Twelve patrol and runner missions teach readable interception.',
+      'Дванадцять місій із патрулями й бігунами навчають зрозумілого перехоплення.',
+    ),
+    chapterIds: CLASSIC_SNAKE_V2_CHAPTERS.slice(0, 2).map((chapter) => chapter.id),
+  },
+  {
+    id: 'classic-tactical-routes-v1',
+    title: bilingual('Tactical Routes', 'Тактичні маршрути'),
+    description: bilingual(
+      'Twelve missions combine warned sprints and timed route choices.',
+      'Дванадцять місій поєднують ривки з попередженням і вибір маршруту за часом.',
+    ),
+    chapterIds: CLASSIC_SNAKE_V2_CHAPTERS.slice(2, 4).map((chapter) => chapter.id),
+  },
+  {
+    id: 'classic-arcade-sorties-v1',
+    title: bilingual('Arcade Sorties', 'Аркадні вильоти'),
+    description: bilingual(
+      'Twelve missions add automatic supplies, optional couriers and combined pursuit.',
+      'Дванадцять місій додають автоматичні припаси, необов’язкових кур’єрів і поєднане переслідування.',
+    ),
+    chapterIds: CLASSIC_SNAKE_V2_CHAPTERS.slice(4, 6).map((chapter) => chapter.id),
+  },
+]);
+export const CLASSIC_SNAKE_FEATURED = freeze(
+  CLASSIC_SNAKE_CHAPTERS.map((chapter, index) => {
+    const entry = CLASSIC_SNAKE_LEVELS.filter((level) => level.chapterId === chapter.id)[5];
+    return {
+      id: `classic-featured-${index + 1}`,
+      chapterId: chapter.id,
+      levelId: entry.id,
+      seed: 4201 + index,
+      title: entry.title,
+      description: entry.description,
     };
   }),
 );

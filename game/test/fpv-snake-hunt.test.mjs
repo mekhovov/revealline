@@ -1,10 +1,14 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import { dataIdentity } from '../data-json.mjs';
 import * as THREE from '../../optional-practice/civilian-fpv/vendor/three.module.js';
 import { createSnakeHuntPresentation } from '../../optional-practice/civilian-fpv/snake-hunt-presentation.mjs';
 import {
   SNAKE_HUNT_COURSES,
   SNAKE_HUNT_PLAYLISTS,
+  SNAKE_HUNT_CATALOGUE,
+  SNAKE_HUNT_IDENTITY,
+  SNAKE_HUNT_PURSUIT_IDENTITY,
 } from '../../optional-practice/civilian-fpv/snake-hunt-catalogue.mjs';
 import {
   createContactHuntState,
@@ -65,11 +69,11 @@ function approach(state, target, altitude = 900) {
   };
 }
 
-test('Sim Hunt has 24 distinct bounded courses in four exact six-course playlists', async () => {
+test('Sim Hunt has 36 distinct bounded courses in six exact six-course playlists', async () => {
   await initWorldRuntime();
-  assert.equal(SNAKE_HUNT_COURSES.length, 24);
-  assert.equal(new Set(SNAKE_HUNT_COURSES.map((course) => course.id)).size, 24);
-  assert.equal(SNAKE_HUNT_PLAYLISTS.length, 4);
+  assert.equal(SNAKE_HUNT_COURSES.length, 36);
+  assert.equal(new Set(SNAKE_HUNT_COURSES.map((course) => course.id)).size, 36);
+  assert.equal(SNAKE_HUNT_PLAYLISTS.length, 6);
   for (const playlist of SNAKE_HUNT_PLAYLISTS) assert.equal(playlist.entries.length, 6);
   for (const source of SNAKE_HUNT_COURSES)
     for (const mode of ['self-level', 'acro']) {
@@ -82,6 +86,22 @@ test('Sim Hunt has 24 distinct bounded courses in four exact six-course playlist
         flight.dispose();
       }
     }
+});
+
+test('adding pursuit courses preserves the original recipes and pack-owned progress references', () => {
+  assert.equal(dataIdentity(SNAKE_HUNT_COURSES.slice(0, 24)), '0a73f7def9f067b8');
+  assert.equal(dataIdentity(SNAKE_HUNT_CATALOGUE.slice(0, 24)), '376f9010937ab8c2');
+  assert.equal(dataIdentity(SNAKE_HUNT_PLAYLISTS.slice(0, 4)), 'b858555995b18f24');
+  assert.equal(SNAKE_HUNT_IDENTITY, 'fpv-snake-hunt:0a73f7def9f067b8');
+  assert.notEqual(SNAKE_HUNT_PURSUIT_IDENTITY, SNAKE_HUNT_IDENTITY);
+  for (const entry of SNAKE_HUNT_CATALOGUE.slice(24)) {
+    assert.equal(entry.packIdentity, SNAKE_HUNT_PURSUIT_IDENTITY);
+    assert.ok(
+      entry.course.actors.every(
+        (actor) => actor.path.length >= 4 && actor.speed > 0 && actor.fireEveryTicks === 0,
+      ),
+    );
+  }
 });
 
 test('wrong-order catches preserve the target and each valid contact counts once', () => {

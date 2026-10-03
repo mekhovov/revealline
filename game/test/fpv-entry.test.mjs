@@ -4,6 +4,7 @@ import { readFile } from 'node:fs/promises';
 import { selectOfflineCore } from '../../scripts/offline-core-closure.mjs';
 import {
   fpvLaunchURL,
+  snakeLaunchURL,
   fpvReturnURL,
   fpvWorldLaunchURL,
   fpvWorldReturnURL,
@@ -95,6 +96,9 @@ test('World SIM returns to the actual arcade mode, query and community without b
       'game/company.html',
       'game/couch/',
       'game/couch/relay-rescue.html',
+      'game/snake/',
+      'game/snake/index.html',
+      'game/snake/play.html',
     ]) {
       const source = root + entry + '?journey=horizon#menu';
       const target = fpvWorldLaunchURL(source, 'uk', { familyId: 'tryzub', revision: 'r1' });
@@ -110,4 +114,37 @@ test('World SIM returns to the actual arcade mode, query and community without b
   const foreign = new URL('https://example.test/project/optional-practice/fpv-worlds/index.html');
   foreign.searchParams.set('game-return', 'https://evil.test/game/');
   assert.equal(fpvWorldReturnURL(foreign.href), 'https://example.test/project/game/');
+});
+
+test('Snake launch keeps the selected seats and bounded cosmetics within the current build', () => {
+  for (const root of [
+    'https://example.test/project/',
+    'https://example.test/project/editions/coupa/releases/v1.2.3/site/',
+    'capacitor://localhost/',
+    'file:///app/site/',
+  ]) {
+    for (const mode of ['solo', 'versus', 'team']) {
+      const launch = new URL(
+        snakeLaunchURL(root + 'game/couch/', mode, 'uk', {
+          familyId: 'tryzub',
+          revision: 'r1',
+        }),
+      );
+      assert.equal(launch.href.split('?')[0], root + 'game/snake/play.html');
+      assert.equal(launch.searchParams.get('mode'), mode);
+      assert.equal(launch.searchParams.get('lang'), 'uk');
+      assert.equal(launch.searchParams.get('appearanceFamily'), 'tryzub');
+      assert.equal(launch.searchParams.get('appearanceRevision'), 'r1');
+      assert.equal(launch.searchParams.has('journey'), false);
+    }
+  }
+  for (const href of [
+    'invalid',
+    'javascript:alert(1)',
+    'https://user@example.test/game/',
+    'https://example.test/admin',
+    'https://example.test/game/snake/unknown.html',
+  ])
+    assert.equal(snakeLaunchURL(href), null, href);
+  assert.equal(snakeLaunchURL('https://example.test/game/', 'unknown'), null);
 });

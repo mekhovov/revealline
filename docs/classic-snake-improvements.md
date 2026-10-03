@@ -1,135 +1,156 @@
-# Classic Snake improvements
+# Classic FPV Snake improvements
 
-Classic Snake is now the default 2D Snake experience. It has automatic grid
-movement, a complete visible starting body, one humanoid collectible at a time,
-contact growth and immediate wall/body failure. The earlier territory-based
-edition remains available as the Capture remix, with its saved identities intact.
-Sim remains a separate flight interpretation.
+This document describes the candidate source implementation, not a production
+publication receipt. The Classic catalogue now has **84 distinct 24 × 18 layouts
+in fourteen chapters**: the original 48 recipes and 36 new pursuit recipes. The
+Sim catalogue contains **36 flight courses**, including twelve new patrol courses.
+Mode copies and different visual styles are not counted as additional maps.
 
-This describes candidate implementation on `codex/snake-hunt-campaigns`, reviewed
-on 3 October 2026. It is not a production-publication receipt.
+## Recognizable rules and presentation
 
-## Research and resulting decisions
+Classic retains automatic cell movement, a complete four-cell starting body,
+contact growth, and wall/body collision. Cable and Signal are presentation styles
+for the same occupied-cell body; choosing a style must not change physics,
+randomness, completion or record identity. The FPV head and humanoid targets use
+the main game's presentation language. Body occupancy, target warnings and closed
+routes remain readable regardless of optional destruction, blood, remains or
+reduced-effects preferences.
 
-The following references informed the design. The implementation choices are our
-inferences from those sources; no reference establishes one universal Snake
-specification, and no third-party artwork, levels or game code were copied.
+The original eight chapters remain `classic-snake-level.v1`; their recipes and
+accepted identities are unchanged. The new content explicitly uses
+`classic-snake-level.v2`, `classic-snake-core.v2` and
+`classic-snake-replay.v2`. Older territory-based Snake is still the Capture remix.
+Flight courses keep their separate physical flight model and controls.
 
-| Reference                                                                                                                                                                                                                                                                                                                                 | Relevant finding                                                                                                                                                          | Decision in this game                                                                                                                                                                                                         |
-| ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [Google Maps Snake announcement](https://blog.google/products-and-platforms/products/maps/sssnakes-map/) and its [official standalone game](https://snake.googlemaps.com/)                                                                                                                                                                | Google's variation uses collecting passengers while avoiding the map boundary and the train itself.                                                                       | Keep the collection-and-self-avoidance loop immediately recognizable, while using the game's existing humanoid visual language.                                                                                               |
-| [Nokia 8265 user guide, printed page 98](https://www.instructionsmanuals.com/sites/default/files/2019-05/Nokia-8265-en.pdf#page=105)                                                                                                                                                                                                      | The original manufacturer manual, retained by a third-party archive, describes food-driven growth, scoring, clear fields or mazes, and game over on tail or wall contact. | Start with a visibly complete snake on an empty board; introduce mazes later. Classic rounds end on collision rather than using territory-game recovery.                                                                      |
-| [Battlesnake's official rules](https://docs.battlesnake.com/rules)                                                                                                                                                                                                                                                                        | The developer documents discrete moves, body/head collisions and simultaneous turn resolution. Its competitive head-to-head outcome depends on length.                    | Resolve Team movement from one pre-step state, including head swaps and tail vacancy. Our cooperative rule ends the shared round on any fatal collision; it does not adopt Battlesnake's length-based duels or health system. |
-| Xbox accessibility guidance on [input](https://learn.microsoft.com/en-us/xbox/accessibility/xbox-accessibility-guidelines/107), [difficulty](https://learn.microsoft.com/en-us/xbox/accessibility/xbox-accessibility-guidelines/108) and [motion](https://learn.microsoft.com/en-us/xbox/accessibility/xbox-accessibility-guidelines/117) | Microsoft recommends flexible input and challenge options and control over distracting motion.                                                                            | Provide tap-to-turn controls, pace selection, pause, visible control help and independently selectable cosmetic effects. These features support accessibility review; they do not establish compliance with every guideline.  |
+## Four campaigns
 
-The four-cell initial body, two-turn buffer, 24 × 18 board, finite catch goals and
-specific timing values are deliberate choices for this game. Wrapping edges and
-fleeing collectibles are named variants; stationary collectibles form the default
-classic introduction.
+| Campaign        | Chapters                         | Missions | Teaching sequence                                                               |
+| --------------- | -------------------------------- | -------: | ------------------------------------------------------------------------------- |
+| Classic         | Original eight chapters          |       48 | Turns, islands, moving quarry, wrapping edges, chicanes and shared circuits.    |
+| Pure Pursuit    | Patrol Routes; Escape Lines      |       12 | Read a patrol route, then intercept a reactive runner.                          |
+| Tactical Routes | Burst Timing; Route Windows      |       12 | Read a sprint warning, then choose timed shortcuts with permanent bypasses.     |
+| Arcade Sorties  | Field Supplies; Combined Pursuit |       12 | Use contact pickups, optionally chase couriers, then combine established rules. |
 
-## Implemented gameplay
+Every chapter has six maps and native English/Ukrainian titles and instructions.
+All 36 new boards are individually authored directly in grid coordinates. Unlike
+the original projected layouts, selected new walls reach the boundary and break
+the universal outer circuit. The new campaign uses a fixed 200 ms base step;
+mission goals are 10/12/14/14/16/18 by chapter, with eight catches in the first two
+lessons. Host pace choices remain separate accepted recipes.
 
-- The snake starts with four distinct, visible cells and advances automatically
-  after Start. A direction press queues a turn. Direct reversals are rejected
-  against the most recent accepted heading, and at most two turns can wait.
-- One humanoid occupies a free grid cell. Catching it adds one body cell and 100
-  points, then spawns the next target. Completing the accepted finite goal wins.
-  Targets cannot spawn in static wall pockets or on a current body.
-- A wall or occupied body cell ends the round. Moving into a tail cell is legal
-  only if that cell vacates in the same non-growing transaction. There are no
-  safe borders, coverage requirements, shooting guards or extra lives in Classic.
-- Selected levels wrap across edges. Selected moving-quarry levels let the one
-  target take a fleeing step every four or five snake steps, using current head
-  positions rather than predicting future input.
-- Slow, Normal and Fast prepare distinct pace recipes. Later chapters also earn
-  modest speed increases through catches. Pause, page hiding and focus loss stop
-  advancement. Keyboard arrows/WASD, swipe and on-screen direction pads are
-  implemented; physical-device qualification remains separate.
+Fourteen featured sorties select each chapter's sixth mission with fixed seeds
+4201–4214. They reuse those exact layouts; they do not inflate the map count.
+See [the catalogue](classic-snake-catalogue.md) for every new mission name.
 
-### Modes and content
+## Bounded pursuit mechanics
 
-There are **48 classic layouts in eight six-level chapters**, with goals of
-8–20 catches. The chapters are First Coils, Wide Turns, Island Circuits, Moving
-Quarry, Borderless Routes, Chicanes, Shared Circuits and Final Weave. Eight levels
-wrap and nine use fleeing targets. Native English and Ukrainian names and
-geometry-specific instructions accompany every level. The same layouts serve
-all three modes; mode copies are not counted as additional levels.
+- Patrollers follow explicit adjacent-cell closed walks, waiting if blocked.
+  Runners respond to nearby current head positions using traversable distance.
+  Sprinters warn for four steps, burst for two, then rest for eight. They never
+  move multiple cells in a single core step.
+- New levels admit at most two active humanoids. The first lessons use one.
+  Ordinary catches contribute to the finite quota and grow the catching body.
+- Optional couriers offer 250 points and one body cell without quota credit.
+  Offers follow required catches four and eight, at most twice; an active first
+  courier defers the second. They persist until caught or the round ends, with no
+  expiry race or repeated farming. Three authored maps include them.
+- Stop Pulse activates on contact and pauses target movement/phases for eight
+  steps. Cable Reel removes four tail cells from the collector, with a four-cell
+  minimum. The same rule applies in Cable and Signal. Neither pickup adds a button.
+  Nine authored maps contain supplies, on permanently walkable pads.
+- Nine maps contain one or two yielding shutters. A group occupies 1–8 cells,
+  stays open for 32 steps with an eight-step closing warning, then closes for 16.
+  Occupancy defers closure; all closed groups still leave a connected permanent
+  bypass. A pickup cannot retroactively save an already fatal collision.
 
-| Mode   | Rules                                                                                                                                                                                                                                                                                                                          |
-| ------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| Solo   | One snake, one board and the finite catch goal.                                                                                                                                                                                                                                                                                |
-| Versus | Two independent boards use matched accepted recipes and seeds. Each board advances on its own earned clock. A goal completion or opponent crash decides the result; events due at the same time resolve together. The deterministic preferred target sequence is shared until body occupancy requires a different legal spawn. |
-| Team   | Two snakes share one board, one target and one catch goal. Either snake can claim the target once. Any fatal contact ends the shared round and cancels catch credit in that transaction; head-on and head-swap contacts are fatal.                                                                                             |
+## Modes, replayability and records
 
-The catalogue adapts the 48 Capture-remix layout ideas into smaller grid
-obstacles. It does not claim 96 independently conceived maps. The first classic
-level is deliberately empty. See [the complete catalogue description](classic-snake-catalogue.md).
+Solo and Team use the same accepted map recipes. Team shares quota, targets and
+route state, records contributors once, and preserves simultaneous fatal-contact
+priority. A contribution medal may reward cooperation without making a particular
+player's catches mandatory for campaign completion.
 
-The existing **24 Sim courses** remain in four playlists, supporting both
-Self-level and Acro with physical drone contact and a world-space echo tail.
-Those are flight controls and course records, not the classic grid core. See
-[Sim Snake Hunt](sim-snake-hunt.md).
+The new host work adds three-minute Versus score duels, mission mastery, featured
+sorties and bounded Endless presets alongside finite campaign play. Their evidence
+belongs to the core/match/host integration observations, not to the content
+admission receipt. Comparisons must bind the accepted recipe, pace, seed and mode;
+cosmetic style must not split gameplay records. Historical finite race recipes
+and saved rounds retain their versioned interpretation.
 
-### Presentation, records and saved rounds
+Local progress now keeps exact match witnesses for scores, clears and mastery. Record keys distinguish mission, Endless, score-duel and survival-duel policies as well as mode, recipe and seed. A same-ID altered recipe cannot grant a catalogue clear. Reads verify witnesses and keep unknown or corrupt stored data untouched; failed writes remain visible in this session and retry on later reads. The HUD reads compact summaries rather than copying replay journals each frame. This proof-based path does not turn historical best-score numbers into verified clears.
 
-Clean catches work by default. Brutal destruction, blood/body parts, settled
-remains and reduced effects use presentation settings; none changes target
-contact, body collision, score, random state or completion. Gameplay bodies stay
-visible even when decorative effects are reduced.
+The content exports four campaign cards and fourteen featured recipes. Endless
+presets reuse admitted pursuit, route and supply rules rather than declaring
+hundreds of procedurally renamed missions. Bounded replay resource limits remain
+part of the runtime contract. Cosmetic mastery rewards do not grant new physics
+or require multiplayer to access the content.
 
-Classic has separate local records and a saved-round format. The accepted level,
-mode, pace, seed, pending turns and each board's elapsed clock belong to the run.
-Replay restoration reconstructs the deterministic simulation and verifies its
-checkpoint before replacing the live round. The UI wrapper preserves fractional
-time between moves. Imported core state cannot simply supply a body or score.
-Historical Capture-remix and Sim formats retain their own ownership.
+## Separate Sim adaptation
 
-## Entry routes and compatibility
+The two new six-course playlists are Patrol Interception and Flight Route Choices.
+They use actual ground patrol paths, static physical obstacles, ordinary manual
+flight, contact catches and the existing solid world-space echo trail. All twelve
+support Self-level and Acro. The new courses do not claim grid shutters, runner AI,
+sprint phases, pickups or Classic Versus/Team rules.
 
-Use `game/snake/index.html` for the campaign hub or
-`game/snake/play.html?mode=solo` for the classic page. The page also accepts
-`mode=versus` and `mode=team`.
+The original 24 course objects, catalogue entries, pack identities and playlist
+references remain exact. The twelve new courses have a separate
+`fpv-snake-pursuit:` pack identity, so adding them does not silently move earlier
+flight progress into a newly hashed collection.
 
-The existing `journey=snake-hunt-v1` entry now opens Classic from Solo, couch
-Versus and Team. The same URL with `snake-style=capture` keeps the original
-territory edition. For example:
+## Research basis
 
-- Classic Solo: `game/?journey=snake-hunt-v1`
-- Capture Solo: `game/?journey=snake-hunt-v1&snake-style=capture`
-- Classic Versus: `game/couch/?journey=snake-hunt-v1`
-- Capture Versus: `game/couch/?journey=snake-hunt-v1&snake-style=capture`
-- Classic Team: `game/couch/relay-rescue.html?journey=snake-hunt-v1`
-- Capture Team: `game/couch/relay-rescue.html?journey=snake-hunt-v1&snake-style=capture`
+These are design inferences from primary examples, not copied game rules or assets.
 
-The classic page links back to the Capture remix. Classic uses its own
-`classic-snake-level.v1`, `classic-snake-core.v1` and `classic-snake-replay.v1`
-contracts. Existing capture cores, levels, Journey progress, Studio authoring
-sources and saves are not reinterpreted as classic games.
+- [Google Maps Snake](https://blog.google/products-and-platforms/products/maps/sssnakes-map/)
+  keeps the growth/self-avoidance loop while changing the visual subject. That
+  supports an FPV presentation with stable grid physics.
+- [PAC-MAN Championship Edition 2](https://pacman.com/en/games/pce2.php) combines
+  maze pursuit, Time Attack and remixed challenges. That supports finite lessons
+  plus score challenges built from a small, readable set of mechanics.
+- [Snakebird Primer](https://store.steampowered.com/app/1014140/Snakebird_Primer/)
+  explicitly introduces easier puzzles before harder challenges. This catalogue
+  introduces behaviors separately before combining them.
+- [Vampire Survivors Adventures](https://poncle.zendesk.com/hc/en-gb/articles/20118186268177-What-are-Adventures)
+  separates a remixed progression path while preserving main unlocks. Its
+  [co-op design FAQ](https://poncle.games/coop-faq) also explains optional co-op
+  progression and persistent player highlighting. These inform independent
+  challenge records and readable, optional cooperative mastery.
+- Xbox guidance on [input](https://learn.microsoft.com/en-us/xbox/accessibility/xbox-accessibility-guidelines/107),
+  [difficulty](https://learn.microsoft.com/en-us/xbox/accessibility/xbox-accessibility-guidelines/108)
+  and [motion](https://learn.microsoft.com/en-us/xbox/accessibility/xbox-accessibility-guidelines/117)
+  supports visible controls, pace choice, pausing and reduced distractions. This
+  source implementation alone is not an accessibility-compliance assessment.
 
-## Verification and remaining qualification
+## Evidence and remaining qualification
 
-Scoped syntax, ESLint and formatting checks passed. Production structural calls
-admitted all 48 recipes and initialized 192 cores: Solo, paired Solo instances
-for Versus and Team for each layout. All starting bodies had four cells; paired
-Versus recipes and initial targets matched. This establishes initial admission,
-not that every body route is solvable after arbitrary player turns.
+Direct production validation admits all 84 grid recipes and initializes 336 cores:
+Solo, two independent equal-seed Solo boards for Versus, and Team for each layout.
+All 84 wall arrangements differ. Separate geometry inspection checks each possible
+closed-shutter combination. This establishes recipe/start-state admission, not
+catchability after arbitrary player-created coils or complete mission solutions.
 
-A disclosed model-driven playthrough of the actual first classic mission caught
-eight targets, grew from four to twelve cells and won in 93 steps / 18,600 ms.
-Its complete replay restored the identical canonical state. Focused observations
-also cover pending-turn restoration, legal tail vacancy, once-only Team head
-swap failures, authoritative speed timing and replayable resource-limit endings.
-Evidence is retained in [the core observation record](verification/classic-snake/core-observations.md)
-and [the catalogue receipt](evidence/classic-snake-catalogue-observation.json).
+Production flight validation admits all 36 courses. A bounded five-second neutral
+startup observation of each new course moves all fifty new patrol actors without
+blocked-actor ticks. This is not a complete flight or contact-win observation.
 
-**Automated suites remain WAIVED_SKIPPED_NOT_PASSED** under
-`publishing/test-policy.json`; the new regression sources are unrun.
-Repository-wide lint/validation, changed-file formatting and committed-source
-default-build inspection passed. Exact identities and bounded browser
-observations are retained in the
-[integration receipt](verification/classic-snake/integration.md). Human play
-qualification remains deferred: all-mission balance, physical keyboard/touch
-devices, slower devices, small-screen two-player readability and full Team
-campaign completion are not declared passed by the model observations. Classic
-does not implement gamepad input or a Studio GUI; those claims are not implied
-by retaining the earlier Capture-remix Studio tools.
+The new receipt is
+[`evidence/classic-snake-pursuit-content-observation.json`](evidence/classic-snake-pursuit-content-observation.json).
+The [v2 route journals](verification/classic-snake/pursuit-v2/README.md) retain a
+verified Solo clear for every new mission, including disclosed failed attempts.
+The [v2 integration report](verification/classic-snake/pursuit-v2/integration.md)
+records browser observations, variant preparation, static checks and build evidence.
+The earlier
+[catalogue receipt](evidence/classic-snake-catalogue-observation.json),
+[core observations](verification/classic-snake/core-observations.md) and
+[integration receipt](verification/classic-snake/integration.md) describe their
+historical source revisions and must not be presented as new-feature qualification.
+
+Automated suites remain **WAIVED_SKIPPED_NOT_PASSED** under
+`publishing/test-policy.json`. Syntax, scoped lint and formatting are checked;
+root integration owns repository validation, build, browser and publication
+receipts. Human qualification remains necessary for all-mission balance,
+keyboard/touch devices, slow devices, small-screen Versus/Team readability and
+complete cooperative campaigns. The catalogue does not by itself establish a
+Classic Studio editor, gamepad support, multiplayer flight or completion of those
+human checks.

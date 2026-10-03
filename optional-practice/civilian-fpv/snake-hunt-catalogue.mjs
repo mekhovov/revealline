@@ -443,10 +443,381 @@ function courseFor(chapter, row, index) {
   };
 }
 
-export const SNAKE_HUNT_COURSES = Object.freeze(
-  chapters.flatMap((chapter) => chapter.rows.map((row, index) => courseFor(chapter, row, index))),
+// New patrol courses have a separate pack identity. The original twenty-four
+// recipe bytes and their retained playlist/progress references stay unchanged.
+const pursuitChapters = [
+  {
+    id: 'interception',
+    title: text('Snake Hunt · Patrol interception', 'Змійка-полювання · Перехоплення патрулів'),
+  },
+  {
+    id: 'route-choices',
+    title: text('Snake Hunt · Flight route choices', 'Змійка-полювання · Вибір льотного маршруту'),
+  },
+];
+const pursuitRows = [
+  [
+    'loop-intercept',
+    'Loop intercept',
+    'Перехоплення на колі',
+    'A broad patrol loop surrounds a low island. Fly across the open interior to meet a target.',
+    'Широкий маршрут патруля оточує низький острів. Летіть через відкритий простір назустріч цілі.',
+    'stadium',
+    3,
+    700,
+    2,
+    [
+      [-14, 10],
+      [-14, -12],
+      [14, -12],
+      [14, 10],
+    ],
+    [[0, 0, 8, 8, 3]],
+  ],
+  [
+    'two-return-lanes',
+    'Two return lanes',
+    'Два шляхи повернення',
+    'Two patrol loops flank a divider. Pass its end or climb above it before returning.',
+    'Дві петлі патрулів проходять обабіч перегородки. Обігніть її кінець або підніміться над нею перед поверненням.',
+    'warehouse',
+    4,
+    800,
+    2,
+    [
+      [-18, 10],
+      [-18, -16],
+      [-6, -16],
+      [-6, 10],
+    ],
+    [[0, -2, 3, 22, 4]],
+    [
+      [6, 10],
+      [6, -16],
+      [18, -16],
+      [18, 10],
+    ],
+  ],
+  [
+    'corner-approach',
+    'Corner approach',
+    'Підхід за ріг',
+    'The L-shaped barrier rewards approaching the next straight instead of following the target.',
+    'Г-подібна перегородка заохочує зайти на наступну пряму, замість летіти за ціллю.',
+    'warehouse',
+    3,
+    900,
+    3,
+    [
+      [-12, 12],
+      [-12, -16],
+      [14, -16],
+      [14, 12],
+    ],
+    [
+      [-3, -2, 3, 16, 4],
+      [4, 5, 12, 3, 4],
+    ],
+  ],
+  [
+    'crossing-patrols',
+    'Crossing patrols',
+    'Перехресні патрулі',
+    'Horizontal and vertical patrol routes cross in open space. Choose an approach with a clear exit.',
+    'Горизонтальні й вертикальні маршрути перетинаються у відкритому просторі. Оберіть підхід із вільним виходом.',
+    'stadium',
+    4,
+    1000,
+    3,
+    [
+      [-22, -3],
+      [22, -3],
+      [22, 3],
+      [-22, 3],
+    ],
+    [
+      [-14, -14, 4, 4, 3],
+      [14, 14, 4, 4, 3],
+      [-14, 14, 4, 4, 3],
+      [14, -14, 4, 4, 3],
+    ],
+    [
+      [-3, -22],
+      [3, -22],
+      [3, 20],
+      [-3, 20],
+    ],
+  ],
+  [
+    'island-bypass',
+    'Island bypass',
+    'Обхід острова',
+    'An asymmetric island and side block divide short and long approaches to the patrol.',
+    'Несиметричний острів і бічний блок розділяють короткі та довгі підходи до патруля.',
+    'garage',
+    4,
+    1100,
+    3,
+    [
+      [-14, -8],
+      [14, -8],
+      [14, 10],
+      [-14, 10],
+    ],
+    [
+      [0, 0, 10, 8, 4],
+      [-20, -14, 4, 6, 3],
+    ],
+  ],
+  [
+    'staggered-interception',
+    'Staggered interception',
+    'Перехоплення між укриттями',
+    'A winding patrol passes alternating obstacles. Cut across a clear height instead of copying every ground turn.',
+    'Звивистий патруль минає почергові перешкоди. Перетинайте вільну висоту, замість повторювати кожен наземний поворот.',
+    'warehouse',
+    5,
+    1200,
+    4,
+    [
+      [-24, 16],
+      [-24, -18],
+      [-4, -18],
+      [-4, 16],
+      [6, 16],
+      [6, -18],
+      [24, -18],
+      [24, 16],
+    ],
+    [
+      [-12, -8, 4, 8, 3],
+      [0, 8, 4, 8, 4],
+      [12, -8, 4, 8, 5],
+    ],
+  ],
+  [
+    'warehouse-return',
+    'Warehouse return',
+    'Повернення через склад',
+    'Long aisles connect at both ends. Plan a return around your solid flown tail.',
+    'Довгі проходи сполучаються з обох кінців. Плануйте повернення навколо твердого сліду польоту.',
+    'warehouse',
+    4,
+    1000,
+    3,
+    [
+      [-24, 16],
+      [-24, -16],
+      [0, -16],
+      [0, 16],
+      [24, 16],
+      [24, -16],
+      [-24, -16],
+    ],
+    [
+      [-12, 0, 3, 22, 5],
+      [12, 0, 3, 22, 5],
+    ],
+  ],
+  [
+    'courtyard-approaches',
+    'Courtyard approaches',
+    'Підходи до двору',
+    'Three blocks define a courtyard with several approaches. The patrol stays on a continuous ground loop.',
+    'Три блоки утворюють двір із кількома підходами. Патруль рухається безперервною наземною петлею.',
+    'stadium',
+    4,
+    1100,
+    3,
+    [
+      [-22, 16],
+      [-22, -20],
+      [22, -20],
+      [22, 16],
+    ],
+    [
+      [-10, -4, 5, 15, 4],
+      [10, -4, 5, 15, 4],
+      [0, 10, 8, 4, 3],
+    ],
+  ],
+  [
+    'platform-perimeter',
+    'Platform perimeter',
+    'Периметр платформи',
+    'Patrols circle a broad platform. Use height to cross the middle, then descend toward the marked torso.',
+    'Патрулі обходять широку платформу. Перелітайте середину на висоті, потім знижуйтеся до позначеного тулуба.',
+    'garage',
+    4,
+    1200,
+    4,
+    [
+      [-18, -14],
+      [18, -14],
+      [18, 14],
+      [-18, 14],
+    ],
+    [
+      [0, 0, 20, 14, 3],
+      [23, -20, 4, 4, 5],
+    ],
+  ],
+  [
+    'boundary-cutback',
+    'Boundary cutback',
+    'Зворотний шлях біля межі',
+    'A tall offset barrier separates the two ground return lanes. Stay inside the flight bounds when circling it.',
+    'Висока зміщена перегородка розділяє два наземні шляхи повернення. Облітаючи її, залишайтеся в межах польоту.',
+    'warehouse',
+    4,
+    1200,
+    4,
+    [
+      [-20, 16],
+      [-20, -22],
+      [8, -22],
+      [8, 16],
+    ],
+    [
+      [-6, -2, 4, 24, 6],
+      [21, 9, 4, 14, 4],
+    ],
+    [
+      [13, 18],
+      [13, -18],
+      [27, -18],
+      [27, 18],
+    ],
+  ],
+  [
+    'cross-route-choice',
+    'Cross-route choice',
+    'Вибір перехресного шляху',
+    'Two figure-eight loops offer different interception angles. Keep the centre free for the next pass.',
+    'Дві вісімки пропонують різні кути перехоплення. Залишайте центр вільним для наступного проходу.',
+    'stadium',
+    5,
+    1300,
+    4,
+    [
+      [0, 0],
+      [-24, 0],
+      [-24, -20],
+      [0, -20],
+      [0, 0],
+      [24, 0],
+      [24, 18],
+      [0, 18],
+    ],
+    [
+      [-12, -10, 5, 5, 4],
+      [12, 10, 5, 5, 4],
+      [-12, 12, 4, 4, 3],
+      [14, -14, 4, 4, 3],
+    ],
+  ],
+  [
+    'airfield-circuit',
+    'Airfield circuit',
+    'Коло аеродрому',
+    'Three patrol corridors share open ends. Combine direct interceptions with height changes around a longer tail.',
+    'Три коридори патрулів мають спільні відкриті кінці. Поєднуйте прямі перехоплення зі зміною висоти навколо довшого хвоста.',
+    'garage',
+    6,
+    1400,
+    5,
+    [
+      [-26, 18],
+      [-26, -22],
+      [-2, -22],
+      [-2, 18],
+      [24, 18],
+      [24, -22],
+      [-26, -22],
+    ],
+    [
+      [-14, -2, 4, 26, 5],
+      [11, -2, 4, 26, 6],
+      [29, 3, 3, 12, 4],
+    ],
+  ],
+];
+function pursuitCourseFor(row, index) {
+  const [
+    slug,
+    en,
+    uk,
+    enBrief,
+    ukBrief,
+    environment,
+    count,
+    speed,
+    growth,
+    firstRoute,
+    boxes,
+    secondRoute,
+  ] = row;
+  const actors = Array.from({ length: count }, (_, actorIndex) => {
+    const route = actorIndex % 2 && secondRoute ? secondRoute : firstRoute;
+    const offset = Math.floor((actorIndex * route.length) / count) % route.length;
+    const path = [...route.slice(offset), ...route.slice(0, offset)].map(point);
+    return {
+      id: `humanoid-${String(actorIndex + 1).padStart(2, '0')}`,
+      type: 'patrol',
+      role: 'hostile',
+      position: { ...path[0] },
+      path,
+      speed,
+      radius: 420,
+      height: 2000,
+      health: 50,
+      fireEveryTicks: 0,
+      damage: 0,
+    };
+  });
+  const criterion = {
+    type: 'hunt-contact-v1',
+    targets: actors.map((actor) => actor.id),
+    ordered: false,
+    tail: { linksPerCatch: growth, maxLinks: 64, neckDistance: 4500, radius: 350 },
+  };
+  return {
+    format: 'FlightCourse.v2',
+    id: `snake-hunt-${pursuitChapters[Math.floor(index / 6)].id}-${slug}`,
+    revision: 'r1',
+    environment,
+    locales: {
+      en: {
+        title: en,
+        brief: enBrief,
+        lesson: `Touch all ${count} moving, unarmed fictional humanoids in any order. Intercept their patrol routes with normal manual flight controls. Each catch adds a solid echo tail; fly above or around it. These flight courses have no grid shutters, pickups or sprint powers.`,
+      },
+      uk: {
+        title: uk,
+        brief: ukBrief,
+        lesson: `Торкніться всіх ${count} рухливих неозброєних вигаданих гуманоїдів у довільному порядку. Перехоплюйте патрулі звичайним ручним керуванням. Кожен дотик подовжує твердий слід; пролітайте над ним або оминайте. Ці льотні вправи не мають клітинкових заслінок, припасів чи ривків.`,
+      },
+    },
+    spawn: point([0, 28]),
+    bounds: { min: point([-34, -34]), max: point([34, 34, 18]) },
+    obstacles: boxes.map((dimensions, i) => box(`obstacle-${i + 1}`, ...dimensions)),
+    actors,
+    steps: { 'self-level': [criterion], acro: [structuredClone(criterion)] },
+    world: { id: environment, theme: 'pixel', style: environment },
+    rules: { seed: 9300 + index, maxTicks: 36000, collisionDamage: 0 },
+    conditions: { profile: 'clear', revision: 'r1' },
+  };
+}
+const originalCourses = chapters.flatMap((chapter) =>
+  chapter.rows.map((row, index) => courseFor(chapter, row, index)),
 );
-export const SNAKE_HUNT_IDENTITY = `fpv-snake-hunt:${dataIdentity(SNAKE_HUNT_COURSES)}`;
+export const SNAKE_HUNT_PURSUIT_COURSES = Object.freeze(pursuitRows.map(pursuitCourseFor));
+export const SNAKE_HUNT_COURSES = Object.freeze([
+  ...originalCourses,
+  ...SNAKE_HUNT_PURSUIT_COURSES,
+]);
+export const SNAKE_HUNT_IDENTITY = `fpv-snake-hunt:${dataIdentity(originalCourses)}`;
+export const SNAKE_HUNT_PURSUIT_IDENTITY = `fpv-snake-pursuit:${dataIdentity(SNAKE_HUNT_PURSUIT_COURSES)}`;
 export const SNAKE_HUNT_CATALOGUE = Object.freeze(
   SNAKE_HUNT_COURSES.map((course, index) => ({
     id: course.id,
@@ -456,12 +827,13 @@ export const SNAKE_HUNT_CATALOGUE = Object.freeze(
     activity: 'hunt',
     difficulty: index % 6 < 2 ? 'beginner' : index % 6 < 5 ? 'intermediate' : 'advanced',
     duration: 4,
-    packIdentity: SNAKE_HUNT_IDENTITY,
+    packIdentity:
+      index < originalCourses.length ? SNAKE_HUNT_IDENTITY : SNAKE_HUNT_PURSUIT_IDENTITY,
     legacy: false,
   })),
 );
 export const SNAKE_HUNT_PLAYLISTS = Object.freeze(
-  chapters.map((chapter) => ({
+  [...chapters, ...pursuitChapters].map((chapter) => ({
     format: 'FPVPlaylist.v1',
     id: `snake-hunt-${chapter.id}`,
     revision: 'r1',

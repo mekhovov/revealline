@@ -4,7 +4,7 @@
 @layer legacy {
   .field-kit .game-mode-choice {
     display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-template-columns: repeat(5, minmax(0, 1fr));
     gap: var(--fk-space-2, 8px);
     margin: 0 0 var(--fk-space-6, 24px);
   }
@@ -53,9 +53,12 @@
     display: none;
   }
 
-  @media (max-width: 480px) {
+  @media (max-width: 640px) {
     .field-kit .game-mode-choice {
       grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    .field-kit .game-mode-choice > [data-snake-entry] {
+      grid-column: 1 / -1;
     }
   }
 }
