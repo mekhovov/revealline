@@ -133,6 +133,35 @@
     "passed": false,
     "reason": "The sparse checkout omits unrelated global content inputs. npm run validate stops during localization at missing game/content/packs/neon-reference-pack.json. Normal exact-head CI must establish full validation."
   },
-  "browser": "Frozen current-main fixture prepared; root browser review pending.",
+  "browser": {
+    "passed": true,
+    "candidate": "fabb417ec23e1fcaaabf90cd0c102a9f9335efed",
+    "baseline": "b3167a8f89c09286a424996ba4f7e3dca4a351b2",
+    "arenaCases": 2,
+    "placementsPerScene": 52,
+    "verticesCheckedPerScene": 16080,
+    "woodland08": {
+      "drawCalls": [
+        24,
+        30
+      ],
+      "triangles": [
+        2594,
+        2746
+      ]
+    },
+    "beginner40": {
+      "drawCalls": [
+        22,
+        22
+      ],
+      "triangles": [
+        2342,
+        2342
+      ]
+    },
+    "note": "Visibility changes with the composition; no unchanged-call or sustained FPS claim. Before/after views inspected in the root chat.",
+    "receipt": "fpv-woodland-depth-main-browser.json"
+  },
   "additionalUnitCoverage": false
 }
