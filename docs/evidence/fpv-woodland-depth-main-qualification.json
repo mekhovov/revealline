@@ -1,0 +1,138 @@
+{
+  "format": "FPVWoodlandDepthFunctionalEvidence.v1",
+  "baseline": "b3167a8f89c09286a424996ba4f7e3dca4a351b2",
+  "candidate": "fabb417ec23e1fcaaabf90cd0c102a9f9335efed",
+  "unchanged": [
+    {
+      "id": "snake-hunt-route-choices-cross-route-choice",
+      "environment": "stadium",
+      "bytes": 865844
+    },
+    {
+      "id": "snake-hunt-route-choices-boundary-cutback",
+      "environment": "warehouse",
+      "bytes": 876604
+    },
+    {
+      "id": "snake-hunt-route-choices-airfield-circuit",
+      "environment": "garage",
+      "bytes": 862492
+    },
+    {
+      "id": "snake-hunt-chase-06",
+      "environment": "container-yard",
+      "bytes": 884208
+    },
+    {
+      "id": "snake-hunt-approach-windows-window-chain",
+      "environment": "warehouse",
+      "bytes": 876636
+    },
+    {
+      "id": "snake-hunt-approach-windows-three-yard-finale",
+      "environment": "stadium",
+      "bytes": 865844
+    },
+    {
+      "id": "courtyard-08",
+      "environment": "courtyard",
+      "bytes": 899188
+    },
+    {
+      "id": "warehouse-08",
+      "environment": "warehouse",
+      "bytes": 876668
+    },
+    {
+      "id": "stadium-08",
+      "environment": "stadium",
+      "bytes": 865844
+    },
+    {
+      "id": "container-yard-08",
+      "environment": "container-yard",
+      "bytes": 884192
+    },
+    {
+      "id": "garage-08",
+      "environment": "garage",
+      "bytes": 862484
+    },
+    {
+      "id": "beginner-42",
+      "environment": "stadium",
+      "bytes": 865792
+    },
+    {
+      "id": "beginner-39",
+      "environment": "courtyard",
+      "bytes": 899648
+    },
+    {
+      "id": "beginner-38",
+      "environment": "warehouse",
+      "bytes": 876492
+    },
+    {
+      "id": "beginner-37",
+      "environment": "container-yard",
+      "bytes": 884104
+    },
+    {
+      "id": "beginner-41",
+      "environment": "garage",
+      "bytes": 862384
+    },
+    {
+      "id": "beginner-57",
+      "environment": "stadium",
+      "bytes": 865168
+    },
+    {
+      "id": "beginner-52",
+      "environment": "courtyard",
+      "bytes": 899488
+    }
+  ],
+  "woodland": [
+    {
+      "id": "woodland-08",
+      "placements": 52,
+      "benchesUnchanged": 12,
+      "clearance": true
+    },
+    {
+      "id": "beginner-40",
+      "placements": 52,
+      "benchesUnchanged": 12,
+      "clearance": true
+    }
+  ],
+  "passed": true,
+  "existingChecks": {
+    "passed": 30,
+    "failed": 0,
+    "files": [
+      "game/test/fpv-acceptance-workflow.test.mjs",
+      "game/test/fpv-world-textures.test.mjs",
+      "game/test/fpv-workshop-visuals.test.mjs"
+    ]
+  },
+  "templateRuntimeEqual": true,
+  "rotationArgumentsPreserved": true,
+  "rendererAndVisualModulesMatchMain": true,
+  "syntax": true,
+  "changedFileEslint": true,
+  "changedFilePrettier": true,
+  "diffCheck": true,
+  "runtimeHashes": {
+    "optional-practice/civilian-fpv/world-assets.mjs": "1f2ff71886eb61b9a87dbcefd7ce41b01f632e599785e5cb1ac22aa28d0b5f79",
+    "authoring/fpv-worlds/scenery-runtime.template.mjs": "574790f70842b3c221abef230970dfb21151f84004d5e9ad20c4216a65b118fb"
+  },
+  "fullValidate": {
+    "passed": false,
+    "reason": "The sparse checkout omits unrelated global content inputs. npm run validate stops during localization at missing game/content/packs/neon-reference-pack.json. Normal exact-head CI must establish full validation."
+  },
+  "browser": "Frozen current-main fixture prepared; root browser review pending.",
+  "additionalUnitCoverage": false
+}
