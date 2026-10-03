@@ -2317,3 +2317,26 @@ under64MiB. Keep subsequent example data separately delivered and verify current
 capacity rather than expanding any limit. Current host SHA256:
 `c3f2a71d5e44ffe1e26110b6712ae1f8fb9032a78337567ecb0e945c71e6e776`. Updated receipts replace prior
 candidate receipts in the feature document; earlier evidence remains in Git.
+
+
+### Pack recovery published — 3 October 2026
+
+[PR #977](https://github.com/mekhovov/revealline/pull/977) is published and attached,
+initial head `c0b04f355fc9d4a12a0b69acbe565328320dce40`, independently against main.
+Final source and packaged hosts each pass90/90 checks; all three optional
+admissions, largest-edition admission, committed inputs and reproducibility pass.
+Player build `dist/fpv-pack-recovery-playtest` was rebuilt and launched at the
+Library; ZIP SHA256 `57cf8df8f86bedc8891d3cdfe22925b8023216db2babc90bc86e36c1a1c084ea`.
+The preceding user Creator preview remains untouched.
+
+The initial release-ready job in run37089297268 reports **ADMISSION hold: no
+immutable release slot**. This is a publication-policy hold, not a runtime test
+failure. Preflight and staging succeeded; preserve the ordinary staging/review
+process and all current protection. Do not allocate a version, change the title
+to impersonate a release, or bypass the gate. Main advanced independently to
+7d64e9ba8 with Snake campaigns; retain this feature head and inspect current
+remote state before later integration. No public deployment claim for #977.
+
+Next independent work is matching-mode school demonstrations and bounded
+optional example import/selection. Player feedback remains nonblocking; physical
+radio, novice acceptance and named-device performance remain unverified.

@@ -29,7 +29,7 @@ Adventure authoring proofs are separate; they are not installed demonstrations.
 | --- | --- | --- | --- |
 | Complete / merged #972 | Watch a recorded section, then practise from its exact entry | Delivered | Verified prefix and end boundary, accurate labels, pause/reconnect and no rewards from playback/practice |
 | Complete / merged #975 | Visual Follow/Observe objective inspector | Delivered | Author, move subject, edit criteria, export/reopen and reimport without losing settings |
-| Implemented / publication | Pack-removal impact and recovery guidance | Source/package verified | 90 browser checks in each build, exact restore and preserved recording/session/playlist evidence |
+| Complete / PR #977 | Pack-removal impact and recovery guidance | Source/package verified; publication pending | 90 browser checks in each build, exact restore and preserved recording/session/playlist evidence |
 | Parallel | Stadium, then yard/garage art using shared Themes materials | 3–5 days per bounded batch | Readability, collision/visibility parity, resource disposal and source/packaged rendering |
 | 4 | Matching-mode school examples and optional Adventure examples | 3–5 days per bounded batch | Correct mode/revision, complete replay and bounded optional delivery |
 | 5 | Further distinct practice worlds and moving-subject challenges | 3–5 days per pair | Authored routes/objectives, both-mode access and verified demonstrations |
