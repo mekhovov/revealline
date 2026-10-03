@@ -1,0 +1,1392 @@
+{
+  "format": "FPVGarageMainIntegrationAudit.v1",
+  "from": "79c68c0c87368205a1718662d47971cefc2223f8",
+  "incoming": "a1cb86c85cd52db7256ad2ed16c30c8f40f90c32",
+  "rendererByteIdentical": true,
+  "changedVisualFunctions": ["buildWorldVisuals"],
+  "garageStadiumHelpersByteIdentical": true,
+  "worldAssetsMatchIncomingMain": true,
+  "garageSceneCases": 162,
+  "nonWoodlandGLBCases": 100,
+  "sceneCases": [
+    {
+      "id": "snake-hunt-heights-01",
+      "quality": "low",
+      "appearance": "authored",
+      "hash": "19897ad04f44c0fea660a752ad1b39fe6c989acee370860cc353eb8228d998f7"
+    },
+    {
+      "id": "snake-hunt-heights-01",
+      "quality": "low",
+      "appearance": "pixel",
+      "hash": "19897ad04f44c0fea660a752ad1b39fe6c989acee370860cc353eb8228d998f7"
+    },
+    {
+      "id": "snake-hunt-heights-01",
+      "quality": "low",
+      "appearance": "industrial-workshop",
+      "hash": "e207148dc437e520470c2479ff9e9341913dc5be342095e6589e27d36dfa6070"
+    },
+    {
+      "id": "snake-hunt-heights-01",
+      "quality": "balanced",
+      "appearance": "authored",
+      "hash": "19897ad04f44c0fea660a752ad1b39fe6c989acee370860cc353eb8228d998f7"
+    },
+    {
+      "id": "snake-hunt-heights-01",
+      "quality": "balanced",
+      "appearance": "pixel",
+      "hash": "19897ad04f44c0fea660a752ad1b39fe6c989acee370860cc353eb8228d998f7"
+    },
+    {
+      "id": "snake-hunt-heights-01",
+      "quality": "balanced",
+      "appearance": "industrial-workshop",
+      "hash": "e207148dc437e520470c2479ff9e9341913dc5be342095e6589e27d36dfa6070"
+    },
+    {
+      "id": "snake-hunt-heights-01",
+      "quality": "high",
+      "appearance": "authored",
+      "hash": "19897ad04f44c0fea660a752ad1b39fe6c989acee370860cc353eb8228d998f7"
+    },
+    {
+      "id": "snake-hunt-heights-01",
+      "quality": "high",
+      "appearance": "pixel",
+      "hash": "19897ad04f44c0fea660a752ad1b39fe6c989acee370860cc353eb8228d998f7"
+    },
+    {
+      "id": "snake-hunt-heights-01",
+      "quality": "high",
+      "appearance": "industrial-workshop",
+      "hash": "e207148dc437e520470c2479ff9e9341913dc5be342095e6589e27d36dfa6070"
+    },
+    {
+      "id": "snake-hunt-heights-02",
+      "quality": "low",
+      "appearance": "authored",
+      "hash": "73c3ef72205d628d8cbf6f6c5bfb91b4d315d8cb0bc86622acccc017378c3ac4"
+    },
+    {
+      "id": "snake-hunt-heights-02",
+      "quality": "low",
+      "appearance": "pixel",
+      "hash": "73c3ef72205d628d8cbf6f6c5bfb91b4d315d8cb0bc86622acccc017378c3ac4"
+    },
+    {
+      "id": "snake-hunt-heights-02",
+      "quality": "low",
+      "appearance": "industrial-workshop",
+      "hash": "da791ceef2c1c89fa5674c298e477a861c5f24f7475c70b3610f6a6d577e006c"
+    },
+    {
+      "id": "snake-hunt-heights-02",
+      "quality": "balanced",
+      "appearance": "authored",
+      "hash": "73c3ef72205d628d8cbf6f6c5bfb91b4d315d8cb0bc86622acccc017378c3ac4"
+    },
+    {
+      "id": "snake-hunt-heights-02",
+      "quality": "balanced",
+      "appearance": "pixel",
+      "hash": "73c3ef72205d628d8cbf6f6c5bfb91b4d315d8cb0bc86622acccc017378c3ac4"
+    },
+    {
+      "id": "snake-hunt-heights-02",
+      "quality": "balanced",
+      "appearance": "industrial-workshop",
+      "hash": "da791ceef2c1c89fa5674c298e477a861c5f24f7475c70b3610f6a6d577e006c"
+    },
+    {
+      "id": "snake-hunt-heights-02",
+      "quality": "high",
+      "appearance": "authored",
+      "hash": "73c3ef72205d628d8cbf6f6c5bfb91b4d315d8cb0bc86622acccc017378c3ac4"
+    },
+    {
+      "id": "snake-hunt-heights-02",
+      "quality": "high",
+      "appearance": "pixel",
+      "hash": "73c3ef72205d628d8cbf6f6c5bfb91b4d315d8cb0bc86622acccc017378c3ac4"
+    },
+    {
+      "id": "snake-hunt-heights-02",
+      "quality": "high",
+      "appearance": "industrial-workshop",
+      "hash": "da791ceef2c1c89fa5674c298e477a861c5f24f7475c70b3610f6a6d577e006c"
+    },
+    {
+      "id": "snake-hunt-heights-03",
+      "quality": "low",
+      "appearance": "authored",
+      "hash": "511a0a2e5a9ea792e6847ffbd0aa4dd9871c172ac0f26dc69f26abfb67636db2"
+    },
+    {
+      "id": "snake-hunt-heights-03",
+      "quality": "low",
+      "appearance": "pixel",
+      "hash": "511a0a2e5a9ea792e6847ffbd0aa4dd9871c172ac0f26dc69f26abfb67636db2"
+    },
+    {
+      "id": "snake-hunt-heights-03",
+      "quality": "low",
+      "appearance": "industrial-workshop",
+      "hash": "dbc1d3c139dd123f1b02c94ae5e1841ece19fb5624d15f1429154e711e749a32"
+    },
+    {
+      "id": "snake-hunt-heights-03",
+      "quality": "balanced",
+      "appearance": "authored",
+      "hash": "511a0a2e5a9ea792e6847ffbd0aa4dd9871c172ac0f26dc69f26abfb67636db2"
+    },
+    {
+      "id": "snake-hunt-heights-03",
+      "quality": "balanced",
+      "appearance": "pixel",
+      "hash": "511a0a2e5a9ea792e6847ffbd0aa4dd9871c172ac0f26dc69f26abfb67636db2"
+    },
+    {
+      "id": "snake-hunt-heights-03",
+      "quality": "balanced",
+      "appearance": "industrial-workshop",
+      "hash": "dbc1d3c139dd123f1b02c94ae5e1841ece19fb5624d15f1429154e711e749a32"
+    },
+    {
+      "id": "snake-hunt-heights-03",
+      "quality": "high",
+      "appearance": "authored",
+      "hash": "511a0a2e5a9ea792e6847ffbd0aa4dd9871c172ac0f26dc69f26abfb67636db2"
+    },
+    {
+      "id": "snake-hunt-heights-03",
+      "quality": "high",
+      "appearance": "pixel",
+      "hash": "511a0a2e5a9ea792e6847ffbd0aa4dd9871c172ac0f26dc69f26abfb67636db2"
+    },
+    {
+      "id": "snake-hunt-heights-03",
+      "quality": "high",
+      "appearance": "industrial-workshop",
+      "hash": "dbc1d3c139dd123f1b02c94ae5e1841ece19fb5624d15f1429154e711e749a32"
+    },
+    {
+      "id": "snake-hunt-heights-04",
+      "quality": "low",
+      "appearance": "authored",
+      "hash": "b25390fbed8a9ff7b2a9ec9f098dd2efc7b54aa9c5f900c913cc5a60731dcad8"
+    },
+    {
+      "id": "snake-hunt-heights-04",
+      "quality": "low",
+      "appearance": "pixel",
+      "hash": "b25390fbed8a9ff7b2a9ec9f098dd2efc7b54aa9c5f900c913cc5a60731dcad8"
+    },
+    {
+      "id": "snake-hunt-heights-04",
+      "quality": "low",
+      "appearance": "industrial-workshop",
+      "hash": "339f92c47c13aae5e43ea955d5beee9ec28ab091055b74024fb20318ca77b2ee"
+    },
+    {
+      "id": "snake-hunt-heights-04",
+      "quality": "balanced",
+      "appearance": "authored",
+      "hash": "b25390fbed8a9ff7b2a9ec9f098dd2efc7b54aa9c5f900c913cc5a60731dcad8"
+    },
+    {
+      "id": "snake-hunt-heights-04",
+      "quality": "balanced",
+      "appearance": "pixel",
+      "hash": "b25390fbed8a9ff7b2a9ec9f098dd2efc7b54aa9c5f900c913cc5a60731dcad8"
+    },
+    {
+      "id": "snake-hunt-heights-04",
+      "quality": "balanced",
+      "appearance": "industrial-workshop",
+      "hash": "339f92c47c13aae5e43ea955d5beee9ec28ab091055b74024fb20318ca77b2ee"
+    },
+    {
+      "id": "snake-hunt-heights-04",
+      "quality": "high",
+      "appearance": "authored",
+      "hash": "b25390fbed8a9ff7b2a9ec9f098dd2efc7b54aa9c5f900c913cc5a60731dcad8"
+    },
+    {
+      "id": "snake-hunt-heights-04",
+      "quality": "high",
+      "appearance": "pixel",
+      "hash": "b25390fbed8a9ff7b2a9ec9f098dd2efc7b54aa9c5f900c913cc5a60731dcad8"
+    },
+    {
+      "id": "snake-hunt-heights-04",
+      "quality": "high",
+      "appearance": "industrial-workshop",
+      "hash": "339f92c47c13aae5e43ea955d5beee9ec28ab091055b74024fb20318ca77b2ee"
+    },
+    {
+      "id": "snake-hunt-heights-05",
+      "quality": "low",
+      "appearance": "authored",
+      "hash": "511a0a2e5a9ea792e6847ffbd0aa4dd9871c172ac0f26dc69f26abfb67636db2"
+    },
+    {
+      "id": "snake-hunt-heights-05",
+      "quality": "low",
+      "appearance": "pixel",
+      "hash": "511a0a2e5a9ea792e6847ffbd0aa4dd9871c172ac0f26dc69f26abfb67636db2"
+    },
+    {
+      "id": "snake-hunt-heights-05",
+      "quality": "low",
+      "appearance": "industrial-workshop",
+      "hash": "dbc1d3c139dd123f1b02c94ae5e1841ece19fb5624d15f1429154e711e749a32"
+    },
+    {
+      "id": "snake-hunt-heights-05",
+      "quality": "balanced",
+      "appearance": "authored",
+      "hash": "511a0a2e5a9ea792e6847ffbd0aa4dd9871c172ac0f26dc69f26abfb67636db2"
+    },
+    {
+      "id": "snake-hunt-heights-05",
+      "quality": "balanced",
+      "appearance": "pixel",
+      "hash": "511a0a2e5a9ea792e6847ffbd0aa4dd9871c172ac0f26dc69f26abfb67636db2"
+    },
+    {
+      "id": "snake-hunt-heights-05",
+      "quality": "balanced",
+      "appearance": "industrial-workshop",
+      "hash": "dbc1d3c139dd123f1b02c94ae5e1841ece19fb5624d15f1429154e711e749a32"
+    },
+    {
+      "id": "snake-hunt-heights-05",
+      "quality": "high",
+      "appearance": "authored",
+      "hash": "511a0a2e5a9ea792e6847ffbd0aa4dd9871c172ac0f26dc69f26abfb67636db2"
+    },
+    {
+      "id": "snake-hunt-heights-05",
+      "quality": "high",
+      "appearance": "pixel",
+      "hash": "511a0a2e5a9ea792e6847ffbd0aa4dd9871c172ac0f26dc69f26abfb67636db2"
+    },
+    {
+      "id": "snake-hunt-heights-05",
+      "quality": "high",
+      "appearance": "industrial-workshop",
+      "hash": "dbc1d3c139dd123f1b02c94ae5e1841ece19fb5624d15f1429154e711e749a32"
+    },
+    {
+      "id": "snake-hunt-heights-06",
+      "quality": "low",
+      "appearance": "authored",
+      "hash": "a173842a7f961934118323d2e21d61ebb8f0fa8ce9037ea6d3e5c9e6b02495fc"
+    },
+    {
+      "id": "snake-hunt-heights-06",
+      "quality": "low",
+      "appearance": "pixel",
+      "hash": "a173842a7f961934118323d2e21d61ebb8f0fa8ce9037ea6d3e5c9e6b02495fc"
+    },
+    {
+      "id": "snake-hunt-heights-06",
+      "quality": "low",
+      "appearance": "industrial-workshop",
+      "hash": "996e1e1ff90b207f2a3b4b896c41f28e8722e9e4d71736bb50b1935e8525e6d5"
+    },
+    {
+      "id": "snake-hunt-heights-06",
+      "quality": "balanced",
+      "appearance": "authored",
+      "hash": "a173842a7f961934118323d2e21d61ebb8f0fa8ce9037ea6d3e5c9e6b02495fc"
+    },
+    {
+      "id": "snake-hunt-heights-06",
+      "quality": "balanced",
+      "appearance": "pixel",
+      "hash": "a173842a7f961934118323d2e21d61ebb8f0fa8ce9037ea6d3e5c9e6b02495fc"
+    },
+    {
+      "id": "snake-hunt-heights-06",
+      "quality": "balanced",
+      "appearance": "industrial-workshop",
+      "hash": "996e1e1ff90b207f2a3b4b896c41f28e8722e9e4d71736bb50b1935e8525e6d5"
+    },
+    {
+      "id": "snake-hunt-heights-06",
+      "quality": "high",
+      "appearance": "authored",
+      "hash": "a173842a7f961934118323d2e21d61ebb8f0fa8ce9037ea6d3e5c9e6b02495fc"
+    },
+    {
+      "id": "snake-hunt-heights-06",
+      "quality": "high",
+      "appearance": "pixel",
+      "hash": "a173842a7f961934118323d2e21d61ebb8f0fa8ce9037ea6d3e5c9e6b02495fc"
+    },
+    {
+      "id": "snake-hunt-heights-06",
+      "quality": "high",
+      "appearance": "industrial-workshop",
+      "hash": "996e1e1ff90b207f2a3b4b896c41f28e8722e9e4d71736bb50b1935e8525e6d5"
+    },
+    {
+      "id": "snake-hunt-interception-island-bypass",
+      "quality": "low",
+      "appearance": "authored",
+      "hash": "bf8eecb297f074afcccec9353b849694ed74cfc370fafbf1151173dd2df1734b"
+    },
+    {
+      "id": "snake-hunt-interception-island-bypass",
+      "quality": "low",
+      "appearance": "pixel",
+      "hash": "bf8eecb297f074afcccec9353b849694ed74cfc370fafbf1151173dd2df1734b"
+    },
+    {
+      "id": "snake-hunt-interception-island-bypass",
+      "quality": "low",
+      "appearance": "industrial-workshop",
+      "hash": "660a08449b0916c58cc3fd76d1595fada9f083cf55be9e592b2b00bb6054d2fb"
+    },
+    {
+      "id": "snake-hunt-interception-island-bypass",
+      "quality": "balanced",
+      "appearance": "authored",
+      "hash": "bf8eecb297f074afcccec9353b849694ed74cfc370fafbf1151173dd2df1734b"
+    },
+    {
+      "id": "snake-hunt-interception-island-bypass",
+      "quality": "balanced",
+      "appearance": "pixel",
+      "hash": "bf8eecb297f074afcccec9353b849694ed74cfc370fafbf1151173dd2df1734b"
+    },
+    {
+      "id": "snake-hunt-interception-island-bypass",
+      "quality": "balanced",
+      "appearance": "industrial-workshop",
+      "hash": "660a08449b0916c58cc3fd76d1595fada9f083cf55be9e592b2b00bb6054d2fb"
+    },
+    {
+      "id": "snake-hunt-interception-island-bypass",
+      "quality": "high",
+      "appearance": "authored",
+      "hash": "bf8eecb297f074afcccec9353b849694ed74cfc370fafbf1151173dd2df1734b"
+    },
+    {
+      "id": "snake-hunt-interception-island-bypass",
+      "quality": "high",
+      "appearance": "pixel",
+      "hash": "bf8eecb297f074afcccec9353b849694ed74cfc370fafbf1151173dd2df1734b"
+    },
+    {
+      "id": "snake-hunt-interception-island-bypass",
+      "quality": "high",
+      "appearance": "industrial-workshop",
+      "hash": "660a08449b0916c58cc3fd76d1595fada9f083cf55be9e592b2b00bb6054d2fb"
+    },
+    {
+      "id": "snake-hunt-route-choices-platform-perimeter",
+      "quality": "low",
+      "appearance": "authored",
+      "hash": "bf8eecb297f074afcccec9353b849694ed74cfc370fafbf1151173dd2df1734b"
+    },
+    {
+      "id": "snake-hunt-route-choices-platform-perimeter",
+      "quality": "low",
+      "appearance": "pixel",
+      "hash": "bf8eecb297f074afcccec9353b849694ed74cfc370fafbf1151173dd2df1734b"
+    },
+    {
+      "id": "snake-hunt-route-choices-platform-perimeter",
+      "quality": "low",
+      "appearance": "industrial-workshop",
+      "hash": "660a08449b0916c58cc3fd76d1595fada9f083cf55be9e592b2b00bb6054d2fb"
+    },
+    {
+      "id": "snake-hunt-route-choices-platform-perimeter",
+      "quality": "balanced",
+      "appearance": "authored",
+      "hash": "bf8eecb297f074afcccec9353b849694ed74cfc370fafbf1151173dd2df1734b"
+    },
+    {
+      "id": "snake-hunt-route-choices-platform-perimeter",
+      "quality": "balanced",
+      "appearance": "pixel",
+      "hash": "bf8eecb297f074afcccec9353b849694ed74cfc370fafbf1151173dd2df1734b"
+    },
+    {
+      "id": "snake-hunt-route-choices-platform-perimeter",
+      "quality": "balanced",
+      "appearance": "industrial-workshop",
+      "hash": "660a08449b0916c58cc3fd76d1595fada9f083cf55be9e592b2b00bb6054d2fb"
+    },
+    {
+      "id": "snake-hunt-route-choices-platform-perimeter",
+      "quality": "high",
+      "appearance": "authored",
+      "hash": "bf8eecb297f074afcccec9353b849694ed74cfc370fafbf1151173dd2df1734b"
+    },
+    {
+      "id": "snake-hunt-route-choices-platform-perimeter",
+      "quality": "high",
+      "appearance": "pixel",
+      "hash": "bf8eecb297f074afcccec9353b849694ed74cfc370fafbf1151173dd2df1734b"
+    },
+    {
+      "id": "snake-hunt-route-choices-platform-perimeter",
+      "quality": "high",
+      "appearance": "industrial-workshop",
+      "hash": "660a08449b0916c58cc3fd76d1595fada9f083cf55be9e592b2b00bb6054d2fb"
+    },
+    {
+      "id": "snake-hunt-route-choices-airfield-circuit",
+      "quality": "low",
+      "appearance": "authored",
+      "hash": "b97ace0cd55e860e520ed502a6ad1092794ade7f202a357b648b0c094c8084a0"
+    },
+    {
+      "id": "snake-hunt-route-choices-airfield-circuit",
+      "quality": "low",
+      "appearance": "pixel",
+      "hash": "b97ace0cd55e860e520ed502a6ad1092794ade7f202a357b648b0c094c8084a0"
+    },
+    {
+      "id": "snake-hunt-route-choices-airfield-circuit",
+      "quality": "low",
+      "appearance": "industrial-workshop",
+      "hash": "3cd4124db7dffa64abba3b2b88fcacc5b86d97d5a4f820586f7f5c6b5b306885"
+    },
+    {
+      "id": "snake-hunt-route-choices-airfield-circuit",
+      "quality": "balanced",
+      "appearance": "authored",
+      "hash": "b97ace0cd55e860e520ed502a6ad1092794ade7f202a357b648b0c094c8084a0"
+    },
+    {
+      "id": "snake-hunt-route-choices-airfield-circuit",
+      "quality": "balanced",
+      "appearance": "pixel",
+      "hash": "b97ace0cd55e860e520ed502a6ad1092794ade7f202a357b648b0c094c8084a0"
+    },
+    {
+      "id": "snake-hunt-route-choices-airfield-circuit",
+      "quality": "balanced",
+      "appearance": "industrial-workshop",
+      "hash": "3cd4124db7dffa64abba3b2b88fcacc5b86d97d5a4f820586f7f5c6b5b306885"
+    },
+    {
+      "id": "snake-hunt-route-choices-airfield-circuit",
+      "quality": "high",
+      "appearance": "authored",
+      "hash": "b97ace0cd55e860e520ed502a6ad1092794ade7f202a357b648b0c094c8084a0"
+    },
+    {
+      "id": "snake-hunt-route-choices-airfield-circuit",
+      "quality": "high",
+      "appearance": "pixel",
+      "hash": "b97ace0cd55e860e520ed502a6ad1092794ade7f202a357b648b0c094c8084a0"
+    },
+    {
+      "id": "snake-hunt-route-choices-airfield-circuit",
+      "quality": "high",
+      "appearance": "industrial-workshop",
+      "hash": "3cd4124db7dffa64abba3b2b88fcacc5b86d97d5a4f820586f7f5c6b5b306885"
+    },
+    {
+      "id": "garage-01",
+      "quality": "low",
+      "appearance": "authored",
+      "hash": "364c5ec806795ea20d02f6dbbc4f857374e5a01c43770a59b01aec892ad251ff"
+    },
+    {
+      "id": "garage-01",
+      "quality": "low",
+      "appearance": "pixel",
+      "hash": "2277038632d77655415bee5f66ed31fea2a9fb73caeae082045d44af52cb3e5e"
+    },
+    {
+      "id": "garage-01",
+      "quality": "low",
+      "appearance": "industrial-workshop",
+      "hash": "b7f34fb82477fc7e0580aa4aa11418bbdf4e96bdd6628f45caa64010f039cbcc"
+    },
+    {
+      "id": "garage-01",
+      "quality": "balanced",
+      "appearance": "authored",
+      "hash": "364c5ec806795ea20d02f6dbbc4f857374e5a01c43770a59b01aec892ad251ff"
+    },
+    {
+      "id": "garage-01",
+      "quality": "balanced",
+      "appearance": "pixel",
+      "hash": "2277038632d77655415bee5f66ed31fea2a9fb73caeae082045d44af52cb3e5e"
+    },
+    {
+      "id": "garage-01",
+      "quality": "balanced",
+      "appearance": "industrial-workshop",
+      "hash": "b7f34fb82477fc7e0580aa4aa11418bbdf4e96bdd6628f45caa64010f039cbcc"
+    },
+    {
+      "id": "garage-01",
+      "quality": "high",
+      "appearance": "authored",
+      "hash": "364c5ec806795ea20d02f6dbbc4f857374e5a01c43770a59b01aec892ad251ff"
+    },
+    {
+      "id": "garage-01",
+      "quality": "high",
+      "appearance": "pixel",
+      "hash": "2277038632d77655415bee5f66ed31fea2a9fb73caeae082045d44af52cb3e5e"
+    },
+    {
+      "id": "garage-01",
+      "quality": "high",
+      "appearance": "industrial-workshop",
+      "hash": "b7f34fb82477fc7e0580aa4aa11418bbdf4e96bdd6628f45caa64010f039cbcc"
+    },
+    {
+      "id": "garage-02",
+      "quality": "low",
+      "appearance": "authored",
+      "hash": "364c5ec806795ea20d02f6dbbc4f857374e5a01c43770a59b01aec892ad251ff"
+    },
+    {
+      "id": "garage-02",
+      "quality": "low",
+      "appearance": "pixel",
+      "hash": "2277038632d77655415bee5f66ed31fea2a9fb73caeae082045d44af52cb3e5e"
+    },
+    {
+      "id": "garage-02",
+      "quality": "low",
+      "appearance": "industrial-workshop",
+      "hash": "b7f34fb82477fc7e0580aa4aa11418bbdf4e96bdd6628f45caa64010f039cbcc"
+    },
+    {
+      "id": "garage-02",
+      "quality": "balanced",
+      "appearance": "authored",
+      "hash": "364c5ec806795ea20d02f6dbbc4f857374e5a01c43770a59b01aec892ad251ff"
+    },
+    {
+      "id": "garage-02",
+      "quality": "balanced",
+      "appearance": "pixel",
+      "hash": "2277038632d77655415bee5f66ed31fea2a9fb73caeae082045d44af52cb3e5e"
+    },
+    {
+      "id": "garage-02",
+      "quality": "balanced",
+      "appearance": "industrial-workshop",
+      "hash": "b7f34fb82477fc7e0580aa4aa11418bbdf4e96bdd6628f45caa64010f039cbcc"
+    },
+    {
+      "id": "garage-02",
+      "quality": "high",
+      "appearance": "authored",
+      "hash": "364c5ec806795ea20d02f6dbbc4f857374e5a01c43770a59b01aec892ad251ff"
+    },
+    {
+      "id": "garage-02",
+      "quality": "high",
+      "appearance": "pixel",
+      "hash": "2277038632d77655415bee5f66ed31fea2a9fb73caeae082045d44af52cb3e5e"
+    },
+    {
+      "id": "garage-02",
+      "quality": "high",
+      "appearance": "industrial-workshop",
+      "hash": "b7f34fb82477fc7e0580aa4aa11418bbdf4e96bdd6628f45caa64010f039cbcc"
+    },
+    {
+      "id": "garage-03",
+      "quality": "low",
+      "appearance": "authored",
+      "hash": "364c5ec806795ea20d02f6dbbc4f857374e5a01c43770a59b01aec892ad251ff"
+    },
+    {
+      "id": "garage-03",
+      "quality": "low",
+      "appearance": "pixel",
+      "hash": "2277038632d77655415bee5f66ed31fea2a9fb73caeae082045d44af52cb3e5e"
+    },
+    {
+      "id": "garage-03",
+      "quality": "low",
+      "appearance": "industrial-workshop",
+      "hash": "b7f34fb82477fc7e0580aa4aa11418bbdf4e96bdd6628f45caa64010f039cbcc"
+    },
+    {
+      "id": "garage-03",
+      "quality": "balanced",
+      "appearance": "authored",
+      "hash": "364c5ec806795ea20d02f6dbbc4f857374e5a01c43770a59b01aec892ad251ff"
+    },
+    {
+      "id": "garage-03",
+      "quality": "balanced",
+      "appearance": "pixel",
+      "hash": "2277038632d77655415bee5f66ed31fea2a9fb73caeae082045d44af52cb3e5e"
+    },
+    {
+      "id": "garage-03",
+      "quality": "balanced",
+      "appearance": "industrial-workshop",
+      "hash": "b7f34fb82477fc7e0580aa4aa11418bbdf4e96bdd6628f45caa64010f039cbcc"
+    },
+    {
+      "id": "garage-03",
+      "quality": "high",
+      "appearance": "authored",
+      "hash": "364c5ec806795ea20d02f6dbbc4f857374e5a01c43770a59b01aec892ad251ff"
+    },
+    {
+      "id": "garage-03",
+      "quality": "high",
+      "appearance": "pixel",
+      "hash": "2277038632d77655415bee5f66ed31fea2a9fb73caeae082045d44af52cb3e5e"
+    },
+    {
+      "id": "garage-03",
+      "quality": "high",
+      "appearance": "industrial-workshop",
+      "hash": "b7f34fb82477fc7e0580aa4aa11418bbdf4e96bdd6628f45caa64010f039cbcc"
+    },
+    {
+      "id": "garage-04",
+      "quality": "low",
+      "appearance": "authored",
+      "hash": "364c5ec806795ea20d02f6dbbc4f857374e5a01c43770a59b01aec892ad251ff"
+    },
+    {
+      "id": "garage-04",
+      "quality": "low",
+      "appearance": "pixel",
+      "hash": "2277038632d77655415bee5f66ed31fea2a9fb73caeae082045d44af52cb3e5e"
+    },
+    {
+      "id": "garage-04",
+      "quality": "low",
+      "appearance": "industrial-workshop",
+      "hash": "b7f34fb82477fc7e0580aa4aa11418bbdf4e96bdd6628f45caa64010f039cbcc"
+    },
+    {
+      "id": "garage-04",
+      "quality": "balanced",
+      "appearance": "authored",
+      "hash": "364c5ec806795ea20d02f6dbbc4f857374e5a01c43770a59b01aec892ad251ff"
+    },
+    {
+      "id": "garage-04",
+      "quality": "balanced",
+      "appearance": "pixel",
+      "hash": "2277038632d77655415bee5f66ed31fea2a9fb73caeae082045d44af52cb3e5e"
+    },
+    {
+      "id": "garage-04",
+      "quality": "balanced",
+      "appearance": "industrial-workshop",
+      "hash": "b7f34fb82477fc7e0580aa4aa11418bbdf4e96bdd6628f45caa64010f039cbcc"
+    },
+    {
+      "id": "garage-04",
+      "quality": "high",
+      "appearance": "authored",
+      "hash": "364c5ec806795ea20d02f6dbbc4f857374e5a01c43770a59b01aec892ad251ff"
+    },
+    {
+      "id": "garage-04",
+      "quality": "high",
+      "appearance": "pixel",
+      "hash": "2277038632d77655415bee5f66ed31fea2a9fb73caeae082045d44af52cb3e5e"
+    },
+    {
+      "id": "garage-04",
+      "quality": "high",
+      "appearance": "industrial-workshop",
+      "hash": "b7f34fb82477fc7e0580aa4aa11418bbdf4e96bdd6628f45caa64010f039cbcc"
+    },
+    {
+      "id": "garage-05",
+      "quality": "low",
+      "appearance": "authored",
+      "hash": "364c5ec806795ea20d02f6dbbc4f857374e5a01c43770a59b01aec892ad251ff"
+    },
+    {
+      "id": "garage-05",
+      "quality": "low",
+      "appearance": "pixel",
+      "hash": "2277038632d77655415bee5f66ed31fea2a9fb73caeae082045d44af52cb3e5e"
+    },
+    {
+      "id": "garage-05",
+      "quality": "low",
+      "appearance": "industrial-workshop",
+      "hash": "b7f34fb82477fc7e0580aa4aa11418bbdf4e96bdd6628f45caa64010f039cbcc"
+    },
+    {
+      "id": "garage-05",
+      "quality": "balanced",
+      "appearance": "authored",
+      "hash": "364c5ec806795ea20d02f6dbbc4f857374e5a01c43770a59b01aec892ad251ff"
+    },
+    {
+      "id": "garage-05",
+      "quality": "balanced",
+      "appearance": "pixel",
+      "hash": "2277038632d77655415bee5f66ed31fea2a9fb73caeae082045d44af52cb3e5e"
+    },
+    {
+      "id": "garage-05",
+      "quality": "balanced",
+      "appearance": "industrial-workshop",
+      "hash": "b7f34fb82477fc7e0580aa4aa11418bbdf4e96bdd6628f45caa64010f039cbcc"
+    },
+    {
+      "id": "garage-05",
+      "quality": "high",
+      "appearance": "authored",
+      "hash": "364c5ec806795ea20d02f6dbbc4f857374e5a01c43770a59b01aec892ad251ff"
+    },
+    {
+      "id": "garage-05",
+      "quality": "high",
+      "appearance": "pixel",
+      "hash": "2277038632d77655415bee5f66ed31fea2a9fb73caeae082045d44af52cb3e5e"
+    },
+    {
+      "id": "garage-05",
+      "quality": "high",
+      "appearance": "industrial-workshop",
+      "hash": "b7f34fb82477fc7e0580aa4aa11418bbdf4e96bdd6628f45caa64010f039cbcc"
+    },
+    {
+      "id": "garage-06",
+      "quality": "low",
+      "appearance": "authored",
+      "hash": "364c5ec806795ea20d02f6dbbc4f857374e5a01c43770a59b01aec892ad251ff"
+    },
+    {
+      "id": "garage-06",
+      "quality": "low",
+      "appearance": "pixel",
+      "hash": "2277038632d77655415bee5f66ed31fea2a9fb73caeae082045d44af52cb3e5e"
+    },
+    {
+      "id": "garage-06",
+      "quality": "low",
+      "appearance": "industrial-workshop",
+      "hash": "b7f34fb82477fc7e0580aa4aa11418bbdf4e96bdd6628f45caa64010f039cbcc"
+    },
+    {
+      "id": "garage-06",
+      "quality": "balanced",
+      "appearance": "authored",
+      "hash": "364c5ec806795ea20d02f6dbbc4f857374e5a01c43770a59b01aec892ad251ff"
+    },
+    {
+      "id": "garage-06",
+      "quality": "balanced",
+      "appearance": "pixel",
+      "hash": "2277038632d77655415bee5f66ed31fea2a9fb73caeae082045d44af52cb3e5e"
+    },
+    {
+      "id": "garage-06",
+      "quality": "balanced",
+      "appearance": "industrial-workshop",
+      "hash": "b7f34fb82477fc7e0580aa4aa11418bbdf4e96bdd6628f45caa64010f039cbcc"
+    },
+    {
+      "id": "garage-06",
+      "quality": "high",
+      "appearance": "authored",
+      "hash": "364c5ec806795ea20d02f6dbbc4f857374e5a01c43770a59b01aec892ad251ff"
+    },
+    {
+      "id": "garage-06",
+      "quality": "high",
+      "appearance": "pixel",
+      "hash": "2277038632d77655415bee5f66ed31fea2a9fb73caeae082045d44af52cb3e5e"
+    },
+    {
+      "id": "garage-06",
+      "quality": "high",
+      "appearance": "industrial-workshop",
+      "hash": "b7f34fb82477fc7e0580aa4aa11418bbdf4e96bdd6628f45caa64010f039cbcc"
+    },
+    {
+      "id": "garage-07",
+      "quality": "low",
+      "appearance": "authored",
+      "hash": "364c5ec806795ea20d02f6dbbc4f857374e5a01c43770a59b01aec892ad251ff"
+    },
+    {
+      "id": "garage-07",
+      "quality": "low",
+      "appearance": "pixel",
+      "hash": "2277038632d77655415bee5f66ed31fea2a9fb73caeae082045d44af52cb3e5e"
+    },
+    {
+      "id": "garage-07",
+      "quality": "low",
+      "appearance": "industrial-workshop",
+      "hash": "b7f34fb82477fc7e0580aa4aa11418bbdf4e96bdd6628f45caa64010f039cbcc"
+    },
+    {
+      "id": "garage-07",
+      "quality": "balanced",
+      "appearance": "authored",
+      "hash": "364c5ec806795ea20d02f6dbbc4f857374e5a01c43770a59b01aec892ad251ff"
+    },
+    {
+      "id": "garage-07",
+      "quality": "balanced",
+      "appearance": "pixel",
+      "hash": "2277038632d77655415bee5f66ed31fea2a9fb73caeae082045d44af52cb3e5e"
+    },
+    {
+      "id": "garage-07",
+      "quality": "balanced",
+      "appearance": "industrial-workshop",
+      "hash": "b7f34fb82477fc7e0580aa4aa11418bbdf4e96bdd6628f45caa64010f039cbcc"
+    },
+    {
+      "id": "garage-07",
+      "quality": "high",
+      "appearance": "authored",
+      "hash": "364c5ec806795ea20d02f6dbbc4f857374e5a01c43770a59b01aec892ad251ff"
+    },
+    {
+      "id": "garage-07",
+      "quality": "high",
+      "appearance": "pixel",
+      "hash": "2277038632d77655415bee5f66ed31fea2a9fb73caeae082045d44af52cb3e5e"
+    },
+    {
+      "id": "garage-07",
+      "quality": "high",
+      "appearance": "industrial-workshop",
+      "hash": "b7f34fb82477fc7e0580aa4aa11418bbdf4e96bdd6628f45caa64010f039cbcc"
+    },
+    {
+      "id": "garage-08",
+      "quality": "low",
+      "appearance": "authored",
+      "hash": "364c5ec806795ea20d02f6dbbc4f857374e5a01c43770a59b01aec892ad251ff"
+    },
+    {
+      "id": "garage-08",
+      "quality": "low",
+      "appearance": "pixel",
+      "hash": "2277038632d77655415bee5f66ed31fea2a9fb73caeae082045d44af52cb3e5e"
+    },
+    {
+      "id": "garage-08",
+      "quality": "low",
+      "appearance": "industrial-workshop",
+      "hash": "b7f34fb82477fc7e0580aa4aa11418bbdf4e96bdd6628f45caa64010f039cbcc"
+    },
+    {
+      "id": "garage-08",
+      "quality": "balanced",
+      "appearance": "authored",
+      "hash": "364c5ec806795ea20d02f6dbbc4f857374e5a01c43770a59b01aec892ad251ff"
+    },
+    {
+      "id": "garage-08",
+      "quality": "balanced",
+      "appearance": "pixel",
+      "hash": "2277038632d77655415bee5f66ed31fea2a9fb73caeae082045d44af52cb3e5e"
+    },
+    {
+      "id": "garage-08",
+      "quality": "balanced",
+      "appearance": "industrial-workshop",
+      "hash": "b7f34fb82477fc7e0580aa4aa11418bbdf4e96bdd6628f45caa64010f039cbcc"
+    },
+    {
+      "id": "garage-08",
+      "quality": "high",
+      "appearance": "authored",
+      "hash": "364c5ec806795ea20d02f6dbbc4f857374e5a01c43770a59b01aec892ad251ff"
+    },
+    {
+      "id": "garage-08",
+      "quality": "high",
+      "appearance": "pixel",
+      "hash": "2277038632d77655415bee5f66ed31fea2a9fb73caeae082045d44af52cb3e5e"
+    },
+    {
+      "id": "garage-08",
+      "quality": "high",
+      "appearance": "industrial-workshop",
+      "hash": "b7f34fb82477fc7e0580aa4aa11418bbdf4e96bdd6628f45caa64010f039cbcc"
+    },
+    {
+      "id": "beginner-41",
+      "quality": "low",
+      "appearance": "authored",
+      "hash": "c014bd95eebd6d9ec3254da6bf5bf16c1d333b3deeb123c4cbcf30e2a4999298"
+    },
+    {
+      "id": "beginner-41",
+      "quality": "low",
+      "appearance": "pixel",
+      "hash": "6959f79549e0d6a5fc0aac0733f0aa3a65e8a5fce3aab2e8febbacec48cc7cc3"
+    },
+    {
+      "id": "beginner-41",
+      "quality": "low",
+      "appearance": "industrial-workshop",
+      "hash": "12114d301c43406669fcd2015974bf3f052aa4ec8d73107da9f9b43f17f922f7"
+    },
+    {
+      "id": "beginner-41",
+      "quality": "balanced",
+      "appearance": "authored",
+      "hash": "c014bd95eebd6d9ec3254da6bf5bf16c1d333b3deeb123c4cbcf30e2a4999298"
+    },
+    {
+      "id": "beginner-41",
+      "quality": "balanced",
+      "appearance": "pixel",
+      "hash": "6959f79549e0d6a5fc0aac0733f0aa3a65e8a5fce3aab2e8febbacec48cc7cc3"
+    },
+    {
+      "id": "beginner-41",
+      "quality": "balanced",
+      "appearance": "industrial-workshop",
+      "hash": "12114d301c43406669fcd2015974bf3f052aa4ec8d73107da9f9b43f17f922f7"
+    },
+    {
+      "id": "beginner-41",
+      "quality": "high",
+      "appearance": "authored",
+      "hash": "c014bd95eebd6d9ec3254da6bf5bf16c1d333b3deeb123c4cbcf30e2a4999298"
+    },
+    {
+      "id": "beginner-41",
+      "quality": "high",
+      "appearance": "pixel",
+      "hash": "6959f79549e0d6a5fc0aac0733f0aa3a65e8a5fce3aab2e8febbacec48cc7cc3"
+    },
+    {
+      "id": "beginner-41",
+      "quality": "high",
+      "appearance": "industrial-workshop",
+      "hash": "12114d301c43406669fcd2015974bf3f052aa4ec8d73107da9f9b43f17f922f7"
+    }
+  ],
+  "glbCases": [
+    {
+      "id": "snake-hunt-loops-01",
+      "hash": "020c827d007863429506c322a878641d187cc9a69b95d2fdc39a5a5de54d89b9"
+    },
+    {
+      "id": "snake-hunt-loops-02",
+      "hash": "020c827d007863429506c322a878641d187cc9a69b95d2fdc39a5a5de54d89b9"
+    },
+    {
+      "id": "snake-hunt-loops-03",
+      "hash": "020c827d007863429506c322a878641d187cc9a69b95d2fdc39a5a5de54d89b9"
+    },
+    {
+      "id": "snake-hunt-loops-04",
+      "hash": "020c827d007863429506c322a878641d187cc9a69b95d2fdc39a5a5de54d89b9"
+    },
+    {
+      "id": "snake-hunt-loops-05",
+      "hash": "020c827d007863429506c322a878641d187cc9a69b95d2fdc39a5a5de54d89b9"
+    },
+    {
+      "id": "snake-hunt-loops-06",
+      "hash": "020c827d007863429506c322a878641d187cc9a69b95d2fdc39a5a5de54d89b9"
+    },
+    {
+      "id": "snake-hunt-weave-01",
+      "hash": "04f01bbc809019ec4772a10fd3c4cadd47b3dbf0a920df9b10beacfac9d7f548"
+    },
+    {
+      "id": "snake-hunt-weave-02",
+      "hash": "04f01bbc809019ec4772a10fd3c4cadd47b3dbf0a920df9b10beacfac9d7f548"
+    },
+    {
+      "id": "snake-hunt-weave-03",
+      "hash": "04f01bbc809019ec4772a10fd3c4cadd47b3dbf0a920df9b10beacfac9d7f548"
+    },
+    {
+      "id": "snake-hunt-weave-04",
+      "hash": "04f01bbc809019ec4772a10fd3c4cadd47b3dbf0a920df9b10beacfac9d7f548"
+    },
+    {
+      "id": "snake-hunt-weave-05",
+      "hash": "04f01bbc809019ec4772a10fd3c4cadd47b3dbf0a920df9b10beacfac9d7f548"
+    },
+    {
+      "id": "snake-hunt-weave-06",
+      "hash": "04f01bbc809019ec4772a10fd3c4cadd47b3dbf0a920df9b10beacfac9d7f548"
+    },
+    {
+      "id": "snake-hunt-heights-01",
+      "hash": "35410de06ca161338c5787f704f43ac55f51c17fe9d1c14ea4f37d0137b06885"
+    },
+    {
+      "id": "snake-hunt-heights-02",
+      "hash": "35410de06ca161338c5787f704f43ac55f51c17fe9d1c14ea4f37d0137b06885"
+    },
+    {
+      "id": "snake-hunt-heights-03",
+      "hash": "35410de06ca161338c5787f704f43ac55f51c17fe9d1c14ea4f37d0137b06885"
+    },
+    {
+      "id": "snake-hunt-heights-04",
+      "hash": "35410de06ca161338c5787f704f43ac55f51c17fe9d1c14ea4f37d0137b06885"
+    },
+    {
+      "id": "snake-hunt-heights-05",
+      "hash": "35410de06ca161338c5787f704f43ac55f51c17fe9d1c14ea4f37d0137b06885"
+    },
+    {
+      "id": "snake-hunt-heights-06",
+      "hash": "35410de06ca161338c5787f704f43ac55f51c17fe9d1c14ea4f37d0137b06885"
+    },
+    {
+      "id": "snake-hunt-chase-01",
+      "hash": "6f9e9223832ccbaa4df87d1e384fe0ff0295a960026308d6fb0e12233eeb65f6"
+    },
+    {
+      "id": "snake-hunt-chase-02",
+      "hash": "6f9e9223832ccbaa4df87d1e384fe0ff0295a960026308d6fb0e12233eeb65f6"
+    },
+    {
+      "id": "snake-hunt-chase-03",
+      "hash": "6f9e9223832ccbaa4df87d1e384fe0ff0295a960026308d6fb0e12233eeb65f6"
+    },
+    {
+      "id": "snake-hunt-chase-04",
+      "hash": "6f9e9223832ccbaa4df87d1e384fe0ff0295a960026308d6fb0e12233eeb65f6"
+    },
+    {
+      "id": "snake-hunt-chase-05",
+      "hash": "6f9e9223832ccbaa4df87d1e384fe0ff0295a960026308d6fb0e12233eeb65f6"
+    },
+    {
+      "id": "snake-hunt-chase-06",
+      "hash": "6f9e9223832ccbaa4df87d1e384fe0ff0295a960026308d6fb0e12233eeb65f6"
+    },
+    {
+      "id": "snake-hunt-interception-loop-intercept",
+      "hash": "020c827d007863429506c322a878641d187cc9a69b95d2fdc39a5a5de54d89b9"
+    },
+    {
+      "id": "snake-hunt-interception-two-return-lanes",
+      "hash": "04f01bbc809019ec4772a10fd3c4cadd47b3dbf0a920df9b10beacfac9d7f548"
+    },
+    {
+      "id": "snake-hunt-interception-corner-approach",
+      "hash": "04f01bbc809019ec4772a10fd3c4cadd47b3dbf0a920df9b10beacfac9d7f548"
+    },
+    {
+      "id": "snake-hunt-interception-crossing-patrols",
+      "hash": "020c827d007863429506c322a878641d187cc9a69b95d2fdc39a5a5de54d89b9"
+    },
+    {
+      "id": "snake-hunt-interception-island-bypass",
+      "hash": "35410de06ca161338c5787f704f43ac55f51c17fe9d1c14ea4f37d0137b06885"
+    },
+    {
+      "id": "snake-hunt-interception-staggered-interception",
+      "hash": "04f01bbc809019ec4772a10fd3c4cadd47b3dbf0a920df9b10beacfac9d7f548"
+    },
+    {
+      "id": "snake-hunt-route-choices-warehouse-return",
+      "hash": "04f01bbc809019ec4772a10fd3c4cadd47b3dbf0a920df9b10beacfac9d7f548"
+    },
+    {
+      "id": "snake-hunt-route-choices-courtyard-approaches",
+      "hash": "020c827d007863429506c322a878641d187cc9a69b95d2fdc39a5a5de54d89b9"
+    },
+    {
+      "id": "snake-hunt-route-choices-platform-perimeter",
+      "hash": "35410de06ca161338c5787f704f43ac55f51c17fe9d1c14ea4f37d0137b06885"
+    },
+    {
+      "id": "snake-hunt-route-choices-boundary-cutback",
+      "hash": "04f01bbc809019ec4772a10fd3c4cadd47b3dbf0a920df9b10beacfac9d7f548"
+    },
+    {
+      "id": "snake-hunt-route-choices-cross-route-choice",
+      "hash": "020c827d007863429506c322a878641d187cc9a69b95d2fdc39a5a5de54d89b9"
+    },
+    {
+      "id": "snake-hunt-route-choices-airfield-circuit",
+      "hash": "35410de06ca161338c5787f704f43ac55f51c17fe9d1c14ea4f37d0137b06885"
+    },
+    {
+      "id": "snake-hunt-ground-routes-low-pass-depot",
+      "hash": "c33904f1ff213dd44f89d181e371629d07093feb3f214a3c4a4c39319502aa35"
+    },
+    {
+      "id": "snake-hunt-ground-routes-split-yard-return",
+      "hash": "c33904f1ff213dd44f89d181e371629d07093feb3f214a3c4a4c39319502aa35"
+    },
+    {
+      "id": "snake-hunt-ground-routes-crossing-arrivals",
+      "hash": "908fcae1e5113574eaff6e0acde57e739b370a1f9646389bc6a6078b0ce43775"
+    },
+    {
+      "id": "snake-hunt-ground-routes-shelter-arc",
+      "hash": "c33904f1ff213dd44f89d181e371629d07093feb3f214a3c4a4c39319502aa35"
+    },
+    {
+      "id": "snake-hunt-ground-routes-freight-slalom",
+      "hash": "c33904f1ff213dd44f89d181e371629d07093feb3f214a3c4a4c39319502aa35"
+    },
+    {
+      "id": "snake-hunt-ground-routes-forked-depot",
+      "hash": "908fcae1e5113574eaff6e0acde57e739b370a1f9646389bc6a6078b0ce43775"
+    },
+    {
+      "id": "snake-hunt-approach-windows-low-roof-window",
+      "hash": "c33904f1ff213dd44f89d181e371629d07093feb3f214a3c4a4c39319502aa35"
+    },
+    {
+      "id": "snake-hunt-approach-windows-roofline-exchange",
+      "hash": "c33904f1ff213dd44f89d181e371629d07093feb3f214a3c4a4c39319502aa35"
+    },
+    {
+      "id": "snake-hunt-approach-windows-return-slot",
+      "hash": "908fcae1e5113574eaff6e0acde57e739b370a1f9646389bc6a6078b0ce43775"
+    },
+    {
+      "id": "snake-hunt-approach-windows-staggered-roofs",
+      "hash": "c33904f1ff213dd44f89d181e371629d07093feb3f214a3c4a4c39319502aa35"
+    },
+    {
+      "id": "snake-hunt-approach-windows-window-chain",
+      "hash": "c33904f1ff213dd44f89d181e371629d07093feb3f214a3c4a4c39319502aa35"
+    },
+    {
+      "id": "snake-hunt-approach-windows-three-yard-finale",
+      "hash": "908fcae1e5113574eaff6e0acde57e739b370a1f9646389bc6a6078b0ce43775"
+    },
+    {
+      "id": "courtyard-01",
+      "hash": "fd467c7c2605c952b129529033bc84bf411510c2bda58cf95e9ad228e6172d05"
+    },
+    {
+      "id": "courtyard-02",
+      "hash": "fd467c7c2605c952b129529033bc84bf411510c2bda58cf95e9ad228e6172d05"
+    },
+    {
+      "id": "courtyard-03",
+      "hash": "fd467c7c2605c952b129529033bc84bf411510c2bda58cf95e9ad228e6172d05"
+    },
+    {
+      "id": "courtyard-04",
+      "hash": "fd467c7c2605c952b129529033bc84bf411510c2bda58cf95e9ad228e6172d05"
+    },
+    {
+      "id": "courtyard-05",
+      "hash": "fd467c7c2605c952b129529033bc84bf411510c2bda58cf95e9ad228e6172d05"
+    },
+    {
+      "id": "courtyard-06",
+      "hash": "fd467c7c2605c952b129529033bc84bf411510c2bda58cf95e9ad228e6172d05"
+    },
+    {
+      "id": "courtyard-07",
+      "hash": "fd467c7c2605c952b129529033bc84bf411510c2bda58cf95e9ad228e6172d05"
+    },
+    {
+      "id": "courtyard-08",
+      "hash": "fd467c7c2605c952b129529033bc84bf411510c2bda58cf95e9ad228e6172d05"
+    },
+    {
+      "id": "warehouse-01",
+      "hash": "1162d45c73334db7d632d61371a11340b25a3a2b2f2f4f244848991ec414ac60"
+    },
+    {
+      "id": "warehouse-02",
+      "hash": "1162d45c73334db7d632d61371a11340b25a3a2b2f2f4f244848991ec414ac60"
+    },
+    {
+      "id": "warehouse-03",
+      "hash": "1162d45c73334db7d632d61371a11340b25a3a2b2f2f4f244848991ec414ac60"
+    },
+    {
+      "id": "warehouse-04",
+      "hash": "1162d45c73334db7d632d61371a11340b25a3a2b2f2f4f244848991ec414ac60"
+    },
+    {
+      "id": "warehouse-05",
+      "hash": "1162d45c73334db7d632d61371a11340b25a3a2b2f2f4f244848991ec414ac60"
+    },
+    {
+      "id": "warehouse-06",
+      "hash": "1162d45c73334db7d632d61371a11340b25a3a2b2f2f4f244848991ec414ac60"
+    },
+    {
+      "id": "warehouse-07",
+      "hash": "1162d45c73334db7d632d61371a11340b25a3a2b2f2f4f244848991ec414ac60"
+    },
+    {
+      "id": "warehouse-08",
+      "hash": "1162d45c73334db7d632d61371a11340b25a3a2b2f2f4f244848991ec414ac60"
+    },
+    {
+      "id": "stadium-01",
+      "hash": "56a00d69f772e181dc9289ff7485f43f7a151f65c14454909b6557c97b737e67"
+    },
+    {
+      "id": "stadium-02",
+      "hash": "56a00d69f772e181dc9289ff7485f43f7a151f65c14454909b6557c97b737e67"
+    },
+    {
+      "id": "stadium-03",
+      "hash": "56a00d69f772e181dc9289ff7485f43f7a151f65c14454909b6557c97b737e67"
+    },
+    {
+      "id": "stadium-04",
+      "hash": "56a00d69f772e181dc9289ff7485f43f7a151f65c14454909b6557c97b737e67"
+    },
+    {
+      "id": "stadium-05",
+      "hash": "56a00d69f772e181dc9289ff7485f43f7a151f65c14454909b6557c97b737e67"
+    },
+    {
+      "id": "stadium-06",
+      "hash": "56a00d69f772e181dc9289ff7485f43f7a151f65c14454909b6557c97b737e67"
+    },
+    {
+      "id": "stadium-07",
+      "hash": "56a00d69f772e181dc9289ff7485f43f7a151f65c14454909b6557c97b737e67"
+    },
+    {
+      "id": "stadium-08",
+      "hash": "56a00d69f772e181dc9289ff7485f43f7a151f65c14454909b6557c97b737e67"
+    },
+    {
+      "id": "container-yard-01",
+      "hash": "910af4a0aa0dc5c1ee8a0a55f5aa8e0865182e400bba1d01a37d63099d78a476"
+    },
+    {
+      "id": "container-yard-02",
+      "hash": "910af4a0aa0dc5c1ee8a0a55f5aa8e0865182e400bba1d01a37d63099d78a476"
+    },
+    {
+      "id": "container-yard-03",
+      "hash": "910af4a0aa0dc5c1ee8a0a55f5aa8e0865182e400bba1d01a37d63099d78a476"
+    },
+    {
+      "id": "container-yard-04",
+      "hash": "910af4a0aa0dc5c1ee8a0a55f5aa8e0865182e400bba1d01a37d63099d78a476"
+    },
+    {
+      "id": "container-yard-05",
+      "hash": "910af4a0aa0dc5c1ee8a0a55f5aa8e0865182e400bba1d01a37d63099d78a476"
+    },
+    {
+      "id": "container-yard-06",
+      "hash": "910af4a0aa0dc5c1ee8a0a55f5aa8e0865182e400bba1d01a37d63099d78a476"
+    },
+    {
+      "id": "container-yard-07",
+      "hash": "910af4a0aa0dc5c1ee8a0a55f5aa8e0865182e400bba1d01a37d63099d78a476"
+    },
+    {
+      "id": "container-yard-08",
+      "hash": "910af4a0aa0dc5c1ee8a0a55f5aa8e0865182e400bba1d01a37d63099d78a476"
+    },
+    {
+      "id": "garage-01",
+      "hash": "719d040bd64a9e728e22623e4fe65f1ac36978f3e8fd9e83015fec806fc43bce"
+    },
+    {
+      "id": "garage-02",
+      "hash": "719d040bd64a9e728e22623e4fe65f1ac36978f3e8fd9e83015fec806fc43bce"
+    },
+    {
+      "id": "garage-03",
+      "hash": "719d040bd64a9e728e22623e4fe65f1ac36978f3e8fd9e83015fec806fc43bce"
+    },
+    {
+      "id": "garage-04",
+      "hash": "719d040bd64a9e728e22623e4fe65f1ac36978f3e8fd9e83015fec806fc43bce"
+    },
+    {
+      "id": "garage-05",
+      "hash": "719d040bd64a9e728e22623e4fe65f1ac36978f3e8fd9e83015fec806fc43bce"
+    },
+    {
+      "id": "garage-06",
+      "hash": "719d040bd64a9e728e22623e4fe65f1ac36978f3e8fd9e83015fec806fc43bce"
+    },
+    {
+      "id": "garage-07",
+      "hash": "719d040bd64a9e728e22623e4fe65f1ac36978f3e8fd9e83015fec806fc43bce"
+    },
+    {
+      "id": "garage-08",
+      "hash": "719d040bd64a9e728e22623e4fe65f1ac36978f3e8fd9e83015fec806fc43bce"
+    },
+    {
+      "id": "beginner-32",
+      "hash": "e39839773f9a3c12f96d1910c453b9fddc5e3ad51a52096966687cbbc6a1ac5a"
+    },
+    {
+      "id": "beginner-33",
+      "hash": "5e07ca2f4dd385eb33fc97e3ec20ba293e259ebd2df13abf16462e084b99b90e"
+    },
+    {
+      "id": "beginner-35",
+      "hash": "e39839773f9a3c12f96d1910c453b9fddc5e3ad51a52096966687cbbc6a1ac5a"
+    },
+    {
+      "id": "beginner-36",
+      "hash": "3de7866a979164f467f72683da2fc672914ec07673e38260e1b8ab3805d4b149"
+    },
+    {
+      "id": "beginner-37",
+      "hash": "c99ad92bae03b474bc3dfcdfeb3441c412913c1a225cf6c3479faf1f25a3c844"
+    },
+    {
+      "id": "beginner-38",
+      "hash": "3de7866a979164f467f72683da2fc672914ec07673e38260e1b8ab3805d4b149"
+    },
+    {
+      "id": "beginner-39",
+      "hash": "5e07ca2f4dd385eb33fc97e3ec20ba293e259ebd2df13abf16462e084b99b90e"
+    },
+    {
+      "id": "beginner-41",
+      "hash": "e2c7b80d8cf8a4ae2f56995ec8ca0bec279b8338c9482cf64d23d84f876c9724"
+    },
+    {
+      "id": "beginner-42",
+      "hash": "e39839773f9a3c12f96d1910c453b9fddc5e3ad51a52096966687cbbc6a1ac5a"
+    },
+    {
+      "id": "beginner-45",
+      "hash": "fc7bffad9d382d295d682b2b9d8c2726608710bec276197c93a0426844ed53f4"
+    },
+    {
+      "id": "beginner-52",
+      "hash": "aacc10a6fbcd9f5df473e6380b853a2f74cd040b2ed078b59f398546e7f29103"
+    },
+    {
+      "id": "beginner-57",
+      "hash": "fc7bffad9d382d295d682b2b9d8c2726608710bec276197c93a0426844ed53f4"
+    }
+  ],
+  "sourceSha256": {
+    "renderer": "0fa5a05706705fd6128d13b18a4714c7a8010bdfc2adc6ed96d7b43906647a75",
+    "visuals": "2efb2ab746751a4c0facefacc77f92a10150a5000eda3afc9a1ac49ea59dd5c0",
+    "worldAssets": "13a5711d9002e0eefb91c9899d02f7ded9b11d0fc6755c8957f9d5dbcb61cac7"
+  }
+}
