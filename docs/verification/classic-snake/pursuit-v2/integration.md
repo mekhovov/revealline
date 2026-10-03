@@ -20,6 +20,7 @@ These observations call production preparation/simulation or exercise the browse
 - Every new authored Solo mission has a retained verified winning input journal at seed 17. Broken Ring required a second route; its first failed attempt remains disclosed. See [route evidence](README.md).
 - Representative Team routes include two clears and a retained partner-body failure. This does not qualify all cooperative maps or all seeds.
 - Match journals cover one dead Versus board while the survivor reaches the cap, simultaneous catch deadlines, exact-deadline catches, and fractional legacy-save timing.
+- After integrating current main, the browser confirmed Reduced effects toggles both the canvas preference and interface `data-theme-motion` between reduced/full, then restored the original setting. The final demo loaded without browser errors.
 - Browser imported the winning Oval Intercept round, displayed 8/8 catches, score 800, 19.4 game seconds and 97 moves. Chapter progress became 1/6 and survived reload.
 - First Baffle opened with Moving-target remix and displayed fleeing targets. Retry keeps the accepted recipe and seed; New route changes the seed explicitly.
 - Small-screen observations used measured CSS pixels (the browser had an existing zoom setting): 320×569 Versus, 360×640 Ukrainian Team with direction pads, 390×844 Solo, and 640×360 landscape. No horizontal overflow was observed. At 320px Versus, both boards were approximately 212×159px, turn buttons 56px and Pause/Retry approximately 44px. At 360px Team, direction buttons were 52px. Layout changes paused the running round before reflow.
@@ -32,7 +33,9 @@ Automated suites are **WAIVED_SKIPPED_NOT_PASSED**. Relevant core, session, prog
 
 Repository lint and validation passed. Validation reported only the existing generated-site navigation warnings. Changed source formatting and whitespace checks passed. The repository-wide formatting check was executed and reported 25 files; every warned file was byte-identical to integrated main parent 7d64e9ba8adbab90f731eb964e1ef138323868b5. See [the baseline receipt](format-baseline.json). These unrelated formatting warnings were not silently fixed or presented as a green global check.
 
-The final committed-source default-build inspection is recorded separately beside this file. It inspects the normal build preparation without publishing, writing a ZIP, or claiming merged-main release qualification.
+The [committed-source default-build inspection](default-build-91152195b.json) passed for source 91152195b224b68870acd6d91c5c35bdeeb5e29b and tree b7623d702de628f7e7065b3c00579d6270f83c19. Included build inputs and available committed source inventories were verified before and after preparation. Payload including the manifest is 856,101,228 bytes, below the 950,000,000-byte Pages budget; the inspection retains its separate 25 MB headroom rule. Report SHA-256: `2ccb6e7dbf47c3e589bb592826a816f09c6f1e9558bab12ce038840d1c6d31ec`.
+
+This inspects normal build preparation without publishing, writing a ZIP, or claiming merged-main release qualification. `publicEligible`, `promotable` and `completeHostedOutput` are all false. The following evidence-only commit adds this receipt without changing runtime build inputs.
 
 ## Remaining release gates
 
