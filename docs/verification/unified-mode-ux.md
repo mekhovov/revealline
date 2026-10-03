@@ -25,9 +25,8 @@ A complete archive was not written. The ZIP alone requires 995,882,946 bytes; th
 
 [Production builds, candidate construction and independent admission](unified-mode-ux-packages.json) passed under the repository's existing `v0.142.4` optional-package version. Public eligibility remains false.
 
-| Package | Runtime files / bytes | Complete source files / bytes | Limit |
-| ------- | --------------------: | ----------------------------: | ----- |
-
-| fpv-worlds | 102 / 15,515,618 | 104 / 15,549,027 | 104 files / 16,777,216 bytes |
-| civilian-fpv | 69 / 4,325,001 | 71 / 4,353,446 | 72 files / 8,388,608 bytes |
-| civilian-flight | 45 / 618,738 | 47 / 643,601 | 64 files / 8,388,608 bytes |
+| Package         | Runtime files / bytes | Complete source files / bytes | Limit                        |
+| --------------- | --------------------: | ----------------------------: | ---------------------------- |
+| fpv-worlds      |      102 / 15,515,618 |              104 / 15,549,027 | 104 files / 16,777,216 bytes |
+| civilian-fpv    |        69 / 4,325,001 |                71 / 4,353,446 | 72 files / 8,388,608 bytes   |
+| civilian-flight |          45 / 618,738 |                  47 / 643,601 | 64 files / 8,388,608 bytes   |
