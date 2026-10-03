@@ -59,8 +59,61 @@ authored/Pixel/Industrial Workshop, FPV at 1.5/3/6 metres, chase and overview.
 It checks all 43 course scopes, lateral views, unchanged Hangar/Woodland pixels,
 live preset restoration, resource plateaus and final disposal. Its compact
 receipt retains every check and image hash/count without raw pixel buffers.
-Preparation is not a browser pass; the coordinating agent owns actual browser
-review. Source/package admission and player evidence remain before readiness.
+Actual source WebGL qualification passes 384 checks / 190 image pairs. The
+coordinating agent visually reviewed and accepted the scoped near-ground change;
+this is not a broader finished-world or realism claim. The complete 108,193-byte
+receipt is `docs/evidence/fpv-meadow-ground-detail-source-browser.json`, SHA-256
+`8a192916bc93b7160de8cec2c2298ce4dd5ac4e158aebc4965f392a289870f45`.
+The inspected screenshot is
+`docs/evidence/fpv-meadow-ground-detail-source-comparison.png`.
 No physical-device FPS, novice readability, final artist or public deployment
 acceptance is inferred. Additional unit coverage remains deferred under the
 approved plan.
+
+## Source-bound package candidate
+
+Node 22.22.2 admitted all three optional packages from commit
+`7dc2e5eca8226dbdab34889c82b80d1ef98d030b` / tree
+`f2c76ef1c3e13e9b42051c3b7fc672022cf15930`. Two builds produced identical
+artifacts; committed inputs and ZIP members were verified. Approved limits and
+all review gates remain unchanged. The candidate is preserved under
+`dist/fpv-meadow-ground-detail-candidate-7dc2e5eca` and remains
+`publicEligible: false`. See
+`docs/evidence/fpv-meadow-ground-detail-admission.json`.
+
+| Package         | Files | Uncompressed bytes | Approved limits              |
+| --------------- | ----: | -----------------: | ---------------------------- |
+| civilian-flight |    48 |            679,266 | 64 files / 8,388,608 bytes   |
+| civilian-fpv    |    69 |          4,364,818 | 72 files / 8,388,608 bytes   |
+| fpv-worlds      |   102 |         15,559,020 | 104 files / 16,777,216 bytes |
+
+All 15 artifact checksums were independently reread and verified. The admitted
+FPV Worlds ZIP SHA-256 is
+`932ecbd227a74e3250cd646d415a8433c0924b907aef231d7a75d2ef4eb088a6`.
+The separate player at
+`http://127.0.0.1:8834/dist/fpv-meadow-ground-detail-playtest/index.html`
+contains 94 files / 15,401,249 bytes; ZIP SHA-256
+`69440c3db5c88c93649f0efa56f24c2dd4bc9add79950b25c015e41c7daa9ed4`.
+Its build receipt is `docs/evidence/fpv-meadow-ground-detail-playtest.json`.
+
+The immutable packaged fixture is
+`http://127.0.0.1:8834/dist/fpv-meadow-ground-detail-verification-package/index.html`
+(31 modules per side / 18,502,426 bytes). All 31 candidate modules match both
+the admitted ZIP and separate player; 30 match the source fixture exactly and
+only the intentionally reduced generated `game/i18n/catalogs.mjs` differs.
+The before inventory and harness are exact across source and packaged fixtures.
+Both HTTP URLs return the expected local bytes. The packaged actual-WebGL run
+passes all 384 checks / 190 image pairs. All 190 sample records exactly match the
+source run: before/after hashes, changed-pixel counts, draw calls and triangles.
+All reload cycles plateau, registered resources dispose to zero, and no unexpected
+context loss occurs. The complete receipt is
+`docs/evidence/fpv-meadow-ground-detail-package-browser.json`
+(108,230 bytes; SHA-256
+`40de931cb0d2fc38c5a0ac1541b26fe0962aba1e6edc4dc0417b14a4155155a2`). Its source inventory exactly matches the
+frozen packaged fixture manifest. The ordinary player was launched into
+“Turn and travel”: the scene rendered correctly and controls progressed from
+Ready through Arm/resume to Paused, with the expected deliberate re-arm prompt.
+The coordinating agent retained the screenshot at
+`docs/evidence/fpv-meadow-ground-detail-player.png`. This scoped player check
+does not replace the 51 deterministic recording replays above.
+The preserved Hangar and Stadium players remain in their separate ignored paths.

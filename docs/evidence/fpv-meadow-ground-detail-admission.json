@@ -1,0 +1,39 @@
+{
+  "admission": {
+    "format": "revealline-optional-package-admission.v1",
+    "packages": [
+      {
+        "bytes": 679266,
+        "files": 48,
+        "id": "civilian-flight",
+        "revision": "06359fc2d3764cc10bf90ae4d7dfcfa8d146dea0a8fee8c5b314288680585d16"
+      },
+      {
+        "bytes": 4364818,
+        "files": 69,
+        "id": "civilian-fpv",
+        "revision": "20c9c2c7c5199600d035373c8b05297470a26cd217937687b22dc8a0faa1d98f"
+      },
+      {
+        "bytes": 15559020,
+        "files": 102,
+        "id": "fpv-worlds",
+        "revision": "92c07d89250c78c8fe0dc318531eb72b89921e3b3fac68ae2b9341194e94c311"
+      }
+    ],
+    "publicEligible": false,
+    "sourceRevision": "7dc2e5eca8226dbdab34889c82b80d1ef98d030b",
+    "sourceTree": "f2c76ef1c3e13e9b42051c3b7fc672022cf15930",
+    "version": "v0.142.4",
+    "zipMembersVerified": true
+  },
+  "committedInputsVerified": true,
+  "envelopeSha256": "d9b6d5b28cae4665ef88079d50bfaa99511cb131554a8d0724a6d46a7b6b5bef",
+  "format": "revealline-optional-package-candidate-verification.v1",
+  "note": "Artifact admission does not qualify installed identity, device behavior or human learning. Review gates remain pending.",
+  "publicEligible": false,
+  "reproducibleBuilds": 2,
+  "sourceRevision": "7dc2e5eca8226dbdab34889c82b80d1ef98d030b",
+  "sourceTree": "f2c76ef1c3e13e9b42051c3b7fc672022cf15930",
+  "version": "v0.142.4"
+}
