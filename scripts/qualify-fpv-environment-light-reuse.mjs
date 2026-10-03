@@ -156,7 +156,24 @@ function fixture() {
   const listeners = new Map(),
     ownerIndex = owners.length,
     sceneIndex = scenes.length;
-  let lossCalls = 0;
+  let lossCalls = 0,
+    controlsLoading = null,
+    finishImport,
+    announceImport;
+  const importStarted = new Promise((resolve) => {
+    announceImport = resolve;
+  });
+  class Loader {
+    register() {
+      return this;
+    }
+    parseAsync() {
+      return new Promise((resolve) => {
+        finishImport = resolve;
+        announceImport();
+      });
+    }
+  }
   const runtime = create({
     canvas: {
       addEventListener: (name, fn) => listeners.set(name, fn),
@@ -164,7 +181,8 @@ function fixture() {
       ownerDocument: { createElement: () => ({ getContext: () => null }) },
     },
     window: { devicePixelRatio: 1 },
-    loadTransformControls: async () => ({ TransformControls: Controls }),
+    loadTransformControls: async () => controlsLoading ?? { TransformControls: Controls },
+    loadGLTF: async () => ({ GLTFLoader: Loader }),
     createHuntPresentation: ({ scene }) => {
       const group = new THREE.Group();
       scene.add(group);
@@ -197,6 +215,18 @@ function fixture() {
     owner: owners[ownerIndex],
     scene: scenes[sceneIndex],
     losses: () => lossCalls,
+    importStarted,
+    finishImport: (value) => finishImport(value),
+    delayControls() {
+      let resolve;
+      controlsLoading = new Promise((done) => {
+        resolve = done;
+      });
+      return () => {
+        resolve({ TransformControls: Controls });
+        controlsLoading = null;
+      };
+    },
   };
 }
 const first = fixture(),
@@ -278,6 +308,18 @@ first.owner.preparing = new Promise((resolve) => {
   releasePreparation = resolve;
 });
 const pendingPreparation = first.runtime.prepare();
+const resumeControls = first.delayControls(),
+  pendingEditor = first.runtime.createEditor().then(
+    () => false,
+    (error) => /World preview changed/.test(error.message),
+  ),
+  pendingImport = first.runtime
+    .loadScene('{"asset":{"version":"2.0","extras":{"fpvScenery":true}}}')
+    .then(
+      () => false,
+      (error) => /World preview changed/.test(error.message),
+    );
+await first.importStarted;
 const huntBeforeLoss = hunts[0];
 first.owner.lost = true;
 let prevented = false;
@@ -292,6 +334,35 @@ check(
 );
 releasePreparation();
 check('pending preparation invalidated by loss', (await pendingPreparation) === false);
+resumeControls();
+check('pending editor creation cannot reattach after loss', await pendingEditor);
+const obsoleteScene = new THREE.Group(),
+  obsoleteShape = new THREE.BoxGeometry(),
+  obsoletePaint = new THREE.MeshBasicMaterial();
+let obsoleteShapeDisposals = 0,
+  obsoletePaintDisposals = 0;
+obsoleteShape.addEventListener('dispose', () => obsoleteShapeDisposals++);
+obsoletePaint.addEventListener('dispose', () => obsoletePaintDisposals++);
+obsoleteScene.add(new THREE.Mesh(obsoleteShape, obsoletePaint));
+first.finishImport({ scene: obsoleteScene, scenes: [obsoleteScene], animations: [] });
+check(
+  'pending imported scene rejected and released after loss',
+  (await pendingImport) && obsoleteShapeDisposals === 1 && obsoletePaintDisposals === 1,
+);
+check(
+  'new imported scene rejected while lost',
+  await first.runtime.loadScene('{}').then(
+    () => false,
+    (error) => /ready course/.test(error.message),
+  ),
+);
+check(
+  'new editor rejected while lost',
+  await first.runtime.createEditor().then(
+    () => false,
+    (error) => /ready course/.test(error.message),
+  ),
+);
 check(
   'all watched scene resources released once during loss',
   watched.size > 0 && [...watched.values()].every((n) => n === 1),
@@ -318,6 +389,20 @@ check(
   targets.length === 5 && first.scene.environment === null,
 );
 first.owner.lost = false;
+check(
+  'import requires Retry to reinstall the cleared course',
+  await first.runtime.loadScene('{}').then(
+    () => false,
+    (error) => /ready course/.test(error.message),
+  ),
+);
+check(
+  'editor requires a ready course after restoration',
+  await first.runtime.createEditor().then(
+    () => false,
+    (error) => /ready course/.test(error.message),
+  ),
+);
 set();
 check('restored same inputs regenerate', targets.length === 6);
 check(
