@@ -173,6 +173,24 @@ function surfacePixels(kind, color, seed, size, pixel) {
     moss = woodlandSurface ? new THREE.Color(0x576747).lerp(base, 0.3) : null,
     pale = woodlandSurface ? new THREE.Color(0x92917b).lerp(base, 0.3) : null,
     leaf = kind === 'forest-floor' ? new THREE.Color(0x82735a).lerp(base, 0.3) : null;
+  const meadow = kind === 'meadow-grass',
+    soil = meadow ? new THREE.Color(0x75634b).lerp(base, 0.18) : null,
+    dryGrass = meadow ? new THREE.Color(0xa49b68).lerp(base, 0.48) : null,
+    tuftGrid = 24,
+    tuftRandom = random(seed ^ 0xbb67ae85),
+    tufts = meadow
+      ? Array.from({ length: tuftGrid * tuftGrid }, () => {
+          const angle = tuftRandom() * Math.PI * 2;
+          return {
+            x: 0.28 + tuftRandom() * 0.44,
+            y: 0.28 + tuftRandom() * 0.44,
+            cosine: Math.cos(angle),
+            sine: Math.sin(angle),
+            length: 0.14 + tuftRandom() * 0.1,
+            shade: 0.85 + tuftRandom() * 0.3,
+          };
+        })
+      : null;
   const branchScars = [
     [0.23, 0.32],
     [0.71, 0.69],
@@ -447,6 +465,30 @@ function surfacePixels(kind, color, seed, size, pixel) {
         relief += mottling * 0.035 + grain * 0.018;
         roughness = 0.98;
       }
+      if (meadow) {
+        // One twelve-metre seamless tile. Quiet soil patches supply ground scale;
+        // short, scattered blades stay within their jittered half-metre cells.
+        // The independent seed leaves every other surface's pixels unchanged.
+        const soilMix = Math.max(0, Math.min(0.72, (broad(u, v) - 0.5) * 2.4)),
+          cellX = Math.floor(u * tuftGrid),
+          cellY = Math.floor(v * tuftGrid),
+          tuft = tufts[cellY * tuftGrid + cellX],
+          dx = u * tuftGrid - cellX - tuft.x,
+          dy = v * tuftGrid - cellY - tuft.y,
+          along = (dx * tuft.cosine + dy * tuft.sine) / tuft.length,
+          across = (dy * tuft.cosine - dx * tuft.sine) / 0.07,
+          blade = Math.max(0, 1 - Math.abs(along)) * Math.max(0, 1 - Math.abs(across)),
+          dryMix = blade * (1 - soilMix) * 0.3 * tuft.shade;
+        red = base.r + (soil.r - base.r) * soilMix;
+        green = base.g + (soil.g - base.g) * soilMix;
+        blue = base.b + (soil.b - base.b) * soilMix;
+        red += (dryGrass.r - red) * dryMix;
+        green += (dryGrass.g - green) * dryMix;
+        blue += (dryGrass.b - blue) * dryMix;
+        shade = 0.94 + patch * 0.7 + mottling * 0.1 + grain * 0.055 + blade * 0.08;
+        relief = mottling * 0.012 + grain * 0.006 + blade * 0.018 - soilMix * 0.012;
+        roughness = 0.98 - soilMix * 0.12 + grain * 0.015;
+      }
       if (kind === 'carbon') {
         const weave = (Math.floor(u * 24) + Math.floor(v * 24)) % 2;
         shade *= weave ? 0.65 : 1.2;
@@ -465,7 +507,8 @@ function surfacePixels(kind, color, seed, size, pixel) {
       properties[at + 2] = kind === 'metal' ? 170 : 0;
       properties[at + 3] = 255;
     }
-  const reliefScale = woodlandSurface || kind === 'woodland-canopy' ? size / 64 : 2;
+  const reliefScale =
+    woodlandSurface || kind === 'woodland-canopy' ? size / 64 : meadow ? size / 128 : 2;
   for (let y = 0; y < size; y++)
     for (let x = 0; x < size; x++) {
       const at = (y * size + x) * 4;
@@ -498,6 +541,8 @@ function surfaceMaps(kind, color, { pixel = false, seed = 971 } = {}) {
       texture.name = `warehouse-storage-steel-${['albedo', 'normal', 'orm'][index]}`;
     if (kind === 'bark' || kind === 'forest-floor' || kind === 'woodland-canopy')
       texture.name = `woodland-${kind}-${['albedo', 'normal', 'orm'][index]}`;
+    if (kind === 'meadow-grass')
+      texture.name = `meadow-ground-${['albedo', 'normal', 'orm'][index]}`;
     return texture;
   });
   resizeSurface(surface, pixel ? 64 : 256, 1);
@@ -993,13 +1038,15 @@ export function buildWorldVisuals({
       ? 'hangar-concrete'
       : environment === 'woodland'
         ? 'forest-floor'
-        : natural
-          ? 'grass'
-          : environment === 'courtyard'
-            ? 'paving'
-            : environment === 'container-yard' || environment === 'stadium'
-              ? 'asphalt'
-              : 'concrete');
+        : environment === 'field' && !pixel && !kit
+          ? 'meadow-grass'
+          : natural
+            ? 'grass'
+            : environment === 'courtyard'
+              ? 'paving'
+              : environment === 'container-yard' || environment === 'stadium'
+                ? 'asphalt'
+                : 'concrete');
   const floorColor =
     themed || natural || pixel
       ? new THREE.Color(theme.ground)
