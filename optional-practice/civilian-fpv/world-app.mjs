@@ -62,6 +62,7 @@ import {
   canonicalWorldJSON,
   preparePack,
   inspectPack,
+  worldSHA256,
   installPack,
   exportEditedProject,
 } from './world-content.mjs';
@@ -724,6 +725,8 @@ export function mountWorldApp({
     records = [],
     worldStore = null,
     recordStore = null,
+    packRemovalReview = null,
+    restorePackIdentity = null,
     disposed = false;
   let entries = [],
     playlistId = unique('playlist'),
@@ -2116,6 +2119,7 @@ export function mountWorldApp({
             : `${txt('Missing pack', 'Відсутній пакунок')}: ${ref.levelId} (${ref.packIdentity})`,
         ),
       );
+      if (!entry) row.append(dependencyGuidance(ref.packIdentity));
       for (const [text, delta] of [
         ['↑', -1],
         ['↓', 1],
@@ -2151,13 +2155,16 @@ export function mountWorldApp({
           (p) => p.id === bookmark.id && p.revision === bookmark.revision,
         )
       : null;
-    if (resumable && bookmark.nextIndex < resumable.entries.length)
-      $('saved-playlists').append(
-        button(
+    if (resumable && bookmark.nextIndex < resumable.entries.length) {
+      const next = resumable.entries[bookmark.nextIndex],
+        resume = button(
           `${txt('Continue', 'Продовжити')}: ${localized(resumable.title)} · ${bookmark.nextIndex + 1}/${resumable.entries.length}`,
           () => flySequence(resumable, bookmark.nextIndex),
-        ),
-      );
+        );
+      resume.disabled = !dependencyAvailable(next.packIdentity, next.levelId);
+      $('saved-playlists').append(resume);
+      if (resume.disabled) $('saved-playlists').append(dependencyGuidance(next.packIdentity));
+    }
     for (const p of [...CURATED_PLAYLISTS, ...saved]) {
       const tile = el('div', undefined, 'playlist-tile'),
         name = el('div', localized(p.title));
@@ -2168,6 +2175,19 @@ export function mountWorldApp({
         name,
         button(txt('Open', 'Відкрити'), () => loadPlaylist(p)),
       );
+      const missing = p.entries.filter(
+        (ref) => !dependencyAvailable(ref.packIdentity, ref.levelId),
+      );
+      if (missing.length)
+        tile.append(
+          el(
+            'small',
+            txt(
+              `${missing.length} entries need exact packs. Open this playlist to restore them.`,
+              `${missing.length} завдань потребують точних пакунків. Відкрийте добірку, щоб відновити їх.`,
+            ),
+          ),
+        );
       if (saved.includes(p))
         tile.append(
           button('×', () => {
@@ -2181,13 +2201,16 @@ export function mountWorldApp({
   async function flySequence(p, index = 0) {
     const list = resolvePlaylist(p, catalogue),
       ref = list[index];
-    if (!ref?.course)
-      throw new Error(
+    if (!ref?.course) {
+      loadPlaylist(p);
+      status(
         txt(
           'This pinned challenge is unavailable. Install its exact world pack to continue.',
           'Це завдання недоступне. Встановіть його точний пакунок світу.',
         ),
       );
+      return;
+    }
     try {
       playlistStore.save(p);
       playlistStore.bookmark(p.id, p.revision, index);
@@ -2425,24 +2448,477 @@ export function mountWorldApp({
         }
       }
     }
-    if (recordStore) records = await recordStore.list();
+    if (recordStore) {
+      [records, recovery] = await Promise.all([recordStore.list(), recordStore.session()]);
+    }
     renderFilters();
     renderCatalogue();
     renderPlaylist();
     renderPacks();
+  }
+  function dependencyAvailable(packIdentity, courseId) {
+    return catalogue.some((entry) => entry.packIdentity === packIdentity && entry.id === courseId);
+  }
+  function dependencyGuidance(packIdentity) {
+    const group = el('div', undefined, 'proof-row');
+    group.dataset.requiredPack = packIdentity;
+    group.style.overflowWrap = 'anywhere';
+    group.append(
+      el('small', txt(`Required revision: ${packIdentity}`, `Потрібна версія: ${packIdentity}`)),
+    );
+    if (/^fpv-pack:[a-f0-9]{64}$/.test(packIdentity)) {
+      const restore = button(txt('Install required pack', 'Встановити потрібний пакунок'), () => {
+        restorePackIdentity = packIdentity;
+        restorePackInput.value = '';
+        restorePackInput.click();
+      });
+      restore.dataset.restorePack = packIdentity;
+      restore.disabled = !worldStore;
+      group.append(restore);
+    } else {
+      group.append(
+        el(
+          'small',
+          txt(
+            'This built-in content needs a compatible simulator version. Keep the recording and its full dependency identity.',
+            'Для цього вбудованого вмісту потрібна сумісна версія симулятора. Збережіть запис і повний ідентифікатор залежності.',
+          ),
+        ),
+      );
+    }
+    return group;
+  }
+  const restorePackInput = el('input');
+  restorePackInput.id = 'restore-pack-input';
+  restorePackInput.type = 'file';
+  restorePackInput.accept = '.rlpack';
+  restorePackInput.hidden = true;
+  doc.body.append(restorePackInput);
+  async function installExactPack(file, requiredIdentity = null) {
+    if (!worldStore)
+      throw new Error(txt('World storage is unavailable.', 'Сховище світів недоступне.'));
+    const generation = await worldStore.generation(),
+      loaded = await inspectPack(file);
+    for (const course of loaded.project.courses) validateWorldCourse(course);
+    if (requiredIdentity && requiredIdentity !== `fpv-pack:${loaded.sha256}`)
+      throw new Error(
+        txt(
+          `This is a different revision. Nothing was installed. Required: ${requiredIdentity}`,
+          `Це інша версія. Нічого не встановлено. Потрібна: ${requiredIdentity}`,
+        ),
+      );
+    if (disposed || !restorePackInput.isConnected) return;
+    // Install the inspected bytes' identity. Repacking through Creator can change
+    // source metadata and silently break references to the original revision.
+    await worldStore.install({ ...loaded, expectedGeneration: generation });
+    if (disposed || !restorePackInput.isConnected) return;
+    await refreshStorage();
+    status(
+      txt(
+        'Exact pack installed. Your draft is unchanged. Resume, verify a record, or continue a playlist when ready.',
+        'Точний пакунок встановлено. Чернетка не змінилася. Можна відновити політ, перевірити запис або продовжити добірку.',
+      ),
+    );
+  }
+  on(restorePackInput, 'change', async (event) => {
+    const file = event.target.files[0],
+      required = restorePackIdentity;
+    restorePackIdentity = null;
+    try {
+      if (file && required) await installExactPack(file, required);
+    } finally {
+      event.target.value = '';
+    }
+  });
+  async function exportPackRevision(
+    id,
+    sha256,
+    isCurrent = () => !disposed && restorePackInput.isConnected,
+  ) {
+    const full = await worldStore.get(id, { sha256 });
+    if (!full || full.sha256 !== sha256)
+      throw new Error(
+        txt('This exact revision is no longer installed.', 'Цю точну версію вже вилучено.'),
+      );
+    const pack = await preparePack(full.project, { assets: full.assets });
+    if ((await worldSHA256(pack)) !== sha256)
+      throw new Error(
+        txt(
+          'This exporter cannot reproduce the original pack identity. Keep the original .rlpack before removing it.',
+          'Цей експортер не відтворює початковий ідентифікатор пакунка. Перед вилученням збережіть оригінальний .rlpack.',
+        ),
+      );
+    if (isCurrent()) download(pack, `${id}-${sha256.slice(0, 12)}.rlpack`);
+  }
+  async function reviewPackRemoval(id) {
+    packRemovalReview?.close();
+    const previousFocus = doc.activeElement,
+      dialog = el('dialog'),
+      heading = el('h2', txt('Review pack removal', 'Перегляд вилучення пакунка')),
+      header = el('div', undefined, 'button-row'),
+      summary = el('div'),
+      message = el('p'),
+      actions = el('div', undefined, 'button-row');
+    let closed = false,
+      busy = false,
+      committing = false,
+      reviewed = null;
+    const alive = () => !closed && !disposed,
+      close = () => {
+        if (closed) return;
+        closed = true;
+        if (packRemovalReview?.dialog === dialog) packRemovalReview = null;
+        dialog.close();
+        dialog.remove();
+        if (!disposed && previousFocus?.isConnected) previousFocus.focus();
+      },
+      cancel = button(txt('Cancel', 'Скасувати'), () => {
+        if (!committing) close();
+      }),
+      confirm = button(
+        txt('Remove pack and retained revisions', 'Вилучити пакунок і збережені версії'),
+        async () => {
+          if (!alive() || busy || !reviewed) return;
+          const removed = reviewed;
+          const identities = new Set(removed.revisions.map((r) => `fpv-pack:${r.sha256}`));
+          if (current && $('flight-dialog').open && identities.has(current.packIdentity)) {
+            pauseFlight();
+            message.textContent = txt(
+              'Close this pack’s flight before removing it. Its saved recovery remains on this device.',
+              'Перед вилученням закрийте політ цього пакунка. Збережені дані відновлення залишаться на пристрої.',
+            );
+            return;
+          }
+          committing = true;
+          setBusy(true);
+          try {
+            await worldStore.remove(id, { expectedGeneration: removed.generation });
+          } catch (error) {
+            committing = false;
+            if (!alive()) return;
+            if (error.code === 'generation-conflict') {
+              try {
+                await loadReview();
+              } catch (refreshError) {
+                reviewed = null;
+                if (alive()) message.textContent = refreshError.message ?? String(refreshError);
+                return;
+              }
+              if (alive()) {
+                message.textContent = txt(
+                  'The library changed. Nothing was removed. Review the updated impact and confirm again if you still want to remove it.',
+                  'Бібліотека змінилася. Нічого не вилучено. Перегляньте оновлені наслідки та підтвердьте вилучення ще раз.',
+                );
+                cancel.focus();
+              }
+            } else message.textContent = error.message ?? String(error);
+            return;
+          } finally {
+            committing = false;
+            if (alive()) setBusy(false);
+          }
+          if (!alive()) return;
+          close();
+          // Deletion has committed. Reflect that fact before reading independent
+          // stores, whose failure must never make a removed revision look installed.
+          installed = installed.filter((record) => record.id !== id);
+          revisions = revisions.filter((record) => record.id !== id);
+          catalogue = catalogue.filter((entry) => entry.projectId !== id);
+          for (const row of $('installed-packs').querySelectorAll('[data-pack-id]'))
+            if (row.dataset.packId === id) row.remove();
+          try {
+            renderFilters();
+            renderCatalogue();
+            renderPlaylist();
+            renderPacks();
+            await refreshStorage();
+            if (!disposed)
+              status(
+                txt(
+                  'Pack and retained revisions removed. Recordings, pins, playlists, the saved flight and the open draft were kept. Reinstall each required exact .rlpack to use them again.',
+                  'Пакунок і збережені версії вилучено. Записи, закріплення, добірки, збережений політ і відкриту чернетку залишено. Для відновлення встановіть кожен потрібний точний .rlpack.',
+                ),
+              );
+          } catch (error) {
+            if (!disposed)
+              status(
+                txt(
+                  `Pack removal succeeded. Refreshing storage failed; reload to check the latest records and recovery state. No recordings or playlists were deleted. ${error.message ?? error}`,
+                  `Пакунок успішно вилучено. Не вдалося оновити сховище; перезавантажте сторінку, щоб перевірити записи та відновлення. Записи й добірки не видалено. ${error.message ?? error}`,
+                ),
+              );
+          }
+        },
+      );
+    function setBusy(value) {
+      busy = value;
+      for (const b of dialog.querySelectorAll('button')) b.disabled = value;
+      cancel.disabled = committing;
+      confirm.disabled = value || !reviewed;
+      dialog.setAttribute('aria-busy', String(value));
+    }
+    async function runExport(action) {
+      if (!alive() || busy) return;
+      setBusy(true);
+      try {
+        await action();
+        if (alive())
+          message.textContent = txt(
+            'Download prepared. Check your browser’s downloads and keep every part. Nothing has been removed.',
+            'Завантаження підготовлено. Перевірте завантаження браузера та збережіть усі частини. Нічого не вилучено.',
+          );
+      } catch (error) {
+        if (alive()) message.textContent = error.message ?? String(error);
+      } finally {
+        if (alive()) setBusy(false);
+      }
+    }
+    async function loadReview() {
+      reviewed = null;
+      setBusy(true);
+      const snapshot = await worldStore.removalSnapshot(id);
+      const dependentData = await Promise.allSettled([
+        recordStore ? recordStore.list() : Promise.reject(new Error('unavailable')),
+        recordStore ? recordStore.session() : Promise.reject(new Error('unavailable')),
+      ]);
+      if (!alive()) return;
+      summary.replaceChildren();
+      if (!snapshot) {
+        summary.append(
+          el('p', txt('This pack is no longer installed.', 'Цей пакунок уже вилучено.')),
+        );
+        setBusy(false);
+        return;
+      }
+      reviewed = snapshot;
+      dialog.dataset.generation = String(snapshot.generation);
+      const identities = new Set(snapshot.revisions.map((r) => `fpv-pack:${r.sha256}`)),
+        affected =
+          dependentData[0].status === 'fulfilled'
+            ? dependentData[0].value.filter((r) => identities.has(r.packIdentity))
+            : null,
+        savedFlight = dependentData[1].status === 'fulfilled' ? dependentData[1].value : null,
+        revisionCount = snapshot.revisions.length,
+        challengeCount = new Set(snapshot.revisions.flatMap((r) => r.courseIds)).size;
+      summary.append(
+        el('strong', snapshot.title),
+        el(
+          'p',
+          txt(
+            `${revisionCount} ${revisionCount === 1 ? 'revision' : 'revisions'} · ${challengeCount} ${challengeCount === 1 ? 'challenge' : 'challenges'}. All listed revisions and their scenery will be removed from this device.`,
+            `${revisionCount} версій · ${challengeCount} завдань. Усі перелічені версії та їхні сцени буде вилучено з пристрою.`,
+          ),
+        ),
+      );
+      const revisionList = el('ul');
+      for (const revision of snapshot.revisions) {
+        const row = el('li');
+        row.dataset.revision = revision.sha256;
+        const exportRevision = button(txt('Export this revision', 'Експортувати цю версію'), () =>
+          runExport(() => exportPackRevision(id, revision.sha256, alive)),
+        );
+        exportRevision.dataset.exportRevision = revision.sha256;
+        row.append(
+          el(
+            'small',
+            `${revision.active ? txt('Active', 'Активна') : txt('Retained', 'Збережена')} · fpv-pack:${revision.sha256}`,
+          ),
+          exportRevision,
+        );
+        revisionList.append(row);
+      }
+      summary.append(revisionList);
+      summary.append(
+        el(
+          'p',
+          affected
+            ? txt(
+                `${affected.length} recordings (${affected.filter((r) => r.pinned).length} pinned) will need these packs. Recording bytes and past verification are kept.`,
+                `${affected.length} записів (${affected.filter((r) => r.pinned).length} закріплено) потребуватимуть цих пакунків. Дані записів і результати попередньої перевірки зберігаються.`,
+              )
+            : txt(
+                'Recording impact is unavailable; removal does not delete the independent recording store.',
+                'Наслідки для записів недоступні; вилучення не видаляє окреме сховище записів.',
+              ),
+        ),
+      );
+      if (affected?.length) {
+        const names = el('ul');
+        for (const record of affected.slice(0, 8))
+          names.append(el('li', record.course.locales?.[locale]?.title ?? record.course.id));
+        if (affected.length > 8)
+          names.append(
+            el('li', txt(`And ${affected.length - 8} more.`, `І ще ${affected.length - 8}.`)),
+          );
+        const exports = el('div', undefined, 'button-row'),
+          exportRecords = button(txt('Prepare recording backup', 'Підготувати копію записів'), () =>
+            runExport(async () => {
+              const parts = await exportProofParts(affected);
+              if (!alive()) return;
+              exports.replaceChildren();
+              parts.forEach((part, index) => {
+                const b = button(
+                  txt(
+                    `Download part ${index + 1}/${parts.length}`,
+                    `Завантажити частину ${index + 1}/${parts.length}`,
+                  ),
+                  () => {
+                    if (alive())
+                      download(
+                        JSON.stringify(part),
+                        `fpv-records-${index + 1}-of-${parts.length}.json`,
+                      );
+                  },
+                );
+                b.dataset.exportProofPart = String(index + 1);
+                exports.append(b);
+              });
+            }),
+          );
+        exportRecords.id = 'pack-removal-export-records';
+        summary.append(names, exportRecords, exports);
+      }
+      try {
+        if (!storage) throw new Error('unavailable');
+        const saved = playlistStore.snapshot(),
+          lists = saved.playlists.filter((p) =>
+            p.entries.some((r) => identities.has(r.packIdentity)),
+          ),
+          references = lists.reduce(
+            (n, p) => n + p.entries.filter((r) => identities.has(r.packIdentity)).length,
+            0,
+          ),
+          bookmarked =
+            saved.bookmark &&
+            [...saved.playlists, ...CURATED_PLAYLISTS].find(
+              (p) => p.id === saved.bookmark.id && p.revision === saved.bookmark.revision,
+            ),
+          nextAffected =
+            bookmarked &&
+            identities.has(bookmarked.entries[saved.bookmark.nextIndex]?.packIdentity),
+          draftReferences = entries.filter((r) => identities.has(r.packIdentity)).length;
+        summary.append(
+          el(
+            'p',
+            txt(
+              `${lists.length} saved ${lists.length === 1 ? 'playlist' : 'playlists'} · ${references} affected entries · ${draftReferences} entries in the open playlist. Order and bookmarks are kept.`,
+              `${lists.length} збережених добірок · ${references} пов’язаних завдань · ${draftReferences} у відкритій добірці. Порядок і закладки зберігаються.`,
+            ),
+          ),
+        );
+        if (nextAffected)
+          summary.append(
+            el(
+              'p',
+              txt(
+                'The next bookmarked challenge will need its exact pack.',
+                'Для наступного завдання за закладкою знадобиться його точний пакунок.',
+              ),
+            ),
+          );
+        for (const p of lists.slice(0, 8)) summary.append(el('small', localized(p.title)));
+      } catch {
+        summary.append(
+          el(
+            'p',
+            txt(
+              'Playlist impact is unavailable. Saved playlists and bookmarks are not removed.',
+              'Наслідки для добірок недоступні. Збережені добірки та закладки не вилучаються.',
+            ),
+          ),
+        );
+      }
+      if (dependentData[1].status === 'rejected')
+        summary.append(
+          el(
+            'p',
+            txt(
+              'Saved-flight impact is unavailable.',
+              'Наслідки для збереженого польоту недоступні.',
+            ),
+          ),
+        );
+      else if (savedFlight && identities.has(savedFlight.packIdentity))
+        summary.append(
+          el(
+            'p',
+            txt(
+              `The interrupted flight is kept locally and needs ${savedFlight.packIdentity} to resume.`,
+              `Перерваний політ зберігається локально; для відновлення потрібен ${savedFlight.packIdentity}.`,
+            ),
+          ),
+        );
+      summary.append(
+        el(
+          'p',
+          txt(
+            'Recording backups do not include the interrupted flight. Keep original pack files and check downloads before removal.',
+            'Копії записів не містять перерваного польоту. Перед вилученням збережіть оригінальні файли пакунків і перевірте завантаження.',
+          ),
+        ),
+      );
+      if (editingProject?.id === id)
+        summary.append(
+          el(
+            'p',
+            txt(
+              'Your open Creator draft stays in memory. Export it before leaving; removal does not save the draft.',
+              'Відкрита чернетка редактора залишиться в пам’яті. Експортуйте її перед виходом; вилучення не зберігає чернетку.',
+            ),
+          ),
+        );
+      setBusy(false);
+    }
+    dialog.id = 'pack-removal-review';
+    heading.id = 'pack-removal-title';
+    summary.id = 'pack-removal-impact';
+    message.id = 'pack-removal-status';
+    message.setAttribute('role', 'status');
+    dialog.setAttribute('aria-labelledby', heading.id);
+    dialog.style.width = 'min(44rem, calc(100vw - 2rem))';
+    dialog.style.maxHeight = 'calc(100dvh - 2rem)';
+    dialog.style.overflow = 'auto';
+    dialog.style.overflowWrap = 'anywhere';
+    cancel.id = 'pack-removal-cancel';
+    cancel.autofocus = true;
+    confirm.id = 'pack-removal-confirm';
+    header.append(heading, cancel);
+    actions.append(confirm);
+    dialog.append(header, summary, message, actions);
+    dialog.addEventListener('cancel', (event) => {
+      event.preventDefault();
+      if (!committing) close();
+    });
+    packRemovalReview = { dialog, close };
+    doc.body.append(dialog);
+    setBusy(true);
+    dialog.showModal();
+    cancel.focus();
+    try {
+      await loadReview();
+    } catch (error) {
+      if (alive()) {
+        reviewed = null;
+        message.textContent = error.message ?? String(error);
+        setBusy(false);
+      }
+    }
   }
   async function resumeInterruptedFlight() {
     if (!recovery) return;
     const entry = catalogue.find(
       (e) => e.id === recovery.course.id && e.packIdentity === recovery.packIdentity,
     );
-    if (!entry)
-      throw new Error(
+    if (!entry) {
+      showTab('packs');
+      status(
         txt(
           'Install the exact world pack before recovering this flight.',
           'Для відновлення встановіть точний пакунок світу.',
         ),
       );
+      return;
+    }
     await startFlight(
       { ...entry, course: recovery.course },
       {
@@ -2467,6 +2943,9 @@ export function mountWorldApp({
     $('installed-packs').replaceChildren();
     for (const record of installed) {
       const row = el('div', undefined, 'proof-row');
+      row.dataset.packId = record.id;
+      const removePack = button(txt('Remove', 'Видалити'), () => reviewPackRemoval(record.id));
+      removePack.dataset.removePack = record.id;
       row.append(
         el('strong', record.project.title),
         el(
@@ -2486,14 +2965,10 @@ export function mountWorldApp({
           );
           showTab('creator');
         }),
-        button(txt('Export pack', 'Експорт пакунка'), async () => {
-          const full = await worldStore.get(record.id);
-          download(await preparePack(full.project, { assets: full.assets }), `${record.id}.rlpack`);
-        }),
-        button(txt('Remove', 'Видалити'), async () => {
-          await worldStore.remove(record.id, { expectedGeneration: await worldStore.generation() });
-          await refreshStorage();
-        }),
+        button(txt('Export pack', 'Експорт пакунка'), () =>
+          exportPackRevision(record.id, record.sha256),
+        ),
+        removePack,
       );
       $('installed-packs').append(row);
       for (const prior of revisions.filter((r) => r.id === record.id && r.active === false))
@@ -2512,6 +2987,9 @@ export function mountWorldApp({
     $('proof-records').replaceChildren();
     for (const record of records.slice().sort((a, b) => b.savedAt - a.savedAt)) {
       const row = el('div', undefined, 'proof-row');
+      const available = dependencyAvailable(record.packIdentity, record.course.id);
+      row.dataset.recordId = record.id;
+      row.dataset.dependency = available ? 'available' : 'missing';
       const remove = button(txt('Remove', 'Видалити'), async () => {
         await recordStore.remove(record.id);
         await refreshStorage();
@@ -2521,10 +2999,10 @@ export function mountWorldApp({
         el('strong', record.course.locales?.[locale]?.title ?? record.course.id),
         el(
           'small',
-          `${record.status} · ${record.diagnostic} · ${record.proof.frames?.length ?? 0} ${txt('ticks', 'тактів')}`,
+          `${record.status === 'verified' ? txt('Previously verified', 'Раніше перевірено') : record.status === 'invalid' ? txt('Invalid recording', 'Недійсний запис') : txt('Verification pending', 'Очікує перевірки')} · ${available ? txt('Required content available', 'Потрібний вміст доступний') : txt('Required pack missing', 'Потрібний пакунок відсутній')} · ${record.diagnostic} · ${record.proof.frames?.length ?? 0} ${txt('ticks', 'тактів')}`,
         ),
         button(txt('Export', 'Експорт'), async () =>
-          download((await exportProofParts([record]))[0], `${record.id}.json`),
+          download(JSON.stringify((await exportProofParts([record]))[0]), `${record.id}.json`),
         ),
         remove,
         button(record.pinned ? txt('Unpin', 'Відкріпити') : txt('Pin', 'Закріпити'), async () => {
@@ -2539,6 +3017,7 @@ export function mountWorldApp({
           ),
         ),
       );
+      if (!available) row.append(dependencyGuidance(record.packIdentity));
       $('proof-records').append(row);
     }
     if (recovery) {
@@ -2556,7 +3035,9 @@ export function mountWorldApp({
         resumeInterruptedFlight,
       );
       b.id = 'resume-flight';
+      b.disabled = !dependencyAvailable(recovery.packIdentity, recovery.course.id);
       $('proof-records').prepend(b);
+      if (b.disabled) b.after(dependencyGuidance(recovery.packIdentity));
     }
   }
   function updateImportControls() {
@@ -4385,9 +4866,15 @@ export function mountWorldApp({
   on($('import-pack'), 'change', async (e) => {
     const file = e.target.files[0];
     if (!file) return;
-    const loaded = /\.zip$/i.test(file.name)
-      ? await importEditableZip(file)
-      : await inspectPack(file);
+    if (!/\.zip$/i.test(file.name)) {
+      try {
+        await installExactPack(file);
+      } finally {
+        e.target.value = '';
+      }
+      return;
+    }
+    const loaded = await importEditableZip(file);
     if (loaded.project.definitions)
       loaded.project.courses = compileContentProject(loaded.project.definitions).map(
         (r) => r.course,
@@ -4405,14 +4892,14 @@ export function mountWorldApp({
   on($('backup-proofs'), 'click', async () => {
     const parts = await exportProofParts(records);
     $('backup-parts')?.remove();
-    if (parts.length === 1) download(parts[0], 'fpv-flights-1-of-1.json');
+    if (parts.length === 1) download(JSON.stringify(parts[0]), 'fpv-flights-1-of-1.json');
     else {
       const links = el('div', undefined, 'button-row');
       links.id = 'backup-parts';
       parts.forEach((part, i) =>
         links.append(
           button(`${txt('Download part', 'Завантажити частину')} ${i + 1}/${parts.length}`, () =>
-            download(part, `fpv-flights-${i + 1}-of-${parts.length}.json`),
+            download(JSON.stringify(part), `fpv-flights-${i + 1}-of-${parts.length}.json`),
           ),
         ),
       );
@@ -4526,6 +5013,8 @@ export function mountWorldApp({
   menuHint.id = 'sim-menu-hint';
   doc.querySelector('main').append(menuHint);
   function menuContext() {
+    if (packRemovalReview?.dialog.open)
+      return { root: packRemovalReview.dialog, key: 'pack-removal-review' };
     const secondary = ['world-radio-dialog', 'drone-hangar', 'sim-settings']
       .map($)
       .find((node) => node.open);
@@ -4565,7 +5054,8 @@ export function mountWorldApp({
       if (menuHint.textContent !== value) menuHint.textContent = value;
     },
     onBack() {
-      if ($('world-radio-dialog').open) closeRadio();
+      if (packRemovalReview?.dialog.open) $('pack-removal-cancel').click();
+      else if ($('world-radio-dialog').open) closeRadio();
       else if ($('drone-hangar').open)
         $('drone-hangar').querySelector('[data-close-hangar]').click();
       else if ($('sim-settings').open) closeSettings();
@@ -5024,6 +5514,9 @@ export function mountWorldApp({
     }),
     async dispose() {
       if (disposed) return;
+      packRemovalReview?.close();
+      restorePackIdentity = null;
+      restorePackInput.remove();
       pauseFlight();
       immersive.dispose();
       await saveRecovery();
