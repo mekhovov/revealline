@@ -2152,3 +2152,95 @@ was rebased onto that main while retaining the qualified runtime bytes. A new
 native stack is only needed if the next dependent feature is published before
 section replay merges. Next concrete feature is the visual Follow/Observe
 objective inspector, including both-mode editing and project/pack roundtrip.
+
+
+### Section replay published; tracking editor started — 3 October 2026
+
+[Section replay #972](https://github.com/mekhovov/revealline/pull/972) is published
+and attached, initial headce8a434de, independently against main after capacity
+#968 merged. It retains source/package51/51 browser checks and768exact recorded
+sections, allthree frozen optional packages and both-mode catalogue access.
+Dedicated local build is `dist/fpv-section-replay-playtest` (ZIP49c1409c…cab2d),
+including merged Themes#967 and Warehouse#966. Public availability still needs
+marker and actual launch verification after merge.
+
+Next branch is `codex/fpv-tracking-objective-editor`, based on the published
+section feature. Own the visual Follow/Observe inspector and narrow editor-host
+wiring; do not add this unfinished work to ready#972. If#972 remains open when
+this dependent feature is complete, inspect its exact remote head and append
+through a new native stack. If it merges first, reconcile with current main and
+publish independently. Continue functional qualification without waiting for
+player feedback; keep physical/human acceptance pending and unit coverage last.
+
+
+Warehouse public availability is now verified: public markerdb84d3f14 (Themes#967)
+is a descendant of Warehouse8896c4976. An actual refreshed public Moving freight
+demonstration reached52.0s/health100 and “Demonstration complete”, with no captured
+console errors. The screenshot API returned a zero-width error on that background
+tab; no fresh screenshot is claimed. This confirms player entry/playback, not
+physical-device performance or new art acceptance. Section#972 remains a separate
+publication gate.
+
+Only superseded outputs from this turn were cleaned for disk headroom: the first
+section source fixtures, first extracted package/browser fixture, and first frozen
+candidate ZIP copies. Their committed receipts/metadata and the latest qualified
+candidate/extracted player/fixtures remain intact; normal user playtest URLs and
+all source assets are preserved.
+
+### Tracking inspector source-qualified — 3 October 2026
+
+`codex/fpv-tracking-objective-editor` now includes the native EN/UK Follow/Observe
+inspector, independent per-mode criteria, exact units, actor validation and
+undo/reimport-safe bindings. Generic route edits no longer change an unrelated
+Acro objective after the mode arrays diverge. Source browser63/63 and exact
+UI-authored two-mode replay pass (627/548ticks, zero contacts), plus shared-host
+section regression53/53. Feature notes: `fpv-tracking-objective-editor.md`.
+
+PR#972 publication checks found a real internal-radio-reset/autoplay regression.
+A concurrent remote repair and newer main Themes merge were preserved. Current
+published parent4bf0d072f incorporates those changes plus reset-before-pause-token
+capture and playback-only pickup isolation. Existing affected checks16/16 and
+source53/53 pass; protected auto-merge is requested using the repository's allowed
+merge method. No check or release policy was bypassed. Old frozen receipts are
+historical until the next complete candidate passes admission.
+
+Disk pressure recurred during local writes/fetch. Only superseded generated
+section fixtures and ZIP copies were removed; their manifests/committed receipts,
+source and normal user playtest builds remain. A retry fetched the newer parent
+without auto-maintenance; main673ac3fc4 is preserved. Source browser63/63 and
+section53/53 were rerun against that integration. User feedback stays nonblocking;
+physical/human qualification and deferred unit coverage remain explicitly open.
+
+The editor has no runtime dependency on section replay. To preserve independent
+publication while #972 receives concurrent main reconciliations, its three local
+commits were rebased onto current main742d25225. A recovery ref preserves the
+combined qualified candidate. Only the editor's two runtime files and its
+qualification/docs remain in the diff; no remote branch was force-pushed and no
+native stack was created. The 53-check section receipt is integration evidence
+for the preserved combined candidate, not a claim that pending #972 is on main.
+Fresh standalone source/package qualification follows this rebase. Next item
+remains pack-removal impact and recovery guidance.
+
+Standalone editor candidateaa05d0b93 passes all three frozen optional admissions,
+exact committed inputs/ZIP members and two identical builds. World Studio99files/
+14,451,645bytes remains inside104files/16MiB. Fresh source and fresh packaged
+browser workflows each pass63/63, and the exact UI-authored data completes and
+replays in both modes. Dedicated build: `dist/fpv-tracking-editor-main-playtest`.
+The earlier combined build remains `dist/fpv-tracking-editor-playtest`; it includes
+pending section replay and is preserved separately. Native stacks remain unused
+because both focused features can merge independently.
+
+### Follow/Observe editor published — 3 October 2026
+
+[PR #975](https://github.com/mekhovov/revealline/pull/975) is published and attached,
+initial head19d11689a, independently against main. Its source/package browser
+workflows pass63/63 each; both UI-authored modes complete/replay; frozen candidate
+ aa05d0b93 passes all three optional admissions and reproducibility. Local standalone
+ZIPa2a8b90c…8c9e50 is available at `dist/fpv-tracking-editor-main-playtest`.
+
+Section replay [#972](https://github.com/mekhovov/revealline/pull/972) has now
+merged at2026-10-03T01:13:01Z, final branch head61da7d890. The new editor remains
+separate; no native stack was necessary. Public deployment/launch of either
+new feature is not yet claimed. Next implementation: pack-removal impact and
+recovery guidance on a separate branch from current main. Preserve pending
+editor CI/review and current qualification receipts while progressing that item.
