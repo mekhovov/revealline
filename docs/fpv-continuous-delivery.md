@@ -2714,5 +2714,4 @@ browser map comparisons pass; package admission passes at 94files/15,383,912byte
 See `docs/fpv-field-surface-identity.md`. Next: publish this focused repair, refresh
 art PRs after protected integration, continue D1 material depth; do not call D1
 complete or public availability verified. Preserve concurrent capacity/Theme work.
-||||||| e0e1db096
 inspect those failures next without weakening admission guards.
