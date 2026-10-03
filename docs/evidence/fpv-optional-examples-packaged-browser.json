@@ -16,7 +16,7 @@
     "optional-practice/civilian-fpv/math.mjs": "555c8b6ea170b46992133507d2a3d867f06185bca060239cab7db9c9b87f9f98",
     "optional-practice/civilian-fpv/rotation-table.mjs": "2ddab304ac99a2e70fc7e84fc6c27eedb49f1f3dac976baed680effa659cef41",
     "optional-practice/civilian-fpv/flight-sectors.mjs": "5b1b54bde4e578e61da7d59f4a80a86db9aafbc78b4523d2ba2b540277a0a16d",
-    "optional-practice/civilian-fpv/snake-hunt-catalogue.mjs": "9b9ba8106125ac6baff0881360967ce3cc8fcbbdc5cf9e50db32ca987aeba35a",
+    "optional-practice/civilian-fpv/snake-hunt-catalogue.mjs": "3668cf4bad75425e92f9bd426ecfea825b809f41b7cb5ba45d6f3adaa709960b",
     "optional-practice/civilian-fpv/snake-hunt-presentation.mjs": "81f63fc3a5deb0f40c294a4083c743a091ae4012e1f1ec5f6c8bce9bd1348f61",
     "game/hunt/presentation-catalog.mjs": "ae5b9fd2502c268aadeb45bad9f22e3e082c24e5724b680c091905491927ee4c",
     "game/hunt/preferences.mjs": "103f0cf5ec674a9e5d9c8795c64e186f0f58cadb8bd1b85998effa6727e96a43",
@@ -71,7 +71,7 @@
     "optional-practice/civilian-fpv/world-progress.mjs": "c7de9e847bc3dbbb8e1aee6da39887ab4778769c33476a428c4186c57b5c845d",
     "optional-practice/civilian-fpv/world-hangar.mjs": "759d21e034e65e99600df72ef7e04a2fdff8359ec9119baa401323b248ec85ef",
     "optional-practice/civilian-fpv/world-actor-editor.mjs": "4495cd582f9b8c01026e5b3e13a177d752862db98db64719156975afc37e74ce",
-    "game/fpv-entry.mjs": "3713b9d9ae2376fd5b59f805b808964522c1ec7afa4303ac9b5227a02f32ae0b",
+    "game/fpv-entry.mjs": "f994c064b82e04c2f218f748b9e745800fc6cc32163c51b40876a572c3c4fd42",
     "optional-practice/fpv-worlds/index.html": "3051aac26469272b4e0551031948f13a65a7c933a6b94c76dd2e2b93fac064f0"
   },
   "proofArchive": {
@@ -80,11 +80,11 @@
     "records": 14
   },
   "fixtureFiles": {
-    "index.html": "780bd2120a8cd98c367d11d73e60a4912da38febb89fef6240def376b0fc419a",
+    "index.html": "59a83b3aaf9f1d6afe7f1b45448e26d91005cf762471a64d7062c0ab18092fa3",
     "examples.json": "715a45515c572ab559ca95362585f5665f6297f7fcd410b3c4d7474cf8ac36aa",
-    "player.html": "211eb6a1ddc5960c1fac1dad384518acdba6c6dd4ca70dc6b5dffccd86bd634f"
+    "player.html": "11d4b91ba626b74ee0e4d6620717cc16c3bc2a351ce28458b51c5292e89a11ec"
   },
-  "elapsedMs": 25760,
+  "elapsedMs": 27279,
   "passed": 109,
   "total": 109,
   "checks": [
@@ -99,7 +99,7 @@
     {
       "name": "Full current catalogue retained, including merged Snake additions",
       "passed": true,
-      "catalogue": 172
+      "catalogue": 184
     },
     {
       "name": "Selected self-level mode initially has no optional school Watch actions",
@@ -536,35 +536,35 @@
       "label": "Verify frozen source and optional archive"
     },
     {
-      "ms": 685,
+      "ms": 869,
       "label": "Reject unusable dependencies, changed course and invalid replay"
     },
     {
-      "ms": 793,
+      "ms": 978,
       "label": "Partial real IndexedDB failure retains only completed saves"
     },
     {
-      "ms": 890,
+      "ms": 1076,
       "label": "Import all 14 through actual File input"
     },
     {
-      "ms": 1499,
+      "ms": 1637,
       "label": "Pinned repeat import is byte-identical"
     },
     {
-      "ms": 2338,
+      "ms": 2469,
       "label": "Selected-mode whole-lesson lab and exact full playback"
     },
     {
-      "ms": 24001,
+      "ms": 25419,
       "label": "Recorded section playback and mode selection"
     },
     {
-      "ms": 24495,
+      "ms": 25954,
       "label": "Removal invalidates availability and local reload restores retained examples"
     },
     {
-      "ms": 25042,
+      "ms": 26514,
       "label": "Disposal during import does not produce late writes"
     }
   ],

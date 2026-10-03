@@ -136,7 +136,9 @@
                 '; ' +
                 (d?.getElementById('studio-status')?.textContent ?? '') +
                 '; ' +
-                (d?.getElementById('flight-status')?.textContent ?? ''),
+                (d?.getElementById('flight-status')?.textContent ?? '') +
+                '; ' +
+                (d?.querySelector('.coach-lab-status')?.textContent ?? ''),
             );
           await wait(15);
           w?.fixtureRAF?.deliver(0);
@@ -501,9 +503,14 @@
           set('flight-mode', 'self-level');
           click(button(card(id), /^Start lesson|^Fly it again/));
           await until(
-            () => app.snapshot().course === id && app.snapshot().learning?.guideOpen && state(),
-            'lesson guide ' + id,
+            () =>
+              app.snapshot().course === id &&
+              app.snapshot().learning?.guideOpen &&
+              state() &&
+              d.getElementById('flight-status').textContent.startsWith('Ready.'),
+            'lesson guide ready ' + id,
           );
+          await pulse(0);
           const replay = d.querySelector('[data-coach-action="lab-replay"]');
           click(replay);
           await pulse(20);

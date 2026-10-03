@@ -2406,3 +2406,40 @@ Pages run37090715866 and public marker both identify f0d950864, which contains
 #977. Recovery is therefore live; #979 remains a separate pending PR. Screenshot:
 `/tmp/fpv-public-recovery-20261003.png`. This launch does not qualify company
 edition capacity or physical input hardware.
+
+### Concurrent main preserved; optional examples requalified — 3 October 2026
+
+The owner concurrently updated #979 to a4221046c with main #978. Both remote
+commits are preserved by a normal merge; no force-push or native-stack retarget
+was used. Main now has184challenges (36Snake Hunt) in14worlds. The source and
+runtime World archives remain within unchanged104-file/16MiB limits: frozen
+candidate eee011acdc6b5ed739289b0576334ef1f1d38241 has102runtime files /
+14513098bytes and104source files, all three admissions and two identical builds.
+
+Source/package examples are being rerun with an explicit Ready-state wait before
+the lab click. One early-click qualification run paused on initial reduced-motion
+publication while renderer preparation finished; no timeout or proof check was
+relaxed. Preserve that failed receipt at /tmp/fpv-optional-examples-source-6-failure.json.
+The complete source recovery flow passes90/90 on this same runtime graph.
+
+The latest observed company candidate after #978 is921files/67401190bytes,
+292326bytes over64MiB (run37091698383). This supersedes the25634-byte observation;
+no FPV package limit or whole-edition guard has been changed. A public launch was
+verified at f0d950864; later main deployment must be checked separately.
+
+Next content is prepared in /tmp/fpv-adventure-example-audit:60Adventure proofs,
+byte-identical to prior qualified proof envelopes, all complete/replayed and
+export/import/replayed. Six optional world archives or one combined archive are
+available. They still need a maintained exporter, player instructions and actual
+browser import/playback qualification before a separate focused PR. None are
+silently added to the core178examples. Continue Stadium/yard/Garage art after
+this bounded data increment. Human feedback remains nonblocking.
+
+Final combined verification: source and immutable packaged examples109/109 each,
+recovery90/90 each, three completed and three interrupted recordings replayed
+with matching identities. The fixture now waits for the visible Ready state and
+initial host frame before starting the example; production replay checks are
+unchanged. Host SHA25652cbfac9012bf2a7127ec1cfd85142ead184166aadb8a97818d886623c7db8f2.
+Fresh local build: `dist/fpv-optional-examples-current-playtest`,94files/
+14355327bytes, ZIP6126d9fd523e62a82cc4b76a185a278cec0f03c6650f89a328b0da48a5dc5661.
+This development player includes the preserved #977/#978 main work and #979.

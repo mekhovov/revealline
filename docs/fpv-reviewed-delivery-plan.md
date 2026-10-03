@@ -20,11 +20,11 @@ controls, school, section practice, ghosts, reimport and original demonstrations
 The Follow/Observe editor #975, shared-theme texture quality #974, WebAssembly
 CSP repair #976 and pack-removal recovery #977 are now merged. Public deployment
 remains distinct from local functional verification.
-The current catalogue is **172 challenges / 14 worlds / 58 school lessons / 374
+The current catalogue is **184 challenges / 14 worlds / 58 school lessons / 374
 school steps**. Installed demonstrations total **178**: all 120 original
 mode-specific recordings plus 58 recommended-mode school examples. The 60
 Adventure authoring proofs are separate; they are not installed demonstrations.
-Main Snake content #973 adds 24 challenges within the same 14 worlds. Fourteen
+Main Snake content #973/#978 adds 36 challenges within the same 14 worlds. Fourteen
 optional matching Self-level foundation examples are published in PR #979; they do
 not add challenges or increase the default installed-example count.
 
@@ -32,7 +32,7 @@ not add challenges or increase the default installed-example count.
 | --- | --- | --- | --- |
 | Complete / merged #972 | Watch a recorded section, then practise from its exact entry | Delivered | Verified prefix and end boundary, accurate labels, pause/reconnect and no rewards from playback/practice |
 | Complete / merged #975 | Visual Follow/Observe objective inspector | Delivered | Author, move subject, edit criteria, export/reopen and reimport without losing settings |
-| Complete / PR #977 | Pack-removal impact and recovery guidance | Source/package verified; publication pending | 90 browser checks in each build, exact restore and preserved recording/session/playlist evidence |
+| Merged and live #977 | Pack-removal impact and recovery guidance | Source/package verified; public launch verified | 90 browser checks in each build, exact restore and preserved recording/session/playlist evidence |
 | Parallel | Stadium, then yard/garage art using shared Themes materials | 3–5 days per bounded batch | Readability, collision/visibility parity, resource disposal and source/packaged rendering |
 | Published #979 | 14 optional Self-level foundation examples; Adventure next | 109 browser checks per build | Correct mode/revision, complete replay and bounded optional delivery |
 | 5 | Further distinct practice worlds and moving-subject challenges | 3–5 days per pair | Authored routes/objectives, both-mode access and verified demonstrations |
