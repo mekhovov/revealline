@@ -1,3 +1,4 @@
+import { TEAM_RUNNING_LEVEL_VERSION } from './running-enemies.mjs';
 import { dataIdentity } from '../data-json.mjs';
 import { EPS, movingCirclesTime } from '../core/geometry.mjs';
 import { classicDomainHit } from '../core/classic-motion.mjs';
@@ -18,7 +19,7 @@ import {
   huntTargetKind,
   chooseHuntRunnerHeading,
 } from '../hunt/rules.mjs';
-import { compileCoopFoundationGeometry } from './foundations.mjs';
+import { compileCoopFoundationGeometry, hasTeamTerrain } from './foundations.mjs';
 
 const live = (actor) => actor.alive;
 const exposed = (run, player) =>
@@ -66,6 +67,7 @@ export function validateCoopCombat(level, cells) {
       classic: { combatPatrols: level.combatPatrols, ...(level.hunt ? { hunt: level.hunt } : {}) },
     },
     {
+      supplemental: level.version === TEAM_RUNNING_LEVEL_VERSION,
       geometry: { cells },
       walls: Array.from(cells, (cell) => cell === 2),
       identity(actor) {
@@ -81,13 +83,14 @@ export function validateCoopCombat(level, cells) {
     validateHuntDefinition(level.hunt, level.combatPatrols.actors, {
       enabled: level.combatPatrols.enabled,
       ordinaryCount: level.enemies.length,
+      supplemental: level.version === TEAM_RUNNING_LEVEL_VERSION,
       playerMoveSpeed: level.rules?.moveSpeed ?? 8,
     });
     validateHuntReachability(level.hunt, level.combatPatrols.actors, {
       width: level.width,
       height: level.height,
       cells,
-      terrain: compileCoopFoundationGeometry(level).terrain,
+      terrain: hasTeamTerrain(level) ? compileCoopFoundationGeometry(level).terrain : [],
       spawns: level.spawns,
     });
   }
@@ -109,7 +112,12 @@ export function initializeCoopCombat(run) {
   if (run.level.hunt) {
     run.hunt = createHuntState();
     run.huntDowns = 0;
-    run.huntRecordIdentity = dataIdentity({ level: run.level, seed: run.seed, config: run.config });
+    run.huntRecordIdentity = dataIdentity({
+      level: run.level,
+      seed: run.seed,
+      config: run.config,
+      ...(run.level.version === TEAM_RUNNING_LEVEL_VERSION ? { difficulty: run.difficulty } : {}),
+    });
   }
 }
 

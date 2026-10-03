@@ -1,3 +1,6 @@
+import { prepareTeamRunningEnemies } from '../hunt/team-running-enemies.mjs';
+import { createRunningEnemyPreferences } from '../hunt/running-enemy-preferences.mjs';
+import { mountRunningEnemyControls } from '../ui/running-enemy-controls.mjs';
 import { createHuntRecords } from '../hunt/records.mjs';
 import { createTeamAttemptIdentity } from '../coop/attempt-identity.mjs';
 import {
@@ -389,6 +392,10 @@ export function bootCoop({
     const reveal = prepareDisplayReveal?.(++displayLayoutVersion);
     renderDisplayPreferences(state);
     reveal?.();
+  });
+  const runningEnemyPreferences = createRunningEnemyPreferences({
+    window,
+    getStorage: () => localStorage,
   });
   const encounterPreferences = createEncounterVariantPreferences({
     window,
@@ -905,6 +912,48 @@ export function bootCoop({
       return encounterChoices.get(level);
     },
   });
+  const runningEnemyControlViews = [
+    ...new Set([$('coop-encounter-variant'), $('coop-enemy-remains').closest('section')]),
+  ]
+    .filter(Boolean)
+    .map((container) =>
+      mountRunningEnemyControls({
+        container,
+        document,
+        window,
+        preferences: runningEnemyPreferences,
+        getCurrentEnabled: () => (run ? Boolean(run.level.hunt) : null),
+        getAcceptedEnabled: () =>
+          run
+            ? run.level.hunt && !run.level.runningEnemies
+              ? runningEnemyPreferences.snapshot().enabled
+              : Boolean(attemptTuning.get(run)?.runningEnemies)
+            : null,
+        onRestart: () => {
+          if (!run) return;
+          closeSettings({ restore: false });
+          requestDeparture('retry', primary(), {
+            runningEnemies: runningEnemyPreferences.snapshot().enabled,
+          });
+        },
+        getAvailability: () => {
+          try {
+            const source = selectedLevel();
+            const tuning = gameplayTuning.snapshot(
+              source.journeyDifficulty ?? $('coop-difficulty').value,
+            );
+            prepareTeamRunningEnemies(applyGameplayTuning(source, tuning));
+            return { available: true, reason: '' };
+          } catch (error) {
+            return { available: false, reason: error.message };
+          }
+        },
+      }),
+    );
+  const runningEnemyControls = {
+    refresh: () => runningEnemyControlViews.forEach((view) => view.refresh()),
+    dispose: () => runningEnemyControlViews.forEach((view) => view.dispose()),
+  };
   const huntStatus = attachHuntStatus({
     records: huntRecords,
     document,
@@ -1127,60 +1176,60 @@ export function bootCoop({
     modeNavigation.simulatorRoot()
       ? 'coop-fpv-sim'
       : installOfflinePanel?.isOpen()
-      ? 'coop-install-offline'
-      : music?.root()
-        ? 'coop-music-library'
-        : journeyPictures?.root()
-          ? 'coop-journey-pictures'
-          : settingsDialog.open
-            ? `coop-settings:${settingsPanels?.selected() || 'display'}`
-            : earnedDialog.open
-              ? 'coop-earned-picture'
-              : departure
-                ? 'coop-discard'
-                : discovery?.isOpen()
-                  ? 'coop-discovery'
-                  : running()
-                    ? 'flight'
-                    : run
-                      ? `coop-${run.status}`
-                      : 'coop-lobby';
+        ? 'coop-install-offline'
+        : music?.root()
+          ? 'coop-music-library'
+          : journeyPictures?.root()
+            ? 'coop-journey-pictures'
+            : settingsDialog.open
+              ? `coop-settings:${settingsPanels?.selected() || 'display'}`
+              : earnedDialog.open
+                ? 'coop-earned-picture'
+                : departure
+                  ? 'coop-discard'
+                  : discovery?.isOpen()
+                    ? 'coop-discovery'
+                    : running()
+                      ? 'flight'
+                      : run
+                        ? `coop-${run.status}`
+                        : 'coop-lobby';
   const primary = () =>
     modeNavigation.simulatorRoot()
       ? modeNavigation.simulatorPrimary()
       : installOfflinePanel?.isOpen()
-      ? $('install-offline-downloads')
-      : music?.root()
-        ? music.primary()
-        : journeyPictures?.root()
-          ? journeyPictures.primary()
-          : settingsDialog.open
-            ? settingsPanels?.primary() || $('coop-settings-close')
-            : earnedDialog.open
-              ? $('coop-picture-return')
-              : departure
-                ? $('coop-discard-stay')
-                : discovery?.isOpen()
-                  ? discovery.primary()
-                  : nextOperation
-                    ? $('coop-next-cancel')
-                    : importOperation
-                      ? $('coop-pack-cancel')
-                      : pictureOperation
-                        ? pictureOperation.passive
-                          ? $('coop-optional-setup-toggle')
-                          : $('coop-picture-cancel')
-                        : !run && pictureSelection?.state !== 'ready'
-                          ? $('coop-picture-retry')
-                          : !run
-                            ? $('coop-start')
-                            : run.status === 'paused' && !loopStopped
-                              ? $('coop-resume')
-                              : run.status === 'won' && !loopStopped
-                                ? teamDestination()?.next
-                                  ? $('coop-next')
-                                  : $('coop-discovery-paused')
-                                : $('coop-retry');
+        ? $('install-offline-downloads')
+        : music?.root()
+          ? music.primary()
+          : journeyPictures?.root()
+            ? journeyPictures.primary()
+            : settingsDialog.open
+              ? settingsPanels?.primary() || $('coop-settings-close')
+              : earnedDialog.open
+                ? $('coop-picture-return')
+                : departure
+                  ? $('coop-discard-stay')
+                  : discovery?.isOpen()
+                    ? discovery.primary()
+                    : nextOperation
+                      ? $('coop-next-cancel')
+                      : importOperation
+                        ? $('coop-pack-cancel')
+                        : pictureOperation
+                          ? pictureOperation.passive
+                            ? $('coop-optional-setup-toggle')
+                            : $('coop-picture-cancel')
+                          : !run && pictureSelection?.state !== 'ready'
+                            ? $('coop-picture-retry')
+                            : !run
+                              ? $('coop-start')
+                              : run.status === 'paused' && !loopStopped
+                                ? $('coop-resume')
+                                : run.status === 'won' && !loopStopped
+                                  ? teamDestination()?.next
+                                    ? $('coop-next')
+                                    : $('coop-discovery-paused')
+                                  : $('coop-retry');
   // Preference updates can reflow a focused select beyond the Settings scroller
   // without a window resize. Keep only that current action visible, never focus
   // it again or resume. Initial display application runs before this owner exists.
@@ -1550,6 +1599,7 @@ export function bootCoop({
         $('coop-difficulty').disabled ? 'categories' : 'panel',
       );
     }
+    runningEnemyControls.refresh();
     settingsDialog.showModal();
     const active = document.activeElement;
     if (
@@ -1871,7 +1921,7 @@ export function bootCoop({
     const snapshot = options.picture?.snapshot ?? presentationPage.current();
     try {
       if (painter.presentation !== snapshot) painter.setPresentation(snapshot);
-      painter.paint(state, options);
+      painter.paint(state, { ...options, runtimeLevel: attemptTuning.get(state)?.runtimeLevel });
       if (!temporary) musicPublished?.setPresentation(snapshot);
     } finally {
       // Preflight painting must not replace the retained attempt's presentation.
@@ -2812,6 +2862,7 @@ export function bootCoop({
       return;
     const recipe = freshRecipe(structuredClone(destination), currentRecipe().options, {
       encounterVariant: attemptTuning.get(run)?.encounterVariant ?? 'authored',
+      runningEnemies: runningEnemyPreferences.snapshot().enabled,
     });
     const nextDiscoveryRow = navigation.nextDiscoveryRow;
     const nextPack = nextDiscoveryRow?.pack ?? navigation.nextRow?.pack;
@@ -2949,6 +3000,7 @@ export function bootCoop({
       };
       // No callbacks between the final check and reference publication.
       run = candidate;
+      runningEnemyControls.refresh();
       attemptLevel = recipe.level;
       attemptPack = selection.pack;
       acceptedPicture = pictureSelection = selection;
@@ -3393,6 +3445,7 @@ export function bootCoop({
       restored
         ? {
             encounterVariant: restored.snapshot.encounterVariant ?? 'authored',
+            runningEnemies: Boolean(restored.snapshot.runningEnemies),
             tuning: restored.snapshot.tuning,
           }
         : null,
@@ -3600,6 +3653,8 @@ export function bootCoop({
           pictureLevel: recipe.level,
           encounterLevel: recipe.encounterLevel,
           encounterVariant: recipe.encounterVariant,
+          runningEnemies: recipe.runningEnemies,
+          runtimeLevel: preparedRuntimeLevel(recipe),
           encounterPack: recipe.encounterPack,
           adminOverride: restored.snapshot.tuning.adminOverride,
           gameplayId: restored.snapshot.gameplayId,
@@ -3672,6 +3727,7 @@ export function bootCoop({
       // Publish the validated core, exact picture and setup together. No callbacks
       // run between the last guard and these reference assignments.
       run = candidate;
+      runningEnemyControls.refresh();
       attemptLevel = recipe.level;
       attemptPack = selection.pack;
       acceptedPicture = pictureSelection = selection;
@@ -3864,6 +3920,7 @@ export function bootCoop({
                   run: promoted.run,
                   segments: promoted.snapshot.segments,
                   encounterVariant: promoted.snapshot.encounterVariant,
+                  runningEnemies: Boolean(promoted.snapshot.runningEnemies),
                   encounterLevelIdentity: promoted.snapshot.encounterLevelIdentity,
                 }),
               }
@@ -4630,6 +4687,9 @@ export function bootCoop({
       options,
       encounterLevel,
       encounterVariant,
+      runningEnemies: accepted
+        ? Boolean(accepted.runningEnemies)
+        : runningEnemyPreferences.snapshot().enabled,
       encounterPack,
       tuning:
         accepted?.tuning ?? gameplayTuning.snapshot(level.journeyDifficulty ?? options.difficulty),
@@ -4647,14 +4707,20 @@ export function bootCoop({
       );
     return normalGameplayIdentities.get(row);
   }
+  function preparedRuntimeLevel(recipe) {
+    const tuned = applyGameplayTuning(recipe.encounterLevel ?? recipe.level, recipe.tuning);
+    return recipe.runningEnemies ? prepareTeamRunningEnemies(tuned) : tuned;
+  }
   function createTunedCoop(recipe) {
-    const level = applyGameplayTuning(recipe.encounterLevel ?? recipe.level, recipe.tuning);
+    const level = preparedRuntimeLevel(recipe);
     const next = createCoop(level, recipe.options);
     painter.captureArcadeCollection(next);
     attemptTuning.set(next, {
       pictureLevel: recipe.level,
       encounterLevel: recipe.encounterLevel ?? recipe.level,
       encounterVariant: recipe.encounterVariant ?? 'authored',
+      runningEnemies: recipe.runningEnemies ?? false,
+      runtimeLevel: level,
       encounterPack: recipe.encounterPack ?? null,
       adminOverride: recipe.tuning.adminOverride,
       gameplayId: dataIdentity({ ruleset: next.ruleset, level }),
@@ -4680,7 +4746,7 @@ export function bootCoop({
         structuredClone(attemptLevel),
         {
           seed: run.seed,
-          difficulty: attemptLevel.journeyDifficulty ?? gameplayPreferences.snapshot().difficulty,
+          difficulty: run.difficulty,
           ...run.config,
         },
         attemptTuning.get(run),
@@ -4776,6 +4842,7 @@ export function bootCoop({
     // Keep the validated starting level separately for an exact fresh Retry.
     const startingLevel = structuredClone(recipe.level);
     const next = prepared || createTunedCoop(recipe);
+    const previousRun = run;
     const rememberVisibleArena =
       !run && pack === COOP_STARTER_PACK && arenaPreference.current() !== startingLevel.id;
     cancelImport({ forget: true });
@@ -4800,6 +4867,8 @@ export function bootCoop({
     generation++;
     startCoop(run);
     beginInstalledTeamAttempt(run, selection);
+    if (previousRun?.level.hunt && !run.level.hunt) clearHuntAttempt(previousRun);
+    runningEnemyControls.refresh();
     document.body.classList.add('playing');
     $('coop-menu').hidden = true;
     $('coop-play').hidden = false;
@@ -5086,7 +5155,7 @@ export function bootCoop({
   function cancelDeparture(options) {
     closeDeparture(departure, options);
   }
-  function requestDeparture(kind, opener, { revealDifficulty = false } = {}) {
+  function requestDeparture(kind, opener, { revealDifficulty = false, runningEnemies } = {}) {
     discovery?.close({ restore: false });
     cancelNext();
     if (
@@ -5098,11 +5167,15 @@ export function bootCoop({
       !Object.hasOwn(departureLabelKeys, kind)
     )
       return;
+    const restartRecipe =
+      kind === 'retry' && typeof runningEnemies === 'boolean'
+        ? { ...currentRecipe(), runningEnemies }
+        : null;
     if (!unfinished()) {
       if (kind === 'setup') lobby({ revealDifficulty });
       else if (kind === 'retry') {
         try {
-          start();
+          start(restartRecipe ?? currentRecipe());
         } catch (error) {
           pictureUI(
             localizedMessage('gameplay:team.pictureAttemptUnchanged', { error: error.message }),
@@ -5111,7 +5184,7 @@ export function bootCoop({
       }
       return;
     }
-    const ticket = { kind, opener, run, generation, recipe: currentRecipe() };
+    const ticket = { kind, opener, run, generation, recipe: restartRecipe ?? currentRecipe() };
     departure = ticket;
     pause();
     if (departure !== ticket) return; // A paint fault cancelled this decision.
@@ -5524,6 +5597,7 @@ export function bootCoop({
       tuning: tuning.tuning,
       encounterLevel: tuning.encounterLevel,
       encounterVariant: tuning.encounterVariant,
+      runningEnemies: tuning.runningEnemies,
       attemptId,
       gameplayId: tuning.gameplayId,
       restored,
@@ -5616,6 +5690,7 @@ export function bootCoop({
         presetId: setup.id,
         tuning: tuning.tuning,
         encounterVariant: tuning.encounterVariant ?? 'authored',
+        runningEnemies: tuning.runningEnemies ?? false,
         encounterLevelIdentity: dataIdentity(tuning.encounterLevel ?? tuning.pictureLevel),
         segments: structuredClone(restored?.snapshot.segments ?? []),
         generation: restored?.generation ?? progress?.generation,
@@ -5647,6 +5722,7 @@ export function bootCoop({
       tuning: record.tuning,
       segments: record.segments,
       encounterVariant: record.encounterVariant,
+      runningEnemies: record.runningEnemies,
       encounterLevelIdentity: record.encounterLevelIdentity,
     });
   }
@@ -5976,6 +6052,7 @@ export function bootCoop({
     if (owns()) {
       setupNote();
       encounterControls.refresh();
+      runningEnemyControls.refresh();
     }
   }
   async function prepareImport(draft, { retry = false, origin = document.activeElement } = {}) {
@@ -6354,6 +6431,7 @@ export function bootCoop({
     }
     setupNote();
     encounterControls.refresh();
+    runningEnemyControls.refresh();
     return preparePicture();
   };
   $('coop-experiment').onchange = setupNote;
@@ -6544,6 +6622,8 @@ export function bootCoop({
     candidateProgress?.dispose();
     candidatePreferences?.dispose();
     if (!candidatePreferences) gameplayPreferences.dispose();
+    runningEnemyControls.dispose();
+    runningEnemyPreferences.dispose();
     encounterControls.dispose();
     encounterPreferences.dispose();
     huntStatus.dispose();

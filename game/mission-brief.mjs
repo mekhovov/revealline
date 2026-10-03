@@ -1,6 +1,8 @@
 import { huntText } from './hunt/copy.mjs';
 import { t, getLocale } from './i18n/index.mjs';
 import { contentText } from './i18n/content.mjs';
+import { baseLevelVersion } from './core/versions.mjs';
+import { combatDefinition, huntDefinition } from './hunt/running-enemy-definition.mjs';
 const compact = (value, limit) => {
   const text = typeof value === 'string' ? value.trim().replace(/\s+/g, ' ') : '';
   return text.length <= limit ? text : `${text.slice(0, limit - 1).trimEnd()}…`;
@@ -52,7 +54,7 @@ export function missionBriefing(
       : t(level.classic?.coverage ? 'gameplay:brief.routeCoverage' : 'gameplay:brief.coverage', {
           coverage,
         });
-  const hunt = level.classic?.hunt;
+  const hunt = huntDefinition(level);
   const goal = hunt
     ? t(
         `gameplay:brief.${hunt.mode === 'hunt' ? 'huntAll' : hunt.mode === 'capture-quota' ? 'huntQuota' : 'huntBonus'}`,
@@ -102,8 +104,8 @@ export function missionBriefing(
     'xonix-level.v7',
     'xonix-level.v8',
     'xonix-level.v9',
-  ].includes(level.version);
-  const combat = level.classic?.combatPatrols;
+  ].includes(baseLevelVersion(level));
+  const combat = combatDefinition(level);
   const optionalRoles =
     foundations &&
     combat?.version === 'combat-patrols.v1' &&
@@ -134,7 +136,7 @@ export function missionBriefing(
     'xonix-level.v7',
     'xonix-level.v8',
     'xonix-level.v9',
-  ].includes(level.version)
+  ].includes(baseLevelVersion(level))
     ? [
         level.directionalFields?.zones?.length ? t('gameplay:brief.arrowFields') : '',
         level.relayGates?.gates?.length ? t('gameplay:brief.relayGates') : '',
