@@ -40,8 +40,9 @@ async function activate(element) {
 
 test('only explicit known Journey editions produce fixed Solo/Versus links, never Team or arbitrary URLs', () => {
   for (const id of AUTHORED_JOURNEY_ROUTE_IDS) {
-    assert.equal(authoredJourneyModeHref(id, 'versus'), `couch/?journey=${id}&return=solo`);
-    assert.equal(authoredJourneyModeHref(id, 'solo'), `../?journey=${id}`);
+    const style = id === 'snake-hunt-v1' ? '&snake-style=capture' : '';
+    assert.equal(authoredJourneyModeHref(id, 'versus'), `couch/?journey=${id}&return=solo${style}`);
+    assert.equal(authoredJourneyModeHref(id, 'solo'), `../?journey=${id}${style}`);
     assert.equal(authoredJourneyModeHref(id, 'team'), null);
   }
   for (const id of [null, undefined, '1', '', 'https://example.com', 'opening&redirect=bad'])

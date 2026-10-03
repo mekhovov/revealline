@@ -5,7 +5,11 @@ export const TEAM_RUNNING_RULESET = 'revealline-coop.v11';
 export const TEAM_RUNNING_PACK_VERSION = 'revealline-coop-pack.v9';
 export const TEAM_RUNNING_RECIPE = 'running-enemies.v1';
 export const inheritedTeamVersion = (level) =>
-  level.version === TEAM_RUNNING_LEVEL_VERSION ? level.runningEnemies?.baseVersion : level.version;
+  level.version === 'revealline-coop-level.v10'
+    ? 'revealline-coop-level.v8'
+    : level.version === TEAM_RUNNING_LEVEL_VERSION
+      ? level.runningEnemies?.baseVersion
+      : level.version;
 
 /** Reconstruct the inherited edition for its unchanged admission and mechanics. */
 export function inheritedRunningTeamLevel(source) {

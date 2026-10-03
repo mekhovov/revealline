@@ -6840,6 +6840,7 @@ try {
   if (
     [
       'humanoid-hunt-v1',
+      'snake-hunt-v1',
       'team-greybox',
       'team-originals',
       'team-pressure-originals-1',
@@ -6854,6 +6855,7 @@ try {
     const { createTeamGreyboxEntry } = await import('../content-design/team-entry.mjs');
     candidateEntry = await createTeamGreyboxEntry({
       huntTraining: journeyRequest === 'humanoid-hunt-v1',
+      snakeHunt: journeyRequest === 'snake-hunt-v1',
       artwork: journeyRequest === 'team-originals',
       pressure: journeyRequest === 'team-pressure-originals-1',
       spatial: journeyRequest === 'team-spatial-originals-1',

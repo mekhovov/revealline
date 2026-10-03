@@ -93,6 +93,7 @@ export function createFlightRenderer({
   loadGLTF = null,
   loadTransformControls = null,
   presentation: initialPresentation = {},
+  createHuntPresentation = null,
 }) {
   let renderer;
   try {
@@ -121,6 +122,7 @@ export function createFlightRenderer({
     editHandles = new THREE.Group();
   editHandles.visible = false;
   scene.add(world, goals, aircraft, ghostAircraft, actors, projectiles, imported, editHandles);
+  const huntPresentation = createHuntPresentation?.({ THREE, scene }) ?? null;
   const hemisphere = new THREE.HemisphereLight(0xe5f3ff, 0x3d504a, 2.1);
   const sunlight = new THREE.DirectionalLight(0xffefd8, 3.1);
   const fillLight = new THREE.DirectionalLight(0x9cc7e8, 0.24);
@@ -194,6 +196,7 @@ export function createFlightRenderer({
     goalRows = [],
     actorRows = new Map(),
     actorDefinitions = new Map(),
+    huntTargets = new Map(),
     seenActors = new Set(),
     pulseRows = new Map(),
     qualityDetails = [];
@@ -990,6 +993,11 @@ export function createFlightRenderer({
     editor?.detach();
     course = value;
     mode = selectedMode;
+    huntPresentation?.reset();
+    huntTargets.clear();
+    for (const step of course.steps[mode])
+      if (step.type === 'hunt-contact-v1')
+        step.targets.forEach((id, index) => huntTargets.set(id, index + 1));
     currentStep = -1;
     clearImported();
     scene.environment = null;
@@ -1095,11 +1103,12 @@ export function createFlightRenderer({
     const radius = (actor.radius ?? 300) / 1000,
       height = (actor.height ?? 1800) / 1000,
       role = actor.type === 'hazard' ? 'hazard' : (actor.role ?? 'hostile'),
-      friendly = role === 'rival' || role === 'civilian',
+      huntTarget = huntTargets.has(actor.id),
+      friendly = huntTarget || role === 'rival' || role === 'civilian',
       slot = actor.type === 'vehicle' ? themeProfile?.assets?.vehicle : themeProfile?.assets?.enemy,
       pixel = themeProfile?.characters === 'arcade' || /pixel|arcade/.test(slot ?? ''),
       detailed = quality === 'high',
-      civilian = themeProfile?.characters === 'civilian' || role === 'civilian';
+      civilian = !huntTarget && (themeProfile?.characters === 'civilian' || role === 'civilian');
     group.name = `actor-${actor.id}`;
     group.userData.themeAsset = slot ?? 'builtin:sentry';
     if (actor.position)
@@ -1115,12 +1124,14 @@ export function createFlightRenderer({
     group.userData.modelRole = actor.type === 'vehicle' ? 'vehicle' : 'enemy';
     group.userData.assetRole = themeProfile?.assets?.[group.userData.modelRole];
     if (kit) bindSimModelRole(group, group.userData.modelRole, kit.collectionId);
-    const armor = kit
-      ? kit.paint('steel')
-      : material(friendly ? 0x74bfc0 : pixel ? 0xa785cb : civilian ? 0x839c9d : 0x778b86, {
-          metalness: civilian ? 0.08 : 0.35,
-          roughness: civilian ? 0.84 : 0.55,
-        });
+    const armor = huntTarget
+      ? material(0x68cbb5, { roughness: 0.8 })
+      : kit
+        ? kit.paint('steel')
+        : material(friendly ? 0x74bfc0 : pixel ? 0xa785cb : civilian ? 0x839c9d : 0x778b86, {
+            metalness: civilian ? 0.08 : 0.35,
+            roughness: civilian ? 0.84 : 0.55,
+          });
     const threat = material(friendly ? 0x77ebe0 : 0xf1ae75, {
       emissive: friendly ? 0x249eaa : 0xb86231,
       emissiveIntensity: 0.5,
@@ -1279,7 +1290,7 @@ export function createFlightRenderer({
         pixel
           ? new THREE.BoxGeometry(radius * 1.05, radius * 1.05, radius * 1.05)
           : new THREE.SphereGeometry(radius * 0.6, quality === 'low' ? 8 : 12, 8),
-        civilian ? armor : dark,
+        huntTarget ? material(0xdfaa87, { roughness: 0.9 }) : civilian ? armor : dark,
         [0, height * 0.87, 0],
       );
       part(new THREE.BoxGeometry(radius * 0.92, height * 0.05, radius * 0.16), threat, [
@@ -1360,17 +1371,19 @@ export function createFlightRenderer({
         ]);
     }
     const marker = label(
-      friendly
-        ? role === 'rival'
-          ? 'RACE'
-          : 'NPC'
-        : actor.type === 'hazard'
-          ? '!'
-          : actor.type === 'vehicle'
-            ? 'V'
-            : actor.type === 'drone'
-              ? 'D'
-              : '•',
+      huntTarget
+        ? String(huntTargets.get(actor.id)).padStart(2, '0')
+        : friendly
+          ? role === 'rival'
+            ? 'RACE'
+            : 'NPC'
+          : actor.type === 'hazard'
+            ? '!'
+            : actor.type === 'vehicle'
+              ? 'V'
+              : actor.type === 'drone'
+                ? 'D'
+                : '•',
       friendly ? '#77ebe0' : '#efb580',
       group,
       friendly ? 0.68 : 0.42,
@@ -1436,7 +1449,7 @@ export function createFlightRenderer({
           let dx = target.x - p.x,
             dz = target.z - p.z;
           const approaching = Math.hypot(dx, dz) > 30;
-          moving = approaching && !actor.blocked && actor.status !== 'defeated';
+          moving = approaching && !actor.blocked && actor.status === 'active';
           // A stopped/arrived snapshot must face the same authored direction
           // even when reached through a replay seek rather than a prior draw.
           if (!approaching) {
@@ -1479,8 +1492,18 @@ export function createFlightRenderer({
         row.lastTick = state.ticks;
       }
       row.lastPosition.set(p.x, p.y, p.z);
-      row.group.visible = actor.status !== 'defeated';
-      if (row.marker) row.marker.material.opacity = actor.health < row.health * 0.4 ? 0.6 : 1;
+      row.group.visible = !['defeated', 'caught'].includes(actor.status);
+      if (row.marker) {
+        const criterion = course.steps[mode].find((step) => step.type === 'hunt-contact-v1');
+        const next = criterion?.ordered ? criterion.targets[state.hunt?.caught.length ?? 0] : null;
+        row.marker.material.opacity = huntTargets.has(actor.id)
+          ? !next || actor.id === next
+            ? 1
+            : 0.3
+          : actor.health < row.health * 0.4
+            ? 0.6
+            : 1;
+      }
     }
     for (const [id, row] of actorRows)
       if (!seenActors.has(id)) {
@@ -1507,6 +1530,8 @@ export function createFlightRenderer({
   }
   function draw(state, { cameraMode = view, cameraFov = fov, cameraTilt = tilt } = {}) {
     if (disposed || !course) return;
+    const hunt = course.steps[mode].find((step) => step.type === 'hunt-contact-v1');
+    huntPresentation?.update(state, { reducedMotion, tailRadius: hunt?.tail.radius ?? 350 });
     view = cameraMode;
     fov = cameraFov;
     tilt = cameraTilt;
@@ -2281,6 +2306,7 @@ export function createFlightRenderer({
           surfaceDetailGroups: qualityDetails.length,
         },
         effects: { ...effectPalette },
+        hunt: huntPresentation?.resources() ?? null,
         importedMaterialBindings: structuredClone(importedMaterialBindings),
         registered: {
           geometries: geometry.size + (pathLine ? 1 : 0),
@@ -2302,6 +2328,7 @@ export function createFlightRenderer({
     dispose() {
       if (disposed) return;
       disposed = true;
+      huntPresentation?.dispose();
       sceneGeneration++;
       canvas.removeEventListener('webglcontextlost', lost);
       if (editor) {

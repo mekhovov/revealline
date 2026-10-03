@@ -1,3 +1,4 @@
+import { validateSnakeDefinition } from '../snake/rules.mjs';
 import { prepareHuntLevel } from '../hunt/level.mjs';
 import { huntTargetKind, HUNT_RUNNER_TURN_TICKS } from '../hunt/rules.mjs';
 import { boundedJSON, exactKeys, required, stableId, dataIdentity } from '../data-json.mjs';
@@ -211,6 +212,7 @@ export function compileContentProject(source) {
         'timedBonuses',
         'combat',
         'hunt',
+        'snake',
         'coverage',
         'timeLimitSeconds',
         'design',
@@ -266,7 +268,8 @@ export function compileContentProject(source) {
         'Mission combat requires a registered optional-combat actor catalogue.',
       );
       required(
-        !mission.modes.includes('team') || mission.team?.format === 'TeamMissionV7',
+        !mission.modes.includes('team') ||
+          ['TeamMissionV7', 'TeamMissionV8'].includes(mission.team?.format),
         'Optional combat requires the explicitly qualified Team hunt edition.',
       );
     }
@@ -279,6 +282,13 @@ export function compileContentProject(source) {
         mission.combat?.enabled === true,
         'Hunting requires an explicit enabled combat population.',
       );
+    if (Object.hasOwn(mission, 'snake')) {
+      validateSnakeDefinition(mission.snake, mission.hunt);
+      required(
+        !mission.modes.includes('team') || mission.team?.format === 'TeamMissionV8',
+        'Snake missions require the explicitly qualified Team Snake edition.',
+      );
+    }
     unique(mission.objectives, 'objectives', 40);
     unique(mission.bonuses, 'bonuses', 64);
     if (relays) {
@@ -513,6 +523,12 @@ export function resolveMission(project, id, { mode = 'solo', difficulty = 'stand
       revision: mission.revision,
       actors: level.classic.combatPatrols.actors,
       hunt: mission.hunt,
+    });
+  if (mission.snake)
+    level = normalizedLevel({
+      ...level,
+      version: 'xonix-level.v11',
+      snake: structuredClone(mission.snake),
     });
   const { name: _name, id: _id, revision: _revision, ...simulation } = level;
   const topology = inspectMissionTopology(level, map.geometry);

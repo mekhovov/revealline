@@ -8,12 +8,19 @@ export const TEAM_MISSION_FORMATS = Object.freeze([
   'TeamMissionV5',
   'TeamMissionV6',
   'TeamMissionV7',
+  'TeamMissionV8',
 ]);
 export const teamRoleQualified = (format, role) =>
   TEAM_MISSION_FORMATS.includes(format) &&
   (role === 'field-keeper' ||
-    (['TeamMissionV3', 'TeamMissionV4', 'TeamMissionV5', 'TeamMissionV6', 'TeamMissionV7'].includes(
-      format,
-    ) &&
+    ([
+      'TeamMissionV3',
+      'TeamMissionV4',
+      'TeamMissionV5',
+      'TeamMissionV6',
+      'TeamMissionV7',
+      'TeamMissionV8',
+    ].includes(format) &&
       role === 'reclaimed-roamer') ||
-    (format === 'TeamMissionV7' && ['optional-scout', 'optional-sentry'].includes(role)));
+    (['TeamMissionV7', 'TeamMissionV8'].includes(format) &&
+      ['optional-scout', 'optional-sentry'].includes(role)));
