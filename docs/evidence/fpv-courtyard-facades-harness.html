@@ -566,8 +566,8 @@
         'Baseline ' +
         manifest.baseline +
         ' · Candidate ' +
-        manifest.candidate +
-        ' · ' +
+        (manifest.candidate === '.' ? 'working tree' : manifest.candidate) +
+        ' · Runtime SHA-256 ' +
         manifest.files.after['optional-practice/civilian-fpv/world-visuals.mjs'];
       $('run').disabled = $('preview').disabled = false;
       status('Ready. Qualification has not run.');
