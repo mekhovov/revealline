@@ -1,0 +1,2621 @@
+{
+  "format": "appearance-captured-pixel-contrast.v1",
+  "method": "Every captured RGB pixel inside textless reading twins; no screenshot correction or retouching. JPEG is lossy and requires an additional 0.2 passing margin; this is captured-pixel evidence, not a guarantee of lossless browser paint.",
+  "captureCount": 6,
+  "sampleCount": 114,
+  "failureCount": 0,
+  "marginCount": 0,
+  "captures": [
+    {
+      "capture": "ember-foundry-high-contrast.jpg",
+      "family": "ember-foundry",
+      "outer": "none",
+      "ornaments": "subtle",
+      "highContrast": true,
+      "reducedEffects": false,
+      "forcedColors": false,
+      "screenshotEncoding": "JPEG",
+      "sourceSHA256": "3146c6325bd0a4bd611820feced61e8135485a702dc7ddaeca9a69d597536c1c",
+      "width": 1280,
+      "height": 2482,
+      "scale": 1.0,
+      "samples": [
+        {
+          "id": "sample-panel-twin",
+          "case": "panel",
+          "status": "pass",
+          "foreground": "rgb(255, 255, 255)",
+          "minimumContrast": 21.0,
+          "threshold": 7,
+          "compressionMargin": 0.2,
+          "worstBackgroundRGB": [
+            0,
+            0,
+            0
+          ],
+          "worstPixel": [
+            666,
+            357
+          ],
+          "nativeHover": false,
+          "nativeActive": false,
+          "pixelsSampled": 18936,
+          "uniqueBackgroundColors": 1
+        },
+        {
+          "id": "sample-muted-panel-twin",
+          "case": "muted-panel",
+          "status": "pass",
+          "foreground": "rgb(221, 221, 221)",
+          "minimumContrast": 15.4611,
+          "threshold": 7,
+          "compressionMargin": 0.2,
+          "worstBackgroundRGB": [
+            0,
+            0,
+            0
+          ],
+          "worstPixel": [
+            666,
+            466
+          ],
+          "nativeHover": false,
+          "nativeActive": false,
+          "pixelsSampled": 18936,
+          "uniqueBackgroundColors": 1
+        },
+        {
+          "id": "sample-default-twin",
+          "case": "default",
+          "status": "pass",
+          "foreground": "rgb(255, 255, 255)",
+          "minimumContrast": 18.6632,
+          "threshold": 7,
+          "compressionMargin": 0.2,
+          "worstBackgroundRGB": [
+            18,
+            19,
+            14
+          ],
+          "worstPixel": [
+            666,
+            575
+          ],
+          "nativeHover": false,
+          "nativeActive": false,
+          "pixelsSampled": 18936,
+          "uniqueBackgroundColors": 2
+        },
+        {
+          "id": "sample-hover-twin",
+          "case": "hover",
+          "status": "pass",
+          "foreground": "rgb(255, 255, 255)",
+          "minimumContrast": 18.6847,
+          "threshold": 7,
+          "compressionMargin": 0.2,
+          "worstBackgroundRGB": [
+            16,
+            19,
+            18
+          ],
+          "worstPixel": [
+            666,
+            719
+          ],
+          "nativeHover": false,
+          "nativeActive": false,
+          "pixelsSampled": 18936,
+          "uniqueBackgroundColors": 2
+        },
+        {
+          "id": "sample-pressed-twin",
+          "case": "pressed",
+          "status": "pass",
+          "foreground": "rgb(0, 0, 0)",
+          "minimumContrast": 18.3308,
+          "threshold": 7,
+          "compressionMargin": 0.2,
+          "worstBackgroundRGB": [
+            253,
+            242,
+            152
+          ],
+          "worstPixel": [
+            666,
+            793
+          ],
+          "nativeHover": false,
+          "nativeActive": false,
+          "pixelsSampled": 18936,
+          "uniqueBackgroundColors": 1
+        },
+        {
+          "id": "sample-selected-twin",
+          "case": "selected",
+          "status": "pass",
+          "foreground": "rgb(0, 0, 0)",
+          "minimumContrast": 18.3308,
+          "threshold": 7,
+          "compressionMargin": 0.2,
+          "worstBackgroundRGB": [
+            253,
+            242,
+            152
+          ],
+          "worstPixel": [
+            666,
+            902
+          ],
+          "nativeHover": false,
+          "nativeActive": false,
+          "pixelsSampled": 18936,
+          "uniqueBackgroundColors": 1
+        },
+        {
+          "id": "sample-selected-hover-twin",
+          "case": "selected-hover",
+          "status": "pass",
+          "foreground": "rgb(0, 0, 0)",
+          "minimumContrast": 18.3308,
+          "threshold": 7,
+          "compressionMargin": 0.2,
+          "worstBackgroundRGB": [
+            253,
+            242,
+            152
+          ],
+          "worstPixel": [
+            666,
+            1011
+          ],
+          "nativeHover": false,
+          "nativeActive": false,
+          "pixelsSampled": 18936,
+          "uniqueBackgroundColors": 1
+        },
+        {
+          "id": "sample-selected-pressed-twin",
+          "case": "selected-pressed",
+          "status": "pass",
+          "foreground": "rgb(0, 0, 0)",
+          "minimumContrast": 18.3308,
+          "threshold": 7,
+          "compressionMargin": 0.2,
+          "worstBackgroundRGB": [
+            253,
+            242,
+            152
+          ],
+          "worstPixel": [
+            666,
+            1120
+          ],
+          "nativeHover": false,
+          "nativeActive": false,
+          "pixelsSampled": 18936,
+          "uniqueBackgroundColors": 1
+        },
+        {
+          "id": "sample-primary-twin",
+          "case": "primary",
+          "status": "pass",
+          "foreground": "rgb(0, 0, 0)",
+          "minimumContrast": 18.3308,
+          "threshold": 7,
+          "compressionMargin": 0.2,
+          "worstBackgroundRGB": [
+            253,
+            242,
+            152
+          ],
+          "worstPixel": [
+            666,
+            1229
+          ],
+          "nativeHover": false,
+          "nativeActive": false,
+          "pixelsSampled": 18936,
+          "uniqueBackgroundColors": 1
+        },
+        {
+          "id": "sample-primary-hover-twin",
+          "case": "primary-hover",
+          "status": "pass",
+          "foreground": "rgb(0, 0, 0)",
+          "minimumContrast": 18.3308,
+          "threshold": 7,
+          "compressionMargin": 0.2,
+          "worstBackgroundRGB": [
+            253,
+            242,
+            152
+          ],
+          "worstPixel": [
+            666,
+            1338
+          ],
+          "nativeHover": false,
+          "nativeActive": false,
+          "pixelsSampled": 18936,
+          "uniqueBackgroundColors": 1
+        },
+        {
+          "id": "sample-danger-twin",
+          "case": "danger",
+          "status": "pass",
+          "foreground": "rgb(0, 0, 0)",
+          "minimumContrast": 11.2924,
+          "threshold": 7,
+          "compressionMargin": 0.2,
+          "worstBackgroundRGB": [
+            243,
+            172,
+            170
+          ],
+          "worstPixel": [
+            666,
+            1447
+          ],
+          "nativeHover": false,
+          "nativeActive": false,
+          "pixelsSampled": 18936,
+          "uniqueBackgroundColors": 1
+        },
+        {
+          "id": "sample-danger-hover-twin",
+          "case": "danger-hover",
+          "status": "pass",
+          "foreground": "rgb(0, 0, 0)",
+          "minimumContrast": 11.2924,
+          "threshold": 7,
+          "compressionMargin": 0.2,
+          "worstBackgroundRGB": [
+            243,
+            172,
+            170
+          ],
+          "worstPixel": [
+            666,
+            1556
+          ],
+          "nativeHover": false,
+          "nativeActive": false,
+          "pixelsSampled": 18936,
+          "uniqueBackgroundColors": 1
+        },
+        {
+          "id": "sample-danger-pressed-twin",
+          "case": "danger-pressed",
+          "status": "pass",
+          "foreground": "rgb(0, 0, 0)",
+          "minimumContrast": 11.2924,
+          "threshold": 7,
+          "compressionMargin": 0.2,
+          "worstBackgroundRGB": [
+            243,
+            172,
+            170
+          ],
+          "worstPixel": [
+            666,
+            1665
+          ],
+          "nativeHover": false,
+          "nativeActive": false,
+          "pixelsSampled": 18936,
+          "uniqueBackgroundColors": 1
+        },
+        {
+          "id": "sample-disabled-twin",
+          "case": "disabled",
+          "status": "pass",
+          "foreground": "rgb(221, 221, 221)",
+          "minimumContrast": 15.4611,
+          "threshold": 7,
+          "compressionMargin": 0.2,
+          "worstBackgroundRGB": [
+            0,
+            0,
+            0
+          ],
+          "worstPixel": [
+            666,
+            1774
+          ],
+          "nativeHover": false,
+          "nativeActive": false,
+          "pixelsSampled": 18936,
+          "uniqueBackgroundColors": 1
+        },
+        {
+          "id": "sample-primary-disabled-twin",
+          "case": "primary-disabled",
+          "status": "pass",
+          "foreground": "rgb(221, 221, 221)",
+          "minimumContrast": 15.4611,
+          "threshold": 7,
+          "compressionMargin": 0.2,
+          "worstBackgroundRGB": [
+            0,
+            0,
+            0
+          ],
+          "worstPixel": [
+            666,
+            1883
+          ],
+          "nativeHover": false,
+          "nativeActive": false,
+          "pixelsSampled": 18936,
+          "uniqueBackgroundColors": 1
+        },
+        {
+          "id": "sample-selected-disabled-twin",
+          "case": "selected-disabled",
+          "status": "pass",
+          "foreground": "rgb(221, 221, 221)",
+          "minimumContrast": 15.4611,
+          "threshold": 7,
+          "compressionMargin": 0.2,
+          "worstBackgroundRGB": [
+            0,
+            0,
+            0
+          ],
+          "worstPixel": [
+            666,
+            1992
+          ],
+          "nativeHover": false,
+          "nativeActive": false,
+          "pixelsSampled": 18936,
+          "uniqueBackgroundColors": 1
+        },
+        {
+          "id": "sample-focus-twin",
+          "case": "focus",
+          "status": "pass",
+          "foreground": "rgb(255, 255, 255)",
+          "minimumContrast": 18.7337,
+          "threshold": 7,
+          "compressionMargin": 0.2,
+          "worstBackgroundRGB": [
+            18,
+            18,
+            18
+          ],
+          "worstPixel": [
+            666,
+            2101
+          ],
+          "nativeHover": false,
+          "nativeActive": false,
+          "pixelsSampled": 18936,
+          "uniqueBackgroundColors": 1
+        },
+        {
+          "id": "sample-loading-twin",
+          "case": "loading",
+          "status": "pass",
+          "foreground": "rgb(255, 255, 255)",
+          "minimumContrast": 18.7337,
+          "threshold": 7,
+          "compressionMargin": 0.2,
+          "worstBackgroundRGB": [
+            18,
+            18,
+            18
+          ],
+          "worstPixel": [
+            666,
+            2210
+          ],
+          "nativeHover": false,
+          "nativeActive": false,
+          "pixelsSampled": 18936,
+          "uniqueBackgroundColors": 1
+        },
+        {
+          "id": "sample-input-twin",
+          "case": "input",
+          "status": "pass",
+          "foreground": "rgb(255, 255, 255)",
+          "minimumContrast": 20.9092,
+          "threshold": 7,
+          "compressionMargin": 0.2,
+          "worstBackgroundRGB": [
+            0,
+            1,
+            0
+          ],
+          "worstPixel": [
+            666,
+            2319
+          ],
+          "nativeHover": false,
+          "nativeActive": false,
+          "pixelsSampled": 18936,
+          "uniqueBackgroundColors": 2
+        }
+      ],
+      "measurementSHA256": "abdada0876f2ee21b7e18c8e4828fb1a8bb884291ea20b5daaf70af7ab569cf1"
+    },
+    {
+      "capture": "ember-foundry.jpg",
+      "family": "ember-foundry",
+      "outer": "none",
+      "ornaments": "subtle",
+      "highContrast": false,
+      "reducedEffects": false,
+      "forcedColors": false,
+      "screenshotEncoding": "JPEG",
+      "sourceSHA256": "753473afe07ee21fd58d230977184d58c39bdffcb962afb9b4a046a35f307aa2",
+      "width": 1280,
+      "height": 2482,
+      "scale": 1.0,
+      "samples": [
+        {
+          "id": "sample-panel-twin",
+          "case": "panel",
+          "status": "pass",
+          "foreground": "rgb(248, 236, 217)",
+          "minimumContrast": 11.5066,
+          "threshold": 4.5,
+          "compressionMargin": 0.2,
+          "worstBackgroundRGB": [
+            51,
+            46,
+            41
+          ],
+          "worstPixel": [
+            1154,
+            357
+          ],
+          "nativeHover": false,
+          "nativeActive": false,
+          "pixelsSampled": 18936,
+          "uniqueBackgroundColors": 19
+        },
+        {
+          "id": "sample-muted-panel-twin",
+          "case": "muted-panel",
+          "status": "pass",
+          "foreground": "rgb(206, 190, 172)",
+          "minimumContrast": 7.5151,
+          "threshold": 4.5,
+          "compressionMargin": 0.2,
+          "worstBackgroundRGB": [
+            50,
+            45,
+            40
+          ],
+          "worstPixel": [
+            1100,
+            471
+          ],
+          "nativeHover": false,
+          "nativeActive": false,
+          "pixelsSampled": 18936,
+          "uniqueBackgroundColors": 28
+        },
+        {
+          "id": "sample-default-twin",
+          "case": "default",
+          "status": "pass",
+          "foreground": "rgb(248, 236, 217)",
+          "minimumContrast": 9.6067,
+          "threshold": 4.5,
+          "compressionMargin": 0.2,
+          "worstBackgroundRGB": [
+            64,
+            58,
+            52
+          ],
+          "worstPixel": [
+            779,
+            584
+          ],
+          "nativeHover": false,
+          "nativeActive": false,
+          "pixelsSampled": 18936,
+          "uniqueBackgroundColors": 24
+        },
+        {
+          "id": "sample-hover-twin",
+          "case": "hover",
+          "status": "pass",
+          "foreground": "rgb(23, 25, 27)",
+          "minimumContrast": 6.8588,
+          "threshold": 4.5,
+          "compressionMargin": 0.2,
+          "worstBackgroundRGB": [
+            211,
+            148,
+            95
+          ],
+          "worstPixel": [
+            821,
+            687
+          ],
+          "nativeHover": false,
+          "nativeActive": false,
+          "pixelsSampled": 18936,
+          "uniqueBackgroundColors": 27
+        },
+        {
+          "id": "sample-pressed-twin",
+          "case": "pressed",
+          "status": "pass",
+          "foreground": "rgb(23, 25, 27)",
+          "minimumContrast": 6.9397,
+          "threshold": 4.5,
+          "compressionMargin": 0.2,
+          "worstBackgroundRGB": [
+            212,
+            149,
+            96
+          ],
+          "worstPixel": [
+            831,
+            799
+          ],
+          "nativeHover": false,
+          "nativeActive": false,
+          "pixelsSampled": 18936,
+          "uniqueBackgroundColors": 21
+        },
+        {
+          "id": "sample-selected-twin",
+          "case": "selected",
+          "status": "pass",
+          "foreground": "rgb(23, 25, 27)",
+          "minimumContrast": 6.7786,
+          "threshold": 4.5,
+          "compressionMargin": 0.2,
+          "worstBackgroundRGB": [
+            210,
+            147,
+            94
+          ],
+          "worstPixel": [
+            781,
+            912
+          ],
+          "nativeHover": false,
+          "nativeActive": false,
+          "pixelsSampled": 18936,
+          "uniqueBackgroundColors": 22
+        },
+        {
+          "id": "sample-selected-hover-twin",
+          "case": "selected-hover",
+          "status": "pass",
+          "foreground": "rgb(23, 25, 27)",
+          "minimumContrast": 6.9397,
+          "threshold": 4.5,
+          "compressionMargin": 0.2,
+          "worstBackgroundRGB": [
+            212,
+            149,
+            96
+          ],
+          "worstPixel": [
+            831,
+            1015
+          ],
+          "nativeHover": false,
+          "nativeActive": false,
+          "pixelsSampled": 18936,
+          "uniqueBackgroundColors": 21
+        },
+        {
+          "id": "sample-selected-pressed-twin",
+          "case": "selected-pressed",
+          "status": "pass",
+          "foreground": "rgb(23, 25, 27)",
+          "minimumContrast": 6.8588,
+          "threshold": 4.5,
+          "compressionMargin": 0.2,
+          "worstBackgroundRGB": [
+            211,
+            148,
+            95
+          ],
+          "worstPixel": [
+            738,
+            1136
+          ],
+          "nativeHover": false,
+          "nativeActive": false,
+          "pixelsSampled": 18936,
+          "uniqueBackgroundColors": 53
+        },
+        {
+          "id": "sample-primary-twin",
+          "case": "primary",
+          "status": "pass",
+          "foreground": "rgb(23, 25, 27)",
+          "minimumContrast": 7.0212,
+          "threshold": 4.5,
+          "compressionMargin": 0.2,
+          "worstBackgroundRGB": [
+            213,
+            150,
+            97
+          ],
+          "worstPixel": [
+            781,
+            1239
+          ],
+          "nativeHover": false,
+          "nativeActive": false,
+          "pixelsSampled": 18936,
+          "uniqueBackgroundColors": 61
+        },
+        {
+          "id": "sample-primary-hover-twin",
+          "case": "primary-hover",
+          "status": "pass",
+          "foreground": "rgb(23, 25, 27)",
+          "minimumContrast": 6.8588,
+          "threshold": 4.5,
+          "compressionMargin": 0.2,
+          "worstBackgroundRGB": [
+            211,
+            148,
+            95
+          ],
+          "worstPixel": [
+            738,
+            1352
+          ],
+          "nativeHover": false,
+          "nativeActive": false,
+          "pixelsSampled": 18936,
+          "uniqueBackgroundColors": 21
+        },
+        {
+          "id": "sample-danger-twin",
+          "case": "danger",
+          "status": "pass",
+          "foreground": "rgb(23, 25, 27)",
+          "minimumContrast": 7.3531,
+          "threshold": 4.5,
+          "compressionMargin": 0.2,
+          "worstBackgroundRGB": [
+            225,
+            148,
+            130
+          ],
+          "worstPixel": [
+            800,
+            1448
+          ],
+          "nativeHover": false,
+          "nativeActive": false,
+          "pixelsSampled": 18936,
+          "uniqueBackgroundColors": 40
+        },
+        {
+          "id": "sample-danger-hover-twin",
+          "case": "danger-hover",
+          "status": "pass",
+          "foreground": "rgb(23, 25, 27)",
+          "minimumContrast": 7.3523,
+          "threshold": 4.5,
+          "compressionMargin": 0.2,
+          "worstBackgroundRGB": [
+            223,
+            149,
+            130
+          ],
+          "worstPixel": [
+            820,
+            1559
+          ],
+          "nativeHover": false,
+          "nativeActive": false,
+          "pixelsSampled": 18936,
+          "uniqueBackgroundColors": 41
+        },
+        {
+          "id": "sample-danger-pressed-twin",
+          "case": "danger-pressed",
+          "status": "pass",
+          "foreground": "rgb(23, 25, 27)",
+          "minimumContrast": 7.2684,
+          "threshold": 4.5,
+          "compressionMargin": 0.2,
+          "worstBackgroundRGB": [
+            222,
+            148,
+            129
+          ],
+          "worstPixel": [
+            824,
+            1695
+          ],
+          "nativeHover": false,
+          "nativeActive": false,
+          "pixelsSampled": 18936,
+          "uniqueBackgroundColors": 45
+        },
+        {
+          "id": "sample-disabled-twin",
+          "case": "disabled",
+          "status": "pass",
+          "foreground": "rgb(206, 190, 172)",
+          "minimumContrast": 8.4787,
+          "threshold": 3,
+          "compressionMargin": 0.2,
+          "worstBackgroundRGB": [
+            41,
+            36,
+            31
+          ],
+          "worstPixel": [
+            666,
+            1774
+          ],
+          "nativeHover": false,
+          "nativeActive": false,
+          "pixelsSampled": 18936,
+          "uniqueBackgroundColors": 1
+        },
+        {
+          "id": "sample-primary-disabled-twin",
+          "case": "primary-disabled",
+          "status": "pass",
+          "foreground": "rgb(206, 190, 172)",
+          "minimumContrast": 8.4787,
+          "threshold": 3,
+          "compressionMargin": 0.2,
+          "worstBackgroundRGB": [
+            41,
+            36,
+            31
+          ],
+          "worstPixel": [
+            666,
+            1883
+          ],
+          "nativeHover": false,
+          "nativeActive": false,
+          "pixelsSampled": 18936,
+          "uniqueBackgroundColors": 1
+        },
+        {
+          "id": "sample-selected-disabled-twin",
+          "case": "selected-disabled",
+          "status": "pass",
+          "foreground": "rgb(206, 190, 172)",
+          "minimumContrast": 8.4787,
+          "threshold": 3,
+          "compressionMargin": 0.2,
+          "worstBackgroundRGB": [
+            41,
+            36,
+            31
+          ],
+          "worstPixel": [
+            666,
+            1992
+          ],
+          "nativeHover": false,
+          "nativeActive": false,
+          "pixelsSampled": 18936,
+          "uniqueBackgroundColors": 1
+        },
+        {
+          "id": "sample-focus-twin",
+          "case": "focus",
+          "status": "pass",
+          "foreground": "rgb(248, 236, 217)",
+          "minimumContrast": 9.7546,
+          "threshold": 4.5,
+          "compressionMargin": 0.2,
+          "worstBackgroundRGB": [
+            63,
+            57,
+            51
+          ],
+          "worstPixel": [
+            819,
+            2103
+          ],
+          "nativeHover": false,
+          "nativeActive": false,
+          "pixelsSampled": 18936,
+          "uniqueBackgroundColors": 12
+        },
+        {
+          "id": "sample-loading-twin",
+          "case": "loading",
+          "status": "pass",
+          "foreground": "rgb(248, 236, 217)",
+          "minimumContrast": 9.9042,
+          "threshold": 4.5,
+          "compressionMargin": 0.2,
+          "worstBackgroundRGB": [
+            62,
+            56,
+            50
+          ],
+          "worstPixel": [
+            736,
+            2223
+          ],
+          "nativeHover": false,
+          "nativeActive": false,
+          "pixelsSampled": 18936,
+          "uniqueBackgroundColors": 11
+        },
+        {
+          "id": "sample-input-twin",
+          "case": "input",
+          "status": "pass",
+          "foreground": "rgb(248, 236, 217)",
+          "minimumContrast": 13.8464,
+          "threshold": 4.5,
+          "compressionMargin": 0.2,
+          "worstBackgroundRGB": [
+            36,
+            32,
+            29
+          ],
+          "worstPixel": [
+            839,
+            2352
+          ],
+          "nativeHover": false,
+          "nativeActive": false,
+          "pixelsSampled": 18936,
+          "uniqueBackgroundColors": 24
+        }
+      ],
+      "measurementSHA256": "32de99cda5a9402e8ce7863d7cae56b36af379ab0b06475b7bb72a822923a79a"
+    },
+    {
+      "capture": "flight-deck-high-contrast.jpg",
+      "family": "industrial-workshop",
+      "outer": "none",
+      "ornaments": "subtle",
+      "highContrast": true,
+      "reducedEffects": false,
+      "forcedColors": false,
+      "screenshotEncoding": "JPEG",
+      "sourceSHA256": "cb951c3bb13132f9f06a955fe1f9178215491139dbabe1df5b40e7587f643f00",
+      "width": 1280,
+      "height": 2482,
+      "scale": 1.0,
+      "samples": [
+        {
+          "id": "sample-panel-twin",
+          "case": "panel",
+          "status": "pass",
+          "foreground": "rgb(255, 255, 255)",
+          "minimumContrast": 21.0,
+          "threshold": 7,
+          "compressionMargin": 0.2,
+          "worstBackgroundRGB": [
+            0,
+            0,
+            0
+          ],
+          "worstPixel": [
+            666,
+            357
+          ],
+          "nativeHover": false,
+          "nativeActive": false,
+          "pixelsSampled": 18936,
+          "uniqueBackgroundColors": 1
+        },
+        {
+          "id": "sample-muted-panel-twin",
+          "case": "muted-panel",
+          "status": "pass",
+          "foreground": "rgb(221, 221, 221)",
+          "minimumContrast": 15.4611,
+          "threshold": 7,
+          "compressionMargin": 0.2,
+          "worstBackgroundRGB": [
+            0,
+            0,
+            0
+          ],
+          "worstPixel": [
+            666,
+            466
+          ],
+          "nativeHover": false,
+          "nativeActive": false,
+          "pixelsSampled": 18936,
+          "uniqueBackgroundColors": 1
+        },
+        {
+          "id": "sample-default-twin",
+          "case": "default",
+          "status": "pass",
+          "foreground": "rgb(255, 255, 255)",
+          "minimumContrast": 18.6632,
+          "threshold": 7,
+          "compressionMargin": 0.2,
+          "worstBackgroundRGB": [
+            18,
+            19,
+            14
+          ],
+          "worstPixel": [
+            666,
+            575
+          ],
+          "nativeHover": false,
+          "nativeActive": false,
+          "pixelsSampled": 18936,
+          "uniqueBackgroundColors": 2
+        },
+        {
+          "id": "sample-hover-twin",
+          "case": "hover",
+          "status": "pass",
+          "foreground": "rgb(255, 255, 255)",
+          "minimumContrast": 18.6847,
+          "threshold": 7,
+          "compressionMargin": 0.2,
+          "worstBackgroundRGB": [
+            16,
+            19,
+            18
+          ],
+          "worstPixel": [
+            666,
+            719
+          ],
+          "nativeHover": false,
+          "nativeActive": false,
+          "pixelsSampled": 18936,
+          "uniqueBackgroundColors": 2
+        },
+        {
+          "id": "sample-pressed-twin",
+          "case": "pressed",
+          "status": "pass",
+          "foreground": "rgb(0, 0, 0)",
+          "minimumContrast": 18.3308,
+          "threshold": 7,
+          "compressionMargin": 0.2,
+          "worstBackgroundRGB": [
+            253,
+            242,
+            152
+          ],
+          "worstPixel": [
+            666,
+            793
+          ],
+          "nativeHover": false,
+          "nativeActive": false,
+          "pixelsSampled": 18936,
+          "uniqueBackgroundColors": 1
+        },
+        {
+          "id": "sample-selected-twin",
+          "case": "selected",
+          "status": "pass",
+          "foreground": "rgb(0, 0, 0)",
+          "minimumContrast": 18.3308,
+          "threshold": 7,
+          "compressionMargin": 0.2,
+          "worstBackgroundRGB": [
+            253,
+            242,
+            152
+          ],
+          "worstPixel": [
+            666,
+            902
+          ],
+          "nativeHover": false,
+          "nativeActive": false,
+          "pixelsSampled": 18936,
+          "uniqueBackgroundColors": 1
+        },
+        {
+          "id": "sample-selected-hover-twin",
+          "case": "selected-hover",
+          "status": "pass",
+          "foreground": "rgb(0, 0, 0)",
+          "minimumContrast": 18.3308,
+          "threshold": 7,
+          "compressionMargin": 0.2,
+          "worstBackgroundRGB": [
+            253,
+            242,
+            152
+          ],
+          "worstPixel": [
+            666,
+            1011
+          ],
+          "nativeHover": false,
+          "nativeActive": false,
+          "pixelsSampled": 18936,
+          "uniqueBackgroundColors": 1
+        },
+        {
+          "id": "sample-selected-pressed-twin",
+          "case": "selected-pressed",
+          "status": "pass",
+          "foreground": "rgb(0, 0, 0)",
+          "minimumContrast": 18.3308,
+          "threshold": 7,
+          "compressionMargin": 0.2,
+          "worstBackgroundRGB": [
+            253,
+            242,
+            152
+          ],
+          "worstPixel": [
+            666,
+            1120
+          ],
+          "nativeHover": false,
+          "nativeActive": false,
+          "pixelsSampled": 18936,
+          "uniqueBackgroundColors": 1
+        },
+        {
+          "id": "sample-primary-twin",
+          "case": "primary",
+          "status": "pass",
+          "foreground": "rgb(0, 0, 0)",
+          "minimumContrast": 18.3308,
+          "threshold": 7,
+          "compressionMargin": 0.2,
+          "worstBackgroundRGB": [
+            253,
+            242,
+            152
+          ],
+          "worstPixel": [
+            666,
+            1229
+          ],
+          "nativeHover": false,
+          "nativeActive": false,
+          "pixelsSampled": 18936,
+          "uniqueBackgroundColors": 1
+        },
+        {
+          "id": "sample-primary-hover-twin",
+          "case": "primary-hover",
+          "status": "pass",
+          "foreground": "rgb(0, 0, 0)",
+          "minimumContrast": 18.3308,
+          "threshold": 7,
+          "compressionMargin": 0.2,
+          "worstBackgroundRGB": [
+            253,
+            242,
+            152
+          ],
+          "worstPixel": [
+            666,
+            1338
+          ],
+          "nativeHover": false,
+          "nativeActive": false,
+          "pixelsSampled": 18936,
+          "uniqueBackgroundColors": 1
+        },
+        {
+          "id": "sample-danger-twin",
+          "case": "danger",
+          "status": "pass",
+          "foreground": "rgb(0, 0, 0)",
+          "minimumContrast": 11.2924,
+          "threshold": 7,
+          "compressionMargin": 0.2,
+          "worstBackgroundRGB": [
+            243,
+            172,
+            170
+          ],
+          "worstPixel": [
+            666,
+            1447
+          ],
+          "nativeHover": false,
+          "nativeActive": false,
+          "pixelsSampled": 18936,
+          "uniqueBackgroundColors": 1
+        },
+        {
+          "id": "sample-danger-hover-twin",
+          "case": "danger-hover",
+          "status": "pass",
+          "foreground": "rgb(0, 0, 0)",
+          "minimumContrast": 11.2924,
+          "threshold": 7,
+          "compressionMargin": 0.2,
+          "worstBackgroundRGB": [
+            243,
+            172,
+            170
+          ],
+          "worstPixel": [
+            666,
+            1556
+          ],
+          "nativeHover": false,
+          "nativeActive": false,
+          "pixelsSampled": 18936,
+          "uniqueBackgroundColors": 1
+        },
+        {
+          "id": "sample-danger-pressed-twin",
+          "case": "danger-pressed",
+          "status": "pass",
+          "foreground": "rgb(0, 0, 0)",
+          "minimumContrast": 11.2924,
+          "threshold": 7,
+          "compressionMargin": 0.2,
+          "worstBackgroundRGB": [
+            243,
+            172,
+            170
+          ],
+          "worstPixel": [
+            666,
+            1665
+          ],
+          "nativeHover": false,
+          "nativeActive": false,
+          "pixelsSampled": 18936,
+          "uniqueBackgroundColors": 1
+        },
+        {
+          "id": "sample-disabled-twin",
+          "case": "disabled",
+          "status": "pass",
+          "foreground": "rgb(221, 221, 221)",
+          "minimumContrast": 15.4611,
+          "threshold": 7,
+          "compressionMargin": 0.2,
+          "worstBackgroundRGB": [
+            0,
+            0,
+            0
+          ],
+          "worstPixel": [
+            666,
+            1774
+          ],
+          "nativeHover": false,
+          "nativeActive": false,
+          "pixelsSampled": 18936,
+          "uniqueBackgroundColors": 1
+        },
+        {
+          "id": "sample-primary-disabled-twin",
+          "case": "primary-disabled",
+          "status": "pass",
+          "foreground": "rgb(221, 221, 221)",
+          "minimumContrast": 15.4611,
+          "threshold": 7,
+          "compressionMargin": 0.2,
+          "worstBackgroundRGB": [
+            0,
+            0,
+            0
+          ],
+          "worstPixel": [
+            666,
+            1883
+          ],
+          "nativeHover": false,
+          "nativeActive": false,
+          "pixelsSampled": 18936,
+          "uniqueBackgroundColors": 1
+        },
+        {
+          "id": "sample-selected-disabled-twin",
+          "case": "selected-disabled",
+          "status": "pass",
+          "foreground": "rgb(221, 221, 221)",
+          "minimumContrast": 15.4611,
+          "threshold": 7,
+          "compressionMargin": 0.2,
+          "worstBackgroundRGB": [
+            0,
+            0,
+            0
+          ],
+          "worstPixel": [
+            666,
+            1992
+          ],
+          "nativeHover": false,
+          "nativeActive": false,
+          "pixelsSampled": 18936,
+          "uniqueBackgroundColors": 1
+        },
+        {
+          "id": "sample-focus-twin",
+          "case": "focus",
+          "status": "pass",
+          "foreground": "rgb(255, 255, 255)",
+          "minimumContrast": 18.7337,
+          "threshold": 7,
+          "compressionMargin": 0.2,
+          "worstBackgroundRGB": [
+            18,
+            18,
+            18
+          ],
+          "worstPixel": [
+            666,
+            2101
+          ],
+          "nativeHover": false,
+          "nativeActive": false,
+          "pixelsSampled": 18936,
+          "uniqueBackgroundColors": 1
+        },
+        {
+          "id": "sample-loading-twin",
+          "case": "loading",
+          "status": "pass",
+          "foreground": "rgb(255, 255, 255)",
+          "minimumContrast": 18.7337,
+          "threshold": 7,
+          "compressionMargin": 0.2,
+          "worstBackgroundRGB": [
+            18,
+            18,
+            18
+          ],
+          "worstPixel": [
+            666,
+            2210
+          ],
+          "nativeHover": false,
+          "nativeActive": false,
+          "pixelsSampled": 18936,
+          "uniqueBackgroundColors": 1
+        },
+        {
+          "id": "sample-input-twin",
+          "case": "input",
+          "status": "pass",
+          "foreground": "rgb(255, 255, 255)",
+          "minimumContrast": 20.9092,
+          "threshold": 7,
+          "compressionMargin": 0.2,
+          "worstBackgroundRGB": [
+            0,
+            1,
+            0
+          ],
+          "worstPixel": [
+            666,
+            2319
+          ],
+          "nativeHover": false,
+          "nativeActive": false,
+          "pixelsSampled": 18936,
+          "uniqueBackgroundColors": 2
+        }
+      ],
+      "measurementSHA256": "fccd04886b4854a9b13ec7993aafd866069919307c3717c5d8e41ed331ef6399"
+    },
+    {
+      "capture": "flight-deck.jpg",
+      "family": "industrial-workshop",
+      "outer": "none",
+      "ornaments": "subtle",
+      "highContrast": false,
+      "reducedEffects": false,
+      "forcedColors": false,
+      "screenshotEncoding": "JPEG",
+      "sourceSHA256": "661193509aba461edaf7a07c775678b822cba620293c74fe8d78716a338b6137",
+      "width": 1280,
+      "height": 2482,
+      "scale": 1.0,
+      "samples": [
+        {
+          "id": "sample-panel-twin",
+          "case": "panel",
+          "status": "pass",
+          "foreground": "rgb(243, 237, 221)",
+          "minimumContrast": 10.1359,
+          "threshold": 4.5,
+          "compressionMargin": 0.2,
+          "worstBackgroundRGB": [
+            52,
+            56,
+            58
+          ],
+          "worstPixel": [
+            744,
+            387
+          ],
+          "nativeHover": false,
+          "nativeActive": false,
+          "pixelsSampled": 18936,
+          "uniqueBackgroundColors": 24
+        },
+        {
+          "id": "sample-muted-panel-twin",
+          "case": "muted-panel",
+          "status": "pass",
+          "foreground": "rgb(196, 193, 182)",
+          "minimumContrast": 6.6715,
+          "threshold": 4.5,
+          "compressionMargin": 0.2,
+          "worstBackgroundRGB": [
+            51,
+            55,
+            57
+          ],
+          "worstPixel": [
+            1178,
+            471
+          ],
+          "nativeHover": false,
+          "nativeActive": false,
+          "pixelsSampled": 18936,
+          "uniqueBackgroundColors": 22
+        },
+        {
+          "id": "sample-default-twin",
+          "case": "default",
+          "status": "pass",
+          "foreground": "rgb(243, 237, 221)",
+          "minimumContrast": 7.9159,
+          "threshold": 4.5,
+          "compressionMargin": 0.2,
+          "worstBackgroundRGB": [
+            67,
+            72,
+            76
+          ],
+          "worstPixel": [
+            744,
+            605
+          ],
+          "nativeHover": false,
+          "nativeActive": false,
+          "pixelsSampled": 18936,
+          "uniqueBackgroundColors": 19
+        },
+        {
+          "id": "sample-hover-twin",
+          "case": "hover",
+          "status": "pass",
+          "foreground": "rgb(23, 25, 27)",
+          "minimumContrast": 7.5807,
+          "threshold": 4.5,
+          "compressionMargin": 0.2,
+          "worstBackgroundRGB": [
+            202,
+            165,
+            87
+          ],
+          "worstPixel": [
+            1016,
+            712
+          ],
+          "nativeHover": false,
+          "nativeActive": false,
+          "pixelsSampled": 18936,
+          "uniqueBackgroundColors": 64
+        },
+        {
+          "id": "sample-pressed-twin",
+          "case": "pressed",
+          "status": "pass",
+          "foreground": "rgb(23, 25, 27)",
+          "minimumContrast": 7.8439,
+          "threshold": 4.5,
+          "compressionMargin": 0.2,
+          "worstBackgroundRGB": [
+            205,
+            168,
+            90
+          ],
+          "worstPixel": [
+            824,
+            823
+          ],
+          "nativeHover": false,
+          "nativeActive": false,
+          "pixelsSampled": 18936,
+          "uniqueBackgroundColors": 70
+        },
+        {
+          "id": "sample-selected-twin",
+          "case": "selected",
+          "status": "pass",
+          "foreground": "rgb(23, 25, 27)",
+          "minimumContrast": 7.7555,
+          "threshold": 4.5,
+          "compressionMargin": 0.2,
+          "worstBackgroundRGB": [
+            204,
+            167,
+            89
+          ],
+          "worstPixel": [
+            1181,
+            906
+          ],
+          "nativeHover": false,
+          "nativeActive": false,
+          "pixelsSampled": 18936,
+          "uniqueBackgroundColors": 53
+        },
+        {
+          "id": "sample-selected-hover-twin",
+          "case": "selected-hover",
+          "status": "pass",
+          "foreground": "rgb(23, 25, 27)",
+          "minimumContrast": 7.8411,
+          "threshold": 4.5,
+          "compressionMargin": 0.2,
+          "worstBackgroundRGB": [
+            205,
+            168,
+            89
+          ],
+          "worstPixel": [
+            824,
+            1039
+          ],
+          "nativeHover": false,
+          "nativeActive": false,
+          "pixelsSampled": 18936,
+          "uniqueBackgroundColors": 50
+        },
+        {
+          "id": "sample-selected-pressed-twin",
+          "case": "selected-pressed",
+          "status": "pass",
+          "foreground": "rgb(23, 25, 27)",
+          "minimumContrast": 7.5807,
+          "threshold": 4.5,
+          "compressionMargin": 0.2,
+          "worstBackgroundRGB": [
+            202,
+            165,
+            87
+          ],
+          "worstPixel": [
+            1181,
+            1126
+          ],
+          "nativeHover": false,
+          "nativeActive": false,
+          "pixelsSampled": 18936,
+          "uniqueBackgroundColors": 78
+        },
+        {
+          "id": "sample-primary-twin",
+          "case": "primary",
+          "status": "pass",
+          "foreground": "rgb(23, 25, 27)",
+          "minimumContrast": 7.7555,
+          "threshold": 4.5,
+          "compressionMargin": 0.2,
+          "worstBackgroundRGB": [
+            204,
+            167,
+            89
+          ],
+          "worstPixel": [
+            821,
+            1232
+          ],
+          "nativeHover": false,
+          "nativeActive": false,
+          "pixelsSampled": 18936,
+          "uniqueBackgroundColors": 97
+        },
+        {
+          "id": "sample-primary-hover-twin",
+          "case": "primary-hover",
+          "status": "pass",
+          "foreground": "rgb(23, 25, 27)",
+          "minimumContrast": 7.5807,
+          "threshold": 4.5,
+          "compressionMargin": 0.2,
+          "worstBackgroundRGB": [
+            202,
+            165,
+            87
+          ],
+          "worstPixel": [
+            1181,
+            1342
+          ],
+          "nativeHover": false,
+          "nativeActive": false,
+          "pixelsSampled": 18936,
+          "uniqueBackgroundColors": 64
+        },
+        {
+          "id": "sample-danger-twin",
+          "case": "danger",
+          "status": "pass",
+          "foreground": "rgb(23, 25, 27)",
+          "minimumContrast": 6.7783,
+          "threshold": 4.5,
+          "compressionMargin": 0.2,
+          "worstBackgroundRGB": [
+            222,
+            139,
+            121
+          ],
+          "worstPixel": [
+            672,
+            1451
+          ],
+          "nativeHover": false,
+          "nativeActive": false,
+          "pixelsSampled": 18936,
+          "uniqueBackgroundColors": 46
+        },
+        {
+          "id": "sample-danger-hover-twin",
+          "case": "danger-hover",
+          "status": "pass",
+          "foreground": "rgb(23, 25, 27)",
+          "minimumContrast": 6.6211,
+          "threshold": 4.5,
+          "compressionMargin": 0.2,
+          "worstBackgroundRGB": [
+            220,
+            137,
+            119
+          ],
+          "worstPixel": [
+            1016,
+            1584
+          ],
+          "nativeHover": false,
+          "nativeActive": false,
+          "pixelsSampled": 18936,
+          "uniqueBackgroundColors": 26
+        },
+        {
+          "id": "sample-danger-pressed-twin",
+          "case": "danger-pressed",
+          "status": "pass",
+          "foreground": "rgb(23, 25, 27)",
+          "minimumContrast": 6.9381,
+          "threshold": 4.5,
+          "compressionMargin": 0.2,
+          "worstBackgroundRGB": [
+            224,
+            141,
+            123
+          ],
+          "worstPixel": [
+            1023,
+            1671
+          ],
+          "nativeHover": false,
+          "nativeActive": false,
+          "pixelsSampled": 18936,
+          "uniqueBackgroundColors": 65
+        },
+        {
+          "id": "sample-disabled-twin",
+          "case": "disabled",
+          "status": "pass",
+          "foreground": "rgb(196, 193, 182)",
+          "minimumContrast": 7.9272,
+          "threshold": 3,
+          "compressionMargin": 0.2,
+          "worstBackgroundRGB": [
+            39,
+            43,
+            45
+          ],
+          "worstPixel": [
+            666,
+            1774
+          ],
+          "nativeHover": false,
+          "nativeActive": false,
+          "pixelsSampled": 18936,
+          "uniqueBackgroundColors": 1
+        },
+        {
+          "id": "sample-primary-disabled-twin",
+          "case": "primary-disabled",
+          "status": "pass",
+          "foreground": "rgb(196, 193, 182)",
+          "minimumContrast": 7.9272,
+          "threshold": 3,
+          "compressionMargin": 0.2,
+          "worstBackgroundRGB": [
+            39,
+            43,
+            45
+          ],
+          "worstPixel": [
+            666,
+            1883
+          ],
+          "nativeHover": false,
+          "nativeActive": false,
+          "pixelsSampled": 18936,
+          "uniqueBackgroundColors": 1
+        },
+        {
+          "id": "sample-selected-disabled-twin",
+          "case": "selected-disabled",
+          "status": "pass",
+          "foreground": "rgb(196, 193, 182)",
+          "minimumContrast": 7.9272,
+          "threshold": 3,
+          "compressionMargin": 0.2,
+          "worstBackgroundRGB": [
+            39,
+            43,
+            45
+          ],
+          "worstPixel": [
+            666,
+            1992
+          ],
+          "nativeHover": false,
+          "nativeActive": false,
+          "pixelsSampled": 18936,
+          "uniqueBackgroundColors": 1
+        },
+        {
+          "id": "sample-focus-twin",
+          "case": "focus",
+          "status": "pass",
+          "foreground": "rgb(243, 237, 221)",
+          "minimumContrast": 8.0413,
+          "threshold": 4.5,
+          "compressionMargin": 0.2,
+          "worstBackgroundRGB": [
+            66,
+            71,
+            75
+          ],
+          "worstPixel": [
+            744,
+            2131
+          ],
+          "nativeHover": false,
+          "nativeActive": false,
+          "pixelsSampled": 18936,
+          "uniqueBackgroundColors": 17
+        },
+        {
+          "id": "sample-loading-twin",
+          "case": "loading",
+          "status": "pass",
+          "foreground": "rgb(243, 237, 221)",
+          "minimumContrast": 8.429,
+          "threshold": 4.5,
+          "compressionMargin": 0.2,
+          "worstBackgroundRGB": [
+            63,
+            68,
+            72
+          ],
+          "worstPixel": [
+            1186,
+            2215
+          ],
+          "nativeHover": false,
+          "nativeActive": false,
+          "pixelsSampled": 18936,
+          "uniqueBackgroundColors": 15
+        },
+        {
+          "id": "sample-input-twin",
+          "case": "input",
+          "status": "pass",
+          "foreground": "rgb(243, 237, 221)",
+          "minimumContrast": 12.8728,
+          "threshold": 4.5,
+          "compressionMargin": 0.2,
+          "worstBackgroundRGB": [
+            36,
+            39,
+            40
+          ],
+          "worstPixel": [
+            839,
+            2352
+          ],
+          "nativeHover": false,
+          "nativeActive": false,
+          "pixelsSampled": 18936,
+          "uniqueBackgroundColors": 15
+        }
+      ],
+      "measurementSHA256": "d24fcc269ba3a00c16f1739435c80a5870249da95a2506bc5a038e7d58a0c59e"
+    },
+    {
+      "capture": "polar-relay-high-contrast.jpg",
+      "family": "polar-relay",
+      "outer": "none",
+      "ornaments": "subtle",
+      "highContrast": true,
+      "reducedEffects": false,
+      "forcedColors": false,
+      "screenshotEncoding": "JPEG",
+      "sourceSHA256": "fba82fc28297aa8fc3c3c34ff0b453561d26b75d12e12775c6759e9c432a3ee8",
+      "width": 1280,
+      "height": 2482,
+      "scale": 1.0,
+      "samples": [
+        {
+          "id": "sample-panel-twin",
+          "case": "panel",
+          "status": "pass",
+          "foreground": "rgb(255, 255, 255)",
+          "minimumContrast": 21.0,
+          "threshold": 7,
+          "compressionMargin": 0.2,
+          "worstBackgroundRGB": [
+            0,
+            0,
+            0
+          ],
+          "worstPixel": [
+            666,
+            357
+          ],
+          "nativeHover": false,
+          "nativeActive": false,
+          "pixelsSampled": 18936,
+          "uniqueBackgroundColors": 1
+        },
+        {
+          "id": "sample-muted-panel-twin",
+          "case": "muted-panel",
+          "status": "pass",
+          "foreground": "rgb(221, 221, 221)",
+          "minimumContrast": 15.4611,
+          "threshold": 7,
+          "compressionMargin": 0.2,
+          "worstBackgroundRGB": [
+            0,
+            0,
+            0
+          ],
+          "worstPixel": [
+            666,
+            466
+          ],
+          "nativeHover": false,
+          "nativeActive": false,
+          "pixelsSampled": 18936,
+          "uniqueBackgroundColors": 1
+        },
+        {
+          "id": "sample-default-twin",
+          "case": "default",
+          "status": "pass",
+          "foreground": "rgb(255, 255, 255)",
+          "minimumContrast": 18.6632,
+          "threshold": 7,
+          "compressionMargin": 0.2,
+          "worstBackgroundRGB": [
+            18,
+            19,
+            14
+          ],
+          "worstPixel": [
+            666,
+            575
+          ],
+          "nativeHover": false,
+          "nativeActive": false,
+          "pixelsSampled": 18936,
+          "uniqueBackgroundColors": 2
+        },
+        {
+          "id": "sample-hover-twin",
+          "case": "hover",
+          "status": "pass",
+          "foreground": "rgb(255, 255, 255)",
+          "minimumContrast": 18.6847,
+          "threshold": 7,
+          "compressionMargin": 0.2,
+          "worstBackgroundRGB": [
+            16,
+            19,
+            18
+          ],
+          "worstPixel": [
+            666,
+            719
+          ],
+          "nativeHover": false,
+          "nativeActive": false,
+          "pixelsSampled": 18936,
+          "uniqueBackgroundColors": 2
+        },
+        {
+          "id": "sample-pressed-twin",
+          "case": "pressed",
+          "status": "pass",
+          "foreground": "rgb(0, 0, 0)",
+          "minimumContrast": 18.3308,
+          "threshold": 7,
+          "compressionMargin": 0.2,
+          "worstBackgroundRGB": [
+            253,
+            242,
+            152
+          ],
+          "worstPixel": [
+            666,
+            793
+          ],
+          "nativeHover": false,
+          "nativeActive": false,
+          "pixelsSampled": 18936,
+          "uniqueBackgroundColors": 1
+        },
+        {
+          "id": "sample-selected-twin",
+          "case": "selected",
+          "status": "pass",
+          "foreground": "rgb(0, 0, 0)",
+          "minimumContrast": 18.3308,
+          "threshold": 7,
+          "compressionMargin": 0.2,
+          "worstBackgroundRGB": [
+            253,
+            242,
+            152
+          ],
+          "worstPixel": [
+            666,
+            902
+          ],
+          "nativeHover": false,
+          "nativeActive": false,
+          "pixelsSampled": 18936,
+          "uniqueBackgroundColors": 1
+        },
+        {
+          "id": "sample-selected-hover-twin",
+          "case": "selected-hover",
+          "status": "pass",
+          "foreground": "rgb(0, 0, 0)",
+          "minimumContrast": 18.3308,
+          "threshold": 7,
+          "compressionMargin": 0.2,
+          "worstBackgroundRGB": [
+            253,
+            242,
+            152
+          ],
+          "worstPixel": [
+            666,
+            1011
+          ],
+          "nativeHover": false,
+          "nativeActive": false,
+          "pixelsSampled": 18936,
+          "uniqueBackgroundColors": 1
+        },
+        {
+          "id": "sample-selected-pressed-twin",
+          "case": "selected-pressed",
+          "status": "pass",
+          "foreground": "rgb(0, 0, 0)",
+          "minimumContrast": 18.3308,
+          "threshold": 7,
+          "compressionMargin": 0.2,
+          "worstBackgroundRGB": [
+            253,
+            242,
+            152
+          ],
+          "worstPixel": [
+            666,
+            1120
+          ],
+          "nativeHover": false,
+          "nativeActive": false,
+          "pixelsSampled": 18936,
+          "uniqueBackgroundColors": 1
+        },
+        {
+          "id": "sample-primary-twin",
+          "case": "primary",
+          "status": "pass",
+          "foreground": "rgb(0, 0, 0)",
+          "minimumContrast": 18.3308,
+          "threshold": 7,
+          "compressionMargin": 0.2,
+          "worstBackgroundRGB": [
+            253,
+            242,
+            152
+          ],
+          "worstPixel": [
+            666,
+            1229
+          ],
+          "nativeHover": false,
+          "nativeActive": false,
+          "pixelsSampled": 18936,
+          "uniqueBackgroundColors": 1
+        },
+        {
+          "id": "sample-primary-hover-twin",
+          "case": "primary-hover",
+          "status": "pass",
+          "foreground": "rgb(0, 0, 0)",
+          "minimumContrast": 18.3308,
+          "threshold": 7,
+          "compressionMargin": 0.2,
+          "worstBackgroundRGB": [
+            253,
+            242,
+            152
+          ],
+          "worstPixel": [
+            666,
+            1338
+          ],
+          "nativeHover": false,
+          "nativeActive": false,
+          "pixelsSampled": 18936,
+          "uniqueBackgroundColors": 1
+        },
+        {
+          "id": "sample-danger-twin",
+          "case": "danger",
+          "status": "pass",
+          "foreground": "rgb(0, 0, 0)",
+          "minimumContrast": 11.2924,
+          "threshold": 7,
+          "compressionMargin": 0.2,
+          "worstBackgroundRGB": [
+            243,
+            172,
+            170
+          ],
+          "worstPixel": [
+            666,
+            1447
+          ],
+          "nativeHover": false,
+          "nativeActive": false,
+          "pixelsSampled": 18936,
+          "uniqueBackgroundColors": 1
+        },
+        {
+          "id": "sample-danger-hover-twin",
+          "case": "danger-hover",
+          "status": "pass",
+          "foreground": "rgb(0, 0, 0)",
+          "minimumContrast": 11.2924,
+          "threshold": 7,
+          "compressionMargin": 0.2,
+          "worstBackgroundRGB": [
+            243,
+            172,
+            170
+          ],
+          "worstPixel": [
+            666,
+            1556
+          ],
+          "nativeHover": false,
+          "nativeActive": false,
+          "pixelsSampled": 18936,
+          "uniqueBackgroundColors": 1
+        },
+        {
+          "id": "sample-danger-pressed-twin",
+          "case": "danger-pressed",
+          "status": "pass",
+          "foreground": "rgb(0, 0, 0)",
+          "minimumContrast": 11.2924,
+          "threshold": 7,
+          "compressionMargin": 0.2,
+          "worstBackgroundRGB": [
+            243,
+            172,
+            170
+          ],
+          "worstPixel": [
+            666,
+            1665
+          ],
+          "nativeHover": false,
+          "nativeActive": false,
+          "pixelsSampled": 18936,
+          "uniqueBackgroundColors": 1
+        },
+        {
+          "id": "sample-disabled-twin",
+          "case": "disabled",
+          "status": "pass",
+          "foreground": "rgb(221, 221, 221)",
+          "minimumContrast": 15.4611,
+          "threshold": 7,
+          "compressionMargin": 0.2,
+          "worstBackgroundRGB": [
+            0,
+            0,
+            0
+          ],
+          "worstPixel": [
+            666,
+            1774
+          ],
+          "nativeHover": false,
+          "nativeActive": false,
+          "pixelsSampled": 18936,
+          "uniqueBackgroundColors": 1
+        },
+        {
+          "id": "sample-primary-disabled-twin",
+          "case": "primary-disabled",
+          "status": "pass",
+          "foreground": "rgb(221, 221, 221)",
+          "minimumContrast": 15.4611,
+          "threshold": 7,
+          "compressionMargin": 0.2,
+          "worstBackgroundRGB": [
+            0,
+            0,
+            0
+          ],
+          "worstPixel": [
+            666,
+            1883
+          ],
+          "nativeHover": false,
+          "nativeActive": false,
+          "pixelsSampled": 18936,
+          "uniqueBackgroundColors": 1
+        },
+        {
+          "id": "sample-selected-disabled-twin",
+          "case": "selected-disabled",
+          "status": "pass",
+          "foreground": "rgb(221, 221, 221)",
+          "minimumContrast": 15.4611,
+          "threshold": 7,
+          "compressionMargin": 0.2,
+          "worstBackgroundRGB": [
+            0,
+            0,
+            0
+          ],
+          "worstPixel": [
+            666,
+            1992
+          ],
+          "nativeHover": false,
+          "nativeActive": false,
+          "pixelsSampled": 18936,
+          "uniqueBackgroundColors": 1
+        },
+        {
+          "id": "sample-focus-twin",
+          "case": "focus",
+          "status": "pass",
+          "foreground": "rgb(255, 255, 255)",
+          "minimumContrast": 18.7337,
+          "threshold": 7,
+          "compressionMargin": 0.2,
+          "worstBackgroundRGB": [
+            18,
+            18,
+            18
+          ],
+          "worstPixel": [
+            666,
+            2101
+          ],
+          "nativeHover": false,
+          "nativeActive": false,
+          "pixelsSampled": 18936,
+          "uniqueBackgroundColors": 1
+        },
+        {
+          "id": "sample-loading-twin",
+          "case": "loading",
+          "status": "pass",
+          "foreground": "rgb(255, 255, 255)",
+          "minimumContrast": 18.7337,
+          "threshold": 7,
+          "compressionMargin": 0.2,
+          "worstBackgroundRGB": [
+            18,
+            18,
+            18
+          ],
+          "worstPixel": [
+            666,
+            2210
+          ],
+          "nativeHover": false,
+          "nativeActive": false,
+          "pixelsSampled": 18936,
+          "uniqueBackgroundColors": 1
+        },
+        {
+          "id": "sample-input-twin",
+          "case": "input",
+          "status": "pass",
+          "foreground": "rgb(255, 255, 255)",
+          "minimumContrast": 20.9092,
+          "threshold": 7,
+          "compressionMargin": 0.2,
+          "worstBackgroundRGB": [
+            0,
+            1,
+            0
+          ],
+          "worstPixel": [
+            666,
+            2319
+          ],
+          "nativeHover": false,
+          "nativeActive": false,
+          "pixelsSampled": 18936,
+          "uniqueBackgroundColors": 2
+        }
+      ],
+      "measurementSHA256": "c98c78e047e4a44c06498089236a39576c93c105cdc694c799e534bfe9189d40"
+    },
+    {
+      "capture": "polar-relay.jpg",
+      "family": "polar-relay",
+      "outer": "none",
+      "ornaments": "subtle",
+      "highContrast": false,
+      "reducedEffects": false,
+      "forcedColors": false,
+      "screenshotEncoding": "JPEG",
+      "sourceSHA256": "d6ce8889ef5836b4f99f7d480d4708ae5a1f65e9f67a165217f6621b579fca76",
+      "width": 1280,
+      "height": 2482,
+      "scale": 1.0,
+      "samples": [
+        {
+          "id": "sample-panel-twin",
+          "case": "panel",
+          "status": "pass",
+          "foreground": "rgb(234, 242, 238)",
+          "minimumContrast": 8.9657,
+          "threshold": 4.5,
+          "compressionMargin": 0.2,
+          "worstBackgroundRGB": [
+            50,
+            68,
+            72
+          ],
+          "worstPixel": [
+            668,
+            357
+          ],
+          "nativeHover": false,
+          "nativeActive": false,
+          "pixelsSampled": 18936,
+          "uniqueBackgroundColors": 74
+        },
+        {
+          "id": "sample-muted-panel-twin",
+          "case": "muted-panel",
+          "status": "pass",
+          "foreground": "rgb(185, 206, 214)",
+          "minimumContrast": 7.2726,
+          "threshold": 4.5,
+          "compressionMargin": 0.2,
+          "worstBackgroundRGB": [
+            45,
+            57,
+            63
+          ],
+          "worstPixel": [
+            728,
+            480
+          ],
+          "nativeHover": false,
+          "nativeActive": false,
+          "pixelsSampled": 18936,
+          "uniqueBackgroundColors": 18
+        },
+        {
+          "id": "sample-default-twin",
+          "case": "default",
+          "status": "pass",
+          "foreground": "rgb(234, 242, 238)",
+          "minimumContrast": 8.1314,
+          "threshold": 4.5,
+          "compressionMargin": 0.2,
+          "worstBackgroundRGB": [
+            59,
+            73,
+            84
+          ],
+          "worstPixel": [
+            696,
+            593
+          ],
+          "nativeHover": false,
+          "nativeActive": false,
+          "pixelsSampled": 18936,
+          "uniqueBackgroundColors": 23
+        },
+        {
+          "id": "sample-hover-twin",
+          "case": "hover",
+          "status": "pass",
+          "foreground": "rgb(23, 25, 27)",
+          "minimumContrast": 9.4438,
+          "threshold": 4.5,
+          "compressionMargin": 0.2,
+          "worstBackgroundRGB": [
+            146,
+            198,
+            212
+          ],
+          "worstPixel": [
+            783,
+            711
+          ],
+          "nativeHover": false,
+          "nativeActive": false,
+          "pixelsSampled": 18936,
+          "uniqueBackgroundColors": 24
+        },
+        {
+          "id": "sample-pressed-twin",
+          "case": "pressed",
+          "status": "pass",
+          "foreground": "rgb(23, 25, 27)",
+          "minimumContrast": 9.4438,
+          "threshold": 4.5,
+          "compressionMargin": 0.2,
+          "worstBackgroundRGB": [
+            146,
+            198,
+            212
+          ],
+          "worstPixel": [
+            688,
+            817
+          ],
+          "nativeHover": false,
+          "nativeActive": false,
+          "pixelsSampled": 18936,
+          "uniqueBackgroundColors": 17
+        },
+        {
+          "id": "sample-selected-twin",
+          "case": "selected",
+          "status": "pass",
+          "foreground": "rgb(23, 25, 27)",
+          "minimumContrast": 9.4438,
+          "threshold": 4.5,
+          "compressionMargin": 0.2,
+          "worstBackgroundRGB": [
+            146,
+            198,
+            212
+          ],
+          "worstPixel": [
+            688,
+            924
+          ],
+          "nativeHover": false,
+          "nativeActive": false,
+          "pixelsSampled": 18936,
+          "uniqueBackgroundColors": 16
+        },
+        {
+          "id": "sample-selected-hover-twin",
+          "case": "selected-hover",
+          "status": "pass",
+          "foreground": "rgb(23, 25, 27)",
+          "minimumContrast": 9.4438,
+          "threshold": 4.5,
+          "compressionMargin": 0.2,
+          "worstBackgroundRGB": [
+            146,
+            198,
+            212
+          ],
+          "worstPixel": [
+            688,
+            1033
+          ],
+          "nativeHover": false,
+          "nativeActive": false,
+          "pixelsSampled": 18936,
+          "uniqueBackgroundColors": 16
+        },
+        {
+          "id": "sample-selected-pressed-twin",
+          "case": "selected-pressed",
+          "status": "pass",
+          "foreground": "rgb(23, 25, 27)",
+          "minimumContrast": 9.4438,
+          "threshold": 4.5,
+          "compressionMargin": 0.2,
+          "worstBackgroundRGB": [
+            146,
+            198,
+            212
+          ],
+          "worstPixel": [
+            704,
+            1144
+          ],
+          "nativeHover": false,
+          "nativeActive": false,
+          "pixelsSampled": 18936,
+          "uniqueBackgroundColors": 26
+        },
+        {
+          "id": "sample-primary-twin",
+          "case": "primary",
+          "status": "pass",
+          "foreground": "rgb(23, 25, 27)",
+          "minimumContrast": 9.4438,
+          "threshold": 4.5,
+          "compressionMargin": 0.2,
+          "worstBackgroundRGB": [
+            146,
+            198,
+            212
+          ],
+          "worstPixel": [
+            783,
+            1256
+          ],
+          "nativeHover": false,
+          "nativeActive": false,
+          "pixelsSampled": 18936,
+          "uniqueBackgroundColors": 35
+        },
+        {
+          "id": "sample-primary-hover-twin",
+          "case": "primary-hover",
+          "status": "pass",
+          "foreground": "rgb(23, 25, 27)",
+          "minimumContrast": 9.4438,
+          "threshold": 4.5,
+          "compressionMargin": 0.2,
+          "worstBackgroundRGB": [
+            146,
+            198,
+            212
+          ],
+          "worstPixel": [
+            704,
+            1360
+          ],
+          "nativeHover": false,
+          "nativeActive": false,
+          "pixelsSampled": 18936,
+          "uniqueBackgroundColors": 18
+        },
+        {
+          "id": "sample-danger-twin",
+          "case": "danger",
+          "status": "pass",
+          "foreground": "rgb(23, 25, 27)",
+          "minimumContrast": 8.1248,
+          "threshold": 4.5,
+          "compressionMargin": 0.2,
+          "worstBackgroundRGB": [
+            231,
+            158,
+            142
+          ],
+          "worstPixel": [
+            704,
+            1469
+          ],
+          "nativeHover": false,
+          "nativeActive": false,
+          "pixelsSampled": 18936,
+          "uniqueBackgroundColors": 17
+        },
+        {
+          "id": "sample-danger-hover-twin",
+          "case": "danger-hover",
+          "status": "pass",
+          "foreground": "rgb(23, 25, 27)",
+          "minimumContrast": 8.2154,
+          "threshold": 4.5,
+          "compressionMargin": 0.2,
+          "worstBackgroundRGB": [
+            232,
+            159,
+            143
+          ],
+          "worstPixel": [
+            783,
+            1583
+          ],
+          "nativeHover": false,
+          "nativeActive": false,
+          "pixelsSampled": 18936,
+          "uniqueBackgroundColors": 14
+        },
+        {
+          "id": "sample-danger-pressed-twin",
+          "case": "danger-pressed",
+          "status": "pass",
+          "foreground": "rgb(23, 25, 27)",
+          "minimumContrast": 8.3066,
+          "threshold": 4.5,
+          "compressionMargin": 0.2,
+          "worstBackgroundRGB": [
+            233,
+            160,
+            144
+          ],
+          "worstPixel": [
+            688,
+            1689
+          ],
+          "nativeHover": false,
+          "nativeActive": false,
+          "pixelsSampled": 18936,
+          "uniqueBackgroundColors": 13
+        },
+        {
+          "id": "sample-disabled-twin",
+          "case": "disabled",
+          "status": "pass",
+          "foreground": "rgb(185, 206, 214)",
+          "minimumContrast": 8.4097,
+          "threshold": 3,
+          "compressionMargin": 0.2,
+          "worstBackgroundRGB": [
+            35,
+            47,
+            53
+          ],
+          "worstPixel": [
+            666,
+            1774
+          ],
+          "nativeHover": false,
+          "nativeActive": false,
+          "pixelsSampled": 18936,
+          "uniqueBackgroundColors": 1
+        },
+        {
+          "id": "sample-primary-disabled-twin",
+          "case": "primary-disabled",
+          "status": "pass",
+          "foreground": "rgb(185, 206, 214)",
+          "minimumContrast": 8.4097,
+          "threshold": 3,
+          "compressionMargin": 0.2,
+          "worstBackgroundRGB": [
+            35,
+            47,
+            53
+          ],
+          "worstPixel": [
+            666,
+            1883
+          ],
+          "nativeHover": false,
+          "nativeActive": false,
+          "pixelsSampled": 18936,
+          "uniqueBackgroundColors": 1
+        },
+        {
+          "id": "sample-selected-disabled-twin",
+          "case": "selected-disabled",
+          "status": "pass",
+          "foreground": "rgb(185, 206, 214)",
+          "minimumContrast": 8.4097,
+          "threshold": 3,
+          "compressionMargin": 0.2,
+          "worstBackgroundRGB": [
+            35,
+            47,
+            53
+          ],
+          "worstPixel": [
+            666,
+            1992
+          ],
+          "nativeHover": false,
+          "nativeActive": false,
+          "pixelsSampled": 18936,
+          "uniqueBackgroundColors": 1
+        },
+        {
+          "id": "sample-focus-twin",
+          "case": "focus",
+          "status": "pass",
+          "foreground": "rgb(234, 242, 238)",
+          "minimumContrast": 8.2598,
+          "threshold": 4.5,
+          "compressionMargin": 0.2,
+          "worstBackgroundRGB": [
+            58,
+            72,
+            83
+          ],
+          "worstPixel": [
+            696,
+            2119
+          ],
+          "nativeHover": false,
+          "nativeActive": false,
+          "pixelsSampled": 18936,
+          "uniqueBackgroundColors": 13
+        },
+        {
+          "id": "sample-loading-twin",
+          "case": "loading",
+          "status": "pass",
+          "foreground": "rgb(234, 242, 238)",
+          "minimumContrast": 8.2598,
+          "threshold": 4.5,
+          "compressionMargin": 0.2,
+          "worstBackgroundRGB": [
+            58,
+            72,
+            83
+          ],
+          "worstPixel": [
+            728,
+            2224
+          ],
+          "nativeHover": false,
+          "nativeActive": false,
+          "pixelsSampled": 18936,
+          "uniqueBackgroundColors": 11
+        },
+        {
+          "id": "sample-input-twin",
+          "case": "input",
+          "status": "pass",
+          "foreground": "rgb(234, 242, 238)",
+          "minimumContrast": 13.4031,
+          "threshold": 4.5,
+          "compressionMargin": 0.2,
+          "worstBackgroundRGB": [
+            33,
+            38,
+            42
+          ],
+          "worstPixel": [
+            839,
+            2352
+          ],
+          "nativeHover": false,
+          "nativeActive": false,
+          "pixelsSampled": 18936,
+          "uniqueBackgroundColors": 35
+        }
+      ],
+      "measurementSHA256": "81f5ca171abf68bef12120f1cd325086dabd614ae53ba3e3de7ccf9f1dff9523"
+    }
+  ],
+  "errors": []
+}

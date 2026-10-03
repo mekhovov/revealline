@@ -867,6 +867,14 @@ export function mountWorldApp({
   const txt = (en, uk) => (locale === 'uk' ? uk : en);
   const localized = (value) =>
     typeof value === 'string' ? value : (value?.[locale] ?? value?.en ?? '');
+  // Creator labels may use the current theme name; exact authored/recorded
+  // profile documents keep their historical title and proof identity.
+  const creatorThemeLabel = (profile) => {
+    const workshop = THEME_PROFILES.find((entry) => entry.id === 'industrial-workshop');
+    return profile?.id === workshop.id && dataIdentity(profile) === dataIdentity(workshop)
+      ? txt('Flight Deck', 'Польотна палуба')
+      : localized(profile?.title);
+  };
   const label = (entry) => entry.course.locales[locale].title;
   const demonstrationCache = new WeakMap();
   function demonstrationFor(entry, mode) {
@@ -1179,7 +1187,7 @@ export function mountWorldApp({
       status.setAttribute('role', 'status');
       $('world-editor-canvas').after(status);
     }
-    status.textContent = `${txt('Preview appearance', 'Оформлення перегляду')}: ${localized(profile.title)}.`;
+    status.textContent = `${txt('Preview appearance', 'Оформлення перегляду')}: ${creatorThemeLabel(profile)}.`;
     $('creator-theme').title = txt(
       'Used when World appearance is set to Authored appearance in Settings.',
       'Використовується, коли в налаштуваннях оформлення світу вибрано «Авторське оформлення».',
@@ -1856,7 +1864,7 @@ export function mountWorldApp({
     if ($('creator-theme'))
       for (const option of $('creator-theme').options)
         option.textContent =
-          localized(THEME_PROFILES.find((t) => t.id === option.value)?.title) || option.value;
+          creatorThemeLabel(THEME_PROFILES.find((t) => t.id === option.value)) || option.value;
     $('theme-tabs').replaceChildren();
     for (const item of [
       { id: 'all', title: { en: 'All worlds', uk: 'Усі світи' } },
