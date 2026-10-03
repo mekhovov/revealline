@@ -1,10 +1,10 @@
 {
   "format": "FPVCourtyardFacadeCPU.v1",
-  "createdAt": "2026-10-03T19:32:30.320Z",
-  "baseline": "30574b85092e3ddaa973527608a658dfc8adcd5b",
-  "candidate": "0d333697ecceefe7b29aeabbafc7593f933ced58",
+  "createdAt": "2026-10-03T19:55:13.757Z",
+  "baseline": "e40809f25ea8fe248dea6f8443876d811d21a777",
+  "candidate": "0f60f3b5f6ff251fba3b91e45c54a3837bd8cce4",
   "visualSha256": "ccd21097afc0ba1b6a630e0c35c1b881fd0c36ef5f4d98f21f6b6e081aefa71a",
-  "qualifierSha256": "0cbe474fbd020a5b18adc318f4a712d2cc363a5486ebc878c5129e1331fad7d3",
+  "qualifierSha256": "9dd2a79a4c80eacc7eff35f13578c784e3514070d291a2c5ebb5c902f7a88ed3",
   "immutable": {
     "optional-practice/civilian-fpv/app.mjs": "ae158a1837bbbf14b3276da6b4abfcef5393ddfa0c828a5d89e30cd87263e0de",
     "optional-practice/civilian-fpv/attempts.mjs": "5353e993c615dbb7091ab5d50497db82e71d3970f1587e6bb1398cc565be2494",
@@ -44,7 +44,7 @@
     "optional-practice/civilian-fpv/vendor/three.module.js": "9052042d676cb0fdc1ddfefe193053f34b7ac0513a616fdac4535d49987812ea",
     "optional-practice/civilian-fpv/world-actor-editor.mjs": "9ca630e6c850d85fd69959ee940195ddaa77daf9da2e31b397e1a6edc1e54350",
     "optional-practice/civilian-fpv/world-app.mjs": "053dbfb4a3e0f2fbf8dfe3685a865368e314d845f8dc451fe9e59a275f52ae49",
-    "optional-practice/civilian-fpv/world-assets.mjs": "6182548973e98a441c16a64648f9c25435fea649b63fe14d9f6cb4c093e609d4",
+    "optional-practice/civilian-fpv/world-assets.mjs": "1f2ff71886eb61b9a87dbcefd7ce41b01f632e599785e5cb1ac22aa28d0b5f79",
     "optional-practice/civilian-fpv/world-audio.mjs": "104011e3e43091577ef2c740aaead7727fc45234fc2cbb2ce61fa3441dc63f8b",
     "optional-practice/civilian-fpv/world-catalogue.mjs": "14f8523c829e9bdfdf8db5efb59169075be6045425222c615b846817694d24cc",
     "optional-practice/civilian-fpv/world-collision.mjs": "2899c7c84f9eae14b9a3434f585a8e873f4a1361e8f3ce4026ef27f44bdeef32",

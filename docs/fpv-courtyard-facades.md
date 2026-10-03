@@ -37,8 +37,9 @@ not GPU/frame-time measurements or a finished-world claim.
 
 ## Source qualification
 
-The manual qualifier uses published source-budget repair head
-`30574b85092e3ddaa973527608a658dfc8adcd5b` as baseline. It passes 950 checks across
+The final manual qualifier uses current main
+`e40809f25ea8fe248dea6f8443876d811d21a777` as baseline, including the source-budget
+repair and Woodland composition. It passes 950 checks across
 171 scene cases: all 11 associated catalogue courses, three bounds, three
 presets, authored/Pixel/all 17 shared collections, exact existing geometry, UVs,
 transforms and material pixels, outward wall coplanarity, canonical ID/dimension
@@ -51,7 +52,9 @@ inputs remain exact except the edited visual module.
 Corrected runtime SHA-256:
 `ccd21097afc0ba1b6a630e0c35c1b881fd0c36ef5f4d98f21f6b6e081aefa71a`.
 CPU evidence binds this hash and its qualifier hash; the recorded Git head is the
-checkout head before evidence capture. Full `npm run validate`, scoped lint/format and the existing 30 workshop, texture
+checkout head before evidence capture. The final manual receipt refresh retains
+the same runtime hash and all previous counts, while rebinding the baseline asset
+module to the reviewed incoming Woodland composition. Full `npm run validate`, scoped lint/format and the existing 30 workshop, texture
 and acceptance-workflow checks pass under Node 22.22.2. No new unit coverage is
 added before D6.
 

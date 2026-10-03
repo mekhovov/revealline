@@ -23,7 +23,7 @@ import {
   worldStateIdentity,
 } from '../optional-practice/civilian-fpv/world-model.mjs';
 
-const baseline = '30574b85092e3ddaa973527608a658dfc8adcd5b',
+const baseline = 'e40809f25ea8fe248dea6f8443876d811d21a777',
   root = new URL('../', import.meta.url),
   args = process.argv.slice(2),
   checks = [],
