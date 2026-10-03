@@ -227,3 +227,30 @@ reconstructs the exact original JSON; verify the uncompressed SHA-256 below.
 Archives are under `docs/evidence/fpv-environment-light-*-browser.json.gz`; the
 v4/v5 and final normal harnesses are preserved separately. Larger raw receipts and
 immutable local fixtures are not default Pages assets.
+
+## Imported raster follow-up and final cosmetic guard admission
+
+The one-case v6 follow-up, still at exact `acc9`, passes all 19 checks. Both
+retained 640×360 images are bit-exact (zero changed pixels) and equal the prior
+v4 imported hash. GL errors remain zero; resource reports match. All 601 semantic
+nodes have equal geometry, materials, decoded textures, transforms and visibility
+when compared without scene-child positions. The first 589 nodes already match
+in place; the tail differs because the recreated Hunt group appends after the
+lights. Captured draw order changes at 85 positions as material/object allocation
+IDs change, yet this run remains pixel-exact. This does **not** establish a cause
+or magnitude for the isolated v5 mismatch, whose original receipt has only image
+hashes. The v5 observation stays recorded and is not silently converted to a pass.
+
+The full v6 receipt, including lossless retained PNGs, is archived as
+`docs/evidence/fpv-environment-light-recovery-v6-diagnostic.json.gz`: 709,027 gzip bytes, SHA-256
+`9df39fb59bd7a8cd95805956ee572a55a191c1db917fdb9e77bdd532cec439bb`. Decompression yields 5,573,976 bytes, SHA-256
+`7f4904690e568fc4ba9f5ebf3f1632a4fc327be201906c4ea33d1c705d379421`. The bounded analysis is
+`docs/evidence/fpv-environment-light-v6-analysis-summary.json`.
+
+Exact source `4f364314378400b22792074d7d0bb6aa292eb044` with the one-byte
+`e76c07374` cosmetic null guard passes all three fresh package admissions,
+95 committed inputs, ZIP verification and two identical builds. Original inputs
+are 16,749,525 bytes (27,691 bytes under 16 MiB
+on its recorded parent). Full validate, 48 manual checks and 30 existing checks
+pass. The entire admitted 102-file player is frozen for a real host UI
+loss/restore/Retry observation; acceptance of that run remains pending.
