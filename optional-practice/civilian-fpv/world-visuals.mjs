@@ -243,6 +243,17 @@ function surfacePixels(kind, color, seed, size, pixel) {
         relief = joint ? -0.045 : mottling * 0.009 + traction * 0.003;
         roughness = joint ? 0.98 : 0.88 + grain * 0.06 - runoff * 0.08;
       }
+      if (kind === 'stadium-concrete') {
+        // Six by two metres: three precast facade panels, not floor slabs
+        // stretched up a stand. Quiet runoff and aggregate retain a solid face.
+        const across = (u * 3) % 1,
+          edge = Math.min(across, 1 - across, v, 1 - v),
+          joint = edge < 0.012,
+          runoff = Math.max(0, fine(u, 0.35) - 0.5) * (1 - v) * 0.1;
+        shade = joint ? 0.73 : 0.96 + patch * 0.5 + mottling * 0.025 - runoff;
+        relief = joint ? -0.04 : mottling * 0.009 + grain * 0.004;
+        roughness = joint ? 0.97 : 0.84 + grain * 0.07;
+      }
       if (kind === 'painted-steel') {
         const column = Math.floor(u * 3),
           row = Math.floor(v * 3),
@@ -1094,6 +1105,8 @@ export function buildWorldVisuals({
       bark: 0x78614d,
       concrete: 0x929790,
       'garage-concrete': 0x9a9d93,
+      'stadium-concrete': new THREE.Color(0x929790).lerp(new THREE.Color(theme.wall), 0.2),
+      'stadium-steel': theme.wall,
       plaster: theme.wall,
       brick: environment === 'courtyard' ? 0xb99e83 : theme.wall,
       metal: theme.wall,
@@ -1109,10 +1122,12 @@ export function buildWorldVisuals({
           ? 'timber'
           : kind === 'foliage'
             ? 'grass'
-            : ['concrete', 'garage-concrete', 'stone', 'plaster'].includes(kind)
+            : ['concrete', 'garage-concrete', 'stadium-concrete', 'stone', 'plaster'].includes(kind)
               ? 'concrete'
               : 'steel';
-      const maps = kit ? { map: kit.texture(role) } : surfaceMaps(kind, colors[kind], { pixel });
+      const maps = kit
+        ? { map: kit.texture(role) }
+        : surfaceMaps(kind === 'stadium-steel' ? 'painted-steel' : kind, colors[kind], { pixel });
       // A shared owner stays under world even when callers make no obstacle
       // mesh, and never shares texture lifetime with independently removed actors.
       world.userData.ownedMaterials.push(material(0xffffff, maps));
@@ -1616,8 +1631,18 @@ export function buildWorldVisuals({
     // Themes steel kit owns its finish; authored worlds reuse neutral hardware.
     obstacleFittingsMaterial: () => (kit ? kit.paint('steel') : hardware),
     garageDetailMaterial,
+    stadiumDetailMaterial(role) {
+      if (!kit) return null;
+      const paint = kit.paint(role);
+      world.userData.ownedMaterials.push(paint);
+      return paint;
+    },
     obstacleSurfaceKind(obstacle) {
       const id = obstacle.id ?? '';
+      if (environment === 'stadium' && !obstacle.type && obstacle.min && obstacle.max) {
+        if (id === 'stand-west' || id === 'stand-east') return 'stadium-concrete';
+        if (id === 'scoreboard') return 'stadium-steel';
+      }
       if (
         environment === 'garage' &&
         ((id === 'garage-ramp' && obstacle.type === 'trimesh') ||
@@ -1847,6 +1872,138 @@ export function buildGarageSurfaceGeometry(obstacle) {
       uv[index * 2 + 1] = (ny >= nx && ny >= nz ? z : y) / 6;
     }
     geometry.setAttribute('uv', new THREE.BufferAttribute(uv, 2));
+    return { role, layer, geometry };
+  });
+}
+
+/** Painted facility detail, coplanar with the three canonical Stadium solids.
+ * Role batches retain the solid contact faces and add no silhouette or opening. */
+export function buildStadiumStructureGeometry(id, [width, height, depth]) {
+  if (!['stand-west', 'stand-east', 'scoreboard'].includes(id)) return [];
+  if (![width, height, depth].every((value) => Number.isFinite(value) && value > 0)) return [];
+  const batches = new Map();
+  function panel(role, layer, side, along, elevation, span, tall) {
+    const key = `${role}:${layer}`;
+    if (!batches.has(key)) batches.set(key, { role, layer, positions: [], normals: [], uvs: [] });
+    const row = batches.get(key),
+      half = (side < 2 ? depth : width) / 2,
+      normal = [
+        [0, 0, 1],
+        [0, 0, -1],
+        [1, 0, 0],
+        [-1, 0, 0],
+      ][side];
+    for (const [u, v] of [
+      [-1, -1],
+      [1, -1],
+      [1, 1],
+      [-1, -1],
+      [1, 1],
+      [-1, 1],
+    ]) {
+      const a = along + (u * span) / 2,
+        y = elevation + (v * tall) / 2;
+      row.positions.push(
+        ...(side === 0
+          ? [a, y, half]
+          : side === 1
+            ? [-a, y, -half]
+            : side === 2
+              ? [half, y, -a]
+              : [-half, y, a]),
+      );
+      row.normals.push(...normal);
+      row.uvs.push(a / 6, y / 3);
+    }
+  }
+  const glyphs = {
+    1: '010110010010111',
+    2: '110001010100111',
+    3: '110001010001110',
+    4: '101101111001001',
+    5: '111100110001110',
+    6: '011100110101010',
+    7: '111001010010010',
+    8: '010101010101010',
+    F: '111100110100100',
+    P: '110101110100100',
+    V: '101101101101010',
+  };
+  function glyph(letter, side, x, y, unit) {
+    for (let row = 0; row < 5; row++)
+      for (let column = 0; column < 3; column++)
+        if (glyphs[letter][row * 3 + column] === '1')
+          panel(
+            'enamel',
+            2,
+            side,
+            x + (column - 1) * unit,
+            y + (2 - row) * unit,
+            unit * 0.86,
+            unit * 0.86,
+          );
+  }
+  if (id !== 'scoreboard') {
+    const bays = Math.max(1, Math.min(8, Math.floor(depth / 6))),
+      pitch = depth / bays,
+      pier = Math.min(0.18, pitch * 0.04),
+      numeral = Math.min(0.12, pitch / 16, height / 30);
+    for (const side of [2, 3]) {
+      panel('steel', 1, side, 0, -height * 0.44, depth, height * 0.075);
+      panel('steel', 1, side, 0, height * 0.455, depth, height * 0.045);
+      for (let i = 1; i < bays; i++)
+        panel('steel', 1, side, -depth / 2 + i * pitch, 0, pier, height * 0.86);
+      for (let i = 0; i < bays; i++) {
+        const along = -depth / 2 + (i + 0.5) * pitch;
+        // Shallow tier bands and small section plates read as a closed stand
+        // facade. No painted black doorway suggests a nonexistent flight gap.
+        for (const y of [0.16, 0.3])
+          panel('enamel', 2, side, along, height * y, pitch - pier * 2, height * 0.014);
+        panel('steel', 1, side, along, -height * 0.2, numeral * 7, numeral * 7);
+        glyph(i + 1, side, along, -height * 0.2, numeral);
+      }
+    }
+    for (const side of [0, 1]) {
+      panel('steel', 1, side, 0, -height * 0.44, width, height * 0.075);
+      panel('steel', 1, side, 0, height * 0.455, width, height * 0.045);
+      for (const y of [0.16, 0.3])
+        panel('enamel', 2, side, 0, height * y, width * 0.88, height * 0.014);
+    }
+  } else {
+    const screenWidth = width * 0.86,
+      screenHeight = height * 0.52,
+      screenY = height * 0.16,
+      rim = Math.min(width * 0.014, height * 0.022);
+    panel('rubber', 1, 0, 0, screenY, screenWidth, screenHeight);
+    for (const side of [-1, 1]) {
+      panel(
+        'steel',
+        1,
+        0,
+        side * (screenWidth / 2 + rim / 2),
+        screenY,
+        rim,
+        screenHeight + rim * 2,
+      );
+      panel('steel', 1, 0, 0, screenY + side * (screenHeight / 2 + rim / 2), screenWidth, rim);
+    }
+    // Static FPV sign and idle --:-- display; this is never a race clock,
+    // live score, objective or input to the simulation.
+    const unit = Math.min(width / 42, height / 35);
+    for (const [i, letter] of ['F', 'P', 'V'].entries())
+      glyph(letter, 0, (i - 1) * unit * 4.5, height * 0.285, unit);
+    for (const x of [-0.28, -0.13, 0.13, 0.28])
+      panel('enamel', 2, 0, width * x, height * 0.065, width * 0.095, height * 0.025);
+    for (const y of [0.025, 0.105]) panel('enamel', 2, 0, 0, height * y, unit * 0.8, unit * 0.8);
+    panel('steel', 1, 0, 0, -height * 0.33, width * 0.88, height * 0.028);
+    for (let slot = 0; slot < 7; slot++)
+      panel('rubber', 1, 1, 0, height * (0.1 + slot * 0.035), width * 0.66, height * 0.01);
+  }
+  return [...batches.values()].map(({ role, layer, positions, normals, uvs }) => {
+    const geometry = new THREE.BufferGeometry();
+    geometry.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3));
+    geometry.setAttribute('normal', new THREE.Float32BufferAttribute(normals, 3));
+    geometry.setAttribute('uv', new THREE.Float32BufferAttribute(uvs, 2));
     return { role, layer, geometry };
   });
 }

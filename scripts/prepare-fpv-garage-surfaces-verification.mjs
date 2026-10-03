@@ -7,7 +7,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { parse } from 'acorn';
 const ROOT = fileURLToPath(new URL('../', import.meta.url));
-const BASELINE = '822188e9bebdcf3d46119b48bfd0558e708eb051';
+const BASELINE = '53907d8dbe489890eb0e346de40762284eedac9a';
 const ENTRY = 'optional-practice/civilian-fpv/';
 const MAX_FILE = 6 * 1024 * 1024,
   MAX_TOTAL = 40 * 1024 * 1024,
@@ -116,7 +116,8 @@ async function main() {
   const manifest = {
     format: 'FPVGarageSurfacesFixture.v1',
     baseline: BASELINE,
-    integratedMain: 'ce6af3e65fba251d82f41d0178f8f631a7fc969e',
+    integratedMain: BASELINE,
+    originalBaseline: '822188e9bebdcf3d46119b48bfd0558e708eb051',
     candidate: candidate || '.',
     files: hashes,
     harnessSha256: sha(html),

@@ -1,11 +1,12 @@
 {
   "format": "FPVGarageSurfacesFunctionalEvidence.v1",
-  "date": "2026-10-03T16:50:19.586Z",
-  "baseline": "822188e9bebdcf3d46119b48bfd0558e708eb051",
-  "integratedMain": "ce6af3e65fba251d82f41d0178f8f631a7fc969e",
+  "date": "2026-10-03T17:21:37.757Z",
+  "baseline": "53907d8dbe489890eb0e346de40762284eedac9a",
+  "integratedMain": "53907d8dbe489890eb0e346de40762284eedac9a",
+  "originalBaseline": "822188e9bebdcf3d46119b48bfd0558e708eb051",
   "sourceSha256": {
-    "renderer.mjs": "c069d348d39adafe20bd3c32af9aa0055f39b619c161b5eb713ce12bfcf8b8c0",
-    "world-visuals.mjs": "6372959c0a874f3ec37d4ac9a92ec90c451e8f13a0196737e0adbf27316caf58"
+    "renderer.mjs": "0fa5a05706705fd6128d13b18a4714c7a8010bdfc2adc6ed96d7b43906647a75",
+    "world-visuals.mjs": "6d5b1b294b6b89afdfd08c22127cb3e5d54ac0fbd7e2ba8a023168f3fb842367"
   },
   "scope": "Manual source-bound canonical geometry, collision support and actual bundled demonstration replay; no browser, package, physical-device performance or human art acceptance claim.",
   "passed": true,

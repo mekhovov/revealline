@@ -20,7 +20,7 @@ import {
 import { createWorldCollision } from '../optional-practice/civilian-fpv/world-collision.mjs';
 
 const ROOT = fileURLToPath(new URL('../', import.meta.url)),
-  baseline = '822188e9bebdcf3d46119b48bfd0558e708eb051',
+  baseline = '53907d8dbe489890eb0e346de40762284eedac9a',
   args = process.argv.slice(2);
 if (args.length && (args.length !== 2 || args[0] !== '--out'))
   throw Error('Usage: node scripts/qualify-fpv-garage-surfaces.mjs [--out NEW_RECEIPT.json]');
@@ -406,7 +406,8 @@ const receipt = {
   format: 'FPVGarageSurfacesFunctionalEvidence.v1',
   date: new Date().toISOString(),
   baseline,
-  integratedMain: 'ce6af3e65fba251d82f41d0178f8f631a7fc969e',
+  integratedMain: baseline,
+  originalBaseline: '822188e9bebdcf3d46119b48bfd0558e708eb051',
   sourceSha256,
   scope:
     'Manual source-bound canonical geometry, collision support and actual bundled demonstration replay; no browser, package, physical-device performance or human art acceptance claim.',

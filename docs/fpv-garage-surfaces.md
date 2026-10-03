@@ -1,9 +1,11 @@
 # Garage ramp, deck and column surfaces
 
 This bounded art increment adds readable finishes to the existing Garage ramp,
-upper deck and six columns. It starts from `822188e9bebdcf3d46119b48bfd0558e708eb051`
-and integrates main `ce6af3e65`'s field-recipe fix while retaining that baseline's
-Woodland foliage work. It is independent of the parallel Stadium art increment.
+upper deck and six columns. Its original baseline was
+`822188e9bebdcf3d46119b48bfd0558e708eb051`. Final qualification compares with main
+`53907d8dbe489890eb0e346de40762284eedac9a`, including the merged Stadium and Field
+recipe work. The original baseline's Woodland foliage finish is retained; its
+removal during the intervening Field merge is not propagated into this candidate.
 
 ## Visible change
 
@@ -75,8 +77,9 @@ node scripts/game-cli.mjs serve --port 8836
 ```
 
 Open `http://127.0.0.1:8836/dist/fpv-garage-surfaces-verification-source/`.
-The fixture compares the pinned baseline with the current candidate using the
-actual renderer. Its browser receipt is `window.fpvGarageSurfacesReceipt`.
+The fixture compares the pinned main baseline with the current candidate using
+the actual renderer, and records the original baseline separately. Its browser
+receipt is `window.fpvGarageSurfacesReceipt`.
 The output directory is immutable: use a fresh descriptive suffix for each
 candidate. `--verify-only` preflights the selected candidate and baseline import
 closures without writing a fixture; it does not recheck an existing output.
@@ -99,6 +102,9 @@ Snake courses, and imported/procedural scenery. Confirm the markings remain on
 the real solids, do not block the flight line, and survive course replacement
 without disposed or growing texture/material ownership. Retained courses,
 support witnesses, collision identities, bounds and fog must match the baseline.
+Each unrelated non-Garage control world uses fresh renderers and retains exact
+zero-pixel comparisons across its Low/Balanced/High sequence. Separate continuous
+multi-course cycles verify resource stability; every renderer owner is disposed.
 
 For a later committed package candidate, build and admit the exact committed
 inputs before generating a second fixture:
@@ -133,3 +139,14 @@ publication remain pending for the integration owner. Physical-device
 performance, novice-player sessions, broader art acceptance and deferred
 regression/unit coverage also remain open. No package or public player is
 qualified by this source-only handoff.
+
+An earlier run of the original, unmodified fixture against candidate `6b00a2e6d`
+reported six differing pixels out of 518,400 in Courtyard Balanced after hundreds
+of prior loads. The candidate buffer matched both sides of a subsequent
+48-frame diagnostic, including a baseline-against-baseline control; all generated
+scene, UV, material, texture and ray hashes matched. A second run of that original
+full fixture passed all 528 checks and 249 image pairs without changing its
+assertions. The first result remains an unresolved transient, history-sensitive
+rendering observation, not a proven shader warmup defect. The fresh-owner control
+scope above keeps zero tolerance and does not claim to resolve every long-session
+rendering variation.
