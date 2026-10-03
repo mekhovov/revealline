@@ -207,6 +207,49 @@ export async function openWorldStore({
     if (!revision) throw fail('This exact revision is not installed.');
     return install({ ...revision, expectedGeneration });
   }
+  async function removalSnapshot(id) {
+    // Read the deletion boundary and its generation together. A later mutation
+    // must invalidate the review instead of silently deleting newly added data.
+    const tx = db.transaction(['projects', 'revisions', 'meta'], 'readonly'),
+      done = transactionDone(tx),
+      activeRequest = request(tx.objectStore('projects').get(id)),
+      generationRequest = request(tx.objectStore('meta').get('generation'));
+    const metadata = (row) => ({
+      sha256: row.sha256,
+      courseIds: (row.project?.courses ?? []).map((course) => course.id),
+    });
+    let retainedTitle;
+    const revisionsRequest = new Promise((resolve, reject) => {
+      const rows = new Map(),
+        cursor = tx.objectStore('revisions').index('project').openCursor(id);
+      cursor.onerror = () => reject(cursor.error);
+      cursor.onsuccess = () => {
+        if (!cursor.result) return resolve(rows);
+        const row = cursor.result.value;
+        retainedTitle ??= row.project?.title;
+        rows.set(row.sha256, metadata(row));
+        cursor.result.continue();
+      };
+    });
+    const [active, currentGeneration, revisions] = await Promise.all([
+      activeRequest,
+      generationRequest,
+      revisionsRequest,
+      done,
+    ]);
+    // Legacy installations may have an active pointer without a retained row.
+    if (active) revisions.set(active.sha256, metadata(active));
+    if (!active && !revisions.size) return null;
+    return {
+      id,
+      title: active?.project?.title ?? retainedTitle ?? id,
+      generation: currentGeneration ?? 0,
+      revisions: [...revisions.values()].map((revision) => ({
+        ...revision,
+        active: revision.sha256 === active?.sha256,
+      })),
+    };
+  }
   function remove(id, { expectedGeneration } = {}) {
     return new Promise((resolve, reject) => {
       const tx = db.transaction(['projects', 'assets', 'meta', 'revisions'], 'readwrite'),
@@ -248,6 +291,15 @@ export async function openWorldStore({
       };
     });
   }
-  return { generation, install, get, list, activate, remove, close: () => db.close() };
+  return {
+    generation,
+    install,
+    get,
+    list,
+    activate,
+    removalSnapshot,
+    remove,
+    close: () => db.close(),
+  };
 }
 export const createWorldStore = openWorldStore;
