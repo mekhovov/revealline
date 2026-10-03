@@ -21,7 +21,7 @@
   fallback['errors:loadingFlightSystems'] = 'Loading flight systems…';
   const t = (key) => host.RevealLineI18n?.t(key) || fallback[key];
   const doc = host.document;
-  if (!doc || host.RevealLineBoot) return;
+  if (!doc || host.RevealLineBoot || host.RevealLineSnakeRedirect) return;
   const appURL = new URL('./app.mjs', doc.currentScript.src).href;
   let state = 'loading';
   let failure = null;

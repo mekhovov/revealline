@@ -354,7 +354,9 @@ export function createCouchShell({
     (kind === 'solo' && token && `../?mode-return-v2=${token}`) ||
     (kind === 'solo' && routeId === 'legacy' && '../?journey=legacy') ||
     (kind === 'solo' && authoredJourneyModeHref(routeId, 'solo')) ||
-    (kind === 'team' && teamRouteId && `relay-rescue.html?journey=${teamRouteId}&return=versus`) ||
+    (kind === 'team' &&
+      teamRouteId &&
+      `relay-rescue.html?journey=${teamRouteId}&return=versus${teamRouteId === 'snake-hunt-v1' ? '&snake-style=capture' : ''}`) ||
     secondaryDestinations[kind] ||
     (isJourney && authoredDestinations?.[kind]) ||
     authoredDestinations?.[kind] ||

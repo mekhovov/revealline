@@ -1,28 +1,21 @@
 import { getLocale, setLocale, onLocaleChange } from '../i18n/index.mjs';
-import {
-  SNAKE_HUNT_CHAPTERS,
-  SNAKE_HUNT_STAGES,
-} from '../content-design/snake-hunt-candidates.mjs';
-import {
-  SNAKE_HUNT_PLAYLISTS,
-  SNAKE_HUNT_COURSES,
-} from '../../optional-practice/civilian-fpv/snake-hunt-catalogue.mjs';
+import { CLASSIC_SNAKE_CHAPTERS, CLASSIC_SNAKE_LEVELS } from './classic-catalogue.mjs';
 import { createEncounterVariantPreferences } from '../hunt/preferences.mjs';
 import { snakeText } from './copy.mjs';
 
 const copy = {
   en: {
-    eyebrow: 'A new way to hunt',
+    eyebrow: 'Classic Snake · RevealLine characters',
     title: 'Catch. Grow.\nLeave room to turn.',
     intro:
-      'A growing tail turns every catch into a route-planning decision. Hunt familiar humanoids through open circuits, wide mazes and guard patrols.',
+      'A real grid, a visible snake and one humanoid to catch at a time. Keep moving, grow with every catch, and avoid walls and your own body.',
     picker:
-      'Choose a mode, then pick any chapter or mission in its Journey library. Your existing Journey progress stays separate.',
+      'Choose Solo, matched-board Versus or shared-board Team. Pick a campaign and level, then press Start. Classic Snake has its own records and saved rounds.',
     diagram: 'Leave an exit for the tail that follows you.',
-    rules: ['Every catch changes your route', 'The whole board is a puzzle', 'Choose your effects'],
+    rules: ['One catch. One more segment.', 'Keep moving. Leave an exit.', 'Choose your effects'],
     ruleBodies: [
-      snakeText('hint', {}, 'en'),
-      snakeText('goal', {}, 'en'),
+      'Your four-segment snake moves automatically, one cell at a time. Arrow keys, WASD or the direction pad steer it.',
+      'Catch the humanoid to grow. A wall or body collision ends the round. Later chapters add mazes, fleeing targets and wrapping edges.',
       'Clean catches work by default. Enable Brutal enemy destruction and optional blood in game Settings whenever you want the stronger effects.',
     ],
     campaigns: 'Eight chapters. Forty-eight routes.',
@@ -40,25 +33,28 @@ const copy = {
     simPlay: 'Open six-course playlist',
     simNote:
       'Prepare a course, then Arm when ready. The simulator has separate progress and flight controls.',
+    simLoading: 'Loading the optional flight-course catalogue… Classic Snake is ready above.',
+    simUnavailable:
+      'The optional simulator catalogue could not load. Classic Snake is ready above. Reconnect and reload this page to see the flight courses.',
     footer:
-      'Clear every target to finish. Chain and ordered-catch bonuses are optional in 2D. Shared Team targets count once; Versus uses matched boards. Blood and reduced effects never change the objective.',
-    studio: 'Open Studio to create your own variants',
+      'Classic Snake uses contact catches only. Team shares the catch goal; Versus races on matched boards. The earlier territory-capture version remains available as a Capture remix from the play page. Sim remains a separate 3D flight variation.',
+    studio: 'Open Studio for capture-remix authoring',
     language: 'Language',
     modeLabel: 'Play mode',
     rulesLabel: 'How to play',
   },
   uk: {
-    eyebrow: 'Новий спосіб полювання',
+    eyebrow: 'Класична Змійка · персонажі RevealLine',
     title: 'Лови. Рости.\nЗалиш місце для повороту.',
     intro:
-      'Зростаючий хвіст перетворює кожну спійману ціль на рішення про маршрут. Полюйте на знайомих гуманоїдів на відкритих колах, у просторих лабіринтах і серед патрулів.',
+      'Справжня сітка, помітна змійка й одна ціль-гуманоїд за раз. Рухайтеся, ростіть після кожного дотику та уникайте стін і власного тіла.',
     picker:
-      'Оберіть режим, потім розділ або місію в його бібліотеці Подорожі. Прогрес попередніх Подорожей зберігається окремо.',
+      'Оберіть Соло, Поєдинок на однакових полях або Команду на спільному полі. Виберіть кампанію й рівень та починайте. У класичної Змійки окремі рекорди й збереження.',
     diagram: 'Залишайте вихід хвосту, що рухається за вами.',
-    rules: ['Кожна ціль змінює маршрут', 'Усе поле — головоломка', 'Обирайте ефекти'],
+    rules: ['Одна ціль — ще один сегмент', 'Рухайтесь і залишайте вихід', 'Обирайте ефекти'],
     ruleBodies: [
-      snakeText('hint', {}, 'uk'),
-      snakeText('goal', {}, 'uk'),
+      'Змійка з чотирьох сегментів рухається автоматично, клітинка за клітинкою. Керуйте стрілками, WASD або панеллю напрямків.',
+      'Ловіть гуманоїда, щоб рости. Стіна чи власне тіло завершують раунд. Далі з’являються лабіринти, втікачі та переходи через край.',
       'За замовчуванням дотики без крові. Для сильніших ефектів увімкніть жорстоке знищення ворогів і кров у налаштуваннях гри.',
     ],
     campaigns: 'Вісім розділів. Сорок вісім маршрутів.',
@@ -76,9 +72,12 @@ const copy = {
     simPlay: 'Відкрити серію з шести трас',
     simNote:
       'Підготуйте трасу та ввімкніть мотори, коли будете готові. У симулятора окремий прогрес і керування.',
+    simLoading: 'Завантажуємо необов’язковий каталог польотів… Класична Змійка вже доступна вище.',
+    simUnavailable:
+      'Не вдалося завантажити необов’язковий каталог симулятора. Класична Змійка вже доступна вище. Під’єднайтеся до мережі й оновіть сторінку, щоб побачити траси для польотів.',
     footer:
-      'Приберіть усі цілі для завершення. У 2D серії та порядок дотиків дають необов’язкові бонуси. Команда рахує кожну ціль лише раз; Поєдинок має однакові поля. Кров і зменшені ефекти не змінюють мету.',
-    studio: 'Відкрити Студію та створити власні варіанти',
+      'У класичній Змійці цілі ловлять лише дотиком. Команда має спільну мету; Поєдинок — однакові поля. Попередня версія доступна на сторінці гри як ремікс із захопленням території. Симулятор залишається окремим 3D-варіантом.',
+    studio: 'Відкрити Студію реміксів із захопленням',
     language: 'Мова',
     modeLabel: 'Режим гри',
     rulesLabel: 'Як грати',
@@ -93,6 +92,8 @@ const node = (tag, text, className) => {
   return value;
 };
 const preferences = createEncounterVariantPreferences();
+let simCatalogue = null;
+let simUnavailable = false;
 const launch = (label, href, reset = false) => {
   const link = node('a', label);
   link.href = href;
@@ -139,7 +140,7 @@ function render() {
     }),
   );
   $('chapters').replaceChildren(
-    ...SNAKE_HUNT_CHAPTERS.map((chapter, index) => {
+    ...CLASSIC_SNAKE_CHAPTERS.map((chapter, index) => {
       const item = node('article', null, 'chapter');
       item.append(
         node(
@@ -147,19 +148,17 @@ function render() {
           `${words.chapter} ${String(index + 1).padStart(2, '0')} / 08`,
           'chapter-number',
         ),
-        node('h3', chapter.localizedName[locale]),
-        node('p', chapter.localizedDescription[locale]),
+        node('h3', chapter.title[locale]),
+        node('p', chapter.description[locale]),
       );
       const details = node('details'),
         list = node('ol');
       details.append(node('summary', words.missions));
-      for (const stage of SNAKE_HUNT_STAGES.filter(
-        (stage) => stage.campaignId === chapter.campaignId,
-      )) {
+      for (const stage of CLASSIC_SNAKE_LEVELS.filter((stage) => stage.chapterId === chapter.id)) {
         const row = node('li');
         row.append(
-          node('strong', stage.localizedName[locale]),
-          node('p', stage.localizedDescription[locale]),
+          launch(stage.title[locale], `./play.html?mode=solo&level=${stage.id}&lang=${locale}`),
+          node('p', stage.description[locale]),
         );
         list.append(row);
       }
@@ -168,8 +167,19 @@ function render() {
       return item;
     }),
   );
+  renderSim();
+}
+function renderSim() {
+  const locale = getLocale() === 'uk' ? 'uk' : 'en',
+    words = copy[locale];
+  if (!simCatalogue) {
+    const status = node('p', words[simUnavailable ? 'simUnavailable' : 'simLoading']);
+    status.setAttribute('role', 'status');
+    $('sim-chapters').replaceChildren(status);
+    return;
+  }
   $('sim-chapters').replaceChildren(
-    ...SNAKE_HUNT_PLAYLISTS.map((playlist, index) => {
+    ...simCatalogue.SNAKE_HUNT_PLAYLISTS.map((playlist, index) => {
       const item = node('article', null, 'chapter');
       item.append(
         node(
@@ -191,7 +201,9 @@ function render() {
         list = node('ol');
       details.append(node('summary', words.missions));
       for (const entry of playlist.entries) {
-        const course = SNAKE_HUNT_COURSES.find((course) => course.id === entry.levelId);
+        const course = simCatalogue.SNAKE_HUNT_COURSES.find(
+          (course) => course.id === entry.levelId,
+        );
         const row = node('li');
         row.append(
           launch(
@@ -210,3 +222,14 @@ function render() {
 $('language').addEventListener('change', () => setLocale($('language').value));
 onLocaleChange(render);
 render();
+// Optional flight courses are excluded from the core offline cache. Their
+// availability must never hold up the classic chapters or mode links.
+void import('../../optional-practice/civilian-fpv/snake-hunt-catalogue.mjs')
+  .then((catalogue) => {
+    simCatalogue = catalogue;
+    renderSim();
+  })
+  .catch(() => {
+    simUnavailable = true;
+    renderSim();
+  });
