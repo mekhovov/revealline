@@ -1,4 +1,4 @@
-import { pageActorArtPool } from '../../game/presentation/actor-art-pool.mjs';
+import { isStudioActorSlot, studioActorImage, studioActorCanvas } from './actor-resources.mjs';
 import { t, localizedText, localizedAttribute } from '../../game/i18n/index.mjs';
 import { assetStudioErrorMessage } from './error-copy.mjs';
 import { startPreviewMotion } from './preview-motion.mjs';
@@ -148,27 +148,7 @@ export function createStudioContextPresentation(resolved, decoded, selectedPlaye
 export async function croppedImage(asset, blobs, options, own) {
   const blob = blobs.get(asset.file.sha256);
   if (!blob) throw new Error(t('tools:previewMediaIsMissing'));
-  if (asset.animation) {
-    if (typeof own !== 'function') throw new TypeError('Animated preview needs a resource owner.');
-    const controller = new AbortController();
-    let lease = null;
-    own(() => {
-      controller.abort();
-      lease?.release();
-    });
-    lease = await pageActorArtPool(document).acquire({
-      key: asset.file.sha256,
-      width: asset.file.width,
-      height: asset.file.height,
-      signal: controller.signal,
-      load: () => createImageBitmap(blob),
-    });
-    if (!options.isCurrent()) {
-      lease.release();
-      return null;
-    }
-    return lease.image;
-  }
+  if (isStudioActorSlot(options.slotId)) return studioActorImage(asset, blob, options, own);
   const bitmap = await createImageBitmap(blob),
     f = asset.geometry.frame,
     canvas = document.createElement('canvas');
@@ -202,11 +182,11 @@ export async function playerRecipePreview(surface, slot, resolved, blobs, option
   options.onStatus?.(() => t('tools:studio.scenePreview.decodingPlayerArtwork'), 'decoding');
   let body = structuredClone(presets.characters[bodyId]);
   const recipe = structuredClone(presets.animationRecipes[body.animationRecipe]);
-  const imageAsset =
-    resolved.assets[`player.${classId}.${slot.id.endsWith('detailed') ? 'detailed' : 'compact'}`];
+  const imageSlot = `player.${classId}.${slot.id.endsWith('detailed') ? 'detailed' : 'compact'}`,
+    imageAsset = resolved.assets[imageSlot];
   let image;
   if (imageAsset?.kind === 'image') {
-    image = await croppedImage(imageAsset, blobs, options, own);
+    image = await croppedImage(imageAsset, blobs, { ...options, slotId: imageSlot }, own);
     if (!options.isCurrent()) return;
     const geometry = imagePresentation(imageAsset);
     body.rotors = geometry.rotors;
@@ -217,9 +197,18 @@ export async function playerRecipePreview(surface, slot, resolved, blobs, option
     await image.decode();
   }
   if (!options.isCurrent()) return;
-  const canvas = document.createElement('canvas');
-  canvas.width = 320;
-  canvas.height = 220;
+  const canvas =
+    imageAsset?.kind === 'image'
+      ? await studioActorCanvas(320, 220, options, own)
+      : document.createElement('canvas');
+  if (!options.isCurrent()) return;
+  if (imageAsset?.kind !== 'image') {
+    canvas.width = 320;
+    canvas.height = 220;
+    own(() => {
+      canvas.width = canvas.height = 0;
+    });
+  }
   surface.append(
     canvas,
     text(
@@ -312,7 +301,7 @@ export async function boardContextPreview(surface, slot, asset, resolved, blobs,
       role = 'background';
     if (!role) continue;
     options.onStatus?.(() => t('tools:studio.scenePreview.decodingAsset', { id }), 'decoding');
-    const image = await croppedImage(candidate, blobs, options, own);
+    const image = await croppedImage(candidate, blobs, { ...options, slotId: id }, own);
     if (!options.isCurrent()) return;
     if (role === 'background') painter.images.background = image;
     else decoded.set(id, { asset: candidate, image });

@@ -160,8 +160,12 @@ test('paired animated context previews share the page atlas and release both own
     left = [],
     right = [];
   const [a, b] = await Promise.all([
-    croppedImage(asset, bytes, { isCurrent: () => true }, (release) => left.push(release)),
-    croppedImage(asset, bytes, { isCurrent: () => true }, (release) => right.push(release)),
+    croppedImage(asset, bytes, { isCurrent: () => true, slotId: 'enemy.bouncer' }, (release) =>
+      left.push(release),
+    ),
+    croppedImage(asset, bytes, { isCurrent: () => true, slotId: 'enemy.bouncer' }, (release) =>
+      right.push(release),
+    ),
   ]);
   assert.strictEqual(a, b);
   assert.equal(decoded, 1);
