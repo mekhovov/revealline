@@ -1,3 +1,4 @@
+import { snakeText } from '../snake/copy.mjs';
 import { localizedText } from '../i18n/index.mjs';
 import { ENCOUNTER_VARIANTS } from '../hunt/preferences.mjs';
 import { huntText } from '../hunt/copy.mjs';
@@ -52,6 +53,10 @@ export function attachEncounterVariantControls({
   lessons.addEventListener('click', startLessons);
   localizedText(lessons, () => huntText('lessons'));
   root.append(lessons);
+  const snakes = doc.createElement('a');
+  snakes.href = new URL('../snake/', import.meta.url).href;
+  localizedText(snakes, () => snakeText('campaigns'));
+  root.append(doc.createElement('br'), snakes);
   container?.append(root);
   const recordControls = attachHuntRecordControls({
     document: doc,

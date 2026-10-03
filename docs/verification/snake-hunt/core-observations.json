@@ -1,0 +1,1145 @@
+{
+  "format": "snake-hunt-core-observation.v1",
+  "observedAt": "2026-10-03T00:31:49.711Z",
+  "scope": "Bounded direct production API observations; not an automated test suite, exhaustive qualification, or publication proof.",
+  "source": {
+    "baselineHead": "f420c00a7ed13dd6410cff610e4017ccaa952457",
+    "workingTreeProduct": true,
+    "sha256": {
+      "game/snake/rules.mjs": "d4e7a25942a7eecd7a2858fd5ef0529fb9b194de2c2b215f8977d0bb2ab95e63",
+      "game/core/index.mjs": "28b60827829bad57c8405e3d4eed0b3a7368f41d99064c6b52357fc28f17746f",
+      "game/core/classic-step.mjs": "6cd07b32a3a30983767c45431a5fa69d5cd196683cb624ef8b7f17a5b5931c1a",
+      "game/core/versions.mjs": "e8962ddcf8161e33951563f5d6a40fc9aa9a8e79959a28e26aebaaeb58e128af",
+      "game/core/level.mjs": "15114de24f5335669fffd0c521eb992bc4975f6dcdad9936f01f200954f99135",
+      "game/core/capture.mjs": "9ea5eec1db293445c3e93cf809ca08bded13062bbbdfe3ac6b7c1306a3cac731",
+      "game/core/combat-patrols.mjs": "7e49aa9588725597499a78badba5ee487bd906298e7b17f8054f447b607f3850",
+      "game/core/foundations.mjs": "5bba8689aed68d43bafca509fbcb26e0783d96efbb1ed64a07083d3b7a86cd71",
+      "game/replay.mjs": "497487927b83e9e4560d7c2fe57e78f4f2341b46baf71a663b5af550fbce39e9",
+      "game/coop/core.mjs": "6350d308e51fdbcb8daf7e0b9c254facfbd18d5df0a3c37e202fa754234f2b08",
+      "game/coop/combat-patrols.mjs": "106eb56c5b2663ad6c6de7d1ea10646d9491484b4e773f559e7e8e7d311fd4c2",
+      "game/coop/foundations.mjs": "3915875ffa24b7a5cad681ee7c02d380258231f6b5c089834e86b9a2e6b83e43",
+      "game/coop/recipes.mjs": "885a93d78881e89eafca7f9c603533a775249413e5955411ea50a1be8cfab9df",
+      "game/coop/hunt-attempts.mjs": "8cc16a555c8fa8395f52542d4ba9500e2cc141b89055b1fea7d4c3ae4cd24dbb",
+      "game/content-design/snake-hunt-candidates.mjs": "8b9d1285c093fcf700cc2b9679547a96abfde02495f4eee20a61cbc6f0aec26b",
+      "game/content-design/team-snake-hunt-candidates.mjs": "82cac29be6d8fbfaa1e32a714b1b16732983f599322486a29dfe6c8275c071c9",
+      "game/gameplay-tuning.mjs": "2e623afebdcb8f552f69f433d0e2790fded9c31dafb8a10327147234e74fe683"
+    },
+    "unchangedDuringObservation": true
+  },
+  "soloAuthoredAttempt": {
+    "levelId": "snake-open-loop",
+    "levelVersion": "xonix-level.v11",
+    "ruleset": "xonix-core.v12",
+    "seed": 7,
+    "tuning": {
+      "version": "gameplay-pressure.v4",
+      "difficulty": "standard",
+      "enemySpeed": 1,
+      "playerSpeed": 1,
+      "enemyDensity": 0,
+      "adminOverride": false,
+      "overrides": {
+        "enemySpeed": 1,
+        "playerSpeed": 1,
+        "enemyDensity": 1
+      }
+    },
+    "observations": [
+      {
+        "label": "initial",
+        "tick": 0,
+        "time": 0,
+        "status": "running",
+        "lives": 3,
+        "player": {
+          "x": 8.5,
+          "y": 0.5,
+          "cutting": false
+        },
+        "hunt": {
+          "version": "humanoid-hunt-state.v1",
+          "kills": 0,
+          "touchKills": 0,
+          "captureKills": 0,
+          "score": 0
+        },
+        "snake": {
+          "version": "snake-hunt-state.v1",
+          "bodies": [
+            {
+              "playerId": 0,
+              "points": [
+                {
+                  "x": 8.5,
+                  "y": 0.5
+                }
+              ],
+              "length": 0,
+              "capacity": 2,
+              "heading": null
+            }
+          ],
+          "catches": 0,
+          "caughtIds": [],
+          "chain": 0,
+          "bestChain": 0,
+          "bonusScore": 0,
+          "lastCatchTick": -1,
+          "orderIndex": 0
+        },
+        "coverage": 0,
+        "events": []
+      },
+      {
+        "label": "top-rail toward central foundation",
+        "tick": 324,
+        "time": 2.699999999999993,
+        "status": "running",
+        "lives": 3,
+        "player": {
+          "x": 32.36800000000021,
+          "y": 0.5,
+          "cutting": false
+        },
+        "hunt": {
+          "version": "humanoid-hunt-state.v1",
+          "kills": 0,
+          "touchKills": 0,
+          "captureKills": 0,
+          "score": 0
+        },
+        "snake": {
+          "version": "snake-hunt-state.v1",
+          "bodies": [
+            {
+              "playerId": 0,
+              "points": [
+                {
+                  "x": 30.368000000000208,
+                  "y": 0.5
+                },
+                {
+                  "x": 32.36800000000021,
+                  "y": 0.5
+                }
+              ],
+              "length": 2,
+              "capacity": 2,
+              "heading": null
+            }
+          ],
+          "catches": 0,
+          "caughtIds": [],
+          "chain": 0,
+          "bestChain": 0,
+          "bonusScore": 0,
+          "lastCatchTick": -1,
+          "orderIndex": 0
+        },
+        "coverage": 0,
+        "events": []
+      },
+      {
+        "label": "close first trail at central foundation",
+        "tick": 549,
+        "time": 4.575000000000017,
+        "status": "running",
+        "lives": 2,
+        "player": {
+          "x": 8.5,
+          "y": 0.5,
+          "cutting": false
+        },
+        "hunt": {
+          "version": "humanoid-hunt-state.v1",
+          "kills": 0,
+          "touchKills": 0,
+          "captureKills": 0,
+          "score": 0
+        },
+        "snake": {
+          "version": "snake-hunt-state.v1",
+          "bodies": [
+            {
+              "playerId": 0,
+              "points": [
+                {
+                  "x": 8.5,
+                  "y": 0.5
+                }
+              ],
+              "length": 0,
+              "capacity": 2,
+              "heading": null
+            }
+          ],
+          "catches": 0,
+          "caughtIds": [],
+          "chain": 0,
+          "bestChain": 0,
+          "bonusScore": 0,
+          "lastCatchTick": -1,
+          "orderIndex": 0
+        },
+        "coverage": 0,
+        "events": [
+          {
+            "type": "cut.started",
+            "tick": 333,
+            "time": 2.7714932126696525
+          },
+          {
+            "type": "player.failed",
+            "tick": 358,
+            "time": 2.9756077217352863,
+            "cause": "enemy-trail",
+            "actorId": "keeper-1",
+            "lives": 2
+          },
+          {
+            "type": "player.respawned",
+            "tick": 436,
+            "time": 3.633333333333323
+          }
+        ]
+      },
+      {
+        "label": "second route along top rail",
+        "tick": 984,
+        "time": 8.200000000000175,
+        "status": "running",
+        "lives": 2,
+        "player": {
+          "x": 40.545000000000336,
+          "y": 0.5,
+          "cutting": false
+        },
+        "hunt": {
+          "version": "humanoid-hunt-state.v1",
+          "kills": 0,
+          "touchKills": 0,
+          "captureKills": 0,
+          "score": 0
+        },
+        "snake": {
+          "version": "snake-hunt-state.v1",
+          "bodies": [
+            {
+              "playerId": 0,
+              "points": [
+                {
+                  "x": 38.545000000000336,
+                  "y": 0.5
+                },
+                {
+                  "x": 40.545000000000336,
+                  "y": 0.5
+                }
+              ],
+              "length": 2,
+              "capacity": 2,
+              "heading": null
+            }
+          ],
+          "catches": 0,
+          "caughtIds": [],
+          "chain": 0,
+          "bestChain": 0,
+          "bonusScore": 0,
+          "lastCatchTick": -1,
+          "orderIndex": 0
+        },
+        "coverage": 0,
+        "events": []
+      },
+      {
+        "label": "vertical divider to lower rail",
+        "tick": 1469,
+        "time": 12.241666666666612,
+        "status": "running",
+        "lives": 2,
+        "player": {
+          "x": 41.5,
+          "y": 35.221000000000004,
+          "cutting": false
+        },
+        "hunt": {
+          "version": "humanoid-hunt-state.v1",
+          "kills": 2,
+          "touchKills": 0,
+          "captureKills": 2,
+          "score": 100
+        },
+        "snake": {
+          "version": "snake-hunt-state.v1",
+          "bodies": [
+            {
+              "playerId": 0,
+              "points": [
+                {
+                  "x": 41.5,
+                  "y": 33
+                },
+                {
+                  "x": 41.5,
+                  "y": 35.221000000000004
+                }
+              ],
+              "length": 2.2210000000000036,
+              "capacity": 4,
+              "heading": null
+            }
+          ],
+          "catches": 2,
+          "caughtIds": ["target-2", "target-3"],
+          "chain": 2,
+          "bestChain": 2,
+          "bonusScore": 0,
+          "lastCatchTick": 1466,
+          "orderIndex": 0
+        },
+        "coverage": 0.432937181663837,
+        "events": [
+          {
+            "type": "cut.started",
+            "tick": 1004,
+            "time": 8.364592760181122
+          },
+          {
+            "type": "cut.closed",
+            "tick": 1466,
+            "time": 12.21074660633472,
+            "cells": 1020
+          },
+          {
+            "type": "cells.claimed",
+            "tick": 1466,
+            "time": 12.21074660633472,
+            "coverage": 0.432937181663837,
+            "claimedIndexCount": 1020
+          },
+          {
+            "type": "snake.caught",
+            "tick": 1466,
+            "time": 12.21074660633472,
+            "actorId": "target-2",
+            "player": 0,
+            "capacity": 3,
+            "chain": 1,
+            "bonusScore": 0
+          },
+          {
+            "type": "combat.eliminated",
+            "tick": 1466,
+            "time": 12.21074660633472,
+            "id": "target-2",
+            "cause": "capture",
+            "x": 52.665053523965035,
+            "y": 29.402423236017853
+          },
+          {
+            "type": "snake.caught",
+            "tick": 1466,
+            "time": 12.21074660633472,
+            "actorId": "target-3",
+            "player": 0,
+            "capacity": 4,
+            "chain": 2,
+            "bonusScore": 0
+          },
+          {
+            "type": "combat.eliminated",
+            "tick": 1466,
+            "time": 12.21074660633472,
+            "id": "target-3",
+            "cause": "capture",
+            "x": 62.15736514297333,
+            "y": 11.991888380990781
+          },
+          {
+            "type": "capture.stopped",
+            "tick": 1466,
+            "time": 12.21074660633472
+          }
+        ]
+      },
+      {
+        "label": "lower-rail route toward remaining targets",
+        "tick": 1758,
+        "time": 14.649999999999809,
+        "status": "running",
+        "lives": 2,
+        "player": {
+          "x": 20.48933333333298,
+          "y": 35.5,
+          "cutting": false
+        },
+        "hunt": {
+          "version": "humanoid-hunt-state.v1",
+          "kills": 2,
+          "touchKills": 0,
+          "captureKills": 2,
+          "score": 100
+        },
+        "snake": {
+          "version": "snake-hunt-state.v1",
+          "bodies": [
+            {
+              "playerId": 0,
+              "points": [
+                {
+                  "x": 24.48933333333298,
+                  "y": 35.5
+                },
+                {
+                  "x": 20.48933333333298,
+                  "y": 35.5
+                }
+              ],
+              "length": 4,
+              "capacity": 4,
+              "heading": null
+            }
+          ],
+          "catches": 2,
+          "caughtIds": ["target-2", "target-3"],
+          "chain": 2,
+          "bestChain": 2,
+          "bonusScore": 0,
+          "lastCatchTick": 1466,
+          "orderIndex": 0
+        },
+        "coverage": 0.432937181663837,
+        "events": []
+      },
+      {
+        "label": "second vertical divider",
+        "tick": 2247,
+        "time": 18.72499999999958,
+        "status": "respawning",
+        "lives": 1,
+        "player": {
+          "x": 19.5,
+          "y": 5.618867460762635,
+          "cutting": false
+        },
+        "hunt": {
+          "version": "humanoid-hunt-state.v1",
+          "kills": 2,
+          "touchKills": 0,
+          "captureKills": 2,
+          "score": 100
+        },
+        "snake": {
+          "version": "snake-hunt-state.v1",
+          "bodies": [
+            {
+              "playerId": 0,
+              "points": [
+                {
+                  "x": 8.5,
+                  "y": 0.5
+                }
+              ],
+              "length": 0,
+              "capacity": 4,
+              "heading": null
+            }
+          ],
+          "catches": 2,
+          "caughtIds": ["target-2", "target-3"],
+          "chain": 2,
+          "bestChain": 2,
+          "bonusScore": 0,
+          "lastCatchTick": 1466,
+          "orderIndex": 0
+        },
+        "coverage": 0.432937181663837,
+        "events": [
+          {
+            "type": "cut.started",
+            "tick": 1779,
+            "time": 14.818476621417554
+          },
+          {
+            "type": "player.failed",
+            "tick": 2178,
+            "time": 18.142134148480388,
+            "cause": "enemy-trail",
+            "actorId": "keeper-2",
+            "lives": 1
+          }
+        ]
+      },
+      {
+        "label": "finish recovery without movement",
+        "tick": 2259,
+        "time": 18.824999999999573,
+        "status": "running",
+        "lives": 1,
+        "player": {
+          "x": 8.5,
+          "y": 0.5,
+          "cutting": false
+        },
+        "hunt": {
+          "version": "humanoid-hunt-state.v1",
+          "kills": 2,
+          "touchKills": 0,
+          "captureKills": 2,
+          "score": 100
+        },
+        "snake": {
+          "version": "snake-hunt-state.v1",
+          "bodies": [
+            {
+              "playerId": 0,
+              "points": [
+                {
+                  "x": 8.5,
+                  "y": 0.5
+                }
+              ],
+              "length": 0,
+              "capacity": 4,
+              "heading": null
+            }
+          ],
+          "catches": 2,
+          "caughtIds": ["target-2", "target-3"],
+          "chain": 2,
+          "bestChain": 2,
+          "bonusScore": 0,
+          "lastCatchTick": 1466,
+          "orderIndex": 0
+        },
+        "coverage": 0.432937181663837,
+        "events": [
+          {
+            "type": "player.respawned",
+            "tick": 2256,
+            "time": 18.799999999999574
+          }
+        ]
+      },
+      {
+        "label": "return along safe rail toward central island",
+        "tick": 2684,
+        "time": 22.36666666666604,
+        "status": "running",
+        "lives": 1,
+        "player": {
+          "x": 39.80833333333366,
+          "y": 0.5,
+          "cutting": false
+        },
+        "hunt": {
+          "version": "humanoid-hunt-state.v1",
+          "kills": 2,
+          "touchKills": 0,
+          "captureKills": 2,
+          "score": 100
+        },
+        "snake": {
+          "version": "snake-hunt-state.v1",
+          "bodies": [
+            {
+              "playerId": 0,
+              "points": [
+                {
+                  "x": 35.80833333333366,
+                  "y": 0.5
+                },
+                {
+                  "x": 39.80833333333366,
+                  "y": 0.5
+                }
+              ],
+              "length": 4,
+              "capacity": 4,
+              "heading": null
+            }
+          ],
+          "catches": 2,
+          "caughtIds": ["target-2", "target-3"],
+          "chain": 2,
+          "bestChain": 2,
+          "bonusScore": 0,
+          "lastCatchTick": 1466,
+          "orderIndex": 0
+        },
+        "coverage": 0.432937181663837,
+        "events": []
+      },
+      {
+        "label": "enter previously captured rail",
+        "tick": 2707,
+        "time": 22.558333333332694,
+        "status": "running",
+        "lives": 1,
+        "player": {
+          "x": 41.50266666666702,
+          "y": 0.5,
+          "cutting": false
+        },
+        "hunt": {
+          "version": "humanoid-hunt-state.v1",
+          "kills": 2,
+          "touchKills": 0,
+          "captureKills": 2,
+          "score": 100
+        },
+        "snake": {
+          "version": "snake-hunt-state.v1",
+          "bodies": [
+            {
+              "playerId": 0,
+              "points": [
+                {
+                  "x": 37.50266666666702,
+                  "y": 0.5
+                },
+                {
+                  "x": 41.50266666666702,
+                  "y": 0.5
+                }
+              ],
+              "length": 4,
+              "capacity": 4,
+              "heading": null
+            }
+          ],
+          "catches": 2,
+          "caughtIds": ["target-2", "target-3"],
+          "chain": 2,
+          "bestChain": 2,
+          "bonusScore": 0,
+          "lastCatchTick": 1466,
+          "orderIndex": 0
+        },
+        "coverage": 0.432937181663837,
+        "events": []
+      },
+      {
+        "label": "descend through captured territory",
+        "tick": 2938,
+        "time": 24.483333333332585,
+        "status": "running",
+        "lives": 1,
+        "player": {
+          "x": 42.5,
+          "y": 16.519666666667,
+          "cutting": false
+        },
+        "hunt": {
+          "version": "humanoid-hunt-state.v1",
+          "kills": 2,
+          "touchKills": 0,
+          "captureKills": 2,
+          "score": 100
+        },
+        "snake": {
+          "version": "snake-hunt-state.v1",
+          "bodies": [
+            {
+              "playerId": 0,
+              "points": [
+                {
+                  "x": 42.5,
+                  "y": 12.519666666667
+                },
+                {
+                  "x": 42.5,
+                  "y": 16.519666666667
+                }
+              ],
+              "length": 4,
+              "capacity": 4,
+              "heading": null
+            }
+          ],
+          "catches": 2,
+          "caughtIds": ["target-2", "target-3"],
+          "chain": 2,
+          "bestChain": 2,
+          "bonusScore": 0,
+          "lastCatchTick": 1466,
+          "orderIndex": 0
+        },
+        "coverage": 0.432937181663837,
+        "events": []
+      },
+      {
+        "label": "cross from central island to left rail",
+        "tick": 3352,
+        "time": 27.93284313725392,
+        "status": "lost",
+        "lives": 0,
+        "player": {
+          "x": 13,
+          "y": 17.5,
+          "cutting": false
+        },
+        "hunt": {
+          "version": "humanoid-hunt-state.v1",
+          "kills": 2,
+          "touchKills": 0,
+          "captureKills": 2,
+          "score": 100
+        },
+        "snake": {
+          "version": "snake-hunt-state.v1",
+          "bodies": [
+            {
+              "playerId": 0,
+              "points": [
+                {
+                  "x": 8.5,
+                  "y": 0.5
+                }
+              ],
+              "length": 0,
+              "capacity": 4,
+              "heading": null
+            }
+          ],
+          "catches": 2,
+          "caughtIds": ["target-2", "target-3"],
+          "chain": 2,
+          "bestChain": 2,
+          "bonusScore": 0,
+          "lastCatchTick": 1466,
+          "orderIndex": 0
+        },
+        "coverage": 0.43378607809847197,
+        "events": [
+          {
+            "type": "cut.started",
+            "tick": 2972,
+            "time": 24.763914027148516
+          },
+          {
+            "type": "cut.closed",
+            "tick": 2999,
+            "time": 24.9901583710399,
+            "cells": 2
+          },
+          {
+            "type": "cells.claimed",
+            "tick": 2999,
+            "time": 24.9901583710399,
+            "coverage": 0.43378607809847197,
+            "claimedIndexCount": 2
+          },
+          {
+            "type": "capture.stopped",
+            "tick": 2999,
+            "time": 24.9901583710399
+          },
+          {
+            "type": "cut.started",
+            "tick": 3108,
+            "time": 25.896644042231433
+          },
+          {
+            "type": "player.failed",
+            "tick": 3352,
+            "time": 27.93284313725392,
+            "cause": "enemy-trail",
+            "actorId": "keeper-1",
+            "lives": 0
+          },
+          {
+            "type": "run.completed",
+            "tick": 3352,
+            "time": 27.93284313725392,
+            "snake": {
+              "version": "snake-hunt-state.v1",
+              "lengths": [0],
+              "capacities": [4],
+              "catches": 2,
+              "chain": 0,
+              "bestChain": 2,
+              "bonusScore": 0,
+              "nextTargetId": null,
+              "friendlyTail": "self"
+            },
+            "ruleset": "xonix-core.v12",
+            "levelId": "snake-open-loop",
+            "revision": "gp4s-3ff00000000000003ff00000000000003ff0000000000000-7cd5c38d2df205e9",
+            "seed": 7,
+            "turnPolicy": "grid-center",
+            "classId": "scout",
+            "activeClassId": "scout",
+            "rosterHash": "roster-v1-e159e435",
+            "classHistory": [
+              {
+                "classId": "scout",
+                "classRevision": "1",
+                "loadoutHash": "loadout-v1-aaa4aadd",
+                "tick": 0
+              }
+            ],
+            "switches": 0,
+            "failureCause": "enemy-trail",
+            "classRevision": "1",
+            "loadoutHash": "loadout-v1-aaa4aadd",
+            "status": "lost",
+            "won": false,
+            "lives": 0,
+            "livesLost": 3,
+            "score": 10220,
+            "hunt": {
+              "version": "humanoid-hunt-state.v1",
+              "mode": "hunt",
+              "quota": 4,
+              "total": 4,
+              "remaining": 2,
+              "kills": 2,
+              "touchKills": 0,
+              "captureKills": 2,
+              "score": 100
+            },
+            "coverage": 0.43378607809847197,
+            "claimedCount": 1022,
+            "totalClaimable": 2356,
+            "medal": null,
+            "objectives": {
+              "captured": 0,
+              "total": 0,
+              "required": 0
+            }
+          }
+        ]
+      }
+    ],
+    "summary": {
+      "snake": {
+        "version": "snake-hunt-state.v1",
+        "lengths": [0],
+        "capacities": [4],
+        "catches": 2,
+        "chain": 0,
+        "bestChain": 2,
+        "bonusScore": 0,
+        "nextTargetId": null,
+        "friendlyTail": "self"
+      },
+      "ruleset": "xonix-core.v12",
+      "levelId": "snake-open-loop",
+      "revision": "gp4s-3ff00000000000003ff00000000000003ff0000000000000-7cd5c38d2df205e9",
+      "seed": 7,
+      "turnPolicy": "grid-center",
+      "classId": "scout",
+      "activeClassId": "scout",
+      "rosterHash": "roster-v1-e159e435",
+      "classHistory": [
+        {
+          "classId": "scout",
+          "classRevision": "1",
+          "loadoutHash": "loadout-v1-aaa4aadd",
+          "tick": 0
+        }
+      ],
+      "switches": 0,
+      "failureCause": "enemy-trail",
+      "classRevision": "1",
+      "loadoutHash": "loadout-v1-aaa4aadd",
+      "status": "lost",
+      "won": false,
+      "tick": 3352,
+      "time": 27.93284313725392,
+      "lives": 0,
+      "livesLost": 3,
+      "score": 10220,
+      "hunt": {
+        "version": "humanoid-hunt-state.v1",
+        "mode": "hunt",
+        "quota": 4,
+        "total": 4,
+        "remaining": 2,
+        "kills": 2,
+        "touchKills": 0,
+        "captureKills": 2,
+        "score": 100
+      },
+      "coverage": 0.43378607809847197,
+      "claimedCount": 1022,
+      "totalClaimable": 2356,
+      "medal": null,
+      "objectives": {
+        "captured": 0,
+        "total": 0,
+        "required": 0
+      }
+    },
+    "replay": {
+      "version": "xonix-replay.v13",
+      "checkpoint": {
+        "algorithm": "fnv1a64-state-v12",
+        "hash": "af4712c87eab2f66",
+        "sections": {
+          "identity": "4933da3277e92977",
+          "configuration": "96ff525f50c27fc8",
+          "board": "3bec1fc9fb227616",
+          "player": "3661291a91a10d7e",
+          "trail": "f0ca473df9efdcc8",
+          "enemies": "4bd68d0e1e26abf0",
+          "objectives": "09612b07b5ecb5a5",
+          "supplies": "09612b07b5ecb5a5",
+          "ability": "f6b5aef539d929bb",
+          "clock": "cc68a88a0b887a1e",
+          "continuation": "a9d828ced6380d30",
+          "result": "cbf28723c804cd70",
+          "encounter": "5b9bc4ba528108e4",
+          "classic": "560b5af647c92982",
+          "foundations": "314423053ee27fe0",
+          "relays": "f38a1e30c8ea9254",
+          "directionalFields": "fd90177a6d9ee047",
+          "snake": "b8299201072707b3"
+        }
+      },
+      "match": true,
+      "verifiedAgainAgainstReceiptSource": true
+    }
+  },
+  "soloSafeBody": {
+    "levelId": "snake-open-loop",
+    "levelVersion": "xonix-level.v11",
+    "recipeIdentity": "c978d99cd7565cd6",
+    "seed": 7,
+    "commands": [
+      {
+        "direction": "right",
+        "ticks": 90
+      },
+      {
+        "direction": "left",
+        "ticks": 8
+      }
+    ],
+    "beforeReversal": {
+      "tick": 90,
+      "player": {
+        "x": 15.12999999999995,
+        "y": 0.5,
+        "cutting": false
+      },
+      "snake": {
+        "version": "snake-hunt-state.v1",
+        "bodies": [
+          {
+            "playerId": 0,
+            "points": [
+              {
+                "x": 13.12999999999995,
+                "y": 0.5
+              },
+              {
+                "x": 15.12999999999995,
+                "y": 0.5
+              }
+            ],
+            "length": 2,
+            "capacity": 2,
+            "heading": null
+          }
+        ],
+        "catches": 0,
+        "caughtIds": [],
+        "chain": 0,
+        "bestChain": 0,
+        "bonusScore": 0,
+        "lastCatchTick": -1,
+        "orderIndex": 0
+      },
+      "lives": 3
+    },
+    "failure": {
+      "type": "player.failed",
+      "tick": 98,
+      "time": 0.8088235294117705,
+      "cause": "snake-body",
+      "actorId": "snake-0",
+      "lives": 2
+    },
+    "after": {
+      "tick": 98,
+      "status": "respawning",
+      "lives": 2,
+      "snake": {
+        "version": "snake-hunt-state.v1",
+        "bodies": [
+          {
+            "playerId": 0,
+            "points": [
+              {
+                "x": 8.5,
+                "y": 0.5
+              }
+            ],
+            "length": 0,
+            "capacity": 2,
+            "heading": null
+          }
+        ],
+        "catches": 0,
+        "caughtIds": [],
+        "chain": 0,
+        "bestChain": 0,
+        "bonusScore": 0,
+        "lastCatchTick": -1,
+        "orderIndex": 0
+      }
+    },
+    "replay": {
+      "version": "xonix-replay.v13",
+      "algorithm": "fnv1a64-state-v12",
+      "match": true
+    }
+  },
+  "teamContinue": {
+    "levelId": "snake-open-loop",
+    "levelVersion": "revealline-coop-level.v10",
+    "ruleset": "revealline-coop.v12",
+    "seed": 7,
+    "tuning": {
+      "version": "gameplay-pressure.v4",
+      "difficulty": "standard",
+      "enemySpeed": 1,
+      "playerSpeed": 1,
+      "enemyDensity": 0,
+      "adminOverride": false,
+      "overrides": {
+        "enemySpeed": 1,
+        "playerSpeed": 1,
+        "enemyDensity": 1
+      }
+    },
+    "commands": [
+      {
+        "ticks": 90,
+        "commands": [
+          {
+            "direction": "right",
+            "boost": false,
+            "support": false
+          },
+          {
+            "direction": "left",
+            "boost": false,
+            "support": false
+          }
+        ]
+      }
+    ],
+    "snapshotBytes": 820,
+    "snapshot": {
+      "format": "revealline-team-hunt-attempt.v1",
+      "attemptId": "snake-observation-1",
+      "levelId": "snake-open-loop",
+      "source": {
+        "pack": "6a20dcf115bab480",
+        "level": "416aa1e7273ee2bf"
+      },
+      "seed": 7,
+      "difficulty": "standard",
+      "config": {
+        "jointCuts": true,
+        "assistCaptures": true,
+        "advancedCooperation": true
+      },
+      "ruleset": "revealline-coop.v12",
+      "gameplayId": "99cc69d1f788f122",
+      "encounterVariant": "authored",
+      "encounterLevelIdentity": "416aa1e7273ee2bf",
+      "tuning": {
+        "version": "gameplay-pressure.v4",
+        "difficulty": "standard",
+        "enemySpeed": 1,
+        "playerSpeed": 1,
+        "enemyDensity": 0,
+        "adminOverride": false,
+        "overrides": {
+          "enemySpeed": 1,
+          "playerSpeed": 1,
+          "enemyDensity": 1
+        }
+      },
+      "segments": [
+        {
+          "ticks": 90,
+          "commands": [
+            {
+              "direction": "right",
+              "boost": false,
+              "support": false
+            },
+            {
+              "direction": "left",
+              "boost": false,
+              "support": false
+            }
+          ]
+        }
+      ],
+      "checkpoint": {
+        "tick": 90,
+        "stateIdentity": "d9ee538e1ef439d1"
+      }
+    },
+    "restoredFullStateEqual": true,
+    "stateIdentity": "99ee09f650d59faf",
+    "snake": {
+      "version": "snake-hunt-state.v1",
+      "bodies": [
+        {
+          "playerId": 0,
+          "points": [
+            {
+              "x": 13.129999999999963,
+              "y": 0.5
+            },
+            {
+              "x": 15.129999999999963,
+              "y": 0.5
+            }
+          ],
+          "length": 2,
+          "capacity": 2,
+          "heading": "right"
+        },
+        {
+          "playerId": 1,
+          "points": [
+            {
+              "x": 58.86999999999989,
+              "y": 35.5
+            },
+            {
+              "x": 56.86999999999989,
+              "y": 35.5
+            }
+          ],
+          "length": 2,
+          "capacity": 2,
+          "heading": "left"
+        }
+      ],
+      "catches": 0,
+      "caughtIds": [],
+      "chain": 0,
+      "bestChain": 0,
+      "bonusScore": 0,
+      "lastCatchTick": -1,
+      "orderIndex": 0
+    }
+  },
+  "limits": {
+    "automatedSuites": "Not run under publishing/test-policy.json waiver.",
+    "winningFinalCapture": "Not observed in this bounded core session.",
+    "fatalSameTimeTie": "Reviewed in transaction ordering; not runtime-demonstrated in this session.",
+    "allMissionHumanQualification": "Pending; separate compile/initial-state inventory is not playtesting.",
+    "versusPairedPlay": "Root owns browser/transport verification; not claimed by this receipt."
+  }
+}

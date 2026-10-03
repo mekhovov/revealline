@@ -1,0 +1,138 @@
+{
+  "scope": "Bounded direct production runtime observations with recorded inputs; no test runner. Controller-generated examples do not qualify human handling, device performance, all courses or Acro completion.",
+  "head": "f420c00a7ed13dd6410cff610e4017ccaa952457",
+  "workingTree": true,
+  "suites": "WAIVED_SKIPPED_NOT_PASSED",
+  "catalogue": {
+    "courses": 24,
+    "playlists": 4,
+    "packIdentity": "fpv-snake-hunt:0a73f7def9f067b8",
+    "admittedInitialModeInstances": 48
+  },
+  "code": {
+    "optional-practice/civilian-fpv/world-model.mjs": "ce94192472f8cc0be1a70ec2dcdf7dc728956f55f589bb84335c851737f54d3e",
+    "optional-practice/civilian-fpv/world-collision.mjs": "2899c7c84f9eae14b9a3434f585a8e873f4a1361e8f3ce4026ef27f44bdeef32",
+    "optional-practice/civilian-fpv/snake-hunt.mjs": "39ce47e8aaae6d7f3e70b8708d52fe2d22e90119318383f8298d8d0c4cc568da",
+    "optional-practice/civilian-fpv/snake-hunt-catalogue.mjs": "9b9ba8106125ac6baff0881360967ce3cc8fcbbdc5cf9e50db32ca987aeba35a"
+  },
+  "observations": [
+    {
+      "kind": "all-catches",
+      "course": "snake-hunt-loops-01",
+      "mode": "self-level",
+      "model": "civilian-world-hunt.v1",
+      "status": "complete",
+      "ticks": 1232,
+      "caught": ["humanoid-01", "humanoid-02", "humanoid-03"],
+      "tailLinks": 0,
+      "failure": null,
+      "events": [
+        {
+          "tick": 390,
+          "type": "catch",
+          "actor": "humanoid-01"
+        },
+        {
+          "tick": 772,
+          "type": "catch",
+          "actor": "humanoid-02"
+        },
+        {
+          "tick": 1232,
+          "type": "catch",
+          "actor": "humanoid-03"
+        },
+        {
+          "tick": 1232,
+          "type": "objective",
+          "index": 0
+        }
+      ],
+      "identity": "cbde57f921e595d7",
+      "replayedIdentity": "cbde57f921e595d7"
+    },
+    {
+      "kind": "deliberate-tail-contact",
+      "course": "snake-hunt-loops-02",
+      "mode": "self-level",
+      "model": "civilian-world-hunt.v1",
+      "status": "failed",
+      "ticks": 1007,
+      "caught": ["humanoid-01"],
+      "tailLinks": 2,
+      "failure": "echo-tail",
+      "events": [
+        {
+          "tick": 403,
+          "type": "catch",
+          "actor": "humanoid-01"
+        },
+        {
+          "tick": 1007,
+          "type": "hunt-tail",
+          "actor": "$hunt-tail-0"
+        }
+      ],
+      "identity": "2420615982e6b957",
+      "replayedIdentity": "2420615982e6b957",
+      "recovery": {
+        "tick": 700,
+        "status": "paused",
+        "caught": ["humanoid-01"],
+        "resumedIdentity": "2420615982e6b957"
+      }
+    },
+    {
+      "kind": "pulses-do-not-catch",
+      "course": "snake-hunt-loops-01",
+      "ticks": 60,
+      "shots": 8,
+      "contacts": 0,
+      "caught": [],
+      "actors": [
+        {
+          "id": "humanoid-01",
+          "status": "active",
+          "health": 50
+        },
+        {
+          "id": "humanoid-02",
+          "status": "active",
+          "health": 50
+        },
+        {
+          "id": "humanoid-03",
+          "status": "active",
+          "health": 50
+        }
+      ],
+      "identity": "d99d1101bfc8519a"
+    },
+    {
+      "kind": "wrong-order-contact",
+      "course": "observation-wrong-order",
+      "ticks": 60,
+      "shots": 0,
+      "contacts": 27,
+      "caught": [],
+      "actors": [
+        {
+          "id": "humanoid-01",
+          "status": "active",
+          "health": 50
+        },
+        {
+          "id": "humanoid-02",
+          "status": "active",
+          "health": 50
+        },
+        {
+          "id": "humanoid-03",
+          "status": "active",
+          "health": 50
+        }
+      ],
+      "identity": "b396d2025885f3c6"
+    }
+  ]
+}

@@ -9,6 +9,7 @@ import { resolveEncounterDescriptor } from './encounter.mjs';
 import { resolveClassicDefinition } from './classic-definition.mjs';
 import { foundationGeometry, validateFoundationOccupants } from './foundations.mjs';
 import { validFieldCourse } from './field-course.mjs';
+import { SNAKE_LEVEL_VERSION, snakeBaseLevel, validateSnakeDefinition } from '../snake/rules.mjs';
 
 const number = (v, lo, hi) => Number.isFinite(v) && v >= lo && v <= hi;
 const integer = (v, lo, hi) => Number.isInteger(v) && v >= lo && v <= hi;
@@ -274,6 +275,13 @@ export function validateLevel(level) {
       level && typeof level === 'object' ? Object.getOwnPropertyDescriptor(level, 'version') : null;
     if (version && !Object.hasOwn(version, 'value'))
       return { valid: false, errors: ['level version must be own data'] };
+    if (version?.value === SNAKE_LEVEL_VERSION) {
+      const base = normalizedLevel(snakeBaseLevel(level));
+      validateSnakeDefinition(level.snake, base.classic.hunt);
+      return { valid: true, errors: [] };
+    }
+    if (level && Object.hasOwn(level, 'snake'))
+      return { valid: false, errors: ['Snake requires its explicit successor edition.'] };
     if (version?.value === 'xonix-level.v10') {
       const owned = runningEnemyCopy(level);
       const base = normalizedLevel(runningEnemyBaseLevel(owned));
@@ -395,6 +403,11 @@ export function validateLevel(level) {
 }
 
 export function normalizedLevel(level) {
+  if (Object.getOwnPropertyDescriptor(level ?? {}, 'version')?.value === SNAKE_LEVEL_VERSION) {
+    const base = normalizedLevel(snakeBaseLevel(level));
+    const snake = validateSnakeDefinition(level.snake, base.classic.hunt);
+    return { ...base, version: SNAKE_LEVEL_VERSION, snake };
+  }
   if (Object.getOwnPropertyDescriptor(level ?? {}, 'version')?.value === 'xonix-level.v10') {
     const owned = runningEnemyCopy(level);
     const base = normalizedLevel(runningEnemyBaseLevel(owned));

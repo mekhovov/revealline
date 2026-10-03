@@ -62,10 +62,18 @@ export const RUNNING_ENEMY_VERSIONS = Object.freeze({
   replayVersion: 'xonix-replay.v12',
   checkpointAlgorithm: 'fnv1a64-state-v11',
 });
+export const SNAKE_VERSIONS = Object.freeze({
+  levelVersion: 'xonix-level.v11',
+  ruleset: 'xonix-core.v12',
+  replayVersion: 'xonix-replay.v13',
+  checkpointAlgorithm: 'fnv1a64-state-v12',
+});
 export const baseLevelVersion = (level) =>
-  level?.version === RUNNING_ENEMY_VERSIONS.levelVersion
-    ? level.runningEnemies?.baseVersion
-    : level?.version;
+  level?.version === SNAKE_VERSIONS.levelVersion
+    ? HUNT_VERSIONS.levelVersion
+    : level?.version === RUNNING_ENEMY_VERSIONS.levelVersion
+      ? level.runningEnemies?.baseVersion
+      : level?.version;
 export const isClassicRuleset = (ruleset) =>
   [
     CLASSIC_VERSIONS.ruleset,
@@ -74,6 +82,7 @@ export const isClassicRuleset = (ruleset) =>
     DIRECTIONAL_VERSIONS.ruleset,
     SENTINEL_VERSIONS.ruleset,
     HUNT_VERSIONS.ruleset,
+    SNAKE_VERSIONS.ruleset,
   ].includes(ruleset);
 export const isFoundationRuleset = (ruleset) =>
   [
@@ -82,6 +91,7 @@ export const isFoundationRuleset = (ruleset) =>
     DIRECTIONAL_VERSIONS.ruleset,
     SENTINEL_VERSIONS.ruleset,
     HUNT_VERSIONS.ruleset,
+    SNAKE_VERSIONS.ruleset,
   ].includes(ruleset);
 export const isRelayRuleset = (ruleset) =>
   [
@@ -89,11 +99,15 @@ export const isRelayRuleset = (ruleset) =>
     DIRECTIONAL_VERSIONS.ruleset,
     SENTINEL_VERSIONS.ruleset,
     HUNT_VERSIONS.ruleset,
+    SNAKE_VERSIONS.ruleset,
   ].includes(ruleset);
 export const isDirectionalRuleset = (ruleset) =>
-  [DIRECTIONAL_VERSIONS.ruleset, SENTINEL_VERSIONS.ruleset, HUNT_VERSIONS.ruleset].includes(
-    ruleset,
-  );
+  [
+    DIRECTIONAL_VERSIONS.ruleset,
+    SENTINEL_VERSIONS.ruleset,
+    HUNT_VERSIONS.ruleset,
+    SNAKE_VERSIONS.ruleset,
+  ].includes(ruleset);
 
 /** An omitted pair remains legacy. Explicit fields must select exactly one supported pair. */
 export function resolveVersions(value = {}) {
@@ -114,6 +128,7 @@ export function resolveVersions(value = {}) {
     SENTINEL_VERSIONS,
     HUNT_VERSIONS,
     RUNNING_ENEMY_VERSIONS,
+    SNAKE_VERSIONS,
   ].find((pair) => keys.every((key) => request[key] === pair[key]));
   if (!match) throw new TypeError('unsupported or mismatched simulation versions');
   return { ...match };

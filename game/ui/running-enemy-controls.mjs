@@ -1,3 +1,4 @@
+import { snakeText } from '../snake/copy.mjs';
 import { getLocale, onLocaleChange } from '../i18n/index.mjs';
 import { createRunningEnemyPreferences } from '../hunt/running-enemy-preferences.mjs';
 
@@ -97,6 +98,9 @@ export function mountRunningEnemyControls({
   restart.dataset.runningEnemiesRestart = 'true';
   restart.setAttribute('aria-describedby', restartHelp.id);
   root.append(restart);
+  const campaigns = doc.createElement('a');
+  campaigns.href = new URL('../snake/', import.meta.url).href;
+  root.append(campaigns);
   container.append(root);
   let disposed = false;
   const text = (node, value) => {
@@ -112,6 +116,7 @@ export function mountRunningEnemyControls({
       choice = (enabled) => words[enabled ? 'on' : 'off'];
     control.checked = state.enabled;
     text(heading, words.title);
+    text(campaigns, snakeText('campaigns'));
     text(help, words.help);
     text(objective, words.objective);
     const currentText =

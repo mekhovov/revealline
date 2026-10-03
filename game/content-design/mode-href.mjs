@@ -2,6 +2,7 @@
 export const AUTHORED_JOURNEY_ROUTE_IDS = Object.freeze([
   'opening',
   'humanoid-hunt-v1',
+  'snake-hunt-v1',
   'authored',
   'whole-originals',
   'whole-originals-v2',

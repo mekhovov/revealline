@@ -5,6 +5,11 @@ import {
   TEAM_RUNNING_PACK_VERSION,
 } from './running-enemies.mjs';
 import { compileMapGeometry } from '../content-design/map.mjs';
+import {
+  TEAM_SNAKE_LEVEL_VERSION,
+  TEAM_SNAKE_RULESET,
+  TEAM_SNAKE_PACK_VERSION,
+} from '../snake/rules.mjs';
 
 export const COOP_FOUNDATION_LEVEL_VERSION = 'revealline-coop-level.v2';
 export const COOP_FOUNDATION_RULESET = 'revealline-coop.v4';
@@ -30,6 +35,10 @@ export const COOP_HUNT_RULESET = 'revealline-coop.v10';
 export const COOP_HUNT_PACK_VERSION = 'revealline-coop-pack.v8';
 
 const editions = Object.freeze({
+  [TEAM_SNAKE_LEVEL_VERSION]: Object.freeze({
+    version: TEAM_SNAKE_PACK_VERSION,
+    ruleset: TEAM_SNAKE_RULESET,
+  }),
   [COOP_HUNT_LEVEL_VERSION]: Object.freeze({
     version: COOP_HUNT_PACK_VERSION,
     ruleset: COOP_HUNT_RULESET,
@@ -99,7 +108,9 @@ export const hasTeamSpecialists = (level) =>
   inheritedTeamVersion(level) === COOP_SPECIALIST_LEVEL_VERSION ||
   (inheritedTeamVersion(level) === COOP_HUNT_LEVEL_VERSION && Object.hasOwn(level, 'supportRoles'));
 export const hasTeamHunting = (level) =>
-  [COOP_HUNT_LEVEL_VERSION, TEAM_RUNNING_LEVEL_VERSION].includes(level.version);
+  [COOP_HUNT_LEVEL_VERSION, TEAM_RUNNING_LEVEL_VERSION, TEAM_SNAKE_LEVEL_VERSION].includes(
+    level.version,
+  );
 
 export const isJourneyTeamLevel = (level) => Object.hasOwn(editions, inheritedTeamVersion(level));
 export const isJourneyTeamRuleset = (ruleset) =>

@@ -1,4 +1,5 @@
 import { huntObjectiveSatisfied } from '../hunt/rules.mjs';
+import { snakeContacts, advanceSnakeBodies, resetSnakeBody } from '../snake/rules.mjs';
 import {
   nextLineImpactSeed,
   nextLineImpactEvent,
@@ -221,6 +222,7 @@ const failureOrder = [
   'cut-timeout',
   'cable-limit',
   'self-contact',
+  'snake-body',
   'lethal-terrain',
   'enemy-trail',
   'enemy-player',
@@ -324,7 +326,9 @@ function world(state, input, hooks) {
       : combatContacts(state, playerPlan.paths, combatPlans, trace, horizon);
     horizon = Math.min(horizon, combat.rams[0]?.time ?? Infinity);
     const self = recovering ? null : selfContact(state, trace, horizon);
+    const snakePlans = [{ playerId: 0, radius: state.rules.playerRadius, paths: playerPlan.paths }];
     const failure = firstFailure([
+      ...(!recovering ? snakeContacts(state, snakePlans, horizon) : []),
       combat.failure && combat.failure.time <= horizon + EPS ? combat.failure : null,
       challengeContact(state, trace, horizon),
       self === null ? null : { time: self, kind: 'self-contact', id: 'player' },
@@ -350,6 +354,7 @@ function world(state, input, hooks) {
     const position = positionAt(playerPlan.paths, elapsed, state.player),
       active = playerPlan.paths.find((p) => p.t1 >= elapsed - EPS);
     if (!recovering) appendTrail(state, trace, elapsed);
+    if (!recovering) advanceSnakeBodies(state, snakePlans, elapsed);
     if (elapsed >= remaining - EPS)
       Object.assign(state.player, playerPlan.player, { cutting: state.player.cutting });
     else
@@ -493,6 +498,8 @@ export function stepClassic(state, input, hooks) {
   useAbilities(state, input);
   if (beforeAbility !== 'respawning' && state.status === 'respawning')
     clearCombatPatrols(state, 'recovery');
+  if (beforeAbility !== 'respawning' && state.status === 'respawning')
+    resetSnakeBody(state, 0, state.level.spawn);
   if (state.status === 'respawning') {
     state.classic.effects['player-speed'] = { from: 0, until: 0 };
     state.classic.departure = null;

@@ -1,3 +1,4 @@
+import { createSnakeHuntCandidates } from './snake-hunt-candidates.mjs';
 import { createOpeningCandidates } from './horizon-candidates.mjs';
 import { createHuntTrainingCandidates } from './hunt-training-candidates.mjs';
 import { createBorderCandidates } from './border-candidates.mjs';
@@ -54,6 +55,7 @@ export function createAuthoredJourneyRoute(id) {
   return createAuthoredJourneyRouteDefinition(id, {
     createOpeningCandidates,
     createHuntTrainingCandidates,
+    createSnakeHuntCandidates,
     createBorderCandidates,
     createWholeJourneyCandidates,
     createWholeSpatialCandidates,
