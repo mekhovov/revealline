@@ -1,0 +1,95 @@
+{
+  "sourceHead": "2573ced30",
+  "gameURL": "http://127.0.0.1:8799/appearance-review-20261002/game/?journey=whole-spatial-v25",
+  "inventory": {
+    "dropdown": 16,
+    "cards": 16,
+    "applyButton": false
+  },
+  "industrial": {
+    "normal": {
+      "buttonMaterial": true,
+      "panelMaterial": true,
+      "selectedBackground": "rgb(230, 184, 92)"
+    },
+    "ornamentsOff": {
+      "buttonMaterial": false,
+      "panelMaterial": false
+    },
+    "highContrast": {
+      "buttonMaterial": false,
+      "texture": "off"
+    }
+  },
+  "immediateSelection": {
+    "deepSpace": "theme-card-deep-space retained focus",
+    "moonlitGrove": "Enter activated theme-card-moonlit-grove and retained focus"
+  },
+  "studio": {
+    "chrome": "dos",
+    "chromeButtons": {
+      "material": false,
+      "shadow": false
+    },
+    "candidateMaterial": "steel",
+    "candidateButtons": {
+      "material": true,
+      "shadow": true
+    },
+    "workspaceUnchanged": true
+  },
+  "layout": {
+    "cards": [
+      {
+        "client": 324,
+        "label": "Обсидіановий релікварійСвятилище з вулканічного каменю: старе золото, світлі написи й гранатові деталі.",
+        "scroll": 324
+      },
+      {
+        "client": 324,
+        "label": "Далекий космосМісток космічного корабля: нічна синява, крижано-блакитні прилади й теплі навігаційні вогні.",
+        "scroll": 324
+      },
+      {
+        "client": 324,
+        "label": "Місячний гайТихий нічний ліс із зеленню папороті та сріблястим місячним сяйвом.",
+        "scroll": 324
+      }
+    ],
+    "family": "obsidian-reliquary",
+    "height": 720,
+    "lang": "uk",
+    "pageWidth": 1280,
+    "width": 1280
+  },
+  "sim": [
+    {
+      "collection": "obsidian-reliquary",
+      "environment": "Training hangar",
+      "quality": "balanced",
+      "stats": "198 draw calls · 7490 triangles · 19 textures"
+    },
+    {
+      "collection": "deep-space",
+      "environment": "Training hangar",
+      "quality": "balanced",
+      "specimen": "deep-space",
+      "stats": "deep-space · 198 draw calls · 7490 triangles · 19 textures"
+    },
+    {
+      "collection": "moonlit-grove",
+      "environment": "Training hangar",
+      "quality": "balanced",
+      "specimen": "moonlit-grove",
+      "stats": "moonlit-grove · 198 draw calls · 7490 triangles · 19 textures"
+    }
+  ],
+  "gameErrors": [],
+  "simErrors": [],
+  "restored": {
+    "contrast": "normal",
+    "lang": "en",
+    "texture": "on",
+    "theme": "industrial-workshop"
+  }
+}
