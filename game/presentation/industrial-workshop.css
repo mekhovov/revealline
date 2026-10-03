@@ -36,6 +36,7 @@
   --ui-pressed-depth: initial;
   --ui-selected-depth: initial;
   --ui-gallery-depth: none;
+  --ui-press-travel: none;
   --ui-scene-motif: none;
   --ui-scene-motif-size: 48px 48px;
   --ui-scene-inset: 24px 24px auto auto;
@@ -964,13 +965,22 @@
   :where(button, .button, [role='button'], .native-menu-actions > a, .game-mode-choice > a) {
   transition:
     box-shadow 100ms ease,
-    outline-color 100ms ease;
+    outline-color 100ms ease,
+    translate 70ms ease-out;
+}
+[data-theme-styled='true']
+  :where(button, .button, [role='button'], .native-menu-actions > a, .game-mode-choice > a):is(
+    :active,
+    [data-state='pressed']
+  ):not(:disabled, [aria-disabled='true']) {
+  translate: var(--ui-press-travel);
 }
 /* The game's motion preference applies even when the operating system allows
    animation. Keep this override after the common action transition recipe. */
 [data-theme-motion='reduced']
   :where(button, .button, [role='button'], .native-menu-actions > a, .game-mode-choice > a) {
   transition: none;
+  translate: none;
 }
 [data-theme-styled='true'] label:has(> input:is([type='checkbox'], [type='radio'])) {
   color: var(--iw-text);
@@ -1111,6 +1121,7 @@
   [data-theme-styled='true']
     :where(button, .button, [role='button'], .native-menu-actions > a, .game-mode-choice > a) {
     transition: none;
+    translate: none;
   }
 }
 
@@ -1410,6 +1421,10 @@
   --ui-grain-timber: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='192' height='128' shape-rendering='crispEdges'%3E%3Cpath fill='none' stroke='%23000' stroke-opacity='.045' d='M81 15h9v3h17v3h13v2h14v1h7v-1h8v-2h10v-3h13v-3h11v-3'/%3E%3Cpath fill='none' stroke='%23000' stroke-opacity='.045' d='M15 105h17v-1h9v-1h8v-1h15v0h17v0h7v1h12v1h10v1'/%3E%3Cpath fill='none' stroke='%23000' stroke-opacity='.045' d='M73 99h14v1h13v1h10v1h15v1h9v0'/%3E%3Cpath fill='none' stroke='%23000' stroke-opacity='.045' d='M64 18h13v1h11v2h16v3'/%3E%3Cpath fill='none' stroke='%23000' stroke-opacity='.045' d='M25 7h16v-1h16v-1h17v0h17v1h17v1h15v1h9v0h15v0h14v-1h8v-1h16v-1'/%3E%3Cpath fill='none' stroke='%23000' stroke-opacity='.045' d='M60 25h15v0h12v1h15v1h13v1h12v1h14v0'/%3E%3Cpath fill='none' stroke='%23000' stroke-opacity='.045' d='M25 79h17v-3h17v-2h8v0h8v1h12v2'/%3E%3Cpath fill='none' stroke='%23fff' stroke-opacity='.028' d='M68 13h7v0h15v1h9v1h7v1h15v1h7v0h8v0h6v0'/%3E%3Cpath fill='none' stroke='%23fff' stroke-opacity='.028' d='M35 90h12v-3h6v-1h10v-1h8v1h10v2h13v3h14v3h7v2h8v2'/%3E%3Cpath fill='none' stroke='%23fff' stroke-opacity='.028' d='M13 94h16v-1h11v-1h6v-1h9v-1h6v0h10v0h16v1h7v1h15v1'/%3E%3Cpath fill='none' stroke='%23fff' stroke-opacity='.028' d='M51 100h12v0h8v0h8v1h10v1'/%3E%3Cpath fill='none' stroke='%23fff' stroke-opacity='.028' d='M55 83h6v0h11v0h10v2h17v3h7v3h11v2h15v1h17v-1h13v-3h6v-3'/%3E%3Cpath fill='none' stroke='%23fff' stroke-opacity='.028' d='M26 82h10v-1h15v-1h11v0h12v0h16v1h13v1h10v1'/%3E%3Cpath fill='none' stroke='%23fff' stroke-opacity='.028' d='M35 28h9v-1h9v-1h14v0h13v0'/%3E%3C/svg%3E");
   --ui-grain-stone: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='192' height='128' shape-rendering='crispEdges'%3E%3Cpath fill='%23fff' opacity='.028' d='M18 33h6v1h2v1h-7v-1h-1zM160 72h6v2h-6zM145 100h4v1h-4zM94 118h3v1h2v1h-4v-1h-1zM62 19h5v1h-5zM147 18h3v1h-3zM85 59h3v1h2v1h-4v-1h-1zM121 47h5v2h-5zM95 56h2v2h-2zM54 77h6v1h2v1h-7v-1h-1zM115 4h3v2h-3zM50 21h5v1h-5zM126 95h6v1h2v1h-7v-1h-1zM127 90h5v2h-5zM159 21h2v2h-2zM153 89h5v1h2v1h-6v-1h-1z'/%3E%3Cpath fill='%23000' opacity='.04' d='M146 23h2v2h-2zM179 84h3v1h2v1h-4v-1h-1zM12 16h5v2h-5zM151 77h5v1h-5zM31 104h5v1h2v1h-6v-1h-1zM137 43h5v1h-5zM70 81h5v2h-5zM124 10h6v1h2v1h-7v-1h-1zM20 118h4v2h-4zM90 69h6v2h-6zM118 30h3v1h2v1h-4v-1h-1zM36 86h2v2h-2zM82 103h4v1h-4zM61 16h3v1h2v1h-4v-1h-1zM115 58h2v1h-2zM106 98h3v2h-3z'/%3E%3C/svg%3E");
   --ui-grain-fiber: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='192' height='128' shape-rendering='crispEdges'%3E%3Cpath fill='%23fff' opacity='.035' d='M137 49h8v1h-3v1h-2v-1h-2zM81 29h6v1h-3v1h-2v-1h-2zM82 31h3v1h-3v1h-2v-1h-2zM54 100h9v1h-3v1h-2v-1h-2zM114 57h4v1h-3v1h-2v-1h-2zM145 26h9v1h-3v1h-2v-1h-2zM129 105h8v1h-3v1h-2v-1h-2zM84 63h3v1h-3v1h-2v-1h-2zM37 44h9v1h-3v1h-2v-1h-2zM136 106h5v1h-3v1h-2v-1h-2zM142 46h8v1h-3v1h-2v-1h-2zM33 60h6v1h-3v1h-2v-1h-2zM16 13h3v1h-3v1h-2v-1h-2z'/%3E%3Cpath fill='%23000' opacity='.033' d='M108 55h4v1h-3v1h-2v-1h-2zM80 108h3v1h-3v1h-2v-1h-2zM36 44h8v1h-3v1h-2v-1h-2zM35 84h4v1h-3v1h-2v-1h-2zM39 91h5v1h-3v1h-2v-1h-2zM83 46h8v1h-3v1h-2v-1h-2zM134 114h9v1h-3v1h-2v-1h-2zM81 45h4v1h-3v1h-2v-1h-2zM75 15h9v1h-3v1h-2v-1h-2zM42 34h4v1h-3v1h-2v-1h-2zM156 90h4v1h-3v1h-2v-1h-2zM89 27h8v1h-3v1h-2v-1h-2z'/%3E%3C/svg%3E");
+  --ui-grain-machining: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='256' height='128' shape-rendering='crispEdges'%3E%3Cpath fill='%23000' opacity='.075' d='M12 18h34v1H12zM91 43h19v1H91zM164 12h47v1h-47zM37 95h31v1H37zM146 103h18v1h-18zM208 74h26v1h-26zM118 65h8v1h-8zM68 28h6v1h-6z'/%3E%3Cpath fill='%23fff' opacity='.045' d='M13 19h30v1H13zM92 44h16v1H92zM167 13h40v1h-40zM39 96h26v1H39zM147 104h15v1h-15zM209 75h22v1h-22z'/%3E%3C/svg%3E");
+  --ui-grain-edge-wear: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='128' height='6' shape-rendering='crispEdges'%3E%3Cpath fill='%23fff' opacity='.20' d='M7 1h12v1H7zM42 2h5v1h-5zM76 1h17v1H76zM111 2h8v1h-8z'/%3E%3Cpath fill='%23000' opacity='.26' d='M8 2h9v1H8zM42 3h4v1h-4zM78 2h13v1H78zM111 3h6v1h-6z'/%3E%3C/svg%3E");
+  --ui-grain-vent: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='96' height='8' shape-rendering='crispEdges'%3E%3Cpath fill='%23000' opacity='.45' d='M4 2h3v4h-3zM10 2h3v4h-3zM16 2h3v4h-3zM22 2h3v4h-3zM28 2h3v4h-3zM34 2h3v4h-3zM40 2h3v4h-3zM46 2h3v4h-3zM52 2h3v4h-3zM58 2h3v4h-3zM64 2h3v4h-3zM70 2h3v4h-3zM76 2h3v4h-3zM82 2h3v4h-3zM88 2h3v4h-3z'/%3E%3Cpath fill='%23fff' opacity='.14' d='M4 6h3v1h-3zM10 6h3v1h-3zM16 6h3v1h-3zM22 6h3v1h-3zM28 6h3v1h-3zM34 6h3v1h-3zM40 6h3v1h-3zM46 6h3v1h-3zM52 6h3v1h-3zM58 6h3v1h-3zM64 6h3v1h-3zM70 6h3v1h-3zM76 6h3v1h-3zM82 6h3v1h-3zM88 6h3v1h-3z'/%3E%3C/svg%3E");
+  --ui-grain-bulkhead: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='256' height='192' shape-rendering='crispEdges'%3E%3Cpath fill='%23000' opacity='.42' d='M0 0h256v2H0zM0 2h2v190H0z'/%3E%3Cpath fill='%23fff' opacity='.07' d='M2 2h254v1H2zM2 3h1v189H2z'/%3E%3Cpath fill='%23000' opacity='.32' d='M9 9h6v6H9zM241 9h6v6h-6zM9 177h6v6H9zM241 177h6v6h-6z'/%3E%3Cpath fill='%23fff' opacity='.12' d='M10 10h4v1h-4zM242 10h4v1h-4zM10 178h4v1h-4zM242 178h4v1h-4z'/%3E%3Cpath fill='%23fff' opacity='.055' d='M34 3h26v1H34zM186 3h39v1h-39zM3 88h1v12H3z'/%3E%3C/svg%3E");
 }
 /* END ORIGINAL MATERIAL GRAIN */
 
@@ -1438,14 +1453,15 @@
       [data-theme-material='steel'],
       [data-theme-material='industrial-workshop']
     )[data-theme-texture='on'][data-theme-contrast='normal'][data-theme-surface='bevel'] {
-    --ui-grain: var(--ui-grain-powder) 17px 11px / 192px 128px repeat;
+    --ui-grain:
+      var(--ui-grain-machining) 0 0 / 256px 128px repeat,
+      var(--ui-grain-powder) 17px 11px / 192px 128px repeat;
     --ui-panel-finish:
-      repeating-linear-gradient(90deg, #0007 0 2px, #ffffff18 2px 3px, transparent 3px 6px) right
-        18px top 8px / 96px 5px no-repeat,
-      var(--ui-grain-powder) 0 0 / 192px 128px repeat,
+      var(--ui-grain-vent) right 18px top 7px / 96px 8px no-repeat,
+      var(--ui-grain-edge-wear) left 14px top 2px / 128px 6px repeat-x, var(--ui-grain),
       linear-gradient(180deg, #ffffff18, transparent 7px, transparent calc(100% - 5px), #00000025);
     --ui-control-finish:
-      var(--ui-grain),
+      var(--ui-grain-edge-wear) left 14px top 1px / 128px 6px repeat-x, var(--ui-grain),
       linear-gradient(90deg, #ffffff14, transparent 4px, transparent calc(100% - 4px), #00000020),
       linear-gradient(
         180deg,
@@ -1457,13 +1473,13 @@
         #00000050
       );
     --ui-active-finish:
-      var(--ui-grain),
+      var(--ui-grain-edge-wear) left 14px bottom 1px / 128px 6px repeat-x, var(--ui-grain),
       linear-gradient(180deg, #00000022, transparent 3px, transparent calc(100% - 2px), #ffffff20);
     --ui-inset-finish:
       var(--ui-grain-powder) 41px 27px / 192px 128px repeat,
       linear-gradient(180deg, #00000048, transparent 6px, transparent calc(100% - 2px), #ffffff10);
     --ui-toolbar-finish:
-      var(--ui-grain),
+      var(--ui-grain-edge-wear) left 14px top 1px / 128px 6px repeat-x, var(--ui-grain),
       linear-gradient(180deg, #ffffff28, transparent 4px, transparent calc(100% - 4px), #00000025);
     --ui-thumb-finish:
       repeating-linear-gradient(90deg, transparent 0 3px, #0006 3px 4px, #fff4 4px 5px) center /
@@ -1502,21 +1518,10 @@
         transparent 35%,
         color-mix(in srgb, var(--iw-accent) 7%, transparent)
       ),
-      repeating-linear-gradient(
-        0deg,
-        transparent 0 190px,
-        #0007 190px 191px,
-        color-mix(in srgb, var(--iw-line) 28%, transparent) 191px 192px
-      ),
-      repeating-linear-gradient(
-        90deg,
-        transparent 0 190px,
-        #0007 190px 191px,
-        color-mix(in srgb, var(--iw-line) 28%, transparent) 191px 192px
-      );
-    --ui-scene-motif-size: 100% 100%, 192px 192px, 192px 192px;
+      var(--ui-grain-bulkhead), var(--ui-grain-machining);
+    --ui-scene-motif-size: 100% 100%, 256px 192px, 256px 128px;
     --ui-scene-repeat: no-repeat, repeat, repeat;
-    --ui-scene-opacity: 0.6;
+    --ui-scene-opacity: 0.8;
   }
 
   /* Cloth keeps its stitches on the panel seam. Buttons are woven fabric,
@@ -1696,6 +1701,53 @@
 
   /* These variants are resolved from the interface basis, including Studio
      descendants, rather than testing the current campaign or family name. */
+  [data-theme-finish='ember-foundry'][data-theme-texture='on'][data-theme-contrast='normal'][data-theme-surface='bevel'] {
+    --ui-grain:
+      var(--ui-grain-stone) 0 0 / 192px 128px repeat,
+      var(--ui-grain-powder) 17px 11px / 192px 128px repeat;
+    --ui-panel-finish:
+      var(--ui-grain-vent) right 18px top 7px / 96px 8px no-repeat,
+      linear-gradient(90deg, var(--iw-accent), transparent) left 12px bottom 5px / 72px 2px
+        no-repeat,
+      var(--ui-grain),
+      linear-gradient(180deg, #ffffff12, transparent 6px, transparent calc(100% - 5px), #0005);
+    --ui-toolbar-finish:
+      var(--ui-grain-brush) 0 0 / 192px 96px repeat,
+      linear-gradient(180deg, #ffffff25, transparent 4px, transparent calc(100% - 4px), #0005);
+    --ui-panel-depth:
+      inset 1px 1px 0 #ffffff20, inset -2px -3px 0 #0009, 0 0 0 1px #0008, 0 5px 0 var(--ui-shadow),
+      0 16px 28px #0006;
+  }
+  [data-theme-finish='polar-relay'][data-theme-texture='on'][data-theme-contrast='normal'][data-theme-surface='bevel'] {
+    --ui-grain: var(--ui-grain-brush) 0 0 / 192px 96px repeat;
+    --ui-panel-finish:
+      var(--ui-grain-vent) right 18px top 7px / 96px 8px no-repeat,
+      linear-gradient(
+          90deg,
+          var(--iw-accent) 0 5px,
+          transparent 5px 9px,
+          var(--iw-accent) 9px 14px,
+          transparent 14px 18px,
+          var(--iw-accent) 18px 23px
+        )
+        left 14px top 8px / 23px 2px no-repeat,
+      var(--ui-grain),
+      linear-gradient(180deg, #ffffff20, transparent 8px, transparent calc(100% - 4px), #0004);
+    --ui-control-finish:
+      var(--ui-grain),
+      linear-gradient(90deg, #ffffff18, transparent 3px, transparent calc(100% - 3px), #0003),
+      linear-gradient(
+        180deg,
+        #ffffff40 0 1px,
+        #ffffff12 1px 3px,
+        transparent 5px,
+        transparent calc(100% - 3px),
+        #0005
+      );
+    --ui-panel-depth:
+      inset 1px 1px 0 #ffffff30, inset -1px -2px 0 #0008, 0 0 0 1px #0007, 0 3px 0 var(--ui-shadow),
+      0 12px 24px #0005;
+  }
   [data-theme-finish='obsidian-reliquary'][data-theme-texture='on'][data-theme-contrast='normal'] {
     --ui-panel-finish:
       var(--ui-metal),
@@ -1778,5 +1830,13 @@
     --ui-panel-depth: inset 0 0 0 1px var(--iw-panel), inset 0 0 0 2px var(--iw-control-line);
     --ui-hover-face: var(--iw-selection);
     --ui-hover-ink: var(--iw-on-selection);
+  }
+}
+
+/* Mechanical travel is an input response, never an idle animation. Both
+   motion preferences opt in; nested flat/HC specimens keep their own reset. */
+@media (prefers-reduced-motion: no-preference) and (forced-colors: none) {
+  [data-theme-material='steel'][data-theme-texture='on'][data-theme-contrast='normal'][data-theme-surface='bevel'][data-theme-motion='full'] {
+    --ui-press-travel: 0 2px;
   }
 }

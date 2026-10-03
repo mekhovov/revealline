@@ -243,12 +243,33 @@ const productionTheme = (
     'obsidian-reliquary': 'brass',
     'deep-space': 'composite',
     'moonlit-grove': 'wood',
+    'ember-foundry': 'steel',
+    'polar-relay': 'steel',
   }[id],
   provenance: { author: 'RevealLine', license: 'project-original', source },
 });
 const ukrainianSource = (name) =>
   `swarmshared/da1c1f3c4b985ead2b8d306c9d883cb0dbcd1521/themes/palettes/${name}.json; original game adaptation`;
 const RETAINED_PRODUCTION_INTERFACE_THEMES = freeze([
+  { ...RETAINED_INTERFACE_THEMES[0], revision: 'r2', name: 'Classic Field Kit' },
+  productionTheme(
+    'industrial-workshop',
+    'Industrial Workshop',
+    {
+      ink: '#17191b',
+      panel: '#272b2e',
+      panelRaised: '#363c40',
+      text: '#f3eddd',
+      muted: '#c4c1b6',
+      line: '#50585d',
+      controlLine: '#8f989c',
+      accent: '#e6b85c',
+      amber: '#e6b85c',
+      hazard: '#ff9987',
+      safe: '#bed7a4',
+    },
+    { revision: 'r2' },
+  ),
   productionTheme(
     'vyshyvanka',
     'Vyshyvanka',
@@ -269,25 +290,34 @@ const RETAINED_PRODUCTION_INTERFACE_THEMES = freeze([
   ),
 ]);
 export const BUILTIN_INTERFACE_THEMES = freeze([
-  { ...RETAINED_INTERFACE_THEMES[0], revision: 'r2', name: 'Classic Field Kit' },
-  productionTheme(
-    'industrial-workshop',
-    'Industrial Workshop',
-    {
-      ink: '#17191b',
-      panel: '#272b2e',
-      panelRaised: '#363c40',
-      text: '#f3eddd',
-      muted: '#c4c1b6',
-      line: '#50585d',
-      controlLine: '#8f989c',
-      accent: '#e6b85c',
-      amber: '#e6b85c',
-      hazard: '#ff9987',
-      safe: '#bed7a4',
-    },
-    { revision: 'r2' },
-  ),
+  { ...RETAINED_PRODUCTION_INTERFACE_THEMES[0], revision: 'r3', name: 'Signal Blue' },
+  { ...RETAINED_PRODUCTION_INTERFACE_THEMES[1], revision: 'r3', name: 'Flight Deck' },
+  productionTheme('ember-foundry', 'Ember Foundry', {
+    ink: '#171311',
+    panel: '#2b2420',
+    panelRaised: '#3b312a',
+    text: '#f8ecd9',
+    muted: '#cebeac',
+    line: '#625045',
+    controlLine: '#ae9180',
+    accent: '#f0a266',
+    amber: '#edc377',
+    hazard: '#ffa18e',
+    safe: '#b4cda0',
+  }),
+  productionTheme('polar-relay', 'Polar Relay', {
+    ink: '#10191e',
+    panel: '#202e36',
+    panelRaised: '#2e414c',
+    text: '#eaf2ee',
+    muted: '#b9ced6',
+    line: '#536d7a',
+    controlLine: '#92b2c0',
+    accent: '#91d5e3',
+    amber: '#efc07a',
+    hazard: '#ffa595',
+    safe: '#b4d8bf',
+  }),
   productionTheme(
     'vyshyvanka',
     'Vyshyvanka',
@@ -515,6 +545,17 @@ export const APPLICATION_THEME_FAMILY = 'industrial-workshop';
 // recordings, authored defaults and first-paint projections.
 export const INSTALLED_THEME_FAMILIES = freeze([
   ...BUILTIN_THEME_FAMILIES,
+  ...RETAINED_PRODUCTION_INTERFACE_THEMES.filter((entry) =>
+    ['legacy', 'industrial-workshop'].includes(entry.id),
+  ).map((entry) => ({
+    format: 'ThemeFamily.v1',
+    id: entry.id,
+    revision: entry.revision,
+    name: entry.name,
+    interface: { id: entry.id, revision: entry.revision },
+    arcade: entry.id === 'legacy' ? null : { id: entry.id, revision: 'r2' },
+    sim: entry.id === 'legacy' ? null : { id: entry.id, revision: 'r1' },
+  })),
   ...RETAINED_THEME_FAMILIES.filter(
     (retained) =>
       !BUILTIN_THEME_FAMILIES.some(
@@ -674,6 +715,30 @@ export function contrastRatio(foreground, background) {
 // Texture is confined to the six-pixel frame. The quiet center has an exact
 // contrast value, and scales without stretching wear into the reading surface.
 function material(color, light, textured, family = 'industrial-workshop', accent = light) {
+  if (textured && ['industrial-workshop', 'steel'].includes(family)) {
+    // Machined rim: the six-pixel slice owns all wear and fasteners. The
+    // center is quiet and untextured, including when a renderer uses fill.
+    const rim = `<path d="M1 46V1h45M3 42V3h39" stroke="${light}" opacity=".55" fill="none"/><path d="M46 1v45H1M44 5v39H5" stroke="#10130f" opacity=".85" fill="none"/><path d="M8 2h5m12 0h8M2 17v8m43 7v7M13 45h8m10 0h6" stroke="${light}" opacity=".22"/>`;
+    const screws = [
+      [4, 4],
+      [44, 4],
+      [4, 44],
+      [44, 44],
+    ]
+      .map(
+        ([x, y]) =>
+          `<path d="M${x - 1} ${y - 1}h3v3h-3z" fill="${light}" opacity=".6"/><path d="M${x - 1} ${y}h3" stroke="#10130f" opacity=".8"/>`,
+      )
+      .join('');
+    const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" shape-rendering="crispEdges"><path fill="${color}" d="M0 0h48v48H0z"/>${rim}${screws}</svg>`;
+    return {
+      source: `data:image/svg+xml,${encodeURIComponent(svg)}`,
+      slice: 6,
+      fill: true,
+      repeat: 'repeat',
+      fallback: color,
+    };
+  }
   const grain = textured
     ? `<path d="M8 2h5m9 1h8M2 14v7m43 6v8M12 45h9" stroke="${light}" opacity=".25"/><path d="M4 4h2v2H4zm38 0h2v2h-2zM4 42h2v2H4zm38 0h2v2h-2z" fill="${light}" opacity=".6"/>`
     : '';
@@ -715,6 +780,8 @@ function materialVariant(source, interfaceBasis) {
     'obsidian-reliquary': 'brass',
     'deep-space': 'composite',
     'moonlit-grove': 'wood',
+    'ember-foundry': 'steel',
+    'polar-relay': 'steel',
   };
   return base && variants[base.id] === style ? base.id : style;
 }
@@ -990,7 +1057,7 @@ export function applyResolvedPresentation(element, resolved) {
   const attributes = {
     interfaceTheme: resolved.interfaceId,
     // Only the original pinned adapter delegates paint to the former UI skin.
-    // Current Classic Field Kit is a complete, fixed semantic palette.
+    // Current Signal Blue is a complete, fixed semantic palette.
     themeStyled: String(
       resolved.interfaceId !== 'legacy' ||
         resolved.revision !== 'r1' ||
@@ -1448,6 +1515,22 @@ const workshopAssets = {
   scenery: 'builtin:workshop-perimeter',
 };
 export const SIM_COLLECTION_PALETTES = freeze({
+  'ember-foundry': {
+    sky: 0x6c625b,
+    fog: 0x83796d,
+    ground: 0x6d6456,
+    wall: 0x51453d,
+    accent: 0xf0a266,
+    warm: 0xedc377,
+  },
+  'polar-relay': {
+    sky: 0x8ba9b6,
+    fog: 0xa1bac2,
+    ground: 0x687c7e,
+    wall: 0x425e6e,
+    accent: 0x91d5e3,
+    warm: 0xefc07a,
+  },
   vyshyvanka: {
     sky: 0x3d4552,
     fog: 0x3d4552,
@@ -1554,6 +1637,26 @@ export const SIM_COLLECTION_PALETTES = freeze({
   },
 });
 const collectionEffectFinishes = {
+  'ember-foundry': {
+    playerPulse: 0xc3dba8,
+    hostilePulse: 0xffa18e,
+    ghost: 0xb9cfcc,
+    ghostEmissive: 0x496764,
+    trail: 0xb9cfcc,
+    goalComplete: 0xb4cda0,
+    goalInactive: 0x9c8675,
+    goalGlowInactive: 0x9c8675,
+  },
+  'polar-relay': {
+    playerPulse: 0xc2e5df,
+    hostilePulse: 0xffa595,
+    ghost: 0xa7cfe2,
+    ghostEmissive: 0x3b677d,
+    trail: 0xa7cfe2,
+    goalComplete: 0xb4d8bf,
+    goalInactive: 0x7b9eac,
+    goalGlowInactive: 0x7b9eac,
+  },
   'pocket-lcd': {
     playerPulse: 0xd8e2b2,
     hostilePulse: 0x324c2a,
