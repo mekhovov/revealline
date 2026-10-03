@@ -33,6 +33,7 @@ import {
 } from '../../publishing/edition-admission.mjs';
 import { readEditionZip } from '../../publishing/edition-zip.mjs';
 import { checkEditionSourceEligibility } from '../../scripts/check-edition-source.mjs';
+import { COMPANY_PACKAGE_BUDGET } from '../editions/package-budget.mjs';
 
 const bytes = (value) => Buffer.from(JSON.stringify(value));
 const digest = (value) => createHash('sha256').update(value).digest('hex');
@@ -199,20 +200,45 @@ test('final offline edition budget counts every generated worker and manifest', 
       files,
       enginePaths: [...options.enginePaths, ...extra, 'game/one-more.txt'],
     }),
-    /Final edition output exceeds 2000 files or 64 MiB \(2001 files/,
+    /Final edition output exceeds 2000 files or 80 MiB \(2001 files/,
   );
   const baselineBytes = [...baseline.files.values()].reduce((sum, bytes) => sum + bytes.length, 0);
   const large = new Map(f.files);
-  large.set('game/padding.txt', Buffer.alloc(64 * 1024 * 1024 - baselineBytes + 1024));
+  large.set(
+    'game/padding.txt',
+    Buffer.alloc(COMPANY_PACKAGE_BUDGET.maxBytes - baselineBytes + 1024),
+  );
   await assert.rejects(
     compileEdition({
       ...options,
       files: large,
       enginePaths: [...options.enginePaths, 'game/padding.txt'],
     }),
-    /Final edition output exceeds 2000 files or 64 MiB/,
+    /Final edition output exceeds 2000 files or 80 MiB/,
     'Payload fits the earlier cache inventory cap but final generated output does not',
   );
+});
+
+test('Company compiler retains runtime above the former 64 MiB ceiling within its new bounded allowance', async () => {
+  const f = fixture();
+  f.files.set('game/company.html', Buffer.from('<html><head></head><body></body></html>'));
+  f.files.set('game/retained-runtime.txt', Buffer.alloc(65 * 1024 * 1024));
+  const result = await compileEdition({
+    ...f,
+    editionIds: ['coupa-public'],
+    enginePaths: ['game/company.html', 'game/retained-runtime.txt'],
+    version: '1.0.0',
+    offline: { basePath: '/verification/' },
+  });
+  const cache = JSON.parse(result.files.get('offline-cache.json'));
+  assert.ok(cache.totalBytes > 64 * 1024 * 1024);
+  assert.ok(cache.totalBytes < COMPANY_PACKAGE_BUDGET.maxBytes);
+  assert.deepEqual(
+    result.files.get('game/retained-runtime.txt'),
+    f.files.get('game/retained-runtime.txt'),
+  );
+  assert.ok(cache.files.some((row) => row.path === 'game/editions/package-budget.mjs'));
+  assert.ok(result.files.has('edition-build.json'));
 });
 
 test('compacted engine bytes keep candidate provenance, offline hashes and authored content exact', async () => {

@@ -4,12 +4,19 @@ import { buildLauncherNavigationFiles } from './offline-launcher.mjs';
 import { createHash } from 'node:crypto';
 import { editionAppIdentity, validateEditionId } from '../game/edition-context.mjs';
 import { inspectImageDataUrl } from '../game/content.mjs';
+import {
+  COMPANY_PACKAGE_BUDGET,
+  assertCompanyPackageBudget,
+} from '../game/editions/package-budget.mjs';
 
 const sha = (value) => createHash('sha256').update(value).digest('hex');
 const json = (value) => Buffer.from(`${JSON.stringify(value)}\n`);
 export function editionOfflineOptionalPath(path) {
   return (
     (path.startsWith('game/demo-data/') && path.endsWith('.replay.json')) ||
+    /^game\/audio\/reactions\/actors-v1\/actor-[a-z-]+-(?:notice|caught)-(?:en|uk)\.m4a$/.test(
+      path,
+    ) ||
     path === 'game/ui/art/menu-scenes/droneaid-main-background.webp'
   );
 }
@@ -26,6 +33,15 @@ const htmlText = (value) =>
 
 function workerSource(inventory) {
   return `const INVENTORY = ${scriptJSON(inventory)};
+const BUDGET = ${scriptJSON(COMPANY_PACKAGE_BUDGET)};
+if (!Array.isArray(INVENTORY.files) || !INVENTORY.files.length || INVENTORY.files.length > BUDGET.maxFiles) throw new Error('Company offline file budget exceeded.');
+const inventoryPaths = new Set();
+let inventoryBytes = 0;
+for (const row of INVENTORY.files) {
+  if (!row || typeof row.path !== 'string' || !/^[A-Za-z0-9_-][A-Za-z0-9_.-]*(?:\\/[A-Za-z0-9_-][A-Za-z0-9_.-]*)*$/.test(row.path) || inventoryPaths.has(row.path) || !Number.isSafeInteger(row.bytes) || row.bytes < 0 || row.bytes > BUDGET.maxBytes || !/^[a-f0-9]{64}$/.test(row.sha256)) throw new Error('Invalid Company offline file.');
+  inventoryPaths.add(row.path); inventoryBytes += row.bytes;
+}
+if (!Number.isSafeInteger(inventoryBytes) || inventoryBytes !== INVENTORY.totalBytes || inventoryBytes > BUDGET.maxBytes) throw new Error('Company offline byte budget exceeded.');
 const SCOPE = self.registration.scope;
 const CACHE = 'revealline-company-' + encodeURIComponent(SCOPE) + '-' + INVENTORY.buildId;
 const rows = new Map(INVENTORY.files.map(row => [new URL(row.path, SCOPE).href, row]));
@@ -235,6 +251,11 @@ navigator.serviceWorker?.register('./service-worker.js',{scope:'./',updateViaCac
       'game/editions/offline-client.mjs',
       await fs.readFile(new URL('../game/editions/offline-client.mjs', import.meta.url)),
     );
+  if (!result.has('game/editions/package-budget.mjs'))
+    put(
+      'game/editions/package-budget.mjs',
+      await fs.readFile(new URL('../game/editions/package-budget.mjs', import.meta.url)),
+    );
   const launcher = [...result]
     .filter(([path]) => path.startsWith('app/') && path !== 'app/current.json')
     .map(([path, bytes]) => ({ path: path.slice(4), bytes: bytes.byteLength, sha256: sha(bytes) }));
@@ -258,8 +279,7 @@ navigator.serviceWorker?.register('./service-worker.js',{scope:'./',updateViaCac
       return { path, bytes: bytes.byteLength, sha256: sha(bytes) };
     });
   const totalBytes = inventory.reduce((sum, row) => sum + row.bytes, 0);
-  if (inventory.length > 2000 || totalBytes > 64 * 1024 * 1024)
-    throw new Error('Edition offline core exceeds 2000 files or 64 MiB.');
+  assertCompanyPackageBudget(inventory.length, totalBytes, 'Edition offline core');
   const config = {
     format: 'revealline-company-offline.v1',
     editionId,

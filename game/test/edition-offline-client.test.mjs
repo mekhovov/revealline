@@ -6,6 +6,7 @@ import {
   selectPreparedEdition,
 } from '../editions/offline-client.mjs';
 import { validateCompanyInstallationReference } from '../edition-context.mjs';
+import { COMPANY_PACKAGE_BUDGET } from '../editions/package-budget.mjs';
 
 const root = 'https://game.test/revealline/editions/coupa-adventure/';
 const scopeFor = (version = '1.0.0') => `${root}releases/v${version}/site/`;
@@ -83,7 +84,7 @@ test('offline receipts bind the exact edition, release, build and bounded invent
     { version: '2.0.0' },
     { buildId: 'bad' },
     { count: 2001 },
-    { bytes: 64 * 1024 * 1024 + 1 },
+    { bytes: COMPANY_PACKAGE_BUDGET.maxBytes + 1 },
     { version: 'DEV' },
   ]) {
     const h = fixture({ response: { ...ready(), ...change } });
@@ -95,6 +96,21 @@ test('offline receipts bind the exact edition, release, build and bounded invent
   );
   f.registration.scope = root;
   await assert.rejects(verifyEditionOffline(f.options), /not been prepared/);
+});
+
+test('Company verification accepts historical and expanded editions but never trusts a supplied larger cap', async () => {
+  for (const size of [64 * 1024 * 1024, 67_659_546, COMPANY_PACKAGE_BUDGET.maxBytes]) {
+    const f = fixture({ response: { ...ready(), bytes: size } });
+    assert.equal((await verifyEditionOffline(f.options)).bytes, size);
+  }
+  const f = fixture({
+    response: {
+      ...ready(),
+      bytes: COMPANY_PACKAGE_BUDGET.maxBytes + 1,
+      budget: { maxBytes: 1024 * 1024 * 1024 },
+    },
+  });
+  await assert.rejects(verifyEditionOffline(f.options), /different edition or build/);
 });
 
 test('preparation waits, repairs an existing active worker, and releases all listeners on abort or failure', async () => {

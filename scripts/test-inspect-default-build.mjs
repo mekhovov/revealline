@@ -122,6 +122,7 @@ async function committedInspectorFixture(t) {
     'game/data-json.mjs',
     'game/content-launch.mjs',
     'game/edition-context.mjs',
+    'game/editions/package-budget.mjs',
   ]) {
     await fs.mkdir(path.dirname(path.join(root, relative)), { recursive: true });
     await fs.copyFile(new URL(`../${relative}`, import.meta.url), path.join(root, relative));

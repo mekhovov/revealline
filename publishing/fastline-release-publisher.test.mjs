@@ -868,6 +868,20 @@ test('trusted publisher sparse checkout includes the complete static edition val
     'publishing/edition-admission.mjs',
     'publishing/edition-zip.mjs',
     'game/edition-context.mjs',
+    'game/editions/package-budget.mjs',
   ])
     assert.ok(checkout.includes(file), file);
+});
+
+test('frozen Pages validation tracks and checks out the Company budget policy', async () => {
+  const workflow = await readFile(
+    new URL('../.github/workflows/publish-frozen-pages.yml', import.meta.url),
+    'utf8',
+  );
+  const policy = 'game/editions/package-budget.mjs';
+  assert.ok(workflow.split('\npermissions:')[0].includes(policy));
+  const checkout = workflow
+    .split('- name: Check out publishing controller and immutable tags')[1]
+    ?.split('- name:')[0];
+  assert.ok(checkout?.includes(`/${policy}`));
 });

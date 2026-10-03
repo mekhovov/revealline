@@ -4,6 +4,7 @@ import { createHash } from 'node:crypto';
 import { readFile } from 'node:fs/promises';
 import { editionAdmissionFixture as fixture } from './edition-fixture.mjs';
 import { createEditionZip } from './edition-zip.mjs';
+import { COMPANY_PACKAGE_BUDGET } from '../game/editions/package-budget.mjs';
 import {
   validateEditionSourceInventory,
   validatePublicSourceEligibility,
@@ -121,6 +122,30 @@ test('missing, duplicate, over-budget and mismatched source bindings reject admi
     const f = fixture();
     mutate(f);
     await assert.rejects(validateEditionAdmission(f.envelope, f));
+  }
+});
+
+test('Company admission independently rejects runtime overflow before inspecting archive members', async () => {
+  for (const overflow of ['bytes', 'files']) {
+    const f = fixture(),
+      row = f.envelope.editions[0];
+    const manifest = JSON.parse(f.files.get(row.manifest.path));
+    if (overflow === 'bytes') manifest.files[0].bytes += COMPANY_PACKAGE_BUDGET.maxBytes;
+    else
+      while (manifest.files.length <= COMPANY_PACKAGE_BUDGET.maxFiles)
+        manifest.files.push({
+          path: `game/padding-${manifest.files.length}.txt`,
+          bytes: 0,
+          sha256: 'a'.repeat(64),
+        });
+    manifest.totalBytes = manifest.files.reduce((sum, file) => sum + file.bytes, 0);
+    const content = bytes(manifest);
+    f.files.set(row.manifest.path, content);
+    row.manifest = descriptor(row.manifest.path, content);
+    await assert.rejects(
+      validateEditionAdmission(f.envelope, f),
+      /Published edition runtime exceeds 2000 files or 80 MiB/,
+    );
   }
 });
 
