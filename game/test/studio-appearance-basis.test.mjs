@@ -10,7 +10,11 @@ import {
 import { exportThemeBundle, importThemeBundle } from '../presentation/bundle.mjs';
 import { exportRuntimeTheme, importRuntimeTheme } from '../presentation/runtime-transfer.mjs';
 import { createThemeCandidate } from '../presentation/theme-preview.mjs';
-import { COMPONENT_ROLES, getThemeFamily } from '../presentation/theme-system.mjs';
+import {
+  BUILTIN_THEME_FAMILIES,
+  COMPONENT_ROLES,
+  getThemeFamily,
+} from '../presentation/theme-system.mjs';
 import { installThemeHost } from '../presentation/theme-host.mjs';
 import { createStudioStore } from '../presentation/studio-store.mjs';
 import { memoryIndexedDB } from './helpers/soundtrack-fixtures.mjs';
@@ -26,6 +30,71 @@ const basis = (id, revision) => {
     interfaceRevision: family.interface.revision,
   };
 };
+
+test('Theme Studio opens the real workspace editor and shared material gallery without editing a theme', () => {
+  const document = new Document(),
+    window = document.defaultView,
+    header = document.createElement('header'),
+    title = document.createElement('h1');
+  window.location = {
+    href: 'https://example.test/releases/v2/site/authoring/asset-studio/?studio=themes&journey=opening',
+  };
+  header.className = 'studio-header';
+  header.append(title);
+  document.body.append(header);
+  const actions = [],
+    source = setStudioAppearanceBasis(createDefaultThemeBundle(), basis('vyshyvanka')),
+    before = JSON.stringify(source);
+  const workbench = mountThemeWorkbench({
+    document,
+    window,
+    onAction: (...args) => actions.push(args),
+  });
+  workbench.update({
+    library: { entries: [{ id: 'my-theme', name: 'My theme' }] },
+    activeId: 'my-theme',
+    document: source,
+    assets: new Map(),
+    selected: source.slots[0].id,
+  });
+  assert.equal(document.getElementById('theme-workbench').open, true);
+  assert.equal(title.getAttribute('data-i18n'), 'tools:studio.themes.studioTitle');
+  assert.equal(document.getElementById('theme-workspace').value, 'my-theme');
+  const specimen = document.getElementById('theme-material-preview');
+  assert.equal(specimen.dataset.themeFamily, createThemeCandidate(source).family.id);
+  assert.equal(specimen.dataset.themeMaterial, 'linen');
+  assert.ok(specimen.querySelector('button[aria-busy="true"]'));
+  const gallery = document.getElementById('theme-material-gallery');
+  assert.equal(
+    gallery.querySelectorAll('.theme-material-preview').length,
+    0,
+    'Comparison mounts lazily',
+  );
+  gallery.open = true;
+  gallery.emit('toggle');
+  const scopes = gallery.querySelectorAll('.theme-material-preview');
+  assert.deepEqual(
+    scopes.map((item) => item.dataset.themeFamily),
+    BUILTIN_THEME_FAMILIES.map((family) => family.id),
+  );
+  const checkbox = scopes[0].querySelector('input[type="checkbox"]');
+  checkbox.checked = false;
+  checkbox.emit('change');
+  gallery.emit('toggle');
+  assert.equal(
+    gallery.querySelectorAll('.theme-material-preview').length,
+    BUILTIN_THEME_FAMILIES.length,
+  );
+  assert.equal(
+    scopes[0].querySelector('input[type="checkbox"]'),
+    checkbox,
+    'Live controls retain their identity',
+  );
+  assert.deepEqual(actions, []);
+  assert.equal(JSON.stringify(source), before);
+  workbench.dispose();
+  assert.equal(document.getElementById('theme-workbench'), null);
+});
 
 for (const pin of [basis('dnipro-porcelain'), basis('industrial-workshop', 'r1')]) {
   test(`saved workspace, duplicate, native and runtime exports retain ${pin.familyId}@${pin.familyRevision}`, async () => {

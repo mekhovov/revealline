@@ -3132,5 +3132,12 @@
   "studio.hunt.runner": "huntable humanoid runner, {{speed}} cells/s; flees within six cells with half-second decisions; contact or enclosure removes it; never retains territory",
   "studio.hunt.guard": "huntable humanoid guard, {{speed}} cells/s; contact or enclosure removes it; {{opening}}s opening / {{warning}}s locked warning / {{recovery}}s recovery / {{rest}}s rest; only its projectiles harm exposed players",
   "studio.hunt.legend": "Humanoid figures: huntable runners and guards. Touch or enclosure removes them; their bodies never retain territory. Guards carry a weapon; their shots remain dangerous.",
-  "studio.geometry.optionalInHunt": "optional in Hunt"
+  "studio.geometry.optionalInHunt": "optional in Hunt",
+  "studio.themes.studioTitle": "Theme Studio",
+  "studio.themes.pageTitle": "FPV / LINE — Theme Studio",
+  "studio.themes.intro": "Create and manage independent theme workspaces, then inspect their materials and controls in the live preview.",
+  "studio.themes.gallery": "Explore built-in themes",
+  "studio.themes.galleryHelp": "Try each theme’s controls without changing your game appearance or workspace.",
+  "studio.themes.openAssetTools": "Open asset tools",
+  "studio.themes.openThemeStudio": "Open Theme Studio"
 }

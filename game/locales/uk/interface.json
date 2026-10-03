@@ -5917,5 +5917,18 @@
   "workshop.theme.deep-space": "Далекий космос",
   "workshop.description.deep-space": "Місток космічного корабля: нічна синява, крижано-блакитні прилади й теплі навігаційні вогні.",
   "workshop.theme.moonlit-grove": "Місячний гай",
-  "workshop.description.moonlit-grove": "Тихий нічний ліс із зеленню папороті та сріблястим місячним сяйвом."
+  "workshop.description.moonlit-grove": "Тихий нічний ліс із зеленню папороті та сріблястим місячним сяйвом.",
+  "themeStudio": "Студія тем",
+  "createManageAndPreviewThemes": "Створення, керування й перегляд тем",
+  "workshop.materialPreview.mission": "Місія",
+  "workshop.materialPreview.launch": "Старт",
+  "workshop.materialPreview.hover": "Наведення",
+  "workshop.materialPreview.pressed": "Натиснуто",
+  "workshop.materialPreview.focus": "Фокус",
+  "workshop.materialPreview.loading": "Завантаження",
+  "workshop.materialPreview.disabled": "Недоступно",
+  "workshop.materialPreview.detail": "Деталі",
+  "workshop.materialPreview.balanced": "Збалансовано",
+  "workshop.materialPreview.detailed": "Докладно",
+  "workshop.materialPreview.telemetry": "Показати телеметрію"
 }

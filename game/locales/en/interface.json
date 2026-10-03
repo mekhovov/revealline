@@ -5807,5 +5807,18 @@
   "workshop.theme.deep-space": "Deep Space",
   "workshop.description.deep-space": "A midnight spacecraft bridge with ice-blue instruments and warm navigation lights.",
   "workshop.theme.moonlit-grove": "Moonlit Grove",
-  "workshop.description.moonlit-grove": "A quiet forest after dark, with fern-green surfaces and silver moonlight."
+  "workshop.description.moonlit-grove": "A quiet forest after dark, with fern-green surfaces and silver moonlight.",
+  "themeStudio": "Theme Studio",
+  "createManageAndPreviewThemes": "Create, manage & preview themes",
+  "workshop.materialPreview.mission": "Mission",
+  "workshop.materialPreview.launch": "Launch",
+  "workshop.materialPreview.hover": "Hover",
+  "workshop.materialPreview.pressed": "Pressed",
+  "workshop.materialPreview.focus": "Focus",
+  "workshop.materialPreview.loading": "Loading",
+  "workshop.materialPreview.disabled": "Disabled",
+  "workshop.materialPreview.detail": "Detail",
+  "workshop.materialPreview.balanced": "Balanced",
+  "workshop.materialPreview.detailed": "Detailed",
+  "workshop.materialPreview.telemetry": "Show telemetry"
 }
