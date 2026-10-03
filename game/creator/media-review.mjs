@@ -1,4 +1,5 @@
 import { prepareCreatorMediaIntake } from './media-intake.mjs';
+import { prepareMobileCreatorVideo } from './video-mobile.mjs';
 import {
   formatNumber,
   localizedAttribute,
@@ -91,6 +92,7 @@ export function createCreatorMediaReviewController({
   document,
   nodes,
   prepareIntake = prepareCreatorMediaIntake,
+  prepareVideo = prepareMobileCreatorVideo,
   createObjectURL = (blob) => URL.createObjectURL(blob),
   revokeObjectURL = (url) => URL.revokeObjectURL(url),
   onPrepared = () => {},
@@ -534,6 +536,7 @@ export function createCreatorMediaReviewController({
       included.map(({ name, kind, blob }) => ({ name, kind, blob })),
       {
         signal: aborter.signal,
+        prepareVideo,
         preserveOrder: true,
         pairingFor: ({ assetSha256 }) => pairing.get(assetSha256),
         posterTimeFor: ({ video, assetSha256 }) =>

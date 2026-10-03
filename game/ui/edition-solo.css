@@ -674,6 +674,24 @@
     object-fit: contain;
     border-radius: 0.35rem;
   }
+  .completion-reward-exhibit-picture {
+    position: relative;
+  }
+  .completion-reward-video-badge {
+    position: absolute;
+    z-index: 1;
+    inset: 0.65rem 0.65rem auto auto;
+    padding: 0.3rem 0.55rem;
+    border: 1px solid color-mix(in srgb, white 65%, transparent);
+    border-radius: 999px;
+    color: white;
+    background: color-mix(in srgb, black 78%, var(--brand-primary, #74c9ff));
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    box-shadow: 0 0.25rem 0.8rem rgb(0 0 0 / 45%);
+  }
 
   /* Earned results reserve the main surface for the picture, outcome and primary
    actions. Secondary controls keep their real handlers in a native disclosure. */
