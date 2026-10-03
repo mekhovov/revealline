@@ -2545,3 +2545,53 @@ Post-rebase candidate4752ae5ef again passes all three package admissions,
 committed-input/ZIP-member checks and two byte-identical builds. The admission
 receipt is refreshed; browser evidence remains bound to identical runtime bytes.
 CI/publication continues on #986 while art work remains independent.
+### FlightDivision presentation increment — 3 October 2026
+
+The user requested comparable visual quality and keyboard controls after
+authenticated browser inspection of FlightDivision. Controls are published as
+[PR #986](https://github.com/mekhovov/revealline/pull/986), current observed head
+e4bd6044421c58b6e878710b7fe534b2ef063820. Source/package keyboard25/25, touch32/32,
+WebGL section replay53/53 and all three frozen optional admissions pass. The
+post-rebase bundle at /tmp/fpv-two-stick-qualified-main-02 verifies committed
+inputs/ZIP members and two identical builds for4752ae5ef; later changes are
+evidence only. Classic remains available; radio/physics contracts stay intact.
+
+The company candidate failure is inherited exactly: main4fada3958 run37099932827
+and PR986 run37100775504 both report923files /67460882bytes,352018bytes above
+64MiB. Scoped optional-practice succeeds. Preserve the capacity guard and all
+content; no public availability is claimed while protected publication is pending.
+
+Independent branch codex/fpv-flight-presentation-delivery carries original local
+quad/container geometry, initially cherry-picked from sparse art commit297760213.
+It is being refined and qualified separately from controls. The updated delivery
+sequence and reference observations are in fpv-flightdivision-reference-plan.md.
+Current main is4fada3958; old native stacks remain closed, and no new native stack
+is needed for these independent increments.
+
+Final visual hashes are ed102bc426eca18307b89d5ba862254edeafa63ea22c98433b9432d80eba7fa3
+(world-visuals) and0949fde59ee6fd5331940c167d5eef23ff2396fdd66cf79ae610ac863d252a97
+(renderer). Final source and packaged actual-WebGL runs each pass90/90 over44
+rendered pairs with no context loss. Manual CPU qualification passes109/109;
+Pixel remains exact and material/texture counts do not increase. Development
+World package has94runtimefiles /14407506bytes, SHA256
+f7068627691de0666e70856924065c09a04a97e1a4f8cf97778593385bbe79d1.
+
+Visual frozen candidate91945d5c0 passes all three optional admissions, committed
+inputs/ZIP members and two identical builds. Source validate/lint/syntax/format
+pass. Packaged Container survey launches, verifies its recording and resumes
+actual WebGL playback without rewards. Next publication is the focused art PR;
+Stadium/Garage and the broader14-world asset pass remain planned, not completed.
+
+### Visual increment published — 3 October 2026
+
+[PR #987](https://github.com/mekhovov/revealline/pull/987) is published and attached,
+initial head e1cf7dbe4, milestone57. It is independent of controls #986 against
+main4fada3958. Packaged Container survey completed its57.3-second verified
+playback through the actual WebGL player; it awarded no rewards. Art source/package
+90/90, CPU109/109 and all three frozen admissions remain green. Broader world
+art, named-device FPS and human qualification remain open.
+
+A separate local integration branch may combine #986/#987 solely to build the
+user's combined playtest. Do not push that merge into either focused PR. Continue
+Stadium/Garage on current main or an explicit dependent branch, preserving these
+ready candidates and all existing proof identities.
