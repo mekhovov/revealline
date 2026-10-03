@@ -17,6 +17,29 @@ const ADVENTURE_SURFACES = Object.freeze({
   'rail-depot': { floor: 'ballast', color: 0x777773, wall: 'metal' },
 });
 
+/** The six closed Quarry solids share one finish; creator variants stay generic. */
+export function isQuarryStrataObstacle(obstacle) {
+  const expected = {
+    'rock-west-terrace': [22000, 7000, 76000],
+    'rock-east-terrace': [22000, 9000, 76000],
+    'rock-west-rim': [8000, 16000, 82000],
+    'rock-east-rim': [8000, 19000, 82000],
+    'rock-central-spire': [12000, 20000, 12000],
+    'rock-landing-ledge': [8000, 5000, 8000],
+  }[obstacle?.id];
+  return Boolean(
+    expected &&
+      obstacle.type === undefined &&
+      obstacle.rotation === undefined &&
+      ['x', 'y', 'z'].every(
+        (axis, index) =>
+          Number.isFinite(obstacle.min?.[axis]) &&
+          Number.isFinite(obstacle.max?.[axis]) &&
+          obstacle.max[axis] - obstacle.min[axis] === expected[index],
+      ),
+  );
+}
+
 // Original procedural artwork. Textures are deterministic and entirely local;
 // only authored obstacle geometry is placed inside the flyable volume.
 export function themeForCourse(course, presentation) {
@@ -173,6 +196,9 @@ function surfacePixels(kind, color, seed, size, pixel) {
     moss = woodlandSurface ? new THREE.Color(0x576747).lerp(base, 0.3) : null,
     pale = woodlandSurface ? new THREE.Color(0x92917b).lerp(base, 0.3) : null,
     leaf = kind === 'forest-floor' ? new THREE.Color(0x82735a).lerp(base, 0.3) : null;
+  const quarryStone = kind === 'quarry-stone',
+    paleStone = quarryStone ? new THREE.Color(0xd0b48b) : null,
+    darkStone = quarryStone ? new THREE.Color(0x927253) : null;
   const meadow = kind === 'meadow-grass',
     soil = meadow ? new THREE.Color(0x75634b).lerp(base, 0.18) : null,
     dryGrass = meadow ? new THREE.Color(0xa49b68).lerp(base, 0.48) : null,
@@ -349,6 +375,26 @@ function surfacePixels(kind, color, seed, size, pixel) {
         relief += mottling * 0.09 - (seam < 0.035 ? 0.05 : 0);
         roughness = 0.92 + grain * 0.07;
       }
+      if (quarryStone) {
+        // Six-metre repeat: broad mineral beds carry from a distance. Thin
+        // bedding and short fractures read only near the existing closed face.
+        const phase = v * tau * 2 + Math.sin(u * tau) * 0.12,
+          layer = 0.5 + Math.sin(phase) * 0.5,
+          mix = layer * layer * (3 - 2 * layer),
+          bed = Math.max(0, 1 - Math.abs(Math.sin(phase)) * 24),
+          segment = (v * 3) % 1,
+          fracture =
+            segment > 0.3 && segment < 0.74
+              ? Math.max(0, 1 - Math.abs(Math.sin(u * tau * 3 + Math.sin(v * tau) * 0.3)) * 48)
+              : 0;
+        red = darkStone.r + (paleStone.r - darkStone.r) * mix;
+        green = darkStone.g + (paleStone.g - darkStone.g) * mix;
+        blue = darkStone.b + (paleStone.b - darkStone.b) * mix;
+        shade =
+          0.97 + patch * 0.55 + mottling * 0.045 + grain * 0.025 - bed * 0.12 - fracture * 0.13;
+        relief = mix * 0.018 + mottling * 0.012 + grain * 0.003 - bed * 0.025 - fracture * 0.03;
+        roughness = 0.93 + grain * 0.045 + bed * 0.015;
+      }
       if (kind === 'ballast') {
         shade *= 0.89 + patch + mottling * 0.24 + grain * 0.2;
         relief += mottling * 0.12;
@@ -519,7 +565,11 @@ function surfacePixels(kind, color, seed, size, pixel) {
       properties[at + 3] = 255;
     }
   const reliefScale =
-    woodlandSurface || kind === 'woodland-canopy' ? size / 64 : meadow ? size / 128 : 2;
+    woodlandSurface || kind === 'woodland-canopy'
+      ? size / 64
+      : meadow || quarryStone
+        ? size / 128
+        : 2;
   for (let y = 0; y < size; y++)
     for (let x = 0; x < size; x++) {
       const at = (y * size + x) * 4;
@@ -1040,6 +1090,18 @@ export function buildWorldVisuals({
   surfaceDetail.name = 'surface-detail';
   world.add(surfaceDetail);
   const pixel = profile.textureFilter === 'nearest';
+  const quarryRocks =
+      environment === 'quarry'
+        ? (course.obstacles ?? []).filter(
+            (item) => !/^(rail-gantry|rail-car|solar-hut)-/.test(item.id ?? ''),
+          )
+        : [],
+    quarryStrata =
+      !pixel &&
+      !kit &&
+      quarryRocks.length === 6 &&
+      new Set(quarryRocks.map((item) => item.id)).size === 6 &&
+      quarryRocks.every(isQuarryStrataObstacle);
   const hangar = environment === 'gym',
     warehouse = environment === 'warehouse',
     steelCladding = hangar || warehouse;
@@ -1159,6 +1221,7 @@ export function buildWorldVisuals({
       metal: theme.wall,
       'storage-steel': theme.wall,
       stone: 0xa18a6d,
+      'quarry-stone': 0xa18a6d,
       foliage: 0x587d49,
       solar: 0x263e5d,
     };
@@ -1169,7 +1232,14 @@ export function buildWorldVisuals({
           ? 'timber'
           : kind === 'foliage'
             ? 'grass'
-            : ['concrete', 'garage-concrete', 'stadium-concrete', 'stone', 'plaster'].includes(kind)
+            : [
+                  'concrete',
+                  'garage-concrete',
+                  'stadium-concrete',
+                  'stone',
+                  'quarry-stone',
+                  'plaster',
+                ].includes(kind)
               ? 'concrete'
               : 'steel';
       const maps = kit
@@ -1839,6 +1909,7 @@ export function buildWorldVisuals({
         return 'bark';
       if (!adventure) return null;
       if (/^(rail-gantry|rail-car|solar-hut)-/.test(id)) return 'metal';
+      if (quarryStrata && isQuarryStrataObstacle(obstacle)) return 'quarry-stone';
       if (environment === 'quarry' || /^rock-/.test(id)) return 'stone';
       if (/^tree-canopy-/.test(id)) return 'foliage';
       if (/^tree-trunk-|timber|crate/.test(id)) return 'wood';
