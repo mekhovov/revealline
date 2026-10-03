@@ -753,16 +753,26 @@ export async function addOfflineEntries(
     // Demo recordings and the large landing photograph remain published for
     // online playback, but they are optional bodies rather than core offline boot.
     // Excluding only their bodies preserves URLs, provenance and on-demand tests
-    // while keeping the unchanged 64 MiB service-worker cache bound.
+    // while keeping the shared 72 MiB service-worker cache bound.
     ...entries
       .filter(
         (entry) =>
           (entry.name.startsWith('game/demo-data/') && entry.name.endsWith('.replay.json')) ||
-          entry.name === 'game/ui/art/menu-scenes/droneaid-main-background.webp',
+          entry.name === 'game/ui/art/menu-scenes/droneaid-main-background.webp' ||
+          // The current Social Drone reward uses the mobile-prepared v2 clip.
+          // Keep v1 hosted for retained presentations without charging every
+          // offline installation for both versions of the same recording.
+          entry.name === 'game/editions/assets/social-drone/sky-watch-v1.mp4' ||
+          // Creator examples are fetched only when the player explicitly opens
+          // one in Studio; the downloadable pack remains hosted and exact.
+          entry.name === 'game/creator/examples/social-drone-sky-watch.rlpack' ||
+          // Motion Lab source sheets are authoring inputs, while the prepared
+          // runtime artwork remains in the core game. Load sources on demand.
+          entry.name.startsWith('authoring/motion-lab/assets/'),
       )
       .map((entry) => entry.name),
     // Recorded spatial effects stay hosted for online play and exact optional
-    // download, but are not charged to every installation's 64 MiB core.
+    // download, but are not charged to every installation's 72 MiB core.
     ...entries.filter((entry) => isOptionalSpatialAudioBody(entry.name)).map((entry) => entry.name),
     ...entries
       .filter((entry) => isOptionalReactionVoiceBody(entry.name))
@@ -886,9 +896,9 @@ export async function addOfflineEntries(
     .sort((a, b) => (a.name < b.name ? -1 : a.name > b.name ? 1 : 0))
     .map((e) => ({ path: e.name, bytes: e.bytes.length, sha256: sha256(e.bytes) }));
   const totalBytes = files.reduce((n, f) => n + f.bytes, 0);
-  if (files.length > 2000 || totalBytes > 64 * 1024 * 1024)
+  if (files.length > 2000 || totalBytes > 72 * 1024 * 1024)
     fail(
-      `Offline distribution exceeds 2000 files or 64 MiB (${files.length} files / ${totalBytes} bytes); split optional content into packs`,
+      `Offline distribution exceeds 2000 files or 72 MiB (${files.length} files / ${totalBytes} bytes); split optional content into packs`,
     );
   const config = {
     format: 'revealline-offline.v1',
