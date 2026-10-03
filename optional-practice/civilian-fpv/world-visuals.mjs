@@ -1387,6 +1387,10 @@ export function buildWorldVisuals({
             offsets.map(([along, outward]) => ({ side, along: anchor + along * span, outward })),
           )
         : null;
+    // Keep spatial sectors independently culled: a single forest-wide batch
+    // would submit every crown even when the camera sees only one edge.
+    const canopyBatches = new Map();
+    const canopyShape = environment === 'woodland' ? new THREE.IcosahedronGeometry(1, 1) : null;
     for (let i = 0; i < count; i++) {
       const angle = (i / count) * Math.PI * 2,
         r = radius + rng() * 24,
@@ -1410,15 +1414,44 @@ export function buildWorldVisuals({
       const trunk = mesh(new THREE.CylinderGeometry(0.14, 0.24, height * 0.7, 6), bark, backdrop);
       trunk.position.set(x, height * 0.35, z);
       trunk.castShadow = true;
-      const crown = mesh(
-        environment === 'woodland'
-          ? new THREE.IcosahedronGeometry(height * 0.3, 1)
-          : new THREE.ConeGeometry(height * 0.3, height * 0.75, 7),
-        leaves[i % 3],
-        backdrop,
-      );
-      crown.position.set(x, height * 0.75, z);
-      crown.castShadow = true;
+      if (canopyShape) {
+        const sector = Math.floor((i / count) * 8),
+          paint = leaves[i % 3],
+          key = `${sector}:${i % 3}`;
+        if (!canopyBatches.has(key)) canopyBatches.set(key, { paint, matrices: [] });
+        const radius = height * 0.3;
+        canopyBatches
+          .get(key)
+          .matrices.push(
+            new THREE.Matrix4().compose(
+              new THREE.Vector3(x, height * 0.75, z),
+              new THREE.Quaternion(),
+              new THREE.Vector3(radius, radius, radius),
+            ),
+          );
+      } else {
+        const crown = mesh(
+          new THREE.ConeGeometry(height * 0.3, height * 0.75, 7),
+          leaves[i % 3],
+          backdrop,
+        );
+        crown.position.set(x, height * 0.75, z);
+        crown.castShadow = true;
+      }
+    }
+    for (const { paint, matrices } of canopyBatches.values()) {
+      const canopy = instanceSimDetails({
+        shape: canopyShape,
+        paint,
+        parent: backdrop,
+        matrices,
+        mesh,
+      });
+      canopy.name = 'woodland-canopy-sector';
+      canopy.castShadow = true;
+      canopy.receiveShadow = false;
+      canopy.computeBoundingBox();
+      canopy.computeBoundingSphere();
     }
   }
   buildEnvironmentDressing({
