@@ -1,5 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import { readFile } from 'node:fs/promises';
 import { createCoopPainter } from '../couch/coop-view.mjs';
 import {
   TEAM_ENEMY_SLOTS,
@@ -12,6 +13,7 @@ import { teamEnemyPreviewNote } from '../../authoring/asset-studio/cross-mode-pr
 import { createDefaultThemeBundle } from '../presentation/catalog.mjs';
 import { resolvePresentation } from '../presentation/model.mjs';
 import { imagePresentation } from '../presentation/runtime.mjs';
+import { sampleActorAnimation } from '../presentation/actor-animation.mjs';
 import {
   addTeamPresentationSlots,
   needsTeamPresentationSlots,
@@ -281,4 +283,142 @@ test('all five enemy bodies retain exact source bytes, pivot and optional rotor 
     assert.equal(geometry.pivot.x, 0.45);
     assert.equal(geometry.rotors.length, 1);
   }
+});
+
+async function animatedTeamSnapshot() {
+  const imported = await importThemeBundle(
+      new Blob([
+        await readFile(
+          new URL(
+            '../../authoring/industrial-art-review/atlas-sample/industrial-bouncer.rltheme',
+            import.meta.url,
+          ),
+        ),
+      ]),
+      { decodeImage: null },
+    ),
+    original = resolvePresentation(imported.document).assets['enemy.bouncer'],
+    binding = { id: original.id, revision: original.revision },
+    staged = reviseStudioTheme(imported.document, {
+      bindings: {
+        'team.enemy.hunter.warning': binding,
+        'team.enemy.hunter.recovery': binding,
+      },
+    }),
+    restored = await importThemeBundle(await exportThemeBundle(staged, imported.assets), {
+      decodeImage: null,
+    }),
+    accepted = resolvePresentation(restored.document),
+    s = snapshot();
+  for (const id of ['team.enemy.hunter.warning', 'team.enemy.hunter.recovery']) {
+    const asset = accepted.assets[id];
+    s.resolved.assets[id] = asset;
+    s.images[id] = {
+      asset,
+      image: { id: `custom-atlas:${id}`, width: asset.file.width, height: asset.file.height },
+      geometry: imagePresentation(asset),
+    };
+  }
+  return s;
+}
+
+test('direct Team asset-v2 slots retain full sheets and paint native warning/recovery regions after transport', async () => {
+  const s = await animatedTeamSnapshot();
+  assert.equal(prepareTeamEnemies(s).size, TEAM_ENEMY_SLOTS.length);
+  for (const [scenario, id, clip, region] of [
+    ['warning', 'team.enemy.hunter.warning', 'anticipation', [96, 0, 32, 32]],
+    ['hunter-recovery', 'team.enemy.hunter.recovery', 'recovery', [32, 64, 32, 32]],
+  ]) {
+    const f = createStudioTeamFixture({ arena: 'first-connection', scenario }),
+      { canvas, calls } = surface(),
+      painter = createCoopPainter(canvas),
+      before = structuredClone(f.run);
+    painter.setPresentation(s);
+    painter.paint(f.run, { reduced: true });
+    const expected = f.run.enemies.filter((enemy) => teamEnemySlot(enemy) === id);
+    assert.ok(expected.length > 0);
+    for (const enemy of expected) {
+      const frame = painter.actorFrame('enemy', enemy.id);
+      assert.equal(frame.sourceSlot, id);
+      assert.equal(frame.animationState, clip);
+      assert.equal(frame.radius, enemy.radius * 16);
+    }
+    const paints = calls.filter(
+      (call) => call.method === 'drawImage' && call.args[0] === s.images[id].image,
+    );
+    assert.equal(paints.length, expected.length);
+    for (const { args } of paints) assert.deepEqual(args.slice(1, 5), region);
+    assert.deepEqual(f.run, before);
+  }
+});
+
+test('Team atlas admission rejects unpinned geometry, wrong sheet dimensions and legacy arbitrary crops atomically', async () => {
+  const accepted = await animatedTeamSnapshot(),
+    id = 'team.enemy.hunter.warning',
+    { canvas } = surface(),
+    painter = createCoopPainter(canvas);
+  painter.setPresentation(accepted);
+  for (const mutate of [
+    (s) => {
+      s.images[id].image.width = 32;
+    },
+    (s) => {
+      s.images[id].geometry.pivot.x = 0.4;
+    },
+    (s) => {
+      s.images[id].geometry.animation.frames[0].region.x = 128;
+    },
+    (s) => {
+      s.images[id].geometry.rotors.push({
+        x: 0,
+        y: 0,
+        radiusScale: 1,
+        direction: 1,
+        phaseDegrees: 0,
+        bladeCount: 3,
+      });
+    },
+    (s) => {
+      s.resolved.assets[id].format = 'revealline-asset-revision.v1';
+    },
+    (s) => {
+      delete s.resolved.assets[id].animation;
+    },
+    (s) => {
+      s.resolved.assets[id].animation.frames[0].region.width = 31;
+    },
+  ]) {
+    const bad = {
+      ...accepted,
+      resolved: structuredClone(accepted.resolved),
+      images: structuredClone(accepted.images),
+    };
+    bad.image = (slot) => bad.images[slot] ?? null;
+    mutate(bad);
+    assert.throws(() => painter.setPresentation(bad), /Team enemy/);
+    assert.strictEqual(painter.presentation, accepted);
+  }
+  const croppedLegacy = snapshot();
+  croppedLegacy.images[id].geometry.frame.x = 32;
+  assert.throws(() => prepareTeamEnemies(croppedLegacy), /Team enemy/);
+});
+
+test('Team atlas admission re-admits exact detached transport geometry before replacing the painter', async () => {
+  const s = await animatedTeamSnapshot(),
+    id = 'team.enemy.hunter.warning',
+    detached = structuredClone(s.images[id].geometry);
+  s.images[id].geometry = detached;
+  assert.throws(() => sampleActorAnimation(detached.animation), /admitted actor animation/);
+  const accepted = prepareTeamEnemies(s).get(id);
+  assert.deepEqual(accepted.geometry, detached);
+  assert.notStrictEqual(accepted.geometry, detached);
+  assert.deepEqual(
+    sampleActorAnimation(accepted.geometry.animation, { clip: 'anticipation' }).region,
+    {
+      x: 96,
+      y: 0,
+      width: 32,
+      height: 32,
+    },
+  );
 });
