@@ -2702,3 +2702,43 @@ handoff into the next phase, not a stopping point or a new approval request. Kee
 CI/publication separate from unfinished next-item work. This standing instruction
 is now recorded in the reviewed delivery plan. D1 art remains next; the canopy
 optimization alone does not complete D1.
+
+
+### Stadium surfaces qualified; remaining world order refreshed — 3 October 2026
+
+Working branch `codex/fpv-stadium-structure-detail`, managed checkout
+`/Users/oleksandr.mekhovov/.codex/worktrees/fpv-stadium-structures/go_test`.
+Runtime candidate `698b6aa3092b2ca235d32e10e994134658f33db6` improves only the
+three canonical Stadium stand/scoreboard solids, keeping collision bodies,
+course identities, school platform and all 14 Snake Stadium layouts unchanged.
+All 21 Stadium demonstrations replay to the same final identities. The new
+surface/detail path adds seven bounded batches / 888 triangles, no new shadow
+casters or asset files. `docs/fpv-stadium-structures.md` records full evidence.
+
+Source and packaged browser closures each pass 484 checks / 228 image pairs,
+including all qualities, camera views, Pixel/shared Themes, unchanged support
+solids, ray parity, imported/fallback scenery and three stable load/disposal
+rounds. Actual packaged-player selection, rendered flight, deliberate arm and
+pause were verified. All three source-bound optional admissions pass, including
+committed inputs, ZIP equality and two byte-identical builds. Runtime manifest:
+93 files / 15,375,227 bytes; source-bound World Studio: 102 / 15,550,157 bytes.
+No unit coverage added or hardware/FPS/human/public-live acceptance claimed.
+
+D0 #989 is merged. #992 foliage surfaces merged while this work was verified.
+#993 was refreshed on main in its separate repair checkout and remains draft:
+29/30 existing scoped checks pass; the remaining known enamel-motif failure is
+fixed by pending #999. #999 advanced externally to b6133b882; preserve that head.
+#996/#998/#1001 still require refresh and current-head checks. Pixel profile
+resolution in #1001 is fixed at28fd01836. A local-only combined art branch
+`codex/fpv-art-combined-verification` at51e3b6d66 passed15 arena/preset comparisons
+and15 GPU cleanup cycles; do not publish it as a replacement for focused PRs.
+
+The reviewed plan now records196 authored challenges/14 worlds/58 school lessons;
+32 already planned new-world challenges make the eventual target228. This count
+is not a claim of artist/player acceptance. D1 acceptance/render budgets remain
+open; continue independent D2 world work while publication runs. Next code item:
+Garage exact-ID ramp/deck/column surface readability on isolated branch
+`codex/fpv-garage-surface-detail` in the managed `fpv-garage-surfaces` checkout.
+Keep `school-upper-deck`, all9 Snake Garage layouts and17 demonstrations intact.
+Stadium publication status will be appended after PR creation; no new stack is
+required for this independent main-based increment.

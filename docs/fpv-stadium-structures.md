@@ -85,9 +85,31 @@ launch remain separate checks.
 `docs/evidence/fpv-stadium-structures-cpu.json` records 32 passing functional
 checks, all 21 complete demonstration replays, exact immutable source hashes and
 the qualified renderer/visual-module hashes. Full `npm run validate`, syntax,
-changed-file ESLint and Prettier checks pass. Browser visual acceptance, packaged
-qualification and public
-deployment remain pending at this implementation handoff. No named-device frame
+changed-file ESLint and Prettier checks pass. The final source browser fixture passed 484 checks and 228 image-pair
+comparisons with no context loss. It covers three repeat load/disposal rounds;
+registered resources are all released and loaded resource counts remain stable.
+The actual before/after stand and scoreboard views were inspected by the agent;
+this is not human artist acceptance. Source receipt and screenshots are in
+`docs/evidence/fpv-stadium-structures-source-browser.json`,
+`fpv-stadium-stand.png` and `fpv-stadium-scoreboard.png`.
+
+All three optional package admissions pass against committed candidate
+`698b6aa3092b2ca235d32e10e994134658f33db6`, including source input identity, ZIP
+member equality and two byte-identical builds. The source-bound World Studio
+closure is 102 files / 15,550,157 bytes under unchanged 104-file / 16 MiB limits.
+The development player closure is 93 files / 15,375,227 bytes. Its manifest hash
+is `4acb11618a94717b71b05f0af85adf3b6fbef02531fc38103bb2e925500d48b7`.
+The admission receipt remains explicitly `publicEligible: false` until normal
+publication qualification. See `docs/evidence/fpv-stadium-structures-admission.json`.
+
+The packaged browser fixture also passed all 484 checks and 228 image-pair
+comparisons, with three stable load/disposal rounds and no context loss. Its
+receipt is `docs/evidence/fpv-stadium-structures-package-browser.json`.
+The packaged player launched through Select Mission → Starting grid, rendered
+the new stands/scoreboard, armed deliberately and paused successfully. The
+inspection used Codex in-app browser on this macOS workstation; no physical
+controller or device performance is inferred. See `docs/evidence/fpv-stadium-player.png`.
+Public deployment remains unverified. No named-device frame
 rate, sustained memory, physical-controller, novice-player or artist acceptance
 is inferred from source verification. Additional unit coverage remains deferred
 to D6 under the approved plan.
