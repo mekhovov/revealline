@@ -1,6 +1,6 @@
 import { inspectReactionRecording } from './reaction-voice-cache.mjs';
 import { REACTION_VOICE_PILOT } from '../audio/reactions/pilot.mjs';
-import { ACTOR_VOICE_RECORDINGS } from '../audio/reactions/actors.mjs';
+import { ACTOR_VOICE_RECORDINGS, createActorVoiceDelivery } from '../audio/reactions/actors.mjs';
 import { REACTION_LINES } from './reactions.mjs';
 
 const DATABASE = 'revealline-reaction-voices-v1',
@@ -160,6 +160,7 @@ export function createReactionVoiceLibrary({
   indexedDB = globalThis.indexedDB,
   fetch: fetcher = globalThis.fetch,
   inspectRecording = inspectReactionRecording,
+  createActorDelivery = createActorVoiceDelivery,
   channelName = 'revealline-reaction-voices',
 } = {}) {
   let connection = null,
@@ -288,10 +289,21 @@ export function createReactionVoiceLibrary({
       /* A committed recording stays saved after its editor closes. */
     }
   };
+  const actorDownloads =
+    createActorDelivery?.({
+      recordings: ACTOR_VOICE_RECORDINGS,
+      baseURL: new URL('../audio/reactions/', import.meta.url),
+      fetch: fetcher,
+      onChange: notify,
+    }) ?? null;
   async function readOriginal(lineId, locale, { signal } = {}) {
     checkAbort(signal);
     const original = originals.get(keyFor(lineId, locale));
-    if (!original || typeof fetcher !== 'function') return null;
+    if (!original) return null;
+    const saved = await actorDownloads?.read(original, { signal });
+    checkAbort(signal);
+    if (saved) return { metadata: original, bytes: saved };
+    if (typeof fetcher !== 'function') return null;
     const response = await fetcher(
       new URL(`../audio/reactions/${original.file}`, import.meta.url),
       { signal },
@@ -350,6 +362,7 @@ export function createReactionVoiceLibrary({
   }
   return Object.freeze({
     originals: pilot,
+    actorDownloads,
     async available(locale) {
       if (!['en', 'uk'].includes(locale)) return [];
       const admitted = new Set(

@@ -31,6 +31,7 @@ async function fixture(
     url = 'https://example.test/optional-practice/civilian-fpv/?lang=en',
     serviceWorker,
     home = false,
+    blurOnTitleMount = false,
     ...factories
   } = {},
 ) {
@@ -86,6 +87,23 @@ async function fixture(
       throw new Error('No persistent test storage');
     },
   });
+  if (blurOnTitleMount) {
+    const createElement = doc.createElement.bind(doc);
+    doc.createElement = (tag) => {
+      const node = createElement(tag);
+      if (tag === 'dialog') {
+        const showModal = node.showModal;
+        node.showModal = function () {
+          showModal.call(this);
+          if (blurOnTitleMount && this.id === 'academy-shell-home-dialog') {
+            blurOnTitleMount = false;
+            win.emit('blur');
+          }
+        };
+      }
+      return node;
+    };
+  }
   const view = mountFlightApp({
     document: doc,
     window: win,
@@ -642,6 +660,49 @@ test('Academy shared menu resumes paused playback without restarting or granting
   assert.ok(f.renders.at(-1).ticks > pausedAgain.ticks);
   assert.equal(f.deliveries.length, 0);
   assert.equal(f.view.exportAttempt().frames.length, 0);
+});
+
+test('Academy exhausted unfinished playback offers Results instead of a nonfunctional Continue', async (t) => {
+  const f = await fixture(t),
+    proof = {
+      ...structuredClone(FLIGHT_DEMONSTRATIONS[0]),
+      session: 'replay',
+      frames: Array.from({ length: 4 }, () => [0, 0, 0, 0]),
+    },
+    original = structuredClone(proof);
+  const checked = await f.view.review(proof);
+  assert.equal(checked.state.status, 'active', 'The recording has not completed its objective.');
+  f.tick(12);
+  const ended = f.renders.at(-1),
+    shell = f.doc.querySelector('[data-mode-play-shell]');
+  assert.equal(ended.ticks, proof.frames.length);
+  assert.equal(ended.status, 'active', 'UI completion must not fabricate a simulation outcome.');
+  assert.equal(shell.dataset.phase, 'results');
+  assert.equal(f.$('academy-shell-action-pause').disabled, true);
+  assert.equal(f.$('arm').disabled, true);
+  assert.equal(f.$('academy-flight-resume').disabled, true);
+  assert.equal(f.view.arm(), false, 'Exhausted commands cannot be resumed.');
+  f.$('academy-shell-action-menu').click();
+  assert.equal(f.$('academy-shell-action-primary').textContent, 'Retry');
+  assert.equal(f.$('academy-shell-action-home-results').hidden, false);
+  f.$('academy-shell-action-home-results').click();
+  assert.equal(f.$('academy-shell-home-dialog').open, false);
+  assert.equal(f.$('academy-shell-results-dialog').open, false);
+  assert.equal(f.doc.activeElement, f.$('status'));
+  f.tick(8);
+  assert.deepEqual(f.renders.at(-1), ended);
+  assert.deepEqual(proof, original);
+  assert.equal(f.deliveries.length, 0);
+  assert.equal(f.view.exportAttempt().frames.length, 0);
+  f.$('academy-shell-action-menu').click();
+  f.$('academy-shell-home-dialog').emit('cancel');
+  assert.equal(shell.dataset.phase, 'results');
+  assert.equal(f.$('academy-shell-home-dialog').open, false);
+  f.$('academy-shell-action-menu').click();
+  f.$('academy-shell-action-primary').click();
+  assert.equal(f.$('academy-shell-briefing-dialog').open, true);
+  assert.equal(f.view.snapshot().status, 'disarmed');
+  assert.equal(f.view.snapshot().ticks, 0);
 });
 
 test('touch release holds throttle, centers yaw, and cancellation clears all input and listener ownership', () => {
@@ -1222,6 +1283,23 @@ test('pause shortcuts release local controls but preserve text, dialogs and modi
   } finally {
     input.dispose();
   }
+});
+
+test('Academy title focus loss before flight initialization keeps the menu usable and disarmed', async (t) => {
+  const f = await fixture(t, { home: true, blurOnTitleMount: true });
+  assert.equal(f.$('academy-shell-home-dialog').open, true);
+  assert.equal(f.view.snapshot().status, 'disarmed');
+  assert.equal(f.view.snapshot().ticks, 0);
+  f.tick(3);
+  assert.equal(f.view.snapshot().ticks, 0);
+  f.win.emit('focus');
+  f.$('academy-shell-action-settings').click();
+  assert.equal(f.$('academy-shell-settings-dialog').open, true);
+  assert.equal(f.view.arm(), false);
+  f.$('academy-shell-action-settings-back').click();
+  f.$('academy-shell-action-primary').click();
+  f.$('academy-shell-action-start').click();
+  assert.equal(f.view.snapshot().status, 'active');
 });
 
 test('Academy shell keeps menu input out of native flight and requires explicit Start', async (t) => {

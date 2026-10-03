@@ -1,5 +1,9 @@
 # World Studio package dependency closure
 
+> Historical checkpoint. The [Company capacity follow-up](verification/company-capacity-followup.md) resolves the
+> capacity and optional actor-voice gaps below and records a completed full game ZIP.
+> The original measurements remain unchanged for provenance.
+
 World Studio inherited three Academy-era admission entries that its application does not load: `civilian-fpv/copy.mjs`, `civilian-fpv/studio.mjs`, and `game/key-bindings.mjs`. Its own `world-app.mjs` supplies UI copy and the World editor; its FPV input runtime owns the flight/menu bindings. The older shared key helper remains used by Civilian Flight.
 
 The policy now excludes these three paths **only from `fpv-worlds`**. Their repository files and the Academy/Civilian Flight packages remain intact. All source text, licenses, provenance, imagery, scenes, demonstrations, Snake content and shared appearance code are preserved. No byte or file-count limit changes.

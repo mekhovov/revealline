@@ -3,6 +3,7 @@ import { required } from '../game/data-json.mjs';
 import { resolveEditionAssets, validateEditionRuntimeCatalog } from '../game/editions/model.mjs';
 import { validateRetainedPresentation } from '../game/editions/retained-presentation.mjs';
 import { editionOfflinePackageId } from '../game/editions/offline-package-id.mjs';
+import { COMPANY_PRESENTATION_MAX_BYTES } from '../game/editions/package-budget.mjs';
 
 const digest = (bytes) => createHash('sha256').update(bytes).digest('hex');
 
@@ -39,7 +40,7 @@ export async function companyOfflinePackages(entries) {
   const add = (selectedCatalog, edition, presentationId = null) => {
     const assets = resolveEditionAssets(selectedCatalog, { editionId: edition.id });
     required(
-      assets.reduce((sum, asset) => sum + asset.bytes, 0) <= 64 * 1024 * 1024,
+      assets.reduce((sum, asset) => sum + asset.bytes, 0) <= COMPANY_PRESENTATION_MAX_BYTES,
       'Company presentation exceeds its offline budget.',
     );
     for (const asset of assets) {

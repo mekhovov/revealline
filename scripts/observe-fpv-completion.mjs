@@ -422,6 +422,7 @@ export async function observeFPVCompletion({ planFile, playwrightModule, output 
       'publishing/optional-package-admission.mjs',
       'publishing/optional-package-policy.mjs',
       'publishing/edition-admission.mjs',
+      'game/editions/package-budget.mjs',
     ]) {
       const bytes = await readFile(path.join(ROOT, name));
       report.instrumentation.push(pin(name, bytes));

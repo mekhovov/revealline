@@ -300,6 +300,7 @@ export function attachContextualReactions({
     controls = new Map(),
     controlLabels = new Map();
   let settings = null,
+    actorVoiceControls = null,
     status = null,
     pilot = null,
     previewSample = null,
@@ -359,6 +360,7 @@ export function attachContextualReactions({
     }
     if (settings) settings.querySelector('legend').textContent = tr('title');
     if (pilot) pilot.textContent = tr('pilot');
+    actorVoiceControls?.refresh();
     if (settings) {
       const preview = settings.querySelector('[data-reaction-preview]');
       preview.textContent = tr('preview');
@@ -573,10 +575,17 @@ export function attachContextualReactions({
     pilot = create('p', tr('pilot'));
     settings.append(preview, previewSample, retry, status, pilot);
     settingsContainer.append(settings);
+    actorVoiceControls =
+      voiceLibrary.actorDownloads?.attach({
+        container: settings,
+        document: doc,
+        getLocale,
+      }) ?? null;
   }
   const unsubPrefs = preferences.subscribe(render),
     unsubOptions = options.subscribe(render);
   const unsubLibrary = voiceLibrary.subscribe(() => {
+    void actorVoiceControls?.synchronize();
     generation++;
     prepared.clear();
     stopSpeech();
@@ -670,6 +679,7 @@ export function attachContextualReactions({
       reducedMedia?.removeEventListener?.('change', reducedChanged);
       for (const control of controls.values()) control.onchange = null;
       settings?.remove();
+      actorVoiceControls?.dispose();
       panel.remove();
       releaseFeedbackLayout();
     },
