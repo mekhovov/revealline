@@ -1,0 +1,114 @@
+{
+  "sourceHead": "e572026ba357f3194bf47e7137a0817cacb1a640",
+  "sourceMode": "admitted-distribution",
+  "passed": true,
+  "bytes": 3494467,
+  "sha256": "3d0062f4c14ec0a45cd60efbc67890c24705343ffd399e4d3e95e539acd19f2f",
+  "samples": 90,
+  "renderedViews": 270,
+  "controls": 60,
+  "checks": [
+    {
+      "name": "Five D1 environment/arena representatives",
+      "passed": true
+    },
+    {
+      "name": "90 configurations rendered in each of three rounds",
+      "passed": true
+    },
+    {
+      "name": "Resources plateau between rounds two and three",
+      "passed": true
+    },
+    {
+      "name": "Pixel and shared linear-theme controls rendered",
+      "passed": true
+    },
+    {
+      "name": "Timing configurations kept visible",
+      "passed": true
+    },
+    {
+      "name": "Quality invalidates pending preparation",
+      "passed": true
+    },
+    {
+      "name": "Course invalidates pending preparation",
+      "passed": true
+    },
+    {
+      "name": "Aborted preparation rejects",
+      "passed": true
+    },
+    {
+      "name": "Dispose invalidates pending preparation",
+      "passed": true
+    },
+    {
+      "name": "Registered ownership empty after disposal",
+      "passed": true
+    },
+    {
+      "name": "Disposed renderer refuses preparation",
+      "passed": true
+    },
+    {
+      "name": "Frozen source closure unchanged",
+      "passed": true
+    },
+    {
+      "name": "No console errors",
+      "passed": true
+    },
+    {
+      "name": "No unexpected context loss",
+      "passed": true
+    }
+  ],
+  "browser": {
+    "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36",
+    "actualDevicePixelRatio": 2,
+    "requestedDevicePixelRatio": 2,
+    "viewport": [
+      1280,
+      720
+    ],
+    "drawingCSS": [
+      640,
+      360
+    ],
+    "visibility": "visible"
+  },
+  "startedAt": "2026-10-03T19:37:54.512Z",
+  "finishedAt": "2026-10-03T19:41:58.765Z",
+  "packageBinding": {
+    "envelopeSha256": "4f3c505e10cc401af8d438250feb9ab22af4fb503ed940563839ff074f82a678",
+    "distribution": {
+      "bytes": 15547680,
+      "path": "distribution-optional-fpv-worlds.zip",
+      "sha256": "906a1e319a2ef17d8852fe18fe1c16a1bf620ecaeabe64e52fb12d3706744370"
+    },
+    "sourceRevision": "e572026ba357f3194bf47e7137a0817cacb1a640",
+    "sourceTree": "6a90e48f99151041d899b4b8d6b2de5fcffd8b2f",
+    "committedInputsVerified": true,
+    "zipMembersVerified": true,
+    "reproducibleBuilds": 2
+  },
+  "verifiedProjections": [
+    {
+      "inputs": [
+        "game/locales/en/errors.json",
+        "game/locales/uk/errors.json",
+        "game/locales/en/interface.json",
+        "game/locales/uk/interface.json"
+      ],
+      "kind": "selected-validator-locales",
+      "output": {
+        "bytes": 3219,
+        "path": "game/i18n/catalogs.mjs",
+        "sha256": "150f60e0ee7d0c281f026ccf76b11d02d73b6022e0097dec89875987e844fb3b"
+      },
+      "committedInputsVerified": true
+    }
+  ]
+}
