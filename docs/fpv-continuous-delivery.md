@@ -2077,3 +2077,49 @@ cues, geometry, alpha and scoring rules. Beginner42's metal landing platform
 must share a plain board-atlas region to avoid another texture pool. No C6
 production changes are mixed into #966. Keep ready Warehouse isolated while the
 Stadium branch develops. Themes received exact runtime hashes and ownership.
+
+
+### Feedback-nonblocking continuation — 3 October 2026
+
+The owner requested continued implementation without waiting for user feedback.
+Human/physical-device acceptance stays pending and is not a feature-development
+gate. Functional verification remains mandatory; additional unit coverage stays
+in H/R7. The current order is section watch/practice, visual Follow/Observe
+editing, recovery guidance, bounded example delivery and further distinct maps;
+remaining environment art can proceed in parallel through shared Themes roles.
+
+Themes #955 and Warehouse #966 are now merged; current main is `8896c4976`.
+The clean independent branch `codex/fpv-section-replay` starts at that main.
+Do not reuse closed native stacks. The last public marker observed is Themes
+`3636201d3` with successful Pages run37077000362; no fresh Warehouse public
+launch is claimed. Warehouse's edition candidate exceeded 64 MiB by216,043bytes
+(67,324,907 total), despite successful optional/default-capacity checks. Preserve
+that concrete failure for a separate lossless repair, without relaxing guards.
+
+The section-watch increment must keep original course identities, verified
+recorded entry state and exact commands, stop at a verified section boundary,
+and offer direct practice of the same section. Playback/practice must not earn
+records, medals or playlist progress. Existing partial-recording practice fallback
+must stay valid; do not label an unreached section a successful demonstration.
+Current counts remain148challenges/14worlds/178installed demonstrations.
+
+
+Section source qualification is complete: 7/7 functional groups,154v2 proofs,
+768exact recorded sections; checkpoint regression716entries/615fallbacks;
+production-host source WebGL51/51 checks. Imported installed sessions now select
+pinned pack scenery even when an edited draft is open. Evidence and limitations
+are in `fpv-section-replay.md`. All functional checks preserve original identities,
+actors and physics; human sessions remain nonblocking and pending.
+
+Capacity is a separate focused [PR #968](https://github.com/mekhovov/revealline/pull/968),
+`codex/edition-token-capacity`, initial head `1d73a5c21`. All18editions compile under
+unchanged limits after syntax/token/comment/line-preserving distribution spacing.
+Largest67,045,468bytes;279,439saved;63,396headroom. The section branch currently
+builds on this repair so global candidate capacity can qualify both increments;
+if #968 remains open when section replay is published, create a fresh native
+stack for that dependency. Do not retarget an existing native member manually.
+
+A fresh actual public Loading bay launch at Themes deployment3636201d3 reached
+Ready atzero throttle with no captured errors. Warehouse8896c4976 has not yet
+been identified by the public marker, so Warehouse live availability is still
+unverified. Public screenshot: `/tmp/fpv-themes-public-launch-20261003.png`.

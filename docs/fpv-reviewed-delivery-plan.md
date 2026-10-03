@@ -6,6 +6,43 @@ fullscreen and existing simulation/content contracts. Direction: grounded
 realism, primary Acro learning, optional self-level assistance and consistent
 main-game presentation. All activities remain immediately selectable.
 
+## Current delivery order — 3 October 2026
+
+The owner has explicitly made player-feedback sessions **nonblocking for further
+implementation**. Continue functional browser, replay, import/export and package
+verification; keep novice, physical-device and artist acceptance honestly pending.
+No session or hardware measurement is inferred from an automated fixture. The
+historical phase tables below are superseded by this current order.
+
+Main now includes Themes #955 and Warehouse #966, alongside the completed content,
+controls, school, section practice, ghosts, reimport and original demonstrations.
+The current catalogue is **148 challenges / 14 worlds / 58 school lessons / 374
+school steps**. Installed demonstrations total **178**: all 120 original
+mode-specific recordings plus 58 recommended-mode school examples. The 60
+Adventure authoring proofs are separate; they are not installed demonstrations.
+
+| Order | Reviewable increment | Working estimate | Required functional evidence |
+| --- | --- | --- | --- |
+| 1 | Watch a recorded section, then practise from its exact entry | 1–2 days | Verified prefix and end boundary, accurate labels, pause/reconnect and no rewards from playback/practice |
+| 2 | Visual Follow/Observe objective inspector | 2–3 days | Author, move subject, edit criteria, export/reopen and reimport without losing settings |
+| 3 | Pack-removal impact and recovery guidance | 1–2 days | Identify affected revisions/records; preserve proof bytes and explain restoration |
+| Parallel | Stadium, then yard/garage art using shared Themes materials | 3–5 days per bounded batch | Readability, collision/visibility parity, resource disposal and source/packaged rendering |
+| 4 | Matching-mode school examples and optional Adventure examples | 3–5 days per bounded batch | Correct mode/revision, complete replay and bounded optional delivery |
+| 5 | Further distinct practice worlds and moving-subject challenges | 3–5 days per pair | Authored routes/objectives, both-mode access and verified demonstrations |
+| Last | H/R7 deferred unit coverage and broad qualification | 5–10 days, excluding external sessions | Required regression, replay/storage failures, named-device performance and separately recorded human acceptance |
+
+These are planning estimates, not elapsed-work promises. Hardware and player
+sessions remain an acceptance backlog and can inform later revisions, but no
+implementation row above waits for them. Current file caps are **64/72/104** and
+byte caps **8/8/16 MiB** for the three optional packages. Keep all guards and
+release authority unchanged. Investigate the merged edition-candidate size
+failure separately; successful optional admission is not whole-edition capacity.
+
+Publish complete, verified increments separately. Start independent branches on
+current main; use a new native stack only for genuine dependencies. Closed stacks
+#889, #902 and #957 remain closed. Public marker plus an actual player launch are
+required before calling any newly merged feature live.
+
 ## Remaining phases and delivery order
 
 | Phase | Scope                                                                             | Working estimate         | Target    |
