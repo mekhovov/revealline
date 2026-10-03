@@ -2191,6 +2191,8 @@ export function createFlightRenderer({
       ? { data: input }
       : input;
     if (disposed) throw new Error('Flight renderer is disposed');
+    if (!course || renderer.getContext().isContextLost())
+      throw new Error('World preview needs a ready course.');
     const generation = sceneGeneration,
       request = ++importGeneration;
     signal?.throwIfAborted();
@@ -2287,6 +2289,8 @@ export function createFlightRenderer({
       if (
         imageFailed ||
         disposed ||
+        !course ||
+        renderer.getContext().isContextLost() ||
         generation !== sceneGeneration ||
         request !== importGeneration ||
         signal?.aborted
@@ -2433,10 +2437,15 @@ export function createFlightRenderer({
     selectEditor(editorSelection, false);
   }
   async function createEditor(callbacks = {}) {
+    const generation = sceneGeneration;
+    if (!course || renderer.getContext().isContextLost())
+      throw new Error('World editor needs a ready course.');
     if (!loadTransformControls)
       throw new Error('World editing requires the World Studio renderer.');
     const { TransformControls } = await loadTransformControls();
     if (disposed) throw new Error('Editor was disposed while loading');
+    if (generation !== sceneGeneration || !course || renderer.getContext().isContextLost())
+      throw new Error('World preview changed while the editor was loading');
     editorCallbacks = callbacks;
     if (!editor) {
       editor = new TransformControls(camera, canvas);
