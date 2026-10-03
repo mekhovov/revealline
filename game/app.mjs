@@ -7647,6 +7647,8 @@ try {
     ) {
       presentedVictoryRun = run;
       openVictoryStory({ autoplay: true });
+    } else if (!practice && !completionWarning && !dialogOpen()) {
+      editionUI?.presentVictoryVideo?.(run, $('show-result'));
     }
   }
   function focusPauseToolReturn(id) {
