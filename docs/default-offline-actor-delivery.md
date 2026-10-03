@@ -58,3 +58,11 @@ Scoped lint and formatting pass. Regressions cover exact registry reconstruction
 unexpected generator/codec rejection, retained mission source descriptors and
 recovery bytes, and optional actor voices across all three core modes. They are
 authored but unexecuted under the explicit automated-suite waiver.
+
+## Final merged committed preparation
+
+The final exact source `125bde7d7` passes normal production preparation after the
+Theme Studio merge: 1,335 core files / 67,034,483 bytes, with 74,381 bytes remaining.
+The [final receipt](verification/expressive-actors/prepared-distribution.json)
+records this result. Full archive generation remains blocked by disk space;
+preparation success is not a completed archive or release qualification.

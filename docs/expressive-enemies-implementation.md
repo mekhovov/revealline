@@ -93,8 +93,8 @@ community clears cannot unlock official Snake chapter accents. A real-account
 publish/install review remains pending.
 
 The largest Company edition remains blocked by its existing 64 MiB admission
-guard: 67,592,864 bytes after integrating Theme Studio main `cf0b62e53`, or
-484,000 bytes over the cap. Before that merge it was 67,559,900 bytes, compared
+guard: its latest measurement was 67,592,864 bytes at merge commit `1592b7fea`
+(after Theme Studio main `cf0b62e53`), or 484,000 bytes over the cap. Before that merge it was 67,559,900 bytes, compared
 with 67,423,717 on main `66d83c424`. The edition menu omits unused flight data;
 no package cap or brand media was changed. [Capacity details](fpv-world-package-closure.md) distinguish this from
 the passing optional SIM package.
@@ -116,7 +116,10 @@ are later roadmap stages, not completed features of this preview.
 Automated suites are explicitly waived. Relevant regression sources were added
 without running them. Structural compilation, format/lint, localization,
 distribution references, source identity and the committed-source build are
-reported separately from gameplay qualification.
+reported separately from gameplay qualification. The exact committed preparation
+passes; writing the required full archive is blocked by local disk space. The
+[verification report](verification/expressive-actors/README.md) records that failure,
+the 995,683,591-byte ZIP requirement and the passing 64 MiB core admission.
 
 Manual browser observations include the hub, launch navigation, Retro Field,
 EN/UK deep links, private two-seat readiness, and compact Team Snake controls.
