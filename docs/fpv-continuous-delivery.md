@@ -2525,3 +2525,9 @@ were removed, after checking its build marker and absence of `.git`; metadata,
 receipts, source worktrees and current player builds remain. The art branch uses
 a sparse Git worktree with two production files. Qualification outputs remain
 bounded; do not run a whole-site build into the remaining free space.
+
+Frozen controls candidate6562df920 passed all three optional admissions,
+committed inputs and ZIP members, with two byte-identical builds. Package review
+gates remain pending. World102runtimefiles /14557129bytes; Academy67files /4220778bytes.
+Packaged actual-WebGL section replay additionally passes53/53. Main advanced to
+4fada3958 through unrelated Social Drone #983; no FPV dependency changed.

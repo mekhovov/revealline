@@ -70,3 +70,11 @@ page scroll while triggering only one arm/pause action.
 Additional unit coverage remains deferred to the approved final phase. This
 evidence does not qualify physical radio, iPhone, Steam Deck, graphics performance
 or novice learning outcomes. Protected CI and public deployment are separate gates.
+
+Frozen candidate `6562df920` also passed all three optional package admissions,
+committed-input/ZIP-member verification and two byte-identical builds.
+[Admission receipt](evidence/fpv-two-stick-package-admission.json) retains the
+source identity and unchanged package limits. Package review gates remain pending;
+`publicEligible: false` is not a failed build or a public release claim.
+Packaged touch checks pass32/32 with368 challenge/mode starts; actual WebGL
+section replay checks pass53/53. Receipts are stored alongside the keyboard evidence.
