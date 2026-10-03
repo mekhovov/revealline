@@ -114,3 +114,28 @@ The scoped material review and package hold are resolved. Publish the ready
 focused PR through normal exact-head protected CI. The broader combined D1
 production-renderer run is separate and still in progress; this PR does not claim
 it passed or imply a public deployment.
+
+### Refresh after groves merged
+
+Groves #996 merged as main `e40809f25ea8fe248dea6f8443876d811d21a777`.
+The ordinary merge at `06ed832704d68e6111a958e3d0fc1ca34a5c0f63` preserves both
+delivery histories. Runtime, physics/model, authoring and build code now match the
+already-qualified local combined candidate `e572026ba357f3194bf47e7137a0817cacb1a640`
+exactly, including matching scenery template/runtime. All 95 admitted original
+input hashes match that candidate. Versus the earlier material-only admission,
+the sole input change is `world-assets.mjs`, adding the published 676-byte grove
+composition. The new binding receipt records that complete comparison.
+
+The existing combined candidate passed all 30 art checks and all three source-bound
+admissions with two builds and committed-input/ZIP verification. World Studio has
+102 files / 15,531,574 runtime bytes; 95 original inputs total 16,737,736 bytes,
+leaving 39,480 bytes under the unchanged byte guard.
+
+Its production source-browser run passed 14 functional/ownership gates across
+90 configurations, three replacement rounds and 60 additional theme controls.
+This is retained evidence from `e572026ba`, not a new browser run for this merge.
+The admitted-package run is separate. Recorded browser-wall outliers remain
+unexplained (maximum RAF interval 32.862 seconds); performance/hardware acceptance
+is not implied by the functional pass. Full evidence is preserved separately as
+bounded lossless archives for later evidence-only publication. Normal current-head
+CI and public deployment verification remain separate.
