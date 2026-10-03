@@ -1499,6 +1499,9 @@ export function buildWorldVisuals({
     obstacleMap: wallMap,
     obstacleMaps: wallMaps,
     obstacleSurface,
+    // Keep fittings in this world's existing material/texture ownership. The
+    // Themes steel kit owns its finish; authored worlds reuse neutral hardware.
+    obstacleFittingsMaterial: () => (kit ? kit.paint('steel') : hardware),
     obstacleSurfaceKind(obstacle) {
       const id = obstacle.id ?? '';
       if (
@@ -2098,12 +2101,24 @@ export function buildDroneVisual({
     tint,
     pixel ? [0.045, 0.12, 0.065] : [0.024, 0.117, 0.073],
   );
-  for (const x of pixel ? [-0.063, 0.063] : [-0.034, 0.034])
-    part(
-      new THREE.BoxGeometry(pixel ? 0.014 : 0.009, pixel ? 0.04 : 0.044, pixel ? 0.09 : 0.075),
-      rubber,
-      [x, pixel ? -0.03 : -0.028, 0],
-    );
+  if (pixel) {
+    for (const x of [-0.063, 0.063])
+      part(new THREE.BoxGeometry(0.014, 0.04, 0.09), rubber, [x, -0.03, 0]);
+  } else {
+    const pads = [];
+    for (const x of [-0.033, 0.033])
+      for (const z of [-0.047, 0.047])
+        pads.push(new THREE.Matrix4().makeTranslation(x, -0.0115, z));
+    const landingPads = instanceSimDetails({
+      shape: new THREE.BoxGeometry(0.012, 0.011, 0.016),
+      paint: rubber,
+      parent,
+      matrices: pads,
+      mesh,
+    });
+    landingPads.name = 'drone-landing-pads';
+    landingPads.castShadow = true;
+  }
   if (kit) {
     // Flush fasteners and a recessed service panel stay inside the original hull.
     const panel = part(

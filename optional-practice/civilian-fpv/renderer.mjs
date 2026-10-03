@@ -175,6 +175,7 @@ export function createFlightRenderer({
     importedMaterialBindings = { applied: 0, diagnostics: [] },
     obstacleMaps = null,
     obstacleSurface = null,
+    obstacleFittingsMaterial = null,
     environmentSurfaceKind = null,
     lastActorState = null,
     importedAnimationTick = null,
@@ -872,13 +873,27 @@ export function createFlightRenderer({
       {
         ...maps,
         normalScale: new THREE.Vector2(
-          kind === 'plaster' ? 0.13 : 0.3,
-          kind === 'plaster' ? 0.13 : 0.3,
+          yardContainer ? 0.08 : kind === 'plaster' ? 0.13 : 0.3,
+          yardContainer ? 0.08 : kind === 'plaster' ? 0.13 : 0.3,
         ),
-        roughness:
-          kind === 'solar' ? 0.3 : kind === 'metal' ? 0.66 : kind === 'storage-steel' ? 0.74 : 0.9,
-        metalness:
-          kind === 'solar' ? 0.35 : kind === 'metal' ? 0.28 : kind === 'storage-steel' ? 0.18 : 0,
+        roughness: yardContainer
+          ? 0.82
+          : kind === 'solar'
+            ? 0.3
+            : kind === 'metal'
+              ? 0.66
+              : kind === 'storage-steel'
+                ? 0.74
+                : 0.9,
+        metalness: yardContainer
+          ? 0.12
+          : kind === 'solar'
+            ? 0.35
+            : kind === 'metal'
+              ? 0.28
+              : kind === 'storage-steel'
+                ? 0.18
+                : 0,
       },
     );
     let value, size, containerHardware;
@@ -932,7 +947,9 @@ export function createFlightRenderer({
     value.castShadow = value.receiveShadow = true;
     if (containerHardware) {
       worldScaleUV(containerHardware);
-      const fittings = mesh(containerHardware, paint, value);
+      // Brushed fittings must read against painted doors without emissive
+      // highlights or another texture. Both finishes remain world-owned.
+      const fittings = mesh(containerHardware, obstacleFittingsMaterial?.() ?? paint, value);
       fittings.name = 'container-door-hardware';
       fittings.userData.materialRole = 'steel';
       fittings.userData.minimumQuality = 'balanced';
@@ -1069,6 +1086,7 @@ export function createFlightRenderer({
     sceneryFallback = surroundings.backdrop;
     obstacleMaps = surroundings.obstacleMaps;
     obstacleSurface = surroundings.obstacleSurface ?? null;
+    obstacleFittingsMaterial = surroundings.obstacleFittingsMaterial ?? null;
     environmentSurfaceKind = surroundings.obstacleSurfaceKind ?? null;
     scene.background = new THREE.Color(surroundings.indoor ? theme.wall : theme.sky);
     // Visibility is a course property, identical across graphics presets.
@@ -2394,6 +2412,7 @@ export function createFlightRenderer({
       droneVisual = null;
       obstacleMaps = null;
       obstacleSurface = null;
+      obstacleFittingsMaterial = null;
       sceneryFallback = null;
       themeProfile = null;
       course = null;
