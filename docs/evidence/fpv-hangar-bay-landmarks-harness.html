@@ -1,0 +1,522 @@
+<!doctype html>
+<html lang="en">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Hangar bay landmarks · frozen comparison</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      font: 15px system-ui;
+      background: #0c1723;
+      color: #e5edf1;
+    }
+    body {
+      margin: 20px;
+      max-width: 1400px;
+    }
+    button,
+    select {
+      font: inherit;
+      padding: 10px;
+      margin: 6px;
+    }
+    .pair {
+      display: flex;
+      gap: 12px;
+      overflow: auto;
+    }
+    figure {
+      margin: 0;
+    }
+    figcaption {
+      padding: 8px;
+    }
+    .screen,
+    .screen canvas {
+      display: block;
+      width: 640px;
+      height: 360px;
+      background: #111;
+    }
+    textarea {
+      width: 100%;
+      height: 180px;
+      font: 11px monospace;
+    }
+    #status {
+      min-height: 24px;
+    }
+  </style>
+  <h1>Hangar bay landmarks</h1>
+  <p>
+    Frozen before/after modules, actual flight renderers, static inspection poses. Wall paint adds
+    no collision surface or shadow caster. This fixture does not certify artistic acceptance,
+    hardware FPS or a flight demonstration.
+  </p>
+  <p id="provenance">Loading frozen inputs…</p>
+  <button id="run" disabled>Run landmark qualification</button>
+  <button id="preview" disabled>Show selected view</button>
+  <button id="download" disabled>Download receipt</button>
+  <label
+    >Course
+    <select id="course">
+      <option>flight-01</option>
+      <option>beginner-01</option>
+      <option>beginner-28</option>
+    </select></label
+  >
+  <label
+    >Finish
+    <select id="appearance">
+      <option value="authored">Authored</option>
+      <option value="pixel">Pixel</option>
+      <option value="industrial-workshop">Industrial Workshop</option>
+    </select></label
+  >
+  <label
+    >Wall
+    <select id="wall">
+      <option value="north">Bays 01–04</option>
+      <option value="south">Bays 05–08</option>
+    </select></label
+  >
+  <p id="status">Preparing controls…</p>
+  <div class="pair">
+    <figure>
+      <figcaption>Before</figcaption>
+      <div class="screen" id="before"></div>
+    </figure>
+    <figure>
+      <figcaption>After</figcaption>
+      <div class="screen" id="after"></div>
+    </figure>
+  </div>
+  <p>
+    The bounded receipt keeps every check and per-view image hash/count, without raw pixel buffers.
+    Download the JSON or transfer it in validated chunks; never truncate the DOM text.
+  </p>
+  <textarea id="receipt" aria-label="Hangar landmark evidence" readonly></textarea>
+  <script type="module">
+    const $ = (id) => document.getElementById(id),
+      clone = structuredClone,
+      encode = JSON.stringify,
+      wait = () => new Promise(requestAnimationFrame),
+      sha = async (value) =>
+        [
+          ...new Uint8Array(
+            await crypto.subtle.digest(
+              'SHA-256',
+              typeof value === 'string' ? new TextEncoder().encode(value) : value,
+            ),
+          ),
+        ]
+          .map((b) => b.toString(16).padStart(2, '0'))
+          .join('');
+    let manifest,
+      modules,
+      owners = [],
+      receipt,
+      busy = false;
+    const errors = [];
+    addEventListener('error', (event) => errors.push(event.message));
+    addEventListener('unhandledrejection', (event) => errors.push(String(event.reason)));
+    const status = (text) => ($('status').textContent = text);
+    function publish() {
+      window.fpvHangarBayLandmarksReceipt = receipt;
+      $('receipt').value = encode(receipt);
+      $('download').disabled = !receipt;
+    }
+    function check(name, passed, details) {
+      receipt.checks.push({
+        name,
+        passed: !!passed,
+        ...(details === undefined ? {} : { details }),
+      });
+      publish();
+      if (!passed) throw Error(name);
+    }
+    async function verifyHashes() {
+      for (const [side, files] of Object.entries(manifest.files))
+        for (const [path, hash] of Object.entries(files)) {
+          const response = await fetch('./' + side + '/' + path, { cache: 'no-store' });
+          if (!response.ok || (await sha(await response.arrayBuffer())) !== hash)
+            throw Error('Frozen source mismatch: ' + side + '/' + path);
+        }
+      if (
+        (await sha(await (await fetch('./index.html', { cache: 'no-store' })).arrayBuffer())) !==
+        manifest.harnessSha256
+      )
+        throw Error('Harness mismatch');
+    }
+    const catalogue = (i) => [
+      ...new Map(
+        [...modules[i].catalogue.WORLD_CATALOGUE, ...modules[i].catalogue.BEGINNER_CATALOGUE].map(
+          (r) => [r.id, r.course],
+        ),
+      ).values(),
+    ];
+    const course = (i, id) => {
+      const value = catalogue(i).find((c) => c.id === id);
+      if (!value) throw Error('Missing ' + id);
+      return value;
+    };
+    function createOwners() {
+      owners = modules.map((row) => {
+        const canvas = document.createElement('canvas');
+        $(row.side).replaceChildren(canvas);
+        let scene = null;
+        const prototype = row.THREE.Object3D.prototype,
+          add = prototype.add;
+        prototype.add = function (...objects) {
+          if (!scene && this.isScene && objects.length === 8 && objects.every((o) => o.isGroup))
+            scene = this;
+          return add.apply(this, objects);
+        };
+        let runtime;
+        try {
+          runtime = row.assets.createFlightRenderer({
+            canvas,
+            window,
+            reducedMotion: true,
+            onContextLost: () => {
+              if (receipt && !receipt.disposing) receipt.contextLosses.push(row.side);
+            },
+          });
+        } finally {
+          prototype.add = add;
+        }
+        if (!runtime.available || !scene) {
+          runtime.dispose();
+          throw Error('Renderer unavailable: ' + row.side);
+        }
+        return {
+          ...row,
+          canvas,
+          runtime,
+          world: scene.children[0],
+          gl: canvas.getContext('webgl2'),
+        };
+      });
+    }
+    function disposeOwners() {
+      if (receipt) receipt.disposing = true;
+      const results = owners.map((owner) => {
+        owner.runtime.dispose();
+        return { side: owner.side, resources: owner.runtime.resources() };
+      });
+      owners = [];
+      if (receipt) delete receipt.disposing;
+      return results;
+    }
+    async function load(id, quality, appearance = 'authored') {
+      for (let i = 0; i < owners.length; i++) {
+        const owner = owners[i],
+          c = clone(course(i, id));
+        if (appearance === 'pixel') c.world = { ...c.world, theme: 'pixel' };
+        owner.runtime.setPresentation({
+          collectionId: appearance === 'pixel' ? 'authored' : appearance,
+          revision: 'r1',
+        });
+        owner.runtime.setCourse(c, 'acro');
+        owner.runtime.setQuality(quality);
+        owner.runtime.setDrone('racer');
+        if ((await owner.runtime.prepare()) === false) throw Error('Shader preparation superseded');
+        owner.world.updateMatrixWorld(true);
+      }
+    }
+    function observation(id, wall) {
+      const c = course(0, id),
+        m = modules[0],
+        flight = (
+          c.format === 'FlightCourse.v2' ? m.worldModel.createWorldFlight : m.model.createFlight
+        )({ course: c, mode: 'acro' }),
+        state = flight.snapshot();
+      flight.dispose?.();
+      const sign = wall === 'north' ? 1 : -1,
+        yaw = wall === 'north' ? 0 : Math.PI,
+        x =
+          (c.bounds.min.x + c.bounds.max.x) / 2000 -
+          ((sign * (c.bounds.max.x - c.bounds.min.x)) / 1000) * 0.375,
+        z = wall === 'north' ? c.bounds.min.z / 1000 + 8 : c.bounds.max.z / 1000 - 8;
+      state.position = { x: x * 1000, y: 3100, z: z * 1000 };
+      state.orientation = [
+        0,
+        Math.round(Math.sin(yaw / 2) * 1e6),
+        0,
+        Math.round(Math.cos(yaw / 2) * 1e6),
+      ];
+      state.ticks = 100;
+      return state;
+    }
+    function pixels(owner, state, camera) {
+      const original = encode(state);
+      owner.runtime.draw(state, { cameraMode: camera, cameraFov: 82, cameraTilt: 0 });
+      const gl = owner.gl,
+        rgba = new Uint8Array(gl.drawingBufferWidth * gl.drawingBufferHeight * 4);
+      gl.readPixels(
+        0,
+        0,
+        gl.drawingBufferWidth,
+        gl.drawingBufferHeight,
+        gl.RGBA,
+        gl.UNSIGNED_BYTE,
+        rgba,
+      );
+      if (gl.getError() !== gl.NO_ERROR || encode(state) !== original)
+        throw Error('WebGL error or observer state mutation');
+      return { rgba, resources: owner.runtime.resources() };
+    }
+    async function pair(id, quality, appearance, camera, wall) {
+      await wait();
+      const state = observation(id, wall),
+        a = pixels(owners[0], state, camera),
+        b = pixels(owners[1], state, camera);
+      if (a.rgba.length !== b.rgba.length) throw Error('Pixel dimensions differ');
+      let changed = 0,
+        nonBlack = 0;
+      for (let i = 0; i < a.rgba.length; i += 4) {
+        if (
+          a.rgba[i] !== b.rgba[i] ||
+          a.rgba[i + 1] !== b.rgba[i + 1] ||
+          a.rgba[i + 2] !== b.rgba[i + 2]
+        )
+          changed++;
+        if (b.rgba[i] + b.rgba[i + 1] + b.rgba[i + 2]) nonBlack++;
+      }
+      return {
+        id,
+        quality,
+        appearance,
+        camera,
+        wall,
+        changedPixels: changed,
+        nonBlackPixels: nonBlack,
+        beforeHash: await sha(a.rgba),
+        afterHash: await sha(b.rgba),
+        drawCalls: [a.resources.renderer.calls, b.resources.renderer.calls],
+        triangles: [a.resources.renderer.triangles, b.resources.renderer.triangles],
+      };
+    }
+    async function baseGeometry(owner) {
+      const result = [];
+      owner.world.traverse((item) => {
+        if (!item.geometry || item.userData.role === 'hangar-bay-landmark') return;
+        result.push({
+          name: item.name,
+          matrix: item.matrixWorld.elements,
+          attributes: Object.fromEntries(
+            Object.entries(item.geometry.attributes).map(([key, value]) => [
+              key,
+              Array.from(value.array),
+            ]),
+          ),
+          index: item.geometry.index ? Array.from(item.geometry.index.array) : null,
+          instances: item.instanceMatrix ? Array.from(item.instanceMatrix.array) : null,
+          cast: item.castShadow,
+          receive: item.receiveShadow,
+          visible: item.visible,
+        });
+      });
+      return sha(encode(result));
+    }
+    function details(owner) {
+      const result = [];
+      owner.world.traverse((item) => {
+        if (item.userData.role === 'hangar-bay-landmark') result.push(item);
+      });
+      return result;
+    }
+    function resourceKey(owner) {
+      const r = owner.runtime.resources();
+      return {
+        registered: r.registered,
+        geometries: r.renderer.geometries,
+        textures: r.renderer.textures,
+      };
+    }
+    async function run() {
+      if (busy) return;
+      busy = true;
+      $('run').disabled = $('preview').disabled = true;
+      disposeOwners();
+      receipt = {
+        format: 'FPVHangarBayLandmarksBrowserEvidence.v1',
+        createdAt: new Date().toISOString(),
+        baseline: manifest.baseline,
+        candidate: manifest.candidate,
+        sourceFiles: manifest.files,
+        checks: [],
+        samples: [],
+        resourceCycles: [],
+        contextLosses: [],
+        limitations: [
+          'Actual WebGL static observer evidence; not new flight proofs, hardware performance or human art acceptance.',
+          'Every image comparison retains hashes/counts, not raw pixel buffers.',
+        ],
+      };
+      try {
+        await verifyHashes();
+        check('Frozen source and harness hashes match', true);
+        createOwners();
+        const hangars = catalogue(0).filter((c) => c.environment === 'gym');
+        check(
+          'All12 Hangar courses unchanged',
+          hangars.length === 12 && hangars.every((c) => encode(c) === encode(course(1, c.id))),
+        );
+        const representative = [...new Map(hangars.map((c) => [encode(c.bounds), c.id])).values()];
+        check('Three arena sizes represented', representative.length === 3);
+        for (const id of representative)
+          for (const quality of ['low', 'balanced', 'high'])
+            for (const appearance of ['authored', 'pixel', 'industrial-workshop']) {
+              status(id + ' · ' + quality + ' · ' + appearance);
+              await load(id, quality, appearance);
+              check(
+                id +
+                  '/' +
+                  quality +
+                  '/' +
+                  appearance +
+                  ' existing geometry/UV/transforms/shadows exact',
+                (await baseGeometry(owners[0])) === (await baseGeometry(owners[1])),
+              );
+              const markings = details(owners[1]);
+              check(
+                id + '/' + quality + '/' + appearance + ' four opaque unshadowed paint batches',
+                markings.length === 4 &&
+                  markings.every(
+                    (m) =>
+                      !m.castShadow &&
+                      m.receiveShadow &&
+                      !m.material.transparent &&
+                      m.material.opacity === 1 &&
+                      m.material.polygonOffset,
+                  ),
+              );
+              if (appearance === 'pixel')
+                check(
+                  id + '/' + quality + ' Pixel map filtering preserved',
+                  markings.every((m) =>
+                    Object.values(m.material)
+                      .filter((v) => v?.isTexture)
+                      .every((v) => v.magFilter === owners[1].THREE.NearestFilter),
+                  ),
+                );
+              for (const camera of ['fpv', 'chase', 'overview'])
+                for (const wall of ['north', 'south']) {
+                  const sample = await pair(id, quality, appearance, camera, wall);
+                  receipt.samples.push(sample);
+                  check(
+                    id + '/' + quality + '/' + appearance + '/' + camera + '/' + wall + ' rendered',
+                    sample.nonBlackPixels > 100 &&
+                      sample.drawCalls.every((n) => n > 0) &&
+                      (camera !== 'fpv' || sample.changedPixels > 20),
+                  );
+                }
+            }
+        for (const id of hangars.map((c) => c.id)) {
+          await load(id, 'balanced');
+          check(id + ' exact generated-wall scope', details(owners[1]).length === 4);
+        }
+        await load('flight-05', 'balanced');
+        const meadow = await pair('flight-05', 'balanced', 'authored', 'fpv', 'north');
+        receipt.samples.push(meadow);
+        check(
+          'Meadow has no landmarks and exact pixels',
+          details(owners[1]).length === 0 && meadow.changedPixels === 0,
+        );
+        for (let cycle = 0; cycle < 3; cycle++) {
+          await load('flight-01', 'balanced');
+          await pair('flight-01', 'balanced', 'authored', 'fpv', 'north');
+          receipt.resourceCycles.push(owners.map(resourceKey));
+        }
+        check(
+          'Three repeated loads have stable registered/GPU resources',
+          receipt.resourceCycles.every((r) => encode(r) === encode(receipt.resourceCycles[0])),
+        );
+        const final = disposeOwners();
+        receipt.finalResources = final;
+        check(
+          'Final disposal releases all registered resources',
+          final.every((r) => Object.values(r.resources.registered).every((n) => n === 0)),
+        );
+        check(
+          'No context loss or application error',
+          receipt.contextLosses.length === 0 && errors.length === 0,
+          errors,
+        );
+        receipt.passed = true;
+        publish();
+        status(
+          'PASS · ' +
+            receipt.checks.length +
+            ' checks · ' +
+            receipt.samples.length +
+            ' image pairs',
+        );
+        createOwners();
+        await load('flight-01', 'balanced');
+        await pair('flight-01', 'balanced', 'authored', 'fpv', 'north');
+      } catch (error) {
+        receipt.passed = false;
+        receipt.error = String(error.stack ?? error);
+        publish();
+        status('FAIL · ' + error.message);
+      } finally {
+        busy = false;
+        $('run').disabled = $('preview').disabled = false;
+      }
+    }
+    $('run').onclick = run;
+    $('preview').onclick = async () => {
+      try {
+        if (!owners.length) createOwners();
+        await load($('course').value, 'balanced', $('appearance').value);
+        await pair($('course').value, 'balanced', $('appearance').value, 'fpv', $('wall').value);
+        status('Selected static view');
+      } catch (error) {
+        status(error.message);
+      }
+    };
+    $('download').onclick = () => {
+      const url = URL.createObjectURL(
+          new Blob([JSON.stringify(receipt, null, 2) + '\n'], { type: 'application/json' }),
+        ),
+        a = document.createElement('a');
+      a.href = url;
+      a.download = 'fpv-hangar-bay-landmarks-browser.json';
+      a.click();
+      setTimeout(() => URL.revokeObjectURL(url), 1000);
+    };
+    try {
+      manifest = await (await fetch('./fixture-manifest.json')).json();
+      if (manifest.format !== 'FPVHangarBayLandmarksFixture.v1') throw Error('Unknown fixture');
+      modules = await Promise.all(
+        ['before', 'after'].map(async (side) => {
+          const base = new URL('./' + side + '/optional-practice/civilian-fpv/', location.href),
+            [assets, catalogue, model, worldModel, THREE] = await Promise.all(
+              [
+                'world-assets.mjs',
+                'world-catalogue.mjs',
+                'model.mjs',
+                'world-model.mjs',
+                'vendor/three.module.js',
+              ].map((p) => import(new URL(p, base))),
+            );
+          await worldModel.initWorldRuntime();
+          return { side, assets, catalogue, model, worldModel, THREE };
+        }),
+      );
+      $('provenance').textContent =
+        'Baseline ' +
+        manifest.baseline +
+        ' · Candidate ' +
+        manifest.candidate +
+        ' · ' +
+        manifest.files.after['optional-practice/civilian-fpv/world-visuals.mjs'];
+      $('run').disabled = $('preview').disabled = false;
+      status('Ready. Qualification has not run.');
+    } catch (error) {
+      status('Preparation failed: ' + error.message);
+    }
+  </script>
+</html>
