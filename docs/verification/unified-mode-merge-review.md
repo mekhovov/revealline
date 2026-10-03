@@ -1,5 +1,9 @@
 # Unified mode UX merge review
 
+> Historical checkpoint. The [Company capacity follow-up](company-capacity-followup.md) resolves the
+> capacity and optional actor-voice gaps below and records a completed full game ZIP.
+> The original measurements remain unchanged for provenance.
+
 ## Reviewed source and fixes
 
 Runtime commit `613ab6dce7ba57e0167927af63c7e5f2ed0d39fd` (tree `6bae8fddd9193dcc808f1c00ed2ea0297dad371f`) includes main through `24ce4caa7aba32199749254402affb7d5badb4d0`. This review completes the locally verifiable unified-menu implementation items. Later workflow/documentation commits retain this exact runtime; they do not constitute a new runtime build receipt.

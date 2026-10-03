@@ -51,3 +51,8 @@ Still required for release qualification: listening in EN/UK on Safari/iOS and C
 The implementation retains player-controlled mute and gesture activation, decodes short effects into reusable buffers, and uses AudioParam scheduling rather than conflicting direct writes while sound is active. These choices follow [MDN Web Audio best practices](https://developer.mozilla.org/en-US/docs/Web/API/Web_Audio_API/Best_practices).
 
 Separate gain nodes and stereo panning follow the graph-based routing shown in [MDN's Web Audio guide](https://developer.mozilla.org/en-US/docs/Web/API/Web_Audio_API/Using_Web_Audio_API). The shared engine uses native Web Audio and the existing game sample library; it adds no external audio library or runtime media service.
+
+Company Capture and Snake also receive [optional EN/UK actor voice packs](company-actor-voices.md)
+through this same reaction and master/dialogue system. The existing verified-download
+service handles offline ownership, integrity, repair and removal; no additional mixer
+or automatic whole-pack download is introduced.

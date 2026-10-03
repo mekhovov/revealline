@@ -191,13 +191,31 @@ export function builtinWorldScene(course) {
     json.nodes.push(node);
     return next;
   };
-  function edge(name, side, along, height, gap = 1, offsetY = 0) {
+  function edge(name, side, along, height, gap = 1, offsetY = 0, turn = 0) {
     const model = models.get(name);
     if (!model) throw new Error(`Missing built-in scenery: ${name}`);
     const scale = height / model.size[1];
-    const yaw = [0, -Math.PI / 2, Math.PI, Math.PI / 2][side];
-    const halfX = ((side % 2 ? model.size[2] : model.size[0]) * scale) / 2;
-    const halfZ = ((side % 2 ? model.size[0] : model.size[2]) * scale) / 2;
+    const yaw = [0, -Math.PI / 2, Math.PI, Math.PI / 2][side] + turn;
+    // Exact rotated box extents retain the edge clearance for irregular crowns.
+    // Keep legacy cardinal extents byte-stable for every other environment.
+    const cosine = Math.abs(Math.cos(yaw)),
+      sine = Math.abs(Math.sin(yaw)),
+      halfX =
+        ((turn
+          ? model.size[0] * cosine + model.size[2] * sine
+          : side % 2
+            ? model.size[2]
+            : model.size[0]) *
+          scale) /
+        2,
+      halfZ =
+        ((turn
+          ? model.size[0] * sine + model.size[2] * cosine
+          : side % 2
+            ? model.size[0]
+            : model.size[2]) *
+          scale) /
+        2;
     const x =
       side === 1
         ? maxX + gap + halfX
@@ -265,6 +283,8 @@ export function builtinWorldScene(course) {
           treeAlong,
           woodland ? (rear ? 9.5 : 5.5) + ((i + side) % 3) * 1.1 : 5.2 + (i % 2),
           woodland ? (rear ? 10 : 2) + ((i + side) % 3) * 1.4 : 3.5,
+          0,
+          environment === 'woodland' ? (i + side * count) * 2.399963229728653 : 0,
         );
         if (i % 4 === 1) retro('detail-bench', side, along, 1.1, 1.2);
       }
@@ -314,6 +334,20 @@ export function builtinWorldScene(course) {
     // Distinct industrial settings, not the same mirrored row on every side.
     const yard = environment === 'container-yard';
     const garage = environment === 'garage';
+    // Each yard edge has a recognizable skyline: tower depot, storage stacks,
+    // tank-side sheds and truck services. Existing models/counts stay bounded.
+    const yardFrontages = [
+      { along: [0.12, 0.31, 0.52], heights: [12, 17, 11], gap: 19 },
+      { along: [0.2, 0.51, 0.81], heights: [10, 12, 16], gap: 23 },
+      { along: [0.32, 0.59, 0.83], heights: [10, 11, 13], gap: 16 },
+      { along: [0.13, 0.36, 0.6], heights: [16, 11, 10], gap: 20 },
+    ];
+    const yardStacks = [
+      [0.12, 0.24, 0.5, 0.62],
+      [0.22, 0.34, 0.46, 0.58],
+      [0.27, 0.39, 0.61, 0.73],
+      [0.12, 0.24, 0.4, 0.52],
+    ];
     for (let side = 0; side < 4; side++) {
       if (yard || side % 2 === 0) {
         const buildings = garage
@@ -323,15 +357,15 @@ export function builtinWorldScene(course) {
           industrial(
             name,
             side,
-            (i + 0.5) / buildings.length,
-            (garage ? 14 : 10) + i * 2 + side,
-            garage ? 24 : 14,
+            yard ? yardFrontages[side].along[i] : (i + 0.5) / buildings.length,
+            yard ? yardFrontages[side].heights[i] : (garage ? 14 : 10) + i * 2 + side,
+            yard ? yardFrontages[side].gap : garage ? 24 : 14,
           ),
         );
       }
       if (!garage && (yard || side === 1)) {
         for (let i = 0; i < (yard ? 4 : 2); i++) {
-          const along = 0.16 + i * 0.17;
+          const along = yard ? yardStacks[side][i] : 0.16 + i * 0.17;
           const name = (side + i) % 2 ? 'shipping-container-a' : 'shipping-container-b';
           industrial(name, side, along, 2.8, 1.5 + (i % 2) * 0.4);
           if (yard && (i + side) % 3 !== 0)
