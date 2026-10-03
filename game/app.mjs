@@ -1,3 +1,7 @@
+import { selectedArcadeCollection } from './presentation/industrial-arcade.mjs';
+import { specialistFailureCopy } from './hunt/actor-catalog.mjs';
+import { getLocale } from './i18n/index.mjs';
+import { pursuitRoster } from './hunt/pursuit-goals.mjs';
 import { snakeText } from './snake/copy.mjs';
 import { createEncounterVariantPreferences } from './hunt/preferences.mjs';
 import { createRunningEnemyPreferences } from './hunt/running-enemy-preferences.mjs';
@@ -112,6 +116,7 @@ import {
   readMissionLibraryReady,
   readMissionLibraryReturn,
 } from './mission-library/handoff.mjs';
+import { playedLevelHref } from './mission-library/played-level-link.mjs';
 import { createDuel } from './multiplayer.mjs';
 import { createPresentationHost } from './presentation/host.mjs';
 import {
@@ -608,7 +613,8 @@ try {
     level,
     classes = classRegistry,
     enabled = runningEnemyPreferences.snapshot().enabled,
-  ) => (enabled ? prepareRunningEnemyLevel(level, { classes }) : level);
+    style = runningEnemyPreferences.snapshot().style,
+  ) => (enabled ? prepareRunningEnemyLevel(level, { classes, style }) : level);
   const refreshRunningEnemies = () => runningEnemyControls.forEach((control) => control.refresh());
   let encounterVariantControls = null,
     contextualReactions = null,
@@ -1159,6 +1165,8 @@ try {
     },
   });
   const packLaunchGuard = createPackLaunchGuard();
+  let playedLevelLink = null;
+  let playedLevelLinkGeneration = 0;
   let demoHost = null;
   const demoLibrary = createDemoLibrary();
   const courseVisit = Object.create(null);
@@ -1309,6 +1317,9 @@ try {
   }
   refreshAppearanceDefault();
   const sound = new Soundscape({ persistentMusic: true, audioMaster });
+  sound.setActorPresentation(() => ({
+    collectionId: selectedArcadeCollection(menuStyle.themeHost.effectivePreferences())?.id,
+  }));
   sound.setDestructionPreferences?.(() => encounterDisplay.snapshot());
   contextualReactions = attachContextualReactions({
     sound,
@@ -1683,7 +1694,9 @@ try {
           });
     if (candidateHost?.owns(entry)) {
       const manifest = entry.manifests.find((item) => item.level.id === nextRun.levelId);
-      if (runtimeContent && manifest.background === null) {
+      // Code-owned greybox missions intentionally have no original picture.
+      // This also applies to source Journey previews, not only installed content.
+      if (manifest.background === null) {
         return createFlightPictures({
           context: {
             runId: nextRunId,
@@ -5810,6 +5823,67 @@ try {
   function nextJourneyMission(id) {
     return candidateHost ? candidateHost.next(id) : journeyCatalog.next(id);
   }
+  function clearPlayedLevelLink() {
+    playedLevelLinkGeneration++;
+    if (playedLevelLink) {
+      // A newly selected local/practice mission must not retain the previous
+      // public mission's identity in the address bar.
+      const url = new URL(location.href);
+      url.searchParams.delete('library-mission');
+      url.searchParams.delete('library-ready');
+      try {
+        history.replaceState(history.state, '', url.href);
+      } catch {
+        // Sharing must never interrupt a flight (for example in an embedded host).
+      }
+    }
+    playedLevelLink = null;
+    $('copy-level-link').hidden = true;
+    $('played-level-link').hidden = true;
+    $('played-level-link').value = '';
+    $('level-link-status').textContent = '';
+    $('level-link-status').hidden = true;
+  }
+  async function updatePlayedLevelLink() {
+    const generation = ++playedLevelLinkGeneration;
+    const selectedRun = run;
+    if (practiceSession || practice || demo || runtimeContent) return;
+    try {
+      const host = await getUnifiedMissionLibrary();
+      if (generation !== playedLevelLinkGeneration || run !== selectedRun) return;
+      const row = currentSoloLibraryMission(host);
+      const href = playedLevelHref(row, { baseURL: location.href });
+      if (!href) return;
+      playedLevelLink = href;
+      $('copy-level-link').hidden = false;
+      $('played-level-link').value = href;
+      try {
+        history.replaceState(history.state, '', href);
+      } catch {
+        // The explicit copy action remains usable when history is restricted.
+      }
+    } catch {
+      // Optional discovery failures cannot stop gameplay or share the wrong map.
+    }
+  }
+  $('copy-level-link').onclick = async () => {
+    const href = playedLevelLink;
+    if (!href) return;
+    try {
+      await navigator.clipboard.writeText(href);
+      if (playedLevelLink !== href) return;
+      $('level-link-status').hidden = false;
+      localizedText($('level-link-status'), () => t('interface:levelLinkCopied'));
+    } catch {
+      if (playedLevelLink !== href) return;
+      const field = $('played-level-link');
+      field.hidden = false;
+      field.focus();
+      field.select();
+      $('level-link-status').hidden = false;
+      localizedText($('level-link-status'), () => t('interface:levelLinkCopyManually'));
+    }
+  };
   function currentSoloLibraryMission(host) {
     const mission = journeyMission();
     if (mission) {
@@ -6744,6 +6818,7 @@ try {
       flightPictures = stagedPictures;
       stagedPictures = null;
       run = restored.run;
+      clearPlayedLevelLink();
       restoredSignalRuns.add(run);
       recorder = restored.recorder;
       runId = restored.session.runId;
@@ -7525,6 +7600,9 @@ try {
         document,
         window,
         preferences: runningEnemyPreferences,
+        getAcceptedStyle: () =>
+          started && run ? (run.level.pursuit ? 'varied' : 'original') : null,
+        getAcceptedActors: () => pursuitRoster(run?.level),
         getCurrentEnabled: () =>
           run ? !!(run.level.runningEnemies || run.level.classic?.hunt) : null,
         getAcceptedEnabled: () =>
@@ -7537,10 +7615,10 @@ try {
       }),
     );
   }
-  let runningEnemyChoice = runningEnemyPreferences.snapshot().enabled;
-  runningEnemyPreferences.subscribe(({ enabled }) => {
-    if (enabled === runningEnemyChoice) return;
-    runningEnemyChoice = enabled;
+  let runningEnemyChoice = JSON.stringify(runningEnemyPreferences.snapshot());
+  runningEnemyPreferences.subscribe(({ enabled, style, durable }) => {
+    if (JSON.stringify({ enabled, style, durable }) === runningEnemyChoice) return;
+    runningEnemyChoice = JSON.stringify({ enabled, style, durable });
     runningEnemyNeedsPreparation = !started;
     cancelResultAttempt();
     cancelSkipForContentChange();
@@ -9046,6 +9124,12 @@ try {
         kind === 'retry'
           ? !!ticket.run.level.runningEnemies
           : runningEnemyPreferences.snapshot().enabled;
+      const runningEnemyStyle =
+        kind === 'retry'
+          ? ticket.run.level.pursuit
+            ? 'varied'
+            : 'original'
+          : runningEnemyPreferences.snapshot().style;
       const entry =
           (retainHunt ? ticket.entry : null) ||
           destinationEntry ||
@@ -9107,6 +9191,7 @@ try {
             onStatus: ticket.feedback.update,
             gameplayTuning: nextGameplayTuning(entry),
             runningEnemies: runningEnemiesEnabled,
+            runningEnemyStyle,
           },
         );
         if (!resultAttemptCurrent(ticket)) {
@@ -9124,6 +9209,7 @@ try {
                 applyGameplayTuning(level, nextGameplayTuning(entry)),
                 options.classRecipes,
                 runningEnemiesEnabled,
+                runningEnemyStyle,
               ),
               options,
             )),
@@ -9461,6 +9547,7 @@ try {
     show('skip-celebration', false);
     clearInput({ resetDirection: true });
     run = nextRun;
+    clearPlayedLevelLink();
     runningEnemyNeedsPreparation = false;
     if (
       retainedRun ||
@@ -9811,6 +9898,7 @@ try {
     if (!started) rememberSelection();
     started = true;
     paused = false;
+    void updatePlayedLevelLink();
     if (['restored', 'paused-resume'].includes(runMessageCue))
       warning(
         run.player.cutting
@@ -10057,6 +10145,8 @@ try {
                           'xonix-core.v10',
                           'xonix-core.v11',
                           'xonix-core.v12',
+                          'xonix-core.v13',
+                          'xonix-core.v14',
                         ].includes(run.ruleset)
                       ? t('interface:reclaimedGround')
                       : t('interface:safeGround'),
@@ -10138,6 +10228,8 @@ try {
   function eventFeedback(events) {
     contextualReactions?.events(events, {
       attemptId: runId,
+      actorFamilyFor: (id) => pursuitRoster(run?.level).find((actor) => actor.id === id)?.family,
+      actorFamilies: pursuitRoster(run?.level).map((actor) => actor.family),
       mode: 'solo',
       board: 0,
       encounter: !!(run?.level?.classic?.hunt || run?.level?.runningEnemies),
@@ -10235,6 +10327,8 @@ try {
                   'xonix-core.v10',
                   'xonix-core.v11',
                   'xonix-core.v12',
+                  'xonix-core.v13',
+                  'xonix-core.v14',
                 ].includes(run.ruleset)
                   ? 'gameplay:liveLineExposedReachReclaimedGroundToSecureIt'
                   : 'gameplay:liveLineExposedReachSafeGroundToSecureIt',
@@ -10245,6 +10339,13 @@ try {
               {
                 'self-contact': t('interface:yourLineCrossedItselfChooseANewRoute'),
                 'snake-body': snakeText('failure'),
+                'combat-specialist': (() => {
+                  const copy = specialistFailureCopy(
+                    run.level.pursuit?.actors.find((actor) => actor.id === event.actorId)?.behavior,
+                    getLocale(),
+                  );
+                  return `${copy.reason} ${copy.tip}`;
+                })(),
                 'combat-projectile': t('interface:failure.combatProjectile'),
                 'mission-timeout': t('interface:theMissionClockRanOutTryAFasterRoute'),
                 'cut-timeout': t('interface:yourLiveLineStayedOpenTooLongMakeAShorter'),
@@ -10264,6 +10365,8 @@ try {
                   'xonix-core.v10',
                   'xonix-core.v11',
                   'xonix-core.v12',
+                  'xonix-core.v13',
+                  'xonix-core.v14',
                 ].includes(run.ruleset)
                   ? 'gameplay:lineStruckReachReclaimedGroundBeforeTheTravellingSparkCatches'
                   : 'interface:lineStruckReachSafeGroundBeforeTheTravellingSparkCatches',

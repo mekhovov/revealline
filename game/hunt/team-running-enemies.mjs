@@ -1,7 +1,15 @@
+import {
+  derivePursuitGoals,
+  validatePursuitPopulation,
+  PURSUIT_GOALS_VERSION,
+} from './pursuit-goals.mjs';
 import { dataIdentity, required } from '../data-json.mjs';
 import { createCoop, validateCoopLevel } from '../coop/core.mjs';
 import {
   TEAM_RUNNING_LEVEL_VERSION,
+  TEAM_PURSUIT_LEVEL_VERSION,
+  TEAM_SNAKE_PURSUIT_LEVEL_VERSION,
+  isTeamRunningLevel,
   TEAM_RUNNING_RECIPE,
   inheritedRunningTeamLevel,
 } from '../coop/running-enemies.mjs';
@@ -9,14 +17,55 @@ import { freezeDesign } from '../content-design/catalogs.mjs';
 import { placeRunningEnemies } from './running-enemy-placement.mjs';
 
 export function teamRunningEnemyBaseLevel(level) {
-  return level.version === TEAM_RUNNING_LEVEL_VERSION ? inheritedRunningTeamLevel(level) : level;
+  return isTeamRunningLevel(level) ? inheritedRunningTeamLevel(level) : level;
 }
 
 /** Apply after accepted gameplay tuning. Existing Hunt objectives remain authored. */
-export function prepareTeamRunningEnemies(source) {
+export function prepareTeamRunningEnemies(source, { style = 'original', population } = {}) {
+  required(['original', 'varied'].includes(style), 'Choose original or varied Team targets.');
+  if (source.pursuit && isTeamRunningLevel(source)) {
+    const checked = validateCoopLevel(source);
+    required(checked.valid, checked.errors.join(' '));
+    return freezeDesign(structuredClone(source));
+  }
+  source = teamRunningEnemyBaseLevel(source);
   const validation = validateCoopLevel(source);
   required(validation.valid, validation.errors.join(' '));
-  if (source.hunt) return source;
+  if (source.hunt) {
+    if (style === 'original') return source;
+    const runners = source.combatPatrols.actors.filter((actor) =>
+      source.hunt.targets.some((target) => target.id === actor.id && target.kind === 'runner'),
+    );
+    if (!runners.length) return source;
+    const authored = population === undefined ? null : validatePursuitPopulation(population);
+    required(
+      !authored ||
+        authored.every((item) =>
+          runners.some((actor) => actor.id === item.id && actor.x === item.x && actor.y === item.y),
+        ),
+      'Authored Team pursuit goals must match existing target positions.',
+    );
+    const level = structuredClone(source);
+    level.version = source.snake ? TEAM_SNAKE_PURSUIT_LEVEL_VERSION : TEAM_PURSUIT_LEVEL_VERSION;
+    level.runningEnemies = {
+      version: source.snake ? 'running-enemies.v3' : 'running-enemies.v2',
+      ...(source.snake ? { inheritedSnake: structuredClone(source.snake) } : {}),
+      baseVersion: source.version,
+      baseRevision: source.revision,
+      inheritedCombat: structuredClone(source.combatPatrols),
+      inheritedHunt: structuredClone(source.hunt),
+      actorIds: [],
+    };
+    level.pursuit = authored
+      ? {
+          version: PURSUIT_GOALS_VERSION,
+          actors: authored.map(({ x: _x, y: _y, ...policy }) => policy),
+        }
+      : derivePursuitGoals(runners, createCoop(source, { seed: 1 }));
+    const checked = validateCoopLevel(level);
+    required(checked.valid, checked.errors.join(' '));
+    return freezeDesign(level);
+  }
   const run = createCoop(source, { seed: 1 });
   const inherited = source.combatPatrols?.enabled ? source.combatPatrols.actors : [];
   const reservedIds = [];
@@ -26,20 +75,24 @@ export function prepareTeamRunningEnemies(source) {
     for (const child of Object.values(value)) visit(child);
   };
   visit(source);
-  const spots = placeRunningEnemies({
-    width: source.width,
-    height: source.height,
-    cells: run.cells,
-    terrain: run.terrain ?? [],
-    spawns: source.spawns,
-    occupied: [
-      ...source.enemies,
-      ...inherited,
-      ...(source.strongholds ?? []).flatMap((hold) => [hold.core, ...hold.anchors]),
-    ],
-    reservedIds,
-    count: Math.min(6, 46 - source.enemies.length - inherited.length),
-  });
+  const authored = population === undefined ? null : validatePursuitPopulation(population);
+  required(!authored || style === 'varied', 'Authored goals require varied pursuit.');
+  const spots =
+    authored ??
+    placeRunningEnemies({
+      width: source.width,
+      height: source.height,
+      cells: run.cells,
+      terrain: run.terrain ?? [],
+      spawns: source.spawns,
+      occupied: [
+        ...source.enemies,
+        ...inherited,
+        ...(source.strongholds ?? []).flatMap((hold) => [hold.core, ...hold.anchors]),
+      ],
+      reservedIds,
+      count: Math.min(6, 46 - source.enemies.length - inherited.length),
+    });
   required(spots.length > 0, 'No safe running-enemy population fits this Team level.');
   const actors = spots.map(({ id, x, y }, index) => ({
     id,
@@ -52,7 +105,7 @@ export function prepareTeamRunningEnemies(source) {
     turnTicks: 60,
   }));
   const level = structuredClone(source);
-  level.version = TEAM_RUNNING_LEVEL_VERSION;
+  level.version = style === 'varied' ? TEAM_PURSUIT_LEVEL_VERSION : TEAM_RUNNING_LEVEL_VERSION;
   level.runningEnemies = {
     version: TEAM_RUNNING_RECIPE,
     baseVersion: source.version,
@@ -71,14 +124,21 @@ export function prepareTeamRunningEnemies(source) {
     quota: 0,
     targets: actors.map((actor) => ({ id: actor.id, kind: 'runner' })),
   };
+  if (style === 'varied')
+    level.pursuit = authored
+      ? {
+          version: PURSUIT_GOALS_VERSION,
+          actors: authored.map(({ x: _x, y: _y, ...policy }) => policy),
+        }
+      : derivePursuitGoals(actors, run);
   const checked = validateCoopLevel(level);
   required(checked.valid, checked.errors.join(' '));
   return freezeDesign(level);
 }
 
-export function matchTeamRunningEnemyLevel(source, recorded) {
+export function matchTeamRunningEnemyLevel(source, recorded, options) {
   try {
-    return dataIdentity(prepareTeamRunningEnemies(source)) === dataIdentity(recorded);
+    return dataIdentity(prepareTeamRunningEnemies(source, options)) === dataIdentity(recorded);
   } catch {
     return false;
   }

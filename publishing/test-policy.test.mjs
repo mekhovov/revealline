@@ -119,3 +119,25 @@ test('CLI missing policy or malformed override cannot emit a waiver output', asy
     await assert.rejects(fs.stat(output), { code: 'ENOENT' });
   }
 });
+
+test('MinIO acceptance and its receipt lifecycle honor the explicit suite policy', async () => {
+  const workflow = await fs.readFile(
+    new URL('../.github/workflows/community-minio-recovery.yml', import.meta.url),
+    'utf8',
+  );
+  const steps = workflow.split(/\n      - /);
+  const policy = steps.findIndex((step) => step.includes('id: test_policy'));
+  assert.ok(policy > 0);
+  assert.match(steps[policy], /run: node publishing\/test-policy\.mjs/);
+  for (const name of [
+    'Run isolated MinIO recovery acceptance',
+    'Collect redacted receipt',
+    'Upload redacted receipt',
+    'Show acceptance service logs on failure',
+    'Remove acceptance containers and volumes',
+  ]) {
+    const index = steps.findIndex((step) => step.startsWith(`name: ${name}\n`));
+    assert.ok(index > policy, name);
+    assert.match(steps[index], /if: .*steps\.test_policy\.outputs\.runTests == 'true'/, name);
+  }
+});

@@ -1,0 +1,138 @@
+:root {
+  color-scheme: dark;
+}
+* {
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+  color: var(--text, #f4f0df);
+  background: var(--background, #080d19);
+  font-family: var(--font-ui, system-ui);
+}
+main {
+  max-width: 1400px;
+  padding: max(16px, env(safe-area-inset-top)) max(16px, env(safe-area-inset-right))
+    max(16px, env(safe-area-inset-bottom)) max(16px, env(safe-area-inset-left));
+  margin: auto;
+}
+header,
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+header h1 {
+  flex: 1;
+  font-size: clamp(1.25rem, 4vw, 2rem);
+}
+a {
+  color: #ffda71;
+}
+section {
+  padding: 12px;
+  border: 1px solid #76959d;
+  margin-block: 12px;
+}
+#setup {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 230px), 1fr));
+  gap: 12px;
+}
+label {
+  display: grid;
+  gap: 6px;
+  min-width: 0;
+}
+select,
+input,
+button {
+  min-height: 48px;
+  max-width: 100%;
+  font: inherit;
+  border: 2px solid #8ae3f2;
+  padding: 8px 12px;
+  background: #172331;
+  color: #fff8e9;
+  border-radius: 4px;
+}
+button {
+  cursor: pointer;
+  touch-action: manipulation;
+}
+button:focus-visible,
+input:focus-visible,
+select:focus-visible {
+  outline: 3px solid #ffda71;
+  outline-offset: 3px;
+}
+button:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+input {
+  width: 100%;
+}
+.identity {
+  font-family: monospace;
+  overflow-wrap: anywhere;
+  color: #bbc8c8;
+  font-size: 0.8rem;
+}
+#boards {
+  display: grid;
+  gap: 12px;
+  align-items: center;
+}
+#boards.paired {
+  grid-template-columns: 1fr 1fr;
+}
+canvas {
+  display: block;
+  width: 100%;
+  max-height: 62dvh;
+  object-fit: contain;
+  border: 2px solid #8ae3f2;
+  image-rendering: pixelated;
+}
+#controls {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  position: sticky;
+  bottom: max(0px, env(safe-area-inset-bottom));
+  padding: 8px;
+  background: #080d19ee;
+}
+#controls button {
+  min-width: 48px;
+  min-height: 56px;
+}
+#notice,
+#result {
+  color: #ffda71;
+  min-height: 1.5em;
+}
+[hidden] {
+  display: none !important;
+}
+@media (max-width: 650px) {
+  #boards.paired {
+    grid-template-columns: 1fr;
+  }
+  #boards.paired canvas {
+    max-height: 30dvh;
+  }
+  #support {
+    font-size: 0.7rem;
+    padding: 4px;
+    flex: 1;
+  }
+  #controls {
+    gap: 4px;
+  }
+  #controls button {
+    min-width: 44px;
+  }
+}

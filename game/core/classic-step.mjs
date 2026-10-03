@@ -229,6 +229,9 @@ const failureOrder = [
   'boss-lane',
   'combat-projectile',
 ];
+// Specialist fatalities retain exactly the enemy-player tie rank.
+const failureRank = (kind) =>
+  failureOrder.indexOf(kind === 'combat-specialist' ? 'enemy-player' : kind);
 function firstFailure(candidates) {
   return (
     candidates
@@ -236,8 +239,7 @@ function firstFailure(candidates) {
       .sort((a, b) =>
         Math.abs(a.time - b.time) > EPS
           ? a.time - b.time
-          : failureOrder.indexOf(a.kind) - failureOrder.indexOf(b.kind) ||
-            (a.id < b.id ? -1 : a.id > b.id ? 1 : 0),
+          : failureRank(a.kind) - failureRank(b.kind) || (a.id < b.id ? -1 : a.id > b.id ? 1 : 0),
       )[0] ?? null
   );
 }

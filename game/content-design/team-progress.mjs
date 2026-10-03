@@ -12,7 +12,9 @@ function runningCompletion(row, run, verified = null) {
     const tuning = recoverGameplayTuning(run.level);
     if (!tuning || tuning.adminOverride) return null;
     const level = applyGameplayTuning(row.level, tuning),
-      matched = prepareTeamRunningEnemies(level),
+      matched = prepareTeamRunningEnemies(level, {
+        style: run.level.pursuit ? 'varied' : 'original',
+      }),
       original = createCoop(level, {
         seed: run.seed,
         difficulty: run.difficulty,

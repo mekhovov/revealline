@@ -1,5 +1,8 @@
+import { SNAKE_PURSUIT_VERSIONS, isPursuitLevel, isRunningEnemyLevel } from './versions.mjs';
+import { validatePursuitGoals } from '../hunt/pursuit-goals.mjs';
 import {
   runningEnemyBaseLevel,
+  runningEnemyGeometry,
   runningEnemyCopy,
   validateRunningEnemyDefinition,
 } from '../hunt/running-enemy-definition.mjs';
@@ -280,12 +283,26 @@ export function validateLevel(level) {
       validateSnakeDefinition(level.snake, base.classic.hunt);
       return { valid: true, errors: [] };
     }
-    if (level && Object.hasOwn(level, 'snake'))
+    if (
+      level &&
+      Object.hasOwn(level, 'snake') &&
+      version?.value !== SNAKE_PURSUIT_VERSIONS.levelVersion
+    )
       return { valid: false, errors: ['Snake requires its explicit successor edition.'] };
-    if (version?.value === 'xonix-level.v10') {
+    if (isRunningEnemyLevel(level)) {
       const owned = runningEnemyCopy(level);
       const base = normalizedLevel(runningEnemyBaseLevel(owned));
       validateRunningEnemyDefinition(owned, base);
+      if (isPursuitLevel(owned))
+        validatePursuitGoals(
+          owned.pursuit,
+          owned.runningEnemies.combatPatrols.actors.slice(
+            -owned.runningEnemies.hunt.targets.length,
+          ),
+          runningEnemyGeometry(base),
+        );
+      else if (Object.hasOwn(owned, 'pursuit'))
+        throw new TypeError('Pursuit requires its explicit successor edition.');
       return { valid: true, errors: [] };
     }
     if (level && Object.hasOwn(level, 'runningEnemies'))
@@ -408,11 +425,27 @@ export function normalizedLevel(level) {
     const snake = validateSnakeDefinition(level.snake, base.classic.hunt);
     return { ...base, version: SNAKE_LEVEL_VERSION, snake };
   }
-  if (Object.getOwnPropertyDescriptor(level ?? {}, 'version')?.value === 'xonix-level.v10') {
+  if (isRunningEnemyLevel(level)) {
     const owned = runningEnemyCopy(level);
     const base = normalizedLevel(runningEnemyBaseLevel(owned));
     validateRunningEnemyDefinition(owned, base);
-    return { ...base, version: owned.version, runningEnemies: owned.runningEnemies };
+    const pursuit = isPursuitLevel(owned)
+      ? validatePursuitGoals(
+          owned.pursuit,
+          owned.runningEnemies.combatPatrols.actors.slice(
+            -owned.runningEnemies.hunt.targets.length,
+          ),
+          runningEnemyGeometry(base),
+        )
+      : null;
+    if (!pursuit && Object.hasOwn(owned, 'pursuit'))
+      throw new TypeError('Pursuit requires its explicit successor edition.');
+    return {
+      ...base,
+      version: owned.version,
+      runningEnemies: owned.runningEnemies,
+      ...(pursuit ? { pursuit } : {}),
+    };
   }
 
   if (

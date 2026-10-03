@@ -3,7 +3,8 @@ import {
   resolveVersions,
   WIDE_VERSIONS,
   isClassicRuleset,
-  RUNNING_ENEMY_VERSIONS,
+  isRunningEnemyLevel,
+  isRunningEnemyRuleset,
   baseLevelVersion,
 } from './versions.mjs';
 
@@ -91,10 +92,9 @@ const board = (width, height) =>
 export const LEGACY_GEOMETRY = board(48, 36);
 export const WIDE_GEOMETRY = board(72, 36);
 export function geometryForLevel(level) {
-  const pair =
-    level?.version === RUNNING_ENEMY_VERSIONS.levelVersion
-      ? resolveVersions({ levelVersion: baseLevelVersion(level) })
-      : versionsForLevel(level);
+  const pair = isRunningEnemyLevel(level)
+    ? resolveVersions({ levelVersion: baseLevelVersion(level) })
+    : versionsForLevel(level);
   const geometry =
     pair.ruleset === WIDE_VERSIONS.ruleset || isClassicRuleset(pair.ruleset)
       ? WIDE_GEOMETRY
@@ -108,10 +108,9 @@ export function geometryForLevel(level) {
 }
 /** Runs are core-owned; this lookup never changes another run's geometry. */
 export function geometryForRun(run) {
-  const pair =
-    run.ruleset === RUNNING_ENEMY_VERSIONS.ruleset
-      ? resolveVersions({ levelVersion: baseLevelVersion(run.level) })
-      : resolveVersions({ ruleset: run.ruleset });
+  const pair = isRunningEnemyRuleset(run.ruleset)
+    ? resolveVersions({ levelVersion: baseLevelVersion(run.level) })
+    : resolveVersions({ ruleset: run.ruleset });
   const geometry =
     pair.ruleset === WIDE_VERSIONS.ruleset || isClassicRuleset(pair.ruleset)
       ? WIDE_GEOMETRY

@@ -2,6 +2,8 @@
 export const AUTHORED_JOURNEY_ROUTE_IDS = Object.freeze([
   'opening',
   'humanoid-hunt-v1',
+  'pursuit-pilots-v1',
+  'pursuit-campaigns-v1',
   'snake-hunt-v1',
   'authored',
   'whole-originals',

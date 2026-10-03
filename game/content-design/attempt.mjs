@@ -73,7 +73,13 @@ export function createContentAttemptPreparer(
   };
   async function prepare(
     request,
-    { signal, onStatus = () => {}, gameplayTuning, runningEnemies = false } = {},
+    {
+      signal,
+      onStatus = () => {},
+      gameplayTuning,
+      runningEnemies = false,
+      runningEnemyStyle = 'original',
+    } = {},
   ) {
     required(!disposed, 'Candidate preparer is disposed.');
     const selected = boundedJSON(request, { maxBytes: 4096, maxNodes: 12, maxDepth: 1 });
@@ -163,7 +169,10 @@ export function createContentAttemptPreparer(
           const tunedLevel = tuning ? applyGameplayTuning(manifest.level, tuning) : manifest.level;
           const run = createRun(
             runningEnemies
-              ? prepareRunningEnemyLevel(tunedLevel, { classes: options.classRecipes })
+              ? prepareRunningEnemyLevel(tunedLevel, {
+                  classes: options.classRecipes,
+                  style: runningEnemyStyle,
+                })
               : tunedLevel,
             options,
           );

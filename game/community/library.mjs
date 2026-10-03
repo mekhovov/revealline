@@ -1,6 +1,9 @@
 import { required } from '../data-json.mjs';
 import { creatorSHA256 } from '../creator/bytes.mjs';
-import { approveCreatorBundle, importCreatorBundle } from '../creator/bundle.mjs';
+import { approveCreatorBundle } from '../creator/bundle.mjs';
+import { inspectCommunityPackage } from './package-family.mjs';
+import { createCommunityClassicInstalled } from './classic-installed.mjs';
+import { createCommunityNativeInstalled } from './native-installed.mjs';
 import {
   exportInstalledCreatorBundle,
   creatorEditionStorageStatus,
@@ -27,12 +30,52 @@ export function createCommunityLibrary({
   stateStore,
   downloadStore,
   decodeImage,
+  classicInstalled = null,
+  nativeInstalled = null,
   lockManager = globalThis.navigator?.locks,
 }) {
   required(
     client && creatorStore && stateStore && downloadStore,
     'Community library adapters are required.',
   );
+  const classics =
+    classicInstalled ?? (globalThis.indexedDB ? createCommunityClassicInstalled() : null);
+  const natives =
+    nativeInstalled ?? (globalThis.indexedDB ? createCommunityNativeInstalled() : null);
+  const isNative = (family) => ['team', 'fpv'].includes(family);
+  const runtimeStorage = async (linked) => {
+    const storage =
+      linked.family === 'classic'
+        ? await classics?.storage(linked.creatorEditionId)
+        : isNative(linked.family)
+          ? await natives?.storage(linked)
+          : await creatorEditionStorageStatus(creatorStore, linked.creatorEditionId);
+    return (
+      storage ??
+      (linked.installation === 'offloaded'
+        ? { installed: false, offloaded: true, manifestRetained: true }
+        : null)
+    );
+  };
+  const playHref = (linked) =>
+    linked.family === 'classic'
+      ? `../snake/play.html?community=${encodeURIComponent(linked.runtimeIdentity)}&mode=solo`
+      : linked.family === 'team'
+        ? `../couch/relay-rescue.html?community-team=${linked.creatorEditionId}`
+        : linked.family === 'fpv'
+          ? `../../optional-practice/civilian-fpv/index.html?community-world=${encodeURIComponent(linked.runtimeIdentity)}&community-revision=${linked.creatorEditionId}`
+          : `../creator/player.html?edition=${encodeURIComponent(linked.creatorEditionId)}`;
+  const runtimeExport = (linked) => {
+    if (linked.family === 'classic') {
+      required(classics, 'Classic community storage is unavailable.');
+      return classics.export(linked.creatorEditionId);
+    }
+    if (isNative(linked.family)) {
+      required(natives, 'Native community storage is unavailable.');
+      return natives.export(linked);
+    }
+    return exportInstalledCreatorBundle(creatorStore, linked.creatorEditionId, { decodeImage });
+  };
   const verifyPackage = async (edition, blob) => {
     const safe = validateCommunityEdition(edition);
     required(blob.size === safe.packageSize, 'Package size differs from its published edition.');
@@ -40,20 +83,24 @@ export function createCommunityLibrary({
       (await packageHash(blob)) === safe.packageSha256,
       'Package hash differs from its published edition.',
     );
-    return importCreatorBundle(blob, { decodeImage });
+    return inspectCommunityPackage(blob, { decodeImage });
   };
   const withEditionLock = (editionId, operation) =>
     lockManager?.request
       ? lockManager.request(`revealline-community-edition-${editionId}`, operation)
       : operation();
   const installedSet = async () =>
-    new Set((await installedCreatorManifests(creatorStore)).map((item) => item.editionId));
+    new Set([
+      ...(await installedCreatorManifests(creatorStore)).map((item) => item.editionId),
+      ...(classics ? await classics.list() : []),
+      ...(natives
+        ? await natives.list([...new Set(stateStore.read().editions.map((item) => item.family))])
+        : []),
+    ]);
   async function status(editionId) {
     const state = stateStore.read();
     const linked = association(state, editionId);
-    const storage = linked
-      ? await creatorEditionStorageStatus(creatorStore, linked.creatorEditionId)
-      : null;
+    const storage = linked ? await runtimeStorage(linked) : null;
     const installed = storage?.installed ?? false;
     const packageRetained = !!(await downloadStore.get(editionId));
     return Object.freeze({
@@ -63,20 +110,39 @@ export function createCommunityLibrary({
       manifestRetained: storage?.manifestRetained ?? false,
       offlinePlayable: installed,
       creatorEditionId: linked?.creatorEditionId ?? null,
-      attemptKey: linked ? creatorAttemptKey(linked.creatorEditionId) : null,
-      profileKey: linked ? creatorProfileKey(linked.creatorEditionId) : null,
+      ...(linked?.family ? { family: linked.family, runtimeIdentity: linked.runtimeIdentity } : {}),
+      attemptKey: linked
+        ? linked.family === 'classic'
+          ? `revealline.classic-snake.round.v2.${linked.runtimeIdentity}`
+          : isNative(linked.family)
+            ? null
+            : creatorAttemptKey(linked.creatorEditionId)
+        : null,
+      profileKey: linked
+        ? linked.family === 'classic'
+          ? `classic-snake-progress.proof.v2/community/${linked.runtimeIdentity}`
+          : isNative(linked.family)
+            ? null
+            : creatorProfileKey(linked.creatorEditionId)
+        : null,
       packageRetained,
       exactRecoveryAvailable: packageRetained || installed,
-      playHref: installed
-        ? `../creator/player.html?edition=${encodeURIComponent(linked.creatorEditionId)}`
-        : null,
+      playHref: installed ? playHref(linked) : null,
     });
   }
   async function installBytes(edition, blob) {
     const safe = validateCommunityEdition(edition);
-    const prepared = await verifyPackage(safe, blob);
-    const approval = approveCreatorBundle(prepared);
-    const review = await reviewCreatorInstallation(creatorStore, prepared, approval);
+    const inspected = await verifyPackage(safe, blob);
+    const prepared = inspected.family === 'creator' ? inspected.prepared : inspected;
+    const approval = inspected.family === 'creator' ? approveCreatorBundle(prepared) : null;
+    let review =
+      inspected.family === 'creator'
+        ? await reviewCreatorInstallation(creatorStore, prepared, approval)
+        : { family: inspected.family, missions: inspected.missions, assets: 0 };
+    if (inspected.family === 'classic')
+      required(classics, 'Classic community storage is unavailable.');
+    else if (isNative(inspected.family))
+      required(natives, 'Native community storage is unavailable.');
     // Cache and journal the exact association before the media commit. If the
     // final commit is interrupted, the catalog shows a retained package ready
     // to retry. If the last journal write fails, status still discovers the
@@ -86,6 +152,9 @@ export function createCommunityLibrary({
     const staged = {
       editionId: safe.editionId,
       creatorEditionId: prepared.editionId,
+      ...(inspected.family !== 'creator'
+        ? { family: inspected.family, runtimeIdentity: inspected.runtimeIdentity }
+        : {}),
       collectionId: safe.collectionId,
       slug: safe.slug,
       version: safe.version,
@@ -98,7 +167,10 @@ export function createCommunityLibrary({
       staged,
     ];
     stateStore.write(state);
-    await installPreparedCreatorBundle(creatorStore, prepared, approval, review, { decodeImage });
+    if (inspected.family === 'classic') review = await classics.install(inspected);
+    else if (isNative(inspected.family)) review = await natives.install(inspected);
+    else
+      await installPreparedCreatorBundle(creatorStore, prepared, approval, review, { decodeImage });
     state.editions = state.editions.map((item) =>
       item.editionId === safe.editionId
         ? {
@@ -132,9 +204,7 @@ export function createCommunityLibrary({
       for (const edition of page.editions) {
         const linked = association(state, edition.editionId);
         const isInstalled = !!linked && local.has(linked.creatorEditionId);
-        const storage = linked
-          ? await creatorEditionStorageStatus(creatorStore, linked.creatorEditionId)
-          : null;
+        const storage = linked ? await runtimeStorage(linked) : null;
         const installedCollection = edition.collectionId
           ? state.editions.filter(
               (item) =>
@@ -167,11 +237,24 @@ export function createCommunityLibrary({
             offloaded: storage?.offloaded ?? false,
             manifestRetained: storage?.manifestRetained ?? false,
             creatorEditionId: linked?.creatorEditionId ?? null,
-            attemptKey: linked ? creatorAttemptKey(linked.creatorEditionId) : null,
-            profileKey: linked ? creatorProfileKey(linked.creatorEditionId) : null,
-            playHref: isInstalled
-              ? `../creator/player.html?edition=${encodeURIComponent(linked.creatorEditionId)}`
+            ...(linked?.family
+              ? { family: linked.family, runtimeIdentity: linked.runtimeIdentity }
+              : {}),
+            attemptKey: linked
+              ? linked.family === 'classic'
+                ? `revealline.classic-snake.round.v2.${linked.runtimeIdentity}`
+                : isNative(linked.family)
+                  ? null
+                  : creatorAttemptKey(linked.creatorEditionId)
               : null,
+            profileKey: linked
+              ? linked.family === 'classic'
+                ? `classic-snake-progress.proof.v2/community/${linked.runtimeIdentity}`
+                : isNative(linked.family)
+                  ? null
+                  : creatorProfileKey(linked.creatorEditionId)
+              : null,
+            playHref: isInstalled ? playHref(linked) : null,
             updateAvailable:
               (isInstalled &&
                 !!edition.latestEditionId &&
@@ -220,11 +303,7 @@ export function createCommunityLibrary({
         current.installed && current.creatorEditionId,
         'Keep the exact recovery package until this edition is installed and verifies locally.',
       );
-      const reconstructed = await exportInstalledCreatorBundle(
-        creatorStore,
-        current.creatorEditionId,
-        { decodeImage },
-      );
+      const reconstructed = await runtimeExport(current);
       await verifyPackage(safe, reconstructed);
       const review = Object.freeze({
         editionId: safe.editionId,
@@ -270,9 +349,7 @@ export function createCommunityLibrary({
         const state = stateStore.read();
         const linked = association(state, safe.editionId);
         required(linked, 'This community edition has not been installed on this device.');
-        const blob = await exportInstalledCreatorBundle(creatorStore, linked.creatorEditionId, {
-          decodeImage,
-        });
+        const blob = await runtimeExport(linked);
         await verifyPackage(safe, blob);
         await downloadStore.put(safe.editionId, blob);
         return status(safe.editionId);
@@ -291,17 +368,16 @@ export function createCommunityLibrary({
         current.installed && current.creatorEditionId,
         'This exact edition is not installed or is already offloaded.',
       );
-      const reconstructed = await exportInstalledCreatorBundle(
-        creatorStore,
-        current.creatorEditionId,
-        { decodeImage },
-      );
+      const reconstructed = await runtimeExport(current);
       await verifyPackage(safe, reconstructed);
-      const creatorReview = await reviewCreatorEditionOffload(
-        creatorStore,
-        current.creatorEditionId,
-        { decodeImage },
-      );
+      const creatorReview =
+        current.family === 'classic'
+          ? await classics.reviewOffload(current.creatorEditionId)
+          : isNative(current.family)
+            ? await natives.reviewOffload(current)
+            : await reviewCreatorEditionOffload(creatorStore, current.creatorEditionId, {
+                decodeImage,
+              });
       const review = Object.freeze({
         editionId: safe.editionId,
         creatorEditionId: current.creatorEditionId,
@@ -342,7 +418,11 @@ export function createCommunityLibrary({
         );
         stateStore.write(pending);
         try {
-          await offloadInstalledCreatorBundle(creatorStore, approved.creatorReview);
+          if (approved.creatorReview.family === 'classic')
+            await classics.offload(approved.creatorReview);
+          else if (isNative(approved.creatorReview.family))
+            await natives.offload(approved.creatorReview);
+          else await offloadInstalledCreatorBundle(creatorStore, approved.creatorReview);
         } catch (error) {
           try {
             pending.editions = pending.editions.map((item) =>
@@ -366,5 +446,9 @@ export function createCommunityLibrary({
       });
     },
     status,
+    close: () => {
+      classics?.close();
+      natives?.close();
+    },
   });
 }

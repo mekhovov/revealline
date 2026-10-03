@@ -567,3 +567,16 @@ test('authored result Retry applies Expert without managed-media pins or changin
   assert.equal(receipts[0].difficulty, 'standard');
   assert.deepEqual(p.errors, []);
 });
+
+test('source pursuit greybox starts and retries without treating null as an asset revision', async (t) => {
+  const { p } = await setup(t, { search: '?journey=pursuit-pilots-v1' });
+  p.$('shell-featured').click();
+  await running(p, 'crossing-post');
+  assert.equal(p.rendered.backdrop, null);
+  assert.ok(p.rendered.run.level.pursuit.actors.length > 0);
+  p.$('pause-button').click();
+  p.$('retry-button').click();
+  await running(p, 'crossing-post');
+  assert.equal(p.rendered.backdrop, null);
+  assert.deepEqual(p.errors, []);
+});

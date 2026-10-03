@@ -9,6 +9,8 @@ import {
   SNAKE_HUNT_CATALOGUE,
   SNAKE_HUNT_IDENTITY,
   SNAKE_HUNT_PURSUIT_IDENTITY,
+  SNAKE_HUNT_EXPRESSIVE_IDENTITY,
+  SNAKE_HUNT_EXPRESSIVE_COURSES,
 } from '../../optional-practice/civilian-fpv/snake-hunt-catalogue.mjs';
 import {
   createContactHuntState,
@@ -69,11 +71,11 @@ function approach(state, target, altitude = 900) {
   };
 }
 
-test('Sim Hunt has 36 distinct bounded courses in six exact six-course playlists', async () => {
+test('Sim Hunt has 48 distinct bounded courses in eight exact six-course playlists', async () => {
   await initWorldRuntime();
-  assert.equal(SNAKE_HUNT_COURSES.length, 36);
-  assert.equal(new Set(SNAKE_HUNT_COURSES.map((course) => course.id)).size, 36);
-  assert.equal(SNAKE_HUNT_PLAYLISTS.length, 6);
+  assert.equal(SNAKE_HUNT_COURSES.length, 48);
+  assert.equal(new Set(SNAKE_HUNT_COURSES.map((course) => course.id)).size, 48);
+  assert.equal(SNAKE_HUNT_PLAYLISTS.length, 8);
   for (const playlist of SNAKE_HUNT_PLAYLISTS) assert.equal(playlist.entries.length, 6);
   for (const source of SNAKE_HUNT_COURSES)
     for (const mode of ['self-level', 'acro']) {
@@ -94,13 +96,41 @@ test('adding pursuit courses preserves the original recipes and pack-owned progr
   assert.equal(dataIdentity(SNAKE_HUNT_PLAYLISTS.slice(0, 4)), 'b858555995b18f24');
   assert.equal(SNAKE_HUNT_IDENTITY, 'fpv-snake-hunt:0a73f7def9f067b8');
   assert.notEqual(SNAKE_HUNT_PURSUIT_IDENTITY, SNAKE_HUNT_IDENTITY);
-  for (const entry of SNAKE_HUNT_CATALOGUE.slice(24)) {
+  for (const entry of SNAKE_HUNT_CATALOGUE.slice(24, 36)) {
     assert.equal(entry.packIdentity, SNAKE_HUNT_PURSUIT_IDENTITY);
     assert.ok(
       entry.course.actors.every(
         (actor) => actor.path.length >= 4 && actor.speed > 0 && actor.fireEveryTicks === 0,
       ),
     );
+  }
+});
+
+test('expressive flight courses retain native unarmed patrols, distinct spawns and separate content ownership', () => {
+  assert.equal(SNAKE_HUNT_EXPRESSIVE_COURSES.length, 12);
+  assert.equal(SNAKE_HUNT_EXPRESSIVE_COURSES[0].locales.en.title, 'Low Pass Depot');
+  assert.notEqual(SNAKE_HUNT_EXPRESSIVE_IDENTITY, SNAKE_HUNT_PURSUIT_IDENTITY);
+  for (const entry of SNAKE_HUNT_CATALOGUE.slice(36)) {
+    assert.equal(entry.packIdentity, SNAKE_HUNT_EXPRESSIVE_IDENTITY);
+    const course = validateWorldCourse(entry.course);
+    assert.equal(
+      new Set(course.actors.map((actor) => JSON.stringify(actor.position))).size,
+      course.actors.length,
+    );
+    assert.ok(
+      course.actors.every(
+        (actor) =>
+          actor.type === 'patrol' &&
+          actor.fireEveryTicks === 0 &&
+          actor.damage === 0 &&
+          actor.speed > 0 &&
+          actor.path.length >= 4,
+      ),
+    );
+    for (const mode of ['self-level', 'acro']) {
+      assert.equal(course.steps[mode][0].type, 'hunt-contact-v1');
+      assert.equal(course.steps[mode][0].targets.length, course.actors.length);
+    }
   }
 });
 

@@ -87,11 +87,8 @@ export function createRun(
 ) {
   const level = normalizedLevel(source);
   const baseVersion = baseLevelVersion(level);
-  const baseLevel = level.snake
-    ? snakeBaseLevel(level)
-    : level.runningEnemies
-      ? runningEnemyBaseLevel(level)
-      : level;
+  const inheritedLevel = level.runningEnemies ? runningEnemyBaseLevel(level) : level;
+  const baseLevel = inheritedLevel.snake ? snakeBaseLevel(inheritedLevel) : inheritedLevel;
   const geometry = geometryForLevel(level),
     { width, height } = geometry;
   if (!Number.isInteger(seed) || seed < 0 || seed > 0xffffffff)

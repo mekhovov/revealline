@@ -8,6 +8,8 @@ import { WHOLE_JOURNEY_CORE_PACK_IDS } from './whole-journey-order.mjs';
 export function createAuthoredJourneyRouteDefinition(
   id,
   {
+    createPursuitPilotCandidates,
+    createPursuitCampaignCandidates,
     createOpeningCandidates,
     createHuntTrainingCandidates,
     createSnakeHuntCandidates,
@@ -56,6 +58,28 @@ export function createAuthoredJourneyRouteDefinition(
   },
 ) {
   if (!isAuthoredJourneyRouteId(id)) return null;
+  if (id === 'pursuit-campaigns-v1')
+    return freezeDesign({
+      id,
+      label: 'Pursuit routes · four prototype chapters',
+      sessionKey: 'revealline.suspended.journey-pursuit-campaigns.v1',
+      profileKey: 'journey-pursuit-campaigns-v1',
+      source: createPursuitCampaignCandidates(),
+      corePackIds: ['journey-pursuit-solo-campaigns'],
+      optionalCampaignIds: [],
+      preserveOriginalThemes: true,
+    });
+  if (id === 'pursuit-pilots-v1')
+    return freezeDesign({
+      id,
+      label: 'Pursuit routes · prototype',
+      sessionKey: 'revealline.suspended.journey-pursuit-pilots.v1',
+      profileKey: 'journey-pursuit-pilots-v1',
+      source: createPursuitPilotCandidates(),
+      corePackIds: ['journey-pursuit-solo'],
+      optionalCampaignIds: [],
+      preserveOriginalThemes: true,
+    });
   if (id === 'snake-hunt-v1')
     return freezeDesign({
       id,
