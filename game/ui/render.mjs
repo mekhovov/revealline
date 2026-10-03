@@ -25,6 +25,7 @@ import {
   drawEnemyPressure,
 } from './classic-view.mjs';
 import { combatView } from './combat-view.mjs';
+import { drawSnakeBody, drawSnakeTargetOrder } from './snake-view.mjs';
 import {
   createCombatPresentation,
   drawCombatScrap,
@@ -840,6 +841,7 @@ export class BoardPainter {
           boardHeight: H,
         });
       }
+      drawSnakeBody(ctx, state, { palette: p });
       drawEncounterLane(ctx, state, p);
       drawClassicPickups(ctx, classic, p, images, {
         screenScale: canvasCSSWidth / W,
@@ -944,6 +946,7 @@ export class BoardPainter {
         frames: actorFrames,
         fonts,
       });
+      drawSnakeTargetOrder(ctx, state, combat?.actors, { palette: p, font: fonts.numeric });
       if (combat) drawCombatWarnings(ctx, combat, p, combatOptions);
       drawActiveTrail(ctx, state.trailSegments, state.trail, state.player, p, {
         time: this.time,

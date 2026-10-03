@@ -1,3 +1,4 @@
+import { snakeText } from './snake/copy.mjs';
 import { createEncounterVariantPreferences } from './hunt/preferences.mjs';
 import { createRunningEnemyPreferences } from './hunt/running-enemy-preferences.mjs';
 import {
@@ -10050,6 +10051,8 @@ try {
                           'xonix-core.v8',
                           'xonix-core.v9',
                           'xonix-core.v10',
+                          'xonix-core.v11',
+                          'xonix-core.v12',
                         ].includes(run.ruleset)
                       ? t('interface:reclaimedGround')
                       : t('interface:safeGround'),
@@ -10226,6 +10229,8 @@ try {
                   'xonix-core.v8',
                   'xonix-core.v9',
                   'xonix-core.v10',
+                  'xonix-core.v11',
+                  'xonix-core.v12',
                 ].includes(run.ruleset)
                   ? 'gameplay:liveLineExposedReachReclaimedGroundToSecureIt'
                   : 'gameplay:liveLineExposedReachSafeGroundToSecureIt',
@@ -10235,6 +10240,7 @@ try {
             warning(
               {
                 'self-contact': t('interface:yourLineCrossedItselfChooseANewRoute'),
+                'snake-body': snakeText('failure'),
                 'combat-projectile': t('interface:failure.combatProjectile'),
                 'mission-timeout': t('interface:theMissionClockRanOutTryAFasterRoute'),
                 'cut-timeout': t('interface:yourLiveLineStayedOpenTooLongMakeAShorter'),
@@ -10252,6 +10258,8 @@ try {
                   'xonix-core.v8',
                   'xonix-core.v9',
                   'xonix-core.v10',
+                  'xonix-core.v11',
+                  'xonix-core.v12',
                 ].includes(run.ruleset)
                   ? 'gameplay:lineStruckReachReclaimedGroundBeforeTheTravellingSparkCatches'
                   : 'interface:lineStruckReachSafeGroundBeforeTheTravellingSparkCatches',

@@ -1,3 +1,4 @@
+import { snakeBrief, snakeText } from '../snake/copy.mjs';
 import { huntText } from '../hunt/copy.mjs';
 import { t } from '../i18n/index.mjs';
 import { coopGroundContext, coopGroundLabel } from './coop-ground.mjs';
@@ -18,6 +19,7 @@ export function coopArenaGuidance(level, { jointCuts = true } = {}) {
   const humanoids = Boolean(level.hunt);
   const guards = patrols.some((actor) => actor.role === 'sentry');
   const threats = [];
+  if (level.snake) threats.push(snakeBrief(level, { team: true }));
   if (humanoids) threats.push(huntText('hint'));
   if (level.timedBonuses) threats.push(teamBonusHelp());
   const slow = level.terrain?.some((area) => area.kind === 'slow'),
@@ -92,27 +94,31 @@ export function coopArenaGuidance(level, { jointCuts = true } = {}) {
         : requiredCores
           ? ''
           : ' ' + t('interface:yourGoalIsTheCoverageTarget')),
-    briefingTitle: humanoids
-      ? huntText(level.hunt.mode)
-      : requiredCores > 1
-        ? t('interface:secureTheRequiredCores')
+    briefingTitle: level.snake
+      ? snakeText('title')
+      : humanoids
+        ? huntText(level.hunt.mode)
+        : requiredCores > 1
+          ? t('interface:secureTheRequiredCores')
+          : requiredCores
+            ? t('interface:takeTheStrongholdTogether')
+            : t('interface:makeYourCommonGround'),
+    levelNote: level.snake
+      ? snakeBrief(level, { team: true })
+      : humanoids
+        ? huntText(
+            level.hunt.mode === 'hunt'
+              ? 'huntGoal'
+              : level.hunt.mode === 'capture-quota'
+                ? 'quotaGoal'
+                : 'bonusGoal',
+          )
         : requiredCores
-          ? t('interface:takeTheStrongholdTogether')
-          : t('interface:makeYourCommonGround'),
-    levelNote: humanoids
-      ? huntText(
-          level.hunt.mode === 'hunt'
-            ? 'huntGoal'
-            : level.hunt.mode === 'capture-quota'
-              ? 'quotaGoal'
-              : 'bonusGoal',
-        )
-      : requiredCores
-        ? t('interface:planRoutesToTheAnchorsThenClaimTheExposedCores')
-        : context === 'reclaimed'
-          ? t('interface:createReturnRoutesTogetherUseReclaimedGroundToLaunchYour')
-          : t('interface:createSafeRoutesTogetherUseTheRevealedGroundToLaunch'),
-    startMessage: `${specialist ? '' + t('interface:specialistsShareTheBoardInterceptorCoversExposedLinesDisruptorOpens') + ' ' : ''}${
+          ? t('interface:planRoutesToTheAnchorsThenClaimTheExposedCores')
+          : context === 'reclaimed'
+            ? t('interface:createReturnRoutesTogetherUseReclaimedGroundToLaunchYour')
+            : t('interface:createSafeRoutesTogetherUseTheRevealedGroundToLaunch'),
+    startMessage: `${level.snake ? snakeBrief(level, { team: true }) + ' ' : ''}${specialist ? '' + t('interface:specialistsShareTheBoardInterceptorCoversExposedLinesDisruptorOpens') + ' ' : ''}${
       roamers
         ? t('gameplay:team.startRoamer', { route })
         : hunters

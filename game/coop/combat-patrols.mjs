@@ -3,6 +3,7 @@ import { dataIdentity } from '../data-json.mjs';
 import { EPS, movingCirclesTime } from '../core/geometry.mjs';
 import { classicDomainHit } from '../core/classic-motion.mjs';
 import { fitsClassicDomain } from '../core/classic-topology.mjs';
+import { recordSnakeCatch } from '../snake/rules.mjs';
 import {
   validateCombatPatrols,
   COMBAT_RADIUS,
@@ -157,7 +158,8 @@ export function eliminateCoopCombat(run, actor, cause, players = []) {
     players: [...new Set(players)].sort(),
   };
   run.combatPatrols.eliminations.push(record);
-  recordHuntElimination(run.hunt, run.level.hunt, actor.id, cause);
+  if (recordHuntElimination(run.hunt, run.level.hunt, actor.id, cause))
+    recordSnakeCatch(run, actor.id, players);
   emit(run, 'eliminated', record);
   removeShots(run, (shot) => shot.actorId === actor.id, 'owner-eliminated');
 }

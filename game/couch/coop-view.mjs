@@ -8,6 +8,7 @@ import {
   drawCombatScrap,
 } from '../ui/combat-presentation.mjs';
 import { createHuntDestruction } from '../hunt/destruction.mjs';
+import { drawSnakeBody, drawSnakeTargetOrder } from '../ui/snake-view.mjs';
 import { t } from '../i18n/index.mjs';
 import {
   createArcadeAdapter,
@@ -490,6 +491,7 @@ export function createCoopPainter(canvas) {
       });
       ctx.restore();
       drawCoopBonuses(ctx, bonuses, { screenScale: canvas.clientWidth / 1152 });
+      drawSnakeBody(ctx, run, { unit: 1, palette, colors });
       // Launch markers are anchored landmarks, not compulsory meeting pads.
       for (const effect of run.supportEffects || [])
         drawTeamSupportPulse(ctx, supportFrames, effect, colors, reduced);
@@ -510,6 +512,7 @@ export function createCoopPainter(canvas) {
       ctx.save();
       ctx.scale(1 / 16, 1 / 16);
       combatPresentation.drawActors(ctx, combat, palette, combatOptions);
+      drawSnakeTargetOrder(ctx, run, combat?.actors, { palette, font: fonts.numeric });
       drawCombatWarnings(ctx, combat, palette, combatOptions);
       drawCombatProjectiles(ctx, combat, palette, combatOptions);
       ctx.restore();

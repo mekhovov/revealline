@@ -58,6 +58,7 @@ import {
 import { steerFieldCourse } from './field-course.mjs';
 import { foundationGeometry } from './foundations.mjs';
 import { createRelayState } from './relay-gates.mjs';
+import { initializeSnake, snakeBaseLevel, resetSnakeBody, snakeSummary } from '../snake/rules.mjs';
 export {
   validateLevel,
   validateClassRecipes,
@@ -86,12 +87,17 @@ export function createRun(
 ) {
   const level = normalizedLevel(source);
   const baseVersion = baseLevelVersion(level);
-  const baseLevel = level.runningEnemies ? runningEnemyBaseLevel(level) : level;
+  const baseLevel = level.snake
+    ? snakeBaseLevel(level)
+    : level.runningEnemies
+      ? runningEnemyBaseLevel(level)
+      : level;
   const geometry = geometryForLevel(level),
     { width, height } = geometry;
   if (!Number.isInteger(seed) || seed < 0 || seed > 0xffffffff)
     throw new TypeError('seed must be a uint32');
   if (!TURN_POLICIES.includes(turnPolicy)) throw new TypeError('unsupported turnPolicy');
+  if (level.snake) turnPolicy = 'grid-center';
   const validation = validateClassRecipes(classRecipes);
   if (!validation.valid)
     throw new TypeError(`Invalid classRecipes: ${validation.errors.join('; ')}`);
@@ -255,6 +261,7 @@ export function createRun(
     initializeCombatPatrols(state);
   }
   state._loadouts[classId] = state.ability;
+  initializeSnake(state);
   updateSignal(state);
   return state;
 }
@@ -292,6 +299,7 @@ function recover(state, contact) {
   const absorbed =
     ![
       'self-contact',
+      'snake-body',
       'cut-timeout',
       'cable-limit',
       ...(state.classic ? ['lethal-terrain'] : []),
@@ -302,6 +310,7 @@ function recover(state, contact) {
   state.cutStartedAt = null;
   state.player.speed = 0;
   state.player.queuedDirection = null;
+  resetSnakeBody(state, 0, state.level.spawn);
   state.ability.fields = [];
   state.ability.shieldUntil = 0;
   if (!absorbed) state.lives--;
@@ -608,6 +617,7 @@ export function stepRun(state, input = {}, dt = FIXED_DT) {
 
 export function getSummary(state) {
   return {
+    ...(state.snake ? { snake: snakeSummary(state) } : {}),
     ruleset: state.ruleset,
     levelId: state.levelId,
     revision: state.revision,
