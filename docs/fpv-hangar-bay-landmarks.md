@@ -118,3 +118,20 @@ source fixture byte for byte; only the intentionally generated, reduced
 and course bytes match. The before inventory and harness are exact between
 source and packaged fixtures. Both HTTP URLs returned the expected local bytes.
 Preparing and serving the player is not a browser launch or visual pass.
+
+## Current-main integration
+
+Current main `a1cb86c85cd52db7256ad2ed16c30c8f40f90c32` (merged Woodland
+replacement #1006) merged cleanly at `f164afa5602680f8344593810529031d4bf6eff1`.
+The Hangar additions/removals match the original reviewed patch exactly;
+Woodland foliage, tree helpers, imported asset runtime and its authoring template
+remain intact. The only runtime diff from this main is the Hangar wall paint.
+
+The maintained manual and fixture preparation scripts now pin this main as the
+integration baseline. `docs/evidence/fpv-hangar-bay-landmarks-main-cpu.json`
+repeats all 125 assertions / 27 scene cases / 16 recordings successfully, and
+all 30 existing workshop, texture and acceptance checks pass. Integrated visual
+module SHA-256 is
+`e87379a77687b43265dd9fcd7bdb90e04695ca475259e995b60b6452faedc83e`.
+The original source and packaged fixtures remain immutable historical inputs;
+new integrated package and browser evidence must use distinct output paths.
