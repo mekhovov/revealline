@@ -39,3 +39,5 @@ Manual browser review confirmed the shared title, mission selection, briefing, e
 Exact committed-source results are recorded in [verification/unified-mode-ux.md](verification/unified-mode-ux.md). Authored regressions cover menu input isolation, pause/Back ownership, accepted Start/Retry identity, saved-round selection, Studio/SIM returns, final-moves playback ownership and Next-result retirement. Automated suites remain explicitly waived and have not been run for this work.
 
 Production validation and browser observations are not substitutes for physical-device qualification. Remaining release qualification includes supported phone widths/orientations, enlarged text, EN/UK, two-player touch and gamepads, native fullscreen, offline optional packages and flight-specific input devices.
+
+The subsequent [merge review](verification/unified-mode-merge-review.md) records the latest main integration, final menu fixes and refreshed exact-source build evidence.

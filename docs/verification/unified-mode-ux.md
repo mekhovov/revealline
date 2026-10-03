@@ -30,3 +30,5 @@ A complete archive was not written. The ZIP alone requires 995,882,946 bytes; th
 | fpv-worlds      |      102 / 15,515,618 |              104 / 15,549,027 | 104 files / 16,777,216 bytes |
 | civilian-fpv    |        69 / 4,325,001 |                71 / 4,353,446 | 72 files / 8,388,608 bytes   |
 | civilian-flight |          45 / 618,738 |                  47 / 643,601 | 64 files / 8,388,608 bytes   |
+
+The subsequent [merge review](unified-mode-merge-review.md) records the latest main integration, final menu fixes and refreshed exact-source build evidence.
