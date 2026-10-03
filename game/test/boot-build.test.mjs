@@ -97,7 +97,7 @@ test('native wrapper CSP precedes bootstrap and permits the existing external-sc
   const transformed = iosHTMLPolicy(original);
   const html = transformed.toString();
   assert.ok(html.indexOf('Content-Security-Policy') < html.indexOf('src="boot.mjs"'));
-  assert.match(IOS_CSP, /script-src 'self';/);
+  assert.match(IOS_CSP, /script-src 'self' 'wasm-unsafe-eval';/);
   assert.match(
     PUBLIC_SECURITY_HEADERS['Content-Security-Policy'],
     /style-src 'self' 'unsafe-inline';/,
