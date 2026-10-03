@@ -1146,6 +1146,7 @@ export function mountWorldApp({
           if (ref?.kind === 'criterion') editorIndex = ref.index;
           if (ref?.kind === 'actor') actorEditor?.select(ref.id);
           refreshEditor(false);
+          if (ref?.kind === 'criterion') actorEditor?.selectObjective('self-level', ref.index);
         },
         onPreview(ref) {
           if (ref?.position)
@@ -1189,7 +1190,7 @@ export function mountWorldApp({
   }
   function moveSelection(c, ref, position) {
     if (ref.kind === 'criterion') {
-      for (const mode of ['self-level', 'acro'])
+      for (const mode of routeEditModes(c))
         if (c.steps[mode][ref.index])
           c.steps[mode][ref.index] = moveCriterion(c.steps[mode][ref.index], position);
     } else if (ref.kind === 'actor') {
@@ -1203,6 +1204,13 @@ export function mountWorldApp({
         Object.fromEntries(coordinates.map((k) => [k, p[k] + delta[k]])),
       );
     }
+  }
+  function routeEditModes(course) {
+    // Mode-specific authoring can change order and length. Decide once before
+    // mutation; equal indices alone never identify corresponding objectives.
+    return canonicalWorldJSON(course.steps['self-level']) === canonicalWorldJSON(course.steps.acro)
+      ? ['self-level', 'acro']
+      : ['self-level'];
   }
   const notebook = createFlightNotebook({
     courses: FLIGHT_COURSES,
@@ -2211,6 +2219,19 @@ export function mountWorldApp({
         new Option(`${txt('Actor', 'Персонаж')}: ${actor.id}`, `actor:${actor.id}`),
       );
     $('criterion-list').value = String(editorIndex);
+    let scope = $('criterion-mode-scope');
+    if (!scope) {
+      scope = el('p', undefined, 'hint');
+      scope.id = 'criterion-mode-scope';
+      $('criterion-list').closest('label').after(scope);
+    }
+    scope.textContent =
+      routeEditModes(editor).length === 2
+        ? txt('Route edits: both matching modes', 'Зміни маршруту: обидва однакові режими')
+        : txt(
+            'Route edits: Self-level only; modes have different routes',
+            'Зміни маршруту: лише самовирівнювання; режими мають різні маршрути',
+          );
     const actor =
       editorSelection?.kind === 'actor'
         ? editor.actors.find((a) => a.id === editorSelection.id)
@@ -2224,7 +2245,13 @@ export function mountWorldApp({
     $('move-criterion').disabled = !p;
     $('criterion-y').max = String(editor.bounds.max.y / 1000);
     for (const id of ['duplicate-criterion', 'remove-criterion', 'criterion-up', 'criterion-down'])
-      $(id).disabled = Boolean(actor);
+      $(id).disabled =
+        Boolean(actor) || editor.steps['self-level'][editorIndex]?.type === 'actor-track-v1';
+    if (!actor && editor.steps['self-level'][editorIndex]?.type === 'actor-track-v1')
+      scope.textContent += txt(
+        '. Edit this objective in Follow & observe below.',
+        '. Редагуйте це завдання нижче в розділі «Супровід і спостереження».',
+      );
     if (updateScene) refreshEditorScene();
     actorEditor?.refresh();
   }
@@ -4232,6 +4259,8 @@ export function mountWorldApp({
     }
     refreshEditor(false);
     spatialEditor?.select(editorSelection);
+    if (editorSelection.kind === 'actor') actorEditor?.select(editorSelection.id);
+    else actorEditor?.selectObjective('self-level', editorIndex, { focus: true });
   });
   on($('move-criterion'), 'click', () => {
     const position = Object.fromEntries(
@@ -4243,7 +4272,7 @@ export function mountWorldApp({
   });
   on($('duplicate-criterion'), 'click', () =>
     applyEdit((c, bindings) => {
-      for (const mode of ['self-level', 'acro']) {
+      for (const mode of routeEditModes(c)) {
         c.steps[mode].splice(editorIndex + 1, 0, clone(c.steps[mode][editorIndex]));
         bindings?.[mode]?.splice(editorIndex + 1, 0, null);
       }
@@ -4253,7 +4282,7 @@ export function mountWorldApp({
   );
   on($('remove-criterion'), 'click', () =>
     applyEdit((c, bindings) => {
-      for (const mode of ['self-level', 'acro']) {
+      for (const mode of routeEditModes(c)) {
         c.steps[mode].splice(editorIndex, 1);
         bindings?.[mode]?.splice(editorIndex, 1);
       }
@@ -4272,7 +4301,7 @@ export function mountWorldApp({
       )
         return;
       applyEdit((c, bindings) => {
-        for (const mode of ['self-level', 'acro']) {
+        for (const mode of routeEditModes(c)) {
           [c.steps[mode][editorIndex], c.steps[mode][editorIndex + delta]] = [
             c.steps[mode][editorIndex + delta],
             c.steps[mode][editorIndex],

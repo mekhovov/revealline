@@ -80,6 +80,85 @@ const LABELS = {
     'A route supports at most 64 waypoints.',
     'Маршрут підтримує не більше 64 точок.',
   ],
+  tracking: ['Follow & observe', 'Супровід і спостереження'],
+  trackingObjective: ['Tracking objective', 'Завдання спостереження'],
+  newTracking: ['New tracking objective', 'Нове завдання спостереження'],
+  subject: ['Subject', 'Об’єкт спостереження'],
+  trackingKind: ['Activity', 'Дія'],
+  observe: ['Observe', 'Спостерігати'],
+  follow: ['Follow', 'Супроводжувати'],
+  trackingModes: ['Add to flight modes', 'Додати до режимів польоту'],
+  minDistance: ['Minimum distance · m', 'Мінімальна відстань · м'],
+  maxDistance: ['Maximum distance · m', 'Максимальна відстань · м'],
+  maxRelativeSpeed: ['Maximum relative speed · m/s', 'Максимальна відносна швидкість · м/с'],
+  maxTilt: ['Maximum bank / tilt · degrees', 'Максимальний крен / нахил · градуси'],
+  viewAngle: [
+    'Maximum angle from drone nose · degrees',
+    'Максимальний кут від носа дрона · градуси',
+  ],
+  ticks: [
+    'Minimum continuous tracking time · seconds',
+    'Мінімальний час безперервного спостереження · секунди',
+  ],
+  minTargetTravel: ['Required subject travel · m', 'Потрібна пройдена об’єктом відстань · м'],
+  trackingHelp: [
+    'Stay airborne, keep a clear sight line and point the drone nose toward the subject within these limits. Camera tilt and field of view do not change the objective. Leaving any limit resets both the timer and subject travel.',
+    'Залишайтеся в повітрі, тримайте пряму видимість і спрямовуйте ніс дрона на об’єкт у заданих межах. Нахил камери та поле зору не змінюють завдання. Вихід за будь-яку межу скидає час і пройдену об’єктом відстань.',
+  ],
+  followHelp: [
+    'Follow needs a moving subject with at least two distinct waypoints. Both time and subject travel must be reached continuously.',
+    'Для супроводу потрібен рухомий об’єкт із принаймні двома різними точками маршруту. Час і потрібну відстань об’єкта слід набрати безперервно.',
+  ],
+  observeHelp: [
+    'Observe requires continuous time within the limits; the subject may stay still or move.',
+    'Спостереження потребує безперервного часу в заданих межах; об’єкт може стояти або рухатися.',
+  ],
+  trackingScope: [
+    'Editing, removing or moving this objective changes only the selected flight mode. Other modes keep their own settings.',
+    'Зміна, видалення або переміщення цього завдання діє лише у вибраному режимі польоту. Інші режими зберігають власні налаштування.',
+  ],
+  addTracking: ['Add tracking objective', 'Додати завдання спостереження'],
+  applyTracking: ['Apply tracking settings', 'Застосувати налаштування спостереження'],
+  removeTracking: ['Remove tracking objective', 'Видалити завдання спостереження'],
+  trackingEarlier: ['Move objective earlier', 'Перемістити завдання раніше'],
+  trackingLater: ['Move objective later', 'Перемістити завдання пізніше'],
+  trackingAdded: [
+    'Tracking objective added to the selected flight modes.',
+    'Завдання додано до вибраних режимів польоту.',
+  ],
+  trackingUpdated: ['Tracking objective updated.', 'Завдання спостереження оновлено.'],
+  trackingRemoved: [
+    'Tracking objective removed from the selected mode.',
+    'Завдання спостереження видалено з вибраного режиму.',
+  ],
+  trackingMoved: [
+    'Tracking objective moved in the selected mode.',
+    'Завдання спостереження переміщено у вибраному режимі.',
+  ],
+  trackingMissing: [
+    'Choose a non-hazard subject first.',
+    'Спочатку виберіть об’єкт, що не є перешкодою.',
+  ],
+  trackingStale: [
+    'The objective changed. Select it again before editing.',
+    'Завдання змінилося. Виберіть його знову перед редагуванням.',
+  ],
+  trackingRange: [
+    'Maximum distance must exceed minimum distance by at least 0.1 m.',
+    'Максимальна відстань має перевищувати мінімальну принаймні на 0,1 м.',
+  ],
+  trackingBudget: [
+    'A flight mode supports at most 64 objectives.',
+    'Режим польоту підтримує щонайбільше 64 завдання.',
+  ],
+  trackingLast: [
+    'Keep at least one objective in this flight mode.',
+    'Залиште хоча б одне завдання у цьому режимі польоту.',
+  ],
+  trackingInvalid: [
+    'Enter a value within the displayed limits and increments.',
+    'Введіть значення у вказаних межах і з указаним кроком.',
+  ],
 };
 
 /** A small numeric authoring surface; the host owns validation and undo history. */
@@ -90,6 +169,9 @@ export function mountActorEditor({ container, getCourse, onChange, locale = 'en'
   let selected = null;
   let newType = 'drone';
   let objectiveMode = 'both';
+  let trackingSelection = null;
+  let trackingAddMode = 'both';
+  let trackingKind = 'observe';
   let message = '';
   let error = false;
   let disposed = false;
@@ -152,15 +234,17 @@ export function mountActorEditor({ container, getCourse, onChange, locale = 'en'
       node.setAttribute('role', error ? 'alert' : 'status');
     }
   }
-  async function change(mutator, success = 'updated') {
+  async function change(mutator, success = 'updated', committed = () => {}) {
     if (disposed || busy) return;
     busy = true;
     try {
       await onChange(mutator);
+      committed();
       message = text(success);
       error = false;
       busy = false;
       refresh();
+      if (success.startsWith('tracking')) focusTracking();
     } catch (cause) {
       message = cause.message;
       error = true;
@@ -205,58 +289,73 @@ export function mountActorEditor({ container, getCourse, onChange, locale = 'en'
     if (bindings?.[mode]) bindings[mode] = refs;
   }
   function addActor() {
-    return change((course) => {
-      if (
-        course.actors.filter((actor) => (actor.type === 'hazard') === (newType === 'hazard'))
-          .length >= (newType === 'hazard' ? 8 : 12)
-      )
-        throw new TypeError(text('budget'));
-      let n = 1;
-      const ids = new Set([...course.actors, ...course.obstacles].map((item) => item.id));
-      while (ids.has(`${newType}-${n}`)) n++;
-      const id = `${newType}-${n}`;
-      const grounded = ['patrol', 'sentry', 'vehicle'].includes(newType);
-      const radius = newType === 'vehicle' ? 900 : newType === 'hazard' ? 500 : 300;
-      const position = {
-        x: Math.max(
-          course.bounds.min.x + radius,
-          Math.min(course.bounds.max.x - radius, course.spawn.x + 4000),
-        ),
-        y: grounded
-          ? course.bounds.min.y
-          : Math.max(
-              course.bounds.min.y,
-              Math.min(course.bounds.max.y - 2 * radius, course.spawn.y + 2000),
-            ),
-        z: Math.max(
-          course.bounds.min.z + radius,
-          Math.min(course.bounds.max.z - radius, course.spawn.z - 4000),
-        ),
-      };
-      course.actors.push({
-        id,
-        type: newType,
-        position,
-        path: [],
-        speed: newType === 'sentry' ? 0 : 1500,
-        radius,
-        height: ['patrol', 'sentry'].includes(newType) ? 1800 : 2 * radius,
-        health: 50,
-        fireEveryTicks: newType === 'hazard' ? 0 : 100,
-        damage: 10,
-        projectileSpeed: 8000,
-        range: 20000,
-      });
-      selected = id;
-    }, 'added');
+    let addedId;
+    return change(
+      (course) => {
+        if (
+          course.actors.filter((actor) => (actor.type === 'hazard') === (newType === 'hazard'))
+            .length >= (newType === 'hazard' ? 8 : 12)
+        )
+          throw new TypeError(text('budget'));
+        let n = 1;
+        const ids = new Set([...course.actors, ...course.obstacles].map((item) => item.id));
+        while (ids.has(`${newType}-${n}`)) n++;
+        const id = `${newType}-${n}`;
+        const grounded = ['patrol', 'sentry', 'vehicle'].includes(newType);
+        const radius = newType === 'vehicle' ? 900 : newType === 'hazard' ? 500 : 300;
+        const position = {
+          x: Math.max(
+            course.bounds.min.x + radius,
+            Math.min(course.bounds.max.x - radius, course.spawn.x + 4000),
+          ),
+          y: grounded
+            ? course.bounds.min.y
+            : Math.max(
+                course.bounds.min.y,
+                Math.min(course.bounds.max.y - 2 * radius, course.spawn.y + 2000),
+              ),
+          z: Math.max(
+            course.bounds.min.z + radius,
+            Math.min(course.bounds.max.z - radius, course.spawn.z - 4000),
+          ),
+        };
+        course.actors.push({
+          id,
+          type: newType,
+          position,
+          path: [],
+          speed: newType === 'sentry' ? 0 : 1500,
+          radius,
+          height: ['patrol', 'sentry'].includes(newType) ? 1800 : 2 * radius,
+          health: 50,
+          fireEveryTicks: newType === 'hazard' ? 0 : 100,
+          damage: 10,
+          projectileSpeed: 8000,
+          range: 20000,
+        });
+        addedId = id;
+      },
+      'added',
+      () => {
+        selected = addedId;
+        trackingSelection = null;
+      },
+    );
   }
   function removeActor() {
     const id = selected;
-    return change((course, bindings) => {
-      course.actors = course.actors.filter((actor) => actor.id !== id);
-      removeTargetReferences(course, bindings, id, { removeTracking: true });
-      selected = course.actors[0]?.id ?? null;
-    }, 'removed');
+    return change(
+      (course, bindings) => {
+        course.actors = course.actors.filter((actor) => actor.id !== id);
+        removeTargetReferences(course, bindings, id, { removeTracking: true });
+        selected = course.actors[0]?.id ?? null;
+      },
+      'removed',
+      () => {
+        selected = getCourse().actors[0]?.id ?? null;
+        trackingSelection = null;
+      },
+    );
   }
   function removeTargetReferences(course, bindings, id, { removeTracking = false } = {}) {
     for (const mode of MODES)
@@ -285,6 +384,256 @@ export function mountActorEditor({ container, getCourse, onChange, locale = 'en'
       }
     }, 'objectiveAdded');
   }
+  const trackingRows = (course) =>
+    MODES.flatMap((mode) =>
+      course.steps[mode].flatMap((step, index) =>
+        step.type === 'actor-track-v1' ? [{ mode, index, step }] : [],
+      ),
+    );
+  const canFollow = (actor) =>
+    actor &&
+    actor.speed > 0 &&
+    actor.path.length > 1 &&
+    actor.path.some((point) => AXES.some((axis) => point[axis] !== actor.path[0][axis]));
+  function focusTracking() {
+    const selector = container.querySelector('[data-tracking-objective]');
+    selector?.focus({ preventScroll: true });
+    selector?.scrollIntoView?.({ block: 'nearest' });
+  }
+  function renderTracking(course) {
+    const subjects = course.actors.filter((actor) => actor.type !== 'hazard');
+    const rows = trackingRows(course);
+    const current = rows.find(
+      (row) => row.mode === trackingSelection?.mode && row.index === trackingSelection.index,
+    );
+    if (!current) trackingSelection = null;
+    const panel = element('section');
+    panel.dataset.trackingEditor = '';
+    panel.append(element('h4', text('tracking')));
+    const key = (row) => `${row.mode}:${row.index}`;
+    const picker = choose(
+      [
+        ['', text('newTracking')],
+        ...rows.map((row) => [
+          key(row),
+          `${text(row.mode === 'acro' ? 'acro' : 'level')} · ${row.index + 1}. ${text(row.step.minTargetTravel ? 'follow' : 'observe')} · ${row.step.actorId}`,
+        ]),
+      ],
+      current ? key(current) : '',
+      text('trackingObjective'),
+    );
+    picker.dataset.trackingObjective = '';
+    picker.addEventListener('change', () => {
+      const row = rows.find((value) => key(value) === picker.value);
+      trackingSelection = row ? { mode: row.mode, index: row.index } : null;
+      if (row) selected = row.step.actorId;
+      refresh();
+      focusTracking();
+    });
+    panel.append(label(text('trackingObjective'), picker));
+    if (!subjects.length) {
+      panel.append(element('p', text('trackingMissing'), 'hint'));
+      return panel;
+    }
+    const initial = current?.step ?? {
+      type: 'actor-track-v1',
+      actorId: subjects.some((actor) => actor.id === selected) ? selected : subjects[0].id,
+      minDistance: 3000,
+      maxDistance: 15000,
+      maxRelativeSpeed: 4000,
+      maxTilt: 4500,
+      ticks: Math.min(150, course.rules?.maxTicks ?? 36000),
+      viewAngle: 7000,
+      minTargetTravel: trackingKind === 'follow' ? 10000 : 0,
+    };
+    const subject = choose(
+      subjects.map((actor) => [actor.id, `${text(actor.type)} · ${actor.id}`]),
+      initial.actorId,
+      text('subject'),
+    );
+    subject.dataset.trackingSubject = '';
+    const kind = choose(
+      ['observe', 'follow'].map((value) => [value, text(value)]),
+      initial.minTargetTravel ? 'follow' : 'observe',
+      text('trackingKind'),
+    );
+    kind.dataset.trackingKind = '';
+    panel.append(label(text('subject'), subject), label(text('trackingKind'), kind));
+    const modes = choose(
+      [
+        ['both', text('both')],
+        ['self-level', text('level')],
+        ['acro', text('acro')],
+      ],
+      trackingAddMode,
+      text('trackingModes'),
+    );
+    modes.dataset.trackingModes = '';
+    if (!current) panel.append(label(text('trackingModes'), modes));
+    else panel.append(element('p', text('trackingScope'), 'hint'));
+    modes.addEventListener('change', () => {
+      trackingAddMode = modes.value;
+    });
+    const grid = element('div', undefined, 'numeric-grid');
+    const fields = {};
+    const specs = [
+      ['minDistance', 1000, 0.1, 100, 0.001],
+      ['maxDistance', 1000, 0.2, 100, 0.001],
+      ['ticks', 50, 0.02, Math.min(5000, course.rules?.maxTicks ?? 36000) / 50, 0.02],
+      ['minTargetTravel', 1000, 0.001, 1500, 0.001],
+      ['maxRelativeSpeed', 1000, 0, 60, 0.001],
+      ['maxTilt', 100, 0, 90, 0.01],
+      ['viewAngle', 100, 1, 90, 0.01],
+    ];
+    for (const [name, scale, min, max, step] of specs) {
+      fields[name] = number(
+        name === 'minTargetTravel'
+          ? (initial.minTargetTravel || 10000) / scale
+          : initial[name] / scale,
+        text(name),
+        { min, max, step },
+      );
+      fields[name].dataset.trackingField = name;
+      fields[name].inputMode = 'decimal';
+      const fieldLabel = label(text(name), fields[name]);
+      fieldLabel.append(element('small', `${min}–${max}`));
+      grid.append(fieldLabel);
+    }
+    const help = element('p', undefined, 'hint');
+    const updateKind = () => {
+      fields.minTargetTravel.disabled = kind.value !== 'follow';
+      fields.minTargetTravel.parentElement.hidden = kind.value !== 'follow';
+      help.textContent = text(kind.value === 'follow' ? 'followHelp' : 'observeHelp');
+      trackingKind = kind.value;
+    };
+    kind.addEventListener('change', updateKind);
+    updateKind();
+    panel.append(grid, help, element('p', text('trackingHelp'), 'hint'));
+    const read = (next) => {
+      const actor = next.actors.find((item) => item.id === subject.value && item.type !== 'hazard');
+      if (!actor) throw new TypeError(text('trackingMissing'));
+      if (kind.value === 'follow' && !canFollow(actor)) throw new TypeError(text('followHelp'));
+      const values = { type: 'actor-track-v1', actorId: actor.id };
+      for (const [name, scale, min, max] of specs) {
+        if (name === 'minTargetTravel' && kind.value !== 'follow') {
+          values[name] = 0;
+          continue;
+        }
+        const value = fields[name].valueAsNumber;
+        if (
+          !Number.isFinite(value) ||
+          value < min ||
+          value > max ||
+          Math.abs(value * scale - Math.round(value * scale)) > 0.000001
+        ) {
+          fields[name].setAttribute('aria-invalid', 'true');
+          fields[name].focus();
+          throw new TypeError(`${text(name)}: ${text('trackingInvalid')} ${min}–${max}.`);
+        }
+        fields[name].removeAttribute('aria-invalid');
+        values[name] = Math.round(value * scale);
+      }
+      if (values.maxDistance < values.minDistance + 100) throw new TypeError(text('trackingRange'));
+      return values;
+    };
+    const original = current ? JSON.stringify(current.step) : null;
+    const locate = (next) => {
+      if (!current || JSON.stringify(next.steps[current.mode]?.[current.index]) !== original)
+        throw new Error(text('trackingStale'));
+      return next.steps[current.mode];
+    };
+    const actions = element('div', undefined, 'button-row');
+    const action = (name, labelKey, perform, disabled = false) => {
+      const node = button(text(labelKey), perform, disabled);
+      node.dataset.trackingAction = name;
+      actions.append(node);
+    };
+    if (!current)
+      action('add', 'addTracking', () => {
+        let added;
+        return change(
+          (next, bindings) => {
+            const values = read(next),
+              targets = modes.value === 'both' ? MODES : [modes.value];
+            if (!targets.every((mode) => MODES.includes(mode)))
+              throw new TypeError(text('trackingInvalid'));
+            if (targets.some((mode) => next.steps[mode].length >= 64))
+              throw new TypeError(text('trackingBudget'));
+            for (const mode of targets) {
+              const steps = next.steps[mode],
+                index = steps.at(-1)?.type === 'land' ? steps.length - 1 : steps.length;
+              steps.splice(index, 0, { ...values });
+              bindings?.[mode]?.splice(index, 0, null);
+              added ??= { mode, index, actorId: values.actorId };
+            }
+          },
+          'trackingAdded',
+          () => {
+            trackingSelection = { mode: added.mode, index: added.index };
+            selected = added.actorId;
+          },
+        );
+      });
+    else {
+      action('apply', 'applyTracking', () =>
+        change(
+          (next) => {
+            const steps = locate(next),
+              values = read(next);
+            steps[current.index] = { ...steps[current.index], ...values };
+          },
+          'trackingUpdated',
+          () => {
+            selected = subject.value;
+          },
+        ),
+      );
+      action(
+        'remove',
+        'removeTracking',
+        () =>
+          change(
+            (next, bindings) => {
+              const steps = locate(next);
+              if (steps.length === 1) throw new TypeError(text('trackingLast'));
+              steps.splice(current.index, 1);
+              bindings?.[current.mode]?.splice(current.index, 1);
+            },
+            'trackingRemoved',
+            () => {
+              trackingSelection = null;
+            },
+          ),
+        course.steps[current.mode].length === 1,
+      );
+      for (const [delta, name, labelKey] of [
+        [-1, 'up', 'trackingEarlier'],
+        [1, 'down', 'trackingLater'],
+      ])
+        action(
+          name,
+          labelKey,
+          () =>
+            change(
+              (next, bindings) => {
+                const steps = locate(next),
+                  other = current.index + delta;
+                if (other < 0 || other >= steps.length) throw new Error(text('trackingStale'));
+                [steps[current.index], steps[other]] = [steps[other], steps[current.index]];
+                const refs = bindings?.[current.mode];
+                if (refs) [refs[current.index], refs[other]] = [refs[other], refs[current.index]];
+              },
+              'trackingMoved',
+              () => {
+                trackingSelection = { mode: current.mode, index: current.index + delta };
+              },
+            ),
+          current.index + delta < 0 || current.index + delta >= course.steps[current.mode].length,
+        );
+    }
+    panel.append(actions);
+    return panel;
+  }
   function refresh() {
     if (disposed) return;
     const course = getCourse();
@@ -298,6 +647,8 @@ export function mountActorEditor({ container, getCourse, onChange, locale = 'en'
       return;
     }
     const actors = course.actors ?? [];
+    const trackingStep = course.steps[trackingSelection?.mode]?.[trackingSelection?.index];
+    if (trackingStep?.type === 'actor-track-v1') selected = trackingStep.actorId;
     if (!actors.some((actor) => actor.id === selected)) selected = actors[0]?.id ?? null;
     const selector = choose(
       actors.length
@@ -309,6 +660,7 @@ export function mountActorEditor({ container, getCourse, onChange, locale = 'en'
     selector.disabled = !actors.length;
     selector.addEventListener('change', () => {
       selected = selector.value;
+      trackingSelection = null;
       refresh();
     });
     container.append(label(text('actor'), selector));
@@ -327,6 +679,7 @@ export function mountActorEditor({ container, getCourse, onChange, locale = 'en'
       button(text('remove'), removeActor, !selected),
     );
     container.append(toolbar, element('p', text('budget'), 'hint'));
+    container.append(renderTracking(course));
     if (!selected) {
       container.append(announcement);
       return;
@@ -516,7 +869,17 @@ export function mountActorEditor({ container, getCourse, onChange, locale = 'en'
     refresh,
     select(id) {
       selected = id;
+      trackingSelection = null;
       refresh();
+    },
+    selectObjective(mode, index, { focus = false } = {}) {
+      const step = getCourse()?.steps[mode]?.[index];
+      if (!MODES.includes(mode) || step?.type !== 'actor-track-v1') return false;
+      trackingSelection = { mode, index };
+      selected = step.actorId;
+      refresh();
+      if (focus) focusTracking();
+      return true;
     },
     selected: () => selected,
     dispose() {
