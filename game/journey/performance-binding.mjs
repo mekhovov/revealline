@@ -12,7 +12,7 @@ const matches = (record, state, level, classes = CLASSES) => {
     return false;
   return (
     canonicalJSON(state.classRecipes) === canonicalJSON(classes) &&
-    matchRecordedGameplayTuning(level, state.level) !== null
+    matchRecordedGameplayTuning(level, state.level, { classes }) !== null
   );
 };
 const sourceMatches = (source, record, state) => {

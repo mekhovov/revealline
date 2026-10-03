@@ -1,3 +1,4 @@
+import { prepareTeamRunningEnemies } from '../hunt/team-running-enemies.mjs';
 import { boundedJSON, dataIdentity, exactKeys, required } from '../data-json.mjs';
 import { deriveEncounterLevel } from '../hunt/variants.mjs';
 import { ENCOUNTER_VARIANTS } from '../hunt/preferences.mjs';
@@ -7,6 +8,7 @@ import { teamInputHistoryExtends } from './attempt-history.mjs';
 
 export const TEAM_HUNT_ATTEMPT_KEY = 'revealline.team-hunt-attempt.v1';
 export const TEAM_HUNT_ATTEMPT_FORMAT = 'revealline-team-hunt-attempt.v1';
+export const TEAM_RUNNING_ATTEMPT_FORMAT = 'revealline-team-hunt-attempt.v2';
 export const TEAM_HUNT_ATTEMPT_MAX_BYTES = 1024 * 1024;
 const MAX_SEGMENTS = 8192;
 const MAX_TICKS = 240000;
@@ -57,10 +59,14 @@ export function validateTeamHuntAttempt(source) {
       'tuning',
       'segments',
       'checkpoint',
+      ...(value.format === TEAM_RUNNING_ATTEMPT_FORMAT ? ['runningEnemies'] : []),
     ],
     'Team Hunt attempt',
   );
-  required(value.format === TEAM_HUNT_ATTEMPT_FORMAT, 'Unsupported Team Hunt save version.');
+  required(
+    [TEAM_HUNT_ATTEMPT_FORMAT, TEAM_RUNNING_ATTEMPT_FORMAT].includes(value.format),
+    'Unsupported Team Hunt save version.',
+  );
   required(
     typeof value.attemptId === 'string' &&
       value.attemptId.length > 0 &&
@@ -77,6 +83,11 @@ export function validateTeamHuntAttempt(source) {
       identity(value.encounterLevelIdentity),
     'Damaged Team Hunt recipe.',
   );
+  if (value.format === TEAM_RUNNING_ATTEMPT_FORMAT)
+    required(
+      value.runningEnemies === 'running-enemies.v1',
+      'Unsupported Team running-enemy recipe.',
+    );
   exactKeys(value.source, ['pack', 'level'], 'Team Hunt source');
   required(
     identity(value.source.pack) && identity(value.source.level),
@@ -143,35 +154,40 @@ export function createTeamHuntRecorder({
   tuning,
   encounterLevel,
   encounterVariant,
+  runningEnemies = false,
   attemptId,
   gameplayId,
   restored,
 }) {
   required(run.level.hunt && run.status === 'running', 'Only a running Team Hunt can be saved.');
-  const recipe =
-    restored?.snapshot.format === TEAM_HUNT_ATTEMPT_FORMAT
-      ? structuredClone(restored.snapshot)
-      : {
-          format: TEAM_HUNT_ATTEMPT_FORMAT,
-          attemptId: restored?.snapshot.attemptId ?? attemptId,
-          levelId: level.id,
-          source: teamHuntSourceIdentity(pack, level),
-          seed: run.seed,
-          difficulty: run.difficulty,
-          config: structuredClone(run.config),
-          ruleset: run.ruleset,
-          gameplayId:
-            gameplayId ??
-            dataIdentity({
-              ruleset: run.ruleset,
-              level: applyGameplayTuning(encounterLevel, tuning),
-            }),
-          encounterVariant,
-          encounterLevelIdentity: dataIdentity(encounterLevel),
-          tuning: structuredClone(tuning),
-          segments: structuredClone(restored?.snapshot.segments ?? []),
-          checkpoint: checkpoint(run),
-        };
+  const recipe = [TEAM_HUNT_ATTEMPT_FORMAT, TEAM_RUNNING_ATTEMPT_FORMAT].includes(
+    restored?.snapshot.format,
+  )
+    ? structuredClone(restored.snapshot)
+    : {
+        format: runningEnemies ? TEAM_RUNNING_ATTEMPT_FORMAT : TEAM_HUNT_ATTEMPT_FORMAT,
+        ...(runningEnemies ? { runningEnemies: 'running-enemies.v1' } : {}),
+        attemptId: restored?.snapshot.attemptId ?? attemptId,
+        levelId: level.id,
+        source: teamHuntSourceIdentity(pack, level),
+        seed: run.seed,
+        difficulty: run.difficulty,
+        config: structuredClone(run.config),
+        ruleset: run.ruleset,
+        gameplayId:
+          gameplayId ??
+          dataIdentity({
+            ruleset: run.ruleset,
+            level: runningEnemies
+              ? prepareTeamRunningEnemies(applyGameplayTuning(encounterLevel, tuning))
+              : applyGameplayTuning(encounterLevel, tuning),
+          }),
+        encounterVariant,
+        encounterLevelIdentity: dataIdentity(encounterLevel),
+        tuning: structuredClone(tuning),
+        segments: structuredClone(restored?.snapshot.segments ?? []),
+        checkpoint: checkpoint(run),
+      };
   let stopped = false;
   return {
     attemptId: recipe.attemptId,
@@ -220,7 +236,8 @@ export async function restoreTeamHuntAttempt(
     'recipeChanged',
     'The saved Team Hunt recipe is unavailable in this edition.',
   );
-  const tuned = applyGameplayTuning(encounterLevel, snapshot.tuning);
+  const baseTuned = applyGameplayTuning(encounterLevel, snapshot.tuning);
+  const tuned = snapshot.runningEnemies ? prepareTeamRunningEnemies(baseTuned) : baseTuned;
   const run = startCoop(
     createCoop(tuned, { seed: snapshot.seed, difficulty: snapshot.difficulty, ...snapshot.config }),
   );
@@ -309,6 +326,7 @@ export async function matchingTeamHuntMirror(
     previous.ruleset !== restored.run.ruleset ||
     previous.difficulty !== snapshot.difficulty ||
     previous.encounterVariant !== (snapshot.encounterVariant ?? 'authored') ||
+    previous.runningEnemies !== snapshot.runningEnemies ||
     dataIdentity(previous.tuning) !== dataIdentity(snapshot.tuning) ||
     dataIdentity(previous.config) !== dataIdentity(restored.run.config)
   )

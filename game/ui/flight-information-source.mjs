@@ -1,6 +1,6 @@
 import { t } from '../i18n/index.mjs';
 import { EPS } from '../core/geometry.mjs';
-import { isClassicRuleset } from '../core/versions.mjs';
+import { baseLevelVersion, isClassicRuleset, resolveVersions } from '../core/versions.mjs';
 import { classicEffectActive } from '../core/classic-state.mjs';
 import { foundationCompatibleView as classicView } from './foundation-view.mjs';
 import { encounterView } from './encounter-view.mjs';
@@ -70,6 +70,7 @@ const rulesets = new Set([
   'xonix-core.v8',
   'xonix-core.v9',
   'xonix-core.v10',
+  'xonix-core.v11',
 ]);
 const finite = (value) => Number.isFinite(value) && value >= 0;
 const integer = (value) => Number.isSafeInteger(value) && value >= 0;
@@ -101,7 +102,11 @@ export function flightInformationSnapshot(run, { started, paused }) {
     t('interface:hostStateIsRequired'),
   );
   const issues = [];
-  const classicExpected = isClassicRuleset(run.ruleset);
+  const classicExpected = isClassicRuleset(
+    run.ruleset === 'xonix-core.v11'
+      ? resolveVersions({ levelVersion: baseLevelVersion(run.level) }).ruleset
+      : run.ruleset,
+  );
   const encounterExpected = Boolean(run.level?.encounter);
   const classic = classicView(run);
   // This richer geometry projection belongs to paused reading. Live event

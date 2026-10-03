@@ -76,6 +76,10 @@ export function encounterGuideAvailability(topic, level) {
   let reason = 'unavailable';
   if (level != null) {
     if (!validateLevel(level).valid) reason = 'invalid';
+    // Practice scenario formats currently preserve only authored level versions.
+    // Never relabel the accepted Bonus overlay as a historical scenario or drop
+    // its actors merely to enable this optional patrol lesson.
+    else if (level.runningEnemies) reason = 'unavailable';
     else {
       const role = lessons[topic].role,
         combat = level.classic?.combatPatrols,
