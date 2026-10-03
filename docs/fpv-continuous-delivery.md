@@ -2491,3 +2491,37 @@ in /tmp/fpv-adventure-example-audit; choose six world downloads, add maintained
 export safeguards, run actual import/playback, then publish a focused PR. No
 unit coverage or human feedback prerequisite is added. Remaining artwork is
 Stadium, container yard and Garage; remaining new distinct worlds and H/R7 follow.
+
+### FlightDivision inspection and Two-stick controls — 3 October 2026
+
+Main #981 and #982 are merged at baseline cf0b62e53. The owner explicitly asked
+to inspect the logged-in FlightDivision simulator and implement its useful
+control/art qualities. Settings, free flight, Gear and first lesson were inspected
+through the browser. Branch `codex/fpv-two-stick-controls` adds its two-hand key
+grouping as the default, with Classic selectable and one shared local preference
+for Academy, World Studio and the school lab. Space arm/pause, R reset and F fire
+use existing safety/recording paths; no radio calibration or physics changes.
+
+Source and packaged actual-browser keyboard qualification each pass25/25. The
+browser found and resolved a held-Space release swallowed by menu propagation;
+the release-only capture listener now safely clears its own firing key. Final
+World host SHA256 is4c2aa82dd59a217ace064fa331c25a0a60dc1b2680a99839e7ea1125a0115360.
+All184 normalized catalogue entries/course/pack identities match the parent.
+Packaged touch/regression checks pass32/32, including368 level/mode starts.
+Existing regression fixtures explicitly select Classic and now account for the
+36 merged Snake Hunt challenges. Scope/receipts: `docs/fpv-two-stick-controls.md`.
+Additional unit coverage and actual physical-device acceptance remain open.
+
+The separate visual branch `codex/fpv-flight-presentation` is preserved in
+`/tmp/fpv-art-20261003`. Its drone/container work is still undergoing visual
+review and must not enter the ready controls PR. Supporting baseline is identical
+to the controls branch; no native stack is required unless a true dependency is
+introduced. Further FlightDivision-level environment production remains planned,
+not completed by this first model/surface increment.
+
+Disk pressure prevented a full app-managed worktree creation. Only reproducible
+generated runtime/assets from the superseded `/tmp/fpv-sim-entry-qualified-20261002`
+were removed, after checking its build marker and absence of `.git`; metadata,
+receipts, source worktrees and current player builds remain. The art branch uses
+a sparse Git worktree with two production files. Qualification outputs remain
+bounded; do not run a whole-site build into the remaining free space.
