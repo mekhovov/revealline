@@ -72,7 +72,7 @@ test('edition indentation leaves vendor modules, mapped columns, data and media 
   assert.notStrictEqual(projected, input);
   for (const [name, bytes] of input)
     if (name !== 'game/code.mjs') assert.strictEqual(projected.get(name), bytes);
-  assert.equal(projected.get('game/code.mjs').toString(), 'export const value = 1;\n');
+  assert.equal(projected.get('game/code.mjs').toString(), 'export const value=1;\n');
   assert.equal(input.get('game/code.mjs').toString(), '  export const value = 1;\n');
 });
 
