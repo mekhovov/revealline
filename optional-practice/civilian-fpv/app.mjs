@@ -18,7 +18,11 @@ import {
 import { createRadioRuntime } from './radio-runtime.mjs';
 import { restoreVerifiedRadio } from './radio-session.mjs';
 import { mountRadioSetup } from './radio-setup.mjs';
-import { mountFlightFullscreen } from './flight-fullscreen.mjs';
+import {
+  mountFlightFullscreen,
+  mountSimPlayShell,
+  createSimModeLinks,
+} from './flight-fullscreen.mjs';
 import {
   mountSimPresentation,
   createSimFlightAudio,
@@ -126,7 +130,8 @@ export function mountFlightApp({
     focused = typeof doc.hasFocus === 'function' ? doc.hasFocus() : true,
     epoch = 0,
     lastRadioDiscovery = -Infinity,
-    message = null;
+    message = null,
+    playShell = null;
   const c = () => COPY[locale],
     messageText = (key) =>
       key === 'preparingGraphics'
@@ -160,7 +165,9 @@ export function mountFlightApp({
     'studio-dialog',
   ];
   const modalOpen = () =>
-    dialogIds.some((id) => $(id).open) || Boolean($('academy-flight-options')?.open);
+    dialogIds.some((id) => $(id).open) ||
+    Boolean($('academy-flight-options')?.open) ||
+    Boolean(playShell?.blocksPlay());
   const shellCopy = {
     academyBrand: ['SIM · ACADEMY', 'SIM · АКАДЕМІЯ'],
     worlds: ['World Studio', 'Студія світів'],
@@ -214,6 +221,7 @@ export function mountFlightApp({
           ? 'Sound on'
           : 'Sound off';
     button.setAttribute('aria-pressed', String(enabled));
+    playShell?.update({ muted: !enabled });
   };
   const audio = createSimFlightAudio({ window: win });
   const presentation = mountSimPresentation({
@@ -296,6 +304,11 @@ export function mountFlightApp({
   const gamepad = createFlightGamepad({ window: win, document: doc });
   const flightMenuOpen = () => $('flight-app').dataset.flightMenuOpen === 'true';
   function setFlightMenu(open) {
+    if (open && playShell) {
+      pause();
+      playShell.openHome();
+      return;
+    }
     if (open) pause();
     $('flight-app').dataset.flightMenuOpen = String(open);
     if (!open) $('academy-flight-options').open = false;
@@ -563,14 +576,19 @@ export function mountFlightApp({
   }
   function closeDialog(id) {
     cancelReview();
+    if (id === 'course-dialog' && playShell) {
+      playShell.open('briefing');
+      return;
+    }
     $(id).close();
     if (id === 'setup-dialog') {
       setup?.dispose();
       setup = null;
     }
-    $('arm').focus();
+    (playShell?.topDialog()?.querySelector('h1') ?? $('viewport')).focus();
   }
   function openDialog(id) {
+    if (id === 'course-dialog' && playShell) return playShell.open('missions');
     pause('paused');
     for (const other of dialogIds) if (other !== id && $(other).open) closeDialog(other);
     if (id === 'setup-dialog') {
@@ -649,6 +667,7 @@ export function mountFlightApp({
     return operation;
   }
   async function showReview(proof, kind, index, checked, savedPresentation = null) {
+    playShell?.enterPlay();
     selected = index;
     mode = proof.mode;
     authoringCourse = null;
@@ -705,6 +724,8 @@ export function mountFlightApp({
       if (values) node.textContent = values[locale === 'uk' ? 1 : 0];
     }
     presentation.refresh();
+    playShell?.setLocale(locale);
+    modes.refresh?.();
     appearanceControls.refresh();
     updateSoundLabel(presentation.soundEnabled());
     audioControls.refresh();
@@ -753,6 +774,13 @@ export function mountFlightApp({
     if (!flight || disposed) return;
     const state = replay ? replay.flight.snapshot() : flight.snapshot();
     $('flight-app').dataset.flightState = state.status;
+    playShell?.update({
+      phase: state.status === 'active' ? 'playing' : state.status,
+      missionName: currentCourse().locales[locale].title,
+      summary: currentCourse().locales[locale].brief,
+      canResume: state.ticks > 0 && ['paused', 'disarmed'].includes(state.status),
+      muted: !audio.enabled(),
+    });
     if ($('academy-flight-resume')) {
       $('academy-flight-resume').disabled =
         !sceneReady || !['disarmed', 'paused'].includes(state.status);
@@ -1172,6 +1200,8 @@ export function mountFlightApp({
         blockRadio: dialog.id === 'setup-dialog',
         blockDevices: dialog.id === 'setup-dialog' && Boolean(setup?.captureActive()),
       };
+    if (playShell?.topDialog())
+      return { root: playShell.topDialog(), key: playShell.topDialog().id, blockDevices: false };
     if (flight.snapshot().status === 'active' && !modalOpen()) return null;
     return {
       root: $('flight-app'),
@@ -1186,6 +1216,9 @@ export function mountFlightApp({
     getContext: menuContext,
     onHint(value) {
       const context = menuContext();
+      // Suspending device input must not reflow an open shared menu beneath
+      // the pointer. Its instructions remain valid while the page is blurred.
+      if (!value && context?.root.dataset.modeSurface) return;
       menuHint.hidden = !context;
       if (context && menuHint.parentElement !== context.root) context.root.append(menuHint);
       if (menuHint.textContent !== value) menuHint.textContent = value;
@@ -1193,6 +1226,7 @@ export function mountFlightApp({
     onBack() {
       const dialog = dialogIds.find((id) => $(id).open);
       if (dialog) closeDialog(dialog);
+      else if (playShell?.topDialog()) playShell.back();
       else if (flightMenuOpen()) setFlightMenu(false);
       else if ($('academy-flight-options').open) $('academy-flight-options').open = false;
       else if (immersive.active()) void immersive.exit();
@@ -1298,6 +1332,7 @@ export function mountFlightApp({
       if (index >= 0) {
         closeDialog('notebook-dialog');
         reset(index, mode, null);
+        playShell?.open('briefing');
       }
     },
     onCosmetic(recipe) {
@@ -1322,6 +1357,7 @@ export function mountFlightApp({
     onPreview(course) {
       closeDialog('studio-dialog');
       reset(selected, mode, course);
+      playShell?.open('briefing');
     },
   });
   for (const [id, operation] of [
@@ -1364,6 +1400,86 @@ export function mountFlightApp({
     $('touch-controls').hidden = false;
     doc.body.classList.add('touch-mode');
   }
+  const menuSection = (className) => {
+    const node = doc.createElement('section');
+    node.className = className;
+    return node;
+  };
+  const shellSettings = menuSection('sim-shell-settings');
+  shellSettings.append(
+    doc.querySelector('.academy-input-controls'),
+    doc.querySelector('.academy-options-panel'),
+  );
+  const shellBriefing = menuSection('sim-shell-briefing');
+  const keys = doc.createElement('p');
+  keys.dataset.copy = 'keys';
+  shellBriefing.append(keys);
+  const arcadeReturn = gameReturn ?? (sourceWorlds ? new URL('../../game/', pageURL).href : null);
+  let wordmarkURL = '';
+  if (arcadeReturn) {
+    const target = new URL(arcadeReturn);
+    const match = /^(.*\/game\/)/.exec(target.pathname);
+    if (match)
+      wordmarkURL = new URL(match[1] + 'ui/art/identity/fpv-line/wordmark.png', target).href;
+  }
+  const modes = createSimModeLinks({
+    document: doc,
+    gameReturn: arcadeReturn,
+    locale: () => locale,
+  });
+  const expert = menuSection('sim-shell-expert');
+  for (const id of ['notebook-button', 'help']) expert.append($(id));
+  const startPrepared = () => {
+    playShell.enterPlay();
+    arm();
+  };
+  playShell = mountSimPlayShell({
+    document: doc,
+    mount: doc.body,
+    idPrefix: 'academy-shell',
+    wordmarkURL,
+    modeName: () => (locale === 'uk' ? 'FPV SIM · Академія' : 'FPV SIM · Academy'),
+    locale,
+    slots: {
+      modes,
+      missions: $('course-list'),
+      briefing: shellBriefing,
+      play: $('flight-app'),
+      settings: shellSettings,
+      expert,
+    },
+    actions: {
+      pause: () => pause(),
+      start: startPrepared,
+      resume: startPrepared,
+      continue: startPrepared,
+      retry: () => {
+        reset();
+        playShell.open('briefing');
+      },
+      canResume: () =>
+        Boolean(
+          flight &&
+            flight.snapshot().ticks > 0 &&
+            ['paused', 'disarmed'].includes(flight.snapshot().status),
+        ),
+      toggleSound: () => $('academy-sound').click(),
+      fullscreen: () => void immersive.toggle(),
+      open(surface) {
+        if (flight?.snapshot().status === 'active') pause();
+        if (surface === 'workshop' || surface === 'help') {
+          openDialog(surface === 'workshop' ? 'studio-dialog' : 'help-dialog');
+          return false;
+        }
+      },
+    },
+
+    initial: 'home',
+    focusPlay: () => $('viewport').focus(),
+  });
+  listen($('academy-close-options'), 'click', () => playShell.back());
+  // Existing renderer preparation remains asynchronous; Play enters its native
+  // disarmed scene, where Arm becomes available as soon as assets are ready.
   reset();
   translated();
   $('fallback').hidden = !!renderer.available;
@@ -1399,6 +1515,7 @@ export function mountFlightApp({
       setup?.dispose();
       void notebook?.dispose();
       studio?.dispose();
+      playShell?.dispose();
       menuNavigation.dispose();
       menuHint.remove();
       input.dispose();

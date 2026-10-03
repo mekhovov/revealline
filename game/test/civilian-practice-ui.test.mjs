@@ -127,3 +127,44 @@ test('reading and failed imports pause the gym and cannot grant completions or r
   f.view.dispose();
   assert.equal(f.frames.size, 0);
 });
+
+test('gym title and settings reuse the accepted drill without starting or resuming it', async (t) => {
+  const f = await fixture(t),
+    $ = (id) => f.doc.getElementById(id);
+  assert.equal($('gym-shell-home-dialog').open, true);
+  assert.equal(f.view.snapshot().status, 'ready');
+  $('gym-shell-action-settings').click();
+  assert.equal($('gym-shell-settings-dialog').open, true);
+  f.tick(3);
+  assert.equal(f.view.snapshot().ticks, 0);
+  $('gym-shell-action-settings-back').click();
+  $('gym-shell-action-primary').click();
+  assert.equal($('gym-shell-briefing-dialog').open, true);
+  $('gym-shell-action-start').click();
+  assert.equal(f.view.snapshot().status, 'active');
+  f.tick(3);
+  $('gym-shell-action-menu').click();
+  const paused = f.view.snapshot();
+  assert.equal(paused.status, 'paused');
+  f.tick(4);
+  assert.deepEqual(f.view.snapshot(), paused);
+  $('gym-shell-action-primary').click();
+  assert.equal(f.view.snapshot().status, 'active');
+});
+
+test('a gym Pause pointer keeps its intent when moving focus first pauses flight input', async (t) => {
+  const f = await fixture(t),
+    $ = (id) => f.doc.getElementById(id);
+  $('gym-shell-action-primary').click();
+  $('gym-shell-action-start').click();
+  f.tick(3);
+  const button = $('gym-shell-action-pause');
+  button.emit('pointerdown', { pointerId: 1, button: 0 });
+  button.focus();
+  assert.equal(f.view.snapshot().status, 'paused');
+  button.emit('click', { detail: 1 });
+  assert.equal($('gym-shell-home-dialog').open, true);
+  const paused = f.view.snapshot();
+  f.tick(4);
+  assert.deepEqual(f.view.snapshot(), paused);
+});

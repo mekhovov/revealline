@@ -2,6 +2,8 @@ export const PRACTICE_COPY = {
   en: {
     title: 'Civilian flight gym',
     drill: 'Practice drill',
+    prepare: 'Prepare flight',
+    backToGame: 'Back to game',
     start: 'Start / resume',
     pause: 'Pause',
     soundOn: 'Sound on',
@@ -64,6 +66,8 @@ export const PRACTICE_COPY = {
   uk: {
     title: 'Цивільний тренувальний зал',
     drill: 'Тренувальна вправа',
+    prepare: 'Підготувати політ',
+    backToGame: 'До гри',
     start: 'Почати / продовжити',
     pause: 'Пауза',
     soundOn: 'Звук увімкнено',

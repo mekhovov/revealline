@@ -15,6 +15,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <meta name="theme-color" content="#111c21" />
     <title>Classic Snake · FPV / LINE</title>
+    <link rel="stylesheet" href="../ui/mode-play-shell.css" />
+    <link rel="stylesheet" href="../ui/optional-practice-panel.css" />
     <link rel="stylesheet" href="classic.css" />
     <script
       defer
@@ -23,43 +25,17 @@
       data-status="boot-status"
     ></script>
   </head>
-  <body>
-    <main>
-      <header class="masthead">
-        <a href="../" class="brand">FPV / LINE</a>
-        <nav>
-          <a href="./" id="campaign-link">All campaigns</a><a href="../" id="home-link">Main game</a
-          ><a href="../studio/snake.html">Snake Studio</a>
+  <body class="field-kit snake-player">
+    <p id="boot-status" role="status">Preparing classic Snake…</p>
+    <main id="snake-shell" hidden></main>
+    <div id="snake-panels" hidden>
+      <div id="snake-mode-links"></div>
+      <section id="snake-missions">
+        <nav id="mode-tabs" aria-label="Play mode">
+          <button data-mode="solo">Solo</button><button data-mode="versus">Versus</button>
+          <button data-mode="team">Team</button>
         </nav>
-        <label
-          ><span data-word="language">Language</span
-          ><select id="language">
-            <option value="en">English</option>
-            <option value="uk">Українська</option>
-          </select></label
-        >
-      </header>
-      <p id="boot-status" role="status">Preparing classic Snake…</p>
-      <div id="game" hidden>
-        <section class="game-heading">
-          <div>
-            <p class="eyebrow" data-word="tag"></p>
-            <h1 data-word="title">SNAKE</h1>
-            <p data-word="intro"></p>
-          </div>
-          <nav id="mode-tabs" aria-label="Play mode">
-            <button data-mode="solo">Solo</button><button data-mode="versus">Versus</button
-            ><button data-mode="team">Team</button>
-          </nav>
-        </section>
-        <section class="setup" aria-label="Game setup">
-          <label
-            ><span data-word="format"></span
-            ><select id="format">
-              <option value="campaign">Campaign</option>
-              <option value="endless">Endless</option>
-            </select></label
-          >
+        <div class="setup" aria-label="Game setup">
           <label id="campaign-field"
             ><span data-word="campaign"></span
             ><select id="campaign"></select
@@ -68,10 +44,27 @@
             ><span data-word="chapter"></span
             ><select id="chapter"></select
           ></label>
-          <label
+          <label hidden
             ><span data-word="mission"></span
             ><select id="mission"></select
           ></label>
+        </div>
+        <div id="mission-cards" class="mission-cards" role="group" aria-label="Missions"></div>
+        <p id="progress-summary" role="status"></p>
+        <nav class="progress-links" aria-label="Campaign progress">
+          <button id="recent-level" hidden></button><button id="uncleared-level" hidden></button>
+        </nav>
+      </section>
+      <section id="snake-expert">
+        <p data-word="changeHelp"></p>
+        <div class="setup variants" aria-label="Round rules">
+          <label
+            ><span data-word="format"></span
+            ><select id="format">
+              <option value="campaign">Campaign</option>
+              <option value="endless">Endless</option>
+            </select></label
+          >
           <label
             ><span data-word="pace"></span
             ><select id="pace">
@@ -80,8 +73,6 @@
               <option value="fast">Fast</option>
             </select></label
           >
-        </section>
-        <section class="setup variants" aria-label="Round rules">
           <label
             ><span data-word="targetRules"></span
             ><select id="target-rules">
@@ -106,140 +97,159 @@
               <option value="survival">Survival duel</option>
             </select></label
           >
-          <div class="sortie-actions">
-            <button id="featured" data-word="featured"></button
-            ><button id="new-route" data-word="newRoute"></button><span id="seed-label"></span>
-          </div>
-        </section>
-        <p id="encounter-summary" class="encounter-summary" role="status"></p>
-        <p id="progress-summary" role="status"></p>
-        <nav class="setup progress-links" aria-label="Campaign progress">
-          <button id="recent-level" hidden></button>
-          <button id="uncleared-level" hidden></button>
-        </nav>
-        <div class="play-layout">
-          <section class="arena" aria-label="Snake game">
-            <div class="level-strip">
-              <h2 id="level-title"></h2>
-              <span id="boundary" class="rule-badge"></span>
-            </div>
-            <div id="boards"></div>
-            <div class="run-controls">
-              <button id="toggle" class="primary">Start game</button
-              ><button id="restart">Restart</button><button id="next" hidden>Next level</button
-              ><button id="review" data-word="review" hidden></button
-              ><button id="slow-offer" data-word="slowOffer" hidden></button>
-            </div>
-            <p id="announcement" role="status"></p>
-            <div id="snake-reaction-caption" aria-live="polite"></div>
-            <div id="pads"></div>
-            <p id="controls-help" class="muted"></p>
-          </section>
-          <aside>
-            <p class="eyebrow" data-word="target"></p>
-            <div class="target-guide">
-              <canvas id="target-icon" width="64" height="64" aria-hidden="true"></canvas>
-              <div>
-                <strong id="target-style"></strong>
-                <p data-word="readyHelp"></p>
-              </div>
-            </div>
-            <p id="level-description"></p>
-            <p data-word="preyLegend"></p>
-            <p id="mode-help"></p>
-            <p id="speed-note" class="rule-badge"></p>
-            <p id="record-summary"></p>
-            <label
-              ><span data-word="boardAppearance"></span>
-              <select id="board-style">
-                <option value="theme">Game theme</option>
-                <option value="retro">Retro Field</option>
-              </select>
-            </label>
-            <label
-              ><span data-word="castLabel"></span>
-              <select id="actor-cast">
-                <option value="authored">Campaign cast</option>
-                <option value="tactical">Tactical</option>
-                <option value="rivals">Rival crews</option>
-                <option value="arcade">Arcade</option>
-              </select>
-            </label>
-            <label
-              ><span data-word="appearance"></span
-              ><select id="style">
-                <option value="cable">Cable</option>
-                <option value="signal">Signal</option>
-              </select></label
-            >
-            <label
-              ><span data-word="steering"></span
-              ><select id="steering">
-                <option value="turns">Turn left / right</option>
-                <option value="dpad">Direction pad</option>
-              </select></label
-            >
-            <label
-              ><span data-word="accent"></span
-              ><select id="accent"></select
-            ></label>
-            <p class="rule-note" data-word="noCapture"></p>
-            <details id="field-guide">
-              <summary data-word="fieldGuide"></summary>
-              <div id="field-guide-cards"></div>
-            </details>
-            <details>
-              <summary data-word="reactions"></summary>
-              <div id="snake-reaction-settings"></div>
-            </details>
-            <details>
-              <summary data-word="controlsTitle"></summary>
-              <p data-word="controlsHelp"></p>
-              <p data-word="changeHelp"></p>
-            </details>
-            <details>
-              <summary data-word="effects"></summary>
-              <label class="check"
-                ><input type="checkbox" id="brutal" /><span data-word="brutal"></span></label
-              ><label class="check"
-                ><input type="checkbox" id="blood" /><span data-word="blood"></span></label
-              ><label class="check"
-                ><input type="checkbox" id="remains" /><span data-word="remains"></span></label
-              ><label class="check"
-                ><input type="checkbox" id="reduced" /><span data-word="reduced"></span
-              ></label>
-              <p data-word="effectHelp"></p>
-              <label class="check"
-                ><input type="checkbox" id="muted" /><span data-word="muted"></span
-              ></label>
-              <label
-                ><span data-word="volume"></span
-                ><input id="volume" type="range" min="0" max="1" step="0.05"
-              /></label>
-              <label
-                ><span data-word="effectsVolume"></span
-                ><input id="effects-volume" type="range" min="0" max="1" step="0.05"
-              /></label>
-            </details>
-            <details>
-              <summary data-word="session"></summary>
-              <button id="continue" data-word="continue" hidden></button
-              ><button id="export" data-word="save"></button
-              ><label class="file-label"
-                ><span data-word="load"></span
-                ><input type="file" id="import" accept="application/json,.json"
-              /></label>
-              <p id="save-status" role="status"></p>
-            </details>
-            <a
-              id="remix-link"
-              class="remix-link"
-              href="../?journey=snake-hunt-v1&amp;snake-style=capture"
-              data-word="remix"
-            ></a>
-          </aside>
         </div>
+        <div class="sortie-actions">
+          <button id="featured" data-word="featured"></button
+          ><button id="new-route" data-word="newRoute"></button><span id="seed-label"></span>
+        </div>
+      </section>
+      <section id="snake-briefing">
+        <p id="level-description"></p>
+        <p id="encounter-summary" class="encounter-summary" role="status"></p>
+        <p id="mode-help"></p>
+        <p id="speed-note" class="rule-badge"></p>
+        <p id="record-summary"></p>
+        <p id="controls-help" class="muted"></p>
+      </section>
+      <section id="snake-settings" class="setup">
+        <label
+          ><span data-word="language">Language</span
+          ><select id="language">
+            <option value="en">English</option>
+            <option value="uk">Українська</option>
+          </select></label
+        >
+        <label
+          ><span data-word="steering"></span
+          ><select id="steering">
+            <option value="dpad">Direction pad</option>
+            <option value="turns">Turn left / right</option>
+          </select></label
+        >
+        <details>
+          <summary data-word="displaySettings"></summary>
+          <label
+            ><span data-word="boardAppearance"></span
+            ><select id="board-style">
+              <option value="theme">Game theme</option>
+              <option value="retro">Retro Field</option>
+            </select></label
+          >
+          <label
+            ><span data-word="castLabel"></span
+            ><select id="actor-cast">
+              <option value="authored">Campaign cast</option>
+              <option value="tactical">Field kit</option>
+              <option value="rivals">Worn field kit</option>
+              <option value="arcade">Winter kit</option>
+            </select></label
+          >
+          <label
+            ><span data-word="appearance"></span
+            ><select id="style">
+              <option value="cable">Cable</option>
+              <option value="signal">Signal</option>
+            </select></label
+          >
+          <label
+            ><span data-word="accent"></span
+            ><select id="accent"></select
+          ></label>
+          <label class="check"
+            ><input type="checkbox" id="reduced" /><span data-word="reduced"></span
+          ></label>
+        </details>
+        <details>
+          <summary data-word="soundSettings"></summary>
+          <label class="check"
+            ><input type="checkbox" id="muted" /><span data-word="muted"></span
+          ></label>
+          <label
+            ><span data-word="volume"></span
+            ><input id="volume" type="range" min="0" max="1" step="0.05"
+          /></label>
+          <label
+            ><span data-word="effectsVolume"></span
+            ><input id="effects-volume" type="range" min="0" max="1" step="0.05"
+          /></label>
+          <div id="snake-reaction-settings"></div>
+        </details>
+        <details>
+          <summary data-word="effects"></summary>
+          <label class="check"
+            ><input type="checkbox" id="brutal" /><span data-word="brutal"></span
+          ></label>
+          <label class="check"
+            ><input type="checkbox" id="blood" /><span data-word="blood"></span
+          ></label>
+          <label class="check"
+            ><input type="checkbox" id="remains" /><span data-word="remains"></span
+          ></label>
+          <p data-word="effectHelp"></p>
+        </details>
+      </section>
+      <section id="snake-help">
+        <div class="target-guide">
+          <canvas id="target-icon" width="64" height="64" aria-hidden="true"></canvas>
+          <div>
+            <strong id="target-style"></strong>
+            <p data-word="readyHelp"></p>
+          </div>
+        </div>
+        <p data-word="controlsHelp"></p>
+        <p class="rule-note" data-word="noCapture"></p>
+        <details id="field-guide">
+          <summary data-word="fieldGuide"></summary>
+          <div id="field-guide-cards"></div>
+        </details>
+        <details>
+          <summary data-word="preyDetails"></summary>
+          <p data-word="preyLegend"></p>
+        </details>
+      </section>
+      <section id="snake-workshop">
+        <nav class="workshop-links">
+          <a href="../studio/snake.html" id="studio-link" data-word="studio"></a>
+          <a href="./" id="campaign-link">All campaigns</a>
+          <a href="../" id="home-link">Main game</a>
+          <a
+            id="remix-link"
+            href="../?journey=snake-hunt-v1&amp;snake-style=capture"
+            data-word="remix"
+          ></a>
+        </nav>
+        <details>
+          <summary data-word="session"></summary>
+          <button id="continue" data-word="continue" hidden></button
+          ><button id="export" data-word="save"></button>
+          <label class="file-label"
+            ><span data-word="load"></span
+            ><input type="file" id="import" accept="application/json,.json"
+          /></label>
+          <p id="save-status" role="status"></p>
+        </details>
+      </section>
+      <section id="snake-results">
+        <p id="result-detail"></p>
+        <p id="result-record"></p>
+        <div class="run-controls">
+          <button id="next" hidden>Next level</button
+          ><button id="review" data-word="review" hidden></button
+          ><button id="slow-offer" data-word="slowOffer" hidden></button>
+        </div>
+      </section>
+      <div id="game">
+        <section class="arena" aria-label="Snake game">
+          <div class="level-strip">
+            <h2 id="level-title"></h2>
+            <span id="boundary" class="rule-badge"></span>
+          </div>
+          <div id="boards"></div>
+          <div id="pads"></div>
+          <p id="announcement" class="sr-only" role="status"></p>
+          <div id="snake-reaction-caption" aria-live="polite"></div>
+        </section>
       </div>
-    </main>
+    </div>
   </body>
 </html>

@@ -19,6 +19,8 @@ const BASE_OPTIONAL_PACKAGE_POLICIES = Object.freeze({
       'README.md',
     ]),
     sharedFiles: Object.freeze([
+      'game/ui/mode-play-shell.mjs',
+      'game/ui/mode-play-shell.css',
       'optional-practice/civilian-fpv/world-audio.mjs',
       'game/ui/audio-output.mjs',
       'game/ui/audio-master.mjs',

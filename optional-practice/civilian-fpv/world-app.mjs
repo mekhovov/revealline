@@ -38,7 +38,11 @@ import { createFlightInput, createFlightMenuNavigation, createFlightGamepad } fr
 import { createRadioRuntime } from './radio-runtime.mjs';
 import { restoreVerifiedRadio } from './radio-session.mjs';
 import { mountRadioSetup } from './radio-setup.mjs';
-import { mountFlightFullscreen } from './flight-fullscreen.mjs';
+import {
+  mountFlightFullscreen,
+  mountSimPlayShell,
+  createSimModeLinks,
+} from './flight-fullscreen.mjs';
 import {
   DEFAULT_RESPONSE,
   createFlightProfileStore,
@@ -729,7 +733,8 @@ export function mountWorldApp({
     proofImport = null,
     packRemovalReview = null,
     restorePackIdentity = null,
-    disposed = false;
+    disposed = false,
+    playShell = null;
   let entries = [],
     playlistId = unique('playlist'),
     playlistDraft = null,
@@ -1091,6 +1096,7 @@ export function mountWorldApp({
   soundButton.id = 'world-sound';
   doc.querySelector('.flight-controls').append(soundButton);
   function updateSoundLabel() {
+    playShell?.update({ muted: !audio.enabled() });
     soundButton.textContent = audio.enabled()
       ? txt('Sound on', 'Звук увімкнено')
       : txt('Sound off', 'Звук вимкнено');
@@ -1184,6 +1190,8 @@ export function mountWorldApp({
     if (id === 'creator') ensureSpatialEditor();
   }
   function paintLanguage() {
+    playShell?.setLocale(locale);
+    shellModes.refresh?.();
     appearanceControls.refresh();
     doc.documentElement.lang = locale;
     for (const { node, key, fallback } of translatedNodes)
@@ -3010,6 +3018,21 @@ export function mountWorldApp({
     );
   }
   function renderPacks() {
+    const titleCourse =
+      recovery?.course ??
+      (
+        catalogue.find((entry) => entry.legacy && !completedKeys().has(keyOf(entry))) ??
+        catalogue.find((entry) => entry.legacy)
+      )?.course;
+    playShell?.update({
+      canResume: Boolean(
+        recovery && dependencyAvailable(recovery.packIdentity, recovery.course.id),
+      ),
+      muted: !audio.enabled(),
+      missionName: titleCourse?.locales?.[locale]?.title ?? '',
+      summary: titleCourse?.locales?.[locale]?.brief ?? '',
+      phase: 'ready',
+    });
     $('recovery-banner')?.remove();
     const savedLesson = recovery && learningById.get(recovery.course.id);
     $('school-recover').hidden = !savedLesson;
@@ -3598,6 +3621,13 @@ export function mountWorldApp({
   function updateHUD(state) {
     $('flight-dialog').dataset.flightState = state.status;
     $('world-flight-identity').textContent = $('flight-title').textContent;
+    playShell?.update({
+      phase: state.status === 'active' ? 'playing' : state.status,
+      missionName: $('flight-title').textContent,
+      summary: $('flight-menu-brief').textContent,
+      canResume: ['paused', 'disarmed'].includes(state.status),
+      muted: !audio.enabled(),
+    });
     updateSectorHUD();
     updateGhostHUD();
     const target = current.course.steps[$('flight-mode').value][state.step];
@@ -4201,6 +4231,8 @@ export function mountWorldApp({
     );
   async function startFlight(entry, options = {}) {
     if (disposed) return;
+    playShell?.enterPlay();
+    if (playShell) $('flight-dialog').prepend(playShell.elements.header);
     const requestedMode =
       options.mode ??
       options.replayProof?.mode ??
@@ -4628,7 +4660,9 @@ export function mountWorldApp({
     restoreLearningPreferences();
     $('flight-dialog').classList.remove('learning-flight');
     sectorReferenceProof = null;
+    if (playShell) playShell.elements.root.prepend(playShell.elements.header);
     $('flight-dialog').close();
+    playShell?.open('missions');
     replayProof = null;
     $('flight-mode').disabled =
       $('flight-source').disabled =
@@ -4794,18 +4828,19 @@ export function mountWorldApp({
     $('flight-dialog').dataset.optionsOpen = String(open);
     $('flight-options').setAttribute('aria-expanded', String(open));
   });
-  on($('lobby-settings'), 'click', () => {
+  function openSettings() {
     pauseFlight();
     ghostButton.hidden = true;
     $('sim-settings-controls').append(flightControls);
-    $('sim-settings').showModal();
-  });
+    if (!$('sim-settings').open) $('sim-settings').showModal();
+  }
+  on($('lobby-settings'), 'click', openSettings);
   function closeSettings() {
     ghostButton.hidden = false;
     $('world-replay-controls').before(flightControls);
     $('sim-settings').close();
     pauseFlight();
-    $('lobby-settings').focus();
+    (playShell?.topDialog()?.querySelector('h1') ?? $('lobby-settings')).focus();
   }
   on($('close-sim-settings'), 'click', closeSettings);
   on($('sim-settings'), 'cancel', (e) => {
@@ -5179,6 +5214,8 @@ export function mountWorldApp({
         blockRadio: secondary.id === 'world-radio-dialog',
         blockDevices: secondary.id === 'world-radio-dialog' && Boolean(radioSetup?.captureActive()),
       };
+    if (playShell?.topDialog())
+      return { root: playShell.topDialog(), key: playShell.topDialog().id };
     if ($('flight-dialog').open) {
       if (beginnerCoach.previewRunning()) return null;
       if (beginnerCoach.blocksArm()) return { root: $('beginner-coach'), key: 'coach' };
@@ -5198,6 +5235,10 @@ export function mountWorldApp({
     getContext: menuContext,
     onHint(value) {
       const context = menuContext();
+      // Blur suspends device ownership with an empty hint. Keep the current
+      // shared menu's instructions in place: clearing and restoring them can
+      // scroll the dialog between pointer press and release.
+      if (!value && context?.root.dataset.modeSurface) return;
       if (!context) {
         menuHint.hidden = true;
         return;
@@ -5213,12 +5254,13 @@ export function mountWorldApp({
       else if ($('drone-hangar').open)
         $('drone-hangar').querySelector('[data-close-hangar]').click();
       else if ($('sim-settings').open) closeSettings();
+      else if (playShell?.topDialog()) playShell.back();
       else if ($('flight-dialog').open) {
         if (flightMenuOpen()) setFlightMenu(false);
         else if ($('flight-dialog').dataset.optionsOpen === 'true') $('flight-options').click();
         else void closeFlight().catch(reportError);
       } else if (immersive.active()) void immersive.exit();
-      else showTab('explore');
+      else playShell?.openHome();
     },
   });
   function pollMenu(now) {
@@ -5325,7 +5367,8 @@ export function mountWorldApp({
   }
   on($('flight-dialog'), 'cancel', (e) => {
     e.preventDefault();
-    if (flight?.snapshot().status === 'active') setFlightMenu(true);
+    if (playShell?.topDialog()) playShell.back();
+    else if (flight?.snapshot().status === 'active') setFlightMenu(true);
     else if (flightMenuOpen()) setFlightMenu(false);
     else if (immersive.active()) void immersive.exit();
     else void closeFlight().catch(reportError);
@@ -5582,12 +5625,93 @@ export function mountWorldApp({
             'Постійне сховище недоступне. Експортуйте роботу перед виходом.',
           );
   })();
+  const shellMissions = el('section', undefined, 'sim-shell-missions');
+  const lobbyHeader = doc.querySelector('.studio-header');
+  const lobbyMain = doc.querySelector('main');
+  shellMissions.append(lobbyHeader, lobbyMain);
+  const shellModes = createSimModeLinks({ document: doc, gameReturn, locale: () => locale });
+  const shellStage = el('p', txt('Preparing flight…', 'Підготовка польоту…'), 'sim-shell-loading');
+  shellStage.setAttribute('role', 'status');
+  const shellBriefing = el('section');
+  const help = el(
+    'p',
+    txt(
+      'Choose your controls in Settings. Your aircraft starts disarmed; Arm when you are ready.',
+      'Оберіть керування в налаштуваннях. Дрон починає з вимкненими двигунами — увімкніть їх, коли будете готові.',
+    ),
+  );
+  shellBriefing.append(help);
+  let shellTab = 'explore';
+  const openCatalogueTab = (id) => {
+    shellTab = id;
+    playShell.open('missions');
+  };
+  playShell = mountSimPlayShell({
+    document: doc,
+    mount: doc.body,
+    idPrefix: 'worlds-shell',
+    wordmarkURL: new URL(
+      lobbyHeader.querySelector('.wordmark img').getAttribute('src'),
+      win.location.href,
+    ).href,
+    modeName: () => (locale === 'uk' ? 'FPV SIM · Світи' : 'FPV SIM · Worlds'),
+    locale,
+    slots: {
+      brand: (() => {
+        const image = el('img');
+        image.src = lobbyHeader.querySelector('.wordmark img').getAttribute('src');
+        image.alt = 'FPV / LINE';
+        return image;
+      })(),
+      modes: shellModes,
+      missions: shellMissions,
+      briefing: shellBriefing,
+      play: shellStage,
+    },
+    actions: {
+      pause: () => pauseFlight(),
+      start: () => $('hero-fly').click(),
+      continue: () =>
+        current && flight
+          ? $('world-arm').click()
+          : void resumeInterruptedFlight().catch(reportError),
+      resume: () =>
+        current && flight
+          ? $('world-arm').click()
+          : void resumeInterruptedFlight().catch(reportError),
+      retry: () => (current ? void startFlight(current).catch(reportError) : $('hero-fly').click()),
+      fullscreen: () => void immersive.toggle(),
+      toggleSound: () => soundButton.click(),
+      canResume: () =>
+        Boolean(recovery && dependencyAvailable(recovery.packIdentity, recovery.course.id)),
+      open(surface) {
+        if (flight?.snapshot().status === 'active') pauseFlight();
+        if (surface === 'missions') {
+          showTab(shellTab, false);
+          shellTab = 'explore';
+        } else if (surface === 'workshop' || surface === 'help') {
+          openCatalogueTab(surface === 'workshop' ? 'creator' : 'learn');
+          return false;
+        } else if (surface === 'settings' || surface === 'expert') {
+          openSettings();
+          return false;
+        }
+      },
+    },
+    initial: 'home',
+    focusPlay: () => $('world-viewport').focus(),
+  });
+  on(doc.querySelector('.wordmark'), 'click', () => playShell.openHome());
+  for (const id of ['lobby-sound', 'world-sound'])
+    if ($(id)) on($(id), 'click', () => playShell.update({ muted: !audio.enabled() }));
   for (const id of preferenceIds) on($(id), 'change', savePreferences);
   paintLanguage();
   paintInput(null);
   renderFilters();
   renderCatalogue();
   showTab(win.location.hash.slice(1) || 'explore', false);
+  if (['explore', 'learn', 'playlists', 'creator', 'packs'].includes(win.location.hash.slice(1)))
+    openCatalogueTab(win.location.hash.slice(1));
   renderPlaylist();
   const requested = new URL(win.location.href).searchParams;
   const requestedWorld = requested.get('community-world'),
@@ -5711,6 +5835,8 @@ export function mountWorldApp({
       await saveRecovery();
       win.cancelAnimationFrame(raf);
       for (const remove of listeners) remove();
+      if (playShell) playShell.elements.root.prepend(playShell.elements.header);
+      playShell?.dispose();
       menuNavigation.dispose();
       menuHint.remove();
       input.dispose();

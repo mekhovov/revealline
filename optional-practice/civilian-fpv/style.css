@@ -2467,10 +2467,8 @@
   .handheld-flight-identity {
     display: none;
   }
-  @media (max-width: 760px),
-    (max-height: 600px),
-    (max-width: 1280px) and (max-height: 800px),
-    (pointer: coarse) and (max-width: 1366px) {
+  /* All screen sizes use the same focused flight surface. */
+  @media (min-width: 0px) {
     .field-kit {
       --flight-safe-top: max(10px, env(safe-area-inset-top));
       --flight-safe-right: max(12px, env(safe-area-inset-right));
@@ -2516,7 +2514,7 @@
         #sector-panel,
         footer,
         .flight-immersive-bar
-      ) {
+      ):not(.mode-play-bar) {
       display: none !important;
     }
     html body.sim-academy #flight-app #viewport,
@@ -3073,5 +3071,413 @@ html[data-fpv-immersive-scope='application'] .sim-menu-hint {
   flex: 0 0 auto;
   padding-inline: 12px;
 }
+
+/* Focused play is the default, fullscreen is an optional browser enhancement. */
+html
+  body.sim-worlds
+  #flight-dialog[data-flight-menu-open='true']:not([data-options-open='true'])
+  > .flight-controls {
+  display: none !important;
+}
+html body.sim-worlds #flight-dialog[data-flight-menu-open='true'] > header,
+html body.sim-worlds #flight-dialog[data-flight-menu-open='true'] > footer,
+html body.sim-worlds #flight-dialog[data-flight-menu-open='true'] > .flight-controls,
+html body.sim-academy #flight-app[data-flight-menu-open='true'] > .flight-header,
+html body.sim-academy #flight-app[data-flight-menu-open='true'] > .flight-toolbar,
+html body.sim-academy #flight-app[data-flight-menu-open='true'] > .academy-footer {
+  max-width: 72rem;
+  margin-inline: auto;
+}
+html body.sim-academy #flight-app[data-flight-menu-open='true'] .academy-input-controls {
+  display: none;
+}
+html
+  body.sim-academy
+  #flight-app[data-flight-menu-open='true']:has(.academy-options[open])
+  .academy-input-controls {
+  display: grid;
+}
+html body.field-kit .flight-immersive-bar button {
+  min-height: 44px;
+}
+
+body.mode-play-page {
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+.field-kit .mode-play-shell {
+  --paper: var(--fk-bg);
+  --ink: var(--fk-text);
+  --panel: var(--fk-panel);
+  --line: var(--fk-line);
+  --accent: var(--fk-accent);
+}
+.field-kit .mode-play-wordmark {
+  font-family: var(--fk-font-display);
+}
+.sim-shell-settings {
+  display: grid;
+  gap: 16px;
+}
+.sim-shell-settings .academy-options-panel {
+  position: static !important;
+  width: 100% !important;
+  max-height: none !important;
+  overflow: visible;
+  margin: 0;
+  box-shadow: none;
+}
+.sim-shell-settings .academy-input-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.sim-shell-settings .academy-input-controls > * {
+  flex: 1 1 180px;
+  min-width: 0;
+}
+.sim-shell-settings select {
+  width: 100%;
+  min-width: 0;
+}
+.sim-shell-missions .studio-header {
+  position: static;
+  padding: 8px 0;
+  border: 0;
+}
+.sim-shell-missions .studio-header .wordmark,
+.sim-shell-missions .sim-utilities {
+  display: none;
+}
+.sim-shell-missions .sim-hero {
+  display: none;
+}
+.sim-shell-missions main {
+  max-width: none;
+  padding: 0;
+}
+.sim-shell-missions .first-flight-card {
+  margin-top: 12px;
+}
+.sim-shell-modes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.sim-shell-modes a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 8px 16px;
+  border: 2px solid var(--fk-control-line);
+  color: var(--fk-text);
+}
+.sim-shell-loading {
+  align-self: center;
+  justify-self: center;
+}
+
+.sim-shell-modes {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+  gap: 8px;
+}
+.sim-shell-modes :is(a, button) {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 56px;
+  padding: 8px 12px;
+  border: 2px solid var(--fk-cyan);
+  background: var(--fk-panel-raised);
+  color: var(--fk-text);
+  font: 600 16px var(--fk-font-ui);
+  text-decoration: none;
+}
+.sim-shell-modes [aria-current='page'] {
+  background: var(--fk-cyan);
+  color: var(--fk-bg);
+}
+
+/* The shared bar occupies real layout space above native instruments/controls. */
+html body.sim-academy .mode-play-stage {
+  position: relative;
+}
+html body.sim-academy .mode-play-stage #flight-app {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+html body.sim-academy #academy-flight-menu,
+html body.sim-worlds #world-flight-menu {
+  display: none !important;
+}
+html body.sim-worlds #flight-dialog[open]:not([data-flight-menu-open='true']) {
+  display: flex;
+  flex-direction: column;
+}
+html body.sim-worlds #flight-dialog[open] > .mode-play-bar {
+  display: flex !important;
+  position: relative;
+  flex: 0 0 auto;
+  width: 100%;
+  z-index: 30;
+}
+html body.sim-worlds #flight-dialog[open]:not([data-flight-menu-open='true']) #world-viewport {
+  flex: 1 1 0;
+  height: auto;
+  min-height: 0;
+}
+
+/* BEGIN SHARED MODE SHELL */
+/* Shared Field Kit structure; the accepted theme continues to own all colours. */
+.mode-play-shell {
+  box-sizing: border-box;
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  grid-template-columns: minmax(0, 1fr);
+  width: 100%;
+  max-width: none;
+  height: 100dvh;
+  min-height: 0;
+  margin: 0;
+  padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom)
+    env(safe-area-inset-left);
+  color: var(--fk-text, var(--ink, #f4f2e5));
+  background: var(--fk-bg, var(--paper, #0b1018));
+  font-family: inherit;
+}
+.mode-play-shell *,
+.mode-play-shell *::before,
+.mode-play-shell *::after {
+  box-sizing: border-box;
+}
+.mode-play-shell [hidden] {
+  display: none !important;
+}
+.mode-play-bar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 4px 12px;
+  border-bottom: 1px solid var(--fk-line, var(--line, #4b626e));
+  min-height: 52px;
+}
+.mode-play-name {
+  flex: 1;
+  min-width: 0;
+  font-size: 0.85rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: var(--fk-text-muted, var(--muted, #aebdc4));
+}
+.mode-play-stage {
+  display: grid;
+  grid-template-rows: minmax(0, 1fr);
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+}
+.mode-play-stage > * {
+  min-width: 0;
+  min-height: 0;
+}
+.mode-play-shell .button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6em;
+  min-height: 44px;
+  min-width: 44px;
+  padding: 0.6em 1em;
+  border: 2px solid var(--fk-line, var(--line, #4b626e));
+  border-radius: 2px;
+  background: var(--fk-panel-raised, var(--panel, #182431));
+  color: var(--fk-text, var(--ink, #f4f2e5));
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+.mode-play-shell .button.primary {
+  background: var(--fk-accent, var(--accent, #83dcef));
+  color: var(--fk-on-accent, var(--paper, #0b1018));
+  border-color: var(--fk-accent, var(--accent, #83dcef));
+}
+.mode-play-shell :focus-visible {
+  outline: 3px solid var(--fk-focus, var(--fk-accent, #83dcef));
+  outline-offset: 3px;
+}
+.mode-play-shell button:disabled {
+  opacity: 0.55;
+  cursor: default;
+}
+.mode-play-dialog {
+  color: var(--fk-text, var(--ink, #f4f2e5));
+  background: var(--fk-bg, var(--paper, #0b1018));
+  border: 2px solid var(--fk-line, var(--line, #4b626e));
+  border-radius: 2px;
+  width: min(900px, calc(100vw - 24px));
+  max-width: none;
+  max-height: calc(100dvh - 24px);
+  padding: 0;
+  overflow: hidden;
+  margin: auto;
+}
+.mode-play-dialog[open] {
+  display: flex;
+  flex-direction: column;
+}
+.mode-play-dialog::backdrop {
+  background: #030710e8;
+}
+.mode-play-dialog-head,
+.mode-play-content,
+.mode-play-actions {
+  padding: 16px clamp(16px, 3vw, 32px);
+}
+.mode-play-dialog-head {
+  flex: none;
+  border-bottom: 1px solid var(--fk-line, var(--line, #4b626e));
+}
+.mode-play-dialog h1 {
+  font: inherit;
+  font-size: clamp(1.25rem, 3vw, 2rem);
+  font-weight: 800;
+  margin: 0;
+}
+.mode-play-content {
+  min-height: 0;
+  overflow: auto;
+  overscroll-behavior: contain;
+}
+.mode-play-content > * {
+  max-width: 100%;
+}
+.mode-play-content > .button {
+  margin-block: 4px;
+}
+.mode-play-actions {
+  flex: none;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 12px;
+  border-top: 1px solid var(--fk-line, var(--line, #4b626e));
+}
+.mode-play-home {
+  width: 100%;
+  height: 100dvh;
+  max-height: 100dvh;
+  border: 0;
+  padding: max(12px, env(safe-area-inset-top)) max(12px, env(safe-area-inset-right))
+    max(12px, env(safe-area-inset-bottom)) max(12px, env(safe-area-inset-left));
+  overflow: auto;
+  background-image: linear-gradient(
+    90deg,
+    transparent 73%,
+    color-mix(in srgb, var(--fk-accent, var(--accent, #83dcef)) 8%, transparent) 73.2%,
+    transparent 73.5%
+  );
+}
+.mode-play-home .mode-play-dialog-head,
+.mode-play-home .mode-play-content,
+.mode-play-home .mode-play-actions {
+  width: min(740px, calc(100% - clamp(0px, 5vw, 90px)));
+  border: 0;
+  margin-inline: clamp(0px, 5vw, 90px) 0;
+}
+.mode-play-home .mode-play-content {
+  overflow: visible;
+  flex: 1 0 auto;
+  padding-top: 0;
+}
+.mode-play-home .mode-play-wordmark {
+  font-size: clamp(2rem, 7vw, 4rem);
+}
+.mode-play-wordmark img {
+  display: block;
+  width: min(100%, 430px);
+  max-height: 115px;
+  object-fit: contain;
+  object-position: left;
+  image-rendering: pixelated;
+}
+.mode-play-edition,
+.mode-play-mission,
+.mode-play-version {
+  color: var(--fk-text-muted, var(--muted, #aebdc4));
+  font-size: 0.9rem;
+  margin: 8px 0 16px;
+}
+.mode-play-edition {
+  font-family: var(--fk-font-mono, monospace);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.mode-play-modes {
+  margin-block: 16px 24px;
+}
+.mode-play-main-menu {
+  display: grid;
+  gap: 8px;
+  max-width: 430px;
+}
+.mode-play-main-menu .button {
+  min-height: 52px;
+  justify-content: flex-start;
+  text-align: start;
+}
+@media (max-width: 480px) {
+  .mode-play-dialog {
+    width: calc(100vw - 12px);
+    max-height: calc(100dvh - 12px);
+  }
+  .mode-play-home {
+    width: 100%;
+    max-height: 100dvh;
+  }
+  .mode-play-dialog-head,
+  .mode-play-content,
+  .mode-play-actions {
+    padding: 12px;
+  }
+  .mode-play-bar {
+    gap: 6px;
+    padding-inline: 6px;
+    justify-content: space-between;
+  }
+  .mode-play-name {
+    display: none;
+  }
+  .mode-play-home .mode-play-dialog-head,
+  .mode-play-home .mode-play-content,
+  .mode-play-home .mode-play-actions {
+    margin-inline: 0;
+  }
+  .mode-play-actions > .button {
+    flex: 1;
+  }
+}
+.mode-play-shell [data-menu-icon]::before {
+  content: '';
+  flex: 0 0 1.1em;
+  width: 1.1em;
+  height: 1.1em;
+  background: currentColor;
+  mask: var(--native-menu-icon) center / contain no-repeat;
+}
+.mode-play-shell .mode-play-brand-button::before {
+  display: none;
+}
+.mode-play-brand-button img {
+  width: 118px;
+  height: 34px;
+  object-fit: contain;
+  image-rendering: pixelated;
+}
+/* END SHARED MODE SHELL */
 /* END SHARED SIM FULLSCREEN */
 }

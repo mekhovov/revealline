@@ -1,3 +1,12 @@
+import { mountModePlayShell } from '../ui/mode-play-shell.mjs';
+import { attachModalNavigation } from '../ui/modal-navigation.mjs';
+import { attachFullscreen } from '../ui/fullscreen.mjs';
+import { attachControllerNavigation } from '../ui/controller-navigation.mjs';
+import { setMenuIcon } from '../ui/native-menu-icons.mjs';
+import { snakeStudioReturnHref } from '../ui/content-studio-navigation.mjs';
+import { mountOptionalPracticePanel } from '../ui/optional-practice-panel.mjs';
+import { contextualAppearance } from '../ui/mode-choice.mjs';
+import { fpvWorldLaunchURL, appearanceLaunchURL } from '../fpv-entry.mjs';
 import { boardPlacement } from '../ui/feedback-cues.mjs';
 import { createClassicAudio } from './classic-audio.mjs';
 import { getLocale, setLocale, onLocaleChange } from '../i18n/index.mjs';
@@ -124,7 +133,7 @@ const currentCast = () => {
   const value = actorAppearance.snapshot().cast;
   return value === 'authored' ? (entry.cast ?? 'rivals') : value;
 };
-let steering = choice(['turns', 'dpad'], cosmetic.steering, 'turns');
+let steering = choice(['turns', 'dpad'], cosmetic.steering, 'dpad');
 let accent = typeof cosmetic.accent === 'string' ? cosmetic.accent : 'default';
 let seed = Number(params.get('seed') ?? selected.seed ?? 17);
 if (!Number.isSafeInteger(seed) || seed < 0 || seed > 0xffffffff) seed = 17;
@@ -135,6 +144,9 @@ let entry =
   ) ??
   CLASSIC_SNAKE_LEVELS[48] ??
   CLASSIC_SNAKE_LEVELS[0];
+let playShell = null,
+  menuController = null,
+  boardLayoutObserver = null;
 let match,
   runs = [],
   boards = [],
@@ -143,6 +155,7 @@ let match,
   paused = true,
   previousFrame = null,
   importEpoch = 0;
+let offerSavedContinue = !params.has('level');
 let savedRound = readLocal(SAVE_KEY) ?? readLocal(OLD_SAVE_KEY),
   saveNotice = '',
   earlyFailures = 0;
@@ -282,6 +295,7 @@ function save() {
     const raw = JSON.stringify(session());
     globalThis.localStorage.setItem(SAVE_KEY, raw);
     savedRound = raw;
+    offerSavedContinue = true;
     saveNotice = 'saved';
   } catch {
     saveNotice = 'storage';
@@ -313,7 +327,7 @@ function remember() {
     saveNotice = 'invalid';
   }
 }
-function pause() {
+function pause({ showMenu = true } = {}) {
   if (ready || paused || result()) return;
   paused = true;
   sound.gameplayPaused = true;
@@ -323,9 +337,11 @@ function pause() {
   save();
   remember();
   refresh();
+  if (showMenu && !playShell?.topDialog()) playShell?.open('pause');
 }
 function start() {
   if (result()) return;
+  playShell?.enterPlay();
   if (ready) void records.visit(entry.id);
   importEpoch++;
   review = null;
@@ -357,9 +373,10 @@ function finish() {
   remember();
   save();
   refresh();
+  playShell?.open('results');
 }
 function turn(player, direction) {
-  if (result() || review) return;
+  if (result() || review || playShell?.topDialog()) return;
   if (ready) start();
   if (paused) return;
   queueClassicSnakeMatchTurn(match, player, direction);
@@ -375,6 +392,9 @@ function relative(player, offset) {
   turn(player, directions[(directions.indexOf(heading) + offset + 4) % 4]);
 }
 function prepare({ launch = false } = {}) {
+  // An explicit selection owns the next Start; an older save remains available
+  // only through Workshop, never as a silent replacement for the selected level.
+  if (match) offerSavedContinue = false;
   classicAudio.reset();
   importEpoch++;
   reactions.reset(`classic:${++reactionAttempt}`);
@@ -401,12 +421,13 @@ function prepare({ launch = false } = {}) {
   paused = true;
   previousFrame = null;
   buildBoards();
+  updateURL();
   renderCopy();
   refresh();
-  updateURL();
   if (launch) start();
 }
 function buildBoards() {
+  boardLayoutObserver?.disconnect();
   footprint?.dispose();
   $('boards').replaceChildren();
   boards = [];
@@ -414,7 +435,7 @@ function buildBoards() {
     const card = el('article', null, 'board-card'),
       stats = el('div', null, 'board-stats'),
       fields = {};
-    for (const key of ['caught', 'length', 'score', 'best', 'clock', 'queued']) {
+    for (const key of ['caught', 'length', 'clock', 'score', 'best', 'queued']) {
       const column = el('div'),
         label = el('span'),
         value = el('b');
@@ -461,6 +482,32 @@ function buildBoards() {
   }
   buildPads();
   footprint = createBoardFootprints(boards.map((board) => board.canvas));
+  const arrange = () => {
+    const area = $('boards');
+    if (mode !== 'versus') {
+      delete area.dataset.arrangement;
+      return;
+    }
+    const width = area.clientWidth,
+      height = area.clientHeight;
+    const stats =
+      Math.max(
+        ...boards.map(
+          (board) =>
+            board.canvas.parentElement.previousElementSibling?.getBoundingClientRect().height ?? 0,
+        ),
+      ) + 28;
+    const level = runs[0].level;
+    const paired = Math.min((width - 12) / 2 / level.width, (height - stats) / level.height);
+    const stacked = Math.min(width / level.width, ((height - 12) / 2 - stats) / level.height);
+    const arrangement = stacked > paired ? 'stacked' : 'paired';
+    if (area.dataset.arrangement !== arrangement) area.dataset.arrangement = arrangement;
+  };
+  if (typeof globalThis.ResizeObserver === 'function') {
+    boardLayoutObserver = new globalThis.ResizeObserver(arrange);
+    boardLayoutObserver.observe($('boards'));
+  }
+  arrange();
   primeEffects();
 }
 function buildPads() {
@@ -508,6 +555,25 @@ function renderProgress() {
     if (option?.value === item.id)
       option.textContent = `${records.cleared(item.id) ? '✓ ' : ''}${index + 1}. ${item.title[locale]}`;
   }
+  const cards = $('mission-cards');
+  cards.setAttribute('aria-label', text('mission'));
+  cards.replaceChildren(
+    ...chapterEntries.map((item, index) => {
+      const card = el(
+        'button',
+        `${records.cleared(item.id) ? '✓ ' : ''}${String(index + 1).padStart(2, '0')} · ${item.title[locale]}`,
+      );
+      card.type = 'button';
+      card.setAttribute('aria-pressed', String(item.id === entry.id));
+      card.addEventListener('click', () => {
+        save();
+        entry = item;
+        prepare();
+        playShell?.open('briefing');
+      });
+      return card;
+    }),
+  );
   $('progress-summary').textContent = text('progress', {
     done: records.chapter(chapterEntries),
     all: CLASSIC_SNAKE_LEVELS.filter((item) => records.cleared(item.id)).length,
@@ -557,6 +623,53 @@ function nextUncleared() {
       (item) => item.chapterId === entry.chapterId && !records.cleared(item.id),
     ) ?? CLASSIC_SNAKE_LEVELS.find((item) => !records.cleared(item.id))
   );
+}
+let snakeSimPanel = null;
+function renderModeLinks() {
+  const links = $('snake-mode-links');
+  if (!links) return;
+  snakeSimPanel?.dispose();
+  snakeSimPanel = null;
+  links.replaceChildren();
+  for (const [key, path, label] of [
+    ['solo', '../', text('solo')],
+    ['versus', '../couch/', text('versus')],
+    ['team', '../couch/relay-rescue.html', text('team')],
+    ['simulator', null, 'FPV SIM'],
+    ['controls', null, text('title')],
+  ]) {
+    const node = el(path ? 'a' : 'button', label);
+    if (path) {
+      const url = new URL(path, globalThis.location.href);
+      url.searchParams.set('lang', locale);
+      node.href = appearanceLaunchURL(url.href, contextualAppearance(doc), { transfer: false });
+      node.addEventListener('click', () => {
+        node.href = appearanceLaunchURL(url.href, contextualAppearance(doc));
+        pause();
+      });
+    } else {
+      node.type = 'button';
+      if (key === 'controls') node.setAttribute('aria-current', 'page');
+    }
+    setMenuIcon(node, key);
+    links.append(node);
+    if (key === 'simulator') {
+      snakeSimPanel = mountOptionalPracticePanel({
+        document: doc,
+        container: links,
+        opener: node,
+        pause,
+        href: globalThis.location.href,
+        getAppearanceDefault: () => contextualAppearance(doc),
+        bundledHref: fpvWorldLaunchURL(globalThis.location.href, locale),
+        packageId: 'fpv-worlds',
+        idPrefix: 'snake-fpv-sim',
+        preferDirect: true,
+        timeoutMs: 4000,
+      });
+      node.disabled = !snakeSimPanel.open;
+    }
+  }
 }
 function renderCopy() {
   doc.documentElement.lang = locale;
@@ -658,8 +771,13 @@ function renderCopy() {
           ? text('vsHelp')
           : '';
   $('controls-help').textContent = text(mode === 'solo' ? 'controls' : 'twoControls');
-  for (const id of ['restart', 'next']) $(id).textContent = text(id);
+  for (const id of ['next']) $(id).textContent = text(id);
   $('home-link').textContent = text('home');
+  $('home-link').href = `../?lang=${locale}`;
+  $('studio-link').href =
+    snakeStudioReturnHref(globalThis.location.href) ?? `../studio/snake.html?lang=${locale}`;
+  playShell?.setLocale(locale);
+  renderModeLinks();
   $('campaign-link').textContent = text('campaigns');
   $('campaign-link').href = `./?lang=${locale}`;
   $('remix-link').href =
@@ -760,8 +878,13 @@ function refresh() {
   }
   const outcome = result();
   doc.body.dataset.playing = String(!ready && !paused);
-  $('toggle').textContent = text(ready ? 'start' : paused ? 'resume' : 'pause');
-  $('toggle').hidden = !!outcome;
+  playShell?.update({
+    phase: outcome ? 'results' : ready ? 'ready' : paused ? 'paused' : 'playing',
+    missionName: entry.title[locale],
+    summary: readyInstruction(),
+    canResume: !outcome && (!ready || (offerSavedContinue && !!savedRound)),
+    muted: audioMaster.snapshot().muted,
+  });
   $('next').hidden = format !== 'campaign' || !runs.some((run) => run.status === 'won');
   $('review').hidden = !outcome || !runs.some((run) => run.tick > 0);
   $('slow-offer').hidden = !outcome || earlyFailures < 3 || pace === 'slow';
@@ -783,6 +906,8 @@ function refresh() {
           : paused
             ? text('paused')
             : '';
+  $('result-detail').textContent = $('announcement').textContent;
+  $('result-record').textContent = $('record-summary').textContent;
   boards.forEach((board, i) => {
     const run = runs[i],
       summary = classicSnakeSummary(run),
@@ -931,16 +1056,18 @@ function restore(raw) {
     reactions.suspend();
     for (const fx of effects) fx.reset();
     buildBoards();
+    updateURL();
     renderCopy();
     refresh();
-    updateURL();
     saveNotice = result() ? 'loadedComplete' : 'loaded';
     $('save-status').textContent = text(saveNotice);
     if (result()) remember();
-    $(result() ? 'restart' : 'toggle').focus({ preventScroll: true });
+    playShell?.open(result() ? 'results' : 'briefing');
+    return true;
   } catch {
     saveNotice = 'invalid';
     $('save-status').textContent = text('invalid');
+    return false;
   }
 }
 function primeEffects() {
@@ -962,6 +1089,7 @@ function primeEffects() {
   });
 }
 function watchReview() {
+  playShell?.enterPlay();
   const frames = runs.map((run) => {
     const replay = exportClassicSnakeReplay(run),
       copy = createClassicSnake(replay.level, { mode: replay.mode, seed: replay.seed });
@@ -1040,9 +1168,9 @@ $('language').addEventListener('change', () => {
 onLocaleChange(() => {
   locale = getLocale() === 'uk' ? 'uk' : 'en';
   buildBoards();
+  updateURL();
   renderCopy();
   refresh();
-  updateURL();
 });
 for (const button of doc.querySelectorAll('#mode-tabs [data-mode]'))
   button.addEventListener('click', () => {
@@ -1078,8 +1206,6 @@ $('mission').addEventListener('change', () => {
   entry = CLASSIC_SNAKE_LEVELS.find((item) => item.id === $('mission').value);
   prepare();
 });
-$('toggle').addEventListener('click', () => (paused || ready ? start() : pause()));
-$('restart').addEventListener('click', () => prepare({ launch: true }));
 for (const id of ['recent-level', 'uncleared-level'])
   $(id).addEventListener('click', () => {
     const destination =
@@ -1093,11 +1219,13 @@ for (const id of ['recent-level', 'uncleared-level'])
     prepare();
   });
 $('next').addEventListener('click', () => {
+  playShell?.enterPlay();
   const same = CLASSIC_SNAKE_LEVELS.filter((item) => item.chapterId === entry.chapterId);
   entry =
     same.find((item) => !records.cleared(item.id) && item.id !== entry.id) ??
     CLASSIC_SNAKE_LEVELS[(CLASSIC_SNAKE_LEVELS.indexOf(entry) + 1) % CLASSIC_SNAKE_LEVELS.length];
   prepare();
+  playShell?.open('briefing');
 });
 $('featured').addEventListener('click', () => {
   save();
@@ -1148,6 +1276,7 @@ $('import').addEventListener('change', async () => {
   $('import').value = '';
 });
 doc.addEventListener('keydown', (event) => {
+  if (event.defaultPrevented || playShell?.topDialog()) return;
   if (event.key === 'Escape' && !event.repeat) {
     event.preventDefault();
     pause();
@@ -1209,10 +1338,22 @@ function pollGamepads() {
       pad.buttons[13]?.pressed || pad.axes[1] > 0.55,
       pad.buttons[14]?.pressed || pad.axes[0] < -0.55,
       pad.buttons[9]?.pressed,
+      pad.buttons[0]?.pressed,
+      pad.buttons[1]?.pressed,
     ];
     const previous = gamepadState.get(pad.index);
     gamepadState.set(pad.index, buttons);
     if (!previous) continue;
+    if (playShell?.topDialog()) {
+      const directionIndex = buttons.slice(0, 4).findIndex((pressed, i) => pressed && !previous[i]);
+      menuController?.handle({
+        direction: directionIndex < 0 ? null : ['up', 'right', 'down', 'left'][directionIndex],
+        confirm: !!buttons[5] && !previous[5],
+        back: !!buttons[6] && !previous[6],
+        menu: !!buttons[4] && !previous[4],
+      });
+      continue;
+    }
     if (buttons[4] && !previous[4]) {
       if (ready || paused) start();
       else pause();
@@ -1230,11 +1371,13 @@ function pollGamepads() {
       pause();
     }
 }
-doc.querySelectorAll('aside details').forEach((details) =>
-  details.addEventListener('toggle', () => {
-    if (details.open) pause();
-  }),
-);
+doc
+  .querySelectorAll('#snake-settings details, #snake-help details, #snake-workshop details')
+  .forEach((details) =>
+    details.addEventListener('toggle', () => {
+      if (details.open) pause();
+    }),
+  );
 doc.addEventListener('visibilitychange', () => {
   if (doc.hidden) pause();
 });
@@ -1256,6 +1399,7 @@ landscapeControls?.addEventListener('change', () => {
 });
 globalThis.addEventListener('pagehide', () => {
   importEpoch++;
+  snakeSimPanel?.close({ restoreFocus: false });
   pause();
   sound.suspend();
   classicAudio.reset();
@@ -1311,11 +1455,12 @@ function frame(now) {
       refresh();
     }
   }
-  if (review) {
+  if (review && !playShell?.topDialog()) {
     review.time += Math.min(elapsed, 250);
     if (review.time > 2200) {
       review = null;
       refresh();
+      playShell?.open('results');
     }
   }
   runs.forEach((run, i) => {
@@ -1364,7 +1509,55 @@ function frame(now) {
 prepare();
 void records.read();
 $('boot-status').hidden = true;
-$('game').hidden = false;
+$('snake-shell').hidden = false;
+playShell = mountModePlayShell({
+  document: doc,
+  mount: $('snake-shell'),
+  idPrefix: 'snake',
+  modeName: { en: CLASSIC_COPY.en.title, uk: CLASSIC_COPY.uk.title },
+  locale,
+  wordmarkURL: new URL('../ui/art/identity/fpv-line/wordmark.png', import.meta.url).href,
+  slots: Object.fromEntries(
+    ['missions', 'briefing', 'settings', 'expert', 'help', 'workshop', 'results']
+      .map((key) => [key, $(`snake-${key}`)])
+      .concat([
+        ['play', $('game')],
+        ['modes', $('snake-mode-links')],
+      ]),
+  ),
+  services: { attachModalNavigation, attachFullscreen, setMenuIcon },
+  actions: {
+    pause: () => pause({ showMenu: false }),
+    start,
+    resume: start,
+    retry: () => prepare({ launch: true }),
+    canResume: () => !result() && (!ready || (offerSavedContinue && !!savedRound)),
+    continue: () => {
+      if (!ready && !result()) start();
+      else if (offerSavedContinue && savedRound && restore(savedRound)) {
+        if (!result()) start();
+      } else playShell.open('briefing');
+    },
+    toggleSound: () => {
+      const muted = !audioMaster.snapshot().muted;
+      audioPreferences.setMuted(muted);
+      if (!muted) void sound.enable();
+      refresh();
+    },
+  },
+  initial: params.has('level') || communityIdentity ? 'briefing' : 'home',
+  focusPlay: () => boards[0]?.canvas.focus({ preventScroll: true }),
+});
+menuController = attachControllerNavigation({
+  document: doc,
+  keyboard: true,
+  getScope: () => (playShell?.topDialog() ? 'ui' : 'flight'),
+  getRoot: () => playShell?.topDialog() ?? $('snake-shell'),
+  getDefaultFocus: () => playShell?.topDialog()?.querySelector('button:not(:disabled),a[href]'),
+  onBack: () => (snakeSimPanel?.root() ? snakeSimPanel.close() : playShell.back()),
+  onMenu: () => (snakeSimPanel?.root() ? snakeSimPanel.close() : playShell.back()),
+});
+refresh();
 footprint.refresh();
 globalThis.RevealLineToolLaunch?.attached?.();
 globalThis.requestAnimationFrame(frame);

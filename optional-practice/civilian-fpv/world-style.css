@@ -3999,10 +3999,8 @@
   }
 
   /* The handheld viewport uses the same flight/menu state as Academy. */
-  @media (max-width: 760px),
-    (max-height: 600px),
-    (max-width: 1280px) and (max-height: 800px),
-    (pointer: coarse) and (max-width: 1366px) {
+  /* All screen sizes use the same focused flight surface. */
+  @media (min-width: 0px) {
     html body.sim-worlds #world-viewport .handheld-flight-identity {
       position: absolute;
       inset: var(--flight-safe-top) calc(var(--flight-safe-right) + 92px) auto

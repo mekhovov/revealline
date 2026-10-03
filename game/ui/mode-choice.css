@@ -4,14 +4,24 @@
 @layer legacy {
   .game-mode-destinations {
     grid-column: 1 / -1;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px 24px;
+    min-width: 0;
+    font-size: var(--fk-text-secondary, 14px);
+  }
+  .game-mode-destinations > summary {
+    min-height: 44px;
+    align-content: center;
+    cursor: pointer;
+    color: var(--fk-muted, #a5b2bb);
+  }
+  .game-mode-destinations > summary:focus-visible {
+    outline: 2px solid var(--fk-focus, #78dce8);
+    outline-offset: 2px;
   }
   .game-mode-destinations a {
     min-height: 44px;
     display: inline-flex;
     align-items: center;
+    margin-inline-end: 24px;
     color: var(--fk-accent, #f4bf62);
     font-size: var(--fk-text-secondary, 14px);
   }
