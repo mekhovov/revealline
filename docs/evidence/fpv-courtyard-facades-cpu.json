@@ -1,10 +1,10 @@
 {
   "format": "FPVCourtyardFacadeCPU.v1",
-  "createdAt": "2026-10-03T19:07:49.673Z",
-  "baseline": "2dbbe0a0f26684eae0a2bdb0b7cbda087627457f",
-  "candidate": "70d05b34f2a8516b3c3fef62d68fc414a8cec4ab",
-  "visualSha256": "60e46dcefc7ef5f02b8e6f18c29b1a5259e1f5802a0ff36fa2867b5c112f0812",
-  "qualifierSha256": "f840b8a6d0d1f52272ce0981d4ecdb99daed7bccaf22f108957c67634bc19dc2",
+  "createdAt": "2026-10-03T19:23:51.160Z",
+  "baseline": "30574b85092e3ddaa973527608a658dfc8adcd5b",
+  "candidate": "5456cb08df364a43da2c5c159ef5a4c41f92ed40",
+  "visualSha256": "451e42a3714c1d012e9edcdb81a640b854081902b2801c14e3f89ab9f8cda7a9",
+  "qualifierSha256": "8c5b0a145e6d599976971e58a6a92e336c8eba015c13a89d29f88631d59b0faf",
   "immutable": {
     "optional-practice/civilian-fpv/app.mjs": "ae158a1837bbbf14b3276da6b4abfcef5393ddfa0c828a5d89e30cd87263e0de",
     "optional-practice/civilian-fpv/attempts.mjs": "5353e993c615dbb7091ab5d50497db82e71d3970f1587e6bb1398cc565be2494",
@@ -55,7 +55,7 @@
     "optional-practice/civilian-fpv/world-hunt-reactions.mjs": "07a55c4d0018983b2174dfbf7363a584fff8641704a293adb49700147bf86f8d",
     "optional-practice/civilian-fpv/world-model.mjs": "ce94192472f8cc0be1a70ec2dcdf7dc728956f55f589bb84335c851737f54d3e",
     "optional-practice/civilian-fpv/world-progress.mjs": "c7de9e847bc3dbbb8e1aee6da39887ab4778769c33476a428c4186c57b5c845d",
-    "optional-practice/civilian-fpv/world-reaction-runtime.mjs": "fffa90addec3f0007c1d40c2d46a3d2559fa146de9a8d1f9fad0eb1596b8d6cb",
+    "optional-practice/civilian-fpv/world-reaction-runtime.mjs": "b853b250484e91f4ca0fae6660605db134cac87aa47522aea07fd52c7fdbf1e2",
     "optional-practice/civilian-fpv/world-records.mjs": "8fb720ec1a1a1e5cbc7ec5b253d14b6d76d680e6c03dc5f2c92b3e2e407d4c27",
     "optional-practice/civilian-fpv/world-store.mjs": "67aca935d0dd889db2310e2df9a4649d6755901e3d82990905b27ba15dde69b0",
     "optional-practice/civilian-fpv/world-themes.mjs": "67abda8ff53ba18e9aede45c57a8f9ec599dc0ddf7c977ce1d8ad2524e6c5549",
@@ -3865,7 +3865,7 @@
       "quality": "low",
       "appearance": "authored",
       "detailBatches": 6,
-      "detailVertices": 3984,
+      "detailVertices": 5712,
       "resources": 143,
       "beforeResources": {
         "geometries": 97,
@@ -3901,7 +3901,7 @@
       "quality": "low",
       "appearance": "industrial-workshop",
       "detailBatches": 6,
-      "detailVertices": 3984,
+      "detailVertices": 5712,
       "resources": 145,
       "beforeResources": {
         "geometries": 99,
@@ -3919,7 +3919,7 @@
       "quality": "low",
       "appearance": "military-field",
       "detailBatches": 6,
-      "detailVertices": 3984,
+      "detailVertices": 5712,
       "resources": 145,
       "beforeResources": {
         "geometries": 99,
@@ -3937,7 +3937,7 @@
       "quality": "low",
       "appearance": "ember-foundry",
       "detailBatches": 6,
-      "detailVertices": 3984,
+      "detailVertices": 5712,
       "resources": 145,
       "beforeResources": {
         "geometries": 99,
@@ -3955,7 +3955,7 @@
       "quality": "low",
       "appearance": "polar-relay",
       "detailBatches": 6,
-      "detailVertices": 3984,
+      "detailVertices": 5712,
       "resources": 145,
       "beforeResources": {
         "geometries": 99,
@@ -3973,7 +3973,7 @@
       "quality": "low",
       "appearance": "vyshyvanka",
       "detailBatches": 6,
-      "detailVertices": 3984,
+      "detailVertices": 5712,
       "resources": 145,
       "beforeResources": {
         "geometries": 99,
@@ -3991,7 +3991,7 @@
       "quality": "low",
       "appearance": "dnipro-porcelain",
       "detailBatches": 6,
-      "detailVertices": 3984,
+      "detailVertices": 5712,
       "resources": 145,
       "beforeResources": {
         "geometries": 99,
@@ -4009,7 +4009,7 @@
       "quality": "low",
       "appearance": "tryzub",
       "detailBatches": 6,
-      "detailVertices": 3984,
+      "detailVertices": 5712,
       "resources": 145,
       "beforeResources": {
         "geometries": 99,
@@ -4027,7 +4027,7 @@
       "quality": "low",
       "appearance": "windows-classic",
       "detailBatches": 6,
-      "detailVertices": 3984,
+      "detailVertices": 5712,
       "resources": 145,
       "beforeResources": {
         "geometries": 99,
@@ -4045,7 +4045,7 @@
       "quality": "low",
       "appearance": "dos",
       "detailBatches": 6,
-      "detailVertices": 3984,
+      "detailVertices": 5712,
       "resources": 145,
       "beforeResources": {
         "geometries": 99,
@@ -4063,7 +4063,7 @@
       "quality": "low",
       "appearance": "orchard-workshop",
       "detailBatches": 6,
-      "detailVertices": 3984,
+      "detailVertices": 5712,
       "resources": 145,
       "beforeResources": {
         "geometries": 99,
@@ -4081,7 +4081,7 @@
       "quality": "low",
       "appearance": "neon-ruins",
       "detailBatches": 6,
-      "detailVertices": 3984,
+      "detailVertices": 5712,
       "resources": 145,
       "beforeResources": {
         "geometries": 99,
@@ -4099,7 +4099,7 @@
       "quality": "low",
       "appearance": "pocket-lcd",
       "detailBatches": 6,
-      "detailVertices": 3984,
+      "detailVertices": 5712,
       "resources": 145,
       "beforeResources": {
         "geometries": 99,
@@ -4117,7 +4117,7 @@
       "quality": "low",
       "appearance": "copper-observatory",
       "detailBatches": 6,
-      "detailVertices": 3984,
+      "detailVertices": 5712,
       "resources": 145,
       "beforeResources": {
         "geometries": 99,
@@ -4135,7 +4135,7 @@
       "quality": "low",
       "appearance": "sakura-station",
       "detailBatches": 6,
-      "detailVertices": 3984,
+      "detailVertices": 5712,
       "resources": 145,
       "beforeResources": {
         "geometries": 99,
@@ -4153,7 +4153,7 @@
       "quality": "low",
       "appearance": "obsidian-reliquary",
       "detailBatches": 6,
-      "detailVertices": 3984,
+      "detailVertices": 5712,
       "resources": 145,
       "beforeResources": {
         "geometries": 99,
@@ -4171,7 +4171,7 @@
       "quality": "low",
       "appearance": "deep-space",
       "detailBatches": 6,
-      "detailVertices": 3984,
+      "detailVertices": 5712,
       "resources": 145,
       "beforeResources": {
         "geometries": 99,
@@ -4189,7 +4189,7 @@
       "quality": "low",
       "appearance": "moonlit-grove",
       "detailBatches": 6,
-      "detailVertices": 3984,
+      "detailVertices": 5712,
       "resources": 145,
       "beforeResources": {
         "geometries": 99,
@@ -4207,7 +4207,7 @@
       "quality": "balanced",
       "appearance": "authored",
       "detailBatches": 6,
-      "detailVertices": 3984,
+      "detailVertices": 5712,
       "resources": 143,
       "beforeResources": {
         "geometries": 97,
@@ -4243,7 +4243,7 @@
       "quality": "balanced",
       "appearance": "industrial-workshop",
       "detailBatches": 6,
-      "detailVertices": 3984,
+      "detailVertices": 5712,
       "resources": 145,
       "beforeResources": {
         "geometries": 99,
@@ -4261,7 +4261,7 @@
       "quality": "balanced",
       "appearance": "military-field",
       "detailBatches": 6,
-      "detailVertices": 3984,
+      "detailVertices": 5712,
       "resources": 145,
       "beforeResources": {
         "geometries": 99,
@@ -4279,7 +4279,7 @@
       "quality": "balanced",
       "appearance": "ember-foundry",
       "detailBatches": 6,
-      "detailVertices": 3984,
+      "detailVertices": 5712,
       "resources": 145,
       "beforeResources": {
         "geometries": 99,
@@ -4297,7 +4297,7 @@
       "quality": "balanced",
       "appearance": "polar-relay",
       "detailBatches": 6,
-      "detailVertices": 3984,
+      "detailVertices": 5712,
       "resources": 145,
       "beforeResources": {
         "geometries": 99,
@@ -4315,7 +4315,7 @@
       "quality": "balanced",
       "appearance": "vyshyvanka",
       "detailBatches": 6,
-      "detailVertices": 3984,
+      "detailVertices": 5712,
       "resources": 145,
       "beforeResources": {
         "geometries": 99,
@@ -4333,7 +4333,7 @@
       "quality": "balanced",
       "appearance": "dnipro-porcelain",
       "detailBatches": 6,
-      "detailVertices": 3984,
+      "detailVertices": 5712,
       "resources": 145,
       "beforeResources": {
         "geometries": 99,
@@ -4351,7 +4351,7 @@
       "quality": "balanced",
       "appearance": "tryzub",
       "detailBatches": 6,
-      "detailVertices": 3984,
+      "detailVertices": 5712,
       "resources": 145,
       "beforeResources": {
         "geometries": 99,
@@ -4369,7 +4369,7 @@
       "quality": "balanced",
       "appearance": "windows-classic",
       "detailBatches": 6,
-      "detailVertices": 3984,
+      "detailVertices": 5712,
       "resources": 145,
       "beforeResources": {
         "geometries": 99,
@@ -4387,7 +4387,7 @@
       "quality": "balanced",
       "appearance": "dos",
       "detailBatches": 6,
-      "detailVertices": 3984,
+      "detailVertices": 5712,
       "resources": 145,
       "beforeResources": {
         "geometries": 99,
@@ -4405,7 +4405,7 @@
       "quality": "balanced",
       "appearance": "orchard-workshop",
       "detailBatches": 6,
-      "detailVertices": 3984,
+      "detailVertices": 5712,
       "resources": 145,
       "beforeResources": {
         "geometries": 99,
@@ -4423,7 +4423,7 @@
       "quality": "balanced",
       "appearance": "neon-ruins",
       "detailBatches": 6,
-      "detailVertices": 3984,
+      "detailVertices": 5712,
       "resources": 145,
       "beforeResources": {
         "geometries": 99,
@@ -4441,7 +4441,7 @@
       "quality": "balanced",
       "appearance": "pocket-lcd",
       "detailBatches": 6,
-      "detailVertices": 3984,
+      "detailVertices": 5712,
       "resources": 145,
       "beforeResources": {
         "geometries": 99,
@@ -4459,7 +4459,7 @@
       "quality": "balanced",
       "appearance": "copper-observatory",
       "detailBatches": 6,
-      "detailVertices": 3984,
+      "detailVertices": 5712,
       "resources": 145,
       "beforeResources": {
         "geometries": 99,
@@ -4477,7 +4477,7 @@
       "quality": "balanced",
       "appearance": "sakura-station",
       "detailBatches": 6,
-      "detailVertices": 3984,
+      "detailVertices": 5712,
       "resources": 145,
       "beforeResources": {
         "geometries": 99,
@@ -4495,7 +4495,7 @@
       "quality": "balanced",
       "appearance": "obsidian-reliquary",
       "detailBatches": 6,
-      "detailVertices": 3984,
+      "detailVertices": 5712,
       "resources": 145,
       "beforeResources": {
         "geometries": 99,
@@ -4513,7 +4513,7 @@
       "quality": "balanced",
       "appearance": "deep-space",
       "detailBatches": 6,
-      "detailVertices": 3984,
+      "detailVertices": 5712,
       "resources": 145,
       "beforeResources": {
         "geometries": 99,
@@ -4531,7 +4531,7 @@
       "quality": "balanced",
       "appearance": "moonlit-grove",
       "detailBatches": 6,
-      "detailVertices": 3984,
+      "detailVertices": 5712,
       "resources": 145,
       "beforeResources": {
         "geometries": 99,
@@ -4549,7 +4549,7 @@
       "quality": "high",
       "appearance": "authored",
       "detailBatches": 6,
-      "detailVertices": 3984,
+      "detailVertices": 5712,
       "resources": 143,
       "beforeResources": {
         "geometries": 97,
@@ -4585,7 +4585,7 @@
       "quality": "high",
       "appearance": "industrial-workshop",
       "detailBatches": 6,
-      "detailVertices": 3984,
+      "detailVertices": 5712,
       "resources": 145,
       "beforeResources": {
         "geometries": 99,
@@ -4603,7 +4603,7 @@
       "quality": "high",
       "appearance": "military-field",
       "detailBatches": 6,
-      "detailVertices": 3984,
+      "detailVertices": 5712,
       "resources": 145,
       "beforeResources": {
         "geometries": 99,
@@ -4621,7 +4621,7 @@
       "quality": "high",
       "appearance": "ember-foundry",
       "detailBatches": 6,
-      "detailVertices": 3984,
+      "detailVertices": 5712,
       "resources": 145,
       "beforeResources": {
         "geometries": 99,
@@ -4639,7 +4639,7 @@
       "quality": "high",
       "appearance": "polar-relay",
       "detailBatches": 6,
-      "detailVertices": 3984,
+      "detailVertices": 5712,
       "resources": 145,
       "beforeResources": {
         "geometries": 99,
@@ -4657,7 +4657,7 @@
       "quality": "high",
       "appearance": "vyshyvanka",
       "detailBatches": 6,
-      "detailVertices": 3984,
+      "detailVertices": 5712,
       "resources": 145,
       "beforeResources": {
         "geometries": 99,
@@ -4675,7 +4675,7 @@
       "quality": "high",
       "appearance": "dnipro-porcelain",
       "detailBatches": 6,
-      "detailVertices": 3984,
+      "detailVertices": 5712,
       "resources": 145,
       "beforeResources": {
         "geometries": 99,
@@ -4693,7 +4693,7 @@
       "quality": "high",
       "appearance": "tryzub",
       "detailBatches": 6,
-      "detailVertices": 3984,
+      "detailVertices": 5712,
       "resources": 145,
       "beforeResources": {
         "geometries": 99,
@@ -4711,7 +4711,7 @@
       "quality": "high",
       "appearance": "windows-classic",
       "detailBatches": 6,
-      "detailVertices": 3984,
+      "detailVertices": 5712,
       "resources": 145,
       "beforeResources": {
         "geometries": 99,
@@ -4729,7 +4729,7 @@
       "quality": "high",
       "appearance": "dos",
       "detailBatches": 6,
-      "detailVertices": 3984,
+      "detailVertices": 5712,
       "resources": 145,
       "beforeResources": {
         "geometries": 99,
@@ -4747,7 +4747,7 @@
       "quality": "high",
       "appearance": "orchard-workshop",
       "detailBatches": 6,
-      "detailVertices": 3984,
+      "detailVertices": 5712,
       "resources": 145,
       "beforeResources": {
         "geometries": 99,
@@ -4765,7 +4765,7 @@
       "quality": "high",
       "appearance": "neon-ruins",
       "detailBatches": 6,
-      "detailVertices": 3984,
+      "detailVertices": 5712,
       "resources": 145,
       "beforeResources": {
         "geometries": 99,
@@ -4783,7 +4783,7 @@
       "quality": "high",
       "appearance": "pocket-lcd",
       "detailBatches": 6,
-      "detailVertices": 3984,
+      "detailVertices": 5712,
       "resources": 145,
       "beforeResources": {
         "geometries": 99,
@@ -4801,7 +4801,7 @@
       "quality": "high",
       "appearance": "copper-observatory",
       "detailBatches": 6,
-      "detailVertices": 3984,
+      "detailVertices": 5712,
       "resources": 145,
       "beforeResources": {
         "geometries": 99,
@@ -4819,7 +4819,7 @@
       "quality": "high",
       "appearance": "sakura-station",
       "detailBatches": 6,
-      "detailVertices": 3984,
+      "detailVertices": 5712,
       "resources": 145,
       "beforeResources": {
         "geometries": 99,
@@ -4837,7 +4837,7 @@
       "quality": "high",
       "appearance": "obsidian-reliquary",
       "detailBatches": 6,
-      "detailVertices": 3984,
+      "detailVertices": 5712,
       "resources": 145,
       "beforeResources": {
         "geometries": 99,
@@ -4855,7 +4855,7 @@
       "quality": "high",
       "appearance": "deep-space",
       "detailBatches": 6,
-      "detailVertices": 3984,
+      "detailVertices": 5712,
       "resources": 145,
       "beforeResources": {
         "geometries": 99,
@@ -4873,7 +4873,7 @@
       "quality": "high",
       "appearance": "moonlit-grove",
       "detailBatches": 6,
-      "detailVertices": 3984,
+      "detailVertices": 5712,
       "resources": 145,
       "beforeResources": {
         "geometries": 99,
@@ -4891,7 +4891,7 @@
       "quality": "low",
       "appearance": "authored",
       "detailBatches": 6,
-      "detailVertices": 3984,
+      "detailVertices": 5712,
       "resources": 143,
       "beforeResources": {
         "geometries": 97,
@@ -4927,7 +4927,7 @@
       "quality": "low",
       "appearance": "industrial-workshop",
       "detailBatches": 6,
-      "detailVertices": 3984,
+      "detailVertices": 5712,
       "resources": 145,
       "beforeResources": {
         "geometries": 99,
@@ -4945,7 +4945,7 @@
       "quality": "low",
       "appearance": "military-field",
       "detailBatches": 6,
-      "detailVertices": 3984,
+      "detailVertices": 5712,
       "resources": 145,
       "beforeResources": {
         "geometries": 99,
@@ -4963,7 +4963,7 @@
       "quality": "low",
       "appearance": "ember-foundry",
       "detailBatches": 6,
-      "detailVertices": 3984,
+      "detailVertices": 5712,
       "resources": 145,
       "beforeResources": {
         "geometries": 99,
@@ -4981,7 +4981,7 @@
       "quality": "low",
       "appearance": "polar-relay",
       "detailBatches": 6,
-      "detailVertices": 3984,
+      "detailVertices": 5712,
       "resources": 145,
       "beforeResources": {
         "geometries": 99,
@@ -4999,7 +4999,7 @@
       "quality": "low",
       "appearance": "vyshyvanka",
       "detailBatches": 6,
-      "detailVertices": 3984,
+      "detailVertices": 5712,
       "resources": 145,
       "beforeResources": {
         "geometries": 99,
@@ -5017,7 +5017,7 @@
       "quality": "low",
       "appearance": "dnipro-porcelain",
       "detailBatches": 6,
-      "detailVertices": 3984,
+      "detailVertices": 5712,
       "resources": 145,
       "beforeResources": {
         "geometries": 99,
@@ -5035,7 +5035,7 @@
       "quality": "low",
       "appearance": "tryzub",
       "detailBatches": 6,
-      "detailVertices": 3984,
+      "detailVertices": 5712,
       "resources": 145,
       "beforeResources": {
         "geometries": 99,
@@ -5053,7 +5053,7 @@
       "quality": "low",
       "appearance": "windows-classic",
       "detailBatches": 6,
-      "detailVertices": 3984,
+      "detailVertices": 5712,
       "resources": 145,
       "beforeResources": {
         "geometries": 99,
@@ -5071,7 +5071,7 @@
       "quality": "low",
       "appearance": "dos",
       "detailBatches": 6,
-      "detailVertices": 3984,
+      "detailVertices": 5712,
       "resources": 145,
       "beforeResources": {
         "geometries": 99,
@@ -5089,7 +5089,7 @@
       "quality": "low",
       "appearance": "orchard-workshop",
       "detailBatches": 6,
-      "detailVertices": 3984,
+      "detailVertices": 5712,
       "resources": 145,
       "beforeResources": {
         "geometries": 99,
@@ -5107,7 +5107,7 @@
       "quality": "low",
       "appearance": "neon-ruins",
       "detailBatches": 6,
-      "detailVertices": 3984,
+      "detailVertices": 5712,
       "resources": 145,
       "beforeResources": {
         "geometries": 99,
@@ -5125,7 +5125,7 @@
       "quality": "low",
       "appearance": "pocket-lcd",
       "detailBatches": 6,
-      "detailVertices": 3984,
+      "detailVertices": 5712,
       "resources": 145,
       "beforeResources": {
         "geometries": 99,
@@ -5143,7 +5143,7 @@
       "quality": "low",
       "appearance": "copper-observatory",
       "detailBatches": 6,
-      "detailVertices": 3984,
+      "detailVertices": 5712,
       "resources": 145,
       "beforeResources": {
         "geometries": 99,
@@ -5161,7 +5161,7 @@
       "quality": "low",
       "appearance": "sakura-station",
       "detailBatches": 6,
-      "detailVertices": 3984,
+      "detailVertices": 5712,
       "resources": 145,
       "beforeResources": {
         "geometries": 99,
@@ -5179,7 +5179,7 @@
       "quality": "low",
       "appearance": "obsidian-reliquary",
       "detailBatches": 6,
-      "detailVertices": 3984,
+      "detailVertices": 5712,
       "resources": 145,
       "beforeResources": {
         "geometries": 99,
@@ -5197,7 +5197,7 @@
       "quality": "low",
       "appearance": "deep-space",
       "detailBatches": 6,
-      "detailVertices": 3984,
+      "detailVertices": 5712,
       "resources": 145,
       "beforeResources": {
         "geometries": 99,
@@ -5215,7 +5215,7 @@
       "quality": "low",
       "appearance": "moonlit-grove",
       "detailBatches": 6,
-      "detailVertices": 3984,
+      "detailVertices": 5712,
       "resources": 145,
       "beforeResources": {
         "geometries": 99,
@@ -5233,7 +5233,7 @@
       "quality": "balanced",
       "appearance": "authored",
       "detailBatches": 6,
-      "detailVertices": 3984,
+      "detailVertices": 5712,
       "resources": 143,
       "beforeResources": {
         "geometries": 97,
@@ -5269,7 +5269,7 @@
       "quality": "balanced",
       "appearance": "industrial-workshop",
       "detailBatches": 6,
-      "detailVertices": 3984,
+      "detailVertices": 5712,
       "resources": 145,
       "beforeResources": {
         "geometries": 99,
@@ -5287,7 +5287,7 @@
       "quality": "balanced",
       "appearance": "military-field",
       "detailBatches": 6,
-      "detailVertices": 3984,
+      "detailVertices": 5712,
       "resources": 145,
       "beforeResources": {
         "geometries": 99,
@@ -5305,7 +5305,7 @@
       "quality": "balanced",
       "appearance": "ember-foundry",
       "detailBatches": 6,
-      "detailVertices": 3984,
+      "detailVertices": 5712,
       "resources": 145,
       "beforeResources": {
         "geometries": 99,
@@ -5323,7 +5323,7 @@
       "quality": "balanced",
       "appearance": "polar-relay",
       "detailBatches": 6,
-      "detailVertices": 3984,
+      "detailVertices": 5712,
       "resources": 145,
       "beforeResources": {
         "geometries": 99,
@@ -5341,7 +5341,7 @@
       "quality": "balanced",
       "appearance": "vyshyvanka",
       "detailBatches": 6,
-      "detailVertices": 3984,
+      "detailVertices": 5712,
       "resources": 145,
       "beforeResources": {
         "geometries": 99,
@@ -5359,7 +5359,7 @@
       "quality": "balanced",
       "appearance": "dnipro-porcelain",
       "detailBatches": 6,
-      "detailVertices": 3984,
+      "detailVertices": 5712,
       "resources": 145,
       "beforeResources": {
         "geometries": 99,
@@ -5377,7 +5377,7 @@
       "quality": "balanced",
       "appearance": "tryzub",
       "detailBatches": 6,
-      "detailVertices": 3984,
+      "detailVertices": 5712,
       "resources": 145,
       "beforeResources": {
         "geometries": 99,
@@ -5395,7 +5395,7 @@
       "quality": "balanced",
       "appearance": "windows-classic",
       "detailBatches": 6,
-      "detailVertices": 3984,
+      "detailVertices": 5712,
       "resources": 145,
       "beforeResources": {
         "geometries": 99,
@@ -5413,7 +5413,7 @@
       "quality": "balanced",
       "appearance": "dos",
       "detailBatches": 6,
-      "detailVertices": 3984,
+      "detailVertices": 5712,
       "resources": 145,
       "beforeResources": {
         "geometries": 99,
@@ -5431,7 +5431,7 @@
       "quality": "balanced",
       "appearance": "orchard-workshop",
       "detailBatches": 6,
-      "detailVertices": 3984,
+      "detailVertices": 5712,
       "resources": 145,
       "beforeResources": {
         "geometries": 99,
@@ -5449,7 +5449,7 @@
       "quality": "balanced",
       "appearance": "neon-ruins",
       "detailBatches": 6,
-      "detailVertices": 3984,
+      "detailVertices": 5712,
       "resources": 145,
       "beforeResources": {
         "geometries": 99,
@@ -5467,7 +5467,7 @@
       "quality": "balanced",
       "appearance": "pocket-lcd",
       "detailBatches": 6,
-      "detailVertices": 3984,
+      "detailVertices": 5712,
       "resources": 145,
       "beforeResources": {
         "geometries": 99,
@@ -5485,7 +5485,7 @@
       "quality": "balanced",
       "appearance": "copper-observatory",
       "detailBatches": 6,
-      "detailVertices": 3984,
+      "detailVertices": 5712,
       "resources": 145,
       "beforeResources": {
         "geometries": 99,
@@ -5503,7 +5503,7 @@
       "quality": "balanced",
       "appearance": "sakura-station",
       "detailBatches": 6,
-      "detailVertices": 3984,
+      "detailVertices": 5712,
       "resources": 145,
       "beforeResources": {
         "geometries": 99,
@@ -5521,7 +5521,7 @@
       "quality": "balanced",
       "appearance": "obsidian-reliquary",
       "detailBatches": 6,
-      "detailVertices": 3984,
+      "detailVertices": 5712,
       "resources": 145,
       "beforeResources": {
         "geometries": 99,
@@ -5539,7 +5539,7 @@
       "quality": "balanced",
       "appearance": "deep-space",
       "detailBatches": 6,
-      "detailVertices": 3984,
+      "detailVertices": 5712,
       "resources": 145,
       "beforeResources": {
         "geometries": 99,
@@ -5557,7 +5557,7 @@
       "quality": "balanced",
       "appearance": "moonlit-grove",
       "detailBatches": 6,
-      "detailVertices": 3984,
+      "detailVertices": 5712,
       "resources": 145,
       "beforeResources": {
         "geometries": 99,
@@ -5575,7 +5575,7 @@
       "quality": "high",
       "appearance": "authored",
       "detailBatches": 6,
-      "detailVertices": 3984,
+      "detailVertices": 5712,
       "resources": 143,
       "beforeResources": {
         "geometries": 97,
@@ -5611,7 +5611,7 @@
       "quality": "high",
       "appearance": "industrial-workshop",
       "detailBatches": 6,
-      "detailVertices": 3984,
+      "detailVertices": 5712,
       "resources": 145,
       "beforeResources": {
         "geometries": 99,
@@ -5629,7 +5629,7 @@
       "quality": "high",
       "appearance": "military-field",
       "detailBatches": 6,
-      "detailVertices": 3984,
+      "detailVertices": 5712,
       "resources": 145,
       "beforeResources": {
         "geometries": 99,
@@ -5647,7 +5647,7 @@
       "quality": "high",
       "appearance": "ember-foundry",
       "detailBatches": 6,
-      "detailVertices": 3984,
+      "detailVertices": 5712,
       "resources": 145,
       "beforeResources": {
         "geometries": 99,
@@ -5665,7 +5665,7 @@
       "quality": "high",
       "appearance": "polar-relay",
       "detailBatches": 6,
-      "detailVertices": 3984,
+      "detailVertices": 5712,
       "resources": 145,
       "beforeResources": {
         "geometries": 99,
@@ -5683,7 +5683,7 @@
       "quality": "high",
       "appearance": "vyshyvanka",
       "detailBatches": 6,
-      "detailVertices": 3984,
+      "detailVertices": 5712,
       "resources": 145,
       "beforeResources": {
         "geometries": 99,
@@ -5701,7 +5701,7 @@
       "quality": "high",
       "appearance": "dnipro-porcelain",
       "detailBatches": 6,
-      "detailVertices": 3984,
+      "detailVertices": 5712,
       "resources": 145,
       "beforeResources": {
         "geometries": 99,
@@ -5719,7 +5719,7 @@
       "quality": "high",
       "appearance": "tryzub",
       "detailBatches": 6,
-      "detailVertices": 3984,
+      "detailVertices": 5712,
       "resources": 145,
       "beforeResources": {
         "geometries": 99,
@@ -5737,7 +5737,7 @@
       "quality": "high",
       "appearance": "windows-classic",
       "detailBatches": 6,
-      "detailVertices": 3984,
+      "detailVertices": 5712,
       "resources": 145,
       "beforeResources": {
         "geometries": 99,
@@ -5755,7 +5755,7 @@
       "quality": "high",
       "appearance": "dos",
       "detailBatches": 6,
-      "detailVertices": 3984,
+      "detailVertices": 5712,
       "resources": 145,
       "beforeResources": {
         "geometries": 99,
@@ -5773,7 +5773,7 @@
       "quality": "high",
       "appearance": "orchard-workshop",
       "detailBatches": 6,
-      "detailVertices": 3984,
+      "detailVertices": 5712,
       "resources": 145,
       "beforeResources": {
         "geometries": 99,
@@ -5791,7 +5791,7 @@
       "quality": "high",
       "appearance": "neon-ruins",
       "detailBatches": 6,
-      "detailVertices": 3984,
+      "detailVertices": 5712,
       "resources": 145,
       "beforeResources": {
         "geometries": 99,
@@ -5809,7 +5809,7 @@
       "quality": "high",
       "appearance": "pocket-lcd",
       "detailBatches": 6,
-      "detailVertices": 3984,
+      "detailVertices": 5712,
       "resources": 145,
       "beforeResources": {
         "geometries": 99,
@@ -5827,7 +5827,7 @@
       "quality": "high",
       "appearance": "copper-observatory",
       "detailBatches": 6,
-      "detailVertices": 3984,
+      "detailVertices": 5712,
       "resources": 145,
       "beforeResources": {
         "geometries": 99,
@@ -5845,7 +5845,7 @@
       "quality": "high",
       "appearance": "sakura-station",
       "detailBatches": 6,
-      "detailVertices": 3984,
+      "detailVertices": 5712,
       "resources": 145,
       "beforeResources": {
         "geometries": 99,
@@ -5863,7 +5863,7 @@
       "quality": "high",
       "appearance": "obsidian-reliquary",
       "detailBatches": 6,
-      "detailVertices": 3984,
+      "detailVertices": 5712,
       "resources": 145,
       "beforeResources": {
         "geometries": 99,
@@ -5881,7 +5881,7 @@
       "quality": "high",
       "appearance": "deep-space",
       "detailBatches": 6,
-      "detailVertices": 3984,
+      "detailVertices": 5712,
       "resources": 145,
       "beforeResources": {
         "geometries": 99,
@@ -5899,7 +5899,7 @@
       "quality": "high",
       "appearance": "moonlit-grove",
       "detailBatches": 6,
-      "detailVertices": 3984,
+      "detailVertices": 5712,
       "resources": 145,
       "beforeResources": {
         "geometries": 99,
@@ -5917,7 +5917,7 @@
       "quality": "low",
       "appearance": "authored",
       "detailBatches": 6,
-      "detailVertices": 3984,
+      "detailVertices": 5712,
       "resources": 143,
       "beforeResources": {
         "geometries": 97,
@@ -5953,7 +5953,7 @@
       "quality": "low",
       "appearance": "industrial-workshop",
       "detailBatches": 6,
-      "detailVertices": 3984,
+      "detailVertices": 5712,
       "resources": 145,
       "beforeResources": {
         "geometries": 99,
@@ -5971,7 +5971,7 @@
       "quality": "low",
       "appearance": "military-field",
       "detailBatches": 6,
-      "detailVertices": 3984,
+      "detailVertices": 5712,
       "resources": 145,
       "beforeResources": {
         "geometries": 99,
@@ -5989,7 +5989,7 @@
       "quality": "low",
       "appearance": "ember-foundry",
       "detailBatches": 6,
-      "detailVertices": 3984,
+      "detailVertices": 5712,
       "resources": 145,
       "beforeResources": {
         "geometries": 99,
@@ -6007,7 +6007,7 @@
       "quality": "low",
       "appearance": "polar-relay",
       "detailBatches": 6,
-      "detailVertices": 3984,
+      "detailVertices": 5712,
       "resources": 145,
       "beforeResources": {
         "geometries": 99,
@@ -6025,7 +6025,7 @@
       "quality": "low",
       "appearance": "vyshyvanka",
       "detailBatches": 6,
-      "detailVertices": 3984,
+      "detailVertices": 5712,
       "resources": 145,
       "beforeResources": {
         "geometries": 99,
@@ -6043,7 +6043,7 @@
       "quality": "low",
       "appearance": "dnipro-porcelain",
       "detailBatches": 6,
-      "detailVertices": 3984,
+      "detailVertices": 5712,
       "resources": 145,
       "beforeResources": {
         "geometries": 99,
@@ -6061,7 +6061,7 @@
       "quality": "low",
       "appearance": "tryzub",
       "detailBatches": 6,
-      "detailVertices": 3984,
+      "detailVertices": 5712,
       "resources": 145,
       "beforeResources": {
         "geometries": 99,
@@ -6079,7 +6079,7 @@
       "quality": "low",
       "appearance": "windows-classic",
       "detailBatches": 6,
-      "detailVertices": 3984,
+      "detailVertices": 5712,
       "resources": 145,
       "beforeResources": {
         "geometries": 99,
@@ -6097,7 +6097,7 @@
       "quality": "low",
       "appearance": "dos",
       "detailBatches": 6,
-      "detailVertices": 3984,
+      "detailVertices": 5712,
       "resources": 145,
       "beforeResources": {
         "geometries": 99,
@@ -6115,7 +6115,7 @@
       "quality": "low",
       "appearance": "orchard-workshop",
       "detailBatches": 6,
-      "detailVertices": 3984,
+      "detailVertices": 5712,
       "resources": 145,
       "beforeResources": {
         "geometries": 99,
@@ -6133,7 +6133,7 @@
       "quality": "low",
       "appearance": "neon-ruins",
       "detailBatches": 6,
-      "detailVertices": 3984,
+      "detailVertices": 5712,
       "resources": 145,
       "beforeResources": {
         "geometries": 99,
@@ -6151,7 +6151,7 @@
       "quality": "low",
       "appearance": "pocket-lcd",
       "detailBatches": 6,
-      "detailVertices": 3984,
+      "detailVertices": 5712,
       "resources": 145,
       "beforeResources": {
         "geometries": 99,
@@ -6169,7 +6169,7 @@
       "quality": "low",
       "appearance": "copper-observatory",
       "detailBatches": 6,
-      "detailVertices": 3984,
+      "detailVertices": 5712,
       "resources": 145,
       "beforeResources": {
         "geometries": 99,
@@ -6187,7 +6187,7 @@
       "quality": "low",
       "appearance": "sakura-station",
       "detailBatches": 6,
-      "detailVertices": 3984,
+      "detailVertices": 5712,
       "resources": 145,
       "beforeResources": {
         "geometries": 99,
@@ -6205,7 +6205,7 @@
       "quality": "low",
       "appearance": "obsidian-reliquary",
       "detailBatches": 6,
-      "detailVertices": 3984,
+      "detailVertices": 5712,
       "resources": 145,
       "beforeResources": {
         "geometries": 99,
@@ -6223,7 +6223,7 @@
       "quality": "low",
       "appearance": "deep-space",
       "detailBatches": 6,
-      "detailVertices": 3984,
+      "detailVertices": 5712,
       "resources": 145,
       "beforeResources": {
         "geometries": 99,
@@ -6241,7 +6241,7 @@
       "quality": "low",
       "appearance": "moonlit-grove",
       "detailBatches": 6,
-      "detailVertices": 3984,
+      "detailVertices": 5712,
       "resources": 145,
       "beforeResources": {
         "geometries": 99,
@@ -6259,7 +6259,7 @@
       "quality": "balanced",
       "appearance": "authored",
       "detailBatches": 6,
-      "detailVertices": 3984,
+      "detailVertices": 5712,
       "resources": 143,
       "beforeResources": {
         "geometries": 97,
@@ -6295,7 +6295,7 @@
       "quality": "balanced",
       "appearance": "industrial-workshop",
       "detailBatches": 6,
-      "detailVertices": 3984,
+      "detailVertices": 5712,
       "resources": 145,
       "beforeResources": {
         "geometries": 99,
@@ -6313,7 +6313,7 @@
       "quality": "balanced",
       "appearance": "military-field",
       "detailBatches": 6,
-      "detailVertices": 3984,
+      "detailVertices": 5712,
       "resources": 145,
       "beforeResources": {
         "geometries": 99,
@@ -6331,7 +6331,7 @@
       "quality": "balanced",
       "appearance": "ember-foundry",
       "detailBatches": 6,
-      "detailVertices": 3984,
+      "detailVertices": 5712,
       "resources": 145,
       "beforeResources": {
         "geometries": 99,
@@ -6349,7 +6349,7 @@
       "quality": "balanced",
       "appearance": "polar-relay",
       "detailBatches": 6,
-      "detailVertices": 3984,
+      "detailVertices": 5712,
       "resources": 145,
       "beforeResources": {
         "geometries": 99,
@@ -6367,7 +6367,7 @@
       "quality": "balanced",
       "appearance": "vyshyvanka",
       "detailBatches": 6,
-      "detailVertices": 3984,
+      "detailVertices": 5712,
       "resources": 145,
       "beforeResources": {
         "geometries": 99,
@@ -6385,7 +6385,7 @@
       "quality": "balanced",
       "appearance": "dnipro-porcelain",
       "detailBatches": 6,
-      "detailVertices": 3984,
+      "detailVertices": 5712,
       "resources": 145,
       "beforeResources": {
         "geometries": 99,
@@ -6403,7 +6403,7 @@
       "quality": "balanced",
       "appearance": "tryzub",
       "detailBatches": 6,
-      "detailVertices": 3984,
+      "detailVertices": 5712,
       "resources": 145,
       "beforeResources": {
         "geometries": 99,
@@ -6421,7 +6421,7 @@
       "quality": "balanced",
       "appearance": "windows-classic",
       "detailBatches": 6,
-      "detailVertices": 3984,
+      "detailVertices": 5712,
       "resources": 145,
       "beforeResources": {
         "geometries": 99,
@@ -6439,7 +6439,7 @@
       "quality": "balanced",
       "appearance": "dos",
       "detailBatches": 6,
-      "detailVertices": 3984,
+      "detailVertices": 5712,
       "resources": 145,
       "beforeResources": {
         "geometries": 99,
@@ -6457,7 +6457,7 @@
       "quality": "balanced",
       "appearance": "orchard-workshop",
       "detailBatches": 6,
-      "detailVertices": 3984,
+      "detailVertices": 5712,
       "resources": 145,
       "beforeResources": {
         "geometries": 99,
@@ -6475,7 +6475,7 @@
       "quality": "balanced",
       "appearance": "neon-ruins",
       "detailBatches": 6,
-      "detailVertices": 3984,
+      "detailVertices": 5712,
       "resources": 145,
       "beforeResources": {
         "geometries": 99,
@@ -6493,7 +6493,7 @@
       "quality": "balanced",
       "appearance": "pocket-lcd",
       "detailBatches": 6,
-      "detailVertices": 3984,
+      "detailVertices": 5712,
       "resources": 145,
       "beforeResources": {
         "geometries": 99,
@@ -6511,7 +6511,7 @@
       "quality": "balanced",
       "appearance": "copper-observatory",
       "detailBatches": 6,
-      "detailVertices": 3984,
+      "detailVertices": 5712,
       "resources": 145,
       "beforeResources": {
         "geometries": 99,
@@ -6529,7 +6529,7 @@
       "quality": "balanced",
       "appearance": "sakura-station",
       "detailBatches": 6,
-      "detailVertices": 3984,
+      "detailVertices": 5712,
       "resources": 145,
       "beforeResources": {
         "geometries": 99,
@@ -6547,7 +6547,7 @@
       "quality": "balanced",
       "appearance": "obsidian-reliquary",
       "detailBatches": 6,
-      "detailVertices": 3984,
+      "detailVertices": 5712,
       "resources": 145,
       "beforeResources": {
         "geometries": 99,
@@ -6565,7 +6565,7 @@
       "quality": "balanced",
       "appearance": "deep-space",
       "detailBatches": 6,
-      "detailVertices": 3984,
+      "detailVertices": 5712,
       "resources": 145,
       "beforeResources": {
         "geometries": 99,
@@ -6583,7 +6583,7 @@
       "quality": "balanced",
       "appearance": "moonlit-grove",
       "detailBatches": 6,
-      "detailVertices": 3984,
+      "detailVertices": 5712,
       "resources": 145,
       "beforeResources": {
         "geometries": 99,
@@ -6601,7 +6601,7 @@
       "quality": "high",
       "appearance": "authored",
       "detailBatches": 6,
-      "detailVertices": 3984,
+      "detailVertices": 5712,
       "resources": 143,
       "beforeResources": {
         "geometries": 97,
@@ -6637,7 +6637,7 @@
       "quality": "high",
       "appearance": "industrial-workshop",
       "detailBatches": 6,
-      "detailVertices": 3984,
+      "detailVertices": 5712,
       "resources": 145,
       "beforeResources": {
         "geometries": 99,
@@ -6655,7 +6655,7 @@
       "quality": "high",
       "appearance": "military-field",
       "detailBatches": 6,
-      "detailVertices": 3984,
+      "detailVertices": 5712,
       "resources": 145,
       "beforeResources": {
         "geometries": 99,
@@ -6673,7 +6673,7 @@
       "quality": "high",
       "appearance": "ember-foundry",
       "detailBatches": 6,
-      "detailVertices": 3984,
+      "detailVertices": 5712,
       "resources": 145,
       "beforeResources": {
         "geometries": 99,
@@ -6691,7 +6691,7 @@
       "quality": "high",
       "appearance": "polar-relay",
       "detailBatches": 6,
-      "detailVertices": 3984,
+      "detailVertices": 5712,
       "resources": 145,
       "beforeResources": {
         "geometries": 99,
@@ -6709,7 +6709,7 @@
       "quality": "high",
       "appearance": "vyshyvanka",
       "detailBatches": 6,
-      "detailVertices": 3984,
+      "detailVertices": 5712,
       "resources": 145,
       "beforeResources": {
         "geometries": 99,
@@ -6727,7 +6727,7 @@
       "quality": "high",
       "appearance": "dnipro-porcelain",
       "detailBatches": 6,
-      "detailVertices": 3984,
+      "detailVertices": 5712,
       "resources": 145,
       "beforeResources": {
         "geometries": 99,
@@ -6745,7 +6745,7 @@
       "quality": "high",
       "appearance": "tryzub",
       "detailBatches": 6,
-      "detailVertices": 3984,
+      "detailVertices": 5712,
       "resources": 145,
       "beforeResources": {
         "geometries": 99,
@@ -6763,7 +6763,7 @@
       "quality": "high",
       "appearance": "windows-classic",
       "detailBatches": 6,
-      "detailVertices": 3984,
+      "detailVertices": 5712,
       "resources": 145,
       "beforeResources": {
         "geometries": 99,
@@ -6781,7 +6781,7 @@
       "quality": "high",
       "appearance": "dos",
       "detailBatches": 6,
-      "detailVertices": 3984,
+      "detailVertices": 5712,
       "resources": 145,
       "beforeResources": {
         "geometries": 99,
@@ -6799,7 +6799,7 @@
       "quality": "high",
       "appearance": "orchard-workshop",
       "detailBatches": 6,
-      "detailVertices": 3984,
+      "detailVertices": 5712,
       "resources": 145,
       "beforeResources": {
         "geometries": 99,
@@ -6817,7 +6817,7 @@
       "quality": "high",
       "appearance": "neon-ruins",
       "detailBatches": 6,
-      "detailVertices": 3984,
+      "detailVertices": 5712,
       "resources": 145,
       "beforeResources": {
         "geometries": 99,
@@ -6835,7 +6835,7 @@
       "quality": "high",
       "appearance": "pocket-lcd",
       "detailBatches": 6,
-      "detailVertices": 3984,
+      "detailVertices": 5712,
       "resources": 145,
       "beforeResources": {
         "geometries": 99,
@@ -6853,7 +6853,7 @@
       "quality": "high",
       "appearance": "copper-observatory",
       "detailBatches": 6,
-      "detailVertices": 3984,
+      "detailVertices": 5712,
       "resources": 145,
       "beforeResources": {
         "geometries": 99,
@@ -6871,7 +6871,7 @@
       "quality": "high",
       "appearance": "sakura-station",
       "detailBatches": 6,
-      "detailVertices": 3984,
+      "detailVertices": 5712,
       "resources": 145,
       "beforeResources": {
         "geometries": 99,
@@ -6889,7 +6889,7 @@
       "quality": "high",
       "appearance": "obsidian-reliquary",
       "detailBatches": 6,
-      "detailVertices": 3984,
+      "detailVertices": 5712,
       "resources": 145,
       "beforeResources": {
         "geometries": 99,
@@ -6907,7 +6907,7 @@
       "quality": "high",
       "appearance": "deep-space",
       "detailBatches": 6,
-      "detailVertices": 3984,
+      "detailVertices": 5712,
       "resources": 145,
       "beforeResources": {
         "geometries": 99,
@@ -6925,7 +6925,7 @@
       "quality": "high",
       "appearance": "moonlit-grove",
       "detailBatches": 6,
-      "detailVertices": 3984,
+      "detailVertices": 5712,
       "resources": 145,
       "beforeResources": {
         "geometries": 99,
