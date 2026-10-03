@@ -43,6 +43,21 @@
 <p id="status">Prepared; not run. Keep the tab visible and run alone.</p>
 <iframe id="baseline" title="Baseline renderer"></iframe
 ><iframe id="candidate" title="Candidate renderer"></iframe>
+<section id="retained" hidden>
+  <h2>Retained comparison</h2>
+  <label
+    >View
+    <select id="view" aria-label="Retained comparison view"></select
+  ></label>
+  <p>
+    Baseline (left), candidate (right). These are captured pixels from the checked frames, retained
+    after WebGL disposal.
+  </p>
+  <div style="display: flex; gap: 8px">
+    <canvas id="before-image" width="640" height="360" style="width: 49%; height: auto"></canvas
+    ><canvas id="after-image" width="640" height="360" style="width: 49%; height: auto"></canvas>
+  </div>
+</section>
 <pre id="summary">No run yet.</pre>
 <label
   >Full read-only receipt<textarea
@@ -56,7 +71,24 @@ No run yet.</textarea
 <script type="module">
   const $ = (id) => document.getElementById(id),
     receipt = { format: 'fpv-environment-light-browser.v1', pairs: [], errors: [], visibility: [] },
-    captures = new Map();
+    captures = new Map(),
+    retained = new Map();
+  function paintRetained() {
+    const row = retained.get($('view').value);
+    if (!row) return;
+    for (const [id, pixels] of [
+      ['before-image', row.before],
+      ['after-image', row.after],
+    ]) {
+      const flipped = new Uint8ClampedArray(pixels.length);
+      for (let y = 0; y < 360; y++)
+        flipped.set(pixels.subarray(y * 640 * 4, (y + 1) * 640 * 4), (359 - y) * 640 * 4);
+      $(id)
+        .getContext('2d')
+        .putImageData(new ImageData(flipped, 640, 360), 0, 0);
+    }
+  }
+  $('view').onchange = paintRetained;
   const digest = async (b) =>
     [...new Uint8Array(await crypto.subtle.digest('SHA-256', b))]
       .map((x) => x.toString(16).padStart(2, '0'))
@@ -130,6 +162,18 @@ No run yet.</textarea
                 baseline: before.meta,
                 candidate: m.meta,
               });
+              if (m.key.startsWith('2/') && m.key.endsWith('/high')) {
+                if (a.length !== 640 * 360 * 4 || retained.size >= 12)
+                  throw Error('Retained image bound violated');
+                retained.set(m.key, { before: a, after: b });
+                const option = document.createElement('option');
+                option.value = m.key;
+                option.textContent = m.key;
+                $('view').append(option);
+                $('retained').hidden = false;
+                if (m.key === '2/school-fallback/high') $('view').value = m.key;
+                paintRetained();
+              }
               captures.delete(m.key);
             })();
             pending.push(work);
@@ -174,6 +218,12 @@ No run yet.</textarea
       receipt.pass = false;
     } finally {
       receipt.finishedAt = new Date().toISOString();
+      receipt.retainedImageKeys = [...retained.keys()];
+      if (retained.size) {
+        $('baseline').hidden = true;
+        $('candidate').hidden = true;
+        paintRetained();
+      }
       $('status').textContent = receipt.pass
         ? 'PASS — full receipt ready'
         : 'Review required — full receipt ready';
