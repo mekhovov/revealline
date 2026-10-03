@@ -62,7 +62,9 @@ The frozen source fixture is
 `dist/fpv-courtyard-facades-verification-source-v4-guarded`. Its before side uses
 main `2dbbe0a0f26684eae0a2bdb0b7cbda087627457f`; the reaction whitespace repair is
 outside the 31-module rendering closure. It uses the actual flight renderer and
-imported GLB scenery. In addition to image, resource and geometry checks, it rays
+procedural fallback scenery. The actual player observation below covers imported
+GLB scenery; the static harness does not load it. In addition to image, resource
+and geometry checks, it rays
 every vertex of the actual old window meshes to require coverage by the new
 front layer.
 
