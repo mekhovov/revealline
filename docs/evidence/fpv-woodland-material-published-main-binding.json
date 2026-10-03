@@ -1,0 +1,13 @@
+{
+  "format": "FPVWoodlandMaterialPublishedMainBinding.v1",
+  "candidate": "843debcdd5ff959d15a3374580791eb434fcabaa",
+  "integratedMain": "b02ca5a62b8d5ca31550c347adfd275aaf8d8093",
+  "previouslyAdmittedCandidate": "3f247a5bb80227d7c79c15b765def7d5d20a5bf6",
+  "browserCandidate": "9a3cae0886a1712deb09ed97e9ad23246c56d6a2",
+  "allOriginalInputBytesExact": true,
+  "originalInputs": 95,
+  "originalInputBytes": 16737060,
+  "sourceInventorySha256": "229ee4f12ad1ea1796f84d834e9928a851031b6cd7e2bc4daecb38b757026a20",
+  "runtimeAndBuildCodeChangeSinceAdmission": false,
+  "qualification": "The ordinary main merge changes ancestry only. All 95 admitted original input byte hashes match this committed candidate. Historical admission/browser receipts retain their original identities; normal exact-head CI will independently qualify publication."
+}
