@@ -2528,3 +2528,17 @@ inputs/ZIP members and two identical builds. Source validate/lint/syntax/format
 pass. Packaged Container survey launches, verifies its recording and resumes
 actual WebGL playback without rewards. Next publication is the focused art PR;
 Stadium/Garage and the broader14-world asset pass remain planned, not completed.
+
+### Visual increment published — 3 October 2026
+
+[PR #987](https://github.com/mekhovov/revealline/pull/987) is published and attached,
+initial head e1cf7dbe4, milestone57. It is independent of controls #986 against
+main4fada3958. Packaged Container survey completed its57.3-second verified
+playback through the actual WebGL player; it awarded no rewards. Art source/package
+90/90, CPU109/109 and all three frozen admissions remain green. Broader world
+art, named-device FPS and human qualification remain open.
+
+A separate local integration branch may combine #986/#987 solely to build the
+user's combined playtest. Do not push that merge into either focused PR. Continue
+Stadium/Garage on current main or an explicit dependent branch, preserving these
+ready candidates and all existing proof identities.
