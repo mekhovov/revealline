@@ -1,0 +1,830 @@
+<!doctype html>
+<meta charset="utf-8" />
+<title>D1 bounded transition profiler</title>
+<style>
+  body {
+    margin: 22px;
+    background: #111c26;
+    color: #eaf1eb;
+    font: 15px system-ui;
+  }
+  p {
+    max-width: 95ch;
+  }
+  button,
+  select {
+    font: inherit;
+    padding: 9px;
+    margin-right: 8px;
+  }
+  canvas {
+    display: block;
+    width: 640px;
+    height: 360px;
+    margin-top: 14px;
+  }
+  pre {
+    white-space: pre-wrap;
+    max-height: 34vh;
+    overflow: auto;
+  }
+</style>
+<h1>D1 bounded transition profiler</h1>
+<p>
+  Frozen e572 production renderer. Three cycles of Yard imported → Yard fallback
+  → Woodland School imported → Woodland School fallback; low/balanced/high in
+  each. One overview camera and three draws per quality. The original
+  90-configuration matrix is not repeated. Run alone, visible, after other GPU
+  work finishes.
+</p>
+<p>
+  Wall timings, long tasks and callback heartbeats identify candidate
+  bottlenecks. They are not GPU timing, hardware FPS or a performance acceptance
+  test. Full input hashes are checked. No production file is modified.
+</p>
+<select id="mode">
+  <option value="detailed">Detailed Three/loading wrappers</option>
+  <option value="outer">Outer wall timings only</option>
+</select>
+<button id="run">Run bounded profile</button
+><button id="download" disabled>Download full receipt</button>
+<p id="status">Prepared, not executed. Keep this tab visible.</p>
+<canvas id="canvas" width="640" height="360"></canvas>
+<pre id="summary">No run yet.</pre>
+<label for="full-receipt"
+  >Full receipt (read-only; populated when the run ends)</label
+>
+<textarea
+  id="full-receipt"
+  aria-label="Full profile receipt"
+  readonly
+  spellcheck="false"
+  style="display: block; width: 96%; height: 220px; margin-top: 8px"
+>
+No run yet.</textarea
+>
+<script type="module">
+  const SOURCE = {
+    sourceHead: "e572026ba357f3194bf47e7137a0817cacb1a640",
+    sourceTree: "6a90e48f99151041d899b4b8d6b2de5fcffd8b2f",
+    sourceMode: "committed-source",
+    verifiedProjections: [],
+    sourceFiles: {
+      "/optional-practice/civilian-fpv/world-model.mjs":
+        "ce94192472f8cc0be1a70ec2dcdf7dc728956f55f589bb84335c851737f54d3e",
+      "/game/data-json.mjs":
+        "9ce33d6173f3cba8587ed7a7f1924c66e9d9c86ffa59b37a743764ea0b01f7bd",
+      "/game/i18n/index.mjs":
+        "29f40a6d92826ced1eb53283ed32e342ac6e95920abbf8d549f2d78e65b48d07",
+      "/game/vendor/i18next-26.4.2.min.js":
+        "eb0dd6d72e8f756b90faf864853af2a17870fe97b54473b7c34494870c65901c",
+      "/game/i18n/catalogs.mjs":
+        "15a52267d8df3f90334f59084247d4a183c6e190e7460cdb6cc3464d29f8c75a",
+      "/game/i18n/bootstrap.mjs":
+        "242e4791b2202d2644b91df5aa76355019890525af774ee2e795c937988b0395",
+      "/optional-practice/civilian-fpv/radio-profile.mjs":
+        "f588fd5cda96ed9627a483f49ca843ace8d99a68fae42b0a4239c2cd0ab81933",
+      "/optional-practice/civilian-fpv/math.mjs":
+        "555c8b6ea170b46992133507d2a3d867f06185bca060239cab7db9c9b87f9f98",
+      "/optional-practice/civilian-fpv/rotation-table.mjs":
+        "2ddab304ac99a2e70fc7e84fc6c27eedb49f1f3dac976baed680effa659cef41",
+      "/optional-practice/civilian-fpv/model.mjs":
+        "9e4cd11cfdde2dd43b437069b8cb7a359a8132495db806cb5f68e8674d48aaf6",
+      "/optional-practice/civilian-fpv/flight-sectors.mjs":
+        "5b1b54bde4e578e61da7d59f4a80a86db9aafbc78b4523d2ba2b540277a0a16d",
+      "/optional-practice/civilian-fpv/world-themes.mjs":
+        "67abda8ff53ba18e9aede45c57a8f9ec599dc0ddf7c977ce1d8ad2524e6c5549",
+      "/game/presentation/theme-system.mjs":
+        "317e107e509f94449050c52f1756bd8436691f0d92bb8185aed697b3ba3127d6",
+      "/optional-practice/civilian-fpv/snake-hunt.mjs":
+        "39ce47e8aaae6d7f3e70b8708d52fe2d22e90119318383f8298d8d0c4cc568da",
+      "/optional-practice/civilian-fpv/world-collision.mjs":
+        "2899c7c84f9eae14b9a3434f585a8e873f4a1361e8f3ce4026ef27f44bdeef32",
+      "/optional-practice/civilian-fpv/vendor/rapier/rapier.mjs":
+        "02dc6a4e2fffc013bab08fbb44fa68f501d8303615e9afe4c7d89ad4eedda0d0",
+      "/optional-practice/civilian-fpv/world-catalogue.mjs":
+        "14f8523c829e9bdfdf8db5efb59169075be6045425222c615b846817694d24cc",
+      "/optional-practice/civilian-fpv/catalogue.mjs":
+        "98338353d17eb585414538c9905040752fd5cd6699c48b17fa1706832b750997",
+      "/optional-practice/civilian-fpv/snake-hunt-catalogue.mjs":
+        "a77f55d138fadd3642ae4cd20326d6f9ab8fc9fdce34a2497d6741b51ea3897a",
+      "/optional-practice/civilian-fpv/expressive-hunt-courses.mjs":
+        "732c6d72dded07e7541965b3c250cfe339dd98ea49d22d2085b856cb869b9ede",
+      "/optional-practice/civilian-fpv/world-assets.mjs":
+        "2670f199445373f9633ae259a046b704bcc5512887376e2498ab2e8e0055607e",
+      "/optional-practice/civilian-fpv/renderer.mjs":
+        "0fa5a05706705fd6128d13b18a4714c7a8010bdfc2adc6ed96d7b43906647a75",
+      "/optional-practice/civilian-fpv/vendor/three.module.js":
+        "9052042d676cb0fdc1ddfefe193053f34b7ac0513a616fdac4535d49987812ea",
+      "/optional-practice/civilian-fpv/vendor/three.core.js":
+        "9edde002b066a9a05676a6127f67735b62baf399bdea529f2f7e31657da769e6",
+      "/game/hunt/actor-catalog.mjs":
+        "a9d232092d58262ccd1008577b27ef8a99cb41abf8e3e962a2f34f3b8bc0df92",
+      "/game/hunt/preferences.mjs":
+        "1dcc93e3b50f8964150731f97c22335d73aae413114712c0528b012acabb4324",
+      "/optional-practice/civilian-fpv/world-visuals.mjs":
+        "640107863d738020223ed42c8654c533e40cea31b34355543c2b1809e417ea9b",
+      "/optional-practice/civilian-fpv/vendor/addons/loaders/GLTFLoader.js":
+        "03952cb129d558f92b8e6c757fbf7c1f718b3126c4d34f264d574b40ea36054f",
+      "/optional-practice/civilian-fpv/vendor/addons/utils/BufferGeometryUtils.js":
+        "259085a7dac89e0840393a9347c77123fbc4206ec2146bf0c29ffc72e14a2800",
+      "/optional-practice/civilian-fpv/vendor/addons/utils/SkeletonUtils.js":
+        "28017bf37d0ecb0c4be6048db759ff14df729a562464830b064d4cc239c5af17",
+      "/optional-practice/civilian-fpv/vendor/addons/controls/TransformControls.js":
+        "10f6d3e4c108dff62110f61a76749f9a1826c9781df9c3eb4ca0b5d9d2f5c4a8",
+    },
+  };
+  const $ = (id) => document.getElementById(id);
+  const assert = (v, message) => {
+    if (!v) throw Error(message);
+  };
+  const frame = () => new Promise(requestAnimationFrame);
+  const clone = structuredClone;
+  let receipt,
+    runtime,
+    flight,
+    modules,
+    current = null,
+    capturedRenderer = null;
+  let startTime = 0,
+    busy = false,
+    nextSpan = 0,
+    heartbeatId,
+    timerId,
+    lastRAF,
+    lastTimer,
+    activeQuality = "balanced";
+  const restorers = [],
+    observers = [];
+  const limits = {
+    spans: 12000,
+    raf: 18000,
+    timers: 5000,
+    tasks: 1500,
+    visibility: 200,
+  };
+  const now = () => performance.now();
+  const relative = (value) => value - startTime;
+  function bounded(key, value, limit) {
+    if (receipt[key].length < limit) receipt[key].push(value);
+    else receipt.dropped[key] = (receipt.dropped[key] ?? 0) + 1;
+  }
+  function begin(kind, details = {}) {
+    const row = {
+      id: ++nextSpan,
+      kind,
+      context: current ? { ...current } : null,
+      start: relative(now()),
+      ...details,
+    };
+    bounded("spans", row, limits.spans);
+    return row;
+  }
+  function finish(row, error) {
+    row.end = relative(now());
+    row.wallMs = row.end - row.start;
+    if (error) row.error = String(error?.stack ?? error);
+  }
+  function timedSync(kind, fn, details) {
+    const row = begin(kind, details);
+    try {
+      const value = fn();
+      finish(row);
+      return value;
+    } catch (error) {
+      finish(row, error);
+      throw error;
+    }
+  }
+  async function timedAsync(kind, fn, details) {
+    const row = begin(kind, details);
+    try {
+      const value = await fn();
+      finish(row);
+      return value;
+    } catch (error) {
+      finish(row, error);
+      throw error;
+    }
+  }
+  function replace(target, name, factory) {
+    const descriptor = Object.getOwnPropertyDescriptor(target, name);
+    const original = target[name];
+    assert(typeof original === "function", "Missing wrapper boundary " + name);
+    const wrapped = factory(original);
+    target[name] = wrapped;
+    restorers.push(() => {
+      if (target[name] !== wrapped) return;
+      if (descriptor) Object.defineProperty(target, name, descriptor);
+      else delete target[name];
+    });
+  }
+  function wrapPromise(target, name, kind) {
+    replace(
+      target,
+      name,
+      (original) =>
+        function (...args) {
+          const row = begin(kind);
+          try {
+            const result = original.apply(this, args);
+            row.dispatchMs = relative(now()) - row.start;
+            result.then(
+              () => finish(row),
+              (error) => finish(row, error),
+            );
+            return result;
+          } catch (error) {
+            finish(row, error);
+            throw error;
+          }
+        },
+    );
+  }
+  function wrapCallbackLoader(target, name, kind) {
+    replace(
+      target,
+      name,
+      (original) =>
+        function (url, onLoad, onProgress, onError) {
+          const row = begin(kind, {
+            urlKind: String(url).split(":", 1)[0],
+            urlLength: String(url).length,
+          });
+          const wrap = (callback, error) =>
+            function (...args) {
+              finish(row, error ? args[0] : undefined);
+              if (!error && args[0])
+                row.image = {
+                  width: args[0].width ?? args[0].image?.width ?? null,
+                  height: args[0].height ?? args[0].image?.height ?? null,
+                };
+              return callback?.apply(this, args);
+            };
+          try {
+            const result = original.call(
+              this,
+              url,
+              wrap(onLoad, false),
+              onProgress,
+              wrap(onError, true),
+            );
+            row.dispatchMs = relative(now()) - row.start;
+            return result;
+          } catch (error) {
+            finish(row, error);
+            throw error;
+          }
+        },
+    );
+  }
+  function compileScope(scene) {
+    const allMaterials = new Set(),
+      visibleMaterials = new Set();
+    let allObjects = 0,
+      allMeshes = 0,
+      visibleMeshes = 0;
+    scene.traverse((item) => {
+      allObjects++;
+      if (!item.isMesh && !item.isLine && !item.isPoints) return;
+      allMeshes++;
+      for (const m of Array.isArray(item.material)
+        ? item.material
+        : [item.material])
+        if (m) allMaterials.add(m);
+    });
+    scene.traverseVisible((item) => {
+      if (!item.isMesh && !item.isLine && !item.isPoints) return;
+      visibleMeshes++;
+      for (const m of Array.isArray(item.material)
+        ? item.material
+        : [item.material])
+        if (m) visibleMaterials.add(m);
+    });
+    return {
+      allObjects,
+      allRenderableObjects: allMeshes,
+      visibleRenderableObjects: visibleMeshes,
+      allMaterials: allMaterials.size,
+      visibleMaterials: visibleMaterials.size,
+      hiddenOnlyMaterials: [...allMaterials].filter(
+        (m) => !visibleMaterials.has(m),
+      ).length,
+    };
+  }
+  function programSummary(renderer) {
+    return renderer.info.programs.map((program) => ({
+      id: program.id,
+      name: program.name,
+      usedTimes: program.usedTimes,
+      cacheKeyLength: program.cacheKey?.length ?? null,
+    }));
+  }
+  function installRendererWrappers(renderer) {
+    if (capturedRenderer) return;
+    capturedRenderer = renderer;
+    receipt.rendererCapturedAt = relative(now());
+    receipt.webgl = {
+      vendor: renderer.getContext().getParameter(renderer.getContext().VENDOR),
+      renderer: renderer
+        .getContext()
+        .getParameter(renderer.getContext().RENDERER),
+      parallelCompile: !!renderer
+        .getContext()
+        .getExtension("KHR_parallel_shader_compile"),
+    };
+    if (receipt.mode !== "detailed") return;
+    replace(
+      renderer,
+      "compile",
+      (original) =>
+        function (...args) {
+          const scopeStart = now(),
+            scope = compileScope(args[0]),
+            before = programSummary(this);
+          const observerMs = now() - scopeStart;
+          const row = begin("three.compile.sync", {
+            scope,
+            programsBefore: before,
+            observerBeforeMs: observerMs,
+          });
+          try {
+            const value = original.apply(this, args);
+            finish(row);
+            row.materialCountReturned = value.size;
+            row.programsAfter = programSummary(this);
+            return value;
+          } catch (error) {
+            finish(row, error);
+            throw error;
+          }
+        },
+    );
+    wrapPromise(renderer, "compileAsync", "three.compileAsync.total");
+  }
+  function installObservers() {
+    const visibility = (type) =>
+      bounded(
+        "visibility",
+        {
+          at: relative(now()),
+          type,
+          state: document.visibilityState,
+          hasFocus: document.hasFocus(),
+        },
+        limits.visibility,
+      );
+    const visible = () => visibility("visibilitychange"),
+      focus = () => visibility("focus"),
+      blur = () => visibility("blur");
+    document.addEventListener("visibilitychange", visible);
+    window.addEventListener("focus", focus);
+    window.addEventListener("blur", blur);
+    restorers.push(() => {
+      document.removeEventListener("visibilitychange", visible);
+      window.removeEventListener("focus", focus);
+      window.removeEventListener("blur", blur);
+    });
+    visibility("start");
+    function heartbeat(timestamp) {
+      const t = now();
+      if (lastRAF !== undefined)
+        bounded(
+          "raf",
+          {
+            at: relative(t),
+            callbackTimestamp: relative(timestamp),
+            intervalMs: t - lastRAF,
+          },
+          limits.raf,
+        );
+      lastRAF = t;
+      heartbeatId = requestAnimationFrame(heartbeat);
+    }
+    heartbeatId = requestAnimationFrame(heartbeat);
+    lastTimer = now();
+    timerId = setInterval(() => {
+      const t = now();
+      bounded(
+        "timers",
+        { at: relative(t), intervalMs: t - lastTimer },
+        limits.timers,
+      );
+      lastTimer = t;
+    }, 50);
+    for (const type of ["longtask", "long-animation-frame"]) {
+      const supported =
+        globalThis.PerformanceObserver?.supportedEntryTypes?.includes(type) ??
+        false;
+      receipt.observerSupport[type] = supported;
+      if (!supported) continue;
+      const consume = (entries) => {
+        for (const item of entries) {
+          const row = {
+            type,
+            name: item.name,
+            start: relative(item.startTime),
+            duration: item.duration,
+          };
+          if (type === "long-animation-frame") {
+            for (const key of [
+              "renderStart",
+              "styleAndLayoutStart",
+              "firstUIEventTimestamp",
+            ])
+              row[key] = item[key] ? relative(item[key]) : null;
+            row.blockingDuration = item.blockingDuration;
+            row.scripts = [...(item.scripts ?? [])].map((script) => ({
+              invoker: script.invoker,
+              invokerType: script.invokerType,
+              sourceURL: script.sourceURL,
+              sourceFunctionName: script.sourceFunctionName,
+              start: relative(script.startTime),
+              duration: script.duration,
+              forcedStyleAndLayoutDuration: script.forcedStyleAndLayoutDuration,
+            }));
+          } else
+            row.attribution = [...(item.attribution ?? [])].map((a) => ({
+              name: a.name,
+              containerType: a.containerType,
+              containerName: a.containerName,
+            }));
+          bounded("tasks", row, limits.tasks);
+        }
+      };
+      const observer = new PerformanceObserver((list) =>
+        consume(list.getEntries()),
+      );
+      observer.observe({ type, buffered: false });
+      observers.push({ observer, consume });
+    }
+  }
+  function installThreeObservers() {
+    const THREE = modules.THREE;
+    replace(
+      THREE.Scene.prototype,
+      "onBeforeRender",
+      (original) =>
+        function (renderer, ...args) {
+          original.call(this, renderer, ...args);
+          installRendererWrappers(renderer);
+        },
+    );
+    if (receipt.mode !== "detailed") return;
+    wrapPromise(
+      modules.GLTFLoader.prototype,
+      "parseAsync",
+      "gltf.parseAsync.total",
+    );
+    replace(
+      modules.GLTFLoader.prototype,
+      "parse",
+      (original) =>
+        function (...args) {
+          return timedSync("gltf.parse.dispatch", () =>
+            original.apply(this, args),
+          );
+        },
+    );
+    for (const [name, kind] of [
+      ["ImageLoader", "three.imageLoader.callback"],
+      ["FileLoader", "three.fileLoader.callback"],
+    ])
+      wrapCallbackLoader(THREE[name].prototype, "load", kind);
+    replace(
+      THREE.PMREMGenerator.prototype,
+      "fromScene",
+      (original) =>
+        function (...args) {
+          return timedSync("three.pmrem.fromScene", () =>
+            original.apply(this, args),
+          );
+        },
+    );
+  }
+  const digest = async (value) =>
+    [...new Uint8Array(await crypto.subtle.digest("SHA-256", value))]
+      .map((v) => v.toString(16).padStart(2, "0"))
+      .join("");
+  async function verifySources() {
+    const hashes = {};
+    for (const [path, expected] of Object.entries(SOURCE.sourceFiles)) {
+      const response = await fetch(path, { cache: "no-store" });
+      assert(response.ok, "Missing frozen source " + path);
+      hashes[path] = await digest(await response.arrayBuffer());
+      assert(hashes[path] === expected, "Frozen source changed " + path);
+    }
+    return hashes;
+  }
+  async function importModules() {
+    if (modules) return;
+    const root = "/optional-practice/civilian-fpv/";
+    const [assets, catalogue, model, worldModel, THREE, loader] =
+      await Promise.all(
+        [
+          "world-assets.mjs",
+          "world-catalogue.mjs",
+          "model.mjs",
+          "world-model.mjs",
+          "vendor/three.module.js",
+          "vendor/addons/loaders/GLTFLoader.js",
+        ].map((name) => import(root + name)),
+      );
+    await worldModel.initWorldRuntime();
+    modules = {
+      ...assets,
+      ...catalogue,
+      createFlight: model.createFlight,
+      createWorldFlight: worldModel.createWorldFlight,
+      THREE,
+      GLTFLoader: loader.GLTFLoader,
+    };
+  }
+  function resources() {
+    return clone(runtime.resources());
+  }
+  async function loadEntry(entry, path, cycle) {
+    current = {
+      cycle,
+      id: entry.course.id,
+      path,
+      quality: activeQuality,
+      phase: "load-before-quality-transition",
+    };
+    const before = resources();
+    timedSync("flight.dispose", () => flight?.dispose?.());
+    flight = timedSync("flight.create", () =>
+      (entry.legacy ? modules.createFlight : modules.createWorldFlight)({
+        course: entry.course,
+        mode: "self-level",
+      }),
+    );
+    timedSync("runtime.setCourse", () =>
+      runtime.setCourse(entry.course, "self-level"),
+    );
+    let blob;
+    if (path === "imported") {
+      blob = timedSync("builtinWorldScene", () =>
+        modules.builtinWorldScene(entry.course),
+      );
+      await timedAsync("runtime.loadScene", () => runtime.loadScene(blob), {
+        blobBytes: blob.size,
+      });
+    }
+    return {
+      state: flight.snapshot(),
+      before,
+      afterLoad: resources(),
+      blobBytes: blob?.size ?? 0,
+    };
+  }
+  async function renderQuality(entry, path, cycle, quality, loaded) {
+    current = { cycle, id: entry.course.id, path, quality };
+    $("status").textContent =
+      `Cycle ${cycle}/3 · ${entry.course.id} · ${path} · ${quality}`;
+    const modelBefore = JSON.stringify(flight.snapshot()),
+      courseBefore = JSON.stringify(entry.course);
+    const before = resources();
+    timedSync("runtime.setQuality", () => runtime.setQuality(quality));
+    activeQuality = quality;
+    const prepared = await timedAsync(
+      "runtime.prepare",
+      () => runtime.prepare(),
+      {
+        rendererWrappersAvailable:
+          !!capturedRenderer && receipt.mode === "detailed",
+      },
+    );
+    assert(prepared, "Preparation invalidated unexpectedly");
+    const draws = [];
+    for (let draw = 0; draw < 3; draw++) {
+      await frame();
+      const start = now();
+      runtime.draw(loaded.state, { cameraMode: "overview" });
+      draws.push(now() - start);
+    }
+    const gl = $("canvas").getContext("webgl2"),
+      errors = [];
+    for (let i = 0; i < 16; i++) {
+      const e = gl.getError();
+      if (e === gl.NO_ERROR) break;
+      errors.push(e);
+    }
+    assert(
+      JSON.stringify(flight.snapshot()) === modelBefore &&
+        JSON.stringify(entry.course) === courseBefore,
+      "Profiling mutated physics/course",
+    );
+    receipt.samples.push({
+      ...current,
+      before,
+      after: resources(),
+      blobBytes: loaded.blobBytes,
+      drawSubmissionMs: draws,
+      visibility: document.visibilityState,
+      hasFocus: document.hasFocus(),
+      glErrors: errors,
+    });
+    assert(!errors.length, "WebGL error " + errors);
+  }
+  function summarize() {
+    const longest = (kind) =>
+      receipt.spans
+        .filter((r) => r.kind === kind && r.end !== undefined)
+        .sort((a, b) => b.wallMs - a.wallMs)
+        .slice(0, 6)
+        .map((r) => ({
+          context: r.context,
+          wallMs: r.wallMs,
+          dispatchMs: r.dispatchMs,
+        }));
+    return {
+      completed: receipt.completed,
+      error: receipt.error,
+      mode: receipt.mode,
+      samples: receipt.samples.length,
+      detailedSpans: receipt.spans.length,
+      longTaskCount: receipt.tasks.filter((t) => t.type === "longtask").length,
+      visibility: receipt.visibility,
+      longestPrepare: longest("runtime.prepare"),
+      longestSyncCompile: longest("three.compile.sync"),
+      longestAsyncCompile: longest("three.compileAsync.total"),
+      longestLoad: longest("runtime.loadScene"),
+      longestParse: longest("gltf.parseAsync.total"),
+      longestImage: longest("three.imageLoader.callback"),
+      dropped: receipt.dropped,
+    };
+  }
+  $("run").onclick = async () => {
+    if (busy) return;
+    busy = true;
+    activeQuality = "balanced";
+    runtime = null;
+    flight = null;
+    $("run").disabled = true;
+    $("mode").disabled = true;
+    capturedRenderer = null;
+    nextSpan = 0;
+    lastRAF = undefined;
+    startTime = now();
+    receipt = {
+      format: "FPVD1BoundedTransitionProfile.v1",
+      harnessVersion: 2,
+      ...SOURCE,
+      mode: $("mode").value,
+      startedAt: new Date().toISOString(),
+      timeOrigin: performance.timeOrigin,
+      performanceStart: startTime,
+      design: {
+        cycles: 3,
+        order: [
+          "container-yard-08/imported",
+          "container-yard-08/fallback",
+          "beginner-40/imported",
+          "beginner-40/fallback",
+        ],
+        qualities: ["low", "balanced", "high"],
+        camera: "overview",
+        drawsPerQuality: 3,
+        expectedSamples: 36,
+        differencesFromQualification: [
+          "Only two of five arenas are visited; three overview draws replace the three-camera/eight-sample views.",
+          "GLTFLoader is imported before timing; this removes first module import from load segmentation.",
+          "The actual renderer is captured from the first Scene.onBeforeRender, including its normal PMREM probe; wrapper availability is recorded per prepare.",
+          "No full JSON serialization during measured cycles. Detailed wrappers add measured scope inspection and callback/span bookkeeping. Overlapping async callback intervals must not be summed; ImageLoader wait combines resource access, decode and scheduling.",
+          "Runtime/model source bytes unchanged. Rendering uses initial physics snapshots, with no simulation stepping. One renderer, fixed order, warm later cycles; not a controlled cold-start or hardware benchmark.",
+        ],
+      },
+      browser: {
+        userAgent: navigator.userAgent,
+        viewport: [innerWidth, innerHeight],
+        dpr: devicePixelRatio,
+        requestedDpr: 2,
+        drawingCSS: [640, 360],
+      },
+      spans: [],
+      samples: [],
+      raf: [],
+      timers: [],
+      tasks: [],
+      visibility: [],
+      observerSupport: {},
+      dropped: {},
+      limits,
+      errors: [],
+      warnings: [],
+      contextLosses: [],
+      completed: false,
+    };
+    window.__fpvTransitionProfile = receipt;
+    const originalError = console.error,
+      originalWarn = console.warn;
+    console.error = (...args) => {
+      receipt.errors.push(args.map(String).join(" "));
+      originalError(...args);
+    };
+    console.warn = (...args) => {
+      receipt.warnings.push(args.map(String).join(" "));
+      originalWarn(...args);
+    };
+    try {
+      assert(document.visibilityState === "visible", "Run must start visible");
+      $("status").textContent = "Verify all 31 frozen source inputs";
+      const manifest = await (
+        await fetch("./profile-v2-manifest.json", { cache: "no-store" })
+      ).json();
+      const harness = await (
+        await fetch(location.pathname, { cache: "no-store" })
+      ).arrayBuffer();
+      receipt.harnessSha256 = await digest(harness);
+      assert(
+        receipt.harnessSha256 === manifest.harnessSha256,
+        "Profile harness changed",
+      );
+      receipt.sourcesBefore = await verifySources();
+      await importModules();
+      installObservers();
+      installThreeObservers();
+      const priorCanvas = $("canvas"),
+        canvas = document.createElement("canvas");
+      canvas.id = "canvas";
+      canvas.width = 640;
+      canvas.height = 360;
+      priorCanvas.replaceWith(canvas);
+      runtime = timedSync("runtime.create", () =>
+        modules.createFlightRenderer({
+          canvas,
+          window: { devicePixelRatio: 2 },
+          onContextLost: () =>
+            receipt.contextLosses.push({
+              at: relative(now()),
+              context: current,
+            }),
+        }),
+      );
+      assert(runtime.available, "WebGL unavailable");
+      const all = [...modules.WORLD_CATALOGUE, ...modules.BEGINNER_CATALOGUE];
+      const entries = ["container-yard-08", "beginner-40"].map((id) =>
+        all.find((e) => e.course.id === id),
+      );
+      assert(entries.every(Boolean), "Missing frozen target courses");
+      for (let cycle = 1; cycle <= 3; cycle++)
+        for (const entry of entries)
+          for (const path of ["imported", "fallback"]) {
+            const loaded = await loadEntry(entry, path, cycle);
+            for (const quality of ["low", "balanced", "high"])
+              await renderQuality(entry, path, cycle, quality, loaded);
+          }
+      current = { phase: "post-cycle verification" };
+      await frame();
+      await frame();
+      receipt.sourcesAfter = await verifySources();
+      receipt.completed = receipt.samples.length === 36;
+    } catch (error) {
+      receipt.error = String(error?.stack ?? error);
+    } finally {
+      current = { phase: "disposal" };
+      flight?.dispose?.();
+      flight = null;
+      if (runtime) {
+        timedSync("runtime.dispose", () => runtime.dispose());
+        receipt.disposedResources = resources();
+      }
+      for (const { observer, consume } of observers.splice(0)) {
+        consume(observer.takeRecords());
+        observer.disconnect();
+      }
+      cancelAnimationFrame(heartbeatId);
+      clearInterval(timerId);
+      for (const restore of restorers.splice(0).reverse()) restore();
+      console.error = originalError;
+      console.warn = originalWarn;
+      receipt.finishedAt = new Date().toISOString();
+      receipt.elapsedMs = now() - startTime;
+      receipt.instrumentationComplete = !Object.keys(receipt.dropped).length;
+      receipt.summary = summarize();
+      window.__fpvTransitionProfile = receipt;
+      $("summary").textContent = JSON.stringify(receipt.summary, null, 2);
+      const serialized = JSON.stringify(receipt);
+      $("full-receipt").textContent = serialized;
+      $("full-receipt").value = serialized;
+      $("status").textContent = receipt.completed
+        ? "Profile complete. Timings are observations, not acceptance."
+        : "Profile stopped; inspect the retained partial receipt.";
+      $("download").disabled = false;
+      $("run").disabled = false;
+      $("mode").disabled = false;
+      busy = false;
+    }
+  };
+  $("download").onclick = () => {
+    const url = URL.createObjectURL(
+      new Blob([JSON.stringify(receipt)], { type: "application/json" }),
+    );
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "fpv-d1-transition-profile-" + receipt.mode + ".json";
+    a.click();
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
+  };
+</script>

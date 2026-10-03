@@ -2937,3 +2937,45 @@ ea596d80 yields 039be4e7c: scenery and renderer bytes remain exact; inherited
 Hangar visual changes are inside the indoor branch and do not affect Woodland.
 All 30 checks and three reproducible admissions pass again. Preserve the explicit
 browser candidate identity and use protected exact-head publication.
+
+
+### D1 production and cached-player evidence — 3 October 2026
+
+Historical combined candidate `e572026ba357f3194bf47e7137a0817cacb1a640` passed
+source and admitted-package production checks: 90 configurations, three rounds,
+60 theme controls and all 14 lifecycle/resource gates. Full receipts are retained
+losslessly as bounded gzip archives; the semantic comparison has zero differences
+across 72,680 leaves. Actual admitted-player preparation, local-origin-unavailable
+reload, Woodland/Yard selection, rendered arm and pause also passed. Timings retain
+large unexplained pauses; no sustained hardware-performance claim follows.
+See [the qualification and limits](fpv-d1-production-qualification.md).
+
+Repair #1011 and groves #996 are merged. Public marker `e40809f25ea8` plus actual
+Clearing check-in render/arm/pause establishes grove availability. Meadow #1010 is
+merged at `e98df020d`; its public check remains separate. Material #1001 and
+Courtyard #1012 continue protected publication; Warehouse exterior composition is
+the next independent art increment. This evidence-only checkpoint changes no
+runtime and does not claim the historical matrix tests newer main code.
+
+
+### Bounded transition follow-up and publication checkpoint — 3 October 2026
+
+The separate e572 v2 diagnostic completed 36 preparations/six imported loads,
+with maximum preparation 77.4 ms and loading 11.2 ms. It did not reproduce the
+historical 15–17 second stalls. Full source-bound receipt, both harness versions,
+analysis, long-task records and the v1 summary-only limitation are preserved in
+[bounded transition profiling](fpv-d1-transition-profile.md). Course setup up to
+294.9 ms, quality changes up to195.5 ms and PMREM up to101.1 ms remain measured
+investigation leads; no production fix or hardware-performance claim is made.
+
+Meadow #1010 is live at marker e98df020d with Turn and travel render/arm/pause
+verified. Material #1001 is merged at25700b699; public acceptance remains separate.
+Courtyard #1012 and Warehouse #1014 are ready. Warehouse's b5a7a3b5a head retains
+437 checks/221 image pairs, the actual102fcd admitted-player launch and integrated
+860ad admission with35,925 bytes of original-input headroom. Their exact-head
+checks and public deployment remain distinct gates. Continue the next approved
+Airfield/Quarry pair while publication proceeds.
+
+Documentation #1013's prior a24d82c36 head passed required preflight, focused and
+release-ready checks in run37151674485; test/build were skipped, not passed.
+This evidence continuation requires its own fresh exact-head checks.
