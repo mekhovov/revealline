@@ -134,6 +134,24 @@ const create = vm.runInNewContext(`${module}; createFlightRenderer`, {
     return drone;
   },
 });
+class Controls extends THREE.EventDispatcher {
+  constructor() {
+    super();
+    this.helper = new THREE.Group();
+  }
+  getHelper() {
+    return this.helper;
+  }
+  setMode() {}
+  setSpace() {}
+  setTranslationSnap() {}
+  setSize() {}
+  attach() {}
+  detach() {}
+  dispose() {
+    this.helper.clear();
+  }
+}
 function fixture() {
   const listeners = new Map(),
     ownerIndex = owners.length,
@@ -146,6 +164,7 @@ function fixture() {
       ownerDocument: { createElement: () => ({ getContext: () => null }) },
     },
     window: { devicePixelRatio: 1 },
+    loadTransformControls: async () => ({ TransformControls: Controls }),
     createHuntPresentation: ({ scene }) => {
       const group = new THREE.Group();
       scene.add(group);
@@ -238,6 +257,7 @@ check(
 first.runtime.setCosmetic({ color: '#ff66aa' });
 first.runtime.setPresentation({ collectionId: 'industrial-workshop' });
 set();
+const editorControls = await first.runtime.createEditor();
 const watched = new Map();
 first.scene.traverse((item) => {
   for (const value of [
@@ -284,8 +304,11 @@ check('optional hunt owner released during loss', huntBeforeLoss.disposals === 1
 check('prepare cannot reuse cleared scene', (await first.runtime.prepare()) === false);
 first.runtime.setCosmetic({ color: '#66aaff' });
 first.runtime.setCosmetic({ color: 'invalid' });
+check('cleared editor ignores pointer selection', editorControls.pick(1, 1) === false);
+editorControls.setSnap(0.5);
+editorControls.zoom(12);
 check(
-  'cosmetic changes while lost keep scene ownership empty',
+  'cosmetic and editor interactions while lost keep scene ownership empty',
   Object.values(first.runtime.resources().registered).every((n) => n === 0),
 );
 first.runtime.draw({});
