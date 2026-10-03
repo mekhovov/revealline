@@ -6,10 +6,10 @@ They are available in Capture and Classic Snake through the existing reaction
 director, master/dialogue routing, warning priority and bounded decoder. They
 do not create another sound system or change gameplay.
 
-In **Settings → Sound → Character reaction sound and captions**, each compiled
+In **Settings → Audio → Character reaction sound and captions**, each compiled
 Company edition offers **Offline enemy voices**, with English and Ukrainian
 download/repair and remove actions. These controls also appear in the Company
-Snake Sound settings. Cancelling, closing Settings, hiding the page or leaving
+Snake Audio settings. Cancelling, closing Settings, hiding the page or leaving
 it aborts the current download; verified completed files remain resumable.
 
 Online playback continues to fetch relevant individual lines. Preparing or
@@ -59,7 +59,7 @@ Relevant regression source covers exact catalogue/asset projection, optional
 versus mandatory cache membership, no automatic pack download, offline cache
 reads, integrity failure, repair, cross-edition offload ownership, cancellation,
 custom-recording precedence, pilot/caption fallback and Settings moved into the
-shared Snake dialog. Automated suites remain explicitly waived and unexecuted.
+shared Snake dialog, plus cross-tab status changes and Settings re-entry. Automated suites remain explicitly waived and unexecuted.
 
 Targeted lint/format, generated flight-source projection, source eligibility and
 production Company build/admission are the applicable independent checks. The
