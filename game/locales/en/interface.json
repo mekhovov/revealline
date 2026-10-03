@@ -4760,6 +4760,8 @@
   "community.recoveryPackageRetained": "Exact recovery package retained for offline reinstall.",
   "community.offloadInstalledMedia": "Offload installed media",
   "community.installedMediaOffloaded": "Installed media offloaded. The manifest, saves, earned pictures, and exact recovery package remain.",
+  "community.localSnakeCopyRetained": "A Studio or previously imported local copy also uses these Snake levels. Offloading this edition keeps that local copy and your progress.",
+  "community.snakeEditionOffloadedLocalKept": "This edition is offloaded. Your local Snake copy, progress and exact recovery package remain.",
   "community.reinstallExactEdition": "Reinstall exact edition",
   "community.downloadUpdate": "Download update",
   "community.downloadAndInstall": "Download and install",
