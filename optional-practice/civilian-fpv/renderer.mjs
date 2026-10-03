@@ -5,6 +5,7 @@ import {
   buildWorldVisuals,
   buildDroneVisual,
   buildContainerVisualGeometry,
+  buildGarageSurfaceGeometry,
   buildStadiumStructureGeometry,
 } from './world-visuals.mjs';
 import {
@@ -179,6 +180,7 @@ export function createFlightRenderer({
     obstacleMaps = null,
     obstacleSurface = null,
     obstacleFittingsMaterial = null,
+    garageDetailMaterial = null,
     environmentSurfaceKind = null,
     lastActorState = null,
     importedAnimationTick = null,
@@ -208,6 +210,7 @@ export function createFlightRenderer({
     huntTargets = new Map(),
     seenActors = new Set(),
     pulseRows = new Map(),
+    garageDetailMaterials = new Map(),
     stadiumDetailMaterials = new Map(),
     qualityDetails = [];
   const framePosition = new THREE.Vector3(),
@@ -754,6 +757,49 @@ export function createFlightRenderer({
     }
     shape.setAttribute('uv', new THREE.BufferAttribute(uv, 2));
   }
+  function garageStructureUV(shape, obstacle) {
+    const positions = shape.getAttribute('position'),
+      normals = shape.getAttribute('normal'),
+      offset = ['x', 'y', 'z'].map((axis) =>
+        obstacle.type === 'trimesh' ? 0 : (obstacle.max[axis] + obstacle.min[axis]) / 2000,
+      ),
+      uv = new Float32Array(positions.count * 2);
+    for (let index = 0; index < positions.count; index++) {
+      const x = positions.getX(index) + offset[0],
+        y = positions.getY(index) + offset[1],
+        z = positions.getZ(index) + offset[2],
+        nx = Math.abs(normals.getX(index)),
+        ny = Math.abs(normals.getY(index)),
+        nz = Math.abs(normals.getZ(index));
+      // World-aligned six-metre pours cross the ramp/deck crest continuously.
+      // Positions, winding, and all physical triangles remain untouched.
+      uv[index * 2] = (nx > ny && nx > nz ? z : x) / 6;
+      uv[index * 2 + 1] = (ny >= nx && ny >= nz ? z : y) / 6;
+    }
+    shape.setAttribute('uv', new THREE.BufferAttribute(uv, 2));
+  }
+  function addGarageSurfaceDetails(parent, obstacle) {
+    for (const { role, layer, geometry: shape } of buildGarageSurfaceGeometry(obstacle)) {
+      const key = `${role}:${layer}`;
+      if (!garageDetailMaterials.has(key)) {
+        const paint = garageDetailMaterial(role).clone();
+        paint.side = THREE.DoubleSide;
+        paint.polygonOffset = true;
+        paint.polygonOffsetFactor = -layer;
+        paint.polygonOffsetUnits = -layer;
+        materials.add(paint);
+        garageDetailMaterials.set(key, paint);
+      }
+      const detail = mesh(shape, garageDetailMaterials.get(key), parent);
+      detail.name = `garage-surface-${role}`;
+      detail.userData.role = 'garage-surface-detail';
+      detail.userData.obstacleId = obstacle.id;
+      detail.userData.materialRole = role;
+      detail.userData.cosmeticDetail = true;
+      detail.castShadow = false;
+      detail.receiveShadow = true;
+    }
+  }
   function woodlandTrunkUV(shape, size) {
     const positions = shape.getAttribute('position'),
       normals = shape.getAttribute('normal'),
@@ -976,7 +1022,8 @@ export function createFlightRenderer({
       shape.dispose();
       shape = flat;
       shape.computeVertexNormals();
-      if (obstacleSurface) worldScaleUV(shape);
+      if (kind === 'garage-concrete') garageStructureUV(shape, obstacle);
+      else if (obstacleSurface) worldScaleUV(shape);
       paint.side = THREE.DoubleSide;
       value = mesh(shape, paint);
     } else if (obstacle.min && obstacle.max) {
@@ -989,6 +1036,7 @@ export function createFlightRenderer({
       else if (kind === 'stadium-concrete' || kind === 'stadium-steel')
         stadiumStructureUV(shape, kind);
       else if (kind === 'bark') woodlandTrunkUV(shape, size);
+      else if (kind === 'garage-concrete') garageStructureUV(shape, obstacle);
       else if (obstacleSurface) worldScaleUV(shape);
       value = mesh(shape, paint);
       value.position.set(
@@ -1009,8 +1057,11 @@ export function createFlightRenderer({
     value.userData.surfaceKind = kind;
     if (kind === 'storage-steel') value.userData.materialRole = 'steel';
     if (kind === 'bark') value.userData.materialRole = 'timber';
+    if (kind === 'garage-concrete') value.userData.materialRole = 'concrete';
     if (kind === 'stadium-concrete') value.userData.materialRole = 'concrete';
     value.castShadow = value.receiveShadow = true;
+    if (kind === 'garage-concrete' && garageDetailMaterial)
+      addGarageSurfaceDetails(value, obstacle);
     if (size && (kind === 'stadium-concrete' || kind === 'stadium-steel'))
       stadiumStructureDetail(value, size);
     if (containerHardware) {
@@ -1121,6 +1172,7 @@ export function createFlightRenderer({
     environmentLight?.dispose();
     environmentLight = null;
     for (const group of [world, goals, actors, projectiles]) releaseGroup(group);
+    garageDetailMaterials.clear();
     stadiumDetailMaterials.clear();
     goalRows.length = 0;
     actorRows.clear();
@@ -1156,6 +1208,7 @@ export function createFlightRenderer({
     obstacleMaps = surroundings.obstacleMaps;
     obstacleSurface = surroundings.obstacleSurface ?? null;
     obstacleFittingsMaterial = surroundings.obstacleFittingsMaterial ?? null;
+    garageDetailMaterial = surroundings.garageDetailMaterial ?? null;
     stadiumMaterial = surroundings.stadiumDetailMaterial ?? null;
     environmentSurfaceKind = surroundings.obstacleSurfaceKind ?? null;
     scene.background = new THREE.Color(surroundings.indoor ? theme.wall : theme.sky);
@@ -2628,6 +2681,7 @@ export function createFlightRenderer({
       }
       for (const value of geometry) value.dispose();
       materials.clear();
+      garageDetailMaterials.clear();
       geometry.clear();
       goalRows.length = 0;
       actorRows.clear();
@@ -2641,6 +2695,8 @@ export function createFlightRenderer({
       obstacleMaps = null;
       obstacleSurface = null;
       obstacleFittingsMaterial = null;
+      garageDetailMaterial = null;
+      environmentSurfaceKind = null;
       stadiumMaterial = null;
       sceneryFallback = null;
       themeProfile = null;
