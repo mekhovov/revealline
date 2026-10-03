@@ -29,7 +29,7 @@ Run the functional qualifier and generate the real-host browser fixture:
 
 ```sh
 node scripts/qualify-fpv-section-replay.mjs --output docs/fpv-section-replay-functional-verification.json
-node scripts/prepare-fpv-section-replay-verification.mjs source-01
+node scripts/prepare-fpv-section-replay-verification.mjs --out dist/fpv-section-replay-verification-source-01
 ```
 
 The browser fixture uses production HTML/runtime, isolated storage and controlled
@@ -51,5 +51,10 @@ English/Ukrainian and 390px layout. See
 [source browser receipt](fpv-section-replay-browser-verification.json).
 These controlled cases do not measure physical controller latency or FPS.
 
-Package admission and packaged-browser evidence follow in the delivery checkpoint.
+Frozen candidate `4d7bad1e2` passed all three optional admissions, exact committed
+inputs/ZIP members and two byte-identical builds. World Studio is 99 source files /
+14,414,182 bytes, within 104 files / 16 MiB. The actual frozen-package browser
+fixture also passes **51/51** checks. See [package receipt](fpv-section-replay-package-verification.json)
+and [packaged browser receipt](fpv-section-replay-packaged-browser-verification.json).
+Later source reconciliation is recorded separately in the delivery checkpoint.
 A local player build or open PR does not establish public availability.

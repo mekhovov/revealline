@@ -2123,3 +2123,15 @@ A fresh actual public Loading bay launch at Themes deployment3636201d3 reached
 Ready atzero throttle with no captured errors. Warehouse8896c4976 has not yet
 been identified by the public marker, so Warehouse live availability is still
 unverified. Public screenshot: `/tmp/fpv-themes-public-launch-20261003.png`.
+
+
+Section frozen candidate4d7bad1e2 passes all three optional admissions, exact
+committed inputs and ZIP members, two identical builds, and packaged WebGL51/51.
+The largest edition also passes frozen validation/reproducibility at this child
+snapshot:887files/67,045,468bytes. The development dependency folder under
+`authoring/fpv-worlds/node_modules` was moved temporarily into ignored `.cache`
+during source eligibility inventory and restored afterward; source and guards
+were unchanged. #968 has since been automatically reconciled with newer Themes
+#967 at586b9cb08. Preserve that remote update and reconcile the section child
+before publication; earlier renderer/package evidence does not qualify new
+Themes bytes by inference.
