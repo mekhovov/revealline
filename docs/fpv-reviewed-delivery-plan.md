@@ -14,23 +14,27 @@ verification; keep novice, physical-device and artist acceptance honestly pendin
 No session or hardware measurement is inferred from an automated fixture. The
 historical phase tables below are superseded by this current order.
 
-Main now includes Themes #955 and Warehouse #966, alongside the completed content,
+Main now includes Themes #955/#967, Warehouse #966, capacity repair #968,
+running enemies #969 and recorded section replay #972, alongside the completed
 controls, school, section practice, ghosts, reimport and original demonstrations.
+The Follow/Observe editor #975, shared-theme texture quality #974, WebAssembly
+CSP repair #976 and pack-removal recovery #977 are now merged. Public deployment
+remains distinct from local functional verification.
 The current catalogue is **172 challenges / 14 worlds / 58 school lessons / 374
 school steps**. Installed demonstrations total **178**: all 120 original
 mode-specific recordings plus 58 recommended-mode school examples. The 60
 Adventure authoring proofs are separate; they are not installed demonstrations.
 Main Snake content #973 adds 24 challenges within the same 14 worlds. Fourteen
-optional matching Self-level foundation examples are in qualification; they do
+optional matching Self-level foundation examples are published in PR #979; they do
 not add challenges or increase the default installed-example count.
 
 | Order | Reviewable increment | Working estimate | Required functional evidence |
 | --- | --- | --- | --- |
-| Delivered as #972 | Watch a recorded section, then practise from its exact entry | Implemented and source/package verified | 768 exact sections, source/package51/51, three frozen admissions; protected publication pending |
-| Implemented; final packaging | Visual Follow/Observe objective inspector | Source verified | 63 browser checks, exact UI-authored two-mode replay, export/reopen/reimport and independent-mode protection |
-| 3 | Pack-removal impact and recovery guidance | 1–2 days | Identify affected revisions/records; preserve proof bytes and explain restoration |
+| Complete / merged #972 | Watch a recorded section, then practise from its exact entry | Delivered | Verified prefix and end boundary, accurate labels, pause/reconnect and no rewards from playback/practice |
+| Complete / merged #975 | Visual Follow/Observe objective inspector | Delivered | Author, move subject, edit criteria, export/reopen and reimport without losing settings |
+| Complete / PR #977 | Pack-removal impact and recovery guidance | Source/package verified; publication pending | 90 browser checks in each build, exact restore and preserved recording/session/playlist evidence |
 | Parallel | Stadium, then yard/garage art using shared Themes materials | 3–5 days per bounded batch | Readability, collision/visibility parity, resource disposal and source/packaged rendering |
-| Source/package complete | 14 optional Self-level foundation examples; Adventure next | 109 browser checks per build | Correct mode/revision, complete replay and bounded optional delivery |
+| Published #979 | 14 optional Self-level foundation examples; Adventure next | 109 browser checks per build | Correct mode/revision, complete replay and bounded optional delivery |
 | 5 | Further distinct practice worlds and moving-subject challenges | 3–5 days per pair | Authored routes/objectives, both-mode access and verified demonstrations |
 | Last | H/R7 deferred unit coverage and broad qualification | 5–10 days, excluding external sessions | Required regression, replay/storage failures, named-device performance and separately recorded human acceptance |
 
@@ -38,8 +42,9 @@ These are planning estimates, not elapsed-work promises. Hardware and player
 sessions remain an acceptance backlog and can inform later revisions, but no
 implementation row above waits for them. Current file caps are **64/72/104** and
 byte caps **8/8/16 MiB** for the three optional packages. Keep all guards and
-release authority unchanged. Edition capacity repair #968 is merged; successful
-optional admission alone still does not establish whole-edition capacity.
+release authority unchanged. Lossless capacity repair #968 is merged; continue
+checking current capacity because optional admission does not establish
+whole-edition capacity.
 
 Publish complete, verified increments separately. Start independent branches on
 current main; use a new native stack only for genuine dependencies. Closed stacks
