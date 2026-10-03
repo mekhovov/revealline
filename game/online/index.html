@@ -43,6 +43,10 @@
             <option value="fast">Fast</option>
           </select></label
         >
+        <p id="selection-source" class="selection-source" role="status"></p>
+        <label id="share-selection" hidden
+          ><span id="share-label">Share this mission selection</span><input id="share" readonly
+        /></label>
         <button id="create" disabled>Create private room</button
         ><button id="public" hidden>Find an unranked player</button>
       </section>
@@ -51,7 +55,19 @@
           ><span id="invite-label">Invite your friend</span><input id="invite" readonly
         /></label>
         <p id="seats"></p>
-        <p id="identity" class="identity"></p>
+        <div class="accepted-content">
+          <h2 id="accepted-title">Accepted mission</h2>
+          <p id="accepted-mission"></p>
+          <p id="accepted-source"></p>
+          <details>
+            <summary id="identity-label">Exact recipe and source</summary>
+            <pre id="identity" class="identity"></pre>
+          </details>
+          <p id="result-scope">
+            Room results and replay exports are separate from local records and official chapter
+            rewards.
+          </p>
+        </div>
         <div class="actions">
           <button id="ready">Ready / Resume</button><button id="pause">Pause both</button
           ><button id="rematch" hidden>Rematch</button

@@ -7,6 +7,7 @@ import {
 } from '../studio/pursuit-editor.mjs';
 import { createPursuitPilotCandidates } from '../content-design/pursuit-pilot-candidates.mjs';
 import { compileContentProject } from '../content-design/project.mjs';
+import { getLocale, setLocale } from '../i18n/index.mjs';
 import { Document } from './helpers/couch-dom.mjs';
 
 test('route text accepts cell centres and rejects incomplete, executable or non-finite entries', () => {
@@ -65,5 +66,11 @@ test('pursuit editor creation does not read an unadopted Studio draft', () => {
     },
     apply() {},
   });
-  editor.dispose();
+  const previous = getLocale();
+  try {
+    setLocale(previous === 'en' ? 'uk' : 'en', { persist: false });
+  } finally {
+    editor.dispose();
+    setLocale(previous, { persist: false });
+  }
 });

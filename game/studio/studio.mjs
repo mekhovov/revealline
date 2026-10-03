@@ -23,6 +23,8 @@ import { createTimedBorderCandidates } from '../content-design/timed-border-cand
 import { TIMED_BONUS_TRAIL_VERSION } from '../core/timed-bonuses.mjs';
 import { createCulturalWorkshopCandidates } from '../content-design/cultural-workshop-candidates.mjs';
 import { createPursuitInterceptCandidates } from '../content-design/pursuit-intercept-candidates.mjs';
+import { createPursuitPilotCandidates } from '../content-design/pursuit-pilot-candidates.mjs';
+import { createPursuitCampaignCandidates } from '../content-design/pursuit-campaign-candidates.mjs';
 import { createCombatCandidates } from '../content-design/combat-candidates.mjs';
 import { createSpatialBalanceCandidates } from '../content-design/spatial-balance-candidates.mjs';
 import { createSignalCandidates } from '../content-design/signal-candidates.mjs';
@@ -868,6 +870,18 @@ $('pursuit-intercept').onclick = guarded(() => {
   sourceChanged = true;
   inspectSource();
 });
+for (const [id, create, team] of [
+  ['living-pilots', createPursuitPilotCandidates, false],
+  ['living-chapters', createPursuitCampaignCandidates, false],
+  ['living-team-pilots', createPursuitPilotCandidates, true],
+  ['living-team-chapters', createPursuitCampaignCandidates, true],
+])
+  $(id).onclick = guarded(() => {
+    if (!discardSource()) return;
+    $('source').value = JSON.stringify(create({ team }), null, 2);
+    sourceChanged = true;
+    inspectSource();
+  });
 $('combat-study').onclick = guarded(() => {
   if (!discardSource()) return;
   $('source').value = JSON.stringify(createCombatCandidates(), null, 2);

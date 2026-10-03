@@ -1,0 +1,1010 @@
+{
+  "format": "pursuit-pilot-packet.v1",
+  "source": {
+    "commit": "b20ca9e0ed568b3f5477726083f011cc2e19f4ac",
+    "dirty": false
+  },
+  "scope": "Native source admission and programmatic format round-trips only. No gameplay route or human/device qualification is supplied.",
+  "files": [
+    {
+      "name": "capture-solo.json",
+      "bytes": 4633,
+      "sha256": "cfd5b9ba139ba72da066886ea08c871c06975d1101b09dc9cd3919f50e85a8b1"
+    },
+    {
+      "name": "capture-team.json",
+      "bytes": 9325,
+      "sha256": "48651085adff4a3f58429f14ed31998fdafbcb63c8079f77deb07a803952c420"
+    },
+    {
+      "name": "snake-pilots.rlsnake.json",
+      "bytes": 3076,
+      "sha256": "4bfb03e4c578da4f5fddca977fb83f20878aab27d568f1541ca307ab2d41d72b"
+    },
+    {
+      "name": "low-pass-depot.rlpack",
+      "bytes": 3783,
+      "sha256": "2ec58f4fdcd21270110af0c36d7cde3935ffc7aadb9f22dfe1582b561f325880"
+    },
+    {
+      "name": "low-pass-depot.zip",
+      "bytes": 3842,
+      "sha256": "54345506afb8f3e98558587d5cb6d4f2ce971ae0f28c15e1d64a4a04c08fed3c"
+    }
+  ],
+  "pilots": [
+    "crossing-post",
+    "pincer-yard",
+    "relay-rendezvous",
+    "classic-living-cable-cutoff",
+    "classic-living-shield-window",
+    "snake-hunt-ground-routes-low-pass-depot"
+  ],
+  "cases": [
+    {
+      "pilot": "crossing-post",
+      "family": "capture",
+      "mode": "solo",
+      "pace": "gentle",
+      "seed": 1,
+      "source": "pursuit-solo-pilots-project",
+      "revision": "pursuit-pilots-2",
+      "launch": "/game/?journey=pursuit-pilots-v1&lang=en",
+      "launchKind": "campaign-entry-requires-selection",
+      "beforeStart": "Select mission crossing-post, difficulty gentle and authored encounters. Start a fresh attempt; do not Continue a saved cursor. Use Scout with immediate turns.",
+      "recording": "native-solo-replay",
+      "recipe": {
+        "format": "xonix-level.v12",
+        "identity": "7e5dcc5b0ed91924",
+        "sha256": "1b1f0926d4e4f443e9c313559faedf529793d25be1817376250b48ab1bc68308"
+      },
+      "options": {
+        "seed": 1,
+        "turnPolicy": "immediate",
+        "classId": "scout",
+        "classRecipes": [
+          {
+            "id": "scout",
+            "label": "Scout",
+            "description": "Mark hidden objectives permanently; show enemy direction hints for four seconds. No slowing.",
+            "primitive": "scan",
+            "capacity": 0,
+            "cooldown": 6,
+            "duration": 4,
+            "radius": 48,
+            "revision": "1"
+          },
+          {
+            "id": "bomber",
+            "label": "Light carrier",
+            "description": "Pick up one charge at a supply pad; drop a field that stuns nearby field enemies.",
+            "primitive": "stun-field",
+            "capacity": 1,
+            "cooldown": 2,
+            "duration": 2.5,
+            "radius": 3,
+            "revision": "1"
+          },
+          {
+            "id": "carrier",
+            "label": "Heavy carrier",
+            "description": "Carry two charges; each creates the same temporary stun field.",
+            "primitive": "stun-field",
+            "capacity": 2,
+            "cooldown": 2,
+            "duration": 2.5,
+            "radius": 3,
+            "revision": "1"
+          },
+          {
+            "id": "interceptor",
+            "label": "Interceptor",
+            "description": "Absorb one enemy or lane contact: cancel the cut and recover at spawn without losing a life. Self-crossing remains dangerous.",
+            "primitive": "shield",
+            "capacity": 0,
+            "cooldown": 9,
+            "duration": 1.5,
+            "radius": 0,
+            "revision": "1"
+          },
+          {
+            "id": "fiber",
+            "label": "Fiber relay",
+            "description": "Ignore signal interference and scan for hidden relays. Your cable is the live trail: enemy contact still breaks it.",
+            "primitive": "scan",
+            "capacity": 0,
+            "cooldown": 7,
+            "duration": 3,
+            "radius": 30,
+            "signalResistance": true,
+            "moveSpeedMultiplier": 1,
+            "revision": "1"
+          },
+          {
+            "id": "impact",
+            "label": "Impact craft",
+            "description": "Release a close-range stun pulse, abandon the unfinished cut and redeploy at home without losing a life. The pulse never captures territory.",
+            "primitive": "impact-pulse",
+            "capacity": 0,
+            "cooldown": 10,
+            "duration": 3,
+            "radius": 5,
+            "revision": "1"
+          },
+          {
+            "id": "trapper",
+            "label": "Trapper",
+            "description": "Pick up one charge and place a four-second field that slows field enemies to one quarter speed.",
+            "primitive": "slow-field",
+            "capacity": 1,
+            "cooldown": 2,
+            "duration": 4,
+            "radius": 4,
+            "slowFactor": 0.25,
+            "revision": "1"
+          }
+        ]
+      },
+      "demonstratedCompletionRoute": null,
+      "humanPlay": "pending",
+      "deviceAndAccessibility": "pending",
+      "publicRelease": "not-qualified"
+    },
+    {
+      "pilot": "crossing-post",
+      "family": "capture",
+      "mode": "solo",
+      "pace": "standard",
+      "seed": 1,
+      "source": "pursuit-solo-pilots-project",
+      "revision": "pursuit-pilots-2",
+      "launch": "/game/?journey=pursuit-pilots-v1&lang=en",
+      "launchKind": "campaign-entry-requires-selection",
+      "beforeStart": "Select mission crossing-post, difficulty standard and authored encounters. Start a fresh attempt; do not Continue a saved cursor. Use Scout with immediate turns.",
+      "recording": "native-solo-replay",
+      "recipe": {
+        "format": "xonix-level.v12",
+        "identity": "f51efe3e4de3dbca",
+        "sha256": "e67cd16f122c18df337bbeeaec45c8d00e61d31400e44f12cf22b455fed06bc6"
+      },
+      "options": {
+        "seed": 1,
+        "turnPolicy": "immediate",
+        "classId": "scout",
+        "classRecipes": [
+          {
+            "id": "scout",
+            "label": "Scout",
+            "description": "Mark hidden objectives permanently; show enemy direction hints for four seconds. No slowing.",
+            "primitive": "scan",
+            "capacity": 0,
+            "cooldown": 6,
+            "duration": 4,
+            "radius": 48,
+            "revision": "1"
+          },
+          {
+            "id": "bomber",
+            "label": "Light carrier",
+            "description": "Pick up one charge at a supply pad; drop a field that stuns nearby field enemies.",
+            "primitive": "stun-field",
+            "capacity": 1,
+            "cooldown": 2,
+            "duration": 2.5,
+            "radius": 3,
+            "revision": "1"
+          },
+          {
+            "id": "carrier",
+            "label": "Heavy carrier",
+            "description": "Carry two charges; each creates the same temporary stun field.",
+            "primitive": "stun-field",
+            "capacity": 2,
+            "cooldown": 2,
+            "duration": 2.5,
+            "radius": 3,
+            "revision": "1"
+          },
+          {
+            "id": "interceptor",
+            "label": "Interceptor",
+            "description": "Absorb one enemy or lane contact: cancel the cut and recover at spawn without losing a life. Self-crossing remains dangerous.",
+            "primitive": "shield",
+            "capacity": 0,
+            "cooldown": 9,
+            "duration": 1.5,
+            "radius": 0,
+            "revision": "1"
+          },
+          {
+            "id": "fiber",
+            "label": "Fiber relay",
+            "description": "Ignore signal interference and scan for hidden relays. Your cable is the live trail: enemy contact still breaks it.",
+            "primitive": "scan",
+            "capacity": 0,
+            "cooldown": 7,
+            "duration": 3,
+            "radius": 30,
+            "signalResistance": true,
+            "moveSpeedMultiplier": 1,
+            "revision": "1"
+          },
+          {
+            "id": "impact",
+            "label": "Impact craft",
+            "description": "Release a close-range stun pulse, abandon the unfinished cut and redeploy at home without losing a life. The pulse never captures territory.",
+            "primitive": "impact-pulse",
+            "capacity": 0,
+            "cooldown": 10,
+            "duration": 3,
+            "radius": 5,
+            "revision": "1"
+          },
+          {
+            "id": "trapper",
+            "label": "Trapper",
+            "description": "Pick up one charge and place a four-second field that slows field enemies to one quarter speed.",
+            "primitive": "slow-field",
+            "capacity": 1,
+            "cooldown": 2,
+            "duration": 4,
+            "radius": 4,
+            "slowFactor": 0.25,
+            "revision": "1"
+          }
+        ]
+      },
+      "demonstratedCompletionRoute": null,
+      "humanPlay": "pending",
+      "deviceAndAccessibility": "pending",
+      "publicRelease": "not-qualified"
+    },
+    {
+      "pilot": "crossing-post",
+      "family": "capture",
+      "mode": "solo",
+      "pace": "expert",
+      "seed": 1,
+      "source": "pursuit-solo-pilots-project",
+      "revision": "pursuit-pilots-2",
+      "launch": "/game/?journey=pursuit-pilots-v1&lang=en",
+      "launchKind": "campaign-entry-requires-selection",
+      "beforeStart": "Select mission crossing-post, difficulty expert and authored encounters. Start a fresh attempt; do not Continue a saved cursor. Use Scout with immediate turns.",
+      "recording": "native-solo-replay",
+      "recipe": {
+        "format": "xonix-level.v12",
+        "identity": "83a64bf112cc6df2",
+        "sha256": "5c16a038cebb7d1c4e6634f9e73e66a2f3a7e065da5cd962560d2e93b1d08e44"
+      },
+      "options": {
+        "seed": 1,
+        "turnPolicy": "immediate",
+        "classId": "scout",
+        "classRecipes": [
+          {
+            "id": "scout",
+            "label": "Scout",
+            "description": "Mark hidden objectives permanently; show enemy direction hints for four seconds. No slowing.",
+            "primitive": "scan",
+            "capacity": 0,
+            "cooldown": 6,
+            "duration": 4,
+            "radius": 48,
+            "revision": "1"
+          },
+          {
+            "id": "bomber",
+            "label": "Light carrier",
+            "description": "Pick up one charge at a supply pad; drop a field that stuns nearby field enemies.",
+            "primitive": "stun-field",
+            "capacity": 1,
+            "cooldown": 2,
+            "duration": 2.5,
+            "radius": 3,
+            "revision": "1"
+          },
+          {
+            "id": "carrier",
+            "label": "Heavy carrier",
+            "description": "Carry two charges; each creates the same temporary stun field.",
+            "primitive": "stun-field",
+            "capacity": 2,
+            "cooldown": 2,
+            "duration": 2.5,
+            "radius": 3,
+            "revision": "1"
+          },
+          {
+            "id": "interceptor",
+            "label": "Interceptor",
+            "description": "Absorb one enemy or lane contact: cancel the cut and recover at spawn without losing a life. Self-crossing remains dangerous.",
+            "primitive": "shield",
+            "capacity": 0,
+            "cooldown": 9,
+            "duration": 1.5,
+            "radius": 0,
+            "revision": "1"
+          },
+          {
+            "id": "fiber",
+            "label": "Fiber relay",
+            "description": "Ignore signal interference and scan for hidden relays. Your cable is the live trail: enemy contact still breaks it.",
+            "primitive": "scan",
+            "capacity": 0,
+            "cooldown": 7,
+            "duration": 3,
+            "radius": 30,
+            "signalResistance": true,
+            "moveSpeedMultiplier": 1,
+            "revision": "1"
+          },
+          {
+            "id": "impact",
+            "label": "Impact craft",
+            "description": "Release a close-range stun pulse, abandon the unfinished cut and redeploy at home without losing a life. The pulse never captures territory.",
+            "primitive": "impact-pulse",
+            "capacity": 0,
+            "cooldown": 10,
+            "duration": 3,
+            "radius": 5,
+            "revision": "1"
+          },
+          {
+            "id": "trapper",
+            "label": "Trapper",
+            "description": "Pick up one charge and place a four-second field that slows field enemies to one quarter speed.",
+            "primitive": "slow-field",
+            "capacity": 1,
+            "cooldown": 2,
+            "duration": 4,
+            "radius": 4,
+            "slowFactor": 0.25,
+            "revision": "1"
+          }
+        ]
+      },
+      "demonstratedCompletionRoute": null,
+      "humanPlay": "pending",
+      "deviceAndAccessibility": "pending",
+      "publicRelease": "not-qualified"
+    },
+    {
+      "pilot": "crossing-post",
+      "family": "capture",
+      "mode": "versus",
+      "pace": "gentle",
+      "seed": 1,
+      "source": "pursuit-solo-pilots-project",
+      "revision": "pursuit-pilots-2",
+      "launch": "/game/couch/?journey=pursuit-pilots-v1&lang=en",
+      "launchKind": "campaign-entry-requires-selection",
+      "beforeStart": "Select mission crossing-post, difficulty gentle and authored encounters. Start a fresh attempt; do not Continue a saved cursor. Retain the native paired/shared rules.",
+      "recording": "local-terminal-export-unavailable",
+      "recipe": {
+        "format": "xonix-level.v12",
+        "identity": "7e5dcc5b0ed91924",
+        "sha256": "1b1f0926d4e4f443e9c313559faedf529793d25be1817376250b48ab1bc68308"
+      },
+      "demonstratedCompletionRoute": null,
+      "humanPlay": "pending",
+      "deviceAndAccessibility": "pending",
+      "publicRelease": "not-qualified"
+    },
+    {
+      "pilot": "crossing-post",
+      "family": "capture",
+      "mode": "versus",
+      "pace": "standard",
+      "seed": 1,
+      "source": "pursuit-solo-pilots-project",
+      "revision": "pursuit-pilots-2",
+      "launch": "/game/couch/?journey=pursuit-pilots-v1&lang=en",
+      "launchKind": "campaign-entry-requires-selection",
+      "beforeStart": "Select mission crossing-post, difficulty standard and authored encounters. Start a fresh attempt; do not Continue a saved cursor. Retain the native paired/shared rules.",
+      "recording": "local-terminal-export-unavailable",
+      "recipe": {
+        "format": "xonix-level.v12",
+        "identity": "f51efe3e4de3dbca",
+        "sha256": "e67cd16f122c18df337bbeeaec45c8d00e61d31400e44f12cf22b455fed06bc6"
+      },
+      "demonstratedCompletionRoute": null,
+      "humanPlay": "pending",
+      "deviceAndAccessibility": "pending",
+      "publicRelease": "not-qualified"
+    },
+    {
+      "pilot": "crossing-post",
+      "family": "capture",
+      "mode": "versus",
+      "pace": "expert",
+      "seed": 1,
+      "source": "pursuit-solo-pilots-project",
+      "revision": "pursuit-pilots-2",
+      "launch": "/game/couch/?journey=pursuit-pilots-v1&lang=en",
+      "launchKind": "campaign-entry-requires-selection",
+      "beforeStart": "Select mission crossing-post, difficulty expert and authored encounters. Start a fresh attempt; do not Continue a saved cursor. Retain the native paired/shared rules.",
+      "recording": "local-terminal-export-unavailable",
+      "recipe": {
+        "format": "xonix-level.v12",
+        "identity": "83a64bf112cc6df2",
+        "sha256": "5c16a038cebb7d1c4e6634f9e73e66a2f3a7e065da5cd962560d2e93b1d08e44"
+      },
+      "demonstratedCompletionRoute": null,
+      "humanPlay": "pending",
+      "deviceAndAccessibility": "pending",
+      "publicRelease": "not-qualified"
+    },
+    {
+      "pilot": "pincer-yard",
+      "family": "capture",
+      "mode": "team",
+      "pace": "gentle",
+      "seed": 17,
+      "source": "pursuit-team-pilots-project",
+      "revision": "pursuit-pilots-2",
+      "launch": "/game/couch/relay-rescue.html?journey=pursuit-pilots-v1&lang=en",
+      "launchKind": "campaign-entry-requires-selection",
+      "beforeStart": "Select mission pincer-yard, difficulty gentle and authored encounters. Start a fresh attempt; do not Continue a saved cursor. Retain the native paired/shared rules.",
+      "recording": "local-terminal-export-unavailable",
+      "recipe": {
+        "format": "revealline-coop-level.v11",
+        "identity": "bfee105c30cbbbd9",
+        "sha256": "18a33ab45314b1477d914b5db331e0c5af6c71ee136d7aef50796b69b5a33708"
+      },
+      "demonstratedCompletionRoute": null,
+      "humanPlay": "pending",
+      "deviceAndAccessibility": "pending",
+      "publicRelease": "not-qualified"
+    },
+    {
+      "pilot": "relay-rendezvous",
+      "family": "capture",
+      "mode": "team",
+      "pace": "gentle",
+      "seed": 17,
+      "source": "pursuit-team-pilots-project",
+      "revision": "pursuit-pilots-2",
+      "launch": "/game/couch/relay-rescue.html?journey=pursuit-pilots-v1&lang=en",
+      "launchKind": "campaign-entry-requires-selection",
+      "beforeStart": "Select mission relay-rendezvous, difficulty gentle and authored encounters. Start a fresh attempt; do not Continue a saved cursor. Retain the native paired/shared rules.",
+      "recording": "local-terminal-export-unavailable",
+      "recipe": {
+        "format": "revealline-coop-level.v11",
+        "identity": "a0dba27085dca782",
+        "sha256": "c7c392acd6b21df01b987c592502be3097c03d0a7b156a3c99691eb66bbbc76e"
+      },
+      "demonstratedCompletionRoute": null,
+      "humanPlay": "pending",
+      "deviceAndAccessibility": "pending",
+      "publicRelease": "not-qualified"
+    },
+    {
+      "pilot": "pincer-yard",
+      "family": "capture",
+      "mode": "team",
+      "pace": "standard",
+      "seed": 17,
+      "source": "pursuit-team-pilots-project",
+      "revision": "pursuit-pilots-2",
+      "launch": "/game/couch/relay-rescue.html?journey=pursuit-pilots-v1&lang=en",
+      "launchKind": "campaign-entry-requires-selection",
+      "beforeStart": "Select mission pincer-yard, difficulty standard and authored encounters. Start a fresh attempt; do not Continue a saved cursor. Retain the native paired/shared rules.",
+      "recording": "local-terminal-export-unavailable",
+      "recipe": {
+        "format": "revealline-coop-level.v11",
+        "identity": "8fd470190b7ea7a1",
+        "sha256": "eec09ec1411948825897dec39ca8e988a4d7f2c59ff73c2c24cff76ce26c8859"
+      },
+      "demonstratedCompletionRoute": null,
+      "humanPlay": "pending",
+      "deviceAndAccessibility": "pending",
+      "publicRelease": "not-qualified"
+    },
+    {
+      "pilot": "relay-rendezvous",
+      "family": "capture",
+      "mode": "team",
+      "pace": "standard",
+      "seed": 17,
+      "source": "pursuit-team-pilots-project",
+      "revision": "pursuit-pilots-2",
+      "launch": "/game/couch/relay-rescue.html?journey=pursuit-pilots-v1&lang=en",
+      "launchKind": "campaign-entry-requires-selection",
+      "beforeStart": "Select mission relay-rendezvous, difficulty standard and authored encounters. Start a fresh attempt; do not Continue a saved cursor. Retain the native paired/shared rules.",
+      "recording": "local-terminal-export-unavailable",
+      "recipe": {
+        "format": "revealline-coop-level.v11",
+        "identity": "d6fe99c041f0d926",
+        "sha256": "20a1641a6e37e245f039050fb2eaf3848ef8acbce5237e90a6b1c900b8c6cd57"
+      },
+      "demonstratedCompletionRoute": null,
+      "humanPlay": "pending",
+      "deviceAndAccessibility": "pending",
+      "publicRelease": "not-qualified"
+    },
+    {
+      "pilot": "pincer-yard",
+      "family": "capture",
+      "mode": "team",
+      "pace": "expert",
+      "seed": 17,
+      "source": "pursuit-team-pilots-project",
+      "revision": "pursuit-pilots-2",
+      "launch": "/game/couch/relay-rescue.html?journey=pursuit-pilots-v1&lang=en",
+      "launchKind": "campaign-entry-requires-selection",
+      "beforeStart": "Select mission pincer-yard, difficulty expert and authored encounters. Start a fresh attempt; do not Continue a saved cursor. Retain the native paired/shared rules.",
+      "recording": "local-terminal-export-unavailable",
+      "recipe": {
+        "format": "revealline-coop-level.v11",
+        "identity": "7f546c144fa3af11",
+        "sha256": "ab5c2bee39b299dbe3e9c6a837d642e377908f96fece09fbe992cce15b9550b5"
+      },
+      "demonstratedCompletionRoute": null,
+      "humanPlay": "pending",
+      "deviceAndAccessibility": "pending",
+      "publicRelease": "not-qualified"
+    },
+    {
+      "pilot": "relay-rendezvous",
+      "family": "capture",
+      "mode": "team",
+      "pace": "expert",
+      "seed": 17,
+      "source": "pursuit-team-pilots-project",
+      "revision": "pursuit-pilots-2",
+      "launch": "/game/couch/relay-rescue.html?journey=pursuit-pilots-v1&lang=en",
+      "launchKind": "campaign-entry-requires-selection",
+      "beforeStart": "Select mission relay-rendezvous, difficulty expert and authored encounters. Start a fresh attempt; do not Continue a saved cursor. Retain the native paired/shared rules.",
+      "recording": "local-terminal-export-unavailable",
+      "recipe": {
+        "format": "revealline-coop-level.v11",
+        "identity": "b6d3d3b7cc918a22",
+        "sha256": "da450ea2e7b7ff45df6bc827d722b992bd36af314212d7b7459470c49b94e3c7"
+      },
+      "demonstratedCompletionRoute": null,
+      "humanPlay": "pending",
+      "deviceAndAccessibility": "pending",
+      "publicRelease": "not-qualified"
+    },
+    {
+      "pilot": "classic-living-cable-cutoff",
+      "family": "snake",
+      "mode": "solo",
+      "pace": "slow",
+      "seed": 17,
+      "source": "classic-snake-twin-intercepts",
+      "revision": "1",
+      "launch": "/game/snake/play.html?mode=solo&level=classic-living-cable-cutoff&activity=campaign&targets=authored&board=retro&pace=slow&seed=17&lang=en",
+      "launchKind": "pinned-preparation",
+      "beforeStart": "Confirm the shown mission, pace and authored target rules, then Start.",
+      "recording": "native-snake-session",
+      "recipe": {
+        "format": "classic-snake-level.v3",
+        "identity": "9ac9b4fc11c9019a",
+        "sha256": "2b0fca72cbc4f4f840a61024016e88d8cddd768511766dca4d0178e4836eb9c9"
+      },
+      "demonstratedCompletionRoute": null,
+      "humanPlay": "pending",
+      "deviceAndAccessibility": "pending",
+      "publicRelease": "not-qualified"
+    },
+    {
+      "pilot": "classic-living-cable-cutoff",
+      "family": "snake",
+      "mode": "solo",
+      "pace": "normal",
+      "seed": 17,
+      "source": "classic-snake-twin-intercepts",
+      "revision": "1",
+      "launch": "/game/snake/play.html?mode=solo&level=classic-living-cable-cutoff&activity=campaign&targets=authored&board=retro&pace=normal&seed=17&lang=en",
+      "launchKind": "pinned-preparation",
+      "beforeStart": "Confirm the shown mission, pace and authored target rules, then Start.",
+      "recording": "native-snake-session",
+      "recipe": {
+        "format": "classic-snake-level.v3",
+        "identity": "98540ea87137165a",
+        "sha256": "f6428ae40e6b1867f90f79b80a8954f70f54fe22b366652c07ba96a9554fb731"
+      },
+      "demonstratedCompletionRoute": null,
+      "humanPlay": "pending",
+      "deviceAndAccessibility": "pending",
+      "publicRelease": "not-qualified"
+    },
+    {
+      "pilot": "classic-living-cable-cutoff",
+      "family": "snake",
+      "mode": "solo",
+      "pace": "fast",
+      "seed": 17,
+      "source": "classic-snake-twin-intercepts",
+      "revision": "1",
+      "launch": "/game/snake/play.html?mode=solo&level=classic-living-cable-cutoff&activity=campaign&targets=authored&board=retro&pace=fast&seed=17&lang=en",
+      "launchKind": "pinned-preparation",
+      "beforeStart": "Confirm the shown mission, pace and authored target rules, then Start.",
+      "recording": "native-snake-session",
+      "recipe": {
+        "format": "classic-snake-level.v3",
+        "identity": "4af520f4d549f2ca",
+        "sha256": "f20cb74c39c8f820d9f4959bf723021bce97c1e02335d0c15903b004d0aace76"
+      },
+      "demonstratedCompletionRoute": null,
+      "humanPlay": "pending",
+      "deviceAndAccessibility": "pending",
+      "publicRelease": "not-qualified"
+    },
+    {
+      "pilot": "classic-living-cable-cutoff",
+      "family": "snake",
+      "mode": "versus",
+      "pace": "slow",
+      "seed": 17,
+      "source": "classic-snake-twin-intercepts",
+      "revision": "1",
+      "launch": "/game/snake/play.html?mode=versus&level=classic-living-cable-cutoff&activity=campaign&targets=authored&board=retro&pace=slow&seed=17&lang=en",
+      "launchKind": "pinned-preparation",
+      "beforeStart": "Confirm the shown mission, pace and authored target rules, then Start.",
+      "recording": "native-snake-session",
+      "recipe": {
+        "format": "classic-snake-level.v3",
+        "identity": "9ac9b4fc11c9019a",
+        "sha256": "2b0fca72cbc4f4f840a61024016e88d8cddd768511766dca4d0178e4836eb9c9"
+      },
+      "demonstratedCompletionRoute": null,
+      "humanPlay": "pending",
+      "deviceAndAccessibility": "pending",
+      "publicRelease": "not-qualified"
+    },
+    {
+      "pilot": "classic-living-cable-cutoff",
+      "family": "snake",
+      "mode": "versus",
+      "pace": "normal",
+      "seed": 17,
+      "source": "classic-snake-twin-intercepts",
+      "revision": "1",
+      "launch": "/game/snake/play.html?mode=versus&level=classic-living-cable-cutoff&activity=campaign&targets=authored&board=retro&pace=normal&seed=17&lang=en",
+      "launchKind": "pinned-preparation",
+      "beforeStart": "Confirm the shown mission, pace and authored target rules, then Start.",
+      "recording": "native-snake-session",
+      "recipe": {
+        "format": "classic-snake-level.v3",
+        "identity": "98540ea87137165a",
+        "sha256": "f6428ae40e6b1867f90f79b80a8954f70f54fe22b366652c07ba96a9554fb731"
+      },
+      "demonstratedCompletionRoute": null,
+      "humanPlay": "pending",
+      "deviceAndAccessibility": "pending",
+      "publicRelease": "not-qualified"
+    },
+    {
+      "pilot": "classic-living-cable-cutoff",
+      "family": "snake",
+      "mode": "versus",
+      "pace": "fast",
+      "seed": 17,
+      "source": "classic-snake-twin-intercepts",
+      "revision": "1",
+      "launch": "/game/snake/play.html?mode=versus&level=classic-living-cable-cutoff&activity=campaign&targets=authored&board=retro&pace=fast&seed=17&lang=en",
+      "launchKind": "pinned-preparation",
+      "beforeStart": "Confirm the shown mission, pace and authored target rules, then Start.",
+      "recording": "native-snake-session",
+      "recipe": {
+        "format": "classic-snake-level.v3",
+        "identity": "4af520f4d549f2ca",
+        "sha256": "f20cb74c39c8f820d9f4959bf723021bce97c1e02335d0c15903b004d0aace76"
+      },
+      "demonstratedCompletionRoute": null,
+      "humanPlay": "pending",
+      "deviceAndAccessibility": "pending",
+      "publicRelease": "not-qualified"
+    },
+    {
+      "pilot": "classic-living-cable-cutoff",
+      "family": "snake",
+      "mode": "team",
+      "pace": "slow",
+      "seed": 17,
+      "source": "classic-snake-twin-intercepts",
+      "revision": "1",
+      "launch": "/game/snake/play.html?mode=team&level=classic-living-cable-cutoff&activity=campaign&targets=authored&board=retro&pace=slow&seed=17&lang=en",
+      "launchKind": "pinned-preparation",
+      "beforeStart": "Confirm the shown mission, pace and authored target rules, then Start.",
+      "recording": "native-snake-session",
+      "recipe": {
+        "format": "classic-snake-level.v3",
+        "identity": "9ac9b4fc11c9019a",
+        "sha256": "2b0fca72cbc4f4f840a61024016e88d8cddd768511766dca4d0178e4836eb9c9"
+      },
+      "demonstratedCompletionRoute": null,
+      "humanPlay": "pending",
+      "deviceAndAccessibility": "pending",
+      "publicRelease": "not-qualified"
+    },
+    {
+      "pilot": "classic-living-cable-cutoff",
+      "family": "snake",
+      "mode": "team",
+      "pace": "normal",
+      "seed": 17,
+      "source": "classic-snake-twin-intercepts",
+      "revision": "1",
+      "launch": "/game/snake/play.html?mode=team&level=classic-living-cable-cutoff&activity=campaign&targets=authored&board=retro&pace=normal&seed=17&lang=en",
+      "launchKind": "pinned-preparation",
+      "beforeStart": "Confirm the shown mission, pace and authored target rules, then Start.",
+      "recording": "native-snake-session",
+      "recipe": {
+        "format": "classic-snake-level.v3",
+        "identity": "98540ea87137165a",
+        "sha256": "f6428ae40e6b1867f90f79b80a8954f70f54fe22b366652c07ba96a9554fb731"
+      },
+      "demonstratedCompletionRoute": null,
+      "humanPlay": "pending",
+      "deviceAndAccessibility": "pending",
+      "publicRelease": "not-qualified"
+    },
+    {
+      "pilot": "classic-living-cable-cutoff",
+      "family": "snake",
+      "mode": "team",
+      "pace": "fast",
+      "seed": 17,
+      "source": "classic-snake-twin-intercepts",
+      "revision": "1",
+      "launch": "/game/snake/play.html?mode=team&level=classic-living-cable-cutoff&activity=campaign&targets=authored&board=retro&pace=fast&seed=17&lang=en",
+      "launchKind": "pinned-preparation",
+      "beforeStart": "Confirm the shown mission, pace and authored target rules, then Start.",
+      "recording": "native-snake-session",
+      "recipe": {
+        "format": "classic-snake-level.v3",
+        "identity": "4af520f4d549f2ca",
+        "sha256": "f20cb74c39c8f820d9f4959bf723021bce97c1e02335d0c15903b004d0aace76"
+      },
+      "demonstratedCompletionRoute": null,
+      "humanPlay": "pending",
+      "deviceAndAccessibility": "pending",
+      "publicRelease": "not-qualified"
+    },
+    {
+      "pilot": "classic-living-shield-window",
+      "family": "snake",
+      "mode": "solo",
+      "pace": "slow",
+      "seed": 17,
+      "source": "classic-snake-moving-windows",
+      "revision": "1",
+      "launch": "/game/snake/play.html?mode=solo&level=classic-living-shield-window&activity=campaign&targets=authored&board=retro&pace=slow&seed=17&lang=en",
+      "launchKind": "pinned-preparation",
+      "beforeStart": "Confirm the shown mission, pace and authored target rules, then Start.",
+      "recording": "native-snake-session",
+      "recipe": {
+        "format": "classic-snake-level.v3",
+        "identity": "d85d9fe5948c871f",
+        "sha256": "deab038a5a10284ec0c316914d6e954aedad9e957c52116d83576dd63051c152"
+      },
+      "demonstratedCompletionRoute": null,
+      "humanPlay": "pending",
+      "deviceAndAccessibility": "pending",
+      "publicRelease": "not-qualified"
+    },
+    {
+      "pilot": "classic-living-shield-window",
+      "family": "snake",
+      "mode": "solo",
+      "pace": "normal",
+      "seed": 17,
+      "source": "classic-snake-moving-windows",
+      "revision": "1",
+      "launch": "/game/snake/play.html?mode=solo&level=classic-living-shield-window&activity=campaign&targets=authored&board=retro&pace=normal&seed=17&lang=en",
+      "launchKind": "pinned-preparation",
+      "beforeStart": "Confirm the shown mission, pace and authored target rules, then Start.",
+      "recording": "native-snake-session",
+      "recipe": {
+        "format": "classic-snake-level.v3",
+        "identity": "eecbb3c52c29c67f",
+        "sha256": "99dcdd613e573c62acb6da52449b34d075e69bfd00ac6976691bfd5caf2fc2b8"
+      },
+      "demonstratedCompletionRoute": null,
+      "humanPlay": "pending",
+      "deviceAndAccessibility": "pending",
+      "publicRelease": "not-qualified"
+    },
+    {
+      "pilot": "classic-living-shield-window",
+      "family": "snake",
+      "mode": "solo",
+      "pace": "fast",
+      "seed": 17,
+      "source": "classic-snake-moving-windows",
+      "revision": "1",
+      "launch": "/game/snake/play.html?mode=solo&level=classic-living-shield-window&activity=campaign&targets=authored&board=retro&pace=fast&seed=17&lang=en",
+      "launchKind": "pinned-preparation",
+      "beforeStart": "Confirm the shown mission, pace and authored target rules, then Start.",
+      "recording": "native-snake-session",
+      "recipe": {
+        "format": "classic-snake-level.v3",
+        "identity": "c7a37efef2a89fbb",
+        "sha256": "06110e89a658252a7ccd95181cac6af9176b174f20ab84cc61dead6dea5f9ab9"
+      },
+      "demonstratedCompletionRoute": null,
+      "humanPlay": "pending",
+      "deviceAndAccessibility": "pending",
+      "publicRelease": "not-qualified"
+    },
+    {
+      "pilot": "classic-living-shield-window",
+      "family": "snake",
+      "mode": "versus",
+      "pace": "slow",
+      "seed": 17,
+      "source": "classic-snake-moving-windows",
+      "revision": "1",
+      "launch": "/game/snake/play.html?mode=versus&level=classic-living-shield-window&activity=campaign&targets=authored&board=retro&pace=slow&seed=17&lang=en",
+      "launchKind": "pinned-preparation",
+      "beforeStart": "Confirm the shown mission, pace and authored target rules, then Start.",
+      "recording": "native-snake-session",
+      "recipe": {
+        "format": "classic-snake-level.v3",
+        "identity": "d85d9fe5948c871f",
+        "sha256": "deab038a5a10284ec0c316914d6e954aedad9e957c52116d83576dd63051c152"
+      },
+      "demonstratedCompletionRoute": null,
+      "humanPlay": "pending",
+      "deviceAndAccessibility": "pending",
+      "publicRelease": "not-qualified"
+    },
+    {
+      "pilot": "classic-living-shield-window",
+      "family": "snake",
+      "mode": "versus",
+      "pace": "normal",
+      "seed": 17,
+      "source": "classic-snake-moving-windows",
+      "revision": "1",
+      "launch": "/game/snake/play.html?mode=versus&level=classic-living-shield-window&activity=campaign&targets=authored&board=retro&pace=normal&seed=17&lang=en",
+      "launchKind": "pinned-preparation",
+      "beforeStart": "Confirm the shown mission, pace and authored target rules, then Start.",
+      "recording": "native-snake-session",
+      "recipe": {
+        "format": "classic-snake-level.v3",
+        "identity": "eecbb3c52c29c67f",
+        "sha256": "99dcdd613e573c62acb6da52449b34d075e69bfd00ac6976691bfd5caf2fc2b8"
+      },
+      "demonstratedCompletionRoute": null,
+      "humanPlay": "pending",
+      "deviceAndAccessibility": "pending",
+      "publicRelease": "not-qualified"
+    },
+    {
+      "pilot": "classic-living-shield-window",
+      "family": "snake",
+      "mode": "versus",
+      "pace": "fast",
+      "seed": 17,
+      "source": "classic-snake-moving-windows",
+      "revision": "1",
+      "launch": "/game/snake/play.html?mode=versus&level=classic-living-shield-window&activity=campaign&targets=authored&board=retro&pace=fast&seed=17&lang=en",
+      "launchKind": "pinned-preparation",
+      "beforeStart": "Confirm the shown mission, pace and authored target rules, then Start.",
+      "recording": "native-snake-session",
+      "recipe": {
+        "format": "classic-snake-level.v3",
+        "identity": "c7a37efef2a89fbb",
+        "sha256": "06110e89a658252a7ccd95181cac6af9176b174f20ab84cc61dead6dea5f9ab9"
+      },
+      "demonstratedCompletionRoute": null,
+      "humanPlay": "pending",
+      "deviceAndAccessibility": "pending",
+      "publicRelease": "not-qualified"
+    },
+    {
+      "pilot": "classic-living-shield-window",
+      "family": "snake",
+      "mode": "team",
+      "pace": "slow",
+      "seed": 17,
+      "source": "classic-snake-moving-windows",
+      "revision": "1",
+      "launch": "/game/snake/play.html?mode=team&level=classic-living-shield-window&activity=campaign&targets=authored&board=retro&pace=slow&seed=17&lang=en",
+      "launchKind": "pinned-preparation",
+      "beforeStart": "Confirm the shown mission, pace and authored target rules, then Start.",
+      "recording": "native-snake-session",
+      "recipe": {
+        "format": "classic-snake-level.v3",
+        "identity": "d85d9fe5948c871f",
+        "sha256": "deab038a5a10284ec0c316914d6e954aedad9e957c52116d83576dd63051c152"
+      },
+      "demonstratedCompletionRoute": null,
+      "humanPlay": "pending",
+      "deviceAndAccessibility": "pending",
+      "publicRelease": "not-qualified"
+    },
+    {
+      "pilot": "classic-living-shield-window",
+      "family": "snake",
+      "mode": "team",
+      "pace": "normal",
+      "seed": 17,
+      "source": "classic-snake-moving-windows",
+      "revision": "1",
+      "launch": "/game/snake/play.html?mode=team&level=classic-living-shield-window&activity=campaign&targets=authored&board=retro&pace=normal&seed=17&lang=en",
+      "launchKind": "pinned-preparation",
+      "beforeStart": "Confirm the shown mission, pace and authored target rules, then Start.",
+      "recording": "native-snake-session",
+      "recipe": {
+        "format": "classic-snake-level.v3",
+        "identity": "eecbb3c52c29c67f",
+        "sha256": "99dcdd613e573c62acb6da52449b34d075e69bfd00ac6976691bfd5caf2fc2b8"
+      },
+      "demonstratedCompletionRoute": null,
+      "humanPlay": "pending",
+      "deviceAndAccessibility": "pending",
+      "publicRelease": "not-qualified"
+    },
+    {
+      "pilot": "classic-living-shield-window",
+      "family": "snake",
+      "mode": "team",
+      "pace": "fast",
+      "seed": 17,
+      "source": "classic-snake-moving-windows",
+      "revision": "1",
+      "launch": "/game/snake/play.html?mode=team&level=classic-living-shield-window&activity=campaign&targets=authored&board=retro&pace=fast&seed=17&lang=en",
+      "launchKind": "pinned-preparation",
+      "beforeStart": "Confirm the shown mission, pace and authored target rules, then Start.",
+      "recording": "native-snake-session",
+      "recipe": {
+        "format": "classic-snake-level.v3",
+        "identity": "c7a37efef2a89fbb",
+        "sha256": "06110e89a658252a7ccd95181cac6af9176b174f20ab84cc61dead6dea5f9ab9"
+      },
+      "demonstratedCompletionRoute": null,
+      "humanPlay": "pending",
+      "deviceAndAccessibility": "pending",
+      "publicRelease": "not-qualified"
+    },
+    {
+      "pilot": "snake-hunt-ground-routes-low-pass-depot",
+      "family": "sim",
+      "mode": "self-level",
+      "pace": "native",
+      "seed": 9601,
+      "source": "civilian-fpv",
+      "revision": "r1",
+      "launch": "/optional-practice/civilian-fpv/worlds.html?snake-course=snake-hunt-ground-routes-low-pass-depot&lang=en",
+      "launchKind": "course-entry-requires-flight-mode",
+      "beforeStart": "Select self-level flight mode and Low Pass Depot, then start a fresh attempt.",
+      "recording": "native-world-proof",
+      "recipe": {
+        "format": "FlightCourse.v2",
+        "identity": "ebc583128e1cc807",
+        "sha256": "cf8179f9972dc8d847ca7a5a37a7e779e52ffc78d83ddfe58cf034590b231219"
+      },
+      "demonstratedCompletionRoute": null,
+      "humanPlay": "pending",
+      "deviceAndAccessibility": "pending",
+      "publicRelease": "not-qualified"
+    },
+    {
+      "pilot": "snake-hunt-ground-routes-low-pass-depot",
+      "family": "sim",
+      "mode": "acro",
+      "pace": "native",
+      "seed": 9601,
+      "source": "civilian-fpv",
+      "revision": "r1",
+      "launch": "/optional-practice/civilian-fpv/worlds.html?snake-course=snake-hunt-ground-routes-low-pass-depot&lang=en",
+      "launchKind": "course-entry-requires-flight-mode",
+      "beforeStart": "Select acro flight mode and Low Pass Depot, then start a fresh attempt.",
+      "recording": "native-world-proof",
+      "recipe": {
+        "format": "FlightCourse.v2",
+        "identity": "ebc583128e1cc807",
+        "sha256": "cf8179f9972dc8d847ca7a5a37a7e779e52ffc78d83ddfe58cf034590b231219"
+      },
+      "demonstratedCompletionRoute": null,
+      "humanPlay": "pending",
+      "deviceAndAccessibility": "pending",
+      "publicRelease": "not-qualified"
+    }
+  ]
+}
