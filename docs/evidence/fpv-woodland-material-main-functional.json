@@ -1,0 +1,93 @@
+{
+  "format": "FPVWoodlandMaterialFunctional.v1",
+  "baseline": "2dbbe0a0f26684eae0a2bdb0b7cbda087627457f",
+  "candidate": "9a3cae0886a1712deb09ed97e9ad23246c56d6a2",
+  "originalLibrarySha256": "8348678121e7784cb8d2a936260c52553173d2bed848bfe21b59684246b8a5c4",
+  "templateRuntimeExact": true,
+  "otherEnvironments": [
+    "snake-hunt-route-choices-cross-route-choice",
+    "snake-hunt-route-choices-boundary-cutback",
+    "snake-hunt-route-choices-airfield-circuit",
+    "snake-hunt-chase-06",
+    "snake-hunt-approach-windows-window-chain",
+    "snake-hunt-approach-windows-three-yard-finale",
+    "courtyard-08",
+    "warehouse-08",
+    "stadium-08",
+    "container-yard-08",
+    "garage-08",
+    "beginner-42",
+    "beginner-39",
+    "beginner-38",
+    "beginner-37",
+    "beginner-41",
+    "beginner-57",
+    "beginner-52"
+  ],
+  "woodland": [
+    {
+      "id": "woodland-08",
+      "correctedMaterials": 8,
+      "geometryTexturesAndSceneExact": true
+    },
+    {
+      "id": "beginner-40",
+      "correctedMaterials": 8,
+      "geometryTexturesAndSceneExact": true
+    }
+  ],
+  "pixelVariants": [
+    {
+      "id": "woodland-08",
+      "variant": "worldTheme",
+      "exact": true
+    },
+    {
+      "id": "woodland-08",
+      "variant": "theme",
+      "exact": true
+    },
+    {
+      "id": "woodland-08",
+      "variant": "themeId",
+      "exact": true
+    },
+    {
+      "id": "woodland-08",
+      "variant": "worldProfile",
+      "exact": true
+    },
+    {
+      "id": "woodland-08",
+      "variant": "profile",
+      "exact": true
+    },
+    {
+      "id": "beginner-40",
+      "variant": "worldTheme",
+      "exact": true
+    },
+    {
+      "id": "beginner-40",
+      "variant": "theme",
+      "exact": true
+    },
+    {
+      "id": "beginner-40",
+      "variant": "themeId",
+      "exact": true
+    },
+    {
+      "id": "beginner-40",
+      "variant": "worldProfile",
+      "exact": true
+    },
+    {
+      "id": "beginner-40",
+      "variant": "profile",
+      "exact": true
+    }
+  ],
+  "importPathScope": "Only builtinWorldScene reads and clones the closed embedded library. Its creator-import renderer delegate is unchanged from baseline.",
+  "passed": true
+}
