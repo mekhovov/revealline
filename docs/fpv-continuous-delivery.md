@@ -2858,3 +2858,16 @@ qualification hold is resolved; preserve the earlier 29/30 result as history.
 Return #993 to ready and use protected merge-commit auto-merge only after normal
 head-specific checks. No native stack, admission guard, release tag or public
 deployment is changed by this refresh. See the new maince6 qualification receipt.
+
+
+### Yard draft refreshed onto integrated Woodland main — 3 October 2026
+
+#998 runtime candidate ec760db263041be23f60f4450381dc4ec88ec402 integrates main
+a1cb86c85, including #1006, without replacing concurrent feature work. The existing
+30 checks pass; the scenery template/runtime match. All three frozen optional
+admissions pass with committed input/ZIP identity and two reproducible builds.
+Frozen current-main browser review and normal full CI remain pending. The sparse
+local checkout cannot run complete global validation because unrelated content
+assets are omitted. See docs/fpv-yard-landmarks.md and its new bounded receipts.
+Keep #998 draft until the browser review is complete; no human/device or public
+acceptance is inferred.
