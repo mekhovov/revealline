@@ -62,3 +62,9 @@ Latest main4074b12f7 was preserved by rebase; the regenerated registry and all13
 focused checks were reverified afterwards. Core and18-edition receipts above
 reflect that refreshed candidate. Earlier observations in the delivery log are
 historical, not exact-head publication claims.
+
+After #986 merged, this branch was rebased onto1aef4d70. The capacity compiler,
+worker, receipt validator and generated registry are byte-identical to the
+recorded candidate. All132focused checks pass again. Current-head full artifact
+qualification is left to protected CI; the saved receipts retain their original
+source identities.
