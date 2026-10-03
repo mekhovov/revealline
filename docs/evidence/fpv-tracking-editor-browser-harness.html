@@ -1,0 +1,828 @@
+<!doctype html>
+<html lang="en">
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Tracking editor · actual host qualification</title>
+  <style>
+    body {
+      font: 15px system-ui;
+      background: #101923;
+      color: #eef4f4;
+      margin: 16px;
+    }
+    button {
+      font: inherit;
+      min-height: 44px;
+      padding: 8px 16px;
+    }
+    iframe {
+      display: block;
+      width: 1280px;
+      height: 800px;
+      border: 1px solid #56717a;
+      max-width: none;
+    }
+    textarea {
+      width: 100%;
+      height: 230px;
+      font: 12px monospace;
+    }
+    p {
+      max-width: 105ch;
+    }
+  </style>
+  <h1>Tracking editor · actual production host</h1>
+  <p>
+    Actual Workshop controls, GLB import, native IndexedDB, ZIP/pack exports and WebGL scene.
+    Isolated player storage. Scripted DOM actions and ordinary fixed-step commands qualify
+    functionality; this does not establish physical-controller usability, measured FPS or player
+    acceptance.
+  </p>
+  <button id="run">Run tracking editor checks</button
+  ><button id="show">Show authored Workshop</button>
+  <p id="status" role="status">Ready</p>
+  <textarea id="receipt" readonly aria-label="Tracking editor qualification receipt"></textarea
+  ><iframe id="sim" title="Actual FPV World Workshop"></iframe>
+  <script type="module">
+    const $ = (id) => document.getElementById(id),
+      frame = $('sim'),
+      wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+    let active = null,
+      manualCleanup = null;
+    const clone = (value) => JSON.parse(JSON.stringify(value));
+    const stable = (value) =>
+      JSON.stringify(value, (_, v) =>
+        v && typeof v === 'object' && !Array.isArray(v)
+          ? Object.fromEntries(Object.entries(v).sort(([a], [b]) => a.localeCompare(b)))
+          : v,
+      );
+    const digest = async (bytes) =>
+      [
+        ...new Uint8Array(
+          await crypto.subtle.digest(
+            'SHA-256',
+            typeof bytes === 'string' ? new TextEncoder().encode(bytes) : bytes,
+          ),
+        ),
+      ]
+        .map((n) => n.toString(16).padStart(2, '0'))
+        .join('');
+    async function execute(manual = false) {
+      if (manualCleanup) {
+        await manualCleanup();
+        manualCleanup = null;
+      }
+      const checks = [],
+        phases = [],
+        names = new Set(),
+        prefix = 'fpv-tracking-editor-' + Date.now() + ':',
+        started = performance.now();
+      let manifest,
+        w,
+        d,
+        app,
+        data,
+        failed = null,
+        phase = 'Prepare',
+        authoredCourse = null,
+        exportHashes = null,
+        proofSummaries = [];
+      const progress = (label) => {
+        phase = label;
+        phases.push({ ms: Math.round(performance.now() - started), label });
+        $('status').textContent = label;
+        $('receipt').value = JSON.stringify({ status: 'running', phase, checks }, null, 2);
+      };
+      const must = (ok, name, detail = {}) => {
+        checks.push({ name, passed: !!ok, ...detail });
+        if (!ok) throw Error(name);
+      };
+      const eq = (a, b, name) => must(stable(a) === stable(b), name);
+      async function bounded(p, label, ms = 30000) {
+        let timer;
+        try {
+          return await Promise.race([
+            p,
+            new Promise(
+              (_, reject) => (timer = setTimeout(() => reject(Error('Timeout ' + label)), ms)),
+            ),
+          ]);
+        } finally {
+          clearTimeout(timer);
+        }
+      }
+      async function until(fn, label, ms = 30000) {
+        const start = performance.now();
+        while (!fn()) {
+          if (performance.now() - start > ms)
+            throw Error(
+              'Timeout ' +
+                label +
+                '; ' +
+                (d?.getElementById('lobby-status')?.textContent ?? '') +
+                '; ' +
+                (d?.querySelector('[data-actor-status]')?.textContent ?? ''),
+            );
+          await wait(15);
+          if (w?.fixtureRAF && app) w.fixtureRAF.deliver(0);
+        }
+      }
+      const memory = new Map([
+        [
+          'revealline.fpv.world-settings.v1',
+          JSON.stringify({
+            'world-language': 'en',
+            'flight-source': 'keyboard',
+            'flight-mode': 'self-level',
+            'flight-camera': 'fpv',
+            'flight-quality': 'low',
+            'sim-motion': 'reduced',
+          }),
+        ],
+      ]);
+      window.fixtureStorage = {
+        getItem: (k) => memory.get(k) ?? null,
+        setItem: (k, v) => memory.set(k, String(v)),
+        removeItem: (k) => memory.delete(k),
+      };
+      window.fixtureDB = {
+        open(name, version) {
+          const full = prefix + name;
+          names.add(full);
+          return version === undefined ? indexedDB.open(full) : indexedDB.open(full, version);
+        },
+        deleteDatabase: (name) => indexedDB.deleteDatabase(prefix + name),
+        cmp: indexedDB.cmp.bind(indexedDB),
+      };
+      const q = (selector) => d.querySelector(selector),
+        course = () => JSON.parse(d.getElementById('creator-json').value),
+        editor = () => d.getElementById('world-actor-editor');
+      const click = (node) => {
+        if (!node || node.disabled) throw Error('Missing/disabled public button');
+        node.click();
+      };
+      const button = (root, pattern) =>
+        [...root.querySelectorAll('button')].find((n) => pattern.test(n.textContent));
+      const set = (node, value) => {
+        if (!node) throw Error('Missing public input');
+        node.value = String(value);
+        node.dispatchEvent(new w.Event('change', { bubbles: true }));
+      };
+      const field = (name, value) => set(q(`[data-tracking-field="${name}"]`), value);
+      const chooseTracking = async (value) => {
+        set(q('[data-tracking-objective]'), value);
+        await wait(0);
+      };
+      async function action(name) {
+        const old = d.getElementById('creator-json').value;
+        click(q(`[data-tracking-action="${name}"]`));
+        await until(() => d.getElementById('creator-json').value !== old, 'tracking ' + name);
+        await wait(0);
+      }
+      async function reject(name) {
+        const before = course();
+        click(q(`[data-tracking-action="${name}"]`));
+        await until(
+          () => q('[data-actor-status]')?.getAttribute('role') === 'alert',
+          'invalid tracking rejected',
+        );
+        eq(course(), before, 'Invalid tracking input leaves course unchanged');
+      }
+      async function history(id, expected, name) {
+        click(d.getElementById(id));
+        await until(() => stable(course()) === stable(expected), name);
+        must(true, name);
+      }
+      async function applyJSON(value) {
+        set(d.getElementById('creator-json'), JSON.stringify(value));
+        click(d.getElementById('apply-json'));
+        await until(
+          () => d.getElementById('creator-json').value !== JSON.stringify(value),
+          'JSON baseline accepted',
+        );
+        eq(
+          course(),
+          data.model.validateWorldCourse(clone(value)),
+          'Controlled baseline uses public validated JSON import',
+        );
+      }
+      async function upload(id, blob, name) {
+        const transfer = new w.DataTransfer();
+        transfer.items.add(new w.File([blob], name, { type: blob.type }));
+        const input = d.getElementById(id);
+        input.files = transfer.files;
+        input.dispatchEvent(new w.Event('change', { bubbles: true }));
+        await wait(0);
+      }
+      async function download(id) {
+        const count = w.fixtureDownloads.length;
+        click(d.getElementById(id));
+        await until(() => w.fixtureDownloads.length > count, 'download ' + id);
+        const file = w.fixtureDownloads.at(-1);
+        return {
+          name: file.name,
+          blob: new Blob([await file.blob.arrayBuffer()], { type: file.blob.type }),
+        };
+      }
+      async function exportProject() {
+        const file = await download('export-project');
+        return { file, loaded: await data.zip.importEditableZip(file.blob) };
+      }
+      function sourceGLB(revision = 0) {
+        const settings = {
+          role: 'civilian',
+          radius: 300,
+          height: 600,
+          health: 100,
+          fireEveryTicks: 0,
+          speed: 1000,
+          path: [
+            { x: 0, y: 3000, z: -6000 },
+            { x: 0, y: 3000, z: -12000 },
+          ],
+        };
+        const doc = {
+          asset: {
+            version: '2.0',
+            generator: 'Original bounded tracking-editor qualification fixture',
+          },
+          scene: 0,
+          scenes: [{ nodes: [0, 1, 2, 3, 4, 5, 6] }],
+          nodes: [
+            { name: 'Original visual triangle', mesh: 0 },
+            {
+              name: 'Spawn',
+              translation: [0, 3, 0],
+              extras: { rl: { id: 'spawn', kind: 'spawn' } },
+            },
+            {
+              name: 'Start hold',
+              translation: [revision, 3, 0],
+              extras: { rl: { id: 'checkpoint', kind: 'checkpoint', order: 0 } },
+            },
+            {
+              name: 'Landing',
+              translation: [0, 0, 0],
+              extras: { rl: { id: 'landing', kind: 'landing', order: 1 } },
+            },
+            {
+              name: 'Moving subject',
+              translation: [revision, 3, -6],
+              extras: { rl: { id: 'subject', kind: 'actor', actorType: 'drone', settings } },
+            },
+            {
+              name: 'Stationary subject',
+              translation: [10, 3, -6],
+              extras: {
+                rl: {
+                  id: 'stationary',
+                  kind: 'actor',
+                  actorType: 'drone',
+                  settings: { ...settings, speed: 0, path: [] },
+                },
+              },
+            },
+            {
+              name: 'Excluded hazard',
+              translation: [-20, 3, -20],
+              extras: {
+                rl: {
+                  id: 'hazard',
+                  kind: 'actor',
+                  actorType: 'hazard',
+                  settings: { radius: 300, height: 600, speed: 0, path: [] },
+                },
+              },
+            },
+          ],
+          meshes: [{ primitives: [{ attributes: { POSITION: 0 }, mode: 4 }] }],
+          buffers: [{ byteLength: 36 }],
+          bufferViews: [{ buffer: 0, byteOffset: 0, byteLength: 36 }],
+          accessors: [
+            {
+              bufferView: 0,
+              componentType: 5126,
+              count: 3,
+              type: 'VEC3',
+              min: [10, 0, -10],
+              max: [11, 1, -10],
+            },
+          ],
+        };
+        return new Blob(
+          [
+            data.content.encodeWorldGLB(
+              doc,
+              new Uint8Array(new Float32Array([10, 0, -10, 11, 0, -10, 10, 1, -10]).buffer),
+            ),
+          ],
+          { type: 'model/gltf-binary' },
+        );
+      }
+      async function cleanup() {
+        if (active) {
+          const old = active;
+          active = null;
+          await bounded(old.dispose(), 'host disposal', 5000);
+        }
+        frame.src = 'about:blank';
+        await wait(20);
+        for (const name of names)
+          await bounded(
+            new Promise((resolve) => {
+              const r = indexedDB.deleteDatabase(name);
+              r.onsuccess = resolve;
+              r.onerror = resolve;
+              r.onblocked = resolve;
+            }),
+            'isolated database removal',
+            2000,
+          );
+      }
+      try {
+        progress('Verify immutable host, dependency and fixture hashes');
+        manifest = await (await fetch('./fixture-manifest.json', { cache: 'no-store' })).json();
+        for (const [url, sha] of Object.entries({
+          ...Object.fromEntries(
+            Object.entries(manifest.fixtureFiles).map(([p, h]) => [
+              new URL(p, location.href).href,
+              h,
+            ]),
+          ),
+          ...manifest.currentSources,
+        })) {
+          const r = await fetch(url, { cache: 'no-store' });
+          if (!r.ok || (await digest(await r.arrayBuffer())) !== sha)
+            throw Error('Frozen input mismatch ' + url);
+        }
+        must(true, 'Frozen candidate and harness provenance verified');
+        const load = (name) =>
+          import(manifest.candidateBase + '/optional-practice/civilian-fpv/' + name);
+        const [model, content, zip, definitions, records] = await Promise.all(
+          [
+            'world-model.mjs',
+            'world-content.mjs',
+            'world-zip.mjs',
+            'content-definitions.mjs',
+            'world-records.mjs',
+          ].map(load),
+        );
+        data = { model, content, zip, definitions };
+        await model.initWorldRuntime();
+        const url = new URL('./player.html', location.href);
+        url.searchParams.set('token', prefix);
+        url.searchParams.set('clock', manual ? 'native' : 'controlled');
+        const loaded = new Promise((r) => frame.addEventListener('load', r, { once: true }));
+        frame.src = url.href;
+        await bounded(loaded, 'HTTP frame');
+        await until(
+          () => frame.contentWindow?.fixtureLoadToken === prefix && frame.contentWindow.fixtureApp,
+          'actual mount',
+        );
+        w = frame.contentWindow;
+        d = w.document;
+        app = active = w.fixtureApp;
+        await bounded(app.ready, 'host ready');
+        w.focus();
+        must(
+          app.snapshot().catalogue === 148,
+          'Original 148 challenges retained before fixture installation',
+        );
+        click(q('[data-tab="creator"]'));
+        set(d.getElementById('asset-author'), 'RevealLine functional qualification');
+        set(d.getElementById('asset-source'), 'Original triangle and semantic markers');
+        set(d.getElementById('asset-license'), 'original');
+        progress('Import original GLB and author independent flight-mode objectives');
+        const oldId = course()?.id;
+        await upload('import-world', sourceGLB(), 'tracking-original.glb');
+        await until(
+          () => course().id !== oldId && course().actors.some((a) => a.id === 'subject'),
+          'GLB imported',
+        );
+        const imported = course();
+        must(
+          imported.actors.length === 3 && imported.steps.acro.length === 2,
+          'Source actor and route anchors compiled',
+        );
+        const divergent = clone(imported);
+        divergent.steps.acro.splice(
+          1,
+          0,
+          { type: 'survive', ticks: 5 },
+          { type: 'survive', ticks: 7 },
+        );
+        await applyJSON(divergent);
+        const initial = course(),
+          identity = { id: initial.id, world: initial.world.id };
+        must(
+          ![...q('[data-tracking-subject]').options].some((o) => o.value === 'hazard'),
+          'Hazards excluded from tracking subjects',
+        );
+        await chooseTracking('');
+        set(q('[data-tracking-subject]'), 'subject');
+        set(q('[data-tracking-kind]'), 'observe');
+        set(q('[data-tracking-modes]'), 'self-level');
+        await action('add');
+        const observe = course();
+        eq(
+          observe.steps.acro,
+          initial.steps.acro,
+          'Adding Observe to Self-level leaves Acro unchanged',
+        );
+        must(
+          observe.steps['self-level'][1].type === 'actor-track-v1' &&
+            observe.steps['self-level'][1].minTargetTravel === 0 &&
+            observe.steps['self-level'].at(-1).type === 'land',
+          'Observe inserted before Self-level landing with travel disabled',
+        );
+        await chooseTracking('');
+        set(q('[data-tracking-subject]'), 'subject');
+        set(q('[data-tracking-kind]'), 'follow');
+        set(q('[data-tracking-modes]'), 'both');
+        field('minTargetTravel', 2);
+        field('ticks', 2);
+        await action('add');
+        const both = course();
+        must(
+          both.steps['self-level'][2].minTargetTravel === 2000 &&
+            both.steps.acro[3].minTargetTravel === 2000,
+          'Both inserts separate Follow criteria at each mode’s own final landing',
+        );
+        eq(
+          both.steps.acro[1],
+          initial.steps.acro[1],
+          'Independent Acro survive criterion retained',
+        );
+        await chooseTracking('acro:3');
+        field('minDistance', 4);
+        field('maxDistance', 16);
+        field('ticks', 3.18);
+        field('maxRelativeSpeed', 2.2);
+        field('maxTilt', 60);
+        field('viewAngle', 80);
+        await action('apply');
+        const independent = course();
+        eq(
+          independent.steps['self-level'],
+          both.steps['self-level'],
+          'Editing Acro tracking values leaves Self-level byte-identical',
+        );
+        eq(
+          independent.steps.acro[3],
+          {
+            type: 'actor-track-v1',
+            actorId: 'subject',
+            minDistance: 4000,
+            maxDistance: 16000,
+            maxRelativeSpeed: 2200,
+            maxTilt: 6000,
+            ticks: 159,
+            viewAngle: 8000,
+            minTargetTravel: 2000,
+          },
+          'Metres, seconds, speed and degree inputs compile to exact integer criteria',
+        );
+        field('minDistance', 5);
+        field('maxDistance', 4);
+        await reject('apply');
+        await chooseTracking('acro:3');
+        field('ticks', 0.021);
+        await reject('apply');
+        await chooseTracking('');
+        set(q('[data-tracking-subject]'), 'stationary');
+        set(q('[data-tracking-kind]'), 'follow');
+        await reject('add');
+        set(d.getElementById('criterion-list'), '1');
+        must(
+          ['duplicate-criterion', 'remove-criterion', 'criterion-up', 'criterion-down'].every(
+            (id) => d.getElementById(id).disabled,
+          ),
+          'Generic tracking toolbar defers to explicit flight-mode inspector',
+        );
+        set(d.getElementById('criterion-list'), '0');
+        const routeBefore = course();
+        set(d.getElementById('criterion-x'), 0.4);
+        click(d.getElementById('move-criterion'));
+        await until(
+          () => course().steps['self-level'][0].min.x !== routeBefore.steps['self-level'][0].min.x,
+          'divergent route move',
+        );
+        eq(
+          course().steps.acro,
+          routeBefore.steps.acro,
+          'Generic route movement preserves divergent Acro route',
+        );
+        must(
+          /Self-level only/.test(d.getElementById('criterion-mode-scope').textContent),
+          'Route scope explicitly identifies independent modes',
+        );
+        await history(
+          'undo-edit',
+          routeBefore,
+          'Undo generic route movement restores exact authored state',
+        );
+        progress('Single-mode ordering, undo/redo and actor reference safety');
+        await chooseTracking('self-level:1');
+        await action('up');
+        const moved = course();
+        eq(
+          moved.steps.acro,
+          independent.steps.acro,
+          'Tracking reorder leaves other mode unchanged',
+        );
+        must(
+          moved.steps['self-level'][0].type === 'actor-track-v1',
+          'Tracking reorder updates selected mode',
+        );
+        await history('undo-edit', independent, 'Undo restores exact independent modes');
+        await history('redo-edit', moved, 'Redo restores exact reorder');
+        await action('down');
+        eq(course(), independent, 'Move down restores original route');
+        await chooseTracking('self-level:1');
+        await action('remove');
+        const removed = course();
+        eq(
+          removed.steps.acro,
+          independent.steps.acro,
+          'Tracking deletion leaves other mode unchanged',
+        );
+        await history('undo-edit', independent, 'Undo restores deleted objective and exact course');
+        await history('redo-edit', removed, 'Redo removes only selected objective');
+        await history('undo-edit', independent, 'Second undo restores authoring state');
+        await chooseTracking('self-level:1');
+        set(editor().querySelector('[aria-label="Actor role"]'), 'rival');
+        const px = editor().querySelector('[aria-label="Position · metres X · m"]');
+        set(px, 0.2);
+        const beforeActor = course();
+        click(button(editor(), /^Apply actor settings$/));
+        await until(
+          () => course().actors.find((a) => a.id === 'subject').role === 'rival',
+          'actor role changed',
+        );
+        const actorEdited = course();
+        eq(
+          actorEdited.steps,
+          beforeActor.steps,
+          'Moving subject and civilian→rival role preserve tracking criteria',
+        );
+        must(
+          actorEdited.actors.find((a) => a.id === 'subject').position.x === 200,
+          'Actor position edit is applied under stable actor ID',
+        );
+        click(button(editor(), /^Remove actor$/));
+        await until(() => !course().actors.some((a) => a.id === 'subject'), 'actor removed');
+        must(
+          Object.values(course().steps).every(
+            (steps) => !steps.some((s) => s.actorId === 'subject'),
+          ),
+          'Actor deletion removes dangling tracking references from both modes',
+        );
+        await history(
+          'undo-edit',
+          actorEdited,
+          'Undo actor deletion restores exact objectives and actor',
+        );
+        eq(
+          { id: course().id, world: course().world.id },
+          identity,
+          'World, course and actor identities preserved through edits',
+        );
+        const authored = course();
+        progress('Portable project and compiled pack roundtrips');
+        const exported = await exportProject(),
+          packed = await download('export-pack'),
+          inspected = await content.inspectPack(packed.blob);
+        eq(
+          exported.loaded.project.courses[0],
+          authored,
+          'Editable ZIP preserves both authored modes',
+        );
+        eq(inspected.project.courses[0], authored, 'Compiled pack preserves both authored modes');
+        const refs = exported.loaded.project.routeBindings[authored.id];
+        must(
+          refs['self-level'][1] === null && refs['self-level'][2] === null && refs.acro[3] === null,
+          'New criteria have independent null source bindings',
+        );
+        const compiled = definitions
+          .compileContentProject(exported.loaded.project.definitions)
+          .find((r) => r.course.id === authored.id).course;
+        eq(compiled, authored, 'Layered content definitions compile exact authored criteria');
+        exportHashes = {
+          project: await digest(await exported.file.blob.arrayBuffer()),
+          pack: await digest(await packed.blob.arrayBuffer()),
+        };
+        await upload('import-pack', exported.file.blob, 'tracking-reopen.zip');
+        await until(() => d.getElementById('import-pack').value === '', 'ZIP reopened');
+        eq(course(), authored, 'Reopening editable project in actual host preserves course');
+        await upload('import-pack', packed.blob, 'tracking-reopen.rlpack');
+        await until(() => d.getElementById('import-pack').value === '', 'Pack reopened');
+        eq(course(), authored, 'Reopening compiled pack preserves independent course data');
+        progress('External source reimport preserves locally authored tracking');
+        click(q('[data-tab="creator"]'));
+        await upload('import-world', sourceGLB(1), 'tracking-original.glb');
+        await until(() => d.getElementById('reimport-review')?.open, 'reimport review');
+        eq(course(), authored, 'Reimport preview does not mutate draft');
+        click(button(d.getElementById('reimport-review'), /^Keep current draft$/));
+        await until(() => !d.getElementById('reimport-review'), 'reimport cancelled');
+        eq(course(), authored, 'Cancelled reimport preserves exact draft');
+        await upload('import-world', sourceGLB(1), 'tracking-original.glb');
+        await until(() => d.getElementById('reimport-review')?.open, 'second reimport review');
+        click(button(d.getElementById('reimport-review'), /^Apply reviewed update$/));
+        await until(
+          () =>
+            !d.getElementById('reimport-review') &&
+            course().steps['self-level'][0].min.x !== authored.steps['self-level'][0].min.x,
+          'reviewed reimport applied',
+        );
+        const reimported = course();
+        for (const mode of ['self-level', 'acro'])
+          eq(
+            reimported.steps[mode].filter((s) => s.type === 'actor-track-v1'),
+            authored.steps[mode].filter((s) => s.type === 'actor-track-v1'),
+            'Reimport preserves local tracking values in ' + mode,
+          );
+        must(
+          reimported.steps['self-level'][0].min.x === -500,
+          'Unmodified bound source checkpoint follows 1 m external move',
+        );
+        must(
+          reimported.actors.find((a) => a.id === 'subject').position.x === 200,
+          'Local subject position survives conflicting source move',
+        );
+        const restored = await exportProject();
+        eq(
+          restored.loaded.project.routeBindings[authored.id],
+          refs,
+          'Reimport preserves independent source bindings',
+        );
+        // Restore the exact exported authored route before actual ordinary-command qualification.
+        await upload('import-pack', packed.blob, 'tracking-qualified.rlpack');
+        await until(() => d.getElementById('import-pack').value === '', 'Authored pack restored');
+        eq(course(), authored, 'Authored pack restored for exact replay');
+        authoredCourse = course();
+        progress('Authored course completes and independently replays in both flight modes');
+        for (const mode of ['self-level', 'acro']) {
+          const flight = model.createWorldFlight({ course: clone(authoredCourse), mode });
+          flight.arm();
+          const recorder = model.createWorldRecorder(flight, { session: 'authoring' });
+          let state = flight.snapshot();
+          try {
+            for (let i = 0; i < 5000 && state.status === 'active'; i++) {
+              state = flight.step({
+                roll: 0,
+                pitch: 0,
+                yaw: 0,
+                throttle:
+                  state.target?.type === 'land'
+                    ? state.grounded
+                      ? 0
+                      : Math.max(0, Math.min(1, (9810 + 2 * (-600 - state.velocity.y)) / 19620))
+                    : 0.5,
+                actions: 0,
+              });
+              recorder.record();
+              if (i % 300 === 0) {
+                await wait(0);
+                w.fixtureRAF?.deliver(0);
+              }
+            }
+            const proof = recorder.export();
+            must(
+              state.status === 'complete',
+              'Actual UI-authored ' + mode + ' objectives complete using ordinary controls',
+              { ticks: state.ticks, step: state.step, status: state.status },
+            );
+            const replay = await model.replayWorldFlight(clone(authoredCourse), proof, {
+              yieldControl: async () => {
+                await wait(0);
+                w.fixtureRAF?.deliver(0);
+              },
+            });
+            must(
+              model.worldStateIdentity(replay.state) === model.worldStateIdentity(state),
+              'Independent ' + mode + ' proof replay reaches identical final state',
+            );
+            proofSummaries.push({
+              mode,
+              ticks: state.ticks,
+              finalStateIdentity: proof.finalStateIdentity,
+              courseIdentity: proof.courseIdentity,
+              sha256: await digest(JSON.stringify(proof)),
+            });
+          } finally {
+            flight.dispose();
+          }
+        }
+        progress('EN/UK responsive inspector, real WebGL preview and storage isolation');
+        for (const [locale, width, height] of [
+          ['en', 1280, 800],
+          ['uk', 390, 844],
+          ['uk', 844, 390],
+        ]) {
+          frame.style.width = width + 'px';
+          frame.style.height = height + 'px';
+          set(d.getElementById('world-language'), locale);
+          await wait(50);
+          const panel = q('[data-tracking-editor]');
+          panel.scrollIntoView({ block: 'start' });
+          await wait(0);
+          must(
+            d.documentElement.scrollWidth <= d.documentElement.clientWidth + 1,
+            locale + ' ' + width + '×' + height + ' has no horizontal overflow',
+          );
+          must(
+            [...panel.querySelectorAll('input,select')]
+              .filter((n) => !n.closest('[hidden]'))
+              .every((n) => n.getAttribute('aria-label')),
+            locale + ' tracking fields retain accessible labels',
+          );
+          must(
+            locale === 'en'
+              ? panel.textContent.includes('Follow & observe')
+              : panel.textContent.includes('Супровід і спостереження'),
+            locale + ' inspector is localized',
+          );
+        }
+        set(d.getElementById('world-language'), 'en');
+        frame.style.width = '1280px';
+        frame.style.height = '800px';
+        const recordsStore = await records.openWorldRecords(window.fixtureDB);
+        const savedBefore = await recordsStore.list();
+        click(d.getElementById('preview-challenge'));
+        await until(
+          () => app.snapshot().state && !d.getElementById('world-arm').disabled,
+          'real authored WebGL preview',
+          60000,
+        );
+        w.fixtureRAF?.deliver(0);
+        must(
+          !!w.fixtureRenderer && !!d.querySelector('#world-viewport canvas'),
+          'Real WebGL renderer mounts imported scene with tracking objective',
+        );
+        d.getElementById('world-viewport').focus();
+        w.fixtureRAF?.deliver(0);
+        click(d.getElementById('world-arm'));
+        w.fixtureRAF?.deliver(0);
+        must(
+          app.snapshot().preview === true ||
+            /preview|поперед/i.test(d.getElementById('flight-status').textContent),
+          'Workshop preview is unscored',
+        );
+        app.pause();
+        const endRecords = await recordsStore.list();
+        eq(endRecords, savedBefore, 'Workshop authoring and preview do not add scored recordings');
+        recordsStore.close();
+        must(w.fixtureErrors.length === 0, 'No uncaught host errors', { errors: w.fixtureErrors });
+        if (manual) {
+          click(d.getElementById('leave-flight'));
+          await until(() => !d.getElementById('flight-dialog').open, 'close manual preview');
+          click(q('[data-tab="creator"]'));
+          $('status').textContent = 'Verified Workshop ready for manual inspection';
+          manualCleanup = cleanup;
+        } else await cleanup();
+      } catch (error) {
+        failed = { message: error.message, stack: error.stack };
+        try {
+          await cleanup();
+        } catch (cause) {
+          failed.cleanup = cause.message;
+        }
+      }
+      const receipt = {
+        format: 'FPVTrackingEditorBrowserEvidence.v1',
+        status: failed ? 'failed' : 'passed',
+        checks,
+        passed: checks.filter((c) => c.passed).length,
+        failed,
+        phases,
+        manifest,
+        authoredCourse,
+        proofSummaries,
+        exportHashes,
+        qualification:
+          'Actual production UI/HTTP/WebGL, isolated storage, scripted public DOM actions and ordinary fixed-step commands; no physical-device, audible, performance or player acceptance claim.',
+      };
+      window.trackingEditorReceipt = receipt;
+      $('receipt').value = JSON.stringify(receipt, null, 2);
+      $('status').textContent =
+        (failed ? 'FAIL' : 'PASS') +
+        ' ' +
+        receipt.passed +
+        '/' +
+        checks.length +
+        (failed ? ' · ' + failed.message : '');
+      return receipt;
+    }
+    for (const [id, manual] of [
+      ['run', false],
+      ['show', true],
+    ])
+      $(id).onclick = async () => {
+        $('run').disabled = $('show').disabled = true;
+        try {
+          await execute(manual);
+        } finally {
+          $('run').disabled = $('show').disabled = false;
+        }
+      };
+  </script>
+</html>
