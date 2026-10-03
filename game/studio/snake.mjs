@@ -596,7 +596,7 @@ file.addEventListener(
 for (const mode of ['solo', 'versus', 'team'])
   modes.append(
     button(words(`Play ${mode}`, `Грати: ${mode}`), async () => {
-      const installed = await library.install(validate()),
+      const installed = await library.install(validate(), { owner: 'studio' }),
         url = new URL('../snake/play.html', location.href);
       url.search = new URLSearchParams({
         mode,

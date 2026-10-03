@@ -4860,6 +4860,8 @@
   "community.recoveryPackageRetained": "Точний пакет відновлення збережено для повторного встановлення офлайн.",
   "community.offloadInstalledMedia": "Вивантажити встановлені медіафайли",
   "community.installedMediaOffloaded": "Встановлені медіафайли вивантажено. Маніфест, збереження, отримані зображення й точний пакет відновлення збережено.",
+  "community.localSnakeCopyRetained": "Ці рівні Snake також використовує локальна копія Studio або попереднього імпорту. Вивантаження цього видання збереже локальну копію та ваш прогрес.",
+  "community.snakeEditionOffloadedLocalKept": "Це видання вивантажено. Локальна копія Snake, прогрес і точний пакет відновлення залишилися.",
   "community.reinstallExactEdition": "Перевстановити точну редакцію",
   "community.downloadUpdate": "Завантажити оновлення",
   "community.downloadAndInstall": "Завантажити й установити",
