@@ -7,7 +7,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { parse } from 'acorn';
 const ROOT = fileURLToPath(new URL('../', import.meta.url));
-const BASELINE = '25700b699cc3c6e2b56d1917803dd7c4e6933b42';
+const BASELINE = 'cd2e6bc5dc0e8af7d1d30705632697cc97562dc1';
 const ENTRY = 'optional-practice/civilian-fpv/';
 const MAX_FILE = 6 * 1024 * 1024,
   MAX_TOTAL = 40 * 1024 * 1024,

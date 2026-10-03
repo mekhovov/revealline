@@ -61,6 +61,33 @@ source-bound package admission are pending. Do not publish this
 feature as qualified on the strength of fixture preparation alone. No new unit
 coverage was introduced; manual functional qualification stays within D2.
 
+## Current-main integration
+
+The normal merge at `26f098361ac21ff471d3a280b7950065cd093ec1` incorporates
+main `cd2e6bc5dc0e8af7d1d30705632697cc97562dc1`. Its adjacent helper conflict
+was resolved by retaining both complete Lighthouse and Courtyard functions.
+The [integration receipt](evidence/fpv-coast-lighthouse-main-integration.json)
+proves both helpers retain their exact pre-merge bytes; removing the Coast-only
+hook and helper leaves main's normalized runtime AST exact.
+
+The [integrated CPU receipt](evidence/fpv-coast-lighthouse-cpu-main.json) again
+passes all 467 checks / 57 scene cases against that main baseline, including
+Courtyard preservation. Final runtime SHA-256:
+`23663ba5c6027611d147fd6e01c3a7c11cbdf4575a61c2554424901c5c463715`.
+Source growth is 4041 bytes, within the agreed 5 KiB increment budget.
+The final frozen preview is
+`dist/fpv-coast-lighthouse-verification-source-v2-main/index.html`, with 31 modules
+per side / 19,747,475 bytes. The original v1 visual is retained as history.
+
+Node 22 `npm run validate` passed on the guarded source before this inactive
+Courtyard merge; the final runtime, manual qualifier and fixture pass focused
+lint/format and embedded-script parsing. No package build, actual-browser matrix
+or human visual acceptance has yet been claimed. The next step is review of the
+final source preview, then its bounded matrix and source-bound package admission
+if the appearance is accepted. Recovery ref
+`codex/fpv-coast-lighthouse-source-checkpoint` preserves the pre-merge candidate;
+published Warehouse and earlier frozen players remain untouched.
+
 ## Next Quarry boundary
 
 The separate read-only Quarry audit found six canonical closed rock masses using
