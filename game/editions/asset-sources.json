@@ -9896,6 +9896,17 @@
       "review": "Exact supplied media; descriptive text is not a soundtrack transcription."
     },
     {
+      "id": "social-drone-sky-watch-video-v2",
+      "path": "game/editions/assets/social-drone/sky-watch-v2.mp4",
+      "sha256": "919fa23b4427b313e19e88784599455feaad022afc128dc93024acdeb988cc21",
+      "bytes": 1982771,
+      "publication": "public",
+      "revision": 2,
+      "rights": "user-supplied-user-requested-publication",
+      "source": "User-provided Social Drone clip and still; requested public playable level on 2026-10-03.",
+      "review": "Prepared as a 1280×720 H.264 Main/yuv420p MP4 with the moov atom before media data for reliable iPhone playback. The exact original AAC-LC soundtrack is copied unchanged; 720p balances visual quality, broad mobile decoding support and the offline distribution budget."
+    },
+    {
       "id": "social-drone-sky-watch-en-description-v1",
       "path": "game/editions/assets/social-drone/sky-watch-en-v1.txt",
       "sha256": "d8fec85fe861b2aa66f6edeafd7f36a10ab8a038bc9b64298322a831346d5ba1",

@@ -1,28 +1,28 @@
 {
   "campaignId": "social-drone-sky-watch",
-  "campaignRevision": "1",
+  "campaignRevision": "2",
   "format": "revealline-campaign-localization.v1",
   "records": [
     {
       "fields": { "name": { "en": "Sky Watch", "uk": "Небесна варта" } },
       "id": "social-drone-sky-watch",
-      "identity": "5953b0a65acd5f74",
+      "identity": "abb3b889466fbe93",
       "kind": "campaign"
     },
     {
       "fields": {
         "design.lesson": {
-          "en": "Reveal the aerial picture, then enjoy the original video.",
+          "en": "Build two deliberate captures through the watch corridors, then enjoy the original video.",
           "uk": "Відкрийте зображення з повітря, а потім перегляньте оригінальне відео."
         },
         "design.routeDecision": {
-          "en": "Take the open channel between the two safe islands.",
-          "uk": "Пройдіть відкритим каналом між двома безпечними островами."
+          "en": "Use the center refuge for a shorter second cut, or circle a side corridor away from the keepers.",
+          "uk": "Скористайтеся центральним укриттям для коротшого другого проходу або обійдіть бічним коридором подалі від вартових."
         },
         "name": { "en": "Sky Watch", "uk": "Небесна варта" }
       },
       "id": "social-drone-sky-watch-01",
-      "identity": "27ef8e4c078fc016",
+      "identity": "5e6fb2a099ee1654",
       "kind": "mission"
     }
   ],
