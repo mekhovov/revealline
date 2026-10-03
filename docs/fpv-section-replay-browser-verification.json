@@ -1,8 +1,8 @@
 {
   "format": "FPVSectionReplayBrowser.v1",
-  "generatedAt": "2026-10-03T00:13:18.322Z",
+  "generatedAt": "2026-10-03T00:47:55.848Z",
   "sourceFiles": {
-    "optional-practice/civilian-fpv/world-app.mjs": "96930dcf62d0b8eecb36994aa3ae81d81169012e20ee9ee72600b589e54052cb",
+    "optional-practice/civilian-fpv/world-app.mjs": "8cb85f6cfe808d4a57bcd40b6570435ea9c84dfc7ab5c32f26d633ab5e661203",
     "optional-practice/civilian-fpv/world-catalogue.mjs": "d901363b623193f4896100f9381c7579946796e741554f012581ebb93f9ea8a6",
     "game/data-json.mjs": "9ce33d6173f3cba8587ed7a7f1924c66e9d9c86ffa59b37a743764ea0b01f7bd",
     "game/i18n/index.mjs": "29f40a6d92826ced1eb53283ed32e342ac6e95920abbf8d549f2d78e65b48d07",
@@ -67,10 +67,10 @@
     "game/fpv-entry.mjs": "3713b9d9ae2376fd5b59f805b808964522c1ec7afa4303ac9b5227a02f32ae0b",
     "optional-practice/fpv-worlds/index.html": "3051aac26469272b4e0551031948f13a65a7c933a6b94c76dd2e2b93fac064f0"
   },
-  "candidateHostSha256": "96930dcf62d0b8eecb36994aa3ae81d81169012e20ee9ee72600b589e54052cb",
+  "candidateHostSha256": "8cb85f6cfe808d4a57bcd40b6570435ea9c84dfc7ab5c32f26d633ab5e661203",
   "scope": "Frozen actual host and WebGL renderer; controlled RAF, programmatic public DOM controls and isolated browser storage. No physical-device, performance or human acceptance claim.",
-  "passed": 51,
-  "total": 51,
+  "passed": 53,
+  "total": 53,
   "checks": [
     {
       "name": "Frozen host, dependencies and harness match prepared hashes",
@@ -261,6 +261,14 @@
       "passed": true
     },
     {
+      "name": "An uninterrupted section starts playback automatically",
+      "passed": true
+    },
+    {
+      "name": "An uninterrupted full recording starts automatically",
+      "passed": true
+    },
+    {
       "name": "Pause during preparation is retained",
       "passed": true
     },
@@ -284,47 +292,47 @@
       "label": "Verify immutable fixture inputs"
     },
     {
-      "ms": 585,
+      "ms": 584,
       "label": "Mount actual HTTP player and WebGL renderer"
     },
     {
-      "ms": 1017,
+      "ms": 914,
       "label": "Result action selects the measured longest section"
     },
     {
-      "ms": 1378,
+      "ms": 1283,
       "label": "Pause, slow playback and held live-input isolation"
     },
     {
-      "ms": 1441,
+      "ms": 1344,
       "label": "Watch to practice restores same section and recorded response"
     },
     {
-      "ms": 1621,
+      "ms": 1513,
       "label": "Actual installed skill and combat sections retain full actor and quaternion state"
     },
     {
-      "ms": 2972,
+      "ms": 2946,
       "label": "Reached unfinished recording retains actual end and truthful result"
     },
     {
-      "ms": 3064,
+      "ms": 3047,
       "label": "Invalid or unreached evidence falls back visibly and remains paused"
     },
     {
-      "ms": 3347,
+      "ms": 3376,
       "label": "English/Ukrainian controls and narrow menu remain usable"
     },
     {
-      "ms": 3740,
+      "ms": 4103,
       "label": "A newer launch cancels pending section preparation without re-opening stale playback"
     },
     {
-      "ms": 3827,
+      "ms": 4297,
       "label": "Pausing during asynchronous preparation prevents automatic playback"
     },
     {
-      "ms": 4106,
+      "ms": 4596,
       "label": "Disposal cancels a pending section without writing progress"
     }
   ],

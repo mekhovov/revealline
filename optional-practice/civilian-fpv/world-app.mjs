@@ -3591,6 +3591,7 @@ export function mountWorldApp({
     abortSectorLookup();
     sceneReady = false;
     pauseFlight();
+    radio.reset({ notify: false });
     const playbackPauseRevision = pauseRevision;
     await saveRecovery();
     await ready;
@@ -3629,7 +3630,6 @@ export function mountWorldApp({
     // The guide creates its isolated lesson simulation before the flight view.
     if (!entry.legacy) await initWorldRuntime();
     if (disposed || token !== flightToken) return;
-    radio.reset({ notify: false });
     flight?.dispose?.();
     flight = null;
     current = entry;
@@ -3806,7 +3806,8 @@ export function mountWorldApp({
         // invalid frames or pretend a later retry can play this missing section.
         checkpointRequest = { ...checkpointRequest, proof: null, watch: false };
       }
-      radio.reset({ notify: false, pickup: prepared.pickup });
+      if (prepared.kind !== 'section-replay')
+        radio.reset({ notify: false, pickup: prepared.pickup });
       const selected = entry.course.steps[prepared.mode][prepared.index];
       $('flight-brief').textContent = $('flight-menu-brief').textContent =
         prepared.kind === 'section-replay'
