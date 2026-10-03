@@ -302,15 +302,15 @@ export async function crossModeContextPreview(
       const image = await services.decode(
         assets[id],
         blobs,
-        { ...options, isCurrent: current },
+        { ...options, isCurrent: current, slotId: id },
         localOwn,
       );
       if (!image || !current()) {
-        if (image) image.src = '';
+        if (image && 'src' in image) image.src = '';
         return null;
       }
       localOwn(() => {
-        image.src = '';
+        if ('src' in image) image.src = '';
       });
       decoded.set(id, { asset: assets[id], image });
       return image;
