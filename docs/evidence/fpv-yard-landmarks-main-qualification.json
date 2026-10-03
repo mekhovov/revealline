@@ -1,0 +1,42 @@
+{
+  "format": "FPVYardMainQualification.v1",
+  "candidate": "ec760db263041be23f60f4450381dc4ec88ec402",
+  "integratedMain": "a1cb86c85cd52db7256ad2ed16c30c8f40f90c32",
+  "existingChecks": {
+    "passed": 30,
+    "failed": 0,
+    "files": [
+      "game/test/fpv-acceptance-workflow.test.mjs",
+      "game/test/fpv-world-textures.test.mjs",
+      "game/test/fpv-workshop-visuals.test.mjs"
+    ]
+  },
+  "templateRuntimeEqual": true,
+  "syntax": true,
+  "changedFileEslint": true,
+  "changedFilePrettier": true,
+  "diffCheck": true,
+  "runtimeHashes": {
+    "optional-practice/civilian-fpv/world-assets.mjs": "6182548973e98a441c16a64648f9c25435fea649b63fe14d9f6cb4c093e609d4",
+    "authoring/fpv-worlds/scenery-runtime.template.mjs": "a1923ed3aa9163b254311a74f86ad6a3d667327ab325bfba73097ef2223206dd"
+  },
+  "fullValidate": {
+    "passed": false,
+    "reason": "Sparse verification checkout omits unrelated global content inputs. npm run validate stops during localization with missing game/content/packs/neon-reference-pack.json. No passing full validation is claimed; normal CI must qualify the pushed head."
+  },
+  "browser": {
+    "passed": true,
+    "candidate": "ec760db263041be23f60f4450381dc4ec88ec402",
+    "baseline": "a1cb86c85cd52db7256ad2ed16c30c8f40f90c32",
+    "arenaCases": 3,
+    "placementsPerScene": 58,
+    "verticesCheckedPerScene": 98880,
+    "drawCallsPerScene": 61,
+    "trianglesUnchanged": true,
+    "unaffectedEnvironmentGlbsByteEqual": 5,
+    "visualReview": "Before/after views inspected by the agent in the root chat; not human artist acceptance.",
+    "receipt": "fpv-yard-landmarks-main-browser.json",
+    "comparison": "fpv-yard-landmarks-main-comparison.png"
+  },
+  "additionalUnitCoverage": false
+}
