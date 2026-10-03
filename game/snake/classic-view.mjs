@@ -1,4 +1,7 @@
-import { drawHumanoidPixelBody, drawHuntRemains } from '../hunt/destruction.mjs';
+import { drawHuntRemains } from '../hunt/destruction.mjs';
+import { drawClassicTarget } from './classic-target-art.mjs';
+import { drawClassicDrone, drawClassicCable } from './classic-flight-art.mjs';
+export { drawClassicTarget } from './classic-target-art.mjs';
 import { CLASSIC_SNAKE_CHAPTERS } from './classic-catalogue.mjs';
 
 const UNIT = 28;
@@ -38,14 +41,6 @@ const FALLBACK_PALETTE = Object.freeze({
   safe: '#67aaff',
   danger: '#ff7169',
 });
-const ANGLES = { up: 0, right: Math.PI / 2, down: Math.PI, left: -Math.PI / 2 };
-const TARGETS = Object.freeze({
-  patroller: { color: '#b8ddf2', accent: '#6ab4db', kind: 'guard' },
-  runner: { color: '#ffe09a', accent: '#e3a247', kind: 'runner' },
-  sprinter: { color: '#ffbfa7', accent: '#f07858', kind: 'runner' },
-  courier: { color: '#e6b8ff', accent: '#ad76df', kind: 'runner' },
-});
-
 export function classicCatchMarks(run) {
   return run.recentCatches.map((mark) => ({
     ...mark,
@@ -54,142 +49,6 @@ export function classicCatchMarks(run) {
     x: mark.x + 0.5,
     y: mark.y + 0.5,
   }));
-}
-
-/** Stable shape badges distinguish roles without depending on color or motion. */
-export function drawClassicTarget(ctx, x, y, size, pose = 0, options = {}) {
-  const profile = options.kind ?? options.profile ?? 'runner',
-    design = TARGETS[profile] ?? TARGETS.runner;
-  ctx.save();
-  ctx.translate(x, y);
-  ctx.scale(size / UNIT, size / UNIT);
-  ctx.fillStyle = '#162238';
-  ctx.fillRect(1, 1, 26, 26);
-  ctx.strokeStyle = design.color;
-  ctx.lineWidth = 2;
-  ctx.strokeRect(1.5, 1.5, 25, 25);
-  ctx.save();
-  ctx.translate(5, 2);
-  ctx.scale(1.2, 1.2);
-  drawHumanoidPixelBody(ctx, { kind: design.kind, pose }, { accent: design.accent });
-  ctx.restore();
-  ctx.fillStyle = design.color;
-  if (profile === 'courier') {
-    ctx.fillRect(17, 14, 8, 7);
-    ctx.fillStyle = '#162238';
-    ctx.fillRect(20, 14, 2, 7);
-  } else if (profile === 'patroller') {
-    ctx.fillRect(3, 4, 4, 10);
-    ctx.fillRect(2, 6, 6, 3);
-  } else {
-    ctx.fillRect(2, 7, 2, 3);
-    ctx.fillRect(4, 9, 2, 3);
-    if (profile === 'sprinter') {
-      ctx.fillRect(2, 13, 2, 3);
-      ctx.fillRect(4, 15, 2, 3);
-    }
-  }
-  if (options.frozen) {
-    ctx.strokeStyle = '#d4f5ff';
-    ctx.lineWidth = 2;
-    ctx.strokeRect(4, 4, 20, 20);
-    ctx.fillStyle = '#d4f5ff';
-    ctx.fillRect(10, 22, 3, 4);
-    ctx.fillRect(16, 22, 3, 4);
-  }
-  if (options.phase === 'warning') {
-    ctx.fillStyle = '#ffffff';
-    ctx.fillRect(22, 12, 3, 6);
-    ctx.fillRect(22, 20, 3, 3);
-  }
-  if (options.direction in ANGLES) {
-    ctx.translate(22, 6);
-    ctx.rotate(ANGLES[options.direction]);
-    ctx.fillStyle = design.color;
-    ctx.beginPath();
-    ctx.moveTo(0, -3);
-    ctx.lineTo(3, 2);
-    ctx.lineTo(-3, 2);
-    ctx.closePath();
-    ctx.fill();
-  }
-  ctx.restore();
-}
-
-function drawDrone(ctx, snake, presentation, accent) {
-  const head = snake.body[0],
-    ink = pilotInk(snake.id, accent);
-  ctx.save();
-  ctx.translate((head.x + 0.5) * UNIT, (head.y + 0.5) * UNIT);
-  ctx.rotate(ANGLES[snake.direction]);
-  ctx.fillStyle = '#071527';
-  ctx.fillRect(-13, -13, 26, 26);
-  ctx.strokeStyle = ink.edge;
-  ctx.lineWidth = 1;
-  ctx.strokeRect(-13, -13, 26, 26);
-  const image = presentation?.image?.('player.scout.compact');
-  if (image) ctx.drawImage(image, -14, -14, 28, 28);
-  else {
-    ctx.strokeStyle = '#a8b8cc';
-    ctx.lineWidth = 3;
-    ctx.beginPath();
-    ctx.moveTo(-8, -8);
-    ctx.lineTo(8, 8);
-    ctx.moveTo(8, -8);
-    ctx.lineTo(-8, 8);
-    ctx.stroke();
-    ctx.fillStyle = '#d5deec';
-    ctx.fillRect(-4, -8, 8, 16);
-  }
-  // Four separated rotor hubs and a forward camera keep the FPV silhouette
-  // readable at small sizes; no spinning blur or new collision shape.
-  for (const x of [-7, 7])
-    for (const y of [-7, 7]) {
-      ctx.fillStyle = '#071527';
-      ctx.fillRect(x - 3, y - 2, 6, 4);
-      ctx.fillStyle = ink.edge;
-      ctx.fillRect(x - 2, y - 1, 4, 2);
-    }
-  ctx.fillStyle = '#0057b7';
-  ctx.fillRect(-3, -2, 6, 3);
-  ctx.fillStyle = '#ffd700';
-  ctx.fillRect(-3, 1, 6, 3);
-  ctx.fillStyle = ink.band;
-  ctx.fillRect(-2, -11, 4, 3);
-  if (snake.id) {
-    ctx.fillRect(-6, 8, 2, 3);
-    ctx.fillRect(4, 8, 2, 3);
-  } else ctx.fillRect(-1, 8, 2, 3);
-  ctx.restore();
-}
-
-function drawCable(ctx, snake, style, accent) {
-  const ink = pilotInk(snake.id, accent);
-  for (let i = snake.body.length - 1; i > 0; i--) {
-    const cell = snake.body[i],
-      x = cell.x * UNIT,
-      y = cell.y * UNIT;
-    // The whole occupied cell remains marked in BOTH cosmetic styles.
-    ctx.fillStyle = ink.body;
-    ctx.fillRect(x + 1, y + 1, UNIT - 2, UNIT - 2);
-    ctx.strokeStyle = ink.edge;
-    ctx.lineWidth = 1;
-    ctx.setLineDash(style === 'signal' ? [3, 2] : []);
-    ctx.strokeRect(x + 1.5, y + 1.5, UNIT - 3, UNIT - 3);
-    ctx.setLineDash([]);
-    const previous = snake.body[i - 1];
-    ctx.strokeStyle = ink.band;
-    ctx.lineWidth = style === 'signal' ? 2 : 5;
-    ctx.beginPath();
-    ctx.moveTo(x + UNIT / 2, y + UNIT / 2);
-    if (previous && Math.abs(cell.x - previous.x) + Math.abs(cell.y - previous.y) === 1)
-      ctx.lineTo((previous.x + 0.5) * UNIT, (previous.y + 0.5) * UNIT);
-    else ctx.lineTo(x + UNIT / 2 + 1, y + UNIT / 2);
-    ctx.stroke();
-    ctx.fillStyle = ink.edge;
-    ctx.fillRect(x + 5, y + 5, 3, 3);
-    if (snake.id) ctx.fillRect(x + 20, y + 20, 3, 3);
-  }
 }
 
 function drawWall(ctx, wall, presentation, palette) {
@@ -290,35 +149,66 @@ export function drawClassicBoard(
     presentation,
     accent = null,
     reduced = false,
+    flight = {},
+    pixelRatio = 1,
+    cssWidth,
   } = {},
 ) {
   const { width, height, walls, wrap } = run.level,
     palette = presentation?.palette ?? FALLBACK_PALETTE;
-  if (canvas.width !== width * UNIT || canvas.height !== height * UNIT) {
-    canvas.width = width * UNIT;
-    canvas.height = height * UNIT;
+  const logicalWidth = width * UNIT,
+    logicalHeight = height * UNIT;
+  const resolution = Math.max(
+    1,
+    Math.min(
+      3,
+      ((Number.isFinite(cssWidth) && cssWidth > 0 ? cssWidth : logicalWidth) / logicalWidth) *
+        (Number.isFinite(pixelRatio) ? Math.max(1, Math.min(2, pixelRatio)) : 1),
+    ),
+  );
+  // Half-step scales preserve the exact grid aspect ratio while avoiding
+  // bitmap/CSS feedback when the responsive footprint is measured again.
+  const stableResolution = Math.ceil(resolution * 2) / 2;
+  const bitmapWidth = logicalWidth * stableResolution,
+    bitmapHeight = logicalHeight * stableResolution;
+  if (canvas.width !== bitmapWidth || canvas.height !== bitmapHeight) {
+    canvas.width = bitmapWidth;
+    canvas.height = bitmapHeight;
     canvas.style.aspectRatio = `${width} / ${height}`;
   }
   const ctx = canvas.getContext('2d');
   if (!ctx) return;
+  ctx.setTransform(bitmapWidth / logicalWidth, 0, 0, bitmapHeight / logicalHeight, 0, 0);
   ctx.imageSmoothingEnabled = false;
+  ctx.fillStyle = palette.field;
+  ctx.fillRect(0, 0, logicalWidth, logicalHeight);
+  ctx.fillStyle = palette.alternate;
+  ctx.globalAlpha = 0.42;
   for (let y = 0; y < height; y++)
-    for (let x = 0; x < width; x++) {
-      ctx.fillStyle = (x + y) % 2 ? palette.field : palette.alternate;
-      ctx.fillRect(x * UNIT, y * UNIT, UNIT, UNIT);
-    }
+    for (let x = 0; x < width; x++)
+      if ((x + y) % 2 === 0) ctx.fillRect(x * UNIT, y * UNIT, UNIT, UNIT);
+  // Fine grid and sparse surface grain echo the main game's terrain without
+  // competing with silhouettes or pretending to be additional obstacles.
+  ctx.globalAlpha = 0.17;
   ctx.strokeStyle = palette.grid;
-  ctx.lineWidth = 0.6;
+  ctx.lineWidth = 0.5;
   ctx.beginPath();
   for (let x = 1; x < width; x++) {
     ctx.moveTo(x * UNIT, 0);
-    ctx.lineTo(x * UNIT, canvas.height);
+    ctx.lineTo(x * UNIT, logicalHeight);
   }
   for (let y = 1; y < height; y++) {
     ctx.moveTo(0, y * UNIT);
-    ctx.lineTo(canvas.width, y * UNIT);
+    ctx.lineTo(logicalWidth, y * UNIT);
   }
   ctx.stroke();
+  ctx.fillStyle = palette.muted;
+  ctx.globalAlpha = 0.08;
+  for (let y = 0; y < height; y++)
+    for (let x = 0; x < width; x++) {
+      if ((x * 7 + y * 11) % 5 === 0) ctx.fillRect(x * UNIT + 8, y * UNIT + 8, 1, 1);
+    }
+  ctx.globalAlpha = 1;
   if (showRemains) {
     ctx.save();
     ctx.scale(UNIT / 16, UNIT / 16);
@@ -337,7 +227,7 @@ export function drawClassicBoard(
   ctx.lineWidth = 3;
   ctx.strokeStyle = wrap ? palette.accent : palette.muted;
   ctx.setLineDash(wrap ? [7, 7] : []);
-  ctx.strokeRect(1.5, 1.5, canvas.width - 3, canvas.height - 3);
+  ctx.strokeRect(1.5, 1.5, logicalWidth - 3, logicalHeight - 3);
   ctx.setLineDash([]);
   const targets = run.targets ?? (run.target ? [run.target] : []);
   for (const target of targets)
@@ -354,11 +244,15 @@ export function drawClassicBoard(
             ? undefined
             : target.heading,
         frozen: run.pulseTicks > 0,
+        palette,
+        timeMs: flight.timeMs,
+        reducedEffects: reduced,
       },
     );
   for (const snake of run.snakes) {
-    drawCable(ctx, snake, style, accent);
-    drawDrone(ctx, snake, presentation, accent);
+    const ink = pilotInk(snake.id, accent);
+    drawClassicCable(ctx, snake, ink, run.level, { style, ...flight, reduced });
+    drawClassicDrone(ctx, snake, ink, { ...flight, reduced });
     if (!snake.alive) {
       const head = snake.body[0];
       ctx.strokeStyle = palette.danger;
