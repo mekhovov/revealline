@@ -77,7 +77,10 @@ were readable and flush, with existing window openings unchanged. This is a
 static renderer comparison, not hardware or full-course learning acceptance.
 
 The existing final Stadium playtest on port 8834 is preserved in its separate
-ignored output directory. This Hangar work has no PR or public deployment claim.
+ignored output directory. The focused Hangar change is published as
+[PR #1008](https://github.com/mekhovov/revealline/pull/1008), assigned to milestone
+57 with the reviewed `fastline-approved` signal. Protected exact-head checks and
+merge rules apply. No public deployment is claimed.
 Source and integrated packaged WebGL/image inspection and prepared-player launch
 are qualified below. Protected publication remains separate from public release. No hardware frame-rate, physical
 device, novice or artist acceptance is inferred. Additional unit coverage stays
