@@ -428,7 +428,13 @@ test('decorative face recipes require their own enabled texture and contrast sco
 
 test('gallery and nested backdrops consume their nearest scope material while retaining palette and focus cues', () => {
   const rules = surfaceRules();
-  const card = rules.find((rule) => rule.selector === '.theme-gallery .theme-preview-card');
+  const gallery = rules.find((rule) => rule.selector === '.theme-gallery'),
+    card = rules.find((rule) => rule.selector === '.theme-gallery .theme-preview-card');
+  assert.equal(
+    gallery.properties['grid-template-columns'],
+    'repeat(auto-fit, minmax(min(100%, 240px), 1fr))',
+  );
+  assert.equal(gallery.properties.gap, '8px');
   assert.equal(card.properties['border-image'], 'var(--ui-raised-frame, none)');
   assert.equal(card.properties['box-shadow'], 'var(--ui-gallery-depth, none)');
   assert.ok(card.properties.background.startsWith('var(--ui-control-finish, none),'));
@@ -460,6 +466,8 @@ test('gallery and nested backdrops consume their nearest scope material while re
   const swatches = rules.find((rule) => rule.selector === '.theme-preview-swatches');
   assert.equal(swatches.properties.display, 'grid');
   assert.equal(swatches.properties.gap, '0');
+  const swatch = rules.find((rule) => rule.selector === '.theme-preview-swatches span');
+  assert.equal(swatch.properties.height, '28px');
   const accent = rules.find(
     (rule) =>
       rule.selector === "[data-theme-styled='true'] .menu-scene[data-backdrop='interface']::before",

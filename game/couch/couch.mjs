@@ -4088,7 +4088,6 @@ try {
     'race-text-size',
     'race-theme-customize',
     'race-theme-ornaments',
-    'race-theme-familyId',
     'race-theme-arcadeArt',
     'race-theme-highContrast',
     'race-theme-opaqueHud',

@@ -54,8 +54,16 @@ function reaches(page, id) {
   }
   assert.fail(`Actual navigation must reach ${id}`);
 }
+function chooseTheme(page, prefix, familyId) {
+  const card = page.$(`${prefix}theme-card-${familyId}`);
+  assert.equal(card.disabled, false, `${card.id} remains usable`);
+  assert.equal(card.closest('[hidden],[inert]'), null, `${card.id} must be a visible control`);
+  card.click();
+  return card;
+}
 function reflects(page, prefix, familyId, ornaments) {
-  assert.equal(page.$(`${prefix}theme-familyId`).value, familyId);
+  assert.equal(page.$(`${prefix}theme-familyId`), null);
+  assert.equal(page.$(`${prefix}theme-card-${familyId}`).getAttribute('aria-pressed'), 'true');
   assert.equal(page.$(`${prefix}theme-ornaments`).value, ornaments);
   assert.equal(page.doc.body.dataset.menuOrnaments, ornaments === 'theme' ? 'subtle' : ornaments);
   for (const key of ['palette', 'ornaments'])
@@ -198,9 +206,9 @@ for (const turnPolicy of ['immediate', 'grid-center']) {
       records = unrelated(store),
       backdrop = page.rendered.backdrop;
     page.$('text-size').focus();
-    reaches(page, 'theme-familyId');
+    reaches(page, 'theme-card-vyshyvanka');
     const beforeWrites = store.writes.length;
-    change(page, 'theme-familyId', 'vyshyvanka');
+    chooseTheme(page, '', 'vyshyvanka');
     assert.ok(store.writes.length > beforeWrites, 'Selecting a family saves it immediately.');
     assert.equal(raw(store).familyId, 'vyshyvanka');
     assert.deepEqual(authoritativeCheckpoint(run), checkpoint);
@@ -258,7 +266,7 @@ test('unified appearance survives Solo, Team, Versus and Solo return without alt
     page.$('settings-tab-display').click();
     const records = unrelated(store),
       writes = store.writes.length;
-    change(page, 'theme-familyId', 'vyshyvanka');
+    chooseTheme(page, '', 'vyshyvanka');
     assert.ok(store.writes.length > writes);
     assert.equal(raw(store).familyId, 'vyshyvanka');
     customize(page);
@@ -283,9 +291,9 @@ test('unified appearance survives Solo, Team, Versus and Solo return without alt
         fonts = page.fonts();
       page.$('coop-settings-open').click();
       page.$('coop-settings-tab-display').focus();
-      reaches(page, 'coop-theme-familyId');
+      reaches(page, 'coop-theme-card-dnipro-porcelain');
       const writes = store.writes.length;
-      change(page, 'coop-theme-familyId', 'dnipro-porcelain');
+      chooseTheme(page, 'coop-', 'dnipro-porcelain');
       assert.ok(store.writes.length > writes);
       assert.equal(raw(store).familyId, 'dnipro-porcelain');
       assert.deepEqual(page.geometry(), geometry);
@@ -326,9 +334,9 @@ test('unified appearance survives Solo, Team, Versus and Solo return without alt
       page.$('race-options').focus();
       page.$('race-options').click();
       assert.equal(page.doc.activeElement.id, 'race-settings-tab-display');
-      reaches(page, 'race-theme-familyId');
+      reaches(page, 'race-theme-card-tryzub');
       const writes = store.writes.length;
-      change(page, 'race-theme-familyId', 'tryzub');
+      chooseTheme(page, 'race-', 'tryzub');
       assert.ok(store.writes.length > writes);
       assert.equal(raw(store).familyId, 'tryzub');
       reaches(page, 'race-theme-customize');
@@ -365,7 +373,7 @@ test('unified appearance survives Solo, Team, Versus and Solo return without alt
   });
 });
 
-test('controller can cancel native editing or immediately select a family without changing Ready', async (t) => {
+test('controller immediately applies a family card without changing Ready', async (t) => {
   const store = memoryStorage(),
     pad = {
       index: 0,
@@ -383,23 +391,12 @@ test('controller can cancel native editing or immediately select a family withou
   const before = page.checkpoint(),
     records = unrelated(store),
     writes = store.writes.length;
-  page.focus('race-theme-familyId');
-  page.pulse(0, 0);
-  assert.equal(page.editors().length, 1);
-  page.pulse(0, 13);
-  page.pulse(0, 1);
-  assert.equal(page.editors().length, 0);
-  assert.equal(page.$('race-theme-familyId').value, 'follow-game');
-  assert.equal(store.writes.length, writes, 'Cancelling a controller editor does not save.');
-  page.pulse(0, 0);
-  assert.equal(page.editors().length, 1);
-  page.pulse(0, 13);
-  page.pulse(0, 13);
+  page.focus('race-theme-card-industrial-workshop');
   page.pulse(0, 0);
   assert.equal(page.editors().length, 0);
-  assert.equal(page.$('race-theme-familyId').value, 'industrial-workshop');
-  assert.equal(page.doc.activeElement.id, 'race-theme-familyId');
-  assert.ok(store.writes.length > writes, 'Native selector confirmation applies immediately.');
+  assert.equal(page.$('race-theme-card-industrial-workshop').getAttribute('aria-pressed'), 'true');
+  assert.equal(page.doc.activeElement.id, 'race-theme-card-industrial-workshop');
+  assert.ok(store.writes.length > writes, 'Controller card activation applies immediately.');
   assert.equal(page.$('race-theme-apply'), null);
   assert.equal(raw(store).familyId, 'industrial-workshop');
   page.focus('race-theme-customize');
@@ -436,7 +433,7 @@ test('denied appearance saving leaves Team local choice usable without replacing
     throw new DOMException('Full storage', 'QuotaExceededError');
   };
   page.$('coop-settings-open').click();
-  change(page, 'coop-theme-familyId', 'vyshyvanka');
+  chooseTheme(page, 'coop-', 'vyshyvanka');
   customize(page, 'coop-');
   change(page, 'coop-theme-ornaments', 'off');
   reflects(page, 'coop-', 'vyshyvanka', 'off');
