@@ -258,8 +258,8 @@ navigator.serviceWorker?.register('./service-worker.js',{scope:'./',updateViaCac
       return { path, bytes: bytes.byteLength, sha256: sha(bytes) };
     });
   const totalBytes = inventory.reduce((sum, row) => sum + row.bytes, 0);
-  if (inventory.length > 2000 || totalBytes > 64 * 1024 * 1024)
-    throw new Error('Edition offline core exceeds 2000 files or 64 MiB.');
+  if (inventory.length > 2000 || totalBytes > 72 * 1024 * 1024)
+    throw new Error('Edition offline core exceeds 2000 files or 72 MiB.');
   const config = {
     format: 'revealline-company-offline.v1',
     editionId,

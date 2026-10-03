@@ -6,6 +6,47 @@ fullscreen and existing simulation/content contracts. Direction: grounded
 realism, primary Acro learning, optional self-level assistance and consistent
 main-game presentation. All activities remain immediately selectable.
 
+## Approved continuation — 3 October 2026
+
+The owner approved implementation with **world quality first**, polishing all
+14 existing worlds before the main learning/usability phase, followed by creator
+tools and four distinct new worlds. This ordering supersedes the older delivery
+order below. Additional unit coverage remains deferred to D6; functional build,
+browser, replay, import/export and offline checks remain part of each increment.
+Physical-device and novice feedback do not block development and are not claimed
+as completed.
+
+| Phase | Working estimate | Reviewable result |
+| --- | --- | --- |
+| D0 | 1 week | Publish verified controls/art PRs #986/#987 through protected checks; repair shared offline capacity; establish rendering baseline and complete Snake outcome verification |
+| D1 | 3–5 weeks | Finished Container Yard and Woodland Park; reusable industrial/natural assets and measured quality tiers |
+| D2 | 5–7 weeks | Remaining 12 worlds in six pairs: Stadium/Garage, Hangar/Meadow, Courtyard/Warehouse, Airfield/Quarry, Campus/Railworks, Orchard/Solar Park |
+| D3 | 2–3 weeks | 60 optional Adventure demonstrations, 28 eligible alternate School demonstrations, evidence-based coaching, continuous practice and touch/controller polish |
+| D4 | 1–2 weeks | Editable sweeper/hairpin/chicane/climb/split-level templates, clearance guidance, divergent-mode routes and industrial/natural starter projects |
+| D5 | 6–8 weeks | Mountain Reservoir, Harbor Docks, Old Town Canals and Festival Grounds; eight distinct challenges and 16 mode-specific demonstrations per world |
+| D6 | 1–2 weeks | Deferred unit coverage, full regression and recorded qualification limits |
+
+Estimate: 19–28 working weeks plus three contingency weeks, assuming two developers
+and an environment artist. Each complete increment receives a focused PR;
+independent work continues while CI runs. Use native stacks only for dependencies.
+D5 targets 18 worlds and 216 authored challenges; authored counts are not player
+acceptance or measured performance claims.
+
+Preserve Three.js, existing physics/replays, world identities, asset licenses and
+retained dependencies. Gameplay geometry changes need explicit content revisions.
+Quality presets must preserve collision, relevant sight lines and objective actors.
+Measure frame times, loading and resource disposal before claiming performance.
+No multiplayer, online publishing or universal commercial-map conversion is added.
+
+### Approved capacity change
+
+The owner explicitly approved raising the shared core/company offline budget from
+64 MiB to **72 MiB** with installation, update and rollback verification. Keep the
+2,000-file guard, content integrity checks and protected release requirements.
+Retain lossless compression and keep new large worlds/assets in optional packs.
+The three optional SIM packages remain **64/72/104 files and 8/8/16 MiB**.
+This approval does not alter unrelated media, backup, archive or source-file limits.
+
 ## Current delivery order — 3 October 2026
 
 The owner has explicitly made player-feedback sessions **nonblocking for further

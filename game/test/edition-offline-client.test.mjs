@@ -83,7 +83,7 @@ test('offline receipts bind the exact edition, release, build and bounded invent
     { version: '2.0.0' },
     { buildId: 'bad' },
     { count: 2001 },
-    { bytes: 64 * 1024 * 1024 + 1 },
+    { bytes: 72 * 1024 * 1024 + 1 },
     { version: 'DEV' },
   ]) {
     const h = fixture({ response: { ...ready(), ...change } });

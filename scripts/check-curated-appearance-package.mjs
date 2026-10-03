@@ -170,7 +170,7 @@ export async function checkCuratedAppearancePackage({ port = 0, keepServing = fa
       });
       packages.set(context, result);
       const totalBytes = [...result.files.values()].reduce((sum, bytes) => sum + bytes.length, 0);
-      assert.ok(result.files.size <= 2000 && totalBytes <= 64 * 1024 * 1024);
+      assert.ok(result.files.size <= 2000 && totalBytes <= 72 * 1024 * 1024);
       const previewURL = `/${context}/game/company.html`;
       const verified = await verifyStudioPreview({
         catalog: draft.catalog,
@@ -288,7 +288,7 @@ export async function checkCuratedAppearancePackage({ port = 0, keepServing = fa
         route: `${origin}${previewURL}`,
         files: result.files.size,
         bytes: totalBytes,
-        headroomBytes: 64 * 1024 * 1024 - totalBytes,
+        headroomBytes: 72 * 1024 * 1024 - totalBytes,
         verifiedFiles: verified.verifiedFiles,
         entrySha256: hash(result.files.get('game/company.html')),
         canonicalEntrySha256: hash(result.files.get('game/index.html')),

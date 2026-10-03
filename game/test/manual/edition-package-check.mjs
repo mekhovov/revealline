@@ -57,7 +57,7 @@ const directReadInputs = [
   ),
 ];
 for (const name of directReadInputs) await read(name);
-const limits = { files: 2000, bytes: 64 * 1024 * 1024 };
+const limits = { files: 2000, bytes: 72 * 1024 * 1024 };
 const editions = [];
 for (const edition of catalog.editions) {
   const diagnostics = { sourceRevision };
@@ -131,7 +131,7 @@ for (const edition of catalog.editions) {
     // Check the returned artifact, including manifests and workers generated
     // after the offline builder checks its cache inventory's own limits.
     assert.ok(compiled.files.size <= limits.files, 'Final edition exceeds 2000 files');
-    assert.ok(outputBytes <= limits.bytes, 'Final edition exceeds 64 MiB');
+    assert.ok(outputBytes <= limits.bytes, 'Final edition exceeds 72 MiB');
     editions.push({
       edition: edition.id,
       passed: true,

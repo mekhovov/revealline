@@ -950,10 +950,10 @@ html[data-edition-id] .edition-boot-logo{display:inline-block;width:auto;height:
   files.set('edition-build.json', jsonBytes(manifest));
   if (offline !== null) {
     const totalBytes = [...files.values()].reduce((sum, bytes) => sum + bytes.byteLength, 0);
-    if (files.size > 2000 || totalBytes > 64 * 1024 * 1024)
+    if (files.size > 2000 || totalBytes > 72 * 1024 * 1024)
       throw Object.assign(
         new TypeError(
-          `Final edition output exceeds 2000 files or 64 MiB (${files.size} files / ${totalBytes} bytes).`,
+          `Final edition output exceeds 2000 files or 72 MiB (${files.size} files / ${totalBytes} bytes).`,
         ),
         { outputFiles: files.size, outputBytes: totalBytes },
       );
