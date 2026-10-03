@@ -2621,3 +2621,19 @@ Published as [PR #990](https://github.com/mekhovov/revealline/pull/990), head
 CI is pending; no live deployment claim. Capacity #989 now passes focused and
 default-capacity checks, but its preview and edition candidate jobs failed;
 inspect those failures next without weakening admission guards.
+### D1 Woodland foliage surfaces — 3 October 2026
+
+#987 and #990 are merged. Independent branch `codex/fpv-woodland-foliage-surfaces`
+starts at main a8c808a26447dcea17c82852cb07b24d3059d2cb. Original shared leaf-cluster
+maps, underside shading and background bark replace flat authored Woodland tree
+surfaces. Geometry, silhouette, collision, routes, actors and physics are unchanged;
+Pixel/shared appearance overrides remain intact. No extra draw calls.
+
+15 browser cases / 90 rendered comparisons pass, including all presets and
+Industrial Workshop/Pixel/Meadow regression. Vertices remain exact and those
+three unaffected styles remain pixel-identical. Fifteen unload cycles plateau.
+21 existing checks pass; World Studio prepares at94files/14,410,935bytes. See
+`docs/fpv-woodland-foliage-surfaces.md`. No physical-FPS or live availability claim.
+Next: publish this surface increment and immediately continue original branching
+and canopy composition on a separate branch. Do not treat this increment as D1
+completion. Continue approved phases without another go-ahead.
