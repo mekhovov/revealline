@@ -190,3 +190,28 @@ for (const block of ['cancelled', 'hidden'])
     assert.deepEqual(state.visits, []);
     assert.deepEqual([state.local.writes, state.session.writes], before);
   });
+
+for (const current of ['solo', 'versus', 'team'])
+  test(`${current} Snake link preserves seats and resolves the appearance at activation`, (context) => {
+    const state = fixture(context, current);
+    const link = state.document.getElementById(`${current}-snake`);
+    assert.equal(link.tagName, 'A');
+    assert.equal(new URL(link.href).searchParams.get('mode'), current);
+    assert.equal(new URL(link.href).searchParams.has('appearanceFamily'), false);
+    Object.assign(state.document.documentElement.dataset, {
+      appearanceFamily: 'tryzub',
+      appearanceRevision: 'r1',
+    });
+    const before = structuredClone([state.local.writes, state.session.writes]);
+    link.click();
+    const target = new URL(link.href);
+    assert.equal(target.pathname, '/project/game/snake/play.html');
+    assert.equal(target.searchParams.get('mode'), current);
+    assert.equal(target.searchParams.get('lang'), 'uk');
+    assert.equal(target.searchParams.get('appearanceFamily'), 'tryzub');
+    assert.equal(state.paused(), 1);
+    assert.deepEqual(state.requests, [], 'The bundled Snake entry needs no simulator preflight.');
+    assert.deepEqual([state.local.writes, state.session.writes], before);
+    state.controls.dispose();
+    assert.equal(link.isConnected, false);
+  });

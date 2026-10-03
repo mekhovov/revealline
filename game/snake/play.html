@@ -2,9 +2,16 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <script src="../presentation/theme-bootstrap.mjs" data-theme-density="player" data-theme-follow-context="true"></script>
-    <link rel="stylesheet" href="../presentation/industrial-workshop.css" data-industrial-workshop />
-    <script type="module" src="../presentation/theme-entry.mjs"></script>
+    <script
+      src="../presentation/theme-bootstrap.mjs"
+      data-theme-density="player"
+      data-theme-follow-context="true"
+    ></script>
+    <link
+      rel="stylesheet"
+      href="../presentation/industrial-workshop.css"
+      data-industrial-workshop
+    />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <meta name="theme-color" content="#111c21" />
     <title>Classic Snake · FPV / LINE</title>
@@ -47,6 +54,17 @@
         </section>
         <section class="setup" aria-label="Game setup">
           <label
+            ><span data-word="format"></span
+            ><select id="format">
+              <option value="campaign">Campaign</option>
+              <option value="endless">Endless</option>
+            </select></label
+          >
+          <label id="campaign-field"
+            ><span data-word="campaign"></span
+            ><select id="campaign"></select
+          ></label>
+          <label
             ><span data-word="chapter"></span
             ><select id="chapter"></select
           ></label>
@@ -63,6 +81,40 @@
             </select></label
           >
         </section>
+        <section class="setup variants" aria-label="Round rules">
+          <label
+            ><span data-word="targetRules"></span
+            ><select id="target-rules">
+              <option value="authored">As designed</option>
+              <option value="moving">Moving-target remix</option>
+            </select></label
+          >
+          <label id="preset-field"
+            ><span data-word="preset"></span
+            ><select id="preset">
+              <option value="classic">Classic</option>
+              <option value="pursuit">Pursuit</option>
+              <option value="tactical">Tactical</option>
+              <option value="arcade">Arcade</option>
+            </select></label
+          >
+          <label id="duel-field"
+            ><span data-word="duel"></span
+            ><select id="duel">
+              <option value="score">Score duel · 3 min</option>
+              <option value="survival">Survival duel</option>
+            </select></label
+          >
+          <div class="sortie-actions">
+            <button id="featured" data-word="featured"></button
+            ><button id="new-route" data-word="newRoute"></button><span id="seed-label"></span>
+          </div>
+        </section>
+        <p id="progress-summary" role="status"></p>
+        <nav class="setup progress-links" aria-label="Campaign progress">
+          <button id="recent-level" hidden></button>
+          <button id="uncleared-level" hidden></button>
+        </nav>
         <div class="play-layout">
           <section class="arena" aria-label="Snake game">
             <div class="level-strip">
@@ -72,7 +124,9 @@
             <div id="boards"></div>
             <div class="run-controls">
               <button id="toggle" class="primary">Start game</button
-              ><button id="restart">Restart</button><button id="next" hidden>Next level</button>
+              ><button id="restart">Restart</button><button id="next" hidden>Next level</button
+              ><button id="review" data-word="review" hidden></button
+              ><button id="slow-offer" data-word="slowOffer" hidden></button>
             </div>
             <p id="announcement" role="status"></p>
             <div id="pads"></div>
@@ -88,8 +142,28 @@
               </div>
             </div>
             <p id="level-description"></p>
+            <p data-word="preyLegend"></p>
             <p id="mode-help"></p>
             <p id="speed-note" class="rule-badge"></p>
+            <p id="record-summary"></p>
+            <label
+              ><span data-word="appearance"></span
+              ><select id="style">
+                <option value="cable">Cable</option>
+                <option value="signal">Signal</option>
+              </select></label
+            >
+            <label
+              ><span data-word="steering"></span
+              ><select id="steering">
+                <option value="turns">Turn left / right</option>
+                <option value="dpad">Direction pad</option>
+              </select></label
+            >
+            <label
+              ><span data-word="accent"></span
+              ><select id="accent"></select
+            ></label>
             <p class="rule-note" data-word="noCapture"></p>
             <details>
               <summary data-word="controlsTitle"></summary>
@@ -108,6 +182,17 @@
                 ><input type="checkbox" id="reduced" /><span data-word="reduced"></span
               ></label>
               <p data-word="effectHelp"></p>
+              <label class="check"
+                ><input type="checkbox" id="muted" /><span data-word="muted"></span
+              ></label>
+              <label
+                ><span data-word="volume"></span
+                ><input id="volume" type="range" min="0" max="1" step="0.05"
+              /></label>
+              <label
+                ><span data-word="effectsVolume"></span
+                ><input id="effects-volume" type="range" min="0" max="1" step="0.05"
+              /></label>
             </details>
             <details>
               <summary data-word="session"></summary>

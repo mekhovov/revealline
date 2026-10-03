@@ -4,6 +4,7 @@ import { parse } from 'acorn';
 import { validateDemoCatalog } from '../game/demo-catalog.mjs';
 import { REACTION_PORTRAITS } from '../game/journey/reaction-portraits.mjs';
 import { REACTION_VOICE_PILOT } from '../game/audio/reactions/pilot.mjs';
+import { CLASSIC_PRESENTATION } from '../game/snake/classic-presentation.mjs';
 import {
   MENU_SCENES,
   MENU_SCENE_COMPOSITIONS,
@@ -95,6 +96,22 @@ export function editionReactionVoiceResources() {
   });
 }
 
+/** Exact original sprites selected by Classic's independent artwork owner. */
+export function editionClassicPresentationResources() {
+  if (CLASSIC_PRESENTATION.assets.length !== 2) throw new Error('Invalid Classic artwork budget.');
+  return CLASSIC_PRESENTATION.assets.map((asset) => {
+    const name = `game/presentation/compiled/assets/${asset.sha256}.png`;
+    if (
+      !['player.scout.compact', 'terrain.wall'].includes(asset.slot) ||
+      !/^[a-f0-9]{64}$/.test(asset.sha256) ||
+      asset.bytes > 1024 ||
+      asset.url !== new URL(`../${name}`, import.meta.url).href
+    )
+      throw new Error('Classic artwork must resolve to its exact original asset.');
+    return name;
+  });
+}
+
 function sceneAssets(scene) {
   return [scene.landscape, scene.portrait, scene.wordmark]
     .filter(Boolean)
@@ -163,6 +180,8 @@ export const EDITION_RUNTIME_ADAPTERS = Object.freeze({
 export const EDITION_RUNTIME_PAGES = Object.freeze([
   'game/controller-lab/index.html',
   'game/replay-theater/index.html',
+  'game/snake/index.html',
+  'game/snake/play.html',
 ]);
 
 // Non-import fetch/navigation dependencies of the shared host. Boot JSON and
@@ -175,6 +194,9 @@ export const EDITION_RUNTIME_RESOURCES = Object.freeze({
   'game/ui/install-offline-panel.mjs': ['game/ui/install-offline-panel.css'],
   'game/journey/reaction-portraits.mjs': editionReactionPortraitResources(),
   'game/audio/reactions/pilot.mjs': editionReactionVoiceResources(),
+  'game/ui/mode-choice.mjs': ['game/snake/play.html', 'game/snake/index.html'],
+  'game/snake/classic-presentation.mjs': editionClassicPresentationResources(),
+  'game/presentation/theme-host.mjs': ['game/presentation/industrial-workshop.css'],
   'game/vendor/qrcodegen-1.8.0.mjs': [
     'game/vendor/QRCODEGEN-LICENSE.txt',
     'game/vendor/qrcodegen-1.8.0.json',
