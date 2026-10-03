@@ -123,7 +123,7 @@ test('explicit real-source build ships thirty-two exact generated bodies once in
       assert.deepEqual(sha(await readFile(path.join(out, pin.path))), pin.sha256);
     }
     assert(offline.files.length <= 2000);
-    assert(offline.files.reduce((total, file) => total + file.bytes, 0) <= 64 * 1024 * 1024);
+    assert(offline.files.reduce((total, file) => total + file.bytes, 0) <= 72 * 1024 * 1024);
   }
   // Preserve the exact historical cohorts formerly recompiled by each chapter test.
   // These are actual loose bytes already authenticated above, in catalog order.

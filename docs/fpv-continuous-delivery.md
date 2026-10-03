@@ -2545,6 +2545,7 @@ Post-rebase candidate4752ae5ef again passes all three package admissions,
 committed-input/ZIP-member checks and two byte-identical builds. The admission
 receipt is refreshed; browser evidence remains bound to identical runtime bytes.
 CI/publication continues on #986 while art work remains independent.
+<<<<<<< 5a0fdc1c183cdfba3cf7a3f85e98bdcb861f6c58
 ### FlightDivision presentation increment — 3 October 2026
 
 The user requested comparable visual quality and keyboard controls after
@@ -2621,3 +2622,88 @@ Published as [PR #990](https://github.com/mekhovov/revealline/pull/990), head
 CI is pending; no live deployment claim. Capacity #989 now passes focused and
 default-capacity checks, but its preview and edition candidate jobs failed;
 inspect those failures next without weakening admission guards.
+||||||| 58bda8fd93291fc56cfa639fe323737d54c17c0d
+=======
+
+### D0 approved capacity increment — 3 October 2026
+
+Working branch `codex/fpv-d0-offline-capacity`, based on main
+`4fada39581777da9ca4111f50ec3b650803cdfa8`. Preserve local combined playtest
+`codex/fpv-flightdivision-combined-playtest`; do not push its integration merge
+into #986 or #987. The owner approved 72 MiB shared core/company capacity with
+verification, retaining lossless compression and all optional SIM limits.
+
+Implementation and current evidence: `docs/verification/fpv-d0-capacity/README.md`.
+All 18 company editions fit; existing focused checks 132 passed; actual browser
+72 MiB installation, staging and corrupt-update fallback passed. Publication and
+physical devices are not verified. The approved D0–D6 world-quality-first order
+is recorded at the top of `docs/fpv-reviewed-delivery-plan.md`.
+
+Next: finish exact candidate preparation and publish the focused capacity PR.
+Let protected CI qualify it, then refresh #986/#987 on current main without
+mixing incomplete D1 artwork into either. Continue Container Yard / Woodland
+rendering baseline independently. Full post-activation rollback and device
+qualification remain explicitly separate from the staging/fallback exercise.
+
+Candidate649887eed completed committed-source verification and default in-memory
+preparation:67,094,501bytes/1,327files,8,402,971bytes headroom. Browser normal
+activation and post-activation rollback also passed at72MiB. See core/rollback
+receipts. During qualification #986 advanced externally to
+cba2532f73ac078b8d013bd5341c1acd836cdeac via a main merge; preserve that work.
+#987 remains e808af302f1bf1480471646240d54371feb9b607.
+
+Refreshed onto main4074b12f7, retaining merged Neon sharing and workflow fixes.
+Final runtime candidate8162e7d4d62999a630b4daf43721f613b3b3ef8f passes committed
+source-bound core preparation:67,073,221bytes/1,328files,8,424,251bytes headroom.
+All18editions and132focused checks pass again. Registry preserves6,297current
+identities and saves308,129bytes. Browser72MiB activation/rollback evidence uses
+the identical production worker; the refreshed registry also passed browser
+equality. Only evidence/docs change after this candidate.
+
+### Capacity PR published; controls merged — 3 October 2026
+
+[PR #989](https://github.com/mekhovov/revealline/pull/989) is published and attached
+in the existing milestone57; no version or native stack was allocated. #986 merged
+as1aef4d70fa37c8911dbb47b4b128c253178c8b60 while publication was running. The
+capacity branch was rebased onto that main with a recovery ref, preserving both
+sides of the delivery-log conflict. All capacity runtime/compiler bytes match the
+qualified candidate;132focused checks pass after this rebase. Source-bound core
+and edition receipts remain explicitly tied to their recorded candidate, not a
+claim that current-head CI or public deployment has passed.
+
+#987 advanced externally to72818f59f502b2440eb9ae9d9b275cad1ecbc875; preserve it.
+Next: let #989 exact-head protected checks run, resolve routine reported failures,
+and verify deployment before calling the budget live. Continue D1 Container Yard
+and Woodland baseline/art independently. Do not repeatedly poll unchanged CI.
+
+### Capacity CI correction and independent Woodland publication — 3 October 2026
+
+#989's default-capacity/focused jobs passed. Edition admission failed because the
+candidate writer already permits selected `game/snake/index.html` and
+`game/snake/play.html` entries while the admission validator did not. Align the
+validator's exact entry list with the existing writer; retain all hash, inventory,
+archive, size and source-eligibility checks. Two preview host tests timed out;
+both pass locally with no timeout/policy changes.
+
+29 existing admission/bundle/menu-style/win-picture checks pass. Real in-memory
+`fpv-learning` and `droneaid-nl-community` candidate ZIP members pass corrected
+admission (36,578,413 and 67,464,718bytes respectively). Their publicEligible flag
+remains false pending normal publication qualification. No new unit coverage or
+physical-device performance claim; current-head CI must rerun.
+
+Independent D1 rendering foundation is published in PR #990 at690897542:
+24 spatial/material batches replace66 individual Woodland crown meshes, retaining
+silhouettes and placement. 12cases/60browser comparisons and package preparation
+pass. See that PR's `docs/fpv-woodland-canopy-batching.md`. Next art work remains
+Woodland natural detail/Container composition. #987 concurrent work is preserved.
+
+
+### Owner directive: continue across phase boundaries — 3 October 2026
+
+After completing and functionally verifying each increment, publish the focused
+PR and immediately implement the next approved item. Completion of a phase is a
+handoff into the next phase, not a stopping point or a new approval request. Keep
+CI/publication separate from unfinished next-item work. This standing instruction
+is now recorded in the reviewed delivery plan. D1 art remains next; the canopy
+optimization alone does not complete D1.
+>>>>>>> c5296fc26c02bb47749959bbfd38945c656bb6d7
