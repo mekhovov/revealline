@@ -2522,3 +2522,9 @@ rendered pairs with no context loss. Manual CPU qualification passes109/109;
 Pixel remains exact and material/texture counts do not increase. Development
 World package has94runtimefiles /14407506bytes, SHA256
 f7068627691de0666e70856924065c09a04a97e1a4f8cf97778593385bbe79d1.
+
+Visual frozen candidate91945d5c0 passes all three optional admissions, committed
+inputs/ZIP members and two identical builds. Source validate/lint/syntax/format
+pass. Packaged Container survey launches, verifies its recording and resumes
+actual WebGL playback without rewards. Next publication is the focused art PR;
+Stadium/Garage and the broader14-world asset pass remain planned, not completed.

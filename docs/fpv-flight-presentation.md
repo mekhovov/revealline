@@ -128,3 +128,11 @@ acceptance, sustained named-device frame
 times and memory, and physical controller/mobile coverage. No broad photorealism,
 commercial-map compatibility, physical-device performance or novice acceptance
 claim follows from this increment.
+
+Frozen candidate91945d5c0 passed all three optional package admissions, verified
+committed inputs/ZIP members and two byte-identical builds.
+[Admission receipt](evidence/fpv-flight-presentation-package-admission.json).
+Package review and protected publication remain separate. `npm run validate`,
+changed-source ESLint, syntax and formatting checks pass. The packaged player
+loads Container survey, verifies its installed recording, and resumes actual
+WebGL playback without rewards; browser inspection is not physical-device acceptance.
