@@ -547,6 +547,8 @@ test('common host import projection closes over committed adapters without visit
     ['game/ui/style.css', bytes('body{color:red}')],
     ['game/controller-lab/index.html', bytes('<html></html>')],
     ['game/replay-theater/index.html', bytes('<html></html>')],
+    ['game/snake/index.html', bytes('<html></html>')],
+    ['game/snake/play.html', bytes('<html></html>')],
     ['game/content/scenarios/line-impact-demo.json', bytes('{}')],
     ['game/editions/runtime-assets.json', bytes('[]')],
     ...Object.entries(EDITION_RUNTIME_ADAPTERS).flatMap(([request, adapter]) => [
