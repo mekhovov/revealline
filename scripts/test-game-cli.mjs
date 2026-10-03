@@ -188,7 +188,7 @@ test('real Git snapshot runs an older frozen entry through an aliased temp root 
     await fs.copyFile(new URL(`../${relative}`, import.meta.url), path.join(root, relative));
   await fs.writeFile(
     path.join(root, 'scripts/offline-core-closure.mjs'),
-    'export function isOptionalSpatialAudioBody() { return false; }\n',
+    'export function isOptionalSpatialAudioBody() { return false; }\nexport function isOptionalReactionVoiceBody() { return false; }\n',
   );
   // Retain the historical argv/URL guard in the archived entry. The real build
   // implementation runs behind it, so fixing only the current entry guard would
@@ -754,6 +754,11 @@ test('packaged offline builds generate scoped metadata, generated brand icons, c
     new URL('../game/offline.mjs', import.meta.url),
     path.join(root, 'game/offline.mjs'),
   );
+  // This packaging fixture has no immutable-version updater context.
+  await fs.writeFile(
+    path.join(root, 'game/game-updates.mjs'),
+    'export function readGameUpdateContext() { return null; }\n',
+  );
   await fs.mkdir(path.join(root, 'game/content-design'));
   await fs.copyFile(
     new URL('../game/content-design/limits.mjs', import.meta.url),
@@ -1208,9 +1213,9 @@ test('archived packs stay downloadable with exact bytes while both navigation ca
   await assert.rejects(buildProject({ root, out }));
   assert.deepEqual(await fs.readFile(path.join(out, 'manifest.json')), before);
 });
-test('declaring an optional pack does not relax the 64 MiB core cache budget', async (t) => {
+test('declaring an optional pack does not relax the 72 MiB core cache budget', async (t) => {
   const { root, out } = await optionalPackFixture(t);
-  await fs.writeFile(path.join(root, 'game/core-payload.bin'), Buffer.alloc(64 * 1024 * 1024));
-  await assert.rejects(buildProject({ root, out }), /64 MiB/);
+  await fs.writeFile(path.join(root, 'game/core-payload.bin'), Buffer.alloc(72 * 1024 * 1024));
+  await assert.rejects(buildProject({ root, out }), /72 MiB/);
   await assert.rejects(fs.access(out));
 });

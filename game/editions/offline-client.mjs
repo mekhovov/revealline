@@ -65,7 +65,7 @@ function receipt(data, { scope, editionId, version, buildId }) {
     data.count > 2000 ||
     !Number.isSafeInteger(data.bytes) ||
     data.bytes < 0 ||
-    data.bytes > 64 * 1024 * 1024 ||
+    data.bytes > 72 * 1024 * 1024 ||
     (editionId !== undefined && data.editionId !== editionId) ||
     (version !== undefined && data.version.replace(/^v/, '') !== version.replace(/^v/, '')) ||
     (buildId !== undefined && data.buildId !== buildId)
