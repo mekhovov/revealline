@@ -17,13 +17,13 @@
   ],
   "campaigns": [
     {
-      "band": 1,
+      "band": 3,
       "discovery": { "exhibitLayout": "gallery" },
       "format": "CampaignDesignV1",
       "id": "social-drone-sky-watch",
       "missionIds": ["social-drone-sky-watch-01"],
       "name": "Sky Watch",
-      "revision": "1"
+      "revision": "2"
     }
   ],
   "difficultyCatalogId": "journey-difficulty-v2",
@@ -33,18 +33,30 @@
     {
       "format": "MapDesignV1",
       "foundations": [
-        { "h": 5, "w": 9, "x": 9, "y": 8 },
-        { "h": 5, "w": 9, "x": 53, "y": 23 }
+        { "h": 5, "w": 10, "x": 10, "y": 20 },
+        { "h": 5, "w": 10, "x": 31, "y": 21 },
+        { "h": 5, "w": 10, "x": 52, "y": 8 }
       ],
       "height": 36,
       "id": "social-drone-sky-watch-01-map",
-      "name": "Island channel",
-      "revision": "1",
+      "name": "Watch corridors",
+      "revision": "2",
       "spawns": [{ "id": "home", "x": 36.5, "y": 0.5 }],
       "terrain": [],
       "walls": [
-        { "h": 2, "w": 10, "x": 4, "y": 16 },
-        { "h": 2, "w": 10, "x": 58, "y": 18 }
+        { "h": 2, "w": 12, "x": 5, "y": 10 },
+        { "h": 2, "w": 18, "x": 27, "y": 12 },
+        { "h": 2, "w": 12, "x": 55, "y": 23 },
+        { "h": 10, "w": 2, "x": 20, "y": 20 },
+        { "h": 10, "w": 2, "x": 49, "y": 5 },
+        { "h": 1, "w": 12, "x": 5, "y": 26 },
+        { "h": 1, "w": 12, "x": 5, "y": 34 },
+        { "h": 7, "w": 1, "x": 5, "y": 27 },
+        { "h": 7, "w": 1, "x": 16, "y": 27 },
+        { "h": 1, "w": 10, "x": 56, "y": 15 },
+        { "h": 1, "w": 10, "x": 56, "y": 22 },
+        { "h": 6, "w": 1, "x": 56, "y": 16 },
+        { "h": 6, "w": 1, "x": 65, "y": 16 }
       ],
       "width": 72
     }
@@ -57,38 +69,54 @@
           "id": "west-keeper",
           "role": "field-keeper",
           "tier": "measured",
-          "x": 8.5,
-          "y": 28.5
+          "x": 10.5,
+          "y": 30.5
+        },
+        {
+          "heading": [0, -1],
+          "id": "east-keeper",
+          "role": "field-keeper",
+          "tier": "measured",
+          "x": 60.5,
+          "y": 18.5
+        },
+        {
+          "clockwise": true,
+          "id": "outer-watch",
+          "role": "perimeter-patrol",
+          "tier": "measured",
+          "x": 1.5,
+          "y": 35.5
         }
       ],
       "bonuses": [],
-      "coverage": 0.5,
+      "coverage": 0.45,
       "design": {
-        "captureConsequence": "Closing the crossing reveals the whole picture and unlocks the video.",
-        "combines": [],
-        "counterplay": "Watch the keeper before crossing the middle channel.",
+        "captureConsequence": "The first closure reveals most of the scene. A second safe return completes the picture and unlocks the video.",
+        "combines": ["field-keeper", "perimeter-patrol", "foundations"],
+        "counterplay": "Read both field keepers and the border patrol before leaving safety; the walls create protected pauses and narrow turns.",
         "difficulty": {
-          "band": 1,
+          "band": 3,
           "coordination": 0,
-          "execution": 1,
-          "mechanicLoad": 1,
-          "planning": 1,
-          "threatDensity": 1,
+          "execution": 3,
+          "mechanicLoad": 3,
+          "planning": 3,
+          "threatDensity": 3,
           "timePressure": 0
         },
-        "durationSeconds": [10, 45],
-        "introduces": ["foundations"],
-        "lesson": "Reveal the aerial picture, then enjoy the original video.",
-        "mastery": "Complete the crossing without losing a life.",
-        "memorableMoment": "The completed picture settles before the aerial clip begins.",
+        "durationSeconds": [25, 75],
+        "introduces": ["perimeter-patrol"],
+        "lesson": "Build two deliberate captures through the watch corridors, then enjoy the original video.",
+        "mastery": "Complete two captures through different corridors without losing a life.",
+        "memorableMoment": "The final corridor closes, the completed picture settles, and the aerial clip begins.",
         "pacingBeat": "discover",
-        "practices": ["closure"],
-        "rewardRef": { "id": "social-drone-sky-watch-01-discovery", "revision": "1" },
-        "routeDecision": "Take the open channel between the two safe islands."
+        "practices": ["closure", "enemy-seeded-closure", "foundations"],
+        "rewardRef": { "id": "social-drone-sky-watch-01-discovery", "revision": "2" },
+        "routeDecision": "Use the center refuge for a shorter second cut, or circle a side corridor away from the keepers."
       },
       "format": "MissionDesignV1",
       "id": "social-drone-sky-watch-01",
-      "map": { "id": "social-drone-sky-watch-01-map", "revision": "1" },
+      "map": { "id": "social-drone-sky-watch-01-map", "revision": "2" },
       "modes": ["solo"],
       "name": "Sky Watch",
       "objectives": [],
@@ -96,7 +124,7 @@
         "backgroundAssetId": "social-drone-sky-watch-picture",
         "themeId": "social-drone-people-workshop-theme"
       },
-      "revision": "1",
+      "revision": "2",
       "spawnId": "home",
       "timeLimitSeconds": 0
     }
@@ -108,9 +136,9 @@
       "format": "PackDesignV1",
       "id": "social-drone-sky-watch-pack",
       "name": "Sky Watch",
-      "revision": "1"
+      "revision": "2"
     }
   ],
   "policyId": "journey-trail-impact-v3",
-  "revision": "1"
+  "revision": "2"
 }
