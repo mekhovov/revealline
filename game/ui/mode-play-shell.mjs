@@ -121,6 +121,7 @@ export function mountModePlayShell({
         start: 'play',
         continue: 'play',
         retry: 'play',
+        results: 'collection',
         menu: 'back',
         pause: 'pause',
         expert: 'settings',
