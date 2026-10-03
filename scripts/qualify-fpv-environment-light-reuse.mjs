@@ -49,7 +49,9 @@ for (const item of ast.body.filter((item) => item.type === 'ImportDeclaration').
 module = module.replaceAll('export function ', 'function ');
 const targets = [],
   owners = [],
-  scenes = [];
+  scenes = [],
+  drones = [],
+  hunts = [];
 let nextInputs = { sky: 0xc5d7e4, ground: 0x535c54, indoor: false },
   failGeneration = false;
 class Renderer {
@@ -59,6 +61,9 @@ class Renderer {
     this.info = { programs: [], memory: {}, render: {} };
     this.lost = false;
     owners.push(this);
+  }
+  compileAsync() {
+    return this.preparing ?? Promise.resolve();
   }
   dispose() {}
   forceContextLoss() {}
@@ -86,19 +91,23 @@ const create = vm.runInNewContext(`${module}; createFlightRenderer`, {
   TextEncoder,
   structuredClone,
   THREE: { ...THREE, WebGLRenderer: Renderer, Scene },
-  buildWorldVisuals: () => ({
-    theme: {
-      ...themes.resolveSimThemeProfile(FLIGHT_COURSES[0]).palette,
-      sky: nextInputs.sky,
-      wall: nextInputs.sky,
-      ground: nextInputs.ground,
-    },
-    groundColor: new THREE.Color(nextInputs.ground),
-    indoor: nextInputs.indoor,
-    center: [0, 0],
-    width: 20,
-    depth: 20,
-  }),
+  buildWorldVisuals: ({ mesh, material, world }) => {
+    const map = new THREE.DataTexture(new Uint8Array([255, 128, 0, 255]), 1, 1);
+    mesh(new THREE.BoxGeometry(2, 1, 2), material(0xffffff, { map }), world);
+    return {
+      theme: {
+        ...themes.resolveSimThemeProfile(FLIGHT_COURSES[0]).palette,
+        sky: nextInputs.sky,
+        wall: nextInputs.sky,
+        ground: nextInputs.ground,
+      },
+      groundColor: new THREE.Color(nextInputs.ground),
+      indoor: nextInputs.indoor,
+      center: [0, 0],
+      width: 20,
+      depth: 20,
+    };
+  },
   createEnvironmentLight: (owner, inputs) => {
     check(
       'previous target released before each allocation',
@@ -117,7 +126,13 @@ const create = vm.runInNewContext(`${module}; createFlightRenderer`, {
     targets.push(target);
     return target;
   },
-  buildDroneVisual: ({ material }) => ({ tint: material(0xffffff), rotors: [] }),
+  buildDroneVisual: ({ material, mesh, parent }) => {
+    const tint = material(0xffffff),
+      body = mesh(new THREE.BoxGeometry(1, 1, 1), tint, parent);
+    const drone = { tint, rotors: [], body };
+    drones.push(drone);
+    return drone;
+  },
 });
 function fixture() {
   const listeners = new Map(),
@@ -131,6 +146,24 @@ function fixture() {
       ownerDocument: { createElement: () => ({ getContext: () => null }) },
     },
     window: { devicePixelRatio: 1 },
+    createHuntPresentation: ({ scene }) => {
+      const group = new THREE.Group();
+      scene.add(group);
+      const row = {
+        group,
+        disposals: 0,
+        reset() {},
+        resources() {
+          return { disposed: this.disposals > 0 };
+        },
+        dispose() {
+          this.disposals++;
+          group.removeFromParent();
+        },
+      };
+      hunts.push(row);
+      return row;
+    },
     onContextLost: () => {
       lossCalls++;
       check(
@@ -202,6 +235,30 @@ check(
   'second renderer releases only its own target once',
   targets[4].disposals === 1 && targets[3].disposals === 0,
 );
+first.runtime.setCosmetic({ color: '#ff66aa' });
+first.runtime.setPresentation({ collectionId: 'industrial-workshop' });
+set();
+const watched = new Map();
+first.scene.traverse((item) => {
+  for (const value of [
+    item.geometry,
+    ...[item.material].flat(),
+    item.customDepthMaterial,
+    item.customDistanceMaterial,
+  ].filter(Boolean)) {
+    for (const resource of [value, ...Object.values(value).filter((v) => v?.isTexture)]) {
+      if (watched.has(resource)) continue;
+      watched.set(resource, 0);
+      resource.addEventListener('dispose', () => watched.set(resource, watched.get(resource) + 1));
+    }
+  }
+});
+let releasePreparation;
+first.owner.preparing = new Promise((resolve) => {
+  releasePreparation = resolve;
+});
+const pendingPreparation = first.runtime.prepare();
+const huntBeforeLoss = hunts[0];
 first.owner.lost = true;
 let prevented = false;
 first.listeners.get('webglcontextlost')({
@@ -213,6 +270,19 @@ check(
   'context loss releases and invalidates exactly once',
   prevented && first.losses() === 1 && targets[3].disposals === 1,
 );
+releasePreparation();
+check('pending preparation invalidated by loss', (await pendingPreparation) === false);
+check(
+  'all watched scene resources released once during loss',
+  watched.size > 0 && [...watched.values()].every((n) => n === 1),
+);
+check(
+  'registered resources empty while lost',
+  Object.values(first.runtime.resources().registered).every((n) => n === 0),
+);
+check('optional hunt owner released during loss', huntBeforeLoss.disposals === 1);
+check('prepare cannot reuse cleared scene', (await first.runtime.prepare()) === false);
+first.runtime.draw({});
 set();
 check(
   'lost context cannot cache a newly invalid target',
@@ -221,6 +291,19 @@ check(
 first.owner.lost = false;
 set();
 check('restored same inputs regenerate', targets.length === 6);
+check(
+  'same-quality aircraft recreated and cosmetic retained',
+  drones.at(-1).body.parent !== null && drones.at(-1).tint.color.getHex() === 0xff66aa,
+);
+check(
+  'pending presentation retained for Retry',
+  first.runtime.resources().presentation.collectionId === 'industrial-workshop',
+);
+check(
+  'new optional hunt owner created on Retry',
+  hunts.length === 3 && hunts.at(-1).disposals === 0,
+);
+check('restored installed scene prepares', (await first.runtime.prepare()) === true);
 nextInputs = { ...nextInputs, indoor: false };
 failGeneration = true;
 let threw = false;
@@ -244,6 +327,14 @@ first.runtime.dispose();
 check(
   'every allocated target disposed exactly once',
   targets.every((t) => t.disposals === 1),
+);
+check(
+  'old loss resources not disposed again',
+  [...watched.values()].every((n) => n === 1),
+);
+check(
+  'each optional hunt owner disposed once',
+  hunts.every((h) => h.disposals === 1),
 );
 check('course is not mutated', JSON.stringify(course) === originalCourse);
 check(
