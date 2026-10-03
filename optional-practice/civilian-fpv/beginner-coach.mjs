@@ -1,6 +1,13 @@
 import { STICK_LAYOUTS, DEFAULT_RESPONSE, neutralFlightInput } from './radio-profile.mjs';
 import { createFlight, FLIGHT_HZ } from './model.mjs';
-import { createFlightGamepad, touchStickValues } from './input.mjs';
+import {
+  createFlightGamepad,
+  touchStickValues,
+  keyboardFlightPreset,
+  keyboardFlightValues,
+  keyboardFlightKey,
+  keyboardFlightHelp,
+} from './input.mjs';
 import { mountDroneDiagram, mountStickTrace, practiceSkillFeedback } from './sim-presentation.mjs';
 import {
   ACRO_LESSON_ORDER,
@@ -419,18 +426,7 @@ export function mountBeginnerCoach({
     blockedKeys = new Set();
   const labTouch = neutralFlightInput();
   let touchThrottleDirection = 0;
-  const movementKeys = new Set([
-    'KeyW',
-    'KeyS',
-    'KeyA',
-    'KeyD',
-    'KeyQ',
-    'KeyE',
-    'ArrowUp',
-    'ArrowDown',
-    'ShiftLeft',
-    'ShiftRight',
-  ]);
+  const keyboardPreset = () => keyboardFlightPreset(snapshot.keyboardPreset);
   const lang = () => ((typeof locale === 'function' ? locale() : locale) === 'uk' ? 'uk' : 'en');
   const t = (en, uk) => (lang() === 'uk' ? uk : en);
   const copy = (value) =>
@@ -809,22 +805,12 @@ export function mountBeginnerCoach({
         );
       return { ...labTouch };
     }
-    const fine = labKeys.has('ShiftLeft') || labKeys.has('ShiftRight');
-    const gain = fine ? 0.18 : 0.5;
-    return {
-      throttle: clamp(
-        labInput.throttle +
-          ((Number(labKeys.has('ArrowUp')) - Number(labKeys.has('ArrowDown'))) *
-            (fine ? 0.1 : 0.35) *
-            Number(advance)) /
-            FLIGHT_HZ,
-        0,
-        1,
-      ),
-      roll: (Number(labKeys.has('KeyD')) - Number(labKeys.has('KeyA'))) * gain,
-      pitch: (Number(labKeys.has('KeyW')) - Number(labKeys.has('KeyS'))) * gain,
-      yaw: (Number(labKeys.has('KeyE')) - Number(labKeys.has('KeyQ'))) * gain,
-    };
+    return keyboardFlightValues({
+      keys: labKeys,
+      preset: keyboardPreset().id,
+      throttle: labInput.throttle,
+      seconds: advance ? 1 / FLIGHT_HZ : 0,
+    });
   }
   function patchLessonStep() {
     if (!labLesson || stage !== 'guide') return;
@@ -1796,22 +1782,17 @@ export function mountBeginnerCoach({
           'coach-lab-help',
           t(
             hasLessonPreview()
-              ? 'Watch the complete lesson, then move a control to take over at this exact point. Real objectives advance the instructions automatically. Click a step number to replay from it. Watch lesson restarts the complete route. Practice is unscored; use Let’s fly for a recorded attempt. W/S, A/D, Q/E and ↑/↓; Shift is gentle. Esc pauses.'
-              : 'Focus the drone and use W/S, A/D, Q/E and ↑/↓, or move a calibrated radio stick. Drag either gimbal or open Touch buttons. Shift is gentle; throttle stays set. Esc pauses for menu navigation. Replay example returns to this step’s control technique.',
+              ? 'Watch the complete lesson, then move a control to take over at this exact point. Real objectives advance the instructions automatically. Click a step number to replay from it. Watch lesson restarts the complete route. Practice is unscored; use Let’s fly for a recorded attempt. Your selected keyboard layout is shown below. Esc pauses.'
+              : 'Focus the drone and use the selected keyboard layout below, or move a calibrated radio stick. Drag either gimbal or open Touch buttons. Shift is gentle; throttle stays set. Esc pauses for menu navigation. Replay example returns to this step’s control technique.',
             hasLessonPreview()
-              ? 'Перегляньте весь урок і рухайте керуванням, щоб продовжити саме з цієї позиції. Справжні цілі автоматично змінюють пояснення. Номер кроку починає показ із нього. «Переглянути урок» повторює весь маршрут. Практика без балів; для записаної спроби натисніть «Почнімо політ». W/S, A/D, Q/E та ↑/↓; Shift — плавно. Esc — пауза.'
-              : 'Виберіть схему дрона й натискайте W/S, A/D, Q/E та ↑/↓ або рухайте каліброваним стіком пульта. Перетягніть джойстик або відкрийте сенсорні кнопки. Shift — плавно; газ зберігається. Esc — пауза для меню. «Повторити приклад» показує прийом цього кроку.',
+              ? 'Перегляньте весь урок і рухайте керуванням, щоб продовжити саме з цієї позиції. Справжні цілі автоматично змінюють пояснення. Номер кроку починає показ із нього. «Переглянути урок» повторює весь маршрут. Практика без балів; для записаної спроби натисніть «Почнімо політ». Вибрана розкладка клавіатури показана нижче. Esc — пауза.'
+              : 'Виберіть схему дрона й користуйтеся розкладкою клавіатури нижче або рухайте каліброваним стіком пульта. Перетягніть джойстик або відкрийте сенсорні кнопки. Shift — плавно; газ зберігається. Esc — пауза для меню. «Повторити приклад» показує прийом цього кроку.',
           ),
         ),
       );
       const keys = node('p', 'coach-keys');
       keys.append(node('strong', '', t('Keyboard: ', 'Клавіатура: ')));
-      for (const [key, axis] of [
-        ['↑ / ↓', 'throttle'],
-        ['Q / E', 'yaw'],
-        ['W / S', 'pitch'],
-        ['A / D', 'roll'],
-      ])
+      for (const [axis, key] of Object.entries(keyboardPreset().labels))
         keys.append(node('kbd', '', key), node('span', '', axisName(axis)));
       keys.append(
         node(
@@ -1823,6 +1804,18 @@ export function mountBeginnerCoach({
           ),
         ),
       );
+      keys.title = keyboardFlightHelp(keyboardPreset().id, lang(), { actions: false });
+      if (keyboardPreset().arm)
+        keys.append(
+          node(
+            'small',
+            '',
+            t(
+              'With the drone focused: Space plays / pauses this practice; R resets it paused. Tab still moves between controls.',
+              'Коли вибрана схема дрона: Пробіл запускає / зупиняє практику; R скидає її на паузі. Tab переміщує фокус між елементами.',
+            ),
+          ),
+        );
       notes.append(keys);
       const tip = node('aside', 'coach-tip');
       refs.stepTip = node('p', '', copy(step?.tip));
@@ -2087,7 +2080,21 @@ export function mountBeginnerCoach({
       event.target?.isContentEditable
     )
       return;
-    if (!movementKeys.has(event.code)) return;
+    const preset = keyboardPreset();
+    if ([preset.arm, preset.reset].includes(event.code) && event.target === refs.labFocus) {
+      event.preventDefault();
+      event.stopImmediatePropagation();
+      if (event.repeat) return;
+      if (event.code === preset.arm) {
+        if (labRunning) pausePreview();
+        else playPreview();
+      } else {
+        resetPreview();
+        paint();
+      }
+      return;
+    }
+    if (!keyboardFlightKey(event.code, preset.id)) return;
     // A held flight key can keep repeating while Explain opens. Only a fresh
     // keydown may take ownership from an example or a different input source.
     if (event.repeat && (labMode !== 'try' || labSource !== 'keyboard')) return;
@@ -2144,7 +2151,11 @@ export function mountBeginnerCoach({
       if (disposed) return;
       pausePreview();
       lesson = value;
-      snapshot = { mode: options.mode ?? value.mode, modePractice: Boolean(options.modePractice) };
+      snapshot = {
+        mode: options.mode ?? value.mode,
+        modePractice: Boolean(options.modePractice),
+        keyboardPreset: options.keyboardPreset,
+      };
       lessonDemonstration = options.demonstration ?? null;
       lessonTimeline = null;
       labScope = hasLessonPreview() ? 'lesson' : 'step';
@@ -2167,9 +2178,11 @@ export function mountBeginnerCoach({
     update(value) {
       if (!lesson || disposed || stage === 'closed') return;
       const previousMode = mode();
+      const previousKeyboard = keyboardPreset().id;
       const wasPending = autoPreviewPending;
       const wasReduced = snapshot.reducedMotion;
       snapshot = { ...snapshot, ...value };
+      if (keyboardPreset().id !== previousKeyboard) pausePreview();
       if (mode() !== previousMode) {
         lessonTimeline = null;
         resetPreview();
@@ -2179,7 +2192,7 @@ export function mountBeginnerCoach({
         pausePreview();
       if (labRunning && labMode === 'try' && labSource === 'radio' && !labRadioAvailable())
         pausePreview('radio');
-      const key = `${lang()}|${activeStep()}|${snapshot.stickMode}|${snapshot.radioStickMode}|${snapshot.radioAvailable}|${snapshot.source}|${snapshot.monitorAvailable}|${snapshot.mode}|${Boolean(snapshot.reducedMotion)}`;
+      const key = `${lang()}|${activeStep()}|${snapshot.stickMode}|${snapshot.radioStickMode}|${snapshot.radioAvailable}|${snapshot.source}|${snapshot.monitorAvailable}|${snapshot.mode}|${keyboardPreset().id}|${Boolean(snapshot.reducedMotion)}`;
       if (key !== lastRender) {
         lastRender = key;
         render();

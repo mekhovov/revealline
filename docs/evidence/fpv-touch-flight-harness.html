@@ -377,6 +377,8 @@
           'Keyboard movement and fine control remain responsive from HUD button focus',
           () => {
             input.select('keyboard');
+            // This regression retains the original keyboard layout explicitly.
+            input.keyboardPreset('classic');
             input.enable(true);
             $('focus').focus();
             const key = (type, code) =>
@@ -467,10 +469,10 @@
         };
         const baselineRecords = JSON.stringify(app.snapshot().records);
         await record(
-          'All 148 installed levels preserve both selected flight modes and keep the selector available',
+          `All ${cat.school.length + cat.worlds.length} installed levels preserve both selected flight modes and keep the selector available`,
           async () => {
             eq(cat.school.length, 58, 'Current school size');
-            eq(cat.worlds.length, 90, 'Current world catalogue size');
+            eq(cat.worlds.length, 126, 'Current world catalogue size including Snake Hunt');
             for (const entry of [...cat.school, ...cat.worlds])
               for (const mode of ['self-level', 'acro']) {
                 progress(`${entry.id} · ${mode}`);

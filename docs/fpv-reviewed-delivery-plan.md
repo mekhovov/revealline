@@ -396,3 +396,52 @@ Keep Themes #955's shared factory/semantic ownership. Counts remain148 challenge
 14worlds and178 original/school demonstrations. B physical TX15/iPhone/Steam Deck,
 D player sessions, F creator/device-offline, feedback-led G maps and H/R7 deferred
 unit coverage remain open.
+
+### FlightDivision inspection and implementation order — 3 October 2026
+
+This checkpoint supersedes the catalogue counts and next-item order immediately
+above. Main `cf0b62e53` includes recovery #981 and Theme Studio #982. It has
+184 challenges in 14 worlds, including 58 school lessons; the original/school
+demonstration total remains 178. The prepared 60 Adventure examples still need
+their own player-delivery qualification. No new world is counted for an art pass.
+
+The owner requested implementation after a logged-in inspection of
+[FlightDivision](https://www.flightdivision.com/sim). Its actual settings,
+free-flight environment, drone Gear screen and first lesson were inspected.
+The useful immediate references are its two-hand keyboard grouping, readable
+quad construction, coherent industrial materials, clear structural silhouettes
+and short contextual lesson instructions. Public marketing statements about
+training transfer and physics are not independent qualification evidence.
+
+Deliver the following focused increments in this order, with independent
+branches where their code has no dependency:
+
+1. **Two-stick keyboard layout:** W/S throttle, A/D yaw, arrows pitch/roll;
+   Space arm/pause and R reset through existing safety gates. Keep Classic
+   selectable and share the preference/hints across both hosts and the lab.
+   Gate: actual-browser input, replay/menu isolation and frozen package admission.
+2. **Drone and Container Yard presentation:** shaped carbon frames, larger swept
+   props, recognizable battery/camera details, corrugated closed containers and
+   door hardware. Reduce repeated meshes; preserve Pixel styling, collider bounds,
+   theme ownership and physical profiles. Gate: before/after WebGL views,
+   collision/visibility equivalence, resource disposal and package admission.
+3. **Full environment art foundation:** carry the same surface scale, material
+   discipline, lighting and flight-line composition into Stadium/Garage, then
+   terrain and richer authored scenery. A small procedural refinement does not
+   establish parity with FlightDivision's complete world production. Establish
+   a representative finished environment before estimating the remaining batch.
+4. **Remaining examples and repeat play:** ship the prepared optional Adventure
+   demonstrations, keep section practice/ghost compatibility and improve relevant
+   next actions. Follow with distinct map additions once the art pipeline is
+   proven; user feedback remains nonblocking.
+5. **Final qualification:** additional unit coverage, sustained named-device
+   frame times, physical radio/handheld and novice acceptance. Continue functional
+   verification on every preceding increment. Do not mark pending human/device
+   observations passed merely because browser fixtures succeed.
+
+The first two increments are under active implementation. Their focused PRs and
+qualification receipts determine completion; public availability additionally
+requires deployment identity and a real player launch. They do not replace the
+larger remaining art work with an unsupported same-quality claim. Reuse existing
+licensed resources and original geometry; this inspection does not establish
+redistribution permission for FlightDivision's proprietary models or textures.
