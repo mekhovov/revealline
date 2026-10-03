@@ -111,6 +111,8 @@
       for (const variant of [
         { world: { theme: 'pixel' } },
         { theme: 'pixel' },
+        { themeId: 'pixel' },
+        { world: { theme: 'ukrainian', themeProfile: { textureFilter: 'nearest' } } },
         { themeProfile: { textureFilter: 'nearest' } },
       ]) {
         const c = { ...woodland[0], ...variant };
@@ -118,7 +120,7 @@
         const b = new Uint8Array(await afterAssets.builtinWorldScene(c).arrayBuffer());
         assert(a.length === b.length && a.every((v, i) => v === b[i]), 'Pixel profile unchanged');
       }
-      report.pixelVariantsUnchanged = 3;
+      report.pixelVariantsUnchanged = 5;
       for (const environment of ['courtyard', 'warehouse', 'stadium', 'container-yard', 'garage']) {
         const a = new Uint8Array(await beforeAssets.builtinWorldScene(environment).arrayBuffer()),
           b = new Uint8Array(await afterAssets.builtinWorldScene(environment).arrayBuffer());

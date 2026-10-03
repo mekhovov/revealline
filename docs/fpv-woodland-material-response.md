@@ -17,7 +17,7 @@ GLB bytes. Geometry, alpha mode, textures, collisions and course IDs stay unchan
 
 `evidence/fpv-woodland-material-browser.json` records both arena sizes through
 GLTFLoader, including lit MeshStandardMaterial assertions, 16,080 vertices clear
-of each flight arena, unchanged sampled draw/triangle counts, three byte-identical
+of each flight arena, unchanged sampled draw/triangle counts, five byte-identical
 Pixel variants and five byte-identical other environments. Before/after PNG is
 alongside it. No additional texture or geometry allocation; PBR shading costs more
 than unlit shading and sustained device FPS remains unmeasured.
@@ -26,6 +26,10 @@ Reproduce using `node scripts/prepare-fpv-woodland-material-verification.mjs` th
 open `docs/evidence/fpv-woodland-material-harness.html` through the local server.
 Thirteen existing acceptance/texture checks and ESLint pass. Shared-theme motif
 qualification still requires #999 integration on this independent branch.
-Development package: 94 files / 15,384,550 bytes, SHA-256
-9d319f83f54b0c995e2f590e10a13fefad4925606ff83420f0eeac168015db0c.
+Development package: 94 files / 15,384,640 bytes, SHA-256
+17f3695e9120487bad13b3f35042c5bb4614567ae567cc8ce69f93e50e6b181a.
 No public-live claim or new unit coverage.
+
+Review correction: use resolveSimThemeProfile for the natural-material guard.
+The five Pixel cases include themeId and nested world.themeProfile overrides.
+Both previously bypassed the hand-written guard; actual browser checks now pass.
