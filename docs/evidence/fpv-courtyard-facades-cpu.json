@@ -1,10 +1,10 @@
 {
   "format": "FPVCourtyardFacadeCPU.v1",
-  "createdAt": "2026-10-03T19:02:00.772Z",
+  "createdAt": "2026-10-03T19:07:49.673Z",
   "baseline": "2dbbe0a0f26684eae0a2bdb0b7cbda087627457f",
-  "candidate": "2dbbe0a0f26684eae0a2bdb0b7cbda087627457f",
-  "visualSha256": "2665b55936908233a7aacf29e1344a843efa3d1ffaffdcc92d7c8a4995470765",
-  "qualifierSha256": "593ddfe0717e79745e34a46d32c1582af1fa92cfaeda1ba1ca57413953915330",
+  "candidate": "70d05b34f2a8516b3c3fef62d68fc414a8cec4ab",
+  "visualSha256": "60e46dcefc7ef5f02b8e6f18c29b1a5259e1f5802a0ff36fa2867b5c112f0812",
+  "qualifierSha256": "f840b8a6d0d1f52272ce0981d4ecdb99daed7bccaf22f108957c67634bc19dc2",
   "immutable": {
     "optional-practice/civilian-fpv/app.mjs": "ae158a1837bbbf14b3276da6b4abfcef5393ddfa0c828a5d89e30cd87263e0de",
     "optional-practice/civilian-fpv/attempts.mjs": "5353e993c615dbb7091ab5d50497db82e71d3970f1587e6bb1398cc565be2494",
@@ -291,6 +291,10 @@
       "passed": true
     },
     {
+      "name": "courtyard-08/low/authored: closed entrance and window layers ordered",
+      "passed": true
+    },
+    {
       "name": "courtyard-08/low/authored: bounded coplanar artwork",
       "passed": true
     },
@@ -323,6 +327,10 @@
       "passed": true
     },
     {
+      "name": "courtyard-08/low/industrial-workshop: closed entrance and window layers ordered",
+      "passed": true
+    },
+    {
       "name": "courtyard-08/low/industrial-workshop: bounded coplanar artwork",
       "passed": true
     },
@@ -336,6 +344,10 @@
     },
     {
       "name": "courtyard-08/low/military-field: six opaque batches or exact Pixel exclusion",
+      "passed": true
+    },
+    {
+      "name": "courtyard-08/low/military-field: closed entrance and window layers ordered",
       "passed": true
     },
     {
@@ -355,6 +367,10 @@
       "passed": true
     },
     {
+      "name": "courtyard-08/low/ember-foundry: closed entrance and window layers ordered",
+      "passed": true
+    },
+    {
       "name": "courtyard-08/low/ember-foundry: bounded coplanar artwork",
       "passed": true
     },
@@ -368,6 +384,10 @@
     },
     {
       "name": "courtyard-08/low/polar-relay: six opaque batches or exact Pixel exclusion",
+      "passed": true
+    },
+    {
+      "name": "courtyard-08/low/polar-relay: closed entrance and window layers ordered",
       "passed": true
     },
     {
@@ -387,6 +407,10 @@
       "passed": true
     },
     {
+      "name": "courtyard-08/low/vyshyvanka: closed entrance and window layers ordered",
+      "passed": true
+    },
+    {
       "name": "courtyard-08/low/vyshyvanka: bounded coplanar artwork",
       "passed": true
     },
@@ -400,6 +424,10 @@
     },
     {
       "name": "courtyard-08/low/dnipro-porcelain: six opaque batches or exact Pixel exclusion",
+      "passed": true
+    },
+    {
+      "name": "courtyard-08/low/dnipro-porcelain: closed entrance and window layers ordered",
       "passed": true
     },
     {
@@ -419,6 +447,10 @@
       "passed": true
     },
     {
+      "name": "courtyard-08/low/tryzub: closed entrance and window layers ordered",
+      "passed": true
+    },
+    {
       "name": "courtyard-08/low/tryzub: bounded coplanar artwork",
       "passed": true
     },
@@ -432,6 +464,10 @@
     },
     {
       "name": "courtyard-08/low/windows-classic: six opaque batches or exact Pixel exclusion",
+      "passed": true
+    },
+    {
+      "name": "courtyard-08/low/windows-classic: closed entrance and window layers ordered",
       "passed": true
     },
     {
@@ -451,6 +487,10 @@
       "passed": true
     },
     {
+      "name": "courtyard-08/low/dos: closed entrance and window layers ordered",
+      "passed": true
+    },
+    {
       "name": "courtyard-08/low/dos: bounded coplanar artwork",
       "passed": true
     },
@@ -464,6 +504,10 @@
     },
     {
       "name": "courtyard-08/low/orchard-workshop: six opaque batches or exact Pixel exclusion",
+      "passed": true
+    },
+    {
+      "name": "courtyard-08/low/orchard-workshop: closed entrance and window layers ordered",
       "passed": true
     },
     {
@@ -483,6 +527,10 @@
       "passed": true
     },
     {
+      "name": "courtyard-08/low/neon-ruins: closed entrance and window layers ordered",
+      "passed": true
+    },
+    {
       "name": "courtyard-08/low/neon-ruins: bounded coplanar artwork",
       "passed": true
     },
@@ -496,6 +544,10 @@
     },
     {
       "name": "courtyard-08/low/pocket-lcd: six opaque batches or exact Pixel exclusion",
+      "passed": true
+    },
+    {
+      "name": "courtyard-08/low/pocket-lcd: closed entrance and window layers ordered",
       "passed": true
     },
     {
@@ -515,6 +567,10 @@
       "passed": true
     },
     {
+      "name": "courtyard-08/low/copper-observatory: closed entrance and window layers ordered",
+      "passed": true
+    },
+    {
       "name": "courtyard-08/low/copper-observatory: bounded coplanar artwork",
       "passed": true
     },
@@ -528,6 +584,10 @@
     },
     {
       "name": "courtyard-08/low/sakura-station: six opaque batches or exact Pixel exclusion",
+      "passed": true
+    },
+    {
+      "name": "courtyard-08/low/sakura-station: closed entrance and window layers ordered",
       "passed": true
     },
     {
@@ -547,6 +607,10 @@
       "passed": true
     },
     {
+      "name": "courtyard-08/low/obsidian-reliquary: closed entrance and window layers ordered",
+      "passed": true
+    },
+    {
       "name": "courtyard-08/low/obsidian-reliquary: bounded coplanar artwork",
       "passed": true
     },
@@ -560,6 +624,10 @@
     },
     {
       "name": "courtyard-08/low/deep-space: six opaque batches or exact Pixel exclusion",
+      "passed": true
+    },
+    {
+      "name": "courtyard-08/low/deep-space: closed entrance and window layers ordered",
       "passed": true
     },
     {
@@ -579,6 +647,10 @@
       "passed": true
     },
     {
+      "name": "courtyard-08/low/moonlit-grove: closed entrance and window layers ordered",
+      "passed": true
+    },
+    {
       "name": "courtyard-08/low/moonlit-grove: bounded coplanar artwork",
       "passed": true
     },
@@ -592,6 +664,10 @@
     },
     {
       "name": "courtyard-08/balanced/authored: six opaque batches or exact Pixel exclusion",
+      "passed": true
+    },
+    {
+      "name": "courtyard-08/balanced/authored: closed entrance and window layers ordered",
       "passed": true
     },
     {
@@ -627,6 +703,10 @@
       "passed": true
     },
     {
+      "name": "courtyard-08/balanced/industrial-workshop: closed entrance and window layers ordered",
+      "passed": true
+    },
+    {
       "name": "courtyard-08/balanced/industrial-workshop: bounded coplanar artwork",
       "passed": true
     },
@@ -640,6 +720,10 @@
     },
     {
       "name": "courtyard-08/balanced/military-field: six opaque batches or exact Pixel exclusion",
+      "passed": true
+    },
+    {
+      "name": "courtyard-08/balanced/military-field: closed entrance and window layers ordered",
       "passed": true
     },
     {
@@ -659,6 +743,10 @@
       "passed": true
     },
     {
+      "name": "courtyard-08/balanced/ember-foundry: closed entrance and window layers ordered",
+      "passed": true
+    },
+    {
       "name": "courtyard-08/balanced/ember-foundry: bounded coplanar artwork",
       "passed": true
     },
@@ -672,6 +760,10 @@
     },
     {
       "name": "courtyard-08/balanced/polar-relay: six opaque batches or exact Pixel exclusion",
+      "passed": true
+    },
+    {
+      "name": "courtyard-08/balanced/polar-relay: closed entrance and window layers ordered",
       "passed": true
     },
     {
@@ -691,6 +783,10 @@
       "passed": true
     },
     {
+      "name": "courtyard-08/balanced/vyshyvanka: closed entrance and window layers ordered",
+      "passed": true
+    },
+    {
       "name": "courtyard-08/balanced/vyshyvanka: bounded coplanar artwork",
       "passed": true
     },
@@ -704,6 +800,10 @@
     },
     {
       "name": "courtyard-08/balanced/dnipro-porcelain: six opaque batches or exact Pixel exclusion",
+      "passed": true
+    },
+    {
+      "name": "courtyard-08/balanced/dnipro-porcelain: closed entrance and window layers ordered",
       "passed": true
     },
     {
@@ -723,6 +823,10 @@
       "passed": true
     },
     {
+      "name": "courtyard-08/balanced/tryzub: closed entrance and window layers ordered",
+      "passed": true
+    },
+    {
       "name": "courtyard-08/balanced/tryzub: bounded coplanar artwork",
       "passed": true
     },
@@ -736,6 +840,10 @@
     },
     {
       "name": "courtyard-08/balanced/windows-classic: six opaque batches or exact Pixel exclusion",
+      "passed": true
+    },
+    {
+      "name": "courtyard-08/balanced/windows-classic: closed entrance and window layers ordered",
       "passed": true
     },
     {
@@ -755,6 +863,10 @@
       "passed": true
     },
     {
+      "name": "courtyard-08/balanced/dos: closed entrance and window layers ordered",
+      "passed": true
+    },
+    {
       "name": "courtyard-08/balanced/dos: bounded coplanar artwork",
       "passed": true
     },
@@ -768,6 +880,10 @@
     },
     {
       "name": "courtyard-08/balanced/orchard-workshop: six opaque batches or exact Pixel exclusion",
+      "passed": true
+    },
+    {
+      "name": "courtyard-08/balanced/orchard-workshop: closed entrance and window layers ordered",
       "passed": true
     },
     {
@@ -787,6 +903,10 @@
       "passed": true
     },
     {
+      "name": "courtyard-08/balanced/neon-ruins: closed entrance and window layers ordered",
+      "passed": true
+    },
+    {
       "name": "courtyard-08/balanced/neon-ruins: bounded coplanar artwork",
       "passed": true
     },
@@ -800,6 +920,10 @@
     },
     {
       "name": "courtyard-08/balanced/pocket-lcd: six opaque batches or exact Pixel exclusion",
+      "passed": true
+    },
+    {
+      "name": "courtyard-08/balanced/pocket-lcd: closed entrance and window layers ordered",
       "passed": true
     },
     {
@@ -819,6 +943,10 @@
       "passed": true
     },
     {
+      "name": "courtyard-08/balanced/copper-observatory: closed entrance and window layers ordered",
+      "passed": true
+    },
+    {
       "name": "courtyard-08/balanced/copper-observatory: bounded coplanar artwork",
       "passed": true
     },
@@ -832,6 +960,10 @@
     },
     {
       "name": "courtyard-08/balanced/sakura-station: six opaque batches or exact Pixel exclusion",
+      "passed": true
+    },
+    {
+      "name": "courtyard-08/balanced/sakura-station: closed entrance and window layers ordered",
       "passed": true
     },
     {
@@ -851,6 +983,10 @@
       "passed": true
     },
     {
+      "name": "courtyard-08/balanced/obsidian-reliquary: closed entrance and window layers ordered",
+      "passed": true
+    },
+    {
       "name": "courtyard-08/balanced/obsidian-reliquary: bounded coplanar artwork",
       "passed": true
     },
@@ -864,6 +1000,10 @@
     },
     {
       "name": "courtyard-08/balanced/deep-space: six opaque batches or exact Pixel exclusion",
+      "passed": true
+    },
+    {
+      "name": "courtyard-08/balanced/deep-space: closed entrance and window layers ordered",
       "passed": true
     },
     {
@@ -883,6 +1023,10 @@
       "passed": true
     },
     {
+      "name": "courtyard-08/balanced/moonlit-grove: closed entrance and window layers ordered",
+      "passed": true
+    },
+    {
       "name": "courtyard-08/balanced/moonlit-grove: bounded coplanar artwork",
       "passed": true
     },
@@ -896,6 +1040,10 @@
     },
     {
       "name": "courtyard-08/high/authored: six opaque batches or exact Pixel exclusion",
+      "passed": true
+    },
+    {
+      "name": "courtyard-08/high/authored: closed entrance and window layers ordered",
       "passed": true
     },
     {
@@ -931,6 +1079,10 @@
       "passed": true
     },
     {
+      "name": "courtyard-08/high/industrial-workshop: closed entrance and window layers ordered",
+      "passed": true
+    },
+    {
       "name": "courtyard-08/high/industrial-workshop: bounded coplanar artwork",
       "passed": true
     },
@@ -944,6 +1096,10 @@
     },
     {
       "name": "courtyard-08/high/military-field: six opaque batches or exact Pixel exclusion",
+      "passed": true
+    },
+    {
+      "name": "courtyard-08/high/military-field: closed entrance and window layers ordered",
       "passed": true
     },
     {
@@ -963,6 +1119,10 @@
       "passed": true
     },
     {
+      "name": "courtyard-08/high/ember-foundry: closed entrance and window layers ordered",
+      "passed": true
+    },
+    {
       "name": "courtyard-08/high/ember-foundry: bounded coplanar artwork",
       "passed": true
     },
@@ -976,6 +1136,10 @@
     },
     {
       "name": "courtyard-08/high/polar-relay: six opaque batches or exact Pixel exclusion",
+      "passed": true
+    },
+    {
+      "name": "courtyard-08/high/polar-relay: closed entrance and window layers ordered",
       "passed": true
     },
     {
@@ -995,6 +1159,10 @@
       "passed": true
     },
     {
+      "name": "courtyard-08/high/vyshyvanka: closed entrance and window layers ordered",
+      "passed": true
+    },
+    {
       "name": "courtyard-08/high/vyshyvanka: bounded coplanar artwork",
       "passed": true
     },
@@ -1008,6 +1176,10 @@
     },
     {
       "name": "courtyard-08/high/dnipro-porcelain: six opaque batches or exact Pixel exclusion",
+      "passed": true
+    },
+    {
+      "name": "courtyard-08/high/dnipro-porcelain: closed entrance and window layers ordered",
       "passed": true
     },
     {
@@ -1027,6 +1199,10 @@
       "passed": true
     },
     {
+      "name": "courtyard-08/high/tryzub: closed entrance and window layers ordered",
+      "passed": true
+    },
+    {
       "name": "courtyard-08/high/tryzub: bounded coplanar artwork",
       "passed": true
     },
@@ -1040,6 +1216,10 @@
     },
     {
       "name": "courtyard-08/high/windows-classic: six opaque batches or exact Pixel exclusion",
+      "passed": true
+    },
+    {
+      "name": "courtyard-08/high/windows-classic: closed entrance and window layers ordered",
       "passed": true
     },
     {
@@ -1059,6 +1239,10 @@
       "passed": true
     },
     {
+      "name": "courtyard-08/high/dos: closed entrance and window layers ordered",
+      "passed": true
+    },
+    {
       "name": "courtyard-08/high/dos: bounded coplanar artwork",
       "passed": true
     },
@@ -1072,6 +1256,10 @@
     },
     {
       "name": "courtyard-08/high/orchard-workshop: six opaque batches or exact Pixel exclusion",
+      "passed": true
+    },
+    {
+      "name": "courtyard-08/high/orchard-workshop: closed entrance and window layers ordered",
       "passed": true
     },
     {
@@ -1091,6 +1279,10 @@
       "passed": true
     },
     {
+      "name": "courtyard-08/high/neon-ruins: closed entrance and window layers ordered",
+      "passed": true
+    },
+    {
       "name": "courtyard-08/high/neon-ruins: bounded coplanar artwork",
       "passed": true
     },
@@ -1104,6 +1296,10 @@
     },
     {
       "name": "courtyard-08/high/pocket-lcd: six opaque batches or exact Pixel exclusion",
+      "passed": true
+    },
+    {
+      "name": "courtyard-08/high/pocket-lcd: closed entrance and window layers ordered",
       "passed": true
     },
     {
@@ -1123,6 +1319,10 @@
       "passed": true
     },
     {
+      "name": "courtyard-08/high/copper-observatory: closed entrance and window layers ordered",
+      "passed": true
+    },
+    {
       "name": "courtyard-08/high/copper-observatory: bounded coplanar artwork",
       "passed": true
     },
@@ -1136,6 +1336,10 @@
     },
     {
       "name": "courtyard-08/high/sakura-station: six opaque batches or exact Pixel exclusion",
+      "passed": true
+    },
+    {
+      "name": "courtyard-08/high/sakura-station: closed entrance and window layers ordered",
       "passed": true
     },
     {
@@ -1155,6 +1359,10 @@
       "passed": true
     },
     {
+      "name": "courtyard-08/high/obsidian-reliquary: closed entrance and window layers ordered",
+      "passed": true
+    },
+    {
       "name": "courtyard-08/high/obsidian-reliquary: bounded coplanar artwork",
       "passed": true
     },
@@ -1168,6 +1376,10 @@
     },
     {
       "name": "courtyard-08/high/deep-space: six opaque batches or exact Pixel exclusion",
+      "passed": true
+    },
+    {
+      "name": "courtyard-08/high/deep-space: closed entrance and window layers ordered",
       "passed": true
     },
     {
@@ -1187,6 +1399,10 @@
       "passed": true
     },
     {
+      "name": "courtyard-08/high/moonlit-grove: closed entrance and window layers ordered",
+      "passed": true
+    },
+    {
       "name": "courtyard-08/high/moonlit-grove: bounded coplanar artwork",
       "passed": true
     },
@@ -1200,6 +1416,10 @@
     },
     {
       "name": "beginner-39/low/authored: six opaque batches or exact Pixel exclusion",
+      "passed": true
+    },
+    {
+      "name": "beginner-39/low/authored: closed entrance and window layers ordered",
       "passed": true
     },
     {
@@ -1235,6 +1455,10 @@
       "passed": true
     },
     {
+      "name": "beginner-39/low/industrial-workshop: closed entrance and window layers ordered",
+      "passed": true
+    },
+    {
       "name": "beginner-39/low/industrial-workshop: bounded coplanar artwork",
       "passed": true
     },
@@ -1248,6 +1472,10 @@
     },
     {
       "name": "beginner-39/low/military-field: six opaque batches or exact Pixel exclusion",
+      "passed": true
+    },
+    {
+      "name": "beginner-39/low/military-field: closed entrance and window layers ordered",
       "passed": true
     },
     {
@@ -1267,6 +1495,10 @@
       "passed": true
     },
     {
+      "name": "beginner-39/low/ember-foundry: closed entrance and window layers ordered",
+      "passed": true
+    },
+    {
       "name": "beginner-39/low/ember-foundry: bounded coplanar artwork",
       "passed": true
     },
@@ -1280,6 +1512,10 @@
     },
     {
       "name": "beginner-39/low/polar-relay: six opaque batches or exact Pixel exclusion",
+      "passed": true
+    },
+    {
+      "name": "beginner-39/low/polar-relay: closed entrance and window layers ordered",
       "passed": true
     },
     {
@@ -1299,6 +1535,10 @@
       "passed": true
     },
     {
+      "name": "beginner-39/low/vyshyvanka: closed entrance and window layers ordered",
+      "passed": true
+    },
+    {
       "name": "beginner-39/low/vyshyvanka: bounded coplanar artwork",
       "passed": true
     },
@@ -1312,6 +1552,10 @@
     },
     {
       "name": "beginner-39/low/dnipro-porcelain: six opaque batches or exact Pixel exclusion",
+      "passed": true
+    },
+    {
+      "name": "beginner-39/low/dnipro-porcelain: closed entrance and window layers ordered",
       "passed": true
     },
     {
@@ -1331,6 +1575,10 @@
       "passed": true
     },
     {
+      "name": "beginner-39/low/tryzub: closed entrance and window layers ordered",
+      "passed": true
+    },
+    {
       "name": "beginner-39/low/tryzub: bounded coplanar artwork",
       "passed": true
     },
@@ -1344,6 +1592,10 @@
     },
     {
       "name": "beginner-39/low/windows-classic: six opaque batches or exact Pixel exclusion",
+      "passed": true
+    },
+    {
+      "name": "beginner-39/low/windows-classic: closed entrance and window layers ordered",
       "passed": true
     },
     {
@@ -1363,6 +1615,10 @@
       "passed": true
     },
     {
+      "name": "beginner-39/low/dos: closed entrance and window layers ordered",
+      "passed": true
+    },
+    {
       "name": "beginner-39/low/dos: bounded coplanar artwork",
       "passed": true
     },
@@ -1376,6 +1632,10 @@
     },
     {
       "name": "beginner-39/low/orchard-workshop: six opaque batches or exact Pixel exclusion",
+      "passed": true
+    },
+    {
+      "name": "beginner-39/low/orchard-workshop: closed entrance and window layers ordered",
       "passed": true
     },
     {
@@ -1395,6 +1655,10 @@
       "passed": true
     },
     {
+      "name": "beginner-39/low/neon-ruins: closed entrance and window layers ordered",
+      "passed": true
+    },
+    {
       "name": "beginner-39/low/neon-ruins: bounded coplanar artwork",
       "passed": true
     },
@@ -1408,6 +1672,10 @@
     },
     {
       "name": "beginner-39/low/pocket-lcd: six opaque batches or exact Pixel exclusion",
+      "passed": true
+    },
+    {
+      "name": "beginner-39/low/pocket-lcd: closed entrance and window layers ordered",
       "passed": true
     },
     {
@@ -1427,6 +1695,10 @@
       "passed": true
     },
     {
+      "name": "beginner-39/low/copper-observatory: closed entrance and window layers ordered",
+      "passed": true
+    },
+    {
       "name": "beginner-39/low/copper-observatory: bounded coplanar artwork",
       "passed": true
     },
@@ -1440,6 +1712,10 @@
     },
     {
       "name": "beginner-39/low/sakura-station: six opaque batches or exact Pixel exclusion",
+      "passed": true
+    },
+    {
+      "name": "beginner-39/low/sakura-station: closed entrance and window layers ordered",
       "passed": true
     },
     {
@@ -1459,6 +1735,10 @@
       "passed": true
     },
     {
+      "name": "beginner-39/low/obsidian-reliquary: closed entrance and window layers ordered",
+      "passed": true
+    },
+    {
       "name": "beginner-39/low/obsidian-reliquary: bounded coplanar artwork",
       "passed": true
     },
@@ -1472,6 +1752,10 @@
     },
     {
       "name": "beginner-39/low/deep-space: six opaque batches or exact Pixel exclusion",
+      "passed": true
+    },
+    {
+      "name": "beginner-39/low/deep-space: closed entrance and window layers ordered",
       "passed": true
     },
     {
@@ -1491,6 +1775,10 @@
       "passed": true
     },
     {
+      "name": "beginner-39/low/moonlit-grove: closed entrance and window layers ordered",
+      "passed": true
+    },
+    {
       "name": "beginner-39/low/moonlit-grove: bounded coplanar artwork",
       "passed": true
     },
@@ -1504,6 +1792,10 @@
     },
     {
       "name": "beginner-39/balanced/authored: six opaque batches or exact Pixel exclusion",
+      "passed": true
+    },
+    {
+      "name": "beginner-39/balanced/authored: closed entrance and window layers ordered",
       "passed": true
     },
     {
@@ -1539,6 +1831,10 @@
       "passed": true
     },
     {
+      "name": "beginner-39/balanced/industrial-workshop: closed entrance and window layers ordered",
+      "passed": true
+    },
+    {
       "name": "beginner-39/balanced/industrial-workshop: bounded coplanar artwork",
       "passed": true
     },
@@ -1552,6 +1848,10 @@
     },
     {
       "name": "beginner-39/balanced/military-field: six opaque batches or exact Pixel exclusion",
+      "passed": true
+    },
+    {
+      "name": "beginner-39/balanced/military-field: closed entrance and window layers ordered",
       "passed": true
     },
     {
@@ -1571,6 +1871,10 @@
       "passed": true
     },
     {
+      "name": "beginner-39/balanced/ember-foundry: closed entrance and window layers ordered",
+      "passed": true
+    },
+    {
       "name": "beginner-39/balanced/ember-foundry: bounded coplanar artwork",
       "passed": true
     },
@@ -1584,6 +1888,10 @@
     },
     {
       "name": "beginner-39/balanced/polar-relay: six opaque batches or exact Pixel exclusion",
+      "passed": true
+    },
+    {
+      "name": "beginner-39/balanced/polar-relay: closed entrance and window layers ordered",
       "passed": true
     },
     {
@@ -1603,6 +1911,10 @@
       "passed": true
     },
     {
+      "name": "beginner-39/balanced/vyshyvanka: closed entrance and window layers ordered",
+      "passed": true
+    },
+    {
       "name": "beginner-39/balanced/vyshyvanka: bounded coplanar artwork",
       "passed": true
     },
@@ -1616,6 +1928,10 @@
     },
     {
       "name": "beginner-39/balanced/dnipro-porcelain: six opaque batches or exact Pixel exclusion",
+      "passed": true
+    },
+    {
+      "name": "beginner-39/balanced/dnipro-porcelain: closed entrance and window layers ordered",
       "passed": true
     },
     {
@@ -1635,6 +1951,10 @@
       "passed": true
     },
     {
+      "name": "beginner-39/balanced/tryzub: closed entrance and window layers ordered",
+      "passed": true
+    },
+    {
       "name": "beginner-39/balanced/tryzub: bounded coplanar artwork",
       "passed": true
     },
@@ -1648,6 +1968,10 @@
     },
     {
       "name": "beginner-39/balanced/windows-classic: six opaque batches or exact Pixel exclusion",
+      "passed": true
+    },
+    {
+      "name": "beginner-39/balanced/windows-classic: closed entrance and window layers ordered",
       "passed": true
     },
     {
@@ -1667,6 +1991,10 @@
       "passed": true
     },
     {
+      "name": "beginner-39/balanced/dos: closed entrance and window layers ordered",
+      "passed": true
+    },
+    {
       "name": "beginner-39/balanced/dos: bounded coplanar artwork",
       "passed": true
     },
@@ -1680,6 +2008,10 @@
     },
     {
       "name": "beginner-39/balanced/orchard-workshop: six opaque batches or exact Pixel exclusion",
+      "passed": true
+    },
+    {
+      "name": "beginner-39/balanced/orchard-workshop: closed entrance and window layers ordered",
       "passed": true
     },
     {
@@ -1699,6 +2031,10 @@
       "passed": true
     },
     {
+      "name": "beginner-39/balanced/neon-ruins: closed entrance and window layers ordered",
+      "passed": true
+    },
+    {
       "name": "beginner-39/balanced/neon-ruins: bounded coplanar artwork",
       "passed": true
     },
@@ -1712,6 +2048,10 @@
     },
     {
       "name": "beginner-39/balanced/pocket-lcd: six opaque batches or exact Pixel exclusion",
+      "passed": true
+    },
+    {
+      "name": "beginner-39/balanced/pocket-lcd: closed entrance and window layers ordered",
       "passed": true
     },
     {
@@ -1731,6 +2071,10 @@
       "passed": true
     },
     {
+      "name": "beginner-39/balanced/copper-observatory: closed entrance and window layers ordered",
+      "passed": true
+    },
+    {
       "name": "beginner-39/balanced/copper-observatory: bounded coplanar artwork",
       "passed": true
     },
@@ -1744,6 +2088,10 @@
     },
     {
       "name": "beginner-39/balanced/sakura-station: six opaque batches or exact Pixel exclusion",
+      "passed": true
+    },
+    {
+      "name": "beginner-39/balanced/sakura-station: closed entrance and window layers ordered",
       "passed": true
     },
     {
@@ -1763,6 +2111,10 @@
       "passed": true
     },
     {
+      "name": "beginner-39/balanced/obsidian-reliquary: closed entrance and window layers ordered",
+      "passed": true
+    },
+    {
       "name": "beginner-39/balanced/obsidian-reliquary: bounded coplanar artwork",
       "passed": true
     },
@@ -1776,6 +2128,10 @@
     },
     {
       "name": "beginner-39/balanced/deep-space: six opaque batches or exact Pixel exclusion",
+      "passed": true
+    },
+    {
+      "name": "beginner-39/balanced/deep-space: closed entrance and window layers ordered",
       "passed": true
     },
     {
@@ -1795,6 +2151,10 @@
       "passed": true
     },
     {
+      "name": "beginner-39/balanced/moonlit-grove: closed entrance and window layers ordered",
+      "passed": true
+    },
+    {
       "name": "beginner-39/balanced/moonlit-grove: bounded coplanar artwork",
       "passed": true
     },
@@ -1808,6 +2168,10 @@
     },
     {
       "name": "beginner-39/high/authored: six opaque batches or exact Pixel exclusion",
+      "passed": true
+    },
+    {
+      "name": "beginner-39/high/authored: closed entrance and window layers ordered",
       "passed": true
     },
     {
@@ -1843,6 +2207,10 @@
       "passed": true
     },
     {
+      "name": "beginner-39/high/industrial-workshop: closed entrance and window layers ordered",
+      "passed": true
+    },
+    {
       "name": "beginner-39/high/industrial-workshop: bounded coplanar artwork",
       "passed": true
     },
@@ -1856,6 +2224,10 @@
     },
     {
       "name": "beginner-39/high/military-field: six opaque batches or exact Pixel exclusion",
+      "passed": true
+    },
+    {
+      "name": "beginner-39/high/military-field: closed entrance and window layers ordered",
       "passed": true
     },
     {
@@ -1875,6 +2247,10 @@
       "passed": true
     },
     {
+      "name": "beginner-39/high/ember-foundry: closed entrance and window layers ordered",
+      "passed": true
+    },
+    {
       "name": "beginner-39/high/ember-foundry: bounded coplanar artwork",
       "passed": true
     },
@@ -1888,6 +2264,10 @@
     },
     {
       "name": "beginner-39/high/polar-relay: six opaque batches or exact Pixel exclusion",
+      "passed": true
+    },
+    {
+      "name": "beginner-39/high/polar-relay: closed entrance and window layers ordered",
       "passed": true
     },
     {
@@ -1907,6 +2287,10 @@
       "passed": true
     },
     {
+      "name": "beginner-39/high/vyshyvanka: closed entrance and window layers ordered",
+      "passed": true
+    },
+    {
       "name": "beginner-39/high/vyshyvanka: bounded coplanar artwork",
       "passed": true
     },
@@ -1920,6 +2304,10 @@
     },
     {
       "name": "beginner-39/high/dnipro-porcelain: six opaque batches or exact Pixel exclusion",
+      "passed": true
+    },
+    {
+      "name": "beginner-39/high/dnipro-porcelain: closed entrance and window layers ordered",
       "passed": true
     },
     {
@@ -1939,6 +2327,10 @@
       "passed": true
     },
     {
+      "name": "beginner-39/high/tryzub: closed entrance and window layers ordered",
+      "passed": true
+    },
+    {
       "name": "beginner-39/high/tryzub: bounded coplanar artwork",
       "passed": true
     },
@@ -1952,6 +2344,10 @@
     },
     {
       "name": "beginner-39/high/windows-classic: six opaque batches or exact Pixel exclusion",
+      "passed": true
+    },
+    {
+      "name": "beginner-39/high/windows-classic: closed entrance and window layers ordered",
       "passed": true
     },
     {
@@ -1971,6 +2367,10 @@
       "passed": true
     },
     {
+      "name": "beginner-39/high/dos: closed entrance and window layers ordered",
+      "passed": true
+    },
+    {
       "name": "beginner-39/high/dos: bounded coplanar artwork",
       "passed": true
     },
@@ -1984,6 +2384,10 @@
     },
     {
       "name": "beginner-39/high/orchard-workshop: six opaque batches or exact Pixel exclusion",
+      "passed": true
+    },
+    {
+      "name": "beginner-39/high/orchard-workshop: closed entrance and window layers ordered",
       "passed": true
     },
     {
@@ -2003,6 +2407,10 @@
       "passed": true
     },
     {
+      "name": "beginner-39/high/neon-ruins: closed entrance and window layers ordered",
+      "passed": true
+    },
+    {
       "name": "beginner-39/high/neon-ruins: bounded coplanar artwork",
       "passed": true
     },
@@ -2016,6 +2424,10 @@
     },
     {
       "name": "beginner-39/high/pocket-lcd: six opaque batches or exact Pixel exclusion",
+      "passed": true
+    },
+    {
+      "name": "beginner-39/high/pocket-lcd: closed entrance and window layers ordered",
       "passed": true
     },
     {
@@ -2035,6 +2447,10 @@
       "passed": true
     },
     {
+      "name": "beginner-39/high/copper-observatory: closed entrance and window layers ordered",
+      "passed": true
+    },
+    {
       "name": "beginner-39/high/copper-observatory: bounded coplanar artwork",
       "passed": true
     },
@@ -2048,6 +2464,10 @@
     },
     {
       "name": "beginner-39/high/sakura-station: six opaque batches or exact Pixel exclusion",
+      "passed": true
+    },
+    {
+      "name": "beginner-39/high/sakura-station: closed entrance and window layers ordered",
       "passed": true
     },
     {
@@ -2067,6 +2487,10 @@
       "passed": true
     },
     {
+      "name": "beginner-39/high/obsidian-reliquary: closed entrance and window layers ordered",
+      "passed": true
+    },
+    {
       "name": "beginner-39/high/obsidian-reliquary: bounded coplanar artwork",
       "passed": true
     },
@@ -2080,6 +2504,10 @@
     },
     {
       "name": "beginner-39/high/deep-space: six opaque batches or exact Pixel exclusion",
+      "passed": true
+    },
+    {
+      "name": "beginner-39/high/deep-space: closed entrance and window layers ordered",
       "passed": true
     },
     {
@@ -2099,6 +2527,10 @@
       "passed": true
     },
     {
+      "name": "beginner-39/high/moonlit-grove: closed entrance and window layers ordered",
+      "passed": true
+    },
+    {
       "name": "beginner-39/high/moonlit-grove: bounded coplanar artwork",
       "passed": true
     },
@@ -2112,6 +2544,10 @@
     },
     {
       "name": "beginner-52/low/authored: six opaque batches or exact Pixel exclusion",
+      "passed": true
+    },
+    {
+      "name": "beginner-52/low/authored: closed entrance and window layers ordered",
       "passed": true
     },
     {
@@ -2147,6 +2583,10 @@
       "passed": true
     },
     {
+      "name": "beginner-52/low/industrial-workshop: closed entrance and window layers ordered",
+      "passed": true
+    },
+    {
       "name": "beginner-52/low/industrial-workshop: bounded coplanar artwork",
       "passed": true
     },
@@ -2160,6 +2600,10 @@
     },
     {
       "name": "beginner-52/low/military-field: six opaque batches or exact Pixel exclusion",
+      "passed": true
+    },
+    {
+      "name": "beginner-52/low/military-field: closed entrance and window layers ordered",
       "passed": true
     },
     {
@@ -2179,6 +2623,10 @@
       "passed": true
     },
     {
+      "name": "beginner-52/low/ember-foundry: closed entrance and window layers ordered",
+      "passed": true
+    },
+    {
       "name": "beginner-52/low/ember-foundry: bounded coplanar artwork",
       "passed": true
     },
@@ -2192,6 +2640,10 @@
     },
     {
       "name": "beginner-52/low/polar-relay: six opaque batches or exact Pixel exclusion",
+      "passed": true
+    },
+    {
+      "name": "beginner-52/low/polar-relay: closed entrance and window layers ordered",
       "passed": true
     },
     {
@@ -2211,6 +2663,10 @@
       "passed": true
     },
     {
+      "name": "beginner-52/low/vyshyvanka: closed entrance and window layers ordered",
+      "passed": true
+    },
+    {
       "name": "beginner-52/low/vyshyvanka: bounded coplanar artwork",
       "passed": true
     },
@@ -2224,6 +2680,10 @@
     },
     {
       "name": "beginner-52/low/dnipro-porcelain: six opaque batches or exact Pixel exclusion",
+      "passed": true
+    },
+    {
+      "name": "beginner-52/low/dnipro-porcelain: closed entrance and window layers ordered",
       "passed": true
     },
     {
@@ -2243,6 +2703,10 @@
       "passed": true
     },
     {
+      "name": "beginner-52/low/tryzub: closed entrance and window layers ordered",
+      "passed": true
+    },
+    {
       "name": "beginner-52/low/tryzub: bounded coplanar artwork",
       "passed": true
     },
@@ -2256,6 +2720,10 @@
     },
     {
       "name": "beginner-52/low/windows-classic: six opaque batches or exact Pixel exclusion",
+      "passed": true
+    },
+    {
+      "name": "beginner-52/low/windows-classic: closed entrance and window layers ordered",
       "passed": true
     },
     {
@@ -2275,6 +2743,10 @@
       "passed": true
     },
     {
+      "name": "beginner-52/low/dos: closed entrance and window layers ordered",
+      "passed": true
+    },
+    {
       "name": "beginner-52/low/dos: bounded coplanar artwork",
       "passed": true
     },
@@ -2288,6 +2760,10 @@
     },
     {
       "name": "beginner-52/low/orchard-workshop: six opaque batches or exact Pixel exclusion",
+      "passed": true
+    },
+    {
+      "name": "beginner-52/low/orchard-workshop: closed entrance and window layers ordered",
       "passed": true
     },
     {
@@ -2307,6 +2783,10 @@
       "passed": true
     },
     {
+      "name": "beginner-52/low/neon-ruins: closed entrance and window layers ordered",
+      "passed": true
+    },
+    {
       "name": "beginner-52/low/neon-ruins: bounded coplanar artwork",
       "passed": true
     },
@@ -2320,6 +2800,10 @@
     },
     {
       "name": "beginner-52/low/pocket-lcd: six opaque batches or exact Pixel exclusion",
+      "passed": true
+    },
+    {
+      "name": "beginner-52/low/pocket-lcd: closed entrance and window layers ordered",
       "passed": true
     },
     {
@@ -2339,6 +2823,10 @@
       "passed": true
     },
     {
+      "name": "beginner-52/low/copper-observatory: closed entrance and window layers ordered",
+      "passed": true
+    },
+    {
       "name": "beginner-52/low/copper-observatory: bounded coplanar artwork",
       "passed": true
     },
@@ -2352,6 +2840,10 @@
     },
     {
       "name": "beginner-52/low/sakura-station: six opaque batches or exact Pixel exclusion",
+      "passed": true
+    },
+    {
+      "name": "beginner-52/low/sakura-station: closed entrance and window layers ordered",
       "passed": true
     },
     {
@@ -2371,6 +2863,10 @@
       "passed": true
     },
     {
+      "name": "beginner-52/low/obsidian-reliquary: closed entrance and window layers ordered",
+      "passed": true
+    },
+    {
       "name": "beginner-52/low/obsidian-reliquary: bounded coplanar artwork",
       "passed": true
     },
@@ -2384,6 +2880,10 @@
     },
     {
       "name": "beginner-52/low/deep-space: six opaque batches or exact Pixel exclusion",
+      "passed": true
+    },
+    {
+      "name": "beginner-52/low/deep-space: closed entrance and window layers ordered",
       "passed": true
     },
     {
@@ -2403,6 +2903,10 @@
       "passed": true
     },
     {
+      "name": "beginner-52/low/moonlit-grove: closed entrance and window layers ordered",
+      "passed": true
+    },
+    {
       "name": "beginner-52/low/moonlit-grove: bounded coplanar artwork",
       "passed": true
     },
@@ -2416,6 +2920,10 @@
     },
     {
       "name": "beginner-52/balanced/authored: six opaque batches or exact Pixel exclusion",
+      "passed": true
+    },
+    {
+      "name": "beginner-52/balanced/authored: closed entrance and window layers ordered",
       "passed": true
     },
     {
@@ -2451,6 +2959,10 @@
       "passed": true
     },
     {
+      "name": "beginner-52/balanced/industrial-workshop: closed entrance and window layers ordered",
+      "passed": true
+    },
+    {
       "name": "beginner-52/balanced/industrial-workshop: bounded coplanar artwork",
       "passed": true
     },
@@ -2464,6 +2976,10 @@
     },
     {
       "name": "beginner-52/balanced/military-field: six opaque batches or exact Pixel exclusion",
+      "passed": true
+    },
+    {
+      "name": "beginner-52/balanced/military-field: closed entrance and window layers ordered",
       "passed": true
     },
     {
@@ -2483,6 +2999,10 @@
       "passed": true
     },
     {
+      "name": "beginner-52/balanced/ember-foundry: closed entrance and window layers ordered",
+      "passed": true
+    },
+    {
       "name": "beginner-52/balanced/ember-foundry: bounded coplanar artwork",
       "passed": true
     },
@@ -2496,6 +3016,10 @@
     },
     {
       "name": "beginner-52/balanced/polar-relay: six opaque batches or exact Pixel exclusion",
+      "passed": true
+    },
+    {
+      "name": "beginner-52/balanced/polar-relay: closed entrance and window layers ordered",
       "passed": true
     },
     {
@@ -2515,6 +3039,10 @@
       "passed": true
     },
     {
+      "name": "beginner-52/balanced/vyshyvanka: closed entrance and window layers ordered",
+      "passed": true
+    },
+    {
       "name": "beginner-52/balanced/vyshyvanka: bounded coplanar artwork",
       "passed": true
     },
@@ -2528,6 +3056,10 @@
     },
     {
       "name": "beginner-52/balanced/dnipro-porcelain: six opaque batches or exact Pixel exclusion",
+      "passed": true
+    },
+    {
+      "name": "beginner-52/balanced/dnipro-porcelain: closed entrance and window layers ordered",
       "passed": true
     },
     {
@@ -2547,6 +3079,10 @@
       "passed": true
     },
     {
+      "name": "beginner-52/balanced/tryzub: closed entrance and window layers ordered",
+      "passed": true
+    },
+    {
       "name": "beginner-52/balanced/tryzub: bounded coplanar artwork",
       "passed": true
     },
@@ -2560,6 +3096,10 @@
     },
     {
       "name": "beginner-52/balanced/windows-classic: six opaque batches or exact Pixel exclusion",
+      "passed": true
+    },
+    {
+      "name": "beginner-52/balanced/windows-classic: closed entrance and window layers ordered",
       "passed": true
     },
     {
@@ -2579,6 +3119,10 @@
       "passed": true
     },
     {
+      "name": "beginner-52/balanced/dos: closed entrance and window layers ordered",
+      "passed": true
+    },
+    {
       "name": "beginner-52/balanced/dos: bounded coplanar artwork",
       "passed": true
     },
@@ -2592,6 +3136,10 @@
     },
     {
       "name": "beginner-52/balanced/orchard-workshop: six opaque batches or exact Pixel exclusion",
+      "passed": true
+    },
+    {
+      "name": "beginner-52/balanced/orchard-workshop: closed entrance and window layers ordered",
       "passed": true
     },
     {
@@ -2611,6 +3159,10 @@
       "passed": true
     },
     {
+      "name": "beginner-52/balanced/neon-ruins: closed entrance and window layers ordered",
+      "passed": true
+    },
+    {
       "name": "beginner-52/balanced/neon-ruins: bounded coplanar artwork",
       "passed": true
     },
@@ -2624,6 +3176,10 @@
     },
     {
       "name": "beginner-52/balanced/pocket-lcd: six opaque batches or exact Pixel exclusion",
+      "passed": true
+    },
+    {
+      "name": "beginner-52/balanced/pocket-lcd: closed entrance and window layers ordered",
       "passed": true
     },
     {
@@ -2643,6 +3199,10 @@
       "passed": true
     },
     {
+      "name": "beginner-52/balanced/copper-observatory: closed entrance and window layers ordered",
+      "passed": true
+    },
+    {
       "name": "beginner-52/balanced/copper-observatory: bounded coplanar artwork",
       "passed": true
     },
@@ -2656,6 +3216,10 @@
     },
     {
       "name": "beginner-52/balanced/sakura-station: six opaque batches or exact Pixel exclusion",
+      "passed": true
+    },
+    {
+      "name": "beginner-52/balanced/sakura-station: closed entrance and window layers ordered",
       "passed": true
     },
     {
@@ -2675,6 +3239,10 @@
       "passed": true
     },
     {
+      "name": "beginner-52/balanced/obsidian-reliquary: closed entrance and window layers ordered",
+      "passed": true
+    },
+    {
       "name": "beginner-52/balanced/obsidian-reliquary: bounded coplanar artwork",
       "passed": true
     },
@@ -2688,6 +3256,10 @@
     },
     {
       "name": "beginner-52/balanced/deep-space: six opaque batches or exact Pixel exclusion",
+      "passed": true
+    },
+    {
+      "name": "beginner-52/balanced/deep-space: closed entrance and window layers ordered",
       "passed": true
     },
     {
@@ -2707,6 +3279,10 @@
       "passed": true
     },
     {
+      "name": "beginner-52/balanced/moonlit-grove: closed entrance and window layers ordered",
+      "passed": true
+    },
+    {
       "name": "beginner-52/balanced/moonlit-grove: bounded coplanar artwork",
       "passed": true
     },
@@ -2720,6 +3296,10 @@
     },
     {
       "name": "beginner-52/high/authored: six opaque batches or exact Pixel exclusion",
+      "passed": true
+    },
+    {
+      "name": "beginner-52/high/authored: closed entrance and window layers ordered",
       "passed": true
     },
     {
@@ -2755,6 +3335,10 @@
       "passed": true
     },
     {
+      "name": "beginner-52/high/industrial-workshop: closed entrance and window layers ordered",
+      "passed": true
+    },
+    {
       "name": "beginner-52/high/industrial-workshop: bounded coplanar artwork",
       "passed": true
     },
@@ -2768,6 +3352,10 @@
     },
     {
       "name": "beginner-52/high/military-field: six opaque batches or exact Pixel exclusion",
+      "passed": true
+    },
+    {
+      "name": "beginner-52/high/military-field: closed entrance and window layers ordered",
       "passed": true
     },
     {
@@ -2787,6 +3375,10 @@
       "passed": true
     },
     {
+      "name": "beginner-52/high/ember-foundry: closed entrance and window layers ordered",
+      "passed": true
+    },
+    {
       "name": "beginner-52/high/ember-foundry: bounded coplanar artwork",
       "passed": true
     },
@@ -2800,6 +3392,10 @@
     },
     {
       "name": "beginner-52/high/polar-relay: six opaque batches or exact Pixel exclusion",
+      "passed": true
+    },
+    {
+      "name": "beginner-52/high/polar-relay: closed entrance and window layers ordered",
       "passed": true
     },
     {
@@ -2819,6 +3415,10 @@
       "passed": true
     },
     {
+      "name": "beginner-52/high/vyshyvanka: closed entrance and window layers ordered",
+      "passed": true
+    },
+    {
       "name": "beginner-52/high/vyshyvanka: bounded coplanar artwork",
       "passed": true
     },
@@ -2832,6 +3432,10 @@
     },
     {
       "name": "beginner-52/high/dnipro-porcelain: six opaque batches or exact Pixel exclusion",
+      "passed": true
+    },
+    {
+      "name": "beginner-52/high/dnipro-porcelain: closed entrance and window layers ordered",
       "passed": true
     },
     {
@@ -2851,6 +3455,10 @@
       "passed": true
     },
     {
+      "name": "beginner-52/high/tryzub: closed entrance and window layers ordered",
+      "passed": true
+    },
+    {
       "name": "beginner-52/high/tryzub: bounded coplanar artwork",
       "passed": true
     },
@@ -2864,6 +3472,10 @@
     },
     {
       "name": "beginner-52/high/windows-classic: six opaque batches or exact Pixel exclusion",
+      "passed": true
+    },
+    {
+      "name": "beginner-52/high/windows-classic: closed entrance and window layers ordered",
       "passed": true
     },
     {
@@ -2883,6 +3495,10 @@
       "passed": true
     },
     {
+      "name": "beginner-52/high/dos: closed entrance and window layers ordered",
+      "passed": true
+    },
+    {
       "name": "beginner-52/high/dos: bounded coplanar artwork",
       "passed": true
     },
@@ -2896,6 +3512,10 @@
     },
     {
       "name": "beginner-52/high/orchard-workshop: six opaque batches or exact Pixel exclusion",
+      "passed": true
+    },
+    {
+      "name": "beginner-52/high/orchard-workshop: closed entrance and window layers ordered",
       "passed": true
     },
     {
@@ -2915,6 +3535,10 @@
       "passed": true
     },
     {
+      "name": "beginner-52/high/neon-ruins: closed entrance and window layers ordered",
+      "passed": true
+    },
+    {
       "name": "beginner-52/high/neon-ruins: bounded coplanar artwork",
       "passed": true
     },
@@ -2928,6 +3552,10 @@
     },
     {
       "name": "beginner-52/high/pocket-lcd: six opaque batches or exact Pixel exclusion",
+      "passed": true
+    },
+    {
+      "name": "beginner-52/high/pocket-lcd: closed entrance and window layers ordered",
       "passed": true
     },
     {
@@ -2947,6 +3575,10 @@
       "passed": true
     },
     {
+      "name": "beginner-52/high/copper-observatory: closed entrance and window layers ordered",
+      "passed": true
+    },
+    {
       "name": "beginner-52/high/copper-observatory: bounded coplanar artwork",
       "passed": true
     },
@@ -2960,6 +3592,10 @@
     },
     {
       "name": "beginner-52/high/sakura-station: six opaque batches or exact Pixel exclusion",
+      "passed": true
+    },
+    {
+      "name": "beginner-52/high/sakura-station: closed entrance and window layers ordered",
       "passed": true
     },
     {
@@ -2979,6 +3615,10 @@
       "passed": true
     },
     {
+      "name": "beginner-52/high/obsidian-reliquary: closed entrance and window layers ordered",
+      "passed": true
+    },
+    {
       "name": "beginner-52/high/obsidian-reliquary: bounded coplanar artwork",
       "passed": true
     },
@@ -2995,6 +3635,10 @@
       "passed": true
     },
     {
+      "name": "beginner-52/high/deep-space: closed entrance and window layers ordered",
+      "passed": true
+    },
+    {
       "name": "beginner-52/high/deep-space: bounded coplanar artwork",
       "passed": true
     },
@@ -3008,6 +3652,10 @@
     },
     {
       "name": "beginner-52/high/moonlit-grove: six opaque batches or exact Pixel exclusion",
+      "passed": true
+    },
+    {
+      "name": "beginner-52/high/moonlit-grove: closed entrance and window layers ordered",
       "passed": true
     },
     {

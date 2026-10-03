@@ -239,6 +239,31 @@ for (const entry of representative)
               item.material.polygonOffset,
           ),
       );
+      if (!isPixel) {
+        for (const [y, z, finish] of [
+          [0.3, -8.3, 'door'],
+          [1, -8, 'accent'],
+          [5, -8.3, 'window'],
+          [5.76, -8.3, 'trim'],
+        ]) {
+          const ray = new THREE.Raycaster(new THREE.Vector3(0, y, z), new THREE.Vector3(-1, 0, 0)),
+            overlapping = ray
+              .intersectObjects(details, true)
+              .filter((hit) => Math.abs(hit.distance - 21) < 1e-5),
+            front = overlapping.sort(
+              (a, b) =>
+                a.object.material.polygonOffsetFactor - b.object.material.polygonOffsetFactor,
+            )[0];
+          assert(
+            front?.object.name === 'courtyard-house-' + finish,
+            'unambiguous plinth/door/panel/pane/frame offset layer',
+          );
+        }
+        check(
+          `${entry.id}/${quality}/${appearance}: closed entrance and window layers ordered`,
+          true,
+        );
+      }
       let vertices = 0;
       for (const item of details) {
         const p = item.geometry.attributes.position,
