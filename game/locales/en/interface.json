@@ -1,4 +1,8 @@
 {
+  "copyLevelLink": "Copy level link",
+  "levelLink": "Level link",
+  "levelLinkCopied": "Level link copied. Anyone with this game version can open the same mission.",
+  "levelLinkCopyManually": "Copy the selected link to share this mission.",
   "revealLineControllerPractice": "FPV / LINE — Controller practice",
   "revealLine": "◩ FPV / LINE",
   "controllerPractice": "CONTROLLER PRACTICE",
@@ -5759,6 +5763,8 @@
   "workshop.detailOff": "Off",
   "workshop.detailSubtle": "Subtle",
   "workshop.detailRich": "Detailed",
+  "workshop.description.military-field": "Field vehicles and concrete checkpoints. Existing enemy rules stay the same.",
+  "workshop.theme.military-field": "Military Field",
   "workshop.theme.legacy": "Signal Blue",
   "workshop.theme.industrial-workshop": "Flight Deck",
   "workshop.theme.ember-foundry": "Ember Foundry",

@@ -135,6 +135,7 @@ export async function restoreCompanySession(
         canonicalJSON(
           prepareRunningEnemyLevel(prepared.manifest.level, {
             classes: replay.options.classRecipes,
+            style: replay.level.pursuit ? 'varied' : 'original',
           }),
         ) === canonicalJSON(replay.level));
     required(

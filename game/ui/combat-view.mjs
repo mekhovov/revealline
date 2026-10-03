@@ -12,6 +12,7 @@ import { EPS, pointAt } from '../core/geometry.mjs';
 import { classicDomainHit } from '../core/classic-motion.mjs';
 import { fitsClassicDomain } from '../core/classic-topology.mjs';
 import { COMBAT_RADIUS, COMBAT_SHOT_RADIUS } from '../core/combat-definition.mjs';
+import { actorFacingRadians } from '../hunt/actor-facing.mjs';
 
 const check = (condition, message = t('interface:malformedActiveCombatPresentationData')) => {
   if (!condition) throw new TypeError(message);
@@ -69,14 +70,16 @@ function id(value) {
   check(stableId(result), t('interface:combatPresentationNeedsStableIds'));
   return result;
 }
-function velocity(value, speed) {
+function velocity(value, speed, canWait = false, boundedSpeed = false) {
   const vx = own(value, 'vx'),
     vy = own(value, 'vy'),
     limit = Math.max(12, speed);
   check(
     finite(vx, -limit, limit) &&
       finite(vy, -limit, limit) &&
-      Math.abs(Math.hypot(vx, vy) - speed) < 1e-7,
+      (Math.abs(Math.hypot(vx, vy) - speed) < 1e-7 ||
+        (canWait && vx === 0 && vy === 0) ||
+        (boundedSpeed && Math.hypot(vx, vy) <= speed + 1e-7)),
     t('interface:invalidCombatVelocity'),
   );
   return { vx, vy };
@@ -131,7 +134,10 @@ function recipes(definition, hunt, maximum = 24) {
           huntTargetKind(hunt, key) === 'runner' ? (maximum > 24 ? 21 : HUNT_MAX_RUNNER_SPEED) : 8,
         ),
     );
-    const recipe = { id: key, role, speed };
+    const headingX = own(source, 'headingX'),
+      headingY = own(source, 'headingY');
+    check(finite(headingX, -1, 1) && finite(headingY, -1, 1));
+    const recipe = { id: key, role, speed, headingX, headingY, ...point(source) };
     if (role === 'sentry') {
       check(++sentries <= 8);
       for (const [key, min, max] of [
@@ -175,6 +181,8 @@ export function combatView(run) {
       'xonix-core.v10': 'xonix-level.v9',
       'xonix-core.v11': 'xonix-level.v10',
       'xonix-core.v12': 'xonix-level.v11',
+      'xonix-core.v13': 'xonix-level.v12',
+      'xonix-core.v14': 'xonix-level.v13',
     };
     const ruleset = own(run, 'ruleset');
     check(
@@ -183,12 +191,18 @@ export function combatView(run) {
         pairs[ruleset] === own(level, 'version'),
       t('interface:unsupportedCombatPresentationSchemaPair'),
     );
-    const supplemental = ruleset === 'xonix-core.v11';
+    const supplemental = ['xonix-core.v11', 'xonix-core.v13', 'xonix-core.v14'].includes(ruleset);
     const baseVersion = supplemental ? own(extension, 'baseVersion') : own(level, 'version');
     if (supplemental)
       check(
-        own(extension, 'version') === 'running-enemies.v1' &&
-          /^xonix-level\.v[1-8]$/.test(baseVersion),
+        (own(extension, 'version') === 'running-enemies.v1' &&
+          /^xonix-level\.v[1-8]$/.test(baseVersion)) ||
+          (ruleset === 'xonix-core.v13' &&
+            own(extension, 'version') === 'running-enemies.v2' &&
+            baseVersion === 'xonix-level.v9') ||
+          (ruleset === 'xonix-core.v14' &&
+            own(extension, 'version') === 'running-enemies.v3' &&
+            baseVersion === 'xonix-level.v11'),
       );
     const legacyOwner = supplemental && /^xonix-level\.v[1-3]$/.test(baseVersion);
     const width =
@@ -241,8 +255,74 @@ export function combatView(run) {
             : ['cooldown', 'warning', 'recovery'].includes(phase)
           : phase === 'eliminated',
       );
+      const policy = ['xonix-core.v13', 'xonix-core.v14'].includes(ruleset)
+        ? dense(own(record(own(level, 'pursuit')), 'actors'), 6).find(
+            (item) => own(record(item), 'id') === key,
+          )
+        : null;
+      const pursuit = policy
+        ? {
+            behavior: own(policy, 'behavior'),
+            phase: own(source, 'pursuit')
+              ? own(record(own(source, 'pursuit')), 'phase')
+              : 'walking',
+          }
+        : null;
+      const specialist = pursuit && ['shield', 'brace'].includes(pursuit.behavior);
+      if (pursuit) {
+        if (pursuit.behavior === 'pair') {
+          pursuit.partnerId = own(policy, 'partnerId');
+          check(stableId(pursuit.partnerId));
+        }
+        const phases = specialist
+          ? ['walking', 'blocked', 'turning', 'rest', 'warning', 'burst']
+          : ['walking', 'committed', 'recovering', 'blocked'];
+        check(
+          [
+            'runner',
+            'patroller',
+            'courier',
+            'refuge',
+            'switchback',
+            'pair',
+            'shield',
+            'brace',
+          ].includes(pursuit.behavior) && phases.includes(pursuit.phase),
+        );
+        const nativeState = own(source, 'pursuit');
+        if (nativeState) {
+          record(nativeState);
+          const goal = own(nativeState, 'goal'),
+            cursor = own(nativeState, 'cursor');
+          check(integer(cursor));
+          pursuit.cursor = cursor;
+          pursuit.goal = goal == null ? null : point(record(goal), width);
+        }
+        if (specialist) {
+          const state = record(own(source, 'pursuit'));
+          pursuit.heading = own(state, 'heading');
+          pursuit.nextHeading = own(state, 'nextHeading');
+          check(['up', 'right', 'down', 'left'].includes(pursuit.heading));
+          check(
+            pursuit.nextHeading === null ||
+              ['up', 'right', 'down', 'left'].includes(pursuit.nextHeading),
+          );
+          check(
+            (pursuit.behavior === 'shield' &&
+              ['walking', 'blocked', 'turning'].includes(pursuit.phase)) ||
+              (pursuit.behavior === 'brace' &&
+                ['rest', 'warning', 'burst'].includes(pursuit.phase)),
+          );
+          check(pursuit.phase !== 'turning' || pursuit.nextHeading !== null);
+        }
+      }
       const position = point(source, width),
-        motion = velocity(source, recipe.speed);
+        motion = velocity(
+          source,
+          recipe.speed * (pursuit?.behavior === 'brace' && pursuit.phase === 'burst' ? 2 : 1),
+          !!pursuit,
+          !!specialist,
+        );
       check(own(source, 'radius') === COMBAT_RADIUS);
       if (alive) check(fitsClassicDomain(domain, position, COMBAT_RADIUS, CELL.FIELD));
       let warningTicks = 0,
@@ -287,15 +367,17 @@ export function combatView(run) {
           );
         }
       }
-      byId.set(key, { role, alive, ...position });
+      byId.set(key, { role, alive, ...position, ...(pursuit ? { family: pursuit.behavior } : {}) });
       if (alive) {
         const factor =
           phase !== 'cooldown' || frozen || ['won', 'lost'].includes(status) ? 0 : slow ? 0.5 : 1;
         actors.push({
           id: key,
           role,
+          ...(pursuit ? { pursuit } : {}),
           ...(huntTargetKind(hunt, key) ? { kind: huntTargetKind(hunt, key) } : {}),
           ...position,
+          facingRadians: actorFacingRadians({ ...position, ...motion, pursuit, aim }, recipe),
           vx: motion.vx * factor,
           vy: motion.vy * factor,
           radius: COMBAT_RADIUS,
@@ -344,6 +426,7 @@ export function combatView(run) {
         cause,
         ...position,
         tick: at,
+        ...(actor.family ? { family: actor.family } : {}),
         ...(huntTargetKind(hunt, key) ? { kind: huntTargetKind(hunt, key) } : {}),
       };
     });

@@ -653,6 +653,24 @@
                       >
                         Choose mission
                       </button>
+                      <button
+                        id="copy-level-link"
+                        class="button secondary"
+                        type="button"
+                        hidden
+                        data-i18n="interface:copyLevelLink"
+                      >
+                        Copy level link
+                      </button>
+                      <input
+                        id="played-level-link"
+                        type="url"
+                        readonly
+                        hidden
+                        aria-label="Level link"
+                        data-i18n-aria-label="interface:levelLink"
+                      />
+                      <p id="level-link-status" role="status" aria-live="polite" hidden></p>
                       <details id="pause-mission-info" class="pause-mission-info" hidden>
                         <summary
                           id="pause-mission-info-toggle"
@@ -3586,6 +3604,7 @@ No offline check yet.</pre
             data-i18n="interface:couchVersus2Players"
             >Couch Versus · 2 players</a
           >
+          <a href="online/" class="button secondary">Private rooms preview / Приватні кімнати</a>
         </nav>
       </details>
       <div id="shell-mission-content"></div>

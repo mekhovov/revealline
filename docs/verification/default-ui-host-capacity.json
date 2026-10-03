@@ -1,0 +1,778 @@
+{
+  "format": "revealline-core-projection-measurement.v1",
+  "status": "direct-production-projection-not-final-build",
+  "baselineSourceRevision": "0854912633e7c6a6e49741cdb2f8abae675178ef",
+  "baselineCore": {
+    "version": "v0.150.0",
+    "files": 1349,
+    "bytes": 67182475,
+    "cap": 67108864,
+    "overBy": 73611
+  },
+  "method": "Production selectOfflineCore over collected build paths with real JS, MJS, CSS and HTML bytes; JSON and binary leaves replaced by empty objects; optionalOffline and optional-practice excluded. This conservative graph proves source reachability without compiling unrelated content. Production projectDefaultRuntimeMetadata then verifies all selected modules with exact AST, tokens, comments and line-terminator guards.",
+  "selectedModules": 83,
+  "additionalModules": 69,
+  "removedNonCoreModules": [
+    "game/couch/relay-rescue.mjs",
+    "game/couch/couch.mjs",
+    "game/couch/coop-view.mjs",
+    "game/ui/still-media-panel.mjs",
+    "game/studio/studio.mjs",
+    "game/couch/couch-installed-chapters.mjs",
+    "game/ui/still-story-panel.mjs"
+  ],
+  "additionalCoreSavings": 281852,
+  "estimatedCoreBytes": 66900623,
+  "estimatedHeadroom": 208241,
+  "automatedSuitesRun": false,
+  "finalCommittedPreparationRequired": true,
+  "modules": [
+    {
+      "name": "game/app.mjs",
+      "originalBytes": 532600,
+      "projectedBytes": 421746,
+      "savings": 110854,
+      "sourceSha256": "4544901e0c4b9e7719207c3c72090c31a073e8f9654e68ce06bfb9120a0bb8d0",
+      "added": false,
+      "retainedThrough": null
+    },
+    {
+      "name": "game/content.mjs",
+      "originalBytes": 26795,
+      "projectedBytes": 22172,
+      "savings": 4623,
+      "sourceSha256": "8a6a8542956c601f21e75239165e1ac0edb00659b8653e3d9a7963cc0a6c0b8a",
+      "added": true,
+      "retainedThrough": "game/app.mjs"
+    },
+    {
+      "name": "game/creator/media-intake.mjs",
+      "originalBytes": 23015,
+      "projectedBytes": 18141,
+      "savings": 4874,
+      "sourceSha256": "78d01b8537891e8a103bc91f5c65531c17747f35996ee2f7388e2690bc821214",
+      "added": true,
+      "retainedThrough": "game/creator/media-bundle.mjs"
+    },
+    {
+      "name": "game/downloads.mjs",
+      "originalBytes": 37596,
+      "projectedBytes": 31351,
+      "savings": 6245,
+      "sourceSha256": "58c0fa65df8de46289c6186b4eec40777abdd4d0d4ec2d0118f1e5eac5a43d0a",
+      "added": true,
+      "retainedThrough": "game/downloads.html"
+    },
+    {
+      "name": "game/external-chapter-host.mjs",
+      "originalBytes": 24423,
+      "projectedBytes": 19228,
+      "savings": 5195,
+      "sourceSha256": "a9d93f5444e28b5f475c3fb4e89f98fac5f5090183857e31d50fc9316ba266c7",
+      "added": true,
+      "retainedThrough": "game/app.mjs"
+    },
+    {
+      "name": "game/external-chapter-install.mjs",
+      "originalBytes": 18134,
+      "projectedBytes": 14677,
+      "savings": 3457,
+      "sourceSha256": "45a56521a6385374fcc28511d5f08e73116bd58f14e181c3049b4c7fb59faed3",
+      "added": true,
+      "retainedThrough": "game/external-chapter-host.mjs"
+    },
+    {
+      "name": "game/external-chapter-source.mjs",
+      "originalBytes": 32127,
+      "projectedBytes": 25686,
+      "savings": 6441,
+      "sourceSha256": "37227329d56c3fa11e46953f299b990b6f5ea11457a7cb0b628fb151762b85f8",
+      "added": true,
+      "retainedThrough": "game/app.mjs"
+    },
+    {
+      "name": "game/first-flight.mjs",
+      "originalBytes": 24520,
+      "projectedBytes": 19427,
+      "savings": 5093,
+      "sourceSha256": "57938d33b2e8a0bc3603992ae0e3cc5965c07479cdb882a648dbfc5729e2876d",
+      "added": true,
+      "retainedThrough": "game/app.mjs"
+    },
+    {
+      "name": "game/hunt/destruction.mjs",
+      "originalBytes": 15089,
+      "projectedBytes": 11725,
+      "savings": 3364,
+      "sourceSha256": "a93185a0fc6f64c5ab6f6735bb9dd51696462dd928c630f53160cd389e4b9cfe",
+      "added": true,
+      "retainedThrough": "game/ui/destruction-controls.mjs"
+    },
+    {
+      "name": "game/journey/profile.mjs",
+      "originalBytes": 29999,
+      "projectedBytes": 24351,
+      "savings": 5648,
+      "sourceSha256": "2dc5dab2dcd3d89c538022b362fc97f65396726e9fc8914ef2a96fcbc8d3036f",
+      "added": true,
+      "retainedThrough": "game/app.mjs"
+    },
+    {
+      "name": "game/library.mjs",
+      "originalBytes": 35962,
+      "projectedBytes": 30469,
+      "savings": 5493,
+      "sourceSha256": "cda2d2aa7bb3675b6a8991ae0080d0a4f7f15f23e44df973dd2e8d8aca8d152c",
+      "added": true,
+      "retainedThrough": "game/app.mjs"
+    },
+    {
+      "name": "game/managed-media-store.mjs",
+      "originalBytes": 54466,
+      "projectedBytes": 42099,
+      "savings": 12367,
+      "sourceSha256": "3a06f17393d0442001a3b4b48abba34c59b7af24a53085634252214f66c0150b",
+      "added": true,
+      "retainedThrough": "game/app.mjs"
+    },
+    {
+      "name": "game/offline.mjs",
+      "originalBytes": 21019,
+      "projectedBytes": 17437,
+      "savings": 3582,
+      "sourceSha256": "c198b5044aaeae76c69ed0f6d44ece590a4df9bdc73b66fc27333f69b7a10864",
+      "added": true,
+      "retainedThrough": "game/app.mjs"
+    },
+    {
+      "name": "game/packs.mjs",
+      "originalBytes": 31165,
+      "projectedBytes": 25590,
+      "savings": 5575,
+      "sourceSha256": "81d54427057ae34f0f4b80e54dad27ffafc868163f9839fd3454443a5df2828e",
+      "added": true,
+      "retainedThrough": "game/app.mjs"
+    },
+    {
+      "name": "game/presentation/host.mjs",
+      "originalBytes": 30143,
+      "projectedBytes": 23940,
+      "savings": 6203,
+      "sourceSha256": "158c0d6ade746c5b655b5e6e8662dbe8cc4bde30ba0f95c37db3cf7c3374943c",
+      "added": true,
+      "retainedThrough": "game/app.mjs"
+    },
+    {
+      "name": "game/presentation/icons.mjs",
+      "originalBytes": 17030,
+      "projectedBytes": 12658,
+      "savings": 4372,
+      "sourceSha256": "750dd23fcac12fff007505ec4b8e91d81c2dae6d9e92fdcc8777fddd187a6780",
+      "added": true,
+      "retainedThrough": "game/assets/field-kit/icons/review.mjs"
+    },
+    {
+      "name": "game/presentation/industrial-arcade.mjs",
+      "originalBytes": 13160,
+      "projectedBytes": 9960,
+      "savings": 3200,
+      "sourceSha256": "cd10a44256fdef7988d3273ce599e523dc4f1aed741a0f0186ecaa0095dd5c63",
+      "added": true,
+      "retainedThrough": "game/app.mjs"
+    },
+    {
+      "name": "game/presentation/model.mjs",
+      "originalBytes": 30099,
+      "projectedBytes": 26154,
+      "savings": 3945,
+      "sourceSha256": "9885571b622b5858a8791c300d7859008fdfa933778d7bf29cf6a4e89be60fd1",
+      "added": true,
+      "retainedThrough": "game/presentation/bundle.mjs"
+    },
+    {
+      "name": "game/presentation/page.mjs",
+      "originalBytes": 8212,
+      "projectedBytes": 6213,
+      "savings": 1999,
+      "sourceSha256": "a65f660145be6d45699112f5c0bf1ea2cdeb4642b1667ad53908fe245b8f8c54",
+      "added": true,
+      "retainedThrough": "game/replay-theater/app.mjs"
+    },
+    {
+      "name": "game/presentation/pixel-art.mjs",
+      "originalBytes": 21430,
+      "projectedBytes": 14908,
+      "savings": 6522,
+      "sourceSha256": "544c975f88686455607dbed2f4babb472dc1ad5d9992d878c8c91dc2b123e582",
+      "added": true,
+      "retainedThrough": "game/presentation/industrial-arcade.mjs"
+    },
+    {
+      "name": "game/presentation/release-pictures.mjs",
+      "originalBytes": 16892,
+      "projectedBytes": 13592,
+      "savings": 3300,
+      "sourceSha256": "6b94780233545f044bc00d0ce13eb335d82828a333ae9fd8f6c5afc23a33442c",
+      "added": true,
+      "retainedThrough": "game/app.mjs"
+    },
+    {
+      "name": "game/presentation/session-release-pictures.mjs",
+      "originalBytes": 14945,
+      "projectedBytes": 11686,
+      "savings": 3259,
+      "sourceSha256": "38e95bf88fea97276306c1d54494d3b9345e1ee85a24b351a0e7ff9dcb5231e2",
+      "added": true,
+      "retainedThrough": "game/app.mjs"
+    },
+    {
+      "name": "game/presentation/theme-bootstrap.mjs",
+      "originalBytes": 88504,
+      "projectedBytes": 76962,
+      "savings": 11542,
+      "sourceSha256": "aac0cfe4b8e767354597b86ea7605bf23bf5e313a604bc7ebe27ee3e34122ab4",
+      "added": true,
+      "retainedThrough": "game/company.html"
+    },
+    {
+      "name": "game/presentation/theme-host.mjs",
+      "originalBytes": 16050,
+      "projectedBytes": 12749,
+      "savings": 3301,
+      "sourceSha256": "6dfd483de01edd16144df0a9537efd305b63576d06097abd9315a8df48efe890",
+      "added": true,
+      "retainedThrough": "game/presentation/theme-entry.mjs"
+    },
+    {
+      "name": "game/presentation/theme-system.mjs",
+      "originalBytes": 65920,
+      "projectedBytes": 54402,
+      "savings": 11518,
+      "sourceSha256": "317e107e509f94449050c52f1756bd8436691f0d92bb8185aed697b3ba3127d6",
+      "added": true,
+      "retainedThrough": "game/presentation/theme-entry.mjs"
+    },
+    {
+      "name": "game/profile-channel-reader.mjs",
+      "originalBytes": 26091,
+      "projectedBytes": 20754,
+      "savings": 5337,
+      "sourceSha256": "ef6849cd9b6b60c483a7b5ed8b27cc22a89296df86ba41a7ccd9afb2729f2b43",
+      "added": true,
+      "retainedThrough": "game/ui/profile-recovery-dialog.mjs"
+    },
+    {
+      "name": "game/profile-shared-media.mjs",
+      "originalBytes": 15469,
+      "projectedBytes": 11816,
+      "savings": 3653,
+      "sourceSha256": "1b668825850ec511def024d0fcc8cae666eb358c926875252fa575538186068a",
+      "added": true,
+      "retainedThrough": "game/profile-channel-reader.mjs"
+    },
+    {
+      "name": "game/replay-theater/app.mjs",
+      "originalBytes": 31113,
+      "projectedBytes": 25568,
+      "savings": 5545,
+      "sourceSha256": "d870b2d3f47a0c48f3cd188d4e5abb678985c8893b82b1aee2de39e30219a8c8",
+      "added": true,
+      "retainedThrough": "game/replay-theater/index.html"
+    },
+    {
+      "name": "game/snake/classic-app.mjs",
+      "originalBytes": 54470,
+      "projectedBytes": 45401,
+      "savings": 9069,
+      "sourceSha256": "9cd35b33d631fa213035d11b88417a957b48c0a54c15fff90d0f8d858180003c",
+      "added": false,
+      "retainedThrough": null
+    },
+    {
+      "name": "game/snake/classic-records.mjs",
+      "originalBytes": 19839,
+      "projectedBytes": 15719,
+      "savings": 4120,
+      "sourceSha256": "1c46dda30a04f4befad6cbe796b76478245d3605c3a34aeaa10816469707cfcf",
+      "added": true,
+      "retainedThrough": "game/snake/classic-app.mjs"
+    },
+    {
+      "name": "game/soundtrack.mjs",
+      "originalBytes": 39449,
+      "projectedBytes": 33511,
+      "savings": 5938,
+      "sourceSha256": "6e5550281c928fc03704d1c743e01d600ba83d5b186d107b510de9bd0bd1610d",
+      "added": true,
+      "retainedThrough": "game/app.mjs"
+    },
+    {
+      "name": "game/story-media-store.mjs",
+      "originalBytes": 17612,
+      "projectedBytes": 14212,
+      "savings": 3400,
+      "sourceSha256": "7cdd1bbf10482c9bdab18657de9657c33dc6b27a6727d356c5ec1752da7aaa50",
+      "added": true,
+      "retainedThrough": "game/app.mjs"
+    },
+    {
+      "name": "game/ui/actor-presentation.mjs",
+      "originalBytes": 36924,
+      "projectedBytes": 28426,
+      "savings": 8498,
+      "sourceSha256": "5546b55fc69d43401c74828011cc98e5a2b38ffabace15fe8ccf61df9f72ce4b",
+      "added": false,
+      "retainedThrough": null
+    },
+    {
+      "name": "game/ui/audio.mjs",
+      "originalBytes": 34132,
+      "projectedBytes": 26943,
+      "savings": 7189,
+      "sourceSha256": "c94c231452beba82f3ebef3893c3266df7df2b4773c13d4d52135d0b09b4458c",
+      "added": false,
+      "retainedThrough": null
+    },
+    {
+      "name": "game/ui/classic-view.mjs",
+      "originalBytes": 28109,
+      "projectedBytes": 21569,
+      "savings": 6540,
+      "sourceSha256": "9cda7f95bcecc7cc4edae05f3aee2bb34615ff5f0cd99984c570574123caae09",
+      "added": false,
+      "retainedThrough": null
+    },
+    {
+      "name": "game/ui/combat-presentation.mjs",
+      "originalBytes": 12323,
+      "projectedBytes": 9235,
+      "savings": 3088,
+      "sourceSha256": "54861a5f3f4db5752f2f96778073f91269e51de1263977c11f25fc4782fcbce9",
+      "added": true,
+      "retainedThrough": "game/ui/render.mjs"
+    },
+    {
+      "name": "game/ui/combat-view.mjs",
+      "originalBytes": 18001,
+      "projectedBytes": 13980,
+      "savings": 4021,
+      "sourceSha256": "8124b915f60de06eb2f68c6bfec32d87c5bdfa52700394efe2c3c74f4cee711b",
+      "added": true,
+      "retainedThrough": "game/ui/flight-information-source.mjs"
+    },
+    {
+      "name": "game/ui/contextual-reactions.mjs",
+      "originalBytes": 24727,
+      "projectedBytes": 20182,
+      "savings": 4545,
+      "sourceSha256": "033e38608d5d6f53293f8785ad36268d6794a413e51bbc07e857679832945bb3",
+      "added": true,
+      "retainedThrough": "game/app.mjs"
+    },
+    {
+      "name": "game/ui/controller-confirm-guard.mjs",
+      "originalBytes": 11867,
+      "projectedBytes": 9858,
+      "savings": 2009,
+      "sourceSha256": "24cb54f6c8476dd6008e519a2fe41c417b576963ad68ed2134662b39dcea608e",
+      "added": true,
+      "retainedThrough": "game/app.mjs"
+    },
+    {
+      "name": "game/ui/controller-field-editor.mjs",
+      "originalBytes": 13637,
+      "projectedBytes": 10890,
+      "savings": 2747,
+      "sourceSha256": "6933c0f07cafbd623248eb20ef64d9d1bfe6a91dd403599dc1b137c6450ed7e8",
+      "added": true,
+      "retainedThrough": "game/ui/controller-navigation.mjs"
+    },
+    {
+      "name": "game/ui/controller-navigation.mjs",
+      "originalBytes": 43708,
+      "projectedBytes": 34464,
+      "savings": 9244,
+      "sourceSha256": "a136883ba62a47c239005a8202743ebf8e46c9d443e92f63a374099907ccd203",
+      "added": false,
+      "retainedThrough": null
+    },
+    {
+      "name": "game/ui/controller-reading.mjs",
+      "originalBytes": 15036,
+      "projectedBytes": 11982,
+      "savings": 3054,
+      "sourceSha256": "479e50ba1f6128b4420b28919aa5e8377bc982ce414283d32c639f2fbe9f91b2",
+      "added": true,
+      "retainedThrough": "game/app.mjs"
+    },
+    {
+      "name": "game/ui/controller-router.mjs",
+      "originalBytes": 24413,
+      "projectedBytes": 19441,
+      "savings": 4972,
+      "sourceSha256": "8eea596e02b762b3924cd8052091d66e59d77825efe918aa0673c58c5c1f5fb9",
+      "added": true,
+      "retainedThrough": "game/app.mjs"
+    },
+    {
+      "name": "game/ui/controller-settings.mjs",
+      "originalBytes": 17978,
+      "projectedBytes": 14569,
+      "savings": 3409,
+      "sourceSha256": "b74bf513c623b3d16dcd2e4910e85e748006f4c16fc661c9652098c5bf7e3a1f",
+      "added": true,
+      "retainedThrough": "game/app.mjs"
+    },
+    {
+      "name": "game/ui/demo-host.mjs",
+      "originalBytes": 30715,
+      "projectedBytes": 24221,
+      "savings": 6494,
+      "sourceSha256": "0527ec0ac9f09351616f7aeee7cd9f071967e7477ea73548da5b15f0a6e941a8",
+      "added": false,
+      "retainedThrough": null
+    },
+    {
+      "name": "game/ui/demo-input.mjs",
+      "originalBytes": 15543,
+      "projectedBytes": 11860,
+      "savings": 3683,
+      "sourceSha256": "45f29ea8568a3cc713e7285dcb96e76e8f9324a9a9750b50c87f70d318f2b664",
+      "added": true,
+      "retainedThrough": "game/ui/demo-host.mjs"
+    },
+    {
+      "name": "game/ui/demo-picture.mjs",
+      "originalBytes": 14329,
+      "projectedBytes": 11373,
+      "savings": 2956,
+      "sourceSha256": "769b2632d5252c152cf01a2d48cad60a629b51825e5881eb1afaa48baedd74e6",
+      "added": true,
+      "retainedThrough": "game/ui/demo-host.mjs"
+    },
+    {
+      "name": "game/ui/edition-expedition.mjs",
+      "originalBytes": 17845,
+      "projectedBytes": 13909,
+      "savings": 3936,
+      "sourceSha256": "1c5f477c6e441f7b4a2727df2e5573216e5628ec7f28eabeae3d3a156f2d4bfc",
+      "added": true,
+      "retainedThrough": "game/ui/edition-solo.mjs"
+    },
+    {
+      "name": "game/ui/edition-lessons.mjs",
+      "originalBytes": 18356,
+      "projectedBytes": 15047,
+      "savings": 3309,
+      "sourceSha256": "84f11b3e97a1b06fb72c47ccbb56339906143914fa6a46069fa31e8a84e54b84",
+      "added": true,
+      "retainedThrough": "game/ui/edition-solo.mjs"
+    },
+    {
+      "name": "game/ui/edition-mastery.mjs",
+      "originalBytes": 11191,
+      "projectedBytes": 9069,
+      "savings": 2122,
+      "sourceSha256": "0fc1d6b4e25265e2fc967204190b0b24b6f368f42859c5dcf0d9553a67c80793",
+      "added": true,
+      "retainedThrough": "game/ui/edition-solo.mjs"
+    },
+    {
+      "name": "game/ui/edition-rewards.mjs",
+      "originalBytes": 36784,
+      "projectedBytes": 29001,
+      "savings": 7783,
+      "sourceSha256": "5ce4fc246961373508d6588fa1ce91ac970b7144cd91bfbcae6f8965b77b9c0d",
+      "added": false,
+      "retainedThrough": null
+    },
+    {
+      "name": "game/ui/edition-solo.mjs",
+      "originalBytes": 18635,
+      "projectedBytes": 15673,
+      "savings": 2962,
+      "sourceSha256": "cafcdf666ebf5775b591ad43e3d250c8870cec5487b3132a4d9c89e9db5a9699",
+      "added": true,
+      "retainedThrough": "game/app.mjs"
+    },
+    {
+      "name": "game/ui/enemy-body-assets.mjs",
+      "originalBytes": 10497,
+      "projectedBytes": 8179,
+      "savings": 2318,
+      "sourceSha256": "7bbe62f021d50d5f975635b9ed02e197c2955d37bc046f63ea189e1c2a497a1e",
+      "added": true,
+      "retainedThrough": "game/ui/enemy-guide.mjs"
+    },
+    {
+      "name": "game/ui/enemy-guide.mjs",
+      "originalBytes": 25889,
+      "projectedBytes": 21094,
+      "savings": 4795,
+      "sourceSha256": "5c8c7300961f021b2b2113b63903a057fa2d9e2036898eaef384e0fd09614763",
+      "added": true,
+      "retainedThrough": "game/app.mjs"
+    },
+    {
+      "name": "game/ui/feedback-director.mjs",
+      "originalBytes": 24111,
+      "projectedBytes": 18547,
+      "savings": 5564,
+      "sourceSha256": "c4315e17ba826c8e67a30d495c3464a362911e5f4196ecbf18d26a9838a99286",
+      "added": true,
+      "retainedThrough": "game/ui/audio.mjs"
+    },
+    {
+      "name": "game/ui/flight-information-bridge.mjs",
+      "originalBytes": 7950,
+      "projectedBytes": 6129,
+      "savings": 1821,
+      "sourceSha256": "66bd23e6e19eedb95d95fb4e11dc28e033fda673e83fd6d2a67c42cc1c8c8186",
+      "added": true,
+      "retainedThrough": "game/ui/flight-information-host.mjs"
+    },
+    {
+      "name": "game/ui/flight-information-details.mjs",
+      "originalBytes": 21082,
+      "projectedBytes": 17063,
+      "savings": 4019,
+      "sourceSha256": "9e577a1ef0681e7b6155bd0a453fe35b84b6751c4b42c5ef9f6c3a9e4a0eef0c",
+      "added": true,
+      "retainedThrough": "game/app.mjs"
+    },
+    {
+      "name": "game/ui/flight-pictures.mjs",
+      "originalBytes": 9373,
+      "projectedBytes": 7118,
+      "savings": 2255,
+      "sourceSha256": "de92bfd88c5ca934c58c45c09a40f18c0bcccf12610429f680a3201f5a0448da",
+      "added": true,
+      "retainedThrough": "game/app.mjs"
+    },
+    {
+      "name": "game/ui/game-shell.mjs",
+      "originalBytes": 31959,
+      "projectedBytes": 26389,
+      "savings": 5570,
+      "sourceSha256": "6abbb75b52c5c5b192cbbbba78404207ead5326ad421f4c6084c41efe2f38554",
+      "added": true,
+      "retainedThrough": "game/app.mjs"
+    },
+    {
+      "name": "game/ui/input.mjs",
+      "originalBytes": 18885,
+      "projectedBytes": 15148,
+      "savings": 3737,
+      "sourceSha256": "abb1774cf8b1c3004ccc687112c13c4eeebf69c4796ad1be6741288c87f0c3a2",
+      "added": true,
+      "retainedThrough": "game/app.mjs"
+    },
+    {
+      "name": "game/ui/install-offline-panel.mjs",
+      "originalBytes": 11039,
+      "projectedBytes": 9070,
+      "savings": 1969,
+      "sourceSha256": "86eaff72b76f91feac037435c6925e4541c12b6267c15ec7d9ff3a17a9ab49b2",
+      "added": true,
+      "retainedThrough": "game/app.mjs"
+    },
+    {
+      "name": "game/ui/library-panel.mjs",
+      "originalBytes": 77858,
+      "projectedBytes": 61297,
+      "savings": 16561,
+      "sourceSha256": "b911c709f9723578f333bec6fec7e185cd227b5b8aacf968a9f367797098678b",
+      "added": false,
+      "retainedThrough": null
+    },
+    {
+      "name": "game/ui/menu-scene-motion.mjs",
+      "originalBytes": 15497,
+      "projectedBytes": 13005,
+      "savings": 2492,
+      "sourceSha256": "9cd29d1cfd8fdf8702218ccbd7ecd92e0c9b1319454488540ae1936ed6883c2a",
+      "added": true,
+      "retainedThrough": "game/ui/menu-scenes.mjs"
+    },
+    {
+      "name": "game/ui/menu-scenes.mjs",
+      "originalBytes": 15327,
+      "projectedBytes": 12817,
+      "savings": 2510,
+      "sourceSha256": "bcbe5fc1d89b673d5b1bf69adb0eb39b809a66c35e9c53035ad04294e3cc960e",
+      "added": true,
+      "retainedThrough": "game/creator/player-menu.mjs"
+    },
+    {
+      "name": "game/ui/mission-library-chooser.mjs",
+      "originalBytes": 48116,
+      "projectedBytes": 39297,
+      "savings": 8819,
+      "sourceSha256": "b591ffb73b1f33e21c52b833c5a199fe35b4e9bd21d2fa2c4dfdb3d11f9fcaf2",
+      "added": false,
+      "retainedThrough": null
+    },
+    {
+      "name": "game/ui/mission-picker.mjs",
+      "originalBytes": 11657,
+      "projectedBytes": 9699,
+      "savings": 1958,
+      "sourceSha256": "8a0d3bc8cad9214c04b187a5ea01ee413d90d6f6392c768140af140455def4d7",
+      "added": true,
+      "retainedThrough": "game/app.mjs"
+    },
+    {
+      "name": "game/ui/mode-play-shell.mjs",
+      "originalBytes": 15498,
+      "projectedBytes": 12940,
+      "savings": 2558,
+      "sourceSha256": "20c218f82ea08fb566063790197d592274b5be053604103a062175a7620104a6",
+      "added": true,
+      "retainedThrough": "game/snake/classic-app.mjs"
+    },
+    {
+      "name": "game/ui/native-menus.mjs",
+      "originalBytes": 17776,
+      "projectedBytes": 15166,
+      "savings": 2610,
+      "sourceSha256": "5165358f367e1ea503e6c5a9bc48e699fc040011e5b7d76407fdfe158522cc53",
+      "added": true,
+      "retainedThrough": "game/ui/field-kit-surfaces.mjs"
+    },
+    {
+      "name": "game/ui/optional-chapters-panel.mjs",
+      "originalBytes": 45620,
+      "projectedBytes": 34669,
+      "savings": 10951,
+      "sourceSha256": "66d12c74f01cbc317e784bd0a2357fa706905560206a250cd4e18d605a0f192d",
+      "added": false,
+      "retainedThrough": null
+    },
+    {
+      "name": "game/ui/optional-practice-panel.mjs",
+      "originalBytes": 15643,
+      "projectedBytes": 12257,
+      "savings": 3386,
+      "sourceSha256": "ba077174795f6b167c2b17b96840c861d16bb4ccc632049536cb0a59879b07c4",
+      "added": true,
+      "retainedThrough": "game/ui/game-shell.mjs"
+    },
+    {
+      "name": "game/ui/page-input-host.mjs",
+      "originalBytes": 17181,
+      "projectedBytes": 14390,
+      "savings": 2791,
+      "sourceSha256": "e2861f0b138f4fe284debaca71257f654d42f3f77863f5818a7311780da62c0e",
+      "added": true,
+      "retainedThrough": "game/ui/authoring-input-host.mjs"
+    },
+    {
+      "name": "game/ui/presentation-image.mjs",
+      "originalBytes": 13129,
+      "projectedBytes": 10951,
+      "savings": 2178,
+      "sourceSha256": "17b8e9e6d92db8532908e37355fb70fc74bb83a17539193d0449fb9e1c267b57",
+      "added": true,
+      "retainedThrough": "game/app.mjs"
+    },
+    {
+      "name": "game/ui/profile-recovery.mjs",
+      "originalBytes": 14932,
+      "projectedBytes": 11849,
+      "savings": 3083,
+      "sourceSha256": "5ac6c7f2792152858d4495290a59f372b422a29e6aa558829d2827b0969ca812",
+      "added": true,
+      "retainedThrough": "game/ui/profile-recovery-dialog.mjs"
+    },
+    {
+      "name": "game/ui/profile-transfer-panel.mjs",
+      "originalBytes": 8801,
+      "projectedBytes": 6801,
+      "savings": 2000,
+      "sourceSha256": "c506917d2dfdea73903cdb006316496b294d9401a773ec4e210aed339e7773f4",
+      "added": true,
+      "retainedThrough": "game/ui/library-panel.mjs"
+    },
+    {
+      "name": "game/ui/quick-music-controls.mjs",
+      "originalBytes": 11610,
+      "projectedBytes": 9479,
+      "savings": 2131,
+      "sourceSha256": "2ff656550c3eb5917d27b19a3fa460a96ef54710fe08db2323df15576e5b7b5d",
+      "added": true,
+      "retainedThrough": "game/app.mjs"
+    },
+    {
+      "name": "game/ui/render.mjs",
+      "originalBytes": 45303,
+      "projectedBytes": 34363,
+      "savings": 10940,
+      "sourceSha256": "37fc56df4efb2baeab26fb3d2689c3c3a3be303d27519bb4a4e42f5f26e3b320",
+      "added": false,
+      "retainedThrough": null
+    },
+    {
+      "name": "game/ui/reward-media.mjs",
+      "originalBytes": 15612,
+      "projectedBytes": 12504,
+      "savings": 3108,
+      "sourceSha256": "f6a1d9764645a276c019c49257f559351583d1976e9e758a0ded240d9681bcb1",
+      "added": true,
+      "retainedThrough": "game/ui/edition-rewards.mjs"
+    },
+    {
+      "name": "game/ui/scene-art.mjs",
+      "originalBytes": 9119,
+      "projectedBytes": 6485,
+      "savings": 2634,
+      "sourceSha256": "f6b763dd22a55fa3c729d87862174942b1572b55c4a2e7b0072a88258de9807f",
+      "added": true,
+      "retainedThrough": "game/ui/render.mjs"
+    },
+    {
+      "name": "game/ui/signal-reception.mjs",
+      "originalBytes": 9548,
+      "projectedBytes": 7073,
+      "savings": 2475,
+      "sourceSha256": "3560400ff9ad5c890a38f4418b2ca45e0e703a3e739e1d81bc219c88e56f27eb",
+      "added": true,
+      "retainedThrough": "game/ui/render.mjs"
+    },
+    {
+      "name": "game/ui/soundtrack-panel.mjs",
+      "originalBytes": 149464,
+      "projectedBytes": 119296,
+      "savings": 30168,
+      "sourceSha256": "4c8734ff4c6c53b31a785ef6173c5bf70e903c89fa1b65c2f552cd6f0a9b50ff",
+      "added": false,
+      "retainedThrough": null
+    },
+    {
+      "name": "game/ui/soundtrack-player.mjs",
+      "originalBytes": 56986,
+      "projectedBytes": 44209,
+      "savings": 12777,
+      "sourceSha256": "32c2a891811fe300de8d1dba75154f2418c20b89b1d7c79b07e5e69f784f13cd",
+      "added": false,
+      "retainedThrough": null
+    },
+    {
+      "name": "game/ui/victory-story.mjs",
+      "originalBytes": 22915,
+      "projectedBytes": 18454,
+      "savings": 4461,
+      "sourceSha256": "30236bef4bd0c869556570895e14cd75923ff53233fae1a5c411ae2b972f9840",
+      "added": true,
+      "retainedThrough": "game/creator/victory-story-host.mjs"
+    },
+    {
+      "name": "game/video-poster.mjs",
+      "originalBytes": 18064,
+      "projectedBytes": 14559,
+      "savings": 3505,
+      "sourceSha256": "facf02206ee18d6809615ded279ad79e5ceede82098ad1eb4ae90c45d2260f62",
+      "added": true,
+      "retainedThrough": "game/victory-story.mjs"
+    }
+  ]
+}

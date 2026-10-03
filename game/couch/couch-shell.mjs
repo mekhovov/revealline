@@ -299,6 +299,7 @@ export function createCouchShell({
       modeChoices.closeSimulator();
       return;
     }
+    if (modeChoices.closeMore()) return;
     departure = null;
     const more = $('race-more');
     if (more.open && actionCurrent($('race-more-toggle'))()) {

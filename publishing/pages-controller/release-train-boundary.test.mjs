@@ -42,7 +42,7 @@ test('next release waits until the exact protected main bytes are public', () =>
     play: 'game/',
   };
   const buildInfo = {
-    version: deployment.buildVersion,
+    version: '0.111.1',
     sourceRevision: 'a'.repeat(40),
     entry: 'game/index.html',
   };
@@ -53,6 +53,7 @@ test('next release waits until the exact protected main bytes are public', () =>
       deployment,
       buildInfo,
       expectedMainSha: 'a'.repeat(40),
+      expectedGameVersion: '0.111.1',
     }),
     {
       latest: 'v0.111.0',
@@ -87,6 +88,17 @@ test('next release waits until the exact protected main bytes are public', () =>
         pages,
         deployment,
         buildInfo: { ...buildInfo, sourceRevision: 'b'.repeat(40) },
+      }),
+    /continuous-main deployment marker/,
+  );
+  assert.throws(
+    () =>
+      verifyPublicBoundary({
+        configuration,
+        pages,
+        deployment,
+        buildInfo: { ...buildInfo, version: '0.111.0' },
+        expectedGameVersion: '0.111.1',
       }),
     /continuous-main deployment marker/,
   );

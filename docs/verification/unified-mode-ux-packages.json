@@ -1,0 +1,96 @@
+{
+  "scope": "Clean working-source production build/admission; source commit/tree bound; public release qualification remains separate",
+  "sourceRevision": "2b338c0e7aeb5f2d3ecbd24c7eda39ecca79d914",
+  "sourceTree": "eff980e02e9c5bd611c8fa6f58711867f8611447",
+  "version": "v0.142.4",
+  "observedAt": "2026-10-03T10:17:13.538Z",
+  "results": [
+    {
+      "packageId": "fpv-worlds",
+      "admission": {
+        "format": "revealline-optional-package-admission.v1",
+        "version": "v0.142.4",
+        "sourceRevision": "2b338c0e7aeb5f2d3ecbd24c7eda39ecca79d914",
+        "sourceTree": "eff980e02e9c5bd611c8fa6f58711867f8611447",
+        "packages": [
+          {
+            "id": "fpv-worlds",
+            "revision": "9be581f390076062f1333aac525bbfdfa2c9fc9e851054a0e19a445188c46ba5",
+            "files": 102,
+            "bytes": 15515618
+          }
+        ],
+        "zipMembersVerified": true,
+        "publicEligible": false
+      },
+      "runtimeFiles": 102,
+      "runtimeBytes": 15515618,
+      "sourceFiles": 104,
+      "sourceBytes": 15549027,
+      "limits": {
+        "files": 104,
+        "bytes": 16777216
+      },
+      "sourceHeadroomBytes": 1228189,
+      "sourceHeadroomFiles": 0
+    },
+    {
+      "packageId": "civilian-fpv",
+      "admission": {
+        "format": "revealline-optional-package-admission.v1",
+        "version": "v0.142.4",
+        "sourceRevision": "2b338c0e7aeb5f2d3ecbd24c7eda39ecca79d914",
+        "sourceTree": "eff980e02e9c5bd611c8fa6f58711867f8611447",
+        "packages": [
+          {
+            "id": "civilian-fpv",
+            "revision": "007eb1f9eeaf98eea5a258689ca7d4af03dc6ab74d320153c750ed1701023089",
+            "files": 69,
+            "bytes": 4325001
+          }
+        ],
+        "zipMembersVerified": true,
+        "publicEligible": false
+      },
+      "runtimeFiles": 69,
+      "runtimeBytes": 4325001,
+      "sourceFiles": 71,
+      "sourceBytes": 4353446,
+      "limits": {
+        "files": 72,
+        "bytes": 8388608
+      },
+      "sourceHeadroomBytes": 4035162,
+      "sourceHeadroomFiles": 1
+    },
+    {
+      "packageId": "civilian-flight",
+      "admission": {
+        "format": "revealline-optional-package-admission.v1",
+        "version": "v0.142.4",
+        "sourceRevision": "2b338c0e7aeb5f2d3ecbd24c7eda39ecca79d914",
+        "sourceTree": "eff980e02e9c5bd611c8fa6f58711867f8611447",
+        "packages": [
+          {
+            "id": "civilian-flight",
+            "revision": "2183ef300ee22148b0a6370aff817a7177800ad0e18e4995410e5f0bd27b431a",
+            "files": 45,
+            "bytes": 618738
+          }
+        ],
+        "zipMembersVerified": true,
+        "publicEligible": false
+      },
+      "runtimeFiles": 45,
+      "runtimeBytes": 618738,
+      "sourceFiles": 47,
+      "sourceBytes": 643601,
+      "limits": {
+        "files": 64,
+        "bytes": 8388608
+      },
+      "sourceHeadroomBytes": 7745007,
+      "sourceHeadroomFiles": 17
+    }
+  ]
+}

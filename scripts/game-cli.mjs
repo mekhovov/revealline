@@ -16,6 +16,7 @@ import {
 } from './pack-indexes.mjs';
 import { SOUNDTRACK_BUNDLED_ASSETS } from '../game/content/soundtrack-catalogue.mjs';
 import { generatedBrandIcons } from './brand-icons.mjs';
+import { writeBuildEntry } from './build-entry-writer.mjs';
 import {
   isOptionalSpatialAudioBody,
   isOptionalReactionVoiceBody,
@@ -593,10 +594,7 @@ export function applyPublicationProfile(entries, catalogue, profile, optionalArt
   while (changed) {
     changed = false;
     for (const group of catalogue.groups)
-      if (
-        !omittedGroupIDs.has(group.id) &&
-        group.requires.some((id) => omittedGroupIDs.has(id))
-      ) {
+      if (!omittedGroupIDs.has(group.id) && group.requires.some((id) => omittedGroupIDs.has(id))) {
         omittedGroupIDs.add(group.id);
         changed = true;
       }
@@ -651,6 +649,8 @@ export async function addOfflineEntries(
   publicationProfile = null,
 ) {
   if (!entries.some((e) => e.name === 'game/offline.mjs')) return;
+  const { projectDefaultRuntimeMetadata } = await import('./default-runtime-metadata.mjs');
+  await projectDefaultRuntimeMetadata(root, entries);
   if (optionalArtwork) {
     const { verifyOptionalArtworkEntries } = await import('./optional-artwork.mjs');
     verifyOptionalArtworkEntries(optionalArtwork, entries);
@@ -1113,7 +1113,7 @@ export async function buildProject({
     for (const entry of entries) {
       const target = path.join(staging, entry.name);
       await fs.mkdir(path.dirname(target), { recursive: true });
-      await fs.writeFile(target, entry.bytes);
+      await writeBuildEntry(path.join(root, entry.name), target, entry.bytes);
     }
     await fs.writeFile(path.join(staging, 'distribution.zip'), zip);
     await fs.writeFile(

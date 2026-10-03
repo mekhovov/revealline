@@ -9,6 +9,7 @@ import { teamInputHistoryExtends } from './attempt-history.mjs';
 export const TEAM_HUNT_ATTEMPT_KEY = 'revealline.team-hunt-attempt.v1';
 export const TEAM_HUNT_ATTEMPT_FORMAT = 'revealline-team-hunt-attempt.v1';
 export const TEAM_RUNNING_ATTEMPT_FORMAT = 'revealline-team-hunt-attempt.v2';
+export const TEAM_PURSUIT_ATTEMPT_FORMAT = 'revealline-team-hunt-attempt.v3';
 export const TEAM_HUNT_ATTEMPT_MAX_BYTES = 1024 * 1024;
 const MAX_SEGMENTS = 8192;
 const MAX_TICKS = 240000;
@@ -59,12 +60,17 @@ export function validateTeamHuntAttempt(source) {
       'tuning',
       'segments',
       'checkpoint',
-      ...(value.format === TEAM_RUNNING_ATTEMPT_FORMAT ? ['runningEnemies'] : []),
+      ...(value.format === TEAM_PURSUIT_ATTEMPT_FORMAT ? ['runningEnemyStyle'] : []),
+      ...([TEAM_RUNNING_ATTEMPT_FORMAT, TEAM_PURSUIT_ATTEMPT_FORMAT].includes(value.format)
+        ? ['runningEnemies']
+        : []),
     ],
     'Team Hunt attempt',
   );
   required(
-    [TEAM_HUNT_ATTEMPT_FORMAT, TEAM_RUNNING_ATTEMPT_FORMAT].includes(value.format),
+    [TEAM_HUNT_ATTEMPT_FORMAT, TEAM_RUNNING_ATTEMPT_FORMAT, TEAM_PURSUIT_ATTEMPT_FORMAT].includes(
+      value.format,
+    ),
     'Unsupported Team Hunt save version.',
   );
   required(
@@ -83,7 +89,9 @@ export function validateTeamHuntAttempt(source) {
       identity(value.encounterLevelIdentity),
     'Damaged Team Hunt recipe.',
   );
-  if (value.format === TEAM_RUNNING_ATTEMPT_FORMAT)
+  if (value.format === TEAM_PURSUIT_ATTEMPT_FORMAT)
+    required(value.runningEnemyStyle === 'varied', 'Unsupported varied pursuit recipe.');
+  if ([TEAM_RUNNING_ATTEMPT_FORMAT, TEAM_PURSUIT_ATTEMPT_FORMAT].includes(value.format))
     required(
       value.runningEnemies === 'running-enemies.v1',
       'Unsupported Team running-enemy recipe.',
@@ -160,12 +168,19 @@ export function createTeamHuntRecorder({
   restored,
 }) {
   required(run.level.hunt && run.status === 'running', 'Only a running Team Hunt can be saved.');
-  const recipe = [TEAM_HUNT_ATTEMPT_FORMAT, TEAM_RUNNING_ATTEMPT_FORMAT].includes(
-    restored?.snapshot.format,
-  )
+  const recipe = [
+    TEAM_HUNT_ATTEMPT_FORMAT,
+    TEAM_RUNNING_ATTEMPT_FORMAT,
+    TEAM_PURSUIT_ATTEMPT_FORMAT,
+  ].includes(restored?.snapshot.format)
     ? structuredClone(restored.snapshot)
     : {
-        format: runningEnemies ? TEAM_RUNNING_ATTEMPT_FORMAT : TEAM_HUNT_ATTEMPT_FORMAT,
+        format: runningEnemies
+          ? run.level.pursuit
+            ? TEAM_PURSUIT_ATTEMPT_FORMAT
+            : TEAM_RUNNING_ATTEMPT_FORMAT
+          : TEAM_HUNT_ATTEMPT_FORMAT,
+        ...(runningEnemies && run.level.pursuit ? { runningEnemyStyle: 'varied' } : {}),
         ...(runningEnemies ? { runningEnemies: 'running-enemies.v1' } : {}),
         attemptId: restored?.snapshot.attemptId ?? attemptId,
         levelId: level.id,
@@ -179,7 +194,9 @@ export function createTeamHuntRecorder({
           dataIdentity({
             ruleset: run.ruleset,
             level: runningEnemies
-              ? prepareTeamRunningEnemies(applyGameplayTuning(encounterLevel, tuning))
+              ? prepareTeamRunningEnemies(applyGameplayTuning(encounterLevel, tuning), {
+                  style: run.level.pursuit ? 'varied' : 'original',
+                })
               : applyGameplayTuning(encounterLevel, tuning),
           }),
         encounterVariant,
@@ -237,7 +254,9 @@ export async function restoreTeamHuntAttempt(
     'The saved Team Hunt recipe is unavailable in this edition.',
   );
   const baseTuned = applyGameplayTuning(encounterLevel, snapshot.tuning);
-  const tuned = snapshot.runningEnemies ? prepareTeamRunningEnemies(baseTuned) : baseTuned;
+  const tuned = snapshot.runningEnemies
+    ? prepareTeamRunningEnemies(baseTuned, { style: snapshot.runningEnemyStyle ?? 'original' })
+    : baseTuned;
   const run = startCoop(
     createCoop(tuned, { seed: snapshot.seed, difficulty: snapshot.difficulty, ...snapshot.config }),
   );
@@ -327,6 +346,7 @@ export async function matchingTeamHuntMirror(
     previous.difficulty !== snapshot.difficulty ||
     previous.encounterVariant !== (snapshot.encounterVariant ?? 'authored') ||
     previous.runningEnemies !== snapshot.runningEnemies ||
+    previous.runningEnemyStyle !== snapshot.runningEnemyStyle ||
     dataIdentity(previous.tuning) !== dataIdentity(snapshot.tuning) ||
     dataIdentity(previous.config) !== dataIdentity(restored.run.config)
   )

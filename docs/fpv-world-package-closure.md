@@ -23,3 +23,53 @@ The actual source archive has **no spare file slots**. Future modules require an
 ## Independent company-edition blocker
 
 The company engine closure has 804 files and **zero FPV runtime files**. The largest `droneaid-nl-community` edition still fails the unchanged 64 MiB guard at 899 files / **67,134,498 bytes**, an overrun of **25,634 bytes**. Filtering World admission entries, or repacking World demonstrations, cannot reduce this separate output. This change neither fixes nor bypasses that guard. No history-referenced asset was recompressed and no global JSON projection was added.
+
+### Actor expansion follow-up (3 October 2026)
+
+The preceding numbers belong to the historical receipt, not the current tree.
+The normal `collectEditionEngineFiles → collectEditionSelectedFiles → compileEdition`
+pipeline was measured again for `droneaid-nl-community`, with its offline launcher,
+version `v0.142.4`, and the same manifest source-revision label for comparison.
+The baseline uses exact Git blobs from `66d83c4249cfa0240b9fedf95baa176c74fcc20b`;
+the two expansion measurements use mutable source. These are capacity and source
+validation results, not frozen-input release or gameplay qualification.
+
+| Company output                                            | Files |      Bytes | Over unchanged 64 MiB limit |
+| --------------------------------------------------------- | ----: | ---------: | --------------------------: |
+| Main baseline (`66d83c424`)                               |   921 | 67,423,717 |                     314,853 |
+| Actor expansion before closure fixes                      |   932 | 67,603,307 |                     494,443 |
+| Actor expansion after closure fixes (before Theme Studio) |   931 | 67,559,900 |                     451,036 |
+| Merged Theme Studio (`1592b7fea`)                         |   932 | 67,592,864 |                     484,000 |
+
+The expansion originally added 179,590 compiled bytes. The scoped fixes remove
+43,407 bytes; 136,183 bytes of additional supported gameplay/presentation code
+remain before the Theme Studio merge. The merged source adds 32,964 bytes to that
+Company output. **The largest Company edition is still rejected.** Its inherited size
+failure is not waived and the 64 MiB limit and brand assets are unchanged.
+
+The new 48 actor speech clips total 868,186 bytes and were never in the approved
+Company asset closure. Previously the copied actor catalogue nevertheless
+advertised those absent URLs. A declared Company runtime adapter now exposes no
+built-in actor originals, so they cause no missing-asset requests. Actor captions,
+visuals, all 16 existing pilot originals, and locally imported custom recordings
+remain supported. Built-in actor speech in Company editions requires a future
+separately admitted optional recording pack. The canonical game and FPV speech
+catalogues are unchanged.
+
+The Snake hub reads only optional FPV course titles, playlist titles and launch
+IDs. A source-pinned build projection now copies exactly that menu metadata,
+instead of including unused flight geometry and the expressive-course rules in
+every Company edition. The canonical FPV package retains those rules. The
+Company engine inventory after the Theme Studio merge has 837 files; its single FPV-named module emits menu
+metadata only. Closure, selected assets and source eligibility validation reached
+the final unchanged capacity guard. Relevant regressions were authored but not
+executed under the current automated-suite waiver; scoped ESLint and formatting
+checks passed.
+
+The final Company row was remeasured with the same production in-memory compiler
+on source based on `1592b7fea5fc0d12bd782736e2d4e5f9b1774db2`, after merging
+`cf0b62e53` and regenerating merged localization. It reached the final capacity
+guard at 932 files / 67,592,864 bytes. No ZIP, expanded output or test suite was
+produced by this audit. The default game's additional app-host indentation
+packing does not improve this independent Company result: Company already uses
+the verified code-indentation projection.

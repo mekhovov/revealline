@@ -9,6 +9,7 @@ export const TEAM_MISSION_FORMATS = Object.freeze([
   'TeamMissionV6',
   'TeamMissionV7',
   'TeamMissionV8',
+  'TeamMissionV9',
 ]);
 export const teamRoleQualified = (format, role) =>
   TEAM_MISSION_FORMATS.includes(format) &&

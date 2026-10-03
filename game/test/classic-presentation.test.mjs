@@ -4,6 +4,8 @@ import { readFileSync } from 'node:fs';
 import { createRun, stepRun, FIXED_DT, CLASSES, CELL } from '../core/index.mjs';
 import { authoritativeCheckpoint } from '../replay.mjs';
 import { BoardPainter } from '../ui/render.mjs';
+import { createArcadeAdapter, getArcadeCollection } from '../presentation/industrial-arcade.mjs';
+import { canvasPresentation, imagePresentation } from '../presentation/runtime.mjs';
 import {
   classicView,
   drawClassicEnemy,
@@ -118,6 +120,66 @@ function until(run, predicate, input = {}) {
     stepRun(run, input, FIXED_DT);
   }
 }
+
+test('Military Field reaches retro campaign terrain and separately leased FPV enemies without changing gameplay', () => {
+  const manifest = read('../presentation/compiled/runtime.json'),
+    horizon = read('../content-design/themes.json').themes.find((theme) => theme.id === 'horizon'),
+    p = painter(horizon),
+    run = createRun(level()),
+    before = authoritativeCheckpoint(run),
+    sprites = new Map();
+  for (const slot of ['terrain.slow', 'terrain.lethal', 'enemy.bouncer']) {
+    const asset = manifest.resolved.assets[slot];
+    sprites.set(slot, {
+      image: { slot, width: asset.file.width, height: asset.file.height },
+      geometry: imagePresentation(asset),
+      asset,
+    });
+  }
+  const world = {
+    resolved: manifest.resolved,
+    canvas: canvasPresentation(manifest.resolved),
+    image: (slot) => (slot.startsWith('terrain.') ? sprites.get(slot) : null),
+  };
+  // Actor-only leases intentionally lack world/canvas properties.
+  const actors = {
+    resolved: manifest.resolved,
+    image: (slot) => (slot.startsWith('enemy.') ? sprites.get(slot) : null),
+  };
+  p.arcadeAdapter = createArcadeAdapter({
+    canvasFactory: () => {
+      const frame = {};
+      frame.getContext = () => ({
+        drawImage() {},
+        getImageData: () => ({ data: new Uint8ClampedArray(frame.width * frame.height * 4) }),
+        putImageData() {},
+      });
+      return frame;
+    },
+  });
+  p.setPresentation(world);
+  p.arcadeCollection = getArcadeCollection('military-field', 'r1');
+  const terrain = p.artSnapshot.image('terrain.slow').image,
+    vehicle = p.arcadeAdapter.resolve(actors, p.arcadeCollection).image('enemy.bouncer').image,
+    observed = canvas();
+  p.draw(observed.ctx, run, 0, {
+    paused: true,
+    reduced: true,
+    actorAppearance: { style: 'fpv', snapshot: actors },
+  });
+  const painted = observed.calls
+    .filter((call) => call.op === 'drawImage')
+    .map((call) => call.args[0]);
+  assert.ok(
+    painted.includes(terrain),
+    'a retro campaign still uses the explicitly selected ground',
+  );
+  assert.ok(painted.includes(vehicle), 'the separate FPV lease receives the selected vehicle kit');
+  assert.equal(painted.includes(sprites.get('enemy.bouncer').image), false);
+  assert.equal(p.theme, horizon, 'the campaign world and picture owner remain intact');
+  assert.deepEqual(authoritativeCheckpoint(run), before);
+  p.dispose();
+});
 
 test('classic projection is bounded, owned and getter-free, and never invents cues on old or malformed runs', () => {
   const run = createRun(level()),
