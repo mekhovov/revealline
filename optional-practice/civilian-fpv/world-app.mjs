@@ -79,7 +79,7 @@ import {
 } from './world-content.mjs';
 import { importEditableZip } from './world-zip.mjs';
 import { openWorldStore } from './world-store.mjs';
-import { preparePracticeOffline } from './offline.mjs';
+import { mountPracticeOfflineControls } from './offline.mjs';
 import { dataIdentity } from '../../game/data-json.mjs';
 import {
   THEME_PROFILES,
@@ -263,6 +263,9 @@ const COPY_EN = {
   backupProofs: 'Back up flight records',
   restoreProofs: 'Import recordings / examples',
   prepareRuntime: 'Prepare simulator offline',
+  removeRuntime: 'Remove offline simulator files',
+  runtimeOfflineHelp:
+    'Removal keeps your installed worlds and flight records. Download again before playing offline.',
   keepOffline: 'Request persistent storage',
   close: 'Close',
   keyboard: 'Keyboard',
@@ -432,6 +435,9 @@ const COPY_UK = {
   restoreProofs: 'Імпорт записів / прикладів',
   keepOffline: 'Запросити постійне сховище',
   prepareRuntime: 'Підготувати автономний запуск',
+  removeRuntime: 'Прибрати автономні файли симулятора',
+  runtimeOfflineHelp:
+    'Встановлені світи й записи польотів залишаться. Перед автономною грою завантажте файли знову.',
   close: 'Закрити',
   keyboard: 'Клавіатура',
   touch: 'Дотик',
@@ -5168,22 +5174,41 @@ export function mountWorldApp({
           'Постійне сховище не надано. Експортуйте пакунки та записи.',
         );
   });
-  on($('prepare-runtime'), 'click', async () => {
-    const result = await preparePracticeOffline({
-      navigator: win.navigator,
-      location: win.location,
-      storage,
-      packageId: 'fpv-worlds',
-    });
-    status(
-      typeof result === 'string'
-        ? result
-        : txt(
-            'Offline runtime preparation completed.',
-            'Підготовку автономного запуску завершено.',
-          ),
-    );
+  const runtimeOffline = mountPracticeOfflineControls({
+    prepareButton: $('prepare-runtime'),
+    removeButton: $('remove-runtime'),
+    document: doc,
+    window: win,
+    storage,
+    packageId: 'fpv-worlds',
+    onStatus(kind, error) {
+      if (disposed) return;
+      const messages = {
+        preparing: [
+          'Preparing simulator files for offline use…',
+          'Підготовка файлів для автономного запуску…',
+        ],
+        removing: ['Removing offline simulator files…', 'Прибирання автономних файлів симулятора…'],
+        ready: [
+          'Offline runtime preparation completed.',
+          'Підготовку автономного запуску завершено.',
+        ],
+        removed: [
+          'Offline simulator files removed. Installed worlds and flight records are kept.',
+          'Автономні файли симулятора прибрано. Встановлені світи й записи польотів збережено.',
+        ],
+        cancelled: ['Offline download cancelled.', 'Автономне завантаження скасовано.'],
+      };
+      $('runtime-offline-status').textContent = messages[kind]
+        ? txt(...messages[kind])
+        : String(error?.message ?? error);
+    },
   });
+  if (!runtimeOffline.available)
+    $('runtime-offline-status').textContent = txt(
+      'Offline installation needs a secure browser with service-worker support.',
+      'Для автономного встановлення потрібен захищений браузер із підтримкою сервісних воркерів.',
+    );
   on($('world-flight-menu'), 'click', () => setFlightMenu(true));
   on($('world-flight-close-menu'), 'click', () => setFlightMenu(false));
   on($('world-flight-resume'), 'click', () => $('world-arm').click());
@@ -5940,6 +5965,7 @@ export function mountWorldApp({
     }),
     async dispose() {
       if (disposed) return;
+      runtimeOffline.dispose();
       proofImport?.abort();
       packRemovalReview?.close();
       restorePackIdentity = null;

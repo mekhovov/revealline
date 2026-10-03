@@ -94,29 +94,46 @@ export function mountActorAnimationControls({
   }
   headingLabel.append(heading);
   root.append(headingLabel);
-  const canvas = node('canvas');
-  // The fixed preview backing store is admitted with its actor atlas. A closed
-  // or never-opened editor keeps no unaccounted canvas pixels alive.
-  canvas.width = canvas.height = 0;
-  canvas.close = () => {
+  const specimens = node('div');
+  specimens.style.display = 'flex';
+  specimens.style.flexWrap = 'wrap';
+  specimens.style.gap = '16px';
+  const previewKey = `studio-animation-preview:${++previewSequence}`;
+  // Each specimen keeps a 1:1 CSS/backing-pixel scale. The cards wrap instead
+  // of shrinking a large atlas preview on a phone. Every backing is pooled.
+  const samples = [16, 24, 32, 112].map((size, index) => {
+    const figure = node('figure'),
+      canvas = node('canvas'),
+      label = node('figcaption', `${size} px`, `${size} пкс`),
+      width = size + 32,
+      height = 144;
+    figure.style.margin = '0';
+    figure.style.flex = '0 0 144px';
     canvas.width = canvas.height = 0;
-  };
-  const canvasKey = `studio-animation-preview:${++previewSequence}`;
-  canvas.style.maxWidth = '100%';
-  canvas.style.imageRendering = 'pixelated';
+    canvas.close = () => {
+      canvas.width = canvas.height = 0;
+    };
+    canvas.style.width = `${width}px`;
+    canvas.style.height = `${height}px`;
+    canvas.style.maxWidth = 'none';
+    canvas.style.imageRendering = 'pixelated';
+    figure.append(canvas, label);
+    specimens.append(figure);
+    return { canvas, size, width, height, light: index % 2 === 1, key: `${previewKey}:${size}` };
+  });
   root.append(
-    canvas,
+    specimens,
     node(
       'p',
-      '16 / 24 / 32 px and enlarged. Cyan line = authoritative facing. Transparent pixels are preserved.',
-      '16 / 24 / 32 пкс і збільшення. Блакитна лінія — фактичний напрямок. Прозорість збережено.',
+      '16 / 24 / 32 px and enlarged. Samples wrap without shrinking. Cyan line = authoritative facing. Transparent pixels are preserved.',
+      '16 / 24 / 32 пкс і збільшення. Зразки переносяться без зменшення. Блакитна лінія — фактичний напрямок. Прозорість збережено.',
     ),
   );
   after.after(root);
   let owner = null,
     descriptor = null,
     lease = null,
-    canvasLease = null,
+    canvasLeases = [],
     generation = 0,
     pending = null,
     disposed = false;
@@ -126,8 +143,8 @@ export function mountActorAnimationControls({
     pending = null;
     lease?.release();
     lease = null;
-    canvasLease?.release();
-    canvasLease = null;
+    for (const backing of canvasLeases) backing.release();
+    canvasLeases = [];
   };
   function current() {
     const next = getContext();
@@ -136,29 +153,31 @@ export function mountActorAnimationControls({
     return next;
   }
   function draw() {
-    if (disposed || !descriptor || !canvasLease || (descriptor.rig === 'sprite.v1' && !lease))
+    if (
+      disposed ||
+      !descriptor ||
+      canvasLeases.length !== samples.length ||
+      (descriptor.rig === 'sprite.v1' && !lease)
+    )
       return;
     if (!sameActorAnimationContext(owner, getContext())) {
       invalidate();
       return;
     }
-    const ctx = canvas.getContext('2d');
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    ctx.imageSmoothingEnabled = false;
-    for (const [size, x] of [
-      [16, 24],
-      [24, 96],
-      [32, 172],
-      [112, 280],
-    ]) {
-      ctx.fillStyle = x === 96 || x === 280 ? '#d4dcc5' : '#101923';
-      ctx.fillRect(x - 8, 12, size + 16, 136);
+    for (const { canvas, size, light } of samples) {
+      const ctx = canvas.getContext('2d'),
+        x = 16,
+        y = 16;
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.imageSmoothingEnabled = false;
+      ctx.fillStyle = light ? '#d4dcc5' : '#101923';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
       if (descriptor.rig === 'overhead-soldier.v1') {
         const clip = ACTOR_CLIPS.includes(clips.value) ? clips.value : 'idle',
           stationaryAim = clip === 'aim' || clip === 'fire';
         // The selected clip controls only this preview's descriptor sampler.
         // Pose vocabulary stays separate from native gameplay vulnerability.
-        drawActor(ctx, x, 35, size, 0, {
+        drawActor(ctx, x, y, size, 0, {
           animation: descriptor,
           animationClip: clip,
           timeMs: Number(time.value),
@@ -187,7 +206,7 @@ export function mountActorAnimationControls({
           timeMs: Number(time.value),
         }).region;
         ctx.save();
-        ctx.translate(x + size / 2, 35 + size / 2);
+        ctx.translate(x + size / 2, y + size / 2);
         ctx.rotate({ up: 0, right: Math.PI / 2, down: Math.PI, left: -Math.PI / 2 }[heading.value]);
         ctx.drawImage(
           lease.image,
@@ -203,7 +222,7 @@ export function mountActorAnimationControls({
         ctx.restore();
       }
       ctx.save();
-      ctx.translate(x + size / 2, 35 + size / 2);
+      ctx.translate(x + size / 2, y + size / 2);
       ctx.rotate({ up: 0, right: Math.PI / 2, down: Math.PI, left: -Math.PI / 2 }[heading.value]);
       ctx.strokeStyle = '#72dceb';
       ctx.beginPath();
@@ -226,22 +245,25 @@ export function mountActorAnimationControls({
     const obsolete = () =>
       disposed || ticket !== generation || !sameActorAnimationContext(owner, getContext());
     try {
-      const output = await pageActorArtPool(document).acquire({
-        key: canvasKey,
-        width: 512,
-        height: 160,
-        signal: controller.signal,
-        load: () => {
-          canvas.width = 512;
-          canvas.height = 160;
-          return canvas;
-        },
-      });
-      if (obsolete()) {
-        output.release();
-        return;
+      for (const { canvas, key, width, height } of samples) {
+        const output = await pageActorArtPool(document).acquire({
+          key,
+          width,
+          height,
+          signal: controller.signal,
+          load: () => {
+            canvas.width = width;
+            canvas.height = height;
+            return canvas;
+          },
+        });
+        if (obsolete()) {
+          output.release();
+          if (ticket === generation) release();
+          return;
+        }
+        canvasLeases.push(output);
       }
-      canvasLease = output;
       if (descriptor.rig === 'sprite.v1') {
         const file = context.asset.file,
           blob = context.blob;
@@ -278,7 +300,8 @@ export function mountActorAnimationControls({
     release();
     owner = null;
     descriptor = null;
-    canvas.getContext('2d').clearRect(0, 0, canvas.width, canvas.height);
+    for (const { canvas } of samples)
+      canvas.getContext('2d').clearRect(0, 0, canvas.width, canvas.height);
   }
   load.onclick = () => {
     try {

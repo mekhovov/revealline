@@ -17,8 +17,15 @@ import {
   createIndustrialAudioReview,
 } from '../../game/ui/industrial-audio-review.mjs';
 import { pageActorArtPool } from '../../game/presentation/actor-art-pool.mjs';
+import { mountReviewMotionPreferences } from './motion-preferences.mjs';
 
 const $ = (id) => document.getElementById(id);
+const motion = mountReviewMotionPreferences({
+  window,
+  checkbox: $('reduced'),
+  notice: $('motion-notice'),
+  getLocale: () => $('language').value,
+});
 let paused = false,
   clock = 0,
   last = null,
@@ -264,12 +271,16 @@ $('audio-mute').onclick = () => {
 };
 window.addEventListener('pagehide', (event) => {
   audioTicket++;
-  if (!event.persisted) for (const row of effects) row.painter.reset();
+  if (!event.persisted) {
+    motion.dispose();
+    for (const row of effects) row.painter.reset();
+  }
 });
 function language() {
   const locale = $('language').value,
     words = copy[locale];
   document.documentElement.lang = locale;
+  motion.refresh();
   for (const id of ['nav-studio', 'nav-motion', 'nav-guide']) {
     const url = new URL($(id).getAttribute('href'), location.href);
     url.searchParams.set('artReview', 'industrial-overhead-v2');
@@ -392,7 +403,7 @@ const effects = [
     age: 0,
     serial: 0,
   };
-  const options = () => ({ key: row, brutal, blood, reduced: $('reduced').checked, paused });
+  const options = () => ({ key: row, brutal, blood, reduced: motion.reducedEffects(), paused });
   painter.advance(row.view, 0, options());
   button.onclick = () => {
     row.serial++;
@@ -414,7 +425,7 @@ const effects = [
   return row;
 });
 function draw(now) {
-  const reduced = $('reduced').checked,
+  const reduced = motion.reducedEffects(),
     elapsed = last === null ? 0 : Math.min(100, now - last);
   last = now;
   if (!paused && !reduced && !document.hidden) clock += elapsed;
