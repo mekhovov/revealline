@@ -1324,10 +1324,10 @@ export function buildWorldVisuals({
       const finishes = {
         plinth: ['concrete', 0x827e72, 0.94, 0, 1],
         roof: ['steel', 0x596766, 0.76, 0.12, 1],
-        window: ['steel', 0x506c78, 0.38, 0.25, 3],
-        door: ['timber', 0x74604c, 0.88, 0, 1],
-        accent: ['enamel', 0x557f8a, 0.8, 0, 2],
-        trim: ['concrete', 0xe4d9bd, 0.9, 0, 4],
+        window: ['steel', 0x506c78, 0.38, 0.25, 4],
+        door: ['timber', 0x74604c, 0.88, 0, 2],
+        accent: ['enamel', 0x557f8a, 0.8, 0, 3],
+        trim: ['concrete', 0xe4d9bd, 0.9, 0, 5],
       };
       for (const { finish, geometry } of buildCourtyardFacadeGeometry(course)) {
         const [role, color, roughness, metalness, layer] = finishes[finish],
