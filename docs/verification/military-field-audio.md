@@ -45,12 +45,27 @@ independent admission passed with unchanged caps:
 
 | Package             | Runtime files / bytes | Complete source files / bytes | Limit              |
 | ------------------- | --------------------: | ----------------------------: | ------------------ |
-| Worlds              |      102 / 15,481,640 |              104 / 15,515,048 | 104 files / 16 MiB |
-| Academy             |        69 / 4,292,228 |                71 / 4,320,672 | 72 files / 8 MiB   |
-| Assisted flight gym |          43 / 589,064 |                  45 / 613,837 | 64 files / 8 MiB   |
+| Worlds              |      102 / 15,481,834 |              104 / 15,515,242 | 104 files / 16 MiB |
+| Academy             |        69 / 4,292,422 |                71 / 4,320,866 | 72 files / 8 MiB   |
+| Assisted flight gym |          43 / 589,229 |                  45 / 613,903 | 64 files / 8 MiB   |
 
-These package measurements are mutable-source checks, not release certificates.
-Committed-source preparation and source identity are recorded separately below.
+The [package admission receipt](military-field-packages.json) binds these results
+to clean runtime commit `98c467d7ac074d2543bfbec127df2d11c594bf75` and tree
+`50f4748b443d85feddf4ad9901afa8773a70917c`. These checks use the repository's
+`v0.142.4` package version and do not grant public eligibility.
+
+The [committed-source preparation receipt](military-field-build.json), using
+candidate version `v0.143.0`, records 2,967 prepared files and 995,299,417 payload
+bytes from the same clean commit. The core contains 1,340 files and 67,064,485
+bytes, below its unchanged 67,108,864-byte cap by 44,379 bytes. Its build manifest
+SHA-256 is `4419277d68c0803f939bd4a406e08009377213af6dd37afabaaf6dc446f4b3b7`.
+Preparation used the production build path; no completed archive is claimed.
+
+Source-manifest verification authenticated all Git blob contents and modes for
+24,968 tracked files (2,352,422,896 original bytes) at that runtime commit. The
+5,855,947-byte source manifest SHA-256 is
+`9c70d0f504e2741171111872ba6ba6e2ab8bb6b4486618c58bc632927148aa7f`.
+The subsequent verification-receipt commit changes documentation only.
 
 Manual browser observations cover hub selection, Snake start/pause, the military
 board and transparent soldiers, Capture Solo startup and sound activation, and
@@ -60,8 +75,9 @@ human completion routes or full device/controller compatibility.
 
 ## Release limitations
 
-The full archive requires about 995 MB for the ZIP alone, while this checkout's
-volume has roughly 585 MiB available. The earlier ordinary committed build
+The full archive requires 995,804,281 bytes for the ZIP alone and 1,991,103,698
+bytes for the expanded output plus ZIP. This checkout's volume had only
+581,955,584 bytes available at preparation completion. The earlier ordinary committed build
 already failed with ENOSPC. Preparation/inventory admission is distinct from a
 completed archive; no successful new release archive is claimed. No unrelated
 workspace or user artifact was removed to free space.
