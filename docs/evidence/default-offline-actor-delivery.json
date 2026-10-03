@@ -1,0 +1,40 @@
+{
+  "format": "revealline-default-offline-capacity.v1",
+  "date": "2026-10-03",
+  "method": "Production addOfflineEntries with final catalogue, worker and inventory generation; no ZIP or expanded output",
+  "currentBase": "bb805128f368b30a57e0792487787781aa389181",
+  "currentSource": "mutable working tree",
+  "baselineSource": "66d83c4249cfa0240b9fedf95baa176c74fcc20b",
+  "committedSourceBuildClaimed": false,
+  "publicReleaseQualified": false,
+  "automatedSuitesRun": false,
+  "limits": { "files": 2000, "bytes": 67108864 },
+  "main": { "files": 1321, "bytes": 67122412, "accepted": false, "overrunBytes": 13548 },
+  "before": { "files": 1382, "bytes": 68360684, "accepted": false, "overrunBytes": 1251820 },
+  "after": { "files": 1334, "bytes": 67085504, "accepted": true, "headroomBytes": 23360 },
+  "optionalVoiceDownloads": [
+    { "id": "extras:character-voices-en", "files": 32, "bytes": 559499 },
+    { "id": "extras:character-voices-uk", "files": 32, "bytes": 652107 }
+  ],
+  "projections": [
+    {
+      "path": "game/i18n/content-registry.mjs",
+      "sourceBytes": 639343,
+      "outputBytes": 315625,
+      "savedBytes": 323718
+    },
+    {
+      "path": "game/content/mission-library-index.json",
+      "sourceBytes": 300737,
+      "outputBytes": 205717,
+      "savedBytes": 95020
+    }
+  ],
+  "recoveryCatalogUnchanged": { "path": "game/content/recovery-catalogs.json", "bytes": 279846 },
+  "notes": [
+    "Baseline comparison uses exact main module sources and build blobs with unchanged catalog-verified optional/external bodies.",
+    "All actor audio remains hosted for online on-demand playback; both locale downloads explicitly include the new clips.",
+    "Default core guard passes; largest Company edition retains its independent capacity failure.",
+    "No cap changes, brand asset removals, gameplay simulations or automated suite executions."
+  ]
+}
