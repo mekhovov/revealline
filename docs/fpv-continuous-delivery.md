@@ -2871,3 +2871,10 @@ local checkout cannot run complete global validation because unrelated content
 assets are omitted. See docs/fpv-yard-landmarks.md and its new bounded receipts.
 Keep #998 draft until the browser review is complete; no human/device or public
 acceptance is inferred.
+
+The current-main Yard browser review then passed all three arena cases with
+58 placements, 98,880 clear vertices and unchanged sampled draw/triangle counts
+per scene. Five other environment GLBs remain byte-identical; the comparison
+views were inspected. This completes the local draft qualification. Publish the
+reviewed #998 head through normal exact-head protected CI; public deployment and
+physical-device/artist acceptance remain separate.

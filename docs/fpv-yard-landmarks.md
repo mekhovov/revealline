@@ -38,8 +38,13 @@ not the earlier development-package counts. The admission receipt remains
 
 The frozen browser fixture compares that exact main with the candidate; its
 27-file committed module closure and original-source hashes are retained in
-`evidence/fpv-yard-landmarks-main-source.json`. Browser review is pending. Earlier
-browser measurements above retain their original candidate identity.
+`evidence/fpv-yard-landmarks-main-source.json`. Current-main browser review passes
+all three arena cases: each retains 58 placements, 98,880 vertices outside the
+flight bounds, 61 sampled draw calls and unchanged triangles. The five unaffected
+environment GLBs remain byte-identical. Before/after views were inspected by the
+agent. See `evidence/fpv-yard-landmarks-main-browser.json` and
+`evidence/fpv-yard-landmarks-main-comparison.png`. Earlier browser measurements
+above retain their original candidate identity.
 
 The bounded sparse checkout omits unrelated global content assets. Full
 `npm run validate` stops in localization at absent
