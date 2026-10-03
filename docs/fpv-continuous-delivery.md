@@ -2244,3 +2244,99 @@ separate; no native stack was necessary. Public deployment/launch of either
 new feature is not yet claimed. Next implementation: pack-removal impact and
 recovery guidance on a separate branch from current main. Preserve pending
 editor CI/review and current qualification receipts while progressing that item.
+
+
+### Pack removal and exact recovery — 3 October 2026
+
+Section replay #972 is merged. The independently published Follow/Observe
+editor #975 remains open at last inspected remote head
+`51b4a6deb972d2c599090028ecf35423bc747922`; no failed actionable checks or
+holds were present in that snapshot. Preserve its newer remote commits and the
+local `codex/fpv-tracking-objective-editor` recovery state. Do not infer live
+availability from local completion. The public marker was last observed at
+`742d25225bcd792075d2a44a3e4c813f6dff9464`, before section replay; no fresh
+public launch of section replay or the editor is claimed.
+
+Current independent branch: **codex/fpv-pack-removal-guidance**, based on main
+`9546597aaeaef3149c4ef44532b4bb58ffec745e`. Pack removal now reviews exact
+active/retained revisions and affected records, pins, playlists/bookmark,
+interrupted flight and draft. A read-only atomic generation snapshot binds the
+confirmation; a stale review requires a new choice. Exact exports refuse a hash
+mismatch, bounded proof parts preserve evidence, and missing dependencies have
+an exact-pack restore picker. Ordinary .rlpack imports now install the inspected
+identity directly instead of silently rewriting through Creator. Original pack
+files remain necessary when noncanonical archive bytes cannot be reproduced.
+
+Final source host SHA256 is
+`b65ef74310dc1c23b7c23385428211b0cb28174eead31dda6d29c4c531894e02`;
+store SHA256 is
+`4b8c2fe165868f38eb297d678ea5aca232d61d2dd2a05b79db9d20145f3d0cfa`.
+The actual source HTTP/WebGL host passes90/90 checks, including preservation,
+rollback/conflict/error paths, wrong/exact restore, paused prefix recovery,
+EN/UK mobile layout and controlled controller dialog ownership. Three completed
+proofs and three prefixes independently replay. The final visible Cancel lives
+beside the review title; destructive confirmation follows the impact details.
+See `docs/fpv-pack-removal-recovery.md` and its bound receipts. Syntax/lint/format
+pass. Frozen/package qualification and focused PR publication follow; no new
+unit coverage, physical hardware or human acceptance is claimed.
+
+Next concrete content increment: matching Self-level examples for the14 primary
+Acro foundation lessons, then bounded optional Adventure examples. Existing178
+installed examples include no alternate-mode school recordings; the60 archived
+Adventure proofs are not installed. Sixteen advanced Acro skill lessons retain
+unscored Self-level practice; do not invent completable Self-level trick demos.
+C6 Stadium remains the parallel art slice:13 courses/21 bundled examples;
+refine the existing stand/board solids through shared Themes factories, preserve
+collision and the beginner42 landing platform's plain material region. Then
+continue yard/Garage art, distinct maps and final H/R7 qualification. Player
+feedback remains nonblocking and pending; all existing limits/gates remain.
+
+
+Pack-recovery frozen candidate `e64e53be5a144919d32c71f3cbce91666f8c4345`
+passes all three optional admissions, committed-input/ZIP validation and two
+identical builds. World Studio is99 source files/14,465,716bytes. Packaged actual
+HTTP/WebGL qualification also passes90/90. The largest edition independently
+passes frozen admission and reproducibility at895files/67,094,087bytes, leaving
+only14,777bytes beneath64MiB; plan additional demo data delivery separately and
+retain this guard. Authoring dependencies were temporarily moved to ignored
+.cache for source eligibility and restored by an EXIT trap. Runtime hashes match
+the source-qualified candidate. Publish as an independent focused PR on main;
+no native stack is needed for this item. Public deployment remains unverified.
+
+
+Before publication, main advanced to21dbd1014 with merged editor#975, Themes#974
+and WASM CSP#976. Recovery ref `codex/recovery/pack-removal-before-main-20261003`
+preserves the earlier candidate. The unpublished branch was rebased linearly;
+only additive delivery-log/plan conflicts required resolution, preserving both
+histories. Runtime merged without conflicts. New source and packaged browser
+fixtures both pass90/90; independent completed/prefix replay passes again.
+Frozen candidate4bc19760ac2f89f1bbb73de94fa909718105fa7a passes all three optional
+admissions and two identical builds, plus the largest edition. World Studio is
+99files/14495347bytes; largest edition67,105,391bytes leaves3,473bytes
+under64MiB. Keep subsequent example data separately delivered and verify current
+capacity rather than expanding any limit. Current host SHA256:
+`c3f2a71d5e44ffe1e26110b6712ae1f8fb9032a78337567ecb0e945c71e6e776`. Updated receipts replace prior
+candidate receipts in the feature document; earlier evidence remains in Git.
+
+
+### Pack recovery published — 3 October 2026
+
+[PR #977](https://github.com/mekhovov/revealline/pull/977) is published and attached,
+initial head `c0b04f355fc9d4a12a0b69acbe565328320dce40`, independently against main.
+Final source and packaged hosts each pass90/90 checks; all three optional
+admissions, largest-edition admission, committed inputs and reproducibility pass.
+Player build `dist/fpv-pack-recovery-playtest` was rebuilt and launched at the
+Library; ZIP SHA256 `57cf8df8f86bedc8891d3cdfe22925b8023216db2babc90bc86e36c1a1c084ea`.
+The preceding user Creator preview remains untouched.
+
+The initial release-ready job in run37089297268 reports **ADMISSION hold: no
+immutable release slot**. This is a publication-policy hold, not a runtime test
+failure. Preflight and staging succeeded; preserve the ordinary staging/review
+process and all current protection. Do not allocate a version, change the title
+to impersonate a release, or bypass the gate. Main advanced independently to
+7d64e9ba8 with Snake campaigns; retain this feature head and inspect current
+remote state before later integration. No public deployment claim for #977.
+
+Next independent work is matching-mode school demonstrations and bounded
+optional example import/selection. Player feedback remains nonblocking; physical
+radio, novice acceptance and named-device performance remain unverified.
