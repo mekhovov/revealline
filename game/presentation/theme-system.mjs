@@ -240,6 +240,9 @@ const productionTheme = (
     'pocket-lcd': 'lcd',
     'copper-observatory': 'copper',
     'sakura-station': 'sakura',
+    'obsidian-reliquary': 'brass',
+    'deep-space': 'composite',
+    'moonlit-grove': 'wood',
   }[id],
   provenance: { author: 'RevealLine', license: 'project-original', source },
 });
@@ -443,6 +446,45 @@ export const BUILTIN_INTERFACE_THEMES = freeze([
     amber: '#755414',
     hazard: '#a2302c',
     safe: '#346344',
+  }),
+  productionTheme('obsidian-reliquary', 'Obsidian Reliquary', {
+    ink: '#0b0a0d',
+    panel: '#191619',
+    panelRaised: '#272127',
+    text: '#eee5d4',
+    muted: '#bcb1a6',
+    line: '#54464e',
+    controlLine: '#a28f76',
+    accent: '#d2b16d',
+    amber: '#d2b16d',
+    hazard: '#f09697',
+    safe: '#a6b998',
+  }),
+  productionTheme('deep-space', 'Deep Space', {
+    ink: '#080e18',
+    panel: '#111d2c',
+    panelRaised: '#1b2b3f',
+    text: '#e5eff5',
+    muted: '#afc0cf',
+    line: '#425366',
+    controlLine: '#839eb5',
+    accent: '#99d5ed',
+    amber: '#f0b17b',
+    hazard: '#ff9d91',
+    safe: '#a8cfb5',
+  }),
+  productionTheme('moonlit-grove', 'Moonlit Grove', {
+    ink: '#09110e',
+    panel: '#14231c',
+    panelRaised: '#22352b',
+    text: '#e6ece1',
+    muted: '#b3c2b4',
+    line: '#496252',
+    controlLine: '#829c86',
+    accent: '#c0b6e2',
+    amber: '#d0c999',
+    hazard: '#edac9b',
+    safe: '#a5c798',
   }),
 ]);
 export const BUILTIN_THEME_FAMILIES = freeze(
@@ -658,12 +700,32 @@ function material(color, light, textured, family = 'industrial-workshop', accent
   };
 }
 
+// Finish variants are derived consumer behavior, not serialized theme assets.
+// A candidate's explicit interface basis follows independently of its world/art
+// family. Missing, incompatible or unavailable bases retain the shared finish.
+function materialVariant(source, interfaceBasis) {
+  const style = source.materialStyle ?? source.id;
+  const installed = getInterfaceTheme(source.id, source.revision);
+  const base =
+    installed ??
+    (source.id.startsWith('candidate-') && interfaceBasis
+      ? getInterfaceTheme(interfaceBasis.interfaceId, interfaceBasis.interfaceRevision ?? 'r1')
+      : null);
+  const variants = {
+    'obsidian-reliquary': 'brass',
+    'deep-space': 'composite',
+    'moonlit-grove': 'wood',
+  };
+  return base && variants[base.id] === style ? base.id : style;
+}
+
 /** Pure renderer input. Never resolves or replaces course/level media. */
 export function resolvePresentation({
   familyId = 'legacy',
   themeFamily,
   interfaceId,
   interfaceTheme,
+  interfaceBasis,
   accessibility = {},
   density = 'player',
   ornaments = 'subtle',
@@ -826,6 +888,7 @@ export function resolvePresentation({
     textured,
     surface: a.highContrast ? 'flat' : source.surface,
     materialStyle: source.materialStyle ?? source.id,
+    materialVariant: materialVariant(source, interfaceBasis),
     targetSize,
     colorScheme:
       contrastRatio('#000000', tokens.panel) > contrastRatio('#ffffff', tokens.panel)
@@ -935,6 +998,7 @@ export function applyResolvedPresentation(element, resolved) {
     themeTexture: resolved.textured ? 'on' : 'off',
     themeSurface: resolved.surface,
     themeMaterial: resolved.materialStyle ?? resolved.interfaceId,
+    themeFinish: resolved.materialVariant ?? resolved.materialStyle ?? resolved.interfaceId,
     themeHud:
       resolved.accessibility.opaqueHud || resolved.accessibility.highContrast ? 'opaque' : 'normal',
     themeMotion: resolved.accessibility.reducedEffects ? 'reduced' : 'full',
@@ -1461,6 +1525,30 @@ export const SIM_COLLECTION_PALETTES = freeze({
     accent: 0x9d304b,
     warm: 0xdfb895,
   },
+  'obsidian-reliquary': {
+    sky: 0x423c48,
+    fog: 0x544b55,
+    ground: 0x514c50,
+    wall: 0x322d37,
+    accent: 0xd2b16d,
+    warm: 0xdccdb6,
+  },
+  'deep-space': {
+    sky: 0x334358,
+    fog: 0x46566b,
+    ground: 0x4b5864,
+    wall: 0x28394d,
+    accent: 0x99d5ed,
+    warm: 0xf0b17b,
+  },
+  'moonlit-grove': {
+    sky: 0x384b43,
+    fog: 0x4b6058,
+    ground: 0x4e6553,
+    wall: 0x2c4437,
+    accent: 0xc0b6e2,
+    warm: 0xcbd4bf,
+  },
 });
 const collectionEffectFinishes = {
   'pocket-lcd': {
@@ -1492,6 +1580,36 @@ const collectionEffectFinishes = {
     goalComplete: 0x346344,
     goalInactive: 0x927d88,
     goalGlowInactive: 0x927d88,
+  },
+  'obsidian-reliquary': {
+    playerPulse: 0xe5d8b7,
+    hostilePulse: 0xdf8d97,
+    ghost: 0xc3b5ca,
+    ghostEmissive: 0x55415b,
+    trail: 0xc3b5ca,
+    goalComplete: 0xa6b998,
+    goalInactive: 0x8c7884,
+    goalGlowInactive: 0x8c7884,
+  },
+  'deep-space': {
+    playerPulse: 0xc6ebf7,
+    hostilePulse: 0xf0b17b,
+    ghost: 0x9bb6d2,
+    ghostEmissive: 0x35526f,
+    trail: 0x9bb6d2,
+    goalComplete: 0xa8cfb5,
+    goalInactive: 0x728aa3,
+    goalGlowInactive: 0x728aa3,
+  },
+  'moonlit-grove': {
+    playerPulse: 0xd3e1c9,
+    hostilePulse: 0xedac9b,
+    ghost: 0xc0b6e2,
+    ghostEmissive: 0x4a4668,
+    trail: 0xc0b6e2,
+    goalComplete: 0xa5c798,
+    goalInactive: 0x7b9383,
+    goalGlowInactive: 0x7b9383,
   },
 };
 export const BUILTIN_SIM_VISUAL_COLLECTIONS = Object.freeze(
@@ -1674,6 +1792,7 @@ export function validateCuratedThemeQuality(input) {
       resolvePresentation({
         themeFamily: candidate.family,
         interfaceTheme: candidate.interfaceTheme,
+        interfaceBasis: candidate.basis,
         accessibility: { highContrast },
       }),
     );
@@ -1802,6 +1921,7 @@ export function createThemeBootstrapSeed(input) {
     resolvePresentation({
       themeFamily: family,
       interfaceTheme: candidate.interfaceTheme,
+      interfaceBasis: candidate.basis,
       ...(ornaments ? { ornaments } : {}),
     });
   const resolved = resolve();
@@ -1828,6 +1948,7 @@ export function createThemeBootstrapSeed(input) {
     surface: resolved.surface,
     revision: family.revision,
     materialStyle: resolved.materialStyle,
+    materialVariant: resolved.materialVariant,
   };
 }
 

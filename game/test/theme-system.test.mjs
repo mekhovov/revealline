@@ -18,7 +18,10 @@ import {
   THEME_PREFERENCES_KEY,
 } from '../presentation/theme-preferences.mjs';
 import { installThemeHost } from '../presentation/theme-host.mjs';
+import { createThemeCandidate } from '../presentation/theme-preview.mjs';
+import { createDefaultThemeBundle } from '../presentation/catalog.mjs';
 import { Document, Events } from './helpers/couch-dom.mjs';
+import { createMaterialSamples, MATERIAL_SAMPLE_CASES } from './fixtures/appearance-materials.mjs';
 
 function memory() {
   const values = new Map(),
@@ -33,6 +36,54 @@ function memory() {
     },
   };
 }
+test('rendered-material fixture uses matched native control pairs without replacing runtime paint', () => {
+  const document = new Document(),
+    container = document.createElement('section');
+  createMaterialSamples(document, container);
+  assert.equal(container.children.length, MATERIAL_SAMPLE_CASES.length);
+  for (const spec of MATERIAL_SAMPLE_CASES) {
+    const shown = container.querySelector(`#sample-${spec.id}`),
+      twin = container.querySelector(`#sample-${spec.id}-twin`);
+    assert.ok(shown && twin, spec.id);
+    assert.equal(shown.tagName, twin.tagName);
+    assert.equal(shown.dataset.uiAction, twin.dataset.uiAction);
+    assert.equal(shown.dataset.uiSurface, twin.dataset.uiSurface);
+    assert.equal(shown.dataset.state, twin.dataset.state);
+    assert.equal(shown.dataset.readingTwin, 'false');
+    assert.equal(twin.dataset.readingTwin, 'true');
+    assert.equal(shown.disabled, twin.disabled);
+    for (const attribute of ['aria-pressed', 'aria-busy'])
+      assert.equal(shown.getAttribute(attribute), twin.getAttribute(attribute));
+    for (const sample of [shown, twin])
+      for (const property of [
+        'background',
+        'backgroundColor',
+        'backgroundImage',
+        'color',
+        'borderImageSource',
+      ])
+        assert.ok(!sample.style[property], `${spec.id}: runtime owns ${property}`);
+    if (spec.id === 'default')
+      assert.equal(shown.dataset.state, undefined, 'the normal sample exercises native hover');
+  }
+  assert.equal(container.querySelector('#sample-input').type, 'text');
+  assert.equal(container.querySelector('#sample-input-twin').value, '');
+  assert.equal(
+    container.querySelector('#sample-selected-hover').getAttribute('aria-pressed'),
+    'true',
+  );
+  assert.equal(container.querySelector('#sample-selected-hover').dataset.state, 'hover');
+  assert.equal(
+    container.querySelector('#sample-selected-pressed').getAttribute('aria-pressed'),
+    'true',
+  );
+  assert.equal(container.querySelector('#sample-selected-pressed').dataset.state, 'pressed');
+  assert.equal(container.querySelector('#sample-danger-pressed').dataset.uiAction, 'danger');
+  assert.equal(container.querySelector('#sample-danger-pressed').dataset.state, 'pressed');
+  for (const id of ['sample-muted-panel', 'sample-muted-panel-twin'])
+    assert.equal(container.querySelector(`#${id}`).querySelector('span').dataset.uiTone, 'muted');
+  assert.equal(container.querySelector('#sample-disabled').disabled, true);
+});
 test('all production and future specimen interfaces validate and meet text contrast', () => {
   for (const theme of BUILTIN_INTERFACE_THEMES) {
     assert.equal(validateInterfaceTheme(theme).id, theme.id);
@@ -112,8 +163,15 @@ function surfaceRules() {
   }));
 }
 
-test('shared controls and reading cards use quiet fills while preserving bevel, focus and selection', () => {
+test('shared material layers preserve semantic state colors and reset at every presentation scope', () => {
   const rules = surfaceRules();
+  const defaults = rules.find((rule) => rule.selector === '[data-theme-family]');
+  for (const role of ['panel', 'control', 'active', 'inset', 'toolbar', 'thumb'])
+    assert.equal(defaults.properties[`--ui-${role}-finish`], 'none');
+  for (const frame of ['panel', 'raised', 'primary'])
+    assert.equal(defaults.properties[`--ui-${frame}-frame`], 'none');
+  assert.equal(defaults.properties['--ui-hover-face'], 'initial');
+  assert.equal(defaults.properties['--ui-hover-ink'], 'initial');
   const panels = rules.find(
     (rule) => rule.selector.includes('.overlay-card') && rule.properties.border,
   );
@@ -121,39 +179,148 @@ test('shared controls and reading cards use quiet fills while preserving bevel, 
     (rule) => rule.properties['--ui-action-fill'] && rule.properties.padding,
   );
   const inputs = rules.find((rule) => rule.selector.endsWith(':where(input, select, textarea)'));
-  for (const rule of [panels, actions, inputs]) {
+  for (const [rule, finish, base] of [
+    [panels, 'panel', '--iw-panel'],
+    [actions, 'control', '--ui-action-fill'],
+    [inputs, 'inset', '--iw-input'],
+  ]) {
     assert.ok(rule);
-    assert.equal(rule.properties['border-image'], 'none');
-    assert.doesNotMatch(rule.properties.background, /url\(|gradient\(|material/);
+    assert.ok(rule.properties.background.startsWith(`var(--ui-${finish}-finish, none),`));
+    assert.ok(
+      rule.properties.background.includes(`var(${base}`),
+      'texture overlays the semantic state, not a fixed pigment',
+    );
     assert.match(rule.properties.border, /solid var\(/);
-    assert.match(rule.properties['box-shadow'], /inset/);
+  }
+  for (const state of ['hover', 'pressed']) {
+    const rule = rules.find((item) =>
+      item.properties.background?.includes(`var(--ui-action-${state}-fill)`),
+    );
+    assert.equal(rule.properties.color, `var(--ui-action-${state}-ink)`);
+    assert.ok(rule.selector.includes(`:${state === 'pressed' ? 'active' : 'hover'}`));
+    assert.ok(
+      rule.selector.includes(`[data-state='${state}']`),
+      'fixture and actual pointer share one rule',
+    );
+    assert.ok(rule.selector.includes(":not(:disabled, [aria-disabled='true'])"));
   }
   const selected = rules.find(
     (rule) =>
       rule.selector.includes("[aria-pressed='true']") && rule.properties['--ui-action-fill'],
   );
+  assert.equal(selected.properties.color, 'var(--ui-action-ink)');
+  assert.ok(selected.properties.background.endsWith('var(--ui-action-fill)'));
   assert.match(selected.properties['border-color'], /--iw-focus/);
-  assert.match(selected.properties['box-shadow'], /inset 3px/);
-  for (const state of ['hover', 'pressed']) {
-    const rule = rules.find(
-      (item) => item.properties.background === `var(--ui-action-${state}-fill)`,
-    );
-    assert.equal(rule.properties.color, `var(--ui-action-${state}-ink)`);
-  }
+  const disabled = rules.find(
+    (rule) => rule.properties.cursor === 'not-allowed' && rule.properties.opacity,
+  );
+  assert.doesNotMatch(
+    disabled.properties.background,
+    /finish|gradient|url\(/,
+    'disabled information remains quiet',
+  );
+  assert.equal(disabled.properties['border-image'], 'none');
   assert.ok(
     rules.some(
       (rule) => rule.selector.includes(':focus-visible') && /3px/.test(rule.properties.outline),
     ),
   );
-  const flat = rules.find((rule) => rule.selector.startsWith("[data-theme-surface='flat']"));
-  assert.equal(flat.properties['box-shadow'], 'none');
+  const flat = rules.find((rule) => rule.selector === "[data-theme-surface='flat']");
+  for (const role of ['panel', 'action', 'hover', 'pressed', 'selected', 'gallery']) {
+    assert.equal(flat.properties[`--ui-${role}-depth`], 'none');
+    assert.equal(
+      defaults.properties[`--ui-${role}-depth`],
+      role === 'gallery' ? 'none' : 'initial',
+    );
+  }
+  assert.ok(
+    !rules.some((rule) => rule.selector.startsWith("[data-theme-surface='flat'] ")),
+    'flat parent scopes cannot suppress nested beveled specimens',
+  );
+  const forced = rules.find((rule) => rule.selector === '[data-theme-family][data-theme-material]');
+  for (const role of ['panel', 'control', 'active', 'inset', 'toolbar', 'thumb'])
+    assert.equal(forced.properties[`--ui-${role}-finish`], 'none');
+  const reduced = rules.find(
+    (rule) =>
+      rule.selector.startsWith("[data-theme-motion='reduced']") &&
+      rule.properties.transition === 'none' &&
+      rule.selector.includes('button'),
+  );
+  assert.ok(reduced, 'actual native controls respect the game motion override');
 });
 
-test('gallery previews are uninterrupted palette strips and ornament is confined to a single outer accent', () => {
+test('authored and retained Industrial identities keep their own material capability for scoped recipes', () => {
+  const candidate = createThemeCandidate(createDefaultThemeBundle(), {
+    familyId: 'industrial-workshop',
+  });
+  const authored = resolvePresentation({
+    themeFamily: candidate.family,
+    interfaceTheme: candidate.interfaceTheme,
+  });
+  assert.notEqual(authored.familyId, 'industrial-workshop');
+  assert.equal(authored.materialStyle, 'steel');
+  const doc = new Document();
+  applyResolvedPresentation(doc.documentElement, authored);
+  assert.equal(doc.documentElement.dataset.themeMaterial, 'steel');
+  const retained = resolvePresentation({
+    themeFamily: getThemeFamily('industrial-workshop', 'r1'),
+  });
+  assert.equal(retained.materialStyle, 'industrial-workshop');
+});
+
+test('decorative face recipes require their own enabled texture and contrast scope', () => {
+  const recipes = surfaceRules().filter((rule) =>
+    Object.entries(rule.properties).some(
+      ([name, value]) => /^--ui-.*-finish$/.test(name) && value !== 'none',
+    ),
+  );
+  assert.ok(recipes.length >= 10, 'each material family declares its own face treatment');
+  for (const recipe of recipes) {
+    assert.ok(recipe.selector.includes("[data-theme-texture='on']"), recipe.selector);
+    assert.ok(recipe.selector.includes("[data-theme-contrast='normal']"), recipe.selector);
+    assert.doesNotMatch(
+      recipe.selector,
+      /\.menu-scene|\bbutton\b/,
+      'finish belongs to a presentation scope, never an ancestor descendant selector',
+    );
+    assert.equal(recipe.properties.animation, undefined, 'material grain is static');
+  }
+  const industrial = recipes.find((recipe) => recipe.properties['--ui-hover-face']);
+  assert.equal(industrial.properties['--ui-hover-face'], 'var(--iw-accent)');
+  assert.equal(industrial.properties['--ui-hover-ink'], 'var(--iw-on-accent)');
+});
+
+test('gallery and nested backdrops consume their nearest scope material while retaining palette and focus cues', () => {
   const rules = surfaceRules();
   const card = rules.find((rule) => rule.selector === '.theme-gallery .theme-preview-card');
-  assert.equal(card.properties['border-image'], 'none');
-  assert.equal(card.properties['box-shadow'], 'none');
+  assert.equal(card.properties['border-image'], 'var(--ui-raised-frame, none)');
+  assert.equal(card.properties['box-shadow'], 'var(--ui-gallery-depth, none)');
+  assert.ok(card.properties.background.startsWith('var(--ui-control-finish, none),'));
+  const hover = rules.find((rule) => rule.selector.includes('.theme-preview-card:hover:not('));
+  for (const excluded of [
+    "[aria-pressed='true']",
+    ':disabled',
+    ':active',
+    "[data-state='pressed']",
+  ])
+    assert.ok(hover.selector.includes(excluded), `gallery hover excludes ${excluded}`);
+  assert.equal(hover.properties.color, 'var(--ui-action-hover-ink)');
+  assert.equal(
+    hover.properties.background,
+    'var(--ui-control-finish, none), var(--ui-action-hover-fill)',
+  );
+  const selected = rules.find(
+      (rule) => rule.selector === ".theme-gallery .theme-preview-card[aria-pressed='true']",
+    ),
+    pressed = rules.find((rule) => rule.selector.includes('.theme-preview-card:is(:active,'));
+  assert.ok(pressed.selector.includes("[data-state='pressed']"));
+  assert.ok(pressed.selector.includes(":not(:disabled, [aria-disabled='true'])"));
+  assert.equal(pressed.properties.color, 'var(--ui-action-pressed-ink)');
+  assert.equal(
+    pressed.properties.background,
+    'var(--ui-active-finish, none), var(--ui-action-pressed-fill)',
+  );
+  assert.ok(rules.indexOf(pressed) > rules.indexOf(selected), 'pressed paint wins over selection');
   const swatches = rules.find((rule) => rule.selector === '.theme-preview-swatches');
   assert.equal(swatches.properties.display, 'grid');
   assert.equal(swatches.properties.gap, '0');
@@ -161,14 +328,14 @@ test('gallery previews are uninterrupted palette strips and ornament is confined
     (rule) =>
       rule.selector === "[data-theme-styled='true'] .menu-scene[data-backdrop='interface']::before",
   );
-  assert.equal(accent.properties['background-repeat'], 'no-repeat');
-  assert.match(accent.properties.inset, /auto auto$/);
-  assert.match(accent.properties['inline-size'], /min\(/);
-  const off = rules.find(
-    (rule) =>
-      rule.selector === "[data-theme-texture='off'] .menu-scene[data-backdrop='interface']::before",
-  );
-  assert.equal(off.properties['background-image'], 'none');
+  const defaults = rules.find((rule) => rule.selector === '[data-theme-family]');
+  assert.equal(accent.properties['background-repeat'], 'var(--ui-scene-repeat)');
+  assert.equal(defaults.properties['--ui-scene-repeat'], 'no-repeat');
+  assert.match(defaults.properties['--ui-scene-inset'], /auto auto$/);
+  assert.match(defaults.properties['--ui-scene-width'], /min\(/);
+  assert.equal(defaults.properties['--ui-scene-motif'], 'none');
+  const off = rules.find((rule) => rule.selector === "[data-theme-texture='off']");
+  assert.equal(off.properties['--ui-scene-motif'], 'none');
 });
 test('interface validation rejects executable styles, unknown fields and missing provenance', () => {
   const source = structuredClone(BUILTIN_INTERFACE_THEMES[1]);
