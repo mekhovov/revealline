@@ -3,7 +3,6 @@ import { isDeepStrictEqual } from 'node:util';
 import { inspectEditionZip } from './edition-zip.mjs';
 import { validateEditionId } from '../game/edition-context.mjs';
 import { validateCuratedAppearanceInventory } from '../game/presentation/theme-system.mjs';
-import { assertCompanyPackageBudget } from '../game/editions/package-budget.mjs';
 
 const SHA = /^[a-f0-9]{64}$/;
 const COMMIT = /^[a-f0-9]{40,64}$/;
@@ -392,7 +391,6 @@ export async function validateEditionAdmission(envelope, { read } = {}) {
     )
       fail('Source inventory has not passed public eligibility.');
     const counts = inventory(manifest);
-    assertCompanyPackageBudget(counts.files, counts.totalBytes, 'Published edition runtime');
     inventory(source);
     const runtime = inspectEditionZip(originals.distribution, [
       ...manifest.files,
