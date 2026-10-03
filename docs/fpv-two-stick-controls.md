@@ -78,3 +78,8 @@ source identity and unchanged package limits. Package review gates remain pendin
 `publicEligible: false` is not a failed build or a public release claim.
 Packaged touch checks pass32/32 with368 challenge/mode starts; actual WebGL
 section replay checks pass53/53. Receipts are stored alongside the keyboard evidence.
+
+CI's existing preview suite initially exposed one legacy lifecycle fixture that
+pressed KeyE without selecting Classic. The fixture now selects Classic
+explicitly and retains every assertion. Its existing29 checks pass locally;
+no additional unit coverage was added and runtime bytes are unchanged.
