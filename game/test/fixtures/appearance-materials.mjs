@@ -121,6 +121,151 @@ export function createMaterialSamples(document, container) {
   }
 }
 
+const computedColor = (value) => {
+  const hex = /^#([\da-f]{6})$/i.exec(value ?? '');
+  if (hex)
+    return `rgb(${[0, 2, 4].map((offset) => parseInt(hex[1].slice(offset, offset + 2), 16)).join(',')})`;
+  return String(value).toLowerCase().replace(/\s+/g, '');
+};
+
+/** Check computed paint, not merely resolver recipes or stylesheet text. */
+export function evaluateMaterialSemantics(
+  samples,
+  tokens,
+  { forcedColors = false, styled = true } = {},
+) {
+  if (forcedColors || !styled)
+    return {
+      status: 'skipped',
+      reason: forcedColors
+        ? 'System colors own this palette.'
+        : 'Retained legacy adapter owns this paint.',
+      checks: [],
+    };
+  const checks = [];
+  for (const twin of [false, true]) {
+    for (const [id, expected] of [
+      [
+        'selected-disabled',
+        {
+          background: tokens.panel,
+          foreground: tokens.muted,
+          shadow: 'none',
+          borderImage: 'none',
+          finish: 'none',
+        },
+      ],
+      [
+        'danger-pressed',
+        { background: tokens.hazard, foreground: tokens.onHazard, borderImage: 'none' },
+      ],
+    ]) {
+      const sampleId = `sample-${id}${twin ? '-twin' : ''}`,
+        sample = samples.find((item) => item.id === sampleId);
+      for (const [property, value] of Object.entries(expected)) {
+        const actual = sample?.[property],
+          color = property === 'background' || property === 'foreground';
+        checks.push({
+          id: `${sampleId}.${property}`,
+          passed:
+            actual !== undefined &&
+            (color ? computedColor(actual) === computedColor(value) : actual === value),
+          expected: value,
+          actual: actual ?? null,
+        });
+      }
+    }
+  }
+  return { status: checks.every((check) => check.passed) ? 'passed' : 'failed', checks };
+}
+
+/** Native-size composition. Only layout is supplied by the fixture stylesheet. */
+export function createMaterialCloseUp(document, container) {
+  const element = (tag, text, className) => {
+    const node = document.createElement(tag);
+    if (text) node.textContent = text;
+    if (className) node.className = className;
+    return node;
+  };
+  const action = (label, role, sample) => {
+    const node = element('button', label);
+    node.type = 'button';
+    node.dataset.closeUpControl = sample;
+    if (role) node.dataset.uiAction = role;
+    return node;
+  };
+  container.append(
+    element('h2', 'Material close-up'),
+    element(
+      'p',
+      'Inspect at native scale: compact Studio controls, player targets, recessed fields and tall cards. Large text and coarse pointers expand the compact targets.',
+    ),
+  );
+  const layout = element('div', '', 'material-close-up-layout'),
+    player = element('section', '', 'material-close-up-panel'),
+    studio = element('section', '', 'material-close-up-panel material-close-up-studio'),
+    cards = element('div', '', 'theme-gallery material-close-up-cards');
+  player.dataset.uiSurface = studio.dataset.uiSurface = 'panel';
+  player.dataset.closeUpSurface = 'player-panel';
+  studio.dataset.closeUpSurface = 'studio-panel';
+  const playerHeader = element('header', '', 'material-close-up-header');
+  playerHeader.dataset.uiSurface = 'toolbar';
+  playerHeader.append(element('h3', 'Flight deck'), element('span', 'Player · 44 px targets'));
+  const well = element('section', '', 'material-close-up-well');
+  well.dataset.uiSurface = 'inset';
+  well.append(
+    element('strong', 'First return'),
+    element('p', 'Return to safe ground to secure the line. Progress is saved automatically.'),
+  );
+  const playerActions = element('div', '', 'material-close-up-actions');
+  playerActions.append(
+    action('Choose mission', null, 'player-default'),
+    action('Launch flight', 'primary', 'player-primary'),
+  );
+  player.append(playerHeader, well, playerActions);
+  const studioHeader = element('header', '', 'material-close-up-header');
+  studioHeader.dataset.uiSurface = 'toolbar';
+  studioHeader.append(
+    element('h3', 'Creator inspector'),
+    element('span', 'Studio · 32 px targets'),
+  );
+  const input = element('input');
+  input.type = 'text';
+  input.value = 'Workshop checkpoint';
+  input.setAttribute('aria-label', 'Preview asset name');
+  input.dataset.closeUpControl = 'studio-input';
+  const studioActions = element('div', '', 'material-close-up-actions');
+  studioActions.append(
+    action('Preview', null, 'studio-default'),
+    action('Save', 'primary', 'studio-primary'),
+  );
+  const disabled = action('Unavailable', null, 'studio-disabled');
+  disabled.disabled = true;
+  disabled.setAttribute('aria-pressed', 'true');
+  studioActions.append(disabled);
+  studio.append(studioHeader, input, studioActions);
+  for (const selected of [false, true]) {
+    const card = action('', null, selected ? 'selected-card' : 'default-card');
+    card.className = 'theme-preview-card material-close-up-card';
+    card.setAttribute('aria-pressed', String(selected));
+    const caption = element('span', selected ? 'SELECTED ROUTE' : 'MISSION 04');
+    caption.dataset.uiTone = 'muted';
+    card.append(
+      caption,
+      element('strong', selected ? 'Across the long valley' : 'Between the towers'),
+      element(
+        'span',
+        'A tall, two-line card tests material scale without stretching the edge lighting.',
+      ),
+      element('small', selected ? 'Selected ✓ · Ready to fly' : 'Explore · 3 objectives'),
+    );
+    cards.append(card);
+  }
+  layout.append(player, studio, cards);
+  container.append(layout);
+  return { studio };
+}
+
 function mount(document, window) {
   const control = (id) => document.getElementById(`specimen-${id}`),
     family = control('family'),
@@ -132,7 +277,8 @@ function mount(document, window) {
     large = control('large-text'),
     surface = control('inner-scope'),
     outerSurface = control('outer-scope'),
-    samples = control('samples');
+    samples = control('samples'),
+    closeUp = control('close-up');
   for (const theme of BUILTIN_THEME_FAMILIES) {
     for (const select of [family, outer]) {
       const option = document.createElement('option');
@@ -149,7 +295,19 @@ function mount(document, window) {
   }
   family.value = 'industrial-workshop';
   createMaterialSamples(document, samples);
-  let removeInner, removeOuter;
+  const { studio } = createMaterialCloseUp(document, closeUp);
+  let removeInner, removeOuter, removeStudio, resolved;
+  const paint = (sample) => {
+    const css = window.getComputedStyle(sample);
+    return {
+      id: sample.id,
+      foreground: window.getComputedStyle(sample.querySelector('span') ?? sample).color,
+      background: css.backgroundColor,
+      finish: css.backgroundImage,
+      borderImage: css.borderImageSource,
+      shadow: css.boxShadow,
+    };
+  };
   function measure() {
     const rows = [...samples.querySelectorAll('[data-material-sample]')]
       .filter((sample) => !sample.closest('[data-sample-case]').hidden)
@@ -158,17 +316,12 @@ function mount(document, window) {
           rect = sample.getBoundingClientRect(),
           inset = 16;
         return {
-          id: sample.id,
+          ...paint(sample),
           case: sample.dataset.materialSample,
           twin: sample.dataset.readingTwin === 'true',
           nativeHover: sample.matches(':hover'),
           nativeActive: sample.matches(':active'),
           focused: document.activeElement === sample,
-          foreground: window.getComputedStyle(sample.querySelector('span') ?? sample).color,
-          background: css.backgroundColor,
-          finish: css.backgroundImage,
-          borderImage: css.borderImageSource,
-          shadow: css.boxShadow,
           outline: css.outline,
           transition: css.transition,
           transform: css.transform,
@@ -188,6 +341,19 @@ function mount(document, window) {
           },
         };
       });
+    const forcedColors = window.matchMedia('(forced-colors: active)').matches,
+      semantics = evaluateMaterialSemantics(
+        ['selected-disabled', 'danger-pressed'].flatMap((id) =>
+          [false, true].map((twin) =>
+            paint(document.getElementById(`sample-${id}${twin ? '-twin' : ''}`)),
+          ),
+        ),
+        resolved.tokens,
+        { forcedColors, styled: surface.dataset.themeStyled === 'true' },
+      );
+    control('semantic-status').textContent =
+      `Semantic state checks: ${semantics.status}${semantics.reason ? ` · ${semantics.reason}` : ` · ${semantics.checks.filter((check) => !check.passed).length} failures`}`;
+    control('semantic-status').dataset.result = semantics.status;
     control('measurements').textContent = JSON.stringify(
       {
         family: family.value,
@@ -195,7 +361,8 @@ function mount(document, window) {
         ornaments: ornaments.value,
         highContrast: contrast.checked,
         reducedEffects: reduced.checked,
-        forcedColors: window.matchMedia('(forced-colors: active)').matches,
+        forcedColors,
+        semantics,
         viewport: {
           width: window.innerWidth,
           height: window.innerHeight,
@@ -203,6 +370,21 @@ function mount(document, window) {
           scrollY: window.scrollY,
         },
         backdrop: window.getComputedStyle(control('backdrop'), '::before').backgroundImage,
+        closeUp: closeUp.hidden
+          ? null
+          : [...closeUp.querySelectorAll('[data-close-up-control], [data-close-up-surface]')].map(
+              (node) => {
+                const rect = node.getBoundingClientRect(),
+                  css = window.getComputedStyle(node);
+                return {
+                  specimen: node.dataset.closeUpControl ?? node.dataset.closeUpSurface,
+                  ...paint(node),
+                  density: node.closest('[data-theme-density]')?.dataset.themeDensity,
+                  minTarget: css.getPropertyValue('--iw-target').trim(),
+                  rectangle: { x: rect.x, y: rect.y, width: rect.width, height: rect.height },
+                };
+              },
+            ),
         samples: rows,
       },
       null,
@@ -210,6 +392,7 @@ function mount(document, window) {
     );
   }
   function refresh() {
+    removeStudio?.();
     removeInner?.();
     removeOuter?.();
     if (outer.value !== 'none')
@@ -218,16 +401,24 @@ function mount(document, window) {
         resolvePresentation({ familyId: outer.value }),
       );
     else removeOuter = null;
-    const resolved = resolvePresentation({
+    const presentationOptions = {
       familyId: family.value,
       ornaments: ornaments.value,
       accessibility: {
         highContrast: contrast.checked,
         reducedEffects: reduced.checked,
         textSize: large.checked ? 'large' : 'standard',
+        coarsePointer: window.matchMedia('(pointer: coarse)').matches,
       },
-    });
+    };
+    resolved = resolvePresentation(presentationOptions);
     removeInner = applyResolvedPresentation(surface, resolved);
+    removeStudio = applyResolvedPresentation(
+      studio,
+      resolvePresentation({ ...presentationOptions, density: 'studio' }),
+    );
+    closeUp.hidden = cases.value !== 'close-up';
+    samples.hidden = cases.value === 'close-up';
     for (const row of samples.children)
       row.hidden = cases.value !== 'all' && row.dataset.sampleCase !== cases.value;
     control('description').textContent =

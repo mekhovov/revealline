@@ -11,6 +11,27 @@ an actual pointer state. The forced hover/pressed rows use the same production
 selectors and are useful for stable screenshots; they are not evidence of native
 pointer input. Check keyboard focus independently.
 
+Choose **Material close-up · native sizes** to inspect a compact flight panel,
+recessed field, Creator inspector and tall mission cards. Player controls use
+44px targets; fine-pointer Studio controls use 32px targets. Large text and coarse
+pointers expand the Studio targets through the production resolver. The fixture
+only supplies layout; colors, materials, state treatment and target tokens come
+from the runtime. Capture this composition as **PNG at native viewport scale**
+(and repeat at device scale 2) to review grain, repeated patterns and edge detail.
+The `closeUp` measurement field records the actual rendered sizes and paint.
+Keep close-up captures in a separate directory from the 19-pair contrast captures;
+the close-up composition has no blank twins and is for native-scale visual review.
+
+The state rows remain the same 19 matched pairs. `semantics` in the measurement
+JSON separately checks the actual computed selected-disabled and danger-pressed
+paint, including both blank twins. Selected-disabled must use the disabled panel
+and muted text with no material frame, finish or shadow. Pressed danger must retain
+the hazard/on-hazard pair with no amber frame. The visible semantic status reports
+failures even when a different row or the close-up composition is selected. System
+forced colors and the retained legacy adapter explicitly skip token-color checks.
+Check `semantics.status === 'passed'` separately from the pixel contrast report;
+a readable but semantically incorrect color is still a regression.
+
 Each row has a labeled control and an equal-size blank twin. The twin keeps the
 same foreground color, background, role, and state; its label is hidden only to
 avoid sampling antialiased text as background. `#specimen-measurements` contains
