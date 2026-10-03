@@ -130,7 +130,7 @@ export function createFlightRenderer({
     editHandles = new THREE.Group();
   editHandles.visible = false;
   scene.add(world, goals, aircraft, ghostAircraft, actors, projectiles, imported, editHandles);
-  const huntPresentation = createHuntPresentation?.({ THREE, scene }) ?? null;
+  let huntPresentation = createHuntPresentation?.({ THREE, scene }) ?? null;
   const hemisphere = new THREE.HemisphereLight(0xe5f3ff, 0x3d504a, 2.1);
   const sunlight = new THREE.DirectionalLight(0xffefd8, 3.1);
   const fillLight = new THREE.DirectionalLight(0x9cc7e8, 0.24);
@@ -1181,7 +1181,8 @@ export function createFlightRenderer({
     environmentLightInputs = inputs;
   }
   function setCourse(value, selectedMode = 'self-level', options = {}) {
-    if (disposed) return;
+    if (disposed || renderer.getContext().isContextLost()) return;
+    huntPresentation ??= createHuntPresentation?.({ THREE, scene }) ?? null;
     if (options.presentation) setPresentation(options.presentation);
     activePresentation = pendingPresentation;
     sceneGeneration++;
@@ -2554,9 +2555,57 @@ export function createFlightRenderer({
     editor.attach(object);
     return { detach: () => editor?.detach() };
   }
+  function clearSceneResources() {
+    huntPresentation?.dispose();
+    huntPresentation = null;
+    if (editor) {
+      scene.remove(editor.getHelper());
+      editor.dispose();
+      editor = null;
+    }
+    setPath([]);
+    releaseEnvironmentLight();
+    setGhost([]);
+    clearImported();
+    for (const group of [world, goals, aircraft, actors, projectiles, editHandles])
+      releaseGroup(group);
+    releaseShadow();
+    for (const value of materials) {
+      for (const texture of texturesOf(value)) texture.dispose();
+      value.dispose();
+    }
+    for (const value of geometry) value.dispose();
+    materials.clear();
+    garageDetailMaterials.clear();
+    geometry.clear();
+    goalRows.length = 0;
+    actorRows.clear();
+    actorDefinitions.clear();
+    seenActors.clear();
+    qualityDetails.length = 0;
+    lastActorState = null;
+    pulseRows.clear();
+    stadiumDetailMaterials.clear();
+    droneVisual = null;
+    obstacleMaps = null;
+    obstacleSurface = null;
+    obstacleFittingsMaterial = null;
+    garageDetailMaterial = null;
+    environmentSurfaceKind = null;
+    stadiumMaterial = null;
+    sceneryFallback = null;
+    themeProfile = null;
+    course = null;
+    editRows.length = 0;
+  }
   const lost = (event) => {
     event.preventDefault();
-    releaseEnvironmentLight();
+    // Retry rebuilds the scene on this renderer. Release old GPU ownership while
+    // the context is lost, before Three restores its resource caches.
+    sceneGeneration++;
+    presentationGeneration++;
+    importGeneration++;
+    clearSceneResources();
     onContextLost();
   };
   canvas.addEventListener('webglcontextlost', lost);
@@ -2688,47 +2737,9 @@ export function createFlightRenderer({
     dispose() {
       if (disposed) return;
       disposed = true;
-      huntPresentation?.dispose();
       sceneGeneration++;
       canvas.removeEventListener('webglcontextlost', lost);
-      if (editor) {
-        scene.remove(editor.getHelper());
-        editor.dispose();
-        editor = null;
-      }
-      setPath([]);
-      releaseEnvironmentLight();
-      setGhost([]);
-      clearImported();
-      for (const group of [world, goals, aircraft, actors, projectiles, editHandles])
-        releaseGroup(group);
-      releaseShadow();
-      for (const value of materials) {
-        for (const texture of texturesOf(value)) texture.dispose();
-        value.dispose();
-      }
-      for (const value of geometry) value.dispose();
-      materials.clear();
-      garageDetailMaterials.clear();
-      geometry.clear();
-      goalRows.length = 0;
-      actorRows.clear();
-      actorDefinitions.clear();
-      seenActors.clear();
-      qualityDetails.length = 0;
-      lastActorState = null;
-      pulseRows.clear();
-      stadiumDetailMaterials.clear();
-      droneVisual = null;
-      obstacleMaps = null;
-      obstacleSurface = null;
-      obstacleFittingsMaterial = null;
-      garageDetailMaterial = null;
-      environmentSurfaceKind = null;
-      stadiumMaterial = null;
-      sceneryFallback = null;
-      themeProfile = null;
-      course = null;
+      clearSceneResources();
       renderer.dispose();
       renderer.forceContextLoss();
     },
