@@ -2674,7 +2674,7 @@ export function createFlightRenderer({
     setCosmetic(recipe) {
       if (/^#[a-fA-F0-9]{6}$/.test(recipe?.color)) {
         cosmeticColor = recipe.color;
-        droneVisual.tint.color.set(cosmeticColor);
+        droneVisual?.tint.color.set(cosmeticColor);
       }
     },
     resources() {
