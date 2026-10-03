@@ -2913,3 +2913,22 @@ ea596d80 yields 039be4e7c: scenery and renderer bytes remain exact; inherited
 Hangar visual changes are inside the indoor branch and do not affect Woodland.
 All 30 checks and three reproducible admissions pass again. Preserve the explicit
 browser candidate identity and use protected exact-head publication.
+
+
+### D1 production and cached-player evidence — 3 October 2026
+
+Historical combined candidate `e572026ba357f3194bf47e7137a0817cacb1a640` passed
+source and admitted-package production checks: 90 configurations, three rounds,
+60 theme controls and all 14 lifecycle/resource gates. Full receipts are retained
+losslessly as bounded gzip archives; the semantic comparison has zero differences
+across 72,680 leaves. Actual admitted-player preparation, local-origin-unavailable
+reload, Woodland/Yard selection, rendered arm and pause also passed. Timings retain
+large unexplained pauses; no sustained hardware-performance claim follows.
+See [the qualification and limits](fpv-d1-production-qualification.md).
+
+Repair #1011 and groves #996 are merged. Public marker `e40809f25ea8` plus actual
+Clearing check-in render/arm/pause establishes grove availability. Meadow #1010 is
+merged at `e98df020d`; its public check remains separate. Material #1001 and
+Courtyard #1012 continue protected publication; Warehouse exterior composition is
+the next independent art increment. This evidence-only checkpoint changes no
+runtime and does not claim the historical matrix tests newer main code.
