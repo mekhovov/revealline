@@ -1,7 +1,11 @@
 import * as THREE from './vendor/three.module.js';
 import { actorVisual } from '../../game/hunt/actor-catalog.mjs';
 import { sharedActorAppearance } from '../../game/hunt/preferences.mjs';
-import { buildWorldVisuals, buildDroneVisual } from './world-visuals.mjs';
+import {
+  buildWorldVisuals,
+  buildDroneVisual,
+  buildContainerVisualGeometry,
+} from './world-visuals.mjs';
 import {
   normalizeSimPresentation,
   resolveSimThemeProfile,
@@ -173,6 +177,7 @@ export function createFlightRenderer({
     importedMaterialBindings = { applied: 0, diagnostics: [] },
     obstacleMaps = null,
     obstacleSurface = null,
+    obstacleFittingsMaterial = null,
     environmentSurfaceKind = null,
     lastActorState = null,
     importedAnimationTick = null,
@@ -424,7 +429,7 @@ export function createFlightRenderer({
     if ((themeProfile?.id ?? activePresentation?.collectionId) === 'military-field') {
       for (const [index, color] of [0x4eb8ee, 0xffd74d].entries()) {
         const stripe = mesh(new THREE.BoxGeometry(0.045, 0.002, 0.018), material(color), aircraft);
-        stripe.position.set(0, 0.064, 0.009 + index * 0.018);
+        stripe.position.set(0, value === 'pixel' ? 0.064 : 0.06, 0.009 + index * 0.018);
       }
     }
     for (const [index, rotor] of droneVisual.rotors.entries())
@@ -860,7 +865,12 @@ export function createFlightRenderer({
   }
   function renderObstacle(obstacle, index) {
     const theme = themeProfile.palette,
-      kind = obstacleSurfaceKind(obstacle);
+      kind = obstacleSurfaceKind(obstacle),
+      yardContainer =
+        course.environment === 'container-yard' &&
+        /^container-[01]-[0-2]$/.test(obstacle.id ?? '') &&
+        themeProfile.textureFilter !== 'nearest' &&
+        ['x', 'y', 'z'].every((axis) => obstacle.max?.[axis] - obstacle.min?.[axis] >= 1000);
     const maps = obstacleSurface?.(kind) ?? obstacleMaps;
     const paint = material(
       kind === 'metal' && course.environment === 'container-yard'
@@ -871,16 +881,30 @@ export function createFlightRenderer({
       {
         ...maps,
         normalScale: new THREE.Vector2(
-          kind === 'plaster' ? 0.13 : 0.3,
-          kind === 'plaster' ? 0.13 : 0.3,
+          yardContainer ? 0.08 : kind === 'plaster' ? 0.13 : 0.3,
+          yardContainer ? 0.08 : kind === 'plaster' ? 0.13 : 0.3,
         ),
-        roughness:
-          kind === 'solar' ? 0.3 : kind === 'metal' ? 0.66 : kind === 'storage-steel' ? 0.74 : 0.9,
-        metalness:
-          kind === 'solar' ? 0.35 : kind === 'metal' ? 0.28 : kind === 'storage-steel' ? 0.18 : 0,
+        roughness: yardContainer
+          ? 0.82
+          : kind === 'solar'
+            ? 0.3
+            : kind === 'metal'
+              ? 0.66
+              : kind === 'storage-steel'
+                ? 0.74
+                : 0.9,
+        metalness: yardContainer
+          ? 0.12
+          : kind === 'solar'
+            ? 0.35
+            : kind === 'metal'
+              ? 0.28
+              : kind === 'storage-steel'
+                ? 0.18
+                : 0,
       },
     );
-    let value, size;
+    let value, size, containerHardware;
     if (obstacle.type === 'trimesh') {
       let shape = new THREE.BufferGeometry();
       shape.setAttribute(
@@ -902,7 +926,9 @@ export function createFlightRenderer({
       value = mesh(shape, paint);
     } else if (obstacle.min && obstacle.max) {
       size = ['x', 'y', 'z'].map((key) => (obstacle.max[key] - obstacle.min[key]) / 1000);
-      const shape = new THREE.BoxGeometry(...size);
+      const container = yardContainer ? buildContainerVisualGeometry(size) : null,
+        shape = container?.shell ?? new THREE.BoxGeometry(...size);
+      containerHardware = container?.hardware;
       if (kind === 'storage-steel')
         storageModuleUV(shape, size, !/^rack-[01]-[0-2]$/.test(obstacle.id));
       else if (kind === 'bark') woodlandTrunkUV(shape, size);
@@ -927,6 +953,18 @@ export function createFlightRenderer({
     if (kind === 'storage-steel') value.userData.materialRole = 'steel';
     if (kind === 'bark') value.userData.materialRole = 'timber';
     value.castShadow = value.receiveShadow = true;
+    if (containerHardware) {
+      worldScaleUV(containerHardware);
+      // Brushed fittings must read against painted doors without emissive
+      // highlights or another texture. Both finishes remain world-owned.
+      const fittings = mesh(containerHardware, obstacleFittingsMaterial?.() ?? paint, value);
+      fittings.name = 'container-door-hardware';
+      fittings.userData.materialRole = 'steel';
+      fittings.userData.minimumQuality = 'balanced';
+      fittings.castShadow = fittings.receiveShadow = true;
+      fittings.visible = quality !== 'low';
+      qualityDetails.push(fittings);
+    }
     if (size && size[1] > 0.5) {
       const panels = [],
         accents = [],
@@ -948,7 +986,15 @@ export function createFlightRenderer({
               ]);
           accents.push([side, 0, -height / 2 + 0.25, span, 0.24, half]);
         } else if ((kind === 'metal' || kind === 'storage-steel') && span > 1) {
-          accents.push([side, 0, -height * 0.34, span * 0.96, Math.min(0.12, height * 0.08), half]);
+          if (!yardContainer)
+            accents.push([
+              side,
+              0,
+              -height * 0.34,
+              span * 0.96,
+              Math.min(0.12, height * 0.08),
+              half,
+            ]);
           if (/container|rack/.test(obstacle.id))
             panels.push([
               side,
@@ -979,12 +1025,15 @@ export function createFlightRenderer({
       );
       addFlushPanels(value, accents, kind === 'plaster' ? 0x8c7863 : theme.warm, 'high');
     }
-    const edges = new THREE.EdgesGeometry(value.geometry, 30);
+    // Only the outer shipping-frame edges are outlined, not every corrugation.
+    const outline = yardContainer ? new THREE.BoxGeometry(...size) : value.geometry,
+      edges = new THREE.EdgesGeometry(outline, 30);
+    if (yardContainer) outline.dispose();
     geometry.add(edges);
     const edgePaint = new THREE.LineBasicMaterial({
-      color: kind === 'bark' ? 0x625747 : theme.warm,
+      color: yardContainer ? paint.color : kind === 'bark' ? 0x625747 : theme.warm,
       transparent: true,
-      opacity: kind === 'bark' ? 0.12 : 0.22,
+      opacity: yardContainer ? 0.1 : kind === 'bark' ? 0.12 : 0.22,
     });
     materials.add(edgePaint);
     value.add(new THREE.LineSegments(edges, edgePaint));
@@ -1045,6 +1094,7 @@ export function createFlightRenderer({
     sceneryFallback = surroundings.backdrop;
     obstacleMaps = surroundings.obstacleMaps;
     obstacleSurface = surroundings.obstacleSurface ?? null;
+    obstacleFittingsMaterial = surroundings.obstacleFittingsMaterial ?? null;
     environmentSurfaceKind = surroundings.obstacleSurfaceKind ?? null;
     scene.background = new THREE.Color(surroundings.indoor ? theme.wall : theme.sky);
     // Visibility is a course property, identical across graphics presets.
@@ -2527,6 +2577,7 @@ export function createFlightRenderer({
       droneVisual = null;
       obstacleMaps = null;
       obstacleSurface = null;
+      obstacleFittingsMaterial = null;
       sceneryFallback = null;
       themeProfile = null;
       course = null;
