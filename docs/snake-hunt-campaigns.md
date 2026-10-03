@@ -180,9 +180,11 @@ Classic structural evidence is in
 192 initial core instances and 48 distinct geometries. A directed authored
 Open Loop playthrough caught all eight targets in 93 steps / 18,600 ms, grew from
 four to twelve cells and replayed exactly. Source-bound core observations are in
-`docs/verification/classic-snake/`. Scoped syntax, lint and formatting checks
-passed; final repository-wide integration/build verification is pending the
-integration owner's final receipt.
+`docs/verification/classic-snake/`. Repository-wide lint and validation, changed
+file formatting and committed-source default-build inspection passed. The
+[integration receipt](verification/classic-snake/integration.md) retains exact
+source/build identities and distinguishes browser observations from release
+qualification.
 
 Capture-remix and Sim evidence remains in `docs/evidence/snake-hunt-content-coverage.json`,
 `docs/evidence/sim-snake-hunt-runtime-observation.json` and its recorded-input

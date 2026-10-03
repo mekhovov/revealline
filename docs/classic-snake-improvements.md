@@ -123,9 +123,13 @@ Evidence is retained in [the core observation record](verification/classic-snake
 and [the catalogue receipt](evidence/classic-snake-catalogue-observation.json).
 
 **Automated suites remain WAIVED_SKIPPED_NOT_PASSED** under
-`publishing/test-policy.json`; the new regression file is unrun. Final
-repository-wide validation, build/source inspection and host/browser checks are
-pending the integration owner's final receipts. Human play qualification remains
-deferred: all-mission balance, physical keyboard/touch/controller use, slower
-devices, small-screen two-player readability and full Team campaign completion
-are not declared passed by the model observations.
+`publishing/test-policy.json`; the new regression sources are unrun.
+Repository-wide lint/validation, changed-file formatting and committed-source
+default-build inspection passed. Exact identities and bounded browser
+observations are retained in the
+[integration receipt](verification/classic-snake/integration.md). Human play
+qualification remains deferred: all-mission balance, physical keyboard/touch
+devices, slower devices, small-screen two-player readability and full Team
+campaign completion are not declared passed by the model observations. Classic
+does not implement gamepad input or a Studio GUI; those claims are not implied
+by retaining the earlier Capture-remix Studio tools.
