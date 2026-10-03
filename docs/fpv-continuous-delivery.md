@@ -2595,3 +2595,29 @@ A separate local integration branch may combine #986/#987 solely to build the
 user's combined playtest. Do not push that merge into either focused PR. Continue
 Stadium/Garage on current main or an explicit dependent branch, preserving these
 ready candidates and all existing proof identities.
+### D1 Woodland rendering foundation — 3 October 2026
+
+Independent branch `codex/fpv-woodland-canopy-batching` starts from accepted main
+`1aef4d70fa37c8911dbb47b4b128c253178c8b60`. It batches 66 background crowns into
+24 spatial/material groups, retaining original geometry within float32 precision,
+colors and placement. No course/collision/physics/input changes. #987's concurrent
+Container/quad work is preserved; no dependency or native stack is needed.
+
+Functional browser qualification passed 12 cases / 60 rendered comparisons,
+including both Woodland bounds, Pixel, Meadow, three presets and shadows.
+Registered Woodland geometry decreases 144→79; Balanced overview calls decrease
+276→192. Twelve disposal cycles show no growing allocation. Existing package
+preparation passes at 94files/14,400,550bytes. See
+`docs/fpv-woodland-canopy-batching.md` for evidence and measurement limitations.
+This is D1's rendering foundation, not completed Woodland art or measured FPS.
+
+#989 capacity checks were still running at the start of this increment. Next:
+qualify/publish this focused increment; continue original Woodland asset detail
+and Container composition while protected CI runs. Preserve physical-device and
+full-release qualification as outstanding, without waiting on player feedback.
+
+Published as [PR #990](https://github.com/mekhovov/revealline/pull/990), head
+16c5809a0de11735d4d4e6b45e7b1f7cba077856 before this log-only update. Required
+CI is pending; no live deployment claim. Capacity #989 now passes focused and
+default-capacity checks, but its preview and edition candidate jobs failed;
+inspect those failures next without weakening admission guards.
