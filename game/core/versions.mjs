@@ -56,6 +56,16 @@ export const HUNT_VERSIONS = Object.freeze({
   replayVersion: 'xonix-replay.v11',
   checkpointAlgorithm: 'fnv1a64-state-v10',
 });
+export const RUNNING_ENEMY_VERSIONS = Object.freeze({
+  levelVersion: 'xonix-level.v10',
+  ruleset: 'xonix-core.v11',
+  replayVersion: 'xonix-replay.v12',
+  checkpointAlgorithm: 'fnv1a64-state-v11',
+});
+export const baseLevelVersion = (level) =>
+  level?.version === RUNNING_ENEMY_VERSIONS.levelVersion
+    ? level.runningEnemies?.baseVersion
+    : level?.version;
 export const isClassicRuleset = (ruleset) =>
   [
     CLASSIC_VERSIONS.ruleset,
@@ -103,6 +113,7 @@ export function resolveVersions(value = {}) {
     DIRECTIONAL_VERSIONS,
     SENTINEL_VERSIONS,
     HUNT_VERSIONS,
+    RUNNING_ENEMY_VERSIONS,
   ].find((pair) => keys.every((key) => request[key] === pair[key]));
   if (!match) throw new TypeError('unsupported or mismatched simulation versions');
   return { ...match };

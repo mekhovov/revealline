@@ -1,6 +1,8 @@
 import { createRun, stepRun, releaseInputs, getSummary, FIXED_DT, CLASSES } from './core/index.mjs';
 import {
   LEGACY_VERSIONS,
+  RUNNING_ENEMY_VERSIONS,
+  baseLevelVersion,
   ENCOUNTER_VERSIONS,
   WIDE_VERSIONS,
   CLASSIC_VERSIONS,
@@ -50,22 +52,32 @@ const SECTIONS = [
 ];
 const encoder = new TextEncoder();
 const sectionNames = (versions) =>
-  isRelayRuleset(versions.ruleset)
+  versions.ruleset === RUNNING_ENEMY_VERSIONS.ruleset
     ? [
         ...SECTIONS,
         'encounter',
         'classic',
         'foundations',
         'relays',
-        ...(isDirectionalRuleset(versions.ruleset) ? ['directionalFields'] : []),
+        'directionalFields',
+        'runningEnemies',
       ]
-    : versions.ruleset === FOUNDATION_VERSIONS.ruleset
-      ? [...SECTIONS, 'encounter', 'classic', 'foundations']
-      : versions.ruleset === CLASSIC_VERSIONS.ruleset
-        ? [...SECTIONS, 'encounter', 'classic']
-        : versions.ruleset !== LEGACY_VERSIONS.ruleset
-          ? [...SECTIONS, 'encounter']
-          : SECTIONS;
+    : isRelayRuleset(versions.ruleset)
+      ? [
+          ...SECTIONS,
+          'encounter',
+          'classic',
+          'foundations',
+          'relays',
+          ...(isDirectionalRuleset(versions.ruleset) ? ['directionalFields'] : []),
+        ]
+      : versions.ruleset === FOUNDATION_VERSIONS.ruleset
+        ? [...SECTIONS, 'encounter', 'classic', 'foundations']
+        : versions.ruleset === CLASSIC_VERSIONS.ruleset
+          ? [...SECTIONS, 'encounter', 'classic']
+          : versions.ruleset !== LEGACY_VERSIONS.ruleset
+            ? [...SECTIONS, 'encounter']
+            : SECTIONS;
 function replayVersions(value) {
   try {
     return resolveVersions({
@@ -233,7 +245,22 @@ const physicsRecipe = (recipe) =>
     'moveSpeedMultiplier',
   ]);
 function authoritativeSections(state, versions) {
+  const supplemental = versions.ruleset === RUNNING_ENEMY_VERSIONS.ruleset;
+  if (supplemental) versions = resolveVersions({ levelVersion: baseLevelVersion(state.level) });
   return {
+    ...(supplemental
+      ? {
+          encounter: null,
+          classic: null,
+          foundations: null,
+          relays: null,
+          directionalFields: null,
+          runningEnemies: {
+            definition: structuredClone(state.level.runningEnemies),
+            state: structuredClone(state.runningEnemies ?? null),
+          },
+        }
+      : {}),
     identity: pick(state, [
       'ruleset',
       'levelId',

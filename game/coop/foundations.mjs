@@ -1,3 +1,9 @@
+import {
+  inheritedTeamVersion,
+  TEAM_RUNNING_LEVEL_VERSION,
+  TEAM_RUNNING_RULESET,
+  TEAM_RUNNING_PACK_VERSION,
+} from './running-enemies.mjs';
 import { compileMapGeometry } from '../content-design/map.mjs';
 
 export const COOP_FOUNDATION_LEVEL_VERSION = 'revealline-coop-level.v2';
@@ -55,7 +61,12 @@ const editions = Object.freeze({
 });
 
 export function journeyTeamPackEdition(level) {
-  const edition = Object.hasOwn(editions, level.version) ? editions[level.version] : null;
+  const edition =
+    level.version === TEAM_RUNNING_LEVEL_VERSION
+      ? { version: TEAM_RUNNING_PACK_VERSION, ruleset: TEAM_RUNNING_RULESET }
+      : Object.hasOwn(editions, level.version)
+        ? editions[level.version]
+        : null;
   if (!edition) throw new TypeError('Unsupported Journey Team runtime edition.');
   return edition;
 }
@@ -68,7 +79,7 @@ export const hasTeamTerrain = (level) =>
     COOP_IMPACT_LEVEL_VERSION,
     COOP_SPECIALIST_LEVEL_VERSION,
     COOP_HUNT_LEVEL_VERSION,
-  ].includes(level.version);
+  ].includes(inheritedTeamVersion(level));
 
 export const hasTeamRoamers = (level) =>
   [
@@ -77,17 +88,20 @@ export const hasTeamRoamers = (level) =>
     COOP_IMPACT_LEVEL_VERSION,
     COOP_SPECIALIST_LEVEL_VERSION,
     COOP_HUNT_LEVEL_VERSION,
-  ].includes(level.version);
+  ].includes(inheritedTeamVersion(level));
 
 export const hasTeamLineImpacts = (level) =>
-  [COOP_IMPACT_LEVEL_VERSION, COOP_SPECIALIST_LEVEL_VERSION].includes(level.version) ||
-  (level.version === COOP_HUNT_LEVEL_VERSION && Object.hasOwn(level, 'lineImpact'));
+  [COOP_IMPACT_LEVEL_VERSION, COOP_SPECIALIST_LEVEL_VERSION].includes(
+    inheritedTeamVersion(level),
+  ) ||
+  (inheritedTeamVersion(level) === COOP_HUNT_LEVEL_VERSION && Object.hasOwn(level, 'lineImpact'));
 export const hasTeamSpecialists = (level) =>
-  level.version === COOP_SPECIALIST_LEVEL_VERSION ||
-  (level.version === COOP_HUNT_LEVEL_VERSION && Object.hasOwn(level, 'supportRoles'));
-export const hasTeamHunting = (level) => level.version === COOP_HUNT_LEVEL_VERSION;
+  inheritedTeamVersion(level) === COOP_SPECIALIST_LEVEL_VERSION ||
+  (inheritedTeamVersion(level) === COOP_HUNT_LEVEL_VERSION && Object.hasOwn(level, 'supportRoles'));
+export const hasTeamHunting = (level) =>
+  [COOP_HUNT_LEVEL_VERSION, TEAM_RUNNING_LEVEL_VERSION].includes(level.version);
 
-export const isJourneyTeamLevel = (level) => Object.hasOwn(editions, level.version);
+export const isJourneyTeamLevel = (level) => Object.hasOwn(editions, inheritedTeamVersion(level));
 export const isJourneyTeamRuleset = (ruleset) =>
   Object.values(editions).some((edition) => edition.ruleset === ruleset);
 

@@ -1,6 +1,48 @@
 import { createJourneyBackend, createJourneyProfileStore } from '../journey/profile.mjs';
 import { validateJourneyPicture } from '../journey/pictures.mjs';
 import { verifiedTeamHuntRestore } from '../coop/hunt-attempts.mjs';
+import { applyGameplayTuning, recoverGameplayTuning } from '../gameplay-tuning.mjs';
+import { prepareTeamRunningEnemies } from '../hunt/team-running-enemies.mjs';
+import { createCoop } from '../coop/core.mjs';
+import { dataIdentity } from '../data-json.mjs';
+
+function runningCompletion(row, run, verified = null) {
+  if (!run?.level.runningEnemies) return null;
+  try {
+    const tuning = recoverGameplayTuning(run.level);
+    if (!tuning || tuning.adminOverride) return null;
+    const level = applyGameplayTuning(row.level, tuning),
+      matched = prepareTeamRunningEnemies(level),
+      original = createCoop(level, {
+        seed: run.seed,
+        difficulty: run.difficulty,
+        ...run.config,
+      });
+    if (level.version !== row.level.version || original.ruleset !== row.pack.ruleset) return null;
+    const actualGameplayId = dataIdentity({ ruleset: run.ruleset, level: matched });
+    // Team initializes and later moves the inherited enemies in run.level.
+    // Fresh binding compares initialized data; Continue has the stronger exact
+    // source, journal and current-state proof retained by the restore owner.
+    if (verified) {
+      if (verified.gameplayId !== actualGameplayId) return null;
+    } else {
+      const expected = createCoop(matched, {
+        seed: run.seed,
+        difficulty: run.difficulty,
+        ...run.config,
+      });
+      if (dataIdentity(expected.level) !== dataIdentity(run.level)) return null;
+    }
+    return {
+      level,
+      ruleset: original.ruleset,
+      actualGameplayId,
+      gameplayId: dataIdentity({ ruleset: original.ruleset, level }),
+    };
+  } catch {
+    return null;
+  }
+}
 
 function availableBackend(profileKey) {
   // Resolve inside the store's bounded operation: a denied global getter is
@@ -113,6 +155,7 @@ export function createTeamJourneyProgress(
         attemptId = null,
       } = {},
     ) {
+      const running = journey.owns(row) ? runningCompletion(row, run) : null;
       if (
         disposed ||
         adminOverride ||
@@ -126,31 +169,41 @@ export function createTeamJourneyProgress(
         run.tick !== 0 ||
         !['ready', 'running'].includes(run.status) ||
         run.level.id !== row.level.id ||
-        run.level.version !== row.level.version ||
-        run.ruleset !== row.pack.ruleset ||
+        (run.level.runningEnemies &&
+          (!running || (gameplayId !== null && gameplayId !== running.actualGameplayId))) ||
+        (running?.level.version ?? run.level.version) !== row.level.version ||
+        (running?.ruleset ?? run.ruleset) !== row.pack.ruleset ||
         run.difficulty !== row.difficulty ||
         (skipped && (!journey.owns(skipped) || journey.destination(skipped).next !== row))
       )
         return false;
-      return bind(row, run, { skipped, gameplayId, picture, attemptId });
+      return bind(row, run, {
+        skipped,
+        gameplayId: running?.gameplayId ?? gameplayId,
+        picture,
+        attemptId,
+      });
     },
     resumed(row, run, { gameplayId = null, adminOverride = false, picture = null } = {}) {
       if (disposed || adminOverride || !journey.owns(row) || !run || attempts.has(run))
         return false;
       const verified = verifiedTeamHuntRestore(run, row);
+      const running = verified ? runningCompletion(row, run, verified) : null;
       if (
         !verified ||
         verified.adminOverride ||
         verified.encounterVariant !== 'authored' ||
         (gameplayId !== null && gameplayId !== verified.gameplayId) ||
         run.level.id !== row.level.id ||
-        run.level.version !== row.level.version ||
-        run.ruleset !== row.pack.ruleset ||
+        (run.level.runningEnemies &&
+          (!running || verified.gameplayId !== running.actualGameplayId)) ||
+        (running?.level.version ?? run.level.version) !== row.level.version ||
+        (running?.ruleset ?? run.ruleset) !== row.pack.ruleset ||
         run.difficulty !== row.difficulty
       )
         return false;
       return bind(row, run, {
-        gameplayId: verified.gameplayId,
+        gameplayId: running?.gameplayId ?? verified.gameplayId,
         attemptId: verified.attemptId,
         picture,
       });
