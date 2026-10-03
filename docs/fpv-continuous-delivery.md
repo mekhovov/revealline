@@ -2621,3 +2621,23 @@ Published as [PR #990](https://github.com/mekhovov/revealline/pull/990), head
 CI is pending; no live deployment claim. Capacity #989 now passes focused and
 default-capacity checks, but its preview and edition candidate jobs failed;
 inspect those failures next without weakening admission guards.
+### D1 continued without waiting: both Woodland scenery paths — 3 October 2026
+
+Surface increment published as PR #992 on `codex/fpv-woodland-foliage-surfaces`.
+Its leaf/bark changes affect the procedural fallback; the primary World Studio
+scene loads licensed Kenney assets and hides that fallback. Keep this distinction
+explicit rather than claiming the fallback pass finishes the normal world art.
+
+Immediately continued independently from main a8c808a on
+`codex/fpv-woodland-tree-forms`. Primary imported trees now receive individual
+orientations with recalculated safe footprints. Procedural trees receive clustered
+crowns and batched forks. All new vertices stay outside playable bounds; five
+other imported environment GLBs remain byte-identical. No physics/content identity
+change. 15cases/90browser views plus two actual GLTFLoader scenes pass; 30 existing
+checks and 94file/14,411,732byte package preparation pass. The fallback has an
+explicit additional triangle cost; primary-scene sampled calls/triangles remain
+unchanged. Evidence: `docs/fpv-woodland-tree-forms.md`.
+
+Next: primary imported Woodland composition/material depth and Container Yard
+landmarks, preserving #992 and this ready model increment. D1 is not yet complete;
+continue into D2 when its remaining art and functional evidence are complete.
