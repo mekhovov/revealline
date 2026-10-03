@@ -2621,3 +2621,14 @@ Published as [PR #990](https://github.com/mekhovov/revealline/pull/990), head
 CI is pending; no live deployment claim. Capacity #989 now passes focused and
 default-capacity checks, but its preview and edition candidate jobs failed;
 inspect those failures next without weakening admission guards.
+### Yard publication and material qualification repair — 3 October 2026
+
+Yard composition is published as draft #998, independent of Woodland #996.
+Immediately continued on `codex/fpv-field-surface-identity` to resolve the shared
+qualification failure. Military-field's foundry recipe collapsed to the DOS
+light/dark motif. Dedicated recessed panels restore distinct identity without
+changing 112 maps across the other 16 collections. All 30 existing checks and
+browser map comparisons pass; package admission passes at 94files/15,383,912bytes.
+See `docs/fpv-field-surface-identity.md`. Next: publish this focused repair, refresh
+art PRs after protected integration, continue D1 material depth; do not call D1
+complete or public availability verified. Preserve concurrent capacity/Theme work.
