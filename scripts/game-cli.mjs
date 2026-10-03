@@ -764,6 +764,11 @@ export async function addOfflineEntries(
     // Recorded spatial effects stay hosted for online play and exact optional
     // download, but are not charged to every installation's 64 MiB core.
     ...entries.filter((entry) => isOptionalSpatialAudioBody(entry.name)).map((entry) => entry.name),
+    // The review gallery duplicates paintings already embedded in playable
+    // content. Host its source copies without charging the offline game twice.
+    ...entries
+      .filter((entry) => entry.name.startsWith('authoring/library/classic-reveal-artwork/'))
+      .map((entry) => entry.name),
     ...entries
       .filter((entry) => isOptionalReactionVoiceBody(entry.name))
       .map((entry) => entry.name),

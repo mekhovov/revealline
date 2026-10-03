@@ -10,6 +10,8 @@
 
 Open `index.html` to review every picture and its level link. The links target the matching source edition and work on GitHub Pages after this change is deployed.
 
+The review gallery loads online on demand. Its duplicate source images are excluded from the game's bounded offline cache; runtime pictures remain in the base sidecar and downloadable chapter packs.
+
 `prompts.json` preserves the exact prompts used with OpenAI's built-in image generation tool, one call per image. `manifest.json` records the generated original filenames and SHA-256 fingerprints as well as the shipped JPEG dimensions, sizes and fingerprints. The full-resolution originals remain in the generating workspace's image output directory. The optimized, uncropped 1024×768 paintings are committed in `backgrounds/` and embedded into the runtime packs.
 
 The same level painting serves all selectable actor themes. The artwork follows the setting and obstacle composition, while actor skins continue to come from the selected theme. No geometry, enemy placement, objectives, campaign revisions or progress identities change.
