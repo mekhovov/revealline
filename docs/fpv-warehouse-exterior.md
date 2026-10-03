@@ -63,8 +63,10 @@ all per-view hashes/counts. Static observations do not certify flight completion
 physical-device performance or final artist acceptance.
 
 The frozen source fixture is
-`dist/fpv-warehouse-exterior-verification-source-v1`, with 31 modules per side
+`dist/fpv-warehouse-exterior-verification-source-v2`, with 31 modules per side
 and 19,723,725 bytes. Its complete inventories bind the runtime hash above.
+The second harness adds preview-only camera selection and an exterior pose;
+the 216 Warehouse plus five control comparisons retain the original two poses.
 Actual visual acceptance is pending. Inspect the four-centimetre panel joints
 obliquely for distracting light slits before package admission. Source/package
 WebGL qualification, actual player, protected publication and public deployment

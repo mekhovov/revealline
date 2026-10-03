@@ -80,8 +80,17 @@
     <select id="wall">
       <option value="north-glazing">North through glazing</option>
       <option value="south-roofline">South above beams</option>
+      <option value="exterior-north">North exterior (preview only)</option>
     </select></label
   >
+  <label
+    >Preview camera
+    <select id="preview-camera">
+      <option value="fpv">FPV</option>
+      <option value="chase">Chase</option>
+      <option value="overview">Overview</option>
+    </select>
+  </label>
   <p id="status">Preparing controls…</p>
   <div class="pair">
     <figure>
@@ -253,6 +262,14 @@
         y: north ? 5400 : 10500,
         z: north ? c.bounds.min.z + 21000 : c.bounds.max.z - 21000,
       };
+      if (wall === 'exterior-north') {
+        state.position = {
+          x: Math.round(middleX * 1000),
+          y: 11000,
+          z: c.bounds.min.z - 16000,
+        };
+        q.setFromEuler(new m.THREE.Euler(-0.22, Math.PI, 0, 'YXZ'));
+      }
       state.orientation = q.toArray().map((n) => Math.round(n * 1e6));
       state.ticks = 100;
       return state;
@@ -542,7 +559,13 @@
       try {
         if (!owners.length) createOwners();
         await load($('course').value, 'balanced', $('appearance').value);
-        await pair($('course').value, 'balanced', $('appearance').value, 'fpv', $('wall').value);
+        await pair(
+          $('course').value,
+          'balanced',
+          $('appearance').value,
+          $('preview-camera').value,
+          $('wall').value,
+        );
         status('Selected static view');
       } catch (error) {
         status(error.message);
