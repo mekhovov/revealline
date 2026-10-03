@@ -267,7 +267,7 @@ export function createSimModeLinks({ document: doc, gameReturn, locale = () => '
 }
 
 // BEGIN GENERATED SHARED MODE SHELL
-// Canonical source sha256: d99637a24904c4c3e81079e9d178ea795d4224487391126dd6c091b2dc739821
+// Canonical source sha256: 20c218f82ea08fb566063790197d592274b5be053604103a062175a7620104a6
 const sharedModeShell = (() => {
   // Presentation only. Hosts own simulation, prepared attempts, sound and navigation.
   // Services are injected so optional modes can project this exact source without
@@ -514,6 +514,7 @@ const sharedModeShell = (() => {
         true,
         'primary',
       ),
+      button('results', () => open('results'), false, 'home-results'),
       button('missions', () => open('missions')),
       button('settings', () => open('settings')),
       button('fullscreen', () => actions.fullscreen?.()),
@@ -610,6 +611,7 @@ const sharedModeShell = (() => {
       put(buttons.pause, 'disabled', !['playing', 'paused'].includes(state.phase));
       attribute(buttons.sound, 'aria-pressed', String(!state.muted));
       put(retryHome, 'hidden', state.phase !== 'paused');
+      put(buttons['home-results'], 'hidden', state.phase !== 'results');
     }
     function enterPlay() {
       if (!alive) return;
@@ -666,6 +668,7 @@ const sharedModeShell = (() => {
       const dialog = topDialog();
       if (!dialog || !Object.values(dialogs).includes(dialog)) return false;
       if (dialog === dialogs.home) {
+        if (state.phase === 'results') return open('results');
         if (!resumable()) return false;
         enterPlay();
         return true;
