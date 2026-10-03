@@ -41,8 +41,10 @@ inspector always names its selected mode explicitly.
 - The exact UI-authored export completes and independently replays in both modes:
   Self-level 627 ticks; Acro 548 ticks; zero contacts. Ordinary scripted flight
   commands qualify objective feasibility, not player usability.
-- Shared-host section regression passes **53/53**, including uninterrupted full
-  and section autoplay, pause during loading, disposal and supersession.
+- Integration with pending section replay #972 passes **53/53**, including
+  uninterrupted full and section autoplay, pause during loading, disposal and
+  supersession. This is separate integration evidence; the editor itself has no
+  playback dependency and targets main independently.
 - Syntax, lint, formatting and independent source review pass.
 
 The fixture initializes an asymmetric non-tracking route through the existing
