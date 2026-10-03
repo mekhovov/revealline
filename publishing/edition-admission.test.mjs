@@ -4,6 +4,7 @@ import { createHash } from 'node:crypto';
 import { readFile } from 'node:fs/promises';
 import { editionAdmissionFixture as fixture } from './edition-fixture.mjs';
 import { createEditionZip } from './edition-zip.mjs';
+import { createEditionCandidate } from './edition-candidate.mjs';
 import { COMPANY_PACKAGE_BUDGET } from '../game/editions/package-budget.mjs';
 import {
   validateEditionSourceInventory,
@@ -101,6 +102,32 @@ test('edition envelope binds exact source and original descriptors without chang
   assert.equal(result.status, 'verified-candidate-members');
   f.files.set('distribution-coupa.zip', bytes('replaced'));
   await assert.rejects(validateEditionAdmission(f.envelope, f), /bytes differ/);
+});
+
+test('Company Snake entry projections survive original-byte archive admission', async () => {
+  const f = fixture();
+  for (const name of ['game/snake/index.html', 'game/snake/play.html']) {
+    f.sourceFiles.set(name, bytes('<html>Full source entry</html>'));
+    f.runtime.set(name, bytes('<html>Selected Company entry</html>'));
+  }
+  const build = () =>
+    createEditionCandidate({
+      compiled: { files: f.runtime, runtimeCatalog: f.catalog },
+      sourceFiles: f.sourceFiles,
+      version: f.envelope.version,
+      sourceRevision: f.envelope.sourceRevision,
+      sourceTree: f.envelope.sourceTree,
+    });
+  const candidate = build();
+  const result = await validateEditionAdmission(
+    { ...f.envelope, editions: [candidate.edition] },
+    { read: async (row) => candidate.files.get(row.path) },
+  );
+  assert.equal(result.zipMembersVerified, true);
+  assert.equal(result.status, 'verified-candidate-members');
+  f.sourceFiles.set('game/snake/unreviewed.html', bytes('<html>Original</html>'));
+  f.runtime.set('game/snake/unreviewed.html', bytes('<html>Projected</html>'));
+  assert.throws(build, /Unclassified selected source projection/);
 });
 
 test('missing, duplicate, over-budget and mismatched source bindings reject admission', async () => {

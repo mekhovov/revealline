@@ -422,7 +422,7 @@ export async function validateEditionAdmission(envelope, { read } = {}) {
         safePath(name);
         const validKind = {
           'selected-entry':
-            /^game\/(?:company\.html|index\.html|(?:controller-lab|replay-theater)\/index\.html)$/.test(
+            /^game\/(?:company\.html|index\.html|(?:controller-lab|replay-theater|snake)\/index\.html|snake\/play\.html)$/.test(
               name,
             ),
           'selected-locales': /^game\/i18n\/(?:catalogs|bootstrap|content-registry)\.mjs$/.test(
