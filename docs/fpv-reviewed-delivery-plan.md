@@ -62,12 +62,18 @@ admissions and the complete 102-file local admitted player are documented there.
 The public marker now matches that merge; actual Lighthouse approach render,
 arm through 0.2 seconds and pause-to-menu passed with empty warning/error logs.
 
-Quarry's next bounded candidate improves the six existing rock solids with
+Quarry's qualified bounded increment improves the six existing rock solids with
 world-aligned authored strata and fine fractures. It changes no collision volume,
 route or geometry, and creates no additional texture set. Pixel, shared Themes
-and unsupported creator layouts retain their prior finish. Actual visual review
-and functional qualification decide readiness; no finished-world or hardware
-claim follows from surface detail alone. Continue the remaining D2 worlds before
+and unsupported creator layouts retain their prior finish. The accepted revision
+retains fine grain and broken seams; source/package browser qualification each
+passes 116 checks / 56 image pairs, ten fresh retained-proof replays cover 41,643
+ticks, all three package admissions pass two identical builds, and the complete
+102-file admitted player renders/arms/pauses. The unrelated imported Courtyard
+control uses disclosed equal GLTF material construction order; original 176/27-pixel
+failures remain in the [qualification record](fpv-quarry-strata.md). Publish this
+focused increment through protected checks; no finished-world or hardware claim
+follows from surface detail alone. Continue the remaining D2 worlds before
 D3 examples/coaching, D4 creator, D5's four worlds and D6 additional unit coverage.
 The catalogue remains 196 unique challenges / 14 worlds: 60 original, 30 Adventure,
 48 Snake Hunt and 58 School, with 374 authored steps. D5 still targets 228 / 18.
