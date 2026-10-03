@@ -1,0 +1,180 @@
+{
+  "sourceHead": "69c8dd10148b657db32da04219ada71e864156a9",
+  "startedAt": "2026-10-03T03:26:34.326Z",
+  "sourceHashes": {
+    "game/i18n/catalogs.mjs": "2b4572d511ed4b641e4b7e2765fd19e093a27e49621c0ace46c5cfd018c2dbdf",
+    "game/locales/en/interface.json": "9c3bc01fa2c88aa9f0f000334860362ee0ddeb8a6f98a8d7a8891ed1bbf2ce8b",
+    "game/locales/en/tools.json": "63b010c79a54b42c878c40c81f53b93fbc5de7b240261bcec08e7804ada66d31",
+    "game/locales/uk/interface.json": "a0d3edf8251e87e36bfdd2abe8165873ea16b82aad6def1aa4978a29cd54565b",
+    "game/locales/uk/tools.json": "f66c475924798fd6c54a0b0f67632b30a73f1791e2596c5bce696970316853fd",
+    "game/presentation/industrial-arcade.mjs": "818a686c08d2ccb369cb5ada2dd38fbb780704e8e0eb0bbc9e4835e4584fa1db",
+    "game/presentation/industrial-workshop.css": "ac88f530924ea863a1aecbdf90db83de4d538c9ec44a87919e8a6acf9f722424",
+    "game/presentation/theme-bootstrap.mjs": "aac0cfe4b8e767354597b86ea7605bf23bf5e313a604bc7ebe27ee3e34122ab4",
+    "game/presentation/theme-system.mjs": "c8e82d70f513a5313b16a9536c5b2359b677b9626b862ed77ecf6d3057b79229",
+    "game/test/theme-collection-expansion.test.mjs": "87fabc8cd84d3ba358cebbb4b9307d781da78da0e23f107594f4a6c05b2a99ab",
+    "game/test/theme-preview.test.mjs": "9d91cfda5ee0c86e45b7de27149c18d186f1e4c57b8fdb23328d7f3ee3335360",
+    "game/test/unified-appearance.test.mjs": "cbb44cd40e5dbc5bac76bdf97fa461138f5241a58eeb79115c9155222ace484a",
+    "optional-practice/civilian-fpv/sim-presentation.mjs": "f85b7d74b48c5a837585d8b9f0dc7501bf5fc09b2dfaef8b8b1e1413aa2d3709",
+    "optional-practice/civilian-fpv/world-visuals.mjs": "d0c0268ba822700a728c4a1cd425151c00334f384432f714d1aa6a696da5865d",
+    "scripts/refresh-interface-material-grain.mjs": "1bd82a2ef1d6d5160759f7f091c5de7344e533800c66bcf8f266d5e98cf5196c"
+  },
+  "checks": [
+    {
+      "command": [
+        "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node",
+        "scripts/refresh-interface-material-grain.mjs",
+        "--check"
+      ],
+      "exitCode": 0,
+      "output": "{\"tiles\":[\"powder\",\"brush\",\"thread\",\"timber\",\"stone\",\"fiber\",\"machining\",\"edge-wear\",\"vent\",\"bulkhead\"],\"bytes\":11086}\n"
+    },
+    {
+      "command": [
+        "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node",
+        "scripts/refresh-fpv-presentation-assets.mjs",
+        "--check"
+      ],
+      "exitCode": 0,
+      "output": "{\"status\":\"verified-byte-identical\",\"assets\":{\"ui\":{\"source\":\"game/ui/fonts/field-kit/exo2-ui-400-600.woff2\",\"bytes\":76652,\"sha256\":\"fce2dc8f15375b66d336c1defbca23dfb2310301b62c822206a0a013d19601ef\",\"license\":\"OFL-1.1\"},\"pixel\":{\"source\":\"game/ui/fonts/departure-mono/DepartureMono-Regular.woff2\",\"bytes\":22496,\"sha256\":\"5b4fed1daa90708aa9c6ee1190abca9dc22164a1c1def0020386e46b61038cfb\",\"license\":\"OFL-1.1\"},\"mono\":{\"source\":\"game/ui/fonts/field-kit/ibm-plex-mono-500.woff2\",\"bytes\":40080,\"sha256\":\"0498bcb48294756b5ac9062290e1639e907b1ec69b5dc2e8cfdec3fab58e0bc8\",\"license\":\"OFL-1.1\"},\"display\":{\"source\":\"game/ui/fonts/field-kit/handjet-display-600.woff2\",\"bytes\":38120,\"sha256\":\"4797c11d5e17c3f5f9b5b3fa96efb4fd2aabb877fb4d625dfc8eb7465464e145\",\"license\":\"OFL-1.1\"},\"focus\":{\"source\":\"game/audio/effects/focus.wav\",\"bytes\":2924,\"sha256\":\"0eb2a24d7e17e79c6d2b4dc4c1be57ba0622d2e3e8e177999c12eb18c54d3256\",\"license\":\"CC0-1.0\"},\"confirm\":{\"source\":\"game/audio/effects/confirm.wav\",\"bytes\":5864,\"sha256\":\"52f084b9648ccd970891996c7ccdabb796dcd33c0a6d4a420bb70e51daef9bf1\",\"license\":\"CC0-1.0\"},\"cancel\":{\"source\":\"game/audio/effects/cancel.wav\",\"bytes\":3948,\"sha256\":\"d59b933dbe794b9d36f962c8505513f3a85a30a6c2c3e2ed1d6895769d0a2616\",\"license\":\"CC0-1.0\"}}}\n"
+    },
+    {
+      "command": [
+        "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node",
+        "scripts/refresh-theme-bootstrap.mjs",
+        "--check"
+      ],
+      "exitCode": 0,
+      "output": ""
+    }
+  ],
+  "command": [
+    "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node",
+    "--test-concurrency=1",
+    "--test",
+    "game/test/theme-system.test.mjs",
+    "game/test/theme-collection-expansion.test.mjs",
+    "game/test/theme-bootstrap.test.mjs",
+    "game/test/theme-preview.test.mjs"
+  ],
+  "exitCode": 0,
+  "finishedAt": "2026-10-03T03:26:42.936Z",
+  "summary": {
+    "tests": 46,
+    "pass": 46,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 0
+  },
+  "sourcesUnchangedDuringRun": true,
+  "retainedDocumentChecks": [
+    {
+      "id": "legacy",
+      "revision": "r2",
+      "familyUnchanged": true,
+      "interfaceUnchanged": true
+    },
+    {
+      "id": "industrial-workshop",
+      "revision": "r2",
+      "familyUnchanged": true,
+      "interfaceUnchanged": true
+    },
+    {
+      "id": "vyshyvanka",
+      "revision": "r2",
+      "familyUnchanged": true,
+      "interfaceUnchanged": true
+    },
+    {
+      "id": "dnipro-porcelain",
+      "revision": "r1",
+      "familyUnchanged": true,
+      "interfaceUnchanged": true
+    },
+    {
+      "id": "tryzub",
+      "revision": "r1",
+      "familyUnchanged": true,
+      "interfaceUnchanged": true
+    },
+    {
+      "id": "windows-classic",
+      "revision": "r2",
+      "familyUnchanged": true,
+      "interfaceUnchanged": true
+    },
+    {
+      "id": "dos",
+      "revision": "r2",
+      "familyUnchanged": true,
+      "interfaceUnchanged": true
+    },
+    {
+      "id": "orchard-workshop",
+      "revision": "r1",
+      "familyUnchanged": true,
+      "interfaceUnchanged": true
+    },
+    {
+      "id": "neon-ruins",
+      "revision": "r1",
+      "familyUnchanged": true,
+      "interfaceUnchanged": true
+    },
+    {
+      "id": "pocket-lcd",
+      "revision": "r1",
+      "familyUnchanged": true,
+      "interfaceUnchanged": true
+    },
+    {
+      "id": "copper-observatory",
+      "revision": "r1",
+      "familyUnchanged": true,
+      "interfaceUnchanged": true
+    },
+    {
+      "id": "sakura-station",
+      "revision": "r1",
+      "familyUnchanged": true,
+      "interfaceUnchanged": true
+    },
+    {
+      "id": "obsidian-reliquary",
+      "revision": "r1",
+      "familyUnchanged": true,
+      "interfaceUnchanged": true
+    },
+    {
+      "id": "deep-space",
+      "revision": "r1",
+      "familyUnchanged": true,
+      "interfaceUnchanged": true
+    },
+    {
+      "id": "moonlit-grove",
+      "revision": "r1",
+      "familyUnchanged": true,
+      "interfaceUnchanged": true
+    },
+    {
+      "id": "legacy",
+      "revision": "r1",
+      "familyUnchanged": true,
+      "interfaceUnchanged": true
+    },
+    {
+      "id": "industrial-workshop",
+      "revision": "r1",
+      "familyUnchanged": true,
+      "interfaceUnchanged": true
+    },
+    {
+      "id": "vyshyvanka",
+      "revision": "r1",
+      "familyUnchanged": true,
+      "interfaceUnchanged": true
+    }
+  ],
+  "existingSimDescriptorsUnchanged": true
+}

@@ -419,7 +419,7 @@ test('v1 preference migration is read-only, preserves unknown intent and permits
   });
 });
 
-test('Classic Field Kit paints its advertised palette independently of old menu skins, while exact r1 stays legacy', async (t) => {
+test('Signal Blue paints its advertised palette independently of old menu skins, while exact r1 stays legacy', async (t) => {
   for (const palette of ['auto', 'ukrainian']) {
     const menu = JSON.stringify({ palette, ornaments: 'subtle' });
     const storage = memoryStorage({
@@ -429,7 +429,7 @@ test('Classic Field Kit paints its advertised palette independently of old menu 
     const { host, document } = hostFixture(t, { storage });
     await host.ready;
     const classic = host.availableThemeChoices().find((choice) => choice.id === 'legacy');
-    assert.equal(host.snapshot().revision, 'r2');
+    assert.equal(host.snapshot().revision, 'r3');
     assert.equal(document.documentElement.dataset.themeStyled, 'true');
     for (const role of ['ink', 'panel', 'text', 'accent'])
       assert.equal(
