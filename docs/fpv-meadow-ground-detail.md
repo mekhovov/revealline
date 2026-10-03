@@ -164,3 +164,20 @@ An immutable final fixture is prepared at
 ZIP and final player. Relative to the original packaged fixture, only the visual
 module changes, containing the separately reviewed Hangar addition; the harness
 and other 30 candidate modules are byte-identical.
+
+The coordinating agent also observed the final integrated `9e25a9674` player:
+“Turn and travel” retained stable ground rendering and progressed through
+Ready → Arm/resume → Paused with the expected “Arm deliberately to continue”
+status. The screenshot is
+`docs/evidence/fpv-meadow-ground-detail-main-player.png`. This bounded final
+observer check supplements the exact integration audit and the original complete
+source/package raster matrices. All later branch changes are evidence and plan
+status only; the reviewed Meadow runtime remains unchanged.
+
+The focused change is published as
+[PR #1010](https://github.com/mekhovov/revealline/pull/1010) for milestone 57,
+with the reviewed `fastline-approved` signal. Required exact-head CI and protected
+merge rules remain in force. Garage subsequently merged as
+`2dbbe0a0f26684eae0a2bdb0b7cbda087627457f`; its routine protected integration
+will retain the frozen Meadow qualification and receive a scoped parity audit.
+No public deployment of this Meadow increment is claimed.
