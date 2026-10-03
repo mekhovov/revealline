@@ -249,6 +249,8 @@ export function createPursuitEditor({ container, getSource, getMission, apply })
     );
 
   function draw() {
+    // Locale can change while the Studio is still loading its first draft.
+    if (!activeMission) return;
     const ctx = preview.getContext?.('2d'),
       board = map();
     if (!ctx || !board) return;

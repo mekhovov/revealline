@@ -1,5 +1,14 @@
 import { getLocale, setLocale } from '../i18n/index.mjs';
 import { ROOM_PROTOCOL, restoreTrustedRoomSnapshot } from './room-core.mjs';
+import { canonicalJSON } from '../data-json.mjs';
+import {
+  validateRoomCatalogue,
+  assertRoomRecipeBinding,
+  roomSelectionLink,
+  roomInvitationLink,
+  readRoomSelection,
+  readRoomInvitation,
+} from './room-content.mjs';
 import {
   ROOM_CONTROL_PROTOCOL,
   roomServiceEndpoint,
@@ -20,6 +29,9 @@ if (['en', 'uk'].includes(linkedLocale)) setLocale(linkedLocale, { persist: fals
 const $ = (id) => document.getElementById(id),
   uk = getLocale() === 'uk';
 const say = (en, ua) => (uk ? ua : en);
+const setText = (id, value) => {
+  if ($(id).textContent !== value) $(id).textContent = value;
+};
 const endpoint = roomServiceEndpoint(location, document.documentElement.dataset.roomService);
 const display = createDisplayPreferences(),
   destruction = createDestructionPreferences(),
@@ -33,7 +45,11 @@ let credentials = null,
   polling = null,
   pauseRequest = null,
   booting = false,
-  previousFrame = null;
+  previousFrame = null,
+  acceptedRecipeJSON = null;
+let catalogueEntries = [],
+  unavailableEntries = [],
+  selectedSeed = 17;
 let canvases = [],
   painters = [],
   flights = [],
@@ -47,6 +63,13 @@ const messages = {
   'recipe-label': ['Mission and seats', 'Місія та гравці'],
   'targets-label': ['Prey', 'Цілі'],
   'pace-label': ['Snake pace', 'Темп Snake'],
+  'share-label': ['Share this mission selection', 'Поділитися вибором місії'],
+  'accepted-title': ['Accepted mission', 'Прийнята місія'],
+  'identity-label': ['Exact recipe and source', 'Точна місія та джерело'],
+  'result-scope': [
+    'Room results and replay exports are separate from local records and official chapter rewards.',
+    'Результати кімнати та повтори зберігаються окремо від локальних рекордів і нагород офіційних розділів.',
+  ],
   create: ['Create private room', 'Створити приватну кімнату'],
   public: ['Find an unranked player', 'Знайти суперника без рейтингу'],
   'invite-label': ['Invite your friend', 'Запросіть друга'],
@@ -178,7 +201,7 @@ async function api(path, body, owner = credentials, signal = null) {
     signal?.removeEventListener('abort', abort);
   }
 }
-async function own(value, { restoring = false } = {}) {
+async function own(value, { restoring = false, catalogueId = null, expectedHash = null } = {}) {
   if (value?.protocol !== ROOM_PROTOCOL || value?.controlProtocol !== ROOM_CONTROL_PROTOCOL)
     throw roomError('Room protocol mismatch. Choose a new room.', 'ROOM_PROTOCOL_MISMATCH');
   if (
@@ -189,19 +212,25 @@ async function own(value, { restoring = false } = {}) {
     !/^[a-f0-9]{64}$/.test(value.engineVersion)
   )
     throw roomError('The saved room seat is invalid.', 'SEAT_UNAVAILABLE');
+  if (expectedHash && expectedHash !== value.contentHash)
+    throw roomError('The invitation refers to different room content.', 'ROOM_IDENTITY_MISMATCH');
+  if (catalogueId) value = { ...value, catalogueId };
   credentials = value;
   state = null;
+  acceptedRecipeJSON = null;
   lifecycle.own(value, { restoring });
   saveSeat(value);
   $('setup').hidden = true;
   $('lobby').hidden = false;
-  $('invitation').hidden = !value.invite;
-  if (value.invite) {
-    const invite = new URL(location.href);
-    invite.searchParams.delete('room');
-    invite.hash = `invite=${value.invite}`;
-    $('invite').value = invite.href;
-  }
+  // Share only after the full snapshot is bound to the owned recipe hash.
+  $('invitation').hidden = true;
+  $('invite').value = '';
+  $('accepted-mission').textContent = say(
+    'Checking accepted mission…',
+    'Перевіряємо прийняту місію…',
+  );
+  $('accepted-source').textContent = '';
+  $('identity').textContent = '';
   syncControls();
   await poll();
 }
@@ -222,8 +251,80 @@ async function requestPause(activation = state?.controlActivation) {
   }
 }
 function selection() {
-  return { id: $('recipe').value, pace: $('pace').value, targets: $('targets').value, seed: 17 };
+  return {
+    id: $('recipe').value,
+    pace: $('pace').value,
+    targets: $('targets').value,
+    seed: selectedSeed,
+  };
 }
+function sourceLabel(kind) {
+  return {
+    builtin: say('Built-in missions', 'Вбудовані місії'),
+    community: say('Community', 'Спільнота'),
+    company: say('Company', 'Компанія'),
+  }[kind];
+}
+function showAcceptedMission(snapshot) {
+  const recipe = snapshot.recipe,
+    content = recipe.content;
+  const mission = content?.mission;
+  setText(
+    'accepted-mission',
+    `${mission?.title[uk ? 'uk' : 'en'] ?? recipe.level.name ?? recipe.level.id} · ${recipe.family} · ${recipe.mode}`,
+  );
+  setText(
+    'accepted-source',
+    content
+      ? `${sourceLabel(content.source.kind)} · ${content.source.title[uk ? 'uk' : 'en']}${content.source.version ? ` · ${content.source.version}` : ''} · ${say('Shared game artwork', 'Спільне оформлення гри')}`
+      : say('Historical built-in room recipe', 'Історична вбудована місія кімнати'),
+  );
+  setText(
+    'identity',
+    [
+      `${say('Mission', 'Місія')}: ${recipe.level.id} @ ${recipe.level.revision}`,
+      ...(content
+        ? [
+            `${say('Catalogue', 'Каталог')}: ${content.catalogueId}`,
+            `${say('Source', 'Джерело')}: ${content.source.id}`,
+            ...(content.source.sha256
+              ? [`${say('Package SHA256', 'SHA256 пакета')}: ${content.source.sha256}`]
+              : []),
+          ]
+        : []),
+      `${say('Seed', 'Зерно')}: ${recipe.seed}`,
+      `${say('Recipe SHA256', 'SHA256 місії')}: ${snapshot.contentHash}`,
+      `${say('Engine', 'Рушій')}: ${snapshot.engineVersion}`,
+    ].join('\n'),
+  );
+}
+function updateSelection(requestedId = null) {
+  const entry = catalogueEntries.find((item) => item.id === $('recipe').value);
+  $('create').disabled = $('public').disabled = !entry;
+  $('share-selection').hidden = !entry;
+  $('pace').disabled = entry?.family !== 'snake';
+  if (!entry) {
+    const unavailable = unavailableEntries.find(
+      (item) =>
+        item.id === requestedId ||
+        (item.id.startsWith('import:') && requestedId?.startsWith(`${item.id}:`)),
+    );
+    $('selection-source').textContent = unavailable
+      ? `${unavailable.title[uk ? 'uk' : 'en']}: ${unavailable.reason[uk ? 'uk' : 'en']}`
+      : say(
+          'This exact mission is not admitted by this room service. Choose another mission.',
+          'Цю точну місію не прийнято сервісом кімнат. Виберіть іншу місію.',
+        );
+    return;
+  }
+  const source = entry.content?.source;
+  $('selection-source').textContent = source
+    ? `${sourceLabel(source.kind)} · ${source.title[uk ? 'uk' : 'en']}${source.version ? ` · ${source.version}` : ''}`
+    : sourceLabel('builtin');
+  $('share').value = roomSelectionLink(location.href, selection());
+}
+for (const id of ['recipe', 'pace', 'targets'])
+  $(id).addEventListener('change', () => updateSelection());
 let acquiring = false;
 for (const [id, path] of [
   ['create', '/rooms'],
@@ -233,7 +334,9 @@ for (const [id, path] of [
     if (acquiring || credentials) return;
     acquiring = true;
     try {
-      await own(await api(path, selection()));
+      const chosen = selection();
+      if (!catalogueEntries.some((entry) => entry.id === chosen.id)) return;
+      await own(await api(path, chosen), { catalogueId: chosen.id });
     } catch (error) {
       notice(error.message);
     } finally {
@@ -271,11 +374,22 @@ $('pause').addEventListener('click', () => {
   void requestPause();
 });
 $('receipt').addEventListener('click', async () => {
-  const owner = credentials;
+  const owner = credentials,
+    accepted = state;
   if (!owner || state?.status !== 'finished' || lifecycle.snapshot().phase !== 'connected') return;
   try {
     const receipt = await api('/result', undefined, owner);
-    if (credentials !== owner) return;
+    if (credentials !== owner || state?.generation !== accepted.generation) return;
+    if (
+      receipt.protocol !== ROOM_PROTOCOL ||
+      receipt.contentHash !== owner.contentHash ||
+      receipt.engineVersion !== owner.engineVersion ||
+      receipt.tick !== accepted.tick ||
+      canonicalJSON(receipt.result) !== canonicalJSON(accepted.result)
+    )
+      throw roomError('The result belongs to different room content.', 'ROOM_IDENTITY_MISMATCH');
+    await assertRoomRecipeBinding(receipt.recipe, owner.contentHash, accepted.recipe);
+    if (credentials !== owner || state?.generation !== accepted.generation) return;
     const exported = await exportJSONFile(receipt, `room-${owner.roomId}.json`);
     if (credentials === owner)
       notice(
@@ -300,6 +414,7 @@ function leave() {
   pauseRequest?.controller.abort();
   pauseRequest = null;
   state = null;
+  acceptedRecipeJSON = null;
   lifecycle.release();
   direction = null;
   boost = false;
@@ -386,6 +501,28 @@ async function poll() {
     } catch {
       throw roomError('The room snapshot identity changed.', 'ROOM_IDENTITY_MISMATCH');
     }
+    try {
+      const recipeJSON = canonicalJSON(snapshot.recipe);
+      if (acceptedRecipeJSON === null) {
+        await assertRoomRecipeBinding(snapshot.recipe, owner.contentHash);
+        if (owner.catalogueId && snapshot.recipe.content?.catalogueId !== owner.catalogueId)
+          throw new Error('The shared mission selection changed.');
+        if (
+          credentials !== owner ||
+          epoch !== lifecycle.snapshot().epoch ||
+          stopped ||
+          document.hidden
+        )
+          return;
+        acceptedRecipeJSON = recipeJSON;
+      } else if (recipeJSON !== acceptedRecipeJSON)
+        throw new Error('The accepted mission changed.');
+    } catch {
+      throw roomError(
+        'The accepted room recipe or source identity changed.',
+        'ROOM_IDENTITY_MISMATCH',
+      );
+    }
     if (
       lifecycle.snapshot().pauseRequired &&
       !['finished', 'abandoned'].includes(snapshot.status)
@@ -414,8 +551,12 @@ async function poll() {
       boost = false;
     }
     syncControls();
-    $('identity').textContent =
-      `${snapshot.recipe.family} · ${snapshot.recipe.level.id} · ${snapshot.recipe.level.revision} · ${snapshot.contentHash}`;
+    showAcceptedMission(snapshot);
+    if (owner.invite) {
+      const invite = roomInvitationLink(location.href, { ...owner, recipe: snapshot.recipe });
+      if ($('invite').value !== invite) $('invite').value = invite;
+      $('invitation').hidden = false;
+    }
     $('seats').textContent = snapshot.seats
       .map(
         (seat, index) =>
@@ -573,19 +714,46 @@ async function boot() {
     const catalogue = await api('/catalogue');
     if (catalogue.protocol !== ROOM_PROTOCOL || catalogue.controlProtocol !== ROOM_CONTROL_PROTOCOL)
       throw roomError('Room protocol mismatch.', 'ROOM_PROTOCOL_MISMATCH');
-    $('recipe').replaceChildren(
-      ...catalogue.entries.map((entry) => {
-        const option = document.createElement('option');
-        option.value = entry.id;
-        option.textContent = `${entry.family} · ${entry.mode} · ${entry.title[uk ? 'uk' : 'en']}`;
-        return option;
-      }),
-    );
-    $('create').disabled = false;
+    const accepted = validateRoomCatalogue(catalogue.entries, catalogue.unavailable ?? []);
+    catalogueEntries = accepted.entries;
+    unavailableEntries = accepted.unavailable;
+    const groups = ['builtin', 'community', 'company']
+      .map((kind) => {
+        const group = document.createElement('optgroup');
+        group.label = sourceLabel(kind);
+        for (const entry of catalogueEntries.filter(
+          (item) => (item.content?.source.kind ?? 'builtin') === kind,
+        )) {
+          const option = document.createElement('option');
+          option.value = entry.id;
+          option.textContent = `${entry.family} · ${entry.mode} · ${entry.title[uk ? 'uk' : 'en']}${entry.content?.source.kind !== 'builtin' && entry.content?.source ? ` · ${entry.content.source.title[uk ? 'uk' : 'en']} · ${entry.content.source.sha256.slice(0, 8)}` : ''}${entry.content?.source.version ? ` · ${entry.content.source.version}` : ''}`;
+          group.append(option);
+        }
+        return group;
+      })
+      .filter((group) => group.children.length);
+    $('recipe').replaceChildren(...groups);
+    const requested = readRoomSelection(location.href);
+    const requestedId = requested.id;
+    selectedSeed = requested.seed;
+    if (requestedId && !catalogueEntries.some((entry) => entry.id === requestedId)) {
+      const missing = document.createElement('option');
+      missing.value = '';
+      missing.textContent = say(
+        'Requested mission unavailable — choose another',
+        'Запитана місія недоступна — виберіть іншу',
+      );
+      missing.selected = true;
+      missing.disabled = true;
+      $('recipe').prepend(missing);
+    } else if (requestedId) $('recipe').value = requestedId;
+    $('pace').value = requested.pace;
+    $('targets').value = requested.targets;
+    updateSelection(requestedId);
     $('public').hidden = !catalogue.public;
-    const invitation = new URLSearchParams(location.hash.slice(1)).get('invite');
+    const invitation = readRoomInvitation(location.href);
     if (invitation) {
-      await own(await api('/join', { invite: invitation }));
+      await own(await api('/join', { invite: invitation.invite }), invitation);
       history.replaceState(null, '', `${location.pathname}${location.search}`);
     } else {
       let previous = null;

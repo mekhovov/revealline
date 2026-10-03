@@ -1,4 +1,5 @@
 import { canonicalJSON, dataIdentity, required } from '../data-json.mjs';
+import { validateRoomContent, assertRoomRecipeBinding } from './room-content.mjs';
 import { createRun, stepRun, getSummary, FIXED_DT } from '../core/index.mjs';
 import { createCoop, startCoop, stepCoop, getCoopSummary } from '../coop/core.mjs';
 import {
@@ -106,6 +107,7 @@ export function createAuthoritativeRoom(
     Number.isSafeInteger(recipe.seed) && recipe.seed >= 0 && recipe.seed <= 0xffffffff,
     'Invalid room seed.',
   );
+  if (recipe.content !== undefined) validateRoomContent(recipe.content, recipe);
   return {
     protocol: ROOM_PROTOCOL,
     id,
@@ -329,6 +331,11 @@ export function restoreTrustedRoomSnapshot(snapshot) {
       dataIdentity(state) === stateIdentity,
     'Network snapshot identity mismatch.',
   );
+  required(
+    state.recipeIdentity === dataIdentity(state.recipe),
+    'Network recipe identity mismatch.',
+  );
+  if (state.recipe.content !== undefined) validateRoomContent(state.recipe.content, state.recipe);
   // Only trusted service snapshots enter reconciliation. This does not grant progression ownership.
   return decodeNetworkState(state);
 }
@@ -382,8 +389,18 @@ export function exportAuthoritativeRoomResult(room) {
 }
 export function verifyAuthoritativeRoomResult(
   receipt,
-  { engineVersion = ROOM_PROTOCOL, contentHash } = {},
+  { engineVersion = ROOM_PROTOCOL, contentHash, acceptedRecipe } = {},
 ) {
+  if (receipt.recipe?.content !== undefined)
+    required(
+      acceptedRecipe && contentHash,
+      'Resolve the trusted accepted room recipe before verifying imported provenance.',
+    );
+  if (acceptedRecipe)
+    required(
+      canonicalJSON(receipt.recipe) === canonicalJSON(acceptedRecipe),
+      'The receipt does not contain the exact accepted room recipe.',
+    );
   required(
     receipt.protocol === ROOM_PROTOCOL &&
       receipt.engineVersion === engineVersion &&
@@ -448,4 +465,18 @@ export function verifyAuthoritativeRoomResult(
       'Embedded Snake replay differs from the authoritative inputs.',
     );
   return clone(room.result);
+}
+
+/** Provenance-aware boundary for a registry-resolved recipe. Verification proves
+ * reproduction under those exact bytes, not a signed server result or reward. */
+export async function verifyBoundAuthoritativeRoomResult(
+  receipt,
+  { acceptedRecipe, contentHash, engineVersion } = {},
+) {
+  required(
+    acceptedRecipe && contentHash && engineVersion,
+    'Resolve the trusted registry recipe, SHA256 and engine before verification.',
+  );
+  await assertRoomRecipeBinding(receipt.recipe, contentHash, acceptedRecipe);
+  return verifyAuthoritativeRoomResult(receipt, { acceptedRecipe, contentHash, engineVersion });
 }

@@ -49,6 +49,27 @@ export const SNAKE_SCENARIO_VERSION = 'xonix-playground.v11';
 export const PURSUIT_SCENARIO_VERSION = 'xonix-playground.v12';
 export const SNAKE_PURSUIT_SCENARIO_VERSION = 'xonix-playground.v13';
 
+// Transport admission and Studio preparation share this table. The older v1
+// envelope remains readable; new v1 previews can carry an explicit null mastery.
+const scenarioLevelVersions = Object.freeze({
+  [MASTERY_SCENARIO_VERSION]: 'xonix-level.v1',
+  [SCENARIO_VERSION]: 'xonix-level.v1',
+  [ENCOUNTER_SCENARIO_VERSION]: 'xonix-level.v2',
+  [WIDE_SCENARIO_VERSION]: 'xonix-level.v3',
+  [CLASSIC_SCENARIO_VERSION]: 'xonix-level.v4',
+  [FOUNDATION_SCENARIO_VERSION]: 'xonix-level.v5',
+  [RELAY_SCENARIO_VERSION]: 'xonix-level.v6',
+  [DIRECTIONAL_SCENARIO_VERSION]: 'xonix-level.v7',
+  [SENTINEL_SCENARIO_VERSION]: 'xonix-level.v8',
+  [HUNT_SCENARIO_VERSION]: 'xonix-level.v9',
+  [SNAKE_SCENARIO_VERSION]: 'xonix-level.v11',
+  [PURSUIT_SCENARIO_VERSION]: 'xonix-level.v12',
+  [SNAKE_PURSUIT_SCENARIO_VERSION]: 'xonix-level.v13',
+});
+export function scenarioFormatForLevel(version) {
+  return Object.entries(scenarioLevelVersions).find(([, level]) => level === version)?.[0] ?? null;
+}
+
 /** A preview uses the authored definition's campaign ID and this single map.
  * It is deliberately separate from any installed campaign or award authority.
  */
@@ -488,21 +509,8 @@ export function validateScenario(value, { classRecipes: defaultRecipes = CLASSES
   if (errors.length) return result(errors, { warnings });
   if (
     !plain(value) ||
-    ![
-      SCENARIO_VERSION,
-      MASTERY_SCENARIO_VERSION,
-      ENCOUNTER_SCENARIO_VERSION,
-      WIDE_SCENARIO_VERSION,
-      CLASSIC_SCENARIO_VERSION,
-      FOUNDATION_SCENARIO_VERSION,
-      RELAY_SCENARIO_VERSION,
-      DIRECTIONAL_SCENARIO_VERSION,
-      SENTINEL_SCENARIO_VERSION,
-      HUNT_SCENARIO_VERSION,
-      SNAKE_SCENARIO_VERSION,
-      PURSUIT_SCENARIO_VERSION,
-      SNAKE_PURSUIT_SCENARIO_VERSION,
-    ].includes(value.format)
+    typeof value.format !== 'string' ||
+    !Object.hasOwn(scenarioLevelVersions, value.format)
   )
     return result([contentError('scenario.supportedFormat')], {
       warnings,
@@ -537,33 +545,7 @@ export function validateScenario(value, { classRecipes: defaultRecipes = CLASSES
     errors,
   );
   errors.push(...validateLevel(value.level).errors);
-  if (
-    plain(value.level) &&
-    value.level.version !==
-      (snakePursuit
-        ? 'xonix-level.v13'
-        : pursuit
-          ? 'xonix-level.v12'
-          : snake
-            ? 'xonix-level.v11'
-            : hunt
-              ? 'xonix-level.v9'
-              : sentinel
-                ? 'xonix-level.v8'
-                : directional
-                  ? 'xonix-level.v7'
-                  : relays
-                    ? 'xonix-level.v6'
-                    : foundations
-                      ? 'xonix-level.v5'
-                      : classic
-                        ? 'xonix-level.v4'
-                        : wide
-                          ? 'xonix-level.v3'
-                          : hasEncounter
-                            ? 'xonix-level.v2'
-                            : 'xonix-level.v1')
-  )
+  if (plain(value.level) && value.level.version !== scenarioLevelVersions[value.format])
     errors.push(contentError('scenario.simulationVersionMatch'));
   themeChecks(value.theme, errors);
   if (plain(value.level)) {

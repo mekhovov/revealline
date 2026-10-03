@@ -1647,6 +1647,8 @@ try {
     return pictureEntry;
   }
   function pictureLevelForRun(nextRun, entry, pictureEntry = pictureExecutionForEntry(entry)) {
+    // A standalone Studio/Playground scenario has no installed campaign picture owner.
+    if (practice && scenario) return nextRun.level;
     if (
       !entry.classicRulesSourceCampaignKey &&
       !recoverGameplayTuning(nextRun.level) &&

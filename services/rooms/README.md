@@ -72,7 +72,7 @@ snapshot store and exact engine/source deployment identity. The core provides
 server storage adapter, including history and full typed state. These checkpoints
 are never admitted from clients; credential retention, durable storage and restart
 clock rebasing are not implemented by the preview service. Hosted account
-identity, qualified community/Company room admission, asynchronous challenges,
+identity, complete media-bearing Community/Company room admission, asynchronous challenges,
 SIM races and shared-world flight remain separate delivery stages.
 
 Regression cases are authored in `game/test/online-room.test.mjs`,
@@ -86,5 +86,102 @@ The server catalogue includes 258 structurally admitted native recipes: 96 Snake
 Versus, 96 Snake Team, 28 Capture Versus and 38 Capture Team. New pursuit chapters
 use the authored standard-difficulty execution catalogue. Constructor/snapshot
 admission is not evidence of human completion or network play qualification.
+
+## Optional operator-owned content registry
+
+Additional content is disabled by default. An operator can set
+`ROOM_CONTENT_MANIFEST=/absolute/path/to/rooms/registry.json` before starting the
+service. The registry is a local, immutable startup snapshot. Players select its
+exact catalogue IDs; they cannot upload levels, change publication ownership,
+provide a validator, fetch URL or supply executable AI. Restart the service to
+replace the registry. Existing ephemeral rooms then become unavailable under the
+normal restart policy.
+
+The manifest has the following shape (replace the example hash and size with the
+**actual raw file** values; this example is not an admitted package):
+
+```json
+{
+  "format": "revealline-room-registry.v1",
+  "packages": [
+    {
+      "id": "my-snake-workshop",
+      "kind": "community",
+      "path": "packages/snake-workshop.json",
+      "sha256": "FULL_64_CHARACTER_RAW_FILE_SHA256",
+      "bytes": 12345,
+      "editionId": "ed_FULL_64_CHARACTER_PUBLISHED_EDITION_ID",
+      "version": "1.0.0",
+      "title": { "en": "Snake workshop", "uk": "Майстерня Snake" }
+    }
+  ]
+}
+```
+
+Operators obtain exact edition IDs, versions, sizes and SHA-256 values from the
+trusted Community publication catalogue, review permission to host them and
+retain the corresponding raw published downloads beside the manifest. This is
+an operator approval boundary, not online publication authentication: the room
+service does not contact the Community backend or automatically track unlisting.
+Remove an unlisted or revoked source from the manifest and restart the service.
+A player's installed receipt or a well-formed `ed_...` string is never admission
+evidence. Distinct publication owners stay distinct even when native geometry is
+identical.
+
+Current supported imports:
+
+| Native package                              | Room modes   | Presentation                                         |
+| ------------------------------------------- | ------------ | ---------------------------------------------------- |
+| Classic Snake portable package              | Versus, Team | Shared runtime assets; namespaced native mission IDs |
+| Team portable v1/v2, without attached media | Team         | Shared native Team painter                           |
+
+The service verifies exact byte count and full SHA-256, then runs the existing
+native package importer and validators. Team package evidence is checked by its
+normal import path; structural source evidence remains structural evidence.
+No publication is promoted to human or network play qualification. Classic
+pace and prey choices use the shared accepted-attempt preparer. Authored Team
+rules remain native; no Solo board is converted into Team geometry.
+
+Creator Capture bundles and Team media bundles return `MEDIA_UNSUPPORTED`, since
+the current room painters do not preserve their verified pictures and stories.
+FPV packages return `FLIGHT_UNSUPPORTED`. These do not receive playable entries.
+Company capability diagnostics accept `kind: "company-catalog"` with a pinned
+local `edition-catalog.json` and the logical `editionId`. The native catalogue
+validator reads only that JSON and does not follow its source or asset paths.
+Current Company content declares Solo only and returns `COMPANY_SOLO_ONLY`.
+Future multiplayer declarations still return `COMPANY_OWNERSHIP_UNSUPPORTED`
+until full production admission binds campaign bytes, brand and media ownership.
+A catalogue hash alone cannot authorize a Company room. Built-in Snake offered
+inside a Company site does not become a Company-authored campaign.
+
+Limits are 32 package pins, 4 MiB per local file, 32 MiB total pinned bytes, a
+128 KiB manifest, and 512 imported room entries. Native format limits can be
+smaller. Package paths must be relative and remain under the manifest directory
+after resolving symlinks; URLs, traversal, outside symlinks, non-files and growing
+oversize reads are rejected. Invalid configuration fails startup. An invalid,
+missing or unsupported individual package is quarantined while valid siblings
+remain available. Neither package paths nor decoder errors reach the client.
+
+`GET /catalogue` explicitly projects public entries and localized unavailable
+reasons, plus aggregate registry counts. Startup logs and the in-process
+`server.contentRegistryReport` contain per-pin status, raw hashes and diagnostic
+codes, without payloads or paths. Every new accepted recipe binds its exact
+catalogue ID, source kind, immutable publication ID/hash/version, accepted mission
+ID/revision and shared-presentation adapter. The normal recipe SHA-256 therefore
+also separates publisher ownership. Snapshots, rematches and result receipts
+retain that content identity. Room outcomes remain separate from local official
+Journey and chapter rewards; a reproducible receipt alone does not establish
+publication authority or a server signature.
+
+The extension seam is `inspectPinnedRoomPackage` in `content-registry.mjs`.
+Future media support must add native verified media ownership, bounded service
+delivery and matching client painter preparation before returning entries with
+a new presentation contract. Do not remove the current fail-closed checks merely
+because its simulation could run.
+
+`game/test/online-room-registry.test.mjs` adds native admission, immutable owner,
+SHA/length, malicious field, media/Company rejection, path containment, retained
+snapshot and HTTP client-authority regressions. These are authored and unrun
+under the current automated-suite waiver.
 
 Explicit service lint: `node_modules/.bin/eslint --config services/rooms/eslint.config.mjs services/rooms/*.mjs --max-warnings 0`.
