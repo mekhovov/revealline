@@ -20,6 +20,11 @@ import {
   validateWorldCourse,
 } from '../optional-practice/civilian-fpv/world-model.mjs';
 import {
+  exportProofParts,
+  importProofPart,
+  worldRecordIdentity,
+} from '../optional-practice/civilian-fpv/world-records.mjs';
+import {
   DEFAULT_RESPONSE,
   responseCurve,
 } from '../optional-practice/civilian-fpv/radio-profile.mjs';
@@ -47,6 +52,7 @@ export function schoolAuthoringPilot(state, course, memory, mode = 'acro') {
     memory.step = state.step;
     memory.start = state.ticks;
     memory.gateApproach = false;
+    memory.tiltReleased = false;
   }
   let position;
   if (target.type === 'gate') {
@@ -93,8 +99,13 @@ export function schoolAuthoringPilot(state, course, memory, mode = 'acro') {
   // rate/attitude objective a learner sees. No state or objective is patched.
   const tiltExercise = target.minTilt > 0;
   if (tiltExercise) {
-    roll = course.id === 'beginner-25' ? (target.minTilt + target.maxTilt) / 2 : 0;
-    pitch = course.id === 'beginner-25' ? 0 : (target.minTilt + target.maxTilt) / 2;
+    // Self-level returns toward the horizon after release. Start near the
+    // authored upper bound so its real transient remains inside the same
+    // centred-control dwell window; Acro commands stay byte-for-byte unchanged.
+    const wanted =
+      mode === 'self-level' ? target.maxTilt - 40 : (target.minTilt + target.maxTilt) / 2;
+    roll = course.id === 'beginner-25' ? wanted : 0;
+    pitch = course.id === 'beginner-25' ? 0 : wanted;
   }
   let heading = target.heading ?? memory.heading ?? 0;
   if (target.type === 'gate')
@@ -122,11 +133,14 @@ export function schoolAuthoringPilot(state, course, memory, mode = 'acro') {
     ),
     actions: 0,
   };
-  if (
-    tiltExercise &&
-    Math.max(Math.abs(state.attitude.roll), Math.abs(state.attitude.pitch)) >= target.minTilt + 100
-  )
-    input.roll = input.pitch = input.yaw = 0;
+  if (tiltExercise) {
+    const tilt = Math.max(Math.abs(state.attitude.roll), Math.abs(state.attitude.pitch));
+    if (mode === 'self-level') {
+      if (tilt >= target.maxTilt - 100) memory.tiltReleased = true;
+      if (memory.tiltReleased && tilt < target.minTilt) memory.tiltReleased = false;
+      if (memory.tiltReleased) input.roll = input.pitch = input.yaw = 0;
+    } else if (tilt >= target.minTilt + 100) input.roll = input.pitch = input.yaw = 0;
+  }
   if (
     (target.type === 'land' || (state.step === 0 && target.centred && target.max.y <= 800)) &&
     state.grounded
@@ -141,14 +155,25 @@ export async function qualifyAcroSchool({
   diagnostic = false,
   installDemonstrations = false,
   recommendedModes = false,
+  mode: requestedMode,
+  proofArchive = false,
 } = {}) {
+  if (requestedMode !== undefined && !['acro', 'self-level'].includes(requestedMode))
+    throw new Error('Explicit mode must be acro or self-level.');
+  if (requestedMode !== undefined && recommendedModes)
+    throw new Error('Choose an explicit mode or recommended modes, not both.');
+  if (proofArchive && !output) throw new Error('Proof archive export requires --output.');
+  if (installDemonstrations && (requestedMode !== undefined || proofArchive))
+    throw new Error(
+      'Explicit-mode recordings are optional archives; core registry installation is disabled.',
+    );
   await initWorldRuntime();
   const results = [],
     demonstrations = [];
   for (const id of ids) {
     const lesson = BEGINNER_LESSONS.find((value) => value.id === id);
     if (!lesson) throw new Error(`Unknown lesson: ${id}`);
-    const mode = recommendedModes ? lesson.mode : 'acro';
+    const mode = requestedMode ?? (recommendedModes ? lesson.mode : 'acro');
     const flight = createWorldFlight({
       course: lesson.course,
       mode,
@@ -215,8 +240,54 @@ export async function qualifyAcroSchool({
     console.log(JSON.stringify(result));
     flight.dispose();
   }
+  const archiveParts = [];
+  if (proofArchive) {
+    const records = demonstrations.map(({ id, packIdentity, proof }) => {
+      const course = validateWorldCourse(
+        BEGINNER_LESSONS.find((lesson) => lesson.id === id).course,
+      );
+      return {
+        id: worldRecordIdentity({ course, proof }),
+        course,
+        proof,
+        packIdentity,
+        status: 'verified',
+        diagnostic: 'complete',
+        savedAt: 0,
+        pinned: false,
+      };
+    });
+    for (const part of await exportProofParts(records)) {
+      const text = JSON.stringify(part);
+      const imported = await importProofPart(text);
+      for (const record of imported) {
+        if (record.status !== 'missing-dependency')
+          throw new Error('Imported archive must not trust its exported verification flag.');
+        const replay = await replayWorldFlight(record.course, record.proof, {
+          yieldControl: async () => {},
+        });
+        if (
+          replay.state.status !== 'complete' ||
+          worldStateIdentity(replay.state) !== record.proof.finalStateIdentity
+        )
+          throw new Error(
+            `${record.course.id} archive round-trip replay did not complete identically`,
+          );
+      }
+      archiveParts.push({ part, text, records: imported.length });
+    }
+  }
+  const outputStem = requestedMode
+    ? `fpv-school-${requestedMode}`
+    : recommendedModes
+      ? 'fpv-school'
+      : 'fpv-acro-school';
   const receipt = {
-    format: recommendedModes ? 'FPVSchoolPhysicsEvidence.v1' : 'FPVAcroSchoolPhysicsEvidence.v1',
+    format:
+      requestedMode || recommendedModes
+        ? 'FPVSchoolPhysicsEvidence.v1'
+        : 'FPVAcroSchoolPhysicsEvidence.v1',
+    ...(requestedMode ? { mode: requestedMode } : {}),
     source: {
       path: 'optional-practice/civilian-fpv/world-catalogue.mjs',
       sha256: digest(
@@ -225,6 +296,23 @@ export async function qualifyAcroSchool({
         ),
       ),
     },
+    ...(requestedMode || proofArchive
+      ? {
+          sources: Object.fromEntries(
+            await Promise.all(
+              [
+                'scripts/qualify-fpv-acro-school.mjs',
+                'optional-practice/civilian-fpv/world-model.mjs',
+                'optional-practice/civilian-fpv/world-records.mjs',
+                'optional-practice/civilian-fpv/radio-profile.mjs',
+              ].map(async (file) => [
+                file,
+                digest(await readFile(new URL('../' + file, import.meta.url))),
+              ]),
+            ),
+          ),
+        }
+      : {}),
     response: DEFAULT_RESPONSE,
     method:
       'Offline pilot supplies normalized commands to the unchanged 50 Hz runtime; each exported demonstration is independently replayed against exact course and response. No state or course advancement is injected.',
@@ -232,7 +320,21 @@ export async function qualifyAcroSchool({
       lessons: results.length,
       completed: results.length,
       independentlyReplayed: results.length,
+      ...(proofArchive
+        ? { archiveRoundTripReplayed: archiveParts.reduce((n, part) => n + part.records, 0) }
+        : {}),
     },
+    archives: archiveParts.map(({ part, text, records }) => ({
+      file: `${outputStem}-proof-part-${part.part}-of-${part.parts}.json`,
+      format: part.format,
+      part: part.part,
+      parts: part.parts,
+      records,
+      bytes: Buffer.byteLength(text + '\n'),
+      archiveId: part.archiveId,
+      payloadSha256: part.sha256,
+      fileSha256: digest(text + '\n'),
+    })),
     limitations: [
       'Controlled-input reachability is not novice usability or physical-radio acceptance.',
       'Unit coverage remains deferred. Public deployment and hardware performance are separate gates.',
@@ -244,19 +346,31 @@ export async function qualifyAcroSchool({
     await writeFile(
       resolve(
         output,
-        recommendedModes ? 'fpv-school-physics.json' : 'fpv-acro-school-physics-20261001.json',
+        requestedMode
+          ? `${outputStem}-physics.json`
+          : recommendedModes
+            ? 'fpv-school-physics.json'
+            : 'fpv-acro-school-physics-20261001.json',
       ),
       `${JSON.stringify(receipt, null, 2)}\n`,
+      ...(requestedMode || proofArchive ? [{ flag: 'wx' }] : []),
     );
     await writeFile(
       resolve(
         output,
-        recommendedModes
-          ? 'fpv-school-demonstrations.json'
-          : 'fpv-acro-school-demonstrations-20261001.json',
+        requestedMode
+          ? `${outputStem}-demonstrations.json`
+          : recommendedModes
+            ? 'fpv-school-demonstrations.json'
+            : 'fpv-acro-school-demonstrations-20261001.json',
       ),
-      `${JSON.stringify({ format: 'FPVAcroDemonstrations.v1', demonstrations })}\n`,
+      `${JSON.stringify({ format: requestedMode ? 'FPVSchoolDemonstrations.v1' : 'FPVAcroDemonstrations.v1', demonstrations })}\n`,
+      ...(requestedMode || proofArchive ? [{ flag: 'wx' }] : []),
     );
+    for (const [index, archive] of archiveParts.entries())
+      await writeFile(resolve(output, receipt.archives[index].file), archive.text + '\n', {
+        flag: 'wx',
+      });
   }
   if (installDemonstrations) {
     if (recommendedModes)
@@ -289,6 +403,39 @@ export async function qualifyAcroSchool({
 }
 if (import.meta.url === pathToFileURL(resolve(process.argv[1] ?? '')).href) {
   const args = process.argv.slice(2);
+  if (args.includes('--help')) {
+    console.log(
+      'Usage: node scripts/qualify-fpv-acro-school.mjs [--mode acro|self-level] [--proof-archive --output NEW_DIRECTORY] [--lesson ID | --all | --self-level] [--diagnostic]\nDefault: fourteen primary Acro lessons. --self-level selects the twelve optional Self-level lessons; --mode selects actual flight mode. Explicit-mode archives never modify the core registry and do not overwrite existing artifacts.',
+    );
+    process.exit(0);
+  }
+  const valueFlags = new Set(['--output', '--lesson', '--mode']),
+    toggleFlags = new Set([
+      '--all',
+      '--self-level',
+      '--diagnostic',
+      '--proof-archive',
+      '--install-demonstrations',
+    ]),
+    seen = new Set();
+  for (let index = 0; index < args.length; index++) {
+    const flag = args[index];
+    if ((!valueFlags.has(flag) && !toggleFlags.has(flag)) || seen.has(flag))
+      throw new Error(`Unknown or repeated option: ${flag}`);
+    seen.add(flag);
+    if (valueFlags.has(flag) && (!args[++index] || args[index].startsWith('--')))
+      throw new Error(`${flag} requires a value.`);
+  }
+  if (['--lesson', '--all', '--self-level'].filter((flag) => seen.has(flag)).length > 1)
+    throw new Error('Choose one lesson selection option.');
+  const requestedMode = args.includes('--mode') ? args[args.indexOf('--mode') + 1] : undefined;
+  if (args.includes('--mode') && !['acro', 'self-level'].includes(requestedMode))
+    throw new Error('--mode requires acro or self-level.');
+  if (
+    args.includes('--output') &&
+    (!args[args.indexOf('--output') + 1] || args[args.indexOf('--output') + 1].startsWith('--'))
+  )
+    throw new Error('--output requires a directory.');
   const output = args.includes('--output')
     ? resolve(args[args.indexOf('--output') + 1])
     : undefined;
@@ -305,7 +452,10 @@ if (import.meta.url === pathToFileURL(resolve(process.argv[1] ?? '')).href) {
     output,
     ids,
     diagnostic: args.includes('--diagnostic'),
-    recommendedModes: args.includes('--all') || args.includes('--self-level'),
+    recommendedModes:
+      requestedMode === undefined && (args.includes('--all') || args.includes('--self-level')),
+    mode: requestedMode,
+    proofArchive: args.includes('--proof-archive'),
     installDemonstrations: args.includes('--install-demonstrations'),
   });
 }

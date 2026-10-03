@@ -144,3 +144,10 @@ Adding Garage 16 completes the original **120 demonstrations**; the 58 school
 examples are separate. The 60 Adventure recordings remain a separate authoring
 archive until their own player-delivery increment. None of these recordings adds
 new challenges or changes the 148-challenge/14-world catalogue.
+
+
+Fourteen matching Self-level foundation demonstrations are available as a
+[separate player-importable archive](optional/README.md). They do not expand the
+core packed registry or its download. Use `--mode self-level --proof-archive`
+with a fresh output directory; the authoring tool verifies both replay and archive
+round-trip before writing.
