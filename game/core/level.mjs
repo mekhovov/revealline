@@ -1,3 +1,8 @@
+import {
+  runningEnemyBaseLevel,
+  runningEnemyCopy,
+  validateRunningEnemyDefinition,
+} from '../hunt/running-enemy-definition.mjs';
 import { DEFAULT_RULES } from './registry.mjs';
 import { boundedJSON, exactKeys } from '../data-json.mjs';
 import { resolveEncounterDescriptor } from './encounter.mjs';
@@ -269,6 +274,14 @@ export function validateLevel(level) {
       level && typeof level === 'object' ? Object.getOwnPropertyDescriptor(level, 'version') : null;
     if (version && !Object.hasOwn(version, 'value'))
       return { valid: false, errors: ['level version must be own data'] };
+    if (version?.value === 'xonix-level.v10') {
+      const owned = runningEnemyCopy(level);
+      const base = normalizedLevel(runningEnemyBaseLevel(owned));
+      validateRunningEnemyDefinition(owned, base);
+      return { valid: true, errors: [] };
+    }
+    if (level && Object.hasOwn(level, 'runningEnemies'))
+      return { valid: false, errors: ['Running enemies requires its explicit successor edition.'] };
     const hunt = version?.value === 'xonix-level.v9';
     const sentinel = version?.value === 'xonix-level.v8' || hunt;
     const directional = version?.value === 'xonix-level.v7' || sentinel;
@@ -382,6 +395,13 @@ export function validateLevel(level) {
 }
 
 export function normalizedLevel(level) {
+  if (Object.getOwnPropertyDescriptor(level ?? {}, 'version')?.value === 'xonix-level.v10') {
+    const owned = runningEnemyCopy(level);
+    const base = normalizedLevel(runningEnemyBaseLevel(owned));
+    validateRunningEnemyDefinition(owned, base);
+    return { ...base, version: owned.version, runningEnemies: owned.runningEnemies };
+  }
+
   if (
     [
       'xonix-level.v4',

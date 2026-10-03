@@ -1,5 +1,6 @@
 import { canvasInterfaceFonts } from '../presentation/theme-system.mjs';
 import { coopCombatView } from '../coop/combat-patrols.mjs';
+import { teamPictureArenaLevel } from '../coop/picture-source.mjs';
 import {
   createCombatPresentation,
   drawCombatWarnings,
@@ -224,6 +225,7 @@ export function createCoopPainter(canvas) {
       brutal = false,
       blood = true,
       encounterLevel = null,
+      runtimeLevel = null,
       textFace = 'pixel',
       textSize = 'standard',
       picture = null,
@@ -260,10 +262,14 @@ export function createCoopPainter(canvas) {
       // The host keeps the authenticated authored picture edition separately
       // from a derived pressure recipe. Geometry and the actual simulation stay
       // owned by the run; no alternate picture edition is inferred by ID.
+      const arenaLevel = teamPictureArenaLevel(run, {
+        runtimeLevel,
+        sourceLevel: encounterLevel ?? pictureLevel,
+      });
       if (
         (encounterLevel
-          ? encounterLevel.id !== run.level.id || encounterLevel.version !== run.level.version
-          : pictureLevel.id !== run.level.id || pictureLevel.version !== run.level.version) ||
+          ? encounterLevel.id !== arenaLevel.id || encounterLevel.version !== arenaLevel.version
+          : pictureLevel.id !== arenaLevel.id || pictureLevel.version !== arenaLevel.version) ||
         pictureLevel.width !== run.width ||
         pictureLevel.height !== run.height
       )

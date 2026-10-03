@@ -2,9 +2,10 @@
  * Active hazards remain authoritative even when actor clocks are frozen or replay is slow. */
 export function soloReactionDanger(run) {
   if (!run || run.status !== 'running') return true;
+  const patrols = (run.classic ?? run.runningEnemies)?.combatPatrols;
   return Boolean(
-    run.classic?.combatPatrols?.actors.some((actor) => actor.alive && actor.phase === 'warning') ||
-      run.classic?.combatPatrols?.projectiles.length > 0 ||
+    patrols?.actors.some((actor) => actor.alive && actor.phase === 'warning') ||
+      patrols?.projectiles.length > 0 ||
       run.classic?.lineImpact?.fronts.length > 0 ||
       (!run.encounter?.defeated && ['warning', 'active'].includes(run.encounter?.phase)) ||
       run.enemies?.some(

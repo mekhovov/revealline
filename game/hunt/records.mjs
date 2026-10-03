@@ -1,5 +1,6 @@
 import { boundedJSON, dataIdentity, exactKeys, required } from '../data-json.mjs';
 import { huntSummary } from './rules.mjs';
+import { combatOwner, huntDefinition } from './running-enemy-definition.mjs';
 export const HUNT_RECORDS_KEY = 'revealline.hunt-records.v1';
 export const HUNT_RECORDS_FORMAT = 'HuntRecordsV1';
 const MAX_RECORDS = 128;
@@ -22,7 +23,10 @@ function identityFor(run) {
   return runIdentities.get(run);
 }
 const summary = (run) =>
-  huntSummary(run.level?.classic?.hunt ?? run.level?.hunt, run.classic?.hunt ?? run.hunt);
+  huntSummary(
+    (run.level ? huntDefinition(run.level) : null) ?? run.level?.hunt,
+    combatOwner(run)?.hunt ?? run.hunt,
+  );
 
 export function validateHuntRecords(source) {
   const value = boundedJSON(source, {
@@ -193,7 +197,11 @@ export function createHuntRecords({
       handled.add(run);
       const key = keyFor(run, mode),
         damage =
-          run.classic?.livesLost ?? run.huntDowns ?? run.metrics?.downs ?? run.stats?.downs ?? 0;
+          run.classic?.livesLost ??
+          run.huntDowns ??
+          run.metrics?.downs ??
+          run.stats?.downs ??
+          (run.runningEnemies ? Math.max(0, run.rules.lives - run.lives) : 0);
       const item = {
         key,
         score: stats.score,
