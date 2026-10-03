@@ -1,4 +1,5 @@
 import { createDemoReward } from './demo-reward.mjs';
+import { createDemoSceneTransition } from './demo-scene-transition.mjs';
 import {
   REWARD_BOARD_SECONDS,
   REWARD_STORY_SECONDS,
@@ -58,12 +59,15 @@ export function attachDemoHost({
   clearRecordings = async () => {},
   audio = null,
   audioMaster = null,
+  prepareActors = async () => null,
+  preparePresentation = async () => null,
 }) {
   const $ = (id) => doc.getElementById(id),
     dialog = $('demo-dialog'),
     canvas = $('demo-canvas');
   if (!dialog || !canvas) return null;
   const reward = createDemoReward({ document: doc, canvas, readMedia, audioMaster });
+  const sceneTransition = createDemoSceneTransition(canvas, doc);
   const fullscreen = attachDemoFullscreen({ document: doc, dialog, button: $('demo-fullscreen') });
   const idle = createDemoIdle(),
     captions = createDemoCaptions();
@@ -124,6 +128,10 @@ export function attachDemoHost({
     const state = currentRun(),
       terminal = ['won', 'lost'].includes(state?.status);
     const loading = busy || !director?.player;
+    dialog.dataset.scene = loading ? 'loading' : 'playing';
+    const track = audio?.snapshot?.()?.track;
+    if ($('demo-now-playing'))
+      text('demo-now-playing', track ? `${track.title} · ${track.artist || ''}` : '');
     text(
       'demo-source',
       t(
@@ -270,6 +278,7 @@ export function attachDemoHost({
   function close({ handoff = false } = {}) {
     if (!active) return;
     active = false;
+    sceneTransition.clear();
     reward.reset();
     delete dialog.dataset.reward;
     clock.stop();
@@ -295,6 +304,8 @@ export function attachDemoHost({
     const player = await source.create({ signal });
     let nextPicture = null,
       nextPainter = null,
+      nextActors = null,
+      nextPresentation = null,
       released = false;
     const release = () => {
       if (released) return;
@@ -302,6 +313,8 @@ export function attachDemoHost({
       player.dispose?.();
       nextPicture?.dispose();
       nextPainter?.dispose?.();
+      nextActors?.release();
+      nextPresentation?.release();
     };
     const check = () => {
       if (signal.aborted) throw new DOMException('Cancelled', 'AbortError');
@@ -314,7 +327,15 @@ export function attachDemoHost({
       const current = getContext(),
         entry = source.entry;
       const theme = resolveDemoTheme(entry, source.level, current.themeId);
+      nextActors = await prepareActors(entry, source.level, theme.id, { signal });
+      if (released) nextActors?.release();
+      check();
       nextPainter = new BoardPainter(presets);
+      nextPresentation = await preparePresentation(nextPainter, entry, source.level, theme.id, {
+        signal,
+      });
+      if (released) nextPresentation?.release();
+      check();
       nextPainter.setLevel(source.level, { seed: player.info.seed });
       const overrides = {
         ...entry.visualOverrides,
@@ -372,6 +393,7 @@ export function attachDemoHost({
       };
       owners.set(wrapper, {
         painter: nextPainter,
+        actors: nextActors,
         picture: nextPicture,
         theme,
         overrides,
@@ -388,12 +410,12 @@ export function attachDemoHost({
   function changed(snapshot) {
     if (!active) return;
     if (snapshot.phase === 'loading') {
+      sceneTransition.begin(reward.departureFrame());
       reward.reset();
       delete dialog.dataset.reward;
       clock.reset();
       source = painter = picture = context = adoptedPlayer = null;
       caption = 'demo:tipStart';
-      canvas.getContext('2d')?.clearRect(0, 0, canvas.width, canvas.height);
     }
     if (snapshot.source && snapshot.player !== adoptedPlayer) {
       adoptedPlayer = snapshot.player;
@@ -407,6 +429,7 @@ export function attachDemoHost({
       const size = boardPaintSizeForRun(snapshot.player.state);
       canvas.width = size.width;
       canvas.height = size.height;
+      sceneTransition.ready();
       captions.reset();
       caption = 'demo:tipStart';
       dwell = 0;
@@ -662,6 +685,8 @@ export function attachDemoHost({
     $('demo-show-all-pictures-live'),
   ].filter(Boolean);
   const saveSettings = () => {
+    sceneTransition.clear();
+    if (!painter) canvas.getContext('2d')?.clearRect(0, 0, canvas.width, canvas.height);
     settings = {
       ...settings,
       auto: $('demo-auto').checked,
@@ -768,6 +793,7 @@ export function attachDemoHost({
 
   function paint(seconds) {
     const state = currentRun();
+    if (active && !doc.hidden) sceneTransition.paint(seconds, getContext().reduced);
     if (!active || !painter || !state || doc.hidden) return;
     renderControls();
     if (state.status === 'won')
@@ -781,6 +807,13 @@ export function attachDemoHost({
     context ??= canvas.getContext('2d');
     if (context)
       painter.draw(context, state, Math.min(seconds, 0.1), {
+        ...getContext().renderOptions,
+        actorAppearance: owners.get(director.player)?.actors
+          ? {
+              style: owners.get(director.player).actors.pin().style,
+              snapshot: owners.get(director.player).actors.snapshot,
+            }
+          : null,
         displayCSSWidth:
           canvas.clientHeight > 0
             ? Math.min(canvas.clientWidth, (canvas.clientHeight * canvas.width) / canvas.height)
@@ -790,10 +823,16 @@ export function attachDemoHost({
         fullReveal: state.status === 'won',
         backdrop: picture?.backdrop,
         pictureVisibility: pictureVisibility(),
-        pictureInterference: !allPicturesPreview(),
+        pictureInterference: true,
         celebrationPaused: interrupted,
-        demoTransition:
-          getContext().reduced || allPicturesPreview() ? 0 : Math.max(0, 1 - transitionAge / 0.3),
+        defeatEffectsRunning: !interrupted,
+        signalReception:
+          state.status === 'won' ? 'off' : state.status === 'lost' ? 'lost' : 'playing',
+        signalEffectsRunning:
+          !interrupted &&
+          (state.status === 'lost' ||
+            (practice ? practice.phase === 'playing' : director.phase === 'playing')),
+        demoTransition: getContext().reduced ? 0 : Math.max(0, 1 - transitionAge / 0.55),
       });
   }
   function updateAudio() {
@@ -889,6 +928,7 @@ export function attachDemoHost({
       close();
       disposed = true;
       clock.destroy();
+      sceneTransition.dispose();
       audioControls.dispose();
       input.destroy();
       fullscreen.dispose();
