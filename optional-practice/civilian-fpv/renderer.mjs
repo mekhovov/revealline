@@ -185,6 +185,7 @@ export function createFlightRenderer({
     lastActorState = null,
     importedAnimationTick = null,
     environmentLight = null,
+    environmentLightInputs = null,
     themeProfile = null,
     effectPalette = resolveSimEffects(null),
     goalMaterialKit = null,
@@ -1149,6 +1150,36 @@ export function createFlightRenderer({
     materials.add(edgePaint);
     value.add(new THREE.LineSegments(edges, edgePaint));
   }
+  function releaseEnvironmentLight() {
+    scene.environment = null;
+    const previous = environmentLight;
+    environmentLight = null;
+    environmentLightInputs = null;
+    previous?.dispose();
+  }
+  function setEnvironmentLight({ sky, ground, indoor }) {
+    if (renderer.getContext().isContextLost()) {
+      releaseEnvironmentLight();
+      return;
+    }
+    const inputs = {
+      sky: new THREE.Color(sky),
+      ground: new THREE.Color(ground),
+      indoor: Boolean(indoor),
+    };
+    // One renderer owns one probe. Compare linear channels without hex rounding:
+    // the resolved floor color can contain a full-precision theme blend.
+    if (
+      environmentLight &&
+      environmentLightInputs?.sky.equals(inputs.sky) &&
+      environmentLightInputs.ground.equals(inputs.ground) &&
+      environmentLightInputs.indoor === inputs.indoor
+    )
+      return;
+    releaseEnvironmentLight();
+    environmentLight = createEnvironmentLight(renderer, inputs);
+    environmentLightInputs = inputs;
+  }
   function setCourse(value, selectedMode = 'self-level', options = {}) {
     if (disposed) return;
     if (options.presentation) setPresentation(options.presentation);
@@ -1169,8 +1200,6 @@ export function createFlightRenderer({
     currentStep = -1;
     clearImported();
     scene.environment = null;
-    environmentLight?.dispose();
-    environmentLight = null;
     for (const group of [world, goals, actors, projectiles]) releaseGroup(group);
     garageDetailMaterials.clear();
     stadiumDetailMaterials.clear();
@@ -1220,7 +1249,7 @@ export function createFlightRenderer({
     hemisphere.groundColor
       .copy(surroundings.groundColor ?? new THREE.Color(theme.ground))
       .multiplyScalar(0.4);
-    environmentLight = createEnvironmentLight(renderer, {
+    setEnvironmentLight({
       sky: surroundings.indoor ? theme.wall : theme.sky,
       ground: surroundings.groundColor ?? theme.ground,
       indoor: surroundings.indoor,
@@ -2527,6 +2556,7 @@ export function createFlightRenderer({
   }
   const lost = (event) => {
     event.preventDefault();
+    releaseEnvironmentLight();
     onContextLost();
   };
   canvas.addEventListener('webglcontextlost', lost);
@@ -2667,9 +2697,7 @@ export function createFlightRenderer({
         editor = null;
       }
       setPath([]);
-      scene.environment = null;
-      environmentLight?.dispose();
-      environmentLight = null;
+      releaseEnvironmentLight();
       setGhost([]);
       clearImported();
       for (const group of [world, goals, aircraft, actors, projectiles, editHandles])
