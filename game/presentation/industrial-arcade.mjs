@@ -79,7 +79,14 @@ function interfaceFor(collection) {
   return getInterfaceTheme(family.interface.id, family.interface.revision);
 }
 const newFinish = (collection) =>
-  ['pocket-lcd', 'copper-observatory', 'sakura-station'].includes(collection.id) ||
+  [
+    'pocket-lcd',
+    'copper-observatory',
+    'sakura-station',
+    'obsidian-reliquary',
+    'deep-space',
+    'moonlit-grove',
+  ].includes(collection.id) ||
   (collection.id === 'vyshyvanka' && collection.revision === 'r2');
 function colorsFor(collection) {
   if (collection.id === 'industrial-workshop' && collection.revision === 'r1')
@@ -197,6 +204,23 @@ export function industrialTexturePixels(
           delta = x % 12 === 3 && y % 12 < 5 ? 13 : y % 8 === 6 ? -8 : 0;
         else if (recipe === 'sakura-station')
           delta = y % 12 === 4 && (x % 12 === 3 || x % 12 === 7) ? -10 : 2;
+        else if (recipe === 'obsidian-reliquary')
+          delta =
+            (x % 16) + (y % 16) < 5 ? -12 : y % 16 === 3 && x % 16 > 5 && x % 16 < 11 ? 10 : 0;
+        else if (recipe === 'deep-space')
+          delta =
+            x % 16 === 3 && y % 16 > 4 && y % 16 < 12
+              ? -11
+              : y % 16 === 4 && x % 16 > 8 && x % 16 < 13
+                ? 12
+                : 0;
+        else if (recipe === 'moonlit-grove')
+          delta =
+            x % 16 === 5 && y % 16 > 4 && y % 16 < 11
+              ? -9
+              : (x % 16) + (y % 16) === 11 && y % 16 > 3 && y % 16 < 8
+                ? 9
+                : 0;
         else if (tile && y % 8 === 6) delta = -13;
         else if (x % 8 === 2 && y % 8 === 2) delta = 19;
         else if ((x + 2 * y) % 11 === 0) delta = -7;

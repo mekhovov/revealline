@@ -15,6 +15,34 @@ export { createThemeBootstrapSeed } from '../game/presentation/theme-system.mjs'
 /** The classic first-paint reader contains only immutable data and the exact
  * shared migration parser. It never loads content or writes a preference. */
 export async function buildThemeBootstrap() {
+  // Material URLs contain the same SVG envelope and many identical quiet
+  // surfaces. Store each decoded body once; the classic reader reconstructs
+  // the exact compiler URL without a network request or a second resolver.
+  const svgHead =
+    '<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" shape-rendering="crispEdges">';
+  const svgTail = '</svg>';
+  const materialBodies = [];
+  const materialIndexes = new Map();
+  const materialIndex = (url) => {
+    if (materialIndexes.has(url)) return materialIndexes.get(url);
+    const svg = decodeURIComponent(url.slice(24, -2));
+    if (
+      !svg.startsWith(svgHead) ||
+      !svg.endsWith(svgTail) ||
+      url !== `url("data:image/svg+xml,${encodeURIComponent(svg)}")`
+    )
+      throw new TypeError('Bootstrap materials must use the canonical inline SVG profile.');
+    const index = materialBodies.length;
+    materialBodies.push(svg.slice(svgHead.length, -svgTail.length));
+    materialIndexes.set(url, index);
+    return index;
+  };
+  const materials = (resolved) =>
+    Object.fromEntries(
+      Object.entries(presentationThemeVariables(resolved))
+        .filter(([key]) => key.startsWith('--iw-material-'))
+        .map(([key, value]) => [key, materialIndex(value)]),
+    );
   const seeds = Object.fromEntries(
     INSTALLED_THEME_FAMILIES.map((family) => {
       const current = BUILTIN_THEME_FAMILIES.some(
@@ -29,12 +57,6 @@ export async function buildThemeBootstrap() {
             !/-(default|hover|pressed|disabled|loading)-/.test(key),
         ),
       );
-      const materials = (value) =>
-        Object.fromEntries(
-          Object.entries(presentationThemeVariables(value)).filter(([key]) =>
-            key.startsWith('--iw-material-'),
-          ),
-        );
       return [
         current ? family.id : `${family.id}@${family.revision}`,
         {
@@ -68,7 +90,13 @@ export async function buildThemeBootstrap() {
   const doc = globalThis.document;
   const root = doc?.documentElement;
   if (!root) return;
+  const materialUrls = ${JSON.stringify(materialBodies)}.map(body => 'url("data:image/svg+xml,' + encodeURIComponent(${JSON.stringify(svgHead)} + body + ${JSON.stringify(svgTail)}) + '")');
   const seeds = ${JSON.stringify(seeds)};
+  for (const seed of Object.values(seeds)) {
+    for (const field of ['material', 'quietMaterial']) {
+      seed[field] = Object.fromEntries(Object.entries(seed[field]).map(([key, index]) => [key, materialUrls[index]]));
+    }
+  }
   const contrast = ${JSON.stringify(contrastVariables)};
   let accepted = null;
   try {

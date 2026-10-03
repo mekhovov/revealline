@@ -5907,5 +5907,11 @@
   "workshop.theme.sakura-station": "Станція сакури",
   "workshop.description.pocket-lcd": "Кишенькова пригода в шавлієвих і чорнильних тонах ранніх портативних консолей.",
   "workshop.theme.pocket-lcd": "Кишенькова LCD",
-  "workshop.description.follow-game": "Використовувати тему, яку обрала кампанія або спільнота."
+  "workshop.description.follow-game": "Використовувати тему, яку обрала кампанія або спільнота.",
+  "workshop.theme.obsidian-reliquary": "Обсидіановий релікварій",
+  "workshop.description.obsidian-reliquary": "Святилище з вулканічного каменю: старе золото, світлі написи й гранатові деталі.",
+  "workshop.theme.deep-space": "Далекий космос",
+  "workshop.description.deep-space": "Місток космічного корабля: нічна синява, крижано-блакитні прилади й теплі навігаційні вогні.",
+  "workshop.theme.moonlit-grove": "Місячний гай",
+  "workshop.description.moonlit-grove": "Тихий нічний ліс із зеленню папороті та сріблястим місячним сяйвом."
 }
