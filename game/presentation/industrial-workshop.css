@@ -14,6 +14,26 @@
   --ui-disabled: var(--iw-muted);
   --ui-control-border: var(--iw-control-line);
 }
+[data-theme-family] {
+  /* Reset at each presentation scope so a quiet Studio specimen cannot
+     inherit its enclosing Industrial Workshop's material finish. */
+  --ui-panel-frame: none;
+  --ui-raised-frame: none;
+  --ui-primary-frame: none;
+  --ui-panel-depth: initial;
+  --ui-action-depth: initial;
+  --ui-hover-depth: initial;
+  --ui-pressed-depth: initial;
+  --ui-selected-depth: initial;
+  --ui-gallery-depth: none;
+  --ui-scene-motif: none;
+  --ui-scene-motif-size: 48px 48px;
+  --ui-scene-inset: 24px 24px auto auto;
+  --ui-scene-width: min(24vw, 192px);
+  --ui-scene-height: 96px;
+  --ui-scene-repeat: no-repeat;
+  --ui-scene-opacity: 0.18;
+}
 /* Rebind older semantic variables on their owning scope. Authored image, video,
    Canvas and 3D assets remain in their own renderer; none are filtered/recolored. */
 [data-theme-styled='true'],
@@ -144,9 +164,8 @@
   font-family: var(--iw-font-mono);
 }
 
-/* Reading surfaces stay quiet. Material identity comes from the palette and
-   light-catching rim; decorative nine-slices belong to authored outer frames,
-   never repeated around each card or control. */
+/* Reading surfaces stay quiet. Industrial Workshop can opt into a six-pixel
+   material rim, without painting the nine-slice center over semantic colors. */
 [data-theme-styled='true']
   :where(
     dialog,
@@ -216,12 +235,14 @@
   font-family: var(--iw-font-ui);
   background: var(--iw-panel);
   border: 2px solid var(--iw-line);
-  border-image: none;
+  border-image: var(--ui-panel-frame, none);
   border-radius: 0;
-  box-shadow:
+  box-shadow: var(
+    --ui-panel-depth,
     inset 0 1px 0 color-mix(in srgb, var(--iw-text) 8%, transparent),
     0 2px 0 var(--ui-shadow),
-    0 8px 18px #0002;
+    0 8px 18px #0002
+  );
 }
 [data-theme-styled='true']
   :where(
@@ -359,10 +380,11 @@
   --ui-action-pressed-fill: var(--iw-button-pressed-background, var(--iw-selection));
   --ui-action-pressed-ink: var(--iw-button-pressed-foreground, var(--iw-on-selection));
   --ui-action-edge: var(--iw-control-line);
+  --ui-action-frame: var(--ui-raised-frame, none);
   color: var(--ui-action-ink);
   background: var(--ui-action-fill);
   border: 2px solid var(--ui-action-edge);
-  border-image: none;
+  border-image: var(--ui-action-frame, none);
   border-radius: 0;
   min-height: var(--iw-target);
   box-sizing: border-box;
@@ -373,10 +395,12 @@
   line-height: 1.35;
   text-shadow: none;
   text-decoration: none;
-  box-shadow:
+  box-shadow: var(
+    --ui-action-depth,
     inset 0 1px 0 color-mix(in srgb, var(--ui-action-ink) 12%, transparent),
     inset 0 -1px 0 #0002,
-    0 2px 0 var(--ui-shadow);
+    0 2px 0 var(--ui-shadow)
+  );
   cursor: pointer;
 }
 [data-theme-styled='true']
@@ -396,6 +420,7 @@
   --ui-action-pressed-fill: var(--iw-primary-pressed-background, var(--iw-selection));
   --ui-action-pressed-ink: var(--iw-primary-pressed-foreground, var(--iw-on-selection));
   --ui-action-edge: var(--iw-accent);
+  --ui-action-frame: var(--ui-primary-frame, none);
 }
 [data-theme-styled='true'] :where(.danger, .danger-action, [data-ui-action='danger']) {
   --ui-action-fill: var(--iw-danger-default-background, var(--iw-hazard));
@@ -405,6 +430,7 @@
   --ui-action-pressed-fill: var(--iw-danger-pressed-background, var(--iw-selection));
   --ui-action-pressed-ink: var(--iw-danger-pressed-foreground, var(--iw-on-selection));
   --ui-action-edge: var(--iw-hazard);
+  --ui-action-frame: none;
 }
 [data-theme-styled='true']
   :where(
@@ -423,9 +449,11 @@
   ):is(:hover, [data-state='hover']):not(:disabled, [aria-disabled='true']) {
   background: var(--ui-action-hover-fill);
   color: var(--ui-action-hover-ink);
-  box-shadow:
+  box-shadow: var(
+    --ui-hover-depth,
     inset 0 0 0 1px var(--ui-action-edge),
-    0 2px 0 var(--ui-shadow);
+    0 2px 0 var(--ui-shadow)
+  );
 }
 [data-theme-styled='true']
   :where(
@@ -444,7 +472,8 @@
   ):is(:active, [data-state='pressed']):not(:disabled, [aria-disabled='true']) {
   background: var(--ui-action-pressed-fill);
   color: var(--ui-action-pressed-ink);
-  box-shadow: inset 0 2px 3px #0005;
+  border-image: var(--ui-primary-frame, none);
+  box-shadow: var(--ui-pressed-depth, inset 0 2px 3px #0005);
 }
 [data-theme-styled='true']
   :where(button, .button, [role='button'], a, [role='tab']):is(
@@ -459,8 +488,8 @@
   color: var(--ui-action-ink);
   background: var(--ui-action-fill);
   border-color: var(--iw-focus, var(--iw-accent));
-  border-image: none;
-  box-shadow: inset 3px 0 var(--iw-focus, var(--iw-accent));
+  border-image: var(--ui-primary-frame, none);
+  box-shadow: var(--ui-selected-depth, inset 3px 0 var(--iw-focus, var(--iw-accent)));
   text-decoration-thickness: 2px;
 }
 [data-theme-styled='true']
@@ -742,23 +771,16 @@
 [data-theme-texture='off'] :where(.menu-ornament, .menu-scene-decoration, .menu-retune-layer) {
   display: none;
 }
-[data-theme-surface='flat']
-  :where(
-    button,
-    .button,
-    .action,
-    .community-entry,
-    [role='button'],
-    [data-ui-action],
-    dialog,
-    .panel,
-    .field-kit-panel,
-    .iw-panel,
-    [data-component='panel'],
-    [data-ui-surface]
-  ) {
-  border-image: none;
-  box-shadow: none;
+[data-theme-surface='flat'] {
+  --ui-panel-frame: none;
+  --ui-raised-frame: none;
+  --ui-primary-frame: none;
+  --ui-panel-depth: none;
+  --ui-action-depth: none;
+  --ui-hover-depth: none;
+  --ui-pressed-depth: none;
+  --ui-selected-depth: none;
+  --ui-gallery-depth: none;
 }
 [data-theme-hud='opaque']
   :where(
@@ -874,6 +896,9 @@
   }
 }
 @media (forced-colors: active) {
+  [data-theme-family][data-theme-material] {
+    --ui-scene-motif: none;
+  }
   [data-theme-styled='true']
     :where(button, .button, input, select, textarea, dialog, .panel, [data-ui-surface]) {
     border-image: none;
@@ -926,10 +951,10 @@
   min-width: 0;
   text-align: left;
   padding: 12px;
-  border-image: none;
+  border-image: var(--ui-raised-frame, none);
   background: var(--iw-panel, var(--fk-panel));
   color: var(--iw-text, var(--fk-text));
-  box-shadow: none;
+  box-shadow: var(--ui-gallery-depth, none);
 }
 .theme-preview-swatches {
   display: grid;
@@ -953,12 +978,17 @@
 .theme-gallery .theme-preview-card[aria-pressed='true'] {
   color: var(--iw-on-selection, var(--fk-text));
   background: var(--iw-selection, var(--fk-panel));
+  border-image: var(--ui-primary-frame, none);
   outline: 2px solid var(--iw-focus, var(--fk-focus));
   outline-offset: 2px;
 }
 .theme-gallery .theme-preview-card:is(:focus-visible, .controller-focus) {
   outline: 3px solid var(--iw-focus, var(--fk-focus));
   outline-offset: 5px;
+}
+.theme-gallery .theme-preview-card:is(:disabled, [aria-disabled='true']) {
+  border-image: none;
+  box-shadow: none;
 }
 .theme-preview-card[aria-pressed='true'] strong::after {
   content: ' ✓';
@@ -1248,15 +1278,15 @@
 [data-theme-styled='true'] .menu-scene[data-backdrop='interface']::before {
   content: '';
   position: absolute;
-  inset: 24px 24px auto auto;
-  inline-size: min(24vw, 192px);
-  block-size: 96px;
+  inset: var(--ui-scene-inset);
+  inline-size: var(--ui-scene-width);
+  block-size: var(--ui-scene-height);
   pointer-events: none;
   background-image: var(--ui-scene-motif, none);
   background-size: var(--ui-scene-motif-size, 48px 48px);
   background-position: right top;
-  background-repeat: no-repeat;
-  opacity: 0.18;
+  background-repeat: var(--ui-scene-repeat);
+  opacity: var(--ui-scene-opacity);
 }
 [data-theme-material='linen'] {
   --ui-scene-motif: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='64' height='64' shape-rendering='crispEdges'%3E%3Cg fill='none' stroke='%23f48686' stroke-width='2'%3E%3Cpath d='M32 10l22 22-22 22L10 32zM24 24l16 16m0-16L24 40'/%3E%3C/g%3E%3Cpath fill='%23e1ddcf' d='M0 0h2v2H0zm62 0h2v2h-2zM0 62h2v2H0zm62 0h2v2h-2z'/%3E%3C/svg%3E");
@@ -1301,6 +1331,65 @@
 [data-theme-material='lcd'] .menu-scene[data-backdrop='interface']::after {
   background: none;
 }
-[data-theme-texture='off'] .menu-scene[data-backdrop='interface']::before {
-  background-image: none;
+[data-theme-texture='off'] {
+  --ui-scene-motif: none;
+}
+
+/* Industrial Workshop and its authored descendants are machined equipment,
+   not patterned stationery. Match the resolved material, including the retained
+   r1 name, so Studio candidates keep their basis's corner fasteners and wear.
+   Omitting `fill` is deliberate: the entire reading center stays the exact
+   semantic state color, including amber selection and destructive actions.
+   Six-pixel paint sits inside existing padding; target sizes never change.
+   Other families, flat/high-contrast specimens and ornaments Off remain quiet. */
+@media (forced-colors: none) {
+  :is(
+      [data-theme-material='steel'],
+      [data-theme-material='industrial-workshop']
+    )[data-theme-texture='on'][data-theme-contrast='normal'][data-theme-surface='bevel'] {
+    --ui-panel-frame: var(--iw-material-panel) 6 / 6px / 0 repeat;
+    --ui-raised-frame: var(--iw-material-raised) 6 / 6px / 0 repeat;
+    --ui-primary-frame: var(--iw-material-primary) 6 / 6px / 0 repeat;
+    --ui-panel-depth:
+      inset 0 0 0 1px #ffffff0b, inset 0 2px 0 #ffffff08, inset 0 -2px 0 #0003,
+      0 3px 0 var(--ui-shadow), 0 12px 28px #0005;
+    --ui-action-depth:
+      inset 0 1px 0 #ffffff1a, inset 0 -2px 0 #0004, 0 3px 0 var(--ui-shadow), 0 4px 6px #0002;
+    --ui-hover-depth:
+      inset 0 1px 0 #ffffff30, inset 0 0 0 1px #ffffff14, inset 0 -2px 0 #0004,
+      0 3px 0 var(--ui-shadow), 0 4px 6px #0003;
+    --ui-gallery-depth: var(--ui-action-depth);
+  }
+
+  /* A static, low-contrast steel seam grid belongs to the workshop backdrop,
+     behind the reading veil. It never overlays authored campaign pictures. */
+  :is(
+      [data-theme-material='steel'],
+      [data-theme-material='industrial-workshop']
+    )[data-theme-texture='on'][data-theme-contrast='normal'][data-theme-surface='bevel'] {
+    --ui-scene-inset: 0;
+    --ui-scene-width: auto;
+    --ui-scene-height: auto;
+    --ui-scene-motif:
+      linear-gradient(
+        135deg,
+        transparent 35%,
+        color-mix(in srgb, var(--iw-accent) 7%, transparent)
+      ),
+      repeating-linear-gradient(
+        0deg,
+        transparent 0 190px,
+        #0007 190px 191px,
+        color-mix(in srgb, var(--iw-line) 28%, transparent) 191px 192px
+      ),
+      repeating-linear-gradient(
+        90deg,
+        transparent 0 190px,
+        #0007 190px 191px,
+        color-mix(in srgb, var(--iw-line) 28%, transparent) 191px 192px
+      );
+    --ui-scene-motif-size: 100% 100%, 192px 192px, 192px 192px;
+    --ui-scene-repeat: no-repeat, repeat, repeat;
+    --ui-scene-opacity: 0.6;
+  }
 }

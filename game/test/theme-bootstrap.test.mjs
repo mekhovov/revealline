@@ -27,6 +27,7 @@ function seed(
     brokenStorage = false,
     href = 'https://example.test/game/',
     appearanceDefault,
+    bootstrapSource = source,
   } = {},
 ) {
   const variables = new Map(),
@@ -52,7 +53,7 @@ function seed(
       throw new Error('Startup must never persist intent');
     },
   };
-  vm.runInNewContext(source, {
+  vm.runInNewContext(bootstrapSource, {
     document,
     localStorage,
     location: { href },
@@ -105,25 +106,47 @@ test('every admitted appearance paints exact paired tokens and frames before mod
   }
 });
 
-test('retained and current context pins paint their exact installed revision before runtime', () => {
+test('retained and current context pins paint exact material bytes through every accessibility override', async () => {
   assert.ok(INSTALLED_THEME_FAMILIES.length > BUILTIN_THEME_FAMILIES.length);
+  const bootstrapSource = await buildThemeBootstrap();
   for (const family of INSTALLED_THEME_FAMILIES) {
-    const expected = presentationThemeVariables(resolvePresentation({ themeFamily: family }));
-    for (const options of [
-      {
-        href: `https://example.test/game/?appearanceFamily=${family.id}&appearanceRevision=${family.revision}`,
-      },
-      { appearanceDefault: { familyId: family.id, revision: family.revision } },
-    ]) {
-      const { variables, dataset } = seed({}, options);
-      assert.equal(dataset.interfaceTheme, family.id);
-      assert.equal(
-        dataset.themeStyled,
-        String(family.id !== 'legacy' || family.interface.revision !== 'r1'),
-      );
-      for (const [key, value] of Object.entries(expected)) {
-        if (/-(default|hover|pressed|disabled|loading)-/.test(key)) continue;
-        assert.equal(variables.get(key), value, `${family.id}@${family.revision}: ${key}`);
+    for (const highContrast of [false, true]) {
+      for (const ornaments of ['theme', 'off']) {
+        const expected = presentationThemeVariables(
+          resolvePresentation({
+            themeFamily: family,
+            accessibility: { highContrast },
+            ornaments: ornaments === 'off' ? 'off' : 'subtle',
+          }),
+        );
+        for (const options of [
+          {
+            href: `https://example.test/game/?appearanceFamily=${family.id}&appearanceRevision=${family.revision}`,
+          },
+          { appearanceDefault: { familyId: family.id, revision: family.revision } },
+        ]) {
+          const { variables, dataset } = seed(
+            {
+              'revealline.appearance.v2': raw(
+                preference('follow-game', { highContrast, ornaments }),
+              ),
+            },
+            { ...options, bootstrapSource },
+          );
+          assert.equal(dataset.interfaceTheme, family.id);
+          assert.equal(
+            dataset.themeStyled,
+            String(family.id !== 'legacy' || family.interface.revision !== 'r1' || highContrast),
+          );
+          for (const [key, value] of Object.entries(expected)) {
+            if (/-(default|hover|pressed|disabled|loading)-/.test(key)) continue;
+            assert.equal(
+              variables.get(key),
+              value,
+              `${family.id}@${family.revision}, ${ornaments}, contrast=${highContrast}: ${key}`,
+            );
+          }
+        }
       }
     }
   }

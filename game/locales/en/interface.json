@@ -5797,5 +5797,11 @@
   "workshop.theme.sakura-station": "Sakura Station",
   "workshop.description.pocket-lcd": "A pocket-size adventure in sage green and dark ink, inspired by early handhelds.",
   "workshop.theme.pocket-lcd": "Pocket LCD",
-  "workshop.description.follow-game": "Use the theme chosen by this campaign or community."
+  "workshop.description.follow-game": "Use the theme chosen by this campaign or community.",
+  "workshop.theme.obsidian-reliquary": "Obsidian Reliquary",
+  "workshop.description.obsidian-reliquary": "A volcanic-stone sanctuary with aged gold, bone-white labels and garnet details.",
+  "workshop.theme.deep-space": "Deep Space",
+  "workshop.description.deep-space": "A midnight spacecraft bridge with ice-blue instruments and warm navigation lights.",
+  "workshop.theme.moonlit-grove": "Moonlit Grove",
+  "workshop.description.moonlit-grove": "A quiet forest after dark, with fern-green surfaces and silver moonlight."
 }
