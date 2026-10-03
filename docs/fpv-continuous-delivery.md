@@ -2545,3 +2545,23 @@ Post-rebase candidate4752ae5ef again passes all three package admissions,
 committed-input/ZIP-member checks and two byte-identical builds. The admission
 receipt is refreshed; browser evidence remains bound to identical runtime bytes.
 CI/publication continues on #986 while art work remains independent.
+
+### D0 approved capacity increment — 3 October 2026
+
+Working branch `codex/fpv-d0-offline-capacity`, based on main
+`4fada39581777da9ca4111f50ec3b650803cdfa8`. Preserve local combined playtest
+`codex/fpv-flightdivision-combined-playtest`; do not push its integration merge
+into #986 or #987. The owner approved 72 MiB shared core/company capacity with
+verification, retaining lossless compression and all optional SIM limits.
+
+Implementation and current evidence: `docs/verification/fpv-d0-capacity/README.md`.
+All 18 company editions fit; existing focused checks 132 passed; actual browser
+72 MiB installation, staging and corrupt-update fallback passed. Publication and
+physical devices are not verified. The approved D0–D6 world-quality-first order
+is recorded at the top of `docs/fpv-reviewed-delivery-plan.md`.
+
+Next: finish exact candidate preparation and publish the focused capacity PR.
+Let protected CI qualify it, then refresh #986/#987 on current main without
+mixing incomplete D1 artwork into either. Continue Container Yard / Woodland
+rendering baseline independently. Full post-activation rollback and device
+qualification remain explicitly separate from the staging/fallback exercise.
