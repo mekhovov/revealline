@@ -2545,7 +2545,6 @@ Post-rebase candidate4752ae5ef again passes all three package admissions,
 committed-input/ZIP-member checks and two byte-identical builds. The admission
 receipt is refreshed; browser evidence remains bound to identical runtime bytes.
 CI/publication continues on #986 while art work remains independent.
-<<<<<<< 5a0fdc1c183cdfba3cf7a3f85e98bdcb861f6c58
 ### FlightDivision presentation increment — 3 October 2026
 
 The user requested comparable visual quality and keyboard controls after
@@ -2622,8 +2621,6 @@ Published as [PR #990](https://github.com/mekhovov/revealline/pull/990), head
 CI is pending; no live deployment claim. Capacity #989 now passes focused and
 default-capacity checks, but its preview and edition candidate jobs failed;
 inspect those failures next without weakening admission guards.
-||||||| 58bda8fd93291fc56cfa639fe323737d54c17c0d
-=======
 
 ### D0 approved capacity increment — 3 October 2026
 
@@ -2706,4 +2703,3 @@ handoff into the next phase, not a stopping point or a new approval request. Kee
 CI/publication separate from unfinished next-item work. This standing instruction
 is now recorded in the reviewed delivery plan. D1 art remains next; the canopy
 optimization alone does not complete D1.
->>>>>>> c5296fc26c02bb47749959bbfd38945c656bb6d7
