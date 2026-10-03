@@ -1,0 +1,314 @@
+[
+  {
+    "theme": "Flight Deck",
+    "semantics": {
+      "status": "passed",
+      "checks": [
+        {
+          "id": "sample-selected-disabled.background",
+          "passed": true,
+          "expected": "#272b2e",
+          "actual": "rgb(39, 43, 46)"
+        },
+        {
+          "id": "sample-selected-disabled.foreground",
+          "passed": true,
+          "expected": "#c4c1b6",
+          "actual": "rgb(196, 193, 182)"
+        },
+        {
+          "id": "sample-selected-disabled.shadow",
+          "passed": true,
+          "expected": "none",
+          "actual": "none"
+        },
+        {
+          "id": "sample-selected-disabled.borderImage",
+          "passed": true,
+          "expected": "none",
+          "actual": "none"
+        },
+        {
+          "id": "sample-selected-disabled.finish",
+          "passed": true,
+          "expected": "none",
+          "actual": "none"
+        },
+        {
+          "id": "sample-danger-pressed.background",
+          "passed": true,
+          "expected": "#ff9987",
+          "actual": "rgb(255, 153, 135)"
+        },
+        {
+          "id": "sample-danger-pressed.foreground",
+          "passed": true,
+          "expected": "#17191b",
+          "actual": "rgb(23, 25, 27)"
+        },
+        {
+          "id": "sample-danger-pressed.borderImage",
+          "passed": true,
+          "expected": "none",
+          "actual": "none"
+        },
+        {
+          "id": "sample-selected-disabled-twin.background",
+          "passed": true,
+          "expected": "#272b2e",
+          "actual": "rgb(39, 43, 46)"
+        },
+        {
+          "id": "sample-selected-disabled-twin.foreground",
+          "passed": true,
+          "expected": "#c4c1b6",
+          "actual": "rgb(196, 193, 182)"
+        },
+        {
+          "id": "sample-selected-disabled-twin.shadow",
+          "passed": true,
+          "expected": "none",
+          "actual": "none"
+        },
+        {
+          "id": "sample-selected-disabled-twin.borderImage",
+          "passed": true,
+          "expected": "none",
+          "actual": "none"
+        },
+        {
+          "id": "sample-selected-disabled-twin.finish",
+          "passed": true,
+          "expected": "none",
+          "actual": "none"
+        },
+        {
+          "id": "sample-danger-pressed-twin.background",
+          "passed": true,
+          "expected": "#ff9987",
+          "actual": "rgb(255, 153, 135)"
+        },
+        {
+          "id": "sample-danger-pressed-twin.foreground",
+          "passed": true,
+          "expected": "#17191b",
+          "actual": "rgb(23, 25, 27)"
+        },
+        {
+          "id": "sample-danger-pressed-twin.borderImage",
+          "passed": true,
+          "expected": "none",
+          "actual": "none"
+        }
+      ]
+    }
+  },
+  {
+    "theme": "Ember Foundry",
+    "semantics": {
+      "status": "passed",
+      "checks": [
+        {
+          "id": "sample-selected-disabled.background",
+          "passed": true,
+          "expected": "#2b2420",
+          "actual": "rgb(43, 36, 32)"
+        },
+        {
+          "id": "sample-selected-disabled.foreground",
+          "passed": true,
+          "expected": "#cebeac",
+          "actual": "rgb(206, 190, 172)"
+        },
+        {
+          "id": "sample-selected-disabled.shadow",
+          "passed": true,
+          "expected": "none",
+          "actual": "none"
+        },
+        {
+          "id": "sample-selected-disabled.borderImage",
+          "passed": true,
+          "expected": "none",
+          "actual": "none"
+        },
+        {
+          "id": "sample-selected-disabled.finish",
+          "passed": true,
+          "expected": "none",
+          "actual": "none"
+        },
+        {
+          "id": "sample-danger-pressed.background",
+          "passed": true,
+          "expected": "#ffa18e",
+          "actual": "rgb(255, 161, 142)"
+        },
+        {
+          "id": "sample-danger-pressed.foreground",
+          "passed": true,
+          "expected": "#17191b",
+          "actual": "rgb(23, 25, 27)"
+        },
+        {
+          "id": "sample-danger-pressed.borderImage",
+          "passed": true,
+          "expected": "none",
+          "actual": "none"
+        },
+        {
+          "id": "sample-selected-disabled-twin.background",
+          "passed": true,
+          "expected": "#2b2420",
+          "actual": "rgb(43, 36, 32)"
+        },
+        {
+          "id": "sample-selected-disabled-twin.foreground",
+          "passed": true,
+          "expected": "#cebeac",
+          "actual": "rgb(206, 190, 172)"
+        },
+        {
+          "id": "sample-selected-disabled-twin.shadow",
+          "passed": true,
+          "expected": "none",
+          "actual": "none"
+        },
+        {
+          "id": "sample-selected-disabled-twin.borderImage",
+          "passed": true,
+          "expected": "none",
+          "actual": "none"
+        },
+        {
+          "id": "sample-selected-disabled-twin.finish",
+          "passed": true,
+          "expected": "none",
+          "actual": "none"
+        },
+        {
+          "id": "sample-danger-pressed-twin.background",
+          "passed": true,
+          "expected": "#ffa18e",
+          "actual": "rgb(255, 161, 142)"
+        },
+        {
+          "id": "sample-danger-pressed-twin.foreground",
+          "passed": true,
+          "expected": "#17191b",
+          "actual": "rgb(23, 25, 27)"
+        },
+        {
+          "id": "sample-danger-pressed-twin.borderImage",
+          "passed": true,
+          "expected": "none",
+          "actual": "none"
+        }
+      ]
+    }
+  },
+  {
+    "theme": "Polar Relay",
+    "semantics": {
+      "status": "passed",
+      "checks": [
+        {
+          "id": "sample-selected-disabled.background",
+          "passed": true,
+          "expected": "#202e36",
+          "actual": "rgb(32, 46, 54)"
+        },
+        {
+          "id": "sample-selected-disabled.foreground",
+          "passed": true,
+          "expected": "#b9ced6",
+          "actual": "rgb(185, 206, 214)"
+        },
+        {
+          "id": "sample-selected-disabled.shadow",
+          "passed": true,
+          "expected": "none",
+          "actual": "none"
+        },
+        {
+          "id": "sample-selected-disabled.borderImage",
+          "passed": true,
+          "expected": "none",
+          "actual": "none"
+        },
+        {
+          "id": "sample-selected-disabled.finish",
+          "passed": true,
+          "expected": "none",
+          "actual": "none"
+        },
+        {
+          "id": "sample-danger-pressed.background",
+          "passed": true,
+          "expected": "#ffa595",
+          "actual": "rgb(255, 165, 149)"
+        },
+        {
+          "id": "sample-danger-pressed.foreground",
+          "passed": true,
+          "expected": "#17191b",
+          "actual": "rgb(23, 25, 27)"
+        },
+        {
+          "id": "sample-danger-pressed.borderImage",
+          "passed": true,
+          "expected": "none",
+          "actual": "none"
+        },
+        {
+          "id": "sample-selected-disabled-twin.background",
+          "passed": true,
+          "expected": "#202e36",
+          "actual": "rgb(32, 46, 54)"
+        },
+        {
+          "id": "sample-selected-disabled-twin.foreground",
+          "passed": true,
+          "expected": "#b9ced6",
+          "actual": "rgb(185, 206, 214)"
+        },
+        {
+          "id": "sample-selected-disabled-twin.shadow",
+          "passed": true,
+          "expected": "none",
+          "actual": "none"
+        },
+        {
+          "id": "sample-selected-disabled-twin.borderImage",
+          "passed": true,
+          "expected": "none",
+          "actual": "none"
+        },
+        {
+          "id": "sample-selected-disabled-twin.finish",
+          "passed": true,
+          "expected": "none",
+          "actual": "none"
+        },
+        {
+          "id": "sample-danger-pressed-twin.background",
+          "passed": true,
+          "expected": "#ffa595",
+          "actual": "rgb(255, 165, 149)"
+        },
+        {
+          "id": "sample-danger-pressed-twin.foreground",
+          "passed": true,
+          "expected": "#17191b",
+          "actual": "rgb(23, 25, 27)"
+        },
+        {
+          "id": "sample-danger-pressed-twin.borderImage",
+          "passed": true,
+          "expected": "none",
+          "actual": "none"
+        }
+      ]
+    }
+  }
+]

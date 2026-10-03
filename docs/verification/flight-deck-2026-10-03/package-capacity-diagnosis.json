@@ -1,0 +1,45 @@
+{
+  "sourceRevision": "548e312ab309ab0b36ae9a290b8bc16d22d67891",
+  "parentRevision": "69c8dd10148b657db32da04219ada71e864156a9",
+  "method": "In-memory builders with original strict quota guards; diagnostic error messages add measured counts/bytes only. Parent comparison overlays git-blob module and input bytes without a checkout or copies.",
+  "packages": [
+    {
+      "id": "civilian-flight",
+      "files": 35,
+      "headBytes": 546048,
+      "parentBytes": 546048,
+      "limits": {
+        "files": 64,
+        "bytes": 8388608
+      }
+    },
+    {
+      "id": "civilian-fpv",
+      "files": 67,
+      "headBytes": 4188523,
+      "parentBytes": 4178677,
+      "limits": {
+        "files": 72,
+        "bytes": 8388608
+      }
+    },
+    {
+      "id": "fpv-worlds",
+      "files": 105,
+      "headBytes": 14567040,
+      "parentBytes": 14556721,
+      "limits": {
+        "files": 104,
+        "bytes": 16777216
+      },
+      "excessFiles": 1,
+      "headByteHeadroom": 2210176,
+      "themeByteDelta": 10319
+    }
+  ],
+  "provisionalOptimization": {
+    "result": "reverted",
+    "reason": "Omitting two unused Academy modules gets World runtime to 103 files, but source archive is 105/104 after its two generator templates and inventory are included. Current policy also has no revisioned historical admission profile: rows() requires an exact dependency path set based on present policy.sharedFiles, so narrowing it can invalidate older archives."
+  },
+  "resolution": "No quota or admission change retained. World packaging remains a separate baseline prerequisite; production frozen bundle must pass on its own committed source before release."
+}
