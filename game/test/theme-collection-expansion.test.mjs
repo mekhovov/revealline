@@ -1,6 +1,8 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
+import { readFile } from 'node:fs/promises';
+import vm from 'node:vm';
 import {
   BUILTIN_THEME_FAMILIES,
   INSTALLED_THEME_FAMILIES,
@@ -14,6 +16,9 @@ import {
   validateInterfaceTheme,
   validatePresentationCoverage,
   contrastRatio,
+  applyResolvedPresentation,
+  createThemeBootstrapSeed,
+  saveAppearanceContext,
 } from '../presentation/theme-system.mjs';
 import {
   getArcadeCollection,
@@ -26,6 +31,12 @@ import {
   createWorkshopTexture,
   getSimVisualCollection,
 } from '../../optional-practice/civilian-fpv/world-visuals.mjs';
+
+import { createDefaultThemeBundle } from '../presentation/catalog.mjs';
+import { createThemeCandidate } from '../presentation/theme-preview.mjs';
+import { installThemeHost } from '../presentation/theme-host.mjs';
+import { installSimThemeHost } from '../../optional-practice/civilian-fpv/sim-presentation.mjs';
+import { Document } from './helpers/couch-dom.mjs';
 
 const darkAdditions = ['obsidian-reliquary', 'deep-space', 'moonlit-grove'];
 const additions = ['pocket-lcd', 'copper-observatory', 'sakura-station', ...darkAdditions];
@@ -265,4 +276,149 @@ test('new dark collections leave every previously installed exact interface, Arc
     hash.digest('hex'),
     '27d078a53324ab337dc91537b8d620ee7dd8b87e24195a3d633753d4f4dd95d6',
   );
+});
+
+const variantStyles = {
+  'obsidian-reliquary': 'brass',
+  'deep-space': 'composite',
+  'moonlit-grove': 'wood',
+};
+const variantCandidate = (id) =>
+  createThemeCandidate(createDefaultThemeBundle(), {
+    familyId: 'industrial-workshop',
+    interfaceId: id,
+  });
+
+test('finish variants follow exact interface bases independently of family without altering serialized assets', () => {
+  for (const [id, style] of Object.entries(variantStyles)) {
+    const candidate = variantCandidate(id),
+      original = JSON.stringify(candidate),
+      input = { themeFamily: candidate.family, interfaceTheme: candidate.interfaceTheme },
+      resolved = resolvePresentation({ ...input, interfaceBasis: candidate.basis });
+    assert.equal(candidate.basis.familyId, 'industrial-workshop');
+    assert.equal(candidate.family.sim.id, 'industrial-workshop');
+    assert.equal(resolved.materialStyle, style);
+    assert.equal(resolved.materialVariant, id);
+    assert.equal(
+      resolvePresentation({ familyId: 'industrial-workshop', interfaceId: id }).materialVariant,
+      id,
+    );
+    assert.deepEqual(
+      resolved.materials,
+      resolvePresentation(input).materials,
+      'variant does not change pinned SVG bytes',
+    );
+    assert.equal(
+      resolvePresentation(input).materialVariant,
+      style,
+      'old callers retain their shared material',
+    );
+    for (const interfaceBasis of [
+      null,
+      {},
+      { interfaceId: 'not-installed', interfaceRevision: 'r1' },
+      { interfaceId: id, interfaceRevision: 'r999' },
+      { interfaceId: 'dos', interfaceRevision: 'r2' },
+    ]) {
+      assert.equal(resolvePresentation({ ...input, interfaceBasis }).materialVariant, style);
+    }
+    assert.equal(JSON.stringify(candidate), original);
+    assert.equal(Object.hasOwn(candidate.interfaceTheme, 'materialVariant'), false);
+    const document = new Document(),
+      root = document.documentElement;
+    root.dataset.themeFinish = 'previous';
+    const restore = applyResolvedPresentation(root, resolved);
+    assert.equal(root.dataset.themeFinish, id);
+    restore();
+    assert.equal(root.dataset.themeFinish, 'previous');
+  }
+  for (const id of ['tryzub', 'neon-ruins', 'orchard-workshop']) {
+    const view = resolvePresentation({ familyId: id });
+    assert.equal(view.materialVariant, view.materialStyle);
+  }
+});
+
+function variantMemory() {
+  const values = new Map();
+  return {
+    getItem: (key) => values.get(key) ?? null,
+    setItem: (key, value) => values.set(key, value),
+    removeItem: (key) => values.delete(key),
+  };
+}
+
+test('actual game and standalone SIM hosts retain custom interface finish and clear it on independent override', async () => {
+  for (const id of Object.keys(variantStyles)) {
+    const candidate = variantCandidate(id),
+      pin = { familyId: candidate.family.id, revision: candidate.family.revision },
+      document = new Document(),
+      storage = variantMemory();
+    const host = installThemeHost({
+      document,
+      getStorage: () => storage,
+      prepareStyles: async () => {},
+      appearanceThemes: [candidate],
+      appearanceDefault: pin,
+    });
+    await host.ready;
+    assert.equal(host.snapshot().materialVariant, id);
+    assert.equal(document.documentElement.dataset.themeFinish, id);
+    await host.setInterface('dos');
+    assert.equal(document.documentElement.dataset.themeFinish, 'terminal');
+    host.dispose();
+
+    const simDocument = new Document(),
+      window = simDocument.defaultView;
+    window.sessionStorage = variantMemory();
+    window.localStorage = variantMemory();
+    saveAppearanceContext(window.sessionStorage, candidate);
+    const simHost = installSimThemeHost({
+      document: simDocument,
+      window,
+      getAppearanceDefault: () => pin,
+    });
+    assert.equal(simHost.snapshot().materialVariant, id);
+    assert.equal(simDocument.documentElement.dataset.themeFinish, id);
+    simHost.setInterface('dos');
+    assert.equal(simDocument.documentElement.dataset.themeFinish, 'terminal');
+    simHost.dispose();
+  }
+});
+
+test('first-paint custom finish uses a bounded style-compatible variant and retains old seed compatibility', async () => {
+  const script = await readFile(
+    new URL('../presentation/theme-bootstrap.mjs', import.meta.url),
+    'utf8',
+  );
+  function paint(seed) {
+    const dataset = {
+      appearanceFamily: seed.familyId,
+      appearanceRevision: seed.revision,
+      appearanceSeed: encodeURIComponent(JSON.stringify(seed)),
+    };
+    vm.runInNewContext(script, {
+      document: {
+        documentElement: { dataset, style: { setProperty() {} } },
+        querySelector: () => null,
+      },
+      location: { href: 'https://example.test/' },
+      URL,
+      localStorage: { getItem: () => null },
+      matchMedia: () => ({ matches: false }),
+    });
+    return dataset;
+  }
+  for (const [id, style] of Object.entries(variantStyles)) {
+    const candidate = variantCandidate(id),
+      seed = createThemeBootstrapSeed(candidate);
+    assert.equal(seed.materialVariant, id);
+    assert.equal(paint(seed).themeFinish, id);
+    const old = { ...seed };
+    delete old.materialVariant;
+    assert.equal(paint(old).themeFinish, style);
+    assert.equal(paint(old).themeFamily, candidate.family.id);
+    for (const bad of ['url(https://evil.test)', 1, {}, 'unknown-variant', 'porcelain']) {
+      assert.equal(paint({ ...seed, materialVariant: bad }).themeFamily, 'industrial-workshop');
+    }
+  }
 });
