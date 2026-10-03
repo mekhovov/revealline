@@ -75,3 +75,27 @@ Keep #1001 draft until normal admission passes; the scoped browser review is com
 full global validation also remains incomplete because unrelated content packs
 are absent; current exact-head CI must establish it. No guard or assertion is
 weakened, and no new unit, physical-device FPS, human-art or live claim is made.
+
+### Published capacity repair integrated for qualification
+
+Published repair #1011 at `30574b85092e3ddaa973527608a658dfc8adcd5b`
+integrates locally as `3f247a5bb80227d7c79c15b765def7d5d20a5bf6`. Its only
+runtime delta from the reviewed material candidate removes generated indentation
+from `world-reaction-runtime.mjs`; renderer, scenery, material and geometry bytes
+remain unchanged. The repair's normalized-AST and 24-recording evidence is in
+`fpv-optional-source-budget.md`. That repair also discloses the unrelated
+pre-existing hunt assertion: 20/21 checks pass, while the direct canonical-source
+test at `fpv-hunt-reactions.test.mjs:169` fails unchanged.
+
+All 30 applicable existing art checks pass again. All three exact-source optional
+admissions now pass with two identical builds, committed-input identity and ZIP
+member verification. World Studio has 102 files / 15,530,898 runtime bytes; its
+95 original inputs total 16,737,060 bytes, leaving 40,156 bytes under the unchanged
+16-MiB limit. These are different measurements from the repair-only inventory:
+main `2dbbe0a0` had 16,778,114 original-input bytes (898 bytes over); the repair
+alone reduces that to 16,735,813 bytes. This material candidate adds 1,247 bytes.
+
+The original failed attempt remains recorded above. The local admission hold is
+resolved by the independent repair; publish #1001 only after #1011 lands on main,
+then use exact-head protected checks. The frozen browser receipt remains bound to
+`9a3cae088`; no broader production or public qualification is inferred.
