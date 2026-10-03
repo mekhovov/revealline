@@ -27,6 +27,8 @@ export function mountRewardMedia({
   timeoutMs = 20000,
   createMedia = (type) => document.createElement(type),
   readLocalAsset,
+  cinematic = false,
+  reducedMotion = false,
 }) {
   const payload = validateCompletionRewardPayload(input);
   required(['audio', 'video'].includes(payload.type), 'Reward media requires audio or video.');
@@ -55,6 +57,7 @@ export function mountRewardMedia({
     mediaListeners = [],
     mediaURLs = new Set();
   root.setAttribute('data-reward-media', payload.type);
+  if (cinematic) root.classList.add('reward-media-cinematic');
   status.setAttribute('role', 'status');
   transcript.append(node('summary', tr('transcript')), transcriptText);
   transcriptText.style.whiteSpace = 'pre-wrap';
@@ -65,7 +68,7 @@ export function mountRewardMedia({
   if (poster) {
     poster.alt = payload.locales[locale].title;
     poster.style.width = '100%';
-    poster.style.maxHeight = '50vh';
+    poster.style.maxHeight = cinematic ? '100%' : '50vh';
     poster.style.objectFit = 'contain';
     poster.hidden = true;
     root.append(poster);
@@ -287,7 +290,7 @@ export function mountRewardMedia({
     media.playsInline = true;
     media.setAttribute('aria-label', payload.locales[locale].title);
     media.style.width = '100%';
-    media.style.maxHeight = '60vh';
+    media.style.maxHeight = cinematic ? '100%' : '60vh';
     media.hidden = true;
     binding = bindAudioMasterMedia({ audioMaster, element: media, muted: true });
     if (poster?.src) media.poster = poster.src;
@@ -303,6 +306,12 @@ export function mountRewardMedia({
       media.append(track);
     }
     root.append(media);
+    listenMedia(media, 'playing', () => {
+      if (!cinematic || !desired || !available()) return;
+      media.hidden = false;
+      if (!reducedMotion)
+        media.animate?.([{ opacity: 0 }, { opacity: 1 }], { duration: 650, easing: 'ease-out' });
+    });
     listenMedia(media, 'play', () => {
       // Native controls are explicit gestures too; hidden/old owners cannot resume.
       if (!prepared || !available()) {
@@ -369,7 +378,7 @@ export function mountRewardMedia({
     if (!alive() || media !== currentMedia) return;
     prepared = true;
     media.controls = true;
-    media.hidden = false;
+    media.hidden = cinematic;
   }
   async function start() {
     if (!available() || (desired && preparation)) return;
@@ -396,7 +405,8 @@ export function mountRewardMedia({
         pause();
         return;
       }
-      if (poster) poster.hidden = true;
+      media.hidden = false;
+      if (poster && !cinematic) poster.hidden = true;
       status.textContent = tr('playing');
     } catch {
       // Browsers can require a second explicit gesture after asynchronous decode.
@@ -433,5 +443,5 @@ export function mountRewardMedia({
     root.remove();
   }
   if (signal?.aborted) dispose();
-  return Object.freeze({ pause, dispose });
+  return Object.freeze({ start, pause, dispose });
 }

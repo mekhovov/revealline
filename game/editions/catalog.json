@@ -2624,6 +2624,60 @@
       "path": "game/editions/assets/discovery/met-shirt-fragment-157571.jpg",
       "publication": "public",
       "sha256": "4a5913f8a42a58165353e44bf492df473f9a90b12bf7b060cc49e3819e6de6bd"
+    },
+    {
+      "approved": true,
+      "bytes": 973469,
+      "dependencies": [],
+      "id": "social-drone-sky-watch-poster-v1",
+      "path": "game/editions/assets/social-drone/sky-watch-v1.png",
+      "publication": "public",
+      "sha256": "3aa3c35ddb9f16b82d29020859ea5f397074b9cbc767e22d587b00fb5119f91d"
+    },
+    {
+      "approved": true,
+      "bytes": 3204423,
+      "dependencies": [],
+      "id": "social-drone-sky-watch-video-v1",
+      "path": "game/editions/assets/social-drone/sky-watch-v1.mp4",
+      "publication": "public",
+      "sha256": "880e5dd71b9dafc0efd318a7dd12216b35bc18e7cb5f2abd155663fb91aae496"
+    },
+    {
+      "approved": true,
+      "bytes": 237,
+      "dependencies": [],
+      "id": "social-drone-sky-watch-en-description-v1",
+      "path": "game/editions/assets/social-drone/sky-watch-en-v1.txt",
+      "publication": "public",
+      "sha256": "d8fec85fe861b2aa66f6edeafd7f36a10ab8a038bc9b64298322a831346d5ba1"
+    },
+    {
+      "approved": true,
+      "bytes": 100,
+      "dependencies": [],
+      "id": "social-drone-sky-watch-en-captions-v1",
+      "path": "game/editions/assets/social-drone/sky-watch-en-v1.vtt",
+      "publication": "public",
+      "sha256": "8461b3e10ce68f3b25b88fcba7c8b4359c122dbc01a36515c2c10ad70e64126f"
+    },
+    {
+      "approved": true,
+      "bytes": 387,
+      "dependencies": [],
+      "id": "social-drone-sky-watch-uk-description-v1",
+      "path": "game/editions/assets/social-drone/sky-watch-uk-v1.txt",
+      "publication": "public",
+      "sha256": "93a0c9a85ec70a6a928879240b271d2e54a80412c56fd60e9debf17066bb015d"
+    },
+    {
+      "approved": true,
+      "bytes": 134,
+      "dependencies": [],
+      "id": "social-drone-sky-watch-uk-captions-v1",
+      "path": "game/editions/assets/social-drone/sky-watch-uk-v1.vtt",
+      "publication": "public",
+      "sha256": "7da415c3006148cf20a9972203ddd57ed262b229da5b056bd64884a63df882d0"
     }
   ],
   "brands": [
@@ -3506,6 +3560,26 @@
       "revision": "1",
       "rewardPath": "game/content/company-campaigns/fpv-care-repair.rewards.json",
       "sourcePath": "game/content/company-campaigns/fpv-care-repair.json"
+    },
+    {
+      "assetIds": [
+        "social-drone-sky-watch-poster-v1",
+        "social-drone-sky-watch-video-v1",
+        "social-drone-sky-watch-en-description-v1",
+        "social-drone-sky-watch-uk-description-v1",
+        "social-drone-sky-watch-en-captions-v1",
+        "social-drone-sky-watch-uk-captions-v1"
+      ],
+      "brandId": "social-drone-ua",
+      "id": "social-drone-sky-watch",
+      "localizationPath": "game/content/company-campaigns/social-drone-sky-watch.localization.json",
+      "localizationSha256": "54a092e96f51f17a086d002f0d813205d11b63ac7b9ef52d0b9e61281783f76a",
+      "modes": ["solo"],
+      "name": "Sky Watch",
+      "publication": "public",
+      "revision": "1",
+      "rewardPath": "game/content/company-campaigns/social-drone-sky-watch.rewards.json",
+      "sourcePath": "game/content/company-campaigns/social-drone-sky-watch.json"
     }
   ],
   "defaultEditionId": "coupa-all",
@@ -3521,13 +3595,23 @@
         "themes": "game/content/company-boot/social-drone-ua/themes.json"
       },
       "brandId": "social-drone-ua",
-      "campaignIds": ["social-drone-people-workshop", "social-drone-community-connections"],
+      "campaignIds": [
+        "social-drone-people-workshop",
+        "social-drone-community-connections",
+        "social-drone-sky-watch"
+      ],
       "entryCampaignId": "social-drone-people-workshop",
       "format": "revealline-edition.v1",
       "id": "social-drone-ua",
       "modes": ["solo"],
       "name": "Social Drone UA / LINE",
       "presentationHistory": [
+        {
+          "bytes": 202011,
+          "id": "7a5367fe55d1b22621662ac29d4c1224a1635fa0b40d0a8cb6e24d620b19a826",
+          "path": "game/editions/retained/social-drone-ua-before-sky-watch.json",
+          "sha256": "c3c084acb98eedc13a3cf89a74e245975c8b6533af92f9bd7dae8aeeaf9c3774"
+        },
         {
           "bytes": 176323,
           "id": "3a82bd8aa3306adf9f02be6f56945985b7e54e1606fc3156a2271ba19bbd16a6",
@@ -3572,7 +3656,7 @@
         }
       ],
       "publication": "public",
-      "revision": 8
+      "revision": 9
     },
     {
       "audience": "learners",

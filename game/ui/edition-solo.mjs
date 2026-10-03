@@ -480,6 +480,7 @@ export async function mountEditionSoloUI({
     pictureReady: lessons.pictureReady,
     cosmeticBodies: rewards.cosmeticBodies,
     closeResultDetails: rewards.closeResultDetails,
+    presentVictoryVideo: rewards.presentVictoryVideo,
     dispose() {
       if (disposed) return;
       disposed = true;
