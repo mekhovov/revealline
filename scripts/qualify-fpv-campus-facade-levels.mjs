@@ -21,11 +21,18 @@ import { FLIGHT_DEMONSTRATIONS } from '../optional-practice/civilian-fpv/demonst
 import { builtinWorldScene } from '../optional-practice/civilian-fpv/world-assets.mjs';
 import { dataIdentity } from '../game/data-json.mjs';
 
+const options = { baseline: '287eec95c81687fb8a6d176f750f7c65a60e1fe3', out: null };
+const args = process.argv.slice(2);
+for (let i = 0; i < args.length; i++) {
+  if (args[i] === '--out' && args[i + 1]) options.out = args[++i];
+  else if (args[i] === '--baseline' && /^[a-f0-9]{40}$/.test(args[i + 1] ?? ''))
+    options.baseline = args[++i];
+  else throw Error('Use [--baseline LOCAL_40_HEX_SHA] [--out NEW_RECEIPT.json]');
+}
 const root = new URL('../', import.meta.url),
-  baseline = '287eec95c81687fb8a6d176f750f7c65a60e1fe3',
+  baseline = options.baseline,
   prefix = 'optional-practice/civilian-fpv/',
   rendererPath = prefix + 'renderer.mjs',
-  args = process.argv.slice(2),
   checks = [],
   scenes = [],
   hash = (value) => createHash('sha256').update(value).digest('hex'),
@@ -42,8 +49,6 @@ const root = new URL('../', import.meta.url),
   },
   ids = Object.keys(dimensions),
   axes = ['x', 'y', 'z'];
-if (args.length && (args.length !== 2 || args[0] !== '--out'))
-  throw Error('Use --out NEW_RECEIPT.json');
 function check(name, pass, details) {
   checks.push({ name, passed: !!pass, ...(details === undefined ? {} : { details }) });
   assert(pass, name);
@@ -907,7 +912,8 @@ const receipt = {
   scope:
     'Actual source-extracted renderObstacle, panel/UV/detail/shadow ownership/release helpers, real Three world/material objects, and exact setQuality detail visibility loop. Base geometry/maps/edges are fully compared. Excludes PMREM, camera, actors/objectives, imported GLTF rendering, GPU timing/pixels and fresh replay. Invalid numeric guards are checked through the exact initializer without constructing invalid GPU geometry. No art acceptance claimed.',
 };
-if (args.length) await writeFile(args[1], JSON.stringify(receipt, null, 2) + '\n', { flag: 'wx' });
+if (options.out)
+  await writeFile(options.out, JSON.stringify(receipt, null, 2) + '\n', { flag: 'wx' });
 console.log(
   JSON.stringify(
     {
