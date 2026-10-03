@@ -6,6 +6,80 @@ fullscreen and existing simulation/content contracts. Direction: grounded
 realism, primary Acro learning, optional self-level assistance and consistent
 main-game presentation. All activities remain immediately selectable.
 
+## Approved continuation — 3 October 2026
+
+### Continuous phase progression
+
+The owner explicitly directs continuous implementation: when an item is complete,
+verify it, publish its focused PR and immediately start the next approved item.
+When a phase is complete, start the next phase without requesting another go-ahead.
+CI, merge queues and deployment continue independently; keep unfinished work on a
+separate branch and use native stacks for actual dependencies. Player feedback and
+physical-device qualification remain nonblocking and honestly recorded as pending.
+If a dependency blocks one item, progress another approved independent item.
+Stop only when the approved backlog is complete, the owner requests a pause, or no
+safe useful work remains without essential user input. Do not expand scope beyond
+the approved plan to keep work running.
+
+
+The owner approved implementation with **world quality first**, polishing all
+14 existing worlds before the main learning/usability phase, followed by creator
+tools and four distinct new worlds. This ordering supersedes the older delivery
+order below. Additional unit coverage remains deferred to D6; functional build,
+browser, replay, import/export and offline checks remain part of each increment.
+Physical-device and novice feedback do not block development and are not claimed
+as completed.
+
+| Phase | Working estimate | Reviewable result |
+| --- | --- | --- |
+| D0 | 1 week | Publish verified controls/art PRs #986/#987 through protected checks; repair shared offline capacity; establish rendering baseline and complete Snake outcome verification |
+| D1 | 3–5 weeks | Finished Container Yard and Woodland Park; reusable industrial/natural assets and measured quality tiers |
+| D2 | 5–7 weeks | Remaining 12 worlds in six pairs: Stadium/Garage, Hangar/Meadow, Courtyard/Warehouse, Airfield/Quarry, Campus/Railworks, Orchard/Solar Park |
+| D3 | 2–3 weeks | 60 optional Adventure demonstrations, 28 eligible alternate School demonstrations, evidence-based coaching, continuous practice and touch/controller polish |
+| D4 | 1–2 weeks | Editable sweeper/hairpin/chicane/climb/split-level templates, clearance guidance, divergent-mode routes and industrial/natural starter projects |
+| D5 | 6–8 weeks | Mountain Reservoir, Harbor Docks, Old Town Canals and Festival Grounds; eight distinct challenges and 16 mode-specific demonstrations per world |
+| D6 | 1–2 weeks | Deferred unit coverage, full regression and recorded qualification limits |
+
+Estimate: 19–28 working weeks plus three contingency weeks, assuming two developers
+and an environment artist. Each complete increment receives a focused PR;
+independent work continues while CI runs. Use native stacks only for dependencies.
+D5 targets 18 worlds and 228 authored challenges (196 current plus 32 planned); authored counts are not player
+acceptance or measured performance claims.
+
+Preserve Three.js, existing physics/replays, world identities, asset licenses and
+retained dependencies. Gameplay geometry changes need explicit content revisions.
+Quality presets must preserve collision, relevant sight lines and objective actors.
+Measure frame times, loading and resource disposal before claiming performance.
+No multiplayer, online publishing or universal commercial-map conversion is added.
+
+### Verified continuation checkpoint — 3 October 2026
+
+The 72 MiB shared-core change #989 and controls #986/#991 are merged. D1 art is
+published in focused PRs #992, #993, #996, #998, #999 and #1001; publication and
+public deployment are separate from local evidence. The combined Woodland/Yard
+candidate was functionally reviewed across 15 arena/preset cases, with identical
+collision data and stable resources through 15 cleanup cycles. A resolved-theme
+bug in #1001 was corrected so all five supported Pixel profile forms retain the
+existing unlit imported material. This evidence does not finish D1 art acceptance
+or establish sustained frame times on named devices.
+
+The next independent D2 increment adds readable closed stand facades and a static
+scoreboard to Stadium's three canonical solids. Its implementation preserves all
+21 associated recorded demonstrations and the 14 Snake Stadium layouts; source
+and package qualification is recorded in `fpv-stadium-structures.md`. Garage is
+the next bounded environment task. Continue D1 publication repairs in parallel,
+then the remaining D2 world pairs before D3–D6. No new dependency stack is needed
+for the Stadium increment, which starts from current main.
+
+### Approved capacity change
+
+The owner explicitly approved raising the shared-core offline budget from
+64 MiB to **72 MiB** with installation, update and rollback verification. Company editions use the separately enforced **80 MiB** package budget. Keep the
+2,000-file guard, content integrity checks and protected release requirements.
+Retain lossless compression and keep new large worlds/assets in optional packs.
+The three optional SIM packages remain **64/72/104 files and 8/8/16 MiB**.
+This approval does not alter unrelated media, backup, archive or source-file limits.
+
 ## Current delivery order — 3 October 2026
 
 The owner has explicitly made player-feedback sessions **nonblocking for further
@@ -20,11 +94,12 @@ controls, school, section practice, ghosts, reimport and original demonstrations
 The Follow/Observe editor #975, shared-theme texture quality #974, WebAssembly
 CSP repair #976 and pack-removal recovery #977 are now merged. Public deployment
 remains distinct from local functional verification.
-The current catalogue is **184 challenges / 14 worlds / 58 school lessons / 374
+The current catalogue is **196 challenges / 14 worlds / 58 school lessons / 374
 school steps**. Installed demonstrations total **178**: all 120 original
 mode-specific recordings plus 58 recommended-mode school examples. The 60
 Adventure authoring proofs are separate; they are not installed demonstrations.
-Main Snake content #973/#978 adds 36 challenges within the same 14 worlds. Fourteen
+Main Snake content now adds 48 challenges within the same 14 worlds, including
+12 tasks added after the earlier 184-challenge checkpoint. Fourteen
 optional matching Self-level foundation examples are merged as PR #979; they do
 not add challenges or increase the default installed-example count.
 
