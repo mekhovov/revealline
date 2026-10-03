@@ -399,7 +399,10 @@ test('Team atlas admission rejects unpinned geometry, wrong sheet dimensions and
     assert.strictEqual(painter.presentation, accepted);
   }
   const croppedLegacy = snapshot();
-  croppedLegacy.images[id].geometry.frame.x = 32;
+  croppedLegacy.images[id].geometry.frame = {
+    ...croppedLegacy.images[id].geometry.frame,
+    x: 32,
+  };
   assert.throws(() => prepareTeamEnemies(croppedLegacy), /Team enemy/);
 });
 
