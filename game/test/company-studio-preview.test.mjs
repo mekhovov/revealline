@@ -148,7 +148,9 @@ test('a self-consistent compiler report cannot omit or add curated theme definit
 test('changed executable bytes, report totals/exclusions and invented approval cannot pass preview verification', async () => {
   const f = await neutral();
   const tampered = new Map(f.result.files);
-  tampered.set('game/preview-test.mjs', Buffer.from('export const version = 2;'));
+  const executable = Buffer.from(tampered.get('game/preview-test.mjs'));
+  executable[0] ^= 1;
+  tampered.set('game/preview-test.mjs', executable);
   await assert.rejects(
     verifyStudioPreview({ ...f.input, fetcher: fetchFiles(tampered) }),
     /Artifact hash differs/,
