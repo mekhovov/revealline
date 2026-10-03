@@ -2377,7 +2377,7 @@ const themedMaterials = (colors, overrides = {}) =>
   );
 const collectionSources = {
   'military-field': {
-    pattern: 'foundry',
+    pattern: 'field',
     ornament: 0xa8b382,
     paper: 0xf0efdc,
     materials: themedMaterials({
@@ -2765,7 +2765,18 @@ function familySurface(pattern, role, x, y, grain) {
       0.92 + Math.sin(x * 0.38 + Math.sin(y * 0.049) * 2) * 0.055 + surfaceMottle(x, y) * 0.1;
   if (role === 'concrete') shade *= edge < 1 ? 0.85 : 0.96 + surfaceMottle(x, y) * 0.07;
   if (role === 'rubber') shade *= (x + y) % 16 < 2 ? 0.91 : 1;
-  if (pattern === 'foundry') {
+  if (pattern === 'field') {
+    // Recessed equipment panels with corner fasteners and a short service slot.
+    // Keep the subdued field palette; readable structure must survive grayscale.
+    if (solid) {
+      shade *= edge < 2 ? 0.78 : 1;
+      const fastener =
+        (Math.abs(u - 8) <= 1 || Math.abs(u - 55) <= 1) &&
+        (Math.abs(v - 8) <= 1 || Math.abs(v - 55) <= 1);
+      if (fastener) shade *= 0.55;
+      if (role === 'enamel' && v >= 44 && v <= 46 && u >= 22 && u <= 41) shade *= 0.64;
+    }
+  } else if (pattern === 'foundry') {
     // Bolted, heat-darkened access plates with short edge machining marks.
     if (solid) {
       shade *= edge < 2 ? 0.71 : edge === 3 ? 1.12 : 1;

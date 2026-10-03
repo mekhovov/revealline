@@ -2620,7 +2620,6 @@ Published as [PR #990](https://github.com/mekhovov/revealline/pull/990), head
 16c5809a0de11735d4d4e6b45e7b1f7cba077856 before this log-only update. Required
 CI is pending; no live deployment claim. Capacity #989 now passes focused and
 default-capacity checks, but its preview and edition candidate jobs failed;
-inspect those failures next without weakening admission guards.
 
 ### D0 approved capacity increment — 3 October 2026
 
@@ -2704,6 +2703,36 @@ is now recorded in the reviewed delivery plan. D1 art remains next; the canopy
 optimization alone does not complete D1.
 
 
+### D1 Woodland foliage surfaces — 3 October 2026
+
+#987 and #990 are merged. Independent branch `codex/fpv-woodland-foliage-surfaces`
+starts at main a8c808a26447dcea17c82852cb07b24d3059d2cb. Original shared leaf-cluster
+maps, underside shading and background bark replace flat authored Woodland tree
+surfaces. Geometry, silhouette, collision, routes, actors and physics are unchanged;
+Pixel/shared appearance overrides remain intact. No extra draw calls.
+
+15 browser cases / 90 rendered comparisons pass, including all presets and
+Industrial Workshop/Pixel/Meadow regression. Vertices remain exact and those
+three unaffected styles remain pixel-identical. Fifteen unload cycles plateau.
+21 existing checks pass; World Studio prepares at94files/14,410,935bytes. See
+`docs/fpv-woodland-foliage-surfaces.md`. No physical-FPS or live availability claim.
+Next: publish this surface increment and immediately continue original branching
+and canopy composition on a separate branch. Do not treat this increment as D1
+completion. Continue approved phases without another go-ahead.
+
+### Yard publication and material qualification repair — 3 October 2026
+
+Yard composition is published as draft #998, independent of Woodland #996.
+Immediately continued on `codex/fpv-field-surface-identity` to resolve the shared
+qualification failure. Military-field's foundry recipe collapsed to the DOS
+light/dark motif. Dedicated recessed panels restore distinct identity without
+changing 112 maps across the other 16 collections. All 30 existing checks and
+browser map comparisons pass; package admission passes at 94files/15,383,912bytes.
+See `docs/fpv-field-surface-identity.md`. Next: publish this focused repair, refresh
+art PRs after protected integration, continue D1 material depth; do not call D1
+complete or public availability verified. Preserve concurrent capacity/Theme work.
+
+
 ### Stadium surfaces qualified; remaining world order refreshed — 3 October 2026
 
 Working branch `codex/fpv-stadium-structure-detail`, managed checkout
@@ -2742,3 +2771,10 @@ Garage exact-ID ramp/deck/column surface readability on isolated branch
 Keep `school-upper-deck`, all9 Snake Garage layouts and17 demonstrations intact.
 Stadium publication status will be appended after PR creation; no new stack is
 required for this independent main-based increment.
+
+
+Published as [PR #1004](https://github.com/mekhovov/revealline/pull/1004), using
+existing milestone57. Main advanced to ce6af3e65 (#999 merged) during publication;
+the main merge preserves both delivery histories and #992 foliage maps. The
+prior browser/admission receipts remain tied to698b6aa30. Current integration
+qualification is recorded separately; no live claim or protection bypass.
