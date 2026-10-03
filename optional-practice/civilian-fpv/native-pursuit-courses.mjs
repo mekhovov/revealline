@@ -192,13 +192,34 @@ export const NATIVE_PURSUIT_CATALOGUE = Object.freeze(
     legacy: false,
   })),
 );
+/** Keep the r1 catalogue and its content hash available for saved attempts and
+ * imported proofs. Only these two behavior samples opt into the corrected model. */
+export const NATIVE_PURSUIT_V2_COURSES = Object.freeze(
+  [2, 4].map((index) => {
+    const course = structuredClone(NATIVE_PURSUIT_COURSES[index]);
+    course.revision = 'r2';
+    course.pursuit.format = 'FlightPursuit.v2';
+    course.locales.en.title += ' · Committed routes';
+    course.locales.uk.title += ' · Узгоджені маршрути';
+    return course;
+  }),
+);
+export const NATIVE_PURSUIT_V2_IDENTITY = `fpv-native-pursuit:${dataIdentity(NATIVE_PURSUIT_V2_COURSES)}`;
+export const NATIVE_PURSUIT_V2_CATALOGUE = Object.freeze(
+  NATIVE_PURSUIT_V2_COURSES.map((course) => ({
+    ...NATIVE_PURSUIT_CATALOGUE.find((entry) => entry.id === course.id),
+    course,
+    packIdentity: NATIVE_PURSUIT_V2_IDENTITY,
+  })),
+);
 export const NATIVE_PURSUIT_PLAYLIST = Object.freeze({
   format: 'FPVPlaylist.v1',
   id: 'native-pursuit',
-  revision: 'r1',
+  revision: 'r2',
   title: { en: 'Native Pursuit · Ground intentions', uk: 'Наземне переслідування · Наміри цілей' },
-  entries: NATIVE_PURSUIT_CATALOGUE.map((entry) => ({
-    packIdentity: entry.packIdentity,
-    levelId: entry.id,
-  })),
+  entries: NATIVE_PURSUIT_CATALOGUE.map((original) => {
+    const entry =
+      NATIVE_PURSUIT_V2_CATALOGUE.find((candidate) => candidate.id === original.id) ?? original;
+    return { packIdentity: entry.packIdentity, levelId: entry.id };
+  }),
 });

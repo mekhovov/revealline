@@ -91,3 +91,21 @@ test('external return to a legacy source removes an unrelated pending pursuit dr
   assert.equal(panel.querySelector('textarea'), null);
   assert.deepEqual(editor.draft, {});
 });
+
+test('existing v1 graphs upgrade only through an explicit, undoable action without discarding text edits', () => {
+  const editor = setup(),
+    original = structuredClone(editor.course());
+  let panel = editor.render();
+  const input = panel.querySelector('textarea');
+  input.value = input.value + ' ';
+  input.emit('input');
+  click(panel, 'Upgrade to committed pursuit v2');
+  assert.deepEqual(editor.course(), original);
+  click(panel, 'Discard graph edits');
+  click(panel, 'Upgrade to committed pursuit v2');
+  assert.equal(editor.course().pursuit.format, 'FlightPursuit.v2');
+  assert.deepEqual(editor.course().steps, original.steps);
+  editor.undo();
+  panel = editor.render();
+  assert.equal(JSON.parse(panel.querySelector('textarea').value).format, 'FlightPursuit.v1');
+});

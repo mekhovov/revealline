@@ -3,7 +3,7 @@ import { attachModalNavigation } from '../ui/modal-navigation.mjs';
 import { attachFullscreen } from '../ui/fullscreen.mjs';
 import { attachControllerNavigation } from '../ui/controller-navigation.mjs';
 import { setMenuIcon } from '../ui/native-menu-icons.mjs';
-import { attachInput } from '../ui/input.mjs';
+import { attachRoomInput } from './room-input.mjs';
 import { createBoardFootprints } from '../couch/board-footprint.mjs';
 import { getSummary } from '../core/index.mjs';
 import { getCoopSummary } from '../coop/core.mjs';
@@ -19,7 +19,7 @@ import { attachEncounterDisplayControls } from '../ui/encounter-display-controls
 import { attachMenuStyleControls } from '../ui/menu-style-controls.mjs';
 import { mountToolDisplay } from '../ui/tool-display.mjs';
 import { getLocale } from '../i18n/index.mjs';
-import { createRoomEventCursor } from './room-events.mjs';
+import { createRoomAudioActivation, createRoomEventCursor } from './room-events.mjs';
 import { attachRoomSupport } from './room-controls.mjs';
 
 /** The room transport owns readiness and outcomes. This adapter owns only native
@@ -44,9 +44,7 @@ export function mountRoomUI({ getState, getSeat, canPlay, submit, pause, display
     pendingTurns = [],
     lastControls = '',
     supportInput,
-    padHeld = [],
     identity = null,
-    audioEpoch = 0,
     wantsPlay = false,
     gestureReady = false,
     wasLive = false,
@@ -63,6 +61,18 @@ export function mountRoomUI({ getState, getSeat, canPlay, submit, pause, display
     container: $('room-reaction-caption'),
     settingsContainer: $('room-reaction-settings'),
     getReduced: () => display.snapshot().effectiveReducedEffects,
+  });
+  const audioActivation = createRoomAudioActivation({
+    sound,
+    active: () => canPlay() && !shell.blocksPlay(),
+    onEnabled: () => {
+      reactions.resume();
+      void reactions.prepare(
+        (getState()?.engine.runs ?? []).flatMap((run) =>
+          (run.targets ?? []).map((target) => target.kind),
+        ),
+      );
+    },
   });
   const encounter = attachEncounterDisplayControls({ prefix: 'room-' });
   const style = attachMenuStyleControls({ prefix: 'room-' });
@@ -192,19 +202,22 @@ export function mountRoomUI({ getState, getSeat, canPlay, submit, pause, display
     wantsPlay = false;
   });
   $('room-results').append($('receipt'));
+  const inputScope = () =>
+    shell.topDialog() ? `dialog:${shell.topDialog().id}` : canPlay() ? 'flight' : 'room:inactive';
   navigation = attachControllerNavigation({
     keyboard: true,
-    getScope: () => (shell.topDialog() ? 'ui' : 'flight'),
+    getScope: inputScope,
     getRoot: () => shell.topDialog() ?? shell.elements.root,
     getDefaultFocus: () => shell.topDialog()?.querySelector('button:not(:disabled),a[href]'),
     onBack: () => shell.back(),
     onMenu: () => shell.back(),
   });
-  input = attachInput({
+  input = attachRoomInput({
     arena: $('boards'),
-    continuousSteering: () => true,
+    getScope: inputScope,
     active: () => canPlay() && !shell.blocksPlay(),
     onPause: () => shell.openHome(),
+    onNavigate: (command) => navigation.handle(command),
     onSteer: (direction) => {
       if (pendingTurns.length < 8) pendingTurns.push(direction);
     },
@@ -220,28 +233,15 @@ export function mountRoomUI({ getState, getSeat, canPlay, submit, pause, display
     pause: () => shell.openHome(),
   });
   function unlock() {
-    const epoch = audioEpoch;
     gestureReady = true;
-    void sound.enable().then(() => {
-      if (epoch !== audioEpoch || !canPlay() || shell.blocksPlay()) {
-        sound.pause();
-        return;
-      }
-      reactions.resume();
-      void reactions.prepare(
-        (getState()?.engine.runs ?? []).flatMap((run) =>
-          (run.targets ?? []).map((target) => target.kind),
-        ),
-      );
-    });
+    void audioActivation.enable();
   }
   function suspend() {
-    audioEpoch++;
     pendingTurns = [];
     lastControls = '';
     supportInput?.clear();
     input?.clear();
-    sound.pause();
+    audioActivation.suspend();
     sound.feedbackDirector.reset();
     reactions.suspend();
     wasLive = false;
@@ -484,25 +484,6 @@ export function mountRoomUI({ getState, getSeat, canPlay, submit, pause, display
   }
   function frame() {
     const state = getState();
-    const pads = [...(globalThis.navigator.getGamepads?.() ?? [])].filter(
-        (pad) => pad?.connected && pad.mapping === 'standard',
-      ),
-      pad = pads[0];
-    const buttons = [12, 15, 13, 14, 0, 1, 9].map((i) => !!pad?.buttons[i]?.pressed);
-    const x = pad?.axes[0] ?? 0,
-      y = pad?.axes[1] ?? 0;
-    if (Math.max(Math.abs(x), Math.abs(y)) > 0.35)
-      buttons[Math.abs(x) > Math.abs(y) ? (x > 0 ? 1 : 3) : y > 0 ? 2 : 0] = true;
-    if (shell.topDialog() && padHeld.length) {
-      const direction = buttons.slice(0, 4).findIndex((pressed, i) => pressed && !padHeld[i]);
-      navigation.handle({
-        direction: direction < 0 ? null : ['up', 'right', 'down', 'left'][direction],
-        confirm: buttons[4] && !padHeld[4],
-        back: buttons[5] && !padHeld[5],
-        menu: buttons[6] && !padHeld[6],
-      });
-    }
-    padHeld = buttons;
     const controls = input.poll();
     const live = canPlay() && !shell.blocksPlay();
     if (!live || !state) return;

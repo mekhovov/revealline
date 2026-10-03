@@ -1,4 +1,4 @@
-import { PURSUIT_COURSE, PURSUIT_FORMAT, PURSUIT_FAMILIES } from './world-pursuit.mjs';
+import { PURSUIT_COURSE, PURSUIT_FORMAT_V2, PURSUIT_FAMILIES } from './world-pursuit.mjs';
 
 /** Remove policy ownership with the same transaction as native actor/objective edits. */
 export function removePursuitActor(course, id) {
@@ -43,7 +43,7 @@ export function pursuitFromWaypoints(course, id, family = 'runner') {
   if (nodes.length > 2) edges.push({ from: nodes.at(-1).id, to: nodes[0].id });
   course.format = PURSUIT_COURSE;
   course.pursuit = {
-    format: PURSUIT_FORMAT,
+    format: PURSUIT_FORMAT_V2,
     nodes,
     edges,
     actors: [{ id, family, start: nodes[0].id, goals: nodes.map((node) => node.id), pair: null }],
@@ -105,8 +105,8 @@ export function renderPursuitEditor({
   const explanation = el(
     'p',
     text(
-      `Graph: at most 64 nodes / 128 undirected edges, millimetres. Policies: ${PURSUIT_FAMILIES.join(', ')}. Each actor starts at its node; clear its ordinary path. Required targets remain in Contact Hunt objectives; couriers must be optional. Rendezvous uses two actors with the same pair ID and one identical goal. All edits below apply together.`,
-      `Граф: до 64 вузлів / 128 ненапрямлених ребер, міліметри. Політики: ${PURSUIT_FAMILIES.join(', ')}. Персонаж починає у своєму вузлі без звичайного маршруту. Обов’язкові цілі залишаються в завданнях полювання; кур’єри необов’язкові. Пара має спільний pair та одну однакову ціль. Усі зміни застосовуються разом.`,
+      `Graph: at most 64 nodes / 128 undirected edges, millimetres. Policies: ${PURSUIT_FAMILIES.join(', ')}. Each actor starts at its node; clear its ordinary path. Required targets remain in Contact Hunt objectives; couriers must be optional. Rendezvous uses two actors with the same pair ID and one identical goal. V2 requires separate graph approaches for their bodies; refuge goals remain committed through intermediate nodes. All edits below apply together.`,
+      `Граф: до 64 вузлів / 128 ненапрямлених ребер, міліметри. Політики: ${PURSUIT_FAMILIES.join(', ')}. Персонаж починає у своєму вузлі без звичайного маршруту. Обов’язкові цілі залишаються в завданнях полювання; кур’єри необов’язкові. Пара має спільний pair та одну однакову ціль. V2 потребує окремих підходів для тіл; ціль укриття зберігається між проміжними вузлами. Усі зміни застосовуються разом.`,
     ),
   );
   const input = el('textarea');
@@ -139,6 +139,24 @@ export function renderPursuitEditor({
       'Незастосовані зміни. Застосуйте їх перед редагуванням інших панелей.',
     );
   });
+  if (course.pursuit.format !== PURSUIT_FORMAT_V2)
+    panel.append(
+      button(
+        text('Upgrade to committed pursuit v2', 'Оновити до узгодженого переслідування v2'),
+        () => {
+          if (dirty) {
+            status.textContent = text(
+              'Apply or discard graph edits before upgrading.',
+              'Застосуйте або скасуйте зміни графа перед оновленням.',
+            );
+            return;
+          }
+          return change((next) => {
+            next.pursuit.format = PURSUIT_FORMAT_V2;
+          });
+        },
+      ),
+    );
   panel.append(
     explanation,
     input,
