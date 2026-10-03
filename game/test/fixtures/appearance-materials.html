@@ -30,6 +30,7 @@
           >Show
           <select id="specimen-case">
             <option value="all">All states</option>
+            <option value="close-up">Material close-up · native sizes</option>
           </select></label
         >
         <label
@@ -45,6 +46,7 @@
         <button id="specimen-measure" type="button">Capture measurements</button>
       </div>
       <p id="specimen-description"></p>
+      <p id="specimen-semantic-status" role="status" aria-live="polite"></p>
     </header>
     <main id="specimen-outer-scope">
       <section id="specimen-inner-scope" aria-label="Resolved runtime controls">
@@ -54,6 +56,11 @@
           data-backdrop="interface"
           aria-hidden="true"
         ></div>
+        <section
+          id="specimen-close-up"
+          aria-label="Material close-up at native sizes"
+          hidden
+        ></section>
         <div id="specimen-samples"></div>
       </section>
     </main>
