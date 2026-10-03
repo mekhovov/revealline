@@ -1,0 +1,4074 @@
+{
+  "format": "FPVCoastLighthouseCPU.v1",
+  "createdAt": "2026-10-03T21:01:20.294Z",
+  "baseline": "25700b699cc3c6e2b56d1917803dd7c4e6933b42",
+  "candidate": "25700b699cc3c6e2b56d1917803dd7c4e6933b42",
+  "candidateStatus": "M optional-practice/civilian-fpv/world-visuals.mjs\n?? docs/evidence/fpv-coast-lighthouse-harness.html\n?? docs/fpv-coast-lighthouse.md\n?? scripts/prepare-fpv-coast-lighthouse-verification.mjs\n?? scripts/qualify-fpv-coast-lighthouse.mjs",
+  "visualSha256": "082ea03268698c60c0038ab54276906761aa74477293f3450f099edb0b4eca7f",
+  "qualifierSha256": "a6b11fdb63e68df12ce730467c0d30d24c0c7e7a4a26e7a9fde2d6c1e7353486",
+  "immutable": {
+    "optional-practice/civilian-fpv/README.md": "2e97f96dcd653804eedf49f6a1d073cc9c8a71399db0cc5d7d1cbfae0ae66774",
+    "optional-practice/civilian-fpv/app.mjs": "ae158a1837bbbf14b3276da6b4abfcef5393ddfa0c828a5d89e30cd87263e0de",
+    "optional-practice/civilian-fpv/app.webmanifest": "1f24cc04ce0b759c23a57f4349484dc16398234e09e8b036f97ec1844d13a2e0",
+    "optional-practice/civilian-fpv/attempts.mjs": "5353e993c615dbb7091ab5d50497db82e71d3970f1587e6bb1398cc565be2494",
+    "optional-practice/civilian-fpv/beginner-coach.mjs": "20978a85d7f6e2a2e516bfcbbd08eb7798557b25b3aa9c48878473d694d2a39c",
+    "optional-practice/civilian-fpv/catalogue.mjs": "98338353d17eb585414538c9905040752fd5cd6699c48b17fa1706832b750997",
+    "optional-practice/civilian-fpv/content-definitions.mjs": "e3808d22cc3dc294311533a16164aced16f342eb9d4b1b22b77d279b2e8dcbfd",
+    "optional-practice/civilian-fpv/copy.mjs": "075ee9dbcf7de69e7f5c9a22e80a42de7cc49b4b2f2d06e9245c2034914b3e89",
+    "optional-practice/civilian-fpv/demonstrations.mjs": "92bb4365c46d94f5c1fea9808ec4e24fb9014d35640ee488959c4e0f4b6c5cfa",
+    "optional-practice/civilian-fpv/expressive-hunt-courses.mjs": "732c6d72dded07e7541965b3c250cfe339dd98ea49d22d2085b856cb869b9ede",
+    "optional-practice/civilian-fpv/flight-fullscreen.css": "b9568785f441fbb52f78b6be3399688aa619183d89f38838f9de58f89d894de2",
+    "optional-practice/civilian-fpv/flight-fullscreen.mjs": "f60358ea99f70f1afe9ff16ce0323ad1b5d9a92e742ecf1544b241faa6e59efc",
+    "optional-practice/civilian-fpv/flight-sectors.mjs": "5b1b54bde4e578e61da7d59f4a80a86db9aafbc78b4523d2ba2b540277a0a16d",
+    "optional-practice/civilian-fpv/guide.html": "091186125c09f19e415c329d2a4183eeca3dc45bd2fe44e5ba2f3aa9170cf4f2",
+    "optional-practice/civilian-fpv/index.html": "db74aa6e180ce5d8ffa1caaf5e9f817878f9da05813ea9e20127b6ebf9e87772",
+    "optional-practice/civilian-fpv/input.mjs": "2d2bb875278e727f589de4e71300ebe1a3640b278abea8f067a79ba06f1d159a",
+    "optional-practice/civilian-fpv/math.mjs": "555c8b6ea170b46992133507d2a3d867f06185bca060239cab7db9c9b87f9f98",
+    "optional-practice/civilian-fpv/model.mjs": "9e4cd11cfdde2dd43b437069b8cb7a359a8132495db806cb5f68e8674d48aaf6",
+    "optional-practice/civilian-fpv/notebook.mjs": "74159518b1c79be1c2858503cd8ddee79aed8796e9b21bf6a9a8721d5099a129",
+    "optional-practice/civilian-fpv/offline.mjs": "7baa069758975eaa133ca9625e8ff0b903a92089f5e7ed0f172ba5e525a6f444",
+    "optional-practice/civilian-fpv/package-info.json": "8ffc75a58ac9a66142c8e1ba71a65eba28de68e8e7f5d754a692ad4a04be2158",
+    "optional-practice/civilian-fpv/playlists.mjs": "ed81b450bc268cf8096fe14a7c1a46e9a5fca0c32ff8fdedad3c356955280a77",
+    "optional-practice/civilian-fpv/preview.png": "31d4f28a15a75721dfeaf8d57ffd0559ef6540bd45ab528840d5f57f84ea6e2a",
+    "optional-practice/civilian-fpv/radio-controls.mjs": "ec81c8b2d7cfe8586a7b73ef0887972019c7c1c39e64e6f32ea0d39437d7d4fb",
+    "optional-practice/civilian-fpv/radio-guide.mjs": "52685411b2099492a1bb26ffed12911c2a006fae971229a08147c0ddfd81a2b1",
+    "optional-practice/civilian-fpv/radio-profile.mjs": "f588fd5cda96ed9627a483f49ca843ace8d99a68fae42b0a4239c2cd0ab81933",
+    "optional-practice/civilian-fpv/radio-runtime.mjs": "3d908c7f6f1295fddacb952fadfc327206153248dbf5222ef31677eb4ff8f71b",
+    "optional-practice/civilian-fpv/radio-session.mjs": "98fdd029f1deb9eb6b51f2ae2f8fb5c441e2b3a7a2aca520a7e9ce5e267e80ef",
+    "optional-practice/civilian-fpv/radio-setup.mjs": "d4c091a8539221e71e39a12436af45a681a21e13f5468b8b4ecccd1b4c05e7d6",
+    "optional-practice/civilian-fpv/renderer.mjs": "0fa5a05706705fd6128d13b18a4714c7a8010bdfc2adc6ed96d7b43906647a75",
+    "optional-practice/civilian-fpv/rotation-table.mjs": "2ddab304ac99a2e70fc7e84fc6c27eedb49f1f3dac976baed680effa659cef41",
+    "optional-practice/civilian-fpv/sim-presentation.mjs": "ef8890ad20ef190e0c7ef6c0d24d933ce587a752cb4f24f55877d353982409d5",
+    "optional-practice/civilian-fpv/snake-hunt-catalogue.mjs": "a77f55d138fadd3642ae4cd20326d6f9ab8fc9fdce34a2497d6741b51ea3897a",
+    "optional-practice/civilian-fpv/snake-hunt-presentation.mjs": "a80ec4ac0f35170e7f18c4deea11bf9d25f328d374ec7af0e8af8ad30472ca81",
+    "optional-practice/civilian-fpv/snake-hunt.mjs": "39ce47e8aaae6d7f3e70b8708d52fe2d22e90119318383f8298d8d0c4cc568da",
+    "optional-practice/civilian-fpv/studio.mjs": "71f6cfd1ccc41e3fce1e59a1cae26455f6927ba599966d595e74f4f32d899485",
+    "optional-practice/civilian-fpv/style.css": "fdf8a71b22970d3ec2c608d36dd58a213f14596f0c5cfa4690e2019d73b77e3c",
+    "optional-practice/civilian-fpv/vendor/LICENSE.txt": "8b378ebe60e2fe500158cb0ac71cb5e8b7d92953c2abcc63a0eb90499653b5bc",
+    "optional-practice/civilian-fpv/vendor/addons/controls/TransformControls.js": "10f6d3e4c108dff62110f61a76749f9a1826c9781df9c3eb4ca0b5d9d2f5c4a8",
+    "optional-practice/civilian-fpv/vendor/addons/loaders/GLTFLoader.js": "03952cb129d558f92b8e6c757fbf7c1f718b3126c4d34f264d574b40ea36054f",
+    "optional-practice/civilian-fpv/vendor/addons/provenance.json": "a87fc39c9dc00b9ca055b006600c51c3f5ebfcc2117f523486979af1d0040be1",
+    "optional-practice/civilian-fpv/vendor/addons/utils/BufferGeometryUtils.js": "259085a7dac89e0840393a9347c77123fbc4206ec2146bf0c29ffc72e14a2800",
+    "optional-practice/civilian-fpv/vendor/addons/utils/SkeletonUtils.js": "28017bf37d0ecb0c4be6048db759ff14df729a562464830b064d4cc239c5af17",
+    "optional-practice/civilian-fpv/vendor/rapier/LICENSE": "4c05555705e3efde601fb1252ae48f1d63992af8a8fb8947745b7fa834e8f519",
+    "optional-practice/civilian-fpv/vendor/rapier/provenance.json": "6dc04a5eca22760fd38665af7649222da26ce343ff67f5ca68e5ed244e30d074",
+    "optional-practice/civilian-fpv/vendor/rapier/rapier.mjs": "02dc6a4e2fffc013bab08fbb44fa68f501d8303615e9afe4c7d89ad4eedda0d0",
+    "optional-practice/civilian-fpv/vendor/three.core.js": "9edde002b066a9a05676a6127f67735b62baf399bdea529f2f7e31657da769e6",
+    "optional-practice/civilian-fpv/vendor/three.module.js": "9052042d676cb0fdc1ddfefe193053f34b7ac0513a616fdac4535d49987812ea",
+    "optional-practice/civilian-fpv/world-actor-editor.mjs": "9ca630e6c850d85fd69959ee940195ddaa77daf9da2e31b397e1a6edc1e54350",
+    "optional-practice/civilian-fpv/world-app.mjs": "053dbfb4a3e0f2fbf8dfe3685a865368e314d845f8dc451fe9e59a275f52ae49",
+    "optional-practice/civilian-fpv/world-assets.mjs": "2670f199445373f9633ae259a046b704bcc5512887376e2498ab2e8e0055607e",
+    "optional-practice/civilian-fpv/world-audio.mjs": "104011e3e43091577ef2c740aaead7727fc45234fc2cbb2ce61fa3441dc63f8b",
+    "optional-practice/civilian-fpv/world-catalogue.mjs": "14f8523c829e9bdfdf8db5efb59169075be6045425222c615b846817694d24cc",
+    "optional-practice/civilian-fpv/world-collision.mjs": "2899c7c84f9eae14b9a3434f585a8e873f4a1361e8f3ce4026ef27f44bdeef32",
+    "optional-practice/civilian-fpv/world-content.mjs": "aa3788b42d2e6379be68a4d76abb10667e7adb260fe00580a963ab09324f0df0",
+    "optional-practice/civilian-fpv/world-demonstrations.mjs": "c9f2d0ee5c571507ae1dce4f48898554cb2ad179218f1905cdc8013db2e2c114",
+    "optional-practice/civilian-fpv/world-editor.mjs": "06cd81f0036641ca5d3bfe408f843e4db446b9d61c8ca58778e01ee468c9c85c",
+    "optional-practice/civilian-fpv/world-hangar.mjs": "759d21e034e65e99600df72ef7e04a2fdff8359ec9119baa401323b248ec85ef",
+    "optional-practice/civilian-fpv/world-hunt-reactions.mjs": "07a55c4d0018983b2174dfbf7363a584fff8641704a293adb49700147bf86f8d",
+    "optional-practice/civilian-fpv/world-model.mjs": "ce94192472f8cc0be1a70ec2dcdf7dc728956f55f589bb84335c851737f54d3e",
+    "optional-practice/civilian-fpv/world-progress.mjs": "c7de9e847bc3dbbb8e1aee6da39887ab4778769c33476a428c4186c57b5c845d",
+    "optional-practice/civilian-fpv/world-reaction-runtime.mjs": "b853b250484e91f4ca0fae6660605db134cac87aa47522aea07fd52c7fdbf1e2",
+    "optional-practice/civilian-fpv/world-records.mjs": "8fb720ec1a1a1e5cbc7ec5b253d14b6d76d680e6c03dc5f2c92b3e2e407d4c27",
+    "optional-practice/civilian-fpv/world-store.mjs": "67aca935d0dd889db2310e2df9a4649d6755901e3d82990905b27ba15dde69b0",
+    "optional-practice/civilian-fpv/world-style.css": "fb8ebd479ba6c78bdba0206173295fb5d01f5a5cc8de1c14695c0cf4c15fed78",
+    "optional-practice/civilian-fpv/world-themes.mjs": "67abda8ff53ba18e9aede45c57a8f9ec599dc0ddf7c977ce1d8ad2524e6c5549",
+    "optional-practice/civilian-fpv/world-zip.mjs": "874b371c817810a5869bc3ba37c94ff6fae4fc5cd418298f35340d2ce09039c8",
+    "game/data-json.mjs": "9ce33d6173f3cba8587ed7a7f1924c66e9d9c86ffa59b37a743764ea0b01f7bd",
+    "game/presentation/theme-system.mjs": "317e107e509f94449050c52f1756bd8436691f0d92bb8185aed697b3ba3127d6",
+    "game/hunt/actor-catalog.mjs": "a9d232092d58262ccd1008577b27ef8a99cb41abf8e3e962a2f34f3b8bc0df92",
+    "game/hunt/preferences.mjs": "1dcc93e3b50f8964150731f97c22335d73aae413114712c0528b012acabb4324"
+  },
+  "checks": [
+    {
+      "name": "tracked runtime and asset file list is unchanged",
+      "passed": true
+    },
+    {
+      "name": "no untracked runtime assets",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/README.md: exact baseline input",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/app.mjs: exact baseline input",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/app.webmanifest: exact baseline input",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/attempts.mjs: exact baseline input",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/beginner-coach.mjs: exact baseline input",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/catalogue.mjs: exact baseline input",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/content-definitions.mjs: exact baseline input",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/copy.mjs: exact baseline input",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/demonstrations.mjs: exact baseline input",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/expressive-hunt-courses.mjs: exact baseline input",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/flight-fullscreen.css: exact baseline input",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/flight-fullscreen.mjs: exact baseline input",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/flight-sectors.mjs: exact baseline input",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/guide.html: exact baseline input",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/index.html: exact baseline input",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/input.mjs: exact baseline input",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/math.mjs: exact baseline input",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/model.mjs: exact baseline input",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/notebook.mjs: exact baseline input",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/offline.mjs: exact baseline input",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/package-info.json: exact baseline input",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/playlists.mjs: exact baseline input",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/preview.png: exact baseline input",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/radio-controls.mjs: exact baseline input",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/radio-guide.mjs: exact baseline input",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/radio-profile.mjs: exact baseline input",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/radio-runtime.mjs: exact baseline input",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/radio-session.mjs: exact baseline input",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/radio-setup.mjs: exact baseline input",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/renderer.mjs: exact baseline input",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/rotation-table.mjs: exact baseline input",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/sim-presentation.mjs: exact baseline input",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/snake-hunt-catalogue.mjs: exact baseline input",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/snake-hunt-presentation.mjs: exact baseline input",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/snake-hunt.mjs: exact baseline input",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/studio.mjs: exact baseline input",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/style.css: exact baseline input",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/vendor/LICENSE.txt: exact baseline input",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/vendor/addons/controls/TransformControls.js: exact baseline input",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/vendor/addons/loaders/GLTFLoader.js: exact baseline input",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/vendor/addons/provenance.json: exact baseline input",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/vendor/addons/utils/BufferGeometryUtils.js: exact baseline input",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/vendor/addons/utils/SkeletonUtils.js: exact baseline input",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/vendor/rapier/LICENSE: exact baseline input",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/vendor/rapier/provenance.json: exact baseline input",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/vendor/rapier/rapier.mjs: exact baseline input",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/vendor/three.core.js: exact baseline input",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/vendor/three.module.js: exact baseline input",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/world-actor-editor.mjs: exact baseline input",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/world-app.mjs: exact baseline input",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/world-assets.mjs: exact baseline input",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/world-audio.mjs: exact baseline input",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/world-catalogue.mjs: exact baseline input",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/world-collision.mjs: exact baseline input",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/world-content.mjs: exact baseline input",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/world-demonstrations.mjs: exact baseline input",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/world-editor.mjs: exact baseline input",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/world-hangar.mjs: exact baseline input",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/world-hunt-reactions.mjs: exact baseline input",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/world-model.mjs: exact baseline input",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/world-progress.mjs: exact baseline input",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/world-reaction-runtime.mjs: exact baseline input",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/world-records.mjs: exact baseline input",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/world-store.mjs: exact baseline input",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/world-style.css: exact baseline input",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/world-themes.mjs: exact baseline input",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/world-zip.mjs: exact baseline input",
+      "passed": true
+    },
+    {
+      "name": "game/data-json.mjs: exact baseline input",
+      "passed": true
+    },
+    {
+      "name": "game/presentation/theme-system.mjs: exact baseline input",
+      "passed": true
+    },
+    {
+      "name": "game/hunt/actor-catalog.mjs: exact baseline input",
+      "passed": true
+    },
+    {
+      "name": "game/hunt/preferences.mjs: exact baseline input",
+      "passed": true
+    },
+    {
+      "name": "five Coast courses with one unchanged arena bounds",
+      "passed": true
+    },
+    {
+      "name": "all 17 shared collections retain identity",
+      "passed": true
+    },
+    {
+      "name": "canonical lighthouse retains its exact 6 by 22 by 6 metre collision box",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01: exact course, collision, actor, objective and identity data",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01: no imported builtin GLB exists",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-02: exact course, collision, actor, objective and identity data",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-02: no imported builtin GLB exists",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-03: exact course, collision, actor, objective and identity data",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-03: no imported builtin GLB exists",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-04: exact course, collision, actor, objective and identity data",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-04: no imported builtin GLB exists",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-05: exact course, collision, actor, objective and identity data",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-05: no imported builtin GLB exists",
+      "passed": true
+    },
+    {
+      "name": "no installed World or legacy Coast demonstrations are claimed",
+      "passed": true
+    },
+    {
+      "name": "canonical lighthouse: exactly four named layered batches",
+      "passed": true
+    },
+    {
+      "name": "canonical lighthouse: at most 80 flush quads and 160 triangles",
+      "passed": true,
+      "details": {
+        "vertices": 324,
+        "triangles": 108
+      }
+    },
+    {
+      "name": "adventure-coast-01: same bounded canonical landmark geometry",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-02: same bounded canonical landmark geometry",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-03: same bounded canonical landmark geometry",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-04: same bounded canonical landmark geometry",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-05: same bounded canonical landmark geometry",
+      "passed": true
+    },
+    {
+      "name": "translated canonical lighthouse: exactly four named layered batches",
+      "passed": true
+    },
+    {
+      "name": "translated canonical lighthouse: at most 80 flush quads and 160 triangles",
+      "passed": true,
+      "details": {
+        "vertices": 324,
+        "triangles": 108
+      }
+    },
+    {
+      "name": "same-dimension translated canonical box moves every mark by exactly its displacement",
+      "passed": true
+    },
+    {
+      "name": "missing obstacle: creator guard adds no marks",
+      "passed": true
+    },
+    {
+      "name": "null obstacle: creator guard adds no marks",
+      "passed": true
+    },
+    {
+      "name": "empty obstacle: creator guard adds no marks",
+      "passed": true
+    },
+    {
+      "name": "different ID: creator guard adds no marks",
+      "passed": true
+    },
+    {
+      "name": "explicit box type: creator guard adds no marks",
+      "passed": true
+    },
+    {
+      "name": "triangle mesh type: creator guard adds no marks",
+      "passed": true
+    },
+    {
+      "name": "identity rotation: creator guard adds no marks",
+      "passed": true
+    },
+    {
+      "name": "rotated box: creator guard adds no marks",
+      "passed": true
+    },
+    {
+      "name": "missing bounds: creator guard adds no marks",
+      "passed": true
+    },
+    {
+      "name": "nonfinite coordinate: creator guard adds no marks",
+      "passed": true
+    },
+    {
+      "name": "changed x dimension: creator guard adds no marks",
+      "passed": true
+    },
+    {
+      "name": "changed y dimension: creator guard adds no marks",
+      "passed": true
+    },
+    {
+      "name": "changed z dimension: creator guard adds no marks",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/low/authored: old meshes, geometry, transforms, material properties and texture pixels remain exact",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/low/authored: four opaque role-owned batches or exact Pixel exclusion",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/low/authored: installed geometry matches the bounded helper and strict layer order",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/low/authored: painted faces cannot alter opaque wall distances",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/low/authored: bounded four-geometry/four-material delta with no new textures or instances",
+      "passed": true,
+      "details": {
+        "before": {
+          "geometries": 17,
+          "materials": 21,
+          "textures": 12,
+          "instances": 7
+        },
+        "after": {
+          "geometries": 21,
+          "materials": 25,
+          "textures": 12,
+          "instances": 7
+        }
+      }
+    },
+    {
+      "name": "adventure-coast-01/low/authored: every owned geometry/material/texture/instance disposed exactly once",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/low/pixel: old meshes, geometry, transforms, material properties and texture pixels remain exact",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/low/pixel: four opaque role-owned batches or exact Pixel exclusion",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/low/pixel: bounded four-geometry/four-material delta with no new textures or instances",
+      "passed": true,
+      "details": {
+        "before": {
+          "geometries": 17,
+          "materials": 21,
+          "textures": 12,
+          "instances": 7
+        },
+        "after": {
+          "geometries": 17,
+          "materials": 21,
+          "textures": 12,
+          "instances": 7
+        }
+      }
+    },
+    {
+      "name": "adventure-coast-01/low/pixel: every owned geometry/material/texture/instance disposed exactly once",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/low/military-field: old meshes, geometry, transforms, material properties and texture pixels remain exact",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/low/military-field: four opaque role-owned batches or exact Pixel exclusion",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/low/military-field: installed geometry matches the bounded helper and strict layer order",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/low/military-field: painted faces cannot alter opaque wall distances",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/low/military-field: bounded four-geometry/four-material delta with no new textures or instances",
+      "passed": true,
+      "details": {
+        "before": {
+          "geometries": 18,
+          "materials": 21,
+          "textures": 4,
+          "instances": 8
+        },
+        "after": {
+          "geometries": 22,
+          "materials": 25,
+          "textures": 4,
+          "instances": 8
+        }
+      }
+    },
+    {
+      "name": "adventure-coast-01/low/military-field: every owned geometry/material/texture/instance disposed exactly once",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/low/ember-foundry: old meshes, geometry, transforms, material properties and texture pixels remain exact",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/low/ember-foundry: four opaque role-owned batches or exact Pixel exclusion",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/low/ember-foundry: installed geometry matches the bounded helper and strict layer order",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/low/ember-foundry: painted faces cannot alter opaque wall distances",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/low/ember-foundry: bounded four-geometry/four-material delta with no new textures or instances",
+      "passed": true,
+      "details": {
+        "before": {
+          "geometries": 18,
+          "materials": 21,
+          "textures": 4,
+          "instances": 8
+        },
+        "after": {
+          "geometries": 22,
+          "materials": 25,
+          "textures": 4,
+          "instances": 8
+        }
+      }
+    },
+    {
+      "name": "adventure-coast-01/low/ember-foundry: every owned geometry/material/texture/instance disposed exactly once",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/low/polar-relay: old meshes, geometry, transforms, material properties and texture pixels remain exact",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/low/polar-relay: four opaque role-owned batches or exact Pixel exclusion",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/low/polar-relay: installed geometry matches the bounded helper and strict layer order",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/low/polar-relay: painted faces cannot alter opaque wall distances",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/low/polar-relay: bounded four-geometry/four-material delta with no new textures or instances",
+      "passed": true,
+      "details": {
+        "before": {
+          "geometries": 18,
+          "materials": 21,
+          "textures": 4,
+          "instances": 8
+        },
+        "after": {
+          "geometries": 22,
+          "materials": 25,
+          "textures": 4,
+          "instances": 8
+        }
+      }
+    },
+    {
+      "name": "adventure-coast-01/low/polar-relay: every owned geometry/material/texture/instance disposed exactly once",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/low/industrial-workshop: old meshes, geometry, transforms, material properties and texture pixels remain exact",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/low/industrial-workshop: four opaque role-owned batches or exact Pixel exclusion",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/low/industrial-workshop: installed geometry matches the bounded helper and strict layer order",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/low/industrial-workshop: painted faces cannot alter opaque wall distances",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/low/industrial-workshop: bounded four-geometry/four-material delta with no new textures or instances",
+      "passed": true,
+      "details": {
+        "before": {
+          "geometries": 18,
+          "materials": 21,
+          "textures": 4,
+          "instances": 8
+        },
+        "after": {
+          "geometries": 22,
+          "materials": 25,
+          "textures": 4,
+          "instances": 8
+        }
+      }
+    },
+    {
+      "name": "adventure-coast-01/low/industrial-workshop: every owned geometry/material/texture/instance disposed exactly once",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/low/vyshyvanka: old meshes, geometry, transforms, material properties and texture pixels remain exact",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/low/vyshyvanka: four opaque role-owned batches or exact Pixel exclusion",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/low/vyshyvanka: installed geometry matches the bounded helper and strict layer order",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/low/vyshyvanka: painted faces cannot alter opaque wall distances",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/low/vyshyvanka: bounded four-geometry/four-material delta with no new textures or instances",
+      "passed": true,
+      "details": {
+        "before": {
+          "geometries": 18,
+          "materials": 21,
+          "textures": 4,
+          "instances": 8
+        },
+        "after": {
+          "geometries": 22,
+          "materials": 25,
+          "textures": 4,
+          "instances": 8
+        }
+      }
+    },
+    {
+      "name": "adventure-coast-01/low/vyshyvanka: every owned geometry/material/texture/instance disposed exactly once",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/low/dnipro-porcelain: old meshes, geometry, transforms, material properties and texture pixels remain exact",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/low/dnipro-porcelain: four opaque role-owned batches or exact Pixel exclusion",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/low/dnipro-porcelain: installed geometry matches the bounded helper and strict layer order",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/low/dnipro-porcelain: painted faces cannot alter opaque wall distances",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/low/dnipro-porcelain: bounded four-geometry/four-material delta with no new textures or instances",
+      "passed": true,
+      "details": {
+        "before": {
+          "geometries": 18,
+          "materials": 21,
+          "textures": 4,
+          "instances": 8
+        },
+        "after": {
+          "geometries": 22,
+          "materials": 25,
+          "textures": 4,
+          "instances": 8
+        }
+      }
+    },
+    {
+      "name": "adventure-coast-01/low/dnipro-porcelain: every owned geometry/material/texture/instance disposed exactly once",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/low/tryzub: old meshes, geometry, transforms, material properties and texture pixels remain exact",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/low/tryzub: four opaque role-owned batches or exact Pixel exclusion",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/low/tryzub: installed geometry matches the bounded helper and strict layer order",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/low/tryzub: painted faces cannot alter opaque wall distances",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/low/tryzub: bounded four-geometry/four-material delta with no new textures or instances",
+      "passed": true,
+      "details": {
+        "before": {
+          "geometries": 18,
+          "materials": 21,
+          "textures": 4,
+          "instances": 8
+        },
+        "after": {
+          "geometries": 22,
+          "materials": 25,
+          "textures": 4,
+          "instances": 8
+        }
+      }
+    },
+    {
+      "name": "adventure-coast-01/low/tryzub: every owned geometry/material/texture/instance disposed exactly once",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/low/windows-classic: old meshes, geometry, transforms, material properties and texture pixels remain exact",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/low/windows-classic: four opaque role-owned batches or exact Pixel exclusion",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/low/windows-classic: installed geometry matches the bounded helper and strict layer order",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/low/windows-classic: painted faces cannot alter opaque wall distances",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/low/windows-classic: bounded four-geometry/four-material delta with no new textures or instances",
+      "passed": true,
+      "details": {
+        "before": {
+          "geometries": 18,
+          "materials": 21,
+          "textures": 4,
+          "instances": 8
+        },
+        "after": {
+          "geometries": 22,
+          "materials": 25,
+          "textures": 4,
+          "instances": 8
+        }
+      }
+    },
+    {
+      "name": "adventure-coast-01/low/windows-classic: every owned geometry/material/texture/instance disposed exactly once",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/low/dos: old meshes, geometry, transforms, material properties and texture pixels remain exact",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/low/dos: four opaque role-owned batches or exact Pixel exclusion",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/low/dos: installed geometry matches the bounded helper and strict layer order",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/low/dos: painted faces cannot alter opaque wall distances",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/low/dos: bounded four-geometry/four-material delta with no new textures or instances",
+      "passed": true,
+      "details": {
+        "before": {
+          "geometries": 18,
+          "materials": 21,
+          "textures": 4,
+          "instances": 8
+        },
+        "after": {
+          "geometries": 22,
+          "materials": 25,
+          "textures": 4,
+          "instances": 8
+        }
+      }
+    },
+    {
+      "name": "adventure-coast-01/low/dos: every owned geometry/material/texture/instance disposed exactly once",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/low/orchard-workshop: old meshes, geometry, transforms, material properties and texture pixels remain exact",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/low/orchard-workshop: four opaque role-owned batches or exact Pixel exclusion",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/low/orchard-workshop: installed geometry matches the bounded helper and strict layer order",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/low/orchard-workshop: painted faces cannot alter opaque wall distances",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/low/orchard-workshop: bounded four-geometry/four-material delta with no new textures or instances",
+      "passed": true,
+      "details": {
+        "before": {
+          "geometries": 18,
+          "materials": 21,
+          "textures": 4,
+          "instances": 8
+        },
+        "after": {
+          "geometries": 22,
+          "materials": 25,
+          "textures": 4,
+          "instances": 8
+        }
+      }
+    },
+    {
+      "name": "adventure-coast-01/low/orchard-workshop: every owned geometry/material/texture/instance disposed exactly once",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/low/neon-ruins: old meshes, geometry, transforms, material properties and texture pixels remain exact",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/low/neon-ruins: four opaque role-owned batches or exact Pixel exclusion",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/low/neon-ruins: installed geometry matches the bounded helper and strict layer order",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/low/neon-ruins: painted faces cannot alter opaque wall distances",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/low/neon-ruins: bounded four-geometry/four-material delta with no new textures or instances",
+      "passed": true,
+      "details": {
+        "before": {
+          "geometries": 18,
+          "materials": 21,
+          "textures": 4,
+          "instances": 8
+        },
+        "after": {
+          "geometries": 22,
+          "materials": 25,
+          "textures": 4,
+          "instances": 8
+        }
+      }
+    },
+    {
+      "name": "adventure-coast-01/low/neon-ruins: every owned geometry/material/texture/instance disposed exactly once",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/low/pocket-lcd: old meshes, geometry, transforms, material properties and texture pixels remain exact",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/low/pocket-lcd: four opaque role-owned batches or exact Pixel exclusion",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/low/pocket-lcd: installed geometry matches the bounded helper and strict layer order",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/low/pocket-lcd: painted faces cannot alter opaque wall distances",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/low/pocket-lcd: bounded four-geometry/four-material delta with no new textures or instances",
+      "passed": true,
+      "details": {
+        "before": {
+          "geometries": 18,
+          "materials": 21,
+          "textures": 4,
+          "instances": 8
+        },
+        "after": {
+          "geometries": 22,
+          "materials": 25,
+          "textures": 4,
+          "instances": 8
+        }
+      }
+    },
+    {
+      "name": "adventure-coast-01/low/pocket-lcd: every owned geometry/material/texture/instance disposed exactly once",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/low/copper-observatory: old meshes, geometry, transforms, material properties and texture pixels remain exact",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/low/copper-observatory: four opaque role-owned batches or exact Pixel exclusion",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/low/copper-observatory: installed geometry matches the bounded helper and strict layer order",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/low/copper-observatory: painted faces cannot alter opaque wall distances",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/low/copper-observatory: bounded four-geometry/four-material delta with no new textures or instances",
+      "passed": true,
+      "details": {
+        "before": {
+          "geometries": 18,
+          "materials": 21,
+          "textures": 4,
+          "instances": 8
+        },
+        "after": {
+          "geometries": 22,
+          "materials": 25,
+          "textures": 4,
+          "instances": 8
+        }
+      }
+    },
+    {
+      "name": "adventure-coast-01/low/copper-observatory: every owned geometry/material/texture/instance disposed exactly once",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/low/sakura-station: old meshes, geometry, transforms, material properties and texture pixels remain exact",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/low/sakura-station: four opaque role-owned batches or exact Pixel exclusion",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/low/sakura-station: installed geometry matches the bounded helper and strict layer order",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/low/sakura-station: painted faces cannot alter opaque wall distances",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/low/sakura-station: bounded four-geometry/four-material delta with no new textures or instances",
+      "passed": true,
+      "details": {
+        "before": {
+          "geometries": 18,
+          "materials": 21,
+          "textures": 4,
+          "instances": 8
+        },
+        "after": {
+          "geometries": 22,
+          "materials": 25,
+          "textures": 4,
+          "instances": 8
+        }
+      }
+    },
+    {
+      "name": "adventure-coast-01/low/sakura-station: every owned geometry/material/texture/instance disposed exactly once",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/low/obsidian-reliquary: old meshes, geometry, transforms, material properties and texture pixels remain exact",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/low/obsidian-reliquary: four opaque role-owned batches or exact Pixel exclusion",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/low/obsidian-reliquary: installed geometry matches the bounded helper and strict layer order",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/low/obsidian-reliquary: painted faces cannot alter opaque wall distances",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/low/obsidian-reliquary: bounded four-geometry/four-material delta with no new textures or instances",
+      "passed": true,
+      "details": {
+        "before": {
+          "geometries": 18,
+          "materials": 21,
+          "textures": 4,
+          "instances": 8
+        },
+        "after": {
+          "geometries": 22,
+          "materials": 25,
+          "textures": 4,
+          "instances": 8
+        }
+      }
+    },
+    {
+      "name": "adventure-coast-01/low/obsidian-reliquary: every owned geometry/material/texture/instance disposed exactly once",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/low/deep-space: old meshes, geometry, transforms, material properties and texture pixels remain exact",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/low/deep-space: four opaque role-owned batches or exact Pixel exclusion",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/low/deep-space: installed geometry matches the bounded helper and strict layer order",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/low/deep-space: painted faces cannot alter opaque wall distances",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/low/deep-space: bounded four-geometry/four-material delta with no new textures or instances",
+      "passed": true,
+      "details": {
+        "before": {
+          "geometries": 18,
+          "materials": 21,
+          "textures": 4,
+          "instances": 8
+        },
+        "after": {
+          "geometries": 22,
+          "materials": 25,
+          "textures": 4,
+          "instances": 8
+        }
+      }
+    },
+    {
+      "name": "adventure-coast-01/low/deep-space: every owned geometry/material/texture/instance disposed exactly once",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/low/moonlit-grove: old meshes, geometry, transforms, material properties and texture pixels remain exact",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/low/moonlit-grove: four opaque role-owned batches or exact Pixel exclusion",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/low/moonlit-grove: installed geometry matches the bounded helper and strict layer order",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/low/moonlit-grove: painted faces cannot alter opaque wall distances",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/low/moonlit-grove: bounded four-geometry/four-material delta with no new textures or instances",
+      "passed": true,
+      "details": {
+        "before": {
+          "geometries": 18,
+          "materials": 21,
+          "textures": 4,
+          "instances": 8
+        },
+        "after": {
+          "geometries": 22,
+          "materials": 25,
+          "textures": 4,
+          "instances": 8
+        }
+      }
+    },
+    {
+      "name": "adventure-coast-01/low/moonlit-grove: every owned geometry/material/texture/instance disposed exactly once",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/balanced/authored: old meshes, geometry, transforms, material properties and texture pixels remain exact",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/balanced/authored: four opaque role-owned batches or exact Pixel exclusion",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/balanced/authored: installed geometry matches the bounded helper and strict layer order",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/balanced/authored: painted faces cannot alter opaque wall distances",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/balanced/authored: bounded four-geometry/four-material delta with no new textures or instances",
+      "passed": true,
+      "details": {
+        "before": {
+          "geometries": 17,
+          "materials": 21,
+          "textures": 12,
+          "instances": 7
+        },
+        "after": {
+          "geometries": 21,
+          "materials": 25,
+          "textures": 12,
+          "instances": 7
+        }
+      }
+    },
+    {
+      "name": "adventure-coast-01/balanced/authored: every owned geometry/material/texture/instance disposed exactly once",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/balanced/pixel: old meshes, geometry, transforms, material properties and texture pixels remain exact",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/balanced/pixel: four opaque role-owned batches or exact Pixel exclusion",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/balanced/pixel: bounded four-geometry/four-material delta with no new textures or instances",
+      "passed": true,
+      "details": {
+        "before": {
+          "geometries": 17,
+          "materials": 21,
+          "textures": 12,
+          "instances": 7
+        },
+        "after": {
+          "geometries": 17,
+          "materials": 21,
+          "textures": 12,
+          "instances": 7
+        }
+      }
+    },
+    {
+      "name": "adventure-coast-01/balanced/pixel: every owned geometry/material/texture/instance disposed exactly once",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/balanced/military-field: old meshes, geometry, transforms, material properties and texture pixels remain exact",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/balanced/military-field: four opaque role-owned batches or exact Pixel exclusion",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/balanced/military-field: installed geometry matches the bounded helper and strict layer order",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/balanced/military-field: painted faces cannot alter opaque wall distances",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/balanced/military-field: bounded four-geometry/four-material delta with no new textures or instances",
+      "passed": true,
+      "details": {
+        "before": {
+          "geometries": 18,
+          "materials": 21,
+          "textures": 4,
+          "instances": 8
+        },
+        "after": {
+          "geometries": 22,
+          "materials": 25,
+          "textures": 4,
+          "instances": 8
+        }
+      }
+    },
+    {
+      "name": "adventure-coast-01/balanced/military-field: every owned geometry/material/texture/instance disposed exactly once",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/balanced/ember-foundry: old meshes, geometry, transforms, material properties and texture pixels remain exact",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/balanced/ember-foundry: four opaque role-owned batches or exact Pixel exclusion",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/balanced/ember-foundry: installed geometry matches the bounded helper and strict layer order",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/balanced/ember-foundry: painted faces cannot alter opaque wall distances",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/balanced/ember-foundry: bounded four-geometry/four-material delta with no new textures or instances",
+      "passed": true,
+      "details": {
+        "before": {
+          "geometries": 18,
+          "materials": 21,
+          "textures": 4,
+          "instances": 8
+        },
+        "after": {
+          "geometries": 22,
+          "materials": 25,
+          "textures": 4,
+          "instances": 8
+        }
+      }
+    },
+    {
+      "name": "adventure-coast-01/balanced/ember-foundry: every owned geometry/material/texture/instance disposed exactly once",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/balanced/polar-relay: old meshes, geometry, transforms, material properties and texture pixels remain exact",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/balanced/polar-relay: four opaque role-owned batches or exact Pixel exclusion",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/balanced/polar-relay: installed geometry matches the bounded helper and strict layer order",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/balanced/polar-relay: painted faces cannot alter opaque wall distances",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/balanced/polar-relay: bounded four-geometry/four-material delta with no new textures or instances",
+      "passed": true,
+      "details": {
+        "before": {
+          "geometries": 18,
+          "materials": 21,
+          "textures": 4,
+          "instances": 8
+        },
+        "after": {
+          "geometries": 22,
+          "materials": 25,
+          "textures": 4,
+          "instances": 8
+        }
+      }
+    },
+    {
+      "name": "adventure-coast-01/balanced/polar-relay: every owned geometry/material/texture/instance disposed exactly once",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/balanced/industrial-workshop: old meshes, geometry, transforms, material properties and texture pixels remain exact",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/balanced/industrial-workshop: four opaque role-owned batches or exact Pixel exclusion",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/balanced/industrial-workshop: installed geometry matches the bounded helper and strict layer order",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/balanced/industrial-workshop: painted faces cannot alter opaque wall distances",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/balanced/industrial-workshop: bounded four-geometry/four-material delta with no new textures or instances",
+      "passed": true,
+      "details": {
+        "before": {
+          "geometries": 18,
+          "materials": 21,
+          "textures": 4,
+          "instances": 8
+        },
+        "after": {
+          "geometries": 22,
+          "materials": 25,
+          "textures": 4,
+          "instances": 8
+        }
+      }
+    },
+    {
+      "name": "adventure-coast-01/balanced/industrial-workshop: every owned geometry/material/texture/instance disposed exactly once",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/balanced/vyshyvanka: old meshes, geometry, transforms, material properties and texture pixels remain exact",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/balanced/vyshyvanka: four opaque role-owned batches or exact Pixel exclusion",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/balanced/vyshyvanka: installed geometry matches the bounded helper and strict layer order",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/balanced/vyshyvanka: painted faces cannot alter opaque wall distances",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/balanced/vyshyvanka: bounded four-geometry/four-material delta with no new textures or instances",
+      "passed": true,
+      "details": {
+        "before": {
+          "geometries": 18,
+          "materials": 21,
+          "textures": 4,
+          "instances": 8
+        },
+        "after": {
+          "geometries": 22,
+          "materials": 25,
+          "textures": 4,
+          "instances": 8
+        }
+      }
+    },
+    {
+      "name": "adventure-coast-01/balanced/vyshyvanka: every owned geometry/material/texture/instance disposed exactly once",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/balanced/dnipro-porcelain: old meshes, geometry, transforms, material properties and texture pixels remain exact",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/balanced/dnipro-porcelain: four opaque role-owned batches or exact Pixel exclusion",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/balanced/dnipro-porcelain: installed geometry matches the bounded helper and strict layer order",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/balanced/dnipro-porcelain: painted faces cannot alter opaque wall distances",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/balanced/dnipro-porcelain: bounded four-geometry/four-material delta with no new textures or instances",
+      "passed": true,
+      "details": {
+        "before": {
+          "geometries": 18,
+          "materials": 21,
+          "textures": 4,
+          "instances": 8
+        },
+        "after": {
+          "geometries": 22,
+          "materials": 25,
+          "textures": 4,
+          "instances": 8
+        }
+      }
+    },
+    {
+      "name": "adventure-coast-01/balanced/dnipro-porcelain: every owned geometry/material/texture/instance disposed exactly once",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/balanced/tryzub: old meshes, geometry, transforms, material properties and texture pixels remain exact",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/balanced/tryzub: four opaque role-owned batches or exact Pixel exclusion",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/balanced/tryzub: installed geometry matches the bounded helper and strict layer order",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/balanced/tryzub: painted faces cannot alter opaque wall distances",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/balanced/tryzub: bounded four-geometry/four-material delta with no new textures or instances",
+      "passed": true,
+      "details": {
+        "before": {
+          "geometries": 18,
+          "materials": 21,
+          "textures": 4,
+          "instances": 8
+        },
+        "after": {
+          "geometries": 22,
+          "materials": 25,
+          "textures": 4,
+          "instances": 8
+        }
+      }
+    },
+    {
+      "name": "adventure-coast-01/balanced/tryzub: every owned geometry/material/texture/instance disposed exactly once",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/balanced/windows-classic: old meshes, geometry, transforms, material properties and texture pixels remain exact",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/balanced/windows-classic: four opaque role-owned batches or exact Pixel exclusion",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/balanced/windows-classic: installed geometry matches the bounded helper and strict layer order",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/balanced/windows-classic: painted faces cannot alter opaque wall distances",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/balanced/windows-classic: bounded four-geometry/four-material delta with no new textures or instances",
+      "passed": true,
+      "details": {
+        "before": {
+          "geometries": 18,
+          "materials": 21,
+          "textures": 4,
+          "instances": 8
+        },
+        "after": {
+          "geometries": 22,
+          "materials": 25,
+          "textures": 4,
+          "instances": 8
+        }
+      }
+    },
+    {
+      "name": "adventure-coast-01/balanced/windows-classic: every owned geometry/material/texture/instance disposed exactly once",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/balanced/dos: old meshes, geometry, transforms, material properties and texture pixels remain exact",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/balanced/dos: four opaque role-owned batches or exact Pixel exclusion",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/balanced/dos: installed geometry matches the bounded helper and strict layer order",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/balanced/dos: painted faces cannot alter opaque wall distances",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/balanced/dos: bounded four-geometry/four-material delta with no new textures or instances",
+      "passed": true,
+      "details": {
+        "before": {
+          "geometries": 18,
+          "materials": 21,
+          "textures": 4,
+          "instances": 8
+        },
+        "after": {
+          "geometries": 22,
+          "materials": 25,
+          "textures": 4,
+          "instances": 8
+        }
+      }
+    },
+    {
+      "name": "adventure-coast-01/balanced/dos: every owned geometry/material/texture/instance disposed exactly once",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/balanced/orchard-workshop: old meshes, geometry, transforms, material properties and texture pixels remain exact",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/balanced/orchard-workshop: four opaque role-owned batches or exact Pixel exclusion",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/balanced/orchard-workshop: installed geometry matches the bounded helper and strict layer order",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/balanced/orchard-workshop: painted faces cannot alter opaque wall distances",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/balanced/orchard-workshop: bounded four-geometry/four-material delta with no new textures or instances",
+      "passed": true,
+      "details": {
+        "before": {
+          "geometries": 18,
+          "materials": 21,
+          "textures": 4,
+          "instances": 8
+        },
+        "after": {
+          "geometries": 22,
+          "materials": 25,
+          "textures": 4,
+          "instances": 8
+        }
+      }
+    },
+    {
+      "name": "adventure-coast-01/balanced/orchard-workshop: every owned geometry/material/texture/instance disposed exactly once",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/balanced/neon-ruins: old meshes, geometry, transforms, material properties and texture pixels remain exact",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/balanced/neon-ruins: four opaque role-owned batches or exact Pixel exclusion",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/balanced/neon-ruins: installed geometry matches the bounded helper and strict layer order",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/balanced/neon-ruins: painted faces cannot alter opaque wall distances",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/balanced/neon-ruins: bounded four-geometry/four-material delta with no new textures or instances",
+      "passed": true,
+      "details": {
+        "before": {
+          "geometries": 18,
+          "materials": 21,
+          "textures": 4,
+          "instances": 8
+        },
+        "after": {
+          "geometries": 22,
+          "materials": 25,
+          "textures": 4,
+          "instances": 8
+        }
+      }
+    },
+    {
+      "name": "adventure-coast-01/balanced/neon-ruins: every owned geometry/material/texture/instance disposed exactly once",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/balanced/pocket-lcd: old meshes, geometry, transforms, material properties and texture pixels remain exact",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/balanced/pocket-lcd: four opaque role-owned batches or exact Pixel exclusion",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/balanced/pocket-lcd: installed geometry matches the bounded helper and strict layer order",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/balanced/pocket-lcd: painted faces cannot alter opaque wall distances",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/balanced/pocket-lcd: bounded four-geometry/four-material delta with no new textures or instances",
+      "passed": true,
+      "details": {
+        "before": {
+          "geometries": 18,
+          "materials": 21,
+          "textures": 4,
+          "instances": 8
+        },
+        "after": {
+          "geometries": 22,
+          "materials": 25,
+          "textures": 4,
+          "instances": 8
+        }
+      }
+    },
+    {
+      "name": "adventure-coast-01/balanced/pocket-lcd: every owned geometry/material/texture/instance disposed exactly once",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/balanced/copper-observatory: old meshes, geometry, transforms, material properties and texture pixels remain exact",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/balanced/copper-observatory: four opaque role-owned batches or exact Pixel exclusion",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/balanced/copper-observatory: installed geometry matches the bounded helper and strict layer order",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/balanced/copper-observatory: painted faces cannot alter opaque wall distances",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/balanced/copper-observatory: bounded four-geometry/four-material delta with no new textures or instances",
+      "passed": true,
+      "details": {
+        "before": {
+          "geometries": 18,
+          "materials": 21,
+          "textures": 4,
+          "instances": 8
+        },
+        "after": {
+          "geometries": 22,
+          "materials": 25,
+          "textures": 4,
+          "instances": 8
+        }
+      }
+    },
+    {
+      "name": "adventure-coast-01/balanced/copper-observatory: every owned geometry/material/texture/instance disposed exactly once",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/balanced/sakura-station: old meshes, geometry, transforms, material properties and texture pixels remain exact",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/balanced/sakura-station: four opaque role-owned batches or exact Pixel exclusion",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/balanced/sakura-station: installed geometry matches the bounded helper and strict layer order",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/balanced/sakura-station: painted faces cannot alter opaque wall distances",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/balanced/sakura-station: bounded four-geometry/four-material delta with no new textures or instances",
+      "passed": true,
+      "details": {
+        "before": {
+          "geometries": 18,
+          "materials": 21,
+          "textures": 4,
+          "instances": 8
+        },
+        "after": {
+          "geometries": 22,
+          "materials": 25,
+          "textures": 4,
+          "instances": 8
+        }
+      }
+    },
+    {
+      "name": "adventure-coast-01/balanced/sakura-station: every owned geometry/material/texture/instance disposed exactly once",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/balanced/obsidian-reliquary: old meshes, geometry, transforms, material properties and texture pixels remain exact",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/balanced/obsidian-reliquary: four opaque role-owned batches or exact Pixel exclusion",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/balanced/obsidian-reliquary: installed geometry matches the bounded helper and strict layer order",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/balanced/obsidian-reliquary: painted faces cannot alter opaque wall distances",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/balanced/obsidian-reliquary: bounded four-geometry/four-material delta with no new textures or instances",
+      "passed": true,
+      "details": {
+        "before": {
+          "geometries": 18,
+          "materials": 21,
+          "textures": 4,
+          "instances": 8
+        },
+        "after": {
+          "geometries": 22,
+          "materials": 25,
+          "textures": 4,
+          "instances": 8
+        }
+      }
+    },
+    {
+      "name": "adventure-coast-01/balanced/obsidian-reliquary: every owned geometry/material/texture/instance disposed exactly once",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/balanced/deep-space: old meshes, geometry, transforms, material properties and texture pixels remain exact",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/balanced/deep-space: four opaque role-owned batches or exact Pixel exclusion",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/balanced/deep-space: installed geometry matches the bounded helper and strict layer order",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/balanced/deep-space: painted faces cannot alter opaque wall distances",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/balanced/deep-space: bounded four-geometry/four-material delta with no new textures or instances",
+      "passed": true,
+      "details": {
+        "before": {
+          "geometries": 18,
+          "materials": 21,
+          "textures": 4,
+          "instances": 8
+        },
+        "after": {
+          "geometries": 22,
+          "materials": 25,
+          "textures": 4,
+          "instances": 8
+        }
+      }
+    },
+    {
+      "name": "adventure-coast-01/balanced/deep-space: every owned geometry/material/texture/instance disposed exactly once",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/balanced/moonlit-grove: old meshes, geometry, transforms, material properties and texture pixels remain exact",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/balanced/moonlit-grove: four opaque role-owned batches or exact Pixel exclusion",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/balanced/moonlit-grove: installed geometry matches the bounded helper and strict layer order",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/balanced/moonlit-grove: painted faces cannot alter opaque wall distances",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/balanced/moonlit-grove: bounded four-geometry/four-material delta with no new textures or instances",
+      "passed": true,
+      "details": {
+        "before": {
+          "geometries": 18,
+          "materials": 21,
+          "textures": 4,
+          "instances": 8
+        },
+        "after": {
+          "geometries": 22,
+          "materials": 25,
+          "textures": 4,
+          "instances": 8
+        }
+      }
+    },
+    {
+      "name": "adventure-coast-01/balanced/moonlit-grove: every owned geometry/material/texture/instance disposed exactly once",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/high/authored: old meshes, geometry, transforms, material properties and texture pixels remain exact",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/high/authored: four opaque role-owned batches or exact Pixel exclusion",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/high/authored: installed geometry matches the bounded helper and strict layer order",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/high/authored: painted faces cannot alter opaque wall distances",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/high/authored: bounded four-geometry/four-material delta with no new textures or instances",
+      "passed": true,
+      "details": {
+        "before": {
+          "geometries": 17,
+          "materials": 21,
+          "textures": 12,
+          "instances": 7
+        },
+        "after": {
+          "geometries": 21,
+          "materials": 25,
+          "textures": 12,
+          "instances": 7
+        }
+      }
+    },
+    {
+      "name": "adventure-coast-01/high/authored: every owned geometry/material/texture/instance disposed exactly once",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/high/pixel: old meshes, geometry, transforms, material properties and texture pixels remain exact",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/high/pixel: four opaque role-owned batches or exact Pixel exclusion",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/high/pixel: bounded four-geometry/four-material delta with no new textures or instances",
+      "passed": true,
+      "details": {
+        "before": {
+          "geometries": 17,
+          "materials": 21,
+          "textures": 12,
+          "instances": 7
+        },
+        "after": {
+          "geometries": 17,
+          "materials": 21,
+          "textures": 12,
+          "instances": 7
+        }
+      }
+    },
+    {
+      "name": "adventure-coast-01/high/pixel: every owned geometry/material/texture/instance disposed exactly once",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/high/military-field: old meshes, geometry, transforms, material properties and texture pixels remain exact",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/high/military-field: four opaque role-owned batches or exact Pixel exclusion",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/high/military-field: installed geometry matches the bounded helper and strict layer order",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/high/military-field: painted faces cannot alter opaque wall distances",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/high/military-field: bounded four-geometry/four-material delta with no new textures or instances",
+      "passed": true,
+      "details": {
+        "before": {
+          "geometries": 18,
+          "materials": 21,
+          "textures": 4,
+          "instances": 8
+        },
+        "after": {
+          "geometries": 22,
+          "materials": 25,
+          "textures": 4,
+          "instances": 8
+        }
+      }
+    },
+    {
+      "name": "adventure-coast-01/high/military-field: every owned geometry/material/texture/instance disposed exactly once",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/high/ember-foundry: old meshes, geometry, transforms, material properties and texture pixels remain exact",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/high/ember-foundry: four opaque role-owned batches or exact Pixel exclusion",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/high/ember-foundry: installed geometry matches the bounded helper and strict layer order",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/high/ember-foundry: painted faces cannot alter opaque wall distances",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/high/ember-foundry: bounded four-geometry/four-material delta with no new textures or instances",
+      "passed": true,
+      "details": {
+        "before": {
+          "geometries": 18,
+          "materials": 21,
+          "textures": 4,
+          "instances": 8
+        },
+        "after": {
+          "geometries": 22,
+          "materials": 25,
+          "textures": 4,
+          "instances": 8
+        }
+      }
+    },
+    {
+      "name": "adventure-coast-01/high/ember-foundry: every owned geometry/material/texture/instance disposed exactly once",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/high/polar-relay: old meshes, geometry, transforms, material properties and texture pixels remain exact",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/high/polar-relay: four opaque role-owned batches or exact Pixel exclusion",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/high/polar-relay: installed geometry matches the bounded helper and strict layer order",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/high/polar-relay: painted faces cannot alter opaque wall distances",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/high/polar-relay: bounded four-geometry/four-material delta with no new textures or instances",
+      "passed": true,
+      "details": {
+        "before": {
+          "geometries": 18,
+          "materials": 21,
+          "textures": 4,
+          "instances": 8
+        },
+        "after": {
+          "geometries": 22,
+          "materials": 25,
+          "textures": 4,
+          "instances": 8
+        }
+      }
+    },
+    {
+      "name": "adventure-coast-01/high/polar-relay: every owned geometry/material/texture/instance disposed exactly once",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/high/industrial-workshop: old meshes, geometry, transforms, material properties and texture pixels remain exact",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/high/industrial-workshop: four opaque role-owned batches or exact Pixel exclusion",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/high/industrial-workshop: installed geometry matches the bounded helper and strict layer order",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/high/industrial-workshop: painted faces cannot alter opaque wall distances",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/high/industrial-workshop: bounded four-geometry/four-material delta with no new textures or instances",
+      "passed": true,
+      "details": {
+        "before": {
+          "geometries": 18,
+          "materials": 21,
+          "textures": 4,
+          "instances": 8
+        },
+        "after": {
+          "geometries": 22,
+          "materials": 25,
+          "textures": 4,
+          "instances": 8
+        }
+      }
+    },
+    {
+      "name": "adventure-coast-01/high/industrial-workshop: every owned geometry/material/texture/instance disposed exactly once",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/high/vyshyvanka: old meshes, geometry, transforms, material properties and texture pixels remain exact",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/high/vyshyvanka: four opaque role-owned batches or exact Pixel exclusion",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/high/vyshyvanka: installed geometry matches the bounded helper and strict layer order",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/high/vyshyvanka: painted faces cannot alter opaque wall distances",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/high/vyshyvanka: bounded four-geometry/four-material delta with no new textures or instances",
+      "passed": true,
+      "details": {
+        "before": {
+          "geometries": 18,
+          "materials": 21,
+          "textures": 4,
+          "instances": 8
+        },
+        "after": {
+          "geometries": 22,
+          "materials": 25,
+          "textures": 4,
+          "instances": 8
+        }
+      }
+    },
+    {
+      "name": "adventure-coast-01/high/vyshyvanka: every owned geometry/material/texture/instance disposed exactly once",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/high/dnipro-porcelain: old meshes, geometry, transforms, material properties and texture pixels remain exact",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/high/dnipro-porcelain: four opaque role-owned batches or exact Pixel exclusion",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/high/dnipro-porcelain: installed geometry matches the bounded helper and strict layer order",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/high/dnipro-porcelain: painted faces cannot alter opaque wall distances",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/high/dnipro-porcelain: bounded four-geometry/four-material delta with no new textures or instances",
+      "passed": true,
+      "details": {
+        "before": {
+          "geometries": 18,
+          "materials": 21,
+          "textures": 4,
+          "instances": 8
+        },
+        "after": {
+          "geometries": 22,
+          "materials": 25,
+          "textures": 4,
+          "instances": 8
+        }
+      }
+    },
+    {
+      "name": "adventure-coast-01/high/dnipro-porcelain: every owned geometry/material/texture/instance disposed exactly once",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/high/tryzub: old meshes, geometry, transforms, material properties and texture pixels remain exact",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/high/tryzub: four opaque role-owned batches or exact Pixel exclusion",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/high/tryzub: installed geometry matches the bounded helper and strict layer order",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/high/tryzub: painted faces cannot alter opaque wall distances",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/high/tryzub: bounded four-geometry/four-material delta with no new textures or instances",
+      "passed": true,
+      "details": {
+        "before": {
+          "geometries": 18,
+          "materials": 21,
+          "textures": 4,
+          "instances": 8
+        },
+        "after": {
+          "geometries": 22,
+          "materials": 25,
+          "textures": 4,
+          "instances": 8
+        }
+      }
+    },
+    {
+      "name": "adventure-coast-01/high/tryzub: every owned geometry/material/texture/instance disposed exactly once",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/high/windows-classic: old meshes, geometry, transforms, material properties and texture pixels remain exact",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/high/windows-classic: four opaque role-owned batches or exact Pixel exclusion",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/high/windows-classic: installed geometry matches the bounded helper and strict layer order",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/high/windows-classic: painted faces cannot alter opaque wall distances",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/high/windows-classic: bounded four-geometry/four-material delta with no new textures or instances",
+      "passed": true,
+      "details": {
+        "before": {
+          "geometries": 18,
+          "materials": 21,
+          "textures": 4,
+          "instances": 8
+        },
+        "after": {
+          "geometries": 22,
+          "materials": 25,
+          "textures": 4,
+          "instances": 8
+        }
+      }
+    },
+    {
+      "name": "adventure-coast-01/high/windows-classic: every owned geometry/material/texture/instance disposed exactly once",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/high/dos: old meshes, geometry, transforms, material properties and texture pixels remain exact",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/high/dos: four opaque role-owned batches or exact Pixel exclusion",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/high/dos: installed geometry matches the bounded helper and strict layer order",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/high/dos: painted faces cannot alter opaque wall distances",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/high/dos: bounded four-geometry/four-material delta with no new textures or instances",
+      "passed": true,
+      "details": {
+        "before": {
+          "geometries": 18,
+          "materials": 21,
+          "textures": 4,
+          "instances": 8
+        },
+        "after": {
+          "geometries": 22,
+          "materials": 25,
+          "textures": 4,
+          "instances": 8
+        }
+      }
+    },
+    {
+      "name": "adventure-coast-01/high/dos: every owned geometry/material/texture/instance disposed exactly once",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/high/orchard-workshop: old meshes, geometry, transforms, material properties and texture pixels remain exact",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/high/orchard-workshop: four opaque role-owned batches or exact Pixel exclusion",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/high/orchard-workshop: installed geometry matches the bounded helper and strict layer order",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/high/orchard-workshop: painted faces cannot alter opaque wall distances",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/high/orchard-workshop: bounded four-geometry/four-material delta with no new textures or instances",
+      "passed": true,
+      "details": {
+        "before": {
+          "geometries": 18,
+          "materials": 21,
+          "textures": 4,
+          "instances": 8
+        },
+        "after": {
+          "geometries": 22,
+          "materials": 25,
+          "textures": 4,
+          "instances": 8
+        }
+      }
+    },
+    {
+      "name": "adventure-coast-01/high/orchard-workshop: every owned geometry/material/texture/instance disposed exactly once",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/high/neon-ruins: old meshes, geometry, transforms, material properties and texture pixels remain exact",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/high/neon-ruins: four opaque role-owned batches or exact Pixel exclusion",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/high/neon-ruins: installed geometry matches the bounded helper and strict layer order",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/high/neon-ruins: painted faces cannot alter opaque wall distances",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/high/neon-ruins: bounded four-geometry/four-material delta with no new textures or instances",
+      "passed": true,
+      "details": {
+        "before": {
+          "geometries": 18,
+          "materials": 21,
+          "textures": 4,
+          "instances": 8
+        },
+        "after": {
+          "geometries": 22,
+          "materials": 25,
+          "textures": 4,
+          "instances": 8
+        }
+      }
+    },
+    {
+      "name": "adventure-coast-01/high/neon-ruins: every owned geometry/material/texture/instance disposed exactly once",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/high/pocket-lcd: old meshes, geometry, transforms, material properties and texture pixels remain exact",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/high/pocket-lcd: four opaque role-owned batches or exact Pixel exclusion",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/high/pocket-lcd: installed geometry matches the bounded helper and strict layer order",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/high/pocket-lcd: painted faces cannot alter opaque wall distances",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/high/pocket-lcd: bounded four-geometry/four-material delta with no new textures or instances",
+      "passed": true,
+      "details": {
+        "before": {
+          "geometries": 18,
+          "materials": 21,
+          "textures": 4,
+          "instances": 8
+        },
+        "after": {
+          "geometries": 22,
+          "materials": 25,
+          "textures": 4,
+          "instances": 8
+        }
+      }
+    },
+    {
+      "name": "adventure-coast-01/high/pocket-lcd: every owned geometry/material/texture/instance disposed exactly once",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/high/copper-observatory: old meshes, geometry, transforms, material properties and texture pixels remain exact",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/high/copper-observatory: four opaque role-owned batches or exact Pixel exclusion",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/high/copper-observatory: installed geometry matches the bounded helper and strict layer order",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/high/copper-observatory: painted faces cannot alter opaque wall distances",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/high/copper-observatory: bounded four-geometry/four-material delta with no new textures or instances",
+      "passed": true,
+      "details": {
+        "before": {
+          "geometries": 18,
+          "materials": 21,
+          "textures": 4,
+          "instances": 8
+        },
+        "after": {
+          "geometries": 22,
+          "materials": 25,
+          "textures": 4,
+          "instances": 8
+        }
+      }
+    },
+    {
+      "name": "adventure-coast-01/high/copper-observatory: every owned geometry/material/texture/instance disposed exactly once",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/high/sakura-station: old meshes, geometry, transforms, material properties and texture pixels remain exact",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/high/sakura-station: four opaque role-owned batches or exact Pixel exclusion",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/high/sakura-station: installed geometry matches the bounded helper and strict layer order",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/high/sakura-station: painted faces cannot alter opaque wall distances",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/high/sakura-station: bounded four-geometry/four-material delta with no new textures or instances",
+      "passed": true,
+      "details": {
+        "before": {
+          "geometries": 18,
+          "materials": 21,
+          "textures": 4,
+          "instances": 8
+        },
+        "after": {
+          "geometries": 22,
+          "materials": 25,
+          "textures": 4,
+          "instances": 8
+        }
+      }
+    },
+    {
+      "name": "adventure-coast-01/high/sakura-station: every owned geometry/material/texture/instance disposed exactly once",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/high/obsidian-reliquary: old meshes, geometry, transforms, material properties and texture pixels remain exact",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/high/obsidian-reliquary: four opaque role-owned batches or exact Pixel exclusion",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/high/obsidian-reliquary: installed geometry matches the bounded helper and strict layer order",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/high/obsidian-reliquary: painted faces cannot alter opaque wall distances",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/high/obsidian-reliquary: bounded four-geometry/four-material delta with no new textures or instances",
+      "passed": true,
+      "details": {
+        "before": {
+          "geometries": 18,
+          "materials": 21,
+          "textures": 4,
+          "instances": 8
+        },
+        "after": {
+          "geometries": 22,
+          "materials": 25,
+          "textures": 4,
+          "instances": 8
+        }
+      }
+    },
+    {
+      "name": "adventure-coast-01/high/obsidian-reliquary: every owned geometry/material/texture/instance disposed exactly once",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/high/deep-space: old meshes, geometry, transforms, material properties and texture pixels remain exact",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/high/deep-space: four opaque role-owned batches or exact Pixel exclusion",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/high/deep-space: installed geometry matches the bounded helper and strict layer order",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/high/deep-space: painted faces cannot alter opaque wall distances",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/high/deep-space: bounded four-geometry/four-material delta with no new textures or instances",
+      "passed": true,
+      "details": {
+        "before": {
+          "geometries": 18,
+          "materials": 21,
+          "textures": 4,
+          "instances": 8
+        },
+        "after": {
+          "geometries": 22,
+          "materials": 25,
+          "textures": 4,
+          "instances": 8
+        }
+      }
+    },
+    {
+      "name": "adventure-coast-01/high/deep-space: every owned geometry/material/texture/instance disposed exactly once",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/high/moonlit-grove: old meshes, geometry, transforms, material properties and texture pixels remain exact",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/high/moonlit-grove: four opaque role-owned batches or exact Pixel exclusion",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/high/moonlit-grove: installed geometry matches the bounded helper and strict layer order",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/high/moonlit-grove: painted faces cannot alter opaque wall distances",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/high/moonlit-grove: bounded four-geometry/four-material delta with no new textures or instances",
+      "passed": true,
+      "details": {
+        "before": {
+          "geometries": 18,
+          "materials": 21,
+          "textures": 4,
+          "instances": 8
+        },
+        "after": {
+          "geometries": 22,
+          "materials": 25,
+          "textures": 4,
+          "instances": 8
+        }
+      }
+    },
+    {
+      "name": "adventure-coast-01/high/moonlit-grove: every owned geometry/material/texture/instance disposed exactly once",
+      "passed": true
+    },
+    {
+      "name": "non-Coast canonical-looking course: full scene remains exact with no landmark",
+      "passed": true
+    },
+    {
+      "name": "renamed creator obstacle: full scene remains exact with no landmark",
+      "passed": true
+    },
+    {
+      "name": "typed creator lighthouse: full scene remains exact with no landmark",
+      "passed": true
+    },
+    {
+      "name": "rotated creator lighthouse: full scene remains exact with no landmark",
+      "passed": true
+    },
+    {
+      "name": "resized creator lighthouse: full scene remains exact with no landmark",
+      "passed": true
+    },
+    {
+      "name": "all other 13 catalogue environments are represented",
+      "passed": true
+    },
+    {
+      "name": "stadium: unrelated scene, materials and resources remain exact",
+      "passed": true
+    },
+    {
+      "name": "warehouse: unrelated scene, materials and resources remain exact",
+      "passed": true
+    },
+    {
+      "name": "garage: unrelated scene, materials and resources remain exact",
+      "passed": true
+    },
+    {
+      "name": "container-yard: unrelated scene, materials and resources remain exact",
+      "passed": true
+    },
+    {
+      "name": "quarry: unrelated scene, materials and resources remain exact",
+      "passed": true
+    },
+    {
+      "name": "rooftops: unrelated scene, materials and resources remain exact",
+      "passed": true
+    },
+    {
+      "name": "orchard: unrelated scene, materials and resources remain exact",
+      "passed": true
+    },
+    {
+      "name": "solar-farm: unrelated scene, materials and resources remain exact",
+      "passed": true
+    },
+    {
+      "name": "rail-depot: unrelated scene, materials and resources remain exact",
+      "passed": true
+    },
+    {
+      "name": "gym: unrelated scene, materials and resources remain exact",
+      "passed": true
+    },
+    {
+      "name": "field: unrelated scene, materials and resources remain exact",
+      "passed": true
+    },
+    {
+      "name": "woodland: unrelated scene, materials and resources remain exact",
+      "passed": true
+    },
+    {
+      "name": "courtyard: unrelated scene, materials and resources remain exact",
+      "passed": true
+    },
+    {
+      "name": "retained historical Adventure archive matches its recorded bytes and SHA-256",
+      "passed": true
+    },
+    {
+      "name": "qualified runtime bytes remained unchanged during the probe",
+      "passed": true
+    }
+  ],
+  "courseIdentities": [
+    {
+      "course": "adventure-coast-01",
+      "dataIdentity": "6a77435a26cd51c1",
+      "sha256": "cd64246049fc950e4841f9449b3bd9174ebc6f6417b240400ff043911b1b25b9"
+    },
+    {
+      "course": "adventure-coast-02",
+      "dataIdentity": "2a8f253b07445673",
+      "sha256": "59425aa6d460cabde28e28a5bf2cd7a9f45190136706d9739a79ab34b925ba27"
+    },
+    {
+      "course": "adventure-coast-03",
+      "dataIdentity": "e9233a498bbd786e",
+      "sha256": "b3d37f6c8337735ef046fcd1d84742f4fa0de08b3ea9597554d61491f6d7fd7b"
+    },
+    {
+      "course": "adventure-coast-04",
+      "dataIdentity": "d0062dabb64d060e",
+      "sha256": "a7e9d48a1f7053700cb6ff7bad510c86c662b24832bb1709f622a5446f41eacd"
+    },
+    {
+      "course": "adventure-coast-05",
+      "dataIdentity": "215965daef683f2d",
+      "sha256": "d5c73f72c845f50911e8dc7bb6072c2d607c3bda2c4907826ccb1d581542cc78"
+    }
+  ],
+  "geometryBudget": {
+    "vertices": 324,
+    "triangles": 108
+  },
+  "scenes": [
+    {
+      "course": "adventure-coast-01",
+      "quality": "low",
+      "appearance": "authored",
+      "pixel": false,
+      "detailBatches": 4,
+      "beforeResources": {
+        "geometries": 17,
+        "materials": 21,
+        "textures": 12,
+        "instances": 7
+      },
+      "afterResources": {
+        "geometries": 21,
+        "materials": 25,
+        "textures": 12,
+        "instances": 7
+      },
+      "disposedBefore": 57,
+      "disposedAfter": 65
+    },
+    {
+      "course": "adventure-coast-01",
+      "quality": "low",
+      "appearance": "pixel",
+      "pixel": true,
+      "detailBatches": 0,
+      "beforeResources": {
+        "geometries": 17,
+        "materials": 21,
+        "textures": 12,
+        "instances": 7
+      },
+      "afterResources": {
+        "geometries": 17,
+        "materials": 21,
+        "textures": 12,
+        "instances": 7
+      },
+      "disposedBefore": 57,
+      "disposedAfter": 57
+    },
+    {
+      "course": "adventure-coast-01",
+      "quality": "low",
+      "appearance": "military-field",
+      "pixel": false,
+      "detailBatches": 4,
+      "beforeResources": {
+        "geometries": 18,
+        "materials": 21,
+        "textures": 4,
+        "instances": 8
+      },
+      "afterResources": {
+        "geometries": 22,
+        "materials": 25,
+        "textures": 4,
+        "instances": 8
+      },
+      "disposedBefore": 51,
+      "disposedAfter": 59
+    },
+    {
+      "course": "adventure-coast-01",
+      "quality": "low",
+      "appearance": "ember-foundry",
+      "pixel": false,
+      "detailBatches": 4,
+      "beforeResources": {
+        "geometries": 18,
+        "materials": 21,
+        "textures": 4,
+        "instances": 8
+      },
+      "afterResources": {
+        "geometries": 22,
+        "materials": 25,
+        "textures": 4,
+        "instances": 8
+      },
+      "disposedBefore": 51,
+      "disposedAfter": 59
+    },
+    {
+      "course": "adventure-coast-01",
+      "quality": "low",
+      "appearance": "polar-relay",
+      "pixel": false,
+      "detailBatches": 4,
+      "beforeResources": {
+        "geometries": 18,
+        "materials": 21,
+        "textures": 4,
+        "instances": 8
+      },
+      "afterResources": {
+        "geometries": 22,
+        "materials": 25,
+        "textures": 4,
+        "instances": 8
+      },
+      "disposedBefore": 51,
+      "disposedAfter": 59
+    },
+    {
+      "course": "adventure-coast-01",
+      "quality": "low",
+      "appearance": "industrial-workshop",
+      "pixel": false,
+      "detailBatches": 4,
+      "beforeResources": {
+        "geometries": 18,
+        "materials": 21,
+        "textures": 4,
+        "instances": 8
+      },
+      "afterResources": {
+        "geometries": 22,
+        "materials": 25,
+        "textures": 4,
+        "instances": 8
+      },
+      "disposedBefore": 51,
+      "disposedAfter": 59
+    },
+    {
+      "course": "adventure-coast-01",
+      "quality": "low",
+      "appearance": "vyshyvanka",
+      "pixel": false,
+      "detailBatches": 4,
+      "beforeResources": {
+        "geometries": 18,
+        "materials": 21,
+        "textures": 4,
+        "instances": 8
+      },
+      "afterResources": {
+        "geometries": 22,
+        "materials": 25,
+        "textures": 4,
+        "instances": 8
+      },
+      "disposedBefore": 51,
+      "disposedAfter": 59
+    },
+    {
+      "course": "adventure-coast-01",
+      "quality": "low",
+      "appearance": "dnipro-porcelain",
+      "pixel": false,
+      "detailBatches": 4,
+      "beforeResources": {
+        "geometries": 18,
+        "materials": 21,
+        "textures": 4,
+        "instances": 8
+      },
+      "afterResources": {
+        "geometries": 22,
+        "materials": 25,
+        "textures": 4,
+        "instances": 8
+      },
+      "disposedBefore": 51,
+      "disposedAfter": 59
+    },
+    {
+      "course": "adventure-coast-01",
+      "quality": "low",
+      "appearance": "tryzub",
+      "pixel": false,
+      "detailBatches": 4,
+      "beforeResources": {
+        "geometries": 18,
+        "materials": 21,
+        "textures": 4,
+        "instances": 8
+      },
+      "afterResources": {
+        "geometries": 22,
+        "materials": 25,
+        "textures": 4,
+        "instances": 8
+      },
+      "disposedBefore": 51,
+      "disposedAfter": 59
+    },
+    {
+      "course": "adventure-coast-01",
+      "quality": "low",
+      "appearance": "windows-classic",
+      "pixel": false,
+      "detailBatches": 4,
+      "beforeResources": {
+        "geometries": 18,
+        "materials": 21,
+        "textures": 4,
+        "instances": 8
+      },
+      "afterResources": {
+        "geometries": 22,
+        "materials": 25,
+        "textures": 4,
+        "instances": 8
+      },
+      "disposedBefore": 51,
+      "disposedAfter": 59
+    },
+    {
+      "course": "adventure-coast-01",
+      "quality": "low",
+      "appearance": "dos",
+      "pixel": false,
+      "detailBatches": 4,
+      "beforeResources": {
+        "geometries": 18,
+        "materials": 21,
+        "textures": 4,
+        "instances": 8
+      },
+      "afterResources": {
+        "geometries": 22,
+        "materials": 25,
+        "textures": 4,
+        "instances": 8
+      },
+      "disposedBefore": 51,
+      "disposedAfter": 59
+    },
+    {
+      "course": "adventure-coast-01",
+      "quality": "low",
+      "appearance": "orchard-workshop",
+      "pixel": false,
+      "detailBatches": 4,
+      "beforeResources": {
+        "geometries": 18,
+        "materials": 21,
+        "textures": 4,
+        "instances": 8
+      },
+      "afterResources": {
+        "geometries": 22,
+        "materials": 25,
+        "textures": 4,
+        "instances": 8
+      },
+      "disposedBefore": 51,
+      "disposedAfter": 59
+    },
+    {
+      "course": "adventure-coast-01",
+      "quality": "low",
+      "appearance": "neon-ruins",
+      "pixel": false,
+      "detailBatches": 4,
+      "beforeResources": {
+        "geometries": 18,
+        "materials": 21,
+        "textures": 4,
+        "instances": 8
+      },
+      "afterResources": {
+        "geometries": 22,
+        "materials": 25,
+        "textures": 4,
+        "instances": 8
+      },
+      "disposedBefore": 51,
+      "disposedAfter": 59
+    },
+    {
+      "course": "adventure-coast-01",
+      "quality": "low",
+      "appearance": "pocket-lcd",
+      "pixel": false,
+      "detailBatches": 4,
+      "beforeResources": {
+        "geometries": 18,
+        "materials": 21,
+        "textures": 4,
+        "instances": 8
+      },
+      "afterResources": {
+        "geometries": 22,
+        "materials": 25,
+        "textures": 4,
+        "instances": 8
+      },
+      "disposedBefore": 51,
+      "disposedAfter": 59
+    },
+    {
+      "course": "adventure-coast-01",
+      "quality": "low",
+      "appearance": "copper-observatory",
+      "pixel": false,
+      "detailBatches": 4,
+      "beforeResources": {
+        "geometries": 18,
+        "materials": 21,
+        "textures": 4,
+        "instances": 8
+      },
+      "afterResources": {
+        "geometries": 22,
+        "materials": 25,
+        "textures": 4,
+        "instances": 8
+      },
+      "disposedBefore": 51,
+      "disposedAfter": 59
+    },
+    {
+      "course": "adventure-coast-01",
+      "quality": "low",
+      "appearance": "sakura-station",
+      "pixel": false,
+      "detailBatches": 4,
+      "beforeResources": {
+        "geometries": 18,
+        "materials": 21,
+        "textures": 4,
+        "instances": 8
+      },
+      "afterResources": {
+        "geometries": 22,
+        "materials": 25,
+        "textures": 4,
+        "instances": 8
+      },
+      "disposedBefore": 51,
+      "disposedAfter": 59
+    },
+    {
+      "course": "adventure-coast-01",
+      "quality": "low",
+      "appearance": "obsidian-reliquary",
+      "pixel": false,
+      "detailBatches": 4,
+      "beforeResources": {
+        "geometries": 18,
+        "materials": 21,
+        "textures": 4,
+        "instances": 8
+      },
+      "afterResources": {
+        "geometries": 22,
+        "materials": 25,
+        "textures": 4,
+        "instances": 8
+      },
+      "disposedBefore": 51,
+      "disposedAfter": 59
+    },
+    {
+      "course": "adventure-coast-01",
+      "quality": "low",
+      "appearance": "deep-space",
+      "pixel": false,
+      "detailBatches": 4,
+      "beforeResources": {
+        "geometries": 18,
+        "materials": 21,
+        "textures": 4,
+        "instances": 8
+      },
+      "afterResources": {
+        "geometries": 22,
+        "materials": 25,
+        "textures": 4,
+        "instances": 8
+      },
+      "disposedBefore": 51,
+      "disposedAfter": 59
+    },
+    {
+      "course": "adventure-coast-01",
+      "quality": "low",
+      "appearance": "moonlit-grove",
+      "pixel": false,
+      "detailBatches": 4,
+      "beforeResources": {
+        "geometries": 18,
+        "materials": 21,
+        "textures": 4,
+        "instances": 8
+      },
+      "afterResources": {
+        "geometries": 22,
+        "materials": 25,
+        "textures": 4,
+        "instances": 8
+      },
+      "disposedBefore": 51,
+      "disposedAfter": 59
+    },
+    {
+      "course": "adventure-coast-01",
+      "quality": "balanced",
+      "appearance": "authored",
+      "pixel": false,
+      "detailBatches": 4,
+      "beforeResources": {
+        "geometries": 17,
+        "materials": 21,
+        "textures": 12,
+        "instances": 7
+      },
+      "afterResources": {
+        "geometries": 21,
+        "materials": 25,
+        "textures": 12,
+        "instances": 7
+      },
+      "disposedBefore": 57,
+      "disposedAfter": 65
+    },
+    {
+      "course": "adventure-coast-01",
+      "quality": "balanced",
+      "appearance": "pixel",
+      "pixel": true,
+      "detailBatches": 0,
+      "beforeResources": {
+        "geometries": 17,
+        "materials": 21,
+        "textures": 12,
+        "instances": 7
+      },
+      "afterResources": {
+        "geometries": 17,
+        "materials": 21,
+        "textures": 12,
+        "instances": 7
+      },
+      "disposedBefore": 57,
+      "disposedAfter": 57
+    },
+    {
+      "course": "adventure-coast-01",
+      "quality": "balanced",
+      "appearance": "military-field",
+      "pixel": false,
+      "detailBatches": 4,
+      "beforeResources": {
+        "geometries": 18,
+        "materials": 21,
+        "textures": 4,
+        "instances": 8
+      },
+      "afterResources": {
+        "geometries": 22,
+        "materials": 25,
+        "textures": 4,
+        "instances": 8
+      },
+      "disposedBefore": 51,
+      "disposedAfter": 59
+    },
+    {
+      "course": "adventure-coast-01",
+      "quality": "balanced",
+      "appearance": "ember-foundry",
+      "pixel": false,
+      "detailBatches": 4,
+      "beforeResources": {
+        "geometries": 18,
+        "materials": 21,
+        "textures": 4,
+        "instances": 8
+      },
+      "afterResources": {
+        "geometries": 22,
+        "materials": 25,
+        "textures": 4,
+        "instances": 8
+      },
+      "disposedBefore": 51,
+      "disposedAfter": 59
+    },
+    {
+      "course": "adventure-coast-01",
+      "quality": "balanced",
+      "appearance": "polar-relay",
+      "pixel": false,
+      "detailBatches": 4,
+      "beforeResources": {
+        "geometries": 18,
+        "materials": 21,
+        "textures": 4,
+        "instances": 8
+      },
+      "afterResources": {
+        "geometries": 22,
+        "materials": 25,
+        "textures": 4,
+        "instances": 8
+      },
+      "disposedBefore": 51,
+      "disposedAfter": 59
+    },
+    {
+      "course": "adventure-coast-01",
+      "quality": "balanced",
+      "appearance": "industrial-workshop",
+      "pixel": false,
+      "detailBatches": 4,
+      "beforeResources": {
+        "geometries": 18,
+        "materials": 21,
+        "textures": 4,
+        "instances": 8
+      },
+      "afterResources": {
+        "geometries": 22,
+        "materials": 25,
+        "textures": 4,
+        "instances": 8
+      },
+      "disposedBefore": 51,
+      "disposedAfter": 59
+    },
+    {
+      "course": "adventure-coast-01",
+      "quality": "balanced",
+      "appearance": "vyshyvanka",
+      "pixel": false,
+      "detailBatches": 4,
+      "beforeResources": {
+        "geometries": 18,
+        "materials": 21,
+        "textures": 4,
+        "instances": 8
+      },
+      "afterResources": {
+        "geometries": 22,
+        "materials": 25,
+        "textures": 4,
+        "instances": 8
+      },
+      "disposedBefore": 51,
+      "disposedAfter": 59
+    },
+    {
+      "course": "adventure-coast-01",
+      "quality": "balanced",
+      "appearance": "dnipro-porcelain",
+      "pixel": false,
+      "detailBatches": 4,
+      "beforeResources": {
+        "geometries": 18,
+        "materials": 21,
+        "textures": 4,
+        "instances": 8
+      },
+      "afterResources": {
+        "geometries": 22,
+        "materials": 25,
+        "textures": 4,
+        "instances": 8
+      },
+      "disposedBefore": 51,
+      "disposedAfter": 59
+    },
+    {
+      "course": "adventure-coast-01",
+      "quality": "balanced",
+      "appearance": "tryzub",
+      "pixel": false,
+      "detailBatches": 4,
+      "beforeResources": {
+        "geometries": 18,
+        "materials": 21,
+        "textures": 4,
+        "instances": 8
+      },
+      "afterResources": {
+        "geometries": 22,
+        "materials": 25,
+        "textures": 4,
+        "instances": 8
+      },
+      "disposedBefore": 51,
+      "disposedAfter": 59
+    },
+    {
+      "course": "adventure-coast-01",
+      "quality": "balanced",
+      "appearance": "windows-classic",
+      "pixel": false,
+      "detailBatches": 4,
+      "beforeResources": {
+        "geometries": 18,
+        "materials": 21,
+        "textures": 4,
+        "instances": 8
+      },
+      "afterResources": {
+        "geometries": 22,
+        "materials": 25,
+        "textures": 4,
+        "instances": 8
+      },
+      "disposedBefore": 51,
+      "disposedAfter": 59
+    },
+    {
+      "course": "adventure-coast-01",
+      "quality": "balanced",
+      "appearance": "dos",
+      "pixel": false,
+      "detailBatches": 4,
+      "beforeResources": {
+        "geometries": 18,
+        "materials": 21,
+        "textures": 4,
+        "instances": 8
+      },
+      "afterResources": {
+        "geometries": 22,
+        "materials": 25,
+        "textures": 4,
+        "instances": 8
+      },
+      "disposedBefore": 51,
+      "disposedAfter": 59
+    },
+    {
+      "course": "adventure-coast-01",
+      "quality": "balanced",
+      "appearance": "orchard-workshop",
+      "pixel": false,
+      "detailBatches": 4,
+      "beforeResources": {
+        "geometries": 18,
+        "materials": 21,
+        "textures": 4,
+        "instances": 8
+      },
+      "afterResources": {
+        "geometries": 22,
+        "materials": 25,
+        "textures": 4,
+        "instances": 8
+      },
+      "disposedBefore": 51,
+      "disposedAfter": 59
+    },
+    {
+      "course": "adventure-coast-01",
+      "quality": "balanced",
+      "appearance": "neon-ruins",
+      "pixel": false,
+      "detailBatches": 4,
+      "beforeResources": {
+        "geometries": 18,
+        "materials": 21,
+        "textures": 4,
+        "instances": 8
+      },
+      "afterResources": {
+        "geometries": 22,
+        "materials": 25,
+        "textures": 4,
+        "instances": 8
+      },
+      "disposedBefore": 51,
+      "disposedAfter": 59
+    },
+    {
+      "course": "adventure-coast-01",
+      "quality": "balanced",
+      "appearance": "pocket-lcd",
+      "pixel": false,
+      "detailBatches": 4,
+      "beforeResources": {
+        "geometries": 18,
+        "materials": 21,
+        "textures": 4,
+        "instances": 8
+      },
+      "afterResources": {
+        "geometries": 22,
+        "materials": 25,
+        "textures": 4,
+        "instances": 8
+      },
+      "disposedBefore": 51,
+      "disposedAfter": 59
+    },
+    {
+      "course": "adventure-coast-01",
+      "quality": "balanced",
+      "appearance": "copper-observatory",
+      "pixel": false,
+      "detailBatches": 4,
+      "beforeResources": {
+        "geometries": 18,
+        "materials": 21,
+        "textures": 4,
+        "instances": 8
+      },
+      "afterResources": {
+        "geometries": 22,
+        "materials": 25,
+        "textures": 4,
+        "instances": 8
+      },
+      "disposedBefore": 51,
+      "disposedAfter": 59
+    },
+    {
+      "course": "adventure-coast-01",
+      "quality": "balanced",
+      "appearance": "sakura-station",
+      "pixel": false,
+      "detailBatches": 4,
+      "beforeResources": {
+        "geometries": 18,
+        "materials": 21,
+        "textures": 4,
+        "instances": 8
+      },
+      "afterResources": {
+        "geometries": 22,
+        "materials": 25,
+        "textures": 4,
+        "instances": 8
+      },
+      "disposedBefore": 51,
+      "disposedAfter": 59
+    },
+    {
+      "course": "adventure-coast-01",
+      "quality": "balanced",
+      "appearance": "obsidian-reliquary",
+      "pixel": false,
+      "detailBatches": 4,
+      "beforeResources": {
+        "geometries": 18,
+        "materials": 21,
+        "textures": 4,
+        "instances": 8
+      },
+      "afterResources": {
+        "geometries": 22,
+        "materials": 25,
+        "textures": 4,
+        "instances": 8
+      },
+      "disposedBefore": 51,
+      "disposedAfter": 59
+    },
+    {
+      "course": "adventure-coast-01",
+      "quality": "balanced",
+      "appearance": "deep-space",
+      "pixel": false,
+      "detailBatches": 4,
+      "beforeResources": {
+        "geometries": 18,
+        "materials": 21,
+        "textures": 4,
+        "instances": 8
+      },
+      "afterResources": {
+        "geometries": 22,
+        "materials": 25,
+        "textures": 4,
+        "instances": 8
+      },
+      "disposedBefore": 51,
+      "disposedAfter": 59
+    },
+    {
+      "course": "adventure-coast-01",
+      "quality": "balanced",
+      "appearance": "moonlit-grove",
+      "pixel": false,
+      "detailBatches": 4,
+      "beforeResources": {
+        "geometries": 18,
+        "materials": 21,
+        "textures": 4,
+        "instances": 8
+      },
+      "afterResources": {
+        "geometries": 22,
+        "materials": 25,
+        "textures": 4,
+        "instances": 8
+      },
+      "disposedBefore": 51,
+      "disposedAfter": 59
+    },
+    {
+      "course": "adventure-coast-01",
+      "quality": "high",
+      "appearance": "authored",
+      "pixel": false,
+      "detailBatches": 4,
+      "beforeResources": {
+        "geometries": 17,
+        "materials": 21,
+        "textures": 12,
+        "instances": 7
+      },
+      "afterResources": {
+        "geometries": 21,
+        "materials": 25,
+        "textures": 12,
+        "instances": 7
+      },
+      "disposedBefore": 57,
+      "disposedAfter": 65
+    },
+    {
+      "course": "adventure-coast-01",
+      "quality": "high",
+      "appearance": "pixel",
+      "pixel": true,
+      "detailBatches": 0,
+      "beforeResources": {
+        "geometries": 17,
+        "materials": 21,
+        "textures": 12,
+        "instances": 7
+      },
+      "afterResources": {
+        "geometries": 17,
+        "materials": 21,
+        "textures": 12,
+        "instances": 7
+      },
+      "disposedBefore": 57,
+      "disposedAfter": 57
+    },
+    {
+      "course": "adventure-coast-01",
+      "quality": "high",
+      "appearance": "military-field",
+      "pixel": false,
+      "detailBatches": 4,
+      "beforeResources": {
+        "geometries": 18,
+        "materials": 21,
+        "textures": 4,
+        "instances": 8
+      },
+      "afterResources": {
+        "geometries": 22,
+        "materials": 25,
+        "textures": 4,
+        "instances": 8
+      },
+      "disposedBefore": 51,
+      "disposedAfter": 59
+    },
+    {
+      "course": "adventure-coast-01",
+      "quality": "high",
+      "appearance": "ember-foundry",
+      "pixel": false,
+      "detailBatches": 4,
+      "beforeResources": {
+        "geometries": 18,
+        "materials": 21,
+        "textures": 4,
+        "instances": 8
+      },
+      "afterResources": {
+        "geometries": 22,
+        "materials": 25,
+        "textures": 4,
+        "instances": 8
+      },
+      "disposedBefore": 51,
+      "disposedAfter": 59
+    },
+    {
+      "course": "adventure-coast-01",
+      "quality": "high",
+      "appearance": "polar-relay",
+      "pixel": false,
+      "detailBatches": 4,
+      "beforeResources": {
+        "geometries": 18,
+        "materials": 21,
+        "textures": 4,
+        "instances": 8
+      },
+      "afterResources": {
+        "geometries": 22,
+        "materials": 25,
+        "textures": 4,
+        "instances": 8
+      },
+      "disposedBefore": 51,
+      "disposedAfter": 59
+    },
+    {
+      "course": "adventure-coast-01",
+      "quality": "high",
+      "appearance": "industrial-workshop",
+      "pixel": false,
+      "detailBatches": 4,
+      "beforeResources": {
+        "geometries": 18,
+        "materials": 21,
+        "textures": 4,
+        "instances": 8
+      },
+      "afterResources": {
+        "geometries": 22,
+        "materials": 25,
+        "textures": 4,
+        "instances": 8
+      },
+      "disposedBefore": 51,
+      "disposedAfter": 59
+    },
+    {
+      "course": "adventure-coast-01",
+      "quality": "high",
+      "appearance": "vyshyvanka",
+      "pixel": false,
+      "detailBatches": 4,
+      "beforeResources": {
+        "geometries": 18,
+        "materials": 21,
+        "textures": 4,
+        "instances": 8
+      },
+      "afterResources": {
+        "geometries": 22,
+        "materials": 25,
+        "textures": 4,
+        "instances": 8
+      },
+      "disposedBefore": 51,
+      "disposedAfter": 59
+    },
+    {
+      "course": "adventure-coast-01",
+      "quality": "high",
+      "appearance": "dnipro-porcelain",
+      "pixel": false,
+      "detailBatches": 4,
+      "beforeResources": {
+        "geometries": 18,
+        "materials": 21,
+        "textures": 4,
+        "instances": 8
+      },
+      "afterResources": {
+        "geometries": 22,
+        "materials": 25,
+        "textures": 4,
+        "instances": 8
+      },
+      "disposedBefore": 51,
+      "disposedAfter": 59
+    },
+    {
+      "course": "adventure-coast-01",
+      "quality": "high",
+      "appearance": "tryzub",
+      "pixel": false,
+      "detailBatches": 4,
+      "beforeResources": {
+        "geometries": 18,
+        "materials": 21,
+        "textures": 4,
+        "instances": 8
+      },
+      "afterResources": {
+        "geometries": 22,
+        "materials": 25,
+        "textures": 4,
+        "instances": 8
+      },
+      "disposedBefore": 51,
+      "disposedAfter": 59
+    },
+    {
+      "course": "adventure-coast-01",
+      "quality": "high",
+      "appearance": "windows-classic",
+      "pixel": false,
+      "detailBatches": 4,
+      "beforeResources": {
+        "geometries": 18,
+        "materials": 21,
+        "textures": 4,
+        "instances": 8
+      },
+      "afterResources": {
+        "geometries": 22,
+        "materials": 25,
+        "textures": 4,
+        "instances": 8
+      },
+      "disposedBefore": 51,
+      "disposedAfter": 59
+    },
+    {
+      "course": "adventure-coast-01",
+      "quality": "high",
+      "appearance": "dos",
+      "pixel": false,
+      "detailBatches": 4,
+      "beforeResources": {
+        "geometries": 18,
+        "materials": 21,
+        "textures": 4,
+        "instances": 8
+      },
+      "afterResources": {
+        "geometries": 22,
+        "materials": 25,
+        "textures": 4,
+        "instances": 8
+      },
+      "disposedBefore": 51,
+      "disposedAfter": 59
+    },
+    {
+      "course": "adventure-coast-01",
+      "quality": "high",
+      "appearance": "orchard-workshop",
+      "pixel": false,
+      "detailBatches": 4,
+      "beforeResources": {
+        "geometries": 18,
+        "materials": 21,
+        "textures": 4,
+        "instances": 8
+      },
+      "afterResources": {
+        "geometries": 22,
+        "materials": 25,
+        "textures": 4,
+        "instances": 8
+      },
+      "disposedBefore": 51,
+      "disposedAfter": 59
+    },
+    {
+      "course": "adventure-coast-01",
+      "quality": "high",
+      "appearance": "neon-ruins",
+      "pixel": false,
+      "detailBatches": 4,
+      "beforeResources": {
+        "geometries": 18,
+        "materials": 21,
+        "textures": 4,
+        "instances": 8
+      },
+      "afterResources": {
+        "geometries": 22,
+        "materials": 25,
+        "textures": 4,
+        "instances": 8
+      },
+      "disposedBefore": 51,
+      "disposedAfter": 59
+    },
+    {
+      "course": "adventure-coast-01",
+      "quality": "high",
+      "appearance": "pocket-lcd",
+      "pixel": false,
+      "detailBatches": 4,
+      "beforeResources": {
+        "geometries": 18,
+        "materials": 21,
+        "textures": 4,
+        "instances": 8
+      },
+      "afterResources": {
+        "geometries": 22,
+        "materials": 25,
+        "textures": 4,
+        "instances": 8
+      },
+      "disposedBefore": 51,
+      "disposedAfter": 59
+    },
+    {
+      "course": "adventure-coast-01",
+      "quality": "high",
+      "appearance": "copper-observatory",
+      "pixel": false,
+      "detailBatches": 4,
+      "beforeResources": {
+        "geometries": 18,
+        "materials": 21,
+        "textures": 4,
+        "instances": 8
+      },
+      "afterResources": {
+        "geometries": 22,
+        "materials": 25,
+        "textures": 4,
+        "instances": 8
+      },
+      "disposedBefore": 51,
+      "disposedAfter": 59
+    },
+    {
+      "course": "adventure-coast-01",
+      "quality": "high",
+      "appearance": "sakura-station",
+      "pixel": false,
+      "detailBatches": 4,
+      "beforeResources": {
+        "geometries": 18,
+        "materials": 21,
+        "textures": 4,
+        "instances": 8
+      },
+      "afterResources": {
+        "geometries": 22,
+        "materials": 25,
+        "textures": 4,
+        "instances": 8
+      },
+      "disposedBefore": 51,
+      "disposedAfter": 59
+    },
+    {
+      "course": "adventure-coast-01",
+      "quality": "high",
+      "appearance": "obsidian-reliquary",
+      "pixel": false,
+      "detailBatches": 4,
+      "beforeResources": {
+        "geometries": 18,
+        "materials": 21,
+        "textures": 4,
+        "instances": 8
+      },
+      "afterResources": {
+        "geometries": 22,
+        "materials": 25,
+        "textures": 4,
+        "instances": 8
+      },
+      "disposedBefore": 51,
+      "disposedAfter": 59
+    },
+    {
+      "course": "adventure-coast-01",
+      "quality": "high",
+      "appearance": "deep-space",
+      "pixel": false,
+      "detailBatches": 4,
+      "beforeResources": {
+        "geometries": 18,
+        "materials": 21,
+        "textures": 4,
+        "instances": 8
+      },
+      "afterResources": {
+        "geometries": 22,
+        "materials": 25,
+        "textures": 4,
+        "instances": 8
+      },
+      "disposedBefore": 51,
+      "disposedAfter": 59
+    },
+    {
+      "course": "adventure-coast-01",
+      "quality": "high",
+      "appearance": "moonlit-grove",
+      "pixel": false,
+      "detailBatches": 4,
+      "beforeResources": {
+        "geometries": 18,
+        "materials": 21,
+        "textures": 4,
+        "instances": 8
+      },
+      "afterResources": {
+        "geometries": 22,
+        "materials": 25,
+        "textures": 4,
+        "instances": 8
+      },
+      "disposedBefore": 51,
+      "disposedAfter": 59
+    }
+  ],
+  "historicalAudit": {
+    "format": "FPVAdventuresPhysicsEvidence.v1",
+    "recordedAt": "2026-10-02T06:57:10.188Z",
+    "proofCount": 10,
+    "ticks": 41868,
+    "allPreviouslyCompletedAndReplayed": true,
+    "proofs": [
+      {
+        "id": "adventure-coast-01",
+        "mode": "self-level",
+        "ticks": 4843,
+        "proofSha256": "a06e954a1208df9d1e347420d693ac08635d1c264d23002ca8c80c3132b76870",
+        "finalStateIdentity": "927ca0248786dd14"
+      },
+      {
+        "id": "adventure-coast-01",
+        "mode": "acro",
+        "ticks": 4843,
+        "proofSha256": "2ddd4c535560a2e43ff8dc02199c192c535717a8968f4cb86eec32933ee98434",
+        "finalStateIdentity": "2a8b70b9435283a4"
+      },
+      {
+        "id": "adventure-coast-02",
+        "mode": "self-level",
+        "ticks": 3748,
+        "proofSha256": "08fe2c1cbb3f7709927c49c0ebdf92a18a36ec225b6ef1848f7af504d12097e2",
+        "finalStateIdentity": "0d2d060b9c07f5cd"
+      },
+      {
+        "id": "adventure-coast-02",
+        "mode": "acro",
+        "ticks": 3740,
+        "proofSha256": "c165ee7cd1bb1796692e133dc8a80c3eadca1be59acbe947e1b6381b3c3816cc",
+        "finalStateIdentity": "d25371f27f994de8"
+      },
+      {
+        "id": "adventure-coast-03",
+        "mode": "self-level",
+        "ticks": 2577,
+        "proofSha256": "be622065d9b4846fec4f4a0e944bb4b6db2fba47e7c0582966d4edbb3eeb5935",
+        "finalStateIdentity": "d19205ce91c6bf0a"
+      },
+      {
+        "id": "adventure-coast-03",
+        "mode": "acro",
+        "ticks": 2685,
+        "proofSha256": "f93d8854b52fe415f8209060a0ff236b03dbd2fb0d244a0a728857f2ebaaa9c5",
+        "finalStateIdentity": "ac0f784d4eb59625"
+      },
+      {
+        "id": "adventure-coast-04",
+        "mode": "self-level",
+        "ticks": 3093,
+        "proofSha256": "58429ba213cd2ae27e7dca2118fb067d803cb16013b5cb3238172c312946c13b",
+        "finalStateIdentity": "f6ecd28c8c2fc3dd"
+      },
+      {
+        "id": "adventure-coast-04",
+        "mode": "acro",
+        "ticks": 3089,
+        "proofSha256": "bcfc396f6539749cd924fed923fecad0c0bd0959f29f1c37df480f15ba9e9da0",
+        "finalStateIdentity": "882f6968e4036ed6"
+      },
+      {
+        "id": "adventure-coast-05",
+        "mode": "self-level",
+        "ticks": 6644,
+        "proofSha256": "8b47b15a7004a2a98dc6353faedcef612ffb33bba96a7b8787aad5340cef7955",
+        "finalStateIdentity": "2faf59b7419ced33"
+      },
+      {
+        "id": "adventure-coast-05",
+        "mode": "acro",
+        "ticks": 6606,
+        "proofSha256": "a7e7b1c7ab5c1b946845547fdea6496ae6f23badc2d365ccdc2e6e2c196016b8",
+        "finalStateIdentity": "5c485b6711e9fe14"
+      }
+    ],
+    "archive": "/tmp/fpv-adventures-proofs-qualified.zip",
+    "archiveAvailable": true,
+    "freshReplayPerformed": false,
+    "note": "Historical Adventure authoring qualification, separate from installed demonstrations and this CPU art check. No new replay claim.",
+    "archiveBytes": 493982,
+    "archiveSha256": "273a68519c195f8f0ca001ce42497a28e288cf2710cc7fcb84c120003d6a2db2"
+  },
+  "limitation": "CPU construction, geometry and ownership evidence only. No WebGL, image acceptance, fresh recording replay, package admission, public availability or device-performance claim."
+}
