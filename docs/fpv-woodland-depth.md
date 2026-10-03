@@ -54,11 +54,32 @@ The admission is explicitly `publicEligible: false`. See
 
 The frozen browser fixture uses a 27-file closure read from the committed
 candidate and compares it with the exact main above. Source hashes are retained
-in `evidence/fpv-woodland-depth-main-source.json`; browser review is pending.
-Earlier measurements retain their original baseline and are not relabelled.
+in `evidence/fpv-woodland-depth-main-source.json`. The browser comparison passes
+both arena sizes with 52 placements and 16,080 clear imported vertices each;
+views were inspected. Woodland-08 visibility changes sampled calls 24→30 and
+triangles 2,594→2,746. Beginner-40 stays at 22 calls / 2,342 triangles. No unchanged
+draw-count or sustained FPS claim is made. See the new main-browser receipt and
+main-comparison image. Earlier measurements retain their original baseline.
 
 Full `npm run validate` cannot finish in the bounded sparse checkout because
 unrelated `game/content/packs/neon-reference-pack.json` is absent. It is not
 claimed locally; normal current-head CI must establish that gate. Sustained
 named-device frame times, human artist acceptance and public deployment remain
 unverified and are not inferred from the functional results.
+
+
+### Published Hangar integration
+
+The branch then integrated main `ea596d80ba26decc4e7691e4a5c34bd3461fcda6`
+(Hangar #1008), producing candidate `039be4e7c776734dedcaa724a7e2d9821220406b`.
+The scenery template/runtime and shared renderer are byte-identical to the frozen
+browser candidate above. The inherited visual-module change is Hangar wall
+construction inside the indoor branch plus its helper; Woodland never enters
+that branch. The browser evidence stays explicitly tied to `fabb417ec`, supported
+by this integration audit rather than relabelled as a new browser run. See
+`evidence/fpv-woodland-depth-hangar-refresh.json`.
+
+All 30 existing checks and all three source-bound admissions pass again. The
+World Studio package is 102 files / 15,561,800 bytes with committed
+inputs/ZIP members verified and two identical builds. See the Hangar-admission
+receipt. Exact-head protected CI and public deployment remain separate gates.

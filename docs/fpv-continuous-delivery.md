@@ -2903,3 +2903,13 @@ All 30 existing checks and all three source-bound optional admissions pass;
 browser review and exact-head CI are pending. Complete global validation requires
 CI because the sparse checkout omits unrelated content packs. No additional unit
 coverage, hardware/artist acceptance or live deployment is claimed.
+
+The frozen #996 browser comparison then passed both Woodland arena sizes at
+fabb417ec. Both retain 52 placements and 16,080 clear imported vertices. Woodland-08
+sampled calls rise 24→30 and triangles 2,594→2,746 as grove visibility changes;
+Beginner-40 stays 22 calls / 2,342 triangles. Views were inspected, without a
+hardware or human-artist acceptance claim. Integration of published Hangar main
+ea596d80 yields 039be4e7c: scenery and renderer bytes remain exact; inherited
+Hangar visual changes are inside the indoor branch and do not affect Woodland.
+All 30 checks and three reproducible admissions pass again. Preserve the explicit
+browser candidate identity and use protected exact-head publication.
