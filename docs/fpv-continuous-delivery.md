@@ -2890,6 +2890,30 @@ per scene. Five other environment GLBs remain byte-identical; the comparison
 views were inspected. This completes the local draft qualification. Publish the
 reviewed #998 head through normal exact-head protected CI; public deployment and
 physical-device/artist acceptance remain separate.
+### Review and primary Woodland lighting — 3 October 2026
+
+#999 passed every reported GitHub check at feb04b6ad; main then advanced. Merged
+current main into its branch, reran 30 passing existing checks, pushed d4408637c
+and enabled protected MERGE auto-merge (repository does not allow squash).
+Current-head CI must finish again. Preserve #989's external 7154c28e2 update.
+#996/#998 drafts await the fix and exact-head requalification; do not claim merged.
+
+Continued independently from e0e1db096 on `codex/fpv-woodland-material-response`.
+Primary park materials were unlit; enabled PBR only for eight known natural
+Woodland surfaces with explicit physical values. Three Pixel variants and five
+other worlds remain byte-identical; both Woodland bounds pass actual browser
+material/clearance checks. Package 94files/15,384,550bytes passes. See qualification
+document. This is material response, not new high-resolution source art.
+
+Remaining order: (1) protected fix integration and refresh ready art branches;
+(2) combined D1 Woodland/Yard rendering and disposal verification, with named-device
+performance still pending; (3) remaining environment pairs starting Stadium/Garage;
+(4) optional examples/learning and creator improvements; (5) deferred unit/release
+qualification. Feedback does not block implementation; no device acceptance is
+invented. Keep finished PRs separate from new work.
+inspect those failures next without weakening admission guards.
+
+
 
 
 ### Woodland groves refreshed after Yard publication — 3 October 2026
