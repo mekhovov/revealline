@@ -1,11 +1,17 @@
 import {
   TEAM_RUNNING_LEVEL_VERSION,
   TEAM_PURSUIT_LEVEL_VERSION,
+  TEAM_PURSUIT_V2_LEVEL_VERSION,
+  TEAM_PURSUIT_V2_RULESET,
+  TEAM_SNAKE_PURSUIT_V2_LEVEL_VERSION,
+  TEAM_SNAKE_PURSUIT_V2_RULESET,
   TEAM_SNAKE_PURSUIT_LEVEL_VERSION,
   TEAM_SNAKE_PURSUIT_RULESET,
   TEAM_SNAKE_PURSUIT_PACK_VERSION,
   TEAM_PURSUIT_RULESET,
   TEAM_PURSUIT_PACK_VERSION,
+  TEAM_PURSUIT_V2_PACK_VERSION,
+  TEAM_SNAKE_PURSUIT_V2_PACK_VERSION,
   TEAM_RUNNING_RULESET,
   TEAM_RUNNING_PACK_VERSION,
 } from './running-enemies.mjs';
@@ -340,8 +346,14 @@ export function validateCoopPack(pack) {
   if (!keys(pack, ['version', 'ruleset', 'id', 'revision', 'name', 'levels']))
     return result(['A co-op pack must be a plain data object with supported fields.']);
   const errors = [];
-  const snakePursuit = pack.version === TEAM_SNAKE_PURSUIT_PACK_VERSION;
-  const pursuit = pack.version === TEAM_PURSUIT_PACK_VERSION || snakePursuit;
+  const successor = [TEAM_PURSUIT_V2_PACK_VERSION, TEAM_SNAKE_PURSUIT_V2_PACK_VERSION].includes(
+    pack.version,
+  );
+  const snakePursuit = [
+    TEAM_SNAKE_PURSUIT_PACK_VERSION,
+    TEAM_SNAKE_PURSUIT_V2_PACK_VERSION,
+  ].includes(pack.version);
+  const pursuit = pack.version === TEAM_PURSUIT_PACK_VERSION || successor || snakePursuit;
   const running = pack.version === TEAM_RUNNING_PACK_VERSION || pursuit;
   const snake = pack.version === TEAM_SNAKE_PACK_VERSION;
   const hunting = pack.version === COOP_HUNT_PACK_VERSION;
@@ -365,11 +377,15 @@ export function validateCoopPack(pack) {
   if (
     pack.ruleset !==
     (snakePursuit
-      ? TEAM_SNAKE_PURSUIT_RULESET
+      ? successor
+        ? TEAM_SNAKE_PURSUIT_V2_RULESET
+        : TEAM_SNAKE_PURSUIT_RULESET
       : snake
         ? TEAM_SNAKE_RULESET
         : pursuit
-          ? TEAM_PURSUIT_RULESET
+          ? successor
+            ? TEAM_PURSUIT_V2_RULESET
+            : TEAM_PURSUIT_RULESET
           : running
             ? TEAM_RUNNING_RULESET
             : hunting
@@ -408,11 +424,15 @@ export function validateCoopPack(pack) {
       validation.valid &&
       level.version !==
         (snakePursuit
-          ? TEAM_SNAKE_PURSUIT_LEVEL_VERSION
+          ? successor
+            ? TEAM_SNAKE_PURSUIT_V2_LEVEL_VERSION
+            : TEAM_SNAKE_PURSUIT_LEVEL_VERSION
           : snake
             ? TEAM_SNAKE_LEVEL_VERSION
             : pursuit
-              ? TEAM_PURSUIT_LEVEL_VERSION
+              ? successor
+                ? TEAM_PURSUIT_V2_LEVEL_VERSION
+                : TEAM_PURSUIT_LEVEL_VERSION
               : running
                 ? TEAM_RUNNING_LEVEL_VERSION
                 : hunting

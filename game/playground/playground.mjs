@@ -46,6 +46,10 @@ import { resolvePreviewSize } from './viewport.mjs';
 import { captureControlGeometry } from './control-geometry.mjs';
 import { firstFlightPreviewURL } from '../ui/first-flight-preview.mjs';
 import { verifyReplayAsync, MAX_REPLAY_BYTES } from '../replay.mjs';
+import {
+  LOCAL_MATCH_RECORDING,
+  verifyLocalMatchRecordingAsync,
+} from '../multiplayer-recording.mjs';
 const $ = (id) => document.getElementById(id),
   clone = (v) => structuredClone(v);
 // A page rail needs viewport bounds, rather than the modal-only clearance helper.
@@ -359,6 +363,8 @@ function sync() {
     'xonix-playground.v11',
     'xonix-playground.v12',
     'xonix-playground.v13',
+    'xonix-playground.v14',
+    'xonix-playground.v15',
   ].includes(current.format);
   $('mastery-json').value = definition ? JSON.stringify(definition, null, 2) : '';
   localizedText($('mastery-readout'), () =>
@@ -572,6 +578,8 @@ function drawAssets() {
     'xonix-playground.v11',
     'xonix-playground.v12',
     'xonix-playground.v13',
+    'xonix-playground.v14',
+    'xonix-playground.v15',
   ].includes(current.format)
     ? [...VISUAL_ROLES, ...CLASSIC_VISUAL_ROLES]
     : VISUAL_ROLES;
@@ -907,27 +915,31 @@ try {
   const recipes = await fetch('../content/classes.json').then((r) => r.json());
   current = {
     format:
-      campaign.levels[0].version === 'xonix-level.v13'
-        ? 'xonix-playground.v13'
-        : campaign.levels[0].version === 'xonix-level.v12'
-          ? 'xonix-playground.v12'
-          : campaign.levels[0].version === 'xonix-level.v11'
-            ? 'xonix-playground.v11'
-            : campaign.levels[0].version === 'xonix-level.v9'
-              ? 'xonix-playground.v10'
-              : campaign.levels[0].version === 'xonix-level.v8'
-                ? 'xonix-playground.v9'
-                : campaign.levels[0].version === 'xonix-level.v7'
-                  ? 'xonix-playground.v8'
-                  : campaign.levels[0].version === 'xonix-level.v6'
-                    ? 'xonix-playground.v7'
-                    : campaign.levels[0].version === 'xonix-level.v5'
-                      ? 'xonix-playground.v6'
-                      : campaign.levels[0].version === 'xonix-level.v4'
-                        ? 'xonix-playground.v5'
-                        : campaign.levels[0].version === 'xonix-level.v3'
-                          ? 'xonix-playground.v4'
-                          : 'xonix-playground.v1',
+      campaign.levels[0].version === 'xonix-level.v15'
+        ? 'xonix-playground.v15'
+        : campaign.levels[0].version === 'xonix-level.v14'
+          ? 'xonix-playground.v14'
+          : campaign.levels[0].version === 'xonix-level.v13'
+            ? 'xonix-playground.v13'
+            : campaign.levels[0].version === 'xonix-level.v12'
+              ? 'xonix-playground.v12'
+              : campaign.levels[0].version === 'xonix-level.v11'
+                ? 'xonix-playground.v11'
+                : campaign.levels[0].version === 'xonix-level.v9'
+                  ? 'xonix-playground.v10'
+                  : campaign.levels[0].version === 'xonix-level.v8'
+                    ? 'xonix-playground.v9'
+                    : campaign.levels[0].version === 'xonix-level.v7'
+                      ? 'xonix-playground.v8'
+                      : campaign.levels[0].version === 'xonix-level.v6'
+                        ? 'xonix-playground.v7'
+                        : campaign.levels[0].version === 'xonix-level.v5'
+                          ? 'xonix-playground.v6'
+                          : campaign.levels[0].version === 'xonix-level.v4'
+                            ? 'xonix-playground.v5'
+                            : campaign.levels[0].version === 'xonix-level.v3'
+                              ? 'xonix-playground.v4'
+                              : 'xonix-playground.v1',
     ...([
       'xonix-level.v3',
       'xonix-level.v4',
@@ -939,6 +951,8 @@ try {
       'xonix-level.v11',
       'xonix-level.v12',
       'xonix-level.v13',
+      'xonix-level.v14',
+      'xonix-level.v15',
     ].includes(campaign.levels[0].version)
       ? { masteryDefinition: null }
       : {}),
@@ -1320,6 +1334,8 @@ try {
           'xonix-playground.v11',
           'xonix-playground.v12',
           'xonix-playground.v13',
+          'xonix-playground.v14',
+          'xonix-playground.v15',
         ].includes(current.format)
           ? {
               format: 'xonix-playground.v2',
@@ -1645,7 +1661,12 @@ try {
       if (text.length > MAX_REPLAY_BYTES) throw new Error(t('tools:replayExceedsTheImportBudget'));
       if (epoch !== replayEpoch) return;
       lease.update({ message: t('tools:verifyingRecordedSimulation') });
-      const result = await verifyReplayAsync(text, {
+      const source = JSON.parse(text);
+      const verify =
+        source.format === LOCAL_MATCH_RECORDING
+          ? verifyLocalMatchRecordingAsync
+          : verifyReplayAsync;
+      const result = await verify(source, {
         signal,
         onProgress: (p) => {
           if (epoch === replayEpoch)

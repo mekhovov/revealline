@@ -46,6 +46,17 @@ import {
   initWorldRuntime,
   WORLD_COLLISION_BACKEND,
 } from './world-collision.mjs';
+import {
+  PURSUIT_COURSE,
+  WORLD_VEHICLE_MODELS,
+  PURSUIT_MODEL,
+  PURSUIT_RULES,
+  validateFlightPursuit,
+  admitFlightPursuit,
+  createPursuitActorState,
+  createPursuitController,
+  pursuitContactProtected,
+} from './world-pursuit.mjs';
 
 export { initWorldRuntime };
 export const WORLD_FLIGHT_MODEL = 'civilian-world-fixed.v2';
@@ -489,11 +500,12 @@ export function validateWorldCourse(input) {
       'actors',
       'rules',
       'conditions',
+      ...(c.format === PURSUIT_COURSE ? ['pursuit'] : []),
     ],
     'world course',
   );
   required(
-    c.format === 'FlightCourse.v2' &&
+    ['FlightCourse.v2', PURSUIT_COURSE].includes(c.format) &&
       stableId(c.id) &&
       stableId(c.revision) &&
       stableId(c.environment),
@@ -619,6 +631,7 @@ export function validateWorldCourse(input) {
         'damage',
         'projectileSpeed',
         'range',
+        ...(c.format === PURSUIT_COURSE ? ['vehicleModel'] : []),
       ],
       'actor',
     );
@@ -634,6 +647,11 @@ export function validateWorldCourse(input) {
         ? value.role === undefined
         : ['hostile', 'rival', 'civilian'].includes(value.role ?? 'hostile'),
       'Actors need a supported role; hazards do not use combat roles',
+    );
+    required(
+      value.vehicleModel === undefined ||
+        (value.type === 'vehicle' && WORLD_VEHICLE_MODELS.includes(value.vehicleModel)),
+      'Native vehicle appearance is unsupported',
     );
     actorIds.add(value.id);
     vector(value.position);
@@ -807,6 +825,7 @@ export function validateWorldCourse(input) {
       }
     }
   }
+  if (c.format === PURSUIT_COURSE) validateFlightPursuit(c.pursuit, c);
   return c;
 }
 
@@ -869,12 +888,17 @@ export function createWorldFlight({
   const rules = source.rules;
   const contactHunt = huntContact(source, mode);
   const contactTargets = new Set(contactHunt?.targets ?? []);
+  const pursuit = source.format === PURSUIT_COURSE ? createPursuitController(source.pursuit) : null;
+  const pursuitPolicies = new Map((source.pursuit?.actors ?? []).map((p) => [p.id, p]));
+  const couriers = new Set(
+    (source.pursuit?.actors ?? []).filter((p) => p.family === 'courier').map((p) => p.id),
+  );
   const gameplay = { ...source };
   delete gameplay.locales;
   delete gameplay.environment;
   delete gameplay.world;
   const identity = Object.freeze({
-    model: contactHunt ? HUNT_FLIGHT_MODEL : WORLD_FLIGHT_MODEL,
+    model: pursuit ? PURSUIT_MODEL : contactHunt ? HUNT_FLIGHT_MODEL : WORLD_FLIGHT_MODEL,
     backend: WORLD_COLLISION_BACKEND,
     course: source.id,
     courseIdentity: dataIdentity(gameplay),
@@ -949,6 +973,7 @@ export function createWorldFlight({
         shots: 0,
         hits: 0,
         ...(contactHunt ? { hunt: createContactHuntState(source.spawn, rules.droneRadius) } : {}),
+        ...(pursuit ? { pursuit: { bonusCaught: [] } } : {}),
         ...(hasSkills ? { skill: { index: 0, status: 'entry', reason: 'enter-zone' } } : {}),
         ...(hasActorTracking
           ? { actorTrack: { index: 0, status: 'acquire', reason: 'acquire-subject', travel: 0 } }
@@ -969,6 +994,9 @@ export function createWorldFlight({
           cooldown:
             a.role === 'hostile' && a.fireEveryTicks ? 1 + (random() % a.fireEveryTicks) : 0,
           blocked: false,
+          ...(pursuitPolicies.has(a.id)
+            ? { pursuit: createPursuitActorState(pursuitPolicies.get(a.id), source.pursuit) }
+            : {}),
         };
         collision.addActor(actor);
         required(
@@ -977,6 +1005,7 @@ export function createWorldFlight({
         );
         state.actors.push(actor);
       }
+      if (pursuit) admitFlightPursuit(source, collision);
       if (contactHunt)
         for (let index = 0; index < HUNT_TAIL_LIMITS.links; index++)
           collision.addActor({
@@ -1002,7 +1031,13 @@ export function createWorldFlight({
       const a = descriptors.get(actor.id);
       const from = { ...actor.position };
       actor.blocked = false;
-      if (a.path.length && a.speed) {
+      if (actor.pursuit) {
+        pursuit.move(
+          actor,
+          { ...state, droneRadius: rules.droneRadius, tailRadius: contactHunt?.tail.radius ?? 0 },
+          collision,
+        );
+      } else if (a.path.length && a.speed) {
         let target = a.path[actor.pathIndex];
         let difference = sub(target, actor.position);
         let distance = length(difference);
@@ -1088,6 +1123,7 @@ export function createWorldFlight({
               a.id === m.id &&
               a.status === 'active' &&
               !contactTargets.has(a.id) &&
+              !couriers.has(a.id) &&
               (a.role === 'hostile' || a.type === 'hazard'),
           ),
       );
@@ -1239,6 +1275,10 @@ export function createWorldFlight({
         }
       : null;
     const wasGrounded = state.grounded;
+    const contactPoses = pursuit
+      ? new Map(state.actors.filter((a) => a.pursuit).map((a) => [a.id, clone(a)]))
+      : null;
+    const pendingCatches = [];
     const motions = moveActors();
     const angles = attitude(state.orientation);
     for (const key of ['roll', 'pitch', 'yaw']) {
@@ -1287,8 +1327,21 @@ export function createWorldFlight({
         state.health = 0;
         state.events.push({ type: 'hunt-tail', actor: hit.id });
       }
-      const catchable = contactHunt && contactTargets.has(hit.id);
+      const catchable = contactHunt && (contactTargets.has(hit.id) || couriers.has(hit.id));
+      const protectedContact =
+        pursuit &&
+        catchable &&
+        contactPoses.has(hit.id) &&
+        pursuitContactProtected(contactPoses.get(hit.id), before);
+      if (
+        pursuit &&
+        catchable &&
+        !protectedContact &&
+        source.steps[mode][state.step]?.type === HUNT_CONTACT_CRITERION
+      )
+        pendingCatches.push(hit.id);
       const caught =
+        !pursuit &&
         catchable &&
         source.steps[mode][state.step]?.type === HUNT_CONTACT_CRITERION &&
         catchHuntTarget(
@@ -1306,18 +1359,23 @@ export function createWorldFlight({
       const hard = hit.moving || hit.normal.y < 866025 || impactSpeed > 1500;
       if (hard) {
         if (caught) continue;
+        if (pursuit && catchable && !protectedContact) continue;
         state.contacts++;
         if (state.contactCooldown === 0) {
           const actor = descriptors.get(hit.id);
-          const damage = catchable
-            ? 0
-            : actor?.type === 'hazard'
-              ? actor.damage
-              : actor && actor.role !== 'hostile'
-                ? 0
-                : rules.collisionDamage;
+          const damage = protectedContact
+            ? PURSUIT_RULES.protectedDamage
+            : catchable
+              ? 0
+              : actor?.type === 'hazard'
+                ? actor.damage
+                : actor && actor.role !== 'hostile'
+                  ? 0
+                  : rules.collisionDamage;
           state.health = Math.max(0, state.health - damage);
           state.contactCooldown = 20;
+          if (protectedContact)
+            state.events.push({ type: 'protected-contact', actor: hit.id, damage });
         }
       }
     }
@@ -1347,6 +1405,25 @@ export function createWorldFlight({
       state.velocity.z = roundDiv(state.velocity.z * 700, 1000);
     }
     weapons(command, motions, before);
+    // Successor contacts are committed only after all native hull damage and
+    // projectile impacts. A fatal transaction cannot also award a catch.
+    if (pursuit && state.health > 0)
+      for (const id of new Set(pendingCatches)) {
+        const actor = state.actors.find((a) => a.id === id);
+        if (couriers.has(id) && actor?.status === 'active') {
+          actor.status = 'caught';
+          state.pursuit.bonusCaught.push(id);
+          state.hunt.catches.push({
+            id: actor.id,
+            family: actor.pursuit.family,
+            optional: true,
+            tick: state.ticks,
+            position: { ...actor.position },
+            velocity: { ...state.velocity },
+          });
+          state.events.push({ type: 'catch', actor: id, optional: true });
+        } else catchHuntTarget(state, contactHunt, actor);
+      }
     if (contactHunt) updateHuntTail(state.hunt, contactHunt, state.position, rules.droneRadius);
     state.ticks++;
     state.lastInput = { ...command };
@@ -1428,7 +1505,7 @@ export function createWorldRecorder(flight, { session = 'practice', prefix = [] 
         'Unrecorded flight ticks cannot be exported',
       );
       return {
-        format: 'FlightAttempt.v2',
+        format: flight.identity.model === PURSUIT_MODEL ? 'FlightAttempt.v3' : 'FlightAttempt.v2',
         session,
         ...flight.identity,
         response: flight.response(),
@@ -1480,8 +1557,10 @@ async function replayInternal(
     ],
     'world proof',
   );
+  const acceptedCourse = validateWorldCourse(course);
   required(
-    proof.format === 'FlightAttempt.v2' &&
+    proof.format ===
+      (acceptedCourse.format === PURSUIT_COURSE ? 'FlightAttempt.v3' : 'FlightAttempt.v2') &&
       SESSION.includes(proof.session) &&
       Array.isArray(proof.frames) &&
       proof.frames.length <= WORLD_MAX_TICKS &&
@@ -1489,7 +1568,7 @@ async function replayInternal(
     'Invalid world proof',
   );
   const flight = createWorldFlight({
-    course,
+    course: acceptedCourse,
     mode: proof.mode,
     response: proof.response,
   });

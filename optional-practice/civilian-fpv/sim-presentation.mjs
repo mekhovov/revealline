@@ -2547,7 +2547,7 @@ import * as academyAudioExternal0 from '../../game/i18n/index.mjs';
 export const createSimFlightAudio = (() => {
   const sourceHashes = Object.freeze({
     'optional-practice/civilian-fpv/world-audio.mjs':
-      '104011e3e43091577ef2c740aaead7727fc45234fc2cbb2ce61fa3441dc63f8b',
+      '7655fa3d77df823f9d85d608fd892b3617f5089ef09ca49dd8d4ed74a90ae824',
     'game/ui/audio-output.mjs': 'dc1b2776407d0b6649b0d15c5c721bd59384d7e38a2e61087961ff7a37bd86c1',
     'game/ui/audio-master.mjs': '6bf14bc5268c0eff8f38c21c819f398917712fdc2607c33977ac873111d1dca8',
     'game/audio-preferences.mjs':
@@ -3107,6 +3107,7 @@ export const createSimFlightAudio = (() => {
     const createAudioMaster = modules['game/ui/audio-master.mjs']['createAudioMaster'];
     const createAudioPreferences = modules['game/audio-preferences.mjs']['createAudioPreferences'];
     const encounterSoundRecipe = modules['game/ui/encounter-audio.mjs']['encounterSoundRecipe'];
+    const actorPhaseSound = modules['game/ui/encounter-audio.mjs']['actorPhaseSound'];
     const readMovementAudio = modules['game/ui/movement-audio.mjs']['readMovementAudio'];
     const MOVEMENT_AUDIO_KEY = modules['game/ui/movement-audio.mjs']['MOVEMENT_AUDIO_KEY'];
     const dialogueChannel = modules['game/ui/dialogue-channel.mjs']['dialogueChannel'];
@@ -3191,6 +3192,8 @@ export const createSimFlightAudio = (() => {
       const recentCues = new Map();
       let actorDefinitions = new Map();
       let actorPositions = new Map();
+      let actorPhases = new Map();
+      let actorFamilies = new Map();
       let lastFootstep = -Infinity;
 
       const volume = (value) =>
@@ -3373,6 +3376,12 @@ export const createSimFlightAudio = (() => {
           fire: 'fire',
           impact: 'impact',
           defeat: 'catch',
+          'protected-contact': 'impact',
+          warning: 'warning',
+          notice: 'notice',
+          burst: 'burst',
+          recover: 'recover',
+          blocked: 'blocked',
         }[type];
         if (!kind) return;
         const now = context?.currentTime ?? 0;
@@ -3381,7 +3390,10 @@ export const createSimFlightAudio = (() => {
         const actor = actorDefinitions.get(event.actor);
         const machine = actor?.type === 'vehicle';
         const recipe = encounterSoundRecipe(kind, {
-          family: actor?.speed > 0 ? 'patroller' : 'lookout',
+          family:
+            event.family ??
+            actorFamilies.get(event.actor) ??
+            (actor?.speed > 0 ? 'patroller' : 'lookout'),
           machine,
         });
         if (recipe.priority >= 5 || (type === 'fire' && !player)) dialogueChannel.interrupt();
@@ -3551,6 +3563,10 @@ export const createSimFlightAudio = (() => {
           lastContacts = null;
           recentCues.clear();
           actorPositions.clear();
+          actorPhases.clear();
+          actorFamilies = new Map(
+            (course.pursuit?.actors ?? []).map((policy) => [policy.id, policy.family]),
+          );
           lastFootstep = -Infinity;
           actorDefinitions = new Map((course.actors ?? []).map((actor) => [actor.id, actor]));
           stopEffects();
@@ -3616,6 +3632,12 @@ export const createSimFlightAudio = (() => {
                   movementCue: true,
                 });
               }
+              for (const actor of snapshot.actors ?? []) {
+                if (!actor.pursuit || actor.status !== 'active') continue;
+                const phase = actor.blocked ? 'blocked' : actor.pursuit.phase;
+                const sound = actorPhaseSound(actorPhases.get(actor.id), phase);
+                if (sound) cue(sound, false, { actor: actor.id, family: actor.pursuit.family });
+              }
               const events = snapshot.events ?? [];
               const types = new Set();
               // Bound cue overlap independently of simulation actor/projectile counts.
@@ -3636,6 +3658,11 @@ export const createSimFlightAudio = (() => {
           }
           actorPositions = new Map(
             (snapshot.actors ?? []).map((actor) => [actor.id, { ...actor.position }]),
+          );
+          actorPhases = new Map(
+            (snapshot.actors ?? [])
+              .filter((actor) => actor.pursuit)
+              .map((actor) => [actor.id, actor.blocked ? 'blocked' : actor.pursuit.phase]),
           );
           lastTick = tick;
           lastStep = step;

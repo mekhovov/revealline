@@ -1,4 +1,5 @@
-export const ROOM_CONTROL_PROTOCOL = 'revealline-room-controls.v1';
+import { roomControls } from './room-controls.mjs';
+export { ROOM_CONTROL_PROTOCOL } from './room-controls.mjs';
 
 /** Native endpoints require their own approved host policy. A Capacitor hostname
  * of localhost is not a browser development origin. */
@@ -155,11 +156,7 @@ export function createRoomClientLifecycle({ sendInput, onError = () => {}, maxPe
         onError(error, owner);
         return false;
       }
-      pending.push({
-        direction: control.direction,
-        boost: control.boost,
-        support: control.support,
-      });
+      pending.push(roomControls(control));
       pump();
       return true;
     },

@@ -614,7 +614,10 @@ try {
     classes = classRegistry,
     enabled = runningEnemyPreferences.snapshot().enabled,
     style = runningEnemyPreferences.snapshot().style,
-  ) => (enabled ? prepareRunningEnemyLevel(level, { classes, style }) : level);
+  ) =>
+    enabled
+      ? prepareRunningEnemyLevel(level, { classes, style, generation: 'pursuit-goals.v2' })
+      : level;
   const refreshRunningEnemies = () => runningEnemyControls.forEach((control) => control.refresh());
   let encounterVariantControls = null,
     contextualReactions = null,
@@ -10147,6 +10150,8 @@ try {
                           'xonix-core.v12',
                           'xonix-core.v13',
                           'xonix-core.v14',
+                          'xonix-core.v15',
+                          'xonix-core.v16',
                         ].includes(run.ruleset)
                       ? t('interface:reclaimedGround')
                       : t('interface:safeGround'),
@@ -10329,6 +10334,8 @@ try {
                   'xonix-core.v12',
                   'xonix-core.v13',
                   'xonix-core.v14',
+                  'xonix-core.v15',
+                  'xonix-core.v16',
                 ].includes(run.ruleset)
                   ? 'gameplay:liveLineExposedReachReclaimedGroundToSecureIt'
                   : 'gameplay:liveLineExposedReachSafeGroundToSecureIt',
@@ -10367,6 +10374,8 @@ try {
                   'xonix-core.v12',
                   'xonix-core.v13',
                   'xonix-core.v14',
+                  'xonix-core.v15',
+                  'xonix-core.v16',
                 ].includes(run.ruleset)
                   ? 'gameplay:lineStruckReachReclaimedGroundBeforeTheTravellingSparkCatches'
                   : 'interface:lineStruckReachSafeGroundBeforeTheTravellingSparkCatches',

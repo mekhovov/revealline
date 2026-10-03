@@ -16,7 +16,9 @@ import {
   createRoomClientLifecycle,
 } from './room-client-lifecycle.mjs';
 import { onNativeInactive, exportJSONFile } from '../platform.mjs';
-import { drawClassicBoard } from '../snake/classic-view.mjs';
+import { drawClassicBoard, classicCatchMarks } from '../snake/classic-view.mjs';
+import { createHuntDestruction } from '../hunt/destruction.mjs';
+import { mountRoomUI } from './room-ui.mjs';
 import { advanceClassicFlight } from '../snake/classic-flight-art.mjs';
 import { createClassicPresentation } from '../snake/classic-presentation.mjs';
 import { BoardPainter } from '../ui/render.mjs';
@@ -53,7 +55,9 @@ let catalogueEntries = [],
 let canvases = [],
   painters = [],
   flights = [],
-  eventIds = new Set();
+  eventIds = new Set(),
+  effects = [],
+  roomUI = null;
 const messages = {
   title: ['Private rooms', 'Приватні кімнати'],
   intro: [
@@ -80,8 +84,8 @@ const messages = {
   receipt: ['Save match replay', 'Зберегти повтор матчу'],
   support: ['Support / Boost', 'Підтримка / Прискорення'],
   keys: [
-    'Arrow keys or WASD steer your own drone. Space pauses both boards. A lost connection pauses play; reconnect within 60 seconds, then both choose Ready.',
-    'Стрілки або WASD керують вашим дроном. Пробіл зупиняє обидва поля. Після втрати зв’язку поверніться за 60 секунд і обидва оберіть «Готово».',
+    'Arrow keys or WASD steer. Shift boosts, E uses equipment and R collects supplies when available. Hold Space for Team Support; P or Escape pauses both players. After reconnecting within 60 seconds, both choose Ready.',
+    'Стрілки або WASD керують дроном. Shift прискорює, E активує обладнання, R збирає припаси. У Team утримуйте пробіл для підтримки; P або Escape зупиняє обох. Поверніться за 60 секунд і обидва оберіть «Готово».',
   ],
   qualification: [
     'Private rooms preview · server outcomes stay separate from local chapter rewards. Public matchmaking requires a qualified service.',
@@ -132,16 +136,17 @@ function syncControls() {
       : say('Reconnect', 'Відновити зв’язок');
 }
 function suspendLocal() {
+  roomUI?.suspend();
   lifecycle.suspend();
-  direction = null;
-  boost = false;
+
   previousFrame = null;
   syncControls();
 }
 function abandonLocal(message) {
+  roomUI?.suspend();
+  roomUI?.shell.open('missions');
   lifecycle.abandon();
-  direction = null;
-  boost = false;
+  roomUI?.shell.update({ phase: 'ready', canResume: false });
   saveSeat(null);
   $('invitation').hidden = true;
   syncControls();
@@ -232,6 +237,7 @@ async function own(value, { restoring = false, catalogueId = null, expectedHash 
   $('accepted-source').textContent = '';
   $('identity').textContent = '';
   syncControls();
+  roomUI?.shell.open('missions');
   await poll();
 }
 async function requestPause(activation = state?.controlActivation) {
@@ -416,8 +422,7 @@ function leave() {
   state = null;
   acceptedRecipeJSON = null;
   lifecycle.release();
-  direction = null;
-  boost = false;
+
   saveSeat(null);
   painters.forEach((painter) => painter?.dispose?.());
   painters = [];
@@ -430,7 +435,29 @@ function leave() {
   $('result').textContent = '';
   reconnect.hidden = true;
   notice(say('Choose a new room.', 'Виберіть нову кімнату.'));
+  effects.forEach((effect) => effect.reset());
+  effects = [];
+  roomUI?.update(null);
 }
+function followInvitation() {
+  let invitation;
+  try {
+    invitation = readRoomInvitation(location.href);
+  } catch (error) {
+    notice(error.message);
+    return;
+  }
+  if (!invitation) return;
+  if (credentials?.invite === invitation.invite && lifecycle.snapshot().phase !== 'abandoned') {
+    history.replaceState(null, '', `${location.pathname}${location.search}`);
+    return;
+  }
+  // Hash-only navigation does not reload the page. Retire the old seat and use
+  // the same boot/admission path as a fresh invitation, including its SHA pins.
+  leave();
+  location.reload();
+}
+window.addEventListener('hashchange', followInvitation);
 $('leave').addEventListener('click', leave);
 reconnect.addEventListener('click', () => {
   if (lifecycle.snapshot().phase === 'abandoned') leave();
@@ -462,7 +489,9 @@ async function allocateBoards(snapshot, owner, epoch) {
   canvases = nextCanvases;
   painters = nextPainters;
   flights = [];
-  $('boards').replaceChildren(...canvases);
+  effects.forEach((effect) => effect.reset());
+  effects = canvases.map(() => createHuntDestruction());
+  roomUI.boards(canvases, snapshot);
   $('boards').classList.toggle('paired', count === 2);
 }
 
@@ -533,9 +562,8 @@ async function poll() {
     // Terminal outcomes remain server-owned, including during recovery.
     if (['finished', 'abandoned'].includes(snapshot.status)) lifecycle.pauseAcknowledged(epoch);
     const replacement = !state || state.generation !== snapshot.generation;
+    const recovering = lifecycle.snapshot().phase !== 'connected';
     if (replacement) {
-      direction = null;
-      boost = false;
       eventIds.clear();
       await allocateBoards(snapshot, owner, epoch);
     }
@@ -546,10 +574,6 @@ async function poll() {
         Object.assign(state.engine.runs[index], run),
       );
     state = snapshot;
-    if (!lifecycle.canPlay()) {
-      direction = null;
-      boost = false;
-    }
     syncControls();
     showAcceptedMission(snapshot);
     if (owner.invite) {
@@ -584,6 +608,7 @@ async function poll() {
       : '';
     for (const event of snapshot.events) eventIds.add(event.id);
     if (eventIds.size > 256) eventIds = new Set(snapshot.events.map((event) => event.id));
+    roomUI.update(snapshot, { replacement, recovering });
     if (snapshot.status === 'abandoned') abandonLocal();
   } catch (error) {
     connectionError(error, owner);
@@ -591,53 +616,6 @@ async function poll() {
     if (polling === operation) polling = null;
   }
 }
-let direction = null,
-  boost = false;
-function input(next = direction) {
-  if (!lifecycle.canPlay() || stopped || document.hidden) return;
-  direction = next;
-  lifecycle.submit({ direction, boost, support: boost });
-}
-const keys = {
-  ArrowUp: 'up',
-  KeyW: 'up',
-  ArrowRight: 'right',
-  KeyD: 'right',
-  ArrowDown: 'down',
-  KeyS: 'down',
-  ArrowLeft: 'left',
-  KeyA: 'left',
-};
-document.addEventListener('keydown', (event) => {
-  if (event.target.closest('input,select,textarea') || event.repeat) return;
-  if (keys[event.code]) {
-    event.preventDefault();
-    void input(keys[event.code]);
-  }
-  if (event.code === 'Space' && lifecycle.canPlay()) {
-    event.preventDefault();
-    $('pause').click();
-  }
-});
-document.querySelectorAll('[data-direction]').forEach((button) =>
-  button.addEventListener('pointerdown', (event) => {
-    event.preventDefault();
-    void input(button.dataset.direction);
-  }),
-);
-$('support').addEventListener('pointerdown', (event) => {
-  if (!lifecycle.canPlay() || stopped || document.hidden) return;
-  event.currentTarget.setPointerCapture(event.pointerId);
-  boost = true;
-  void input();
-});
-for (const type of ['pointerup', 'pointercancel', 'lostpointercapture'])
-  $('support').addEventListener(type, () => {
-    if (boost) {
-      boost = false;
-      void input();
-    }
-  });
 function suspend() {
   if (!credentials || ['abandoned', 'idle'].includes(lifecycle.snapshot().phase)) return;
   suspendLocal();
@@ -652,6 +630,7 @@ document.addEventListener('visibilitychange', () => {
 });
 window.addEventListener('orientationchange', suspend);
 window.addEventListener('offline', suspend);
+window.addEventListener('blur', suspend);
 window.addEventListener('online', () => void poll());
 let removeNativeInactive = null;
 void onNativeInactive(suspend)
@@ -664,6 +643,7 @@ void onNativeInactive(suspend)
 function frame(time) {
   const dt = Math.min(0.1, previousFrame === null ? 0 : (time - previousFrame) / 1000);
   previousFrame = time;
+  roomUI?.frame();
   if (state)
     state.engine.runs.forEach((run, index) => {
       const canvas = canvases[index];
@@ -674,12 +654,26 @@ function frame(time) {
       if (state.engine.kind === 'snake') {
         flights[index] = advanceClassicFlight(flights[index], dt * 1000, !paused, reduced);
         const cast = appearance.snapshot().cast;
+        effects[index]?.advance({ valid: true, eliminations: classicCatchMarks(run) }, dt, {
+          key: run,
+          paused,
+          reduced,
+          ...fx,
+          sources: run.snakes.map((snake) => ({
+            ...snake.body[0],
+            id: snake.id,
+            direction: snake.direction,
+          })),
+        });
         drawClassicBoard(canvas, run, {
           presentation: presentation.snapshot(),
+          effects: effects[index],
+          boardStyle: roomUI.boardStyle(),
+          style: roomUI.tailStyle(),
           cast: cast === 'authored' ? 'rivals' : cast,
           reduced,
           flight: flights[index],
-          cssWidth: canvas.clientWidth,
+          cssWidth: roomUI.width(index) ?? canvas.clientWidth,
           pixelRatio: devicePixelRatio || 1,
           ...fx,
           showRemains: remains.snapshot().showRemains,
@@ -792,6 +786,8 @@ window.addEventListener('pagehide', (event) => {
   suspend();
   stopped = true;
   if (!event.persisted) {
+    roomUI?.dispose();
+    effects.forEach((effect) => effect.reset());
     void removeNativeInactive?.();
     removeNativeInactive = null;
   }
@@ -800,6 +796,15 @@ window.addEventListener('pageshow', () => {
   stopped = false;
   previousFrame = null;
   void poll();
+});
+roomUI = mountRoomUI({
+  getState: () => state,
+  getSeat: () => credentials?.seat ?? 0,
+  canPlay: () => lifecycle.canPlay() && !stopped && !document.hidden,
+  submit: (control) => lifecycle.submit(control),
+  pause: suspend,
+  display,
+  destruction,
 });
 requestAnimationFrame(frame);
 void boot();

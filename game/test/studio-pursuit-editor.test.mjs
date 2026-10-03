@@ -35,7 +35,8 @@ test('Studio pursuit applies through the runtime compiler and preserves unrelate
     const mission = source.missions[0];
     const next = selectedMissionPursuitSource(source, mission.id, mission.pursuit.actors);
     assert.equal(JSON.stringify(source), before);
-    assert.equal(next.missions[0].format, 'MissionDesignV5');
+    assert.equal(next.missions[0].format, 'MissionDesignV6');
+    assert.equal(next.missions[0].pursuit.version, 'mission-pursuit.v2');
     assert.deepEqual(next.missions[0].pursuit.actors, mission.pursuit.actors);
     assert.notEqual(next.missions[0].revision, mission.revision);
     assert.deepEqual(next.missions.slice(1), source.missions.slice(1));

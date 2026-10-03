@@ -409,7 +409,11 @@ export class FeedbackDirector {
       const phase = actor.pursuit?.phase ?? actor.phase;
       const family =
         actor.pursuit?.behavior ?? actor.family ?? (actor.role === 'sentry' ? 'guard' : 'runner');
-      const phaseCue = humanoid && newTick && actorPhaseSound(previous?.phase, phase);
+      const phaseCue =
+        options.phaseEvents !== false &&
+        humanoid &&
+        newTick &&
+        actorPhaseSound(previous?.phase, phase);
       // Native Guard locked/fired events already own their audible warning.
       if (phaseCue && actor.role !== 'sentry')
         this.sound.encounter?.(phaseCue, {

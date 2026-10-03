@@ -1,3 +1,5 @@
+import { createSoldierAnimation, sampleActorAnimation } from '../presentation/actor-animation.mjs';
+import { actorArtReviewRevision } from './preferences.mjs';
 import { actorVisual, resolveActorFamily } from './actor-catalog.mjs';
 /** Original overhead pixel rigs. The host owns time, facing and vulnerability;
  * this renderer never advances AI, reads a clock or consumes randomness. */
@@ -7,6 +9,27 @@ const STRIDE = [0, 1, 2, 0, -1, -2];
 const BREATH = [0, 0, 1, 0];
 const INK = '#192820';
 const BOOT = '#26302c';
+
+export const INDUSTRIAL_ACTOR_SAMPLES = Object.freeze({
+  runner: createSoldierAnimation('industrial-runner', ['helmet', 'torso', 'arms', 'boots']),
+  courier: createSoldierAnimation('industrial-courier', [
+    'cap',
+    'torso',
+    'arms',
+    'boots',
+    'satchel',
+  ]),
+  guard: createSoldierAnimation(
+    'industrial-guard',
+    ['helmet', 'torso', 'arms', 'boots', 'armor', 'weapon'],
+    'armor',
+  ),
+  'shield-bearer': createSoldierAnimation(
+    'industrial-shield',
+    ['helmet', 'torso', 'arms', 'boots', 'shield'],
+    'armor',
+  ),
+});
 
 function pixel(ctx, color, x, y, width, height) {
   ctx.fillStyle = color;
@@ -109,7 +132,8 @@ function detailed(ctx, role, family, gait, options, cast) {
   if (family === 'refuge-seeker') pack(ctx, role, 11, 17, 11, 10);
   else if (family === 'rendezvous-pair' || family === 'relay-warden')
     pack(ctx, role, 12, 17, family === 'relay-warden' ? 11 : 9, 9, true);
-  else if (family === 'patroller' || cast === 'tactical') pack(ctx, role, 12, 18, 8, 7);
+  else if (family === 'patroller' || (cast === 'tactical' && !options.industrialSample))
+    pack(ctx, role, 12, 18, 8, 7);
   else {
     pixel(ctx, INK, 10, 21, 4, 4);
     pixel(ctx, role.trim, 11, 22, 2, 2);
@@ -364,7 +388,32 @@ export function drawHuntActor(ctx, x, y, size, pose = 0, options = {}) {
   const visual =
     actorVisual(options.visualId) ?? actorVisual(family, options.cast) ?? actorVisual(family);
   const angle = facing(options);
+  const candidate = (options.artRevision ?? actorArtReviewRevision()) === 'industrial-pilot-v1';
+  const descriptor =
+    options.animation ?? (candidate ? INDUSTRIAL_ACTOR_SAMPLES[visual.family] : null);
   const gait = motion(pose, options, visual.family);
+  if (descriptor) {
+    const clip = gait.caught
+      ? 'caught'
+      : gait.recovery
+        ? 'recovery'
+        : options.phase === 'warning' || options.phase === 'turning'
+          ? 'anticipation'
+          : options.state === 'blocked'
+            ? 'blocked'
+            : gait.notice
+              ? 'notice'
+              : gait.idling
+                ? 'idle'
+                : 'move';
+    const sample = sampleActorAnimation(descriptor, {
+      clip,
+      timeMs: options.timeMs ?? pose * 100,
+      reducedEffects: options.reducedEffects || options.frozen || options.paused,
+    });
+    if (gait.stride !== 0) gait.stride = sample.stride;
+    gait.breath = sample.breath;
+  }
   ctx.save();
   ctx.translate(x, y);
   ctx.scale(size / UNIT, size / UNIT);
@@ -381,7 +430,52 @@ export function drawHuntActor(ctx, x, y, size, pose = 0, options = {}) {
     ctx.globalAlpha = alpha;
   }
   const useCompact = options.detail === 'compact' || (options.detail !== 'detailed' && size < 24);
-  (useCompact ? compact : detailed)(ctx, visual.palette, visual.family, gait, options, visual.cast);
+  (useCompact ? compact : detailed)(
+    ctx,
+    visual.palette,
+    visual.family,
+    gait,
+    { ...options, industrialSample: candidate },
+    visual.cast,
+  );
+  if (candidate && INDUSTRIAL_ACTOR_SAMPLES[visual.family]) {
+    const p = visual.palette;
+    // Family-sized equipment changes the silhouette, not the occupied cell.
+    if (visual.family === 'runner') {
+      pixel(ctx, p.dark, 11, 16, 10, 7);
+      pixel(ctx, p.coat, 12, 16, 8, 6);
+      pixel(ctx, p.trim, 12, 17, 2, 4);
+      pixel(ctx, '#bdbda0', 19, 17, 1, 3);
+      pixel(ctx, INK, 12, 23, 3, 2);
+      pixel(ctx, INK, 18, 23, 3, 2);
+    } else if (visual.family === 'courier') {
+      const bounce = gait.stride ? Math.sign(gait.stride) : 0;
+      pixel(ctx, INK, 23, 17 + bounce, 8, 10);
+      pixel(ctx, '#795e3f', 24, 18 + bounce, 6, 8);
+      pixel(ctx, '#be9b65', 24, 18 + bounce, 6, 2);
+      pixel(ctx, '#d9c296', 26, 20 + bounce, 2, 4);
+      pixel(ctx, '#402f24', 24, 25 + bounce, 6, 1);
+      pixel(ctx, p.trim, 11, 15, 2, 9);
+    } else if (visual.family === 'guard') {
+      pixel(ctx, INK, 7, 14, 18, 5);
+      pixel(ctx, '#667366', 8, 14, 16, 4);
+      pixel(ctx, '#9fa68b', 8, 14, 15, 1);
+      pixel(ctx, p.dark, 10, 19, 12, 5);
+      for (const x of [10, 15, 20]) {
+        pixel(ctx, '#283b33', x, 19, 3, 5);
+        pixel(ctx, '#87957c', x, 19, 3, 1);
+      }
+    } else {
+      pixel(ctx, INK, 5, 2, 22, 8);
+      pixel(ctx, '#465953', 6, 2, 20, 7);
+      pixel(ctx, '#afb8a0', 6, 2, 20, 1);
+      pixel(ctx, '#85958a', 6, 3, 2, 5);
+      pixel(ctx, '#263a37', 23, 3, 3, 6);
+      pixel(ctx, '#152723', 10, 4, 12, 2);
+      pixel(ctx, '#c2d6c8', 11, 4, 10, 1);
+      pixel(ctx, '#a59762', 15, 7, 2, 2);
+    }
+  }
   ctx.restore();
   markers(ctx, visual.family, options, angle);
   ctx.restore();

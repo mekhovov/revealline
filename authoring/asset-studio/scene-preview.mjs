@@ -1,3 +1,4 @@
+import { pageActorArtPool } from '../../game/presentation/actor-art-pool.mjs';
 import { t, localizedText, localizedAttribute } from '../../game/i18n/index.mjs';
 import { assetStudioErrorMessage } from './error-copy.mjs';
 import { startPreviewMotion } from './preview-motion.mjs';
@@ -144,9 +145,30 @@ export function createStudioContextPresentation(resolved, decoded, selectedPlaye
   });
 }
 
-async function croppedImage(asset, blobs, options) {
+export async function croppedImage(asset, blobs, options, own) {
   const blob = blobs.get(asset.file.sha256);
   if (!blob) throw new Error(t('tools:previewMediaIsMissing'));
+  if (asset.animation) {
+    if (typeof own !== 'function') throw new TypeError('Animated preview needs a resource owner.');
+    const controller = new AbortController();
+    let lease = null;
+    own(() => {
+      controller.abort();
+      lease?.release();
+    });
+    lease = await pageActorArtPool(document).acquire({
+      key: asset.file.sha256,
+      width: asset.file.width,
+      height: asset.file.height,
+      signal: controller.signal,
+      load: () => createImageBitmap(blob),
+    });
+    if (!options.isCurrent()) {
+      lease.release();
+      return null;
+    }
+    return lease.image;
+  }
   const bitmap = await createImageBitmap(blob),
     f = asset.geometry.frame,
     canvas = document.createElement('canvas');
@@ -184,7 +206,7 @@ export async function playerRecipePreview(surface, slot, resolved, blobs, option
     resolved.assets[`player.${classId}.${slot.id.endsWith('detailed') ? 'detailed' : 'compact'}`];
   let image;
   if (imageAsset?.kind === 'image') {
-    image = await croppedImage(imageAsset, blobs, options);
+    image = await croppedImage(imageAsset, blobs, options, own);
     if (!options.isCurrent()) return;
     const geometry = imagePresentation(imageAsset);
     body.rotors = geometry.rotors;
@@ -247,7 +269,8 @@ export async function boardContextPreview(surface, slot, asset, resolved, blobs,
       context: (id, owner) => fixtureLoader.context(id, owner),
       bodyIds,
       imageRoles,
-      decode: croppedImage,
+      decode: (candidate, bytes, context, resourceOwner = own) =>
+        croppedImage(candidate, bytes, context, resourceOwner),
       presentation: createStudioContextPresentation,
       loop,
     });
@@ -289,7 +312,7 @@ export async function boardContextPreview(surface, slot, asset, resolved, blobs,
       role = 'background';
     if (!role) continue;
     options.onStatus?.(() => t('tools:studio.scenePreview.decodingAsset', { id }), 'decoding');
-    const image = await croppedImage(candidate, blobs, options);
+    const image = await croppedImage(candidate, blobs, options, own);
     if (!options.isCurrent()) return;
     if (role === 'background') painter.images.background = image;
     else decoded.set(id, { asset: candidate, image });

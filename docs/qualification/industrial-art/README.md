@@ -1,0 +1,41 @@
+# Industrial art and unified play review
+
+This is a review candidate, not production art approval or a public release.
+The [implementation register](../../unified-industrial-plan.md) separates implemented source from required acceptance and optional expansion.
+
+## Open the sample
+
+Run the repository development server, then open `/authoring/industrial-art-review/`.
+The current local review server uses <http://127.0.0.1:8787/authoring/industrial-art-review/>.
+Use Pause, Facing, State and Reduced effects to compare released and candidate silhouettes at actual 16/24/32 px and enlarged sizes. EN/UK copy and native play links are provided. Each defeat preview is explicitly triggered by its labeled button.
+
+The four candidates are original procedural revisions. They allocate no decoded atlas bitmap. The displayed 64/32 MiB ceiling is shared-provider capacity, not a measured process-memory number. Machine detail is a review specimen; default machinery bindings remain unchanged. The FPV drone, connected Retro body and destruction use existing shared renderers.
+
+![Released and candidate character specimens](character-comparison.jpg)
+
+## Manual observations, 3 October 2026
+
+- Desktop IAB: review page renders four transparent overhead candidates, real-size/enlarged comparison grounds and the native play links. Pausing freezes the comparison animation. Screenshot above records the visible specimen state.
+- Native Snake: Cable Cutoff opened at briefing and explicit Start entered focused Retro play with native HUD; no console warning/error was observed. This is a startup check, not a clear or gameplay-quality qualification.
+- Asset Studio on isolated localhost: selected `enemy.bouncer`, loaded the current image descriptor, checked preview, staged asset-v2, saved local revision atomically, reloaded document r105, and loaded the retained animation descriptor. Export prepared `revealline-fpv-r105.rltheme` including source files/revisions. The IAB download-event adapter timed out, so external file import/round-trip evidence remains pending. No claim of a multi-frame production atlas is made: this admitted sample reuses the source frame across clips.
+- Private Snake Versus: two local tabs joined the same recipe, both chose Ready, paired native boards started, and a terminal collision reached Results without console errors. Rematch reset readiness; both seats started again; Pause returned to the shared menu and Settings exposed the shared audio/display controls. This is a localhost lifecycle check, not network latency, reconnect, audio-listening or human play qualification.
+- Attempted viewport override did not change the observed 1552×1484 CSS viewport. It was reset. Phone-size checks are **not** marked complete.
+
+## Evidence boundaries
+
+`inventory.json` records immutable source hashes, byte sizes and mechanical Keep/Refine triage. It does not mean each of the 1,181 tracked visual/model files received artistic review. There are no third-party game-art copies.
+
+`../../verification/native-pursuit-structural.json` records the native SIM route/Studio admission cases and source hashes. Zero simulation steps were used; this is deliberately not a completion route.
+
+Automated regression sources cover bounded decoding, cancellation, sharing, atlas admission/pivot rules, stale Studio ownership, pursuit phases, recording validation and room ordering. They were authored **without running** the waived test suites.
+
+## Pending before broad recommendation
+
+- Complete Phase C terrain/material/audio samples and native Capture/Team/SIM scene captures.
+- Artist/user review of silhouettes, motion and all three destruction treatments.
+- Actual multi-frame atlas export/import, offload/reinstall and interrupted-load evidence.
+- 320/360/390 px, landscape, enlarged text, two-player touch, controllers and audio listening.
+- Measured low-end frame rate/peak memory and simultaneous two-board effects.
+- Pause/Retry/restore/seeking across all represented modes, completed pinned-seed routes and human play review.
+
+The plan requires Phase C approval before full-roster/36-appearance mass production. Independent engine, recording and private-room correctness work can proceed.

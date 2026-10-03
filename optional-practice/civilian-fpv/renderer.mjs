@@ -1055,6 +1055,8 @@ export function createFlightRenderer({
     for (const step of course.steps[mode])
       if (step.type === 'hunt-contact-v1')
         step.targets.forEach((id, index) => huntTargets.set(id, index + 1));
+    for (const policy of course.pursuit?.actors ?? [])
+      if (policy.family === 'courier') huntTargets.set(policy.id, 0);
     currentStep = -1;
     clearImported();
     scene.environment = null;
@@ -1156,7 +1158,14 @@ export function createFlightRenderer({
   }
   function createActor(actor) {
     const group = new THREE.Group();
-    const animated = { rotors: [], wheels: [], limbs: [], body: null };
+    const animated = {
+      rotors: [],
+      wheels: [],
+      limbs: [],
+      body: null,
+      armorTell: null,
+      intent: null,
+    };
     actors.add(group);
     const radius = (actor.radius ?? 300) / 1000,
       height = (actor.height ?? 1800) / 1000,
@@ -1170,7 +1179,9 @@ export function createFlightRenderer({
       civilian = !huntTarget && (themeProfile?.characters === 'civilian' || role === 'civilian');
     const preferredCast = sharedActorAppearance().snapshot().cast;
     const huntFamily =
-      (actorDefinitions.get(actor.id)?.speed ?? actor.speed ?? 0) > 0 ? 'patroller' : 'lookout';
+      actor.pursuit?.family ??
+      course.pursuit?.actors.find((policy) => policy.id === actor.id)?.family ??
+      ((actorDefinitions.get(actor.id)?.speed ?? actor.speed ?? 0) > 0 ? 'patroller' : 'lookout');
     const huntAppearance = huntTarget
       ? actorVisual(huntFamily, preferredCast === 'authored' ? 'rivals' : preferredCast)
       : null;
@@ -1240,6 +1251,118 @@ export function createFlightRenderer({
       });
       visual.tint.color.setHex(friendly ? 0x77ebe0 : 0xe6a16b);
       animated.rotors = visual.rotors;
+    } else if (actor.type === 'vehicle' && actorDefinitions.get(actor.id)?.vehicleModel) {
+      const model = actorDefinitions.get(actor.id).vehicleModel;
+      const tracked = model === 'field-tank';
+      const carrier = model === 'armored-carrier';
+      const cargo = model === 'cargo-truck' || model === 'relay-truck';
+      // Original compact field machines share the native vehicle proxy and route.
+      // Distinct silhouettes add no new weapons, armor or damage rules.
+      part(new THREE.BoxGeometry(radius * 1.25, radius * 0.35, radius * 1.55), armor, [
+        0,
+        radius * 0.47,
+        0,
+      ]);
+      if (tracked) {
+        for (const side of [-1, 1]) {
+          part(new THREE.BoxGeometry(radius * 0.3, radius * 0.38, radius * 1.68), dark, [
+            side * radius * 0.61,
+            radius * 0.27,
+            0,
+          ]);
+          if (quality !== 'low')
+            for (let t = -3; t <= 3; t++)
+              part(new THREE.BoxGeometry(radius * 0.32, radius * 0.055, radius * 0.06), metal, [
+                side * radius * 0.61,
+                radius * 0.47,
+                t * radius * 0.23,
+              ]);
+        }
+        part(new THREE.CylinderGeometry(radius * 0.43, radius * 0.48, radius * 0.3, 8), armor, [
+          0,
+          radius * 0.81,
+          0,
+        ]);
+        part(new THREE.BoxGeometry(radius * 0.12, radius * 0.13, radius * 0.83), dark, [
+          0,
+          radius * 0.85,
+          -radius * 0.45,
+        ]);
+      } else {
+        part(
+          new THREE.BoxGeometry(
+            radius * (carrier ? 1.12 : 0.98),
+            radius * (carrier ? 0.36 : 0.43),
+            radius * (carrier ? 1.16 : 0.55),
+          ),
+          armor,
+          [0, radius * 0.85, cargo ? -radius * 0.4 : 0],
+        );
+        if (cargo)
+          part(new THREE.BoxGeometry(radius * 1.1, radius * 0.6, radius * 0.8), armor, [
+            0,
+            radius * 0.94,
+            radius * 0.31,
+          ]);
+        for (const side of [-1, 1])
+          for (const at of carrier || cargo ? [-0.6, 0, 0.6] : [-0.53, 0.53]) {
+            const axle = new THREE.Group();
+            axle.position.set(side * radius * 0.62, radius * 0.25, radius * at);
+            group.add(axle);
+            const wheel = part(
+              new THREE.CylinderGeometry(
+                radius * 0.23,
+                radius * 0.23,
+                radius * 0.22,
+                quality === 'low' ? 6 : 10,
+              ),
+              dark,
+              [0, 0, 0],
+              axle,
+            );
+            wheel.rotation.z = Math.PI / 2;
+            animated.wheels.push(axle);
+          }
+        part(new THREE.BoxGeometry(radius * 0.78, radius * 0.2, radius * 0.03), glass, [
+          0,
+          radius * 0.9,
+          -radius * (cargo ? 0.69 : carrier ? 0.6 : 0.3),
+        ]);
+      }
+      if (model === 'relay-truck') {
+        part(new THREE.CylinderGeometry(radius * 0.025, radius * 0.035, radius * 0.42, 6), dark, [
+          0,
+          radius * 1.41,
+          radius * 0.25,
+        ]);
+        const dish = part(
+          new THREE.CylinderGeometry(radius * 0.4, radius * 0.3, radius * 0.07, 10),
+          metal,
+          [0, radius * 1.58, radius * 0.25],
+        );
+        dish.rotation.x = 0.5;
+        animated.radar = dish;
+      }
+      if (model === 'field-utility') {
+        part(new THREE.BoxGeometry(radius * 0.72, radius * 0.08, radius * 0.48), dark, [
+          0,
+          radius * 1.11,
+          0,
+        ]);
+        const spare = part(
+          new THREE.CylinderGeometry(radius * 0.24, radius * 0.24, radius * 0.16, 10),
+          dark,
+          [0, radius * 0.7, radius * 0.83],
+        );
+        spare.rotation.x = Math.PI / 2;
+      }
+      for (const side of [-1, 1])
+        part(new THREE.BoxGeometry(radius * 0.14, radius * 0.11, radius * 0.04), threat, [
+          side * radius * 0.44,
+          radius * 0.55,
+          -radius * 0.79,
+        ]);
+      group.userData.nativeVehicleModel = model;
     } else if (actor.type === 'vehicle') {
       const van = /van/.test(slot ?? ''),
         truck = /truck/.test(slot ?? '');
@@ -1429,6 +1552,45 @@ export function createFlightRenderer({
           height * 0.56,
           0,
         ]);
+        if (['courier', 'refuge-seeker', 'rendezvous-pair', 'switchback'].includes(huntFamily)) {
+          const parcel = part(
+            new THREE.BoxGeometry(radius * 0.68, height * 0.22, radius * 0.5),
+            trim,
+            [radius * 0.8, height * 0.53, radius * 0.15],
+          );
+          if (huntFamily === 'refuge-seeker') parcel.position.set(0, height * 0.7, radius * 0.67);
+          if (huntFamily === 'rendezvous-pair') parcel.scale.set(0.4, 0.25, 0.4);
+        }
+        if (['shield-bearer', 'brace-trooper'].includes(huntFamily)) {
+          const plate = part(
+            new THREE.BoxGeometry(radius * 1.85, height * 0.48, radius * 0.22),
+            armor,
+            [0, height * 0.55, -radius * 0.84],
+          );
+          animated.armorTell = part(
+            new THREE.RingGeometry(
+              radius * 1.04,
+              radius * 1.13,
+              20,
+              1,
+              0,
+              huntFamily === 'shield-bearer' ? Math.PI : Math.PI * 2,
+            ),
+            threat,
+            [0, 0.04, 0],
+          );
+          animated.armorTell.rotation.x = -Math.PI / 2;
+          // The semicircle's endpoints expose the exact side/rear boundary.
+          if (huntFamily === 'brace-trooper') animated.shield = plate;
+        }
+        if (course.pursuit?.actors.some((policy) => policy.id === actor.id)) {
+          animated.intent = part(new THREE.ConeGeometry(radius * 0.23, radius * 0.65, 3), trim, [
+            0,
+            0.07,
+            -radius * 1.25,
+          ]);
+          animated.intent.rotation.x = -Math.PI / 2;
+        }
         if (huntFamily === 'lookout') {
           for (const side of [-1, 1])
             part(new THREE.BoxGeometry(radius * 0.22, radius * 0.26, radius * 0.28), dark, [
@@ -1572,7 +1734,9 @@ export function createFlightRenderer({
     }
     const marker = label(
       huntTarget
-        ? String(huntTargets.get(actor.id)).padStart(2, '0')
+        ? huntFamily === 'courier'
+          ? '+'
+          : String(huntTargets.get(actor.id)).padStart(2, '0')
         : friendly
           ? role === 'rival'
             ? 'RACE'
@@ -1606,6 +1770,7 @@ export function createFlightRenderer({
       quality,
       health: actor.maxHealth ?? actor.health ?? 1,
       cast: preferredCast,
+      family: huntFamily,
     };
   }
   function projectileBatch(owner) {
@@ -1639,7 +1804,8 @@ export function createFlightRenderer({
       if (
         row &&
         huntTargets.has(actor.id) &&
-        row.cast !== sharedActorAppearance().snapshot().cast
+        (row.cast !== sharedActorAppearance().snapshot().cast ||
+          (actor.pursuit && row.family !== actor.pursuit.family))
       ) {
         releaseGroup(row.group);
         actors.remove(row.group);
@@ -1656,7 +1822,37 @@ export function createFlightRenderer({
       row.group.position.set(p.x / 1000, p.y / 1000, p.z / 1000);
       if (row.lastTick !== state.ticks) {
         let moving = false;
-        if (target && definition.speed > 0) {
+        if (actor.pursuit) {
+          const intent = actor.pursuit;
+          row.group.rotation.y = Math.atan2(-intent.heading.x, -intent.heading.z);
+          moving =
+            Boolean(intent.next) &&
+            !actor.blocked &&
+            actor.status === 'active' &&
+            ['committed', 'flee', 'burst'].includes(intent.phase);
+          if (row.animated.armorTell)
+            row.animated.armorTell.visible =
+              intent.family === 'shield-bearer' || ['warning', 'burst'].includes(intent.phase);
+          if (row.animated.shield)
+            row.animated.shield.rotation.x = intent.phase === 'recovering' ? Math.PI / 3 : 0;
+          if (row.animated.intent) {
+            const next = intent.nextHeading ?? intent.heading;
+            const turn = Math.atan2(-next.x, -next.z) - row.group.rotation.y;
+            row.animated.intent.rotation.set(-Math.PI / 2, turn, 0, 'YXZ');
+            row.animated.intent.position.set(
+              -Math.sin(turn) * row.radius * 1.25,
+              0.07,
+              -Math.cos(turn) * row.radius * 1.25,
+            );
+            row.animated.intent.visible = [
+              'warning',
+              'turning',
+              'committed',
+              'flee',
+              'burst',
+            ].includes(intent.phase);
+          }
+        } else if (target && definition.speed > 0) {
           let dx = target.x - p.x,
             dz = target.z - p.z;
           const approaching = Math.hypot(dx, dz) > 30;
@@ -1681,7 +1877,11 @@ export function createFlightRenderer({
         }
         row.moving = moving;
         const seconds = state.ticks / 50,
-          speed = Math.max(0.35, (definition?.speed ?? 1000) / 1000),
+          speed = actor.pursuit
+            ? actor.pursuit.phase === 'burst'
+              ? 3
+              : 1.5
+            : Math.max(0.35, (definition?.speed ?? 1000) / 1000),
           phase = seconds * speed * 7;
         // Pose is a pure function of simulation time/current route direction.
         // Repeated draws, pause, view changes and replay seeks cannot add motion.
@@ -1689,6 +1889,7 @@ export function createFlightRenderer({
           rotor.rotation.y = reducedMotion
             ? 0
             : ((state.ticks * 0.64) % (Math.PI * 2)) * (index === 0 || index === 3 ? -1 : 1);
+        if (row.animated.radar) row.animated.radar.rotation.y = reducedMotion ? 0 : seconds * 0.7;
         for (const wheel of row.animated.wheels)
           wheel.rotation.x =
             !reducedMotion && moving ? -(seconds * speed) / Math.max(0.02, row.radius * 0.25) : 0;
