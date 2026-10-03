@@ -1274,7 +1274,9 @@ export function mountWorldApp({
   input.bindStick($('world-right-stick'), 'right');
   const radio = createRadioRuntime({
     getGamepads: () => win.navigator.getGamepads?.() ?? [],
-    onFreeze: () => pauseFlight(false),
+    onFreeze: () => {
+      if (!replayProof && $('flight-source').value === 'radio') pauseFlight(false);
+    },
     onReset: () => {
       if (current)
         void startFlight(current, {
