@@ -89,7 +89,10 @@ const choices = [...CURRICULUM_IDENTITIES.map((item) => [
     item.id,
     item.name,
     'learners',
-    curriculumCampaignIds(item.id),
+    [
+      ...curriculumCampaignIds(item.id),
+      ...(item.id === 'social-drone-ua' ? ['social-drone-sky-watch'] : []),
+    ],
   ]),
 ['droneaid-community', 'droneaid', 'Community Relay', 'public', ['droneaid-community-relay']],
 [
@@ -140,6 +143,12 @@ const retainedPresentations = Object.freeze({'victory-drones': [
     },
   ],
 'social-drone-ua': [
+    {
+      id: '7a5367fe55d1b22621662ac29d4c1224a1635fa0b40d0a8cb6e24d620b19a826',
+      path: 'game/editions/retained/social-drone-ua-before-sky-watch.json',
+      sha256: 'c3c084acb98eedc13a3cf89a74e245975c8b6533af92f9bd7dae8aeeaf9c3774',
+      bytes: 202011,
+    },
     {
       id: '3a82bd8aa3306adf9f02be6f56945985b7e54e1606fc3156a2271ba19bbd16a6',
       path: 'game/editions/retained/social-drone-ua-before-showcase-learning.json',
@@ -414,7 +423,7 @@ export const COMPANY_EDITIONS = Object.freeze(
                   : id === 'fpv-learning'
                     ? 9
                     : id === 'social-drone-ua'
-                      ? 8
+                      ? 9
                       : id === 'ukraine-culture'
                         ? 8
                         : id === 'victory-drones'

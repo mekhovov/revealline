@@ -587,3 +587,34 @@ test('Level Studio local preview matches authored pins, uses the shared viewer a
   preview.dispose();
   assert.equal(h.container.children.length, 0);
 });
+
+test('cinematic playback keeps the poster underneath and fades only when native video is playing', async () => {
+  const f = await fixture(),
+    h = harness(f);
+  const viewer = mountRewardMedia({ ...h.options, cinematic: true });
+  await viewer.start();
+  const media = h.videos[0],
+    poster = h.container.querySelector('img');
+  assert.equal(media.paused, false);
+  assert.equal(poster.hidden, false, 'No empty frame replaces the completed picture');
+  const animations = [];
+  media.animate = (...args) => animations.push(args);
+  media.emit('playing');
+  assert.equal(animations.length, 1);
+  assert.equal(animations[0][1].duration, 650);
+  viewer.dispose();
+  assert.equal(h.urls.size, 0);
+});
+
+test('cinematic reduced motion and autoplay rejection preserve an explicit playback fallback', async () => {
+  const f = await fixture(),
+    h = harness(f, { playFailure: true });
+  const viewer = mountRewardMedia({ ...h.options, cinematic: true, reducedMotion: true });
+  await viewer.start();
+  assert.equal(h.container.querySelector('img').hidden, false);
+  assert.equal(h.videos[0].hidden, true);
+  assert(h.container.querySelector('[data-reward-media-action="play"]'));
+  h.videos[0].animate = () => assert.fail('Reduced motion must not animate');
+  h.videos[0].emit('playing');
+  viewer.dispose();
+});
