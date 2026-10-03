@@ -7,14 +7,15 @@ import { execFileSync } from 'node:child_process';
 import { createHash } from 'node:crypto';
 import { acceptanceDependencies } from './prepare-sim-appearance-acceptance.mjs';
 const root = fileURLToPath(new URL('../', import.meta.url)),
-  [baseline, candidate, out] = process.argv.slice(2),
+  [baseline, candidate, out, reuse] = process.argv.slice(2),
   hash = (value) => createHash('sha256').update(value).digest('hex');
 if (
   ![baseline, candidate].every((s) => /^[a-f0-9]{40}$/.test(s ?? '')) ||
-  !out?.startsWith('/tmp/fpv-environment-light-')
+  !out?.startsWith('/tmp/fpv-environment-light-') ||
+  (reuse && !reuse.startsWith('/tmp/fpv-environment-light-'))
 )
   throw Error(
-    'Usage: node scripts/prepare-fpv-environment-light-reuse.mjs BASELINE_SHA CANDIDATE_SHA /tmp/fpv-environment-light-NAME',
+    'Usage: node scripts/prepare-fpv-environment-light-reuse.mjs BASELINE_SHA CANDIDATE_SHA /tmp/fpv-environment-light-NAME [PRIOR_FROZEN_ROOT]',
   );
 const git = (...args) => execFileSync('git', args, { cwd: root, maxBuffer: 8 * 1024 * 1024 }),
   manifest = {
@@ -25,13 +26,35 @@ const git = (...args) => execFileSync('git', args, { cwd: root, maxBuffer: 8 * 1
     harness: {},
   },
   written = new Map();
+if (reuse) {
+  const priorBytes = await fs.readFile(path.join(reuse, 'manifest.json'));
+  const prior = JSON.parse(priorBytes);
+  for (const [variant, row] of Object.entries(prior.variants)) {
+    if (!['baseline', 'candidate'].includes(variant)) throw Error('Unexpected prior variant');
+    for (const [name, pin] of Object.entries(row.files)) {
+      if (
+        !/^(?:game|optional-practice)\/[a-zA-Z0-9_./-]+$/.test(name) ||
+        name.split('/').includes('..')
+      )
+        throw Error('Unsafe prior path');
+      const file = path.join(reuse, variant, name),
+        bytes = await fs.readFile(file);
+      if (hash(bytes) !== pin.sha256 || bytes.length !== pin.bytes)
+        throw Error('Prior source changed: ' + name);
+      written.set(pin.sha256, file);
+    }
+  }
+  manifest.reusedFixture = { root: reuse, manifestSha256: hash(priorBytes) };
+}
 await fs.mkdir(out, { recursive: false });
+const closureHashes = new Set();
 let uniqueBytes = 0;
 for (const [variant, revision] of Object.entries({ baseline, candidate })) {
   const pending = [
       'optional-practice/civilian-fpv/world-assets.mjs',
       'optional-practice/civilian-fpv/world-catalogue.mjs',
       'optional-practice/civilian-fpv/world-model.mjs',
+      'optional-practice/civilian-fpv/snake-hunt-presentation.mjs',
     ],
     files = {};
   while (pending.length) {
@@ -51,6 +74,9 @@ for (const [variant, revision] of Object.entries({ baseline, candidate })) {
     else {
       await fs.writeFile(target, bytes, { flag: 'wx' });
       written.set(sha256, target);
+    }
+    if (!closureHashes.has(sha256)) {
+      closureHashes.add(sha256);
       uniqueBytes += bytes.length;
     }
     files[name] = { bytes: bytes.length, sha256 };
