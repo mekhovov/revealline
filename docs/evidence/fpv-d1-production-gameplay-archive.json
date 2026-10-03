@@ -1,0 +1,12 @@
+{
+  "format": "FPVD1GameplayEvidenceArchive.v1",
+  "file": "fpv-d1-production-gameplay-replays.json.gz",
+  "gzipMtime": 0,
+  "compressedBytes": 20259,
+  "compressedSha256": "4c5f6b5c4f82a2e844990d826c8da9abbde0216b4ca8a11fb58addaa67e8aada",
+  "rawBytes": 204112,
+  "rawSha256": "f07cf1bacbd77ce20801bf64b68859ca01cab5a815b38611f627be5c1cb6f335",
+  "executionCandidate": "d7bf9f9926b1f7af62fabc0eda5afd451e880ba8",
+  "integratedBinding": "fpv-d1-production-gameplay-binding.json",
+  "losslessRoundTripVerified": true
+}
