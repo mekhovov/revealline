@@ -35,6 +35,7 @@ import { prepareClassicSnakeLevel, CLASSIC_PACES } from './classic-setup.mjs';
 import { createClassicSnakeRecords } from './classic-records.mjs';
 import { createClassicPresentation } from './classic-presentation.mjs';
 import { classicCatchMarks, drawClassicBoard, drawClassicTarget } from './classic-view.mjs';
+import { advanceClassicFlight } from './classic-flight-art.mjs';
 
 const doc = globalThis.document,
   $ = (id) => doc.getElementById(id);
@@ -98,7 +99,8 @@ let savedRound = readLocal(SAVE_KEY) ?? readLocal(OLD_SAVE_KEY),
   saveNotice = '',
   earlyFailures = 0;
 let review = null,
-  recordedMatch = null;
+  recordedMatch = null,
+  flightFrames = [];
 const gamepadState = new Map(),
   gamepadSeats = new Map();
 const effects = [createHuntDestruction(), createHuntDestruction()];
@@ -316,6 +318,7 @@ function prepare({ launch = false } = {}) {
     catchDeadlineMs: 30000,
   });
   runs = match.runs;
+  flightFrames = [];
   ready = true;
   paused = true;
   previousFrame = null;
@@ -761,6 +764,7 @@ function restore(raw) {
     ({ pace, format, targetRules, preset, duel, seed, style } = next);
     match = restored;
     runs = match.runs;
+    flightFrames = [];
     ready = false;
     paused = true;
     previousFrame = null;
@@ -1116,6 +1120,12 @@ function frame(now) {
   }
   runs.forEach((run, i) => {
     const choice = destruction.snapshot();
+    flightFrames[i] = advanceClassicFlight(
+      flightFrames[i],
+      elapsed,
+      !ready && !paused && !result() && !doc.hidden && run.status === 'running',
+      isReduced(),
+    );
     effects[i].advance(
       { valid: true, eliminations: classicCatchMarks(run) },
       Math.min(0.1, elapsed / 1000),
@@ -1142,6 +1152,9 @@ function frame(now) {
       presentation: presentation.snapshot(),
       accent,
       reduced: isReduced(),
+      flight: flightFrames[i],
+      cssWidth: footprint?.width(i),
+      pixelRatio: globalThis.devicePixelRatio ?? 1,
     });
   });
   globalThis.requestAnimationFrame(frame);

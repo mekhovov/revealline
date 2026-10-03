@@ -16,6 +16,7 @@ import {
 import * as matches from '../snake/classic-match.mjs';
 import { prepareClassicSnakeLevel, CLASSIC_PACES } from '../snake/classic-setup.mjs';
 import { CLASSIC_COPY } from '../snake/classic-copy.mjs';
+import { advanceClassicFlight } from '../snake/classic-flight-art.mjs';
 
 const appURL = new URL('../snake/classic-app.mjs', import.meta.url);
 const source = await readFile(appURL, 'utf8');
@@ -31,7 +32,7 @@ const flush = () => new Promise((resolve) => setImmediate(resolve));
 
 // Execute actual host handlers, setup preparation and match/session admission.
 // Canvas, persistent records and preferences are boundaries; no layout claim.
-function harness({ entry = CLASSIC_SNAKE_LEVELS[0], mode = 'solo' } = {}) {
+function harness({ entry = CLASSIC_SNAKE_LEVELS[0], mode = 'solo', activity = 'campaign' } = {}) {
   const document = new Document();
   document.createElement = (tag) => {
     const node = new Element(document, tag);
@@ -57,9 +58,11 @@ function harness({ entry = CLASSIC_SNAKE_LEVELS[0], mode = 'solo' } = {}) {
   const window = new Events();
   const storage = new Map();
   const created = [],
+    drawings = [],
     scheduledFrames = [];
+  const display = { reducedEffects: false, effectiveReducedEffects: false };
   const location = {
-    href: `https://example.test/game/snake/play.html?mode=${mode}&level=${entry.id}`,
+    href: `https://example.test/game/snake/play.html?mode=${mode}&level=${entry.id}&activity=${activity}`,
   };
   const preferences = (snapshot) => ({
     snapshot: () => snapshot,
@@ -97,11 +100,11 @@ function harness({ entry = CLASSIC_SNAKE_LEVELS[0], mode = 'solo' } = {}) {
     onLocaleChange() {},
     createDestructionPreferences: () => preferences({ brutal: false, blood: true }),
     createEncounterDisplayPreferences: () => preferences({ showRemains: true }),
-    createDisplayPreferences: () =>
-      preferences({ reducedEffects: false, effectiveReducedEffects: false }),
+    createDisplayPreferences: () => preferences(display),
     createTouchPreferences: () => preferences({ size: 'normal', opacity: 1, side: 'right' }),
     createClassicPresentation: () => ({ snapshot: () => null }),
-    createBoardFootprints: () => ({ refresh() {}, dispose() {} }),
+    createBoardFootprints: () => ({ refresh() {}, dispose() {}, width: () => 336 }),
+    devicePixelRatio: 2,
     createAudioMaster: () => preferences({ muted: false, volume: 1 }),
     createAudioPreferences: () => ({ setMuted() {}, setVolume() {} }),
     Soundscape: class {
@@ -123,8 +126,11 @@ function harness({ entry = CLASSIC_SNAKE_LEVELS[0], mode = 'solo' } = {}) {
     }),
     createHuntDestruction: () => ({ reset() {}, advance() {}, draw() {} }),
     classicCatchMarks: () => [],
-    drawClassicBoard() {},
+    drawClassicBoard(canvas, run, options) {
+      drawings.push({ canvas, run, options: { ...options, flight: { ...options.flight } } });
+    },
     drawClassicTarget() {},
+    advanceClassicFlight,
     boundedJSON,
     exactKeys,
     required,
@@ -151,6 +157,8 @@ function harness({ entry = CLASSIC_SNAKE_LEVELS[0], mode = 'solo' } = {}) {
   return {
     document,
     created,
+    drawings,
+    display,
     window,
     storage,
     location,
@@ -318,4 +326,70 @@ test('a valid match cannot be imported under a different host seat arrangement',
   assert.equal(imported.$('save-status').textContent, CLASSIC_COPY.en.invalid);
   assert.equal(imported.document.body.dataset.mode, 'solo');
   assert.equal(imported.$('toggle').textContent, CLASSIC_COPY.en.start);
+});
+
+test('Classic flight animation follows play, pause and effective Reduced effects without stopping movement', () => {
+  const state = harness();
+  const latest = () => state.drawings.at(-1).options;
+  state.frame(0);
+  state.frame(500);
+  assert.equal(latest().flight.timeMs, 0);
+  state.$('toggle').emit('click');
+  state.frame(600);
+  state.frame(650);
+  const moving = latest().flight;
+  assert.ok(moving.timeMs > 0);
+  assert.ok(moving.rotorPhase > 0);
+  assert.equal(latest().cssWidth, 336);
+  assert.equal(latest().pixelRatio, 2);
+
+  state.window.emit('blur');
+  state.frame(900);
+  assert.deepEqual(latest().flight, moving);
+  state.$('toggle').emit('click');
+  state.frame(1000);
+  assert.deepEqual(latest().flight, moving, 'resume excludes the paused wall-clock gap');
+
+  // A system motion preference is effective even when the explicit checkbox is off.
+  state.display.effectiveReducedEffects = true;
+  const tick = state.created[0].tick;
+  state.frame(1200);
+  assert.equal(latest().reduced, true);
+  assert.deepEqual(latest().flight, moving);
+  assert.ok(state.created[0].tick > tick, 'reduced motion must not alter simulation speed');
+  state.display.effectiveReducedEffects = false;
+  state.frame(1250);
+  assert.ok(latest().flight.timeMs > moving.timeMs);
+
+  state.$('restart').emit('click');
+  state.frame(1400);
+  assert.equal(latest().flight.timeMs, 0, 'Retry owns a fresh presentation clock');
+});
+
+test('a failed Versus score board freezes its flight clock while the surviving board continues', () => {
+  const state = harness({ mode: 'versus', activity: 'endless' });
+  state.document.emit('keydown', {
+    target: state.document.querySelector('canvas'),
+    key: 'w',
+    code: 'KeyW',
+    repeat: false,
+  });
+  state.frame(0);
+  const stepMs = core.classicSnakeSummary(state.created[0]).stepMs;
+  for (let step = 1; step <= 3; step++) state.frame(step * stepMs);
+  assert.equal(state.created[0].status, 'lost');
+  assert.equal(state.created[1].status, 'running');
+  const [failed, surviving] = state.drawings.slice(-2).map((row) => row.options.flight);
+  state.frame(3 * stepMs + 50);
+  const [nextFailed, nextSurviving] = state.drawings.slice(-2).map((row) => row.options.flight);
+  assert.deepEqual(nextFailed, failed);
+  assert.ok(nextSurviving.timeMs > surviving.timeMs);
+
+  state.document.hidden = true;
+  state.document.emit('visibilitychange');
+  state.frame(3 * stepMs + 100);
+  assert.deepEqual(
+    state.drawings.slice(-2).map((row) => row.options.flight),
+    [nextFailed, nextSurviving],
+  );
 });
