@@ -2544,7 +2544,8 @@ isolated pending its renderer/browser and package qualification.
 Post-rebase candidate4752ae5ef again passes all three package admissions,
 committed-input/ZIP-member checks and two byte-identical builds. The admission
 receipt is refreshed; browser evidence remains bound to identical runtime bytes.
-CI/publication continues on #986 while art work remains independent.\n### FlightDivision presentation increment — 3 October 2026
+CI/publication continues on #986 while art work remains independent.
+### FlightDivision presentation increment — 3 October 2026
 
 The user requested comparable visual quality and keyboard controls after
 authenticated browser inspection of FlightDivision. Controls are published as
