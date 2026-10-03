@@ -231,7 +231,7 @@ test('an old context family pin reaches Arcade unchanged and a later context use
   assert.equal(retained.revision, 'r1', 'a captured attempt keeps its original collection object');
 });
 
-test('cards and the selector immediately apply the same complete choice without replacing focused controls', async (t) => {
+test('compact theme cards immediately apply complete choices without replacing focused controls', async (t) => {
   const { document, host, storage } = hostFixture(t);
   await host.ready;
   const controls = attachThemeFamilyControls({
@@ -241,22 +241,16 @@ test('cards and the selector immediately apply the same complete choice without 
     prefix: 'review-',
   });
   t.after(() => controls.dispose());
-  const card = document.getElementById('review-theme-card-vyshyvanka'),
-    family = document.getElementById('review-theme-familyId');
+  const card = document.getElementById('review-theme-card-vyshyvanka');
   assert.equal(document.getElementById('review-theme-apply'), null);
-  assert.deepEqual(
-    [...family.options].map((option) => option.value),
-    [...document.querySelectorAll('[data-theme-preview]')].map(
-      (button) => button.dataset.themePreview,
-    ),
-  );
+  assert.equal(document.getElementById('review-theme-familyId'), null);
+  assert.equal(document.getElementById('review-theme-family-heading').tagName, 'H4');
   card.focus();
   card.click();
   assert.equal(host.preferences.snapshot().familyId, 'vyshyvanka');
   assert.equal(JSON.parse(storage.getItem(THEME_PREFERENCES_KEY)).familyId, 'vyshyvanka');
   await host.ready;
   assert.equal(host.snapshot().familyId, 'vyshyvanka');
-  assert.equal(family.value, 'vyshyvanka');
   assert.equal(card.getAttribute('aria-pressed'), 'true');
   assert.equal(document.activeElement, card);
   const contrast = document.getElementById('review-theme-highContrast');
@@ -265,9 +259,9 @@ test('cards and the selector immediately apply the same complete choice without 
   const ornaments = document.getElementById('review-theme-ornaments');
   ornaments.value = 'off';
   ornaments.emit('change');
-  family.focus();
-  family.value = 'dnipro-porcelain';
-  family.emit('change');
+  const dnipro = document.getElementById('review-theme-card-dnipro-porcelain');
+  dnipro.focus();
+  dnipro.click();
   assert.equal(host.preferences.snapshot().familyId, 'dnipro-porcelain');
   await host.ready;
   assert.equal(host.snapshot().familyId, 'dnipro-porcelain');
@@ -277,7 +271,7 @@ test('cards and the selector immediately apply the same complete choice without 
     'theme',
     'A new complete choice resets optional detail.',
   );
-  assert.equal(document.activeElement, family);
+  assert.equal(document.activeElement, dnipro);
   assert.equal(
     document.getElementById(card.id),
     card,
@@ -286,7 +280,7 @@ test('cards and the selector immediately apply the same complete choice without 
   assert.equal(card.getAttribute('aria-pressed'), 'false');
 });
 
-test('Follow, original Field Kit and curated revisions have matching cards/options and exact context/custom colors', async (t) => {
+test('Follow, original Field Kit and curated revisions have complete cards and exact context/custom colors', async (t) => {
   const candidate = createThemeCandidate(
     reviseStudioTheme(
       duplicateStudioSnapshot(createDefaultThemeBundle(), {
@@ -304,17 +298,14 @@ test('Follow, original Field Kit and curated revisions have matching cards/optio
   await host.ready;
   const controls = attachThemeFamilyControls({ document, root: document.body, host });
   t.after(() => controls.dispose());
-  const family = document.getElementById('theme-familyId'),
-    follow = document.getElementById('theme-card-follow-game'),
+  const follow = document.getElementById('theme-card-follow-game'),
     original = document.getElementById('theme-card-legacy'),
     custom = document.getElementById(`theme-card-${candidate.family.id}`);
   assert.ok(follow && original && custom);
+  assert.equal(document.getElementById('theme-familyId'), null);
   assert.deepEqual(storage.writes, [], 'Rendering choices never writes a preference.');
   for (const button of [follow, original, custom]) {
-    const option = [...family.options].find(
-      (option) => option.value === button.dataset.themePreview,
-    );
-    assert.equal(button.querySelector('strong').textContent, option.textContent);
+    assert.ok(button.querySelector('strong').textContent);
     assert.ok(button.querySelector('small').textContent);
   }
   for (const button of [follow, custom])
@@ -371,7 +362,7 @@ test('rapid immediate choices retain the accepted theme until resources load, ig
   last.focus();
   last.click();
   await nextTask();
-  assert.equal(document.getElementById('theme-familyId').value, 'dnipro-porcelain');
+  assert.equal(last.getAttribute('aria-pressed'), 'true');
   latest.resolve([]);
   await host.ready;
   const resolved = host.snapshot();

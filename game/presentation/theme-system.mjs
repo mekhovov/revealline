@@ -857,8 +857,11 @@ export function resolvePresentation({
           states: {
             default: recipe(background, foreground),
             hover: recipe(background, foreground, tokens.focus),
-            pressed: recipe(tokens.selection, tokens.onSelection),
-            disabled: recipe(tokens.panelRaised, tokens.muted),
+            pressed:
+              role === 'danger'
+                ? recipe(tokens.hazard, tokens.onHazard, tokens.hazard)
+                : recipe(tokens.selection, tokens.onSelection),
+            disabled: recipe(tokens.panel, tokens.muted),
             loading: recipe(background, foreground),
           },
           selection: {

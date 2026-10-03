@@ -30,6 +30,7 @@ on:
       - 'scripts/build-neon-artwork-gallery.mjs'
       - 'scripts/build-neon-mosaic.mjs'
       - 'scripts/refresh-fpv-presentation-assets.mjs'
+      - 'scripts/refresh-interface-material-grain.mjs'
       - 'scripts/test-industrial-marking-kit.mjs'
       - 'game/test/story-dialog.test.mjs'
       - 'game/test/operation-status.test.mjs'
@@ -161,6 +162,7 @@ jobs:
         run: |
           set -euo pipefail
           node scripts/refresh-theme-bootstrap.mjs --check
+          node scripts/refresh-interface-material-grain.mjs --check
           node scripts/refresh-fpv-presentation-assets.mjs --check
           node authoring/fpv-worlds/industrial-markings/generate.mjs --check
       - name: Run focused appearance, SIM and curated-community checks
