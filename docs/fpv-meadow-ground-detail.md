@@ -117,3 +117,50 @@ The coordinating agent retained the screenshot at
 `docs/evidence/fpv-meadow-ground-detail-player.png`. This scoped player check
 does not replace the 51 deterministic recording replays above.
 The preserved Hangar and Stadium players remain in their separate ignored paths.
+
+## Integration with merged Hangar
+
+Main `ea596d80ba26decc4e7691e4a5c34bd3461fcda6` merged cleanly at
+`883b2d3460ff0cad8fe9decf3e3c10574dedd103`, preserving the reviewed Hangar
+113-line addition. The original Meadow added/removed runtime lines remain exact
+against the new main. The qualification scripts now pin that integration baseline;
+commit `9e25a9674d54ff37a2e47dccf0fe121e44dbea1a` freezes these inputs.
+Integrated visual SHA-256 is
+`5202f048a9fc6bf7ea53ced7fdea52833ddf9af9e508010654763b0873fd78f4`.
+
+The CPU rerun again passes 1,777 assertions / 324 cases / 51 recordings and the
+30 existing checks pass. All 285 field/controls-preview scene records exactly
+match the original candidate, including the ground map and protected/full-scene
+hashes, counts and resource totals. All 321 non-Hangar cases, all 71 immutable
+input hashes and all 51 recording results remain exact. Only the three incoming
+Hangar scene records change, as expected for that separately qualified feature.
+See `fpv-meadow-ground-detail-main-cpu.json` and
+`fpv-meadow-ground-detail-integration.json` under `docs/evidence/`.
+
+The original source and packaged 384-check / 190-pair browser matrices remain the
+raster evidence for these unchanged Meadow maps/scenes. A second unconditional
+full raster matrix is unnecessary for the isolated Hangar integration; the
+final integrated player observation is recorded separately. No earlier frozen
+candidate or receipt was overwritten.
+
+The integrated Node 22.22.2 candidate is
+`dist/fpv-meadow-ground-detail-candidate-9e25a9674`, tree
+`7f64b0608668d256bf5ebfd9a00054bfc58a3ee6`. All three admissions again pass two
+identical builds, committed-input and ZIP-member verification: 48 / 679,266 bytes,
+69 / 4,369,226 bytes, and 102 / 15,563,428 bytes, within the same approved bounds.
+All 15 artifact checksums pass independent rereading. Integrated FPV Worlds ZIP
+SHA-256 is
+`30345a2d03c91e5944f04e6614824d0169335c929a994a6b82842999f11121cc`.
+See `docs/evidence/fpv-meadow-ground-detail-main-admission.json`.
+
+The final player is
+`http://127.0.0.1:8834/dist/fpv-meadow-ground-detail-playtest-main/index.html`:
+94 files / 15,405,657 bytes, ZIP SHA-256
+`12d759486bc1d2eacecd6698083002dd7ffd6aedb4cada26d22f22aa28200aae`.
+See `docs/evidence/fpv-meadow-ground-detail-main-playtest.json`.
+An immutable final fixture is prepared at
+`http://127.0.0.1:8834/dist/fpv-meadow-ground-detail-verification-main-package/index.html`
+(31 modules per side / 18,511,242 bytes). All 31 after modules match the admitted
+ZIP and final player. Relative to the original packaged fixture, only the visual
+module changes, containing the separately reviewed Hangar addition; the harness
+and other 30 candidate modules are byte-identical.
