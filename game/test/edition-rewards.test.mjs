@@ -692,15 +692,15 @@ test('exact earned images verify on demand and release object URLs on close/disp
   f.accepted(1);
   f.view.refresh();
   await f.settle();
-  assert.equal(f.requests.length, 0);
+  assert.equal(f.requests.length, 1);
   f.collection.showModal();
   f.cards[0].querySelector('button').click();
   const dialog = f.doc.getElementById('completion-reward-dialog');
   await waitFor(() => !!dialog.querySelector('img'));
   const image = dialog.querySelector('img');
   assert.equal(image.alt, 'The exact earned illustration');
-  assert.equal(f.requests.length, 1);
-  assert.equal(f.requests[0].options.redirect, 'error');
+  assert.equal(f.requests.length, 2);
+  assert(f.requests.every((request) => request.options.redirect === 'error'));
   dialog.close();
   assert(f.revoked.includes(image.src));
   f.cards[0].querySelector('button').click();
@@ -723,7 +723,7 @@ test('missing pinned media never substitutes newer artwork or revokes the earned
   await f.settle();
   const dialog = f.doc.getElementById('completion-reward-dialog');
   assert.equal(dialog.querySelector('img'), null);
-  assert.equal(f.requests.length, 0);
+  assert.equal(f.requests.length, 1);
   assert(dialog.textContent.includes('Knowledge earned'));
   assert.deepEqual((await f.exportState()).receipts, earned.receipts);
 });
@@ -886,7 +886,7 @@ test('native media is absent while locked; earned viewer uses shared sound owner
   assert.deepEqual((await f.exportState()).receipts, before.receipts);
 });
 
-test('campaign exhibit never requests a locked image and releases exact earned thumbnails on close', async (t) => {
+test('campaign exhibit shows every earned thumbnail without another click and releases it on close', async (t) => {
   const f = await fixture(t, { image: true });
   f.collection.showModal();
   const pictures = () => f.doc.getElementById('completion-reward-exhibit-pictures');
@@ -906,6 +906,7 @@ test('campaign exhibit never requests a locked image and releases exact earned t
   assert.equal(f.requests.length, 1);
   assert.equal(f.doc.activeElement, pictures());
   f.collection.close();
+  await f.settle();
   assert.equal(pictures().getAttribute('aria-pressed'), 'false');
   assert.equal(
     f.doc.querySelector('.completion-reward-exhibit-picture')?.querySelector('img') ?? null,
@@ -914,29 +915,24 @@ test('campaign exhibit never requests a locked image and releases exact earned t
   assert.deepEqual(f.created.map((entry) => entry.url).sort(), [...f.revoked].sort());
 });
 
-test('twenty exhibit picture cycles keep accepted progress and release all owned URLs', async (t) => {
+test('earned pictures stay visible while locked-preview controls keep accepted progress unchanged', async (t) => {
   const f = await fixture(t, { image: true });
   f.accepted(1);
   f.view.refresh();
   await f.settle();
   const generation = f.profile.generation;
   const receipts = JSON.stringify(f.view.snapshot().state.receipts);
+  await waitFor(() =>
+    f.doc.querySelector('.completion-reward-exhibit-picture')?.querySelector('img'),
+  );
   for (let index = 0; index < 20; index++) {
     f.doc.getElementById('completion-reward-exhibit-pictures').click();
-    await waitFor(() =>
-      f.doc.querySelector('.completion-reward-exhibit-picture')?.querySelector('img'),
-    );
-    f.doc.getElementById('completion-reward-exhibit-pictures').click();
-    assert.equal(
-      f.doc.querySelector('.completion-reward-exhibit-picture')?.querySelector('img') ?? null,
-      null,
-    );
+    await f.settle();
+    assert(f.doc.querySelector('.completion-reward-exhibit-picture')?.querySelector('img'));
   }
   assert.equal(f.profile.generation, generation);
   assert.equal(JSON.stringify(f.view.snapshot().state.receipts), receipts);
-  assert.equal(f.created.length, 20);
-  assert.equal(new Set(f.revoked).size, 20);
-  assert.deepEqual(f.created.map((entry) => entry.url).sort(), [...f.revoked].sort());
+  assert.equal(f.requests.length, 21);
 });
 
 test('the earned viewer persists the historic qualified attempt only when its exact proof is durable', async (t) => {
