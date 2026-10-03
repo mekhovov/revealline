@@ -1,3 +1,4 @@
+import { loadBaseArtwork } from '../base-artwork.mjs';
 import { selectedArcadeCollection } from '../presentation/industrial-arcade.mjs';
 import { pursuitRoster } from '../hunt/pursuit-goals.mjs';
 import { missionBriefing } from '../mission-brief.mjs';
@@ -392,8 +393,10 @@ try {
     campaign: { ...campaign, classRecipes: registry },
     classRecipes: registry,
     themes: themes.themes,
-    visualOverrides: {},
-    levelVisuals: [],
+    ...(await loadBaseArtwork(
+      { ...campaign, classRecipes: registry },
+      { signal: artworkLifetime.signal },
+    )),
     music: [],
     sourcePackId: null,
   };
