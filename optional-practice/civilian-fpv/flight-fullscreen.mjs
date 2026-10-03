@@ -267,7 +267,7 @@ export function createSimModeLinks({ document: doc, gameReturn, locale = () => '
 }
 
 // BEGIN GENERATED SHARED MODE SHELL
-// Canonical source sha256: 20c218f82ea08fb566063790197d592274b5be053604103a062175a7620104a6
+// Canonical source sha256: 6c473e4c3b86f79d41ad805cb9a6e75b2c5c5ac3b3879c88e7f04c48134d30b4
 const sharedModeShell = (() => {
   // Presentation only. Hosts own simulation, prepared attempts, sound and navigation.
   // Services are injected so optional modes can project this exact source without
@@ -392,6 +392,7 @@ const sharedModeShell = (() => {
           start: 'play',
           continue: 'play',
           retry: 'play',
+          results: 'collection',
           menu: 'back',
           pause: 'pause',
           expert: 'settings',

@@ -1,34 +1,17 @@
-# Default UI host capacity repair
+# Default runtime capacity repair
 
-The preliminary production preparation after integrating main reported **1,349 core files / 67,327,209 bytes**, exceeding the unchanged 67,108,864-byte core limit by **218,345 bytes**. This measurement used mutable working-tree source and candidate version `v0.143.0`; it is a capacity finding, not a committed-source release receipt.
+Committed production preparation for `0854912633e7c6a6e49741cdb2f8abae675178ef`, candidate `v0.150.0`, reported **1,349 core files / 67,182,475 bytes**. This exceeds the unchanged **67,108,864-byte** limit by **73,611 bytes**.
 
-`scripts/default-runtime-metadata.mjs` now applies the existing Company whitespace projector to twenty additional explicitly named UI hosts. The existing `game/app.mjs` projection remains. The projector compares the complete AST, exact lexical tokens, exact comments and every line terminator before accepting an emitted copy. Source-mapped modules remain byte-exact. Canonical repository files, artwork metadata, gameplay recipes, historical records and package limits are unchanged.
+The original repair measured 279,653 bytes saved across twenty additional distribution hosts. Its approximate core-margin estimate was incorrect because seven of those hosts were outside the default core. The earlier mutable-source finding of 67,327,209 bytes and its estimated 61 KB margin are superseded by the exact committed failure above.
 
-Direct production projection of the then-current host bytes saved **279,653 additional bytes**. This would leave approximately **61 KB** relative to the preliminary core inventory; the exact final inventory must be regenerated from the committed source with the selected release version and all final changes. These measurements do not claim the final build passed.
+The revised explicit allowlist contains **83 core-reachable runtime modules**: fourteen previously selected core modules, including `game/app.mjs`, plus **69 additional UI, presentation and media/storage modules**. Seven non-core hosts were removed: the Couch launcher, relay-rescue host, cooperative view, installed-chapter host, Studio host, still-media panel and still-story panel. No gameplay implementation, recipe, byte-pinned artwork catalogue or package limit changed.
 
-| Additional distribution host              | Bytes saved |
-| ----------------------------------------- | ----------: |
-| `game/couch/relay-rescue.mjs`             |      56,312 |
-| `game/couch/couch.mjs`                    |      40,546 |
-| `game/ui/soundtrack-panel.mjs`            |      30,168 |
-| `game/ui/library-panel.mjs`               |      16,561 |
-| `game/ui/soundtrack-player.mjs`           |      12,777 |
-| `game/couch/coop-view.mjs`                |      11,279 |
-| `game/ui/optional-chapters-panel.mjs`     |      10,951 |
-| `game/ui/render.mjs`                      |      10,940 |
-| `game/ui/controller-navigation.mjs`       |       9,244 |
-| `game/snake/classic-app.mjs`              |       9,069 |
-| `game/ui/mission-library-chooser.mjs`     |       8,819 |
-| `game/ui/actor-presentation.mjs`          |       8,498 |
-| `game/ui/edition-rewards.mjs`             |       7,783 |
-| `game/ui/audio.mjs`                       |       7,189 |
-| `game/ui/still-media-panel.mjs`           |       6,798 |
-| `game/studio/studio.mjs`                  |       6,755 |
-| `game/ui/classic-view.mjs`                |       6,540 |
-| `game/couch/couch-installed-chapters.mjs` |       6,531 |
-| `game/ui/demo-host.mjs`                   |       6,494 |
-| `game/ui/still-story-panel.mjs`           |       6,399 |
+Selection uses the production `selectOfflineCore` graph over collected build paths, retaining actual JavaScript, HTML and CSS bytes while omitting JSON/binary leaf content and applying optional-package exclusions. This is a conservative reachability check: omitted leaf edges can hide candidates but cannot manufacture an import path. The graph proves each added module is retained before its saving is counted. The receipt records each module, its source hash, size reduction and retaining owner.
 
-Scoped ESLint and formatting passed. The regression source checks the explicit host boundary, unchanged input buffers, unchanged gameplay/artwork/unreviewed modules, multilingual literals, comments, automatic semicolon insertion, line endings and source-map exclusions. It was authored but **not run**, preserving the automated-suite waiver.
+Direct invocation of the production projection on all selected modules measured **281,852 additional core bytes saved** against the failed committed baseline. The resulting estimate is **66,900,623 bytes**, leaving **208,241 bytes** below the core cap. The exact final inventory still requires committed-source production preparation; these figures do not claim that the final build passed. Full per-file evidence is in [default-ui-host-capacity.json](default-ui-host-capacity.json).
 
-This repair changes only the default distribution's emitted host copies. Company already applies the same projector to its engine closure, so its separate capacity blocker is not resolved by this change. Optional-package limits and public-release qualification remain independent.
+The existing Company whitespace projector verifies the complete AST, exact lexical tokens, exact comments and every line terminator before accepting an emitted copy. Source-mapped modules remain byte-exact. Canonical repository files, artwork metadata, gameplay recipes and historical records retain their original bytes. This change affects only explicitly named distribution copies.
+
+Scoped ESLint, Prettier and whitespace checks passed. The expanded regression source checks the explicit module boundary, unchanged canonical input buffers, unchanged gameplay/artwork/unreviewed/non-core modules, multilingual literals, comments, automatic semicolon insertion, line endings and source-map exclusions. It was authored but **not run**, preserving the automated-suite waiver. Direct production projection executed its mandatory syntax/token/comment/newline guards on all 83 actual modules.
+
+Company already applies the same projector to its engine closure, so its separate capacity blocker is not resolved by this change. Optional-package limits and public-release qualification remain independent.
