@@ -51,9 +51,9 @@ English/Ukrainian and 390px layout. See
 [source browser receipt](fpv-section-replay-browser-verification.json).
 These controlled cases do not measure physical controller latency or FPS.
 
-Frozen candidate `4d7bad1e2` passed all three optional admissions, exact committed
+Frozen candidate `c5b7b3771` (including Themes #967) passed all three optional admissions, exact committed
 inputs/ZIP members and two byte-identical builds. World Studio is 99 source files /
-14,414,182 bytes, within 104 files / 16 MiB. The actual frozen-package browser
+14,423,222 bytes, within 104 files / 16 MiB. The actual frozen-package browser
 fixture also passes **51/51** checks. See [package receipt](fpv-section-replay-package-verification.json)
 and [packaged browser receipt](fpv-section-replay-packaged-browser-verification.json).
 Later source reconciliation is recorded separately in the delivery checkpoint.

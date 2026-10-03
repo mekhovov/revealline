@@ -2135,3 +2135,20 @@ were unchanged. #968 has since been automatically reconciled with newer Themes
 #967 at586b9cb08. Preserve that remote update and reconcile the section child
 before publication; earlier renderer/package evidence does not qualify new
 Themes bytes by inference.
+
+
+Themes #967 was preserved through a recovery-backed child rebase. Candidate
+c5b7b3771 passes all three frozen optional admissions, committed inputs/ZIP
+members and two identical builds. New source and new packaged browser fixtures
+both pass51/51; their receipts replace the superseded revision in the feature
+documents. A second local ENOSPC during admission was resolved by removing only
+this turn's superseded fixture copies and reproducible largest-edition ZIPs;
+all source, frozen optional packages, metadata and qualification receipts remain.
+Admission reran successfully. No limit was relaxed.
+
+Capacity #968 has now merged as432904d7d. Section replay can target main directly;
+no new native stack is necessary for an already-merged dependency. The local child
+was rebased onto that main while retaining the qualified runtime bytes. A new
+native stack is only needed if the next dependent feature is published before
+section replay merges. Next concrete feature is the visual Follow/Observe
+objective inspector, including both-mode editing and project/pack roundtrip.
