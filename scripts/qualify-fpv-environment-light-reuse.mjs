@@ -282,6 +282,12 @@ check(
 );
 check('optional hunt owner released during loss', huntBeforeLoss.disposals === 1);
 check('prepare cannot reuse cleared scene', (await first.runtime.prepare()) === false);
+first.runtime.setCosmetic({ color: '#66aaff' });
+first.runtime.setCosmetic({ color: 'invalid' });
+check(
+  'cosmetic changes while lost keep scene ownership empty',
+  Object.values(first.runtime.resources().registered).every((n) => n === 0),
+);
 first.runtime.draw({});
 set();
 check(
@@ -292,8 +298,8 @@ first.owner.lost = false;
 set();
 check('restored same inputs regenerate', targets.length === 6);
 check(
-  'same-quality aircraft recreated and cosmetic retained',
-  drones.at(-1).body.parent !== null && drones.at(-1).tint.color.getHex() === 0xff66aa,
+  'same-quality aircraft recreated with latest valid cosmetic chosen while lost',
+  drones.at(-1).body.parent !== null && drones.at(-1).tint.color.getHex() === 0x66aaff,
 );
 check(
   'pending presentation retained for Retry',
