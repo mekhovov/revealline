@@ -1,3 +1,4 @@
+import { loadBaseArtwork } from '../base-artwork.mjs';
 import { snakeBrief } from '../snake/copy.mjs';
 import { huntText } from '../hunt/copy.mjs';
 import { generateSymbolLevel } from './symbol-level.mjs';
@@ -905,6 +906,7 @@ try {
     fetch('../content/themes.json').then((r) => r.json()),
   ]);
   const recipes = await fetch('../content/classes.json').then((r) => r.json());
+  const baseArtwork = await loadBaseArtwork({ ...campaign, classRecipes: recipes });
   current = {
     format:
       campaign.levels[0].version === 'xonix-level.v13'
@@ -947,7 +949,7 @@ try {
     settings: { classId: 'scout', turnPolicy: 'immediate', seed: 1 },
     classRecipes: recipes,
     presentation: { style: 'hybrid', showGrid: false },
-    visualOverrides: {},
+    visualOverrides: baseArtwork.levelVisuals[0].visualOverrides,
   };
   current = editorScenario(current);
   baseEntry = {
@@ -958,8 +960,7 @@ try {
     campaign,
     themes: themes.themes,
     classRecipes: recipes,
-    visualOverrides: {},
-    levelVisuals: [],
+    ...baseArtwork,
     music: [],
   };
   catalog = [baseEntry];

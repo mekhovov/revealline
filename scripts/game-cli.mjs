@@ -1675,6 +1675,20 @@ export async function validateLevels(root = PROJECT_ROOT) {
     if (ids.has(level.id)) fail(`Duplicate campaign level ID: ${level.id}`);
     ids.add(level.id);
   }
+  if (await exists(path.join(root, 'game/base-artwork.mjs'))) {
+    const { resolveBaseArtwork } = await import(
+      pathToFileURL(path.join(root, 'game/base-artwork.mjs')).href
+    );
+    resolveBaseArtwork(
+      JSON.parse(await fs.readFile(path.join(root, 'game/content/base-artwork.json'), 'utf8')),
+      {
+        ...campaign,
+        classRecipes: JSON.parse(
+          await fs.readFile(path.join(root, 'game/content/classes.json'), 'utf8'),
+        ),
+      },
+    );
+  }
   return { campaign: campaign.id, levels: campaign.levels.length };
 }
 
