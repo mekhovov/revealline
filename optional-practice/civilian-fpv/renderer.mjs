@@ -421,6 +421,12 @@ export function createFlightRenderer({
       maxAnisotropy: renderer.capabilities.getMaxAnisotropy(),
     });
     if (cosmeticColor) droneVisual.tint.color.set(cosmeticColor);
+    if ((themeProfile?.id ?? activePresentation?.collectionId) === 'military-field') {
+      for (const [index, color] of [0x4eb8ee, 0xffd74d].entries()) {
+        const stripe = mesh(new THREE.BoxGeometry(0.045, 0.002, 0.018), material(color), aircraft);
+        stripe.position.set(0, 0.064, 0.009 + index * 0.018);
+      }
+    }
     for (const [index, rotor] of droneVisual.rotors.entries())
       rotor.rotation.y = rotorPhase * (index === 0 || index === 3 ? -1 : 1);
     setSurfaceQuality(materials, quality, renderer.capabilities.getMaxAnisotropy());
@@ -1106,6 +1112,7 @@ export function createFlightRenderer({
       height = (actor.height ?? 1800) / 1000,
       role = actor.type === 'hazard' ? 'hazard' : (actor.role ?? 'hostile'),
       huntTarget = huntTargets.has(actor.id),
+      military = themeProfile?.id === 'military-field',
       friendly = huntTarget || role === 'rival' || role === 'civilian',
       slot = actor.type === 'vehicle' ? themeProfile?.assets?.vehicle : themeProfile?.assets?.enemy,
       pixel = themeProfile?.characters === 'arcade' || /pixel|arcade/.test(slot ?? ''),
@@ -1145,6 +1152,7 @@ export function createFlightRenderer({
       emissiveIntensity: 0.5,
     });
     const dark = kit ? kit.paint('rubber') : material(0x283e47, { roughness: 0.78 });
+    const trousers = huntTarget ? material(huntAppearance.palette.pants, { roughness: 0.9 }) : dark;
     const metal = kit
       ? kit.paint('copper')
       : quality === 'low'
@@ -1152,7 +1160,7 @@ export function createFlightRenderer({
         : material(0xa9b7b8, { metalness: 0.72, roughness: 0.34 });
     const glass =
       quality === 'low' ? dark : material(0x456975, { metalness: 0.25, roughness: 0.17 });
-    group.userData.ownedMaterials = [armor, threat, dark, metal, glass];
+    group.userData.ownedMaterials = [armor, threat, dark, trousers, metal, glass];
     const part = (shape, paint, at, parent = group) => {
       const value = mesh(shape, paint, parent);
       value.position.set(...at);
@@ -1273,6 +1281,41 @@ export function createFlightRenderer({
           radius * 1.35,
           radius * 0.24,
         ]);
+      if (military) {
+        // Cosmetic field utility car: its existing path, shots and cylinder
+        // collider remain authoritative. This does not introduce tank combat.
+        part(new THREE.BoxGeometry(radius * 0.7, radius * 0.08, radius * 0.5), dark, [
+          0,
+          radius * 1.21,
+          radius * 0.05,
+        ]);
+        part(new THREE.BoxGeometry(radius * 0.6, radius * 0.035, radius * 0.4), armor, [
+          0,
+          radius * 1.27,
+          radius * 0.05,
+        ]);
+        const spare = part(
+          new THREE.CylinderGeometry(radius * 0.24, radius * 0.24, radius * 0.14, 10),
+          dark,
+          [0, radius * 0.75, radius * 0.73],
+        );
+        spare.rotation.x = Math.PI / 2;
+        if (quality !== 'low') {
+          for (const side of [-1, 1]) {
+            part(new THREE.BoxGeometry(radius * 0.13, radius * 0.13, radius * 0.09), metal, [
+              side * radius * 0.67,
+              radius * 1.02,
+              -radius * 0.26,
+            ]);
+            for (const [index, color] of [0xe6e5d6, 0x486588, 0xb96758].entries())
+              part(
+                new THREE.BoxGeometry(radius * 0.008, radius * 0.045, radius * 0.21),
+                material(color),
+                [side * radius * 0.431, radius * (0.9 - index * 0.045), radius * 0.22],
+              );
+          }
+        }
+      }
     } else if (actor.type === 'hazard') {
       const orb = part(new THREE.IcosahedronGeometry(radius, quality === 'low' ? 0 : 1), threat, [
         0,
@@ -1344,7 +1387,7 @@ export function createFlightRenderer({
               -radius * 0.52,
             ]);
         }
-        if (huntAppearance.cast === 'tactical') {
+        if (huntAppearance.cast !== 'arcade') {
           part(new THREE.BoxGeometry(radius * 0.9, height * 0.22, radius * 0.6), dark, [
             0,
             height * 0.61,
@@ -1364,6 +1407,40 @@ export function createFlightRenderer({
               -radius * 0.1,
             ]);
         }
+        // Shared cast palette, native articulated meshes. Webbing, cuffs and
+        // covered helmets preserve each field / worn / winter identity at all
+        // camera angles without touching the accepted capsule or route.
+        for (const side of [-1, 1]) {
+          part(new THREE.BoxGeometry(radius * 0.32, height * 0.085, radius * 0.18), armor, [
+            side * radius * 0.32,
+            height * 0.54,
+            -radius * 0.63,
+          ]);
+          part(new THREE.BoxGeometry(radius * 0.14, height * 0.17, radius * 0.08), dark, [
+            side * radius * 0.29,
+            height * 0.65,
+            -radius * 0.44,
+          ]);
+        }
+        if (huntFamily === 'patroller') {
+          part(new THREE.BoxGeometry(radius * 1.19, radius * 0.42, radius * 1.14), armor, [
+            0,
+            height * 0.94,
+            0.03 * radius,
+          ]);
+          part(new THREE.BoxGeometry(radius * 0.68, height * 0.17, radius * 0.33), trim, [
+            0,
+            height * 0.63,
+            radius * 0.69,
+          ]);
+        }
+        if (quality !== 'low')
+          for (const [index, color] of [0xe6e5d6, 0x486588, 0xb96758].entries())
+            part(
+              new THREE.BoxGeometry(radius * 0.013, height * 0.016, radius * 0.21),
+              material(color),
+              [radius * 0.7, height * (0.68 - index * 0.016), 0],
+            );
       } else {
         part(new THREE.BoxGeometry(radius * 0.92, height * 0.05, radius * 0.16), threat, [
           0,
@@ -1391,7 +1468,7 @@ export function createFlightRenderer({
         group.add(leg, arm);
         part(
           new THREE.BoxGeometry(radius * 0.34, height * 0.38, radius * 0.43),
-          dark,
+          trousers,
           [0, -height * 0.19, 0],
           leg,
         );

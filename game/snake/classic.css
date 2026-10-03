@@ -302,8 +302,8 @@ aside > p,
   gap: 12px;
 }
 .target-guide canvas {
-  background: var(--fk-panel, #10243e);
-  border: 1px solid var(--line);
+  background: transparent;
+  border: 0;
   width: 56px;
   height: 56px;
   flex-shrink: 0;

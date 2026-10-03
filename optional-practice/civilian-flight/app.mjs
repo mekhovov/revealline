@@ -1,3 +1,4 @@
+import { createPracticeAudio } from './audio.mjs';
 import { getLocale, setLocale, onLocaleChange } from '../../game/i18n/index.mjs';
 import { CIVILIAN_PRACTICE_CATALOGUE } from './catalogue.mjs';
 import {
@@ -27,6 +28,12 @@ export function mountCivilianPractice({ document: doc, window: win }) {
     frame = null,
     disposed = false;
   const completed = new Set();
+  const audio = createPracticeAudio({ window: win });
+  const updateSound = () => {
+    $('sound').textContent = tr(audio.enabled() ? 'soundOn' : 'soundOff');
+    $('sound').setAttribute('aria-pressed', String(audio.enabled()));
+  };
+  const stopSound = audio.subscribe(updateSound);
   const canvas = $('board');
   let context;
   try {
@@ -37,6 +44,7 @@ export function mountCivilianPractice({ document: doc, window: win }) {
   $('fallback').hidden = !!context;
   const pause = () => {
     model.pause();
+    audio.pause();
     input?.clear();
     accumulator = 0;
     render();
@@ -150,9 +158,11 @@ export function mountCivilianPractice({ document: doc, window: win }) {
     doc.querySelector('.touch-controls').setAttribute('aria-label', tr('touch'));
     $('catalogue').setAttribute('aria-label', tr('json'));
     options();
+    updateSound();
     render();
   }
   function reset(drillId = model.drill().id) {
+    audio.reset();
     input.clear();
     model = createPractice(catalogue, drillId);
     commands = [];
@@ -181,7 +191,9 @@ export function mountCivilianPractice({ document: doc, window: win }) {
       last.ticks++;
     else commands.push({ ticks: 1, input: command });
     recordingTicks++;
+    audio.update(model.snapshot(), command);
     const state = model.step(command);
+    audio.update(state, command);
     if (state.status === 'complete') {
       input.clear();
       if (replayPractice(catalogue, trace()).status === 'complete')
@@ -206,12 +218,17 @@ export function mountCivilianPractice({ document: doc, window: win }) {
   $('start').onclick = () => {
     input.clear();
     model.start();
+    void audio.resume();
     previous = null;
     accumulator = 0;
     $('arena').focus();
     render();
   };
   $('pause').onclick = pause;
+  $('sound').onclick = async () => {
+    await audio.setEnabled(!audio.enabled());
+    updateSound();
+  };
   $('reset').onclick = () => reset();
   $('drill').onchange = () => reset($('drill').value);
   $('language').onchange = () => setLocale($('language').value);
@@ -273,6 +290,9 @@ export function mountCivilianPractice({ document: doc, window: win }) {
     if (disposed) return;
     disposed = true;
     input.dispose();
+    stopSound();
+    audio.dispose();
+    $('sound').onclick = null;
     stopLocale();
     win.cancelAnimationFrame(frame);
     win.removeEventListener('pagehide', pagehide);

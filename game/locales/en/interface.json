@@ -5759,6 +5759,8 @@
   "workshop.detailOff": "Off",
   "workshop.detailSubtle": "Subtle",
   "workshop.detailRich": "Detailed",
+  "workshop.description.military-field": "Field vehicles and concrete checkpoints. Existing enemy rules stay the same.",
+  "workshop.theme.military-field": "Military Field",
   "workshop.theme.legacy": "Signal Blue",
   "workshop.theme.industrial-workshop": "Flight Deck",
   "workshop.theme.ember-foundry": "Ember Foundry",

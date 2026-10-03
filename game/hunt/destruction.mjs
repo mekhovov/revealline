@@ -43,6 +43,8 @@ export function drawHumanoidPixelBody(ctx, actor = {}, palette = {}) {
     kind,
     heading: actor.pursuit?.heading ?? actor.heading,
     nextHeading: actor.pursuit?.nextHeading ?? actor.nextHeading,
+    goal: actor.pursuit?.goal ?? actor.goal,
+    partnerId: actor.pursuit?.partnerId ?? actor.partnerId,
     phase: phase === 'recovering' ? 'rest' : phase,
     state: phase === 'blocked' ? 'blocked' : actor.state,
     cast: appearance.cast,
@@ -71,15 +73,22 @@ function equipment(ctx, family, colors) {
     paint(dark, -1, -1, 2, 3);
     paint('#bca47f', -1, -2, 2, 1);
   } else if (family === 'relay-warden') {
-    paint('#e4c26b', -3, 0, 6, 2);
-    paint('#e4c26b', -3, -2, 1, 3);
-    paint('#e4c26b', -1, -2, 2, 3);
-    paint('#e4c26b', 2, -2, 1, 3);
+    paint(ink, -3, -3, 6, 6);
+    paint(dark, -2, -2, 4, 4);
+    paint(light, -2, -2, 3, 1);
+    paint(ink, 2, -6, 1, 5);
+    paint(coat, -1, 0, 2, 1);
   } else if (family === 'rendezvous-pair') {
     paint(ink, -3, -2, 6, 4);
     paint(light, -2, -1, 2, 2);
     paint(light, 1, -1, 2, 2);
-  } else if (family === 'switchback' || family === 'sprinter') {
+  } else if (family === 'sprinter') {
+    paint(ink, -3, -3, 6, 1);
+    paint(dark, -4, -2, 2, 4);
+    paint(dark, 2, -2, 2, 4);
+    paint(light, -4, -2, 1, 3);
+    paint(coat, 1, 2, 3, 1);
+  } else if (family === 'switchback') {
     paint(dark, -4, -2, 7, 2);
     paint(light, -4, -2, 6, 1);
     paint(coat, 2, -1, 2, 3);

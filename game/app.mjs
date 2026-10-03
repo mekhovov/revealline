@@ -1,3 +1,4 @@
+import { selectedArcadeCollection } from './presentation/industrial-arcade.mjs';
 import { specialistFailureCopy } from './hunt/actor-catalog.mjs';
 import { getLocale } from './i18n/index.mjs';
 import { pursuitRoster } from './hunt/pursuit-goals.mjs';
@@ -1313,6 +1314,9 @@ try {
   }
   refreshAppearanceDefault();
   const sound = new Soundscape({ persistentMusic: true, audioMaster });
+  sound.setActorPresentation(() => ({
+    collectionId: selectedArcadeCollection(menuStyle.themeHost.effectivePreferences())?.id,
+  }));
   sound.setDestructionPreferences?.(() => encounterDisplay.snapshot());
   contextualReactions = attachContextualReactions({
     sound,
@@ -1687,7 +1691,9 @@ try {
           });
     if (candidateHost?.owns(entry)) {
       const manifest = entry.manifests.find((item) => item.level.id === nextRun.levelId);
-      if (runtimeContent && manifest.background === null) {
+      // Code-owned greybox missions intentionally have no original picture.
+      // This also applies to source Journey previews, not only installed content.
+      if (manifest.background === null) {
         return createFlightPictures({
           context: {
             runId: nextRunId,

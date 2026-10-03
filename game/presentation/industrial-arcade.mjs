@@ -7,6 +7,7 @@ import {
   resolveThemeFamilySelection,
 } from './theme-system.mjs';
 import { INDUSTRIAL_BUILTIN_SPRITES } from './industrial-arcade-builtins.mjs';
+import { MILITARY_FIELD_ROLES, militaryFieldPixels } from './military-field-art.mjs';
 
 /** An appearance layer only. The original release remains the authority for
  * pictures, audio, provenance, geometry, and all saved presentation identities. */
@@ -33,7 +34,10 @@ const collections = INSTALLED_THEME_FAMILIES.filter((family) => family.arcade).m
           provenance: Object.freeze({
             author: 'RevealLine',
             license: 'project-original',
-            source: `${family.id}: semantic pixel material masks`,
+            source:
+              family.id === 'military-field'
+                ? 'military-field-art.mjs: original overhead vehicles and checkpoint surfaces'
+                : `${family.id}: semantic pixel material masks`,
           }),
         }),
 );
@@ -150,13 +154,21 @@ export const INDUSTRIAL_ARCADE_PALETTE = Object.freeze({
   land: '#686d49',
 });
 
-/** Native pixels only: no sampling, new occupied pixels, rotor marks, or baked
- * cues. Sparse seams/rivets are confined to solid same-material interiors. */
+/** Native frames only. Ordinary finishes preserve occupied pixels and apply
+ * material masks. Military Field has explicit new silhouettes for verified
+ * built-in enemy/terrain slots; functional state cues remain separate. */
 export function industrialTexturePixels(
   { width, height, rgba },
   slot,
   collection = INDUSTRIAL_ARCADE_COLLECTION,
 ) {
+  // Enemy livery must never recolor the Ukrainian FPV player into the opposing kit.
+  if (collection.id === 'military-field' && slot.startsWith('player.'))
+    return { width, height, rgba: new Uint8ClampedArray(rgba) };
+  if (collection.id === 'military-field') {
+    const military = militaryFieldPixels({ width, height }, slot);
+    if (military) return military;
+  }
   const colors = colorsFor(collection),
     recipe = collection.id;
   if (
@@ -297,7 +309,27 @@ export function createArcadeAdapter({ canvasFactory = defaultCanvas } = {}) {
             );
             ctx.putImageData(data, 0, 0);
             canvases.add(canvas);
-            derived = Object.freeze({ ...original, image: canvas });
+            const vehicle = collection.id === 'military-field' && slot.startsWith('enemy.');
+            derived = Object.freeze({
+              ...original,
+              image: canvas,
+              ...(vehicle
+                ? {
+                    geometry: Object.freeze({
+                      ...original.geometry,
+                      rotors: Object.freeze([]),
+                      material: 'military-vehicle',
+                      vehicleRole: MILITARY_FIELD_ROLES[slot],
+                      occupiedBounds: Object.freeze({
+                        x: 5 / 32,
+                        y: 1 / 32,
+                        width: 22 / 32,
+                        height: 29 / 32,
+                      }),
+                    }),
+                  }
+                : {}),
+            });
           } catch {
             /* A failed/tainted decode must never hide a functional sprite. */
           }

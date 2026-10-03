@@ -21,6 +21,13 @@ const copy = {
   waypoints: ['Waypoints: one x, y pair per line', 'Точки: одна пара x, y на рядок'],
   cast: ['Preview cast (cosmetic)', 'Вигляд для перегляду'],
   pose: ['Preview state', 'Стан для перегляду'],
+  direction: ['Preview direction', 'Напрямок для перегляду'],
+  frame: ['Next animation frame', 'Наступний кадр анімації'],
+  walk: ['Running', 'Біг'],
+  up: ['Up', 'Угору'],
+  right: ['Right', 'Праворуч'],
+  down: ['Down', 'Униз'],
+  left: ['Left', 'Ліворуч'],
   rest: ['Recovery / exposed armor', 'Відновлення / відкрита броня'],
   warning: ['Warning / closed armor', 'Попередження / закрита броня'],
   burst: ['Committed action', 'Виконання дії'],
@@ -127,7 +134,12 @@ export function createPursuitEditor({ container, getSource, getMission, apply })
     poseLabel = node('label'),
     poseCaption = node('span'),
     pose = node('select'),
+    directionLabel = node('label'),
+    directionCaption = node('span'),
+    direction = node('select'),
+    frame = node('button'),
     preview = node('canvas');
+  let animationFrame = 0;
   root.dataset.pursuitEditor = 'true';
   status.setAttribute('role', 'status');
   preview.width = 720;
@@ -144,7 +156,7 @@ export function createPursuitEditor({ container, getSource, getMission, apply })
   cast.value = 'rivals';
   castLabel.append(castCaption, cast);
   poseLabel.style.cssText = castLabel.style.cssText;
-  for (const value of ['rest', 'warning', 'burst', 'turning']) {
+  for (const value of ['walk', 'rest', 'warning', 'burst', 'turning']) {
     const option = node('option');
     option.value = value;
     pose.append(option);
@@ -152,6 +164,20 @@ export function createPursuitEditor({ container, getSource, getMission, apply })
   pose.value = 'rest';
   poseLabel.append(poseCaption, pose);
   pose.onchange = () => draw();
+  directionLabel.style.cssText = castLabel.style.cssText;
+  for (const value of ['up', 'right', 'down', 'left']) {
+    const option = node('option');
+    option.value = value;
+    direction.append(option);
+  }
+  direction.value = 'right';
+  directionLabel.append(directionCaption, direction);
+  direction.onchange = () => draw();
+  frame.type = 'button';
+  frame.onclick = () => {
+    animationFrame = (animationFrame + 1) % 12;
+    draw();
+  };
   for (const button of [add, inspect, commit]) {
     button.type = 'button';
     button.style.margin = '.25rem';
@@ -165,6 +191,8 @@ export function createPursuitEditor({ container, getSource, getMission, apply })
     note,
     castLabel,
     poseLabel,
+    directionLabel,
+    frame,
     preview,
     list,
     add,
@@ -254,10 +282,17 @@ export function createPursuitEditor({ container, getSource, getMission, apply })
       for (const point of actor.waypoints) ctx.fillRect(point.x * sx - 2, point.y * sy - 2, 4, 4);
       drawHuntActor(ctx, actor.x * sx - 12, actor.y * sy - 12, 24, 0, {
         kind: actor.behavior,
+        partnerId: actor.partnerId,
         cast: cast.value,
-        state: 'idle',
-        heading: 'right',
-        nextHeading: pose.value === 'turning' ? 'up' : null,
+        state: pose.value === 'walk' ? 'walk' : pose.value === 'rest' ? 'recover' : 'warning',
+        timeMs: animationFrame * 130,
+        heading: direction.value,
+        nextHeading:
+          pose.value === 'turning'
+            ? ['up', 'right', 'down', 'left'][
+                (['up', 'right', 'down', 'left'].indexOf(direction.value) + 1) % 4
+              ]
+            : null,
         phase: pose.value,
       });
       const row = rows.find((entry) => entry.fields.id.value === actor.id);
@@ -266,10 +301,17 @@ export function createPursuitEditor({ container, getSource, getMission, apply })
         portrait.clearRect(0, 0, 56, 56);
         drawHuntActor(portrait, 0, 0, 56, 0, {
           kind: actor.behavior,
+          partnerId: actor.partnerId,
           cast: cast.value,
-          state: 'idle',
-          heading: 'right',
-          nextHeading: pose.value === 'turning' ? 'up' : null,
+          state: pose.value === 'walk' ? 'walk' : pose.value === 'rest' ? 'recover' : 'warning',
+          timeMs: animationFrame * 130,
+          heading: direction.value,
+          nextHeading:
+            pose.value === 'turning'
+              ? ['up', 'right', 'down', 'left'][
+                  (['up', 'right', 'down', 'left'].indexOf(direction.value) + 1) % 4
+                ]
+              : null,
           phase: pose.value,
         });
       }
@@ -289,6 +331,9 @@ export function createPursuitEditor({ container, getSource, getMission, apply })
     commit.textContent = words('apply');
     castCaption.textContent = words('cast');
     poseCaption.textContent = words('pose');
+    directionCaption.textContent = words('direction');
+    frame.textContent = words('frame');
+    for (const option of direction.options) option.textContent = words(option.value);
     for (const option of pose.options) option.textContent = words(option.value);
     preview.setAttribute('aria-label', words('preview'));
     for (const option of cast.options)

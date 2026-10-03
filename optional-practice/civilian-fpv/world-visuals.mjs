@@ -1790,6 +1790,20 @@ const themedMaterials = (colors, overrides = {}) =>
     ),
   );
 const collectionSources = {
+  'military-field': {
+    pattern: 'foundry',
+    ornament: 0xa8b382,
+    paper: 0xf0efdc,
+    materials: themedMaterials({
+      steel: 0x65744f,
+      rubber: 0x26302b,
+      copper: 0xada37c,
+      concrete: 0x969f8c,
+      enamel: 0x61734a,
+      timber: 0x827553,
+      grass: 0x5c744e,
+    }),
+  },
   'ember-foundry': {
     pattern: 'foundry',
     ornament: 0xf0a266,

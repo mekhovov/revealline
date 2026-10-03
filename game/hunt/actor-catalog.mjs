@@ -1,6 +1,7 @@
 /** Shared identities, not a grant of gameplay capability. Native engines must
  * accept a versioned policy before an actor can enter an attempt. */
 export const ACTOR_CATALOG_VERSION = 'humanoid-actors.v1';
+export const ACTOR_ART_REVISION = 'overhead-field-kit.v2';
 export const ACTOR_ART_BUDGET = Object.freeze({ decodedBytes: 32 * 1024 * 1024, sharedBoards: 2 });
 const freeze = (value) => {
   if (value && typeof value === 'object') {
@@ -11,9 +12,13 @@ const freeze = (value) => {
 };
 
 export const ACTOR_CASTS = freeze([
-  { id: 'tactical', name: { en: 'Tactical', uk: 'Тактичні' }, accessory: 'field-kit' },
-  { id: 'rivals', name: { en: 'Rival crews', uk: 'Команди суперників' }, accessory: 'crew-jacket' },
-  { id: 'arcade', name: { en: 'Arcade', uk: 'Аркадні' }, accessory: 'oversized-gloves' },
+  { id: 'tactical', name: { en: 'Field kit', uk: 'Польове спорядження' }, accessory: 'field-kit' },
+  {
+    id: 'rivals',
+    name: { en: 'Worn field kit', uk: 'Зношене польове спорядження' },
+    accessory: 'mixed-kit',
+  },
+  { id: 'arcade', name: { en: 'Winter kit', uk: 'Зимове спорядження' }, accessory: 'winter-kit' },
 ]);
 export const ACTOR_STATES = Object.freeze([
   'idle',
@@ -49,8 +54,8 @@ const descriptions = [
     false,
     ['Completes a circuit or shuttle route.', 'Проходить коло або маршрут туди й назад.'],
     [
-      'A cap, measured steps and a direction arrow identify the route.',
-      'Кашкет, рівні кроки та стрілка показують напрямок маршруту.',
+      'A patrol pack, measured steps and the body heading identify the route.',
+      'Патрульний рюкзак, рівні кроки та поворот тіла показують напрямок маршруту.',
     ],
     [
       'Intercept a crossing; a blocked patrol waits.',
@@ -77,12 +82,12 @@ const descriptions = [
     'sprinter',
     'Sprinter',
     'Спринтер',
-    'headband',
+    'headset',
     false,
     ['Reaches an open straight for a burst.', 'Шукає пряму ділянку для ривка.'],
     [
-      'A headband and crouched warning precede the dash; breathing marks recovery.',
-      'Пов’язка та присідання попереджають про ривок; важке дихання означає відпочинок.',
+      'A light headset and crouched warning precede the dash; breathing marks recovery.',
+      'Легка гарнітура та присідання попереджають про ривок; важке дихання означає відпочинок.',
     ],
     [
       'Predict the straight dash and catch the recovery.',
@@ -173,8 +178,8 @@ const descriptions = [
     false,
     ['Two actors seek a shared meeting point.', 'Двоє прямують до спільного місця зустрічі.'],
     [
-      'Linked badges and greeting gestures identify the partners.',
-      'Парні значки та вітальні жести позначають напарників.',
+      'Paired radio packs and greeting gestures identify the partners.',
+      'Парні радіорюкзаки та вітальні жести позначають напарників.',
     ],
     [
       'Separate their routes; each counts once, and the survivor becomes a Runner.',
@@ -223,15 +228,15 @@ const descriptions = [
     'relay-warden',
     'Relay warden',
     'Вартовий ретранслятора',
-    'relay-crown',
+    'command-radio',
     true,
     [
       'Holds a native Capture relay or stronghold objective.',
       'Утримує ціль ретранслятора або фортеці в режимі захоплення.',
     ],
     [
-      'A linked crown and relay indicators show its objective role.',
-      'Корона зі зв’язками та індикатори ретранслятора позначають роль цілі.',
+      'A command radio pack and relay indicators show its objective role.',
+      'Командний радіорюкзак та індикатори ретранслятора позначають роль цілі.',
     ],
     [
       'Follow the mission’s relay or stronghold rules; this is not ordinary contact prey.',
@@ -324,25 +329,64 @@ const aliases = freeze({
   warden: 'relay-warden',
 });
 const families = new Map(ACTOR_FAMILIES.map((entry) => [entry.id, entry]));
-const colors = {
-  lookout: ['#c39b4b', '#ffe4a3', '#806336'],
-  patroller: ['#67a6bb', '#b9e2e8', '#356579'],
-  runner: ['#e5a148', '#ffd483', '#a96934'],
-  sprinter: ['#dd7554', '#ffb588', '#934833'],
-  courier: ['#a581ba', '#ddbee8', '#674979'],
-  guard: ['#8a9878', '#d4ddba', '#4e5c4c'],
-  'refuge-seeker': ['#55a797', '#b3e5c4', '#386957'],
-  switchback: ['#c97ba2', '#ffc2df', '#884564'],
-  'rendezvous-pair': ['#688bc4', '#c6d9ff', '#3b567e'],
-  'shield-bearer': ['#738c9b', '#d3e4e7', '#465b6e'],
-  'brace-trooper': ['#c78a52', '#ffe0a0', '#82563d'],
-  'relay-warden': ['#967ab0', '#e3cfff', '#604779'],
+// Uniform wardrobes are presentation only. Family equipment remains the primary
+// identifier; soft webbing never implies the specialist's protected contact.
+const wardrobes = {
+  tactical: {
+    coat: '#778665',
+    light: '#b0bb8c',
+    dark: '#45553f',
+    pants: '#576647',
+    trim: '#a0a17a',
+    camo: '#536248',
+    patch: '#b9ac84',
+    glove: '#857c5e',
+    edge: '#d2d3ac',
+  },
+  rivals: {
+    coat: '#958560',
+    light: '#c8b88a',
+    dark: '#5d6047',
+    pants: '#5f6850',
+    trim: '#b3a078',
+    camo: '#716949',
+    patch: '#706b56',
+    glove: '#9b815f',
+    edge: '#e0d1aa',
+  },
+  arcade: {
+    coat: '#d4d9cc',
+    light: '#f4f2df',
+    dark: '#697564',
+    pants: '#aab4a4',
+    trim: '#8c987e',
+    camo: '#939d8b',
+    patch: '#a3af9e',
+    glove: '#6f786a',
+    edge: '#edeedd',
+  },
+};
+// Tiny accents keep all families distinguishable without replacing equipment
+// silhouettes with rainbow uniforms.
+const familyTrim = {
+  lookout: '#b0a078',
+  patroller: '#a4af87',
+  runner: '#89976b',
+  sprinter: '#b2a782',
+  courier: '#b89967',
+  guard: '#94a183',
+  'refuge-seeker': '#7c9981',
+  switchback: '#ae9270',
+  'rendezvous-pair': '#9aacaa',
+  'shield-bearer': '#9ba8a0',
+  'brace-trooper': '#b2a287',
+  'relay-warden': '#b9b38c',
 };
 
 export const ACTOR_VISUALS = freeze(
   ACTOR_FAMILIES.flatMap((family) =>
     ACTOR_CASTS.map((cast) => {
-      const [coat, light, dark] = colors[family.id];
+      const wardrobe = wardrobes[cast.id];
       return {
         id: `${ACTOR_CATALOG_VERSION}/${family.id}/${cast.id}`,
         family: family.id,
@@ -350,17 +394,15 @@ export const ACTOR_VISUALS = freeze(
         material: 'flesh',
         accessory: family.accessory,
         castAccessory: cast.accessory,
+        artRevision: ACTOR_ART_REVISION,
         palette: {
-          coat,
-          light,
-          dark,
-          ink: '#29313a',
-          skin: '#e4ad7e',
-          skinLight: '#ffd3a1',
-          pants: cast.id === 'tactical' ? '#4b584d' : '#45515e',
-          trim: cast.id === 'arcade' ? '#fff7dd' : cast.id === 'tactical' ? '#d4c6a3' : light,
+          ...wardrobe,
+          ink: '#192820',
+          skin: '#cba984',
+          skinLight: '#e3c29b',
+          trim: familyTrim[family.id],
         },
-        detailPixels: 28,
+        detailPixels: 32,
         compactPixels: 16,
         decodedBytes: 0,
       };

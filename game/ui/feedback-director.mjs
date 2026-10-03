@@ -1,3 +1,4 @@
+import { actorPhaseSound } from './encounter-audio.mjs';
 import { dialogueChannel } from './dialogue-channel.mjs';
 import { playerMovementBody } from './movement-profiles.mjs';
 import { getLocale } from '../i18n/index.mjs';
@@ -233,6 +234,29 @@ export class FeedbackDirector {
       if (options.mode === 'versus' && event.type === 'run.completed') return;
       seen.add(key);
       if (seen.size > 512) seen.delete(seen.values().next().value);
+      const combatCue = {
+        'combat.locked': 'warning',
+        'combat.fired': 'fire',
+        'combat.impact': 'impact',
+        'combat.cancelled': 'recover',
+        'combat.eliminated': 'catch',
+      }[event.type];
+      if (combatCue && this.sound.encounter) {
+        const hunt =
+          run.level?.hunt ??
+          run.level?.runningEnemies?.hunt ??
+          run.level?.classic?.hunt ??
+          run.definition?.classic?.hunt;
+        const humanoid = hunt?.targets?.find((target) => target.id === event.id);
+        this.sound.encounter(combatCue, {
+          board: options.board ?? 'solo',
+          family: humanoid?.kind,
+          machine: event.type === 'combat.eliminated' && !humanoid,
+          brutal: (options.getDestruction?.() ?? this.sound.readDestruction?.())?.brutal === true,
+          pan: Number.isFinite(event.x) ? screenPan(event.x, run.width, options.placement) : 0,
+        });
+        return;
+      }
       if (event.type === 'run.completed' && event.won !== false && event.status !== 'lost') {
         // One victory owner, whether samples have decoded yet or not. This
         // preserves published cues and campaign phrases while giving every
@@ -257,7 +281,7 @@ export class FeedbackDirector {
       const board = options.board ?? 'solo';
       const source = Number.isFinite(event.x)
         ? event
-        : ([...(run.enemies ?? []), ...(run.classic?.combatPatrols?.actors ?? [])].find(
+        : ([...(run.enemies ?? []), ...((run.classic ?? run).combatPatrols?.actors ?? [])].find(
             (actor) => actor.id === (event.actorId ?? event.enemy ?? event.id),
           ) ?? (Number.isInteger(event.player) ? run.players?.[event.player] : run.player));
       const pan = Number.isFinite(source?.x)
@@ -371,14 +395,33 @@ export class FeedbackDirector {
     const details = new Map((run.classic?.enemies ?? []).map((actor) => [actor.id, actor]));
     for (const [i, actor] of [
       ...(run.enemies ?? []),
-      ...(run.classic?.combatPatrols?.actors ?? []).filter((a) => a.alive),
+      ...((run.classic ?? run).combatPatrols?.actors ?? []).filter((a) => a.alive),
     ].entries()) {
       const key = `enemy:${actor.id ?? i}`,
         previous = state.previous.get(key);
+      const hunt =
+        run.level?.hunt ??
+        run.level?.runningEnemies?.hunt ??
+        run.level?.classic?.hunt ??
+        run.definition?.classic?.hunt;
+      const humanoid =
+        actor.bodyId === 'humanoid' || hunt?.targets?.some((target) => target.id === actor.id);
+      const phase = actor.pursuit?.phase ?? actor.phase;
+      const family =
+        actor.pursuit?.behavior ?? actor.family ?? (actor.role === 'sentry' ? 'guard' : 'runner');
+      const phaseCue = humanoid && newTick && actorPhaseSound(previous?.phase, phase);
+      // Native Guard locked/fired events already own their audible warning.
+      if (phaseCue && actor.role !== 'sentry')
+        this.sound.encounter?.(phaseCue, {
+          family,
+          board,
+          pan: screenPan(actor.x, run.width, options.placement),
+        });
       const moved = newTick
         ? previous && Math.hypot(actor.x - previous.x, actor.y - previous.y) > 0.0001
         : previous?.moving;
-      if (newTick || !previous) state.previous.set(key, { x: actor.x, y: actor.y, moving: moved });
+      if (newTick || !previous)
+        state.previous.set(key, { x: actor.x, y: actor.y, moving: moved, phase });
       const detail = details.get(actor.id);
       if (
         !moved ||
@@ -399,7 +442,13 @@ export class FeedbackDirector {
         movement: true,
         rate: movementRate(actor.bodyId ?? '', actor.type ?? actor.role),
         name: movementFor(
-          actor.bodyId ?? '',
+          humanoid
+            ? 'humanoid'
+            : options.collectionId === 'military-field'
+              ? ['eroder', 'lane-boss'].includes(actor.type)
+                ? 'tracked-vehicle'
+                : 'wheeled-vehicle'
+              : (actor.bodyId ?? ''),
           options.actorStyle === 'fpv' ? { family: 'fpv' } : theme,
           actor.type ?? actor.role,
           options.actorSkins?.[actor.type] ?? actor.skinId,

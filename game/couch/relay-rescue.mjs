@@ -1,3 +1,4 @@
+import { selectedArcadeCollection } from '../presentation/industrial-arcade.mjs';
 import { pursuitRoster } from '../hunt/pursuit-goals.mjs';
 import { prepareTeamRunningEnemies } from '../hunt/team-running-enemies.mjs';
 import { createRunningEnemyPreferences } from '../hunt/running-enemy-preferences.mjs';
@@ -1521,6 +1522,9 @@ export function bootCoop({
     onClose: () => clear(),
   });
   if (music) {
+    music.sound.setActorPresentation(() => ({
+      collectionId: selectedArcadeCollection(menuStyle.themeHost.effectivePreferences())?.id,
+    }));
     music.sound.setDestructionPreferences?.(() => encounterDisplay.snapshot());
     contextualReactions = attachContextualReactions({
       sound: music.sound,

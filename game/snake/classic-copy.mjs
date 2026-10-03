@@ -109,7 +109,7 @@ export const CLASSIC_COPY = {
     controlsHelp:
       'Your drone keeps moving. Direct reversals are ignored. Queue up to two turns. Losing focus pauses the game. Each Team pilot uses their own buttons or controller.',
     preyLegend:
-      'Cap and reflective jacket: patrol. Open jacket: runner. Headband and light shoes: sprinter—watch its warning and rest. Satchel: optional courier, +250 points and extra cable. Pulse holds prey; Reel shortens your cable. Supplies activate on contact. Shutters warn before closing and wait for an occupied cable.',
+      'Patrol pack: patroller. Light webbing: runner. Headset and crouched stance: sprinter—watch its warning and rest. Satchel: optional courier, +250 points and extra cable. Pulse holds prey; Reel shortens your cable. Supplies activate on contact. Shutters warn before closing and wait for an occupied cable.',
     caught: 'CAUGHT',
     length: 'LENGTH',
     score: 'SCORE',
@@ -273,7 +273,7 @@ export const CLASSIC_COPY = {
     controlsHelp:
       'Дрон рухається безперервно. Зворотний напрямок ігнорується. Можна запланувати два повороти. Втрата фокуса ставить гру на паузу. Кожен пілот команди має власні кнопки або контролер.',
     preyLegend:
-      'Кашкет і світловідбивна куртка — патруль. Розстебнута куртка — бігун. Пов’язка й світле взуття — спринтер: стежте за попередженням і відпочинком. Сумка — необов’язковий кур’єр: +250 балів і сегмент кабелю. Імпульс зупиняє цілі, котушка скорочує кабель. Припаси діють від дотику. Заслінки попереджають перед закриттям і чекають, доки кабель звільнить прохід.',
+      'Патрульний рюкзак — патруль. Легке спорядження — бігун. Гарнітура й присідання — спринтер: стежте за попередженням і відпочинком. Сумка — необов’язковий кур’єр: +250 балів і сегмент кабелю. Імпульс зупиняє цілі, котушка скорочує кабель. Припаси діють від дотику. Заслінки попереджають перед закриттям і чекають, доки кабель звільнить прохід.',
     caught: 'СПІЙМАНО',
     length: 'ДОВЖИНА',
     score: 'БАЛИ',

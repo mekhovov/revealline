@@ -8,6 +8,7 @@ const BASE_OPTIONAL_PACKAGE_POLICIES = Object.freeze({
     localFiles: Object.freeze([
       'index.html',
       'app.mjs',
+      'audio.mjs',
       'model.mjs',
       'input.mjs',
       'catalogue.mjs',
@@ -18,6 +19,13 @@ const BASE_OPTIONAL_PACKAGE_POLICIES = Object.freeze({
       'README.md',
     ]),
     sharedFiles: Object.freeze([
+      'optional-practice/civilian-fpv/world-audio.mjs',
+      'game/ui/audio-output.mjs',
+      'game/ui/audio-master.mjs',
+      'game/audio-preferences.mjs',
+      'game/ui/encounter-audio.mjs',
+      'game/ui/movement-audio.mjs',
+      'game/ui/dialogue-channel.mjs',
       'optional-practice/install-context.mjs',
       'game/data-json.mjs',
       'game/key-bindings.mjs',
@@ -29,7 +37,22 @@ const BASE_OPTIONAL_PACKAGE_POLICIES = Object.freeze({
     ]),
     template: 'optional-practice/civilian-flight/worker-template.mjs',
     launcherTemplate: 'optional-practice/launcher-template.mjs',
-    localeInputs: Object.freeze(['game/locales/en/errors.json', 'game/locales/uk/errors.json']),
+    localeInputs: Object.freeze([
+      'game/locales/en/errors.json',
+      'game/locales/uk/errors.json',
+      'game/locales/en/interface.json',
+      'game/locales/uk/interface.json',
+    ]),
+    localeKeys: Object.freeze({
+      interface: Object.freeze([
+        'audioVolumeMustBeBetweenZeroAndOne',
+        'audioMuteMustBeABoolean',
+        'audioMasterOutputCouldNotBeApplied',
+        'audioMasterIsDisposed',
+        'audioMasterListenerRequired',
+        'audioMasterListenerAlreadySubscribed',
+      ]),
+    }),
     licenses: Object.freeze([
       {
         dependency: 'i18next',

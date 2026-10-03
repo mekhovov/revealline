@@ -236,3 +236,150 @@ test('clean catches use bounded non-bloody feedback; Reduced effects clears anim
   assert.equal(painter.snapshot().bursts, 0);
   painter.reset();
 });
+
+// Minimal alpha raster for artwork contracts; no browser or generated snapshots.
+// Covers public Canvas transforms so a token cannot hide behind helper calls.
+function alphaContext(size) {
+  const coverage = new Float32Array(size * size);
+  const stack = [];
+  let matrix = [1, 0, 0, 1, 0, 0];
+  const multiply = ([a, b, c, d, e, f]) => {
+    const [aa, ab, ac, ad, ae, af] = matrix;
+    matrix = [
+      aa * a + ac * b,
+      ab * a + ad * b,
+      aa * c + ac * d,
+      ab * c + ad * d,
+      aa * e + ac * f + ae,
+      ab * e + ad * f + af,
+    ];
+  };
+  return {
+    coverage,
+    globalAlpha: 1,
+    fillStyle: '#000000',
+    imageSmoothingEnabled: true,
+    save() {
+      stack.push({ matrix: [...matrix], alpha: this.globalAlpha });
+    },
+    restore() {
+      const saved = stack.pop();
+      matrix = saved.matrix;
+      this.globalAlpha = saved.alpha;
+    },
+    translate(x, y) {
+      multiply([1, 0, 0, 1, x, y]);
+    },
+    scale(x, y) {
+      multiply([x, 0, 0, y, 0, 0]);
+    },
+    rotate(angle) {
+      const c = Math.cos(angle),
+        s = Math.sin(angle);
+      multiply([c, s, -s, c, 0, 0]);
+    },
+    fillRect(x, y, w, h) {
+      const [a, b, c, d, e, f] = matrix;
+      const determinant = a * d - b * c;
+      for (let py = 0; py < size; py++)
+        for (let px = 0; px < size; px++) {
+          const dx = px + 0.5 - e,
+            dy = py + 0.5 - f;
+          const localX = (d * dx - c * dy) / determinant;
+          const localY = (-b * dx + a * dy) / determinant;
+          if (localX >= x && localX < x + w && localY >= y && localY < y + h) {
+            const index = py * size + px;
+            coverage[index] = this.globalAlpha + coverage[index] * (1 - this.globalAlpha);
+          }
+        }
+    },
+  };
+}
+
+test('all military variants preserve transparent corners and substantial open background with legacy token=true', () => {
+  for (const size of [16, 32])
+    for (const visual of ACTOR_VISUALS) {
+      const ctx = alphaContext(size);
+      drawHuntActor(ctx, 0, 0, size, 0, {
+        visualId: visual.id,
+        token: true,
+        direction: 'up',
+        shadow: false,
+      });
+      for (const index of [0, size - 1, size * (size - 1), size * size - 1])
+        assert.equal(ctx.coverage[index], 0, visual.id);
+      const occupied = ctx.coverage.filter((alpha) => alpha > 0).length;
+      assert.ok(occupied > size * size * 0.2, `${visual.id} readable body`);
+      assert.ok(occupied < size * size * 0.8, `${visual.id} has no opaque token`);
+      const legacy = context(),
+        transparent = context();
+      drawHuntActor(legacy, 0, 0, size, 0, { visualId: visual.id, token: true });
+      drawHuntActor(transparent, 0, 0, size, 0, { visualId: visual.id, token: false });
+      assert.deepEqual(legacy.commands, transparent.commands);
+    }
+});
+
+test('the entire overhead body turns with cardinal or continuous facing; shield nextHeading cannot lead contact facing', () => {
+  for (const [direction, angle] of [
+    ['up', 0],
+    ['right', Math.PI / 2],
+    ['down', Math.PI],
+    ['left', -Math.PI / 2],
+  ]) {
+    const ctx = context();
+    drawHuntActor(ctx, 0, 0, 32, 0, { family: 'runner', direction });
+    const rotation = ctx.commands.findIndex(([method]) => method === 'rotate');
+    const firstPixel = ctx.commands.findIndex(([method]) => method === 'rect');
+    assert.equal(ctx.commands[rotation][1], angle);
+    assert.ok(rotation < firstPixel, 'orientation applies to body, not just a marker');
+  }
+  const continuous = context();
+  drawHuntActor(continuous, 0, 0, 32, 0, { family: 'runner', facingRadians: 0.37 });
+  assert.equal(continuous.commands.find(([method]) => method === 'rotate')[1], 0.37);
+  const shield = context();
+  drawHuntActor(shield, 0, 0, 32, 0, {
+    family: 'shield',
+    heading: 'left',
+    nextHeading: 'up',
+    phase: 'turning',
+    facingRadians: 0,
+  });
+  assert.equal(shield.commands.find(([method]) => method === 'rotate')[1], -Math.PI / 2);
+});
+
+test('running cycles, stopped phases and accepted armed policies are independent presentation inputs', () => {
+  const draw = (options) => {
+    const ctx = context();
+    drawHuntActor(ctx, 0, 0, 32, 0, options);
+    return ctx.commands;
+  };
+  assert.notDeepEqual(
+    draw({ family: 'runner', state: 'walk', timeMs: 0 }),
+    draw({ family: 'runner', state: 'walk', timeMs: 260 }),
+  );
+  for (const pause of ['frozen', 'paused', 'reducedEffects']) {
+    assert.deepEqual(
+      draw({ family: 'runner', state: 'walk', [pause]: true, timeMs: 0 }),
+      draw({ family: 'runner', state: 'walk', [pause]: true, timeMs: 2000 }),
+    );
+  }
+  for (const phase of ['blocked', 'turning', 'warning'])
+    assert.deepEqual(
+      draw({ family: 'runner', phase, timeMs: 0 }),
+      draw({ family: 'runner', phase, timeMs: 260 }),
+    );
+  assert.deepEqual(draw({ family: 'guard' }), draw({ family: 'guard', armed: false }));
+  assert.notDeepEqual(draw({ family: 'guard' }), draw({ family: 'guard', armed: true }));
+});
+
+test('compact idle and recovery poses breathe while frozen compact poses stay fixed', () => {
+  const draw = (state, timeMs, frozen = false) => {
+    const ctx = context();
+    drawHuntActor(ctx, 0, 0, 16, 0, { family: 'runner', detail: 'compact', state, timeMs, frozen });
+    return ctx.commands;
+  };
+  for (const state of ['idle', 'recover']) {
+    assert.notDeepEqual(draw(state, 0), draw(state, 600));
+    assert.deepEqual(draw(state, 0, true), draw(state, 600, true));
+  }
+});

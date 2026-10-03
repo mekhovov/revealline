@@ -1,7 +1,7 @@
 import { getLocale, onLocaleChange } from '../i18n/index.mjs';
 import { createRunningEnemyPreferences } from '../hunt/running-enemy-preferences.mjs';
 import { sharedActorAppearance } from '../hunt/preferences.mjs';
-import { actorFieldGuide } from '../hunt/actor-catalog.mjs';
+import { actorFieldGuide, ACTOR_CASTS } from '../hunt/actor-catalog.mjs';
 import { renderEnemyFieldGuide } from './enemy-field-guide.mjs';
 
 const copy = {
@@ -28,9 +28,6 @@ const copy = {
     varied: 'Varied prey',
     cast: 'Character appearance',
     authored: 'As designed',
-    tactical: 'Tactical',
-    rivals: 'Expressive rivals',
-    arcade: 'Playful arcade',
     guide: 'Enemy field guide · Goal, tell and counter',
     population: 'Accepted population',
   },
@@ -57,9 +54,6 @@ const copy = {
     varied: 'Різноманітна здобич',
     cast: 'Вигляд персонажів',
     authored: 'За задумом',
-    tactical: 'Тактичний',
-    rivals: 'Виразні суперники',
-    arcade: 'Грайлива аркада',
     guide: 'Довідник ворогів · Мета, сигнал і протидія',
     population: 'Підготовлений склад',
   },
@@ -174,7 +168,13 @@ export function mountRunningEnemyControls({
     text(roster.title, words.roster);
     text(cast.title, words.cast);
     for (const menu of [roster.control, cast.control])
-      for (const option of menu.options) text(option, words[option.value]);
+      for (const option of menu.options)
+        text(
+          option,
+          ACTOR_CASTS.find((entry) => entry.id === option.value)?.name[
+            getLocale() === 'uk' ? 'uk' : 'en'
+          ] ?? words[option.value],
+        );
     text(guideTitle, words.guide);
     const actors = getAcceptedActors();
     const kinds = actors?.length

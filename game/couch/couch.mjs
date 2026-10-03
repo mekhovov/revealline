@@ -1,3 +1,4 @@
+import { selectedArcadeCollection } from '../presentation/industrial-arcade.mjs';
 import { pursuitRoster } from '../hunt/pursuit-goals.mjs';
 import { missionBriefing } from '../mission-brief.mjs';
 import { createEncounterVariantPreferences } from '../hunt/preferences.mjs';
@@ -828,6 +829,9 @@ try {
     audioMaster,
   }));
   sound.configure({ master: 1 });
+  sound.setActorPresentation(() => ({
+    collectionId: selectedArcadeCollection(menuStyle.themeHost.effectivePreferences())?.id,
+  }));
   sound.setDestructionPreferences?.(() => encounterDisplay.snapshot());
   contextualReactions = attachContextualReactions({
     sound,

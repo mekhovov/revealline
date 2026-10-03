@@ -5869,6 +5869,8 @@
   "workshop.detailOff": "Вимкнено",
   "workshop.detailSubtle": "Стримані",
   "workshop.detailRich": "Детальні",
+  "workshop.description.military-field": "Польова техніка й бетонні блокпости. Правила наявних ворогів не змінюються.",
+  "workshop.theme.military-field": "Військове поле",
   "workshop.theme.legacy": "Синій сигнал",
   "workshop.theme.industrial-workshop": "Польотна палуба",
   "workshop.theme.ember-foundry": "Жар ливарні",
