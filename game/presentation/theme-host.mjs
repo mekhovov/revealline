@@ -186,7 +186,7 @@ export function installThemeHost({
       themeFamily: selection.family,
       interfaceId: override ?? undefined,
       ...(selection.interfaceTheme && !override
-        ? { interfaceTheme: selection.interfaceTheme }
+        ? { interfaceTheme: selection.interfaceTheme, interfaceBasis: selection.candidate?.basis }
         : {}),
       accessibility: {
         ...display.snapshot(),

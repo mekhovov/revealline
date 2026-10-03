@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Runtime appearance material specimen</title>
+    <link rel="stylesheet" href="../../presentation/industrial-workshop.css" />
+    <link rel="stylesheet" href="./appearance-materials.css" />
+    <script type="module" src="./appearance-materials.mjs"></script>
+  </head>
+  <body>
+    <header class="specimen-controls">
+      <h1>Runtime material specimen</h1>
+      <p>
+        Real game styles and native controls. The blank twins have identical paint; their reading
+        areas can be sampled from a screenshot without text antialiasing. No preferences are saved.
+      </p>
+      <div class="specimen-options">
+        <label
+          >Inner theme
+          <select id="specimen-family"></select
+        ></label>
+        <label
+          >Outer theme
+          <select id="specimen-outer">
+            <option value="none">No outer scope</option>
+          </select></label
+        >
+        <label
+          >Show
+          <select id="specimen-case">
+            <option value="all">All states</option>
+          </select></label
+        >
+        <label
+          >Decoration
+          <select id="specimen-ornaments">
+            <option value="subtle">Theme material</option>
+            <option value="off">Off</option>
+          </select></label
+        >
+        <label><input id="specimen-high-contrast" type="checkbox" /> High contrast</label>
+        <label><input id="specimen-reduced-effects" type="checkbox" /> Reduced motion</label>
+        <label><input id="specimen-large-text" type="checkbox" /> Large text</label>
+        <button id="specimen-measure" type="button">Capture measurements</button>
+      </div>
+      <p id="specimen-description"></p>
+    </header>
+    <main id="specimen-outer-scope">
+      <section id="specimen-inner-scope" aria-label="Resolved runtime controls">
+        <div
+          id="specimen-backdrop"
+          class="menu-scene"
+          data-backdrop="interface"
+          aria-hidden="true"
+        ></div>
+        <div id="specimen-samples"></div>
+      </section>
+    </main>
+    <details class="specimen-measurements">
+      <summary>Rendered paint and reading rectangles</summary>
+      <p>Rectangles use viewport CSS pixels. Screenshot scale is image width / viewport width.</p>
+      <pre id="specimen-measurements"></pre>
+    </details>
+  </body>
+</html>
