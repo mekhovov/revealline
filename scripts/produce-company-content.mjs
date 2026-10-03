@@ -1,3 +1,9 @@
+import {
+  SKY_WATCH_CAMPAIGN,
+  createSkyWatchProject,
+  createSkyWatchRewards,
+  createSkyWatchLocalization,
+} from '../game/company-campaigns/sky-watch.mjs';
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
@@ -49,6 +55,14 @@ export async function produceCompanyContent({
   const files = new Map(),
     projects = new Map();
   const factories = new Map([
+    [
+      SKY_WATCH_CAMPAIGN.id,
+      {
+        project: createSkyWatchProject,
+        rewards: createSkyWatchRewards,
+        localization: createSkyWatchLocalization,
+      },
+    ],
     ...COMPANY_CAMPAIGNS.map((entry) => [
       entry.id,
       {
@@ -70,9 +84,10 @@ export async function produceCompanyContent({
     ]),
   ]);
   const campaigns = await Promise.all(
-    [...COMPANY_CAMPAIGNS, ...CURRICULUM_CAMPAIGNS].map(async (definition) => {
+    [...COMPANY_CAMPAIGNS, ...CURRICULUM_CAMPAIGNS, SKY_WATCH_CAMPAIGN].map(async (definition) => {
       const factory = factories.get(definition.id);
       const source = factory.project({
+        assets,
         brandId: definition.brandId,
         campaignId: definition.id,
         artwork,

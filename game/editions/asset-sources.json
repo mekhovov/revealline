@@ -9872,6 +9872,72 @@
       "accession": "2009.300.2713",
       "credit": "Brooklyn Museum Costume Collection at The Metropolitan Museum of Art, Gift of the Brooklyn Museum, 2009; Gift of Mrs. Edward S. Harkness in memory of her mother, Elizabeth Greenman Stillman, 1931",
       "context": "Separate Ukrainian shirt fragment used for source comparison. Recorded materials silk, linen and metal; no precise locality, maker or symbolic interpretation inferred from the photograph."
+    },
+    {
+      "id": "social-drone-sky-watch-poster-v1",
+      "path": "game/editions/assets/social-drone/sky-watch-v1.png",
+      "sha256": "3aa3c35ddb9f16b82d29020859ea5f397074b9cbc767e22d587b00fb5119f91d",
+      "bytes": 973469,
+      "publication": "public",
+      "revision": 1,
+      "rights": "user-supplied-user-requested-publication",
+      "source": "User-provided Social Drone clip and still; requested public playable level on 2026-10-03.",
+      "review": "Exact supplied media; descriptive text is not a soundtrack transcription."
+    },
+    {
+      "id": "social-drone-sky-watch-video-v1",
+      "path": "game/editions/assets/social-drone/sky-watch-v1.mp4",
+      "sha256": "880e5dd71b9dafc0efd318a7dd12216b35bc18e7cb5f2abd155663fb91aae496",
+      "bytes": 3204423,
+      "publication": "public",
+      "revision": 1,
+      "rights": "user-supplied-user-requested-publication",
+      "source": "User-provided Social Drone clip and still; requested public playable level on 2026-10-03.",
+      "review": "Exact supplied media; descriptive text is not a soundtrack transcription."
+    },
+    {
+      "id": "social-drone-sky-watch-en-description-v1",
+      "path": "game/editions/assets/social-drone/sky-watch-en-v1.txt",
+      "sha256": "d8fec85fe861b2aa66f6edeafd7f36a10ab8a038bc9b64298322a831346d5ba1",
+      "bytes": 237,
+      "publication": "public",
+      "revision": 1,
+      "rights": "original-accessible-description",
+      "source": "User-provided Social Drone clip and still; requested public playable level on 2026-10-03.",
+      "review": "Exact supplied media; descriptive text is not a soundtrack transcription."
+    },
+    {
+      "id": "social-drone-sky-watch-en-captions-v1",
+      "path": "game/editions/assets/social-drone/sky-watch-en-v1.vtt",
+      "sha256": "8461b3e10ce68f3b25b88fcba7c8b4359c122dbc01a36515c2c10ad70e64126f",
+      "bytes": 100,
+      "publication": "public",
+      "revision": 1,
+      "rights": "original-accessible-description",
+      "source": "User-provided Social Drone clip and still; requested public playable level on 2026-10-03.",
+      "review": "Exact supplied media; descriptive text is not a soundtrack transcription."
+    },
+    {
+      "id": "social-drone-sky-watch-uk-description-v1",
+      "path": "game/editions/assets/social-drone/sky-watch-uk-v1.txt",
+      "sha256": "93a0c9a85ec70a6a928879240b271d2e54a80412c56fd60e9debf17066bb015d",
+      "bytes": 387,
+      "publication": "public",
+      "revision": 1,
+      "rights": "original-accessible-description",
+      "source": "User-provided Social Drone clip and still; requested public playable level on 2026-10-03.",
+      "review": "Exact supplied media; descriptive text is not a soundtrack transcription."
+    },
+    {
+      "id": "social-drone-sky-watch-uk-captions-v1",
+      "path": "game/editions/assets/social-drone/sky-watch-uk-v1.vtt",
+      "sha256": "7da415c3006148cf20a9972203ddd57ed262b229da5b056bd64884a63df882d0",
+      "bytes": 134,
+      "publication": "public",
+      "revision": 1,
+      "rights": "original-accessible-description",
+      "source": "User-provided Social Drone clip and still; requested public playable level on 2026-10-03.",
+      "review": "Exact supplied media; descriptive text is not a soundtrack transcription."
     }
   ]
 }

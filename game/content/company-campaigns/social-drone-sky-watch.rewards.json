@@ -1,0 +1,90 @@
+[
+  {
+    "brandId": "social-drone-ua",
+    "campaignId": "social-drone-sky-watch",
+    "format": "revealline-completion-reward.v1",
+    "id": "social-drone-sky-watch-01-discovery",
+    "locales": {
+      "en": {
+        "teaser": "Reveal the picture to unlock the original aerial clip.",
+        "title": "Sky Watch"
+      },
+      "uk": {
+        "teaser": "Відкрийте зображення, щоб переглянути оригінальне відео з повітря.",
+        "title": "Небесна варта"
+      }
+    },
+    "payloads": [
+      {
+        "asset": {
+          "assetId": "social-drone-sky-watch-poster-v1",
+          "sha256": "3aa3c35ddb9f16b82d29020859ea5f397074b9cbc767e22d587b00fb5119f91d"
+        },
+        "id": "social-drone-sky-watch-image",
+        "locales": {
+          "en": {
+            "alt": "A white fixed-wing drone above fields and a river.",
+            "title": "Sky Watch"
+          },
+          "uk": {
+            "alt": "Білий безпілотник із нерухомим крилом над полями й річкою.",
+            "title": "Небесна варта"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "asset": {
+          "assetId": "social-drone-sky-watch-video-v1",
+          "sha256": "880e5dd71b9dafc0efd318a7dd12216b35bc18e7cb5f2abd155663fb91aae496"
+        },
+        "captions": {
+          "en": {
+            "assetId": "social-drone-sky-watch-en-captions-v1",
+            "sha256": "8461b3e10ce68f3b25b88fcba7c8b4359c122dbc01a36515c2c10ad70e64126f"
+          },
+          "uk": {
+            "assetId": "social-drone-sky-watch-uk-captions-v1",
+            "sha256": "7da415c3006148cf20a9972203ddd57ed262b229da5b056bd64884a63df882d0"
+          }
+        },
+        "id": "social-drone-sky-watch-clip",
+        "locales": {
+          "en": { "title": "Sky Watch · original clip" },
+          "uk": { "title": "Небесна варта · оригінальне відео" }
+        },
+        "poster": {
+          "assetId": "social-drone-sky-watch-poster-v1",
+          "sha256": "3aa3c35ddb9f16b82d29020859ea5f397074b9cbc767e22d587b00fb5119f91d"
+        },
+        "transcript": {
+          "en": {
+            "assetId": "social-drone-sky-watch-en-description-v1",
+            "sha256": "d8fec85fe861b2aa66f6edeafd7f36a10ab8a038bc9b64298322a831346d5ba1"
+          },
+          "uk": {
+            "assetId": "social-drone-sky-watch-uk-description-v1",
+            "sha256": "93a0c9a85ec70a6a928879240b271d2e54a80412c56fd60e9debf17066bb015d"
+          }
+        },
+        "type": "video"
+      }
+    ],
+    "requirements": {
+      "learning": [],
+      "mastery": [],
+      "missions": [
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "908f94d0e059dd0c" },
+            { "difficulty": "standard", "gameplayId": "9ff2769e9521efd6" },
+            { "difficulty": "expert", "gameplayId": "384c52abcf04059c" }
+          ],
+          "missionId": "social-drone-sky-watch-01"
+        }
+      ]
+    },
+    "revision": "1",
+    "scope": { "id": "social-drone-sky-watch-01", "kind": "mission" }
+  }
+]

@@ -1,3 +1,4 @@
+import { createEarnedVideo } from './earned-video.mjs';
 import { rewardPresentationItems } from '../rewards/audio-groups.mjs';
 import { mountRewardAudioGroup } from './reward-audio-group.mjs';
 import { loadRewardImage } from './reward-image.mjs';
@@ -202,6 +203,14 @@ export async function mountEditionRewards({
     },
   });
   await store.load();
+  const earnedVideo = createEarnedVideo({
+    document: doc,
+    window: win,
+    provider,
+    audioMaster,
+    musicDucker,
+    getReducedMotion,
+  });
 
   function releaseMedia() {
     mediaVisit++;
@@ -999,8 +1008,14 @@ export async function mountEditionRewards({
     snapshot: () => ({ state, progress }),
     cosmeticBodies: () => cosmeticProjection.available.map((item) => item.recipeId),
     closeResultDetails: () => resultLayout.close(),
+    presentVictoryVideo(run, opener) {
+      refresh();
+      if (!played.has(run)) return false;
+      return earnedVideo.present(run, state.receipts, opener);
+    },
     dispose() {
       disposed = true;
+      earnedVideo.dispose();
       importVisit++;
       releaseMedia();
       releaseShelfPictures();
