@@ -180,7 +180,7 @@ function surfacePixels(kind, color, seed, size, pixel) {
   const leafGrid = 18,
     leafRandom = random(seed ^ 0x6a09e667),
     leaves =
-      kind === 'forest-floor' || kind === 'woodland-canopy'
+      kind === 'forest-floor'
         ? Array.from({ length: leafGrid * leafGrid }, (_, index) => {
             const angle = leafRandom() * Math.PI * 2,
               u = ((index % leafGrid) + 0.5) / leafGrid,
@@ -319,24 +319,6 @@ function surfacePixels(kind, color, seed, size, pixel) {
         relief += mottling * 0.045;
         roughness = 0.95;
       }
-      if (kind === 'woodland-canopy') {
-        // Original leaf clusters: broad shade carries at flight distance, while
-        // scattered elliptical leaves and veins resolve only at close range.
-        // Opaque, mipmapped maps preserve the established crown silhouette.
-        const cellX = Math.floor(u * leafGrid),
-          cellY = Math.floor(v * leafGrid),
-          detail = leaves[cellY * leafGrid + cellX],
-          dx = u * leafGrid - cellX - detail.x,
-          dy = v * leafGrid - cellY - detail.y,
-          along = (dx * detail.cosine + dy * detail.sine) / (detail.length * 1.7),
-          across = (-dx * detail.sine + dy * detail.cosine) / (detail.width * 2.1),
-          outline = along * along + across * across,
-          blade = Math.max(0, Math.min(1, (1 - outline) * 5)),
-          vein = Math.max(0, 1 - Math.abs(across) / 0.1) * blade;
-        shade = 0.76 + broad(u, v) * 0.2 + mottling * 0.12 + blade * 0.14 - vein * 0.035;
-        relief = mottling * 0.04 + blade * 0.025 - vein * 0.01;
-        roughness = 0.88 + grain * 0.06;
-      }
       if (kind === 'solar') {
         const bus = (u * 12) % 1 < 0.022,
           joint = (u * 6) % 1 < 0.025 || (v * 8) % 1 < 0.025;
@@ -454,7 +436,7 @@ function surfacePixels(kind, color, seed, size, pixel) {
       properties[at + 2] = kind === 'metal' ? 170 : 0;
       properties[at + 3] = 255;
     }
-  const reliefScale = woodlandSurface || kind === 'woodland-canopy' ? size / 64 : 2;
+  const reliefScale = woodlandSurface ? size / 64 : 2;
   for (let y = 0; y < size; y++)
     for (let x = 0; x < size; x++) {
       const at = (y * size + x) * 4;
@@ -485,7 +467,7 @@ function surfaceMaps(kind, color, { pixel = false, seed = 971 } = {}) {
     texture.userData.surface = surface;
     if (kind === 'storage-steel')
       texture.name = `warehouse-storage-steel-${['albedo', 'normal', 'orm'][index]}`;
-    if (kind === 'bark' || kind === 'forest-floor' || kind === 'woodland-canopy')
+    if (kind === 'bark' || kind === 'forest-floor')
       texture.name = `woodland-${kind}-${['albedo', 'normal', 'orm'][index]}`;
     return texture;
   });
@@ -1333,24 +1315,8 @@ export function buildWorldVisuals({
     const rng = random(environment === 'woodland' ? 7947 : 997),
       count = environment === 'woodland' ? 66 : 32;
     const radius = Math.hypot(width, depth) / 2 + 10;
-    const naturalWoodland = environment === 'woodland' && !pixel && !kit,
-      canopyMaps = naturalWoodland ? surfaceMaps('woodland-canopy', 0xffffff) : null,
-      leaves = [0x496b50, 0x345749, 0x7c905d].map((color) =>
-        material(
-          color,
-          canopyMaps
-            ? { ...canopyMaps, normalScale: new THREE.Vector2(0.22, 0.22), vertexColors: true }
-            : {},
-        ),
-      ),
-      bark = kit
-        ? kit.paint('timber')
-        : naturalWoodland
-          ? material(0xffffff, {
-              ...surfaceMaps('bark', 0x63554a),
-              normalScale: new THREE.Vector2(0.3, 0.3),
-            })
-          : material(0x63554a);
+    const leaves = [material(0x496b50), material(0x345749), material(0x7c905d)],
+      bark = kit ? kit.paint('timber') : material(0x63554a);
     // Meadow groves frame a clearing instead of repeating a circular tree fence.
     // Unequal groups and staggered depth leave broad openings. Their spread is
     // capped in metres so larger school arenas retain recognizable silhouettes.
@@ -1425,17 +1391,6 @@ export function buildWorldVisuals({
     // would submit every crown even when the camera sees only one edge.
     const canopyBatches = new Map();
     const canopyShape = environment === 'woodland' ? new THREE.IcosahedronGeometry(1, 1) : null;
-    if (naturalWoodland) {
-      const positions = canopyShape.attributes.position,
-        colors = new Float32Array(positions.count * 3);
-      for (let i = 0; i < positions.count; i++) {
-        // Stable local-space ambient shading does not alter geometry or vary
-        // with quality. The lighter upper crown reads above a quieter underside.
-        const light = 0.72 + (positions.getY(i) + 1) * 0.14;
-        colors.set([light, light, light], i * 3);
-      }
-      canopyShape.setAttribute('color', new THREE.BufferAttribute(colors, 3));
-    }
     for (let i = 0; i < count; i++) {
       const angle = (i / count) * Math.PI * 2,
         r = radius + rng() * 24,
@@ -2265,7 +2220,7 @@ const themedMaterials = (colors, overrides = {}) =>
   );
 const collectionSources = {
   'military-field': {
-    pattern: 'foundry',
+    pattern: 'field',
     ornament: 0xa8b382,
     paper: 0xf0efdc,
     materials: themedMaterials({
@@ -2653,7 +2608,18 @@ function familySurface(pattern, role, x, y, grain) {
       0.92 + Math.sin(x * 0.38 + Math.sin(y * 0.049) * 2) * 0.055 + surfaceMottle(x, y) * 0.1;
   if (role === 'concrete') shade *= edge < 1 ? 0.85 : 0.96 + surfaceMottle(x, y) * 0.07;
   if (role === 'rubber') shade *= (x + y) % 16 < 2 ? 0.91 : 1;
-  if (pattern === 'foundry') {
+  if (pattern === 'field') {
+    // Recessed equipment panels with corner fasteners and a short service slot.
+    // Keep the subdued field palette; readable structure must survive grayscale.
+    if (solid) {
+      shade *= edge < 2 ? 0.78 : 1;
+      const fastener =
+        (Math.abs(u - 8) <= 1 || Math.abs(u - 55) <= 1) &&
+        (Math.abs(v - 8) <= 1 || Math.abs(v - 55) <= 1);
+      if (fastener) shade *= 0.55;
+      if (role === 'enamel' && v >= 44 && v <= 46 && u >= 22 && u <= 41) shade *= 0.64;
+    }
+  } else if (pattern === 'foundry') {
     // Bolted, heat-darkened access plates with short edge machining marks.
     if (solid) {
       shade *= edge < 2 ? 0.71 : edge === 3 ? 1.12 : 1;
