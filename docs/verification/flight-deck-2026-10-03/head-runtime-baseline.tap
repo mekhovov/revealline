@@ -1,0 +1,109 @@
+TAP version 13
+# Subtest: Team Settings has all eight categories, original controls, and exact lobby return without preparing or saving
+ok 1 - Team Settings has all eight categories, original controls, and exact lobby return without preparing or saving # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.875625
+  ...
+# Subtest: Settings stays above a retained paused Team attempt and reopens its selected category
+ok 2 - Settings stays above a retained paused Team attempt and reopens its selected category # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.070583
+  ...
+# Subtest: compact Team native cancellation returns to categories before the host closes Settings
+ok 3 - compact Team native cancellation returns to categories before the host closes Settings # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.045333
+  ...
+# Subtest: Settings tab keys stay in the categories and Tab cannot reach inactive content or the arena
+ok 4 - Settings tab keys stay in the categories and Tab cannot reach inactive content or the arena # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.034625
+  ...
+# Subtest: a controller selects Team Settings and paused quick sound without resuming
+not ok 5 - a controller selects Team Settings and paused quick sound without resuming
+  ---
+  duration_ms: 2133.233958
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/appearance-publish-20261002/game/test/coop-shared-settings.test.mjs:190:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected ... Lines skipped
+    
+      {
+        hud: [
+    ...
+            'revealline.team-contextual-teaching.v1',
+            '{"format":"revealline.team-contextual-teaching.v1","introduced":["cut"],"completed":[]}'
+    +     ],
+    +     [
+    +       'revealline.couch-radio-setup.v1',
+    +       '{"entries":[],"format":"RadioSetup.v1"}'
+          ]
+        ]
+      }
+  code: 'ERR_TEST_FAILURE'
+  ...
+# Subtest: closing Settings does not cancel a pending Team picture and late readiness does not steal focus
+ok 6 - closing Settings does not cancel a pending Team picture and late readiness does not steal focus # SKIP test name does not match pattern
+  ---
+  duration_ms: 2.413208
+  ...
+# Subtest: Settings Back leaves a pending Team import under its existing operation owner
+ok 7 - Settings Back leaves a pending Team import under its existing operation owner # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.053667
+  ...
+# Subtest: a blur Settings close cannot focus or resume in the background
+ok 8 - a blur Settings close cannot focus or resume in the background # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.047459
+  ...
+# Subtest: a hidden Settings close cannot focus or resume in the background
+ok 9 - a hidden Settings close cannot focus or resume in the background # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.114584
+  ...
+# Subtest: a pagehide Settings close cannot focus or resume in the background
+ok 10 - a pagehide Settings close cannot focus or resume in the background # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.040208
+  ...
+# Subtest: queued old close and newer focus cannot replace the current Settings visit
+ok 11 - queued old close and newer focus cannot replace the current Settings visit # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.034291
+  ...
+# Subtest: paused keyboard quick Sound and Settings mute share one owner without resuming
+ok 12 - paused keyboard quick Sound and Settings mute share one owner without resuming # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.029625
+  ...
+# Subtest: terminal disposal retires Settings controls without reopening, refocusing, saving or retaining pictures
+ok 13 - terminal disposal retires Settings controls without reopening, refocusing, saving or retaining pictures # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.081875
+  ...
+# Subtest: a newer focus choice during native Settings opening wins over the default category focus
+ok 14 - a newer focus choice during native Settings opening wins over the default category focus # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.02725
+  ...
+# Subtest: a reopen during return visibility checking retires the old Settings close
+ok 15 - a reopen during return visibility checking retires the old Settings close # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.026833
+  ...
+# Subtest: a background during return visibility checking retires the old Settings close
+ok 16 - a background during return visibility checking retires the old Settings close # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.024208
+  ...
+1..16
+# tests 16
+# suites 0
+# pass 0
+# fail 1
+# cancelled 0
+# skipped 15
+# todo 0
+# duration_ms 9729.361125

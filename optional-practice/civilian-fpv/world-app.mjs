@@ -247,7 +247,7 @@ const COPY_EN = {
   packsHelp: 'Install portable worlds and back up your recorded flights.',
   importPack: 'Import .rlpack / editable project',
   backupProofs: 'Back up flight records',
-  restoreProofs: 'Restore flight records',
+  restoreProofs: 'Import recordings / examples',
   prepareRuntime: 'Prepare simulator offline',
   keepOffline: 'Request persistent storage',
   close: 'Close',
@@ -412,7 +412,7 @@ const COPY_UK = {
   packsHelp: 'Встановлюйте світи та створюйте резервні копії польотів.',
   importPack: 'Імпорт .rlpack / проєкту',
   backupProofs: 'Резервна копія польотів',
-  restoreProofs: 'Відновити записи',
+  restoreProofs: 'Імпорт записів / прикладів',
   keepOffline: 'Запросити постійне сховище',
   prepareRuntime: 'Підготувати автономний запуск',
   close: 'Закрити',
@@ -726,6 +726,7 @@ export function mountWorldApp({
     records = [],
     worldStore = null,
     recordStore = null,
+    proofImport = null,
     packRemovalReview = null,
     restorePackIdentity = null,
     disposed = false;
@@ -868,16 +869,59 @@ export function mountWorldApp({
   const txt = (en, uk) => (locale === 'uk' ? uk : en);
   const localized = (value) =>
     typeof value === 'string' ? value : (value?.[locale] ?? value?.en ?? '');
+  // Creator labels may use the current theme name; exact authored/recorded
+  // profile documents keep their historical title and proof identity.
+  const creatorThemeLabel = (profile) => {
+    const workshop = THEME_PROFILES.find((entry) => entry.id === 'industrial-workshop');
+    return profile?.id === workshop.id && dataIdentity(profile) === dataIdentity(workshop)
+      ? txt('Flight Deck', 'Польотна палуба')
+      : localized(profile?.title);
+  };
   const label = (entry) => entry.course.locales[locale].title;
-  const demonstrationCache = new WeakMap();
+  let demonstrationCache = new WeakMap();
+  function demonstrationEntry(entry) {
+    const course =
+      entry.appearanceCourse === entry.course ? (entry.sourceCourse ?? entry.course) : entry.course;
+    return {
+      ...entry,
+      course,
+      sourceCourse: course,
+      appearanceCourse: course,
+      presentation: undefined,
+    };
+  }
   function demonstrationFor(entry, mode) {
     if (!entry) return null;
+    entry = demonstrationEntry(entry);
     const cache = demonstrationCache.get(entry.course) ?? new Map();
     if (cache.has(mode)) return cache.get(mode);
     if (!entry.legacy) {
-      const candidate = WORLD_DEMONSTRATIONS.find(
-        (item) => item.proof.course === entry.id && item.proof.mode === mode,
+      const sourceIdentity = dataIdentity(validateWorldCourse(entry.course));
+      let candidate = WORLD_DEMONSTRATIONS.find(
+        (item) =>
+          item.proof.course === entry.id &&
+          item.proof.mode === mode &&
+          item.sourceIdentity === sourceIdentity,
       );
+      if (!candidate && !entry.projectId) {
+        const saved = records.find((r) => {
+          if (
+            r.status !== 'verified' ||
+            r.diagnostic !== 'complete' ||
+            r.packIdentity !== entry.packIdentity ||
+            r.proof.course !== entry.id ||
+            r.proof.mode !== mode ||
+            r.proof.session !== 'demonstration'
+          )
+            return false;
+          try {
+            return dataIdentity(validateWorldCourse(r.course)) === sourceIdentity;
+          } catch {
+            return false;
+          }
+        });
+        if (saved) candidate = { sourceIdentity, proof: saved.proof };
+      }
       const proof = candidate?.proof;
       // Catalogue availability must not initialize a physics world. The full
       // normalized source fingerprint binds this data to the exact revision;
@@ -888,7 +932,7 @@ export function mountWorldApp({
         proof.model === WORLD_FLIGHT_MODEL &&
         proof.backend === WORLD_COLLISION_BACKEND &&
         proof.responseIdentity === responseIdentity(proof.response) &&
-        candidate.sourceIdentity === dataIdentity(validateWorldCourse(entry.course))
+        candidate.sourceIdentity === sourceIdentity
           ? proof
           : null;
       cache.set(mode, match);
@@ -909,6 +953,7 @@ export function mountWorldApp({
     return match;
   }
   function watchDemonstration(entry, mode = $('flight-mode').value) {
+    entry = demonstrationEntry(entry);
     const proof = demonstrationFor(entry, mode);
     if (!proof)
       throw new Error(
@@ -1191,7 +1236,7 @@ export function mountWorldApp({
       status.setAttribute('role', 'status');
       $('world-editor-canvas').after(status);
     }
-    status.textContent = `${txt('Preview appearance', 'Оформлення перегляду')}: ${localized(profile.title)}.`;
+    status.textContent = `${txt('Preview appearance', 'Оформлення перегляду')}: ${creatorThemeLabel(profile)}.`;
     $('creator-theme').title = txt(
       'Used when World appearance is set to Authored appearance in Settings.',
       'Використовується, коли в налаштуваннях оформлення світу вибрано «Авторське оформлення».',
@@ -1849,9 +1894,10 @@ export function mountWorldApp({
         start.dataset.simIcon = 'play';
         start.setAttribute('aria-label', `${start.textContent}: ${localized(lesson.title)}`);
         card.append(meta, start);
-        if (demonstrationFor(entry, lesson.mode)) {
-          const watch = button(txt('Watch demonstration', 'Переглянути демонстрацію'), () =>
-            watchDemonstration(entry, lesson.mode),
+        if (demonstrationFor(entry, $('flight-mode').value)) {
+          const watch = button(
+            `${txt('Watch demonstration', 'Переглянути демонстрацію')} · ${$('flight-mode').selectedOptions[0].textContent}`,
+            () => watchDemonstration(entry),
           );
           watch.dataset.simIcon = 'replay';
           watch.setAttribute('aria-label', `${watch.textContent}: ${localized(lesson.title)}`);
@@ -1868,7 +1914,7 @@ export function mountWorldApp({
     if ($('creator-theme'))
       for (const option of $('creator-theme').options)
         option.textContent =
-          localized(THEME_PROFILES.find((t) => t.id === option.value)?.title) || option.value;
+          creatorThemeLabel(THEME_PROFILES.find((t) => t.id === option.value)) || option.value;
     $('theme-tabs').replaceChildren();
     for (const item of [
       { id: 'all', title: { en: 'All worlds', uk: 'Усі світи' } },
@@ -2021,7 +2067,7 @@ export function mountWorldApp({
             `${localized(ACTIVITY_NAMES[entry.activity])} · ${COPY_UK[entry.difficulty] && locale === 'uk' ? COPY_UK[entry.difficulty] : entry.difficulty} · ${entry.duration ?? 3} ${txt('min', 'хв')}`,
           ),
         );
-        if (demonstrationFor(entry, 'self-level') && demonstrationFor(entry, 'acro')) {
+        if (demonstrationFor(entry, $('flight-mode').value)) {
           const watch = button(
             txt('Watch example', 'Переглянути приклад'),
             () => watchDemonstration(entry),
@@ -2460,13 +2506,22 @@ export function mountWorldApp({
         }
       }
     }
+    if (recordStore) records = await recordStore.list();
+    demonstrationCache = new WeakMap();
+    let recoveryError = null;
     if (recordStore) {
-      [records, recovery] = await Promise.all([recordStore.list(), recordStore.session()]);
+      try {
+        recovery = await recordStore.session();
+      } catch (error) {
+        recoveryError = error;
+      }
     }
+    if (disposed) return;
     renderFilters();
     renderCatalogue();
     renderPlaylist();
     renderPacks();
+    if (recoveryError) throw recoveryError;
   }
   function dependencyAvailable(packIdentity, courseId) {
     return catalogue.some((entry) => entry.packIdentity === packIdentity && entry.id === courseId);
@@ -3011,7 +3066,7 @@ export function mountWorldApp({
         el('strong', record.course.locales?.[locale]?.title ?? record.course.id),
         el(
           'small',
-          `${record.status === 'verified' ? txt('Previously verified', 'Раніше перевірено') : record.status === 'invalid' ? txt('Invalid recording', 'Недійсний запис') : txt('Verification pending', 'Очікує перевірки')} · ${available ? txt('Required content available', 'Потрібний вміст доступний') : txt('Required pack missing', 'Потрібний пакунок відсутній')} · ${record.diagnostic} · ${record.proof.frames?.length ?? 0} ${txt('ticks', 'тактів')}`,
+          `${record.proof.session === 'demonstration' ? txt('Example · ', 'Приклад · ') : ''}${record.status === 'verified' ? txt('Previously verified', 'Раніше перевірено') : record.status === 'invalid' ? txt('Invalid recording', 'Недійсний запис') : txt('Verification pending', 'Очікує перевірки')} · ${available ? txt('Required content available', 'Потрібний вміст доступний') : txt('Required pack missing', 'Потрібний пакунок відсутній')} · ${record.diagnostic} · ${record.proof.frames?.length ?? 0} ${txt('ticks', 'тактів')}`,
         ),
         button(txt('Export', 'Експорт'), async () =>
           download(JSON.stringify((await exportProofParts([record]))[0]), `${record.id}.json`),
@@ -4204,7 +4259,7 @@ export function mountWorldApp({
       beginnerCoach.open(learning, {
         mode: requestedMode,
         modePractice,
-        demonstration: demonstrationFor(entry, requestedMode),
+        demonstration: demonstrationFor({ ...entry, course: learning.course }, requestedMode),
         practice: Boolean(options.recover),
         replay: Boolean(options.replayProof),
       });
@@ -4577,50 +4632,105 @@ export function mountWorldApp({
   async function restoreProofs(file) {
     if (!recordStore) throw new Error('Flight storage is unavailable.');
     if (file.size > 32 * 1024 * 1024) throw new Error('Flight archive exceeds 32 MiB.');
-    const restored = await importProofPart(await file.text());
-    let verifiedCount = 0;
-    for (const saved of restored) {
-      const entry = catalogue.find(
-        (e) => e.id === saved.course?.id && e.packIdentity === saved.packIdentity,
-      );
-      let verification = 'missing-dependency',
-        diagnostic = txt('Exact world pack is missing.', 'Точний пакунок світу відсутній.');
-      if (entry) {
-        try {
-          const result = entry.legacy
-            ? await replayFlightCooperatively(entry.course, saved.proof)
-            : await replayWorldFlight(entry.course, saved.proof);
-          verification = 'verified';
-          diagnostic = result.state.status;
-          verifiedCount++;
-          if (
-            entry.legacy &&
-            result.state.status === 'complete' &&
-            saved.proof.session === 'practice'
-          )
-            await notebook.accept(saved.proof);
-        } catch (error) {
-          verification = 'invalid';
-          diagnostic = error.message;
+    pauseFlight();
+    proofImport?.abort();
+    const controller = (proofImport = new AbortController()),
+      active = () => !disposed && !controller.signal.aborted,
+      restored = await importProofPart(await file.text());
+    if (!active()) return;
+    const existing = new Map((await recordStore.list()).map((r) => [r.id, r]));
+    let verifiedCount = 0,
+      imported = 0,
+      failure = null;
+    try {
+      for (const saved of restored) {
+        if (!active()) return;
+        status(
+          txt(
+            `Verifying ${imported + 1}/${restored.length}…`,
+            `Перевірка ${imported + 1}/${restored.length}…`,
+          ),
+        );
+        const entry = catalogue.find(
+            (e) => e.id === saved.course?.id && e.packIdentity === saved.packIdentity,
+          ),
+          example = saved.proof.session === 'demonstration';
+        let verification = 'missing-dependency',
+          diagnostic = txt('Exact world pack is missing.', 'Точний пакунок світу відсутній.');
+        if (entry) {
+          try {
+            if (
+              example &&
+              !entry.legacy &&
+              dataIdentity(validateWorldCourse(saved.course)) !==
+                dataIdentity(validateWorldCourse(entry.course))
+            )
+              throw new Error(
+                txt(
+                  'Example course differs from the installed course.',
+                  'Курс прикладу відрізняється від встановленого.',
+                ),
+              );
+            const result = entry.legacy
+              ? await replayFlightCooperatively(entry.course, saved.proof, {
+                  signal: controller.signal,
+                })
+              : await replayWorldFlight(entry.course, saved.proof, { signal: controller.signal });
+            if (!active()) return;
+            verification = 'verified';
+            diagnostic = result.state.status;
+            verifiedCount++;
+            if (
+              entry.legacy &&
+              result.state.status === 'complete' &&
+              saved.proof.session === 'practice'
+            )
+              await notebook.accept(saved.proof);
+          } catch (error) {
+            verification = 'invalid';
+            diagnostic = error.message;
+          }
         }
+        if (!active()) return;
+        const prior = existing.get(saved.id);
+        if (
+          !(
+            example &&
+            verification === 'verified' &&
+            prior?.status === 'verified' &&
+            prior.diagnostic === diagnostic &&
+            prior.packIdentity === saved.packIdentity
+          )
+        )
+          await recordStore.put({
+            course: saved.course,
+            proof: saved.proof,
+            packIdentity: saved.packIdentity,
+            status: verification,
+            diagnostic,
+            pinned: prior || example ? undefined : (saved.pinned ?? false),
+            ...(saved.presentation ? { presentation: saved.presentation } : {}),
+          });
+        imported++;
       }
-      await recordStore.put({
-        course: saved.course,
-        proof: saved.proof,
-        packIdentity: saved.packIdentity,
-        status: verification,
-        diagnostic,
-        pinned: saved.pinned ?? false,
-        ...(saved.presentation ? { presentation: saved.presentation } : {}),
-      });
+    } catch (error) {
+      failure = error;
+    } finally {
+      if (active()) {
+        try {
+          await refreshStorage();
+        } catch (error) {
+          failure ??= error;
+        }
+        if (active())
+          status(
+            txt(
+              `Imported ${imported}/${restored.length} records or examples; ${verifiedCount} verified.`,
+              `Імпортовано ${imported}/${restored.length} записів або прикладів; перевірено ${verifiedCount}.`,
+            ) + (failure ? ` ${failure.message}` : ''),
+          );
+      }
     }
-    await refreshStorage();
-    status(
-      txt(
-        `Restored ${restored.length} records; ${verifiedCount} verified. Missing and invalid records remain available for export.`,
-        `Відновлено ${restored.length} записів; перевірено ${verifiedCount}. Неперевірені записи збережено для експорту.`,
-      ),
-    );
   }
 
   const flightControls = $('sim-flight-controls');
@@ -5241,22 +5351,24 @@ export function mountWorldApp({
   });
   on($('flight-mode'), 'change', () => {
     const selectedMode = $('flight-mode').value;
+    renderCatalogue();
     if (checkpointRequest) {
       const hasSection = checkpointRequest.index < current.course.steps[selectedMode].length;
-      return startFlight(current, {
+      const proof = hasSection ? demonstrationFor(current, selectedMode) : null;
+      return startFlight(proof ? demonstrationEntry(current) : current, {
         paused: true,
         checkpoint: {
           ...checkpointRequest,
           mode: selectedMode,
           index: hasSection ? checkpointRequest.index : 0,
-          proof: hasSection ? demonstrationFor(current, selectedMode) : null,
+          proof,
         },
       });
     }
     if (replayProof) {
       const proof = replayKind === 'demonstration' ? demonstrationFor(current, selectedMode) : null;
       return startFlight(
-        current,
+        proof ? demonstrationEntry(current) : current,
         proof ? { preview: true, replayProof: proof, demonstration: true, paused: true } : {},
       );
     }
@@ -5567,6 +5679,7 @@ export function mountWorldApp({
     }),
     async dispose() {
       if (disposed) return;
+      proofImport?.abort();
       packRemovalReview?.close();
       restorePackIdentity = null;
       restorePackInput.remove();

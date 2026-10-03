@@ -86,6 +86,8 @@ const newFinish = (collection) =>
     'obsidian-reliquary',
     'deep-space',
     'moonlit-grove',
+    'ember-foundry',
+    'polar-relay',
   ].includes(collection.id) ||
   (collection.id === 'vyshyvanka' && collection.revision === 'r2');
 function colorsFor(collection) {
@@ -220,6 +222,16 @@ export function industrialTexturePixels(
               ? -9
               : (x % 16) + (y % 16) === 11 && y % 16 > 3 && y % 16 < 8
                 ? 9
+                : 0;
+        else if (recipe === 'ember-foundry')
+          delta =
+            y % 16 === 3 && x % 16 > 3 && x % 16 < 12 ? -10 : x % 16 === 3 && y % 16 === 3 ? 18 : 0;
+        else if (recipe === 'polar-relay')
+          delta =
+            x % 16 === 4 && y % 16 > 4 && y % 16 < 12
+              ? -9
+              : y % 16 === 4 && x % 16 > 9 && x % 16 < 13
+                ? 13
                 : 0;
         else if (tile && y % 8 === 6) delta = -13;
         else if (x % 8 === 2 && y % 8 === 2) delta = 19;

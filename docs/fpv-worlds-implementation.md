@@ -1,14 +1,16 @@
 # FPV World Studio — implementation and player qualification
 
-Current continuation: **3 October 2026**, branch `codex/fpv-tracking-objective-editor`.
-The catalogue has **14 worlds / 148 authored challenges**: the original 60,
-58 school lessons and 30 World Adventures. All 120 original mode-specific
-recordings plus 58 recommended-mode school examples are installed. Main includes
-Themes #955 and Warehouse #966. Content, reimport, ghosts, section practice,
-continuous learning, control/mobile improvements and Hangar/Meadow/Courtyard/
-Woodland/Warehouse refinements are merged. The recorded-section watch → practice loop is merged as #972. The current
-focused increment adds visual Follow/Observe objective editing. See [the current delivery plan](fpv-reviewed-delivery-plan.md)
-and [delivery log](fpv-continuous-delivery.md) for exact evidence and publication.
+Current continuation: **3 October 2026**, branch `codex/fpv-example-recovery-refresh`.
+The catalogue has **14 worlds / 184 authored challenges**: the original 60,
+58 school lessons, 30 World Adventures and 36 Snake Hunt challenges. All 120
+original mode-specific recordings plus 58 recommended-mode school examples are
+installed. Fourteen additional Self-level foundation recordings ship as an
+optional archive in PR #979; they do not increase the default installed count.
+Content, reimport, ghosts, section practice, continuous learning, control/mobile
+improvements and Hangar/Meadow/Courtyard/Woodland/Warehouse refinements are merged,
+as are section replay #972, Follow/Observe editing #975 and pack recovery #977.
+See [the current delivery plan](fpv-reviewed-delivery-plan.md) and
+[delivery log](fpv-continuous-delivery.md) for exact qualification and publication.
 
 Player-feedback sessions no longer block implementation at the owner's request.
 Physical-device, novice-player and broader production-art acceptance remain

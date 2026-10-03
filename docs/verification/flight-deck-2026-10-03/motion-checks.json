@@ -1,0 +1,50 @@
+[
+  {
+    "theme": "Flight Deck",
+    "full": {
+      "transition": "box-shadow 0.1s, outline-color 0.1s, translate 0.07s ease-out",
+      "translate": "0px 2px"
+    },
+    "reduced": {
+      "transition": "none",
+      "translate": "none"
+    },
+    "off": {
+      "border": "none",
+      "image": "none, none",
+      "translate": "none"
+    }
+  },
+  {
+    "theme": "Ember Foundry",
+    "full": {
+      "transition": "box-shadow 0.1s, outline-color 0.1s, translate 0.07s ease-out",
+      "translate": "0px 2px"
+    },
+    "reduced": {
+      "transition": "none",
+      "translate": "none"
+    },
+    "off": {
+      "border": "none",
+      "image": "none, none",
+      "translate": "none"
+    }
+  },
+  {
+    "theme": "Polar Relay",
+    "full": {
+      "transition": "box-shadow 0.1s, outline-color 0.1s, translate 0.07s ease-out",
+      "translate": "0px 2px"
+    },
+    "reduced": {
+      "transition": "none",
+      "translate": "none"
+    },
+    "off": {
+      "border": "none",
+      "image": "none, none",
+      "translate": "none"
+    }
+  }
+]

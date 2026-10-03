@@ -19,6 +19,8 @@ import {
   applyResolvedPresentation,
   createThemeBootstrapSeed,
   saveAppearanceContext,
+  resolveThemeFamilySelection,
+  resolveStoredAppearance,
 } from '../presentation/theme-system.mjs';
 import {
   getArcadeCollection,
@@ -38,7 +40,13 @@ import { installThemeHost } from '../presentation/theme-host.mjs';
 import { installSimThemeHost } from '../../optional-practice/civilian-fpv/sim-presentation.mjs';
 import { Document } from './helpers/couch-dom.mjs';
 
-const darkAdditions = ['obsidian-reliquary', 'deep-space', 'moonlit-grove'];
+const darkAdditions = [
+  'obsidian-reliquary',
+  'deep-space',
+  'moonlit-grove',
+  'ember-foundry',
+  'polar-relay',
+];
 const additions = ['pocket-lcd', 'copper-observatory', 'sakura-station', ...darkAdditions];
 const digest = (value) => createHash('sha256').update(value).digest('hex');
 function spriteDigest(collection) {
@@ -84,28 +92,59 @@ test('current red Vyshyvanka has new exact interface/Arcade pins while the origi
   assert.equal(getArcadeCollection('vyshyvanka', 'r3'), null);
 });
 
-test('Classic Field Kit changes its current display name through a new revision and keeps exact legacy documents', () => {
+test('Signal Blue keeps both earlier named revisions and its original identity', () => {
   const oldInterface = getInterfaceTheme('legacy', 'r1'),
     currentInterface = getInterfaceTheme('legacy'),
     oldFamily = getThemeFamily('legacy', 'r1'),
     currentFamily = getThemeFamily('legacy');
   assert.equal(oldInterface.name, 'Existing appearance');
   assert.equal(oldFamily.name, 'Existing appearance');
-  assert.equal(currentInterface.name, 'Classic Field Kit');
-  assert.equal(currentFamily.name, 'Classic Field Kit');
+  assert.equal(getInterfaceTheme('legacy', 'r2').name, 'Classic Field Kit');
+  assert.equal(getThemeFamily('legacy', 'r2').name, 'Classic Field Kit');
+  assert.equal(currentInterface.name, 'Signal Blue');
+  assert.equal(currentFamily.name, 'Signal Blue');
   assert.deepEqual(currentInterface, {
     ...oldInterface,
-    revision: 'r2',
-    name: 'Classic Field Kit',
+    revision: 'r3',
+    name: 'Signal Blue',
   });
   assert.deepEqual(currentFamily, {
     ...oldFamily,
-    revision: 'r2',
-    name: 'Classic Field Kit',
-    interface: { id: 'legacy', revision: 'r2' },
+    revision: 'r3',
+    name: 'Signal Blue',
+    interface: { id: 'legacy', revision: 'r3' },
   });
   assert.equal(currentFamily.arcade, null);
   assert.equal(currentFamily.sim, null);
+});
+
+test('new players start with Flight Deck while saved personal and community themes remain respected', () => {
+  const preferences = resolveStoredAppearance(),
+    application = resolveThemeFamilySelection(preferences),
+    current = getThemeFamily('industrial-workshop');
+  assert.equal(preferences.familyId, 'follow-game');
+  assert.equal(preferences.arcadeArt, 'follow-game');
+  assert.equal(application.source, 'application');
+  assert.equal(application.family, current);
+  assert.equal(current.name, 'Flight Deck');
+  assert.equal(current.revision, 'r3');
+  assert.equal(getThemeFamily('industrial-workshop', 'r2').name, 'Industrial Workshop');
+  assert.deepEqual(getInterfaceTheme('industrial-workshop'), {
+    ...getInterfaceTheme('industrial-workshop', 'r2'),
+    revision: 'r3',
+    name: 'Flight Deck',
+  });
+  const saved = resolveStoredAppearance({
+    appearance: JSON.stringify({ ...preferences, familyId: 'legacy' }),
+  });
+  assert.equal(resolveThemeFamilySelection(saved).family.name, 'Signal Blue');
+  assert.equal(
+    resolveThemeFamilySelection({
+      ...preferences,
+      appearanceDefault: { familyId: 'vyshyvanka', revision: 'r2' },
+    }).family.id,
+    'vyshyvanka',
+  );
 });
 
 test('each new family resolves complete interface, Arcade and SIM contracts with readable state pairs', () => {
@@ -282,6 +321,8 @@ const variantStyles = {
   'obsidian-reliquary': 'brass',
   'deep-space': 'composite',
   'moonlit-grove': 'wood',
+  'ember-foundry': 'steel',
+  'polar-relay': 'steel',
 };
 const variantCandidate = (id) =>
   createThemeCandidate(createDefaultThemeBundle(), {

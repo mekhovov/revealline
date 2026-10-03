@@ -1,0 +1,45 @@
+{
+  "sourceRevision": "69c8dd10148b657db32da04219ada71e864156a9",
+  "method": "In-memory ESM module and builder input overlay from git blobs; limits and final guard unchanged.",
+  "overriddenPaths": [
+    "game/i18n/catalogs.mjs",
+    "game/locales/en/interface.json",
+    "game/locales/en/tools.json",
+    "game/locales/uk/interface.json",
+    "game/locales/uk/tools.json",
+    "game/presentation/industrial-arcade.mjs",
+    "game/presentation/industrial-workshop.css",
+    "game/presentation/theme-bootstrap.mjs",
+    "game/presentation/theme-system.mjs",
+    "game/test/theme-collection-expansion.test.mjs",
+    "game/test/theme-preview.test.mjs",
+    "game/test/unified-appearance.test.mjs",
+    "optional-practice/civilian-fpv/sim-presentation.mjs",
+    "optional-practice/civilian-fpv/world-app.mjs",
+    "optional-practice/civilian-fpv/world-visuals.mjs",
+    "scripts/refresh-interface-material-grain.mjs"
+  ],
+  "packages": [
+    {
+      "packageId": "civilian-flight",
+      "files": 35,
+      "bytes": 546048,
+      "limits": {
+        "files": 64,
+        "bytes": 8388608
+      }
+    },
+    {
+      "packageId": "civilian-fpv",
+      "files": 67,
+      "bytes": 4178677,
+      "limits": {
+        "files": 72,
+        "bytes": 8388608
+      }
+    },
+    {
+      "error": "Complete optional output exceeds package limits: {\"packageId\":\"fpv-worlds\",\"files\":105,\"bytes\":14556721,\"limits\":{\"files\":104,\"bytes\":16777216}}"
+    }
+  ]
+}
