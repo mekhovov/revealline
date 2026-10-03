@@ -79,7 +79,8 @@
   <label
     >View
     <select id="wall">
-      <option value="terrace">West terrace</option>
+      <option value="terrace">West terrace · 11 m</option>
+      <option value="close">West terrace close · 3 m (preview only)</option>
       <option value="spire">Central spire</option>
     </select></label
   >
@@ -252,8 +253,9 @@
       flight.dispose?.();
       if (c.environment === 'quarry') {
         const spire = wall === 'spire',
-          position = spire ? [-14, 12, -12] : [-23, 5, -20],
-          target = spire ? [0, 11, -34] : [-34, 6, -20],
+          close = wall === 'close',
+          position = spire ? [-14, 12, -12] : close ? [-31, 3.5, -20] : [-23, 5, -20],
+          target = spire ? [0, 11, -34] : close ? [-34, 3.5, -20] : [-34, 6, -20],
           dx = target[0] - position[0],
           dz = target[2] - position[2],
           q = new m.THREE.Quaternion().setFromEuler(
