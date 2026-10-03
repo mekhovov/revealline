@@ -1284,6 +1284,34 @@ export function buildWorldVisuals({
     return obstacleSurfaces.get(kind);
   };
   const garagePaints = new Map();
+  if (environment === 'coast' && !pixel) {
+    const paints = new Map();
+    for (const obstacle of course.obstacles ?? [])
+      for (const { role, layer, geometry } of buildCoastLighthouseGeometry(obstacle)) {
+        const materialRole = role === 'pane' || role === 'trim' ? 'steel' : 'concrete';
+        if (!paints.has(role)) {
+          const colors = { shell: 0xffedcc, band: 0xd95b42, pane: 0x18313b, trim: 0xfff4db },
+            maps = kit ? { map: kit.texture(materialRole) } : obstacleSurface('concrete'),
+            paint = material(kit && role === 'band' ? theme.accent : colors[role], {
+              ...maps,
+              roughness: role === 'pane' ? 0.38 : 0.85,
+              metalness: role === 'trim' ? 0.15 : 0,
+              polygonOffset: true,
+              polygonOffsetFactor: -layer,
+              polygonOffsetUnits: -layer,
+            });
+          // Both maps already belong to this world. No actor or imported scene
+          // owns the lighthouse finish; retain paints through world disposal.
+          world.userData.ownedMaterials.push(paint);
+          paints.set(role, paint);
+        }
+        const finish = mesh(geometry, paints.get(role), world);
+        finish.name = `coast-lighthouse-${role}`;
+        finish.userData = { role: 'coast-lighthouse-landmark', materialRole, cosmeticDetail: true };
+        finish.castShadow = false;
+        finish.receiveShadow = true;
+      }
+  }
   const garageDetailMaterial = (role) => {
     if (!garagePaints.has(role)) {
       const paint = kit
@@ -1956,6 +1984,72 @@ export function buildWorldVisuals({
       surfaceDetail.visible = value === 'high';
     },
   };
+}
+
+/** Closed lantern panes and paint stay on the four faces of the existing tower. */
+export function buildCoastLighthouseGeometry(obstacle) {
+  if (
+    obstacle?.id !== 'coast-tower-lighthouse' ||
+    obstacle.type !== undefined ||
+    obstacle.rotation !== undefined ||
+    !['x', 'y', 'z'].every(
+      (axis, index) =>
+        Number.isFinite(obstacle.min?.[axis]) &&
+        Number.isFinite(obstacle.max?.[axis]) &&
+        obstacle.max[axis] - obstacle.min[axis] === [6000, 22000, 6000][index],
+    )
+  )
+    return [];
+  const min = Object.fromEntries(
+      Object.entries(obstacle.min).map(([key, value]) => [key, value / 1000]),
+    ),
+    max = Object.fromEntries(
+      Object.entries(obstacle.max).map(([key, value]) => [key, value / 1000]),
+    ),
+    cx = (min.x + max.x) / 2,
+    cz = (min.z + max.z) / 2,
+    batches = new Map(),
+    points = [
+      (u, y) => [cx + u, min.y + y, max.z],
+      (u, y) => [max.x, min.y + y, cz - u],
+      (u, y) => [cx - u, min.y + y, min.z],
+      (u, y) => [min.x, min.y + y, cz + u],
+    ],
+    rectangle = (role, point, left, bottom, right, top) => {
+      if (!batches.has(role)) batches.set(role, { positions: [], uv: [] });
+      const row = batches.get(role),
+        corners = [
+          [left, bottom],
+          [right, bottom],
+          [right, top],
+          [left, top],
+        ];
+      for (const index of [0, 1, 2, 0, 2, 3]) {
+        const [u, y] = corners[index];
+        row.positions.push(...point(u, y));
+        row.uv.push(u / 4, y / 4);
+      }
+    };
+  for (const point of points) {
+    rectangle('shell', point, -3, 0, 3, 22);
+    for (const bottom of [4.5, 9.5, 14.5, 21])
+      rectangle('band', point, -3, bottom, 3, Math.min(bottom + 1.3, 22));
+    rectangle('pane', point, -2.35, 18.3, 2.35, 20.7);
+    for (const bottom of [18.3, 20.58])
+      rectangle('trim', point, -2.35, bottom, 2.35, bottom + 0.12);
+    for (const left of [-2.35, -1.2, -0.06, 1.08, 2.23])
+      rectangle('trim', point, left, 18.3, left + 0.12, 20.7);
+  }
+  // A closed, solid service door faces the harbour. It never suggests a tunnel.
+  rectangle('pane', points[0], -0.85, 0.05, 0.85, 2.8);
+  rectangle('trim', points[0], 0.54, 1.1, 0.62, 1.42);
+  return [...batches].map(([role, { positions, uv }]) => {
+    const geometry = new THREE.BufferGeometry();
+    geometry.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3));
+    geometry.setAttribute('uv', new THREE.Float32BufferAttribute(uv, 2));
+    geometry.computeVertexNormals();
+    return { role, layer: ['shell', 'band', 'pane', 'trim'].indexOf(role) + 1, geometry };
+  });
 }
 
 /** Original closed-house artwork, flush with the authored box faces.
