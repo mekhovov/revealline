@@ -144,7 +144,21 @@ and Industrial Workshop retain geometry, UVs, transforms, materials, texture
 pixels and exactly-once resource ownership. The 3,812-byte Warehouse composition
 block is exact in both template and generated module; renderer, replay, collision,
 catalogue and recording inputs are unchanged. No full matrix is repeated solely
-for these inactive incoming branches. Fresh integrated admission follows before
-publication. Local `publicEligible` and `releaseQualified` remain false;
+for these inactive incoming branches.
+
+Integrated clean candidate `860c23d0fe64f9db2f5822b05df34bbea45eb267`, tree
+`639b65e139249e1d38b6432437656e97cc454151`, passes fresh all-three admission,
+committed-input verification, ZIP-member checks and two identical builds. Admitted
+counts are Flight 48 / 679,266 bytes, FPV 69 / 4,380,054 and World Studio
+102 / 15,535,129. All 15 checksums were independently reread. The 95 original
+World inputs total 16,741,291 bytes, leaving 35,925 bytes under the unchanged guard.
+
+Compared with the accepted historical admitted ZIP, 98 of 102 files are exact.
+Only the two scoped incoming runtime modules and their package/worker identity
+metadata differ. All 102 integrated distribution entries are staged and reread
+without modification; ZIP SHA-256:
+`a161e3b0f40c00b3689f4a664e4960d1adf9d9266adcf9a8d7ed45fa7d235e4e`.
+The actual-player observation remains explicitly bound to the historical `fcd075`
+admitted player; the integration proof establishes preserved Warehouse behavior. Local `publicEligible` and `releaseQualified` remain false;
 protected publication, public deployment and physical-device qualification remain
 separate.
