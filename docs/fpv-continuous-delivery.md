@@ -2491,3 +2491,34 @@ in /tmp/fpv-adventure-example-audit; choose six world downloads, add maintained
 export safeguards, run actual import/playback, then publish a focused PR. No
 unit coverage or human feedback prerequisite is added. Remaining artwork is
 Stadium, container yard and Garage; remaining new distinct worlds and H/R7 follow.
+
+### FlightDivision presentation increment — 3 October 2026
+
+The user requested comparable visual quality and keyboard controls after
+authenticated browser inspection of FlightDivision. Controls are published as
+[PR #986](https://github.com/mekhovov/revealline/pull/986), current observed head
+e4bd6044421c58b6e878710b7fe534b2ef063820. Source/package keyboard25/25, touch32/32,
+WebGL section replay53/53 and all three frozen optional admissions pass. The
+post-rebase bundle at /tmp/fpv-two-stick-qualified-main-02 verifies committed
+inputs/ZIP members and two identical builds for4752ae5ef; later changes are
+evidence only. Classic remains available; radio/physics contracts stay intact.
+
+The company candidate failure is inherited exactly: main4fada3958 run37099932827
+and PR986 run37100775504 both report923files /67460882bytes,352018bytes above
+64MiB. Scoped optional-practice succeeds. Preserve the capacity guard and all
+content; no public availability is claimed while protected publication is pending.
+
+Independent branch codex/fpv-flight-presentation-delivery carries original local
+quad/container geometry, initially cherry-picked from sparse art commit297760213.
+It is being refined and qualified separately from controls. The updated delivery
+sequence and reference observations are in fpv-flightdivision-reference-plan.md.
+Current main is4fada3958; old native stacks remain closed, and no new native stack
+is needed for these independent increments.
+
+Final visual hashes are ed102bc426eca18307b89d5ba862254edeafa63ea22c98433b9432d80eba7fa3
+(world-visuals) and0949fde59ee6fd5331940c167d5eef23ff2396fdd66cf79ae610ac863d252a97
+(renderer). Final source and packaged actual-WebGL runs each pass90/90 over44
+rendered pairs with no context loss. Manual CPU qualification passes109/109;
+Pixel remains exact and material/texture counts do not increase. Development
+World package has94runtimefiles /14407506bytes, SHA256
+f7068627691de0666e70856924065c09a04a97e1a4f8cf97778593385bbe79d1.
