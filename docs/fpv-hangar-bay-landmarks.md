@@ -78,8 +78,8 @@ static renderer comparison, not hardware or full-course learning acceptance.
 
 The existing final Stadium playtest on port 8834 is preserved in its separate
 ignored output directory. This Hangar work has no PR or public deployment claim.
-Packaged WebGL/image inspection, prepared-player launch and protected publication
-remain before readiness. No hardware frame-rate, physical
+Source and integrated packaged WebGL/image inspection and prepared-player launch
+are qualified below. Protected publication remains separate from public release. No hardware frame-rate, physical
 device, novice or artist acceptance is inferred. Additional unit coverage stays
 deferred to D6 under the approved plan.
 
@@ -135,3 +135,55 @@ module SHA-256 is
 `e87379a77687b43265dd9fcd7bdb90e04695ca475259e995b60b6452faedc83e`.
 The original source and packaged fixtures remain immutable historical inputs;
 new integrated package and browser evidence must use distinct output paths.
+
+The original packaged browser run also passes all 244 checks / 163 image pairs
+with zero context losses and successful disposal. The complete receipt is
+`docs/evidence/fpv-hangar-bay-landmarks-package-browser.json` (85,550 bytes,
+SHA-256 `33c2fd5625342101fcf2d91663fdaae2ef3819f474b8808b7c1deccb3c65621b`).
+All source and packaged sample records are exactly equal, including before/after
+pixel hashes, changed-pixel counts, draw calls and submitted triangles. The
+visually inspected north-wall comparison is retained at
+`docs/evidence/fpv-hangar-bay-landmarks.png`.
+
+The integrated Node 22.22.2 candidate at
+`dist/fpv-hangar-bay-landmarks-candidate-99a9061d3` binds commit
+`99a9061d372836764c2d70293a0ee2c79264c6bd` / tree
+`3bc111859d2bd2ac2b21f49a4878c573fb08a863`. All three packages again pass two
+identical builds, committed-source and ZIP-member checks under the same limits:
+48 / 679,266 bytes (civilian-flight), 69 / 4,366,922 bytes (civilian-fpv), and
+102 / 15,560,358 bytes (FPV Worlds). See
+`docs/evidence/fpv-hangar-bay-landmarks-main-admission.json`.
+All 15 candidate artifact checksums were independently verified. Integrated
+FPV Worlds ZIP SHA-256:
+`6d930c71334a818c9051f4d0fc68e9c23df5d01401f9c34262e18424598618ca`.
+
+The integrated player is
+`http://127.0.0.1:8834/dist/fpv-hangar-bay-landmarks-playtest-main/index.html`.
+Its 94 files / 15,402,587 bytes have ZIP SHA-256
+`775594f1b8cd3b373726bb27db40b6aabfcc0b3bb182f3ac729873546c429503`;
+see `docs/evidence/fpv-hangar-bay-landmarks-main-playtest.json`.
+The immutable integrated fixture is
+`http://127.0.0.1:8834/dist/fpv-hangar-bay-landmarks-verification-main-package/index.html`
+(31 modules per side / 18,502,998 bytes). All 31 candidate modules match the
+admitted ZIP and player; the generated catalogue remains the only difference
+from source. Full `npm run validate` passes again on this integrated source.
+
+The integrated packaged actual-WebGL run passes all 244 checks / 163 image
+pairs, all three reload cycles and final disposal, with zero unexpected context
+losses. Its complete receipt is
+`docs/evidence/fpv-hangar-bay-landmarks-main-package-browser.json`
+(85,555 bytes; SHA-256
+`273bc9582b28fca7279bf4a78b477306dd6bd7a31713671e32d3c2f509576314`). The receipt's source inventories exactly
+match the immutable fixture manifest. All 163 sample records remain identical
+to the original source and packaged runs, including both raster hashes, changed
+pixels, draw calls and submitted triangles. This directly verifies that the
+current-main integration retains the reviewed Hangar rendering.
+
+The coordinating agent launched the integrated ordinary player, selected
+“Lift and land”, observed the new bay markers, and operated Arm/resume then
+Pause at 0.3 seconds without application errors. The actual-player screenshot
+is `docs/evidence/fpv-hangar-bay-landmarks-main-player.png`. This is a scoped
+launch/control observation; deterministic recording coverage is provided by the
+16 CPU replays above. The preserved Stadium player on port 8834 was untouched.
+All edits after source-bound candidate `99a9061d3` are documentation/evidence;
+the qualified runtime bytes remain exact.
