@@ -55,6 +55,43 @@
     padding: 1.4rem;
     margin: 1.3rem 0;
   }
+  .creator-video-recipe {
+    margin-top: 1.4rem;
+    padding: clamp(1rem, 3vw, 1.5rem);
+    border: 1px solid color-mix(in srgb, #83e5c6 58%, #34454d);
+    border-left: 0.45rem solid #ffdc84;
+    border-radius: 0.35rem;
+    background: linear-gradient(135deg, rgb(131 229 198 / 9%), transparent 42%), #101923;
+  }
+  .creator-video-recipe h3 {
+    margin: 0.2rem 0 1rem;
+    font-size: clamp(1.2rem, 3vw, 1.7rem);
+  }
+  .creator-video-recipe ol {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 17rem), 1fr));
+    gap: 0.75rem;
+    margin: 0;
+    padding: 0;
+    counter-reset: video-recipe;
+    list-style: none;
+  }
+  .creator-video-recipe li {
+    position: relative;
+    min-height: 7rem;
+    padding: 2.9rem 0.9rem 0.9rem;
+    border-top: 1px solid #46605f;
+    counter-increment: video-recipe;
+  }
+  .creator-video-recipe li::before {
+    content: counter(video-recipe, decimal-leading-zero);
+    position: absolute;
+    inset: 0.45rem auto auto 0.9rem;
+    color: #83e5c6;
+    font-size: 1.35rem;
+    font-weight: 850;
+    letter-spacing: 0.08em;
+  }
   .controls,
   .actions {
     display: flex;
