@@ -112,13 +112,12 @@ test('retained and current context pins paint exact material bytes through every
   for (const family of INSTALLED_THEME_FAMILIES) {
     for (const highContrast of [false, true]) {
       for (const ornaments of ['theme', 'off']) {
-        const expected = presentationThemeVariables(
-          resolvePresentation({
-            themeFamily: family,
-            accessibility: { highContrast },
-            ornaments: ornaments === 'off' ? 'off' : 'subtle',
-          }),
-        );
+        const resolved = resolvePresentation({
+          themeFamily: family,
+          accessibility: { highContrast },
+          ornaments: ornaments === 'off' ? 'off' : 'subtle',
+        });
+        const expected = presentationThemeVariables(resolved);
         for (const options of [
           {
             href: `https://example.test/game/?appearanceFamily=${family.id}&appearanceRevision=${family.revision}`,
@@ -134,6 +133,7 @@ test('retained and current context pins paint exact material bytes through every
             { ...options, bootstrapSource },
           );
           assert.equal(dataset.interfaceTheme, family.id);
+          assert.equal(dataset.themeFinish, resolved.materialVariant);
           assert.equal(
             dataset.themeStyled,
             String(family.id !== 'legacy' || family.interface.revision !== 'r1' || highContrast),
