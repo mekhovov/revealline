@@ -6,16 +6,16 @@ export function optionalPracticeCatalogURL(href) {
   const location = new URL(href);
   if (!['http:', 'https:'].includes(location.protocol)) return null;
   const frozen =
-    /^(.*\/)(?:editions\/[a-z][a-z0-9-]*\/)?releases\/v\d+\.\d+\.\d+\/site\/game\/(?:(?:controller-lab|couch)\/)?[^/]*$/.exec(
+    /^(.*\/)(?:editions\/[a-z][a-z0-9-]*\/)?releases\/v\d+\.\d+\.\d+\/site\/game\/(?:(?:controller-lab|couch|snake)\/)?[^/]*$/.exec(
       location.pathname,
     );
   // The optional edition segment must be stripped before the ordinary frozen
   // matcher, whose prefix is intentionally permissive for project hosting.
   const edition =
-    /^(.*\/)editions\/[a-z][a-z0-9-]*\/releases\/v\d+\.\d+\.\d+\/site\/game\/(?:(?:controller-lab|couch)\/)?[^/]*$/.exec(
+    /^(.*\/)editions\/[a-z][a-z0-9-]*\/releases\/v\d+\.\d+\.\d+\/site\/game\/(?:(?:controller-lab|couch|snake)\/)?[^/]*$/.exec(
       location.pathname,
     );
-  const source = /^(.*\/)game\/(?:(?:controller-lab|couch)\/)?[^/]*$/.exec(location.pathname);
+  const source = /^(.*\/)game\/(?:(?:controller-lab|couch|snake)\/)?[^/]*$/.exec(location.pathname);
   const root = edition?.[1] ?? frozen?.[1] ?? source?.[1];
   if (!root || !/^\/(?:[A-Za-z0-9_-]+\/)*$/.test(root)) return null;
   return new URL(root + 'practice/index.json', location.origin).href;

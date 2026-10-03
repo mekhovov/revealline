@@ -1,0 +1,434 @@
+{
+  "scope": "Two configured production open-field demonstrations with legal four-cell loop input; no test runner or state mutation.",
+  "coreSha256": "79d8da0cb894def4d09b5e664f8a28ec6bf18cac1b8fd4c7d43c16b74decd92f",
+  "observations": [
+    {
+      "seed": 17,
+      "initial": {
+        "id": "required-1",
+        "kind": "sprinter",
+        "role": "required",
+        "policyIndex": 0,
+        "x": 0,
+        "y": 8,
+        "age": 0,
+        "wait": 3,
+        "routeIndex": 192,
+        "phase": "rest",
+        "phaseTicks": 8,
+        "heading": "right",
+        "burstLeft": 0,
+        "random": 2722046293
+      },
+      "transitions": [
+        {
+          "tick": 1,
+          "phase": "rest",
+          "phaseTicks": 7,
+          "x": 0,
+          "y": 8,
+          "warnings": 0
+        },
+        {
+          "tick": 2,
+          "phase": "rest",
+          "phaseTicks": 6,
+          "x": 0,
+          "y": 8,
+          "warnings": 0
+        },
+        {
+          "tick": 3,
+          "phase": "rest",
+          "phaseTicks": 5,
+          "x": 0,
+          "y": 8,
+          "warnings": 0
+        },
+        {
+          "tick": 4,
+          "phase": "rest",
+          "phaseTicks": 4,
+          "x": 0,
+          "y": 8,
+          "warnings": 0
+        },
+        {
+          "tick": 5,
+          "phase": "rest",
+          "phaseTicks": 3,
+          "x": 0,
+          "y": 8,
+          "warnings": 0
+        },
+        {
+          "tick": 6,
+          "phase": "rest",
+          "phaseTicks": 2,
+          "x": 0,
+          "y": 8,
+          "warnings": 0
+        },
+        {
+          "tick": 7,
+          "phase": "rest",
+          "phaseTicks": 1,
+          "x": 0,
+          "y": 8,
+          "warnings": 0
+        },
+        {
+          "tick": 8,
+          "phase": "rest",
+          "phaseTicks": 1,
+          "x": 0,
+          "y": 8,
+          "warnings": 0
+        },
+        {
+          "tick": 9,
+          "phase": "rest",
+          "phaseTicks": 1,
+          "x": 0,
+          "y": 8,
+          "warnings": 0
+        },
+        {
+          "tick": 10,
+          "phase": "rest",
+          "phaseTicks": 1,
+          "x": 0,
+          "y": 8,
+          "warnings": 0
+        },
+        {
+          "tick": 11,
+          "phase": "rest",
+          "phaseTicks": 1,
+          "x": 0,
+          "y": 8,
+          "warnings": 0
+        },
+        {
+          "tick": 12,
+          "phase": "rest",
+          "phaseTicks": 1,
+          "x": 0,
+          "y": 8,
+          "warnings": 0
+        },
+        {
+          "tick": 13,
+          "phase": "rest",
+          "phaseTicks": 1,
+          "x": 0,
+          "y": 8,
+          "warnings": 0
+        },
+        {
+          "tick": 14,
+          "phase": "rest",
+          "phaseTicks": 1,
+          "x": 0,
+          "y": 8,
+          "warnings": 0
+        },
+        {
+          "tick": 15,
+          "phase": "rest",
+          "phaseTicks": 1,
+          "x": 0,
+          "y": 8,
+          "warnings": 0
+        },
+        {
+          "tick": 16,
+          "phase": "rest",
+          "phaseTicks": 1,
+          "x": 0,
+          "y": 8,
+          "warnings": 0
+        },
+        {
+          "tick": 17,
+          "phase": "rest",
+          "phaseTicks": 1,
+          "x": 0,
+          "y": 8,
+          "warnings": 0
+        },
+        {
+          "tick": 18,
+          "phase": "rest",
+          "phaseTicks": 1,
+          "x": 0,
+          "y": 8,
+          "warnings": 0
+        },
+        {
+          "tick": 19,
+          "phase": "rest",
+          "phaseTicks": 1,
+          "x": 0,
+          "y": 8,
+          "warnings": 0
+        },
+        {
+          "tick": 20,
+          "phase": "rest",
+          "phaseTicks": 1,
+          "x": 0,
+          "y": 8,
+          "warnings": 0
+        },
+        {
+          "tick": 21,
+          "phase": "rest",
+          "phaseTicks": 1,
+          "x": 0,
+          "y": 8,
+          "warnings": 0
+        },
+        {
+          "tick": 22,
+          "phase": "rest",
+          "phaseTicks": 1,
+          "x": 0,
+          "y": 8,
+          "warnings": 0
+        },
+        {
+          "tick": 23,
+          "phase": "rest",
+          "phaseTicks": 1,
+          "x": 0,
+          "y": 8,
+          "warnings": 0
+        },
+        {
+          "tick": 24,
+          "phase": "rest",
+          "phaseTicks": 1,
+          "x": 0,
+          "y": 8,
+          "warnings": 0
+        }
+      ],
+      "exactRestore": true
+    },
+    {
+      "seed": 6,
+      "initial": {
+        "id": "required-1",
+        "kind": "sprinter",
+        "role": "required",
+        "policyIndex": 0,
+        "x": 6,
+        "y": 2,
+        "age": 0,
+        "wait": 3,
+        "routeIndex": 54,
+        "phase": "rest",
+        "phaseTicks": 8,
+        "heading": "right",
+        "burstLeft": 0,
+        "random": 2722046274
+      },
+      "transitions": [
+        {
+          "tick": 1,
+          "phase": "rest",
+          "phaseTicks": 7,
+          "x": 6,
+          "y": 2,
+          "warnings": 0
+        },
+        {
+          "tick": 2,
+          "phase": "rest",
+          "phaseTicks": 6,
+          "x": 6,
+          "y": 2,
+          "warnings": 0
+        },
+        {
+          "tick": 3,
+          "phase": "rest",
+          "phaseTicks": 5,
+          "x": 6,
+          "y": 2,
+          "warnings": 0
+        },
+        {
+          "tick": 4,
+          "phase": "rest",
+          "phaseTicks": 4,
+          "x": 6,
+          "y": 2,
+          "warnings": 0
+        },
+        {
+          "tick": 5,
+          "phase": "rest",
+          "phaseTicks": 3,
+          "x": 6,
+          "y": 2,
+          "warnings": 0
+        },
+        {
+          "tick": 6,
+          "phase": "rest",
+          "phaseTicks": 2,
+          "x": 6,
+          "y": 2,
+          "warnings": 0
+        },
+        {
+          "tick": 7,
+          "phase": "rest",
+          "phaseTicks": 1,
+          "x": 6,
+          "y": 2,
+          "warnings": 0
+        },
+        {
+          "tick": 8,
+          "phase": "warning",
+          "phaseTicks": 4,
+          "x": 6,
+          "y": 2,
+          "warnings": 1
+        },
+        {
+          "tick": 9,
+          "phase": "warning",
+          "phaseTicks": 3,
+          "x": 6,
+          "y": 2,
+          "warnings": 0
+        },
+        {
+          "tick": 10,
+          "phase": "warning",
+          "phaseTicks": 2,
+          "x": 6,
+          "y": 2,
+          "warnings": 0
+        },
+        {
+          "tick": 11,
+          "phase": "warning",
+          "phaseTicks": 1,
+          "x": 6,
+          "y": 2,
+          "warnings": 0
+        },
+        {
+          "tick": 12,
+          "phase": "burst",
+          "phaseTicks": 0,
+          "x": 6,
+          "y": 3,
+          "warnings": 0
+        },
+        {
+          "tick": 13,
+          "phase": "rest",
+          "phaseTicks": 8,
+          "x": 6,
+          "y": 4,
+          "warnings": 0
+        },
+        {
+          "tick": 14,
+          "phase": "rest",
+          "phaseTicks": 7,
+          "x": 6,
+          "y": 4,
+          "warnings": 0
+        },
+        {
+          "tick": 15,
+          "phase": "rest",
+          "phaseTicks": 6,
+          "x": 6,
+          "y": 4,
+          "warnings": 0
+        },
+        {
+          "tick": 16,
+          "phase": "rest",
+          "phaseTicks": 5,
+          "x": 6,
+          "y": 4,
+          "warnings": 0
+        },
+        {
+          "tick": 17,
+          "phase": "rest",
+          "phaseTicks": 4,
+          "x": 6,
+          "y": 4,
+          "warnings": 0
+        },
+        {
+          "tick": 18,
+          "phase": "rest",
+          "phaseTicks": 3,
+          "x": 6,
+          "y": 4,
+          "warnings": 0
+        },
+        {
+          "tick": 19,
+          "phase": "rest",
+          "phaseTicks": 2,
+          "x": 6,
+          "y": 4,
+          "warnings": 0
+        },
+        {
+          "tick": 20,
+          "phase": "rest",
+          "phaseTicks": 1,
+          "x": 6,
+          "y": 4,
+          "warnings": 0
+        },
+        {
+          "tick": 21,
+          "phase": "warning",
+          "phaseTicks": 4,
+          "x": 6,
+          "y": 4,
+          "warnings": 1
+        },
+        {
+          "tick": 22,
+          "phase": "warning",
+          "phaseTicks": 3,
+          "x": 6,
+          "y": 4,
+          "warnings": 0
+        },
+        {
+          "tick": 23,
+          "phase": "warning",
+          "phaseTicks": 2,
+          "x": 6,
+          "y": 4,
+          "warnings": 0
+        },
+        {
+          "tick": 24,
+          "phase": "warning",
+          "phaseTicks": 1,
+          "x": 6,
+          "y": 4,
+          "warnings": 0
+        }
+      ],
+      "exactRestore": true
+    }
+  ]
+}

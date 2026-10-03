@@ -1,0 +1,105 @@
+{
+  "parent": "aa7ef6ec2c9791d7367f4e53a0ff80fa1c9c0c06",
+  "warnings": [
+    {
+      "path": "game/communities/coupa/index.html",
+      "unchangedFromParent": true
+    },
+    {
+      "path": "game/communities/droneaid-community/index.html",
+      "unchangedFromParent": true
+    },
+    {
+      "path": "game/communities/droneaid/index.html",
+      "unchangedFromParent": true
+    },
+    {
+      "path": "game/communities/fpv-learning/index.html",
+      "unchangedFromParent": true
+    },
+    {
+      "path": "game/communities/index.html",
+      "unchangedFromParent": true
+    },
+    {
+      "path": "game/communities/social-drone-ua/index.html",
+      "unchangedFromParent": true
+    },
+    {
+      "path": "game/communities/ukraine-culture/index.html",
+      "unchangedFromParent": true
+    },
+    {
+      "path": "game/communities/victory-drones/index.html",
+      "unchangedFromParent": true
+    },
+    {
+      "path": "game/community/index.html",
+      "unchangedFromParent": true
+    },
+    {
+      "path": "game/community/moderation.html",
+      "unchangedFromParent": true
+    },
+    {
+      "path": "game/community/store.html",
+      "unchangedFromParent": true
+    },
+    {
+      "path": "game/content/mission-library-index.json",
+      "unchangedFromParent": true
+    },
+    {
+      "path": "game/creator/index.html",
+      "unchangedFromParent": true
+    },
+    {
+      "path": "game/creator/player.html",
+      "unchangedFromParent": true
+    },
+    {
+      "path": "game/creator/team.html",
+      "unchangedFromParent": true
+    },
+    {
+      "path": "game/downloads.html",
+      "unchangedFromParent": true
+    },
+    {
+      "path": "game/presentation/combat-review.html",
+      "unchangedFromParent": true
+    },
+    {
+      "path": "game/presentation/journey-actor-review.html",
+      "unchangedFromParent": true
+    },
+    {
+      "path": "game/test/fpv-world-content.test.mjs",
+      "unchangedFromParent": true
+    },
+    {
+      "path": "game/test/workshop-art-integration.test.mjs",
+      "unchangedFromParent": true
+    },
+    {
+      "path": "game/ui/demo-picture.mjs",
+      "unchangedFromParent": true
+    },
+    {
+      "path": "scripts/game-cli.mjs",
+      "unchangedFromParent": true
+    },
+    {
+      "path": "scripts/test-fpv-content.mjs",
+      "unchangedFromParent": true
+    },
+    {
+      "path": "scripts/test-main-pages-profile.mjs",
+      "unchangedFromParent": true
+    },
+    {
+      "path": "site/index.html",
+      "unchangedFromParent": true
+    }
+  ]
+}

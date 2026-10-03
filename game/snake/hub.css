@@ -263,3 +263,80 @@ footer {
     text-align: center;
   }
 }
+
+/* Follow the same accepted interface family as the game. */
+:root {
+  --bg: var(--fk-bg, #071527);
+  --surface: var(--fk-panel, #10243e);
+  --line: var(--fk-line, #647786);
+  --text: var(--fk-text, #f6f3e8);
+  --muted: var(--fk-muted, #a8b8cc);
+  --mint: var(--fk-accent, #67aaff);
+  --gold: var(--fk-amber, #ffd64a);
+}
+body {
+  font-family: var(--fk-font-ui, Exo, system-ui, sans-serif);
+}
+main {
+  padding-inline: env(safe-area-inset-left) env(safe-area-inset-right);
+  padding-bottom: env(safe-area-inset-bottom);
+}
+button,
+select,
+summary,
+.chapter a {
+  min-height: 44px;
+}
+button {
+  font: inherit;
+}
+button:focus-visible {
+  outline: 3px solid var(--gold);
+  outline-offset: 3px;
+}
+.sim-launch {
+  display: inline-block;
+  padding: 10px 12px;
+  color: var(--text);
+  background: var(--surface);
+  border: 1px solid var(--mint);
+  border-radius: 4px;
+  text-align: left;
+  cursor: pointer;
+}
+.sim-launch:hover {
+  background: var(--bg);
+}
+.chapter a {
+  display: inline-flex;
+  align-items: center;
+}
+.campaign-cards {
+  margin-bottom: 28px;
+}
+.campaign-cards .actions {
+  gap: 6px;
+}
+.campaign-cards .actions a {
+  padding: 9px 12px;
+}
+.campaign-cards .chapter > .chapter-number {
+  min-height: 0;
+  color: var(--gold);
+  font-size: 13px;
+  margin: 0 0 8px;
+}
+@media (max-width: 600px) {
+  .chapter {
+    padding: 20px;
+  }
+  .topbar {
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .topbar label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+}
