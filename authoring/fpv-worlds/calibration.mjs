@@ -52,6 +52,7 @@ if (candidateId) {
     candidatePresentation = resolvePresentation({
       themeFamily: candidate.family,
       interfaceTheme: candidate.interfaceTheme,
+      interfaceBasis: candidate.basis,
       density: 'studio',
     });
     restoreInterface = applyResolvedPresentation(document.documentElement, candidatePresentation);

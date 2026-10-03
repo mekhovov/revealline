@@ -38,6 +38,7 @@ export function inspectStudioTheme(document, slotId = document.slots[0].id, opti
     runtime = resolveInterface({
       themeFamily: candidate.family,
       interfaceTheme: candidate.interfaceTheme,
+      interfaceBasis: candidate.basis,
     }),
     base = getInterfaceTheme(candidate.basis.interfaceId, candidate.basis.interfaceRevision);
   const contrast = [

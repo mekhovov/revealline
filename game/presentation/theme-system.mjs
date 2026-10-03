@@ -700,12 +700,32 @@ function material(color, light, textured, family = 'industrial-workshop', accent
   };
 }
 
+// Finish variants are derived consumer behavior, not serialized theme assets.
+// A candidate's explicit interface basis follows independently of its world/art
+// family. Missing, incompatible or unavailable bases retain the shared finish.
+function materialVariant(source, interfaceBasis) {
+  const style = source.materialStyle ?? source.id;
+  const installed = getInterfaceTheme(source.id, source.revision);
+  const base =
+    installed ??
+    (source.id.startsWith('candidate-') && interfaceBasis
+      ? getInterfaceTheme(interfaceBasis.interfaceId, interfaceBasis.interfaceRevision ?? 'r1')
+      : null);
+  const variants = {
+    'obsidian-reliquary': 'brass',
+    'deep-space': 'composite',
+    'moonlit-grove': 'wood',
+  };
+  return base && variants[base.id] === style ? base.id : style;
+}
+
 /** Pure renderer input. Never resolves or replaces course/level media. */
 export function resolvePresentation({
   familyId = 'legacy',
   themeFamily,
   interfaceId,
   interfaceTheme,
+  interfaceBasis,
   accessibility = {},
   density = 'player',
   ornaments = 'subtle',
@@ -868,6 +888,7 @@ export function resolvePresentation({
     textured,
     surface: a.highContrast ? 'flat' : source.surface,
     materialStyle: source.materialStyle ?? source.id,
+    materialVariant: materialVariant(source, interfaceBasis),
     targetSize,
     colorScheme:
       contrastRatio('#000000', tokens.panel) > contrastRatio('#ffffff', tokens.panel)
@@ -977,6 +998,7 @@ export function applyResolvedPresentation(element, resolved) {
     themeTexture: resolved.textured ? 'on' : 'off',
     themeSurface: resolved.surface,
     themeMaterial: resolved.materialStyle ?? resolved.interfaceId,
+    themeFinish: resolved.materialVariant ?? resolved.materialStyle ?? resolved.interfaceId,
     themeHud:
       resolved.accessibility.opaqueHud || resolved.accessibility.highContrast ? 'opaque' : 'normal',
     themeMotion: resolved.accessibility.reducedEffects ? 'reduced' : 'full',
@@ -1770,6 +1792,7 @@ export function validateCuratedThemeQuality(input) {
       resolvePresentation({
         themeFamily: candidate.family,
         interfaceTheme: candidate.interfaceTheme,
+        interfaceBasis: candidate.basis,
         accessibility: { highContrast },
       }),
     );
@@ -1898,6 +1921,7 @@ export function createThemeBootstrapSeed(input) {
     resolvePresentation({
       themeFamily: family,
       interfaceTheme: candidate.interfaceTheme,
+      interfaceBasis: candidate.basis,
       ...(ornaments ? { ornaments } : {}),
     });
   const resolved = resolve();
@@ -1924,6 +1948,7 @@ export function createThemeBootstrapSeed(input) {
     surface: resolved.surface,
     revision: family.revision,
     materialStyle: resolved.materialStyle,
+    materialVariant: resolved.materialVariant,
   };
 }
 
