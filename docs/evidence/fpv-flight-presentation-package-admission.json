@@ -6,34 +6,34 @@
         "bytes": 546048,
         "files": 35,
         "id": "civilian-flight",
-        "revision": "897a4af1bbf96f7eb3bbccf730b7d0895bc20e603574baf4f8a292098f2f7ece"
+        "revision": "b7f50568a214b975ea56d41805dcaa86260e16ba11ecc347ecd93dbd762aa67f"
       },
       {
-        "bytes": 4220778,
+        "bytes": 4230383,
         "files": 67,
         "id": "civilian-fpv",
-        "revision": "5fd0adececa44a3331efb0eddfb2cf1478f192b15fc58bcca337a1071397f092"
+        "revision": "c0d408f10c300eb3dded2873bdaa963c0eb0512793ec77ab9d720a34b3b63100"
       },
       {
-        "bytes": 14557129,
+        "bytes": 14565277,
         "files": 102,
         "id": "fpv-worlds",
-        "revision": "aa122a817862dadac41167e758f0f134a88804ed667d22db9b62176255dcecf9"
+        "revision": "b20fc44d623dd5323dd74f4c3df3cecd479ed5298a7b6239bc3acb7610ae6c6d"
       }
     ],
     "publicEligible": false,
-    "sourceRevision": "4752ae5ef373beaa5f99e6fa1a67d96e24956b03",
-    "sourceTree": "eb385850b9b096ca909461fd3e04a0a01ab8681a",
+    "sourceRevision": "91945d5c01bad66588ca6cb556cffeb2c54c63a4",
+    "sourceTree": "c519ee61ed455c83adeb3859b01f5d03279809ad",
     "version": "v0.142.4",
     "zipMembersVerified": true
   },
   "committedInputsVerified": true,
-  "envelopeSha256": "31e80a126cfe13fe7bf3d88f22105b3bf2157de37ba931f99222c6bc1efcd7f4",
+  "envelopeSha256": "5c551cab1e9581a7f4a3f64a937e49c9725346e76c865d13927a8efa9e0fd486",
   "format": "revealline-optional-package-candidate-verification.v1",
   "note": "Artifact admission does not qualify installed identity, device behavior or human learning. Review gates remain pending.",
   "publicEligible": false,
   "reproducibleBuilds": 2,
-  "sourceRevision": "4752ae5ef373beaa5f99e6fa1a67d96e24956b03",
-  "sourceTree": "eb385850b9b096ca909461fd3e04a0a01ab8681a",
+  "sourceRevision": "91945d5c01bad66588ca6cb556cffeb2c54c63a4",
+  "sourceTree": "c519ee61ed455c83adeb3859b01f5d03279809ad",
   "version": "v0.142.4"
 }

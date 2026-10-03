@@ -1499,6 +1499,9 @@ export function buildWorldVisuals({
     obstacleMap: wallMap,
     obstacleMaps: wallMaps,
     obstacleSurface,
+    // Keep fittings in this world's existing material/texture ownership. The
+    // Themes steel kit owns its finish; authored worlds reuse neutral hardware.
+    obstacleFittingsMaterial: () => (kit ? kit.paint('steel') : hardware),
     obstacleSurfaceKind(obstacle) {
       const id = obstacle.id ?? '';
       if (
@@ -1555,6 +1558,115 @@ export function instanceSimDetails({ shape, paint, parent, matrices, mesh }) {
   return value;
 }
 
+/** Closed visual steelwork stays inside the authored container collision box. */
+export function buildContainerVisualGeometry([width, height, depth]) {
+  if (
+    ![width, height, depth].every((value) => Number.isFinite(value) && value >= 1 && value <= 200)
+  )
+    throw new TypeError('Invalid visual container dimensions.');
+  const positions = [],
+    fittings = [];
+  const quad = (a, b, c, d) => positions.push(...a, ...b, ...c, ...a, ...c, ...d);
+  const layers = Math.max(1, Math.min(2, Math.round(height / 2.6))),
+    layerHeight = height / layers;
+  const fitting = (size, at) => {
+    const indexed = new THREE.BoxGeometry(...size),
+      shape = indexed.toNonIndexed();
+    indexed.dispose();
+    shape.translate(...at);
+    fittings.push(shape);
+  };
+  for (let layer = 0; layer < layers; layer++) {
+    const bottom = -height / 2 + layer * layerHeight,
+      top = bottom + layerHeight,
+      centre = (bottom + top) / 2;
+    for (let side = 0; side < 4; side++) {
+      const end = side < 2,
+        span = end ? width : depth;
+      const across = end
+        ? [-span / 2, -span / 2 + 0.14, -0.055, -0.012, 0.012, 0.055, span / 2 - 0.14, span / 2]
+        : [-span / 2, -span / 2 + 0.16];
+      const recess = end ? [0, 0.045, 0.045, 0.062, 0.062, 0.045, 0.045, 0] : [0, 0];
+      if (!end) {
+        const ribs = Math.min(24, Math.max(4, Math.round((span - 0.32) / 0.55))),
+          pitch = (span - 0.32) / ribs;
+        for (let rib = 0; rib < ribs; rib++)
+          for (const [fraction, inset] of [
+            [0.18, 0],
+            [0.34, 0.038],
+            [0.7, 0.038],
+            [0.86, 0],
+          ]) {
+            across.push(-span / 2 + 0.16 + (rib + fraction) * pitch);
+            recess.push(inset);
+          }
+        across.push(span / 2 - 0.16, span / 2);
+        recess.push(0, 0);
+      }
+      const elevations = [bottom, bottom + 0.13, top - 0.13, top];
+      const point = (u, v) => {
+        const along = across[u],
+          y = elevations[v],
+          inset = v === 0 || v === 3 ? 0 : recess[u];
+        if (side === 0) return [along, y, depth / 2 - inset];
+        if (side === 1) return [-along, y, -depth / 2 + inset];
+        if (side === 2) return [width / 2 - inset, y, -along];
+        return [-width / 2 + inset, y, along];
+      };
+      for (let u = 0; u < across.length - 1; u++)
+        for (let v = 0; v < elevations.length - 1; v++)
+          quad(point(u, v), point(u + 1, v), point(u + 1, v + 1), point(u, v + 1));
+    }
+    quad(
+      [-width / 2, top, depth / 2],
+      [width / 2, top, depth / 2],
+      [width / 2, top, -depth / 2],
+      [-width / 2, top, -depth / 2],
+    );
+    quad(
+      [-width / 2, bottom, -depth / 2],
+      [width / 2, bottom, -depth / 2],
+      [width / 2, bottom, depth / 2],
+      [-width / 2, bottom, depth / 2],
+    );
+    for (const x of [-1, 1])
+      for (const z of [-1, 1])
+        for (const y of [-1, 1])
+          fitting(
+            [0.18, 0.16, 0.18],
+            [x * (width / 2 - 0.09), centre + y * (layerHeight / 2 - 0.08), z * (depth / 2 - 0.09)],
+          );
+    for (const end of [-1, 1]) {
+      // The doors are closed opaque geometry. Locks sit in the recessed face,
+      // never outside the original collision envelope or across a flyable gap.
+      for (const x of [-0.32, -0.18, 0.18, 0.32])
+        fitting([0.045, layerHeight - 0.38, 0.03], [x * width, centre, end * (depth / 2 - 0.023)]);
+      for (const x of [-1, 1]) {
+        fitting([0.32, 0.05, 0.038], [x * width * 0.18, centre - 0.18, end * (depth / 2 - 0.024)]);
+        for (const y of [-0.3, 0.3])
+          fitting(
+            [0.22, 0.08, 0.022],
+            [x * (width / 2 - 0.16), centre + y * layerHeight, end * (depth / 2 - 0.016)],
+          );
+      }
+    }
+  }
+  const shell = new THREE.BufferGeometry();
+  shell.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3));
+  shell.computeVertexNormals();
+  const hardware = new THREE.BufferGeometry();
+  for (const attribute of ['position', 'normal', 'uv']) {
+    const values = [];
+    for (const shape of fittings) values.push(...shape.getAttribute(attribute).array);
+    hardware.setAttribute(
+      attribute,
+      new THREE.Float32BufferAttribute(values, attribute === 'uv' ? 2 : 3),
+    );
+  }
+  for (const shape of fittings) shape.dispose();
+  return { shell, hardware };
+}
+
 export function buildDroneVisual({
   parent,
   mesh,
@@ -1584,15 +1696,15 @@ export function buildDroneVisual({
     ? kit.paint('rubber')
     : material(pixel ? 0x293348 : 0x202b33, {
         ...carbon,
-        metalness: 0.18,
-        roughness: 0.72,
+        metalness: pixel ? 0.18 : 0,
+        roughness: pixel ? 0.72 : 0.56,
         normalScale: new THREE.Vector2(0.15, 0.15),
       });
   const shell = kit
     ? kit.paint('steel')
-    : material(pixel ? 0x60e1d6 : utility ? 0xe7b875 : 0xc7d8c9, {
-        metalness: 0.18,
-        roughness: 0.4,
+    : material(pixel ? 0x60e1d6 : utility ? 0x59636a : 0x667277, {
+        metalness: pixel ? 0.18 : 0.04,
+        roughness: pixel ? 0.4 : 0.6,
       });
   const tint = material(
     kit
@@ -1600,11 +1712,12 @@ export function buildDroneVisual({
       : pixel
         ? 0xf3a870
         : utility
-          ? 0x91c8cf
-          : 0xbdf083,
+          ? 0xcbd8d0
+          : 0xdde8df,
     {
-      emissive: pixel ? 0x944a21 : 0x486834,
-      emissiveIntensity: 0.25,
+      emissive: pixel ? 0x944a21 : 0,
+      emissiveIntensity: pixel ? 0.25 : 0,
+      ...(pixel ? {} : { roughness: 0.48, metalness: 0 }),
     },
   );
   const alloy = kit ? kit.paint('steel') : material(0x9eacb1, { metalness: 0.82, roughness: 0.28 });
@@ -1621,121 +1734,404 @@ export function buildDroneVisual({
     value.castShadow = true;
     return value;
   };
+  // Original small solid meshes, built locally. These change appearance only;
+  // motor centres, rotor clocks and the flight collision sphere stay unchanged.
+  const plate = (points, thickness) => {
+    const outline = new THREE.Shape();
+    points.forEach(([x, z], index) => (index ? outline.lineTo(x, z) : outline.moveTo(x, z)));
+    outline.closePath();
+    const shape = new THREE.ExtrudeGeometry(outline, {
+      depth: thickness,
+      bevelEnabled: false,
+      steps: 1,
+    });
+    shape.rotateX(Math.PI / 2);
+    shape.translate(0, thickness / 2, 0);
+    return shape;
+  };
+  const chamferedCase = (width, height, depth, bevel) => {
+    const x = width / 2,
+      z = depth / 2;
+    return plate(
+      [
+        [-x + bevel, -z],
+        [x - bevel, -z],
+        [x, -z + bevel],
+        [x, z - bevel],
+        [x - bevel, z],
+        [-x + bevel, z],
+        [-x, z - bevel],
+        [-x, -z + bevel],
+      ],
+      height,
+    );
+  };
+  const strap = () => {
+    const outline = new THREE.Shape();
+    outline.moveTo(-0.029, -0.017);
+    outline.lineTo(0.029, -0.017);
+    outline.lineTo(0.029, 0.017);
+    outline.lineTo(-0.029, 0.017);
+    outline.closePath();
+    const opening = new THREE.Path();
+    opening.moveTo(-0.02725, -0.01575);
+    opening.lineTo(-0.02725, 0.01575);
+    opening.lineTo(0.02725, 0.01575);
+    opening.lineTo(0.02725, -0.01575);
+    opening.closePath();
+    outline.holes.push(opening);
+    const shape = new THREE.ExtrudeGeometry(outline, {
+      depth: 0.012,
+      bevelEnabled: false,
+      steps: 1,
+    });
+    shape.translate(0, 0, -0.006);
+    return shape;
+  };
+  const propeller = (handedness) => {
+    // A swept tip stays inside its radius. Utility props fit the existing guard;
+    // Racer's larger disc remains inside the existing 0.22 m collision sphere.
+    const radius = utility ? 0.059 : 0.07;
+    const blade = [
+      [-0.065, 0.1],
+      [0.075, 0.1],
+      [0.16, 0.22],
+      [0.235, 0.44],
+      [0.22, 0.64],
+      [0.15, 0.83],
+      [0.05, 0.97],
+      [-0.005, 0.995],
+      [-0.07, 0.965],
+      [-0.12, 0.83],
+      [-0.135, 0.61],
+      [-0.12, 0.38],
+      [-0.1, 0.22],
+    ];
+    const outlines = [];
+    for (let index = 0; index < 3; index++) {
+      const angle = (index * Math.PI * 2) / 3,
+        outline = new THREE.Shape();
+      blade.forEach(([across, along], vertex) => {
+        const x = across * radius * handedness,
+          z = along * radius;
+        const u = x * Math.cos(angle) + z * Math.sin(angle),
+          v = z * Math.cos(angle) - x * Math.sin(angle);
+        vertex ? outline.lineTo(u, v) : outline.moveTo(u, v);
+      });
+      outline.closePath();
+      outlines.push(outline);
+    }
+    const shape = new THREE.ExtrudeGeometry(outlines, {
+      depth: 0.0018,
+      bevelEnabled: false,
+      steps: 1,
+    });
+    shape.rotateX(Math.PI / 2);
+    shape.translate(0, 0.0009, 0);
+    // A modest blade pitch gives real thickness/specular definition obliquely;
+    // it is geometry, not blur or an amplified motor/control signal.
+    const points = shape.getAttribute('position');
+    for (let i = 0; i < points.count; i++) {
+      const x = points.getX(i),
+        z = points.getZ(i),
+        angle = Math.atan2(x, z),
+        sector = Math.round(angle / ((Math.PI * 2) / 3)),
+        turn = (sector * Math.PI * 2) / 3,
+        across = x * Math.cos(turn) - z * Math.sin(turn),
+        along = x * Math.sin(turn) + z * Math.cos(turn);
+      points.setY(i, points.getY(i) + handedness * across * (0.38 - (0.18 * along) / radius));
+    }
+    shape.computeVertexNormals();
+    return shape;
+  };
   const frame = () => {
     if (pixel) return new THREE.BoxGeometry(0.17, 0.012, 0.15);
     const outline = new THREE.Shape();
-    outline.moveTo(-0.07, -0.055);
-    outline.lineTo(-0.05, -0.083);
-    outline.lineTo(0.05, -0.083);
-    outline.lineTo(0.07, -0.055);
-    outline.lineTo(0.07, 0.055);
-    outline.lineTo(0.04, 0.08);
-    outline.lineTo(-0.04, 0.08);
-    outline.lineTo(-0.07, 0.055);
+    outline.moveTo(-0.046, -0.052);
+    outline.lineTo(-0.03, -0.083);
+    outline.lineTo(0.03, -0.083);
+    outline.lineTo(0.046, -0.052);
+    outline.lineTo(0.043, 0.05);
+    outline.lineTo(0.031, 0.08);
+    outline.lineTo(-0.031, 0.08);
+    outline.lineTo(-0.043, 0.05);
     outline.closePath();
     const geometry = new THREE.ExtrudeGeometry(outline, {
-      depth: 0.007,
+      depth: 0.004,
       bevelEnabled: quality !== 'low',
       bevelSegments: 1,
       steps: 1,
-      bevelSize: 0.002,
-      bevelThickness: 0.001,
+      bevelSize: 0.001,
+      bevelThickness: 0.0006,
     });
     geometry.rotateX(Math.PI / 2);
     return geometry;
   };
-  part(frame(), dark, [0, -0.005, 0]);
-  part(frame(), dark, [0, 0.027, 0]);
-  for (const x of [-0.047, 0.047])
+  part(frame(), dark, [0, pixel ? -0.005 : -0.002, 0]);
+  part(frame(), dark, [0, pixel ? 0.027 : 0.025, 0]);
+  for (const x of pixel ? [-0.047, 0.047] : [-0.032, 0.032])
     for (const z of [-0.055, 0.055])
-      part(new THREE.CylinderGeometry(0.004, 0.004, 0.024, pixel ? 4 : 8), alloy, [x, 0.01, z]);
-  part(new THREE.BoxGeometry(0.12, 0.045, 0.13), shell, [0, 0.038, 0.016]);
+      part(
+        new THREE.CylinderGeometry(
+          pixel ? 0.004 : 0.0028,
+          pixel ? 0.004 : 0.0028,
+          0.024,
+          pixel ? 4 : 8,
+        ),
+        alloy,
+        [x, pixel ? 0.01 : 0.0095, z],
+      );
+  const battery = part(
+    pixel ? new THREE.BoxGeometry(0.12, 0.045, 0.13) : chamferedCase(0.054, 0.031, 0.116, 0.005),
+    shell,
+    [0, pixel ? 0.038 : 0.0425, 0.016],
+  );
+  battery.name = 'drone-battery';
   for (const z of [-0.014, 0.054])
-    part(new THREE.BoxGeometry(0.124, 0.049, 0.015), rubber, [0, 0.038, z]);
-  part(new THREE.BoxGeometry(0.045, 0.002, 0.037), tint, [0, 0.0615, 0.018]);
+    part(pixel ? new THREE.BoxGeometry(0.124, 0.049, 0.015) : strap(), rubber, [
+      0,
+      pixel ? 0.038 : 0.0425,
+      z,
+    ]);
+  part(
+    new THREE.BoxGeometry(pixel ? 0.045 : 0.031, pixel ? 0.002 : 0.001, pixel ? 0.037 : 0.038),
+    tint,
+    [0, pixel ? 0.0615 : 0.0585, 0.018],
+  );
   if (detail) {
     for (const z of [-0.053, 0.047])
-      for (const x of [-0.051, 0.051])
-        part(new THREE.CylinderGeometry(0.003, 0.003, 0.002, 8), alloy, [x, 0.029, z]);
+      for (const x of [-0.036, 0.036])
+        part(new THREE.CylinderGeometry(0.003, 0.003, 0.002, 8), alloy, [x, 0.0258, z]);
     for (let cell = 0; cell < 4; cell++)
-      part(new THREE.BoxGeometry(0.003, 0.032, 0.085), alloy, [0.06, 0.038, -0.025 + cell * 0.024]);
+      part(new THREE.BoxGeometry(0.001, 0.019, 0.009), alloy, [
+        0.027,
+        0.0425,
+        -0.025 + cell * 0.024,
+      ]);
     const lead = new THREE.CatmullRomCurve3([
-      new THREE.Vector3(0.043, 0.04, 0.09),
-      new THREE.Vector3(0.072, 0.034, 0.1),
-      new THREE.Vector3(0.075, 0.01, 0.06),
+      new THREE.Vector3(0.019, 0.043, 0.074),
+      new THREE.Vector3(0.045, 0.034, 0.097),
+      new THREE.Vector3(0.043, 0.012, 0.055),
     ]);
     part(new THREE.TubeGeometry(lead, 8, 0.0025, 5, false), material(0xb8513e), [0, 0, 0]);
-    part(new THREE.BoxGeometry(0.016, 0.01, 0.017), material(0xe9ba57), [0.073, 0.011, 0.062]);
+    part(new THREE.BoxGeometry(0.016, 0.01, 0.017), material(0xe9ba57), [0.043, 0.013, 0.053]);
+  }
+  const armShape = pixel
+    ? null
+    : plate(
+        [
+          [-0.009, -0.075],
+          [0.009, -0.075],
+          [0.008, -0.025],
+          [0.007, 0.074],
+          [-0.007, 0.074],
+          [-0.008, -0.025],
+        ],
+        0.0065,
+      );
+  const propShapes = pixel ? null : [propeller(-1), propeller(1)];
+  const windings = [];
+  const motorBell = pixel
+    ? null
+    : new THREE.LatheGeometry(
+        [
+          [0, -0.009],
+          [0.015, -0.009],
+          [0.018, -0.006],
+          [0.018, 0.004],
+          [0.016, 0.008],
+          [0.01, 0.01],
+          [0.006, 0.012],
+          [0, 0.012],
+        ].map(([r, y]) => new THREE.Vector2(r, y)),
+        detail ? 20 : 12,
+      );
+  if (motorBell) {
+    const vertices = motorBell.getAttribute('position'),
+      indices = motorBell.index.array,
+      kept = [],
+      segments = detail ? 20 : 12;
+    for (let i = 0; i < indices.length; i += 3) {
+      const triangle = Array.from(indices.slice(i, i + 3));
+      const vent = triangle.every(
+        (index) => Math.abs(Math.hypot(vertices.getX(index), vertices.getZ(index)) - 0.018) < 1e-6,
+      );
+      const x = triangle.reduce((n, index) => n + vertices.getX(index), 0),
+        z = triangle.reduce((n, index) => n + vertices.getZ(index), 0),
+        sector = Math.floor(
+          ((Math.atan2(x, z) + Math.PI * 2) % (Math.PI * 2)) / ((Math.PI * 2) / segments),
+        );
+      if (!vent || sector % 2 === 0) kept.push(...triangle);
+    }
+    motorBell.setIndex(kept);
   }
   for (const x of [-0.103, 0.103])
     for (const z of [-0.103, 0.103]) {
-      const arm = part(new THREE.BoxGeometry(0.018, 0.018, 0.15), dark, [x / 2, 0, z / 2]);
+      const arm = part(armShape ?? new THREE.BoxGeometry(0.018, 0.018, 0.15), dark, [
+        x / 2,
+        0,
+        z / 2,
+      ]);
+      arm.name = 'drone-carbon-arm';
       arm.rotation.y = Math.atan2(x, z);
-      part(new THREE.CylinderGeometry(0.021, 0.023, 0.032, pixel ? 6 : detail ? 24 : 12), alloy, [
+      const bell = part(motorBell ?? new THREE.CylinderGeometry(0.021, 0.023, 0.032, 6), alloy, [
         x,
-        0.01,
+        pixel ? 0.01 : 0.009,
         z,
       ]);
-      part(new THREE.CylinderGeometry(0.022, 0.022, 0.008, pixel ? 6 : 12), dark, [x, 0.027, z]);
+      bell.name = 'drone-motor-bell';
+      part(
+        pixel
+          ? new THREE.CylinderGeometry(0.022, 0.022, 0.008, 6)
+          : new THREE.CylinderGeometry(0.0145, 0.0145, 0.012, detail ? 16 : 12),
+        pixel ? dark : copper,
+        [x, pixel ? 0.027 : 0.007, z],
+      );
       if (detail)
         for (let vent = 0; vent < 8; vent++) {
           const angle = (vent * Math.PI) / 4;
-          part(new THREE.CylinderGeometry(0.0025, 0.0025, 0.016, 5), copper, [
-            x + Math.cos(angle) * 0.0205,
-            0.012,
-            z + Math.sin(angle) * 0.0205,
-          ]);
+          windings.push(
+            new THREE.Matrix4().makeTranslation(
+              x + Math.cos(angle) * 0.0145,
+              0.012,
+              z + Math.sin(angle) * 0.0145,
+            ),
+          );
         }
       const rotor = new THREE.Group();
       parent.add(rotor);
       rotor.position.set(x, 0.039, z);
-      for (let blade = 0; blade < 3; blade++) {
-        const pivot = new THREE.Group();
-        pivot.rotation.y = (blade * Math.PI * 2) / 3;
-        rotor.add(pivot);
-        const prop = mesh(new THREE.BoxGeometry(0.014, 0.003, 0.058), tint, pivot);
-        prop.position.z = 0.028;
-        if (!pixel) prop.rotation.z = 0.12;
+      if (pixel) {
+        for (let blade = 0; blade < 3; blade++) {
+          const pivot = new THREE.Group();
+          pivot.rotation.y = (blade * Math.PI * 2) / 3;
+          rotor.add(pivot);
+          const prop = mesh(new THREE.BoxGeometry(0.014, 0.003, 0.058), tint, pivot);
+          prop.position.z = 0.028;
+        }
+      } else {
+        const prop = mesh(propShapes[x * z > 0 ? 0 : 1], tint, rotor);
+        prop.name = 'drone-swept-propeller';
       }
-      mesh(new THREE.CylinderGeometry(0.006, 0.006, 0.006, 8), alloy, rotor);
+      const hub = mesh(
+        new THREE.CylinderGeometry(0.006, 0.006, pixel ? 0.006 : 0.02, 8),
+        alloy,
+        rotor,
+      );
+      if (!pixel) hub.position.y = -0.008;
       rotors.push(rotor);
       if (utility) {
         const duct = part(new THREE.TorusGeometry(0.067, 0.006, 6, 24), shell, [x, 0.025, z]);
         duct.rotation.x = Math.PI / 2;
       }
     }
-  part(new THREE.BoxGeometry(0.06, 0.048, 0.045), dark, [0, 0.015, -0.087]);
+  if (windings.length) {
+    const coils = instanceSimDetails({
+      shape: new THREE.CylinderGeometry(0.002, 0.002, 0.01, 5),
+      paint: copper,
+      parent,
+      matrices: windings,
+      mesh,
+    });
+    coils.name = 'drone-motor-windings';
+  }
+  const camera = part(
+    pixel ? new THREE.BoxGeometry(0.06, 0.048, 0.045) : chamferedCase(0.034, 0.024, 0.036, 0.004),
+    dark,
+    [0, pixel ? 0.015 : 0.009, pixel ? -0.087 : -0.078],
+  );
+  camera.name = 'drone-camera';
   if (!pixel) {
+    // The camera sits between two thin carbon cheeks, not inside a solid cube.
+    const cheek = plate(
+      [
+        [-0.012, -0.102],
+        [0.024, -0.101],
+        [0.029, -0.07],
+        [-0.012, -0.06],
+      ],
+      0.003,
+    );
+    cheek.rotateZ(Math.PI / 2);
+    for (const x of [-0.021, 0.021]) {
+      part(cheek, dark, [x, 0, 0]).name = 'drone-camera-cheek';
+      const screw = part(new THREE.CylinderGeometry(0.0035, 0.0035, 0.003, 8), alloy, [
+        x * 1.095,
+        0.01,
+        -0.081,
+      ]);
+      screw.rotation.z = Math.PI / 2;
+    }
     const housing = part(
-      new THREE.CylinderGeometry(0.022, 0.022, 0.017, 16),
+      new THREE.CylinderGeometry(0.013, 0.015, 0.014, 16),
       alloy,
-      [0, 0.016, -0.11],
+      [0, 0.009, -0.098],
     );
     housing.rotation.x = Math.PI / 2;
   }
+  const lensShape = pixel
+    ? new THREE.CylinderGeometry(0.016, 0.017, 0.014, 16)
+    : new THREE.SphereGeometry(
+        0.0118,
+        detail ? 20 : 12,
+        detail ? 12 : 8,
+        0,
+        Math.PI * 2,
+        0,
+        Math.PI / 2,
+      );
+  if (!pixel) lensShape.scale(1, 0.28, 1);
   const lens = part(
-    new THREE.CylinderGeometry(0.016, 0.017, 0.014, 16),
-    material(0x5fbed7, { metalness: 0.6, roughness: 0.1 }),
-    [0, 0.016, -0.117],
+    lensShape,
+    material(pixel ? 0x5fbed7 : 0x27465a, {
+      metalness: pixel ? 0.6 : 0,
+      roughness: pixel ? 0.1 : 0.055,
+    }),
+    [0, pixel ? 0.016 : 0.009, pixel ? -0.117 : -0.106],
   );
-  lens.rotation.x = Math.PI / 2;
-  part(new THREE.CylinderGeometry(0.003, 0.003, 0.075, 6), dark, [0.045, 0.079, 0.065]);
-  part(new THREE.SphereGeometry(0.012, 8, 6), tint, [0.045, 0.12, 0.065]);
-  for (const x of [-0.063, 0.063])
-    part(new THREE.BoxGeometry(0.014, 0.04, 0.09), rubber, [x, -0.03, 0]);
+  lens.rotation.x = pixel ? Math.PI / 2 : -Math.PI / 2;
+  lens.name = 'drone-glass-lens';
+  part(
+    new THREE.CylinderGeometry(0.003, 0.003, pixel ? 0.075 : 0.084, 6),
+    dark,
+    pixel ? [0.045, 0.079, 0.065] : [0.024, 0.067, 0.073],
+  );
+  part(
+    new THREE.SphereGeometry(pixel ? 0.012 : 0.009, 8, 6),
+    tint,
+    pixel ? [0.045, 0.12, 0.065] : [0.024, 0.117, 0.073],
+  );
+  if (pixel) {
+    for (const x of [-0.063, 0.063])
+      part(new THREE.BoxGeometry(0.014, 0.04, 0.09), rubber, [x, -0.03, 0]);
+  } else {
+    const pads = [];
+    for (const x of [-0.033, 0.033])
+      for (const z of [-0.047, 0.047])
+        pads.push(new THREE.Matrix4().makeTranslation(x, -0.0115, z));
+    const landingPads = instanceSimDetails({
+      shape: new THREE.BoxGeometry(0.012, 0.011, 0.016),
+      paint: rubber,
+      parent,
+      matrices: pads,
+      mesh,
+    });
+    landingPads.name = 'drone-landing-pads';
+    landingPads.castShadow = true;
+  }
   if (kit) {
     // Flush fasteners and a recessed service panel stay inside the original hull.
     const panel = part(
-      new THREE.BoxGeometry(0.062, 0.001, 0.063),
+      new THREE.BoxGeometry(pixel ? 0.062 : 0.032, 0.001, pixel ? 0.063 : 0.04),
       kit.paint('enamel'),
-      [0, 0.061, 0.022],
+      [0, pixel ? 0.061 : 0.0585, 0.022],
     );
     panel.castShadow = false;
     panel.userData.cosmeticDetail = true;
     const matrices = [];
-    for (const x of [-0.049, 0.049])
-      for (const z of [-0.026, 0.058])
-        matrices.push(new THREE.Matrix4().makeTranslation(x, 0.061, z));
+    for (const x of pixel ? [-0.049, 0.049] : [-0.012, 0.012])
+      for (const z of pixel ? [-0.026, 0.058] : [0.007, 0.037])
+        matrices.push(new THREE.Matrix4().makeTranslation(x, pixel ? 0.061 : 0.0585, z));
     instanceSimDetails({
       shape: new THREE.CylinderGeometry(0.003, 0.003, 0.002, 6),
       paint: kit.paint('copper'),
@@ -1744,14 +2140,14 @@ export function buildDroneVisual({
       mesh,
     });
   }
-  for (const x of [-0.053, 0.053]) {
+  for (const x of [-1, 1]) {
     part(
       new THREE.BoxGeometry(0.011, 0.008, 0.006),
       material(0xd5f4eb, {
         emissive: 0x9be7d5,
         emissiveIntensity: 0.8,
       }),
-      [x, 0.015, -0.08],
+      [x * (pixel ? 0.053 : 0.035), 0.015, pixel ? -0.08 : -0.068],
     );
     part(
       new THREE.BoxGeometry(0.011, 0.008, 0.006),
@@ -1759,7 +2155,7 @@ export function buildDroneVisual({
         emissive: 0xc84c36,
         emissiveIntensity: 0.7,
       }),
-      [x, 0.015, 0.073],
+      [x * (pixel ? 0.053 : 0.026), 0.015, 0.073],
     );
   }
   return { rotors, tint };

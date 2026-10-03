@@ -1,5 +1,3 @@
-import { keyboardFlightHelp } from './input.mjs';
-
 export const COPY = {
   en: {
     worlds: 'World Studio',
@@ -67,7 +65,7 @@ export const COPY = {
     endReplay: 'Replay finished. Try starts a new practice attempt.',
     limitation:
       'A fictional civilian training model with simplified dynamics, collision and aircraft response. It does not reproduce a particular aircraft or certify real flight proficiency. No real wiring, radio frequencies or aircraft setup are taught here.',
-    keys: keyboardFlightHelp('two-stick', 'en'),
+    keys: 'W / S: pitch forward / back · A / D: roll left / right · Q / E: yaw · ↑ / ↓: adjust manual throttle · Shift: smaller adjustments · P: pause. Release the throttle keys to keep that throttle position. Centre sticks do not stop momentum or hold altitude.',
     touchHelp:
       'Mode 2: touch either stick, then drag. Touching down never jumps the controls. Left: yaw and throttle; right: roll and pitch. Release to centre rotation and keep throttle, then touch again to continue from that power. Precise response makes small corrections easier; full travel still gives full control. Self-level is a useful starting mode. Losing focus or a pointer pauses and clears controls.',
     modeHelp:
@@ -177,7 +175,7 @@ export const COPY = {
     endReplay: 'Перегляд завершено. Спроба починає нову практику.',
     limitation:
       'Вигадана цивільна навчальна модель зі спрощеною динамікою, зіткненнями та реакцією апарата. Вона не відтворює конкретний апарат і не засвідчує вміння реального польоту. Тут немає навчання реальних з’єднань, радіочастот чи налаштування апарата.',
-    keys: keyboardFlightHelp('two-stick', 'uk'),
+    keys: 'W / S: тангаж уперед / назад · A / D: крен ліворуч / праворуч · Q / E: рискання · ↑ / ↓: змінити ручний газ · Shift: менші корекції · P: пауза. Відпускання клавіш газу зберігає його положення. Центр стіків не зупиняє імпульс і не тримає висоту.',
     touchHelp:
       'Mode 2: торкніться стіка й перетягніть. Дотик не змінює керування стрибком. Лівий — рискання й газ; правий — крен і тангаж. Відпустіть, щоб центрувати обертання й зберегти газ, потім торкніться знову для подальшої зміни тяги. Точна чутливість полегшує малі корекції; повний хід зберігає повне керування. Починати зручно із самовирівнювання. Втрата фокуса чи вказівника ставить паузу й скидає керування.',
     modeHelp:
