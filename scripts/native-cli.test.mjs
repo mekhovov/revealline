@@ -244,8 +244,8 @@ test('iOS policy derives from public headers, excludes unsupported meta directiv
       .join('; '),
   );
   assert.ok(!IOS_CSP.includes('frame-ancestors'));
-  assert.ok(!IOS_CSP.includes('unsafe-eval'));
-  assert.ok(IOS_CSP.includes("script-src 'self';"));
+  assert.ok(!IOS_CSP.includes("'unsafe-eval'"));
+  assert.ok(IOS_CSP.includes("script-src 'self' 'wasm-unsafe-eval';"));
   assert.ok(IOS_CSP.includes("connect-src 'self';"));
   assert.ok(IOS_CSP.includes("img-src 'self' data: blob:;"));
   assert.ok(IOS_CSP.includes("base-uri 'none'; form-action 'none'"));
@@ -260,7 +260,7 @@ test('iOS policy derives from public headers, excludes unsupported meta directiv
 });
 test('compatible existing policy is preserved and relocated once; conflicts, duplicates and malformed heads reject', () => {
   const policy =
-    "default-src 'self'; script-src 'self'; style-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'";
+    "default-src 'self'; script-src 'self' 'wasm-unsafe-eval'; style-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'";
   const meta = `<meta content="${policy}" http-equiv="Content-Security-Policy">`;
   const source = `<html><head><meta charset="utf-8">${meta}<script src="page.js"></script></head></html>`;
   const result = iosHTMLPolicy(Buffer.from(source));
