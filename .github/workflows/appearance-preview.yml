@@ -57,6 +57,7 @@ on:
       - 'scripts/refresh-theme-bootstrap.mjs'
       - 'game/test/theme-*.test.mjs'
       - 'game/test/material-state-semantics.test.mjs'
+      - 'game/test/workshop-return.test.mjs'
       - 'game/test/unified-appearance.test.mjs'
       - 'game/test/industrial-arcade.test.mjs'
       - 'game/test/community-appearance.test.mjs'
@@ -92,6 +93,7 @@ jobs:
       APPEARANCE_TEST_FILES: >-
         game/test/theme-system.test.mjs
         game/test/material-state-semantics.test.mjs
+        game/test/theme-picker-materials.test.mjs
         game/test/theme-collection-expansion.test.mjs
         game/test/unified-appearance.test.mjs
         game/test/theme-bootstrap.test.mjs

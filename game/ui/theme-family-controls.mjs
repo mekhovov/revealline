@@ -1,5 +1,6 @@
 import { t, localizedText, localizedAttribute } from '../i18n/index.mjs';
-import { BUILTIN_THEME_FAMILIES } from '../presentation/theme-system.mjs';
+import { BUILTIN_THEME_FAMILIES, resolvePresentation } from '../presentation/theme-system.mjs';
+import { mountThemeMaterialPreview } from './theme-material-preview.mjs';
 
 /** One immediate appearance choice; the host owns atomic loads and flight boundaries. */
 export function attachThemeFamilyControls({
@@ -60,7 +61,7 @@ export function attachThemeFamilyControls({
   group.append(gallery);
   const builtinIds = new Set(BUILTIN_THEME_FAMILIES.map((item) => item.id));
   const choose = (id) => host.applyComplete(id);
-  const syncChoices = () => {
+  const syncChoices = (state) => {
     const choices = host.availableThemeChoices();
     const known = new Set(choices.map((item) => item.id));
     for (const [id, card] of cards) {
@@ -75,6 +76,7 @@ export function attachThemeFamilyControls({
         const button = doc.createElement('button'),
           title = doc.createElement('strong'),
           swatches = doc.createElement('span'),
+          preview = doc.createElement('span'),
           description = doc.createElement('small');
         button.type = 'button';
         button.id = `${prefix}theme-card-${item.id}`;
@@ -82,7 +84,14 @@ export function attachThemeFamilyControls({
         button.setAttribute('data-theme-preview', item.id);
         swatches.className = 'theme-preview-swatches';
         swatches.setAttribute('aria-hidden', 'true');
-        button.append(swatches, title, description);
+        preview.setAttribute('data-theme-card-preview', '');
+        button.append(title, preview, swatches, description);
+        const material = mountThemeMaterialPreview({
+          document: doc,
+          root: preview,
+          interactive: false,
+          compact: true,
+        });
         const activate = () => choose(item.id);
         button.addEventListener('click', activate);
         card = {
@@ -90,7 +99,11 @@ export function attachThemeFamilyControls({
           title,
           swatches,
           description,
-          stop: () => button.removeEventListener('click', activate),
+          material,
+          stop: () => {
+            button.removeEventListener('click', activate);
+            material.dispose();
+          },
         };
         cards.set(item.id, card);
       }
@@ -109,6 +122,19 @@ export function attachThemeFamilyControls({
         builtinIds.has(item.id) || item.id === 'follow-game'
           ? t(`interface:workshop.description.${item.id}`)
           : t('interface:workshop.description.curated', { revision: item.family.revision }),
+      );
+      card.material.update(
+        resolvePresentation({
+          themeFamily: item.family,
+          interfaceTheme: item.interfaceTheme,
+          interfaceBasis: item.basis,
+          accessibility: {
+            ...host.snapshot()?.accessibility,
+            highContrast: state.highContrast,
+            opaqueHud: state.opaqueHud,
+          },
+          ornaments: state.ornaments === 'theme' ? 'subtle' : state.ornaments,
+        }),
       );
       const tokens = item.interfaceTheme?.tokens ?? {},
         colors = ['ink', 'panel', 'text', 'accent'].map((role) => tokens[role]);
@@ -185,7 +211,7 @@ export function attachThemeFamilyControls({
   if (legacyRow?.parentElement === root && root.insertBefore) root.insertBefore(group, legacyRow);
   else root.append(group);
   const render = (state) => {
-    syncChoices();
+    syncChoices(state);
     for (const [id, card] of cards)
       card.button.setAttribute('aria-pressed', String(id === state.familyId));
     for (const [key, input] of controls)
