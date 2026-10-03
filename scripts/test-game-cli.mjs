@@ -1025,8 +1025,8 @@ test('public package has local entry, accurate storage notices and enforced prev
   const source = await getRaw(sourceServer.url, '/game/'),
     release = await getRaw(releaseServer.url, '/game/');
   assert.equal(source.headers['content-security-policy'], undefined);
-  assert.match(release.headers['content-security-policy'], /script-src 'self'/);
-  assert.doesNotMatch(release.headers['content-security-policy'], /unsafe-eval/);
+  assert.match(release.headers['content-security-policy'], /script-src 'self' 'wasm-unsafe-eval'/);
+  assert.doesNotMatch(release.headers['content-security-policy'], /'unsafe-eval'/);
   assert.equal(
     release.headers['content-security-policy']
       .split(';')
