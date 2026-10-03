@@ -2186,3 +2186,27 @@ section source fixtures, first extracted package/browser fixture, and first froz
 candidate ZIP copies. Their committed receipts/metadata and the latest qualified
 candidate/extracted player/fixtures remain intact; normal user playtest URLs and
 all source assets are preserved.
+
+### Tracking inspector source-qualified — 3 October 2026
+
+`codex/fpv-tracking-objective-editor` now includes the native EN/UK Follow/Observe
+inspector, independent per-mode criteria, exact units, actor validation and
+undo/reimport-safe bindings. Generic route edits no longer change an unrelated
+Acro objective after the mode arrays diverge. Source browser63/63 and exact
+UI-authored two-mode replay pass (627/548ticks, zero contacts), plus shared-host
+section regression53/53. Feature notes: `fpv-tracking-objective-editor.md`.
+
+PR#972 publication checks found a real internal-radio-reset/autoplay regression.
+A concurrent remote repair and newer main Themes merge were preserved. Current
+published parent4bf0d072f incorporates those changes plus reset-before-pause-token
+capture and playback-only pickup isolation. Existing affected checks16/16 and
+source53/53 pass; protected auto-merge is requested using the repository's allowed
+merge method. No check or release policy was bypassed. Old frozen receipts are
+historical until the next complete candidate passes admission.
+
+Disk pressure recurred during local writes/fetch. Only superseded generated
+section fixtures and ZIP copies were removed; their manifests/committed receipts,
+source and normal user playtest builds remain. A retry fetched the newer parent
+without auto-maintenance; main673ac3fc4 is preserved. Source browser63/63 and
+section53/53 were rerun against that integration. User feedback stays nonblocking;
+physical/human qualification and deferred unit coverage remain explicitly open.

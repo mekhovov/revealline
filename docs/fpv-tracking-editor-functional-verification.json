@@ -1,0 +1,44 @@
+{
+  "format": "FPVTrackingEditorFunctionalEvidence.v1",
+  "status": "passed",
+  "inputSha256": "7676a4161c2c51de9d0b39c338d427313c2f22a3864faa76dd9762fbb6219b01",
+  "pilot": "hover",
+  "sources": {
+    "optional-practice/civilian-fpv/world-model.mjs": "d6e0939daf77a2a1459687dd8ba900719b78b02a1b3fe5fab862773bd6109551",
+    "optional-practice/civilian-fpv/world-actor-editor.mjs": "4495cd582f9b8c01026e5b3e13a177d752862db98db64719156975afc37e74ce",
+    "optional-practice/civilian-fpv/world-app.mjs": "255b9b172e01e781ff9a542b4b4cf77e8920e298f7950edc2aa5d9b1f34261f6",
+    "optional-practice/civilian-fpv/world-content.mjs": "aa3788b42d2e6379be68a4d76abb10667e7adb260fe00580a963ab09324f0df0",
+    "optional-practice/civilian-fpv/content-definitions.mjs": "e3808d22cc3dc294311533a16164aced16f342eb9d4b1b22b77d279b2e8dcbfd",
+    "scripts/qualify-fpv-tracking-editor.mjs": "3c3272e52aef1ba95c16f24c20b53f8da34438227c90d3e637b04115637ab236",
+    "scripts/qualify-fpv-adventures.mjs": "cc24b5a389bd6875b8e3361c189ecea0348a7e86da827e393423c519ae2fa646"
+  },
+  "results": [
+    {
+      "course": "world-muromuoj-0ut22-route",
+      "mode": "self-level",
+      "passed": true,
+      "status": "complete",
+      "ticks": 627,
+      "step": 4,
+      "contacts": 0,
+      "trackingCriteria": 2,
+      "finalStateIdentity": "66e4c7072ee5b1a4",
+      "proofSha256": "2bb25f2cfc7d5201cfe22a6d8fe60d7ff7ce466f04030d2614c173fbcd2ad809",
+      "proof": "world-muromuoj-0ut22-route-self-level.json"
+    },
+    {
+      "course": "world-muromuoj-0ut22-route",
+      "mode": "acro",
+      "passed": true,
+      "status": "complete",
+      "ticks": 548,
+      "step": 5,
+      "contacts": 0,
+      "trackingCriteria": 1,
+      "finalStateIdentity": "3a86e3ac31e60928",
+      "proofSha256": "f00454c68012bfba1b02cece25d34ee8c1ba3e2942e9b50aaf7557d6dd777c37",
+      "proof": "world-muromuoj-0ut22-route-acro.json"
+    }
+  ],
+  "scope": "Actual exported course/project/pack or passed browser receipt; canonical ordinary flight commands, independently verified replay. No player acceptance, physical-input, performance or new unit coverage claim."
+}
