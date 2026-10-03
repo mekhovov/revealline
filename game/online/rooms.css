@@ -162,3 +162,176 @@ canvas {
   font-size: 0.85rem;
   color: #bbc8c8;
 }
+
+/* Shared title/menus own preparation; the active scene uses measured space. */
+#room-source {
+  display: contents;
+}
+#room-source > header {
+  display: none;
+}
+.mode-play-shell section {
+  margin: 0;
+  border: 0;
+}
+#room-play {
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr) auto auto;
+  padding: 4px 8px;
+  min-height: 0;
+  overflow: hidden;
+}
+#room-live-status {
+  font-size: 0.85rem;
+  margin: 2px 0 4px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+#boards {
+  min-height: 0;
+  min-width: 0;
+  gap: 8px;
+}
+#boards[data-arrangement='paired'] {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-rows: minmax(0, 1fr);
+}
+#boards[data-arrangement='stacked'] {
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: repeat(2, minmax(0, 1fr));
+}
+.room-board {
+  min-width: 0;
+  min-height: 0;
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+}
+.room-hud {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2px 12px;
+  font-size: 0.8rem;
+  padding: 3px;
+}
+.room-hud > span:last-child {
+  flex-basis: 100%;
+}
+.room-board-wrap {
+  position: relative;
+  min-height: 0;
+  min-width: 0;
+}
+#boards canvas {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: auto;
+  max-width: 100%;
+  max-height: 100%;
+  touch-action: none;
+}
+#controls {
+  position: static;
+  padding: 4px 0;
+  min-width: 0;
+  background: transparent;
+  flex-wrap: wrap;
+}
+.direction-controls,
+.room-equipment {
+  display: flex;
+  gap: 4px;
+  justify-content: center;
+  min-width: 0;
+}
+#controls button {
+  min-height: 56px;
+  min-width: 44px;
+  padding: 6px 10px;
+}
+.room-equipment button {
+  font-size: 0.8rem;
+}
+#room-play #result {
+  display: none;
+}
+#room-settings label {
+  margin-block: 8px;
+}
+#room-settings label:has(input[type='checkbox']) {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+#room-settings input[type='checkbox'] {
+  width: 24px;
+  height: 24px;
+  min-height: 24px;
+}
+#room-settings :is(img, canvas) {
+  max-width: 100%;
+}
+.room-mode-links {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 4px;
+}
+.room-mode-links a {
+  padding: 8px 4px !important;
+  font-size: 0.85rem !important;
+  text-decoration: none;
+}
+#room-settings .theme-gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(180px, 100%), 1fr));
+  gap: 8px;
+}
+#room-settings .theme-gallery button {
+  min-width: 0;
+}
+#room-settings .theme-gallery canvas {
+  position: static;
+  width: 100%;
+  max-height: 150px;
+}
+@media (max-width: 480px) {
+  #room-play {
+    padding-inline: 4px;
+  }
+  .room-mode-links {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  .room-hud {
+    font-size: 0.7rem;
+    gap: 2px 6px;
+  }
+  #controls {
+    gap: 4px;
+  }
+}
+@media (max-height: 500px) and (orientation: landscape) and (pointer: coarse) {
+  #room-play {
+    grid-template: auto minmax(0, 1fr) auto / minmax(0, 1fr) auto;
+  }
+  #room-live-status {
+    grid-column: 1/-1;
+  }
+  #controls {
+    grid-column: 2;
+    grid-row: 2;
+    align-self: center;
+    flex-direction: column;
+  }
+  .direction-controls {
+    display: grid;
+    grid-template-columns: repeat(2, 44px);
+  }
+  .room-equipment {
+    flex-direction: column;
+  }
+  #controls button {
+    min-height: 44px;
+  }
+}

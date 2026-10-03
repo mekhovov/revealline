@@ -630,7 +630,8 @@ export class Soundscape {
       source.connect(filter);
       filter.connect(gain);
     } else source.connect(gain);
-    const destination = bus === 'music' ? this.musicBus : this.sfxBus,
+    const destination =
+        bus === 'music' ? this.musicBus : note.movement ? this.movementBus : this.sfxBus,
       drive = bus === 'music' ? this.musicDrive : this.sfxDrive;
     const output = note.voice === 'guitar' && drive ? drive : destination;
     if (Number.isFinite(note.pan) && c.createStereoPanner) {
@@ -650,6 +651,7 @@ export class Soundscape {
       bus,
       source,
       feedback: note.encounter === true,
+      movement: note.movement === true,
       name: note.cueName,
       cueFamily: note.cueName,
       board: note.board,
@@ -719,24 +721,41 @@ export class Soundscape {
       this.settings.sfx === 0
     )
       return false;
+    if (
+      recipe.gain === 0 ||
+      (recipe.movement &&
+        (!this.movementSettings.enabled ||
+          this.movementSettings.volume === 0 ||
+          [...this.voices].some((voice) => voice.feedback && voice.priority >= 4)))
+    )
+      return false;
     const board = details.board ?? 'solo',
       key = `encounter:${board}:${type}`;
     if (
       c.currentTime - (this.recentEvents.get(key) ?? -Infinity) <
-      (type === 'warning' ? 0.3 : ['notice', 'recover', 'blocked'].includes(type) ? 0.65 : 0.12)
+      (recipe.cooldown ??
+        (type === 'warning' ? 0.3 : ['notice', 'recover', 'blocked'].includes(type) ? 0.65 : 0.12))
     )
       return false;
     this.recentEvents.set(key, c.currentTime);
     if (this.recentEvents.size > 64)
       this.recentEvents.delete(this.recentEvents.keys().next().value);
+    // A warning arriving later in the same transaction owns the foreground.
+    // Only short movement accents are shed; continuous player rotors remain.
+    if (recipe.priority >= 4)
+      for (const voice of [...this.voices])
+        if (voice.feedback && voice.movement && !voice.source?.loop) voice.stop();
     if (this.feedbackDirector.play(recipe.name, { ...recipe, board, pan: details.pan ?? 0 }))
       return true;
+    if (recipe.movement && [...this.voices].filter((voice) => voice.feedback).length >= 16)
+      return false;
     if (recipe.priority >= 5) dialogueChannel.interrupt();
     // Missing optional samples remain audible now; loading never replays stale cues.
     return this.play(
       {
         kind: 'tone',
         encounter: true,
+        movement: recipe.movement,
         cueName: recipe.name,
         board,
         priority: recipe.priority,

@@ -1,3 +1,5 @@
+import { WORLD_VEHICLE_MODELS } from './world-pursuit.mjs';
+import { renderPursuitEditor, removePursuitActor } from './world-pursuit-editor.mjs';
 import { boundedJSON, exactKeys } from '../../game/data-json.mjs';
 import { ACTOR_CASTS, actorFieldGuide } from '../../game/hunt/actor-catalog.mjs';
 import { drawHuntActor } from '../../game/hunt/actor-art.mjs';
@@ -243,6 +245,7 @@ export function mountActorEditor({ container, getCourse, onChange, locale = 'en'
   let huntAddMode = 'both';
   let huntDraftOwner = null;
   const huntDrafts = new Map();
+  const pursuitDraft = {};
   let message = '';
   let error = false;
   let disposed = false;
@@ -305,10 +308,21 @@ export function mountActorEditor({ container, getCourse, onChange, locale = 'en'
       node.setAttribute('role', error ? 'alert' : 'status');
     }
   }
-  async function change(mutator, success = 'updated', committed = () => {}) {
+  async function change(
+    mutator,
+    success = 'updated',
+    committed = () => {},
+    { pursuit = false } = {},
+  ) {
     if (disposed || busy) return;
     busy = true;
     try {
+      if (!pursuit && pursuitDraft.base !== undefined && pursuitDraft.value !== pursuitDraft.base)
+        throw new TypeError(
+          (typeof locale === 'function' ? locale() : locale) === 'uk'
+            ? 'Застосуйте або скасуйте зміни графа переслідування.'
+            : 'Apply or discard pursuit graph edits first.',
+        );
       await onChange(mutator);
       committed();
       message = text(success);
@@ -431,6 +445,7 @@ export function mountActorEditor({ container, getCourse, onChange, locale = 'en'
     );
   }
   function removeTargetReferences(course, bindings, id, { removeTracking = false } = {}) {
+    removePursuitActor(course, id);
     for (const mode of MODES)
       alterSteps(course, bindings, mode, (step) => {
         if (removeTracking && step.type === 'actor-track-v1' && step.actorId === id) return null;
@@ -1109,7 +1124,19 @@ export function mountActorEditor({ container, getCourse, onChange, locale = 'en'
       button(text('remove'), removeActor, !selected),
     );
     container.append(toolbar, element('p', text('budget'), 'hint'));
-    container.append(renderHunt(course), renderTracking(course));
+    container.append(
+      renderHunt(course),
+      renderTracking(course),
+      renderPursuitEditor({
+        document,
+        course,
+        selected,
+        draft: pursuitDraft,
+        locale: typeof locale === 'function' ? locale() : locale,
+        change: (mutator) => change(mutator, 'updated', () => {}, { pursuit: true }),
+        busy,
+      }),
+    );
     if (!selected) {
       container.append(announcement);
       return;
@@ -1122,7 +1149,9 @@ export function mountActorEditor({ container, getCourse, onChange, locale = 'en'
     );
     if (contactTarget) {
       const language = (typeof locale === 'function' ? locale() : locale) === 'uk' ? 'uk' : 'en';
-      const family = actor.speed > 0 ? 'patroller' : 'lookout';
+      const family =
+        course.pursuit?.actors.find((policy) => policy.id === actor.id)?.family ??
+        (actor.speed > 0 ? 'patroller' : 'lookout');
       const guide = actorFieldGuide(family, language);
       const section = element('fieldset'),
         legend = element('legend', language === 'uk' ? 'Довідник цілей' : 'Target field guide');
@@ -1160,8 +1189,12 @@ export function mountActorEditor({ container, getCourse, onChange, locale = 'en'
         element(
           'p',
           language === 'uk'
-            ? 'Вигляд спільний із грою. Цей льотний персонаж використовує справжній наземний маршрут; клітинкові щити й ривки не підмінюють його фізику.'
-            : 'Appearance is shared with the game. This flight actor uses a native ground route; grid shields and bursts do not replace its physics.',
+            ? course.pursuit
+              ? 'Нативна фізика польоту, прийнятий граф, напрямок і фаза визначають рух та вразливість.'
+              : 'Вигляд спільний із грою. Цей льотний персонаж використовує справжній наземний маршрут; клітинкові щити й ривки не підмінюють його фізику.'
+            : course.pursuit
+              ? 'Native flight physics and the accepted graph, heading and phase control movement and vulnerability.'
+              : 'Appearance is shared with the game. This flight actor uses a native ground route; grid shields and bursts do not replace its physics.',
           'hint',
         ),
       );
@@ -1176,6 +1209,41 @@ export function mountActorEditor({ container, getCourse, onChange, locale = 'en'
     );
     if (actor.type !== 'hazard')
       container.append(label(text('role'), role), element('p', text('roleHelp'), 'hint'));
+    if (course.pursuit && actor.type === 'vehicle') {
+      const names = {
+        'field-utility': ['Field utility car', 'Польовий автомобіль'],
+        'cargo-truck': ['Cargo truck', 'Вантажівка'],
+        'armored-carrier': ['Armored carrier', 'Бронетранспортер'],
+        'field-tank': ['Tracked tank', 'Гусеничний танк'],
+        'relay-truck': ['Relay truck', 'Машина зв’язку'],
+      };
+      const uk = (typeof locale === 'function' ? locale() : locale) === 'uk';
+      const model = choose(
+        [
+          ['', uk ? 'Звичайний вигляд' : 'Original appearance'],
+          ...WORLD_VEHICLE_MODELS.map((id) => [id, names[id][uk ? 1 : 0]]),
+        ],
+        actor.vehicleModel ?? '',
+        uk ? 'Модель техніки' : 'Vehicle model',
+      );
+      model.addEventListener('change', () =>
+        change((next) => {
+          const target = actorIn(next);
+          if (model.value) target.vehicleModel = model.value;
+          else delete target.vehicleModel;
+        }),
+      );
+      container.append(
+        label(uk ? 'Модель техніки' : 'Vehicle model', model),
+        element(
+          'p',
+          uk
+            ? 'Лише вигляд. Колізії, маршрути та зброя використовують наявні правила техніки.'
+            : 'Appearance only. Collision, paths and weapons retain native vehicle rules.',
+          'hint',
+        ),
+      );
+    }
     const position = positionFields(actor.position, course.bounds, text('position'));
     container.append(element('h4', text('position')), position.group);
     const numericGroup = element('div', undefined, 'numeric-grid');
@@ -1219,6 +1287,11 @@ export function mountActorEditor({ container, getCourse, onChange, locale = 'en'
         change((next, bindings) => {
           const target = actorIn(next);
           target.position = position.read();
+          const policy = next.pursuit?.actors.find((item) => item.id === target.id);
+          if (policy)
+            next.pursuit.nodes.find((node) => node.id === policy.start).position = {
+              ...target.position,
+            };
           for (const [key, , scale] of [...basic, ...extra])
             target[key] = numeric(fields[key], scale);
           if (target.type !== 'hazard') {
@@ -1290,6 +1363,18 @@ export function mountActorEditor({ container, getCourse, onChange, locale = 'en'
         !actor.path.length,
       ),
     );
+    if (course.pursuit?.actors.some((policy) => policy.id === actor.id)) {
+      for (const control of routeActions.querySelectorAll('button')) control.disabled = true;
+      container.append(
+        element(
+          'p',
+          (typeof locale === 'function' ? locale() : locale) === 'uk'
+            ? 'Рухом керує граф переслідування. Змінюйте вузли та цілі в його редакторі.'
+            : 'The pursuit graph owns movement. Edit its nodes and goals in the graph editor.',
+          'hint',
+        ),
+      );
+    }
     container.append(routeActions);
     const jsonDetails = element('details');
     const json = element('textarea');

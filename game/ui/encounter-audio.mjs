@@ -18,12 +18,39 @@ const FAMILY_PITCH = Object.freeze({
   'brace-trooper': 0.68,
   'relay-warden': 0.62,
 });
+// Original material accents reuse the admitted bank. Cadence follows observed
+// movement, never a sprite frame, random choice or simulation mutation.
+const ACTOR_SOUNDS = Object.freeze({
+  runner: Object.freeze({ cadence: 0.32, rate: 1.08, equipment: 'paper', from: 240, to: 150 }),
+  courier: Object.freeze({ cadence: 0.29, rate: 1.19, equipment: 'ratchet', from: 360, to: 210 }),
+  guard: Object.freeze({
+    cadence: 0.41,
+    rate: 0.87,
+    equipment: 'contact-metal',
+    from: 210,
+    to: 90,
+  }),
+  shield: Object.freeze({
+    cadence: 0.48,
+    rate: 0.7,
+    equipment: 'contact-metal',
+    from: 135,
+    to: 48,
+  }),
+});
+export function actorSoundProfile(family) {
+  return ACTOR_SOUNDS[family === 'shield-bearer' ? 'shield' : family] ?? ACTOR_SOUNDS.runner;
+}
 export function encounterSoundRecipe(type, details = {}) {
   const pitch = FAMILY_PITCH[details.family] ?? 1;
-  const metal = details.material === 'metal' || details.machine === true;
+  const actor = actorSoundProfile(details.family),
+    tracked = details.machine === 'tracked',
+    metal = details.material === 'metal' || [true, 'tracked', 'wheeled'].includes(details.machine);
   const brutal = details.brutal === true;
   const recipes = {
-    step: ['grain', 0.11, 0, 130, 65, 0.055],
+    step: ['grain', 0.11, 0, 130 * actor.rate, 65 * actor.rate, 0.055],
+    equipment: [actor.equipment, 0.12, 1, actor.from, actor.to, 0.085],
+    drive: [tracked ? 'ratchet' : 'wheels', 0.17, 1, tracked ? 110 : 210, tracked ? 48 : 90, 0.16],
     notice: ['switch', 0.17, 2, 360, 520, 0.09],
     warning: ['warning', 0.44, 5, 620, 860, 0.13],
     burst: ['paper', 0.19, 2, 190, 320, 0.09],
@@ -56,17 +83,26 @@ export function encounterSoundRecipe(type, details = {}) {
   const row = recipes[type];
   if (!row) return null;
   const [name, gain, priority, from, to, duration] = row;
+  const scale = Number.isFinite(details.gainScale)
+    ? Math.max(0, Math.min(1, details.gainScale))
+    : 1;
+  const movement = ['step', 'equipment', 'drive'].includes(type);
   return {
     name,
-    gain,
+    gain: gain * scale,
     priority,
-    rate: pitch,
+    movement,
+    // Loop textures are deliberately sampled as short envelopes for footsteps.
+    maxDuration: movement ? duration : null,
+    cooldown:
+      type === 'step' ? actor.cadence : type === 'equipment' ? 0.7 : type === 'drive' ? 1.2 : null,
+    rate: type === 'step' ? actor.rate : pitch,
     tone: {
       from: from * pitch,
       to: to * pitch,
       duration,
-      gain: gain * 0.14,
-      type: metal ? 'triangle' : 'sine',
+      gain: gain * scale * 0.14,
+      type: metal || type === 'equipment' ? 'triangle' : 'sine',
     },
   };
 }

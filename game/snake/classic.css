@@ -525,8 +525,7 @@ body[data-mode='versus'] #boards[data-arrangement='paired'] {
 }
 @media (max-width: 700px), (max-height: 600px) {
   .board-stats [data-stat='best'],
-  .board-stats [data-stat='length'],
-  .board-stats [data-stat='queued'] {
+  .board-stats [data-stat='length'] {
     display: none;
   }
   .board-stats {
@@ -547,6 +546,18 @@ body[data-mode='versus'] #boards[data-arrangement='paired'] {
   }
   .board-stats span {
     font-size: 10px;
+  }
+  /* Keep queued turns visible where touch steering needs advance feedback. */
+  .board-stats [data-stat='queued'] {
+    display: inline-flex;
+    margin-inline-start: auto;
+  }
+  .board-stats [data-stat='queued'] span {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
   }
   .level-strip h2 {
     font-size: 16px;

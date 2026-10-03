@@ -949,7 +949,7 @@ export function mountWorldApp({
       // normalized source fingerprint binds this data to the exact revision;
       // replayWorldFlight checks every v2 identity and final state before play.
       const match =
-        proof?.format === 'FlightAttempt.v2' &&
+        ['FlightAttempt.v2', 'FlightAttempt.v3'].includes(proof?.format) &&
         proof.session === 'demonstration' &&
         proof.model === WORLD_FLIGHT_MODEL &&
         proof.backend === WORLD_COLLISION_BACKEND &&
@@ -1723,7 +1723,18 @@ export function mountWorldApp({
   actorEditor = mountActorEditor({
     container: actorContainer,
     getCourse: () => editor,
-    onChange: (mutator) => applyEdit(mutator),
+    onChange: async (mutator) => {
+      const source = editor;
+      await initWorldRuntime();
+      if (editor !== source)
+        throw new Error(
+          txt(
+            'The editor changed. Review the current challenge before applying.',
+            'Редактор змінився. Перегляньте поточне завдання перед застосуванням.',
+          ),
+        );
+      return applyEdit(mutator, { nativePursuitAdmission: true });
+    },
     locale: () => locale,
   });
 
@@ -2148,6 +2159,7 @@ export function mountWorldApp({
         button(txt('Free flight', 'Вільний політ'), () => {
           const course = clone(group[0].course);
           course.format = 'FlightCourse.v2';
+          delete course.pursuit;
           course.id = unique('freeflight');
           course.world ??= {
             id: group[0].world,
@@ -2430,7 +2442,7 @@ export function mountWorldApp({
     bindings: clone(editingProject?.routeBindings?.[editor.id] ?? null),
     overrides: clone(editingProject?.overrides ?? {}),
   });
-  function applyEdit(change) {
+  function applyEdit(change, { nativePursuitAdmission = false } = {}) {
     if (!editor)
       throw new Error(txt('Create a challenge copy first.', 'Спочатку створіть копію завдання.'));
     const before = editorSnapshot(),
@@ -2440,6 +2452,10 @@ export function mountWorldApp({
     try {
       change(next, bindings);
       valid = validateWorldCourse(next);
+      if (nativePursuitAdmission && valid.pursuit) {
+        const admitted = createWorldFlight({ course: valid, mode: 'acro' });
+        admitted.dispose();
+      }
       if (valid.id !== editor.id || valid.world.id !== editor.world.id)
         throw new Error(
           txt(
@@ -2476,7 +2492,7 @@ export function mountWorldApp({
         })
       : null;
     const c = clone(entry.course);
-    c.format = 'FlightCourse.v2';
+    c.format = c.pursuit ? 'FlightCourse.v3' : 'FlightCourse.v2';
     c.id = unique('custom');
     c.revision = 'r1';
     c.world ??= {

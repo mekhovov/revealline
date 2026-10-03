@@ -288,7 +288,11 @@
     "optional-practice/civilian-fpv/snake-hunt.mjs",
     "optional-practice/civilian-fpv/snake-hunt-catalogue.mjs",
     "optional-practice/civilian-fpv/expressive-hunt-courses.mjs",
-    "optional-practice/civilian-fpv/snake-hunt-presentation.mjs"
+    "optional-practice/civilian-fpv/snake-hunt-presentation.mjs",
+    "authoring/industrial-art-review",
+    "optional-practice/civilian-fpv/world-pursuit.mjs",
+    "optional-practice/civilian-fpv/world-pursuit-editor.mjs",
+    "optional-practice/civilian-fpv/native-pursuit-courses.mjs"
   ],
   "optionalOffline": [
     "game/content/packs/neon-reference-pack.json",

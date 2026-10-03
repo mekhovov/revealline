@@ -1,4 +1,4 @@
-import { sharedActorAppearance } from '../hunt/preferences.mjs';
+import { sharedActorAppearance, actorArtReviewRevision } from '../hunt/preferences.mjs';
 import { actorFacingRadians } from '../hunt/actor-facing.mjs';
 import { HUNT_PRESENTATION_CATALOG } from '../hunt/presentation-catalog.mjs';
 import { drawHumanoidPixelBody, drawHuntRemains } from '../hunt/destruction.mjs';
@@ -75,6 +75,7 @@ export function createCombatPresentation({
     const cast = sharedActorAppearance().snapshot().cast;
     const id = JSON.stringify([
       kind ?? role,
+      actorArtReviewRevision(),
       pose,
       cast,
       actor?.pursuit?.behavior,

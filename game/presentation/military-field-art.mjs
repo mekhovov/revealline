@@ -1,3 +1,9 @@
+import {
+  INDUSTRIAL_MATERIAL_REVISION,
+  INDUSTRIAL_TERRAIN_MATERIALS,
+  industrialMaterialPixels,
+} from './industrial-materials.mjs';
+
 /** Original overhead pixel silhouettes. These replace only verified built-in
  * presentation slots; their names are not new combat or collision policies. */
 export const MILITARY_FIELD_ROLES = Object.freeze({
@@ -47,9 +53,11 @@ export function drawMilitaryVehicleMotion(ctx, frame, role, diameter) {
 
 /** No clocks, randomness, physics or DOM access. Keep the original sprite frame
  * and pivot while using transparent air around every vehicle silhouette. */
-export function militaryFieldPixels({ width, height }, slot) {
+export function militaryFieldPixels({ width, height }, slot, { revision = null } = {}) {
   const role = MILITARY_FIELD_ROLES[slot];
   if (!role) return null;
+  if (revision === INDUSTRIAL_MATERIAL_REVISION && INDUSTRIAL_TERRAIN_MATERIALS[slot])
+    return industrialMaterialPixels({ width, height }, INDUSTRIAL_TERRAIN_MATERIALS[slot]);
   if (
     !Number.isInteger(width) ||
     !Number.isInteger(height) ||
@@ -196,6 +204,29 @@ export function militaryFieldPixels({ width, height }, slot) {
       rect(13, 17, 4, 4, 'sand');
     }
     markings(14, 18);
+  }
+  if (revision === 'industrial-pilot-v1' && ['utility-car', 'tracked-tank'].includes(role)) {
+    // Candidate surface treatment retains the original silhouette and all rules.
+    for (const y of [9, 12, 22]) {
+      rect(10, y, 1, 1, 'metal');
+      rect(21, y, 1, 1, 'metal');
+    }
+    if (role === 'tracked-tank') {
+      rect(11, 22, 10, 5, 'ink');
+      for (const x of [12, 14, 16, 18, 20]) rect(x, 23, 1, 3, 'tread');
+      rect(11, 27, 10, 1, 'light');
+      rect(17, 12, 5, 5, 'camo');
+      rect(18, 12, 3, 1, 'metal');
+      rect(9, 17, 1, 5, 'sand');
+    } else {
+      rect(11, 7, 10, 3, 'ink');
+      for (const x of [12, 14, 16, 18, 20]) rect(x, 7, 1, 2, 'tread');
+      rect(10, 12, 1, 6, 'metal');
+      rect(21, 12, 1, 6, 'camo');
+      rect(12, 16, 8, 1, 'sand');
+      rect(12, 22, 8, 1, 'camo');
+      rect(13, 24, 6, 1, 'metal');
+    }
   }
   return { width, height, rgba };
 }

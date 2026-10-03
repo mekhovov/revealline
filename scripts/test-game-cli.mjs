@@ -1208,9 +1208,9 @@ test('archived packs stay downloadable with exact bytes while both navigation ca
   await assert.rejects(buildProject({ root, out }));
   assert.deepEqual(await fs.readFile(path.join(out, 'manifest.json')), before);
 });
-test('declaring an optional pack does not relax the 64 MiB core cache budget', async (t) => {
+test('declaring an optional pack does not relax the 80 MiB core cache budget', async (t) => {
   const { root, out } = await optionalPackFixture(t);
-  await fs.writeFile(path.join(root, 'game/core-payload.bin'), Buffer.alloc(64 * 1024 * 1024));
-  await assert.rejects(buildProject({ root, out }), /64 MiB/);
+  await fs.writeFile(path.join(root, 'game/core-payload.bin'), Buffer.alloc(80 * 1024 * 1024));
+  await assert.rejects(buildProject({ root, out }), /80 MiB/);
   await assert.rejects(fs.access(out));
 });

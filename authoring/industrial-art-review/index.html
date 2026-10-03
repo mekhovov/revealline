@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Industrial field kit · art review</title>
+    <link rel="stylesheet" href="../../game/ui/field-kit-fonts.css" />
+    <link rel="stylesheet" href="../../game/ui/field-kit-tokens.css" />
+    <link rel="stylesheet" href="review.css" />
+  </head>
+  <body>
+    <main>
+      <nav>
+        <a id="nav-studio" href="../asset-studio/">Asset Studio</a
+        ><a id="nav-motion" href="../motion-lab/">Motion Lab</a
+        ><a id="nav-guide" href="../../game/hunt/">Enemy field guide</a>
+      </nav>
+      <p id="eyebrow" class="eyebrow">ORIGINAL ART · REVIEW CANDIDATE 02</p>
+      <h1 id="page-title">Industrial field kit</h1>
+      <p id="intro">
+        Transparent overhead silhouettes, readable equipment and stronger motion. This sample is
+        awaiting artistic approval; it does not replace your saved appearance.
+      </p>
+      <div class="controls">
+        <button id="pause" type="button">Pause motion</button>
+        <label
+          ><span id="facing-label">Facing</span>
+          <select id="heading">
+            <option value="up">North</option>
+            <option value="right">East</option>
+            <option value="down">South</option>
+            <option value="left">West</option>
+          </select></label
+        >
+        <label
+          ><span id="state-label">State</span>
+          <select id="state">
+            <option value="walk">Moving</option>
+            <option value="notice">Notice</option>
+            <option value="warning">Warning</option>
+            <option value="recover">Recovery</option>
+            <option value="blocked">Blocked</option>
+          </select></label
+        >
+        <label
+          ><input type="checkbox" id="reduced" />
+          <span id="reduced-label">Reduced effects</span></label
+        >
+        <label
+          ><span id="language-label">Language</span>
+          <select id="language">
+            <option value="en">English</option>
+            <option value="uk">Українська</option>
+          </select></label
+        >
+      </div>
+      <p id="sizes">
+        Each row: released → candidate; actual 16 / 24 / 32 px and enlarged. Dark and light grounds
+        are comparison surfaces, not sprite backgrounds.
+      </p>
+      <section id="actors" aria-label="Character comparison"></section>
+      <section class="hardware">
+        <h2 id="hardware-title">Flight and machinery</h2>
+        <canvas
+          id="hardware"
+          width="960"
+          height="190"
+          aria-label="Drone, body, utility car and tank preview"
+        ></canvas>
+        <p id="hardware-note">
+          Existing FPV rig and connected body; candidate surface detail on the utility car and tank.
+          Vehicle shapes retain their current game rules.
+        </p>
+      </section>
+      <section>
+        <h2 id="materials-title">Shared terrain materials</h2>
+        <p id="materials-note">
+          Concrete, rutted earth and tread plate use the same original pixels in the board renderer
+          and native flight material maps.
+        </p>
+        <div id="materials" class="sample-grid"></div>
+      </section>
+      <section>
+        <h2 id="audio-title">Equipment and movement sounds</h2>
+        <p id="audio-note">
+          Play a short sample through the game mixer. Your mute and Effects settings apply. Nothing
+          plays automatically.
+        </p>
+        <div class="controls">
+          <label
+            ><span id="treatment-label">Treatment</span
+            ><select id="audio-treatment">
+              <option value="clean">Clean</option>
+              <option value="brutal">Brutal without blood</option>
+              <option value="blood">Brutal with blood</option>
+            </select></label
+          >
+          <button id="audio-mute" type="button">Unmute sound</button>
+          <button id="audio-stop" type="button">Stop sample</button>
+        </div>
+        <div id="audio-samples" class="sample-grid"></div>
+        <output id="audio-status" role="status" aria-live="polite"></output>
+      </section>
+      <section>
+        <h2 id="effects-title">Defeat treatments</h2>
+        <div id="effects" class="links"></div>
+      </section>
+      <section>
+        <h2 id="play-title">Review in the native game</h2>
+        <div id="links" class="links"></div>
+        <p id="scope">
+          These links opt into the four character samples only. Other families retain released
+          artwork. Native SIM models and complete chapter adoption have separate review gates.
+        </p>
+      </section>
+      <section>
+        <h2 id="studio-title">Use the same animation in Studio</h2>
+        <p id="studio-copy">
+          Asset Studio → enemy slot → Actor animation · advanced. Edit bounded clips or atlas
+          frames, compare at phone size, then stage and save/export a normal immutable collection.
+          Earlier static revisions remain available.
+        </p>
+        <img
+          class="atlas-sheet"
+          src="atlas-sample/atlas.png"
+          width="384"
+          height="288"
+          alt="Transparent twelve-pose machinery atlas"
+        />
+        <div class="links">
+          <a id="atlas-download" href="atlas-sample/industrial-bouncer.rltheme" download
+            >Download complete Studio collection</a
+          >
+          <a id="atlas-guide" href="atlas-sample/README.md">Import and review instructions</a>
+          <a id="atlas-provenance" href="atlas-sample/provenance.json"
+            >Artwork provenance and exact sizes</a
+          >
+        </div>
+        <button id="export" type="button">Download sample animation descriptors</button>
+      </section>
+      <output id="budget"></output>
+    </main>
+    <script type="module" src="review.mjs"></script>
+  </body>
+</html>

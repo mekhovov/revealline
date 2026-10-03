@@ -8,8 +8,8 @@ import { getLocale, onLocaleChange } from '../i18n/index.mjs';
 const copy = {
   title: ['Pursuit routes and personalities', 'Маршрути та характери переслідування'],
   help: [
-    'Author up to six targets. Ordinary prey allows one-contact catches; Shield and Brace are explicit hazardous challenges. Use cell centres (for example 12.5, 8.5). Routes need two to eight reachable points; paired actors must name one another. Inspection uses the same compiler as play and export.',
-    'Створіть до шести цілей. Звичайну здобич ловлять дотиком; Щит та Броньований ривок — окремі небезпечні випробування. Вказуйте центри клітинок (наприклад 12.5, 8.5). Маршрути потребують від двох до восьми досяжних точок; напарники мають указувати одне одного. Перевірка використовує той самий компілятор, що й гра та експорт.',
+    'Author up to six targets. Ordinary prey allows one-contact catches; Shield and Brace are explicit hazardous challenges. Use cell centres (for example 12.5, 8.5). Routes need two to eight reachable points; Runner and Sprinter may omit them. Paired actors must name one another and share the same ordered meeting points. New editions use committed goals, announced switchbacks and timed sprints. Inspection uses the same compiler as play and export.',
+    'Створіть до шести цілей. Звичайну здобич ловлять дотиком; Щит та Броньований ривок — окремі небезпечні випробування. Вказуйте центри клітинок (наприклад 12.5, 8.5). Маршрути потребують від двох до восьми досяжних точок; Бігун і Спринтер можуть їх не мати. Напарники мають указувати одне одного й однаковий порядок точок зустрічі. Нові версії використовують сталі цілі, оголошені зміни напрямку та ривки з попередженням. Перевірка використовує той самий компілятор, що й гра та експорт.',
   ],
   add: ['Add target', 'Додати ціль'],
   remove: ['Remove target', 'Видалити ціль'],
@@ -66,6 +66,7 @@ const copy = {
 const words = (key) => copy[key][getLocale() === 'uk' ? 1 : 0];
 const behaviors = [
   'runner',
+  'sprinter',
   'patroller',
   'courier',
   'refuge',
@@ -95,8 +96,8 @@ export function selectedMissionPursuitSource(source, missionId, population) {
   const project = structuredClone(compileContentProject(source).source);
   const mission = project.missions.find((entry) => entry.id === missionId && !entry.archived);
   if (!mission) throw new Error(words('select'));
-  mission.format = 'MissionDesignV5';
-  mission.pursuit = { version: 'mission-pursuit.v1', actors: structuredClone(population) };
+  mission.format = 'MissionDesignV6';
+  mission.pursuit = { version: 'mission-pursuit.v2', actors: structuredClone(population) };
   mission.revision = `pursuit-${dataIdentity(mission)}`;
   const changed = new Set();
   for (const campaign of project.campaigns) {
