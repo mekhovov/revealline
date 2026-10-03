@@ -78,3 +78,28 @@ World Studio preparation passes with 94 files / 15,388,669 bytes and ZIP SHA-256
 The earlier failed GitHub preview/edition jobs used obsolete 64 MiB limits;
 this merge incorporates current main's reviewed capacity implementation without
 changing any admission guard. Current-head CI and public deployment remain pending.
+
+## Qualification hold resolved — 3 October 2026
+
+Merged main `ce6af3e65fba251d82f41d0178f8f631a7fc969e`, including #999's
+field recipe. All 30 existing acceptance/texture/workshop checks now pass. This
+supersedes the local 29/30 qualification hold above; it does not relabel the old
+failed run or skipped full suites as passing.
+
+The #999 merge had also removed #992's foliage implementation from main.
+This refresh restores those leaf maps, bark maps and vertex colors by retaining
+the already-qualified #993 implementation and incorporating the field recipe.
+World-owned shared texture and geometry disposal remains unchanged. The entire
+resolved `world-visuals.mjs` is byte-identical to reviewed combined source
+`51e3b6`; imported tree assets and the generator template are byte-identical to
+the prior `a0f5b5f4b` refresh. Thus the reviewed Pixel/form implementation and
+the prior six-case geometry/ownership evidence remain applicable to these bytes.
+No new browser run is claimed.
+
+ESLint, Prettier, whitespace checks and development package preparation pass.
+The 94-file package is 15,389,187 bytes, ZIP SHA-256
+`e52d101fe4f5fdee660231cc8865c53b5ca88d259dea455b83c70d602aa8bca6`.
+Prepared `world-visuals`, `world-assets`, `renderer` and `world-themes` module bytes
+match source exactly. Receipt: `evidence/fpv-woodland-tree-forms-maince6-refresh.json`.
+The PR may return to ready status and request protected merge-commit auto-merge;
+current-head GitHub checks and public deployment remain separate pending gates.

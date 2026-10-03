@@ -2720,6 +2720,19 @@ Next: publish this surface increment and immediately continue original branching
 and canopy composition on a separate branch. Do not treat this increment as D1
 completion. Continue approved phases without another go-ahead.
 
+### Yard publication and material qualification repair — 3 October 2026
+
+Yard composition is published as draft #998, independent of Woodland #996.
+Immediately continued on `codex/fpv-field-surface-identity` to resolve the shared
+qualification failure. Military-field's foundry recipe collapsed to the DOS
+light/dark motif. Dedicated recessed panels restore distinct identity without
+changing 112 maps across the other 16 collections. All 30 existing checks and
+browser map comparisons pass; package admission passes at 94files/15,383,912bytes.
+See `docs/fpv-field-surface-identity.md`. Next: publish this focused repair, refresh
+art PRs after protected integration, continue D1 material depth; do not call D1
+complete or public availability verified. Preserve concurrent capacity/Theme work.
+inspect those failures next without weakening admission guards.
+
 ### D1 continued without waiting: both Woodland scenery paths — 3 October 2026
 
 Surface increment published as PR #992 on `codex/fpv-woodland-foliage-surfaces`.
@@ -2763,3 +2776,20 @@ motif repair. Keep #993 draft until that fix merges and current-head qualificati
 passes; do not copy the independent fix or weaken admission. Historical browser
 evidence is retained separately. No fresh browser, full-art, device-FPS or public
 availability claim is made by this publication refresh.
+
+### Woodland qualification repaired after #999 — 3 October 2026
+
+Merged main `ce6af3e65` into #993 and retained both delivery histories. The new
+main had removed #992 foliage while integrating the field recipe; this refresh
+restores the existing leaf/bark maps and vertex colors alongside tree forms and
+keeps the independent field fix. The resolved visual module is byte-identical to
+reviewed combined source `51e3b6`; imported assets/template remain unchanged from
+the prior #993 refresh. World resource ownership and Pixel/form behavior retain
+the reviewed implementation.
+
+All 30 scoped existing checks, source/package module equality, lint/formatting,
+whitespace checks and 94-file / 15,389,187-byte package preparation pass. The local
+qualification hold is resolved; preserve the earlier 29/30 result as history.
+Return #993 to ready and use protected merge-commit auto-merge only after normal
+head-specific checks. No native stack, admission guard, release tag or public
+deployment is changed by this refresh. See the new maince6 qualification receipt.
