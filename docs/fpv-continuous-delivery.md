@@ -2775,6 +2775,15 @@ required for this independent main-based increment.
 
 Published as [PR #1004](https://github.com/mekhovov/revealline/pull/1004), using
 existing milestone57. Main advanced to ce6af3e65 (#999 merged) during publication;
-the main merge preserves both delivery histories and #992 foliage maps. The
+the main merge preserves both delivery histories. The
 prior browser/admission receipts remain tied to698b6aa30. Current integration
 qualification is recorded separately; no live claim or protection bypass.
+
+Runtime candidate70679d3ab passes30 existing visual/acceptance checks,32 functional
+checks with21 exact demonstration replays, and allthree frozen optional admissions
+with committed-input/ZIP verification and two byte-identical builds. The only
+visual-module integration delta from the browser-qualified candidate is#999's
+Military Field recipe; Stadium renderer/helpers remain identical. Main's#999merge
+unintentionally removed#992 foliage code; separate#993repair restores it and keeps
+that work out of the independent StadiumPR. Local player build is available at
+port8834/dist/fpv-stadium-playtest-70679d3ab/optional-practice/fpv-worlds/index.html.

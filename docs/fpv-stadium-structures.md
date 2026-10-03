@@ -113,3 +113,20 @@ Public deployment remains unverified. No named-device frame
 rate, sustained memory, physical-controller, novice-player or artist acceptance
 is inferred from source verification. Additional unit coverage remains deferred
 to D6 under the approved plan.
+
+
+## Current-main publication integration
+
+PR #1004 merged main ce6af3e65 after the original browser qualification. The
+resulting runtime candidate70679d3ab retains byte-identical Stadium renderer and
+structure helpers; the sole visual-module delta is #999's Military Field material
+recipe. All30 existing visual/acceptance checks and32 functional checks pass,
+including all21 demonstrations. All three optional admissions, committed-input
+verification, ZIP checks and two byte-identical builds pass again; see
+`fpv-stadium-structures-main-admission.json` and `fpv-stadium-structures-main-cpu.json`.
+The refreshed development build is94files/15,392,904bytes including its manifest;
+ZIP SHA c5f90ddd8f582667294a72c09ec953278ff9fea71a1cdede5ccee0c94c803be6.
+Original browser receipts stay bound to their recorded candidate rather than
+being relabelled as new measurements. Current-head CI and public deployment
+remain pending. Separate #993 repairs a Woodland foliage regression in main;
+this Stadium increment does not claim to complete that integration.
