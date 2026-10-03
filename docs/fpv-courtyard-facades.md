@@ -65,10 +65,14 @@ front layer.
 
 The earlier v2 source fixture passed mechanical WebGL checks but was rejected in
 visual review because its windows did not align with the existing marks. Those
-results do not qualify this corrected appearance. The corrected visual preview and source/package browser runs remain pending
-at this checkpoint.
+results do not qualify this corrected appearance. Both corrected entrance views passed visual review. Final guarded source WebGL
+qualification passes 261 checks / 163 image pairs, including exact Pixel pixels,
+coverage of every actual old window mark, unchanged base geometry, three stable
+resource cycles, zero registered resources after disposal and no unexpected
+context loss. Source receipt SHA-256:
+`9a0d1b6d7cf6bb93f1753a854fc4f324e56e6530928f9f8c773ccdce363bbe5f`.
 
-## Package prerequisite
+## Frozen package
 
 The first source admission failed at the existing byte limit and wrote no
 candidate directory. Separately reviewed repair #1011 removes indentation from
@@ -77,11 +81,36 @@ bytes and generator check remain exact; no guard or asset was removed. The
 existing unrelated audio warning-priority assertion remains recorded in the
 repair's evidence; no broad all-green regression is claimed.
 
-That repair merged normally into the art branch as `5456cb08d`. The superseded
-v2 art at that commit passed all three admissions, two identical builds and
-committed-source/ZIP checks. Its receipts retain the exact source identity but
-do not qualify the corrected artwork. A fresh frozen admission and packaged
-player will follow accepted visual preview. No Courtyard PR is published before
-the repair lands and the corrected source/package/player is qualified.
+Repair #1011 merged to main as `b02ca5a62`; the art branch integrated it normally.
+The corrected, clean source candidate is
+`c452dd215d62f5e0a5b87584f407a6c7a24cdd6b`, tree
+`ddb5b5ecd82b44d85703133a243db832e61370a7`. All 31 rendering modules match the
+final guarded source fixture. The packaged harness changes only the provenance
+label to say “Runtime SHA-256”; every render/qualification statement is unchanged.
+The source fixture's historical `candidate: "."` is bound unambiguously to this
+runtime by its full per-module hash inventory.
+
+Node 22.22.2 admits all three optional packages with two identical builds,
+committed-source checks and ZIP-member verification:
+
+| Package         | Admitted files | Admitted bytes |
+| --------------- | -------------: | -------------: |
+| Civilian Flight |             48 |        679,266 |
+| Civilian FPV    |             69 |      4,384,679 |
+| World Studio    |            102 |     15,536,580 |
+
+World Studio's original inputs total 16,742,742 bytes, leaving 34,474 bytes under
+the unchanged 16 MiB guard. All 15 artifact checksums were independently reread.
+Distribution ZIP SHA-256:
+`00e62f023317fceb6f4c223fd25b4477a040e4ecacc3c27905c79ea38e37a4d4`.
+The separate player contains 94 files / 15,378,809 bytes. All 31 packaged-renderer
+modules match both the admitted ZIP and player; compared with source, only the
+intentionally generated locale catalogue differs. Candidate/playtest/packaged
+fixture directories retain suffix `c452dd215` under `dist/`.
+
+Packaged browser and actual-player observations remain pending at this checkpoint.
+No Courtyard PR is published before those observations pass. `publicEligible`
+and `releaseQualified` remain false in the local candidate/player receipts;
+these are not public-deployment identities.
 
 Human, physical-device performance and final artist acceptance remain open.
