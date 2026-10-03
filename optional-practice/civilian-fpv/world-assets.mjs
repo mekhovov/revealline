@@ -262,12 +262,28 @@ export function builtinWorldScene(course) {
           0.96,
           Math.max(0.04, (i + 0.5 + Math.sin(i * 2.7 + side) * 0.22) / count),
         );
+        // Four distinct groves, with outer trees behind the near silhouettes.
+        // Reuse the existing forty models: depth comes from composition, not
+        // additional meshes. Benches retain the original accessible edge rhythm.
+        const woodland = environment === 'woodland';
+        const grove = Math.floor(i / 3);
+        const centres = [0.13, 0.38, 0.67, 0.89];
+        const treeAlong = woodland
+          ? Math.max(
+              0.04,
+              Math.min(
+                0.96,
+                centres[grove] + ((i % 3) - 1) * 0.055 + Math.sin(side * 2 + grove) * 0.025,
+              ),
+            )
+          : along;
+        const rear = i % 3 === 1;
         retro(
           (i + side) % 3 === 0 ? 'tree-park-pine-large' : 'tree-park-large',
           side,
-          along,
-          environment === 'woodland' ? 5.5 + ((i * 3 + side) % 5) * 1.2 : 5.2 + (i % 2),
-          environment === 'woodland' ? 1.5 + ((i + side) % 3) * 2 : 3.5,
+          treeAlong,
+          woodland ? (rear ? 9.5 : 5.5) + ((i + side) % 3) * 1.1 : 5.2 + (i % 2),
+          woodland ? (rear ? 10 : 2) + ((i + side) % 3) * 1.4 : 3.5,
           0,
           environment === 'woodland' ? (i + side * count) * 2.399963229728653 : 0,
         );

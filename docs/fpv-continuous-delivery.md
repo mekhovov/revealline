@@ -2621,6 +2621,18 @@ Published as [PR #990](https://github.com/mekhovov/revealline/pull/990), head
 CI is pending; no live deployment claim. Capacity #989 now passes focused and
 default-capacity checks, but its preview and edition candidate jobs failed;
 inspect those failures next without weakening admission guards.
+### D1 primary Woodland composition — 3 October 2026
+
+Continued on independent `codex/fpv-woodland-depth-composition` from main
+3d04f9ab04980a8c51d3c28512ace7e024ebae51. Forty existing imported trees form layered
+groves; benches and flight geometry stay exact. Actual GLTFLoader clearance and
+five unaffected environment byte comparisons pass. Package admission passes at
+94 files/15,382,549 bytes. Existing checks are 29/30: shared-theme enamel uniqueness
+fails in unchanged code and remains outstanding. See `docs/fpv-woodland-depth.md`.
+#989 is rerunning CI; preserve its externally updated fe449dcf3 head. #992 and #993
+remain open. Continue Container Yard landmarks and remaining D1 materials; then
+D2 world pairs. Do not count this composition pass as complete art qualification.
+
 ### D1 Container Yard frontages — 3 October 2026
 
 Independent branch `codex/fpv-yard-landmark-composition`, baseline b43b0ce12,
@@ -2900,3 +2912,28 @@ performance still pending; (3) remaining environment pairs starting Stadium/Gara
 qualification. Feedback does not block implementation; no device acceptance is
 invented. Keep finished PRs separate from new work.
 inspect those failures next without weakening admission guards.
+
+
+
+
+### Woodland groves refreshed after Yard publication — 3 October 2026
+
+#996 candidate fabb417ec23e1fcaaabf90cd0c102a9f9335efed integrates main b3167a8f89,
+including merged Yard #998 and replacement tree forms #1006. Preserve the rotated
+footprint calculation and per-tree turn when composing groves; the shared
+renderer/visual modules remain byte-identical to main. #1001 is kept separate.
+All 30 existing checks and all three source-bound optional admissions pass;
+18 other imported environment/arena GLBs remain exact. Frozen current-main
+browser review and exact-head CI are pending. Complete global validation requires
+CI because the sparse checkout omits unrelated content packs. No additional unit
+coverage, hardware/artist acceptance or live deployment is claimed.
+
+The frozen #996 browser comparison then passed both Woodland arena sizes at
+fabb417ec. Both retain 52 placements and 16,080 clear imported vertices. Woodland-08
+sampled calls rise 24→30 and triangles 2,594→2,746 as grove visibility changes;
+Beginner-40 stays 22 calls / 2,342 triangles. Views were inspected, without a
+hardware or human-artist acceptance claim. Integration of published Hangar main
+ea596d80 yields 039be4e7c: scenery and renderer bytes remain exact; inherited
+Hangar visual changes are inside the indoor branch and do not affect Woodland.
+All 30 checks and three reproducible admissions pass again. Preserve the explicit
+browser candidate identity and use protected exact-head publication.
