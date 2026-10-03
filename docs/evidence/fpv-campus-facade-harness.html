@@ -245,10 +245,12 @@
             );
             const originalParse = GLTFLoader.prototype.parse;
             owner.importOrder = [];
+            owner.importMaterialCount = null;
             GLTFLoader.prototype.parse = function (...args) {
               this.register((parser) => ({
                 name: 'CAMPUS_CONTROL_SOURCE_MATERIAL_ORDER',
                 async beforeRoot() {
+                  owner.importMaterialCount = (parser.json.materials ?? []).length;
                   await parser.getDependencies('texture');
                   for (let index = 0; index < (parser.json.materials ?? []).length; index++) {
                     await parser.getDependency('material', index);
@@ -388,8 +390,9 @@
           attributes: Object.fromEntries(
             Object.entries(item.geometry.attributes)
               .filter(
-                () =>
+                ([attribute]) =>
                   !(
+                    ['position', 'normal'].includes(attribute) &&
                     item.name === 'flush-surface-markings' &&
                     campusIds.includes(item.parent?.userData.collisionId)
                   ),
@@ -773,8 +776,13 @@
           if (id === 'courtyard-01')
             check(
               'Courtyard source material order equal and loader hooks restored',
-              owners.every((o) => o.importHookRestored) &&
-                encode(owners[0].importOrder) === encode(owners[1].importOrder),
+              owners.every(
+                (o) =>
+                  o.importHookRestored &&
+                  o.importMaterialCount > 0 &&
+                  o.importOrder.length === o.importMaterialCount &&
+                  o.importOrder.every((row, index) => row.index === index),
+              ) && encode(owners[0].importOrder) === encode(owners[1].importOrder),
               owners.map((o) => o.importOrder),
             );
           publish();
