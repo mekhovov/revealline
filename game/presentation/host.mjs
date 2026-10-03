@@ -1,3 +1,4 @@
+import { pageActorArtPool } from './actor-art-pool.mjs';
 import { localizedMessage } from '../i18n/index.mjs';
 import {
   isTeamRuntimeImageSlot,
@@ -245,7 +246,11 @@ export function createPresentationHost({
   revokeObjectURL = (url) => URL.revokeObjectURL(url),
   fontFactory = (name, bytes, descriptors) => new FontFace(name, bytes, descriptors),
 } = {}) {
-  required(['full', 'actors'].includes(profile), 'Use a registered presentation host profile.');
+  required(
+    ['full', 'actors', 'board'].includes(profile),
+    'Use a registered presentation host profile.',
+  );
+  const actorPool = pageActorArtPool(document);
   const loadsSlot = (id, asset) =>
     profile === 'full'
       ? visibleSlot(id, asset) &&
@@ -253,7 +258,8 @@ export function createPresentationHost({
           (id === 'screen.title.background' || id === 'screen.title.portrait') &&
           (skipTitleArtwork || document?.querySelector?.('.native-landing'))
         )
-      : actorSlots.has(id) && asset.kind === 'image';
+      : (actorSlots.has(id) || (profile === 'board' && /^(terrain|pickup)\./.test(id))) &&
+        asset.kind === 'image';
   const manifestPath = presentationManifestPath(retainedManifestSha256);
   const base = new URL(baseURL);
   required(
@@ -527,10 +533,11 @@ export function createPresentationHost({
           fullImages.set(asset.file.sha256, asset.file.width * asset.file.height);
           const frame = asset.geometry.frame;
           if (
-            frame.x ||
-            frame.y ||
-            frame.width !== asset.file.width ||
-            frame.height !== asset.file.height
+            !asset.animation &&
+            (frame.x ||
+              frame.y ||
+              frame.width !== asset.file.width ||
+              frame.height !== asset.file.height)
           )
             frames.set(slot, frame.width * frame.height);
         }
@@ -540,7 +547,16 @@ export function createPresentationHost({
           'Presentation exceeds the decoded pixel budget.',
         );
         const sourceBlobs = new Map(),
-          decoded = new Map();
+          decoded = new Map(),
+          actorLeases = new Map(),
+          actorHashes = new Set(
+            Object.entries(manifest.resolved.assets)
+              .filter(
+                ([slot, asset]) =>
+                  loadsSlot(slot, asset) && actorSlots.has(slot) && asset.kind === 'image',
+              )
+              .map(([, asset]) => asset.file.sha256),
+          );
         for (const [slot, asset] of Object.entries(manifest.resolved.assets)) {
           if (!loadsSlot(slot, asset)) continue;
           cancelled(controller.signal);
@@ -587,8 +603,21 @@ export function createPresentationHost({
               header.valid && header.width === file.width && header.height === file.height,
               'Presentation image header disagrees with its dimensions.',
             );
-            original = await decodeImage(blob, { signal: controller.signal });
-            own(() => original.close?.());
+            if (actorHashes.has(hash)) {
+              const lease = await actorPool.acquire({
+                key: hash,
+                width: file.width,
+                height: file.height,
+                signal: controller.signal,
+                load: (signal) => decodeImage(blob, { signal }),
+              });
+              original = lease.image;
+              actorLeases.set(hash, lease);
+              own(lease.release);
+            } else {
+              original = await decodeImage(blob, { signal: controller.signal });
+              own(() => original.close?.());
+            }
             cancelled(controller.signal);
             required(
               (original.naturalWidth ?? original.width) === file.width &&
@@ -600,10 +629,30 @@ export function createPresentationHost({
           const frame = asset.geometry.frame;
           let image = original,
             visualBlob = blob;
-          if (frame.x || frame.y || frame.width !== file.width || frame.height !== file.height) {
+          if (
+            !asset.animation &&
+            (frame.x || frame.y || frame.width !== file.width || frame.height !== file.height)
+          ) {
             report('decoding', localizedMessage('interface:presentation.preparingFrames'));
-            image = await cropImage(original, frame, { signal: controller.signal });
-            own(() => image.close?.());
+            if (actorHashes.has(hash)) {
+              const keepOriginal = actorLeases.get(hash).retain();
+              try {
+                const lease = await actorPool.acquire({
+                  key: `${hash}:${frame.x},${frame.y},${frame.width},${frame.height}`,
+                  width: frame.width,
+                  height: frame.height,
+                  signal: controller.signal,
+                  load: (signal) => cropImage(original, frame, { signal }),
+                });
+                image = lease.image;
+                own(lease.release);
+              } finally {
+                keepOriginal();
+              }
+            } else {
+              image = await cropImage(original, frame, { signal: controller.signal });
+              own(() => image.close?.());
+            }
             cancelled(controller.signal);
             required(
               image.width === frame.width && image.height === frame.height,
@@ -627,6 +676,7 @@ export function createPresentationHost({
         const css = presentationCSSVariables(manifest.resolved);
         const snapshot = Object.freeze({
           manifestSha256,
+          actorArtBudget: actorPool.stats,
           source: manifest.source,
           resolved: manifest.resolved,
           canvas: canvasPresentation(manifest.resolved),

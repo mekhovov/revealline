@@ -6,7 +6,7 @@ import {
 } from '../../game/ui/audio-output.mjs';
 import { createAudioMaster } from '../../game/ui/audio-master.mjs';
 import { createAudioPreferences } from '../../game/audio-preferences.mjs';
-import { encounterSoundRecipe } from '../../game/ui/encounter-audio.mjs';
+import { encounterSoundRecipe, actorPhaseSound } from '../../game/ui/encounter-audio.mjs';
 import { readMovementAudio, MOVEMENT_AUDIO_KEY } from '../../game/ui/movement-audio.mjs';
 import { dialogueChannel } from '../../game/ui/dialogue-channel.mjs';
 
@@ -90,6 +90,8 @@ export function createWorldAudio(options = {}) {
   const recentCues = new Map();
   let actorDefinitions = new Map();
   let actorPositions = new Map();
+  let actorPhases = new Map();
+  let actorFamilies = new Map();
   let lastFootstep = -Infinity;
 
   const volume = (value) =>
@@ -272,6 +274,12 @@ export function createWorldAudio(options = {}) {
       fire: 'fire',
       impact: 'impact',
       defeat: 'catch',
+      'protected-contact': 'impact',
+      warning: 'warning',
+      notice: 'notice',
+      burst: 'burst',
+      recover: 'recover',
+      blocked: 'blocked',
     }[type];
     if (!kind) return;
     const now = context?.currentTime ?? 0;
@@ -280,7 +288,10 @@ export function createWorldAudio(options = {}) {
     const actor = actorDefinitions.get(event.actor);
     const machine = actor?.type === 'vehicle';
     const recipe = encounterSoundRecipe(kind, {
-      family: actor?.speed > 0 ? 'patroller' : 'lookout',
+      family:
+        event.family ??
+        actorFamilies.get(event.actor) ??
+        (actor?.speed > 0 ? 'patroller' : 'lookout'),
       machine,
     });
     if (recipe.priority >= 5 || (type === 'fire' && !player)) dialogueChannel.interrupt();
@@ -446,6 +457,10 @@ export function createWorldAudio(options = {}) {
       lastContacts = null;
       recentCues.clear();
       actorPositions.clear();
+      actorPhases.clear();
+      actorFamilies = new Map(
+        (course.pursuit?.actors ?? []).map((policy) => [policy.id, policy.family]),
+      );
       lastFootstep = -Infinity;
       actorDefinitions = new Map((course.actors ?? []).map((actor) => [actor.id, actor]));
       stopEffects();
@@ -511,6 +526,12 @@ export function createWorldAudio(options = {}) {
               movementCue: true,
             });
           }
+          for (const actor of snapshot.actors ?? []) {
+            if (!actor.pursuit || actor.status !== 'active') continue;
+            const phase = actor.blocked ? 'blocked' : actor.pursuit.phase;
+            const sound = actorPhaseSound(actorPhases.get(actor.id), phase);
+            if (sound) cue(sound, false, { actor: actor.id, family: actor.pursuit.family });
+          }
           const events = snapshot.events ?? [];
           const types = new Set();
           // Bound cue overlap independently of simulation actor/projectile counts.
@@ -531,6 +552,11 @@ export function createWorldAudio(options = {}) {
       }
       actorPositions = new Map(
         (snapshot.actors ?? []).map((actor) => [actor.id, { ...actor.position }]),
+      );
+      actorPhases = new Map(
+        (snapshot.actors ?? [])
+          .filter((actor) => actor.pursuit)
+          .map((actor) => [actor.id, actor.blocked ? 'blocked' : actor.pursuit.phase]),
       );
       lastTick = tick;
       lastStep = step;

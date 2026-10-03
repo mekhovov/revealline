@@ -1235,5 +1235,284 @@
     "publication": "public",
     "approved": true,
     "dependencies": []
+  },
+  {
+    "id": "runtime-board-5c51f6d7b29af2e8be90",
+    "path": "game/presentation/compiled/assets/5c51f6d7b29af2e8be90adc5d01257f1b5d34ac5aaf0bb533fd2088bd944b683.png",
+    "sha256": "5c51f6d7b29af2e8be90adc5d01257f1b5d34ac5aaf0bb533fd2088bd944b683",
+    "bytes": 295,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "runtime-board-e35ca174c360d5a572c7",
+    "path": "game/presentation/compiled/assets/e35ca174c360d5a572c72e6be448666cf3da1438cf0d91f8ea7ff8c221b8eb5e.png",
+    "sha256": "e35ca174c360d5a572c72e6be448666cf3da1438cf0d91f8ea7ff8c221b8eb5e",
+    "bytes": 290,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "runtime-board-fedb83171e9c894c8cbc",
+    "path": "game/presentation/compiled/assets/fedb83171e9c894c8cbc446d4fb2bf460359b587068a33d0e108b14e185a0adc.png",
+    "sha256": "fedb83171e9c894c8cbc446d4fb2bf460359b587068a33d0e108b14e185a0adc",
+    "bytes": 282,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "runtime-board-4edc2d90b443fbc191cb",
+    "path": "game/presentation/compiled/assets/4edc2d90b443fbc191cbd741c824732113a590cd758e32d8e098c63eba4e70a9.png",
+    "sha256": "4edc2d90b443fbc191cbd741c824732113a590cd758e32d8e098c63eba4e70a9",
+    "bytes": 269,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "runtime-board-05af7a73b7dadc8821ce",
+    "path": "game/presentation/compiled/assets/05af7a73b7dadc8821cecccf0abb4f763dafae7ad21500a3293957fa88ed7d76.png",
+    "sha256": "05af7a73b7dadc8821cecccf0abb4f763dafae7ad21500a3293957fa88ed7d76",
+    "bytes": 275,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "runtime-board-cea04fc27e33583748da",
+    "path": "game/presentation/compiled/assets/cea04fc27e33583748da59f8bc873505d15b8c37745f0b30b5a4415f4d7c87cb.png",
+    "sha256": "cea04fc27e33583748da59f8bc873505d15b8c37745f0b30b5a4415f4d7c87cb",
+    "bytes": 446,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "runtime-board-2d4e0eafa015c8e43408",
+    "path": "game/presentation/compiled/assets/2d4e0eafa015c8e434082b8be0552556e0abfe057248233a701cac4d1b3f4cd0.png",
+    "sha256": "2d4e0eafa015c8e434082b8be0552556e0abfe057248233a701cac4d1b3f4cd0",
+    "bytes": 515,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "runtime-board-02b4ab6f9e8339b921ac",
+    "path": "game/presentation/compiled/assets/02b4ab6f9e8339b921ac83fa0f72e334ab98edc82a46ae5b70499d4ea5dfb872.png",
+    "sha256": "02b4ab6f9e8339b921ac83fa0f72e334ab98edc82a46ae5b70499d4ea5dfb872",
+    "bytes": 233,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "runtime-board-7e696d173490ae948cea",
+    "path": "game/presentation/compiled/assets/7e696d173490ae948cead01a22c5650bc6ffef16c70c514ba6d88413d460a192.png",
+    "sha256": "7e696d173490ae948cead01a22c5650bc6ffef16c70c514ba6d88413d460a192",
+    "bytes": 185,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "runtime-board-44ebf8c1d8a028a91901",
+    "path": "game/presentation/compiled/assets/44ebf8c1d8a028a919012f75978d025d1698aeb3d295c8813edc1a7ebae71868.png",
+    "sha256": "44ebf8c1d8a028a919012f75978d025d1698aeb3d295c8813edc1a7ebae71868",
+    "bytes": 156,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "runtime-board-53f17c3672c097ce79b6",
+    "path": "game/presentation/compiled/assets/53f17c3672c097ce79b63629e4dfbffe9d5a2ecacf4ac99ec67704538951d9fe.png",
+    "sha256": "53f17c3672c097ce79b63629e4dfbffe9d5a2ecacf4ac99ec67704538951d9fe",
+    "bytes": 159,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "runtime-board-5cda580ceefd258918dc",
+    "path": "game/presentation/compiled/assets/5cda580ceefd258918dcf6c49f0f8ad68966999c153a876fb01c2f171b659420.png",
+    "sha256": "5cda580ceefd258918dcf6c49f0f8ad68966999c153a876fb01c2f171b659420",
+    "bytes": 137,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "runtime-board-7954823e793dd6140528",
+    "path": "game/presentation/compiled/assets/7954823e793dd6140528d271c12653fca559eda862ca83c4be73c6bfbdf9c26c.png",
+    "sha256": "7954823e793dd6140528d271c12653fca559eda862ca83c4be73c6bfbdf9c26c",
+    "bytes": 152,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "runtime-board-33955b0fafb24b5edab1",
+    "path": "game/presentation/compiled/assets/33955b0fafb24b5edab1d605d6b3a8453a0073438aa87785cc2376ec36953346.png",
+    "sha256": "33955b0fafb24b5edab1d605d6b3a8453a0073438aa87785cc2376ec36953346",
+    "bytes": 314,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "runtime-board-de2406eaf230f4701c82",
+    "path": "game/presentation/compiled/assets/de2406eaf230f4701c82249f0709f1238616cca532d2be1b02d3105503646c3c.png",
+    "sha256": "de2406eaf230f4701c82249f0709f1238616cca532d2be1b02d3105503646c3c",
+    "bytes": 564,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "runtime-board-7258c2453b49a52aaa2b",
+    "path": "game/presentation/compiled/assets/7258c2453b49a52aaa2ba003c4e076eb7aa2d87d21abb6df65f5f5178f9f6a59.png",
+    "sha256": "7258c2453b49a52aaa2ba003c4e076eb7aa2d87d21abb6df65f5f5178f9f6a59",
+    "bytes": 328,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "runtime-board-8535d7dec70f8fb64d3c",
+    "path": "game/presentation/compiled/assets/8535d7dec70f8fb64d3c0aa8ac919daa7609a477dada753b67429c9c7ae2cadb.png",
+    "sha256": "8535d7dec70f8fb64d3c0aa8ac919daa7609a477dada753b67429c9c7ae2cadb",
+    "bytes": 639,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "runtime-board-ad53247e6be0c1c2a308",
+    "path": "game/presentation/compiled/assets/ad53247e6be0c1c2a3080a8ebabd0ca24b1394be0caa109138926e821b08ae35.png",
+    "sha256": "ad53247e6be0c1c2a3080a8ebabd0ca24b1394be0caa109138926e821b08ae35",
+    "bytes": 303,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "runtime-board-77a93635bc7d39976bbf",
+    "path": "game/presentation/compiled/assets/77a93635bc7d39976bbf571f056a68f75ef43e1b655b6512fd293b2b568306e3.png",
+    "sha256": "77a93635bc7d39976bbf571f056a68f75ef43e1b655b6512fd293b2b568306e3",
+    "bytes": 567,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "runtime-board-4c0ab153dd814ff806ff",
+    "path": "game/presentation/compiled/assets/4c0ab153dd814ff806ff0d9a63bb1ef5ad9eac532f8f771d1288265d7327ec68.png",
+    "sha256": "4c0ab153dd814ff806ff0d9a63bb1ef5ad9eac532f8f771d1288265d7327ec68",
+    "bytes": 331,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "runtime-board-f03dc7d839fef8d53cae",
+    "path": "game/presentation/compiled/assets/f03dc7d839fef8d53cae7b29cc106dd094c976af6e3758d71110bf0d47140efa.png",
+    "sha256": "f03dc7d839fef8d53cae7b29cc106dd094c976af6e3758d71110bf0d47140efa",
+    "bytes": 583,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "runtime-board-2d0b8b6260f73e3fe008",
+    "path": "game/presentation/compiled/assets/2d0b8b6260f73e3fe008c5ac228021f681747183a586ed7ca9dde3906b22dcc3.png",
+    "sha256": "2d0b8b6260f73e3fe008c5ac228021f681747183a586ed7ca9dde3906b22dcc3",
+    "bytes": 341,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "runtime-board-85bb90c58fb61a1fdd21",
+    "path": "game/presentation/compiled/assets/85bb90c58fb61a1fdd212316f223dad209d374386e1aad14f044df4c1ea2af7e.png",
+    "sha256": "85bb90c58fb61a1fdd212316f223dad209d374386e1aad14f044df4c1ea2af7e",
+    "bytes": 635,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "runtime-board-3fa6527474d2da84fed1",
+    "path": "game/presentation/compiled/assets/3fa6527474d2da84fed128052df7ee8ac2b34a25eaf5a162d21be849a12fd65c.png",
+    "sha256": "3fa6527474d2da84fed128052df7ee8ac2b34a25eaf5a162d21be849a12fd65c",
+    "bytes": 600,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "runtime-board-83b8dea4de4fad710942",
+    "path": "game/presentation/compiled/assets/83b8dea4de4fad710942a60c18f03c34849df904a45edb0316b6287c3770fb3c.png",
+    "sha256": "83b8dea4de4fad710942a60c18f03c34849df904a45edb0316b6287c3770fb3c",
+    "bytes": 327,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "runtime-board-78033ee190de99663e4b",
+    "path": "game/presentation/compiled/assets/78033ee190de99663e4b936e480562d4cc93d9e90190b529ef46d07877c43826.png",
+    "sha256": "78033ee190de99663e4b936e480562d4cc93d9e90190b529ef46d07877c43826",
+    "bytes": 586,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "runtime-board-6abc4a68192b4d517b22",
+    "path": "game/presentation/compiled/assets/6abc4a68192b4d517b22690c43126de34a1c403caf4a24ec57aa8b2ff68f079a.png",
+    "sha256": "6abc4a68192b4d517b22690c43126de34a1c403caf4a24ec57aa8b2ff68f079a",
+    "bytes": 395,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "runtime-board-28e58f70c759b20798fa",
+    "path": "game/presentation/compiled/assets/28e58f70c759b20798fac07e6f9d1b336e936ee23beea26bb4be30fd5528311d.png",
+    "sha256": "28e58f70c759b20798fac07e6f9d1b336e936ee23beea26bb4be30fd5528311d",
+    "bytes": 366,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "runtime-board-009d14748f9430020912",
+    "path": "game/presentation/compiled/assets/009d14748f943002091255caebd32e4df1c886569575f512ab0d55d7a3ff637a.png",
+    "sha256": "009d14748f943002091255caebd32e4df1c886569575f512ab0d55d7a3ff637a",
+    "bytes": 389,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "runtime-board-963bdc61942194177b4d",
+    "path": "game/presentation/compiled/assets/963bdc61942194177b4d0dac32ba560c0200f55c83f21d939356b8680b6f644c.png",
+    "sha256": "963bdc61942194177b4d0dac32ba560c0200f55c83f21d939356b8680b6f644c",
+    "bytes": 148,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "runtime-board-544551f875b2fd52c41d",
+    "path": "game/presentation/compiled/assets/544551f875b2fd52c41dbbd384d6710a80fb23d744ae8a9bca3353cd23752a48.png",
+    "sha256": "544551f875b2fd52c41dbbd384d6710a80fb23d744ae8a9bca3353cd23752a48",
+    "bytes": 144,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
   }
 ]

@@ -2,6 +2,10 @@ import { validatePursuitGoals } from '../hunt/pursuit-goals.mjs';
 import {
   isTeamRunningLevel,
   TEAM_PURSUIT_LEVEL_VERSION,
+  TEAM_PURSUIT_V2_LEVEL_VERSION,
+  TEAM_PURSUIT_V2_RULESET,
+  TEAM_SNAKE_PURSUIT_V2_LEVEL_VERSION,
+  TEAM_SNAKE_PURSUIT_V2_RULESET,
   TEAM_SNAKE_PURSUIT_LEVEL_VERSION,
   TEAM_SNAKE_PURSUIT_RULESET,
   isTeamPursuitLevel,
@@ -528,15 +532,19 @@ export function createCoop(
   const cells = buildGrid(owned);
   const run = {
     ruleset:
-      owned.version === TEAM_SNAKE_PURSUIT_LEVEL_VERSION
-        ? TEAM_SNAKE_PURSUIT_RULESET
-        : owned.version === TEAM_PURSUIT_LEVEL_VERSION
-          ? TEAM_PURSUIT_RULESET
-          : isTeamRunningLevel(owned)
-            ? TEAM_RUNNING_RULESET
-            : isJourneyTeamLevel(owned)
-              ? journeyTeamPackEdition(owned).ruleset
-              : COOP_RULESET,
+      owned.version === TEAM_SNAKE_PURSUIT_V2_LEVEL_VERSION
+        ? TEAM_SNAKE_PURSUIT_V2_RULESET
+        : owned.version === TEAM_PURSUIT_V2_LEVEL_VERSION
+          ? TEAM_PURSUIT_V2_RULESET
+          : owned.version === TEAM_SNAKE_PURSUIT_LEVEL_VERSION
+            ? TEAM_SNAKE_PURSUIT_RULESET
+            : owned.version === TEAM_PURSUIT_LEVEL_VERSION
+              ? TEAM_PURSUIT_RULESET
+              : isTeamRunningLevel(owned)
+                ? TEAM_RUNNING_RULESET
+                : isJourneyTeamLevel(owned)
+                  ? journeyTeamPackEdition(owned).ruleset
+                  : COOP_RULESET,
     level: owned,
     width: owned.width,
     height: owned.height,

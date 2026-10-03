@@ -6,7 +6,10 @@ import { validateDemoCatalog } from '../game/demo-catalog.mjs';
 import { REACTION_PORTRAITS } from '../game/journey/reaction-portraits.mjs';
 import { REACTION_VOICE_PILOT } from '../game/audio/reactions/pilot.mjs';
 import { ACTOR_VOICE_RECORDINGS } from '../game/audio/reactions/actors.mjs';
-import { CLASSIC_PRESENTATION } from '../game/snake/classic-presentation.mjs';
+import {
+  ACTOR_PRESENTATION_SLOTS,
+  validateCompiledPresentation,
+} from '../game/presentation/host.mjs';
 import { projectEditionFlightMenu } from './edition-flight-menu.mjs';
 import {
   MENU_SCENES,
@@ -164,20 +167,24 @@ export function projectEditionActorVoices(name, bytes) {
   );
 }
 
-/** Exact original sprites selected by Classic's independent artwork owner. */
-export function editionClassicPresentationResources() {
-  if (CLASSIC_PRESENTATION.assets.length !== 2) throw new Error('Invalid Classic artwork budget.');
-  return CLASSIC_PRESENTATION.assets.map((asset) => {
-    const name = `game/presentation/compiled/assets/${asset.sha256}.png`;
-    if (
-      !['player.scout.compact', 'terrain.wall'].includes(asset.slot) ||
-      !/^[a-f0-9]{64}$/.test(asset.sha256) ||
-      asset.bytes > 1024 ||
-      asset.url !== new URL(`../${name}`, import.meta.url).href
-    )
-      throw new Error('Classic artwork must resolve to its exact original asset.');
-    return name;
-  });
+/** Classic's shared board host reads the original immutable runtime manifest.
+ * Its dynamic file closure follows that registered profile, not two historical
+ * sprites. Keep menu, font, picture and audio payload ownership separate. */
+export function editionClassicPresentationResources(
+  source = readFileSync(
+    new URL('../game/presentation/compiled/runtime.json', import.meta.url),
+    'utf8',
+  ),
+) {
+  const manifest = validateCompiledPresentation(source),
+    actors = new Set(ACTOR_PRESENTATION_SLOTS),
+    resources = new Set(['game/presentation/compiled/runtime.json']);
+  for (const [slot, asset] of Object.entries(manifest.resolved.assets)) {
+    if (asset.kind !== 'image' || (!actors.has(slot) && !/^(terrain|pickup)\./.test(slot)))
+      continue;
+    resources.add(`game/presentation/compiled/${manifest.urls[asset.file.sha256].slice(2)}`);
+  }
+  return [...resources];
 }
 
 function sceneAssets(scene) {

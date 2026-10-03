@@ -1,3 +1,4 @@
+import { sampleActorAnimation } from '../presentation/actor-animation.mjs';
 import { aliasSafePhase } from '../../authoring/motion-lab/animation.mjs';
 import { paintRotor } from './rotor-presentation.mjs';
 import { enemyCatalogRecord, resolveEnemySkin } from '../enemy-catalog.mjs';
@@ -755,7 +756,25 @@ export function drawPresentedActor(
     bodyPaintDiameter = Math.max(width, height);
     // The release host already cropped the declared source frame. Pivot and
     // motor anchors remain normalized to that entire frame, including alpha.
-    ctx.drawImage(image, -geometry.pivot.x * width, -geometry.pivot.y * height, width, height);
+    if (geometry.animation) {
+      const region = sampleActorAnimation(geometry.animation, {
+        clip: frame.animationState ?? (frame.dormant || frame.stunned ? 'idle' : 'move'),
+        timeMs: (frame.phase ?? 0) * 1000,
+        reducedEffects: frame.reduced,
+      }).region;
+      ctx.drawImage(
+        image,
+        region.x,
+        region.y,
+        region.width,
+        region.height,
+        -geometry.pivot.x * width,
+        -geometry.pivot.y * height,
+        width,
+        height,
+      );
+    } else
+      ctx.drawImage(image, -geometry.pivot.x * width, -geometry.pivot.y * height, width, height);
     for (const anchor of showRotors ? geometry.rotors : []) {
       ctx.save();
       ctx.translate(anchor.x * width, anchor.y * height);

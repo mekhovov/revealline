@@ -299,7 +299,12 @@ export async function crossModeContextPreview(
         () => t('tools:studio.crossMode.decodingAsset', { id, mode: options.fieldMode }),
         'decoding',
       );
-      const image = await services.decode(assets[id], blobs, { ...options, isCurrent: current });
+      const image = await services.decode(
+        assets[id],
+        blobs,
+        { ...options, isCurrent: current },
+        localOwn,
+      );
       if (!image || !current()) {
         if (image) image.src = '';
         return null;
