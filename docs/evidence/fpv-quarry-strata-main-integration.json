@@ -1,0 +1,64 @@
+{
+  "format": "FPVQuarryLighthouseIntegrationSummary.v1",
+  "provenance": "Independent read-only warehouse_layout_review subagent audit; two Node22 heredoc command results retained in task tool history, not raw probe files. This committed file records that reported result and method, not a newly executed probe.",
+  "baseline": "d79a1cf89de6ae92eac442d88a5987ed3f19717b",
+  "candidate": "3e681c45da13baa1e26c239f54673e081fb664dd",
+  "passed": true,
+  "checks": 114,
+  "sourceChecks": {
+    "remainingProgramASTExact": 1,
+    "exactlyTwoLighthouseNodesRemoved": 1,
+    "directHelperTextExact": 8,
+    "runtimeFileListExact": 1,
+    "otherRuntimeFilesExactBetweenCommitsAndCheckout": 67,
+    "candidateVisualBytesEqualCheckout": 1
+  },
+  "sceneChecks": {
+    "quarrySceneAndMapSnapshotExact": 9,
+    "quarryResourceCountsExact": 9,
+    "quarryOwnedResourcesDisposedOnce": 9,
+    "courtyardWorldAndLazyMapSnapshotExact": 3,
+    "courtyardOwnedResourcesDisposedOnce": 3,
+    "visualAndRendererCheckoutStable": 2
+  },
+  "visualSha256": {
+    "before": "ab8306298c6e2517a21106952b99098b9181b5cfbaf2d7359d92f72958a360c8",
+    "after": "053f74a1d42db8373994350010f347ff0d306dfebd05cbdd9bf7df838b73d9e0"
+  },
+  "rendererSha256": "28baf7f257c7beb8a8d166aae24d25335e7bf778b53a63d63aace281f50b5b43",
+  "quarryObstacleSha256AllFiveCourses": "8540b6f3363fd8c5e4ddb6e458d47c9b33b9514b84567f00902ad33fa9afcc8a",
+  "quarrySceneMatrix": {
+    "qualities": [
+      "low",
+      "balanced",
+      "high"
+    ],
+    "appearances": [
+      "authored",
+      "pixel",
+      "industrial-workshop"
+    ],
+    "course": "adventure-quarry-01"
+  },
+  "courtyardControls": {
+    "quality": "balanced",
+    "appearances": [
+      "authored",
+      "pixel",
+      "industrial-workshop"
+    ],
+    "scope": "world visuals plus lazy obstacle maps"
+  },
+  "method": [
+    "Acorn parse both whole modules; remove only candidate buildCoastLighthouseGeometry export and exact Coast-only lighthouse hook, strip parser position/raw fields and compare remaining AST exactly.",
+    "Compare source text of isQuarryStrataObstacle, surfacePixels, surfaceMaps, resizeSurface, setSurfaceQuality, buildEnvironmentDressing, buildCourtyardFacadeGeometry and disposeSimVisualGroup.",
+    "Compare all67 other tracked civilian-fpv runtime/asset files between both immutable refs and checkout.",
+    "Source-extract exact functions sourceModule, rendererFunctions, nodeMaterials, build, typedBytes, valueData, textureData, snapshot, resources, counts, dispose from existing manual Quarry qualifier; data-URL import committed source, use each committed renderer, snapshot with allowChanges=false, compare all scene/map/ownership bytes and exact resource disposal."
+  ],
+  "limitations": [
+    "No WebGL comparison; original source browser finding remains separately retained.",
+    "No replay in this audit; fresh authoritative replay has its own complete receipt.",
+    "No new production edits, fetches or check suite."
+  ],
+  "retainedProbePath": null
+}
