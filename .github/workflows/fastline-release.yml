@@ -413,6 +413,7 @@ jobs:
             publishing/edition-admission.mjs
             publishing/edition-zip.mjs
             game/edition-context.mjs
+            game/editions/package-budget.mjs
             game/data-json.mjs
             game/presentation/theme-system.mjs
             game/i18n/index.mjs

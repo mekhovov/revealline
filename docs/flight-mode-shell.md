@@ -12,6 +12,10 @@ The focused flight layout now applies on desktop as well as phones. Gameplay sho
 
 Worlds and source-hosted Academy present Solo, Versus, Team, FPV SIM and Snake destinations derived from the existing validated game-return URL. The local gym source also exposes these destinations, and an installed gym can use a validated explicit return. Snake opens its game title directly. The shared header reuses the existing main wordmark asset; it does not duplicate artwork inside optional packages. An isolated optional package does not invent an arcade installation. Its host-provided return remains available. Interface theme, fonts and SIM appearance continue to use the existing presentation service.
 
+## Finished recordings
+
+When a recording exhausts its accepted commands, the shared menu shows **Results** and **Retry**, including incomplete recordings and section replays. Continue is unavailable after playback ends. This is a presentation outcome: the recorded simulation state stays unchanged, an unfinished objective is not marked complete, and watching earns no records or rewards. Results reveals the retained native playback explanation and actions. Pausing a recording before its end still offers Continue from the same position.
+
 ## Source and package ownership
 
 `game/ui/mode-play-shell.mjs` is dependency-free. `scripts/refresh-fpv-play-shell.mjs` checks its syntax, rejects imported or dynamically resolved dependencies, embeds a deterministic source projection into the already-admitted `flight-fullscreen.mjs`, and projects its resource-free CSS into `flight-fullscreen.css`. The existing presentation-assets generator then includes that stylesheet in admitted SIM `style.css`. Both identity checks are part of `npm run validate`.
@@ -20,7 +24,7 @@ Worlds and Academy gain no package file slots. The gym admits the two canonical 
 
 ## Verification
 
-Regressions were authored for Academy and gym title/menu input ownership, explicit Start, paused clocks and continuation; Worlds' connected catalogue and native-modal header ownership; and the gym's pointer-focus Pause sequence. Native blur/focus input safety remains authoritative, while the shared Pause button remembers the action shown when the pointer was pressed. Existing flight-domain tests explicitly enter the prepared disarmed scene; shell regressions retain the initial title. Automated suites remain waived and were not run.
+Regressions were authored for Academy and gym title/menu input ownership, explicit Start, paused clocks and continuation; Worlds' connected catalogue and native-modal header ownership; and the gym's pointer-focus Pause sequence. Regressions also cover exhausted incomplete Academy recordings and World section/full recordings: Results remains reachable, proof and record ownership are unchanged, and only explicit Retry prepares another attempt. Native blur/focus input safety remains authoritative, while the shared Pause button remembers the action shown when the pointer was pressed. Existing flight-domain tests explicitly enter the prepared disarmed scene; shell regressions retain the initial title. Automated suites remain waived and were not run.
 
 Targeted ESLint, formatting and exact projection checks accompany production optional-package build/candidate/independent admission. These checks validate import closure and package budgets, not physical-device usability. The release owner records committed-source outcomes separately.
 

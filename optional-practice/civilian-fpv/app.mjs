@@ -542,7 +542,8 @@ export function mountFlightApp({
       graphicsLost ||
       modalOpen() ||
       !inputAvailable() ||
-      reviewAbort
+      reviewAbort ||
+      (replay && replay.at >= replay.proof.frames.length)
     )
       return false;
     immersive.closeControls();
@@ -789,7 +790,10 @@ export function mountFlightApp({
   function paint(force = false, now = 0) {
     if (!flight || disposed) return;
     const state = replay ? replay.flight.snapshot() : flight.snapshot();
-    const terminal = ['complete', 'expired'].includes(state.status);
+    // A recording can end before its objective; exhausting its commands is a
+    // presentation result, never a simulated completion or resumable flight.
+    const replayEnded = !!replay && replay.at >= replay.proof.frames.length;
+    const terminal = ['complete', 'expired'].includes(state.status) || replayEnded;
     // Playback retains the recorded model's status when its presentation clock
     // pauses. The shared menu must follow that clock, not the live-flight model.
     const pausedReplay =
@@ -810,9 +814,10 @@ export function mountFlightApp({
         : state.ticks > 0 && ['paused', 'disarmed'].includes(state.status),
       muted: !audio.enabled(),
     });
+    $('arm').disabled = !sceneReady || terminal;
     if ($('academy-flight-resume')) {
       $('academy-flight-resume').disabled =
-        !sceneReady || !['disarmed', 'paused'].includes(state.status);
+        !sceneReady || terminal || !['disarmed', 'paused'].includes(state.status);
       $('academy-flight-resume').textContent = c().arm;
     }
     if ($('academy-controller-hint')) {
@@ -1282,7 +1287,8 @@ export function mountFlightApp({
       };
     if (playShell?.topDialog())
       return { root: playShell.topDialog(), key: playShell.topDialog().id, blockDevices: false };
-    if (flight.snapshot().status === 'active' && !modalOpen()) return null;
+    // Initial title focus can blur the page before reset installs a flight.
+    if (flight?.snapshot().status === 'active' && !modalOpen()) return null;
     return {
       root: $('flight-app'),
       key: `academy:${modalOpen()}:${flightMenuOpen()}`,
