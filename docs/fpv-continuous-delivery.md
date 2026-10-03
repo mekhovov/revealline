@@ -2890,3 +2890,16 @@ per scene. Five other environment GLBs remain byte-identical; the comparison
 views were inspected. This completes the local draft qualification. Publish the
 reviewed #998 head through normal exact-head protected CI; public deployment and
 physical-device/artist acceptance remain separate.
+
+
+### Woodland groves refreshed after Yard publication — 3 October 2026
+
+#996 candidate fabb417ec23e1fcaaabf90cd0c102a9f9335efed integrates main b3167a8f89,
+including merged Yard #998 and replacement tree forms #1006. Preserve the rotated
+footprint calculation and per-tree turn when composing groves; the shared
+renderer/visual modules remain byte-identical to main. #1001 is kept separate.
+All 30 existing checks and all three source-bound optional admissions pass;
+18 other imported environment/arena GLBs remain exact. Frozen current-main
+browser review and exact-head CI are pending. Complete global validation requires
+CI because the sparse checkout omits unrelated content packs. No additional unit
+coverage, hardware/artist acceptance or live deployment is claimed.
