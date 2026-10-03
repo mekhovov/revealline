@@ -1,0 +1,23 @@
+{
+  "scope": "Mutable source production build/admission, not committed qualification",
+  "admission": {
+    "format": "revealline-optional-package-admission.v1",
+    "version": "v0.142.4",
+    "sourceRevision": "fb9dd693002f95b16755eb0236421051dd123deb",
+    "sourceTree": "50b21712d6e843d36893a8f8232d075e36403fa4",
+    "packages": [
+      {
+        "id": "fpv-worlds",
+        "revision": "a10295c5a16830b56c5cc219539ed5dbf8742ab7afb648847ca9ea7a0d737d57",
+        "files": 102,
+        "bytes": 15380370
+      }
+    ],
+    "zipMembersVerified": true,
+    "publicEligible": false
+  },
+  "runtimeFiles": 102,
+  "runtimeBytes": 15380370,
+  "sourceFiles": 104,
+  "sourceBytes": 15413877
+}

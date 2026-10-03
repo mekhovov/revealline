@@ -210,7 +210,12 @@ const RUNTIME_PACKAGE_POLICIES = Object.freeze({
         'vendor/addons/utils/SkeletonUtils.js',
         'vendor/addons/provenance.json',
         'world-app.mjs',
+        // Checked projection of shared reactions plus four canonical presentation utilities.
+        // Keeps the source archive within the existing 104-file / 16 MiB limits.
         'world-reaction-runtime.mjs',
+        'world-records.mjs',
+        'world-store.mjs',
+        'world-zip.mjs',
         'beginner-coach.mjs',
         'world-demonstrations.mjs',
         'world-assets.mjs',

@@ -261,3 +261,26 @@ test('raw Playground successor transport preserves native pursuit and refuses ch
     }),
   );
 });
+
+test('ordinary running-enemy wrappers cannot be relabelled as combined Snake pursuit', async () => {
+  const { readFile } = await import('node:fs/promises');
+  const { COOP_STARTER_PACK } = await import('../coop/library.mjs');
+  const campaign = JSON.parse(await readFile(new URL('../content/campaign.json', import.meta.url)));
+  for (const team of [false, true]) {
+    const base = team ? COOP_STARTER_PACK.levels[1] : campaign.levels[0];
+    const prepare = team ? prepareTeamRunningEnemies : prepareRunningEnemyLevel;
+    const validate = team ? validateCoopLevel : validateLevel;
+    const ordinary = prepare(base, { style: 'varied' });
+    assert.equal(ordinary.runningEnemies.version, 'running-enemies.v1');
+    assert.equal(validate(ordinary).valid, true);
+    const forged = {
+      ...structuredClone(ordinary),
+      version: team ? 'revealline-coop-level.v12' : 'xonix-level.v13',
+    };
+    assert.equal(validate(forged).valid, false);
+    assert.throws(
+      () => (team ? createCoop(forged) : createRun(forged)),
+      /exact inherited Snake wrapper/,
+    );
+  }
+});

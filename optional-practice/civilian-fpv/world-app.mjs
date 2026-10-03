@@ -53,7 +53,7 @@ import {
   exportPlaylist,
   resolvePlaylist,
 } from './playlists.mjs';
-import { openWorldRecords, exportProofParts, importProofPart } from './world-reaction-runtime.mjs';
+import { openWorldRecords, exportProofParts, importProofPart } from './world-records.mjs';
 import {
   inspectImport,
   projectFromImport,
@@ -66,8 +66,8 @@ import {
   installPack,
   exportEditedProject,
 } from './world-content.mjs';
-import { importEditableZip } from './world-reaction-runtime.mjs';
-import { openWorldStore } from './world-reaction-runtime.mjs';
+import { importEditableZip } from './world-zip.mjs';
+import { openWorldStore } from './world-store.mjs';
 import { preparePracticeOffline } from './offline.mjs';
 import { dataIdentity } from '../../game/data-json.mjs';
 import {
