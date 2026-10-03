@@ -2580,3 +2580,19 @@ All18editions and132focused checks pass again. Registry preserves6,297current
 identities and saves308,129bytes. Browser72MiB activation/rollback evidence uses
 the identical production worker; the refreshed registry also passed browser
 equality. Only evidence/docs change after this candidate.
+
+### Capacity PR published; controls merged — 3 October 2026
+
+[PR #989](https://github.com/mekhovov/revealline/pull/989) is published and attached
+in the existing milestone57; no version or native stack was allocated. #986 merged
+as1aef4d70fa37c8911dbb47b4b128c253178c8b60 while publication was running. The
+capacity branch was rebased onto that main with a recovery ref, preserving both
+sides of the delivery-log conflict. All capacity runtime/compiler bytes match the
+qualified candidate;132focused checks pass after this rebase. Source-bound core
+and edition receipts remain explicitly tied to their recorded candidate, not a
+claim that current-head CI or public deployment has passed.
+
+#987 advanced externally to72818f59f502b2440eb9ae9d9b275cad1ecbc875; preserve it.
+Next: let #989 exact-head protected checks run, resolve routine reported failures,
+and verify deployment before calling the budget live. Continue D1 Container Yard
+and Woodland baseline/art independently. Do not repeatedly poll unchanged CI.
