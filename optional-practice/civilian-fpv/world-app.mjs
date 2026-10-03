@@ -1304,6 +1304,12 @@ export function mountWorldApp({
   const gamepad = createFlightGamepad({ window: win, document: doc });
   const flightMenuOpen = () => $('flight-dialog').dataset.flightMenuOpen === 'true';
   function setFlightMenu(open) {
+    if (open && playShell) {
+      pauseFlight();
+      if (flight) updateHUD(flight.snapshot());
+      playShell.openHome();
+      return;
+    }
     if (open) pauseFlight();
     $('flight-dialog').dataset.flightMenuOpen = String(open);
     if (!open) {
@@ -3622,7 +3628,7 @@ export function mountWorldApp({
     $('flight-dialog').dataset.flightState = state.status;
     $('world-flight-identity').textContent = $('flight-title').textContent;
     playShell?.update({
-      phase: state.status === 'active' ? 'playing' : state.status,
+      phase: state.status === 'active' ? 'playing' : terminal(state) ? 'results' : state.status,
       missionName: $('flight-title').textContent,
       summary: $('flight-menu-brief').textContent,
       canResume: ['paused', 'disarmed'].includes(state.status),
@@ -5319,16 +5325,17 @@ export function mountWorldApp({
     secondaryDialogOpen: () => !!doc.querySelector('dialog[open]:not(#flight-dialog)'),
   });
   on($('world-pause'), 'click', () => pauseFlight());
-  on($('world-retry'), 'click', () =>
-    startFlight(current, {
+  function retryFlight() {
+    return startFlight(current, {
       preview,
       playlist: playingPlaylist,
       index: playlistIndex,
       replayProof,
       checkpoint: checkpointRequest,
       demonstration: replayKind === 'demonstration',
-    }),
-  );
+    });
+  }
+  on($('world-retry'), 'click', retryFlight);
   on($('world-watch-demo'), 'click', () => current && watchDemonstration(current));
   on($('watch-first-flight'), 'click', () =>
     watchDemonstration(
@@ -5656,6 +5663,12 @@ export function mountWorldApp({
     ).href,
     modeName: () => (locale === 'uk' ? 'FPV SIM · Світи' : 'FPV SIM · Worlds'),
     locale,
+    services: {
+      setMenuIcon(node, name) {
+        node.dataset.simIcon = name;
+        presentation.refresh(node);
+      },
+    },
     slots: {
       brand: (() => {
         const image = el('img');
@@ -5679,7 +5692,7 @@ export function mountWorldApp({
         current && flight
           ? $('world-arm').click()
           : void resumeInterruptedFlight().catch(reportError),
-      retry: () => (current ? void startFlight(current).catch(reportError) : $('hero-fly').click()),
+      retry: () => (current ? void retryFlight().catch(reportError) : $('hero-fly').click()),
       fullscreen: () => void immersive.toggle(),
       toggleSound: () => soundButton.click(),
       canResume: () =>

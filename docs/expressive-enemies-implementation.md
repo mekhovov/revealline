@@ -7,7 +7,7 @@ the released Journey or historical attempts.
 
 ## Open the content
 
-From the main mode selector, choose **New pursuit campaigns**. The shared hub is
+From the main menu, open **More modes and guides → New pursuit campaigns**. The shared hub is
 `/game/hunt/`. It links Capture Solo/Versus, Capture Team, Classic Snake and the
 optional native FPV SIM catalogue. **Private rooms preview** opens `/game/online/`.
 

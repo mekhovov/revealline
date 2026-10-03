@@ -21,6 +21,9 @@ const BASE_OPTIONAL_PACKAGE_POLICIES = Object.freeze({
     sharedFiles: Object.freeze([
       'game/ui/mode-play-shell.mjs',
       'game/ui/mode-play-shell.css',
+      'game/ui/native-menu-icons.mjs',
+      'optional-practice/civilian-fpv/input.mjs',
+      'optional-practice/civilian-fpv/radio-profile.mjs',
       'optional-practice/civilian-fpv/world-audio.mjs',
       'game/ui/audio-output.mjs',
       'game/ui/audio-master.mjs',
