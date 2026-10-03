@@ -1,3 +1,4 @@
+import { sharedActorAppearance } from '../hunt/preferences.mjs';
 import { HUNT_PRESENTATION_CATALOG } from '../hunt/presentation-catalog.mjs';
 import { drawHumanoidPixelBody, drawHuntRemains } from '../hunt/destruction.mjs';
 import { t } from '../i18n/index.mjs';
@@ -64,20 +65,22 @@ export function createCombatPresentation({
 } = {}) {
   let paletteKey = '',
     sprites = new Map();
-  function sprite(role, pose, palette, kind) {
+  function sprite(role, pose, palette, kind, actor) {
     const key = JSON.stringify(colors(palette));
     if (paletteKey !== key) {
       paletteKey = key;
       sprites = new Map();
     }
-    const id = `${kind ?? role}:${pose}`;
+    const cast = sharedActorAppearance().snapshot().cast;
+    const id = `${kind ?? role}:${pose}:${actor?.pursuit?.behavior ?? ''}:${actor?.pursuit?.phase ?? actor?.phase ?? ''}:${cast}:${actor?.pursuit?.heading ?? ''}:${actor?.pursuit?.nextHeading ?? ''}:${Math.abs(actor?.vx ?? 0) >= Math.abs(actor?.vy ?? 0) ? ((actor?.vx ?? 0) < 0 ? 'left' : 'right') : (actor?.vy ?? 0) < 0 ? 'up' : 'down'}`;
     if (!sprites.has(id)) {
       const canvas = createCanvas();
       canvas.width = canvas.height = 16;
       const ctx = canvas.getContext('2d');
       if (!ctx) throw new Error(t('interface:combatPixelPresentationRequiresA2dCanvas'));
-      if (kind) drawHumanoidPixelBody(ctx, { kind, pose }, palette);
+      if (kind) drawHumanoidPixelBody(ctx, { ...actor, kind, pose, cast }, palette);
       else drawCombatPixelBody(ctx, { role, pose }, palette);
+      if (sprites.size >= 192) sprites.delete(sprites.keys().next().value);
       sprites.set(id, canvas);
     }
     return sprites.get(id);
@@ -105,7 +108,7 @@ export function createCombatPresentation({
         const x = actor.x * CELL,
           y = actor.y * CELL;
         ctx.drawImage(
-          sprite(actor.role, pose, palette, actor.kind),
+          sprite(actor.role, pose, palette, actor.kind, actor),
           x - size / 2,
           y - size / 2,
           size,

@@ -1,3 +1,6 @@
+import { specialistFailureCopy } from './hunt/actor-catalog.mjs';
+import { getLocale } from './i18n/index.mjs';
+import { pursuitRoster } from './hunt/pursuit-goals.mjs';
 import { snakeText } from './snake/copy.mjs';
 import { createEncounterVariantPreferences } from './hunt/preferences.mjs';
 import { createRunningEnemyPreferences } from './hunt/running-enemy-preferences.mjs';
@@ -608,7 +611,8 @@ try {
     level,
     classes = classRegistry,
     enabled = runningEnemyPreferences.snapshot().enabled,
-  ) => (enabled ? prepareRunningEnemyLevel(level, { classes }) : level);
+    style = runningEnemyPreferences.snapshot().style,
+  ) => (enabled ? prepareRunningEnemyLevel(level, { classes, style }) : level);
   const refreshRunningEnemies = () => runningEnemyControls.forEach((control) => control.refresh());
   let encounterVariantControls = null,
     contextualReactions = null,
@@ -7525,6 +7529,9 @@ try {
         document,
         window,
         preferences: runningEnemyPreferences,
+        getAcceptedStyle: () =>
+          started && run ? (run.level.pursuit ? 'varied' : 'original') : null,
+        getAcceptedActors: () => pursuitRoster(run?.level),
         getCurrentEnabled: () =>
           run ? !!(run.level.runningEnemies || run.level.classic?.hunt) : null,
         getAcceptedEnabled: () =>
@@ -7537,10 +7544,10 @@ try {
       }),
     );
   }
-  let runningEnemyChoice = runningEnemyPreferences.snapshot().enabled;
-  runningEnemyPreferences.subscribe(({ enabled }) => {
-    if (enabled === runningEnemyChoice) return;
-    runningEnemyChoice = enabled;
+  let runningEnemyChoice = JSON.stringify(runningEnemyPreferences.snapshot());
+  runningEnemyPreferences.subscribe(({ enabled, style, durable }) => {
+    if (JSON.stringify({ enabled, style, durable }) === runningEnemyChoice) return;
+    runningEnemyChoice = JSON.stringify({ enabled, style, durable });
     runningEnemyNeedsPreparation = !started;
     cancelResultAttempt();
     cancelSkipForContentChange();
@@ -9044,6 +9051,12 @@ try {
         kind === 'retry'
           ? !!ticket.run.level.runningEnemies
           : runningEnemyPreferences.snapshot().enabled;
+      const runningEnemyStyle =
+        kind === 'retry'
+          ? ticket.run.level.pursuit
+            ? 'varied'
+            : 'original'
+          : runningEnemyPreferences.snapshot().style;
       const entry =
           (retainHunt ? ticket.entry : null) ||
           destinationEntry ||
@@ -9105,6 +9118,7 @@ try {
             onStatus: ticket.feedback.update,
             gameplayTuning: nextGameplayTuning(entry),
             runningEnemies: runningEnemiesEnabled,
+            runningEnemyStyle,
           },
         );
         if (!resultAttemptCurrent(ticket)) {
@@ -9122,6 +9136,7 @@ try {
                 applyGameplayTuning(level, nextGameplayTuning(entry)),
                 options.classRecipes,
                 runningEnemiesEnabled,
+                runningEnemyStyle,
               ),
               options,
             )),
@@ -10055,6 +10070,8 @@ try {
                           'xonix-core.v10',
                           'xonix-core.v11',
                           'xonix-core.v12',
+                          'xonix-core.v13',
+                          'xonix-core.v14',
                         ].includes(run.ruleset)
                       ? t('interface:reclaimedGround')
                       : t('interface:safeGround'),
@@ -10136,6 +10153,8 @@ try {
   function eventFeedback(events) {
     contextualReactions?.events(events, {
       attemptId: runId,
+      actorFamilyFor: (id) => pursuitRoster(run?.level).find((actor) => actor.id === id)?.family,
+      actorFamilies: pursuitRoster(run?.level).map((actor) => actor.family),
       mode: 'solo',
       board: 0,
       encounter: !!(run?.level?.classic?.hunt || run?.level?.runningEnemies),
@@ -10233,6 +10252,8 @@ try {
                   'xonix-core.v10',
                   'xonix-core.v11',
                   'xonix-core.v12',
+                  'xonix-core.v13',
+                  'xonix-core.v14',
                 ].includes(run.ruleset)
                   ? 'gameplay:liveLineExposedReachReclaimedGroundToSecureIt'
                   : 'gameplay:liveLineExposedReachSafeGroundToSecureIt',
@@ -10243,6 +10264,13 @@ try {
               {
                 'self-contact': t('interface:yourLineCrossedItselfChooseANewRoute'),
                 'snake-body': snakeText('failure'),
+                'combat-specialist': (() => {
+                  const copy = specialistFailureCopy(
+                    run.level.pursuit?.actors.find((actor) => actor.id === event.actorId)?.behavior,
+                    getLocale(),
+                  );
+                  return `${copy.reason} ${copy.tip}`;
+                })(),
                 'combat-projectile': t('interface:failure.combatProjectile'),
                 'mission-timeout': t('interface:theMissionClockRanOutTryAFasterRoute'),
                 'cut-timeout': t('interface:yourLiveLineStayedOpenTooLongMakeAShorter'),
@@ -10262,6 +10290,8 @@ try {
                   'xonix-core.v10',
                   'xonix-core.v11',
                   'xonix-core.v12',
+                  'xonix-core.v13',
+                  'xonix-core.v14',
                 ].includes(run.ruleset)
                   ? 'gameplay:lineStruckReachReclaimedGroundBeforeTheTravellingSparkCatches'
                   : 'interface:lineStruckReachSafeGroundBeforeTheTravellingSparkCatches',

@@ -57,7 +57,10 @@ export function createRewardMissionBindings(source, { includeRunningEnemies = fa
           // derived from the exact unchanged base plus the finite Bonus recipe;
           // no recording metadata can nominate its own reward identity.
           const overlay = createRun(
-            prepareRunningEnemyLevel(run.level, { classes: run.classRecipes }),
+            prepareRunningEnemyLevel(run.level, {
+              classes: run.classRecipes,
+              style: run.level.pursuit ? 'varied' : 'original',
+            }),
             { classRecipes: run.classRecipes },
           );
           const gameplayId = gameplayIdentity(overlay);

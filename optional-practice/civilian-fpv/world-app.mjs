@@ -53,7 +53,7 @@ import {
   exportPlaylist,
   resolvePlaylist,
 } from './playlists.mjs';
-import { openWorldRecords, exportProofParts, importProofPart } from './world-records.mjs';
+import { openWorldRecords, exportProofParts, importProofPart } from './world-reaction-runtime.mjs';
 import {
   inspectImport,
   projectFromImport,
@@ -66,8 +66,8 @@ import {
   installPack,
   exportEditedProject,
 } from './world-content.mjs';
-import { importEditableZip } from './world-zip.mjs';
-import { openWorldStore } from './world-store.mjs';
+import { importEditableZip } from './world-reaction-runtime.mjs';
+import { openWorldStore } from './world-reaction-runtime.mjs';
 import { preparePracticeOffline } from './offline.mjs';
 import { dataIdentity } from '../../game/data-json.mjs';
 import {
@@ -88,14 +88,15 @@ import {
   paintStickDirections,
   mountStickTrace,
 } from './sim-presentation.mjs';
-import { createWorldAudio } from './world-audio.mjs';
+import { createWorldAudio } from './world-reaction-runtime.mjs';
+import { mountWorldHuntReactions } from './world-reaction-runtime.mjs';
 import {
   evaluateWorldResult,
   createSectorTracker,
   compatibleGhost,
   prepareCheckpointPractice,
   prepareSectionReplay,
-} from './world-progress.mjs';
+} from './world-reaction-runtime.mjs';
 import {
   splitCourseDefinition,
   compileContentProject,
@@ -103,8 +104,8 @@ import {
   translateCriterion,
 } from './content-definitions.mjs';
 import { builtinWorldScene, createFlightRenderer } from './world-assets.mjs';
-import { mountDroneHangar } from './world-hangar.mjs';
-import { mountActorEditor } from './world-actor-editor.mjs';
+import { mountDroneHangar } from './world-reaction-runtime.mjs';
+import { mountActorEditor } from './world-reaction-runtime.mjs';
 import { fpvWorldReturnURL } from '../../game/fpv-entry.mjs';
 
 const COPY_EN = {
@@ -1022,9 +1023,19 @@ export function mountWorldApp({
     storage,
     locale: () => locale,
   });
+  const huntReactions = mountWorldHuntReactions({
+    sound: audio,
+    container: doc.querySelector('#world-viewport .flight-coaching'),
+    settingsContainer: $('sim-flight-controls'),
+    document: doc,
+    window: win,
+    storage,
+    locale: () => locale,
+  });
   const soundButton = button('', async () => {
     const enabled = !audio.enabled();
     await Promise.all([audio.setEnabled(enabled), presentation.setSoundEnabled(enabled)]);
+    if (enabled) huntReactions.prepare();
     updateSoundLabel();
   });
   soundButton.id = 'world-sound';
@@ -1126,6 +1137,7 @@ export function mountWorldApp({
     updateSoundLabel();
     audioControls.refresh();
     huntPresentationControls.refresh();
+    huntReactions.refresh();
     updateGhostHUD();
     for (const id of ['flight-mode', 'first-flight-mode']) {
       $(id).options[0].textContent = txt('Self-level', 'Самовирівнювання');
@@ -3270,6 +3282,7 @@ export function mountWorldApp({
     beginnerCoach.pausePreview?.();
     if (fire) fireReleaseRequired = true;
     fire = false;
+    huntReactions.suspend();
     audio.pause();
     presentation.resume();
     input.enable(false);
@@ -4013,6 +4026,11 @@ export function mountWorldApp({
       if (radio.status().active && flight) {
         input.enable(true);
         flight.arm();
+        huntReactions.resume();
+        void audio
+          .resume()
+          .then(() => huntReactions.prepare())
+          .catch(reportError);
         appearanceSession.arm(flight.snapshot().status);
         fire = false;
         accumulator = 0;
@@ -4063,6 +4081,7 @@ export function mountWorldApp({
               },
         );
         if (flight.snapshot().ticks > before) {
+          if (!replayProof && !current.legacy) huntReactions.consume(flight.snapshot());
           if (recorder) {
             if (current.legacy) recorder.record(controls);
             else recorder.record();
@@ -4407,6 +4426,11 @@ export function mountWorldApp({
     renderer.setCourse(entry.course, $('flight-mode').value);
     paintLoadout();
     audio.setCourse(entry.course);
+    huntReactions.reset(entry.course, flight.snapshot(), {
+      mode: $('flight-mode').value,
+      attemptId: `fpv-world-${token}`,
+      replay: Boolean(replayProof || entry.legacy),
+    });
     renderer.setQuality($('flight-quality').value);
     renderer.setDrone(
       playableAppearance.fallbackReason && !entry.legacy
@@ -4990,11 +5014,15 @@ export function mountWorldApp({
       input.seedThrottle(throttle);
       gamepad.seedThrottle(throttle);
     }
-    void audio.resume().catch(reportError);
+    void audio
+      .resume()
+      .then(() => huntReactions.prepare())
+      .catch(reportError);
     fire = false;
     lastTime = null;
     lastExecutionTime = win.performance?.now?.() ?? null;
     flight.arm();
+    huntReactions.resume();
     appearanceSession.arm(flight.snapshot().status);
     $('flight-status').textContent = replayProof
       ? txt('Playback active · no rewards.', 'Відтворення триває · без нагород.')
@@ -5434,6 +5462,31 @@ export function mountWorldApp({
   showTab(win.location.hash.slice(1) || 'explore', false);
   renderPlaylist();
   const requested = new URL(win.location.href).searchParams;
+  const requestedWorld = requested.get('community-world'),
+    requestedRevision = requested.get('community-revision');
+  if (
+    requestedWorld &&
+    /^[a-zA-Z0-9][a-zA-Z0-9._-]{0,79}$/.test(requestedWorld) &&
+    /^[a-f0-9]{64}$/.test(requestedRevision ?? '')
+  )
+    void ready
+      .then(() => {
+        if (disposed) return;
+        const entry = catalogue.find(
+          (candidate) =>
+            candidate.projectId === requestedWorld &&
+            candidate.packIdentity === `fpv-pack:${requestedRevision}`,
+        );
+        if (!entry)
+          throw new Error(
+            txt(
+              'This exact community world is not installed. Reinstall its package.',
+              'Цей точний світ спільноти не встановлено. Перевстановіть пакунок.',
+            ),
+          );
+        return startFlight(entry);
+      })
+      .catch(reportError);
   const requestedChapter = requested.get('snake-hunt');
   const huntPlaylist = CURATED_PLAYLISTS.find(
     (playlist) => playlist.id === `snake-hunt-${requestedChapter}`,
@@ -5546,6 +5599,7 @@ export function mountWorldApp({
       actorEditor?.dispose();
       audioControls.dispose();
       huntPresentationControls.dispose();
+      huntReactions.dispose();
       audio.dispose();
       presentation.dispose();
       droneResponse.dispose();

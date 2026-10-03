@@ -6,6 +6,7 @@ import { encounterVariantSource } from '../hunt/variants.mjs';
 import { huntText } from '../hunt/copy.mjs';
 import { missionEditContext } from './edit-context.mjs';
 import { getLocale, onLocaleChange } from '../i18n/index.mjs';
+import { createPursuitEditor } from './pursuit-editor.mjs';
 
 const copy = {
   title: ['Author hunting for this mission', 'Створити полювання для цієї місії'],
@@ -118,6 +119,7 @@ export function createHuntEditor({ container, getSource, getMission, apply }) {
   root.append(legend, help, variantLabel, quotaLabel, inspect, commit, status);
   container.append(root);
   const presentationPreview = createHuntPresentationPreview(root);
+  const pursuitEditor = createPursuitEditor({ container, getSource, getMission, apply });
   let identity = null,
     prepared = null,
     pendingKey = null,
@@ -156,6 +158,7 @@ export function createHuntEditor({ container, getSource, getMission, apply }) {
       quotaLabel.hidden = variant.value !== 'capture-quota';
     }
     localize();
+    pursuitEditor.sync();
   }
   inspect.onclick = () => {
     try {
@@ -200,6 +203,7 @@ export function createHuntEditor({ container, getSource, getMission, apply }) {
       disposed = true;
       unlocale();
       presentationPreview.dispose();
+      pursuitEditor.dispose();
       inspect.onclick = commit.onclick = variant.onchange = quota.onchange = null;
       root.remove();
     },

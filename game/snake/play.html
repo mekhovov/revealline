@@ -28,8 +28,8 @@
       <header class="masthead">
         <a href="../" class="brand">FPV / LINE</a>
         <nav>
-          <a href="./" id="campaign-link">All campaigns</a
-          ><a href="../" id="home-link">Main game</a>
+          <a href="./" id="campaign-link">All campaigns</a><a href="../" id="home-link">Main game</a
+          ><a href="../studio/snake.html">Snake Studio</a>
         </nav>
         <label
           ><span data-word="language">Language</span
@@ -87,6 +87,7 @@
             ><select id="target-rules">
               <option value="authored">As designed</option>
               <option value="moving">Moving-target remix</option>
+              <option value="varied">Varied prey</option>
             </select></label
           >
           <label id="preset-field"
@@ -110,6 +111,7 @@
             ><button id="new-route" data-word="newRoute"></button><span id="seed-label"></span>
           </div>
         </section>
+        <p id="encounter-summary" class="encounter-summary" role="status"></p>
         <p id="progress-summary" role="status"></p>
         <nav class="setup progress-links" aria-label="Campaign progress">
           <button id="recent-level" hidden></button>
@@ -129,6 +131,7 @@
               ><button id="slow-offer" data-word="slowOffer" hidden></button>
             </div>
             <p id="announcement" role="status"></p>
+            <div id="snake-reaction-caption" aria-live="polite"></div>
             <div id="pads"></div>
             <p id="controls-help" class="muted"></p>
           </section>
@@ -146,6 +149,22 @@
             <p id="mode-help"></p>
             <p id="speed-note" class="rule-badge"></p>
             <p id="record-summary"></p>
+            <label
+              ><span data-word="boardAppearance"></span>
+              <select id="board-style">
+                <option value="theme">Game theme</option>
+                <option value="retro">Retro Field</option>
+              </select>
+            </label>
+            <label
+              ><span data-word="castLabel"></span>
+              <select id="actor-cast">
+                <option value="authored">Campaign cast</option>
+                <option value="tactical">Tactical</option>
+                <option value="rivals">Rival crews</option>
+                <option value="arcade">Arcade</option>
+              </select>
+            </label>
             <label
               ><span data-word="appearance"></span
               ><select id="style">
@@ -165,6 +184,14 @@
               ><select id="accent"></select
             ></label>
             <p class="rule-note" data-word="noCapture"></p>
+            <details id="field-guide">
+              <summary data-word="fieldGuide"></summary>
+              <div id="field-guide-cards"></div>
+            </details>
+            <details>
+              <summary data-word="reactions"></summary>
+              <div id="snake-reaction-settings"></div>
+            </details>
             <details>
               <summary data-word="controlsTitle"></summary>
               <p data-word="controlsHelp"></p>

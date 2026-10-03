@@ -276,6 +276,8 @@
     "optional-practice/civilian-fpv/world-themes.mjs",
     "optional-practice/civilian-fpv/world-editor.mjs",
     "optional-practice/civilian-fpv/world-audio.mjs",
+    "optional-practice/civilian-fpv/world-hunt-reactions.mjs",
+    "optional-practice/civilian-fpv/world-reaction-runtime.mjs",
     "optional-practice/civilian-fpv/world-progress.mjs",
     "optional-practice/civilian-fpv/content-definitions.mjs",
     "optional-practice/fpv-worlds/SCENERY-LICENSES.txt",
@@ -285,6 +287,7 @@
     "optional-practice/civilian-fpv/world-actor-editor.mjs",
     "optional-practice/civilian-fpv/snake-hunt.mjs",
     "optional-practice/civilian-fpv/snake-hunt-catalogue.mjs",
+    "optional-practice/civilian-fpv/expressive-hunt-courses.mjs",
     "optional-practice/civilian-fpv/snake-hunt-presentation.mjs"
   ],
   "optionalOffline": [

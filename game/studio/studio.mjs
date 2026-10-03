@@ -1,3 +1,8 @@
+import {
+  prepareCreatorTeamSourceCampaign,
+  exportCreatorTeamCampaign,
+  importCreatorTeamCampaign,
+} from '../creator/team.mjs';
 import { createSnakeHuntCandidates } from '../content-design/snake-hunt-candidates.mjs';
 import { createTeamSnakeHuntCandidates } from '../content-design/team-snake-hunt-candidates.mjs';
 import { editorMessageError, editorErrorText } from './editor-copy.mjs';
@@ -1160,6 +1165,11 @@ $('import').onchange = guarded(async () => {
     return;
   }
   if (!current()) return;
+  if (JSON.parse(text)?.format === 'revealline-creator-team-portable.v2') {
+    const prepared = await importCreatorTeamCampaign(new Blob([text]));
+    if (!current()) return;
+    text = JSON.stringify(prepared.provenance.sourceProject, null, 2);
+  }
   $('source').value = text;
   sourceChanged = true;
   inspectSource();
@@ -1190,6 +1200,27 @@ $('export-team-campaign').onclick = guarded(async () => {
       message: platformExportText(result),
       count: pack.levels.length,
     }),
+  );
+});
+$('export-team-portable').onclick = guarded(async () => {
+  if (sourceChanged) throw editorMessageError('errors:studio.source.exportCampaign');
+  const source = session.current(),
+    campaignId = $('team-test-campaign').value;
+  const sourcePack = source.packs.find(
+    (pack) => !pack.archived && pack.campaignIds.includes(campaignId),
+  );
+  if (!sourcePack) throw editorMessageError('errors:studio.chooseTeam');
+  const difficulty = $('difficulty').value;
+  const prepared = await prepareCreatorTeamSourceCampaign(source, {
+    sourcePackId: sourcePack.id,
+    campaignId,
+    difficulty,
+  });
+  const portable = JSON.parse(await exportCreatorTeamCampaign(prepared).text());
+  const result = await exportJSONFile(portable, `${campaignId}-${difficulty}-team-portable.json`);
+  status(
+    () =>
+      `${platformExportText(result)} · Community package: structurally validated; human play qualification pending. / Пакунок спільноти: структура перевірена; ігрова перевірка ще попереду.`,
   );
 });
 for (const action of ['undo', 'redo'])

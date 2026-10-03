@@ -1,4 +1,7 @@
 import { boundedJSON, exactKeys } from '../../game/data-json.mjs';
+import { ACTOR_CASTS, actorFieldGuide } from '../../game/hunt/actor-catalog.mjs';
+import { drawHuntActor } from '../../game/hunt/actor-art.mjs';
+import { sharedActorAppearance } from '../../game/hunt/preferences.mjs';
 
 const TYPES = ['drone', 'patrol', 'sentry', 'vehicle', 'hazard'];
 const AXES = ['x', 'y', 'z'];
@@ -685,6 +688,59 @@ export function mountActorEditor({ container, getCourse, onChange, locale = 'en'
       return;
     }
     const actor = actorIn(course);
+    const contactTarget = MODES.some((mode) =>
+      course.steps[mode]?.some(
+        (step) => step.type === 'hunt-contact-v1' && step.targets.includes(actor.id),
+      ),
+    );
+    if (contactTarget) {
+      const language = (typeof locale === 'function' ? locale() : locale) === 'uk' ? 'uk' : 'en';
+      const family = actor.speed > 0 ? 'patroller' : 'lookout';
+      const guide = actorFieldGuide(family, language);
+      const section = element('fieldset'),
+        legend = element('legend', language === 'uk' ? 'Довідник цілей' : 'Target field guide');
+      const preview = element('canvas');
+      preview.width = preview.height = 112;
+      preview.style.cssText = 'display:block;width:5rem;height:5rem;image-rendering:pixelated;';
+      preview.setAttribute('aria-label', guide.name);
+      const preferences = sharedActorAppearance();
+      const cast = choose(
+        [
+          ['authored', language === 'uk' ? 'Як задумано' : 'As designed'],
+          ...ACTOR_CASTS.map((entry) => [entry.id, entry.name[language]]),
+        ],
+        preferences.snapshot().cast,
+        language === 'uk' ? 'Спільний вигляд персонажів' : 'Shared character cast',
+      );
+      const paint = () => {
+        const ctx = preview.getContext?.('2d');
+        if (!ctx) return;
+        ctx.clearRect(0, 0, 112, 112);
+        drawHuntActor(ctx, 0, 0, 112, 0, { kind: family, cast: cast.value, state: 'idle' });
+      };
+      cast.addEventListener('change', () => {
+        preferences.set({ cast: cast.value });
+        paint();
+      });
+      section.append(
+        legend,
+        preview,
+        element('strong', guide.name),
+        element('p', `${guide.goal} ${guide.tell} ${guide.counter}`),
+        label(language === 'uk' ? 'Спільний вигляд персонажів' : 'Shared character cast', cast),
+      );
+      section.append(
+        element(
+          'p',
+          language === 'uk'
+            ? 'Вигляд спільний із грою. Цей льотний персонаж використовує справжній наземний маршрут; клітинкові щити й ривки не підмінюють його фізику.'
+            : 'Appearance is shared with the game. This flight actor uses a native ground route; grid shields and bursts do not replace its physics.',
+          'hint',
+        ),
+      );
+      container.append(section);
+      paint();
+    }
     const role = choose(
       ['hostile', 'rival', 'civilian'].map((id) => [id, text(id)]),
       actor.role ?? 'hostile',

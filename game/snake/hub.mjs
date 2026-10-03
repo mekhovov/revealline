@@ -8,6 +8,8 @@ import { mountOptionalPracticePanel } from '../ui/optional-practice-panel.mjs';
 import { fpvWorldLaunchURL, appearanceLaunchURL } from '../fpv-entry.mjs';
 import { installThemeHost } from '../presentation/theme-host.mjs';
 import { classicAppearanceContext } from './classic-presentation.mjs';
+const linkedLocale = new URL(location.href).searchParams.get('lang');
+if (['en', 'uk'].includes(linkedLocale)) setLocale(linkedLocale, { persist: false });
 
 const copy = {
   en: {
@@ -24,8 +26,8 @@ const copy = {
       'Catch humanoids to grow your cable. Patrols follow readable routes; runners flee nearby drones; sprinters warn before a short dash. Later routes add yielding shutters, Stop Pulse and Cable Reel pickups.',
       'Clean catches work by default. Enable Brutal enemy destruction and optional blood in game Settings whenever you want the stronger effects.',
     ],
-    campaigns: 'Four campaigns. Fourteen chapters.',
-    count: '84 missions · Solo / Versus / Team',
+    campaigns: 'Five campaigns. Sixteen chapters.',
+    count: '96 missions · Solo / Versus / Team',
     missions: 'Explore all six missions',
     chapter: 'Chapter',
     solo: 'Solo',
@@ -33,9 +35,9 @@ const copy = {
     team: 'Team',
     sim: 'Simulator',
     simTitle: 'Take the hunt into 3D',
-    simCount: '36 courses · 6 playlists · Self-level / Acro',
+    simCount: '48 courses · 8 playlists · Self-level / Acro',
     simIntro:
-      'Fly close enough to catch humanoids on ground routes and raised platforms. Six playlists include twelve moving-patrol courses. After the introduction, catches grow an echo trail to avoid; some courses require numbered catches in order. This is a separate 3D variation using the simulator’s flight model.',
+      'Fly close enough to catch humanoids on ground routes and raised platforms. Eight playlists include twenty-four moving-patrol courses. After the introduction, catches grow an echo trail to avoid; some courses require numbered catches in order. This is a separate 3D variation using the simulator’s flight model.',
     simPlay: 'Open six-course playlist',
     simNote:
       'Prepare a course, then Arm when ready. The simulator has separate progress and flight controls. If it is not bundled here, the verified launcher helps you install or open it; select the named course there.',
@@ -44,7 +46,7 @@ const copy = {
       'The optional simulator catalogue could not load. Classic Snake is ready above. Reconnect and reload this page to see the flight courses.',
     footer:
       'Classic Snake uses contact catches only. Team shares the catch goal; Versus races on matched boards. The earlier territory-capture version remains available as a Capture remix from the play page. Sim remains a separate 3D flight variation.',
-    studio: 'Open Studio for capture-remix authoring',
+    studio: 'Open Snake Studio · create and share your routes',
     language: 'Language',
     recommended: 'Start here · Pure Pursuit',
     startCampaign: 'Start campaign',
@@ -67,8 +69,8 @@ const copy = {
       'Ловіть гуманоїдів, щоб подовжувати кабель. Патрулі йдуть помітними маршрутами, бігуни тікають від близького дрона, спринтери попереджають про ривок. Далі з’являються заслінки, імпульс зупинки й котушка кабелю.',
       'За замовчуванням дотики без крові. Для сильніших ефектів увімкніть жорстоке знищення ворогів і кров у налаштуваннях гри.',
     ],
-    campaigns: 'Чотири кампанії. Чотирнадцять розділів.',
-    count: '84 місії · Соло / Поєдинок / Команда',
+    campaigns: 'П’ять кампаній. Шістнадцять розділів.',
+    count: '96 місій · Соло / Поєдинок / Команда',
     missions: 'Переглянути всі шість місій',
     chapter: 'Розділ',
     solo: 'Соло',
@@ -76,9 +78,9 @@ const copy = {
     team: 'Команда',
     sim: 'Симулятор',
     simTitle: 'Перенесіть полювання у 3D',
-    simCount: '36 трас · 6 серій · Самовирівнювання / Acro',
+    simCount: '48 трас · 8 серій · Самовирівнювання / Acro',
     simIntro:
-      'Ловіть дотиком гуманоїдів на наземних маршрутах і піднятих платформах. Шість серій містять дванадцять трас із рухомими патрулями. Після вступу цілі подовжують небезпечний слід; іноді потрібен порядок номерів. Це окремий 3D-варіант із моделлю польоту симулятора.',
+      'Ловіть дотиком гуманоїдів на наземних маршрутах і піднятих платформах. Вісім серій містять двадцять чотири траси з рухомими патрулями. Після вступу цілі подовжують небезпечний слід; іноді потрібен порядок номерів. Це окремий 3D-варіант із моделлю польоту симулятора.',
     simPlay: 'Відкрити серію з шести трас',
     simNote:
       'Підготуйте трасу та ввімкніть мотори. У симулятора окремий прогрес і керування. Якщо його немає в цій збірці, перевірений запуск допоможе встановити чи відкрити його; там оберіть названу трасу.',
@@ -87,7 +89,7 @@ const copy = {
       'Не вдалося завантажити необов’язковий каталог симулятора. Класична Змійка вже доступна вище. Під’єднайтеся до мережі й оновіть сторінку, щоб побачити траси для польотів.',
     footer:
       'У класичній Змійці цілі ловлять лише дотиком. Команда має спільну мету; Поєдинок — однакові поля. Попередня версія доступна на сторінці гри як ремікс із захопленням території. Симулятор залишається окремим 3D-варіантом.',
-    studio: 'Відкрити Студію реміксів із захопленням',
+    studio: 'Відкрити Snake Studio · створюйте та поширюйте маршрути',
     language: 'Мова',
     recommended: 'Почніть тут · Чисте переслідування',
     startCampaign: 'Почати кампанію',

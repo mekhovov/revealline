@@ -15,7 +15,10 @@ export function matchReplayInstalledRules({ campaign, replay, state }) {
   const matched = tuning
     ? matchRecordedGameplayTuning(level, state.level, { classes: campaign.classRecipes })
     : state.level.runningEnemies
-      ? prepareRunningEnemyLevel(level, { classes: campaign.classRecipes })
+      ? prepareRunningEnemyLevel(level, {
+          classes: campaign.classRecipes,
+          style: state.level.pursuit ? 'varied' : 'original',
+        })
       : level;
   if (!matched) throw new Error('Saved rules differ from the installed campaign.');
   const expected = createRun(matched, {

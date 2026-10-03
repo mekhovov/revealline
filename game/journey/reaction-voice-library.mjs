@@ -1,5 +1,6 @@
 import { inspectReactionRecording } from './reaction-voice-cache.mjs';
 import { REACTION_VOICE_PILOT } from '../audio/reactions/pilot.mjs';
+import { ACTOR_VOICE_RECORDINGS } from '../audio/reactions/actors.mjs';
 import { REACTION_LINES } from './reactions.mjs';
 
 const DATABASE = 'revealline-reaction-voices-v1',
@@ -18,7 +19,7 @@ const mimeTypes = new Set([
 const lines = new Map(REACTION_LINES.map((entry) => [entry.id, entry]));
 const keyFor = (lineId, locale) => `${lineId}|${locale}`;
 const pilot = Object.freeze(
-  REACTION_VOICE_PILOT.map((entry) =>
+  [...REACTION_VOICE_PILOT, ...ACTOR_VOICE_RECORDINGS].map((entry) =>
     Object.freeze({ ...entry, provenance: Object.freeze({ ...entry.provenance }) }),
   ),
 );

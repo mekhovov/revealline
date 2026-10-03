@@ -1,0 +1,4151 @@
+{
+  "format": "expressive-content-inventory.v1",
+  "scope": "Source admission only; no completion, enjoyment, network or release qualification is implied.",
+  "counts": {
+    "Capture Solo / Versus": 24,
+    "Capture Team": 36,
+    "Classic Snake": 12,
+    "FPV SIM": 12
+  },
+  "totalLayouts": 84,
+  "actors": {
+    "families": [
+      "lookout",
+      "patroller",
+      "runner",
+      "sprinter",
+      "courier",
+      "guard",
+      "refuge-seeker",
+      "switchback",
+      "rendezvous-pair",
+      "shield-bearer",
+      "brace-trooper",
+      "relay-warden"
+    ],
+    "casts": ["tactical", "rivals", "arcade"],
+    "variants": 36,
+    "artworkBudget": {
+      "decodedBytes": 33554432,
+      "sharedBoards": 2
+    }
+  },
+  "layouts": [
+    {
+      "family": "Capture Solo / Versus",
+      "id": "crossing-post",
+      "revision": "pursuit-2",
+      "title": "Crossing Post",
+      "challenge": "Use either side island as a return. Intercept the patrol beside the central gap, or intercept the optional courier between delivery stops.",
+      "provenance": {
+        "owner": "official-candidate",
+        "source": "pursuit-solo-campaigns-project",
+        "format": "MissionDesignV5"
+      },
+      "modes": ["solo", "versus"],
+      "recipes": [
+        {
+          "mode": "solo",
+          "pace": "gentle",
+          "format": "xonix-level.v12",
+          "identity": "f9a462c30a5460de31068ef825360174eec91e7d5c972b840982918352084740",
+          "campaign": "pursuit-patrol-district"
+        },
+        {
+          "mode": "solo",
+          "pace": "standard",
+          "format": "xonix-level.v12",
+          "identity": "54174eba364529c8d881296d9887bd0a26e7836016b2620ed7ac5c515c295e9c",
+          "campaign": "pursuit-patrol-district"
+        },
+        {
+          "mode": "solo",
+          "pace": "expert",
+          "format": "xonix-level.v12",
+          "identity": "f62950af3d4cfd8c9f97579d34d6972d6f3416bf8a099dce9735e5e50038febd",
+          "campaign": "pursuit-patrol-district"
+        },
+        {
+          "mode": "versus",
+          "pace": "gentle",
+          "format": "xonix-level.v12",
+          "identity": "f9a462c30a5460de31068ef825360174eec91e7d5c972b840982918352084740",
+          "campaign": "pursuit-patrol-district"
+        },
+        {
+          "mode": "versus",
+          "pace": "standard",
+          "format": "xonix-level.v12",
+          "identity": "54174eba364529c8d881296d9887bd0a26e7836016b2620ed7ac5c515c295e9c",
+          "campaign": "pursuit-patrol-district"
+        },
+        {
+          "mode": "versus",
+          "pace": "expert",
+          "format": "xonix-level.v12",
+          "identity": "f62950af3d4cfd8c9f97579d34d6972d6f3416bf8a099dce9735e5e50038febd",
+          "campaign": "pursuit-patrol-district"
+        }
+      ],
+      "launch": "/game/?journey=pursuit-campaigns-v1",
+      "qualification": {
+        "structuralAdmission": "accepted",
+        "proposedQualificationSeed": 17,
+        "demonstratedCompletionRoute": null,
+        "humanPlay": "pending",
+        "deviceAndPerformance": "pending",
+        "studioRoundTrip": "pending-manual-review",
+        "publicRelease": "not-qualified"
+      }
+    },
+    {
+      "family": "Capture Solo / Versus",
+      "id": "pursuit-signal-square",
+      "revision": "pursuit-chapters-1",
+      "title": "Signal Square",
+      "challenge": "Choose the inner turn or the outer return around a square island.",
+      "provenance": {
+        "owner": "official-candidate",
+        "source": "pursuit-solo-campaigns-project",
+        "format": "MissionDesignV5"
+      },
+      "modes": ["solo", "versus"],
+      "recipes": [
+        {
+          "mode": "solo",
+          "pace": "gentle",
+          "format": "xonix-level.v12",
+          "identity": "4474df7df99ff36d7b1816e2f1cc8bedb84000befbb83384c19a2238396a8d02",
+          "campaign": "pursuit-patrol-district"
+        },
+        {
+          "mode": "solo",
+          "pace": "standard",
+          "format": "xonix-level.v12",
+          "identity": "9d6102564f21d24bea1ac2aec67f711b1b4f9a22dbb6c2156578c699104e3446",
+          "campaign": "pursuit-patrol-district"
+        },
+        {
+          "mode": "solo",
+          "pace": "expert",
+          "format": "xonix-level.v12",
+          "identity": "99cdf83dcbb2654a2a4b8c2bb21403bd0594478df02c20fb614a9ac3df68d7ac",
+          "campaign": "pursuit-patrol-district"
+        },
+        {
+          "mode": "versus",
+          "pace": "gentle",
+          "format": "xonix-level.v12",
+          "identity": "4474df7df99ff36d7b1816e2f1cc8bedb84000befbb83384c19a2238396a8d02",
+          "campaign": "pursuit-patrol-district"
+        },
+        {
+          "mode": "versus",
+          "pace": "standard",
+          "format": "xonix-level.v12",
+          "identity": "9d6102564f21d24bea1ac2aec67f711b1b4f9a22dbb6c2156578c699104e3446",
+          "campaign": "pursuit-patrol-district"
+        },
+        {
+          "mode": "versus",
+          "pace": "expert",
+          "format": "xonix-level.v12",
+          "identity": "99cdf83dcbb2654a2a4b8c2bb21403bd0594478df02c20fb614a9ac3df68d7ac",
+          "campaign": "pursuit-patrol-district"
+        }
+      ],
+      "launch": "/game/?journey=pursuit-campaigns-v1",
+      "qualification": {
+        "structuralAdmission": "accepted",
+        "proposedQualificationSeed": 17,
+        "demonstratedCompletionRoute": null,
+        "humanPlay": "pending",
+        "deviceAndPerformance": "pending",
+        "studioRoundTrip": "pending-manual-review",
+        "publicRelease": "not-qualified"
+      }
+    },
+    {
+      "family": "Capture Solo / Versus",
+      "id": "pursuit-passing-bay",
+      "revision": "pursuit-chapters-1",
+      "title": "Passing Bay",
+      "challenge": "Use a refuge bay to pass the circuit instead of following it.",
+      "provenance": {
+        "owner": "official-candidate",
+        "source": "pursuit-solo-campaigns-project",
+        "format": "MissionDesignV5"
+      },
+      "modes": ["solo", "versus"],
+      "recipes": [
+        {
+          "mode": "solo",
+          "pace": "gentle",
+          "format": "xonix-level.v12",
+          "identity": "ee3756b1973ed2529a87b7417057aeed490a9bd41d1c3071f31b66e10f38b926",
+          "campaign": "pursuit-patrol-district"
+        },
+        {
+          "mode": "solo",
+          "pace": "standard",
+          "format": "xonix-level.v12",
+          "identity": "0a0add8bedb7749016d8d702d19034bae33fb53fcbfa3af72e326c8824fb8ba3",
+          "campaign": "pursuit-patrol-district"
+        },
+        {
+          "mode": "solo",
+          "pace": "expert",
+          "format": "xonix-level.v12",
+          "identity": "df40b6fbbad5626e85c85e072fc8f4afd7d3a77ebbd97de625ca7297b5969ff4",
+          "campaign": "pursuit-patrol-district"
+        },
+        {
+          "mode": "versus",
+          "pace": "gentle",
+          "format": "xonix-level.v12",
+          "identity": "ee3756b1973ed2529a87b7417057aeed490a9bd41d1c3071f31b66e10f38b926",
+          "campaign": "pursuit-patrol-district"
+        },
+        {
+          "mode": "versus",
+          "pace": "standard",
+          "format": "xonix-level.v12",
+          "identity": "0a0add8bedb7749016d8d702d19034bae33fb53fcbfa3af72e326c8824fb8ba3",
+          "campaign": "pursuit-patrol-district"
+        },
+        {
+          "mode": "versus",
+          "pace": "expert",
+          "format": "xonix-level.v12",
+          "identity": "df40b6fbbad5626e85c85e072fc8f4afd7d3a77ebbd97de625ca7297b5969ff4",
+          "campaign": "pursuit-patrol-district"
+        }
+      ],
+      "launch": "/game/?journey=pursuit-campaigns-v1",
+      "qualification": {
+        "structuralAdmission": "accepted",
+        "proposedQualificationSeed": 17,
+        "demonstratedCompletionRoute": null,
+        "humanPlay": "pending",
+        "deviceAndPerformance": "pending",
+        "studioRoundTrip": "pending-manual-review",
+        "publicRelease": "not-qualified"
+      }
+    },
+    {
+      "family": "Capture Solo / Versus",
+      "id": "pursuit-island-clock",
+      "revision": "pursuit-chapters-1",
+      "title": "Island Clock",
+      "challenge": "Match a four-corner patrol from either of two island approaches.",
+      "provenance": {
+        "owner": "official-candidate",
+        "source": "pursuit-solo-campaigns-project",
+        "format": "MissionDesignV5"
+      },
+      "modes": ["solo", "versus"],
+      "recipes": [
+        {
+          "mode": "solo",
+          "pace": "gentle",
+          "format": "xonix-level.v12",
+          "identity": "2f285734ebb3c709c7474c43774ce68702f0a5397d63ac5f88e6ac48771058da",
+          "campaign": "pursuit-patrol-district"
+        },
+        {
+          "mode": "solo",
+          "pace": "standard",
+          "format": "xonix-level.v12",
+          "identity": "42578fde611e7176b89bc956622e7799dc0e45d22035dd7efa48cf7162b8af91",
+          "campaign": "pursuit-patrol-district"
+        },
+        {
+          "mode": "solo",
+          "pace": "expert",
+          "format": "xonix-level.v12",
+          "identity": "cf51641fbcad8bedace9214d75d0e67466525c0f386e046dc8a06f09262b3ac5",
+          "campaign": "pursuit-patrol-district"
+        },
+        {
+          "mode": "versus",
+          "pace": "gentle",
+          "format": "xonix-level.v12",
+          "identity": "2f285734ebb3c709c7474c43774ce68702f0a5397d63ac5f88e6ac48771058da",
+          "campaign": "pursuit-patrol-district"
+        },
+        {
+          "mode": "versus",
+          "pace": "standard",
+          "format": "xonix-level.v12",
+          "identity": "42578fde611e7176b89bc956622e7799dc0e45d22035dd7efa48cf7162b8af91",
+          "campaign": "pursuit-patrol-district"
+        },
+        {
+          "mode": "versus",
+          "pace": "expert",
+          "format": "xonix-level.v12",
+          "identity": "cf51641fbcad8bedace9214d75d0e67466525c0f386e046dc8a06f09262b3ac5",
+          "campaign": "pursuit-patrol-district"
+        }
+      ],
+      "launch": "/game/?journey=pursuit-campaigns-v1",
+      "qualification": {
+        "structuralAdmission": "accepted",
+        "proposedQualificationSeed": 17,
+        "demonstratedCompletionRoute": null,
+        "humanPlay": "pending",
+        "deviceAndPerformance": "pending",
+        "studioRoundTrip": "pending-manual-review",
+        "publicRelease": "not-qualified"
+      }
+    },
+    {
+      "family": "Capture Solo / Versus",
+      "id": "pursuit-inner-shortcut",
+      "revision": "pursuit-chapters-1",
+      "title": "Inner Shortcut",
+      "challenge": "Take a narrow inner cut while the target follows the outer lane.",
+      "provenance": {
+        "owner": "official-candidate",
+        "source": "pursuit-solo-campaigns-project",
+        "format": "MissionDesignV5"
+      },
+      "modes": ["solo", "versus"],
+      "recipes": [
+        {
+          "mode": "solo",
+          "pace": "gentle",
+          "format": "xonix-level.v12",
+          "identity": "bd4b5a2e7c91fc0c6bc3d202ad4b09580bfab6773ba031f0afd5e00656b79776",
+          "campaign": "pursuit-patrol-district"
+        },
+        {
+          "mode": "solo",
+          "pace": "standard",
+          "format": "xonix-level.v12",
+          "identity": "9d3b1b4da9a904136999152e27f632495f9d60d685819d1cbdbb76750477ccc8",
+          "campaign": "pursuit-patrol-district"
+        },
+        {
+          "mode": "solo",
+          "pace": "expert",
+          "format": "xonix-level.v12",
+          "identity": "f01c1a1a3262059be3bc12712f68a509a56680cc84f394a9ab61ed2938825d50",
+          "campaign": "pursuit-patrol-district"
+        },
+        {
+          "mode": "versus",
+          "pace": "gentle",
+          "format": "xonix-level.v12",
+          "identity": "bd4b5a2e7c91fc0c6bc3d202ad4b09580bfab6773ba031f0afd5e00656b79776",
+          "campaign": "pursuit-patrol-district"
+        },
+        {
+          "mode": "versus",
+          "pace": "standard",
+          "format": "xonix-level.v12",
+          "identity": "9d3b1b4da9a904136999152e27f632495f9d60d685819d1cbdbb76750477ccc8",
+          "campaign": "pursuit-patrol-district"
+        },
+        {
+          "mode": "versus",
+          "pace": "expert",
+          "format": "xonix-level.v12",
+          "identity": "f01c1a1a3262059be3bc12712f68a509a56680cc84f394a9ab61ed2938825d50",
+          "campaign": "pursuit-patrol-district"
+        }
+      ],
+      "launch": "/game/?journey=pursuit-campaigns-v1",
+      "qualification": {
+        "structuralAdmission": "accepted",
+        "proposedQualificationSeed": 17,
+        "demonstratedCompletionRoute": null,
+        "humanPlay": "pending",
+        "deviceAndPerformance": "pending",
+        "studioRoundTrip": "pending-manual-review",
+        "publicRelease": "not-qualified"
+      }
+    },
+    {
+      "family": "Capture Solo / Versus",
+      "id": "pursuit-loop-exchange",
+      "revision": "pursuit-chapters-1",
+      "title": "Loop Exchange",
+      "challenge": "Change circuits through the center before the next patrol crossing.",
+      "provenance": {
+        "owner": "official-candidate",
+        "source": "pursuit-solo-campaigns-project",
+        "format": "MissionDesignV5"
+      },
+      "modes": ["solo", "versus"],
+      "recipes": [
+        {
+          "mode": "solo",
+          "pace": "gentle",
+          "format": "xonix-level.v12",
+          "identity": "89eef1798494519ab36822d4e98d95812280e2ba3ad668ca9d2f1db0e8c08c4b",
+          "campaign": "pursuit-patrol-district"
+        },
+        {
+          "mode": "solo",
+          "pace": "standard",
+          "format": "xonix-level.v12",
+          "identity": "e12f413c404c04e983740c56147c4b404ca07d3405d67a2511182e84ffa36107",
+          "campaign": "pursuit-patrol-district"
+        },
+        {
+          "mode": "solo",
+          "pace": "expert",
+          "format": "xonix-level.v12",
+          "identity": "2016ea071a27eadea35a8cea087ec3e529b7b2944c4d9156e8ffa4e6e5da2045",
+          "campaign": "pursuit-patrol-district"
+        },
+        {
+          "mode": "versus",
+          "pace": "gentle",
+          "format": "xonix-level.v12",
+          "identity": "89eef1798494519ab36822d4e98d95812280e2ba3ad668ca9d2f1db0e8c08c4b",
+          "campaign": "pursuit-patrol-district"
+        },
+        {
+          "mode": "versus",
+          "pace": "standard",
+          "format": "xonix-level.v12",
+          "identity": "e12f413c404c04e983740c56147c4b404ca07d3405d67a2511182e84ffa36107",
+          "campaign": "pursuit-patrol-district"
+        },
+        {
+          "mode": "versus",
+          "pace": "expert",
+          "format": "xonix-level.v12",
+          "identity": "2016ea071a27eadea35a8cea087ec3e529b7b2944c4d9156e8ffa4e6e5da2045",
+          "campaign": "pursuit-patrol-district"
+        }
+      ],
+      "launch": "/game/?journey=pursuit-campaigns-v1",
+      "qualification": {
+        "structuralAdmission": "accepted",
+        "proposedQualificationSeed": 17,
+        "demonstratedCompletionRoute": null,
+        "humanPlay": "pending",
+        "deviceAndPerformance": "pending",
+        "studioRoundTrip": "pending-manual-review",
+        "publicRelease": "not-qualified"
+      }
+    },
+    {
+      "family": "Capture Solo / Versus",
+      "id": "pursuit-open-intercept",
+      "revision": "pursuit-chapters-1",
+      "title": "Open Intercept",
+      "challenge": "Approach the refuge target from its distant goal.",
+      "provenance": {
+        "owner": "official-candidate",
+        "source": "pursuit-solo-campaigns-project",
+        "format": "MissionDesignV5"
+      },
+      "modes": ["solo", "versus"],
+      "recipes": [
+        {
+          "mode": "solo",
+          "pace": "gentle",
+          "format": "xonix-level.v12",
+          "identity": "07439905d1a0f3a93f4230f026f612d7089202acac5dff67c0778bd36a82d296",
+          "campaign": "pursuit-escape-lines"
+        },
+        {
+          "mode": "solo",
+          "pace": "standard",
+          "format": "xonix-level.v12",
+          "identity": "c98ebf1088e4e02abcabf7eca193608deda77fd613a4961dcd00877b8145df40",
+          "campaign": "pursuit-escape-lines"
+        },
+        {
+          "mode": "solo",
+          "pace": "expert",
+          "format": "xonix-level.v12",
+          "identity": "fad55293fad9b5c3c784823cf068125793c9956d571ec9a7c5282b65c7ceadde",
+          "campaign": "pursuit-escape-lines"
+        },
+        {
+          "mode": "versus",
+          "pace": "gentle",
+          "format": "xonix-level.v12",
+          "identity": "07439905d1a0f3a93f4230f026f612d7089202acac5dff67c0778bd36a82d296",
+          "campaign": "pursuit-escape-lines"
+        },
+        {
+          "mode": "versus",
+          "pace": "standard",
+          "format": "xonix-level.v12",
+          "identity": "c98ebf1088e4e02abcabf7eca193608deda77fd613a4961dcd00877b8145df40",
+          "campaign": "pursuit-escape-lines"
+        },
+        {
+          "mode": "versus",
+          "pace": "expert",
+          "format": "xonix-level.v12",
+          "identity": "fad55293fad9b5c3c784823cf068125793c9956d571ec9a7c5282b65c7ceadde",
+          "campaign": "pursuit-escape-lines"
+        }
+      ],
+      "launch": "/game/?journey=pursuit-campaigns-v1",
+      "qualification": {
+        "structuralAdmission": "accepted",
+        "proposedQualificationSeed": 17,
+        "demonstratedCompletionRoute": null,
+        "humanPlay": "pending",
+        "deviceAndPerformance": "pending",
+        "studioRoundTrip": "pending-manual-review",
+        "publicRelease": "not-qualified"
+      }
+    },
+    {
+      "family": "Capture Solo / Versus",
+      "id": "pursuit-shelter-fork",
+      "revision": "pursuit-chapters-1",
+      "title": "Shelter Fork",
+      "challenge": "Choose which of two corners to cut off before leaving safety.",
+      "provenance": {
+        "owner": "official-candidate",
+        "source": "pursuit-solo-campaigns-project",
+        "format": "MissionDesignV5"
+      },
+      "modes": ["solo", "versus"],
+      "recipes": [
+        {
+          "mode": "solo",
+          "pace": "gentle",
+          "format": "xonix-level.v12",
+          "identity": "e32786d71f403e035a910b008132d90b2ff03249ce6f0ee39b64988da4519058",
+          "campaign": "pursuit-escape-lines"
+        },
+        {
+          "mode": "solo",
+          "pace": "standard",
+          "format": "xonix-level.v12",
+          "identity": "3182b98fed221e1dce23d25d45fe7c413939406539f471aec69cba757876a6cf",
+          "campaign": "pursuit-escape-lines"
+        },
+        {
+          "mode": "solo",
+          "pace": "expert",
+          "format": "xonix-level.v12",
+          "identity": "15e1c59b7e6acd2b89509ba79030176de783137f67f8c71bb42ae189c6212e22",
+          "campaign": "pursuit-escape-lines"
+        },
+        {
+          "mode": "versus",
+          "pace": "gentle",
+          "format": "xonix-level.v12",
+          "identity": "e32786d71f403e035a910b008132d90b2ff03249ce6f0ee39b64988da4519058",
+          "campaign": "pursuit-escape-lines"
+        },
+        {
+          "mode": "versus",
+          "pace": "standard",
+          "format": "xonix-level.v12",
+          "identity": "3182b98fed221e1dce23d25d45fe7c413939406539f471aec69cba757876a6cf",
+          "campaign": "pursuit-escape-lines"
+        },
+        {
+          "mode": "versus",
+          "pace": "expert",
+          "format": "xonix-level.v12",
+          "identity": "15e1c59b7e6acd2b89509ba79030176de783137f67f8c71bb42ae189c6212e22",
+          "campaign": "pursuit-escape-lines"
+        }
+      ],
+      "launch": "/game/?journey=pursuit-campaigns-v1",
+      "qualification": {
+        "structuralAdmission": "accepted",
+        "proposedQualificationSeed": 17,
+        "demonstratedCompletionRoute": null,
+        "humanPlay": "pending",
+        "deviceAndPerformance": "pending",
+        "studioRoundTrip": "pending-manual-review",
+        "publicRelease": "not-qualified"
+      }
+    },
+    {
+      "family": "Capture Solo / Versus",
+      "id": "pursuit-zigzag-exit",
+      "revision": "pursuit-chapters-1",
+      "title": "Zigzag Exit",
+      "challenge": "Cross a staggered passage instead of matching every target turn.",
+      "provenance": {
+        "owner": "official-candidate",
+        "source": "pursuit-solo-campaigns-project",
+        "format": "MissionDesignV5"
+      },
+      "modes": ["solo", "versus"],
+      "recipes": [
+        {
+          "mode": "solo",
+          "pace": "gentle",
+          "format": "xonix-level.v12",
+          "identity": "e25bed929ee589c4942ccda8712f7109167ee5c7e4136f11f899b1200e26a3de",
+          "campaign": "pursuit-escape-lines"
+        },
+        {
+          "mode": "solo",
+          "pace": "standard",
+          "format": "xonix-level.v12",
+          "identity": "dc3c3d56aee172b62a65d510d4a511e734c9319660fc96915b894b1c02380cc0",
+          "campaign": "pursuit-escape-lines"
+        },
+        {
+          "mode": "solo",
+          "pace": "expert",
+          "format": "xonix-level.v12",
+          "identity": "2b73e348a808881d6a24ac9ae8831e0e9e1b59245340ba4020f16df8e419f8c6",
+          "campaign": "pursuit-escape-lines"
+        },
+        {
+          "mode": "versus",
+          "pace": "gentle",
+          "format": "xonix-level.v12",
+          "identity": "e25bed929ee589c4942ccda8712f7109167ee5c7e4136f11f899b1200e26a3de",
+          "campaign": "pursuit-escape-lines"
+        },
+        {
+          "mode": "versus",
+          "pace": "standard",
+          "format": "xonix-level.v12",
+          "identity": "dc3c3d56aee172b62a65d510d4a511e734c9319660fc96915b894b1c02380cc0",
+          "campaign": "pursuit-escape-lines"
+        },
+        {
+          "mode": "versus",
+          "pace": "expert",
+          "format": "xonix-level.v12",
+          "identity": "2b73e348a808881d6a24ac9ae8831e0e9e1b59245340ba4020f16df8e419f8c6",
+          "campaign": "pursuit-escape-lines"
+        }
+      ],
+      "launch": "/game/?journey=pursuit-campaigns-v1",
+      "qualification": {
+        "structuralAdmission": "accepted",
+        "proposedQualificationSeed": 17,
+        "demonstratedCompletionRoute": null,
+        "humanPlay": "pending",
+        "deviceAndPerformance": "pending",
+        "studioRoundTrip": "pending-manual-review",
+        "publicRelease": "not-qualified"
+      }
+    },
+    {
+      "family": "Capture Solo / Versus",
+      "id": "pursuit-broken-ring",
+      "revision": "pursuit-chapters-1",
+      "title": "Broken Ring",
+      "challenge": "Use the shorter gap while the target commits to its next corner.",
+      "provenance": {
+        "owner": "official-candidate",
+        "source": "pursuit-solo-campaigns-project",
+        "format": "MissionDesignV5"
+      },
+      "modes": ["solo", "versus"],
+      "recipes": [
+        {
+          "mode": "solo",
+          "pace": "gentle",
+          "format": "xonix-level.v12",
+          "identity": "353644308892bc922e847d5ab51d928a0678a6f09c72833d69d31c08e75c3b15",
+          "campaign": "pursuit-escape-lines"
+        },
+        {
+          "mode": "solo",
+          "pace": "standard",
+          "format": "xonix-level.v12",
+          "identity": "d8aa3ce3911c8f713f087fca46b32332fd62fe2f83e35829d75403fab8975fe5",
+          "campaign": "pursuit-escape-lines"
+        },
+        {
+          "mode": "solo",
+          "pace": "expert",
+          "format": "xonix-level.v12",
+          "identity": "e758b7314fd2c32b1da016d09fd30dcf50123d98c8d7dc8756a780aa8c9d26ff",
+          "campaign": "pursuit-escape-lines"
+        },
+        {
+          "mode": "versus",
+          "pace": "gentle",
+          "format": "xonix-level.v12",
+          "identity": "353644308892bc922e847d5ab51d928a0678a6f09c72833d69d31c08e75c3b15",
+          "campaign": "pursuit-escape-lines"
+        },
+        {
+          "mode": "versus",
+          "pace": "standard",
+          "format": "xonix-level.v12",
+          "identity": "d8aa3ce3911c8f713f087fca46b32332fd62fe2f83e35829d75403fab8975fe5",
+          "campaign": "pursuit-escape-lines"
+        },
+        {
+          "mode": "versus",
+          "pace": "expert",
+          "format": "xonix-level.v12",
+          "identity": "e758b7314fd2c32b1da016d09fd30dcf50123d98c8d7dc8756a780aa8c9d26ff",
+          "campaign": "pursuit-escape-lines"
+        }
+      ],
+      "launch": "/game/?journey=pursuit-campaigns-v1",
+      "qualification": {
+        "structuralAdmission": "accepted",
+        "proposedQualificationSeed": 17,
+        "demonstratedCompletionRoute": null,
+        "humanPlay": "pending",
+        "deviceAndPerformance": "pending",
+        "studioRoundTrip": "pending-manual-review",
+        "publicRelease": "not-qualified"
+      }
+    },
+    {
+      "family": "Capture Solo / Versus",
+      "id": "pursuit-far-corner",
+      "revision": "pursuit-chapters-1",
+      "title": "Far Corner",
+      "challenge": "Turn the refuge seeker away from a long exposed chase.",
+      "provenance": {
+        "owner": "official-candidate",
+        "source": "pursuit-solo-campaigns-project",
+        "format": "MissionDesignV5"
+      },
+      "modes": ["solo", "versus"],
+      "recipes": [
+        {
+          "mode": "solo",
+          "pace": "gentle",
+          "format": "xonix-level.v12",
+          "identity": "51cdb624761e64c1cf1a0347c91cde34d271fac39630b6ccc3e4ee50957c1d67",
+          "campaign": "pursuit-escape-lines"
+        },
+        {
+          "mode": "solo",
+          "pace": "standard",
+          "format": "xonix-level.v12",
+          "identity": "136eebb103dea0c23147663946ccce4693848cfe79b0bc498750430e5ae5fb58",
+          "campaign": "pursuit-escape-lines"
+        },
+        {
+          "mode": "solo",
+          "pace": "expert",
+          "format": "xonix-level.v12",
+          "identity": "68d71f059efc855988f6a679733c6a449205cd6290cc7609ead33cda05f9e1cc",
+          "campaign": "pursuit-escape-lines"
+        },
+        {
+          "mode": "versus",
+          "pace": "gentle",
+          "format": "xonix-level.v12",
+          "identity": "51cdb624761e64c1cf1a0347c91cde34d271fac39630b6ccc3e4ee50957c1d67",
+          "campaign": "pursuit-escape-lines"
+        },
+        {
+          "mode": "versus",
+          "pace": "standard",
+          "format": "xonix-level.v12",
+          "identity": "136eebb103dea0c23147663946ccce4693848cfe79b0bc498750430e5ae5fb58",
+          "campaign": "pursuit-escape-lines"
+        },
+        {
+          "mode": "versus",
+          "pace": "expert",
+          "format": "xonix-level.v12",
+          "identity": "68d71f059efc855988f6a679733c6a449205cd6290cc7609ead33cda05f9e1cc",
+          "campaign": "pursuit-escape-lines"
+        }
+      ],
+      "launch": "/game/?journey=pursuit-campaigns-v1",
+      "qualification": {
+        "structuralAdmission": "accepted",
+        "proposedQualificationSeed": 17,
+        "demonstratedCompletionRoute": null,
+        "humanPlay": "pending",
+        "deviceAndPerformance": "pending",
+        "studioRoundTrip": "pending-manual-review",
+        "publicRelease": "not-qualified"
+      }
+    },
+    {
+      "family": "Capture Solo / Versus",
+      "id": "pursuit-three-way-escape",
+      "revision": "pursuit-chapters-1",
+      "title": "Three-way Escape",
+      "challenge": "Connect a middle return to cover three possible goal routes.",
+      "provenance": {
+        "owner": "official-candidate",
+        "source": "pursuit-solo-campaigns-project",
+        "format": "MissionDesignV5"
+      },
+      "modes": ["solo", "versus"],
+      "recipes": [
+        {
+          "mode": "solo",
+          "pace": "gentle",
+          "format": "xonix-level.v12",
+          "identity": "1ee67607fd98bac4c1761ccb162c667f58c2201f69007240d7a48a73e08658c1",
+          "campaign": "pursuit-escape-lines"
+        },
+        {
+          "mode": "solo",
+          "pace": "standard",
+          "format": "xonix-level.v12",
+          "identity": "083c6865430e877557d97eeb39480ac6f3e488158cb731b55d27bcb4bd92bf99",
+          "campaign": "pursuit-escape-lines"
+        },
+        {
+          "mode": "solo",
+          "pace": "expert",
+          "format": "xonix-level.v12",
+          "identity": "7ce21fd379433fdb773f738ac43a3508549826bddb92dc355a6efee475e33f78",
+          "campaign": "pursuit-escape-lines"
+        },
+        {
+          "mode": "versus",
+          "pace": "gentle",
+          "format": "xonix-level.v12",
+          "identity": "1ee67607fd98bac4c1761ccb162c667f58c2201f69007240d7a48a73e08658c1",
+          "campaign": "pursuit-escape-lines"
+        },
+        {
+          "mode": "versus",
+          "pace": "standard",
+          "format": "xonix-level.v12",
+          "identity": "083c6865430e877557d97eeb39480ac6f3e488158cb731b55d27bcb4bd92bf99",
+          "campaign": "pursuit-escape-lines"
+        },
+        {
+          "mode": "versus",
+          "pace": "expert",
+          "format": "xonix-level.v12",
+          "identity": "7ce21fd379433fdb773f738ac43a3508549826bddb92dc355a6efee475e33f78",
+          "campaign": "pursuit-escape-lines"
+        }
+      ],
+      "launch": "/game/?journey=pursuit-campaigns-v1",
+      "qualification": {
+        "structuralAdmission": "accepted",
+        "proposedQualificationSeed": 17,
+        "demonstratedCompletionRoute": null,
+        "humanPlay": "pending",
+        "deviceAndPerformance": "pending",
+        "studioRoundTrip": "pending-manual-review",
+        "publicRelease": "not-qualified"
+      }
+    },
+    {
+      "family": "Capture Solo / Versus",
+      "id": "pursuit-warning-yard",
+      "revision": "pursuit-chapters-1",
+      "title": "Warning Yard",
+      "challenge": "Let the guard lock its aim before committing to the nearest return.",
+      "provenance": {
+        "owner": "official-candidate",
+        "source": "pursuit-solo-campaigns-project",
+        "format": "MissionDesignV5"
+      },
+      "modes": ["solo", "versus"],
+      "recipes": [
+        {
+          "mode": "solo",
+          "pace": "gentle",
+          "format": "xonix-level.v12",
+          "identity": "13f922a9220bbcf6eee963c2a4b2de5c9422684620ea1c128c1a1ec80a4ab95f",
+          "campaign": "pursuit-guarded-crossings"
+        },
+        {
+          "mode": "solo",
+          "pace": "standard",
+          "format": "xonix-level.v12",
+          "identity": "7970f317a1946ffcc0a01908e12155a5980e07c93a19480b85ff340303cd7072",
+          "campaign": "pursuit-guarded-crossings"
+        },
+        {
+          "mode": "solo",
+          "pace": "expert",
+          "format": "xonix-level.v12",
+          "identity": "2aa077978b34fb45b89e67cff5a2978ab6ac2759cbc8dd355d9b1d520cf1e5da",
+          "campaign": "pursuit-guarded-crossings"
+        },
+        {
+          "mode": "versus",
+          "pace": "gentle",
+          "format": "xonix-level.v12",
+          "identity": "13f922a9220bbcf6eee963c2a4b2de5c9422684620ea1c128c1a1ec80a4ab95f",
+          "campaign": "pursuit-guarded-crossings"
+        },
+        {
+          "mode": "versus",
+          "pace": "standard",
+          "format": "xonix-level.v12",
+          "identity": "7970f317a1946ffcc0a01908e12155a5980e07c93a19480b85ff340303cd7072",
+          "campaign": "pursuit-guarded-crossings"
+        },
+        {
+          "mode": "versus",
+          "pace": "expert",
+          "format": "xonix-level.v12",
+          "identity": "2aa077978b34fb45b89e67cff5a2978ab6ac2759cbc8dd355d9b1d520cf1e5da",
+          "campaign": "pursuit-guarded-crossings"
+        }
+      ],
+      "launch": "/game/?journey=pursuit-campaigns-v1",
+      "qualification": {
+        "structuralAdmission": "accepted",
+        "proposedQualificationSeed": 17,
+        "demonstratedCompletionRoute": null,
+        "humanPlay": "pending",
+        "deviceAndPerformance": "pending",
+        "studioRoundTrip": "pending-manual-review",
+        "publicRelease": "not-qualified"
+      }
+    },
+    {
+      "family": "Capture Solo / Versus",
+      "id": "pursuit-covered-detour",
+      "revision": "pursuit-chapters-1",
+      "title": "Covered Detour",
+      "challenge": "Choose cover or a shorter interception across the warning lane.",
+      "provenance": {
+        "owner": "official-candidate",
+        "source": "pursuit-solo-campaigns-project",
+        "format": "MissionDesignV5"
+      },
+      "modes": ["solo", "versus"],
+      "recipes": [
+        {
+          "mode": "solo",
+          "pace": "gentle",
+          "format": "xonix-level.v12",
+          "identity": "01c7974eb804d0dc3be6d00a3fb622464896fa6723c97c2d677e9a58d7efa2fe",
+          "campaign": "pursuit-guarded-crossings"
+        },
+        {
+          "mode": "solo",
+          "pace": "standard",
+          "format": "xonix-level.v12",
+          "identity": "b26cf2370a02eaf3affddb9c4351615a4f23700c38013d47b7eb832551ac4448",
+          "campaign": "pursuit-guarded-crossings"
+        },
+        {
+          "mode": "solo",
+          "pace": "expert",
+          "format": "xonix-level.v12",
+          "identity": "a34b7acf97e59e24a943ec714028810a8585ccafcd3cdaf72ae586c33c75a8e8",
+          "campaign": "pursuit-guarded-crossings"
+        },
+        {
+          "mode": "versus",
+          "pace": "gentle",
+          "format": "xonix-level.v12",
+          "identity": "01c7974eb804d0dc3be6d00a3fb622464896fa6723c97c2d677e9a58d7efa2fe",
+          "campaign": "pursuit-guarded-crossings"
+        },
+        {
+          "mode": "versus",
+          "pace": "standard",
+          "format": "xonix-level.v12",
+          "identity": "b26cf2370a02eaf3affddb9c4351615a4f23700c38013d47b7eb832551ac4448",
+          "campaign": "pursuit-guarded-crossings"
+        },
+        {
+          "mode": "versus",
+          "pace": "expert",
+          "format": "xonix-level.v12",
+          "identity": "a34b7acf97e59e24a943ec714028810a8585ccafcd3cdaf72ae586c33c75a8e8",
+          "campaign": "pursuit-guarded-crossings"
+        }
+      ],
+      "launch": "/game/?journey=pursuit-campaigns-v1",
+      "qualification": {
+        "structuralAdmission": "accepted",
+        "proposedQualificationSeed": 17,
+        "demonstratedCompletionRoute": null,
+        "humanPlay": "pending",
+        "deviceAndPerformance": "pending",
+        "studioRoundTrip": "pending-manual-review",
+        "publicRelease": "not-qualified"
+      }
+    },
+    {
+      "family": "Capture Solo / Versus",
+      "id": "pursuit-two-watchpoints",
+      "revision": "pursuit-chapters-1",
+      "title": "Two Watchpoints",
+      "challenge": "Approach a patrol from a protected island while avoiding guard fire.",
+      "provenance": {
+        "owner": "official-candidate",
+        "source": "pursuit-solo-campaigns-project",
+        "format": "MissionDesignV5"
+      },
+      "modes": ["solo", "versus"],
+      "recipes": [
+        {
+          "mode": "solo",
+          "pace": "gentle",
+          "format": "xonix-level.v12",
+          "identity": "fdacc3029e1cd401a6b4623709bf1748c3bf20fac790c7bfccd57731cb575651",
+          "campaign": "pursuit-guarded-crossings"
+        },
+        {
+          "mode": "solo",
+          "pace": "standard",
+          "format": "xonix-level.v12",
+          "identity": "ef0ad2641ad437bdc6861c0f929defb06660b2b2b8a1389d19e66571f23887d8",
+          "campaign": "pursuit-guarded-crossings"
+        },
+        {
+          "mode": "solo",
+          "pace": "expert",
+          "format": "xonix-level.v12",
+          "identity": "3fccc8cf439446491d66f259ed5d3f2bd4cbc4683634b01a034538dd15472df9",
+          "campaign": "pursuit-guarded-crossings"
+        },
+        {
+          "mode": "versus",
+          "pace": "gentle",
+          "format": "xonix-level.v12",
+          "identity": "fdacc3029e1cd401a6b4623709bf1748c3bf20fac790c7bfccd57731cb575651",
+          "campaign": "pursuit-guarded-crossings"
+        },
+        {
+          "mode": "versus",
+          "pace": "standard",
+          "format": "xonix-level.v12",
+          "identity": "ef0ad2641ad437bdc6861c0f929defb06660b2b2b8a1389d19e66571f23887d8",
+          "campaign": "pursuit-guarded-crossings"
+        },
+        {
+          "mode": "versus",
+          "pace": "expert",
+          "format": "xonix-level.v12",
+          "identity": "3fccc8cf439446491d66f259ed5d3f2bd4cbc4683634b01a034538dd15472df9",
+          "campaign": "pursuit-guarded-crossings"
+        }
+      ],
+      "launch": "/game/?journey=pursuit-campaigns-v1",
+      "qualification": {
+        "structuralAdmission": "accepted",
+        "proposedQualificationSeed": 17,
+        "demonstratedCompletionRoute": null,
+        "humanPlay": "pending",
+        "deviceAndPerformance": "pending",
+        "studioRoundTrip": "pending-manual-review",
+        "publicRelease": "not-qualified"
+      }
+    },
+    {
+      "family": "Capture Solo / Versus",
+      "id": "pursuit-crossing-warning",
+      "revision": "pursuit-chapters-1",
+      "title": "Crossing Warning",
+      "challenge": "Separate the patroller crossing from the guard firing window.",
+      "provenance": {
+        "owner": "official-candidate",
+        "source": "pursuit-solo-campaigns-project",
+        "format": "MissionDesignV5"
+      },
+      "modes": ["solo", "versus"],
+      "recipes": [
+        {
+          "mode": "solo",
+          "pace": "gentle",
+          "format": "xonix-level.v12",
+          "identity": "83e7eeefd2c0e33359339499d7fb74b3713c48e6f34305be61d2499435d530d0",
+          "campaign": "pursuit-guarded-crossings"
+        },
+        {
+          "mode": "solo",
+          "pace": "standard",
+          "format": "xonix-level.v12",
+          "identity": "40bd8383f858c2b1333e71378f1440a588c7001f56e7ca1f6479fd64d2fc0cf4",
+          "campaign": "pursuit-guarded-crossings"
+        },
+        {
+          "mode": "solo",
+          "pace": "expert",
+          "format": "xonix-level.v12",
+          "identity": "7e099d3879fc245af53d84d887fc09820c15f7222f72f248fc1be60f559dd95f",
+          "campaign": "pursuit-guarded-crossings"
+        },
+        {
+          "mode": "versus",
+          "pace": "gentle",
+          "format": "xonix-level.v12",
+          "identity": "83e7eeefd2c0e33359339499d7fb74b3713c48e6f34305be61d2499435d530d0",
+          "campaign": "pursuit-guarded-crossings"
+        },
+        {
+          "mode": "versus",
+          "pace": "standard",
+          "format": "xonix-level.v12",
+          "identity": "40bd8383f858c2b1333e71378f1440a588c7001f56e7ca1f6479fd64d2fc0cf4",
+          "campaign": "pursuit-guarded-crossings"
+        },
+        {
+          "mode": "versus",
+          "pace": "expert",
+          "format": "xonix-level.v12",
+          "identity": "7e099d3879fc245af53d84d887fc09820c15f7222f72f248fc1be60f559dd95f",
+          "campaign": "pursuit-guarded-crossings"
+        }
+      ],
+      "launch": "/game/?journey=pursuit-campaigns-v1",
+      "qualification": {
+        "structuralAdmission": "accepted",
+        "proposedQualificationSeed": 17,
+        "demonstratedCompletionRoute": null,
+        "humanPlay": "pending",
+        "deviceAndPerformance": "pending",
+        "studioRoundTrip": "pending-manual-review",
+        "publicRelease": "not-qualified"
+      }
+    },
+    {
+      "family": "Capture Solo / Versus",
+      "id": "pursuit-last-safe-turn",
+      "revision": "pursuit-chapters-1",
+      "title": "Last Safe Turn",
+      "challenge": "Keep a return behind the craft while following the committed branch.",
+      "provenance": {
+        "owner": "official-candidate",
+        "source": "pursuit-solo-campaigns-project",
+        "format": "MissionDesignV5"
+      },
+      "modes": ["solo", "versus"],
+      "recipes": [
+        {
+          "mode": "solo",
+          "pace": "gentle",
+          "format": "xonix-level.v12",
+          "identity": "f934c2d2f7d94bc4b67c1fecb3e4545bb78ef00fe45581a8714546d100024957",
+          "campaign": "pursuit-guarded-crossings"
+        },
+        {
+          "mode": "solo",
+          "pace": "standard",
+          "format": "xonix-level.v12",
+          "identity": "6b6af62c91f74144b060d36642cb1f9b4bd5524890a3958a3122ff8239722c3d",
+          "campaign": "pursuit-guarded-crossings"
+        },
+        {
+          "mode": "solo",
+          "pace": "expert",
+          "format": "xonix-level.v12",
+          "identity": "594517dd9d466f1a5ad72672e63029e2a01cea59655d9b21e24797bc34dee31e",
+          "campaign": "pursuit-guarded-crossings"
+        },
+        {
+          "mode": "versus",
+          "pace": "gentle",
+          "format": "xonix-level.v12",
+          "identity": "f934c2d2f7d94bc4b67c1fecb3e4545bb78ef00fe45581a8714546d100024957",
+          "campaign": "pursuit-guarded-crossings"
+        },
+        {
+          "mode": "versus",
+          "pace": "standard",
+          "format": "xonix-level.v12",
+          "identity": "6b6af62c91f74144b060d36642cb1f9b4bd5524890a3958a3122ff8239722c3d",
+          "campaign": "pursuit-guarded-crossings"
+        },
+        {
+          "mode": "versus",
+          "pace": "expert",
+          "format": "xonix-level.v12",
+          "identity": "594517dd9d466f1a5ad72672e63029e2a01cea59655d9b21e24797bc34dee31e",
+          "campaign": "pursuit-guarded-crossings"
+        }
+      ],
+      "launch": "/game/?journey=pursuit-campaigns-v1",
+      "qualification": {
+        "structuralAdmission": "accepted",
+        "proposedQualificationSeed": 17,
+        "demonstratedCompletionRoute": null,
+        "humanPlay": "pending",
+        "deviceAndPerformance": "pending",
+        "studioRoundTrip": "pending-manual-review",
+        "publicRelease": "not-qualified"
+      }
+    },
+    {
+      "family": "Capture Solo / Versus",
+      "id": "pursuit-courtyard-approach",
+      "revision": "pursuit-chapters-1",
+      "title": "Courtyard Approach",
+      "challenge": "Use two courtyard entrances to approach the guard and refuge target.",
+      "provenance": {
+        "owner": "official-candidate",
+        "source": "pursuit-solo-campaigns-project",
+        "format": "MissionDesignV5"
+      },
+      "modes": ["solo", "versus"],
+      "recipes": [
+        {
+          "mode": "solo",
+          "pace": "gentle",
+          "format": "xonix-level.v12",
+          "identity": "81b4b6079b78f9a9e78c581ad4b79d4dff6e0babd6c5b0b58758a4b5f360fc50",
+          "campaign": "pursuit-guarded-crossings"
+        },
+        {
+          "mode": "solo",
+          "pace": "standard",
+          "format": "xonix-level.v12",
+          "identity": "62751ac253f5281e6035fc165121237f3932168616219cce85010ec04d275754",
+          "campaign": "pursuit-guarded-crossings"
+        },
+        {
+          "mode": "solo",
+          "pace": "expert",
+          "format": "xonix-level.v12",
+          "identity": "6c806a3463bc67f547bef90326cda9ed8e854f379235db017406ec3d0a96c269",
+          "campaign": "pursuit-guarded-crossings"
+        },
+        {
+          "mode": "versus",
+          "pace": "gentle",
+          "format": "xonix-level.v12",
+          "identity": "81b4b6079b78f9a9e78c581ad4b79d4dff6e0babd6c5b0b58758a4b5f360fc50",
+          "campaign": "pursuit-guarded-crossings"
+        },
+        {
+          "mode": "versus",
+          "pace": "standard",
+          "format": "xonix-level.v12",
+          "identity": "62751ac253f5281e6035fc165121237f3932168616219cce85010ec04d275754",
+          "campaign": "pursuit-guarded-crossings"
+        },
+        {
+          "mode": "versus",
+          "pace": "expert",
+          "format": "xonix-level.v12",
+          "identity": "6c806a3463bc67f547bef90326cda9ed8e854f379235db017406ec3d0a96c269",
+          "campaign": "pursuit-guarded-crossings"
+        }
+      ],
+      "launch": "/game/?journey=pursuit-campaigns-v1",
+      "qualification": {
+        "structuralAdmission": "accepted",
+        "proposedQualificationSeed": 17,
+        "demonstratedCompletionRoute": null,
+        "humanPlay": "pending",
+        "deviceAndPerformance": "pending",
+        "studioRoundTrip": "pending-manual-review",
+        "publicRelease": "not-qualified"
+      }
+    },
+    {
+      "family": "Capture Solo / Versus",
+      "id": "pursuit-shield-turn",
+      "revision": "pursuit-chapters-1",
+      "title": "Shield Turn",
+      "challenge": "Read the shield facing and approach its exposed rear.",
+      "provenance": {
+        "owner": "official-candidate",
+        "source": "pursuit-solo-campaigns-project",
+        "format": "MissionDesignV5"
+      },
+      "modes": ["solo", "versus"],
+      "recipes": [
+        {
+          "mode": "solo",
+          "pace": "gentle",
+          "format": "xonix-level.v12",
+          "identity": "815d5166b34983d48e67c58e50cbebc1affc2c109da63be15d53a3878ea9fa53",
+          "campaign": "pursuit-specialist-circuit"
+        },
+        {
+          "mode": "solo",
+          "pace": "standard",
+          "format": "xonix-level.v12",
+          "identity": "3e95922111847ecd54fb74cd0474fe4f0b5622d95be04abc0f3ac74de72e2718",
+          "campaign": "pursuit-specialist-circuit"
+        },
+        {
+          "mode": "solo",
+          "pace": "expert",
+          "format": "xonix-level.v12",
+          "identity": "b72fef8881d2befb6f860868167f3b639b65b0968da9d2997efa6399995285eb",
+          "campaign": "pursuit-specialist-circuit"
+        },
+        {
+          "mode": "versus",
+          "pace": "gentle",
+          "format": "xonix-level.v12",
+          "identity": "815d5166b34983d48e67c58e50cbebc1affc2c109da63be15d53a3878ea9fa53",
+          "campaign": "pursuit-specialist-circuit"
+        },
+        {
+          "mode": "versus",
+          "pace": "standard",
+          "format": "xonix-level.v12",
+          "identity": "3e95922111847ecd54fb74cd0474fe4f0b5622d95be04abc0f3ac74de72e2718",
+          "campaign": "pursuit-specialist-circuit"
+        },
+        {
+          "mode": "versus",
+          "pace": "expert",
+          "format": "xonix-level.v12",
+          "identity": "b72fef8881d2befb6f860868167f3b639b65b0968da9d2997efa6399995285eb",
+          "campaign": "pursuit-specialist-circuit"
+        }
+      ],
+      "launch": "/game/?journey=pursuit-campaigns-v1",
+      "qualification": {
+        "structuralAdmission": "accepted",
+        "proposedQualificationSeed": 17,
+        "demonstratedCompletionRoute": null,
+        "humanPlay": "pending",
+        "deviceAndPerformance": "pending",
+        "studioRoundTrip": "pending-manual-review",
+        "publicRelease": "not-qualified"
+      }
+    },
+    {
+      "family": "Capture Solo / Versus",
+      "id": "pursuit-shield-flank",
+      "revision": "pursuit-chapters-1",
+      "title": "Shield Flank",
+      "challenge": "Use the central wall to reach the shield flank after its turn warning.",
+      "provenance": {
+        "owner": "official-candidate",
+        "source": "pursuit-solo-campaigns-project",
+        "format": "MissionDesignV5"
+      },
+      "modes": ["solo", "versus"],
+      "recipes": [
+        {
+          "mode": "solo",
+          "pace": "gentle",
+          "format": "xonix-level.v12",
+          "identity": "a6bf42ca7d69be46b3ce998378128342646a9fb04ec2f01096353751c92fb59d",
+          "campaign": "pursuit-specialist-circuit"
+        },
+        {
+          "mode": "solo",
+          "pace": "standard",
+          "format": "xonix-level.v12",
+          "identity": "fe9fe2a7679e8da4caa8ab9a749ce1c78a5e7dc5416dbe13b79d2c5dcf73aed2",
+          "campaign": "pursuit-specialist-circuit"
+        },
+        {
+          "mode": "solo",
+          "pace": "expert",
+          "format": "xonix-level.v12",
+          "identity": "010cfa7f938bc4d6fcf512b8e91b4edc0bfb22bbb6f7110d7f5732c45f44c3c7",
+          "campaign": "pursuit-specialist-circuit"
+        },
+        {
+          "mode": "versus",
+          "pace": "gentle",
+          "format": "xonix-level.v12",
+          "identity": "a6bf42ca7d69be46b3ce998378128342646a9fb04ec2f01096353751c92fb59d",
+          "campaign": "pursuit-specialist-circuit"
+        },
+        {
+          "mode": "versus",
+          "pace": "standard",
+          "format": "xonix-level.v12",
+          "identity": "fe9fe2a7679e8da4caa8ab9a749ce1c78a5e7dc5416dbe13b79d2c5dcf73aed2",
+          "campaign": "pursuit-specialist-circuit"
+        },
+        {
+          "mode": "versus",
+          "pace": "expert",
+          "format": "xonix-level.v12",
+          "identity": "010cfa7f938bc4d6fcf512b8e91b4edc0bfb22bbb6f7110d7f5732c45f44c3c7",
+          "campaign": "pursuit-specialist-circuit"
+        }
+      ],
+      "launch": "/game/?journey=pursuit-campaigns-v1",
+      "qualification": {
+        "structuralAdmission": "accepted",
+        "proposedQualificationSeed": 17,
+        "demonstratedCompletionRoute": null,
+        "humanPlay": "pending",
+        "deviceAndPerformance": "pending",
+        "studioRoundTrip": "pending-manual-review",
+        "publicRelease": "not-qualified"
+      }
+    },
+    {
+      "family": "Capture Solo / Versus",
+      "id": "pursuit-first-brace",
+      "revision": "pursuit-chapters-1",
+      "title": "First Brace",
+      "challenge": "Wait out the brace warning and intercept its recovery.",
+      "provenance": {
+        "owner": "official-candidate",
+        "source": "pursuit-solo-campaigns-project",
+        "format": "MissionDesignV5"
+      },
+      "modes": ["solo", "versus"],
+      "recipes": [
+        {
+          "mode": "solo",
+          "pace": "gentle",
+          "format": "xonix-level.v12",
+          "identity": "345b3a317483ff1351cf581b2457cc87fccd8d724b41adadf3fade9a199ba755",
+          "campaign": "pursuit-specialist-circuit"
+        },
+        {
+          "mode": "solo",
+          "pace": "standard",
+          "format": "xonix-level.v12",
+          "identity": "f458553816c4a2b3ec474c1e82402f594df6769aaf0a6969984c2f97a430a38b",
+          "campaign": "pursuit-specialist-circuit"
+        },
+        {
+          "mode": "solo",
+          "pace": "expert",
+          "format": "xonix-level.v12",
+          "identity": "24c33ef7a7202bf38203793da454615e4e21bfccdcbf332ab73148f563b18fa4",
+          "campaign": "pursuit-specialist-circuit"
+        },
+        {
+          "mode": "versus",
+          "pace": "gentle",
+          "format": "xonix-level.v12",
+          "identity": "345b3a317483ff1351cf581b2457cc87fccd8d724b41adadf3fade9a199ba755",
+          "campaign": "pursuit-specialist-circuit"
+        },
+        {
+          "mode": "versus",
+          "pace": "standard",
+          "format": "xonix-level.v12",
+          "identity": "f458553816c4a2b3ec474c1e82402f594df6769aaf0a6969984c2f97a430a38b",
+          "campaign": "pursuit-specialist-circuit"
+        },
+        {
+          "mode": "versus",
+          "pace": "expert",
+          "format": "xonix-level.v12",
+          "identity": "24c33ef7a7202bf38203793da454615e4e21bfccdcbf332ab73148f563b18fa4",
+          "campaign": "pursuit-specialist-circuit"
+        }
+      ],
+      "launch": "/game/?journey=pursuit-campaigns-v1",
+      "qualification": {
+        "structuralAdmission": "accepted",
+        "proposedQualificationSeed": 17,
+        "demonstratedCompletionRoute": null,
+        "humanPlay": "pending",
+        "deviceAndPerformance": "pending",
+        "studioRoundTrip": "pending-manual-review",
+        "publicRelease": "not-qualified"
+      }
+    },
+    {
+      "family": "Capture Solo / Versus",
+      "id": "pursuit-brace-bypass",
+      "revision": "pursuit-chapters-1",
+      "title": "Brace Bypass",
+      "challenge": "Take the bypass instead of entering the committed burst lane.",
+      "provenance": {
+        "owner": "official-candidate",
+        "source": "pursuit-solo-campaigns-project",
+        "format": "MissionDesignV5"
+      },
+      "modes": ["solo", "versus"],
+      "recipes": [
+        {
+          "mode": "solo",
+          "pace": "gentle",
+          "format": "xonix-level.v12",
+          "identity": "d049585ae93a571b4141202be45c373e60d0f6387551ab30ad02744404fa509f",
+          "campaign": "pursuit-specialist-circuit"
+        },
+        {
+          "mode": "solo",
+          "pace": "standard",
+          "format": "xonix-level.v12",
+          "identity": "a8148bc84555eb8bcd0f8b9538e47dc7b14614d50b2bbe5184fa791b9f1ff5d4",
+          "campaign": "pursuit-specialist-circuit"
+        },
+        {
+          "mode": "solo",
+          "pace": "expert",
+          "format": "xonix-level.v12",
+          "identity": "8ff350301a1706d593da5d7ec2746f07c23298ca07b54e4268a03ca58995212c",
+          "campaign": "pursuit-specialist-circuit"
+        },
+        {
+          "mode": "versus",
+          "pace": "gentle",
+          "format": "xonix-level.v12",
+          "identity": "d049585ae93a571b4141202be45c373e60d0f6387551ab30ad02744404fa509f",
+          "campaign": "pursuit-specialist-circuit"
+        },
+        {
+          "mode": "versus",
+          "pace": "standard",
+          "format": "xonix-level.v12",
+          "identity": "a8148bc84555eb8bcd0f8b9538e47dc7b14614d50b2bbe5184fa791b9f1ff5d4",
+          "campaign": "pursuit-specialist-circuit"
+        },
+        {
+          "mode": "versus",
+          "pace": "expert",
+          "format": "xonix-level.v12",
+          "identity": "8ff350301a1706d593da5d7ec2746f07c23298ca07b54e4268a03ca58995212c",
+          "campaign": "pursuit-specialist-circuit"
+        }
+      ],
+      "launch": "/game/?journey=pursuit-campaigns-v1",
+      "qualification": {
+        "structuralAdmission": "accepted",
+        "proposedQualificationSeed": 17,
+        "demonstratedCompletionRoute": null,
+        "humanPlay": "pending",
+        "deviceAndPerformance": "pending",
+        "studioRoundTrip": "pending-manual-review",
+        "publicRelease": "not-qualified"
+      }
+    },
+    {
+      "family": "Capture Solo / Versus",
+      "id": "pursuit-mixed-post",
+      "revision": "pursuit-chapters-1",
+      "title": "Mixed Post",
+      "challenge": "Separate a shield approach from a brace recovery window.",
+      "provenance": {
+        "owner": "official-candidate",
+        "source": "pursuit-solo-campaigns-project",
+        "format": "MissionDesignV5"
+      },
+      "modes": ["solo", "versus"],
+      "recipes": [
+        {
+          "mode": "solo",
+          "pace": "gentle",
+          "format": "xonix-level.v12",
+          "identity": "ce00fe73b4cc6fc672ad0a123d604163be0341f9cd92fed8af366d583738c0b4",
+          "campaign": "pursuit-specialist-circuit"
+        },
+        {
+          "mode": "solo",
+          "pace": "standard",
+          "format": "xonix-level.v12",
+          "identity": "363c205e05e1ff7f88587c92b53bed99dac89c62b5daaeb8dd9edbcb8131d9ff",
+          "campaign": "pursuit-specialist-circuit"
+        },
+        {
+          "mode": "solo",
+          "pace": "expert",
+          "format": "xonix-level.v12",
+          "identity": "f3313056437bad627cf4dfe5a4f8676f5ad1a13fa28009c5cdf5cb65bfdf274a",
+          "campaign": "pursuit-specialist-circuit"
+        },
+        {
+          "mode": "versus",
+          "pace": "gentle",
+          "format": "xonix-level.v12",
+          "identity": "ce00fe73b4cc6fc672ad0a123d604163be0341f9cd92fed8af366d583738c0b4",
+          "campaign": "pursuit-specialist-circuit"
+        },
+        {
+          "mode": "versus",
+          "pace": "standard",
+          "format": "xonix-level.v12",
+          "identity": "363c205e05e1ff7f88587c92b53bed99dac89c62b5daaeb8dd9edbcb8131d9ff",
+          "campaign": "pursuit-specialist-circuit"
+        },
+        {
+          "mode": "versus",
+          "pace": "expert",
+          "format": "xonix-level.v12",
+          "identity": "f3313056437bad627cf4dfe5a4f8676f5ad1a13fa28009c5cdf5cb65bfdf274a",
+          "campaign": "pursuit-specialist-circuit"
+        }
+      ],
+      "launch": "/game/?journey=pursuit-campaigns-v1",
+      "qualification": {
+        "structuralAdmission": "accepted",
+        "proposedQualificationSeed": 17,
+        "demonstratedCompletionRoute": null,
+        "humanPlay": "pending",
+        "deviceAndPerformance": "pending",
+        "studioRoundTrip": "pending-manual-review",
+        "publicRelease": "not-qualified"
+      }
+    },
+    {
+      "family": "Capture Solo / Versus",
+      "id": "pursuit-specialist-airfield",
+      "revision": "pursuit-chapters-1",
+      "title": "Specialist Airfield",
+      "challenge": "Combine flanking, burst evasion and an enclosure escape.",
+      "provenance": {
+        "owner": "official-candidate",
+        "source": "pursuit-solo-campaigns-project",
+        "format": "MissionDesignV5"
+      },
+      "modes": ["solo", "versus"],
+      "recipes": [
+        {
+          "mode": "solo",
+          "pace": "gentle",
+          "format": "xonix-level.v12",
+          "identity": "b76b4b217402121ebe613c344168f16e8c39fe9ec2c2eb3ec4245b3c82ee8aff",
+          "campaign": "pursuit-specialist-circuit"
+        },
+        {
+          "mode": "solo",
+          "pace": "standard",
+          "format": "xonix-level.v12",
+          "identity": "845798735e10fdddcb7aa9ca90c2a6eb57e8ba697fe6b928c47fc60c9e1bea54",
+          "campaign": "pursuit-specialist-circuit"
+        },
+        {
+          "mode": "solo",
+          "pace": "expert",
+          "format": "xonix-level.v12",
+          "identity": "7828cb9c7bb80967de07a27ab43d7d3005dc73139d866097c91dc7be49a7f5fe",
+          "campaign": "pursuit-specialist-circuit"
+        },
+        {
+          "mode": "versus",
+          "pace": "gentle",
+          "format": "xonix-level.v12",
+          "identity": "b76b4b217402121ebe613c344168f16e8c39fe9ec2c2eb3ec4245b3c82ee8aff",
+          "campaign": "pursuit-specialist-circuit"
+        },
+        {
+          "mode": "versus",
+          "pace": "standard",
+          "format": "xonix-level.v12",
+          "identity": "845798735e10fdddcb7aa9ca90c2a6eb57e8ba697fe6b928c47fc60c9e1bea54",
+          "campaign": "pursuit-specialist-circuit"
+        },
+        {
+          "mode": "versus",
+          "pace": "expert",
+          "format": "xonix-level.v12",
+          "identity": "7828cb9c7bb80967de07a27ab43d7d3005dc73139d866097c91dc7be49a7f5fe",
+          "campaign": "pursuit-specialist-circuit"
+        }
+      ],
+      "launch": "/game/?journey=pursuit-campaigns-v1",
+      "qualification": {
+        "structuralAdmission": "accepted",
+        "proposedQualificationSeed": 17,
+        "demonstratedCompletionRoute": null,
+        "humanPlay": "pending",
+        "deviceAndPerformance": "pending",
+        "studioRoundTrip": "pending-manual-review",
+        "publicRelease": "not-qualified"
+      }
+    },
+    {
+      "family": "Capture Team",
+      "id": "pincer-yard",
+      "revision": "pursuit-2",
+      "title": "Pincer Yard",
+      "challenge": "Approach from opposite rails. One pilot closes an escape around the divider while the partner intercepts; trade sides through the permanent upper and lower bypasses.",
+      "provenance": {
+        "owner": "official-candidate",
+        "source": "pursuit-team-campaigns-project",
+        "format": "MissionDesignV5"
+      },
+      "modes": ["team"],
+      "recipes": [
+        {
+          "mode": "team",
+          "pace": "gentle",
+          "format": "revealline-coop-level.v11",
+          "identity": "eee931d54728c55d83dd19a534e9c3e03db5ad4d3d1eb07311fac47baacc62a8",
+          "campaign": "pursuit-team-shared-bearings"
+        },
+        {
+          "mode": "team",
+          "pace": "standard",
+          "format": "revealline-coop-level.v11",
+          "identity": "af6f243ff26bb3bc6477d80ab94024370043f1eb61ad33a000c65ba7b0b7c1f5",
+          "campaign": "pursuit-team-shared-bearings"
+        },
+        {
+          "mode": "team",
+          "pace": "expert",
+          "format": "revealline-coop-level.v11",
+          "identity": "5d03184ded9fd0ad671f31d2da5b603e766f5a2073f252f425aa63390e1a4cb6",
+          "campaign": "pursuit-team-shared-bearings"
+        }
+      ],
+      "launch": "/game/couch/relay-rescue.html?journey=pursuit-campaigns-v1",
+      "qualification": {
+        "structuralAdmission": "accepted",
+        "proposedQualificationSeed": 17,
+        "demonstratedCompletionRoute": null,
+        "humanPlay": "pending",
+        "deviceAndPerformance": "pending",
+        "studioRoundTrip": "pending-manual-review",
+        "publicRelease": "not-qualified"
+      }
+    },
+    {
+      "family": "Capture Team",
+      "id": "pursuit-team-partner-bay",
+      "revision": "pursuit-chapters-1",
+      "title": "Partner Bay",
+      "challenge": "One pilot closes the narrow bay while the other keeps the outside return.",
+      "provenance": {
+        "owner": "official-candidate",
+        "source": "pursuit-team-campaigns-project",
+        "format": "MissionDesignV5"
+      },
+      "modes": ["team"],
+      "recipes": [
+        {
+          "mode": "team",
+          "pace": "gentle",
+          "format": "revealline-coop-level.v11",
+          "identity": "1c071d08f529b4ce72488bab26d004dd002ee4bbb1f0ecf884cfaeb698068fcd",
+          "campaign": "pursuit-team-shared-bearings"
+        },
+        {
+          "mode": "team",
+          "pace": "standard",
+          "format": "revealline-coop-level.v11",
+          "identity": "2647f654d325436e2ffb8c2e342d03d763fdbc158c7a958446ea34af1793e578",
+          "campaign": "pursuit-team-shared-bearings"
+        },
+        {
+          "mode": "team",
+          "pace": "expert",
+          "format": "revealline-coop-level.v11",
+          "identity": "6bd212dd2ac605cdb3fa99fb467870b512722add44ba39cb3f41c3423af0d70f",
+          "campaign": "pursuit-team-shared-bearings"
+        }
+      ],
+      "launch": "/game/couch/relay-rescue.html?journey=pursuit-campaigns-v1",
+      "qualification": {
+        "structuralAdmission": "accepted",
+        "proposedQualificationSeed": 17,
+        "demonstratedCompletionRoute": null,
+        "humanPlay": "pending",
+        "deviceAndPerformance": "pending",
+        "studioRoundTrip": "pending-manual-review",
+        "publicRelease": "not-qualified"
+      }
+    },
+    {
+      "family": "Capture Team",
+      "id": "pursuit-team-opposite-shores",
+      "revision": "pursuit-chapters-1",
+      "title": "Opposite Shores",
+      "challenge": "Build different approaches toward the same patrol crossing.",
+      "provenance": {
+        "owner": "official-candidate",
+        "source": "pursuit-team-campaigns-project",
+        "format": "MissionDesignV5"
+      },
+      "modes": ["team"],
+      "recipes": [
+        {
+          "mode": "team",
+          "pace": "gentle",
+          "format": "revealline-coop-level.v11",
+          "identity": "ccace66e5d06bb6aec76964f02f6adda909009e01478509b99b903fdf1084b37",
+          "campaign": "pursuit-team-shared-bearings"
+        },
+        {
+          "mode": "team",
+          "pace": "standard",
+          "format": "revealline-coop-level.v11",
+          "identity": "1e23186f9f42f9e6d0945de2a83a554c029a8710e8705fbcb857528b0f935a6f",
+          "campaign": "pursuit-team-shared-bearings"
+        },
+        {
+          "mode": "team",
+          "pace": "expert",
+          "format": "revealline-coop-level.v11",
+          "identity": "fc5c5f9bbf1038e119279a3203f1ce1a9872dfd707c9d69e0c84c18909305547",
+          "campaign": "pursuit-team-shared-bearings"
+        }
+      ],
+      "launch": "/game/couch/relay-rescue.html?journey=pursuit-campaigns-v1",
+      "qualification": {
+        "structuralAdmission": "accepted",
+        "proposedQualificationSeed": 17,
+        "demonstratedCompletionRoute": null,
+        "humanPlay": "pending",
+        "deviceAndPerformance": "pending",
+        "studioRoundTrip": "pending-manual-review",
+        "publicRelease": "not-qualified"
+      }
+    },
+    {
+      "family": "Capture Team",
+      "id": "pursuit-team-transfer-islands",
+      "revision": "pursuit-chapters-1",
+      "title": "Transfer Islands",
+      "challenge": "Connect opposite islands before exchanging interception roles.",
+      "provenance": {
+        "owner": "official-candidate",
+        "source": "pursuit-team-campaigns-project",
+        "format": "MissionDesignV5"
+      },
+      "modes": ["team"],
+      "recipes": [
+        {
+          "mode": "team",
+          "pace": "gentle",
+          "format": "revealline-coop-level.v11",
+          "identity": "b2b0cedf792c0b4831ebba3f2b2c34a251c74eb364125a8d60f955faa98ecd81",
+          "campaign": "pursuit-team-shared-bearings"
+        },
+        {
+          "mode": "team",
+          "pace": "standard",
+          "format": "revealline-coop-level.v11",
+          "identity": "990fdba3fbd7b21ed86f790e8e121b0e67887a867765e5938e08807f00ff58c5",
+          "campaign": "pursuit-team-shared-bearings"
+        },
+        {
+          "mode": "team",
+          "pace": "expert",
+          "format": "revealline-coop-level.v11",
+          "identity": "1b820b205e64fd35f14a956db3cc3bd74d51375101b4c8bb797f1684d2d12328",
+          "campaign": "pursuit-team-shared-bearings"
+        }
+      ],
+      "launch": "/game/couch/relay-rescue.html?journey=pursuit-campaigns-v1",
+      "qualification": {
+        "structuralAdmission": "accepted",
+        "proposedQualificationSeed": 17,
+        "demonstratedCompletionRoute": null,
+        "humanPlay": "pending",
+        "deviceAndPerformance": "pending",
+        "studioRoundTrip": "pending-manual-review",
+        "publicRelease": "not-qualified"
+      }
+    },
+    {
+      "family": "Capture Team",
+      "id": "pursuit-team-crossed-bearings",
+      "revision": "pursuit-chapters-1",
+      "title": "Crossed Bearings",
+      "challenge": "Avoid converging on the same exposed lane while targets cross it.",
+      "provenance": {
+        "owner": "official-candidate",
+        "source": "pursuit-team-campaigns-project",
+        "format": "MissionDesignV5"
+      },
+      "modes": ["team"],
+      "recipes": [
+        {
+          "mode": "team",
+          "pace": "gentle",
+          "format": "revealline-coop-level.v11",
+          "identity": "7f0ddccf574c5f8a35fcddbea4ac796055dfa5a4e1c6c05f5ca0ed03a7228052",
+          "campaign": "pursuit-team-shared-bearings"
+        },
+        {
+          "mode": "team",
+          "pace": "standard",
+          "format": "revealline-coop-level.v11",
+          "identity": "32fd3e5e540cf27a9a76363c73907a07e2f50ff13e2fc2039e3756e92db15e62",
+          "campaign": "pursuit-team-shared-bearings"
+        },
+        {
+          "mode": "team",
+          "pace": "expert",
+          "format": "revealline-coop-level.v11",
+          "identity": "a9cd1cab67bbcca0f06968936cf9cc1cfd319c9b8ca2e1ef3c4981cb284c958c",
+          "campaign": "pursuit-team-shared-bearings"
+        }
+      ],
+      "launch": "/game/couch/relay-rescue.html?journey=pursuit-campaigns-v1",
+      "qualification": {
+        "structuralAdmission": "accepted",
+        "proposedQualificationSeed": 17,
+        "demonstratedCompletionRoute": null,
+        "humanPlay": "pending",
+        "deviceAndPerformance": "pending",
+        "studioRoundTrip": "pending-manual-review",
+        "publicRelease": "not-qualified"
+      }
+    },
+    {
+      "family": "Capture Team",
+      "id": "pursuit-team-shared-compass",
+      "revision": "pursuit-chapters-1",
+      "title": "Shared Compass",
+      "challenge": "Choose a common return that supports two separate target approaches.",
+      "provenance": {
+        "owner": "official-candidate",
+        "source": "pursuit-team-campaigns-project",
+        "format": "MissionDesignV5"
+      },
+      "modes": ["team"],
+      "recipes": [
+        {
+          "mode": "team",
+          "pace": "gentle",
+          "format": "revealline-coop-level.v11",
+          "identity": "25c93758e9476fb1a254fd7ebbd4bcad90ae4f85fca366f7d3b02b64bb17d838",
+          "campaign": "pursuit-team-shared-bearings"
+        },
+        {
+          "mode": "team",
+          "pace": "standard",
+          "format": "revealline-coop-level.v11",
+          "identity": "6e04d6933215d6fc585322404c9538e2dffde19f845b8a2973e8b3b5bd788030",
+          "campaign": "pursuit-team-shared-bearings"
+        },
+        {
+          "mode": "team",
+          "pace": "expert",
+          "format": "revealline-coop-level.v11",
+          "identity": "82cbe00ccf28f459ea1bc2a746b8cf21de95a3fdcb2d7d6992d7b57d44c0775d",
+          "campaign": "pursuit-team-shared-bearings"
+        }
+      ],
+      "launch": "/game/couch/relay-rescue.html?journey=pursuit-campaigns-v1",
+      "qualification": {
+        "structuralAdmission": "accepted",
+        "proposedQualificationSeed": 17,
+        "demonstratedCompletionRoute": null,
+        "humanPlay": "pending",
+        "deviceAndPerformance": "pending",
+        "studioRoundTrip": "pending-manual-review",
+        "publicRelease": "not-qualified"
+      }
+    },
+    {
+      "family": "Capture Team",
+      "id": "pursuit-team-refuge-pincer",
+      "revision": "pursuit-chapters-1",
+      "title": "Refuge Pincer",
+      "challenge": "One pilot approaches while the partner waits near the refuge goal.",
+      "provenance": {
+        "owner": "official-candidate",
+        "source": "pursuit-team-campaigns-project",
+        "format": "MissionDesignV5"
+      },
+      "modes": ["team"],
+      "recipes": [
+        {
+          "mode": "team",
+          "pace": "gentle",
+          "format": "revealline-coop-level.v11",
+          "identity": "50017fa52401ef4562a62562275265364b7398f66abe12c29f9c1207f05bf8d8",
+          "campaign": "pursuit-team-pincer-grounds"
+        },
+        {
+          "mode": "team",
+          "pace": "standard",
+          "format": "revealline-coop-level.v11",
+          "identity": "3b0ba69795c0da8606c1ceadb2b8057d8945fadccbc56b0d39f01c197608a131",
+          "campaign": "pursuit-team-pincer-grounds"
+        },
+        {
+          "mode": "team",
+          "pace": "expert",
+          "format": "revealline-coop-level.v11",
+          "identity": "c6f1e45fcf2a64905d6e064f92461c1baabc62541fdebb284f4578aed22d3ccd",
+          "campaign": "pursuit-team-pincer-grounds"
+        }
+      ],
+      "launch": "/game/couch/relay-rescue.html?journey=pursuit-campaigns-v1",
+      "qualification": {
+        "structuralAdmission": "accepted",
+        "proposedQualificationSeed": 17,
+        "demonstratedCompletionRoute": null,
+        "humanPlay": "pending",
+        "deviceAndPerformance": "pending",
+        "studioRoundTrip": "pending-manual-review",
+        "publicRelease": "not-qualified"
+      }
+    },
+    {
+      "family": "Capture Team",
+      "id": "pursuit-team-split-refuge",
+      "revision": "pursuit-chapters-1",
+      "title": "Split Refuge",
+      "challenge": "Divide two refuges and communicate the changed escape direction.",
+      "provenance": {
+        "owner": "official-candidate",
+        "source": "pursuit-team-campaigns-project",
+        "format": "MissionDesignV5"
+      },
+      "modes": ["team"],
+      "recipes": [
+        {
+          "mode": "team",
+          "pace": "gentle",
+          "format": "revealline-coop-level.v11",
+          "identity": "671be09a8fdd242652565324c983b5e4483d5ac4771f8ceb0fd4af7c8672d551",
+          "campaign": "pursuit-team-pincer-grounds"
+        },
+        {
+          "mode": "team",
+          "pace": "standard",
+          "format": "revealline-coop-level.v11",
+          "identity": "714346b9f15768d4de6581839cd2a106f5e98fab870e65470afec5afa126560b",
+          "campaign": "pursuit-team-pincer-grounds"
+        },
+        {
+          "mode": "team",
+          "pace": "expert",
+          "format": "revealline-coop-level.v11",
+          "identity": "8124b667b8e6a3bde8dd5c410315b95d06892129c91886fd21808f7d191788c8",
+          "campaign": "pursuit-team-pincer-grounds"
+        }
+      ],
+      "launch": "/game/couch/relay-rescue.html?journey=pursuit-campaigns-v1",
+      "qualification": {
+        "structuralAdmission": "accepted",
+        "proposedQualificationSeed": 17,
+        "demonstratedCompletionRoute": null,
+        "humanPlay": "pending",
+        "deviceAndPerformance": "pending",
+        "studioRoundTrip": "pending-manual-review",
+        "publicRelease": "not-qualified"
+      }
+    },
+    {
+      "family": "Capture Team",
+      "id": "pursuit-team-return-triangle",
+      "revision": "pursuit-chapters-1",
+      "title": "Return Triangle",
+      "challenge": "Use a triangular return network to exchange pursuit and capture.",
+      "provenance": {
+        "owner": "official-candidate",
+        "source": "pursuit-team-campaigns-project",
+        "format": "MissionDesignV5"
+      },
+      "modes": ["team"],
+      "recipes": [
+        {
+          "mode": "team",
+          "pace": "gentle",
+          "format": "revealline-coop-level.v11",
+          "identity": "d2b2d1cb810c28a3f795d8f83393a22d805e3c655b1bccf8999a6ca7d837702b",
+          "campaign": "pursuit-team-pincer-grounds"
+        },
+        {
+          "mode": "team",
+          "pace": "standard",
+          "format": "revealline-coop-level.v11",
+          "identity": "1542aa5c0dad2322ec746e78100fbb6b44ec8ab218db80e6432f0e31b94fdcda",
+          "campaign": "pursuit-team-pincer-grounds"
+        },
+        {
+          "mode": "team",
+          "pace": "expert",
+          "format": "revealline-coop-level.v11",
+          "identity": "fa363e88fa7e82dbc6d305a822ffe2e02ecd2fd567753d6f5d05ae599977b60d",
+          "campaign": "pursuit-team-pincer-grounds"
+        }
+      ],
+      "launch": "/game/couch/relay-rescue.html?journey=pursuit-campaigns-v1",
+      "qualification": {
+        "structuralAdmission": "accepted",
+        "proposedQualificationSeed": 17,
+        "demonstratedCompletionRoute": null,
+        "humanPlay": "pending",
+        "deviceAndPerformance": "pending",
+        "studioRoundTrip": "pending-manual-review",
+        "publicRelease": "not-qualified"
+      }
+    },
+    {
+      "family": "Capture Team",
+      "id": "pursuit-team-meeting-cutoff",
+      "revision": "pursuit-chapters-1",
+      "title": "Meeting Cutoff",
+      "challenge": "Split a rendezvous pair, then cover the surviving runner.",
+      "provenance": {
+        "owner": "official-candidate",
+        "source": "pursuit-team-campaigns-project",
+        "format": "MissionDesignV5"
+      },
+      "modes": ["team"],
+      "recipes": [
+        {
+          "mode": "team",
+          "pace": "gentle",
+          "format": "revealline-coop-level.v11",
+          "identity": "85da57f57c6dbcbaab5392082854cc17f0ac10452886f9333504968b3cab319f",
+          "campaign": "pursuit-team-pincer-grounds"
+        },
+        {
+          "mode": "team",
+          "pace": "standard",
+          "format": "revealline-coop-level.v11",
+          "identity": "fd3e3ebe9d04d717a30f7d360efcb8462736a0e4e1ccb01fc615015ae5750063",
+          "campaign": "pursuit-team-pincer-grounds"
+        },
+        {
+          "mode": "team",
+          "pace": "expert",
+          "format": "revealline-coop-level.v11",
+          "identity": "b7ca7b0eeb1ab6987d15c32682a695a9af6d309293e37e243d2bcd8f1dbba21e",
+          "campaign": "pursuit-team-pincer-grounds"
+        }
+      ],
+      "launch": "/game/couch/relay-rescue.html?journey=pursuit-campaigns-v1",
+      "qualification": {
+        "structuralAdmission": "accepted",
+        "proposedQualificationSeed": 17,
+        "demonstratedCompletionRoute": null,
+        "humanPlay": "pending",
+        "deviceAndPerformance": "pending",
+        "studioRoundTrip": "pending-manual-review",
+        "publicRelease": "not-qualified"
+      }
+    },
+    {
+      "family": "Capture Team",
+      "id": "pursuit-team-outer-partner",
+      "revision": "pursuit-chapters-1",
+      "title": "Outer Partner",
+      "challenge": "Keep one pilot outside the walls while the partner crosses the inner lane.",
+      "provenance": {
+        "owner": "official-candidate",
+        "source": "pursuit-team-campaigns-project",
+        "format": "MissionDesignV5"
+      },
+      "modes": ["team"],
+      "recipes": [
+        {
+          "mode": "team",
+          "pace": "gentle",
+          "format": "revealline-coop-level.v11",
+          "identity": "0ad97666b81df421640f0ee419730cf77a03308da87bcdad7001c411ee196cec",
+          "campaign": "pursuit-team-pincer-grounds"
+        },
+        {
+          "mode": "team",
+          "pace": "standard",
+          "format": "revealline-coop-level.v11",
+          "identity": "85f68bd79632437fb9f5d673ceba477d66f5e4c0ca1d7d6c88234a37ac6719a6",
+          "campaign": "pursuit-team-pincer-grounds"
+        },
+        {
+          "mode": "team",
+          "pace": "expert",
+          "format": "revealline-coop-level.v11",
+          "identity": "737dac37b92c5792b83cb0115ae17f225883c30b41af66cfbeb2bb166cf181fc",
+          "campaign": "pursuit-team-pincer-grounds"
+        }
+      ],
+      "launch": "/game/couch/relay-rescue.html?journey=pursuit-campaigns-v1",
+      "qualification": {
+        "structuralAdmission": "accepted",
+        "proposedQualificationSeed": 17,
+        "demonstratedCompletionRoute": null,
+        "humanPlay": "pending",
+        "deviceAndPerformance": "pending",
+        "studioRoundTrip": "pending-manual-review",
+        "publicRelease": "not-qualified"
+      }
+    },
+    {
+      "family": "Capture Team",
+      "id": "pursuit-team-double-enclosure",
+      "revision": "pursuit-chapters-1",
+      "title": "Double Enclosure",
+      "challenge": "Arrange two closures without competing for the same target.",
+      "provenance": {
+        "owner": "official-candidate",
+        "source": "pursuit-team-campaigns-project",
+        "format": "MissionDesignV5"
+      },
+      "modes": ["team"],
+      "recipes": [
+        {
+          "mode": "team",
+          "pace": "gentle",
+          "format": "revealline-coop-level.v11",
+          "identity": "ff3591e2f71cdcae65047b690e924b8d90e2448865d255c56a6dc2ea125e1c2e",
+          "campaign": "pursuit-team-pincer-grounds"
+        },
+        {
+          "mode": "team",
+          "pace": "standard",
+          "format": "revealline-coop-level.v11",
+          "identity": "c558c88ca4541db4d0c81252601b6a691a43c216f6121ec20a44ce2de6707fe9",
+          "campaign": "pursuit-team-pincer-grounds"
+        },
+        {
+          "mode": "team",
+          "pace": "expert",
+          "format": "revealline-coop-level.v11",
+          "identity": "49359c1ac9a43180484b3fa0d7fcc264f7113d8a7c210f6705fde0c13dc6b726",
+          "campaign": "pursuit-team-pincer-grounds"
+        }
+      ],
+      "launch": "/game/couch/relay-rescue.html?journey=pursuit-campaigns-v1",
+      "qualification": {
+        "structuralAdmission": "accepted",
+        "proposedQualificationSeed": 17,
+        "demonstratedCompletionRoute": null,
+        "humanPlay": "pending",
+        "deviceAndPerformance": "pending",
+        "studioRoundTrip": "pending-manual-review",
+        "publicRelease": "not-qualified"
+      }
+    },
+    {
+      "family": "Capture Team",
+      "id": "relay-rendezvous",
+      "revision": "pursuit-chapters-1",
+      "title": "Relay Rendezvous",
+      "challenge": "Capture the two marked anchors from opposite island approaches, then enclose the exposed core. Intercept the optional pair at their meeting corridor.",
+      "provenance": {
+        "owner": "official-candidate",
+        "source": "pursuit-team-campaigns-project",
+        "format": "MissionDesignV5"
+      },
+      "modes": ["team"],
+      "recipes": [
+        {
+          "mode": "team",
+          "pace": "gentle",
+          "format": "revealline-coop-level.v11",
+          "identity": "6cc0f9613a06dc2ae11d3de93441e3d3a573bcc81410c0a3f88340674167e4eb",
+          "campaign": "pursuit-team-return-workshop"
+        },
+        {
+          "mode": "team",
+          "pace": "standard",
+          "format": "revealline-coop-level.v11",
+          "identity": "55fa04abd800bdb63aefa1f5f656933f875a2cbb10d5e3260b2fce7deefd03d2",
+          "campaign": "pursuit-team-return-workshop"
+        },
+        {
+          "mode": "team",
+          "pace": "expert",
+          "format": "revealline-coop-level.v11",
+          "identity": "09014d67fccc7d9b9b22f42a3273b1b0a86b083b096f16c2e1f0dfaf8b0f5a2e",
+          "campaign": "pursuit-team-return-workshop"
+        }
+      ],
+      "launch": "/game/couch/relay-rescue.html?journey=pursuit-campaigns-v1",
+      "qualification": {
+        "structuralAdmission": "accepted",
+        "proposedQualificationSeed": 17,
+        "demonstratedCompletionRoute": null,
+        "humanPlay": "pending",
+        "deviceAndPerformance": "pending",
+        "studioRoundTrip": "pending-manual-review",
+        "publicRelease": "not-qualified"
+      }
+    },
+    {
+      "family": "Capture Team",
+      "id": "pursuit-team-return-bench",
+      "revision": "pursuit-chapters-1",
+      "title": "Return Bench",
+      "challenge": "Construct a shared return before pursuing the long patrol.",
+      "provenance": {
+        "owner": "official-candidate",
+        "source": "pursuit-team-campaigns-project",
+        "format": "MissionDesignV5"
+      },
+      "modes": ["team"],
+      "recipes": [
+        {
+          "mode": "team",
+          "pace": "gentle",
+          "format": "revealline-coop-level.v11",
+          "identity": "83dd7dc1d9779f1f29ee80ce220622e54d7449f8c2991dfb2b2875425a1a7eda",
+          "campaign": "pursuit-team-return-workshop"
+        },
+        {
+          "mode": "team",
+          "pace": "standard",
+          "format": "revealline-coop-level.v11",
+          "identity": "1e9378bb385e8b7e1594ed4e5d42f684ed02f6a0633ef42b76dd8bd60c4aafdc",
+          "campaign": "pursuit-team-return-workshop"
+        },
+        {
+          "mode": "team",
+          "pace": "expert",
+          "format": "revealline-coop-level.v11",
+          "identity": "e4b3be3c8a337889984dece780f50a732cd7647b0ab6f405e9d8c1daec66c7f2",
+          "campaign": "pursuit-team-return-workshop"
+        }
+      ],
+      "launch": "/game/couch/relay-rescue.html?journey=pursuit-campaigns-v1",
+      "qualification": {
+        "structuralAdmission": "accepted",
+        "proposedQualificationSeed": 17,
+        "demonstratedCompletionRoute": null,
+        "humanPlay": "pending",
+        "deviceAndPerformance": "pending",
+        "studioRoundTrip": "pending-manual-review",
+        "publicRelease": "not-qualified"
+      }
+    },
+    {
+      "family": "Capture Team",
+      "id": "pursuit-team-paired-workshop",
+      "revision": "pursuit-chapters-1",
+      "title": "Paired Workshop",
+      "challenge": "One pilot reclaims the central strip while the other intercepts.",
+      "provenance": {
+        "owner": "official-candidate",
+        "source": "pursuit-team-campaigns-project",
+        "format": "MissionDesignV5"
+      },
+      "modes": ["team"],
+      "recipes": [
+        {
+          "mode": "team",
+          "pace": "gentle",
+          "format": "revealline-coop-level.v11",
+          "identity": "07824b02babd596aaad58806c6a12d1bb1f94a0770bcf9ae7ad9f0780f11553b",
+          "campaign": "pursuit-team-return-workshop"
+        },
+        {
+          "mode": "team",
+          "pace": "standard",
+          "format": "revealline-coop-level.v11",
+          "identity": "9c4d27d79ded530753431937194449dfa401998b11b8d06d75c5bf37116767b3",
+          "campaign": "pursuit-team-return-workshop"
+        },
+        {
+          "mode": "team",
+          "pace": "expert",
+          "format": "revealline-coop-level.v11",
+          "identity": "d792d5b7219fd41f9e2b7e34c858dee2a20c10528c4f5239e6fd6309198bc44d",
+          "campaign": "pursuit-team-return-workshop"
+        }
+      ],
+      "launch": "/game/couch/relay-rescue.html?journey=pursuit-campaigns-v1",
+      "qualification": {
+        "structuralAdmission": "accepted",
+        "proposedQualificationSeed": 17,
+        "demonstratedCompletionRoute": null,
+        "humanPlay": "pending",
+        "deviceAndPerformance": "pending",
+        "studioRoundTrip": "pending-manual-review",
+        "publicRelease": "not-qualified"
+      }
+    },
+    {
+      "family": "Capture Team",
+      "id": "pursuit-team-side-door-partners",
+      "revision": "pursuit-chapters-1",
+      "title": "Side-door Partners",
+      "challenge": "Leave separate doors open until both craft have returned.",
+      "provenance": {
+        "owner": "official-candidate",
+        "source": "pursuit-team-campaigns-project",
+        "format": "MissionDesignV5"
+      },
+      "modes": ["team"],
+      "recipes": [
+        {
+          "mode": "team",
+          "pace": "gentle",
+          "format": "revealline-coop-level.v11",
+          "identity": "b0c5e057489742f55732b0c951fef91ff6961c6c5d9371ac8012fd33999559c6",
+          "campaign": "pursuit-team-return-workshop"
+        },
+        {
+          "mode": "team",
+          "pace": "standard",
+          "format": "revealline-coop-level.v11",
+          "identity": "d85fb3a255847b28357c7dea824773c35602e66fcdbe36e13f19dfdacec94583",
+          "campaign": "pursuit-team-return-workshop"
+        },
+        {
+          "mode": "team",
+          "pace": "expert",
+          "format": "revealline-coop-level.v11",
+          "identity": "ddea463e390ff6fc1d49f27da670f3ce5a7c4ab260479724c16fdb2bf155dffc",
+          "campaign": "pursuit-team-return-workshop"
+        }
+      ],
+      "launch": "/game/couch/relay-rescue.html?journey=pursuit-campaigns-v1",
+      "qualification": {
+        "structuralAdmission": "accepted",
+        "proposedQualificationSeed": 17,
+        "demonstratedCompletionRoute": null,
+        "humanPlay": "pending",
+        "deviceAndPerformance": "pending",
+        "studioRoundTrip": "pending-manual-review",
+        "publicRelease": "not-qualified"
+      }
+    },
+    {
+      "family": "Capture Team",
+      "id": "pursuit-team-shared-overpass",
+      "revision": "pursuit-chapters-1",
+      "title": "Shared Overpass",
+      "challenge": "Use an island chain to pass the pursuit between players.",
+      "provenance": {
+        "owner": "official-candidate",
+        "source": "pursuit-team-campaigns-project",
+        "format": "MissionDesignV5"
+      },
+      "modes": ["team"],
+      "recipes": [
+        {
+          "mode": "team",
+          "pace": "gentle",
+          "format": "revealline-coop-level.v11",
+          "identity": "df99e97c76517dc94c6c8f957bcf2ad8383c75223920793a11e7b0196c01e70f",
+          "campaign": "pursuit-team-return-workshop"
+        },
+        {
+          "mode": "team",
+          "pace": "standard",
+          "format": "revealline-coop-level.v11",
+          "identity": "50227193fc1efcfe562749ff8e190c0f1678cee35149af51087b1c7aa845da54",
+          "campaign": "pursuit-team-return-workshop"
+        },
+        {
+          "mode": "team",
+          "pace": "expert",
+          "format": "revealline-coop-level.v11",
+          "identity": "f623d99679b4dcf68b3d95d28e6addcbf68a12e11bc14870ea906d51cfe9e9b0",
+          "campaign": "pursuit-team-return-workshop"
+        }
+      ],
+      "launch": "/game/couch/relay-rescue.html?journey=pursuit-campaigns-v1",
+      "qualification": {
+        "structuralAdmission": "accepted",
+        "proposedQualificationSeed": 17,
+        "demonstratedCompletionRoute": null,
+        "humanPlay": "pending",
+        "deviceAndPerformance": "pending",
+        "studioRoundTrip": "pending-manual-review",
+        "publicRelease": "not-qualified"
+      }
+    },
+    {
+      "family": "Capture Team",
+      "id": "pursuit-team-workshop-exchange",
+      "revision": "pursuit-chapters-1",
+      "title": "Workshop Exchange",
+      "challenge": "Exchange sides through the new reclaimed connection.",
+      "provenance": {
+        "owner": "official-candidate",
+        "source": "pursuit-team-campaigns-project",
+        "format": "MissionDesignV5"
+      },
+      "modes": ["team"],
+      "recipes": [
+        {
+          "mode": "team",
+          "pace": "gentle",
+          "format": "revealline-coop-level.v11",
+          "identity": "cd345a89aef03d204f3ba4a49c2451fa298c96f9631efab4b22a9bf73ea041e2",
+          "campaign": "pursuit-team-return-workshop"
+        },
+        {
+          "mode": "team",
+          "pace": "standard",
+          "format": "revealline-coop-level.v11",
+          "identity": "91136d61f623fdd6dcc51264736372cf514b4d09bf1d4366e6cb746e6b93890f",
+          "campaign": "pursuit-team-return-workshop"
+        },
+        {
+          "mode": "team",
+          "pace": "expert",
+          "format": "revealline-coop-level.v11",
+          "identity": "b44419b1dc983c55c1abb52f3c37148adfb67ae81fae30b950f47d5c6a786aef",
+          "campaign": "pursuit-team-return-workshop"
+        }
+      ],
+      "launch": "/game/couch/relay-rescue.html?journey=pursuit-campaigns-v1",
+      "qualification": {
+        "structuralAdmission": "accepted",
+        "proposedQualificationSeed": 17,
+        "demonstratedCompletionRoute": null,
+        "humanPlay": "pending",
+        "deviceAndPerformance": "pending",
+        "studioRoundTrip": "pending-manual-review",
+        "publicRelease": "not-qualified"
+      }
+    },
+    {
+      "family": "Capture Team",
+      "id": "pursuit-team-slow-bay-partners",
+      "revision": "pursuit-chapters-1",
+      "title": "Slow Bay Partners",
+      "challenge": "Use the slow-material bay to make a safer partner interception.",
+      "provenance": {
+        "owner": "official-candidate",
+        "source": "pursuit-team-campaigns-project",
+        "format": "MissionDesignV5"
+      },
+      "modes": ["team"],
+      "recipes": [
+        {
+          "mode": "team",
+          "pace": "gentle",
+          "format": "revealline-coop-level.v11",
+          "identity": "386704bcc80316fc02865da14e937ca923441023e1c1b7dd5f50a0d53c51bdd5",
+          "campaign": "pursuit-team-material-exchange"
+        },
+        {
+          "mode": "team",
+          "pace": "standard",
+          "format": "revealline-coop-level.v11",
+          "identity": "4fe66b16b926c65fa33427734fc8bb59f6e1359ad49ddd19998d33c1f1058d13",
+          "campaign": "pursuit-team-material-exchange"
+        },
+        {
+          "mode": "team",
+          "pace": "expert",
+          "format": "revealline-coop-level.v11",
+          "identity": "a9ab9d3cb1922b34d6f81c0279aefeb58ef263a697c67945f0fd3ecaa8d3926a",
+          "campaign": "pursuit-team-material-exchange"
+        }
+      ],
+      "launch": "/game/couch/relay-rescue.html?journey=pursuit-campaigns-v1",
+      "qualification": {
+        "structuralAdmission": "accepted",
+        "proposedQualificationSeed": 17,
+        "demonstratedCompletionRoute": null,
+        "humanPlay": "pending",
+        "deviceAndPerformance": "pending",
+        "studioRoundTrip": "pending-manual-review",
+        "publicRelease": "not-qualified"
+      }
+    },
+    {
+      "family": "Capture Team",
+      "id": "pursuit-team-lethal-pocket",
+      "revision": "pursuit-chapters-1",
+      "title": "Lethal Pocket",
+      "challenge": "Enclose the isolated lethal material instead of crossing it.",
+      "provenance": {
+        "owner": "official-candidate",
+        "source": "pursuit-team-campaigns-project",
+        "format": "MissionDesignV5"
+      },
+      "modes": ["team"],
+      "recipes": [
+        {
+          "mode": "team",
+          "pace": "gentle",
+          "format": "revealline-coop-level.v11",
+          "identity": "fc2dfaa998c8d6394cf5b5a29771227618f9414927cb806885e93b3406081fdc",
+          "campaign": "pursuit-team-material-exchange"
+        },
+        {
+          "mode": "team",
+          "pace": "standard",
+          "format": "revealline-coop-level.v11",
+          "identity": "d7dab55686efc60671a75c7cf4ba9f199dd5bbc990393e54a82ad274683bf830",
+          "campaign": "pursuit-team-material-exchange"
+        },
+        {
+          "mode": "team",
+          "pace": "expert",
+          "format": "revealline-coop-level.v11",
+          "identity": "501d350f90de9ae993d2087508958b3c1b41c0fcccde32f0fab4ad35b39660c6",
+          "campaign": "pursuit-team-material-exchange"
+        }
+      ],
+      "launch": "/game/couch/relay-rescue.html?journey=pursuit-campaigns-v1",
+      "qualification": {
+        "structuralAdmission": "accepted",
+        "proposedQualificationSeed": 17,
+        "demonstratedCompletionRoute": null,
+        "humanPlay": "pending",
+        "deviceAndPerformance": "pending",
+        "studioRoundTrip": "pending-manual-review",
+        "publicRelease": "not-qualified"
+      }
+    },
+    {
+      "family": "Capture Team",
+      "id": "pursuit-team-unequal-orchards",
+      "revision": "pursuit-chapters-1",
+      "title": "Unequal Orchards",
+      "challenge": "Give the longer route to one pilot while the other connects the nearer island.",
+      "provenance": {
+        "owner": "official-candidate",
+        "source": "pursuit-team-campaigns-project",
+        "format": "MissionDesignV5"
+      },
+      "modes": ["team"],
+      "recipes": [
+        {
+          "mode": "team",
+          "pace": "gentle",
+          "format": "revealline-coop-level.v11",
+          "identity": "31bbc1134e263549065a85814777a87f3704a70b71a795aa6c4f40e502d6e9e5",
+          "campaign": "pursuit-team-material-exchange"
+        },
+        {
+          "mode": "team",
+          "pace": "standard",
+          "format": "revealline-coop-level.v11",
+          "identity": "4b4da8251810db9a3380058a4a254da022a4b3936a5dafefcd943be0f8df0c0c",
+          "campaign": "pursuit-team-material-exchange"
+        },
+        {
+          "mode": "team",
+          "pace": "expert",
+          "format": "revealline-coop-level.v11",
+          "identity": "1a80755fc940fa578518a4f6f583b436a8968c71323ebbeedfa8064a55ee885a",
+          "campaign": "pursuit-team-material-exchange"
+        }
+      ],
+      "launch": "/game/couch/relay-rescue.html?journey=pursuit-campaigns-v1",
+      "qualification": {
+        "structuralAdmission": "accepted",
+        "proposedQualificationSeed": 17,
+        "demonstratedCompletionRoute": null,
+        "humanPlay": "pending",
+        "deviceAndPerformance": "pending",
+        "studioRoundTrip": "pending-manual-review",
+        "publicRelease": "not-qualified"
+      }
+    },
+    {
+      "family": "Capture Team",
+      "id": "pursuit-team-changing-return",
+      "revision": "pursuit-chapters-1",
+      "title": "Changing Return",
+      "challenge": "Reclaim a material pocket to open the partner route.",
+      "provenance": {
+        "owner": "official-candidate",
+        "source": "pursuit-team-campaigns-project",
+        "format": "MissionDesignV5"
+      },
+      "modes": ["team"],
+      "recipes": [
+        {
+          "mode": "team",
+          "pace": "gentle",
+          "format": "revealline-coop-level.v11",
+          "identity": "3ff4805ff07439fa7ad1e6e956b752cc021a1122926be6a5dde557e5db5f04fb",
+          "campaign": "pursuit-team-material-exchange"
+        },
+        {
+          "mode": "team",
+          "pace": "standard",
+          "format": "revealline-coop-level.v11",
+          "identity": "c1701128d85ffba0f436ac673bf5095891fdfa52f83b322aad840b1249e3f8aa",
+          "campaign": "pursuit-team-material-exchange"
+        },
+        {
+          "mode": "team",
+          "pace": "expert",
+          "format": "revealline-coop-level.v11",
+          "identity": "fd94014727b14c7cf957c0bdc481f09c4e845911f22c20185d2c11b30824e099",
+          "campaign": "pursuit-team-material-exchange"
+        }
+      ],
+      "launch": "/game/couch/relay-rescue.html?journey=pursuit-campaigns-v1",
+      "qualification": {
+        "structuralAdmission": "accepted",
+        "proposedQualificationSeed": 17,
+        "demonstratedCompletionRoute": null,
+        "humanPlay": "pending",
+        "deviceAndPerformance": "pending",
+        "studioRoundTrip": "pending-manual-review",
+        "publicRelease": "not-qualified"
+      }
+    },
+    {
+      "family": "Capture Team",
+      "id": "pursuit-team-material-pincer",
+      "revision": "pursuit-chapters-1",
+      "title": "Material Pincer",
+      "challenge": "Choose whether to neutralize the slow bay before herding the target.",
+      "provenance": {
+        "owner": "official-candidate",
+        "source": "pursuit-team-campaigns-project",
+        "format": "MissionDesignV5"
+      },
+      "modes": ["team"],
+      "recipes": [
+        {
+          "mode": "team",
+          "pace": "gentle",
+          "format": "revealline-coop-level.v11",
+          "identity": "f1e5c2b611bddb92876a6d8534a84db4ba25136ba412c466c1a66fb91444774b",
+          "campaign": "pursuit-team-material-exchange"
+        },
+        {
+          "mode": "team",
+          "pace": "standard",
+          "format": "revealline-coop-level.v11",
+          "identity": "0ed56f215155948b34418be858f5d9111a5c311b92ab15626f26075b68f02930",
+          "campaign": "pursuit-team-material-exchange"
+        },
+        {
+          "mode": "team",
+          "pace": "expert",
+          "format": "revealline-coop-level.v11",
+          "identity": "0447f2e485b6312d2c03bd332c888ee5779ca9773e04c93c58e4249c13471a7e",
+          "campaign": "pursuit-team-material-exchange"
+        }
+      ],
+      "launch": "/game/couch/relay-rescue.html?journey=pursuit-campaigns-v1",
+      "qualification": {
+        "structuralAdmission": "accepted",
+        "proposedQualificationSeed": 17,
+        "demonstratedCompletionRoute": null,
+        "humanPlay": "pending",
+        "deviceAndPerformance": "pending",
+        "studioRoundTrip": "pending-manual-review",
+        "publicRelease": "not-qualified"
+      }
+    },
+    {
+      "family": "Capture Team",
+      "id": "pursuit-team-garden-exchange",
+      "revision": "pursuit-chapters-1",
+      "title": "Garden Exchange",
+      "challenge": "Combine two return networks while keeping lethal ground outside the cut.",
+      "provenance": {
+        "owner": "official-candidate",
+        "source": "pursuit-team-campaigns-project",
+        "format": "MissionDesignV5"
+      },
+      "modes": ["team"],
+      "recipes": [
+        {
+          "mode": "team",
+          "pace": "gentle",
+          "format": "revealline-coop-level.v11",
+          "identity": "6837798e7edcd3aa8f178b202656224476220d62524940f676e360a25e83f239",
+          "campaign": "pursuit-team-material-exchange"
+        },
+        {
+          "mode": "team",
+          "pace": "standard",
+          "format": "revealline-coop-level.v11",
+          "identity": "fc7529fbff19812cb02a7ffbd2ba6e9f73fbe6f1e26a090a2abf3383dfdac797",
+          "campaign": "pursuit-team-material-exchange"
+        },
+        {
+          "mode": "team",
+          "pace": "expert",
+          "format": "revealline-coop-level.v11",
+          "identity": "d84d4eb829297a92db2218f8bef5c61727da7cbf6395b01c1a5508edc3598185",
+          "campaign": "pursuit-team-material-exchange"
+        }
+      ],
+      "launch": "/game/couch/relay-rescue.html?journey=pursuit-campaigns-v1",
+      "qualification": {
+        "structuralAdmission": "accepted",
+        "proposedQualificationSeed": 17,
+        "demonstratedCompletionRoute": null,
+        "humanPlay": "pending",
+        "deviceAndPerformance": "pending",
+        "studioRoundTrip": "pending-manual-review",
+        "publicRelease": "not-qualified"
+      }
+    },
+    {
+      "family": "Capture Team",
+      "id": "pursuit-team-draw-the-aim",
+      "revision": "pursuit-chapters-1",
+      "title": "Draw the Aim",
+      "challenge": "One pilot draws a fixed warning while the partner approaches the guard.",
+      "provenance": {
+        "owner": "official-candidate",
+        "source": "pursuit-team-campaigns-project",
+        "format": "MissionDesignV5"
+      },
+      "modes": ["team"],
+      "recipes": [
+        {
+          "mode": "team",
+          "pace": "gentle",
+          "format": "revealline-coop-level.v11",
+          "identity": "a7beacd635b2f14542ff6072e9aae7a8a2b554fe857fe08b7f62f08deffa9ae2",
+          "campaign": "pursuit-team-window-partners"
+        },
+        {
+          "mode": "team",
+          "pace": "standard",
+          "format": "revealline-coop-level.v11",
+          "identity": "80b69a1b37fae926a7a8ef837af1afaaea2f6a48afa7b234a242e318734d5539",
+          "campaign": "pursuit-team-window-partners"
+        },
+        {
+          "mode": "team",
+          "pace": "expert",
+          "format": "revealline-coop-level.v11",
+          "identity": "28f3003a26751309b895652b724fa176bb6087815f73906805143378ff4347e0",
+          "campaign": "pursuit-team-window-partners"
+        }
+      ],
+      "launch": "/game/couch/relay-rescue.html?journey=pursuit-campaigns-v1",
+      "qualification": {
+        "structuralAdmission": "accepted",
+        "proposedQualificationSeed": 17,
+        "demonstratedCompletionRoute": null,
+        "humanPlay": "pending",
+        "deviceAndPerformance": "pending",
+        "studioRoundTrip": "pending-manual-review",
+        "publicRelease": "not-qualified"
+      }
+    },
+    {
+      "family": "Capture Team",
+      "id": "pursuit-team-support-crossing",
+      "revision": "pursuit-chapters-1",
+      "title": "Support Crossing",
+      "challenge": "Use Interceptor support to protect a partner crossing.",
+      "provenance": {
+        "owner": "official-candidate",
+        "source": "pursuit-team-campaigns-project",
+        "format": "MissionDesignV5"
+      },
+      "modes": ["team"],
+      "recipes": [
+        {
+          "mode": "team",
+          "pace": "gentle",
+          "format": "revealline-coop-level.v11",
+          "identity": "e2944165923ea095086a9dc896e0874c7703e1ef72a2f9d5043ee6774a990b25",
+          "campaign": "pursuit-team-window-partners"
+        },
+        {
+          "mode": "team",
+          "pace": "standard",
+          "format": "revealline-coop-level.v11",
+          "identity": "6b200839310cd5500f3b1da5c3ba308ebc4b0214c8bf762c08ff7e3401da000d",
+          "campaign": "pursuit-team-window-partners"
+        },
+        {
+          "mode": "team",
+          "pace": "expert",
+          "format": "revealline-coop-level.v11",
+          "identity": "b56808b24978605a347dec56c5039be11c17fd3a773168b88061bd34691fbdfc",
+          "campaign": "pursuit-team-window-partners"
+        }
+      ],
+      "launch": "/game/couch/relay-rescue.html?journey=pursuit-campaigns-v1",
+      "qualification": {
+        "structuralAdmission": "accepted",
+        "proposedQualificationSeed": 17,
+        "demonstratedCompletionRoute": null,
+        "humanPlay": "pending",
+        "deviceAndPerformance": "pending",
+        "studioRoundTrip": "pending-manual-review",
+        "publicRelease": "not-qualified"
+      }
+    },
+    {
+      "family": "Capture Team",
+      "id": "pursuit-team-slow-the-pursuit",
+      "revision": "pursuit-chapters-1",
+      "title": "Slow the Pursuit",
+      "challenge": "Disruptor support creates a shorter interception window.",
+      "provenance": {
+        "owner": "official-candidate",
+        "source": "pursuit-team-campaigns-project",
+        "format": "MissionDesignV5"
+      },
+      "modes": ["team"],
+      "recipes": [
+        {
+          "mode": "team",
+          "pace": "gentle",
+          "format": "revealline-coop-level.v11",
+          "identity": "127d5d0993608fe413bb9e26f866d37e33cd4c45922ae6da37e9386e8077d99a",
+          "campaign": "pursuit-team-window-partners"
+        },
+        {
+          "mode": "team",
+          "pace": "standard",
+          "format": "revealline-coop-level.v11",
+          "identity": "7e9cfb1a64c70c7e9b208a5a49778b676539ec464887ab4b6a2f4ad7f94dd03a",
+          "campaign": "pursuit-team-window-partners"
+        },
+        {
+          "mode": "team",
+          "pace": "expert",
+          "format": "revealline-coop-level.v11",
+          "identity": "ed5fdf5dd4f4d00a5d9a216965cbefea39d90ff0847f4b84ca565b08a5b25087",
+          "campaign": "pursuit-team-window-partners"
+        }
+      ],
+      "launch": "/game/couch/relay-rescue.html?journey=pursuit-campaigns-v1",
+      "qualification": {
+        "structuralAdmission": "accepted",
+        "proposedQualificationSeed": 17,
+        "demonstratedCompletionRoute": null,
+        "humanPlay": "pending",
+        "deviceAndPerformance": "pending",
+        "studioRoundTrip": "pending-manual-review",
+        "publicRelease": "not-qualified"
+      }
+    },
+    {
+      "family": "Capture Team",
+      "id": "pursuit-team-cover-and-return",
+      "revision": "pursuit-chapters-1",
+      "title": "Cover and Return",
+      "challenge": "Separate target pursuit from the guard warning lane.",
+      "provenance": {
+        "owner": "official-candidate",
+        "source": "pursuit-team-campaigns-project",
+        "format": "MissionDesignV5"
+      },
+      "modes": ["team"],
+      "recipes": [
+        {
+          "mode": "team",
+          "pace": "gentle",
+          "format": "revealline-coop-level.v11",
+          "identity": "5abc6a508fffa922649337011ae9505ce7a06720d05ddfefa6950f7cc1fdfc18",
+          "campaign": "pursuit-team-window-partners"
+        },
+        {
+          "mode": "team",
+          "pace": "standard",
+          "format": "revealline-coop-level.v11",
+          "identity": "ec9d74ed8e9dd8f5bcc24f6155840b1057b22825391bfd0bd815ffd49f9ec32f",
+          "campaign": "pursuit-team-window-partners"
+        },
+        {
+          "mode": "team",
+          "pace": "expert",
+          "format": "revealline-coop-level.v11",
+          "identity": "24d62a189563bca6be60f8457748f8e74bea805cf372c6f5df48b70c5cee0788",
+          "campaign": "pursuit-team-window-partners"
+        }
+      ],
+      "launch": "/game/couch/relay-rescue.html?journey=pursuit-campaigns-v1",
+      "qualification": {
+        "structuralAdmission": "accepted",
+        "proposedQualificationSeed": 17,
+        "demonstratedCompletionRoute": null,
+        "humanPlay": "pending",
+        "deviceAndPerformance": "pending",
+        "studioRoundTrip": "pending-manual-review",
+        "publicRelease": "not-qualified"
+      }
+    },
+    {
+      "family": "Capture Team",
+      "id": "pursuit-team-opposite-openings",
+      "revision": "pursuit-chapters-1",
+      "title": "Opposite Openings",
+      "challenge": "Take different openings and share the once-only catches.",
+      "provenance": {
+        "owner": "official-candidate",
+        "source": "pursuit-team-campaigns-project",
+        "format": "MissionDesignV5"
+      },
+      "modes": ["team"],
+      "recipes": [
+        {
+          "mode": "team",
+          "pace": "gentle",
+          "format": "revealline-coop-level.v11",
+          "identity": "b266019658adeece20501fdb04a9821e420472fe80b37bd0808a66d5786d4b82",
+          "campaign": "pursuit-team-window-partners"
+        },
+        {
+          "mode": "team",
+          "pace": "standard",
+          "format": "revealline-coop-level.v11",
+          "identity": "1ecc195495f911d9944588def1e3ca89c17fdcb8a907921af4d4c4b544b840d2",
+          "campaign": "pursuit-team-window-partners"
+        },
+        {
+          "mode": "team",
+          "pace": "expert",
+          "format": "revealline-coop-level.v11",
+          "identity": "c0e6e2e7c21a97ce9a048b28fa359655298ff4d509fa4626239632ed4475dfb0",
+          "campaign": "pursuit-team-window-partners"
+        }
+      ],
+      "launch": "/game/couch/relay-rescue.html?journey=pursuit-campaigns-v1",
+      "qualification": {
+        "structuralAdmission": "accepted",
+        "proposedQualificationSeed": 17,
+        "demonstratedCompletionRoute": null,
+        "humanPlay": "pending",
+        "deviceAndPerformance": "pending",
+        "studioRoundTrip": "pending-manual-review",
+        "publicRelease": "not-qualified"
+      }
+    },
+    {
+      "family": "Capture Team",
+      "id": "pursuit-team-warning-exchange",
+      "revision": "pursuit-chapters-1",
+      "title": "Warning Exchange",
+      "challenge": "Swap support roles at the next safe return.",
+      "provenance": {
+        "owner": "official-candidate",
+        "source": "pursuit-team-campaigns-project",
+        "format": "MissionDesignV5"
+      },
+      "modes": ["team"],
+      "recipes": [
+        {
+          "mode": "team",
+          "pace": "gentle",
+          "format": "revealline-coop-level.v11",
+          "identity": "e0be15b0dcf39490bd5693977461deb4dca8303008e46a391141aa30a38a6ec1",
+          "campaign": "pursuit-team-window-partners"
+        },
+        {
+          "mode": "team",
+          "pace": "standard",
+          "format": "revealline-coop-level.v11",
+          "identity": "6868ad6f8eec94a5f7f2690910314187769675860aabf298428fabff3ab88edb",
+          "campaign": "pursuit-team-window-partners"
+        },
+        {
+          "mode": "team",
+          "pace": "expert",
+          "format": "revealline-coop-level.v11",
+          "identity": "2b4eb1139ab60d9859b73593f7333b258bca981c958d7108e76f82bbf36a0e2f",
+          "campaign": "pursuit-team-window-partners"
+        }
+      ],
+      "launch": "/game/couch/relay-rescue.html?journey=pursuit-campaigns-v1",
+      "qualification": {
+        "structuralAdmission": "accepted",
+        "proposedQualificationSeed": 17,
+        "demonstratedCompletionRoute": null,
+        "humanPlay": "pending",
+        "deviceAndPerformance": "pending",
+        "studioRoundTrip": "pending-manual-review",
+        "publicRelease": "not-qualified"
+      }
+    },
+    {
+      "family": "Capture Team",
+      "id": "pursuit-team-paired-routes",
+      "revision": "pursuit-chapters-1",
+      "title": "Paired Routes",
+      "challenge": "Each pilot follows a different member of a rendezvous pair.",
+      "provenance": {
+        "owner": "official-candidate",
+        "source": "pursuit-team-campaigns-project",
+        "format": "MissionDesignV5"
+      },
+      "modes": ["team"],
+      "recipes": [
+        {
+          "mode": "team",
+          "pace": "gentle",
+          "format": "revealline-coop-level.v11",
+          "identity": "e83687da9e418c4931cff0503988ef8426ad194a32b766b00eddd9094104e010",
+          "campaign": "pursuit-team-two-pilot-finale"
+        },
+        {
+          "mode": "team",
+          "pace": "standard",
+          "format": "revealline-coop-level.v11",
+          "identity": "6ec884716560c4c14eab9e3b2dd9d04a2e143b6929e8788cf5c8dd751fb90a41",
+          "campaign": "pursuit-team-two-pilot-finale"
+        },
+        {
+          "mode": "team",
+          "pace": "expert",
+          "format": "revealline-coop-level.v11",
+          "identity": "bc66d0c514766148dd34f2884f0d2b0021a5102a10bbd36db77805e129c7a4a0",
+          "campaign": "pursuit-team-two-pilot-finale"
+        }
+      ],
+      "launch": "/game/couch/relay-rescue.html?journey=pursuit-campaigns-v1",
+      "qualification": {
+        "structuralAdmission": "accepted",
+        "proposedQualificationSeed": 17,
+        "demonstratedCompletionRoute": null,
+        "humanPlay": "pending",
+        "deviceAndPerformance": "pending",
+        "studioRoundTrip": "pending-manual-review",
+        "publicRelease": "not-qualified"
+      }
+    },
+    {
+      "family": "Capture Team",
+      "id": "pursuit-team-shared-cutoff",
+      "revision": "pursuit-chapters-1",
+      "title": "Shared Cutoff",
+      "challenge": "Herd toward the partner instead of following the whole route.",
+      "provenance": {
+        "owner": "official-candidate",
+        "source": "pursuit-team-campaigns-project",
+        "format": "MissionDesignV5"
+      },
+      "modes": ["team"],
+      "recipes": [
+        {
+          "mode": "team",
+          "pace": "gentle",
+          "format": "revealline-coop-level.v11",
+          "identity": "be3bf966b9b341156628448e2dcb118a1284adb34e38b2c409f5dc3fbdd7a3ee",
+          "campaign": "pursuit-team-two-pilot-finale"
+        },
+        {
+          "mode": "team",
+          "pace": "standard",
+          "format": "revealline-coop-level.v11",
+          "identity": "4a8597be37f19efcbb5f849208ed67688aa4e05ac8175f02d8754ac8f25fe22a",
+          "campaign": "pursuit-team-two-pilot-finale"
+        },
+        {
+          "mode": "team",
+          "pace": "expert",
+          "format": "revealline-coop-level.v11",
+          "identity": "a6ed29a70c7b3db3831311e1c972eaa57bd10c84c56eca9f2f9a09df6faa30ea",
+          "campaign": "pursuit-team-two-pilot-finale"
+        }
+      ],
+      "launch": "/game/couch/relay-rescue.html?journey=pursuit-campaigns-v1",
+      "qualification": {
+        "structuralAdmission": "accepted",
+        "proposedQualificationSeed": 17,
+        "demonstratedCompletionRoute": null,
+        "humanPlay": "pending",
+        "deviceAndPerformance": "pending",
+        "studioRoundTrip": "pending-manual-review",
+        "publicRelease": "not-qualified"
+      }
+    },
+    {
+      "family": "Capture Team",
+      "id": "pursuit-team-courtyard-partners",
+      "revision": "pursuit-chapters-1",
+      "title": "Courtyard Partners",
+      "challenge": "Use the side courts to alternate capture and pursuit.",
+      "provenance": {
+        "owner": "official-candidate",
+        "source": "pursuit-team-campaigns-project",
+        "format": "MissionDesignV5"
+      },
+      "modes": ["team"],
+      "recipes": [
+        {
+          "mode": "team",
+          "pace": "gentle",
+          "format": "revealline-coop-level.v11",
+          "identity": "b5ca5373947b6e6ac1fe771a2cdff83961e3152e2eb7c946e3e451f7d4cc7f43",
+          "campaign": "pursuit-team-two-pilot-finale"
+        },
+        {
+          "mode": "team",
+          "pace": "standard",
+          "format": "revealline-coop-level.v11",
+          "identity": "000c02db9d18a053919412642fa616d47ed18d15f9dd4a41bdaf63c762d7cd62",
+          "campaign": "pursuit-team-two-pilot-finale"
+        },
+        {
+          "mode": "team",
+          "pace": "expert",
+          "format": "revealline-coop-level.v11",
+          "identity": "6029acf181d3ab25c33ad4a51b438a1d71143824d053b3f5f9e6ead1ef8ac9bf",
+          "campaign": "pursuit-team-two-pilot-finale"
+        }
+      ],
+      "launch": "/game/couch/relay-rescue.html?journey=pursuit-campaigns-v1",
+      "qualification": {
+        "structuralAdmission": "accepted",
+        "proposedQualificationSeed": 17,
+        "demonstratedCompletionRoute": null,
+        "humanPlay": "pending",
+        "deviceAndPerformance": "pending",
+        "studioRoundTrip": "pending-manual-review",
+        "publicRelease": "not-qualified"
+      }
+    },
+    {
+      "family": "Capture Team",
+      "id": "pursuit-team-final-warning",
+      "revision": "pursuit-chapters-1",
+      "title": "Final Warning",
+      "challenge": "Keep a safe partner route through the guard recovery window.",
+      "provenance": {
+        "owner": "official-candidate",
+        "source": "pursuit-team-campaigns-project",
+        "format": "MissionDesignV5"
+      },
+      "modes": ["team"],
+      "recipes": [
+        {
+          "mode": "team",
+          "pace": "gentle",
+          "format": "revealline-coop-level.v11",
+          "identity": "8243f7433c461d6511fd386731eade23cf1d1aeb0bea4e38da6e997e4c3c36e5",
+          "campaign": "pursuit-team-two-pilot-finale"
+        },
+        {
+          "mode": "team",
+          "pace": "standard",
+          "format": "revealline-coop-level.v11",
+          "identity": "9e83c66e4a410f3ef4a01f269f59c8953fb92e4f9f8e7fa1851d48b4be06dcdf",
+          "campaign": "pursuit-team-two-pilot-finale"
+        },
+        {
+          "mode": "team",
+          "pace": "expert",
+          "format": "revealline-coop-level.v11",
+          "identity": "f83181a6f4d7cb93afe0941decadd629270bdcd3198e2e5fb9f3fe23154552b2",
+          "campaign": "pursuit-team-two-pilot-finale"
+        }
+      ],
+      "launch": "/game/couch/relay-rescue.html?journey=pursuit-campaigns-v1",
+      "qualification": {
+        "structuralAdmission": "accepted",
+        "proposedQualificationSeed": 17,
+        "demonstratedCompletionRoute": null,
+        "humanPlay": "pending",
+        "deviceAndPerformance": "pending",
+        "studioRoundTrip": "pending-manual-review",
+        "publicRelease": "not-qualified"
+      }
+    },
+    {
+      "family": "Capture Team",
+      "id": "pursuit-team-rendezvous-relay",
+      "revision": "pursuit-chapters-1",
+      "title": "Rendezvous Relay",
+      "challenge": "Relay the chase after the first partner target is removed.",
+      "provenance": {
+        "owner": "official-candidate",
+        "source": "pursuit-team-campaigns-project",
+        "format": "MissionDesignV5"
+      },
+      "modes": ["team"],
+      "recipes": [
+        {
+          "mode": "team",
+          "pace": "gentle",
+          "format": "revealline-coop-level.v11",
+          "identity": "ce650878a5decd9ee6faddd375a8068b066835d33dd6c028379c1f6325fd718b",
+          "campaign": "pursuit-team-two-pilot-finale"
+        },
+        {
+          "mode": "team",
+          "pace": "standard",
+          "format": "revealline-coop-level.v11",
+          "identity": "54a95586a46694f23acbb3c802ee111ff833556a22740943388d3a8e0a721993",
+          "campaign": "pursuit-team-two-pilot-finale"
+        },
+        {
+          "mode": "team",
+          "pace": "expert",
+          "format": "revealline-coop-level.v11",
+          "identity": "8995ac55846e6ce8de1cd1282367716dd298863fc1942b8ffc3fedc9bb5576dc",
+          "campaign": "pursuit-team-two-pilot-finale"
+        }
+      ],
+      "launch": "/game/couch/relay-rescue.html?journey=pursuit-campaigns-v1",
+      "qualification": {
+        "structuralAdmission": "accepted",
+        "proposedQualificationSeed": 17,
+        "demonstratedCompletionRoute": null,
+        "humanPlay": "pending",
+        "deviceAndPerformance": "pending",
+        "studioRoundTrip": "pending-manual-review",
+        "publicRelease": "not-qualified"
+      }
+    },
+    {
+      "family": "Capture Team",
+      "id": "pursuit-team-two-pilot-airfield",
+      "revision": "pursuit-chapters-1",
+      "title": "Two-Pilot Airfield",
+      "challenge": "Combine support, interception, shared returns and optional enclosure.",
+      "provenance": {
+        "owner": "official-candidate",
+        "source": "pursuit-team-campaigns-project",
+        "format": "MissionDesignV5"
+      },
+      "modes": ["team"],
+      "recipes": [
+        {
+          "mode": "team",
+          "pace": "gentle",
+          "format": "revealline-coop-level.v11",
+          "identity": "967d4f3d6970864c737b0f9a50ac6a8e582dd5996b0f656f87e7696e452c65f4",
+          "campaign": "pursuit-team-two-pilot-finale"
+        },
+        {
+          "mode": "team",
+          "pace": "standard",
+          "format": "revealline-coop-level.v11",
+          "identity": "9edea12f8740eeea55b6e9ccb3e023b659e102ca0f9d9235c1fc6bfca9e391f4",
+          "campaign": "pursuit-team-two-pilot-finale"
+        },
+        {
+          "mode": "team",
+          "pace": "expert",
+          "format": "revealline-coop-level.v11",
+          "identity": "f1e43b88d9ef5b03a0a535594a894db07c1eb6f0665d8a9e1f15ca351bc23a30",
+          "campaign": "pursuit-team-two-pilot-finale"
+        }
+      ],
+      "launch": "/game/couch/relay-rescue.html?journey=pursuit-campaigns-v1",
+      "qualification": {
+        "structuralAdmission": "accepted",
+        "proposedQualificationSeed": 17,
+        "demonstratedCompletionRoute": null,
+        "humanPlay": "pending",
+        "deviceAndPerformance": "pending",
+        "studioRoundTrip": "pending-manual-review",
+        "publicRelease": "not-qualified"
+      }
+    },
+    {
+      "family": "Classic Snake",
+      "id": "classic-living-refuge-bays",
+      "revision": "1",
+      "title": "Refuge Bays",
+      "titleUk": "Затишні кишені",
+      "challenge": "The refuge seeker announces its next bay. Cut across the open middle instead of following it.",
+      "provenance": {
+        "owner": "official-catalogue",
+        "source": "classic-snake-twin-intercepts",
+        "format": "classic-snake-level.v3"
+      },
+      "modes": ["solo", "versus", "team"],
+      "recipes": [
+        {
+          "pace": "slow",
+          "format": "classic-snake-level.v3",
+          "identity": "ca3be01c617acd26400fd8fcdf19b3a3c0259da0900a64002ebbd66fa756fdfa"
+        },
+        {
+          "pace": "normal",
+          "format": "classic-snake-level.v3",
+          "identity": "cf52ecb6b1c25120cfcd6ead3242756365c76bd7161e1f723d48cb177d58e26c"
+        },
+        {
+          "pace": "fast",
+          "format": "classic-snake-level.v3",
+          "identity": "111a2219ea6afaaff78ab0e9cf2b7a8c1de0460087622d9f113d905a8b8e2ed4"
+        }
+      ],
+      "launch": "/game/snake/play.html?mode=solo&level=classic-living-refuge-bays&targets=authored&board=retro&seed=17",
+      "qualification": {
+        "structuralAdmission": "accepted",
+        "proposedQualificationSeed": 17,
+        "demonstratedCompletionRoute": null,
+        "humanPlay": "pending",
+        "deviceAndPerformance": "pending",
+        "studioRoundTrip": "pending-manual-review",
+        "publicRelease": "not-qualified"
+      }
+    },
+    {
+      "family": "Classic Snake",
+      "id": "classic-living-switchback-yard",
+      "revision": "1",
+      "title": "Switchback Yard",
+      "titleUk": "Двір зміни курсу",
+      "challenge": "The scarf runner signals its next exit before committing. Intercept from the opposite return.",
+      "provenance": {
+        "owner": "official-catalogue",
+        "source": "classic-snake-twin-intercepts",
+        "format": "classic-snake-level.v3"
+      },
+      "modes": ["solo", "versus", "team"],
+      "recipes": [
+        {
+          "pace": "slow",
+          "format": "classic-snake-level.v3",
+          "identity": "066635d7f347701972ebf590563cede7bdbb77c86e3841633a8ddb2eef7d1e8c"
+        },
+        {
+          "pace": "normal",
+          "format": "classic-snake-level.v3",
+          "identity": "f016cc43e5c3ca5a2d79adccc609f1d535c33bc84bc5d866c025f528d23cb5ed"
+        },
+        {
+          "pace": "fast",
+          "format": "classic-snake-level.v3",
+          "identity": "567629441c6908915b4bb8dab0facc5f8052057e7bced5e730f9e2bdbc54f373"
+        }
+      ],
+      "launch": "/game/snake/play.html?mode=solo&level=classic-living-switchback-yard&targets=authored&board=retro&seed=17",
+      "qualification": {
+        "structuralAdmission": "accepted",
+        "proposedQualificationSeed": 17,
+        "demonstratedCompletionRoute": null,
+        "humanPlay": "pending",
+        "deviceAndPerformance": "pending",
+        "studioRoundTrip": "pending-manual-review",
+        "publicRelease": "not-qualified"
+      }
+    },
+    {
+      "family": "Classic Snake",
+      "id": "classic-living-rendezvous-crossing",
+      "revision": "1",
+      "title": "Rendezvous Crossing",
+      "titleUk": "Перехрестя зустрічі",
+      "challenge": "Two partners seek one meeting place. Each catch counts once; the survivor becomes a runner.",
+      "provenance": {
+        "owner": "official-catalogue",
+        "source": "classic-snake-twin-intercepts",
+        "format": "classic-snake-level.v3"
+      },
+      "modes": ["solo", "versus", "team"],
+      "recipes": [
+        {
+          "pace": "slow",
+          "format": "classic-snake-level.v3",
+          "identity": "265831cb34c876e9983d5966e8927da6d23f68de74a779778d7a8cf341051d39"
+        },
+        {
+          "pace": "normal",
+          "format": "classic-snake-level.v3",
+          "identity": "ac4b7a476505e86ebc54127b8125333d7691562843123a5c08718f4b61b14eb8"
+        },
+        {
+          "pace": "fast",
+          "format": "classic-snake-level.v3",
+          "identity": "b7890cc50e6f6105c24d512e6fc9bb65082d97e273004d9e70e67f602f610991"
+        }
+      ],
+      "launch": "/game/snake/play.html?mode=solo&level=classic-living-rendezvous-crossing&targets=authored&board=retro&seed=17",
+      "qualification": {
+        "structuralAdmission": "accepted",
+        "proposedQualificationSeed": 17,
+        "demonstratedCompletionRoute": null,
+        "humanPlay": "pending",
+        "deviceAndPerformance": "pending",
+        "studioRoundTrip": "pending-manual-review",
+        "publicRelease": "not-qualified"
+      }
+    },
+    {
+      "family": "Classic Snake",
+      "id": "classic-living-cable-cutoff",
+      "revision": "1",
+      "title": "Cable Cutoff",
+      "titleUk": "Кабельний заслін",
+      "challenge": "Two offset passages turn your cable into a temporary barrier. Leave a return lane before herding the prey.",
+      "provenance": {
+        "owner": "official-catalogue",
+        "source": "classic-snake-twin-intercepts",
+        "format": "classic-snake-level.v3"
+      },
+      "modes": ["solo", "versus", "team"],
+      "recipes": [
+        {
+          "pace": "slow",
+          "format": "classic-snake-level.v3",
+          "identity": "139bb4ededbc263cae7ebabbec9f60b23432d9046e6046622e8e0631c6496abd"
+        },
+        {
+          "pace": "normal",
+          "format": "classic-snake-level.v3",
+          "identity": "47d9034c8fd46fe588b29f53f8abb855f39d76cb2584200addf3b884ba5885a0"
+        },
+        {
+          "pace": "fast",
+          "format": "classic-snake-level.v3",
+          "identity": "02ccbc2093fd9186daccfc0c4d5cb07abb1d94118741387815bf0c91bde601b3"
+        }
+      ],
+      "launch": "/game/snake/play.html?mode=solo&level=classic-living-cable-cutoff&targets=authored&board=retro&seed=17",
+      "qualification": {
+        "structuralAdmission": "accepted",
+        "proposedQualificationSeed": 17,
+        "demonstratedCompletionRoute": null,
+        "humanPlay": "pending",
+        "deviceAndPerformance": "pending",
+        "studioRoundTrip": "pending-manual-review",
+        "publicRelease": "not-qualified"
+      }
+    },
+    {
+      "family": "Classic Snake",
+      "id": "classic-living-return-pincer",
+      "revision": "1",
+      "title": "Return Pincer",
+      "titleUk": "Обхідні лещата",
+      "challenge": "Pair goals alternate across the long divider. In Team, use separate returns and keep both cables clear.",
+      "provenance": {
+        "owner": "official-catalogue",
+        "source": "classic-snake-twin-intercepts",
+        "format": "classic-snake-level.v3"
+      },
+      "modes": ["solo", "versus", "team"],
+      "recipes": [
+        {
+          "pace": "slow",
+          "format": "classic-snake-level.v3",
+          "identity": "44303935c441ef01b6de7131e6a9a4be9b51cc5c5127e49889519b13fcb50666"
+        },
+        {
+          "pace": "normal",
+          "format": "classic-snake-level.v3",
+          "identity": "37a1fdb87e6e8658abca1e8e09ee01cd56a558c3b3d5c2a0e6991167242266b8"
+        },
+        {
+          "pace": "fast",
+          "format": "classic-snake-level.v3",
+          "identity": "9ea8058fc236ec5a16bfed9df0f10cd9b0515e7e5d2656cec8b2163cdcae303e"
+        }
+      ],
+      "launch": "/game/snake/play.html?mode=solo&level=classic-living-return-pincer&targets=authored&board=retro&seed=17",
+      "qualification": {
+        "structuralAdmission": "accepted",
+        "proposedQualificationSeed": 17,
+        "demonstratedCompletionRoute": null,
+        "humanPlay": "pending",
+        "deviceAndPerformance": "pending",
+        "studioRoundTrip": "pending-manual-review",
+        "publicRelease": "not-qualified"
+      }
+    },
+    {
+      "family": "Classic Snake",
+      "id": "classic-living-twin-intercepts",
+      "revision": "1",
+      "title": "Twin Intercepts",
+      "titleUk": "Подвійні перехоплення",
+      "challenge": "Refuge seekers, runners and switchbacks share three courtyards. Choose a different approach for each intention.",
+      "provenance": {
+        "owner": "official-catalogue",
+        "source": "classic-snake-twin-intercepts",
+        "format": "classic-snake-level.v3"
+      },
+      "modes": ["solo", "versus", "team"],
+      "recipes": [
+        {
+          "pace": "slow",
+          "format": "classic-snake-level.v3",
+          "identity": "29759a950e8345a35b8fd3a9e2fabd21f7e21c6aa79c1ddd56fe9c70310bf6b2"
+        },
+        {
+          "pace": "normal",
+          "format": "classic-snake-level.v3",
+          "identity": "6e26e7f21097a9a1e266424fe36c200271674754a51703e7bec7b429b4bbcb72"
+        },
+        {
+          "pace": "fast",
+          "format": "classic-snake-level.v3",
+          "identity": "90f14d0c0eb9b57a2643fa07a403c25c94e45e3d2ff1be5d31bd9615ddde649a"
+        }
+      ],
+      "launch": "/game/snake/play.html?mode=solo&level=classic-living-twin-intercepts&targets=authored&board=retro&seed=17",
+      "qualification": {
+        "structuralAdmission": "accepted",
+        "proposedQualificationSeed": 17,
+        "demonstratedCompletionRoute": null,
+        "humanPlay": "pending",
+        "deviceAndPerformance": "pending",
+        "studioRoundTrip": "pending-manual-review",
+        "publicRelease": "not-qualified"
+      }
+    },
+    {
+      "family": "Classic Snake",
+      "id": "classic-living-shield-window",
+      "revision": "1",
+      "title": "Shield Window",
+      "titleUk": "Вікно щита",
+      "challenge": "Specialist: the marked shield front is fatal. Catch from the side or rear; a warned turn keeps its old facing until complete.",
+      "provenance": {
+        "owner": "official-catalogue",
+        "source": "classic-snake-moving-windows",
+        "format": "classic-snake-level.v3"
+      },
+      "modes": ["solo", "versus", "team"],
+      "recipes": [
+        {
+          "pace": "slow",
+          "format": "classic-snake-level.v3",
+          "identity": "4d8ca57c67064cb2a6e7c56ef85ea9aebadb909783de08f63044674949e1b00c"
+        },
+        {
+          "pace": "normal",
+          "format": "classic-snake-level.v3",
+          "identity": "17517b91cf169c9bf10277cd6c5372bc6734a330f4cf042f798caf6f1859f45e"
+        },
+        {
+          "pace": "fast",
+          "format": "classic-snake-level.v3",
+          "identity": "c571aa30b809350df638f46f07fdd26b27583d82332bbaa40cc0212d8e21fc23"
+        }
+      ],
+      "launch": "/game/snake/play.html?mode=solo&level=classic-living-shield-window&targets=authored&board=retro&seed=17",
+      "qualification": {
+        "structuralAdmission": "accepted",
+        "proposedQualificationSeed": 17,
+        "demonstratedCompletionRoute": null,
+        "humanPlay": "pending",
+        "deviceAndPerformance": "pending",
+        "studioRoundTrip": "pending-manual-review",
+        "publicRelease": "not-qualified"
+      }
+    },
+    {
+      "family": "Classic Snake",
+      "id": "classic-living-brace-break",
+      "revision": "1",
+      "title": "Brace Break",
+      "titleUk": "Пауза броні",
+      "challenge": "Specialist: warning and burst are protected. Catch during the long recovery, when the armor visibly opens.",
+      "provenance": {
+        "owner": "official-catalogue",
+        "source": "classic-snake-moving-windows",
+        "format": "classic-snake-level.v3"
+      },
+      "modes": ["solo", "versus", "team"],
+      "recipes": [
+        {
+          "pace": "slow",
+          "format": "classic-snake-level.v3",
+          "identity": "1fcf173a6c5b8335313da3a1ef644bda0a3237126052a231af7fd2e448cf4862"
+        },
+        {
+          "pace": "normal",
+          "format": "classic-snake-level.v3",
+          "identity": "64b926280fc54736e0cee42e7a947a03ef99bf21c58e7f94d0474583edcf80fb"
+        },
+        {
+          "pace": "fast",
+          "format": "classic-snake-level.v3",
+          "identity": "8fd3d689940a5c724a892bdbd7165d280630ae135767630cf3346be3c751c8ae"
+        }
+      ],
+      "launch": "/game/snake/play.html?mode=solo&level=classic-living-brace-break&targets=authored&board=retro&seed=17",
+      "qualification": {
+        "structuralAdmission": "accepted",
+        "proposedQualificationSeed": 17,
+        "demonstratedCompletionRoute": null,
+        "humanPlay": "pending",
+        "deviceAndPerformance": "pending",
+        "studioRoundTrip": "pending-manual-review",
+        "publicRelease": "not-qualified"
+      }
+    },
+    {
+      "family": "Classic Snake",
+      "id": "classic-living-shutter-flank",
+      "revision": "1",
+      "title": "Shutter Flank",
+      "titleUk": "Фланг заслінки",
+      "challenge": "The center shortcut opens beside the shield. Take the permanent outer return when either danger blocks the approach.",
+      "provenance": {
+        "owner": "official-catalogue",
+        "source": "classic-snake-moving-windows",
+        "format": "classic-snake-level.v3"
+      },
+      "modes": ["solo", "versus", "team"],
+      "recipes": [
+        {
+          "pace": "slow",
+          "format": "classic-snake-level.v3",
+          "identity": "2c93cf5a6318813f7246d9f096dd0698f77dd6143cd481bd485580ee276370d7"
+        },
+        {
+          "pace": "normal",
+          "format": "classic-snake-level.v3",
+          "identity": "c8f64d6af3de6227c1de074ef898ee52a76ea768eb15df5d7d30ad5835090333"
+        },
+        {
+          "pace": "fast",
+          "format": "classic-snake-level.v3",
+          "identity": "e504f5bd41acf19443999704af802905113132e289191e80be4fb38f830c567b"
+        }
+      ],
+      "launch": "/game/snake/play.html?mode=solo&level=classic-living-shutter-flank&targets=authored&board=retro&seed=17",
+      "qualification": {
+        "structuralAdmission": "accepted",
+        "proposedQualificationSeed": 17,
+        "demonstratedCompletionRoute": null,
+        "humanPlay": "pending",
+        "deviceAndPerformance": "pending",
+        "studioRoundTrip": "pending-manual-review",
+        "publicRelease": "not-qualified"
+      }
+    },
+    {
+      "family": "Classic Snake",
+      "id": "classic-living-frozen-opening",
+      "revision": "1",
+      "title": "Frozen Opening",
+      "titleUk": "Завмерле вікно",
+      "challenge": "Pulse freezes the current armor state, not just movement. Collect it during recovery to extend the safe catch window.",
+      "provenance": {
+        "owner": "official-catalogue",
+        "source": "classic-snake-moving-windows",
+        "format": "classic-snake-level.v3"
+      },
+      "modes": ["solo", "versus", "team"],
+      "recipes": [
+        {
+          "pace": "slow",
+          "format": "classic-snake-level.v3",
+          "identity": "e699b93ac7fe19562de6491d3d21c961d40970130a9445e8450270291c731169"
+        },
+        {
+          "pace": "normal",
+          "format": "classic-snake-level.v3",
+          "identity": "64f76000fccfd1855108da3f69b11f0bc860d48d45f208cac33e73695d5ed31d"
+        },
+        {
+          "pace": "fast",
+          "format": "classic-snake-level.v3",
+          "identity": "55d8906b208f990350f2dcbb4d3c0874cc86c0a3dbf73fda32d1359d843c2beb"
+        }
+      ],
+      "launch": "/game/snake/play.html?mode=solo&level=classic-living-frozen-opening&targets=authored&board=retro&seed=17",
+      "qualification": {
+        "structuralAdmission": "accepted",
+        "proposedQualificationSeed": 17,
+        "demonstratedCompletionRoute": null,
+        "humanPlay": "pending",
+        "deviceAndPerformance": "pending",
+        "studioRoundTrip": "pending-manual-review",
+        "publicRelease": "not-qualified"
+      }
+    },
+    {
+      "family": "Classic Snake",
+      "id": "classic-living-supply-flanks",
+      "revision": "1",
+      "title": "Supply Flanks",
+      "titleUk": "Припаси на флангах",
+      "challenge": "Refuge goals and shield flanks compete with supply detours. Reel frees space, but cannot undo a collision.",
+      "provenance": {
+        "owner": "official-catalogue",
+        "source": "classic-snake-moving-windows",
+        "format": "classic-snake-level.v3"
+      },
+      "modes": ["solo", "versus", "team"],
+      "recipes": [
+        {
+          "pace": "slow",
+          "format": "classic-snake-level.v3",
+          "identity": "eb7e0e794e07de18f331e3a4eab6caa713d652a12b9c3482d352e684f37d42c3"
+        },
+        {
+          "pace": "normal",
+          "format": "classic-snake-level.v3",
+          "identity": "82ce11d02c38babbe0c83f148064aad02e77e33405532368cced73c7852f7eb7"
+        },
+        {
+          "pace": "fast",
+          "format": "classic-snake-level.v3",
+          "identity": "5b02cee348a7d108aee09f3e5e86c9be07a796e32a5913cf69c7ba81979a0a68"
+        }
+      ],
+      "launch": "/game/snake/play.html?mode=solo&level=classic-living-supply-flanks&targets=authored&board=retro&seed=17",
+      "qualification": {
+        "structuralAdmission": "accepted",
+        "proposedQualificationSeed": 17,
+        "demonstratedCompletionRoute": null,
+        "humanPlay": "pending",
+        "deviceAndPerformance": "pending",
+        "studioRoundTrip": "pending-manual-review",
+        "publicRelease": "not-qualified"
+      }
+    },
+    {
+      "family": "Classic Snake",
+      "id": "classic-living-living-airfield",
+      "revision": "1",
+      "title": "Living Airfield",
+      "titleUk": "Живий аеродром",
+      "challenge": "Two timed crossings link specialist and ordinary prey. Read each silhouette, choose a safe return, then commit.",
+      "provenance": {
+        "owner": "official-catalogue",
+        "source": "classic-snake-moving-windows",
+        "format": "classic-snake-level.v3"
+      },
+      "modes": ["solo", "versus", "team"],
+      "recipes": [
+        {
+          "pace": "slow",
+          "format": "classic-snake-level.v3",
+          "identity": "d6ca87ae676ec88aa6c28cd5d9d97d5340ae7d09f50a037b7fddcb63b622d0b5"
+        },
+        {
+          "pace": "normal",
+          "format": "classic-snake-level.v3",
+          "identity": "7e0eb3480cfef0e45742dc87186200bb42af07c1910cef4da8012dc8be0456f4"
+        },
+        {
+          "pace": "fast",
+          "format": "classic-snake-level.v3",
+          "identity": "31ed387ccc7d81446ee06e37df865db26c7d0c343566d4dc3d9e675e16cd413d"
+        }
+      ],
+      "launch": "/game/snake/play.html?mode=solo&level=classic-living-living-airfield&targets=authored&board=retro&seed=17",
+      "qualification": {
+        "structuralAdmission": "accepted",
+        "proposedQualificationSeed": 17,
+        "demonstratedCompletionRoute": null,
+        "humanPlay": "pending",
+        "deviceAndPerformance": "pending",
+        "studioRoundTrip": "pending-manual-review",
+        "publicRelease": "not-qualified"
+      }
+    },
+    {
+      "family": "FPV SIM",
+      "id": "snake-hunt-ground-routes-low-pass-depot",
+      "revision": "r1",
+      "title": "Low Pass Depot",
+      "titleUk": "Депо низьких прольотів",
+      "challenge": "Meet a slow perimeter patrol at a low crate crossing. Cut across the depot instead of following the loop.",
+      "provenance": {
+        "owner": "official-optional-package",
+        "source": "civilian-fpv",
+        "format": "FlightCourse.v2"
+      },
+      "modes": ["self-level", "acro"],
+      "recipes": [
+        {
+          "format": "FlightCourse.v2",
+          "identity": "ecf2ac1669bd02dd91abcb0eea3836ad5c99d597e6cec1a3e62966e4ef69a067"
+        }
+      ],
+      "launch": "/game/snake/#sim-title",
+      "qualification": {
+        "structuralAdmission": "accepted",
+        "proposedQualificationSeed": 9601,
+        "demonstratedCompletionRoute": null,
+        "humanPlay": "pending",
+        "deviceAndPerformance": "pending",
+        "studioRoundTrip": "pending-manual-review",
+        "publicRelease": "not-qualified"
+      }
+    },
+    {
+      "family": "FPV SIM",
+      "id": "snake-hunt-ground-routes-split-yard-return",
+      "revision": "r1",
+      "title": "Split Yard Return",
+      "titleUk": "Повернення розділеним двором",
+      "challenge": "Two independent patrol loops flank a divider. Return around its end or rise over it to change sides.",
+      "provenance": {
+        "owner": "official-optional-package",
+        "source": "civilian-fpv",
+        "format": "FlightCourse.v2"
+      },
+      "modes": ["self-level", "acro"],
+      "recipes": [
+        {
+          "format": "FlightCourse.v2",
+          "identity": "09238ab762a507e0137bf686542a3c9525d9fcaafe0a89be715aace7f6be7231"
+        }
+      ],
+      "launch": "/game/snake/#sim-title",
+      "qualification": {
+        "structuralAdmission": "accepted",
+        "proposedQualificationSeed": 9602,
+        "demonstratedCompletionRoute": null,
+        "humanPlay": "pending",
+        "deviceAndPerformance": "pending",
+        "studioRoundTrip": "pending-manual-review",
+        "publicRelease": "not-qualified"
+      }
+    },
+    {
+      "family": "FPV SIM",
+      "id": "snake-hunt-ground-routes-crossing-arrivals",
+      "revision": "r1",
+      "title": "Crossing Arrivals",
+      "titleUk": "Зустрічні маршрути",
+      "challenge": "Long and short patrol rectangles share two crossings. Choose an arrival to intercept rather than chase the closest body.",
+      "provenance": {
+        "owner": "official-optional-package",
+        "source": "civilian-fpv",
+        "format": "FlightCourse.v2"
+      },
+      "modes": ["self-level", "acro"],
+      "recipes": [
+        {
+          "format": "FlightCourse.v2",
+          "identity": "3637a833113401f185fec34d7215a901a5a1628a0abd0ad16d6b75faf142b266"
+        }
+      ],
+      "launch": "/game/snake/#sim-title",
+      "qualification": {
+        "structuralAdmission": "accepted",
+        "proposedQualificationSeed": 9603,
+        "demonstratedCompletionRoute": null,
+        "humanPlay": "pending",
+        "deviceAndPerformance": "pending",
+        "studioRoundTrip": "pending-manual-review",
+        "publicRelease": "not-qualified"
+      }
+    },
+    {
+      "family": "FPV SIM",
+      "id": "snake-hunt-ground-routes-shelter-arc",
+      "revision": "r1",
+      "title": "Shelter Arc",
+      "titleUk": "Дуга біля укриття",
+      "challenge": "A horseshoe route passes through a broad sheltered lane. Wait at its open return or fly over the low shelter.",
+      "provenance": {
+        "owner": "official-optional-package",
+        "source": "civilian-fpv",
+        "format": "FlightCourse.v2"
+      },
+      "modes": ["self-level", "acro"],
+      "recipes": [
+        {
+          "format": "FlightCourse.v2",
+          "identity": "965ca6daa0cdf2402984df680a33e3c1e9b6ecb8519906437d5e1f0fa1f64f78"
+        }
+      ],
+      "launch": "/game/snake/#sim-title",
+      "qualification": {
+        "structuralAdmission": "accepted",
+        "proposedQualificationSeed": 9604,
+        "demonstratedCompletionRoute": null,
+        "humanPlay": "pending",
+        "deviceAndPerformance": "pending",
+        "studioRoundTrip": "pending-manual-review",
+        "publicRelease": "not-qualified"
+      }
+    },
+    {
+      "family": "FPV SIM",
+      "id": "snake-hunt-ground-routes-freight-slalom",
+      "revision": "r1",
+      "title": "Freight Slalom",
+      "titleUk": "Вантажний слалом",
+      "challenge": "Patrols weave through three long aisles. Cross over a low freight row to gain an interception without threading every turn.",
+      "provenance": {
+        "owner": "official-optional-package",
+        "source": "civilian-fpv",
+        "format": "FlightCourse.v2"
+      },
+      "modes": ["self-level", "acro"],
+      "recipes": [
+        {
+          "format": "FlightCourse.v2",
+          "identity": "d45a57f56c36607e14d122841fc6d8856fe78c389a04e5172f456f62e2baed12"
+        }
+      ],
+      "launch": "/game/snake/#sim-title",
+      "qualification": {
+        "structuralAdmission": "accepted",
+        "proposedQualificationSeed": 9605,
+        "demonstratedCompletionRoute": null,
+        "humanPlay": "pending",
+        "deviceAndPerformance": "pending",
+        "studioRoundTrip": "pending-manual-review",
+        "publicRelease": "not-qualified"
+      }
+    },
+    {
+      "family": "FPV SIM",
+      "id": "snake-hunt-ground-routes-forked-depot",
+      "revision": "r1",
+      "title": "Forked Depot",
+      "titleUk": "Розгалужене депо",
+      "challenge": "Two loops use a shared approach but different return distances. Alternate wings to leave your growing echo behind.",
+      "provenance": {
+        "owner": "official-optional-package",
+        "source": "civilian-fpv",
+        "format": "FlightCourse.v2"
+      },
+      "modes": ["self-level", "acro"],
+      "recipes": [
+        {
+          "format": "FlightCourse.v2",
+          "identity": "5d9492f6157bb1397db8f2320f2984413b2c212498e89ae380ccebb3026d68a4"
+        }
+      ],
+      "launch": "/game/snake/#sim-title",
+      "qualification": {
+        "structuralAdmission": "accepted",
+        "proposedQualificationSeed": 9606,
+        "demonstratedCompletionRoute": null,
+        "humanPlay": "pending",
+        "deviceAndPerformance": "pending",
+        "studioRoundTrip": "pending-manual-review",
+        "publicRelease": "not-qualified"
+      }
+    },
+    {
+      "family": "FPV SIM",
+      "id": "snake-hunt-approach-windows-low-roof-window",
+      "revision": "r1",
+      "title": "Low Roof Window",
+      "titleUk": "Вікно під низьким дахом",
+      "challenge": "A broad canopy leaves a low approach underneath and an open aerial bypass. Settle your altitude before the patrol arrives.",
+      "provenance": {
+        "owner": "official-optional-package",
+        "source": "civilian-fpv",
+        "format": "FlightCourse.v2"
+      },
+      "modes": ["self-level", "acro"],
+      "recipes": [
+        {
+          "format": "FlightCourse.v2",
+          "identity": "eac6f119e9270acf958a850978c577dc64abd5dd474ff8c71a5835c8954a7fbc"
+        }
+      ],
+      "launch": "/game/snake/#sim-title",
+      "qualification": {
+        "structuralAdmission": "accepted",
+        "proposedQualificationSeed": 9607,
+        "demonstratedCompletionRoute": null,
+        "humanPlay": "pending",
+        "deviceAndPerformance": "pending",
+        "studioRoundTrip": "pending-manual-review",
+        "publicRelease": "not-qualified"
+      }
+    },
+    {
+      "family": "FPV SIM",
+      "id": "snake-hunt-approach-windows-roofline-exchange",
+      "revision": "r1",
+      "title": "Roofline Exchange",
+      "titleUk": "Обмін між дахами",
+      "challenge": "Patrols occupy two separate raised platforms. Gain height in the open centre, then descend toward each marked torso.",
+      "provenance": {
+        "owner": "official-optional-package",
+        "source": "civilian-fpv",
+        "format": "FlightCourse.v2"
+      },
+      "modes": ["self-level", "acro"],
+      "recipes": [
+        {
+          "format": "FlightCourse.v2",
+          "identity": "db8f8150f998309a8dc41e4f4a55108c7cb763ff806f7155710c0ccbd3912754"
+        }
+      ],
+      "launch": "/game/snake/#sim-title",
+      "qualification": {
+        "structuralAdmission": "accepted",
+        "proposedQualificationSeed": 9608,
+        "demonstratedCompletionRoute": null,
+        "humanPlay": "pending",
+        "deviceAndPerformance": "pending",
+        "studioRoundTrip": "pending-manual-review",
+        "publicRelease": "not-qualified"
+      }
+    },
+    {
+      "family": "FPV SIM",
+      "id": "snake-hunt-approach-windows-return-slot",
+      "revision": "r1",
+      "title": "Return Slot",
+      "titleUk": "Щілина повернення",
+      "challenge": "A long wall has one wide ground-level slot. Intercept there or spend height to take the outer return.",
+      "provenance": {
+        "owner": "official-optional-package",
+        "source": "civilian-fpv",
+        "format": "FlightCourse.v2"
+      },
+      "modes": ["self-level", "acro"],
+      "recipes": [
+        {
+          "format": "FlightCourse.v2",
+          "identity": "b0e098726bc407a09acdc8f7eadaff26f79697d19b4274c0d7ceeb73a1b51132"
+        }
+      ],
+      "launch": "/game/snake/#sim-title",
+      "qualification": {
+        "structuralAdmission": "accepted",
+        "proposedQualificationSeed": 9609,
+        "demonstratedCompletionRoute": null,
+        "humanPlay": "pending",
+        "deviceAndPerformance": "pending",
+        "studioRoundTrip": "pending-manual-review",
+        "publicRelease": "not-qualified"
+      }
+    },
+    {
+      "family": "FPV SIM",
+      "id": "snake-hunt-approach-windows-staggered-roofs",
+      "revision": "r1",
+      "title": "Staggered Roofs",
+      "titleUk": "Дахи різної висоти",
+      "challenge": "A perimeter patrol surrounds three unequal roofs. Choose the low crossing or a wider, flatter approach.",
+      "provenance": {
+        "owner": "official-optional-package",
+        "source": "civilian-fpv",
+        "format": "FlightCourse.v2"
+      },
+      "modes": ["self-level", "acro"],
+      "recipes": [
+        {
+          "format": "FlightCourse.v2",
+          "identity": "f17715458386a7e0f266c2a7baeacb62dbd80bd1316a4c1a9dca0f9b5e8067e9"
+        }
+      ],
+      "launch": "/game/snake/#sim-title",
+      "qualification": {
+        "structuralAdmission": "accepted",
+        "proposedQualificationSeed": 9610,
+        "demonstratedCompletionRoute": null,
+        "humanPlay": "pending",
+        "deviceAndPerformance": "pending",
+        "studioRoundTrip": "pending-manual-review",
+        "publicRelease": "not-qualified"
+      }
+    },
+    {
+      "family": "FPV SIM",
+      "id": "snake-hunt-approach-windows-window-chain",
+      "revision": "r1",
+      "title": "Window Chain",
+      "titleUk": "Ланцюжок вікон",
+      "challenge": "Two low canopies interrupt opposite patrol straights. Clear each approach before committing and keep the echo out of your return.",
+      "provenance": {
+        "owner": "official-optional-package",
+        "source": "civilian-fpv",
+        "format": "FlightCourse.v2"
+      },
+      "modes": ["self-level", "acro"],
+      "recipes": [
+        {
+          "format": "FlightCourse.v2",
+          "identity": "4473413507d03e9f41c8c18598bf6736e0d90730f8a38587ceaa6f04c614f1ed"
+        }
+      ],
+      "launch": "/game/snake/#sim-title",
+      "qualification": {
+        "structuralAdmission": "accepted",
+        "proposedQualificationSeed": 9611,
+        "demonstratedCompletionRoute": null,
+        "humanPlay": "pending",
+        "deviceAndPerformance": "pending",
+        "studioRoundTrip": "pending-manual-review",
+        "publicRelease": "not-qualified"
+      }
+    },
+    {
+      "family": "FPV SIM",
+      "id": "snake-hunt-approach-windows-three-yard-finale",
+      "revision": "r1",
+      "title": "Three-yard Finale",
+      "titleUk": "Фінал трьох дворів",
+      "challenge": "Three courtyards offer low passages and aerial shortcuts. Plan a sweep that leaves space for eight catches and a long echo.",
+      "provenance": {
+        "owner": "official-optional-package",
+        "source": "civilian-fpv",
+        "format": "FlightCourse.v2"
+      },
+      "modes": ["self-level", "acro"],
+      "recipes": [
+        {
+          "format": "FlightCourse.v2",
+          "identity": "64897ea26116502a5aec5acda812c63d92e1361313622b98e6ae37ce395bd56b"
+        }
+      ],
+      "launch": "/game/snake/#sim-title",
+      "qualification": {
+        "structuralAdmission": "accepted",
+        "proposedQualificationSeed": 9612,
+        "demonstratedCompletionRoute": null,
+        "humanPlay": "pending",
+        "deviceAndPerformance": "pending",
+        "studioRoundTrip": "pending-manual-review",
+        "publicRelease": "not-qualified"
+      }
+    }
+  ]
+}

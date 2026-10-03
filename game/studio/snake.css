@@ -1,0 +1,142 @@
+* {
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+  background: var(--iw-ink, #101d21);
+  color: var(--iw-text, #f4f0df);
+  font: 16px/1.5 var(--iw-font-ui, 'Field Kit UI', sans-serif);
+}
+main {
+  max-width: 1400px;
+  margin: auto;
+  padding: clamp(12px, 3vw, 32px);
+}
+h1 {
+  margin: 16px 0 8px;
+}
+a {
+  color: var(--iw-accent, #b9ec83);
+}
+nav,
+.actions,
+.fields {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: end;
+}
+label {
+  display: grid;
+  gap: 5px;
+  min-width: 140px;
+  flex: 1 1 180px;
+}
+button,
+select,
+input,
+textarea {
+  min-height: 44px;
+  border: 1px solid var(--iw-line, #5a7376);
+  border-radius: 5px;
+  background: var(--iw-panel, #223338);
+  color: inherit;
+  font: inherit;
+  padding: 9px 12px;
+  max-width: 100%;
+}
+button {
+  cursor: pointer;
+}
+button:hover {
+  border-color: var(--iw-accent, #b9ec83);
+}
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+:focus-visible {
+  outline: 3px solid var(--iw-accent, #b9ec83);
+  outline-offset: 3px;
+}
+.layout {
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) minmax(250px, 1fr);
+  gap: 24px;
+  margin-top: 22px;
+}
+section {
+  min-width: 0;
+}
+canvas {
+  display: block;
+  width: 100%;
+  height: auto;
+  touch-action: none;
+  border: 2px solid var(--iw-accent, #b9ec83);
+  background: #101d21;
+}
+.fields {
+  margin: 12px 0;
+}
+#studio-status {
+  padding: 12px;
+  min-height: 48px;
+  border-left: 4px solid var(--iw-accent, #b9ec83);
+  background: var(--iw-panel, #223338);
+  overflow-wrap: anywhere;
+}
+#studio-status[data-error='true'] {
+  border-left-color: var(--iw-hazard, #ffb1a0);
+}
+textarea {
+  width: 100%;
+  min-height: 100px;
+}
+#package-source {
+  min-height: 300px;
+  font: 13px/1.5 monospace;
+}
+small {
+  color: var(--iw-muted, #bdccce);
+}
+.file-label {
+  max-width: 310px;
+}
+.preview {
+  width: 100%;
+  max-width: 260px;
+  height: auto;
+  border: 0;
+}
+.enemy-guide-card {
+  margin: 12px 0;
+  padding: 12px;
+  border: 1px solid var(--iw-line, #5a7376);
+  background: var(--iw-panel, #223338);
+  overflow-wrap: anywhere;
+}
+.enemy-guide-card h3 {
+  margin: 0 0 8px;
+}
+.enemy-guide-card p {
+  margin: 8px 0 0;
+}
+canvas.enemy-guide-icon {
+  float: right;
+  width: 56px;
+  height: 56px;
+  margin: 0 0 8px 8px;
+  border: 0;
+}
+.enemy-hazard {
+  color: var(--iw-hazard, #ffb1a0);
+}
+@media (max-width: 760px) {
+  .layout {
+    grid-template-columns: 1fr;
+  }
+  .fields > * {
+    flex-basis: 140px;
+  }
+}

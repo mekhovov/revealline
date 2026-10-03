@@ -4,7 +4,7 @@ import { prepareStillAsset } from '../media-still.mjs';
 import { openVideoPosterSource, VIDEO_POSTER_LIMITS } from '../video-poster.mjs';
 import { creatorAbort, creatorSHA256, ownCreatorBlob } from './bytes.mjs';
 import {
-  CREATOR_TEAM_PORTABLE_FORMAT,
+  CREATOR_TEAM_PORTABLE_FORMATS,
   CREATOR_TEAM_PORTABLE_MIME,
   exportCreatorTeamCampaign,
   importCreatorTeamCampaign,
@@ -33,7 +33,7 @@ const copy = (value) =>
   boundedJSON(value, {
     maxBytes: CREATOR_TEAM_MEDIA_LIMITS.manifestBytes,
     maxNodes: 100000,
-    maxDepth: 24,
+    maxDepth: 32,
     maxArray: 4096,
     maxString: 8192,
   });
@@ -184,7 +184,10 @@ function gameplayDocument(prepared) {
   );
   return portable.text().then((value) => {
     const document = copy(value);
-    required(document.format === CREATOR_TEAM_PORTABLE_FORMAT, 'Invalid Team gameplay payload.');
+    required(
+      CREATOR_TEAM_PORTABLE_FORMATS.includes(document.format),
+      'Invalid Team gameplay payload.',
+    );
     return document;
   });
 }

@@ -1,3 +1,4 @@
+import { pursuitRoster } from '../hunt/pursuit-goals.mjs';
 import { prepareTeamRunningEnemies } from '../hunt/team-running-enemies.mjs';
 import { createRunningEnemyPreferences } from '../hunt/running-enemy-preferences.mjs';
 import { mountRunningEnemyControls } from '../ui/running-enemy-controls.mjs';
@@ -922,6 +923,8 @@ export function bootCoop({
         document,
         window,
         preferences: runningEnemyPreferences,
+        getAcceptedStyle: () => (run ? (run.level.pursuit ? 'varied' : 'original') : null),
+        getAcceptedActors: () => pursuitRoster(run?.level),
         getCurrentEnabled: () => (run ? Boolean(run.level.hunt) : null),
         getAcceptedEnabled: () =>
           run
@@ -934,6 +937,7 @@ export function bootCoop({
           closeSettings({ restore: false });
           requestDeparture('retry', primary(), {
             runningEnemies: runningEnemyPreferences.snapshot().enabled,
+            runningEnemyStyle: runningEnemyPreferences.snapshot().style,
           });
         },
         getAvailability: () => {
@@ -942,7 +946,9 @@ export function bootCoop({
             const tuning = gameplayTuning.snapshot(
               source.journeyDifficulty ?? $('coop-difficulty').value,
             );
-            prepareTeamRunningEnemies(applyGameplayTuning(source, tuning));
+            prepareTeamRunningEnemies(applyGameplayTuning(source, tuning), {
+              style: runningEnemyPreferences.snapshot().style,
+            });
             return { available: true, reason: '' };
           } catch (error) {
             return { available: false, reason: error.message };
@@ -2863,6 +2869,7 @@ export function bootCoop({
     const recipe = freshRecipe(structuredClone(destination), currentRecipe().options, {
       encounterVariant: attemptTuning.get(run)?.encounterVariant ?? 'authored',
       runningEnemies: runningEnemyPreferences.snapshot().enabled,
+      runningEnemyStyle: runningEnemyPreferences.snapshot().style,
     });
     const nextDiscoveryRow = navigation.nextDiscoveryRow;
     const nextPack = nextDiscoveryRow?.pack ?? navigation.nextRow?.pack;
@@ -3446,6 +3453,7 @@ export function bootCoop({
         ? {
             encounterVariant: restored.snapshot.encounterVariant ?? 'authored',
             runningEnemies: Boolean(restored.snapshot.runningEnemies),
+            runningEnemyStyle: restored.snapshot.runningEnemyStyle ?? 'original',
             tuning: restored.snapshot.tuning,
           }
         : null,
@@ -3654,6 +3662,7 @@ export function bootCoop({
           encounterLevel: recipe.encounterLevel,
           encounterVariant: recipe.encounterVariant,
           runningEnemies: recipe.runningEnemies,
+          runningEnemyStyle: recipe.runningEnemyStyle,
           runtimeLevel: preparedRuntimeLevel(recipe),
           encounterPack: recipe.encounterPack,
           adminOverride: restored.snapshot.tuning.adminOverride,
@@ -3921,6 +3930,7 @@ export function bootCoop({
                   segments: promoted.snapshot.segments,
                   encounterVariant: promoted.snapshot.encounterVariant,
                   runningEnemies: Boolean(promoted.snapshot.runningEnemies),
+                  runningEnemyStyle: promoted.snapshot.runningEnemyStyle ?? 'original',
                   encounterLevelIdentity: promoted.snapshot.encounterLevelIdentity,
                 }),
               }
@@ -4690,6 +4700,9 @@ export function bootCoop({
       runningEnemies: accepted
         ? Boolean(accepted.runningEnemies)
         : runningEnemyPreferences.snapshot().enabled,
+      runningEnemyStyle: accepted
+        ? (accepted.runningEnemyStyle ?? 'original')
+        : runningEnemyPreferences.snapshot().style,
       encounterPack,
       tuning:
         accepted?.tuning ?? gameplayTuning.snapshot(level.journeyDifficulty ?? options.difficulty),
@@ -4709,7 +4722,9 @@ export function bootCoop({
   }
   function preparedRuntimeLevel(recipe) {
     const tuned = applyGameplayTuning(recipe.encounterLevel ?? recipe.level, recipe.tuning);
-    return recipe.runningEnemies ? prepareTeamRunningEnemies(tuned) : tuned;
+    return recipe.runningEnemies
+      ? prepareTeamRunningEnemies(tuned, { style: recipe.runningEnemyStyle })
+      : tuned;
   }
   function createTunedCoop(recipe) {
     const level = preparedRuntimeLevel(recipe);
@@ -4720,6 +4735,7 @@ export function bootCoop({
       encounterLevel: recipe.encounterLevel ?? recipe.level,
       encounterVariant: recipe.encounterVariant ?? 'authored',
       runningEnemies: recipe.runningEnemies ?? false,
+      runningEnemyStyle: recipe.runningEnemyStyle ?? 'original',
       runtimeLevel: level,
       encounterPack: recipe.encounterPack ?? null,
       adminOverride: recipe.tuning.adminOverride,
@@ -5387,6 +5403,8 @@ export function bootCoop({
     prepareReactionAttempt();
     contextualReactions?.events(run.events, {
       mode: 'team',
+      actorFamilyFor: (id) => pursuitRoster(run.level).find((actor) => actor.id === id)?.family,
+      actorFamilies: pursuitRoster(run.level).map((actor) => actor.family),
       board: 'team',
       danger:
         run.combatPatrols?.actors.some((actor) => actor.alive && actor.phase === 'warning') ||
@@ -5598,6 +5616,7 @@ export function bootCoop({
       encounterLevel: tuning.encounterLevel,
       encounterVariant: tuning.encounterVariant,
       runningEnemies: tuning.runningEnemies,
+      runningEnemyStyle: tuning.runningEnemyStyle,
       attemptId,
       gameplayId: tuning.gameplayId,
       restored,
@@ -5691,6 +5710,7 @@ export function bootCoop({
         tuning: tuning.tuning,
         encounterVariant: tuning.encounterVariant ?? 'authored',
         runningEnemies: tuning.runningEnemies ?? false,
+        runningEnemyStyle: tuning.runningEnemyStyle,
         encounterLevelIdentity: dataIdentity(tuning.encounterLevel ?? tuning.pictureLevel),
         segments: structuredClone(restored?.snapshot.segments ?? []),
         generation: restored?.generation ?? progress?.generation,
@@ -5723,6 +5743,7 @@ export function bootCoop({
       segments: record.segments,
       encounterVariant: record.encounterVariant,
       runningEnemies: record.runningEnemies,
+      runningEnemyStyle: record.runningEnemyStyle,
       encounterLevelIdentity: record.encounterLevelIdentity,
     });
   }
@@ -6817,6 +6838,33 @@ export function bootCoop({
   });
   if (incomingAutoStart) handoffOpening = trackMissionLibraryOpening({ document });
   void preparation.finally(() => handoffOpening?.dispose());
+  // A community Play link resolves an installed immutable edition through the
+  // same admission, saved-attempt and input-ownership path as Mission Library.
+  const requestedCommunityTeam = entryParams.get('community-team');
+  if (requestedCommunityTeam && /^[a-f0-9]{64}$/.test(requestedCommunityTeam))
+    void preparation
+      .then(async () => {
+        if (disposed || run || departure || !foreground()) return;
+        const context = teamLibraryContext();
+        await includeInstalledTeamCampaigns();
+        if (!context.isCurrent()) return;
+        const edition = installedTeamEditions.get(requestedCommunityTeam);
+        const row = installedTeamRows.find(
+          (entry) => entry.installedEditionId === requestedCommunityTeam,
+        );
+        if (!edition || !row)
+          throw new Error(
+            'This exact community Team edition is not installed. Reinstall it from Community.',
+          );
+        await launchInstalledTeamRow(edition, row, context);
+      })
+      .catch((error) => {
+        if (!disposed) {
+          retireLibraryLaunch();
+          libraryStatus(error.message, 'error');
+        }
+      });
+
   if (
     initialFocusPending &&
     !pictureOperation &&
@@ -6840,6 +6888,8 @@ try {
   if (
     [
       'humanoid-hunt-v1',
+      'pursuit-pilots-v1',
+      'pursuit-campaigns-v1',
       'snake-hunt-v1',
       'team-greybox',
       'team-originals',
@@ -6855,6 +6905,8 @@ try {
     const { createTeamGreyboxEntry } = await import('../content-design/team-entry.mjs');
     candidateEntry = await createTeamGreyboxEntry({
       huntTraining: journeyRequest === 'humanoid-hunt-v1',
+      pursuitPilots: journeyRequest === 'pursuit-pilots-v1',
+      pursuitCampaigns: journeyRequest === 'pursuit-campaigns-v1',
       snakeHunt: journeyRequest === 'snake-hunt-v1',
       artwork: journeyRequest === 'team-originals',
       pressure: journeyRequest === 'team-pressure-originals-1',

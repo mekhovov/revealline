@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>Private rooms · FPV / LINE</title>
+    <script src="../presentation/theme-bootstrap.mjs" data-theme-density="game"></script>
+    <link rel="stylesheet" href="../presentation/industrial-workshop.css" />
+    <link rel="stylesheet" href="../ui/field-kit-fonts.css" />
+    <link rel="stylesheet" href="rooms.css" />
+    <script type="module" src="rooms.mjs"></script>
+  </head>
+  <body>
+    <main>
+      <header>
+        <a href="../">FPV / LINE</a>
+        <h1 id="title">Private rooms</h1>
+        <a href="../snake/">Snake</a>
+      </header>
+      <p id="intro">
+        Play with a friend. Both players choose Ready before the server starts the exact same
+        recipe.
+      </p>
+      <p id="notice" role="status">Connecting to the room service…</p>
+      <section id="setup">
+        <label
+          ><span id="recipe-label">Mission and seats</span
+          ><select id="recipe"></select
+        ></label>
+        <label
+          ><span id="targets-label">Prey</span
+          ><select id="targets">
+            <option value="authored">As designed</option>
+            <option value="moving">Running enemies</option>
+            <option value="varied">Varied prey</option>
+          </select></label
+        >
+        <label
+          ><span id="pace-label">Snake pace</span
+          ><select id="pace">
+            <option value="slow">Slow</option>
+            <option value="normal" selected>Normal</option>
+            <option value="fast">Fast</option>
+          </select></label
+        >
+        <button id="create" disabled>Create private room</button
+        ><button id="public" hidden>Find an unranked player</button>
+      </section>
+      <section id="lobby" hidden>
+        <label id="invitation"
+          ><span id="invite-label">Invite your friend</span><input id="invite" readonly
+        /></label>
+        <p id="seats"></p>
+        <p id="identity" class="identity"></p>
+        <div class="actions">
+          <button id="ready">Ready / Resume</button><button id="pause">Pause both</button
+          ><button id="rematch" hidden>Rematch</button
+          ><button id="receipt" hidden>Save match replay</button
+          ><button id="leave">Leave room</button>
+        </div>
+      </section>
+      <div id="boards"></div>
+      <p id="result" role="status"></p>
+      <div id="controls" hidden>
+        <button data-direction="up" aria-label="Up">↑</button
+        ><button data-direction="left" aria-label="Left">←</button
+        ><button data-direction="down" aria-label="Down">↓</button
+        ><button data-direction="right" aria-label="Right">→</button
+        ><button id="support">Support / Boost</button>
+      </div>
+      <p id="keys">
+        Arrow keys or WASD steer your own drone. Space pauses both boards. A lost connection pauses
+        play; reconnect within 60 seconds, then both choose Ready.
+      </p>
+      <p id="qualification">
+        Private rooms preview · server outcomes stay separate from local chapter rewards. Public
+        matchmaking requires a qualified service.
+      </p>
+    </main>
+  </body>
+</html>

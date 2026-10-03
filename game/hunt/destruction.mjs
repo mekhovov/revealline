@@ -1,4 +1,6 @@
 import { huntDestructionBudget } from './destruction-budget.mjs';
+import { drawHuntActor } from './actor-art.mjs';
+import { sharedActorAppearance } from './preferences.mjs';
 import {
   HUNT_PRESENTATION_CATALOG as catalog,
   huntActorPresentation,
@@ -16,34 +18,103 @@ const rect = (ctx, color, x, y, w, h) => {
 };
 const { edge, blood, flesh } = catalog.palette;
 const { recipes, budgets } = catalog;
-const coatFor = (kind, accent) => {
-  const actor = huntActorPresentation(kind);
+const actorFor = (mark) => {
+  const cast = mark?.cast ?? sharedActorAppearance().snapshot().cast;
+  return huntActorPresentation(
+    typeof mark === 'string' ? mark : (mark.family ?? mark.pursuit?.behavior ?? mark.kind),
+    cast === 'authored' ? 'rivals' : cast,
+  );
+};
+const coatFor = (mark, accent) => {
+  const actor = actorFor(mark);
   return actor?.tintWithAccent ? (accent ?? actor.palette.coat) : (actor?.palette.coat ?? accent);
 };
 function art(ctx, rectangles, palette) {
   for (const [color, x, y, width, height] of rectangles)
     rect(ctx, palette[color], x, y, width, height);
 }
-export function drawHumanoidPixelBody(ctx, { kind = 'runner', pose = 0 }, palette = {}) {
-  const actor = huntActorPresentation(kind);
-  if (!actor) return;
-  const colors = { ...catalog.palette, ...actor.palette };
-  if (actor.tintWithAccent && palette.accent) colors.coat = palette.accent;
-  art(
-    ctx,
-    actor.artwork.frames[
-      (Number.isFinite(pose) ? Math.abs(Math.trunc(pose)) : 0) % actor.artwork.frames.length
-    ],
-    colors,
-  );
+export function drawHumanoidPixelBody(ctx, actor = {}, palette = {}) {
+  const kind = actor.family ?? actor.pursuit?.behavior ?? actor.kind ?? 'runner';
+  const appearance = actorFor({ ...actor, kind });
+  if (!appearance) return;
+  const phase = actor.pursuit?.phase ?? actor.phase;
+  drawHuntActor(ctx, 0, 0, 16, actor.pose ?? 0, {
+    ...actor,
+    kind,
+    heading: actor.pursuit?.heading ?? actor.heading,
+    nextHeading: actor.pursuit?.nextHeading ?? actor.nextHeading,
+    phase: phase === 'recovering' ? 'rest' : phase,
+    state: phase === 'blocked' ? 'blocked' : actor.state,
+    cast: appearance.cast,
+    palette,
+    token: false,
+    detail: 'compact',
+  });
 }
-function piece(ctx, index, bloody, color, unit) {
+function equipment(ctx, family, colors) {
+  const paint = (color, x, y, w, h) => rect(ctx, color, x, y, w, h);
+  const { coat, light, dark, ink } = colors;
+  if (family === 'courier') {
+    paint(ink, -3, -3, 6, 6);
+    paint('#c99455', -2, -2, 4, 4);
+    paint('#ffe2a2', -2, -2, 4, 1);
+    paint('#624a37', -1, -1, 2, 1);
+  } else if (family === 'lookout') {
+    paint(ink, -4, -1, 8, 1);
+    paint(ink, -4, -2, 3, 4);
+    paint(ink, 1, -2, 3, 4);
+    paint(light, -3, -2, 1, 2);
+    paint(light, 2, -2, 1, 2);
+  } else if (family === 'shield-bearer' || family === 'brace-trooper') {
+    paint(ink, -3, -3, 6, 6);
+    paint(light, -2, -2, 4, 4);
+    paint(dark, -1, -1, 2, 3);
+    paint('#bca47f', -1, -2, 2, 1);
+  } else if (family === 'relay-warden') {
+    paint('#e4c26b', -3, 0, 6, 2);
+    paint('#e4c26b', -3, -2, 1, 3);
+    paint('#e4c26b', -1, -2, 2, 3);
+    paint('#e4c26b', 2, -2, 1, 3);
+  } else if (family === 'rendezvous-pair') {
+    paint(ink, -3, -2, 6, 4);
+    paint(light, -2, -1, 2, 2);
+    paint(light, 1, -1, 2, 2);
+  } else if (family === 'switchback' || family === 'sprinter') {
+    paint(dark, -4, -2, 7, 2);
+    paint(light, -4, -2, 6, 1);
+    paint(coat, 2, -1, 2, 3);
+  } else if (family === 'guard' || family === 'patroller') {
+    paint(ink, -3, -2, 6, 4);
+    paint(coat, -2, -1, 4, 2);
+    paint(light, -3, 1, 7, 1);
+  } else {
+    paint(ink, -3, -3, 6, 6);
+    paint(coat, -2, -2, 4, 4);
+    paint(light, -2, -2, 1, 4);
+    paint(dark, 0, -2, 1, 4);
+  }
+}
+
+function piece(ctx, index, bloody, color, unit, appearance) {
   ctx.scale(unit, unit);
+  if (appearance && ((!bloody && index % 2 === 0) || (bloody && index % 6 === 4))) {
+    equipment(ctx, appearance.family, appearance.palette);
+    return;
+  }
   const material = catalog.materials[bloody ? 'flesh' : 'neutral'];
   art(ctx, material.fragments[index % material.fragments.length], {
     ...catalog.palette,
+    ...appearance?.palette,
     coat: color,
   });
+  if (appearance && bloody && index % material.fragments.length === 0) {
+    if (['guard', 'patroller', 'shield-bearer'].includes(appearance.family)) {
+      rect(ctx, appearance.palette.coat, -2, -3, 5, 1);
+      rect(ctx, appearance.palette.light, -2, -2, 5, 1);
+    } else if (appearance.family === 'sprinter') {
+      rect(ctx, appearance.palette.light, -2, -2, 5, 1);
+    }
+  }
 }
 
 export function drawHuntRemains(
@@ -52,7 +123,7 @@ export function drawHuntRemains(
   { unit = 1, brutal = false, blood: showBlood = true, color = '#79d7ce' } = {},
 ) {
   const seed = hash(`${mark.id}/${mark.tick}`),
-    bloody = brutal && showBlood && huntActorPresentation(mark.kind)?.material === 'flesh';
+    bloody = brutal && showBlood && actorFor(mark)?.material === 'flesh';
   const x = mark.x * catalog.pixelSize,
     y = mark.y * catalog.pixelSize;
   ctx.save();
@@ -77,8 +148,9 @@ export function drawHuntRemains(
       ctx,
       i,
       bloody,
-      coatFor(mark.kind, color),
+      coatFor(mark, color),
       unit * (brutal ? recipes.settled.fullScale : recipes.settled.cleanScale),
+      actorFor(mark),
     );
     ctx.restore();
   }
@@ -126,8 +198,26 @@ function impactAngle(mark, sources, seed) {
 
 /** Two compact stepped blast envelopes per painter. Both materials use the same
  * geometry; blood is a color/body recipe, never an extra damage or collision. */
+const cleanRecipe = Object.freeze({
+  life: 0.42,
+  envelopeLife: 0.14,
+  speed: 9,
+  speedRange: 7,
+  spread: 1.3,
+  gravity: 18,
+  fragments: 2,
+  trail: 1,
+  radius: 2,
+  radiusChange: 4,
+  opacity: 0.3,
+});
+const recipeForBurst = (burst) =>
+  burst.brutal
+    ? huntDestructionRecipe(burst.cause)
+    : { ...huntDestructionRecipe(burst.cause), ...cleanRecipe };
+
 function blast(ctx, burst, t, unit) {
-  const recipe = huntDestructionRecipe(burst.cause),
+  const recipe = recipeForBurst(burst),
     phase = t / recipe.envelopeLife;
   if (phase < 0 || phase >= 1) return;
   const x = burst.x * catalog.pixelSize,
@@ -182,13 +272,15 @@ export function createHuntDestruction({
     seen = new Set(),
     bursts = [],
     enabled = false,
-    bloodEnabled = false;
+    bloodEnabled = false,
+    brutalEnabled = false;
   return Object.freeze({
     reset() {
       owner = null;
       seen.clear();
       bursts = [];
       enabled = false;
+      brutalEnabled = false;
       lastAdvance = null;
       release();
       drawn = { particles: 0, envelopes: 0 };
@@ -227,25 +319,27 @@ export function createHuntDestruction({
         seen = new Set(view.eliminations.map((m) => m.id));
         bursts = [];
         release();
-        enabled = brutal;
+        enabled = true;
+        brutalEnabled = brutal;
         bloodEnabled = showBlood;
         return;
       }
-      if (!brutal || reduced || (bloodEnabled && !showBlood)) {
+      if ((!brutal && brutalEnabled) || reduced || (bloodEnabled && !showBlood)) {
         bursts = [];
         release();
       }
       if (!paused)
         bursts = bursts
           .map((b) => ({ ...b, age: b.age + Math.max(0, Math.min(0.1, dt || 0)) }))
-          .filter((b) => b.age < huntDestructionRecipe(b.cause).life);
+          .filter((b) => b.age < recipeForBurst(b).life);
       const fresh = view.eliminations.filter((m) => !seen.has(m.id));
       for (const mark of fresh) seen.add(mark.id);
       if (!bursts.length) release();
-      if (brutal && !reduced && !paused && enabled && fresh.length) {
+      if (!reduced && !paused && enabled && fresh.length) {
         lease = budget.claim(budgetOwner, { preview, cancel });
         if (!lease) {
-          enabled = brutal;
+          enabled = true;
+          brutalEnabled = brutal;
           bloodEnabled = showBlood;
           return;
         }
@@ -258,12 +352,14 @@ export function createHuntDestruction({
             age: 0,
             delay: Math.min(index, recipes.group.maximumDelaySteps) * recipes.group.delayStep,
             chain: fresh.length,
-            bloody: showBlood && huntActorPresentation(mark.kind)?.material === 'flesh',
+            brutal,
+            bloody: brutal && showBlood && actorFor(mark)?.material === 'flesh',
           });
         }
         bursts = bursts.slice(-budgets.settledClustersPerBoard);
       }
-      enabled = brutal;
+      enabled = true;
+      brutalEnabled = brutal;
       bloodEnabled = showBlood;
       if (bursts.length) lease = budget.claim(budgetOwner, { preview, cancel });
     },
@@ -288,7 +384,7 @@ export function createHuntDestruction({
       for (let eventIndex = bursts.length - 1; eventIndex >= 0; eventIndex--) {
         const burst = bursts[eventIndex],
           t = burst.age - burst.delay,
-          recipe = huntDestructionRecipe(burst.cause);
+          recipe = recipeForBurst(burst);
         if (t < 0) continue;
         if (envelopes < envelopeLimit && t < recipe.envelopeLife) {
           blast(ctx, burst, t, unit);
@@ -312,7 +408,7 @@ export function createHuntDestruction({
           ctx.save();
           ctx.translate(px, py);
           ctx.rotate(angle + t * (i % 2 ? 6 : -6));
-          piece(ctx, i, burst.bloody, coatFor(burst.kind, color), unit);
+          piece(ctx, i, burst.bloody, coatFor(burst, color), unit, actorFor(burst));
           ctx.restore();
           particles++;
           // Directional stepped droplets or neutral chips share one hard cap.
