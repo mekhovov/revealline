@@ -1,0 +1,1773 @@
+{
+  "baseline": "a8c808a26447dcea17c82852cb07b24d3059d2cb",
+  "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36",
+  "cases": [
+    {
+      "id": "woodland-08",
+      "environment": "woodland",
+      "quality": "low",
+      "maxVertexErrorMetres": 0,
+      "logicalMeshes": 92,
+      "geometries": [79, 80],
+      "batches": 24
+    },
+    {
+      "id": "woodland-08",
+      "environment": "woodland",
+      "quality": "balanced",
+      "maxVertexErrorMetres": 0,
+      "logicalMeshes": 92,
+      "geometries": [79, 80],
+      "batches": 24
+    },
+    {
+      "id": "woodland-08",
+      "environment": "woodland",
+      "quality": "high",
+      "maxVertexErrorMetres": 0,
+      "logicalMeshes": 92,
+      "geometries": [79, 80],
+      "batches": 24
+    },
+    {
+      "id": "beginner-40",
+      "environment": "woodland",
+      "quality": "low",
+      "maxVertexErrorMetres": 0,
+      "logicalMeshes": 92,
+      "geometries": [79, 80],
+      "batches": 24
+    },
+    {
+      "id": "beginner-40",
+      "environment": "woodland",
+      "quality": "balanced",
+      "maxVertexErrorMetres": 0,
+      "logicalMeshes": 92,
+      "geometries": [79, 80],
+      "batches": 24
+    },
+    {
+      "id": "beginner-40",
+      "environment": "woodland",
+      "quality": "high",
+      "maxVertexErrorMetres": 0,
+      "logicalMeshes": 92,
+      "geometries": [79, 80],
+      "batches": 24
+    },
+    {
+      "id": "woodland-pixel-check",
+      "environment": "woodland",
+      "quality": "low",
+      "maxVertexErrorMetres": 0,
+      "logicalMeshes": 92,
+      "geometries": [79, 79],
+      "batches": 24
+    },
+    {
+      "id": "woodland-pixel-check",
+      "environment": "woodland",
+      "quality": "balanced",
+      "maxVertexErrorMetres": 0,
+      "logicalMeshes": 92,
+      "geometries": [79, 79],
+      "batches": 24
+    },
+    {
+      "id": "woodland-pixel-check",
+      "environment": "woodland",
+      "quality": "high",
+      "maxVertexErrorMetres": 0,
+      "logicalMeshes": 92,
+      "geometries": [79, 79],
+      "batches": 24
+    },
+    {
+      "id": "woodland-industrial-check",
+      "environment": "woodland",
+      "quality": "low",
+      "maxVertexErrorMetres": 0,
+      "logicalMeshes": 100,
+      "geometries": [80, 80],
+      "batches": 24
+    },
+    {
+      "id": "woodland-industrial-check",
+      "environment": "woodland",
+      "quality": "balanced",
+      "maxVertexErrorMetres": 0,
+      "logicalMeshes": 100,
+      "geometries": [80, 80],
+      "batches": 24
+    },
+    {
+      "id": "woodland-industrial-check",
+      "environment": "woodland",
+      "quality": "high",
+      "maxVertexErrorMetres": 0,
+      "logicalMeshes": 100,
+      "geometries": [80, 80],
+      "batches": 24
+    },
+    {
+      "id": "flight-05",
+      "environment": "field",
+      "quality": "low",
+      "maxVertexErrorMetres": 0,
+      "logicalMeshes": 90,
+      "geometries": [76, 76],
+      "batches": 0
+    },
+    {
+      "id": "flight-05",
+      "environment": "field",
+      "quality": "balanced",
+      "maxVertexErrorMetres": 0,
+      "logicalMeshes": 90,
+      "geometries": [76, 76],
+      "batches": 0
+    },
+    {
+      "id": "flight-05",
+      "environment": "field",
+      "quality": "high",
+      "maxVertexErrorMetres": 0,
+      "logicalMeshes": 90,
+      "geometries": [76, 76],
+      "batches": 0
+    }
+  ],
+  "views": [
+    {
+      "id": "woodland-08",
+      "quality": "low",
+      "view": 0,
+      "before": {
+        "calls": 41,
+        "triangles": 4902,
+        "geometries": 30
+      },
+      "after": {
+        "calls": 45,
+        "triangles": 17442,
+        "geometries": 61
+      },
+      "changedChannelsRatio": 0.022453342013888888,
+      "meanChannelError": 1.1543815104166666
+    },
+    {
+      "id": "woodland-08",
+      "quality": "low",
+      "view": 1,
+      "before": {
+        "calls": 37,
+        "triangles": 4546,
+        "geometries": 77
+      },
+      "after": {
+        "calls": 41,
+        "triangles": 15806,
+        "geometries": 93
+      },
+      "changedChannelsRatio": 0.021810980902777777,
+      "meanChannelError": 1.1614290364583333
+    },
+    {
+      "id": "woodland-08",
+      "quality": "low",
+      "view": 2,
+      "before": {
+        "calls": 46,
+        "triangles": 5898,
+        "geometries": 115
+      },
+      "after": {
+        "calls": 50,
+        "triangles": 18438,
+        "geometries": 137
+      },
+      "changedChannelsRatio": 0.01871310763888889,
+      "meanChannelError": 0.9930512152777777
+    },
+    {
+      "id": "woodland-08",
+      "quality": "low",
+      "view": 3,
+      "before": {
+        "calls": 37,
+        "triangles": 4546,
+        "geometries": 148
+      },
+      "after": {
+        "calls": 41,
+        "triangles": 15806,
+        "geometries": 159
+      },
+      "changedChannelsRatio": 0.023084852430555556,
+      "meanChannelError": 1.130715060763889
+    },
+    {
+      "id": "woodland-08",
+      "quality": "low",
+      "view": 4,
+      "before": {
+        "calls": 102,
+        "triangles": 9594,
+        "geometries": 159
+      },
+      "after": {
+        "calls": 110,
+        "triangles": 34674,
+        "geometries": 159
+      },
+      "changedChannelsRatio": 0.023160807291666665,
+      "meanChannelError": 0.38089301215277777
+    },
+    {
+      "id": "woodland-08",
+      "quality": "low",
+      "view": 5,
+      "before": {
+        "calls": 63,
+        "triangles": 6646,
+        "geometries": 159
+      },
+      "after": {
+        "calls": 69,
+        "triangles": 25646,
+        "geometries": 159
+      },
+      "changedChannelsRatio": 0.1083203125,
+      "meanChannelError": 5.883825954861111
+    },
+    {
+      "id": "woodland-08",
+      "quality": "balanced",
+      "view": 0,
+      "before": {
+        "calls": 131,
+        "triangles": 11766,
+        "geometries": 74
+      },
+      "after": {
+        "calls": 143,
+        "triangles": 49386,
+        "geometries": 149
+      },
+      "changedChannelsRatio": 0.022805989583333332,
+      "meanChannelError": 1.1588335503472222
+    },
+    {
+      "id": "woodland-08",
+      "quality": "balanced",
+      "view": 1,
+      "before": {
+        "calls": 127,
+        "triangles": 11410,
+        "geometries": 149
+      },
+      "after": {
+        "calls": 139,
+        "triangles": 47750,
+        "geometries": 149
+      },
+      "changedChannelsRatio": 0.02292751736111111,
+      "meanChannelError": 1.1783051215277778
+    },
+    {
+      "id": "woodland-08",
+      "quality": "balanced",
+      "view": 2,
+      "before": {
+        "calls": 136,
+        "triangles": 12762,
+        "geometries": 154
+      },
+      "after": {
+        "calls": 148,
+        "triangles": 50382,
+        "geometries": 159
+      },
+      "changedChannelsRatio": 0.019300130208333332,
+      "meanChannelError": 1.0013639322916668
+    },
+    {
+      "id": "woodland-08",
+      "quality": "balanced",
+      "view": 3,
+      "before": {
+        "calls": 127,
+        "triangles": 11410,
+        "geometries": 159
+      },
+      "after": {
+        "calls": 139,
+        "triangles": 47750,
+        "geometries": 159
+      },
+      "changedChannelsRatio": 0.023575303819444445,
+      "meanChannelError": 1.1373014322916666
+    },
+    {
+      "id": "woodland-08",
+      "quality": "balanced",
+      "view": 4,
+      "before": {
+        "calls": 192,
+        "triangles": 16458,
+        "geometries": 159
+      },
+      "after": {
+        "calls": 208,
+        "triangles": 66618,
+        "geometries": 159
+      },
+      "changedChannelsRatio": 0.029310980902777777,
+      "meanChannelError": 0.4502354600694444
+    },
+    {
+      "id": "woodland-08",
+      "quality": "balanced",
+      "view": 5,
+      "before": {
+        "calls": 153,
+        "triangles": 13510,
+        "geometries": 159
+      },
+      "after": {
+        "calls": 167,
+        "triangles": 57590,
+        "geometries": 159
+      },
+      "changedChannelsRatio": 0.1167556423611111,
+      "meanChannelError": 6.0005067274305555
+    },
+    {
+      "id": "woodland-08",
+      "quality": "high",
+      "view": 0,
+      "before": {
+        "calls": 131,
+        "triangles": 11766,
+        "geometries": 74
+      },
+      "after": {
+        "calls": 143,
+        "triangles": 49386,
+        "geometries": 149
+      },
+      "changedChannelsRatio": 0.022711588541666668,
+      "meanChannelError": 1.1587163628472221
+    },
+    {
+      "id": "woodland-08",
+      "quality": "high",
+      "view": 1,
+      "before": {
+        "calls": 127,
+        "triangles": 11410,
+        "geometries": 149
+      },
+      "after": {
+        "calls": 139,
+        "triangles": 47750,
+        "geometries": 149
+      },
+      "changedChannelsRatio": 0.022644314236111112,
+      "meanChannelError": 1.1776844618055555
+    },
+    {
+      "id": "woodland-08",
+      "quality": "high",
+      "view": 2,
+      "before": {
+        "calls": 136,
+        "triangles": 12762,
+        "geometries": 154
+      },
+      "after": {
+        "calls": 148,
+        "triangles": 50382,
+        "geometries": 159
+      },
+      "changedChannelsRatio": 0.019143880208333332,
+      "meanChannelError": 1.0010894097222223
+    },
+    {
+      "id": "woodland-08",
+      "quality": "high",
+      "view": 3,
+      "before": {
+        "calls": 127,
+        "triangles": 11410,
+        "geometries": 159
+      },
+      "after": {
+        "calls": 139,
+        "triangles": 47750,
+        "geometries": 159
+      },
+      "changedChannelsRatio": 0.023453776041666666,
+      "meanChannelError": 1.1366948784722222
+    },
+    {
+      "id": "woodland-08",
+      "quality": "high",
+      "view": 4,
+      "before": {
+        "calls": 192,
+        "triangles": 16458,
+        "geometries": 159
+      },
+      "after": {
+        "calls": 208,
+        "triangles": 66618,
+        "geometries": 159
+      },
+      "changedChannelsRatio": 0.02787868923611111,
+      "meanChannelError": 0.4508452690972222
+    },
+    {
+      "id": "woodland-08",
+      "quality": "high",
+      "view": 5,
+      "before": {
+        "calls": 153,
+        "triangles": 13510,
+        "geometries": 159
+      },
+      "after": {
+        "calls": 167,
+        "triangles": 57590,
+        "geometries": 159
+      },
+      "changedChannelsRatio": 0.11446723090277777,
+      "meanChannelError": 5.998785807291667
+    },
+    {
+      "id": "beginner-40",
+      "quality": "low",
+      "view": 0,
+      "before": {
+        "calls": 40,
+        "triangles": 4890,
+        "geometries": 29
+      },
+      "after": {
+        "calls": 44,
+        "triangles": 17430,
+        "geometries": 59
+      },
+      "changedChannelsRatio": 0.017116970486111112,
+      "meanChannelError": 0.8623057725694444
+    },
+    {
+      "id": "beginner-40",
+      "quality": "low",
+      "view": 1,
+      "before": {
+        "calls": 37,
+        "triangles": 4546,
+        "geometries": 76
+      },
+      "after": {
+        "calls": 41,
+        "triangles": 15806,
+        "geometries": 93
+      },
+      "changedChannelsRatio": 0.016769748263888887,
+      "meanChannelError": 0.8788075086805556
+    },
+    {
+      "id": "beginner-40",
+      "quality": "low",
+      "view": 2,
+      "before": {
+        "calls": 40,
+        "triangles": 4890,
+        "geometries": 110
+      },
+      "after": {
+        "calls": 44,
+        "triangles": 17430,
+        "geometries": 127
+      },
+      "changedChannelsRatio": 0.014397786458333334,
+      "meanChannelError": 0.7548621961805555
+    },
+    {
+      "id": "beginner-40",
+      "quality": "low",
+      "view": 3,
+      "before": {
+        "calls": 37,
+        "triangles": 4546,
+        "geometries": 138
+      },
+      "after": {
+        "calls": 41,
+        "triangles": 15806,
+        "geometries": 149
+      },
+      "changedChannelsRatio": 0.017985026041666668,
+      "meanChannelError": 0.8817306857638889
+    },
+    {
+      "id": "beginner-40",
+      "quality": "low",
+      "view": 4,
+      "before": {
+        "calls": 98,
+        "triangles": 9498,
+        "geometries": 154
+      },
+      "after": {
+        "calls": 106,
+        "triangles": 34578,
+        "geometries": 159
+      },
+      "changedChannelsRatio": 0.021334635416666668,
+      "meanChannelError": 0.40121527777777777
+    },
+    {
+      "id": "beginner-40",
+      "quality": "low",
+      "view": 5,
+      "before": {
+        "calls": 67,
+        "triangles": 7402,
+        "geometries": 159
+      },
+      "after": {
+        "calls": 73,
+        "triangles": 25442,
+        "geometries": 159
+      },
+      "changedChannelsRatio": 0.11954318576388889,
+      "meanChannelError": 6.459510633680556
+    },
+    {
+      "id": "beginner-40",
+      "quality": "balanced",
+      "view": 0,
+      "before": {
+        "calls": 128,
+        "triangles": 11706,
+        "geometries": 71
+      },
+      "after": {
+        "calls": 140,
+        "triangles": 49326,
+        "geometries": 143
+      },
+      "changedChannelsRatio": 0.01750542534722222,
+      "meanChannelError": 0.8676746961805556
+    },
+    {
+      "id": "beginner-40",
+      "quality": "balanced",
+      "view": 1,
+      "before": {
+        "calls": 125,
+        "triangles": 11362,
+        "geometries": 145
+      },
+      "after": {
+        "calls": 137,
+        "triangles": 47702,
+        "geometries": 147
+      },
+      "changedChannelsRatio": 0.017273220486111112,
+      "meanChannelError": 0.8868587239583333
+    },
+    {
+      "id": "beginner-40",
+      "quality": "balanced",
+      "view": 2,
+      "before": {
+        "calls": 128,
+        "triangles": 11706,
+        "geometries": 148
+      },
+      "after": {
+        "calls": 140,
+        "triangles": 49326,
+        "geometries": 149
+      },
+      "changedChannelsRatio": 0.014720052083333334,
+      "meanChannelError": 0.7598372395833334
+    },
+    {
+      "id": "beginner-40",
+      "quality": "balanced",
+      "view": 3,
+      "before": {
+        "calls": 125,
+        "triangles": 11362,
+        "geometries": 149
+      },
+      "after": {
+        "calls": 137,
+        "triangles": 47702,
+        "geometries": 149
+      },
+      "changedChannelsRatio": 0.01830837673611111,
+      "meanChannelError": 0.8863802083333333
+    },
+    {
+      "id": "beginner-40",
+      "quality": "balanced",
+      "view": 4,
+      "before": {
+        "calls": 186,
+        "triangles": 16314,
+        "geometries": 154
+      },
+      "after": {
+        "calls": 202,
+        "triangles": 66474,
+        "geometries": 159
+      },
+      "changedChannelsRatio": 0.026005859375,
+      "meanChannelError": 0.4553168402777778
+    },
+    {
+      "id": "beginner-40",
+      "quality": "balanced",
+      "view": 5,
+      "before": {
+        "calls": 155,
+        "triangles": 14218,
+        "geometries": 159
+      },
+      "after": {
+        "calls": 169,
+        "triangles": 57338,
+        "geometries": 159
+      },
+      "changedChannelsRatio": 0.1284201388888889,
+      "meanChannelError": 6.573899739583333
+    },
+    {
+      "id": "beginner-40",
+      "quality": "high",
+      "view": 0,
+      "before": {
+        "calls": 128,
+        "triangles": 11706,
+        "geometries": 71
+      },
+      "after": {
+        "calls": 140,
+        "triangles": 49326,
+        "geometries": 143
+      },
+      "changedChannelsRatio": 0.017429470486111112,
+      "meanChannelError": 0.8677864583333333
+    },
+    {
+      "id": "beginner-40",
+      "quality": "high",
+      "view": 1,
+      "before": {
+        "calls": 125,
+        "triangles": 11362,
+        "geometries": 145
+      },
+      "after": {
+        "calls": 137,
+        "triangles": 47702,
+        "geometries": 147
+      },
+      "changedChannelsRatio": 0.01717556423611111,
+      "meanChannelError": 0.8868402777777777
+    },
+    {
+      "id": "beginner-40",
+      "quality": "high",
+      "view": 2,
+      "before": {
+        "calls": 128,
+        "triangles": 11706,
+        "geometries": 148
+      },
+      "after": {
+        "calls": 140,
+        "triangles": 49326,
+        "geometries": 149
+      },
+      "changedChannelsRatio": 0.01466796875,
+      "meanChannelError": 0.7597406684027778
+    },
+    {
+      "id": "beginner-40",
+      "quality": "high",
+      "view": 3,
+      "before": {
+        "calls": 125,
+        "triangles": 11362,
+        "geometries": 149
+      },
+      "after": {
+        "calls": 137,
+        "triangles": 47702,
+        "geometries": 149
+      },
+      "changedChannelsRatio": 0.018246527777777778,
+      "meanChannelError": 0.8862131076388889
+    },
+    {
+      "id": "beginner-40",
+      "quality": "high",
+      "view": 4,
+      "before": {
+        "calls": 186,
+        "triangles": 16314,
+        "geometries": 154
+      },
+      "after": {
+        "calls": 202,
+        "triangles": 66474,
+        "geometries": 159
+      },
+      "changedChannelsRatio": 0.025020616319444446,
+      "meanChannelError": 0.45507595486111113
+    },
+    {
+      "id": "beginner-40",
+      "quality": "high",
+      "view": 5,
+      "before": {
+        "calls": 155,
+        "triangles": 14218,
+        "geometries": 159
+      },
+      "after": {
+        "calls": 169,
+        "triangles": 57338,
+        "geometries": 159
+      },
+      "changedChannelsRatio": 0.12633897569444444,
+      "meanChannelError": 6.573293185763889
+    },
+    {
+      "id": "woodland-pixel-check",
+      "quality": "low",
+      "view": 0,
+      "before": {
+        "calls": 41,
+        "triangles": 3810,
+        "geometries": 30
+      },
+      "after": {
+        "calls": 41,
+        "triangles": 3810,
+        "geometries": 60
+      },
+      "changedChannelsRatio": 0,
+      "meanChannelError": 0
+    },
+    {
+      "id": "woodland-pixel-check",
+      "quality": "low",
+      "view": 1,
+      "before": {
+        "calls": 37,
+        "triangles": 3454,
+        "geometries": 76
+      },
+      "after": {
+        "calls": 37,
+        "triangles": 3454,
+        "geometries": 92
+      },
+      "changedChannelsRatio": 0,
+      "meanChannelError": 0
+    },
+    {
+      "id": "woodland-pixel-check",
+      "quality": "low",
+      "view": 2,
+      "before": {
+        "calls": 46,
+        "triangles": 4806,
+        "geometries": 114
+      },
+      "after": {
+        "calls": 46,
+        "triangles": 4806,
+        "geometries": 136
+      },
+      "changedChannelsRatio": 0,
+      "meanChannelError": 0
+    },
+    {
+      "id": "woodland-pixel-check",
+      "quality": "low",
+      "view": 3,
+      "before": {
+        "calls": 37,
+        "triangles": 3454,
+        "geometries": 147
+      },
+      "after": {
+        "calls": 37,
+        "triangles": 3454,
+        "geometries": 158
+      },
+      "changedChannelsRatio": 0,
+      "meanChannelError": 0
+    },
+    {
+      "id": "woodland-pixel-check",
+      "quality": "low",
+      "view": 4,
+      "before": {
+        "calls": 102,
+        "triangles": 8502,
+        "geometries": 158
+      },
+      "after": {
+        "calls": 102,
+        "triangles": 8502,
+        "geometries": 158
+      },
+      "changedChannelsRatio": 0,
+      "meanChannelError": 0
+    },
+    {
+      "id": "woodland-pixel-check",
+      "quality": "low",
+      "view": 5,
+      "before": {
+        "calls": 63,
+        "triangles": 5554,
+        "geometries": 158
+      },
+      "after": {
+        "calls": 63,
+        "triangles": 5554,
+        "geometries": 158
+      },
+      "changedChannelsRatio": 0,
+      "meanChannelError": 0
+    },
+    {
+      "id": "woodland-pixel-check",
+      "quality": "balanced",
+      "view": 0,
+      "before": {
+        "calls": 131,
+        "triangles": 10674,
+        "geometries": 74
+      },
+      "after": {
+        "calls": 131,
+        "triangles": 10674,
+        "geometries": 148
+      },
+      "changedChannelsRatio": 0,
+      "meanChannelError": 0
+    },
+    {
+      "id": "woodland-pixel-check",
+      "quality": "balanced",
+      "view": 1,
+      "before": {
+        "calls": 127,
+        "triangles": 10318,
+        "geometries": 148
+      },
+      "after": {
+        "calls": 127,
+        "triangles": 10318,
+        "geometries": 148
+      },
+      "changedChannelsRatio": 0,
+      "meanChannelError": 0
+    },
+    {
+      "id": "woodland-pixel-check",
+      "quality": "balanced",
+      "view": 2,
+      "before": {
+        "calls": 136,
+        "triangles": 11670,
+        "geometries": 153
+      },
+      "after": {
+        "calls": 136,
+        "triangles": 11670,
+        "geometries": 158
+      },
+      "changedChannelsRatio": 0,
+      "meanChannelError": 0
+    },
+    {
+      "id": "woodland-pixel-check",
+      "quality": "balanced",
+      "view": 3,
+      "before": {
+        "calls": 127,
+        "triangles": 10318,
+        "geometries": 158
+      },
+      "after": {
+        "calls": 127,
+        "triangles": 10318,
+        "geometries": 158
+      },
+      "changedChannelsRatio": 0,
+      "meanChannelError": 0
+    },
+    {
+      "id": "woodland-pixel-check",
+      "quality": "balanced",
+      "view": 4,
+      "before": {
+        "calls": 192,
+        "triangles": 15366,
+        "geometries": 158
+      },
+      "after": {
+        "calls": 192,
+        "triangles": 15366,
+        "geometries": 158
+      },
+      "changedChannelsRatio": 0,
+      "meanChannelError": 0
+    },
+    {
+      "id": "woodland-pixel-check",
+      "quality": "balanced",
+      "view": 5,
+      "before": {
+        "calls": 153,
+        "triangles": 12418,
+        "geometries": 158
+      },
+      "after": {
+        "calls": 153,
+        "triangles": 12418,
+        "geometries": 158
+      },
+      "changedChannelsRatio": 0,
+      "meanChannelError": 0
+    },
+    {
+      "id": "woodland-pixel-check",
+      "quality": "high",
+      "view": 0,
+      "before": {
+        "calls": 131,
+        "triangles": 10674,
+        "geometries": 74
+      },
+      "after": {
+        "calls": 131,
+        "triangles": 10674,
+        "geometries": 148
+      },
+      "changedChannelsRatio": 0,
+      "meanChannelError": 0
+    },
+    {
+      "id": "woodland-pixel-check",
+      "quality": "high",
+      "view": 1,
+      "before": {
+        "calls": 127,
+        "triangles": 10318,
+        "geometries": 148
+      },
+      "after": {
+        "calls": 127,
+        "triangles": 10318,
+        "geometries": 148
+      },
+      "changedChannelsRatio": 0,
+      "meanChannelError": 0
+    },
+    {
+      "id": "woodland-pixel-check",
+      "quality": "high",
+      "view": 2,
+      "before": {
+        "calls": 136,
+        "triangles": 11670,
+        "geometries": 153
+      },
+      "after": {
+        "calls": 136,
+        "triangles": 11670,
+        "geometries": 158
+      },
+      "changedChannelsRatio": 0,
+      "meanChannelError": 0
+    },
+    {
+      "id": "woodland-pixel-check",
+      "quality": "high",
+      "view": 3,
+      "before": {
+        "calls": 127,
+        "triangles": 10318,
+        "geometries": 158
+      },
+      "after": {
+        "calls": 127,
+        "triangles": 10318,
+        "geometries": 158
+      },
+      "changedChannelsRatio": 0,
+      "meanChannelError": 0
+    },
+    {
+      "id": "woodland-pixel-check",
+      "quality": "high",
+      "view": 4,
+      "before": {
+        "calls": 192,
+        "triangles": 15366,
+        "geometries": 158
+      },
+      "after": {
+        "calls": 192,
+        "triangles": 15366,
+        "geometries": 158
+      },
+      "changedChannelsRatio": 0,
+      "meanChannelError": 0
+    },
+    {
+      "id": "woodland-pixel-check",
+      "quality": "high",
+      "view": 5,
+      "before": {
+        "calls": 153,
+        "triangles": 12418,
+        "geometries": 158
+      },
+      "after": {
+        "calls": 153,
+        "triangles": 12418,
+        "geometries": 158
+      },
+      "changedChannelsRatio": 0,
+      "meanChannelError": 0
+    },
+    {
+      "id": "woodland-industrial-check",
+      "quality": "low",
+      "view": 0,
+      "before": {
+        "calls": 41,
+        "triangles": 4902,
+        "geometries": 30
+      },
+      "after": {
+        "calls": 41,
+        "triangles": 4902,
+        "geometries": 60
+      },
+      "changedChannelsRatio": 0,
+      "meanChannelError": 0
+    },
+    {
+      "id": "woodland-industrial-check",
+      "quality": "low",
+      "view": 1,
+      "before": {
+        "calls": 37,
+        "triangles": 4546,
+        "geometries": 76
+      },
+      "after": {
+        "calls": 37,
+        "triangles": 4546,
+        "geometries": 92
+      },
+      "changedChannelsRatio": 0,
+      "meanChannelError": 0
+    },
+    {
+      "id": "woodland-industrial-check",
+      "quality": "low",
+      "view": 2,
+      "before": {
+        "calls": 47,
+        "triangles": 6090,
+        "geometries": 115
+      },
+      "after": {
+        "calls": 47,
+        "triangles": 6090,
+        "geometries": 138
+      },
+      "changedChannelsRatio": 0,
+      "meanChannelError": 0
+    },
+    {
+      "id": "woodland-industrial-check",
+      "quality": "low",
+      "view": 3,
+      "before": {
+        "calls": 37,
+        "triangles": 4546,
+        "geometries": 149
+      },
+      "after": {
+        "calls": 37,
+        "triangles": 4546,
+        "geometries": 160
+      },
+      "changedChannelsRatio": 0,
+      "meanChannelError": 0
+    },
+    {
+      "id": "woodland-industrial-check",
+      "quality": "low",
+      "view": 4,
+      "before": {
+        "calls": 103,
+        "triangles": 9786,
+        "geometries": 160
+      },
+      "after": {
+        "calls": 103,
+        "triangles": 9786,
+        "geometries": 160
+      },
+      "changedChannelsRatio": 0,
+      "meanChannelError": 0
+    },
+    {
+      "id": "woodland-industrial-check",
+      "quality": "low",
+      "view": 5,
+      "before": {
+        "calls": 63,
+        "triangles": 6646,
+        "geometries": 160
+      },
+      "after": {
+        "calls": 63,
+        "triangles": 6646,
+        "geometries": 160
+      },
+      "changedChannelsRatio": 0,
+      "meanChannelError": 0
+    },
+    {
+      "id": "woodland-industrial-check",
+      "quality": "balanced",
+      "view": 0,
+      "before": {
+        "calls": 131,
+        "triangles": 11766,
+        "geometries": 74
+      },
+      "after": {
+        "calls": 131,
+        "triangles": 11766,
+        "geometries": 148
+      },
+      "changedChannelsRatio": 0,
+      "meanChannelError": 0
+    },
+    {
+      "id": "woodland-industrial-check",
+      "quality": "balanced",
+      "view": 1,
+      "before": {
+        "calls": 127,
+        "triangles": 11410,
+        "geometries": 148
+      },
+      "after": {
+        "calls": 127,
+        "triangles": 11410,
+        "geometries": 148
+      },
+      "changedChannelsRatio": 0,
+      "meanChannelError": 0
+    },
+    {
+      "id": "woodland-industrial-check",
+      "quality": "balanced",
+      "view": 2,
+      "before": {
+        "calls": 137,
+        "triangles": 12954,
+        "geometries": 154
+      },
+      "after": {
+        "calls": 137,
+        "triangles": 12954,
+        "geometries": 160
+      },
+      "changedChannelsRatio": 0,
+      "meanChannelError": 0
+    },
+    {
+      "id": "woodland-industrial-check",
+      "quality": "balanced",
+      "view": 3,
+      "before": {
+        "calls": 127,
+        "triangles": 11410,
+        "geometries": 160
+      },
+      "after": {
+        "calls": 127,
+        "triangles": 11410,
+        "geometries": 160
+      },
+      "changedChannelsRatio": 0,
+      "meanChannelError": 0
+    },
+    {
+      "id": "woodland-industrial-check",
+      "quality": "balanced",
+      "view": 4,
+      "before": {
+        "calls": 193,
+        "triangles": 16650,
+        "geometries": 160
+      },
+      "after": {
+        "calls": 193,
+        "triangles": 16650,
+        "geometries": 160
+      },
+      "changedChannelsRatio": 0,
+      "meanChannelError": 0
+    },
+    {
+      "id": "woodland-industrial-check",
+      "quality": "balanced",
+      "view": 5,
+      "before": {
+        "calls": 153,
+        "triangles": 13510,
+        "geometries": 160
+      },
+      "after": {
+        "calls": 153,
+        "triangles": 13510,
+        "geometries": 160
+      },
+      "changedChannelsRatio": 0,
+      "meanChannelError": 0
+    },
+    {
+      "id": "woodland-industrial-check",
+      "quality": "high",
+      "view": 0,
+      "before": {
+        "calls": 131,
+        "triangles": 11766,
+        "geometries": 74
+      },
+      "after": {
+        "calls": 131,
+        "triangles": 11766,
+        "geometries": 148
+      },
+      "changedChannelsRatio": 0,
+      "meanChannelError": 0
+    },
+    {
+      "id": "woodland-industrial-check",
+      "quality": "high",
+      "view": 1,
+      "before": {
+        "calls": 127,
+        "triangles": 11410,
+        "geometries": 148
+      },
+      "after": {
+        "calls": 127,
+        "triangles": 11410,
+        "geometries": 148
+      },
+      "changedChannelsRatio": 0,
+      "meanChannelError": 0
+    },
+    {
+      "id": "woodland-industrial-check",
+      "quality": "high",
+      "view": 2,
+      "before": {
+        "calls": 137,
+        "triangles": 12954,
+        "geometries": 154
+      },
+      "after": {
+        "calls": 137,
+        "triangles": 12954,
+        "geometries": 160
+      },
+      "changedChannelsRatio": 0,
+      "meanChannelError": 0
+    },
+    {
+      "id": "woodland-industrial-check",
+      "quality": "high",
+      "view": 3,
+      "before": {
+        "calls": 127,
+        "triangles": 11410,
+        "geometries": 160
+      },
+      "after": {
+        "calls": 127,
+        "triangles": 11410,
+        "geometries": 160
+      },
+      "changedChannelsRatio": 0,
+      "meanChannelError": 0
+    },
+    {
+      "id": "woodland-industrial-check",
+      "quality": "high",
+      "view": 4,
+      "before": {
+        "calls": 193,
+        "triangles": 16650,
+        "geometries": 160
+      },
+      "after": {
+        "calls": 193,
+        "triangles": 16650,
+        "geometries": 160
+      },
+      "changedChannelsRatio": 0,
+      "meanChannelError": 0
+    },
+    {
+      "id": "woodland-industrial-check",
+      "quality": "high",
+      "view": 5,
+      "before": {
+        "calls": 153,
+        "triangles": 13510,
+        "geometries": 160
+      },
+      "after": {
+        "calls": 153,
+        "triangles": 13510,
+        "geometries": 160
+      },
+      "changedChannelsRatio": 0,
+      "meanChannelError": 0
+    },
+    {
+      "id": "flight-05",
+      "quality": "low",
+      "view": 0,
+      "before": {
+        "calls": 33,
+        "triangles": 2230,
+        "geometries": 33
+      },
+      "after": {
+        "calls": 33,
+        "triangles": 2230,
+        "geometries": 66
+      },
+      "changedChannelsRatio": 0,
+      "meanChannelError": 0
+    },
+    {
+      "id": "flight-05",
+      "quality": "low",
+      "view": 1,
+      "before": {
+        "calls": 24,
+        "triangles": 2064,
+        "geometries": 84
+      },
+      "after": {
+        "calls": 24,
+        "triangles": 2064,
+        "geometries": 102
+      },
+      "changedChannelsRatio": 0,
+      "meanChannelError": 0
+    },
+    {
+      "id": "flight-05",
+      "quality": "low",
+      "view": 2,
+      "before": {
+        "calls": 13,
+        "triangles": 1850,
+        "geometries": 109
+      },
+      "after": {
+        "calls": 13,
+        "triangles": 1850,
+        "geometries": 116
+      },
+      "changedChannelsRatio": 0,
+      "meanChannelError": 0
+    },
+    {
+      "id": "flight-05",
+      "quality": "low",
+      "view": 3,
+      "before": {
+        "calls": 24,
+        "triangles": 2054,
+        "geometries": 129
+      },
+      "after": {
+        "calls": 24,
+        "triangles": 2054,
+        "geometries": 142
+      },
+      "changedChannelsRatio": 0,
+      "meanChannelError": 0
+    },
+    {
+      "id": "flight-05",
+      "quality": "low",
+      "view": 4,
+      "before": {
+        "calls": 76,
+        "triangles": 3946,
+        "geometries": 147
+      },
+      "after": {
+        "calls": 76,
+        "triangles": 3946,
+        "geometries": 152
+      },
+      "changedChannelsRatio": 0,
+      "meanChannelError": 0
+    },
+    {
+      "id": "flight-05",
+      "quality": "low",
+      "view": 5,
+      "before": {
+        "calls": 25,
+        "triangles": 2092,
+        "geometries": 152
+      },
+      "after": {
+        "calls": 25,
+        "triangles": 2092,
+        "geometries": 152
+      },
+      "changedChannelsRatio": 0,
+      "meanChannelError": 0
+    },
+    {
+      "id": "flight-05",
+      "quality": "balanced",
+      "view": 0,
+      "before": {
+        "calls": 97,
+        "triangles": 3446,
+        "geometries": 70
+      },
+      "after": {
+        "calls": 97,
+        "triangles": 3446,
+        "geometries": 140
+      },
+      "changedChannelsRatio": 0,
+      "meanChannelError": 0
+    },
+    {
+      "id": "flight-05",
+      "quality": "balanced",
+      "view": 1,
+      "before": {
+        "calls": 88,
+        "triangles": 3280,
+        "geometries": 141
+      },
+      "after": {
+        "calls": 88,
+        "triangles": 3280,
+        "geometries": 142
+      },
+      "changedChannelsRatio": 0,
+      "meanChannelError": 0
+    },
+    {
+      "id": "flight-05",
+      "quality": "balanced",
+      "view": 2,
+      "before": {
+        "calls": 77,
+        "triangles": 3066,
+        "geometries": 142
+      },
+      "after": {
+        "calls": 77,
+        "triangles": 3066,
+        "geometries": 142
+      },
+      "changedChannelsRatio": 0,
+      "meanChannelError": 0
+    },
+    {
+      "id": "flight-05",
+      "quality": "balanced",
+      "view": 3,
+      "before": {
+        "calls": 88,
+        "triangles": 3270,
+        "geometries": 142
+      },
+      "after": {
+        "calls": 88,
+        "triangles": 3270,
+        "geometries": 142
+      },
+      "changedChannelsRatio": 0,
+      "meanChannelError": 0
+    },
+    {
+      "id": "flight-05",
+      "quality": "balanced",
+      "view": 4,
+      "before": {
+        "calls": 140,
+        "triangles": 5162,
+        "geometries": 147
+      },
+      "after": {
+        "calls": 140,
+        "triangles": 5162,
+        "geometries": 152
+      },
+      "changedChannelsRatio": 0,
+      "meanChannelError": 0
+    },
+    {
+      "id": "flight-05",
+      "quality": "balanced",
+      "view": 5,
+      "before": {
+        "calls": 89,
+        "triangles": 3308,
+        "geometries": 152
+      },
+      "after": {
+        "calls": 89,
+        "triangles": 3308,
+        "geometries": 152
+      },
+      "changedChannelsRatio": 0,
+      "meanChannelError": 0
+    },
+    {
+      "id": "flight-05",
+      "quality": "high",
+      "view": 0,
+      "before": {
+        "calls": 97,
+        "triangles": 3446,
+        "geometries": 70
+      },
+      "after": {
+        "calls": 97,
+        "triangles": 3446,
+        "geometries": 140
+      },
+      "changedChannelsRatio": 0,
+      "meanChannelError": 0
+    },
+    {
+      "id": "flight-05",
+      "quality": "high",
+      "view": 1,
+      "before": {
+        "calls": 88,
+        "triangles": 3280,
+        "geometries": 141
+      },
+      "after": {
+        "calls": 88,
+        "triangles": 3280,
+        "geometries": 142
+      },
+      "changedChannelsRatio": 0,
+      "meanChannelError": 0
+    },
+    {
+      "id": "flight-05",
+      "quality": "high",
+      "view": 2,
+      "before": {
+        "calls": 77,
+        "triangles": 3066,
+        "geometries": 142
+      },
+      "after": {
+        "calls": 77,
+        "triangles": 3066,
+        "geometries": 142
+      },
+      "changedChannelsRatio": 0,
+      "meanChannelError": 0
+    },
+    {
+      "id": "flight-05",
+      "quality": "high",
+      "view": 3,
+      "before": {
+        "calls": 88,
+        "triangles": 3270,
+        "geometries": 142
+      },
+      "after": {
+        "calls": 88,
+        "triangles": 3270,
+        "geometries": 142
+      },
+      "changedChannelsRatio": 0,
+      "meanChannelError": 0
+    },
+    {
+      "id": "flight-05",
+      "quality": "high",
+      "view": 4,
+      "before": {
+        "calls": 140,
+        "triangles": 5162,
+        "geometries": 147
+      },
+      "after": {
+        "calls": 140,
+        "triangles": 5162,
+        "geometries": 152
+      },
+      "changedChannelsRatio": 0,
+      "meanChannelError": 0
+    },
+    {
+      "id": "flight-05",
+      "quality": "high",
+      "view": 5,
+      "before": {
+        "calls": 89,
+        "triangles": 3308,
+        "geometries": 152
+      },
+      "after": {
+        "calls": 89,
+        "triangles": 3308,
+        "geometries": 152
+      },
+      "changedChannelsRatio": 0,
+      "meanChannelError": 0
+    }
+  ],
+  "renderer": "WebKit WebGL",
+  "cleanup": [
+    {
+      "geometries": 0,
+      "textures": 1
+    },
+    {
+      "geometries": 0,
+      "textures": 1
+    },
+    {
+      "geometries": 0,
+      "textures": 1
+    },
+    {
+      "geometries": 0,
+      "textures": 1
+    },
+    {
+      "geometries": 0,
+      "textures": 1
+    },
+    {
+      "geometries": 0,
+      "textures": 1
+    },
+    {
+      "geometries": 0,
+      "textures": 1
+    },
+    {
+      "geometries": 0,
+      "textures": 1
+    },
+    {
+      "geometries": 0,
+      "textures": 1
+    },
+    {
+      "geometries": 0,
+      "textures": 1
+    },
+    {
+      "geometries": 0,
+      "textures": 1
+    },
+    {
+      "geometries": 0,
+      "textures": 1
+    },
+    {
+      "geometries": 0,
+      "textures": 1
+    },
+    {
+      "geometries": 0,
+      "textures": 1
+    },
+    {
+      "geometries": 0,
+      "textures": 1
+    }
+  ],
+  "imported": [
+    {
+      "id": "woodland-08",
+      "before": {
+        "bytes": 884724,
+        "placements": 52,
+        "verticesOutsideArena": 16080,
+        "calls": 152,
+        "triangles": 6642
+      },
+      "after": {
+        "bytes": 885204,
+        "placements": 52,
+        "verticesOutsideArena": 16080,
+        "calls": 152,
+        "triangles": 6642
+      }
+    },
+    {
+      "id": "beginner-40",
+      "before": {
+        "bytes": 884696,
+        "placements": 52,
+        "verticesOutsideArena": 16080,
+        "calls": 150,
+        "triangles": 6390
+      },
+      "after": {
+        "bytes": 885172,
+        "placements": 52,
+        "verticesOutsideArena": 16080,
+        "calls": 150,
+        "triangles": 6390
+      }
+    }
+  ],
+  "passed": true
+}
