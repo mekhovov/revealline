@@ -2443,3 +2443,20 @@ unchanged. Host SHA25652cbfac9012bf2a7127ec1cfd85142ead184166aadb8a97818d886623c
 Fresh local build: `dist/fpv-optional-examples-current-playtest`,94files/
 14355327bytes, ZIP6126d9fd523e62a82cc4b76a185a278cec0f03c6650f89a328b0da48a5dc5661.
 This development player includes the preserved #977/#978 main work and #979.
+
+
+### Optional examples merged; focused recovery-refresh follow-up — 3 October 2026
+
+The owner merged #979 at a6775a478cd9bfcbbd968ab247af7bfa307ec570 while final
+integration evidence was being recorded. The merge included remote a4221046c.
+The later forward push7bfcbf032 preserved all owner commits but happened after
+that closure; it does not put the final12-line recovery-read fix on main.
+The follow-up therefore lives independently on `codex/fpv-example-recovery-refresh`,
+merged with current main. Its runtime delta only keeps fresh example records/cache
+and rendered Library available when the independent interrupted-session read
+fails, then reports that error while retaining known recovery data.
+
+An explicit native IndexedDB session-read-abort scenario is being added to the
+existing browser workflow before publishing that small fix. Preserve #979 as
+merged; do not reopen or rewrite it. Optional14-example delivery is already in
+main, but its public deployment/launch has not yet been checked.
