@@ -80,6 +80,9 @@ const BASE_OPTIONAL_PACKAGE_POLICIES = Object.freeze({
       'optional-practice/install-context.mjs',
       'game/data-json.mjs',
       'game/fpv-entry.mjs',
+      // The renderer is shared with World Studio, including its optional hunt art.
+      'game/hunt/actor-catalog.mjs',
+      'game/hunt/preferences.mjs',
       'game/presentation/theme-system.mjs',
       'game/ui/native-menu-icons.mjs',
       'game/key-bindings.mjs',
@@ -198,8 +201,6 @@ const RUNTIME_PACKAGE_POLICIES = Object.freeze({
       'game/ui/art/identity/fpv-line/wordmark.png',
       'game/ui/art/menu-scenes/fpv.webp',
       'game/ui/art/menu-scenes/fpv-portrait.webp',
-      'game/hunt/preferences.mjs',
-      'game/hunt/actor-catalog.mjs',
       'game/hunt/actor-art.mjs',
       'game/hunt/presentation-catalog.mjs',
       'game/encounter-display-preferences.mjs',
