@@ -5,6 +5,7 @@ import { validateDemoCatalog } from '../game/demo-catalog.mjs';
 import { REACTION_PORTRAITS } from '../game/journey/reaction-portraits.mjs';
 import { REACTION_VOICE_PILOT } from '../game/audio/reactions/pilot.mjs';
 import { CLASSIC_PRESENTATION } from '../game/snake/classic-presentation.mjs';
+import { projectEditionFlightMenu } from './edition-flight-menu.mjs';
 import {
   MENU_SCENES,
   MENU_SCENE_COMPOSITIONS,
@@ -175,6 +176,7 @@ export const EDITION_RUNTIME_ADAPTERS = Object.freeze({
   'game/runtime-library-sources.mjs': 'game/editions/standalone/library-sources.mjs',
   'game/external-chapter-source.mjs': 'game/editions/standalone/external-chapters.mjs',
   'game/replay-theater/examples.mjs': 'game/editions/standalone/replay-examples.mjs',
+  'game/audio/reactions/actors.mjs': 'game/editions/standalone/actor-recordings.mjs',
 });
 
 export const EDITION_RUNTIME_PAGES = Object.freeze([
@@ -269,6 +271,7 @@ export function validateEditionHostRequests(name, bytes) {
 
 export function projectEditionRuntimeImports(name, bytes) {
   if (!/\.(?:mjs|js)$/.test(name)) return bytes;
+  bytes = projectEditionFlightMenu(name, bytes);
   const source = new TextDecoder('utf-8', { fatal: true }).decode(bytes),
     edits = [];
   const visit = (node) => {

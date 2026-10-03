@@ -2,6 +2,7 @@ import { mkdir, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { pathToFileURL } from 'node:url';
 import { createHash } from 'node:crypto';
+import { format, resolveConfig } from 'prettier';
 import { createPursuitCampaignCandidates } from '../game/content-design/pursuit-campaign-candidates.mjs';
 import { createContentExecutionCatalog } from '../game/content-design/execution.mjs';
 import { applyGameplayTuning, resolveGameplayTuning } from '../game/gameplay-tuning.mjs';
@@ -142,11 +143,15 @@ if (process.argv[1] && import.meta.url === pathToFileURL(path.resolve(process.ar
   const destination = process.argv[2];
   if (destination) {
     await mkdir(destination, { recursive: true });
+    const formatting = (await resolveConfig(import.meta.filename)) ?? {};
     await writeFile(
       path.join(destination, 'expressive-content-inventory.json'),
-      `${JSON.stringify(report, null, 2)}\n`,
+      await format(JSON.stringify(report), { ...formatting, parser: 'json' }),
     );
-    await writeFile(path.join(destination, 'expressive-content-inventory.md'), markdown(report));
+    await writeFile(
+      path.join(destination, 'expressive-content-inventory.md'),
+      await format(markdown(report), { ...formatting, parser: 'markdown' }),
+    );
   }
   console.log(
     JSON.stringify(

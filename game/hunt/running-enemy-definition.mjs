@@ -60,6 +60,10 @@ export function validateRunningEnemyDefinition(level, base) {
     ['version', 'baseVersion', 'baseIdentity', 'combatPatrols', 'hunt'],
     'Running enemies',
   );
+  required(
+    (level.version === 'xonix-level.v13') === (value.version === 'running-enemies.v3'),
+    'Combined Snake pursuit requires its exact inherited Snake wrapper.',
+  );
   if (['running-enemies.v2', 'running-enemies.v3'].includes(value.version)) {
     const snake = value.version === 'running-enemies.v3';
     required(

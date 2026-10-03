@@ -52,6 +52,10 @@ export function inheritedRunningTeamLevel(source) {
     'Team running enemies',
   );
   required(
+    (level.version === TEAM_SNAKE_PURSUIT_LEVEL_VERSION) === snake,
+    'Combined Team Snake pursuit requires its exact inherited Snake wrapper.',
+  );
+  required(
     [TEAM_RUNNING_RECIPE, 'running-enemies.v2', 'running-enemies.v3'].includes(recipe.version) &&
       (snake
         ? recipe.baseVersion === 'revealline-coop-level.v10'

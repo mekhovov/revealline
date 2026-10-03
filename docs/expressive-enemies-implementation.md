@@ -72,6 +72,13 @@ encoded bytes), wired into the existing bounded voice library as replaceable
 originals. Active actor families are warmed on demand. Listening review remains
 pending; captions work with speech disabled or unavailable.
 
+Native SIM uses the shared director through a checked source projection. Its
+optional package remains within the unchanged 104-file / 16 MiB limits; see the
+[package receipt](qualification/fpv-hunt-reactions.md). Company editions retain
+actor captions, custom recordings and the existing pilot voices. Their declared
+adapter omits the new built-in actor recordings instead of requesting missing
+files; an optional Company actor-voice package is still outstanding.
+
 ## Studios, ownership and multiplayer
 
 The Capture Studio pursuit panel edits accepted actors, routes, goals and pair
@@ -84,6 +91,13 @@ packages across publisher, validation, installation, previews, launch, progress
 and offloading. Immutable installed editions retain separate progression;
 community clears cannot unlock official Snake chapter accents. A real-account
 publish/install review remains pending.
+
+The largest Company edition remains blocked by its existing 64 MiB admission
+guard: 67,559,900 bytes after the dependency fixes, compared with 67,423,717 bytes
+on main `66d83c424`. The expansion adds 136,183 compiled bytes after removing
+unneeded flight data from the edition menu. No package cap or brand media was
+changed. [Capacity details](fpv-world-package-closure.md) distinguish this from
+the passing optional SIM package.
 
 The dedicated room service implements authoritative private Capture/Snake Versus
 and Team attempts, paired readiness, shared pause, once-only inputs, rematch,
