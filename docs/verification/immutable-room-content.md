@@ -61,7 +61,27 @@ receipt, so that export is not recorded as a passed file round-trip.
 Automated suites remain unrun under `publishing/test-policy.json`. Regression
 sources cover malformed formats, preview ownership, early locale refresh, exact
 native package admission, recipe/provenance substitution and room result export.
-Mandatory source checks and committed-build receipts are recorded separately.
+Full lint, service lint, changed-file formatting, localization/content validation,
+generated appearance/audio/SIM projections and all 189 Company generated files pass.
+Seven existing link warnings refer to destinations assembled by publication.
+
+The receipts below bind source commit `b20ca9e0ed568b3f5477726083f011cc2e19f4ac`, tree
+`244f148d14d2c9e169ad453290e3c459e35e5081`. Later evidence-only commits do not relabel that source.
+
+- [Source identity](immutable-room-content-source.json): 25,061 tracked
+  files / 2,358,176,094 bytes verified against raw Git blobs and modes.
+- [Production archive](immutable-room-content-build.json): 2,985 manifest
+  files / 1,000,053,983 ZIP bytes. Every member's bytes, SHA-256 and CRC match;
+  the exact member set passes. Core uses 66,923,590 bytes, with
+  185,274 bytes remaining under the unchanged 64 MiB limit.
+- [Optional FPV packages](immutable-room-content-packages.json): all three pass
+  independent native archive admission within unchanged budgets.
+- [Pilot packet manifest](../qualification/pursuit-pilots/packet/manifest.json):
+  prepared from the same clean commit, with six pilots, 32 cases and five native
+  artifacts totalling 24,659 bytes. Every completion/human/device gate remains pending.
+
+The full game build uses planned version `v0.150.0`; optional candidates retain
+repository version `v0.142.4`. No published version is changed.
 
 Next:
 
