@@ -50,7 +50,7 @@ function compatiblePolicy(value) {
     if (!tokens?.length || tokens.some((token) => !allowed.includes(token))) return false;
   }
   return (
-    actual.get('script-src')?.join(' ') === "'self'" &&
+    actual.get('script-src')?.join(' ') === "'self' 'wasm-unsafe-eval'" &&
     actual.get('connect-src')?.join(' ') === "'self'"
   );
 }
