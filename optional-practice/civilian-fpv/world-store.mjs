@@ -250,6 +250,58 @@ export async function openWorldStore({
       })),
     };
   }
+  /** Remove a single edition without destroying other retained revisions or proofs. */
+  function removeRevision(id, sha256, { expectedGeneration } = {}) {
+    if (
+      typeof id !== 'string' ||
+      !/^[a-f0-9]{64}$/.test(sha256) ||
+      !Number.isSafeInteger(expectedGeneration)
+    )
+      return Promise.reject(fail('Review the exact world revision before offloading.'));
+    return new Promise((resolve, reject) => {
+      const tx = db.transaction(['projects', 'assets', 'meta', 'revisions'], 'readwrite');
+      const meta = tx.objectStore('meta'),
+        projects = tx.objectStore('projects'),
+        revisions = tx.objectStore('revisions');
+      const generationRequest = meta.get('generation'),
+        activeRequest = projects.get(id),
+        revisionRequest = revisions.get([id, sha256]);
+      let ready = 0,
+        error,
+        next;
+      const abort = (message) => {
+        error = fail(message);
+        tx.abort();
+      };
+      const stage = () => {
+        if (++ready !== 3) return;
+        const generation = generationRequest.result ?? 0,
+          active = activeRequest.result;
+        if (
+          generation !== expectedGeneration ||
+          (!revisionRequest.result && active?.sha256 !== sha256)
+        )
+          return abort('World revision changed. Review offloading again.');
+        revisions.delete([id, sha256]);
+        next = generation + 1;
+        meta.put(next, 'generation');
+        if (active?.sha256 === sha256) {
+          projects.delete(id);
+          const cursor = tx.objectStore('assets').index('project').openCursor(id);
+          cursor.onsuccess = () => {
+            if (cursor.result) {
+              cursor.result.delete();
+              cursor.result.continue();
+            }
+          };
+        }
+      };
+      generationRequest.onsuccess = activeRequest.onsuccess = revisionRequest.onsuccess = stage;
+      tx.oncomplete = () => resolve({ generation: next });
+      tx.onabort = () => reject(error ?? tx.error ?? fail('World offload aborted.'));
+      tx.onerror = () => {};
+    });
+  }
   function remove(id, { expectedGeneration } = {}) {
     return new Promise((resolve, reject) => {
       const tx = db.transaction(['projects', 'assets', 'meta', 'revisions'], 'readwrite'),
@@ -298,6 +350,7 @@ export async function openWorldStore({
     list,
     activate,
     removalSnapshot,
+    removeRevision,
     remove,
     close: () => db.close(),
   };

@@ -17,6 +17,7 @@ import {
   EDITION_RUNTIME_ADAPTERS,
   EDITION_RUNTIME_RESOURCES,
   editionDemoResources,
+  editionActorVoiceResources,
   editionClassicPresentationResources,
   projectEditionRuntimeImports,
   projectEditionRuntimeIndentation,
@@ -541,7 +542,7 @@ test('common host import projection closes over committed adapters without visit
     [
       'game/app.mjs',
       bytes(
-        "import './content-design/route-loader.mjs'; export * from './runtime-library-sources.mjs'; import('./external-chapter-source.mjs'); import './replay-theater/examples.mjs';",
+        "import './content-design/route-loader.mjs'; export * from './runtime-library-sources.mjs'; import('./external-chapter-source.mjs'); import './replay-theater/examples.mjs'; import './audio/reactions/actors.mjs';",
       ),
     ],
     ['game/ui/style.css', bytes('body{color:red}')],
@@ -556,6 +557,13 @@ test('common host import projection closes over committed adapters without visit
       [adapter, bytes('export const selected = true;')],
     ]),
   ]);
+  originals.set(
+    'game/editions/standalone/actor-recordings.mjs',
+    bytes(
+      'export const ACTOR_VOICE_RECORDINGS = Object.freeze([]); export const createActorVoiceDelivery = null;',
+    ),
+  );
+  for (const name of editionActorVoiceResources()) originals.set(name, bytes('fixture voice'));
   for (const [name, contents] of originals) {
     await fs.mkdir(path.dirname(path.join(root, name)), { recursive: true });
     await fs.writeFile(path.join(root, name), contents);

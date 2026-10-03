@@ -425,7 +425,11 @@ export class BoardPainter {
     const captureAccent = feedbackComparison?.captureAccent !== false,
       eventAccents = feedbackComparison?.eventAccents !== false;
     const presentation =
-      this.theme.id === 'fpv' || this.theme.family === 'fpv' ? this.artSnapshot : null;
+      this.theme.id === 'fpv' ||
+      this.theme.family === 'fpv' ||
+      this.arcadeCollection?.id === 'military-field'
+        ? this.artSnapshot
+        : null;
     if (
       actorAppearance !== null &&
       (!['fpv', 'campaign'].includes(actorAppearance?.style) ||
@@ -437,7 +441,9 @@ export class BoardPainter {
     // The host owns and verifies this separate lease. Its canvas, fonts and
     // theme are deliberately ignored: changing actors must not change a world.
     const fpvActors = actorAppearance?.style === 'fpv';
-    const actorPresentation = fpvActors ? actorAppearance.snapshot : presentation;
+    const actorPresentation = fpvActors
+      ? this.arcadeAdapter.resolve(actorAppearance.snapshot, this.arcadeCollection)
+      : presentation;
     const interfaceFonts = canvasInterfaceFonts(this.interfaceProvider());
     const fonts = canvasTextFonts(textFace, interfaceFonts ?? presentation?.fonts, {
       useThemeFont: !!interfaceFonts || !!presentation?.appearance,

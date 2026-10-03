@@ -73,8 +73,9 @@ export function contentActorMarkerType(level, actor) {
 
 /** Initial authored positions are also shown when the gameplay modifier is off. */
 export function contentCombatMarkers(level) {
-  const patrols = level.classic?.combatPatrols ?? level.combatPatrols;
-  const hunt = level.classic?.hunt ?? level.hunt;
+  const patrols =
+    level.runningEnemies?.combatPatrols ?? level.classic?.combatPatrols ?? level.combatPatrols;
+  const hunt = level.runningEnemies?.hunt ?? level.classic?.hunt ?? level.hunt;
   return (patrols?.actors ?? []).map(({ id, role, x, y }) => ({
     id,
     type: `optional-${role}`,
@@ -99,7 +100,8 @@ const actorTypeKeys = {
 };
 export function contentActorDescription(level, actor) {
   if (['optional-scout', 'optional-sentry'].includes(actor.type)) {
-    const patrols = level.classic?.combatPatrols ?? level.combatPatrols;
+    const patrols =
+      level.runningEnemies?.combatPatrols ?? level.classic?.combatPatrols ?? level.combatPatrols;
     const recipe = patrols.actors.find((entry) => entry.id === actor.id);
     const active = patrols.enabled;
     if (actor.huntKind)

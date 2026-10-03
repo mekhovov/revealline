@@ -16,11 +16,35 @@ import { createReactionPreferences } from '../journey/reaction-preferences.mjs';
 import { createReactionOptions } from '../journey/reaction-options.mjs';
 import { createReactionVoiceLibrary } from '../journey/reaction-voice-library.mjs';
 import { REACTION_PORTRAITS } from '../journey/reaction-portraits.mjs';
+import { actorDefinition, resolveActorFamily } from '../hunt/actor-catalog.mjs';
+import { actorEventReaction } from '../hunt/actor-reactions.mjs';
+import { drawHuntActor } from '../hunt/actor-art.mjs';
+import { sharedActorAppearance } from '../hunt/preferences.mjs';
 
 const recentLines = new Map();
 const HISTORY_KEY = 'revealline.reaction-recent.v1';
+/** Warm the active cast first, then shared pilot lines. Unrelated enemy packs
+ * must not displace the current encounter from the bounded decoded cache. */
+export function reactionWarmupLineIds({ families = [], originals = [], available = [], locale }) {
+  const active = new Set(families.map(resolveActorFamily).filter(Boolean));
+  const relevant = (id) => {
+    const line = REACTION_LINES.find((entry) => entry.id === id);
+    return line && (!actorDefinition(line.speaker) || active.has(line.speaker));
+  };
+  return [
+    ...new Set([
+      ...REACTION_LINES.filter((line) => active.has(line.speaker)).map((line) => line.id),
+      ...originals
+        .filter((line) => line.locale === locale && relevant(line.lineId))
+        .map((line) => line.lineId),
+      ...available.filter(relevant),
+    ]),
+  ].slice(0, 24);
+}
 const lineRepeatKey = (line) =>
-  line.family === 'result' ? line.id : `${line.family}/${line.id.split('/').at(-1)}`;
+  line.family === 'result' || actorDefinition(line.speaker)
+    ? line.id
+    : `${line.family}/${line.id.split('/').at(-1)}`;
 const speakerFor = (context) =>
   Object.hasOwn(JOURNEY_REACTIONS, context.speaker)
     ? context.speaker
@@ -35,6 +59,8 @@ const familyFor = (event) =>
   ({
     'cells.claimed': 'capture',
     'combat.eliminated': 'elimination',
+    'actor.caught': 'elimination',
+    'actor.noticed': 'notice',
     'player.respawned': 'recovery',
     'craft.redeployed': 'recovery',
     'player.revived': event.reason === 'reserve' ? 'recovery' : 'rescue',
@@ -124,16 +150,26 @@ export class ContextualReactionDirector {
       .filter((item) => item.family && !this.families.has(item.family))
       .sort(
         (a, b) =>
-          ['rescue', 'recovery', 'elimination', 'capture'].indexOf(a.family) -
-          ['rescue', 'recovery', 'elimination', 'capture'].indexOf(b.family),
+          ['rescue', 'recovery', 'elimination', 'capture', 'notice'].indexOf(a.family) -
+          ['rescue', 'recovery', 'elimination', 'capture', 'notice'].indexOf(b.family),
       );
     for (const { event, family } of candidates) {
-      const line = REACTION_LINES.find(
-        (entry) =>
-          entry.speaker === speaker &&
-          entry.family === family &&
-          time - (recentLines.get(lineRepeatKey(entry)) ?? -Infinity) >= 300000,
+      const actor = resolveActorFamily(
+        event.actorFamily ?? event.kind ?? context.actorFamilyFor?.(event.id),
       );
+      const actorLine =
+        actor && ['elimination', 'notice'].includes(family)
+          ? actorEventReaction(actor, family === 'notice' ? 'notice' : 'caught', this.getLocale())
+          : null;
+      const line =
+        actorLine && time - (recentLines.get(lineRepeatKey(actorLine)) ?? -Infinity) >= 300000
+          ? REACTION_LINES.find((entry) => entry.id === actorLine.id)
+          : REACTION_LINES.find(
+              (entry) =>
+                entry.speaker === speaker &&
+                entry.family === family &&
+                time - (recentLines.get(lineRepeatKey(entry)) ?? -Infinity) >= 300000,
+            );
       if (!line) continue;
       const selected = {
         ...reactionLine(line.id, this.getLocale()),
@@ -225,6 +261,7 @@ export function attachContextualReactions({
   };
   const panel = create('div'),
     portrait = create('img'),
+    actorPortrait = create('canvas'),
     caption = create('span');
   panel.dataset.characterReaction = 'true';
   panel.className = 'reaction-live-caption';
@@ -235,9 +272,13 @@ export function attachContextualReactions({
   portrait.alt = '';
   portrait.style.cssText =
     'display:block;flex:0 0 var(--reaction-portrait-size,3rem);width:var(--reaction-portrait-size,3rem);height:var(--reaction-portrait-size,3rem);border-radius:.4rem;image-rendering:pixelated;';
+  actorPortrait.setAttribute('aria-hidden', 'true');
+  actorPortrait.width = actorPortrait.height = 56;
+  actorPortrait.style.cssText = portrait.style.cssText;
+  actorPortrait.hidden = true;
   caption.style.cssText =
     'font-family:system-ui,sans-serif;line-height:1.45;overflow-wrap:anywhere;min-width:0;';
-  panel.append(portrait, caption);
+  panel.append(portrait, actorPortrait, caption);
   container.append(panel);
   const releaseFeedbackLayout = attachHuntFeedbackLayout({ container, window: target });
   const preferences = createReactionPreferences({
@@ -259,6 +300,7 @@ export function attachContextualReactions({
     controls = new Map(),
     controlLabels = new Map();
   let settings = null,
+    actorVoiceControls = null,
     status = null,
     pilot = null,
     previewSample = null,
@@ -318,6 +360,7 @@ export function attachContextualReactions({
     }
     if (settings) settings.querySelector('legend').textContent = tr('title');
     if (pilot) pilot.textContent = tr('pilot');
+    actorVoiceControls?.refresh();
     if (settings) {
       const preview = settings.querySelector('[data-reaction-preview]');
       preview.textContent = tr('preview');
@@ -355,7 +398,11 @@ export function attachContextualReactions({
         renderResultReactionCaption(resultContainer, localized, state, enabled, getLocale());
     }
   }
-  function prepare() {
+  let voiceFamilies = [],
+    warmupRevision = 0;
+  function prepare(families) {
+    if (Array.isArray(families))
+      voiceFamilies = [...new Set(families.map(resolveActorFamily).filter(Boolean))].sort();
     if (
       closed ||
       !preferences.snapshot().enabled ||
@@ -371,29 +418,36 @@ export function attachContextualReactions({
     if (
       previous?.context === context &&
       previous.generation === revision &&
+      previous.families === voiceFamilies.join('|') &&
       Date.now() - previous.time < 30000
     )
       return;
-    prepared.set(locale, { context, generation: revision, time: Date.now() });
+    prepared.set(locale, {
+      context,
+      generation: revision,
+      families: voiceFamilies.join('|'),
+      time: Date.now(),
+    });
+    const warmup = ++warmupRevision,
+      activeFamilies = [...voiceFamilies];
     // Two bounded asset decoders warm pilot and local recordings before events.
     // Missing recordings never enqueue or replay an already-expired reaction.
     void Promise.resolve(voiceLibrary.available?.(locale) ?? [])
       .then(async (available) => {
         await cache.ready();
-        const ids = [
-          ...new Set([
-            ...(voiceLibrary.originals ?? [])
-              .filter((line) => line.locale === locale)
-              .map((line) => line.lineId),
-            ...available,
-          ]),
-        ].slice(0, 24);
+        const ids = reactionWarmupLineIds({
+          families: activeFamilies,
+          originals: voiceLibrary.originals ?? [],
+          available,
+          locale,
+        });
         let index = 0;
         const warm = async () => {
           while (
             index < ids.length &&
             !closed &&
             generation === revision &&
+            warmup === warmupRevision &&
             getLocale() === locale &&
             !doc.hidden &&
             sound.context === context
@@ -413,12 +467,30 @@ export function attachContextualReactions({
     current = { line, terminal };
     const appearance = REACTION_PORTRAITS[line.speaker] ?? REACTION_PORTRAITS.guide;
     portrait.src = getReduced() ? appearance.idle : appearance.react;
+    const actor = actorDefinition(line.speaker);
+    const painter = actor ? actorPortrait.getContext?.('2d') : null;
+    actorPortrait.hidden = !painter;
+    actorPortrait.style.display = painter ? 'block' : 'none';
+    portrait.hidden = !!painter;
+    portrait.style.display = painter ? 'none' : 'block';
+    if (painter) {
+      const cast = sharedActorAppearance().snapshot().cast;
+      painter.clearRect(0, 0, 56, 56);
+      drawHuntActor(painter, 0, 0, 56, 0, {
+        kind: actor.id,
+        cast,
+        state: line.family === 'caught' ? 'caught' : 'notice',
+      });
+    }
     render();
     if (!getReduced())
-      motion = portrait.animate?.([{ transform: 'scale(.88)' }, { transform: 'scale(1)' }], {
-        duration: 180,
-        easing: 'ease-out',
-      });
+      motion = (painter ? actorPortrait : portrait).animate?.(
+        [{ transform: 'scale(.88)' }, { transform: 'scale(1)' }],
+        {
+          duration: 180,
+          easing: 'ease-out',
+        },
+      );
     const state = options.snapshot(),
       buffer = cache.get(line.id, getLocale());
     if (state.speech && speak && buffer) {
@@ -503,10 +575,17 @@ export function attachContextualReactions({
     pilot = create('p', tr('pilot'));
     settings.append(preview, previewSample, retry, status, pilot);
     settingsContainer.append(settings);
+    actorVoiceControls =
+      voiceLibrary.actorDownloads?.attach({
+        container: settings,
+        document: doc,
+        getLocale,
+      }) ?? null;
   }
   const unsubPrefs = preferences.subscribe(render),
     unsubOptions = options.subscribe(render);
   const unsubLibrary = voiceLibrary.subscribe(() => {
+    void actorVoiceControls?.synchronize();
     generation++;
     prepared.clear();
     stopSpeech();
@@ -547,6 +626,10 @@ export function attachContextualReactions({
     options,
     voiceLibrary,
     prepare,
+    refresh() {
+      render();
+      prepare();
+    },
     diagnostics: () =>
       Object.freeze({
         cache: cache.snapshot(),
@@ -555,7 +638,18 @@ export function attachContextualReactions({
         speaking: !!activeVoice && !activeVoice.ended,
       }),
     events(events, context) {
-      prepare();
+      const observed = Array.isArray(events)
+        ? events
+            .map((event) =>
+              resolveActorFamily(
+                event?.actorFamily ?? event?.kind ?? context?.actorFamilyFor?.(event?.id),
+              ),
+            )
+            .filter(Boolean)
+        : [];
+      prepare(
+        context?.actorFamilies ?? (observed.length ? [...voiceFamilies, ...observed] : undefined),
+      );
       return director.events(events, { ...context, enabled: preferences.snapshot().enabled });
     },
     result(context) {
@@ -585,6 +679,7 @@ export function attachContextualReactions({
       reducedMedia?.removeEventListener?.('change', reducedChanged);
       for (const control of controls.values()) control.onchange = null;
       settings?.remove();
+      actorVoiceControls?.dispose();
       panel.remove();
       releaseFeedbackLayout();
     },

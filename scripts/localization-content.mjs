@@ -56,12 +56,25 @@ async function currentJourneySources(root) {
   const { createContentExecutionCatalog } = await moduleAt('content-design/execution.mjs');
   const { createJourneyCatalog } = await moduleAt('journey/catalog.mjs');
   const { createMissionCard } = await moduleAt('content-design/mission-card.mjs');
+  const { applyGameplayTuning, resolveGameplayTuning } = await moduleAt('gameplay-tuning.mjs');
   const sources = [];
   const add = (source, data) => sources.push({ source, data });
   const registerExecution = (source, data, mode) => {
     add(`${source}#source`, data);
     const executions = createContentExecutionCatalog(data, { mode });
     add(`${source}#executions/${mode}`, executions.entries);
+    // Capture HUDs own the accepted pressure recipe, not the untuned catalogue
+    // level. Register only default first-party projections; custom edits never
+    // gain translation authority by reusing a title or ID.
+    if (source.includes('pursuit-'))
+      add(
+        `${source}#accepted/${mode}`,
+        executions.entries.flatMap((entry) =>
+          entry.campaign.levels.map((level) =>
+            applyGameplayTuning(level, resolveGameplayTuning(entry.difficulty)),
+          ),
+        ),
+      );
     // Match the navigation adapters' exact serializable records, including
     // source ownership and mode. A same-named custom mission cannot opt in.
     const catalog = createJourneyCatalog(
@@ -116,7 +129,12 @@ async function currentJourneySources(root) {
   // Optional first-party routes remain launchable by their explicit Journey
   // URL before they become the default or enter retained history. Register
   // their presentation identities now without changing authored route data.
-  for (const routeId of ['whole-spatial-v34', 'snake-hunt-v1']) {
+  for (const routeId of [
+    'whole-spatial-v34',
+    'snake-hunt-v1',
+    'pursuit-pilots-v1',
+    'pursuit-campaigns-v1',
+  ]) {
     if (
       history.has(routeId) ||
       [DEFAULT_JOURNEY_ROUTES.solo, DEFAULT_JOURNEY_ROUTES.versus].includes(routeId)
@@ -191,6 +209,22 @@ async function currentJourneySources(root) {
   registerExecution(
     'game/content-design/team-snake-hunt-candidates.mjs#createTeamSnakeHuntCandidates',
     createTeamSnakeHuntCandidates(),
+    'team',
+  );
+  const { createPursuitPilotCandidates } = await moduleAt(
+    'content-design/pursuit-pilot-candidates.mjs',
+  );
+  const { createPursuitCampaignCandidates } = await moduleAt(
+    'content-design/pursuit-campaign-candidates.mjs',
+  );
+  registerExecution(
+    'game/content-design/pursuit-pilot-candidates.mjs#createPursuitPilotCandidates',
+    createPursuitPilotCandidates({ team: true }),
+    'team',
+  );
+  registerExecution(
+    'game/content-design/pursuit-campaign-candidates.mjs#createPursuitCampaignCandidates',
+    createPursuitCampaignCandidates({ team: true }),
     'team',
   );
   return sources;
@@ -326,7 +360,7 @@ export async function extractContent(root, register) {
           'budgetLabel',
         ].includes(key);
       const snakePresentation =
-        source.includes('snake-hunt') &&
+        (source.includes('snake-hunt') || source.includes('pursuit-')) &&
         ['lesson', 'counterplay', 'captureConsequence', 'memorableMoment'].includes(key);
       if (
         (CONTENT_FIELDS.has(key) || motionPresentation || snakePresentation) &&
@@ -340,7 +374,7 @@ export async function extractContent(root, register) {
         for (const field of [
           'routeDecision',
           'mastery',
-          ...(source.includes('snake-hunt')
+          ...(source.includes('snake-hunt') || source.includes('pursuit-')
             ? ['lesson', 'counterplay', 'captureConsequence', 'memorableMoment']
             : []),
         ])

@@ -10,6 +10,9 @@ const journey = (source, target) => {
     /^[a-z][a-z0-9]*(?:-[a-z0-9]+)*$/.test(editions[0])
   )
     target.searchParams.set('edition', editions[0]);
+  const locales = source.searchParams.getAll('lang');
+  if (locales.length === 1 && ['en', 'uk'].includes(locales[0]))
+    target.searchParams.set('lang', locales[0]);
   return target;
 };
 

@@ -6,6 +6,61 @@ fullscreen and existing simulation/content contracts. Direction: grounded
 realism, primary Acro learning, optional self-level assistance and consistent
 main-game presentation. All activities remain immediately selectable.
 
+## Approved continuation — 3 October 2026
+
+### Continuous phase progression
+
+The owner explicitly directs continuous implementation: when an item is complete,
+verify it, publish its focused PR and immediately start the next approved item.
+When a phase is complete, start the next phase without requesting another go-ahead.
+CI, merge queues and deployment continue independently; keep unfinished work on a
+separate branch and use native stacks for actual dependencies. Player feedback and
+physical-device qualification remain nonblocking and honestly recorded as pending.
+If a dependency blocks one item, progress another approved independent item.
+Stop only when the approved backlog is complete, the owner requests a pause, or no
+safe useful work remains without essential user input. Do not expand scope beyond
+the approved plan to keep work running.
+
+
+The owner approved implementation with **world quality first**, polishing all
+14 existing worlds before the main learning/usability phase, followed by creator
+tools and four distinct new worlds. This ordering supersedes the older delivery
+order below. Additional unit coverage remains deferred to D6; functional build,
+browser, replay, import/export and offline checks remain part of each increment.
+Physical-device and novice feedback do not block development and are not claimed
+as completed.
+
+| Phase | Working estimate | Reviewable result |
+| --- | --- | --- |
+| D0 | 1 week | Publish verified controls/art PRs #986/#987 through protected checks; repair shared offline capacity; establish rendering baseline and complete Snake outcome verification |
+| D1 | 3–5 weeks | Finished Container Yard and Woodland Park; reusable industrial/natural assets and measured quality tiers |
+| D2 | 5–7 weeks | Remaining 12 worlds in six pairs: Stadium/Garage, Hangar/Meadow, Courtyard/Warehouse, Airfield/Quarry, Campus/Railworks, Orchard/Solar Park |
+| D3 | 2–3 weeks | 60 optional Adventure demonstrations, 28 eligible alternate School demonstrations, evidence-based coaching, continuous practice and touch/controller polish |
+| D4 | 1–2 weeks | Editable sweeper/hairpin/chicane/climb/split-level templates, clearance guidance, divergent-mode routes and industrial/natural starter projects |
+| D5 | 6–8 weeks | Mountain Reservoir, Harbor Docks, Old Town Canals and Festival Grounds; eight distinct challenges and 16 mode-specific demonstrations per world |
+| D6 | 1–2 weeks | Deferred unit coverage, full regression and recorded qualification limits |
+
+Estimate: 19–28 working weeks plus three contingency weeks, assuming two developers
+and an environment artist. Each complete increment receives a focused PR;
+independent work continues while CI runs. Use native stacks only for dependencies.
+D5 targets 18 worlds and 216 authored challenges; authored counts are not player
+acceptance or measured performance claims.
+
+Preserve Three.js, existing physics/replays, world identities, asset licenses and
+retained dependencies. Gameplay geometry changes need explicit content revisions.
+Quality presets must preserve collision, relevant sight lines and objective actors.
+Measure frame times, loading and resource disposal before claiming performance.
+No multiplayer, online publishing or universal commercial-map conversion is added.
+
+### Approved capacity change
+
+The owner explicitly approved raising the shared-core offline budget from
+64 MiB to **72 MiB** with installation, update and rollback verification. Company editions use the separately enforced **80 MiB** package budget. Keep the
+2,000-file guard, content integrity checks and protected release requirements.
+Retain lossless compression and keep new large worlds/assets in optional packs.
+The three optional SIM packages remain **64/72/104 files and 8/8/16 MiB**.
+This approval does not alter unrelated media, backup, archive or source-file limits.
+
 ## Current delivery order — 3 October 2026
 
 The owner has explicitly made player-feedback sessions **nonblocking for further
@@ -396,3 +451,52 @@ Keep Themes #955's shared factory/semantic ownership. Counts remain148 challenge
 14worlds and178 original/school demonstrations. B physical TX15/iPhone/Steam Deck,
 D player sessions, F creator/device-offline, feedback-led G maps and H/R7 deferred
 unit coverage remain open.
+
+### FlightDivision inspection and implementation order — 3 October 2026
+
+This checkpoint supersedes the catalogue counts and next-item order immediately
+above. Main `cf0b62e53` includes recovery #981 and Theme Studio #982. It has
+184 challenges in 14 worlds, including 58 school lessons; the original/school
+demonstration total remains 178. The prepared 60 Adventure examples still need
+their own player-delivery qualification. No new world is counted for an art pass.
+
+The owner requested implementation after a logged-in inspection of
+[FlightDivision](https://www.flightdivision.com/sim). Its actual settings,
+free-flight environment, drone Gear screen and first lesson were inspected.
+The useful immediate references are its two-hand keyboard grouping, readable
+quad construction, coherent industrial materials, clear structural silhouettes
+and short contextual lesson instructions. Public marketing statements about
+training transfer and physics are not independent qualification evidence.
+
+Deliver the following focused increments in this order, with independent
+branches where their code has no dependency:
+
+1. **Two-stick keyboard layout:** W/S throttle, A/D yaw, arrows pitch/roll;
+   Space arm/pause and R reset through existing safety gates. Keep Classic
+   selectable and share the preference/hints across both hosts and the lab.
+   Gate: actual-browser input, replay/menu isolation and frozen package admission.
+2. **Drone and Container Yard presentation:** shaped carbon frames, larger swept
+   props, recognizable battery/camera details, corrugated closed containers and
+   door hardware. Reduce repeated meshes; preserve Pixel styling, collider bounds,
+   theme ownership and physical profiles. Gate: before/after WebGL views,
+   collision/visibility equivalence, resource disposal and package admission.
+3. **Full environment art foundation:** carry the same surface scale, material
+   discipline, lighting and flight-line composition into Stadium/Garage, then
+   terrain and richer authored scenery. A small procedural refinement does not
+   establish parity with FlightDivision's complete world production. Establish
+   a representative finished environment before estimating the remaining batch.
+4. **Remaining examples and repeat play:** ship the prepared optional Adventure
+   demonstrations, keep section practice/ghost compatibility and improve relevant
+   next actions. Follow with distinct map additions once the art pipeline is
+   proven; user feedback remains nonblocking.
+5. **Final qualification:** additional unit coverage, sustained named-device
+   frame times, physical radio/handheld and novice acceptance. Continue functional
+   verification on every preceding increment. Do not mark pending human/device
+   observations passed merely because browser fixtures succeed.
+
+The first two increments are under active implementation. Their focused PRs and
+qualification receipts determine completion; public availability additionally
+requires deployment identity and a real player launch. They do not replace the
+larger remaining art work with an unsupported same-quality claim. Reuse existing
+licensed resources and original geometry; this inspection does not establish
+redistribution permission for FlightDivision's proprietary models or textures.

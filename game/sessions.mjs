@@ -1,5 +1,5 @@
 import { createRun, releaseInputs } from './core/index.mjs';
-import { resolveVersions, versionsForCampaign } from './core/versions.mjs';
+import { resolveVersions, versionsForCampaign, isRunningEnemyLevel } from './core/versions.mjs';
 import {
   createRecorder,
   exportReplay,
@@ -214,7 +214,10 @@ export function suspendSession({
   if (presentationLevel && projected) {
     const matched = tuning
       ? matchRecordedGameplayTuning(presentationLevel, run.level, { classes: run.classRecipes })
-      : prepareRunningEnemyLevel(presentationLevel, { classes: run.classRecipes });
+      : prepareRunningEnemyLevel(presentationLevel, {
+          classes: run.classRecipes,
+          style: run.level.pursuit ? 'varied' : 'original',
+        });
     required(matched, 'Tuned picture source differs from this flight.');
     const expected = createRun(matched, {
       classId: run.classId,
@@ -310,7 +313,7 @@ export async function restoreSession(
   const versions = versionsForCampaign(installed);
   required(
     session.replay.ruleset === versions.ruleset ||
-      (session.replay.level.version === 'xonix-level.v10' &&
+      (isRunningEnemyLevel(session.replay.level) &&
         runningEnemyBaseLevel(session.replay.level).version === versions.levelVersion),
     'Saved attempt and installed campaign simulation versions differ.',
   );

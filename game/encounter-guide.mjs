@@ -10,6 +10,8 @@ import {
   SENTINEL_SCENARIO_VERSION,
   HUNT_SCENARIO_VERSION,
   SNAKE_SCENARIO_VERSION,
+  PURSUIT_SCENARIO_VERSION,
+  SNAKE_PURSUIT_SCENARIO_VERSION,
   validateScenario,
 } from './content.mjs';
 
@@ -77,13 +79,12 @@ export function encounterGuideAvailability(topic, level) {
   let reason = 'unavailable';
   if (level != null) {
     if (!validateLevel(level).valid) reason = 'invalid';
-    // Practice scenario formats currently preserve only authored level versions.
-    // Never relabel the accepted Bonus overlay as a historical scenario or drop
-    // its actors merely to enable this optional patrol lesson.
-    else if (level.runningEnemies) reason = 'unavailable';
+    // Original v10 overlays have no raw practice transport. Pursuit successors
+    // have exact versions, so the complete accepted recipe is retained.
+    else if (level.version === 'xonix-level.v10') reason = 'unavailable';
     else {
       const role = lessons[topic].role,
-        combat = level.classic?.combatPatrols,
+        combat = level.runningEnemies?.combatPatrols ?? level.classic?.combatPatrols,
         present = role
           ? combat?.enabled === true && combat.actors.some((actor) => actor.role === role)
           : level.classic?.enemyPressure?.actors.some((actor) => actor.mode === topic);
@@ -108,6 +109,8 @@ export function createEncounterGuideScenario({ topic, level, theme, turnPolicy, 
     'xonix-level.v8': SENTINEL_SCENARIO_VERSION,
     'xonix-level.v9': HUNT_SCENARIO_VERSION,
     'xonix-level.v11': SNAKE_SCENARIO_VERSION,
+    'xonix-level.v12': PURSUIT_SCENARIO_VERSION,
+    'xonix-level.v13': SNAKE_PURSUIT_SCENARIO_VERSION,
   };
   const candidate = {
     format: formats[level.version],

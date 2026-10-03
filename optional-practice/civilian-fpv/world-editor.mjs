@@ -1,4 +1,5 @@
 import { createFlightRenderer } from './world-assets.mjs';
+import { sharedActorAppearance } from '../../game/hunt/preferences.mjs';
 
 /** Lightweight spatial authoring view. The host owns validated source, undo/redo,
  * and persistence. This view never creates or steps a simulation. */
@@ -38,6 +39,7 @@ export function mountWorldEditor({
   const invalidate = () => {
     dirty = true;
   };
+  const releaseActorAppearance = sharedActorAppearance().subscribe(invalidate);
   const select = (value) => {
     selection = value;
     controls?.select(value, false);
@@ -165,6 +167,7 @@ export function mountWorldEditor({
       for (const remove of listeners) remove();
       observer?.disconnect();
       renderer.dispose();
+      releaseActorAppearance();
     },
   };
 }

@@ -4,22 +4,23 @@ on:
   pull_request:
     branches: [main]
     paths:
-      - "publishing/pages-controller/**"
-      - ".github/workflows/publish-frozen-pages.yml"
-      - "scripts/pages-archive.mjs"
-      - "scripts/pages-current-entry.mjs"
-      - "publishing/edition-promotion.mjs"
-      - "publishing/optional-package-*.mjs"
-      - "publishing/edition-admission.mjs"
-      - "publishing/edition-zip.mjs"
-      - "game/edition-context.mjs"
-      - "game/data-json.mjs"
-      - "game/presentation/theme-system.mjs"
-      - "game/i18n/index.mjs"
-      - "game/i18n/catalogs.mjs"
-      - "game/i18n/bootstrap.mjs"
-      - "game/vendor/i18next-26.4.2.min.js"
-      - "package.json"
+      - 'publishing/pages-controller/**'
+      - '.github/workflows/publish-frozen-pages.yml'
+      - 'scripts/pages-archive.mjs'
+      - 'scripts/pages-current-entry.mjs'
+      - 'publishing/edition-promotion.mjs'
+      - 'publishing/optional-package-*.mjs'
+      - 'publishing/edition-admission.mjs'
+      - 'publishing/edition-zip.mjs'
+      - 'game/edition-context.mjs'
+      - 'game/editions/package-budget.mjs'
+      - 'game/data-json.mjs'
+      - 'game/presentation/theme-system.mjs'
+      - 'game/i18n/index.mjs'
+      - 'game/i18n/catalogs.mjs'
+      - 'game/i18n/bootstrap.mjs'
+      - 'game/vendor/i18next-26.4.2.min.js'
+      - 'package.json'
 
 permissions:
   contents: read
@@ -61,6 +62,7 @@ jobs:
             /publishing/edition-admission.mjs
             /publishing/edition-zip.mjs
             /game/edition-context.mjs
+            /game/editions/package-budget.mjs
             /game/data-json.mjs
             /game/presentation/theme-system.mjs
             /game/i18n/index.mjs

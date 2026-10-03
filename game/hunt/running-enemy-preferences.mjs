@@ -2,12 +2,22 @@ import { boundedJSON, exactKeys } from '../data-json.mjs';
 
 export const RUNNING_ENEMY_PREFERENCES_KEY = 'revealline.running-enemies.v1';
 const format = 'RunningEnemyPreferencesV1';
+const successorFormat = 'RunningEnemyPreferencesV2';
+const successorKey = 'revealline.running-enemies.v2';
 const pageObservers = new WeakMap();
 
 export function validateRunningEnemyPreferences(source) {
-  const value = boundedJSON(source, { maxBytes: 256, maxNodes: 4, maxDepth: 1 });
-  exactKeys(value, ['format', 'enabled'], 'Running enemy preferences');
-  if (value.format !== format || typeof value.enabled !== 'boolean')
+  const value = boundedJSON(source, { maxBytes: 256, maxNodes: 6, maxDepth: 1 });
+  exactKeys(
+    value,
+    ['format', 'enabled', ...(value.format === successorFormat ? ['style'] : [])],
+    'Running enemy preferences',
+  );
+  if (
+    ![format, successorFormat].includes(value.format) ||
+    typeof value.enabled !== 'boolean' ||
+    (value.format === successorFormat && !['original', 'varied'].includes(value.style))
+  )
     throw new TypeError('Unsupported running enemy preferences.');
   return Object.freeze(value);
 }
@@ -19,6 +29,7 @@ export function createRunningEnemyPreferences({
   window: target = globalThis.window,
 } = {}) {
   let enabled = false,
+    style = 'original',
     durable = true,
     pending = false,
     disposed = false;
@@ -26,15 +37,17 @@ export function createRunningEnemyPreferences({
   const pageKey = target && ['object', 'function'].includes(typeof target) ? target : null;
   const peers = (pageKey && pageObservers.get(pageKey)) ?? new Set();
   if (pageKey) pageObservers.set(pageKey, peers);
-  const snapshot = () => Object.freeze({ enabled, durable });
+  const snapshot = () => Object.freeze({ enabled, style, durable });
   const read = () => {
     const storage = getStorage();
     if (!storage) throw new Error('Preference storage unavailable.');
-    const raw = storage.getItem(RUNNING_ENEMY_PREFERENCES_KEY);
+    const raw = storage.getItem(successorKey) ?? storage.getItem(RUNNING_ENEMY_PREFERENCES_KEY);
+    const accepted = raw === null ? null : validateRunningEnemyPreferences(raw);
     return {
       storage,
       raw,
-      enabled: raw === null ? false : validateRunningEnemyPreferences(raw).enabled,
+      enabled: accepted?.enabled ?? false,
+      style: accepted?.style ?? 'original',
     };
   };
   const notify = () => {
@@ -49,13 +62,16 @@ export function createRunningEnemyPreferences({
     return snapshot();
   };
   try {
-    enabled = read().enabled;
+    const current = read();
+    enabled = current.enabled;
+    style = current.style;
   } catch {
     durable = false;
   }
   const receivePageChoice = (choice) => {
     if (disposed) return;
     enabled = choice.enabled;
+    style = choice.style;
     durable = choice.durable;
     pending = !durable;
     notify();
@@ -67,7 +83,8 @@ export function createRunningEnemyPreferences({
     if (
       event.type === 'storage' &&
       event.key !== null &&
-      event.key !== RUNNING_ENEMY_PREFERENCES_KEY
+      event.key !== RUNNING_ENEMY_PREFERENCES_KEY &&
+      event.key !== successorKey
     )
       return;
     try {
@@ -79,6 +96,7 @@ export function createRunningEnemyPreferences({
       )
         return;
       enabled = current.enabled;
+      style = current.style;
       durable = true;
     } catch {
       durable = false;
@@ -89,10 +107,9 @@ export function createRunningEnemyPreferences({
     if (disposed) return snapshot();
     try {
       const { storage } = read(); // Preserve unsupported or damaged stored records.
-      const raw = JSON.stringify({ format, enabled });
-      storage.setItem(RUNNING_ENEMY_PREFERENCES_KEY, raw);
-      if (storage.getItem(RUNNING_ENEMY_PREFERENCES_KEY) !== raw)
-        throw new Error('Preference readback failed.');
+      const raw = JSON.stringify({ format: successorFormat, enabled, style });
+      storage.setItem(successorKey, raw);
+      if (storage.getItem(successorKey) !== raw) throw new Error('Preference readback failed.');
       pending = false;
       durable = true;
     } catch {
@@ -111,6 +128,14 @@ export function createRunningEnemyPreferences({
       if (typeof value !== 'boolean')
         throw new TypeError('Choose whether running enemies are enabled.');
       enabled = value;
+      pending = true;
+      return save();
+    },
+    setStyle(value) {
+      if (disposed) return snapshot();
+      if (!['original', 'varied'].includes(value))
+        throw new TypeError('Choose original or varied running targets.');
+      style = value;
       pending = true;
       return save();
     },

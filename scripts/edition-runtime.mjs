@@ -1,10 +1,13 @@
 import path from 'node:path';
+import { createHash } from 'node:crypto';
 import { readFileSync } from 'node:fs';
 import { parse } from 'acorn';
 import { validateDemoCatalog } from '../game/demo-catalog.mjs';
 import { REACTION_PORTRAITS } from '../game/journey/reaction-portraits.mjs';
 import { REACTION_VOICE_PILOT } from '../game/audio/reactions/pilot.mjs';
+import { ACTOR_VOICE_RECORDINGS } from '../game/audio/reactions/actors.mjs';
 import { CLASSIC_PRESENTATION } from '../game/snake/classic-presentation.mjs';
+import { projectEditionFlightMenu } from './edition-flight-menu.mjs';
 import {
   MENU_SCENES,
   MENU_SCENE_COMPOSITIONS,
@@ -12,6 +15,10 @@ import {
 } from '../game/ui/menu-scene-catalog.mjs';
 
 export const DEFAULT_GAME_WORDMARK = 'game/ui/art/identity/fpv-line/wordmark.png';
+const actorVoiceSource = 'game/audio/reactions/actors.mjs';
+const actorVoiceSourceHash = createHash('sha256')
+  .update(readFileSync(new URL(`../${actorVoiceSource}`, import.meta.url)))
+  .digest('hex');
 
 /** Standalone company chrome already uses its selected brand. Keep the shared
  * helper's image fallback local to that same approved logo instead of shipping
@@ -96,6 +103,67 @@ export function editionReactionVoiceResources() {
   });
 }
 
+/** Optional Company speech is pinned to the same immutable originals as main play. */
+export function editionActorVoiceResources() {
+  const identities = new Set();
+  if (ACTOR_VOICE_RECORDINGS.length !== 48)
+    throw new Error('Review the Company actor voice budget.');
+  let bytes = 0;
+  const paths = ACTOR_VOICE_RECORDINGS.map((voice) => {
+    const identity = `${voice.lineId}|${voice.locale}`;
+    if (
+      !/^humanoid-actors\.v1\/[a-z-]+\/(notice|caught)$/.test(voice.lineId) ||
+      !['en', 'uk'].includes(voice.locale) ||
+      !/^actors-v1\/actor-[a-z-]+-(notice|caught)-(en|uk)\.m4a$/.test(voice.file) ||
+      !voice.file.endsWith(`-${voice.locale}.m4a`) ||
+      !Number.isSafeInteger(voice.bytes) ||
+      voice.bytes < 1 ||
+      voice.bytes > 2 * 1024 * 1024 ||
+      !/^[a-f0-9]{64}$/.test(voice.sha256) ||
+      identities.has(identity)
+    )
+      throw new Error('Invalid Company actor voice resource.');
+    identities.add(identity);
+    bytes += voice.bytes;
+    return `game/audio/reactions/${voice.file}`;
+  });
+  if (bytes > 2 * 1024 * 1024) throw new Error('Company actor voice pack exceeds 2 MiB.');
+  return paths;
+}
+
+export function projectEditionActorVoices(name, bytes) {
+  if (name !== 'game/editions/standalone/actor-recordings.mjs') return bytes;
+  editionActorVoiceResources();
+  if (
+    createHash('sha256')
+      .update(readFileSync(new URL(`../${actorVoiceSource}`, import.meta.url)))
+      .digest('hex') !== actorVoiceSourceHash
+  )
+    throw new Error('Company actor voice source changed during compilation.');
+  const source = new TextDecoder('utf-8', { fatal: true }).decode(bytes);
+  const tree = parse(source, { ecmaVersion: 'latest', sourceType: 'module' });
+  const declaration = tree.body
+    .flatMap((node) => node.declaration?.declarations ?? [])
+    .find((node) => node.id?.name === 'ACTOR_VOICE_RECORDINGS');
+  const value = declaration?.init;
+  if (
+    value?.type !== 'CallExpression' ||
+    value.callee?.object?.name !== 'Object' ||
+    value.callee?.property?.name !== 'freeze' ||
+    value.arguments.length !== 1 ||
+    value.arguments[0]?.type !== 'ArrayExpression' ||
+    value.arguments[0].elements.length
+  )
+    throw new Error('Unknown Company actor catalogue adapter.');
+  const array = value.arguments[0];
+  return Buffer.from(
+    `// Company actor originals; source identity: ${actorVoiceSource} ${actorVoiceSourceHash}\n` +
+      source.slice(0, array.start) +
+      JSON.stringify(ACTOR_VOICE_RECORDINGS) +
+      source.slice(array.end),
+  );
+}
+
 /** Exact original sprites selected by Classic's independent artwork owner. */
 export function editionClassicPresentationResources() {
   if (CLASSIC_PRESENTATION.assets.length !== 2) throw new Error('Invalid Classic artwork budget.');
@@ -175,6 +243,7 @@ export const EDITION_RUNTIME_ADAPTERS = Object.freeze({
   'game/runtime-library-sources.mjs': 'game/editions/standalone/library-sources.mjs',
   'game/external-chapter-source.mjs': 'game/editions/standalone/external-chapters.mjs',
   'game/replay-theater/examples.mjs': 'game/editions/standalone/replay-examples.mjs',
+  'game/audio/reactions/actors.mjs': 'game/editions/standalone/actor-recordings.mjs',
 });
 
 export const EDITION_RUNTIME_PAGES = Object.freeze([
@@ -194,6 +263,7 @@ export const EDITION_RUNTIME_RESOURCES = Object.freeze({
   'game/ui/install-offline-panel.mjs': ['game/ui/install-offline-panel.css'],
   'game/journey/reaction-portraits.mjs': editionReactionPortraitResources(),
   'game/audio/reactions/pilot.mjs': editionReactionVoiceResources(),
+  'game/editions/standalone/actor-recordings.mjs': editionActorVoiceResources(),
   'game/ui/mode-choice.mjs': ['game/snake/play.html', 'game/snake/index.html'],
   'game/snake/classic-presentation.mjs': editionClassicPresentationResources(),
   'game/presentation/theme-host.mjs': ['game/presentation/industrial-workshop.css'],
@@ -269,6 +339,8 @@ export function validateEditionHostRequests(name, bytes) {
 
 export function projectEditionRuntimeImports(name, bytes) {
   if (!/\.(?:mjs|js)$/.test(name)) return bytes;
+  bytes = projectEditionFlightMenu(name, bytes);
+  bytes = projectEditionActorVoices(name, bytes);
   const source = new TextDecoder('utf-8', { fatal: true }).decode(bytes),
     edits = [];
   const visit = (node) => {

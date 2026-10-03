@@ -5,6 +5,7 @@ import { textSymbolMask, imageSymbolMask } from './symbol-source.mjs';
 import { analyzeRouteCoverage, ROUTE_COVERAGE } from '../core/coverage.mjs';
 import {
   t,
+  getLocale,
   localizedMessage,
   localizedText,
   localizedAttribute,
@@ -356,41 +357,48 @@ function sync() {
     'xonix-playground.v9',
     'xonix-playground.v10',
     'xonix-playground.v11',
+    'xonix-playground.v12',
+    'xonix-playground.v13',
   ].includes(current.format);
   $('mastery-json').value = definition ? JSON.stringify(definition, null, 2) : '';
   localizedText($('mastery-readout'), () =>
-    current.format === 'xonix-playground.v11'
-      ? snakeBrief(current.level)
-      : current.format === 'xonix-playground.v10'
-        ? huntText('hint')
-        : current.format === 'xonix-playground.v9'
-          ? t('tools:sentinelEditionCaptureEveryShieldRelayBeforeTheCoreOpening')
-          : current.format === 'xonix-playground.v8'
-            ? t('tools:directionalEditionMarkedUnclaimedFieldsChangeCraftSpeedWithOr')
-            : current.format === 'xonix-playground.v7'
-              ? t('tools:relayEditionCaptureEachLinkedObjectiveToOpenPermanentReclaimed')
-              : current.format === 'xonix-playground.v6'
-                ? t('tools:foundationEditionReclaimedIslandsAndLanesArePermanentReturnGround')
-                : current.format === 'xonix-playground.v5'
-                  ? t('tools:classicEditionTerrainContactPickupsAndEnemyRolesStayIn')
-                  : current.format === 'xonix-playground.v4'
-                    ? t('tools:wideEditionOptionalEquipmentGoalsAreUnavailableTheMapRetains')
-                    : current.format === 'xonix-playground.v3'
-                      ? t('tools:stagedEncounterThisRulesetHasNoOptionalEquipmentGoalsIts')
-                      : current.format === 'xonix-playground.v2'
-                        ? definition
-                          ? t('tools:referencesValidateAgainstThisMapAndRosterPlayTheRoute', {
-                              value1: definition.name,
-                              value2: definition.description,
-                            })
-                          : t('tools:noOptionalGoalThisExplicitChoiceIsRetainedInPractice')
-                        : t('tools:legacyScenarioOnlyExactShippedContentCanUseItsBuilt'),
+    current.level.pursuit
+      ? getLocale() === 'uk'
+        ? 'Маршрути переслідування та правила хвоста закріплені у версії. Цей редактор зберігає й експортує всю місію без змін ШІ. Для редагування цілей і маршрутів використовуйте головну Студію. Зміни оформлення доступні; несумісні зміни ігрових правил буде відхилено.'
+        : 'Pursuit routes and tail rules are pinned to this edition. This editor preserves and exports the complete mission. Edit target goals and routes in the main Studio. Presentation edits remain available; incompatible gameplay edits are rejected.'
+      : current.format === 'xonix-playground.v11'
+        ? snakeBrief(current.level)
+        : current.format === 'xonix-playground.v10'
+          ? huntText('hint')
+          : current.format === 'xonix-playground.v9'
+            ? t('tools:sentinelEditionCaptureEveryShieldRelayBeforeTheCoreOpening')
+            : current.format === 'xonix-playground.v8'
+              ? t('tools:directionalEditionMarkedUnclaimedFieldsChangeCraftSpeedWithOr')
+              : current.format === 'xonix-playground.v7'
+                ? t('tools:relayEditionCaptureEachLinkedObjectiveToOpenPermanentReclaimed')
+                : current.format === 'xonix-playground.v6'
+                  ? t('tools:foundationEditionReclaimedIslandsAndLanesArePermanentReturnGround')
+                  : current.format === 'xonix-playground.v5'
+                    ? t('tools:classicEditionTerrainContactPickupsAndEnemyRolesStayIn')
+                    : current.format === 'xonix-playground.v4'
+                      ? t('tools:wideEditionOptionalEquipmentGoalsAreUnavailableTheMapRetains')
+                      : current.format === 'xonix-playground.v3'
+                        ? t('tools:stagedEncounterThisRulesetHasNoOptionalEquipmentGoalsIts')
+                        : current.format === 'xonix-playground.v2'
+                          ? definition
+                            ? t('tools:referencesValidateAgainstThisMapAndRosterPlayTheRoute', {
+                                value1: definition.name,
+                                value2: definition.description,
+                              })
+                            : t('tools:noOptionalGoalThisExplicitChoiceIsRetainedInPractice')
+                          : t('tools:legacyScenarioOnlyExactShippedContentCanUseItsBuilt'),
   );
   $('use-campaign-goal').disabled = noMasteries || !entryMastery(selectedEntry(), current.level.id);
   $('apply-mastery').disabled = noMasteries;
   $('clear-goal').disabled = noMasteries;
   const encounter = current.level.encounter;
-  $('encounter-fields').disabled = !encounter || encounter.version === 'xonix-encounter.v2';
+  $('encounter-fields').disabled =
+    !!current.level.pursuit || !encounter || encounter.version === 'xonix-encounter.v2';
   localizedText($('encounter-readout'), () =>
     encounter?.version === 'xonix-encounter.v2'
       ? t('tools:playground.sentinelEncounter', {
@@ -562,6 +570,8 @@ function drawAssets() {
     'xonix-playground.v9',
     'xonix-playground.v10',
     'xonix-playground.v11',
+    'xonix-playground.v12',
+    'xonix-playground.v13',
   ].includes(current.format)
     ? [...VISUAL_ROLES, ...CLASSIC_VISUAL_ROLES]
     : VISUAL_ROLES;
@@ -897,23 +907,27 @@ try {
   const recipes = await fetch('../content/classes.json').then((r) => r.json());
   current = {
     format:
-      campaign.levels[0].version === 'xonix-level.v11'
-        ? 'xonix-playground.v11'
-        : campaign.levels[0].version === 'xonix-level.v9'
-          ? 'xonix-playground.v10'
-          : campaign.levels[0].version === 'xonix-level.v8'
-            ? 'xonix-playground.v9'
-            : campaign.levels[0].version === 'xonix-level.v7'
-              ? 'xonix-playground.v8'
-              : campaign.levels[0].version === 'xonix-level.v6'
-                ? 'xonix-playground.v7'
-                : campaign.levels[0].version === 'xonix-level.v5'
-                  ? 'xonix-playground.v6'
-                  : campaign.levels[0].version === 'xonix-level.v4'
-                    ? 'xonix-playground.v5'
-                    : campaign.levels[0].version === 'xonix-level.v3'
-                      ? 'xonix-playground.v4'
-                      : 'xonix-playground.v1',
+      campaign.levels[0].version === 'xonix-level.v13'
+        ? 'xonix-playground.v13'
+        : campaign.levels[0].version === 'xonix-level.v12'
+          ? 'xonix-playground.v12'
+          : campaign.levels[0].version === 'xonix-level.v11'
+            ? 'xonix-playground.v11'
+            : campaign.levels[0].version === 'xonix-level.v9'
+              ? 'xonix-playground.v10'
+              : campaign.levels[0].version === 'xonix-level.v8'
+                ? 'xonix-playground.v9'
+                : campaign.levels[0].version === 'xonix-level.v7'
+                  ? 'xonix-playground.v8'
+                  : campaign.levels[0].version === 'xonix-level.v6'
+                    ? 'xonix-playground.v7'
+                    : campaign.levels[0].version === 'xonix-level.v5'
+                      ? 'xonix-playground.v6'
+                      : campaign.levels[0].version === 'xonix-level.v4'
+                        ? 'xonix-playground.v5'
+                        : campaign.levels[0].version === 'xonix-level.v3'
+                          ? 'xonix-playground.v4'
+                          : 'xonix-playground.v1',
     ...([
       'xonix-level.v3',
       'xonix-level.v4',
@@ -923,6 +937,8 @@ try {
       'xonix-level.v8',
       'xonix-level.v9',
       'xonix-level.v11',
+      'xonix-level.v12',
+      'xonix-level.v13',
     ].includes(campaign.levels[0].version)
       ? { masteryDefinition: null }
       : {}),
@@ -1302,6 +1318,8 @@ try {
           'xonix-playground.v9',
           'xonix-playground.v10',
           'xonix-playground.v11',
+          'xonix-playground.v12',
+          'xonix-playground.v13',
         ].includes(current.format)
           ? {
               format: 'xonix-playground.v2',

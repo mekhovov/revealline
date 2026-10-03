@@ -1,4 +1,5 @@
 import { campaignResultLine } from './campaign-feedback.mjs';
+import { ACTOR_REACTION_LINES, actorReactionLine } from '../hunt/actor-reactions.mjs';
 /** Original, non-blocking personality copy. No simulated facts, gameplay rules,
  * scores, requests to keep playing, or rewards are derived from these captions. */
 export const JOURNEY_REACTIONS = Object.freeze({
@@ -78,8 +79,8 @@ const incidentalCopy = {
     ['That rescue opened another chance.', 'Цей порятунок дав ще один шанс.'],
   ],
 };
-export const REACTION_LINES = Object.freeze(
-  Object.entries(JOURNEY_REACTIONS).flatMap(([speaker, entry]) => [
+export const REACTION_LINES = Object.freeze([
+  ...Object.entries(JOURNEY_REACTIONS).flatMap(([speaker, entry]) => [
     ...entry.lines.map((en, variant) =>
       Object.freeze({
         id: `journey-reaction.v1/${speaker}/${variant}`,
@@ -99,9 +100,12 @@ export const REACTION_LINES = Object.freeze(
       ),
     ),
   ]),
-);
+  ...ACTOR_REACTION_LINES,
+]);
 const byId = new Map(REACTION_LINES.map((line) => [line.id, line]));
 export function reactionLine(id, locale = 'en') {
+  const actor = actorReactionLine(id, locale);
+  if (actor) return actor;
   const line = byId.get(id);
   if (!line) return null;
   return {

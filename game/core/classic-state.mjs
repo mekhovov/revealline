@@ -1,6 +1,6 @@
 import { huntDefinition } from '../hunt/running-enemy-definition.mjs';
 import { CELL } from './registry.mjs';
-import { isClassicRuleset } from './versions.mjs';
+import { isClassicRuleset, isRunningEnemyRuleset } from './versions.mjs';
 import { createTimedBonusState } from './timed-bonuses.mjs';
 import { createHuntState } from '../hunt/rules.mjs';
 
@@ -59,7 +59,7 @@ export function classicEffectActive(state, kind) {
 
 /** Complete new-branch authority. Derived graph caches are rebuilt from these fields. */
 export function projectClassicState(state) {
-  if ((!isClassicRuleset(state.ruleset) && state.ruleset !== 'xonix-core.v11') || !state.classic)
+  if ((!isClassicRuleset(state.ruleset) && !isRunningEnemyRuleset(state.ruleset)) || !state.classic)
     throw new TypeError('Classic projection requires a classic run');
   const { terrain, eligible, everClaimed, ...data } = state.classic;
   return {

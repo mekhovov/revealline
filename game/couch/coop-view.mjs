@@ -244,7 +244,9 @@ export function createCoopPainter(canvas) {
     if (actorAppearance !== null && !['fpv', 'campaign'].includes(actorAppearance?.style))
       throw new TypeError(t('interface:teamActorAppearanceNeedsASupportedStyle'));
     const selectedActors =
-      actorAppearance?.style === 'fpv' ? actorAppearance.snapshot : artSnapshot;
+      actorAppearance?.style === 'fpv'
+        ? arcadeAdapter.resolve(actorAppearance.snapshot, runCollections.get(run) ?? null)
+        : artSnapshot;
     let nextActors = actors;
     if (
       actorAppearance?.style === 'fpv' &&
