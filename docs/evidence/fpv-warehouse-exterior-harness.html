@@ -1,0 +1,593 @@
+<!doctype html>
+<html lang="en">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Warehouse exterior composition · frozen comparison</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      font: 15px system-ui;
+      background: #0c1723;
+      color: #e5edf1;
+    }
+    body {
+      margin: 20px;
+      max-width: 1400px;
+    }
+    button,
+    select {
+      font: inherit;
+      padding: 10px;
+      margin: 6px;
+    }
+    .pair {
+      display: flex;
+      gap: 12px;
+      overflow: auto;
+    }
+    figure {
+      margin: 0;
+    }
+    figcaption {
+      padding: 8px;
+    }
+    .screen,
+    .screen canvas {
+      display: block;
+      width: 640px;
+      height: 360px;
+      background: #111;
+    }
+    textarea {
+      width: 100%;
+      height: 180px;
+      font: 11px monospace;
+    }
+    #status {
+      min-height: 24px;
+    }
+  </style>
+  <h1>Warehouse exterior composition</h1>
+  <p>
+    Frozen before/after modules, actual flight renderers, static inspection poses. Connected window
+    bays and staggered buildings reuse all 57 imported placements. Interior geometry and collision
+    remain exact. This fixture does not certify artistic acceptance, hardware FPS or a flight
+    demonstration.
+  </p>
+  <p id="provenance">Loading frozen inputs…</p>
+  <button id="run" disabled>Run exterior qualification</button>
+  <button id="preview" disabled>Show selected view</button>
+  <button id="download" disabled>Download receipt</button>
+  <label
+    >Course
+    <select id="course">
+      <option>warehouse-08</option>
+      <option>snake-hunt-route-choices-boundary-cutback</option>
+      <option>snake-hunt-approach-windows-window-chain</option>
+      <option>beginner-38</option>
+    </select></label
+  >
+  <label
+    >Finish
+    <select id="appearance">
+      <option value="authored">Authored</option>
+      <option value="pixel">Pixel</option>
+      <option value="industrial-workshop">Industrial Workshop</option>
+    </select></label
+  >
+  <label
+    >View
+    <select id="wall">
+      <option value="north-glazing">North through glazing</option>
+      <option value="south-roofline">South above beams</option>
+    </select></label
+  >
+  <p id="status">Preparing controls…</p>
+  <div class="pair">
+    <figure>
+      <figcaption>Before</figcaption>
+      <div class="screen" id="before"></div>
+    </figure>
+    <figure>
+      <figcaption>After</figcaption>
+      <div class="screen" id="after"></div>
+    </figure>
+  </div>
+  <p>
+    The bounded receipt keeps every check and per-view image hash/count, without raw pixel buffers.
+    Download the JSON or transfer it in validated chunks; never truncate the DOM text.
+  </p>
+  <textarea id="receipt" aria-label="Warehouse exterior evidence" readonly></textarea>
+  <script type="module">
+    const $ = (id) => document.getElementById(id),
+      clone = structuredClone,
+      encode = JSON.stringify,
+      wait = () => new Promise(requestAnimationFrame),
+      sha = async (value) =>
+        [
+          ...new Uint8Array(
+            await crypto.subtle.digest(
+              'SHA-256',
+              typeof value === 'string' ? new TextEncoder().encode(value) : value,
+            ),
+          ),
+        ]
+          .map((b) => b.toString(16).padStart(2, '0'))
+          .join('');
+    let manifest,
+      modules,
+      owners = [],
+      receipt,
+      busy = false;
+    const errors = [];
+    addEventListener('error', (event) => errors.push(event.message));
+    addEventListener('unhandledrejection', (event) => errors.push(String(event.reason)));
+    const status = (text) => ($('status').textContent = text);
+    function publish() {
+      window.fpvWarehouseExteriorReceipt = receipt;
+      $('receipt').value = encode(receipt);
+      $('download').disabled = !receipt;
+    }
+    function check(name, passed, details) {
+      receipt.checks.push({
+        name,
+        passed: !!passed,
+        ...(details === undefined ? {} : { details }),
+      });
+      publish();
+      if (!passed) throw Error(name);
+    }
+    async function verifyHashes() {
+      for (const [side, files] of Object.entries(manifest.files))
+        for (const [path, hash] of Object.entries(files)) {
+          const response = await fetch('./' + side + '/' + path, { cache: 'no-store' });
+          if (!response.ok || (await sha(await response.arrayBuffer())) !== hash)
+            throw Error('Frozen source mismatch: ' + side + '/' + path);
+        }
+      if (
+        (await sha(await (await fetch('./index.html', { cache: 'no-store' })).arrayBuffer())) !==
+        manifest.harnessSha256
+      )
+        throw Error('Harness mismatch');
+    }
+    const catalogue = (i) => [
+      ...new Map(
+        [...modules[i].catalogue.WORLD_CATALOGUE, ...modules[i].catalogue.BEGINNER_CATALOGUE].map(
+          (r) => [r.id, r.course],
+        ),
+      ).values(),
+    ];
+    const course = (i, id) => {
+      const value = catalogue(i).find((c) => c.id === id);
+      if (!value) throw Error('Missing ' + id);
+      return value;
+    };
+    function createOwners() {
+      owners = modules.map((row) => {
+        const canvas = document.createElement('canvas');
+        $(row.side).replaceChildren(canvas);
+        let scene = null;
+        const prototype = row.THREE.Object3D.prototype,
+          add = prototype.add;
+        prototype.add = function (...objects) {
+          if (!scene && this.isScene && objects.length === 8 && objects.every((o) => o.isGroup))
+            scene = this;
+          return add.apply(this, objects);
+        };
+        let runtime;
+        try {
+          runtime = row.assets.createFlightRenderer({
+            canvas,
+            window,
+            reducedMotion: true,
+            onContextLost: () => {
+              if (receipt && !receipt.disposing) receipt.contextLosses.push(row.side);
+            },
+          });
+        } finally {
+          prototype.add = add;
+        }
+        if (!runtime.available || !scene) {
+          runtime.dispose();
+          throw Error('Renderer unavailable: ' + row.side);
+        }
+        return {
+          ...row,
+          canvas,
+          runtime,
+          scene,
+          world: scene.children[0],
+          imported: scene.children[6],
+          gl: canvas.getContext('webgl2'),
+        };
+      });
+    }
+    function disposeOwners() {
+      if (receipt) receipt.disposing = true;
+      const results = owners.map((owner) => {
+        owner.runtime.dispose();
+        return { side: owner.side, resources: owner.runtime.resources() };
+      });
+      owners = [];
+      if (receipt) delete receipt.disposing;
+      return results;
+    }
+    async function load(id, quality, appearance = 'authored') {
+      for (let i = 0; i < owners.length; i++) {
+        const owner = owners[i],
+          c = clone(course(i, id));
+        if (appearance === 'pixel') c.world = { ...c.world, theme: 'pixel' };
+        owner.runtime.setPresentation({
+          collectionId: appearance === 'pixel' ? 'authored' : appearance,
+          revision: 'r1',
+        });
+        owner.runtime.setCourse(c, 'acro');
+        owner.runtime.setQuality(quality);
+        owner.runtime.setDrone('racer');
+        const glb = owner.assets.builtinWorldScene(c);
+        if (glb) {
+          owner.glbHash = await sha(await glb.arrayBuffer());
+          await owner.runtime.loadScene(glb);
+          if (!owner.imported.children.length) throw Error('Actual GLB was not installed');
+        }
+        if ((await owner.runtime.prepare()) === false) throw Error('Shader preparation superseded');
+        owner.scene.updateMatrixWorld(true);
+      }
+    }
+    function observation(id, wall) {
+      const c = course(0, id),
+        m = modules[0],
+        flight = (
+          c.format === 'FlightCourse.v2' ? m.worldModel.createWorldFlight : m.model.createFlight
+        )({ course: c, mode: 'acro' }),
+        state = flight.snapshot();
+      flight.dispose?.();
+      const north = wall === 'north-glazing',
+        width = (c.bounds.max.x - c.bounds.min.x) / 1000,
+        middleX = (c.bounds.max.x + c.bounds.min.x) / 2000,
+        yaw = north ? 0 : Math.PI,
+        pitch = north ? 0 : -0.2,
+        q = new m.THREE.Quaternion().setFromEuler(new m.THREE.Euler(pitch, yaw, 0, 'YXZ'));
+      state.position = {
+        x: Math.round((middleX - width * 0.1) * 1000),
+        y: north ? 5400 : 10500,
+        z: north ? c.bounds.min.z + 21000 : c.bounds.max.z - 21000,
+      };
+      state.orientation = q.toArray().map((n) => Math.round(n * 1e6));
+      state.ticks = 100;
+      return state;
+    }
+    function pixels(owner, state, camera) {
+      const original = encode(state);
+      owner.runtime.draw(state, { cameraMode: camera, cameraFov: 82, cameraTilt: 0 });
+      const gl = owner.gl,
+        rgba = new Uint8Array(gl.drawingBufferWidth * gl.drawingBufferHeight * 4);
+      gl.readPixels(
+        0,
+        0,
+        gl.drawingBufferWidth,
+        gl.drawingBufferHeight,
+        gl.RGBA,
+        gl.UNSIGNED_BYTE,
+        rgba,
+      );
+      if (gl.getError() !== gl.NO_ERROR || encode(state) !== original)
+        throw Error('WebGL error or observer state mutation');
+      return { rgba, resources: owner.runtime.resources() };
+    }
+    async function pair(id, quality, appearance, camera, wall) {
+      await wait();
+      const state = observation(id, wall),
+        a = pixels(owners[0], state, camera),
+        b = pixels(owners[1], state, camera);
+      if (a.rgba.length !== b.rgba.length) throw Error('Pixel dimensions differ');
+      let changed = 0,
+        nonBlack = 0;
+      for (let i = 0; i < a.rgba.length; i += 4) {
+        if (
+          a.rgba[i] !== b.rgba[i] ||
+          a.rgba[i + 1] !== b.rgba[i + 1] ||
+          a.rgba[i + 2] !== b.rgba[i + 2]
+        )
+          changed++;
+        if (b.rgba[i] + b.rgba[i + 1] + b.rgba[i + 2]) nonBlack++;
+      }
+      return {
+        id,
+        quality,
+        appearance,
+        camera,
+        wall,
+        changedPixels: changed,
+        nonBlackPixels: nonBlack,
+        beforeHash: await sha(a.rgba),
+        afterHash: await sha(b.rgba),
+        drawCalls: [a.resources.renderer.calls, b.resources.renderer.calls],
+        triangles: [a.resources.renderer.triangles, b.resources.renderer.triangles],
+      };
+    }
+    async function baseGeometry(owner) {
+      const result = [];
+      owner.world.traverse((item) => {
+        if (!item.geometry) return;
+        result.push({
+          name: item.name,
+          matrix: item.matrixWorld.elements,
+          attributes: Object.fromEntries(
+            Object.entries(item.geometry.attributes).map(([key, value]) => [
+              key,
+              Array.from(value.array),
+            ]),
+          ),
+          index: item.geometry.index ? Array.from(item.geometry.index.array) : null,
+          instances: item.instanceMatrix ? Array.from(item.instanceMatrix.array) : null,
+          cast: item.castShadow,
+          receive: item.receiveShadow,
+          visible: item.visible,
+        });
+      });
+      return sha(encode(result));
+    }
+    function importedSnapshot(owner) {
+      let vertices = 0,
+        instances = 0,
+        meshes = 0;
+      const materials = new Set(),
+        geometries = new Set(),
+        textures = new Set();
+      owner.imported.traverse((item) => {
+        if (!item.isMesh) return;
+        meshes++;
+        vertices +=
+          item.geometry.attributes.position.count * (item.isInstancedMesh ? item.count : 1);
+        instances += item.isInstancedMesh ? item.count : 0;
+        geometries.add(item.geometry);
+        for (const material of [item.material].flat()) {
+          materials.add(material);
+          for (const value of Object.values(material)) if (value?.isTexture) textures.add(value);
+        }
+      });
+      return {
+        meshes,
+        vertices,
+        instances,
+        materials: materials.size,
+        geometries: geometries.size,
+        textures: textures.size,
+        filters: [...textures]
+          .map((t) => [t.minFilter, t.magFilter, t.wrapS, t.wrapT, t.colorSpace])
+          .sort(),
+      };
+    }
+    function importedClearance(owner, id) {
+      const c = course(0, id),
+        v = new owner.THREE.Vector3(),
+        matrix = new owner.THREE.Matrix4();
+      let vertices = 0;
+      owner.imported.traverse((item) => {
+        if (!item.isMesh) return;
+        const p = item.geometry.attributes.position;
+        for (let instance = 0; instance < (item.isInstancedMesh ? item.count : 1); instance++) {
+          if (item.isInstancedMesh) {
+            item.getMatrixAt(instance, matrix);
+            matrix.premultiply(item.matrixWorld);
+          } else matrix.copy(item.matrixWorld);
+          for (let i = 0; i < p.count; i++) {
+            v.fromBufferAttribute(p, i).applyMatrix4(matrix);
+            if (
+              !(
+                v.x < c.bounds.min.x / 1000 - 0.25 ||
+                v.x > c.bounds.max.x / 1000 + 0.25 ||
+                v.z < c.bounds.min.z / 1000 - 0.25 ||
+                v.z > c.bounds.max.z / 1000 + 0.25
+              )
+            )
+              throw Error('Actual imported vertex approaches the flight envelope');
+            vertices++;
+          }
+        }
+      });
+      return vertices;
+    }
+    function resourceKey(owner) {
+      const r = owner.runtime.resources();
+      return {
+        registered: r.registered,
+        geometries: r.renderer.geometries,
+        textures: r.renderer.textures,
+      };
+    }
+    async function run() {
+      if (busy) return;
+      busy = true;
+      $('run').disabled = $('preview').disabled = true;
+      disposeOwners();
+      receipt = {
+        format: 'FPVWarehouseExteriorBrowserEvidence.v1',
+        createdAt: new Date().toISOString(),
+        baseline: manifest.baseline,
+        candidate: manifest.candidate,
+        sourceFiles: manifest.files,
+        checks: [],
+        samples: [],
+        resourceCycles: [],
+        contextLosses: [],
+        limitations: [
+          'Actual WebGL static observer evidence; not new flight proofs, hardware performance or human art acceptance.',
+          'Every image comparison retains hashes/counts, not raw pixel buffers.',
+        ],
+      };
+      try {
+        await verifyHashes();
+        check('Frozen source and harness hashes match', true);
+        createOwners();
+        const warehouses = catalogue(0).filter((c) => c.environment === 'warehouse');
+        check(
+          'All29 Warehouse courses unchanged',
+          warehouses.length === 29 &&
+            warehouses.every((c) => encode(c) === encode(course(1, c.id))),
+        );
+        const representative = [
+          ...new Map(warehouses.map((c) => [encode(c.bounds), c.id])).values(),
+        ];
+        check('Four arena sizes represented', representative.length === 4);
+        for (const id of representative)
+          for (const quality of ['low', 'balanced', 'high'])
+            for (const appearance of ['authored', 'pixel', 'industrial-workshop']) {
+              status(id + ' · ' + quality + ' · ' + appearance);
+              await load(id, quality, appearance);
+              const key = id + '/' + quality + '/' + appearance;
+              check(
+                key + ' existing shell/storage/UV/transforms/shadows exact',
+                (await baseGeometry(owners[0])) === (await baseGeometry(owners[1])),
+              );
+              check(
+                key + ' actual imported resources and filters remain exact',
+                encode(importedSnapshot(owners[0])) === encode(importedSnapshot(owners[1])) &&
+                  importedSnapshot(owners[1]).instances === 42,
+              );
+              check(
+                key + ' loaded GLB vertices stay outside the flight envelope',
+                importedClearance(owners[0], id) === importedClearance(owners[1], id) &&
+                  importedClearance(owners[1], id) > 0,
+              );
+              check(
+                key + ' total registered resources remain exact',
+                encode(owners[0].runtime.resources().registered) ===
+                  encode(owners[1].runtime.resources().registered),
+              );
+              for (const camera of ['fpv', 'chase', 'overview'])
+                for (const wall of ['north-glazing', 'south-roofline']) {
+                  const sample = await pair(id, quality, appearance, camera, wall);
+                  receipt.samples.push(sample);
+                  check(
+                    key + '/' + camera + '/' + wall + ' rendered',
+                    sample.nonBlackPixels > 100 && sample.drawCalls.every((n) => n > 0),
+                  );
+                }
+            }
+        check(
+          'Exterior composition visible in actual imported FPV views',
+          receipt.samples
+            .filter((s) => s.camera === 'fpv' && s.wall === 'north-glazing')
+            .every((s) => s.changedPixels > 20),
+        );
+        for (const c of warehouses) {
+          const blobs = modules.map((m) => m.assets.builtinWorldScene(c));
+          check(
+            c.id + ' only intended Warehouse imported composition changes',
+            (await sha(await blobs[0].arrayBuffer())) !== (await sha(await blobs[1].arrayBuffer())),
+          );
+        }
+        for (const environment of [
+          'courtyard',
+          'woodland',
+          'stadium',
+          'container-yard',
+          'garage',
+        ]) {
+          const c = catalogue(0).find((c) => c.environment === environment);
+          await load(c.id, 'balanced');
+          const sample = await pair(c.id, 'balanced', 'authored', 'fpv', 'north-glazing');
+          receipt.samples.push(sample);
+          check(
+            environment + ' imported control pixels and GLB exact',
+            sample.changedPixels === 0 && owners[0].glbHash === owners[1].glbHash,
+          );
+        }
+        for (let cycle = 0; cycle < 3; cycle++) {
+          await load('warehouse-08', 'balanced');
+          await pair('warehouse-08', 'balanced', 'authored', 'fpv', 'north-glazing');
+          receipt.resourceCycles.push(owners.map(resourceKey));
+        }
+        check(
+          'Three repeated loads have stable registered/GPU resources',
+          receipt.resourceCycles.every((r) => encode(r) === encode(receipt.resourceCycles[0])),
+        );
+        const final = disposeOwners();
+        receipt.finalResources = final;
+        check(
+          'Final disposal releases all registered resources',
+          final.every((r) => Object.values(r.resources.registered).every((n) => n === 0)),
+        );
+        check(
+          'No unexpected context loss or application error',
+          receipt.contextLosses.length === 0 && errors.length === 0,
+          errors,
+        );
+        receipt.passed = true;
+        publish();
+        status(
+          'PASS · ' +
+            receipt.checks.length +
+            ' checks · ' +
+            receipt.samples.length +
+            ' image pairs',
+        );
+        createOwners();
+        await load('warehouse-08', 'balanced');
+        await pair('warehouse-08', 'balanced', 'authored', 'fpv', 'north-glazing');
+      } catch (error) {
+        receipt.passed = false;
+        receipt.error = String(error.stack ?? error);
+        publish();
+        status('FAIL · ' + error.message);
+      } finally {
+        busy = false;
+        $('run').disabled = $('preview').disabled = false;
+      }
+    }
+    $('run').onclick = run;
+    $('preview').onclick = async () => {
+      try {
+        if (!owners.length) createOwners();
+        await load($('course').value, 'balanced', $('appearance').value);
+        await pair($('course').value, 'balanced', $('appearance').value, 'fpv', $('wall').value);
+        status('Selected static view');
+      } catch (error) {
+        status(error.message);
+      }
+    };
+    $('download').onclick = () => {
+      const url = URL.createObjectURL(
+          new Blob([JSON.stringify(receipt, null, 2) + '\n'], { type: 'application/json' }),
+        ),
+        a = document.createElement('a');
+      a.href = url;
+      a.download = 'fpv-warehouse-exterior-browser.json';
+      a.click();
+      setTimeout(() => URL.revokeObjectURL(url), 1000);
+    };
+    try {
+      manifest = await (await fetch('./fixture-manifest.json')).json();
+      if (manifest.format !== 'FPVWarehouseExteriorFixture.v1') throw Error('Unknown fixture');
+      modules = await Promise.all(
+        ['before', 'after'].map(async (side) => {
+          const base = new URL('./' + side + '/optional-practice/civilian-fpv/', location.href),
+            [assets, catalogue, model, worldModel, THREE] = await Promise.all(
+              [
+                'world-assets.mjs',
+                'world-catalogue.mjs',
+                'model.mjs',
+                'world-model.mjs',
+                'vendor/three.module.js',
+              ].map((p) => import(new URL(p, base))),
+            );
+          await worldModel.initWorldRuntime();
+          return { side, assets, catalogue, model, worldModel, THREE };
+        }),
+      );
+      $('provenance').textContent =
+        'Baseline ' +
+        manifest.baseline +
+        ' · Candidate ' +
+        (manifest.candidate === '.' ? 'working tree' : manifest.candidate) +
+        ' · Runtime SHA-256 ' +
+        manifest.files.after['optional-practice/civilian-fpv/world-assets.mjs'];
+      $('run').disabled = $('preview').disabled = false;
+      status('Ready. Qualification has not run.');
+    } catch (error) {
+      status('Preparation failed: ' + error.message);
+    }
+  </script>
+</html>

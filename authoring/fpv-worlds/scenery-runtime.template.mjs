@@ -179,6 +179,9 @@ export function builtinWorldScene(course) {
     maxX = bounds.max.x / 1000;
   const minZ = bounds.min.z / 1000,
     maxZ = bounds.max.z / 1000;
+  // Keep small creator arenas on their original exterior layout.
+  const warehouseComposition =
+    environment === 'warehouse' && Math.min(maxX - minX, maxZ - minZ) >= 64;
   const { json: original, bin: originalBin, models } = readLibrary();
   const json = structuredClone(original);
   const roots = [],
@@ -341,6 +344,12 @@ export function builtinWorldScene(course) {
       { along: [0.32, 0.59, 0.83], heights: [10, 11, 13], gap: 16 },
       { along: [0.13, 0.36, 0.6], heights: [16, 11, 10], gap: 20 },
     ];
+    // Offset the two industrial backlines behind connected window bays.
+    // The northern tank clears the first building's nearest face by 0.55 m.
+    const warehouseFrontages = [
+      { along: [0.15, 0.52, 0.82], gaps: [16, 20, 15] },
+      { along: [0.2, 0.48, 0.78], gaps: [22, 16, 20] },
+    ];
     const yardStacks = [
       [0.12, 0.24, 0.5, 0.62],
       [0.22, 0.34, 0.46, 0.58],
@@ -356,9 +365,19 @@ export function builtinWorldScene(course) {
           industrial(
             name,
             side,
-            yard ? yardFrontages[side].along[i] : (i + 0.5) / buildings.length,
+            yard
+              ? yardFrontages[side].along[i]
+              : warehouseComposition
+                ? warehouseFrontages[side / 2].along[i]
+                : (i + 0.5) / buildings.length,
             yard ? yardFrontages[side].heights[i] : (garage ? 14 : 10) + i * 2 + side,
-            yard ? yardFrontages[side].gap : garage ? 24 : 14,
+            yard
+              ? yardFrontages[side].gap
+              : warehouseComposition
+                ? warehouseFrontages[side / 2].gaps[i]
+                : garage
+                  ? 24
+                  : 14,
           ),
         );
       }
@@ -389,8 +408,23 @@ export function builtinWorldScene(course) {
     } else if (!garage) industrial('detail-tank', 0, 0.04, 6, 8);
   }
   if (environment === 'warehouse') {
-    for (let side = 0; side < 4; side++)
-      for (let i = 0; i < 8; i++) retro('wall-a-flat-window', side, (i + 0.5) / 8, 6, 0.5, 2.5);
+    // Two four-bay runs read as a frontage rather than isolated floating panels.
+    // Reuse all 32 six-metre panels with a four-centimetre construction joint.
+    const centres = [
+      [0.25, 0.69],
+      [0.3, 0.75],
+      [0.29, 0.74],
+      [0.24, 0.7],
+    ];
+    for (let side = 0; side < 4; side++) {
+      const span = side % 2 ? maxZ - minZ : maxX - minX;
+      for (let i = 0; i < 8; i++) {
+        const along = warehouseComposition
+          ? centres[side][Math.floor(i / 4)] + (((i % 4) - 1.5) * 6.04) / span
+          : (i + 0.5) / 8;
+        retro('wall-a-flat-window', side, along, 6, 0.5, 2.5);
+      }
+    }
   }
   json.scenes = [{ name: `${environment} · Kenney CC0 scenery`, nodes: roots }];
   json.scene = 0;
