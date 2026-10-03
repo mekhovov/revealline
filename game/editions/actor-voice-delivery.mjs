@@ -197,6 +197,7 @@ export function attachActorVoiceDownloads({
     }
   }
   async function refresh() {
+    if (closed || operation) return;
     const current = ++revision;
     render();
     await Promise.all(
@@ -251,19 +252,32 @@ export function attachActorVoiceDownloads({
   };
   const visibility = () => {
     if (doc.hidden) abort();
+    else void refresh();
+  };
+  const focus = () => {
+    if (!doc.hidden) void refresh();
+  };
+  const settingsFocused = (event) => {
+    const dialog = section.closest('dialog');
+    if (dialog?.contains(event.target) && !dialog.contains(event.relatedTarget)) void refresh();
   };
   doc.addEventListener('close', dialogClosed, true);
   doc.addEventListener('visibilitychange', visibility);
+  doc.addEventListener('focusin', settingsFocused);
+  target?.addEventListener('focus', focus);
   target?.addEventListener('pagehide', abort);
   void refresh();
   return Object.freeze({
     refresh: render,
+    synchronize: refresh,
     dispose() {
       closed = true;
       revision++;
       abort();
       doc.removeEventListener('close', dialogClosed, true);
       doc.removeEventListener('visibilitychange', visibility);
+      doc.removeEventListener('focusin', settingsFocused);
+      target?.removeEventListener('focus', focus);
       target?.removeEventListener('pagehide', abort);
       section.remove();
     },

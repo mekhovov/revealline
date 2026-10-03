@@ -19,7 +19,7 @@ const sourceHashes = {
   'optional-practice/civilian-fpv/world-hunt-reactions.mjs':
     '07a55c4d0018983b2174dfbf7363a584fff8641704a293adb49700147bf86f8d',
   'game/ui/contextual-reactions.mjs':
-    '4322a64cde1cfc72cca2622ae80192bc462aa9628f90e21b706b1492ca424d15',
+    '4678ab822811af4c6fc4c43986d0276c2eebfbec59f882464a63bd6108bb1bd0',
   'game/ui/hunt-feedback-layout.mjs':
     '697525f452578880c62102b984da3ff51ec794913c3a2708187c62815c816de5',
   'game/ui/reaction-caption.mjs':
@@ -6197,6 +6197,7 @@ modules['game/ui/contextual-reactions.mjs'] = (() => {
     const unsubPrefs = preferences.subscribe(render),
       unsubOptions = options.subscribe(render);
     const unsubLibrary = voiceLibrary.subscribe(() => {
+      void actorVoiceControls?.synchronize();
       generation++;
       prepared.clear();
       stopSpeech();
