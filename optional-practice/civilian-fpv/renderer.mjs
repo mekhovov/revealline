@@ -2467,6 +2467,7 @@ export function createFlightRenderer({
     return {
       select: selectEditor,
       pick(clientX, clientY) {
+        if (!editor) return false;
         if (editor.dragging || editor.axis) return true;
         const rect = canvas.getBoundingClientRect();
         raycaster.setFromCamera(
@@ -2487,7 +2488,7 @@ export function createFlightRenderer({
       isDragging: () => !!editor?.dragging,
       setSnap(value) {
         if (![0, 0.1, 0.25, 0.5, 1].includes(value)) throw new TypeError('Invalid editor snap');
-        editor.setTranslationSnap(value || null);
+        editor?.setTranslationSnap(value || null);
       },
       orbit(dx, dy) {
         editorCamera.yaw -= dx * 0.007;
@@ -2495,6 +2496,7 @@ export function createFlightRenderer({
         callbacks.onRedraw?.();
       },
       zoom(delta) {
+        if (!course) return;
         const extent =
           Math.max(
             course.bounds.max.x - course.bounds.min.x,
