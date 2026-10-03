@@ -1393,6 +1393,34 @@ export function buildWorldVisuals({
       }
     }
   } else if (environment === 'courtyard') {
+    // These are closed facade finishes on the two authored collision solids.
+    // Pixel retains its existing simple blocks; shared Themes keep their role maps.
+    if (!pixel) {
+      const finishes = {
+        plinth: ['concrete', 0x827e72, 0.94, 0, 3],
+        roof: ['steel', 0x596766, 0.76, 0.12, 3],
+        window: ['steel', 0x506c78, 0.38, 0.25, 6],
+        door: ['timber', 0x74604c, 0.88, 0, 4],
+        accent: ['enamel', 0x557f8a, 0.8, 0, 5],
+        trim: ['concrete', 0xe4d9bd, 0.9, 0, 7],
+      };
+      for (const { finish, geometry } of buildCourtyardFacadeGeometry(course)) {
+        const [role, color, roughness, metalness, layer] = finishes[finish],
+          source = kit ? kit.paint(role) : material(color, { roughness, metalness }),
+          paint = source.clone();
+        paint.polygonOffset = true;
+        paint.polygonOffsetFactor = -layer;
+        paint.polygonOffsetUnits = -layer;
+        world.userData.ownedMaterials.push(source, paint);
+        const facade = mesh(geometry, paint, world);
+        facade.name = `courtyard-house-${finish}`;
+        facade.userData.role = 'courtyard-house-facade';
+        facade.userData.materialRole = role;
+        facade.userData.cosmeticDetail = true;
+        facade.castShadow = false;
+        facade.receiveShadow = true;
+      }
+    }
     const roofPaint = material(theme.warm),
       plinthPaint = material(0x9b9587),
       trimPaint = material(0xf0e5cb),
@@ -1919,6 +1947,125 @@ export function buildCoastLighthouseGeometry(obstacle) {
     geometry.setAttribute('uv', new THREE.Float32BufferAttribute(uv, 2));
     geometry.computeVertexNormals();
     return { role, layer: ['shell', 'band', 'pane', 'trim'].indexOf(role) + 1, geometry };
+  });
+}
+
+/** Original closed-house artwork, flush with the authored box faces.
+ * No recess, porch, roof extension or pane is presented as a flyable opening. */
+export function buildCourtyardFacadeGeometry(course) {
+  if (course?.environment !== 'courtyard') return [];
+  const batches = new Map();
+  for (const obstacle of course.obstacles ?? []) {
+    const expected =
+      obstacle.id === 'house-west' ? [8, 8, 20] : obstacle.id === 'house-east' ? [8, 7, 26] : null;
+    if (!expected || obstacle.type || obstacle.rotation || !obstacle.min || !obstacle.max) continue;
+    const min = ['x', 'y', 'z'].map((axis) => obstacle.min[axis] / 1000),
+      max = ['x', 'y', 'z'].map((axis) => obstacle.max[axis] / 1000);
+    if (
+      ![...min, ...max].every(Number.isFinite) ||
+      expected.some((size, axis) => Math.abs(max[axis] - min[axis] - size) > 1e-8)
+    )
+      continue;
+    const [width, height, depth] = expected,
+      center = min.map((value, axis) => (value + max[axis]) / 2);
+    for (let side = 0; side < 4; side++) {
+      const span = side % 2 ? width : depth,
+        // Each local face runs left to right as viewed from outside, so its
+        // triangles are front-facing without a double-sided material.
+        point = (u, v) =>
+          side === 0
+            ? [max[0], min[1] + v, center[2] - u]
+            : side === 1
+              ? [center[0] + u, min[1] + v, max[2]]
+              : side === 2
+                ? [min[0], min[1] + v, center[2] + u]
+                : [center[0] - u, min[1] + v, min[2]],
+        polygon = (finish, points) => {
+          if (!batches.has(finish)) batches.set(finish, { positions: [], uv: [] });
+          const batch = batches.get(finish);
+          for (let i = 1; i < points.length - 1; i++)
+            for (const index of [0, i, i + 1]) {
+              const p = point(...points[index]);
+              batch.positions.push(...p);
+              batch.uv.push((side % 2 ? p[0] : p[2]) / 3, p[1] / 3);
+            }
+        },
+        rectangle = (finish, left, bottom, right, top) =>
+          polygon(finish, [
+            [left, bottom],
+            [right, bottom],
+            [right, top],
+            [left, top],
+          ]),
+        frame = (finish, left, bottom, right, top, stroke) => {
+          rectangle(finish, left, bottom, right, bottom + stroke);
+          rectangle(finish, left, top - stroke, right, top);
+          rectangle(finish, left, bottom + stroke, left + stroke, top - stroke);
+          rectangle(finish, right - stroke, bottom + stroke, right, top - stroke);
+        };
+      rectangle('plinth', -span / 2, 0, span / 2, 0.56);
+      rectangle('trim', -span / 2, 0.56, span / 2, 0.66);
+      rectangle('roof', -span / 2, height - 0.3, span / 2, height);
+      rectangle('trim', -span / 2, height - 0.48, span / 2, height - 0.3);
+      for (const x of [-span / 2, span / 2 - 0.18])
+        rectangle('trim', x, 0.66, x + 0.18, height - 0.48);
+      // Match renderObstacle's existing plaster-window grid. The new panes
+      // cover those opaque marks at every preset instead of drawing a second,
+      // misaligned set of windows over them. Old marks use offset layer 2.
+      const columns = Math.max(1, Math.min(5, Math.floor(span / 2.4))),
+        pitch = span / columns,
+        entrySide = obstacle.id === 'house-west' ? side === 0 : side === 2,
+        entryColumn = Math.floor(columns / 2);
+      for (let column = 0; column < columns; column++) {
+        const x = (column + 0.5 - columns / 2) * pitch;
+        for (let floor = 0; floor < Math.min(3, Math.floor(height / 2.2)); floor++) {
+          if (entrySide && column === entryColumn && floor === 0) continue;
+          const bottom = 1.4 + floor * 2.2 - 0.575,
+            top = bottom + 1.15,
+            left = x - 0.73,
+            right = x + 0.73;
+          rectangle('accent', left - 0.13, bottom - 0.14, right + 0.13, top + 0.14);
+          rectangle('window', left, bottom, right, top);
+          frame('trim', left, bottom, right, top, 0.07);
+          rectangle('trim', x - 0.045, bottom + 0.07, x + 0.045, top - 0.07);
+          rectangle('trim', left + 0.07, top - 0.48, right - 0.07, top - 0.42);
+          rectangle('trim', left - 0.2, bottom - 0.14, right + 0.2, bottom - 0.06);
+        }
+      }
+      if (entrySide) {
+        // Opaque timber leaves, separate panel lines and a visible handle make
+        // the entrance read as closed. The geometric border is original paint.
+        const left = -0.78,
+          right = 0.78;
+        rectangle('door', left, 0.08, right, 2.42);
+        frame('trim', left - 0.13, 0.08, right + 0.13, 2.55, 0.13);
+        rectangle('accent', -0.026, 0.14, 0.026, 2.36);
+        for (const x of [-0.69, 0.1]) {
+          frame('accent', x, 0.25, x + 0.59, 1.2, 0.045);
+          frame('accent', x, 1.4, x + 0.59, 2.25, 0.045);
+        }
+        rectangle('trim', 0.12, 1.18, 0.18, 1.43);
+        rectangle('accent', -1.08, 2.6, 1.08, 2.84);
+        for (let i = -2; i <= 2; i++) {
+          const x = i * 0.37;
+          polygon('trim', [
+            [x, 2.63],
+            [x + 0.1, 2.72],
+            [x, 2.81],
+            [x - 0.1, 2.72],
+          ]);
+        }
+      }
+    }
+  }
+  return [...batches].map(([finish, { positions, uv }]) => {
+    const geometry = new THREE.BufferGeometry();
+    geometry.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3));
+    geometry.setAttribute('uv', new THREE.Float32BufferAttribute(uv, 2));
+    geometry.computeVertexNormals();
+    geometry.computeBoundingBox();
+    geometry.computeBoundingSphere();
+    return { finish, geometry };
   });
 }
 
