@@ -82,6 +82,14 @@ export function createDemoReward({
     }
   }
   return {
+    // Only the currently displayed, already admitted media can leave the scene.
+    // A decoded video frame avoids flashing back to its poster on Next.
+    departureFrame() {
+      const video = stage?.querySelector('video');
+      return video && video.readyState >= 2 && ['playing', 'paused'].includes(state)
+        ? video
+        : canvas;
+    },
     reset,
     pause,
     update({ won, age, allowed, pin, paused, reduced, volume = 0.7, muted = true }) {

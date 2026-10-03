@@ -33,7 +33,7 @@ for (const exit of ['deadline', 'Back'])
       completeImage = resolve;
     });
     const loading = t.mock.method(BoardPainter.prototype, 'setLook', function () {
-      pendingPainter = this;
+      pendingPainter ??= this;
       return decoding;
     });
     t.mock.method(BoardPainter.prototype, 'dispose', function () {
@@ -50,9 +50,13 @@ for (const exit of ['deadline', 'Back'])
       if (exit === 'deadline') {
         assert.equal(timers.size, 1, 'Only full scene preparation is still awaiting its deadline.');
         [...timers.values()][0]();
-        await waitFor(() => !page.$('demo-dialog').open, {
-          message: 'An exhausted source bank should return Home.',
+        await waitFor(() => disposals === 1, {
+          message: 'The timed-out scene must release its painter before fallback.',
         });
+        // Other installed maps have improvised sources even when the fixture
+        // restricts the reviewed catalogue to one clip. Cancel their fallback
+        // preparation; the source bank is not exhausted after one deadline.
+        page.$('demo-back').click();
       } else page.$('demo-back').click();
       assert.equal(
         disposals,
