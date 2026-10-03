@@ -130,3 +130,25 @@ Original browser receipts stay bound to their recorded candidate rather than
 being relabelled as new measurements. Current-head CI and public deployment
 remain pending. Separate #993 repairs a Woodland foliage regression in main;
 this Stadium increment does not claim to complete that integration.
+
+## Browser receipt capture repair
+
+After PR #1004 merged as `53907d8dbe489890eb0e346de40762284eedac9a`, inspection
+found that both stored browser receipts ended mid-string: the original DOM
+transfer had truncated the bulk per-frame samples after 200,000 characters.
+The source and package receipt files are now valid bounded summaries with format
+`FPVStadiumStructuresBrowserEvidenceSummary.v1`. Each preserves all 484 complete
+passing checks, both original 31-file source digest inventories, the timestamp,
+baseline and candidate from its original capture. The original receipt format is
+retained in `sourceFormat`.
+
+The final success status and 228 image pairs were independently observed in the
+browser DOM during the original qualification. Raw per-frame samples are not
+retained; the summaries do not reconstruct those samples, report a new browser
+run, or establish hardware performance. The capture limitation is explicit in
+each file's `captureNote`. This documentation repair changes no runtime source,
+package, admission rule or original qualification identity.
+
+Repair verification parses both summaries and compares every retained check and
+source digest inventory with the complete fields recoverable from the original
+truncated files. All 484 checks per file remain identical and passed.
