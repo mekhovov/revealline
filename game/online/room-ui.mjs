@@ -20,6 +20,7 @@ import { attachMenuStyleControls } from '../ui/menu-style-controls.mjs';
 import { mountToolDisplay } from '../ui/tool-display.mjs';
 import { getLocale } from '../i18n/index.mjs';
 import { createRoomEventCursor } from './room-events.mjs';
+import { attachRoomSupport } from './room-controls.mjs';
 
 /** The room transport owns readiness and outcomes. This adapter owns only native
  * menu/input presentation and the one page mixer; it never advances a simulation. */
@@ -42,7 +43,7 @@ export function mountRoomUI({ getState, getSeat, canPlay, submit, pause, display
     cards = [],
     pendingTurns = [],
     lastControls = '',
-    support = false,
+    supportInput,
     padHeld = [],
     identity = null,
     audioEpoch = 0,
@@ -211,31 +212,12 @@ export function mountRoomUI({ getState, getSeat, canPlay, submit, pause, display
       $('room-live-status').textContent = message;
     },
   });
-  const setSupport = (value) => {
-    support = value;
-  };
-  $('support').addEventListener('pointerdown', (event) => {
-    if (!canPlay() || shell.blocksPlay() || event.button !== 0) return;
-    event.preventDefault();
-    event.currentTarget.setPointerCapture(event.pointerId);
-    setSupport(true);
-  });
-  for (const type of ['pointerup', 'pointercancel', 'lostpointercapture'])
-    $('support').addEventListener(type, () => setSupport(false));
-  doc.addEventListener('keydown', (event) => {
-    if (
-      event.code !== 'Space' ||
-      event.target.closest('input,select,textarea,button') ||
-      !canPlay() ||
-      shell.blocksPlay()
-    )
-      return;
-    event.preventDefault();
-    if (getState()?.engine.kind === 'team') setSupport(true);
-    else if (!event.repeat) shell.openHome();
-  });
-  doc.addEventListener('keyup', (event) => {
-    if (event.code === 'Space') setSupport(false);
+  supportInput = attachRoomSupport({
+    document: doc,
+    button: $('support'),
+    active: () => canPlay() && !shell.blocksPlay(),
+    isTeam: () => getState()?.engine.kind === 'team',
+    pause: () => shell.openHome(),
   });
   function unlock() {
     const epoch = audioEpoch;
@@ -257,7 +239,7 @@ export function mountRoomUI({ getState, getSeat, canPlay, submit, pause, display
     audioEpoch++;
     pendingTurns = [];
     lastControls = '';
-    support = false;
+    supportInput?.clear();
     input?.clear();
     sound.pause();
     sound.feedbackDirector.reset();
@@ -526,7 +508,7 @@ export function mountRoomUI({ getState, getSeat, canPlay, submit, pause, display
     if (!live || !state) return;
     const command = {
       ...controls,
-      support: state.engine.kind === 'team' && (support || controls.action),
+      support: state.engine.kind === 'team' && (supportInput.held() || controls.action),
       steer: false,
     };
     if (state.engine.kind === 'team') command.action = command.pickup = false;
@@ -585,6 +567,7 @@ export function mountRoomUI({ getState, getSeat, canPlay, submit, pause, display
       footprints?.dispose();
       observer?.disconnect();
       input.destroy();
+      supportInput.dispose();
       navigation.destroy();
       reactions.dispose();
       sound.dispose();

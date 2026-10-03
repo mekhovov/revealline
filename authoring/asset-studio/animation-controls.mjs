@@ -9,6 +9,8 @@ import { pageActorArtPool } from '../../game/presentation/actor-art-pool.mjs';
 import { drawHuntActor } from '../../game/hunt/actor-art.mjs';
 import { actorArtReviewRevision } from '../../game/hunt/preferences.mjs';
 
+let previewSequence = 0;
+
 export function sameActorAnimationContext(owner, next) {
   return (
     !!owner &&
@@ -93,8 +95,13 @@ export function mountActorAnimationControls({
   headingLabel.append(heading);
   root.append(headingLabel);
   const canvas = node('canvas');
-  canvas.width = 512;
-  canvas.height = 160;
+  // The fixed preview backing store is admitted with its actor atlas. A closed
+  // or never-opened editor keeps no unaccounted canvas pixels alive.
+  canvas.width = canvas.height = 0;
+  canvas.close = () => {
+    canvas.width = canvas.height = 0;
+  };
+  const canvasKey = `studio-animation-preview:${++previewSequence}`;
   canvas.style.maxWidth = '100%';
   canvas.style.imageRendering = 'pixelated';
   root.append(
@@ -109,6 +116,7 @@ export function mountActorAnimationControls({
   let owner = null,
     descriptor = null,
     lease = null,
+    canvasLease = null,
     generation = 0,
     pending = null,
     disposed = false;
@@ -118,6 +126,8 @@ export function mountActorAnimationControls({
     pending = null;
     lease?.release();
     lease = null;
+    canvasLease?.release();
+    canvasLease = null;
   };
   function current() {
     const next = getContext();
@@ -126,7 +136,8 @@ export function mountActorAnimationControls({
     return next;
   }
   function draw() {
-    if (disposed || !descriptor) return;
+    if (disposed || !descriptor || !canvasLease || (descriptor.rig === 'sprite.v1' && !lease))
+      return;
     if (!sameActorAnimationContext(owner, getContext())) {
       invalidate();
       return;
@@ -212,24 +223,53 @@ export function mountActorAnimationControls({
     const ticket = generation;
     const controller = new AbortController();
     pending = controller;
-    if (descriptor.rig === 'sprite.v1') {
-      const file = context.asset.file,
-        blob = context.blob;
-      const next = await pageActorArtPool(document).acquire({
-        key: file.sha256,
-        width: file.width,
-        height: file.height,
+    const obsolete = () =>
+      disposed || ticket !== generation || !sameActorAnimationContext(owner, getContext());
+    try {
+      const output = await pageActorArtPool(document).acquire({
+        key: canvasKey,
+        width: 512,
+        height: 160,
         signal: controller.signal,
-        load: () => createImageBitmap(blob),
+        load: () => {
+          canvas.width = 512;
+          canvas.height = 160;
+          return canvas;
+        },
       });
-      if (disposed || ticket !== generation || !sameActorAnimationContext(owner, getContext())) {
-        next.release();
+      if (obsolete()) {
+        output.release();
         return;
       }
-      lease = next;
+      canvasLease = output;
+      if (descriptor.rig === 'sprite.v1') {
+        const file = context.asset.file,
+          blob = context.blob;
+        const next = await pageActorArtPool(document).acquire({
+          key: file.sha256,
+          width: file.width,
+          height: file.height,
+          signal: controller.signal,
+          load: () => createImageBitmap(blob),
+        });
+        if (obsolete()) {
+          next.release();
+          if (ticket === generation) release();
+          return;
+        }
+        lease = next;
+      }
+      draw();
+    } catch (error) {
+      if (obsolete()) {
+        if (ticket === generation) release();
+        return;
+      }
+      release();
+      throw error;
+    } finally {
+      if (pending === controller) pending = null;
     }
-    if (pending === controller) pending = null;
-    draw();
   }
   const failed = (error) => {
     if (error.name !== 'AbortError' && !disposed) onError(error);

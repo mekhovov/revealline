@@ -166,6 +166,30 @@ test('verification owns the complete input before yielding and responds to cance
   assert.equal((await pending).match, true);
 });
 
+test('v1 import requires complete source pins while preserving optional community ownership', async () => {
+  const { match, recorder } = versus();
+  // A fabricated terminal flag supplies a structural fixture, never completion
+  // evidence. This case exercises the import boundary without replay stepping.
+  match.status = 'finished';
+  const recording = await recorder.snapshot(match);
+  assert.deepEqual(snapshotLocalMatchRecording(recording), recording);
+  assert.equal(Object.hasOwn(recording.recipe.provenance, 'editionId'), false);
+  assert.equal(Object.hasOwn(recording.recipe.provenance, 'packageIdentity'), false);
+  for (const key of ['sourceLevelId', 'sourceRevision', 'sourceIdentity']) {
+    const missing = structuredClone(recording);
+    delete missing.recipe.provenance[key];
+    assert.throws(() => snapshotLocalMatchRecording(missing), /source pins/i, key);
+  }
+  const imported = structuredClone(recording);
+  imported.recipe.provenance.editionId = 'community-owned-pilot-copy';
+  imported.recipe.provenance.packageIdentity = '1'.repeat(64);
+  assert.deepEqual(snapshotLocalMatchRecording(imported), imported);
+  assert.deepEqual(
+    recording.recipe.provenance,
+    snapshotLocalMatchRecording(recording).recipe.provenance,
+  );
+});
+
 test('import rejects injected state, excessive timelines and getter execution; live budget exhaustion only disables export', async () => {
   const { match, recorder, tick } = versus();
   while (match.status === 'running') tick();

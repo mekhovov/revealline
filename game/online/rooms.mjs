@@ -19,6 +19,7 @@ import { onNativeInactive, exportJSONFile } from '../platform.mjs';
 import { drawClassicBoard, classicCatchMarks } from '../snake/classic-view.mjs';
 import { createHuntDestruction } from '../hunt/destruction.mjs';
 import { mountRoomUI } from './room-ui.mjs';
+import { createRoomBoardPresentation } from './room-events.mjs';
 import { advanceClassicFlight } from '../snake/classic-flight-art.mjs';
 import { createClassicPresentation } from '../snake/classic-presentation.mjs';
 import { BoardPainter } from '../ui/render.mjs';
@@ -39,7 +40,8 @@ const display = createDisplayPreferences(),
   destruction = createDestructionPreferences(),
   remains = createEncounterDisplayPreferences();
 const presentation = createClassicPresentation({ displayPreferences: display }),
-  appearance = sharedActorAppearance();
+  appearance = sharedActorAppearance(),
+  teamPresentation = createRoomBoardPresentation();
 const SESSION_KEY = 'revealline.private-room.seat.v1';
 let credentials = null,
   state = null,
@@ -137,6 +139,7 @@ function syncControls() {
 }
 function suspendLocal() {
   roomUI?.suspend();
+  teamPresentation.reset();
   lifecycle.suspend();
 
   previousFrame = null;
@@ -158,8 +161,14 @@ function abandonLocal(message) {
       ),
   );
 }
-function connectionError(error, owner = credentials) {
-  if (credentials !== owner || lifecycle.snapshot().phase === 'abandoned') return;
+function connectionError(error, owner = credentials, epoch = null) {
+  const current = lifecycle.snapshot();
+  if (
+    credentials !== owner ||
+    current.phase === 'abandoned' ||
+    (epoch !== null && epoch !== current.epoch)
+  )
+    return;
   if (terminalRoomError(error)) {
     abandonLocal();
     return;
@@ -222,6 +231,7 @@ async function own(value, { restoring = false, catalogueId = null, expectedHash 
   if (catalogueId) value = { ...value, catalogueId };
   credentials = value;
   state = null;
+  teamPresentation.reset();
   acceptedRecipeJSON = null;
   lifecycle.own(value, { restoring });
   saveSeat(value);
@@ -251,7 +261,7 @@ async function requestPause(activation = state?.controlActivation) {
     await api('/pause', { activation }, owner, operation.controller.signal);
     if (credentials === owner) lifecycle.pauseAcknowledged(epoch);
   } catch (error) {
-    connectionError(error, owner);
+    connectionError(error, owner, epoch);
   } finally {
     if (pauseRequest === operation) pauseRequest = null;
   }
@@ -363,13 +373,14 @@ for (const [id, path] of [
       $(id).disabled
     )
       return;
-    const owner = credentials;
+    const owner = credentials,
+      epoch = lifecycle.snapshot().epoch;
     $(id).disabled = true;
     try {
       await api(path, { activation: state.controlActivation }, owner);
       if (credentials === owner) await poll();
     } catch (error) {
-      connectionError(error, owner);
+      connectionError(error, owner, epoch);
     } finally {
       $(id).disabled = false;
     }
@@ -420,6 +431,7 @@ function leave() {
   pauseRequest?.controller.abort();
   pauseRequest = null;
   state = null;
+  teamPresentation.reset();
   acceptedRecipeJSON = null;
   lifecycle.release();
 
@@ -509,6 +521,7 @@ async function poll() {
   polling = operation;
   const owner = credentials,
     epoch = lifecycle.snapshot().epoch;
+  let errorEpoch = epoch;
   try {
     const wire = await api('/snapshot', undefined, owner, operation.controller.signal);
     if (credentials !== owner || epoch !== lifecycle.snapshot().epoch || stopped || document.hidden)
@@ -563,12 +576,16 @@ async function poll() {
     if (['finished', 'abandoned'].includes(snapshot.status)) lifecycle.pauseAcknowledged(epoch);
     const replacement = !state || state.generation !== snapshot.generation;
     const recovering = lifecycle.snapshot().phase !== 'connected';
+    if (replacement || recovering) teamPresentation.reset();
     if (replacement) {
       eventIds.clear();
       await allocateBoards(snapshot, owner, epoch);
     }
     if (credentials !== owner || stopped || document.hidden || !lifecycle.accept(snapshot, epoch))
       return;
+    // Admission may rotate the control epoch. Presentation failures after that
+    // point still belong to this newly accepted activation, unlike late I/O.
+    errorEpoch = lifecycle.snapshot().epoch;
     if (!replacement)
       snapshot.engine.runs = snapshot.engine.runs.map((run, index) =>
         Object.assign(state.engine.runs[index], run),
@@ -611,7 +628,7 @@ async function poll() {
     roomUI.update(snapshot, { replacement, recovering });
     if (snapshot.status === 'abandoned') abandonLocal();
   } catch (error) {
-    connectionError(error, owner);
+    connectionError(error, owner, errorEpoch);
   } finally {
     if (polling === operation) polling = null;
   }
@@ -680,7 +697,7 @@ function frame(time) {
           showRemains: remains.snapshot().showRemains,
         });
       } else if (state.engine.kind === 'team')
-        painters[index]?.paint(run, {
+        painters[index]?.paint(teamPresentation.project(run, { paused }), {
           reduced,
           ...fx,
           showRemains: remains.snapshot().showRemains,

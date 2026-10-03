@@ -66,7 +66,7 @@ const fixture = () => {
   };
 };
 const settle = async () => {
-  for (let i = 0; i < 12; i++) await Promise.resolve();
+  for (let i = 0; i < 24; i++) await Promise.resolve();
 };
 function decoder(t, fn) {
   const old = Object.getOwnPropertyDescriptor(globalThis, 'createImageBitmap');
@@ -102,7 +102,7 @@ test('Studio refresh and disposal release preview leases and refuse a stale Stag
   const buttons = f.after.next.children.filter((node) => node.tag === 'button');
   buttons[0].onclick();
   await settle();
-  assert.equal(pageActorArtPool(f.document).stats().leases, 1);
+  assert.equal(pageActorArtPool(f.document).stats().leases, 2);
   f.setContext({ ...f.getContext(), document: {} });
   controls.refresh();
   assert.equal(pageActorArtPool(f.document).stats().reservedBytes, 0);
@@ -144,6 +144,156 @@ test('closing a pending animation preview retires its reservation when decoding 
   assert.equal(pageActorArtPool(f.document).stats().reservedBytes, 0);
   assert.equal(closed, 1);
   controls.dispose();
+});
+
+test('animation preview backing storage is accounted, released on collapse and recreated on explicit preview', async (t) => {
+  const f = fixture();
+  decoder(t, async () => ({ width: 4, height: 4, close() {} }));
+  const errors = [],
+    controls = mountActorAnimationControls({
+      ...f,
+      onApply() {},
+      onError: (error) => errors.push(error),
+    }),
+    root = f.after.next,
+    canvas = root.children.find((node) => node.tag === 'canvas'),
+    buttons = root.children.filter((node) => node.tag === 'button'),
+    pool = pageActorArtPool(f.document);
+  assert.equal(canvas.width, 0);
+  assert.equal(pool.stats().reservedBytes, 0);
+  buttons[0].onclick();
+  await settle();
+  assert.equal(canvas.width, 512);
+  assert.equal(canvas.height, 160);
+  assert.equal(pool.stats().reservedBytes, 512 * 160 * 4 + 64);
+  root.open = false;
+  root.listeners.get('toggle')();
+  assert.equal(canvas.width, 0);
+  assert.equal(pool.stats().reservedBytes, 0);
+  buttons[1].onclick();
+  await settle();
+  assert.equal(canvas.width, 512);
+  assert.equal(pool.stats().reservedBytes, 512 * 160 * 4 + 64);
+  controls.dispose();
+  assert.equal(canvas.width, 0);
+  assert.equal(pool.stats().reservedBytes, 0);
+  assert.deepEqual(errors, []);
+});
+
+test('a nearly full page refuses the animation canvas before decoding an atlas and recovers after offload', async (t) => {
+  const f = fixture();
+  let decoded = 0;
+  decoder(t, async () => {
+    decoded++;
+    return { width: 4, height: 4, close() {} };
+  });
+  const errors = [],
+    controls = mountActorAnimationControls({
+      ...f,
+      onApply() {},
+      onError: (error) => errors.push(error),
+    }),
+    pool = pageActorArtPool(f.document),
+    height = (pool.stats().limit - 64) / 4,
+    filler = await pool.acquire({
+      key: 'remaining-visible-art',
+      width: 1,
+      height,
+      load: () => ({ width: 1, height }),
+    }),
+    root = f.after.next,
+    canvas = root.children.find((node) => node.tag === 'canvas'),
+    buttons = root.children.filter((node) => node.tag === 'button');
+  buttons[0].onclick();
+  await settle();
+  assert.equal(errors.length, 1);
+  assert.match(errors[0].message, /decoded byte budget/);
+  assert.equal(decoded, 0);
+  assert.equal(canvas.width, 0);
+  assert.equal(pool.stats().reservedBytes, pool.stats().limit - 64);
+  filler.release();
+  buttons[1].onclick();
+  await settle();
+  assert.equal(decoded, 1);
+  assert.equal(canvas.width, 512);
+  controls.dispose();
+  assert.equal(pool.stats().reservedBytes, 0);
+});
+
+test('rapid animation owner replacement waits for the old codec without losing the new preview', async (t) => {
+  const f = fixture();
+  let finish,
+    decoded = 0,
+    closed = 0;
+  decoder(t, () => {
+    decoded++;
+    if (decoded === 1)
+      return new Promise((resolve) => {
+        finish = resolve;
+      });
+    return { width: 4, height: 4, close: () => closed++ };
+  });
+  const errors = [],
+    controls = mountActorAnimationControls({
+      ...f,
+      onApply() {},
+      onError: (error) => errors.push(error),
+    }),
+    root = f.after.next,
+    canvas = root.children.find((node) => node.tag === 'canvas'),
+    load = root.children.find((node) => node.tag === 'button');
+  load.onclick();
+  await settle();
+  f.setContext({ ...f.getContext(), document: {} });
+  controls.refresh();
+  load.onclick();
+  await settle();
+  assert.equal(decoded, 1);
+  assert.deepEqual(errors, []);
+  finish({ width: 4, height: 4, close: () => closed++ });
+  await settle();
+  assert.equal(decoded, 2);
+  assert.equal(closed, 1);
+  assert.equal(canvas.width, 512);
+  assert.equal(pageActorArtPool(f.document).stats().leases, 2);
+  assert.deepEqual(errors, []);
+  controls.dispose();
+  assert.equal(closed, 2);
+  assert.equal(pageActorArtPool(f.document).stats().reservedBytes, 0);
+});
+
+test('a retired animation decoder failure cannot replace the new owner with an error', async (t) => {
+  const f = fixture();
+  let fail,
+    decoded = 0;
+  decoder(t, () => {
+    if (decoded++ === 0)
+      return new Promise((resolve, reject) => {
+        fail = reject;
+      });
+    return { width: 4, height: 4, close() {} };
+  });
+  const errors = [],
+    controls = mountActorAnimationControls({
+      ...f,
+      onApply() {},
+      onError: (error) => errors.push(error),
+    }),
+    root = f.after.next,
+    load = root.children.find((node) => node.tag === 'button');
+  load.onclick();
+  await settle();
+  f.setContext({ ...f.getContext(), document: {} });
+  controls.refresh();
+  load.onclick();
+  await settle();
+  fail(new Error('Retired codec rejected its source'));
+  await settle();
+  assert.equal(decoded, 2);
+  assert.deepEqual(errors, []);
+  assert.equal(root.children.find((node) => node.tag === 'canvas').width, 512);
+  controls.dispose();
+  assert.equal(pageActorArtPool(f.document).stats().reservedBytes, 0);
 });
 
 test('paired animated context previews share the page atlas and release both owners exactly once', async (t) => {

@@ -12,6 +12,7 @@ import { createRecorder, snapshotReplay, verifyReplay } from '../game/replay.mjs
 import { createCoop } from '../game/coop/core.mjs';
 import { UNTIMED_DUEL_PROTOCOL } from '../game/multiplayer.mjs';
 import {
+  localMatchProvenance,
   snapshotLocalMatchRecording,
   verifyLocalMatchRecordingAsync,
 } from '../game/multiplayer-recording.mjs';
@@ -93,6 +94,14 @@ export function pursuitPilotCases() {
               ...teamRun.config,
             },
             ...(mode === 'versus' ? { duel: { protocol: UNTIMED_DUEL_PROTOCOL, seconds: 0 } } : {}),
+            ...(mode !== 'solo'
+              ? {
+                  recordingProvenance: localMatchProvenance(
+                    level,
+                    team ? { packageIdentity: dataIdentity(entry.campaign) } : {},
+                  ),
+                }
+              : {}),
             source: source.id,
             revision: source.revision,
             launch: `/game/${team ? 'couch/relay-rescue.html' : mode === 'versus' ? 'couch/' : ''}?journey=pursuit-pilots-v1&lang=en`,
@@ -243,6 +252,10 @@ export async function verifyPursuitPilotRecording({ pilot, mode, pace, recording
       same(replay.recipe.options, entry.options) && same(replay.recipe.duel, entry.duel ?? null),
       'Recording seed, cooperation or race rules differ from the pinned Capture case.',
     );
+    check(
+      same(replay.recipe.provenance, entry.recordingProvenance),
+      'Recording source ownership or revision differs from the pinned Capture case.',
+    );
     const verified = await verifyLocalMatchRecordingAsync(replay);
     const completedBoards =
       mode === 'team'
@@ -260,6 +273,7 @@ export async function verifyPursuitPilotRecording({ pilot, mode, pace, recording
       recordedBuild: verified.recordedBuild,
       completedBoards,
       recipeSha256: verified.recipeSha256,
+      provenance: verified.recipe.provenance,
       authority: verified.authority,
     };
   } else if (entry.family === 'capture') {
