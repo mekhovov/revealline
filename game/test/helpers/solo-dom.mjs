@@ -71,7 +71,15 @@ class SoloDocument extends Document {
     this.activeElement = this.body;
   }
   createElement(tag) {
-    return new SoloElement(this, tag);
+    const element = new SoloElement(this, tag);
+    if (tag.toLowerCase() === 'canvas')
+      element.getContext = () => new Proxy({}, { get: () => () => {} });
+    return element;
+  }
+  createTextNode(value) {
+    const node = new SoloElement(this, 'span');
+    node.textContent = value;
+    return node;
   }
 }
 function mount(document, html) {
