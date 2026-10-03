@@ -1,0 +1,19 @@
+{
+  "method": "Diagnostic only; original strict output guards remain active.",
+  "sourceRevision": "548e312ab309ab0b36ae9a290b8bc16d22d67891",
+  "provisionalOmissions": [
+    "optional-practice/civilian-fpv/copy.mjs",
+    "optional-practice/civilian-fpv/studio.mjs"
+  ],
+  "runtime": {
+    "files": 103,
+    "bytes": 14533705,
+    "limits": {
+      "files": 104,
+      "bytes": 16777216
+    }
+  },
+  "sourceError": "Complete optional source output exceeds package limits: {\"files\":105,\"bytes\":14567229,\"limits\":{\"files\":104,\"bytes\":16777216}}",
+  "retained": false,
+  "result": "All provisional packaging and test edits were reverted to committed HEAD. Source capacity and historical admission compatibility require a separate packaging change."
+}
