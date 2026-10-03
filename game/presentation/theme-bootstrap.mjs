@@ -186,6 +186,7 @@
       textured: false,
       surface: 'bevel',
       materialStyle: 'legacy',
+      materialVariant: 'legacy',
       revision: 'r2',
     },
     'industrial-workshop': {
@@ -233,6 +234,7 @@
       textured: true,
       surface: 'bevel',
       materialStyle: 'steel',
+      materialVariant: 'steel',
       revision: 'r2',
     },
     vyshyvanka: {
@@ -280,6 +282,7 @@
       textured: true,
       surface: 'bevel',
       materialStyle: 'linen',
+      materialVariant: 'linen',
       revision: 'r2',
     },
     'dnipro-porcelain': {
@@ -327,6 +330,7 @@
       textured: true,
       surface: 'bevel',
       materialStyle: 'porcelain',
+      materialVariant: 'porcelain',
       revision: 'r1',
     },
     tryzub: {
@@ -374,6 +378,7 @@
       textured: true,
       surface: 'bevel',
       materialStyle: 'brass',
+      materialVariant: 'brass',
       revision: 'r1',
     },
     'windows-classic': {
@@ -421,6 +426,7 @@
       textured: false,
       surface: 'bevel',
       materialStyle: 'classic',
+      materialVariant: 'classic',
       revision: 'r2',
     },
     dos: {
@@ -468,6 +474,7 @@
       textured: false,
       surface: 'flat',
       materialStyle: 'terminal',
+      materialVariant: 'terminal',
       revision: 'r2',
     },
     'orchard-workshop': {
@@ -515,6 +522,7 @@
       textured: true,
       surface: 'bevel',
       materialStyle: 'wood',
+      materialVariant: 'wood',
       revision: 'r1',
     },
     'neon-ruins': {
@@ -562,6 +570,7 @@
       textured: true,
       surface: 'bevel',
       materialStyle: 'composite',
+      materialVariant: 'composite',
       revision: 'r1',
     },
     'pocket-lcd': {
@@ -609,6 +618,7 @@
       textured: true,
       surface: 'bevel',
       materialStyle: 'lcd',
+      materialVariant: 'lcd',
       revision: 'r1',
     },
     'copper-observatory': {
@@ -656,6 +666,7 @@
       textured: true,
       surface: 'bevel',
       materialStyle: 'copper',
+      materialVariant: 'copper',
       revision: 'r1',
     },
     'sakura-station': {
@@ -703,6 +714,7 @@
       textured: true,
       surface: 'bevel',
       materialStyle: 'sakura',
+      materialVariant: 'sakura',
       revision: 'r1',
     },
     'obsidian-reliquary': {
@@ -750,6 +762,7 @@
       textured: true,
       surface: 'bevel',
       materialStyle: 'brass',
+      materialVariant: 'obsidian-reliquary',
       revision: 'r1',
     },
     'deep-space': {
@@ -797,6 +810,7 @@
       textured: true,
       surface: 'bevel',
       materialStyle: 'composite',
+      materialVariant: 'deep-space',
       revision: 'r1',
     },
     'moonlit-grove': {
@@ -844,6 +858,7 @@
       textured: true,
       surface: 'bevel',
       materialStyle: 'wood',
+      materialVariant: 'moonlit-grove',
       revision: 'r1',
     },
     'legacy@r1': {
@@ -891,6 +906,7 @@
       textured: false,
       surface: 'bevel',
       materialStyle: 'legacy',
+      materialVariant: 'legacy',
       revision: 'r1',
     },
     'industrial-workshop@r1': {
@@ -938,6 +954,7 @@
       textured: true,
       surface: 'bevel',
       materialStyle: 'industrial-workshop',
+      materialVariant: 'industrial-workshop',
       revision: 'r1',
     },
     'vyshyvanka@r1': {
@@ -985,6 +1002,7 @@
       textured: true,
       surface: 'bevel',
       materialStyle: 'linen',
+      materialVariant: 'linen',
       revision: 'r1',
     },
   };
@@ -1083,17 +1101,27 @@
               svg,
             );
           });
+        const seedKeys = [
+          'familyId',
+          'revision',
+          'variables',
+          'material',
+          'quietMaterial',
+          'textured',
+          'surface',
+          'materialStyle',
+        ];
+        const hasVariant = Object.hasOwn(seed ?? {}, 'materialVariant');
+        const validVariant =
+          !hasVariant ||
+          Object.values(seeds).some(
+            (entry) =>
+              entry.materialStyle === seed.materialStyle &&
+              entry.materialVariant === seed.materialVariant,
+          );
         if (
-          exact(seed, [
-            'familyId',
-            'revision',
-            'variables',
-            'material',
-            'quietMaterial',
-            'textured',
-            'surface',
-            'materialStyle',
-          ]) &&
+          exact(seed, hasVariant ? [...seedKeys, 'materialVariant'] : seedKeys) &&
+          validVariant &&
           /^candidate-[a-z0-9-]{1,54}$/.test(seed.familyId) &&
           seed.revision === 'r1' &&
           !Object.hasOwn(seeds, seed.familyId) &&
@@ -1253,6 +1281,7 @@
     themeTexture: textured ? 'on' : 'off',
     themeSurface: high ? 'flat' : seed.surface,
     themeMaterial: seed.materialStyle,
+    themeFinish: seed.materialVariant ?? seed.materialStyle,
     themeHud: high || intent.opaqueHud ? 'opaque' : 'normal',
     themeMotion: reduced ? 'reduced' : 'full',
     themeDensity: studio ? 'studio' : 'player',

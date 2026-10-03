@@ -129,7 +129,18 @@ export function checkpointPractice(input, mode, index) {
 /** Reconstruct a checkpoint through recorded commands, never a saved pose.
  * Both selected-objective and safe full-route fallback flights reject recorders.
  * The caller owns disposal and must require explicit arming with fresh input. */
-export async function prepareCheckpointPractice(
+export async function prepareCheckpointPractice(input, mode, index, options = {}) {
+  return prepareRecordedSection(input, mode, index, options, false);
+}
+
+/** Watch one verified section, including the available part of an unfinished
+ * attempt. The private proof and exclusive end tick must stay together: callers
+ * must not play a command at endTick or persist this unscored flight. */
+export async function prepareSectionReplay(input, mode, index, options = {}) {
+  return prepareRecordedSection(input, mode, index, options, true);
+}
+
+async function prepareRecordedSection(
   input,
   mode,
   index,
@@ -139,6 +150,7 @@ export async function prepareCheckpointPractice(
     signal,
     yieldControl = () => new Promise((resolve) => setTimeout(resolve, 0)),
   } = {},
+  watch,
 ) {
   const course = checkpointPractice(input, mode, index);
   signal?.throwIfAborted();
@@ -146,6 +158,9 @@ export async function prepareCheckpointPractice(
   signal?.throwIfAborted();
   let checkedProof = null,
     startTick = 0,
+    endTick = null,
+    sectionComplete = false,
+    recordedStatus = null,
     reason = 'missing-proof';
   if (proof !== null && proof !== undefined) {
     try {
@@ -166,9 +181,13 @@ export async function prepareCheckpointPractice(
         });
         const boundary = index === 0 ? 0 : checked.sectors[index - 1]?.endTick;
         if (boundary === undefined || checked.state.step < index) reason = 'unreached-checkpoint';
+        else if (watch && boundary >= candidate.frames.length) reason = 'empty-section';
         else {
           checkedProof = candidate;
           startTick = boundary;
+          sectionComplete = Boolean(checked.sectors[index]);
+          endTick = checked.sectors[index]?.endTick ?? candidate.frames.length;
+          recordedStatus = checked.state.status;
           reason = null;
         }
       }
@@ -206,7 +225,7 @@ export async function prepareCheckpointPractice(
     const state = flight.snapshot();
     return {
       flight,
-      kind: checkedProof ? 'checkpoint' : 'full-attempt',
+      kind: checkedProof ? (watch ? 'section-replay' : 'checkpoint') : 'full-attempt',
       reason,
       requestedIndex: index,
       index: startStep,
@@ -218,6 +237,7 @@ export async function prepareCheckpointPractice(
       pickup: Object.fromEntries(
         ['roll', 'pitch', 'yaw', 'throttle'].map((key) => [key, state.lastInput[key] / 1000]),
       ),
+      ...(watch ? { proof: checkedProof, endTick, sectionComplete, recordedStatus } : {}),
     };
   } catch (error) {
     flight.dispose();

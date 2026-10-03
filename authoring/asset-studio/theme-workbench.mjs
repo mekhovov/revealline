@@ -267,6 +267,7 @@ export function mountThemeWorkbench({ document, window, onAction, onWarning }) {
       'theme-recipe-state',
     ),
     recipePreview = node('div', null, 'theme-state-card');
+  recipePreview.id = 'theme-recipe-preview';
   for (const role of COMPONENT_ROLES) {
     const option = node('option');
     option.value = role;
@@ -348,6 +349,7 @@ export function mountThemeWorkbench({ document, window, onAction, onWarning }) {
     return resolveInterface({
       themeFamily: candidate.family,
       interfaceTheme: candidate.interfaceTheme,
+      interfaceBasis: candidate.basis,
       density: 'player',
       accessibility: host.snapshot()?.accessibility ?? {},
     });
@@ -424,21 +426,21 @@ export function mountThemeWorkbench({ document, window, onAction, onWarning }) {
           });
     removeSpecimen?.();
     removeSpecimen = applyResolvedPresentation(surface, resolved);
-    renderRecipe(resolved);
+    renderRecipe();
   }
-  function renderRecipe(resolved) {
+  function renderRecipe() {
     const role = recipeRole.value || COMPONENT_ROLES[0],
       state = recipeState.value || 'default',
-      recipe = resolved.components[role],
-      pair =
-        state === 'selected' ? recipe.selection : (recipe.states[state] ?? recipe.states.default);
+      preserveFocus = recipePreview.contains(document.activeElement);
     const kind = ['button', 'primary', 'danger', 'tab'].includes(role)
       ? 'button'
       : ['input', 'checkbox', 'radio', 'slider'].includes(role)
         ? 'input'
         : role === 'progress'
           ? 'progress'
-          : 'section';
+          : role === 'table'
+            ? 'table'
+            : 'section';
     const sample = node(kind);
     sample.dataset.component = role;
     sample.dataset.state = state;
@@ -446,38 +448,70 @@ export function mountThemeWorkbench({ document, window, onAction, onWarning }) {
       sample.type = { checkbox: 'checkbox', radio: 'radio', slider: 'range' }[role] ?? 'text';
       if (role === 'input') sample.value = copy('inputPlaceholder');
       if (['checkbox', 'radio'].includes(role)) sample.checked = state === 'selected';
+      if (role === 'slider') {
+        sample.min = '0';
+        sample.max = '100';
+        sample.value = '68';
+      }
     } else if (kind === 'progress') {
       sample.max = 100;
       sample.value = 68;
+    } else if (kind === 'table') {
+      const row = node('tr'),
+        cell = node('td');
+      cell.textContent = `${role} · ${copy(`state.${state}`)}`;
+      if (state === 'selected') row.setAttribute('aria-selected', 'true');
+      row.append(cell);
+      sample.append(row);
     } else sample.textContent = `${role} · ${copy(`state.${state}`)}`;
     sample.setAttribute('aria-label', `${role} · ${copy(`state.${state}`)}`);
-    if (state === 'disabled') sample.disabled = true;
+    if (state === 'disabled') {
+      if (['button', 'input'].includes(kind)) sample.disabled = true;
+      else sample.setAttribute('aria-disabled', 'true');
+    }
     if (state === 'loading') sample.setAttribute('aria-busy', 'true');
     if (state === 'error') sample.setAttribute('aria-invalid', 'true');
     if (kind === 'button') {
       sample.type = 'button';
+      sample.dataset.uiAction = ['primary', 'danger'].includes(role) ? role : 'secondary';
       sample.setAttribute('aria-pressed', String(state === 'selected'));
+    } else if (kind === 'section') {
+      sample.dataset.uiSurface =
+        { dialog: 'dialog', toolbar: 'toolbar', slot: 'inset', scrollbar: 'inset' }[role] ??
+        'panel';
+      if (role === 'hud') sample.className = 'hud';
+      if (role === 'inspector') sample.className = 'creator-inspector';
+      if (role === 'notification') sample.setAttribute('role', 'status');
+      if (role === 'tooltip') sample.setAttribute('role', 'tooltip');
+      if (role === 'scrollbar') {
+        sample.tabIndex = 0;
+        sample.style.maxHeight = '88px';
+        sample.style.overflow = 'auto';
+        for (let index = 0; index < 6; index++) {
+          const line = node('p');
+          line.textContent = `${role} · ${index + 1}`;
+          sample.append(line);
+        }
+      }
     }
-    sample.style.backgroundColor = pair.background;
-    sample.style.color = pair.foreground;
-    sample.style.borderColor = state === 'error' ? recipe.validation.color : pair.border;
-    const material = resolved.materials[recipe.material];
-    if (
-      resolved.textured &&
-      material &&
-      !['checkbox', 'radio', 'slider', 'progress'].includes(role)
-    ) {
-      sample.style.borderImageSource = `url("${material.source}")`;
-      // State colors own the quiet center; a frame must not paint over them.
-      sample.style.borderImageSlice = String(material.slice);
-      sample.style.borderImageWidth = `${material.slice}px`;
-    } else sample.style.borderImageSource = 'none';
-    sample.style.minHeight = `${recipe.minTarget}px`;
-    if (state === 'focus') {
-      sample.style.outline = `${recipe.focus.width}px solid ${recipe.focus.color}`;
-      sample.style.outlineOffset = `${recipe.focus.offset}px`;
+    let preview = sample;
+    if (['checkbox', 'radio'].includes(role)) {
+      preview = node('label');
+      const caption = node('span');
+      caption.textContent = `${role} · ${copy(`state.${state}`)}`;
+      preview.append(sample, caption);
+    } else if (role === 'tab') {
+      preview = node('div');
+      preview.setAttribute('role', 'tablist');
+      sample.setAttribute('role', 'tab');
+      sample.removeAttribute('aria-pressed');
+      sample.setAttribute('aria-selected', String(state === 'selected'));
+      preview.append(sample);
     }
-    recipePreview.replaceChildren(sample);
+    // The runtime stylesheet owns colors, material finish, state lighting and
+    // focus. Uploaded asset/frame inspection is a separate component specimen.
+    recipePreview.replaceChildren(preview);
+    if (preserveFocus && !sample.disabled) sample.focus();
   }
   function refreshInspection(source, selected) {
     if (!basisAvailable()) {

@@ -1,6 +1,11 @@
 # Unified appearance implementation
 
-The latest [Industrial restoration and dark-collection review](verification/appearance-industrial-dark-2026-10-03/README.md)
+The latest [material-depth review](verification/appearance-material-depth-2026-10-03/README.md)
+records full steel faces, amber hover and mechanical pressed feedback, individual
+material finishes across the theme catalog, actual rendered contrast sampling,
+and runtime paint parity in Studio. This supersedes the rim-only treatment below.
+
+The preceding [Industrial restoration and dark-collection review](verification/appearance-industrial-dark-2026-10-03/README.md)
 records richer Industrial material edges, three additional dark collections and
 compact first-paint theme data.
 
@@ -84,11 +89,22 @@ The optional SIM host embeds the same stylesheet and font sources to preserve
 offline closure and the existing file caps.
 
 The material system provides charcoal panels, painted steel, inset controls,
-amber accents and material depth. Industrial steel uses textured six-pixel rims,
-corner fasteners, deeper bevels and a static machine-grid backdrop. The treatment
-follows the material into community themes and Studio specimens. Other materials
-keep quiet ordinary controls and sparse page-edge motifs. Text centers retain their
-semantic state colors; Off, high contrast and forced colors suppress decoration. Exo 2 is the interface face, IBM Plex Mono provides telemetry, and
+amber accents and material depth. Industrial steel combines full powder-coated
+faces, directional lighting, textured six-pixel rims, corner fasteners, recessed
+inputs, ridged slider grips and sparse panel vents. Steel controls turn amber on
+hover and reverse their bevel when pressed; hit areas and label positions stay fixed.
+Other families have their own textile weave, ceramic glaze, enamel, wood fibres,
+mineral facets or instrument brushing. Desktop 98 uses structural plastic bevels;
+DOS uses texture-free double rules. Strong ornament stays on panel edges.
+
+Resolved `materialVariant` / `data-theme-finish` keeps Obsidian stone, Deep Space
+anodized plates and Moonlit timber distinct from their shared underlying materials.
+Community candidates inherit their explicit interface basis independently of world
+or Arcade appearance. This adds consumer behavior without changing pinned documents
+or historical asset bytes. Studio role specimens use the real runtime painter,
+including native input semantics and focus preservation. Semantic base colors stay
+paired; low-amplitude finish layers are checked against captured reading pixels.
+Off, high contrast and forced colors suppress decorative finishes. Exo 2 is the interface face, IBM Plex Mono provides telemetry, and
 Handjet is reserved for display headings. DOS uses a flat mono interface; the
 light Desktop 98 family exercises a different palette and geometry. Primary,
 selected, input and semantic fills have explicit foreground partners. The shared
