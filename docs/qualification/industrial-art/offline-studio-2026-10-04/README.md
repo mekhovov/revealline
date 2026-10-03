@@ -43,7 +43,7 @@ Repository ESLint, formatting, native formatting, localization/content validatio
 
 ## Browser qualification
 
-Observed in the Codex in-app browser at 830×1316 CSS px, EN, on isolated loopback port 8792. The [package receipt](package-builds.json) binds both double-builds to implementation commit `e74542650523e7d5d297aaf59abd813d8001fa32`, tree `bd7641b5102e2ca4df3adbb6168e6a35be2de833`. Committed input blobs, reproducibility, ZIP CRC/membership and production package admission passed. Frozen packages were served from memory because disk writes intermittently failed with ENOSPC. Runtime bytes were not patched; publication metadata URLs were local staging fixtures.
+Observed in the Codex in-app browser at the normal desktop viewport (1280×720 screenshot), EN, on isolated loopback port 8792. The [package receipt](package-builds.json) binds both double-builds to implementation commit `e74542650523e7d5d297aaf59abd813d8001fa32`, tree `bd7641b5102e2ca4df3adbb6168e6a35be2de833`. Committed input blobs, reproducibility, ZIP CRC/membership and production package admission passed. Frozen packages were served from memory because disk writes intermittently failed with ENOSPC. Runtime bytes were not patched; publication metadata URLs were local staging fixtures.
 
 Initial Academy registration reported “Failed to access storage”; Studio initially reported “Internal error.” Neither counted as a pass. After storage became available, both runtime flows and the saved Studio workspace reopened normally. No site data or workspace was cleared or replaced. Review installations were removed through their own controls and temporary tabs closed. Flight engines remained disarmed/paused.
 
