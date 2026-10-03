@@ -2191,8 +2191,8 @@ export function createFlightRenderer({
       ? { data: input }
       : input;
     if (disposed) throw new Error('Flight renderer is disposed');
-    if (!course || renderer.getContext().isContextLost())
-      throw new Error('World preview needs a ready course.');
+    if (renderer.getContext().isContextLost())
+      throw new Error('World preview is unavailable while graphics are lost.');
     const generation = sceneGeneration,
       request = ++importGeneration;
     signal?.throwIfAborted();
@@ -2289,7 +2289,6 @@ export function createFlightRenderer({
       if (
         imageFailed ||
         disposed ||
-        !course ||
         renderer.getContext().isContextLost() ||
         generation !== sceneGeneration ||
         request !== importGeneration ||
@@ -2314,7 +2313,7 @@ export function createFlightRenderer({
       imported.add(result.scene);
       if (
         json.asset?.extras?.fpvScenery === true &&
-        ['woodland', 'courtyard', 'container-yard'].includes(course.environment)
+        ['woodland', 'courtyard', 'container-yard'].includes(course?.environment)
       )
         sceneryFallback.visible = false;
       imported.userData.auxiliaryRoots = result.scenes.filter((item) => item !== result.scene);
@@ -2438,13 +2437,13 @@ export function createFlightRenderer({
   }
   async function createEditor(callbacks = {}) {
     const generation = sceneGeneration;
-    if (!course || renderer.getContext().isContextLost())
-      throw new Error('World editor needs a ready course.');
+    if (renderer.getContext().isContextLost())
+      throw new Error('World editor is unavailable while graphics are lost.');
     if (!loadTransformControls)
       throw new Error('World editing requires the World Studio renderer.');
     const { TransformControls } = await loadTransformControls();
     if (disposed) throw new Error('Editor was disposed while loading');
-    if (generation !== sceneGeneration || !course || renderer.getContext().isContextLost())
+    if (generation !== sceneGeneration || renderer.getContext().isContextLost())
       throw new Error('World preview changed while the editor was loading');
     editorCallbacks = callbacks;
     if (!editor) {
