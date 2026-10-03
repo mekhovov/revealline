@@ -63,11 +63,48 @@ all per-view hashes/counts. Static observations do not certify flight completion
 physical-device performance or final artist acceptance.
 
 The frozen source fixture is
-`dist/fpv-warehouse-exterior-verification-source-v2`, with 31 modules per side
+`dist/fpv-warehouse-exterior-verification-source-v4`, with 31 modules per side
 and 19,723,725 bytes. Its complete inventories bind the runtime hash above.
 The second harness adds preview-only camera selection and an exterior pose;
 the 216 Warehouse plus five control comparisons retain the original two poses.
-Actual visual acceptance is pending. Inspect the four-centimetre panel joints
-obliquely for distracting light slits before package admission. Source/package
-WebGL qualification, actual player, protected publication and public deployment
-remain separate outstanding steps. No ready PR is published for unfinished work.
+The overview and both interior poses have passed bounded art review: connected
+four-panel runs, narrow joints and staggered backline depth are visible. The
+preview-only exterior FPV pose intersects a baseline building and produces a
+black before image; that pose is excluded from art evidence and from the full
+matrix. The overview remains useful and is retained in the evidence image.
+
+The first browser attempt failed a fixture count assertion. Its complete v2
+failure and v3 diagnostic receipts are retained. The diagnostic shows exact
+before/after resource snapshots: 36 meshes, 42,002 vertices, 106 primitive
+instances, six materials, 17 geometries and six textures with matching filters.
+The incorrect fixture expected 42 rendered instances; 42 is the logical GLB
+instance count. Each of 32 window instances has three mesh primitives, producing
+96 rendered instances, plus ten pallet instances. The corrected fixture keeps
+resource equality as a separate check and derives the expected mesh/primitive
+instance tally from the actual loaded GLB. No runtime or geometry change was
+needed; the unchanged logical 57 placements / 42 instances remain required.
+
+## Frozen package
+
+Clean source `fcd075a55cdc7db4ae1c527bb7c465c87c41fd7e`, tree
+`961d488c1eb3619f692576f1605d7a91684fe8f4`, passes all three source-bound optional
+package admissions, two identical builds, committed-input and ZIP-member checks:
+
+| Package         | Files |      Bytes |
+| --------------- | ----: | ---------: |
+| Civilian Flight |    48 |    679,266 |
+| Civilian FPV    |    69 |  4,377,750 |
+| World Studio    |   102 | 15,531,578 |
+
+All 15 artifact checksums were independently reread. The 95 original World inputs
+total 16,737,740 bytes, leaving 39,476 bytes under the unchanged 16 MiB guard.
+The separate player has 94 files / 15,373,807 bytes, ZIP SHA-256
+`2215ae22ac2f1a1a6df4ee72b180061cd8aefb3a1b1a1e43f88f896a24cda2f5`.
+All 31 packaged rendering modules match the admitted ZIP, player and fixture.
+Only the intended generated locale catalogue differs from source. The corrected
+source/package harness bytes are identical and add no production code.
+
+Final source/package browser qualification and actual-player observations remain
+pending. Local `publicEligible` and `releaseQualified` remain false; protected
+publication, public deployment and physical-device qualification remain separate.
+No ready PR is published for unfinished work.

@@ -235,7 +235,25 @@
         owner.runtime.setDrone('racer');
         const glb = owner.assets.builtinWorldScene(c);
         if (glb) {
-          owner.glbHash = await sha(await glb.arrayBuffer());
+          const bytes = await glb.arrayBuffer(),
+            view = new DataView(bytes),
+            json = JSON.parse(
+              new TextDecoder().decode(new Uint8Array(bytes, 20, view.getUint32(12, true))),
+            );
+          owner.glbHash = await sha(bytes);
+          owner.expectedImported = json.nodes.reduce(
+            (total, node) => {
+              if (node.mesh === undefined) return total;
+              const primitives = json.meshes[node.mesh].primitives.length,
+                instanceAccessor = node.extensions?.EXT_mesh_gpu_instancing?.attributes.TRANSLATION;
+              total.meshes += primitives;
+              if (instanceAccessor !== undefined)
+                total.instances += primitives * json.accessors[instanceAccessor].count;
+              return total;
+            },
+            { meshes: 0, instances: 0 },
+          );
+          owner.logicalBatching = json.asset.extras.batching;
           await owner.runtime.loadScene(glb);
           if (!owner.imported.children.length) throw Error('Actual GLB was not installed');
         }
@@ -458,10 +476,34 @@
                 key + ' existing shell/storage/UV/transforms/shadows exact',
                 (await baseGeometry(owners[0])) === (await baseGeometry(owners[1])),
               );
+              const importedBefore = importedSnapshot(owners[0]),
+                importedAfter = importedSnapshot(owners[1]);
               check(
                 key + ' actual imported resources and filters remain exact',
-                encode(importedSnapshot(owners[0])) === encode(importedSnapshot(owners[1])) &&
-                  importedSnapshot(owners[1]).instances === 42,
+                encode(importedBefore) === encode(importedAfter),
+                { before: importedBefore, after: importedAfter },
+              );
+              check(
+                key + ' loaded primitive meshes and instances match actual GLB structure',
+                owners.every((owner, index) => {
+                  const actual = index ? importedAfter : importedBefore;
+                  return (
+                    actual.meshes === owner.expectedImported.meshes &&
+                    actual.instances === owner.expectedImported.instances &&
+                    owner.logicalBatching.sourceMeshes === 57 &&
+                    owner.logicalBatching.instances === 42
+                  );
+                }),
+                owners.map((owner, index) => ({
+                  side: owner.side,
+                  actual: {
+                    meshes: (index ? importedAfter : importedBefore).meshes,
+                    instances: (index ? importedAfter : importedBefore).instances,
+                  },
+                  expected: owner.expectedImported,
+                  logicalBatching: owner.logicalBatching,
+                  glbHash: owner.glbHash,
+                })),
               );
               check(
                 key + ' loaded GLB vertices stay outside the flight envelope',
