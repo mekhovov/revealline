@@ -1,0 +1,20 @@
+{
+  "format": "revealline-source-verification-receipt.v1",
+  "sourceRevision": "bae630ebc2df89f80db82963e2a4020552f165ec",
+  "sourceTree": "12178cd61269c36a90b0fdbdc88e67e7d351c264",
+  "files": 25032,
+  "originalBytes": 2357758024,
+  "manifestBytes": 5869033,
+  "manifestSha256": "cc05f49f9e108cce6f76c75e24adf1b12a297cc4c5f8b86a565ff5c2f65a2e58",
+  "rawAggregateSha256": "26292286a694d356669e9c4176985d9e23fa0fbf7bccff8d69bc76d6ea4bec92",
+  "rawAggregateFormat": "UTF-8 path sorted JSONL [path, Git mode, raw content SHA-256]",
+  "allTrackedSourceContentsAndModesMatch": true,
+  "allGitBlobContentsAndModesVerified": true,
+  "workingTreeCleanAfterVerification": true,
+  "automatedSuites": "waived-not-run",
+  "provenance": {
+    "raw": "scripts/check-source-identity.mjs read tracked working files without Git index stat-cache trust; compares raw content Git blob hashes and modes against HEAD",
+    "immutable": "publishing/utility/source_manifest.py create then verify independently reread immutable Git blobs and modes from the exact commit",
+    "scope": "Source verification only; no source edits, automated suites, build, or publication performed by this receipt task"
+  }
+}
