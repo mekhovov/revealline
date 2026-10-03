@@ -1,17 +1,68 @@
 import { neutralFlightInput } from './radio-profile.mjs';
 
-const MOVE_KEYS = new Set([
-  'KeyW',
-  'KeyS',
-  'KeyA',
-  'KeyD',
-  'KeyQ',
-  'KeyE',
-  'ArrowUp',
-  'ArrowDown',
-  'ShiftLeft',
-  'ShiftRight',
-]);
+export const KEYBOARD_PRESET_KEY = 'revealline.fpv.keyboard-preset.v1';
+const keyboardPresets = Object.freeze({
+  'two-stick': Object.freeze({
+    id: 'two-stick',
+    axes: Object.freeze({
+      throttle: Object.freeze(['KeyS', 'KeyW']),
+      yaw: Object.freeze(['KeyA', 'KeyD']),
+      pitch: Object.freeze(['ArrowDown', 'ArrowUp']),
+      roll: Object.freeze(['ArrowLeft', 'ArrowRight']),
+    }),
+    labels: Object.freeze({ throttle: 'W / S', yaw: 'A / D', pitch: '↑ / ↓', roll: '← / →' }),
+    arm: 'Space',
+    reset: 'KeyR',
+    fire: 'KeyF',
+  }),
+  classic: Object.freeze({
+    id: 'classic',
+    axes: Object.freeze({
+      throttle: Object.freeze(['ArrowDown', 'ArrowUp']),
+      yaw: Object.freeze(['KeyQ', 'KeyE']),
+      pitch: Object.freeze(['KeyS', 'KeyW']),
+      roll: Object.freeze(['KeyA', 'KeyD']),
+    }),
+    labels: Object.freeze({ throttle: '↑ / ↓', yaw: 'Q / E', pitch: 'W / S', roll: 'A / D' }),
+    arm: null,
+    reset: null,
+    fire: 'Space',
+  }),
+});
+export const keyboardFlightPreset = (value = 'two-stick') =>
+  Object.hasOwn(keyboardPresets, value) ? keyboardPresets[value] : keyboardPresets['two-stick'];
+export const keyboardFlightKey = (code, preset) =>
+  code === 'ShiftLeft' ||
+  code === 'ShiftRight' ||
+  Object.values(keyboardFlightPreset(preset).axes).some((pair) => pair.includes(code));
+
+/** Key mapping only. Both flight and the unscored lab use the original gains,
+ * retained throttle and fixed-step integration; changing a layout changes no physics. */
+export function keyboardFlightValues({ keys, preset, throttle = 0, seconds = 0 }) {
+  const axes = keyboardFlightPreset(preset).axes,
+    fine = keys.has('ShiftLeft') || keys.has('ShiftRight'),
+    gain = fine ? 0.18 : 0.5,
+    axis = (name) => Number(keys.has(axes[name][1])) - Number(keys.has(axes[name][0]));
+  return {
+    roll: axis('roll') * gain,
+    pitch: axis('pitch') * gain,
+    yaw: axis('yaw') * gain,
+    throttle: clamp(
+      throttle +
+        axis('throttle') *
+          (fine ? 0.1 : 0.35) *
+          clamp(Number.isFinite(seconds) ? seconds : 0, 0, 0.05),
+      0,
+      1,
+    ),
+  };
+}
+export function keyboardFlightHelp(preset, locale = 'en', { actions = true, combat = false } = {}) {
+  const p = keyboardFlightPreset(preset),
+    uk = locale === 'uk',
+    text = `${p.labels.throttle} ${uk ? 'газ' : 'throttle'} · ${p.labels.yaw} ${uk ? 'поворот' : 'yaw'} · ${p.labels.pitch} ${uk ? 'нахил уперед/назад' : 'pitch forward/back'} · ${p.labels.roll} ${uk ? 'крен' : 'roll'} · Shift ${uk ? 'точніше' : 'fine control'}`;
+  return `${text}${actions ? (p.arm ? (uk ? ' · Пробіл — увімкнути / пауза · R — почати заново · Esc / P — меню' : ' · Space arm / pause · R reset · Esc / P menu') : uk ? ' · Esc / P — пауза' : ' · Esc / P pause') : ''}${combat ? ` · ${p.fire === 'Space' ? (uk ? 'Пробіл' : 'Space') : 'F'} ${uk ? 'вогонь' : 'fire'}` : ''}`;
+}
 const clamp = (n, low, high) => Math.max(low, Math.min(high, n));
 const editable = (target) =>
   ['INPUT', 'TEXTAREA', 'SELECT'].includes(target?.tagName) || target?.isContentEditable;
@@ -44,6 +95,7 @@ export function createFlightInput({ window: win, document: doc, onPause = () => 
   let owner = 'keyboard',
     enabled = false,
     throttle = 0,
+    keyboardPreset = 'two-stick',
     touchResponse = 'precise',
     disposed = false;
   const keys = new Set(),
@@ -83,7 +135,16 @@ export function createFlightInput({ window: win, document: doc, onPause = () => 
     // Cosmetic HUD buttons can retain focus during an active flight. They are
     // not text editors; the host's enabled ownership still excludes all menus.
     if (editable(event.target)) return;
-    if (owner !== 'keyboard' || !enabled || !MOVE_KEYS.has(event.code)) return;
+    if (
+      event.ctrlKey ||
+      event.metaKey ||
+      event.altKey ||
+      owner !== 'keyboard' ||
+      !enabled ||
+      !keyboardFlightKey(event.code, keyboardPreset)
+    )
+      return;
+    if (event.repeat && !keys.has(event.code)) return;
     event.preventDefault();
     keys.add(event.code);
   });
@@ -117,6 +178,11 @@ export function createFlightInput({ window: win, document: doc, onPause = () => 
       if (!enabled) clear();
     },
     owner: () => owner,
+    keyboardPreset(value) {
+      if (!Object.hasOwn(keyboardPresets, value)) throw new TypeError('Unknown keyboard preset');
+      if (value !== keyboardPreset) clear();
+      keyboardPreset = value;
+    },
     touchResponse(value) {
       if (!['precise', 'direct'].includes(value)) throw new TypeError('Unknown touch response');
       if (value !== touchResponse) clear();
@@ -137,22 +203,9 @@ export function createFlightInput({ window: win, document: doc, onPause = () => 
       if (disposed || !enabled || ['radio', 'controller'].includes(owner))
         return neutralFlightInput();
       if (owner === 'touch') return { ...touch };
-      const fine = keys.has('ShiftLeft') || keys.has('ShiftRight'),
-        gain = fine ? 0.18 : 0.5;
-      throttle = clamp(
-        throttle +
-          (Number(keys.has('ArrowUp')) - Number(keys.has('ArrowDown'))) *
-            (fine ? 0.1 : 0.35) *
-            clamp(seconds, 0, 0.05),
-        0,
-        1,
-      );
-      return {
-        roll: (Number(keys.has('KeyD')) - Number(keys.has('KeyA'))) * gain,
-        pitch: (Number(keys.has('KeyW')) - Number(keys.has('KeyS'))) * gain,
-        yaw: (Number(keys.has('KeyE')) - Number(keys.has('KeyQ'))) * gain,
-        throttle,
-      };
+      const command = keyboardFlightValues({ keys, preset: keyboardPreset, throttle, seconds });
+      throttle = command.throttle;
+      return command;
     },
     bindStick(element, side) {
       let pointer = null,

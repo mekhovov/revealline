@@ -32,7 +32,14 @@ import {
   paintStickDirections,
   mountStickTrace,
 } from './sim-presentation.mjs';
-import { createFlightInput, createFlightMenuNavigation, createFlightGamepad } from './input.mjs';
+import {
+  createFlightInput,
+  createFlightMenuNavigation,
+  createFlightGamepad,
+  keyboardFlightPreset,
+  keyboardFlightHelp,
+  KEYBOARD_PRESET_KEY,
+} from './input.mjs';
 import { createFlightRenderer } from './renderer.mjs';
 import { COPY } from './copy.mjs';
 import { mountFlightNotebook } from './notebook.mjs';
@@ -200,6 +207,9 @@ export function mountFlightApp({
     expanded: ['Expanded', 'Збільшені'],
     done: ['Done', 'Готово'],
     keyboardGuide: ['Keyboard controls', 'Клавіатура'],
+    keyboardPreset: ['Keyboard layout', 'Розкладка клавіатури'],
+    keyboardTwoStick: ['Two-stick · WASD + arrows', 'Два стіки · WASD + стрілки'],
+    keyboardClassic: ['Classic · W/S pitch', 'Класична · W/S — тангаж'],
     touchGuide: ['Touch controls', 'Сенсорне керування'],
     touchResponse: ['Touch response', 'Чутливість дотику'],
     touchPrecise: ['Precise — small corrections', 'Точна — малі корекції'],
@@ -278,6 +288,9 @@ export function mountFlightApp({
     }
   };
   try {
+    $('keyboard-preset').value = keyboardFlightPreset(
+      win.localStorage?.getItem(KEYBOARD_PRESET_KEY),
+    ).id;
     const touchResponse = win.localStorage?.getItem('revealline.fpv.touch-response.v1');
     if (['precise', 'direct'].includes(touchResponse)) $('touch-response').value = touchResponse;
     const saved = win.localStorage?.getItem('revealline.fpv.academy-sticks.v1');
@@ -297,6 +310,7 @@ export function mountFlightApp({
     onPause: (reason) => (reason === 'paused' ? setFlightMenu(true) : pause(reason)),
   });
   input.touchResponse($('touch-response').value);
+  input.keyboardPreset($('keyboard-preset').value);
   const controllerHint = doc.createElement('p');
   controllerHint.id = 'academy-controller-hint';
   controllerHint.hidden = true;
@@ -731,6 +745,8 @@ export function mountFlightApp({
     audioControls.refresh();
     for (const node of doc.querySelectorAll('[data-copy]'))
       if (c()[node.dataset.copy]) node.textContent = c()[node.dataset.copy];
+    for (const node of doc.querySelectorAll('[data-copy="keys"]'))
+      node.textContent = `${keyboardFlightHelp($('keyboard-preset').value, locale)}. ${locale === 'uk' ? 'Відпустіть клавіші газу, щоб утримувати його значення. Центровані стіки не зупиняють рух і не утримують висоту.' : 'Release the throttle keys to keep that setting. Centre sticks do not stop momentum or hold altitude.'}`;
     $('mode').options[0].textContent = locale === 'uk' ? 'Самовирівнювання' : 'Self-level';
     $('mode').options[1].textContent = 'Acro';
     $('academy-navigation')?.setAttribute(
@@ -1110,6 +1126,47 @@ export function mountFlightApp({
       paint(true);
     });
   listen($('arm'), 'click', arm);
+  listen(win, 'keydown', (event) => {
+    if (
+      event.defaultPrevented ||
+      event.isComposing ||
+      event.ctrlKey ||
+      event.metaKey ||
+      event.altKey ||
+      !flight ||
+      modalOpen() ||
+      flightMenuOpen() ||
+      immersive.snapshot().toolsOpen ||
+      !inputAvailable() ||
+      !$('viewport').contains(event.target) ||
+      !$('viewport').contains(doc.activeElement) ||
+      /^(INPUT|SELECT|TEXTAREA|BUTTON|A|SUMMARY)$/.test(event.target?.tagName) ||
+      event.target?.isContentEditable
+    )
+      return;
+    const preset = keyboardFlightPreset($('keyboard-preset').value);
+    if (event.code === preset.arm) {
+      event.preventDefault();
+      if (event.repeat) return;
+      if (replay ? !replay.paused : flight.snapshot().status === 'active') pause();
+      else arm();
+    } else if (event.code === preset.reset) {
+      event.preventDefault();
+      if (event.repeat) return;
+      if (replay) {
+        pause();
+        replay.flight = createFlight({
+          course: courses[selected],
+          mode,
+          response: replay.proof.response,
+        });
+        replay.at = 0;
+        message = 'paused';
+        paint(true);
+      } else reset();
+      $('viewport').focus();
+    }
+  });
   listen(win, 'blur', () => {
     focused = false;
     presentation.pause();
@@ -1170,6 +1227,16 @@ export function mountFlightApp({
       /* Touch response remains available when preference storage is denied. */
     }
     paint(true);
+  });
+  listen($('keyboard-preset'), 'change', () => {
+    pause();
+    input.keyboardPreset($('keyboard-preset').value);
+    try {
+      win.localStorage?.setItem(KEYBOARD_PRESET_KEY, $('keyboard-preset').value);
+    } catch {
+      /* Session controls remain usable without storage. */
+    }
+    translated();
   });
   listen($('language'), 'change', () => {
     pause();
