@@ -4,12 +4,12 @@
     {
       "id": "fpv-arcade-r5",
       "path": "fpv-arcade-r5.json",
-      "name": "FPV Front \u00b7 Pressure Lines",
+      "name": "FPV Front · Pressure Lines",
       "campaigns": [
         {
           "id": "fpv-pressure-lines",
           "revision": "1",
-          "title": "FPV Front \u00b7 Pressure Lines",
+          "title": "FPV Front · Pressure Lines",
           "levels": [
             {
               "id": "orchard-crossing",
@@ -30,12 +30,12 @@
     {
       "id": "fpv-pressure-frontier",
       "path": "fpv-pressure-frontier.json",
-      "name": "FPV Front \u00b7 Frontier Lines",
+      "name": "FPV Front · Frontier Lines",
       "campaigns": [
         {
           "id": "fpv-pressure-frontier",
           "revision": "1",
-          "title": "FPV Front \u00b7 Frontier Lines",
+          "title": "FPV Front · Frontier Lines",
           "levels": [
             {
               "id": "copper-switchyard",
@@ -200,250 +200,6 @@
             {
               "id": "sentinel-relay-01",
               "name": "Sentinel Relay"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "id": "neon-reference-pack",
-      "path": "neon-reference-pack.json",
-      "name": "Neon Reference Pack",
-      "campaigns": [
-        {
-          "id": "neon-reference",
-          "revision": "2",
-          "title": "Neon Reference Pack",
-          "levels": [
-            {
-              "id": "neon-channels-pack",
-              "name": "Neon Channels"
-            },
-            {
-              "id": "neon-crossroads-pack",
-              "name": "Neon Crossroads"
-            },
-            {
-              "id": "neon-hearts-pack",
-              "name": "Neon Hearts"
-            },
-            {
-              "id": "neon-labyrinth-pack",
-              "name": "Neon Labyrinth"
-            },
-            {
-              "id": "neon-arrows-pack",
-              "name": "Neon Arrows"
-            },
-            {
-              "id": "neon-chambers-pack",
-              "name": "Neon Chambers"
-            },
-            {
-              "id": "neon-crossgrid-pack",
-              "name": "Neon Crossgrid"
-            },
-            {
-              "id": "neon-switchback-pack",
-              "name": "Neon Switchback"
-            },
-            {
-              "id": "neon-spirals-pack",
-              "name": "Neon Spirals"
-            },
-            {
-              "id": "neon-crossfire-pack",
-              "name": "Neon Crossfire"
-            },
-            {
-              "id": "neon-pinwheels-pack",
-              "name": "Neon Pinwheels"
-            },
-            {
-              "id": "neon-wavebands-pack",
-              "name": "Neon Wavebands"
-            },
-            {
-              "id": "neon-conduit-pack",
-              "name": "Neon Conduit"
-            },
-            {
-              "id": "neon-switchyards-pack",
-              "name": "Neon Switchyards"
-            },
-            {
-              "id": "neon-spines-pack",
-              "name": "Neon Spines"
-            },
-            {
-              "id": "neon-prism-pack",
-              "name": "Neon Prism"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "id": "neon-mosaic-pack",
-      "path": "neon-mosaic-pack.json",
-      "name": "Neon Words & Symbols",
-      "campaigns": [
-        {
-          "id": "neon-mosaic",
-          "revision": "2",
-          "title": "Neon Words & Symbols",
-          "levels": [
-            {
-              "id": "neon-fpv-pack",
-              "name": "Neon FPV"
-            },
-            {
-              "id": "neon-ukraine-pack",
-              "name": "Neon UKRAINE"
-            },
-            {
-              "id": "neon-drone-aid-pack",
-              "name": "Neon DRONE AID"
-            },
-            {
-              "id": "neon-coupa-pack",
-              "name": "Neon COUPA"
-            },
-            {
-              "id": "neon-social-drone-pack",
-              "name": "Neon SOCIAL DRONE"
-            },
-            {
-              "id": "neon-sdua-pack",
-              "name": "Neon SDUA"
-            },
-            {
-              "id": "neon-victory-drones-pack",
-              "name": "Neon VICTORY DRONES"
-            },
-            {
-              "id": "neon-vd-pack",
-              "name": "Neon VD"
-            },
-            {
-              "id": "neon-fpv-line-pack",
-              "name": "Neon FPV LINE"
-            },
-            {
-              "id": "neon-reveal-pack",
-              "name": "Neon REVEAL"
-            },
-            {
-              "id": "neon-fly-free-pack",
-              "name": "Neon FLY FREE"
-            },
-            {
-              "id": "neon-fpv-drone-pack",
-              "name": "Neon FPV Drone"
-            },
-            {
-              "id": "neon-tryzub-pack",
-              "name": "Neon Ukrainian Trident"
-            },
-            {
-              "id": "neon-vyshyvanka-pack",
-              "name": "Neon Vyshyvanka Diamonds"
-            },
-            {
-              "id": "neon-ruzha-pack",
-              "name": "Neon Eight-Point Ruzha"
-            },
-            {
-              "id": "neon-kalyna-pack",
-              "name": "Neon Kalyna"
-            },
-            {
-              "id": "neon-tree-of-life-pack",
-              "name": "Neon Tree of Life"
-            },
-            {
-              "id": "neon-pysanka-pack",
-              "name": "Neon Pysanka"
-            },
-            {
-              "id": "neon-barvinok-pack",
-              "name": "Neon Barvinok"
-            },
-            {
-              "id": "neon-wheat-pack",
-              "name": "Neon Wheat Sheaf"
-            },
-            {
-              "id": "neon-vinok-pack",
-              "name": "Neon Vinok"
-            },
-            {
-              "id": "neon-didukh-pack",
-              "name": "Neon Didukh"
-            },
-            {
-              "id": "neon-rushnyk-pack",
-              "name": "Neon Rushnyk"
-            },
-            {
-              "id": "neon-bandura-pack",
-              "name": "Neon Bandura"
-            },
-            {
-              "id": "neon-trembita-pack",
-              "name": "Neon Trembita"
-            },
-            {
-              "id": "neon-tsymbaly-pack",
-              "name": "Neon Tsymbaly"
-            },
-            {
-              "id": "neon-kosiv-pitcher-pack",
-              "name": "Neon Kosiv Pitcher"
-            },
-            {
-              "id": "neon-opishnia-ram-pack",
-              "name": "Neon Opishnia Ram"
-            },
-            {
-              "id": "neon-petrykivka-pack",
-              "name": "Neon Petrykivka Flower"
-            },
-            {
-              "id": "neon-oak-pack",
-              "name": "Neon Oak and Acorns"
-            },
-            {
-              "id": "neon-stork-pack",
-              "name": "Neon Stork"
-            },
-            {
-              "id": "neon-swallow-pack",
-              "name": "Neon Swallow"
-            },
-            {
-              "id": "neon-horse-pack",
-              "name": "Neon Pysanka Horse"
-            },
-            {
-              "id": "neon-deer-pack",
-              "name": "Neon Pysanka Deer"
-            },
-            {
-              "id": "neon-fish-pack",
-              "name": "Neon Pysanka Fish"
-            },
-            {
-              "id": "neon-berehynia-pack",
-              "name": "Neon Berehynia Motif"
-            },
-            {
-              "id": "neon-bezkonechnyk-pack",
-              "name": "Neon Bezkonechnyk"
-            },
-            {
-              "id": "neon-ornek-tulip-pack",
-              "name": "Neon Crimean Tatar Ornek Tulip"
             }
           ]
         }

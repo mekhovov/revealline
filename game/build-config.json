@@ -288,8 +288,6 @@
     "optional-practice/civilian-fpv/snake-hunt-presentation.mjs"
   ],
   "optionalOffline": [
-    "game/content/packs/neon-reference-pack.json",
-    "game/content/packs/neon-mosaic-pack.json",
     "game/content/packs/fpv-arcade-r3.json",
     "game/content/packs/fpv-arcade-r2.json",
     "game/content/packs/fpv-arcade.json",

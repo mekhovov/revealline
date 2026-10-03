@@ -32,14 +32,6 @@
     {
       "id": "sentinel-relay",
       "path": "sentinel-relay.json"
-    },
-    {
-      "id": "neon-reference-pack",
-      "path": "neon-reference-pack.json"
-    },
-    {
-      "id": "neon-mosaic-pack",
-      "path": "neon-mosaic-pack.json"
     }
   ]
 }
