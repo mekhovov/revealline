@@ -2641,3 +2641,11 @@ unchanged. Evidence: `docs/fpv-woodland-tree-forms.md`.
 Next: primary imported Woodland composition/material depth and Container Yard
 landmarks, preserving #992 and this ready model increment. D1 is not yet complete;
 continue into D2 when its remaining art and functional evidence are complete.
+
+Published tree forms as [PR #993](https://github.com/mekhovov/revealline/pull/993),
+implementation head 81c9bbbe8. Packaged player launch on an isolated localhost
+origin completed Clearing check-in's 23.7-second demonstration with no captured
+browser errors. The user's existing port-8789 recovery state was not changed.
+Package SHA-256: 349f34b9b7760caec405594d7534ee0fa750d10343ef9e4ecfc3541ac230cbff.
+Both #992 and #993 remain pending protected publication; no public-live or sustained
+hardware-FPS claim. Continue the primary scene composition work next.
