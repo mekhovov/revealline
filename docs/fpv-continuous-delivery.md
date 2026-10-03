@@ -2566,3 +2566,9 @@ This is D1's rendering foundation, not completed Woodland art or measured FPS.
 qualify/publish this focused increment; continue original Woodland asset detail
 and Container composition while protected CI runs. Preserve physical-device and
 full-release qualification as outstanding, without waiting on player feedback.
+
+Published as [PR #990](https://github.com/mekhovov/revealline/pull/990), head
+16c5809a0de11735d4d4e6b45e7b1f7cba077856 before this log-only update. Required
+CI is pending; no live deployment claim. Capacity #989 now passes focused and
+default-capacity checks, but its preview and edition candidate jobs failed;
+inspect those failures next without weakening admission guards.
