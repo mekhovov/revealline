@@ -11,11 +11,12 @@
   <body>
     <main>
       <nav>
-        <a href="../asset-studio/">Asset Studio</a><a href="../motion-lab/">Motion Lab</a
-        ><a href="../../game/hunt/">Enemy field guide</a>
+        <a id="nav-studio" href="../asset-studio/">Asset Studio</a
+        ><a id="nav-motion" href="../motion-lab/">Motion Lab</a
+        ><a id="nav-guide" href="../../game/hunt/">Enemy field guide</a>
       </nav>
-      <p class="eyebrow">ORIGINAL ART · REVIEW CANDIDATE 01</p>
-      <h1>Industrial field kit</h1>
+      <p id="eyebrow" class="eyebrow">ORIGINAL ART · REVIEW CANDIDATE 02</p>
+      <h1 id="page-title">Industrial field kit</h1>
       <p id="intro">
         Transparent overhead silhouettes, readable equipment and stronger motion. This sample is
         awaiting artistic approval; it does not replace your saved appearance.
@@ -72,6 +73,35 @@
         </p>
       </section>
       <section>
+        <h2 id="materials-title">Shared terrain materials</h2>
+        <p id="materials-note">
+          Concrete, rutted earth and tread plate use the same original pixels in the board renderer
+          and native flight material maps.
+        </p>
+        <div id="materials" class="sample-grid"></div>
+      </section>
+      <section>
+        <h2 id="audio-title">Equipment and movement sounds</h2>
+        <p id="audio-note">
+          Play a short sample through the game mixer. Your mute and Effects settings apply. Nothing
+          plays automatically.
+        </p>
+        <div class="controls">
+          <label
+            ><span id="treatment-label">Treatment</span
+            ><select id="audio-treatment">
+              <option value="clean">Clean</option>
+              <option value="brutal">Brutal without blood</option>
+              <option value="blood">Brutal with blood</option>
+            </select></label
+          >
+          <button id="audio-mute" type="button">Unmute sound</button>
+          <button id="audio-stop" type="button">Stop sample</button>
+        </div>
+        <div id="audio-samples" class="sample-grid"></div>
+        <output id="audio-status" role="status" aria-live="polite"></output>
+      </section>
+      <section>
         <h2 id="effects-title">Defeat treatments</h2>
         <div id="effects" class="links"></div>
       </section>
@@ -90,6 +120,22 @@
           frames, compare at phone size, then stage and save/export a normal immutable collection.
           Earlier static revisions remain available.
         </p>
+        <img
+          class="atlas-sheet"
+          src="atlas-sample/atlas.png"
+          width="384"
+          height="288"
+          alt="Transparent twelve-pose machinery atlas"
+        />
+        <div class="links">
+          <a id="atlas-download" href="atlas-sample/industrial-bouncer.rltheme" download
+            >Download complete Studio collection</a
+          >
+          <a id="atlas-guide" href="atlas-sample/README.md">Import and review instructions</a>
+          <a id="atlas-provenance" href="atlas-sample/provenance.json"
+            >Artwork provenance and exact sizes</a
+          >
+        </div>
         <button id="export" type="button">Download sample animation descriptors</button>
       </section>
       <output id="budget"></output>

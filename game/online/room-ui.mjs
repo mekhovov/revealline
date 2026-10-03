@@ -387,7 +387,7 @@ export function mountRoomUI({ getState, getSeat, canPlay, submit, pause, display
                     ? 'pulse'
                     : 'reel'
                   : null));
-          if (cue)
+          if (cue) {
             sound.encounter(cue, {
               ...options,
               family: target.family ?? target.kind ?? event.actorFamily,
@@ -395,6 +395,13 @@ export function mountRoomUI({ getState, getSeat, canPlay, submit, pause, display
               closed: event.closed,
               pan: screenPan(target.x ?? 0, run.width ?? run.level.width, placement),
             });
+            if (event.type === 'actor.phase' && cue !== 'warning')
+              sound.encounter('equipment', {
+                ...options,
+                family: target.family ?? target.kind ?? event.actorFamily,
+                pan: screenPan(target.x ?? 0, run.width ?? run.level.width, placement),
+              });
+          }
         }
         if (snapshot.engine.kind !== 'snake')
           sound.events(

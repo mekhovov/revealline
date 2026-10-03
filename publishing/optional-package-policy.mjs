@@ -351,6 +351,9 @@ export const OPTIONAL_PACKAGE_POLICIES = Object.freeze(
         ]),
         sharedFiles: Object.freeze([
           ...policy.sharedFiles,
+          ...(['civilian-fpv', 'fpv-worlds'].includes(id)
+            ? ['game/presentation/industrial-materials.mjs']
+            : []),
           'optional-practice/guide.mjs',
           'optional-practice/navigation.mjs',
         ]),

@@ -19,6 +19,8 @@ import { drawActiveTrail, drawCapturePulse } from '../../game/ui/actor-presentat
 import { drawEventFeedback } from '../../game/ui/event-feedback.mjs';
 import { CURRENT_ART_SOURCES } from '../../game/presentation/current-art-sources.mjs';
 import { crossModeContextPreview, stageBoardPreviewEffect } from './cross-mode-preview.mjs';
+import { actorArtReviewRevision } from '../../game/hunt/preferences.mjs';
+import { getArcadeCollection } from '../../game/presentation/industrial-arcade.mjs';
 const text = (tag, value, className = '', hostRole = null) => {
   const node = document.createElement(tag);
   localizedText(node, typeof value === 'function' ? value : () => value);
@@ -289,7 +291,10 @@ export async function boardContextPreview(surface, slot, asset, resolved, blobs,
     painter.enemyBodies.clear();
     return;
   }
-  painter.setLevel(level, { seed: pictureOwner?.descriptor?.seed ?? 42 });
+  painter.setLevel(level, {
+    seed: pictureOwner?.descriptor?.seed ?? 42,
+    arcadeCollection: actorArtReviewRevision() ? getArcadeCollection('military-field', 'r1') : null,
+  });
   stageBoardPreviewEffect(painter, slot, run);
   const scoped = { ...resolved.assets, [slot.id]: asset },
     decoded = new Map();

@@ -2,11 +2,11 @@
 // Native flight logic remains in its existing cores. No simulation clock or record recipe changes.
 const sourceHashes = {
   'optional-practice/civilian-fpv/world-audio.mjs':
-    '7655fa3d77df823f9d85d608fd892b3617f5089ef09ca49dd8d4ed74a90ae824',
+    'c8ec1535a969018e3b5eaa4e2ae575e4dc464ab5983af65471183e7dd76f3723',
   'game/ui/audio-output.mjs': 'dc1b2776407d0b6649b0d15c5c721bd59384d7e38a2e61087961ff7a37bd86c1',
   'game/ui/audio-master.mjs': '6bf14bc5268c0eff8f38c21c819f398917712fdc2607c33977ac873111d1dca8',
   'game/audio-preferences.mjs': '9212831a3524c9e1ebe8c595783f9f53a112e02e3d51280d775ac103b94a9239',
-  'game/ui/encounter-audio.mjs': 'ef72dc277ec903688ea15aad395f19520cf03534156af1bd25927386b047e9f7',
+  'game/ui/encounter-audio.mjs': 'de48fc709c99c571e1e2a15e8a5cb1958a53e6404751cc3482255f05c626c519',
   'game/ui/movement-audio.mjs': '685d8e458401354028a2cacda0c7b1009b3c1e480a08d4cafce46d8f98b69020',
   'game/ui/dialogue-channel.mjs':
     'f4839f3a1634189a03eed6a3096dc595dfc88ee6437277ee82d78de05c300142',
@@ -549,12 +549,47 @@ modules['game/ui/encounter-audio.mjs'] = (() => {
     'brace-trooper': 0.68,
     'relay-warden': 0.62,
   });
+  // Original material accents reuse the admitted bank. Cadence follows observed
+  // movement, never a sprite frame, random choice or simulation mutation.
+  const ACTOR_SOUNDS = Object.freeze({
+    runner: Object.freeze({ cadence: 0.32, rate: 1.08, equipment: 'paper', from: 240, to: 150 }),
+    courier: Object.freeze({ cadence: 0.29, rate: 1.19, equipment: 'ratchet', from: 360, to: 210 }),
+    guard: Object.freeze({
+      cadence: 0.41,
+      rate: 0.87,
+      equipment: 'contact-metal',
+      from: 210,
+      to: 90,
+    }),
+    shield: Object.freeze({
+      cadence: 0.48,
+      rate: 0.7,
+      equipment: 'contact-metal',
+      from: 135,
+      to: 48,
+    }),
+  });
+  function actorSoundProfile(family) {
+    return ACTOR_SOUNDS[family === 'shield-bearer' ? 'shield' : family] ?? ACTOR_SOUNDS.runner;
+  }
   function encounterSoundRecipe(type, details = {}) {
     const pitch = FAMILY_PITCH[details.family] ?? 1;
-    const metal = details.material === 'metal' || details.machine === true;
+    const actor = actorSoundProfile(details.family),
+      tracked = details.machine === 'tracked',
+      metal =
+        details.material === 'metal' || [true, 'tracked', 'wheeled'].includes(details.machine);
     const brutal = details.brutal === true;
     const recipes = {
-      step: ['grain', 0.11, 0, 130, 65, 0.055],
+      step: ['grain', 0.11, 0, 130 * actor.rate, 65 * actor.rate, 0.055],
+      equipment: [actor.equipment, 0.12, 1, actor.from, actor.to, 0.085],
+      drive: [
+        tracked ? 'ratchet' : 'wheels',
+        0.17,
+        1,
+        tracked ? 110 : 210,
+        tracked ? 48 : 90,
+        0.16,
+      ],
       notice: ['switch', 0.17, 2, 360, 520, 0.09],
       warning: ['warning', 0.44, 5, 620, 860, 0.13],
       burst: ['paper', 0.19, 2, 190, 320, 0.09],
@@ -587,17 +622,32 @@ modules['game/ui/encounter-audio.mjs'] = (() => {
     const row = recipes[type];
     if (!row) return null;
     const [name, gain, priority, from, to, duration] = row;
+    const scale = Number.isFinite(details.gainScale)
+      ? Math.max(0, Math.min(1, details.gainScale))
+      : 1;
+    const movement = ['step', 'equipment', 'drive'].includes(type);
     return {
       name,
-      gain,
+      gain: gain * scale,
       priority,
-      rate: pitch,
+      movement,
+      // Loop textures are deliberately sampled as short envelopes for footsteps.
+      maxDuration: movement ? duration : null,
+      cooldown:
+        type === 'step'
+          ? actor.cadence
+          : type === 'equipment'
+            ? 0.7
+            : type === 'drive'
+              ? 1.2
+              : null,
+      rate: type === 'step' ? actor.rate : pitch,
       tone: {
         from: from * pitch,
         to: to * pitch,
         duration,
-        gain: gain * 0.14,
-        type: metal ? 'triangle' : 'sine',
+        gain: gain * scale * 0.14,
+        type: metal || type === 'equipment' ? 'triangle' : 'sine',
       },
     };
   }
@@ -613,7 +663,11 @@ modules['game/ui/encounter-audio.mjs'] = (() => {
     return null;
   }
 
-  return { encounterSoundRecipe: encounterSoundRecipe, actorPhaseSound: actorPhaseSound };
+  return {
+    actorSoundProfile: actorSoundProfile,
+    encounterSoundRecipe: encounterSoundRecipe,
+    actorPhaseSound: actorPhaseSound,
+  };
 })();
 modules['game/ui/movement-audio.mjs'] = (() => {
   const MOVEMENT_AUDIO_KEY = 'revealline.movement-audio.v1';
@@ -887,18 +941,26 @@ modules['optional-practice/civilian-fpv/world-audio.mjs'] = (() => {
       delay = 0,
       type = 'sine',
       movementCue = false,
+      priority = 2,
     }) {
       if (
         !graph ||
         !enabled ||
         masterState.volume === 0 ||
         !levels.interface ||
-        effects.size >= 12 ||
         !wanted ||
         context.state !== 'running'
       )
         return;
-      if (movementCue && (!movement.enabled || movement.volume === 0)) return;
+      if (
+        movementCue &&
+        (!movement.enabled ||
+          movement.volume === 0 ||
+          [...effects].some((effect) => effect.priority >= 4))
+      )
+        return;
+      if (priority >= 4) for (const effect of [...effects]) if (effect.movementCue) effect.stop();
+      if (effects.size >= 12) return;
       const oscillator = context.createOscillator();
       const envelope = context.createGain();
       const start = context.currentTime + delay;
@@ -914,6 +976,8 @@ modules['optional-practice/civilian-fpv/world-audio.mjs'] = (() => {
         .connect(movementCue ? graph.output.movementBus : graph.buses.interface);
       let stopped = false;
       const effect = {
+        priority,
+        movementCue,
         stop() {
           if (stopped) return;
           stopped = true;
@@ -947,13 +1011,18 @@ modules['optional-practice/civilian-fpv/world-audio.mjs'] = (() => {
         burst: 'burst',
         recover: 'recover',
         blocked: 'blocked',
+        equipment: 'equipment',
+        drive: 'drive',
       }[type];
       if (!kind) return;
-      const now = context?.currentTime ?? 0;
-      if (now - (recentCues.get(kind) ?? -Infinity) < 0.12) return;
-      recentCues.set(kind, now);
       const actor = actorDefinitions.get(event.actor);
-      const machine = actor?.type === 'vehicle';
+      const machine =
+        event.machine ??
+        (actor?.type === 'vehicle'
+          ? actor.vehicleModel === 'field-tank'
+            ? 'tracked'
+            : 'wheeled'
+          : false);
       const recipe = encounterSoundRecipe(kind, {
         family:
           event.family ??
@@ -961,8 +1030,12 @@ modules['optional-practice/civilian-fpv/world-audio.mjs'] = (() => {
           (actor?.speed > 0 ? 'patroller' : 'lookout'),
         machine,
       });
+      const now = context?.currentTime ?? 0;
+      if (now - (recentCues.get(kind) ?? -Infinity) < (recipe.cooldown ?? 0.12)) return;
+      recentCues.set(kind, now);
       if (recipe.priority >= 5 || (type === 'fire' && !player)) dialogueChannel.interrupt();
-      const voice = { ...recipe.tone };
+      const voice = { ...recipe.tone, priority: recipe.priority, movementCue: recipe.movement };
+      if (recipe.movement) voice.gain *= levels.interface;
       if (type === 'fire' && !player) voice.gain *= 0.65;
       if (type === 'objective' && gateStyle === 'digital') voice.type = 'triangle';
       tone(voice);
@@ -1163,7 +1236,9 @@ modules['optional-practice/civilian-fpv/world-audio.mjs'] = (() => {
           ramp(graph.humGain.gain, ambience.humGain);
           if (fresh) {
             let nearestVehicle = Infinity,
-              nearestFoot = Infinity;
+              nearestFoot = Infinity,
+              footActor = null,
+              startingVehicle = null;
             for (const actor of snapshot.actors ?? []) {
               const previous = actorPositions.get(actor.id),
                 position = actor.position;
@@ -1176,29 +1251,50 @@ modules['optional-practice/civilian-fpv/world-audio.mjs'] = (() => {
                   position.y - snapshot.position.y,
                   position.z - snapshot.position.z,
                 );
-                if (actor.type === 'vehicle') nearestVehicle = Math.min(nearestVehicle, d);
-                else if (['patrol', 'sentry'].includes(actor.type))
-                  nearestFoot = Math.min(nearestFoot, d);
+                if (actor.type === 'vehicle') {
+                  nearestVehicle = Math.min(nearestVehicle, d);
+                  if (
+                    !previous.moving &&
+                    d < 16000 &&
+                    (!startingVehicle || d < startingVehicle.distance)
+                  )
+                    startingVehicle = { actor: actor.id, distance: d };
+                } else if (['patrol', 'sentry'].includes(actor.type) && d < nearestFoot) {
+                  nearestFoot = d;
+                  footActor = actor;
+                }
               }
             }
             ramp(
               graph.vehicleGain.gain,
               flying && nearestVehicle < 16000 ? 0.012 * (1 - nearestVehicle / 16000) : 0,
             );
-            if (flying && nearestFoot < 6000 && context.currentTime - lastFootstep >= 0.34) {
+            if (flying && startingVehicle) cue('drive', false, { actor: startingVehicle.actor });
+            const step = encounterSoundRecipe('step', {
+              family: footActor?.pursuit?.family ?? actorFamilies.get(footActor?.id),
+            });
+            if (
+              flying &&
+              nearestFoot < 6000 &&
+              context.currentTime - lastFootstep >= step.cooldown
+            ) {
               lastFootstep = context.currentTime;
-              const step = encounterSoundRecipe('step');
               tone({
                 ...step.tone,
                 gain: step.tone.gain * (1 - nearestFoot / 6000) * levels.interface,
                 movementCue: true,
+                priority: 0,
               });
             }
             for (const actor of snapshot.actors ?? []) {
               if (!actor.pursuit || actor.status !== 'active') continue;
               const phase = actor.blocked ? 'blocked' : actor.pursuit.phase;
               const sound = actorPhaseSound(actorPhases.get(actor.id), phase);
-              if (sound) cue(sound, false, { actor: actor.id, family: actor.pursuit.family });
+              if (sound) {
+                cue(sound, false, { actor: actor.id, family: actor.pursuit.family });
+                if (sound !== 'warning')
+                  cue('equipment', false, { actor: actor.id, family: actor.pursuit.family });
+              }
             }
             const events = snapshot.events ?? [];
             const types = new Set();
@@ -1219,7 +1315,19 @@ modules['optional-practice/civilian-fpv/world-audio.mjs'] = (() => {
           ramp(graph.humGain.gain, 0);
         }
         actorPositions = new Map(
-          (snapshot.actors ?? []).map((actor) => [actor.id, { ...actor.position }]),
+          (snapshot.actors ?? []).map((actor) => {
+            const previous = actorPositions.get(actor.id);
+            return [
+              actor.id,
+              {
+                ...actor.position,
+                moving:
+                  fresh && previous && actor.position
+                    ? Math.hypot(actor.position.x - previous.x, actor.position.z - previous.z) > 0
+                    : previous?.moving,
+              },
+            ];
+          }),
         );
         actorPhases = new Map(
           (snapshot.actors ?? [])
