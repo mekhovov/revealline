@@ -42,6 +42,10 @@ test('exhibit pictures and descriptions come from the exact earned receipt', () 
   const current = reward('r1', 'm1'),
     original = structuredClone(current);
   original.payloads[0].asset.assetId = 'original-image';
+  original.payloads.push({
+    type: 'video',
+    asset: { assetId: 'original-video', sha256: 'b'.repeat(64) },
+  });
   original.locales.en.title = 'Original title';
   const receipt = { definition: original };
   const [exhibit] = projectRewardExhibits({
@@ -51,6 +55,7 @@ test('exhibit pictures and descriptions come from the exact earned receipt', () 
     progress: [],
   });
   assert.equal(exhibit.rows[0].image.asset.assetId, 'original-image');
+  assert.equal(exhibit.rows[0].video.asset.assetId, 'original-video');
   assert.equal(exhibit.rows[0].locales.en.title, 'Original title');
   assert.equal(exhibit.rows[0].receipt, receipt);
   assert.equal(exhibit.collected, 1);
