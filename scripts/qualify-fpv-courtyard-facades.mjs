@@ -365,13 +365,16 @@ for (const mutation of [
     c.obstacles = c.obstacles.map((o) => ({ ...o, type: 'box' }));
   },
   (c) => {
+    c.obstacles = c.obstacles.map((o) => ({ ...o, rotation: [0, 0.7071068, 0, 0.7071068] }));
+  },
+  (c) => {
     c.obstacles = c.obstacles.map((o) => ({ ...o, max: { ...o.max, x: o.max.x + 1 } }));
   },
 ]) {
   const changed = structuredClone(canonical);
   mutation(changed);
   check(
-    'unsupported environment/IDs/types/dimensions do not acquire facade artwork',
+    'unsupported environment/IDs/types/rotation/dimensions do not acquire facade artwork',
     after.buildCourtyardFacadeGeometry(changed).length === 0,
   );
 }

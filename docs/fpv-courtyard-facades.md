@@ -10,7 +10,7 @@ complements the exterior street-front terraces from #961.
 
 Only `house-west` (8 × 8 × 20 m) and `house-east` (8 × 7 × 26 m) in the
 `courtyard` environment receive artwork. The geometry helper rejects renamed,
-resized, typed and unsupported obstacles. Every added vertex lies on one of the
+resized, rotated, typed and unsupported obstacles. Every added vertex lies on one of the
 original vertical box faces. Existing obstacle meshes, roof silhouettes, garden
 wall, well, school obstacles, routes, actors, cameras and physics remain exact.
 The closed opaque panes and doors do not represent flyable openings.
@@ -38,7 +38,7 @@ not GPU/frame-time measurements or a finished-world claim.
 ## Source qualification
 
 The manual qualifier uses published source-budget repair head
-`30574b85092e3ddaa973527608a658dfc8adcd5b` as baseline. It passes 949 checks across
+`30574b85092e3ddaa973527608a658dfc8adcd5b` as baseline. It passes 950 checks across
 171 scene cases: all 11 associated catalogue courses, three bounds, three
 presets, authored/Pixel/all 17 shared collections, exact existing geometry, UVs,
 transforms and material pixels, outward wall coplanarity, canonical ID/dimension
@@ -49,12 +49,14 @@ final World state identities. All 54 retained optional-FPV JavaScript/WebAssembl
 inputs remain exact except the edited visual module.
 
 Corrected runtime SHA-256:
-`451e42a3714c1d012e9edcdb81a640b854081902b2801c14e3f89ab9f8cda7a9`.
+`ccd21097afc0ba1b6a630e0c35c1b881fd0c36ef5f4d98f21f6b6e081aefa71a`.
 CPU evidence binds this hash and its qualifier hash; the recorded Git head is the
-checkout head before evidence capture. No new unit coverage is added before D6.
+checkout head before evidence capture. Full `npm run validate`, scoped lint/format and the existing 30 workshop, texture
+and acceptance-workflow checks pass under Node 22.22.2. No new unit coverage is
+added before D6.
 
 The frozen source fixture is
-`dist/fpv-courtyard-facades-verification-source-v3-covered`. Its before side uses
+`dist/fpv-courtyard-facades-verification-source-v4-guarded`. Its before side uses
 main `2dbbe0a0f26684eae0a2bdb0b7cbda087627457f`; the reaction whitespace repair is
 outside the 31-module rendering closure. It uses the actual flight renderer and
 imported GLB scenery. In addition to image, resource and geometry checks, it rays
@@ -63,8 +65,8 @@ front layer.
 
 The earlier v2 source fixture passed mechanical WebGL checks but was rejected in
 visual review because its windows did not align with the existing marks. Those
-results do not qualify this corrected appearance. The v3 visual preview and
-source/package browser runs remain pending at this checkpoint.
+results do not qualify this corrected appearance. The corrected visual preview and source/package browser runs remain pending
+at this checkpoint.
 
 ## Package prerequisite
 
@@ -78,7 +80,7 @@ repair's evidence; no broad all-green regression is claimed.
 That repair merged normally into the art branch as `5456cb08d`. The superseded
 v2 art at that commit passed all three admissions, two identical builds and
 committed-source/ZIP checks. Its receipts retain the exact source identity but
-do not qualify the corrected v3 artwork. A fresh frozen admission and packaged
+do not qualify the corrected artwork. A fresh frozen admission and packaged
 player will follow accepted visual preview. No Courtyard PR is published before
 the repair lands and the corrected source/package/player is qualified.
 

@@ -1,10 +1,10 @@
 {
   "format": "FPVCourtyardFacadeCPU.v1",
-  "createdAt": "2026-10-03T19:23:51.160Z",
+  "createdAt": "2026-10-03T19:32:30.320Z",
   "baseline": "30574b85092e3ddaa973527608a658dfc8adcd5b",
-  "candidate": "5456cb08df364a43da2c5c159ef5a4c41f92ed40",
-  "visualSha256": "451e42a3714c1d012e9edcdb81a640b854081902b2801c14e3f89ab9f8cda7a9",
-  "qualifierSha256": "8c5b0a145e6d599976971e58a6a92e336c8eba015c13a89d29f88631d59b0faf",
+  "candidate": "0d333697ecceefe7b29aeabbafc7593f933ced58",
+  "visualSha256": "ccd21097afc0ba1b6a630e0c35c1b881fd0c36ef5f4d98f21f6b6e081aefa71a",
+  "qualifierSha256": "0cbe474fbd020a5b18adc318f4a712d2cc363a5486ebc878c5129e1331fad7d3",
   "immutable": {
     "optional-practice/civilian-fpv/app.mjs": "ae158a1837bbbf14b3276da6b4abfcef5393ddfa0c828a5d89e30cd87263e0de",
     "optional-practice/civilian-fpv/attempts.mjs": "5353e993c615dbb7091ab5d50497db82e71d3970f1587e6bb1398cc565be2494",
@@ -3667,19 +3667,23 @@
       "passed": true
     },
     {
-      "name": "unsupported environment/IDs/types/dimensions do not acquire facade artwork",
+      "name": "unsupported environment/IDs/types/rotation/dimensions do not acquire facade artwork",
       "passed": true
     },
     {
-      "name": "unsupported environment/IDs/types/dimensions do not acquire facade artwork",
+      "name": "unsupported environment/IDs/types/rotation/dimensions do not acquire facade artwork",
       "passed": true
     },
     {
-      "name": "unsupported environment/IDs/types/dimensions do not acquire facade artwork",
+      "name": "unsupported environment/IDs/types/rotation/dimensions do not acquire facade artwork",
       "passed": true
     },
     {
-      "name": "unsupported environment/IDs/types/dimensions do not acquire facade artwork",
+      "name": "unsupported environment/IDs/types/rotation/dimensions do not acquire facade artwork",
+      "passed": true
+    },
+    {
+      "name": "unsupported environment/IDs/types/rotation/dimensions do not acquire facade artwork",
       "passed": true
     },
     {
