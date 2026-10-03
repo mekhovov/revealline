@@ -91,10 +91,11 @@ pending; captions work with speech disabled or unavailable.
 
 Native SIM uses the shared director through a checked source projection. Its
 optional package remains within the unchanged 104-file / 16 MiB limits; see the
-[package receipt](qualification/fpv-hunt-reactions.md). Company editions retain
-actor captions, custom recordings and the existing pilot voices. Their declared
-adapter omits the new built-in actor recordings instead of requesting missing
-files; an optional Company actor-voice package is still outstanding.
+[package receipt](verification/company-capacity-followup-packages.json). Company editions
+now include [optional EN/UK actor voice packs](company-actor-voices.md) through the
+existing shared audio and verified-download system. The 48 recordings are outside
+mandatory offline preparation; captions, custom recordings and pilot voices retain
+their behavior.
 
 ## Studios, ownership and multiplayer
 
@@ -109,12 +110,11 @@ and offloading. Immutable installed editions retain separate progression;
 community clears cannot unlock official Snake chapter accents. A real-account
 publish/install review remains pending.
 
-The largest Company edition remains blocked by its existing 64 MiB admission
-guard: its latest measurement was 67,592,864 bytes at merge commit `1592b7fea`
-(after Theme Studio main `cf0b62e53`), or 484,000 bytes over the cap. Before that merge it was 67,559,900 bytes, compared
-with 67,423,717 on main `66d83c424`. The edition menu omits unused flight data;
-no package cap or brand media was changed. [Capacity details](fpv-world-package-closure.md) distinguish this from
-the passing optional SIM package.
+All 18 Company editions now pass deterministic production compilation and
+independent archive admission under the shared **80 MiB / 2,000-file** complete
+application policy. The ordinary core, presentation-only media and optional flight
+budgets remain unchanged. [Current evidence](verification/company-capacity-followup.md)
+supersedes the historical Company capacity blocker.
 
 The dedicated room service implements authoritative private Capture/Snake Versus
 and Team attempts, paired readiness, shared pause, once-only inputs, rematch,
@@ -133,10 +133,10 @@ are later roadmap stages, not completed features of this preview.
 Automated suites are explicitly waived. Relevant regression sources were added
 without running them. Structural compilation, format/lint, localization,
 distribution references, source identity and the committed-source build are
-reported separately from gameplay qualification. The exact committed preparation
-passes; writing the required full archive is blocked by local disk space. The
-[verification report](verification/expressive-actors/README.md) records that failure,
-the 995,683,591-byte ZIP requirement and the passing 64 MiB core admission.
+reported separately from gameplay qualification. The full committed-source game
+archive, all 18 Company edition candidates and all three optional flight packages
+now pass. The [current verification report](verification/company-capacity-followup.md)
+records exact source identities, archive hashes and unchanged core/flight limits.
 
 Manual browser observations include the hub, launch navigation, Retro Field,
 EN/UK deep links, private two-seat readiness, and compact Team Snake controls.

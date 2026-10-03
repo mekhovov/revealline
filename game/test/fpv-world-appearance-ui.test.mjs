@@ -467,3 +467,60 @@ test('World menu Back dismisses the visible surface without closing its paused n
   assert.equal(h.$('flight-dialog').open, true);
   assert.deepEqual(h.app.snapshot().state, paused);
 });
+
+for (const section of [false, true])
+  test(`World exhausted ${section ? 'section' : 'unfinished'} playback keeps native Results reachable without Continue`, async (t) => {
+    const h = fixture(t);
+    await h.app.ready;
+    await initWorldRuntime();
+    const entry = WORLD_CATALOGUE.find((item) => !item.legacy),
+      flight = createWorldFlight({ course: entry.course }),
+      recorder = createWorldRecorder(flight);
+    flight.arm();
+    for (let i = 0; i < 4; i++) {
+      flight.step({ roll: 0, pitch: 0, yaw: 0, throttle: 0, actions: 0 });
+      recorder.record();
+    }
+    assert.equal(flight.snapshot().status, 'active');
+    const proof = recorder.export(),
+      original = structuredClone(proof),
+      records = h.app.snapshot().records;
+    flight.dispose();
+    await h.app.startFlight(
+      entry,
+      section
+        ? { checkpoint: { mode: proof.mode, index: 0, proof, watch: true } }
+        : { replayProof: proof },
+    );
+    h.tick(12);
+    const ended = h.app.snapshot(),
+      nativeOutcome = h.$('result-panel'),
+      shell = h.doc.querySelector('[data-mode-play-shell]');
+    assert.equal(ended.replay.finished, true);
+    assert.equal(ended.state.ticks, proof.frames.length);
+    assert.equal(ended.state.status, 'paused');
+    if (section) assert.equal(ended.sectionReplay.sectionComplete, false);
+    assert.equal(shell.dataset.phase, 'results');
+    assert.equal(h.$('world-arm').disabled, true);
+    assert.equal(h.$('worlds-shell-action-pause').disabled, true);
+    h.$('worlds-shell-action-menu').click();
+    assert.equal(h.$('worlds-shell-action-primary').textContent, 'Retry');
+    assert.equal(h.$('worlds-shell-action-home-results').hidden, false);
+    h.$('worlds-shell-action-home-results').click();
+    assert.equal(h.$('worlds-shell-home-dialog').open, false);
+    assert.equal(h.$('worlds-shell-results-dialog').open, false);
+    assert.equal(h.$('flight-dialog').open, true);
+    assert.equal(h.$('result-panel'), nativeOutcome);
+    assert.equal(nativeOutcome.hidden, false);
+    assert.equal(h.doc.activeElement, nativeOutcome);
+    h.$('world-arm').click();
+    h.tick(8);
+    assert.deepEqual(h.app.snapshot().state, ended.state);
+    assert.deepEqual(h.app.snapshot().records, records);
+    assert.deepEqual(proof, original);
+    h.$('worlds-shell-action-menu').click();
+    h.$('worlds-shell-home-dialog').emit('cancel', { bubbles: false });
+    assert.equal(h.$('worlds-shell-home-dialog').open, false);
+    assert.equal(h.doc.activeElement, nativeOutcome);
+    assert.equal(shell.dataset.phase, 'results');
+  });

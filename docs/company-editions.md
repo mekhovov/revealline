@@ -159,7 +159,7 @@ storage keys must remain scoped explicitly.
 Candidate builds are not qualified releases. Public promotion requires the human and deployed
 artifact gates below; private source must never enter a public source archive, evidence bundle
 or GitHub release. Restrictive source checks run before the default source archive as well.
-The existing 64 MiB / 2,000-file core offline budget remains unchanged. Measure the whole
+The Company runtime uses the shared 80 MiB / 2,000-file [package policy](company-package-capacity.md); ordinary core and artwork-pack limits remain unchanged. Measure the whole
 hosted target against the GitHub Pages 1 GB limit before promotion.
 
 ### Candidate and promotion commands

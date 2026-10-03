@@ -180,7 +180,7 @@ function surfacePixels(kind, color, seed, size, pixel) {
   const leafGrid = 18,
     leafRandom = random(seed ^ 0x6a09e667),
     leaves =
-      kind === 'forest-floor'
+      kind === 'forest-floor' || kind === 'woodland-canopy'
         ? Array.from({ length: leafGrid * leafGrid }, (_, index) => {
             const angle = leafRandom() * Math.PI * 2,
               u = ((index % leafGrid) + 0.5) / leafGrid,
@@ -231,6 +231,17 @@ function surfacePixels(kind, color, seed, size, pixel) {
         shade = joint ? 0.65 : 0.96 + patch * 0.7 + mottling * 0.025 - lip * 0.035 - aggregate;
         relief = joint ? -0.085 : mottling * 0.014 + grain * 0.008 - lip * 0.006;
         roughness = joint ? 0.98 : 0.88 - wear * 0.24 + grain * 0.055;
+      }
+      if (kind === 'stadium-concrete') {
+        // Six by two metres: three precast facade panels, not floor slabs
+        // stretched up a stand. Quiet runoff and aggregate retain a solid face.
+        const across = (u * 3) % 1,
+          edge = Math.min(across, 1 - across, v, 1 - v),
+          joint = edge < 0.012,
+          runoff = Math.max(0, fine(u, 0.35) - 0.5) * (1 - v) * 0.1;
+        shade = joint ? 0.73 : 0.96 + patch * 0.5 + mottling * 0.025 - runoff;
+        relief = joint ? -0.04 : mottling * 0.009 + grain * 0.004;
+        roughness = joint ? 0.97 : 0.84 + grain * 0.07;
       }
       if (kind === 'painted-steel') {
         const column = Math.floor(u * 3),
@@ -318,6 +329,24 @@ function surfacePixels(kind, color, seed, size, pixel) {
         shade *= 0.93 + patch * 1.4 + mottling * 0.3;
         relief += mottling * 0.045;
         roughness = 0.95;
+      }
+      if (kind === 'woodland-canopy') {
+        // Original leaf clusters: broad shade carries at flight distance, while
+        // scattered elliptical leaves and veins resolve only at close range.
+        // Opaque, mipmapped maps preserve the established crown silhouette.
+        const cellX = Math.floor(u * leafGrid),
+          cellY = Math.floor(v * leafGrid),
+          detail = leaves[cellY * leafGrid + cellX],
+          dx = u * leafGrid - cellX - detail.x,
+          dy = v * leafGrid - cellY - detail.y,
+          along = (dx * detail.cosine + dy * detail.sine) / (detail.length * 1.7),
+          across = (-dx * detail.sine + dy * detail.cosine) / (detail.width * 2.1),
+          outline = along * along + across * across,
+          blade = Math.max(0, Math.min(1, (1 - outline) * 5)),
+          vein = Math.max(0, 1 - Math.abs(across) / 0.1) * blade;
+        shade = 0.76 + broad(u, v) * 0.2 + mottling * 0.12 + blade * 0.14 - vein * 0.035;
+        relief = mottling * 0.04 + blade * 0.025 - vein * 0.01;
+        roughness = 0.88 + grain * 0.06;
       }
       if (kind === 'solar') {
         const bus = (u * 12) % 1 < 0.022,
@@ -436,7 +465,7 @@ function surfacePixels(kind, color, seed, size, pixel) {
       properties[at + 2] = kind === 'metal' ? 170 : 0;
       properties[at + 3] = 255;
     }
-  const reliefScale = woodlandSurface ? size / 64 : 2;
+  const reliefScale = woodlandSurface || kind === 'woodland-canopy' ? size / 64 : 2;
   for (let y = 0; y < size; y++)
     for (let x = 0; x < size; x++) {
       const at = (y * size + x) * 4;
@@ -467,7 +496,7 @@ function surfaceMaps(kind, color, { pixel = false, seed = 971 } = {}) {
     texture.userData.surface = surface;
     if (kind === 'storage-steel')
       texture.name = `warehouse-storage-steel-${['albedo', 'normal', 'orm'][index]}`;
-    if (kind === 'bark' || kind === 'forest-floor')
+    if (kind === 'bark' || kind === 'forest-floor' || kind === 'woodland-canopy')
       texture.name = `woodland-${kind}-${['albedo', 'normal', 'orm'][index]}`;
     return texture;
   });
@@ -1064,6 +1093,8 @@ export function buildWorldVisuals({
       wood: 0x85725a,
       bark: 0x78614d,
       concrete: 0x929790,
+      'stadium-concrete': new THREE.Color(0x929790).lerp(new THREE.Color(theme.wall), 0.2),
+      'stadium-steel': theme.wall,
       plaster: theme.wall,
       brick: environment === 'courtyard' ? 0xb99e83 : theme.wall,
       metal: theme.wall,
@@ -1079,10 +1110,12 @@ export function buildWorldVisuals({
           ? 'timber'
           : kind === 'foliage'
             ? 'grass'
-            : ['concrete', 'stone', 'plaster'].includes(kind)
+            : ['concrete', 'stadium-concrete', 'stone', 'plaster'].includes(kind)
               ? 'concrete'
               : 'steel';
-      const maps = kit ? { map: kit.texture(role) } : surfaceMaps(kind, colors[kind], { pixel });
+      const maps = kit
+        ? { map: kit.texture(role) }
+        : surfaceMaps(kind === 'stadium-steel' ? 'painted-steel' : kind, colors[kind], { pixel });
       // A shared owner stays under world even when callers make no obstacle
       // mesh, and never shares texture lifetime with independently removed actors.
       world.userData.ownedMaterials.push(material(0xffffff, maps));
@@ -1315,8 +1348,24 @@ export function buildWorldVisuals({
     const rng = random(environment === 'woodland' ? 7947 : 997),
       count = environment === 'woodland' ? 66 : 32;
     const radius = Math.hypot(width, depth) / 2 + 10;
-    const leaves = [material(0x496b50), material(0x345749), material(0x7c905d)],
-      bark = kit ? kit.paint('timber') : material(0x63554a);
+    const naturalWoodland = environment === 'woodland' && !pixel && !kit,
+      canopyMaps = naturalWoodland ? surfaceMaps('woodland-canopy', 0xffffff) : null,
+      leaves = [0x496b50, 0x345749, 0x7c905d].map((color) =>
+        material(
+          color,
+          canopyMaps
+            ? { ...canopyMaps, normalScale: new THREE.Vector2(0.22, 0.22), vertexColors: true }
+            : {},
+        ),
+      ),
+      bark = kit
+        ? kit.paint('timber')
+        : naturalWoodland
+          ? material(0xffffff, {
+              ...surfaceMaps('bark', 0x63554a),
+              normalScale: new THREE.Vector2(0.3, 0.3),
+            })
+          : material(0x63554a);
     // Meadow groves frame a clearing instead of repeating a circular tree fence.
     // Unequal groups and staggered depth leave broad openings. Their spread is
     // capped in metres so larger school arenas retain recognizable silhouettes.
@@ -1389,8 +1438,33 @@ export function buildWorldVisuals({
         : null;
     // Keep spatial sectors independently culled: a single forest-wide batch
     // would submit every crown even when the camera sees only one edge.
-    const canopyBatches = new Map();
-    const canopyShape = environment === 'woodland' ? new THREE.IcosahedronGeometry(1, 1) : null;
+    const canopyBatches = new Map(),
+      branchBatches = new Map(),
+      organicCanopy = environment === 'woodland' && !pixel && !kit,
+      canopyShape = environment === 'woodland' ? new THREE.IcosahedronGeometry(1, 1) : null,
+      branchShape = organicCanopy ? new THREE.CylinderGeometry(0.035, 0.08, 1, 5) : null;
+    // Every lobe fits inside the old unit-sphere envelope. These cosmetic trees
+    // stay outside the arena and cannot introduce an obstacle into a flight line.
+    const crownLobes = organicCanopy
+      ? [
+          [0, 0.33, 0, 0.58, 0.62, 0.58],
+          [-0.32, -0.05, -0.18, 0.56, 0.6, 0.6],
+          [0.29, -0.12, 0.24, 0.58, 0.56, 0.54],
+          [-0.2, -0.3, 0.26, 0.5, 0.5, 0.5],
+          [0.26, 0.1, -0.3, 0.55, 0.57, 0.55],
+        ]
+      : [[0, 0, 0, 1, 1, 1]];
+    if (naturalWoodland) {
+      const positions = canopyShape.attributes.position,
+        colors = new Float32Array(positions.count * 3);
+      for (let i = 0; i < positions.count; i++) {
+        // Stable local-space ambient shading does not alter geometry or vary
+        // with quality. The lighter upper crown reads above a quieter underside.
+        const light = 0.72 + (positions.getY(i) + 1) * 0.14;
+        colors.set([light, light, light], i * 3);
+      }
+      canopyShape.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+    }
     for (let i = 0; i < count; i++) {
       const angle = (i / count) * Math.PI * 2,
         r = radius + rng() * 24,
@@ -1420,15 +1494,46 @@ export function buildWorldVisuals({
           key = `${sector}:${i % 3}`;
         if (!canopyBatches.has(key)) canopyBatches.set(key, { paint, matrices: [] });
         const radius = height * 0.3;
-        canopyBatches
-          .get(key)
-          .matrices.push(
-            new THREE.Matrix4().compose(
-              new THREE.Vector3(x, height * 0.75, z),
-              new THREE.Quaternion(),
-              new THREE.Vector3(radius, radius, radius),
-            ),
-          );
+        const turn = organicCanopy ? i * 2.399963229728653 : 0,
+          rotation = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0, 1, 0), turn);
+        for (const [lx, ly, lz, sx, sy, sz] of crownLobes) {
+          const offset = new THREE.Vector3(lx, ly, lz)
+            .multiplyScalar(radius)
+            .applyQuaternion(rotation);
+          canopyBatches
+            .get(key)
+            .matrices.push(
+              new THREE.Matrix4().compose(
+                offset.add(new THREE.Vector3(x, height * 0.75, z)),
+                rotation,
+                new THREE.Vector3(sx * radius, sy * radius, sz * radius),
+              ),
+            );
+        }
+        if (branchShape) {
+          if (!branchBatches.has(sector)) branchBatches.set(sector, []);
+          for (const lobe of crownLobes.slice(1, 4)) {
+            const start = new THREE.Vector3(x, height * 0.53, z),
+              end = new THREE.Vector3(lobe[0], lobe[1], lobe[2])
+                .multiplyScalar(radius)
+                .applyQuaternion(rotation)
+                .add(new THREE.Vector3(x, height * 0.75, z)),
+              direction = end.clone().sub(start),
+              length = direction.length();
+            branchBatches
+              .get(sector)
+              .push(
+                new THREE.Matrix4().compose(
+                  start.add(end).multiplyScalar(0.5),
+                  new THREE.Quaternion().setFromUnitVectors(
+                    new THREE.Vector3(0, 1, 0),
+                    direction.normalize(),
+                  ),
+                  new THREE.Vector3(1, length, 1),
+                ),
+              );
+          }
+        }
       } else {
         const crown = mesh(
           new THREE.ConeGeometry(height * 0.3, height * 0.75, 7),
@@ -1438,6 +1543,20 @@ export function buildWorldVisuals({
         crown.position.set(x, height * 0.75, z);
         crown.castShadow = true;
       }
+    }
+    for (const matrices of branchBatches.values()) {
+      const forks = instanceSimDetails({
+        shape: branchShape,
+        paint: bark,
+        parent: backdrop,
+        matrices,
+        mesh,
+      });
+      forks.name = 'woodland-branch-sector';
+      forks.castShadow = true;
+      forks.receiveShadow = false;
+      forks.computeBoundingBox();
+      forks.computeBoundingSphere();
     }
     for (const { paint, matrices } of canopyBatches.values()) {
       const canopy = instanceSimDetails({
@@ -1535,8 +1654,18 @@ export function buildWorldVisuals({
     // Keep fittings in this world's existing material/texture ownership. The
     // Themes steel kit owns its finish; authored worlds reuse neutral hardware.
     obstacleFittingsMaterial: () => (kit ? kit.paint('steel') : hardware),
+    stadiumDetailMaterial(role) {
+      if (!kit) return null;
+      const paint = kit.paint(role);
+      world.userData.ownedMaterials.push(paint);
+      return paint;
+    },
     obstacleSurfaceKind(obstacle) {
       const id = obstacle.id ?? '';
+      if (environment === 'stadium' && !obstacle.type && obstacle.min && obstacle.max) {
+        if (id === 'stand-west' || id === 'stand-east') return 'stadium-concrete';
+        if (id === 'scoreboard') return 'stadium-steel';
+      }
       if (
         warehouse &&
         /^(rack-[01]-[0-2]|school-low-stack|school-overhead-beam|school-aisle-divider)$/.test(id) &&
@@ -1589,6 +1718,138 @@ export function instanceSimDetails({ shape, paint, parent, matrices, mesh }) {
   value.receiveShadow = true;
   parent.add(value);
   return value;
+}
+
+/** Painted facility detail, coplanar with the three canonical Stadium solids.
+ * Role batches retain the solid contact faces and add no silhouette or opening. */
+export function buildStadiumStructureGeometry(id, [width, height, depth]) {
+  if (!['stand-west', 'stand-east', 'scoreboard'].includes(id)) return [];
+  if (![width, height, depth].every((value) => Number.isFinite(value) && value > 0)) return [];
+  const batches = new Map();
+  function panel(role, layer, side, along, elevation, span, tall) {
+    const key = `${role}:${layer}`;
+    if (!batches.has(key)) batches.set(key, { role, layer, positions: [], normals: [], uvs: [] });
+    const row = batches.get(key),
+      half = (side < 2 ? depth : width) / 2,
+      normal = [
+        [0, 0, 1],
+        [0, 0, -1],
+        [1, 0, 0],
+        [-1, 0, 0],
+      ][side];
+    for (const [u, v] of [
+      [-1, -1],
+      [1, -1],
+      [1, 1],
+      [-1, -1],
+      [1, 1],
+      [-1, 1],
+    ]) {
+      const a = along + (u * span) / 2,
+        y = elevation + (v * tall) / 2;
+      row.positions.push(
+        ...(side === 0
+          ? [a, y, half]
+          : side === 1
+            ? [-a, y, -half]
+            : side === 2
+              ? [half, y, -a]
+              : [-half, y, a]),
+      );
+      row.normals.push(...normal);
+      row.uvs.push(a / 6, y / 3);
+    }
+  }
+  const glyphs = {
+    1: '010110010010111',
+    2: '110001010100111',
+    3: '110001010001110',
+    4: '101101111001001',
+    5: '111100110001110',
+    6: '011100110101010',
+    7: '111001010010010',
+    8: '010101010101010',
+    F: '111100110100100',
+    P: '110101110100100',
+    V: '101101101101010',
+  };
+  function glyph(letter, side, x, y, unit) {
+    for (let row = 0; row < 5; row++)
+      for (let column = 0; column < 3; column++)
+        if (glyphs[letter][row * 3 + column] === '1')
+          panel(
+            'enamel',
+            2,
+            side,
+            x + (column - 1) * unit,
+            y + (2 - row) * unit,
+            unit * 0.86,
+            unit * 0.86,
+          );
+  }
+  if (id !== 'scoreboard') {
+    const bays = Math.max(1, Math.min(8, Math.floor(depth / 6))),
+      pitch = depth / bays,
+      pier = Math.min(0.18, pitch * 0.04),
+      numeral = Math.min(0.12, pitch / 16, height / 30);
+    for (const side of [2, 3]) {
+      panel('steel', 1, side, 0, -height * 0.44, depth, height * 0.075);
+      panel('steel', 1, side, 0, height * 0.455, depth, height * 0.045);
+      for (let i = 1; i < bays; i++)
+        panel('steel', 1, side, -depth / 2 + i * pitch, 0, pier, height * 0.86);
+      for (let i = 0; i < bays; i++) {
+        const along = -depth / 2 + (i + 0.5) * pitch;
+        // Shallow tier bands and small section plates read as a closed stand
+        // facade. No painted black doorway suggests a nonexistent flight gap.
+        for (const y of [0.16, 0.3])
+          panel('enamel', 2, side, along, height * y, pitch - pier * 2, height * 0.014);
+        panel('steel', 1, side, along, -height * 0.2, numeral * 7, numeral * 7);
+        glyph(i + 1, side, along, -height * 0.2, numeral);
+      }
+    }
+    for (const side of [0, 1]) {
+      panel('steel', 1, side, 0, -height * 0.44, width, height * 0.075);
+      panel('steel', 1, side, 0, height * 0.455, width, height * 0.045);
+      for (const y of [0.16, 0.3])
+        panel('enamel', 2, side, 0, height * y, width * 0.88, height * 0.014);
+    }
+  } else {
+    const screenWidth = width * 0.86,
+      screenHeight = height * 0.52,
+      screenY = height * 0.16,
+      rim = Math.min(width * 0.014, height * 0.022);
+    panel('rubber', 1, 0, 0, screenY, screenWidth, screenHeight);
+    for (const side of [-1, 1]) {
+      panel(
+        'steel',
+        1,
+        0,
+        side * (screenWidth / 2 + rim / 2),
+        screenY,
+        rim,
+        screenHeight + rim * 2,
+      );
+      panel('steel', 1, 0, 0, screenY + side * (screenHeight / 2 + rim / 2), screenWidth, rim);
+    }
+    // Static FPV sign and idle --:-- display; this is never a race clock,
+    // live score, objective or input to the simulation.
+    const unit = Math.min(width / 42, height / 35);
+    for (const [i, letter] of ['F', 'P', 'V'].entries())
+      glyph(letter, 0, (i - 1) * unit * 4.5, height * 0.285, unit);
+    for (const x of [-0.28, -0.13, 0.13, 0.28])
+      panel('enamel', 2, 0, width * x, height * 0.065, width * 0.095, height * 0.025);
+    for (const y of [0.025, 0.105]) panel('enamel', 2, 0, 0, height * y, unit * 0.8, unit * 0.8);
+    panel('steel', 1, 0, 0, -height * 0.33, width * 0.88, height * 0.028);
+    for (let slot = 0; slot < 7; slot++)
+      panel('rubber', 1, 1, 0, height * (0.1 + slot * 0.035), width * 0.66, height * 0.01);
+  }
+  return [...batches.values()].map(({ role, layer, positions, normals, uvs }) => {
+    const geometry = new THREE.BufferGeometry();
+    geometry.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3));
+    geometry.setAttribute('normal', new THREE.Float32BufferAttribute(normals, 3));
+    geometry.setAttribute('uv', new THREE.Float32BufferAttribute(uvs, 2));
+    return { role, layer, geometry };
+  });
 }
 
 /** Closed visual steelwork stays inside the authored container collision box. */
@@ -2220,7 +2481,7 @@ const themedMaterials = (colors, overrides = {}) =>
   );
 const collectionSources = {
   'military-field': {
-    pattern: 'foundry',
+    pattern: 'field',
     ornament: 0xa8b382,
     paper: 0xf0efdc,
     materials: themedMaterials({
@@ -2608,7 +2869,18 @@ function familySurface(pattern, role, x, y, grain) {
       0.92 + Math.sin(x * 0.38 + Math.sin(y * 0.049) * 2) * 0.055 + surfaceMottle(x, y) * 0.1;
   if (role === 'concrete') shade *= edge < 1 ? 0.85 : 0.96 + surfaceMottle(x, y) * 0.07;
   if (role === 'rubber') shade *= (x + y) % 16 < 2 ? 0.91 : 1;
-  if (pattern === 'foundry') {
+  if (pattern === 'field') {
+    // Recessed equipment panels with corner fasteners and a short service slot.
+    // Keep the subdued field palette; readable structure must survive grayscale.
+    if (solid) {
+      shade *= edge < 2 ? 0.78 : 1;
+      const fastener =
+        (Math.abs(u - 8) <= 1 || Math.abs(u - 55) <= 1) &&
+        (Math.abs(v - 8) <= 1 || Math.abs(v - 55) <= 1);
+      if (fastener) shade *= 0.55;
+      if (role === 'enamel' && v >= 44 && v <= 46 && u >= 22 && u <= 41) shade *= 0.64;
+    }
+  } else if (pattern === 'foundry') {
     // Bolted, heat-darkened access plates with short edge machining marks.
     if (solid) {
       shade *= edge < 2 ? 0.71 : edge === 3 ? 1.12 : 1;

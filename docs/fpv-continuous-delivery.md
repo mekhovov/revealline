@@ -2632,3 +2632,261 @@ fails in unchanged code and remains outstanding. See `docs/fpv-woodland-depth.md
 #989 is rerunning CI; preserve its externally updated fe449dcf3 head. #992 and #993
 remain open. Continue Container Yard landmarks and remaining D1 materials; then
 D2 world pairs. Do not count this composition pass as complete art qualification.
+
+### D1 Container Yard frontages — 3 October 2026
+
+Independent branch `codex/fpv-yard-landmark-composition`, baseline b43b0ce12,
+changes only primary imported Yard composition. Three arena sizes pass actual
+GLTFLoader vertex clearance, with unchanged sampled draw/triangle counts and
+five other GLBs byte-identical. Package passes at 94 files/15,384,159 bytes.
+29/30 existing checks pass; shared-theme enamel motif uniqueness remains open.
+See `docs/fpv-yard-landmarks.md`. Next: isolate that existing qualification failure,
+then continue primary material depth and remaining world art. D1 remains open.
+
+
+### D0 approved capacity increment — 3 October 2026
+
+Working branch `codex/fpv-d0-offline-capacity`, based on main
+`4fada39581777da9ca4111f50ec3b650803cdfa8`. Preserve local combined playtest
+`codex/fpv-flightdivision-combined-playtest`; do not push its integration merge
+into #986 or #987. The owner approved a 72 MiB shared-core capacity; Company editions use their separately enforced 80 MiB package budget. Verification retains lossless compression and all optional SIM limits.
+
+Implementation and current evidence: `docs/verification/fpv-d0-capacity/README.md`.
+All 18 company editions fit; existing focused checks 132 passed; actual browser
+72 MiB installation, staging and corrupt-update fallback passed. Publication and
+physical devices are not verified. The approved D0–D6 world-quality-first order
+is recorded at the top of `docs/fpv-reviewed-delivery-plan.md`.
+
+Next: finish exact candidate preparation and publish the focused capacity PR.
+Let protected CI qualify it, then refresh #986/#987 on current main without
+mixing incomplete D1 artwork into either. Continue Container Yard / Woodland
+rendering baseline independently. Full post-activation rollback and device
+qualification remain explicitly separate from the staging/fallback exercise.
+
+Candidate649887eed completed committed-source verification and default in-memory
+preparation:67,094,501bytes/1,327files,8,402,971bytes headroom. Browser normal
+activation and post-activation rollback also passed at72MiB. See core/rollback
+receipts. During qualification #986 advanced externally to
+cba2532f73ac078b8d013bd5341c1acd836cdeac via a main merge; preserve that work.
+#987 remains e808af302f1bf1480471646240d54371feb9b607.
+
+Refreshed onto main4074b12f7, retaining merged Neon sharing and workflow fixes.
+Final runtime candidate8162e7d4d62999a630b4daf43721f613b3b3ef8f passes committed
+source-bound core preparation:67,073,221bytes/1,328files,8,424,251bytes headroom.
+All18editions and132focused checks pass again. Registry preserves6,297current
+identities and saves308,129bytes. Browser72MiB activation/rollback evidence uses
+the identical production worker; the refreshed registry also passed browser
+equality. Only evidence/docs change after this candidate.
+
+### Capacity PR published; controls merged — 3 October 2026
+
+[PR #989](https://github.com/mekhovov/revealline/pull/989) is published and attached
+in the existing milestone57; no version or native stack was allocated. #986 merged
+as1aef4d70fa37c8911dbb47b4b128c253178c8b60 while publication was running. The
+capacity branch was rebased onto that main with a recovery ref, preserving both
+sides of the delivery-log conflict. All capacity runtime/compiler bytes match the
+qualified candidate;132focused checks pass after this rebase. Source-bound core
+and edition receipts remain explicitly tied to their recorded candidate, not a
+claim that current-head CI or public deployment has passed.
+
+#987 advanced externally to72818f59f502b2440eb9ae9d9b275cad1ecbc875; preserve it.
+Next: let #989 exact-head protected checks run, resolve routine reported failures,
+and verify deployment before calling the budget live. Continue D1 Container Yard
+and Woodland baseline/art independently. Do not repeatedly poll unchanged CI.
+
+### Capacity CI correction and independent Woodland publication — 3 October 2026
+
+#989's default-capacity/focused jobs passed. Edition admission failed because the
+candidate writer already permits selected `game/snake/index.html` and
+`game/snake/play.html` entries while the admission validator did not. Align the
+validator's exact entry list with the existing writer; retain all hash, inventory,
+archive, size and source-eligibility checks. Two preview host tests timed out;
+both pass locally with no timeout/policy changes.
+
+29 existing admission/bundle/menu-style/win-picture checks pass. Real in-memory
+`fpv-learning` and `droneaid-nl-community` candidate ZIP members pass corrected
+admission (36,578,413 and 67,464,718bytes respectively). Their publicEligible flag
+remains false pending normal publication qualification. No new unit coverage or
+physical-device performance claim; current-head CI must rerun.
+
+Independent D1 rendering foundation is published in PR #990 at690897542:
+24 spatial/material batches replace66 individual Woodland crown meshes, retaining
+silhouettes and placement. 12cases/60browser comparisons and package preparation
+pass. See that PR's `docs/fpv-woodland-canopy-batching.md`. Next art work remains
+Woodland natural detail/Container composition. #987 concurrent work is preserved.
+
+
+### Owner directive: continue across phase boundaries — 3 October 2026
+
+After completing and functionally verifying each increment, publish the focused
+PR and immediately implement the next approved item. Completion of a phase is a
+handoff into the next phase, not a stopping point or a new approval request. Keep
+CI/publication separate from unfinished next-item work. This standing instruction
+is now recorded in the reviewed delivery plan. D1 art remains next; the canopy
+optimization alone does not complete D1.
+
+
+### D1 Woodland foliage surfaces — 3 October 2026
+
+#987 and #990 are merged. Independent branch `codex/fpv-woodland-foliage-surfaces`
+starts at main a8c808a26447dcea17c82852cb07b24d3059d2cb. Original shared leaf-cluster
+maps, underside shading and background bark replace flat authored Woodland tree
+surfaces. Geometry, silhouette, collision, routes, actors and physics are unchanged;
+Pixel/shared appearance overrides remain intact. No extra draw calls.
+
+15 browser cases / 90 rendered comparisons pass, including all presets and
+Industrial Workshop/Pixel/Meadow regression. Vertices remain exact and those
+three unaffected styles remain pixel-identical. Fifteen unload cycles plateau.
+21 existing checks pass; World Studio prepares at94files/14,410,935bytes. See
+`docs/fpv-woodland-foliage-surfaces.md`. No physical-FPS or live availability claim.
+Next: publish this surface increment and immediately continue original branching
+and canopy composition on a separate branch. Do not treat this increment as D1
+completion. Continue approved phases without another go-ahead.
+
+### Yard publication and material qualification repair — 3 October 2026
+
+Yard composition is published as draft #998, independent of Woodland #996.
+Immediately continued on `codex/fpv-field-surface-identity` to resolve the shared
+qualification failure. Military-field's foundry recipe collapsed to the DOS
+light/dark motif. Dedicated recessed panels restore distinct identity without
+changing 112 maps across the other 16 collections. All 30 existing checks and
+browser map comparisons pass; package admission passes at 94files/15,383,912bytes.
+See `docs/fpv-field-surface-identity.md`. Next: publish this focused repair, refresh
+art PRs after protected integration, continue D1 material depth; do not call D1
+complete or public availability verified. Preserve concurrent capacity/Theme work.
+
+
+### Stadium surfaces qualified; remaining world order refreshed — 3 October 2026
+
+Working branch `codex/fpv-stadium-structure-detail`, managed checkout
+`/Users/oleksandr.mekhovov/.codex/worktrees/fpv-stadium-structures/go_test`.
+Runtime candidate `698b6aa3092b2ca235d32e10e994134658f33db6` improves only the
+three canonical Stadium stand/scoreboard solids, keeping collision bodies,
+course identities, school platform and all 14 Snake Stadium layouts unchanged.
+All 21 Stadium demonstrations replay to the same final identities. The new
+surface/detail path adds seven bounded batches / 888 triangles, no new shadow
+casters or asset files. `docs/fpv-stadium-structures.md` records full evidence.
+
+Source and packaged browser closures each pass 484 checks / 228 image pairs,
+including all qualities, camera views, Pixel/shared Themes, unchanged support
+solids, ray parity, imported/fallback scenery and three stable load/disposal
+rounds. Actual packaged-player selection, rendered flight, deliberate arm and
+pause were verified. All three source-bound optional admissions pass, including
+committed inputs, ZIP equality and two byte-identical builds. Runtime manifest:
+93 files / 15,375,227 bytes; source-bound World Studio: 102 / 15,550,157 bytes.
+No unit coverage added or hardware/FPS/human/public-live acceptance claimed.
+
+D0 #989 is merged. #992 foliage surfaces merged while this work was verified.
+#993 was refreshed on main in its separate repair checkout and remains draft:
+29/30 existing scoped checks pass; the remaining known enamel-motif failure is
+fixed by pending #999. #999 advanced externally to b6133b882; preserve that head.
+#996/#998/#1001 still require refresh and current-head checks. Pixel profile
+resolution in #1001 is fixed at28fd01836. A local-only combined art branch
+`codex/fpv-art-combined-verification` at51e3b6d66 passed15 arena/preset comparisons
+and15 GPU cleanup cycles; do not publish it as a replacement for focused PRs.
+
+The reviewed plan now records196 authored challenges/14 worlds/58 school lessons;
+32 already planned new-world challenges make the eventual target228. This count
+is not a claim of artist/player acceptance. D1 acceptance/render budgets remain
+open; continue independent D2 world work while publication runs. Next code item:
+Garage exact-ID ramp/deck/column surface readability on isolated branch
+`codex/fpv-garage-surface-detail` in the managed `fpv-garage-surfaces` checkout.
+Keep `school-upper-deck`, all9 Snake Garage layouts and17 demonstrations intact.
+Stadium publication status will be appended after PR creation; no new stack is
+required for this independent main-based increment.
+
+
+Published as [PR #1004](https://github.com/mekhovov/revealline/pull/1004), using
+existing milestone57. Main advanced to ce6af3e65 (#999 merged) during publication;
+the main merge preserves both delivery histories. The
+prior browser/admission receipts remain tied to698b6aa30. Current integration
+qualification is recorded separately; no live claim or protection bypass.
+
+Runtime candidate70679d3ab passes30 existing visual/acceptance checks,32 functional
+checks with21 exact demonstration replays, and allthree frozen optional admissions
+with committed-input/ZIP verification and two byte-identical builds. The only
+visual-module integration delta from the browser-qualified candidate is#999's
+Military Field recipe; Stadium renderer/helpers remain identical. Main's#999merge
+unintentionally removed#992 foliage code; separate#993repair restores it and keeps
+that work out of the independent StadiumPR. Local player build is available at
+port8834/dist/fpv-stadium-playtest-70679d3ab/optional-practice/fpv-worlds/index.html.
+### D1 continued without waiting: both Woodland scenery paths — 3 October 2026
+
+Surface increment published as PR #992 on `codex/fpv-woodland-foliage-surfaces`.
+Its leaf/bark changes affect the procedural fallback; the primary World Studio
+scene loads licensed Kenney assets and hides that fallback. Keep this distinction
+explicit rather than claiming the fallback pass finishes the normal world art.
+
+Immediately continued independently from main a8c808a on
+`codex/fpv-woodland-tree-forms`. Primary imported trees now receive individual
+orientations with recalculated safe footprints. Procedural trees receive clustered
+crowns and batched forks. All new vertices stay outside playable bounds; five
+other imported environment GLBs remain byte-identical. No physics/content identity
+change. 15cases/90browser views plus two actual GLTFLoader scenes pass; 30 existing
+checks and 94file/14,411,732byte package preparation pass. The fallback has an
+explicit additional triangle cost; primary-scene sampled calls/triangles remain
+unchanged. Evidence: `docs/fpv-woodland-tree-forms.md`.
+
+Next: primary imported Woodland composition/material depth and Container Yard
+landmarks, preserving #992 and this ready model increment. D1 is not yet complete;
+continue into D2 when its remaining art and functional evidence are complete.
+
+Published tree forms as [PR #993](https://github.com/mekhovov/revealline/pull/993),
+implementation head 81c9bbbe8. Packaged player launch on an isolated localhost
+origin completed Clearing check-in's 23.7-second demonstration with no captured
+browser errors. The user's existing port-8789 recovery state was not changed.
+Package SHA-256: 349f34b9b7760caec405594d7534ee0fa750d10343ef9e4ecfc3541ac230cbff.
+Both #992 and #993 remain pending protected publication; no public-live or sustained
+hardware-FPS claim. Continue the primary scene composition work next.
+
+### Woodland tree forms publication refresh — 3 October 2026
+
+Refreshed #993 from its preserved `55296ddf2` head onto main `822188e9b`,
+including merged foliage #992 and current capacity rules. Retained both delivery
+histories and combined foliage materials/vertex colors with the clustered crowns,
+branch forks and imported tree rotations. Manual source geometry/ownership checks,
+template/runtime equality, lint/formatting and 94-file / 15,388,669-byte development
+package preparation pass. See `docs/fpv-woodland-tree-forms.md` and its new receipt.
+
+Existing scoped checks remain 29/30 because main still lacks #999's shared enamel
+motif repair. Keep #993 draft until that fix merges and current-head qualification
+passes; do not copy the independent fix or weaken admission. Historical browser
+evidence is retained separately. No fresh browser, full-art, device-FPS or public
+availability claim is made by this publication refresh.
+
+### Woodland qualification repaired after #999 — 3 October 2026
+
+Merged main `ce6af3e65` into #993 and retained both delivery histories. The new
+main had removed #992 foliage while integrating the field recipe; this refresh
+restores the existing leaf/bark maps and vertex colors alongside tree forms and
+keeps the independent field fix. The resolved visual module is byte-identical to
+reviewed combined source `51e3b6`; imported assets/template remain unchanged from
+the prior #993 refresh. World resource ownership and Pixel/form behavior retain
+the reviewed implementation.
+
+All 30 scoped existing checks, source/package module equality, lint/formatting,
+whitespace checks and 94-file / 15,389,187-byte package preparation pass. The local
+qualification hold is resolved; preserve the earlier 29/30 result as history.
+Return #993 to ready and use protected merge-commit auto-merge only after normal
+head-specific checks. No native stack, admission guard, release tag or public
+deployment is changed by this refresh. See the new maince6 qualification receipt.
+
+
+### Yard draft refreshed onto integrated Woodland main — 3 October 2026
+
+#998 runtime candidate ec760db263041be23f60f4450381dc4ec88ec402 integrates main
+a1cb86c85, including #1006, without replacing concurrent feature work. The existing
+30 checks pass; the scenery template/runtime match. All three frozen optional
+admissions pass with committed input/ZIP identity and two reproducible builds.
+Frozen current-main browser review and normal full CI remain pending. The sparse
+local checkout cannot run complete global validation because unrelated content
+assets are omitted. See docs/fpv-yard-landmarks.md and its new bounded receipts.
+Keep #998 draft until the browser review is complete; no human/device or public
+acceptance is inferred.
+
+The current-main Yard browser review then passed all three arena cases with
+58 placements, 98,880 clear vertices and unchanged sampled draw/triangle counts
+per scene. Five other environment GLBs remain byte-identical; the comparison
+views were inspected. This completes the local draft qualification. Publish the
+reviewed #998 head through normal exact-head protected CI; public deployment and
+physical-device/artist acceptance remain separate.
