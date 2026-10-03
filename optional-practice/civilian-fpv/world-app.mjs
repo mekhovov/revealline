@@ -5766,6 +5766,15 @@ export function mountWorldApp({
         Boolean(recovery && dependencyAvailable(recovery.packIdentity, recovery.course.id)),
       open(surface) {
         if (flight?.snapshot().status === 'active') pauseFlight();
+        if (surface === 'results') {
+          // Keep the native result actions and async verification in place.
+          playShell.enterPlay();
+          setFlightMenu(false);
+          const target = $('result-panel').hidden ? $('flight-status') : $('result-panel');
+          target.setAttribute('tabindex', '-1');
+          target.focus();
+          return false;
+        }
         if (surface === 'missions') {
           showTab(shellTab, false);
           shellTab = 'explore';

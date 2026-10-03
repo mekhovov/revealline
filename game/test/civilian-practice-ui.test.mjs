@@ -95,6 +95,25 @@ test('actual optional page is playable with canvas fallback and verifies a compl
   assert.ok($('discovery').textContent.length > 0);
   assert.equal($('start').disabled, true);
   assert.match($('drill').children[0].textContent, /✓/);
+  const completedState = f.view.snapshot(),
+    completedTrace = f.view.trace(),
+    discovery = $('discovery');
+  for (const action of ['results', 'back']) {
+    $('gym-shell-action-menu').click();
+    if (action === 'results') $('gym-shell-action-home-results').click();
+    else $('gym-shell-home-dialog').emit('cancel');
+    assert.equal($('gym-shell-home-dialog').open, false);
+    assert.equal($('gym-shell-results-dialog').open, false);
+    assert.equal($('discovery'), discovery);
+    assert.equal(f.doc.activeElement, discovery);
+    f.tick(3);
+    assert.deepEqual(f.view.snapshot(), completedState);
+    assert.deepEqual(f.view.trace(), completedTrace);
+  }
+  $('gym-shell-action-menu').click();
+  $('gym-shell-action-primary').click();
+  assert.equal(f.view.snapshot().status, 'active', 'Only explicit Retry starts a fresh drill.');
+  assert.equal(f.view.snapshot().ticks, 0);
   $('drill').value = 'square';
   $('drill').emit('change');
   assert.equal(f.view.snapshot().status, 'ready');

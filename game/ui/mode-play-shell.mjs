@@ -371,15 +371,19 @@ export function mountModePlayShell({
       if (!alive || request !== opening) return false;
     } else update();
     if (actions.open?.(name) === false || !alive || request !== opening) return false;
-    if (dialog.open) {
-      dialog.querySelector('h1').focus({ preventScroll: true });
-      return true;
-    }
     if (name === 'home') {
       closing = true;
-      for (const prior of [...stack].reverse()) if (prior.open) prior.close();
+      for (const prior of [...stack].reverse()) if (prior !== dialog && prior.open) prior.close();
       stack.length = 0;
+      if (dialog.open) stack.push(dialog);
       closing = false;
+    }
+    if (dialog.open) {
+      if (name === 'home') onSurfaceChange(name);
+      (name === 'home' ? buttons.primary : dialog.querySelector('h1')).focus({
+        preventScroll: true,
+      });
+      return true;
     }
     dialog.showModal();
     removeFromStack(dialog);

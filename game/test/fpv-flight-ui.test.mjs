@@ -316,6 +316,22 @@ test('synthetic USB samples drive the real shell/model to one verified practice 
   assert.match(f.deliveries[0].verification.hash, /^[a-f0-9]{64}$/);
   assert.equal(replayFlight(FLIGHT_COURSES[0], f.deliveries[0].attempt).state.status, 'complete');
   assert.equal(f.$('complete').hidden, false);
+  const completedState = f.view.snapshot(),
+    nativeOutcome = f.$('complete');
+  for (const action of ['results', 'back']) {
+    f.$('academy-shell-action-menu').click();
+    assert.equal(f.$('academy-shell-home-dialog').open, true);
+    if (action === 'results') f.$('academy-shell-action-home-results').click();
+    else f.$('academy-shell-home-dialog').emit('cancel');
+    assert.equal(f.$('academy-shell-home-dialog').open, false);
+    assert.equal(f.$('academy-shell-results-dialog').open, false);
+    assert.equal(f.$('complete'), nativeOutcome);
+    assert.equal(nativeOutcome.hidden, false);
+    assert.equal(f.doc.activeElement, f.$('retry'));
+    f.tick(3);
+    assert.deepEqual(f.view.snapshot(), completedState);
+    assert.equal(f.deliveries.length, 1, 'Results must not readmit a completion.');
+  }
   f.$('review').click();
   await f.view.settled();
   f.tick(example.frames.length + 4);

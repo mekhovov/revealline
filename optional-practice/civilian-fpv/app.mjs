@@ -1553,6 +1553,14 @@ export function mountFlightApp({
       fullscreen: () => void immersive.toggle(),
       open(surface) {
         if (flight?.snapshot().status === 'active') pause();
+        if (surface === 'results') {
+          // Reveal the retained native outcome; entering the scene never arms.
+          playShell.enterPlay();
+          const target = $('complete').hidden ? $('status') : $('retry');
+          if (target === $('status')) target.setAttribute('tabindex', '-1');
+          target.focus();
+          return false;
+        }
         if (surface === 'workshop' || surface === 'help') {
           openDialog(surface === 'workshop' ? 'studio-dialog' : 'help-dialog');
           return false;

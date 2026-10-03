@@ -267,7 +267,7 @@ export function createSimModeLinks({ document: doc, gameReturn, locale = () => '
 }
 
 // BEGIN GENERATED SHARED MODE SHELL
-// Canonical source sha256: 6c473e4c3b86f79d41ad805cb9a6e75b2c5c5ac3b3879c88e7f04c48134d30b4
+// Canonical source sha256: 751be3729b5a702525d629844eb59661673e9bc2a27b5589df7047ea9badab1d
 const sharedModeShell = (() => {
   // Presentation only. Hosts own simulation, prepared attempts, sound and navigation.
   // Services are injected so optional modes can project this exact source without
@@ -646,15 +646,19 @@ const sharedModeShell = (() => {
         if (!alive || request !== opening) return false;
       } else update();
       if (actions.open?.(name) === false || !alive || request !== opening) return false;
-      if (dialog.open) {
-        dialog.querySelector('h1').focus({ preventScroll: true });
-        return true;
-      }
       if (name === 'home') {
         closing = true;
-        for (const prior of [...stack].reverse()) if (prior.open) prior.close();
+        for (const prior of [...stack].reverse()) if (prior !== dialog && prior.open) prior.close();
         stack.length = 0;
+        if (dialog.open) stack.push(dialog);
         closing = false;
+      }
+      if (dialog.open) {
+        if (name === 'home') onSurfaceChange(name);
+        (name === 'home' ? buttons.primary : dialog.querySelector('h1')).focus({
+          preventScroll: true,
+        });
+        return true;
       }
       dialog.showModal();
       removeFromStack(dialog);
