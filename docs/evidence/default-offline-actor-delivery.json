@@ -4,6 +4,15 @@
   "method": "Production addOfflineEntries with final catalogue, worker and inventory generation; no ZIP or expanded output",
   "currentBase": "bb805128f368b30a57e0792487787781aa389181",
   "currentSource": "mutable working tree",
+  "measuredScope": "Before Theme Studio PR 982",
+  "mergedScope": {
+    "upstream": "cf0b62e53",
+    "hostPath": "game/app.mjs",
+    "hostSourceBytes": 529551,
+    "hostOutputBytes": 419178,
+    "hostSavedBytes": 110373,
+    "capacityStatus": "pending fresh committed-source build"
+  },
   "baselineSource": "66d83c4249cfa0240b9fedf95baa176c74fcc20b",
   "committedSourceBuildClaimed": false,
   "publicReleaseQualified": false,

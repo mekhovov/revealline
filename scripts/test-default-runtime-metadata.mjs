@@ -65,6 +65,31 @@ test('default transport projection preserves pinned recovery and mission-source 
   assert.deepEqual(JSON.parse(entries[0].bytes).missions[0].sourceFile, mission);
 });
 
+test('default host packing changes only its verified whitespace and leaves other code exact', async () => {
+  const source = Buffer.from(
+    '// Original license and comment spacing  stay.\n' +
+      'export const text = "two  spaces";\n' +
+      'export function value() {\n  return\n    7;\n}\n' +
+      'export const template = `first\n  second`;\n',
+  );
+  const entries = [
+    { name: 'game/app.mjs', bytes: source },
+    { name: 'game/core.mjs', bytes: source },
+  ];
+  await projectDefaultRuntimeMetadata(root, entries);
+  assert.ok(entries[0].bytes.length < source.length);
+  assert.equal(entries[1].bytes, source);
+  assert.deepEqual(
+    entries[0].bytes.toString().match(/\r\n|[\n\r\u2028\u2029]/g),
+    source.toString().match(/\r\n|[\n\r\u2028\u2029]/g),
+  );
+  assert.match(entries[0].bytes.toString(), /Original license and comment spacing  stay/);
+  const module = await import(`data:text/javascript;base64,${entries[0].bytes.toString('base64')}`);
+  assert.equal(module.text, 'two  spaces');
+  assert.equal(module.template, 'first\n  second');
+  assert.equal(module.value(), undefined, 'Automatic semicolon insertion stays intact.');
+});
+
 test('versioned actor voices remain optional in every core while catalogs and captions stay available', () => {
   for (const locale of ['en', 'uk']) {
     const path = `game/audio/reactions/actors-v1/runner-alert-${locale}.m4a`;

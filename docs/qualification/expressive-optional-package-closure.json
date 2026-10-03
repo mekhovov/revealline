@@ -1,7 +1,7 @@
 {
-  "scope": "All three optional packages: mutable-source normal production build, candidate and independent admission; not committed-input or release qualification.",
-  "sourceRevision": "9e80234beb4645e5d9511689f9cae85a7063f829",
-  "sourceTree": "4f4037bbb6d917bf5695cdac16ba8100b060ba31",
+  "scope": "All three optional packages after PR982 integration: mutable-source normal production build, candidate and independent admission; not committed-input or release qualification.",
+  "sourceRevision": "b1a4c9bf6b17e385b1ec72e19b030024435dd9c2",
+  "sourceTree": "6cfc30b624a86dd6dc0985c2bdb7e89440ed0c4e",
   "packages": [
     {
       "id": "civilian-flight",
@@ -12,12 +12,12 @@
       "admission": {
         "format": "revealline-optional-package-admission.v1",
         "version": "v0.142.4",
-        "sourceRevision": "9e80234beb4645e5d9511689f9cae85a7063f829",
-        "sourceTree": "4f4037bbb6d917bf5695cdac16ba8100b060ba31",
+        "sourceRevision": "b1a4c9bf6b17e385b1ec72e19b030024435dd9c2",
+        "sourceTree": "6cfc30b624a86dd6dc0985c2bdb7e89440ed0c4e",
         "packages": [
           {
             "id": "civilian-flight",
-            "revision": "8cce89477574eee8c69324ee7582550c309de8ef220b878ba1ec9344aca075c5",
+            "revision": "6072858e46917623eef5e18ad4f906d327ba107214ef931318f77c3f3cdbb83f",
             "files": 35,
             "bytes": 545883
           }
@@ -39,23 +39,23 @@
       "admission": {
         "format": "revealline-optional-package-admission.v1",
         "version": "v0.142.4",
-        "sourceRevision": "9e80234beb4645e5d9511689f9cae85a7063f829",
-        "sourceTree": "4f4037bbb6d917bf5695cdac16ba8100b060ba31",
+        "sourceRevision": "b1a4c9bf6b17e385b1ec72e19b030024435dd9c2",
+        "sourceTree": "6cfc30b624a86dd6dc0985c2bdb7e89440ed0c4e",
         "packages": [
           {
             "id": "civilian-fpv",
-            "revision": "92f74072dfe7b3eae2b9a90d5e6f671816c2ef8a45320b8616c582f435167a5d",
+            "revision": "11bf1b1fccaa900b1b7b2225f2cb84dcf7d9b9606008ad0223e359c29755fc7f",
             "files": 69,
-            "bytes": 4214737
+            "bytes": 4241668
           }
         ],
         "zipMembersVerified": true,
         "publicEligible": false
       },
       "runtimeFiles": 69,
-      "runtimeBytes": 4214737,
+      "runtimeBytes": 4241668,
       "sourceFiles": 71,
-      "sourceBytes": 4243280
+      "sourceBytes": 4270211
     },
     {
       "id": "fpv-worlds",
@@ -66,23 +66,23 @@
       "admission": {
         "format": "revealline-optional-package-admission.v1",
         "version": "v0.142.4",
-        "sourceRevision": "9e80234beb4645e5d9511689f9cae85a7063f829",
-        "sourceTree": "4f4037bbb6d917bf5695cdac16ba8100b060ba31",
+        "sourceRevision": "b1a4c9bf6b17e385b1ec72e19b030024435dd9c2",
+        "sourceTree": "6cfc30b624a86dd6dc0985c2bdb7e89440ed0c4e",
         "packages": [
           {
             "id": "fpv-worlds",
-            "revision": "526d458bf9b8c2f6465d04ace35efb23a0829e0cfe36e57114fb2f0592a23fe6",
+            "revision": "bbad395a6e5ae23aeb86b632357cac29712e9c1fc090ab454adde515cd57eac5",
             "files": 102,
-            "bytes": 15380370
+            "bytes": 15407301
           }
         ],
         "zipMembersVerified": true,
         "publicEligible": false
       },
       "runtimeFiles": 102,
-      "runtimeBytes": 15380370,
+      "runtimeBytes": 15407301,
       "sourceFiles": 104,
-      "sourceBytes": 15413877
+      "sourceBytes": 15440808
     }
   ]
 }
