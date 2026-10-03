@@ -21,6 +21,7 @@ import { mountRadioSetup } from './radio-setup.mjs';
 import { mountFlightFullscreen } from './flight-fullscreen.mjs';
 import {
   mountSimPresentation,
+  createSimFlightAudio,
   mountSimAppearanceControls,
   mountDroneResponse,
   mountSimAudioControls,
@@ -207,26 +208,35 @@ export function mountFlightApp({
     button.textContent =
       locale === 'uk'
         ? enabled
-          ? 'Звуки меню увімкнено'
-          : 'Звуки меню вимкнено'
+          ? 'Звук увімкнено'
+          : 'Звук вимкнено'
         : enabled
-          ? 'Menu sound on'
-          : 'Menu sound off';
+          ? 'Sound on'
+          : 'Sound off';
     button.setAttribute('aria-pressed', String(enabled));
   };
+  const audio = createSimFlightAudio({ window: win });
   const presentation = mountSimPresentation({
     root: doc,
     window: win,
-    enabled: false,
-    preferenceKey: 'revealline.fpv.academy-menu-sound.v1',
+    enabled: audio.enabled(),
+    audioHost: audio,
     onSoundChange: updateSoundLabel,
   });
+  listeners.push(
+    audio.subscribe((enabled) => {
+      updateSoundLabel(enabled);
+      presentation.setSoundPreference(enabled);
+    }),
+  );
   const audioControls = mountSimAudioControls({
     root: $('academy-audio-mix'),
     window: win,
     locale: () => locale,
-    channels: ['interface'],
-    onChange: (levels) => presentation.setVolume(levels.interface),
+    onChange: (levels) => {
+      audio.setVolumes(levels);
+      presentation.setVolume(levels.interface);
+    },
   });
   updateSoundLabel(presentation.soundEnabled());
   const droneResponse = mountDroneResponse({
@@ -354,6 +364,7 @@ export function mountFlightApp({
         : undefined,
     onFreeze(reason) {
       flight?.pause();
+      audio.pause();
       input.enable(false);
       accumulator = 0;
       lastTime = null;
@@ -460,7 +471,9 @@ export function mountFlightApp({
     selected = index;
     mode = nextMode;
     authoringCourse = previewCourse ? nextFlight.course() : null;
+    audio.pause();
     flight = nextFlight;
+    audio.setCourse(flight.course());
     recorder = createFlightRecorder(flight, {
       session: authoringCourse ? 'authoring' : 'practice',
     });
@@ -482,6 +495,7 @@ export function mountFlightApp({
     resetStickTraces();
     cancelReview();
     flight?.pause();
+    audio.pause();
     if (replay) replay.paused = true;
     input.enable(false);
     radio.freeze(reason);
@@ -537,6 +551,7 @@ export function mountFlightApp({
     }
     input.enable(true);
     flight.arm();
+    void audio.resume();
     appearanceSession.arm(flight.snapshot().status);
     accumulator = 0;
     lastTime = null;
@@ -951,6 +966,7 @@ export function mountFlightApp({
           message = radio.status().reason === 'ready' ? 'radioReady' : radio.status().reason;
         if (radio.status().active && ['paused', 'disarmed'].includes(flight.snapshot().status)) {
           flight.arm();
+          void audio.resume();
           appearanceSession.arm(flight.snapshot().status);
           input.enable(true);
           message = null;
@@ -988,12 +1004,16 @@ export function mountFlightApp({
                 ? gamepad.sample(1 / FLIGHT_HZ)
                 : input.sample(1 / FLIGHT_HZ);
           const before = flight.snapshot().ticks;
+          audio.update(flight.snapshot(), { active: true });
           flight.step(command);
+          audio.update(flight.snapshot(), { active: flight.snapshot().status === 'active' });
           if (flight.snapshot().ticks !== before) recorder.record(command);
           completed();
         }
       }
     }
+    if (!replay && flight)
+      audio.update(flight.snapshot(), { active: flight.snapshot().status === 'active' });
     paint(false, now);
     frameId = win.requestAnimationFrame(frame);
   }
@@ -1038,8 +1058,10 @@ export function mountFlightApp({
     paint(true);
   });
   listen($('academy-sound'), 'click', async () => {
-    await presentation.setSoundEnabled(!presentation.soundEnabled());
-    updateSoundLabel(presentation.soundEnabled());
+    const enabled = !audio.enabled();
+    await audio.setEnabled(enabled);
+    await presentation.setSoundEnabled(enabled);
+    updateSoundLabel(enabled);
   });
   for (const id of ['academy-drone-guide', 'academy-guide-scale'])
     listen($(id), 'change', () => {
@@ -1385,6 +1407,7 @@ export function mountFlightApp({
       immersive.dispose();
       audioControls.dispose();
       presentation.dispose();
+      audio.dispose();
       appearanceControls.dispose();
       droneResponse.dispose();
       [...stickTraces, ...touchTraces].forEach((trace) => trace.dispose());

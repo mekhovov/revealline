@@ -4,6 +4,7 @@ import {
   specialistMotionAllowed,
 } from '../hunt/pursuit-specialists.mjs';
 import { pursuitPolicy, updatePursuitHeading } from '../hunt/pursuit-goals.mjs';
+import { actorFacingRadians } from '../hunt/actor-facing.mjs';
 import { isTeamRunningLevel } from './running-enemies.mjs';
 import { dataIdentity } from '../data-json.mjs';
 import { EPS, movingCirclesTime } from '../core/geometry.mjs';
@@ -504,8 +505,19 @@ export function coopCombatView(run) {
     }
     return {
       ...actor,
+      facingRadians: actorFacingRadians(actor, def),
       ...(pursuitPolicy(run.level, actor.id) && !actor.pursuit
         ? { pursuit: { behavior: pursuitPolicy(run.level, actor.id).behavior, phase: 'walking' } }
+        : {}),
+      ...(pursuitPolicy(run.level, actor.id)?.partnerId
+        ? {
+            pursuit: {
+              ...actor.pursuit,
+              behavior: 'pair',
+              phase: actor.pursuit?.phase ?? 'walking',
+              partnerId: pursuitPolicy(run.level, actor.id).partnerId,
+            },
+          }
         : {}),
       kind: huntTargetKind(run.level.hunt, actor.id),
       rayEnd,

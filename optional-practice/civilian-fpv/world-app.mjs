@@ -1025,7 +1025,12 @@ export function mountWorldApp({
     return b;
   };
   const audio = createWorldAudio({ window: win, storage });
-  const presentation = mountSimPresentation({ root: doc, window: win, enabled: audio.enabled() });
+  const presentation = mountSimPresentation({
+    root: doc,
+    window: win,
+    enabled: audio.enabled(),
+    audioHost: audio,
+  });
   const appearanceSession = createSimAppearanceSession();
   let appearanceReady = false;
   const appearanceControls = mountSimAppearanceControls({
@@ -1098,6 +1103,13 @@ export function mountWorldApp({
     presentation.refresh();
   }
   updateSoundLabel();
+  listeners.push(
+    audio.subscribe(() => {
+      updateSoundLabel();
+      // Synchronize mute without unlocking or resuming audio from a storage event.
+      presentation.setSoundPreference(audio.enabled());
+    }),
+  );
   const folderLabel = el('label', undefined, 'file-button'),
     folderText = el('span', txt('Choose scene folder', 'Вибрати папку сцени')),
     folderInput = el('input');
@@ -4093,6 +4105,7 @@ export function mountWorldApp({
       }
     }
     if (flight.snapshot().status === 'active') {
+      audio.update(flight.snapshot(), { active: !replayProof });
       accumulator += elapsed * (replayProof ? replayRate : 1);
       while (accumulator >= 20 && flight.snapshot().status === 'active') {
         accumulator -= 20;
@@ -4136,6 +4149,9 @@ export function mountWorldApp({
               },
         );
         if (flight.snapshot().ticks > before) {
+          audio.update(flight.snapshot(), {
+            active: !replayProof && flight.snapshot().status === 'active',
+          });
           if (!replayProof && !current.legacy) huntReactions.consume(flight.snapshot());
           if (recorder) {
             if (current.legacy) recorder.record(controls);
@@ -4162,7 +4178,7 @@ export function mountWorldApp({
       return;
     }
     if (state.status === 'active') presentation.pause();
-    audio.update(state, { active: state.status === 'active' });
+    audio.update(state, { active: !replayProof && state.status === 'active' });
     renderer?.draw?.(state, {
       cameraMode: $('flight-camera').value,
       cameraFov: Number($('world-fov').value),

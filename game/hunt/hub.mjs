@@ -6,11 +6,14 @@ import { createDisplayPreferences } from '../display-preferences.mjs';
 import { mountRunningEnemyControls } from '../ui/running-enemy-controls.mjs';
 import { attachDestructionControls } from '../ui/destruction-controls.mjs';
 import { renderEnemyFieldGuide } from '../ui/enemy-field-guide.mjs';
+import { militaryFieldPixels } from '../presentation/military-field-art.mjs';
+import { installThemeHost } from '../presentation/theme-host.mjs';
 const linkedLocale = new URL(location.href).searchParams.get('lang');
 if (['en', 'uk'].includes(linkedLocale)) setLocale(linkedLocale, { persist: false });
 const $ = (id) => document.getElementById(id),
   appearance = sharedActorAppearance(),
-  display = createDisplayPreferences();
+  display = createDisplayPreferences(),
+  theme = installThemeHost({ displayPreferences: display });
 const words = {
   en: {
     eyebrow: 'Living Routes · pursuit expansion',
@@ -18,6 +21,10 @@ const words = {
     intro:
       'New opponents make familiar ground a different chase. Learn their intentions, cut off an escape, and leave your partner a useful route. Every ordinary humanoid is caught by contact; marked specialists have their own openings.',
     'start-title': 'Choose your playground',
+    'military-title': 'Military Field',
+    'military-help':
+      'Russian field vehicles, concrete checkpoints and rutted ground. Vehicles keep their existing enemy rules and remain dangerous; soldiers are contact prey unless marked as specialists. Snake uses the same soldiers and concrete walls. Choose Military Field in the game appearance settings, or apply it and open a mode below.',
+    'military-apply': 'Apply Military Field',
     qualification:
       'Preview chapters: structural admission is complete; human completion routes, phone/controller play and release qualification are still being recorded. Existing campaigns and saved attempts keep their original rules.',
     'settings-title': 'Add running enemies to your next Capture attempt',
@@ -51,6 +58,10 @@ const words = {
     intro:
       'Нові суперники змінюють погоню на знайомих полях. Розпізнавайте наміри, перекривайте втечу й залишайте партнеру корисний маршрут. Звичайних гуманоїдів ловлять дотиком; позначені спеціалісти мають власні вразливі вікна.',
     'start-title': 'Оберіть поле гри',
+    'military-title': 'Військове поле',
+    'military-help':
+      'Російська польова техніка, бетонні блокпости й колії. Техніка зберігає правила відповідних ворогів і залишається небезпечною; солдатів ловлять дотиком, окрім позначених спеціалістів. Змійка використовує тих самих солдатів і бетонні стіни. Оберіть «Військове поле» в налаштуваннях вигляду або застосуйте його й відкрийте режим нижче.',
+    'military-apply': 'Застосувати «Військове поле»',
     qualification:
       'Попередні розділи: структурну перевірку пройдено; маршрути проходження людьми, телефони, контролери та придатність до випуску ще перевіряються. Наявні кампанії та спроби зберігають початкові правила.',
     'settings-title': 'Додайте рухливих ворогів до наступної спроби Capture',
@@ -140,6 +151,65 @@ function render() {
     }),
   );
   const cast = appearance.snapshot().cast;
+  const vehicles = [
+    ['enemy.bouncer', 'Field utility car', 'Польовий позашляховик'],
+    ['enemy.claimed-rover', 'Cargo truck', 'Вантажівка'],
+    ['enemy.border-patrol', 'Armored carrier', 'Бронетранспортер'],
+    ['enemy.contour-patrol', 'Scout car', 'Розвідувальна машина'],
+    ['enemy.eroder', 'Tracked tank', 'Гусеничний танк'],
+    ['enemy.relay-sentinel', 'Radar truck', 'Радіолокаційна машина'],
+  ];
+  $('military-strip').replaceChildren(
+    ...vehicles.map(([slot, en, uk]) => {
+      const item = node('figure'),
+        canvas = node('canvas');
+      canvas.width = canvas.height = 64;
+      canvas.setAttribute('aria-hidden', 'true');
+      const ctx = canvas.getContext('2d');
+      const image = ctx.createImageData(64, 64);
+      image.data.set(militaryFieldPixels({ width: 64, height: 64 }, slot).rgba);
+      ctx.putImageData(image, 0, 0);
+      item.append(canvas, node('figcaption', locale === 'uk' ? uk : en));
+      return item;
+    }),
+  );
+  $('military-launches').replaceChildren(
+    ...[
+      [copy.solo, '../?journey=pursuit-pilots-v1'],
+      [copy.versus, '../couch/?journey=pursuit-pilots-v1'],
+      [copy.coop, '../couch/relay-rescue.html?journey=pursuit-pilots-v1'],
+      ['Snake', '../snake/play.html?mode=solo&level=classic-living-cable-cutoff&board=theme'],
+    ].map(([label, path]) => {
+      const link = node('a', `${copy['military-apply']} · ${label}`),
+        url = new URL(path, location.href);
+      url.searchParams.set('appearanceFamily', 'military-field');
+      url.searchParams.set('appearanceRevision', 'r1');
+      url.searchParams.set('lang', locale);
+      link.href = url.href;
+      const apply = (event) => {
+        if (event.type === 'auxclick' && event.button !== 1) return;
+        // The URL is a context default; existing personal/author-art choices
+        // take precedence. This clearly labeled action explicitly selects the
+        // complete shared appearance before opening the selected playground.
+        const accepted = theme.applyComplete('military-field');
+        if (
+          event.button === 0 &&
+          !event.ctrlKey &&
+          !event.metaKey &&
+          !event.shiftKey &&
+          !event.altKey
+        ) {
+          event.preventDefault();
+          void accepted.then(() => location.assign(link.href));
+        }
+        // applyComplete persists synchronously, so modified/middle clicks can
+        // retain native new-tab behavior with the same selected appearance.
+      };
+      link.addEventListener('click', apply);
+      link.addEventListener('auxclick', apply);
+      return link;
+    }),
+  );
   renderEnemyFieldGuide(
     $('guide'),
     ACTOR_FAMILIES.map((actor) => actor.id),
@@ -170,11 +240,12 @@ function frame(now) {
     drawHuntActor(ctx, 8, 8, 80, Math.floor(time / 170) % 4, {
       family: ACTOR_FAMILIES[index].id,
       cast: cast === 'authored' ? 'rivals' : cast,
-      direction: index % 2 ? 'left' : 'right',
+      direction: ['up', 'right', 'down', 'left'][(index + Math.floor(time / 2400)) % 4],
       state: 'walk',
+      armed: ACTOR_FAMILIES[index].id === 'guard',
       timeMs: time,
       reducedEffects: reduced,
-      token: true,
+      token: false,
     });
   });
   requestAnimationFrame(frame);

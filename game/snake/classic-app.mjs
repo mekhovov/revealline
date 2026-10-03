@@ -1,7 +1,9 @@
+import { boardPlacement } from '../ui/feedback-cues.mjs';
+import { createClassicAudio } from './classic-audio.mjs';
 import { getLocale, setLocale, onLocaleChange } from '../i18n/index.mjs';
 import { boundedJSON, exactKeys, required } from '../data-json.mjs';
 import { createDestructionPreferences, sharedActorAppearance } from '../hunt/preferences.mjs';
-import { actorFieldGuide } from '../hunt/actor-catalog.mjs';
+import { ACTOR_CASTS, actorFieldGuide } from '../hunt/actor-catalog.mjs';
 import { renderEnemyFieldGuide } from '../ui/enemy-field-guide.mjs';
 import { attachContextualReactions } from '../ui/contextual-reactions.mjs';
 import { createEncounterDisplayPreferences } from '../encounter-display-preferences.mjs';
@@ -157,6 +159,7 @@ const presentation = createClassicPresentation({ displayPreferences: display });
 const audioMaster = createAudioMaster(),
   audioPreferences = createAudioPreferences({ audioMaster });
 const sound = new Soundscape({ audioMaster });
+const classicAudio = createClassicAudio(sound, { getDestruction: () => destruction.snapshot() });
 sound.configure({
   master: 1,
   music: 0,
@@ -314,6 +317,8 @@ function pause() {
   if (ready || paused || result()) return;
   paused = true;
   sound.gameplayPaused = true;
+  sound.pause();
+  classicAudio.reset();
   reactions.suspend();
   save();
   remember();
@@ -347,6 +352,7 @@ function start() {
 function finish() {
   paused = true;
   sound.gameplayPaused = true;
+  for (const voice of [...sound.voices]) if (voice.feedback && voice.source.loop) voice.stop();
   earlyFailures = runs.every((run) => run.catches < 3) ? earlyFailures + 1 : 0;
   remember();
   save();
@@ -369,6 +375,7 @@ function relative(player, offset) {
   turn(player, directions[(directions.indexOf(heading) + offset + 4) % 4]);
 }
 function prepare({ launch = false } = {}) {
+  classicAudio.reset();
   importEpoch++;
   reactions.reset(`classic:${++reactionAttempt}`);
   review = null;
@@ -602,13 +609,17 @@ function renderCopy() {
     steering,
   })) {
     for (const option of $(id).options)
-      option.textContent = text(
-        id === 'duel' && option.value === 'score'
-          ? 'scoreDuel'
-          : id === 'actor-cast' && option.value === 'authored'
-            ? 'campaignCast'
-            : option.value,
-      );
+      option.textContent =
+        (id === 'actor-cast'
+          ? ACTOR_CASTS.find((cast) => cast.id === option.value)?.name[locale]
+          : null) ??
+        text(
+          id === 'duel' && option.value === 'score'
+            ? 'scoreDuel'
+            : id === 'actor-cast' && option.value === 'authored'
+              ? 'campaignCast'
+              : option.value,
+        );
     $(id).value = value;
   }
   $('preset-field').hidden = format !== 'endless';
@@ -906,6 +917,7 @@ function restore(raw) {
     entry = item;
     mode = source.mode;
     ({ pace, format, targetRules, preset, duel, seed, style } = next);
+    classicAudio.reset();
     match = restored;
     runs = match.runs;
     flightFrames = [];
@@ -1245,6 +1257,8 @@ landscapeControls?.addEventListener('change', () => {
 globalThis.addEventListener('pagehide', () => {
   importEpoch++;
   pause();
+  sound.suspend();
+  classicAudio.reset();
   save();
 });
 globalThis.addEventListener('pageshow', () => footprint?.refresh());
@@ -1256,13 +1270,27 @@ function frame(now) {
     if (elapsed > 1000 || doc.hidden) pause();
     else {
       const before = runs.map((run) => run.catches + (run.bonusCatches ?? 0));
+      // Seed the presentation projection before movement, so the first catch and
+      // restored attempts have an exact observation boundary.
+      runs.forEach((run, i) =>
+        classicAudio.update(run, {
+          active: true,
+          mode,
+          board: `snake-${i}`,
+          placement: boardPlacement(boards[i]?.canvas),
+        }),
+      );
       advanceClassicSnakeMatchTo(match, match.elapsedMs + Math.min(250, elapsed));
+      runs.forEach((run, i) =>
+        classicAudio.update(run, {
+          active: true,
+          mode,
+          board: `snake-${i}`,
+          placement: boardPlacement(boards[i]?.canvas),
+        }),
+      );
       runs.forEach((run, i) => {
         if (run.catches + (run.bonusCatches ?? 0) > before[i]) {
-          sound.feedbackDirector.play('pickup', {
-            board: `snake-${i}`,
-            pan: mode === 'versus' ? (i ? 0.5 : -0.5) : 0,
-          });
           const delta = run.catches + (run.bonusCatches ?? 0) - before[i];
           reactions.events(
             (run.recentCatches ?? []).slice(-delta).map((mark) => ({
@@ -1277,9 +1305,7 @@ function frame(now) {
         }
       });
       if (result()) {
-        sound.feedbackDirector.play(
-          runs.some((run) => run.status === 'lost') ? 'contact-stone' : 'confirm',
-        );
+        sound.encounter(runs.some((run) => run.status === 'lost') ? 'failure' : 'objective');
         finish();
       }
       refresh();

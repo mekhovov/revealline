@@ -12,6 +12,7 @@ import { EPS, pointAt } from '../core/geometry.mjs';
 import { classicDomainHit } from '../core/classic-motion.mjs';
 import { fitsClassicDomain } from '../core/classic-topology.mjs';
 import { COMBAT_RADIUS, COMBAT_SHOT_RADIUS } from '../core/combat-definition.mjs';
+import { actorFacingRadians } from '../hunt/actor-facing.mjs';
 
 const check = (condition, message = t('interface:malformedActiveCombatPresentationData')) => {
   if (!condition) throw new TypeError(message);
@@ -133,7 +134,10 @@ function recipes(definition, hunt, maximum = 24) {
           huntTargetKind(hunt, key) === 'runner' ? (maximum > 24 ? 21 : HUNT_MAX_RUNNER_SPEED) : 8,
         ),
     );
-    const recipe = { id: key, role, speed };
+    const headingX = own(source, 'headingX'),
+      headingY = own(source, 'headingY');
+    check(finite(headingX, -1, 1) && finite(headingY, -1, 1));
+    const recipe = { id: key, role, speed, headingX, headingY, ...point(source) };
     if (role === 'sentry') {
       check(++sentries <= 8);
       for (const [key, min, max] of [
@@ -266,6 +270,10 @@ export function combatView(run) {
         : null;
       const specialist = pursuit && ['shield', 'brace'].includes(pursuit.behavior);
       if (pursuit) {
+        if (pursuit.behavior === 'pair') {
+          pursuit.partnerId = own(policy, 'partnerId');
+          check(stableId(pursuit.partnerId));
+        }
         const phases = specialist
           ? ['walking', 'blocked', 'turning', 'rest', 'warning', 'burst']
           : ['walking', 'committed', 'recovering', 'blocked'];
@@ -281,6 +289,15 @@ export function combatView(run) {
             'brace',
           ].includes(pursuit.behavior) && phases.includes(pursuit.phase),
         );
+        const nativeState = own(source, 'pursuit');
+        if (nativeState) {
+          record(nativeState);
+          const goal = own(nativeState, 'goal'),
+            cursor = own(nativeState, 'cursor');
+          check(integer(cursor));
+          pursuit.cursor = cursor;
+          pursuit.goal = goal == null ? null : point(record(goal), width);
+        }
         if (specialist) {
           const state = record(own(source, 'pursuit'));
           pursuit.heading = own(state, 'heading');
@@ -360,6 +377,7 @@ export function combatView(run) {
           ...(pursuit ? { pursuit } : {}),
           ...(huntTargetKind(hunt, key) ? { kind: huntTargetKind(hunt, key) } : {}),
           ...position,
+          facingRadians: actorFacingRadians({ ...position, ...motion, pursuit, aim }, recipe),
           vx: motion.vx * factor,
           vy: motion.vy * factor,
           radius: COMBAT_RADIUS,

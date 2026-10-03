@@ -2,7 +2,12 @@
 // Native flight logic remains in its existing cores. No simulation clock or record recipe changes.
 const sourceHashes = {
   'optional-practice/civilian-fpv/world-audio.mjs':
-    '70b9cfefb62f4e1bb467332cb7c517643555e55bfed4f569d0c12ac186faeb67',
+    '104011e3e43091577ef2c740aaead7727fc45234fc2cbb2ce61fa3441dc63f8b',
+  'game/ui/audio-output.mjs': 'dc1b2776407d0b6649b0d15c5c721bd59384d7e38a2e61087961ff7a37bd86c1',
+  'game/ui/audio-master.mjs': '6bf14bc5268c0eff8f38c21c819f398917712fdc2607c33977ac873111d1dca8',
+  'game/audio-preferences.mjs': '9212831a3524c9e1ebe8c595783f9f53a112e02e3d51280d775ac103b94a9239',
+  'game/ui/encounter-audio.mjs': 'ef72dc277ec903688ea15aad395f19520cf03534156af1bd25927386b047e9f7',
+  'game/ui/movement-audio.mjs': '685d8e458401354028a2cacda0c7b1009b3c1e480a08d4cafce46d8f98b69020',
   'game/ui/dialogue-channel.mjs':
     'f4839f3a1634189a03eed6a3096dc595dfc88ee6437277ee82d78de05c300142',
   'optional-practice/civilian-fpv/world-hangar.mjs':
@@ -105,18 +110,528 @@ const sourceHashes = {
   'game/audio/reactions/actors-v1/actor-patroller-caught-uk.m4a':
     '08087574625bd72a08a58b4549ba6884255d32de2003071014755641eac2f025',
 };
-import * as external0 from './vendor/three.module.js';
-import * as external1 from './world-visuals.mjs';
-import * as external2 from './world-themes.mjs';
-import * as external3 from '../../game/data-json.mjs';
-import * as external4 from '../../game/hunt/actor-catalog.mjs';
-import * as external5 from '../../game/hunt/actor-art.mjs';
-import * as external6 from '../../game/hunt/preferences.mjs';
-import * as external7 from './world-model.mjs';
-import * as external8 from './flight-sectors.mjs';
-import * as external9 from '../../game/i18n/index.mjs';
+import * as external0 from '../../game/i18n/index.mjs';
+import * as external1 from './vendor/three.module.js';
+import * as external2 from './world-visuals.mjs';
+import * as external3 from './world-themes.mjs';
+import * as external4 from '../../game/data-json.mjs';
+import * as external5 from '../../game/hunt/actor-catalog.mjs';
+import * as external6 from '../../game/hunt/actor-art.mjs';
+import * as external7 from '../../game/hunt/preferences.mjs';
+import * as external8 from './world-model.mjs';
+import * as external9 from './flight-sectors.mjs';
 import * as external10 from './snake-hunt.mjs';
 const modules = Object.create(null);
+modules['game/ui/audio-output.mjs'] = (() => {
+  /** Shared output topology for Capture, Snake and native flight presentation.
+   * A page owns one context. Construction is called only from its gesture owner. */
+  function createGameAudioContext(host = globalThis) {
+    const Context = host.AudioContext ?? host.webkitAudioContext;
+    return Context ? new Context({ latencyHint: 'interactive' }) : null;
+  }
+
+  function createGameAudioOutput(context) {
+    const output = {};
+    for (const key of [
+      'master',
+      'musicBus',
+      'sfxBus',
+      'menuBus',
+      'movementBus',
+      'radioBus',
+      'dialogueBus',
+    ])
+      output[key] = context.createGain();
+    for (const key of ['musicBus', 'sfxBus', 'menuBus', 'dialogueBus'])
+      output[key].connect(output.master);
+    for (const key of ['movementBus', 'radioBus']) output[key].connect(output.sfxBus);
+    output.compressor = context.createDynamicsCompressor?.();
+    if (output.compressor) {
+      output.compressor.threshold.value = -12;
+      output.compressor.knee.value = 12;
+      output.compressor.ratio.value = 5;
+      output.master.connect(output.compressor);
+      output.compressor.connect(context.destination);
+    } else output.master.connect(context.destination);
+    return output;
+  }
+
+  /** Request the same audible iOS playback category before creating/resuming audio. */
+  function requestPlaybackAudioSession(audioSession = globalThis.navigator?.audioSession) {
+    if (!audioSession || typeof audioSession !== 'object') return false;
+    try {
+      if (audioSession.type !== 'playback') audioSession.type = 'playback';
+      return audioSession.type === 'playback';
+    } catch {
+      return false;
+    }
+  }
+  function releasePlaybackAudioSession(audioSession = globalThis.navigator?.audioSession) {
+    if (!audioSession || typeof audioSession !== 'object') return false;
+    try {
+      if (audioSession.type === 'playback') audioSession.type = 'auto';
+      return audioSession.type !== 'playback';
+    } catch {
+      return false;
+    }
+  }
+
+  return {
+    createGameAudioContext: createGameAudioContext,
+    createGameAudioOutput: createGameAudioOutput,
+    requestPlaybackAudioSession: requestPlaybackAudioSession,
+    releasePlaybackAudioSession: releasePlaybackAudioSession,
+  };
+})();
+modules['game/ui/audio-master.mjs'] = (() => {
+  const t = external0['t'];
+  const volumeValue = (value) => {
+    if (!Number.isFinite(value) || value < 0 || value > 1)
+      throw new TypeError(t('interface:audioVolumeMustBeBetweenZeroAndOne'));
+    return value;
+  };
+  const mutedValue = (value) => {
+    if (typeof value !== 'boolean') throw new TypeError(t('interface:audioMuteMustBeABoolean'));
+    return value;
+  };
+
+  /** Shared output policy only. Hosts retain persistence, gestures and transport. */
+  function createAudioMaster({ muted = true, volume = 1 } = {}) {
+    let state = Object.freeze({
+      muted: mutedValue(muted),
+      volume: volumeValue(volume),
+      revision: 0,
+    });
+    let disposed = false;
+    const listeners = new Set();
+    function publish(next) {
+      state = Object.freeze({ ...next, revision: state.revision + 1 });
+      const errors = [];
+      for (const listener of [...listeners]) {
+        if (!listeners.has(listener)) continue;
+        try {
+          // A preceding observer may have applied a newer explicit intent.
+          listener(state);
+        } catch (error) {
+          errors.push(error);
+        }
+      }
+      if (errors.length)
+        throw new AggregateError(errors, t('interface:audioMasterOutputCouldNotBeApplied'));
+      return state;
+    }
+    function change(patch) {
+      if (disposed) throw new Error(t('interface:audioMasterIsDisposed'));
+      return publish({ ...state, ...patch });
+    }
+    return Object.freeze({
+      snapshot: () => state,
+      setMuted: (value) => change({ muted: mutedValue(value) }),
+      setVolume: (value) => change({ volume: volumeValue(value) }),
+      subscribe(listener) {
+        if (disposed) throw new Error(t('interface:audioMasterIsDisposed'));
+        if (typeof listener !== 'function')
+          throw new TypeError(t('interface:audioMasterListenerRequired'));
+        if (listeners.has(listener))
+          throw new Error(t('interface:audioMasterListenerAlreadySubscribed'));
+        listeners.add(listener);
+        try {
+          listener(state);
+        } catch (error) {
+          listeners.delete(listener);
+          throw error;
+        }
+        return () => listeners.delete(listener);
+      },
+      dispose() {
+        if (disposed) return;
+        disposed = true;
+        try {
+          publish({ ...state, muted: true });
+        } finally {
+          listeners.clear();
+        }
+      },
+    });
+  }
+
+  const mediaOwners = new WeakSet();
+  /** Native media keeps its own local fader. Queued native events cannot rewrite
+   * master or local intent; explicit local controls call setLocal instead. */
+  function bindAudioMasterMedia({ audioMaster, element, volume = 1, muted = false } = {}) {
+    if (!audioMaster?.snapshot || !audioMaster?.subscribe)
+      throw new TypeError(t('interface:audioMasterRequired'));
+    if (!element?.addEventListener || !element?.removeEventListener)
+      throw new TypeError(t('interface:audioMediaElementRequired'));
+    if (mediaOwners.has(element))
+      throw new Error(t('interface:audioMediaElementAlreadyHasAMasterOwner'));
+    let local = { volume: volumeValue(volume), muted: mutedValue(muted) };
+    let master = audioMaster.snapshot();
+    let disposed = false;
+    let applying = false;
+    const attempted = new Map();
+    const write = (key, value) => {
+      const observed = element[key];
+      const previous = attempted.get(key);
+      if (observed === value || (previous?.value === value && previous.observed === observed))
+        return;
+      element[key] = value;
+      // Some native platforms ignore/quantize volume. Their queued notification
+      // must not cause an endless attempt to write the same unsupported value.
+      attempted.set(key, { value, observed: element[key] });
+    };
+    const apply = () => {
+      if (disposed || applying) return;
+      const muted = local.muted || master.muted || local.volume === 0 || master.volume === 0;
+      const volume = local.volume * master.volume;
+      // Setting an unchanged property may still enqueue a native volumechange.
+      // Mute first so a simultaneous volume increase cannot escape the gate.
+      applying = true;
+      try {
+        if (muted) write('muted', true);
+        write('volume', volume);
+        if (!muted) write('muted', false);
+      } finally {
+        applying = false;
+      }
+    };
+    mediaOwners.add(element);
+    let unsubscribe;
+    try {
+      unsubscribe = audioMaster.subscribe((next) => {
+        master = next;
+        apply();
+      });
+      element.addEventListener('volumechange', apply);
+      element.addEventListener('play', apply);
+    } catch (error) {
+      unsubscribe?.();
+      element.removeEventListener('volumechange', apply);
+      element.removeEventListener('play', apply);
+      mediaOwners.delete(element);
+      throw error;
+    }
+    return Object.freeze({
+      setLocal(patch) {
+        if (disposed) return;
+        if (!patch || typeof patch !== 'object' || Array.isArray(patch))
+          throw new TypeError(t('interface:localAudioSettingsRequired'));
+        const next = { ...local };
+        for (const key of Object.keys(patch)) {
+          if (key === 'volume') next.volume = volumeValue(patch.volume);
+          else if (key === 'muted') next.muted = mutedValue(patch.muted);
+          else throw new TypeError(t('interface:unknownLocalAudioSetting'));
+        }
+        local = next;
+        apply();
+      },
+      dispose() {
+        if (disposed) return;
+        disposed = true;
+        unsubscribe();
+        element.removeEventListener('volumechange', apply);
+        element.removeEventListener('play', apply);
+        mediaOwners.delete(element);
+        if (element.muted !== true) element.muted = true;
+      },
+    });
+  }
+
+  return { createAudioMaster: createAudioMaster, bindAudioMasterMedia: bindAudioMasterMedia };
+})();
+modules['game/audio-preferences.mjs'] = (() => {
+  const AUDIO_PREFERENCES_KEY = 'revealline.audio-master.v1';
+  const MAX_RECORD_LENGTH = 256;
+
+  function values(value) {
+    if (
+      !value ||
+      typeof value !== 'object' ||
+      Array.isArray(value) ||
+      Object.keys(value).length !== 2 ||
+      !Object.hasOwn(value, 'muted') ||
+      !Object.hasOwn(value, 'volume') ||
+      typeof value.muted !== 'boolean' ||
+      !Number.isFinite(value.volume) ||
+      value.volume < 0 ||
+      value.volume > 1
+    )
+      throw new TypeError(
+        'Audio preferences require a mute boolean and volume between zero and one.',
+      );
+    return { muted: value.muted, volume: value.volume };
+  }
+
+  function decode(raw) {
+    if (typeof raw !== 'string' || raw.length > MAX_RECORD_LENGTH) return null;
+    try {
+      return values(JSON.parse(raw));
+    } catch {
+      return null;
+    }
+  }
+
+  /** Page-owned persistence for the shared output authority. This adapter never
+   * starts media or writes a player profile. Only its explicit setters save. */
+  function createAudioPreferences({
+    audioMaster,
+    getStorage = () => globalThis.localStorage,
+    window: eventTarget = globalThis,
+    fallback = { muted: true, volume: 0.65 },
+    writable = () => true,
+    onWarning = () => {},
+  } = {}) {
+    const initial = values(fallback);
+    let disposed = false,
+      explicit = false,
+      stored = false,
+      unsaved = false,
+      warning = '';
+    const notify = (message) => {
+      warning = message;
+      try {
+        onWarning(message);
+      } catch {
+        // A notice cannot prevent the synchronous sound change.
+      }
+    };
+    const read = () => {
+      try {
+        const storage = getStorage(),
+          raw = storage?.getItem(AUDIO_PREFERENCES_KEY);
+        return { storage, raw, value: decode(raw) };
+      } catch {
+        return { storage: null, raw: null, value: null };
+      }
+    };
+    const apply = (record) => {
+      let revision = audioMaster.snapshot().revision;
+      // Close the mute gate before increasing volume; open it after the fader.
+      for (const key of record.muted ? ['muted', 'volume'] : ['volume', 'muted']) {
+        const current = audioMaster.snapshot();
+        if (disposed || current.revision !== revision) return false;
+        if (current[key] === record[key]) continue;
+        audioMaster[key === 'muted' ? 'setMuted' : 'setVolume'](record[key]);
+        revision++;
+        // A subscriber's newer intent must also win over this synchronous seed.
+        if (audioMaster.snapshot().revision !== revision) return false;
+      }
+      return true;
+    };
+    let seedRevision = audioMaster.snapshot().revision;
+    explicit = seedRevision !== 0;
+    const first = read();
+    if (first.value) {
+      stored = true;
+      apply(first.value);
+    } else if (seedRevision === 0 && apply(initial)) {
+      seedRevision = audioMaster.snapshot().revision;
+    }
+    const persist = () => {
+      try {
+        const allowed = writable();
+        if (disposed) return;
+        if (!allowed) {
+          unsaved = true;
+          notify('Sound changes apply only to this session; saving is disabled here.');
+          return;
+        }
+        const { muted, volume } = audioMaster.snapshot(),
+          storage = getStorage();
+        if (disposed) return;
+        if (!storage) throw new Error('Storage unavailable.');
+        storage.setItem(AUDIO_PREFERENCES_KEY, JSON.stringify(values({ muted, volume })));
+        if (disposed) return;
+        stored = true;
+        unsaved = false;
+        notify('');
+      } catch {
+        if (disposed) return;
+        unsaved = true;
+        notify('Sound changed for this session, but could not be saved for another page.');
+      }
+    };
+    const change = (key, value) => {
+      if (disposed) throw new Error('Audio preferences are disposed.');
+      const before = audioMaster.snapshot();
+      values({ muted: before.muted, volume: before.volume, [key]: value });
+      explicit = true;
+      try {
+        audioMaster[key === 'muted' ? 'setMuted' : 'setVolume'](value);
+      } finally {
+        // Output listeners may throw after the authority accepted the intent.
+        if (!disposed && audioMaster.snapshot().revision !== before.revision) persist();
+      }
+      return audioMaster.snapshot();
+    };
+    const receive = (event) => {
+      if (disposed || unsaved || event.key !== AUDIO_PREFERENCES_KEY) return;
+      const revision = audioMaster.snapshot().revision,
+        current = read();
+      if (
+        disposed ||
+        unsaved ||
+        audioMaster.snapshot().revision !== revision ||
+        !current.storage ||
+        event.storageArea !== current.storage ||
+        event.newValue !== current.raw ||
+        !current.value
+      )
+        return;
+      stored = true;
+      apply(current.value);
+    };
+    // Reconcile a restored page with fresh storage rather than a missed event's
+    // payload, without discarding local intent that could not be saved.
+    const restored = (event) => {
+      if (disposed || unsaved || event.persisted !== true) return;
+      const revision = audioMaster.snapshot().revision,
+        current = read();
+      if (disposed || unsaved || audioMaster.snapshot().revision !== revision || !current.value)
+        return;
+      stored = true;
+      apply(current.value);
+    };
+    eventTarget?.addEventListener?.('storage', receive);
+    eventTarget?.addEventListener?.('pageshow', restored);
+    return Object.freeze({
+      setMuted: (value) => change('muted', value),
+      setVolume: (value) => change('volume', value),
+      seed(candidate) {
+        if (disposed || stored || explicit || audioMaster.snapshot().revision !== seedRevision)
+          return false;
+        const current = read();
+        if (current.value) {
+          stored = true;
+          apply(current.value);
+          return false;
+        }
+        if (!apply(values(candidate))) return false;
+        seedRevision = audioMaster.snapshot().revision;
+        return true;
+      },
+      getWarning: () => warning,
+      dispose() {
+        if (disposed) return;
+        disposed = true;
+        eventTarget?.removeEventListener?.('storage', receive);
+        eventTarget?.removeEventListener?.('pageshow', restored);
+      },
+    });
+  }
+
+  return {
+    AUDIO_PREFERENCES_KEY: AUDIO_PREFERENCES_KEY,
+    createAudioPreferences: createAudioPreferences,
+  };
+})();
+modules['game/ui/encounter-audio.mjs'] = (() => {
+  /** Shared semantic cues; both recorded and offline procedural renditions use
+   * these recipes. No context, clock, randomness or actor mutation lives here. */
+  const FAMILY_PITCH = Object.freeze({
+    lookout: 1.1,
+    patroller: 0.94,
+    runner: 1.06,
+    sprinter: 1.18,
+    courier: 1.24,
+    guard: 0.84,
+    refuge: 0.98,
+    switchback: 1.14,
+    pair: 1.04,
+    shield: 0.72,
+    brace: 0.68,
+    'refuge-seeker': 0.98,
+    'rendezvous-pair': 1.04,
+    'shield-bearer': 0.72,
+    'brace-trooper': 0.68,
+    'relay-warden': 0.62,
+  });
+  function encounterSoundRecipe(type, details = {}) {
+    const pitch = FAMILY_PITCH[details.family] ?? 1;
+    const metal = details.material === 'metal' || details.machine === true;
+    const brutal = details.brutal === true;
+    const recipes = {
+      step: ['grain', 0.11, 0, 130, 65, 0.055],
+      notice: ['switch', 0.17, 2, 360, 520, 0.09],
+      warning: ['warning', 0.44, 5, 620, 860, 0.13],
+      burst: ['paper', 0.19, 2, 190, 320, 0.09],
+      recover: ['cancel', 0.13, 1, 310, 210, 0.08],
+      blocked: ['contact-soft', 0.1, 1, 150, 100, 0.055],
+      catch: [
+        metal ? 'contact-metal' : 'contact-soft',
+        brutal ? 0.52 : 0.25,
+        3,
+        metal ? 150 : 390,
+        metal ? 55 : 690,
+        brutal ? 0.19 : 0.1,
+      ],
+      fire: ['attack', 0.34, 4, 620, 110, 0.08],
+      impact: ['impact', 0.48, 5, 170, 38, 0.15],
+      pulse: ['deploy', 0.33, 3, 880, 260, 0.19],
+      reel: ['ratchet', 0.3, 3, 220, 510, 0.16],
+      supply: ['pickup', 0.2, 2, 520, 780, 0.09],
+      shutter: [
+        details.closed ? 'closure' : 'gate',
+        0.22,
+        3,
+        details.closed ? 360 : 260,
+        details.closed ? 160 : 520,
+        0.13,
+      ],
+      objective: ['confirm', 0.4, 4, 660, 990, 0.18],
+      failure: ['loss', 0.42, 5, 260, 65, 0.23],
+    };
+    const row = recipes[type];
+    if (!row) return null;
+    const [name, gain, priority, from, to, duration] = row;
+    return {
+      name,
+      gain,
+      priority,
+      rate: pitch,
+      tone: {
+        from: from * pitch,
+        to: to * pitch,
+        duration,
+        gain: gain * 0.14,
+        type: metal ? 'triangle' : 'sine',
+      },
+    };
+  }
+
+  /** Phase changes are incidental cues; blocked/idling actors never emit per frame. */
+  function actorPhaseSound(previous, next) {
+    if (!previous || previous === next) return null;
+    if (['warning', 'telegraph', 'turning'].includes(next)) return 'warning';
+    if (['burst', 'dash'].includes(next)) return 'burst';
+    if (['recover', 'recovering', 'recovery', 'rest'].includes(next)) return 'recover';
+    if (next === 'blocked') return 'blocked';
+    if (['flee', 'fleeing', 'notice', 'committed'].includes(next)) return 'notice';
+    return null;
+  }
+
+  return { encounterSoundRecipe: encounterSoundRecipe, actorPhaseSound: actorPhaseSound };
+})();
+modules['game/ui/movement-audio.mjs'] = (() => {
+  const MOVEMENT_AUDIO_KEY = 'revealline.movement-audio.v1';
+  function readMovementAudio(storage) {
+    try {
+      storage ??= globalThis.localStorage;
+      const value = JSON.parse(storage?.getItem(MOVEMENT_AUDIO_KEY) ?? 'null');
+      return {
+        enabled: typeof value?.enabled === 'boolean' ? value.enabled : true,
+        volume:
+          Number.isFinite(value?.volume) && value.volume >= 0 && value.volume <= 1
+            ? value.volume
+            : 0.5,
+      };
+    } catch {
+      return { enabled: true, volume: 0.5 };
+    }
+  }
+
+  return { MOVEMENT_AUDIO_KEY: MOVEMENT_AUDIO_KEY, readMovementAudio: readMovementAudio };
+})();
 modules['game/ui/dialogue-channel.mjs'] = (() => {
   /** One spoken line per page, including radio and Studio auditions. */
   let active = null;
@@ -145,6 +660,17 @@ modules['game/ui/dialogue-channel.mjs'] = (() => {
   return { dialogueChannel: dialogueChannel };
 })();
 modules['optional-practice/civilian-fpv/world-audio.mjs'] = (() => {
+  const createGameAudioContext = modules['game/ui/audio-output.mjs']['createGameAudioContext'];
+  const createGameAudioOutput = modules['game/ui/audio-output.mjs']['createGameAudioOutput'];
+  const requestPlaybackAudioSession =
+    modules['game/ui/audio-output.mjs']['requestPlaybackAudioSession'];
+  const releasePlaybackAudioSession =
+    modules['game/ui/audio-output.mjs']['releasePlaybackAudioSession'];
+  const createAudioMaster = modules['game/ui/audio-master.mjs']['createAudioMaster'];
+  const createAudioPreferences = modules['game/audio-preferences.mjs']['createAudioPreferences'];
+  const encounterSoundRecipe = modules['game/ui/encounter-audio.mjs']['encounterSoundRecipe'];
+  const readMovementAudio = modules['game/ui/movement-audio.mjs']['readMovementAudio'];
+  const MOVEMENT_AUDIO_KEY = modules['game/ui/movement-audio.mjs']['MOVEMENT_AUDIO_KEY'];
   const dialogueChannel = modules['game/ui/dialogue-channel.mjs']['dialogueChannel'];
 
   /** Optional presentation-only sound. No media requests or gameplay clocks. */
@@ -177,14 +703,58 @@ modules['optional-practice/civilian-fpv/world-audio.mjs'] = (() => {
     let disposed = false;
     let wanted = false;
     let transition = 0;
+    let lastPlaying = false;
     let lastTick = null;
     let lastStep = null;
+    let lastContacts = null;
     let ambience = AMBIENCES.hangar;
     let motorStyle = 'quad';
     let gateStyle = 'chime';
     let dialogue = { enabled: false, volume: 0.8 };
     let dialogueVoice = null;
     const effects = new Set();
+    const audioMaster = options.audioMaster ?? createAudioMaster();
+    const preferences =
+      options.audioPreferences ??
+      createAudioPreferences({
+        audioMaster,
+        getStorage: () => storage,
+        window: host,
+        fallback: options.audioMaster
+          ? { muted: audioMaster.snapshot().muted, volume: audioMaster.snapshot().volume }
+          : { muted: !enabled, volume: 0.65 },
+      });
+    let movement = readMovementAudio(storage);
+    let masterState = audioMaster.snapshot();
+    enabled = !masterState.muted;
+    const applyOutput = () => {
+      if (!graph || context.state === 'closed') return;
+      graph.master.gain.cancelScheduledValues(context.currentTime);
+      graph.master.gain.setValueAtTime(enabled ? masterState.volume : 0, context.currentTime);
+      graph.output.movementBus.gain.setTargetAtTime(
+        movement.enabled ? movement.volume : 0,
+        context.currentTime,
+        0.025,
+      );
+    };
+    const releaseMaster = audioMaster.subscribe((value) => {
+      masterState = value;
+      enabled = !value.muted;
+      if (!enabled || value.volume === 0) silence();
+      applyOutput();
+    });
+    const changed = (event) => {
+      if (event.key === MOVEMENT_AUDIO_KEY) {
+        movement = readMovementAudio(storage);
+        applyOutput();
+      }
+    };
+    host.addEventListener?.('storage', changed);
+    const recentCues = new Map();
+    let actorDefinitions = new Map();
+    let actorPositions = new Map();
+    let lastFootstep = -Infinity;
+
     const volume = (value) =>
       typeof value === 'number' && Number.isFinite(value) ? clamp(value, 0, 1) : 1;
     let levels = Object.fromEntries(
@@ -203,7 +773,7 @@ modules['optional-practice/civilian-fpv/world-audio.mjs'] = (() => {
     function silence() {
       dialogueVoice?.stop();
       if (!graph || context.state === 'closed') return;
-      for (const node of [graph.motor, graph.wind, graph.humGain]) {
+      for (const node of [graph.motor, graph.vehicleGain, graph.wind, graph.humGain]) {
         node.gain.cancelScheduledValues(context.currentTime);
         node.gain.setValueAtTime(0, context.currentTime);
       }
@@ -215,21 +785,21 @@ modules['optional-practice/civilian-fpv/world-audio.mjs'] = (() => {
       if (!AudioContext || disposed) return false;
       let candidate;
       try {
-        candidate = new AudioContext({ latencyHint: 'interactive' });
-        const master = candidate.createGain();
-        master.gain.value = 0.7;
-        master.connect(candidate.destination);
+        candidate = createGameAudioContext(host);
+        const output = createGameAudioOutput(candidate);
+        const master = output.master;
+        master.gain.value = enabled ? masterState.volume : 0;
+        output.movementBus.gain.value = movement.enabled ? movement.volume : 0;
         const buses = Object.fromEntries(
           Object.entries(levels).map(([key, level]) => {
             const bus = candidate.createGain();
             bus.gain.value = level;
-            bus.connect(master);
+            bus.connect(key === 'motor' ? output.movementBus : output.sfxBus);
             return [key, bus];
           }),
         );
-        const dialogueBus = candidate.createGain();
+        const dialogueBus = output.dialogueBus;
         dialogueBus.gain.value = dialogue.enabled ? dialogue.volume : 0;
-        dialogueBus.connect(master);
         const motor = candidate.createGain();
         motor.gain.value = 0;
         const motorFilter = candidate.createBiquadFilter();
@@ -272,8 +842,18 @@ modules['optional-practice/civilian-fpv/world-audio.mjs'] = (() => {
         humGain.gain.value = 0;
         hum.connect(humGain).connect(buses.ambience);
         hum.start();
+        const vehicleMotor = candidate.createOscillator(),
+          vehicleGain = candidate.createGain();
+        vehicleMotor.type = 'triangle';
+        vehicleMotor.frequency.value = 62;
+        vehicleGain.gain.value = 0;
+        vehicleMotor.connect(vehicleGain).connect(buses.motor);
+        vehicleMotor.start();
         context = candidate;
         graph = {
+          vehicleMotor,
+          vehicleGain,
+          output,
           master,
           buses,
           dialogueBus,
@@ -293,15 +873,26 @@ modules['optional-practice/civilian-fpv/world-audio.mjs'] = (() => {
       }
     }
 
-    function tone({ from, to = from, duration = 0.12, gain = 0.05, delay = 0, type = 'sine' }) {
+    function tone({
+      from,
+      to = from,
+      duration = 0.12,
+      gain = 0.05,
+      delay = 0,
+      type = 'sine',
+      movementCue = false,
+    }) {
       if (
         !graph ||
+        !enabled ||
+        masterState.volume === 0 ||
         !levels.interface ||
         effects.size >= 12 ||
         !wanted ||
         context.state !== 'running'
       )
         return;
+      if (movementCue && (!movement.enabled || movement.volume === 0)) return;
       const oscillator = context.createOscillator();
       const envelope = context.createGain();
       const start = context.currentTime + delay;
@@ -312,7 +903,9 @@ modules['optional-practice/civilian-fpv/world-audio.mjs'] = (() => {
       envelope.gain.setValueAtTime(0, start);
       envelope.gain.linearRampToValueAtTime(gain, start + 0.008);
       envelope.gain.exponentialRampToValueAtTime(0.0001, start + duration);
-      oscillator.connect(envelope).connect(graph.buses.interface);
+      oscillator
+        .connect(envelope)
+        .connect(movementCue ? graph.output.movementBus : graph.buses.interface);
       let stopped = false;
       const effect = {
         stop() {
@@ -334,35 +927,36 @@ modules['optional-practice/civilian-fpv/world-audio.mjs'] = (() => {
       oscillator.stop(start + duration + 0.02);
     }
 
-    function cue(type, player = true) {
-      if (type === 'hunt-tail' || type === 'impact' || (type === 'fire' && !player))
-        dialogueVoice?.stop();
-      if (type === 'catch') {
-        tone({ from: 520, to: 880, duration: 0.12, gain: 0.055, type: 'triangle' });
-      } else if (type === 'hunt-tail') {
-        tone({ from: 240, to: 75, duration: 0.18, gain: 0.06, type: 'triangle' });
-      } else if (type === 'objective') {
-        const frequency = gateStyle === 'bell' ? 660 : gateStyle === 'radio' ? 440 : 740;
-        const wave = gateStyle === 'digital' ? 'triangle' : 'sine';
-        tone({ from: frequency, duration: 0.2, gain: 0.07, type: wave });
-        tone({ from: frequency * 1.5, duration: 0.25, delay: 0.09, gain: 0.055, type: wave });
-      } else if (type === 'fire') {
-        tone({
-          from: player ? 750 : 410,
-          to: 150,
-          duration: 0.08,
-          gain: player ? 0.048 : 0.024,
-          type: 'triangle',
-        });
-      } else if (type === 'impact') {
-        tone({ from: 170, to: 38, duration: 0.15, gain: 0.075, type: 'triangle' });
-      } else if (type === 'defeat') {
-        tone({ from: 430, to: 95, duration: 0.24, gain: 0.05, type: 'sine' });
-      }
+    function cue(type, player = true, event = {}) {
+      const kind = {
+        catch: 'catch',
+        'hunt-tail': 'failure',
+        objective: 'objective',
+        fire: 'fire',
+        impact: 'impact',
+        defeat: 'catch',
+      }[type];
+      if (!kind) return;
+      const now = context?.currentTime ?? 0;
+      if (now - (recentCues.get(kind) ?? -Infinity) < 0.12) return;
+      recentCues.set(kind, now);
+      const actor = actorDefinitions.get(event.actor);
+      const machine = actor?.type === 'vehicle';
+      const recipe = encounterSoundRecipe(kind, {
+        family: actor?.speed > 0 ? 'patroller' : 'lookout',
+        machine,
+      });
+      if (recipe.priority >= 5 || (type === 'fire' && !player)) dialogueChannel.interrupt();
+      const voice = { ...recipe.tone };
+      if (type === 'fire' && !player) voice.gain *= 0.65;
+      if (type === 'objective' && gateStyle === 'digital') voice.type = 'triangle';
+      tone(voice);
     }
 
     async function resume() {
-      if (!enabled || disposed || !initialize()) return false;
+      if (!enabled || disposed) return false;
+      requestPlaybackAudioSession(host.navigator?.audioSession);
+      if (!initialize()) return false;
       wanted = true;
       const epoch = ++transition;
       try {
@@ -382,11 +976,18 @@ modules['optional-practice/civilian-fpv/world-audio.mjs'] = (() => {
       transition++;
       silence();
       if (context && context.state !== 'closed') context.suspend().catch(() => {});
+      releasePlaybackAudioSession(host.navigator?.audioSession);
     }
 
     return {
       get context() {
         return context;
+      },
+      get menuBus() {
+        return graph?.output.menuBus;
+      },
+      subscribe(listener) {
+        return audioMaster.subscribe(() => listener(enabled));
       },
       configureDialogue({ enabled = dialogue.enabled, volume: value = dialogue.volume } = {}) {
         if (typeof enabled !== 'boolean' || !Number.isFinite(value) || value < 0 || value > 1)
@@ -472,6 +1073,7 @@ modules['optional-practice/civilian-fpv/world-audio.mjs'] = (() => {
       async setEnabled(value) {
         if (disposed) return false;
         enabled = Boolean(value);
+        preferences.setMuted(!enabled);
         try {
           storage?.setItem(PREFERENCE, enabled ? 'on' : 'off');
         } catch {
@@ -502,8 +1104,14 @@ modules['optional-practice/civilian-fpv/world-audio.mjs'] = (() => {
         gateStyle =
           profile.gate ??
           (theme === 'pixel' ? 'digital' : theme === 'ukrainian' ? 'bell' : 'chime');
+        lastPlaying = false;
         lastTick = null;
         lastStep = null;
+        lastContacts = null;
+        recentCues.clear();
+        actorPositions.clear();
+        lastFootstep = -Infinity;
+        actorDefinitions = new Map((course.actors ?? []).map((actor) => [actor.id, actor]));
         stopEffects();
         if (graph && context.state !== 'closed') {
           ramp(graph.windFilter.frequency, ambience.filter);
@@ -514,10 +1122,11 @@ modules['optional-practice/civilian-fpv/world-audio.mjs'] = (() => {
         if (disposed || !snapshot) return;
         const tick = snapshot.ticks;
         const step = snapshot.step;
-        const fresh = Number.isSafeInteger(tick) && tick !== lastTick;
+        const fresh = Number.isSafeInteger(tick) && lastTick !== null && tick > lastTick;
         const advanced = Number.isSafeInteger(step) && lastStep !== null && step > lastStep;
         const playing = active && !['paused', 'disarmed'].includes(snapshot.status);
-        if (enabled && wanted && graph && context.state === 'running' && playing) {
+        const finalCue = fresh && lastPlaying && ['complete', 'failed'].includes(snapshot.status);
+        if (enabled && wanted && graph && context.state === 'running' && (playing || finalCue)) {
           const flying = snapshot.status === 'active';
           const throttle = clamp((snapshot.lastInput?.throttle ?? 0) / 1000, 0, 1);
           const velocity = snapshot.velocity ?? {};
@@ -534,46 +1143,91 @@ modules['optional-practice/civilian-fpv/world-audio.mjs'] = (() => {
           ramp(graph.wind.gain, ambience.gain + (flying ? airflow * 0.028 : 0));
           ramp(graph.humGain.gain, ambience.humGain);
           if (fresh) {
+            let nearestVehicle = Infinity,
+              nearestFoot = Infinity;
+            for (const actor of snapshot.actors ?? []) {
+              const previous = actorPositions.get(actor.id),
+                position = actor.position;
+              if (!position) continue;
+              const moving =
+                previous && Math.hypot(position.x - previous.x, position.z - previous.z) > 0;
+              if (moving && actor.status === 'active') {
+                const d = Math.hypot(
+                  position.x - snapshot.position.x,
+                  position.y - snapshot.position.y,
+                  position.z - snapshot.position.z,
+                );
+                if (actor.type === 'vehicle') nearestVehicle = Math.min(nearestVehicle, d);
+                else if (['patrol', 'sentry'].includes(actor.type))
+                  nearestFoot = Math.min(nearestFoot, d);
+              }
+            }
+            ramp(
+              graph.vehicleGain.gain,
+              flying && nearestVehicle < 16000 ? 0.012 * (1 - nearestVehicle / 16000) : 0,
+            );
+            if (flying && nearestFoot < 6000 && context.currentTime - lastFootstep >= 0.34) {
+              lastFootstep = context.currentTime;
+              const step = encounterSoundRecipe('step');
+              tone({
+                ...step.tone,
+                gain: step.tone.gain * (1 - nearestFoot / 6000) * levels.interface,
+                movementCue: true,
+              });
+            }
             const events = snapshot.events ?? [];
             const types = new Set();
             // Bound cue overlap independently of simulation actor/projectile counts.
             for (const event of events) {
               if (types.has(event.type)) continue;
               types.add(event.type);
-              cue(event.type, event.actor === 'player');
+              cue(event.type, event.actor === 'player', event);
             }
             if (advanced && !types.has('objective')) cue('objective');
+            if (lastContacts !== null && snapshot.contacts > lastContacts && !types.has('impact'))
+              cue('impact');
           }
         } else if (graph && context.state !== 'closed') {
           ramp(graph.motor.gain, 0);
+          ramp(graph.vehicleGain.gain, 0);
           ramp(graph.wind.gain, 0);
           ramp(graph.humGain.gain, 0);
         }
+        actorPositions = new Map(
+          (snapshot.actors ?? []).map((actor) => [actor.id, { ...actor.position }]),
+        );
         lastTick = tick;
         lastStep = step;
+        lastContacts = snapshot.contacts ?? null;
+        lastPlaying = playing;
       },
       dispose() {
         if (disposed) return;
         disposed = true;
         pause();
+        releaseMaster();
+        host.removeEventListener?.('storage', changed);
+        if (!options.audioPreferences) preferences.dispose();
+        if (!options.audioMaster) audioMaster.dispose();
         if (!graph) return;
         for (const node of [
           ...graph.rotors.map((rotor) => rotor.oscillator),
           graph.noise,
           graph.hum,
+          graph.vehicleMotor,
         ]) {
           node.stop();
           node.disconnect();
         }
         for (const node of [
           graph.motor,
+          graph.vehicleGain,
           graph.motorFilter,
           graph.windFilter,
           graph.wind,
           graph.humGain,
           ...Object.values(graph.buses),
-          graph.dialogueBus,
-          graph.master,
+          ...Object.values(graph.output).filter(Boolean),
         ])
           node.disconnect();
         context.close().catch(() => {});
@@ -585,14 +1239,14 @@ modules['optional-practice/civilian-fpv/world-audio.mjs'] = (() => {
   return { createWorldAudio: createWorldAudio };
 })();
 modules['optional-practice/civilian-fpv/world-hangar.mjs'] = (() => {
-  const THREE = external0;
-  const buildDroneVisual = external1['buildDroneVisual'];
-  const createEnvironmentLight = external1['createEnvironmentLight'];
-  const setSurfaceQuality = external1['setSurfaceQuality'];
-  const resolveSimThemeProfile = external2['resolveSimThemeProfile'];
-  const createWorkshopMaterials = external1['createWorkshopMaterials'];
-  const disposeSimVisualGroup = external1['disposeSimVisualGroup'];
-  const simCollectionIdForProfile = external1['simCollectionIdForProfile'];
+  const THREE = external1;
+  const buildDroneVisual = external2['buildDroneVisual'];
+  const createEnvironmentLight = external2['createEnvironmentLight'];
+  const setSurfaceQuality = external2['setSurfaceQuality'];
+  const resolveSimThemeProfile = external3['resolveSimThemeProfile'];
+  const createWorkshopMaterials = external2['createWorkshopMaterials'];
+  const disposeSimVisualGroup = external2['disposeSimVisualGroup'];
+  const simCollectionIdForProfile = external2['simCollectionIdForProfile'];
 
   /** A close inspection view. Appearance selections never modify flight physics. */
   function mountDroneHangar({
@@ -773,12 +1427,12 @@ modules['optional-practice/civilian-fpv/world-hangar.mjs'] = (() => {
   return { mountDroneHangar: mountDroneHangar };
 })();
 modules['optional-practice/civilian-fpv/world-actor-editor.mjs'] = (() => {
-  const boundedJSON = external3['boundedJSON'];
-  const exactKeys = external3['exactKeys'];
-  const ACTOR_CASTS = external4['ACTOR_CASTS'];
-  const actorFieldGuide = external4['actorFieldGuide'];
-  const drawHuntActor = external5['drawHuntActor'];
-  const sharedActorAppearance = external6['sharedActorAppearance'];
+  const boundedJSON = external4['boundedJSON'];
+  const exactKeys = external4['exactKeys'];
+  const ACTOR_CASTS = external5['ACTOR_CASTS'];
+  const actorFieldGuide = external5['actorFieldGuide'];
+  const drawHuntActor = external6['drawHuntActor'];
+  const sharedActorAppearance = external7['sharedActorAppearance'];
 
   const TYPES = ['drone', 'patrol', 'sentry', 'vehicle', 'hazard'];
   const AXES = ['x', 'y', 'z'];
@@ -1734,12 +2388,12 @@ modules['optional-practice/civilian-fpv/world-actor-editor.mjs'] = (() => {
   return { mountActorEditor: mountActorEditor };
 })();
 modules['optional-practice/civilian-fpv/world-progress.mjs'] = (() => {
-  const boundedJSON = external3['boundedJSON'];
-  const createWorldFlight = external7['createWorldFlight'];
-  const initWorldRuntime = external7['initWorldRuntime'];
-  const replayWorldFlight = external7['replayWorldFlight'];
-  const validateWorldCourse = external7['validateWorldCourse'];
-  const WORLD_MAX_TICKS = external7['WORLD_MAX_TICKS'];
+  const boundedJSON = external4['boundedJSON'];
+  const createWorldFlight = external8['createWorldFlight'];
+  const initWorldRuntime = external8['initWorldRuntime'];
+  const replayWorldFlight = external8['replayWorldFlight'];
+  const validateWorldCourse = external8['validateWorldCourse'];
+  const WORLD_MAX_TICKS = external8['WORLD_MAX_TICKS'];
 
   const centre = (step) =>
     step.min
@@ -1980,7 +2634,7 @@ modules['optional-practice/civilian-fpv/world-progress.mjs'] = (() => {
   }
 
   return {
-    createSectorTracker: external8['createSectorTracker'],
+    createSectorTracker: external9['createSectorTracker'],
     medalTargets: medalTargets,
     evaluateWorldResult: evaluateWorldResult,
     compatibleGhost: compatibleGhost,
@@ -2549,10 +3203,10 @@ modules['game/journey/reaction-voice-cache.mjs'] = (() => {
   };
 })();
 modules['game/journey/campaign-feedback.mjs'] = (() => {
-  const boundedJSON = external3['boundedJSON'];
-  const exactKeys = external3['exactKeys'];
-  const required = external3['required'];
-  const stableId = external3['stableId'];
+  const boundedJSON = external4['boundedJSON'];
+  const exactKeys = external4['exactKeys'];
+  const required = external4['required'];
+  const stableId = external4['stableId'];
 
   const CAMPAIGN_FEEDBACK_FORMAT = 'revealline-campaign-feedback.v1';
   // Original fixed synth phrases. These are presentation recipes, not schedules
@@ -2658,9 +3312,9 @@ modules['game/journey/campaign-feedback.mjs'] = (() => {
   };
 })();
 modules['game/hunt/actor-reactions.mjs'] = (() => {
-  const ACTOR_CATALOG_VERSION = external4['ACTOR_CATALOG_VERSION'];
-  const actorDefinition = external4['actorDefinition'];
-  const resolveActorFamily = external4['resolveActorFamily'];
+  const ACTOR_CATALOG_VERSION = external5['ACTOR_CATALOG_VERSION'];
+  const actorDefinition = external5['actorDefinition'];
+  const resolveActorFamily = external5['resolveActorFamily'];
 
   /** Original optional copy. Selection is deterministic and carries no simulated
    * facts. Hosts must use their existing incidental-reaction budget and priority.
@@ -2925,8 +3579,8 @@ modules['game/journey/reactions.mjs'] = (() => {
   };
 })();
 modules['game/journey/reaction-preferences.mjs'] = (() => {
-  const boundedJSON = external3['boundedJSON'];
-  const exactKeys = external3['exactKeys'];
+  const boundedJSON = external4['boundedJSON'];
+  const exactKeys = external4['exactKeys'];
 
   const JOURNEY_REACTION_PREFERENCES_KEY = 'revealline.journey-reactions.v1';
   const format = 'JourneyReactionPreferencesV1';
@@ -3088,8 +3742,8 @@ modules['game/journey/reaction-preferences.mjs'] = (() => {
   };
 })();
 modules['game/journey/reaction-options.mjs'] = (() => {
-  const boundedJSON = external3['boundedJSON'];
-  const exactKeys = external3['exactKeys'];
+  const boundedJSON = external4['boundedJSON'];
+  const exactKeys = external4['exactKeys'];
 
   const REACTION_OPTIONS_KEY = 'revealline.reaction-presentation.v1';
   const DEFAULT_REACTION_OPTIONS = Object.freeze({
@@ -4928,8 +5582,8 @@ modules['game/ui/contextual-reactions.mjs'] = (() => {
     modules['game/ui/reaction-caption.mjs']['renderResultReactionCaption'];
   const createReactionVoiceCache =
     modules['game/journey/reaction-voice-cache.mjs']['createReactionVoiceCache'];
-  const currentLocale = external9['getLocale'];
-  const onLocaleChange = external9['onLocaleChange'];
+  const currentLocale = external0['getLocale'];
+  const onLocaleChange = external0['onLocaleChange'];
   const JOURNEY_REACTIONS = modules['game/journey/reactions.mjs']['JOURNEY_REACTIONS'];
   const REACTION_LINES = modules['game/journey/reactions.mjs']['REACTION_LINES'];
   const reactionLine = modules['game/journey/reactions.mjs']['reactionLine'];
@@ -4941,11 +5595,11 @@ modules['game/ui/contextual-reactions.mjs'] = (() => {
   const createReactionVoiceLibrary =
     modules['game/journey/reaction-voice-library.mjs']['createReactionVoiceLibrary'];
   const REACTION_PORTRAITS = modules['game/journey/reaction-portraits.mjs']['REACTION_PORTRAITS'];
-  const actorDefinition = external4['actorDefinition'];
-  const resolveActorFamily = external4['resolveActorFamily'];
+  const actorDefinition = external5['actorDefinition'];
+  const resolveActorFamily = external5['resolveActorFamily'];
   const actorEventReaction = modules['game/hunt/actor-reactions.mjs']['actorEventReaction'];
-  const drawHuntActor = external5['drawHuntActor'];
-  const sharedActorAppearance = external6['sharedActorAppearance'];
+  const drawHuntActor = external6['drawHuntActor'];
+  const sharedActorAppearance = external7['sharedActorAppearance'];
 
   const recentLines = new Map();
   const HISTORY_KEY = 'revealline.reaction-recent.v1';

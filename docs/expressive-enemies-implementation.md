@@ -49,8 +49,13 @@ This invokes production content admission, not a gameplay test suite.
 
 The twelve catalogue families are Lookout, Patroller, Runner, Sprinter, Courier,
 Guard, Refuge seeker, Switchback, Rendezvous pair, Shield bearer, Brace trooper and
-Relay warden. Tactical, Rival crews and Arcade casts provide 36 procedural visual
-variants with shared compact/detailed rigs, accessories, palettes and reactions.
+Relay warden. Field kit, Worn field kit and Winter kit provide 36 procedural
+Russian military visual variants with shared compact/detailed rigs, accessories,
+palettes and reactions. Historical cast IDs remain unchanged. Live actors and
+guide previews now have transparent surroundings and an overhead viewpoint;
+movement-facing bodies share a six-frame gait, anticipation, recovery and idle
+animation. Paused and Reduced effects presentations remain stable. Unarmed
+Snake/SIM policies do not display an armed Guard weapon.
 Native capabilities remain authoritative: armed Guards and Wardens are Capture
 actors; current SIM Hunt supports unarmed patrols, not grid armor or fleeing AI.
 
@@ -64,6 +69,18 @@ actor identity and existing presentation limits. Brutality and blood remain
 opt-in; remains, Reduced effects and audio are independent. Procedural actor art
 does not require a downloaded frame atlas. The page artwork budget remains
 32 MiB, shared across paired boards.
+
+[Military Field](military-field-appearance.md) adds cars, trucks, armored carriers,
+tanks, radar vehicles and checkpoint materials through existing mechanical enemy
+and terrain roles. It is selectable through the shared appearance host and Theme
+Studio; the pursuit hub includes direct previews. Vehicle enemies keep their
+established dangerous contact rules. Native SIM currently receives soldier kits,
+its existing utility-car model and matching materials, not new tank physics.
+
+Capture, grid Snake and native flight retain their respective deterministic
+simulation engines. They share actor definitions, presentation preferences,
+destruction, reactions and audio services. [Audio coverage](shared-game-audio.md)
+documents the shared mixer and each mode's event bindings.
 
 There are two stable EN/UK reaction scripts per family, integrated with the
 existing cooldown/priority director and recording replacement workflow. The
