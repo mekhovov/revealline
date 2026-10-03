@@ -2645,6 +2645,15 @@
     },
     {
       "approved": true,
+      "bytes": 2467021,
+      "dependencies": [],
+      "id": "social-drone-sky-watch-video-v2",
+      "path": "game/editions/assets/social-drone/sky-watch-v2.mp4",
+      "publication": "public",
+      "sha256": "ea033ebd2b205098b4b06567394f07d16887143b92f608030b1b1ddfde1fa656"
+    },
+    {
+      "approved": true,
       "bytes": 237,
       "dependencies": [],
       "id": "social-drone-sky-watch-en-description-v1",
@@ -3564,7 +3573,7 @@
     {
       "assetIds": [
         "social-drone-sky-watch-poster-v1",
-        "social-drone-sky-watch-video-v1",
+        "social-drone-sky-watch-video-v2",
         "social-drone-sky-watch-en-description-v1",
         "social-drone-sky-watch-uk-description-v1",
         "social-drone-sky-watch-en-captions-v1",
@@ -3573,11 +3582,11 @@
       "brandId": "social-drone-ua",
       "id": "social-drone-sky-watch",
       "localizationPath": "game/content/company-campaigns/social-drone-sky-watch.localization.json",
-      "localizationSha256": "54a092e96f51f17a086d002f0d813205d11b63ac7b9ef52d0b9e61281783f76a",
+      "localizationSha256": "a265fa37e2692d8bf8aba0b2bf77c9200d08c0c1098aa328471629311b96e8d4",
       "modes": ["solo"],
       "name": "Sky Watch",
       "publication": "public",
-      "revision": "1",
+      "revision": "2",
       "rewardPath": "game/content/company-campaigns/social-drone-sky-watch.rewards.json",
       "sourcePath": "game/content/company-campaigns/social-drone-sky-watch.json"
     }
@@ -3606,6 +3615,12 @@
       "modes": ["solo"],
       "name": "Social Drone UA / LINE",
       "presentationHistory": [
+        {
+          "bytes": 210197,
+          "id": "ef26881b40bfc01a8ac1ef4ce5d746d11b253a64d2c44316dde458659f541195",
+          "path": "game/editions/retained/social-drone-ua-before-iphone-video-gallery.json",
+          "sha256": "a41bdd8b87b1d81dc83830ffbc12ddf8b04205c72b9d00e831cc82af0731f784"
+        },
         {
           "bytes": 202011,
           "id": "7a5367fe55d1b22621662ac29d4c1224a1635fa0b40d0a8cb6e24d620b19a826",
@@ -3656,7 +3671,7 @@
         }
       ],
       "publication": "public",
-      "revision": 9
+      "revision": 10
     },
     {
       "audience": "learners",

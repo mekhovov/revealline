@@ -355,6 +355,7 @@ export async function prepareCreatorMediaIntake(
   {
     signal,
     inspectVideo = openVideoPosterSource,
+    prepareVideo,
     prepareImage = prepareCreatorImage,
     pairingFor,
     posterTimeFor = ({ video }) => video.durationSeconds * 0.5,
@@ -372,6 +373,10 @@ export async function prepareCreatorMediaIntake(
     creatorAbort(signal);
     if (row.error) continue;
     try {
+      if (row.kind === 'video' && prepareVideo) {
+        row.blob = await prepareVideo(row.blob, { signal });
+        row.bytes = row.blob.size;
+      }
       const bytes = await row.blob.arrayBuffer();
       creatorAbort(signal);
       row.sha256 = await creatorSHA256(bytes);

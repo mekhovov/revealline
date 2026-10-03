@@ -210,6 +210,12 @@ const retainedPresentations = Object.freeze({
   ],
   'social-drone-ua': [
     {
+      id: 'ef26881b40bfc01a8ac1ef4ce5d746d11b253a64d2c44316dde458659f541195',
+      path: 'game/editions/retained/social-drone-ua-before-iphone-video-gallery.json',
+      sha256: 'a41bdd8b87b1d81dc83830ffbc12ddf8b04205c72b9d00e831cc82af0731f784',
+      bytes: 210197,
+    },
+    {
       id: '7a5367fe55d1b22621662ac29d4c1224a1635fa0b40d0a8cb6e24d620b19a826',
       path: 'game/editions/retained/social-drone-ua-before-sky-watch.json',
       sha256: 'c3c084acb98eedc13a3cf89a74e245975c8b6533af92f9bd7dae8aeeaf9c3774',
@@ -597,7 +603,7 @@ export const COMPANY_EDITIONS = Object.freeze(
                   : id === 'fpv-learning'
                     ? 9
                     : id === 'social-drone-ua'
-                      ? 9
+                      ? 10
                       : id === 'ukraine-culture'
                         ? 8
                         : id === 'victory-drones'

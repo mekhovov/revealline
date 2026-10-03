@@ -758,7 +758,17 @@ export async function addOfflineEntries(
       .filter(
         (entry) =>
           (entry.name.startsWith('game/demo-data/') && entry.name.endsWith('.replay.json')) ||
-          entry.name === 'game/ui/art/menu-scenes/droneaid-main-background.webp',
+          entry.name === 'game/ui/art/menu-scenes/droneaid-main-background.webp' ||
+          // The current Social Drone reward uses the mobile-prepared v2 clip.
+          // Keep v1 hosted for retained presentations without charging every
+          // offline installation for both versions of the same recording.
+          entry.name === 'game/editions/assets/social-drone/sky-watch-v1.mp4' ||
+          // Creator examples are fetched only when the player explicitly opens
+          // one in Studio; the downloadable pack remains hosted and exact.
+          entry.name === 'game/creator/examples/social-drone-sky-watch.rlpack' ||
+          // Motion Lab source sheets are authoring inputs, while the prepared
+          // runtime artwork remains in the core game. Load sources on demand.
+          entry.name.startsWith('authoring/motion-lab/assets/'),
       )
       .map((entry) => entry.name),
     // Recorded spatial effects stay hosted for online play and exact optional
