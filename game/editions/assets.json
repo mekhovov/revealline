@@ -2643,6 +2643,15 @@
     "dependencies": []
   },
   {
+    "id": "social-drone-sky-watch-video-v2",
+    "path": "game/editions/assets/social-drone/sky-watch-v2.mp4",
+    "sha256": "ea033ebd2b205098b4b06567394f07d16887143b92f608030b1b1ddfde1fa656",
+    "bytes": 2467021,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
     "id": "social-drone-sky-watch-en-description-v1",
     "path": "game/editions/assets/social-drone/sky-watch-en-v1.txt",
     "sha256": "d8fec85fe861b2aa66f6edeafd7f36a10ab8a038bc9b64298322a831346d5ba1",

@@ -35,8 +35,8 @@
       },
       {
         "asset": {
-          "assetId": "social-drone-sky-watch-video-v1",
-          "sha256": "880e5dd71b9dafc0efd318a7dd12216b35bc18e7cb5f2abd155663fb91aae496"
+          "assetId": "social-drone-sky-watch-video-v2",
+          "sha256": "ea033ebd2b205098b4b06567394f07d16887143b92f608030b1b1ddfde1fa656"
         },
         "captions": {
           "en": {
@@ -76,15 +76,15 @@
       "missions": [
         {
           "bindings": [
-            { "difficulty": "gentle", "gameplayId": "908f94d0e059dd0c" },
-            { "difficulty": "standard", "gameplayId": "9ff2769e9521efd6" },
-            { "difficulty": "expert", "gameplayId": "384c52abcf04059c" }
+            { "difficulty": "gentle", "gameplayId": "9a1240882fd7567e" },
+            { "difficulty": "standard", "gameplayId": "5de9aeb2adcb93bf" },
+            { "difficulty": "expert", "gameplayId": "99cd4895c1695135" }
           ],
           "missionId": "social-drone-sky-watch-01"
         }
       ]
     },
-    "revision": "1",
+    "revision": "2",
     "scope": { "id": "social-drone-sky-watch-01", "kind": "mission" }
   }
 ]
