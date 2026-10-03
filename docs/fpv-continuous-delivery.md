@@ -2617,3 +2617,13 @@ Independent D1 rendering foundation is published in PR #990 at690897542:
 silhouettes and placement. 12cases/60browser comparisons and package preparation
 pass. See that PR's `docs/fpv-woodland-canopy-batching.md`. Next art work remains
 Woodland natural detail/Container composition. #987 concurrent work is preserved.
+
+
+### Owner directive: continue across phase boundaries — 3 October 2026
+
+After completing and functionally verifying each increment, publish the focused
+PR and immediately implement the next approved item. Completion of a phase is a
+handoff into the next phase, not a stopping point or a new approval request. Keep
+CI/publication separate from unfinished next-item work. This standing instruction
+is now recorded in the reviewed delivery plan. D1 art remains next; the canopy
+optimization alone does not complete D1.
