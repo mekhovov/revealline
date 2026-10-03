@@ -136,7 +136,9 @@
                 '; ' +
                 (d?.getElementById('studio-status')?.textContent ?? '') +
                 '; ' +
-                (d?.getElementById('flight-status')?.textContent ?? ''),
+                (d?.getElementById('flight-status')?.textContent ?? '') +
+                '; ' +
+                (d?.querySelector('.coach-lab-status')?.textContent ?? ''),
             );
           await wait(15);
           w?.fixtureRAF?.deliver(0);
@@ -501,9 +503,14 @@
           set('flight-mode', 'self-level');
           click(button(card(id), /^Start lesson|^Fly it again/));
           await until(
-            () => app.snapshot().course === id && app.snapshot().learning?.guideOpen && state(),
-            'lesson guide ' + id,
+            () =>
+              app.snapshot().course === id &&
+              app.snapshot().learning?.guideOpen &&
+              state() &&
+              d.getElementById('flight-status').textContent.startsWith('Ready.'),
+            'lesson guide ready ' + id,
           );
+          await pulse(0);
           const replay = d.querySelector('[data-coach-action="lab-replay"]');
           click(replay);
           await pulse(20);
@@ -588,14 +595,66 @@
             row.querySelector('strong')?.textContent === removable.course.locales.en.title &&
             /Example/.test(row.textContent),
         );
-        click(button(removeRow, /^Remove$/));
-        await until(
-          () => !app.snapshot().records.some((r) => r.id === removable.id),
-          'example removed',
+        must(
+          !!watchButton(removable.course.id) &&
+            !!d.getElementById('resume-flight') &&
+            !d.getElementById('resume-flight').disabled,
+          'Example availability and cached interrupted recovery exist before session read fault',
+        );
+        const sessionBeforeFailure = plain(await store.session());
+        w.fixtureSessionReadFault.armed = true;
+        d.getElementById('studio-status').textContent = '';
+        try {
+          click(button(removeRow, /^Remove$/));
+          await until(
+            () => /storage failed|abort/i.test(d.getElementById('studio-status').textContent),
+            'independent session read failure reported',
+          );
+          await until(
+            () => !app.snapshot().records.some((r) => r.id === removable.id),
+            'example removed',
+          );
+          must(
+            w.fixtureSessionReadFault.count === 1 && !w.fixtureSessionReadFault.armed,
+            'Exactly one isolated native readonly session transaction aborts',
+          );
+        } finally {
+          w.fixtureSessionReadFault.restore();
+        }
+        must(
+          /storage failed|abort/i.test(d.getElementById('studio-status').textContent),
+          'Successful example deletion still reports the independent recovery read failure',
+          { status: d.getElementById('studio-status').textContent },
+        );
+        must(
+          !(await store.list()).some((r) => r.id === removable.id) &&
+            !d.querySelector(`[data-record-id="${removable.id}"]`),
+          'Deleted example is absent from both real IndexedDB and the refreshed Library',
         );
         must(
           !watchButton(removable.course.id),
           'Removing the only optional example clears a previously populated availability cache',
+        );
+        const removedChallenge = [...d.querySelectorAll('.challenge-row')].find(
+          (row) => row.querySelector('strong')?.textContent === removable.course.locales.en.title,
+        );
+        must(
+          !!removedChallenge && !removedChallenge.querySelector('.watch-example'),
+          'Catalogue Watch also disappears despite the unrelated session read failure',
+        );
+        must(
+          !!d.getElementById('resume-flight') && !d.getElementById('resume-flight').disabled,
+          'Cached interrupted recovery remains available after its read fails',
+        );
+        equal(
+          plain(await store.session()),
+          sessionBeforeFailure,
+          'One-shot fault restores native reads and leaves interrupted session bytes unchanged',
+        );
+        equal(
+          await protectedData(),
+          baseline,
+          'Example deletion with session read failure preserves progress, recovery and bookmark',
         );
         w.fixtureYieldDelay = 40;
         beginImport(await archiveFor([removable]));
