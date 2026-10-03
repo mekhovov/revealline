@@ -1,5 +1,23 @@
 [
   {
+    "id": "runtime-classic-scout",
+    "path": "game/presentation/compiled/assets/827da59e870daf2e8548168399449bd894b4cdf7953a1f8ca48a7ed6df8f8d91.png",
+    "sha256": "827da59e870daf2e8548168399449bd894b4cdf7953a1f8ca48a7ed6df8f8d91",
+    "bytes": 325,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "runtime-classic-wall",
+    "path": "game/presentation/compiled/assets/326d159fab7ab655e40c493e5e3ae27713157b419788134f23363ef222ad27db.png",
+    "sha256": "326d159fab7ab655e40c493e5e3ae27713157b419788134f23363ef222ad27db",
+    "bytes": 146,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
     "id": "runtime-tiny5-license",
     "path": "game/ui/fonts/OFL.txt",
     "sha256": "6fe7d64407c69d187748206265977654747d3e2fe9e38e45a62cd03ec4770df6",

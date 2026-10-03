@@ -1,0 +1,93 @@
+{
+  "format": "classic-snake-record-cache-observation.v1",
+  "observedAt": "2026-10-03T02:21:29.773Z",
+  "scope": "Direct production records read/merge/cache observation, using the existing finite IndexedDB model. No automated test suite.",
+  "testPolicy": "WAIVED_SKIPPED_NOT_PASSED",
+  "storageModel": "game/test/helpers/managed-idb.mjs; not native browser disk or quota evidence",
+  "sources": {
+    "game/snake/classic-records.mjs": "9d8766e57d581995a0c9f3ccd85f5d61edd212542a58f26604faec2e43343ed4",
+    "game/snake/classic-core.mjs": "f9a4361b85bfc8d4cba8e8889109b893bbca8de65e91863b93c7d5ddc0435f74",
+    "game/snake/classic-core-v2.mjs": "79d8da0cb894def4d09b5e664f8a28ec6bf18cac1b8fd4c7d43c16b74decd92f",
+    "game/snake/classic-match.mjs": "02d904912c0df723bbe7ec760c07c489939298f109817d6542bfd38e1d287d77",
+    "game/snake/classic-setup.mjs": "3cd00fe2cb125b1897dc2986fb00c847df07c6845257d1e1f3e9d7fa5babf299",
+    "game/snake/classic-catalogue.mjs": "b613fe7101cf34c4c146f72ddc563033f69297ebeab809a5be3e4d28eaf2e25f",
+    "game/snake/classic-catalogue-v2.mjs": "a63cae859668b2a18bc0cd861f7a99084d78c2317e470dc5cfe77cb460e0e040"
+  },
+  "corpus": {
+    "authoredInitialRows": 84,
+    "longRunningEndlessRows": 12,
+    "longRunningSteps": 96000,
+    "longRunningTurnsPerRow": 3999,
+    "storedRows": 96,
+    "serializedBytes": 4472292
+  },
+  "timingsMs": {
+    "coldRead": 26447.6,
+    "warmRead": 327.7,
+    "visitMerge": 531.8,
+    "pruneRead": 0.5
+  },
+  "coldVerificationYieldCallbacks": 96,
+  "diagnostics": {
+    "cold": {
+      "verified": 96,
+      "hits": 192,
+      "cachedProofs": 96,
+      "cachedCharacters": 4429983,
+      "characterLimit": 33554432
+    },
+    "warm": {
+      "verified": 96,
+      "hits": 288,
+      "cachedProofs": 96,
+      "cachedCharacters": 4429983,
+      "characterLimit": 33554432
+    },
+    "updated": {
+      "verified": 96,
+      "hits": 480,
+      "cachedProofs": 96,
+      "cachedCharacters": 4429983,
+      "characterLimit": 33554432
+    },
+    "pruned": {
+      "verified": 96,
+      "hits": 482,
+      "cachedProofs": 2,
+      "cachedCharacters": 1661,
+      "characterLimit": 33554432
+    }
+  },
+  "notifications": {
+    "count": 4,
+    "last": {
+      "lastPlayed": {
+        "levelId": "classic-snake-open-loop",
+        "at": 1790994089240
+      },
+      "recordCount": 2
+    },
+    "maxSerializedBytes": 88
+  },
+  "warnings": [],
+  "limitations": [
+    "Candidate qualification only: first-load verification took 26.19–26.45 seconds for this 4.47MB profile; one 8000-step proof synchronously restored in 1.81 seconds. Large-profile cold responsiveness remains a release performance gate.",
+    "Initial catalogue rows are not mission playthroughs. Long-running records follow an input-only empty-field loop, without catches.",
+    "Cold verification yields between full match proofs; a single bounded proof is still synchronous.",
+    "No native browser IndexedDB latency, quota, maximum24MiB profile or simultaneous multi-tab stress qualification."
+  ],
+  "priorTimingObservationMs": {
+    "coldRead": 26190.3,
+    "warmRead": 332.3,
+    "visitMerge": 525.8,
+    "note": "Same frozen production source and corpus; subsequent observation corrected only the harness external replacement used to inspect pruning."
+  },
+  "singleLongProofObservation": {
+    "steps": 8000,
+    "turns": 3999,
+    "inputLoopGenerationMs": 911.1,
+    "synchronousRestoreMatchMs": 1811.0,
+    "coldRememberIncludingStorageMs": 1890.1,
+    "scope": "Separate direct production observation of the first long Endless witness; finite IndexedDB model."
+  }
+}

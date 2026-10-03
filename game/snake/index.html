@@ -2,13 +2,21 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <script src="../presentation/theme-bootstrap.mjs" data-theme-density="player" data-theme-follow-context="true"></script>
-    <link rel="stylesheet" href="../presentation/industrial-workshop.css" data-industrial-workshop />
-    <script type="module" src="../presentation/theme-entry.mjs"></script>
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script
+      src="../presentation/theme-bootstrap.mjs"
+      data-theme-density="player"
+      data-theme-follow-context="true"
+    ></script>
+    <link
+      rel="stylesheet"
+      href="../presentation/industrial-workshop.css"
+      data-industrial-workshop
+    />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <meta name="theme-color" content="#101b20" />
     <title>Snake hunts · FPV / LINE</title>
     <link rel="stylesheet" href="hub.css" />
+    <link rel="stylesheet" href="../ui/optional-practice-panel.css" />
     <script type="module" src="hub.mjs"></script>
   </head>
   <body>
@@ -68,9 +76,20 @@
               stroke-dasharray="4 7"
             />
             <path d="M110 110H180V120H120V190H110Z M235 200H245V255H190V245H235Z" fill="#71828b" />
-            <rect x="151" y="128" width="18" height="18" fill="#76d5aa" />
-            <rect x="153" y="130" width="5" height="5" fill="#f7eacb" />
-            <rect x="162" y="130" width="5" height="5" fill="#f7eacb" />
+            <g transform="translate(160 137)" aria-hidden="true">
+              <rect x="-14" y="-14" width="28" height="28" fill="#071527" stroke="#65b6ff" />
+              <path d="M-9-9 9 9M9-9-9 9" stroke="#a8b8cc" stroke-width="4" />
+              <g fill="#65b6ff">
+                <rect x="-13" y="-10" width="8" height="3" />
+                <rect x="5" y="-10" width="8" height="3" />
+                <rect x="-13" y="7" width="8" height="3" />
+                <rect x="5" y="7" width="8" height="3" />
+              </g>
+              <rect x="-4" y="-9" width="8" height="17" fill="#d5deec" />
+              <rect x="-4" y="-3" width="8" height="4" fill="#0057b7" />
+              <rect x="-4" y="1" width="8" height="4" fill="#ffd700" />
+              <rect x="-2" y="-12" width="4" height="3" fill="#ffe16b" />
+            </g>
             <path d="M155 130V133M164 130V133" stroke="#101b20" stroke-width="2" />
             <g fill="#efbe60">
               <rect x="270" y="65" width="10" height="10" />
@@ -90,6 +109,8 @@
           <h2 id="campaign-title"></h2>
           <p id="campaign-count"></p>
         </div>
+        <p id="campaign-note" class="lede"></p>
+        <div id="campaigns" class="chapters campaign-cards"></div>
         <div id="chapters" class="chapters"></div>
       </section>
       <section class="sim-section" aria-labelledby="sim-title">
