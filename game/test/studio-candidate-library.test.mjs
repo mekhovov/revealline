@@ -14,6 +14,10 @@ const controls = [
   'combat-study',
   'cultural-workshop',
   'pursuit-intercept',
+  'living-pilots',
+  'living-chapters',
+  'living-team-pilots',
+  'living-team-chapters',
   'whole-spatial',
   'whole-field',
   'whole-timed',
@@ -92,8 +96,8 @@ for (const initialLocale of ['en', 'uk'])
         assert.equal(
           $('candidate-count').textContent,
           locale === 'uk'
-            ? 'Показано 1 запис із 31. Деякі записи мають спільні елементи вибору версії.'
-            : '1 of 31 entries shown. Some entries share edition controls.',
+            ? `Показано 1 запис із ${entries.length}. Деякі записи мають спільні елементи вибору версії.`
+            : `1 of ${entries.length} entries shown. Some entries share edition controls.`,
         );
         assert.equal($('candidate-search').value, 'whole-spatial-v11');
         assert.equal($('source').value, '{"unapplied":"Україна"}');
@@ -111,6 +115,22 @@ for (const initialLocale of ['en', 'uk'])
       setLocale(previous, { persist: false });
     }
   });
+
+test('Living Routes pilot and chapter controls are discoverable without replacing source edits', () => {
+  const { $, search, visible } = setup();
+  $('source').value = '{"unapplied":"keep me"}';
+  $('apply').disabled = true;
+  search('crossing post');
+  assert.equal(visible().length, 1);
+  assert(visible()[0].querySelector('#living-pilots'));
+  assert(visible()[0].querySelector('#living-chapters'));
+  search('pincer yard');
+  assert.equal(visible().length, 1);
+  assert(visible()[0].querySelector('#living-team-pilots'));
+  assert(visible()[0].querySelector('#living-team-chapters'));
+  assert.equal($('source').value, '{"unapplied":"keep me"}');
+  assert.equal($('apply').disabled, true);
+});
 
 test('translated inspection feedback retains authored names and cannot revive a cleared inspection', () => {
   const previous = getLocale();

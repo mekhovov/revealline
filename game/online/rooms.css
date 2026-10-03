@@ -136,3 +136,29 @@ canvas {
     min-width: 44px;
   }
 }
+
+.selection-source,
+#share-selection {
+  grid-column: 1 / -1;
+}
+.accepted-content {
+  border-block: 1px solid #76959d;
+  padding-block: 12px;
+  margin-block: 12px;
+}
+.accepted-content h2 {
+  font-size: 1.1rem;
+  margin: 0;
+}
+.accepted-content summary {
+  min-height: 44px;
+  padding-block: 12px;
+  cursor: pointer;
+}
+.accepted-content pre {
+  white-space: pre-wrap;
+}
+#result-scope {
+  font-size: 0.85rem;
+  color: #bbc8c8;
+}

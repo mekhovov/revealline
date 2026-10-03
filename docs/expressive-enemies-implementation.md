@@ -132,10 +132,14 @@ loopback by default and needs a
 separately deployed HTTPS endpoint for a public game host. GitHub Pages alone
 cannot run it. See [room service instructions](../services/rooms/README.md).
 
-Public matching is disabled by default. Hosted authentication and abuse controls,
-durable credential/state recovery, native endpoint approval, community/Company
-room admission, asynchronous challenges/ghosts, SIM races and shared-world flight
-are later roadmap stages, not completed features of this preview.
+The default-off operator registry now admits hash-pinned Community Classic Snake
+and data-only native Team packages through native validators. Accepted room
+recipes bind publication ownership; clients cannot supply or relabel packages.
+Company editions are currently Solo-only, and media-bearing Creator/Team content
+needs verified room presentation before admission. Public matching remains
+disabled by default. Hosted authentication, durable recovery, native endpoints,
+full media/Company room admission, asynchronous challenges/ghosts and SIM
+networking remain later stages. See the [immutable-content follow-up](verification/immutable-room-content.md).
 
 ## Qualification and verification
 
@@ -156,6 +160,10 @@ At 320×740 the page had no horizontal overflow, all four turn buttons measured
 56×56 CSS pixels, and Pause and both players' controls stayed inside the viewport.
 At 740×360 the board and controls fit side by side. These checks are not a
 complete device, accessibility, simultaneous-touch or gamepad qualification.
+
+The [six-pilot packet](qualification/pursuit-pilots/README.md) now supplies native
+editable sources, exact recipe identities and explicit recording verification.
+It does not generate completion inputs or grant release qualification.
 
 No completed human route is claimed for the 84 drafts. Each needs its pinned
 qualification-seed route, supported pace/mode review, readable specialist contact,

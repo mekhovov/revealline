@@ -3,8 +3,10 @@ import { randomBytes, createHash } from 'node:crypto';
 import { readFile, readdir } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 import { resolve, dirname, relative } from 'node:path';
-import { canonicalJSON, required } from '../../game/data-json.mjs';
+import { canonicalJSON, exactKeys, required } from '../../game/data-json.mjs';
 import { ROOM_CONTROL_PROTOCOL } from '../../game/online/room-client-lifecycle.mjs';
+import { validateRoomContent, validateRoomCatalogue } from '../../game/online/room-content.mjs';
+import { loadRoomContentRegistry } from './content-registry.mjs';
 import { CLASSIC_SNAKE_LEVELS } from '../../game/snake/classic-catalogue.mjs';
 import { prepareClassicSnakeLevel } from '../../game/snake/classic-setup.mjs';
 import { FIRST_CONNECTION } from '../../game/coop/first-connection.mjs';
@@ -128,8 +130,34 @@ export async function createRoomService({
   maxRooms = 64,
   allowPublic = false,
   catalogue = null,
+  contentManifestPath = null,
 } = {}) {
-  const entries = catalogue ?? (await roomCatalogue());
+  const imported = await loadRoomContentRegistry(contentManifestPath);
+  const entries = [...(catalogue ?? (await roomCatalogue())), ...imported.entries].map((entry) => {
+    // Server-internal fixture/catalogue entries are copied before accepting any
+    // request. Only the local registry can supply imported source provenance.
+    const owned = structuredClone(entry);
+    owned.content = validateRoomContent(
+      owned.content ?? {
+        format: 'revealline-room-content.v1',
+        catalogueId: owned.id,
+        source: {
+          kind: 'builtin',
+          id: 'revealline',
+          revision: 'rooms-v1',
+          title: { en: 'RevealLine', uk: 'RevealLine' },
+        },
+        mission: { id: owned.level.id, revision: String(owned.level.revision), title: owned.title },
+        presentation: 'shared-runtime',
+      },
+    );
+    return owned;
+  });
+  required(
+    new Set(entries.map((entry) => entry.id)).size === entries.length,
+    'Duplicate room catalogue ID.',
+  );
+  const publicCatalogue = validateRoomCatalogue(entries, imported.unavailable);
   const engineVersion = await roomEngineIdentity();
   const rooms = new Map(),
     credentials = new Map(),
@@ -155,6 +183,7 @@ export async function createRoomService({
     return JSON.parse(Buffer.concat(chunks).toString('utf8') || '{}');
   };
   const admit = (selection) => {
+    exactKeys(selection, ['id', 'pace', 'targets', 'seed'], 'room recipe selection');
     const entry = entries.find((item) => item.id === selection.id);
     required(entry, 'Choose an available exact room recipe.');
     required(['normal', 'slow', 'fast'].includes(selection.pace ?? 'normal'), 'Invalid pace.');
@@ -180,7 +209,17 @@ export async function createRoomService({
                 style: selection.targets === 'varied' ? 'varied' : 'original',
               });
     const accepted = level.level ?? level;
-    return { family: entry.family, mode: entry.mode, level: accepted, seed: selection.seed ?? 17 };
+    const content = validateRoomContent({
+      ...entry.content,
+      mission: { ...entry.content.mission, id: accepted.id, revision: String(accepted.revision) },
+    });
+    return {
+      family: entry.family,
+      mode: entry.mode,
+      level: accepted,
+      seed: selection.seed ?? 17,
+      content,
+    };
   };
   const allocate = (selection, publicRoom = false) => {
     required(rooms.size < maxRooms, 'The room service is full. Try again later.');
@@ -254,7 +293,15 @@ export async function createRoomService({
           protocol: ROOM_PROTOCOL,
           controlProtocol: ROOM_CONTROL_PROTOCOL,
           public: allowPublic,
-          entries: entries.map(({ level, ...entry }) => ({ ...entry, revision: level.revision })),
+          entries: publicCatalogue.entries,
+          unavailable: publicCatalogue.unavailable,
+          registry: {
+            enabled: imported.report.enabled,
+            packages: imported.report.packages,
+            admittedPackages: imported.report.admittedPackages,
+            unavailablePackages: imported.report.unavailablePackages,
+            entries: imported.report.entries,
+          },
         });
       if (request.method === 'POST' && url.pathname === '/rooms')
         return send(201, allocate(await read(request)));
@@ -359,15 +406,20 @@ export async function createRoomService({
   }, 4);
   timer.unref();
   server.on('close', () => clearInterval(timer));
+  // Operator diagnostics contain no package paths or payloads. They are not an
+  // HTTP admission endpoint and cannot be changed by a player request.
+  Object.defineProperty(server, 'contentRegistryReport', { value: imported.report });
   return server;
 }
 if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
   const server = await createRoomService({
     origins: (process.env.ROOM_ORIGINS ?? 'http://127.0.0.1:8779,http://localhost:8779').split(','),
     allowPublic: process.env.ROOM_PUBLIC === 'qualified',
+    contentManifestPath: process.env.ROOM_CONTENT_MANIFEST || null,
   });
   const port = Number(process.env.PORT ?? 8783);
-  server.listen(port, process.env.HOST ?? '127.0.0.1', () =>
-    console.log(`RevealLine rooms listening on ${port}; source ${root}`),
-  );
+  server.listen(port, process.env.HOST ?? '127.0.0.1', () => {
+    console.log(`RevealLine rooms listening on ${port}; source ${root}`);
+    console.log(`Room content registry: ${JSON.stringify(server.contentRegistryReport)}`);
+  });
 }
