@@ -166,6 +166,10 @@ const generated = await format(lines.join('\n'), {
   ...(await resolveConfig(path.join(root, target))),
   filepath: path.join(root, target),
   parser: 'babel',
+  // This generated projection repeats nested source scopes. Keep newlines for
+  // inspection without charging their indentation to the offline source budget.
+  // Canonical modules and packed recordings retain their original bytes.
+  tabWidth: 0,
 });
 const check = process.argv.includes('--check');
 if (process.argv.slice(2).some((arg) => arg !== '--check')) throw new Error('Use [--check].');
