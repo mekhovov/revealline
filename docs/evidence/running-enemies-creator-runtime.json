@@ -1,5 +1,5 @@
 {
-  "observedAt": "2026-10-02T23:53:38.036Z",
+  "observedAt": "2026-10-03T00:01:34.703Z",
   "method": "Direct bounded in-memory generated Creator bundle preparation/export/import, explicit runtime starts, 30 legal down ticks, pause, replay-verified On v2 and Off v1 restoration, accepted-selection Retry, fresh Off, and at most 2400 further legal down ticks. No test runner or automated suite; native image decode replaced only by actual PNG header dimension reader.",
   "editionId": "0b27d155c825072cb8f50da4cbb5013085053b010a39a89fc85d70d143873a5e",
   "bundleBytes": 30841,
@@ -46,7 +46,14 @@
     "retainedRunId": true
   },
   "codeSHA256": {
-    "game/creator/runtime.mjs": "c3583065cc0f6c03f41121936ecef5b2c82874a62f04ff644388212a988c1bf5"
+    "game/creator/runtime.mjs": "a9f3b275700ff3160396c32a4fba689b3b4ae7be32ce6d63154087b1ee361fa7"
   },
-  "scope": "Production runtime and bundle validation only. This is not native image rendering, IndexedDB installation, browser controls, or exhaustive generated-template qualification."
+  "scope": "Production runtime and bundle validation only. This is not native image rendering, IndexedDB installation, browser controls, or exhaustive generated-template qualification.",
+  "comparison": {
+    "previousRuntimeSHA256": "c3583065cc0f6c03f41121936ecef5b2c82874a62f04ff644388212a988c1bf5",
+    "sameBoundedObservations": true,
+    "sourceUnchangedDuringObservation": true,
+    "harnessSHA256": "f0c5e3c77d5a127611daf00206857d0b8b9643b6520b83e067142a6317769508",
+    "sourceChangeAssessment": "Implementing agent reports final scoped Prettier formatting only. Prior source bytes were not retained by this observer, so no independent AST comparison is claimed. This fresh observation directly verifies the current frozen runtime bytes."
+  }
 }
