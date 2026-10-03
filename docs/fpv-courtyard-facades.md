@@ -108,7 +108,7 @@ World Studio's original inputs total 16,742,742 bytes, leaving 34,474 bytes unde
 the unchanged 16 MiB guard. All 15 artifact checksums were independently reread.
 Distribution ZIP SHA-256:
 `00e62f023317fceb6f4c223fd25b4477a040e4ecacc3c27905c79ea38e37a4d4`.
-The separate player contains 94 files / 15,378,809 bytes. All 31 packaged-renderer
+The separate development playtest contains 94 files / 15,378,809 bytes. All 31 packaged-renderer
 modules match both the admitted ZIP and player; compared with source, only the
 intentionally generated locale catalogue differs. Candidate/playtest/packaged
 fixture directories retain suffix `c452dd215` under `dist/`.
@@ -146,7 +146,30 @@ match its admitted ZIP, and 30 remain exact to the accepted player. The sole
 changed module produces the exact Courtyard GLBs proven above. Candidate and
 player directory suffixes are `6b81d2120`.
 
+Both 94-file players are development playtests, not complete copies of their
+102-file admitted distribution ZIPs. Direct ZIP comparison confirms 91 common
+files are exact. The distribution adds eight launcher files; `optional-package.json`,
+`app.webmanifest` and `worker.js` differ in source/install/cache identity. All 31
+rendering modules are exact as stated above. The actual-player observations
+qualify rendered gameplay only, not the admitted launcher, installation identity
+or offline package flow.
+
 `publicEligible` and `releaseQualified` remain false in local receipts. Protected
 source CI, merge and public deployment remain separate publication boundaries.
 
 Human, physical-device performance and final artist acceptance remain open.
+
+## Protected-controller integration audit
+
+After Meadow and Woodland material response merged, the controller advanced this
+PR normally to `c612816b2bf06467ffadaa1e5e75d455c81b2297`. A separate scoped audit
+passes 197 checks: nine representative Courtyard geometry/material/texture/disposal
+cases, all 11 facade outputs and 22 authored/Pixel Courtyard GLBs remain exact.
+The complete facade function has SHA-256
+`0a0784274f0e5392455cf1980824ea4dc894311757b14429a699995f9110a2df`.
+Incoming Meadow and Woodland branches do not select Courtyard. The original
+source/package receipts remain bound to their stated frozen candidates; this
+audit does not claim a new full browser matrix or newly admitted local package.
+The inherited scenery provenance file is stale, so this audit uses direct
+runtime/library/GLB hashes; the separate Warehouse generator refresh repairs
+that metadata.
