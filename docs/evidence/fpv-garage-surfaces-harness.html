@@ -1,0 +1,1421 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Garage surfaces · before / after</title>
+    <style>
+      :root {
+        font: 15px system-ui;
+        color-scheme: dark;
+        background: #0b1724;
+        color: #e6eff4;
+      }
+      body {
+        margin: 20px;
+        max-width: 1400px;
+      }
+      h1 {
+        font-size: 23px;
+      }
+      p {
+        max-width: 105ch;
+        line-height: 1.45;
+      }
+      button,
+      select {
+        font: inherit;
+        min-height: 44px;
+        background: #1b3044;
+        color: inherit;
+        border: 1px solid #58778d;
+        border-radius: 6px;
+        padding: 8px 12px;
+      }
+      button:disabled {
+        opacity: 0.5;
+      }
+      .controls {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+        margin: 12px 0;
+        align-items: center;
+      }
+      label {
+        display: flex;
+        gap: 8px;
+        align-items: center;
+      }
+      .pair {
+        display: flex;
+        gap: 14px;
+        overflow: auto;
+      }
+      figure {
+        margin: 0;
+        flex: none;
+      }
+      figcaption {
+        padding: 8px;
+        font-weight: 600;
+      }
+      .screen,
+      .screen canvas {
+        width: 640px;
+        height: 360px;
+        display: block;
+        background: #101923;
+      }
+      .screen {
+        border: 1px solid #526878;
+      }
+      textarea {
+        width: 100%;
+        height: 240px;
+        background: #101923;
+        color: #dce8f0;
+        font: 12px monospace;
+      }
+      small {
+        color: #aac0ce;
+      }
+      #status {
+        min-height: 25px;
+      }
+      #provenance {
+        font: 12px monospace;
+        overflow-wrap: anywhere;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Garage ramp, deck and columns comparison</h1>
+    <p>
+      Frozen baseline and candidate use actual production WebGL renderers and built-in GLB scenery.
+      The eight canonical solids retain their complete opaque bounds. Inspect ramp toe and crest,
+      deck top and underside, and column markings while preserving actual support surfaces.
+    </p>
+    <p>
+      <small
+        >Prepare with
+        <code
+          >node scripts/prepare-fpv-garage-surfaces-verification.mjs --out
+          dist/fpv-garage-surfaces-verification-NAME</code
+        >. Add <code>--candidate-base dist/PACKAGE</code> for an admitted packaged closure. No game
+        progress or remote assets are used. Observer poses are not flight proofs. Keep this tab
+        visible during verification.</small
+      >
+    </p>
+    <p id="provenance">Loading provenance…</p>
+    <div class="controls">
+      <button id="run" disabled>Run structure qualification</button>
+      <button id="preview" disabled>Show selected view</button>
+      <button id="download" disabled>Download receipt</button>
+    </div>
+    <div class="controls">
+      <label>Course<select id="course"></select></label>
+      <label
+        >Appearance<select id="appearance">
+          <option value="authored">Authored Operations</option>
+          <option value="pixel">Pixel profile · renderer-only override</option>
+          <option value="industrial-workshop">Shared Themes · Industrial Workshop</option>
+        </select></label
+      >
+      <label
+        >Quality<select id="quality">
+          <option value="low">Performance</option>
+          <option value="balanced" selected>Balanced</option>
+          <option value="high">Quality</option>
+        </select></label
+      >
+      <label
+        >Camera<select id="camera">
+          <option>fpv</option>
+          <option>chase</option>
+          <option>overview</option>
+        </select></label
+      >
+      <label
+        >Height<select id="height">
+          <option value="1.5">1.5 m · near ground</option>
+          <option value="3" selected>3 m · under deck</option>
+          <option value="5.5">5.5 m · deck edge</option>
+          <option value="7">7 m · above ramp</option>
+        </select></label
+      >
+      <label
+        >Facing<select id="pose">
+          <option value="ramp-toe">Ramp toe</option>
+          <option value="ramp-crest">Ramp crest</option>
+          <option value="ramp-side">Ramp side</option>
+          <option value="deck-top">Deck top</option>
+          <option value="deck-under">Deck underside</option>
+          <option value="column">Column face</option>
+          <option value="trail">Trail and objectives</option>
+          <option value="platform">Plain school upper deck</option>
+        </select></label
+      >
+    </div>
+    <p id="status">Preparing controls…</p>
+    <div class="pair">
+      <figure>
+        <figcaption>Before · frozen baseline</figcaption>
+        <div class="screen" id="before"></div>
+      </figure>
+      <figure>
+        <figcaption>After · frozen candidate</figcaption>
+        <div class="screen" id="after"></div>
+      </figure>
+    </div>
+    <p>
+      <small
+        >The harness observes Three.js scene attachment only during renderer construction, then
+        restores the original method. It never replaces production geometry, shaders or render
+        output. Added surface details are checked separately from exact body geometry and sightline
+        parity. Pixel equality is same-browser evidence, not a cross-device golden or FPS
+        claim.</small
+      >
+    </p>
+    <textarea id="receipt" aria-label="Garage surface verification receipt" readonly></textarea>
+    <script type="module">
+      const $ = (id) => document.getElementById(id),
+        qualities = ['low', 'balanced', 'high'],
+        heights = [1.5, 3, 5.5, 7],
+        structureIds = [
+          'garage-ramp',
+          'garage-deck',
+          ...[0, 1].flatMap((i) => [0, 1, 2].map((j) => `column-${i}-${j}`)),
+        ],
+        garageIds = [
+          ...Array.from({ length: 8 }, (_, i) => 'garage-' + String(i + 1).padStart(2, '0')),
+          'beginner-41',
+        ],
+        wait = () => new Promise(requestAnimationFrame),
+        encode = JSON.stringify,
+        clone = (value) => JSON.parse(JSON.stringify(value));
+      const sha = async (value) =>
+        [
+          ...new Uint8Array(
+            await crypto.subtle.digest(
+              'SHA-256',
+              typeof value === 'string' ? new TextEncoder().encode(value) : value,
+            ),
+          ),
+        ]
+          .map((x) => x.toString(16).padStart(2, '0'))
+          .join('');
+      let manifest,
+        modules,
+        receipt,
+        owners = [],
+        busy = false;
+      const errors = [];
+      addEventListener('error', (event) => errors.push(event.message));
+      addEventListener('unhandledrejection', (event) => errors.push(String(event.reason)));
+      function status(text) {
+        $('status').textContent = text;
+      }
+      function publish() {
+        window.fpvGarageSurfacesReceipt = receipt;
+        $('receipt').value = JSON.stringify(receipt, null, 2);
+        $('download').disabled = !receipt;
+      }
+      function check(passed, name, details = {}) {
+        receipt.checks.push({ name, passed: !!passed, ...details });
+        publish();
+        if (!passed) throw Error(name);
+      }
+      async function timeout(operation, label) {
+        let timer;
+        try {
+          return await Promise.race([
+            operation,
+            new Promise((_, reject) => {
+              timer = setTimeout(() => reject(Error('Timeout: ' + label)), 45000);
+            }),
+          ]);
+        } finally {
+          clearTimeout(timer);
+        }
+      }
+      async function verifyHashes() {
+        for (const [side, files] of Object.entries(manifest.files))
+          for (const [file, hash] of Object.entries(files)) {
+            const r = await fetch('./' + side + '/' + file, { cache: 'no-store' });
+            if (!r.ok || (await sha(await r.arrayBuffer())) !== hash)
+              throw Error('Frozen source mismatch: ' + side + '/' + file);
+          }
+        if (
+          (await sha(await (await fetch('./index.html', { cache: 'no-store' })).arrayBuffer())) !==
+          manifest.harnessSha256
+        )
+          throw Error('Harness mismatch');
+      }
+      async function initialize() {
+        manifest = await (await fetch('./fixture-manifest.json', { cache: 'no-store' })).json();
+        if (manifest.format !== 'FPVGarageSurfacesFixture.v1') throw Error('Unknown fixture');
+        $('provenance').textContent =
+          'Baseline ' +
+          manifest.baseline +
+          ' · Candidate ' +
+          manifest.candidate +
+          ' · renderer ' +
+          manifest.files.after['optional-practice/civilian-fpv/renderer.mjs'] +
+          ' · visuals ' +
+          manifest.files.after['optional-practice/civilian-fpv/world-visuals.mjs'];
+        modules = await Promise.all(
+          ['before', 'after'].map(async (side) => {
+            const base = new URL('./' + side + '/optional-practice/civilian-fpv/', location.href);
+            const [
+              assets,
+              catalogue,
+              model,
+              visuals,
+              THREE,
+              worldCatalogue,
+              worldModel,
+              collision,
+            ] = await Promise.all(
+              [
+                'world-assets.mjs',
+                'catalogue.mjs',
+                'model.mjs',
+                'world-visuals.mjs',
+                'vendor/three.module.js',
+                'world-catalogue.mjs',
+                'world-model.mjs',
+                'world-collision.mjs',
+              ].map((name) => import(new URL(name, base))),
+            );
+            await worldModel.initWorldRuntime();
+            return {
+              side,
+              assets,
+              catalogue,
+              model,
+              visuals,
+              THREE,
+              worldCatalogue,
+              worldModel,
+              collision,
+            };
+          }),
+        );
+      }
+      const allCourses = (index = 0) => [
+        ...modules[index].worldCatalogue.WORLD_CATALOGUE,
+        ...modules[index].worldCatalogue.BEGINNER_CATALOGUE,
+      ];
+      function course(index, id) {
+        const c = [
+          ...modules[index].worldCatalogue.WORLD_CATALOGUE,
+          ...modules[index].worldCatalogue.BEGINNER_CATALOGUE,
+        ].find((row) => row.id === id)?.course;
+        if (!c) throw Error('Missing course ' + id);
+        return c;
+      }
+      function observation(id, height, pose) {
+        const c = course(0, id),
+          m = modules[0],
+          flight = (
+            c.format === 'FlightCourse.v2' ? m.worldModel.createWorldFlight : m.model.createFlight
+          )({ course: c, mode: 'acro' }),
+          state = flight.snapshot();
+        flight.dispose?.();
+        let x = c.spawn.x / 1000,
+          z = c.spawn.z / 1000,
+          yaw = 0,
+          pitch = 0;
+        if (c.obstacles.some((o) => o.id === 'garage-ramp')) {
+          if (pose === 'ramp-toe') {
+            x = -29.5;
+            z = 19;
+            pitch = -0.08;
+          }
+          if (pose === 'ramp-crest') {
+            x = -29.5;
+            z = -16;
+            yaw = Math.PI;
+            pitch = -0.12;
+          }
+          if (pose === 'ramp-side') {
+            x = -19;
+            z = 3;
+            yaw = Math.PI / 2;
+          }
+          if (pose === 'deck-top') {
+            x = -18;
+            z = -19;
+            yaw = Math.PI / 2;
+            pitch = -0.12;
+          }
+          if (pose === 'deck-under') {
+            x = -29.5;
+            z = -3;
+            pitch = 0.25;
+          }
+          if (pose === 'column') {
+            x = -16;
+            z = -5;
+            yaw = Math.PI / 2;
+          }
+          if (pose === 'platform') {
+            x = 0;
+            z = -5;
+            pitch = height < 4.7 ? 0.2 : -0.1;
+          }
+        }
+        const q = new m.THREE.Quaternion().setFromEuler(new m.THREE.Euler(pitch, yaw, 0, 'YXZ'));
+        state.position = { x: x * 1000, y: height * 1000, z: z * 1000 };
+        state.orientation = q.toArray().map((n) => Math.round(n * 1e6));
+        state.ticks = 100;
+        return state;
+      }
+      function createOwners() {
+        owners = modules.map((row) => {
+          const canvas = document.createElement('canvas');
+          canvas.setAttribute('aria-label', row.side + ' actual garage scene');
+          $(row.side).replaceChildren(canvas);
+          let scene = null;
+          const proto = row.THREE.Object3D.prototype,
+            original = proto.add;
+          proto.add = function (...objects) {
+            if (!scene && this.isScene && objects.length === 8 && objects.every((o) => o.isGroup))
+              scene = this;
+            return original.apply(this, objects);
+          };
+          let runtime;
+          try {
+            runtime = row.assets.createFlightRenderer({
+              canvas,
+              window,
+              reducedMotion: true,
+              onContextLost: () => {
+                if (receipt && !receipt.disposing) receipt.contextLosses.push(row.side);
+              },
+            });
+          } finally {
+            proto.add = original;
+          }
+          if (!runtime.available || !scene) {
+            runtime.dispose();
+            throw Error(row.side + ' renderer/scene unavailable');
+          }
+          return {
+            ...row,
+            canvas,
+            runtime,
+            scene,
+            world: scene.children[0],
+            goals: scene.children[1],
+            actors: scene.children[4],
+            imported: scene.children[6],
+            gl: canvas.getContext('webgl2'),
+          };
+        });
+      }
+      function disposeOwners() {
+        if (receipt) receipt.disposing = true;
+        const result = owners.map((o) => {
+          o.runtime.dispose();
+          return { side: o.side, resources: o.runtime.resources() };
+        });
+        owners = [];
+        if (receipt) delete receipt.disposing;
+        return result;
+      }
+      async function load(id, quality, { appearance = 'authored' } = {}) {
+        const result = [];
+        for (let i = 0; i < owners.length; i++) {
+          const o = owners[i],
+            c = clone(course(i, id));
+          if (appearance === 'pixel') c.world = { ...c.world, theme: 'pixel' };
+          o.runtime.setPresentation({
+            collectionId: appearance === 'pixel' ? 'authored' : appearance,
+            revision: 'r1',
+          });
+          o.runtime.setCourse(c, 'acro');
+          o.runtime.setQuality(quality);
+          o.runtime.setDrone('racer');
+          const glb = o.assets.builtinWorldScene(c);
+          let glbHash = null;
+          if (glb) {
+            glbHash = await sha(await glb.arrayBuffer());
+            await timeout(o.runtime.loadScene(glb), 'Actual GLB');
+          }
+          if ((await timeout(o.runtime.prepare(), 'Shader warmup')) === false)
+            throw Error('Shader preparation superseded');
+          o.scene.updateMatrixWorld(true);
+          result.push({
+            side: o.side,
+            glbHash,
+            importedChildren: o.imported.children.length,
+            profileId: o.runtime.resources().presentation.profileId,
+          });
+        }
+        return result;
+      }
+      function pixels(o, state, camera) {
+        const original = encode(state);
+        o.runtime.draw(state, { cameraMode: camera, cameraFov: 82, cameraTilt: 0 });
+        const g = o.gl,
+          rgba = new Uint8Array(g.drawingBufferWidth * g.drawingBufferHeight * 4);
+        g.readPixels(
+          0,
+          0,
+          g.drawingBufferWidth,
+          g.drawingBufferHeight,
+          g.RGBA,
+          g.UNSIGNED_BYTE,
+          rgba,
+        );
+        if (g.getError() !== g.NO_ERROR) throw Error(o.side + ' WebGL error');
+        if (encode(state) !== original) throw Error('Renderer mutated observer state');
+        return {
+          rgba,
+          width: g.drawingBufferWidth,
+          height: g.drawingBufferHeight,
+          resources: o.runtime.resources(),
+        };
+      }
+      async function pair(id, quality, camera, height, pose = 'ramp-toe') {
+        await wait();
+        const state = observation(id, height, pose),
+          a = pixels(owners[0], state, camera),
+          b = pixels(owners[1], state, camera);
+        if (a.rgba.length !== b.rgba.length) throw Error('Buffer mismatch');
+        let changed = 0,
+          nonBlack = 0,
+          total = 0;
+        for (let i = 0; i < a.rgba.length; i += 4) {
+          let d = 0;
+          for (let c = 0; c < 3; c++) d += Math.abs(a.rgba[i + c] - b.rgba[i + c]);
+          if (d) changed++;
+          total += d;
+          if (b.rgba[i] + b.rgba[i + 1] + b.rgba[i + 2]) nonBlack++;
+        }
+        return {
+          id,
+          quality,
+          camera,
+          height,
+          pose,
+          width: b.width,
+          heightPixels: b.height,
+          beforeHash: await sha(a.rgba),
+          afterHash: await sha(b.rgba),
+          changedPixels: changed,
+          changedFraction: changed / (a.rgba.length / 4),
+          meanChannelDifference: total / ((a.rgba.length / 4) * 3),
+          nonBlackPixels: nonBlack,
+          drawCalls: [a.resources.renderer.calls, b.resources.renderer.calls],
+          triangles: [a.resources.renderer.triangles, b.resources.renderer.triangles],
+          shaderPrograms: [a.resources.renderer.programs, b.resources.renderer.programs],
+        };
+      }
+      const active = (o) => {
+        for (let at = o; at; at = at.parent) if (!at.visible) return false;
+        return true;
+      };
+      const detail = (item) => item.userData.role === 'garage-surface-detail';
+      const cosmeticSurface = (item) =>
+        detail(item) ||
+        (item.name === 'flush-surface-markings' &&
+          /^column-[01]-[0-2]$/.test(item.parent?.userData.collisionId ?? ''));
+      const paintsOf = (item) =>
+        (Array.isArray(item.material) ? item.material : [item.material]).filter(Boolean);
+      const obstacleIdOf = (item) => {
+        for (let at = item; at; at = at.parent)
+          if (at.userData.collisionId) return at.userData.collisionId;
+        return null;
+      };
+      const geometryOf = (item) => ({
+        type: item.type,
+        name: item.name,
+        visible: active(item),
+        matrix: item.matrixWorld.elements.slice(),
+        cast: item.castShadow,
+        receive: item.receiveShadow,
+        positions: item.geometry?.attributes.position
+          ? Array.from(item.geometry.attributes.position.array)
+          : null,
+        normals: item.geometry?.attributes.normal
+          ? Array.from(item.geometry.attributes.normal.array)
+          : null,
+        index: item.geometry?.index ? Array.from(item.geometry.index.array) : null,
+        groups: item.geometry?.groups,
+        instances: item.instanceMatrix ? Array.from(item.instanceMatrix.array) : null,
+        count: item.count,
+      });
+      const opacityOf = (paint) => ({
+        transparent: paint.transparent,
+        opacity: paint.opacity,
+        alphaTest: paint.alphaTest,
+        side: paint.side,
+        depthWrite: paint.depthWrite,
+        displacementScale: paint.displacementMap ? paint.displacementScale : 0,
+      });
+      async function mapOf(t) {
+        const image = t.image;
+        return {
+          name: t.name,
+          kind: t.userData.surface?.kind ?? null,
+          role: t.userData.materialRole ?? null,
+          collectionId: t.userData.collectionId ?? null,
+          size: [image?.width, image?.height],
+          mag: t.magFilter,
+          min: t.minFilter,
+          anisotropy: t.anisotropy,
+          repeat: t.repeat.toArray(),
+          mipmaps: t.generateMipmaps,
+          hash: image?.data
+            ? await sha(image.data)
+            : image?.toDataURL
+              ? await sha(image.toDataURL())
+              : null,
+        };
+      }
+      function onAuthoredSurface(obstacle, point, normal, THREE) {
+        if (obstacle.type === 'trimesh') {
+          for (let i = 0; i < obstacle.indices.length; i += 3) {
+            const [a, b, c] = obstacle.indices
+                .slice(i, i + 3)
+                .map(
+                  (index) =>
+                    new THREE.Vector3(
+                      ...obstacle.vertices.slice(index * 3, index * 3 + 3).map((n) => n / 1000),
+                    ),
+                ),
+              triangle = new THREE.Triangle(a, b, c),
+              faceNormal = triangle.getNormal(new THREE.Vector3()),
+              closest = triangle.closestPointToPoint(point, new THREE.Vector3());
+            if (closest.distanceTo(point) < 1e-5 && Math.abs(faceNormal.dot(normal)) > 0.99999)
+              return true;
+          }
+          return false;
+        }
+        return (
+          ['x', 'y', 'z'].every(
+            (axis) =>
+              point[axis] >= obstacle.min[axis] / 1000 - 1e-5 &&
+              point[axis] <= obstacle.max[axis] / 1000 + 1e-5,
+          ) &&
+          ['x', 'y', 'z'].some(
+            (axis) =>
+              (Math.abs(point[axis] - obstacle.min[axis] / 1000) < 1e-5 &&
+                normal[axis] < -0.99999) ||
+              (Math.abs(point[axis] - obstacle.max[axis] / 1000) < 1e-5 && normal[axis] > 0.99999),
+          )
+        );
+      }
+      async function inspect(owner, c) {
+        const { THREE } = owner,
+          geometry = [],
+          uv = [],
+          opacity = [],
+          materials = [],
+          maps = [],
+          mapIndices = new Map(),
+          structureMapSet = new Set(),
+          structures = [],
+          details = [],
+          seamPoints = { 'garage-ramp': [], 'garage-deck': [] },
+          ramp = c.obstacles.find((o) => o.id === 'garage-ramp'),
+          deck = c.obstacles.find((o) => o.id === 'garage-deck'),
+          rampPoints = ramp
+            ? Array.from({ length: ramp.vertices.length / 3 }, (_, i) =>
+                ramp.vertices.slice(i * 3, i * 3 + 3).map((n) => n / 1000),
+              )
+            : [],
+          crestY = Math.max(...rampPoints.map((p) => p[1])),
+          crest = rampPoints.filter((p) => p[1] === crestY),
+          crestZ = crest[0]?.[2],
+          baseMeshes = [],
+          allMeshes = [],
+          platformItems = [],
+          seenUVs = new Set();
+        owner.scene.updateMatrixWorld(true);
+        for (const root of [owner.world, owner.imported, owner.goals, owner.actors])
+          root.traverse((item) => {
+            const g = item.geometry,
+              paints = paintsOf(item),
+              id = obstacleIdOf(item),
+              isDetail = detail(item),
+              mapped = paints.map((paint) => {
+                const textures = {};
+                for (const key of ['map', 'normalMap', 'roughnessMap', 'metalnessMap', 'alphaMap'])
+                  if (paint[key]) {
+                    if (!mapIndices.has(paint[key])) mapIndices.set(paint[key], mapIndices.size);
+                    textures[key] = mapIndices.get(paint[key]);
+                    if (structureIds.includes(id)) structureMapSet.add(paint[key]);
+                  }
+                return {
+                  type: paint.type,
+                  color: paint.color?.getHex(),
+                  emissive: paint.emissive?.getHex(),
+                  roughness: paint.roughness,
+                  metalness: paint.metalness,
+                  normalScale: paint.normalScale?.toArray(),
+                  ...opacityOf(paint),
+                  textures,
+                };
+              });
+            if (!cosmeticSurface(item)) {
+              geometry.push(geometryOf(item));
+              if (item.isMesh) opacity.push(paints.map(opacityOf));
+            }
+            materials.push(mapped);
+            if (g?.attributes.uv) {
+              uv.push(Array.from(g.attributes.uv.array));
+              seenUVs.add(g.attributes.uv.array);
+            }
+            if (item.userData.collisionId && structureIds.includes(id))
+              structures.push({
+                id,
+                kind: item.userData.surfaceKind,
+                role: item.userData.materialRole,
+                positions: g.attributes.position.count,
+                dimensions: [g.parameters?.width, g.parameters?.height, g.parameters?.depth],
+                opaque: paints.every((m) => !m.transparent && m.opacity === 1 && !m.alphaTest),
+                displacement: paints.some((m) => !!m.displacementMap),
+                finiteUV:
+                  !!g.attributes.uv && Array.from(g.attributes.uv.array).every(Number.isFinite),
+                worldUV:
+                  !!g.attributes.uv &&
+                  Array.from({ length: g.attributes.position.count }, (_, i) => {
+                    const v = new THREE.Vector3()
+                        .fromBufferAttribute(g.attributes.position, i)
+                        .applyMatrix4(item.matrixWorld),
+                      n = new THREE.Vector3()
+                        .fromBufferAttribute(g.attributes.normal, i)
+                        .transformDirection(item.matrixWorld),
+                      nx = Math.abs(n.x),
+                      ny = Math.abs(n.y),
+                      nz = Math.abs(n.z),
+                      u = (nx > ny && nx > nz ? v.z : v.x) / 6,
+                      w = (ny >= nx && ny >= nz ? v.z : v.y) / 6;
+                    return (
+                      Math.abs(g.attributes.uv.getX(i) - u) < 1e-6 &&
+                      Math.abs(g.attributes.uv.getY(i) - w) < 1e-6
+                    );
+                  }).every(Boolean),
+                visible: active(item),
+                collectionId:
+                  item.userData.simModelBinding?.collectionId ?? item.userData.collectionId ?? null,
+              });
+            if (isDetail) {
+              const parent = item.parent,
+                p = g?.attributes.position,
+                n = g?.attributes.normal,
+                textureUV = g?.attributes.uv,
+                bounds = c.obstacles.find((o) => o.id === id),
+                vertexRows = [];
+              if (p && bounds)
+                for (let i = 0; i < p.count; i++) {
+                  const v = new THREE.Vector3()
+                      .fromBufferAttribute(p, i)
+                      .applyMatrix4(item.matrixWorld),
+                    normal = n
+                      ? new THREE.Vector3()
+                          .fromBufferAttribute(n, i)
+                          .transformDirection(item.matrixWorld)
+                      : null;
+                  const nx = Math.abs(normal?.x),
+                    ny = Math.abs(normal?.y),
+                    nz = Math.abs(normal?.z),
+                    row = {
+                      p: v.toArray(),
+                      n: normal?.toArray() ?? null,
+                      uv: textureUV ? [textureUV.getX(i), textureUV.getY(i)] : null,
+                      worldUV:
+                        !!textureUV &&
+                        !!normal &&
+                        Math.abs(textureUV.getX(i) - (nx > ny && nx > nz ? v.z : v.x) / 6) < 1e-6 &&
+                        Math.abs(textureUV.getY(i) - (ny >= nx && ny >= nz ? v.z : v.y) / 6) < 1e-6,
+                      onFace: !!normal && onAuthoredSurface(bounds, v, normal, THREE),
+                    };
+                  vertexRows.push(row);
+                  if (
+                    seamPoints[id] &&
+                    item.userData.materialRole === 'enamel' &&
+                    Math.abs(v.y - crestY) < 1e-5 &&
+                    Math.abs(v.z - crestZ) < 1e-5
+                  )
+                    seamPoints[id].push({ point: row.p, uv: row.uv });
+                }
+              details.push({
+                id,
+                declaredId: item.userData.obstacleId,
+                parent: parent.userData.collisionId,
+                role: item.userData.materialRole,
+                visible: active(item),
+                castShadow: item.castShadow,
+                opaque: paints.every((m) => !m.transparent && m.opacity === 1 && !m.alphaTest),
+                displacement: paints.some((m) => !!m.displacementMap),
+                finiteUV:
+                  !!g?.attributes.uv && Array.from(g.attributes.uv.array).every(Number.isFinite),
+                vertices: vertexRows.length,
+                worldUV: vertexRows.length > 0 && vertexRows.every((v) => v.worldUV),
+                confinedToFace: vertexRows.length > 0 && vertexRows.every((v) => v.onFace),
+                materialCollections: paints.map(
+                  (m) => m.userData.collectionId ?? m.map?.userData.collectionId ?? null,
+                ),
+              });
+            }
+            if (id === 'school-upper-deck')
+              platformItems.push({
+                item,
+                geometry: geometryOf(item),
+                uv: g?.attributes.uv ? Array.from(g.attributes.uv.array) : null,
+              });
+            if (
+              item.isMesh &&
+              active(item) &&
+              paints.some((paint) => !paint.transparent && paint.opacity > 0) &&
+              (root === owner.world || root === owner.imported)
+            ) {
+              allMeshes.push(item);
+              if (!cosmeticSurface(item)) baseMeshes.push(item);
+            }
+          });
+        const nearPoint = (a, b) => a.every((n, i) => Math.abs(n - b[i]) < 1e-5),
+          uniqueSeamPoints = Object.fromEntries(
+            Object.entries(seamPoints).map(([id, points]) => [
+              id,
+              points.filter(
+                (p, i) => points.findIndex((other) => nearPoint(p.point, other.point)) === i,
+              ),
+            ]),
+          ),
+          paintSeam = {
+            derivedPlane:
+              crest.length === 2 &&
+              crest.every((p) => p[2] === crestZ) &&
+              deck?.max.y / 1000 === crestY &&
+              deck?.max.z / 1000 === crestZ &&
+              Math.min(...crest.map((p) => p[0])) === deck?.min.x / 1000 &&
+              Math.max(...crest.map((p) => p[0])) === deck?.max.x / 1000,
+            counts: Object.values(uniqueSeamPoints).map((points) => points.length),
+            matches: uniqueSeamPoints['garage-ramp'].map((ramp) => {
+              const deck = uniqueSeamPoints['garage-deck'].find((p) =>
+                nearPoint(ramp.point, p.point),
+              );
+              return {
+                ramp,
+                deck,
+                equalUV:
+                  !!deck?.uv &&
+                  !!ramp.uv &&
+                  ramp.uv.every((v, i) => Math.abs(v - deck.uv[i]) < 1e-6),
+              };
+            }),
+          };
+        for (const [t, index] of mapIndices) maps.push({ index, ...(await mapOf(t)) });
+        const structureMaps = await Promise.all([...structureMapSet].map(mapOf)),
+          baseRays = [],
+          surfaceRays = [];
+        function ray(from, to, label) {
+          const a = new THREE.Vector3(...from),
+            delta = new THREE.Vector3(...to).sub(a),
+            length = delta.length();
+          if (length < 1e-8) return;
+          const caster = new THREE.Raycaster(a, delta.normalize(), 0, length + 0.001);
+          for (const [meshes, output] of [
+            [baseMeshes, baseRays],
+            [allMeshes, surfaceRays],
+          ]) {
+            const hit = caster.intersectObjects(meshes, false)[0];
+            output.push({
+              label,
+              hit: hit ? (obstacleIdOf(hit.object) ?? hit.object.name) : null,
+              distance: hit?.distance ?? null,
+            });
+          }
+        }
+        for (const o of c.obstacles ?? [])
+          if (o.min && o.max) {
+            const x = (o.min.x + o.max.x) / 2000,
+              z = (o.min.z + o.max.z) / 2000,
+              top = o.max.y / 1000,
+              radiusX = (o.max.x - o.min.x) / 2000 + 3,
+              radiusZ = (o.max.z - o.min.z) / 2000 + 3;
+            for (const y of [...heights, top - 0.1, top + 0.1])
+              for (const [dx, dz] of [
+                [radiusX, 0],
+                [-radiusX, 0],
+                [0, radiusZ],
+                [0, -radiusZ],
+              ])
+                ray([x + dx, y, z + dz], [x, y, z], o.id + '/' + y + '/' + dx + '/' + dz);
+            ray([x, top + 2, z], [x, top - 0.1, z], o.id + '/top');
+          }
+        if (c.obstacles.some((o) => o.id === 'garage-ramp')) {
+          for (const z of [13.99, 9.6, 3, -3.6, -7.99, -8]) {
+            const top = ((14 - z) * 5) / 22;
+            for (const x of [-35.01, -34.99, -29.5, -24.01, -23.99]) {
+              ray([x, top + 2, z], [x, top - 0.1, z], 'ramp-top/' + x + '/' + z);
+              ray([-19, top * 0.5, z], [-30, top * 0.5, z], 'ramp-side/' + x + '/' + z);
+            }
+          }
+          ray([-29.5, 3, -18], [-29.5, 4.8, -18], 'garage-deck/underside');
+          ray([-29.5, 7, -18], [-29.5, 4.9, -18], 'garage-deck/top');
+        }
+        for (const [index, s] of (c.steps.acro ?? []).entries()) {
+          const target = s.min
+            ? ['x', 'y', 'z'].map((k) => (s.min[k] + s.max[k]) / 2000)
+            : s.type === 'gate'
+              ? [
+                  s.axis === 'x' ? s.at / 1000 : (s.minSide + s.maxSide) / 2000,
+                  (s.minY + s.maxY) / 2000,
+                  s.axis === 'z' ? s.at / 1000 : (s.minSide + s.maxSide) / 2000,
+                ]
+              : null;
+          if (target) ray([c.spawn.x / 1000, 4, c.spawn.z / 1000], target, 'objective-' + index);
+        }
+        const platform = await Promise.all(
+          platformItems.map(async ({ item, ...row }) => ({
+            ...row,
+            materials: await Promise.all(
+              paintsOf(item).map(async (m) => ({
+                type: m.type,
+                color: m.color?.getHex(),
+                emissive: m.emissive?.getHex(),
+                roughness: m.roughness,
+                metalness: m.metalness,
+                normalScale: m.normalScale?.toArray(),
+                polygonOffset: m.polygonOffset,
+                polygonOffsetFactor: m.polygonOffsetFactor,
+                polygonOffsetUnits: m.polygonOffsetUnits,
+                ...opacityOf(m),
+                maps: await Promise.all(
+                  ['map', 'normalMap', 'roughnessMap', 'metalnessMap'].map(async (key) =>
+                    m[key] ? mapOf(m[key]) : null,
+                  ),
+                ),
+              })),
+            ),
+          })),
+        );
+        return {
+          geometryHash: await sha(encode(geometry)),
+          uvHash: await sha(encode(uv)),
+          opacityHash: await sha(encode(opacity)),
+          materialHash: await sha(encode(materials)),
+          mapHash: await sha(encode(maps)),
+          rayHash: await sha(encode(baseRays)),
+          rayCount: baseRays.length,
+          nodes: geometry.length,
+          uvBytes: [...seenUVs].reduce((total, values) => total + values.byteLength, 0),
+          platformHash: platform.length ? await sha(encode(platform)) : null,
+          structures,
+          details,
+          paintSeam,
+          structureMaps,
+          maps,
+          baseRays,
+          surfaceRays,
+        };
+      }
+      const resources = (o) => {
+        const r = o.runtime.resources();
+        return {
+          registered: r.registered,
+          geometries: r.renderer.geometries,
+          textures: r.renderer.textures,
+          programs: r.renderer.programs,
+        };
+      };
+      function surfaceParity(a, b) {
+        return (
+          a.surfaceRays.length === b.surfaceRays.length &&
+          a.surfaceRays.every((ray, i) => {
+            const other = b.surfaceRays[i];
+            return (
+              ray.label === other.label &&
+              ray.hit === other.hit &&
+              (ray.distance === other.distance ||
+                (ray.distance !== null &&
+                  other.distance !== null &&
+                  Math.abs(ray.distance - other.distance) < 1e-5))
+            );
+          })
+        );
+      }
+      function summarize(inspection) {
+        return { ...inspection, baseRays: undefined, surfaceRays: undefined, maps: undefined };
+      }
+      async function supportSamples(c, index) {
+        const physics = modules[index].collision.createWorldCollision(c),
+          rows = [],
+          radius = c.rules?.droneRadius ?? 220;
+        try {
+          for (const [name, position] of [
+            ['deck-top', { x: -30000, y: 5020, z: -18000 }],
+            ['deck-underside-floor', { x: -30000, y: 20, z: -18000 }],
+            ['ramp-low', { x: -30000, y: 1020, z: 9600 }],
+            ['ramp-middle', { x: -30000, y: 2520, z: 3000 }],
+            ['ramp-high', { x: -30000, y: 4020, z: -3600 }],
+            ['ramp-toe', { x: -30000, y: 20, z: 13990 }],
+            ['ramp-crest', { x: -30000, y: 5020, z: -7990 }],
+            ['ramp-deck-seam', { x: -30000, y: 5020, z: -8000 }],
+            ['ramp-west-outside', { x: -35010, y: 2520, z: 3000 }],
+            ['ramp-east-outside', { x: -23990, y: 2520, z: 3000 }],
+            ['deck-west-inside', { x: -34990, y: 5020, z: -18000 }],
+            ['deck-west-outside', { x: -35010, y: 5020, z: -18000 }],
+            ['school-upper-deck', { x: 0, y: 5020, z: -16000 }],
+          ])
+            rows.push({ name, position, support: physics.support(position, radius, 100) });
+        } finally {
+          physics.dispose();
+        }
+        return rows;
+      }
+      async function verifyStructure(id, quality, appearance = 'authored') {
+        status(id + ' · ' + quality + ' · ' + appearance);
+        const loaded = await load(id, quality, { appearance }),
+          expectedProfile = appearance === 'authored' ? 'operations' : appearance;
+        check(
+          loaded.every((x) => x.importedChildren > 0 && x.profileId === expectedProfile) &&
+            loaded[0].glbHash === loaded[1].glbHash,
+          id +
+            '/' +
+            quality +
+            '/' +
+            appearance +
+            ' loads identical actual Garage GLB and resolved appearance',
+        );
+        const sample = await pair(id, quality, 'fpv', 3, 'column'),
+          a = await inspect(owners[0], course(0, id)),
+          b = await inspect(owners[1], course(1, id));
+        sample.appearance = appearance;
+        receipt.samples.push(sample);
+        receipt.inspections.push({
+          id,
+          quality,
+          appearance,
+          before: summarize(a),
+          after: summarize(b),
+          additionalUVBytes: b.uvBytes - a.uvBytes,
+        });
+        check(
+          a.geometryHash === b.geometryHash &&
+            a.opacityHash === b.opacityHash &&
+            a.rayHash === b.rayHash &&
+            surfaceParity(a, b),
+          id +
+            '/' +
+            quality +
+            '/' +
+            appearance +
+            ' exact body geometry, shadows, opacity and sightline parity',
+          { rays: b.rayCount },
+        );
+        check(
+          encode(b.structures.map((o) => o.id).sort()) === encode([...structureIds].sort()) &&
+            b.structures.every(
+              (o) =>
+                o.positions === 24 &&
+                o.opaque &&
+                !o.displacement &&
+                o.visible &&
+                o.finiteUV &&
+                o.worldUV &&
+                o.kind === 'garage-concrete',
+            ),
+          id +
+            '/' +
+            quality +
+            '/' +
+            appearance +
+            ' all eight canonical opaque bodies retain exact vertices',
+        );
+        check(
+          b.details.length > 0 &&
+            b.details.length <= 16 &&
+            structureIds.every((sid) => b.details.some((d) => d.id === sid)) &&
+            b.details.every(
+              (d) =>
+                structureIds.includes(d.id) &&
+                d.declaredId === d.id &&
+                d.parent === d.id &&
+                d.visible &&
+                !d.castShadow &&
+                d.opaque &&
+                !d.displacement &&
+                d.finiteUV &&
+                d.worldUV &&
+                d.confinedToFace,
+            ),
+          id +
+            '/' +
+            quality +
+            '/' +
+            appearance +
+            ' bounded opaque details stay on canonical box faces and actual ramp triangles at every preset',
+        );
+        check(
+          b.paintSeam.derivedPlane &&
+            b.paintSeam.counts.every((n) => n === 4) &&
+            b.paintSeam.matches.every((p) => p.equalUV),
+          id +
+            '/' +
+            quality +
+            '/' +
+            appearance +
+            ' four crest paint vertices retain equal world UV phase',
+          { paintSeam: b.paintSeam },
+        );
+        check(
+          sample.nonBlackPixels > 100 &&
+            sample.drawCalls.every((n) => n > 0) &&
+            sample.triangles.every((n) => n > 0) &&
+            sample.changedPixels > 0,
+          id + '/' + quality + '/' + appearance + ' actual WebGL renders changed surface pixels',
+        );
+        const pixel = appearance === 'pixel';
+        check(
+          b.structureMaps.length > 0 &&
+            b.structureMaps.every(
+              (t) =>
+                t.mag === owners[1].THREE[pixel ? 'NearestFilter' : 'LinearFilter'] &&
+                t.min ===
+                  owners[1].THREE[
+                    pixel ? 'NearestMipmapNearestFilter' : 'LinearMipmapLinearFilter'
+                  ] &&
+                t.mipmaps &&
+                (!pixel || t.anisotropy === 1),
+            ),
+          id + '/' + quality + '/' + appearance + ' maps follow resolved texture filtering',
+        );
+        if (appearance === 'industrial-workshop')
+          check(
+            b.structureMaps.every((t) => t.collectionId === appearance) &&
+              b.structureMaps.some((t) => t.role === 'concrete') &&
+              b.details.every((d) => d.materialCollections.every((value) => value === appearance)),
+            id + '/' + quality + ' actual shared Themes owns body and detail role materials',
+          );
+        if (id === 'beginner-41')
+          check(
+            a.platformHash !== null && a.platformHash === b.platformHash,
+            quality +
+              '/' +
+              appearance +
+              ' plain school-upper-deck geometry, UV, materials and maps remain exact',
+          );
+        return { a, b };
+      }
+      async function run() {
+        if (busy) return;
+        busy = true;
+        $('run').disabled = $('preview').disabled = true;
+        disposeOwners();
+        receipt = {
+          format: 'FPVGarageSurfacesBrowserEvidence.v1',
+          createdAt: new Date().toISOString(),
+          baseline: manifest.baseline,
+          integratedMain: manifest.integratedMain,
+          candidate: manifest.candidate,
+          sourceFiles: manifest.files,
+          checks: [],
+          samples: [],
+          inspections: [],
+          supportProbes: [],
+          resourceCycles: [],
+          contextLosses: [],
+          browser: { userAgent: navigator.userAgent, dpr: devicePixelRatio, canvasCss: [640, 360] },
+          appearanceContracts: {
+            authored: 'Unchanged canonical course resolves Operations/linear.',
+            pixel:
+              'Renderer-only cloned course sets world.theme=pixel and authored presentation; no Pixel SIM collection exists. Canonical courses and proofs remain immutable.',
+            'industrial-workshop':
+              'Actual runtime.setPresentation SIM collection override uses its owned role materials.',
+          },
+          limitations: [
+            'Same-browser frozen-source pixel comparisons; not cross-device goldens.',
+            'Static observer poses are not scored attempts or demonstration commands; the manual CPU qualifier replays all 17 Garage demonstrations.',
+            'No FPS, sustained performance, physical-device or human art acceptance claim.',
+            'Disposal checks empty registered ownership; Three.js may retain internal allocations until context release.',
+            'Rays inspect opaque mesh triangles, not alpha texture holes or human readability of objective cues.',
+            'Added coplanar detail and legacy column accent planes are checked independently; base geometry and base rays must be exact.',
+            'No additional unit-test coverage. Scene observation restores the original method immediately after construction.',
+          ],
+        };
+        try {
+          status('Checking frozen sources');
+          await verifyHashes();
+          check(true, 'Frozen source and harness hashes verified');
+          check(
+            encode(allCourses(0)) === encode(allCourses(1)),
+            'All authored courses, collisions, objectives and proof rules remain exact',
+          );
+          const garage = allCourses().filter((row) => row.course.environment === 'garage'),
+            canonical = garage.filter((row) =>
+              row.course.obstacles.some((o) => structureIds.includes(o.id)),
+            ),
+            snake = garage.filter((row) => !canonical.includes(row));
+          receipt.inventory = {
+            allCourses: allCourses().length,
+            worldCourses: modules[0].worldCatalogue.WORLD_CATALOGUE.length,
+            schoolCourses: modules[0].worldCatalogue.BEGINNER_CATALOGUE.length,
+            environments: new Set(allCourses().map((row) => row.course.environment)).size,
+            garageCourses: garage.length,
+            canonicalCourses: canonical.length,
+            unchangedSnakeCourses: snake.length,
+          };
+          check(
+            garage.length === 18 &&
+              snake.length === 9 &&
+              canonical.length === 9 &&
+              encode(canonical.map((r) => r.id).sort()) === encode([...garageIds].sort()) &&
+              canonical.every((r) =>
+                structureIds.every((id) => r.course.obstacles.some((o) => o.id === id)),
+              ),
+            'Inventory pins nine canonical Garage courses and nine unaffected Snake Garage courses',
+          );
+          receipt.authoredCases = canonical.map((r) => ({
+            id: r.id,
+            obstacles: r.course.obstacles.map((o) => o.id),
+          }));
+          receipt.snakeCases = snake.map((r) => r.id);
+          for (const file of [
+            'world-assets.mjs',
+            'world-model.mjs',
+            'model.mjs',
+            'world-collision.mjs',
+            'world-demonstrations.mjs',
+          ])
+            check(
+              manifest.files.before['optional-practice/civilian-fpv/' + file] ===
+                manifest.files.after['optional-practice/civilian-fpv/' + file],
+              file + ' stays byte-identical to baseline',
+            );
+          for (const id of garageIds) {
+            const before = await supportSamples(course(0, id), 0),
+              after = await supportSamples(course(1, id), 1);
+            receipt.supportProbes.push({ id, before, after });
+            check(
+              encode(before) === encode(after),
+              id +
+                ' exact collision support IDs, heights and normals across ramp/deck/edge/underside probes',
+            );
+          }
+          createOwners();
+          for (const id of garageIds)
+            for (const quality of qualities) {
+              await verifyStructure(id, quality);
+              if (['garage-02', 'garage-08', 'beginner-41'].includes(id)) {
+                for (const camera of ['fpv', 'chase', 'overview'])
+                  for (const height of camera === 'overview' ? [5.5] : heights) {
+                    const row = await pair(id, quality, camera, height, 'ramp-toe');
+                    receipt.samples.push(row);
+                    check(
+                      row.nonBlackPixels > 100 &&
+                        row.drawCalls.every((n) => n > 0) &&
+                        row.changedPixels > 0,
+                      id + '/' + quality + '/' + camera + '/' + height + 'm renders surface change',
+                    );
+                  }
+                for (const [pose, height] of [
+                  ['ramp-crest', 6],
+                  ['ramp-side', 3],
+                  ['deck-top', 6],
+                  ['deck-under', 3],
+                  ['column', 3],
+                  ['trail', 3],
+                  ...(id === 'beginner-41' ? [['platform', 6]] : []),
+                ]) {
+                  const row = await pair(id, quality, 'fpv', height, pose);
+                  receipt.samples.push(row);
+                  check(
+                    row.nonBlackPixels > 100 && (pose === 'platform' || row.changedPixels > 0),
+                    id + '/' + quality + '/' + pose + ' produces inspection buffer',
+                  );
+                }
+              }
+            }
+          for (const appearance of ['pixel', 'industrial-workshop'])
+            for (const quality of qualities)
+              for (const id of ['garage-02', 'beginner-41']) {
+                await verifyStructure(id, quality, appearance);
+                for (const camera of ['fpv', 'chase', 'overview']) {
+                  const row = await pair(id, quality, camera, 6, 'ramp-crest');
+                  row.appearance = appearance;
+                  receipt.samples.push(row);
+                  check(
+                    row.nonBlackPixels > 100 && row.changedPixels > 0,
+                    id +
+                      '/' +
+                      quality +
+                      '/' +
+                      appearance +
+                      '/' +
+                      camera +
+                      ' renders surface change',
+                  );
+                }
+              }
+          for (const row of snake)
+            for (const quality of qualities) {
+              const id = row.id;
+              status('Exact Snake Garage regression · ' + id + ' · ' + quality);
+              const loaded = await load(id, quality),
+                sample = await pair(id, quality, 'fpv', 3, 'trail');
+              receipt.samples.push(sample);
+              check(
+                loaded[0].glbHash === loaded[1].glbHash &&
+                  sample.changedPixels === 0 &&
+                  sample.beforeHash === sample.afterHash,
+                id + '/' + quality + ' exact Snake Garage pixels and GLB bytes',
+              );
+              if (quality === 'balanced') {
+                const a = await inspect(owners[0], course(0, id)),
+                  b = await inspect(owners[1], course(1, id));
+                check(
+                  [
+                    'geometryHash',
+                    'uvHash',
+                    'opacityHash',
+                    'materialHash',
+                    'mapHash',
+                    'rayHash',
+                  ].every((k) => a[k] === b[k]) && !b.details.length,
+                  id +
+                    ' exact Snake geometry, UVs, materials, maps and rays without canonical detail selection',
+                );
+              }
+            }
+          for (const id of ['stadium-01', 'warehouse-07', 'courtyard-01'])
+            for (const quality of qualities) {
+              await load(id, quality);
+              const sample = await pair(id, quality, 'fpv', 3, 'trail');
+              receipt.samples.push(sample);
+              check(
+                sample.changedPixels === 0 && sample.beforeHash === sample.afterHash,
+                id + '/' + quality + ' exact non-Garage pixel regression',
+              );
+            }
+          for (let cycle = 0; cycle < 3; cycle++) {
+            status('Resource reload cycle ' + (cycle + 1) + '/3');
+            const rows = {};
+            for (const [id, appearance] of [
+              ['courtyard-01', 'authored'],
+              ['garage-02', 'authored'],
+              ['garage-08', 'pixel'],
+              ['beginner-41', 'industrial-workshop'],
+            ])
+              for (const quality of qualities) {
+                await load(id, quality, { appearance });
+                await pair(id, quality, 'fpv', 3, 'column');
+                rows[id + '/' + quality + '/' + appearance] = owners.map(resources);
+              }
+            receipt.resourceCycles.push(rows);
+          }
+          check(
+            encode(receipt.resourceCycles[1]) === encode(receipt.resourceCycles[2]),
+            'Geometry/material/texture/program counts plateau after course, preset, appearance and GLB reloads',
+          );
+          receipt.disposal = disposeOwners();
+          check(
+            receipt.disposal.every(
+              (o) =>
+                o.resources.disposed && Object.values(o.resources.registered).every((n) => n === 0),
+            ),
+            'Both renderers release every registered resource',
+          );
+          check(
+            !errors.length && !receipt.contextLosses.length,
+            'No uncaught errors, unexpected context loss or GL errors',
+            { errors },
+          );
+          await verifyHashes();
+          check(true, 'Frozen source and harness hashes remain exact after execution');
+          receipt.passed = true;
+          status(
+            'PASS ' +
+              receipt.checks.length +
+              ' checks · ' +
+              receipt.samples.length +
+              ' image pairs',
+          );
+        } catch (error) {
+          receipt.passed = false;
+          receipt.error = error.stack;
+          status('FAIL · ' + error.message);
+        } finally {
+          if (owners.length) receipt.failureDisposal = disposeOwners();
+          busy = false;
+          $('run').disabled = $('preview').disabled = false;
+          publish();
+        }
+      }
+      async function preview() {
+        if (busy) return;
+        busy = true;
+        $('run').disabled = $('preview').disabled = true;
+        try {
+          disposeOwners();
+          createOwners();
+          const id = $('course').value,
+            q = $('quality').value,
+            appearance = $('appearance').value;
+          await load(id, q, { appearance });
+          const row = await pair(
+            id,
+            q,
+            $('camera').value,
+            Number($('height').value),
+            $('pose').value,
+          );
+          status(
+            'Human inspection · ' +
+              id +
+              ' · ' +
+              q +
+              ' · ' +
+              appearance +
+              ' · ' +
+              row.height +
+              'm · ' +
+              (row.changedFraction * 100).toFixed(1) +
+              '% changed pixels',
+          );
+        } catch (e) {
+          status('Preview failed: ' + e.message);
+        } finally {
+          busy = false;
+          $('run').disabled = $('preview').disabled = false;
+        }
+      }
+      $('run').onclick = run;
+      $('preview').onclick = preview;
+      $('download').onclick = () => {
+        if (!receipt) return;
+        const url = URL.createObjectURL(
+            new Blob([JSON.stringify(receipt, null, 2)], { type: 'application/json' }),
+          ),
+          a = document.createElement('a');
+        a.href = url;
+        a.download = 'fpv-garage-surfaces-evidence.json';
+        a.click();
+        URL.revokeObjectURL(url);
+      };
+      addEventListener('pagehide', disposeOwners);
+      try {
+        await initialize();
+        for (const row of allCourses().filter((r) => r.course.environment === 'garage')) {
+          const option = document.createElement('option');
+          option.value = row.id;
+          option.textContent =
+            row.id + (garageIds.includes(row.id) ? ' · canonical solids' : ' · Snake regression');
+          $('course').append(option);
+        }
+        $('course').value = 'garage-02';
+        $('run').disabled = $('preview').disabled = false;
+        status('Ready · run qualification or show a selected view');
+      } catch (e) {
+        status('Initialization failed: ' + e.message);
+      }
+    </script>
+  </body>
+</html>
