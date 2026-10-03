@@ -355,6 +355,38 @@ export function builtinWorldScene(course) {
   const bin = instanceScenery(json, roots, placements, originalBin);
   const pixels =
     environment === 'warehouse' || environment === 'stadium' || course?.world?.theme === 'pixel';
+  // glTF defaults omitted metallicFactor to 1. These closed-library park
+  // surfaces are dielectric; the original textures describe colour, not metal.
+  // Scope to the natural Woodland presentation, never arbitrary creator imports.
+  if (
+    environment === 'woodland' &&
+    !pixels &&
+    course?.theme !== 'pixel' &&
+    course?.themeProfile?.textureFilter !== 'nearest'
+  ) {
+    const surfaces = {
+      treeA: [0, 1],
+      treeB: [0, 1],
+      dirt: [0, 1],
+      planks: [0, 0.92],
+      concreteSmooth: [0, 0.86],
+      concrete: [0, 0.94],
+      metal: [0.35, 0.64],
+      wall_metal: [0.08, 0.76],
+    };
+    for (const material of json.materials ?? []) {
+      const surface = surfaces[material.name];
+      if (!surface) continue;
+      // This library was authored unlit. Natural scenery should receive the
+      // world's lighting; explicit metalness avoids glTF's metallic default.
+      if (material.extensions) delete material.extensions.KHR_materials_unlit;
+      material.pbrMetallicRoughness = {
+        ...material.pbrMetallicRoughness,
+        metallicFactor: surface[0],
+        roughnessFactor: surface[1],
+      };
+    }
+  }
   if (pixels)
     for (const sampler of json.samplers ?? []) {
       sampler.magFilter = 9728;
