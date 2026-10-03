@@ -64,8 +64,9 @@ The frozen actual-renderer preview is
 with FPV, chase and overview controls. The bounded matrix
 covers the authored appearance plus exact Pixel/shared-theme images, a real
 imported Courtyard control and a procedural Coast control. Source modules and
-harness hashes are pinned. Human visual acceptance, actual-browser results,
-fresh retained-proof replay and package admission are pending. No readiness,
+harness hashes are pinned. Bounded human visual review is accepted, and fresh retained-proof replay has
+passed. Constrained actual-browser qualification now passes as described below;
+package admission and actual packaged-player observation remain pending. No readiness,
 finished-world, physical-device or public-deployment claim is made here.
 
 ## Rejected visual revision retained
@@ -81,15 +82,100 @@ renderer bytes were identical to v4. No package or publication was attempted.
 V4 restores the original stone grain and mottling amplitudes, keeps the base
 stone colour, and adds faint unequal beds with noisy, fading seams and short
 branched fractures. Mechanical qualification still passes 444 checks in 83
-scene cases. This does not establish visual acceptance: close, distant and
-upper-surface inspection remain pending before package work.
+scene cases. Human review accepted v4 specifically as a bounded surface correction: grain is
+retained at 11 m, broken seams improve the 3 m view, and the overview silhouette
+and readability remain unchanged. The [close view](evidence/fpv-quarry-strata-v4-close.png)
+and [overview](evidence/fpv-quarry-strata-v4-overview.png) preserve this observation.
+This is not complete-world artistic acceptance.
+
+## Browser control diagnostic and constrained source qualification
+
+The [uncontrolled v4 browser run](evidence/fpv-quarry-strata-source-v4-failure.json)
+retains 109 passing checks, one failure and all 56 image pairs. Its unrelated
+actual imported Courtyard control differs by 176 pixels. A fresh
+[v5 diagnostic run](evidence/fpv-quarry-strata-source-v5-diagnostic-failure.json)
+without static previews differs by 27 pixels. Neither is presented as a pass.
+
+All 77 material records, decoded texture pixels, 298 mesh geometry/matrix/visibility
+records, GLB bytes, world geometry and resources are exact. The differing values
+are 36 imported material-ID ranks and 32 opaque draw submissions: asynchronous
+image completion changes the creation order of concrete, wall lines, windows and
+doors. The production loader constructs each material after its texture promises
+resolve. This is outside the Quarry recipe, but the original pixel equality
+failure remains real and disclosed.
+
+The source-v6 diagnostic constrains only Courtyard import construction to its
+encoded GLTF material-index order on both sides. It preloads the same textures,
+requests material dependencies in source order and immediately restores the
+temporary loader hook. No production source, geometry, material properties,
+render order, texture bytes or comparison tolerance changes. It must prove each
+side preserves every scene input and then compare exact pixels. The [controlled diagnostic](evidence/fpv-quarry-strata-order-diagnostic.json)
+passes five explicit checks: each side retains its full semantic scene, both
+relative material ranks match, source order matches, temporary hooks restore,
+and exact pixels match. This fresh diagnostic happened to have zero differences
+in its uncontrolled pair too; it does not erase the earlier 176/27-pixel failures
+or establish unconditional imported-scene determinism.
+
+The final [source-v6 actual-browser receipt](evidence/fpv-quarry-strata-source-browser.json)
+passes all 116 checks, 56 image pairs and three resource cycles. It retains the
+full control diagnostics, checks every temporary-hook restoration, and uses zero
+pixel tolerance for Pixel, shared Themes and the constrained imported control.
+Quarry views use the unmodified runtime. Candidate module bytes still exactly
+match accepted v4; only the fixture's unrelated imported-control construction
+is constrained. Public and admitted-player observations use the normal loader.
+
+## Current-main integration
+
+Normal merge `3e681c45da13baa1e26c239f54673e081fb664dd` includes main's Lighthouse
+`287eec95c81687fb8a6d176f750f7c65a60e1fe3`. Both documentation histories are
+preserved. The independent [114-check integration summary](evidence/fpv-quarry-strata-main-integration.json)
+proves that removing exactly the incoming Coast-only hook/helper leaves the
+entire previous world-visuals AST exact. Eight direct helpers, every other one of
+67 runtime/asset files, nine Quarry scene/map snapshots and three Courtyard
+CPU controls remain exact. The summary explicitly records that its two raw
+heredoc probes remain in task history, not as standalone files.
+
+The integrated world-visuals SHA-256 is
+`053f74a1d42db8373994350010f347ff0d306dfebd05cbdd9bf7df838b73d9e0`;
+renderer SHA-256 and the Quarry recipe/guard are unchanged from accepted v4.
+The source browser receipt still identifies its historical pre-integration
+candidate. Incoming Lighthouse art intentionally changes Coast; final package
+comparison must use current-main baseline there, not demand obsolete Coast art.
+
+## Fresh authoritative flight replay
+
+At normally integrated head `3e681c45da13baa1e26c239f54673e081fb664dd`, the
+[manual replay receipt](evidence/fpv-quarry-strata-replay.json) passes 237 checks
+for all ten authenticated retained recordings: both modes of all five Quarry
+courses, 41,643 fixed steps, every objective complete and exact final identities.
+All contacts remain zero; no actor is blocked at the final state. Ten Rapier
+collision worlds are created and freed once each, with peak live count one and
+none left live. One-second path samples are not continuous clearance proof;
+free-call observation is not a memory-plateau or hardware measurement.
+
+Quarry 04 historically finishes at 94/100 health in acro and 97/100 in self-level,
+with 17 shots and seven hits in each. Those outcomes are preserved exactly.
+An initial copied Coast probe incorrectly required full health; its
+[failure log](evidence/fpv-quarry-strata-replay-v1-assumption-failure.log) and
+[probe](evidence/fpv-quarry-strata-replay-v1-probe.mjs) remain historical. The
+[corrected executed probe](evidence/fpv-quarry-strata-replay-probe.mjs) checks exact
+archival outcomes without changing the runtime, controls or proofs. The
+[authenticated inputs](evidence/fpv-quarry-strata-replay-inputs.json.gz) preserve
+all ten complete original recordings and manifest provenance. Decompressed input
+SHA-256: `51f81dce4bb2322a803026428519a1208fdbdb30def7b418b66730a52d728fe2`.
+
+Node 22 full `npm run validate` passed on the accepted v4 source before the
+incoming Lighthouse-only merge. Runtime lint, formatting and diff checks pass.
+No new unit coverage was introduced.
 
 ## Published work preserved
 
 Lighthouse #1015 merged normally at
 `287eec95c81687fb8a6d176f750f7c65a60e1fe3`, with its published branch and recovery
-ref preserved alongside accepted source/package/player evidence. Public deployment
-of that merge was still pending at this checkpoint. Quarry is independent and
+ref preserved alongside accepted source/package/player evidence. The [public marker](evidence/fpv-coast-lighthouse-public-marker.json) now matches
+that merge; an actual public Lighthouse approach render/arm through 0.2 seconds/
+pause-to-menu completed with empty warning/error logs, preserved in the
+[live capture](evidence/fpv-coast-lighthouse-live.png). Quarry is independent and
 does not alter that PR or its frozen outputs.
 
 Root separately verified Courtyard #1012 and Warehouse #1014 at public marker

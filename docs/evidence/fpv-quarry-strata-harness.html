@@ -57,6 +57,7 @@
   <p id="provenance">Loading frozen inputs…</p>
   <button id="run" disabled>Run rock surface qualification</button>
   <button id="preview" disabled>Show selected view</button>
+  <button id="order" disabled>Diagnose Courtyard construction order</button>
   <button id="download" disabled>Download receipt</button>
   <label
     >Course
@@ -221,7 +222,7 @@
       if (receipt) delete receipt.disposing;
       return results;
     }
-    async function load(id, quality, appearance = 'authored') {
+    async function load(id, quality, appearance = 'authored', orderedImport = false) {
       for (let i = 0; i < owners.length; i++) {
         const owner = owners[i],
           c = clone(course(i, id));
@@ -236,7 +237,40 @@
         const glb = owner.assets.builtinWorldScene(c);
         owner.glbHash = glb ? await sha(await glb.arrayBuffer()) : null;
         if (glb) {
-          await owner.runtime.loadScene(glb);
+          if (orderedImport) {
+            const { GLTFLoader } = await import(
+              './' +
+                owner.side +
+                '/optional-practice/civilian-fpv/vendor/addons/loaders/GLTFLoader.js'
+            );
+            const originalParse = GLTFLoader.prototype.parse;
+            owner.importOrder = [];
+            GLTFLoader.prototype.parse = function (...args) {
+              this.register((parser) => ({
+                name: 'QUARRY_CONTROL_SOURCE_MATERIAL_ORDER',
+                async beforeRoot() {
+                  await parser.getDependencies('texture');
+                  for (let index = 0; index < (parser.json.materials ?? []).length; index++) {
+                    await parser.getDependency('material', index);
+                    owner.importOrder.push({
+                      index,
+                      name: parser.json.materials[index].name ?? '',
+                    });
+                  }
+                },
+              }));
+              return originalParse.apply(this, args);
+            };
+            try {
+              await owner.runtime.loadScene(glb);
+            } finally {
+              GLTFLoader.prototype.parse = originalParse;
+            }
+            owner.importHookRestored = GLTFLoader.prototype.parse === originalParse;
+          } else {
+            owner.importOrder = null;
+            await owner.runtime.loadScene(glb);
+          }
           if (!owner.imported.children.length) throw Error('Actual GLB was not installed');
         }
         if ((await owner.runtime.prepare()) === false) throw Error('Shader preparation superseded');
@@ -352,6 +386,160 @@
       });
       return sha(encode(result));
     }
+    async function controlSnapshot(owner) {
+      const geometryCache = new Map(),
+        textureCache = new Map(),
+        materials = [],
+        meshes = [];
+      const materialSet = new Set();
+      owner.scene.traverse((item) => {
+        for (const material of Array.isArray(item.material)
+          ? item.material
+          : item.material
+            ? [item.material]
+            : [])
+          materialSet.add(material);
+      });
+      const ranks = new Map(
+        [...materialSet].sort((a, b) => a.id - b.id).map((material, index) => [material, index]),
+      );
+      async function textureRecord(texture) {
+        if (!texture) return null;
+        if (textureCache.has(texture)) return textureCache.get(texture);
+        const image = texture.image;
+        let pixels = null;
+        if (image?.data) pixels = image.data;
+        else if (image?.width && image?.height) {
+          const canvas = document.createElement('canvas');
+          canvas.width = image.width;
+          canvas.height = image.height;
+          const ctx = canvas.getContext('2d', { willReadFrequently: true });
+          ctx.drawImage(image, 0, 0);
+          pixels = ctx.getImageData(0, 0, canvas.width, canvas.height).data;
+        }
+        const record = {
+          name: texture.name,
+          width: image?.width,
+          height: image?.height,
+          sha256: pixels ? await sha(pixels) : null,
+          wrap: [texture.wrapS, texture.wrapT],
+          filters: [texture.magFilter, texture.minFilter, texture.anisotropy],
+          colorSpace: texture.colorSpace,
+          flipY: texture.flipY,
+          matrix: texture.matrix.elements,
+        };
+        textureCache.set(texture, record);
+        return record;
+      }
+      for (const material of materialSet) {
+        const maps = {};
+        for (const key of [
+          'map',
+          'normalMap',
+          'roughnessMap',
+          'metalnessMap',
+          'aoMap',
+          'emissiveMap',
+          'alphaMap',
+        ])
+          maps[key] = await textureRecord(material[key]);
+        materials.push({
+          name: material.name,
+          type: material.type,
+          color: material.color?.toArray(),
+          emissive: material.emissive?.toArray(),
+          roughness: material.roughness,
+          metalness: material.metalness,
+          opacity: material.opacity,
+          transparent: material.transparent,
+          alphaTest: material.alphaTest,
+          side: material.side,
+          depthWrite: material.depthWrite,
+          depthTest: material.depthTest,
+          polygonOffset: [
+            material.polygonOffset,
+            material.polygonOffsetFactor,
+            material.polygonOffsetUnits,
+          ],
+          vertexColors: material.vertexColors,
+          normalScale: material.normalScale?.toArray(),
+          maps,
+        });
+      }
+      const nodes = [];
+      owner.scene.traverse((item) => {
+        if (item.geometry) nodes.push(item);
+      });
+      for (const item of nodes) {
+        const geometry = item.geometry;
+        if (!geometryCache.has(geometry))
+          geometryCache.set(
+            geometry,
+            await sha(
+              encode({
+                attributes: Object.fromEntries(
+                  Object.entries(geometry.attributes).map(([name, value]) => [
+                    name,
+                    {
+                      itemSize: value.itemSize,
+                      normalized: value.normalized,
+                      array: Array.from(value.array),
+                    },
+                  ]),
+                ),
+                index: geometry.index ? Array.from(geometry.index.array) : null,
+                groups: geometry.groups,
+              }),
+            ),
+          );
+        const values = Array.isArray(item.material) ? item.material : [item.material];
+        meshes.push({
+          name: item.name,
+          geometry: geometryCache.get(geometry),
+          matrix: item.matrixWorld.elements,
+          instances: item.instanceMatrix ? Array.from(item.instanceMatrix.array) : null,
+          materials: values.map((value) => [...materialSet].indexOf(value)),
+          materialIdRanks: values.map((value) => ranks.get(value)),
+          visible: item.visible,
+          castShadow: item.castShadow,
+          receiveShadow: item.receiveShadow,
+          renderOrder: item.renderOrder,
+        });
+      }
+      return {
+        quarryDetails: details(owner).length,
+        glbHash: owner.glbHash,
+        worldGeometrySha256: await baseGeometry(owner),
+        materials,
+        meshes,
+        draws: owner.controlDraws,
+        resources: owner.runtime.resources(),
+      };
+    }
+    function traceControl(owner) {
+      owner.controlDraws = [];
+      const restore = [];
+      owner.scene.traverse((item) => {
+        if (!item.geometry) return;
+        const before = item.onBeforeRender;
+        item.onBeforeRender = function (...args) {
+          const material = args[4];
+          owner.controlDraws.push({
+            name: this.name,
+            matrix: this.matrixWorld.elements,
+            materialName: material.name,
+            color: material.color?.toArray(),
+            materialId: material.id,
+            group: args[5],
+          });
+          return before.apply(this, args);
+        };
+        restore.push(() => {
+          item.onBeforeRender = before;
+        });
+      });
+      return () => restore.forEach((fn) => fn());
+    }
     function details(owner) {
       const result = [];
       owner.world.traverse((item) => {
@@ -386,6 +574,7 @@
           'Actual WebGL static observer evidence; not new flight proofs, hardware performance or human art acceptance.',
           'Every image comparison retains hashes/counts, not raw pixel buffers.',
           'Coast and Quarry are actual procedural fallback scenes, with no built-in GLB; Courtyard control explicitly loads its built-in GLB.',
+          'Courtyard control preloads existing encoded textures and material dependencies in GLTF source order equally on both sides, preserving production material content and draw policy. Temporary loader hooks restore immediately after import. Uncontrolled asynchronous-image-order failures are retained separately; this constrained comparison is not a claim of unconstrained Courtyard raster determinism.',
         ],
       };
       try {
@@ -471,12 +660,28 @@
           check(id + ' exact canonical-rock scope', details(owners[1]).length === 6);
         }
         for (const id of ['adventure-coast-01', 'courtyard-01']) {
-          await load(id, 'balanced');
+          await load(id, 'balanced', 'authored', id === 'courtyard-01');
+          const restore = owners.map(traceControl);
           const control = await pair(id, 'balanced', 'authored', 'overview', 'terrace');
+          restore.forEach((fn) => fn());
           receipt.samples.push(control);
+          receipt.controlDiagnostics ??= {};
+          receipt.controlDiagnostics[id] = await Promise.all(owners.map(controlSnapshot));
+          if (id === 'courtyard-01')
+            check(
+              'Courtyard source material order equal and loader hooks restored',
+              owners.every((o) => o.importHookRestored) &&
+                encode(owners[0].importOrder) === encode(owners[1].importOrder),
+              owners.map((o) => o.importOrder),
+            );
+          publish();
           check(
             id + ' no quarry rock artwork and exact pixels',
             details(owners[1]).length === 0 && control.changedPixels === 0,
+            {
+              quarryDetails: owners.map((o) => details(o).length),
+              changedPixels: control.changedPixels,
+            },
           );
           check(
             id + ' correct imported/fallback ownership',
@@ -531,6 +736,87 @@
         $('run').disabled = $('preview').disabled = false;
       }
     }
+    async function diagnoseOrder() {
+      if (busy) return;
+      busy = true;
+      disposeOwners();
+      receipt = {
+        format: 'FPVQuarryCourtyardOrderDiagnostic.v1',
+        createdAt: new Date().toISOString(),
+        baseline: manifest.baseline,
+        candidate: manifest.candidate,
+        sourceFiles: manifest.files,
+        checks: [],
+        samples: [],
+        contextLosses: [],
+        limitations: [
+          'Manual controlled-construction diagnostic only; no production renderer/material/geometry changes. Original unmodified asynchronous-load pixel mismatches remain preserved.',
+        ],
+      };
+      try {
+        await verifyHashes();
+        createOwners();
+        const snapshots = [];
+        for (const ordered of [false, true]) {
+          status(
+            ordered
+              ? 'Courtyard source-order material construction'
+              : 'Courtyard unmodified asynchronous material construction',
+          );
+          await load('courtyard-01', 'balanced', 'authored', ordered);
+          const restore = owners.map(traceControl);
+          const sample = await pair('courtyard-01', 'balanced', 'authored', 'overview', 'terrace');
+          restore.forEach((fn) => fn());
+          receipt.samples.push({ ...sample, orderedImport: ordered });
+          snapshots.push(await Promise.all(owners.map(controlSnapshot)));
+        }
+        const semantic = (snapshot) => ({
+          glbHash: snapshot.glbHash,
+          quarryDetails: snapshot.quarryDetails,
+          world: snapshot.worldGeometrySha256,
+          materials: snapshot.materials,
+          meshes: snapshot.meshes.map(({ materialIdRanks, ...mesh }) => mesh),
+        });
+        receipt.controlDiagnostics = {
+          uncontrolled: snapshots[0],
+          sourceOrdered: snapshots[1],
+          importOrder: owners.map((o) => o.importOrder),
+        };
+        for (let side = 0; side < 2; side++)
+          check(
+            'Side ' +
+              side +
+              ' ordering constraint preserves every mesh/material/decoded texture/GLB/world byte',
+            encode(semantic(snapshots[0][side])) === encode(semantic(snapshots[1][side])),
+          );
+        check(
+          'Both source-ordered scenes and relative material ranks are exact',
+          encode(snapshots[1][0].materials) === encode(snapshots[1][1].materials) &&
+            encode(snapshots[1][0].meshes) === encode(snapshots[1][1].meshes),
+        );
+        check(
+          'GLTF source order equal and temporary loader hooks restored',
+          owners.every((o) => o.importHookRestored) &&
+            encode(owners[0].importOrder) === encode(owners[1].importOrder),
+        );
+        check(
+          'Source-ordered actual render has zero differing pixels',
+          receipt.samples[1].changedPixels === 0,
+          receipt.samples[1],
+        );
+        receipt.passed = true;
+        publish();
+        status('PASS · controlled Courtyard import diagnostic');
+      } catch (error) {
+        receipt.passed = false;
+        receipt.error = String(error.stack ?? error);
+        publish();
+        status('FAIL · ' + error.message);
+      } finally {
+        busy = false;
+      }
+    }
+    $('order').onclick = diagnoseOrder;
     $('run').onclick = run;
     $('preview').onclick = async () => {
       try {
@@ -584,7 +870,7 @@
         (manifest.candidate === '.' ? 'working tree' : manifest.candidate) +
         ' · Runtime SHA-256 ' +
         manifest.files.after['optional-practice/civilian-fpv/world-visuals.mjs'];
-      $('run').disabled = $('preview').disabled = false;
+      $('order').disabled = $('run').disabled = $('preview').disabled = false;
       status('Ready. Qualification has not run.');
     } catch (error) {
       status('Preparation failed: ' + error.message);

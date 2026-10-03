@@ -59,7 +59,8 @@ with empty warning/error logs. Coastal lighthouse #1015 has merged normally at
 `287eec95c81687fb8a6d176f750f7c65a60e1fe3`: source/package browser
 qualification with 97 checks and 56 image pairs, ten fresh retained-proof replays / 41,868 ticks, three package
 admissions and the complete 102-file local admitted player are documented there.
-Its public deployment remains pending at this checkpoint.
+The public marker now matches that merge; actual Lighthouse approach render,
+arm through 0.2 seconds and pause-to-menu passed with empty warning/error logs.
 
 Quarry's next bounded candidate improves the six existing rock solids with
 world-aligned authored strata and fine fractures. It changes no collision volume,
