@@ -1,3 +1,5 @@
+import { sharedActorAppearance } from '../hunt/preferences.mjs';
+import { actorFacingRadians } from '../hunt/actor-facing.mjs';
 import { HUNT_PRESENTATION_CATALOG } from '../hunt/presentation-catalog.mjs';
 import { drawHumanoidPixelBody, drawHuntRemains } from '../hunt/destruction.mjs';
 import { t } from '../i18n/index.mjs';
@@ -64,20 +66,40 @@ export function createCombatPresentation({
 } = {}) {
   let paletteKey = '',
     sprites = new Map();
-  function sprite(role, pose, palette, kind) {
+  function sprite(role, pose, palette, kind, actor) {
     const key = JSON.stringify(colors(palette));
     if (paletteKey !== key) {
       paletteKey = key;
       sprites = new Map();
     }
-    const id = `${kind ?? role}:${pose}`;
+    const cast = sharedActorAppearance().snapshot().cast;
+    const id = JSON.stringify([
+      kind ?? role,
+      pose,
+      cast,
+      actor?.pursuit?.behavior,
+      actor?.pursuit?.phase ?? actor?.phase,
+      actor?.pursuit?.heading,
+      actor?.pursuit?.nextHeading,
+      actor?.state,
+      actor?.frozen,
+      actor?.reducedEffects,
+      !!actor?.pursuit?.goal,
+      actor?.pursuit?.partnerId,
+    ]);
     if (!sprites.has(id)) {
       const canvas = createCanvas();
       canvas.width = canvas.height = 16;
       const ctx = canvas.getContext('2d');
       if (!ctx) throw new Error(t('interface:combatPixelPresentationRequiresA2dCanvas'));
-      if (kind) drawHumanoidPixelBody(ctx, { kind, pose }, palette);
+      if (kind)
+        drawHumanoidPixelBody(
+          ctx,
+          { ...actor, kind, pose, cast, armed: role === 'sentry' },
+          palette,
+        );
       else drawCombatPixelBody(ctx, { role, pose }, palette);
+      if (sprites.size >= 192) sprites.delete(sprites.keys().next().value);
       sprites.set(id, canvas);
     }
     return sprites.get(id);
@@ -101,16 +123,53 @@ export function createCombatPresentation({
           !view.frozen &&
           actor.phase === 'cooldown' &&
           Math.hypot(actor.vx, actor.vy) > 0;
-        const pose = moving ? 1 + (Math.floor(view.actorTick / 24) % 2) : 0;
+        const phase = actor.pursuit?.phase ?? actor.phase;
+        const state =
+          phase === 'warning' || phase === 'turning'
+            ? 'warning'
+            : phase === 'blocked'
+              ? 'blocked'
+              : ['recovering', 'rest', 'recovery'].includes(phase)
+                ? 'recover'
+                : moving
+                  ? actor.kind === 'runner'
+                    ? 'flee'
+                    : 'walk'
+                  : 'idle';
+        const specialist = ['shield', 'brace'].includes(actor.pursuit?.behavior);
+        const still = options.reduced || view.frozen;
+        const cycleTicks = Math.max(36, Math.min(120, 360 / (Math.hypot(actor.vx, actor.vy) || 3)));
+        const pose = actor.kind
+          ? still
+            ? 0
+            : moving
+              ? Math.floor((view.actorTick / cycleTicks) * 6) % 6
+              : Math.floor(view.actorTick / 24) % 4
+          : moving
+            ? 1 + (Math.floor(view.actorTick / 24) % 2)
+            : 0;
+        const drawing = actor.kind
+          ? {
+              ...actor,
+              state,
+              frozen: view.frozen,
+              reducedEffects: !!options.reduced,
+              locomotionPhase: pose / 6,
+              timeMs: pose * 300,
+              facingRadians: specialist ? actor.facingRadians : 0,
+              heading: specialist ? actor.pursuit.heading : 'up',
+            }
+          : actor;
         const x = actor.x * CELL,
           y = actor.y * CELL;
-        ctx.drawImage(
-          sprite(actor.role, pose, palette, actor.kind),
-          x - size / 2,
-          y - size / 2,
-          size,
-          size,
-        );
+        const body = sprite(actor.role, pose, palette, actor.kind, drawing);
+        if (actor.kind && !specialist) {
+          ctx.save();
+          ctx.translate(x, y);
+          ctx.rotate(actor.facingRadians ?? actorFacingRadians(actor));
+          ctx.drawImage(body, -size / 2, -size / 2, size, size);
+          ctx.restore();
+        } else ctx.drawImage(body, x - size / 2, y - size / 2, size, size);
       }
       // Draw every functional footprint after every enlarged body. Dense groups
       // must not let a later sprite paint over an earlier target's exact center.

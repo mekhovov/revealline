@@ -1,3 +1,15 @@
+import {
+  createGameAudioContext,
+  createGameAudioOutput,
+  requestPlaybackAudioSession,
+  releasePlaybackAudioSession,
+} from '../../game/ui/audio-output.mjs';
+import { createAudioMaster } from '../../game/ui/audio-master.mjs';
+import { createAudioPreferences } from '../../game/audio-preferences.mjs';
+import { encounterSoundRecipe } from '../../game/ui/encounter-audio.mjs';
+import { readMovementAudio, MOVEMENT_AUDIO_KEY } from '../../game/ui/movement-audio.mjs';
+import { dialogueChannel } from '../../game/ui/dialogue-channel.mjs';
+
 /** Optional presentation-only sound. No media requests or gameplay clocks. */
 const PREFERENCE = 'revealline.fpv.world-audio.v1';
 const clamp = (value, min, max) => Math.max(min, Math.min(max, value));
@@ -28,12 +40,58 @@ export function createWorldAudio(options = {}) {
   let disposed = false;
   let wanted = false;
   let transition = 0;
+  let lastPlaying = false;
   let lastTick = null;
   let lastStep = null;
+  let lastContacts = null;
   let ambience = AMBIENCES.hangar;
   let motorStyle = 'quad';
   let gateStyle = 'chime';
+  let dialogue = { enabled: false, volume: 0.8 };
+  let dialogueVoice = null;
   const effects = new Set();
+  const audioMaster = options.audioMaster ?? createAudioMaster();
+  const preferences =
+    options.audioPreferences ??
+    createAudioPreferences({
+      audioMaster,
+      getStorage: () => storage,
+      window: host,
+      fallback: options.audioMaster
+        ? { muted: audioMaster.snapshot().muted, volume: audioMaster.snapshot().volume }
+        : { muted: !enabled, volume: 0.65 },
+    });
+  let movement = readMovementAudio(storage);
+  let masterState = audioMaster.snapshot();
+  enabled = !masterState.muted;
+  const applyOutput = () => {
+    if (!graph || context.state === 'closed') return;
+    graph.master.gain.cancelScheduledValues(context.currentTime);
+    graph.master.gain.setValueAtTime(enabled ? masterState.volume : 0, context.currentTime);
+    graph.output.movementBus.gain.setTargetAtTime(
+      movement.enabled ? movement.volume : 0,
+      context.currentTime,
+      0.025,
+    );
+  };
+  const releaseMaster = audioMaster.subscribe((value) => {
+    masterState = value;
+    enabled = !value.muted;
+    if (!enabled || value.volume === 0) silence();
+    applyOutput();
+  });
+  const changed = (event) => {
+    if (event.key === MOVEMENT_AUDIO_KEY) {
+      movement = readMovementAudio(storage);
+      applyOutput();
+    }
+  };
+  host.addEventListener?.('storage', changed);
+  const recentCues = new Map();
+  let actorDefinitions = new Map();
+  let actorPositions = new Map();
+  let lastFootstep = -Infinity;
+
   const volume = (value) =>
     typeof value === 'number' && Number.isFinite(value) ? clamp(value, 0, 1) : 1;
   let levels = Object.fromEntries(
@@ -50,8 +108,9 @@ export function createWorldAudio(options = {}) {
   }
 
   function silence() {
+    dialogueVoice?.stop();
     if (!graph || context.state === 'closed') return;
-    for (const node of [graph.motor, graph.wind, graph.humGain]) {
+    for (const node of [graph.motor, graph.vehicleGain, graph.wind, graph.humGain]) {
       node.gain.cancelScheduledValues(context.currentTime);
       node.gain.setValueAtTime(0, context.currentTime);
     }
@@ -63,18 +122,21 @@ export function createWorldAudio(options = {}) {
     if (!AudioContext || disposed) return false;
     let candidate;
     try {
-      candidate = new AudioContext({ latencyHint: 'interactive' });
-      const master = candidate.createGain();
-      master.gain.value = 0.7;
-      master.connect(candidate.destination);
+      candidate = createGameAudioContext(host);
+      const output = createGameAudioOutput(candidate);
+      const master = output.master;
+      master.gain.value = enabled ? masterState.volume : 0;
+      output.movementBus.gain.value = movement.enabled ? movement.volume : 0;
       const buses = Object.fromEntries(
         Object.entries(levels).map(([key, level]) => {
           const bus = candidate.createGain();
           bus.gain.value = level;
-          bus.connect(master);
+          bus.connect(key === 'motor' ? output.movementBus : output.sfxBus);
           return [key, bus];
         }),
       );
+      const dialogueBus = output.dialogueBus;
+      dialogueBus.gain.value = dialogue.enabled ? dialogue.volume : 0;
       const motor = candidate.createGain();
       motor.gain.value = 0;
       const motorFilter = candidate.createBiquadFilter();
@@ -117,8 +179,30 @@ export function createWorldAudio(options = {}) {
       humGain.gain.value = 0;
       hum.connect(humGain).connect(buses.ambience);
       hum.start();
+      const vehicleMotor = candidate.createOscillator(),
+        vehicleGain = candidate.createGain();
+      vehicleMotor.type = 'triangle';
+      vehicleMotor.frequency.value = 62;
+      vehicleGain.gain.value = 0;
+      vehicleMotor.connect(vehicleGain).connect(buses.motor);
+      vehicleMotor.start();
       context = candidate;
-      graph = { master, buses, motor, motorFilter, rotors, noise, windFilter, wind, hum, humGain };
+      graph = {
+        vehicleMotor,
+        vehicleGain,
+        output,
+        master,
+        buses,
+        dialogueBus,
+        motor,
+        motorFilter,
+        rotors,
+        noise,
+        windFilter,
+        wind,
+        hum,
+        humGain,
+      };
       return true;
     } catch {
       candidate?.close().catch(() => {});
@@ -126,9 +210,26 @@ export function createWorldAudio(options = {}) {
     }
   }
 
-  function tone({ from, to = from, duration = 0.12, gain = 0.05, delay = 0, type = 'sine' }) {
-    if (!graph || !levels.interface || effects.size >= 12 || !wanted || context.state !== 'running')
+  function tone({
+    from,
+    to = from,
+    duration = 0.12,
+    gain = 0.05,
+    delay = 0,
+    type = 'sine',
+    movementCue = false,
+  }) {
+    if (
+      !graph ||
+      !enabled ||
+      masterState.volume === 0 ||
+      !levels.interface ||
+      effects.size >= 12 ||
+      !wanted ||
+      context.state !== 'running'
+    )
       return;
+    if (movementCue && (!movement.enabled || movement.volume === 0)) return;
     const oscillator = context.createOscillator();
     const envelope = context.createGain();
     const start = context.currentTime + delay;
@@ -139,7 +240,9 @@ export function createWorldAudio(options = {}) {
     envelope.gain.setValueAtTime(0, start);
     envelope.gain.linearRampToValueAtTime(gain, start + 0.008);
     envelope.gain.exponentialRampToValueAtTime(0.0001, start + duration);
-    oscillator.connect(envelope).connect(graph.buses.interface);
+    oscillator
+      .connect(envelope)
+      .connect(movementCue ? graph.output.movementBus : graph.buses.interface);
     let stopped = false;
     const effect = {
       stop() {
@@ -161,33 +264,36 @@ export function createWorldAudio(options = {}) {
     oscillator.stop(start + duration + 0.02);
   }
 
-  function cue(type, player = true) {
-    if (type === 'catch') {
-      tone({ from: 520, to: 880, duration: 0.12, gain: 0.055, type: 'triangle' });
-    } else if (type === 'hunt-tail') {
-      tone({ from: 240, to: 75, duration: 0.18, gain: 0.06, type: 'triangle' });
-    } else if (type === 'objective') {
-      const frequency = gateStyle === 'bell' ? 660 : gateStyle === 'radio' ? 440 : 740;
-      const wave = gateStyle === 'digital' ? 'triangle' : 'sine';
-      tone({ from: frequency, duration: 0.2, gain: 0.07, type: wave });
-      tone({ from: frequency * 1.5, duration: 0.25, delay: 0.09, gain: 0.055, type: wave });
-    } else if (type === 'fire') {
-      tone({
-        from: player ? 750 : 410,
-        to: 150,
-        duration: 0.08,
-        gain: player ? 0.048 : 0.024,
-        type: 'triangle',
-      });
-    } else if (type === 'impact') {
-      tone({ from: 170, to: 38, duration: 0.15, gain: 0.075, type: 'triangle' });
-    } else if (type === 'defeat') {
-      tone({ from: 430, to: 95, duration: 0.24, gain: 0.05, type: 'sine' });
-    }
+  function cue(type, player = true, event = {}) {
+    const kind = {
+      catch: 'catch',
+      'hunt-tail': 'failure',
+      objective: 'objective',
+      fire: 'fire',
+      impact: 'impact',
+      defeat: 'catch',
+    }[type];
+    if (!kind) return;
+    const now = context?.currentTime ?? 0;
+    if (now - (recentCues.get(kind) ?? -Infinity) < 0.12) return;
+    recentCues.set(kind, now);
+    const actor = actorDefinitions.get(event.actor);
+    const machine = actor?.type === 'vehicle';
+    const recipe = encounterSoundRecipe(kind, {
+      family: actor?.speed > 0 ? 'patroller' : 'lookout',
+      machine,
+    });
+    if (recipe.priority >= 5 || (type === 'fire' && !player)) dialogueChannel.interrupt();
+    const voice = { ...recipe.tone };
+    if (type === 'fire' && !player) voice.gain *= 0.65;
+    if (type === 'objective' && gateStyle === 'digital') voice.type = 'triangle';
+    tone(voice);
   }
 
   async function resume() {
-    if (!enabled || disposed || !initialize()) return false;
+    if (!enabled || disposed) return false;
+    requestPlaybackAudioSession(host.navigator?.audioSession);
+    if (!initialize()) return false;
     wanted = true;
     const epoch = ++transition;
     try {
@@ -207,9 +313,77 @@ export function createWorldAudio(options = {}) {
     transition++;
     silence();
     if (context && context.state !== 'closed') context.suspend().catch(() => {});
+    releasePlaybackAudioSession(host.navigator?.audioSession);
   }
 
   return {
+    get context() {
+      return context;
+    },
+    get menuBus() {
+      return graph?.output.menuBus;
+    },
+    subscribe(listener) {
+      return audioMaster.subscribe(() => listener(enabled));
+    },
+    configureDialogue({ enabled = dialogue.enabled, volume: value = dialogue.volume } = {}) {
+      if (typeof enabled !== 'boolean' || !Number.isFinite(value) || value < 0 || value > 1)
+        throw new TypeError('Dialogue requires an enabled boolean and volume from zero to one.');
+      dialogue = { enabled, volume: value };
+      if (!enabled || !value) dialogueVoice?.stop();
+      if (graph && context.state !== 'closed') ramp(graph.dialogueBus.gain, enabled ? value : 0);
+    },
+    /** Uses the existing flight context and the shared one-line dialogue arbiter. */
+    playDialogue(buffer, { onended = () => {} } = {}) {
+      if (
+        !buffer ||
+        disposed ||
+        !enabled ||
+        !wanted ||
+        !dialogue.enabled ||
+        !dialogue.volume ||
+        !graph ||
+        context.state !== 'running'
+      )
+        return null;
+      dialogueVoice?.stop();
+      const source = context.createBufferSource();
+      source.buffer = buffer;
+      source.connect(graph.dialogueBus);
+      let ended = false;
+      const voice = {
+        get ended() {
+          return ended;
+        },
+        stop() {
+          if (ended) return;
+          ended = true;
+          try {
+            source.stop();
+          } catch {
+            /* An ended source is already silent. */
+          }
+          source.disconnect();
+          if (dialogueVoice === voice) dialogueVoice = null;
+          dialogueChannel.release(voice);
+          try {
+            onended();
+          } catch {
+            /* Presentation callbacks cannot interrupt flight. */
+          }
+        },
+      };
+      source.onended = voice.stop;
+      dialogueChannel.claim(voice);
+      dialogueVoice = voice;
+      try {
+        source.start();
+      } catch {
+        voice.stop();
+        return null;
+      }
+      return voice;
+    },
     enabled: () => enabled,
     volumes: () => ({ ...levels }),
     setVolumes(values = {}) {
@@ -236,6 +410,7 @@ export function createWorldAudio(options = {}) {
     async setEnabled(value) {
       if (disposed) return false;
       enabled = Boolean(value);
+      preferences.setMuted(!enabled);
       try {
         storage?.setItem(PREFERENCE, enabled ? 'on' : 'off');
       } catch {
@@ -248,6 +423,7 @@ export function createWorldAudio(options = {}) {
     resume,
     pause,
     setCourse(course = {}) {
+      dialogueVoice?.stop();
       const theme = course.world?.theme ?? course.theme ?? 'academy';
       const profile = course.world?.themeProfile?.audio ?? course.themeProfile?.audio ?? {};
       const fallback =
@@ -264,8 +440,14 @@ export function createWorldAudio(options = {}) {
         (theme === 'pixel' ? 'arcade' : theme === 'operations' ? 'utility' : 'quad');
       gateStyle =
         profile.gate ?? (theme === 'pixel' ? 'digital' : theme === 'ukrainian' ? 'bell' : 'chime');
+      lastPlaying = false;
       lastTick = null;
       lastStep = null;
+      lastContacts = null;
+      recentCues.clear();
+      actorPositions.clear();
+      lastFootstep = -Infinity;
+      actorDefinitions = new Map((course.actors ?? []).map((actor) => [actor.id, actor]));
       stopEffects();
       if (graph && context.state !== 'closed') {
         ramp(graph.windFilter.frequency, ambience.filter);
@@ -276,10 +458,11 @@ export function createWorldAudio(options = {}) {
       if (disposed || !snapshot) return;
       const tick = snapshot.ticks;
       const step = snapshot.step;
-      const fresh = Number.isSafeInteger(tick) && tick !== lastTick;
+      const fresh = Number.isSafeInteger(tick) && lastTick !== null && tick > lastTick;
       const advanced = Number.isSafeInteger(step) && lastStep !== null && step > lastStep;
       const playing = active && !['paused', 'disarmed'].includes(snapshot.status);
-      if (enabled && wanted && graph && context.state === 'running' && playing) {
+      const finalCue = fresh && lastPlaying && ['complete', 'failed'].includes(snapshot.status);
+      if (enabled && wanted && graph && context.state === 'running' && (playing || finalCue)) {
         const flying = snapshot.status === 'active';
         const throttle = clamp((snapshot.lastInput?.throttle ?? 0) / 1000, 0, 1);
         const velocity = snapshot.velocity ?? {};
@@ -296,45 +479,91 @@ export function createWorldAudio(options = {}) {
         ramp(graph.wind.gain, ambience.gain + (flying ? airflow * 0.028 : 0));
         ramp(graph.humGain.gain, ambience.humGain);
         if (fresh) {
+          let nearestVehicle = Infinity,
+            nearestFoot = Infinity;
+          for (const actor of snapshot.actors ?? []) {
+            const previous = actorPositions.get(actor.id),
+              position = actor.position;
+            if (!position) continue;
+            const moving =
+              previous && Math.hypot(position.x - previous.x, position.z - previous.z) > 0;
+            if (moving && actor.status === 'active') {
+              const d = Math.hypot(
+                position.x - snapshot.position.x,
+                position.y - snapshot.position.y,
+                position.z - snapshot.position.z,
+              );
+              if (actor.type === 'vehicle') nearestVehicle = Math.min(nearestVehicle, d);
+              else if (['patrol', 'sentry'].includes(actor.type))
+                nearestFoot = Math.min(nearestFoot, d);
+            }
+          }
+          ramp(
+            graph.vehicleGain.gain,
+            flying && nearestVehicle < 16000 ? 0.012 * (1 - nearestVehicle / 16000) : 0,
+          );
+          if (flying && nearestFoot < 6000 && context.currentTime - lastFootstep >= 0.34) {
+            lastFootstep = context.currentTime;
+            const step = encounterSoundRecipe('step');
+            tone({
+              ...step.tone,
+              gain: step.tone.gain * (1 - nearestFoot / 6000) * levels.interface,
+              movementCue: true,
+            });
+          }
           const events = snapshot.events ?? [];
           const types = new Set();
           // Bound cue overlap independently of simulation actor/projectile counts.
           for (const event of events) {
             if (types.has(event.type)) continue;
             types.add(event.type);
-            cue(event.type, event.actor === 'player');
+            cue(event.type, event.actor === 'player', event);
           }
           if (advanced && !types.has('objective')) cue('objective');
+          if (lastContacts !== null && snapshot.contacts > lastContacts && !types.has('impact'))
+            cue('impact');
         }
       } else if (graph && context.state !== 'closed') {
         ramp(graph.motor.gain, 0);
+        ramp(graph.vehicleGain.gain, 0);
         ramp(graph.wind.gain, 0);
         ramp(graph.humGain.gain, 0);
       }
+      actorPositions = new Map(
+        (snapshot.actors ?? []).map((actor) => [actor.id, { ...actor.position }]),
+      );
       lastTick = tick;
       lastStep = step;
+      lastContacts = snapshot.contacts ?? null;
+      lastPlaying = playing;
     },
     dispose() {
       if (disposed) return;
       disposed = true;
       pause();
+      releaseMaster();
+      host.removeEventListener?.('storage', changed);
+      if (!options.audioPreferences) preferences.dispose();
+      if (!options.audioMaster) audioMaster.dispose();
       if (!graph) return;
       for (const node of [
         ...graph.rotors.map((rotor) => rotor.oscillator),
         graph.noise,
         graph.hum,
+        graph.vehicleMotor,
       ]) {
         node.stop();
         node.disconnect();
       }
       for (const node of [
         graph.motor,
+        graph.vehicleGain,
         graph.motorFilter,
         graph.windFilter,
         graph.wind,
         graph.humGain,
         ...Object.values(graph.buses),
-        graph.master,
+        ...Object.values(graph.output).filter(Boolean),
       ])
         node.disconnect();
       context.close().catch(() => {});

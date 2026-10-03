@@ -51,7 +51,8 @@ function optionsFor(level, input) {
   required(
     policy === 'mission'
       ? level.objective !== 'endless'
-      : level.version === 'classic-snake-level.v2' && level.objective === 'endless',
+      : ['classic-snake-level.v2', 'classic-snake-level.v3'].includes(level.version) &&
+          level.objective === 'endless',
     'Snake objective and match policy differ.',
   );
   required(

@@ -1,3 +1,5 @@
+import { createPursuitCampaignCandidates } from './pursuit-campaign-candidates.mjs';
+import { createPursuitPilotCandidates } from './pursuit-pilot-candidates.mjs';
 import { createSnakeHuntCandidates } from './snake-hunt-candidates.mjs';
 import { createOpeningCandidates } from './horizon-candidates.mjs';
 import { createHuntTrainingCandidates } from './hunt-training-candidates.mjs';
@@ -53,6 +55,8 @@ export { createCandidateSequence } from './sequence.mjs';
 // selective async loader; both share the exact same route definition.
 export function createAuthoredJourneyRoute(id) {
   return createAuthoredJourneyRouteDefinition(id, {
+    createPursuitPilotCandidates,
+    createPursuitCampaignCandidates,
     createOpeningCandidates,
     createHuntTrainingCandidates,
     createSnakeHuntCandidates,

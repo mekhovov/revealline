@@ -1,7 +1,17 @@
+import {
+  derivePursuitGoals,
+  validatePursuitPopulation,
+  PURSUIT_GOALS_VERSION,
+} from './pursuit-goals.mjs';
 import { dataIdentity, required } from '../data-json.mjs';
 import { normalizedLevel } from '../core/level.mjs';
 import { CLASSES, validateClassRecipes } from '../core/registry.mjs';
-import { RUNNING_ENEMY_VERSIONS } from '../core/versions.mjs';
+import {
+  RUNNING_ENEMY_VERSIONS,
+  PURSUIT_VERSIONS,
+  SNAKE_PURSUIT_VERSIONS,
+  isRunningEnemyLevel,
+} from '../core/versions.mjs';
 import { placeRunningEnemies, runningEnemyReservedIds } from './running-enemy-placement.mjs';
 import { HUNT_VERSION, HUNT_RUNNER_TURN_TICKS } from './rules.mjs';
 import {
@@ -21,13 +31,53 @@ const freeze = (value) => {
 
 /** Resolve once before starting an attempt, after difficulty/tuning. Historical
  * variants and authored Hunt objectives keep their existing accepted recipe. */
-export function prepareRunningEnemyLevel(source, { classes = CLASSES } = {}) {
+export function prepareRunningEnemyLevel(
+  source,
+  { classes = CLASSES, style = 'original', population } = {},
+) {
+  required(['original', 'varied'].includes(style), 'Choose original or varied running targets.');
   source = runningEnemyCopy(source);
-  if (source.version === RUNNING_ENEMY_VERSIONS.levelVersion) source = normalizedLevel(source);
+  if (source.pursuit && isRunningEnemyLevel(source)) return freeze(normalizedLevel(source));
+  if (isRunningEnemyLevel(source)) source = normalizedLevel(source);
   const base = normalizedLevel(
-    source.version === RUNNING_ENEMY_VERSIONS.levelVersion ? runningEnemyBaseLevel(source) : source,
+    isRunningEnemyLevel(source) ? runningEnemyBaseLevel(source) : source,
   );
-  if (base.classic?.hunt) return freeze(base);
+  if (base.classic?.hunt) {
+    if (style === 'original') return freeze(base);
+    const runners = base.classic.combatPatrols.actors.filter((actor) =>
+      base.classic.hunt.targets.some(
+        (target) => target.id === actor.id && target.kind === 'runner',
+      ),
+    );
+    if (!runners.length) return freeze(base);
+    const authored = population === undefined ? null : validatePursuitPopulation(population);
+    required(
+      !authored ||
+        authored.every((item) =>
+          runners.some((actor) => actor.id === item.id && actor.x === item.x && actor.y === item.y),
+        ),
+      'Authored pursuit goals must match existing target positions.',
+    );
+    return freeze(
+      normalizedLevel({
+        ...base,
+        version: base.snake ? SNAKE_PURSUIT_VERSIONS.levelVersion : PURSUIT_VERSIONS.levelVersion,
+        runningEnemies: {
+          version: base.snake ? 'running-enemies.v3' : 'running-enemies.v2',
+          baseVersion: base.version,
+          baseIdentity: dataIdentity(base),
+          combatPatrols: base.classic.combatPatrols,
+          hunt: base.classic.hunt,
+        },
+        pursuit: authored
+          ? {
+              version: PURSUIT_GOALS_VERSION,
+              actors: authored.map(({ x: _x, y: _y, ...policy }) => policy),
+            }
+          : derivePursuitGoals(runners, runningEnemyGeometry(base)),
+      }),
+    );
+  }
   const roster = validateClassRecipes(classes);
   required(roster.valid, `Invalid running-enemy roster: ${roster.errors.join('; ')}`);
   const speed =
@@ -40,17 +90,23 @@ export function prepareRunningEnemyLevel(source, { classes = CLASSES } = {}) {
   );
   const inherited = base.classic?.combatPatrols?.enabled ? base.classic.combatPatrols.actors : [];
   const geometry = runningEnemyGeometry(base);
-  const points = placeRunningEnemies({
-    ...geometry,
-    occupied: [...base.enemies, ...inherited],
-    reservedIds: runningEnemyReservedIds(base),
-  });
+  const authored = population === undefined ? null : validatePursuitPopulation(population);
+  required(!authored || style === 'varied', 'Authored goals require varied pursuit.');
+  const points =
+    authored ??
+    placeRunningEnemies({
+      ...geometry,
+      occupied: [...base.enemies, ...inherited],
+      reservedIds: runningEnemyReservedIds(base),
+    });
   required(
     points.length > 0,
     'This level has no reachable unclaimed cell with safe runner clearance.',
   );
-  const actors = points.map((point) => ({
-    ...point,
+  const actors = points.map(({ id, x, y }) => ({
+    id,
+    x,
+    y,
     role: 'scout',
     headingX: 1,
     headingY: 0,
@@ -60,7 +116,18 @@ export function prepareRunningEnemyLevel(source, { classes = CLASSES } = {}) {
   return freeze(
     normalizedLevel({
       ...base,
-      version: RUNNING_ENEMY_VERSIONS.levelVersion,
+      version:
+        style === 'varied' ? PURSUIT_VERSIONS.levelVersion : RUNNING_ENEMY_VERSIONS.levelVersion,
+      ...(style === 'varied'
+        ? {
+            pursuit: authored
+              ? {
+                  version: PURSUIT_GOALS_VERSION,
+                  actors: authored.map(({ x: _x, y: _y, ...policy }) => policy),
+                }
+              : derivePursuitGoals(actors, geometry),
+          }
+        : {}),
       runningEnemies: {
         version: RUNNING_ENEMIES_VERSION,
         baseVersion: base.version,

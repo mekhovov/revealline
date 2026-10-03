@@ -63,6 +63,13 @@ const familyFor = (theme) =>
   ({atlas: 'ukraine',
 arcade: 'retro'})[theme.family] ?? theme.family ?? theme.id;
 const explicitBody = (body) =>
+  (body === 'humanoid'
+    ? 'grain'
+    : body === 'tracked-vehicle'
+      ? 'ratchet'
+      : body === 'wheeled-vehicle'
+        ? 'wheels'
+        : null) ??
   PLAYER_MOVEMENT[body] ??
   (/bird|falcon|swallow|sail|moth/.test(body)
     ? 'wings'

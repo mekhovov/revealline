@@ -97,6 +97,29 @@ export function drawClassicCable(
 ) {
   const signal = style === 'signal';
   ctx.save();
+  if (style === 'segmented') {
+    // The original chunky Snake body is still the exact occupied-cell footprint.
+    // Small connectors follow real neighbours, including a wrapped board edge.
+    for (let i = snake.body.length - 1; i > 0; i--) {
+      const cell = snake.body[i],
+        x = cell.x * UNIT,
+        y = cell.y * UNIT;
+      for (const neighbour of [snake.body[i - 1], snake.body[i + 1]]) {
+        const toward = direction(cell, neighbour, level);
+        if (toward) rect(ctx, ink.body, x + 8 + toward.x * 8, y + 8 + toward.y * 8, 12, 12);
+      }
+      rect(ctx, ink.edge, x + 1, y + 1, 26, 26);
+      rect(ctx, ink.body, x + 3, y + 3, 22, 22);
+      rect(ctx, ink.band, x + 5, y + 5, 4, 4);
+      rect(ctx, '#71966b', x + 3, y + 24, 22, 1);
+      if (i === snake.body.length - 1) {
+        rect(ctx, ink.edge, x + 11, y + 11, 6, 6);
+        rect(ctx, ink.band, x + 13, y + 13, 2, 2);
+      }
+    }
+    ctx.restore();
+    return;
+  }
   // Full occupied cells stay visible; continuous tubing carries the visual focus.
   for (let i = snake.body.length - 1; i > 0; i--) {
     const cell = snake.body[i],

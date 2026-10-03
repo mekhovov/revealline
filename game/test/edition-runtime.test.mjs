@@ -541,7 +541,7 @@ test('common host import projection closes over committed adapters without visit
     [
       'game/app.mjs',
       bytes(
-        "import './content-design/route-loader.mjs'; export * from './runtime-library-sources.mjs'; import('./external-chapter-source.mjs'); import './replay-theater/examples.mjs';",
+        "import './content-design/route-loader.mjs'; export * from './runtime-library-sources.mjs'; import('./external-chapter-source.mjs'); import './replay-theater/examples.mjs'; import './audio/reactions/actors.mjs';",
       ),
     ],
     ['game/ui/style.css', bytes('body{color:red}')],

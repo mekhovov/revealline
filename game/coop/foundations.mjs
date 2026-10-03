@@ -1,6 +1,12 @@
 import {
   inheritedTeamVersion,
   TEAM_RUNNING_LEVEL_VERSION,
+  TEAM_PURSUIT_LEVEL_VERSION,
+  TEAM_SNAKE_PURSUIT_LEVEL_VERSION,
+  TEAM_SNAKE_PURSUIT_RULESET,
+  TEAM_SNAKE_PURSUIT_PACK_VERSION,
+  TEAM_PURSUIT_RULESET,
+  TEAM_PURSUIT_PACK_VERSION,
   TEAM_RUNNING_RULESET,
   TEAM_RUNNING_PACK_VERSION,
 } from './running-enemies.mjs';
@@ -35,6 +41,10 @@ export const COOP_HUNT_RULESET = 'revealline-coop.v10';
 export const COOP_HUNT_PACK_VERSION = 'revealline-coop-pack.v8';
 
 const editions = Object.freeze({
+  [TEAM_SNAKE_PURSUIT_LEVEL_VERSION]: Object.freeze({
+    version: TEAM_SNAKE_PURSUIT_PACK_VERSION,
+    ruleset: TEAM_SNAKE_PURSUIT_RULESET,
+  }),
   [TEAM_SNAKE_LEVEL_VERSION]: Object.freeze({
     version: TEAM_SNAKE_PACK_VERSION,
     ruleset: TEAM_SNAKE_RULESET,
@@ -71,11 +81,13 @@ const editions = Object.freeze({
 
 export function journeyTeamPackEdition(level) {
   const edition =
-    level.version === TEAM_RUNNING_LEVEL_VERSION
-      ? { version: TEAM_RUNNING_PACK_VERSION, ruleset: TEAM_RUNNING_RULESET }
-      : Object.hasOwn(editions, level.version)
-        ? editions[level.version]
-        : null;
+    level.version === TEAM_PURSUIT_LEVEL_VERSION
+      ? { version: TEAM_PURSUIT_PACK_VERSION, ruleset: TEAM_PURSUIT_RULESET }
+      : level.version === TEAM_RUNNING_LEVEL_VERSION
+        ? { version: TEAM_RUNNING_PACK_VERSION, ruleset: TEAM_RUNNING_RULESET }
+        : Object.hasOwn(editions, level.version)
+          ? editions[level.version]
+          : null;
   if (!edition) throw new TypeError('Unsupported Journey Team runtime edition.');
   return edition;
 }
@@ -108,9 +120,13 @@ export const hasTeamSpecialists = (level) =>
   inheritedTeamVersion(level) === COOP_SPECIALIST_LEVEL_VERSION ||
   (inheritedTeamVersion(level) === COOP_HUNT_LEVEL_VERSION && Object.hasOwn(level, 'supportRoles'));
 export const hasTeamHunting = (level) =>
-  [COOP_HUNT_LEVEL_VERSION, TEAM_RUNNING_LEVEL_VERSION, TEAM_SNAKE_LEVEL_VERSION].includes(
-    level.version,
-  );
+  [
+    COOP_HUNT_LEVEL_VERSION,
+    TEAM_RUNNING_LEVEL_VERSION,
+    TEAM_SNAKE_LEVEL_VERSION,
+    TEAM_PURSUIT_LEVEL_VERSION,
+    TEAM_SNAKE_PURSUIT_LEVEL_VERSION,
+  ].includes(level.version);
 
 export const isJourneyTeamLevel = (level) => Object.hasOwn(editions, inheritedTeamVersion(level));
 export const isJourneyTeamRuleset = (ruleset) =>

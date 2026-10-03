@@ -4,7 +4,11 @@ import {
   matchTeamRunningEnemyLevel,
   teamRunningEnemyBaseLevel,
 } from '../hunt/team-running-enemies.mjs';
-import { TEAM_RUNNING_LEVEL_VERSION, TEAM_RUNNING_RULESET } from './running-enemies.mjs';
+import {
+  isTeamRunningLevel,
+  TEAM_RUNNING_RULESET,
+  TEAM_PURSUIT_RULESET,
+} from './running-enemies.mjs';
 
 const accepted = new WeakMap();
 
@@ -14,9 +18,9 @@ const accepted = new WeakMap();
 export function teamPictureArenaLevel(run, { runtimeLevel, sourceLevel }) {
   if (!run.level.runningEnemies) return run.level;
   required(
-    runtimeLevel?.version === TEAM_RUNNING_LEVEL_VERSION &&
+    isTeamRunningLevel(runtimeLevel) &&
       run.level.version === runtimeLevel.version &&
-      run.ruleset === TEAM_RUNNING_RULESET &&
+      [TEAM_RUNNING_RULESET, TEAM_PURSUIT_RULESET].includes(run.ruleset) &&
       run.level.id === runtimeLevel.id &&
       run.level.revision === runtimeLevel.revision &&
       run.width === runtimeLevel.width &&
@@ -31,7 +35,9 @@ export function teamPictureArenaLevel(run, { runtimeLevel, sourceLevel }) {
     );
     const matches = recoverGameplayTuning(runtimeLevel)
       ? matchRecordedGameplayTuning(sourceLevel, runtimeLevel)
-      : matchTeamRunningEnemyLevel(sourceLevel, runtimeLevel);
+      : matchTeamRunningEnemyLevel(sourceLevel, runtimeLevel, {
+          style: runtimeLevel.pursuit ? 'varied' : 'original',
+        });
     required(matches, 'Team running-enemy picture source differs from its exact recipe.');
     binding = {
       runtimeLevel,

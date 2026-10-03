@@ -245,6 +245,7 @@ const productionTheme = (
     'moonlit-grove': 'wood',
     'ember-foundry': 'steel',
     'polar-relay': 'steel',
+    'military-field': 'steel',
   }[id],
   provenance: { author: 'RevealLine', license: 'project-original', source },
 });
@@ -292,6 +293,19 @@ const RETAINED_PRODUCTION_INTERFACE_THEMES = freeze([
 export const BUILTIN_INTERFACE_THEMES = freeze([
   { ...RETAINED_PRODUCTION_INTERFACE_THEMES[0], revision: 'r3', name: 'Signal Blue' },
   { ...RETAINED_PRODUCTION_INTERFACE_THEMES[1], revision: 'r3', name: 'Flight Deck' },
+  productionTheme('military-field', 'Military Field', {
+    ink: '#121811',
+    panel: '#232c20',
+    panelRaised: '#343f2d',
+    text: '#f0efdc',
+    muted: '#bbc5ad',
+    line: '#58664c',
+    controlLine: '#a9b992',
+    accent: '#e5ca85',
+    amber: '#e5ca85',
+    hazard: '#ff9c86',
+    safe: '#b1d5a5',
+  }),
   productionTheme('ember-foundry', 'Ember Foundry', {
     ink: '#171311',
     panel: '#2b2420',
@@ -1515,6 +1529,14 @@ const workshopAssets = {
   scenery: 'builtin:workshop-perimeter',
 };
 export const SIM_COLLECTION_PALETTES = freeze({
+  'military-field': {
+    sky: 0xa8b4b1,
+    fog: 0xbac1b0,
+    ground: 0x647451,
+    wall: 0x717861,
+    accent: 0xe5ca85,
+    warm: 0xf0dc9d,
+  },
   'ember-foundry': {
     sky: 0x6c625b,
     fog: 0x83796d,
@@ -1742,8 +1764,18 @@ export const BUILTIN_SIM_VISUAL_COLLECTIONS = Object.freeze(
       ...Object.entries(SIM_COLLECTION_PALETTES).map(([id, palette]) => ({
         id,
         profileId: id,
-        models: workshopModels,
-        assets: workshopAssets,
+        models:
+          id === 'military-field'
+            ? { ...workshopModels, vehicle: 'field-utility-car', enemy: 'field-soldier' }
+            : workshopModels,
+        assets:
+          id === 'military-field'
+            ? {
+                ...workshopAssets,
+                vehicle: 'builtin:military-utility-car',
+                enemy: 'builtin:military-field-soldier',
+              }
+            : workshopAssets,
         materials: materialBindings(id),
         effects: {
           ...workshopEffects,

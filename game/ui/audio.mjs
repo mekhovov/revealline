@@ -1,3 +1,11 @@
+import { encounterSoundRecipe } from './encounter-audio.mjs';
+import {
+  createGameAudioContext,
+  createGameAudioOutput,
+  requestPlaybackAudioSession,
+  releasePlaybackAudioSession,
+} from './audio-output.mjs';
+export { requestPlaybackAudioSession, releasePlaybackAudioSession } from './audio-output.mjs';
 import { dialogueChannel } from './dialogue-channel.mjs';
 import { campaignVictoryMotif } from '../journey/campaign-feedback.mjs';
 import { readMovementAudio } from './movement-audio.mjs';
@@ -23,37 +31,7 @@ const trackFields = ['id', 'name', 'genre', 'tempo', 'root', 'scale'];
 const sameTrack = (a, b) => trackFields.every((key) => a[key] === b[key]);
 const clamp = (n, a, b) => Math.min(b, Math.max(a, n));
 const voiceLimit = 64;
-const playbackAudioSession = 'playback';
-const defaultFactory = () => {
-  const Audio = globalThis.AudioContext || globalThis.webkitAudioContext;
-  if (!Audio) return null;
-  return new Audio({ latencyHint: 'interactive' });
-};
-
-/**
- * iOS treats Web Audio as ambient unless the page requests a playback session.
- * Ambient audio obeys the iPhone Silent switch even while AudioContext reports
- * `running`, which leaves a progressing but inaudible game soundtrack.
- */
-export function requestPlaybackAudioSession(audioSession = globalThis.navigator?.audioSession) {
-  if (!audioSession || typeof audioSession !== 'object') return false;
-  try {
-    if (audioSession.type !== playbackAudioSession) audioSession.type = playbackAudioSession;
-    return audioSession.type === playbackAudioSession;
-  } catch {
-    return false;
-  }
-}
-
-export function releasePlaybackAudioSession(audioSession = globalThis.navigator?.audioSession) {
-  if (!audioSession || typeof audioSession !== 'object') return false;
-  try {
-    if (audioSession.type === playbackAudioSession) audioSession.type = 'auto';
-    return audioSession.type !== playbackAudioSession;
-  } catch {
-    return false;
-  }
-}
+const defaultFactory = () => createGameAudioContext();
 
 /** One shared context, independently controlled gain buses, original oscillator/noise instruments.
  * Only toggle/enable/resume create or resume audio; update never bypasses a gesture.
@@ -374,19 +352,7 @@ export class Soundscape {
     const context = this.contextFactory();
     if (!context) return false;
     this.context = context;
-    this.master = context.createGain();
-    this.musicBus = context.createGain();
-    this.sfxBus = context.createGain();
-    this.menuBus = context.createGain();
-    this.movementBus = context.createGain();
-    this.movementBus.connect(this.sfxBus);
-    this.radioBus = context.createGain();
-    this.radioBus.connect(this.sfxBus);
-    this.dialogueBus = context.createGain();
-    this.dialogueBus.connect(this.master);
-    this.menuBus.connect(this.master);
-    this.musicBus.connect(this.master);
-    this.sfxBus.connect(this.master);
+    Object.assign(this, createGameAudioOutput(context));
     if (context.createWaveShaper) {
       const curve = Float32Array.from({ length: 256 }, (_, i) =>
         Math.tanh(((i / 255) * 2 - 1) * 3),
@@ -402,14 +368,6 @@ export class Soundscape {
         node.connect(bus);
       }
     }
-    this.compressor = context.createDynamicsCompressor?.();
-    if (this.compressor) {
-      this.compressor.threshold.value = -12;
-      this.compressor.knee.value = 12;
-      this.compressor.ratio.value = 5;
-      this.master.connect(this.compressor);
-      this.compressor.connect(context.destination);
-    } else this.master.connect(context.destination);
     const length = Math.ceil(context.sampleRate * 0.25);
     this.noise = context.createBuffer(1, length, context.sampleRate);
     const data = this.noise.getChannelData(0);
@@ -648,6 +606,12 @@ export class Soundscape {
             }[note.voice] || 'triangle';
       const freq = clamp(note.frequency || 120, 30, 5000);
       source.frequency.setValueAtTime(note.kind === 'kick' ? 145 : freq, start);
+      if (['sine', 'triangle', 'square'].includes(note.wave)) source.type = note.wave;
+      if (Number.isFinite(note.endFrequency))
+        source.frequency.exponentialRampToValueAtTime(
+          clamp(note.endFrequency, 30, 5000),
+          start + duration,
+        );
       if (note.kind === 'kick') source.frequency.exponentialRampToValueAtTime(44, start + duration);
       if (note.voice === 'guitar' || note.voice === 'pad') {
         filter = c.createBiquadFilter();
@@ -668,7 +632,14 @@ export class Soundscape {
     } else source.connect(gain);
     const destination = bus === 'music' ? this.musicBus : this.sfxBus,
       drive = bus === 'music' ? this.musicDrive : this.sfxDrive;
-    gain.connect(note.voice === 'guitar' && drive ? drive : destination);
+    const output = note.voice === 'guitar' && drive ? drive : destination;
+    if (Number.isFinite(note.pan) && c.createStereoPanner) {
+      const panner = c.createStereoPanner();
+      panner.pan.setValueAtTime(clamp(note.pan, -1, 1), start);
+      gain.connect(panner);
+      panner.connect(output);
+      nodes.push(panner);
+    } else gain.connect(output);
     const attack = { pad: 0.07, chime: 0.012, bloom: 0.12 }[note.voice] ?? 0.005,
       volume = clamp(note.volume ?? 0.035, 0.001, 0.3);
     gain.gain.setValueAtTime(0.0001, start);
@@ -677,6 +648,16 @@ export class Soundscape {
     let ended = false;
     const voice = {
       bus,
+      source,
+      feedback: note.encounter === true,
+      name: note.cueName,
+      cueFamily: note.cueName,
+      board: note.board,
+      priority: note.priority ?? 0,
+      get ended() {
+        return ended;
+      },
+      retire: () => voice.stop(),
       stop: () => {
         if (ended) return;
         ended = true;
@@ -708,10 +689,67 @@ export class Soundscape {
       (this.context?.currentTime || 0) + offset,
     );
   }
+  setActorPresentation(read) {
+    if (typeof read !== 'function') throw new TypeError('Actor presentation reader required.');
+    this.readActorPresentation = read;
+  }
   feedback(active, theme, run, options = {}) {
     if (active && run?.status === 'running' && this.enabled && !this.paused)
       this.gameplayPaused = false;
-    this.feedbackDirector.update(active, theme, run, options);
+    this.feedbackDirector.update(active, theme, run, {
+      ...this.readActorPresentation?.(),
+      ...options,
+    });
+  }
+  /** Shared enemy, machinery and tactical cues, including an offline fallback. */
+  encounter(type, details = {}) {
+    const recipe = encounterSoundRecipe(type, details),
+      c = this.context;
+    if (
+      !recipe ||
+      !this.enabled ||
+      this.paused ||
+      this.gameplayPaused ||
+      this.disposed ||
+      this.audioMaster.muted ||
+      this.audioMaster.volume === 0 ||
+      !c ||
+      c.state !== 'running' ||
+      this.settings.master === 0 ||
+      this.settings.sfx === 0
+    )
+      return false;
+    const board = details.board ?? 'solo',
+      key = `encounter:${board}:${type}`;
+    if (
+      c.currentTime - (this.recentEvents.get(key) ?? -Infinity) <
+      (type === 'warning' ? 0.3 : ['notice', 'recover', 'blocked'].includes(type) ? 0.65 : 0.12)
+    )
+      return false;
+    this.recentEvents.set(key, c.currentTime);
+    if (this.recentEvents.size > 64)
+      this.recentEvents.delete(this.recentEvents.keys().next().value);
+    if (this.feedbackDirector.play(recipe.name, { ...recipe, board, pan: details.pan ?? 0 }))
+      return true;
+    if (recipe.priority >= 5) dialogueChannel.interrupt();
+    // Missing optional samples remain audible now; loading never replays stale cues.
+    return this.play(
+      {
+        kind: 'tone',
+        encounter: true,
+        cueName: recipe.name,
+        board,
+        priority: recipe.priority,
+        frequency: recipe.tone.from,
+        endFrequency: recipe.tone.to,
+        duration: recipe.tone.duration,
+        volume: recipe.tone.gain,
+        voice: 'lead',
+        wave: recipe.tone.type,
+        pan: details.pan ?? 0,
+      },
+      c.currentTime,
+    );
   }
   events(events, run, theme, options = {}) {
     this.feedbackDirector.events(events, run, theme, options);

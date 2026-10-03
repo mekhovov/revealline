@@ -23,6 +23,7 @@ export function attachPracticeInput({
   active,
   onPause,
   onStatus = () => {},
+  readGamepads = () => win.navigator?.getGamepads?.() ?? [],
 }) {
   const physical = new Set(),
     owned = new Map(),
@@ -32,9 +33,9 @@ export function attachPracticeInput({
   let padIndex = null,
     padReady = false,
     disposed = false;
-  const listen = (target, type, fn) => {
-    target.addEventListener(type, fn);
-    listeners.push(() => target.removeEventListener(type, fn));
+  const listen = (target, type, fn, capture = false) => {
+    target.addEventListener(type, fn, capture);
+    listeners.push(() => target.removeEventListener(type, fn, capture));
   };
   const clear = () => {
     owned.clear();
@@ -50,9 +51,9 @@ export function attachPracticeInput({
     padReady = false;
     for (const button of buttons) button.setAttribute('aria-pressed', 'false');
   };
-  const pause = () => {
+  const pause = (reason = 'interrupted') => {
     clear();
-    onPause();
+    onPause(reason);
   };
   listen(win, 'keydown', (event) => {
     const code = keyCodeForEvent(event),
@@ -69,7 +70,7 @@ export function attachPracticeInput({
       return;
     if (code === 'Escape' || code === 'Space') {
       event.preventDefault();
-      pause();
+      pause('menu');
       return;
     }
     if (keys[code]) {
@@ -77,11 +78,18 @@ export function attachPracticeInput({
       if (fresh) owned.set(code, keys[code]);
     }
   });
-  listen(win, 'keyup', (event) => {
-    const code = keyCodeForEvent(event);
-    physical.delete(code);
-    owned.delete(code);
-  });
+  // Menu navigation may consume a release at document capture. Retire held
+  // flight keys first so a key released in a menu is usable after Resume.
+  listen(
+    win,
+    'keyup',
+    (event) => {
+      const code = keyCodeForEvent(event);
+      physical.delete(code);
+      owned.delete(code);
+    },
+    true,
+  );
   for (const button of buttons) {
     const axis = button.dataset.axis,
       direction = Number(button.dataset.direction);
@@ -130,7 +138,7 @@ export function attachPracticeInput({
       clear();
       let pads;
       try {
-        pads = [...(win.navigator?.getGamepads?.() ?? [])];
+        pads = [...readGamepads()];
       } catch {
         pads = [];
       }
@@ -150,7 +158,7 @@ export function attachPracticeInput({
       if (padIndex !== null) {
         let pad;
         try {
-          pad = win.navigator?.getGamepads?.()?.[padIndex];
+          pad = readGamepads()?.find((item) => item?.index === padIndex);
         } catch {
           /* capability fallback */
         }
@@ -174,7 +182,7 @@ export function attachPracticeInput({
           return result;
         }
         if (pad.buttons?.[9]?.pressed || pad.buttons?.[1]?.pressed) {
-          pause();
+          pause('menu');
           return neutralPracticeInput();
         }
         const axis = (index) => (Math.abs(axes[index]) < 0.15 ? 0 : axes[index]);

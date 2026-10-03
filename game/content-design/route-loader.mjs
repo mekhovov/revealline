@@ -12,7 +12,11 @@ export async function loadAuthoredJourneyRoute(id, options = {}) {
   if (!isAuthoredJourneyRouteId(id)) return null;
   if (SHIPPED_ROUTE_SNAPSHOT?.id === id) return loadRouteSnapshot(SHIPPED_ROUTE_SNAPSHOT, options);
   let factories;
-  if (id === 'snake-hunt-v1') {
+  if (id === 'pursuit-campaigns-v1') {
+    factories = await import('./pursuit-campaign-candidates.mjs');
+  } else if (id === 'pursuit-pilots-v1') {
+    factories = await import('./pursuit-pilot-candidates.mjs');
+  } else if (id === 'snake-hunt-v1') {
     factories = await import('./snake-hunt-candidates.mjs');
   } else if (id === 'humanoid-hunt-v1') {
     factories = await import('./hunt-training-candidates.mjs');

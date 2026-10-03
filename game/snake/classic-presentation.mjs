@@ -1,6 +1,10 @@
 import { installThemeHost } from '../presentation/theme-host.mjs';
 import { TOKEN_DEFAULTS } from '../presentation/model.mjs';
 import { loadAcceptedAppearance } from '../presentation/theme-system.mjs';
+import {
+  selectedArcadeCollection,
+  industrialTexturePixels,
+} from '../presentation/industrial-arcade.mjs';
 
 // A deliberately small, code-owned Classic release. Imported artwork and a
 // theme name cannot authorize different sprite bytes or gameplay geometry.
@@ -109,10 +113,39 @@ export function createClassicPresentation({
   onWarning = () => {},
 } = {}) {
   const controller = new AbortController(),
-    images = new Map();
+    images = new Map(),
+    derived = new Map();
   let disposed = false,
     themeSnapshot = null,
     current;
+  function imageFor(slot) {
+    if (disposed) return null;
+    const image = images.get(slot) ?? null,
+      collection = selectedArcadeCollection(theme.effectivePreferences());
+    if (!image || slot !== 'terrain.wall' || collection?.id !== 'military-field') return image;
+    if (derived.has(slot)) return derived.get(slot);
+    try {
+      const canvas = doc.createElement('canvas');
+      canvas.width = image.width;
+      canvas.height = image.height;
+      const context = canvas.getContext('2d', { willReadFrequently: true });
+      if (!context) return image;
+      context.drawImage(image, 0, 0);
+      const pixels = context.getImageData(0, 0, canvas.width, canvas.height);
+      pixels.data.set(
+        industrialTexturePixels(
+          { width: canvas.width, height: canvas.height, rgba: pixels.data },
+          slot,
+          collection,
+        ).rgba,
+      );
+      context.putImageData(pixels, 0, 0);
+      derived.set(slot, canvas);
+      return canvas;
+    } catch {
+      return image;
+    }
+  }
   const theme = installThemeHost({
     document: doc,
     window: win,
@@ -137,7 +170,7 @@ export function createClassicPresentation({
         safe: t.safe ?? t.cyan,
         danger: t.hazard,
       }),
-      image: (slot) => (disposed ? null : (images.get(slot) ?? null)),
+      image: imageFor,
     });
     queueMicrotask(() => {
       if (!disposed) onChange(current);
@@ -180,6 +213,8 @@ export function createClassicPresentation({
     theme.dispose();
     for (const image of images.values()) image.close();
     images.clear();
+    for (const canvas of derived.values()) canvas.width = canvas.height = 0;
+    derived.clear();
     win?.removeEventListener('pagehide', hide);
   }
   function hide(event) {

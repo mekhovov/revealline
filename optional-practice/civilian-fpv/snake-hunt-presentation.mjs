@@ -1,6 +1,8 @@
 import { HUNT_PRESENTATION_CATALOG } from '../../game/hunt/presentation-catalog.mjs';
 import { createDestructionPreferences } from '../../game/hunt/preferences.mjs';
 import { createEncounterDisplayPreferences } from '../../game/encounter-display-preferences.mjs';
+import { actorVisual } from '../../game/hunt/actor-catalog.mjs';
+import { sharedActorAppearance } from '../../game/hunt/preferences.mjs';
 
 export function mountSnakeHuntPresentationControls({
   document,
@@ -132,7 +134,7 @@ export function createSnakeHuntPresentation({ THREE, scene, preferences }) {
   return {
     palette,
     reset,
-    update(state, { reducedMotion = false, tailRadius = 350 } = {}) {
+    update(state, { reducedMotion = false, tailRadius = 350, actorDefinitions = [] } = {}) {
       if (disposed) return;
       reset();
       if (!state.hunt) return;
@@ -151,6 +153,12 @@ export function createSnakeHuntPresentation({ THREE, scene, preferences }) {
         const age = Math.max(0, (state.ticks - caught.tick) / 50);
         const at = caught.position;
         const origin = [at.x / 1000, at.y / 1000, at.z / 1000];
+        const actor = actorDefinitions.find((entry) => entry.id === caught.id);
+        const cast = sharedActorAppearance().snapshot().cast;
+        const appearance = actorVisual(
+          (actor?.speed ?? 0) > 0 ? 'patroller' : 'lookout',
+          cast === 'authored' ? 'rivals' : cast,
+        );
         // Clean feedback remains visible for a short moment. Graphic remains
         // require the independent shared Brutal, Blood and Remains settings.
         if (bloody && prefs.showRemains !== false) {
@@ -190,7 +198,7 @@ export function createSnakeHuntPresentation({ THREE, scene, preferences }) {
             bloody
               ? [palette.blood, palette.flesh, palette.skin, palette.bone][piece % 4]
               : piece % 2
-                ? '#68cbb5'
+                ? appearance.palette.coat
                 : palette.spark,
             age * ((piece % 4) + 1),
           );
