@@ -2,7 +2,7 @@
 
 ## Reviewed source and fixes
 
-Runtime commit `aa2e46e9140e348091cf337f458dc49481422b51` (tree `4c7c7e74a004e449aabcb353a9212f6dd2e82c26`) includes main through `1aef4d70fa37c8911dbb47b4b128c253178c8b60`. This review completes the locally verifiable unified-menu implementation items. Later documentation-only commits retain this exact runtime; they do not constitute a new runtime build receipt.
+Runtime commit `aa2e46e9140e348091cf337f458dc49481422b51` (tree `4c7c7e74a004e449aabcb353a9212f6dd2e82c26`) includes main through `1aef4d70fa37c8911dbb47b4b128c253178c8b60`. This review completes the locally verifiable unified-menu implementation items. Later workflow/documentation commits retain this exact runtime; they do not constitute a new runtime build receipt.
 
 - Worlds keyboard/controller Pause and Escape open the common paused menu. Worlds and Academy use shared menu icons and map terminal attempts to Results/Retry.
 - Worlds Retry retains preview, replay, playlist, checkpoint and demonstration context, including the newly merged two-stick keyboard controls.
@@ -14,7 +14,9 @@ Runtime commit `aa2e46e9140e348091cf337f458dc49481422b51` (tree `4c7c7e74a004e44
 
 ## Verification
 
-Automated suites remain **waived and unrun** under `publishing/test-policy.json`. New regressions cover pause/menu ownership, playback continuation, retry context, controller/key release, Results return and the bounded code projection.
+Automated suites remain **waived and unrun** under `publishing/test-policy.json`. New regressions cover pause/menu ownership, playback continuation, retry context, controller/key release, Results return, the bounded code projection and explicit CI policy guards.
+
+The first merge-review push exposed two older workflows that bypassed the waiver. Appearance preview run `37117814000` and MinIO recovery run `37117814003` were canceled during checkout, before any automated suite started. Both workflows now read the accepted policy before running suites; preview artifacts distinguish waiver evidence from passing tests. Mandatory source validation, production builds and artifact checksums remain required.
 
 Full configured ESLint and changed-file formatting checks passed. The generated aggregate SIM stylesheet is checked through its source projection. Historical unrelated full-format baseline failures remain separate. EN/UK localization, distribution validation, presentation metadata, all four shared projections and public-source eligibility passed. The seven existing links to release-generated destinations remain warnings.
 
