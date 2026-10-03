@@ -2620,7 +2620,6 @@ Published as [PR #990](https://github.com/mekhovov/revealline/pull/990), head
 16c5809a0de11735d4d4e6b45e7b1f7cba077856 before this log-only update. Required
 CI is pending; no live deployment claim. Capacity #989 now passes focused and
 default-capacity checks, but its preview and edition candidate jobs failed;
-inspect those failures next without weakening admission guards.
 
 ### D0 approved capacity increment — 3 October 2026
 
@@ -2703,6 +2702,7 @@ CI/publication separate from unfinished next-item work. This standing instructio
 is now recorded in the reviewed delivery plan. D1 art remains next; the canopy
 optimization alone does not complete D1.
 
+
 ### D1 Woodland foliage surfaces — 3 October 2026
 
 #987 and #990 are merged. Independent branch `codex/fpv-woodland-foliage-surfaces`
@@ -2731,4 +2731,59 @@ browser map comparisons pass; package admission passes at 94files/15,383,912byte
 See `docs/fpv-field-surface-identity.md`. Next: publish this focused repair, refresh
 art PRs after protected integration, continue D1 material depth; do not call D1
 complete or public availability verified. Preserve concurrent capacity/Theme work.
-inspect those failures next without weakening admission guards.
+
+
+### Stadium surfaces qualified; remaining world order refreshed — 3 October 2026
+
+Working branch `codex/fpv-stadium-structure-detail`, managed checkout
+`/Users/oleksandr.mekhovov/.codex/worktrees/fpv-stadium-structures/go_test`.
+Runtime candidate `698b6aa3092b2ca235d32e10e994134658f33db6` improves only the
+three canonical Stadium stand/scoreboard solids, keeping collision bodies,
+course identities, school platform and all 14 Snake Stadium layouts unchanged.
+All 21 Stadium demonstrations replay to the same final identities. The new
+surface/detail path adds seven bounded batches / 888 triangles, no new shadow
+casters or asset files. `docs/fpv-stadium-structures.md` records full evidence.
+
+Source and packaged browser closures each pass 484 checks / 228 image pairs,
+including all qualities, camera views, Pixel/shared Themes, unchanged support
+solids, ray parity, imported/fallback scenery and three stable load/disposal
+rounds. Actual packaged-player selection, rendered flight, deliberate arm and
+pause were verified. All three source-bound optional admissions pass, including
+committed inputs, ZIP equality and two byte-identical builds. Runtime manifest:
+93 files / 15,375,227 bytes; source-bound World Studio: 102 / 15,550,157 bytes.
+No unit coverage added or hardware/FPS/human/public-live acceptance claimed.
+
+D0 #989 is merged. #992 foliage surfaces merged while this work was verified.
+#993 was refreshed on main in its separate repair checkout and remains draft:
+29/30 existing scoped checks pass; the remaining known enamel-motif failure is
+fixed by pending #999. #999 advanced externally to b6133b882; preserve that head.
+#996/#998/#1001 still require refresh and current-head checks. Pixel profile
+resolution in #1001 is fixed at28fd01836. A local-only combined art branch
+`codex/fpv-art-combined-verification` at51e3b6d66 passed15 arena/preset comparisons
+and15 GPU cleanup cycles; do not publish it as a replacement for focused PRs.
+
+The reviewed plan now records196 authored challenges/14 worlds/58 school lessons;
+32 already planned new-world challenges make the eventual target228. This count
+is not a claim of artist/player acceptance. D1 acceptance/render budgets remain
+open; continue independent D2 world work while publication runs. Next code item:
+Garage exact-ID ramp/deck/column surface readability on isolated branch
+`codex/fpv-garage-surface-detail` in the managed `fpv-garage-surfaces` checkout.
+Keep `school-upper-deck`, all9 Snake Garage layouts and17 demonstrations intact.
+Stadium publication status will be appended after PR creation; no new stack is
+required for this independent main-based increment.
+
+
+Published as [PR #1004](https://github.com/mekhovov/revealline/pull/1004), using
+existing milestone57. Main advanced to ce6af3e65 (#999 merged) during publication;
+the main merge preserves both delivery histories. The
+prior browser/admission receipts remain tied to698b6aa30. Current integration
+qualification is recorded separately; no live claim or protection bypass.
+
+Runtime candidate70679d3ab passes30 existing visual/acceptance checks,32 functional
+checks with21 exact demonstration replays, and allthree frozen optional admissions
+with committed-input/ZIP verification and two byte-identical builds. The only
+visual-module integration delta from the browser-qualified candidate is#999's
+Military Field recipe; Stadium renderer/helpers remain identical. Main's#999merge
+unintentionally removed#992 foliage code; separate#993repair restores it and keeps
+that work out of the independent StadiumPR. Local player build is available at
+port8834/dist/fpv-stadium-playtest-70679d3ab/optional-practice/fpv-worlds/index.html.
