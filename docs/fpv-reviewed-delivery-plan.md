@@ -8,6 +8,20 @@ main-game presentation. All activities remain immediately selectable.
 
 ## Approved continuation — 3 October 2026
 
+### Continuous phase progression
+
+The owner explicitly directs continuous implementation: when an item is complete,
+verify it, publish its focused PR and immediately start the next approved item.
+When a phase is complete, start the next phase without requesting another go-ahead.
+CI, merge queues and deployment continue independently; keep unfinished work on a
+separate branch and use native stacks for actual dependencies. Player feedback and
+physical-device qualification remain nonblocking and honestly recorded as pending.
+If a dependency blocks one item, progress another approved independent item.
+Stop only when the approved backlog is complete, the owner requests a pause, or no
+safe useful work remains without essential user input. Do not expand scope beyond
+the approved plan to keep work running.
+
+
 The owner approved implementation with **world quality first**, polishing all
 14 existing worlds before the main learning/usability phase, followed by creator
 tools and four distinct new worlds. This ordering supersedes the older delivery
