@@ -2621,3 +2621,14 @@ Published as [PR #990](https://github.com/mekhovov/revealline/pull/990), head
 CI is pending; no live deployment claim. Capacity #989 now passes focused and
 default-capacity checks, but its preview and edition candidate jobs failed;
 inspect those failures next without weakening admission guards.
+### D1 primary Woodland composition — 3 October 2026
+
+Continued on independent `codex/fpv-woodland-depth-composition` from main
+3d04f9ab04980a8c51d3c28512ace7e024ebae51. Forty existing imported trees form layered
+groves; benches and flight geometry stay exact. Actual GLTFLoader clearance and
+five unaffected environment byte comparisons pass. Package admission passes at
+94 files/15,382,549 bytes. Existing checks are 29/30: shared-theme enamel uniqueness
+fails in unchanged code and remains outstanding. See `docs/fpv-woodland-depth.md`.
+#989 is rerunning CI; preserve its externally updated fe449dcf3 head. #992 and #993
+remain open. Continue Container Yard landmarks and remaining D1 materials; then
+D2 world pairs. Do not count this composition pass as complete art qualification.
