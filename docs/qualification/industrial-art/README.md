@@ -38,6 +38,10 @@ Candidate 03 covers twelve families and three appearances using original procedu
 ![Native Snake material sample](snake-material-sample.png)
 ![Native SIM material sample](sim-material-sample.png)
 
+## Reliability and phone-layout continuation, 4 October 2026
+
+The [continuation report](continuation-2026-10-04/README.md) records corrected artwork ownership, recording provenance and room lifecycle handling, plus native Snake CSS measurements at 320/360/390 px. Earlier failed viewport attempts above remain historical; the new observations use measured viewport dimensions. They do not qualify physical phones or simultaneous touch.
+
 ## Evidence boundaries
 
 `inventory.json` records immutable source hashes, byte sizes and mechanical Keep/Refine triage. It does not mean each of the 1,181 tracked visual/model files received artistic review. There are no third-party game-art copies.
@@ -51,7 +55,7 @@ Automated regression sources cover bounded decoding, cancellation, sharing, atla
 - Complete native Capture Solo/Versus/Team scene captures after normal unlock, and review the implemented terrain/material/audio sample in all represented native contexts.
 - Artist/user review of silhouettes, motion and all three destruction treatments.
 - Offload/reinstall and interrupted-load evidence. The multi-frame sample now has native import, stage, save, reload, external export and external-file re-import observations.
-- 320/360/390 px, landscape, enlarged text, two-player touch, controllers and audio listening.
+- Broader 320/360/390 px host coverage, physical devices, landscape, enlarged text, two-player touch, controllers and audio listening. The continuation establishes only the listed Snake portrait CSS layouts.
 - Measured low-end frame rate/peak memory and simultaneous two-board effects.
 - Pause/Retry/restore/seeking across all represented modes, completed pinned-seed routes and human play review.
 

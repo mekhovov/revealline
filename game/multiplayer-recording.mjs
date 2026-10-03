@@ -293,9 +293,15 @@ export function snapshotLocalMatchRecording(source) {
       value.recipe.ruleset === accepted.state.ruleset,
     'Recorded recipe is not canonical.',
   );
-  localMatchProvenance(
-    { id: provenance?.sourceLevelId, revision: provenance?.sourceRevision },
-    provenance,
+  required(
+    same(
+      provenance,
+      localMatchProvenance(
+        { id: provenance?.sourceLevelId, revision: provenance?.sourceRevision },
+        provenance,
+      ),
+    ),
+    'Recorded source pins are not canonical.',
   );
   required(digest(value.recipeSha256), 'Invalid recorded recipe hash.');
   const ticks = journal(value.segments, mode);

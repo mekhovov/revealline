@@ -5,6 +5,29 @@ export const COMPACT_ACTOR_DECODED_BYTES = 32 * 1024 * 1024;
 const pages = new WeakMap();
 const fallbackPage = {};
 
+// An uninterruptible browser codec still owns its reservation after its last
+// caller leaves. A replacement waits for that generation instead of allocating
+// the same pixels twice or inheriting the old caller's cancellation.
+function waitForRetirement(entry, signal) {
+  return new Promise((resolve, reject) => {
+    let finished = false;
+    const finish = (error) => {
+      if (finished) return;
+      finished = true;
+      signal?.removeEventListener('abort', abort);
+      if (error) reject(error);
+      else resolve();
+    };
+    const abort = () => finish(new DOMException('Artwork load cancelled.', 'AbortError'));
+    signal?.addEventListener('abort', abort, { once: true });
+    entry.promise.then(
+      () => finish(),
+      () => finish(),
+    );
+    if (signal?.aborted) abort();
+  });
+}
+
 export function createActorArtPool({ limit = ACTOR_DECODED_BYTES } = {}) {
   if (!Number.isSafeInteger(limit) || limit < 4 || limit > ACTOR_DECODED_BYTES)
     throw new TypeError('Invalid actor artwork budget.');
@@ -48,8 +71,13 @@ export function createActorArtPool({ limit = ACTOR_DECODED_BYTES } = {}) {
       let entry = entries.get(key);
       if (entry && (entry.width !== width || entry.height !== height))
         throw new TypeError('Actor resource identity has conflicting dimensions.');
-      if (entry?.controller.signal.aborted)
-        throw new DOMException('Actor resource is being released.', 'AbortError');
+      while (entry?.controller.signal.aborted) {
+        await waitForRetirement(entry, signal);
+        if (signal?.aborted) throw new DOMException('Artwork load cancelled.', 'AbortError');
+        entry = entries.get(key);
+        if (entry && (entry.width !== width || entry.height !== height))
+          throw new TypeError('Actor resource identity has conflicting dimensions.');
+      }
       if (!entry) {
         const bytes = width * height * 4;
         if (reserved + bytes > limit)

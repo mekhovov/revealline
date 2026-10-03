@@ -140,6 +140,49 @@ test('native localhost and unapproved origins never acquire a development room e
   assert.equal(roomServiceEndpoint(hosted, 'https://rooms.example'), 'https://rooms.example');
 });
 
+test('late poll and action failures from a retired epoch cannot suspend accepted readiness', async () => {
+  const source = await readFile(new URL('../online/rooms.mjs', import.meta.url), 'utf8'),
+    handler = parse(source, { ecmaVersion: 'latest', sourceType: 'module' }).body.find(
+      (node) => node.type === 'FunctionDeclaration' && node.id.name === 'connectionError',
+    ),
+    lifecycle = createRoomClientLifecycle({ sendInput() {} });
+  lifecycle.own(owner);
+  accept(lifecycle, snapshot());
+  const beforePause = lifecycle.snapshot().epoch;
+  lifecycle.suspend();
+  lifecycle.pauseAcknowledged(lifecycle.snapshot().epoch);
+  accept(lifecycle, snapshot('paused', 'b'));
+  const readyEpoch = lifecycle.snapshot().epoch;
+  accept(lifecycle, snapshot('playing', 'c'));
+  let suspensions = 0,
+    notice = 'Room playing';
+  const fail = runInNewContext(`(${source.slice(handler.start, handler.end)})`, {
+    credentials: owner,
+    lifecycle,
+    terminalRoomError,
+    abandonLocal() {
+      lifecycle.abandon();
+    },
+    suspendLocal() {
+      lifecycle.suspend();
+      suspensions++;
+    },
+    notice(value) {
+      notice = value;
+    },
+    say: (en) => en,
+  });
+  fail(new Error('Late snapshot timeout'), owner, beforePause);
+  fail(new Error('Ready response lost after the playing snapshot arrived'), owner, readyEpoch);
+  assert.equal(lifecycle.canPlay(), true);
+  assert.equal(suspensions, 0);
+  assert.equal(notice, 'Room playing');
+  fail(new Error('Current activation failed'), owner, lifecycle.snapshot().epoch);
+  assert.equal(lifecycle.canPlay(), false);
+  assert.equal(suspensions, 1);
+  assert.match(notice, /Reconnecting/);
+});
+
 test('restored seats and connection recovery need shared Pause then fresh readiness', () => {
   const client = createRoomClientLifecycle({ sendInput() {} });
   client.own(owner, { restoring: true });

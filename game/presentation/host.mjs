@@ -156,12 +156,31 @@ const browserDecode = async (blob) => {
 async function cropBitmap(image, frame) {
   return globalThis.createImageBitmap(image, frame.x, frame.y, frame.width, frame.height);
 }
-async function cropBlob(image, frame, document) {
-  const canvas = document.createElement('canvas');
-  canvas.width = frame.width;
-  canvas.height = frame.height;
-  canvas.getContext('2d').drawImage(image, 0, 0);
+let cropExportSequence = 0;
+async function cropBlob(image, frame, document, { actorPool, signal } = {}) {
+  let lease;
+  const createCanvas = () => {
+    const canvas = document.createElement('canvas');
+    canvas.width = frame.width;
+    canvas.height = frame.height;
+    canvas.close = () => {
+      canvas.width = canvas.height = 0;
+    };
+    return canvas;
+  };
+  // Keep encoding storage reserved until toBlob settles. Aborting the host
+  // cannot make an in-flight encoder's pixels disappear from accounting.
+  if (actorPool)
+    lease = await actorPool.acquire({
+      key: `presentation-crop-export:${++cropExportSequence}`,
+      width: frame.width,
+      height: frame.height,
+      load: createCanvas,
+    });
+  const canvas = lease?.image ?? createCanvas();
   try {
+    cancelled(signal);
+    canvas.getContext('2d').drawImage(image, 0, 0);
     return await new Promise((resolve, reject) =>
       canvas.toBlob(
         (blob) => (blob ? resolve(blob) : reject(new Error('Frame export failed.'))),
@@ -169,7 +188,8 @@ async function cropBlob(image, frame, document) {
       ),
     );
   } finally {
-    canvas.width = canvas.height = 0;
+    if (lease) lease.release();
+    else canvas.close();
   }
 }
 const visibleSlot = (id, asset) =>
@@ -250,7 +270,9 @@ export function createPresentationHost({
     ['full', 'actors', 'board'].includes(profile),
     'Use a registered presentation host profile.',
   );
-  const actorPool = pageActorArtPool(document);
+  // Actor-only leases deliberately omit DOM authority, but still share their
+  // page's image ownership and budget with the ordinary presentation host.
+  const actorPool = pageActorArtPool(document ?? globalThis.document);
   const loadsSlot = (id, asset) =>
     profile === 'full'
       ? visibleSlot(id, asset) &&
@@ -658,7 +680,12 @@ export function createPresentationHost({
               image.width === frame.width && image.height === frame.height,
               'Decoded presentation frame disagrees.',
             );
-            if (profile === 'full') visualBlob = await cropBlob(image, frame, document);
+            if (profile === 'full')
+              visualBlob = await cropBlob(image, frame, document, {
+                actorPool: actorHashes.has(hash) ? actorPool : null,
+                signal: controller.signal,
+              });
+            cancelled(controller.signal);
           }
           images[slot] = Object.freeze({ image, asset, geometry: imagePresentation(asset) });
           if (profile === 'full') {

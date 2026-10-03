@@ -48,3 +48,30 @@ export function createRoomEventCursor() {
     },
   };
 }
+
+/** The shared Team painter reads run.status as its pause clock. Room pause is
+ * transport-owned, so project it without overwriting the authoritative run.
+ * A new/recovered view primes its event tick silently; settled state is kept. */
+export function createRoomBoardPresentation() {
+  let owner = null,
+    view = null,
+    silentThrough = -1;
+  return Object.freeze({
+    reset() {
+      owner = view = null;
+      silentThrough = -1;
+    },
+    project(run, { paused = false } = {}) {
+      if (owner !== run || !view || run.tick < view.tick) {
+        owner = run;
+        view = {};
+        silentThrough = run.tick;
+      }
+      if (paused) silentThrough = run.tick;
+      Object.assign(view, run);
+      if (run.tick <= silentThrough) view.events = [];
+      if (paused && run.status === 'running') view.status = 'paused';
+      return view;
+    },
+  });
+}
