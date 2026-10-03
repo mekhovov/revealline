@@ -16,10 +16,13 @@ historical phase tables below are superseded by this current order.
 
 Main now includes Themes #955 and Warehouse #966, alongside the completed content,
 controls, school, section practice, ghosts, reimport and original demonstrations.
-The current catalogue is **148 challenges / 14 worlds / 58 school lessons / 374
+The current catalogue is **172 challenges / 14 worlds / 58 school lessons / 374
 school steps**. Installed demonstrations total **178**: all 120 original
 mode-specific recordings plus 58 recommended-mode school examples. The 60
 Adventure authoring proofs are separate; they are not installed demonstrations.
+Main Snake content #973 adds 24 challenges within the same 14 worlds. Fourteen
+optional matching Self-level foundation examples are in qualification; they do
+not add challenges or increase the default installed-example count.
 
 | Order | Reviewable increment | Working estimate | Required functional evidence |
 | --- | --- | --- | --- |
@@ -27,7 +30,7 @@ Adventure authoring proofs are separate; they are not installed demonstrations.
 | Implemented; final packaging | Visual Follow/Observe objective inspector | Source verified | 63 browser checks, exact UI-authored two-mode replay, export/reopen/reimport and independent-mode protection |
 | 3 | Pack-removal impact and recovery guidance | 1–2 days | Identify affected revisions/records; preserve proof bytes and explain restoration |
 | Parallel | Stadium, then yard/garage art using shared Themes materials | 3–5 days per bounded batch | Readability, collision/visibility parity, resource disposal and source/packaged rendering |
-| 4 | Matching-mode school examples and optional Adventure examples | 3–5 days per bounded batch | Correct mode/revision, complete replay and bounded optional delivery |
+| In qualification | 14 optional Self-level foundation examples, then Adventure examples | 3–5 days per bounded batch | Correct mode/revision, complete replay and bounded optional delivery |
 | 5 | Further distinct practice worlds and moving-subject challenges | 3–5 days per pair | Authored routes/objectives, both-mode access and verified demonstrations |
 | Last | H/R7 deferred unit coverage and broad qualification | 5–10 days, excluding external sessions | Required regression, replay/storage failures, named-device performance and separately recorded human acceptance |
 
