@@ -71,6 +71,22 @@ the next bounded environment task. Continue D1 publication repairs in parallel,
 then the remaining D2 world pairs before D3–D6. No new dependency stack is needed
 for the Stadium increment, which starts from current main.
 
+### Qualified art delivery checkpoint — 3 October 2026
+
+The catalogue remains **196 challenges / 14 worlds**. D5 targets **228 challenges
+in 18 worlds** (196 current plus 32 planned), superseding historical 216-count
+estimates. Stadium and Container Yard have verified public deployment identities
+and actual-player launches. Hangar #1008 is merged with public acceptance pending;
+Garage #1009 is merged with public acceptance pending. This focused Meadow PR carries
+qualified source/package rendering and actual-player evidence; these bounded art
+increments do not claim that the larger world-quality phase is finished.
+
+Continue the remaining D1 groves #996 and material response #1001 publication,
+then the rest of D2 world pairs. Follow with D3 optional examples/coaching,
+D4 creator tools, D5 four new worlds, and D6 deferred unit coverage and full
+regression. Keep independent implementation moving while protected CI/publication
+runs. Human, physical-device and final artist acceptance remain explicitly open.
+
 ### Approved capacity change
 
 The owner explicitly approved raising the shared-core offline budget from
