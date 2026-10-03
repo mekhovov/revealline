@@ -40,6 +40,9 @@ export function optionalPracticeSourcePreviews(href, { packageId = null } = {}) 
       '/game/couch/',
       '/game/couch/index.html',
       '/game/couch/relay-rescue.html',
+      '/game/snake/',
+      '/game/snake/index.html',
+      '/game/snake/play.html',
     ].includes(location.pathname)
   )
     return [];

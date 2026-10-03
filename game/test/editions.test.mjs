@@ -347,6 +347,8 @@ test('lazy shared panel styles retain exact bytes through selected compilation, 
       ],
       ['game/controller-lab/index.html', Buffer.from('<html></html>')],
       ['game/replay-theater/index.html', Buffer.from('<html></html>')],
+      ['game/snake/index.html', Buffer.from('<html></html>')],
+      ['game/snake/play.html', Buffer.from('<html></html>')],
       ['game/editions/runtime-assets.json', Buffer.from('[]')],
       ['authoring/private/unselected.css', Buffer.from('UNSELECTED_PRIVATE_STYLE')],
     ]);
