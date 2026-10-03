@@ -1,0 +1,22 @@
+{"course":"adventure-quarry-01","mode":"acro","ticks":4198,"identity":"ab06c4fc86493bb4","contacts":0,"health":100,"collisionWorldFreed":true}
+{"course":"adventure-quarry-01","mode":"self-level","ticks":4192,"identity":"5c7c51ceca5128cd","contacts":0,"health":100,"collisionWorldFreed":true}
+{"course":"adventure-quarry-02","mode":"acro","ticks":3951,"identity":"38f7834ee333bbe2","contacts":0,"health":100,"collisionWorldFreed":true}
+{"course":"adventure-quarry-02","mode":"self-level","ticks":3726,"identity":"439474dfcb4bbe96","contacts":0,"health":100,"collisionWorldFreed":true}
+{"course":"adventure-quarry-03","mode":"acro","ticks":2137,"identity":"f1e65cd3eca506ee","contacts":0,"health":100,"collisionWorldFreed":true}
+{"course":"adventure-quarry-03","mode":"self-level","ticks":2052,"identity":"85ee5bde1fcd6b94","contacts":0,"health":100,"collisionWorldFreed":true}
+node:internal/modules/run_main:123
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: adventure-quarry-04/acro: collision, health and weapon outcomes match authoritative recording
+    at check (file:///private/tmp/replay-fpv-quarry-strata.mjs:14:117)
+    at file:///private/tmp/replay-fpv-quarry-strata.mjs:47:3 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: false,
+  expected: true,
+  operator: '==',
+  diff: 'simple'
+}
+
+Node.js v22.22.2
