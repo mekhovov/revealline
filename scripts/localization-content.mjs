@@ -116,7 +116,7 @@ async function currentJourneySources(root) {
   // Optional first-party routes remain launchable by their explicit Journey
   // URL before they become the default or enter retained history. Register
   // their presentation identities now without changing authored route data.
-  for (const routeId of ['whole-spatial-v34']) {
+  for (const routeId of ['whole-spatial-v34', 'snake-hunt-v1']) {
     if (
       history.has(routeId) ||
       [DEFAULT_JOURNEY_ROUTES.solo, DEFAULT_JOURNEY_ROUTES.versus].includes(routeId)
@@ -185,6 +185,14 @@ async function currentJourneySources(root) {
   const [file, factory] = team;
   const module = await moduleAt(`content-design/${file}`);
   registerExecution(`game/content-design/${file}#${factory}`, module[factory](), 'team');
+  const { createTeamSnakeHuntCandidates } = await moduleAt(
+    'content-design/team-snake-hunt-candidates.mjs',
+  );
+  registerExecution(
+    'game/content-design/team-snake-hunt-candidates.mjs#createTeamSnakeHuntCandidates',
+    createTeamSnakeHuntCandidates(),
+    'team',
+  );
   return sources;
 }
 export async function contentSources(root) {
@@ -317,8 +325,11 @@ export async function extractContent(root, register) {
           'hazeLabel',
           'budgetLabel',
         ].includes(key);
+      const snakePresentation =
+        source.includes('snake-hunt') &&
+        ['lesson', 'counterplay', 'captureConsequence', 'memorableMoment'].includes(key);
       if (
-        (CONTENT_FIELDS.has(key) || motionPresentation) &&
+        (CONTENT_FIELDS.has(key) || motionPresentation || snakePresentation) &&
         !(motionPreset && key === 'outcome') &&
         (key !== 'motion' || typeof child === 'string')
       )
@@ -326,7 +337,13 @@ export async function extractContent(root, register) {
       if (key === 'metadata' && child?.description)
         leaves(child.description, 'metadata.description');
       if (key === 'design' && child && typeof child === 'object')
-        for (const field of ['routeDecision', 'mastery'])
+        for (const field of [
+          'routeDecision',
+          'mastery',
+          ...(source.includes('snake-hunt')
+            ? ['lesson', 'counterplay', 'captureConsequence', 'memorableMoment']
+            : []),
+        ])
           if (typeof child[field] === 'string') leaves(child[field], `design.${field}`);
     }
     if (source === 'game/content/mission-library-index.json' && typeof value.edition === 'string')

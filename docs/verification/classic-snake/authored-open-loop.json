@@ -1,0 +1,193 @@
+{
+  "format": "classic-snake-authored-observation.v1",
+  "observedAt": "2026-10-03T01:06:18.034Z",
+  "scope": "One directed production model playthrough, not an automated test suite or all-content human qualification.",
+  "source": {
+    "coreSha256": "6625ed2469b201fa1a852e974c179b706bd3dca893bc81d6ecd7e21eec4b7c0f",
+    "catalogueSha256": "137a85808c9da16f429ac2f4dc8fb14e154bbd61fa9ab6b807da2af2300238b1"
+  },
+  "steering": "Each automatic step used BFS toward the visible stationary target avoiding current body except its vacating tail; ordinary turn queue only, no live state mutation.",
+  "initial": {
+    "target": {
+      "id": "humanoid-1",
+      "kind": "humanoid",
+      "x": 0,
+      "y": 8
+    },
+    "body": [
+      {
+        "x": 5,
+        "y": 2
+      },
+      {
+        "x": 4,
+        "y": 2
+      },
+      {
+        "x": 3,
+        "y": 2
+      },
+      {
+        "x": 2,
+        "y": 2
+      }
+    ]
+  },
+  "summary": {
+    "version": "classic-snake-core.v1",
+    "levelId": "classic-snake-open-loop",
+    "levelIdentity": "5f286bbd6eb04450",
+    "mode": "solo",
+    "seed": 17,
+    "tick": 93,
+    "elapsedMs": 18600,
+    "status": "won",
+    "catches": 8,
+    "goal": 8,
+    "score": 800,
+    "lengths": [12],
+    "playerCatches": [8],
+    "stepMs": 200,
+    "failure": null
+  },
+  "catches": [
+    {
+      "type": "target.caught",
+      "tick": 11,
+      "playerId": 0,
+      "target": {
+        "id": "humanoid-1",
+        "kind": "humanoid",
+        "x": 0,
+        "y": 8
+      },
+      "catches": 1,
+      "score": 100,
+      "length": 5
+    },
+    {
+      "type": "target.caught",
+      "tick": 21,
+      "playerId": 0,
+      "target": {
+        "id": "humanoid-2",
+        "kind": "humanoid",
+        "x": 2,
+        "y": 16
+      },
+      "catches": 2,
+      "score": 200,
+      "length": 6
+    },
+    {
+      "type": "target.caught",
+      "tick": 30,
+      "playerId": 0,
+      "target": {
+        "id": "humanoid-3",
+        "kind": "humanoid",
+        "x": 1,
+        "y": 8
+      },
+      "catches": 3,
+      "score": 300,
+      "length": 7
+    },
+    {
+      "type": "target.caught",
+      "tick": 40,
+      "playerId": 0,
+      "target": {
+        "id": "humanoid-4",
+        "kind": "humanoid",
+        "x": 5,
+        "y": 14
+      },
+      "catches": 4,
+      "score": 400,
+      "length": 8
+    },
+    {
+      "type": "target.caught",
+      "tick": 49,
+      "playerId": 0,
+      "target": {
+        "id": "humanoid-5",
+        "kind": "humanoid",
+        "x": 4,
+        "y": 6
+      },
+      "catches": 5,
+      "score": 500,
+      "length": 9
+    },
+    {
+      "type": "target.caught",
+      "tick": 69,
+      "playerId": 0,
+      "target": {
+        "id": "humanoid-6",
+        "kind": "humanoid",
+        "x": 20,
+        "y": 2
+      },
+      "catches": 6,
+      "score": 600,
+      "length": 10
+    },
+    {
+      "type": "target.caught",
+      "tick": 83,
+      "playerId": 0,
+      "target": {
+        "id": "humanoid-7",
+        "kind": "humanoid",
+        "x": 12,
+        "y": 8
+      },
+      "catches": 7,
+      "score": 700,
+      "length": 11
+    },
+    {
+      "type": "target.caught",
+      "tick": 93,
+      "playerId": 0,
+      "target": {
+        "id": "humanoid-8",
+        "kind": "humanoid",
+        "x": 9,
+        "y": 1
+      },
+      "catches": 8,
+      "score": 800,
+      "length": 12
+    }
+  ],
+  "finalEvents": [
+    {
+      "type": "target.caught",
+      "tick": 93,
+      "playerId": 0,
+      "target": {
+        "id": "humanoid-8",
+        "kind": "humanoid",
+        "x": 9,
+        "y": 1
+      },
+      "catches": 8,
+      "score": 800,
+      "length": 12
+    },
+    {
+      "type": "run.completed",
+      "tick": 93,
+      "status": "won",
+      "catches": 8,
+      "score": 800,
+      "failure": null
+    }
+  ],
+  "exactReplayState": true,
+  "replayFile": "authored-open-loop.replay.json"
+}

@@ -31,6 +31,7 @@ export function foundationCompatibleView(run) {
         'xonix-core.v8',
         'xonix-core.v9',
         'xonix-core.v10',
+        'xonix-core.v12',
         'xonix-core.v5',
       ].includes(ruleset)
     )

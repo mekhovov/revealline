@@ -33,6 +33,15 @@ export function medalTargets(course, mode = 'self-level') {
     }
     holdTicks += step.ticks ?? 0;
     if (step.type === 'eliminate') holdTicks += step.targets.length * 250;
+    if (step.type === 'hunt-contact-v1') {
+      for (const id of step.targets) {
+        const target = course.actors.find((actor) => actor.id === id).position;
+        const centre = { ...target, y: target.y + 1000 };
+        distance += Math.hypot(...['x', 'y', 'z'].map((key) => centre[key] - position[key])) / 1000;
+        position = centre;
+      }
+      holdTicks += step.targets.length * 150;
+    }
   }
   const base = Math.ceil(
     (distance / 2.6 + holdTicks / 50 + 20) * (mode === 'acro' ? 1.25 : 1) * 50,
@@ -71,8 +80,10 @@ export function evaluateWorldResult(
         (eligible ? 5000 : 0) -
         Math.floor(state.ticks / 5) -
         clean * 125 +
-        (state.hits ?? 0) * 100,
+        (state.hits ?? 0) * 100 +
+        (state.hunt?.caught.length ?? 0) * 250,
     ),
+    ...(state.hunt ? { catches: state.hunt.caught.length, huntFailure: state.hunt.failure } : {}),
     accuracy: state.shots ? Math.min(1, (state.hits ?? 0) / state.shots) : null,
     health: state.health ?? null,
     targets,

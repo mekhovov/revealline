@@ -282,7 +282,10 @@
     "optional-practice/fpv-worlds/scenery-provenance.json",
     "optional-practice/civilian-fpv/world-assets.mjs",
     "optional-practice/civilian-fpv/world-hangar.mjs",
-    "optional-practice/civilian-fpv/world-actor-editor.mjs"
+    "optional-practice/civilian-fpv/world-actor-editor.mjs",
+    "optional-practice/civilian-fpv/snake-hunt.mjs",
+    "optional-practice/civilian-fpv/snake-hunt-catalogue.mjs",
+    "optional-practice/civilian-fpv/snake-hunt-presentation.mjs"
   ],
   "optionalOffline": [
     "game/content/packs/fpv-arcade-r3.json",

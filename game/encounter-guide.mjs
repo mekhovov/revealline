@@ -9,6 +9,7 @@ import {
   DIRECTIONAL_SCENARIO_VERSION,
   SENTINEL_SCENARIO_VERSION,
   HUNT_SCENARIO_VERSION,
+  SNAKE_SCENARIO_VERSION,
   validateScenario,
 } from './content.mjs';
 
@@ -106,6 +107,7 @@ export function createEncounterGuideScenario({ topic, level, theme, turnPolicy, 
     'xonix-level.v7': DIRECTIONAL_SCENARIO_VERSION,
     'xonix-level.v8': SENTINEL_SCENARIO_VERSION,
     'xonix-level.v9': HUNT_SCENARIO_VERSION,
+    'xonix-level.v11': SNAKE_SCENARIO_VERSION,
   };
   const candidate = {
     format: formats[level.version],
