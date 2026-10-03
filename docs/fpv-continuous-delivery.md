@@ -2621,3 +2621,12 @@ Published as [PR #990](https://github.com/mekhovov/revealline/pull/990), head
 CI is pending; no live deployment claim. Capacity #989 now passes focused and
 default-capacity checks, but its preview and edition candidate jobs failed;
 inspect those failures next without weakening admission guards.
+### D1 Container Yard frontages — 3 October 2026
+
+Independent branch `codex/fpv-yard-landmark-composition`, baseline b43b0ce12,
+changes only primary imported Yard composition. Three arena sizes pass actual
+GLTFLoader vertex clearance, with unchanged sampled draw/triangle counts and
+five other GLBs byte-identical. Package passes at 94 files/15,384,159 bytes.
+29/30 existing checks pass; shared-theme enamel motif uniqueness remains open.
+See `docs/fpv-yard-landmarks.md`. Next: isolate that existing qualification failure,
+then continue primary material depth and remaining world art. D1 remains open.
