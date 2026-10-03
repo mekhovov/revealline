@@ -2531,3 +2531,12 @@ committed inputs and ZIP members, with two byte-identical builds. Package review
 gates remain pending. World102runtimefiles /14557129bytes; Academy67files /4220778bytes.
 Packaged actual-WebGL section replay additionally passes53/53. Main advanced to
 4fada3958 through unrelated Social Drone #983; no FPV dependency changed.
+
+### Two-stick controls published — 3 October 2026
+
+[PR #986](https://github.com/mekhovov/revealline/pull/986) is attached with
+milestone57. The independent controls branch was rebased onto current main
+4fada3958 with recovery ref `codex/recovery-fpv-two-stick-20261003`; all optional
+runtime and verification bytes are unchanged. Exact-head checks remain required.
+No native stack is needed. The separate art branch commit297760213 remains
+isolated pending its renderer/browser and package qualification.
