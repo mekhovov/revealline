@@ -1,3 +1,4 @@
+import { combatOwner, huntDefinition } from '../hunt/running-enemy-definition.mjs';
 import { huntTargetKind } from '../hunt/rules.mjs';
 import { CELL } from './registry.mjs';
 import { EPS, movingCirclesTime, pointAt } from './geometry.mjs';
@@ -43,7 +44,7 @@ export function planCombatMotion(state, duration) {
           true,
         ),
       ),
-    shots: (state.classic?.combatPatrols?.projectiles ?? []).map((shot) =>
+    shots: (combatOwner(state)?.combatPatrols?.projectiles ?? []).map((shot) =>
       planMotion(state, shot, duration, COMBAT_SHOT_RADIUS, factor, false),
     ),
   };
@@ -95,7 +96,8 @@ export function combatContacts(state, playerPaths, plans, trace, horizon) {
       trace,
       horizon,
       plan.body.radius,
-      state.status === 'running' && huntTargetKind(state.level.classic.hunt, plan.body.id) !== null,
+      state.status === 'running' &&
+        huntTargetKind(huntDefinition(state.level), plan.body.id) !== null,
     );
     if (time !== null) rams.push({ time, actor: plan.body });
   }

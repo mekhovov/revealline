@@ -375,7 +375,7 @@ try {
         attemptId: `replay-${epoch}`,
         mode: 'solo',
         board: 0,
-        encounter: !!player.state.level.classic?.hunt,
+        encounter: !!(player.state.level.runningEnemies?.hunt ?? player.state.level.classic?.hunt),
         danger: soloReactionDanger(player.state),
       });
     } else replayReactions.suspend();

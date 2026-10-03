@@ -1,4 +1,10 @@
-import { huntSummary, validateHuntDefinition } from '../hunt/rules.mjs';
+import {
+  combatOwner,
+  combatDefinition,
+  huntDefinition,
+  runningEnemyBaseLevel,
+} from '../hunt/running-enemy-definition.mjs';
+import { huntSummary, validateHuntDefinition, createHuntState } from '../hunt/rules.mjs';
 import { analyzeRouteCoverage } from './coverage.mjs';
 import { clearLineImpacts } from './line-impact.mjs';
 import {
@@ -29,14 +35,26 @@ import {
   commitCapture,
   releaseIsolatedCapture,
 } from './capture.mjs';
-import { versionsForLevel } from './versions.mjs';
+import { versionsForLevel, baseLevelVersion } from './versions.mjs';
 import { createEncounter, updateEncounter, canReleaseIsolated } from './encounter.mjs';
 import { enemyContact } from './contacts.mjs';
 import { updateAbilities, useAbilities } from './abilities.mjs';
 import { createAbility, switchClass, updateSignal, challengeContact } from './systems.mjs';
 import { createClassicState } from './classic-state.mjs';
-import { clearCombatPatrols } from './combat-patrols.mjs';
+import {
+  clearCombatPatrols,
+  initializeCombatPatrols,
+  updateCombatPatrols,
+  expireCombatProjectiles,
+  impactCombatProjectile,
+} from './combat-patrols.mjs';
 import { initializeClassicActors, stepClassic } from './classic-step.mjs';
+import {
+  planCombatMotion,
+  combatContacts,
+  advanceCombatMotion,
+  finishCombatMotion,
+} from './combat-motion.mjs';
 import { steerFieldCourse } from './field-course.mjs';
 import { foundationGeometry } from './foundations.mjs';
 import { createRelayState } from './relay-gates.mjs';
@@ -67,6 +85,8 @@ export function createRun(
   { seed = 1, turnPolicy = 'immediate', classId = 'scout', classRecipes = CLASSES } = {},
 ) {
   const level = normalizedLevel(source);
+  const baseVersion = baseLevelVersion(level);
+  const baseLevel = level.runningEnemies ? runningEnemyBaseLevel(level) : level;
   const geometry = geometryForLevel(level),
     { width, height } = geometry;
   if (!Number.isInteger(seed) || seed < 0 || seed > 0xffffffff)
@@ -75,10 +95,11 @@ export function createRun(
   const validation = validateClassRecipes(classRecipes);
   if (!validation.valid)
     throw new TypeError(`Invalid classRecipes: ${validation.errors.join('; ')}`);
-  if (level.classic?.hunt)
-    validateHuntDefinition(level.classic.hunt, level.classic.combatPatrols.actors, {
+  if (huntDefinition(level))
+    validateHuntDefinition(huntDefinition(level), combatDefinition(level).actors, {
+      supplemental: !!level.runningEnemies,
       ordinaryCount: level.enemies.length,
-      enabled: level.classic.combatPatrols.enabled,
+      enabled: combatDefinition(level).enabled,
       playerMoveSpeed:
         level.rules.moveSpeed *
         Math.min(...classRecipes.map((recipe) => recipe.moveSpeedMultiplier ?? 1)),
@@ -99,8 +120,8 @@ export function createRun(
     'xonix-level.v7',
     'xonix-level.v8',
     'xonix-level.v9',
-  ].includes(level.version)
-    ? foundationGeometry(level)
+  ].includes(baseVersion)
+    ? foundationGeometry(baseLevel)
     : null;
   if (foundations) cells.set(foundations.cells);
   const totalClaimable = cells.filter((c) => c === CELL.FIELD).length;
@@ -194,7 +215,7 @@ export function createRun(
       'xonix-level.v7',
       'xonix-level.v8',
       'xonix-level.v9',
-    ].includes(level.version)
+    ].includes(baseVersion)
   )
     state.encounter = level.encounter === null ? null : createEncounter(level.encounter);
   if (foundations)
@@ -203,7 +224,7 @@ export function createRun(
       permanent: Uint8Array.from(foundations.permanent),
     };
   if (
-    ['xonix-level.v6', 'xonix-level.v7', 'xonix-level.v8', 'xonix-level.v9'].includes(level.version)
+    ['xonix-level.v6', 'xonix-level.v7', 'xonix-level.v8', 'xonix-level.v9'].includes(baseVersion)
   )
     state.relay = createRelayState(level, foundations);
   if (
@@ -214,7 +235,7 @@ export function createRun(
       'xonix-level.v7',
       'xonix-level.v8',
       'xonix-level.v9',
-    ].includes(level.version)
+    ].includes(baseVersion)
   ) {
     state.classic = createClassicState(level, cells);
     if (level.classic.coverage) {
@@ -224,6 +245,14 @@ export function createRun(
       state.totalClaimable = budget.total;
     }
     initializeClassicActors(state);
+  }
+  if (level.runningEnemies && !state.classic) {
+    state.runningEnemies = {
+      version: 'running-enemy-state.v1',
+      actorTick: 0,
+      hunt: createHuntState(),
+    };
+    initializeCombatPatrols(state);
   }
   state._loadouts[classId] = state.ability;
   updateSignal(state);
@@ -325,16 +354,69 @@ function updateBosses(state) {
     }
 }
 
+// Legacy recovery and blocked player intervals still advance only the new
+// optional population. They never invent Classic recovery, terrain or scoring.
+function advanceQuietCombat(state, duration) {
+  if (!state.runningEnemies) return;
+  let remaining = duration;
+  const startTime = state.time;
+  for (let guard = 0; remaining > EPS && guard < 128; guard++) {
+    const plans = planCombatMotion(state, remaining);
+    let elapsed = Math.min(
+      remaining,
+      ...plans.patrols.map((plan) => plan.event?.time ?? Infinity),
+      ...plans.shots.map((plan) => plan.event?.time ?? Infinity),
+    );
+    const player = state.player;
+    const contacts =
+      state.status === 'running'
+        ? combatContacts(
+            state,
+            [{ x1: player.x, y1: player.y, x2: player.x, y2: player.y, t0: 0, t1: remaining }],
+            plans,
+            { started: null, closure: null },
+            elapsed,
+          )
+        : { rams: [], failure: null };
+    elapsed = Math.min(elapsed, contacts.rams[0]?.time ?? Infinity);
+    advanceCombatMotion(state, plans, elapsed);
+    state.time += elapsed;
+    finishCombatMotion(state, plans, contacts, elapsed, state.status !== 'running');
+    remaining -= elapsed;
+  }
+  state.time = startTime;
+  if (remaining > EPS) throw new Error('Running enemy event horizon bound exceeded');
+}
+
 function worldStep(state, input, duration) {
   let remaining = duration;
-  for (let guard = 0; remaining > EPS && guard < 6 && state.status === 'running'; guard++) {
+  for (
+    let guard = 0;
+    remaining > EPS && guard < (state.runningEnemies ? 128 : 6) && state.status === 'running';
+    guard++
+  ) {
     const playerPlan = planPlayer(state, input, remaining),
       trace = tracePlan(state, playerPlan.paths, remaining);
-    const horizon = Math.min(remaining, trace.closure ?? Infinity, trace.stop ?? Infinity);
+    const combatPlans = planCombatMotion(state, remaining);
+    let horizon = Math.min(
+      remaining,
+      trace.closure ?? Infinity,
+      trace.stop ?? Infinity,
+      ...combatPlans.patrols.map((plan) => plan.event?.time ?? Infinity),
+      ...combatPlans.shots.map((plan) => plan.event?.time ?? Infinity),
+    );
+    const combat = combatContacts(state, playerPlan.paths, combatPlans, trace, horizon);
+    horizon = Math.min(horizon, combat.rams[0]?.time ?? Infinity);
     const enemyPlans = state.enemies.map((e) => planEnemy(state, e, remaining));
     const self = selfContact(state, trace, horizon),
       contact = enemyContact(state, playerPlan.paths, enemyPlans, trace, horizon);
     let failure = contact;
+    if (
+      combat.failure &&
+      combat.failure.time <= horizon + EPS &&
+      (!failure || combat.failure.time < failure.time - EPS)
+    )
+      failure = combat.failure;
     const challenge = challengeContact(state, trace, horizon);
     if (challenge && (!failure || challenge.time <= failure.time + EPS)) failure = challenge;
     if (
@@ -361,9 +443,12 @@ function worldStep(state, input, duration) {
     state.player.y = position.y;
     for (let i = 0; i < state.enemies.length; i++)
       applyPlannedEnemy(state.enemies[i], enemyPlans[i], elapsed, remaining, state);
+    advanceCombatMotion(state, combatPlans, elapsed);
     state.time += elapsed;
     remaining -= elapsed;
     if (failure && failure.time <= horizon + EPS) {
+      finishCombatMotion(state, combatPlans, combat, elapsed, true);
+      if (failure.shot) impactCombatProjectile(state, failure.shot);
       if (failure.kind === 'mission-timeout') {
         state.failureCause = failure.kind;
         complete(state, false);
@@ -372,6 +457,7 @@ function worldStep(state, input, duration) {
     }
     if (trace.closure !== null && trace.closure <= horizon + EPS) {
       commitCapture(state);
+      finishCombatMotion(state, combatPlans, combat, elapsed, false);
       if (
         state.coverage + EPS >= state.level.goal.coverage &&
         state.objectives.every((o) => !o.required || o.captured) &&
@@ -382,6 +468,7 @@ function worldStep(state, input, duration) {
       }
       continue;
     }
+    finishCombatMotion(state, combatPlans, combat, elapsed, false);
     if (trace.stop !== null && trace.stop <= horizon + EPS) {
       state.player.speed = 0;
       // Grace blocks leaving safe territory; actors and the mission clock still advance.
@@ -392,6 +479,7 @@ function worldStep(state, input, duration) {
       const restPlans = state.enemies.map((e) => planEnemy(state, e, rest));
       for (let i = 0; i < state.enemies.length; i++)
         applyPlannedEnemy(state.enemies[i], restPlans[i], rest, rest, state);
+      advanceQuietCombat(state, rest);
       state.time += rest;
       remaining = 0;
       if (state.rules.timeLimitSeconds > 0 && state.time + EPS >= state.rules.timeLimitSeconds) {
@@ -400,6 +488,7 @@ function worldStep(state, input, duration) {
       }
       break;
     }
+    if (state.runningEnemies && remaining > EPS) continue;
     break;
   }
   // A contact resolves partway through a tick. Recovery time still starts at
@@ -408,6 +497,7 @@ function worldStep(state, input, duration) {
     const plans = state.enemies.map((e) => planEnemy(state, e, remaining));
     for (let i = 0; i < state.enemies.length; i++)
       applyPlannedEnemy(state.enemies[i], plans[i], remaining, remaining, state);
+    advanceQuietCombat(state, remaining);
     state.time += remaining;
   }
 }
@@ -415,6 +505,8 @@ function worldStep(state, input, duration) {
 function fixedStep(state, input) {
   if (state.classic) return stepClassic(state, input, { complete, recover, updateBosses });
   state.tick++;
+  if (state.runningEnemies) state.runningEnemies.actorTick++;
+  expireCombatProjectiles(state);
   const endTime = state.time + FIXED_DT;
   updateBosses(state);
   updateEncounter(state);
@@ -436,7 +528,9 @@ function fixedStep(state, input) {
     const plans = state.enemies.map((e) => planEnemy(state, e, FIXED_DT));
     for (let i = 0; i < state.enemies.length; i++)
       applyPlannedEnemy(state.enemies[i], plans[i], FIXED_DT, FIXED_DT, state);
+    advanceQuietCombat(state, FIXED_DT);
     state.time = endTime;
+    updateCombatPatrols(state);
     if (state.time + EPS >= state.respawnAt) {
       Object.assign(state.player, state.level.spawn, {
         direction: 'down',
@@ -451,6 +545,7 @@ function fixedStep(state, input) {
     return;
   }
   worldStep(state, input, FIXED_DT);
+  updateCombatPatrols(state);
   updateSignal(state);
   if (state.status !== 'won' && state.status !== 'lost') state.time = endTime;
   // Only a normal running world tick may isolate; recovery/respawn returned above.
@@ -533,8 +628,8 @@ export function getSummary(state) {
     lives: state.lives,
     ...(state.classic ? { livesLost: state.classic.livesLost } : {}),
     score: state.score,
-    ...(state.classic?.hunt
-      ? { hunt: huntSummary(state.level.classic.hunt, state.classic.hunt) }
+    ...(combatOwner(state)?.hunt
+      ? { hunt: huntSummary(huntDefinition(state.level), combatOwner(state).hunt) }
       : {}),
     coverage: state.coverage,
     claimedCount: state.claimedCount,

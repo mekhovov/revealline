@@ -1,5 +1,5 @@
 import { createRun } from './core/index.mjs';
-import { versionsForCampaign } from './core/versions.mjs';
+import { baseLevelVersion, versionsForCampaign } from './core/versions.mjs';
 import { required } from './data-json.mjs';
 import { createExecutionCatalog } from './campaign-contexts.mjs';
 import { campaignKey } from './library.mjs';
@@ -107,7 +107,9 @@ async function readJSON(path, maxBytes, { fetcher, signal }, identity = null) {
 
 function recordedLevel(campaign, replay) {
   required(
-    versionsForCampaign(campaign).ruleset === replay.ruleset,
+    versionsForCampaign(campaign).ruleset === replay.ruleset ||
+      (replay.ruleset === 'xonix-core.v11' &&
+        versionsForCampaign(campaign).levelVersion === baseLevelVersion(replay.level)),
     'Replay and accepted campaign simulation versions differ.',
   );
   return matchReplayInstalledRules({
