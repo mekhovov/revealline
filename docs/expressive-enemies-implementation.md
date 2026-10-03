@@ -102,13 +102,19 @@ their behavior.
 The Capture Studio pursuit panel edits accepted actors, routes, goals and pair
 links through native source compilation. Classic Snake has its own editor within
 the shared Studio navigation and uses runtime validators for import/export and
-preview. FPV World Studio exposes native Hunt actors and the shared field guide.
+preview. FPV World Studio now authors native Contact Hunt objectives, ordered target
+lists and bounded echo tails for Self-level and Acro independently. It uses the
+existing flight validator, Undo history and export/preview path; actor removal and
+role changes also repair Hunt references. See [Contact Hunt authoring](fpv-contact-hunt-authoring.md).
 
 Community adapters cover Creator, Classic Snake, native Team and FPV World
 packages across publisher, validation, installation, previews, launch, progress
 and offloading. Immutable installed editions retain separate progression;
-community clears cannot unlock official Snake chapter accents. A real-account
-publish/install review remains pending.
+community clears cannot unlock official Snake chapter accents. The follow-up
+hardens concurrent journal updates and Classic package ownership so another
+installed edition or Studio preview can retain shared content during offload.
+Historical ownership migrates conservatively. A real-account publish/install
+review remains pending.
 
 All 18 Company editions now pass deterministic production compilation and
 independent archive admission under the shared **80 MiB / 2,000-file** complete
@@ -119,7 +125,10 @@ supersedes the historical Company capacity blocker.
 The dedicated room service implements authoritative private Capture/Snake Versus
 and Team attempts, paired readiness, shared pause, once-only inputs, rematch,
 60-second reconnection, exact engine/content identities, full snapshots and
-reproducible outcome receipts. It binds to loopback by default and needs a
+reproducible outcome receipts. The follow-up suspends client controls on connection
+loss, rejects stale queued controls across pause/reconnect boundaries, and
+distinguishes abandoned rooms from temporary connection failures. It binds to
+loopback by default and needs a
 separately deployed HTTPS endpoint for a public game host. GitHub Pages alone
 cannot run it. See [room service instructions](../services/rooms/README.md).
 
@@ -137,6 +146,9 @@ reported separately from gameplay qualification. The full committed-source game
 archive, all 18 Company edition candidates and all three optional flight packages
 now pass. The [current verification report](verification/company-capacity-followup.md)
 records exact source identities, archive hashes and unchanged core/flight limits.
+The subsequent [Studio and lifecycle follow-up](verification/pursuit-lifecycle-followup.md)
+records the additional changes and their own verification; it does not relabel
+the earlier Company builds or qualify the draft layouts.
 
 Manual browser observations include the hub, launch navigation, Retro Field,
 EN/UK deep links, private two-seat readiness, and compact Team Snake controls.

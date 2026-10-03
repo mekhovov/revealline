@@ -23,6 +23,15 @@ acknowledgements in replay receipts, and exact terminal ticks must reproduce. Re
 Capture, Team and Snake painters. Repeated snapshots preserve presentation
 ownership and do not award local chapter progress.
 
+The transport additionally advertises `revealline-room-controls.v1`. Every full
+snapshot binds a service-owned `controlActivation` to its state identity. Ready,
+Pause, input and Rematch requests must carry that current activation; the service
+checks it after reading the complete request body. Pause, resume, rematch,
+heartbeat pause and service-stall transitions rotate it. An already-sent delayed
+input or Ready request therefore cannot affect a resumed attempt. Gameplay and
+replay formats remain unchanged; clients without this control contract need a
+matching deployment and a fresh room.
+
 Five seconds without a seat heartbeat pauses both boards. A player can reconnect
 for sixty seconds; both seats must explicitly choose Ready to resume. Missing
 rooms are abandoned. Both players must request a rematch; it preserves the
@@ -31,11 +40,30 @@ stall over 250 ms pauses play rather than advancing an unseen interval. A match
 has a thirty-minute active-time/input budget. Outcome downloads contain accepted
 controls and can be reproduced by `verifyAuthoritativeRoomResult`.
 
+The browser immediately suspends local controls and presentation time after a
+failed request or lifecycle interruption. At most eight controls may be pending;
+queue pressure pauses the room instead of dropping a held-control release. Pause,
+hide, leave, recovery and rematch retire queued commands and pending input fetches.
+Recovery reads a fresh snapshot, requests a shared Pause, and observes the paused
+room before offering Ready. This also clears previous readiness when restoring a
+waiting room. Returning to a page never resumes gameplay automatically.
+
+HTTP errors retain a readable `error` and add a stable `code`: stale activations
+return `STALE_ACTIVATION` (409), unavailable seats `SEAT_UNAVAILABLE` (401), and
+expired rooms `ROOM_UNAVAILABLE` (410). Missing seats after service restart are
+terminal: the browser clears its saved credential and offers **Choose another
+room** or a fresh invitation. Transient failures offer **Reconnect**. Saved seats
+are scoped to the configured endpoint; they are not sent to a different service.
+
 Public matching is disabled by default. `ROOM_PUBLIC=qualified` enables only
 unranked pairing of identical recipes and seeds; deployment review, rate limits,
 authentication, real-network play qualification and abuse handling must precede
 public discovery. This preview does not implement account rankings or native
 endpoint approval. There is no player chat or user-supplied executable content.
+The browser loopback fallback applies only to HTTP development origins; native
+`capacitor://localhost` does not qualify. Native schemes remain unavailable until
+their separate endpoint policy is approved. Lifecycle suspension and replay
+exports use the shared platform adapters.
 
 Room loss on service restart is deliberate: an in-memory room is abandoned,
 never reconstructed from a replay hash. Durable recovery needs a trusted full
@@ -47,7 +75,10 @@ clock rebasing are not implemented by the preview service. Hosted account
 identity, qualified community/Company room admission, asynchronous challenges,
 SIM races and shared-world flight remain separate delivery stages.
 
-Regression cases are authored in `game/test/online-room.test.mjs`. Automated
+Regression cases are authored in `game/test/online-room.test.mjs`,
+`game/test/online-room-client.test.mjs` and `game/test/online-room-service.test.mjs`.
+They include held HTTP bodies crossing pause/resume, stale readiness, bounded
+client queues and abandoned-room recovery. Automated
 suites remain unrun under the current repository waiver. Local browser checks
 are recorded separately from network and public-release qualification.
 

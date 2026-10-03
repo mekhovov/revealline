@@ -2369,11 +2369,19 @@ export function mountWorldApp({
     $('criterion-y').max = String(editor.bounds.max.y / 1000);
     for (const id of ['duplicate-criterion', 'remove-criterion', 'criterion-up', 'criterion-down'])
       $(id).disabled =
-        Boolean(actor) || editor.steps['self-level'][editorIndex]?.type === 'actor-track-v1';
+        Boolean(actor) ||
+        ['actor-track-v1', 'hunt-contact-v1'].includes(
+          editor.steps['self-level'][editorIndex]?.type,
+        );
     if (!actor && editor.steps['self-level'][editorIndex]?.type === 'actor-track-v1')
       scope.textContent += txt(
         '. Edit this objective in Follow & observe below.',
         '. Редагуйте це завдання нижче в розділі «Супровід і спостереження».',
+      );
+    if (!actor && editor.steps['self-level'][editorIndex]?.type === 'hunt-contact-v1')
+      scope.textContent += txt(
+        '. Edit this objective in Contact Hunt below.',
+        '. Редагуйте це завдання нижче в розділі «Контактне полювання».',
       );
     if (updateScene) refreshEditorScene();
     actorEditor?.refresh();

@@ -4,6 +4,7 @@ import { readFile, readdir } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 import { resolve, dirname, relative } from 'node:path';
 import { canonicalJSON, required } from '../../game/data-json.mjs';
+import { ROOM_CONTROL_PROTOCOL } from '../../game/online/room-client-lifecycle.mjs';
 import { CLASSIC_SNAKE_LEVELS } from '../../game/snake/classic-catalogue.mjs';
 import { prepareClassicSnakeLevel } from '../../game/snake/classic-setup.mjs';
 import { FIRST_CONNECTION } from '../../game/coop/first-connection.mjs';
@@ -29,6 +30,9 @@ import {
 
 const token = () => randomBytes(32).toString('hex');
 const digest = (value) => createHash('sha256').update(canonicalJSON(value)).digest('hex');
+const fail = (code, status, message) => {
+  throw Object.assign(new TypeError(message), { code, status });
+};
 const root = fileURLToPath(new URL('../../', import.meta.url));
 export async function roomEngineIdentity() {
   const files = new Map(),
@@ -130,6 +134,15 @@ export async function createRoomService({
   const rooms = new Map(),
     credentials = new Map(),
     invitations = new Map();
+  const activations = new WeakMap();
+  const syncActivation = (room, invalidate = false) => {
+    const prior = activations.get(room);
+    if (invalidate || prior?.status !== room.status || prior?.generation !== room.generation) {
+      room.controlProtocol = ROOM_CONTROL_PROTOCOL;
+      room.controlActivation = token();
+      activations.set(room, { status: room.status, generation: room.generation });
+    }
+  };
   const allowed = new Set(origins);
   const read = async (request) => {
     let size = 0;
@@ -181,6 +194,7 @@ export async function createRoomService({
     });
     const bearer = token(),
       invite = token();
+    syncActivation(room);
     credentials.set(bearer, { id, seat: 0 });
     invitations.set(invite, id);
     room.public = publicRoom;
@@ -191,6 +205,7 @@ export async function createRoomService({
       invite,
       seat: 0,
       protocol: ROOM_PROTOCOL,
+      controlProtocol: ROOM_CONTROL_PROTOCOL,
       contentHash: room.contentHash,
       engineVersion,
     };
@@ -207,6 +222,7 @@ export async function createRoomService({
       token: bearer,
       seat: 1,
       protocol: ROOM_PROTOCOL,
+      controlProtocol: ROOM_CONTROL_PROTOCOL,
       contentHash: room.contentHash,
       engineVersion,
     };
@@ -223,7 +239,8 @@ export async function createRoomService({
       response.end(JSON.stringify(value));
     };
     try {
-      required(origin && allowed.has(origin), 'This game origin is not approved for rooms.');
+      if (!origin || !allowed.has(origin))
+        fail('ORIGIN_NOT_ALLOWED', 403, 'This game origin is not approved for rooms.');
       headers['Access-Control-Allow-Origin'] = origin;
       headers.Vary = 'Origin';
       if (request.method === 'OPTIONS') {
@@ -235,6 +252,7 @@ export async function createRoomService({
       if (request.method === 'GET' && url.pathname === '/catalogue')
         return send(200, {
           protocol: ROOM_PROTOCOL,
+          controlProtocol: ROOM_CONTROL_PROTOCOL,
           public: allowPublic,
           entries: entries.map(({ level, ...entry }) => ({ ...entry, revision: level.revision })),
         });
@@ -243,7 +261,7 @@ export async function createRoomService({
       if (request.method === 'POST' && url.pathname === '/join') {
         const body = await read(request),
           id = invitations.get(body.invite);
-        required(id, 'This invitation is invalid or already used.');
+        if (!id) fail('INVITE_UNAVAILABLE', 410, 'This invitation is invalid or already used.');
         return send(200, join(id));
       }
       if (request.method === 'POST' && url.pathname === '/matchmaking') {
@@ -260,29 +278,50 @@ export async function createRoomService({
         return send(200, available ? join(available.id) : allocate(body, true));
       }
       const auth = credentials.get(request.headers.authorization?.replace(/^Bearer /, ''));
-      required(auth, 'A seat credential is required.');
+      if (!auth)
+        fail('SEAT_UNAVAILABLE', 401, 'This seat is unavailable. Request a new invitation.');
       const room = rooms.get(auth.id);
-      required(room, 'This room expired.');
+      if (!room) fail('ROOM_UNAVAILABLE', 410, 'This room expired. Request a new invitation.');
       touchAuthoritativeRoom(room, auth.seat, now());
+      syncActivation(room);
       if (request.method === 'GET' && url.pathname === '/snapshot')
         return send(200, snapshotAuthoritativeRoom(room));
       if (request.method === 'GET' && url.pathname === '/result')
         return send(200, exportAuthoritativeRoomResult(room));
       required(request.method === 'POST', 'Unsupported room operation.');
       const body = await read(request);
+      // Body delivery can span a pause/resume or rematch. Check the current
+      // service activation after reading, before admitting any queued action.
+      if (
+        ['/ready', '/pause', '/input', '/rematch'].includes(url.pathname) &&
+        body.activation !== room.controlActivation
+      )
+        fail('STALE_ACTIVATION', 409, 'Refresh the room before sending new controls.');
       if (url.pathname === '/ready') readyAuthoritativeRoom(room, auth.seat, now());
-      else if (url.pathname === '/pause') pauseAuthoritativeRoom(room);
-      else if (url.pathname === '/input') submitAuthoritativeInput(room, auth.seat, body, now());
+      else if (url.pathname === '/pause') {
+        pauseAuthoritativeRoom(room);
+        // A reconnecting waiting/paused seat must not retain an earlier Ready.
+        if (['waiting', 'paused'].includes(room.status))
+          room.seats.forEach((seat) => {
+            seat.ready = false;
+          });
+        syncActivation(room, true);
+      } else if (url.pathname === '/input') submitAuthoritativeInput(room, auth.seat, body, now());
       else if (url.pathname === '/rematch') rematchAuthoritativeRoom(room, auth.seat, now());
       else if (url.pathname === '/leave') abandonAuthoritativeRoom(room, auth.seat, now());
       else throw new TypeError('Unsupported room operation.');
+      syncActivation(room);
       send(200, {
         acknowledged: room.seats[auth.seat].acknowledged,
         status: room.status,
         generation: room.generation,
+        controlActivation: room.controlActivation,
       });
     } catch (error) {
-      send(400, { error: String(error.message).slice(0, 240) });
+      send(error.status ?? 400, {
+        error: String(error.message).slice(0, 240),
+        code: error.code ?? 'INVALID_REQUEST',
+      });
     }
   });
   let lastTick = now(),
@@ -292,7 +331,10 @@ export async function createRoomService({
     const elapsed = time - lastTick;
     lastTick = time;
     if (elapsed > 250) {
-      for (const room of rooms.values()) pauseAuthoritativeRoom(room, 'service-stall');
+      for (const room of rooms.values()) {
+        pauseAuthoritativeRoom(room, 'service-stall');
+        syncActivation(room);
+      }
       remainder = 0;
     } else remainder += Math.max(0, elapsed);
     const steps = Math.floor((remainder + 1e-7) / (1000 / 120));
@@ -304,6 +346,7 @@ export async function createRoomService({
         room.status = 'abandoned';
         room.result = { outcome: 'abandoned', reason: 'service-error' };
       }
+      syncActivation(room);
       if (
         time - room.touchedAt > 120000 &&
         ['abandoned', 'finished', 'waiting'].includes(room.status)

@@ -299,6 +299,12 @@ export function snapshotAuthoritativeRoom(room) {
     roomId: room.id,
     contentHash: room.contentHash,
     engineVersion: room.engineVersion,
+    ...(room.controlActivation
+      ? {
+          controlProtocol: room.controlProtocol,
+          controlActivation: room.controlActivation,
+        }
+      : {}),
     recipeIdentity: room.recipeIdentity,
     recipe: room.recipe,
     status: room.status,

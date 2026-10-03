@@ -1,5 +1,12 @@
 import { getLocale, setLocale } from '../i18n/index.mjs';
 import { ROOM_PROTOCOL, restoreTrustedRoomSnapshot } from './room-core.mjs';
+import {
+  ROOM_CONTROL_PROTOCOL,
+  roomServiceEndpoint,
+  terminalRoomError,
+  createRoomClientLifecycle,
+} from './room-client-lifecycle.mjs';
+import { onNativeInactive, exportJSONFile } from '../platform.mjs';
 import { drawClassicBoard } from '../snake/classic-view.mjs';
 import { advanceClassicFlight } from '../snake/classic-flight-art.mjs';
 import { createClassicPresentation } from '../snake/classic-presentation.mjs';
@@ -13,9 +20,7 @@ if (['en', 'uk'].includes(linkedLocale)) setLocale(linkedLocale, { persist: fals
 const $ = (id) => document.getElementById(id),
   uk = getLocale() === 'uk';
 const say = (en, ua) => (uk ? ua : en);
-const endpoint =
-  document.documentElement.dataset.roomService ||
-  (['127.0.0.1', 'localhost'].includes(location.hostname) ? 'http://127.0.0.1:8783' : null);
+const endpoint = roomServiceEndpoint(location, document.documentElement.dataset.roomService);
 const display = createDisplayPreferences(),
   destruction = createDestructionPreferences(),
   remains = createEncounterDisplayPreferences();
@@ -24,9 +29,10 @@ const presentation = createClassicPresentation({ displayPreferences: display }),
 const SESSION_KEY = 'revealline.private-room.seat.v1';
 let credentials = null,
   state = null,
-  sequence = 0,
   stopped = false,
-  polling = false,
+  polling = null,
+  pauseRequest = null,
+  booting = false,
   previousFrame = null;
 let canvases = [],
   painters = [],
@@ -71,7 +77,74 @@ if (uk) {
 const notice = (value) => {
   $('notice').textContent = value;
 };
-async function api(path, body) {
+const reconnect = document.createElement('button');
+reconnect.id = 'reconnect';
+reconnect.hidden = true;
+reconnect.textContent = say('Reconnect', 'Відновити зв’язок');
+$('notice').after(reconnect);
+const lifecycle = createRoomClientLifecycle({
+  sendInput: (body, owner, signal) => api('/input', body, owner, signal),
+  onError: (error, owner) => connectionError(error, owner),
+});
+const roomError = (message, code) => Object.assign(new Error(message), { code });
+const saveSeat = (value) => {
+  try {
+    if (value) sessionStorage.setItem(SESSION_KEY, JSON.stringify({ ...value, service: endpoint }));
+    else sessionStorage.removeItem(SESSION_KEY);
+  } catch {
+    /* A live ephemeral seat does not require browser storage. */
+  }
+};
+function syncControls() {
+  const phase = lifecycle.snapshot().phase;
+  const live = lifecycle.canPlay() && !stopped && !document.hidden;
+  $('controls').hidden = !live;
+  $('ready').hidden = phase !== 'connected' || !['waiting', 'paused'].includes(state?.status);
+  $('pause').hidden = !live;
+  $('rematch').hidden = $('receipt').hidden = phase !== 'connected' || state?.status !== 'finished';
+  reconnect.hidden = !['recovering', 'abandoned'].includes(phase);
+  reconnect.textContent =
+    phase === 'abandoned'
+      ? say('Choose another room', 'Вибрати іншу кімнату')
+      : say('Reconnect', 'Відновити зв’язок');
+}
+function suspendLocal() {
+  lifecycle.suspend();
+  direction = null;
+  boost = false;
+  previousFrame = null;
+  syncControls();
+}
+function abandonLocal(message) {
+  lifecycle.abandon();
+  direction = null;
+  boost = false;
+  saveSeat(null);
+  $('invitation').hidden = true;
+  syncControls();
+  notice(
+    message ??
+      say(
+        'This room is no longer available. Choose another room or ask your friend for a new invitation.',
+        'Ця кімната більше недоступна. Виберіть іншу або попросіть друга надіслати нове запрошення.',
+      ),
+  );
+}
+function connectionError(error, owner = credentials) {
+  if (credentials !== owner || lifecycle.snapshot().phase === 'abandoned') return;
+  if (terminalRoomError(error)) {
+    abandonLocal();
+    return;
+  }
+  suspendLocal();
+  notice(
+    say(
+      `Connection interrupted: ${error.message}. Controls are paused. Reconnecting…`,
+      `Зв’язок перервано: ${error.message}. Керування призупинено. Відновлюємо зв’язок…`,
+    ),
+  );
+}
+async function api(path, body, owner = credentials, signal = null) {
   if (!endpoint)
     throw new Error(
       say(
@@ -79,38 +152,74 @@ async function api(path, body) {
         'Для цього сайту не налаштовано сервіс кімнат.',
       ),
     );
-  const response = await fetch(new URL(path, endpoint), {
-    method: body === undefined ? 'GET' : 'POST',
-    mode: 'cors',
-    credentials: 'omit',
-    cache: 'no-store',
-    headers: {
-      ...(body === undefined ? {} : { 'Content-Type': 'application/json' }),
-      ...(credentials ? { Authorization: `Bearer ${credentials.token}` } : {}),
-    },
-    ...(body === undefined ? {} : { body: JSON.stringify(body) }),
-    signal: AbortSignal.timeout(4000),
-  });
-  const value = await response.json();
-  if (!response.ok) throw new Error(value.error ?? `Room service ${response.status}`);
-  return value;
+  const controller = new AbortController();
+  const abort = () => controller.abort();
+  if (signal?.aborted) abort();
+  else signal?.addEventListener('abort', abort, { once: true });
+  const timeout = setTimeout(abort, 4000);
+  try {
+    const response = await fetch(new URL(path, endpoint), {
+      method: body === undefined ? 'GET' : 'POST',
+      mode: 'cors',
+      credentials: 'omit',
+      cache: 'no-store',
+      headers: {
+        ...(body === undefined ? {} : { 'Content-Type': 'application/json' }),
+        ...(owner ? { Authorization: `Bearer ${owner.token}` } : {}),
+      },
+      ...(body === undefined ? {} : { body: JSON.stringify(body) }),
+      signal: controller.signal,
+    });
+    const value = await response.json();
+    if (!response.ok) throw roomError(value.error ?? `Room service ${response.status}`, value.code);
+    return value;
+  } finally {
+    clearTimeout(timeout);
+    signal?.removeEventListener('abort', abort);
+  }
 }
-async function own(value) {
-  if (value.protocol !== ROOM_PROTOCOL) throw new Error('Room protocol mismatch.');
+async function own(value, { restoring = false } = {}) {
+  if (value?.protocol !== ROOM_PROTOCOL || value?.controlProtocol !== ROOM_CONTROL_PROTOCOL)
+    throw roomError('Room protocol mismatch. Choose a new room.', 'ROOM_PROTOCOL_MISMATCH');
+  if (
+    !/^[a-f0-9]{32}$/.test(value.roomId) ||
+    !/^[a-f0-9]{64}$/.test(value.token) ||
+    ![0, 1].includes(value.seat) ||
+    !/^[a-f0-9]{64}$/.test(value.contentHash) ||
+    !/^[a-f0-9]{64}$/.test(value.engineVersion)
+  )
+    throw roomError('The saved room seat is invalid.', 'SEAT_UNAVAILABLE');
   credentials = value;
   state = null;
-  sequence = 0;
-  sessionStorage.setItem(SESSION_KEY, JSON.stringify(value));
+  lifecycle.own(value, { restoring });
+  saveSeat(value);
   $('setup').hidden = true;
   $('lobby').hidden = false;
   $('invitation').hidden = !value.invite;
   if (value.invite) {
     const invite = new URL(location.href);
-    invite.search = '';
+    invite.searchParams.delete('room');
     invite.hash = `invite=${value.invite}`;
     $('invite').value = invite.href;
   }
+  syncControls();
   await poll();
+}
+async function requestPause(activation = state?.controlActivation) {
+  if (!credentials || !activation || pauseRequest || lifecycle.snapshot().phase === 'abandoned')
+    return;
+  const owner = credentials,
+    epoch = lifecycle.snapshot().epoch;
+  const operation = { controller: new AbortController() };
+  pauseRequest = operation;
+  try {
+    await api('/pause', { activation }, owner, operation.controller.signal);
+    if (credentials === owner) lifecycle.pauseAcknowledged(epoch);
+  } catch (error) {
+    connectionError(error, owner);
+  } finally {
+    if (pauseRequest === operation) pauseRequest = null;
+  }
 }
 function selection() {
   return { id: $('recipe').value, pace: $('pace').value, targets: $('targets').value, seed: 17 };
@@ -133,46 +242,87 @@ for (const [id, path] of [
   });
 for (const [id, path] of [
   ['ready', '/ready'],
-  ['pause', '/pause'],
   ['rematch', '/rematch'],
 ])
   $(id).addEventListener('click', async () => {
+    if (
+      !credentials ||
+      lifecycle.snapshot().phase !== 'connected' ||
+      document.hidden ||
+      stopped ||
+      $(id).hidden ||
+      $(id).disabled
+    )
+      return;
+    const owner = credentials;
+    $(id).disabled = true;
     try {
-      await api(path, {});
-      await poll();
+      await api(path, { activation: state.controlActivation }, owner);
+      if (credentials === owner) await poll();
     } catch (error) {
-      notice(error.message);
+      connectionError(error, owner);
+    } finally {
+      $(id).disabled = false;
     }
   });
+$('pause').addEventListener('click', () => {
+  if (!lifecycle.canPlay()) return;
+  suspendLocal();
+  void requestPause();
+});
 $('receipt').addEventListener('click', async () => {
+  const owner = credentials;
+  if (!owner || state?.status !== 'finished' || lifecycle.snapshot().phase !== 'connected') return;
   try {
-    const receipt = await api('/result'),
-      url = URL.createObjectURL(new Blob([JSON.stringify(receipt)], { type: 'application/json' }));
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = `room-${credentials.roomId}.json`;
-    link.click();
-    setTimeout(() => URL.revokeObjectURL(url), 1000);
+    const receipt = await api('/result', undefined, owner);
+    if (credentials !== owner) return;
+    const exported = await exportJSONFile(receipt, `room-${owner.roomId}.json`);
+    if (credentials === owner)
+      notice(
+        exported.status === 'requested'
+          ? say(
+              'Download requested. Check your downloads or Save dialog.',
+              'Завантаження запитано. Перевірте завантаження або вікно збереження.',
+            )
+          : exported.message,
+      );
   } catch (error) {
-    notice(error.message);
+    if (credentials === owner) notice(error.message);
   }
 });
-$('leave').addEventListener('click', () => {
-  // Capture the current bearer synchronously, then retire local ownership before any await.
-  void api('/leave', {}).catch(() => {});
+function leave() {
+  const owner = credentials;
+  if (owner && lifecycle.snapshot().phase !== 'abandoned')
+    void api('/leave', {}, owner).catch(() => {});
   credentials = null;
+  polling?.controller.abort();
+  polling = null;
+  pauseRequest?.controller.abort();
+  pauseRequest = null;
   state = null;
-  sessionStorage.removeItem(SESSION_KEY);
+  lifecycle.release();
+  direction = null;
+  boost = false;
+  saveSeat(null);
   painters.forEach((painter) => painter?.dispose?.());
   painters = [];
   canvases = [];
+  flights = [];
+  eventIds.clear();
   $('boards').replaceChildren();
   $('lobby').hidden = $('controls').hidden = true;
   $('setup').hidden = false;
   $('result').textContent = '';
+  reconnect.hidden = true;
   notice(say('Choose a new room.', 'Виберіть нову кімнату.'));
+}
+$('leave').addEventListener('click', leave);
+reconnect.addEventListener('click', () => {
+  if (lifecycle.snapshot().phase === 'abandoned') leave();
+  else if (credentials) void poll();
+  else void boot();
 });
-async function allocateBoards(snapshot, owner) {
+async function allocateBoards(snapshot, owner, epoch) {
   const count = snapshot.engine.runs.length;
   const nextCanvases = Array.from({ length: count }, (_, index) => {
     const canvas = document.createElement('canvas');
@@ -189,7 +339,7 @@ async function allocateBoards(snapshot, owner) {
     nextPainters = nextCanvases.map(() => new BoardPainter(presets));
     await Promise.all(nextPainters.map((painter) => painter.setLook(pack.themes[0], 'fpv-body')));
   }
-  if (credentials !== owner || stopped) {
+  if (credentials !== owner || stopped || document.hidden || epoch !== lifecycle.snapshot().epoch) {
     nextPainters.forEach((painter) => painter?.dispose?.());
     return;
   }
@@ -202,96 +352,110 @@ async function allocateBoards(snapshot, owner) {
 }
 
 async function poll() {
-  if (!credentials || polling || stopped) return;
-  polling = true;
-  const owner = credentials;
+  if (
+    !credentials ||
+    polling ||
+    pauseRequest ||
+    stopped ||
+    document.hidden ||
+    lifecycle.snapshot().phase === 'abandoned'
+  )
+    return;
+  const operation = { controller: new AbortController() };
+  polling = operation;
+  const owner = credentials,
+    epoch = lifecycle.snapshot().epoch;
   try {
-    const wire = await api('/snapshot');
-    if (credentials !== owner) return;
+    const wire = await api('/snapshot', undefined, owner, operation.controller.signal);
+    if (credentials !== owner || epoch !== lifecycle.snapshot().epoch || stopped || document.hidden)
+      return;
     if (
-      wire.contentHash !== credentials.contentHash ||
-      wire.engineVersion !== credentials.engineVersion
+      wire.roomId !== owner.roomId ||
+      wire.contentHash !== owner.contentHash ||
+      wire.engineVersion !== owner.engineVersion
     )
-      throw new Error('The room content identity changed.');
-    const snapshot = restoreTrustedRoomSnapshot(wire);
-    if (!state || state.generation !== snapshot.generation) {
-      sequence = 0;
-      state = null;
+      throw roomError('The room content identity changed.', 'ROOM_IDENTITY_MISMATCH');
+    if (
+      wire.controlProtocol !== ROOM_CONTROL_PROTOCOL ||
+      !/^[a-f0-9]{64}$/.test(wire.controlActivation)
+    )
+      throw roomError('Room controls protocol mismatch.', 'ROOM_PROTOCOL_MISMATCH');
+    let snapshot;
+    try {
+      snapshot = restoreTrustedRoomSnapshot(wire);
+    } catch {
+      throw roomError('The room snapshot identity changed.', 'ROOM_IDENTITY_MISMATCH');
+    }
+    if (
+      lifecycle.snapshot().pauseRequired &&
+      !['finished', 'abandoned'].includes(snapshot.status)
+    ) {
+      await requestPause(snapshot.controlActivation);
+      return;
+    }
+    // Terminal outcomes remain server-owned, including during recovery.
+    if (['finished', 'abandoned'].includes(snapshot.status)) lifecycle.pauseAcknowledged(epoch);
+    const replacement = !state || state.generation !== snapshot.generation;
+    if (replacement) {
       direction = null;
       boost = false;
       eventIds.clear();
-      await allocateBoards(snapshot, owner);
-    } else
+      await allocateBoards(snapshot, owner, epoch);
+    }
+    if (credentials !== owner || stopped || document.hidden || !lifecycle.accept(snapshot, epoch))
+      return;
+    if (!replacement)
       snapshot.engine.runs = snapshot.engine.runs.map((run, index) =>
         Object.assign(state.engine.runs[index], run),
       );
-    if (credentials !== owner) return;
-    sequence = Math.max(sequence, snapshot.seats[credentials.seat].acknowledged);
     state = snapshot;
-    $('controls').hidden = snapshot.status !== 'playing';
-    $('ready').hidden = !['waiting', 'paused'].includes(snapshot.status);
-    $('pause').hidden = snapshot.status !== 'playing';
-    $('rematch').hidden = $('receipt').hidden = snapshot.status !== 'finished';
+    if (!lifecycle.canPlay()) {
+      direction = null;
+      boost = false;
+    }
+    syncControls();
     $('identity').textContent =
       `${snapshot.recipe.family} · ${snapshot.recipe.level.id} · ${snapshot.recipe.level.revision} · ${snapshot.contentHash}`;
     $('seats').textContent = snapshot.seats
       .map(
         (seat, index) =>
-          `${index + 1}${index === credentials.seat ? say(' (you)', ' (ви)') : ''}: ${!seat.joined ? say('waiting for invite', 'очікує запрошення') : seat.ready ? say('ready', 'готово') : say('not ready', 'не готово')}`,
+          `${index + 1}${index === owner.seat ? say(' (you)', ' (ви)') : ''}: ${!seat.joined ? say('waiting for invite', 'очікує запрошення') : seat.ready ? say('ready', 'готово') : say('not ready', 'не готово')}`,
       )
       .join(' · ');
     notice(
-      say(
-        `Room ${snapshot.status}${snapshot.pauseReason ? ` · ${snapshot.pauseReason}` : ''}`,
-        `Кімната: ${{ waiting: 'очікування', playing: 'гра', paused: 'пауза', finished: 'завершено', abandoned: 'залишена' }[snapshot.status]}`,
-      ),
+      snapshot.status === 'paused'
+        ? say(
+            'Room paused. Both players must choose Ready to resume.',
+            'Кімнату призупинено. Обидва гравці мають обрати «Готово», щоб продовжити.',
+          )
+        : say(
+            `Room ${snapshot.status}`,
+            `Кімната: ${{ waiting: 'очікування', playing: 'гра', finished: 'завершено', abandoned: 'залишена' }[snapshot.status]}`,
+          ),
     );
-    if (snapshot.result)
-      $('result').textContent = snapshot.result.winner
+    $('result').textContent = snapshot.result
+      ? snapshot.result.winner
         ? say(`Result: ${snapshot.result.winner}`, `Результат: ${snapshot.result.winner}`)
         : say(
             `Result: ${snapshot.result.outcome ?? snapshot.result.reason ?? 'finished'}`,
             `Результат: ${snapshot.result.outcome ?? 'завершено'}`,
-          );
-    // Repeated snapshots do not repeat effects, reactions or result ownership.
+          )
+      : '';
     for (const event of snapshot.events) eventIds.add(event.id);
     if (eventIds.size > 256) eventIds = new Set(snapshot.events.map((event) => event.id));
+    if (snapshot.status === 'abandoned') abandonLocal();
   } catch (error) {
-    if (credentials !== owner) return;
-    notice(
-      say(
-        `Connection interrupted: ${error.message}. Reconnecting…`,
-        `Зв’язок перервано: ${error.message}. Повертаємося…`,
-      ),
-    );
+    connectionError(error, owner);
   } finally {
-    polling = false;
+    if (polling === operation) polling = null;
   }
 }
 let direction = null,
   boost = false;
-let inputChain = Promise.resolve();
-async function input(next = direction) {
-  if (state?.status !== 'playing') return;
+function input(next = direction) {
+  if (!lifecycle.canPlay() || stopped || document.hidden) return;
   direction = next;
-  const owner = credentials,
-    generation = state.generation;
-  const captured = { direction, boost, support: boost };
-  inputChain = inputChain.then(async () => {
-    if (credentials !== owner || state?.generation !== generation || state?.status !== 'playing')
-      return;
-    try {
-      await api('/input', { sequence: ++sequence, generation, ...captured });
-    } catch (error) {
-      if (credentials === owner && state?.generation === generation) {
-        // A timed-out request may already have been accepted. Never reuse its sequence
-        // for a different control; later snapshots reconcile the monotonic acknowledgement.
-        sequence = Math.max(sequence, state.seats[owner.seat].acknowledged);
-        notice(error.message);
-      }
-    }
-  });
-  return inputChain;
+  lifecycle.submit({ direction, boost, support: boost });
 }
 const keys = {
   ArrowUp: 'up',
@@ -309,7 +473,7 @@ document.addEventListener('keydown', (event) => {
     event.preventDefault();
     void input(keys[event.code]);
   }
-  if (event.code === 'Space') {
+  if (event.code === 'Space' && lifecycle.canPlay()) {
     event.preventDefault();
     $('pause').click();
   }
@@ -321,6 +485,7 @@ document.querySelectorAll('[data-direction]').forEach((button) =>
   }),
 );
 $('support').addEventListener('pointerdown', (event) => {
+  if (!lifecycle.canPlay() || stopped || document.hidden) return;
   event.currentTarget.setPointerCapture(event.pointerId);
   boost = true;
   void input();
@@ -332,12 +497,29 @@ for (const type of ['pointerup', 'pointercancel', 'lostpointercapture'])
       void input();
     }
   });
+function suspend() {
+  if (!credentials || ['abandoned', 'idle'].includes(lifecycle.snapshot().phase)) return;
+  suspendLocal();
+  void requestPause();
+}
 document.addEventListener('visibilitychange', () => {
-  if (document.hidden && state?.status === 'playing') void api('/pause', {}).catch(() => {});
+  if (document.hidden) suspend();
+  else {
+    previousFrame = null;
+    void poll();
+  }
 });
-window.addEventListener('orientationchange', () => {
-  if (state?.status === 'playing') void api('/pause', {}).catch(() => {});
-});
+window.addEventListener('orientationchange', suspend);
+window.addEventListener('offline', suspend);
+window.addEventListener('online', () => void poll());
+let removeNativeInactive = null;
+void onNativeInactive(suspend)
+  .then((remove) => {
+    removeNativeInactive = remove;
+  })
+  .catch((error) => {
+    if (credentials) connectionError(error);
+  });
 function frame(time) {
   const dt = Math.min(0.1, previousFrame === null ? 0 : (time - previousFrame) / 1000);
   previousFrame = time;
@@ -347,7 +529,7 @@ function frame(time) {
       if (!canvas) return;
       const reduced = display.snapshot().effectiveReducedEffects,
         fx = destruction.snapshot(),
-        paused = state.status !== 'playing';
+        paused = !lifecycle.canPlay() || stopped || document.hidden;
       if (state.engine.kind === 'snake') {
         flights[index] = advanceClassicFlight(flights[index], dt * 1000, !paused, reduced);
         const cast = appearance.snapshot().cast;
@@ -372,7 +554,7 @@ function frame(time) {
           canvas.width = run.width * 16;
           canvas.height = run.height * 16;
         }
-        painters[index]?.draw(canvas.getContext('2d'), run, dt, {
+        painters[index]?.draw(canvas.getContext('2d'), run, paused ? 0 : dt, {
           paused,
           reduced,
           ...fx,
@@ -384,9 +566,13 @@ function frame(time) {
   requestAnimationFrame(frame);
 }
 async function boot() {
+  if (booting || credentials) return;
+  booting = true;
+  reconnect.hidden = true;
   try {
     const catalogue = await api('/catalogue');
-    if (catalogue.protocol !== ROOM_PROTOCOL) throw new Error('Room protocol mismatch.');
+    if (catalogue.protocol !== ROOM_PROTOCOL || catalogue.controlProtocol !== ROOM_CONTROL_PROTOCOL)
+      throw roomError('Room protocol mismatch.', 'ROOM_PROTOCOL_MISMATCH');
     $('recipe').replaceChildren(
       ...catalogue.entries.map((entry) => {
         const option = document.createElement('option');
@@ -400,10 +586,16 @@ async function boot() {
     const invitation = new URLSearchParams(location.hash.slice(1)).get('invite');
     if (invitation) {
       await own(await api('/join', { invite: invitation }));
-      history.replaceState(null, '', location.pathname);
+      history.replaceState(null, '', `${location.pathname}${location.search}`);
     } else {
-      const previous = sessionStorage.getItem(SESSION_KEY);
-      if (previous) await own(JSON.parse(previous));
+      let previous = null;
+      try {
+        const saved = sessionStorage.getItem(SESSION_KEY);
+        if (saved && saved.length <= 2048) previous = JSON.parse(saved);
+      } catch {
+        saveSeat(null);
+      }
+      if (previous?.service === endpoint) await own(previous, { restoring: true });
       else
         notice(
           say(
@@ -413,20 +605,33 @@ async function boot() {
         );
     }
   } catch (error) {
+    if (terminalRoomError(error)) saveSeat(null);
+    if (error.code === 'INVITE_UNAVAILABLE')
+      history.replaceState(null, '', `${location.pathname}${location.search}`);
+    reconnect.hidden = !endpoint;
     notice(
       say(
         `Room service unavailable: ${error.message}. Local play is ready from the main game.`,
         `Сервіс кімнат недоступний: ${error.message}. Локальна гра доступна з головного меню.`,
       ),
     );
+  } finally {
+    booting = false;
   }
 }
 setInterval(() => void poll(), 150);
-window.addEventListener('pagehide', () => {
+window.addEventListener('pagehide', (event) => {
+  suspend();
   stopped = true;
+  if (!event.persisted) {
+    void removeNativeInactive?.();
+    removeNativeInactive = null;
+  }
 });
 window.addEventListener('pageshow', () => {
   stopped = false;
+  previousFrame = null;
+  void poll();
 });
 requestAnimationFrame(frame);
 void boot();

@@ -1,0 +1,30 @@
+{
+  "scope": "Manual local-browser observations on working source; not automated-suite, physical-device, real-network or public-release qualification",
+  "observedAt": "2026-10-03T14:27:30.895791+00:00",
+  "worldStudio": [
+    "Created a Lift and land copy, added two unarmed native patrols and an ordered Contact Hunt with an echo tail in both flight modes.",
+    "Disabled Self-level tail; Acro tail stayed enabled.",
+    "Removed one target: both mode objectives retained one target. Undo restored both target lists.",
+    "Final draft fix: edited an existing Hunt to two tail links per catch without Apply, added a new unarmed actor, and observed that the original three targets and both tail edits remained.",
+    "No browser console errors observed in these flows."
+  ],
+  "privateRooms": [
+    "Isolated loopback service8784 and UI8785 left the existing user services unchanged.",
+    "Two Snake seats joined one exact Slow recipe, both chose Ready, and both boards started.",
+    "Pause both hid steering controls and reset both seats to not ready.",
+    "After seat1 chose Ready, reloading seat2 recovered a paused room with both seats not ready.",
+    "Stopping the isolated service showed Reconnecting with controls hidden. Restarting its empty state showed a terminal unavailable-room notice and Choose another room.",
+    "Choose another room returned to an enabled Create private room action."
+  ],
+  "proofImages": [
+    "/tmp/pursuit-lifecycle-hunt-studio.png",
+    "/tmp/pursuit-lifecycle-hunt-draft.png",
+    "/tmp/pursuit-lifecycle-abandoned-room.png"
+  ],
+  "limitations": [
+    "World Studio export was requested but no browser download receipt was returned, so export/import round-trip is not claimed.",
+    "Community cross-tab mutation coverage is authored as regressions but unrun under the waiver.",
+    "Real network latency, native endpoint/device behavior, physical controllers and human mission completion remain pending."
+  ],
+  "cleanup": "Temporary browser tabs59/58/57/56 closed and isolated services8784/8785 stopped; existing8779/8783 left running."
+}
