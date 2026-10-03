@@ -1,0 +1,15 @@
+TAP version 13
+# Subtest: spatial editor applies current presentation before every course build without changing authored source or scene bytes
+ok 1 - spatial editor applies current presentation before every course build without changing authored source or scene bytes
+  ---
+  duration_ms: 1.352125
+  ...
+1..1
+# tests 1
+# suites 0
+# pass 1
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 224.179791
