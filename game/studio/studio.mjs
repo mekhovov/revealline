@@ -1,3 +1,5 @@
+import { createSnakeHuntCandidates } from '../content-design/snake-hunt-candidates.mjs';
+import { createTeamSnakeHuntCandidates } from '../content-design/team-snake-hunt-candidates.mjs';
 import { editorMessageError, editorErrorText } from './editor-copy.mjs';
 import { createSourceDiscardGate } from './source-discard.mjs';
 import {
@@ -1113,6 +1115,8 @@ $('whole-variety').onclick = guarded(async () => {
     return;
   }
   const create = {
+    'snake-hunt-v1': createSnakeHuntCandidates,
+    'team-snake-hunt-v1': createTeamSnakeHuntCandidates,
     'variety-1': createWholeVarietyCandidates,
     'sorting-lanes-1': createWholeSortingCandidates,
     'global-impact-1': createWholeImpactCandidates,

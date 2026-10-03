@@ -10,6 +10,7 @@ export function createAuthoredJourneyRouteDefinition(
   {
     createOpeningCandidates,
     createHuntTrainingCandidates,
+    createSnakeHuntCandidates,
     createBorderCandidates,
     createWholeJourneyCandidates,
     createWholeSpatialCandidates,
@@ -55,6 +56,17 @@ export function createAuthoredJourneyRouteDefinition(
   },
 ) {
   if (!isAuthoredJourneyRouteId(id)) return null;
+  if (id === 'snake-hunt-v1')
+    return freezeDesign({
+      id,
+      label: 'Snake Hunt · eight chapters',
+      sessionKey: 'revealline.suspended.journey-snake-hunt.v1',
+      profileKey: 'journey-snake-hunt-v1',
+      source: createSnakeHuntCandidates({ artwork: true }),
+      corePackIds: ['journey-snake-hunt'],
+      optionalCampaignIds: [],
+      preserveOriginalThemes: true,
+    });
   if (id === 'humanoid-hunt-v1')
     return freezeDesign({
       id,

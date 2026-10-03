@@ -235,7 +235,10 @@ export function encounterVariantSource(source, variant, { missionIds = null } = 
   if (!roles['optional-scout']) project.actorCatalogId = COMBAT_ACTOR_CATALOG.id;
   const changed = new Set();
   for (const mission of project.missions) {
-    if (mission.archived || (missionIds && !missionIds.includes(mission.id))) continue;
+    // Snake objectives own their population and order; other missions in a
+    // mixed creator project can still use ordinary encounter variants.
+    if (mission.snake || mission.archived || (missionIds && !missionIds.includes(mission.id)))
+      continue;
     if (variant === 'off') {
       if (!mission.combat && !mission.hunt) continue;
       mission.actors = mission.actors.filter((actor) => !actorIsOptional(actor));

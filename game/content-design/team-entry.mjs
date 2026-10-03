@@ -1,4 +1,9 @@
 import {
+  createTeamSnakeHuntCandidates,
+  TEAM_SNAKE_HUNT_PROFILE_KEY,
+} from './team-snake-hunt-candidates.mjs';
+import { contentText } from '../i18n/content.mjs';
+import {
   createTeamHuntTrainingCandidates,
   TEAM_HUNT_TRAINING_PROFILE_KEY,
 } from './team-hunt-training-candidates.mjs';
@@ -53,6 +58,7 @@ import {
 export async function createTeamGreyboxEntry({
   artwork = false,
   huntTraining = false,
+  snakeHunt = false,
   pressure = false,
   spatial = false,
   impact = false,
@@ -63,25 +69,27 @@ export async function createTeamGreyboxEntry({
   culturalSpecialistsV2 = false,
   reviewCopy = true,
 } = {}) {
-  const source = huntTraining
-    ? createTeamHuntTrainingCandidates()
-    : culturalSpecialistsV2
-      ? createTeamCulturalSpecialistV2OriginalCandidates()
-      : culturalSpecialists
-        ? createTeamCulturalSpecialistOriginalCandidates()
-        : reviewedSpecialists
-          ? createTeamCompleteSpecialistOriginalCandidates()
-          : partnerSpecialist
-            ? createTeamPartnerSpecialistOriginalCandidates()
-            : specialist
-              ? createTeamSpecialistOriginalCandidates()
-              : impact
-                ? createTeamImpactOriginalCandidates()
-                : spatial
-                  ? createTeamSpatialOriginalCandidates()
-                  : pressure
-                    ? createTeamPressureOriginalCandidates()
-                    : createTeamJourneyCandidates({ artwork });
+  const source = snakeHunt
+    ? createTeamSnakeHuntCandidates()
+    : huntTraining
+      ? createTeamHuntTrainingCandidates()
+      : culturalSpecialistsV2
+        ? createTeamCulturalSpecialistV2OriginalCandidates()
+        : culturalSpecialists
+          ? createTeamCulturalSpecialistOriginalCandidates()
+          : reviewedSpecialists
+            ? createTeamCompleteSpecialistOriginalCandidates()
+            : partnerSpecialist
+              ? createTeamPartnerSpecialistOriginalCandidates()
+              : specialist
+                ? createTeamSpecialistOriginalCandidates()
+                : impact
+                  ? createTeamImpactOriginalCandidates()
+                  : spatial
+                    ? createTeamSpatialOriginalCandidates()
+                    : pressure
+                      ? createTeamPressureOriginalCandidates()
+                      : createTeamJourneyCandidates({ artwork });
   const preferences = createJourneyPreferences({ window: globalThis.window ?? globalThis });
   const snapshot = preferences.snapshot();
   const candidateJourney = createCandidateTeamHost(source, {
@@ -89,25 +97,27 @@ export async function createTeamGreyboxEntry({
   });
   const candidateProgress = createTeamJourneyProgress(
     candidateJourney,
-    huntTraining
-      ? { profileKey: TEAM_HUNT_TRAINING_PROFILE_KEY }
-      : culturalSpecialistsV2
-        ? { profileKey: TEAM_CULTURAL_SPECIALIST_V2_PROFILE_KEY }
-        : culturalSpecialists
-          ? { profileKey: TEAM_CULTURAL_SPECIALIST_PROFILE_KEY }
-          : reviewedSpecialists
-            ? { profileKey: TEAM_COMPLETE_SPECIALIST_PROFILE_KEY }
-            : partnerSpecialist
-              ? { profileKey: TEAM_PARTNER_SPECIALIST_PROFILE_KEY }
-              : specialist
-                ? { profileKey: TEAM_SPECIALIST_PROFILE_KEY }
-                : impact
-                  ? { profileKey: TEAM_IMPACT_PROFILE_KEY }
-                  : spatial
-                    ? { profileKey: TEAM_SPATIAL_PROFILE_KEY }
-                    : pressure
-                      ? { profileKey: TEAM_PRESSURE_PROFILE_KEY }
-                      : {},
+    snakeHunt
+      ? { profileKey: TEAM_SNAKE_HUNT_PROFILE_KEY }
+      : huntTraining
+        ? { profileKey: TEAM_HUNT_TRAINING_PROFILE_KEY }
+        : culturalSpecialistsV2
+          ? { profileKey: TEAM_CULTURAL_SPECIALIST_V2_PROFILE_KEY }
+          : culturalSpecialists
+            ? { profileKey: TEAM_CULTURAL_SPECIALIST_PROFILE_KEY }
+            : reviewedSpecialists
+              ? { profileKey: TEAM_COMPLETE_SPECIALIST_PROFILE_KEY }
+              : partnerSpecialist
+                ? { profileKey: TEAM_PARTNER_SPECIALIST_PROFILE_KEY }
+                : specialist
+                  ? { profileKey: TEAM_SPECIALIST_PROFILE_KEY }
+                  : impact
+                    ? { profileKey: TEAM_IMPACT_PROFILE_KEY }
+                    : spatial
+                      ? { profileKey: TEAM_SPATIAL_PROFILE_KEY }
+                      : pressure
+                        ? { profileKey: TEAM_PRESSURE_PROFILE_KEY }
+                        : {},
   );
   await candidateProgress.load();
   return Object.freeze({
@@ -119,39 +129,41 @@ export async function createTeamGreyboxEntry({
     }),
     candidateCaptureTeaching: createTeamCaptureTeaching(
       candidateJourney,
-      huntTraining
+      huntTraining || snakeHunt
         ? source.missions.map((mission) => mission.id)
         : TEAM_JOURNEY_LEARNING_ARCS[0].missionIds,
     ),
     candidateDifficulty: snapshot.difficulty,
-    candidateEditionLabel: huntTraining
-      ? () => huntText('lessons')
-      : pressure ||
-          spatial ||
-          impact ||
-          specialist ||
-          partnerSpecialist ||
-          reviewedSpecialists ||
-          culturalSpecialists ||
-          culturalSpecialistsV2
-        ? localizedMessage(
+    candidateEditionLabel: snakeHunt
+      ? () => contentText(source, 'name')
+      : huntTraining
+        ? () => huntText('lessons')
+        : pressure ||
+            spatial ||
+            impact ||
+            specialist ||
+            partnerSpecialist ||
+            reviewedSpecialists ||
+            culturalSpecialists ||
             culturalSpecialistsV2
-              ? 'interface:couch.teamEdition_culturalSpecialistsV2'
-              : culturalSpecialists
-                ? 'interface:couch.teamEdition_culturalSpecialists'
-                : reviewedSpecialists
-                  ? 'interface:couch.teamEdition_reviewedSpecialists'
-                  : partnerSpecialist
-                    ? 'interface:couch.teamEdition_partnerSpecialist'
-                    : specialist
-                      ? 'interface:couch.teamEdition_specialist'
-                      : impact
-                        ? 'interface:couch.teamEdition_impact'
-                        : spatial
-                          ? 'interface:couch.teamEdition_spatial'
-                          : 'interface:couch.teamEdition_pressure',
-          )
-        : '',
+          ? localizedMessage(
+              culturalSpecialistsV2
+                ? 'interface:couch.teamEdition_culturalSpecialistsV2'
+                : culturalSpecialists
+                  ? 'interface:couch.teamEdition_culturalSpecialists'
+                  : reviewedSpecialists
+                    ? 'interface:couch.teamEdition_reviewedSpecialists'
+                    : partnerSpecialist
+                      ? 'interface:couch.teamEdition_partnerSpecialist'
+                      : specialist
+                        ? 'interface:couch.teamEdition_specialist'
+                        : impact
+                          ? 'interface:couch.teamEdition_impact'
+                          : spatial
+                            ? 'interface:couch.teamEdition_spatial'
+                            : 'interface:couch.teamEdition_pressure',
+            )
+          : '',
     candidateNotice: snapshot.durable ? '' : snapshot.error,
   });
 }

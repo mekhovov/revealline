@@ -1,8 +1,10 @@
 import { dataIdentity } from '../../game/data-json.mjs';
 import { FLIGHT_COURSES } from './catalogue.mjs';
+import { SNAKE_HUNT_CATALOGUE, SNAKE_HUNT_PLAYLISTS } from './snake-hunt-catalogue.mjs';
 
 const text = (en, uk) => ({ en, uk });
 export const WORLD_THEMES = Object.freeze([
+  { id: 'snake-hunt', title: text('Snake Hunt', 'Змійка-полювання'), color: '#68cbb5' },
   { id: 'academy', title: text('Flight Academy', 'Льотна академія'), color: '#a2dfcf' },
   { id: 'ukrainian', title: text('Ukrainian Horizons', 'Українські обрії'), color: '#e5c36e' },
   { id: 'pixel', title: text('Pixel Circuit', 'Піксельні перегони'), color: '#bd9cfc' },
@@ -130,6 +132,7 @@ export const FLIGHT_WORLDS = Object.freeze([
   },
 ]);
 export const ACTIVITY_NAMES = Object.freeze({
+  hunt: text('Catch humanoids', 'Полювання на гуманоїдів'),
   training: text('Orientation', 'Ознайомлення'),
   exploration: text('Explore', 'Дослідження'),
   precision: text('Precision', 'Точність'),
@@ -1626,6 +1629,7 @@ export const ADVENTURE_CATALOGUE = Object.freeze(
 );
 
 export const WORLD_CATALOGUE = Object.freeze([
+  ...SNAKE_HUNT_CATALOGUE,
   ...ADVENTURE_CATALOGUE,
   ...FLIGHT_COURSES.map((course, index) => ({
     id: course.id,
@@ -1655,6 +1659,7 @@ export const WORLD_CATALOGUE = Object.freeze([
   }),
 ]);
 export const CURATED_PLAYLISTS = Object.freeze([
+  ...SNAKE_HUNT_PLAYLISTS,
   ...WORLD_THEMES.map((theme) => ({
     format: 'FPVPlaylist.v1',
     id: `collection-${theme.id}`,

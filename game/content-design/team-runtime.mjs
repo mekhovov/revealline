@@ -27,7 +27,9 @@ export function resolveTeamMission(project, mission, map, difficulty) {
       mission.team.spawnIds.every(stableId),
     'Team missions require two explicit named spawns.',
   );
-  const hunting = mission.team.format === 'TeamMissionV7';
+  const snake = mission.team.format === 'TeamMissionV8';
+  const hunting = snake || mission.team.format === 'TeamMissionV7';
+  required(snake === !!mission.snake, 'Team Snake missions require an explicit Snake definition.');
   required(
     hunting
       ? typeof mission.team.lineImpact === 'boolean'
@@ -54,15 +56,19 @@ export function resolveTeamMission(project, mission, map, difficulty) {
       mission.objectives.length === 0 &&
       mission.bonuses.length === 0 &&
       (!Object.hasOwn(mission, 'timedBonuses') ||
-        ['TeamMissionV4', 'TeamMissionV5', 'TeamMissionV6', 'TeamMissionV7'].includes(
-          mission.team.format,
-        )) &&
+        [
+          'TeamMissionV4',
+          'TeamMissionV5',
+          'TeamMissionV6',
+          'TeamMissionV7',
+          'TeamMissionV8',
+        ].includes(mission.team.format)) &&
       mission.timeLimitSeconds === 0 &&
       (mission.team.format !== 'TeamMissionV1' || (map.source.terrain ?? []).length === 0),
     'Team candidates support only qualified actor roles and coverage, not unqualified terrain, bonuses, objectives or timers.',
   );
   required(
-    !['TeamMissionV4', 'TeamMissionV5', 'TeamMissionV6', 'TeamMissionV7'].includes(
+    !['TeamMissionV4', 'TeamMissionV5', 'TeamMissionV6', 'TeamMissionV7', 'TeamMissionV8'].includes(
       mission.team.format,
     ) ||
       (map.source.format === 'MapDesignV1' &&
@@ -89,19 +95,21 @@ export function resolveTeamMission(project, mission, map, difficulty) {
     'Team spawn bodies must have independent clearance.',
   );
   const level = {
-    version: hunting
-      ? COOP_HUNT_LEVEL_VERSION
-      : mission.team.format === 'TeamMissionV6'
-        ? COOP_SPECIALIST_LEVEL_VERSION
-        : mission.team.format === 'TeamMissionV5'
-          ? COOP_IMPACT_LEVEL_VERSION
-          : mission.team.format === 'TeamMissionV4'
-            ? COOP_BONUS_LEVEL_VERSION
-            : mission.team.format === 'TeamMissionV3'
-              ? COOP_ROVER_LEVEL_VERSION
-              : mission.team.format === 'TeamMissionV2'
-                ? COOP_TERRAIN_LEVEL_VERSION
-                : COOP_FOUNDATION_LEVEL_VERSION,
+    version: snake
+      ? 'revealline-coop-level.v10'
+      : hunting
+        ? COOP_HUNT_LEVEL_VERSION
+        : mission.team.format === 'TeamMissionV6'
+          ? COOP_SPECIALIST_LEVEL_VERSION
+          : mission.team.format === 'TeamMissionV5'
+            ? COOP_IMPACT_LEVEL_VERSION
+            : mission.team.format === 'TeamMissionV4'
+              ? COOP_BONUS_LEVEL_VERSION
+              : mission.team.format === 'TeamMissionV3'
+                ? COOP_ROVER_LEVEL_VERSION
+                : mission.team.format === 'TeamMissionV2'
+                  ? COOP_TERRAIN_LEVEL_VERSION
+                  : COOP_FOUNDATION_LEVEL_VERSION,
     ...(mission.team.format !== 'TeamMissionV1' ? { terrain: map.source.terrain ?? [] } : {}),
     ...(Object.hasOwn(mission, 'timedBonuses') ? { timedBonuses: mission.timedBonuses } : {}),
     ...(['TeamMissionV5', 'TeamMissionV6'].includes(mission.team.format) ||
@@ -125,6 +133,7 @@ export function resolveTeamMission(project, mission, map, difficulty) {
     spawns,
     walls: map.source.walls ?? [],
     safeRects: map.source.foundations ?? [],
+    ...(snake ? { snake: structuredClone(mission.snake) } : {}),
     ...(hunting && mission.hunt ? { hunt: structuredClone(mission.hunt) } : {}),
     ...(hunting && mission.combat
       ? {

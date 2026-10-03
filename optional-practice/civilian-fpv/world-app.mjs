@@ -15,6 +15,10 @@ import {
   CURATED_PLAYLISTS,
 } from './world-catalogue.mjs';
 import { FLIGHT_COURSES } from './catalogue.mjs';
+import {
+  createSnakeHuntPresentation,
+  mountSnakeHuntPresentationControls,
+} from './snake-hunt-presentation.mjs';
 import { FLIGHT_DEMONSTRATIONS } from './demonstrations.mjs';
 import { WORLD_DEMONSTRATIONS } from './world-demonstrations.mjs';
 import { createFlight, createFlightRecorder, replayFlightCooperatively } from './model.mjs';
@@ -918,6 +922,7 @@ export function mountWorldApp({
       land: ['Land', 'Сідайте'],
       eliminate: ['Disable targets', 'Вимкніть мішені'],
       survive: ['Stay airborne', 'Тримайтеся в повітрі'],
+      'hunt-contact-v1': ['Catch the marked humanoids', 'Спіймайте позначених гуманоїдів'],
       'actor-track-v1':
         step?.minTargetTravel > 0
           ? ['Follow the marked subject', 'Супроводжуйте позначений об’єкт']
@@ -1006,6 +1011,13 @@ export function mountWorldApp({
       audio.setVolumes(levels);
       presentation.setVolume(levels.interface);
     },
+  });
+  const huntPresentationControls = mountSnakeHuntPresentationControls({
+    document: doc,
+    window: win,
+    container: $('sim-flight-controls'),
+    storage,
+    locale: () => locale,
   });
   const soundButton = button('', async () => {
     const enabled = !audio.enabled();
@@ -1110,6 +1122,7 @@ export function mountWorldApp({
     immersive.refresh();
     updateSoundLabel();
     audioControls.refresh();
+    huntPresentationControls.refresh();
     updateGhostHUD();
     for (const id of ['flight-mode', 'first-flight-mode']) {
       $(id).options[0].textContent = txt('Self-level', 'Самовирівнювання');
@@ -3053,6 +3066,20 @@ export function mountWorldApp({
       const hint = hints[state.actorTrack?.reason];
       if (hint) $('flight-objective').textContent += ` · ${txt(...hint)}`;
     }
+    if (state.hunt) {
+      const criterion = current.course.steps[$('flight-mode').value].find(
+        (step) => step.type === 'hunt-contact-v1',
+      );
+      const count = state.hunt.caught.length;
+      $('flight-objective').textContent +=
+        ` · ${txt('Caught', 'Спіймано')} ${count}/${criterion.targets.length} · ${txt('Echo tail', 'Хвіст')} ${state.hunt.tail.length}`;
+      if (!terminal(state) && criterion.ordered)
+        $('flight-objective').textContent +=
+          ` · ${txt('Next', 'Далі')} ${String(count + 1).padStart(2, '0')}`;
+      if (state.hunt.failure)
+        $('flight-objective').textContent +=
+          ` · ${txt('Touched your echo tail', 'Зіткнення зі своїм хвостом')}`;
+    }
     if (modePractice)
       $('flight-objective').textContent =
         `${modePracticeNotice()} · ${$('flight-objective').textContent}`;
@@ -3766,6 +3793,11 @@ export function mountWorldApp({
           );
         },
         reducedMotion: win.matchMedia?.('(prefers-reduced-motion: reduce)').matches,
+        createHuntPresentation: (options) =>
+          createSnakeHuntPresentation({
+            ...options,
+            preferences: () => huntPresentationControls.preferences.snapshot(),
+          }),
       });
     if (!renderer.available)
       throw new Error(
@@ -4911,6 +4943,22 @@ export function mountWorldApp({
   renderCatalogue();
   showTab(win.location.hash.slice(1) || 'explore', false);
   renderPlaylist();
+  const requested = new URL(win.location.href).searchParams;
+  const requestedChapter = requested.get('snake-hunt');
+  const huntPlaylist = CURATED_PLAYLISTS.find(
+    (playlist) => playlist.id === `snake-hunt-${requestedChapter}`,
+  );
+  if (huntPlaylist) loadPlaylist(huntPlaylist);
+  const requestedCourse = requested.get('snake-course');
+  const huntEntry = catalogue.find(
+    (entry) => entry.activity === 'hunt' && entry.id === requestedCourse,
+  );
+  if (huntEntry)
+    void ready
+      .then(() => {
+        if (!disposed) return startFlight(huntEntry);
+      })
+      .catch(reportError);
   void cloneChallenge(catalogue.find((e) => !e.legacy)).catch(reportError);
   raf = win.requestAnimationFrame(frame);
   return {
@@ -5004,6 +5052,7 @@ export function mountWorldApp({
       appearanceControls.dispose();
       actorEditor?.dispose();
       audioControls.dispose();
+      huntPresentationControls.dispose();
       audio.dispose();
       presentation.dispose();
       droneResponse.dispose();

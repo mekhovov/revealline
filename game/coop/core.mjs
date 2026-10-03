@@ -81,6 +81,17 @@ import {
   eliminateCoopCombat,
 } from './combat-patrols.mjs';
 import { huntObjectiveSatisfied, huntSummary } from '../hunt/rules.mjs';
+import {
+  TEAM_SNAKE_LEVEL_VERSION,
+  snakeBaseLevel,
+  validateSnakeDefinition,
+  initializeSnake,
+  snakeContacts,
+  advanceSnakeBodies,
+  resetSnakeBody,
+  recordSnakeReturn,
+  snakeSummary,
+} from '../snake/rules.mjs';
 
 export const COOP_RULESET = 'revealline-coop.v3';
 export const COOP_LEVEL_VERSION = 'revealline-coop-level.v1';
@@ -133,6 +144,17 @@ function buildGrid(level) {
 
 /** Validate before adopting content; the engine owns its copy and never changes the caller's level. */
 export function validateCoopLevel(level) {
+  if (Object.getOwnPropertyDescriptor(level ?? {}, 'version')?.value === TEAM_SNAKE_LEVEL_VERSION) {
+    try {
+      const base = snakeBaseLevel(level);
+      const validation = validateCoopLevel(base);
+      if (!validation.valid) return validation;
+      validateSnakeDefinition(level.snake, base.hunt);
+      return { valid: true, errors: [] };
+    } catch (error) {
+      return { valid: false, errors: [error.message] };
+    }
+  }
   if (
     Object.getOwnPropertyDescriptor(level ?? {}, 'version')?.value === TEAM_RUNNING_LEVEL_VERSION
   ) {
@@ -559,6 +581,7 @@ export function createCoop(
   };
   initializeThreats(run);
   initializeCoopCombat(run);
+  initializeSnake(run);
   if (hasTeamRoamers(owned)) initializeCoopRoamers(run);
   run.headsTouching = headsTouch(run);
   return run;
@@ -641,6 +664,25 @@ function movement(run, commands, stopped) {
       else direction = null;
     }
     if (player.rescue || stopped.has(player.id)) direction = null;
+    if (run.snake && player.status === 'active' && direction) {
+      const body = run.snake.bodies[player.id];
+      const centered =
+        Math.abs(player.x - Math.floor(player.x) - 0.5) < EPS &&
+        Math.abs(player.y - Math.floor(player.y) - 0.5) < EPS;
+      if (centered || body.heading === null) body.heading = direction;
+      direction = body.heading;
+      if (centered) {
+        const next = DIRECTIONS[direction];
+        if (
+          player.x + next.x < 0.5 ||
+          player.x + next.x > run.width - 0.5 ||
+          player.y + next.y < 0.5 ||
+          player.y + next.y > run.height - 0.5 ||
+          playerWallContact(run, player, next, 1)
+        )
+          direction = null;
+      }
+    }
     player.direction = direction;
     const axis = DIRECTIONS[direction] || { x: 0, y: 0 };
     const speed =
@@ -688,6 +730,7 @@ function knockDown(run, player, cause, commands, enemy = null) {
   player.x = player.safeAnchor.x;
   player.y = player.safeAnchor.y;
   player.cellIndex = cellAt(run, player.x, player.y);
+  resetSnakeBody(run, player.id, player);
   player.direction = null;
   player.blockedDirection = commands[player.id].direction;
   emit(run, 'player.downed', { player: player.id, cause, ...(enemy === null ? {} : { enemy }) });
@@ -701,6 +744,11 @@ function revive(run, player, commands, reason = 'reserve') {
   player.graceUntil = run.time + 2;
   player.direction = null;
   player.blockedDirection = commands[player.id].direction;
+  if (run.snake) {
+    player.x = (player.cellIndex % run.width) + 0.5;
+    player.y = Math.floor(player.cellIndex / run.width) + 0.5;
+    resetSnakeBody(run, player.id, player);
+  }
   emit(run, 'player.revived', { player: player.id, reason, graceUntil: player.graceUntil });
 }
 
@@ -952,6 +1000,7 @@ function capture(run, closers, commands, stopped, joint = false) {
     run,
     closers.map((player) => player.id),
   );
+  for (const playerId of completed.keys()) recordSnakeReturn(run, playerId);
   for (const enemy of run.enemies)
     if (
       enemy.active !== false &&
@@ -1112,6 +1161,23 @@ export function stepCoop(run, commands, dt = FIXED_DT) {
     clearInvalidImpacts(run, emit);
     const horizon = tickEnd - run.time;
     const velocities = movement(run, commands, stopped);
+    const snakePlans = run.snake
+      ? run.players.map((player, index) => ({
+          playerId: player.id,
+          radius: PLAYER_RADIUS,
+          paths: [
+            {
+              x1: player.x,
+              y1: player.y,
+              x2: player.x + velocities[index].x * horizon,
+              y2: player.y + velocities[index].y * horizon,
+              t0: 0,
+              t1: horizon,
+            },
+          ],
+        }))
+      : [];
+    const bodyContacts = snakeContacts(run, snakePlans, horizon);
     const actors = run.bonuses
       ? run.enemies.map((enemy) => {
           const factor = coopBonusEnemyFactor(run, enemy);
@@ -1159,16 +1225,29 @@ export function stepCoop(run, commands, dt = FIXED_DT) {
       ...obstacles,
       ...walls,
       ...contacts,
+      ...bodyContacts,
       ...bonusContacts,
       ...combatPlans.contacts,
       ...combatPlans.patrols,
       ...combatPlans.shots,
     ])
       if (event) elapsed = Math.min(elapsed, event.time);
+    if (run.snake)
+      for (const [index, player] of run.players.entries()) {
+        const velocity = velocities[index],
+          speed = Math.abs(velocity.x || velocity.y);
+        if (speed < EPS) continue;
+        const value = velocity.x ? player.x : player.y,
+          sign = Math.sign(velocity.x || velocity.y);
+        const next =
+          sign > 0 ? Math.floor(value - 0.5 + EPS) + 1.5 : Math.ceil(value - 0.5 - EPS) - 0.5;
+        elapsed = Math.min(elapsed, Math.abs(next - value) / speed);
+      }
     for (const plan of impactPlans) elapsed = Math.min(elapsed, plan.waypointAt, plan.contactAt);
     if (meetingTime !== null) elapsed = Math.min(elapsed, meetingTime);
     for (const deadline of deadlines) elapsed = Math.min(elapsed, Math.max(0, deadline - run.time));
     const due = (time) => time !== null && time <= elapsed + EPS;
+    advanceSnakeBodies(run, snakePlans, elapsed);
     for (const player of run.players) {
       const next = positionAt(player, velocities[player.id], elapsed);
       player.x = next.x;
@@ -1260,6 +1339,9 @@ export function stepCoop(run, commands, dt = FIXED_DT) {
     const instantContacts = hazards(run, velocities, 0, instantActors);
     const hits = [...contacts.filter((contact) => due(contact.time)), ...instantContacts];
     for (const player of selfHits) knockDown(run, player, 'self-trail', commands);
+    for (const contact of bodyContacts)
+      if (due(contact.time))
+        knockDown(run, run.players[contact.player], 'snake-body', commands, contact.id);
     for (const contact of hits)
       if (contact.cause === 'lethal-terrain')
         knockDown(run, run.players[contact.player], contact.cause, commands);
@@ -1383,6 +1465,7 @@ export function stepCoop(run, commands, dt = FIXED_DT) {
 
 export function getCoopSummary(run) {
   return {
+    ...(run.snake ? { snake: snakeSummary(run) } : {}),
     ruleset: run.ruleset,
     levelId: run.level.id,
     levelRevision: run.level.revision,
