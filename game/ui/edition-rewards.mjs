@@ -395,7 +395,7 @@ export async function mountEditionRewards({
     label.append(select);
     controls.append(label);
     const pictures = button(
-      tr(showPictures ? 'hideDiscoveryPictures' : 'showDiscoveryPictures'),
+      tr(showPictures ? 'hidePromisePictures' : 'showPromisePictures'),
       () => {
         showPictures = !showPictures;
         renderShelf();
@@ -430,13 +430,21 @@ export async function mountEditionRewards({
         ),
         node('h4', copy.title),
       );
-      // Locked cards can request only separately authored teaser art. The
-      // explicit toggle bounds work to twelve pictures in the selected exhibit.
-      const picture = receipt ? row.image : row.teaserImage;
-      if (showPictures && picture && imageJobs.length < 12) {
-        const image = node('div', undefined, 'completion-reward-exhibit-picture');
+      // Earned art is the collection: show every picture without another click.
+      // Locked cards still require an explicit request for their teaser art.
+      const picture = receipt ? row.image : showPictures ? row.teaserImage : null;
+      if (picture) {
+        const image = node('div', undefined, 'completion-reward-exhibit-picture'),
+          media = node('div');
+        image.append(media);
+        if (receipt && row.video) {
+          const badge = node('span', tr('videoDiscovery'), 'completion-reward-video-badge');
+          badge.setAttribute('aria-hidden', 'true');
+          image.append(badge);
+          card.dataset.video = 'true';
+        }
         card.append(image);
-        imageJobs.push({ payload: picture, container: image, teaser: !receipt });
+        imageJobs.push({ payload: picture, container: media, teaser: !receipt });
       }
       card.append(
         node('p', copy.teaser),
@@ -450,7 +458,10 @@ export async function mountEditionRewards({
               }),
         ),
       );
-      if (receipt) card.append(exploreButton(receipt, 'collection'));
+      if (receipt) {
+        card.append(exploreButton(receipt, 'collection'));
+        if (row.video) card.append(exploreButton(receipt, 'collection-video', 'playVideo'));
+      }
       grid.append(card);
     }
     shelf.replaceChildren(title, controls);
@@ -894,16 +905,24 @@ export async function mountEditionRewards({
   }
   const collectionDialog = doc.getElementById('collection-dialog');
   const closeShelf = () => {
-    if (disposed || !showPictures) return;
+    if (disposed) return;
     showPictures = false;
     releaseShelfPictures();
-    renderShelf();
+    shelfContentKey = null;
+    const toggle = doc.getElementById('completion-reward-exhibit-pictures');
+    if (toggle) {
+      toggle.textContent = tr('showPromisePictures');
+      toggle.setAttribute('aria-pressed', 'false');
+    }
+    for (const picture of shelf.querySelectorAll('.completion-reward-exhibit-picture'))
+      picture.querySelector('div')?.replaceChildren();
   };
   collectionDialog.addEventListener('close', closeShelf);
   const shelfObserver =
     typeof win.MutationObserver === 'function'
       ? new win.MutationObserver(() => {
-          if (!collectionDialog.open) closeShelf();
+          if (collectionDialog.open) renderShelf();
+          else closeShelf();
         })
       : null;
   shelfObserver?.observe(collectionDialog, { attributes: true, attributeFilter: ['open'] });
