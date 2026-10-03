@@ -191,13 +191,31 @@ export function builtinWorldScene(course) {
     json.nodes.push(node);
     return next;
   };
-  function edge(name, side, along, height, gap = 1, offsetY = 0) {
+  function edge(name, side, along, height, gap = 1, offsetY = 0, turn = 0) {
     const model = models.get(name);
     if (!model) throw new Error(`Missing built-in scenery: ${name}`);
     const scale = height / model.size[1];
-    const yaw = [0, -Math.PI / 2, Math.PI, Math.PI / 2][side];
-    const halfX = ((side % 2 ? model.size[2] : model.size[0]) * scale) / 2;
-    const halfZ = ((side % 2 ? model.size[0] : model.size[2]) * scale) / 2;
+    const yaw = [0, -Math.PI / 2, Math.PI, Math.PI / 2][side] + turn;
+    // Exact rotated box extents retain the edge clearance for irregular crowns.
+    // Keep legacy cardinal extents byte-stable for every other environment.
+    const cosine = Math.abs(Math.cos(yaw)),
+      sine = Math.abs(Math.sin(yaw)),
+      halfX =
+        ((turn
+          ? model.size[0] * cosine + model.size[2] * sine
+          : side % 2
+            ? model.size[2]
+            : model.size[0]) *
+          scale) /
+        2,
+      halfZ =
+        ((turn
+          ? model.size[0] * sine + model.size[2] * cosine
+          : side % 2
+            ? model.size[0]
+            : model.size[2]) *
+          scale) /
+        2;
     const x =
       side === 1
         ? maxX + gap + halfX
@@ -249,6 +267,8 @@ export function builtinWorldScene(course) {
           along,
           environment === 'woodland' ? 5.5 + ((i * 3 + side) % 5) * 1.2 : 5.2 + (i % 2),
           environment === 'woodland' ? 1.5 + ((i + side) % 3) * 2 : 3.5,
+          0,
+          environment === 'woodland' ? (i + side * count) * 2.399963229728653 : 0,
         );
         if (i % 4 === 1) retro('detail-bench', side, along, 1.1, 1.2);
       }
