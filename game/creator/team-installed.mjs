@@ -1,3 +1,4 @@
+import { prepareTeamRunningEnemies } from '../hunt/team-running-enemies.mjs';
 import { deriveEncounterLevel } from '../hunt/variants.mjs';
 import { ENCOUNTER_VARIANTS } from '../hunt/preferences.mjs';
 import { boundedJSON, canonicalJSON, dataIdentity, exactKeys, required } from '../data-json.mjs';
@@ -35,6 +36,7 @@ export const CREATOR_TEAM_PROGRESS_FORMAT = 'revealline-installed-team-progress.
 export const CREATOR_TEAM_ATTEMPT_FORMAT = 'revealline-installed-team-attempt.v1';
 export const CREATOR_TEAM_VARIANT_ATTEMPT_FORMAT = 'revealline-installed-team-attempt.v2';
 export const CREATOR_TEAM_RELEASE_ATTEMPT_FORMAT = 'revealline-installed-team-attempt.v3';
+export const CREATOR_TEAM_RUNNING_ATTEMPT_FORMAT = 'revealline-installed-team-attempt.v4';
 const DATABASE_VERSION = 1;
 const STORES = Object.freeze(['editions', 'progress', 'metadata']);
 const STATE_KEY = 'state';
@@ -158,20 +160,29 @@ export function validateInstalledTeamAttempt(source, editionId, levelId) {
       'tuning',
       'segments',
       'checkpoint',
-      ...([CREATOR_TEAM_VARIANT_ATTEMPT_FORMAT, CREATOR_TEAM_RELEASE_ATTEMPT_FORMAT].includes(
-        attempt.format,
-      )
+      ...(attempt.format === CREATOR_TEAM_RUNNING_ATTEMPT_FORMAT ? ['runningEnemies'] : []),
+      ...([
+        CREATOR_TEAM_VARIANT_ATTEMPT_FORMAT,
+        CREATOR_TEAM_RELEASE_ATTEMPT_FORMAT,
+        CREATOR_TEAM_RUNNING_ATTEMPT_FORMAT,
+      ].includes(attempt.format)
         ? ['encounterVariant', 'encounterLevelIdentity']
         : []),
     ],
     'installed Team attempt',
   );
+  if (attempt.format === CREATOR_TEAM_RUNNING_ATTEMPT_FORMAT)
+    required(
+      attempt.runningEnemies === 'running-enemies.v1',
+      'Unsupported Team running-enemy recipe.',
+    );
   const tuning = validateGameplayTuning(attempt.tuning);
   required(
     [
       CREATOR_TEAM_ATTEMPT_FORMAT,
       CREATOR_TEAM_VARIANT_ATTEMPT_FORMAT,
       CREATOR_TEAM_RELEASE_ATTEMPT_FORMAT,
+      CREATOR_TEAM_RUNNING_ATTEMPT_FORMAT,
     ].includes(attempt.format) &&
       attempt.editionId === editionId &&
       attempt.levelId === levelId &&
@@ -186,13 +197,17 @@ export function validateInstalledTeamAttempt(source, editionId, levelId) {
     'Installed Team attempt is damaged.',
   );
   if (
-    [CREATOR_TEAM_VARIANT_ATTEMPT_FORMAT, CREATOR_TEAM_RELEASE_ATTEMPT_FORMAT].includes(
-      attempt.format,
-    )
+    [
+      CREATOR_TEAM_VARIANT_ATTEMPT_FORMAT,
+      CREATOR_TEAM_RELEASE_ATTEMPT_FORMAT,
+      CREATOR_TEAM_RUNNING_ATTEMPT_FORMAT,
+    ].includes(attempt.format)
   )
     required(
       ENCOUNTER_VARIANTS.includes(attempt.encounterVariant) &&
-        (attempt.format === CREATOR_TEAM_RELEASE_ATTEMPT_FORMAT ||
+        ([CREATOR_TEAM_RELEASE_ATTEMPT_FORMAT, CREATOR_TEAM_RUNNING_ATTEMPT_FORMAT].includes(
+          attempt.format,
+        ) ||
           attempt.encounterVariant !== 'authored') &&
         typeof attempt.encounterLevelIdentity === 'string' &&
         /^[a-f0-9]{16}$/.test(attempt.encounterLevelIdentity),
@@ -200,7 +215,12 @@ export function validateInstalledTeamAttempt(source, editionId, levelId) {
     );
   let ticks = 0;
   for (const segment of attempt.segments) {
-    if (attempt.format === CREATOR_TEAM_RELEASE_ATTEMPT_FORMAT && segment.release === true) {
+    if (
+      [CREATOR_TEAM_RELEASE_ATTEMPT_FORMAT, CREATOR_TEAM_RUNNING_ATTEMPT_FORMAT].includes(
+        attempt.format,
+      ) &&
+      segment.release === true
+    ) {
       exactKeys(segment, ['release'], 'installed Team input release');
       continue;
     }
@@ -236,6 +256,7 @@ function replayAttempt(pack, source, editionId, levelId, { terminal = false } = 
       attempt.presetId,
       attempt.tuning,
       attempt.encounterVariant ?? 'authored',
+      Boolean(attempt.runningEnemies),
     ),
     run = configured.run;
   required(
@@ -253,9 +274,11 @@ function replayAttempt(pack, source, editionId, levelId, { terminal = false } = 
     }
   }
   if (
-    [CREATOR_TEAM_VARIANT_ATTEMPT_FORMAT, CREATOR_TEAM_RELEASE_ATTEMPT_FORMAT].includes(
-      attempt.format,
-    )
+    [
+      CREATOR_TEAM_VARIANT_ATTEMPT_FORMAT,
+      CREATOR_TEAM_RELEASE_ATTEMPT_FORMAT,
+      CREATOR_TEAM_RUNNING_ATTEMPT_FORMAT,
+    ].includes(attempt.format)
   )
     required(
       attempt.encounterLevelIdentity === configured.encounterLevelIdentity,
@@ -292,13 +315,15 @@ function installedTeamConfiguration(
   presetId,
   tuning = resolveGameplayTuning(difficulty),
   encounterVariant = 'authored',
+  runningEnemies = false,
 ) {
   const base = createCreatorTeamAttempt(pack, levelId, difficulty, presetId),
     checkedTuning = validateGameplayTuning(tuning),
     original = pack.levels.find((candidate) => candidate.id === levelId),
     encounterLevel = deriveEncounterLevel(original, encounterVariant, { mode: 'team' });
   required(encounterLevel, 'Saved Team encounter variant is unavailable for this mission.');
-  const level = applyGameplayTuning(encounterLevel, checkedTuning);
+  const baseTuned = applyGameplayTuning(encounterLevel, checkedTuning);
+  const level = runningEnemies ? prepareTeamRunningEnemies(baseTuned) : baseTuned;
   required(
     checkedTuning.difficulty === difficulty && checkedTuning.adminOverride === false,
     'Installed Team progress requires the reviewed gameplay pressure preset.',
@@ -335,16 +360,20 @@ export function createInstalledTeamAttemptSnapshot({
   segments,
   encounterVariant = 'authored',
   encounterLevelIdentity,
+  runningEnemies = false,
 }) {
   const variant = encounterVariant !== 'authored';
   const releases = segments.some((segment) => segment.release === true);
   const source = {
-    format: releases
-      ? CREATOR_TEAM_RELEASE_ATTEMPT_FORMAT
-      : variant
-        ? CREATOR_TEAM_VARIANT_ATTEMPT_FORMAT
-        : CREATOR_TEAM_ATTEMPT_FORMAT,
-    ...(variant || releases ? { encounterVariant, encounterLevelIdentity } : {}),
+    format: runningEnemies
+      ? CREATOR_TEAM_RUNNING_ATTEMPT_FORMAT
+      : releases
+        ? CREATOR_TEAM_RELEASE_ATTEMPT_FORMAT
+        : variant
+          ? CREATOR_TEAM_VARIANT_ATTEMPT_FORMAT
+          : CREATOR_TEAM_ATTEMPT_FORMAT,
+    ...(runningEnemies ? { runningEnemies: 'running-enemies.v1' } : {}),
+    ...(variant || releases || runningEnemies ? { encounterVariant, encounterLevelIdentity } : {}),
     editionId,
     levelId: run?.level?.id,
     attemptId,
@@ -1139,9 +1168,18 @@ export function createInstalledTeamCampaignStore({
           const progress = validateInstalledTeamProgress(progressRequest.result, editionId),
             previous = progress.clears[levelId],
             picture = validateReward(reward),
+            completionGameplayId = attempt?.runningEnemies
+              ? installedTeamGameplayId(
+                  validated.pack,
+                  levelId,
+                  difficulty,
+                  presetId,
+                  attempt.tuning,
+                )
+              : gameplayId,
             receipt = {
               runId,
-              gameplayId,
+              gameplayId: completionGameplayId,
               difficulty,
               presetId,
               ...(picture ? { reward: picture } : {}),

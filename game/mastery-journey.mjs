@@ -1,6 +1,6 @@
 import { boundedJSON, dataIdentity, exactKeys, required, stableId } from './data-json.mjs';
 import { createRun } from './core/index.mjs';
-import { isClassicRuleset } from './core/versions.mjs';
+import { baseLevelVersion, isClassicRuleset, resolveVersions } from './core/versions.mjs';
 import { snapshotReplay, verifyReplayAsync } from './replay.mjs';
 import { freezeDesign } from './content-design/catalogs.mjs';
 
@@ -78,7 +78,8 @@ export async function verifyJourneyMasteryRun(
   const recording = snapshotReplay(replay);
   const start = createRun(recording.level, recording.options);
   required(
-    isClassicRuleset(start.ruleset) && start.classic,
+    isClassicRuleset(resolveVersions({ levelVersion: baseLevelVersion(start.level) }).ruleset) &&
+      start.classic,
     'This Journey mastery requires a supported modern Solo ruleset.',
   );
   required(

@@ -4,6 +4,7 @@ import { verifyLearningAttempt } from './company-campaigns/learning.mjs';
 import { verifyLearningEvidence } from './company-campaigns/evidence.mjs';
 import { resolveEditionAssets } from './editions/model.mjs';
 import { matchRecordedGameplayTuning, recoverGameplayTuning } from './gameplay-tuning.mjs';
+import { prepareRunningEnemyLevel } from './hunt/running-enemies.mjs';
 
 export const COMPANY_SESSION_FORMAT = 'revealline-company-session.v1';
 export function companySimulationIdentity(run) {
@@ -125,7 +126,17 @@ export async function restoreCompanySession(
       (preparedTuning !== null &&
         prepared.manifest?.level &&
         canonicalJSON(preparedTuning) === canonicalJSON(recoverGameplayTuning(replay.level)) &&
-        matchRecordedGameplayTuning(prepared.manifest.level, replay.level) !== null);
+        matchRecordedGameplayTuning(prepared.manifest.level, replay.level, {
+          classes: replay.options.classRecipes,
+        }) !== null) ||
+      (replay.level.runningEnemies &&
+        prepared.manifest?.level &&
+        preparedTuning === null &&
+        canonicalJSON(
+          prepareRunningEnemyLevel(prepared.manifest.level, {
+            classes: replay.options.classRecipes,
+          }),
+        ) === canonicalJSON(replay.level));
     required(
       sameLevel && canonicalJSON(prepared.recorder.options) === canonicalJSON(replay.options),
       'The saved simulation differs from this authored mission.',

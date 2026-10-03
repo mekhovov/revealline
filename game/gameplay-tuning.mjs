@@ -13,6 +13,8 @@ import * as v3 from './gameplay-tuning-v3.mjs';
 import { COLLISION_COURSE_VERSION } from './core/field-course.mjs';
 import { CLASSES } from './core/registry.mjs';
 import { huntTargetKind } from './hunt/rules.mjs';
+import { prepareRunningEnemyLevel } from './hunt/running-enemies.mjs';
+import { prepareTeamRunningEnemies } from './hunt/team-running-enemies.mjs';
 
 export const GAMEPLAY_TUNING_VERSION = 'gameplay-pressure.v4';
 // The preference format is unchanged; historical recipes have separate dispatch.
@@ -414,15 +416,21 @@ export function applyGameplayTuning(source, snapshot) {
  * Pre-fix gp4 records can retain this runtime's original native arithmetic;
  * fresh attempts and reward bindings always use applyGameplayTuning instead.
  */
-export function matchRecordedGameplayTuning(source, recordedLevel) {
+export function matchRecordedGameplayTuning(source, recordedLevel, { classes = CLASSES } = {}) {
   const recorded = boundedJSON(recordedLevel),
     tuning = recoverGameplayTuning(recorded);
   if (!tuning) return null;
-  const exact = canonicalJSON(recorded),
-    current = applyGameplayTuning(source, tuning);
+  const exact = canonicalJSON(recorded);
+  const accepted = (level) =>
+    recorded.runningEnemies
+      ? recorded.version === 'revealline-coop-level.v9'
+        ? prepareTeamRunningEnemies(level)
+        : prepareRunningEnemyLevel(level, { classes })
+      : level;
+  const current = accepted(applyGameplayTuning(source, tuning));
   if (canonicalJSON(current) === exact) return current;
   if (tuning.version !== GAMEPLAY_TUNING_VERSION) return null;
-  const historicalNative = tuneGameplay(source, tuning, Math.hypot);
+  const historicalNative = accepted(tuneGameplay(source, tuning, Math.hypot));
   return canonicalJSON(historicalNative) === exact ? historicalNative : null;
 }
 

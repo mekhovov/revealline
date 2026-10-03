@@ -34,7 +34,7 @@ function fields(value, keys, label) {
 
 /** The level boundary has already copied dense bounded JSON without invoking code.
  * Disabled descriptors receive the same validation as enabled descriptors. */
-export function validateCombatPatrols(level, { identity, walls, geometry }) {
+export function validateCombatPatrols(level, { identity, walls, geometry, supplemental = false }) {
   if (!Object.hasOwn(level.classic, 'combatPatrols')) return;
   required(
     [
@@ -51,8 +51,9 @@ export function validateCombatPatrols(level, { identity, walls, geometry }) {
   required(definition.version === COMBAT_PATROLS_VERSION, 'unsupported combat patrol version');
   required(typeof definition.enabled === 'boolean', 'combat patrol enabled must be boolean');
   required(
-    Array.isArray(definition.actors) && definition.actors.length <= COMBAT_MAX_ACTORS,
-    'combat patrols require at most 24 actors',
+    Array.isArray(definition.actors) &&
+      definition.actors.length <= COMBAT_MAX_ACTORS + (supplemental ? 6 : 0),
+    `combat patrols require at most ${COMBAT_MAX_ACTORS + (supplemental ? 6 : 0)} actors`,
   );
   required(
     geometry?.cells?.length === level.width * level.height,
@@ -94,7 +95,9 @@ export function validateCombatPatrols(level, { identity, walls, geometry }) {
     const maximumSpeed =
       level.version === 'xonix-level.v9' &&
       huntTargetKind(level.classic.hunt, actor.id) === 'runner'
-        ? HUNT_MAX_RUNNER_SPEED
+        ? supplemental
+          ? 21
+          : HUNT_MAX_RUNNER_SPEED
         : 8;
     required(
       number(actor.speed, 0.25, maximumSpeed),

@@ -81,7 +81,9 @@ export async function mountEditionRewards({
     value.rel = 'noopener noreferrer';
     return value;
   };
-  const bindings = createRewardMissionBindings(provider.route.source);
+  const bindings = createRewardMissionBindings(provider.route.source, {
+    includeRunningEnemies: true,
+  });
   const cosmeticRegistry = createRewardCosmeticRegistry({
     presets: provider.bootstrap?.boot?.presets,
     themes: provider.bootstrap?.boot?.themes?.themes ?? [],

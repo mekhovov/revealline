@@ -1,5 +1,8 @@
 import { missionBriefing } from '../mission-brief.mjs';
 import { createEncounterVariantPreferences } from '../hunt/preferences.mjs';
+import { createRunningEnemyPreferences } from '../hunt/running-enemy-preferences.mjs';
+import { prepareRunningEnemyLevel } from '../hunt/running-enemies.mjs';
+import { mountRunningEnemyControls } from '../ui/running-enemy-controls.mjs';
 import { attachEncounterVariantControls } from '../ui/encounter-variant-controls.mjs';
 import { attachHuntStatus } from '../ui/hunt-status.mjs';
 import { createHuntRecords } from '../hunt/records.mjs';
@@ -226,6 +229,11 @@ const encounterChoices = createEncounterVariantPreferences({
   window,
   getStorage: () => localStorage,
 });
+const runningEnemyPreferences = createRunningEnemyPreferences({
+  window,
+  getStorage: () => localStorage,
+});
+const runningEnemyControls = [];
 let encounterVariantControls = null,
   contextualReactions = null,
   huntStatuses = [],
@@ -1333,6 +1341,7 @@ try {
       format: $('race-format').value === 'first-to-two' ? 'first-to-two' : 'single',
       actorStyle: preference.actorStyle,
       actorPreferenceRevision: preference.revision,
+      runningEnemies: runningEnemyPreferences.snapshot().enabled,
     };
   }
   function prepare() {
@@ -1397,6 +1406,7 @@ try {
       format: $('race-format').value === 'first-to-two' ? 'first-to-two' : 'single',
       actorStyle: configured.actorStyle,
       actorPreferenceRevision: configured.actorPreferenceRevision,
+      runningEnemies: configured.runningEnemies,
     };
     $('race-format').value = roundRecipe.format;
     match = createRound(roundRecipe);
@@ -1430,9 +1440,11 @@ try {
     );
     // Qualified creator evidence is bound to the exact compiled installed
     // level. Global tuning would create a different, unverified simulation.
-    recipe.runtimeLevel = creatorOwned
-      ? rulesLevel
-      : applyGameplayTuning(rulesLevel, recipe.tuning);
+    const tunedLevel = creatorOwned ? rulesLevel : applyGameplayTuning(rulesLevel, recipe.tuning);
+    recipe.runningEnemies ??= runningEnemyPreferences.snapshot().enabled;
+    recipe.runtimeLevel = recipe.runningEnemies
+      ? prepareRunningEnemyLevel(tunedLevel, { classes: recipe.entry.classes })
+      : tunedLevel;
     return createDuel(
       recipe.runtimeLevel,
       {
@@ -1627,8 +1639,14 @@ try {
       actorStyle: fresh ? preference.actorStyle : roundRecipe.actorStyle,
       actorPreferenceRevision: fresh ? preference.revision : roundRecipe.actorPreferenceRevision,
       actorPresentation: fresh ? null : (actorLease?.pin().presentation ?? null),
+      runningEnemies:
+        sameMission && !fresh
+          ? roundRecipe.runningEnemies
+          : runningEnemyPreferences.snapshot().enabled,
       tuning:
-        sameMission && !fresh && roundRecipe.runtimeLevel?.classic?.hunt
+        sameMission &&
+        !fresh &&
+        (roundRecipe.runtimeLevel?.classic?.hunt || roundRecipe.runtimeLevel?.runningEnemies)
           ? roundRecipe.tuning
           : creatorVersusOwners.has(target)
             ? resolveGameplayTuning(
@@ -1906,7 +1924,8 @@ try {
     if (
       match.status === 'ready' &&
       !destination &&
-      (roundRecipe.actorStyle !== actorPreferences.snapshot().actorStyle ||
+      (roundRecipe.runningEnemies !== runningEnemyPreferences.snapshot().enabled ||
+        roundRecipe.actorStyle !== actorPreferences.snapshot().actorStyle ||
         dataIdentity(roundRecipe.tuning) !==
           dataIdentity(
             gameplayTuning.snapshot(
@@ -2303,6 +2322,57 @@ try {
         updateMenu();
       },
     });
+  for (const container of new Set([
+    $('race-enemy-remains')?.closest('section') ?? $('race-settings-panel-display'),
+    $('race-optional-setup'),
+  ])) {
+    if (!container) continue;
+    runningEnemyControls.push(
+      mountRunningEnemyControls({
+        container,
+        document,
+        window,
+        preferences: runningEnemyPreferences,
+        getCurrentEnabled: () =>
+          match?.runs?.[0]
+            ? !!(match.runs[0].level.runningEnemies || match.runs[0].level.classic?.hunt)
+            : null,
+        getAcceptedEnabled: () =>
+          match?.status === 'running' || match?.status === 'paused'
+            ? roundRecipe.runtimeLevel?.classic?.hunt
+              ? runningEnemyPreferences.snapshot().enabled
+              : !!roundRecipe.runningEnemies
+            : null,
+        onRestart: () => {
+          pause();
+          const configured = {
+            ...roundRecipe,
+            runningEnemies: runningEnemyPreferences.snapshot().enabled,
+          };
+          void prepareNext(roundRecipe.entry, document.activeElement, { configured, fresh: true })
+            .then(() => updateMenu())
+            .catch((error) => localizedText($('race-message'), () => error.message));
+        },
+      }),
+    );
+  }
+  let runningEnemyChoice = runningEnemyPreferences.snapshot().enabled;
+  runningEnemyPreferences.subscribe(({ enabled }) => {
+    if (enabled === runningEnemyChoice) return;
+    runningEnemyChoice = enabled;
+    startIntentEpoch++;
+    cancelContent();
+    nextAttempt?.lease?.cancel();
+    nextAttempt = null;
+    if (match?.status === 'ready') {
+      void Promise.resolve()
+        .then(() => prepare())
+        .catch((error) => {
+          localizedText($('race-message'), () => error.message);
+        });
+    }
+    updateMenu();
+  });
   if (candidateJourney) {
     let preferenceRevision = journeyPreferences.snapshot().revision,
       preferenceExportSequence = 0;
@@ -3852,6 +3922,7 @@ try {
   }
   function updateMenu() {
     if (!match || disposed) return;
+    runningEnemyControls.forEach((control) => control.refresh());
     const completedBoards = match.runs.filter((run) => run.status === 'won').length;
     journeyReactions.present({
       owned: !!candidateJourney?.owns(roundRecipe?.entry),
@@ -4247,6 +4318,8 @@ try {
     suspend();
     if (event.persisted) return;
     installOfflinePanel?.dispose();
+    runningEnemyControls.forEach((control) => control.dispose());
+    runningEnemyPreferences.dispose();
     contentController?.abort();
     disposed = true;
     actorLease?.release();

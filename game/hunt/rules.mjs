@@ -28,7 +28,7 @@ export const HUNT_HEADINGS = Object.freeze(
 export function validateHuntDefinition(
   source,
   actors,
-  { ordinaryCount = 0, enabled = true, playerMoveSpeed } = {},
+  { ordinaryCount = 0, enabled = true, playerMoveSpeed, supplemental = false } = {},
 ) {
   const value = boundedJSON(source, { maxBytes: 8192, maxNodes: 180, maxDepth: 4, maxArray: 24 });
   exactKeys(value, ['version', 'mode', 'quota', 'targets'], 'Humanoid hunt');
@@ -41,8 +41,8 @@ export function validateHuntDefinition(
     Array.isArray(actors) &&
       Number.isSafeInteger(ordinaryCount) &&
       ordinaryCount >= 0 &&
-      actors.length + ordinaryCount <= HUNT_MAX_ACTORS,
-    'Hunt editions support at most 24 total actors.',
+      actors.length + ordinaryCount <= (supplemental ? 54 : HUNT_MAX_ACTORS),
+    `Hunt editions support at most ${supplemental ? 54 : HUNT_MAX_ACTORS} total actors.`,
   );
   required(
     Array.isArray(value.targets) &&

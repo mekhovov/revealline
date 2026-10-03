@@ -25,6 +25,11 @@ import { createCreatorPlayerVictoryStory } from './player-victory-story.mjs';
 import { localizedMessage, localizedText, t } from '../i18n/index.mjs';
 import { attachCreatorPlayerNavigation } from './player-navigation.mjs';
 import { attachCreatorPlayerMenu } from './player-menu.mjs';
+import { createRunningEnemyPreferences } from '../hunt/running-enemy-preferences.mjs';
+import { huntDefinition } from '../hunt/running-enemy-definition.mjs';
+import { mountRunningEnemyControls } from '../ui/running-enemy-controls.mjs';
+import { attachEncounterDisplayControls } from '../ui/encounter-display-controls.mjs';
+import { attachHuntStatus } from '../ui/hunt-status.mjs';
 
 const $ = (id) => document.getElementById(id);
 const status = (message, error = false) => {
@@ -64,6 +69,7 @@ let runtime,
   nextMissionId = null,
   activationEpoch = 0;
 const saveKey = creatorAttemptKey(edition);
+const runningEnemyPreferences = createRunningEnemyPreferences();
 let menu;
 const playerMenu = attachCreatorPlayerMenu({
   getState: () => ({
@@ -91,12 +97,68 @@ const playerMenu = attachCreatorPlayerMenu({
           missionId,
           difficulty: $('difficulty').value,
           turnPolicy: $('steering').value,
+          runningEnemies: runningEnemyPreferences.snapshot().enabled,
         }),
         true,
         epoch,
       );
     }),
 });
+const runningEnemyControls = mountRunningEnemyControls({
+  container: $('creator-panel-gameplay'),
+  preferences: runningEnemyPreferences,
+  getCurrentEnabled: () => {
+    const current = runtime?.current();
+    return current ? !!huntDefinition(current.run.level) : null;
+  },
+  getAcceptedEnabled: () => runtime?.current()?.selection.runningEnemies ?? null,
+  onRestart: () =>
+    playerMenu.request(() =>
+      operation(async () => {
+        pause();
+        const epoch = activationEpoch;
+        await adoptDisplay(
+          await runtime.start({
+            ...runtime.current().selection,
+            runningEnemies: runningEnemyPreferences.snapshot().enabled,
+          }),
+          true,
+          epoch,
+        );
+      }),
+    ),
+});
+// Use the same cosmetic preference owners as Solo and Versus. These controls
+// change presentation only; the running-enemy choice is accepted at launch.
+const remainsLabel = document.createElement('label');
+remainsLabel.className = 'settings-check';
+const remainsInput = document.createElement('input');
+remainsInput.type = 'checkbox';
+remainsInput.id = 'creator-enemy-remains';
+remainsInput.setAttribute('aria-describedby', 'creator-enemy-remains-hint');
+const remainsText = document.createElement('span');
+localizedText(remainsText, localizedMessage('common:preferences.enemyRemains'));
+remainsLabel.append(remainsInput, remainsText);
+const remainsHint = document.createElement('p');
+remainsHint.id = 'creator-enemy-remains-hint';
+remainsHint.className = 'micro-note';
+localizedText(remainsHint, localizedMessage('common:preferences.enemyRemainsHint'));
+const remainsStatus = document.createElement('p');
+remainsStatus.id = 'creator-enemy-remains-status';
+remainsStatus.className = 'micro-note';
+remainsStatus.setAttribute('role', 'status');
+remainsStatus.hidden = true;
+const remainsRetry = document.createElement('button');
+remainsRetry.id = 'creator-enemy-remains-retry';
+remainsRetry.type = 'button';
+remainsRetry.hidden = true;
+localizedText(remainsRetry, localizedMessage('common:preferences.retryEncounterSave'));
+$('creator-panel-display').append(remainsLabel, remainsHint, remainsStatus, remainsRetry);
+const encounterDisplay = attachEncounterDisplayControls({ prefix: 'creator-' });
+const huntFeedback = document.createElement('div');
+huntFeedback.id = 'creator-hunt-feedback';
+$('hud').after(huntFeedback);
+const huntStatus = attachHuntStatus({ container: huntFeedback, mode: 'solo' });
 menu = attachCreatorPlayerNavigation({
   getScope: () =>
     busy
@@ -163,6 +225,7 @@ function setRunning() {
   previousTime = null;
   accumulator = 0;
   playerMenu.refresh();
+  runningEnemyControls.refresh();
   menu.refresh();
   localizedText($('pause'), localizedMessage('common:actions.pause'));
   $('arena').focus();
@@ -183,6 +246,7 @@ function updateControls() {
   $('export-progress').disabled = busy || !profile;
   $('next').disabled = busy;
   playerMenu.refresh();
+  runningEnemyControls.refresh();
   menu.refresh();
 }
 async function operation(action) {
@@ -426,13 +490,17 @@ function frame(time) {
     );
   }
   painter.draw($('board').getContext('2d'), attempt.run, dt, {
-    paused,
+    paused: paused || busy || document.hidden || !document.hasFocus(),
     celebrationPaused:
       document.hidden || !document.hasFocus() || !!document.querySelector('dialog[open]'),
     reduced: document.body.dataset.effects === 'reduced',
     fullReveal: attempt.run.status === 'won',
+    showCombatScrap: encounterDisplay.snapshot().showRemains,
+    brutal: encounterDisplay.snapshot().brutal,
+    blood: encounterDisplay.snapshot().blood,
     backdrop: attempt.picture,
   });
+  huntStatus.render(attempt.run);
   $('hud').textContent = t('interface:creator.hud', {
     coverage: Math.round(attempt.run.coverage * 100),
     lives: t('common:counts.lives', { count: attempt.run.lives }),
@@ -448,6 +516,7 @@ $('start').onclick = () =>
           missionId: startMissionId,
           difficulty: $('difficulty').value,
           turnPolicy: $('steering').value,
+          runningEnemies: runningEnemyPreferences.snapshot().enabled,
         }),
         true,
         epoch,
@@ -487,6 +556,7 @@ $('next').onclick = () => {
         missionId,
         difficulty: current.difficulty,
         turnPolicy: current.turnPolicy,
+        runningEnemies: runningEnemyPreferences.snapshot().enabled,
       }),
       true,
       epoch,
@@ -544,6 +614,11 @@ window.addEventListener('pagehide', () => {
   lease?.release();
   storyPlayer?.dispose();
   runtime?.dispose();
+  painter?.dispose();
+  huntStatus.dispose();
+  runningEnemyControls.dispose();
+  runningEnemyPreferences.dispose();
+  encounterDisplay.dispose();
   input?.destroy();
   menu.destroy();
   playerMenu.destroy();

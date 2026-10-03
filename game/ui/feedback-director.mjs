@@ -288,6 +288,7 @@ export class FeedbackDirector {
           (options.getDestruction?.() ?? this.sound.readDestruction?.())?.brutal === true;
         const humanoid =
           run.level?.hunt?.targets?.some((target) => target.id === event.id) ||
+          run.level?.runningEnemies?.hunt?.targets?.some((target) => target.id === event.id) ||
           run.level?.classic?.hunt?.targets?.some((target) => target.id === event.id) ||
           run.definition?.classic?.hunt?.targets?.some((target) => target.id === event.id);
         // One material accent replaces pickup; simultaneous removals remain throttled.
