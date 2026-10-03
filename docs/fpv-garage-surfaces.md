@@ -3,9 +3,9 @@
 This bounded art increment adds readable finishes to the existing Garage ramp,
 upper deck and six columns. Its original baseline was
 `822188e9bebdcf3d46119b48bfd0558e708eb051`. Final qualification compares with main
-`53907d8dbe489890eb0e346de40762284eedac9a`, including the merged Stadium and Field
-recipe work. The original baseline's Woodland foliage finish is retained; its
-removal during the intervening Field merge is not propagated into this candidate.
+`a1cb86c85cd52db7256ad2ed16c30c8f40f90c32`, including the merged Stadium, Field
+recipe and Woodland tree-form work. The original Woodland foliage finish remains
+present alongside the new published crown lobes, branches and exterior tree turns.
 
 ## Visible change
 
@@ -134,11 +134,15 @@ landing/departure witnesses, including four matched crest vertices with equal
 paint UV phase. The bounded browser fixture prepares successfully;
 preparation alone is not browser verification.
 
-Source browser review, committed package admission, packaged browser review and
-publication remain pending for the integration owner. Physical-device
+Candidate `79c68c0c8` passed all three optional package admissions with two
+reproducible builds, committed input verification and ZIP member checks. Its
+packaged browser fixture passed 528 checks and 249 image pairs; 32 frozen candidate
+modules matched the player and admitted Worlds ZIP exactly. These receipts remain
+bound to that pre-Woodland-integration candidate. Final integrated package admission
+and observer review are reported separately by the integration owner. Physical-device
 performance, novice-player sessions, broader art acceptance and deferred
-regression/unit coverage also remain open. No package or public player is
-qualified by this source-only handoff.
+regression/unit coverage remain open; no public launch is inferred from the
+package fixture.
 
 An earlier run of the original, unmodified fixture against candidate `6b00a2e6d`
 reported six differing pixels out of 518,400 in Courtyard Balanced after hundreds
@@ -150,3 +154,26 @@ assertions. The first result remains an unresolved transient, history-sensitive
 rendering observation, not a proven shader warmup defect. The fresh-owner control
 scope above keeps zero tolerance and does not claim to resolve every long-session
 rendering variation.
+
+The refreshed source fixture for `79c68c0c8`, compared with main `53907d8d`,
+reported one differing pixel out of 230,400 in Courtyard Low, with equal draw,
+triangle and shader counts. That source control is a disclosed non-pass; its
+pixel assertion was not relaxed. The final packaged fixture passed the same
+zero-tolerance comparisons. A 70-draw focused diagnostic found zero pixel
+differences while semantic draw-submission order varied for both the candidate
+and an unchanged baseline duplicate. A full baseline-duplicate history completed
+528 diagnostic checks and 249 image pairs; Garage-change expectations in that
+diagnostic are deliberately non-blocking and are not a feature qualification.
+Existing imported-material submission-order variability is a renderer determinism
+follow-up. The evidence does not prove it caused either isolated pixel deviation,
+and this Garage increment does not change the loader, sorting or comparison
+tolerance to address it.
+
+Current-main integration `a1cb86c85` preserves the complete renderer and Garage/
+Stadium helper functions byte-for-byte from the browser-qualified candidate.
+The only changed visual function adds the incoming Woodland tree forms. A
+separate CPU comparison matched all 162 Garage visual-input cases (18 courses,
+three presets, authored/Pixel/shared Themes) and all 100 generated non-Woodland
+GLBs exactly. The refreshed Garage qualifier passes 148 checks and all 30
+existing scoped visual/acceptance checks pass. These semantic comparisons support
+a bounded final observer review; they are not a new full browser-matrix receipt.

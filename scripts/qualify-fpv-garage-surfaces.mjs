@@ -20,7 +20,7 @@ import {
 import { createWorldCollision } from '../optional-practice/civilian-fpv/world-collision.mjs';
 
 const ROOT = fileURLToPath(new URL('../', import.meta.url)),
-  baseline = '53907d8dbe489890eb0e346de40762284eedac9a',
+  baseline = 'a1cb86c85cd52db7256ad2ed16c30c8f40f90c32',
   args = process.argv.slice(2);
 if (args.length && (args.length !== 2 || args[0] !== '--out'))
   throw Error('Usage: node scripts/qualify-fpv-garage-surfaces.mjs [--out NEW_RECEIPT.json]');
