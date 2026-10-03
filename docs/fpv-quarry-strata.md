@@ -66,7 +66,8 @@ covers the authored appearance plus exact Pixel/shared-theme images, a real
 imported Courtyard control and a procedural Coast control. Source modules and
 harness hashes are pinned. Bounded human visual review is accepted, and fresh retained-proof replay has
 passed. Constrained actual-browser qualification now passes as described below;
-package admission and actual packaged-player observation remain pending. No readiness,
+all package admissions, the packaged comparison and actual admitted-player
+observation also pass. No readiness,
 finished-world, physical-device or public-deployment claim is made here.
 
 ## Rejected visual revision retained
@@ -168,6 +169,53 @@ Node 22 full `npm run validate` passed on the accepted v4 source before the
 incoming Lighthouse-only merge. Runtime lint, formatting and diff checks pass.
 No new unit coverage was introduced.
 
+## Clean package admission and actual player
+
+Clean candidate `0a7c390bece5e6569d69f98755cfadd0c10527f2`, tree
+`199b42c72323fb1d4472841ca8dc3d7c75b4421f`, passed all three source-bound
+[package admissions](evidence/fpv-quarry-strata-admission.json) under Node 22,
+with two byte-identical builds, exact committed input verification and complete
+ZIP member verification. Approved limits remain unchanged.
+
+| Package         | Files | Payload bytes |
+| --------------- | ----: | ------------: |
+| Civilian flight |    48 |       679,266 |
+| Civilian FPV    |    69 |     4,394,931 |
+| Worlds          |   102 |    15,550,006 |
+
+The 95 original source inputs total 16,756,168 bytes, leaving 21,048 bytes below
+the unchanged 16 MiB source limit. Worlds distribution ZIP SHA-256 is
+`ed1fc9db3dd407060e4b4949a37ad276e79d8eeda6d7846b6a3a7bd40f9f74d3`.
+
+The [admitted-player staging receipt](evidence/fpv-quarry-strata-admitted-player.json)
+passes 223 checks for candidate checksums, the exact 102-member ZIP and a re-read
+of every extracted file. This is the entire admitted distribution, not a
+94-file development playtest. The [executed extraction probe](evidence/fpv-quarry-strata-admitted-player-probe.mjs)
+and [31-module closure audit](evidence/fpv-quarry-strata-source-package-closure.json)
+retain the provenance. Packaged fixture modules equal this player exactly.
+
+The package fixture uses baseline main `287eec95c81687fb8a6d176f750f7c65a60e1fe3`
+and the same source-v6 harness. Source/package module differences are only the
+already-audited incoming Lighthouse helper/hook and normal selected-locale
+projection. The final [packaged browser receipt](evidence/fpv-quarry-strata-package-browser.json)
+passes 116 checks, 56 image pairs and three resource cycles. The
+[explicit source/package comparison](evidence/fpv-quarry-strata-source-package-browser-comparison.json)
+finds all 116 check records JSON-identical and all 54 Quarry sample records plus
+Courtyard exact (55/56). Only Coast differs between historical source and current
+package: both package sides now show Lighthouse, increasing 153 to 157 draws
+and 7132 to 7240 triangles. Source and package Coast pairs each remain zero-pixel
+differences internally. No image tolerance or production-loader behavior changed.
+The [actual full admitted-player observation](evidence/fpv-quarry-strata-admitted-player-observation.json)
+is accepted: Read the rock bowl rendered, armed through 0.3 seconds and paused to
+the main menu, with empty warning/error logs. The initial Follow game appearance
+used the shared kit and correctly retained its prior finish; the
+[shared-kit capture](evidence/fpv-quarry-strata-admitted-shared-control.png) is not
+presented as new art. After selecting Authored and Retry, the
+[authored capture](evidence/fpv-quarry-strata-admitted-authored.png) confirms the
+new rock texture using the normal unmodified loader. This is a local complete
+admitted player, not installed/offline or public Quarry deployment. No hardware
+or complete-world artistic claim follows.
+
 ## Published work preserved
 
 Lighthouse #1015 merged normally at
@@ -184,4 +232,4 @@ rendered, armed through 0.2 seconds and paused, with empty warning/error logs.
 The [marker receipt](evidence/fpv-courtyard-warehouse-public-marker.json),
 [Courtyard capture](evidence/fpv-courtyard-live-0aeb0c2b4.png) and
 [Warehouse capture](evidence/fpv-warehouse-live-0aeb0c2b4.png) preserve those
-observations without changing Lighthouse's ready head.
+observations alongside the preserved Lighthouse published recovery ref.
