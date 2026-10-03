@@ -16,6 +16,7 @@ The shared editor keeps its own storage and return-navigation contract. Theme St
 - Browser: Theme Studio reached through the real Workshop destination; saved workspaces loaded; all 17 gallery scopes created on opening the gallery. Changing its detail selector and telemetry checkbox left the global Obsidian theme and active `field-kit` workspace unchanged.
 - Both game and Theme Studio report zero browser console errors. English and Ukrainian preview/entry copy is localized. Generated SIM CSS was refreshed from the shared stylesheet.
 - `package-evidence.json`: two reproducible builds from runtime commit `5a529f5aa` verify committed inputs and ZIP inventories for all three optional packages. No new package files; Academy and Worlds each grow by 3,786 bytes. All existing limits pass; Worlds source remains at 104/104 files.
+- `post-merge-package-evidence.json`: after incorporating the concurrent World recovery update, merged runtime `83181816a` passes the same two reproducible builds and inventory checks for all three optional packages. Package counts stay unchanged; Worlds gains 188 bytes and remains within its existing limits. `post-merge-world-tests.tap` records **6/6 World appearance UI tests passing**.
 - Screenshots: `game-theme-cards.jpg`, `workshop-entry.jpg`, `theme-studio-workspaces.jpg`, `studio-material-gallery.jpg`.
 
 This is a focused UI/authoring change. It adds no simulation or recording behavior. Target-device performance, physical-controller qualification and complete screen-by-screen release acceptance remain separate from these checks.
