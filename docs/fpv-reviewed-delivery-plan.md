@@ -14,7 +14,7 @@ verification; keep novice, physical-device and artist acceptance honestly pendin
 No session or hardware measurement is inferred from an automated fixture. The
 historical phase tables below are superseded by this current order.
 
-Main now includes Themes #955 and Warehouse #966, alongside the completed content,
+Main now includes the latest shared Themes work through `673ac3fc4` and Warehouse #966, alongside the completed content,
 controls, school, section practice, ghosts, reimport and original demonstrations.
 The current catalogue is **148 challenges / 14 worlds / 58 school lessons / 374
 school steps**. Installed demonstrations total **178**: all 120 original
@@ -24,7 +24,7 @@ Adventure authoring proofs are separate; they are not installed demonstrations.
 | Order | Reviewable increment | Working estimate | Required functional evidence |
 | --- | --- | --- | --- |
 | Delivered as #972 | Watch a recorded section, then practise from its exact entry | Implemented and source/package verified | 768 exact sections, source/package51/51, three frozen admissions; protected publication pending |
-| 2 | Visual Follow/Observe objective inspector | 2–3 days | Author, move subject, edit criteria, export/reopen and reimport without losing settings |
+| Implemented; final packaging | Visual Follow/Observe objective inspector | Source verified | 63 browser checks, exact UI-authored two-mode replay, export/reopen/reimport and independent-mode protection |
 | 3 | Pack-removal impact and recovery guidance | 1–2 days | Identify affected revisions/records; preserve proof bytes and explain restoration |
 | Parallel | Stadium, then yard/garage art using shared Themes materials | 3–5 days per bounded batch | Readability, collision/visibility parity, resource disposal and source/packaged rendering |
 | 4 | Matching-mode school examples and optional Adventure examples | 3–5 days per bounded batch | Correct mode/revision, complete replay and bounded optional delivery |
@@ -35,8 +35,8 @@ These are planning estimates, not elapsed-work promises. Hardware and player
 sessions remain an acceptance backlog and can inform later revisions, but no
 implementation row above waits for them. Current file caps are **64/72/104** and
 byte caps **8/8/16 MiB** for the three optional packages. Keep all guards and
-release authority unchanged. Investigate the merged edition-candidate size
-failure separately; successful optional admission is not whole-edition capacity.
+release authority unchanged. Edition capacity repair #968 is merged; successful
+optional admission alone still does not establish whole-edition capacity.
 
 Publish complete, verified increments separately. Start independent branches on
 current main; use a new native stack only for genuine dependencies. Closed stacks
