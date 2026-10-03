@@ -217,6 +217,10 @@ function fixture() {
     losses: () => lossCalls,
     importStarted,
     finishImport: (value) => finishImport(value),
+    waitForImport: () =>
+      new Promise((resolve) => {
+        announceImport = resolve;
+      }),
     delayControls() {
       let resolve;
       controlsLoading = new Promise((done) => {
@@ -353,14 +357,14 @@ check(
   'new imported scene rejected while lost',
   await first.runtime.loadScene('{}').then(
     () => false,
-    (error) => /ready course/.test(error.message),
+    (error) => /graphics are lost/.test(error.message),
   ),
 );
 check(
   'new editor rejected while lost',
   await first.runtime.createEditor().then(
     () => false,
-    (error) => /ready course/.test(error.message),
+    (error) => /graphics are lost/.test(error.message),
   ),
 );
 check(
@@ -389,20 +393,10 @@ check(
   targets.length === 5 && first.scene.environment === null,
 );
 first.owner.lost = false;
-check(
-  'import requires Retry to reinstall the cleared course',
-  await first.runtime.loadScene('{}').then(
-    () => false,
-    (error) => /ready course/.test(error.message),
-  ),
-);
-check(
-  'editor requires a ready course after restoration',
-  await first.runtime.createEditor().then(
-    () => false,
-    (error) => /ready course/.test(error.message),
-  ),
-);
+const restoredEmptyControls = await first.runtime.createEditor();
+restoredEmptyControls.zoom(12);
+check('blank editor creation remains supported after restoration', !!restoredEmptyControls);
+
 set();
 check('restored same inputs regenerate', targets.length === 6);
 check(
@@ -456,6 +450,41 @@ check(
   ['materials', 'geometries', 'textures'].every(
     (key) => !first.runtime.resources().registered[key],
   ),
+);
+const blank = fixture(),
+  blankControls = await blank.runtime.createEditor();
+blankControls.zoom(12);
+check('initial blank editor remains supported', !!blankControls);
+const initialImportStarted = blank.waitForImport(),
+  initialImport = blank.runtime.loadScene('{"asset":{"version":"2.0"}}');
+await initialImportStarted;
+const initialImportedScene = new THREE.Group();
+blank.finishImport({ scene: initialImportedScene, scenes: [initialImportedScene], animations: [] });
+await initialImport;
+check('non-scenery import before course remains supported', initialImportedScene.parent !== null);
+blank.owner.lost = true;
+blank.listeners.get('webglcontextlost')({ preventDefault() {} });
+blank.owner.lost = false;
+const restoredImportStarted = blank.waitForImport(),
+  restoredImport = blank.runtime.loadScene(
+    '{"asset":{"version":"2.0","extras":{"fpvScenery":true}}}',
+  );
+await restoredImportStarted;
+const restoredImportedScene = new THREE.Group();
+blank.finishImport({
+  scene: restoredImportedScene,
+  scenes: [restoredImportedScene],
+  animations: [],
+});
+await restoredImport;
+check(
+  'fresh scenery import after restore tolerates the cleared course',
+  restoredImportedScene.parent !== null,
+);
+blank.runtime.dispose();
+check(
+  'blank/import-only owner releases final resources',
+  Object.values(blank.runtime.resources().registered).every((n) => n === 0),
 );
 const receipt = {
   format: 'fpv-environment-light-reuse-manual.v1',
