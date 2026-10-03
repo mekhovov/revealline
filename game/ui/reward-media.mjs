@@ -288,6 +288,8 @@ export function mountRewardMedia({
     media.preload = 'metadata';
     media.muted = true;
     media.playsInline = true;
+    media.setAttribute('playsinline', '');
+    media.setAttribute('webkit-playsinline', '');
     media.setAttribute('aria-label', payload.locales[locale].title);
     media.style.width = '100%';
     media.style.maxHeight = cinematic ? '100%' : '60vh';

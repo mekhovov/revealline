@@ -18,6 +18,17 @@ import { createEarnedVideo } from '../ui/earned-video.mjs';
 import { Document } from './helpers/couch-dom.mjs';
 
 const root = new URL('../../', import.meta.url);
+const SKY_WATCH_ROUTE = [
+  { direction: 'right', reached: (run) => run.player.x >= 51.4 },
+  { direction: 'down', reached: (run) => run.player.y >= 34.9 && !run.player.cutting },
+  { direction: 'left', reached: (run) => run.player.x <= 46.6 },
+  { direction: 'up', reached: (run) => run.player.y <= 1.1 && !run.player.cutting },
+  { direction: 'left', reached: (run) => run.player.x <= 24.6 },
+  { direction: 'down', reached: (run) => run.player.y >= 34.9 && !run.player.cutting },
+  { direction: 'up', reached: (run) => run.player.y <= 1.1 && !run.player.cutting },
+  { direction: 'right', reached: (run) => run.player.x >= 68.4 },
+  { direction: 'down', reached: (run) => run.player.y >= 34.9 && !run.player.cutting },
+];
 const fetcher = async (value) => {
   const path = new URL(value, 'https://example.test/').pathname
     .replace(/^\/revealline\//, '')
@@ -37,7 +48,7 @@ async function provider() {
   });
 }
 
-test('public Social Drone includes an independently playable Sky Watch mission and exact original media', async () => {
+test('public Social Drone includes an independently playable Sky Watch mission and mobile-prepared media', async () => {
   const p = await provider();
   assert.equal(p.editionId, 'social-drone-ua');
   assert(p.selection.edition.campaignIds.includes('social-drone-sky-watch'));
@@ -54,20 +65,26 @@ test('public Social Drone includes an independently playable Sky Watch mission a
   const video = reward.payloads.find((p) => p.type === 'video');
   assert.equal(
     video.asset.sha256,
-    '880e5dd71b9dafc0efd318a7dd12216b35bc18e7cb5f2abd155663fb91aae496',
+    'ea033ebd2b205098b4b06567394f07d16887143b92f608030b1b1ddfde1fa656',
   );
+  assert.equal(mission.actors.length, 3);
+  assert.equal(mission.map.revision, '2');
   for (const { reference, role } of rewardMediaReferences(video)) {
     const asset = p.catalog.assets.find((a) => a.id === reference.assetId);
     const bytes = await readFile(new URL(asset.path, root));
     assert.equal(createHash('sha256').update(bytes).digest('hex'), reference.sha256);
     inspectRewardMediaBytes(asset, role, bytes);
+    if (role === 'video') {
+      const source = Buffer.from(bytes);
+      assert(source.indexOf('moov') < source.indexOf('mdat'), 'MP4 is prepared for iPhone start');
+    }
   }
   assert(
     p.selection.edition.presentationHistory.some((h) => h.path.endsWith('before-sky-watch.json')),
   );
 });
 
-test('an actual island-channel win verifies as a replay and earns the video without previous campaign clears', async () => {
+test('an actual watch-corridor win verifies as a replay and earns the video without previous campaign clears', async () => {
   const p = await provider();
   const project = compileContentProject(p.route.source);
   const { level: authoredLevel } = resolveMission(project, 'social-drone-sky-watch-01', {
@@ -78,9 +95,11 @@ test('an actual island-channel win verifies as a replay and earns the video with
   const options = { seed: 1, classId: 'scout', turnPolicy: 'immediate' };
   const run = createRun(level, options),
     recorder = createRecorder(level, options);
-  for (let i = 0; i < 2000 && run.status === 'running'; i++) {
-    recordInput(recorder, { direction: 'down' });
-    stepRun(run, { direction: 'down' }, FIXED_DT);
+  for (const segment of SKY_WATCH_ROUTE) {
+    for (let i = 0; i < 2500 && run.status === 'running' && !segment.reached(run); i++) {
+      recordInput(recorder, { direction: segment.direction });
+      stepRun(run, { direction: segment.direction }, FIXED_DT);
+    }
   }
   assert.equal(run.status, 'won');
   assert.equal(run.lives, 3);
@@ -181,10 +200,21 @@ test('normal community mission library launches Sky Watch and holds the finished
       page.doc.body.dataset.flightState === 'running'
     );
   });
-  page.key('ArrowDown');
-  for (let i = 0; i < 2000 && page.rendered.run.status === 'running'; i++)
-    page.frame(FIXED_DT * 1000);
-  page.key('ArrowDown', false);
+  const keys = { up: 'ArrowUp', down: 'ArrowDown', left: 'ArrowLeft', right: 'ArrowRight' };
+  for (const segment of SKY_WATCH_ROUTE) {
+    page.key(keys[segment.direction]);
+    for (
+      let i = 0;
+      i < 650 && page.rendered.run.status === 'running' && !segment.reached(page.rendered.run);
+      i++
+    )
+      page.frame(FIXED_DT * 1000 * 4);
+    page.key(keys[segment.direction], false);
+    assert(
+      page.rendered.run.status !== 'running' || segment.reached(page.rendered.run),
+      `Sky Watch route reached its ${segment.direction} waypoint`,
+    );
+  }
   assert.equal(page.rendered.run.status, 'won');
   assert.equal(page.doc.querySelector('.earned-video-dialog'), null);
   for (let i = 0; i < 18; i++) page.frame(100);
