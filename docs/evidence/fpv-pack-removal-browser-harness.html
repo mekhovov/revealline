@@ -1,0 +1,1116 @@
+<!doctype html>
+<html lang="en">
+  <meta charset="utf-8" /><meta
+    name="viewport"
+    content="width=device-width,initial-scale=1"
+  /><title>Pack removal · actual host qualification</title>
+  <style>
+    body {
+      font: 15px system-ui;
+      background: #101923;
+      color: #eef4f4;
+      margin: 16px;
+    }
+    button {
+      font: inherit;
+      min-height: 44px;
+      padding: 8px 16px;
+    }
+    iframe {
+      display: block;
+      width: 1280px;
+      height: 800px;
+      border: 1px solid #56717a;
+      max-width: none;
+    }
+    textarea {
+      width: 100%;
+      height: 240px;
+      font: 12px monospace;
+    }
+    p {
+      max-width: 105ch;
+    }
+  </style>
+  <h1>Pack removal and exact-revision restoration</h1>
+  <p>
+    Real production HTTP host, native IndexedDB, original GLB packs and actual replay commands.
+    Storage is isolated. One deliberately aborted native transaction qualifies atomic rollback; it
+    does not model hardware eviction. Scripted controls do not establish device usability, download
+    completion, measured FPS or player acceptance.
+  </p>
+  <button id="run">Run pack removal checks</button>
+  <label><input id="pause-review" type="checkbox" /> Pause at review for visual inspection</label>
+  <button id="continue" disabled>Continue checks</button>
+  <p id="status" role="status">Ready</p>
+  <textarea id="receipt" readonly aria-label="Pack-removal qualification receipt"></textarea
+  ><iframe id="sim" title="Actual FPV World library"></iframe>
+  <script type="module">
+    const $ = (id) => document.getElementById(id),
+      frame = $('sim'),
+      wait = (ms) => new Promise((r) => setTimeout(r, ms)),
+      clone = (value) => JSON.parse(JSON.stringify(value));
+    const stable = (value) =>
+      JSON.stringify(value, (_, v) =>
+        v && typeof v === 'object' && !Array.isArray(v)
+          ? Object.fromEntries(Object.entries(v).sort(([a], [b]) => a.localeCompare(b)))
+          : v,
+      );
+    const digest = async (bytes) =>
+      [
+        ...new Uint8Array(
+          await crypto.subtle.digest(
+            'SHA-256',
+            typeof bytes === 'string' ? new TextEncoder().encode(bytes) : bytes,
+          ),
+        ),
+      ]
+        .map((n) => n.toString(16).padStart(2, '0'))
+        .join('');
+    async function execute() {
+      const checks = [],
+        phases = [],
+        preservation = [],
+        names = new Set(),
+        started = performance.now(),
+        prefix = 'fpv-removal-' + Date.now() + ':',
+        faults = {
+          abortNext: false,
+          aborted: 0,
+          playlistUnavailable: false,
+          failRecordRead: false,
+        };
+      let manifest,
+        data,
+        w,
+        d,
+        app,
+        library,
+        records,
+        failed = null,
+        phase = 'Prepare',
+        proofs = [],
+        packs = [],
+        baseline,
+        draft;
+      const nativeTransaction = IDBDatabase.prototype.transaction;
+      IDBDatabase.prototype.transaction = function (stores, mode, ...rest) {
+        const tx = nativeTransaction.call(this, stores, mode, ...rest);
+        if (
+          faults.abortNext &&
+          this.name === prefix + 'revealline-fpv-worlds-v1' &&
+          mode === 'readwrite'
+        ) {
+          faults.abortNext = false;
+          faults.aborted++;
+          queueMicrotask(() => tx.abort());
+        }
+        if (
+          faults.failRecordRead &&
+          this.name === prefix + 'revealline.fpv.world-records.v1' &&
+          mode === 'readonly'
+        )
+          queueMicrotask(() => tx.abort());
+        return tx;
+      };
+      const progress = (label) => {
+        phase = label;
+        phases.push({ label, ms: Math.round(performance.now() - started) });
+        $('status').textContent = label;
+        $('receipt').value = JSON.stringify({ status: 'running', phase, checks }, null, 2);
+      };
+      const must = (ok, name, detail = {}) => {
+        checks.push({ name, passed: !!ok, ...detail });
+        if (!ok) throw Error(name);
+      };
+      const eq = (a, b, name) => must(stable(a) === stable(b), name);
+      async function bounded(p, label, ms = 30000) {
+        let timer;
+        try {
+          return await Promise.race([
+            p,
+            new Promise(
+              (_, reject) => (timer = setTimeout(() => reject(Error('Timeout ' + label)), ms)),
+            ),
+          ]);
+        } finally {
+          clearTimeout(timer);
+        }
+      }
+      async function until(fn, label, ms = 30000) {
+        const start = performance.now();
+        while (!fn()) {
+          if (performance.now() - start > ms)
+            throw Error(
+              'Timeout ' +
+                label +
+                '; ' +
+                (d?.getElementById('pack-removal-status')?.textContent ?? '') +
+                '; ' +
+                (d?.getElementById('studio-status')?.textContent ?? ''),
+            );
+          await wait(15);
+          w?.fixtureRAF?.deliver(0);
+        }
+      }
+      const memory = new Map([
+        [
+          'revealline.fpv.world-settings.v1',
+          JSON.stringify({
+            'world-language': 'en',
+            'flight-source': 'keyboard',
+            'flight-mode': 'self-level',
+            'flight-camera': 'fpv',
+            'flight-quality': 'low',
+            'sim-motion': 'reduced',
+          }),
+        ],
+      ]);
+      window.fixtureStorage = {
+        getItem(k) {
+          if (faults.playlistUnavailable && k === 'revealline.fpv.playlists.v1')
+            throw Error('Controlled fixture playlist read failure');
+          return memory.get(k) ?? null;
+        },
+        setItem: (k, v) => memory.set(k, String(v)),
+        removeItem: (k) => memory.delete(k),
+      };
+      window.fixtureFaults = faults;
+      window.fixtureDBName = (name) => {
+        const full = prefix + name;
+        names.add(full);
+        return full;
+      };
+      window.fixtureDB = {
+        open(name, version) {
+          const full = prefix + name;
+          names.add(full);
+          return version === undefined ? indexedDB.open(full) : indexedDB.open(full, version);
+        },
+        deleteDatabase: (name) => indexedDB.deleteDatabase(prefix + name),
+        cmp: indexedDB.cmp.bind(indexedDB),
+      };
+      const q = (selector) => d.querySelector(selector),
+        button = (root, pattern) =>
+          [...root.querySelectorAll('button')].find((n) => pattern.test(n.textContent));
+      const click = (node) => {
+        if (!node || node.disabled) throw Error('Missing/disabled public control');
+        node.focus({ preventScroll: true });
+        node.click();
+      };
+      const set = (node, value) => {
+        if (!node) throw Error('Missing public field');
+        node.value = String(value);
+        node.dispatchEvent(new w.Event('change', { bubbles: true }));
+      };
+      const row = (id) => q(`[data-pack-id="${id}"]`),
+        recordRow = (id) => q(`[data-record-id="${id}"]`),
+        dialog = () => d.getElementById('pack-removal-review');
+      async function retained() {
+        return {
+          records: await records.list(),
+          session: await records.session(),
+          playlist: memory.get('revealline.fpv.playlists.v1'),
+          rewardStorage: [...memory].filter(([k]) =>
+            /reward|attempt|notebook|school|learning/.test(k),
+          ),
+        };
+      }
+      async function preserve(label, expected = baseline) {
+        const current = await retained();
+        eq(current, expected, label);
+        preservation.push({ label, sha256: await digest(stable(current)) });
+      }
+      async function libraryState() {
+        return {
+          generation: await library.generation(),
+          revisions: await library.list({ includeRevisions: true }),
+        };
+      }
+      async function review(id = packs[0].project.id) {
+        click(q('[data-tab="packs"]'));
+        click(q(`[data-remove-pack="${id}"]`));
+        await until(
+          () =>
+            dialog()?.open &&
+            d.getElementById('pack-removal-cancel') &&
+            !d.getElementById('pack-removal-cancel').disabled,
+          'impact review',
+        );
+        await until(() => dialog().querySelector('[data-revision]'), 'revision metadata');
+        return dialog();
+      }
+      async function cancel() {
+        click(d.getElementById('pack-removal-cancel'));
+        await until(() => !dialog(), 'cancelled review');
+      }
+      async function download(node) {
+        const count = w.fixtureDownloads.length;
+        click(node);
+        await until(() => w.fixtureDownloads.length > count, 'download requested');
+        const file = w.fixtureDownloads.at(-1);
+        return {
+          name: file.name,
+          blob: new Blob([await file.blob.arrayBuffer()], { type: file.blob.type }),
+        };
+      }
+      async function upload(blob, name, id = 'restore-pack-input') {
+        const input = d.getElementById(id),
+          transfer = new w.DataTransfer();
+        transfer.items.add(new w.File([blob], name, { type: blob.type }));
+        input.files = transfer.files;
+        input.dispatchEvent(new w.Event('change', { bubbles: true }));
+        await wait(0);
+        await until(() => !input.value, 'restoration file processed');
+      }
+      async function restore(expected, actual = expected) {
+        const restoreButton = [
+          ...d.querySelectorAll(`[data-restore-pack="fpv-pack:${expected.sha256}"]`),
+        ].find((node) => node.getClientRects().length > 0);
+        click(restoreButton);
+        await upload(actual.blob, actual.project.id + '.rlpack');
+      }
+      async function buildPack(id, revision) {
+        const doc = {
+          asset: { version: '2.0', generator: 'Original pack-removal fixture' },
+          scene: 0,
+          scenes: [{ nodes: [0, 1] }],
+          nodes: [
+            {
+              name: 'Original triangle',
+              mesh: 0,
+              translation: [revision === 'r2' ? 0.2 : 0, 0, 0],
+            },
+            {
+              name: 'Spawn',
+              translation: [0, 3, 0],
+              extras: { rl: { id: 'spawn', kind: 'spawn' } },
+            },
+          ],
+          meshes: [{ primitives: [{ attributes: { POSITION: 0 }, mode: 4 }] }],
+          buffers: [{ byteLength: 36 }],
+          bufferViews: [{ buffer: 0, byteOffset: 0, byteLength: 36 }],
+          accessors: [
+            {
+              bufferView: 0,
+              componentType: 5126,
+              count: 3,
+              type: 'VEC3',
+              min: [10, 0, -10],
+              max: [11, 1, -10],
+            },
+          ],
+        };
+        const glb = new Blob(
+          [
+            data.content.encodeWorldGLB(
+              doc,
+              new Uint8Array(new Float32Array([10, 0, -10, 11, 0, -10, 10, 1, -10]).buffer),
+            ),
+          ],
+          { type: 'model/gltf-binary' },
+        );
+        const imported = await data.content.inspectImport({
+            files: new Map([['original.glb', glb]]),
+            entry: 'original.glb',
+            id,
+            title: id === 'removal-target' ? 'Restore practice world' : 'Unrelated retained world',
+            license: {
+              id: 'original',
+              author: 'RevealLine qualification',
+              source: 'Original geometry',
+            },
+          }),
+          project = data.content.projectFromImport(imported);
+        const hold = {
+          type: 'hold',
+          min: { x: -2000, y: 2000, z: -2000 },
+          max: { x: 2000, y: 4000, z: 2000 },
+          ticks: 80,
+          maxSpeed: 3000,
+          maxTilt: 9000,
+          minTilt: 0,
+          centred: false,
+          heading: null,
+        };
+        const course = data.model.validateWorldCourse({
+          format: 'FlightCourse.v2',
+          id: id + '-course',
+          revision,
+          environment: id,
+          world: { id, theme: 'academy', style: 'hangar' },
+          locales: {
+            en: {
+              title: 'Restore course ' + revision,
+              brief: 'Hold the original position.',
+              lesson: 'Temporary qualification course.',
+            },
+            uk: {
+              title: 'Відновлення ' + revision,
+              brief: 'Утримуйте початкову позицію.',
+              lesson: 'Тимчасовий перевірочний маршрут.',
+            },
+          },
+          spawn: { x: 0, y: 3000, z: 0 },
+          bounds: { min: { x: -20000, y: 0, z: -20000 }, max: { x: 20000, y: 20000, z: 20000 } },
+          obstacles: [],
+          actors: [],
+          steps: { 'self-level': [hold], acro: [clone(hold)] },
+          rules: { seed: 1, maxTicks: 1000 },
+        });
+        project.courses = [course];
+        const assets = new Map([[project.world.modelAsset, imported.modelBlob]]),
+          blob = await data.content.preparePack(project, { assets }),
+          prepared = await data.content.inspectPack(blob);
+        return { ...prepared, blob, course };
+      }
+      async function prove(pack, mode) {
+        const f = data.model.createWorldFlight({ course: pack.course, mode });
+        f.arm();
+        const recorder = data.model.createWorldRecorder(f, { session: 'practice' });
+        let prefixProof,
+          state = f.snapshot();
+        try {
+          while (state.status === 'active') {
+            state = f.step({ roll: 0, pitch: 0, yaw: 0, throttle: 0.5, actions: 0 });
+            recorder.record();
+            if (state.ticks === 25) prefixProof = recorder.export();
+          }
+          const proof = recorder.export(),
+            replay = await data.model.replayWorldFlight(pack.course, proof, {
+              yieldControl: async () => {},
+            });
+          must(
+            replay.state.status === 'complete' &&
+              data.model.worldStateIdentity(replay.state) === proof.finalStateIdentity,
+            'Original ' +
+              pack.project.id +
+              '/' +
+              pack.course.revision +
+              ' ' +
+              mode +
+              ' proof is independently verified',
+          );
+          return {
+            course: pack.course,
+            proof,
+            prefix: prefixProof,
+            packIdentity: 'fpv-pack:' + pack.sha256,
+          };
+        } finally {
+          f.dispose();
+        }
+      }
+      async function cleanup() {
+        faults.playlistUnavailable = false;
+        faults.failRecordRead = false;
+        faults.abortNext = false;
+        window.fixturePads = [];
+        if (app) {
+          const old = app;
+          app = null;
+          await bounded(old.dispose(), 'host disposal', 5000);
+        }
+        records?.close();
+        records = null;
+        library?.close();
+        library = null;
+        frame.src = 'about:blank';
+        IDBDatabase.prototype.transaction = nativeTransaction;
+        await wait(20);
+        for (const name of names)
+          await bounded(
+            new Promise((resolve) => {
+              const r = indexedDB.deleteDatabase(name);
+              r.onsuccess = resolve;
+              r.onerror = resolve;
+              r.onblocked = resolve;
+            }),
+            'isolated database deletion',
+            2000,
+          );
+      }
+      try {
+        progress('Verify immutable production modules and original fixtures');
+        manifest = await (await fetch('./fixture-manifest.json', { cache: 'no-store' })).json();
+        for (const [url, sha] of Object.entries({
+          ...Object.fromEntries(
+            Object.entries(manifest.fixtureFiles).map(([p, h]) => [
+              new URL(p, location.href).href,
+              h,
+            ]),
+          ),
+          ...manifest.currentSources,
+        })) {
+          const r = await fetch(url, { cache: 'no-store' });
+          if (!r.ok || (await digest(await r.arrayBuffer())) !== sha)
+            throw Error('Frozen input mismatch ' + url);
+        }
+        must(true, 'Frozen host, dependencies and harness provenance match');
+        const load = (name) =>
+          import(manifest.candidateBase + '/optional-practice/civilian-fpv/' + name);
+        const [content, model, worldStore, worldRecords, playlists] = await Promise.all(
+          [
+            'world-content.mjs',
+            'world-model.mjs',
+            'world-store.mjs',
+            'world-records.mjs',
+            'playlists.mjs',
+          ].map(load),
+        );
+        data = { content, model, worldStore, worldRecords, playlists };
+        await model.initWorldRuntime();
+        packs = [
+          await buildPack('removal-target', 'r1'),
+          await buildPack('removal-target', 'r2'),
+          await buildPack('removal-unrelated', 'r1'),
+        ];
+        proofs = [
+          await prove(packs[0], 'self-level'),
+          await prove(packs[1], 'acro'),
+          await prove(packs[2], 'self-level'),
+        ];
+        library = await worldStore.openWorldStore({ indexedDB: window.fixtureDB });
+        records = await worldRecords.openWorldRecords(window.fixtureDB);
+        for (const pack of packs)
+          await library.install({ ...pack, expectedGeneration: await library.generation() });
+        const saved = [];
+        for (const [p, proof] of proofs.entries())
+          saved.push(
+            await records.put({
+              course: proof.course,
+              proof: proof.proof,
+              packIdentity: proof.packIdentity,
+              status: 'verified',
+              diagnostic: 'complete',
+              pinned: p === 0,
+            }),
+          );
+        await records.saveSession({
+          course: proofs[0].course,
+          proof: proofs[0].prefix,
+          packIdentity: proofs[0].packIdentity,
+          preview: false,
+          sectorReferenceId: null,
+          ghostEnabled: false,
+        });
+        const playlist = {
+          format: 'FPVPlaylist.v1',
+          id: 'repeated-restore-route',
+          revision: 'r1',
+          title: { en: 'Repeated restoration route', uk: 'Повторний маршрут відновлення' },
+          entries: [0, 1, 0, 2].map((i) => ({
+            packIdentity: proofs[i].packIdentity,
+            levelId: proofs[i].course.id,
+          })),
+        };
+        const playlistStore = playlists.createPlaylistStore(window.fixtureStorage);
+        playlistStore.save(playlist);
+        playlistStore.bookmark(playlist.id, playlist.revision, 2);
+        const metadata = await library.removalSnapshot('removal-target');
+        must(
+          metadata.revisions.length === 2 &&
+            metadata.revisions.filter((r) => r.active).length === 1,
+          'Removal snapshot contains active and retained exact revisions',
+        );
+        eq(
+          metadata.revisions.map((r) => r.sha256).sort(),
+          packs
+            .slice(0, 2)
+            .map((p) => p.sha256)
+            .sort(),
+          'Removal metadata uses full exact hashes',
+        );
+        must(
+          !JSON.stringify(metadata).includes('modelBlob') &&
+            !JSON.stringify(metadata).includes('assets'),
+          'Removal metadata excludes visual asset payloads',
+        );
+        progress('Mount actual library and preserve an unsaved Creator draft');
+        const url = new URL('./player.html', location.href);
+        url.searchParams.set('token', prefix);
+        url.searchParams.set('clock', 'controlled');
+        const loaded = new Promise((r) => frame.addEventListener('load', r, { once: true }));
+        frame.src = url.href;
+        await bounded(loaded, 'HTTP frame');
+        await until(
+          () => frame.contentWindow?.fixtureLoadToken === prefix && frame.contentWindow.fixtureApp,
+          'actual host',
+        );
+        w = frame.contentWindow;
+        d = w.document;
+        app = w.fixtureApp;
+        await bounded(app.ready, 'host ready');
+        w.focus();
+        click(q('[data-tab="packs"]'));
+        must(
+          !!row('removal-target') && !!row('removal-unrelated'),
+          'Actual library displays target and unrelated packs',
+        );
+        click(button(row('removal-target'), /^Edit$/));
+        await until(
+          () => JSON.parse(d.getElementById('creator-json').value).id === packs[1].course.id,
+          'open installed draft',
+        );
+        set(d.getElementById('creator-title'), 'Unexported local draft');
+        await wait(0);
+        draft = d.getElementById('creator-json').value;
+        baseline = await retained();
+        progress('Review, Cancel and dialog-cancel preserve data and focus');
+        const beforeReview = await libraryState();
+        await review();
+        must(
+          d.activeElement === d.getElementById('pack-removal-cancel'),
+          'Cancel receives safe initial focus',
+        );
+        must(
+          dialog().querySelectorAll('[data-revision]').length === 2,
+          'Both active and rollback revisions appear in review',
+        );
+        must(
+          packs.slice(0, 2).every((p) => dialog().textContent.includes(p.sha256)),
+          'Review reveals both full revision identities',
+        );
+        must(
+          /recording|запис/i.test(dialog().textContent) &&
+            /pinned|закріп/i.test(dialog().textContent) &&
+            /playlist|добір/i.test(dialog().textContent),
+          'Review explains recordings, pins and playlist impact',
+        );
+        must(
+          dialog().textContent.includes('Repeated restoration route') &&
+            /interrupted|перерван/i.test(dialog().textContent),
+          'Review identifies affected playlist and unfinished session',
+        );
+        must(
+          /draft|чернет/i.test(dialog().textContent),
+          'Review warns that the unsaved Creator draft is not a backup',
+        );
+        if ($('pause-review').checked) {
+          progress('Paused at actual removal review for visual inspection');
+          $('continue').disabled = false;
+          await new Promise((resolve) =>
+            $('continue').addEventListener('click', resolve, { once: true }),
+          );
+          $('continue').disabled = true;
+          progress('Continue impact review qualification');
+        }
+        await cancel();
+        eq(
+          await libraryState(),
+          beforeReview,
+          'Cancel does not change library revisions/generation',
+        );
+        await preserve(
+          'Cancel retains exact record, pin, completion, session, playlist and bookmark bytes',
+        );
+        must(
+          d.activeElement?.dataset.removePack === 'removal-target',
+          'Cancel restores focus to initiating Remove control',
+        );
+        await review();
+        dialog().dispatchEvent(new w.Event('cancel', { cancelable: true }));
+        await until(() => !dialog(), 'native dialog cancel');
+        await preserve('Native dialog cancel retains all recovery bytes');
+        await review();
+        const pad = {
+          id: 'Controlled standard controller',
+          index: 0,
+          connected: true,
+          mapping: 'standard',
+          axes: [0, 0, 0, 0],
+          buttons: Array.from({ length: 16 }, () => ({ value: 0, pressed: false, touched: false })),
+        };
+        window.fixturePads = [pad];
+        const padFrame = async (index = null) => {
+          for (const [i, b] of pad.buttons.entries()) {
+            b.value = i === index ? 1 : 0;
+            b.pressed = b.value === 1;
+          }
+          w.fixtureRAF.deliver(20);
+          await wait(0);
+        };
+        await padFrame();
+        await padFrame(0);
+        await padFrame();
+        must(
+          dialog().contains(d.activeElement),
+          'Controlled standard controller joins the removal dialog only',
+        );
+        await padFrame(13);
+        await padFrame();
+        must(
+          dialog().contains(d.activeElement),
+          'Controller navigation stays inside active removal review',
+        );
+        await padFrame(1);
+        await padFrame();
+        await until(() => !dialog(), 'controller Back cancels review');
+        window.fixturePads = [];
+        await preserve('Controlled controller Back preserves all recovery bytes');
+        progress('Export each revision and affected recordings without activation');
+        await review();
+        const generationBeforeExport = await library.generation();
+        for (const pack of packs.slice(0, 2)) {
+          const file = await download(
+              dialog().querySelector(`[data-export-revision="${pack.sha256}"]`),
+            ),
+            restored = await content.inspectPack(file.blob);
+          must(
+            restored.sha256 === pack.sha256,
+            'Revision export reproduces exact ' + pack.course.revision + ' pack identity',
+          );
+        }
+        must(
+          (await library.generation()) === generationBeforeExport,
+          'Exporting retained revisions does not activate or install them',
+        );
+        must(
+          (await library.get('removal-target')).sha256 === packs[1].sha256,
+          'Export leaves active revision unchanged',
+        );
+        const downloadsBefore = w.fixtureDownloads.length;
+        click(d.getElementById('pack-removal-export-records'));
+        await until(
+          () =>
+            w.fixtureDownloads.length > downloadsBefore ||
+            dialog()?.querySelector('[data-export-proof-part]'),
+          'record archive ready',
+        );
+        if (w.fixtureDownloads.length === downloadsBefore)
+          for (const part of dialog().querySelectorAll('[data-export-proof-part]')) click(part);
+        await until(() => w.fixtureDownloads.length > downloadsBefore, 'record part requested');
+        const backups = w.fixtureDownloads.slice(downloadsBefore);
+        let recovered = [];
+        for (const file of backups) {
+          const text = await file.blob.text();
+          const raw = JSON.parse(text);
+          must(!('session' in raw), 'Record archive explicitly excludes interrupted session');
+          recovered.push(...(await worldRecords.importProofPart(text)));
+        }
+        eq(
+          recovered
+            .map((r) => ({ id: r.id, course: r.course, proof: r.proof, pinned: r.pinned }))
+            .sort((a, b) => a.id.localeCompare(b.id)),
+          saved
+            .slice(0, 2)
+            .map((r) => ({ id: r.id, course: r.course, proof: r.proof, pinned: r.pinned }))
+            .sort((a, b) => a.id.localeCompare(b.id)),
+          'Affected record backup preserves exact payloads and pins',
+        );
+        await preserve('Exports do not mutate stored completion or recovery evidence');
+        await cancel();
+        await review();
+        const cancelledExportDownloads = w.fixtureDownloads.length,
+          cancelledExportGeneration = await library.generation();
+        click(dialog().querySelector(`[data-export-revision="${packs[0].sha256}"]`));
+        await cancel();
+        await wait(50);
+        must(
+          w.fixtureDownloads.length === cancelledExportDownloads &&
+            (await library.generation()) === cancelledExportGeneration,
+          'Cancel during export preparation discards stale download and changes no library data',
+        );
+        await preserve('Cancelling in-flight export preserves all recovery bytes');
+        for (const [locale, width, height] of [
+          ['en', 390, 844],
+          ['uk', 390, 844],
+          ['uk', 844, 390],
+        ]) {
+          frame.style.width = width + 'px';
+          frame.style.height = height + 'px';
+          set(d.getElementById('world-language'), locale);
+          await review();
+          await wait(50);
+          const box = dialog().getBoundingClientRect(),
+            heading = d.getElementById('pack-removal-title').getBoundingClientRect(),
+            safeAction = d.getElementById('pack-removal-cancel').getBoundingClientRect();
+          must(
+            heading.top >= box.top && heading.bottom <= box.bottom,
+            locale +
+              ' ' +
+              width +
+              '×' +
+              height +
+              ' initial Cancel focus keeps review heading visible',
+          );
+          must(
+            safeAction.top >= box.top && safeAction.bottom <= box.bottom,
+            locale + ' ' + width + '×' + height + ' initial Cancel action is visible',
+          );
+          must(
+            dialog().scrollWidth <= dialog().clientWidth + 1,
+            locale + ' ' + width + '×' + height + ' review has no horizontal overflow',
+          );
+          must(
+            locale === 'en'
+              ? /2 recordings \(1 pinned\)/.test(dialog().textContent)
+              : /2 записів \(1 закріплено\)/.test(dialog().textContent),
+            locale + ' exact affected recording/pin counts are localized',
+          );
+          await cancel();
+        }
+        set(d.getElementById('world-language'), 'en');
+        frame.style.width = '1280px';
+        frame.style.height = '800px';
+        progress('Generation conflict and native transaction abort do not delete content');
+        await review();
+        await library.activate('removal-target', packs[0].sha256, {
+          expectedGeneration: await library.generation(),
+        });
+        const raced = await libraryState();
+        click(d.getElementById('pack-removal-confirm'));
+        await until(
+          () =>
+            dialog()?.open &&
+            /changed|змін/i.test(d.getElementById('pack-removal-status').textContent),
+          'generation conflict refresh',
+        );
+        eq(await libraryState(), raced, 'Stale review generation rejects all deletion');
+        must(
+          d.activeElement === d.getElementById('pack-removal-cancel'),
+          'Conflict returns safe focus and requires a fresh explicit choice',
+        );
+        await preserve('Generation conflict preserves independent records and recovery bytes');
+        await cancel();
+        await review();
+        const abortBefore = await libraryState();
+        faults.abortNext = true;
+        click(d.getElementById('pack-removal-confirm'));
+        await until(
+          () =>
+            faults.aborted === 1 &&
+            dialog()?.open &&
+            d.getElementById('pack-removal-status').textContent,
+          'aborted deletion',
+        );
+        await wait(20);
+        eq(
+          await libraryState(),
+          abortBefore,
+          'Deliberately aborted native transaction leaves revisions and generation intact',
+        );
+        await preserve('Native transaction abort preserves all independent recovery bytes');
+        await cancel();
+        faults.failRecordRead = true;
+        await review();
+        must(
+          /Recording impact is unavailable/.test(dialog().textContent) &&
+            /Saved-flight impact is unavailable/.test(dialog().textContent),
+          'Unavailable record/session impact is reported honestly',
+        );
+        await cancel();
+        faults.failRecordRead = false;
+        await preserve('Unavailable-impact review preserves independent stores');
+        faults.playlistUnavailable = true;
+        await review();
+        must(
+          /unavailable|cannot|could not|недоступ|не вдалося|невідом/i.test(dialog().textContent),
+          'Unavailable playlist impact is reported honestly rather than as zero',
+        );
+        await cancel();
+        faults.playlistUnavailable = false;
+        progress('Confirmed removal preserves records, draft and exact restoration requirements');
+        await review();
+        faults.failRecordRead = true;
+        click(d.getElementById('pack-removal-confirm'));
+        await until(() => !dialog() && !row('removal-target'), 'confirmed removal');
+        await until(
+          () => /Pack removal succeeded/.test(d.getElementById('studio-status').textContent),
+          'postcommit read failure reported honestly',
+        );
+        must(
+          /Refresh|refresh/.test(d.getElementById('studio-status').textContent),
+          'Committed removal reports independent refresh failure explicitly',
+        );
+        faults.failRecordRead = false;
+        must(
+          (await library.get('removal-target', { sha256: packs[0].sha256 })) === null &&
+            (await library.get('removal-target', { sha256: packs[1].sha256 })) === null,
+          'Confirmation removes active and retained target revisions',
+        );
+        must(
+          !!(await library.get('removal-unrelated', { sha256: packs[2].sha256 })),
+          'Unrelated pack remains installed',
+        );
+        await preserve(
+          'Removal retains byte-identical records, pins, completion, session, playlist and bookmark',
+        );
+        must(
+          d.getElementById('creator-json').value === draft,
+          'Removal leaves the unsaved Creator draft unchanged',
+        );
+        must(
+          recordRow(saved[0].id)?.dataset.dependency === 'missing' &&
+            recordRow(saved[1].id)?.dataset.dependency === 'missing' &&
+            recordRow(saved[2].id)?.dataset.dependency === 'available',
+          'Recording dependency availability is separate from stored verification',
+        );
+        must(
+          d.getElementById('resume-flight')?.disabled &&
+            !!q(`[data-restore-pack="${proofs[0].packIdentity}"]`),
+          'Missing exact session revision disables Resume and offers installation',
+        );
+        click(q('[data-tab="playlists"]'));
+        const savedPlaylistTile = [...d.querySelectorAll('#saved-playlists .playlist-tile')].find(
+          (node) => node.textContent.includes(playlist.title.en),
+        );
+        if (!savedPlaylistTile) throw Error('Seeded restoration playlist tile is missing');
+        click(button(savedPlaylistTile, /^Open$/));
+        must(
+          q('#playlist-entries [data-restore-pack]') &&
+            d.getElementById('playlist-entries').textContent.includes(packs[0].sha256),
+          'Missing playlist entries retain full identity and import guidance',
+        );
+        for (const [locale, width, height] of [
+          ['en', 1280, 800],
+          ['uk', 390, 844],
+          ['uk', 844, 390],
+        ]) {
+          frame.style.width = width + 'px';
+          frame.style.height = height + 'px';
+          set(d.getElementById('world-language'), locale);
+          click(q('[data-tab="packs"]'));
+          await wait(50);
+          must(
+            d.documentElement.scrollWidth <= d.documentElement.clientWidth + 1,
+            locale + ' ' + width + '×' + height + ' dependency guidance has no horizontal overflow',
+          );
+          must(
+            recordRow(saved[0].id).textContent.includes(packs[0].sha256),
+            locale + ' missing recording exposes full exact revision',
+          );
+          must(
+            locale === 'en'
+              ? /missing|required/i.test(recordRow(saved[0].id).textContent)
+              : /відсут|потріб/i.test(recordRow(saved[0].id).textContent),
+            locale + ' dependency status is localized',
+          );
+        }
+        set(d.getElementById('world-language'), 'en');
+        frame.style.width = '1280px';
+        frame.style.height = '800px';
+        progress('Wrong revision is rejected; exact revision restoration changes no evidence');
+        await restore(packs[0], packs[1]);
+        must(
+          (await library.get('removal-target')) === null,
+          'Wrong selected revision cannot silently replace missing exact dependency',
+        );
+        await preserve('Wrong-revision installation attempt preserves recovery data');
+        await restore(packs[1]);
+        await until(
+          () => recordRow(saved[1].id)?.dataset.dependency === 'available',
+          'revision B restored',
+        );
+        must(
+          recordRow(saved[0].id).dataset.dependency === 'missing' &&
+            d.getElementById('resume-flight').disabled,
+          'Restoring B leaves older A session and recordings unavailable',
+        );
+        await preserve('Restoring B preserves all original record/session/bookmark bytes');
+        await restore(packs[0]);
+        await until(
+          () =>
+            recordRow(saved[0].id)?.dataset.dependency === 'available' &&
+            !d.getElementById('resume-flight').disabled,
+          'exact A restored',
+        );
+        await preserve(
+          'Restoring exact A and B preserves all original data before explicit replay',
+        );
+        must(
+          d.getElementById('creator-json').value === draft,
+          'Exact restoration preserves in-memory Creator draft',
+        );
+        must(!app.snapshot().state, 'Reinstallation does not automatically start or arm a flight');
+        progress('Valid noncanonical transport keeps identity and reports export limitation');
+        const noncanonicalBase = await buildPack('removal-noncanonical', 'r1'),
+          canonicalBytes = new Uint8Array(await noncanonicalBase.blob.arrayBuffer()),
+          oldLength = new DataView(canonicalBytes.buffer).getUint32(8, true),
+          header = canonicalBytes.slice(0, 12),
+          manifestBytes = new TextEncoder().encode(
+            JSON.stringify(
+              JSON.parse(new TextDecoder().decode(canonicalBytes.subarray(12, 12 + oldLength))),
+              null,
+              2,
+            ),
+          );
+        new DataView(header.buffer).setUint32(8, manifestBytes.length, true);
+        const noncanonicalBlob = new Blob(
+            [header, manifestBytes, canonicalBytes.subarray(12 + oldLength)],
+            { type: noncanonicalBase.blob.type },
+          ),
+          noncanonical = await content.inspectPack(noncanonicalBlob);
+        must(
+          noncanonical.sha256 !== noncanonicalBase.sha256,
+          'Valid whitespace-only transport has a distinct exact pack identity',
+        );
+        await upload(noncanonicalBlob, 'noncanonical.rlpack', 'import-pack');
+        await until(() => !!row('removal-noncanonical'), 'ordinary exact importer');
+        must(
+          (await library.get('removal-noncanonical')).sha256 === noncanonical.sha256,
+          'Ordinary .rlpack importer preserves inspected transport identity',
+        );
+        must(
+          d.getElementById('creator-json').value === draft,
+          'Ordinary exact import does not normalize or replace Creator draft',
+        );
+        await review('removal-noncanonical');
+        const noncanonicalGeneration = await library.generation(),
+          priorDownloads = w.fixtureDownloads.length;
+        click(q(`[data-export-revision="${noncanonical.sha256}"]`));
+        await until(
+          () => /cannot reproduce/.test(d.getElementById('pack-removal-status').textContent),
+          'noncanonical export guidance',
+        );
+        must(
+          w.fixtureDownloads.length === priorDownloads &&
+            (await library.generation()) === noncanonicalGeneration,
+          'Unreproducible export neither downloads another identity nor mutates library',
+        );
+        must(
+          /original .rlpack/.test(d.getElementById('pack-removal-status').textContent),
+          'Noncanonical export explains retaining original exact file',
+        );
+        await cancel();
+        await preserve('Noncanonical import and failed export preserve all recovery data');
+        progress('Explicit verification and interrupted-prefix recovery use actual runtime');
+        const beforeVerify = saved[0];
+        click(button(recordRow(saved[0].id), /^Verify again$/));
+        await until(
+          () =>
+            app
+              .snapshot()
+              .records.some((r) => r.id === beforeVerify.id && r.savedAt !== beforeVerify.savedAt),
+          'explicit proof replay',
+        );
+        const verified = (await records.list()).find((r) => r.id === beforeVerify.id);
+        must(
+          verified.status === 'verified' && verified.diagnostic === 'complete' && verified.pinned,
+          'Explicit verification completes and preserves pinned proof eligibility',
+        );
+        eq(
+          {
+            id: verified.id,
+            course: verified.course,
+            proof: verified.proof,
+            pinned: verified.pinned,
+          },
+          {
+            id: beforeVerify.id,
+            course: beforeVerify.course,
+            proof: beforeVerify.proof,
+            pinned: beforeVerify.pinned,
+          },
+          'Explicit verification preserves proof identity and exact flight payload',
+        );
+        const expectedRecovery = await model.recoverWorldFlight(
+          proofs[0].course,
+          proofs[0].prefix,
+          { yieldControl: async () => {} },
+        );
+        const expectedState = expectedRecovery.state;
+        expectedRecovery.flight.dispose();
+        click(d.getElementById('resume-flight'));
+        await until(
+          () => app.snapshot().state?.ticks === 25 && !d.getElementById('world-arm').disabled,
+          'restored exact interrupted prefix',
+          60000,
+        );
+        must(
+          app.snapshot().state.status === 'paused',
+          'Recovered flight remains paused for deliberate pickup',
+        );
+        must(
+          model.worldStateIdentity(clone(app.snapshot().state)) ===
+            model.worldStateIdentity(expectedState),
+          'Real WebGL recovery reproduces exact recorded command prefix',
+        );
+        must(
+          !!w.fixtureRenderer && !!q('#world-viewport canvas'),
+          'Restored imported scene uses actual WebGL renderer',
+        );
+        for (let i = 0; i < 4; i++) {
+          w.fixtureRAF.deliver(100);
+          await wait(0);
+        }
+        must(
+          app.snapshot().state.ticks === 25 && app.snapshot().state.status === 'paused',
+          'Fresh callbacks do not automatically resume recovered flight',
+        );
+        eq(
+          memory.get('revealline.fpv.playlists.v1'),
+          baseline.playlist,
+          'Explicit proof verification and recovery do not advance playlist bookmark',
+        );
+        click(d.getElementById('leave-flight'));
+        await until(() => !d.getElementById('flight-dialog').open, 'close recovered flight');
+        progress('Closing host while review prepares cannot remove a pack');
+        const beforeDispose = await libraryState();
+        click(q('[data-tab="packs"]'));
+        click(q('[data-remove-pack="removal-target"]'));
+        const old = app;
+        app = null;
+        await bounded(old.dispose(), 'dispose pending review', 5000);
+        await wait(40);
+        eq(
+          await libraryState(),
+          beforeDispose,
+          'Disposing pending review cannot delete library data',
+        );
+        must(!dialog()?.open, 'Disposed host does not leave an actionable removal dialog');
+        must(w.fixtureErrors.length === 0, 'No uncaught host errors', { errors: w.fixtureErrors });
+        await cleanup();
+      } catch (error) {
+        failed = {
+          message: error.message,
+          stack: error.stack,
+          studioStatus: d?.getElementById('studio-status')?.textContent,
+          hostErrors: w?.fixtureErrors,
+        };
+        try {
+          await cleanup();
+        } catch (cause) {
+          failed.cleanup = cause.message;
+          IDBDatabase.prototype.transaction = nativeTransaction;
+        }
+      }
+      const receipt = {
+        format: 'FPVPackRemovalBrowserEvidence.v1',
+        status: failed ? 'failed' : 'passed',
+        checks,
+        passed: checks.filter((c) => c.passed).length,
+        failed,
+        phases,
+        manifest,
+        packs: packs.map((p) => ({
+          id: p.project.id,
+          revision: p.course.revision,
+          sha256: p.sha256,
+        })),
+        proofs,
+        preservation,
+        qualification:
+          'Actual production HTTP/WebGL host and native IndexedDB; bounded original GLB revisions; public DOM actions, controlled transaction abort and genuine recorded-command replay. Download initiation is not confirmation of saved portable backups. No physical hardware, eviction, FPS, player acceptance or additional unit coverage claim.',
+      };
+      window.packRemovalReceipt = receipt;
+      $('receipt').value = JSON.stringify(receipt, null, 2);
+      $('status').textContent =
+        (failed ? 'FAIL' : 'PASS') +
+        ' ' +
+        receipt.passed +
+        '/' +
+        checks.length +
+        (failed ? ' · ' + failed.message : '');
+      return receipt;
+    }
+    $('run').onclick = async () => {
+      $('run').disabled = true;
+      try {
+        await execute();
+      } finally {
+        $('run').disabled = false;
+      }
+    };
+  </script>
+</html>
