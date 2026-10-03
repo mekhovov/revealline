@@ -585,6 +585,7 @@ export function attachContextualReactions({
   const unsubPrefs = preferences.subscribe(render),
     unsubOptions = options.subscribe(render);
   const unsubLibrary = voiceLibrary.subscribe(() => {
+    void actorVoiceControls?.synchronize();
     generation++;
     prepared.clear();
     stopSpeech();

@@ -17,6 +17,8 @@ import {
 } from '../official-downloads.mjs';
 import { memoryCaches } from './helpers/official-caches.mjs';
 import { Document } from './helpers/couch-dom.mjs';
+import { waitFor } from './helpers/wait-for.mjs';
+import { attachContextualReactions } from '../ui/contextual-reactions.mjs';
 import {
   editionActorVoiceResources,
   projectEditionActorVoices,
@@ -262,4 +264,112 @@ test('voice download cancellation follows Settings moved into a dialog after mou
   dialog.close();
   assert.equal(signal.aborted, true);
   view.dispose();
+});
+
+test('another tab removing the same voice pack invalidates the visible verified status through the reaction library', async () => {
+  const h = setup();
+  await h.delivery.download('en');
+  const doc = new Document(),
+    container = doc.createElement('section'),
+    settings = doc.createElement('section');
+  doc.body.append(container, settings);
+  let changed;
+  const library = {
+    originals: [],
+    actorDownloads: h.delivery,
+    subscribe(listener) {
+      changed = listener;
+      return () => {};
+    },
+  };
+  const host = attachContextualReactions({
+    container,
+    settingsContainer: settings,
+    document: doc,
+    window: doc.defaultView,
+    voiceLibrary: library,
+    sound: { configureDialogue() {} },
+    getStorage: () => ({ getItem: () => null }),
+    getLocale: () => 'en',
+  });
+  const status = settings
+    .querySelector('[data-actor-voice-locale]')
+    .querySelector('[role="status"]');
+  await waitFor(() => status.textContent === 'Verified for offline speech.');
+  const otherTab = createCompanyActorVoiceDelivery({
+    recordings: [recording],
+    baseURL,
+    store: h.store,
+  });
+  await otherTab.remove('en');
+  changed(); // The shared library delivers the other tab's BroadcastChannel notice.
+  await waitFor(() => status.textContent === 'Available online; download for offline speech.');
+  assert.equal(settings.querySelector('[data-actor-voice-remove]').disabled, true);
+  assert.equal(h.calls.length, 1, 'status refresh never downloads or repairs the pack');
+  host.dispose();
+});
+
+test('returning to Settings rechecks optional voice ownership without repeated render inspections', async () => {
+  const h = setup();
+  await h.delivery.download('en');
+  const doc = new Document(),
+    container = doc.createElement('section');
+  doc.body.append(container);
+  let inspections = 0;
+  const delivery = {
+    ...h.delivery,
+    status: async (...args) => {
+      inspections++;
+      return h.delivery.status(...args);
+    },
+  };
+  const view = attachActorVoiceDownloads({ container, document: doc, delivery });
+  const status = container.querySelector('[role="status"]');
+  await waitFor(() => status.textContent === 'Verified for offline speech.');
+  const before = inspections;
+  for (let i = 0; i < 5; i++) view.refresh();
+  assert.equal(inspections, before, 'locale and preference renders stay cheap');
+  await h.delivery.remove('en');
+  const dialog = doc.createElement('dialog');
+  doc.body.append(dialog);
+  dialog.append(container);
+  dialog.showModal();
+  doc.dispatchEvent({
+    type: 'focusin',
+    target: container.querySelector('[data-actor-voice-download]'),
+    relatedTarget: doc.body,
+  });
+  await waitFor(() => status.textContent === 'Available online; download for offline speech.');
+  assert.equal(inspections, before + 1);
+  view.dispose();
+});
+
+test('cross-tab status inspection does not interrupt or repaint an active voice download', async () => {
+  const doc = new Document(),
+    container = doc.createElement('section');
+  doc.body.append(container);
+  let inspections = 0,
+    signal;
+  const delivery = {
+    packs: [{ locale: 'en', files: 24, bytes: 1000 }],
+    status: async () => {
+      inspections++;
+      return { ready: false, readyBytes: 0, owned: false };
+    },
+    download: async (_locale, options) => {
+      signal = options.signal;
+      await new Promise((_resolve, reject) =>
+        signal.addEventListener('abort', () => reject(signal.reason)),
+      );
+    },
+  };
+  const view = attachActorVoiceDownloads({ container, document: doc, delivery });
+  container.querySelector('[data-actor-voice-download]').click();
+  const before = inspections;
+  await view.synchronize();
+  assert.equal(inspections, before);
+  assert.equal(signal.aborted, false);
+  assert.equal(container.querySelector('[role="status"]').textContent, 'Downloading…');
+  view.dispose();
+  assert.equal(signal.aborted, true);
 });
