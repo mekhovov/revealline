@@ -375,3 +375,150 @@
     clip-path: inset(50%);
   }
 }
+
+@layer legacy {
+  /* Fit the entire board to the viewport; controls float over its edges. */
+  #demo-dialog[open] {
+    display: block;
+    padding: 0;
+    background: #080d16;
+  }
+  #demo-dialog .demo-board,
+  #demo-dialog[data-reward='expanded'] .demo-board {
+    position: absolute;
+    inset: 0;
+    border: 0;
+  }
+  .demo-scene-veil {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    pointer-events: none;
+    z-index: 1;
+  }
+  #demo-dialog .demo-header,
+  #demo-dialog[data-reward='expanded'] .demo-header {
+    position: absolute;
+    z-index: 3;
+    top: max(6px, env(safe-area-inset-top));
+    left: max(8px, env(safe-area-inset-left));
+    right: max(8px, env(safe-area-inset-right));
+    padding: 4px 8px;
+    border-radius: 8px;
+    background: transparent;
+    pointer-events: none;
+    flex-wrap: nowrap;
+  }
+  #demo-dialog .demo-header > div {
+    background: #080d16d9;
+    border-radius: 6px;
+    padding: 4px 6px;
+    pointer-events: auto;
+  }
+  #demo-dialog .demo-header h2 {
+    font-size: clamp(0.85rem, 1.5vw, 1.1rem);
+    margin: 0;
+  }
+  #demo-dialog .demo-header .eyebrow {
+    font-size: 0.65rem;
+  }
+  #demo-dialog .demo-panel,
+  #demo-dialog[data-reward='expanded'] .demo-panel {
+    position: absolute;
+    z-index: 3;
+    bottom: max(6px, env(safe-area-inset-bottom));
+    left: max(8px, env(safe-area-inset-left));
+    right: max(8px, env(safe-area-inset-right));
+    width: fit-content;
+    max-width: calc(100% - 16px);
+    max-height: 48dvh;
+    margin: auto;
+    padding: 6px 10px;
+    gap: 4px;
+    border-radius: 10px;
+    background: #080d16e8;
+    scrollbar-gutter: auto;
+  }
+  #demo-dialog .demo-transport {
+    position: static;
+    padding: 0;
+    background: transparent;
+  }
+  #demo-dialog .demo-transport > button {
+    flex: 1 1 auto;
+    padding: 6px 12px;
+    font-size: 0.85rem;
+  }
+  #demo-dialog .demo-header-actions {
+    gap: 4px;
+    flex-wrap: nowrap;
+  }
+  #demo-dialog .demo-header-actions button {
+    font-size: 0.8rem;
+    padding: 4px 8px;
+  }
+  #demo-dialog #demo-caption {
+    margin: 0;
+    font-size: 0.8rem;
+    line-height: 1.3;
+    max-width: 70ch;
+  }
+  #demo-details summary {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-height: 44px;
+    cursor: pointer;
+    font-size: 0.8rem;
+  }
+  #demo-now-playing {
+    color: #bdc9d6;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 45ch;
+  }
+  #demo-details[open] {
+    max-width: 680px;
+  }
+  #demo-dialog #demo-audio {
+    margin-bottom: 6px;
+  }
+  #demo-dialog[data-scene='loading'] .demo-board {
+    background: radial-gradient(ellipse, #142333, #080d16 70%);
+  }
+  #demo-dialog[data-scene='loading'] .demo-compact-caption {
+    visibility: hidden;
+  }
+  @media (max-height: 540px) {
+    #demo-dialog .demo-panel {
+      flex-direction: row;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 4px 12px;
+    }
+    #demo-dialog .demo-compact-caption {
+      display: none;
+    }
+    #demo-details[open] {
+      flex-basis: 100%;
+    }
+    #demo-now-playing {
+      max-width: 22ch;
+    }
+  }
+  @media (max-width: 600px) {
+    #demo-dialog .demo-panel {
+      width: auto;
+    }
+    #demo-now-playing {
+      max-width: 28ch;
+      flex: 1;
+    }
+    #demo-dialog .demo-header > div:first-child {
+      flex: 1;
+    }
+  }
+}

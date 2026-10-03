@@ -17,10 +17,32 @@ const setChecked = (page, id, checked) => {
 };
 const assertClearPreview = (page) => {
   assert.equal(page.demoFrame.options.pictureVisibility, 'clear');
-  assert.equal(page.demoFrame.options.pictureInterference, false);
-  assert.equal(page.demoFrame.options.demoTransition, 0);
+  assert.equal(page.demoFrame.options.pictureInterference, true);
+  assert.equal(page.demoFrame.options.signalReception, 'playing');
   assert.equal(page.$('demo-picture-note').textContent, PREVIEW_NOTE);
 };
+
+test('demo and takeover use current ordinary gore, remains, grid and font settings', async (t) => {
+  const page = await demoPage(t);
+  page.$('brutal-destruction').checked = true;
+  page.$('brutal-destruction').emit('change');
+  page.$('blood-body-parts').checked = false;
+  page.$('blood-body-parts').emit('change');
+  page.$('enemy-remains').checked = false;
+  page.$('enemy-remains').emit('change');
+  page.frame(0);
+  const expected = page.rendered;
+  await page.open();
+  for (const key of ['brutal', 'blood', 'showCombatScrap', 'showGrid', 'textFace'])
+    assert.equal(page.demoFrame.options[key], expected[key], key);
+  assert.equal(page.demoFrame.options.brutal, true);
+  assert.equal(page.demoFrame.options.blood, false);
+  page.$('demo-takeover').click();
+  await settle(() => !page.$('demo-practice-controls').hidden);
+  page.frame(0);
+  assert.equal(page.demoFrame.options.blood, false);
+  assert.equal(page.demoFrame.options.showCombatScrap, false);
+});
 
 for (const [name, search] of [
   ['Standard', '?journey=legacy'],
