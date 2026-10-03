@@ -7,6 +7,11 @@ import {
 } from './world-themes.mjs';
 import { boundedJSON, exactKeys, required, stableId } from '../../game/data-json.mjs';
 import { contrastRatio } from '../../game/presentation/theme-system.mjs';
+import { actorArtReviewRevision } from '../../game/hunt/preferences.mjs';
+import {
+  INDUSTRIAL_MATERIAL_REVISION,
+  industrialMaterialPixels,
+} from '../../game/presentation/industrial-materials.mjs';
 
 const ADVENTURE_SURFACES = Object.freeze({
   coast: { floor: 'sand', color: 0xc2b38f, wall: 'concrete' },
@@ -2762,7 +2767,12 @@ export function configureSimTextureSampling(texture, quality = 'balanced', maxAn
 
 export function createWorkshopTexture(
   role,
-  { quality = 'balanced', maxAnisotropy = 1, collectionId = 'industrial-workshop' } = {},
+  {
+    quality = 'balanced',
+    maxAnisotropy = 1,
+    collectionId = 'industrial-workshop',
+    reviewRevision = actorArtReviewRevision(),
+  } = {},
 ) {
   const collection = getSimVisualCollection(collectionId),
     spec = collection.materials[role];
@@ -2801,11 +2811,18 @@ export function createWorkshopTexture(
       data[at + 2] = Math.min(255, Math.round(pigment.b * 255 * shade));
       data[at + 3] = 255;
     }
+  const sampleRole =
+    collectionId === 'military-field' && reviewRevision === INDUSTRIAL_MATERIAL_REVISION
+      ? { concrete: 'concrete', grass: 'earth', steel: 'metal' }[role]
+      : null;
+  if (sampleRole)
+    data.set(industrialMaterialPixels({ width: size, height: size }, sampleRole).rgba);
   const texture = new THREE.DataTexture(data, size, size);
   texture.name = `${collection.descriptor?.materials[role] ?? `${collectionId}-${role}`}-${collection.revision}`;
   texture.colorSpace = THREE.SRGBColorSpace;
   texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
   texture.userData = { simSurface: true, materialRole: role, revision: 'r1', collectionId };
+  if (sampleRole) texture.userData.materialReviewRevision = reviewRevision;
   configureSimTextureSampling(texture, quality, maxAnisotropy);
   return texture;
 }

@@ -74,17 +74,32 @@ article {
   border-radius: 10px;
   background: #15262a;
 }
-article {
-  overflow-x: auto;
+#actors {
+  border: 0;
+  padding: 0;
+  background: transparent;
+}
+.actor-pair {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+}
+.actor-pair > div {
+  min-width: 0;
+}
+h3 {
+  font-size: 16px;
+  color: #b8c9c8;
+  margin: 0 0 8px;
 }
 canvas {
   display: block;
   image-rendering: pixelated;
 }
-article canvas {
-  width: 920px;
-  height: 180px;
-  max-width: none;
+.actor-pair canvas {
+  width: 100%;
+  height: auto;
+  max-width: 100%;
 }
 .hardware canvas {
   max-width: 100%;
@@ -102,6 +117,10 @@ output {
   border-radius: 5px;
 }
 @media (max-width: 600px) {
+  .actor-pair {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 12px;
+  }
   section,
   article {
     padding: 12px;
@@ -112,4 +131,46 @@ output {
   .controls label {
     width: 100%;
   }
+}
+
+.sample-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 210px), 1fr));
+  gap: 18px;
+  margin-top: 20px;
+}
+.sample-grid > div {
+  min-width: 0;
+}
+.sample-grid canvas {
+  max-width: 100%;
+  height: auto;
+}
+.sample-grid button {
+  width: 100%;
+  text-align: left;
+}
+
+.atlas-sheet {
+  max-width: 100%;
+  height: auto;
+  image-rendering: pixelated;
+  margin-bottom: 16px;
+}
+#effects > div {
+  max-width: 100%;
+}
+#effects canvas {
+  max-width: 100%;
+  height: auto;
+}
+.controls select {
+  max-width: 100%;
+  min-width: 0;
+}
+.controls label {
+  flex-wrap: wrap;
+}
+#export {
+  margin-top: 16px;
 }

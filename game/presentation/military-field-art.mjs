@@ -1,3 +1,9 @@
+import {
+  INDUSTRIAL_MATERIAL_REVISION,
+  INDUSTRIAL_TERRAIN_MATERIALS,
+  industrialMaterialPixels,
+} from './industrial-materials.mjs';
+
 /** Original overhead pixel silhouettes. These replace only verified built-in
  * presentation slots; their names are not new combat or collision policies. */
 export const MILITARY_FIELD_ROLES = Object.freeze({
@@ -50,6 +56,8 @@ export function drawMilitaryVehicleMotion(ctx, frame, role, diameter) {
 export function militaryFieldPixels({ width, height }, slot, { revision = null } = {}) {
   const role = MILITARY_FIELD_ROLES[slot];
   if (!role) return null;
+  if (revision === INDUSTRIAL_MATERIAL_REVISION && INDUSTRIAL_TERRAIN_MATERIALS[slot])
+    return industrialMaterialPixels({ width, height }, INDUSTRIAL_TERRAIN_MATERIALS[slot]);
   if (
     !Number.isInteger(width) ||
     !Number.isInteger(height) ||

@@ -2,6 +2,8 @@ import { createPresentationHost } from '../presentation/host.mjs';
 import { installThemeHost } from '../presentation/theme-host.mjs';
 import { TOKEN_DEFAULTS } from '../presentation/model.mjs';
 import { loadAcceptedAppearance } from '../presentation/theme-system.mjs';
+import { actorArtReviewRevision } from '../hunt/preferences.mjs';
+import { INDUSTRIAL_BUILTIN_SPRITES } from '../presentation/industrial-arcade-builtins.mjs';
 import {
   selectedArcadeCollection,
   industrialTexturePixels,
@@ -98,9 +100,15 @@ export function createClassicPresentation({
     current;
   function imageFor(slot) {
     if (disposed) return null;
-    const image = artwork.current()?.image(slot)?.image ?? null,
+    const frame = artwork.current()?.image(slot),
+      image = frame?.image ?? null,
       collection = selectedArcadeCollection(theme.effectivePreferences());
     if (!image || slot !== 'terrain.wall' || collection?.id !== 'military-field') return image;
+    if (
+      frame.asset?.id !== `${slot}.field-kit` ||
+      !INDUSTRIAL_BUILTIN_SPRITES[slot]?.includes(frame.asset?.file?.sha256)
+    )
+      return image;
     if (derived.has(slot)) return derived.get(slot);
     try {
       const canvas = doc.createElement('canvas');
@@ -115,6 +123,7 @@ export function createClassicPresentation({
           { width: canvas.width, height: canvas.height, rgba: pixels.data },
           slot,
           collection,
+          { reviewRevision: actorArtReviewRevision(win?.location) },
         ).rgba,
       );
       context.putImageData(pixels, 0, 0);
