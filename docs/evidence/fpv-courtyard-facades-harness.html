@@ -322,6 +322,46 @@
       });
       return result;
     }
+    function originalWindowMarksCovered() {
+      const before = owners[0],
+        after = owners[1],
+        rows = details(after);
+      let vertices = 0;
+      before.world.traverse((item) => {
+        if (
+          item.name !== 'flush-surface-markings' ||
+          item.userData.minimumQuality !== 'balanced' ||
+          !/^house-(east|west)$/.test(item.parent?.userData.collisionId ?? '')
+        )
+          return;
+        const p = item.geometry.attributes.position,
+          n = item.geometry.attributes.normal;
+        for (let i = 0; i < p.count; i++) {
+          const point = new before.THREE.Vector3()
+              .fromBufferAttribute(p, i)
+              .applyMatrix4(item.matrixWorld),
+            normal = new before.THREE.Vector3()
+              .fromBufferAttribute(n, i)
+              .transformDirection(item.matrixWorld),
+            start = point.clone().addScaledVector(normal, 0.1),
+            ray = new after.THREE.Raycaster(
+              new after.THREE.Vector3(...start.toArray()),
+              new after.THREE.Vector3(...normal.negate().toArray()),
+            ),
+            hits = ray
+              .intersectObjects(rows, true)
+              .filter((hit) => Math.abs(hit.distance - 0.1) < 0.0001);
+          if (
+            !hits.some(
+              (hit) => hit.object.material.polygonOffsetFactor < item.material.polygonOffsetFactor,
+            )
+          )
+            throw Error('Uncovered original window mark');
+          vertices++;
+        }
+      });
+      return vertices > 0;
+    }
     function resourceKey(owner) {
       const r = owner.runtime.resources();
       return {
@@ -396,6 +436,16 @@
                       m.material.polygonOffset,
                   ),
               );
+              if (appearance !== 'pixel')
+                check(
+                  id +
+                    '/' +
+                    quality +
+                    '/' +
+                    appearance +
+                    ' original opaque window marks fully covered',
+                  originalWindowMarksCovered(),
+                );
               if (appearance === 'pixel')
                 check(
                   id + '/' + quality + ' Pixel map filtering preserved',

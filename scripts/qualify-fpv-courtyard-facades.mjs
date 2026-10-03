@@ -23,7 +23,7 @@ import {
   worldStateIdentity,
 } from '../optional-practice/civilian-fpv/world-model.mjs';
 
-const baseline = '2dbbe0a0f26684eae0a2bdb0b7cbda087627457f',
+const baseline = '30574b85092e3ddaa973527608a658dfc8adcd5b',
   root = new URL('../', import.meta.url),
   args = process.argv.slice(2),
   checks = [],
@@ -243,8 +243,8 @@ for (const entry of representative)
         for (const [y, z, finish] of [
           [0.3, -8.3, 'door'],
           [1, -8, 'accent'],
-          [5, -8.3, 'window'],
-          [5.76, -8.3, 'trim'],
+          [5.8, -8.3, 'window'],
+          [6.35, -8.3, 'trim'],
         ]) {
           const ray = new THREE.Raycaster(new THREE.Vector3(0, y, z), new THREE.Vector3(-1, 0, 0)),
             overlapping = ray
@@ -302,7 +302,7 @@ for (const entry of representative)
       }
       check(
         `${entry.id}/${quality}/${appearance}: bounded coplanar artwork`,
-        vertices === (isPixel ? 0 : 3984),
+        vertices === (isPixel ? 0 : 5712),
       );
       // Coplanar artwork must neither shorten a line to the wall nor let a ray
       // pass through its closed windows/doors. Inspect the actual box plus paint.
