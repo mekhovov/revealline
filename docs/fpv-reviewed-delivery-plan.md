@@ -43,7 +43,7 @@ as completed.
 Estimate: 19–28 working weeks plus three contingency weeks, assuming two developers
 and an environment artist. Each complete increment receives a focused PR;
 independent work continues while CI runs. Use native stacks only for dependencies.
-D5 targets 18 worlds and 216 authored challenges; authored counts are not player
+D5 targets 18 worlds and 228 authored challenges (196 current plus 32 planned); authored counts are not player
 acceptance or measured performance claims.
 
 Preserve Three.js, existing physics/replays, world identities, asset licenses and
@@ -51,6 +51,25 @@ retained dependencies. Gameplay geometry changes need explicit content revisions
 Quality presets must preserve collision, relevant sight lines and objective actors.
 Measure frame times, loading and resource disposal before claiming performance.
 No multiplayer, online publishing or universal commercial-map conversion is added.
+
+### Verified continuation checkpoint — 3 October 2026
+
+The 72 MiB shared-core change #989 and controls #986/#991 are merged. D1 art is
+published in focused PRs #992, #993, #996, #998, #999 and #1001; publication and
+public deployment are separate from local evidence. The combined Woodland/Yard
+candidate was functionally reviewed across 15 arena/preset cases, with identical
+collision data and stable resources through 15 cleanup cycles. A resolved-theme
+bug in #1001 was corrected so all five supported Pixel profile forms retain the
+existing unlit imported material. This evidence does not finish D1 art acceptance
+or establish sustained frame times on named devices.
+
+The next independent D2 increment adds readable closed stand facades and a static
+scoreboard to Stadium's three canonical solids. Its implementation preserves all
+21 associated recorded demonstrations and the 14 Snake Stadium layouts; source
+and package qualification is recorded in `fpv-stadium-structures.md`. Garage is
+the next bounded environment task. Continue D1 publication repairs in parallel,
+then the remaining D2 world pairs before D3–D6. No new dependency stack is needed
+for the Stadium increment, which starts from current main.
 
 ### Approved capacity change
 
@@ -75,11 +94,12 @@ controls, school, section practice, ghosts, reimport and original demonstrations
 The Follow/Observe editor #975, shared-theme texture quality #974, WebAssembly
 CSP repair #976 and pack-removal recovery #977 are now merged. Public deployment
 remains distinct from local functional verification.
-The current catalogue is **184 challenges / 14 worlds / 58 school lessons / 374
+The current catalogue is **196 challenges / 14 worlds / 58 school lessons / 374
 school steps**. Installed demonstrations total **178**: all 120 original
 mode-specific recordings plus 58 recommended-mode school examples. The 60
 Adventure authoring proofs are separate; they are not installed demonstrations.
-Main Snake content #973/#978 adds 36 challenges within the same 14 worlds. Fourteen
+Main Snake content now adds 48 challenges within the same 14 worlds, including
+12 tasks added after the earlier 184-challenge checkpoint. Fourteen
 optional matching Self-level foundation examples are merged as PR #979; they do
 not add challenges or increase the default installed-example count.
 
