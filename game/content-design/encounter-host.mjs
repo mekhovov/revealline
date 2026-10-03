@@ -22,6 +22,7 @@ function supports(level, variant) {
   if (!level) return false;
   const rules = level.classic;
   if (variant === 'authored') return true;
+  if (level.snake) return false;
   if (variant === 'off') return !rules?.hunt && !rules?.combatPatrols?.enabled;
   if (variant === 'patrol')
     return (
@@ -202,6 +203,7 @@ function createEncounterHost(source, { getEncounterVariant = () => 'authored', .
     if (catalog.find(mission?.id) !== mission) return Object.freeze([]);
     const original = authoredHost[solo ? 'select' : 'row'](mission, 'standard'),
       level = levelFor(original, mission);
+    if (level?.snake) return Object.freeze(['authored']);
     return Object.freeze(
       ENCOUNTER_VARIANTS.filter((variant) => {
         if (Object.hasOwn(errors, variant)) return false;

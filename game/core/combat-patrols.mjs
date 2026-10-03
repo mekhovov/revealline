@@ -4,6 +4,7 @@ import {
   huntDefinition,
 } from '../hunt/running-enemy-definition.mjs';
 import { huntTargetKind, recordHuntElimination, chooseHuntRunnerHeading } from '../hunt/rules.mjs';
+import { recordSnakeCatch } from '../snake/rules.mjs';
 import { CELL } from './registry.mjs';
 import { EPS } from './geometry.mjs';
 import { classicEffectActive } from './classic-state.mjs';
@@ -123,7 +124,8 @@ export function eliminateCombatPatrol(state, actor, cause) {
     time: state.time,
   };
   combatOwner(state).combatPatrols.eliminations.push(record);
-  recordHuntElimination(combatOwner(state).hunt, huntDefinition(state.level), actor.id, cause);
+  if (recordHuntElimination(combatOwner(state).hunt, huntDefinition(state.level), actor.id, cause))
+    recordSnakeCatch(state, actor.id);
   emit(state, 'eliminated', record);
   removeShots(state, (shot) => shot.actorId === actor.id, 'owner-eliminated');
 }

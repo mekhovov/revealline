@@ -174,6 +174,7 @@ export function combatView(run) {
       'xonix-core.v9': 'xonix-level.v8',
       'xonix-core.v10': 'xonix-level.v9',
       'xonix-core.v11': 'xonix-level.v10',
+      'xonix-core.v12': 'xonix-level.v11',
     };
     const ruleset = own(run, 'ruleset');
     check(
@@ -212,7 +213,7 @@ export function combatView(run) {
     const frozen = legacyOwner ? false : effect(state, 'enemy-freeze', tick),
       slow = legacyOwner ? false : effect(state, 'enemy-slow', tick);
     const hunt =
-      ruleset === 'xonix-core.v10' || supplemental
+      ruleset === 'xonix-core.v10' || ruleset === 'xonix-core.v12' || supplemental
         ? validateHuntDefinition(own(classicDefinition, 'hunt'), own(definition, 'actors'), {
             supplemental,
           })

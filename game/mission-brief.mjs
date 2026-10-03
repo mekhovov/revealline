@@ -1,4 +1,5 @@
 import { huntText } from './hunt/copy.mjs';
+import { snakeBrief } from './snake/copy.mjs';
 import { t, getLocale } from './i18n/index.mjs';
 import { contentText } from './i18n/content.mjs';
 import { baseLevelVersion } from './core/versions.mjs';
@@ -55,6 +56,7 @@ export function missionBriefing(
           coverage,
         });
   const hunt = huntDefinition(level);
+  const snakeHint = snakeBrief(level);
   const goal = hunt
     ? t(
         `gameplay:brief.${hunt.mode === 'hunt' ? 'huntAll' : hunt.mode === 'capture-quota' ? 'huntQuota' : 'huntBonus'}`,
@@ -196,9 +198,12 @@ export function missionBriefing(
           ]
             .filter(Boolean)
             .join('\n')
-        : [facts, captureHint, optionalHint, impactHint, classicHint].filter(Boolean).join('\n'),
+        : [facts, snakeHint, captureHint, optionalHint, impactHint, classicHint]
+            .filter(Boolean)
+            .join('\n'),
     fullBrief: [
       hunt ? goal : '',
+      snakeHint,
       authored || t('gameplay:brief.returnToSafeGroundToSecureEachLineRegionsWithout'),
       optionalDetails,
     ]

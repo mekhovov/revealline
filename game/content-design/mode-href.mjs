@@ -2,6 +2,7 @@
 export const AUTHORED_JOURNEY_ROUTE_IDS = Object.freeze([
   'opening',
   'humanoid-hunt-v1',
+  'snake-hunt-v1',
   'authored',
   'whole-originals',
   'whole-originals-v2',
@@ -99,7 +100,10 @@ export const authoredJourneyUsesActorMaterials = (id) =>
  * no save, token, mission completion or cross-mode progress transfer. */
 export function authoredJourneyModeHref(routeId, destination) {
   if (!isAuthoredJourneyRouteId(routeId)) return null;
-  if (destination === 'versus') return `couch/?journey=${routeId}&return=solo`;
-  if (destination === 'solo') return `../?journey=${routeId}`;
+  // This helper belongs to the retained territory hosts. The default Snake
+  // entry redirects before they boot, so their mode switches keep the remix.
+  const style = routeId === 'snake-hunt-v1' ? '&snake-style=capture' : '';
+  if (destination === 'versus') return `couch/?journey=${routeId}&return=solo${style}`;
+  if (destination === 'solo') return `../?journey=${routeId}${style}`;
   return null;
 }

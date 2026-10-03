@@ -31,6 +31,17 @@ import { crossesGate, quantizeFlightInput } from './model.mjs';
 import { createSectorTracker } from './flight-sectors.mjs';
 import { validateThemeProfile } from './world-themes.mjs';
 import {
+  HUNT_CONTACT_CRITERION,
+  HUNT_FLIGHT_MODEL,
+  HUNT_TAIL_LIMITS,
+  validateHuntContact,
+  huntContact,
+  createContactHuntState,
+  catchHuntTarget,
+  updateHuntTail,
+  huntTailId,
+} from './snake-hunt.mjs';
+import {
   createWorldCollision,
   initWorldRuntime,
   WORLD_COLLISION_BACKEND,
@@ -681,8 +692,23 @@ export function validateWorldCourse(input) {
       Array.isArray(c.steps[mode]) && c.steps[mode].length >= 1 && c.steps[mode].length <= 64,
       'Ordered mission criteria required',
     );
+    required(
+      c.steps[mode].filter((step) => step.type === HUNT_CONTACT_CRITERION).length <= 1,
+      'At most one Contact Hunt criterion per mode',
+    );
+    const huntTargets = new Set(huntContact(c, mode)?.targets ?? []);
+    required(
+      c.steps[mode].every(
+        (step) =>
+          !(step.type === 'eliminate' && step.targets.some((id) => huntTargets.has(id))) &&
+          !(step.type === 'actor-track-v1' && huntTargets.has(step.actorId)),
+      ),
+      'Caught humanoids cannot also be defeat or tracking objectives',
+    );
     for (const step of c.steps[mode]) {
-      if (SKILL_TYPES.has(step.type)) {
+      if (step.type === HUNT_CONTACT_CRITERION) {
+        validateHuntContact(step, c);
+      } else if (SKILL_TYPES.has(step.type)) {
         validateSkillTarget(step);
       } else if (step.type === 'actor-track-v1') {
         exactKeys(
@@ -841,12 +867,14 @@ export function createWorldFlight({
     'Skill courses require Acro mode for scored flight',
   );
   const rules = source.rules;
+  const contactHunt = huntContact(source, mode);
+  const contactTargets = new Set(contactHunt?.targets ?? []);
   const gameplay = { ...source };
   delete gameplay.locales;
   delete gameplay.environment;
   delete gameplay.world;
   const identity = Object.freeze({
-    model: WORLD_FLIGHT_MODEL,
+    model: contactHunt ? HUNT_FLIGHT_MODEL : WORLD_FLIGHT_MODEL,
     backend: WORLD_COLLISION_BACKEND,
     course: source.id,
     courseIdentity: dataIdentity(gameplay),
@@ -920,6 +948,7 @@ export function createWorldFlight({
         events: [],
         shots: 0,
         hits: 0,
+        ...(contactHunt ? { hunt: createContactHuntState(source.spawn, rules.droneRadius) } : {}),
         ...(hasSkills ? { skill: { index: 0, status: 'entry', reason: 'enter-zone' } } : {}),
         ...(hasActorTracking
           ? { actorTrack: { index: 0, status: 'acquire', reason: 'acquire-subject', travel: 0 } }
@@ -948,6 +977,14 @@ export function createWorldFlight({
         );
         state.actors.push(actor);
       }
+      if (contactHunt)
+        for (let index = 0; index < HUNT_TAIL_LIMITS.links; index++)
+          collision.addActor({
+            id: huntTailId(index),
+            type: 'hazard',
+            position: source.spawn,
+            radius: contactHunt.tail.radius,
+          });
       const ground = collision.support(state.position, rules.droneRadius, 5);
       state.grounded = !!ground && Math.abs(ground.y - state.position.y) <= 5;
       state.support = state.grounded ? ground : null;
@@ -1050,6 +1087,7 @@ export function createWorldFlight({
             (a) =>
               a.id === m.id &&
               a.status === 'active' &&
+              !contactTargets.has(a.id) &&
               (a.role === 'hostile' || a.type === 'hazard'),
           ),
       );
@@ -1133,7 +1171,10 @@ export function createWorldFlight({
     const target = source.steps[mode][state.step];
     if (!target) return; // Completed lab routes remain available for free practice.
     let accepted = false;
-    if (SKILL_TYPES.has(target.type)) accepted = evaluateSkillTarget(target, state, skillBefore);
+    if (target.type === HUNT_CONTACT_CRITERION)
+      accepted = target.targets.every((id) => state.hunt.caught.includes(id));
+    else if (SKILL_TYPES.has(target.type))
+      accepted = evaluateSkillTarget(target, state, skillBefore);
     else if (target.type === 'actor-track-v1') accepted = evaluateActorTrack(target, motions);
     else if (target.type === 'gate') accepted = crossesGate(before, state.position, target);
     else if (target.type === 'eliminate')
@@ -1229,10 +1270,32 @@ export function createWorldFlight({
       delta[k] = roundDiv(state.velocity[k], WORLD_FLIGHT_HZ);
     }
     const impactSpeed = length(state.velocity);
-    const moved = collision.moveSphere(before, delta, rules.droneRadius, motions);
+    const tailMotions = (state.hunt?.tail ?? []).map((point, index) => ({
+      id: huntTailId(index),
+      from: { ...point, y: point.y - contactHunt.tail.radius },
+      to: { ...point, y: point.y - contactHunt.tail.radius },
+    }));
+    const moved = collision.moveSphere(before, delta, rules.droneRadius, [
+      ...motions,
+      ...tailMotions,
+    ]);
     state.position = moved.position;
     if (state.contactCooldown > 0) state.contactCooldown--;
     for (const hit of moved.contacts) {
+      if (contactHunt && hit.id.startsWith('$hunt-tail-')) {
+        state.hunt.failure = 'echo-tail';
+        state.health = 0;
+        state.events.push({ type: 'hunt-tail', actor: hit.id });
+      }
+      const catchable = contactHunt && contactTargets.has(hit.id);
+      const caught =
+        catchable &&
+        source.steps[mode][state.step]?.type === HUNT_CONTACT_CRITERION &&
+        catchHuntTarget(
+          state,
+          contactHunt,
+          state.actors.find((actor) => actor.id === hit.id),
+        );
       const into = roundDiv(
         AXES.reduce((n, k) => n + state.velocity[k] * hit.normal[k], 0),
         Q,
@@ -1242,11 +1305,13 @@ export function createWorldFlight({
         for (const k of AXES) state.velocity[k] -= roundDiv(hit.normal[k] * into, Q);
       const hard = hit.moving || hit.normal.y < 866025 || impactSpeed > 1500;
       if (hard) {
+        if (caught) continue;
         state.contacts++;
         if (state.contactCooldown === 0) {
           const actor = descriptors.get(hit.id);
-          const damage =
-            actor?.type === 'hazard'
+          const damage = catchable
+            ? 0
+            : actor?.type === 'hazard'
               ? actor.damage
               : actor && actor.role !== 'hostile'
                 ? 0
@@ -1282,6 +1347,7 @@ export function createWorldFlight({
       state.velocity.z = roundDiv(state.velocity.z * 700, 1000);
     }
     weapons(command, motions, before);
+    if (contactHunt) updateHuntTail(state.hunt, contactHunt, state.position, rules.droneRadius);
     state.ticks++;
     state.lastInput = { ...command };
     state.heightRange.min = Math.min(state.heightRange.min, state.position.y);

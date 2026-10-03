@@ -162,7 +162,11 @@ export function createWorldAudio(options = {}) {
   }
 
   function cue(type, player = true) {
-    if (type === 'objective') {
+    if (type === 'catch') {
+      tone({ from: 520, to: 880, duration: 0.12, gain: 0.055, type: 'triangle' });
+    } else if (type === 'hunt-tail') {
+      tone({ from: 240, to: 75, duration: 0.18, gain: 0.06, type: 'triangle' });
+    } else if (type === 'objective') {
       const frequency = gateStyle === 'bell' ? 660 : gateStyle === 'radio' ? 440 : 740;
       const wave = gateStyle === 'digital' ? 'triangle' : 'sine';
       tone({ from: frequency, duration: 0.2, gain: 0.07, type: wave });

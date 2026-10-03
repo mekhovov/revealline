@@ -7,6 +7,7 @@ import { classicClaim, updateClassicAnchors } from './classic-topology.mjs';
 import { retainedCaptureCells } from './capture-regions.mjs';
 import { openCapturedRelays } from './relay-gates.mjs';
 import { captureCombatPatrols } from './combat-patrols.mjs';
+import { recordSnakeReturn } from '../snake/rules.mjs';
 
 export function tracePlan(state, paths, duration) {
   const additions = [],
@@ -193,6 +194,7 @@ function captureCells(state, releaseSeed, closeCut) {
     }
   openCapturedRelays(state);
   captureCombatPatrols(state);
+  if (closeCut) recordSnakeReturn(state, 0);
   if (state.classic) updateClassicAnchors(state);
 }
 

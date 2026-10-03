@@ -10,6 +10,7 @@ import {
   DIRECTIONAL_VERSIONS,
   SENTINEL_VERSIONS,
   HUNT_VERSIONS,
+  SNAKE_VERSIONS,
   versionsForCampaign,
 } from './core/versions.mjs';
 import { normalizedLevel } from './core/level.mjs';
@@ -287,6 +288,7 @@ export function createMasteryCatalog(source) {
         'xonix-pack.v8',
         'xonix-pack.v9',
         'xonix-pack.v10',
+        'xonix-pack.v11',
       ].includes(format),
       'Unsupported mastery source pack format.',
     );
@@ -294,7 +296,12 @@ export function createMasteryCatalog(source) {
       !Object.hasOwn(entry, 'sourcePackFormat') || entry.sourcePackFormat === format,
       'A source format must be explicit text or omitted.',
     );
-    const directional = ['xonix-pack.v8', 'xonix-pack.v9', 'xonix-pack.v10'].includes(format);
+    const directional = [
+      'xonix-pack.v8',
+      'xonix-pack.v9',
+      'xonix-pack.v10',
+      'xonix-pack.v11',
+    ].includes(format);
     const relays = format === 'xonix-pack.v7' || directional;
     const foundations = format === 'xonix-pack.v6' || relays;
     const classic = format === 'xonix-pack.v5' || foundations;
@@ -312,23 +319,25 @@ export function createMasteryCatalog(source) {
       definitionIds = new Set();
     requireValue(
       context.versions.ruleset ===
-        (format === 'xonix-pack.v10'
-          ? HUNT_VERSIONS.ruleset
-          : format === 'xonix-pack.v9'
-            ? SENTINEL_VERSIONS.ruleset
-            : directional
-              ? DIRECTIONAL_VERSIONS.ruleset
-              : relays
-                ? RELAY_VERSIONS.ruleset
-                : foundations
-                  ? FOUNDATION_VERSIONS.ruleset
-                  : classic
-                    ? CLASSIC_VERSIONS.ruleset
-                    : wide
-                      ? WIDE_VERSIONS.ruleset
-                      : encounter
-                        ? ENCOUNTER_VERSIONS.ruleset
-                        : LEGACY_VERSIONS.ruleset),
+        (format === 'xonix-pack.v11'
+          ? SNAKE_VERSIONS.ruleset
+          : format === 'xonix-pack.v10'
+            ? HUNT_VERSIONS.ruleset
+            : format === 'xonix-pack.v9'
+              ? SENTINEL_VERSIONS.ruleset
+              : directional
+                ? DIRECTIONAL_VERSIONS.ruleset
+                : relays
+                  ? RELAY_VERSIONS.ruleset
+                  : foundations
+                    ? FOUNDATION_VERSIONS.ruleset
+                    : classic
+                      ? CLASSIC_VERSIONS.ruleset
+                      : wide
+                        ? WIDE_VERSIONS.ruleset
+                        : encounter
+                          ? ENCOUNTER_VERSIONS.ruleset
+                          : LEGACY_VERSIONS.ruleset),
       'Pack format and campaign simulation versions differ.',
     );
     requireValue(

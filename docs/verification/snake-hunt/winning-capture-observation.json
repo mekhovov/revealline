@@ -1,0 +1,749 @@
+{
+  "format": "snake-hunt-winning-capture-observation.v1",
+  "observedAt": "2026-10-03T00:34:47.203Z",
+  "scope": "One bounded manually steered production run of an unchanged authored mission; no state mutation, search, or suite runner.",
+  "source": {
+    "head": "f420c00a7ed13dd6410cff610e4017ccaa952457",
+    "workingTreeProduct": true,
+    "sha256": {
+      "game/snake/rules.mjs": "d4e7a25942a7eecd7a2858fd5ef0529fb9b194de2c2b215f8977d0bb2ab95e63",
+      "game/core/index.mjs": "28b60827829bad57c8405e3d4eed0b3a7368f41d99064c6b52357fc28f17746f",
+      "game/core/classic-step.mjs": "6cd07b32a3a30983767c45431a5fa69d5cd196683cb624ef8b7f17a5b5931c1a",
+      "game/core/versions.mjs": "e8962ddcf8161e33951563f5d6a40fc9aa9a8e79959a28e26aebaaeb58e128af",
+      "game/core/level.mjs": "15114de24f5335669fffd0c521eb992bc4975f6dcdad9936f01f200954f99135",
+      "game/core/capture.mjs": "9ea5eec1db293445c3e93cf809ca08bded13062bbbdfe3ac6b7c1306a3cac731",
+      "game/core/combat-patrols.mjs": "7e49aa9588725597499a78badba5ee487bd906298e7b17f8054f447b607f3850",
+      "game/core/foundations.mjs": "5bba8689aed68d43bafca509fbcb26e0783d96efbb1ed64a07083d3b7a86cd71",
+      "game/replay.mjs": "497487927b83e9e4560d7c2fe57e78f4f2341b46baf71a663b5af550fbce39e9",
+      "game/coop/core.mjs": "6350d308e51fdbcb8daf7e0b9c254facfbd18d5df0a3c37e202fa754234f2b08",
+      "game/coop/combat-patrols.mjs": "106eb56c5b2663ad6c6de7d1ea10646d9491484b4e773f559e7e8e7d311fd4c2",
+      "game/coop/foundations.mjs": "3915875ffa24b7a5cad681ee7c02d380258231f6b5c089834e86b9a2e6b83e43",
+      "game/coop/recipes.mjs": "885a93d78881e89eafca7f9c603533a775249413e5955411ea50a1be8cfab9df",
+      "game/coop/hunt-attempts.mjs": "8cc16a555c8fa8395f52542d4ba9500e2cc141b89055b1fea7d4c3ae4cd24dbb",
+      "game/content-design/snake-hunt-candidates.mjs": "8b9d1285c093fcf700cc2b9679547a96abfde02495f4eee20a61cbc6f0aec26b",
+      "game/content-design/team-snake-hunt-candidates.mjs": "82cac29be6d8fbfaa1e32a714b1b16732983f599322486a29dfe6c8275c071c9",
+      "game/gameplay-tuning.mjs": "2e623afebdcb8f552f69f433d0e2790fded9c31dafb8a10327147234e74fe683"
+    },
+    "coreHashesMatchEarlierReceipt": true
+  },
+  "recipe": {
+    "missionId": "snake-open-loop",
+    "mode": "solo",
+    "difficulty": "gentle",
+    "tuning": {
+      "version": "gameplay-pressure.v4",
+      "difficulty": "gentle",
+      "enemySpeed": 0.75,
+      "playerSpeed": 1,
+      "enemyDensity": 0,
+      "adminOverride": false,
+      "overrides": {
+        "enemySpeed": 1,
+        "playerSpeed": 1,
+        "enemyDensity": 1
+      }
+    },
+    "seed": 17,
+    "classId": "scout",
+    "turnPolicy": "grid-center",
+    "levelVersion": "xonix-level.v11",
+    "ruleset": "xonix-core.v12"
+  },
+  "inputMethod": "Directions were selected between bounded held-input segments after reading the production positions. Boost was held. No level, enemy, body, score or run state was changed. One keeper hit was recovered normally. The replay owns the exact recipe and complete input history.",
+  "summary": {
+    "snake": {
+      "version": "snake-hunt-state.v1",
+      "lengths": [5],
+      "capacities": [6],
+      "catches": 4,
+      "chain": 2,
+      "bestChain": 2,
+      "bonusScore": 0,
+      "nextTargetId": null,
+      "friendlyTail": "self"
+    },
+    "ruleset": "xonix-core.v12",
+    "levelId": "snake-open-loop",
+    "revision": "gp4g-3ff00000000000003ff00000000000003ff0000000000000-162069b9f0a19adc",
+    "seed": 17,
+    "turnPolicy": "grid-center",
+    "classId": "scout",
+    "activeClassId": "scout",
+    "rosterHash": "roster-v1-e159e435",
+    "classHistory": [
+      {
+        "classId": "scout",
+        "classRevision": "1",
+        "loadoutHash": "loadout-v1-aaa4aadd",
+        "tick": 0
+      }
+    ],
+    "switches": 0,
+    "failureCause": "enemy-trail",
+    "classRevision": "1",
+    "loadoutHash": "loadout-v1-aaa4aadd",
+    "status": "won",
+    "won": true,
+    "tick": 5559,
+    "time": 46.3236802413252,
+    "lives": 4,
+    "livesLost": 1,
+    "score": 16570,
+    "hunt": {
+      "version": "humanoid-hunt-state.v1",
+      "mode": "hunt",
+      "quota": 4,
+      "total": 4,
+      "remaining": 0,
+      "kills": 4,
+      "touchKills": 0,
+      "captureKills": 4,
+      "score": 200
+    },
+    "coverage": 0.7033106960950763,
+    "claimedCount": 1657,
+    "totalClaimable": 2356,
+    "medal": "silver",
+    "objectives": {
+      "captured": 0,
+      "total": 0,
+      "required": 0
+    }
+  },
+  "finalTransaction": [
+    {
+      "type": "cut.closed",
+      "tick": 5559,
+      "time": 46.3236802413252,
+      "cells": 112
+    },
+    {
+      "type": "snake.caught",
+      "tick": 5559,
+      "time": 46.3236802413252,
+      "actorId": "target-2",
+      "player": 0,
+      "capacity": 6,
+      "chain": 2,
+      "bonusScore": 0
+    },
+    {
+      "type": "combat.eliminated",
+      "tick": 5559,
+      "time": 46.3236802413252,
+      "id": "target-2",
+      "cause": "capture",
+      "x": 70.26019231334408,
+      "y": 24.606192315343606
+    },
+    {
+      "type": "capture.stopped",
+      "tick": 5559,
+      "time": 46.3236802413252
+    },
+    {
+      "type": "run.completed",
+      "tick": 5559,
+      "time": 46.3236802413252,
+      "snake": {
+        "version": "snake-hunt-state.v1",
+        "lengths": [5],
+        "capacities": [6],
+        "catches": 4,
+        "chain": 2,
+        "bestChain": 2,
+        "bonusScore": 0,
+        "nextTargetId": null,
+        "friendlyTail": "self"
+      },
+      "ruleset": "xonix-core.v12",
+      "levelId": "snake-open-loop",
+      "revision": "gp4g-3ff00000000000003ff00000000000003ff0000000000000-162069b9f0a19adc",
+      "seed": 17,
+      "turnPolicy": "grid-center",
+      "classId": "scout",
+      "activeClassId": "scout",
+      "rosterHash": "roster-v1-e159e435",
+      "classHistory": [
+        {
+          "classId": "scout",
+          "classRevision": "1",
+          "loadoutHash": "loadout-v1-aaa4aadd",
+          "tick": 0
+        }
+      ],
+      "switches": 0,
+      "failureCause": "enemy-trail",
+      "classRevision": "1",
+      "loadoutHash": "loadout-v1-aaa4aadd",
+      "status": "won",
+      "won": true,
+      "lives": 4,
+      "livesLost": 1,
+      "score": 16570,
+      "hunt": {
+        "version": "humanoid-hunt-state.v1",
+        "mode": "hunt",
+        "quota": 4,
+        "total": 4,
+        "remaining": 0,
+        "kills": 4,
+        "touchKills": 0,
+        "captureKills": 4,
+        "score": 200
+      },
+      "coverage": 0.7033106960950763,
+      "claimedCount": 1657,
+      "totalClaimable": 2356,
+      "medal": "silver",
+      "objectives": {
+        "captured": 0,
+        "total": 0,
+        "required": 0
+      }
+    }
+  ],
+  "observedCheckpoints": [
+    {
+      "label": "initial",
+      "tick": 0,
+      "time": 0,
+      "status": "running",
+      "lives": 5,
+      "player": {
+        "x": 8.5,
+        "y": 0.5,
+        "cutting": false
+      },
+      "hunt": {
+        "version": "humanoid-hunt-state.v1",
+        "kills": 0,
+        "touchKills": 0,
+        "captureKills": 0,
+        "score": 0
+      },
+      "coverage": 0,
+      "remaining": ["target-1", "target-2", "target-3", "target-4"],
+      "bodyCapacity": 2,
+      "caughtIds": []
+    },
+    {
+      "label": "boosted top rail",
+      "tick": 200,
+      "time": 1.6666666666666632,
+      "status": "running",
+      "lives": 5,
+      "player": {
+        "x": 23.233333333333395,
+        "y": 0.5,
+        "cutting": false
+      },
+      "hunt": {
+        "version": "humanoid-hunt-state.v1",
+        "kills": 0,
+        "touchKills": 0,
+        "captureKills": 0,
+        "score": 0
+      },
+      "coverage": 0,
+      "remaining": ["target-1", "target-2", "target-3", "target-4"],
+      "bodyCapacity": 2,
+      "caughtIds": []
+    },
+    {
+      "label": "approach central rail",
+      "tick": 365,
+      "time": 3.0416666666666585,
+      "status": "running",
+      "lives": 5,
+      "player": {
+        "x": 35.38833333333359,
+        "y": 0.5,
+        "cutting": false
+      },
+      "hunt": {
+        "version": "humanoid-hunt-state.v1",
+        "kills": 0,
+        "touchKills": 0,
+        "captureKills": 0,
+        "score": 0
+      },
+      "coverage": 0,
+      "remaining": ["target-1", "target-2", "target-3", "target-4"],
+      "bodyCapacity": 2,
+      "caughtIds": []
+    },
+    {
+      "label": "reach central island",
+      "tick": 595,
+      "time": 4.9583333333333695,
+      "status": "running",
+      "lives": 5,
+      "player": {
+        "x": 35.5,
+        "y": 17.326000000000022,
+        "cutting": false
+      },
+      "hunt": {
+        "version": "humanoid-hunt-state.v1",
+        "kills": 0,
+        "touchKills": 0,
+        "captureKills": 0,
+        "score": 0
+      },
+      "coverage": 0.006366723259762309,
+      "remaining": ["target-1", "target-2", "target-3", "target-4"],
+      "bodyCapacity": 2,
+      "caughtIds": []
+    },
+    {
+      "label": "bank lower-left quarter",
+      "tick": 1073,
+      "time": 8.9416666666668,
+      "status": "running",
+      "lives": 5,
+      "player": {
+        "x": 0.5,
+        "y": 17.5,
+        "cutting": false
+      },
+      "hunt": {
+        "version": "humanoid-hunt-state.v1",
+        "kills": 1,
+        "touchKills": 0,
+        "captureKills": 1,
+        "score": 50
+      },
+      "coverage": 0.24830220713073006,
+      "remaining": ["target-2", "target-3", "target-4"],
+      "bodyCapacity": 3,
+      "caughtIds": ["target-1"]
+    },
+    {
+      "label": "safe loop to top rail",
+      "tick": 1304,
+      "time": 10.86666666666669,
+      "status": "running",
+      "lives": 5,
+      "player": {
+        "x": 0.5,
+        "y": 0.5,
+        "cutting": false
+      },
+      "hunt": {
+        "version": "humanoid-hunt-state.v1",
+        "kills": 1,
+        "touchKills": 0,
+        "captureKills": 1,
+        "score": 50
+      },
+      "coverage": 0.24830220713073006,
+      "remaining": ["target-2", "target-3", "target-4"],
+      "bodyCapacity": 3,
+      "caughtIds": ["target-1"]
+    },
+    {
+      "label": "safe loop to central rail",
+      "tick": 1779,
+      "time": 14.824999999999799,
+      "status": "running",
+      "lives": 5,
+      "player": {
+        "x": 35.49166666666694,
+        "y": 0.5,
+        "cutting": false
+      },
+      "hunt": {
+        "version": "humanoid-hunt-state.v1",
+        "kills": 1,
+        "touchKills": 0,
+        "captureKills": 1,
+        "score": 50
+      },
+      "coverage": 0.24830220713073006,
+      "remaining": ["target-2", "target-3", "target-4"],
+      "bodyCapacity": 3,
+      "caughtIds": ["target-1"]
+    },
+    {
+      "label": "return to central island",
+      "tick": 2011,
+      "time": 16.758333333333024,
+      "status": "running",
+      "lives": 5,
+      "player": {
+        "x": 35.5,
+        "y": 17.582333333333583,
+        "cutting": false
+      },
+      "hunt": {
+        "version": "humanoid-hunt-state.v1",
+        "kills": 1,
+        "touchKills": 0,
+        "captureKills": 1,
+        "score": 50
+      },
+      "coverage": 0.24830220713073006,
+      "remaining": ["target-2", "target-3", "target-4"],
+      "bodyCapacity": 3,
+      "caughtIds": ["target-1"]
+    },
+    {
+      "label": "divide eastern half",
+      "tick": 2506,
+      "time": 20.88333333333279,
+      "status": "running",
+      "lives": 5,
+      "player": {
+        "x": 71,
+        "y": 18.5,
+        "cutting": false
+      },
+      "hunt": {
+        "version": "humanoid-hunt-state.v1",
+        "kills": 2,
+        "touchKills": 0,
+        "captureKills": 2,
+        "score": 100
+      },
+      "coverage": 0.5118845500848896,
+      "remaining": ["target-2", "target-4"],
+      "bodyCapacity": 4,
+      "caughtIds": ["target-1", "target-3"]
+    },
+    {
+      "label": "complete edge entry",
+      "tick": 2513,
+      "time": 20.94166666666612,
+      "status": "running",
+      "lives": 5,
+      "player": {
+        "x": 71.5,
+        "y": 18.5,
+        "cutting": false
+      },
+      "hunt": {
+        "version": "humanoid-hunt-state.v1",
+        "kills": 2,
+        "touchKills": 0,
+        "captureKills": 2,
+        "score": 100
+      },
+      "coverage": 0.5118845500848896,
+      "remaining": ["target-2", "target-4"],
+      "bodyCapacity": 4,
+      "caughtIds": ["target-1", "target-3"]
+    },
+    {
+      "label": "outer right rail",
+      "tick": 2744,
+      "time": 22.86666666666601,
+      "status": "running",
+      "lives": 5,
+      "player": {
+        "x": 71.5,
+        "y": 35.5,
+        "cutting": false
+      },
+      "hunt": {
+        "version": "humanoid-hunt-state.v1",
+        "kills": 2,
+        "touchKills": 0,
+        "captureKills": 2,
+        "score": 100
+      },
+      "coverage": 0.5118845500848896,
+      "remaining": ["target-2", "target-4"],
+      "bodyCapacity": 4,
+      "caughtIds": ["target-1", "target-3"]
+    },
+    {
+      "label": "lower rail toward eastern runner",
+      "tick": 3029,
+      "time": 25.241666666665875,
+      "status": "running",
+      "lives": 5,
+      "player": {
+        "x": 50.504999999999654,
+        "y": 35.5,
+        "cutting": false
+      },
+      "hunt": {
+        "version": "humanoid-hunt-state.v1",
+        "kills": 2,
+        "touchKills": 0,
+        "captureKills": 2,
+        "score": 100
+      },
+      "coverage": 0.5118845500848896,
+      "remaining": ["target-2", "target-4"],
+      "bodyCapacity": 4,
+      "caughtIds": ["target-1", "target-3"]
+    },
+    {
+      "label": "bank eastern runner enclosure",
+      "tick": 3274,
+      "time": 27.283333333332425,
+      "status": "running",
+      "lives": 5,
+      "player": {
+        "x": 50.5,
+        "y": 17.526666666666646,
+        "cutting": false
+      },
+      "hunt": {
+        "version": "humanoid-hunt-state.v1",
+        "kills": 2,
+        "touchKills": 0,
+        "captureKills": 2,
+        "score": 100
+      },
+      "coverage": 0.5186757215619694,
+      "remaining": ["target-2", "target-4"],
+      "bodyCapacity": 4,
+      "caughtIds": ["target-1", "target-3"]
+    },
+    {
+      "label": "upper safe rail across eastern pocket",
+      "tick": 3559,
+      "time": 29.65833333333229,
+      "status": "running",
+      "lives": 5,
+      "player": {
+        "x": 71.46833333333369,
+        "y": 17.5,
+        "cutting": false
+      },
+      "hunt": {
+        "version": "humanoid-hunt-state.v1",
+        "kills": 2,
+        "touchKills": 0,
+        "captureKills": 2,
+        "score": 100
+      },
+      "coverage": 0.5186757215619694,
+      "remaining": ["target-2", "target-4"],
+      "bodyCapacity": 4,
+      "caughtIds": ["target-1", "target-3"]
+    },
+    {
+      "label": "right border to pocket midline",
+      "tick": 3730,
+      "time": 31.08333333333221,
+      "status": "running",
+      "lives": 5,
+      "player": {
+        "x": 71.5,
+        "y": 30.065333333333896,
+        "cutting": false
+      },
+      "hunt": {
+        "version": "humanoid-hunt-state.v1",
+        "kills": 2,
+        "touchKills": 0,
+        "captureKills": 2,
+        "score": 100
+      },
+      "coverage": 0.5186757215619694,
+      "remaining": ["target-2", "target-4"],
+      "bodyCapacity": 4,
+      "caughtIds": ["target-1", "target-3"]
+    },
+    {
+      "label": "split eastern pocket",
+      "tick": 4019,
+      "time": 33.49166666666541,
+      "status": "respawning",
+      "lives": 4,
+      "player": {
+        "x": 52.17738578623806,
+        "y": 30.5,
+        "cutting": false
+      },
+      "hunt": {
+        "version": "humanoid-hunt-state.v1",
+        "kills": 2,
+        "touchKills": 0,
+        "captureKills": 2,
+        "score": 100
+      },
+      "coverage": 0.5186757215619694,
+      "remaining": ["target-2", "target-4"],
+      "bodyCapacity": 4,
+      "caughtIds": ["target-1", "target-3"]
+    },
+    {
+      "label": "recover without changing rewards",
+      "tick": 4099,
+      "time": 34.15833333333204,
+      "status": "running",
+      "lives": 4,
+      "player": {
+        "x": 8.5,
+        "y": 0.5,
+        "cutting": false
+      },
+      "hunt": {
+        "version": "humanoid-hunt-state.v1",
+        "kills": 2,
+        "touchKills": 0,
+        "captureKills": 2,
+        "score": 100
+      },
+      "coverage": 0.5186757215619694,
+      "remaining": ["target-2", "target-4"],
+      "bodyCapacity": 4,
+      "caughtIds": ["target-1", "target-3"]
+    },
+    {
+      "label": "safe rail to western target pocket",
+      "tick": 4235,
+      "time": 35.29166666666531,
+      "status": "running",
+      "lives": 4,
+      "player": {
+        "x": 18.51866666666665,
+        "y": 0.5,
+        "cutting": false
+      },
+      "hunt": {
+        "version": "humanoid-hunt-state.v1",
+        "kills": 2,
+        "touchKills": 0,
+        "captureKills": 2,
+        "score": 100
+      },
+      "coverage": 0.5186757215619694,
+      "remaining": ["target-2", "target-4"],
+      "bodyCapacity": 4,
+      "caughtIds": ["target-1", "target-3"]
+    },
+    {
+      "label": "close western target pocket",
+      "tick": 4712,
+      "time": 39.26666666666508,
+      "status": "running",
+      "lives": 4,
+      "player": {
+        "x": 19.5,
+        "y": 34.65766666666692,
+        "cutting": true
+      },
+      "hunt": {
+        "version": "humanoid-hunt-state.v1",
+        "kills": 2,
+        "touchKills": 0,
+        "captureKills": 2,
+        "score": 100
+      },
+      "coverage": 0.5186757215619694,
+      "remaining": ["target-2", "target-4"],
+      "bodyCapacity": 4,
+      "caughtIds": ["target-1", "target-3"]
+    },
+    {
+      "label": "close western capture",
+      "tick": 4724,
+      "time": 39.366666666665076,
+      "status": "running",
+      "lives": 4,
+      "player": {
+        "x": 19.5,
+        "y": 35.5,
+        "cutting": false
+      },
+      "hunt": {
+        "version": "humanoid-hunt-state.v1",
+        "kills": 3,
+        "touchKills": 0,
+        "captureKills": 3,
+        "score": 150
+      },
+      "coverage": 0.6557724957555179,
+      "remaining": ["target-2"],
+      "bodyCapacity": 5,
+      "caughtIds": ["target-1", "target-3", "target-4"]
+    },
+    {
+      "label": "lower rail to last target",
+      "tick": 5334,
+      "time": 44.44999999999812,
+      "status": "running",
+      "lives": 4,
+      "player": {
+        "x": 64.4366666666674,
+        "y": 35.5,
+        "cutting": false
+      },
+      "hunt": {
+        "version": "humanoid-hunt-state.v1",
+        "kills": 3,
+        "touchKills": 0,
+        "captureKills": 3,
+        "score": 150
+      },
+      "coverage": 0.6557724957555179,
+      "remaining": ["target-2"],
+      "bodyCapacity": 5,
+      "caughtIds": ["target-1", "target-3", "target-4"]
+    },
+    {
+      "label": "final eastern strip attempt",
+      "tick": 5559,
+      "time": 46.3236802413252,
+      "status": "won",
+      "lives": 4,
+      "player": {
+        "x": 64.5,
+        "y": 19,
+        "cutting": false
+      },
+      "hunt": {
+        "version": "humanoid-hunt-state.v1",
+        "kills": 4,
+        "touchKills": 0,
+        "captureKills": 4,
+        "score": 200
+      },
+      "coverage": 0.7033106960950763,
+      "remaining": [],
+      "bodyCapacity": 6,
+      "caughtIds": ["target-1", "target-3", "target-4", "target-2"]
+    }
+  ],
+  "replay": {
+    "file": "solo-open-loop-gentle-win.replay.json",
+    "version": "xonix-replay.v13",
+    "checkpoint": {
+      "algorithm": "fnv1a64-state-v12",
+      "hash": "25a5c16b3441e17b",
+      "sections": {
+        "identity": "1a537199d12e7920",
+        "configuration": "636ab476be581936",
+        "board": "b17fdc37e10aa203",
+        "player": "6d7470d44c68e324",
+        "trail": "f0ca473df9efdcc8",
+        "enemies": "933988848fd9ccff",
+        "objectives": "09612b07b5ecb5a5",
+        "supplies": "09612b07b5ecb5a5",
+        "ability": "f6b5aef539d929bb",
+        "clock": "7bb6c46c0ac50b8c",
+        "continuation": "a9d828ced6380d30",
+        "result": "0ccab885a1d7beb4",
+        "encounter": "5b9bc4ba528108e4",
+        "classic": "9fc3f27958476dd5",
+        "foundations": "314423053ee27fe0",
+        "relays": "f38a1e30c8ea9254",
+        "directionalFields": "fd90177a6d9ee047",
+        "snake": "1ff9b80b22b7872d"
+      }
+    },
+    "verified": true,
+    "segments": 18
+  },
+  "limits": [
+    "This proves one authored Solo solution and the terminal capture/growth/win transaction, not all48 mission solutions.",
+    "Exact-time fatal/catch ties, Team terminal captures and paired Versus wins remain outside this observation.",
+    "Automated test suites remained waived and were not run."
+  ]
+}
