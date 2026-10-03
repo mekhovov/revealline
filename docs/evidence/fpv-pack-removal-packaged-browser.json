@@ -373,47 +373,47 @@
     },
     {
       "label": "Mount actual library and preserve an unsaved Creator draft",
-      "ms": 213
+      "ms": 191
     },
     {
       "label": "Review, Cancel and dialog-cancel preserve data and focus",
-      "ms": 695
+      "ms": 652
     },
     {
       "label": "Export each revision and affected recordings without activation",
-      "ms": 781
+      "ms": 739
     },
     {
       "label": "Generation conflict and native transaction abort do not delete content",
-      "ms": 1276
+      "ms": 1224
     },
     {
       "label": "Confirmed removal preserves records, draft and exact restoration requirements",
-      "ms": 1429
+      "ms": 1385
     },
     {
       "label": "Wrong revision is rejected; exact revision restoration changes no evidence",
-      "ms": 1758
+      "ms": 1710
     },
     {
       "label": "Valid noncanonical transport keeps identity and reports export limitation",
-      "ms": 1825
+      "ms": 1776
     },
     {
       "label": "Explicit verification and interrupted-prefix recovery use actual runtime",
-      "ms": 1886
+      "ms": 1838
     },
     {
       "label": "Closing host while review prepares cannot remove a pack",
-      "ms": 2080
+      "ms": 2045
     }
   ],
   "manifest": {
     "format": "FPVPackRemovalFixture.v1",
-    "candidateBase": "/dist/fpv-pack-removal-verification-packaged-01/candidate",
-    "sourceBase": "/dist/fpv-pack-recovery-packaged-01",
+    "candidateBase": "/dist/fpv-pack-removal-verification-packaged-02/candidate",
+    "sourceBase": "/dist/fpv-pack-recovery-packaged-02",
     "sourceFiles": {
-      "optional-practice/civilian-fpv/world-app.mjs": "b65ef74310dc1c23b7c23385428211b0cb28174eead31dda6d29c4c531894e02",
+      "optional-practice/civilian-fpv/world-app.mjs": "c3f2a71d5e44ffe1e26110b6712ae1f8fb9032a78337567ecb0e945c71e6e776",
       "optional-practice/civilian-fpv/world-catalogue.mjs": "d901363b623193f4896100f9381c7579946796e741554f012581ebb93f9ea8a6",
       "game/data-json.mjs": "9ce33d6173f3cba8587ed7a7f1924c66e9d9c86ffa59b37a743764ea0b01f7bd",
       "game/i18n/index.mjs": "29f40a6d92826ced1eb53283ed32e342ac6e95920abbf8d549f2d78e65b48d07",
@@ -430,12 +430,12 @@
       "optional-practice/civilian-fpv/world-demonstrations.mjs": "c9f2d0ee5c571507ae1dce4f48898554cb2ad179218f1905cdc8013db2e2c114",
       "optional-practice/civilian-fpv/world-model.mjs": "d6e0939daf77a2a1459687dd8ba900719b78b02a1b3fe5fab862773bd6109551",
       "optional-practice/civilian-fpv/world-themes.mjs": "67abda8ff53ba18e9aede45c57a8f9ec599dc0ddf7c977ce1d8ad2524e6c5549",
-      "game/presentation/theme-system.mjs": "aa2314f10ffa9bb5426e2e8c629bb6a43a3a209b4732c92be09f921d4cae4bc2",
+      "game/presentation/theme-system.mjs": "bf5b10cd7b1e9ea037bdb62aeb6aa401eedfd296891a3c64f514bd6ce86fb1ee",
       "optional-practice/civilian-fpv/world-collision.mjs": "2899c7c84f9eae14b9a3434f585a8e873f4a1361e8f3ce4026ef27f44bdeef32",
       "optional-practice/civilian-fpv/vendor/rapier/rapier.mjs": "02dc6a4e2fffc013bab08fbb44fa68f501d8303615e9afe4c7d89ad4eedda0d0",
       "optional-practice/civilian-fpv/beginner-coach.mjs": "65198813dec5b51fc91eca77f38b04c06f6f2b1acb322e3033238d9fea7d1f97",
       "optional-practice/civilian-fpv/input.mjs": "e80b8c16e93516fb5bce96e67a3d0472fed166c8be2e79af16f81182722e05b1",
-      "optional-practice/civilian-fpv/sim-presentation.mjs": "ba96476a55dc2f4e14bbc8882ab1d9952d76f119bd2f1b0e8dcbc1b192b6eb7a",
+      "optional-practice/civilian-fpv/sim-presentation.mjs": "e851f66fc07acf79fd33a6b14d96d2266ec58afe3f2b687e2cdd65ad02044b9f",
       "game/ui/native-menu-icons.mjs": "d710daff089fbbfe262ed0738b89e31f2494789b02c326f130e6eb32d248b731",
       "optional-practice/civilian-fpv/radio-runtime.mjs": "3d908c7f6f1295fddacb952fadfc327206153248dbf5222ef31677eb4ff8f71b",
       "optional-practice/civilian-fpv/radio-session.mjs": "98fdd029f1deb9eb6b51f2ae2f8fb5c441e2b3a7a2aca520a7e9ce5e267e80ef",
@@ -474,80 +474,80 @@
       "optional-practice/civilian-fpv/world-audio.mjs": "0aead831e25798324e3ad51356401f36612b832b55946225d849654f04d26233",
       "optional-practice/civilian-fpv/world-progress.mjs": "bc51a58aa8e068e5e74ee8ad03b2e4dd08ca672fc6dd2bada6521e5df66de89f",
       "optional-practice/civilian-fpv/world-hangar.mjs": "759d21e034e65e99600df72ef7e04a2fdff8359ec9119baa401323b248ec85ef",
-      "optional-practice/civilian-fpv/world-actor-editor.mjs": "a157c824cbb5058059402e159d7571dfa394f4ae21b6aa28296e5deea7190159",
+      "optional-practice/civilian-fpv/world-actor-editor.mjs": "4495cd582f9b8c01026e5b3e13a177d752862db98db64719156975afc37e74ce",
       "game/fpv-entry.mjs": "3713b9d9ae2376fd5b59f805b808964522c1ec7afa4303ac9b5227a02f32ae0b",
       "optional-practice/fpv-worlds/index.html": "3051aac26469272b4e0551031948f13a65a7c933a6b94c76dd2e2b93fac064f0"
     },
-    "candidateHostSha256": "b65ef74310dc1c23b7c23385428211b0cb28174eead31dda6d29c4c531894e02",
+    "candidateHostSha256": "c3f2a71d5e44ffe1e26110b6712ae1f8fb9032a78337567ecb0e945c71e6e776",
     "fixtureFiles": {
       "index.html": "c30d465c4c5c55f04592bde8e62f6c332c14c616da173ed62f90db0780d9bbd8",
-      "player.html": "5e087aa613265e47463ccb573c00033d40a58cd6bd6ad96349eec29e8f11e469"
+      "player.html": "3e4383c7392eaa2576a773c22738d630f5698e490efd00a55f577297e8b3d173"
     },
     "currentSources": {
-      "/dist/fpv-pack-removal-verification-packaged-01/candidate/optional-practice/civilian-fpv/world-app.mjs": "b65ef74310dc1c23b7c23385428211b0cb28174eead31dda6d29c4c531894e02",
-      "/dist/fpv-pack-removal-verification-packaged-01/candidate/optional-practice/civilian-fpv/world-catalogue.mjs": "d901363b623193f4896100f9381c7579946796e741554f012581ebb93f9ea8a6",
-      "/dist/fpv-pack-removal-verification-packaged-01/candidate/game/data-json.mjs": "9ce33d6173f3cba8587ed7a7f1924c66e9d9c86ffa59b37a743764ea0b01f7bd",
-      "/dist/fpv-pack-removal-verification-packaged-01/candidate/game/i18n/index.mjs": "29f40a6d92826ced1eb53283ed32e342ac6e95920abbf8d549f2d78e65b48d07",
-      "/dist/fpv-pack-removal-verification-packaged-01/candidate/game/vendor/i18next-26.4.2.min.js": "eb0dd6d72e8f756b90faf864853af2a17870fe97b54473b7c34494870c65901c",
-      "/dist/fpv-pack-removal-verification-packaged-01/candidate/game/i18n/catalogs.mjs": "150f60e0ee7d0c281f026ccf76b11d02d73b6022e0097dec89875987e844fb3b",
-      "/dist/fpv-pack-removal-verification-packaged-01/candidate/game/i18n/bootstrap.mjs": "242e4791b2202d2644b91df5aa76355019890525af774ee2e795c937988b0395",
-      "/dist/fpv-pack-removal-verification-packaged-01/candidate/optional-practice/civilian-fpv/catalogue.mjs": "98338353d17eb585414538c9905040752fd5cd6699c48b17fa1706832b750997",
-      "/dist/fpv-pack-removal-verification-packaged-01/candidate/optional-practice/civilian-fpv/model.mjs": "9e4cd11cfdde2dd43b437069b8cb7a359a8132495db806cb5f68e8674d48aaf6",
-      "/dist/fpv-pack-removal-verification-packaged-01/candidate/optional-practice/civilian-fpv/radio-profile.mjs": "f588fd5cda96ed9627a483f49ca843ace8d99a68fae42b0a4239c2cd0ab81933",
-      "/dist/fpv-pack-removal-verification-packaged-01/candidate/optional-practice/civilian-fpv/math.mjs": "555c8b6ea170b46992133507d2a3d867f06185bca060239cab7db9c9b87f9f98",
-      "/dist/fpv-pack-removal-verification-packaged-01/candidate/optional-practice/civilian-fpv/rotation-table.mjs": "2ddab304ac99a2e70fc7e84fc6c27eedb49f1f3dac976baed680effa659cef41",
-      "/dist/fpv-pack-removal-verification-packaged-01/candidate/optional-practice/civilian-fpv/flight-sectors.mjs": "5b1b54bde4e578e61da7d59f4a80a86db9aafbc78b4523d2ba2b540277a0a16d",
-      "/dist/fpv-pack-removal-verification-packaged-01/candidate/optional-practice/civilian-fpv/demonstrations.mjs": "92bb4365c46d94f5c1fea9808ec4e24fb9014d35640ee488959c4e0f4b6c5cfa",
-      "/dist/fpv-pack-removal-verification-packaged-01/candidate/optional-practice/civilian-fpv/world-demonstrations.mjs": "c9f2d0ee5c571507ae1dce4f48898554cb2ad179218f1905cdc8013db2e2c114",
-      "/dist/fpv-pack-removal-verification-packaged-01/candidate/optional-practice/civilian-fpv/world-model.mjs": "d6e0939daf77a2a1459687dd8ba900719b78b02a1b3fe5fab862773bd6109551",
-      "/dist/fpv-pack-removal-verification-packaged-01/candidate/optional-practice/civilian-fpv/world-themes.mjs": "67abda8ff53ba18e9aede45c57a8f9ec599dc0ddf7c977ce1d8ad2524e6c5549",
-      "/dist/fpv-pack-removal-verification-packaged-01/candidate/game/presentation/theme-system.mjs": "aa2314f10ffa9bb5426e2e8c629bb6a43a3a209b4732c92be09f921d4cae4bc2",
-      "/dist/fpv-pack-removal-verification-packaged-01/candidate/optional-practice/civilian-fpv/world-collision.mjs": "2899c7c84f9eae14b9a3434f585a8e873f4a1361e8f3ce4026ef27f44bdeef32",
-      "/dist/fpv-pack-removal-verification-packaged-01/candidate/optional-practice/civilian-fpv/vendor/rapier/rapier.mjs": "02dc6a4e2fffc013bab08fbb44fa68f501d8303615e9afe4c7d89ad4eedda0d0",
-      "/dist/fpv-pack-removal-verification-packaged-01/candidate/optional-practice/civilian-fpv/beginner-coach.mjs": "65198813dec5b51fc91eca77f38b04c06f6f2b1acb322e3033238d9fea7d1f97",
-      "/dist/fpv-pack-removal-verification-packaged-01/candidate/optional-practice/civilian-fpv/input.mjs": "e80b8c16e93516fb5bce96e67a3d0472fed166c8be2e79af16f81182722e05b1",
-      "/dist/fpv-pack-removal-verification-packaged-01/candidate/optional-practice/civilian-fpv/sim-presentation.mjs": "ba96476a55dc2f4e14bbc8882ab1d9952d76f119bd2f1b0e8dcbc1b192b6eb7a",
-      "/dist/fpv-pack-removal-verification-packaged-01/candidate/game/ui/native-menu-icons.mjs": "d710daff089fbbfe262ed0738b89e31f2494789b02c326f130e6eb32d248b731",
-      "/dist/fpv-pack-removal-verification-packaged-01/candidate/optional-practice/civilian-fpv/radio-runtime.mjs": "3d908c7f6f1295fddacb952fadfc327206153248dbf5222ef31677eb4ff8f71b",
-      "/dist/fpv-pack-removal-verification-packaged-01/candidate/optional-practice/civilian-fpv/radio-session.mjs": "98fdd029f1deb9eb6b51f2ae2f8fb5c441e2b3a7a2aca520a7e9ce5e267e80ef",
-      "/dist/fpv-pack-removal-verification-packaged-01/candidate/optional-practice/civilian-fpv/radio-setup.mjs": "d4c091a8539221e71e39a12436af45a681a21e13f5468b8b4ecccd1b4c05e7d6",
-      "/dist/fpv-pack-removal-verification-packaged-01/candidate/optional-practice/civilian-fpv/radio-controls.mjs": "ec81c8b2d7cfe8586a7b73ef0887972019c7c1c39e64e6f32ea0d39437d7d4fb",
-      "/dist/fpv-pack-removal-verification-packaged-01/candidate/optional-practice/civilian-fpv/radio-guide.mjs": "52685411b2099492a1bb26ffed12911c2a006fae971229a08147c0ddfd81a2b1",
-      "/dist/fpv-pack-removal-verification-packaged-01/candidate/optional-practice/civilian-fpv/flight-fullscreen.mjs": "c5a0eb8ddcc0f6cd9ef81c548b9a7284050b4a896cf747c5705bcbd009a5c63e",
-      "/dist/fpv-pack-removal-verification-packaged-01/candidate/optional-practice/civilian-fpv/notebook.mjs": "74159518b1c79be1c2858503cd8ddee79aed8796e9b21bf6a9a8721d5099a129",
-      "/dist/fpv-pack-removal-verification-packaged-01/candidate/game/rewards/model.mjs": "1f7ac62d4c5e9a01d1435e93116d7b59eb9bac8c4714769a9abaaba98d790d92",
-      "/dist/fpv-pack-removal-verification-packaged-01/candidate/game/rewards/learning-profiles.mjs": "f24f81f972c921c7d3f89713c8a470086affd0b420783c1ab97cb15c6de4dc1d",
-      "/dist/fpv-pack-removal-verification-packaged-01/candidate/game/rewards/exploration.mjs": "e997a52802aee1410f06faa75ca4984958fd979d495b1b34b0ee2582c5628ccd",
-      "/dist/fpv-pack-removal-verification-packaged-01/candidate/game/rewards/audio-groups.mjs": "85e1340e57dc925927830d6dd436d7b3da4b459f781e5f989d8efbbe54a44b6b",
-      "/dist/fpv-pack-removal-verification-packaged-01/candidate/game/rewards/store.mjs": "0d12e0e1b83e55a8103c9efe9bfde90291005150dac766af7ee42bd51f91521f",
-      "/dist/fpv-pack-removal-verification-packaged-01/candidate/game/profile-storage.mjs": "7f0e6cc3a957ddc00a032d41e8bea782907b901f714708de5385667fe5fbbaec",
-      "/dist/fpv-pack-removal-verification-packaged-01/candidate/game/profile-database.mjs": "6a843fc68c3d639ca6d3bac8c77228eccf21cd72a525872245bd5cbbd9d68a1c",
-      "/dist/fpv-pack-removal-verification-packaged-01/candidate/game/ui/reward-knowledge.mjs": "77232a28c5112c0d20c291ca629bebbd908ca9945344bb997e0a4b392a8e931b",
-      "/dist/fpv-pack-removal-verification-packaged-01/candidate/optional-practice/civilian-fpv/attempts.mjs": "5353e993c615dbb7091ab5d50497db82e71d3970f1587e6bb1398cc565be2494",
-      "/dist/fpv-pack-removal-verification-packaged-01/candidate/optional-practice/civilian-fpv/playlists.mjs": "ed81b450bc268cf8096fe14a7c1a46e9a5fca0c32ff8fdedad3c356955280a77",
-      "/dist/fpv-pack-removal-verification-packaged-01/candidate/optional-practice/civilian-fpv/world-records.mjs": "8fb720ec1a1a1e5cbc7ec5b253d14b6d76d680e6c03dc5f2c92b3e2e407d4c27",
-      "/dist/fpv-pack-removal-verification-packaged-01/candidate/optional-practice/civilian-fpv/world-content.mjs": "aa3788b42d2e6379be68a4d76abb10667e7adb260fe00580a963ab09324f0df0",
-      "/dist/fpv-pack-removal-verification-packaged-01/candidate/optional-practice/civilian-fpv/content-definitions.mjs": "e3808d22cc3dc294311533a16164aced16f342eb9d4b1b22b77d279b2e8dcbfd",
-      "/dist/fpv-pack-removal-verification-packaged-01/candidate/optional-practice/civilian-fpv/world-zip.mjs": "874b371c817810a5869bc3ba37c94ff6fae4fc5cd418298f35340d2ce09039c8",
-      "/dist/fpv-pack-removal-verification-packaged-01/candidate/optional-practice/civilian-fpv/world-store.mjs": "4b8c2fe165868f38eb297d678ea5aca232d61d2dd2a05b79db9d20145f3d0cfa",
-      "/dist/fpv-pack-removal-verification-packaged-01/candidate/optional-practice/civilian-fpv/offline.mjs": "7baa069758975eaa133ca9625e8ff0b903a92089f5e7ed0f172ba5e525a6f444",
-      "/dist/fpv-pack-removal-verification-packaged-01/candidate/optional-practice/install-context.mjs": "b07afe79491b3f58775b131d59986c581d8df1275ae9d3d148f0a5bd49ea85a3",
-      "/dist/fpv-pack-removal-verification-packaged-01/candidate/optional-practice/civilian-fpv/world-editor.mjs": "0c062d6587b7a25cc3c9470401051b622ca22ba088256d2c6f3364f80ad6feff",
-      "/dist/fpv-pack-removal-verification-packaged-01/candidate/optional-practice/civilian-fpv/world-assets.mjs": "7ec935731fb2404badde162930bf602ff49d24a9382623e582ce6cce199cc0aa",
-      "/dist/fpv-pack-removal-verification-packaged-01/candidate/optional-practice/civilian-fpv/renderer.mjs": "f7e39ab386627cddfcb12b5138f94b49ce5ef5a1e9faa1788c60132d1a39d65f",
-      "/dist/fpv-pack-removal-verification-packaged-01/candidate/optional-practice/civilian-fpv/vendor/three.module.js": "9052042d676cb0fdc1ddfefe193053f34b7ac0513a616fdac4535d49987812ea",
-      "/dist/fpv-pack-removal-verification-packaged-01/candidate/optional-practice/civilian-fpv/vendor/three.core.js": "9edde002b066a9a05676a6127f67735b62baf399bdea529f2f7e31657da769e6",
-      "/dist/fpv-pack-removal-verification-packaged-01/candidate/optional-practice/civilian-fpv/world-visuals.mjs": "f10dc35f2d22c88fac1e37c0369e38cdf5675010a34787873c34f76279d8b730",
-      "/dist/fpv-pack-removal-verification-packaged-01/candidate/optional-practice/civilian-fpv/vendor/addons/loaders/GLTFLoader.js": "03952cb129d558f92b8e6c757fbf7c1f718b3126c4d34f264d574b40ea36054f",
-      "/dist/fpv-pack-removal-verification-packaged-01/candidate/optional-practice/civilian-fpv/vendor/addons/utils/BufferGeometryUtils.js": "259085a7dac89e0840393a9347c77123fbc4206ec2146bf0c29ffc72e14a2800",
-      "/dist/fpv-pack-removal-verification-packaged-01/candidate/optional-practice/civilian-fpv/vendor/addons/utils/SkeletonUtils.js": "28017bf37d0ecb0c4be6048db759ff14df729a562464830b064d4cc239c5af17",
-      "/dist/fpv-pack-removal-verification-packaged-01/candidate/optional-practice/civilian-fpv/vendor/addons/controls/TransformControls.js": "10f6d3e4c108dff62110f61a76749f9a1826c9781df9c3eb4ca0b5d9d2f5c4a8",
-      "/dist/fpv-pack-removal-verification-packaged-01/candidate/optional-practice/civilian-fpv/world-audio.mjs": "0aead831e25798324e3ad51356401f36612b832b55946225d849654f04d26233",
-      "/dist/fpv-pack-removal-verification-packaged-01/candidate/optional-practice/civilian-fpv/world-progress.mjs": "bc51a58aa8e068e5e74ee8ad03b2e4dd08ca672fc6dd2bada6521e5df66de89f",
-      "/dist/fpv-pack-removal-verification-packaged-01/candidate/optional-practice/civilian-fpv/world-hangar.mjs": "759d21e034e65e99600df72ef7e04a2fdff8359ec9119baa401323b248ec85ef",
-      "/dist/fpv-pack-removal-verification-packaged-01/candidate/optional-practice/civilian-fpv/world-actor-editor.mjs": "a157c824cbb5058059402e159d7571dfa394f4ae21b6aa28296e5deea7190159",
-      "/dist/fpv-pack-removal-verification-packaged-01/candidate/game/fpv-entry.mjs": "3713b9d9ae2376fd5b59f805b808964522c1ec7afa4303ac9b5227a02f32ae0b",
-      "/dist/fpv-pack-removal-verification-packaged-01/candidate/optional-practice/fpv-worlds/index.html": "3051aac26469272b4e0551031948f13a65a7c933a6b94c76dd2e2b93fac064f0"
+      "/dist/fpv-pack-removal-verification-packaged-02/candidate/optional-practice/civilian-fpv/world-app.mjs": "c3f2a71d5e44ffe1e26110b6712ae1f8fb9032a78337567ecb0e945c71e6e776",
+      "/dist/fpv-pack-removal-verification-packaged-02/candidate/optional-practice/civilian-fpv/world-catalogue.mjs": "d901363b623193f4896100f9381c7579946796e741554f012581ebb93f9ea8a6",
+      "/dist/fpv-pack-removal-verification-packaged-02/candidate/game/data-json.mjs": "9ce33d6173f3cba8587ed7a7f1924c66e9d9c86ffa59b37a743764ea0b01f7bd",
+      "/dist/fpv-pack-removal-verification-packaged-02/candidate/game/i18n/index.mjs": "29f40a6d92826ced1eb53283ed32e342ac6e95920abbf8d549f2d78e65b48d07",
+      "/dist/fpv-pack-removal-verification-packaged-02/candidate/game/vendor/i18next-26.4.2.min.js": "eb0dd6d72e8f756b90faf864853af2a17870fe97b54473b7c34494870c65901c",
+      "/dist/fpv-pack-removal-verification-packaged-02/candidate/game/i18n/catalogs.mjs": "150f60e0ee7d0c281f026ccf76b11d02d73b6022e0097dec89875987e844fb3b",
+      "/dist/fpv-pack-removal-verification-packaged-02/candidate/game/i18n/bootstrap.mjs": "242e4791b2202d2644b91df5aa76355019890525af774ee2e795c937988b0395",
+      "/dist/fpv-pack-removal-verification-packaged-02/candidate/optional-practice/civilian-fpv/catalogue.mjs": "98338353d17eb585414538c9905040752fd5cd6699c48b17fa1706832b750997",
+      "/dist/fpv-pack-removal-verification-packaged-02/candidate/optional-practice/civilian-fpv/model.mjs": "9e4cd11cfdde2dd43b437069b8cb7a359a8132495db806cb5f68e8674d48aaf6",
+      "/dist/fpv-pack-removal-verification-packaged-02/candidate/optional-practice/civilian-fpv/radio-profile.mjs": "f588fd5cda96ed9627a483f49ca843ace8d99a68fae42b0a4239c2cd0ab81933",
+      "/dist/fpv-pack-removal-verification-packaged-02/candidate/optional-practice/civilian-fpv/math.mjs": "555c8b6ea170b46992133507d2a3d867f06185bca060239cab7db9c9b87f9f98",
+      "/dist/fpv-pack-removal-verification-packaged-02/candidate/optional-practice/civilian-fpv/rotation-table.mjs": "2ddab304ac99a2e70fc7e84fc6c27eedb49f1f3dac976baed680effa659cef41",
+      "/dist/fpv-pack-removal-verification-packaged-02/candidate/optional-practice/civilian-fpv/flight-sectors.mjs": "5b1b54bde4e578e61da7d59f4a80a86db9aafbc78b4523d2ba2b540277a0a16d",
+      "/dist/fpv-pack-removal-verification-packaged-02/candidate/optional-practice/civilian-fpv/demonstrations.mjs": "92bb4365c46d94f5c1fea9808ec4e24fb9014d35640ee488959c4e0f4b6c5cfa",
+      "/dist/fpv-pack-removal-verification-packaged-02/candidate/optional-practice/civilian-fpv/world-demonstrations.mjs": "c9f2d0ee5c571507ae1dce4f48898554cb2ad179218f1905cdc8013db2e2c114",
+      "/dist/fpv-pack-removal-verification-packaged-02/candidate/optional-practice/civilian-fpv/world-model.mjs": "d6e0939daf77a2a1459687dd8ba900719b78b02a1b3fe5fab862773bd6109551",
+      "/dist/fpv-pack-removal-verification-packaged-02/candidate/optional-practice/civilian-fpv/world-themes.mjs": "67abda8ff53ba18e9aede45c57a8f9ec599dc0ddf7c977ce1d8ad2524e6c5549",
+      "/dist/fpv-pack-removal-verification-packaged-02/candidate/game/presentation/theme-system.mjs": "bf5b10cd7b1e9ea037bdb62aeb6aa401eedfd296891a3c64f514bd6ce86fb1ee",
+      "/dist/fpv-pack-removal-verification-packaged-02/candidate/optional-practice/civilian-fpv/world-collision.mjs": "2899c7c84f9eae14b9a3434f585a8e873f4a1361e8f3ce4026ef27f44bdeef32",
+      "/dist/fpv-pack-removal-verification-packaged-02/candidate/optional-practice/civilian-fpv/vendor/rapier/rapier.mjs": "02dc6a4e2fffc013bab08fbb44fa68f501d8303615e9afe4c7d89ad4eedda0d0",
+      "/dist/fpv-pack-removal-verification-packaged-02/candidate/optional-practice/civilian-fpv/beginner-coach.mjs": "65198813dec5b51fc91eca77f38b04c06f6f2b1acb322e3033238d9fea7d1f97",
+      "/dist/fpv-pack-removal-verification-packaged-02/candidate/optional-practice/civilian-fpv/input.mjs": "e80b8c16e93516fb5bce96e67a3d0472fed166c8be2e79af16f81182722e05b1",
+      "/dist/fpv-pack-removal-verification-packaged-02/candidate/optional-practice/civilian-fpv/sim-presentation.mjs": "e851f66fc07acf79fd33a6b14d96d2266ec58afe3f2b687e2cdd65ad02044b9f",
+      "/dist/fpv-pack-removal-verification-packaged-02/candidate/game/ui/native-menu-icons.mjs": "d710daff089fbbfe262ed0738b89e31f2494789b02c326f130e6eb32d248b731",
+      "/dist/fpv-pack-removal-verification-packaged-02/candidate/optional-practice/civilian-fpv/radio-runtime.mjs": "3d908c7f6f1295fddacb952fadfc327206153248dbf5222ef31677eb4ff8f71b",
+      "/dist/fpv-pack-removal-verification-packaged-02/candidate/optional-practice/civilian-fpv/radio-session.mjs": "98fdd029f1deb9eb6b51f2ae2f8fb5c441e2b3a7a2aca520a7e9ce5e267e80ef",
+      "/dist/fpv-pack-removal-verification-packaged-02/candidate/optional-practice/civilian-fpv/radio-setup.mjs": "d4c091a8539221e71e39a12436af45a681a21e13f5468b8b4ecccd1b4c05e7d6",
+      "/dist/fpv-pack-removal-verification-packaged-02/candidate/optional-practice/civilian-fpv/radio-controls.mjs": "ec81c8b2d7cfe8586a7b73ef0887972019c7c1c39e64e6f32ea0d39437d7d4fb",
+      "/dist/fpv-pack-removal-verification-packaged-02/candidate/optional-practice/civilian-fpv/radio-guide.mjs": "52685411b2099492a1bb26ffed12911c2a006fae971229a08147c0ddfd81a2b1",
+      "/dist/fpv-pack-removal-verification-packaged-02/candidate/optional-practice/civilian-fpv/flight-fullscreen.mjs": "c5a0eb8ddcc0f6cd9ef81c548b9a7284050b4a896cf747c5705bcbd009a5c63e",
+      "/dist/fpv-pack-removal-verification-packaged-02/candidate/optional-practice/civilian-fpv/notebook.mjs": "74159518b1c79be1c2858503cd8ddee79aed8796e9b21bf6a9a8721d5099a129",
+      "/dist/fpv-pack-removal-verification-packaged-02/candidate/game/rewards/model.mjs": "1f7ac62d4c5e9a01d1435e93116d7b59eb9bac8c4714769a9abaaba98d790d92",
+      "/dist/fpv-pack-removal-verification-packaged-02/candidate/game/rewards/learning-profiles.mjs": "f24f81f972c921c7d3f89713c8a470086affd0b420783c1ab97cb15c6de4dc1d",
+      "/dist/fpv-pack-removal-verification-packaged-02/candidate/game/rewards/exploration.mjs": "e997a52802aee1410f06faa75ca4984958fd979d495b1b34b0ee2582c5628ccd",
+      "/dist/fpv-pack-removal-verification-packaged-02/candidate/game/rewards/audio-groups.mjs": "85e1340e57dc925927830d6dd436d7b3da4b459f781e5f989d8efbbe54a44b6b",
+      "/dist/fpv-pack-removal-verification-packaged-02/candidate/game/rewards/store.mjs": "0d12e0e1b83e55a8103c9efe9bfde90291005150dac766af7ee42bd51f91521f",
+      "/dist/fpv-pack-removal-verification-packaged-02/candidate/game/profile-storage.mjs": "7f0e6cc3a957ddc00a032d41e8bea782907b901f714708de5385667fe5fbbaec",
+      "/dist/fpv-pack-removal-verification-packaged-02/candidate/game/profile-database.mjs": "6a843fc68c3d639ca6d3bac8c77228eccf21cd72a525872245bd5cbbd9d68a1c",
+      "/dist/fpv-pack-removal-verification-packaged-02/candidate/game/ui/reward-knowledge.mjs": "77232a28c5112c0d20c291ca629bebbd908ca9945344bb997e0a4b392a8e931b",
+      "/dist/fpv-pack-removal-verification-packaged-02/candidate/optional-practice/civilian-fpv/attempts.mjs": "5353e993c615dbb7091ab5d50497db82e71d3970f1587e6bb1398cc565be2494",
+      "/dist/fpv-pack-removal-verification-packaged-02/candidate/optional-practice/civilian-fpv/playlists.mjs": "ed81b450bc268cf8096fe14a7c1a46e9a5fca0c32ff8fdedad3c356955280a77",
+      "/dist/fpv-pack-removal-verification-packaged-02/candidate/optional-practice/civilian-fpv/world-records.mjs": "8fb720ec1a1a1e5cbc7ec5b253d14b6d76d680e6c03dc5f2c92b3e2e407d4c27",
+      "/dist/fpv-pack-removal-verification-packaged-02/candidate/optional-practice/civilian-fpv/world-content.mjs": "aa3788b42d2e6379be68a4d76abb10667e7adb260fe00580a963ab09324f0df0",
+      "/dist/fpv-pack-removal-verification-packaged-02/candidate/optional-practice/civilian-fpv/content-definitions.mjs": "e3808d22cc3dc294311533a16164aced16f342eb9d4b1b22b77d279b2e8dcbfd",
+      "/dist/fpv-pack-removal-verification-packaged-02/candidate/optional-practice/civilian-fpv/world-zip.mjs": "874b371c817810a5869bc3ba37c94ff6fae4fc5cd418298f35340d2ce09039c8",
+      "/dist/fpv-pack-removal-verification-packaged-02/candidate/optional-practice/civilian-fpv/world-store.mjs": "4b8c2fe165868f38eb297d678ea5aca232d61d2dd2a05b79db9d20145f3d0cfa",
+      "/dist/fpv-pack-removal-verification-packaged-02/candidate/optional-practice/civilian-fpv/offline.mjs": "7baa069758975eaa133ca9625e8ff0b903a92089f5e7ed0f172ba5e525a6f444",
+      "/dist/fpv-pack-removal-verification-packaged-02/candidate/optional-practice/install-context.mjs": "b07afe79491b3f58775b131d59986c581d8df1275ae9d3d148f0a5bd49ea85a3",
+      "/dist/fpv-pack-removal-verification-packaged-02/candidate/optional-practice/civilian-fpv/world-editor.mjs": "0c062d6587b7a25cc3c9470401051b622ca22ba088256d2c6f3364f80ad6feff",
+      "/dist/fpv-pack-removal-verification-packaged-02/candidate/optional-practice/civilian-fpv/world-assets.mjs": "7ec935731fb2404badde162930bf602ff49d24a9382623e582ce6cce199cc0aa",
+      "/dist/fpv-pack-removal-verification-packaged-02/candidate/optional-practice/civilian-fpv/renderer.mjs": "f7e39ab386627cddfcb12b5138f94b49ce5ef5a1e9faa1788c60132d1a39d65f",
+      "/dist/fpv-pack-removal-verification-packaged-02/candidate/optional-practice/civilian-fpv/vendor/three.module.js": "9052042d676cb0fdc1ddfefe193053f34b7ac0513a616fdac4535d49987812ea",
+      "/dist/fpv-pack-removal-verification-packaged-02/candidate/optional-practice/civilian-fpv/vendor/three.core.js": "9edde002b066a9a05676a6127f67735b62baf399bdea529f2f7e31657da769e6",
+      "/dist/fpv-pack-removal-verification-packaged-02/candidate/optional-practice/civilian-fpv/world-visuals.mjs": "f10dc35f2d22c88fac1e37c0369e38cdf5675010a34787873c34f76279d8b730",
+      "/dist/fpv-pack-removal-verification-packaged-02/candidate/optional-practice/civilian-fpv/vendor/addons/loaders/GLTFLoader.js": "03952cb129d558f92b8e6c757fbf7c1f718b3126c4d34f264d574b40ea36054f",
+      "/dist/fpv-pack-removal-verification-packaged-02/candidate/optional-practice/civilian-fpv/vendor/addons/utils/BufferGeometryUtils.js": "259085a7dac89e0840393a9347c77123fbc4206ec2146bf0c29ffc72e14a2800",
+      "/dist/fpv-pack-removal-verification-packaged-02/candidate/optional-practice/civilian-fpv/vendor/addons/utils/SkeletonUtils.js": "28017bf37d0ecb0c4be6048db759ff14df729a562464830b064d4cc239c5af17",
+      "/dist/fpv-pack-removal-verification-packaged-02/candidate/optional-practice/civilian-fpv/vendor/addons/controls/TransformControls.js": "10f6d3e4c108dff62110f61a76749f9a1826c9781df9c3eb4ca0b5d9d2f5c4a8",
+      "/dist/fpv-pack-removal-verification-packaged-02/candidate/optional-practice/civilian-fpv/world-audio.mjs": "0aead831e25798324e3ad51356401f36612b832b55946225d849654f04d26233",
+      "/dist/fpv-pack-removal-verification-packaged-02/candidate/optional-practice/civilian-fpv/world-progress.mjs": "bc51a58aa8e068e5e74ee8ad03b2e4dd08ca672fc6dd2bada6521e5df66de89f",
+      "/dist/fpv-pack-removal-verification-packaged-02/candidate/optional-practice/civilian-fpv/world-hangar.mjs": "759d21e034e65e99600df72ef7e04a2fdff8359ec9119baa401323b248ec85ef",
+      "/dist/fpv-pack-removal-verification-packaged-02/candidate/optional-practice/civilian-fpv/world-actor-editor.mjs": "4495cd582f9b8c01026e5b3e13a177d752862db98db64719156975afc37e74ce",
+      "/dist/fpv-pack-removal-verification-packaged-02/candidate/game/fpv-entry.mjs": "3713b9d9ae2376fd5b59f805b808964522c1ec7afa4303ac9b5227a02f32ae0b",
+      "/dist/fpv-pack-removal-verification-packaged-02/candidate/optional-practice/fpv-worlds/index.html": "3051aac26469272b4e0551031948f13a65a7c933a6b94c76dd2e2b93fac064f0"
     },
     "scope": "Actual candidate host and renderer with unchanged immutable module copies under a unique URL. Real HTTP iframe; controlled clock qualification and separate native real-time review. CSS/artwork resolve to the selected source/package base."
   },
@@ -3240,55 +3240,55 @@
   "preservation": [
     {
       "label": "Cancel retains exact record, pin, completion, session, playlist and bookmark bytes",
-      "sha256": "c126d5e6f6d0f9b63f98d8586460fd844c206cd48a24477a66906a20a6d99b60"
+      "sha256": "22299c15c5bc558e6f9c1088e0f1159d0b8ac86390fdbdb5475443e44992a36c"
     },
     {
       "label": "Native dialog cancel retains all recovery bytes",
-      "sha256": "c126d5e6f6d0f9b63f98d8586460fd844c206cd48a24477a66906a20a6d99b60"
+      "sha256": "22299c15c5bc558e6f9c1088e0f1159d0b8ac86390fdbdb5475443e44992a36c"
     },
     {
       "label": "Controlled controller Back preserves all recovery bytes",
-      "sha256": "c126d5e6f6d0f9b63f98d8586460fd844c206cd48a24477a66906a20a6d99b60"
+      "sha256": "22299c15c5bc558e6f9c1088e0f1159d0b8ac86390fdbdb5475443e44992a36c"
     },
     {
       "label": "Exports do not mutate stored completion or recovery evidence",
-      "sha256": "c126d5e6f6d0f9b63f98d8586460fd844c206cd48a24477a66906a20a6d99b60"
+      "sha256": "22299c15c5bc558e6f9c1088e0f1159d0b8ac86390fdbdb5475443e44992a36c"
     },
     {
       "label": "Cancelling in-flight export preserves all recovery bytes",
-      "sha256": "c126d5e6f6d0f9b63f98d8586460fd844c206cd48a24477a66906a20a6d99b60"
+      "sha256": "22299c15c5bc558e6f9c1088e0f1159d0b8ac86390fdbdb5475443e44992a36c"
     },
     {
       "label": "Generation conflict preserves independent records and recovery bytes",
-      "sha256": "c126d5e6f6d0f9b63f98d8586460fd844c206cd48a24477a66906a20a6d99b60"
+      "sha256": "22299c15c5bc558e6f9c1088e0f1159d0b8ac86390fdbdb5475443e44992a36c"
     },
     {
       "label": "Native transaction abort preserves all independent recovery bytes",
-      "sha256": "c126d5e6f6d0f9b63f98d8586460fd844c206cd48a24477a66906a20a6d99b60"
+      "sha256": "22299c15c5bc558e6f9c1088e0f1159d0b8ac86390fdbdb5475443e44992a36c"
     },
     {
       "label": "Unavailable-impact review preserves independent stores",
-      "sha256": "c126d5e6f6d0f9b63f98d8586460fd844c206cd48a24477a66906a20a6d99b60"
+      "sha256": "22299c15c5bc558e6f9c1088e0f1159d0b8ac86390fdbdb5475443e44992a36c"
     },
     {
       "label": "Removal retains byte-identical records, pins, completion, session, playlist and bookmark",
-      "sha256": "c126d5e6f6d0f9b63f98d8586460fd844c206cd48a24477a66906a20a6d99b60"
+      "sha256": "22299c15c5bc558e6f9c1088e0f1159d0b8ac86390fdbdb5475443e44992a36c"
     },
     {
       "label": "Wrong-revision installation attempt preserves recovery data",
-      "sha256": "c126d5e6f6d0f9b63f98d8586460fd844c206cd48a24477a66906a20a6d99b60"
+      "sha256": "22299c15c5bc558e6f9c1088e0f1159d0b8ac86390fdbdb5475443e44992a36c"
     },
     {
       "label": "Restoring B preserves all original record/session/bookmark bytes",
-      "sha256": "c126d5e6f6d0f9b63f98d8586460fd844c206cd48a24477a66906a20a6d99b60"
+      "sha256": "22299c15c5bc558e6f9c1088e0f1159d0b8ac86390fdbdb5475443e44992a36c"
     },
     {
       "label": "Restoring exact A and B preserves all original data before explicit replay",
-      "sha256": "c126d5e6f6d0f9b63f98d8586460fd844c206cd48a24477a66906a20a6d99b60"
+      "sha256": "22299c15c5bc558e6f9c1088e0f1159d0b8ac86390fdbdb5475443e44992a36c"
     },
     {
       "label": "Noncanonical import and failed export preserve all recovery data",
-      "sha256": "c126d5e6f6d0f9b63f98d8586460fd844c206cd48a24477a66906a20a6d99b60"
+      "sha256": "22299c15c5bc558e6f9c1088e0f1159d0b8ac86390fdbdb5475443e44992a36c"
     }
   ],
   "qualification": "Actual production HTTP/WebGL host and native IndexedDB; bounded original GLB revisions; public DOM actions, controlled transaction abort and genuine recorded-command replay. Download initiation is not confirmation of saved portable backups. No physical hardware, eviction, FPS, player acceptance or additional unit coverage claim."
