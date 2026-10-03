@@ -3,6 +3,7 @@ import { readFile } from 'node:fs/promises';
 import path from 'node:path';
 import { parse } from 'acorn';
 import LZString from 'lz-string';
+import { projectEditionModuleIndentation } from './edition-code-indentation.mjs';
 
 const hash = (bytes) => createHash('sha256').update(bytes).digest('hex');
 const codecPath = 'game/vendor/lz-string-1.5.0.min.js';
@@ -53,6 +54,11 @@ export function projectDefaultContentRegistry(bytes, { codec, license }) {
  * hashes. Never compact byte-pinned recovery catalogs, mission bodies or artwork.
  * Canonical repository files and authoring exports retain their original bytes. */
 export async function projectDefaultRuntimeMetadata(root, entries) {
+  // The main UI host is distribution code, not a pinned gameplay recipe. Reuse
+  // the existing exact AST/token/comment/newline check for this one owned path;
+  // no CSS, authored content, other modules or canonical source are rewritten.
+  const host = entries.find((entry) => entry.name === 'game/app.mjs');
+  if (host) host.bytes = projectEditionModuleIndentation(host.name, host.bytes);
   const registry = entries.find((entry) => entry.name === 'game/i18n/content-registry.mjs');
   if (registry) {
     const [codec, license] = await Promise.all([

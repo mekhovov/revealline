@@ -93,10 +93,10 @@ community clears cannot unlock official Snake chapter accents. A real-account
 publish/install review remains pending.
 
 The largest Company edition remains blocked by its existing 64 MiB admission
-guard: 67,559,900 bytes after the dependency fixes, compared with 67,423,717 bytes
-on main `66d83c424`. The expansion adds 136,183 compiled bytes after removing
-unneeded flight data from the edition menu. No package cap or brand media was
-changed. [Capacity details](fpv-world-package-closure.md) distinguish this from
+guard: 67,592,864 bytes after integrating Theme Studio main `cf0b62e53`, or
+484,000 bytes over the cap. Before that merge it was 67,559,900 bytes, compared
+with 67,423,717 on main `66d83c424`. The edition menu omits unused flight data;
+no package cap or brand media was changed. [Capacity details](fpv-world-package-closure.md) distinguish this from
 the passing optional SIM package.
 
 The dedicated room service implements authoritative private Capture/Snake Versus
