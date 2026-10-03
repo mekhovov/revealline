@@ -89,7 +89,13 @@ export function createCreatorRuntime(prepared, { decodeImage, buildVersion = 'de
   const completions = new WeakSet();
   const choices = new WeakMap();
   const key = (entry) => `creator:${prepared.editionId}:${entry.executionKey}`;
-  async function prepare(missionId, difficulty, turnPolicy, runningEnemies, { signal } = {}) {
+  async function prepare(
+    missionId,
+    difficulty,
+    turnPolicy,
+    runningEnemies,
+    { signal, runningEnemyStyle = 'original' } = {},
+  ) {
     required(!disposed, 'Custom player is closed.');
     required(typeof runningEnemies === 'boolean', 'Choose whether to add running enemies.');
     const ticket = ++generation;
@@ -101,7 +107,7 @@ export function createCreatorRuntime(prepared, { decodeImage, buildVersion = 'de
     required(missionProvenance, 'This mission is missing its generation evidence.');
     const candidate = await preparer.prepare(
       { missionId: mission.id, difficulty, turnPolicy, seed: missionProvenance.runtimeSeed },
-      { signal, runningEnemies },
+      { signal, runningEnemies, runningEnemyStyle },
     );
     if (disposed || ticket !== generation || signal?.aborted) {
       if (preparer.current(candidate)) preparer.cancel();
@@ -115,7 +121,11 @@ export function createCreatorRuntime(prepared, { decodeImage, buildVersion = 'de
     attempt?.picture?.release();
     attempt = {
       ...next,
-      selection: Object.freeze({ ...next.selection, runningEnemies: choices.get(candidate) }),
+      selection: Object.freeze({
+        ...next.selection,
+        runningEnemies: choices.get(candidate),
+        runningEnemyStyle: next.run.level.pursuit ? 'varied' : 'original',
+      }),
       ...(restored ? { run: restored.run, recorder: restored.recorder } : {}),
     };
     runId = restored?.session.runId ?? crypto.randomUUID();
@@ -138,10 +148,16 @@ export function createCreatorRuntime(prepared, { decodeImage, buildVersion = 'de
         difficulty = 'standard',
         turnPolicy = 'immediate',
         runningEnemies = false,
+        runningEnemyStyle = 'original',
       } = {},
       options,
     ) {
-      return adopt(await prepare(missionId, difficulty, turnPolicy, runningEnemies, options));
+      return adopt(
+        await prepare(missionId, difficulty, turnPolicy, runningEnemies, {
+          ...options,
+          runningEnemyStyle,
+        }),
+      );
     },
     step(input) {
       required(attempt && !disposed, 'Start an installed Custom mission first.');
@@ -210,7 +226,7 @@ export function createCreatorRuntime(prepared, { decodeImage, buildVersion = 'de
         saved.difficulty,
         saved.session.replay.options.turnPolicy,
         runningEnemies,
-        { signal },
+        { signal, runningEnemyStyle: saved.session.replay.level.pursuit ? 'varied' : 'original' },
       );
       try {
         required(

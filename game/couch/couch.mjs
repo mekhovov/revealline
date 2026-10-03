@@ -1,3 +1,4 @@
+import { pursuitRoster } from '../hunt/pursuit-goals.mjs';
 import { missionBriefing } from '../mission-brief.mjs';
 import { createEncounterVariantPreferences } from '../hunt/preferences.mjs';
 import { createRunningEnemyPreferences } from '../hunt/running-enemy-preferences.mjs';
@@ -1342,6 +1343,7 @@ try {
       actorStyle: preference.actorStyle,
       actorPreferenceRevision: preference.revision,
       runningEnemies: runningEnemyPreferences.snapshot().enabled,
+      runningEnemyStyle: runningEnemyPreferences.snapshot().style,
     };
   }
   function prepare() {
@@ -1407,6 +1409,7 @@ try {
       actorStyle: configured.actorStyle,
       actorPreferenceRevision: configured.actorPreferenceRevision,
       runningEnemies: configured.runningEnemies,
+      runningEnemyStyle: configured.runningEnemyStyle ?? runningEnemyPreferences.snapshot().style,
     };
     $('race-format').value = roundRecipe.format;
     match = createRound(roundRecipe);
@@ -1442,8 +1445,12 @@ try {
     // level. Global tuning would create a different, unverified simulation.
     const tunedLevel = creatorOwned ? rulesLevel : applyGameplayTuning(rulesLevel, recipe.tuning);
     recipe.runningEnemies ??= runningEnemyPreferences.snapshot().enabled;
+    recipe.runningEnemyStyle ??= runningEnemyPreferences.snapshot().style;
     recipe.runtimeLevel = recipe.runningEnemies
-      ? prepareRunningEnemyLevel(tunedLevel, { classes: recipe.entry.classes })
+      ? prepareRunningEnemyLevel(tunedLevel, {
+          classes: recipe.entry.classes,
+          style: recipe.runningEnemyStyle,
+        })
       : tunedLevel;
     return createDuel(
       recipe.runtimeLevel,
@@ -1643,6 +1650,10 @@ try {
         sameMission && !fresh
           ? roundRecipe.runningEnemies
           : runningEnemyPreferences.snapshot().enabled,
+      runningEnemyStyle:
+        sameMission && !fresh
+          ? roundRecipe.runningEnemyStyle
+          : runningEnemyPreferences.snapshot().style,
       tuning:
         sameMission &&
         !fresh &&
@@ -1925,6 +1936,7 @@ try {
       match.status === 'ready' &&
       !destination &&
       (roundRecipe.runningEnemies !== runningEnemyPreferences.snapshot().enabled ||
+        roundRecipe.runningEnemyStyle !== runningEnemyPreferences.snapshot().style ||
         roundRecipe.actorStyle !== actorPreferences.snapshot().actorStyle ||
         dataIdentity(roundRecipe.tuning) !==
           dataIdentity(
@@ -2333,6 +2345,13 @@ try {
         document,
         window,
         preferences: runningEnemyPreferences,
+        getAcceptedStyle: () =>
+          match?.status === 'running' || match?.status === 'paused'
+            ? roundRecipe.runtimeLevel?.pursuit
+              ? 'varied'
+              : 'original'
+            : null,
+        getAcceptedActors: () => pursuitRoster(roundRecipe?.runtimeLevel),
         getCurrentEnabled: () =>
           match?.runs?.[0]
             ? !!(match.runs[0].level.runningEnemies || match.runs[0].level.classic?.hunt)
@@ -2348,6 +2367,7 @@ try {
           const configured = {
             ...roundRecipe,
             runningEnemies: runningEnemyPreferences.snapshot().enabled,
+            runningEnemyStyle: runningEnemyPreferences.snapshot().style,
           };
           void prepareNext(roundRecipe.entry, document.activeElement, { configured, fresh: true })
             .then(() => updateMenu())
@@ -2356,10 +2376,10 @@ try {
       }),
     );
   }
-  let runningEnemyChoice = runningEnemyPreferences.snapshot().enabled;
-  runningEnemyPreferences.subscribe(({ enabled }) => {
-    if (enabled === runningEnemyChoice) return;
-    runningEnemyChoice = enabled;
+  let runningEnemyChoice = JSON.stringify(runningEnemyPreferences.snapshot());
+  runningEnemyPreferences.subscribe(({ enabled, style, durable }) => {
+    if (JSON.stringify({ enabled, style, durable }) === runningEnemyChoice) return;
+    runningEnemyChoice = JSON.stringify({ enabled, style, durable });
     startIntentEpoch++;
     cancelContent();
     nextAttempt?.lease?.cancel();
@@ -4427,6 +4447,9 @@ try {
               painters[i].effectsFor(match.runs[i].events, match.runs[i]);
               contextualReactions?.events(match.runs[i].events, {
                 attemptId: String(generation),
+                actorFamilyFor: (id) =>
+                  pursuitRoster(match.runs[i].level).find((actor) => actor.id === id)?.family,
+                actorFamilies: pursuitRoster(match.runs[i].level).map((actor) => actor.family),
                 mode: 'versus',
                 board: i,
                 encounter: !!match.runs[i].level.classic?.hunt,

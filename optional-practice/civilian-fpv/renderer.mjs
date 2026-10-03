@@ -1,4 +1,6 @@
 import * as THREE from './vendor/three.module.js';
+import { actorVisual } from '../../game/hunt/actor-catalog.mjs';
+import { sharedActorAppearance } from '../../game/hunt/preferences.mjs';
 import { buildWorldVisuals, buildDroneVisual } from './world-visuals.mjs';
 import {
   normalizeSimPresentation,
@@ -1109,6 +1111,12 @@ export function createFlightRenderer({
       pixel = themeProfile?.characters === 'arcade' || /pixel|arcade/.test(slot ?? ''),
       detailed = quality === 'high',
       civilian = !huntTarget && (themeProfile?.characters === 'civilian' || role === 'civilian');
+    const preferredCast = sharedActorAppearance().snapshot().cast;
+    const huntFamily =
+      (actorDefinitions.get(actor.id)?.speed ?? actor.speed ?? 0) > 0 ? 'patroller' : 'lookout';
+    const huntAppearance = huntTarget
+      ? actorVisual(huntFamily, preferredCast === 'authored' ? 'rivals' : preferredCast)
+      : null;
     group.name = `actor-${actor.id}`;
     group.userData.themeAsset = slot ?? 'builtin:sentry';
     if (actor.position)
@@ -1125,7 +1133,7 @@ export function createFlightRenderer({
     group.userData.assetRole = themeProfile?.assets?.[group.userData.modelRole];
     if (kit) bindSimModelRole(group, group.userData.modelRole, kit.collectionId);
     const armor = huntTarget
-      ? material(0x68cbb5, { roughness: 0.8 })
+      ? material(huntAppearance.palette.coat, { roughness: 0.8 })
       : kit
         ? kit.paint('steel')
         : material(friendly ? 0x74bfc0 : pixel ? 0xa785cb : civilian ? 0x839c9d : 0x778b86, {
@@ -1290,14 +1298,79 @@ export function createFlightRenderer({
         pixel
           ? new THREE.BoxGeometry(radius * 1.05, radius * 1.05, radius * 1.05)
           : new THREE.SphereGeometry(radius * 0.6, quality === 'low' ? 8 : 12, 8),
-        huntTarget ? material(0xdfaa87, { roughness: 0.9 }) : civilian ? armor : dark,
+        huntTarget
+          ? material(huntAppearance.palette.skinLight, { roughness: 0.9 })
+          : civilian
+            ? armor
+            : dark,
         [0, height * 0.87, 0],
       );
-      part(new THREE.BoxGeometry(radius * 0.92, height * 0.05, radius * 0.16), threat, [
-        0,
-        height * 0.89,
-        -radius * 0.53,
-      ]);
+      if (huntTarget) {
+        const trim = material(huntAppearance.palette.light, { roughness: 0.85 });
+        const skin = material(huntAppearance.palette.skin, { roughness: 0.9 });
+        // Original common family accessories and palettes, adapted to native
+        // 3D meshes. They never alter the existing capsule collision proxy.
+        part(new THREE.BoxGeometry(radius * 1.1, radius * 0.18, radius * 1.12), armor, [
+          0,
+          height * 0.98,
+          0,
+        ]);
+        part(new THREE.BoxGeometry(radius * 1.2, radius * 0.08, radius * 0.55), trim, [
+          0,
+          height * 0.945,
+          -radius * 0.52,
+        ]);
+        for (const side of [-1, 1])
+          part(new THREE.BoxGeometry(radius * 0.12, radius * 0.12, radius * 0.05), dark, [
+            side * radius * 0.22,
+            height * 0.89,
+            -radius * 0.55,
+          ]);
+        part(new THREE.BoxGeometry(radius * 0.2, radius * 0.1, radius * 0.1), skin, [
+          0,
+          height * 0.845,
+          -radius * 0.55,
+        ]);
+        part(new THREE.BoxGeometry(radius * 1.1, height * 0.035, radius * 0.86), trim, [
+          0,
+          height * 0.56,
+          0,
+        ]);
+        if (huntFamily === 'lookout') {
+          for (const side of [-1, 1])
+            part(new THREE.BoxGeometry(radius * 0.22, radius * 0.26, radius * 0.28), dark, [
+              side * radius * 0.19,
+              height * 0.66,
+              -radius * 0.52,
+            ]);
+        }
+        if (huntAppearance.cast === 'tactical') {
+          part(new THREE.BoxGeometry(radius * 0.9, height * 0.22, radius * 0.6), dark, [
+            0,
+            height * 0.61,
+            radius * 0.53,
+          ]);
+          for (const side of [-1, 1])
+            part(new THREE.BoxGeometry(radius * 0.13, height * 0.25, radius * 0.04), trim, [
+              side * radius * 0.3,
+              height * 0.59,
+              -radius * 0.43,
+            ]);
+        } else if (huntAppearance.cast === 'arcade') {
+          for (const side of [-1, 1])
+            part(new THREE.BoxGeometry(radius * 0.46, height * 0.075, radius * 0.75), trim, [
+              side * radius * 0.38,
+              height * 0.05,
+              -radius * 0.1,
+            ]);
+        }
+      } else {
+        part(new THREE.BoxGeometry(radius * 0.92, height * 0.05, radius * 0.16), threat, [
+          0,
+          height * 0.89,
+          -radius * 0.53,
+        ]);
+      }
       if (quality !== 'low') {
         part(
           new THREE.BoxGeometry(radius * 0.91, height * 0.19, radius * 0.16),
@@ -1405,6 +1478,7 @@ export function createFlightRenderer({
       radius,
       quality,
       health: actor.maxHealth ?? actor.health ?? 1,
+      cast: preferredCast,
     };
   }
   function projectileBatch(owner) {
@@ -1435,6 +1509,16 @@ export function createFlightRenderer({
       if (!actor.position || !actor.id) continue;
       seenActors.add(actor.id);
       let row = actorRows.get(actor.id);
+      if (
+        row &&
+        huntTargets.has(actor.id) &&
+        row.cast !== sharedActorAppearance().snapshot().cast
+      ) {
+        releaseGroup(row.group);
+        actors.remove(row.group);
+        actorRows.delete(actor.id);
+        row = null;
+      }
       if (!row) {
         row = createActor(actor);
         actorRows.set(actor.id, row);
@@ -1531,7 +1615,11 @@ export function createFlightRenderer({
   function draw(state, { cameraMode = view, cameraFov = fov, cameraTilt = tilt } = {}) {
     if (disposed || !course) return;
     const hunt = course.steps[mode].find((step) => step.type === 'hunt-contact-v1');
-    huntPresentation?.update(state, { reducedMotion, tailRadius: hunt?.tail.radius ?? 350 });
+    huntPresentation?.update(state, {
+      reducedMotion,
+      tailRadius: hunt?.tail.radius ?? 350,
+      actorDefinitions: course.actors,
+    });
     view = cameraMode;
     fov = cameraFov;
     tilt = cameraTilt;

@@ -17,8 +17,9 @@ export function captureSeedEnemies(state, releaseBoss = false) {
           'revealline-coop.v9',
           'revealline-coop.v10',
           'revealline-coop.v12',
+          'revealline-coop.v14',
         ].includes(state.ruleset) ||
-          (state.ruleset === 'revealline-coop.v11' &&
+          (['revealline-coop.v11', 'revealline-coop.v13'].includes(state.ruleset) &&
             /^revealline-coop-level\.v[4-8]$/.test(state.level?.runningEnemies?.baseVersion))) &&
         enemy.type === 'claimed-rover'
       ) &&

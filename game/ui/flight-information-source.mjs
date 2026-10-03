@@ -1,6 +1,11 @@
 import { t } from '../i18n/index.mjs';
 import { EPS } from '../core/geometry.mjs';
-import { baseLevelVersion, isClassicRuleset, resolveVersions } from '../core/versions.mjs';
+import {
+  baseLevelVersion,
+  isClassicRuleset,
+  isRunningEnemyRuleset,
+  resolveVersions,
+} from '../core/versions.mjs';
 import { classicEffectActive } from '../core/classic-state.mjs';
 import { foundationCompatibleView as classicView } from './foundation-view.mjs';
 import { encounterView } from './encounter-view.mjs';
@@ -104,7 +109,7 @@ export function flightInformationSnapshot(run, { started, paused }) {
   );
   const issues = [];
   const classicExpected = isClassicRuleset(
-    run.ruleset === 'xonix-core.v11'
+    isRunningEnemyRuleset(run.ruleset)
       ? resolveVersions({ levelVersion: baseLevelVersion(run.level) }).ruleset
       : run.ruleset,
   );

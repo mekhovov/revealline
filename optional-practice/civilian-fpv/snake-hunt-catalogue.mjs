@@ -1,4 +1,5 @@
 import { dataIdentity } from '../../game/data-json.mjs';
+import { EXPRESSIVE_HUNT_CHAPTERS, EXPRESSIVE_HUNT_COURSES } from './expressive-hunt-courses.mjs';
 
 const text = (en, uk) => ({ en, uk });
 const point = ([x, z, y = 0]) => ({
@@ -812,12 +813,15 @@ const originalCourses = chapters.flatMap((chapter) =>
   chapter.rows.map((row, index) => courseFor(chapter, row, index)),
 );
 export const SNAKE_HUNT_PURSUIT_COURSES = Object.freeze(pursuitRows.map(pursuitCourseFor));
+export const SNAKE_HUNT_EXPRESSIVE_COURSES = EXPRESSIVE_HUNT_COURSES;
 export const SNAKE_HUNT_COURSES = Object.freeze([
   ...originalCourses,
   ...SNAKE_HUNT_PURSUIT_COURSES,
+  ...SNAKE_HUNT_EXPRESSIVE_COURSES,
 ]);
 export const SNAKE_HUNT_IDENTITY = `fpv-snake-hunt:${dataIdentity(originalCourses)}`;
 export const SNAKE_HUNT_PURSUIT_IDENTITY = `fpv-snake-pursuit:${dataIdentity(SNAKE_HUNT_PURSUIT_COURSES)}`;
+export const SNAKE_HUNT_EXPRESSIVE_IDENTITY = `fpv-expressive-hunt:${dataIdentity(SNAKE_HUNT_EXPRESSIVE_COURSES)}`;
 export const SNAKE_HUNT_CATALOGUE = Object.freeze(
   SNAKE_HUNT_COURSES.map((course, index) => ({
     id: course.id,
@@ -828,12 +832,16 @@ export const SNAKE_HUNT_CATALOGUE = Object.freeze(
     difficulty: index % 6 < 2 ? 'beginner' : index % 6 < 5 ? 'intermediate' : 'advanced',
     duration: 4,
     packIdentity:
-      index < originalCourses.length ? SNAKE_HUNT_IDENTITY : SNAKE_HUNT_PURSUIT_IDENTITY,
+      index < originalCourses.length
+        ? SNAKE_HUNT_IDENTITY
+        : index < originalCourses.length + SNAKE_HUNT_PURSUIT_COURSES.length
+          ? SNAKE_HUNT_PURSUIT_IDENTITY
+          : SNAKE_HUNT_EXPRESSIVE_IDENTITY,
     legacy: false,
   })),
 );
 export const SNAKE_HUNT_PLAYLISTS = Object.freeze(
-  [...chapters, ...pursuitChapters].map((chapter) => ({
+  [...chapters, ...pursuitChapters, ...EXPRESSIVE_HUNT_CHAPTERS].map((chapter) => ({
     format: 'FPVPlaylist.v1',
     id: `snake-hunt-${chapter.id}`,
     revision: 'r1',

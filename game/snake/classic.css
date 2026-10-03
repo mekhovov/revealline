@@ -312,6 +312,46 @@ aside > p,
 .target-guide p {
   margin-top: 4px;
 }
+.encounter-summary {
+  border-left: 3px solid var(--mint);
+  padding: 8px 12px;
+  color: var(--fk-muted, #a8b8cc);
+  overflow-wrap: anywhere;
+}
+.encounter-summary[data-specialist='true'],
+.enemy-hazard {
+  color: var(--gold);
+}
+.enemy-guide-card {
+  display: flow-root;
+  padding-block: 10px;
+}
+.enemy-guide-card + .enemy-guide-card {
+  border-top: 1px solid var(--line);
+}
+.enemy-guide-card canvas {
+  float: left;
+  width: 48px;
+  height: 48px;
+  margin: 0 10px 6px 0;
+  image-rendering: pixelated;
+}
+.enemy-guide-card h3 {
+  font-size: 16px;
+  margin: 4px 0 8px;
+}
+.enemy-guide-card p {
+  font-size: 13px;
+  margin: 8px 0;
+}
+.enemy-hazard {
+  display: block;
+  font-size: 13px;
+}
+body[data-board-style='retro'] .board-wrap {
+  border-color: #a5b797;
+  background: #13251e;
+}
 .rule-note {
   border-left: 3px solid var(--mint);
   padding-left: 12px;
@@ -460,7 +500,8 @@ body[data-playing='true'] #game {
   display: grid;
   grid-template-rows: auto minmax(0, 1fr);
 }
-body[data-playing='true'] :is(.setup, #progress-summary, aside, #controls-help) {
+body[data-playing='true']
+  :is(.setup, #progress-summary, #encounter-summary, aside, #controls-help) {
   display: none;
 }
 body[data-playing='true'] .game-heading {
@@ -478,7 +519,7 @@ body[data-playing='true'] .play-layout {
 }
 body[data-playing='true'] .arena {
   display: grid;
-  grid-template-rows: auto minmax(80px, 1fr) auto auto auto;
+  grid-template-rows: auto minmax(80px, 1fr) auto auto auto auto;
   gap: 5px;
 }
 body[data-playing='true'] .level-strip,
@@ -577,6 +618,9 @@ body[data-playing='true'] #pads {
     grid-area: controls;
   }
   body[data-playing='true'] #announcement {
+    grid-area: announcement;
+  }
+  body[data-playing='true'] #snake-reaction-caption {
     grid-area: announcement;
   }
   body[data-playing='true'] #pads {

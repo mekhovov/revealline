@@ -2,7 +2,7 @@ import { boundedJSON, dataIdentity, exactKeys, required } from '../data-json.mjs
 import { CELL } from '../core/registry.mjs';
 import { foundationGeometry } from '../core/foundations.mjs';
 import { validateCombatPatrols } from '../core/combat-definition.mjs';
-import { RUNNING_ENEMY_VERSIONS } from '../core/versions.mjs';
+import { isRunningEnemyLevel } from '../core/versions.mjs';
 import { validateHuntDefinition, validateHuntReachability } from './rules.mjs';
 import { runningEnemyReservedIds } from './running-enemy-placement.mjs';
 
@@ -21,9 +21,10 @@ export const huntDefinition = (level) => level.runningEnemies?.hunt ?? level.cla
 
 export function runningEnemyBaseLevel(level) {
   const copy = runningEnemyCopy(level);
-  if (copy.version !== RUNNING_ENEMY_VERSIONS.levelVersion) return copy;
+  if (!isRunningEnemyLevel(copy)) return copy;
   copy.version = copy.runningEnemies?.baseVersion;
   delete copy.runningEnemies;
+  delete copy.pursuit;
   return copy;
 }
 
@@ -59,6 +60,23 @@ export function validateRunningEnemyDefinition(level, base) {
     ['version', 'baseVersion', 'baseIdentity', 'combatPatrols', 'hunt'],
     'Running enemies',
   );
+  if (['running-enemies.v2', 'running-enemies.v3'].includes(value.version)) {
+    const snake = value.version === 'running-enemies.v3';
+    required(
+      level.version === (snake ? 'xonix-level.v13' : 'xonix-level.v12') &&
+        value.baseVersion === (snake ? 'xonix-level.v11' : 'xonix-level.v9') &&
+        (!snake || base.snake) &&
+        base.classic?.hunt,
+      'Authored pursuit requires its exact historical hunt base.',
+    );
+    required(
+      value.baseIdentity === dataIdentity(base) &&
+        dataIdentity(value.combatPatrols) === dataIdentity(base.classic.combatPatrols) &&
+        dataIdentity(value.hunt) === dataIdentity(base.classic.hunt),
+      'Authored pursuit preserves its complete population and objectives.',
+    );
+    return value;
+  }
   required(value.version === RUNNING_ENEMIES_VERSION, 'Unsupported Running enemies recipe.');
   required(
     /^xonix-level\.v[1-8]$/.test(value.baseVersion),

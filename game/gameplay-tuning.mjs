@@ -1,3 +1,4 @@
+import { pursuitPopulation } from './hunt/pursuit-goals.mjs';
 import { boundedJSON, canonicalJSON, dataIdentity, exactKeys, required } from './data-json.mjs';
 import { normalizedLevel } from './core/level.mjs';
 import { foundationGeometry } from './core/foundations.mjs';
@@ -13,8 +14,11 @@ import * as v3 from './gameplay-tuning-v3.mjs';
 import { COLLISION_COURSE_VERSION } from './core/field-course.mjs';
 import { CLASSES } from './core/registry.mjs';
 import { huntTargetKind } from './hunt/rules.mjs';
-import { prepareRunningEnemyLevel } from './hunt/running-enemies.mjs';
-import { prepareTeamRunningEnemies } from './hunt/team-running-enemies.mjs';
+import { prepareRunningEnemyLevel, runningEnemyBaseLevel } from './hunt/running-enemies.mjs';
+import {
+  prepareTeamRunningEnemies,
+  teamRunningEnemyBaseLevel,
+} from './hunt/team-running-enemies.mjs';
 
 export const GAMEPLAY_TUNING_VERSION = 'gameplay-pressure.v4';
 // The preference format is unchanged; historical recipes have separate dispatch.
@@ -423,9 +427,12 @@ export function matchRecordedGameplayTuning(source, recordedLevel, { classes = C
   const exact = canonicalJSON(recorded);
   const accepted = (level) =>
     recorded.runningEnemies
-      ? recorded.version === 'revealline-coop-level.v9'
-        ? prepareTeamRunningEnemies(level)
-        : prepareRunningEnemyLevel(level, { classes })
+      ? recorded.version.startsWith('revealline-coop-level.')
+        ? prepareTeamRunningEnemies(level, { style: recorded.pursuit ? 'varied' : 'original' })
+        : prepareRunningEnemyLevel(level, {
+            classes,
+            style: recorded.pursuit ? 'varied' : 'original',
+          })
       : level;
   const current = accepted(applyGameplayTuning(source, tuning));
   if (canonicalJSON(current) === exact) return current;
@@ -437,6 +444,15 @@ export function matchRecordedGameplayTuning(source, recordedLevel, { classes = C
 function tuneGameplay(source, snapshot, vectorMagnitude) {
   const tuning = validateGameplayTuning(snapshot);
   const owned = boundedJSON(source);
+  if (owned.pursuit) {
+    const team = owned.version.startsWith('revealline-coop-level.');
+    const base = team ? teamRunningEnemyBaseLevel(owned) : runningEnemyBaseLevel(owned);
+    const tuned = tuneGameplay(base, snapshot, vectorMagnitude);
+    const options = { style: 'varied', population: pursuitPopulation(owned) };
+    return team
+      ? prepareTeamRunningEnemies(tuned, options)
+      : prepareRunningEnemyLevel(tuned, options);
+  }
   required(
     !/^gp[1234][gse]-/.test(String(owned?.revision)),
     'Gameplay tuning must apply exactly once per attempt.',

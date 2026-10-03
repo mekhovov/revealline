@@ -1,6 +1,9 @@
 import { getLocale, setLocale, onLocaleChange } from '../i18n/index.mjs';
 import { boundedJSON, exactKeys, required } from '../data-json.mjs';
-import { createDestructionPreferences } from '../hunt/preferences.mjs';
+import { createDestructionPreferences, sharedActorAppearance } from '../hunt/preferences.mjs';
+import { actorFieldGuide } from '../hunt/actor-catalog.mjs';
+import { renderEnemyFieldGuide } from '../ui/enemy-field-guide.mjs';
+import { attachContextualReactions } from '../ui/contextual-reactions.mjs';
 import { createEncounterDisplayPreferences } from '../encounter-display-preferences.mjs';
 import { createDisplayPreferences } from '../display-preferences.mjs';
 import { createTouchPreferences } from '../touch-preferences.mjs';
@@ -10,11 +13,12 @@ import { createAudioMaster } from '../ui/audio-master.mjs';
 import { createAudioPreferences } from '../audio-preferences.mjs';
 import { Soundscape } from '../ui/audio.mjs';
 import {
-  CLASSIC_SNAKE_CHAPTERS,
-  CLASSIC_SNAKE_LEVELS,
-  CLASSIC_SNAKE_FEATURED,
-  CLASSIC_SNAKE_CAMPAIGNS,
+  CLASSIC_SNAKE_CHAPTERS as OFFICIAL_CHAPTERS,
+  CLASSIC_SNAKE_LEVELS as OFFICIAL_LEVELS,
+  CLASSIC_SNAKE_FEATURED as OFFICIAL_FEATURED,
+  CLASSIC_SNAKE_CAMPAIGNS as OFFICIAL_CAMPAIGNS,
 } from './classic-catalogue.mjs';
+import { createClassicSnakeCommunityLibrary } from './classic-community.mjs';
 import { CLASSIC_COPY } from './classic-copy.mjs';
 import {
   createClassicSnake,
@@ -31,7 +35,11 @@ import {
   restoreClassicSnakeMatch,
   restoreClassicSnakeLegacyMatch,
 } from './classic-match.mjs';
-import { prepareClassicSnakeLevel, CLASSIC_PACES } from './classic-setup.mjs';
+import {
+  prepareClassicSnakeLevel,
+  CLASSIC_PACES,
+  classicSnakeSurvivalEntry,
+} from './classic-setup.mjs';
 import { createClassicSnakeRecords } from './classic-records.mjs';
 import { createClassicPresentation } from './classic-presentation.mjs';
 import { classicCatchMarks, drawClassicBoard, drawClassicTarget } from './classic-view.mjs';
@@ -40,10 +48,42 @@ import { advanceClassicFlight } from './classic-flight-art.mjs';
 const doc = globalThis.document,
   $ = (id) => doc.getElementById(id);
 const params = new URL(globalThis.location.href).searchParams;
+if (['en', 'uk'].includes(params.get('lang'))) setLocale(params.get('lang'), { persist: false });
+const communityIdentity = params.get('community');
+const contentLibrary = communityIdentity ? createClassicSnakeCommunityLibrary() : null;
+let installedContent = null;
+if (contentLibrary) {
+  try {
+    installedContent = await contentLibrary.load(communityIdentity);
+  } catch (error) {
+    $('boot-status').textContent =
+      `${getLocale() === 'uk' ? 'Не вдалося відкрити пакет Snake.' : 'This Snake package could not be opened.'} ${error.message}`;
+    const link = doc.createElement('a');
+    link.href = '../studio/snake.html';
+    link.textContent = getLocale() === 'uk' ? ' Відкрити Snake Studio' : ' Open Snake Studio';
+    $('boot-status').append(link);
+    throw error;
+  }
+}
+const CLASSIC_SNAKE_LEVELS = installedContent?.entries ?? OFFICIAL_LEVELS;
+const CLASSIC_SNAKE_CHAPTERS = installedContent
+  ? [{ id: installedContent.entries[0].chapterId, title: installedContent.pack.title }]
+  : OFFICIAL_CHAPTERS;
+const CLASSIC_SNAKE_CAMPAIGNS = installedContent
+  ? [
+      {
+        id: `community-${communityIdentity}`,
+        title: installedContent.pack.title,
+        chapterIds: [CLASSIC_SNAKE_CHAPTERS[0].id],
+      },
+    ]
+  : OFFICIAL_CAMPAIGNS;
+const CLASSIC_SNAKE_FEATURED = installedContent ? [] : OFFICIAL_FEATURED;
+const survivalEntry = classicSnakeSurvivalEntry(CLASSIC_SNAKE_LEVELS);
 const MODES = ['solo', 'versus', 'team'],
   PRESETS = ['classic', 'pursuit', 'tactical', 'arcade'];
-const SAVE_KEY = 'revealline.classic-snake.round.v2',
-  OLD_SAVE_KEY = 'revealline.classic-snake.round.v1';
+const SAVE_KEY = `revealline.classic-snake.round.v2${communityIdentity ? `.${communityIdentity}` : ''}`,
+  OLD_SAVE_KEY = communityIdentity ? SAVE_KEY : 'revealline.classic-snake.round.v1';
 const PREF_KEY = 'revealline.classic-snake.presentation.v1',
   SETUP_KEY = 'revealline.classic-snake.setup.v2';
 const SESSION_FORMAT = 'revealline-classic-snake-session.v2';
@@ -69,13 +109,19 @@ let mode = choice(MODES, params.get('mode') ?? selected.mode, 'solo');
 let pace = choice(Object.keys(CLASSIC_PACES), params.get('pace') ?? selected.pace, 'normal');
 let format = choice(['campaign', 'endless'], params.get('activity') ?? selected.format, 'campaign');
 let targetRules = choice(
-  ['authored', 'moving'],
+  ['authored', 'moving', 'varied'],
   params.get('targets') ?? selected.targetRules,
   'authored',
 );
 let preset = choice(PRESETS, params.get('preset') ?? selected.preset, 'classic');
 let duel = choice(['score', 'survival'], params.get('duel') ?? selected.duel, 'score');
 let style = choice(['cable', 'signal'], cosmetic.style, 'cable');
+let boardStyle = choice(['theme', 'retro'], params.get('board') ?? cosmetic.boardStyle, 'theme');
+const actorAppearance = sharedActorAppearance();
+const currentCast = () => {
+  const value = actorAppearance.snapshot().cast;
+  return value === 'authored' ? (entry.cast ?? 'rivals') : value;
+};
 let steering = choice(['turns', 'dpad'], cosmetic.steering, 'turns');
 let accent = typeof cosmetic.accent === 'string' ? cosmetic.accent : 'default';
 let seed = Number(params.get('seed') ?? selected.seed ?? 17);
@@ -117,6 +163,13 @@ sound.configure({
   sfx: Number.isFinite(cosmetic.sfx) ? Math.max(0, Math.min(1, cosmetic.sfx)) : 0.7,
 });
 const isReduced = () => display.snapshot().effectiveReducedEffects;
+const reactions = attachContextualReactions({
+  sound,
+  container: $('snake-reaction-caption'),
+  settingsContainer: $('snake-reaction-settings'),
+  getReduced: isReduced,
+});
+let reactionAttempt = 0;
 const text = (key, values = {}) =>
   Object.entries(values).reduce(
     (value, [name, replacement]) => value.replaceAll(`{${name}}`, String(replacement)),
@@ -142,6 +195,7 @@ const settings = () => ({ pace, format, targetRules, preset });
 const acceptedLevel = () => prepareClassicSnakeLevel(entry, settings());
 const result = () => match?.result ?? null;
 const records = createClassicSnakeRecords({
+  ...(installedContent ? { contentPack: installedContent.pack } : {}),
   onChange: () => {
     if (match) {
       renderProgress();
@@ -173,7 +227,7 @@ function storePresentation() {
   try {
     globalThis.localStorage.setItem(
       PREF_KEY,
-      JSON.stringify({ style, steering, accent, sfx: sound.settings.sfx }),
+      JSON.stringify({ style, boardStyle, steering, accent, sfx: sound.settings.sfx }),
     );
   } catch {
     saveNotice = 'storage';
@@ -191,6 +245,7 @@ function updateURL() {
     preset,
     duel,
     seed,
+    board: boardStyle,
   }))
     url.searchParams.set(key, value);
   globalThis.history.replaceState(null, '', url);
@@ -259,6 +314,7 @@ function pause() {
   if (ready || paused || result()) return;
   paused = true;
   sound.gameplayPaused = true;
+  reactions.suspend();
   save();
   remember();
   refresh();
@@ -272,7 +328,19 @@ function start() {
   paused = false;
   previousFrame = null;
   sound.gameplayPaused = false;
-  void sound.enable();
+  reactions.resume();
+  void sound
+    .enable()
+    .then(() =>
+      reactions.prepare(
+        runs.flatMap(
+          (run) =>
+            run.level.targets?.required?.map((target) => target.kind) ?? [
+              run.level.targetMovement === 'flee' ? 'runner' : 'lookout',
+            ],
+        ),
+      ),
+    );
   refresh();
   boards[0]?.canvas.focus({ preventScroll: true });
 }
@@ -302,12 +370,15 @@ function relative(player, offset) {
 }
 function prepare({ launch = false } = {}) {
   importEpoch++;
+  reactions.reset(`classic:${++reactionAttempt}`);
   review = null;
   recordedMatch = null;
   if (format === 'endless' && mode === 'versus' && duel === 'survival') {
-    entry = CLASSIC_SNAKE_LEVELS[0];
-    preset = 'classic';
-    targetRules = 'authored';
+    if (survivalEntry) {
+      entry = survivalEntry;
+      preset = 'classic';
+      targetRules = 'authored';
+    } else duel = 'score';
   }
   for (const fx of effects) fx.reset();
   match = createClassicSnakeMatch(acceptedLevel(), {
@@ -433,6 +504,7 @@ function renderProgress() {
   $('progress-summary').textContent = text('progress', {
     done: records.chapter(chapterEntries),
     all: CLASSIC_SNAKE_LEVELS.filter((item) => records.cleared(item.id)).length,
+    total: CLASSIC_SNAKE_LEVELS.length,
   });
   const recent = CLASSIC_SNAKE_LEVELS.find((item) => item.id === records.recent()?.levelId);
   $('recent-level').hidden = !recent;
@@ -442,10 +514,13 @@ function renderProgress() {
   $('uncleared-level').textContent = upcoming
     ? text('nextUncleared', { name: upcoming.title[locale] })
     : '';
-  const unlocked = CLASSIC_SNAKE_CHAPTERS.filter(
-    (chapter) =>
-      records.chapter(CLASSIC_SNAKE_LEVELS.filter((item) => item.chapterId === chapter.id)) === 6,
-  );
+  const unlocked = installedContent
+    ? []
+    : CLASSIC_SNAKE_CHAPTERS.filter(
+        (chapter) =>
+          records.chapter(CLASSIC_SNAKE_LEVELS.filter((item) => item.chapterId === chapter.id)) ===
+          6,
+      );
   if (accent !== 'default' && !unlocked.some((chapter) => chapter.id === accent))
     accent = 'default';
   options(
@@ -480,6 +555,7 @@ function renderCopy() {
   doc.documentElement.lang = locale;
   doc.title = `${text('title')} · FPV / LINE`;
   doc.body.dataset.mode = mode;
+  doc.body.dataset.boardStyle = boardStyle;
   for (const [selector, label] of [
     ['#mode-tabs', 'mode'],
     ['.setup:not(.variants):not(.progress-links)', 'setupLabel'],
@@ -521,31 +597,44 @@ function renderCopy() {
     preset,
     duel,
     style,
+    'board-style': boardStyle,
+    'actor-cast': actorAppearance.snapshot().cast,
     steering,
   })) {
     for (const option of $(id).options)
       option.textContent = text(
-        id === 'duel' && option.value === 'score' ? 'scoreDuel' : option.value,
+        id === 'duel' && option.value === 'score'
+          ? 'scoreDuel'
+          : id === 'actor-cast' && option.value === 'authored'
+            ? 'campaignCast'
+            : option.value,
       );
     $(id).value = value;
   }
   $('preset-field').hidden = format !== 'endless';
   $('duel-field').hidden = format !== 'endless' || mode !== 'versus';
+  for (const option of $('duel').options)
+    if (option.value === 'survival') option.disabled = !survivalEntry;
   const survival = format === 'endless' && mode === 'versus' && duel === 'survival';
   for (const id of ['mission', 'chapter', 'campaign', 'target-rules', 'preset'])
     $(id).disabled = survival;
-  $('featured').hidden = format !== 'campaign';
+  $('featured').hidden =
+    format !== 'campaign' ||
+    !CLASSIC_SNAKE_FEATURED.some((item) => item.chapterId === entry.chapterId);
   $('level-title').textContent = entry.title[locale];
   $('boundary').textContent = text(entry.level.wrap ? 'wrap' : 'walls');
-  $('level-description').textContent = entry.description[locale];
+  $('level-description').textContent =
+    targetRules === 'authored' ? entry.description[locale] : text('remixDescription');
   $('target-style').textContent = text(
-    targetRules === 'moving'
-      ? 'fleeing'
-      : runs[0].level.version.endsWith('v2')
-        ? 'modernTargets'
-        : entry.level.targetMovement === 'flee'
-          ? 'fleeing'
-          : 'stationary',
+    targetRules === 'varied'
+      ? 'varied'
+      : targetRules === 'moving'
+        ? 'fleeing'
+        : !runs[0].level.version.endsWith('v1')
+          ? 'modernTargets'
+          : entry.level.targetMovement === 'flee'
+            ? 'fleeing'
+            : 'stationary',
   );
   $('mode-help').textContent =
     format === 'endless'
@@ -569,11 +658,16 @@ function renderCopy() {
   $('continue').hidden = !savedRound;
   const icon = $('target-icon').getContext('2d');
   icon.clearRect(0, 0, 64, 64);
-  drawClassicTarget(icon, 0, 0, 64);
+  drawClassicTarget(icon, 0, 0, 64, 0, {
+    ...(runs[0].targets?.[0] ?? runs[0].target ?? {}),
+    cast: currentCast(),
+    reducedEffects: true,
+  });
+  renderEncounterGuide();
   boards.forEach(({ canvas, fields }, i) => {
     canvas.setAttribute(
       'aria-label',
-      `${text('title')}: ${entry.title[locale]}. ${mode === 'versus' ? text(i ? 'p2' : 'p1') : ''} ${text('readyHelp')}`,
+      `${text('title')}: ${entry.title[locale]}. ${mode === 'versus' ? text(i ? 'p2' : 'p1') : ''} ${readyInstruction()}`,
     );
     for (const key of Object.keys(fields)) fields[key].label.textContent = text(key);
   });
@@ -590,6 +684,11 @@ function failureText(run, boardResult) {
     'catch-deadline': 'catchDeadline',
     'step-limit': 'limit',
     'input-limit': 'limit',
+    shield: 'shieldCrash',
+    armor: 'armorCrash',
+    specialist: 'specialistCrash',
+    'shield-front': 'shieldCrash',
+    brace: 'armorCrash',
   }[cause];
   if (!key) return '';
   const detail = text(key);
@@ -601,8 +700,53 @@ function failureText(run, boardResult) {
     )
     .join(' ');
 }
+function readyInstruction() {
+  return text(
+    runs[0]?.level.targets?.required.some((policy) => ['shield', 'brace'].includes(policy.kind))
+      ? 'specialistHelp'
+      : 'readyHelp',
+  );
+}
+function renderEncounterGuide() {
+  if (!runs[0]) return;
+  const level = runs[0].level;
+  const kinds = level.targets
+    ? [
+        ...level.targets.required.map((policy) => policy.kind),
+        ...(level.targets.bonus ? ['courier'] : []),
+      ]
+    : [level.targetMovement === 'flee' ? 'runner' : 'still'];
+  const entries = [...new Set(kinds)].map((kind) => actorFieldGuide(kind, locale)).filter(Boolean);
+  for (const node of doc.querySelectorAll('[data-word="readyHelp"]'))
+    node.textContent = readyInstruction();
+  const specialist = entries.some((actor) => actor.specialist);
+  $('encounter-summary').textContent =
+    text('encounterSummary', {
+      actors: entries.map((actor) => actor.name).join(' · '),
+      count: level.targets?.maxActive ?? 1,
+      objective: format === 'endless' ? text('endless') : text('catchQuota', { goal: level.goal }),
+    }) + (specialist ? ` ◇ ${text('specialistNotice')}` : '');
+  $('encounter-summary').dataset.specialist = String(specialist);
+  renderEnemyFieldGuide($('field-guide-cards'), kinds, { locale, cast: currentCast() });
+}
 function refresh() {
   if (!match) return;
+  const nextTarget =
+    runs[0].targets?.find((actor) => !actor.bonus) ?? runs[0].targets?.[0] ?? runs[0].target;
+  if (nextTarget) {
+    const guide = actorFieldGuide(
+      nextTarget.kind ?? (runs[0].level.targetMovement === 'flee' ? 'runner' : 'still'),
+      locale,
+    );
+    if (guide) $('target-style').textContent = guide.name;
+    const icon = $('target-icon').getContext('2d');
+    icon.clearRect(0, 0, 64, 64);
+    drawClassicTarget(icon, 0, 0, 64, 0, {
+      ...nextTarget,
+      cast: currentCast(),
+      reducedEffects: true,
+    });
+  }
   const outcome = result();
   doc.body.dataset.playing = String(!ready && !paused);
   $('toggle').textContent = text(ready ? 'start' : paused ? 'resume' : 'pause');
@@ -624,7 +768,7 @@ function refresh() {
       : outcome
         ? title
         : ready
-          ? text('readyHelp')
+          ? readyInstruction()
           : paused
             ? text('paused')
             : '';
@@ -738,7 +882,7 @@ function restore(raw) {
         style: source.style,
       };
       required(
-        ['authored', 'moving'].includes(next.targetRules) &&
+        ['authored', 'moving', 'varied'].includes(next.targetRules) &&
           PRESETS.includes(next.preset) &&
           ['score', 'survival'].includes(next.duel) &&
           ['cable', 'signal'].includes(next.style) &&
@@ -771,6 +915,8 @@ function restore(raw) {
     review = null;
     recordedMatch = null;
     sound.gameplayPaused = true;
+    reactions.reset(`classic:${++reactionAttempt}`);
+    reactions.suspend();
     for (const fx of effects) fx.reset();
     buildBoards();
     renderCopy();
@@ -849,6 +995,21 @@ $('effects-volume').addEventListener('input', () => {
 $('style').addEventListener('change', () => {
   style = $('style').value;
   storePresentation();
+});
+$('board-style').addEventListener('change', () => {
+  boardStyle = $('board-style').value;
+  doc.body.dataset.boardStyle = boardStyle;
+  storePresentation();
+  updateURL();
+});
+$('actor-cast').addEventListener('change', () => {
+  actorAppearance.set({ cast: $('actor-cast').value });
+});
+actorAppearance.subscribe(() => {
+  if (runs.length) renderCopy();
+});
+$('field-guide').addEventListener('toggle', () => {
+  if ($('field-guide').open) pause();
 });
 $('steering').addEventListener('change', () => {
   pause();
@@ -929,6 +1090,7 @@ $('next').addEventListener('click', () => {
 $('featured').addEventListener('click', () => {
   save();
   const sortie = CLASSIC_SNAKE_FEATURED.find((item) => item.chapterId === entry.chapterId);
+  if (!sortie) return;
   entry = CLASSIC_SNAKE_LEVELS.find((item) => item.id === sortie.levelId);
   seed = sortie.seed;
   targetRules = 'authored';
@@ -1096,11 +1258,23 @@ function frame(now) {
       const before = runs.map((run) => run.catches + (run.bonusCatches ?? 0));
       advanceClassicSnakeMatchTo(match, match.elapsedMs + Math.min(250, elapsed));
       runs.forEach((run, i) => {
-        if (run.catches + (run.bonusCatches ?? 0) > before[i])
+        if (run.catches + (run.bonusCatches ?? 0) > before[i]) {
           sound.feedbackDirector.play('pickup', {
             board: `snake-${i}`,
             pan: mode === 'versus' ? (i ? 0.5 : -0.5) : 0,
           });
+          const delta = run.catches + (run.bonusCatches ?? 0) - before[i];
+          reactions.events(
+            (run.recentCatches ?? []).slice(-delta).map((mark) => ({
+              type: 'actor.caught',
+              id: mark.id,
+              actorFamily: mark.kind ?? 'lookout',
+              tick: mark.tick,
+              player: mark.playerId,
+            })),
+            { mode, board: i, danger: run.status === 'lost' },
+          );
+        }
       });
       if (result()) {
         sound.feedbackDirector.play(
@@ -1149,6 +1323,8 @@ function frame(now) {
       ...choice,
       showRemains: remains.snapshot().showRemains,
       style,
+      boardStyle,
+      cast: currentCast(),
       presentation: presentation.snapshot(),
       accent,
       reduced: isReduced(),

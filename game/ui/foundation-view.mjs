@@ -1,5 +1,5 @@
 import { classicView } from './classic-view.mjs';
-import { isClassicRuleset, resolveVersions } from '../core/versions.mjs';
+import { isClassicRuleset, isRunningEnemyRuleset, resolveVersions } from '../core/versions.mjs';
 
 const ownValue = (value, key) => {
   const descriptor = Object.getOwnPropertyDescriptor(value, key);
@@ -17,9 +17,10 @@ export function foundationCompatibleView(run) {
     const descriptor = Object.getOwnPropertyDescriptor(run, 'ruleset');
     if (!descriptor || !Object.hasOwn(descriptor, 'value')) return null;
     let ruleset = descriptor.value;
-    if (ruleset === 'xonix-core.v11') {
+    if (isRunningEnemyRuleset(ruleset)) {
       const level = ownValue(run, 'level');
-      if (ownValue(level, 'version') !== 'xonix-level.v10') return null;
+      if (resolveVersions({ levelVersion: ownValue(level, 'version') }).ruleset !== ruleset)
+        return null;
       const overlay = ownValue(level, 'runningEnemies');
       ruleset = resolveVersions({ levelVersion: ownValue(overlay, 'baseVersion') }).ruleset;
       if (!isClassicRuleset(ruleset)) return null;

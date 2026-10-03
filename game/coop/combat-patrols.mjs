@@ -1,4 +1,10 @@
-import { TEAM_RUNNING_LEVEL_VERSION } from './running-enemies.mjs';
+import {
+  isPursuitSpecialist,
+  protectedPursuitContact,
+  specialistMotionAllowed,
+} from '../hunt/pursuit-specialists.mjs';
+import { pursuitPolicy, updatePursuitHeading } from '../hunt/pursuit-goals.mjs';
+import { isTeamRunningLevel } from './running-enemies.mjs';
 import { dataIdentity } from '../data-json.mjs';
 import { EPS, movingCirclesTime } from '../core/geometry.mjs';
 import { classicDomainHit } from '../core/classic-motion.mjs';
@@ -68,7 +74,7 @@ export function validateCoopCombat(level, cells) {
       classic: { combatPatrols: level.combatPatrols, ...(level.hunt ? { hunt: level.hunt } : {}) },
     },
     {
-      supplemental: level.version === TEAM_RUNNING_LEVEL_VERSION,
+      supplemental: isTeamRunningLevel(level),
       geometry: { cells },
       walls: Array.from(cells, (cell) => cell === 2),
       identity(actor) {
@@ -84,7 +90,7 @@ export function validateCoopCombat(level, cells) {
     validateHuntDefinition(level.hunt, level.combatPatrols.actors, {
       enabled: level.combatPatrols.enabled,
       ordinaryCount: level.enemies.length,
-      supplemental: level.version === TEAM_RUNNING_LEVEL_VERSION,
+      supplemental: isTeamRunningLevel(level),
       playerMoveSpeed: level.rules?.moveSpeed ?? 8,
     });
     validateHuntReachability(level.hunt, level.combatPatrols.actors, {
@@ -101,7 +107,10 @@ export function initializeCoopCombat(run) {
   if (!run.level.combatPatrols?.enabled) return;
   const bridge = {
     seed: run.seed,
-    level: { classic: { combatPatrols: run.level.combatPatrols } },
+    level: {
+      classic: { combatPatrols: run.level.combatPatrols },
+      ...(run.level.pursuit ? { pursuit: run.level.pursuit } : {}),
+    },
     classic: {},
   };
   initializeCombatPatrols(bridge);
@@ -117,7 +126,7 @@ export function initializeCoopCombat(run) {
       level: run.level,
       seed: run.seed,
       config: run.config,
-      ...(run.level.version === TEAM_RUNNING_LEVEL_VERSION ? { difficulty: run.difficulty } : {}),
+      ...(isTeamRunningLevel(run.level) ? { difficulty: run.difficulty } : {}),
     });
   }
 }
@@ -275,6 +284,20 @@ export function updateCoopCombat(run) {
         } else actor.nextScanTick = tick + def.scanTicks;
       }
     }
+    if (
+      actor.phase === 'cooldown' &&
+      updatePursuitHeading({
+        actor,
+        policy: pursuitPolicy(run.level, actor.id),
+        actors: combat.actors,
+        players: run.players.filter((player) => player.status === 'active'),
+        geometry: run,
+        tick,
+        speed: def.speed,
+        clearance: (from, to) => classicDomainHit(run, from, to, COMBAT_RADIUS, 0)?.t ?? 1,
+      })
+    )
+      continue;
     if (actor.phase === 'cooldown' && tick >= actor.nextTurnTick) {
       const rotation = random(actor);
       const [x, y] =
@@ -305,6 +328,20 @@ function motion(run, body, duration, radius, reflect) {
   const moving = !reflect || body.phase === 'cooldown';
   const velocity = { x: moving ? body.vx * factor : 0, y: moving ? body.vy * factor : 0 };
   const end = { x: body.x + velocity.x * duration, y: body.y + velocity.y * duration };
+  if (
+    reflect &&
+    !specialistMotionAllowed(
+      body,
+      end,
+      run,
+      run.players.filter((player) => player.status === 'active'),
+    )
+  ) {
+    velocity.x = 0;
+    velocity.y = 0;
+    end.x = body.x;
+    end.y = body.y;
+  }
   const wall = velocity.x || velocity.y ? classicDomainHit(run, body, end, radius, 0) : null;
   return { body, radius, reflect, velocity, wall, time: wall ? wall.t * duration : Infinity };
 }
@@ -361,11 +398,22 @@ export function planCoopCombat(run, velocities, horizon) {
         continue;
       if (!plan.reflect && plan.wall && plan.time <= time + EPS) continue;
       if (time > plan.time + EPS) continue;
+      const protectedContact =
+        plan.reflect &&
+        protectedPursuitContact(
+          plan.body,
+          {
+            x: player.x + velocities[player.id].x * time,
+            y: player.y + velocities[player.id].y * time,
+          },
+          { x: plan.body.x + plan.velocity.x * time, y: plan.body.y + plan.velocity.y * time },
+        );
+      if (protectedContact && player.graceUntil > run.time + EPS) continue;
       contacts.push({
         time,
         player: player.id,
         body: plan.body,
-        cause: plan.reflect ? 'ram' : 'combat-projectile',
+        cause: protectedContact ? 'combat-specialist' : plan.reflect ? 'ram' : 'combat-projectile',
       });
     }
   }
@@ -385,8 +433,13 @@ export function advanceCoopCombat(run, plans, elapsed) {
       if (!plan.reflect) removeShots(run, (shot) => shot.id === plan.body.id, 'boundary');
       else {
         const { nx, ny } = plan.wall;
-        if (nx) plan.body.vx *= -1;
-        if (ny) plan.body.vy *= -1;
+        if (isPursuitSpecialist(plan.body)) {
+          plan.body.vx = 0;
+          plan.body.vy = 0;
+        } else {
+          if (nx) plan.body.vx *= -1;
+          if (ny) plan.body.vy *= -1;
+        }
         if (!nx && !ny) throw new Error('Team optional patrol embedded in field boundary.');
         plan.body.x += nx * EPS * 2;
         plan.body.y += ny * EPS * 2;
@@ -451,6 +504,9 @@ export function coopCombatView(run) {
     }
     return {
       ...actor,
+      ...(pursuitPolicy(run.level, actor.id) && !actor.pursuit
+        ? { pursuit: { behavior: pursuitPolicy(run.level, actor.id).behavior, phase: 'walking' } }
+        : {}),
       kind: huntTargetKind(run.level.hunt, actor.id),
       rayEnd,
       warningTotal: def.warningTicks ?? 0,
@@ -469,6 +525,9 @@ export function coopCombatView(run) {
     eliminations: combat.eliminations.map((mark) => ({
       ...mark,
       role: definition(run, mark).role,
+      ...(pursuitPolicy(run.level, mark.id)
+        ? { family: pursuitPolicy(run.level, mark.id).behavior }
+        : {}),
       kind: huntTargetKind(run.level.hunt, mark.id),
     })),
   };

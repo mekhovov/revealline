@@ -196,6 +196,9 @@ export const toPublicEdition = (row) => ({
   latestEditionId: row.latestEditionId,
   latestVersion: row.latestVersion,
   previewAvailable: true,
+  ...(['classic', 'team', 'fpv'].includes(row.validationReport?.family)
+    ? { family: row.validationReport.family }
+    : {}),
 });
 
 export const toOwnerSubmission = (row) => ({

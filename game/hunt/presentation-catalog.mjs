@@ -1,3 +1,4 @@
+import { ACTOR_VISUALS, actorVisual } from './actor-catalog.mjs';
 /** Original 16-pixel art and cosmetic recipes. A catalog version never changes rules. */
 const freeze = (value) => {
   if (value && typeof value === 'object') {
@@ -147,9 +148,24 @@ export const HUNT_PRESENTATION_CATALOG = freeze({
     staleFrameMs: 250,
   },
 });
-export const huntActorPresentation = (kind) =>
-  Object.hasOwn(HUNT_PRESENTATION_CATALOG.actors, kind)
-    ? HUNT_PRESENTATION_CATALOG.actors[kind]
-    : null;
+// The historical catalog remains intact for imported previews. Runtime family
+// lookups use the same original palette as live actors, including their cast.
+const sharedActors = new Map(
+  ACTOR_VISUALS.map((visual) => [
+    visual.id,
+    freeze({
+      family: visual.family,
+      cast: visual.cast,
+      visualId: visual.id,
+      material: visual.material,
+      tintWithAccent: false,
+      palette: { ...visual.palette, badge: visual.palette.light, armor: visual.palette.trim },
+    }),
+  ]),
+);
+export function huntActorPresentation(kind, cast = 'rivals') {
+  const visual = actorVisual(kind, cast);
+  return visual ? sharedActors.get(visual.id) : null;
+}
 export const huntDestructionRecipe = (cause) =>
   HUNT_PRESENTATION_CATALOG.recipes[cause === 'capture' ? 'enclosure' : 'contact'];

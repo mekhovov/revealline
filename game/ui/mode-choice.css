@@ -2,6 +2,19 @@
 
 /* Legacy layout and paint share one cascade layer. Theme recipes own opt-in appearance. */
 @layer legacy {
+  .game-mode-destinations {
+    grid-column: 1 / -1;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 24px;
+  }
+  .game-mode-destinations a {
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+    color: var(--fk-accent, #f4bf62);
+    font-size: var(--fk-text-secondary, 14px);
+  }
   .field-kit .game-mode-choice {
     display: grid;
     grid-template-columns: repeat(5, minmax(0, 1fr));

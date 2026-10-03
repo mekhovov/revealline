@@ -98,6 +98,24 @@ export function mountModeChoices({
   };
   snake.addEventListener('click', enterSnake);
   root.replaceChildren(...choices, simulator, snake);
+  const destinations = document.createElement('div');
+  destinations.className = 'game-mode-destinations';
+  for (const [path, en, uk] of [
+    ['../hunt/', 'New pursuit campaigns', 'Нові кампанії переслідування'],
+    ['../online/', 'Private rooms preview', 'Приватні кімнати'],
+  ]) {
+    const link = document.createElement('a');
+    link.href = new URL(path, import.meta.url).href;
+    localizedText(link, () => (getLocale() === 'uk' ? uk : en));
+    link.addEventListener('click', () => {
+      const target = new URL(link.href);
+      target.searchParams.set('lang', getLocale());
+      link.href = target.href;
+      pause();
+    });
+    destinations.append(link);
+  }
+  root.append(destinations);
   const panel = mountOptionalPracticePanel({
     document,
     getAppearanceDefault,
@@ -126,6 +144,7 @@ export function mountModeChoices({
     dispose() {
       panel.dispose();
       simulator.remove();
+      destinations.remove();
       snake.removeEventListener('click', enterSnake);
       snake.remove();
     },

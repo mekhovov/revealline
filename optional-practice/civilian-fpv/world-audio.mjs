@@ -1,3 +1,5 @@
+import { dialogueChannel } from '../../game/ui/dialogue-channel.mjs';
+
 /** Optional presentation-only sound. No media requests or gameplay clocks. */
 const PREFERENCE = 'revealline.fpv.world-audio.v1';
 const clamp = (value, min, max) => Math.max(min, Math.min(max, value));
@@ -33,6 +35,8 @@ export function createWorldAudio(options = {}) {
   let ambience = AMBIENCES.hangar;
   let motorStyle = 'quad';
   let gateStyle = 'chime';
+  let dialogue = { enabled: false, volume: 0.8 };
+  let dialogueVoice = null;
   const effects = new Set();
   const volume = (value) =>
     typeof value === 'number' && Number.isFinite(value) ? clamp(value, 0, 1) : 1;
@@ -50,6 +54,7 @@ export function createWorldAudio(options = {}) {
   }
 
   function silence() {
+    dialogueVoice?.stop();
     if (!graph || context.state === 'closed') return;
     for (const node of [graph.motor, graph.wind, graph.humGain]) {
       node.gain.cancelScheduledValues(context.currentTime);
@@ -75,6 +80,9 @@ export function createWorldAudio(options = {}) {
           return [key, bus];
         }),
       );
+      const dialogueBus = candidate.createGain();
+      dialogueBus.gain.value = dialogue.enabled ? dialogue.volume : 0;
+      dialogueBus.connect(master);
       const motor = candidate.createGain();
       motor.gain.value = 0;
       const motorFilter = candidate.createBiquadFilter();
@@ -118,7 +126,19 @@ export function createWorldAudio(options = {}) {
       hum.connect(humGain).connect(buses.ambience);
       hum.start();
       context = candidate;
-      graph = { master, buses, motor, motorFilter, rotors, noise, windFilter, wind, hum, humGain };
+      graph = {
+        master,
+        buses,
+        dialogueBus,
+        motor,
+        motorFilter,
+        rotors,
+        noise,
+        windFilter,
+        wind,
+        hum,
+        humGain,
+      };
       return true;
     } catch {
       candidate?.close().catch(() => {});
@@ -162,6 +182,8 @@ export function createWorldAudio(options = {}) {
   }
 
   function cue(type, player = true) {
+    if (type === 'hunt-tail' || type === 'impact' || (type === 'fire' && !player))
+      dialogueVoice?.stop();
     if (type === 'catch') {
       tone({ from: 520, to: 880, duration: 0.12, gain: 0.055, type: 'triangle' });
     } else if (type === 'hunt-tail') {
@@ -210,6 +232,67 @@ export function createWorldAudio(options = {}) {
   }
 
   return {
+    get context() {
+      return context;
+    },
+    configureDialogue({ enabled = dialogue.enabled, volume: value = dialogue.volume } = {}) {
+      if (typeof enabled !== 'boolean' || !Number.isFinite(value) || value < 0 || value > 1)
+        throw new TypeError('Dialogue requires an enabled boolean and volume from zero to one.');
+      dialogue = { enabled, volume: value };
+      if (!enabled || !value) dialogueVoice?.stop();
+      if (graph && context.state !== 'closed') ramp(graph.dialogueBus.gain, enabled ? value : 0);
+    },
+    /** Uses the existing flight context and the shared one-line dialogue arbiter. */
+    playDialogue(buffer, { onended = () => {} } = {}) {
+      if (
+        !buffer ||
+        disposed ||
+        !enabled ||
+        !wanted ||
+        !dialogue.enabled ||
+        !dialogue.volume ||
+        !graph ||
+        context.state !== 'running'
+      )
+        return null;
+      dialogueVoice?.stop();
+      const source = context.createBufferSource();
+      source.buffer = buffer;
+      source.connect(graph.dialogueBus);
+      let ended = false;
+      const voice = {
+        get ended() {
+          return ended;
+        },
+        stop() {
+          if (ended) return;
+          ended = true;
+          try {
+            source.stop();
+          } catch {
+            /* An ended source is already silent. */
+          }
+          source.disconnect();
+          if (dialogueVoice === voice) dialogueVoice = null;
+          dialogueChannel.release(voice);
+          try {
+            onended();
+          } catch {
+            /* Presentation callbacks cannot interrupt flight. */
+          }
+        },
+      };
+      source.onended = voice.stop;
+      dialogueChannel.claim(voice);
+      dialogueVoice = voice;
+      try {
+        source.start();
+      } catch {
+        voice.stop();
+        return null;
+      }
+      return voice;
+    },
     enabled: () => enabled,
     volumes: () => ({ ...levels }),
     setVolumes(values = {}) {
@@ -248,6 +331,7 @@ export function createWorldAudio(options = {}) {
     resume,
     pause,
     setCourse(course = {}) {
+      dialogueVoice?.stop();
       const theme = course.world?.theme ?? course.theme ?? 'academy';
       const profile = course.world?.themeProfile?.audio ?? course.themeProfile?.audio ?? {};
       const fallback =
@@ -334,6 +418,7 @@ export function createWorldAudio(options = {}) {
         graph.wind,
         graph.humGain,
         ...Object.values(graph.buses),
+        graph.dialogueBus,
         graph.master,
       ])
         node.disconnect();

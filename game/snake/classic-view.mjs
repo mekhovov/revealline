@@ -41,27 +41,41 @@ const FALLBACK_PALETTE = Object.freeze({
   safe: '#67aaff',
   danger: '#ff7169',
 });
+export const RETRO_FIELD_PALETTE = Object.freeze({
+  field: '#c5cfaa',
+  alternate: '#d5dbba',
+  grid: '#8a9b76',
+  text: '#162b24',
+  muted: '#61765d',
+  accent: '#946516',
+  safe: '#29643e',
+  danger: '#8c2348',
+});
+const RETRO_INKS = [
+  { body: '#276340', edge: '#153e2c', band: '#b3df76' },
+  { body: '#6c457b', edge: '#3e274d', band: '#edd0f4' },
+];
 export function classicCatchMarks(run) {
   return run.recentCatches.map((mark) => ({
     ...mark,
-    kind: mark.kind === 'patroller' ? 'guard' : 'runner',
+    kind: mark.kind ?? 'runner',
     cause: 'ram',
     x: mark.x + 0.5,
     y: mark.y + 0.5,
   }));
 }
 
-function drawWall(ctx, wall, presentation, palette) {
+function drawWall(ctx, wall, presentation, palette, retro = false) {
   const x = wall.x * UNIT,
     y = wall.y * UNIT,
-    image = presentation?.image?.('terrain.wall');
+    image = retro ? null : presentation?.image?.('terrain.wall');
   if (image) ctx.drawImage(image, x, y, UNIT, UNIT);
   else {
-    ctx.fillStyle = '#425563';
+    ctx.fillStyle = retro ? '#3d4e41' : '#425563';
     ctx.fillRect(x, y, UNIT, UNIT);
-    ctx.fillStyle = '#a5b2bb';
+    ctx.fillStyle = retro ? '#75856b' : '#a5b2bb';
     ctx.fillRect(x + 2, y + 2, UNIT - 4, 4);
-    ctx.fillStyle = '#182531';
+    ctx.fillStyle = retro ? '#26392d' : '#182531';
     ctx.fillRect(x, y + 14, UNIT, 2);
   }
   ctx.strokeStyle = palette.muted;
@@ -146,6 +160,8 @@ export function drawClassicBoard(
     blood = true,
     showRemains = true,
     style = 'cable',
+    boardStyle = 'theme',
+    cast = 'rivals',
     presentation,
     accent = null,
     reduced = false,
@@ -155,7 +171,8 @@ export function drawClassicBoard(
   } = {},
 ) {
   const { width, height, walls, wrap } = run.level,
-    palette = presentation?.palette ?? FALLBACK_PALETTE;
+    retro = boardStyle === 'retro',
+    palette = retro ? RETRO_FIELD_PALETTE : (presentation?.palette ?? FALLBACK_PALETTE);
   const logicalWidth = width * UNIT,
     logicalHeight = height * UNIT;
   const resolution = Math.max(
@@ -221,7 +238,7 @@ export function drawClassicBoard(
     effects.draw(ctx);
     ctx.restore();
   }
-  for (const wall of walls) drawWall(ctx, wall, presentation, palette);
+  for (const wall of walls) drawWall(ctx, wall, presentation, palette, retro);
   drawShutters(ctx, run, palette);
   drawPickup(ctx, run.pickup);
   ctx.lineWidth = 3;
@@ -239,6 +256,7 @@ export function drawClassicBoard(
       reduced || target.kind === 'still' || run.pulseTicks > 0 ? 0 : run.tick % 3,
       {
         ...target,
+        cast,
         direction:
           target.kind === 'still' || (target.kind === 'sprinter' && target.phase === 'rest')
             ? undefined
@@ -250,8 +268,12 @@ export function drawClassicBoard(
       },
     );
   for (const snake of run.snakes) {
-    const ink = pilotInk(snake.id, accent);
-    drawClassicCable(ctx, snake, ink, run.level, { style, ...flight, reduced });
+    const ink = retro ? RETRO_INKS[snake.id % 2] : pilotInk(snake.id, accent);
+    drawClassicCable(ctx, snake, ink, run.level, {
+      style: retro ? 'segmented' : style,
+      ...flight,
+      reduced,
+    });
     drawClassicDrone(ctx, snake, ink, { ...flight, reduced });
     if (!snake.alive) {
       const head = snake.body[0];
