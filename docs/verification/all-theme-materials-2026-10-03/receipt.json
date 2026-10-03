@@ -1,0 +1,148 @@
+{
+  "baseRevision": "222a9a7238645484828cdc50b3585c7d6c68425d",
+  "sources": {
+    "game/presentation/industrial-workshop.css": {
+      "bytes": 97701,
+      "sha256": "a8d72396d271162d7a292598e23f2308e6c2d7671c9301a7882aba46523b7da0"
+    },
+    "optional-practice/civilian-fpv/sim-presentation.mjs": {
+      "bytes": 451756,
+      "sha256": "15f4cb1af86eac26b809b3ca0aac296bb86064c504524075022bf68ee3ec0d26"
+    },
+    "game/test/fixtures/appearance-materials.mjs": {
+      "bytes": 30453,
+      "sha256": "fdea58124003b4d11b28c10bb82d8ee6cc605106e8b034903d08a929f89287e8"
+    },
+    "game/test/fixtures/appearance-materials.css": {
+      "bytes": 4481,
+      "sha256": "5098039d2db9573eab9f073aab323b496f72fbbcd08e3e634af4d0c9403f5fc7"
+    },
+    "game/test/fixtures/appearance-materials.html": {
+      "bytes": 2957,
+      "sha256": "f57477e4f8b5a9b511c78e8dd024c31c086a87cb55fb22b6c0cb9da84091429a"
+    },
+    "game/test/material-state-semantics.test.mjs": {
+      "bytes": 4495,
+      "sha256": "28e6b7d7ac2e77b772ec6738fff5aa119490a28a76891094c3771d2128585385"
+    }
+  },
+  "renderedCaptures": [
+    {
+      "file": "copper-observatory.json",
+      "family": "copper-observatory",
+      "samples": 82,
+      "semanticChecks": 56
+    },
+    {
+      "file": "deep-space.json",
+      "family": "deep-space",
+      "samples": 82,
+      "semanticChecks": 56
+    },
+    {
+      "file": "dnipro-porcelain.json",
+      "family": "dnipro-porcelain",
+      "samples": 82,
+      "semanticChecks": 56
+    },
+    {
+      "file": "dos.json",
+      "family": "dos",
+      "samples": 82,
+      "semanticChecks": 56
+    },
+    {
+      "file": "ember-foundry.json",
+      "family": "ember-foundry",
+      "samples": 82,
+      "semanticChecks": 56
+    },
+    {
+      "file": "high-contrast.json",
+      "family": "industrial-workshop",
+      "samples": 82,
+      "semanticChecks": 56
+    },
+    {
+      "file": "industrial-workshop.json",
+      "family": "industrial-workshop",
+      "samples": 82,
+      "semanticChecks": 56
+    },
+    {
+      "file": "legacy.json",
+      "family": "legacy",
+      "samples": 82,
+      "semanticChecks": 56
+    },
+    {
+      "file": "moonlit-grove.json",
+      "family": "moonlit-grove",
+      "samples": 82,
+      "semanticChecks": 56
+    },
+    {
+      "file": "neon-ruins.json",
+      "family": "neon-ruins",
+      "samples": 82,
+      "semanticChecks": 56
+    },
+    {
+      "file": "obsidian-reliquary.json",
+      "family": "obsidian-reliquary",
+      "samples": 82,
+      "semanticChecks": 56
+    },
+    {
+      "file": "orchard-workshop.json",
+      "family": "orchard-workshop",
+      "samples": 82,
+      "semanticChecks": 56
+    },
+    {
+      "file": "pocket-lcd.json",
+      "family": "pocket-lcd",
+      "samples": 82,
+      "semanticChecks": 56
+    },
+    {
+      "file": "polar-relay.json",
+      "family": "polar-relay",
+      "samples": 82,
+      "semanticChecks": 56
+    },
+    {
+      "file": "sakura-station.json",
+      "family": "sakura-station",
+      "samples": 82,
+      "semanticChecks": 56
+    },
+    {
+      "file": "tryzub.json",
+      "family": "tryzub",
+      "samples": 82,
+      "semanticChecks": 56
+    },
+    {
+      "file": "vyshyvanka.json",
+      "family": "vyshyvanka",
+      "samples": 82,
+      "semanticChecks": 56
+    },
+    {
+      "file": "windows-classic.json",
+      "family": "windows-classic",
+      "samples": 82,
+      "semanticChecks": 56
+    }
+  ],
+  "renderedContrastCount": 738,
+  "nestedAccessibilityCombinations": 51,
+  "nestedAccessibilityAssertions": 2856,
+  "tests": 56,
+  "browser": "Codex in-app Chromium",
+  "limitations": [
+    "Stable-state JPEG sampling, not lossless certification",
+    "No device p95 or Firefox/forced-colors qualification"
+  ]
+}

@@ -56,7 +56,8 @@ body {
   gap: 18px;
 }
 #specimen-samples[hidden],
-#specimen-close-up[hidden] {
+#specimen-close-up[hidden],
+#specimen-gallery[hidden] {
   display: none;
 }
 #specimen-close-up > h2 {
@@ -161,6 +162,54 @@ body {
 #specimen-samples input[data-material-sample] {
   display: block;
   text-align: center;
+}
+#specimen-samples label[data-native-control] {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+}
+#specimen-samples label[data-native-control='range'] {
+  flex-direction: column;
+  gap: 4px;
+}
+#specimen-samples label[data-native-control='range'] > input {
+  width: 80%;
+}
+#specimen-gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 360px), 1fr));
+  gap: 24px;
+}
+.material-gallery-tile {
+  min-width: 0;
+  padding: 20px;
+}
+.material-gallery-tile > h2 {
+  margin: 0 0 14px;
+  font-size: 22px;
+}
+.material-gallery-panel {
+  padding: 18px;
+  display: grid;
+  gap: 16px;
+}
+.material-gallery-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.material-gallery-actions > button {
+  padding: 6px 12px;
+}
+.material-gallery-panel > label {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.material-gallery-panel select {
+  flex: 1;
+  min-width: 120px;
 }
 [data-reading-twin='true'] > span {
   visibility: hidden;
