@@ -199,18 +199,18 @@ test('final offline edition budget counts every generated worker and manifest', 
       files,
       enginePaths: [...options.enginePaths, ...extra, 'game/one-more.txt'],
     }),
-    /Final edition output exceeds 2000 files or 64 MiB \(2001 files/,
+    /Final edition output exceeds 2000 files or 72 MiB \(2001 files/,
   );
   const baselineBytes = [...baseline.files.values()].reduce((sum, bytes) => sum + bytes.length, 0);
   const large = new Map(f.files);
-  large.set('game/padding.txt', Buffer.alloc(64 * 1024 * 1024 - baselineBytes + 1024));
+  large.set('game/padding.txt', Buffer.alloc(72 * 1024 * 1024 - baselineBytes + 1024));
   await assert.rejects(
     compileEdition({
       ...options,
       files: large,
       enginePaths: [...options.enginePaths, 'game/padding.txt'],
     }),
-    /Final edition output exceeds 2000 files or 64 MiB/,
+    /Final edition output exceeds 2000 files or 72 MiB/,
     'Payload fits the earlier cache inventory cap but final generated output does not',
   );
 });
