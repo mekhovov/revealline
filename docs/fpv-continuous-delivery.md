@@ -2229,3 +2229,18 @@ replays in both modes. Dedicated build: `dist/fpv-tracking-editor-main-playtest`
 The earlier combined build remains `dist/fpv-tracking-editor-playtest`; it includes
 pending section replay and is preserved separately. Native stacks remain unused
 because both focused features can merge independently.
+
+### Follow/Observe editor published — 3 October 2026
+
+[PR #975](https://github.com/mekhovov/revealline/pull/975) is published and attached,
+initial head19d11689a, independently against main. Its source/package browser
+workflows pass63/63 each; both UI-authored modes complete/replay; frozen candidate
+ aa05d0b93 passes all three optional admissions and reproducibility. Local standalone
+ZIPa2a8b90c…8c9e50 is available at `dist/fpv-tracking-editor-main-playtest`.
+
+Section replay [#972](https://github.com/mekhovov/revealline/pull/972) has now
+merged at2026-10-03T01:13:01Z, final branch head61da7d890. The new editor remains
+separate; no native stack was necessary. Public deployment/launch of either
+new feature is not yet claimed. Next implementation: pack-removal impact and
+recovery guidance on a separate branch from current main. Preserve pending
+editor CI/review and current qualification receipts while progressing that item.
