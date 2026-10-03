@@ -38,6 +38,22 @@ raised.
 
 The browser exercise establishes boundary installation, staged update and failure
 fallback. It does not establish iPhone/Steam Deck memory, quota or performance,
-or rollback after a completed activation. Existing offline regressions cover
+Existing offline regressions cover
 scope isolation, failed installs, quota recovery and update behavior. Public
 availability requires protected checks, merge and deployment/launch verification.
+
+## Completed activation/rollback and source-bound build
+
+The browser then activated version C normally after the old client closed,
+verified all 75,497,472 bytes, staged original version B, closed the client again,
+and verified B active with no missing/corrupt files. No forced activation was
+used. See `browser-rollback.png`. Reproduce with
+`node scripts/verify-offline-capacity-browser.mjs`; use its isolated URL and
+remove the verification cache afterwards. This verifies a synthetic boundary
+payload with the production worker, not physical-device acceptance.
+
+`core.json` binds preparation to committed candidate
+`649887eed17b1a704715cae2205f57b82875584b`: 1,327 files / 67,094,501 bytes,
+8,402,971 bytes headroom at 72 MiB. Available committed source bytes were checked
+before and after preparation. The receipt is for in-memory preparation, not a
+published distribution or public deployment.
