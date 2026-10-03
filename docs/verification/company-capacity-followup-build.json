@@ -1,0 +1,15 @@
+{
+  "scope": "Clean committed-source full production build and archive; not public-release qualification",
+  "sourceRevision": "bae630ebc2df89f80db82963e2a4020552f165ec",
+  "sourceTree": "12178cd61269c36a90b0fdbdc88e67e7d351c264",
+  "version": "v0.150.0",
+  "files": 2983,
+  "sha256": "c47d6d6e41ccc60eafba602b86898f2d9ee0156281d22db850e98913a1dbfad7",
+  "zipBytes": 999968494,
+  "coreFiles": 1350,
+  "coreBytes": 66912603,
+  "coreLimitBytes": 67108864,
+  "manifestSha256": "5a204e0f0aa69f97731395077b8cd144738a059198bc652e12b1d215a3a15007",
+  "automatedSuites": "waived-not-run",
+  "coreHeadroomBytes": 196261
+}
