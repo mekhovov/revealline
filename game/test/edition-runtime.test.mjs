@@ -17,6 +17,7 @@ import {
   EDITION_RUNTIME_ADAPTERS,
   EDITION_RUNTIME_RESOURCES,
   editionDemoResources,
+  editionClassicPresentationResources,
   projectEditionRuntimeImports,
   projectEditionRuntimeIndentation,
   validateEditionHostRequests,
@@ -27,6 +28,7 @@ import {
   DEFAULT_GAME_WORDMARK,
 } from '../../scripts/edition-runtime.mjs';
 import { MENU_SCENES, resolveMenuScene } from '../ui/menu-scene-catalog.mjs';
+import { CLASSIC_PRESENTATION } from '../snake/classic-presentation.mjs';
 import { selectOfflineCore } from '../../scripts/offline-core-closure.mjs';
 import { fileURLToPath } from 'node:url';
 
@@ -241,6 +243,48 @@ test('standalone and public offline menus retain every dynamically attached pane
       `Missing dynamically attached offline stylesheet: ${name}`,
     );
 });
+test('the shared Snake launcher delivers both pages, current match modules and exact original artwork offline', async () => {
+  const files = await collectEditionEngineFiles({
+    root: fileURLToPath(new URL('../../', import.meta.url)),
+    entries: ['game/ui/mode-choice.mjs'],
+  });
+  const projected = new Map(
+    [...files].map(([name, source]) => [name, projectEditionRuntimeImports(name, source)]),
+  );
+  validateEditionCodeClosure(projected);
+  const offline = selectOfflineCore(
+    [...projected].map(([name, bytes]) => ({ name, bytes })),
+    new Set(),
+  );
+  for (const name of [
+    'game/snake/index.html',
+    'game/snake/hub.mjs',
+    'game/snake/hub.css',
+    'game/snake/play.html',
+    'game/snake/classic-app.mjs',
+    'game/snake/classic.css',
+    'game/snake/classic-match.mjs',
+    'game/snake/classic-core-v2.mjs',
+    'game/snake/classic-catalogue-v2.mjs',
+    'game/snake/classic-setup.mjs',
+    'game/snake/classic-records.mjs',
+    'game/snake/classic-presentation.mjs',
+    'game/presentation/industrial-workshop.css',
+    'game/ui/optional-practice-panel.css',
+    ...editionClassicPresentationResources(),
+  ]) {
+    assert.ok(files.has(name), `Missing edition Snake resource: ${name}`);
+    assert.ok(offline.retained.has(name), `Missing offline Snake resource: ${name}`);
+  }
+  assert.equal(editionClassicPresentationResources().length, 2);
+  for (const asset of CLASSIC_PRESENTATION.assets) {
+    const name = `game/presentation/compiled/assets/${asset.sha256}.png`;
+    const payload = files.get(name);
+    assert.equal(payload.length, asset.bytes);
+    assert.equal(createHash('sha256').update(payload).digest('hex'), asset.sha256);
+  }
+});
+
 test('actual company host closure retains explicit Demo dependencies and preserves optional artwork', async () => {
   const files = await collectEditionEngineFiles({
     root: fileURLToPath(new URL('../../', import.meta.url)),
