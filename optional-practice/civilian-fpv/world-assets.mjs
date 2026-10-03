@@ -2,6 +2,7 @@
 // licenses, unmodified models, textures and hashes: authoring/fpv-worlds/assets/kenney.
 // Scene layouts are presentation only; every model lies outside flight bounds.
 import { createFlightRenderer as createRenderer } from './renderer.mjs';
+import { resolveSimThemeProfile } from './world-themes.mjs';
 import { Matrix4, Vector3, Quaternion } from './vendor/three.module.js';
 
 /** World-only extensions stay outside the original Academy package's closure. */
@@ -362,8 +363,8 @@ export function builtinWorldScene(course) {
   if (
     environment === 'woodland' &&
     !pixels &&
-    course?.theme !== 'pixel' &&
-    course?.themeProfile?.textureFilter !== 'nearest'
+    resolveSimThemeProfile(typeof course === 'object' ? course : { environment }).textureFilter !==
+      'nearest'
   ) {
     const surfaces = {
       treeA: [0, 1],
