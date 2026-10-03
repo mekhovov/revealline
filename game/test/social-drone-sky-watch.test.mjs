@@ -65,7 +65,7 @@ test('public Social Drone includes an independently playable Sky Watch mission a
   const video = reward.payloads.find((p) => p.type === 'video');
   assert.equal(
     video.asset.sha256,
-    'ea033ebd2b205098b4b06567394f07d16887143b92f608030b1b1ddfde1fa656',
+    '919fa23b4427b313e19e88784599455feaad022afc128dc93024acdeb988cc21',
   );
   assert.equal(mission.actors.length, 3);
   assert.equal(mission.map.revision, '2');
