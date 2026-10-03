@@ -31,8 +31,8 @@
   ],
   "modifications": "Embedded original textures, deduplicated shared geometry/materials/textures, centered source models at ground level. Runtime instances form original environment-specific scenery layouts outside flight bounds. Repeated opaque/masked static models use per-side EXT_mesh_gpu_instancing batches; alpha-blended models retain individual sorting. No source geometry changes or new decoder.",
   "runtime": "optional-practice/civilian-fpv/world-assets.mjs",
-  "bytes": 1163735,
-  "sha256": "7ec935731fb2404badde162930bf602ff49d24a9382623e582ce6cce199cc0aa",
+  "bytes": 1168270,
+  "sha256": "e1b987e2580b8b1e2d1afdfa3e9f0bc2d36a37e0bf516681cb0e94f045afd34c",
   "libraryBytes": 861504,
   "librarySha256": "6153c9c7e5dbe571e91a1ba54d021a95bf618db13873e7e661f1ea593c71573e"
 }
