@@ -1,0 +1,16 @@
+{
+  "sourceRevision": "613ab6dce7ba57e0167927af63c7e5f2ed0d39fd",
+  "sourceTree": "6bae8fddd9193dcc808f1c00ed2ea0297dad371f",
+  "companyId": "droneaid-nl-community",
+  "scope": "Production in-memory compile; exact committed inputs; final capacity guard rejected; no archive or release qualification",
+  "files": 942,
+  "bytes": 67659546,
+  "limitBytes": 67108864,
+  "overBytes": 550682,
+  "engineFiles": 847,
+  "originalInputFiles": 941,
+  "allInputContentsMatchCommit": true,
+  "sourceEligibilityFiles": 25021,
+  "sourceEligibilityAssets": 378,
+  "automatedSuites": "waived-not-run"
+}
