@@ -2540,3 +2540,8 @@ milestone57. The independent controls branch was rebased onto current main
 runtime and verification bytes are unchanged. Exact-head checks remain required.
 No native stack is needed. The separate art branch commit297760213 remains
 isolated pending its renderer/browser and package qualification.
+
+Post-rebase candidate4752ae5ef again passes all three package admissions,
+committed-input/ZIP-member checks and two byte-identical builds. The admission
+receipt is refreshed; browser evidence remains bound to identical runtime bytes.
+CI/publication continues on #986 while art work remains independent.
