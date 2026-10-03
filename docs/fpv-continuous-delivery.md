@@ -2724,5 +2724,4 @@ performance still pending; (3) remaining environment pairs starting Stadium/Gara
 (4) optional examples/learning and creator improvements; (5) deferred unit/release
 qualification. Feedback does not block implementation; no device acceptance is
 invented. Keep finished PRs separate from new work.
-||||||| e0e1db096
 inspect those failures next without weakening admission guards.
