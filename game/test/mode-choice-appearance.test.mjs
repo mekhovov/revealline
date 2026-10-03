@@ -178,6 +178,34 @@ test('the explicit Solo context getter remains primary over compiled and accepte
   assert.equal(new URL(state.visits[0]).searchParams.get('appearanceFamily'), 'dos');
 });
 
+for (const current of ['solo', 'versus', 'team']) {
+  test(`${current} keeps primary mode entry direct and extra discovery collapsed`, (context) => {
+    const state = fixture(context, current);
+    const disclosure = state.root.querySelector('.game-mode-destinations');
+    assert.equal(disclosure.tagName, 'DETAILS');
+    assert.notEqual(disclosure.open, true);
+    assert.ok(disclosure.querySelector('summary'));
+    assert.equal(disclosure.querySelectorAll('a').length, 3);
+    const snake = state.document.getElementById(`${current}-snake`);
+    const target = new URL(snake.href);
+    assert.equal(target.pathname, '/project/game/snake/play.html');
+    assert.equal(target.searchParams.get('mode'), current);
+    assert.equal(target.searchParams.get('lang'), 'uk');
+    assert.equal(state.paused(), 0, 'Opening a landing page never starts or pauses an attempt.');
+    disclosure.open = true;
+    snake.focus();
+    assert.equal(state.controls.closeMore(), false, 'Another menu control retains focus.');
+    disclosure.querySelector('a').focus();
+    assert.equal(state.controls.closeMore(), true);
+    assert.equal(disclosure.open, false);
+    assert.equal(state.document.activeElement, disclosure.querySelector('summary'));
+    disclosure.open = true;
+    const back = disclosure.querySelector('a').emit('keydown', { key: 'Escape' });
+    assert.equal(back.defaultPrevented, true);
+    assert.equal(disclosure.open, false);
+  });
+}
+
 for (const block of ['cancelled', 'hidden'])
   test(`${block} entry checks cannot navigate or transfer an accepted custom theme`, async (context) => {
     const state = fixture(context, 'team');

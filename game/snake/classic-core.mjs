@@ -1,4 +1,23 @@
 import {
+  CLASSIC_SNAKE_V3_LEVEL,
+  CLASSIC_SNAKE_V3_CORE,
+  CLASSIC_SNAKE_V3_REPLAY,
+  validateClassicSnakeLevelV3,
+  createClassicSnakeV3,
+  queueClassicSnakeTurnV3,
+  stepClassicSnakeV3,
+  classicSnakeSummaryV3,
+  exportClassicSnakeReplayV3,
+  restoreClassicSnakeReplayV3,
+} from './classic-core-v3.mjs';
+export {
+  makeClassicSnakeV3,
+  CLASSIC_SNAKE_V3_LEVEL,
+  CLASSIC_SNAKE_V3_CORE,
+  CLASSIC_SNAKE_V3_REPLAY,
+  classicSnakeContactHazardV3,
+} from './classic-core-v3.mjs';
+import {
   CLASSIC_SNAKE_V2_LEVEL,
   CLASSIC_SNAKE_V2_CORE,
   CLASSIC_SNAKE_V2_REPLAY,
@@ -82,6 +101,7 @@ function initialBody(level, spawn) {
 
 /** A separate classic-grid recipe: no territory, captures, abilities or old-core conversion. */
 export function validateClassicSnakeLevel(source) {
+  if (source?.version === CLASSIC_SNAKE_V3_LEVEL) return validateClassicSnakeLevelV3(source);
   if (source?.version === CLASSIC_SNAKE_V2_LEVEL) return validateClassicSnakeLevelV2(source);
   const level = boundedJSON(source, {
     maxBytes: 64 * 1024,
@@ -235,6 +255,7 @@ function spawnTarget(run) {
 }
 
 export function createClassicSnake(source, options = {}) {
+  if (source?.version === CLASSIC_SNAKE_V3_LEVEL) return createClassicSnakeV3(source, options);
   if (source?.version === CLASSIC_SNAKE_V2_LEVEL) return createClassicSnakeV2(source, options);
   const settings = boundedJSON(options, { maxBytes: 1024, maxNodes: 10, maxDepth: 1 });
   exactKeys(settings, ['mode', 'seed'], 'Classic Snake options');
@@ -276,6 +297,8 @@ export function createClassicSnake(source, options = {}) {
 
 /** One input edge, not a held direction. No reversal against pending turns. */
 export function queueClassicSnakeTurn(run, playerId, direction) {
+  if (run?.version === CLASSIC_SNAKE_V3_CORE)
+    return queueClassicSnakeTurnV3(run, playerId, direction);
   if (run?.version === CLASSIC_SNAKE_V2_CORE)
     return queueClassicSnakeTurnV2(run, playerId, direction);
   if (
@@ -349,6 +372,7 @@ function stepMilliseconds(run) {
 
 /** One automatic, simultaneous grid step. UI pausing simply stops calling this. */
 export function stepClassicSnake(run) {
+  if (run?.version === CLASSIC_SNAKE_V3_CORE) return stepClassicSnakeV3(run);
   if (run?.version === CLASSIC_SNAKE_V2_CORE) return stepClassicSnakeV2(run);
   if (run.status !== 'running') return run;
   run.events = [];
@@ -436,6 +460,7 @@ export function stepClassicSnake(run) {
 }
 
 export function classicSnakeSummary(run) {
+  if (run?.version === CLASSIC_SNAKE_V3_CORE) return classicSnakeSummaryV3(run);
   if (run?.version === CLASSIC_SNAKE_V2_CORE) return classicSnakeSummaryV2(run);
   return {
     version: run.version,
@@ -474,6 +499,7 @@ const checkpoint = (run) =>
     events: run.events,
   });
 export function exportClassicSnakeReplay(run) {
+  if (run?.version === CLASSIC_SNAKE_V3_CORE) return exportClassicSnakeReplayV3(run);
   if (run?.version === CLASSIC_SNAKE_V2_CORE) return exportClassicSnakeReplayV2(run);
   return {
     version: CLASSIC_SNAKE_REPLAY_VERSION,
@@ -491,6 +517,8 @@ export function exportClassicSnakeReplay(run) {
 /** Saves contain only an accepted recipe, turn journal and verified checkpoint.
  * No serialized body/score can become authority without reproducing the inputs. */
 export function restoreClassicSnakeReplay(source, { level: expectedLevel } = {}) {
+  if (source?.version === CLASSIC_SNAKE_V3_REPLAY)
+    return restoreClassicSnakeReplayV3(source, { level: expectedLevel });
   if (source?.version === CLASSIC_SNAKE_V2_REPLAY)
     return restoreClassicSnakeReplayV2(source, { level: expectedLevel });
   const saved = boundedJSON(source, {

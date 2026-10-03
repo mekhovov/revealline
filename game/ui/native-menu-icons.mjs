@@ -1,5 +1,6 @@
 // One pixel-grid icon family. Labels remain real text owned by localization.
 const paths = Object.freeze({
+  pause: 'M3 2h4v12H3zM9 2h4v12H9z',
   play: 'M4 2h2v2h2v2h2v2h2v2h-2v2H8v2H6v2H4z',
   missions: 'M1 2h4v2h2v2h2V4h2V2h4v12h-4v-2H9v-2H7v2H5v2H1zM3 4v8h2V6zm8 2v6h2V4z',
   settings: 'M6 0h4v3h3V6h3v4h-3v3h-3v3H6v-3H3v-3H0V6h3V3h3zm0 5v1H5v4h1v1h4v-1h1V6h-1V5z',

@@ -1,5 +1,11 @@
+import { validatePursuitGoals } from '../hunt/pursuit-goals.mjs';
 import {
-  TEAM_RUNNING_LEVEL_VERSION,
+  isTeamRunningLevel,
+  TEAM_PURSUIT_LEVEL_VERSION,
+  TEAM_SNAKE_PURSUIT_LEVEL_VERSION,
+  TEAM_SNAKE_PURSUIT_RULESET,
+  isTeamPursuitLevel,
+  TEAM_PURSUIT_RULESET,
   TEAM_RUNNING_RULESET,
   inheritedRunningTeamLevel,
 } from './running-enemies.mjs';
@@ -155,14 +161,27 @@ export function validateCoopLevel(level) {
       return { valid: false, errors: [error.message] };
     }
   }
-  if (
-    Object.getOwnPropertyDescriptor(level ?? {}, 'version')?.value === TEAM_RUNNING_LEVEL_VERSION
-  ) {
+  if (isTeamRunningLevel(level)) {
     try {
       const inherited = inheritedRunningTeamLevel(level);
       const validation = validateCoopLevel(inherited);
       if (!validation.valid) return validation;
       validateCoopCombat(level, buildGrid(inherited));
+      if (isTeamPursuitLevel(level))
+        validatePursuitGoals(
+          level.pursuit,
+          level.combatPatrols.actors.filter((actor) =>
+            level.hunt.targets.some((target) => target.id === actor.id && target.kind === 'runner'),
+          ),
+          {
+            width: level.width,
+            height: level.height,
+            cells: buildGrid(inherited),
+            terrain: hasTeamTerrain(level) ? compileCoopFoundationGeometry(level).terrain : [],
+          },
+        );
+      else if (Object.hasOwn(level, 'pursuit'))
+        throw new TypeError('Pursuit requires its explicit successor edition.');
       if (Object.hasOwn(level, 'timedBonuses'))
         validateCoopTimedBonuses(level, compileCoopFoundationGeometry(level));
       return { valid: true, errors: [] };
@@ -509,11 +528,15 @@ export function createCoop(
   const cells = buildGrid(owned);
   const run = {
     ruleset:
-      owned.version === TEAM_RUNNING_LEVEL_VERSION
-        ? TEAM_RUNNING_RULESET
-        : isJourneyTeamLevel(owned)
-          ? journeyTeamPackEdition(owned).ruleset
-          : COOP_RULESET,
+      owned.version === TEAM_SNAKE_PURSUIT_LEVEL_VERSION
+        ? TEAM_SNAKE_PURSUIT_RULESET
+        : owned.version === TEAM_PURSUIT_LEVEL_VERSION
+          ? TEAM_PURSUIT_RULESET
+          : isTeamRunningLevel(owned)
+            ? TEAM_RUNNING_RULESET
+            : isJourneyTeamLevel(owned)
+              ? journeyTeamPackEdition(owned).ruleset
+              : COOP_RULESET,
     level: owned,
     width: owned.width,
     height: owned.height,
@@ -704,7 +727,7 @@ function knockDown(run, player, cause, commands, enemy = null) {
   player.downedUntil =
     run.time +
     ((
-      run.level.version === TEAM_RUNNING_LEVEL_VERSION
+      isTeamRunningLevel(run.level)
         ? isJourneyTeamLevel(run.level)
         : isJourneyTeamRuleset(run.ruleset)
     )
@@ -1398,6 +1421,12 @@ export function stepCoop(run, commands, dt = FIXED_DT) {
           hitCoopCombatProjectile(run, contact.body)
         )
           knockDown(run, player, 'combat-projectile', commands, contact.body.actorId);
+      }
+    for (const contact of combatContacts)
+      if (contact.cause === 'combat-specialist') {
+        const player = run.players[contact.player];
+        if (player.status === 'active' && player.graceUntil <= run.time + EPS)
+          knockDown(run, player, 'combat-specialist', commands, contact.body.id);
       }
     const deferredImpactHits = [];
     for (const impact of impactHits.values()) {

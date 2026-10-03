@@ -719,6 +719,10 @@ export function attachGameShell({
   }
   const cancelHome = (event) => {
     titleModeIntent = null;
+    if (modeChoices?.closeMore()) {
+      event.preventDefault();
+      return;
+    }
     if (titleAction) {
       // Back during preparation cancels that operation and keeps its opener.
       // Closing the title too would strand focus on the underlying ready field.

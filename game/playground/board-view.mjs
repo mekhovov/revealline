@@ -23,6 +23,8 @@ export function paintEditorMap(canvas, current) {
     'xonix-level.v8',
     'xonix-level.v9',
     'xonix-level.v11',
+    'xonix-level.v12',
+    'xonix-level.v13',
   ].includes(current.level.version)
     ? createRun(current.level, { ...current.settings, classRecipes: current.classRecipes })
     : null;
@@ -102,7 +104,15 @@ export function paintEditorMap(canvas, current) {
     if (actor.inactive) c.globalAlpha = 0.5;
     if (actor.huntKind) {
       c.translate(actor.x * s - 8, actor.y * s - 8);
-      drawHumanoidPixelBody(c, { kind: actor.huntKind }, current.theme.palette);
+      const policy = current.level.pursuit?.actors.find((entry) => entry.id === actor.id);
+      const native = (run?.classic ?? run?.runningEnemies)?.combatPatrols?.actors.find(
+        (entry) => entry.id === actor.id,
+      );
+      drawHumanoidPixelBody(
+        c,
+        { ...native, kind: actor.huntKind, family: policy?.behavior ?? actor.huntKind },
+        current.theme.palette,
+      );
     } else {
       c.fillStyle = current.theme.palette.accent;
       c.beginPath();

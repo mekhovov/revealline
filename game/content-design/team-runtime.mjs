@@ -1,3 +1,4 @@
+import { prepareTeamRunningEnemies } from '../hunt/team-running-enemies.mjs';
 import { exactKeys, required, stableId, dataIdentity } from '../data-json.mjs';
 import { validateCoopLevel, createCoop } from '../coop/core.mjs';
 import {
@@ -18,7 +19,27 @@ import { TEAM_MISSION_FORMATS, teamRoleQualified } from './team-qualification.mj
 /** Explicit Team qualification, not an automatic Solo-to-Team conversion.
  * Unsupported mechanics fail closed until their Team semantics are implemented. */
 export function resolveTeamMission(project, mission, map, difficulty) {
-  exactKeys(mission.team, ['format', 'spawnIds', 'supportRoles', 'lineImpact'], 'Team mission');
+  const stronghold = mission.team.format === 'TeamMissionV9';
+  exactKeys(
+    mission.team,
+    [
+      'format',
+      'spawnIds',
+      'supportRoles',
+      'lineImpact',
+      ...(stronghold ? ['strongholds', 'requiredCores'] : []),
+    ],
+    'Team mission',
+  );
+  if (stronghold)
+    required(
+      mission.pursuit &&
+        Array.isArray(mission.team.strongholds) &&
+        mission.team.strongholds.length > 0 &&
+        Array.isArray(mission.team.requiredCores) &&
+        mission.team.requiredCores.length > 0,
+      'Pursuit stronghold missions need explicit anchors, cores and required objectives.',
+    );
   required(
     TEAM_MISSION_FORMATS.includes(mission.team.format) &&
       Array.isArray(mission.team.spawnIds) &&
@@ -64,7 +85,8 @@ export function resolveTeamMission(project, mission, map, difficulty) {
           'TeamMissionV8',
         ].includes(mission.team.format)) &&
       mission.timeLimitSeconds === 0 &&
-      (mission.team.format !== 'TeamMissionV1' || (map.source.terrain ?? []).length === 0),
+      ((!stronghold && mission.team.format !== 'TeamMissionV1') ||
+        (map.source.terrain ?? []).length === 0),
     'Team candidates support only qualified actor roles and coverage, not unqualified terrain, bonuses, objectives or timers.',
   );
   required(
@@ -94,7 +116,7 @@ export function resolveTeamMission(project, mission, map, difficulty) {
     Math.hypot(spawns[0].x - spawns[1].x, spawns[0].y - spawns[1].y) >= 1,
     'Team spawn bodies must have independent clearance.',
   );
-  const level = {
+  let level = {
     version: snake
       ? 'revealline-coop-level.v10'
       : hunting
@@ -110,7 +132,9 @@ export function resolveTeamMission(project, mission, map, difficulty) {
                 : mission.team.format === 'TeamMissionV2'
                   ? COOP_TERRAIN_LEVEL_VERSION
                   : COOP_FOUNDATION_LEVEL_VERSION,
-    ...(mission.team.format !== 'TeamMissionV1' ? { terrain: map.source.terrain ?? [] } : {}),
+    ...(!stronghold && mission.team.format !== 'TeamMissionV1'
+      ? { terrain: map.source.terrain ?? [] }
+      : {}),
     ...(Object.hasOwn(mission, 'timedBonuses') ? { timedBonuses: mission.timedBonuses } : {}),
     ...(['TeamMissionV5', 'TeamMissionV6'].includes(mission.team.format) ||
     (hunting && mission.team.lineImpact)
@@ -168,9 +192,15 @@ export function resolveTeamMission(project, mission, map, difficulty) {
           radius: 0.25,
         };
       }),
-    goal: { coverage: mission.coverage },
+    ...(stronghold ? { strongholds: structuredClone(mission.team.strongholds) } : {}),
+    goal: stronghold ? { cores: [...mission.team.requiredCores] } : { coverage: mission.coverage },
     rules: { moveSpeed: project.policy.rules.moveSpeed, boostMultiplier: 1 },
   };
+  if (mission.pursuit)
+    level = prepareTeamRunningEnemies(level, {
+      style: 'varied',
+      population: mission.pursuit.actors,
+    });
   const result = validateCoopLevel(level);
   required(result.valid, result.errors.join(' '));
   const topology = inspectRuntimeTopology(

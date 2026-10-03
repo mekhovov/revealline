@@ -1,3 +1,5 @@
+import { validatePursuitPopulation } from '../hunt/pursuit-goals.mjs';
+import { prepareRunningEnemyLevel } from '../hunt/running-enemies.mjs';
 import { validateSnakeDefinition } from '../snake/rules.mjs';
 import { prepareHuntLevel } from '../hunt/level.mjs';
 import { huntTargetKind, HUNT_RUNNER_TURN_TICKS } from '../hunt/rules.mjs';
@@ -190,18 +192,29 @@ export function compileContentProject(source) {
   const assets = (project.assets ?? []).map(compileAssetRevision);
   const maps = project.maps.map(compileMapDesign);
   for (const mission of project.missions) {
-    const sentinel = mission.format === 'MissionDesignV4';
-    const directional = mission.format === 'MissionDesignV3' || sentinel;
-    const relays = mission.format === 'MissionDesignV2' || directional;
+    const pursuit = mission.format === 'MissionDesignV5';
+    const authoredMap = maps.find((entry) => entry.source.id === mission.map?.id)?.source.format;
+    const sentinel =
+      mission.format === 'MissionDesignV4' || (pursuit && Object.hasOwn(mission, 'encounter'));
+    const directional =
+      mission.format === 'MissionDesignV3' ||
+      sentinel ||
+      (pursuit && authoredMap === 'MapDesignV3');
+    const relays =
+      mission.format === 'MissionDesignV2' ||
+      directional ||
+      (pursuit && authoredMap === 'MapDesignV2');
     identity(
       mission,
-      sentinel
-        ? 'MissionDesignV4'
-        : directional
-          ? 'MissionDesignV3'
-          : relays
-            ? 'MissionDesignV2'
-            : 'MissionDesignV1',
+      pursuit
+        ? 'MissionDesignV5'
+        : sentinel
+          ? 'MissionDesignV4'
+          : directional
+            ? 'MissionDesignV3'
+            : relays
+              ? 'MissionDesignV2'
+              : 'MissionDesignV1',
       [
         'map',
         'spawnId',
@@ -213,6 +226,7 @@ export function compileContentProject(source) {
         'combat',
         'hunt',
         'snake',
+        ...(pursuit ? ['pursuit'] : []),
         'coverage',
         'timeLimitSeconds',
         'design',
@@ -224,6 +238,14 @@ export function compileContentProject(source) {
       ],
     );
     archiveFlag(mission);
+    if (pursuit) {
+      exactKeys(mission.pursuit, ['version', 'actors'], 'Mission pursuit');
+      required(
+        mission.pursuit.version === 'mission-pursuit.v1',
+        'Pursuit missions require a versioned finite population.',
+      );
+      validatePursuitPopulation(mission.pursuit.actors);
+    }
     if (sentinel)
       required(
         Object.hasOwn(mission, 'encounter'),
@@ -404,9 +426,17 @@ export function resolveMission(project, id, { mode = 'solo', difficulty = 'stand
   const pressureActors = mission.actors
     .filter((actor) => project.actors.roles[actor.role]?.pressureRecipe)
     .sort((a, b) => (a.id < b.id ? -1 : 1));
-  const sentinel = mission.format === 'MissionDesignV4';
-  const directional = mission.format === 'MissionDesignV3' || sentinel;
-  const relays = mission.format === 'MissionDesignV2' || directional;
+  const pursuit = mission.format === 'MissionDesignV5';
+  const sentinel =
+    mission.format === 'MissionDesignV4' || (pursuit && Object.hasOwn(mission, 'encounter'));
+  const directional =
+    mission.format === 'MissionDesignV3' ||
+    sentinel ||
+    (pursuit && map.source.format === 'MapDesignV3');
+  const relays =
+    mission.format === 'MissionDesignV2' ||
+    directional ||
+    (pursuit && map.source.format === 'MapDesignV2');
   let level = normalizedLevel({
     version: sentinel
       ? 'xonix-level.v8'
@@ -529,6 +559,11 @@ export function resolveMission(project, id, { mode = 'solo', difficulty = 'stand
       ...level,
       version: 'xonix-level.v11',
       snake: structuredClone(mission.snake),
+    });
+  if (mission.pursuit)
+    level = prepareRunningEnemyLevel(level, {
+      style: 'varied',
+      population: mission.pursuit.actors,
     });
   const { name: _name, id: _id, revision: _revision, ...simulation } = level;
   const topology = inspectMissionTopology(level, map.geometry);

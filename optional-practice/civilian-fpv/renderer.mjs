@@ -1,4 +1,6 @@
 import * as THREE from './vendor/three.module.js';
+import { actorVisual } from '../../game/hunt/actor-catalog.mjs';
+import { sharedActorAppearance } from '../../game/hunt/preferences.mjs';
 import {
   buildWorldVisuals,
   buildDroneVisual,
@@ -424,6 +426,12 @@ export function createFlightRenderer({
       maxAnisotropy: renderer.capabilities.getMaxAnisotropy(),
     });
     if (cosmeticColor) droneVisual.tint.color.set(cosmeticColor);
+    if ((themeProfile?.id ?? activePresentation?.collectionId) === 'military-field') {
+      for (const [index, color] of [0x4eb8ee, 0xffd74d].entries()) {
+        const stripe = mesh(new THREE.BoxGeometry(0.045, 0.002, 0.018), material(color), aircraft);
+        stripe.position.set(0, value === 'pixel' ? 0.064 : 0.06, 0.009 + index * 0.018);
+      }
+    }
     for (const [index, rotor] of droneVisual.rotors.entries())
       rotor.rotation.y = rotorPhase * (index === 0 || index === 3 ? -1 : 1);
     setSurfaceQuality(materials, quality, renderer.capabilities.getMaxAnisotropy());
@@ -1154,11 +1162,18 @@ export function createFlightRenderer({
       height = (actor.height ?? 1800) / 1000,
       role = actor.type === 'hazard' ? 'hazard' : (actor.role ?? 'hostile'),
       huntTarget = huntTargets.has(actor.id),
+      military = themeProfile?.id === 'military-field',
       friendly = huntTarget || role === 'rival' || role === 'civilian',
       slot = actor.type === 'vehicle' ? themeProfile?.assets?.vehicle : themeProfile?.assets?.enemy,
       pixel = themeProfile?.characters === 'arcade' || /pixel|arcade/.test(slot ?? ''),
       detailed = quality === 'high',
       civilian = !huntTarget && (themeProfile?.characters === 'civilian' || role === 'civilian');
+    const preferredCast = sharedActorAppearance().snapshot().cast;
+    const huntFamily =
+      (actorDefinitions.get(actor.id)?.speed ?? actor.speed ?? 0) > 0 ? 'patroller' : 'lookout';
+    const huntAppearance = huntTarget
+      ? actorVisual(huntFamily, preferredCast === 'authored' ? 'rivals' : preferredCast)
+      : null;
     group.name = `actor-${actor.id}`;
     group.userData.themeAsset = slot ?? 'builtin:sentry';
     if (actor.position)
@@ -1175,7 +1190,7 @@ export function createFlightRenderer({
     group.userData.assetRole = themeProfile?.assets?.[group.userData.modelRole];
     if (kit) bindSimModelRole(group, group.userData.modelRole, kit.collectionId);
     const armor = huntTarget
-      ? material(0x68cbb5, { roughness: 0.8 })
+      ? material(huntAppearance.palette.coat, { roughness: 0.8 })
       : kit
         ? kit.paint('steel')
         : material(friendly ? 0x74bfc0 : pixel ? 0xa785cb : civilian ? 0x839c9d : 0x778b86, {
@@ -1187,6 +1202,7 @@ export function createFlightRenderer({
       emissiveIntensity: 0.5,
     });
     const dark = kit ? kit.paint('rubber') : material(0x283e47, { roughness: 0.78 });
+    const trousers = huntTarget ? material(huntAppearance.palette.pants, { roughness: 0.9 }) : dark;
     const metal = kit
       ? kit.paint('copper')
       : quality === 'low'
@@ -1194,7 +1210,7 @@ export function createFlightRenderer({
         : material(0xa9b7b8, { metalness: 0.72, roughness: 0.34 });
     const glass =
       quality === 'low' ? dark : material(0x456975, { metalness: 0.25, roughness: 0.17 });
-    group.userData.ownedMaterials = [armor, threat, dark, metal, glass];
+    group.userData.ownedMaterials = [armor, threat, dark, trousers, metal, glass];
     const part = (shape, paint, at, parent = group) => {
       const value = mesh(shape, paint, parent);
       value.position.set(...at);
@@ -1315,6 +1331,41 @@ export function createFlightRenderer({
           radius * 1.35,
           radius * 0.24,
         ]);
+      if (military) {
+        // Cosmetic field utility car: its existing path, shots and cylinder
+        // collider remain authoritative. This does not introduce tank combat.
+        part(new THREE.BoxGeometry(radius * 0.7, radius * 0.08, radius * 0.5), dark, [
+          0,
+          radius * 1.21,
+          radius * 0.05,
+        ]);
+        part(new THREE.BoxGeometry(radius * 0.6, radius * 0.035, radius * 0.4), armor, [
+          0,
+          radius * 1.27,
+          radius * 0.05,
+        ]);
+        const spare = part(
+          new THREE.CylinderGeometry(radius * 0.24, radius * 0.24, radius * 0.14, 10),
+          dark,
+          [0, radius * 0.75, radius * 0.73],
+        );
+        spare.rotation.x = Math.PI / 2;
+        if (quality !== 'low') {
+          for (const side of [-1, 1]) {
+            part(new THREE.BoxGeometry(radius * 0.13, radius * 0.13, radius * 0.09), metal, [
+              side * radius * 0.67,
+              radius * 1.02,
+              -radius * 0.26,
+            ]);
+            for (const [index, color] of [0xe6e5d6, 0x486588, 0xb96758].entries())
+              part(
+                new THREE.BoxGeometry(radius * 0.008, radius * 0.045, radius * 0.21),
+                material(color),
+                [side * radius * 0.431, radius * (0.9 - index * 0.045), radius * 0.22],
+              );
+          }
+        }
+      }
     } else if (actor.type === 'hazard') {
       const orb = part(new THREE.IcosahedronGeometry(radius, quality === 'low' ? 0 : 1), threat, [
         0,
@@ -1340,14 +1391,113 @@ export function createFlightRenderer({
         pixel
           ? new THREE.BoxGeometry(radius * 1.05, radius * 1.05, radius * 1.05)
           : new THREE.SphereGeometry(radius * 0.6, quality === 'low' ? 8 : 12, 8),
-        huntTarget ? material(0xdfaa87, { roughness: 0.9 }) : civilian ? armor : dark,
+        huntTarget
+          ? material(huntAppearance.palette.skinLight, { roughness: 0.9 })
+          : civilian
+            ? armor
+            : dark,
         [0, height * 0.87, 0],
       );
-      part(new THREE.BoxGeometry(radius * 0.92, height * 0.05, radius * 0.16), threat, [
-        0,
-        height * 0.89,
-        -radius * 0.53,
-      ]);
+      if (huntTarget) {
+        const trim = material(huntAppearance.palette.light, { roughness: 0.85 });
+        const skin = material(huntAppearance.palette.skin, { roughness: 0.9 });
+        // Original common family accessories and palettes, adapted to native
+        // 3D meshes. They never alter the existing capsule collision proxy.
+        part(new THREE.BoxGeometry(radius * 1.1, radius * 0.18, radius * 1.12), armor, [
+          0,
+          height * 0.98,
+          0,
+        ]);
+        part(new THREE.BoxGeometry(radius * 1.2, radius * 0.08, radius * 0.55), trim, [
+          0,
+          height * 0.945,
+          -radius * 0.52,
+        ]);
+        for (const side of [-1, 1])
+          part(new THREE.BoxGeometry(radius * 0.12, radius * 0.12, radius * 0.05), dark, [
+            side * radius * 0.22,
+            height * 0.89,
+            -radius * 0.55,
+          ]);
+        part(new THREE.BoxGeometry(radius * 0.2, radius * 0.1, radius * 0.1), skin, [
+          0,
+          height * 0.845,
+          -radius * 0.55,
+        ]);
+        part(new THREE.BoxGeometry(radius * 1.1, height * 0.035, radius * 0.86), trim, [
+          0,
+          height * 0.56,
+          0,
+        ]);
+        if (huntFamily === 'lookout') {
+          for (const side of [-1, 1])
+            part(new THREE.BoxGeometry(radius * 0.22, radius * 0.26, radius * 0.28), dark, [
+              side * radius * 0.19,
+              height * 0.66,
+              -radius * 0.52,
+            ]);
+        }
+        if (huntAppearance.cast !== 'arcade') {
+          part(new THREE.BoxGeometry(radius * 0.9, height * 0.22, radius * 0.6), dark, [
+            0,
+            height * 0.61,
+            radius * 0.53,
+          ]);
+          for (const side of [-1, 1])
+            part(new THREE.BoxGeometry(radius * 0.13, height * 0.25, radius * 0.04), trim, [
+              side * radius * 0.3,
+              height * 0.59,
+              -radius * 0.43,
+            ]);
+        } else if (huntAppearance.cast === 'arcade') {
+          for (const side of [-1, 1])
+            part(new THREE.BoxGeometry(radius * 0.46, height * 0.075, radius * 0.75), trim, [
+              side * radius * 0.38,
+              height * 0.05,
+              -radius * 0.1,
+            ]);
+        }
+        // Shared cast palette, native articulated meshes. Webbing, cuffs and
+        // covered helmets preserve each field / worn / winter identity at all
+        // camera angles without touching the accepted capsule or route.
+        for (const side of [-1, 1]) {
+          part(new THREE.BoxGeometry(radius * 0.32, height * 0.085, radius * 0.18), armor, [
+            side * radius * 0.32,
+            height * 0.54,
+            -radius * 0.63,
+          ]);
+          part(new THREE.BoxGeometry(radius * 0.14, height * 0.17, radius * 0.08), dark, [
+            side * radius * 0.29,
+            height * 0.65,
+            -radius * 0.44,
+          ]);
+        }
+        if (huntFamily === 'patroller') {
+          part(new THREE.BoxGeometry(radius * 1.19, radius * 0.42, radius * 1.14), armor, [
+            0,
+            height * 0.94,
+            0.03 * radius,
+          ]);
+          part(new THREE.BoxGeometry(radius * 0.68, height * 0.17, radius * 0.33), trim, [
+            0,
+            height * 0.63,
+            radius * 0.69,
+          ]);
+        }
+        if (quality !== 'low')
+          for (const [index, color] of [0xe6e5d6, 0x486588, 0xb96758].entries())
+            part(
+              new THREE.BoxGeometry(radius * 0.013, height * 0.016, radius * 0.21),
+              material(color),
+              [radius * 0.7, height * (0.68 - index * 0.016), 0],
+            );
+      } else {
+        part(new THREE.BoxGeometry(radius * 0.92, height * 0.05, radius * 0.16), threat, [
+          0,
+          height * 0.89,
+          -radius * 0.53,
+        ]);
+      }
       if (quality !== 'low') {
         part(
           new THREE.BoxGeometry(radius * 0.91, height * 0.19, radius * 0.16),
@@ -1368,7 +1518,7 @@ export function createFlightRenderer({
         group.add(leg, arm);
         part(
           new THREE.BoxGeometry(radius * 0.34, height * 0.38, radius * 0.43),
-          dark,
+          trousers,
           [0, -height * 0.19, 0],
           leg,
         );
@@ -1455,6 +1605,7 @@ export function createFlightRenderer({
       radius,
       quality,
       health: actor.maxHealth ?? actor.health ?? 1,
+      cast: preferredCast,
     };
   }
   function projectileBatch(owner) {
@@ -1485,6 +1636,16 @@ export function createFlightRenderer({
       if (!actor.position || !actor.id) continue;
       seenActors.add(actor.id);
       let row = actorRows.get(actor.id);
+      if (
+        row &&
+        huntTargets.has(actor.id) &&
+        row.cast !== sharedActorAppearance().snapshot().cast
+      ) {
+        releaseGroup(row.group);
+        actors.remove(row.group);
+        actorRows.delete(actor.id);
+        row = null;
+      }
       if (!row) {
         row = createActor(actor);
         actorRows.set(actor.id, row);
@@ -1581,7 +1742,11 @@ export function createFlightRenderer({
   function draw(state, { cameraMode = view, cameraFov = fov, cameraTilt = tilt } = {}) {
     if (disposed || !course) return;
     const hunt = course.steps[mode].find((step) => step.type === 'hunt-contact-v1');
-    huntPresentation?.update(state, { reducedMotion, tailRadius: hunt?.tail.radius ?? 350 });
+    huntPresentation?.update(state, {
+      reducedMotion,
+      tailRadius: hunt?.tail.radius ?? 350,
+      actorDefinitions: course.actors,
+    });
     view = cameraMode;
     fov = cameraFov;
     tilt = cameraTilt;

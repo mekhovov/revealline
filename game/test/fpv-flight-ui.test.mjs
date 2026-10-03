@@ -30,6 +30,7 @@ async function fixture(
     storage,
     url = 'https://example.test/optional-practice/civilian-fpv/?lang=en',
     serviceWorker,
+    home = false,
     ...factories
   } = {},
 ) {
@@ -105,6 +106,9 @@ async function fixture(
   });
   t.after(() => view.dispose());
   await view.settled();
+  // Existing flight-domain tests enter the prepared, disarmed scene explicitly.
+  // Title-shell regressions opt in to retaining the initial menu.
+  if (!home) doc.getElementById('academy-shell-home-dialog').close();
   return {
     doc,
     win,
@@ -303,12 +307,31 @@ test('synthetic USB samples drive the real shell/model to one verified practice 
   }
   await f.view.settled();
   assert.equal(f.view.snapshot().status, 'complete');
+  assert.equal(f.doc.querySelector('[data-mode-play-shell]').dataset.phase, 'results');
+  assert.equal(f.$('academy-shell-action-primary').textContent, 'Retry');
+  assert.equal(f.$('academy-shell-action-pause').disabled, true);
   assert.equal(f.deliveries.length, 1, f.$('status').textContent);
   assert.equal(f.deliveries[0].attempt.session, 'practice');
   assert.equal(f.deliveries[0].verification.proof.session, 'practice');
   assert.match(f.deliveries[0].verification.hash, /^[a-f0-9]{64}$/);
   assert.equal(replayFlight(FLIGHT_COURSES[0], f.deliveries[0].attempt).state.status, 'complete');
   assert.equal(f.$('complete').hidden, false);
+  const completedState = f.view.snapshot(),
+    nativeOutcome = f.$('complete');
+  for (const action of ['results', 'back']) {
+    f.$('academy-shell-action-menu').click();
+    assert.equal(f.$('academy-shell-home-dialog').open, true);
+    if (action === 'results') f.$('academy-shell-action-home-results').click();
+    else f.$('academy-shell-home-dialog').emit('cancel');
+    assert.equal(f.$('academy-shell-home-dialog').open, false);
+    assert.equal(f.$('academy-shell-results-dialog').open, false);
+    assert.equal(f.$('complete'), nativeOutcome);
+    assert.equal(nativeOutcome.hidden, false);
+    assert.equal(f.doc.activeElement, f.$('retry'));
+    f.tick(3);
+    assert.deepEqual(f.view.snapshot(), completedState);
+    assert.equal(f.deliveries.length, 1, 'Results must not readmit a completion.');
+  }
   f.$('review').click();
   await f.view.settled();
   f.tick(example.frames.length + 4);
@@ -587,6 +610,40 @@ test('replay owns a verified clone, rejects forged course data and cannot be use
   assert.equal(f.view.exportAttempt().frames.length, 0);
 });
 
+test('Academy shared menu resumes paused playback without restarting or granting practice evidence', async (t) => {
+  const f = await fixture(t);
+  await f.view.review(FLIGHT_DEMONSTRATIONS[0]);
+  f.tick(5);
+  const shell = f.doc.querySelector('[data-mode-play-shell]');
+  f.$('academy-flight-menu').click();
+  const paused = f.renders.at(-1);
+  assert.ok(paused.ticks > 0);
+  assert.equal(shell.dataset.phase, 'paused');
+  assert.equal(f.$('academy-shell-action-primary').textContent, 'Continue');
+  f.tick(4);
+  assert.deepEqual(f.renders.at(-1), paused);
+
+  f.$('academy-shell-action-primary').click();
+  assert.equal(f.$('academy-shell-home-dialog').open, false);
+  assert.equal(f.$('academy-shell-briefing-dialog').open, false);
+  assert.equal(shell.dataset.phase, 'playing');
+  f.tick(4);
+  assert.ok(f.renders.at(-1).ticks > paused.ticks, 'Continue advances the retained playback');
+
+  f.$('academy-flight-menu').click();
+  const pausedAgain = f.renders.at(-1);
+  f.$('academy-shell-home-dialog').emit('cancel');
+  assert.equal(f.$('academy-shell-home-dialog').open, false);
+  f.tick(4);
+  assert.deepEqual(f.renders.at(-1), pausedAgain, 'Back never resumes the recording');
+  assert.equal(f.$('academy-shell-action-pause').textContent, 'Resume');
+  f.$('academy-shell-action-pause').click();
+  f.tick(4);
+  assert.ok(f.renders.at(-1).ticks > pausedAgain.ticks);
+  assert.equal(f.deliveries.length, 0);
+  assert.equal(f.view.exportAttempt().frames.length, 0);
+});
+
 test('touch release holds throttle, centers yaw, and cancellation clears all input and listener ownership', () => {
   const doc = new Document(),
     win = new Events(),
@@ -755,6 +812,9 @@ test('stale queued animation timestamps cannot advance after a long execution ga
         };
       let clock = 0;
       f.win.performance = { now: () => clock };
+      // This lifecycle fixture exercises the original KeyE yaw mapping.
+      f.$('keyboard-preset').value = 'classic';
+      f.$('keyboard-preset').emit('change');
       f.$('mode').value = mode;
       f.$('mode').emit('change');
       f.$('input-source').value = owner;
@@ -1162,4 +1222,37 @@ test('pause shortcuts release local controls but preserve text, dialogs and modi
   } finally {
     input.dispose();
   }
+});
+
+test('Academy shell keeps menu input out of native flight and requires explicit Start', async (t) => {
+  const f = await fixture(t, { home: true });
+  assert.equal(f.$('academy-shell-home-dialog').open, true);
+  assert.equal(f.$('academy-shell-action-pause').dataset.menuIcon, 'pause');
+  assert.equal(f.$('academy-shell-action-settings').dataset.menuIcon, 'settings');
+  assert.equal(f.view.snapshot().status, 'disarmed');
+  f.$('academy-shell-action-settings').click();
+  assert.equal(f.$('academy-shell-settings-dialog').open, true);
+  assert.equal(f.view.arm(), false);
+  f.tick(4);
+  assert.equal(f.view.snapshot().ticks, 0);
+  f.$('academy-shell-action-settings-back').click();
+  f.$('academy-shell-action-primary').click();
+  assert.equal(f.$('academy-shell-briefing-dialog').open, true);
+  f.$('academy-shell-action-start').click();
+  assert.equal(f.view.snapshot().status, 'active');
+  f.$('academy-flight-menu').click();
+  assert.equal(f.$('academy-shell-home-dialog').open, true);
+  assert.equal(f.view.snapshot().status, 'paused');
+  const paused = f.view.snapshot();
+  f.tick(4);
+  assert.deepEqual(f.view.snapshot(), paused);
+  const hint = f.$('academy-shell-home-dialog').querySelector('.sim-menu-hint');
+  const instructions = hint.textContent;
+  assert.ok(instructions.length > 0);
+  f.win.emit('blur');
+  assert.equal(hint.textContent, instructions, 'blur must not move the shared menu controls');
+  assert.equal(hint.hidden, false);
+  f.win.emit('focus');
+  f.tick(2);
+  assert.equal(hint.textContent, instructions);
 });

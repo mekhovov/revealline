@@ -72,6 +72,7 @@ export function verifyPublicBoundary({
   deployment,
   buildInfo,
   expectedMainSha = null,
+  expectedGameVersion = null,
 }) {
   const { latest } = releaseDecision({ configuration, pages });
   if (!VERSION.test(configuration.currentVersion))
@@ -89,7 +90,8 @@ export function verifyPublicBoundary({
       `Public main deployment ${deployment.sourceRevision} does not match protected base ${expectedMainSha}.`,
     );
   if (
-    buildInfo?.version !== deployment.buildVersion ||
+    !/^\d+\.\d+\.\d+$/.test(buildInfo?.version || '') ||
+    (expectedGameVersion !== null && buildInfo.version !== expectedGameVersion) ||
     buildInfo?.sourceRevision !== deployment.sourceRevision ||
     buildInfo?.entry !== 'game/index.html'
   )
@@ -146,9 +148,7 @@ async function verifyPublic() {
   const cacheKey = encodeURIComponent(
     `${process.env.GITHUB_RUN_ID || 'local'}-${process.env.GITHUB_RUN_ATTEMPT || '0'}-${Date.now()}`,
   );
-  const deployment = await fetchPublicJSON(
-    `${base}/main-deployment.json?boundary=${cacheKey}`,
-  );
+  const deployment = await fetchPublicJSON(`${base}/main-deployment.json?boundary=${cacheKey}`);
   const buildInfo = await fetchPublicJSON(`${base}/game/build-info.json?boundary=${cacheKey}`);
   const boundary = verifyPublicBoundary({
     configuration,
@@ -156,6 +156,7 @@ async function verifyPublic() {
     deployment,
     buildInfo,
     expectedMainSha: process.env.PR_BASE_SHA || null,
+    expectedGameVersion: process.env.PR_BASE_VERSION || null,
   });
   const requested = verifyNextReleaseTitle(process.env.PR_TITLE, boundary.latest);
   return {

@@ -132,6 +132,10 @@ function render() {
       ),
     );
     const flags = document.createElement('p');
+    if (edition.family)
+      flags.append(
+        text('span', { classic: 'Snake', team: 'Team', fpv: 'FPV SIM' }[edition.family], 'badge'),
+      );
     if (edition.installed)
       flags.append(text('span', localizedMessage('common:status.installed'), 'badge'));
     if (edition.offloaded)

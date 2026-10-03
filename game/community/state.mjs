@@ -1,4 +1,4 @@
-import { boundedJSON, exactKeys, required } from '../data-json.mjs';
+import { boundedJSON, exactKeys, required, stableId } from '../data-json.mjs';
 
 export const COMMUNITY_STATE_KEY = 'revealline.community.library.v1';
 const empty = () => ({
@@ -24,6 +24,8 @@ const validate = (source) => {
         'packageSha256',
         'installation',
         'installedAt',
+        'family',
+        'runtimeIdentity',
       ],
       'community library edition',
     );
@@ -42,6 +44,22 @@ const validate = (source) => {
             Number.isFinite(Date.parse(item.installedAt)))) &&
         !ids.has(item.editionId),
       'Community library identity is invalid.',
+    );
+    required(
+      item.family === undefined || ['creator', 'classic', 'team', 'fpv'].includes(item.family),
+      'Unknown installed content family.',
+    );
+    required(
+      item.family !== 'classic' || /^[a-f0-9]{16}$/.test(item.runtimeIdentity),
+      'Classic content identity is invalid.',
+    );
+    required(
+      item.family !== 'team' || /^[a-f0-9]{64}$/.test(item.runtimeIdentity),
+      'Team runtime identity is invalid.',
+    );
+    required(
+      item.family !== 'fpv' || stableId(item.runtimeIdentity),
+      'FPV project identity is invalid.',
     );
     ids.add(item.editionId);
   }

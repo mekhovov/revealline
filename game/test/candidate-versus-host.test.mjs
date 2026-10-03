@@ -633,3 +633,19 @@ for (const route of ['opening', 'authored'])
     assert.equal(p.doc.activeElement, p.$('race-journey-next'));
     assert.deepEqual((await p.journeyBackend.read()).clears, persisted.clears);
   });
+
+test('source pursuit greybox uses equal paired boards without acquiring an original picture', async (t) => {
+  const p = await setup(t, 'standard', {
+    href: 'http://localhost/game/couch/?journey=pursuit-pilots-v1',
+  });
+  assert.equal(p.renders[0].levelId, 'crossing-post');
+  assert.deepEqual(p.renders[0], p.renders[1]);
+  assert.equal(p.drawOptions[0].backdrop, null);
+  assert.equal(p.drawOptions[1].backdrop, null);
+  p.$('race-start').click();
+  await waitFor(() => {
+    p.frame();
+    return p.renders.every((run) => run.status === 'running');
+  });
+  assert.ok(p.renders.every((run) => run.level.pursuit.actors.length > 0));
+});

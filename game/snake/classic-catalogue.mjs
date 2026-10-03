@@ -1,3 +1,4 @@
+import { CLASSIC_SNAKE_V3_CHAPTERS, CLASSIC_SNAKE_V3_LEVELS } from './classic-catalogue-v3.mjs';
 import { CLASSIC_SNAKE_V2_CHAPTERS, CLASSIC_SNAKE_V2_LEVELS } from './classic-catalogue-v2.mjs';
 
 /**
@@ -758,9 +759,23 @@ const FOUNDATION_LEVELS = freeze(
 export const CLASSIC_SNAKE_CHAPTERS = freeze([
   ...FOUNDATION_CHAPTERS,
   ...CLASSIC_SNAKE_V2_CHAPTERS,
+  ...CLASSIC_SNAKE_V3_CHAPTERS,
 ]);
-export const CLASSIC_SNAKE_LEVELS = freeze([...FOUNDATION_LEVELS, ...CLASSIC_SNAKE_V2_LEVELS]);
+export const CLASSIC_SNAKE_LEVELS = freeze([
+  ...FOUNDATION_LEVELS,
+  ...CLASSIC_SNAKE_V2_LEVELS,
+  ...CLASSIC_SNAKE_V3_LEVELS,
+]);
 export const CLASSIC_SNAKE_CAMPAIGNS = freeze([
+  {
+    id: 'classic-living-routes-v1',
+    title: bilingual('Living Routes', 'Живі маршрути'),
+    description: bilingual(
+      'Twelve original missions: readable goals, partner interception and explicitly marked specialists.',
+      'Дванадцять оригінальних місій: зрозумілі цілі, парні перехоплення й чітко позначені спеціалісти.',
+    ),
+    chapterIds: CLASSIC_SNAKE_V3_CHAPTERS.map((chapter) => chapter.id),
+  },
   {
     id: 'classic-foundations-v1',
     title: bilingual('Classic', 'Класика'),
