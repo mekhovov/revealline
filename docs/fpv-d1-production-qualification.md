@@ -228,3 +228,7 @@ not prove zero driver/internal lookup allocation. Sustained hardware FPS, therma
 behavior, low-end/mobile performance and artist/novice acceptance remain
 unmeasured. The owner's standing direction makes physical-device/player feedback
 nonblocking; those limits are recorded without inventing acceptance.
+
+A separate [bounded transition profile](fpv-d1-transition-profile.md) retained a
+complete follow-up trace on the same historical source. It did not reproduce the
+long waits and does not change the measurements or unresolved limits above.

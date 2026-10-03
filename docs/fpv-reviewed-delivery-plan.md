@@ -60,16 +60,18 @@ This checkpoint supersedes the dated pending statuses below; older evidence rema
 composition **#996** are merged. The public marker at `e40809f25ea8` and an actual
 Clearing check-in render/arm/pause verify the grove increment live. Hangar, Garage,
 Stadium and Yard also have actual public launch evidence. Meadow **#1010** is
-merged at `e98df020d`; its public deployment remains to be verified.
+live at public marker `e98df020d`, with Turn and travel render/arm/pause verified.
+Woodland material correction **#1001** is merged at `25700b699`; its public
+acceptance remains separate from that earlier marker.
 
-1. Complete protected publication of **#1001** Woodland material correction and
-   **#1012** Courtyard closed façades. Keep each ready patch focused while main
-   integration and CI run. Source repair recovered 42,301 bytes without changing
-   generated syntax trees or 24 packed recordings; no package limit was raised.
-2. Continue **Warehouse exterior composition**, the next D2 increment. Preserve
-   29 courses/four bounds, 18 installed recordings, the 57 licensed placements,
-   indoor flight routes and closed collision envelope. Group exterior window
-   modules into coherent loading-frontage runs and add depth to the backline.
+1. Complete protected publication of **#1012** Courtyard closed façades and
+   **#1014** Warehouse exterior composition, preserving exact-head admission.
+   Keep ready patches focused while independent work continues. Source repair
+   recovered 42,301 bytes without changing generated syntax trees or 24 packed
+   recordings; no package limit was raised.
+2. Continue the next **Airfield/Quarry** art pair after the qualified Warehouse
+   increment. Warehouse #1014 retains 29 courses/four bounds, 18 installed
+   recordings, 57 licensed placements, indoor routes and closed collision bounds.
 3. Finish the remaining **D2 world pairs**, then D3 examples/coaching, D4 creator
    tools, D5 four new worlds, and D6 deferred unit/regression qualification.
 4. Keep **D1 performance tuning** active alongside art: production source and
@@ -84,10 +86,10 @@ installed; optional Adventure/alternate-mode examples belong to D3.
 | Area | Verified increment | Remaining |
 | --- | --- | --- |
 | D0 | Core 72 MiB/Company 80 MiB capacity and lossless optional-source repair #1011 | Existing canonical audio-warning arbitration failure remains recorded separately |
-| D1 | Field materials #999, tree forms #1006, Yard frontage #998 and Woodland groves #996; source/package production renderer and local-origin-offline checks pass | #1001 publication; loading/frame-time investigation; broader art and actual-device qualification |
+| D1 | Field materials #999, tree forms #1006, Yard frontage #998, Woodland groves #996 and material correction #1001 are merged; historical source/package production and cached-player evidence retained | Material public acceptance; unresolved long-stall investigation; broader art and actual-device qualification |
 | D2: Stadium/Garage | Stadium #1004 and Garage #1009 public render/arm/pause verified | Broader art/performance acceptance, without blocking next work |
-| D2: Hangar/Meadow | Hangar #1008 live; Meadow #1010 merged and source/package verified | Meadow public deployment verification |
-| D2: Courtyard/Warehouse | Courtyard #1012 published with aligned windows, closed doors and coherent trim; source/package checks and actual imported-player launch pass | Warehouse exterior composition active on a separate branch; broader world polish continues |
+| D2: Hangar/Meadow | Hangar #1008 and Meadow #1010 public render/arm/pause verified | Broader art/performance acceptance remains separate |
+| D2: Courtyard/Warehouse | Courtyard #1012 and Warehouse #1014 are ready with scoped source/package and actual-player evidence | Exact-head protected publication, public deployment and broader world polish |
 | D2: later pairs | Existing reusable surfaces and landmarks retained | Airfield/Quarry, Campus/Railworks and Orchard/Solar cohesive art passes |
 | D3–D6 | Existing teaching, creator/import, replay and recovery features retained | Optional examples/coaching; creator templates; four new worlds; deferred unit coverage and final regression |
 
@@ -98,12 +100,23 @@ semantic discrepancies across 72,680 leaves. Local server-unavailable reload,
 Woodland/Yard selection, arm and pause pass. This is functional browser evidence,
 not physical-radio, airplane-mode, novice or sustained hardware-performance proof.
 
+The bounded [D1 transition profile](fpv-d1-transition-profile.md) completed 36
+preparations and six imports on the same historical e572 source. It did not
+reproduce the earlier 15–17 second waits (maxima 77.4/11.2 ms). Measurable course
+setup/quality/probe costs and all long tasks are retained; the original stalls
+remain unresolved and no production optimization or FPS claim follows.
+
 **Courtyard evidence:** the first visual review rejected overlapping window marks
 although its numerical matrix passed. The corrected final source and package each
 pass 261 checks/163 pairs with matching records. These matrices use the production
 renderer with procedural fallback scenery; the separate normal player launch
 covers imported scenery, backed by the GLB integration audit. Preserve the rejected
 revision and the distinction between these checks.
+
+**Warehouse evidence:** ready #1014 at `b5a7a3b5a` retains 437 checks/221 image
+pairs and the actual admitted-player launch on frozen `102fcd`; integrated
+`860ad` admission leaves 35,925 original-input bytes of headroom. These scoped
+receipts do not replace fresh exact-head CI or public deployment verification.
 
 Player feedback, actual iPhone/TX15/Steam Deck sessions and human art acceptance
 remain pending and nonblocking. No guard, replay identity or gameplay geometry
