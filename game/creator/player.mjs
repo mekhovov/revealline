@@ -1,3 +1,4 @@
+import { pursuitRoster } from '../hunt/pursuit-goals.mjs';
 import {
   REWARD_BOARD_SECONDS,
   REWARD_STORY_SECONDS,
@@ -98,6 +99,7 @@ const playerMenu = attachCreatorPlayerMenu({
           difficulty: $('difficulty').value,
           turnPolicy: $('steering').value,
           runningEnemies: runningEnemyPreferences.snapshot().enabled,
+          runningEnemyStyle: runningEnemyPreferences.snapshot().style,
         }),
         true,
         epoch,
@@ -107,6 +109,9 @@ const playerMenu = attachCreatorPlayerMenu({
 const runningEnemyControls = mountRunningEnemyControls({
   container: $('creator-panel-gameplay'),
   preferences: runningEnemyPreferences,
+  getAcceptedStyle: () =>
+    runtime?.current() ? (runtime.current().run.level.pursuit ? 'varied' : 'original') : null,
+  getAcceptedActors: () => pursuitRoster(runtime?.current()?.run.level),
   getCurrentEnabled: () => {
     const current = runtime?.current();
     return current ? !!huntDefinition(current.run.level) : null;
@@ -121,6 +126,7 @@ const runningEnemyControls = mountRunningEnemyControls({
           await runtime.start({
             ...runtime.current().selection,
             runningEnemies: runningEnemyPreferences.snapshot().enabled,
+            runningEnemyStyle: runningEnemyPreferences.snapshot().style,
           }),
           true,
           epoch,
@@ -517,6 +523,7 @@ $('start').onclick = () =>
           difficulty: $('difficulty').value,
           turnPolicy: $('steering').value,
           runningEnemies: runningEnemyPreferences.snapshot().enabled,
+          runningEnemyStyle: runningEnemyPreferences.snapshot().style,
         }),
         true,
         epoch,
@@ -557,6 +564,7 @@ $('next').onclick = () => {
         difficulty: current.difficulty,
         turnPolicy: current.turnPolicy,
         runningEnemies: runningEnemyPreferences.snapshot().enabled,
+        runningEnemyStyle: runningEnemyPreferences.snapshot().style,
       }),
       true,
       epoch,

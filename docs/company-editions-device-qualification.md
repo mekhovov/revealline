@@ -1,5 +1,10 @@
 # Company edition device qualification
 
+Current Company candidates use the [80 MiB complete-package policy](company-package-capacity.md)
+and [optional actor voice packs](company-actor-voices.md). Historical 64 MiB artifact
+receipts below remain valid only for their original bytes. The new candidates need
+fresh device/offline observations; successful build admission does not fill these rows.
+
 This is the executable check list for the remaining installation, offline and recovery work.
 It does not reopen formative playtesting: the user reported that complete on 26 September 2026. It does not certify artwork, hardware or a public release. Record an observed result
 for the exact artifact; leave an unrun case pending.

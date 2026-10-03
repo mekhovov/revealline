@@ -3,11 +3,16 @@ import { geometryForRun } from '../core/geometry.mjs';
 import { CELL, FIXED_DT } from '../core/registry.mjs';
 import { encounterCutCells, encounterShieldIds } from '../core/encounter.mjs';
 import { classicEffectActive } from '../core/classic-state.mjs';
-import { baseLevelVersion, isClassicRuleset, resolveVersions } from '../core/versions.mjs';
+import {
+  baseLevelVersion,
+  isClassicRuleset,
+  isRunningEnemyRuleset,
+  resolveVersions,
+} from '../core/versions.mjs';
 
 const classicRun = (state) =>
   isClassicRuleset(
-    state.ruleset === 'xonix-core.v11'
+    isRunningEnemyRuleset(state.ruleset)
       ? resolveVersions({ levelVersion: baseLevelVersion(state.level) }).ruleset
       : state.ruleset,
   );

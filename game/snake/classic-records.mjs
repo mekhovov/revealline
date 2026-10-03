@@ -3,6 +3,11 @@ import { createProfileRecordBackend } from '../profile-storage.mjs';
 import { exportClassicSnakeReplay, validateClassicSnakeLevel } from './classic-core.mjs';
 import { restoreClassicSnakeMatch } from './classic-match.mjs';
 import { CLASSIC_SNAKE_LEVELS } from './classic-catalogue.mjs';
+import {
+  validateClassicSnakePackage,
+  classicSnakePackageEntries,
+  classicSnakePackageIdentity,
+} from './classic-community.mjs';
 import { CLASSIC_PACES, prepareClassicSnakeLevel } from './classic-setup.mjs';
 
 // Distinct from the earlier unreleased, metric-only candidate. Its bytes are kept.
@@ -13,22 +18,20 @@ const ROW_PROOFS = 6;
 class ColdSnakeProof extends Error {}
 const empty = () => ({ format: FORMAT, rows: {}, lastPlayed: null });
 const integer = (n) => Number.isSafeInteger(n) && n >= 0;
-const catalogue = new Map(CLASSIC_SNAKE_LEVELS.map((entry) => [entry.id, entry]));
-const recipes = new Map();
 const policies = ['mission', 'endless', 'score', 'survival'];
 export const classicRecordKey = (run, mode, policy = 'mission') =>
   `${mode}/${policy}/${run.levelIdentity}/${run.seed}`;
 
 /** Match only definitions that the public setup can actually prepare. This is
  * cached per catalogue entry, not inferred from an imported level's own ID. */
-function ownedRecipe(level) {
+function ownedRecipe(level, catalogue, recipes) {
   const entry = catalogue.get(level?.id);
   required(entry, 'Snake records require a catalogue mission.');
   if (!recipes.has(entry.id)) {
     const variants = new Map();
     for (const pace of Object.keys(CLASSIC_PACES))
       for (const format of ['campaign', 'endless'])
-        for (const targetRules of ['authored', 'moving'])
+        for (const targetRules of ['authored', 'moving', 'varied'])
           for (const preset of ['classic', 'pursuit', 'tactical', 'arcade']) {
             try {
               const prepared = validateClassicSnakeLevel(
@@ -48,7 +51,7 @@ function ownedRecipe(level) {
 
 /** Only exact match proofs can own progress. Cache bounded serialized witnesses
  * to avoid replaying the same stored rounds inside every database transaction. */
-function proofVerifier() {
+function proofVerifier(catalogue, recipes) {
   const cache = new Map();
   // Canonical JSON has no more UTF-16 code units than UTF-8 bytes. A valid
   // 24 MiB profile therefore fits in 24 Mi code units (at most 48 MiB in JS).
@@ -77,7 +80,11 @@ function proofVerifier() {
       return summary;
     }
     if (cachedOnly) throw new ColdSnakeProof('Snake progress needs replay verification.');
-    const { entry, level } = ownedRecipe(witness.match?.replays?.[witness.board]?.level);
+    const { entry, level } = ownedRecipe(
+      witness.match?.replays?.[witness.board]?.level,
+      catalogue,
+      recipes,
+    );
     const accepted = restoreClassicSnakeMatch(witness.match, { level });
     const run = accepted.runs[witness.board];
     required(run, 'Snake proof board is absent.');
@@ -99,7 +106,7 @@ function proofVerifier() {
       teamwork: clear && mode === 'team' && run.snakes.every((snake) => snake.catches >= 2),
       noSupplies:
         clear &&
-        level.version === 'classic-snake-level.v2' &&
+        ['classic-snake-level.v2', 'classic-snake-level.v3'].includes(level.version) &&
         level.pickups.length > 0 &&
         run.pickupsUsed === 0,
       identity: dataIdentity(witness),
@@ -132,7 +139,7 @@ function proofVerifier() {
   };
 }
 
-function validator(verifier) {
+function validator(verifier, catalogue) {
   return (source, { cachedOnly = false } = {}) => {
     const value = boundedJSON(source, {
       maxBytes: PROFILE_BYTES,
@@ -316,11 +323,16 @@ export function createClassicSnakeRecords({
   onChange = () => {},
   onWarning = () => {},
   indexedDB = globalThis.indexedDB,
+  contentPack = null,
 } = {}) {
-  const verifier = proofVerifier(),
-    validate = validator(verifier);
+  const pack = contentPack === null ? null : validateClassicSnakePackage(contentPack);
+  const entries = pack ? classicSnakePackageEntries(pack) : CLASSIC_SNAKE_LEVELS;
+  const catalogue = new Map(entries.map((entry) => [entry.id, entry])),
+    recipes = new Map();
+  const verifier = proofVerifier(catalogue, recipes),
+    validate = validator(verifier, catalogue);
   const backend = createProfileRecordBackend({
-    key: FORMAT,
+    key: pack ? `${FORMAT}/community/${classicSnakePackageIdentity(pack)}` : FORMAT,
     empty,
     indexedDB,
     // Replays never execute inside an IndexedDB transaction. Its timeout covers
@@ -434,7 +446,7 @@ export function createClassicSnakeRecords({
       };
     },
     async remember(run, { mode, chapterId, level, match, policy = 'mission', allowClear = true }) {
-      const expected = ownedRecipe(level);
+      const expected = ownedRecipe(level, catalogue, recipes);
       required(
         chapterId === expected.entry.chapterId && typeof allowClear === 'boolean',
         'Snake record chapter differs.',

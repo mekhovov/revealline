@@ -803,5 +803,437 @@
     "publication": "public",
     "approved": true,
     "dependencies": []
+  },
+  {
+    "id": "runtime-actor-lookout-notice-en",
+    "path": "game/audio/reactions/actors-v1/actor-lookout-notice-en.m4a",
+    "sha256": "a567406ee7e636e8fb33bb8db6b3114ed01bf2fe4ee6f41b64446f05c1875165",
+    "bytes": 16583,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "runtime-actor-lookout-notice-uk",
+    "path": "game/audio/reactions/actors-v1/actor-lookout-notice-uk.m4a",
+    "sha256": "e5509427115873ebba48d4fb3125046148760049ec8f10c07b2ada0319a786b7",
+    "bytes": 16008,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "runtime-actor-lookout-caught-en",
+    "path": "game/audio/reactions/actors-v1/actor-lookout-caught-en.m4a",
+    "sha256": "eb202be4d1c066b2ba178d9c999cfbef8213dc111d285b127efd9c0725b9c45f",
+    "bytes": 14878,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "runtime-actor-lookout-caught-uk",
+    "path": "game/audio/reactions/actors-v1/actor-lookout-caught-uk.m4a",
+    "sha256": "b6a125966ae1a28cb8e282c40f3f139cfcb955d43ec0716063ec72f9ce6f3e9e",
+    "bytes": 15053,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "runtime-actor-patroller-notice-en",
+    "path": "game/audio/reactions/actors-v1/actor-patroller-notice-en.m4a",
+    "sha256": "5ddc2c1d7aed2747e93379453fd8b46a8926e384fc095c4741c5b98f5df2193f",
+    "bytes": 13598,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "runtime-actor-patroller-notice-uk",
+    "path": "game/audio/reactions/actors-v1/actor-patroller-notice-uk.m4a",
+    "sha256": "cf111d88b310b71dbfde77ec569536dca43af334b1af738039db3c1cff06298d",
+    "bytes": 14432,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "runtime-actor-patroller-caught-en",
+    "path": "game/audio/reactions/actors-v1/actor-patroller-caught-en.m4a",
+    "sha256": "5bf98f89f3c694eefc4ed2886b3904f749ed618d123d95464fa223fedac2d01b",
+    "bytes": 15968,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "runtime-actor-patroller-caught-uk",
+    "path": "game/audio/reactions/actors-v1/actor-patroller-caught-uk.m4a",
+    "sha256": "08087574625bd72a08a58b4549ba6884255d32de2003071014755641eac2f025",
+    "bytes": 20328,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "runtime-actor-runner-notice-en",
+    "path": "game/audio/reactions/actors-v1/actor-runner-notice-en.m4a",
+    "sha256": "1c94c334347c3352b1e1e50380f43e41f59e8ada1728c97726a01a14863898b1",
+    "bytes": 15661,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "runtime-actor-runner-notice-uk",
+    "path": "game/audio/reactions/actors-v1/actor-runner-notice-uk.m4a",
+    "sha256": "a605e92659dd5f7073dbedecbbc1b1d119aaefe28ce2f081aaa09ae5c4b6f794",
+    "bytes": 23565,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "runtime-actor-runner-caught-en",
+    "path": "game/audio/reactions/actors-v1/actor-runner-caught-en.m4a",
+    "sha256": "d54a656e0b409727d43f2cddb1542b792a3f087daaf09abdcb0ec3deda3e4dda",
+    "bytes": 15257,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "runtime-actor-runner-caught-uk",
+    "path": "game/audio/reactions/actors-v1/actor-runner-caught-uk.m4a",
+    "sha256": "519c3f8b06c56bd8d95e17c52d72a1a9936ac8faffe8a991cde7b6a991d19d25",
+    "bytes": 20042,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "runtime-actor-sprinter-notice-en",
+    "path": "game/audio/reactions/actors-v1/actor-sprinter-notice-en.m4a",
+    "sha256": "2f91d071a758de445fd8d48eefc8a1d7badab077577f483f0a21e98d61272200",
+    "bytes": 17466,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "runtime-actor-sprinter-notice-uk",
+    "path": "game/audio/reactions/actors-v1/actor-sprinter-notice-uk.m4a",
+    "sha256": "ae25f4e21d379514a3678d6cd6ae36e454f084e19da24c4d31f673a79152cf0b",
+    "bytes": 20846,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "runtime-actor-sprinter-caught-en",
+    "path": "game/audio/reactions/actors-v1/actor-sprinter-caught-en.m4a",
+    "sha256": "2a014371c62df7b146caa48c4155d47aac65ce9df6aa9cd5977bf44de97c6919",
+    "bytes": 12633,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "runtime-actor-sprinter-caught-uk",
+    "path": "game/audio/reactions/actors-v1/actor-sprinter-caught-uk.m4a",
+    "sha256": "93ae1eb3129f248f4e2d788ac0440173498967c507f765ae386087f762f68616",
+    "bytes": 15014,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "runtime-actor-courier-notice-en",
+    "path": "game/audio/reactions/actors-v1/actor-courier-notice-en.m4a",
+    "sha256": "cf87e82b1007e4071baedc4088a736cea8483de8b202469d7c4ad4cfe88ca0bb",
+    "bytes": 18418,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "runtime-actor-courier-notice-uk",
+    "path": "game/audio/reactions/actors-v1/actor-courier-notice-uk.m4a",
+    "sha256": "99c267538a73a5ec61f92967d332285baa5397c322dd1d89cb89a11b648ca722",
+    "bytes": 19761,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "runtime-actor-courier-caught-en",
+    "path": "game/audio/reactions/actors-v1/actor-courier-caught-en.m4a",
+    "sha256": "3af5c8292c0570d9da7bdb36ae1feb6c7ff18487e831ac743f2016da6411906c",
+    "bytes": 15044,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "runtime-actor-courier-caught-uk",
+    "path": "game/audio/reactions/actors-v1/actor-courier-caught-uk.m4a",
+    "sha256": "76463910db387b56c232a4e4cb91026fc7ae12b04d58089b03ee9adb9055f531",
+    "bytes": 15846,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "runtime-actor-guard-notice-en",
+    "path": "game/audio/reactions/actors-v1/actor-guard-notice-en.m4a",
+    "sha256": "588c83967b9ccceadf2d502f6adcc365b7d7b240953324fd4e32af77086d5b51",
+    "bytes": 20746,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "runtime-actor-guard-notice-uk",
+    "path": "game/audio/reactions/actors-v1/actor-guard-notice-uk.m4a",
+    "sha256": "3b30975483ba66cdade0e1a2f38699ebc67416561ec4731a528f64ba1a0e7fb8",
+    "bytes": 18029,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "runtime-actor-guard-caught-en",
+    "path": "game/audio/reactions/actors-v1/actor-guard-caught-en.m4a",
+    "sha256": "3091fcc4d52eb8a7c554ad395a23849995cc8b07e4a420ef08befa8179c3b591",
+    "bytes": 14582,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "runtime-actor-guard-caught-uk",
+    "path": "game/audio/reactions/actors-v1/actor-guard-caught-uk.m4a",
+    "sha256": "8febef93ddb730036edce32dc38994d09ffdcd3d8b5c85cdd2daaab0813af52d",
+    "bytes": 16895,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "runtime-actor-refuge-seeker-notice-en",
+    "path": "game/audio/reactions/actors-v1/actor-refuge-seeker-notice-en.m4a",
+    "sha256": "6ac87a6460c4f13f44d9a2743435f1e9ca3be2d719cb3dda5945f81f406fe8a3",
+    "bytes": 17603,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "runtime-actor-refuge-seeker-notice-uk",
+    "path": "game/audio/reactions/actors-v1/actor-refuge-seeker-notice-uk.m4a",
+    "sha256": "88a472ae67778c8b48da26363bceab7723b11b706d23b105b2f834f5703d4920",
+    "bytes": 17546,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "runtime-actor-refuge-seeker-caught-en",
+    "path": "game/audio/reactions/actors-v1/actor-refuge-seeker-caught-en.m4a",
+    "sha256": "bcf27e781c41e5a537104c021ba98a9b50f7e91a7c9687f9f535ba95fe1a02ba",
+    "bytes": 13598,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "runtime-actor-refuge-seeker-caught-uk",
+    "path": "game/audio/reactions/actors-v1/actor-refuge-seeker-caught-uk.m4a",
+    "sha256": "1b00da367d7426c0eef9f58acf131b5653131d19adcfc1adfb46e470b614b874",
+    "bytes": 22329,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "runtime-actor-switchback-notice-en",
+    "path": "game/audio/reactions/actors-v1/actor-switchback-notice-en.m4a",
+    "sha256": "431c52942a4eca4f229c2bdff14983864160306fc07e333d9b80aa98b57af441",
+    "bytes": 15314,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "runtime-actor-switchback-notice-uk",
+    "path": "game/audio/reactions/actors-v1/actor-switchback-notice-uk.m4a",
+    "sha256": "c8f3edf47b9f691a2b3116097e33214bd4dcad69eeddd9ce5a058a95d57dd515",
+    "bytes": 14656,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "runtime-actor-switchback-caught-en",
+    "path": "game/audio/reactions/actors-v1/actor-switchback-caught-en.m4a",
+    "sha256": "43af4d60c83b01f2244d282ae4185145afdc24134506664c3e86227c2c550994",
+    "bytes": 13097,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "runtime-actor-switchback-caught-uk",
+    "path": "game/audio/reactions/actors-v1/actor-switchback-caught-uk.m4a",
+    "sha256": "97c9b85bbcae74fbd6b1d56858a9511e558ae66322d8dc31272bc4001926aefd",
+    "bytes": 17544,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "runtime-actor-rendezvous-pair-notice-en",
+    "path": "game/audio/reactions/actors-v1/actor-rendezvous-pair-notice-en.m4a",
+    "sha256": "b71fe944971fe122c52bfcf275be8743f368cd5d5bb4a514ed6f009dbf22c8f3",
+    "bytes": 15660,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "runtime-actor-rendezvous-pair-notice-uk",
+    "path": "game/audio/reactions/actors-v1/actor-rendezvous-pair-notice-uk.m4a",
+    "sha256": "c1ad55886b9d8e2a9c0a781c575bf7a29c88e711ce49941cd62f8298989ecd6d",
+    "bytes": 19008,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "runtime-actor-rendezvous-pair-caught-en",
+    "path": "game/audio/reactions/actors-v1/actor-rendezvous-pair-caught-en.m4a",
+    "sha256": "2eeb7509585afbfa24031b2a222928f054df57fe72a390a6011bca29c217db32",
+    "bytes": 18483,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "runtime-actor-rendezvous-pair-caught-uk",
+    "path": "game/audio/reactions/actors-v1/actor-rendezvous-pair-caught-uk.m4a",
+    "sha256": "a850111ec29765749c4ad8512a6a30d86acd02e36579524c52efd427acf2bf75",
+    "bytes": 21324,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "runtime-actor-shield-bearer-notice-en",
+    "path": "game/audio/reactions/actors-v1/actor-shield-bearer-notice-en.m4a",
+    "sha256": "1842c1fdecfbd4e8964e2d641676b4ea94be780541072ae89c0ac1acff542146",
+    "bytes": 19433,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "runtime-actor-shield-bearer-notice-uk",
+    "path": "game/audio/reactions/actors-v1/actor-shield-bearer-notice-uk.m4a",
+    "sha256": "c878ef73486957a4d1be16cd5e1d6d5bf710884abc1a57841c7822a085bc09c6",
+    "bytes": 26718,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "runtime-actor-shield-bearer-caught-en",
+    "path": "game/audio/reactions/actors-v1/actor-shield-bearer-caught-en.m4a",
+    "sha256": "402042b0f56378e1c482cbada9925d3a16ea61719d3933584417c121deaea6c8",
+    "bytes": 19084,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "runtime-actor-shield-bearer-caught-uk",
+    "path": "game/audio/reactions/actors-v1/actor-shield-bearer-caught-uk.m4a",
+    "sha256": "54cd07848ede2d578218681bafd9036dadf26402695c3adace985f292038bf26",
+    "bytes": 21086,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "runtime-actor-brace-trooper-notice-en",
+    "path": "game/audio/reactions/actors-v1/actor-brace-trooper-notice-en.m4a",
+    "sha256": "848f5e9d00bffa9737783b10a15fef02802f2ecdf1f04ffea617d624a87d0d79",
+    "bytes": 21658,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "runtime-actor-brace-trooper-notice-uk",
+    "path": "game/audio/reactions/actors-v1/actor-brace-trooper-notice-uk.m4a",
+    "sha256": "1f15d5769b9c1bb05a33fe8f5348fd614a9f414762f5d9ecbdfe0bb798b2a8ea",
+    "bytes": 30573,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "runtime-actor-brace-trooper-caught-en",
+    "path": "game/audio/reactions/actors-v1/actor-brace-trooper-caught-en.m4a",
+    "sha256": "4cbc545e194cad7cc747f498f70990920346e58bdc35cff7923b08f91860d6d1",
+    "bytes": 13785,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "runtime-actor-brace-trooper-caught-uk",
+    "path": "game/audio/reactions/actors-v1/actor-brace-trooper-caught-uk.m4a",
+    "sha256": "b745facddb9224d2630f9504838dbca6a90d3a503ed0605775ade96159e596c9",
+    "bytes": 15010,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "runtime-actor-relay-warden-notice-en",
+    "path": "game/audio/reactions/actors-v1/actor-relay-warden-notice-en.m4a",
+    "sha256": "36054f1ec751008f71467e14a493f1661030bc94441c84984507468e4b078960",
+    "bytes": 20566,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "runtime-actor-relay-warden-notice-uk",
+    "path": "game/audio/reactions/actors-v1/actor-relay-warden-notice-uk.m4a",
+    "sha256": "78dac1dadf797f40dacc6afa10305926b24479e2f48ab0ffa189c7d37dadc7fe",
+    "bytes": 22782,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "runtime-actor-relay-warden-caught-en",
+    "path": "game/audio/reactions/actors-v1/actor-relay-warden-caught-en.m4a",
+    "sha256": "c5cb2d93c9c15402606213c9111b1c3ea79a97a38ef29461a14f0dee440b0bf4",
+    "bytes": 20712,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "runtime-actor-relay-warden-caught-uk",
+    "path": "game/audio/reactions/actors-v1/actor-relay-warden-caught-uk.m4a",
+    "sha256": "51fe2e5cb8c24b946996a9a54d2e603d59869e73f32a2b5fcc0caf11cbc2f09f",
+    "bytes": 23964,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
   }
 ]

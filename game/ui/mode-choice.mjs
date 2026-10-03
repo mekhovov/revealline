@@ -5,7 +5,7 @@ import { fpvWorldLaunchURL, snakeLaunchURL } from '../fpv-entry.mjs';
 import { loadAcceptedAppearance } from '../presentation/theme-system.mjs';
 const MODES = Object.freeze([['solo'], ['versus'], ['team']]);
 
-function contextualAppearance(document) {
+export function contextualAppearance(document) {
   let accepted = null;
   try {
     accepted = loadAcceptedAppearance((document.defaultView ?? globalThis).sessionStorage);
@@ -98,6 +98,42 @@ export function mountModeChoices({
   };
   snake.addEventListener('click', enterSnake);
   root.replaceChildren(...choices, simulator, snake);
+  const destinations = document.createElement('details');
+  destinations.className = 'game-mode-destinations';
+  const summary = document.createElement('summary');
+  localizedText(summary, () =>
+    getLocale() === 'uk' ? 'Ще режими та посібники' : 'More modes and guides',
+  );
+  destinations.append(summary);
+  const closeMore = () => {
+    if (!destinations.open || !destinations.contains(document.activeElement)) return false;
+    destinations.open = false;
+    summary.focus({ preventScroll: true });
+    return true;
+  };
+  const backFromMore = (event) => {
+    if (event.key !== 'Escape' || event.defaultPrevented || !closeMore()) return;
+    event.preventDefault();
+    event.stopPropagation();
+  };
+  destinations.addEventListener('keydown', backFromMore);
+  for (const [path, en, uk] of [
+    ['../snake/', 'Snake campaign guide', 'Посібник кампаній Snake'],
+    ['../hunt/', 'New pursuit campaigns', 'Нові кампанії переслідування'],
+    ['../online/', 'Private rooms preview', 'Приватні кімнати'],
+  ]) {
+    const link = document.createElement('a');
+    link.href = new URL(path, import.meta.url).href;
+    localizedText(link, () => (getLocale() === 'uk' ? uk : en));
+    link.addEventListener('click', () => {
+      const target = new URL(link.href);
+      target.searchParams.set('lang', getLocale());
+      link.href = target.href;
+      pause();
+    });
+    destinations.append(link);
+  }
+  root.append(destinations);
   const panel = mountOptionalPracticePanel({
     document,
     getAppearanceDefault,
@@ -119,6 +155,7 @@ export function mountModeChoices({
     localizedAttribute(simulator, 'title', () => t('interface:optionalPractice.simBrowserOnly'));
   }
   return {
+    closeMore,
     openSimulator: panel.open,
     simulatorRoot: () => panel.root?.() ?? null,
     simulatorPrimary: () => panel.primary?.() ?? simulator,
@@ -126,6 +163,8 @@ export function mountModeChoices({
     dispose() {
       panel.dispose();
       simulator.remove();
+      destinations.removeEventListener('keydown', backFromMore);
+      destinations.remove();
       snake.removeEventListener('click', enterSnake);
       snake.remove();
     },

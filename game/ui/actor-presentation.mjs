@@ -3,6 +3,7 @@ import { paintRotor } from './rotor-presentation.mjs';
 import { enemyCatalogRecord, resolveEnemySkin } from '../enemy-catalog.mjs';
 import { advanceEnemySurfacePhase, drawEnemyBodyMotion } from './enemy-body-motion.mjs';
 import { drawActorRecipe, resolveActorRecipe } from './actor-recipes.mjs';
+import { drawMilitaryVehicleMotion } from '../presentation/military-field-art.mjs';
 import {
   journeyActorThemeMaterial,
   drawJourneyActorMaterial,
@@ -775,7 +776,9 @@ export function drawPresentedActor(
     ctx.scale(d / 28, d / 28);
     drawEnemySilhouette(ctx, frame, colors);
   }
-  if (image && bodyRecord) drawEnemyBodyMotion(ctx, frame, bodyRecord, bodyPaintDiameter);
+  if (image && geometry?.material === 'military-vehicle')
+    drawMilitaryVehicleMotion(ctx, frame, geometry.vehicleRole, bodyPaintDiameter);
+  else if (image && bodyRecord) drawEnemyBodyMotion(ctx, frame, bodyRecord, bodyPaintDiameter);
   if (image) ctx.scale(d / 28, d / 28);
   // Two small nose pixels give rounded/compact and uploaded bodies a stable
   // heading cue. They remain within the body envelope, never a targeting ray.

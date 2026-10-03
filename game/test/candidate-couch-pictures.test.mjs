@@ -127,3 +127,50 @@ test('reentrant preparation status cancellation cannot acquire or publish a pict
   assert.equal(acquisitions, 0);
   h.dispose();
 });
+
+test('explicit greybox races own a null picture without acquisition and keep transactional identity', async () => {
+  const greybox = Object.freeze({ asset: null, defaultThemeId: 'horizon' });
+  let acquisitions = 0;
+  const h = createCandidateCouchPictures({
+    owns: (value) => value === greybox,
+    acquire: async () => {
+      acquisitions++;
+      throw new Error('Greyboxes have no asset.');
+    },
+  });
+  const stage = await h.stage(greybox, options(1));
+  assert.equal(stage.picture, null);
+  assert.throws(() => stage.commit(), /Confirm/);
+  await stage.confirm();
+  stage.commit()();
+  h.confirm(greybox, { raceId: 1 });
+  assert.throws(() => h.confirm(greybox, { raceId: 2 }), /does not own/);
+  await assert.rejects(h.stage({ ...greybox }, options(2)), /exact authored/);
+  const cancelled = await h.stage(greybox, options(2));
+  cancelled.cancel();
+  await assert.rejects(cancelled.confirm(), { name: 'AbortError' });
+  h.confirm(greybox, { raceId: 1 });
+  assert.equal(acquisitions, 0);
+  h.dispose();
+  h.dispose();
+});
+
+test('switching between original and greybox retires only the committed original', async () => {
+  const greybox = Object.freeze({ asset: null, defaultThemeId: 'horizon' });
+  const h = createCandidateCouchPictures({
+    owns: (value) => value === row || value === greybox,
+    acquire: picture,
+  });
+  const original = await h.select(row, options(1));
+  const blank = await h.stage(greybox, options(2));
+  await blank.confirm();
+  assert.equal(original.image.releases, 0);
+  const retire = blank.commit();
+  assert.equal(original.image.releases, 0);
+  retire();
+  assert.equal(original.image.releases, 1);
+  assert.equal(await h.select(greybox, options(3)), null);
+  const next = await h.select(row, options(4));
+  h.dispose();
+  assert.equal(next.image.releases, 1);
+});

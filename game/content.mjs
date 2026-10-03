@@ -46,6 +46,8 @@ export const DIRECTIONAL_SCENARIO_VERSION = 'xonix-playground.v8';
 export const SENTINEL_SCENARIO_VERSION = 'xonix-playground.v9';
 export const HUNT_SCENARIO_VERSION = 'xonix-playground.v10';
 export const SNAKE_SCENARIO_VERSION = 'xonix-playground.v11';
+export const PURSUIT_SCENARIO_VERSION = 'xonix-playground.v12';
+export const SNAKE_PURSUIT_SCENARIO_VERSION = 'xonix-playground.v13';
 
 /** A preview uses the authored definition's campaign ID and this single map.
  * It is deliberately separate from any installed campaign or award authority.
@@ -498,13 +500,17 @@ export function validateScenario(value, { classRecipes: defaultRecipes = CLASSES
       SENTINEL_SCENARIO_VERSION,
       HUNT_SCENARIO_VERSION,
       SNAKE_SCENARIO_VERSION,
+      PURSUIT_SCENARIO_VERSION,
+      SNAKE_PURSUIT_SCENARIO_VERSION,
     ].includes(value.format)
   )
     return result([contentError('scenario.supportedFormat')], {
       warnings,
     });
-  const snake = value.format === SNAKE_SCENARIO_VERSION;
-  const hunt = value.format === HUNT_SCENARIO_VERSION || snake;
+  const snakePursuit = value.format === SNAKE_PURSUIT_SCENARIO_VERSION;
+  const pursuit = value.format === PURSUIT_SCENARIO_VERSION || snakePursuit;
+  const snake = value.format === SNAKE_SCENARIO_VERSION || snakePursuit;
+  const hunt = value.format === HUNT_SCENARIO_VERSION || snake || pursuit;
   const sentinel = value.format === SENTINEL_SCENARIO_VERSION || hunt;
   const directional = value.format === DIRECTIONAL_SCENARIO_VERSION || sentinel;
   const relays = value.format === RELAY_SCENARIO_VERSION || directional;
@@ -534,25 +540,29 @@ export function validateScenario(value, { classRecipes: defaultRecipes = CLASSES
   if (
     plain(value.level) &&
     value.level.version !==
-      (snake
-        ? 'xonix-level.v11'
-        : hunt
-          ? 'xonix-level.v9'
-          : sentinel
-            ? 'xonix-level.v8'
-            : directional
-              ? 'xonix-level.v7'
-              : relays
-                ? 'xonix-level.v6'
-                : foundations
-                  ? 'xonix-level.v5'
-                  : classic
-                    ? 'xonix-level.v4'
-                    : wide
-                      ? 'xonix-level.v3'
-                      : hasEncounter
-                        ? 'xonix-level.v2'
-                        : 'xonix-level.v1')
+      (snakePursuit
+        ? 'xonix-level.v13'
+        : pursuit
+          ? 'xonix-level.v12'
+          : snake
+            ? 'xonix-level.v11'
+            : hunt
+              ? 'xonix-level.v9'
+              : sentinel
+                ? 'xonix-level.v8'
+                : directional
+                  ? 'xonix-level.v7'
+                  : relays
+                    ? 'xonix-level.v6'
+                    : foundations
+                      ? 'xonix-level.v5'
+                      : classic
+                        ? 'xonix-level.v4'
+                        : wide
+                          ? 'xonix-level.v3'
+                          : hasEncounter
+                            ? 'xonix-level.v2'
+                            : 'xonix-level.v1')
   )
     errors.push(contentError('scenario.simulationVersionMatch'));
   themeChecks(value.theme, errors);

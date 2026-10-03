@@ -159,3 +159,17 @@ export const createDestructionPreferences = (options = {}) =>
     defaults: { brutal: false, blood: true },
     valid: (value) => typeof value.brutal === 'boolean' && typeof value.blood === 'boolean',
   });
+
+/** Cosmetic cast choice is shared by Capture, Snake, Studio and flight hosts.
+ * It never becomes part of an accepted gameplay recipe. */
+export const createActorAppearancePreferences = (options = {}) =>
+  storedChoice({
+    ...options,
+    key: 'revealline.actor-appearance.v1',
+    format: 'ActorAppearancePreferencesV1',
+    defaults: { cast: 'authored' },
+    valid: (value) => ['authored', 'tactical', 'rivals', 'arcade'].includes(value.cast),
+  });
+
+let actorAppearance;
+export const sharedActorAppearance = () => (actorAppearance ??= createActorAppearancePreferences());

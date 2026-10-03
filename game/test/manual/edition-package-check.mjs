@@ -12,6 +12,7 @@ import {
 } from '../../../scripts/compile-edition.mjs';
 import { editionMenuSceneResources } from '../../../scripts/edition-runtime.mjs';
 import { LAUNCHER_NAVIGATION_FILES } from '../../../scripts/offline-launcher.mjs';
+import { COMPANY_PACKAGE_BUDGET } from '../../editions/package-budget.mjs';
 
 const root = fileURLToPath(new URL('../../../', import.meta.url));
 const hash = (bytes) => createHash('sha256').update(bytes).digest('hex');
@@ -57,7 +58,7 @@ const directReadInputs = [
   ),
 ];
 for (const name of directReadInputs) await read(name);
-const limits = { files: 2000, bytes: 64 * 1024 * 1024 };
+const limits = { files: COMPANY_PACKAGE_BUDGET.maxFiles, bytes: COMPANY_PACKAGE_BUDGET.maxBytes };
 const editions = [];
 for (const edition of catalog.editions) {
   const diagnostics = { sourceRevision };
@@ -131,7 +132,7 @@ for (const edition of catalog.editions) {
     // Check the returned artifact, including manifests and workers generated
     // after the offline builder checks its cache inventory's own limits.
     assert.ok(compiled.files.size <= limits.files, 'Final edition exceeds 2000 files');
-    assert.ok(outputBytes <= limits.bytes, 'Final edition exceeds 64 MiB');
+    assert.ok(outputBytes <= limits.bytes, `Final edition exceeds ${COMPANY_PACKAGE_BUDGET.maxBytes / 1024 / 1024} MiB`);
     editions.push({
       edition: edition.id,
       passed: true,

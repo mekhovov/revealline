@@ -2,7 +2,7 @@
 (() => {
   'use strict';
   const CONFIG = __XONIX_OFFLINE_CONFIG__;
-  const MAX_BYTES = 64 * 1024 * 1024;
+  const MAX_BYTES = 72 * 1024 * 1024;
   const DOWNLOAD_CONCURRENCY = 4;
   if (!Array.isArray(CONFIG.files) || CONFIG.files.length > 2000)
     throw new Error('Offline inventory exceeds its file budget');

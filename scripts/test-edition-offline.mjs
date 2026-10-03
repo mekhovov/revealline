@@ -5,6 +5,7 @@ import { webcrypto } from 'node:crypto';
 import { buildEditionOfflineFiles } from './edition-offline.mjs';
 import { validateCompanyInstallationReference } from '../game/edition-context.mjs';
 import { validateEditionCodeClosure } from './compile-edition.mjs';
+import { COMPANY_PACKAGE_BUDGET } from '../game/editions/package-budget.mjs';
 
 const STORED_RESPONSE = Symbol('stored-response');
 
@@ -224,6 +225,42 @@ test('corrupt downloads refuse worker installation and over-budget editions are 
     buildEditionOfflineFiles({ files, editionId: 'coupa', version: '1.0.0' }),
     /2000 files/,
   );
+});
+
+test('generated Company workers reject enlarged or inconsistent embedded inventories before caching', async () => {
+  const original = await build();
+  for (const mutate of [
+    (inventory) => {
+      inventory.files[0].bytes = COMPANY_PACKAGE_BUDGET.maxBytes + 1;
+      inventory.totalBytes = inventory.files.reduce((sum, row) => sum + row.bytes, 0);
+      inventory.budget = { maxBytes: inventory.totalBytes };
+    },
+    (inventory) => inventory.totalBytes++,
+    (inventory) => inventory.files.push({ ...inventory.files[0] }),
+    (inventory) => {
+      inventory.files = Array.from({ length: COMPANY_PACKAGE_BUDGET.maxFiles + 1 }, (_, i) => ({
+        path: `game/file-${i}.txt`,
+        bytes: 0,
+        sha256: 'a'.repeat(64),
+      }));
+      inventory.totalBytes = 0;
+    },
+  ]) {
+    const files = new Map(original);
+    const source = files.get('service-worker.js').toString();
+    const inventory = JSON.parse(source.match(/^const INVENTORY = (.+);\n/)[1]);
+    mutate(inventory);
+    files.set(
+      'service-worker.js',
+      Buffer.from(
+        source.replace(
+          /^const INVENTORY = .+;\n/,
+          `const INVENTORY = ${JSON.stringify(inventory)};\n`,
+        ),
+      ),
+    );
+    assert.throws(() => worker(files), /Company offline/);
+  }
 });
 
 test('offline downloads stop and cancel overlong streams before allocating the advertised body', async () => {

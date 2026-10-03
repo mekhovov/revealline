@@ -1,3 +1,7 @@
+import { mountModePlayShell } from '../../game/ui/mode-play-shell.mjs';
+import { setMenuIcon } from '../../game/ui/native-menu-icons.mjs';
+import { createFlightMenuNavigation } from '../civilian-fpv/input.mjs';
+import { createPracticeAudio } from './audio.mjs';
 import { getLocale, setLocale, onLocaleChange } from '../../game/i18n/index.mjs';
 import { CIVILIAN_PRACTICE_CATALOGUE } from './catalogue.mjs';
 import {
@@ -25,8 +29,25 @@ export function mountCivilianPractice({ document: doc, window: win }) {
     previous = null,
     accumulator = 0,
     frame = null,
-    disposed = false;
+    disposed = false,
+    playShell = null,
+    gamepads = [];
+  const readGamepads = () => {
+    try {
+      gamepads = Array.from(win.navigator?.getGamepads?.() ?? []);
+    } catch {
+      gamepads = [];
+    }
+    return gamepads;
+  };
   const completed = new Set();
+  const audio = createPracticeAudio({ window: win });
+  const updateSound = () => {
+    $('sound').textContent = tr(audio.enabled() ? 'soundOn' : 'soundOff');
+    $('sound').setAttribute('aria-pressed', String(audio.enabled()));
+    playShell?.update({ muted: !audio.enabled() });
+  };
+  const stopSound = audio.subscribe(updateSound);
   const canvas = $('board');
   let context;
   try {
@@ -37,6 +58,7 @@ export function mountCivilianPractice({ document: doc, window: win }) {
   $('fallback').hidden = !!context;
   const pause = () => {
     model.pause();
+    audio.pause();
     input?.clear();
     accumulator = 0;
     render();
@@ -47,7 +69,11 @@ export function mountCivilianPractice({ document: doc, window: win }) {
     arena: $('arena'),
     buttons: [...doc.querySelectorAll('[data-axis]')],
     active: () => model.snapshot().status === 'active' && !$('help-dialog').open,
-    onPause: pause,
+    readGamepads: () => gamepads,
+    onPause(reason) {
+      pause();
+      if (reason === 'menu') playShell?.openHome();
+    },
     onStatus: (key) => {
       $('pad-status').textContent = tr(key === 'ready' ? 'connected' : key);
     },
@@ -81,6 +107,18 @@ export function mountCivilianPractice({ document: doc, window: win }) {
     $('discovery').textContent = state.status === 'complete' ? copy.discovery : '';
     $('start').disabled = recordingFull || state.status === 'active' || state.status === 'complete';
     $('pause').disabled = state.status !== 'active';
+    playShell?.update({
+      phase:
+        state.status === 'active'
+          ? 'playing'
+          : state.status === 'complete'
+            ? 'results'
+            : state.status,
+      missionName: copy.title,
+      summary: copy.brief,
+      canResume: !recordingFull && state.ticks > 0 && state.status !== 'complete',
+      muted: !audio.enabled(),
+    });
     draw(state);
   }
   function draw(state) {
@@ -150,9 +188,13 @@ export function mountCivilianPractice({ document: doc, window: win }) {
     doc.querySelector('.touch-controls').setAttribute('aria-label', tr('touch'));
     $('catalogue').setAttribute('aria-label', tr('json'));
     options();
+    updateSound();
+    playShell?.setLocale(getLocale());
+    for (const { node, en, uk } of modeLabels) node.textContent = getLocale() === 'uk' ? uk : en;
     render();
   }
   function reset(drillId = model.drill().id) {
+    audio.reset();
     input.clear();
     model = createPractice(catalogue, drillId);
     commands = [];
@@ -181,7 +223,9 @@ export function mountCivilianPractice({ document: doc, window: win }) {
       last.ticks++;
     else commands.push({ ticks: 1, input: command });
     recordingTicks++;
+    audio.update(model.snapshot(), command);
     const state = model.step(command);
+    audio.update(state, command);
     if (state.status === 'complete') {
       input.clear();
       if (replayPractice(catalogue, trace()).status === 'complete')
@@ -191,6 +235,7 @@ export function mountCivilianPractice({ document: doc, window: win }) {
   }
   function tick(now) {
     if (disposed) return;
+    menuNavigation.poll({ now, gamepads: readGamepads() });
     if (previous !== null && now - previous > 1000) pause();
     if (model.snapshot().status === 'active') {
       accumulator += previous === null ? 0 : Math.max(0, Math.min(250, now - previous));
@@ -205,18 +250,26 @@ export function mountCivilianPractice({ document: doc, window: win }) {
   }
   $('start').onclick = () => {
     input.clear();
+    playShell?.enterPlay();
     model.start();
+    void audio.resume();
     previous = null;
     accumulator = 0;
     $('arena').focus();
     render();
   };
   $('pause').onclick = pause;
+  $('sound').onclick = async () => {
+    await audio.setEnabled(!audio.enabled());
+    updateSound();
+    render();
+  };
   $('reset').onclick = () => reset();
   $('drill').onchange = () => reset($('drill').value);
   $('language').onchange = () => setLocale($('language').value);
   $('connect').onclick = () => {
     pause();
+    readGamepads();
     input.connect();
   };
   $('help').onclick = () => {
@@ -226,7 +279,7 @@ export function mountCivilianPractice({ document: doc, window: win }) {
   $('close-help').onclick = () => $('help-dialog').close();
   $('help-dialog').addEventListener('close', () => {
     input.clear();
-    $('help').focus();
+    (playShell?.topDialog()?.querySelector('h1') ?? $('arena')).focus();
   });
   $('export').onclick = () => {
     $('catalogue').value = exportPracticeCatalogue(catalogue);
@@ -266,22 +319,200 @@ export function mountCivilianPractice({ document: doc, window: win }) {
       $('package-status').textContent = tr('installFailed');
     }
   };
+  const section = (className) => {
+    const node = doc.createElement('section');
+    node.className = className;
+    return node;
+  };
+  const playSurface = doc.querySelector('main');
+  playSurface.classList.add('gym-play-surface');
+  const missions = section('gym-missions');
+  missions.append($('drill').closest('label'), $('brief'));
+  const briefing = section('gym-briefing');
+  const instructions = doc.createElement('p');
+  instructions.dataset.copy = 'instructions';
+  briefing.append(instructions);
+  const settings = section('gym-settings');
+  const language = doc.createElement('label');
+  const languageName = doc.createElement('span');
+  languageName.textContent = 'Language / Мова';
+  language.append(languageName, $('language'));
+  settings.append(language, $('sound'), $('connect'), $('pad-status'), $('instructions'));
+  const expert = section('gym-expert');
+  const helper = $('help');
+  expert.append(helper);
+  const modes = section('gym-mode-links');
+  let arcadeRoot = null;
+  try {
+    const current = new URL(win.location.href);
+    const retained = current.searchParams.get('game-return');
+    const supplied = retained ? new URL(retained, current) : null;
+    const source = /^(.*\/)optional-practice\/civilian-flight\/(?:index\.html)?$/.exec(
+      current.pathname,
+    );
+    const target =
+      supplied ??
+      (source && ['localhost', '127.0.0.1', '[::1]'].includes(current.hostname)
+        ? new URL(source[1] + 'game/', current)
+        : null);
+    if (target && target.origin === current.origin && !target.username && !target.password) {
+      const match =
+        /^(.*\/game\/)(?:index\.html|company\.html|couch\/(?:index\.html|relay-rescue\.html)?|snake\/(?:index\.html|play\.html)?)?$/.exec(
+          target.pathname,
+        );
+      if (match) arcadeRoot = new URL(match[1], target);
+    }
+  } catch {
+    /* Isolated packages do not invent an arcade installation. */
+  }
+  const modeLabels = [];
+  for (const [path, en, uk] of [
+    ['', 'Solo', 'Соло'],
+    ['couch/', 'Versus', 'Двобій'],
+    ['couch/relay-rescue.html', 'Team', 'Команда'],
+    [null, 'FPV SIM', 'FPV SIM'],
+    ['snake/play.html', 'Snake', 'Змійка'],
+  ]) {
+    if (!arcadeRoot && path !== null) continue;
+    const node = doc.createElement(path === null ? 'button' : 'a');
+    node.className = 'button';
+    setMenuIcon(
+      node,
+      { Solo: 'solo', Versus: 'versus', Team: 'team', 'FPV SIM': 'simulator', Snake: 'controls' }[
+        en
+      ],
+    );
+    modeLabels.push({ node, en, uk });
+    node.textContent = getLocale() === 'uk' ? uk : en;
+    if (path === null) {
+      node.type = 'button';
+      node.setAttribute('aria-current', 'page');
+    } else {
+      const target = new URL(path, arcadeRoot);
+      target.searchParams.set('lang', getLocale());
+      node.href = target.href;
+      node.onclick = () => {
+        target.searchParams.set('lang', getLocale());
+        node.href = target.href;
+      };
+    }
+    modes.append(node);
+  }
+  const wordmarkURL = arcadeRoot
+    ? new URL('ui/art/identity/fpv-line/wordmark.png', arcadeRoot).href
+    : '';
+  doc.querySelector('body > header').hidden = true;
+  doc.querySelector('.gym-toolbar').hidden = true;
+  playShell = mountModePlayShell({
+    document: doc,
+    mount: doc.body,
+    idPrefix: 'gym-shell',
+    wordmarkURL,
+    modeName: () => (getLocale() === 'uk' ? 'FPV SIM · Тренувальний зал' : 'FPV SIM · Flight gym'),
+    locale: getLocale(),
+    services: { setMenuIcon },
+    slots: { modes, missions, briefing, play: playSurface, settings, expert },
+    actions: {
+      pause,
+      start: () => {
+        $('start').click();
+      },
+      resume: () => {
+        $('start').click();
+      },
+      retry: () => {
+        reset();
+        $('start').click();
+      },
+      continue: () => {
+        $('start').click();
+      },
+      canResume: () =>
+        model.snapshot().ticks > 0 && model.snapshot().status !== 'complete' && !recordingFull,
+      toggleSound: () => {
+        $('sound').click();
+      },
+      fullscreen: () => {
+        pause();
+        const request = doc.fullscreenElement
+          ? doc.exitFullscreen?.()
+          : doc.documentElement.requestFullscreen?.();
+        void request?.catch?.(() => {});
+      },
+      open(surface) {
+        if (model.snapshot().status === 'active') pause();
+        if (surface === 'results') {
+          // The completed board and discovery remain the native result scene.
+          playShell.enterPlay();
+          $('discovery').setAttribute('tabindex', '-1');
+          $('discovery').focus();
+          return false;
+        }
+        if (surface === 'briefing') render();
+        if (surface === 'workshop' || surface === 'help') {
+          $('help').click();
+          if (surface === 'workshop') $('help-dialog').querySelector('details').open = true;
+          return false;
+        }
+      },
+    },
+    initial: 'home',
+    focusPlay: () => $('arena').focus(),
+  });
+  const menuHint = doc.createElement('p');
+  menuHint.className = 'gym-menu-hint';
+  const menuContext = () => {
+    const dialog = $('help-dialog').open ? $('help-dialog') : playShell.topDialog();
+    if (dialog) return { root: dialog, key: dialog.id, blockRadio: true };
+    if (model.snapshot().status === 'active') return null;
+    return {
+      root: playShell.elements.root,
+      key: `gym:${model.snapshot().status}`,
+      blockRadio: true,
+    };
+  };
+  const menuNavigation = createFlightMenuNavigation({
+    document: doc,
+    window: win,
+    locale: getLocale,
+    getContext: menuContext,
+    onHint(value) {
+      const context = menuContext();
+      if (!value && context?.root.dataset.modeSurface) return;
+      menuHint.hidden = !context;
+      if (context && menuHint.parentNode !== context.root) context.root.append(menuHint);
+      if (menuHint.textContent !== value) menuHint.textContent = value;
+    },
+    onBack() {
+      if ($('help-dialog').open) $('close-help').click();
+      else if (playShell.topDialog()) playShell.back();
+      else playShell.openHome();
+    },
+  });
   const stopLocale = onLocaleChange(localized);
   localized();
   frame = win.requestAnimationFrame(tick);
   const dispose = () => {
     if (disposed) return;
     disposed = true;
+    menuNavigation.dispose();
+    menuHint.remove();
+    playShell?.dispose();
     input.dispose();
+    stopSound();
+    audio.dispose();
+    $('sound').onclick = null;
     stopLocale();
     win.cancelAnimationFrame(frame);
     win.removeEventListener('pagehide', pagehide);
+    win.removeEventListener('orientationchange', pause);
   };
   const pagehide = (event) => {
     pause();
     if (!event.persisted) dispose();
   };
   win.addEventListener('pagehide', pagehide);
+  win.addEventListener('orientationchange', pause);
   return {
     dispose,
     snapshot: () => model.snapshot(),

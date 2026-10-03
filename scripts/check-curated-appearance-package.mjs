@@ -20,6 +20,10 @@ import {
 } from './company-studio.mjs';
 import { createEditionRuntimeCatalog } from '../game/editions/model.mjs';
 import {
+  COMPANY_PACKAGE_BUDGET,
+  assertCompanyPackageBudget,
+} from '../game/editions/package-budget.mjs';
+import {
   withStudioAppearanceTheme,
   withStudioAppearanceDefault,
   declaredJSONPaths,
@@ -170,7 +174,7 @@ export async function checkCuratedAppearancePackage({ port = 0, keepServing = fa
       });
       packages.set(context, result);
       const totalBytes = [...result.files.values()].reduce((sum, bytes) => sum + bytes.length, 0);
-      assert.ok(result.files.size <= 2000 && totalBytes <= 64 * 1024 * 1024);
+      assertCompanyPackageBudget(result.files.size, totalBytes);
       const previewURL = `/${context}/game/company.html`;
       const verified = await verifyStudioPreview({
         catalog: draft.catalog,
@@ -288,7 +292,7 @@ export async function checkCuratedAppearancePackage({ port = 0, keepServing = fa
         route: `${origin}${previewURL}`,
         files: result.files.size,
         bytes: totalBytes,
-        headroomBytes: 64 * 1024 * 1024 - totalBytes,
+        headroomBytes: COMPANY_PACKAGE_BUDGET.maxBytes - totalBytes,
         verifiedFiles: verified.verifiedFiles,
         entrySha256: hash(result.files.get('game/company.html')),
         canonicalEntrySha256: hash(result.files.get('game/index.html')),

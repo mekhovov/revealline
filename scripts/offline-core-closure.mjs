@@ -34,7 +34,9 @@ const PUBLISHED_SOLO_BOUNDARIES = new Set([
 export const isOptionalSpatialAudioBody = (name) =>
   /^game\/audio\/effects\/[a-z0-9][a-z0-9-]*\.wav$/i.test(name);
 export const isOptionalReactionVoiceBody = (name) =>
-  /^game\/audio\/reactions\/[a-z0-9][a-z0-9-]*-(?:en|uk)\.m4a$/i.test(name);
+  /^game\/audio\/reactions\/(?:actors-v[1-9][0-9]*\/)?[a-z0-9][a-z0-9-]*-(?:en|uk)\.m4a$/i.test(
+    name,
+  );
 
 // These exact older Team import themes are selectable recovery dependencies,
 // not part of every fresh installation. Other retained manifests stay core.
@@ -87,6 +89,7 @@ export function selectOfflineCore(entries, excluded, { mode = 'solo' } = {}) {
       !/^game\/ui\/art\/menu-scenes\/[a-z0-9][a-z0-9-]*\.(?:png|webp)$/.test(name) &&
       name !== 'game/ui/art/identity/fpv-line/icon-master.png' &&
       !isOptionalSpatialAudioBody(name) &&
+      !isOptionalReactionVoiceBody(name) &&
       !isOptionalTeamImportManifest(name) &&
       !retained.has(name) &&
       !(mode === 'solo' && PUBLISHED_SOLO_BOUNDARIES.has(name))

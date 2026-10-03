@@ -1,3 +1,5 @@
+import { initializePursuitSpecialist } from '../hunt/pursuit-specialists.mjs';
+import { pursuitPolicy, updatePursuitHeading } from '../hunt/pursuit-goals.mjs';
 import {
   combatOwner,
   combatDefinition,
@@ -82,6 +84,7 @@ export function initializeCombatPatrols(state) {
             : {}),
         };
         velocity(actor, item.headingX, item.headingY, item.speed);
+        initializePursuitSpecialist(actor, pursuitPolicy(state.level, actor.id));
         return actor;
       })
       .sort((a, b) => (a.id < b.id ? -1 : a.id > b.id ? 1 : 0)),
@@ -258,6 +261,21 @@ export function updateCombatPatrols(state) {
         } else actor.nextScanTick = tick + def.scanTicks;
       }
     }
+    if (
+      actor.phase === 'cooldown' &&
+      updatePursuitHeading({
+        actor,
+        policy: pursuitPolicy(state.level, actor.id),
+        actors: combat.actors,
+        players: state.status === 'running' ? [state.player] : [],
+        geometry: state,
+        tick,
+        speed: def.speed,
+        clearance: (from, to) =>
+          classicDomainHit(state, from, to, actor.radius, CELL.FIELD)?.t ?? 1,
+      })
+    )
+      continue;
     if (actor.phase === 'cooldown' && tick >= actor.nextTurnTick) {
       const rotation = nextRandom(actor);
       const [x, y] =
