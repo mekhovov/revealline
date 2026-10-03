@@ -29,7 +29,10 @@ function fixture(t) {
   const doc = new Document(),
     win = new Events(),
     storage = new Map(),
+    frames = new Map(),
     rendered = [];
+  let frameId = 0,
+    now = 0;
   const priorOption = globalThis.Option;
   globalThis.Option = function (text, value) {
     const option = doc.createElement('option');
@@ -67,15 +70,20 @@ function fixture(t) {
   for (const child of body.childNodes) copy(child, doc.body);
   Object.assign(win, {
     location: new URL('https://example.test/optional-practice/fpv-worlds/index.html'),
-    performance: { now: () => 0 },
+    performance: { now: () => now },
     navigator: { getGamepads: () => [] },
     localStorage: {
       getItem: (key) => storage.get(key) ?? null,
       setItem: (key, value) => storage.set(key, value),
     },
     indexedDB: new IDBFactory(),
-    requestAnimationFrame: () => 1,
-    cancelAnimationFrame() {},
+    requestAnimationFrame(callback) {
+      frames.set(++frameId, callback);
+      return frameId;
+    },
+    cancelAnimationFrame(id) {
+      frames.delete(id);
+    },
     matchMedia: () => ({ matches: false }),
     setTimeout,
     clearTimeout,
@@ -108,7 +116,21 @@ function fixture(t) {
   };
   const app = mountWorldApp({ document: doc, window: win, rendererFactory: () => renderer });
   t.after(() => app.dispose());
-  return { app, doc, win, rendered, $: (id) => doc.getElementById(id) };
+  return {
+    app,
+    doc,
+    win,
+    rendered,
+    $: (id) => doc.getElementById(id),
+    tick(count = 1) {
+      for (let i = 0; i < count; i++) {
+        const [id, callback] = frames.entries().next().value;
+        frames.delete(id);
+        callback(now);
+        now += 20;
+      }
+    },
+  };
 }
 
 test('World app prepares a pinned appearance and queues drone/theme changes after arming', async (t) => {
@@ -309,6 +331,8 @@ test('World title retains connected catalogue nodes and transfers the common bar
   const h = fixture(t);
   await h.app.ready;
   assert.equal(h.$('worlds-shell-home-dialog').open, true);
+  assert.equal(h.$('worlds-shell-action-pause').dataset.menuIcon, 'pause');
+  assert.equal(h.$('worlds-shell-action-settings').dataset.menuIcon, 'settings');
   assert.ok(h.doc.querySelector('#worlds-shell-home-dialog img'));
   assert.ok(h.$('theme-tabs').isConnected);
   h.$('worlds-shell-action-missions').click();
@@ -324,6 +348,66 @@ test('World title retains connected catalogue nodes and transfers the common bar
   h.$('worlds-shell-action-menu').click();
   assert.equal(h.app.snapshot().state.status, 'paused');
   assert.equal(h.$('worlds-shell-home-dialog').open, true);
+});
+
+test('World keyboard and native pause actions open the same shared menu without resuming on Back', async (t) => {
+  const h = fixture(t);
+  await h.app.ready;
+  await h.app.startFlight(WORLD_CATALOGUE.find((item) => !item.legacy));
+  const pauses = [
+    () => h.win.emit('keydown', { code: 'KeyP', key: 'p', target: h.$('world-viewport') }),
+    () => h.$('flight-dialog').emit('cancel', { bubbles: false }),
+    () => h.$('world-flight-menu').click(),
+  ];
+  for (const pause of pauses) {
+    h.$('world-arm').click();
+    assert.equal(h.app.snapshot().state.status, 'active');
+    pause();
+    assert.equal(h.$('worlds-shell-home-dialog').open, true);
+    assert.notEqual(h.$('flight-dialog').dataset.flightMenuOpen, 'true');
+    assert.equal(h.app.snapshot().state.status, 'paused');
+    const paused = h.app.snapshot().state;
+    h.$('worlds-shell-home-dialog').emit('cancel', { bubbles: false });
+    assert.equal(h.$('worlds-shell-home-dialog').open, false);
+    assert.equal(h.$('flight-dialog').open, true);
+    assert.deepEqual(h.app.snapshot().state, paused);
+  }
+});
+
+test('World terminal preview offers Retry and prepares a fresh disarmed attempt', async (t) => {
+  const h = fixture(t);
+  await h.app.ready;
+  const source = WORLD_CATALOGUE.find((item) => !item.legacy);
+  const entry = {
+    ...source,
+    course: {
+      ...source.course,
+      actors: [],
+      steps: {
+        'self-level': [{ type: 'survive', ticks: 1 }],
+        acro: [{ type: 'survive', ticks: 1 }],
+      },
+    },
+  };
+  await h.app.startFlight(entry, { preview: true });
+  h.$('world-arm').click();
+  h.tick(3);
+  assert.equal(h.app.snapshot().state.status, 'complete');
+  assert.equal(h.doc.querySelector('[data-mode-play-shell]').dataset.phase, 'results');
+  h.$('worlds-shell-action-menu').click();
+  assert.equal(h.$('worlds-shell-action-primary').textContent, 'Retry');
+  assert.equal(h.$('worlds-shell-action-pause').disabled, true);
+  h.$('worlds-shell-action-primary').click();
+  for (let i = 0; i < 100; i++) {
+    await new Promise((resolve) => setImmediate(resolve));
+    if (h.app.snapshot().state.status === 'disarmed') break;
+  }
+  assert.equal(h.app.snapshot().state.status, 'disarmed');
+  assert.equal(h.app.snapshot().state.ticks, 0);
+  assert.equal(h.$('worlds-shell-home-dialog').open, false);
+  assert.equal(h.$('flight-dialog').open, true);
+  h.$('world-arm').click();
+  assert.match(h.$('flight-status').textContent, /Preview: completion does not earn rewards/);
 });
 
 test('World menu Back dismisses the visible surface without closing its paused native flight', async (t) => {

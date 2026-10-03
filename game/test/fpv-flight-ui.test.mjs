@@ -307,6 +307,9 @@ test('synthetic USB samples drive the real shell/model to one verified practice 
   }
   await f.view.settled();
   assert.equal(f.view.snapshot().status, 'complete');
+  assert.equal(f.doc.querySelector('[data-mode-play-shell]').dataset.phase, 'results');
+  assert.equal(f.$('academy-shell-action-primary').textContent, 'Retry');
+  assert.equal(f.$('academy-shell-action-pause').disabled, true);
   assert.equal(f.deliveries.length, 1, f.$('status').textContent);
   assert.equal(f.deliveries[0].attempt.session, 'practice');
   assert.equal(f.deliveries[0].verification.proof.session, 'practice');
@@ -1171,6 +1174,8 @@ test('pause shortcuts release local controls but preserve text, dialogs and modi
 test('Academy shell keeps menu input out of native flight and requires explicit Start', async (t) => {
   const f = await fixture(t, { home: true });
   assert.equal(f.$('academy-shell-home-dialog').open, true);
+  assert.equal(f.$('academy-shell-action-pause').dataset.menuIcon, 'pause');
+  assert.equal(f.$('academy-shell-action-settings').dataset.menuIcon, 'settings');
   assert.equal(f.view.snapshot().status, 'disarmed');
   f.$('academy-shell-action-settings').click();
   assert.equal(f.$('academy-shell-settings-dialog').open, true);

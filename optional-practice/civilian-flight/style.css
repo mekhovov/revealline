@@ -267,3 +267,18 @@ body.mode-play-page {
   color: #10231f;
   background: #dcf59e;
 }
+
+/* Existing flight menu navigation owns these focus/edit markers. */
+[data-fpv-menu-focus] {
+  outline: 3px solid var(--fk-focus, #bfe5bd);
+  outline-offset: 3px;
+}
+[data-fpv-menu-editing] {
+  outline: 3px dashed var(--fk-accent, #bfe5bd);
+  outline-offset: 3px;
+}
+.gym-menu-hint {
+  margin: 8px 16px;
+  font-size: 0.8rem;
+  color: var(--fk-text-muted, #b1cbb5);
+}

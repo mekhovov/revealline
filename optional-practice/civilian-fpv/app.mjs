@@ -775,7 +775,12 @@ export function mountFlightApp({
     const state = replay ? replay.flight.snapshot() : flight.snapshot();
     $('flight-app').dataset.flightState = state.status;
     playShell?.update({
-      phase: state.status === 'active' ? 'playing' : state.status,
+      phase:
+        state.status === 'active'
+          ? 'playing'
+          : ['complete', 'expired'].includes(state.status)
+            ? 'results'
+            : state.status,
       missionName: currentCourse().locales[locale].title,
       summary: currentCourse().locales[locale].brief,
       canResume: state.ticks > 0 && ['paused', 'disarmed'].includes(state.status),
@@ -1440,6 +1445,12 @@ export function mountFlightApp({
     wordmarkURL,
     modeName: () => (locale === 'uk' ? 'FPV SIM · Академія' : 'FPV SIM · Academy'),
     locale,
+    services: {
+      setMenuIcon(node, name) {
+        node.dataset.simIcon = name;
+        presentation.refresh(node);
+      },
+    },
     slots: {
       modes,
       missions: $('course-list'),

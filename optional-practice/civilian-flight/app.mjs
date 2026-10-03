@@ -1,4 +1,6 @@
 import { mountModePlayShell } from '../../game/ui/mode-play-shell.mjs';
+import { setMenuIcon } from '../../game/ui/native-menu-icons.mjs';
+import { createFlightMenuNavigation } from '../civilian-fpv/input.mjs';
 import { createPracticeAudio } from './audio.mjs';
 import { getLocale, setLocale, onLocaleChange } from '../../game/i18n/index.mjs';
 import { CIVILIAN_PRACTICE_CATALOGUE } from './catalogue.mjs';
@@ -28,7 +30,16 @@ export function mountCivilianPractice({ document: doc, window: win }) {
     accumulator = 0,
     frame = null,
     disposed = false,
-    playShell = null;
+    playShell = null,
+    gamepads = [];
+  const readGamepads = () => {
+    try {
+      gamepads = Array.from(win.navigator?.getGamepads?.() ?? []);
+    } catch {
+      gamepads = [];
+    }
+    return gamepads;
+  };
   const completed = new Set();
   const audio = createPracticeAudio({ window: win });
   const updateSound = () => {
@@ -58,7 +69,11 @@ export function mountCivilianPractice({ document: doc, window: win }) {
     arena: $('arena'),
     buttons: [...doc.querySelectorAll('[data-axis]')],
     active: () => model.snapshot().status === 'active' && !$('help-dialog').open,
-    onPause: pause,
+    readGamepads: () => gamepads,
+    onPause(reason) {
+      pause();
+      if (reason === 'menu') playShell?.openHome();
+    },
     onStatus: (key) => {
       $('pad-status').textContent = tr(key === 'ready' ? 'connected' : key);
     },
@@ -220,6 +235,7 @@ export function mountCivilianPractice({ document: doc, window: win }) {
   }
   function tick(now) {
     if (disposed) return;
+    menuNavigation.poll({ now, gamepads: readGamepads() });
     if (previous !== null && now - previous > 1000) pause();
     if (model.snapshot().status === 'active') {
       accumulator += previous === null ? 0 : Math.max(0, Math.min(250, now - previous));
@@ -253,6 +269,7 @@ export function mountCivilianPractice({ document: doc, window: win }) {
   $('language').onchange = () => setLocale($('language').value);
   $('connect').onclick = () => {
     pause();
+    readGamepads();
     input.connect();
   };
   $('help').onclick = () => {
@@ -311,11 +328,6 @@ export function mountCivilianPractice({ document: doc, window: win }) {
   playSurface.classList.add('gym-play-surface');
   const missions = section('gym-missions');
   missions.append($('drill').closest('label'), $('brief'));
-  const prepare = doc.createElement('button');
-  prepare.type = 'button';
-  prepare.dataset.copy = 'prepare';
-  prepare.onclick = () => playShell.open('briefing');
-  missions.append(prepare);
   const briefing = section('gym-briefing');
   const instructions = doc.createElement('p');
   instructions.dataset.copy = 'instructions';
@@ -364,6 +376,12 @@ export function mountCivilianPractice({ document: doc, window: win }) {
     if (!arcadeRoot && path !== null) continue;
     const node = doc.createElement(path === null ? 'button' : 'a');
     node.className = 'button';
+    setMenuIcon(
+      node,
+      { Solo: 'solo', Versus: 'versus', Team: 'team', 'FPV SIM': 'simulator', Snake: 'controls' }[
+        en
+      ],
+    );
     modeLabels.push({ node, en, uk });
     node.textContent = getLocale() === 'uk' ? uk : en;
     if (path === null) {
@@ -392,6 +410,7 @@ export function mountCivilianPractice({ document: doc, window: win }) {
     wordmarkURL,
     modeName: () => (getLocale() === 'uk' ? 'FPV SIM · Тренувальний зал' : 'FPV SIM · Flight gym'),
     locale: getLocale(),
+    services: { setMenuIcon },
     slots: { modes, missions, briefing, play: playSurface, settings, expert },
     actions: {
       pause,
@@ -422,6 +441,7 @@ export function mountCivilianPractice({ document: doc, window: win }) {
       },
       open(surface) {
         if (model.snapshot().status === 'active') pause();
+        if (surface === 'briefing') render();
         if (surface === 'workshop' || surface === 'help') {
           $('help').click();
           if (surface === 'workshop') $('help-dialog').querySelector('details').open = true;
@@ -432,14 +452,45 @@ export function mountCivilianPractice({ document: doc, window: win }) {
     initial: 'home',
     focusPlay: () => $('arena').focus(),
   });
+  const menuHint = doc.createElement('p');
+  menuHint.className = 'gym-menu-hint';
+  const menuContext = () => {
+    const dialog = $('help-dialog').open ? $('help-dialog') : playShell.topDialog();
+    if (dialog) return { root: dialog, key: dialog.id, blockRadio: true };
+    if (model.snapshot().status === 'active') return null;
+    return {
+      root: playShell.elements.root,
+      key: `gym:${model.snapshot().status}`,
+      blockRadio: true,
+    };
+  };
+  const menuNavigation = createFlightMenuNavigation({
+    document: doc,
+    window: win,
+    locale: getLocale,
+    getContext: menuContext,
+    onHint(value) {
+      const context = menuContext();
+      if (!value && context?.root.dataset.modeSurface) return;
+      menuHint.hidden = !context;
+      if (context && menuHint.parentNode !== context.root) context.root.append(menuHint);
+      if (menuHint.textContent !== value) menuHint.textContent = value;
+    },
+    onBack() {
+      if ($('help-dialog').open) $('close-help').click();
+      else if (playShell.topDialog()) playShell.back();
+      else playShell.openHome();
+    },
+  });
   const stopLocale = onLocaleChange(localized);
   localized();
   frame = win.requestAnimationFrame(tick);
   const dispose = () => {
     if (disposed) return;
     disposed = true;
+    menuNavigation.dispose();
+    menuHint.remove();
     playShell?.dispose();
-    prepare.onclick = null;
     input.dispose();
     stopSound();
     audio.dispose();
