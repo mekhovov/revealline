@@ -1,6 +1,10 @@
 # Unified appearance implementation
 
-The latest [theme-selection review](verification/appearance-theme-selection-2026-10-03/README.md)
+The latest [Industrial restoration and dark-collection review](verification/appearance-industrial-dark-2026-10-03/README.md)
+records richer Industrial material edges, three additional dark collections and
+compact first-paint theme data.
+
+The preceding [theme-selection review](verification/appearance-theme-selection-2026-10-03/README.md)
 records immediate matching selectors, quieter controls, crimson Vyshyvanka,
 Classic Field Kit and three additional shared families.
 
@@ -23,9 +27,10 @@ and creator tools. Industrial Workshop is the application fallback for new profi
 existing preferences migrate without rewriting them on read. No Factorio assets
 are included. This is a local implementation, not a published release.
 
-Eleven coordinated built-in families are available: Industrial Workshop, Vyshyvanka,
+Fourteen coordinated built-in families are available: Industrial Workshop, Vyshyvanka,
 Dnipro Porcelain, Tryzub, Desktop 98, DOS Navigator, Orchard Workshop, Neon Ruins,
-Pocket LCD, Copper Observatory and Sakura Station. Classic Field Kit is also
+Pocket LCD, Copper Observatory, Sakura Station, Obsidian Reliquary, Deep Space
+and Moonlit Grove. Classic Field Kit is also
 available; exact older revisions remain loadable. Palette and material roles use the same engine
 contracts across communities; a community theme is not restricted to its source
 campaign. Ukrainian palette research used the user's Swarmshared palette examples
@@ -50,7 +55,7 @@ and [the supplied Ukrainian palettes](https://github.com/mekhovov/swarmshared/tr
   overrides; choosing a complete theme resets those and SIM overrides to Follow. Accessibility
   preferences are preserved.
 - In Academy or World flight options, choose the interface and world appearance
-  separately. Follow game, Authored and all eleven collections preserve independent
+  separately. Follow game, Authored and all fourteen collections preserve independent
   preferences. World/model changes after the first successful arm take effect
   on Retry or a new flight; interface and accessibility changes remain immediate.
 - Open `/authoring/asset-studio/`, expand **Theme workbench**, and create an
@@ -79,9 +84,11 @@ The optional SIM host embeds the same stylesheet and font sources to preserve
 offline closure and the existing file caps.
 
 The material system provides charcoal panels, painted steel, inset controls,
-amber accents and restrained material depth. Repeated decorative nine-slice borders
-are removed from ordinary controls; sparse motifs stay at page edges. Text centers
-stay quiet. Exo 2 is the interface face, IBM Plex Mono provides telemetry, and
+amber accents and material depth. Industrial steel uses textured six-pixel rims,
+corner fasteners, deeper bevels and a static machine-grid backdrop. The treatment
+follows the material into community themes and Studio specimens. Other materials
+keep quiet ordinary controls and sparse page-edge motifs. Text centers retain their
+semantic state colors; Off, high contrast and forced colors suppress decoration. Exo 2 is the interface face, IBM Plex Mono provides telemetry, and
 Handjet is reserved for display headings. DOS uses a flat mono interface; the
 light Desktop 98 family exercises a different palette and geometry. Primary,
 selected, input and semantic fills have explicit foreground partners. The shared
