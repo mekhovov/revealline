@@ -99,3 +99,18 @@ The original failed attempt remains recorded above. The local admission hold is
 resolved by the independent repair; publish #1001 only after #1011 lands on main,
 then use exact-head protected checks. The frozen browser receipt remains bound to
 `9a3cae088`; no broader production or public qualification is inferred.
+
+### Publication after independent repair merge
+
+Repair #1011 merged normally as main `b02ca5a62b8d5ca31550c347adfd275aaf8d8093`.
+The material branch integrates that published main at
+`843debcdd5ff959d15a3374580791eb434fcabaa`. This merge changes ancestry only:
+runtime/build code is identical to admitted `3f247a5bb`, and all 95 admitted
+original input hashes match exactly. The new binding receipt records that
+comparison; earlier admission and browser receipts keep their explicit candidates.
+Subsequent feature commits contain evidence/docs only.
+
+The scoped material review and package hold are resolved. Publish the ready
+focused PR through normal exact-head protected CI. The broader combined D1
+production-renderer run is separate and still in progress; this PR does not claim
+it passed or imply a public deployment.
