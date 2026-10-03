@@ -7,7 +7,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { parse } from 'acorn';
 const ROOT = fileURLToPath(new URL('../', import.meta.url));
-const BASELINE = '0aeb0c2b4342715ba9a19b976114d7d905fed7bd';
+const DEFAULT_BASELINE = '0aeb0c2b4342715ba9a19b976114d7d905fed7bd';
 const ENTRY = 'optional-practice/civilian-fpv/';
 const MAX_FILE = 6 * 1024 * 1024,
   MAX_TOTAL = 40 * 1024 * 1024,
@@ -44,17 +44,20 @@ function dependencies(source, owner) {
 }
 async function main() {
   let output = 'dist/fpv-quarry-strata-verification',
+    baseline = DEFAULT_BASELINE,
     candidate = '',
     verifyOnly = false;
   const args = process.argv.slice(2);
   for (let i = 0; i < args.length; i++) {
     if (args[i] === '--out' && args[i + 1]) output = args[++i];
+    else if (args[i] === '--baseline' && /^[a-f0-9]{40}$/.test(args[i + 1] ?? ''))
+      baseline = args[++i];
     else if (args[i] === '--candidate-base' && args[i + 1]) candidate = args[++i];
     else if (args[i] === '--verify-only') verifyOnly = true;
     else if (args[i] === '--help') {
       console.log(
-        'Usage: node scripts/prepare-fpv-quarry-strata-verification.mjs [--out dist/fpv-quarry-strata-verification-NAME] [--candidate-base dist/PACKAGE] [--verify-only]\nPins baseline ' +
-          BASELINE +
+        'Usage: node scripts/prepare-fpv-quarry-strata-verification.mjs [--out dist/fpv-quarry-strata-verification-NAME] [--candidate-base dist/PACKAGE] [--baseline LOCAL_40_HEX_SHA] [--verify-only]\nDefaults to baseline ' +
+          DEFAULT_BASELINE +
           '. Copies current candidate and import closure into unique URLs. Existing outputs never overwritten; no fetching or Git writes.',
       );
       return;
@@ -87,7 +90,7 @@ async function main() {
       if (files.size >= MAX_MODULES) fail('Module bound exceeded.');
       let bytes;
       if (side === 'before') {
-        const result = spawnSync('git', ['--no-pager', 'show', BASELINE + ':' + relative], {
+        const result = spawnSync('git', ['--no-pager', 'show', baseline + ':' + relative], {
           cwd: ROOT,
           encoding: null,
           maxBuffer: MAX_FILE,
@@ -114,7 +117,7 @@ async function main() {
   const html = await fs.readFile(path.join(ROOT, 'docs/evidence/fpv-quarry-strata-harness.html'));
   const manifest = {
     format: 'FPVQuarryStrataFixture.v1',
-    baseline: BASELINE,
+    baseline,
     candidate: candidate || '.',
     files: hashes,
     harnessSha256: sha(html),
@@ -130,7 +133,7 @@ async function main() {
       JSON.stringify({
         verified: true,
         writes: 0,
-        baseline: BASELINE,
+        baseline,
         modules: Object.fromEntries(Object.entries(trees).map(([s, t]) => [s, t.size])),
         bytes: total,
       }),
