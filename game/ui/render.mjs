@@ -610,16 +610,13 @@ export class BoardPainter {
         ? Math.max(0, Math.min(1, demoTransition)) * 0.35
         : 0;
     const picture = this.jammerPictureFilter.select(protectedPicture, {
-      // A demo can explicitly preview its validated artwork without reception
-      // noise. Gameplay signals, territory masks and actors remain unchanged.
-      strength: pictureInterference
-        ? Math.max(
-            transitionStrength,
-            pictureVisibility === 'clear'
-              ? jammerPictureStrength(state, { fullReveal }) * (reduced ? 0.65 : 1)
-              : 0,
-          )
-        : 0,
+      // Picture-preview preferences control concealment/decorative reception,
+      // never the authoritative jammer mechanic. Apply it to protected pixels
+      // too, so hiding artwork cannot disable the level's warning feedback.
+      strength: Math.max(
+        pictureInterference ? transitionStrength : 0,
+        jammerPictureStrength(state, { fullReveal }) * (reduced ? 0.65 : 1),
+      ),
       time: this.time,
       animate: !reduced,
     });
