@@ -360,8 +360,9 @@ export function installThemeHost({
           ...BUILTIN_THEME_FAMILIES,
           ...customThemes.map((row) => row.family),
         ],
-        // The controls use the same entries for cards and the native selector.
-        // Follow previews its context even while a personal family is active.
+        // Every selector and material specimen consumes the same inventory.
+        // Follow previews its context even while a personal family is active;
+        // curated bases preserve the exact material finish used on acceptance.
         availableThemeChoices: () => {
           const follow = resolveSelection(contextDefault, 'follow-game'),
             active = resolveSelection(contextDefault),
@@ -375,16 +376,18 @@ export function installThemeHost({
               interfaceTheme:
                 follow.interfaceTheme ??
                 getInterfaceTheme(follow.family.interface.id, follow.family.interface.revision),
+              basis: follow.candidate?.basis,
             },
             ...BUILTIN_THEME_FAMILIES.map((family) => ({
               id: family.id,
               family,
               interfaceTheme: getInterfaceTheme(family.interface.id, family.interface.revision),
             })),
-            ...candidates.map(({ family, interfaceTheme }) => ({
+            ...candidates.map(({ family, interfaceTheme, basis }) => ({
               id: family.id,
               family,
               interfaceTheme,
+              basis,
             })),
           ];
         },

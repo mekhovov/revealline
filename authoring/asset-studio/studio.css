@@ -1137,6 +1137,23 @@
   .theme-state-card button {
     width: 100%;
   }
+  .theme-workbench-materials {
+    max-width: 640px;
+    margin: 20px auto;
+  }
+  .theme-material-gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr));
+    gap: 24px;
+    margin-block: 20px;
+  }
+  .theme-material-gallery-card {
+    min-width: 0;
+  }
+  .theme-material-gallery-card h3 {
+    margin: 0 0 12px;
+    font: 600 var(--fk-text-body) var(--fk-font-ui);
+  }
   .theme-role-report {
     white-space: pre-wrap;
     overflow-wrap: anywhere;
