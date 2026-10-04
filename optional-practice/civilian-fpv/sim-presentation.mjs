@@ -4,6 +4,8 @@ import {
   playableSimAppearance,
 } from './world-themes.mjs';
 import { setMenuIcon } from '../../game/ui/native-menu-icons.mjs';
+import { sharedEnemyArtwork } from '../../game/hunt/preferences.mjs';
+import { mountEnemyAppearanceControls } from '../../game/ui/enemy-appearance-controls.mjs';
 import {
   resolvePresentation,
   applyResolvedPresentation,
@@ -1899,6 +1901,20 @@ export function mountSimAppearanceControls({
   }
   fieldset.append(status);
   container?.append(fieldset);
+  const enemyAppearance = mountEnemyAppearanceControls({
+    document: doc,
+    container: fieldset,
+    locale,
+    includeUniform: true,
+    applyMilitary: () => {
+      host.preferences.applyComplete('military-field');
+      preferences.set({ interface: 'follow-game', world: 'follow-game' });
+    },
+    applyAuthored: () => {
+      host.set({ arcadeArt: 'authored' });
+      preferences.set({ world: 'authored' });
+    },
+  });
   const resolve = () => {
     const selection = host.snapshot().familySelection;
     const family = selection.family;
@@ -1921,6 +1937,7 @@ export function mountSimAppearanceControls({
   };
   function refresh() {
     const uk = locale() === 'uk';
+    enemyAppearance.refresh();
     legend.textContent = uk ? 'Оформлення' : 'Appearance';
     const value = preferences.snapshot();
     for (const name of ['interface', 'world']) {
@@ -1980,7 +1997,11 @@ export function mountSimAppearanceControls({
   let lastSelection = '';
   function notify() {
     const next = resolve();
-    const signature = JSON.stringify([preferences.snapshot().world, next]);
+    const signature = JSON.stringify([
+      preferences.snapshot().world,
+      next,
+      sharedEnemyArtwork().snapshot().style,
+    ]);
     if (signature !== lastSelection) {
       lastSelection = signature;
       onChange(next.appearance);
@@ -1994,7 +2015,12 @@ export function mountSimAppearanceControls({
     else host.setInterface('legacy', 'r1'); // Authored and unavailable choices retain the old adapter.
   }
   applyInterface();
-  lastSelection = JSON.stringify([preferences.snapshot().world, resolve()]);
+  lastSelection = JSON.stringify([
+    preferences.snapshot().world,
+    resolve(),
+    sharedEnemyArtwork().snapshot().style,
+  ]);
+  const unsubscribeArtwork = sharedEnemyArtwork().subscribe(notify);
   const unsubscribeHost = host.subscribe(notify);
   const unsubscribePreferences = preferences.subscribe(() => {
     applyInterface();
@@ -2019,7 +2045,9 @@ export function mountSimAppearanceControls({
     changed: notify,
     dispose() {
       win?.removeEventListener?.('revealline:complete-theme', completeTheme);
+      enemyAppearance.dispose();
       unsubscribeHost();
+      unsubscribeArtwork();
       unsubscribePreferences();
       preferences.dispose();
       fieldset.remove();

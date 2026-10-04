@@ -387,7 +387,10 @@ export function createPresentationHost({
     /** Audio stays lazy. The existing sound transport owns playback, decoding,
      * user activation and any object URLs; this host authenticates original bytes. */
     async readAudio(slot, { signal, snapshot = current?.snapshot } = {}) {
-      required(profile === 'full', 'An actor-only host cannot read audio.');
+      required(
+        profile === 'full' || (profile === 'board' && slot === 'audio.pickup'),
+        'This presentation profile cannot read this audio slot.',
+      );
       required(!closed && snapshot && snapshot === current?.snapshot, 'No current audio release.');
       cancelled(signal);
       const asset = snapshot.resolved.assets[slot];

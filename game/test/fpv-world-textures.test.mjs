@@ -9,7 +9,7 @@ import { configureWorldGLTFLoader } from '../../optional-practice/civilian-fpv/r
 import * as visuals from '../../optional-practice/civilian-fpv/world-visuals.mjs';
 import * as themes from '../../optional-practice/civilian-fpv/world-themes.mjs';
 import { FLIGHT_COURSES } from '../../optional-practice/civilian-fpv/catalogue.mjs';
-import { actorArtReviewRevision } from '../hunt/preferences.mjs';
+import { runtimeActorArtRevision } from '../hunt/preferences.mjs';
 import {
   inspectImport,
   encodeWorldGLB,
@@ -173,7 +173,7 @@ async function rendererFixture() {
   const create = vm.runInNewContext(`${module}; createFlightRenderer`, {
     ...themes,
     ...visuals,
-    actorArtReviewRevision,
+    runtimeActorArtRevision,
     Blob,
     URL,
     ArrayBuffer,

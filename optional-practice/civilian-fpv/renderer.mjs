@@ -1,6 +1,6 @@
 import * as THREE from './vendor/three.module.js';
 import { actorVisual } from '../../game/hunt/actor-catalog.mjs';
-import { sharedActorAppearance, actorArtReviewRevision } from '../../game/hunt/preferences.mjs';
+import { sharedActorAppearance, runtimeActorArtRevision } from '../../game/hunt/preferences.mjs';
 import {
   INDUSTRIAL_VEHICLE_REVISION,
   buildIndustrialVehicle,
@@ -115,7 +115,7 @@ export function createFlightRenderer({
   presentation: initialPresentation = {},
   createHuntPresentation = null,
 }) {
-  const machineryRevision = actorArtReviewRevision(win?.location);
+  let machineryRevision = runtimeActorArtRevision(win?.location);
   let renderer;
   try {
     renderer = new THREE.WebGLRenderer({
@@ -445,6 +445,7 @@ export function createFlightRenderer({
       profile: themeProfile ?? resolveSimThemeProfile({}, activePresentation),
       quality,
       maxAnisotropy: renderer.capabilities.getMaxAnisotropy(),
+      reviewRevision: machineryRevision,
     });
     if (cosmeticColor) droneVisual.tint.color.set(cosmeticColor);
     if ((themeProfile?.id ?? activePresentation?.collectionId) === 'military-field') {
@@ -1318,6 +1319,9 @@ export function createFlightRenderer({
   function setCourse(value, selectedMode = 'self-level', options = {}) {
     if (disposed || renderer.getContext().isContextLost()) return;
     huntPresentation ??= createHuntPresentation?.({ THREE, scene }) ?? null;
+    machineryRevision = Object.hasOwn(options, 'artRevision')
+      ? options.artRevision
+      : runtimeActorArtRevision(win?.location);
     if (options.presentation) setPresentation(options.presentation);
     activePresentation = pendingPresentation;
     sceneGeneration++;
@@ -1356,6 +1360,7 @@ export function createFlightRenderer({
       presentation: activePresentation,
       quality,
       maxAnisotropy: renderer.capabilities.getMaxAnisotropy(),
+      reviewRevision: machineryRevision,
     });
     register(world);
     const theme = surroundings.theme;
@@ -1368,6 +1373,7 @@ export function createFlightRenderer({
           material,
           quality,
           maxAnisotropy: renderer.capabilities.getMaxAnisotropy(),
+          reviewRevision: machineryRevision,
         })
       : null;
     setDrone(droneKind);
@@ -1484,6 +1490,7 @@ export function createFlightRenderer({
           material,
           quality,
           maxAnisotropy: renderer.capabilities.getMaxAnisotropy(),
+          reviewRevision: machineryRevision,
         })
       : null;
     group.userData.modelRole = actor.type === 'vehicle' ? 'vehicle' : 'enemy';
@@ -1537,6 +1544,7 @@ export function createFlightRenderer({
         quality: quality === 'high' ? 'balanced' : 'low',
         profile: themeProfile,
         maxAnisotropy: renderer.capabilities.getMaxAnisotropy(),
+        reviewRevision: machineryRevision,
       });
       visual.tint.color.setHex(friendly ? 0x77ebe0 : 0xe6a16b);
       animated.rotors = visual.rotors;
@@ -2757,6 +2765,7 @@ export function createFlightRenderer({
         collectionId: simCollectionIdForProfile(themeProfile) ?? 'authored',
         quality,
         maxAnisotropy: renderer.capabilities.getMaxAnisotropy(),
+        reviewRevision: machineryRevision,
         associations: result.parser?.associations,
         material,
       });

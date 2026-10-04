@@ -74,7 +74,16 @@
         "game/test/industrial-native-vehicles.test.mjs",
         "game/test/industrial-environment-production.test.mjs",
         "game/test/industrial-native-soldiers.test.mjs",
-        "game/test/industrial-soldier-debris.test.mjs"
+        "game/test/industrial-soldier-debris.test.mjs",
+        "game/test/classic-catch-audio.test.mjs",
+        "game/test/enemy-artwork-preferences.test.mjs",
+        "game/test/classic-presentation.test.mjs",
+        "game/test/combat-presentation.test.mjs",
+        "game/test/audio.test.mjs",
+        "game/test/published-audio.test.mjs",
+        "game/test/coop-view-presentation.test.mjs",
+        "game/test/fpv-world-textures.test.mjs",
+        "game/test/fpv-objective-labels.test.mjs"
       ]
     },
     {
@@ -116,7 +125,10 @@
         "game/test/content-studio-navigation.test.mjs",
         "game/test/couch-departure.test.mjs",
         "game/test/title-mode-departure-host.test.mjs",
-        "game/test/mode-choice-appearance.test.mjs"
+        "game/test/mode-choice-appearance.test.mjs",
+        "game/test/enemy-appearance-controls.test.mjs",
+        "game/test/military-level-directory.test.mjs",
+        "game/test/fpv-theme-family-controls.test.mjs"
       ]
     }
   ]

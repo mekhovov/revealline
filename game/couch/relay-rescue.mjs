@@ -5009,6 +5009,7 @@ export function bootCoop({
         : t('interface:proceduralTeamArenaIsReadyForThisAttempt'),
     );
     generation++;
+    painter.acceptEnemyArtwork(run);
     startCoop(run);
     beginInstalledTeamAttempt(run, selection, briefing?.restored, {
       // Starting an already prepared core clears its held controls before its

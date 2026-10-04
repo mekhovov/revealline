@@ -7,6 +7,7 @@ import {
   drawCombatProjectiles,
   drawCombatScrap,
 } from '../ui/combat-presentation.mjs';
+import { sharedEnemyArtwork, runtimeActorArtRevision } from '../hunt/preferences.mjs';
 import { PRESENTATION_INK, PRESENTATION_PLATE } from '../ui/actor-presentation.mjs';
 import { combatView } from '../ui/combat-view.mjs';
 import { BoardPainter } from '../ui/render.mjs';
@@ -510,4 +511,45 @@ test('maximum presentation populations have bounded drawing work and finite mini
   assert.equal(s.calls.filter((c) => c.name === 'drawImage').length, 24);
   for (const { args } of s.calls)
     for (const arg of args.flat()) if (typeof arg === 'number') assert(Number.isFinite(arg));
+});
+
+test('Capture humanoid artwork accepts first Start, stays frozen and preserves explicit historical null', () => {
+  const preference = sharedEnemyArtwork(),
+    previous = preference.snapshot().style;
+  const board = new BoardPainter({});
+  const cached = painter(),
+    destination = surface(),
+    observed = view();
+  board.combatPresentation = cached;
+  observed.actors = [{ ...observed.actors[0], kind: 'runner', heading: 'up' }];
+  const draw = () => {
+    cached.drawActors(destination.ctx, observed, palette);
+    return destination.calls.filter(({ name }) => name === 'drawImage').at(-1).args[0];
+  };
+  try {
+    preference.set({ style: 'authored' });
+    board.setLevel({}, { artRevision: null });
+    const original = draw(),
+      pixels = JSON.stringify(original.calls);
+    preference.set({ style: 'military' });
+    assert.equal(runtimeActorArtRevision(), 'industrial-roster-v3');
+    assert.equal(draw(), original, 'setting alone cannot replace the accepted active sprite');
+    const preparedLevel = board.levelInfo;
+    board.acceptEnemyArtwork();
+    assert.equal(board.levelInfo, preparedLevel, 'first Start does not recreate the level');
+    assert.equal(board.artRevision, 'industrial-roster-v3');
+    assert.notEqual(JSON.stringify(draw().calls), pixels);
+    const accepted = draw();
+    preference.set({ style: 'authored' });
+    assert.equal(draw(), accepted, 'later menu edits wait for a new attempt');
+    board.setLevel({});
+    assert.equal(JSON.stringify(draw().calls), pixels);
+    preference.set({ style: 'military' });
+    board.setLevel({}, { artRevision: null });
+    assert.equal(board.artRevision, null);
+    assert.equal(JSON.stringify(draw().calls), pixels, 'null must not fall through to saved v3');
+  } finally {
+    preference.set({ style: previous });
+    board.dispose();
+  }
 });

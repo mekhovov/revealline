@@ -1,4 +1,4 @@
-import { sharedActorAppearance, actorArtReviewRevision } from '../hunt/preferences.mjs';
+import { sharedActorAppearance, runtimeActorArtRevision } from '../hunt/preferences.mjs';
 import { actorFacingRadians } from '../hunt/actor-facing.mjs';
 import { HUNT_PRESENTATION_CATALOG } from '../hunt/presentation-catalog.mjs';
 import { drawHumanoidPixelBody, drawHuntRemains } from '../hunt/destruction.mjs';
@@ -64,6 +64,7 @@ export function drawCombatPixelBody(ctx, { role, pose = 0 }, palette = {}) {
 /** Bounded per-painter sprite cache, never a cache of runs or actor references. */
 export function createCombatPresentation({
   createCanvas = () => document.createElement('canvas'),
+  artRevision = runtimeActorArtRevision(),
 } = {}) {
   let paletteKey = '',
     sprites = new Map();
@@ -76,7 +77,7 @@ export function createCombatPresentation({
     const cast = sharedActorAppearance().snapshot().cast;
     const id = JSON.stringify([
       kind ?? role,
-      actorArtReviewRevision(),
+      artRevision,
       pose,
       cast,
       actor?.pursuit?.behavior,
@@ -98,7 +99,7 @@ export function createCombatPresentation({
       if (kind)
         drawHumanoidPixelBody(
           ctx,
-          { ...actor, kind, pose, cast, armed: role === 'sentry' },
+          { ...actor, kind, pose, cast, artRevision, armed: role === 'sentry' },
           palette,
         );
       else drawCombatPixelBody(ctx, { role, pose }, palette);
@@ -108,6 +109,12 @@ export function createCombatPresentation({
     return sprites.get(id);
   }
   return Object.freeze({
+    setArtRevision(value) {
+      if (value === artRevision) return false;
+      artRevision = value;
+      this.reset();
+      return true;
+    },
     reset() {
       paletteKey = '';
       sprites = new Map();
@@ -340,6 +347,7 @@ export function drawCombatScrap(ctx, view, palette, options = {}) {
         brutal: options.brutal,
         blood: options.blood,
         color: c.body,
+        ...(Object.hasOwn(options, 'artRevision') ? { artRevision: options.artRevision } : {}),
       });
     } else if (index >= firstSettled && options.showScrap !== false) {
       pixel(ctx, c.plate, x - 4 * u, y - 2 * u, 8 * u, 4 * u);
