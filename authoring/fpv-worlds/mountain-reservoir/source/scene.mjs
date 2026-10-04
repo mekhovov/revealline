@@ -2,6 +2,7 @@
 // Coordinates are glTF metres; course geometry converts the same source to integer millimetres.
 import * as THREE from '../../../../optional-practice/civilian-fpv/vendor/three.module.js';
 import { encodeWorldGLB } from '../../../../optional-practice/civilian-fpv/world-content.mjs';
+import { mineralPNG, noise } from './mineral.mjs';
 
 const xyz = (a) => Object.fromEntries(['x', 'y', 'z'].map((k, i) => [k, Math.round(a[i] * 1000)]));
 export const bounds = { min: xyz([-44, 0, -34]), max: xyz([6, 28, 38]) };
@@ -10,8 +11,7 @@ const boxes = [],
   terrains = [],
   batches = new Map();
 const paints = [
-  ['mineral-ridge', '#697b7a', 1],
-  ['distant-ridge', '#789191', 1],
+  ['mineral-ridge', '#b8b8a7', 1],
   ['fir-dark', '#244f46', 1],
   ['fir-light', '#3e6953', 1],
   ['reservoir-water', '#3e969c', 0.23],
@@ -33,9 +33,23 @@ function add(shape, role, at = [0, 0, 0], rotate = [0, 0, 0]) {
   shape.dispose();
   flat.applyMatrix4(matrix);
   if (!flat.attributes.normal) flat.computeVertexNormals();
-  const batch = batches.get(role) ?? { positions: [], normals: [] };
+  const batch = batches.get(role) ?? { positions: [], normals: [], uvs: [], colors: [] };
   batch.positions.push(...flat.attributes.position.array);
   batch.normals.push(...flat.attributes.normal.array);
+  const positions = flat.attributes.position.array,
+    normals = flat.attributes.normal.array;
+  for (let i = 0; i < positions.length; i += 3) {
+    const [x, y, z] = positions.slice(i, i + 3),
+      [nx, ny, nz] = normals.slice(i, i + 3),
+      moss = Math.min(0.7, Math.max(0, ny - 0.6) * 2.5 * noise(x / 7, z / 7)),
+      variation = Math.min(
+        1,
+        0.84 + 0.16 * noise(x / 3.1, z / 3.1) + 0.04 * noise(y * 1.2, x * 0.2),
+      );
+    // Metre-scale dominant-face projection retains grain on steep rock faces.
+    batch.uvs.push((Math.abs(nx) > Math.abs(nz) ? z : x) / 4, (Math.abs(ny) > 0.65 ? z : y) / 4);
+    batch.colors.push(variation - moss * 0.32, variation - moss * 0.12, variation - moss * 0.36);
+  }
   batches.set(role, batch);
   flat.dispose();
 }
@@ -193,89 +207,132 @@ for (let x = -6; x < 48; x += 4) {
 // Inspection rail visibly identifies the first route's water-side edge.
 for (let z = -30; z < 36; z += 4) detailBox('safety-yellow', [0.028, 0.24, 0.55], [5.428, 0.86, z]);
 
-// Reservoir and mountains are scenery beyond course 01's marked eastern boundary.
-const water = new THREE.PlaneGeometry(42, 68, 12, 16);
+// A connected heightfield encloses an irregular lake. All raised imported
+// ground remains outside the first course, where it cannot fake a collision surface.
+const shoreLeft = (z) => 8.8 + 0.65 * Math.sin(z * 0.18) + noise(z * 0.27, 3) * 1.8;
+const shoreRight = (z) => 44 + 3.8 * Math.sin(z * 0.095) + noise(z * 0.23, 9) * 4;
+const shoreSouth = (x) => 39 + 2.2 * Math.sin(x * 0.14) + noise(x * 0.3, 7) * 2;
+const smooth = (value) => {
+  const t = Math.max(0, Math.min(1, value));
+  return t * t * (3 - 2 * t);
+};
+const hill = (x, z, cx, cz, rx, rz) => Math.exp(-(((x - cx) / rx) ** 2) - ((z - cz) / rz) ** 2);
+function groundHeight(x, z) {
+  const shoreDistance = Math.max(shoreLeft(z) - x, x - shoreRight(z), -25 - z, z - shoreSouth(x));
+  if (shoreDistance < 0) return -0.35;
+  const ridge =
+    6 +
+    19 * hill(x, z, 67, 8, 23, 35) +
+    24 * hill(x, z, 44, -57, 24, 20) +
+    29 * hill(x, z, -15, -63, 31, 19) +
+    23 * hill(x, z, -68, -42, 22, 27) +
+    17 * hill(x, z, -66, 12, 18, 32) +
+    3 * noise(x / 9, z / 9) +
+    1.1 * noise(x / 2.4, z / 2.4);
+  const distanceFromFlight = Math.max(-44 - x, x - 6, -34 - z, z - 38, 0);
+  let edge = 0;
+  if (x <= -44 && z >= -24 && z <= 13) edge = z >= -21 && z <= 5 ? 8.5 : z <= 9 ? 5.6 : 2.7;
+  if (z <= -34 && x >= -27 && x <= -13) edge = x >= -24 && x <= -16 ? 6.8 : 4.1;
+  const bank = 0.11 + ridge * smooth(shoreDistance / 17);
+  return edge + (bank - edge) * smooth(distanceFromFlight / 8);
+}
+const axis = (min, max, boundaries) =>
+  [
+    ...new Set([
+      ...Array.from({ length: Math.ceil((max - min) / 3) + 1 }, (_, i) =>
+        Math.min(max, min + i * 3),
+      ),
+      ...boundaries,
+    ]),
+  ].sort((a, b) => a - b);
+const xs = axis(-86, 90, [-44, 6]),
+  zs = axis(-82, 66, [-34, 38]),
+  terrainPositions = [],
+  terrainIndices = [];
+for (const z of zs) for (const x of xs) terrainPositions.push(x, groundHeight(x, z), z);
+for (let iz = 0; iz < zs.length - 1; iz++) {
+  for (let ix = 0; ix < xs.length - 1; ix++) {
+    const x = (xs[ix] + xs[ix + 1]) / 2,
+      z = (zs[iz] + zs[iz + 1]) / 2;
+    if (x > -44 && x < 6 && z > -34 && z < 38) continue;
+    const a = iz * xs.length + ix,
+      b = a + 1,
+      c = a + xs.length,
+      d = c + 1;
+    terrainIndices.push(a, c, b, b, c, d);
+  }
+}
+const terrain = new THREE.BufferGeometry();
+terrain.setAttribute('position', new THREE.Float32BufferAttribute(terrainPositions, 3));
+terrain.setIndex(terrainIndices);
+terrain.computeVertexNormals();
+add(terrain, 'mineral-ridge');
+function surfaceHeight(x, z) {
+  const ix = xs.findIndex((v, i) => x >= v && x <= xs[i + 1]),
+    iz = zs.findIndex((v, i) => z >= v && z <= zs[i + 1]),
+    u = (x - xs[ix]) / (xs[ix + 1] - xs[ix]),
+    v = (z - zs[iz]) / (zs[iz + 1] - zs[iz]),
+    a = groundHeight(xs[ix], zs[iz]),
+    b = groundHeight(xs[ix + 1], zs[iz]),
+    c = groundHeight(xs[ix], zs[iz + 1]),
+    d = groundHeight(xs[ix + 1], zs[iz + 1]);
+  return u + v <= 1 ? a + (b - a) * u + (c - a) * v : d + (c - d) * (1 - u) + (b - d) * (1 - v);
+}
+// The bank mesh covers this plane outside the irregular shoreline. Its lower
+// bed is hidden below the opaque water, leaving no dangling ridge or shore gap.
+const water = new THREE.PlaneGeometry(50, 72);
 water.rotateX(-Math.PI / 2);
-add(water, 'reservoir-water', [29, 0.22, 8]);
-for (let i = 0; i < 32; i++) {
-  const x = 10 + ((i * 13) % 37),
-    z = -21 + ((i * 17) % 61);
+add(water, 'reservoir-water', [33, 0.22, 9]);
+for (let i = 0; i < 25; i++) {
+  const x = 12 + ((i * 13) % 29),
+    z = -21 + ((i * 17) % 55);
   detailBox(
     'water-current',
-    [1.2 + (i % 5) * 0.4, 0.007, 0.06],
+    [0.7 + (i % 5) * 0.3, 0.006, 0.04],
     [x, 0.23, z],
     [0, ((i % 4) - 2) * 0.11, 0],
   );
 }
-function ridge(role, points, backZ) {
-  const vertices = [],
-    indices = [];
-  points.forEach(([x, y, z]) => vertices.push(x, 0, z, x, y, z, x, 0, backZ));
-  for (let i = 0; i < points.length - 1; i++) {
-    const a = i * 3,
-      b = a + 3;
-    indices.push(a, b, a + 1, b, b + 1, a + 1, a + 1, b + 1, a + 2, b + 1, b + 2, a + 2);
-  }
-  const shape = new THREE.BufferGeometry();
-  shape.setAttribute('position', new THREE.Float32BufferAttribute(vertices, 3));
-  shape.setIndex(indices);
-  add(shape, role);
-}
-ridge(
-  'distant-ridge',
-  [
-    [-85, 20, -73],
-    [-63, 36, -82],
-    [-42, 24, -75],
-    [-16, 45, -89],
-    [6, 32, -80],
-    [27, 49, -88],
-    [52, 30, -78],
-    [78, 37, -82],
-    [96, 17, -72],
-  ],
-  -100,
-);
-ridge(
-  'mineral-ridge',
-  [
-    [-60, 8, -48],
-    [-45, 19, -50],
-    [-29, 13, -47],
-    [-7, 22, -58],
-    [14, 18, -54],
-    [34, 25, -61],
-    [59, 16, -50],
-    [78, 8, -48],
-  ],
-  -72,
-);
-ridge(
-  'mineral-ridge',
-  [
-    [49, 3, 43],
-    [57, 11, 29],
-    [58, 15, 7],
-    [57, 18, -12],
-    [51, 8, -23],
-  ],
-  53,
-);
-for (let i = 0; i < 38; i++) {
-  const x = 11 + ((i * 17) % 48),
-    z = -40 - ((i * 11) % 13),
-    h = 2.4 + (i % 7) * 0.45;
-  add(new THREE.CylinderGeometry(0.15, 0.24, h, 5), 'mineral-ridge', [x, h / 2, z]);
-  for (let k = 0; k < 3; k++)
-    add(new THREE.ConeGeometry(1.2 - k * 0.22, h * 0.58, 7), i % 3 ? 'fir-dark' : 'fir-light', [
+// Grounded conifer clusters supply familiar scale without another mesh owner.
+for (let i = 0; i < 48; i++) {
+  const cluster = [
+      [58, 17],
+      [64, -9],
+      [37, -46],
+      [-6, -49],
+      [-60, 3],
+      [-60, -30],
+    ][i % 6],
+    x = cluster[0] + Math.sin(i * 2.4) * (3 + (i % 8)),
+    z = cluster[1] + Math.cos(i * 1.7) * (3 + (i % 7)),
+    base = surfaceHeight(x, z) - 0.1,
+    h = 3.2 + (i % 7) * 0.42;
+  add(new THREE.CylinderGeometry(0.12, 0.2, h * 0.65, 5), 'mineral-ridge', [
+    x,
+    base + h * 0.325,
+    z,
+  ]);
+  for (let k = 0; k < 2; k++)
+    add(new THREE.ConeGeometry(1.25 - k * 0.3, h * 0.64, 7), i % 3 ? 'fir-dark' : 'fir-light', [
       x,
-      h * 0.42 + k * h * 0.2,
+      base + h * (0.43 + k * 0.23),
       z,
     ]);
 }
-// Shore strips are flush mineral/gravel paint, leaving canonical ground support visible.
-for (let i = 0; i < 18; i++)
-  detailBox('warm-gravel', [0.08, 0.008, 1.4], [3.8 + (i % 3) * 0.22, 0.008, -31 + i * 3.7]);
+// Flush irregular gravel apron gives the existing flat support a readable scale.
+const gravelPositions = [];
+for (let z = -30; z < 36; z += 2) {
+  const inner = (v) => 0.6 + noise(v * 0.16, 11) * 2.3,
+    outer = 5.35,
+    a = [inner(z), 0.012, z],
+    b = [outer, 0.012, z],
+    c = [inner(z + 2), 0.012, z + 2],
+    d = [outer, 0.012, z + 2];
+  gravelPositions.push(...a, ...c, ...b, ...b, ...c, ...d);
+}
+const gravel = new THREE.BufferGeometry();
+gravel.setAttribute('position', new THREE.Float32BufferAttribute(gravelPositions, 3));
+add(gravel, 'warm-gravel');
 
 export const obstacles = [...terrains, ...boxes];
 export const anchors = [
@@ -287,7 +344,7 @@ export const anchors = [
 
 export function createScene() {
   const document = {
-    asset: { version: '2.0', generator: 'RevealLine original Mountain Reservoir source r1' },
+    asset: { version: '2.0', generator: 'RevealLine original Mountain Reservoir source r2' },
     scene: 0,
     scenes: [{ nodes: [] }],
     nodes: [],
@@ -312,7 +369,12 @@ export function createScene() {
       }) - 1;
     pieces.push(bytes);
     offset += bytes.length;
-    const accessor = { bufferView: view, componentType, count: values.length / 3, type };
+    const accessor = {
+      bufferView: view,
+      componentType,
+      count: values.length / (type === 'VEC2' ? 2 : 3),
+      type,
+    };
     if (type === 'VEC3') {
       accessor.min = [0, 1, 2].map((k) => Math.min(...values.filter((_, i) => i % 3 === k)));
       accessor.max = [0, 1, 2].map((k) => Math.max(...values.filter((_, i) => i % 3 === k)));
@@ -321,7 +383,8 @@ export function createScene() {
   }
   for (const [role, batch] of batches) {
     const definition = paints.find(([id]) => id === role),
-      color = new THREE.Color(definition[1]);
+      color = new THREE.Color(definition[1]),
+      textured = role === 'mineral-ridge' || role === 'warm-gravel';
     const material =
       document.materials.push({
         name: role,
@@ -329,6 +392,7 @@ export function createScene() {
           baseColorFactor: [color.r, color.g, color.b, 1],
           metallicFactor: role === 'reservoir-water' ? 0.15 : 0,
           roughnessFactor: definition[2],
+          ...(textured ? { baseColorTexture: { index: 0 } } : {}),
         },
       }) - 1;
     const mesh =
@@ -339,6 +403,12 @@ export function createScene() {
             attributes: {
               POSITION: attribute(batch.positions, 'VEC3'),
               NORMAL: attribute(batch.normals, 'VEC3'),
+              ...(textured
+                ? {
+                    TEXCOORD_0: attribute(batch.uvs, 'VEC2'),
+                    COLOR_0: attribute(batch.colors, 'VEC3'),
+                  }
+                : {}),
             },
             material,
           },
@@ -366,6 +436,16 @@ export function createScene() {
       }) - 1,
     );
   }
+  const texture = mineralPNG(),
+    imageView =
+      document.bufferViews.push({ buffer: 0, byteOffset: offset, byteLength: texture.length }) - 1;
+  pieces.push(texture);
+  offset += texture.length;
+  document.images = [
+    { name: 'original-mineral-grain-256', mimeType: 'image/png', bufferView: imageView },
+  ];
+  document.samplers = [{ magFilter: 9729, minFilter: 9987, wrapS: 10497, wrapT: 10497 }];
+  document.textures = [{ sampler: 0, source: 0 }];
   document.buffers[0].byteLength = offset;
   const binary = new Uint8Array(offset);
   let position = 0;
@@ -379,7 +459,7 @@ export function createScene() {
       triangles,
       materials: document.materials.length,
       nodes: document.nodes.length,
-      textures: 0,
+      textures: 1,
       colliders: obstacles.length,
       collisionTriangles: terrains.reduce((n, o) => n + o.indices.length / 3, 0),
     },

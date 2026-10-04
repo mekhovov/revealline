@@ -47,3 +47,27 @@ directories. Keep rejected visuals and failed qualification receipts rather than
 rewriting their frozen inputs. The ordinary-controls proof pass will use the
 existing `adventureAuthoringPilot`, then independent replay, after the shared
 qualification lane is released.
+
+The actual `r1` scene review **rejected the artwork**: single-triangle mountains,
+an apparently floating far-bank wedge and rectilinear shore did not meet the
+world-quality target. The rejected screenshot and observation remain at
+`/tmp/fpv-reservoir-scene-r1-rejected.png` and
+`/tmp/fpv-reservoir-scene-r1-observation.json` (both also retained in `evidence/`);
+transport validation above is not
+art acceptance. No course proof generation or seven-course expansion followed.
+
+The `r2` source replaces those wedges with a continuous irregular bank and ridge
+heightfield outside the first flight area. It uses one original 256px mineral
+texture at a four-metre repeat, muted per-vertex variation and tree roots placed
+on the exact rendered triangle surface. Existing course collision solids, route,
+dam, hut and rail are retained. The authoring targets are fewer than 15,000
+imported triangles and 1.2MiB source GLB; production admission limits are unchanged.
+This revision still requires actual visual acceptance before flight proofs.
+
+Generated `r2` has 8,996 imported triangles, 11 materials and one texture;
+the complete normalized course is byte-equivalent in JSON content to `r1`
+(34 collision bodies and 132 explicit terrain triangles). Prepared model:
+1,099,076 bytes, SHA-256
+`cb799ef07882e62e415d28746ea99a1f36a872b091fd17c9dd5257bb2535334a`.
+Khronos validation reports zero errors. These remain transport and scope checks,
+not visual acceptance or flight proofs.
