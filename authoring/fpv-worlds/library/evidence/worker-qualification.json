@@ -32,6 +32,9 @@
     "zipMembers": true,
     "inputScope": "worker-admission-scope.json"
   },
-  "admittedBrowser": "Pending",
-  "nativeOfflineSmoke": "Pending for the changed worker transport; prerequisite offline receipt is historical."
+  "admittedBrowser": "Repeated119-check timeout; both complete failures retained. Bounded diagnostic pending.",
+  "nativeOfflineSmoke": {
+    "status": "passed",
+    "receipt": "worker-native-offline-smoke.json"
+  }
 }

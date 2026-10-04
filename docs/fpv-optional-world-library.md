@@ -31,7 +31,19 @@ the selected flight's exact Ready text. Its [failure receipt](../authoring/fpv-w
 is preserved. The coordinator subsequently observed the same frame paused at
 tick zero with Arm enabled and no graphics errors. The runtime and helper files
 match the source fixture; a focus pause is a hypothesis because that run retained
-no focus trace. A controlled repeat is required; no guard or timeout was relaxed.
+no focus trace. The [same immutable fixture repeated the timeout](../authoring/fpv-worlds/library/evidence/worker-package-r1-exclusive-failure-provenance.json)
+under exclusive browser focus. A separate bounded diagnostic now records status
+setter stacks, focus/visibility and native animation-frame entries; no guard or
+timeout was relaxed and no automatic resume was added. Full admitted Library
+qualification remains pending.
+
+The exact admitted direct Worlds and Academy players separately passed
+[native offline preparation and stopped-origin reload](../authoring/fpv-worlds/library/evidence/worker-native-offline-smoke.json).
+The coordinator stopped the known server and observed connection refusal before
+and after reloading both players. Worlds entered flight at zero throttle and
+paused; Academy entered practice and paused. This qualifies the changed Worker's
+native install/cache path for this local-origin outage, not device-wide offline,
+eviction endurance or the unfinished admitted Library matrix.
 
 ### Historical page-transport evidence
 
