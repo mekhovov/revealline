@@ -37,7 +37,7 @@ const showcase = [
     'social-drone-community-connections',
     7,
     '1a360b73d74bfec5bae456e15e1e1f1a42f7c400bc04f0275b342c46160be98f',
-    9, // The later Sky Watch addition preserves the showcase snapshot below.
+    10, // Sky Watch and its mobile-video upgrade preserve the showcase snapshot below.
   ],
   [
     'victory-drones',

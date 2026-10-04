@@ -422,7 +422,7 @@ test('later curricula use canonical progression with registered distinct present
   }
 });
 
-test('mission-art expansion retains every prior gameplay binding and revises each changed reward payload', async () => {
+test('mission-art expansion retains every prior curriculum gameplay binding and revises each changed reward payload', async () => {
   for (const editionId of [
     'social-drone-ua',
     'victory-drones',
@@ -445,6 +445,13 @@ test('mission-art expansion retains every prior gameplay binding and revises eac
       for (const descriptor of snapshot.catalog.campaigns) {
         const previous = snapshot.files.find((file) => file.path === descriptor.sourcePath).data;
         const current = projects.find(({ definition }) => definition.id === descriptor.id);
+        if (!current) {
+          // Sky Watch is a separate single-mission release. Its explicit r2
+          // geometry/media upgrade is covered by social-drone-sky-watch.test;
+          // it is not one of the eighteen gameplay-preserving curricula.
+          assert.equal(descriptor.id, SKY_WATCH_CAMPAIGN.id);
+          continue;
+        }
         assert.deepEqual(createRewardMissionBindings(previous), current.missionBindings);
         const oldRewards = snapshot.files.find((file) => file.path === descriptor.rewardPath).data;
         for (const before of oldRewards) {

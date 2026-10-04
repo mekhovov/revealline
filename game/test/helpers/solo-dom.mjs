@@ -467,6 +467,8 @@ export async function soloPage(
       return audio.context;
     };
   win.location = globals.location;
+  // Window and global URL share the same page-owned object URL registry.
+  win.URL = globals.URL;
   // Real browser Window and global sessionStorage refer to the same tab store.
   win.sessionStorage = previewStorage;
   browserSetup?.({ document: doc, window: win, globals });
