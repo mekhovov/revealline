@@ -21,9 +21,14 @@ packages passed one fresh source-bound admission with two identical builds each,
 committed input verification and ZIP-member admission. Worlds has102 members and
 16,741,638 original input bytes, leaving35,578 bytes under the unchanged limit.
 The immutable complete player passed223 staging checks with zero overlays;
-99 files reuse verified immutable links. The admitted fixture at port8966 and
-longer-session fixture reuse this single build. Their native/offline results are
-still pending. [Admission evidence](evidence/admission-0b54/manifest.json) retains
+99 files reuse verified immutable links. The admitted fixture at port8966 passed
+the same **453/453** named native online controls with zero overlays. Its exact
+6,456,634-byte receipt, screenshot and fixture are preserved under
+`evidence/admitted-8966-passed`. Both hosts again had no errors or warnings;
+the created renderer released its registered resources, while the reopened lobby
+created no renderer. This remains explicit file import rather than published
+Browse acceptance. Native offline and longer-session verification are separate
+and still pending. [Admission evidence](evidence/admission-0b54/manifest.json) retains
 exact logs, inventories, package descriptors, checksums and original-source bridge.
 
 The first native online run at port8963 stopped at its Retry control after 362
