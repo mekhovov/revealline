@@ -1,6 +1,6 @@
 # Mountain Reservoir — D5 readiness, 4 October 2026
 
-Status: this document is the read-only readiness audit, not Reservoir content delivery. The audit used capacity integration `0241a523d`, which integrates main `5931ef12678cc52ab332fbbfe5516ad93a60caa9`. The separate [imported-example prerequisite](fpv-imported-world-examples.md) now has 46 functional checks, 47 source-browser checks and all-three package admission; final packaged browser/publication remain pending. Its branch normally integrates merged capacity main `ef9d606b6`. Separate original-scene drafting is underway, but no Reservoir course, sixteen-example set or full-world qualification is claimed here.
+Status: this document is the read-only readiness audit, not Reservoir content delivery. The audit used capacity integration `0241a523d`, which integrates main `5931ef12678cc52ab332fbbfe5516ad93a60caa9`. The separate [imported-example prerequisite](fpv-imported-world-examples.md) now has 46 functional checks, 47 checks each in source and admitted-package browsers, and all-three package admission; protected publication remains pending. Its branch normally integrates merged capacity main `ef9d606b6`. Separate original-scene drafting is underway, but no Reservoir course, sixteen-example set or full-world qualification is claimed here.
 
 ## Decision
 

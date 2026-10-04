@@ -1,8 +1,10 @@
 # Examples for installed worlds
 
-The source browser passes **47/47 checks**, including both complete rendered
-demonstrations. All three packages pass source-bound admission with two identical
-builds; the final packaged browser and publication remain pending. This is
+The source and admitted-package browsers each pass **47/47 checks**, including
+both complete rendered demonstrations with identical final states. All three
+packages pass source-bound admission with two identical builds. The branch
+integrates merged capacity main through the explicit audit below; protected
+publication checks remain required. This is
 a focused D5 prerequisite, independent of the capacity and D4 editor changes.
 
 An installed world can import and verify a demonstration yet have no Watch action:
@@ -50,6 +52,16 @@ files (287,535 bytes) are newly written. The package browser fixture uses this
 exact player and candidate host without a source overlay. It keeps the explicit
 baseline comparison, private storage and controlled scheduling; its frozen
 wrappers are bound in [package provenance](evidence/fpv-imported-examples-package-provenance.json).
+The actual packaged run passes all 47 checks with empty runtime and operator
+console warning/error logs. Its [source/package comparison](evidence/fpv-imported-examples-source-package-comparison.json)
+confirms identical check outcomes, phase labels and mode/tick/final-state/pulse
+counts for both complete demonstrations. The source fixture's retained player
+and candidate package differ only in the host, its generated worker inventory
+and package descriptor; the effective candidate host is exact in both runs.
+The full [package receipt](evidence/fpv-imported-examples-package-browser-v1.json.gz)
+is retained losslessly: 29,583 raw bytes, SHA-256
+`3370636451297172380e779c802d02729d72ef1368f9be3bb58c974e8cde7b33`.
+Timing observations are preserved but are not a performance comparison.
 This admission precedes the separately qualified capacity merge; it does not
 claim a combined latest-main package or installed/public release acceptance.
 
