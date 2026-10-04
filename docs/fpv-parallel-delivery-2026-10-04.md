@@ -12,6 +12,37 @@ estimates are not current instructions. Functional verification accompanies ever
 increment. Additional unit coverage stays in D6. Hardware and novice feedback
 remain pending and nonblocking, never passed by implication.
 
+## Current execution checkpoint
+
+Library's dedicated-worker transport, responsive menu/language controls and
+pre-arm focus repair are merged; public entry and the intentionally empty Library
+index were verified at `8e5ad71e9b791b7c16bae1cb308026ed3e18d5c2`. Warm-frame
+readiness #1084 is merged and publicly launched at
+`1a1a82d5e6617a53239218642eda3aa70e817fe3`. Public personal-best access #1086
+is merged at `5cde6dbc97c3067b6023d2bf7fd97fe251805347`; its public deployment
+has not yet been checked. Source-capacity preparation #1085 is merged at
+`5bd8f36d7767dcd9dda740865b4d8f19ddbe7c28`, recovering 41,026 original source
+bytes without a behavior or limit change. That main input set has 41,262 bytes
+of reserve; the separately qualified language fix leaves 41,157 bytes.
+
+The language/menu action-ownership fix is now qualified: 433 native source checks,
+283 exact admitted lifecycle checks, full validation, 16 existing checks and all
+three/two-identical package admissions. Its earlier failed run remains retained.
+Publication follows the normal capacity-only main bridge and protected checks;
+see [the exact evidence and boundaries](../authoring/fpv-worlds/language-phase/README.md).
+Next engineering work is the measured HUD/layout candidate under browser
+qualification, then continued integrated reliability. No hardware-FPS conclusion
+is drawn from these bounded observations.
+
+Reservoir's required coating capability is qualified and awaiting its focused
+publication. The r14 pack has passed 16 ordinary-flight/replay proofs and bounded
+native import/flight views; representative terrain rooting and hut quality remain
+open. The production Library index stays empty intentionally until the required
+world-quality and publication gates are met. Preserve the research gates below
+and the sequence Reservoir → Festival → Harbor → Canals → D6. Earlier estimates
+and pending lists below describe their original checkpoints, not a reversal of
+this delivered state.
+
 ## Starting position
 
 The delivered catalogue contains 196 authored challenges, 14 worlds, 58 School
@@ -148,23 +179,29 @@ is implied by this gate.
 
 ### Engineering execution within the revised allocation
 
-1. **Library delivery:** finish the reviewed lossless worker-source preparation,
-   then the dedicated-worker download path. Keep the network guard, bounded index,
-   exact hashes/size/revision, cancellation, transfer ownership and atomic native
-   installation. The previous 195-check source fixture predates this transport;
-   it cannot qualify the new worker path. Register only fully published packs.
-2. **Performance:** investigate first-ready actor/camera initialization versus
-   shader preparation on Yard and an actor-free reference at fixed quality/pose.
-   Record native-clock first/second-draw timings and actor/program/resource counts.
-   The readiness fix removed pending draws but shifted some work into the first
-   ready draw; existing comparisons are mixed, not a general FPS gain. Change
-   initialization/preparation only if the new observation establishes the cause.
-3. **Integrated reliability:** finish the reproduced pre-arm appearance-focus
-   repair and reachable EN/UK/small-screen menu fixes, then qualify the complete
-   Library install -> select -> settings -> arm -> pause/retry -> replay -> editor
-   -> offline/reopen path. Include cancellation/quota failure and retained records.
-   Preserve input ownership and deliberate neutral/arm pickup. Hardware/novice
-   observations remain honestly pending and nonblocking.
+1. **Library delivery:** the dedicated-worker transport, bounded immutable paths,
+   exact hashes/size/revision, cancellation and atomic installation are delivered.
+   Preserve their source/admitted 208-control and combined native offline receipts;
+   the earlier 195-control pre-transport run remains historical. Next establish
+   actionable compatibility for older cached players before registering the first
+   finished Reservoir revision, then verify the actual published row through
+   Browse, download, install, selection, Watch and editing. The production index
+   remains intentionally empty; fixture starter rows are not delivered worlds.
+2. **Performance:** the native program trace identified 66 first-draw shadow links;
+   the merged warm-frame change moves that initialization before Ready in the
+   qualified Yard cases. HUD work has measured bounded callback/width-read savings
+   and is in protected publication. Neither proves a general loading/FPS gain or
+   resolves every historical stall. Next use one genuinely natural presentation
+   and one industrial reference at fixed poses/quality, plus a bounded longer
+   load/disposal session on final integrated source. Optimize only measured costs.
+3. **Integrated reliability:** focus, language access, narrow-screen menus and
+   personal-best access are delivered; language/Home phase ownership is now merged.
+   The next native fixture distinguishes Creator install abort from a committed
+   save followed by failed refresh/generation reads, preserving dirty course/mode,
+   exact revisions, a genuine proof and interrupted recovery. Then qualify the
+   final combined Library -> select -> settings -> arm -> pause/retry -> replay ->
+   editor -> offline/reopen journey. Reuse exact component receipts and target
+   boundary failures; real quota/eviction and broader hardware remain unclaimed.
 
 ### Visual and input quality checks
 
@@ -184,10 +221,11 @@ content work. Record browser/GPU/device identity before any performance claim.
 ## Capacity and publication
 
 Retain Core 72 MiB / Company 80 MiB and the existing optional-package file/source ceilings.
-World Studio's projected source headroom after the merged shell/readiness changes
-is 8,474 bytes, with 102/104 runtime files. The proposed worker preparation and
-Library/menu/focus integration would leave approximately 461 source bytes; this
-estimate is not admission evidence. Admit every actual candidate; use existing UI,
+Main `5bd8f36d7` has 41,262 original source bytes available after the verified
+41,026-byte visual projection, with 102/104 runtime files. The phase head's exact
+95-input bridge leaves 41,157 bytes; independent HUD admission leaves 41,141 bytes
+before phase/coating integration. These are distinct source sets, not a combined
+release admission. Retain the bounded receipts and admit actual final integration; use existing UI,
 small data manifests and reviewed lossless preparation before proposing a limit
 change. The core budget does not waive the separate World Studio ceiling.
 
@@ -210,9 +248,11 @@ actual launch, not merely a green PR.
 
 D6 includes original proofs/rewards, all final world examples, shared-prefab and
 reimport compatibility, EN/UK presentation, input/lifecycle recovery, repeated
-loading/disposal, archive/retention limits and the deferred unit coverage. Resolve
-the retained pre-arm appearance-focus and audio-warning-arbitration diagnostics
-without weakening expectations or labelling a known baseline failure a new defect.
+loading/disposal, archive/retention limits and the deferred unit coverage. The
+pre-arm focus and audio-warning-arbitration diagnostics are resolved; preserve
+their original failures and accepted fixes. The Academy fake-DOM mount diagnostic,
+unexplained historical storage-close observation and final regression remain
+distinct open evidence limits, without weakened expectations or inferred causes.
 
 Sustained 60 fps desktop / 30 fps mobile remain targets, not achieved results. Hardware,
 novice and broader artist acceptance stay explicitly pending when unavailable.
