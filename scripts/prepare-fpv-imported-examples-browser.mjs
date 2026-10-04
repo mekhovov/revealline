@@ -34,17 +34,34 @@ assert(
     digest(baseline) === preparation.baselineHostSha256,
 );
 assert(!(await fs.stat(dest).catch(() => null)), 'Never replace a frozen fixture');
+const git = (...args) => execFileSync('git', args, { cwd: root }).toString().trim();
+assert.equal(
+  git(
+    'diff',
+    '--name-only',
+    receipt.sourceRevision,
+    'HEAD',
+    '--',
+    'game',
+    'optional-practice',
+    'publishing',
+  ),
+  hostPath,
+  'Only the host may differ from the admitted original source',
+);
+assert.equal(
+  git('diff', 'HEAD', '--name-only', '--', 'game', 'optional-practice', 'publishing'),
+  '',
+  'Freeze only committed production source',
+);
 // A source experiment changes only this host. The other complete package files remain exact.
 for (const entry of receipt.files) {
   assert(!entry.path.includes('..') && !path.isAbsolute(entry.path));
   const file = path.join(opts['player-root'], entry.path),
     bytes = await fs.readFile(file);
   assert(bytes.length === entry.bytes && digest(bytes) === entry.sha256, entry.path);
-  const local = await fs.readFile(path.join(root, entry.path)).catch(() => null);
-  assert(
-    !local || entry.path === hostPath || local.equals(bytes),
-    'Unexpected additional source overlay ' + entry.path,
-  );
+  // Package projection can differ from original Git bytes (for example i18n).
+  // The original-source comparison above and exact admitted member hashes bind both.
   files.push({ path: entry.path, bytes: bytes.length, sha256: digest(bytes) });
 }
 function servedHost(bytes) {
