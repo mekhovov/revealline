@@ -1,0 +1,17 @@
+{
+  "format": "FPVPublicLaunchReceipt.v1",
+  "sourceRevision": "a46aded0b56c612fbbfb1736cfb27ee0746c2b1f",
+  "url": "https://mekhovov.github.io/revealline/optional-practice/fpv-worlds/index.html",
+  "course": "Clearing check-in",
+  "mode": "Self-level",
+  "controls": "Touch",
+  "appearance": "Follow game",
+  "quality": "Balanced",
+  "arm": "- link \"Skip to flight selection\":\n  - /url: \"#explore\"\n- dialog:\n  - banner:\n    - button \"Menu\"\n    - generic: FPV SIM · Worlds\n    - button \"Pause\"\n  - paragraph: Clearing check-in\n  - generic: +\n  - generic: 0.0 m · 0 m/s · 0.2 s · ♥ 100\n  - strong: 1/3 · Hold position\n  - status: Flight active.\n  - generic \"Yaw 0%, Throttle 0%\":\n    - generic: Yaw / Throttle\n    - status: 0% · held\n  - generic \"Roll 0%, Pitch 0%\":\n    - generic: Roll / Pitch\n  - complementary \"Drone response. vertical speed near zero. 0.0 m · +0.0 m/s vertical · 0.0 m/s drift\":\n    - button \"Hide drone response\": ×\n    - status: Motors off · Drone upright\n- status: Preparing flight…",
+  "pause": "- link \"Skip to flight selection\":\n  - /url: \"#explore\"\n- dialog:\n  - banner:\n    - button \"Menu\"\n    - generic: FPV SIM · Worlds\n    - button \"Resume\"\n  - paragraph: Clearing check-in\n  - button \"Arm / resume\"\n  - generic: +\n  - generic: 0.0 m · 0 m/s · 0.3 s · ♥ 100\n  - strong: 1/3 · Hold position\n  - status: Paused. Arm deliberately to continue.\n  - generic \"Yaw 0%, Throttle 0%\":\n    - generic: Yaw / Throttle\n    - status: 0% · held\n  - generic \"Roll 0%, Pitch 0%\":\n    - generic: Roll / Pitch\n  - complementary \"Drone response. Paused · actual pose retained vertical speed near zero. 0.0 m · +0.0 m/s vertical · 0.0 m/s drift\":\n    - button \"Hide drone response\": ×\n    - status: Motors off · Drone upright\n- status: Preparing flight…\n- dialog \"FPV / LINE\":\n  - heading \"FPV / LINE\" [level=1]:\n    - img \"FPV / LINE\"\n  - paragraph: FPV SIM · Worlds\n  - navigation \"Choose game mode\":\n    - navigation:\n      - link \"Solo\":\n        - /url: https://mekhovov.github.io/revealline/game/?lang=en\n      - link \"Versus\":\n        - /url: https://mekhovov.github.io/revealline/game/couch/?lang=en\n      - link \"Team\":\n        - /url: https://mekhovov.github.io/revealline/game/couch/relay-rescue.html?lang=en\n      - button \"FPV SIM\"\n      - link \"Snake\":\n        - /url: https://mekhovov.github.io/revealline/game/snake/play.html?lang=en\n  - paragraph: Clearing check-in\n  - navigation \"Main menu\":\n    - button \"Continue\" [active]\n    - button \"Select Mission\"\n    - button \"Settings\"\n    - button \"Full screen\"\n    - 'button \"Sound: off\"'\n  - button \"Retry\"\n  - paragraph: \"Tab/arrows move; Enter selects; Esc goes back. Controller: release, then press/release A to connect. Calibrated radio: hold yaw right for 0.7 s, then centre to connect; roll/pitch move, hold yaw right/left then centre to confirm/go back.\"",
+  "console": [],
+  "screenshot": "/tmp/fpv-renderer-public-a46aded0b.png",
+  "limitations": [
+    "Normal public render/arm/pause only; context-loss recovery qualified in admitted local player/editor. Not physical touch-device, offline or sustained FPS proof."
+  ]
+}
