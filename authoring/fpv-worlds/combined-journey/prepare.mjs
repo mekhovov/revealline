@@ -98,8 +98,10 @@ const watch = archive.records.find(
 assert(watch && watch.proof.frames.length === 1616);
 for (const record of archive.records) assert.equal(record.packIdentity, 'fpv-pack:' + pack.sha256);
 const assets = [];
-for (const [name, bytes] of pack.assets)
-  assets.push({ path: name, bytes: bytes.byteLength, sha256: hash(bytes) });
+for (const [name, blob] of pack.assets) {
+  const bytes = Buffer.from(await blob.arrayBuffer());
+  assets.push({ path: name, bytes: bytes.length, sha256: hash(bytes) });
+}
 assets.sort((a, b) => a.path.localeCompare(b.path));
 
 // Validate the complete retained member set before making any output directory.
