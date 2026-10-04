@@ -44,7 +44,17 @@ test('appearance preview gates tests and test fixtures while retaining mandatory
 async function bindEvidence(mode, outcome) {
   const root = '.cache/appearance-preview/';
   const files = new Map([
-    ['publishing/test-policy.json', Buffer.from(JSON.stringify({ ...acceptedPolicy, mode }))],
+    [
+      'publishing/test-policy.json',
+      Buffer.from(
+        JSON.stringify({
+          ...acceptedPolicy,
+          mode,
+          authorization:
+            mode === 'waived' ? 'explicit-user-request-20260922' : acceptedPolicy.authorization,
+        }),
+      ),
+    ],
     [root + 'distribution.zip', Buffer.from('game archive')],
     [root + 'fpv-worlds-playtest.zip', Buffer.from('world archive')],
     [root + 'README.md', Buffer.from('manual review guide')],
