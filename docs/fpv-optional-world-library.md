@@ -23,7 +23,8 @@ scoped lint and all-three source-bound admission passed at `01fc6ad20`, with
 two identical builds and all committed inputs/ZIP members verified. The
 [qualification receipt](../authoring/fpv-worlds/library/evidence/worker-qualification.json)
 binds those results. The new exact 102-member Worlds and 69-member Academy players
-are staged; admitted-player and changed-worker offline checks remain pending.
+are staged. Changed-worker native offline checks passed as described below;
+the admitted Library matrix remains pending after two readiness timeouts.
 The production catalogue remains empty.
 
 The first admitted fixture run passed 119 controls, then timed out waiting for
