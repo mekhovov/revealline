@@ -3426,8 +3426,13 @@ r16 art review is accepted and its data is merged; the first production Library
 row is ready as #1094 following compatibility's merge; actual download/install
 verification remains pending. An explicit owner-authorized temporary main-merge
 hold applies until Character/P1 #1083 completes protected merge and Pages delivery
-and the coordinator lifts the hold. #1094 is not enrolled in auto-merge; its checks
-and prepared data remain intact. Development and qualification continue.
+and the coordinator lifts the hold. Qualified #1094 and evidence #1096 are
+temporarily Draft, with exact heads preserved and auto-merge disabled. This
+enforces the controller's explicit draft gate because it can directly merge an
+approved head even when auto-merge is absent. The existing release-train-hold
+label means unallocated product work and was not repurposed. Draft is procedural,
+not an unfinished-qualification claim; Ready returns only after the human hold
+is lifted. Development and qualification continue.
 Festival r5 eight-course source has616 checks / 16 ordinary completion and replay
 proofs, plus 311 historical admitted-browser checks / 16 Watch replays; final native
 offline qualification and publication remain pending. Continue

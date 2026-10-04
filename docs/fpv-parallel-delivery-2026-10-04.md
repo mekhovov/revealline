@@ -16,8 +16,13 @@ remain pending and nonblocking, never passed by implication.
 
 Main merges are temporarily held by explicit owner authorization while the
 Character/P1 delivery #1083 completes its protected merge and Pages publication.
-The coordinator will explicitly lift this hold. Ready PRs retain their checks;
-#1094 has no auto-merge enrollment. Implementation and qualification continue.
+The coordinator will explicitly lift this hold. Qualified #1094 and #1096 are
+temporarily Draft with their heads preserved and no auto-merge enrollment.
+The trusted controller can directly merge approved heads without auto-merge;
+Draft is its explicit blocker. The existing release-train-hold label describes
+unallocated work, so this procedural pause does not repurpose that allocation
+signal or imply unfinished qualification. Restore Ready only after the human
+hold is lifted. Implementation and qualification continue.
 
 Library's dedicated-worker transport, responsive menu/language controls and
 pre-arm focus repair are merged; public entry and the intentionally empty Library
