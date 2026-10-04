@@ -72,12 +72,17 @@ performance pass.
 
 ### World production and variety
 
-Reservoir is in progress: one course and its two checkpoint examples passed
-import/replay; the final eight-course shared scene is still being reviewed.
-Land-side intake/control gallery, dry spillway and Shoreline circuit replace the
-earlier provisional island idea. Water remains outside playable land bounds.
-Freeze final shared geometry before producing all sixteen final proofs, including
-the first course again; checkpoint proofs are not final-world qualification.
+Reservoir r8 now qualifies all eight courses and sixteen exact-pack ordinary
+demonstrations (575 CPU checks, 304 actual imported-player/editor checks). Its
+native player also reloaded after the server stopped, flew Dry spillway descent
+and performed an Acro-only edit with Undo/Redo offline. Land-side intake/control
+gallery, dry spillway and Shoreline circuit replace the earlier provisional
+island idea; water remains outside playable land bounds. This is D5 **one of
+four** locally qualified worlds, pending protected publication/public entry.
+The optional install yields 204 challenges / 15 installed worlds; the bundled
+baseline remains 196 / 14. Historical one-course proofs are separate from final
+r8 qualification. Generic imported-card Explore / Intermediate / 4 min metadata
+is an existing host follow-up, not a claim about each route's activity or duration.
 
 After Reservoir, build Festival first for a readable open-racing contrast, then
 Harbor for vertical industrial reuse, then the denser Canals environment. The
