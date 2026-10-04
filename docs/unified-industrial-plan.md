@@ -113,3 +113,11 @@ The existing published-production continuation also needs reconciliation: its ex
 - Recovered room snapshots replace destruction ownership, silently restoring settled state instead of replaying frozen pre-disconnect bursts. Ordinary polls retain once-only event ownership.
 - The recording audit found no new confirmed defect; native terminal export/import and genuine pilot completion remain acceptance work. All baseline `177afe429` CI checks passed; new-head evidence is separate.
 - See the [room and Studio evidence](qualification/industrial-art/room-studio-2026-10-04/README.md). Full art production still follows Phase C approval. Optional work remains optional.
+
+## Intent, room-layout and native guide continuation, 4 October 2026
+
+- Capture's ordinary pursuit warnings now retain and display their accepted upcoming direction, including correct rotation in cached artwork. Reduced effects retains the essential static cue; simulation and specialist contact rules remain unchanged.
+- Private-room canvases fill their allocated area instead of collapsing. Paired portrait/landscape layouts preserve aspect ratio, and a control-layout breakpoint change releases input and requests shared pause. Normal two-seat Ready behavior was observed at 320/360/390 px and 568×320.
+- Native FPV SIM now exposes accepted enemies/counts and native Goal–Tell–Counter advice before flight and through its paused shared menu. The guide remains paused on dismissal and preserves historical versus successor pursuit descriptions. It uses the existing shared catalogue and optional-package projection.
+- All `aa68949c7` baseline CI checks passed. Current source, package and build receipts are evaluated separately; regression suites remain waived.
+- See the [intent, layout and flight-guide evidence](qualification/industrial-art/intent-room-guide-2026-10-04/README.md). Continue Phase C native completion/device evidence and the explicit picture-slot migration reconciliation. Artwork approval still precedes mass production; optional expansion remains optional.

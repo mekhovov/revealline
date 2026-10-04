@@ -633,6 +633,28 @@ function overheadCompact(ctx, role, family, gait, options, cast) {
 }
 
 function markers(ctx, family, options, angle) {
+  if (
+    ['refuge-seeker', 'switchback', 'sprinter'].includes(family) &&
+    options.phase === 'warning' &&
+    Object.hasOwn(ANGLES, options.nextHeading)
+  ) {
+    // Show only an accepted upcoming heading, never a guessed vector to a goal
+    // behind a wall. Cached north-facing hosts supply the relative paint angle;
+    // direct board callers keep the native world heading. This stays visible
+    // during Reduced effects/Pulse without rotating the current body.
+    ctx.save();
+    ctx.translate(16, 16);
+    ctx.rotate(
+      Number.isFinite(options.intentFacingRadians)
+        ? options.intentFacingRadians
+        : ANGLES[options.nextHeading],
+    );
+    pixel(ctx, INK, -2, -11, 4, 4);
+    pixel(ctx, '#fff0cc', -1, -11, 2, 1);
+    pixel(ctx, '#fff0cc', -2, -10, 1, 2);
+    pixel(ctx, '#fff0cc', 1, -10, 1, 2);
+    ctx.restore();
+  }
   if (family === 'shield-bearer') {
     ctx.save();
     ctx.translate(16, 16);

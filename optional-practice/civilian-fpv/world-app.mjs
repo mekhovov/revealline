@@ -101,6 +101,7 @@ import {
 } from './sim-presentation.mjs';
 import { createWorldAudio } from './world-reaction-runtime.mjs';
 import { mountWorldHuntReactions } from './world-reaction-runtime.mjs';
+import { mountWorldEnemyGuide, worldEnemyGuide } from './world-reaction-runtime.mjs';
 import {
   evaluateWorldResult,
   createSectorTracker,
@@ -1052,6 +1053,42 @@ export function mountWorldApp({
     });
     return b;
   };
+  const enemyGuide = mountWorldEnemyGuide({
+    document: doc,
+    locale: () => locale,
+    onPause: () => pauseFlight(),
+  });
+  const guideButtons = [];
+  function currentEnemyGuide(trigger) {
+    if (!current || !flight) return;
+    enemyGuide.open(current.course, {
+      mode: $('flight-mode').value,
+      state: flight.snapshot(),
+      trigger,
+    });
+  }
+  function makeGuideButton(id) {
+    const control = button('', (event) => currentEnemyGuide(event.currentTarget));
+    control.id = id;
+    control.hidden = true;
+    control.setAttribute('aria-controls', enemyGuide.dialog.id);
+    guideButtons.push(control);
+    return control;
+  }
+  function refreshEnemyGuide() {
+    const available = Boolean(
+      current &&
+        worldEnemyGuide(current.course, {
+          mode: $('flight-mode').value,
+        }).rows.length,
+    );
+    for (const control of guideButtons) {
+      control.textContent = txt('Enemy field guide', 'Довідник ворогів');
+      control.hidden = !available;
+    }
+    enemyGuide.refresh();
+  }
+  $('flight-options').before(makeGuideButton('world-flight-enemy-guide'));
   const audio = createWorldAudio({ window: win, storage });
   const presentation = mountSimPresentation({
     root: doc,
@@ -1228,6 +1265,7 @@ export function mountWorldApp({
     audioControls.refresh();
     huntPresentationControls.refresh();
     huntReactions.refresh();
+    refreshEnemyGuide();
     updateGhostHUD();
     for (const id of ['flight-mode', 'first-flight-mode']) {
       $(id).options[0].textContent = txt('Self-level', 'Самовирівнювання');
@@ -2137,6 +2175,21 @@ export function mountWorldApp({
             `${txt('Watch demonstration', 'Переглянути демонстрацію')}: ${label(entry)}`,
           );
           info.append(watch);
+        }
+        if (worldEnemyGuide(entry.course, { mode: $('flight-mode').value }).rows.length) {
+          const inspect = button(txt('Preview targets', 'Переглянути цілі'), (event) =>
+            enemyGuide.open(entry.course, {
+              mode: $('flight-mode').value,
+              trigger: event.currentTarget,
+            }),
+          );
+          inspect.dataset.enemyGuideCourse = entry.id;
+          inspect.setAttribute('aria-controls', enemyGuide.dialog.id);
+          inspect.setAttribute(
+            'aria-label',
+            `${txt('Preview targets', 'Переглянути цілі')}: ${label(entry)}`,
+          );
+          info.append(inspect);
         }
         const fly = button(txt('Fly', 'Летіти'), () => startFlight(entry));
         fly.setAttribute('aria-label', `${txt('Fly', 'Летіти')}: ${label(entry)}`);
@@ -4290,6 +4343,7 @@ export function mountWorldApp({
       'Практика із самовирівнюванням · без заліку. Для цих маневрів потрібен Acro.',
     );
   async function startFlight(entry, options = {}) {
+    enemyGuide.close();
     if (disposed) return;
     playShell?.enterPlay();
     if (playShell) $('flight-dialog').prepend(playShell.elements.header);
@@ -4354,6 +4408,7 @@ export function mountWorldApp({
     checkpointRequest = options.checkpoint ?? null;
     checkpointSession = null;
     $('flight-mode').value = requestedMode;
+    refreshEnemyGuide();
     const needsAcro = !entry.legacy && worldCourseRequiresAcro(entry.course);
     modePractice = needsAcro && requestedMode === 'self-level';
     const learning = !checkpointRequest && learningById.get(entry.beginner);
@@ -4699,6 +4754,7 @@ export function mountWorldApp({
       )}`;
   }
   async function closeFlight() {
+    enemyGuide.close();
     const token = ++flightToken;
     checkpointPreparation?.abort();
     checkpointPreparation = null;
@@ -4713,6 +4769,7 @@ export function mountWorldApp({
     flight = null;
     const closedLesson = current?.beginner;
     current = null;
+    refreshEnemyGuide();
     recorder = null;
     checkpointSession = null;
     checkpointRequest = null;
@@ -5282,6 +5339,7 @@ export function mountWorldApp({
   menuHint.id = 'sim-menu-hint';
   doc.querySelector('main').append(menuHint);
   function menuContext() {
+    if (enemyGuide.dialog.open) return { root: enemyGuide.dialog, key: enemyGuide.dialog.id };
     if (packRemovalReview?.dialog.open)
       return { root: packRemovalReview.dialog, key: 'pack-removal-review' };
     const secondary = ['world-radio-dialog', 'drone-hangar', 'sim-settings']
@@ -5329,7 +5387,8 @@ export function mountWorldApp({
       if (menuHint.textContent !== value) menuHint.textContent = value;
     },
     onBack() {
-      if (packRemovalReview?.dialog.open) $('pack-removal-cancel').click();
+      if (enemyGuide.dialog.open) enemyGuide.close();
+      else if (packRemovalReview?.dialog.open) $('pack-removal-cancel').click();
       else if ($('world-radio-dialog').open) closeRadio();
       else if ($('drone-hangar').open)
         $('drone-hangar').querySelector('[data-close-hangar]').click();
@@ -5772,6 +5831,7 @@ export function mountWorldApp({
     ),
   );
   shellBriefing.append(help);
+  shellBriefing.append(makeGuideButton('world-briefing-enemy-guide'));
   let shellTab = 'explore';
   const openCatalogueTab = (id) => {
     shellTab = id;
@@ -5847,6 +5907,7 @@ export function mountWorldApp({
     initial: 'home',
     focusPlay: () => $('world-viewport').focus(),
   });
+  playShell.elements.content.home.append(makeGuideButton('world-menu-enemy-guide'));
   on(doc.querySelector('.wordmark'), 'click', () => playShell.openHome());
   for (const id of ['lobby-sound', 'world-sound'])
     if ($(id)) on($(id), 'click', () => playShell.update({ muted: !audio.enabled() }));
@@ -6002,6 +6063,7 @@ export function mountWorldApp({
       audioControls.dispose();
       huntPresentationControls.dispose();
       huntReactions.dispose();
+      enemyGuide.dispose();
       audio.dispose();
       presentation.dispose();
       droneResponse.dispose();

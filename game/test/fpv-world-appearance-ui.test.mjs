@@ -468,6 +468,37 @@ test('World menu Back dismisses the visible surface without closing its paused n
   assert.deepEqual(h.app.snapshot().state, paused);
 });
 
+test('World native Hunt guide remains reachable from the shared pause menu without consuming controls or changing the flight', async (t) => {
+  const h = fixture(t);
+  await h.app.ready;
+  await h.app.startFlight(
+    WORLD_CATALOGUE.find((entry) => entry.id === 'native-pursuit-armor-windows'),
+  );
+  assert.equal(h.$('world-flight-enemy-guide').hidden, false);
+  h.$('world-arm').click();
+  h.$('worlds-shell-action-menu').click();
+  const paused = h.app.snapshot();
+  h.$('world-menu-enemy-guide').click();
+  assert.equal(h.$('world-enemy-guide').open, true);
+  assert.match(h.$('world-enemy-guide').textContent, /25 hull damage/);
+  h.doc.emit('keydown', { key: ' ', code: 'Space' });
+  h.doc.emit('keyup', { key: ' ', code: 'Space' });
+  h.tick(5);
+  assert.deepEqual(h.app.snapshot().state, paused.state);
+  assert.deepEqual(h.app.snapshot().records, paused.records);
+  h.$('world-enemy-guide').querySelector('button').click();
+  assert.equal(h.$('world-enemy-guide').open, false);
+  assert.equal(h.$('worlds-shell-home-dialog').open, true);
+  assert.equal(h.$('flight-dialog').open, true);
+  assert.deepEqual(h.app.snapshot().state, paused.state);
+  // Choosing an ordinary course cannot leave a stale specialist guide button.
+  await h.app.startFlight(
+    WORLD_CATALOGUE.find((entry) => !entry.legacy && entry.activity !== 'hunt'),
+  );
+  assert.equal(h.$('world-menu-enemy-guide').hidden, true);
+  assert.equal(h.$('world-flight-enemy-guide').hidden, true);
+});
+
 for (const section of [false, true])
   test(`World exhausted ${section ? 'section' : 'unfinished'} playback keeps native Results reachable without Continue`, async (t) => {
     const h = fixture(t);

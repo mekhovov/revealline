@@ -121,9 +121,6 @@ canvas {
   #boards.paired {
     grid-template-columns: 1fr;
   }
-  #boards.paired canvas {
-    max-height: 30dvh;
-  }
   #support {
     font-size: 0.7rem;
     padding: 4px;
@@ -192,6 +189,9 @@ canvas {
   min-height: 0;
   min-width: 0;
   gap: 8px;
+  /* The canvas is absolute: its card must fill the allocated grid track so
+     the measured board slot cannot collapse to the HUD's intrinsic height. */
+  align-items: stretch;
 }
 #boards[data-arrangement='paired'] {
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -311,12 +311,21 @@ canvas {
     gap: 4px;
   }
 }
-@media (max-height: 500px) and (orientation: landscape) and (pointer: coarse) {
+/* Match room-input's layout boundary, including narrow keyboard/hybrid windows. */
+@media (max-height: 500px) and (orientation: landscape) and (max-width: 899px),
+  (max-height: 500px) and (orientation: landscape) and (pointer: coarse) {
   #room-play {
     grid-template: auto minmax(0, 1fr) auto / minmax(0, 1fr) auto;
   }
   #room-live-status {
     grid-column: 1/-1;
+  }
+  #boards {
+    grid-area: 2 / 1;
+  }
+  #room-reaction-caption {
+    grid-row: 3;
+    grid-column: 1 / -1;
   }
   #controls {
     grid-column: 2;
@@ -329,7 +338,13 @@ canvas {
     grid-template-columns: repeat(2, 44px);
   }
   .room-equipment {
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(44px, 1fr));
+    max-width: 200px;
+  }
+  .room-equipment button {
+    min-width: 0;
+    overflow-wrap: anywhere;
   }
   #controls button {
     min-height: 44px;
