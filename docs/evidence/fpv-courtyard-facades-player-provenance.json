@@ -1,0 +1,44 @@
+[
+  {
+    "candidate": "c452dd215",
+    "admittedFiles": 102,
+    "developmentFiles": 94,
+    "exactCommon": 91,
+    "admittedOnly": [
+      "launcher/app.mjs",
+      "launcher/app.webmanifest",
+      "launcher/context.mjs",
+      "launcher/icons/icon-192.png",
+      "launcher/icons/icon-512.png",
+      "launcher/index.html",
+      "launcher/navigation.mjs",
+      "launcher/worker.js"
+    ],
+    "different": [
+      "optional-package.json",
+      "optional-practice/fpv-worlds/app.webmanifest",
+      "optional-practice/fpv-worlds/worker.js"
+    ]
+  },
+  {
+    "candidate": "6b81d2120",
+    "admittedFiles": 102,
+    "developmentFiles": 94,
+    "exactCommon": 91,
+    "admittedOnly": [
+      "launcher/app.mjs",
+      "launcher/app.webmanifest",
+      "launcher/context.mjs",
+      "launcher/icons/icon-192.png",
+      "launcher/icons/icon-512.png",
+      "launcher/index.html",
+      "launcher/navigation.mjs",
+      "launcher/worker.js"
+    ],
+    "different": [
+      "optional-package.json",
+      "optional-practice/fpv-worlds/app.webmanifest",
+      "optional-practice/fpv-worlds/worker.js"
+    ]
+  }
+]
