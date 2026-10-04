@@ -11,7 +11,7 @@ import {
   verifyReplay,
 } from '../replay.mjs';
 import { BOT_LIMITS, planDemoMacro, supportsDemoBot, LIVE_BOT_LEVEL_IDS } from '../demo-bot.mjs';
-import { prepareBotPlayer } from '../demo-bot-player.mjs';
+import { prepareBotPlayer, prepareCompleteBotPlayer } from '../demo-bot-player.mjs';
 import { applyGameplayTuning, resolveGameplayTuning } from '../gameplay-tuning.mjs';
 
 const pack = JSON.parse(
@@ -455,4 +455,82 @@ test('a stale future plan remains a fault, not a successful exhaustion handoff',
   } finally {
     player.dispose();
   }
+});
+
+test('live playback crosses the old 60 second cutoff without claiming completion', async () => {
+  class WaitingWorker {
+    constructor() {
+      this.callbacks = new Set();
+    }
+    addEventListener(type, fn) {
+      if (type === 'message') this.callbacks.add(fn);
+    }
+    removeEventListener(type, fn) {
+      this.callbacks.delete(fn);
+    }
+    terminate() {}
+    postMessage({ id, state }) {
+      const predictedState = structuredClone(state);
+      for (let tick = 0; tick < 1200; tick++)
+        stepRun(predictedState, { direction: null }, FIXED_DT);
+      const result = {
+        ok: true,
+        startTick: state.tick,
+        startHash: authoritativeCheckpoint(state).hash,
+        endTick: predictedState.tick,
+        endHash: authoritativeCheckpoint(predictedState).hash,
+        predictedState,
+        segments: [{ ticks: 1200, input: { direction: null } }],
+      };
+      queueMicrotask(() => {
+        for (const fn of this.callbacks) fn({ data: { id, result } });
+      });
+    }
+  }
+  const player = await prepareBotPlayer(maps[0], options('immediate', 2), {
+    WorkerClass: WaitingWorker,
+  });
+  try {
+    player.play();
+    while (player.state.tick < 7800 && player.phase === 'playing') {
+      await player.planning;
+      player.advance(player.maxAdvanceSeconds);
+    }
+    assert.equal(player.state.tick, 7800);
+    assert.equal(player.state.status, 'running');
+    assert.equal(player.phase, 'playing');
+    assert.equal(player.finalCheckpoint, null);
+    assert.equal(verifyReplay(player.exportRecording()).match, true);
+  } finally {
+    player.dispose();
+  }
+});
+
+test('full live admission rejects an exhausted route before display and resets a completed seed', async () => {
+  await assert.rejects(
+    prepareCompleteBotPlayer(maps[0], options('immediate', 1), {
+      WorkerClass: ThreadWorker,
+      watchdogMs: 5000,
+    }),
+    /complete result/,
+  );
+  assert.equal(ThreadWorker.owners, 0);
+  const player = await prepareCompleteBotPlayer(maps[0], options('immediate', 2), {
+    WorkerClass: ThreadWorker,
+    watchdogMs: 5000,
+  });
+  try {
+    assert.equal(player.state.tick, 0);
+    assert.equal(player.phase, 'paused');
+    player.play();
+    while (player.phase === 'playing') {
+      await player.planning;
+      player.advance(player.maxAdvanceSeconds);
+    }
+    assert.equal(player.state.status, 'won');
+    assert.equal(verifyReplay(player.exportRecording()).match, true);
+  } finally {
+    player.dispose();
+  }
+  assert.equal(ThreadWorker.owners, 0);
 });
