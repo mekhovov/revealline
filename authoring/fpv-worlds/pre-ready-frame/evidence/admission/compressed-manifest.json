@@ -1,0 +1,25 @@
+{
+  "files": [
+    {
+      "file": "lifecycle-fixture.json.gz",
+      "bytes": 45642,
+      "sha256": "d257217daa84ddc31005701123060e8b59cbb4c69d02716accd1f28d6cfacf93",
+      "storedBytes": 7819,
+      "storedSha256": "066e234ead117b2d97b8c59d1503694dab50fb3c035489daf892ea0277afd30e"
+    },
+    {
+      "file": "staged-player.json.gz",
+      "bytes": 42964,
+      "sha256": "f601674887c0db380f2583a930f27ff6787526f8bf05394ba19ed2fcbacdaebe",
+      "storedBytes": 7356,
+      "storedSha256": "fcbd83e0de2cc2a65d4317327af4cac9eb81f5182ee81de63503a71cde1806f7"
+    },
+    {
+      "file": "manifest-optional-fpv-worlds.json.gz",
+      "bytes": 18746,
+      "sha256": "903773e6578a17803ad7df027079c2aa4a9f0e48e68a19dc572a78265073e41f",
+      "storedBytes": 5871,
+      "storedSha256": "56bc46ba554ffd02ddb5d49bb26f123053e954d6e5cee9d7de14c8a719dd250d"
+    }
+  ]
+}
