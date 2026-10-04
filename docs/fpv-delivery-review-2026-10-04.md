@@ -29,9 +29,11 @@ FPS. Earlier failures remain in the feature evidence rather than being hidden.
    courses, but Workshop previously selected only the first. The isolated picker
    guards unapplied fields, preserves project order/title, scopes history and
    actor selection, previews the selected course and exports every course. Its
-   first actual-browser run passes 197 checks; final package admission and browser
-   verification remain pending. Mode editing is already merged, so this does not
-   require a native stack.
+   focused implementation is published as #1063: 197 source checks, 241 admitted
+   checks including a trusted spatial edit, and 160 unchanged-runtime identity
+   controls pass. Full validation and reproducible package admission pass;
+   current-head protected publication remains pending. Mode editing is already
+   merged, so this does not require a native stack.
 2. **Publish imported-world demonstration lookup, #1060.** Exact pack, challenge
    revision, mode and runtime matching now finds imported verified examples
    without borrowing built-in examples or another revision's records. Source and

@@ -1,0 +1,41 @@
+{
+  "source": "23ad656c96f1f89f415e246423bdc5de1377077d",
+  "checks": 241,
+  "failures": 0,
+  "operatorConsoleWarnings": [],
+  "operatorConsoleErrors": [],
+  "trustedDelta": {
+    "x": 3000,
+    "y": 0,
+    "z": 0
+  },
+  "archives": [
+    {
+      "file": "package-r2-bounded.json.gz",
+      "uncompressedBytes": 158570,
+      "uncompressedSha256": "4aa2f030952124c53bf795c0e2dce7ee2095e533f9c2a60952f4806a3fdd4665"
+    },
+    {
+      "file": "package-r2-fixture.json.gz",
+      "uncompressedBytes": 19956,
+      "uncompressedSha256": "1d77f406eb16f34ecfbf38497fadec4a92bf46c02e0eb7d1a2a73c79e1218b8c"
+    },
+    {
+      "file": "package-r2-host.html.gz",
+      "uncompressedBytes": 34903,
+      "uncompressedSha256": "02d8dc92eadabd3592ad3aa260ed7171dd1837443f0fd0d4b93bb2fcc4ee0a3f"
+    },
+    {
+      "file": "package-r2-harness.mjs.gz",
+      "uncompressedBytes": 22036,
+      "uncompressedSha256": "6f474b2f3468afb2fa2c0806751db8c0e5b63df593dd179ef3cabd7ec5d69f5a"
+    },
+    {
+      "file": "package-r2-index.html.gz",
+      "uncompressedBytes": 1487,
+      "uncompressedSha256": "bbfef7c44e8bf372862db0aada6d5aa8cd47b47aa02ddb069c7e1c71793fc0fc"
+    }
+  ],
+  "priorAttempt": "package-r2-drag-too-far.json.gz",
+  "runtimeAndHarnessUnchangedBetweenAttempts": true
+}
