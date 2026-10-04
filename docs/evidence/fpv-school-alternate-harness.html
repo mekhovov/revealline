@@ -72,6 +72,8 @@
         phases = [],
         playback = [],
         focusEvents = [],
+        snapshotCosts = [],
+        rafReceipts = [],
         errors = [],
         names = new Set(),
         started = performance.now();
@@ -170,7 +172,17 @@
           w?.fixtureRAF?.deliver(0);
         }
       }
-      const state = () => app.snapshot().state;
+      const state = () => w.fixtureDrawState;
+      function measureSnapshot(label) {
+        const before = performance.now(),
+          value = app.snapshot();
+        snapshotCosts.push({
+          label,
+          wallMs: performance.now() - before,
+          records: value.records.length,
+        });
+        return value;
+      }
       const copy = (value) => w.JSON.parse(JSON.stringify(value));
       const button = (root, pattern) =>
         [...root.querySelectorAll('button')].find((n) => pattern.test(n.textContent));
@@ -202,6 +214,7 @@
         if (app) {
           // Native navigation unloads the previous host; explicit unmount is a separate lifecycle gate.
           errors.push(...w.fixtureErrors);
+          rafReceipts.push(plain(w.fixtureRAF.trace));
           app = null;
           store.close();
         }
@@ -316,7 +329,6 @@
           warmup: [],
         };
         const failPlayback = (reason) => {
-          const snapshot = app.snapshot();
           activePlayback.failure = {
             reason,
             elapsedMs: Math.round(performance.now() - playbackStart),
@@ -325,10 +337,9 @@
             frameVisibility: d.visibilityState,
             frameFocused: d.hasFocus(),
             message: d.getElementById('flight-status')?.textContent,
-            course: snapshot.course,
-            replay: snapshot.replay,
-            sectionReplay: snapshot.sectionReplay,
-            state: snapshot.state,
+            course: w.fixtureRenderedCourse,
+            state: state(),
+            raf: w.fixtureRAF.trace,
           };
           throw Error(reason + ': ' + JSON.stringify(activePlayback));
         };
@@ -342,13 +353,29 @@
             failPlayback('Playback requires visible focused ownership; no automatic resume');
         };
         requireFocus();
-        await until(() => state() && !d.getElementById('world-arm').disabled, 'playback prepared');
+        await until(
+          () =>
+            w.fixtureRenderedCourse === row.course.id &&
+            state() &&
+            !d.getElementById('world-arm').disabled,
+          'playback prepared',
+        );
         // The actual Pause action keeps shader preparation outside active playback.
         // Its measured startup outliers remain evidence; production pause guards stay enabled.
         click(d.getElementById('world-pause'));
+        // A full host snapshot clones every stored recording. Keep it outside active playback.
+        const paused = measureSnapshot('paused before ' + row.course.id + '/' + row.proof.mode);
+        must(
+          paused.course === row.course.id &&
+            paused.state.status === 'paused' &&
+            paused.replay?.mode === row.proof.mode &&
+            paused.replay.kind === (sectionIndex === null ? 'demonstration' : 'section') &&
+            (sectionIndex === null || paused.sectionReplay?.index === sectionIndex),
+          'Exact playback identity is paused before deliberate Arm',
+        );
         set('world-replay-rate', '1');
         d.getElementById('world-viewport').focus();
-        const initialTick = state().ticks;
+        const initialTick = paused.state.ticks;
         let stableWarmFrames = 0;
         for (let i = 0; i < 10 && stableWarmFrames < 2; i++) {
           requireFocus();
@@ -358,11 +385,14 @@
           activePlayback.warmup.push({
             pulse: i,
             wallMs: elapsed,
-            status: state().status,
+            status: d.getElementById('flight-status').textContent,
             ticks: state().ticks,
           });
           requireFocus();
-          if (state().status !== 'paused' || state().ticks !== initialTick)
+          if (
+            !/^Playback paused/.test(d.getElementById('flight-status').textContent) ||
+            state().ticks !== initialTick
+          )
             failPlayback('Paused zero-time preparation advanced or armed flight');
           stableWarmFrames = elapsed <= 250 ? stableWarmFrames + 1 : 0;
         }
@@ -376,38 +406,43 @@
         });
         requireFocus();
         click(d.getElementById('world-arm'));
-        if (state().status !== 'active')
+        if (!/^Playback active/.test(d.getElementById('flight-status').textContent))
           failPlayback('Playback did not start through the actual Arm/Resume button');
-        must(state().status === 'active', 'Playback deliberately armed after paused preparation');
+        must(true, 'Playback deliberately armed after paused preparation');
         let previousPulse = performance.now(),
           previousTick = state().ticks;
         const maxPulses = Math.ceil(row.proof.frames.length / 10) + 30;
-        for (let i = 0; i < maxPulses && !app.snapshot().replay?.finished; i++) {
+        const completed = () => !d.getElementById('result-panel').hidden;
+        for (let i = 0; i < maxPulses && !completed(); i++) {
           requireFocus();
-          if (state().status !== 'active') failPlayback('Unexpected production playback pause');
+          if (!/^Playback active/.test(d.getElementById('flight-status').textContent))
+            failPlayback('Unexpected production playback pause');
           if (performance.now() - playbackStart > 120000)
             failPlayback('Playback wall-clock bound exceeded');
           await pulse(200);
           const now = performance.now(),
-            snapshot = app.snapshot();
+            drawn = state();
           activePlayback.maxPulseGapMs = Math.max(
             activePlayback.maxPulseGapMs,
             now - previousPulse,
           );
           previousPulse = now;
           activePlayback.pulses++;
-          activePlayback.ticks = snapshot.state.ticks;
-          if (!Number.isSafeInteger(snapshot.state.ticks) || snapshot.state.ticks < previousTick)
+          activePlayback.ticks = drawn.ticks;
+          if (!Number.isSafeInteger(drawn.ticks) || drawn.ticks < previousTick)
             failPlayback('Playback ticks did not remain monotonic');
           activePlayback.stalledPulses =
-            snapshot.state.ticks > previousTick ? 0 : activePlayback.stalledPulses + 1;
-          previousTick = snapshot.state.ticks;
+            drawn.ticks > previousTick ? 0 : activePlayback.stalledPulses + 1;
+          previousTick = drawn.ticks;
           requireFocus();
-          if (!snapshot.replay?.finished && snapshot.state.status !== 'active')
+          if (
+            !completed() &&
+            !/^Playback active/.test(d.getElementById('flight-status').textContent)
+          )
             failPlayback('Unexpected production playback pause');
-          if (!snapshot.replay?.finished && activePlayback.stalledPulses >= 5)
+          if (!completed() && activePlayback.stalledPulses >= 5)
             failPlayback('Playback ticks stalled for five delivered frames');
-          if (i % 25 === 0 || snapshot.replay?.finished) {
+          if (i % 25 === 0 || completed()) {
             $('status').textContent =
               'Watch ' +
               row.course.id +
@@ -419,26 +454,40 @@
               '/' +
               row.proof.frames.length;
             $('receipt').value = JSON.stringify(
-              { status: 'running', checks, phases, playback, activePlayback, focusEvents },
+              {
+                status: 'running',
+                checks,
+                phases,
+                playback,
+                activePlayback,
+                focusEvents,
+                snapshotCosts,
+                raf: w.fixtureRAF.trace,
+              },
               null,
               2,
             );
           }
         }
-        if (!app.snapshot().replay?.finished) failPlayback('Playback pulse bound exceeded');
-        await until(
-          () => app.snapshot().replay?.finished && !d.getElementById('result-panel').hidden,
-          'playback finished',
-          5000,
+        if (!completed()) failPlayback('Playback pulse bound exceeded');
+        const final = measureSnapshot('completed ' + row.course.id + '/' + row.proof.mode);
+        must(
+          final.replay?.finished &&
+            final.course === row.course.id &&
+            final.replay.mode === row.proof.mode &&
+            w.fixtureWorldStateIdentity(final.state) === w.fixtureWorldStateIdentity(state()),
+          'Final rendered state agrees with the completed actual host snapshot',
         );
         activePlayback.elapsedMs = Math.round(performance.now() - playbackStart);
         playback.push(plain(activePlayback));
         activePlayback = null;
+        return final;
       }
       async function cleanup() {
         if (app) {
           // Native iframe teardown avoids the separately tracked explicit-unmount defect.
           errors.push(...w.fixtureErrors);
+          rafReceipts.push(plain(w.fixtureRAF.trace));
           app = null;
         }
         store?.close();
@@ -666,9 +715,41 @@
           'All 28 imported records independently replay to completion',
         );
         must(
-          saved.find((r) => r.id === wrongPack.id)?.status === 'missing-dependency',
-          'Valid imports do not promote the missing-dependency control',
+          wrongPack.id === first.id &&
+            saved.length === 30 &&
+            new Set(saved.map((r) => r.id)).size === 30 &&
+            saved.every((r) => r.packIdentity !== wrongPack.packIdentity),
+          'Authenticated import replaces the same-content missing-pack record without duplication',
         );
+        const content = (r) => ({
+          id: r.id,
+          course: r.course,
+          proof: r.proof,
+          packIdentity: r.packIdentity,
+          presentation: r.presentation,
+        });
+        for (const row of imported)
+          equal(
+            content(saved.find((r) => r.id === row.id)),
+            content(row),
+            pairKey(row) + ' stores the exact authenticated pack, course and proof',
+          );
+        must(
+          saved.filter((r) => r.status === 'invalid').length === 2 &&
+            wrongCourse.id !== invalid.id &&
+            [wrongCourse, invalid].every(
+              (r) =>
+                !imported.some((s) => s.id === r.id) &&
+                saved.find((s) => s.id === r.id)?.status === 'invalid',
+            ),
+          'Both distinct changed-course and forged-state controls remain invalid',
+        );
+        for (const row of [wrongCourse, invalid])
+          equal(
+            content(saved.find((r) => r.id === row.id)),
+            content(row),
+            'Invalid control bytes remain exact: ' + row.id,
+          );
         equal(await protectedData(), baseline, 'Import awards no progress or rewards');
         for (const row of imported) {
           set('flight-mode', row.proof.mode);
@@ -716,11 +797,15 @@
           set('flight-mode', mode);
           click(button(card(id), /^Start lesson|^Fly it again/));
           await until(
-            () =>
-              app.snapshot().course === id &&
-              app.snapshot().learning?.guideOpen &&
-              state() &&
-              d.getElementById('flight-status').textContent.startsWith('Ready.'),
+            () => {
+              const paused = measureSnapshot('paused lesson guide ' + id);
+              return (
+                paused.course === id &&
+                paused.learning?.guideOpen &&
+                paused.state &&
+                d.getElementById('flight-status').textContent.startsWith('Ready.')
+              );
+            },
             'lesson guide ready ' + pairKey(row),
           );
           await pulse(0);
@@ -731,18 +816,16 @@
             'whole lesson preview ' + pairKey(row),
           );
           must(
-            d.getElementById('flight-mode').value === mode && state().status !== 'active',
+            d.getElementById('flight-mode').value === mode &&
+              measureSnapshot('paused lesson lab ' + id).state.status !== 'active',
             pairKey(row) + ' lab preview leaves real flight paused',
           );
           await closeFlight();
           click(watchButton(id));
-          await until(
-            () => app.snapshot().course === id && app.snapshot().replay?.kind === 'demonstration',
-            'School demonstration ' + pairKey(row),
-          );
-          await playToEnd(row);
+          const final = await playToEnd(row);
           must(
             w.fixtureWorldStateIdentity(state()) === row.proof.finalStateIdentity &&
+              state().ticks === row.proof.frames.length &&
               state().status === 'complete' &&
               state().contacts === 0 &&
               state().health === state().maxHealth,
@@ -760,7 +843,7 @@
             },
           );
           must(
-            app.snapshot().replay.mode === mode &&
+            final.replay.mode === mode &&
               /Demonstration complete/.test(d.getElementById('result-panel').textContent),
             pairKey(row) + ' selected mode and demonstration result remain explicit',
           );
@@ -792,13 +875,9 @@
             }),
             'prepare section ' + id,
           );
-          await until(
-            () => app.snapshot().sectionReplay?.index === index,
-            'section identity ' + id,
-          );
-          await playToEnd(row, index);
+          const final = await playToEnd(row, index);
           must(
-            app.snapshot().sectionReplay.sectionComplete && app.snapshot().replay.mode === mode,
+            final.sectionReplay.sectionComplete && final.replay.mode === mode,
             id + ':' + mode + ' exact recorded section completes',
           );
           must(
@@ -895,11 +974,13 @@
         playback,
         activePlayback,
         focusEvents,
+        snapshotCosts,
+        rafReceipts,
         errors,
         failure: failed ?? null,
         offline: 'Not measured: reload uses live HTTP; only IndexedDB persistence was checked.',
         controls:
-          'Scripted File inputs, buttons and controlled animation clock. Before the single deliberate Arm, up to ten zero-time frames remain paused with unchanged ticks until two frames take at most 250 ms each; all timings remain recorded. Production focus/pause guards remain active, with no automatic resume. No physical-device or player acceptance claim.',
+          'Scripted File inputs, buttons and controlled animation clock. Before the single deliberate Arm, up to ten zero-time frames remain paused with unchanged ticks until two frames take at most 250 ms each; all timings remain recorded. Transparent renderer forwarding observes existing draw states during active playback; full host snapshots run only outside active playback and the final snapshot identity must equal the final draw. Actual RAF callback-entry gaps are recorded without changing the performance clock. Production focus/pause guards remain active, with no automatic resume. No physical-device or player acceptance claim.',
         lifecycle:
           'Native iframe reload and teardown only; no explicit app.dispose qualification or WebGL leak claim.',
       };
