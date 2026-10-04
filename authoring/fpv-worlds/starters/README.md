@@ -6,9 +6,10 @@ routes. They use the existing World Studio project, collision, flight and archiv
 formats. Nothing is added to the built-in challenge catalogue or simulator package.
 
 This is the first D4 authoring increment. The explicit spatial editor mode selector
-and offline qualification are follow-ups. The [functional receipts](evidence/README.md)
+is a follow-up. The [functional receipts](evidence/README.md)
 record twenty completed authoring flights with matching independent replays and
-237 passed browser checks, including an actual spatial drag. Original proofs and
+237 passed browser checks, including an actual spatial drag, plus a separate
+localhost offline edit/reopen qualification. Original proofs and
 the earlier failed browser receipt are retained.
 
 ## Build and open
@@ -144,10 +145,12 @@ routes' flight or nominal-clearance qualification.
 
 Десять окремих проєктів містять п'ять форм маршруту у промисловому та природному
 середовищах. Кожен проєкт має одне завдання й незалежні маршрути самовирівнювання
-та Acro. Це перший крок D4; вибір режиму у просторовому редакторі та перевірка
-автономного доступу будуть окремими наступними кроками. Збережено результати
+та Acro. Це перший крок D4; вибір режиму у просторовому редакторі буде окремим
+наступним кроком. Збережено результати
 двадцяти польотів із точним повторенням та 237 успішних перевірок у браузері,
-зокрема фактичного перетягування маркера у просторовому редакторі.
+зокрема фактичного перетягування маркера у просторовому редакторі. Окремо
+перевірено редагування й повторне відкриття проєкту з вимкненим локальним сервером;
+перевірка на реальних пристроях і після очищення кешу залишається відкритою.
 
 Команда збірки вище створює `index.html` з посиланнями на редаговані ZIP. Відкрийте
 **Бібліотека → Імпорт .rlpack / проєкту**, оберіть ZIP, а потім

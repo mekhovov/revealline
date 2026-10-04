@@ -3062,6 +3062,12 @@ public Edit flow. No production guard changed. See the
 
 Publish this completed authoring increment independently. Continue explicit
 spatial mode choice through route edits/order/Undo/Redo/source overrides in a
-separate branch after runtime-capacity review; offline reopening is separately
-qualified. Neither this increment nor browser checks close full D4, hardware,
+separate branch after runtime-capacity review. Separate localhost offline
+qualification now passes on the same admitted player: actual Prepare offline,
+stopped origin with two curl exit-7 probes, reload/Workshop render, native keyboard
+edit, two Undo/Redo pairs, edited installation, reload, and restoration of both
+the original and edited revisions. Logs are empty; the dedicated server is
+restored afterward. The raw receipt and screenshots are in the starter evidence.
+This is not device-wide offline, browser restart, storage eviction or public-path
+qualification. Neither this increment nor browser checks close full D4, hardware,
 novice or sustained-FPS acceptance. Additional unit coverage remains in D6.
