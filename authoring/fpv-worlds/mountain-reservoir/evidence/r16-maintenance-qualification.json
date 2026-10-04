@@ -1,0 +1,1240 @@
+{
+  "format": "FPVReservoirMaintenanceQualification.v1",
+  "beforeSHA256": "3215632ac49f9c7142858744140165dd1382b3fda3ea40a7b864688b7305d898",
+  "afterSHA256": "2ab983dd2262027084cbd23b48d59be866ac790cc15df30ef4a87bec7e3fa843",
+  "preparedSHA256": "6d7d829e337357b61fa212af3691bd8e3088092ce22de9d93011f7e820142bae",
+  "checks": [
+    {
+      "name": "Exact accepted r15 source",
+      "passed": true
+    },
+    {
+      "name": "Source below unchanged 1.2MiB target",
+      "passed": true
+    },
+    {
+      "name": "nodes exact ownership/state",
+      "passed": true
+    },
+    {
+      "name": "scenes exact ownership/state",
+      "passed": true
+    },
+    {
+      "name": "meshes exact ownership/state",
+      "passed": true
+    },
+    {
+      "name": "materials exact ownership/state",
+      "passed": true
+    },
+    {
+      "name": "textures exact ownership/state",
+      "passed": true
+    },
+    {
+      "name": "samplers exact ownership/state",
+      "passed": true
+    },
+    {
+      "name": "extensionsUsed exact ownership/state",
+      "passed": true
+    },
+    {
+      "name": "extensionsRequired exact ownership/state",
+      "passed": true
+    },
+    {
+      "name": "Image 0 exact",
+      "passed": true
+    },
+    {
+      "name": "Image 1 exact",
+      "passed": true
+    },
+    {
+      "name": "Image 2 exact",
+      "passed": true
+    },
+    {
+      "name": "closed-window existing untextured attribute layout",
+      "passed": true
+    },
+    {
+      "name": "closed-window/NORMAL all retained attributes exact",
+      "passed": true
+    },
+    {
+      "name": "closed-window/NORMAL exact bounded append",
+      "passed": true
+    },
+    {
+      "name": "closed-window outward planar normals",
+      "passed": true
+    },
+    {
+      "name": "closed-window existing untextured attribute layout",
+      "passed": true
+    },
+    {
+      "name": "closed-window/POSITION all retained attributes exact",
+      "passed": true
+    },
+    {
+      "name": "closed-window/POSITION exact bounded append",
+      "passed": true
+    },
+    {
+      "name": "closed-window triangle 0 one closed face only",
+      "passed": true
+    },
+    {
+      "name": "closed-window triangle 1 one closed face only",
+      "passed": true
+    },
+    {
+      "name": "closed-window triangle 2 one closed face only",
+      "passed": true
+    },
+    {
+      "name": "closed-window triangle 3 one closed face only",
+      "passed": true
+    },
+    {
+      "name": "closed-window triangle 4 one closed face only",
+      "passed": true
+    },
+    {
+      "name": "closed-window triangle 5 one closed face only",
+      "passed": true
+    },
+    {
+      "name": "closed-window triangle 6 one closed face only",
+      "passed": true
+    },
+    {
+      "name": "closed-window triangle 7 one closed face only",
+      "passed": true
+    },
+    {
+      "name": "closed-window triangle 8 one closed face only",
+      "passed": true
+    },
+    {
+      "name": "closed-window triangle 9 one closed face only",
+      "passed": true
+    },
+    {
+      "name": "closed-window triangle 10 one closed face only",
+      "passed": true
+    },
+    {
+      "name": "closed-window triangle 11 one closed face only",
+      "passed": true
+    },
+    {
+      "name": "closed-window triangle 12 one closed face only",
+      "passed": true
+    },
+    {
+      "name": "closed-window triangle 13 one closed face only",
+      "passed": true
+    },
+    {
+      "name": "closed-window triangle 14 one closed face only",
+      "passed": true
+    },
+    {
+      "name": "closed-window triangle 15 one closed face only",
+      "passed": true
+    },
+    {
+      "name": "closed-window removed triangles confined to exact old east-window boxes",
+      "passed": true
+    },
+    {
+      "name": "chalk-enamel existing untextured attribute layout",
+      "passed": true
+    },
+    {
+      "name": "chalk-enamel/NORMAL all retained attributes exact",
+      "passed": true
+    },
+    {
+      "name": "chalk-enamel/NORMAL exact bounded append",
+      "passed": true
+    },
+    {
+      "name": "chalk-enamel outward planar normals",
+      "passed": true
+    },
+    {
+      "name": "chalk-enamel existing untextured attribute layout",
+      "passed": true
+    },
+    {
+      "name": "chalk-enamel/POSITION all retained attributes exact",
+      "passed": true
+    },
+    {
+      "name": "chalk-enamel/POSITION exact bounded append",
+      "passed": true
+    },
+    {
+      "name": "chalk-enamel triangle 0 one closed face only",
+      "passed": true
+    },
+    {
+      "name": "chalk-enamel triangle 1 one closed face only",
+      "passed": true
+    },
+    {
+      "name": "chalk-enamel triangle 2 one closed face only",
+      "passed": true
+    },
+    {
+      "name": "chalk-enamel triangle 3 one closed face only",
+      "passed": true
+    },
+    {
+      "name": "chalk-enamel triangle 4 one closed face only",
+      "passed": true
+    },
+    {
+      "name": "chalk-enamel triangle 5 one closed face only",
+      "passed": true
+    },
+    {
+      "name": "chalk-enamel triangle 6 one closed face only",
+      "passed": true
+    },
+    {
+      "name": "chalk-enamel triangle 7 one closed face only",
+      "passed": true
+    },
+    {
+      "name": "chalk-enamel triangle 8 one closed face only",
+      "passed": true
+    },
+    {
+      "name": "chalk-enamel triangle 9 one closed face only",
+      "passed": true
+    },
+    {
+      "name": "chalk-enamel triangle 10 one closed face only",
+      "passed": true
+    },
+    {
+      "name": "chalk-enamel triangle 11 one closed face only",
+      "passed": true
+    },
+    {
+      "name": "chalk-enamel triangle 12 one closed face only",
+      "passed": true
+    },
+    {
+      "name": "chalk-enamel triangle 13 one closed face only",
+      "passed": true
+    },
+    {
+      "name": "chalk-enamel triangle 14 one closed face only",
+      "passed": true
+    },
+    {
+      "name": "chalk-enamel triangle 15 one closed face only",
+      "passed": true
+    },
+    {
+      "name": "chalk-enamel triangle 16 one closed face only",
+      "passed": true
+    },
+    {
+      "name": "chalk-enamel triangle 17 one closed face only",
+      "passed": true
+    },
+    {
+      "name": "chalk-enamel triangle 18 one closed face only",
+      "passed": true
+    },
+    {
+      "name": "chalk-enamel triangle 19 one closed face only",
+      "passed": true
+    },
+    {
+      "name": "chalk-enamel triangle 20 one closed face only",
+      "passed": true
+    },
+    {
+      "name": "chalk-enamel triangle 21 one closed face only",
+      "passed": true
+    },
+    {
+      "name": "chalk-enamel triangle 22 one closed face only",
+      "passed": true
+    },
+    {
+      "name": "chalk-enamel triangle 23 one closed face only",
+      "passed": true
+    },
+    {
+      "name": "chalk-enamel triangle 24 one closed face only",
+      "passed": true
+    },
+    {
+      "name": "chalk-enamel triangle 25 one closed face only",
+      "passed": true
+    },
+    {
+      "name": "chalk-enamel triangle 26 one closed face only",
+      "passed": true
+    },
+    {
+      "name": "chalk-enamel triangle 27 one closed face only",
+      "passed": true
+    },
+    {
+      "name": "chalk-enamel triangle 28 one closed face only",
+      "passed": true
+    },
+    {
+      "name": "chalk-enamel triangle 29 one closed face only",
+      "passed": true
+    },
+    {
+      "name": "chalk-enamel triangle 30 one closed face only",
+      "passed": true
+    },
+    {
+      "name": "chalk-enamel triangle 31 one closed face only",
+      "passed": true
+    },
+    {
+      "name": "chalk-enamel triangle 32 one closed face only",
+      "passed": true
+    },
+    {
+      "name": "chalk-enamel triangle 33 one closed face only",
+      "passed": true
+    },
+    {
+      "name": "chalk-enamel triangle 34 one closed face only",
+      "passed": true
+    },
+    {
+      "name": "chalk-enamel triangle 35 one closed face only",
+      "passed": true
+    },
+    {
+      "name": "chalk-enamel triangle 36 one closed face only",
+      "passed": true
+    },
+    {
+      "name": "chalk-enamel triangle 37 one closed face only",
+      "passed": true
+    },
+    {
+      "name": "chalk-enamel triangle 38 one closed face only",
+      "passed": true
+    },
+    {
+      "name": "chalk-enamel triangle 39 one closed face only",
+      "passed": true
+    },
+    {
+      "name": "chalk-enamel triangle 40 one closed face only",
+      "passed": true
+    },
+    {
+      "name": "chalk-enamel triangle 41 one closed face only",
+      "passed": true
+    },
+    {
+      "name": "chalk-enamel triangle 42 one closed face only",
+      "passed": true
+    },
+    {
+      "name": "chalk-enamel triangle 43 one closed face only",
+      "passed": true
+    },
+    {
+      "name": "chalk-enamel triangle 44 one closed face only",
+      "passed": true
+    },
+    {
+      "name": "chalk-enamel triangle 45 one closed face only",
+      "passed": true
+    },
+    {
+      "name": "chalk-enamel triangle 46 one closed face only",
+      "passed": true
+    },
+    {
+      "name": "chalk-enamel triangle 47 one closed face only",
+      "passed": true
+    },
+    {
+      "name": "chalk-enamel triangle 48 one closed face only",
+      "passed": true
+    },
+    {
+      "name": "chalk-enamel removed triangles confined to exact old east-window boxes",
+      "passed": true
+    },
+    {
+      "name": "blue-enamel existing untextured attribute layout",
+      "passed": true
+    },
+    {
+      "name": "blue-enamel/NORMAL all retained attributes exact",
+      "passed": true
+    },
+    {
+      "name": "blue-enamel/NORMAL exact bounded append",
+      "passed": true
+    },
+    {
+      "name": "blue-enamel outward planar normals",
+      "passed": true
+    },
+    {
+      "name": "blue-enamel existing untextured attribute layout",
+      "passed": true
+    },
+    {
+      "name": "blue-enamel/POSITION all retained attributes exact",
+      "passed": true
+    },
+    {
+      "name": "blue-enamel/POSITION exact bounded append",
+      "passed": true
+    },
+    {
+      "name": "blue-enamel triangle 0 one closed face only",
+      "passed": true
+    },
+    {
+      "name": "blue-enamel triangle 1 one closed face only",
+      "passed": true
+    },
+    {
+      "name": "blue-enamel triangle 2 one closed face only",
+      "passed": true
+    },
+    {
+      "name": "blue-enamel triangle 3 one closed face only",
+      "passed": true
+    },
+    {
+      "name": "blue-enamel triangle 4 one closed face only",
+      "passed": true
+    },
+    {
+      "name": "blue-enamel triangle 5 one closed face only",
+      "passed": true
+    },
+    {
+      "name": "blue-enamel triangle 6 one closed face only",
+      "passed": true
+    },
+    {
+      "name": "blue-enamel triangle 7 one closed face only",
+      "passed": true
+    },
+    {
+      "name": "blue-enamel triangle 8 one closed face only",
+      "passed": true
+    },
+    {
+      "name": "blue-enamel triangle 9 one closed face only",
+      "passed": true
+    },
+    {
+      "name": "blue-enamel triangle 10 one closed face only",
+      "passed": true
+    },
+    {
+      "name": "blue-enamel triangle 11 one closed face only",
+      "passed": true
+    },
+    {
+      "name": "blue-enamel triangle 12 one closed face only",
+      "passed": true
+    },
+    {
+      "name": "blue-enamel triangle 13 one closed face only",
+      "passed": true
+    },
+    {
+      "name": "blue-enamel triangle 14 one closed face only",
+      "passed": true
+    },
+    {
+      "name": "blue-enamel triangle 15 one closed face only",
+      "passed": true
+    },
+    {
+      "name": "blue-enamel triangle 16 one closed face only",
+      "passed": true
+    },
+    {
+      "name": "blue-enamel triangle 17 one closed face only",
+      "passed": true
+    },
+    {
+      "name": "blue-enamel triangle 18 one closed face only",
+      "passed": true
+    },
+    {
+      "name": "blue-enamel triangle 19 one closed face only",
+      "passed": true
+    },
+    {
+      "name": "blue-enamel triangle 20 one closed face only",
+      "passed": true
+    },
+    {
+      "name": "safety-yellow/NORMAL exact bytes",
+      "passed": true
+    },
+    {
+      "name": "safety-yellow/POSITION exact bytes",
+      "passed": true
+    },
+    {
+      "name": "oxidized-roof existing untextured attribute layout",
+      "passed": true
+    },
+    {
+      "name": "oxidized-roof/NORMAL all retained attributes exact",
+      "passed": true
+    },
+    {
+      "name": "oxidized-roof/NORMAL exact bounded append",
+      "passed": true
+    },
+    {
+      "name": "oxidized-roof outward planar normals",
+      "passed": true
+    },
+    {
+      "name": "oxidized-roof existing untextured attribute layout",
+      "passed": true
+    },
+    {
+      "name": "oxidized-roof/POSITION all retained attributes exact",
+      "passed": true
+    },
+    {
+      "name": "oxidized-roof/POSITION exact bounded append",
+      "passed": true
+    },
+    {
+      "name": "oxidized-roof triangle 0 one closed face only",
+      "passed": true
+    },
+    {
+      "name": "oxidized-roof triangle 1 one closed face only",
+      "passed": true
+    },
+    {
+      "name": "oxidized-roof triangle 2 one closed face only",
+      "passed": true
+    },
+    {
+      "name": "oxidized-roof triangle 3 one closed face only",
+      "passed": true
+    },
+    {
+      "name": "oxidized-roof triangle 4 one closed face only",
+      "passed": true
+    },
+    {
+      "name": "oxidized-roof triangle 5 one closed face only",
+      "passed": true
+    },
+    {
+      "name": "shore-meadow/COLOR_0 exact bytes",
+      "passed": true
+    },
+    {
+      "name": "shore-meadow/NORMAL exact bytes",
+      "passed": true
+    },
+    {
+      "name": "shore-meadow/POSITION exact bytes",
+      "passed": true
+    },
+    {
+      "name": "shore-meadow/TEXCOORD_0 exact bytes",
+      "passed": true
+    },
+    {
+      "name": "warm-gravel/COLOR_0 exact bytes",
+      "passed": true
+    },
+    {
+      "name": "warm-gravel/NORMAL exact bytes",
+      "passed": true
+    },
+    {
+      "name": "warm-gravel/POSITION exact bytes",
+      "passed": true
+    },
+    {
+      "name": "warm-gravel/TEXCOORD_0 exact bytes",
+      "passed": true
+    },
+    {
+      "name": "mineral-ridge/COLOR_0 exact bytes",
+      "passed": true
+    },
+    {
+      "name": "mineral-ridge/NORMAL exact bytes",
+      "passed": true
+    },
+    {
+      "name": "mineral-ridge/POSITION exact bytes",
+      "passed": true
+    },
+    {
+      "name": "mineral-ridge/TEXCOORD_0 exact bytes",
+      "passed": true
+    },
+    {
+      "name": "reservoir-water/COLOR_0 exact bytes",
+      "passed": true
+    },
+    {
+      "name": "reservoir-water/NORMAL exact bytes",
+      "passed": true
+    },
+    {
+      "name": "reservoir-water/POSITION exact bytes",
+      "passed": true
+    },
+    {
+      "name": "water-current/NORMAL exact bytes",
+      "passed": true
+    },
+    {
+      "name": "water-current/POSITION exact bytes",
+      "passed": true
+    },
+    {
+      "name": "tree-bark/NORMAL exact bytes",
+      "passed": true
+    },
+    {
+      "name": "tree-bark/POSITION exact bytes",
+      "passed": true
+    },
+    {
+      "name": "fir-light/NORMAL exact bytes",
+      "passed": true
+    },
+    {
+      "name": "fir-light/POSITION exact bytes",
+      "passed": true
+    },
+    {
+      "name": "fir-dark/NORMAL exact bytes",
+      "passed": true
+    },
+    {
+      "name": "fir-dark/POSITION exact bytes",
+      "passed": true
+    },
+    {
+      "name": "Exactly 92 new triangles below 96 target; remove 120 redundant triangles",
+      "passed": true
+    },
+    {
+      "name": "Nondegenerate outward triangle 0",
+      "passed": true
+    },
+    {
+      "name": "Nondegenerate outward triangle 1",
+      "passed": true
+    },
+    {
+      "name": "Nondegenerate outward triangle 2",
+      "passed": true
+    },
+    {
+      "name": "Nondegenerate outward triangle 3",
+      "passed": true
+    },
+    {
+      "name": "Nondegenerate outward triangle 4",
+      "passed": true
+    },
+    {
+      "name": "Nondegenerate outward triangle 5",
+      "passed": true
+    },
+    {
+      "name": "Nondegenerate outward triangle 6",
+      "passed": true
+    },
+    {
+      "name": "Nondegenerate outward triangle 7",
+      "passed": true
+    },
+    {
+      "name": "Nondegenerate outward triangle 8",
+      "passed": true
+    },
+    {
+      "name": "Nondegenerate outward triangle 9",
+      "passed": true
+    },
+    {
+      "name": "Nondegenerate outward triangle 10",
+      "passed": true
+    },
+    {
+      "name": "Nondegenerate outward triangle 11",
+      "passed": true
+    },
+    {
+      "name": "Nondegenerate outward triangle 12",
+      "passed": true
+    },
+    {
+      "name": "Nondegenerate outward triangle 13",
+      "passed": true
+    },
+    {
+      "name": "Nondegenerate outward triangle 14",
+      "passed": true
+    },
+    {
+      "name": "Nondegenerate outward triangle 15",
+      "passed": true
+    },
+    {
+      "name": "Nondegenerate outward triangle 16",
+      "passed": true
+    },
+    {
+      "name": "Nondegenerate outward triangle 17",
+      "passed": true
+    },
+    {
+      "name": "Nondegenerate outward triangle 18",
+      "passed": true
+    },
+    {
+      "name": "Nondegenerate outward triangle 19",
+      "passed": true
+    },
+    {
+      "name": "Nondegenerate outward triangle 20",
+      "passed": true
+    },
+    {
+      "name": "Nondegenerate outward triangle 21",
+      "passed": true
+    },
+    {
+      "name": "Nondegenerate outward triangle 22",
+      "passed": true
+    },
+    {
+      "name": "Nondegenerate outward triangle 23",
+      "passed": true
+    },
+    {
+      "name": "Nondegenerate outward triangle 24",
+      "passed": true
+    },
+    {
+      "name": "Nondegenerate outward triangle 25",
+      "passed": true
+    },
+    {
+      "name": "Nondegenerate outward triangle 26",
+      "passed": true
+    },
+    {
+      "name": "Nondegenerate outward triangle 27",
+      "passed": true
+    },
+    {
+      "name": "Nondegenerate outward triangle 28",
+      "passed": true
+    },
+    {
+      "name": "Nondegenerate outward triangle 29",
+      "passed": true
+    },
+    {
+      "name": "Nondegenerate outward triangle 30",
+      "passed": true
+    },
+    {
+      "name": "Nondegenerate outward triangle 31",
+      "passed": true
+    },
+    {
+      "name": "Nondegenerate outward triangle 32",
+      "passed": true
+    },
+    {
+      "name": "Nondegenerate outward triangle 33",
+      "passed": true
+    },
+    {
+      "name": "Nondegenerate outward triangle 34",
+      "passed": true
+    },
+    {
+      "name": "Nondegenerate outward triangle 35",
+      "passed": true
+    },
+    {
+      "name": "Nondegenerate outward triangle 36",
+      "passed": true
+    },
+    {
+      "name": "Nondegenerate outward triangle 37",
+      "passed": true
+    },
+    {
+      "name": "Nondegenerate outward triangle 38",
+      "passed": true
+    },
+    {
+      "name": "Nondegenerate outward triangle 39",
+      "passed": true
+    },
+    {
+      "name": "Nondegenerate outward triangle 40",
+      "passed": true
+    },
+    {
+      "name": "Nondegenerate outward triangle 41",
+      "passed": true
+    },
+    {
+      "name": "Nondegenerate outward triangle 42",
+      "passed": true
+    },
+    {
+      "name": "Nondegenerate outward triangle 43",
+      "passed": true
+    },
+    {
+      "name": "Nondegenerate outward triangle 44",
+      "passed": true
+    },
+    {
+      "name": "Nondegenerate outward triangle 45",
+      "passed": true
+    },
+    {
+      "name": "Nondegenerate outward triangle 46",
+      "passed": true
+    },
+    {
+      "name": "Nondegenerate outward triangle 47",
+      "passed": true
+    },
+    {
+      "name": "Nondegenerate outward triangle 48",
+      "passed": true
+    },
+    {
+      "name": "Nondegenerate outward triangle 49",
+      "passed": true
+    },
+    {
+      "name": "Nondegenerate outward triangle 50",
+      "passed": true
+    },
+    {
+      "name": "Nondegenerate outward triangle 51",
+      "passed": true
+    },
+    {
+      "name": "Nondegenerate outward triangle 52",
+      "passed": true
+    },
+    {
+      "name": "Nondegenerate outward triangle 53",
+      "passed": true
+    },
+    {
+      "name": "Nondegenerate outward triangle 54",
+      "passed": true
+    },
+    {
+      "name": "Nondegenerate outward triangle 55",
+      "passed": true
+    },
+    {
+      "name": "Nondegenerate outward triangle 56",
+      "passed": true
+    },
+    {
+      "name": "Nondegenerate outward triangle 57",
+      "passed": true
+    },
+    {
+      "name": "Nondegenerate outward triangle 58",
+      "passed": true
+    },
+    {
+      "name": "Nondegenerate outward triangle 59",
+      "passed": true
+    },
+    {
+      "name": "Nondegenerate outward triangle 60",
+      "passed": true
+    },
+    {
+      "name": "Nondegenerate outward triangle 61",
+      "passed": true
+    },
+    {
+      "name": "Nondegenerate outward triangle 62",
+      "passed": true
+    },
+    {
+      "name": "Nondegenerate outward triangle 63",
+      "passed": true
+    },
+    {
+      "name": "Nondegenerate outward triangle 64",
+      "passed": true
+    },
+    {
+      "name": "Nondegenerate outward triangle 65",
+      "passed": true
+    },
+    {
+      "name": "Nondegenerate outward triangle 66",
+      "passed": true
+    },
+    {
+      "name": "Nondegenerate outward triangle 67",
+      "passed": true
+    },
+    {
+      "name": "Nondegenerate outward triangle 68",
+      "passed": true
+    },
+    {
+      "name": "Nondegenerate outward triangle 69",
+      "passed": true
+    },
+    {
+      "name": "Nondegenerate outward triangle 70",
+      "passed": true
+    },
+    {
+      "name": "Nondegenerate outward triangle 71",
+      "passed": true
+    },
+    {
+      "name": "Nondegenerate outward triangle 72",
+      "passed": true
+    },
+    {
+      "name": "Nondegenerate outward triangle 73",
+      "passed": true
+    },
+    {
+      "name": "Nondegenerate outward triangle 74",
+      "passed": true
+    },
+    {
+      "name": "Nondegenerate outward triangle 75",
+      "passed": true
+    },
+    {
+      "name": "Nondegenerate outward triangle 76",
+      "passed": true
+    },
+    {
+      "name": "Nondegenerate outward triangle 77",
+      "passed": true
+    },
+    {
+      "name": "Nondegenerate outward triangle 78",
+      "passed": true
+    },
+    {
+      "name": "Nondegenerate outward triangle 79",
+      "passed": true
+    },
+    {
+      "name": "Nondegenerate outward triangle 80",
+      "passed": true
+    },
+    {
+      "name": "Nondegenerate outward triangle 81",
+      "passed": true
+    },
+    {
+      "name": "Nondegenerate outward triangle 82",
+      "passed": true
+    },
+    {
+      "name": "Nondegenerate outward triangle 83",
+      "passed": true
+    },
+    {
+      "name": "Nondegenerate outward triangle 84",
+      "passed": true
+    },
+    {
+      "name": "Nondegenerate outward triangle 85",
+      "passed": true
+    },
+    {
+      "name": "Nondegenerate outward triangle 86",
+      "passed": true
+    },
+    {
+      "name": "Nondegenerate outward triangle 87",
+      "passed": true
+    },
+    {
+      "name": "Nondegenerate outward triangle 88",
+      "passed": true
+    },
+    {
+      "name": "Nondegenerate outward triangle 89",
+      "passed": true
+    },
+    {
+      "name": "Nondegenerate outward triangle 90",
+      "passed": true
+    },
+    {
+      "name": "Nondegenerate outward triangle 91",
+      "passed": true
+    },
+    {
+      "name": "No overlapping new coplanar coloured surfaces after serialization",
+      "passed": true
+    },
+    {
+      "name": "Maintenance badge is fully filled opaque partition",
+      "passed": true
+    },
+    {
+      "name": "Closed vent is fully filled opaque plate",
+      "passed": true
+    },
+    {
+      "name": "Pane at 12.333333333333334 matches existing canonical lower mark",
+      "passed": true
+    },
+    {
+      "name": "Pane/frame at 12.333333333333334 entire closed rectangle",
+      "passed": true
+    },
+    {
+      "name": "Pane at 15 matches existing canonical lower mark",
+      "passed": true
+    },
+    {
+      "name": "Pane/frame at 15 entire closed rectangle",
+      "passed": true
+    },
+    {
+      "name": "Pane at 17.666666666666668 matches existing canonical lower mark",
+      "passed": true
+    },
+    {
+      "name": "Pane/frame at 17.666666666666668 entire closed rectangle",
+      "passed": true
+    },
+    {
+      "name": "No new front paint overlaps existing closed door or amber lintel",
+      "passed": true
+    },
+    {
+      "name": "New explicit r16 identity",
+      "passed": true
+    },
+    {
+      "name": "All eight complete courses/colliders/routes exact except revision",
+      "passed": true
+    },
+    {
+      "name": "spawnBindings exact",
+      "passed": true
+    },
+    {
+      "name": "routeBindings exact",
+      "passed": true
+    },
+    {
+      "name": "overrides exact",
+      "passed": true
+    },
+    {
+      "name": "themes exact",
+      "passed": true
+    },
+    {
+      "name": "campaigns exact",
+      "passed": true
+    },
+    {
+      "name": "playlists exact",
+      "passed": true
+    },
+    {
+      "name": "Prepared nodes exact ownership/state",
+      "passed": true
+    },
+    {
+      "name": "Prepared scenes exact ownership/state",
+      "passed": true
+    },
+    {
+      "name": "Prepared meshes exact ownership/state",
+      "passed": true
+    },
+    {
+      "name": "Prepared materials exact ownership/state",
+      "passed": true
+    },
+    {
+      "name": "Prepared textures exact ownership/state",
+      "passed": true
+    },
+    {
+      "name": "Prepared samplers exact ownership/state",
+      "passed": true
+    },
+    {
+      "name": "Prepared extensionsUsed exact ownership/state",
+      "passed": true
+    },
+    {
+      "name": "Prepared extensionsRequired exact ownership/state",
+      "passed": true
+    },
+    {
+      "name": "Prepared safety-yellow/NORMAL exact bytes",
+      "passed": true
+    },
+    {
+      "name": "Prepared safety-yellow/POSITION exact bytes",
+      "passed": true
+    },
+    {
+      "name": "Prepared shore-meadow/COLOR_0 exact bytes",
+      "passed": true
+    },
+    {
+      "name": "Prepared shore-meadow/NORMAL exact bytes",
+      "passed": true
+    },
+    {
+      "name": "Prepared shore-meadow/POSITION exact bytes",
+      "passed": true
+    },
+    {
+      "name": "Prepared shore-meadow/TEXCOORD_0 exact bytes",
+      "passed": true
+    },
+    {
+      "name": "Prepared warm-gravel/COLOR_0 exact bytes",
+      "passed": true
+    },
+    {
+      "name": "Prepared warm-gravel/NORMAL exact bytes",
+      "passed": true
+    },
+    {
+      "name": "Prepared warm-gravel/POSITION exact bytes",
+      "passed": true
+    },
+    {
+      "name": "Prepared warm-gravel/TEXCOORD_0 exact bytes",
+      "passed": true
+    },
+    {
+      "name": "Prepared mineral-ridge/COLOR_0 exact bytes",
+      "passed": true
+    },
+    {
+      "name": "Prepared mineral-ridge/NORMAL exact bytes",
+      "passed": true
+    },
+    {
+      "name": "Prepared mineral-ridge/POSITION exact bytes",
+      "passed": true
+    },
+    {
+      "name": "Prepared mineral-ridge/TEXCOORD_0 exact bytes",
+      "passed": true
+    },
+    {
+      "name": "Prepared reservoir-water/COLOR_0 exact bytes",
+      "passed": true
+    },
+    {
+      "name": "Prepared reservoir-water/NORMAL exact bytes",
+      "passed": true
+    },
+    {
+      "name": "Prepared reservoir-water/POSITION exact bytes",
+      "passed": true
+    },
+    {
+      "name": "Prepared water-current/NORMAL exact bytes",
+      "passed": true
+    },
+    {
+      "name": "Prepared water-current/POSITION exact bytes",
+      "passed": true
+    },
+    {
+      "name": "Prepared tree-bark/NORMAL exact bytes",
+      "passed": true
+    },
+    {
+      "name": "Prepared tree-bark/POSITION exact bytes",
+      "passed": true
+    },
+    {
+      "name": "Prepared fir-light/NORMAL exact bytes",
+      "passed": true
+    },
+    {
+      "name": "Prepared fir-light/POSITION exact bytes",
+      "passed": true
+    },
+    {
+      "name": "Prepared fir-dark/NORMAL exact bytes",
+      "passed": true
+    },
+    {
+      "name": "Prepared fir-dark/POSITION exact bytes",
+      "passed": true
+    },
+    {
+      "name": "Prepared validator zero errors",
+      "passed": true
+    },
+    {
+      "name": "Exact resource counts; triangle budget reduced by 28",
+      "passed": true
+    }
+  ],
+  "newTriangles": 92,
+  "removedTriangles": 120,
+  "maximumOverlapSquareMetres": 0,
+  "limitations": [
+    "Serialized ownership/collision/closed-partition audit, not visual acceptance.",
+    "Actual low/balanced/high, Pixel/shared, grazing and roof views still required.",
+    "No fresh16 ordinary proofs for this intermediate art candidate."
+  ]
+}
