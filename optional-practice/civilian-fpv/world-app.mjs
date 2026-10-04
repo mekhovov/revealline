@@ -5157,13 +5157,11 @@ export function mountWorldApp({
   });
   function openSettings() {
     pauseFlight();
-    ghostButton.hidden = true;
     $('sim-settings-controls').append(flightControls);
     if (!$('sim-settings').open) $('sim-settings').showModal();
   }
   on($('lobby-settings'), 'click', openSettings);
   function closeSettings() {
-    ghostButton.hidden = false;
     $('world-replay-controls').before(flightControls);
     $('sim-settings').close();
     pauseFlight();
