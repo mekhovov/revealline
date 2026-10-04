@@ -56,7 +56,38 @@ node authoring/fpv-worlds/surface-coatings/qualify.mjs LEGACY_PLAYER NEW_OUTPUT_
 node scripts/refresh-fpv-world-visuals.mjs --check
 ```
 
-Full validation, all-three source-bound package admission, supported-player
-WebGL checks and publication remain pending. The older direct-loader prototype
-and its rejected prepare-boundary assumption are preserved in the separate
-Reservoir branch at `530ad2d9606c9b5493e1dbfbf7e64b51d9339ab3`.
+Candidate `b51e17a83f2d3aad99f7076c3e0ae84f1122aeda` integrates the updated capacity
+parent `63fbe26be3ecde48a13e9c0ef8f3c7fff2fa8956`, including current Library main.
+The capability files remain byte-identical to the reviewed runtime-only source;
+the three static entry closures are still unchanged. Full Node 22 validation and
+all three source-bound package admissions pass with two byte-identical builds.
+Worlds retains 102 members and 95 original inputs, totaling 16,739,037 source
+bytes with 38,179 bytes below the unchanged 16MiB ceiling. The admitted-path
+addition is 3,399 bytes after the existing lexical projection.
+
+The existing content/Theme checks pass 29 and the texture-loader checks pass four.
+The first texture-file invocation could not start because two authoring fixture
+assets were absent from the sparse checkout. Exact Git-hash APFS copies restored
+those files; that affected file alone then passed. Both logs are retained, along
+with all original admission manifests, inventories and checksums under
+`evidence/qualified-b51/`. No new unit coverage was added.
+
+The complete admitted player is staged through 90 immutable links and 1,689,021
+new bytes, with no source overlay. Its fixed-camera fixture uses the unpublished
+r14 required-extension model and accepted r11 comparison model; those content
+files are not part of this runtime change. Nine actual packaged-renderer views
+pass the bounded visual review with no errors and successful resource disposal.
+Inspected overview/grazing, low/high approach, Pixel/shared replacement and
+landing views show no depth fighting. The two exact poses shared with the
+historical r13 prototype (close FPV and overview) retain identical pixel hashes;
+the other views are not described as matched parity. This is not complete-world
+art or hardware acceptance. The unmodified admitted player's visible Library
+chooser then installed the exact required pack as eight challenges. Rock terrace
+climb opened Ready, deliberately armed to Flight active, paused, continued and
+paused again. This is an import/render/control check, not course completion or
+offline qualification. An initial hidden-input targeting timeout was a tool
+interaction issue; the normal visible chooser succeeded.
+
+Protected publication remains pending. The older direct-loader prototype and its
+rejected prepare-boundary assumption are preserved separately
+at `530ad2d9606c9b5493e1dbfbf7e64b51d9339ab3`.
