@@ -1,7 +1,7 @@
 const $ = (id) => document.getElementById(id),
   frame = $('sim');
 const receipt = {
-  format: 'FPVCreatorInstallReliability.v1',
+  format: 'FPVCreatorInstallReliability.v2',
   checks: [],
   observations: [],
   hosts: [],
@@ -206,6 +206,13 @@ async function openEditor() {
     'non-first course remains selected',
   );
 }
+async function creatorLocale(locale) {
+  await settings();
+  set('world-language', locale);
+  await missions();
+  click(q('[data-tab="creator"]'));
+  await frames();
+}
 async function edit(suffix) {
   const input = q('#creator-json');
   reveal(input);
@@ -244,7 +251,7 @@ async function exportPack(name) {
   });
   return pack;
 }
-async function install(fault, name) {
+async function install(fault, name, faultExpected = true) {
   const start = p.data.transactions.length,
     beforeFaults = p.data.faults.length;
   p.data.fault = fault;
@@ -257,7 +264,8 @@ async function install(fault, name) {
         .some((r) => r.mode === 'readwrite' && r.stores.includes('revisions') && r.outcome),
     'native install terminal ' + name,
   );
-  if (fault) await until(() => p.data.faults.length > beforeFaults, 'named native fault ' + name);
+  if (fault && faultExpected)
+    await until(() => p.data.faults.length > beforeFaults, 'named native fault ' + name);
   await settled();
   const row = await capture(name);
   row.operation = p.data.transactions.slice(start).map((r) => ({ ...r }));
@@ -374,6 +382,10 @@ async function run() {
       'refresh failure retains earlier revisions',
     );
     receipt.refreshDiagnostic = { status: refresh.studio, committed: true };
+    check(
+      refresh.studio === 'World pack saved. Reload the page to refresh the Library.',
+      'committed refresh failure truthfully reports saved pack and reload action',
+    );
     const retryB = await install(null, 'ordinary retry after refresh failure');
     retained(beforeB, retryB, 'refresh failure retry');
     check(active(retryB).sha256 === editedB.sha256, 'refresh retry retains same exact pack');
@@ -381,12 +393,27 @@ async function run() {
       retryB.revisions.length === refresh.revisions.length,
       'refresh retry adds no duplicate revision',
     );
+    await creatorLocale('uk');
+    const beforeUK = await capture('before Ukrainian committed refresh failure');
+    const refreshUK = await install('commit-then-refresh', 'Ukrainian committed refresh failure');
+    retained(beforeUK, refreshUK, 'Ukrainian refresh failure');
+    check(
+      refreshUK.studio ===
+        'Пакунок світу збережено. Перезавантажте сторінку, щоб оновити бібліотеку.',
+      'Ukrainian committed-save guidance is visible',
+    );
+    check(
+      active(refreshUK).sha256 === editedB.sha256,
+      'Ukrainian refresh failure retains exact committed pack',
+    );
+    await creatorLocale('en');
     $('status').textContent = 'Commit revision, abort generation read, observe retry ownership';
     const editedC = await edit('C'),
       beforeC = await capture('before post-commit generation read');
     const generation = await install(
       'commit-then-generation',
-      'committed install with aborted generation read',
+      'committed install with generation-read abort probe armed',
+      false,
     );
     retained(beforeC, generation, 'post-commit generation read failure');
     check(
@@ -397,7 +424,18 @@ async function run() {
       generation.generation === beforeC.generation + 1,
       'generation read failure follows actual commit',
     );
-    const retryC = await install(null, 'ordinary retry after generation read failure');
+    check(
+      p.data.pendingGeneration &&
+        !generation.operation.some(
+          (r) => r.mode === 'readonly' && r.stores.length === 1 && r.stores[0] === 'meta',
+        ),
+      'committed result avoids redundant generation read while abort probe remains armed',
+    );
+    check(
+      generation.studio === 'World pack is ready to fly.',
+      'no false failure after committed result',
+    );
+    const retryC = await install(null, 'ordinary retry using committed generation');
     retained(beforeC, retryC, 'generation read retry');
     check(active(retryC).sha256 === editedC.sha256, 'generation retry retains committed bytes');
     receipt.generationDiagnostic = {
@@ -407,6 +445,45 @@ async function run() {
       retryGeneration: retryC.generation,
       retryTransactions: retryC.operation,
     };
+    check(
+      retryC.generation === generation.generation + 1,
+      'retry commits with exact previous committed generation',
+    );
+    check(retryC.studio === 'World pack is ready to fly.', 'retry reports actual completion');
+    check(
+      retryC.revisions.length === generation.revisions.length,
+      'retry retains one copy of each exact revision',
+    );
+    p.data.pendingGeneration = false;
+    const externalProject = w.JSON.parse(JSON.stringify(editedC.project));
+    externalProject.courses[1].locales.en.brief = 'Real separate-connection revision';
+    const externalPack = await p.content.inspectPack(await p.content.preparePack(externalProject));
+    const externalResult = await p.store.install({
+      ...externalPack,
+      expectedGeneration: retryC.generation,
+    });
+    receipt.externalWriter = {
+      scope: 'Explicit diagnostic second native connection; no runtime state substitution',
+      sha256: externalPack.sha256,
+      generation: externalResult.generation,
+    };
+    const beforeExternalRetry = await capture(
+      'separate native connection committed newer revision',
+    );
+    const staleRetry = await install(null, 'stale Creator retry after separate native writer');
+    retained(beforeExternalRetry, staleRetry, 'external-generation conflict');
+    check(
+      equal(beforeExternalRetry.revisions, staleRetry.revisions),
+      'stale retry cannot overwrite newer external revision',
+    );
+    check(
+      staleRetry.generation === externalResult.generation,
+      'stale retry leaves external generation exact',
+    );
+    check(
+      staleRetry.studio === 'World library changed. Reload before saving.',
+      'strict generation-conflict advice remains intact',
+    );
     const latestExport = await exportPack('after all faults');
     check(
       latestExport.sha256 === editedC.sha256,
@@ -421,7 +498,14 @@ async function run() {
       'native reopen exact retained original recording',
     );
     check(equal(saved.recovery, reopened.recovery), 'native reopen exact interrupted recovery');
-    check(active(reopened).sha256 === editedC.sha256, 'native reopen latest installed revision');
+    check(
+      active(reopened).sha256 === externalPack.sha256,
+      'native reopen latest external installed revision',
+    );
+    check(
+      reopened.revisions.some((r) => r.sha256 === editedC.sha256 && !r.active),
+      'native reopen retains previously saved Creator revision',
+    );
     check(
       reopened.revisions.some((r) => r.sha256 === fixture.pack.sha256 && !r.active),
       'native reopen retains original required pack',

@@ -1,6 +1,8 @@
 # Creator installation and retained-flight diagnostic
 
-This manual fixture starts from current main `5bd8f36d7767dcd9dda740865b4d8f19ddbe7c28`. It does not change product code or assume that installation is defective. The first browser run is pending.
+The original manual diagnostic at historical main `5bd8f36d7767dcd9dda740865b4d8f19ddbe7c28` passed all 254 retention/control assertions but reproduced two product failures: a committed save reported only “Flight storage failed” after refresh aborted, and a committed save followed by generation-read abort caused the next ordinary retry to reject its unchanged draft as stale. The complete raw receipt (1,311,673 bytes), screenshot, summary and fixture manifest are preserved losslessly under `evidence/baseline-8957`; the manifest records the original SHA-256 and restoration command. This diagnostic pass is not a claim that those outcomes were correct.
+
+The correction is based on normally merged main `395a638b1b3d68b0da9771f313990f3028703481`. Creator uses the generation returned by its completed installation transaction. Only the subsequent UI refresh is caught, with EN/UK guidance that the pack was saved and a page reload refreshes the Library. Validation, installation and genuine intervening-generation conflicts still reject. The revised fixture checks both translations, leaves the obsolete generation-read abort probe armed to prove that the extra read is absent, then uses a real separate native connection to install a newer revision and verifies that Creator cannot overwrite it. Candidate browser/admission are pending.
 
 The retained `d1d48b2b7ad67a0915532a1489f300abccd778ae` admitted player supplies all 102 members. The preparer verifies its original 95-input inventory and every member, then explicitly overlays only main's host and already-qualified visual source projection. The other 100 members, including the generated worker and its descriptors, remain exact. This is a source fixture, not a newly admitted combined player or offline qualification.
 
@@ -10,7 +12,7 @@ The host observer uses native IndexedDB from its own iframe and a unique databas
 
 1. Abort the world installation after its project write but before the transaction commits. The previous revisions and generation must remain exact; an ordinary retry should save the exported draft.
 2. Commit the installation, then abort the independent recordings read used by UI refresh. Verify the committed revision and retained flights; record the actual user-facing status and retry separately.
-3. Commit the installation, then abort the separate generation read. Record whether retry uses the committed generation or refuses the unchanged draft because of a stale generation. This outcome is diagnostic rather than a presumed success.
+3. Baseline: commit the installation, then abort the separate generation read and observe the stale retry. Candidate: retain that abort probe, require no redundant read, verify successful retry, then require rejection after a real separate-connection generation change.
 
 All three cases compare the exact retained recording and recovery, selected course/mode, editable JSON and paused flight. A native same-origin reopen checks durable bytes before continuing the old-revision recovery and using its verified Watch action. The fixture captures the actual exported Blob instead of opening an OS download; no export data is substituted.
 
