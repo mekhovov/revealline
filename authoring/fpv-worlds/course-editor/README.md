@@ -89,7 +89,9 @@ reverted, restoring the exact qualified host hash
 No rename/append semantics changed and no replacement admission was required.
 The optional `?scope=identity` fixture entry provides a separate bounded manual
 control for that rejection, pending-field retention, project export and native
-reopening. It does not modify the accepted source-r1 or package-r2 fixture.
+reopening. It passes **160/160** on the same admitted runtime, with empty operator
+console warning/error logs; its full receipt is retained under `evidence/identity-r3-*`.
+It does not modify the accepted source-r1 or package-r2 fixture.
 
 Neither qualification claims completed edited routes, offline readiness, hardware
 performance or public deployment.
