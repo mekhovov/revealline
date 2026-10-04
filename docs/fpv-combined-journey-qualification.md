@@ -99,7 +99,8 @@ The parent runs trusted browser actions; no benchmark or competing GPU run overl
    hashes, selected edit, old retained revision, all 16 original proof bytes and
    interrupted recovery. The changed course may invalidate its own demonstration;
    never require an old proof to bind to a changed course. Use an unchanged course
-   and exact retained revision for the concluding Watch/continuation check.
+   and exact retained revision for recovery. The earlier full Watch is not repeated;
+   retained proof bytes and dependency availability are checked separately.
 8. **Prepare and reopen without the origin server.** Through public Library,
    prepare the exact runtime offline and wait for completion. Record the installed
    pack and runtime-cache state separately. Stop only the known dedicated server;
