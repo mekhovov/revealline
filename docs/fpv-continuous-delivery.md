@@ -3369,8 +3369,10 @@ are preserved in qualified [PR #1096](https://github.com/mekhovov/revealline/pul
 First Reservoir row #1094 and qualified Festival r5 #1097 are also Draft under the
 explicit human-authorized P1 #1083 main-merge hold. This procedural state preserves
 heads and qualification; no hold lift, merge, policy change or live-row claim is
-implied. Harbor is the next bounded scene checkpoint after Festival; initial
-water/barge/deck views need revision. Canals and D6 retain their approved order.
+implied. Qualified stick-size observation #1099 is also held Draft. Harbor's accepted
+r2 scene is fixed while eight authored routes enter static/ordinary-proof qualification;
+an actual fine-step actor support stall remains under diagnosis, before any native
+world/release claim. Canals and D6 retain their approved order.
 
 The separate imported catalogue correction removes the unverified Explore,
 intermediate and 4-minute defaults. The selected mode can infer only one consistent
@@ -3384,7 +3386,13 @@ controls and reproduced a separate product defect: an Acro replay changed the
 selected mode while Missions retained the previous Follow label until a filter
 repaint. The narrow correction repaints when Missions opens. Its immutable 8976
 fixture passed 424 checks and 14 samples, requiring Observe immediately before any
-filter change; both native owners recorded no warnings or errors. Final admission
-and protected publication remain pending. Runtime grows 620 bytes in one of
-95 inputs, leaving 34,958 source bytes before other draft integrations. See the
+filter change; both native owners recorded no warnings or errors. Final `add835c7b`
+admission passed full Node22 validation, 12 existing World UI checks and two identical
+builds of all three optional packages. Runtime grows 620 bytes in one of 95 inputs,
+leaving 34,958 source bytes before other draft integrations. Exact admitted fixture
+8977 passed the same 424 checks and 14 samples with no runtime overlays or owner
+warnings/errors. Source/admitted check names/results, catalogue samples and immediate
+Acro mode observation match. The focused change is qualified for a held Draft PR;
+protected publication remains subject to the explicit human hold. No published
+Browse, whole replay completion, offline or performance claim is added. See the
 [focused scope](../authoring/fpv-worlds/catalogue-truthfulness/README.md).
