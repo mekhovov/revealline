@@ -5,9 +5,14 @@ control modes over the accepted r3 scene: orientation, three races, a precision
 landing, a moving service-cart escort, guide observation and a capstone circuit.
 Fresh qualification passes 616 checks, including all sixteen recorded ordinary
 flights, independent complete replay and exported-archive replay. Every flight
-finishes with full health and zero contacts. Real import, browser Watch/editor,
-native launch and offline qualification are still pending; this is not yet a
-published or production-Library world.
+finishes with full health and zero contacts. Actual browser qualification passes
+311 checks: native File/IndexedDB import, all sixteen complete controlled-RAF
+Watch replays, eight-course/two-mode editing, source reimport and storage reopen.
+All terminal identities, ticks and landing speeds match the ordinary proofs;
+errors, warnings and dropped diagnostics are empty. The created renderer releases
+all registered resources, while the reopened lobby correctly creates none.
+Native subject views and offline qualification are still pending; this is not
+yet a published or production-Library world.
 
 The scene has 12,284 imported triangles, 12 material batches, two original 256px
 maps and 47 explicit solids. Eleven actual-renderer views accepted the bounded r3
@@ -62,6 +67,14 @@ adds no runtime overlay. Its complete Watch matrix uses controlled RAF delivery
 with the unchanged performance clock and pause guards, not assigned simulation
 state or native-clock endurance. Native launch and true stopped-origin offline
 use require the separate unmodified admitted entry and their own receipts.
+
+The immutable r5 candidate files are [the installable pack](distribution/r5/festival-grounds.r5.rlpack),
+[the editable project ZIP](distribution/r5/festival-grounds.r5.zip) and
+[sixteen exact-pack demonstrations](distribution/r5/festival-grounds.r5.proofs.json).
+The [release manifest](distribution/r5/manifest.json) records their sizes,
+SHA-256 digests and the remaining qualification gates. Installing this optional
+pack adds one world and eight authored challenges; it does not change the bundled
+14-world/196-challenge catalogue.
 
 The moving cart requires 300 continuous tracking ticks and at least 4m of real
 travel; both recorded modes achieve 4.2m. Guide observation requires 200 continuous

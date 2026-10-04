@@ -87,10 +87,15 @@
     "staticReceipt": "../../evidence/r3-static/static-review.json",
     "revisionBridgeReceipt": "../../evidence/r4-r5-bridge.json",
     "admittedBrowserRuntime": "364fb78c3dc7e268b84b0a13349af32864bca802",
-    "browserStatus": "Pending exact-pack import/Watch/editor/reopen qualification",
+    "browserStatus": "Passed311 checks; exact identified historical admitted host, scripted public File/nativeIDB/complete controlled-RAF Watch/editor/reopen",
     "nativeStatus": "Pending unmodified native entry",
     "offlineStatus": "Pending stopped-origin reload",
-    "scope": "Bounded original stylized scene and distinct authored flight tasks. No photoreal, hardware, FPS or distinct imported-card metadata claim."
+    "scope": "Bounded original stylized scene and distinct authored flight tasks. No photoreal, hardware, FPS or distinct imported-card metadata claim.",
+    "browserChecks": 311,
+    "completeControlledRAFWatchReplays": 16,
+    "browserReceipt": "../../evidence/r5-browser.json",
+    "browserComparison": "../../evidence/r5-browser-comparison.json",
+    "browserClockScope": "Controlled RAF delivers200ms per pulse to actual1x Watch; real performance clock, visibility and pause guards remain unchanged. No state/tick/completion assignment. Native-clock launch and unmodified standalone entry are distinct manual steps."
   },
   "discovery": "No production Library index row is added by this content change. Imported cards retain host defaults Explore/intermediate/4min."
 }
