@@ -1,0 +1,124 @@
+{
+  "format": "fpv-environment-light-editor-final-archive.v1",
+  "sourceRevision": "06d154e765c8332e5778bc51945799ee115353ac",
+  "rawBytes": 28701,
+  "rawSha256": "bb38ca584296d7b1bf10402e3240710e8353bc80a61acf632834249615c84095",
+  "gzipBytes": 7135,
+  "gzipSha256": "7eececcc7411cb619a61cf6f1d2618fd3c69f07320b630e9762b70e8129541ca",
+  "pass": true,
+  "checks": [
+    {
+      "name": "real editor initialized",
+      "pass": true
+    },
+    {
+      "name": "while lost pointer selection inert",
+      "pass": true
+    },
+    {
+      "name": "while lost no dragging",
+      "pass": true
+    },
+    {
+      "name": "while lost scene resources stay cleared",
+      "pass": true
+    },
+    {
+      "name": "after restore before reload pointer selection inert",
+      "pass": true
+    },
+    {
+      "name": "after restore before reload no dragging",
+      "pass": true
+    },
+    {
+      "name": "after restore before reload scene resources stay cleared",
+      "pass": true
+    },
+    {
+      "name": "final registered resources zero",
+      "pass": true
+    },
+    {
+      "name": "host reports its existing reload requirement",
+      "pass": true
+    },
+    {
+      "name": "no unexpected GL errors",
+      "pass": true
+    },
+    {
+      "name": "no uncaught errors or warnings",
+      "pass": true
+    }
+  ],
+  "verifiedFiles": 102,
+  "events": [
+    {
+      "name": "webglcontextlost",
+      "time": 49988.69999998808
+    },
+    {
+      "name": "webglcontextrestored",
+      "time": 50093.59999999404
+    }
+  ],
+  "notifications": ["Editor graphics context lost. Reload the editor."],
+  "errors": [],
+  "warnings": [],
+  "stages": [
+    {
+      "name": "mounted",
+      "codes": [],
+      "isContextLost": false,
+      "registered": {
+        "geometries": 176,
+        "materials": 147,
+        "textures": 28
+      }
+    },
+    {
+      "name": "while lost",
+      "codes": [
+        {
+          "code": 37442,
+          "hex": "0x9242",
+          "expectedLossSignal": true
+        }
+      ],
+      "isContextLost": true,
+      "registered": {
+        "geometries": 0,
+        "materials": 0,
+        "textures": 0
+      }
+    },
+    {
+      "name": "after restore before reload",
+      "codes": [],
+      "isContextLost": false,
+      "registered": {
+        "geometries": 0,
+        "materials": 0,
+        "textures": 0
+      }
+    },
+    {
+      "name": "final cleanup",
+      "codes": [
+        {
+          "code": 37442,
+          "hex": "0x9242",
+          "expectedLossSignal": true
+        }
+      ],
+      "isContextLost": true,
+      "registered": {
+        "geometries": 0,
+        "materials": 0,
+        "textures": 0
+      }
+    }
+  ],
+  "limits": "Actual admitted editor loss/restoration and inert retained controls; the existing host requires reload. No automatic editor recovery, hardware FPS, or universal imported-image determinism claim."
+}
