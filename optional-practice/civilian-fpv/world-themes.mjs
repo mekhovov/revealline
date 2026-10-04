@@ -16,6 +16,54 @@ export {
   resolveSimEffects,
 } from '../../game/presentation/theme-system.mjs';
 
+export const WORLD_SURFACE_COATING_EXTENSION = 'REVEALLINE_surface_coating';
+/** One canonical capability declaration, shared by import and actual GLTF loading. */
+export function validateWorldSurfaceCoatings(doc) {
+  const marked = new Set();
+  for (const [index, material] of (doc.materials ?? []).entries()) {
+    if (!Object.hasOwn(material.extensions ?? {}, WORLD_SURFACE_COATING_EXTENSION)) continue;
+    const value = material.extensions[WORLD_SURFACE_COATING_EXTENSION];
+    required(
+      value &&
+        Object.keys(value).length === 2 &&
+        Object.hasOwn(value, 'version') &&
+        Object.hasOwn(value, 'kind') &&
+        value.version === 1 &&
+        value.kind === 'opaque-finish',
+      'Unsupported surface coating declaration.',
+    );
+    required(
+      (material.alphaMode ?? 'OPAQUE') === 'OPAQUE' &&
+        (material.pbrMetallicRoughness?.baseColorFactor?.[3] ?? 1) === 1 &&
+        (material.extensions?.KHR_materials_transmission?.transmissionFactor ?? 0) === 0,
+      'Surface coatings require an opaque material.',
+    );
+    marked.add(index);
+  }
+  if (
+    marked.size ||
+    doc.extensionsUsed?.includes(WORLD_SURFACE_COATING_EXTENSION) ||
+    doc.extensionsRequired?.includes(WORLD_SURFACE_COATING_EXTENSION)
+  ) {
+    required(
+      marked.size > 0 &&
+        ['extensionsUsed', 'extensionsRequired'].every(
+          (key) =>
+            Array.isArray(doc[key]) &&
+            doc[key].filter((name) => name === WORLD_SURFACE_COATING_EXTENSION).length === 1,
+        ),
+      'Surface coatings must declare their required capability.',
+    );
+    for (const mesh of doc.meshes ?? [])
+      for (const primitive of mesh.primitives ?? [])
+        required(
+          !marked.has(primitive.material) || [4, 5, 6].includes(primitive.mode ?? 4),
+          'Surface coatings require triangle geometry.',
+        );
+  }
+  return marked;
+}
+
 const title = (en, uk) => ({ en, uk });
 const profile = (id, names, palette, extras = {}) =>
   Object.freeze({
