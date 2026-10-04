@@ -24,9 +24,11 @@
       "sha256": "a13e0fd9f9bc40604c4172fa2861e2659e486e1c8cf41b2ce65f9f96ab8fe1fc"
     },
     {
-      "path": "source-browser-r1-summary.json",
-      "bytes": 97,
-      "sha256": "5b589edb872ae938fa953292e6567b86f278de1fb51066a6197b87de655511c8"
+      "path": "source-browser-r1-summary.json.gz",
+      "bytes": 89,
+      "sha256": "312e91778142459e3fc4e2050b194fb903999d3070f5b6455ab01d175e956209",
+      "originalBytes": 97,
+      "originalSha256": "5b589edb872ae938fa953292e6567b86f278de1fb51066a6197b87de655511c8"
     }
   ]
 }
