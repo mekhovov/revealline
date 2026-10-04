@@ -389,7 +389,9 @@ export function createPresentationHost({
     async readAudio(slot, { signal, snapshot = current?.snapshot } = {}) {
       required(
         profile === 'full' || (profile === 'board' && slot === 'audio.pickup'),
-        'This presentation profile cannot read this audio slot.',
+        profile === 'actors'
+          ? 'An actor-only host cannot read audio.'
+          : 'This presentation profile cannot read this audio slot.',
       );
       required(!closed && snapshot && snapshot === current?.snapshot, 'No current audio release.');
       cancelled(signal);
