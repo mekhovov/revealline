@@ -2100,6 +2100,26 @@ export function mountWorldApp({
       $('creator-template').append(new Option(label(entry), keyOf(entry)));
     if (template) $('creator-template').value = template;
   }
+  function catalogueActivity(entry) {
+    if (entry.activity) return entry.activity;
+    let activity = null;
+    for (const step of entry.course.steps[$('flight-mode').value]) {
+      if (step.type === 'hold' || step.type === 'land') continue;
+      if (step.type !== 'actor-track-v1') return null;
+      const kind = step.minTargetTravel > 0 ? 'follow' : 'observe';
+      if (activity && activity !== kind) return null;
+      activity = kind;
+    }
+    return activity;
+  }
+  function catalogueDetails(entry) {
+    const name =
+      localized(ACTIVITY_NAMES[catalogueActivity(entry)]) ||
+      txt('Authored challenge', 'Авторське завдання');
+    return entry.activity
+      ? `${name} · ${COPY_UK[entry.difficulty] && locale === 'uk' ? COPY_UK[entry.difficulty] : entry.difficulty} · ${entry.duration ?? 3} ${txt('min', 'хв')}`
+      : name;
+  }
   function renderCatalogue() {
     renderSchool();
     const complete = completedKeys(),
@@ -2111,7 +2131,7 @@ export function mountWorldApp({
       (e) =>
         !e.archived &&
         (theme === 'all' || e.theme === theme) &&
-        (activity === 'all' || e.activity === activity) &&
+        (activity === 'all' || catalogueActivity(e) === activity) &&
         (difficulty === 'all' || e.difficulty === difficulty) &&
         (progress === 'all' || complete.has(keyOf(e)) === (progress === 'complete')) &&
         `${label(e)} ${localized(FLIGHT_WORLDS.find((w) => w.id === e.world)?.title)} ${e.course.environment}`
@@ -2222,10 +2242,7 @@ export function mountWorldApp({
           info = el('div', undefined, 'challenge-info');
         info.append(
           el('strong', `${complete.has(keyOf(entry)) ? '✓ ' : ''}${label(entry)}`),
-          el(
-            'small',
-            `${localized(ACTIVITY_NAMES[entry.activity])} · ${COPY_UK[entry.difficulty] && locale === 'uk' ? COPY_UK[entry.difficulty] : entry.difficulty} · ${entry.duration ?? 3} ${txt('min', 'хв')}`,
-          ),
+          el('small', catalogueDetails(entry)),
         );
         if (demonstrationFor(entry, $('flight-mode').value)) {
           const watch = button(
@@ -2749,9 +2766,6 @@ export function mountWorldApp({
       course,
       world: course.world.id,
       theme: projectOwnsCourse(course) ? 'custom' : course.world.theme,
-      activity: 'exploration',
-      difficulty: 'intermediate',
-      duration: 4,
       packIdentity: 'authoring',
       legacy: false,
       projectId: projectOwnsCourse(course) ? editingProject.id : undefined,
