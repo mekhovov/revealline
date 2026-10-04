@@ -5860,5 +5860,12 @@
   "recording.copyUnavailable": "Clipboard unavailable. Select the JSON below and copy it manually.",
   "recording.selected": "Recording JSON selected. Use your device’s Copy command.",
   "recording.preparing": "Preparing this recording…",
-  "recording.exportFailed": "Download could not be requested. The recording JSON below is ready to copy."
+  "recording.exportFailed": "Download could not be requested. The recording JSON below is ready to copy.",
+  "downloads.loadingFailedTitle": "Download information unavailable",
+  "downloads.loadingFailed": "Could not load download information. Reconnect and try again. Your installed game, downloaded files and progress are kept.",
+  "downloads.retryLoading": "Retry loading update",
+  "downloads.loadingDetails": "Loading details",
+  "downloads.downloadUnavailable": "Download unavailable",
+  "downloads.loadingTimedOut": "Loading download information took too long. Reconnect and retry.",
+  "downloads.publishedBuildChanged": "The published game changed while loading. Retry to load the latest matching update."
 }

@@ -40,6 +40,13 @@ completion assertions remain unchanged. The subsequent native Library merge
 retains its bounded dedicated-worker downloads alongside the runtime worker
 cancellation latch, non-creating cache reads and serialized offline removal.
 
+Delivery also includes #1072: the published catalogue has fourteen packs, but
+the legacy updater rejected more than twelve descriptive entries. The updater
+now admits that valid catalogue while retaining package-content validation,
+loads matching manifests within a bounded deadline and offers visible retry
+without deleting installations or progress. Its authored initialization and
+offline regressions are included in the required local-UX CI phase.
+
 The integration must pass the strict current-base `release-ready` check,
 industrial feature phases, Appearance and Company checks, mandatory static and
 content validation, source identity and committed-source builds. A scheduled

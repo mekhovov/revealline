@@ -48,6 +48,31 @@
         >
       </section>
       <section
+        id="initialization-recovery"
+        data-ui-surface="panel"
+        hidden
+        aria-labelledby="initialization-title"
+      >
+        <h2 id="initialization-title" data-i18n="interface:downloads.loadingFailedTitle">
+          Download information unavailable
+        </h2>
+        <p data-i18n="interface:downloads.loadingFailed">
+          Could not load download information. Reconnect and try again. Your installed game,
+          downloaded files and progress are kept.
+        </p>
+        <button
+          id="retry-initialization"
+          type="button"
+          data-i18n="interface:downloads.retryLoading"
+        >
+          Retry loading update
+        </button>
+        <details>
+          <summary data-i18n="interface:downloads.loadingDetails">Loading details</summary>
+          <p id="initialization-detail"></p>
+        </details>
+      </section>
+      <section
         data-ui-surface="panel"
         id="destination-recovery"
         aria-labelledby="destination-title"
@@ -97,7 +122,7 @@
           ></label
         >
         <label
-          ><input id="all-game" type="checkbox" />
+          ><input id="all-game" type="checkbox" disabled />
           <span data-i18n="interface:downloads.allGameplay"
             >All current levels, modes and communities</span
           ></label
@@ -112,6 +137,7 @@
           <div class="actions">
             <button
               id="select-communities"
+              disabled
               type="button"
               data-i18n="interface:downloads.selectCommunities"
             >
@@ -119,6 +145,7 @@
             </button>
             <button
               id="select-everything"
+              disabled
               type="button"
               data-i18n="interface:downloads.selectEverything"
             >
