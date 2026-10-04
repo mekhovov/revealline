@@ -1,0 +1,541 @@
+<!doctype html>
+<html lang="en">
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Gate-section coaching · actual host qualification</title>
+  <style>
+    body {
+      font: 15px system-ui;
+      background: #101923;
+      color: #eef4f4;
+      margin: 16px;
+    }
+    button {
+      font: inherit;
+      min-height: 44px;
+      padding: 8px 16px;
+    }
+    iframe {
+      display: block;
+      width: 1280px;
+      height: 800px;
+      border: 1px solid #56717a;
+    }
+    textarea {
+      width: 100%;
+      height: 240px;
+      font: 12px monospace;
+    }
+    p {
+      max-width: 100ch;
+    }
+  </style>
+  <h1>Gate-section coaching · production host</h1>
+  <p>
+    Frozen production host, real WebGL and private IndexedDB. Independently replayed ordinary
+    command prefixes are restored through the supported host recovery API; the final tick uses
+    actual Arm and neutral input. No result/state injection or pause-guard changes. Controlled
+    timestamps are functional evidence, not hardware or FPS measurements.
+  </p>
+  <button id="run">Run coaching checks</button
+  ><button id="preview">Preview measured recommendation</button>
+  <p id="status">Ready</p>
+  <textarea id="receipt" readonly aria-label="Coaching receipt"></textarea
+  ><iframe id="sim" title="Actual World player"></iframe>
+  <script type="module">
+    const $ = (id) => document.getElementById(id),
+      frame = $('sim'),
+      wait = (ms) => new Promise((r) => setTimeout(r, ms));
+    const stable = (v) =>
+      JSON.stringify(v, (_, x) =>
+        x && typeof x === 'object' && !Array.isArray(x)
+          ? Object.fromEntries(Object.entries(x).sort(([a], [b]) => a.localeCompare(b)))
+          : x,
+      );
+    const hash = async (bytes) =>
+      [...new Uint8Array(await crypto.subtle.digest('SHA-256', bytes))]
+        .map((x) => x.toString(16).padStart(2, '0'))
+        .join('');
+    let running = false;
+    async function run(previewOnly = false) {
+      if (running) return;
+      running = true;
+      $('run').disabled = $('preview').disabled = true;
+      const checks = [],
+        cases = [],
+        errors = [],
+        names = new Set(),
+        memory = new Map(),
+        started = performance.now();
+      let manifest,
+        w,
+        d,
+        app,
+        sequence = 0,
+        row,
+        playlist;
+      window.fixtureStorage = {
+        getItem: (k) => memory.get(k) ?? null,
+        setItem: (k, v) => memory.set(k, String(v)),
+        removeItem: (k) => memory.delete(k),
+      };
+      window.fixtureRegisterDB = (name) => {
+        if (!name.startsWith('fpv-gate-coaching-')) throw Error('Database isolation');
+        names.add(name);
+      };
+      const must = (name, ok, detail = {}) => {
+        checks.push({ name, passed: !!ok, ...detail });
+        if (!ok) throw Error(name);
+      };
+      const equal = (name, a, b) =>
+        must(
+          name,
+          stable(a) === stable(b),
+          stable(a) === stable(b) ? {} : { actual: a, expected: b },
+        );
+      const progress = (text) => {
+        $('status').textContent = text;
+        $('receipt').value = JSON.stringify({ status: 'running', phase: text, checks }, null, 2);
+      };
+      const copy = (v) => w.JSON.parse(JSON.stringify(v));
+      const click = (n) => {
+        if (!n || n.disabled) throw Error('Missing/disabled UI control');
+        n.click();
+      };
+      const node = (id) => d?.getElementById(id);
+      const button = (root, pattern) =>
+        [...root.querySelectorAll('button')].find((n) => pattern.test(n.textContent));
+      async function until(fn, label, ms = 60000) {
+        const start = performance.now();
+        while (!fn()) {
+          if (performance.now() - start > ms)
+            throw Error(
+              'Timeout ' +
+                label +
+                '; ' +
+                node('flight-status')?.textContent +
+                '; ' +
+                node('studio-status')?.textContent +
+                '; ' +
+                JSON.stringify(w?.fixtureLastState),
+            );
+          await wait(15);
+          w?.fixtureRAF?.deliver(0);
+        }
+      }
+      async function bounded(p, label) {
+        let id;
+        try {
+          return await Promise.race([
+            p,
+            new Promise(
+              (_, reject) => (id = setTimeout(() => reject(Error('Timeout ' + label)), 60000)),
+            ),
+          ]);
+        } finally {
+          clearTimeout(id);
+        }
+      }
+      const state = () => w.fixtureLastState;
+      async function pulse(delta = 0) {
+        w.fixtureRAF.deliver(delta);
+        await wait(0);
+      }
+      function set(id, value) {
+        node(id).value = value;
+        node(id).dispatchEvent(new w.Event('change', { bubbles: true }));
+      }
+      async function mount({
+        mode = 0,
+        reference = false,
+        locale = 'en',
+        imported = false,
+        narrow = false,
+      } = {}) {
+        if (w) {
+          errors.push(...w.fixtureErrors);
+          w.fixtureRecords.close();
+          frame.src = 'about:blank';
+          await wait(30);
+          w = d = app = null;
+        }
+        memory.clear();
+        memory.set(
+          'revealline.fpv.world-settings.v1',
+          JSON.stringify({
+            'world-language': locale,
+            'flight-source': 'keyboard',
+            'flight-mode': mode ? 'acro' : 'self-level',
+            'flight-camera': 'chase',
+            'flight-quality': 'low',
+            'sim-motion': 'reduced',
+          }),
+        );
+        memory.set(
+          'revealline.fpv.playlists.v1',
+          JSON.stringify({ playlists: [], bookmark: null }),
+        );
+        frame.style.width = narrow ? '390px' : '1280px';
+        frame.style.height = narrow ? '844px' : '800px';
+        const token = 'fpv-gate-coaching-' + Date.now() + '-' + ++sequence + ':',
+          url = new URL('./player.html', location.href);
+        url.searchParams.set('token', token);
+        url.searchParams.set('database', token);
+        url.searchParams.set('row', mode);
+        url.searchParams.set('reference', reference ? 'yes' : 'no');
+        url.searchParams.set('imported', imported ? 'yes' : 'no');
+        frame.src = url.href;
+        await until(
+          () => frame.contentWindow?.fixtureLoadToken === token && frame.contentWindow.fixtureApp,
+          'mount',
+        );
+        w = frame.contentWindow;
+        d = w.document;
+        app = w.fixtureApp;
+        await bounded(app.ready, 'host ready');
+        w.focus();
+        await pulse();
+        row = w.fixtureInputs.rows[mode];
+        playlist = {
+          format: 'FPVPlaylist.v1',
+          id: 'gate-coaching-route',
+          revision: 'r1',
+          title: { en: 'Coaching route', uk: 'Маршрут тренування' },
+          entries: [
+            { packIdentity: row.entry.packIdentity, levelId: row.entry.id },
+            { packIdentity: row.entry.packIdentity, levelId: row.entry.id },
+          ],
+        };
+        memory.set(
+          'revealline.fpv.playlists.v1',
+          JSON.stringify({
+            playlists: [playlist],
+            bookmark: { id: playlist.id, revision: playlist.revision, nextIndex: 0 },
+          }),
+        );
+        must('Actual mounted host ready and isolated', !!app && w.fixtureErrors.length === 0);
+      }
+      async function startPrefix(entry, prefix, options = {}) {
+        await bounded(
+          app.startFlight(copy(entry), { recover: copy(prefix), ...copy(options) }),
+          'restore ordinary command prefix',
+        );
+        await until(() => !node('world-arm').disabled, 'prepared Arm');
+        w.focus();
+        node('world-viewport').focus();
+        // Warm only paused rendering. No synthetic time advances and no automatic recovery after a pause.
+        const initial = app.snapshot().state.ticks;
+        let good = 0;
+        for (let i = 0; i < 12 && good < 2; i++) {
+          const t = performance.now();
+          await pulse(0);
+          good = performance.now() - t < 180 ? good + 1 : 0;
+        }
+        equal('Paused warmup consumes zero flight ticks', app.snapshot().state.ticks, initial);
+        must('Warmup settles before explicit Arm', good === 2);
+        click(node('world-arm'));
+        must('Explicit Arm starts actual practice', app.snapshot().state.status === 'active');
+        await pulse(0);
+        await pulse(20);
+        await until(
+          () =>
+            !node('result-panel').hidden &&
+            !/Checking recording|Перевірка запису/.test(node('result-panel').textContent),
+          'verified terminal result',
+        );
+        const snapshot = app.snapshot();
+        must(
+          'Ordinary neutral last tick completes and is verified',
+          snapshot.state.status === 'complete' &&
+            /Recording verified|Запис перевірено/.test(node('result-panel').textContent),
+        );
+        return snapshot;
+      }
+      async function originalResult(options = {}) {
+        const result = await startPrefix(row.entry, row.prefix, { playlist, index: 0, ...options });
+        const coach = node('result-panel').querySelector('[data-coach-lesson]');
+        must(
+          'Exactly one optional gate lesson is offered',
+          node('result-panel').querySelectorAll('[data-coach-lesson]').length === 1 &&
+            coach.dataset.coachLesson === 'beginner-24',
+        );
+        equal('Verified measured gate rows', result.sectorTiming.sectors, row.sectors);
+        must('Measured duration is factual', coach.textContent.includes('53.34'));
+        must(
+          'No inferred piloting cause',
+          !/overshoot|bad|weak|нахил|помил/i.test(coach.textContent),
+        );
+        return coach;
+      }
+      async function takeLesson(coach) {
+        click(coach.querySelector('button'));
+        await until(
+          () => app.snapshot().course === 'beginner-24' && !node('world-arm').disabled,
+          'lesson prepared',
+        );
+        equal(
+          'Original mode retained in optional lesson',
+          node('flight-mode').value,
+          row.proof.mode,
+        );
+        must(
+          'Lesson starts paused with deliberate guide/Arm',
+          app.snapshot().state.status !== 'active',
+        );
+        must('Return context remains available', !node('world-return-challenge').hidden);
+      }
+      const savedPlaylist = () => JSON.parse(memory.get('revealline.fpv.playlists.v1'));
+      async function returnHome() {
+        click(
+          d.querySelector('[data-mode-action="menu"]') ?? d.querySelector('.mode-play-bar button'),
+        );
+        await until(() => d.getElementById('worlds-shell-home-dialog').open, 'home');
+        const b = node('world-return-challenge');
+        must(
+          'Return action is inside visible shared home menu',
+          b.closest('dialog')?.open && b.getBoundingClientRect().height >= 44,
+        );
+        click(b);
+        await until(
+          () => app.snapshot().course === row.entry.id && !node('world-arm').disabled,
+          'original challenge',
+        );
+      }
+      async function checkReturn(bookmark) {
+        const s = app.snapshot();
+        const before = w.fixtureDownloads.length;
+        click(node('export-flight'));
+        await until(() => w.fixtureDownloads.length > before, 'export returned proof');
+        const exported = JSON.parse(await w.fixtureDownloads.at(-1).blob.text());
+        equal(
+          'Original response restored in actual exported proof',
+          exported.records[0].proof.response,
+          row.reference.response,
+        );
+        equal(
+          'Exact original course snapshot restored',
+          w.fixtureLastCourse.id,
+          row.entry.course.id,
+        );
+        equal(
+          'Original geometry and objectives retained',
+          [w.fixtureLastCourse.obstacles, w.fixtureLastCourse.steps],
+          [row.entry.course.obstacles, row.entry.course.steps],
+        );
+        equal('Original mode restored', node('flight-mode').value, row.proof.mode);
+        equal('Original source restored', node('flight-source').value, 'keyboard');
+        equal('Original camera restored', node('flight-camera').value, 'chase');
+        must(
+          'Returned challenge does not auto-arm',
+          s.state.status !== 'active' && s.state.ticks === 0,
+        );
+        equal(
+          'Advanced playlist bookmark unchanged by detour/return',
+          savedPlaylist().bookmark,
+          bookmark,
+        );
+        must(
+          'Return context clears after deliberate return',
+          node('world-return-challenge').hidden,
+        );
+      }
+      async function closeFlight() {
+        click(node('leave-flight'));
+        await until(() => !node('flight-dialog').open, 'closed lesson');
+      }
+      async function inputFile(id, blob, name) {
+        const file = new w.File([blob], name, { type: 'application/x-revealline-fpv-pack' }),
+          transfer = new w.DataTransfer();
+        transfer.items.add(file);
+        node(id).files = transfer.files;
+        node(id).dispatchEvent(new w.Event('change', { bubbles: true }));
+      }
+      try {
+        manifest = await (await fetch('./fixture-manifest.json')).json();
+        for (const [name, expected] of Object.entries(manifest.fixtureFiles)) {
+          const bytes = await (await fetch('./' + name)).arrayBuffer();
+          equal('Pinned fixture ' + name, await hash(bytes), expected);
+        }
+        const host = await (
+          await fetch('./candidate/optional-practice/civilian-fpv/world-app.mjs')
+        ).arrayBuffer();
+        equal('Exact production host hash', await hash(host), manifest.hostSHA256);
+        progress('Self-level measured loss and early return');
+        await mount({ reference: true });
+        const coach = await originalResult();
+        must(
+          'Compatible reference reports measured positive loss',
+          coach.textContent.includes('46.12') &&
+            coach.textContent.includes('best flight with these settings'),
+        );
+        if (previewOnly) {
+          cases.push({ kind: 'preview', text: coach.textContent });
+          progress('Preview ready · measured recommendation');
+          return;
+        }
+        const bookmark = savedPlaylist().bookmark;
+        equal('Original completion advances playlist once', bookmark.nextIndex, 1);
+        await takeLesson(coach);
+        await bounded(
+          app.startFlight(copy(row.lesson.entry), { mode: row.proof.mode }),
+          'retry lesson through ordinary host path',
+        );
+        must('Retry retains original return context', !node('world-return-challenge').hidden);
+        set('flight-source', 'touch');
+        set('flight-camera', 'overview');
+        await returnHome();
+        await checkReturn(bookmark);
+        click(coach.querySelector('button'));
+        await wait(30);
+        equal(
+          'Detached old result action cannot restart a lesson',
+          app.snapshot().course,
+          row.entry.id,
+        );
+        // Next button proves original playlist/index ownership, independently of the saved bookmark.
+        click(node('world-next'));
+        await until(
+          () => app.snapshot().course === row.entry.id && !node('world-arm').disabled,
+          'original playlist next',
+        );
+        equal(
+          'Returned flight retains original playlist index',
+          savedPlaylist().bookmark.nextIndex,
+          1,
+        );
+        cases.push({ kind: 'self-level reference/early return', selected: row.loss });
+        progress(
+          'Acro longest completed section, Ukrainian/narrow, return after lesson completion',
+        );
+        await mount({ mode: 1, locale: 'uk', narrow: true });
+        const uk = await originalResult();
+        must(
+          'No-reference explanation uses longest completed section',
+          uk.textContent.includes('найдовша') && !uk.textContent.includes('найкращому'),
+        );
+        const acroBookmark = savedPlaylist().bookmark;
+        await takeLesson(uk);
+        await startPrefix(row.lesson.entry, row.lesson.prefix);
+        must('Lesson completion retains return action', !node('world-return-challenge').hidden);
+        await returnHome();
+        await checkReturn(acroBookmark);
+        cases.push({
+          kind: 'acro no-reference/lesson result/390px Ukrainian',
+          selected: row.longest,
+        });
+        progress('Early exit and edited playlist dependency denial');
+        await mount();
+        await takeLesson(await originalResult());
+        await closeFlight();
+        const early = node('world-return-challenge');
+        must(
+          'Early exit retains return in School menu',
+          !early.hidden && early.parentNode === node('school-lessons').parentNode,
+        );
+        const prior = savedPlaylist();
+        memory.set(
+          'revealline.fpv.playlists.v1',
+          JSON.stringify({
+            ...prior,
+            playlists: [{ ...playlist, title: { en: 'Edited route', uk: 'Змінено' } }],
+          }),
+        );
+        click(early);
+        await until(
+          () => /unavailable|недоступ/.test(node('studio-status').textContent),
+          'edited playlist rejection',
+        );
+        must('Changed playlist cannot restart original flight', !node('flight-dialog').open);
+        memory.set('revealline.fpv.playlists.v1', JSON.stringify(prior));
+        click(early);
+        await until(
+          () => app.snapshot().course === row.entry.id && !node('world-arm').disabled,
+          'restored exact playlist',
+        );
+        await checkReturn(prior.bookmark);
+        progress('Unrelated course launch clears detour and non-gate result suppresses suggestion');
+        await takeLesson(await originalResult());
+        await bounded(app.startFlight(copy(w.fixtureInputs.negative.entry)), 'unrelated launch');
+        must('Unrelated launch clears return context', node('world-return-challenge').hidden);
+        await startPrefix(w.fixtureInputs.negative.entry, w.fixtureInputs.negative.prefix);
+        must(
+          'Measured non-gate result has no gate lesson',
+          !node('result-panel').querySelector('[data-coach-lesson]'),
+        );
+        progress('Imported exact revision removal and replacement denial');
+        await mount({ imported: true, reference: true });
+        await takeLesson(await originalResult());
+        await closeFlight();
+        click(d.querySelector('[data-tab="packs"]'));
+        click(d.querySelector('[data-remove-pack="gate-coach-fixture"]'));
+        await until(
+          () =>
+            d.getElementById('pack-removal-confirm') &&
+            !d.getElementById('pack-removal-confirm').disabled,
+          'review removal',
+        );
+        click(d.getElementById('pack-removal-confirm'));
+        await until(() => !d.querySelector('[data-pack-id="gate-coach-fixture"]'), 'removed pack');
+        click(node('world-return-challenge'));
+        await until(
+          () => /unavailable/.test(node('studio-status').textContent),
+          'missing exact pack rejection',
+        );
+        must('Removed pack does not restart a substitute', !node('flight-dialog').open);
+        await inputFile('import-pack', w.fixturePack.revised, 'revised.rlpack');
+        await until(
+          () => d.querySelector('[data-pack-id="gate-coach-fixture"]'),
+          'revised pack imported',
+        );
+        node('studio-status').textContent = '';
+        click(node('world-return-challenge'));
+        await until(
+          () => /unavailable/.test(node('studio-status').textContent),
+          'revised exact pack rejection',
+        );
+        must('Revised pack is not silently substituted', !node('flight-dialog').open);
+        await inputFile('import-pack', w.fixturePack.blob, 'original.rlpack');
+        await until(
+          () => /imported|installed|Імпорт|Встанов/i.test(node('studio-status').textContent),
+          'original pack imported',
+        );
+        click(node('world-return-challenge'));
+        await until(
+          () => app.snapshot().course === row.entry.id && !node('world-arm').disabled,
+          'exact original pack restored',
+        );
+        must(
+          'Exact original pack restoration allows deliberate return',
+          app.snapshot().state.status !== 'active',
+        );
+        errors.push(...w.fixtureErrors);
+        equal('No browser errors or unhandled rejections', errors, []);
+        $('status').textContent = 'PASS · ' + checks.length + ' checks';
+      } catch (e) {
+        checks.push({ name: String(e.message ?? e), passed: false });
+        $('status').textContent = 'FAIL · ' + e.message;
+      } finally {
+        const result = {
+          format: 'FPVGateCoachingBrowser.v1',
+          status: checks.some((c) => !c.passed) ? 'failed' : previewOnly ? 'preview' : 'passed',
+          elapsedMs: Math.round(performance.now() - started),
+          manifest,
+          checks,
+          cases,
+          errors,
+          limitations: [
+            'Actual browser functional evidence, not hardware/FPS.',
+            'Supported startFlight recovery API and exact recorded input prefix; normal host independently verifies final practice result.',
+            'Private fixture databases and memory preferences; original player storage untouched.',
+          ],
+        };
+        window.gateCoachingResult = result;
+        $('receipt').value = JSON.stringify(result, null, 2);
+        if (w && !previewOnly) app.pause();
+        running = false;
+        $('run').disabled = $('preview').disabled = false;
+      }
+    }
+    $('run').onclick = () => run();
+    $('preview').onclick = () => run(true);
+  </script>
+</html>
