@@ -70,7 +70,7 @@ permanent unit coverage. It parses the two exact committed host files and
 executes their actual rendering functions against isolated DOM/size adapters.
 The retained native state is only a display seed; synthetic objective flags do
 not purport to be reachable flights, completed objectives, or verified proofs.
-The r1 comparison and final formatted r2 script each passed 456 checks:
+The comparison, including the final repository-formatted r3 script, passed 456 checks:
 68 objective cases and 160 input cases.
 
 Objective coverage includes EN/UK terminal and hold/progress text, all nine actor
@@ -124,6 +124,36 @@ The optional admitted preparer retains the historical baseline and verifies a
 newly staged candidate's exact revision, tree, 95-input inventory and 102
 immutable members. It creates no candidate runtime overlay; committed-source
 verification is inherited from the checked admission/staging receipt.
+
+## Integrated admission
+
+Clean candidate `a60d1b27fc83f7dbf03cc61cb76168c7026cbb7b` normally integrates
+published main `5bd8f36d7767dcd9dda740865b4d8f19ddbe7c28`. Full Node 22
+`npm run validate` passed, including localization and all generated-source
+identity checks. The selected existing appearance/radio cases passed 15/15;
+the four texture cases initially could not load two sparse-checkout assets.
+Restoring their exact tracked 9,133 bytes allowed those unchanged cases to pass
+4/4. The initial missing-file result is retained, not called a passing run.
+Scoped ESLint, syntax, formatting, and diff checks passed. No new unit cases or
+full D6 suite were added or claimed.
+
+The normal optional-package builder admitted all three packages with two
+identical builds and committed-input/ZIP-member verification. Worlds contains
+102 members and 95 original inputs totaling 16,736,075 bytes, leaving 41,141
+bytes under the unchanged 16 MiB original-source ceiling and retaining the
+104-file ceiling. Its ZIP is 15,545,985 bytes, SHA-256
+`1c6fc014ff6689db7051e2a640f699a24811f06943574fc892c733c2c16bd376`,
+package revision
+`2fa1e4c7faa6dbaf63d22e044e4679e8eca820e47e954544efcc8b0631a5ea2a`.
+
+All 95 integrated committed inputs match the admitted inventory. The native
+qualified host remains byte-identical; 94 inputs also exactly match the source
+fixture. The sole other difference is main's lossless `world-visuals.mjs`
+projection, independently checked for exact normalized AST, token spelling,
+comments and line terminators. This bridge, the full staging inventory, and
+all admission receipts are retained. Source browser parity and artifact
+admission are distinct evidence; no repeated native package matrix, public
+deployment or offline acceptance is implied.
 
 Evidence gzip files are lossless; `evidence/manifest.json` records original and
 compressed byte counts and SHA-256 hashes. Full D6 qualification, sustained
