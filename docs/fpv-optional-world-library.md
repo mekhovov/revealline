@@ -26,6 +26,13 @@ binds those results. The new exact 102-member Worlds and 69-member Academy playe
 are staged; admitted-player and changed-worker offline checks remain pending.
 The production catalogue remains empty.
 
+The first admitted fixture run passed 119 controls, then timed out waiting for
+the selected flight's exact Ready text. Its [failure receipt](../authoring/fpv-worlds/library/evidence/worker-package-r1-failure-provenance.json)
+is preserved. The coordinator subsequently observed the same frame paused at
+tick zero with Arm enabled and no graphics errors. The runtime and helper files
+match the source fixture; a focus pause is a hypothesis because that run retained
+no focus trace. A controlled repeat is required; no guard or timeout was relaxed.
+
 ### Historical page-transport evidence
 
 The prior draft integrated main `ade4bfc2dd` and the
