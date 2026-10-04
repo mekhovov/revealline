@@ -63,7 +63,7 @@ const sourceHashes={
 'game/audio/reactions/actors.mjs':
 '79debf91cafa2e01cd65170037ee483977cbf7d5c3a619ccac9ed400264598b8',
 'optional-practice/civilian-fpv/world-library.mjs':
-'065d1f290696c6730a8a9cf1a983ea5853115efc4b0b0b60fd80be1e8ef5e90f',
+'8c452316136b91dd9ac8f81de56a7a6aee931dcd62c4595c55e29bcdd10a5c9a',
 'game/audio/reactions/guide-0-en.m4a':
 '58f961f54b52d0dbb58f53f000ca85bba166236126e135dc1f5e89f8f9a94210',
 'game/audio/reactions/guide-0-uk.m4a':
@@ -7674,7 +7674,8 @@ if(!condition)throw new Error('Invalid world download.');
 };
 
 function worldImportErrorCopy(error){
-if(error?.code!=='unsupported-world-extension')return null;
+if(!['unsupported-world-extension','unsupported-ground-motion'].includes(error?.code))
+return null;
 return[
 'This SIM version does not support a required world feature. Open Flight practice, choose Check available practice, then Play available version. If that version still cannot import it, use a compatible pack. Prepare offline saves the version you opened.',
 'Ця версія SIM не підтримує потрібну можливість світу. Відкрийте «Практика польоту», виберіть «Перевірити доступну практику», а потім «Грати в доступну версію». Якщо імпорт усе ще неможливий, потрібен сумісний пакунок. Підготовка офлайн зберігає відкриту версію.',
