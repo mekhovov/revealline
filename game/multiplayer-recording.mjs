@@ -9,8 +9,19 @@ import {
   getCoopSummary,
 } from './coop/core.mjs';
 import { createDuel, resumeDuel, stepDuel } from './multiplayer.mjs';
+import {
+  LOCAL_TERMINAL_OBSERVATIONS,
+  assertLocalTerminalObservationSupport,
+  localTerminalObservations,
+} from './multiplayer-terminal-observation.mjs';
 
+// Keep the original identifier and exact reader for historical recordings.
 export const LOCAL_MATCH_RECORDING = 'revealline-local-capture-recording.v1';
+export const LOCAL_MATCH_RECORDING_V2 = 'revealline-local-capture-recording.v2';
+export const LOCAL_MATCH_RECORDINGS = Object.freeze([
+  LOCAL_MATCH_RECORDING,
+  LOCAL_MATCH_RECORDING_V2,
+]);
 export const LOCAL_MATCH_MAX_BYTES = 4 * 1024 * 1024;
 export const LOCAL_MATCH_MAX_TICKS = 240000;
 const MAX_SEGMENTS = 32768;
@@ -188,8 +199,12 @@ export function createLocalMatchRecorder({
   provenance = localMatchProvenance(level),
   build = 'unknown',
   segments = [],
+  format = LOCAL_MATCH_RECORDING_V2,
 }) {
+  required(LOCAL_MATCH_RECORDINGS.includes(format), 'Unsupported local recording format.');
   const accepted = prepare(mode, copy(level), copy(options), duel === null ? null : copy(duel));
+  if (format === LOCAL_MATCH_RECORDING_V2)
+    assertLocalTerminalObservationSupport(mode, accepted.state);
   const recipe = copy({
     mode,
     ruleset: accepted.state.ruleset,
@@ -259,9 +274,16 @@ export function createLocalMatchRecorder({
       required(state.tick === ticks, 'Recording is missing native input steps.');
       // Own everything before the first async yield; Retry may replace the host run.
       const native = project(state),
-        value = copy({ format: LOCAL_MATCH_RECORDING, build, recipe, segments: entries });
+        observations =
+          format === LOCAL_MATCH_RECORDING_V2 ? copy(localTerminalObservations(mode, state)) : null,
+        value = copy({ format, build, recipe, segments: entries });
       value.recipeSha256 = await sha256(value.recipe);
+      if (observations) value.inputSha256 = await sha256(value.segments);
       value.final = { tick: native.tick, status: native.status, stateSha256: await sha256(native) };
+      if (observations) {
+        value.final.observationContract = LOCAL_TERMINAL_OBSERVATIONS;
+        value.final.observationSha256 = await sha256(observations);
+      }
       return snapshotLocalMatchRecording(value);
     },
   };
@@ -272,11 +294,19 @@ export function snapshotLocalMatchRecording(source) {
   const value = copy(source);
   exactKeys(
     value,
-    ['format', 'build', 'recipe', 'recipeSha256', 'segments', 'final'],
+    [
+      'format',
+      'build',
+      'recipe',
+      'recipeSha256',
+      'segments',
+      'final',
+      ...(value.format === LOCAL_MATCH_RECORDING_V2 ? ['inputSha256'] : []),
+    ],
     'Local recording',
   );
   required(
-    value.format === LOCAL_MATCH_RECORDING && text(value.build),
+    LOCAL_MATCH_RECORDINGS.includes(value.format) && text(value.build),
     'Unsupported local recording format.',
   );
   exactKeys(
@@ -286,6 +316,8 @@ export function snapshotLocalMatchRecording(source) {
   );
   const { mode, level, options, duel, provenance } = value.recipe;
   const accepted = prepare(mode, level, options, duel);
+  if (value.format === LOCAL_MATCH_RECORDING_V2)
+    assertLocalTerminalObservationSupport(mode, accepted.state);
   required(
     same(level, accepted.level) &&
       same(options, accepted.options) &&
@@ -305,11 +337,28 @@ export function snapshotLocalMatchRecording(source) {
   );
   required(digest(value.recipeSha256), 'Invalid recorded recipe hash.');
   const ticks = journal(value.segments, mode);
-  exactKeys(value.final, ['tick', 'status', 'stateSha256'], 'Recorded terminal checkpoint');
+  const portable = value.format === LOCAL_MATCH_RECORDING_V2;
+  if (portable) required(digest(value.inputSha256), 'Invalid recorded input hash.');
+  exactKeys(
+    value.final,
+    [
+      'tick',
+      'status',
+      'stateSha256',
+      ...(portable ? ['observationContract', 'observationSha256'] : []),
+    ],
+    'Recorded terminal checkpoint',
+  );
   required(
     value.final.tick === ticks && digest(value.final.stateSha256) && terminal(mode, value.final),
     'Invalid recorded terminal checkpoint.',
   );
+  if (portable)
+    required(
+      value.final.observationContract === LOCAL_TERMINAL_OBSERVATIONS &&
+        digest(value.final.observationSha256),
+      'Invalid recorded terminal observation contract.',
+    );
   return value;
 }
 
@@ -328,6 +377,8 @@ export async function verifyLocalMatchRecordingAsync(
   };
   aborted();
   required((await sha256(value.recipe)) === value.recipeSha256, 'Recording recipe hash differs.');
+  if (value.format === LOCAL_MATCH_RECORDING_V2)
+    required((await sha256(value.segments)) === value.inputSha256, 'Recording input hash differs.');
   const { mode, level, options, duel } = value.recipe;
   const { state } = prepare(mode, level, options, duel);
   let ticks = 0;
@@ -356,24 +407,44 @@ export async function verifyLocalMatchRecordingAsync(
     status: state.status,
     stateSha256: await sha256(project(state)),
   };
+  const portable = value.format === LOCAL_MATCH_RECORDING_V2;
+  if (portable) {
+    actual.observationContract = LOCAL_TERMINAL_OBSERVATIONS;
+    actual.observationSha256 = await sha256(localTerminalObservations(mode, state));
+  }
   aborted();
-  const match =
+  const terminalMatch =
     terminal(mode, state) &&
-    same(value.final, {
-      tick: actual.tick,
-      status: actual.status,
-      stateSha256: actual.stateSha256,
-    });
+    value.final.tick === actual.tick &&
+    value.final.status === actual.status;
+  const exactStateMatch = terminalMatch && value.final.stateSha256 === actual.stateSha256;
+  const terminalObservationMatch = portable
+    ? terminalMatch && value.final.observationSha256 === actual.observationSha256
+    : null;
+  // V1 never falls back to the narrower successor observation contract.
+  const match = portable ? terminalObservationMatch : exactStateMatch;
   onProgress({ ticks, total: ticks });
   return {
     match,
-    diagnostics: match ? [] : ['Native terminal state differs.'],
+    exactStateMatch,
+    terminalObservationMatch,
+    verificationScope: portable ? LOCAL_TERMINAL_OBSERVATIONS : 'exact-native-state.v1',
+    diagnostics: !match
+      ? [
+          portable
+            ? 'Declared terminal gameplay observations differ.'
+            : 'Native terminal state differs.',
+        ]
+      : portable && !exactStateMatch
+        ? ['Only declared terminal observations match; the raw native-state digest differs.']
+        : [],
     actual,
     state,
     ticks,
     recordedBuild: value.build,
     recipe: value.recipe,
     recipeSha256: value.recipeSha256,
-    authority: 'local-replay-integrity-only',
+    ...(portable ? { inputSha256: value.inputSha256 } : {}),
+    authority: portable ? 'local-terminal-observations-only' : 'local-replay-integrity-only',
   };
 }

@@ -144,6 +144,21 @@
     margin-block: 8px;
     border-block: 1px solid #2b4364;
   }
+  #race-briefing {
+    width: min(100%, var(--native-menu-width, 40rem));
+    min-width: 0;
+    margin: 0.75rem auto;
+    text-align: start;
+    overflow-wrap: anywhere;
+  }
+  #race-briefing h2 {
+    margin: 0 0 0.4rem;
+    font-size: clamp(1.15rem, 3vw, 1.6rem);
+  }
+  #race-briefing p {
+    margin: 0;
+    line-height: 1.45;
+  }
   .race-seats {
     display: grid;
     grid-template-columns: 1fr 1fr;

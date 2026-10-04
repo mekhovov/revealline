@@ -81,6 +81,19 @@ The historical checked-in packet retains its original source pin and reports the
 
 The verifier resolves expected recipes from the current native catalogue; it never trusts a packet's imported identities or actor positions. Input files are bounded before parsing, and native validators retain their own stricter limits. A valid replay establishes reproducible simulation completion, not an author signature or proof that a human supplied the controls.
 
+## Local multiplayer successor recording scope
+
+New local Capture exports use `revealline-local-capture-recording.v2`. They bind
+the complete input/release journal and exact declared terminal gameplay
+observations, while retaining the full native-state digest as an independent
+diagnostic. The verifier reports both results. A successful v2 pilot receipt is
+labelled `native-terminal-observation-completion`; it does not claim every
+continuous simulation value matched. Historical v1 files remain exact-only and
+are never converted automatically. See [the recording contract](../../multiplayer-recordings.md)
+for included fields, exclusions, limits and the native cross-runtime evidence
+still required. Existing v1 recordings and prior receipts keep their original
+interpretation.
+
 ## Qualification still required
 
 Record real review evidence for each supported mode/pace and pinned seed: completion route, readable movement/vulnerability, useful Team roles, paired-board fairness, clean/brutal equivalence, touch/gamepad ownership, EN/UK, 320/360/390px layouts, performance and browser Studio round-trips. Derived seeds require separate review. This tool never marks human understanding, accessibility, device performance or public release as passed.

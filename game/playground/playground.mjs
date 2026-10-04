@@ -48,7 +48,7 @@ import { firstFlightPreviewURL } from '../ui/first-flight-preview.mjs';
 import { openRecordingVerificationSection } from '../ui/recording-verification.mjs';
 import { verifyReplayAsync, MAX_REPLAY_BYTES } from '../replay.mjs';
 import {
-  LOCAL_MATCH_RECORDING,
+  LOCAL_MATCH_RECORDINGS,
   verifyLocalMatchRecordingAsync,
 } from '../multiplayer-recording.mjs';
 const $ = (id) => document.getElementById(id),
@@ -1663,10 +1663,9 @@ try {
       if (epoch !== replayEpoch) return;
       lease.update({ message: t('tools:verifyingRecordedSimulation') });
       const source = JSON.parse(text);
-      const verify =
-        source.format === LOCAL_MATCH_RECORDING
-          ? verifyLocalMatchRecordingAsync
-          : verifyReplayAsync;
+      const verify = LOCAL_MATCH_RECORDINGS.includes(source.format)
+        ? verifyLocalMatchRecordingAsync
+        : verifyReplayAsync;
       const result = await verify(source, {
         signal,
         onProgress: (p) => {
@@ -1679,15 +1678,29 @@ try {
       if (epoch !== replayEpoch) return;
       localizedText($('replay-result'), () =>
         JSON.stringify(
-          { match: result.match, diagnostics: result.diagnostics, actual: result.actual.summary },
+          {
+            match: result.match,
+            verificationScope: result.verificationScope,
+            exactStateMatch: result.exactStateMatch,
+            terminalObservationMatch: result.terminalObservationMatch,
+            diagnostics: result.diagnostics,
+            actual: result.actual.summary,
+          },
           null,
           2,
         ),
       );
       lease.finish({
-        message: result.match
-          ? t('tools:replayMatchesItsFullRecordedSimulationState')
-          : t('tools:replayDiffersCheckTheReportedStateSections'),
+        message:
+          result.terminalObservationMatch !== undefined && result.terminalObservationMatch !== null
+            ? t(
+                result.match
+                  ? 'tools:recordingTerminalObservationsMatch'
+                  : 'tools:recordingTerminalObservationsDiffer',
+              )
+            : result.match
+              ? t('tools:replayMatchesItsFullRecordedSimulationState')
+              : t('tools:replayDiffersCheckTheReportedStateSections'),
         state: result.match ? 'ready' : 'error',
       });
     } catch (error) {

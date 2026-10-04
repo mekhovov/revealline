@@ -1953,7 +1953,7 @@ try {
   }
   async function startRace(
     destination = null,
-    { rulesEdition, focusOrigin = null, libraryStart = null } = {},
+    { rulesEdition, focusOrigin = null, libraryStart = null, briefingOnly = false } = {},
   ) {
     // A confirmed library selection may originate from Settings. Its captured
     // scope remains authoritative through preparation; ordinary Start/Retry
@@ -2182,6 +2182,11 @@ try {
     }
     try {
       if (!contentReady || disposed) return false;
+      if (briefingOnly) {
+        if (!ownsStartIntent() || (nextFocus && !nextFocus.ownsAction())) return false;
+        nextFocus?.releaseFocus();
+        return showPreparedBriefing(match, generation);
+      }
       return activateAcceptedMatch({
         owner: match,
         ownerGeneration: generation,
@@ -2191,6 +2196,37 @@ try {
     } finally {
       nextFocus?.releaseFocus();
     }
+  }
+
+  function showPreparedBriefing(owner, ownerGeneration) {
+    if (
+      disposed ||
+      match !== owner ||
+      generation !== ownerGeneration ||
+      match.status !== 'ready' ||
+      !contentReady ||
+      document.hidden ||
+      !document.hasFocus()
+    )
+      return false;
+    // The card owns preparation only. Retire its gesture before the native
+    // briefing can receive a fresh Start, including from a held controller.
+    startIntentEpoch++;
+    clear({ resetDirection: true });
+    contentScope = 'main';
+    updateMenu();
+    const recipe = roundRecipe;
+    shell.briefing(owner, {
+      title: () => contentText(recipe.entry.level, 'name'),
+      description: () =>
+        [
+          missionBriefing(recipe.runtimeLevel ?? recipe.entry.level).goal,
+          t('interface:bothBoardsUseThePreparedNextPictureStartWhenYou'),
+          t('interface:wASDMove'),
+          t('interface:arrowKeysMove'),
+        ].join(' · '),
+    });
+    return match === owner && generation === ownerGeneration && match.status === 'ready';
   }
 
   $('race-start').onclick = () => {
@@ -2890,7 +2926,9 @@ try {
     localizedText(stay, () => t('interface:stay'));
     stay.type = 'button';
     replace.id = 'race-library-play';
-    localizedText(replace, () => t('interface:replacePlay'));
+    localizedText(replace, () =>
+      t(context.continuousNext ? 'interface:replacePlay' : 'interface:replaceAndPrepare'),
+    );
     replace.type = 'button';
     dialog.append(heading, copy, stay, replace);
     document.body.append(dialog);
@@ -2974,11 +3012,15 @@ try {
       if (!entry) throw new Error(t('interface:thisExactBaseMissionIsUnavailable'));
       if (!(await confirmLibraryReplacement(context, `Play ${entry.level.name}?`))) return false;
       if (!context.isCurrent()) return false;
-      await startRace(entry, {
+      const accepted = await startRace(entry, {
         rulesEdition: selection.rulesEdition,
         libraryStart: context.continuousNext ? null : context,
+        briefingOnly: !context.continuousNext,
       });
-      const started = roundRecipe.entry === entry && match.status === 'running';
+      const started =
+        accepted === true &&
+        roundRecipe.entry === entry &&
+        match.status === (context.continuousNext ? 'running' : 'ready');
       if (started) currentLibrarySelection = { match, id: context.libraryMissionId };
       return started;
     }
@@ -3021,7 +3063,9 @@ try {
       const adopted = staged.adopt(current);
       if (!adopted?.current() || !focus.current() || controller.signal.aborted) return false;
       focus.dispose();
-      const started = adopted.start();
+      const started = context.continuousNext
+        ? adopted.start()
+        : showPreparedBriefing(match, generation);
       if (started) currentLibrarySelection = { match, id: context.libraryMissionId };
       return started;
     } finally {
@@ -3264,8 +3308,14 @@ try {
     if (!entry) throw new Error('This exact creator mission is unavailable in Versus.');
     if (!(await confirmLibraryReplacement(context, `Play ${mission.name}?`))) return false;
     if (!context.isCurrent()) return false;
-    await startRace(entry, { libraryStart: context.continuousNext ? null : context });
-    const started = roundRecipe.entry === entry && match.status === 'running';
+    const accepted = await startRace(entry, {
+      libraryStart: context.continuousNext ? null : context,
+      briefingOnly: !context.continuousNext,
+    });
+    const started =
+      accepted === true &&
+      roundRecipe.entry === entry &&
+      match.status === (context.continuousNext ? 'running' : 'ready');
     if (started) currentLibrarySelection = { match, id: context.libraryMissionId };
     return started;
   }
@@ -3382,8 +3432,14 @@ try {
                   if (!(await confirmLibraryReplacement(context, `Play ${mission.name}?`)))
                     return false;
                   if (!context.isCurrent()) return false;
-                  await startRace(entry, { libraryStart: context.continuousNext ? null : context });
-                  const started = roundRecipe.entry === entry && match.status === 'running';
+                  const accepted = await startRace(entry, {
+                    libraryStart: context.continuousNext ? null : context,
+                    briefingOnly: !context.continuousNext,
+                  });
+                  const started =
+                    accepted === true &&
+                    roundRecipe.entry === entry &&
+                    match.status === (context.continuousNext ? 'running' : 'ready');
                   if (started)
                     currentLibrarySelection = {
                       match,

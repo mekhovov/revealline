@@ -137,7 +137,7 @@ test('native multiplayer cases require reconstructed completion, not a self-atte
     const recording = await recorder.snapshot(state);
     await assert.rejects(
       verifyPursuitPilotRecording({ ...entry, recording }),
-      /does not match its full native terminal state/,
+      /does not match its (?:full native terminal state|declared terminal observations)/,
     );
     const changed = structuredClone(recording);
     changed.recipe.options.seed++;
@@ -172,7 +172,51 @@ test('a reconstructed native clear with a changed digest reports integrity failu
       pace: 'standard',
       recording,
     }),
-    /does not match its full native terminal state/,
+    /does not match its (?:full native terminal state|declared terminal observations)/,
+  );
+});
+
+test('a successor pilot receipt names observation completion and independently reports raw-state mismatch', async () => {
+  const historical = JSON.parse(
+    await readFile(
+      new URL(
+        '../docs/qualification/industrial-art/native-play-2026-10-04/versus-crossing-post.json',
+        import.meta.url,
+      ),
+      'utf8',
+    ),
+  );
+  const reconstructed = await verifyLocalMatchRecordingAsync(historical);
+  // A synthetic regression fixture made from a native reconstruction, not a
+  // converted evidence file or a new human/native-browser completion claim.
+  const recorder = createLocalMatchRecorder({
+    ...historical.recipe,
+    segments: historical.segments,
+  });
+  const recording = await recorder.snapshot(reconstructed.state);
+  recording.final.stateSha256 = '0'.repeat(64);
+  const receipt = await verifyPursuitPilotRecording({
+    pilot: 'crossing-post',
+    mode: 'versus',
+    pace: 'standard',
+    recording,
+  });
+  assert.equal(receipt.format, 'pursuit-pilot-recording-receipt.v2');
+  assert.equal(receipt.verification, 'native-terminal-observation-completion');
+  assert.equal(receipt.outcome.exactStateMatch, false);
+  assert.equal(receipt.outcome.terminalObservationMatch, true);
+  assert.deepEqual(receipt.outcome.completedBoards, [1]);
+  assert.equal(receipt.outcome.authority, 'local-terminal-observations-only');
+  assert.match(receipt.scope, /not a resumable checkpoint/);
+  recording.final.observationSha256 = '0'.repeat(64);
+  await assert.rejects(
+    verifyPursuitPilotRecording({
+      pilot: 'crossing-post',
+      mode: 'versus',
+      pace: 'standard',
+      recording,
+    }),
+    /does not match its declared terminal observations/,
   );
 });
 
@@ -216,7 +260,7 @@ test('pilot evidence rejects different source pins and imported ownership even f
     }
     await assert.rejects(
       verifyPursuitPilotRecording({ ...entry, recording }),
-      /does not match its full native terminal state/,
+      /does not match its (?:full native terminal state|declared terminal observations)/,
       'matching source metadata still cannot prove a clear',
     );
   }

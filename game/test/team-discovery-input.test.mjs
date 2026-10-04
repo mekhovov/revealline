@@ -187,13 +187,19 @@ const ready = (f) =>
     () => status(f).dataset.state === 'ready',
     () => status(f).textContent,
   );
-const runningYard = (f) =>
-  waitFor(
+async function runningYard(f) {
+  await waitFor(
     () => !dialog(f).open && f.$('coop-stage').textContent === 'RELAY YARD',
     () => status(f).textContent,
   );
+  if (!f.$('coop-overlay').hidden && /Start together/.test(f.$('coop-resume').textContent)) {
+    assert.equal(f.doc.activeElement.id, 'coop-resume');
+    pointerClick(f.$('coop-resume'));
+  }
+  await waitFor(() => f.$('coop-overlay').hidden);
+}
 
-test('pointer Play survives native discovery opener restoration and finishes focused on the new Team board', async (t) => {
+test('pointer selection survives native restoration and a fresh Start focuses the new Team board', async (t) => {
   const f = await fixture(t);
   await openLibrary(f, 'coop-discovery-open');
   await operation(relayCard(f), () => pointerClick(relayCard(f), 'touch'));
@@ -207,6 +213,31 @@ test('pointer Play survives native discovery opener restoration and finishes foc
   assert.equal(f.$('coop-clock').textContent, '0:00');
   assert.equal(teamImage(f).sha256, yard.picture.sha256);
   assert.deepEqual(f.visits, []);
+});
+
+test('holding controller Confirm through Team preparation cannot start the accepted briefing', async (t) => {
+  const f = await fixture(t);
+  const controls = joinedController(f);
+  controls.seek((element) => element.id === 'coop-discovery-open', 'Missions');
+  await openLibrary(f, 'coop-discovery-open', () => controls.press(0));
+  controls.seek((element) => element === relayCard(f), 'Relay Yard');
+  const selecting = operation(relayCard(f), () => {
+    controls.pad.buttons[0] = { pressed: true, value: 1 };
+    f.tick();
+  });
+  await selecting;
+  await waitFor(() => f.$('coop-stage').textContent === 'RELAY YARD' && !dialog(f).open);
+  f.tick(120);
+  assert.equal(f.$('coop-overlay').hidden, false);
+  assert.match(f.$('coop-resume').textContent, /Start together/);
+  assert.equal(f.doc.activeElement.id, 'coop-resume');
+  assert.equal(f.$('coop-clock').textContent, '0:00');
+  const acceptedPicture = teamImage(f);
+  controls.pad.buttons[0] = { pressed: false, value: 0 };
+  f.tick(2);
+  controls.press(0);
+  assert.equal(f.$('coop-overlay').hidden, true);
+  assert.equal(teamImage(f), acceptedPicture);
 });
 
 test('pointer Stay returns through outer Cancel; a separate Replace starts once with native focus restoration enabled', async (t) => {

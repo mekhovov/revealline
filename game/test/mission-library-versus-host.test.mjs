@@ -142,6 +142,14 @@ async function running(p, id) {
   try {
     await settle(() => {
       p.frame(0);
+      return p.renders[0]?.level.id === id && ['ready', 'running'].includes(p.state());
+    });
+    if (p.state() === 'ready') {
+      p.$('race-start').focus();
+      p.$('race-start').click();
+    }
+    await settle(() => {
+      p.frame(0);
       return p.renders[0]?.level.id === id && p.state() === 'running';
     });
   } catch (error) {
@@ -182,10 +190,23 @@ test('Versus All missions lists exact Journey and retained Classic rows without 
   assert.equal(p.doc.activeElement, p.$('race-library-switch'));
 });
 
-test('empty-profile Versus library starts a late Base mission directly and pauses both boards before replacement', async (t) => {
+test('empty-profile Versus library prepares a late Base briefing and preserves both boards on cancelled replacement', async (t) => {
   const p = await fixture(t);
   await open(p);
   [...p.$('journey-cards').children].find((card) => card.dataset.missionId === late.id).click();
+  await settle(() => {
+    p.frame(0);
+    return p.renders[0]?.level.id === late.runtimeId && p.state() === 'ready';
+  });
+  assert.equal(p.$('journey-chooser').open, false);
+  assert.equal(p.$('race-main').hidden, false);
+  assert.equal(p.doc.activeElement.id, 'race-start');
+  assert.equal(p.$('race-start-cue').hidden, true);
+  const prepared = p.checkpoint();
+  p.key('ArrowDown');
+  p.frames(30);
+  p.key('ArrowDown', false);
+  assert.deepEqual(p.checkpoint(), prepared, 'Selecting a card and steering do not start a race.');
   await running(p, late.runtimeId);
   assert.equal(p.renders[1].level.id, late.runtimeId);
   p.key('ArrowDown');

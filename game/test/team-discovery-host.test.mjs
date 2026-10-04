@@ -33,11 +33,17 @@ const settled = (f, state = 'ready') =>
         : status(f).dataset.state === state,
     () => status(f).textContent,
   );
-const started = (f, title) =>
+const prepared = (f, title) =>
   waitFor(
     () => !dialog(f).open && f.$('coop-stage').textContent === title.toUpperCase(),
     () => status(f).textContent,
   );
+async function started(f, title) {
+  await prepared(f, title);
+  if (!f.$('coop-overlay').hidden && /Start together/.test(f.$('coop-resume').textContent))
+    enter(f, f.$('coop-resume'));
+  await waitFor(() => f.$('coop-overlay').hidden);
+}
 function pause(f) {
   enter(f, f.$('coop-start'));
   f.tap('Escape');
@@ -79,16 +85,33 @@ test('Team discovery opens through keyboard and Back restores the exact lobby op
   assert.equal(f.$('coop-level').value, 'first-connection');
 });
 
-test('one deliberate Play prepares Relay Yard and starts it without another Start screen', async (t) => {
+test('a Team mission card prepares the exact arena and waits for a separate Start together', async (t) => {
   const f = await page(t, options);
   await open(f);
   enter(f, card(f, 'Relay Yard'));
-  await started(f, 'Relay Yard');
+  await prepared(f, 'Relay Yard');
   assert.equal(f.$('coop-menu').hidden, true);
-  assert.equal(f.$('coop-overlay').hidden, true);
+  assert.equal(f.$('coop-overlay').hidden, false);
+  assert.equal(f.$('coop-overlay-title').textContent, 'Relay Yard');
+  assert.match(f.$('coop-resume').textContent, /Start together/);
+  assert.equal(f.doc.activeElement.id, 'coop-resume');
   assert.equal(currentImage(f).sha256, COOP_PICTURE_BINDINGS[1].picture.sha256);
   assert.equal(f.$('coop-level').value, 'relay-yard');
   assert.equal(f.$('coop-clock').textContent, '0:00');
+  const picture = currentImage(f);
+  f.press('KeyD');
+  f.tick(120);
+  assert.equal(f.$('coop-clock').textContent, '0:00');
+  assert.equal(f.$('coop-overlay').hidden, false);
+  enter(f, f.$('coop-resume'));
+  assert.equal(f.$('coop-overlay').hidden, true);
+  assert.equal(
+    currentImage(f),
+    picture,
+    'Start consumes the prepared picture without replacing it.',
+  );
+  f.tick(120);
+  assert.notEqual(f.$('coop-clock').textContent, '0:00');
 });
 
 test('a newer Back focus during Play admission prevents preparation and keeps the current setup', async (t) => {
@@ -128,6 +151,8 @@ test('successful built-in discovery updates only the existing Team arena bookmar
   });
   await open(f);
   enter(f, card(f, 'Relay Yard'));
+  await prepared(f, 'Relay Yard');
+  assert.deepEqual(writes, [], 'Preparation does not persist a started attempt or arena bookmark.');
   await started(f, 'Relay Yard');
   assert.deepEqual(writes, [TEAM_ARENA_PREFERENCE_KEY]);
   const bookmark = JSON.parse(values.get(TEAM_ARENA_PREFERENCE_KEY));

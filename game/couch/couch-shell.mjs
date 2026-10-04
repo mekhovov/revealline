@@ -110,6 +110,7 @@ export function createCouchShell({
     status = null,
     opener = null,
     departure = null,
+    briefingOwner = null,
     destroyed = false,
     revealingResize = false,
     equipment = [];
@@ -575,6 +576,7 @@ export function createCouchShell({
       $('race-solo-return').setAttribute('href', soloHref);
     const previous = status;
     status = match.status;
+    $('race-briefing').hidden = status !== 'ready' || contentBusy || match !== briefingOwner;
     doc.body.dataset.couchStatus = status;
     if (departure && !departureCurrent(departure)) cancelDeparture();
     equipment = match.runs.map(couchEquipment);
@@ -677,6 +679,13 @@ export function createCouchShell({
     update,
     back,
     setup,
+    briefing(owner, { title, description }) {
+      briefingOwner = owner;
+      setText('race-briefing-title', title);
+      setText('race-briefing-copy', description);
+      $('race-briefing').hidden = status !== 'ready';
+      show('main');
+    },
     observe,
     root,
     primary,
