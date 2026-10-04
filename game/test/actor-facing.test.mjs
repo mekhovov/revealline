@@ -46,9 +46,14 @@ test('stationary cleared goals use authored facing without guessing from visit c
 
 test('Capture retains direction before freeze suppresses displayed motion and uses locked warning aim', () => {
   const run = createRun(combatLevel(), { seed: 7 });
-  const before = structuredClone(run);
+  const loadouts = run._loadouts;
+  assert.equal(Object.getPrototypeOf(loadouts), null);
+  // structuredClone discards the native null prototype of the loadout bank.
+  const before = createRun(combatLevel(), { seed: 7 });
+  assert.deepEqual(run, before);
   assert.equal(combatView(run).actors[0].facingRadians, Math.PI / 2);
   assert.deepEqual(run, before);
+  assert.equal(run._loadouts, loadouts);
   run.classic.effects['enemy-freeze'] = { from: 0, until: 100 };
   assert.equal(combatView(run).actors[0].vx, 0);
   assert.equal(combatView(run).actors[0].facingRadians, Math.PI / 2);
