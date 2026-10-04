@@ -45,7 +45,7 @@ const prepared = await prepareWorldFile({
   title: 'Harbor Docks · scene checkpoint',
 });
 const project = prepared.project,
-  revision = 'r1';
+  revision = 'r2';
 project.revision = revision;
 function volume(type, centre, size, extra = {}) {
   return {
@@ -119,7 +119,7 @@ project.authoring = {
     'Initial original scene and one playable route; visual review and both ordinary-mode proofs pending. Seven routes remain.',
   coordinateReference: 'integer millimetres at drone lower point',
   collision:
-    'A continuous real platform spansY0–2m under all playable land; source marker and course box corners share exact coordinates. Water atY0.22m startsX43m beyond the playableX40m boundary. No over-water course or water physics. Minor attached lock/strap relief is cosmetic; no flyable gaps are implied.',
+    'A continuous real platform spans Y0–2m under all playable land; source marker and course box corners share exact coordinates. East water at Y0.22m starts X43m beyond playable X40m; north/south background water stays beyond quay Z−52/50m and playable Z−48/46m. No over-water course or water physics. Minor attached lock/strap relief is cosmetic; no flyable gaps are implied.',
   capabilities: [
     'REVEALLINE_surface_coating version1 opaque-finish: exact painted canonical planes, fixed host bias, fail-closed old-host refusal',
   ],
