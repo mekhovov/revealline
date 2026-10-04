@@ -1,0 +1,651 @@
+<!doctype html>
+<html lang="en">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Orchard tree surfaces · frozen comparison</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      font: 15px system-ui;
+      background: #0c1723;
+      color: #e5edf1;
+    }
+    body {
+      margin: 20px;
+      max-width: 1400px;
+    }
+    button,
+    select {
+      font: inherit;
+      padding: 10px;
+      margin: 6px;
+    }
+    .pair {
+      display: flex;
+      gap: 12px;
+      overflow: auto;
+    }
+    figure {
+      margin: 0;
+    }
+    figcaption {
+      padding: 8px;
+    }
+    .screen,
+    .screen canvas {
+      display: block;
+      width: 640px;
+      height: 360px;
+      background: #111;
+    }
+    textarea {
+      width: 100%;
+      height: 180px;
+      font: 11px monospace;
+    }
+    #status {
+      min-height: 24px;
+    }
+  </style>
+  <h1>Orchard tree surfaces</h1>
+  <p>
+    Frozen before/after modules and actual flight renderers. The five canonical Orchard layouts
+    retain all closed trunks and crowns, collision solids, actors and sightlines. Only the existing
+    opaque bark and leaf texture maps change. Static observations are not flight proofs, hardware
+    performance or a claim of complete world art acceptance.
+  </p>
+  <p id="provenance">Loading frozen inputs…</p>
+  <button id="run" disabled>Run tree surface qualification</button>
+  <button id="preview" disabled>Show selected view</button>
+  <button id="download" disabled>Download receipt</button>
+  <label
+    >Course
+    <select id="course">
+      <option>adventure-orchard-01</option>
+      <option>adventure-orchard-02</option>
+      <option>adventure-orchard-03</option>
+      <option>adventure-orchard-04</option>
+      <option>adventure-orchard-05</option>
+    </select></label
+  >
+  <label
+    >Finish
+    <select id="appearance">
+      <option value="authored">Authored</option>
+      <option value="pixel">Pixel</option>
+      <option value="industrial-workshop">Industrial Workshop</option>
+    </select></label
+  >
+  <label
+    >View
+    <select id="wall">
+      <option value="trunk">Bark plates · 1.5 m</option>
+      <option value="crown">Opaque leaf groups · 2 m</option>
+      <option value="avenue">Avenue / guide and cart</option>
+      <option value="plinth">Barn and survey plinth</option>
+    </select></label
+  >
+  <label
+    >Camera<select id="camera">
+      <option value="fpv">FPV</option>
+      <option value="chase">Chase</option>
+      <option value="overview">Overview</option>
+    </select></label
+  >
+  <p id="status">Preparing controls…</p>
+  <div class="pair">
+    <figure>
+      <figcaption>Before</figcaption>
+      <div class="screen" id="before"></div>
+    </figure>
+    <figure>
+      <figcaption>After</figcaption>
+      <div class="screen" id="after"></div>
+    </figure>
+  </div>
+  <p>
+    The bounded receipt keeps every check and per-view image hash/count, without raw pixel buffers.
+    Download the JSON or transfer it in validated chunks; never truncate the DOM text.
+  </p>
+  <textarea id="receipt" aria-label="Orchard tree surfaces evidence" readonly></textarea>
+  <script type="module">
+    const $ = (id) => document.getElementById(id),
+      clone = structuredClone,
+      encode = JSON.stringify,
+      wait = () => new Promise(requestAnimationFrame),
+      sha = async (value) =>
+        [
+          ...new Uint8Array(
+            await crypto.subtle.digest(
+              'SHA-256',
+              typeof value === 'string' ? new TextEncoder().encode(value) : value,
+            ),
+          ),
+        ]
+          .map((b) => b.toString(16).padStart(2, '0'))
+          .join('');
+    let manifest,
+      modules,
+      owners = [],
+      receipt,
+      busy = false;
+    const errors = [];
+    addEventListener('error', (event) => errors.push(event.message));
+    addEventListener('unhandledrejection', (event) => errors.push(String(event.reason)));
+    const status = (text) => ($('status').textContent = text);
+    function publish() {
+      window.fpvOrchardTreesReceipt = receipt;
+      $('receipt').value = encode(receipt);
+      $('download').disabled = !receipt;
+    }
+    function check(name, passed, details) {
+      receipt.checks.push({
+        name,
+        passed: !!passed,
+        ...(details === undefined ? {} : { details }),
+      });
+      publish();
+      if (!passed) throw Error(name);
+    }
+    async function verifyHashes() {
+      for (const [side, files] of Object.entries(manifest.files))
+        for (const [path, hash] of Object.entries(files)) {
+          const response = await fetch('./' + side + '/' + path, { cache: 'no-store' });
+          if (!response.ok || (await sha(await response.arrayBuffer())) !== hash)
+            throw Error('Frozen source mismatch: ' + side + '/' + path);
+        }
+      if (
+        (await sha(await (await fetch('./index.html', { cache: 'no-store' })).arrayBuffer())) !==
+        manifest.harnessSha256
+      )
+        throw Error('Harness mismatch');
+    }
+    const catalogue = (i) => [
+      ...new Map(
+        [...modules[i].catalogue.WORLD_CATALOGUE, ...modules[i].catalogue.BEGINNER_CATALOGUE].map(
+          (r) => [r.id, r.course],
+        ),
+      ).values(),
+    ];
+    const course = (i, id) => {
+      const value = catalogue(i).find((c) => c.id === id);
+      if (!value) throw Error('Missing ' + id);
+      return value;
+    };
+    function createOwners() {
+      owners = modules.map((row) => {
+        const canvas = document.createElement('canvas');
+        $(row.side).replaceChildren(canvas);
+        let scene = null;
+        const prototype = row.THREE.Object3D.prototype,
+          add = prototype.add;
+        prototype.add = function (...objects) {
+          if (!scene && this.isScene && objects.length === 8 && objects.every((o) => o.isGroup))
+            scene = this;
+          return add.apply(this, objects);
+        };
+        let runtime;
+        try {
+          runtime = row.assets.createFlightRenderer({
+            canvas,
+            window,
+            reducedMotion: true,
+            onContextLost: () => {
+              if (receipt && !receipt.disposing) receipt.contextLosses.push(row.side);
+            },
+          });
+        } finally {
+          prototype.add = add;
+        }
+        if (!runtime.available || !scene) {
+          runtime.dispose();
+          throw Error('Renderer unavailable: ' + row.side);
+        }
+        return {
+          ...row,
+          canvas,
+          runtime,
+          scene,
+          world: scene.children[0],
+          imported: scene.children[6],
+          gl: canvas.getContext('webgl2'),
+        };
+      });
+    }
+    function disposeOwners() {
+      if (receipt) receipt.disposing = true;
+      const results = owners.map((owner) => {
+        owner.runtime.dispose();
+        return { side: owner.side, resources: owner.runtime.resources() };
+      });
+      owners = [];
+      if (receipt) delete receipt.disposing;
+      return results;
+    }
+    async function load(id, quality, appearance = 'authored', orderedImport = false) {
+      for (let i = 0; i < owners.length; i++) {
+        const owner = owners[i],
+          c = clone(course(i, id));
+        if (appearance === 'pixel') c.world = { ...c.world, theme: 'pixel' };
+        owner.runtime.setPresentation({
+          collectionId: appearance === 'pixel' ? 'authored' : appearance,
+          revision: 'r1',
+        });
+        owner.runtime.setCourse(c, 'acro');
+        owner.runtime.setQuality(quality);
+        owner.runtime.setDrone('racer');
+        const glb = owner.assets.builtinWorldScene(c);
+        owner.glbHash = glb ? await sha(await glb.arrayBuffer()) : null;
+        if (glb) {
+          if (orderedImport) {
+            const { GLTFLoader } = await import(
+              './' +
+                owner.side +
+                '/optional-practice/civilian-fpv/vendor/addons/loaders/GLTFLoader.js'
+            );
+            const originalParse = GLTFLoader.prototype.parse;
+            owner.importOrder = [];
+            GLTFLoader.prototype.parse = function (...args) {
+              this.register((parser) => ({
+                name: 'ORCHARD_CONTROL_SOURCE_MATERIAL_ORDER',
+                async beforeRoot() {
+                  await parser.getDependencies('texture');
+                  for (let index = 0; index < (parser.json.materials ?? []).length; index++) {
+                    await parser.getDependency('material', index);
+                    owner.importOrder.push({
+                      index,
+                      name: parser.json.materials[index].name ?? '',
+                    });
+                  }
+                },
+              }));
+              return originalParse.apply(this, args);
+            };
+            try {
+              await owner.runtime.loadScene(glb);
+            } finally {
+              GLTFLoader.prototype.parse = originalParse;
+            }
+            owner.importHookRestored = GLTFLoader.prototype.parse === originalParse;
+          } else {
+            owner.importOrder = null;
+            await owner.runtime.loadScene(glb);
+          }
+          if (!owner.imported.children.length) throw Error('Actual GLB was not installed');
+        }
+        if ((await owner.runtime.prepare()) === false) throw Error('Shader preparation superseded');
+        owner.scene.updateMatrixWorld(true);
+      }
+    }
+    function observation(id, wall) {
+      const c = course(0, id),
+        m = modules[0],
+        flight = (
+          c.format === 'FlightCourse.v2' ? m.worldModel.createWorldFlight : m.model.createFlight
+        )({ course: c, mode: 'acro' }),
+        state = flight.snapshot();
+      flight.dispose?.();
+      if (c.environment === 'orchard') {
+        const poses = {
+          trunk: [
+            [-16.1, 2.3, 2.7],
+            [-18, 2.3, 2],
+          ],
+          crown: [
+            [-15.3, 7.25, 4.7],
+            [-16.5, 6, 3.5],
+          ],
+          avenue: [
+            [0, 4.8, 30],
+            [0, 3.5, -16],
+          ],
+          plinth: [
+            [-12, 5, -26],
+            [0, 1.5, -43],
+          ],
+        };
+        const [position, target] = poses[wall] ?? poses.avenue,
+          dx = target[0] - position[0],
+          dz = target[2] - position[2],
+          q = new m.THREE.Quaternion().setFromEuler(
+            new m.THREE.Euler(
+              Math.atan2(target[1] - position[1], Math.hypot(dx, dz)),
+              -Math.atan2(dx, -dz),
+              0,
+              'YXZ',
+            ),
+          );
+        state.position = Object.fromEntries(
+          ['x', 'y', 'z'].map((axis, i) => [axis, position[i] * 1000]),
+        );
+        state.orientation = q.toArray().map((n) => Math.round(n * 1e6));
+      }
+      state.ticks = 100;
+      return state;
+    }
+    function pixels(owner, state, camera) {
+      const original = encode(state);
+      owner.runtime.draw(state, { cameraMode: camera, cameraFov: 82, cameraTilt: 0 });
+      const gl = owner.gl,
+        rgba = new Uint8Array(gl.drawingBufferWidth * gl.drawingBufferHeight * 4);
+      gl.readPixels(
+        0,
+        0,
+        gl.drawingBufferWidth,
+        gl.drawingBufferHeight,
+        gl.RGBA,
+        gl.UNSIGNED_BYTE,
+        rgba,
+      );
+      if (gl.getError() !== gl.NO_ERROR || encode(state) !== original)
+        throw Error('WebGL error or observer state mutation');
+      return { rgba, resources: owner.runtime.resources() };
+    }
+    async function pair(id, quality, appearance, camera, wall) {
+      await wait();
+      const state = observation(id, wall),
+        a = pixels(owners[0], state, camera),
+        b = pixels(owners[1], state, camera);
+      if (a.rgba.length !== b.rgba.length) throw Error('Pixel dimensions differ');
+      let changed = 0,
+        nonBlack = 0;
+      for (let i = 0; i < a.rgba.length; i += 4) {
+        if (
+          a.rgba[i] !== b.rgba[i] ||
+          a.rgba[i + 1] !== b.rgba[i + 1] ||
+          a.rgba[i + 2] !== b.rgba[i + 2]
+        )
+          changed++;
+        if (b.rgba[i] + b.rgba[i + 1] + b.rgba[i + 2]) nonBlack++;
+      }
+      return {
+        id,
+        quality,
+        appearance,
+        camera,
+        wall,
+        changedPixels: changed,
+        nonBlackPixels: nonBlack,
+        beforeHash: await sha(a.rgba),
+        afterHash: await sha(b.rgba),
+        drawCalls: [a.resources.renderer.calls, b.resources.renderer.calls],
+        triangles: [a.resources.renderer.triangles, b.resources.renderer.triangles],
+      };
+    }
+    async function baseGeometry(owner) {
+      const result = [];
+      owner.world.traverse((item) => {
+        if (!item.geometry) return;
+        result.push({
+          name: item.name,
+          matrix: item.matrixWorld.elements,
+          attributes: Object.fromEntries(
+            Object.entries(item.geometry.attributes).map(([key, value]) => [
+              key,
+              Array.from(value.array),
+            ]),
+          ),
+          index: item.geometry.index ? Array.from(item.geometry.index.array) : null,
+          instances: item.instanceMatrix ? Array.from(item.instanceMatrix.array) : null,
+          cast: item.castShadow,
+          receive: item.receiveShadow,
+          visible: item.visible,
+        });
+      });
+      return sha(encode(result));
+    }
+    function details(owner) {
+      const result = [];
+      owner.world.traverse((item) => {
+        if (/^tree-(trunk|canopy)-[0-3]-[0-3]$/.test(item.userData.collisionId ?? ''))
+          result.push(item);
+      });
+      return result;
+    }
+    function resourceKey(owner) {
+      const r = owner.runtime.resources();
+      return {
+        registered: r.registered,
+        geometries: r.renderer.geometries,
+        textures: r.renderer.textures,
+      };
+    }
+    async function run() {
+      if (busy) return;
+      busy = true;
+      $('run').disabled = $('preview').disabled = true;
+      disposeOwners();
+      receipt = {
+        format: 'FPVOrchardTreesBrowserEvidence.v1',
+        createdAt: new Date().toISOString(),
+        baseline: manifest.baseline,
+        candidate: manifest.candidate,
+        sourceFiles: manifest.files,
+        viewport: { width: innerWidth, height: innerHeight, dpr: devicePixelRatio },
+        checks: [],
+        samples: [],
+        resourceCycles: [],
+        contextLosses: [],
+        limitations: [
+          'Actual static WebGL evidence; no new flight proof or hardware performance claim.',
+          'Every image pair retains hashes and changed-pixel counts, not raw pixel buffers.',
+          'Courtyard control preloads existing encoded textures/material dependencies in source order equally on both sides; temporary hooks restore immediately. This is not a claim of unconstrained asynchronous imported-image determinism.',
+          'All17 shared kits and custom layout/profile boundaries also receive separate real-Three CPU scene comparisons.',
+        ],
+      };
+      try {
+        await verifyHashes();
+        check('Frozen source and harness hashes match', true);
+        createOwners();
+        const orchards = catalogue(0).filter((c) => c.environment === 'orchard');
+        check(
+          'Five exact Orchard courses',
+          orchards.length === 5 && orchards.every((c) => encode(c) === encode(course(1, c.id))),
+        );
+        for (const quality of ['low', 'balanced', 'high'])
+          for (const appearance of ['authored', 'pixel', 'industrial-workshop']) {
+            const id = 'adventure-orchard-01',
+              label = quality + '/' + appearance;
+            status(id + ' · ' + label);
+            await load(id, quality, appearance);
+            check(
+              label + ' all geometry/transforms/UVs/shadows exact',
+              (await baseGeometry(owners[0])) === (await baseGeometry(owners[1])),
+            );
+            const trees = details(owners[1]);
+            check(
+              label + ' original32 opaque closed tree meshes',
+              trees.length === 32 &&
+                trees.every(
+                  (m) =>
+                    m.castShadow &&
+                    m.receiveShadow &&
+                    !m.material.transparent &&
+                    m.material.opacity === 1,
+                ),
+            );
+            check(
+              label + ' authored-only tree recipes',
+              trees.every(
+                (m) =>
+                  (m.material.map?.userData.surface?.kind?.startsWith('orchard-') ?? false) ===
+                  (appearance === 'authored'),
+              ),
+            );
+            check(
+              label + ' actual procedural ownership',
+              owners.every(
+                (o) =>
+                  o.glbHash === null &&
+                  o.imported.children.length === 0 &&
+                  o.world.getObjectByName('procedural-scenery-fallback')?.visible,
+              ),
+            );
+            check(
+              label + ' exact registered and GPU resources',
+              encode(resourceKey(owners[0])) === encode(resourceKey(owners[1])),
+            );
+            for (const [camera, wall] of [
+              ['fpv', 'trunk'],
+              ['fpv', 'crown'],
+              ['chase', 'avenue'],
+              ['overview', 'plinth'],
+            ]) {
+              const sample = await pair(id, quality, appearance, camera, wall);
+              receipt.samples.push(sample);
+              check(
+                label + '/' + camera + '/' + wall + ' visible with exact draw budget',
+                sample.nonBlackPixels > 100 &&
+                  sample.drawCalls[0] > 0 &&
+                  sample.drawCalls[0] === sample.drawCalls[1] &&
+                  sample.triangles[0] === sample.triangles[1] &&
+                  (appearance !== 'authored'
+                    ? sample.changedPixels === 0
+                    : camera !== 'fpv' || sample.changedPixels > 20),
+                sample,
+              );
+            }
+          }
+        for (const id of orchards.map((c) => c.id)) {
+          await load(id, 'balanced');
+          const sample = await pair(id, 'balanced', 'authored', 'fpv', 'avenue');
+          receipt.samples.push(sample);
+          check(
+            id + ' preserved guide/cart/objective scene geometry',
+            details(owners[1]).length === 32 &&
+              (await baseGeometry(owners[0])) === (await baseGeometry(owners[1])) &&
+              sample.drawCalls[0] === sample.drawCalls[1] &&
+              sample.triangles[0] === sample.triangles[1],
+          );
+        }
+        for (const id of ['adventure-coast-01', 'courtyard-01']) {
+          await load(id, 'balanced', 'authored', id === 'courtyard-01');
+          const sample = await pair(id, 'balanced', 'authored', 'overview', 'avenue');
+          receipt.samples.push(sample);
+          check(
+            id + ' no Orchard tree recipe and exact control pixels',
+            details(owners[1]).length === 0 &&
+              sample.changedPixels === 0 &&
+              sample.drawCalls[0] === sample.drawCalls[1] &&
+              sample.triangles[0] === sample.triangles[1],
+            sample,
+          );
+          check(
+            id + ' correct imported/fallback path',
+            owners.every((o) =>
+              id === 'courtyard-01'
+                ? o.glbHash !== null && o.imported.children.length > 0
+                : o.glbHash === null && o.imported.children.length === 0,
+            ),
+          );
+          if (id === 'courtyard-01')
+            check(
+              'Imported control exact GLB and restored ordering hooks',
+              owners[0].glbHash === owners[1].glbHash &&
+                owners.every((o) => o.importHookRestored) &&
+                encode(owners[0].importOrder) === encode(owners[1].importOrder),
+            );
+        }
+        for (let cycle = 0; cycle < 3; cycle++) {
+          await load('adventure-orchard-01', 'balanced');
+          await pair('adventure-orchard-01', 'balanced', 'authored', 'fpv', 'trunk');
+          receipt.resourceCycles.push(owners.map(resourceKey));
+        }
+        check(
+          'Three repeated loads retain registered/GPU resource plateau',
+          receipt.resourceCycles.every((r) => encode(r) === encode(receipt.resourceCycles[0])),
+        );
+        const final = disposeOwners();
+        receipt.finalResources = final;
+        check(
+          'Final disposal releases every registered owner',
+          final.every((r) => Object.values(r.resources.registered).every((n) => n === 0)),
+        );
+        check(
+          'No unexpected context loss or application error',
+          receipt.contextLosses.length === 0 && errors.length === 0,
+          errors,
+        );
+        receipt.passed = true;
+        publish();
+        status(
+          'PASS · ' +
+            receipt.checks.length +
+            ' checks · ' +
+            receipt.samples.length +
+            ' image pairs',
+        );
+        createOwners();
+        await load('adventure-orchard-01', 'balanced');
+        await pair('adventure-orchard-01', 'balanced', 'authored', 'fpv', 'crown');
+        $('wall').value = 'crown';
+      } catch (error) {
+        receipt.passed = false;
+        receipt.error = String(error.stack ?? error);
+        publish();
+        status('FAIL · ' + error.message);
+      } finally {
+        busy = false;
+        $('run').disabled = $('preview').disabled = false;
+      }
+    }
+    $('run').onclick = run;
+    $('preview').onclick = async () => {
+      try {
+        if (!owners.length) createOwners();
+        await load($('course').value, 'balanced', $('appearance').value);
+        await pair(
+          $('course').value,
+          'balanced',
+          $('appearance').value,
+          $('camera').value,
+          $('wall').value,
+        );
+        status('Selected static view');
+      } catch (error) {
+        status(error.message);
+      }
+    };
+    $('download').onclick = () => {
+      const url = URL.createObjectURL(
+          new Blob([JSON.stringify(receipt, null, 2) + '\n'], { type: 'application/json' }),
+        ),
+        a = document.createElement('a');
+      a.href = url;
+      a.download = 'fpv-orchard-tree-surfaces-browser.json';
+      a.click();
+      setTimeout(() => URL.revokeObjectURL(url), 1000);
+    };
+    try {
+      manifest = await (await fetch('./fixture-manifest.json')).json();
+      if (manifest.format !== 'FPVOrchardTreesFixture.v1') throw Error('Unknown fixture');
+      modules = await Promise.all(
+        ['before', 'after'].map(async (side) => {
+          const base = new URL('./' + side + '/optional-practice/civilian-fpv/', location.href),
+            [assets, catalogue, model, worldModel, THREE] = await Promise.all(
+              [
+                'world-assets.mjs',
+                'world-catalogue.mjs',
+                'model.mjs',
+                'world-model.mjs',
+                'vendor/three.module.js',
+              ].map((p) => import(new URL(p, base))),
+            );
+          await worldModel.initWorldRuntime();
+          return { side, assets, catalogue, model, worldModel, THREE };
+        }),
+      );
+      $('provenance').textContent =
+        'Baseline ' +
+        manifest.baseline +
+        ' · Candidate ' +
+        (manifest.candidate === '.' ? 'working tree' : manifest.candidate) +
+        ' · Runtime SHA-256 ' +
+        manifest.files.after['optional-practice/civilian-fpv/world-visuals.mjs'];
+      $('run').disabled = $('preview').disabled = false;
+      status('Ready. Qualification has not run.');
+    } catch (error) {
+      status('Preparation failed: ' + error.message);
+    }
+  </script>
+</html>
