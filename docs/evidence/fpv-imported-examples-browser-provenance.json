@@ -1,0 +1,52 @@
+{
+  "format": "FPVImportedExamplesBrowserProvenance.v1",
+  "candidate": "cc1ffbbadf092caf3871f52203e2edf2f119d74c",
+  "candidateHostSha256": "6d93d9c36fb8d0c576907d98618d7aa73637bb49bd8d72ec310508241b96045c",
+  "playerSource": "d9ad2561ee1d7685ef97961478b7de30278c1e48",
+  "checks": 47,
+  "passed": true,
+  "artifacts": [
+    {
+      "artifact": "fpv-imported-examples-source-browser-v1.json.gz",
+      "bytes": 29494,
+      "sha256": "9a73e2e1b3d1bf784aebe1d32acf5c2d21d50fb5296fb4d90a1e23c395cebfc2",
+      "storedBytes": 8076,
+      "storedSha256": "9ba61bb32126d67aad7536d5be4d1256fc9685a5cabe7611a51b41c57fda87ee",
+      "compression": "gzip-mtime0"
+    },
+    {
+      "artifact": "fpv-imported-examples-source-browser-v1.png",
+      "bytes": 88776,
+      "sha256": "dfa5d6fe79d5be74e4c02aea0f24c7014554b96c99ed534bb58e2c94b9b34073",
+      "storedBytes": 88776,
+      "storedSha256": "dfa5d6fe79d5be74e4c02aea0f24c7014554b96c99ed534bb58e2c94b9b34073",
+      "compression": null
+    },
+    {
+      "artifact": "fpv-imported-examples-source-v1-manifest.json.gz",
+      "bytes": 20762,
+      "sha256": "c4ccaefd105eaac200901ef9c183337d63a86b303294009125fa202248ae09c6",
+      "storedBytes": 6614,
+      "storedSha256": "869c61448b8aa40341297e518b56192f127fd5992b1ef8c963dd60343a0f0517",
+      "compression": "gzip-mtime0"
+    },
+    {
+      "artifact": "fpv-imported-examples-source-v1-player.html.gz",
+      "bytes": 35973,
+      "sha256": "7c1cfa60d67889b4330e7d7b1ed12af9107fe312220bcfae1bdf5f59fdaabf32",
+      "storedBytes": 9098,
+      "storedSha256": "f17f54321f336b6e095651704f3e4046826358f80c6bff43d30b6a6e515b821b",
+      "compression": "gzip-mtime0"
+    },
+    {
+      "artifact": "fpv-imported-examples-source-v1-index.html.gz",
+      "bytes": 21270,
+      "sha256": "3db10b2c34693f5f70604593430fc6c66b48ed51b49d425534484ce3574bdf5d",
+      "storedBytes": 5919,
+      "storedSha256": "9cc8fbcfa34dbd76c516e353f6af45f9a81ab8897cd90fbce4997e288e9ea655",
+      "compression": "gzip-mtime0"
+    }
+  ],
+  "scope": "102 immutable admitted files. Only static host import paths rewritten; source candidate changes one explicitly bound host. Actual UI/File/IndexedDB/renderer/physics, private database names and memory preferences, external RAF scheduling. Real performance clock and pause guards untouched. No package admission or hardware-performance claim.",
+  "preparationDiagnostic": "The first freeze attempt rejected raw Git i18n bytes differing from admitted projected i18n. No output directory was created. The preparer now checks original-source Git differences separately and verifies all admitted member hashes; no package contents were changed to pass this check."
+}
