@@ -1,12 +1,43 @@
 # Reuse environment lighting and release graphics ownership before Retry
 
+## Current qualification — 4 October 2026
+
+Reviewed runtime and admitted source `06d154e765c8332e5778bc51945799ee115353ac`
+are locally qualified on published main `47d2019d`. Full validate, changed-file
+lint/format, 63 manual lifecycle checks and 30 existing checks pass. All three
+optional packages pass 95 committed-input hashes, ZIP membership and two
+byte-identical builds. Inputs total 16,758,095 bytes, leaving 19,121 bytes under
+16 MiB. Only the renderer differs among those inputs from the published parent.
+
+The actual final admitted editor passes all 11 checks and verifies all 102
+distribution files. Actual loss/restoration brackets retained pointer, snap,
+zoom, orbit, home, selection and cosmetic calls. Cleared controls stay inert,
+the host emits its existing reload notice once, registered resources remain zero,
+and no unexpected GL errors, uncaught errors or warnings occur. The expected
+CONTEXT_LOST_WEBGL signal appears only while the context is actually lost,
+including final deliberate disposal. This is not automatic editor recovery.
+
+The lossless 28,701-byte receipt is archived as
+`docs/evidence/fpv-environment-light-editor-final-browser.json.gz` (7,135 bytes);
+the adjacent summary contains both SHA-256 identities and all 11 checks.
+`docs/evidence/fpv-environment-light-final-06d-qualification.json` binds final
+validation, admission, source budget and the immutable 102-file fixture.
+
+Earlier source/package matrices and actual flight-host Retry keep their exact
+historical candidate identities; source-scope receipts connect the narrow
+lifecycle changes. The isolated v5 imported-image mismatch remains recorded.
+No new FPS, sustained-device, universal image-determinism or historical
+15–17 second stall-fix claim follows. Exact-head remote checks, protected merge
+and public player availability remain subsequent publication gates. Sections
+below preserve the investigation history and its original failures.
+
 The historical bounded D1 profile found repeated PMREM generation inside course
 installation (up to 101.1 ms in that observation). This increment reuses one
 renderer-owned target when its exact normalized sky/ground linear color channels
 and indoor probe shape are unchanged. It does not claim to fix the earlier
 unreproduced 15–17 second stalls or to establish device FPS.
 
-The baseline is main `0aeb0c2b4342715ba9a19b976114d7d905fed7bd`. Only
+The initial baseline was main `0aeb0c2b4342715ba9a19b976114d7d905fed7bd`. Only
 `optional-practice/civilian-fpv/renderer.mjs` changes production behavior. The
 world visuals, scenery, physics, collision, course identities and imported assets
 remain untouched. There is no multi-entry or shared cache. A lighting change
@@ -16,7 +47,7 @@ context cannot populate the cache; restoration followed by the existing course
 reinstall creates a fresh target. Failed generation leaves no reusable stale key.
 Final disposal remains idempotent.
 
-## Qualification in progress
+## Initial qualification (historical)
 
 `node scripts/qualify-fpv-environment-light-reuse.mjs` exercises the actual
 renderer closure with real Three Color/Scene objects and controlled WebGL/PMREM
