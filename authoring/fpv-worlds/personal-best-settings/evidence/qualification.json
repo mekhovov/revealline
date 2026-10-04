@@ -1,0 +1,199 @@
+{
+  "format": "FPVPublicGhostSettingsQualification.v1",
+  "qualifiedSource": "f8ebdcb8fab909de6a5b91b0ab3b146dfe041d36",
+  "publishedBranchInputBridgeHead": "57d00a810875481cdcbf78beb553b04c4f719f9b",
+  "all95OriginalInputsExact": true,
+  "originalInputCount": 95,
+  "originalInputBytes": 16776601,
+  "remainingOriginalSourceBytes": 615,
+  "packageMembers": 102,
+  "deltaBytes": -63,
+  "browser": [
+    {
+      "receipt": "initial-evidence.json",
+      "passingChecks": 173,
+      "overallPassed": false,
+      "scope": "Trusted pointer and keyboard, native record/ghost identity,320px,EN/UK and repeated control ownership; later arm timeout retained."
+    },
+    {
+      "receipt": "replay-tail.json.gz",
+      "passingChecks": 166,
+      "overallPassed": true,
+      "scope": "Separate unchanged-runtime tail: observes language primary race, fresh public selection and nativeWatch\u2192Settingspause\u2192disabledghost, cleanup."
+    }
+  ],
+  "validation": {
+    "node": "22.22.2",
+    "fullValidateExit": 0,
+    "existingChecksPassed": 16,
+    "initialFailure": "fake-indexeddb absent from this checkout; original TAP retained, resolved through existing primary pinned authoring NODE_PATH without test changes/install."
+  },
+  "admission": {
+    "allPackages": [
+      "civilian-flight",
+      "civilian-fpv",
+      "fpv-worlds"
+    ],
+    "builds": 2,
+    "byteIdentical": true,
+    "committedInputsVerified": true,
+    "zipMembersVerified": true,
+    "source": "f8ebdcb8fab909de6a5b91b0ab3b146dfe041d36"
+  },
+  "packageComparison": {
+    "baseline": "216b36ce15df84f5148d9d16e92c5defdee0da09",
+    "changed": [
+      {
+        "path": "optional-package.json",
+        "beforeBytes": 18746,
+        "bytes": 18746,
+        "sha256": "9a74761102d7b8259840451d5a03479886428c6204101e04875d1898eba89cbb"
+      },
+      {
+        "path": "optional-practice/civilian-fpv/world-app.mjs",
+        "beforeBytes": 261425,
+        "bytes": 261362,
+        "sha256": "377a0e348940e1d48f22f475acb85d0f6d4658c0e55f90eadc6c6ec9634d39b9"
+      },
+      {
+        "path": "optional-practice/fpv-worlds/worker.js",
+        "beforeBytes": 19875,
+        "bytes": 19875,
+        "sha256": "28a1348b8a29e5f6b0444610b1038bdb33bbeb288301ae7c9778036a0a2a9599"
+      }
+    ],
+    "otherMembersByteIdentical": 99,
+    "qualifiedSourceFixtureHostExact": true
+  },
+  "followup": "Native language repaint temporarily resets Home phase/canResume through renderPacks; immediate primary Start opens briefing. Root assigned separate reliability follow-up. No fix or single broad browser pass is claimed here.",
+  "artifacts": [
+    {
+      "source": "/tmp/fpv-ghost-settings-8947-tail.json",
+      "archive": "replay-tail.json.gz",
+      "bytes": 146006,
+      "sha256": "5fc1bc28bbcbd79d744604b8d895e7875da12c25e1261ed5ffce90ac6518bdfb",
+      "storedBytes": 18022,
+      "storedSHA256": "172ce9f2ae8d3a7d5db9650fd221ca5e1d7b9899bbc924b8b6b1adc6bdc1325c"
+    },
+    {
+      "source": "/tmp/fpv-ghost-settings-8947-tail.png",
+      "archive": "replay-tail.png.gz",
+      "bytes": 56673,
+      "sha256": "5af7fbeafea147cb616613ad7c7e63e9da5a4cdb0f9c32119c92e60ddb5aa84d",
+      "storedBytes": 40909,
+      "storedSHA256": "c7df0f0cdb34e96ba867863823423ffdb4020ecc05a62925732a32ba0e70e420"
+    },
+    {
+      "source": "/tmp/fpv-ghost-settings-validation-f8eb.log",
+      "archive": "validation.log.gz",
+      "bytes": 3399,
+      "sha256": "05bebaba8dac541ee3805fd865e92b6c7e7fbb2c9392fbaada915e79f41527e5",
+      "storedBytes": 1460,
+      "storedSHA256": "5c5d4a061aa75bf7bae88cb02f5380e144b1d5636492c3c3e24663d91f06d83c"
+    },
+    {
+      "source": "/tmp/fpv-ghost-settings-existing-f8eb.tap",
+      "archive": "initial-missing-dependency.tap.gz",
+      "bytes": 2893,
+      "sha256": "831f74bc55d7f647024d98ebc0c2205687cf303e6bb8b3afa441de9132e2da34",
+      "storedBytes": 1036,
+      "storedSHA256": "e6f9b99d29515ed0ac55a59ec45dc80ae94f2fb5c8b49a852c6137612a3ee326"
+    },
+    {
+      "source": "/tmp/fpv-ghost-settings-existing-f8eb-resolved.tap",
+      "archive": "existing-controls.tap.gz",
+      "bytes": 4363,
+      "sha256": "83c8f353a4f24f99bf230ec4d43ba0aaee50f26cc3916cb309bd26bd9e455dc7",
+      "storedBytes": 1155,
+      "storedSHA256": "1aaefb3043e860c1e4287a49321c287fd09fa036b5221863ea83ffa0dccee192"
+    },
+    {
+      "source": "/tmp/fpv-ghost-settings-admission-f8eb.log",
+      "archive": "admission.log.gz",
+      "bytes": 420,
+      "sha256": "84fccb3dff7f3a7c0a053451f4f6c8d40d8ccc8f125bb8db6a621f5c82e1a12f",
+      "storedBytes": 288,
+      "storedSHA256": "c82c5cfb15485ab85518fc020e60e47b8c33f18b1fca8083f3203b483778a976"
+    },
+    {
+      "source": "/tmp/fpv-main-8e-input-bridge.json",
+      "archive": "main-input-bridge.json.gz",
+      "bytes": 31582,
+      "sha256": "e3507e71195fdb83011930281c2286aea19e1c81077d3b979fbc71af18f839bc",
+      "storedBytes": 8856,
+      "storedSHA256": "69022f25d369f1e0f3f01418e1c3441530bd2fbf9cb0e0f444557b4c3a77e5b3"
+    },
+    {
+      "source": "/tmp/fpv-library-publication-merged-1080.json",
+      "archive": "preceding-publication.json.gz",
+      "bytes": 1755,
+      "sha256": "d618157a537244bf9a74a34295c755ef40a013cbbd82b444bd2596a13763fc7c",
+      "storedBytes": 900,
+      "storedSHA256": "e0354dd88281adc16451c3f7117fa09258c83fb4b227757426d0bad3a38df05f"
+    },
+    {
+      "source": "/private/tmp/fpv-ghost-settings-tail-f8eb-r2/fixture.json",
+      "archive": "r2-fixture.json.gz",
+      "bytes": 45020,
+      "sha256": "c77e4215398fef978bbe7fdea4a2193ee563f87e96e4e0407e5311e03d9c8ccb",
+      "storedBytes": 8048,
+      "storedSHA256": "ae208989749f336e4a7128fbc15144fb3297bba39d25bc74095d26c4911ae1fd"
+    },
+    {
+      "source": "/private/tmp/fpv-ghost-settings-tail-f8eb-r2/host.mjs",
+      "archive": "r2-host.mjs.gz",
+      "bytes": 2947,
+      "sha256": "2ca87cd569d6bf711e73f7e2397304f3914fd16198b2df861c0e389a64f908a2",
+      "storedBytes": 1215,
+      "storedSHA256": "18343b2df343573bcd74347af7e7b6df2b07d0ed174309d6f9098911875611bb"
+    },
+    {
+      "source": "/private/tmp/fpv-ghost-settings-tail-f8eb-r2/run.mjs",
+      "archive": "r2-run.mjs.gz",
+      "bytes": 13849,
+      "sha256": "759e231b58e22341a946c765d980d648e9068d97380b6b41777bd1f8ffd0f728",
+      "storedBytes": 4641,
+      "storedSHA256": "364eb9548e599481049fd3776126aa1a9cf59f87369cc43d8b7ef433cc58d834"
+    },
+    {
+      "source": "/private/tmp/fpv-ghost-settings-tail-f8eb-r2/index.html",
+      "archive": "r2-index.html.gz",
+      "bytes": 802,
+      "sha256": "5ee627296d395edfc27061c084ea7bb420a005f78279574c6fc699bf4868d55f",
+      "storedBytes": 501,
+      "storedSHA256": "84046fe79d5b8baa4544dd951f66901b17e7f2909fc43d55ec67986b00a4c73d"
+    },
+    {
+      "source": "/private/tmp/fpv-ghost-settings-admission-f8ebdcb8/source-inventory-optional-fpv-worlds.json",
+      "archive": "source-inventory-optional-fpv-worlds.json.gz",
+      "bytes": 32166,
+      "sha256": "853c3da02f9f69bc297d74946794fb6eed14f29f00516ee46f3d35d19bce13c1",
+      "storedBytes": 7145,
+      "storedSHA256": "c40e122c4b1b94bb0dd97079ecfb239da4dc1d44f1d391afe0d822f66bf17d11"
+    },
+    {
+      "source": "/private/tmp/fpv-ghost-settings-admission-f8ebdcb8/optional-checksums.json",
+      "archive": "optional-checksums.json.gz",
+      "bytes": 2136,
+      "sha256": "a1854559e76611b47eb7fb2a5648736cbbf71bcad23247f69d2dcc3ecb41164b",
+      "storedBytes": 923,
+      "storedSHA256": "4415c8468cf0a3f1a5b6b57b6f4bf75373f2d2364bf0a324e00eacba33559bf2"
+    },
+    {
+      "source": "/private/tmp/fpv-ghost-settings-admission-f8ebdcb8/optional-candidate-verification.json",
+      "archive": "optional-candidate-verification.json.gz",
+      "bytes": 1142,
+      "sha256": "32aea1a873f42a97b41d9d26da033b8b9a9605dc32060184e980041ac41ad6c3",
+      "storedBytes": 610,
+      "storedSHA256": "f505d205153fe998e7a58a9b4288bee68f980ed6ae505b5ee8359f683fe69047"
+    },
+    {
+      "source": "/private/tmp/fpv-ghost-settings-admission-f8ebdcb8/optional-packages.json",
+      "archive": "optional-packages.json.gz",
+      "bytes": 2633,
+      "sha256": "1600d314aeeb7b983b92713f278db12f71fa7fbcaa3fbd07b75a8c90f4790f49",
+      "storedBytes": 1079,
+      "storedSHA256": "3164d170b9fd35a3d7da19ce75f2f583535a84be3aa8f23365a5e6d4254a1a41"
+    }
+  ]
+}
