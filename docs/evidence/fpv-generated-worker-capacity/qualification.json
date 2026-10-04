@@ -23,5 +23,9 @@
     "zipMembers": true
   },
   "review": "Independent read-only review found no blocker in generator/projection/identity guard.",
-  "browser": "Pending actual admitted offline/launch qualification; no Library transport claim."
+  "browser": {
+    "status": "passed",
+    "receipt": "offline-smoke.json",
+    "scope": "Actual native offline preparation, stopped-local-origin reload, Worlds/Academy practice entry and pause; not new Library transport."
+  }
 }
