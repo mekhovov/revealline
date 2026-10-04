@@ -12,7 +12,7 @@ const sourceHashes={
 'optional-practice/civilian-fpv/world-hangar.mjs':
 '759d21e034e65e99600df72ef7e04a2fdff8359ec9119baa401323b248ec85ef',
 'optional-practice/civilian-fpv/world-actor-editor.mjs':
-'9ca630e6c850d85fd69959ee940195ddaa77daf9da2e31b397e1a6edc1e54350',
+'82fd9921891a9bcef564f772aa9c312f8ce393249b3e30900161891ad46a8b7d',
 'optional-practice/civilian-fpv/world-progress.mjs':
 'c7de9e847bc3dbbb8e1aee6da39887ab4778769c33476a428c4186c57b5c845d',
 'optional-practice/civilian-fpv/world-hunt-reactions.mjs':
@@ -1585,6 +1585,15 @@ let message='';
 let error=false;
 let disposed=false;
 let busy=false;
+let cleanFields='';
+const fieldValues=()=>
+JSON.stringify(
+[
+...container.querySelectorAll(
+'input, textarea, [data-tracking-subject], [data-tracking-kind], [data-actor-role]',
+),
+].map((node)=>[node.value,node.checked]),
+);
 const text=(key)=>
 LABELS[key][(typeof locale==='function'?locale():locale)==='uk'?1:0];
 const element=(tag,content,className)=>{
@@ -2036,6 +2045,10 @@ panel.append(actions);
 return panel;
 }
 function refresh(){
+paint();
+cleanFields=fieldValues();
+}
+function paint(){
 if(disposed)return;
 const course=getCourse();
 container.replaceChildren(element('h3',text('heading')));
@@ -2144,6 +2157,7 @@ const role=choose(
 actor.role??'hostile',
 text('role'),
 );
+role.dataset.actorRole='';
 if(actor.type!=='hazard')
 container.append(label(text('role'),role),element('p',text('roleHelp'),'hint'));
 const position=positionFields(actor.position,course.bounds,text('position'));
@@ -2317,6 +2331,7 @@ container.append(objectiveActions,element('p',text('objectiveHelp'),'hint'),anno
 refresh();
 return{
 refresh,
+hasPendingChanges:()=>fieldValues()!==cleanFields,
 select(id){
 selected=id;
 trackingSelection=null;
