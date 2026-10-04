@@ -39,7 +39,7 @@
   const $ = (id) => document.getElementById(id),
     sleep = (ms) => new Promise((r) => setTimeout(r, ms));
   const result = {
-    format: 'FPVWorldDisposalBrowser.v3',
+    format: 'FPVWorldDisposalBrowser.v5',
     started: null,
     checks: [],
     cases: [],
@@ -176,7 +176,14 @@
     if (mode !== 'lobby') {
       await bounded(app.startFlight(w.fixtureEntry), 'start canonical Clearing check-in');
       await warm(ctx);
-      await arm(ctx);
+      if (mode === 'arm-and-dispose') {
+        d.getElementById('world-viewport').focus();
+        d.getElementById('world-arm').click();
+        must(
+          /Flight active/.test(d.getElementById('flight-status').textContent),
+          'Arm immediately precedes disposal while asynchronous preparation may settle',
+        );
+      } else await arm(ctx);
       row.before = copy(w.fixtureDrawState);
       row.resourcesBefore = copy(w.fixtureRenderer.resources());
       must(
@@ -409,6 +416,7 @@
       for (const mode of ['lobby', 'flight', 'save-failure'])
         for (const variant of ['baseline', 'candidate']) await runCase(variant, mode);
       await runCase('candidate', 'pending-save-failure');
+      await runCase('candidate', 'arm-and-dispose');
       for (const phase of ['open', 'session']) await hydrationCase(phase);
     } catch (e) {
       result.errors.push({ message: String(e), stack: e.stack });
