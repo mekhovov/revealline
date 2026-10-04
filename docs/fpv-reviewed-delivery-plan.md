@@ -51,6 +51,28 @@ Quality presets must preserve collision, relevant sight lines and objective acto
 Measure frame times, loading and resource disposal before claiming performance.
 No multiplayer, online publishing or universal commercial-map conversion is added.
 
+### D4 starter-project checkpoint — 4 October 2026
+
+The first D4 increment supplies [ten editable industrial/natural starter projects](../authoring/fpv-worlds/starters/README.md):
+sweeper, hairpin, chicane, climb and split level, with one course per project,
+independent Self-level/Acro routes, EN/UK guidance and bounded nominal clearance.
+Twenty ordinary-control flights and independent replays complete in 55,804 ticks
+with zero hard contacts. The unchanged 102-member admitted player passes 237
+browser checks covering all ten ZIP identities, two numeric editor workflows,
+four original replays, a trusted spatial drag, Undo/Redo, export/reimport and
+native IndexedDB reopening. See the [exact receipts and limits](../authoring/fpv-worlds/starters/evidence/README.md).
+
+This authoring-only increment adds zero runtime source bytes and no catalogue
+entries; counts remain 196 challenges / 14 worlds and package limits stay exact.
+Complete D4 next with explicit spatial route-mode selection across edits,
+ordering, history and source overrides. Separate actual localhost offline
+qualification passes cached reload, keyboard editing, Undo/Redo, installation,
+reopening and original/edited revision restoration with the serving origin down.
+Device-wide offline, browser restart and storage-eviction qualification remain open.
+Edited copies do not inherit the original routes' flight/clearance evidence.
+D5's four new worlds and D6's additional unit coverage remain subsequent work;
+physical-device, unfamiliar-player and sustained-performance acceptance stay open.
+
 ### Optional Adventure examples checkpoint — 4 October 2026
 
 The D3 data-only Adventure increment converts all 60 retained authoring proofs
