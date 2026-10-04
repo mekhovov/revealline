@@ -128,3 +128,19 @@ The import and native-launch JSON receipts and screenshots are retained under
 first-course import/collision/playback checkpoint, not delivery of the entire
 Reservoir world. Any later shared bounds or geometry revision changes the exact
 pack dependency and requires new final proofs for all eight courses.
+
+## Paused for prioritization review
+
+The verified checkpoint above remains frozen. A separate five-course data
+candidate at `/tmp/fpv-mountain-reservoir-land-routes-r5` passes schema and full
+pack/ZIP round trips and preserves the accepted r4 GLB/collision/bounds. Its four
+new routes (02, 05, 06, 08) have no flight or visual acceptance yet.
+
+`source/engineering.mjs`, `source/engineering-routes.mjs` and `build-world.mjs`
+are the next **unbuilt draft**: a supported intake-control gallery, solid dry
+spillway and eight bilingual route pairs, including the renamed land-side
+Shoreline circuit. The optional engineering path also adjusts the roof approach
+around the proposed chute. No generated r6 scene, clearance result, visual review
+or final sixteen proofs exist. This source checkpoint was saved when the user
+requested re-prioritization; it is not a publication candidate. `DESIGN.md`
+records the land-only decision and remaining acceptance requirements.
