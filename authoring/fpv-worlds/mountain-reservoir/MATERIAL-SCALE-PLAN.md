@@ -1,4 +1,4 @@
-# Reservoir material scale — proposed next increment
+# Reservoir material scale — bounded r11 qualification
 
 Current revision r11 removes r10's broad brown grass patches. Actual fixed-camera
 review rejected r10 because that motif tiled into regular diagonal rows, despite
@@ -13,8 +13,26 @@ The r11 asset contract passes 148 checks, with zero prepare validation errors.
 Another 43 direct r10/r11 comparisons retain every geometry attribute, material
 batch, sampler, node and both non-grass images exactly. The changed grass image
 and explicit candidate metadata are the only intended differences.
-New actual visual review and revision-bound r11 proofs are pending; the r10
-flight evidence below is historical and cannot authenticate the new r11 pack.
+Actual r11 review accepts this bounded material pass: close grass no longer has
+the brown rows, gravel reads as aggregate, and approach/chase/overview preserve
+route visibility across the observed Low/High, Pixel and shared Industrial views.
+The eight observations and owned-resource disposal pass are retained in
+`evidence/r11-static-review.json`; the acceptance limits and screenshots are in
+`evidence/r11-art-acceptance.json`. Generic terrace composition, vegetation rooting
+and maintenance identity remain unfinished. This is not completed world art.
+
+Fresh r11 qualification at `d7a8e044d03859b59212fdfdcde3d25af8c7e75a` passes
+575 checks across sixteen ordinary flights and independent direct/archive
+replays. All flights finish with full health, zero contacts and the intended
+landing; every retained r9 physical field and recorded input matches exactly.
+Only the explicit course identity changes in the proof. The new exact pack is
+`e3f4c5e040c8232e31cc8d757d377cf892cf26a1042989c50de1df68cf5b2c34`;
+the 908,574-byte demonstration archive is
+`35aefd942d00dd294417d02d9fd782ef9aa23dd08c0d189088abcb0db895b8f6`.
+The immutable [r11 distribution](distribution/r11/README.md) has exact hashes,
+and `evidence/r11-qualification.json` plus `evidence/r11-r9-flight-comparison.json`
+retain the complete evidence. Native import/offline journeys remain explicitly
+historical r8/r9 evidence, with no new r11 claim.
 
 The rejected r10 browser run still supplies useful resource evidence: eleven
 static observations covered Low/Balanced/High, Pixel, shared Industrial, chase
@@ -25,9 +43,13 @@ material batches. Those observed owner counts are retained explicitly, rather
 than inferring total renderer ownership from the asset material count. See
 `evidence/r10-static-review.json`; no FPS or final artistic acceptance follows.
 
-This branch starts from main `f3764070e`; the qualified seam repair is isolated
-in PR #1077 at `ab3a3585d`. Its accepted r9 source must reach normal main history
-before this later revision is published. No r8 or r9 pack, proof or fixture is
+This branch started from main `f3764070e`; the qualified seam repair was initially
+isolated in PR #1077 at `ab3a3585d`. That repair merged normally at `7e7611241`.
+The material branch integrates it in `f7dc23b89`: the entire main Reservoir tree
+equals qualified r9, while all integrated Reservoir, flight runtime, game and
+publishing bytes remain identical to the qualified material candidate. The only
+other incoming scope is the previously merged generated-worker capacity change.
+See `evidence/r11-main-integration.json`. No r8/r9 pack, proof or fixture is
 overwritten, and Festival remains paused.
 
 Implementation was subsequently authorized within this scope. The published r9
