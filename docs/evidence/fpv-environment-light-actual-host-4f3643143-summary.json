@@ -1,0 +1,13 @@
+{
+  "format": "fpv-environment-light-actual-host-archive.v1",
+  "sourceRevision": "4f364314378400b22792074d7d0bb6aa292eb044",
+  "rawBytes": 26420,
+  "rawSha256": "05a52eed47228feb5d1d824a10e911d2f57260361a0c1b3be6005012b6c8716e",
+  "gzipBytes": 7122,
+  "gzipSha256": "22e5149a5590f61988f7947f9f2ffdd0635f8b7fa121e824ad4c29cb114ec0e8",
+  "verifiedFiles": 102,
+  "nonLossGLErrors": 0,
+  "errors": [],
+  "observedFlow": "Clearing check-in, Chase, Utility, authored; actual loss/restoration; normal UI Menu \u2192 Retry \u2192 Arm 0.2s \u2192 Pause. Root visually reviewed rebuilt Utility at the pad. Outer loss-control focus blur paused before the event.",
+  "limits": "Recorded candidate 4f, not the later integrated source. No device FPS claim."
+}

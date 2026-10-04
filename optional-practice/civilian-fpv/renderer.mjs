@@ -130,7 +130,7 @@ export function createFlightRenderer({
     editHandles = new THREE.Group();
   editHandles.visible = false;
   scene.add(world, goals, aircraft, ghostAircraft, actors, projectiles, imported, editHandles);
-  const huntPresentation = createHuntPresentation?.({ THREE, scene }) ?? null;
+  let huntPresentation = createHuntPresentation?.({ THREE, scene }) ?? null;
   const hemisphere = new THREE.HemisphereLight(0xe5f3ff, 0x3d504a, 2.1);
   const sunlight = new THREE.DirectionalLight(0xffefd8, 3.1);
   const fillLight = new THREE.DirectionalLight(0x9cc7e8, 0.24);
@@ -170,6 +170,7 @@ export function createFlightRenderer({
     ghostSamples = [],
     ghostPose = null,
     sceneGeneration = 0,
+    contextGeneration = 0,
     presentationGeneration = 0,
     rotorTick = null,
     rotorPhase = 0,
@@ -185,6 +186,7 @@ export function createFlightRenderer({
     lastActorState = null,
     importedAnimationTick = null,
     environmentLight = null,
+    environmentLightInputs = null,
     themeProfile = null,
     effectPalette = resolveSimEffects(null),
     goalMaterialKit = null,
@@ -1220,8 +1222,39 @@ export function createFlightRenderer({
     materials.add(edgePaint);
     value.add(new THREE.LineSegments(edges, edgePaint));
   }
+  function releaseEnvironmentLight() {
+    scene.environment = null;
+    const previous = environmentLight;
+    environmentLight = null;
+    environmentLightInputs = null;
+    previous?.dispose();
+  }
+  function setEnvironmentLight({ sky, ground, indoor }) {
+    if (renderer.getContext().isContextLost()) {
+      releaseEnvironmentLight();
+      return;
+    }
+    const inputs = {
+      sky: new THREE.Color(sky),
+      ground: new THREE.Color(ground),
+      indoor: Boolean(indoor),
+    };
+    // One renderer owns one probe. Compare linear channels without hex rounding:
+    // the resolved floor color can contain a full-precision theme blend.
+    if (
+      environmentLight &&
+      environmentLightInputs?.sky.equals(inputs.sky) &&
+      environmentLightInputs.ground.equals(inputs.ground) &&
+      environmentLightInputs.indoor === inputs.indoor
+    )
+      return;
+    releaseEnvironmentLight();
+    environmentLight = createEnvironmentLight(renderer, inputs);
+    environmentLightInputs = inputs;
+  }
   function setCourse(value, selectedMode = 'self-level', options = {}) {
-    if (disposed) return;
+    if (disposed || renderer.getContext().isContextLost()) return;
+    huntPresentation ??= createHuntPresentation?.({ THREE, scene }) ?? null;
     if (options.presentation) setPresentation(options.presentation);
     activePresentation = pendingPresentation;
     sceneGeneration++;
@@ -1240,8 +1273,6 @@ export function createFlightRenderer({
     currentStep = -1;
     clearImported();
     scene.environment = null;
-    environmentLight?.dispose();
-    environmentLight = null;
     for (const group of [world, goals, actors, projectiles]) releaseGroup(group);
     garageDetailMaterials.clear();
     stadiumDetailMaterials.clear();
@@ -1291,7 +1322,7 @@ export function createFlightRenderer({
     hemisphere.groundColor
       .copy(surroundings.groundColor ?? new THREE.Color(theme.ground))
       .multiplyScalar(0.4);
-    environmentLight = createEnvironmentLight(renderer, {
+    setEnvironmentLight({
       sky: surroundings.indoor ? theme.wall : theme.sky,
       ground: surroundings.groundColor ?? theme.ground,
       indoor: surroundings.indoor,
@@ -2232,6 +2263,8 @@ export function createFlightRenderer({
       ? { data: input }
       : input;
     if (disposed) throw new Error('Flight renderer is disposed');
+    if (renderer.getContext().isContextLost())
+      throw new Error('World preview is unavailable while graphics are lost.');
     const generation = sceneGeneration,
       request = ++importGeneration;
     signal?.throwIfAborted();
@@ -2328,6 +2361,7 @@ export function createFlightRenderer({
       if (
         imageFailed ||
         disposed ||
+        renderer.getContext().isContextLost() ||
         generation !== sceneGeneration ||
         request !== importGeneration ||
         signal?.aborted
@@ -2351,7 +2385,7 @@ export function createFlightRenderer({
       imported.add(result.scene);
       if (
         json.asset?.extras?.fpvScenery === true &&
-        ['woodland', 'courtyard', 'container-yard'].includes(course.environment)
+        ['woodland', 'courtyard', 'container-yard'].includes(course?.environment)
       )
         sceneryFallback.visible = false;
       imported.userData.auxiliaryRoots = result.scenes.filter((item) => item !== result.scene);
@@ -2474,10 +2508,15 @@ export function createFlightRenderer({
     selectEditor(editorSelection, false);
   }
   async function createEditor(callbacks = {}) {
+    const generation = contextGeneration;
+    if (renderer.getContext().isContextLost())
+      throw new Error('World editor is unavailable while graphics are lost.');
     if (!loadTransformControls)
       throw new Error('World editing requires the World Studio renderer.');
     const { TransformControls } = await loadTransformControls();
     if (disposed) throw new Error('Editor was disposed while loading');
+    if (generation !== contextGeneration || renderer.getContext().isContextLost())
+      throw new Error('World preview changed while the editor was loading');
     editorCallbacks = callbacks;
     if (!editor) {
       editor = new TransformControls(camera, canvas);
@@ -2508,6 +2547,7 @@ export function createFlightRenderer({
     return {
       select: selectEditor,
       pick(clientX, clientY) {
+        if (!editor) return false;
         if (editor.dragging || editor.axis) return true;
         const rect = canvas.getBoundingClientRect();
         raycaster.setFromCamera(
@@ -2528,7 +2568,7 @@ export function createFlightRenderer({
       isDragging: () => !!editor?.dragging,
       setSnap(value) {
         if (![0, 0.1, 0.25, 0.5, 1].includes(value)) throw new TypeError('Invalid editor snap');
-        editor.setTranslationSnap(value || null);
+        editor?.setTranslationSnap(value || null);
       },
       orbit(dx, dy) {
         editorCamera.yaw -= dx * 0.007;
@@ -2536,6 +2576,7 @@ export function createFlightRenderer({
         callbacks.onRedraw?.();
       },
       zoom(delta) {
+        if (!course) return;
         const extent =
           Math.max(
             course.bounds.max.x - course.bounds.min.x,
@@ -2596,8 +2637,58 @@ export function createFlightRenderer({
     editor.attach(object);
     return { detach: () => editor?.detach() };
   }
+  function clearSceneResources() {
+    huntPresentation?.dispose();
+    huntPresentation = null;
+    if (editor) {
+      scene.remove(editor.getHelper());
+      editor.dispose();
+      editor = null;
+    }
+    setPath([]);
+    releaseEnvironmentLight();
+    setGhost([]);
+    clearImported();
+    for (const group of [world, goals, aircraft, actors, projectiles, editHandles])
+      releaseGroup(group);
+    releaseShadow();
+    for (const value of materials) {
+      for (const texture of texturesOf(value)) texture.dispose();
+      value.dispose();
+    }
+    for (const value of geometry) value.dispose();
+    materials.clear();
+    garageDetailMaterials.clear();
+    geometry.clear();
+    goalRows.length = 0;
+    actorRows.clear();
+    actorDefinitions.clear();
+    seenActors.clear();
+    qualityDetails.length = 0;
+    lastActorState = null;
+    pulseRows.clear();
+    stadiumDetailMaterials.clear();
+    droneVisual = null;
+    obstacleMaps = null;
+    obstacleSurface = null;
+    obstacleFittingsMaterial = null;
+    garageDetailMaterial = null;
+    environmentSurfaceKind = null;
+    stadiumMaterial = null;
+    sceneryFallback = null;
+    themeProfile = null;
+    course = null;
+    editRows.length = 0;
+  }
   const lost = (event) => {
     event.preventDefault();
+    // Retry rebuilds the scene on this renderer. Release old GPU ownership while
+    // the context is lost, before Three restores its resource caches.
+    sceneGeneration++;
+    contextGeneration++;
+    presentationGeneration++;
+    importGeneration++;
+    clearSceneResources();
     onContextLost();
   };
   canvas.addEventListener('webglcontextlost', lost);
@@ -2666,7 +2757,7 @@ export function createFlightRenderer({
     setCosmetic(recipe) {
       if (/^#[a-fA-F0-9]{6}$/.test(recipe?.color)) {
         cosmeticColor = recipe.color;
-        droneVisual.tint.color.set(cosmeticColor);
+        droneVisual?.tint.color.set(cosmeticColor);
       }
     },
     resources() {
@@ -2729,49 +2820,9 @@ export function createFlightRenderer({
     dispose() {
       if (disposed) return;
       disposed = true;
-      huntPresentation?.dispose();
       sceneGeneration++;
       canvas.removeEventListener('webglcontextlost', lost);
-      if (editor) {
-        scene.remove(editor.getHelper());
-        editor.dispose();
-        editor = null;
-      }
-      setPath([]);
-      scene.environment = null;
-      environmentLight?.dispose();
-      environmentLight = null;
-      setGhost([]);
-      clearImported();
-      for (const group of [world, goals, aircraft, actors, projectiles, editHandles])
-        releaseGroup(group);
-      releaseShadow();
-      for (const value of materials) {
-        for (const texture of texturesOf(value)) texture.dispose();
-        value.dispose();
-      }
-      for (const value of geometry) value.dispose();
-      materials.clear();
-      garageDetailMaterials.clear();
-      geometry.clear();
-      goalRows.length = 0;
-      actorRows.clear();
-      actorDefinitions.clear();
-      seenActors.clear();
-      qualityDetails.length = 0;
-      lastActorState = null;
-      pulseRows.clear();
-      stadiumDetailMaterials.clear();
-      droneVisual = null;
-      obstacleMaps = null;
-      obstacleSurface = null;
-      obstacleFittingsMaterial = null;
-      garageDetailMaterial = null;
-      environmentSurfaceKind = null;
-      stadiumMaterial = null;
-      sceneryFallback = null;
-      themeProfile = null;
-      course = null;
+      clearSceneResources();
       renderer.dispose();
       renderer.forceContextLoss();
     },
