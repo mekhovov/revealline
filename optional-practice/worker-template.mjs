@@ -1,5 +1,90 @@
 /** Serialized by the optional builder. Keep the body self-contained. */
 export function installPracticeWorker(scope, pins, revision) {
+  const sha = async (bytes) =>
+    [...new Uint8Array(await scope.crypto.subtle.digest('SHA-256', bytes))]
+      .map((value) => value.toString(16).padStart(2, '0'))
+      .join('');
+  async function read(url, limit, signal, progress, options = {}) {
+    const response = await scope.fetch(url, { cache: 'no-store', signal, ...options }),
+      reader = response.body?.getReader();
+    try {
+      if (!response.ok || response.redirected || !reader)
+        throw new Error('Optional package dependency unavailable');
+      const advertised = response.headers.get('content-length');
+      if (
+        options.credentials &&
+        advertised &&
+        (!Number.isSafeInteger(+advertised) || +advertised < 0 || +advertised > limit)
+      )
+        throw new Error('Optional package dependency too large');
+      const bytes = new Uint8Array(limit);
+      let length = 0;
+      for (;;) {
+        signal.throwIfAborted();
+        const chunk = await reader.read();
+        if (chunk.done) break;
+        if (length + chunk.value.byteLength > limit)
+          throw new Error('Optional package dependency too large');
+        bytes.set(chunk.value, length);
+        length += chunk.value.byteLength;
+        progress(chunk.value.byteLength);
+      }
+      return { bytes: bytes.subarray(0, length), headers: response.headers };
+    } finally {
+      if (reader) await reader.cancel().catch(() => {});
+    }
+  }
+  // Explicit data requests reuse the verified generated file without registering
+  // a service worker or downloading the runtime. One dedicated owner per request.
+  if (!scope.registration) {
+    let controller;
+    scope.addEventListener('message', ({ data }) => {
+      if (data?.type === 'world-cancel') return controller?.abort();
+      if (controller) return;
+      controller = new AbortController();
+      void (async () => {
+        try {
+          const { url, bytes: limit, sha256 } = data ?? {},
+            index =
+              url ===
+              'https://raw.githubusercontent.com/mekhovov/revealline/main/authoring/fpv-worlds/published/index.json';
+          if (
+            data?.type !== 'world-read' ||
+            (index
+              ? limit !== 8192 || sha256 !== undefined
+              : !Number.isSafeInteger(limit) ||
+                limit <= 0 ||
+                limit > 67108864 ||
+                typeof sha256 !== 'string' ||
+                !/^[a-f0-9]{64}$/.test(sha256) ||
+                typeof url !== 'string' ||
+                !/^https:\/\/raw\.githubusercontent\.com\/mekhovov\/revealline\/[a-f0-9]{40}\/authoring\/fpv-worlds\/(?:[a-z0-9_-]+\/)+[a-z0-9_-]+(?:\.[a-z0-9_-]+)*\.rlpack$/.test(
+                  url,
+                ))
+          )
+            throw new Error('Invalid world request');
+          let loaded = 0;
+          const { bytes } = await read(
+            url,
+            limit,
+            controller.signal,
+            (count) => {
+              loaded += count;
+              scope.postMessage({ type: 'world-progress', bytes: loaded });
+            },
+            { credentials: 'omit', redirect: 'error' },
+          );
+          if (!index && (bytes.length !== limit || (await sha(bytes)) !== sha256))
+            throw new Error('World content mismatch');
+          controller.signal.throwIfAborted();
+          scope.postMessage({ type: 'world-done', bytes }, [bytes.buffer]);
+        } catch {
+          scope.postMessage({ type: 'world-error' });
+        }
+      })();
+    });
+    return;
+  }
   const base = scope.registration.scope;
   const owner = `revealline.optional.package.v1:${new URL(base).pathname}:`;
   const cacheName = owner + revision;
@@ -10,10 +95,6 @@ export function installPracticeWorker(scope, pins, revision) {
     idleTimer,
     downloaded = 0,
     phase = 'available';
-  const sha = async (bytes) =>
-    [...new Uint8Array(await scope.crypto.subtle.digest('SHA-256', bytes))]
-      .map((value) => value.toString(16).padStart(2, '0'))
-      .join('');
   const announce = () => {
     for (const port of ports) {
       try {
@@ -89,43 +170,17 @@ export function installPracticeWorker(scope, pins, revision) {
         try {
           const cache = await scope.caches.open(cacheName);
           for (const [url, pin] of urls) {
-            const response = await scope.fetch(url, {
-              cache: 'no-store',
-              signal: controller.signal,
+            const { bytes, headers } = await read(url, pin.bytes, controller.signal, (count) => {
+              activity();
+              downloaded += count;
+              announce();
             });
-            if (!response.ok || response.redirected)
-              throw new Error('Optional package dependency unavailable');
-            const reader = response.body?.getReader();
-            if (!reader) throw new Error('Bounded optional download unavailable');
-            const chunks = [];
-            let length = 0;
-            try {
-              for (;;) {
-                if (controller.signal.aborted) throw new Error('Optional download cancelled');
-                const chunk = await reader.read();
-                if (chunk.done) break;
-                activity();
-                length += chunk.value.byteLength;
-                if (length > pin.bytes) throw new Error('Optional package dependency too large');
-                downloaded += chunk.value.byteLength;
-                chunks.push(chunk.value);
-                announce();
-              }
-            } finally {
-              await reader.cancel().catch(() => {});
-            }
-            const bytes = new Uint8Array(length);
-            let offset = 0;
-            for (const chunk of chunks) {
-              bytes.set(chunk, offset);
-              offset += chunk.byteLength;
-            }
             phase = 'verifying';
             announce();
-            if (length !== pin.bytes || (await sha(bytes)) !== pin.sha256)
+            if (bytes.length !== pin.bytes || (await sha(bytes)) !== pin.sha256)
               throw new Error('Optional package dependency mismatch');
             if (controller.signal.aborted) throw new Error('Optional download cancelled');
-            await cache.put(url, new Response(bytes, { status: 200, headers: response.headers }));
+            await cache.put(url, new Response(bytes, { status: 200, headers }));
             activity();
             phase = 'downloading';
           }
