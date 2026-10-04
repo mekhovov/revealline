@@ -42,6 +42,32 @@ and `fpv-gate-coaching-source-v1-fixture.json`. The v2 observer waits for the ex
 lesson, its open guide and the Ready status; it does not change the production
 guide or arming rule.
 
+The v2 run passed 112 checks, including both modes, Ukrainian at 390 px, early
+return, return after lesson results, camera/source/response restoration and the
+advanced bookmark. It stopped when a Return refusal overlapped the asynchronous
+pack-removal completion message. Its full failed receipt and manifest are kept.
+The final observer preserves status mutations and checks the refusal adjacent to
+Return through that overlap, rather than treating a completed-removal wait as
+proof that concurrent feedback is correct.
+
+Review also identified stale dependency-read and preparation windows. The host
+now reads the exact pack from IndexedDB and only then reads the saved playlist;
+it guards the entire asynchronous return by its flight token and detour context.
+The detour survives preparation failure and clears only after the original scene
+is ready. A dedicated status paragraph beside Return preserves a refusal when an
+unrelated operation writes the shared status. No stale rejection may overwrite a
+newly selected route. The frozen v5 host hash is
+`5ba1182b7f1e2d96931353fbaf5982dee3eefd540feb4795b849b655fcd5d7b3`;
+v3/v4 are preserved unrun fixture snapshots, not passing evidence.
+
+The v5 functional controls use a second real database connection to remove,
+revise and restore the original pack. A native readonly transaction is held
+while a playlist changes, then released; a separate held read is aborted after
+an unrelated route takes ownership. Explicit fixture-only renderer preparation
+rejections cover failed-return retry and superseded failure. Normal rendering
+and storage calls retain their receivers, arguments and results outside those
+declared fault cases. These controls do not modify production pause or Arm rules.
+
 The manual input preparer derives a slower ordinary Warehouse gate flight from
 the existing offline authoring pilot by changing only gate travel speed to
 350 mm/s. Both modes complete without contacts and with full health, and an

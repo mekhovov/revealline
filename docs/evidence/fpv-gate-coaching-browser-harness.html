@@ -482,17 +482,36 @@
         );
         click(d.getElementById('pack-removal-confirm'));
         await until(() => !d.querySelector('[data-pack-id="gate-coach-fixture"]'), 'removed pack');
+        click(d.querySelector('[data-tab="learn"]'));
         click(node('world-return-challenge'));
         await until(
-          () => /unavailable/.test(node('studio-status').textContent),
+          () => /unavailable/.test(node('world-return-status').textContent),
           'missing exact pack rejection',
         );
+        await until(
+          () =>
+            w.fixtureStatusTrace.some((row) =>
+              /Pack and retained revisions removed/.test(row.studio),
+            ),
+          'completed removal trace',
+        );
+        must(
+          'Concurrent removal completion cannot erase the visible Return refusal',
+          /unavailable/.test(node('world-return-status').textContent) &&
+            node('world-return-status').getBoundingClientRect().height > 0,
+        );
         must('Removed pack does not restart a substitute', !node('flight-dialog').open);
+        click(d.querySelector('[data-tab="packs"]'));
         await inputFile('import-pack', w.fixturePack.revised, 'revised.rlpack');
         await until(
           () => d.querySelector('[data-pack-id="gate-coach-fixture"]'),
           'revised pack imported',
         );
+        await until(
+          () => /Exact pack installed/.test(node('studio-status').textContent),
+          'completed revised import',
+        );
+        click(d.querySelector('[data-tab="learn"]'));
         node('studio-status').textContent = '';
         click(node('world-return-challenge'));
         await until(
@@ -500,11 +519,13 @@
           'revised exact pack rejection',
         );
         must('Revised pack is not silently substituted', !node('flight-dialog').open);
+        click(d.querySelector('[data-tab="packs"]'));
         await inputFile('import-pack', w.fixturePack.blob, 'original.rlpack');
         await until(
           () => /imported|installed|Імпорт|Встанов/i.test(node('studio-status').textContent),
           'original pack imported',
         );
+        click(d.querySelector('[data-tab="learn"]'));
         click(node('world-return-challenge'));
         await until(
           () => app.snapshot().course === row.entry.id && !node('world-arm').disabled,
@@ -513,6 +534,141 @@
         must(
           'Exact original pack restoration allows deliberate return',
           app.snapshot().state.status !== 'active',
+        );
+        progress('Second-connection removal and failed return preparation');
+        await takeLesson(await originalResult());
+        await closeFlight();
+        const externalBookmark = savedPlaylist().bookmark;
+        await w.fixtureExternalPack('remove');
+        must(
+          'Independent removal leaves the prior catalogue UI stale',
+          !!d.querySelector('[data-pack-id="gate-coach-fixture"]'),
+        );
+        node('studio-status').textContent = '';
+        click(node('world-return-challenge'));
+        await until(
+          () => /unavailable/.test(node('studio-status').textContent),
+          'fresh external removal denial',
+        );
+        must(
+          'Fresh storage denial preserves the return context and closed flight',
+          !node('world-return-challenge').hidden && !node('flight-dialog').open,
+        );
+        equal(
+          'External removal leaves advanced bookmark exact',
+          savedPlaylist().bookmark,
+          externalBookmark,
+        );
+        await w.fixtureExternalPack('revised');
+        node('studio-status').textContent = '';
+        click(node('world-return-challenge'));
+        await until(
+          () => /unavailable/.test(node('studio-status').textContent),
+          'external revised dependency denial',
+        );
+        must(
+          'External replacement does not consume original return context',
+          !node('world-return-challenge').hidden && !node('flight-dialog').open,
+        );
+        await w.fixtureExternalPack('original');
+        w.fixturePrepareFault = 'reject';
+        click(node('world-return-challenge'));
+        await until(
+          () => /Fixture rejected scene preparation/.test(node('flight-status').textContent),
+          'failed return preparation',
+        );
+        must(
+          'Failed scene preparation retains exact detour for retry',
+          !node('world-return-challenge').hidden && node('world-arm').disabled,
+        );
+        await returnHome();
+        await checkReturn(externalBookmark);
+        progress('Superseded return preparation cannot overwrite a new route');
+        await takeLesson(await originalResult());
+        w.fixturePrepareFault = 'defer';
+        click(node('world-return-challenge'));
+        await until(
+          () => typeof w.fixtureRejectPreparation === 'function',
+          'delayed return preparation',
+        );
+        await bounded(app.startFlight(copy(w.fixtureInputs.negative.entry)), 'superseding route');
+        const nextStatus = node('flight-status').textContent;
+        w.fixtureRejectPreparation();
+        await wait(30);
+        must(
+          'Superseding unrelated route owns the host and clears detour',
+          app.snapshot().course === w.fixtureInputs.negative.entry.id &&
+            node('world-return-challenge').hidden,
+        );
+        equal(
+          'Superseded rejection does not overwrite current flight status',
+          node('flight-status').textContent,
+          nextStatus,
+        );
+        progress('Superseded native dependency-read rejection is contained');
+        await takeLesson(await originalResult());
+        const beforeEdit = savedPlaylist();
+        w.fixtureHoldPackRead = 2;
+        w.fixtureReleasePackRead = false;
+        w.fixtureAbortPackRead = false;
+        click(node('world-return-challenge'));
+        await until(() => w.fixturePackReadHeld, 'held second native dependency read');
+        memory.set(
+          'revealline.fpv.playlists.v1',
+          JSON.stringify({
+            ...beforeEdit,
+            playlists: [
+              {
+                ...playlist,
+                title: { en: 'Changed during return', uk: 'Змінено під час повернення' },
+              },
+            ],
+          }),
+        );
+        w.fixtureReleasePackRead = true;
+        await until(
+          () => /unavailable/.test(node('world-return-status').textContent),
+          'fresh playlist after awaited pack read',
+        );
+        must(
+          'Editing playlist during second dependency read denies return and retains context',
+          !node('flight-dialog').open && !node('world-return-challenge').hidden,
+        );
+        equal(
+          'Racing playlist edit does not rewind advanced bookmark',
+          savedPlaylist().bookmark,
+          beforeEdit.bookmark,
+        );
+        memory.set('revealline.fpv.playlists.v1', JSON.stringify(beforeEdit));
+        click(node('world-return-challenge'));
+        await until(
+          () => app.snapshot().course === row.entry.id && !node('world-arm').disabled,
+          'exact playlist restored after held lookup',
+        );
+        await checkReturn(beforeEdit.bookmark);
+        await takeLesson(await originalResult());
+        w.fixtureHoldPackRead = true;
+        w.fixtureReleasePackRead = false;
+        w.fixtureAbortPackRead = true;
+        click(node('world-return-challenge'));
+        await until(() => w.fixturePackReadHeld, 'held actual dependency read');
+        await bounded(
+          app.startFlight(copy(w.fixtureInputs.negative.entry)),
+          'superseding dependency check',
+        );
+        const ownedStatus = node('flight-status').textContent;
+        w.fixtureReleasePackRead = true;
+        await until(() => !w.fixturePackReadHeld, 'aborted old dependency read');
+        await wait(30);
+        equal(
+          'Old native storage rejection cannot overwrite unrelated flight',
+          node('flight-status').textContent,
+          ownedStatus,
+        );
+        must(
+          'Unrelated route retains ownership after aborted dependency lookup',
+          app.snapshot().course === w.fixtureInputs.negative.entry.id &&
+            node('world-return-challenge').hidden,
         );
         errors.push(...w.fixtureErrors);
         equal('No browser errors or unhandled rejections', errors, []);
@@ -529,6 +685,7 @@
           checks,
           cases,
           errors,
+          statusTrace: w?.fixtureStatusTrace ?? [],
           limitations: [
             'Actual browser functional evidence, not hardware/FPS.',
             'Supported startFlight recovery API and exact recorded input prefix; normal host independently verifies final practice result.',
@@ -537,7 +694,10 @@
         };
         window.gateCoachingResult = result;
         $('receipt').value = JSON.stringify(result, null, 2);
-        if (w && !previewOnly) app.pause();
+        if (w && !previewOnly) {
+          w.fixtureReleasePackRead = true;
+          app.pause();
+        }
         running = false;
         $('run').disabled = $('preview').disabled = false;
       }
