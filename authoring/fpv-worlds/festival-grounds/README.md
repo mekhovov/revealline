@@ -1,12 +1,19 @@
-# Festival Grounds — first scene checkpoint
+# Festival Grounds — eight authored challenges
 
-Independent D5 work after Mountain Reservoir #1066. This is **one orientation
-course**, not a completed eight-course world. The revised r2 scene has
-12,172 imported triangles, 12 material batches, two original 256px surface textures
-and 44 explicit solids. The existing pipeline reports zero GLTF validation errors
-and exact editable ZIP round-trip preservation. Static clearance/source-collider
-verification passes 159 checks. Actual r2 art review and ordinary flight proofs are
-still pending.
+The r5 content candidate contains eight distinct challenges in both ordinary
+control modes over the accepted r3 scene: orientation, three races, a precision
+landing, a moving service-cart escort, guide observation and a capstone circuit.
+Fresh qualification passes 616 checks, including all sixteen recorded ordinary
+flights, independent complete replay and exported-archive replay. Every flight
+finishes with full health and zero contacts. Real import, browser Watch/editor,
+native launch and offline qualification are still pending; this is not yet a
+published or production-Library world.
+
+The scene has 12,284 imported triangles, 12 material batches, two original 256px
+maps and 47 explicit solids. Eleven actual-renderer views accepted the bounded r3
+gathering, surface and wayfinding increment across Low/Balanced/High, Pixel and a
+shared Theme; disposal passed. The broad scene remains stylized and sparse. This
+is not photoreal, hardware, frame-rate or complete artistic acceptance.
 
 R1's 123 static checks passed, but actual entry/wide review rejected its flat lawn,
 sparse stage and weak festival identity. That receipt and screenshot remain in
@@ -14,7 +21,12 @@ sparse stage and weak festival identity. That receipt and screenshot remain in
 lawn while exposing existing ground-profile grass, adding original pebble path
 detail, supported stage beams and patterned fabric, closed kiosk finish and
 Ukrainian signs, and two physically supported perimeter benches. These changes
-are candidates for visual review, not an artistic acceptance claim.
+were retained as the structural base. R3 adds irregular gathering courts, a
+physically supported table with a real open underside, and original kiosk marks.
+Its exact source/model bytes remain unchanged in r5. R4's sixteen successful
+proofs are historical: r5 changes revision and durable authoring-status metadata,
+then re-records and replays all sixteen against the fresh exact pack. Criteria,
+geometry, actors and all recorded control arrays are equal across that bridge.
 
 See [design, reference and scope](DESIGN.md). All art is original
 [CC0](source/LICENSE.md). The existing runtime, physics, Themes, package ceilings
@@ -28,6 +40,14 @@ node authoring/fpv-worlds/festival-grounds/qualify-scene.mjs \
   NEW_DIRECTORY/prepared/festival-grounds-checkpoint.r2.rlpack NEW_RECEIPT.json
 node authoring/fpv-worlds/festival-grounds/prepare-preview.mjs \
   EXACT_ADMITTED_102_PLAYER NEW_DIRECTORY NEW_PREVIEW_DIRECTORY
+
+# Accepted r3 artwork is immutable; author the full final shared World separately.
+node authoring/fpv-worlds/festival-grounds/build-world.mjs \
+  ACCEPTED_R3_GENERATED_DIRECTORY NEW_WORLD_DIRECTORY
+node authoring/fpv-worlds/festival-grounds/qualify-world.mjs \
+  NEW_WORLD_DIRECTORY/prepared/festival-grounds.r5.rlpack NEW_PROOF_DIRECTORY
+node authoring/fpv-worlds/festival-grounds/prepare-world-import.mjs \
+  EXACT_ADMITTED_102_RECEIPT NEW_WORLD_DIRECTORY NEW_PROOF_DIRECTORY NEW_BROWSER_DIRECTORY
 ```
 
 The preview authenticates and hardlinks immutable admitted assets, preserving
@@ -36,8 +56,18 @@ stage-under-roof, roof, clock, wide and overview poses; quality, mode and appear
 selectors do not change collision. It is a static art observation, not flight,
 performance, offline or device acceptance.
 
-After visual acceptance, finish the approved orientation / three races /
-precision / follow / observe / capstone allocation. Freeze the final shared World
-before generating all sixteen demonstrations and qualifying real import, Watch,
-editing/reimport and offline entry. Do not advertise the world in the production
-Library catalogue before it is complete and published.
+The full-world browser fixture authenticates the identified complete historical
+admitted host and the exact flight/collision/content/proof module closure; it
+adds no runtime overlay. Its complete Watch matrix uses controlled RAF delivery
+with the unchanged performance clock and pause guards, not assigned simulation
+state or native-clock endurance. Native launch and true stopped-origin offline
+use require the separate unmodified admitted entry and their own receipts.
+
+The moving cart requires 300 continuous tracking ticks and at least 4m of real
+travel; both recorded modes achieve 4.2m. Guide observation requires 200 continuous
+ticks with actual range, relative speed, nose alignment and visibility; its
+civilian actor walks 1.2m during that interval. These are layout-owned actors, not
+decorative motion. Imported catalogue cards currently retain the host defaults
+Explore/intermediate/4min; activity allocation describes the authored criteria,
+not distinct runtime card metadata. Do not advertise this world in the production
+Library catalogue before qualification and publication finish.
