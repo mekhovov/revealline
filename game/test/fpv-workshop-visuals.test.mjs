@@ -558,7 +558,7 @@ test('all collections cover every environment with protected course data and ext
   }
 });
 
-test('surface motifs stay distinct except the declared foundry reuse, with a unique palette for every family', () => {
+test('every family has a distinct surface motif and a unique palette', () => {
   const signatures = new Map(),
     colored = new Set();
   for (const collectionId of Object.keys(SIM_VISUAL_COLLECTIONS)) {
@@ -581,17 +581,14 @@ test('surface motifs stay distinct except the declared foundry reuse, with a uni
     assert.equal(texture.image.width, 128);
     texture.dispose();
   }
-  // Military Field r1 deliberately shares bolted access panels with Foundry.
-  // Retain that historical material recipe instead of silently repainting it.
+  // Field equipment now has its own recessed panels and service slot.
+  // Every admitted family must remain structurally distinct in grayscale.
   assert.deepEqual(
     [...signatures.values()].filter((owners) => owners.length > 1).map((owners) => owners.sort()),
-    [['ember-foundry', 'military-field']],
+    [],
   );
-  assert.equal(SIM_VISUAL_COLLECTIONS['military-field'].pattern, 'foundry');
+  assert.equal(SIM_VISUAL_COLLECTIONS['military-field'].pattern, 'field');
   assert.equal(SIM_VISUAL_COLLECTIONS['ember-foundry'].pattern, 'foundry');
-  assert.equal(
-    signatures.size,
-    new Set(Object.values(SIM_VISUAL_COLLECTIONS).map((v) => v.pattern)).size,
-  );
+  assert.equal(signatures.size, Object.keys(SIM_VISUAL_COLLECTIONS).length);
   assert.equal(colored.size, Object.keys(SIM_VISUAL_COLLECTIONS).length);
 });
