@@ -3,7 +3,9 @@ import path from 'node:path';
 import { pathToFileURL } from 'node:url';
 import { createHash } from 'node:crypto';
 import { execFileSync } from 'node:child_process';
-const [root, player, inventoryPath, revision, originalPack, out] = process.argv.slice(2);
+const [root, player, inventoryPath, revision, originalPack, out, mode] = process.argv.slice(2);
+const admitted = mode === '--admitted';
+if (mode && !admitted) throw Error('Unknown fixture mode');
 if (
   ![root, player, inventoryPath, originalPack, out].every((p) => p && path.isAbsolute(p)) ||
   !/^[a-f0-9]{40}$/.test(revision ?? '')
@@ -30,6 +32,15 @@ if (
   !stage.checks.every((c) => c.passed)
 )
   throw Error('Exact admitted 102/95 baseline required');
+if (
+  admitted &&
+  (stage.sourceRevision !== revision ||
+    stage.sourceTree !==
+      git('rev-parse', revision + '^{tree}')
+        .toString()
+        .trim())
+)
+  throw Error('Exact admitted candidate revision/tree required');
 const inputs = [],
   overlays = new Map();
 for (const row of inventory.inputs) {
@@ -37,6 +48,7 @@ for (const row of inventory.inputs) {
     sha256 = hash(bytes),
     changed = bytes.length !== row.bytes || sha256 !== row.sha256;
   if (changed) {
+    if (admitted) throw Error('Admitted candidate input changed ' + row.path);
     if (
       ![
         'optional-practice/civilian-fpv/world-app.mjs',
@@ -48,7 +60,7 @@ for (const row of inventory.inputs) {
   }
   inputs.push({ ...row, bytes: bytes.length, sha256, changed });
 }
-if (overlays.size !== 2)
+if (overlays.size !== (admitted ? 0 : 2))
   throw Error('Expected only historical host and qualified visual projection differences');
 await fs.mkdir(out);
 const files = [];
@@ -126,7 +138,7 @@ await write(
   '<!doctype html><meta charset="utf-8"><title>Creator install transaction reliability</title><style>body{margin:0;background:#142029;color:white;font:14px system-ui}header{padding:10px}button{font:inherit;padding:8px}iframe{display:block;border:0;width:100%;height:760px}textarea{width:98%;height:220px}pre{white-space:pre-wrap}</style><header><button id="run">Run bounded native install diagnostic</button> <span id="status">Real practice and recovery, then named native IndexedDB aborts. Keep this fixture visible.</span></header><iframe id="sim" title="Native Creator install player" src="about:blank"></iframe><pre id="summary"></pre><label>Full receipt<textarea id="receipt" readonly></textarea></label><script type="module" src="run.mjs"></script>',
 );
 const fixture = {
-  format: 'FPVCreatorInstallFixture.v1',
+  format: admitted ? 'FPVCreatorInstallAdmittedFixture.v1' : 'FPVCreatorInstallFixture.v1',
   revision,
   sourceTree: git('rev-parse', revision + '^{tree}')
     .toString()
@@ -149,7 +161,9 @@ const fixture = {
   },
   files,
   limitations: [
-    'Source-only current-main host and visual projection overlays; other 100 admitted members exact. Generated worker/descriptors remain historical; no new admitted/offline claim.',
+    admitted
+      ? 'Complete exact admitted candidate, all102 members and95 committed inputs verified; zero runtime overlays. No new offline claim.'
+      : 'Source-only current-main host and visual projection overlays; other 100 admitted members exact. Generated worker/descriptors remain historical; no new admitted/offline claim.',
     'Same-frame native IndexedDB. Faults abort real transactions after successful native requests; this is not disk quota exhaustion.',
     'Public DOM events and original native clocks; no proof, physics, pause or arming injection. Production export bytes are captured before the OS download.',
   ],
