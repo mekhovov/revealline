@@ -22,13 +22,21 @@ The terminal integration preserves the source history of PRs #997, #1000,
 #1068, #1070, #1073, #1074 and #1078. It joins current main using a merge
 commit, without rewriting or deleting their branches. Protected main publishes
 on each merge, so the complete integration is reviewed together instead of
-publishing partially reconciled components.
+publishing partially reconciled components. All 36 newer component tips are
+ancestors of the integration. The feature/evidence history from #997 is also
+included; its later tip adds three historical main merges and an obsolete
+catalogue/scenery reconciliation, superseded by current main. Its branch is
+retained rather than claiming literal ancestry for that later tip.
 
 The reconciliation retains main's native course/mode editor, lesson return,
 menu-focus and idempotent shutdown changes alongside Hunt authoring, enemy
 guides, artwork and offline recovery. The new canonical optional-worker source
 retains the stack's cancellation and non-creating cache reads; generated
-projections are regenerated from their combined sources.
+projections are regenerated from their combined sources. Seven new FPV authoring
+entrypoints also receive the shared synchronous appearance bootstrap. The
+saved-Continue cancellation fixture waits for the observed held-decode boundary
+with an operation-specific setup budget; storage, focus, cancellation and late
+completion assertions remain unchanged.
 
 The integration must pass the strict current-base `release-ready` check,
 industrial feature phases, Appearance and Company checks, mandatory static and
