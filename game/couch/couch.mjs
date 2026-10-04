@@ -99,6 +99,7 @@ import { createRun } from '../core/index.mjs';
 import { normalizedLevel } from '../core/level.mjs';
 import { boundedJSON, dataIdentity, exactKeys } from '../data-json.mjs';
 import { downloadJSON } from '../content.mjs';
+import { attachTerminalRecordingExport } from '../ui/terminal-recording-export.mjs';
 import { arcadeActionCapabilities } from '../core/arcade-actions.mjs';
 import { onNativeInactive } from '../platform.mjs';
 import {
@@ -922,6 +923,13 @@ try {
   boardFootprints = createBoardFootprints([0, 1].map((i) => $(`race-canvas-${i}`)));
   let boardLayoutKey = null;
   const localRecordings = new WeakMap();
+  const recordingExport = attachTerminalRecordingExport({
+    document,
+    container: $('race-recording-copy'),
+    status: $('race-recording-status'),
+    getOwner: () => match,
+    isTerminal: (owner) => owner?.status === 'finished',
+  });
   const recordingBuild = document.documentElement.dataset.buildVersion;
   const buildVersion =
     recordingBuild && recordingBuild !== '__REVEALLINE_VERSION__' ? recordingBuild : 'dev';
@@ -4108,6 +4116,7 @@ try {
     $('race-export-recording').hidden = match.status !== 'finished';
     $('race-recording-status').hidden = match.status !== 'finished';
     $('race-recording-help').hidden = match.status !== 'finished';
+    recordingExport.refresh();
     $('race-pause').disabled = !running;
     $('race-menu-release').hidden = running || !menuOwner;
     $('race-menu-release').disabled = running || !menuOwner;
@@ -4158,11 +4167,11 @@ try {
     try {
       const recorder = localRecordings.get(owner);
       if (!recorder) throw new Error('Recording is unavailable for this round.');
-      const value = await recorder.snapshot(owner);
-      if (disposed || match !== owner) return;
-      const result = await downloadJSON(value, `revealline-versus-${owner.runs[0].levelId}.json`);
-      if (!disposed && match === owner)
-        localizedText($('race-recording-status'), () => result.message);
+      await recordingExport.request(
+        owner,
+        recorder,
+        `revealline-versus-${owner.runs[0].levelId}.json`,
+      );
     } catch (error) {
       if (!disposed && match === owner)
         localizedText($('race-recording-status'), () => error.message);
@@ -4186,6 +4195,10 @@ try {
     'race-retry',
     'race-export-recording',
     'race-verify-recording',
+    'race-recording-copy-toggle',
+    'race-recording-copy-json',
+    'race-recording-copy-copy',
+    'race-recording-copy-select',
     'race-optional-setup-toggle',
     'race-chapters',
     'race-journey-next',
@@ -4473,6 +4486,7 @@ try {
     runningEnemyPreferences.dispose();
     contentController?.abort();
     disposed = true;
+    recordingExport.dispose();
     actorLease?.release();
     actorLease = null;
     actorAppearance = null;
