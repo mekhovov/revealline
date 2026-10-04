@@ -465,3 +465,105 @@ test('Studio follows an explicit overhead review link while preserving its histo
     controls.dispose();
   }
 });
+
+test('Studio can scrub to the last frame of a maximum-duration admitted atlas clip', async (t) => {
+  const f = fixture(),
+    animation = structuredClone(createSoldierAnimation('studio-long-clip', ['torso']));
+  animation.rig = 'sprite.v1';
+  animation.frames = Array.from({ length: 32 }, (_, index) => ({
+    id: `long-frame-${index}`,
+    durationMs: 2000,
+    stride: 0,
+    breath: 0,
+    accessory: 0,
+    region: { x: index === 31 ? 3 : 0, y: 0, width: 1, height: 1 },
+  }));
+  for (const clip of Object.values(animation.clips)) clip.frames = [animation.frames[0].id];
+  animation.clips.move.frames = animation.frames.map((frame) => frame.id);
+  f.asset.animation = animation;
+  decoder(t, async () => ({ width: 4, height: 4, close() {} }));
+  const controls = mountActorAnimationControls({
+    ...f,
+    onApply() {
+      assert.fail('Scrubbing cannot stage an asset revision');
+    },
+    onError(error) {
+      throw error;
+    },
+  });
+  const root = f.after.next,
+    nested = root.children.flatMap((node) => node.children),
+    clip = nested.find((node) => node.tag === 'select'),
+    time = nested.find((node) => node.type === 'range'),
+    readout = nested.find((node) => node.tag === 'output'),
+    drawnRegions = [];
+  canvases(root)[0].getContext('2d').drawImage = (_image, x, y) => drawnRegions.push([x, y]);
+  root.children.find((node) => node.tag === 'button').onclick();
+  await settle();
+  clip.value = 'move';
+  clip.oninput();
+  assert.equal(Number(time.max), 63999);
+  assert.equal(Number(time.step), 1);
+  time.value = time.max;
+  drawnRegions.length = 0;
+  time.oninput();
+  assert.match(readout.textContent, /63999 \/ 63999/);
+  assert.deepEqual(drawnRegions, [
+    [3, 0],
+    [3, 0],
+    [3, 0],
+    [3, 0],
+  ]);
+  clip.value = 'idle';
+  clip.oninput();
+  assert.equal(Number(time.max), 1999);
+  assert.equal(Number(time.value), 1999, 'A shorter clip clamps the existing scrub position');
+  assert.match(readout.textContent, /1999 \/ 1999/);
+  assert.deepEqual(f.asset.animation, animation);
+  controls.dispose();
+  assert.equal(pageActorArtPool(f.document).stats().reservedBytes, 0);
+});
+
+test('Studio offers only admitted clips and replaces a removed optional selection with labelled Idle', async () => {
+  const f = fixture(),
+    calls = [],
+    animation = structuredClone(createSoldierAnimation('studio-optional-clips', ['torso']));
+  f.asset.animation = animation;
+  const controls = mountActorAnimationControls({
+    ...f,
+    drawActor(...args) {
+      calls.push(args.at(-1));
+    },
+    onApply() {},
+    onError(error) {
+      throw error;
+    },
+  });
+  const root = f.after.next,
+    buttons = root.children.filter((node) => node.tag === 'button'),
+    nested = root.children.flatMap((node) => node.children),
+    clip = nested.find((node) => node.tag === 'select'),
+    input = nested.find((node) => node.tag === 'textarea');
+  buttons[0].onclick();
+  await settle();
+  clip.value = 'fire';
+  clip.oninput();
+  assert.equal(calls.at(-1).animationClip, 'fire');
+  const edited = JSON.parse(input.value);
+  delete edited.clips.aim;
+  delete edited.clips.fire;
+  input.value = JSON.stringify(edited);
+  calls.length = 0;
+  buttons[1].onclick();
+  await settle();
+  assert.equal(clip.value, 'idle');
+  assert.equal(calls.length, 4);
+  assert.ok(calls.every((options) => options.animationClip === 'idle'));
+  for (const option of clip.children) {
+    const missing = option.value === 'aim' || option.value === 'fire';
+    assert.equal(option.hidden, missing);
+    assert.equal(option.disabled, missing);
+  }
+  assert.ok(f.asset.animation.clips.fire, 'Preview editing does not mutate the original asset');
+  controls.dispose();
+});

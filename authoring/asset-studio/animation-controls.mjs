@@ -75,10 +75,17 @@ export function mountActorAnimationControls({
     time = node('input');
   time.type = 'range';
   time.min = 0;
-  time.max = 6000;
-  time.step = 16;
+  time.max = 0;
+  time.step = 1;
   time.value = 0;
-  frameLabel.append(time);
+  const timeReadout = node('output'),
+    showTime = () =>
+      localizedText(
+        timeReadout,
+        () => `${time.value} / ${time.max} ${getLocale() === 'uk' ? 'мс' : 'ms'}`,
+      );
+  showTime();
+  frameLabel.append(time, timeReadout);
   root.append(frameLabel);
   const headingLabel = node('label', 'Facing ', 'Напрямок '),
     heading = node('select');
@@ -151,6 +158,28 @@ export function mountActorAnimationControls({
     if (disposed || !sameActorAnimationContext(owner, next))
       throw new Error('The selected asset changed; load it again before staging animation.');
     return next;
+  }
+  function syncClipControls() {
+    if (!descriptor) return;
+    const requested = clips.value;
+    for (const option of clips.children) {
+      const supported = Object.hasOwn(descriptor.clips, option.value);
+      option.disabled = !supported;
+      option.hidden = !supported;
+    }
+    // Aim/Fire are optional. A missing clip must not silently show Idle under
+    // another label, including after the author edits the descriptor.
+    clips.value = Object.hasOwn(descriptor.clips, requested) ? requested : 'idle';
+    const duration = descriptor.clips[clips.value].frames.reduce(
+      (sum, id) => sum + descriptor.frames.find((frame) => frame.id === id).durationMs,
+      0,
+    );
+    // Every admitted frame is reachable, including the final frame of a long
+    // non-looping clip. Sampling exactly duration would wrap a looping clip.
+    time.max = duration - 1;
+    const previous = Number(time.value);
+    time.value = Math.min(duration - 1, Math.max(0, Number.isFinite(previous) ? previous : 0));
+    showTime();
   }
   function draw() {
     if (
@@ -238,6 +267,7 @@ export function mountActorAnimationControls({
       width: context.asset.file?.width,
       height: context.asset.file?.height,
     });
+    syncClipControls();
     release();
     const ticket = generation;
     const controller = new AbortController();
@@ -343,7 +373,15 @@ export function mountActorAnimationControls({
       onError(error);
     }
   };
-  for (const control of [time, clips, heading]) control.oninput = draw;
+  time.oninput = () => {
+    showTime();
+    draw();
+  };
+  heading.oninput = draw;
+  clips.oninput = () => {
+    syncClipControls();
+    draw();
+  };
   root.addEventListener('toggle', () => {
     if (!root.open) release();
   });

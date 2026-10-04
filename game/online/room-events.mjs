@@ -71,6 +71,18 @@ export function createRoomAudioActivation({ sound, active, onEnabled }) {
   });
 }
 
+/** Live polls preserve each painter's owner so newly accepted catches can emit
+ * once. Recovery replaces it: native destruction then primes settled remains
+ * silently instead of resuming a burst frozen before the connection was lost. */
+export function reconcileRoomPresentationRuns(
+  previous,
+  incoming,
+  { replacement = false, recovering = false } = {},
+) {
+  if (!previous || replacement || recovering) return incoming;
+  return incoming.map((run, index) => Object.assign(previous[index], run));
+}
+
 /** The shared Team painter reads run.status as its pause clock. Room pause is
  * transport-owned, so project it without overwriting the authoritative run.
  * A new/recovered view primes its event tick silently; settled state is kept. */

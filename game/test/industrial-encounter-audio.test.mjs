@@ -10,6 +10,7 @@ import { MOVEMENT_AUDIO_KEY } from '../ui/movement-audio.mjs';
 import { actorSoundProfile, encounterSoundRecipe } from '../ui/encounter-audio.mjs';
 import { FeedbackDirector } from '../ui/feedback-director.mjs';
 import { audioHarness } from './helpers/soundtrack-audio.mjs';
+import { updateReviewAudioStatus } from '../../authoring/industrial-art-review/audio-status.mjs';
 
 function reviewHarness({ muted = false, enable } = {}) {
   const events = () => {
@@ -186,6 +187,99 @@ test('cross-tab mute cancels a preview and movement preferences keep their own f
   h.host.emit('storage', { key: MOVEMENT_AUDIO_KEY });
   assert.deepEqual(h.sound.movementSettings, { enabled: false, volume: 0.2 });
   assert.equal(h.writes.length, 0);
+  await h.review.dispose();
+});
+
+test('review labels follow cross-tab mute and zero volume without playback, writes or repeated DOM replacement', async () => {
+  const h = reviewHarness(),
+    words = {
+      ready: 'Ready',
+      played: 'Playing',
+      stopped: 'Stopped',
+      muted: 'Muted',
+      silent: 'Zero volume',
+      mute: 'Mute sound',
+      unmute: 'Unmute sound',
+    };
+  function label() {
+    let value = '';
+    return {
+      writes: 0,
+      get textContent() {
+        return value;
+      },
+      set textContent(next) {
+        value = next;
+        this.writes++;
+      },
+    };
+  }
+  const mute = label(),
+    status = label();
+  let result = 'ready';
+  const paint = () => {
+    result = updateReviewAudioStatus({ sound: h.review, words, result, mute, status });
+  };
+  const fromOtherTab = (muted, volume) => {
+    const raw = JSON.stringify({ muted, volume });
+    h.storage.set(AUDIO_PREFERENCES_KEY, raw);
+    h.host.emit('storage', {
+      key: AUDIO_PREFERENCES_KEY,
+      storageArea: h.host.localStorage,
+      newValue: raw,
+    });
+    paint();
+  };
+  paint();
+  assert.equal(mute.textContent, 'Mute sound');
+  await h.review.play('runner');
+  result = 'played';
+  paint();
+  fromOtherTab(true, 0.42);
+  assert.equal(mute.textContent, 'Unmute sound');
+  assert.equal(status.textContent, 'Muted');
+  assert.equal(h.review.snapshot().playing, false);
+  const before = [mute.writes, status.writes];
+  for (let frame = 0; frame < 12; frame++) paint();
+  assert.deepEqual([mute.writes, status.writes], before);
+  fromOtherTab(false, 0);
+  assert.equal(mute.textContent, 'Mute sound');
+  assert.equal(status.textContent, 'Zero volume');
+  fromOtherTab(false, 0.42);
+  assert.equal(status.textContent, 'Ready');
+  assert.equal(h.calls.filter(([kind]) => kind === 'enable').length, 1);
+  assert.deepEqual(h.writes, []);
+  await h.review.dispose();
+});
+
+test('review status reflects normal completion and hidden cancellation without another activation', async () => {
+  const h = reviewHarness(),
+    mute = { textContent: '' },
+    status = { textContent: '' },
+    words = {
+      ready: 'Ready',
+      played: 'Playing',
+      stopped: 'Stopped',
+      mute: 'Mute',
+      unmute: 'Unmute',
+    };
+  await h.review.play('courier');
+  h.advance(1000);
+  assert.equal(
+    updateReviewAudioStatus({ sound: h.review, words, result: 'played', mute, status }),
+    'stopped',
+  );
+  assert.equal(status.textContent, 'Stopped');
+  await h.review.play('guard');
+  h.document.hidden = true;
+  h.document.emit('visibilitychange');
+  h.document.hidden = false;
+  const uk = { ...words, stopped: 'Зразок зупинено.', mute: 'Вимкнути звук' };
+  updateReviewAudioStatus({ sound: h.review, words: uk, result: 'played', mute, status });
+  assert.equal(status.textContent, 'Зразок зупинено.');
+  assert.equal(mute.textContent, 'Вимкнути звук');
+  assert.equal(h.calls.filter(([kind]) => kind === 'enable').length, 2);
+  assert.deepEqual(h.writes, []);
   await h.review.dispose();
 });
 
