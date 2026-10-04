@@ -263,7 +263,13 @@ test('unified appearance survives Solo, Team, Versus and Solo return without alt
     JSON.stringify({ textFace: 'plain', textSize: 'large', reducedEffects: true }),
   );
   await t.test('Solo immediately applies its complete family from real Settings', async (t) => {
-    const page = await soloPage(t, { campaign, storage: store, titleScreen: true });
+    // Title Settings are usable while optional flight pictures are preparing.
+    const page = await soloPage(t, {
+      campaign,
+      storage: store,
+      titleScreen: true,
+      waitForPictures: false,
+    });
     page.$('shell-options').click();
     page.$('settings-tab-display').click();
     const records = unrelated(store),
@@ -366,8 +372,14 @@ test('unified appearance survives Solo, Team, Versus and Solo return without alt
     },
   );
   await t.test('fresh Solo adopts without an implicit save or start', async (t) => {
+    // This adoption stays on Home and must not depend on board-image readiness.
     const before = store.writes.length,
-      page = await soloPage(t, { campaign, storage: store, titleScreen: true });
+      page = await soloPage(t, {
+        campaign,
+        storage: store,
+        titleScreen: true,
+        waitForPictures: false,
+      });
     reflects(page, '', 'tryzub', 'subtle');
     assert.equal(store.writes.length, before);
     assert.deepEqual(unrelated(store), records);
