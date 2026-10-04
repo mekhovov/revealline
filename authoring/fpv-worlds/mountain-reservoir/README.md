@@ -84,3 +84,36 @@ over the unchanged flat support. The closed hut, roof, paint and exact collision
 solids move together to x −26…−18 m, z −19…−11 m, removing their overlap with
 the western rock terrace. Project/course revision advances to `r3`; route and
 physics remain unchanged. This is another scene candidate, not art acceptance.
+
+Actual `r3` Shore/Wide/Hut and low-graphics review accepted a **first-scene
+checkpoint for ordinary-flight/collision qualification only**. It remains
+stylized and is not final full-world artistic acceptance. The first collision
+pass then correctly failed before either flight: a sphere wholly inside the
+rectangular dam did not intersect its closed Rapier triangle shell. The failure
+is retained. `r4` uses solid cuboids for the same rectangular dam and roof
+envelopes; irregular terraced rocks retain explicit surface triangles. No
+runtime physics or route changes are introduced, and the interior-spawn check
+is retained. A new exact pack must pass before any completion claim.
+
+The `r4` checkpoint now passes 28 functional checks: Self-level completes in
+2,990 ticks and Acro in 3,002, both with zero contacts, full health and the named
+shore pad support. Touchdown speeds are 261/262 mm/s under the unchanged 700 mm/s
+criterion. The shared pilot's original 65mm early motor cut produced 1,135 mm/s
+and is retained as a failed recording. The qualifier now supplies ordinary 48%
+throttle through that final gap until actual contact; it does not alter flight
+state, criteria or physics. Complete and archive-import replays match terminal
+identities. The two-record archive SHA-256 is
+`521ddfd1e747e7deec17bebf53d00c30365beb19da5715000939164c7a4754c8`,
+bound to pack `4c4a0aba2c6347f7670b86a40af5a0d9dd8a1be0e0b65e4a66465c4684136c6c`.
+These remain two **checkpoint** proofs; final shared world geometry/bounds will
+require all eight courses and sixteen demonstrations to be qualified anew.
+
+`prepare-import.mjs` freezes all 102 members of the separately accepted historical
+`#1060` admitted player (`79a721dd19343726fed30f618a2d7c8cd164d691`) by exact
+manifest hash and immutable hardlinks. It adds only the external content and a
+manual host harness; no runtime overlay or package rebuild. The real File input,
+native IndexedDB, collision queries and both catalogue Watch replays remain
+pending actual browser execution. The harness preserves production pause/focus
+guards, uses paused shader warmup and a lightweight draw observer, and provides a
+separate native-animation-clock launch for manual inspection. It is not an
+offline, hardware or full-world acceptance claim.
