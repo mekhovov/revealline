@@ -177,6 +177,14 @@ test('other Team runtime paths retain the navigation gate', () => {
   assert.deepEqual(plan.unknownRuntime, []);
 });
 
+test('Versus runtime changes retain native controller Start ownership coverage once', () => {
+  const file = 'game/test/mission-library-controller-host.test.mjs';
+  const plan = focusedTestPlan(['game/couch/couch.mjs', file], manifest);
+  const command = plan.commands.find(({ id }) => id === 'player-navigation-team');
+  assert.ok(command.args.includes(file));
+  assert.equal(plan.commands.filter(({ args }) => args.includes(file)).length, 1);
+});
+
 test('documentation-only changes have a zero-command bounded plan', () => {
   const plan = focusedTestPlan(['docs/fast-release-mode.md'], manifest);
   assert.deepEqual(plan, {

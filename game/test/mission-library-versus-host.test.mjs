@@ -104,26 +104,30 @@ async function fixture(t, { href, fetchResponse, installedSource, ...options } =
   return p;
 }
 function beginOpen(p, { focus = true } = {}) {
-  // Preserve the real anchor click and Couch-shell departure guards while
+  if (p.state() === 'running') {
+    assert.equal(p.$('race-pause').hidden, false);
+    p.$('race-pause').click();
+    p.frame(0);
+    assert.equal(p.state(), 'paused');
+  }
+  // Preserve the visible Missions click and Couch-shell departure guards while
   // joining its operation, rather than timing catalogue compilation with polls.
-  const opener = p.$('race-library-switch'),
-    listeners = opener.listeners.get('click'),
+  const opener = p.$('race-chapters'),
+    handler = opener.onclick,
     pending = [];
-  opener.listeners.set(
-    'click',
-    new Set(
-      [...listeners].map((listener) => (event) => {
-        const result = listener.call(opener, event);
-        if (result instanceof Promise) pending.push(result);
-        return result;
-      }),
-    ),
-  );
+  assert.equal(opener.hidden, false);
+  assert.equal(opener.disabled, false);
+  assert.equal(typeof handler, 'function');
+  opener.onclick = (event) => {
+    const result = handler.call(opener, event);
+    if (result instanceof Promise) pending.push(result);
+    return result;
+  };
   try {
     if (focus) opener.focus();
     opener.click();
   } finally {
-    opener.listeners.set('click', listeners);
+    opener.onclick = handler;
   }
   assert.equal(pending.length, 1, 'The real Missions click owns one preparation.');
   assert.match(p.$('race-message').textContent, /Preparing missions/);
@@ -165,7 +169,7 @@ test('Versus All missions lists exact Journey and retained Classic rows without 
       requests.push(String(path));
     },
   });
-  assert.equal(p.$('race-library-switch').textContent, 'All missions');
+  assert.equal(p.$('race-chapters').textContent, 'Select Mission');
   const before = p.checkpoint();
   await open(p);
   assert.equal(p.$('journey-mode').value, 'versus');
@@ -187,7 +191,7 @@ test('Versus All missions lists exact Journey and retained Classic rows without 
   p.$('journey-back').click();
   p.frame(0);
   assert.deepEqual(p.checkpoint(), before);
-  assert.equal(p.doc.activeElement, p.$('race-library-switch'));
+  assert.ok(p.doc.activeElement === p.$('race-chapters'), 'Back returns to native Missions.');
 });
 
 test('empty-profile Versus library prepares a late Base briefing and preserves both boards on cancelled replacement', async (t) => {
