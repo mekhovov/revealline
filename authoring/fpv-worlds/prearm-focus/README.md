@@ -18,7 +18,13 @@ The complete browser receipt is 63,856 bytes, SHA256 `9aea8cde0c3bf5582e2c0b306a
 
 ## Integration and reproduction
 
-An ordinary local merge of main `f3764070e22f0b33b63fd0f7434690fa7455dc64` produced `30e54d791f3fcc6266b10f1b6001920c5044d145`, retaining the focused host change and diagnostic. Main also supplies the separately qualified readiness guard and compact generated shell. Source browser acceptance above remains tied to the original 58d overlay; integrated package qualification is pending and must be recorded separately.
+An ordinary local merge of main `f3764070e22f0b33b63fd0f7434690fa7455dc64` produced `30e54d791f3fcc6266b10f1b6001920c5044d145`, retaining the focused host change and diagnostic. Main also supplies the separately qualified readiness guard and compact generated shell. Evidence commit `8cb06a2ae28c377956c59c949aab2918a1c9991f` passed full `npm run validate`, including EN/UK and generated projections, and the same 16 existing checks on Node 20.19.5. Validation materialization used APFS clones with exact committed Git blob verification for all 4,943 selected inputs; it did not modify tracked source.
+
+All three optional packages passed admission from exact 8cb, with two identical builds, committed-input verification and independent ZIP-member checks. Worlds has 102 files / 15,562,608 admitted bytes; its 95 original inputs total 16,768,770 bytes, leaving 8,446 bytes under the unchanged 16 MiB source limit. Its package revision is `31d056b4b1f0b53300c526b29f97a71a9bb3b8d02979d7344549d60854ea3a51`. The exact host is 260,715 bytes, SHA256 `5b636afefad57c27a917cb0901aa9725f106e86586222d4270179b7fd892b2f0`.
+
+The admitted r1 browser fixture uses all 102 immutable members without an overlay and the same c205 harness/observer as source r2. Its manifest SHA256 is `f7162b3a5f2e57c03dedc931226f75c3ffcf774aca3ca2cd93f26dcbd52860a0`. The actual admitted-player run passed **145/145 checks**, with the same check names as source r2 and no warnings or errors. Root repeated trusted Tab to the next checkbox and Shift+Tab back to World appearance; Finish verified deliberate arming, pause, queued appearance and ordinary Retry. The conditional Flight options branch remained unexercised. The complete admitted receipt is 63,860 bytes, SHA256 `3971e9155418e3dc700cccb85162d413d50c11b84c23e11bfc3f1a231ed66b83`.
+
+All validation/admission receipts, both browser receipts/screenshots and the exact staged-player inventory are retained in `evidence/archives.json`. Scoped ESLint, Prettier and diff checks also passed. This confirms the bounded focus/menu behavior in the integrated package; it is not an offline, mobile, controller, performance or full D6 acceptance claim.
 
 To prepare another immutable source fixture:
 
