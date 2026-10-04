@@ -1,0 +1,71 @@
+{
+  "format": "FPVWorkerProjectionActualOfflineSmoke.v1",
+  "sourceRevision": "b452a0cac273ed290ac7ee14609dde4f87984df3",
+  "recordedAt": "2026-10-04T15:51:16.611Z",
+  "observationSource": "Coordinating root agent actual browser UI actions and console inspection; this receipt transcribes its observed result.",
+  "players": [
+    {
+      "id": "fpv-worlds",
+      "members": 102,
+      "receipt": "worlds-player.json",
+      "prepared": "Prepare simulator offline completed",
+      "afterReload": [
+        "Native page rendered with local origin stopped",
+        "Lift & land briefing opened and Start activated",
+        "Deliberate Arm/resume at zero throttle entered Flight active",
+        "Pause returned to neutral"
+      ],
+      "warnings": [],
+      "errors": []
+    },
+    {
+      "id": "civilian-fpv",
+      "members": 69,
+      "receipt": "academy-player.json",
+      "prepared": "Native Workshop & offline control activated with focused Enter; exact package ready offline",
+      "afterReload": [
+        "Native page rendered with local origin stopped",
+        "Lift & land briefing opened and Start activated",
+        "Practice in progress then Pause",
+        "Continue returned to Practice in progress then Pause neutral"
+      ],
+      "warnings": [],
+      "errors": []
+    }
+  ],
+  "origin": {
+    "url": "http://127.0.0.1:8917",
+    "stoppedOwnPID": 82680,
+    "connectionRefusedExitBeforeReload": 7,
+    "connectionRefusedExitAfterBothLaunches": 7,
+    "restartedSession": 61817
+  },
+  "screenshots": [
+    {
+      "file": "fpv-worker-academy-offline-active-b452.png",
+      "bytes": 70887,
+      "sha256": "34a17cba4e17eb526084d2e519ac0d4347fb816579e6868bcd051521ce4ec773"
+    },
+    {
+      "file": "fpv-worker-academy-prepared-b452.png",
+      "bytes": 90040,
+      "sha256": "6ae1db6f346508ee86547efab89523f899229f92e904482c775817c1b88eaebc"
+    },
+    {
+      "file": "fpv-worker-worlds-offline-active-b452.png",
+      "bytes": 72620,
+      "sha256": "c79227d02454076e3d9fe8eeb3f755554d31e2f8366abd69600b24f603edb9c3"
+    },
+    {
+      "file": "fpv-worker-worlds-prepared-b452.png",
+      "bytes": 76550,
+      "sha256": "e99749cc766193eb6497c1ee8c2da43fc495c02900159f2bc8f8f2e8642bc6c0"
+    }
+  ],
+  "limitations": [
+    "Exact admitted local package bytes; no overlays.",
+    "Only this localhost origin was stopped. No claim of device-wide outage, airplane mode, cache eviction, browser restart or storage durability.",
+    "No hardware FPS, timing improvement or new dedicated-worker Library transport acceptance.",
+    "No public deployment claim."
+  ]
+}
