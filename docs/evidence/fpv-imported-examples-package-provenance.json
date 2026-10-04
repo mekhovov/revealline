@@ -26,8 +26,28 @@
       "storedBytes": 5979,
       "storedSha256": "9ffc0dc9ea2f4c2da0e5a40e1362740e4b8bb0aae6f16d85a9c0aaa87d939466",
       "compression": "gzip-mtime0"
+    },
+    {
+      "artifact": "fpv-imported-examples-package-browser-v1.json.gz",
+      "bytes": 29583,
+      "sha256": "3370636451297172380e779c802d02729d72ef1368f9be3bb58c974e8cde7b33",
+      "storedBytes": 8059,
+      "storedSha256": "62ab9f38687b3fb8f23f6dd6376a78a4cd05ef18e972981d7992628e2d411e24",
+      "compression": "gzip-mtime0"
+    },
+    {
+      "artifact": "fpv-imported-examples-package-browser-v1.png",
+      "bytes": 90860,
+      "sha256": "62d27d2ad892686e2a2e9855ee3b0c2f74d77bb8fed5a263bf28d53b572c0dc6",
+      "storedBytes": 90860,
+      "storedSha256": "62d27d2ad892686e2a2e9855ee3b0c2f74d77bb8fed5a263bf28d53b572c0dc6",
+      "compression": null
     }
   ],
-  "browserStatus": "pending",
-  "scope": "Exact102 admitted members; candidate host from admitted ZIP, no source overlays; explicit baseline comparison only. Static import paths are rewritten into frozen closure; controlled RAF preserves real performance clock and production pause guards."
+  "browserStatus": "passed",
+  "scope": "Exact102 admitted members; candidate host from admitted ZIP, no source overlays; explicit baseline comparison only. Static import paths are rewritten into frozen closure; controlled RAF preserves real performance clock and production pause guards.",
+  "checks": 47,
+  "errors": [],
+  "operatorConsoleWarnings": [],
+  "operatorConsoleErrors": []
 }
