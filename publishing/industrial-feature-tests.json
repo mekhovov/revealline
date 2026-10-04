@@ -14,6 +14,7 @@
         "game/test/fpv-pilot-completion.test.mjs",
         "game/test/capture-pilot-completion.test.mjs",
         "game/test/fpv-native-pursuit-successor.test.mjs",
+        "game/test/fpv-native-pursuit-completion.test.mjs",
         "game/test/fpv-native-pursuit.test.mjs",
         "game/test/coop-hunting.test.mjs",
         "game/test/hunt-core.test.mjs",
