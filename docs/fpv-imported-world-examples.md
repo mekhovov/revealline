@@ -1,6 +1,8 @@
 # Examples for installed worlds
 
-Draft prerequisite for D5; browser/package qualification and publication remain pending.
+The source browser passes **47/47 checks**, including both complete rendered
+demonstrations. Final package admission and publication remain pending. This is
+a focused D5 prerequisite, independent of the capacity and D4 editor changes.
 
 An installed world can import and verify a demonstration yet have no Watch action:
 the host only searched optional records for built-in catalogue entries. Conversely,
@@ -42,6 +44,26 @@ Watch replays without rewards. It keeps the real performance clock and pause
 guards, uses controlled RAF timestamps, and stops on lost focus, unexpected pause
 or stalled progress. It does not claim FPS, physical device acceptance or offline
 qualification. The admitted player contents are never modified in place.
+
+Frozen candidate `cc1ffbbadf092caf3871f52203e2edf2f119d74c`, host SHA-256
+`6d93d9c36fb8d0c576907d98618d7aa73637bb49bd8d72ec310508241b96045c`,
+passes that native browser contract. Self-level renders all 4,024 recorded ticks
+to final identity `c6a52efd455aeefa`; Acro renders all 3,670 ticks to
+`4a4560272f8dc41a`. Notebook/reward data and unavailable proof bytes remain exact.
+Runtime errors are empty; the browser operator also reported empty console
+warning/error logs. Controlled scheduling is functional evidence, not a timing
+or FPS claim. The complete [receipt](evidence/fpv-imported-examples-source-browser-v1.json.gz)
+is preserved losslessly with deterministic gzip; its uncompressed size is 29,494
+bytes and SHA-256 is `9a73e2e1b3d1bf784aebe1d32acf5c2d21d50fb5296fb4d90a1e23c395cebfc2`.
+[Provenance](evidence/fpv-imported-examples-browser-provenance.json) binds the
+screenshot, frozen wrappers and all 102 admitted members. Decompress the gzip
+to recover the original full JSON; no observations were dropped.
+
+The first fixture preparation attempt failed closed when it compared a raw Git
+i18n module with its valid package projection. The corrected preparer separately
+checks the original Git source delta (host only) and every admitted member's
+exact bytes/hash. No package content or production assertion was changed to
+make the fixture pass. This is a preparation diagnostic, not a browser failure.
 
 Prepare from retained D4 authoring proofs, then freeze for root-owned browser work:
 
