@@ -225,8 +225,10 @@ Retain Core 72 MiB / Company 80 MiB and the existing optional-package file/sourc
 Coating main `3bc7a923d` retains 37,758 original source bytes after the verified visual
 projection and merged phase/coating increments, with 102/104 runtime files.
 Creator's fresh all-three admission `fc3254382` includes that main plus its 323-byte
-correction and retains 37,435 bytes. The now-merged, independently qualified 121-byte HUD change would leave 37,314
-bytes with Creator when combined; that arithmetic is not a combined admission.
+correction and retains 37,435 bytes. HUD main `ecf0bafc6` retains 37,637 bytes. Creator's normal publication merge
+contains only that already-qualified 121-byte HUD difference from its admitted
+source; all 95 inputs are audited, with 37,314 bytes remaining. This source bridge
+is not a new combined admission; fresh protected CI remains required.
 Retain the bounded receipts and admit actual final integration; use existing UI,
 small data manifests and reviewed lossless preparation before proposing a limit
 change. The core budget does not waive the separate World Studio ceiling.
