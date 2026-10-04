@@ -1,0 +1,246 @@
+<!doctype html><meta charset="utf-8" /><title>Admitted player graphics recovery</title>
+<style>
+  body {
+    font: 14px system-ui;
+    background: #15212c;
+    color: #edf4ef;
+    margin: 12px;
+  }
+  button {
+    font: inherit;
+    padding: 8px;
+    margin-right: 8px;
+  }
+  iframe {
+    width: 100%;
+    height: 680px;
+    border: 1px solid #52616b;
+    background: white;
+  }
+  pre {
+    white-space: pre-wrap;
+    max-height: 160px;
+    overflow: auto;
+  }
+  textarea {
+    width: 98%;
+    height: 150px;
+  }
+  p {
+    max-width: 115ch;
+  }
+</style>
+<h1>Admitted player: graphics recovery</h1>
+<p>
+  The iframe contains the complete, unmodified admitted 102-file World Studio distribution. Launch
+  and pause a flight through its UI. Then use the loss/restore control once, choose the real
+  player's Retry, verify visible aircraft and Arm/Pause, and capture the receipt. The same
+  renderer/canvas is used by the real host. This helper only observes DOM/events/GL error queues; it
+  does not replace the host, renderer, input or flight model.
+</p>
+<button id="lose" disabled>Lose and restore active graphics</button
+><button id="capture" disabled>Capture player receipt</button>
+<p id="status">Verifying admitted files</p>
+<iframe
+  id="player"
+  title="Actual admitted World Studio player"
+  allow="fullscreen; autoplay; gamepad"
+></iframe>
+<pre id="summary">Not loaded</pre>
+<label
+  >Full read-only receipt<textarea
+    id="full-receipt"
+    aria-label="Full admitted player recovery receipt"
+    readonly
+  >
+No receipt yet.</textarea
+  >
+</label>
+<script type="module">
+  const $ = (id) => document.getElementById(id),
+    receipt = {
+      format: 'fpv-admitted-player-recovery.v1',
+      events: [],
+      snapshots: [],
+      glErrors: [],
+      visibility: [],
+      errors: [],
+      pollFrames: 0,
+    },
+    digest = async (b) =>
+      [...new Uint8Array(await crypto.subtle.digest('SHA-256', b))]
+        .map((x) => x.toString(16).padStart(2, '0'))
+        .join('');
+  let gl = null,
+    phase = 'idle',
+    running = false,
+    frameId = null;
+  const snapshot = () => {
+    const doc = $('player').contentDocument,
+      canvas = doc?.getElementById('world-canvas');
+    return {
+      at: new Date().toISOString(),
+      phase,
+      status: doc?.getElementById('flight-status')?.textContent ?? null,
+      dialogOpen: doc?.getElementById('flight-dialog')?.open ?? null,
+      canvas: canvas
+        ? {
+            width: canvas.width,
+            height: canvas.height,
+            display: canvas.getBoundingClientRect().toJSON(),
+          }
+        : null,
+      visibleButtons: [...(doc?.querySelectorAll('button') ?? [])]
+        .filter((b) => b.getClientRects().length && !b.hidden)
+        .map((b) => ({ id: b.id, text: b.textContent.trim().slice(0, 90), disabled: b.disabled }))
+        .slice(-40),
+      contextLost: gl?.isContextLost() ?? null,
+    };
+  };
+  function sampleErrors() {
+    if (!gl) return;
+    const codes = [];
+    for (let i = 0; i < 16; i++) {
+      const code = gl.getError();
+      if (code === gl.NO_ERROR) break;
+      codes.push({
+        code,
+        hex: '0x' + code.toString(16),
+        expectedLossSignal: code === gl.CONTEXT_LOST_WEBGL && gl.isContextLost(),
+      });
+    }
+    if (codes.length) {
+      receipt.glErrors.push({ phase, time: performance.now(), codes });
+      if (receipt.glErrors.length > 64) {
+        running = false;
+        receipt.errors.push('Error-record bound exceeded');
+      }
+    }
+  }
+  function poll() {
+    if (!running) return;
+    receipt.pollFrames++;
+    sampleErrors();
+    frameId = requestAnimationFrame(poll);
+  }
+  function output() {
+    const text = JSON.stringify(receipt, null, 2);
+    $('full-receipt').textContent = text;
+    $('full-receipt').value = text;
+    $('summary').textContent = JSON.stringify(
+      {
+        source: receipt.binding?.sourceRevision,
+        events: receipt.events,
+        errorQueues: receipt.glErrors,
+        errors: receipt.errors,
+        lastSnapshot: receipt.snapshots.at(-1),
+      },
+      null,
+      2,
+    );
+  }
+  document.addEventListener('visibilitychange', () =>
+    receipt.visibility.push({ state: document.visibilityState, time: performance.now() }),
+  );
+  $('lose').onclick = async () => {
+    $('lose').disabled = true;
+    try {
+      const doc = $('player').contentDocument,
+        canvas = doc?.getElementById('world-canvas');
+      if (!canvas || !doc.getElementById('flight-dialog')?.open)
+        throw Error('Launch a flight first');
+      gl = canvas.getContext('webgl2');
+      if (!gl) throw Error('Active WebGL2 context unavailable');
+      const extension = gl.getExtension('WEBGL_lose_context');
+      if (!extension) throw Error('Loss extension unavailable');
+      receipt.startedAt = new Date().toISOString();
+      receipt.start = {
+        visibility: document.visibilityState,
+        focus: document.hasFocus(),
+        viewport: [innerWidth, innerHeight],
+        dpr: devicePixelRatio,
+      };
+      phase = 'before-loss';
+      receipt.snapshots.push(snapshot());
+      sampleErrors();
+      running = true;
+      poll();
+      await new Promise((resolve, reject) => {
+        const timer = setTimeout(() => reject(Error('Loss event timeout')), 6000);
+        canvas.addEventListener(
+          'webglcontextlost',
+          () => {
+            clearTimeout(timer);
+            phase = 'lost';
+            receipt.events.push({ type: 'lost', time: performance.now() });
+            receipt.snapshots.push(snapshot());
+            sampleErrors();
+            resolve();
+          },
+          { once: true },
+        );
+        extension.loseContext();
+      });
+      await new Promise((r) => setTimeout(r, 150));
+      await new Promise((resolve, reject) => {
+        const timer = setTimeout(() => reject(Error('Restore event timeout')), 6000);
+        canvas.addEventListener(
+          'webglcontextrestored',
+          () => {
+            clearTimeout(timer);
+            phase = 'restored-await-real-retry';
+            receipt.events.push({ type: 'restored', time: performance.now() });
+            receipt.snapshots.push(snapshot());
+            sampleErrors();
+            resolve();
+          },
+          { once: true },
+        );
+        extension.restoreContext();
+      });
+      $('status').textContent =
+        'Restored. Use the actual player Retry, then Arm/Pause and Capture player receipt.';
+      output();
+    } catch (e) {
+      receipt.errors.push(String(e.stack ?? e));
+      $('status').textContent = 'Review helper error';
+      output();
+    }
+  };
+  $('capture').onclick = () => {
+    running = false;
+    if (frameId) cancelAnimationFrame(frameId);
+    sampleErrors();
+    phase = 'captured-after-user-ui';
+    receipt.snapshots.push(snapshot());
+    receipt.finishedAt = new Date().toISOString();
+    receipt.nonLossErrorCount = receipt.glErrors.reduce(
+      (n, row) => n + row.codes.filter((c) => !c.expectedLossSignal).length,
+      0,
+    );
+    output();
+    $('status').textContent =
+      'Receipt captured. UI actions still require the reviewer’s observation.';
+  };
+  try {
+    receipt.binding = await (await fetch('/binding.json', { cache: 'no-store' })).json();
+    for (const pin of receipt.binding.files) {
+      const response = await fetch('/player/' + pin.path, { cache: 'no-store' }),
+        b = await response.arrayBuffer();
+      if (!response.ok || b.byteLength !== pin.bytes || (await digest(b)) !== pin.sha256)
+        throw Error('Admitted file changed: ' + pin.path);
+    }
+    receipt.verifiedFiles = receipt.binding.files.length;
+    $('player').src = '/player/optional-practice/fpv-worlds/index.html';
+    $('player').onload = () => {
+      $('lose').disabled = false;
+      $('capture').disabled = false;
+      $('status').textContent =
+        'Verified admitted bytes. Launch and pause a flight, then use loss/restore.';
+    };
+  } catch (e) {
+    receipt.errors.push(String(e.stack ?? e));
+    output();
+    $('status').textContent = 'Admission binding failed';
+  }
+</script>
