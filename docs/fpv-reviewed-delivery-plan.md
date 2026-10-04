@@ -51,6 +51,31 @@ Quality presets must preserve collision, relevant sight lines and objective acto
 Measure frame times, loading and resource disposal before claiming performance.
 No multiplayer, online publishing or universal commercial-map conversion is added.
 
+### Orchard surface checkpoint — 4 October 2026
+
+Campus #1018 is merged and public render/arm/pause was verified at96ef08777.
+Graphics recovery #1019 is merged at`a46aded0b56c612fbbfb1736cfb27ee0746c2b1f`
+and [normal public Clearing check-in render/arm/pause](evidence/fpv-renderer-public-launch-a46aded0b.json)
+is verified; context-loss recovery retains its separate local evidence.
+
+Orchard now has an accepted bounded authored-tree material increment. It replaces
+six existing maps with broken upright bark plates and broad opaque leaf groups;
+all closed tree geometry, UVs, routes, actors, collision and GPU owners remain
+unchanged. CPU378/89, ten original recordings/39,525ticks, source/package96checks/
+43pairs each, all three reproducible admissions and the full102-file admitted
+player render/arm/pause pass. [Qualification](fpv-orchard-tree-surfaces.md) retains
+the rejected first visual pass and exact candidate identities. Current original
+inputs leave11,488bytes below16MiB before independent Railworks/Solar integration.
+Protected CI, merge and public Orchard availability remain separate.
+
+Railworks #1020 continues independently; Solar is a separate art increment.
+Continue the approved D3 optional Adventure examples after publishing this focused
+Orchard item, without mixing unfinished conversion work into its PR. The earlier
+world-surface increments do not certify every world as fully realistic. Broader
+art/device acceptance and the unexplained historical long stalls remain recorded
+without blocking the approved sequence. D4 creator work, D5 four new worlds and
+D6 additional unit coverage retain their order and scope.
+
 ### Campus facade checkpoint — 4 October 2026
 
 Quarry #1016 is merged at `47d2019dced85d80671b2d780da662f50ea11c20`.
