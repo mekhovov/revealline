@@ -12,7 +12,19 @@ was Home. The full failure, screenshot and manifest are preserved under
 retained recovery, no warnings/errors and zero owned resources after disposal.
 The next immutable fixture selects the existing public Home Retry button and
 adds compact control/dialog/phase observations. Production and visibility guards
-are unchanged; the remainder of the journey is still unqualified.
+are unchanged.
+
+The corrected run at port8964 completed the native flight, exact Watch, edit,
+transaction-fault retry and durable reopen checks, then stopped at the final
+cleanup assertion. The original owner had all registered resources zero. The
+reopened lobby never launched a flight: its lastDraw was null and no renderer
+resource result existed. The fixture incorrectly required a renderer for every
+owner. Its full failed receipt is preserved under `evidence/source-8964-failed`.
+The next observer records factory creation count explicitly: a never-created
+owner must have null resources and no draw; a created renderer must still have
+all owned resources zero. No missing resource result is treated as zero after
+creation. This run used the actual default Industrial presentation and does not
+qualify the authored natural profile or longer-session performance.
 
 Preparation rejects any input difference beyond the exact accepted 323-byte
 Creator function when using the Library admitted player as a source baseline.
