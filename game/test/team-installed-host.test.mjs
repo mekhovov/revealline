@@ -5,7 +5,10 @@ import {
   exportCreatorTeamCampaign,
   generateCreatorTeamCampaign,
   prepareCreatorTeamCampaign,
+  prepareCreatorTeamSourceCampaign,
 } from '../creator/team.mjs';
+import { createPursuitPilotCandidates } from '../content-design/pursuit-pilot-candidates.mjs';
+import { TEAM_HUNT_ATTEMPT_KEY, restoreTeamHuntAttempt } from '../coop/hunt-attempts.mjs';
 import {
   CREATOR_TEAM_DATABASE,
   CREATOR_TEAM_PROGRESS_FORMAT,
@@ -129,6 +132,9 @@ test('a fresh Team host discovers and launches one exact installed edition', asy
   await activateMissionCard(installed[0]);
   assert.equal(f.$('journey-chooser').open, false);
   assert.equal(f.$('coop-menu').hidden, true);
+  assert.equal(f.$('coop-overlay').hidden, false);
+  f.$('coop-resume').focus();
+  f.$('coop-resume').click();
   assert.equal(f.$('coop-overlay').hidden, true);
   assert.equal(f.$('coop-stage').textContent, prepared.pack.levels[0].name.toUpperCase());
   assert.equal(f.$('coop-level').value, prepared.pack.levels[0].id);
@@ -256,11 +262,106 @@ test('a fresh Team host labels and resumes an exactly replayed installed checkpo
   assert(card);
   assert.match(card.textContent, /Resume saved attempt/);
   await activateMissionCard(card);
-  assert.match(f.$('coop-discovery-status').textContent, /restored from its saved attempt/i);
-  assert.match(f.$('coop-message').textContent, /Saved territory restored/i);
+  assert.equal(f.$('coop-overlay').hidden, false);
+  const clock = f.$('coop-clock').textContent;
+  f.tick(120);
+  assert.equal(f.$('coop-clock').textContent, clock);
+  f.$('coop-resume').focus();
+  f.$('coop-resume').click();
+  assert.equal(f.$('coop-overlay').hidden, true);
   assert.equal(f.$('coop-level').value, level.id);
   assert.equal(f.$('coop-difficulty').value, 'gentle');
   assert.equal(f.$('coop-experiment').value, 'joint');
+});
+
+test('an installed Hunt resumes through its paused briefing and retains replayable release journals', async (t) => {
+  const memory = managedIndexedDB(),
+    local = storage(),
+    prepared = await prepareCreatorTeamSourceCampaign(
+      createPursuitPilotCandidates({ team: true }),
+      {
+        sourcePackId: 'journey-pursuit-team',
+        campaignId: 'pursuit-team-pilots',
+        difficulty: 'standard',
+      },
+    ),
+    installer = createInstalledTeamCampaignStore({ indexedDB: memory.indexedDB }),
+    { editionId } = await installer.install(prepared),
+    level = prepared.pack.levels[0],
+    run = createInstalledTeamAttempt(prepared.pack, level.id, 'standard', 'full'),
+    gameplayId = installedTeamGameplayId(prepared.pack, level.id, 'standard', 'full'),
+    commands = [
+      { direction: 'right', boost: false, support: false },
+      { direction: 'left', boost: false, support: false },
+    ];
+  assert.ok(run.level.hunt);
+  for (let index = 0; index < 25; index++) stepCoop(run, commands);
+  const snapshot = createInstalledTeamAttemptSnapshot({
+    editionId,
+    attemptId: 'installed-hunt-briefing',
+    gameplayId,
+    presetId: 'full',
+    run,
+    segments: [{ ticks: 25, commands }],
+  });
+  await installer.recordAttempt(snapshot, { expectedGeneration: 0 });
+  t.after(() => installer.close());
+  const f = await page(t, {
+    nativeFocus: true,
+    nativeVisibility: true,
+    beforeImport({ install }) {
+      install('crypto', { value: webcrypto });
+      install('indexedDB', { value: memory.indexedDB });
+      install('localStorage', { value: local });
+    },
+    presentation: {
+      load: ({ snapshot: artwork }) => {
+        artwork.resolved.theme.revision = 79;
+      },
+    },
+  });
+  await openMissionLibrary(f, 'coop-discovery-open');
+  const card = [...f.$('journey-cards').children].find((candidate) => {
+    const [source, edition, , levelId] = JSON.parse(candidate.dataset.missionId);
+    return (
+      source === `team-installed:${editionId}` && edition === editionId && levelId === level.id
+    );
+  });
+  assert.ok(card);
+  await activateMissionCard(card);
+  assert.equal(f.$('coop-overlay').hidden, false);
+  assert.match(f.$('coop-resume').textContent, /Resume together/);
+  assert.equal(
+    local.getItem(TEAM_HUNT_ATTEMPT_KEY),
+    null,
+    'Preparation does not overwrite a save.',
+  );
+  f.$('coop-resume').focus();
+  f.$('coop-resume').click();
+  assert.equal(
+    f.$('coop-overlay').hidden,
+    true,
+    'Resume binds Hunt stores only after the core resumes.',
+  );
+  f.$('coop-pause').click();
+  const saved = JSON.parse(local.getItem(TEAM_HUNT_ATTEMPT_KEY));
+  assert.equal(saved.attemptId, snapshot.attemptId);
+  assert.equal(saved.checkpoint.tick, snapshot.checkpoint.tick);
+  assert.deepEqual(saved.segments[0], snapshot.segments[0]);
+  assert.deepEqual(saved.segments.at(-1), { release: true });
+  const verified = await restoreTeamHuntAttempt(saved, { pack: prepared.pack, level });
+  assert.equal(verified.run.tick, run.tick);
+  assert.deepEqual(verified.run.needsNeutral, [true, true]);
+  // Force-pause persistence serializes asynchronously through the installed store.
+  for (let index = 0; index < 40; index++) {
+    const current = await installer.restoreAttempt(editionId, level.id);
+    if (current.snapshot.segments.at(-1)?.release) {
+      assert.deepEqual(current.run, verified.run);
+      return;
+    }
+    await new Promise((resolve) => setImmediate(resolve));
+  }
+  assert.fail('The installed journal must retain the same briefing release as the Hunt mirror.');
 });
 
 test('storage denial keeps a verified Team campaign playable for the current visit', async (t) => {

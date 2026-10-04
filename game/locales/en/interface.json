@@ -5838,5 +5838,15 @@
   "recording.exportTeam": "Export Team recording",
   "recording.verifyExported": "Verify exported recording ↗",
   "recording.exportHelp": "Choose your exported file in the new tab. Wins and losses can be verified; this grants no progress or rewards.",
-  "replaceAndPrepare": "Replace and prepare"
+  "replaceAndPrepare": "Replace and prepare",
+  "recording.copyDetails": "Copy recording JSON",
+  "recording.copyLabel": "Recording JSON",
+  "recording.copyHelp": "If no file arrives, copy this JSON and save it as {{filename}}. It contains this finished attempt.",
+  "recording.copy": "Copy JSON",
+  "recording.select": "Select all JSON",
+  "recording.copied": "Recording JSON copied.",
+  "recording.copyUnavailable": "Clipboard unavailable. Select the JSON below and copy it manually.",
+  "recording.selected": "Recording JSON selected. Use your device’s Copy command.",
+  "recording.preparing": "Preparing this recording…",
+  "recording.exportFailed": "Download could not be requested. The recording JSON below is ready to copy."
 }

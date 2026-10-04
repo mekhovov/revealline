@@ -7,6 +7,8 @@ import { createProfileRecordBackend } from '../profile-storage.mjs';
 import { boundedJSON, required } from '../data-json.mjs';
 import { contentStudioLinks } from '../ui/content-studio-navigation.mjs';
 import { mountSnakeStudioPreview } from './snake-preview-panel.mjs';
+import { captureStudioActionFocus } from './action-focus.mjs';
+import { prepareSnakeStudioPlay } from './snake-play-launch.mjs';
 import {
   CLASSIC_PACKAGE_FORMAT,
   validateClassicSnakePackage,
@@ -93,7 +95,14 @@ let draft = {
 };
 let active = 0,
   cursor = { x: 0, y: 0 },
-  strokes = new Set();
+  strokes = new Set(),
+  playRevision = 0,
+  playFocus = null;
+function retirePlay() {
+  playRevision++;
+  playFocus?.cancel();
+  playFocus = null;
+}
 const library = createClassicSnakeCommunityLibrary();
 const drafts = createProfileRecordBackend({
   key: 'classic-snake-studio-draft.v1',
@@ -285,6 +294,7 @@ function editableLevel() {
   return entry.level;
 }
 function changed() {
+  retirePlay();
   current().level.revision = `studio-${sequence++}`;
   paint();
 }
@@ -299,6 +309,7 @@ function validate() {
   return pack;
 }
 function refresh() {
+  retirePlay();
   const entry = current(),
     level = entry.level;
   missionSelect.replaceChildren(
@@ -606,26 +617,41 @@ file.addEventListener(
     file.value = '';
   }),
 );
-for (const mode of ['solo', 'versus', 'team'])
-  modes.append(
-    button(words(`Play ${mode}`, `Грати: ${mode}`), async () => {
-      const installed = await library.install(validate(), { owner: 'studio' }),
-        url = new URL('../snake/play.html', location.href);
-      url.search = new URLSearchParams({
+for (const mode of ['solo', 'versus', 'team']) {
+  const play = button(words(`Play ${mode}`, `Грати: ${mode}`), async () => {
+    retirePlay();
+    play.focus({ preventScroll: true });
+    const focus = captureStudioActionFocus(play),
+      revision = playRevision;
+    playFocus = focus;
+    try {
+      const url = await prepareSnakeStudioPlay({
+        source: validate(),
+        selectedIndex: active,
         mode,
-        community: installed.identity,
-        level: installed.entries[active].id,
-        lang: language,
-        studio: 'snake',
-      }).toString();
-      location.assign(url.href);
-    }),
-  );
+        locale: language,
+        baseURL: location.href,
+        install: (pack, options) => library.install(pack, options),
+        isCurrent: () => revision === playRevision && focus.current(),
+      });
+      if (url && revision === playRevision && focus.current()) location.assign(url);
+    } finally {
+      focus.cancel();
+      if (playFocus === focus) playFocus = null;
+    }
+  });
+  modes.append(play);
+}
 sourceDetails.addEventListener('toggle', () => {
   if (sourceDetails.open) sourceArea.value = JSON.stringify(draft, null, 2);
 });
-window.addEventListener('pagehide', () => {
-  drafts.close();
-  library.close();
+window.addEventListener('pagehide', (event) => {
+  retirePlay();
+  // A cached page keeps these owners: close() is permanent, so disposing them
+  // here would break Save/Restore/Play after the browser's Back action.
+  if (!event.persisted) {
+    drafts.close();
+    library.close();
+  }
 });
 refresh();

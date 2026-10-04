@@ -1,3 +1,5 @@
+@import url('../ui/terminal-recording-export.css');
+
 /* Legacy layout and paint share one cascade layer. Theme recipes own opt-in appearance. */
 @layer legacy {
   /* Couch owns the viewport. Each arena is complete; touch controls follow it. */

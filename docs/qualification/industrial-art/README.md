@@ -44,6 +44,8 @@ The [continuation report](continuation-2026-10-04/README.md) records corrected a
 
 ## Evidence boundaries
 
+The [Team export and adoption continuation](team-adoption-2026-10-04/README.md) adds a genuine Team v2 browser/Node verification pair, native Team route observations, copyable recording recovery, creator handoff fixes and guarded atomic review-branch adoption tooling. It preserves the outstanding artistic, device and public-delivery gates.
+
 `inventory.json` records immutable source hashes, byte sizes and mechanical Keep/Refine triage. It does not mean each of the 1,181 tracked visual/model files received artistic review. There are no third-party game-art copies.
 
 `../../verification/native-pursuit-structural.json` records the native SIM route/Studio admission cases and source hashes. Zero simulation steps were used; this is deliberately not a completion route.

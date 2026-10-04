@@ -1,7 +1,7 @@
 import { selectedArcadeCollection } from '../presentation/industrial-arcade.mjs';
 import { createLocalMatchRecorder, localMatchProvenance } from '../multiplayer-recording.mjs';
 import { recordingVerificationHref } from '../ui/recording-verification.mjs';
-import { downloadJSON } from '../content.mjs';
+import { attachTerminalRecordingExport } from '../ui/terminal-recording-export.mjs';
 import { pursuitRoster } from '../hunt/pursuit-goals.mjs';
 import { prepareTeamRunningEnemies } from '../hunt/team-running-enemies.mjs';
 import { createRunningEnemyPreferences } from '../hunt/running-enemy-preferences.mjs';
@@ -605,6 +605,13 @@ export function bootCoop({
   const installedTeamAttempts = new WeakMap();
   const huntAttempts = new WeakMap();
   const localRecordings = new WeakMap();
+  const recordingExport = attachTerminalRecordingExport({
+    document,
+    container: $('coop-recording-copy'),
+    status: $('coop-recording-status'),
+    getOwner: () => run,
+    isTerminal: (owner) => ['won', 'lost'].includes(owner?.status),
+  });
   const recordingBuild = document.documentElement.dataset.buildVersion;
   const buildVersion =
     recordingBuild && recordingBuild !== '__REVEALLINE_VERSION__' ? recordingBuild : 'dev';
@@ -1826,6 +1833,7 @@ export function bootCoop({
     $('coop-export-recording').hidden = !['won', 'lost'].includes(run?.status);
     $('coop-recording-status').hidden = !['won', 'lost'].includes(run?.status);
     $('coop-recording-help').hidden = !['won', 'lost'].includes(run?.status);
+    recordingExport.refresh();
     $('coop-pause').disabled = !running();
     difficultyControls();
     const skipDestination = journeyNavigation();
@@ -3727,7 +3735,12 @@ export function bootCoop({
         });
       } else candidate = createTunedCoop(recipe);
       if (briefingOnly) {
-        if (candidate.status === 'running') pauseCoop(candidate);
+        if (candidate.status === 'running') {
+          // A restored checkpoint can still contain held controls or a rescue.
+          // Preparing its briefing performs the same journalled release as Pause.
+          recordTeamInputRelease(candidate);
+          pauseCoop(candidate);
+        }
       } else startCoop(candidate);
       check();
       if (previous.run?.status === 'paused') {
@@ -5105,12 +5118,17 @@ export function bootCoop({
     cancelPicture({ restore: false });
     clear();
     const briefing = discoveryBriefings.get(run);
+    // Hunt persistence accepts running cores only. Resume the exact prepared
+    // core before binding its stores, without advancing simulation time.
+    resumeCoop(run);
     if (briefing) {
       beginInstalledTeamAttempt(run, acceptedPicture, briefing.restored);
       discoveryBriefings.delete(run);
     }
+    // Newly attached stores also need the briefing/resume release after their
+    // restored journal. Save stores coalesce these; terminal recordings retain
+    // each ordered release for their native reconstruction.
     recordTeamInputRelease(run);
-    resumeCoop(run);
     contextualReactions?.resume();
     if (music) void music.start();
     last = null;
@@ -6090,11 +6108,7 @@ export function bootCoop({
     try {
       const recorder = localRecordings.get(owner);
       if (!recorder) throw new Error('Recording is unavailable for this attempt.');
-      const value = await recorder.snapshot(owner);
-      if (disposed || run !== owner) return;
-      const result = await downloadJSON(value, `revealline-team-${owner.level.id}.json`);
-      if (!disposed && run === owner)
-        localizedText($('coop-recording-status'), () => result.message);
+      await recordingExport.request(owner, recorder, `revealline-team-${owner.level.id}.json`);
     } catch (error) {
       if (!disposed && run === owner)
         localizedText($('coop-recording-status'), () => error.message);
@@ -6818,6 +6832,7 @@ export function bootCoop({
     candidatePreferenceRestoration?.dispose();
     importRequest++;
     disposed = true;
+    recordingExport.dispose();
     packStatus.dispose();
     packPicker.removeEventListener('toggle', pickerToggled);
     cancelAnimationFrame(frame);

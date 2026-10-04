@@ -10,3 +10,23 @@ The geometry editor now has a **Play preview** disclosure. It accepts a fresh, v
 - Closing the disclosure releases its artwork lease, effect leases and canvas bitmaps. Hiding the page pauses; restoring a cached page prepares a fresh paused preview. No abandoned preview catches up with elapsed background time.
 
 `game/test/snake-studio-preview.test.mjs` adds authored regressions for native mode equivalence, immutable draft ownership, target movement, real corners/wrap, visual independence, bounded clocks and invalid/disposed replacement. Automated suites remain unrun under the repository waiver. Browser/device observations and artistic approval must be reported separately; this integration does not approve new assets or qualify campaign completion routes.
+
+## Opening the complete game
+
+Play Solo/Versus/Team pins the validated package and selected mission before its
+transactional installation begins. The launch uses that exact installed entry;
+it never reads a later mission selection to choose from an older package.
+Editing or importing a draft, selecting another mission, newer input, focus loss,
+page hiding or another Play action retires pending navigation. A finished
+installation may retain its immutable Studio-owned copy, but cannot launch a
+retired selection or remove another owner's content.
+
+A browser Back/Forward cache visit retires pending launch intent while retaining
+the Studio's storage owners. Save, Restore and Play remain available on return;
+final page exit closes those owners. The native in-page preview independently
+releases its presentation resources and returns paused.
+
+`game/test/snake-studio-launch.test.mjs` adds unrun regressions for exact native
+package export/import across all three modes, selected-entry pinning during a
+delayed install, stale success/failure, foreground cancellation, and the actual
+pagehide binding's cached-return versus final-disposal behavior.

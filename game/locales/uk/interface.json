@@ -5948,5 +5948,15 @@
   "recording.exportTeam": "Експортувати запис команди",
   "recording.verifyExported": "Перевірити експортований запис ↗",
   "recording.exportHelp": "Обери експортований файл у новій вкладці. Можна перевірити і перемоги, і поразки; це не дає прогресу чи нагород.",
-  "replaceAndPrepare": "Замінити й підготувати"
+  "replaceAndPrepare": "Замінити й підготувати",
+  "recording.copyDetails": "Копіювання JSON запису",
+  "recording.copyLabel": "JSON запису",
+  "recording.copyHelp": "Якщо файл не з’явився, скопіюйте цей JSON і збережіть його як {{filename}}. Він містить цю завершену спробу.",
+  "recording.copy": "Копіювати JSON",
+  "recording.select": "Виділити весь JSON",
+  "recording.copied": "JSON запису скопійовано.",
+  "recording.copyUnavailable": "Буфер обміну недоступний. Виділіть JSON нижче та скопіюйте його вручну.",
+  "recording.selected": "JSON запису виділено. Скористайтеся командою копіювання свого пристрою.",
+  "recording.preparing": "Підготовка цього запису…",
+  "recording.exportFailed": "Не вдалося запитати завантаження. JSON запису нижче готовий до копіювання."
 }

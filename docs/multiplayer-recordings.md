@@ -88,6 +88,23 @@ route. V2 qualification emits `pursuit-pilot-recording-receipt.v2` with
 `native-terminal-observation-completion` and the separate exact-state result.
 V1 and other native proof receipts keep their original interpretation.
 
+## Keeping an exported file
+
+The secondary terminal **Export recording** action in both Capture Versus and
+Team prepares one owned snapshot, then exposes its read-only compact JSON before
+requesting a file download. The displayed JSON and the platform file use the
+same serialization. A requested download is not confirmation that a browser or
+native share sheet saved the file.
+
+If no file appears, expand **Copy recording JSON**, use **Copy JSON** or **Select
+all JSON**, and save the text with the displayed `.json` filename. Clipboard
+denial keeps manual selection available. Preparing/exporting a recording never
+copies to the clipboard automatically. The copy belongs to this finished
+attempt and is cleared when Retry, another mission or page disposal replaces
+it; late snapshot, download and clipboard callbacks cannot republish an old
+attempt's result. The separate verification link still performs no automatic
+import or progression.
+
 ## Evidence boundary
 
 The retained 4 October Crossing Post and Pincer Yard files are genuine v1 exports.
