@@ -1,0 +1,65 @@
+{
+  "format": "FPVLibraryCompatibilityNativeEntry.v1",
+  "sourceRevision": "4eeb7bc4480acc1f82f07d436401283ea80cfd04",
+  "url": "http://127.0.0.1:8962/optional-practice/fpv-worlds/index.html",
+  "runtimeOverlays": 0,
+  "observerOverlays": 0,
+  "method": "Root operated the actual admitted entry through native browser UI.",
+  "result": "PASS",
+  "actions": [
+    "Home to briefing to Ready",
+    "Deliberate Arm; native active flight observed at 17.3 seconds",
+    "Pause; Continue available",
+    "Select Mission to Library; import/offline/Browse controls present"
+  ],
+  "consoleWarnings": 0,
+  "consoleErrors": 0,
+  "files": [
+    {
+      "path": "admitted-entry-active.txt.gz",
+      "originalPath": "/tmp/fpv-library-8962-active.txt",
+      "originalBytes": 578,
+      "originalSha256": "8d6a2a14350fb321d0ac1e52499399f20fd95c1a30bdab4da288a9f1fb79a546",
+      "archiveBytes": 350,
+      "archiveSha256": "0524f42ba0a4b4f9fd67d7bdec6419954196fb6e6d806bc89758f2b180c71c1d"
+    },
+    {
+      "path": "admitted-entry-active.png",
+      "originalPath": "/tmp/fpv-library-8962-active.png",
+      "originalBytes": 72549,
+      "originalSha256": "89c385dd869b724f7b1faae1513a5e16934c78681db09d83a3a89e5babaa8146",
+      "archiveBytes": 72549,
+      "archiveSha256": "89c385dd869b724f7b1faae1513a5e16934c78681db09d83a3a89e5babaa8146"
+    },
+    {
+      "path": "admitted-entry-paused.txt.gz",
+      "originalPath": "/tmp/fpv-library-8962-paused.txt",
+      "originalBytes": 1651,
+      "originalSha256": "0e4d6a8b87781bccc45cee98183912bc80d57c8ca18d0f6a915a0cf6fbe1307f",
+      "archiveBytes": 738,
+      "archiveSha256": "8631d33735ccdede9679002d33085776daca78c05840b83444ee2e408ce2bab7"
+    },
+    {
+      "path": "admitted-entry-library.txt.gz",
+      "originalPath": "/tmp/fpv-library-8962-library.txt",
+      "originalBytes": 2604,
+      "originalSha256": "229443eca57dae62bf600470d4e59c772c3cff06b082a7f00bd489f2573e4711",
+      "archiveBytes": 1068,
+      "archiveSha256": "01727696335551912537d8894f6ef53d58dae69e2f823d4c849a041053a0e216"
+    },
+    {
+      "path": "admitted-entry-library.png",
+      "originalPath": "/tmp/fpv-library-8962-library.png",
+      "originalBytes": 62877,
+      "originalSha256": "be33c2b15c8e146a82c4283b6cebf854fe0968ca36f8c4535954bbf3b8d0e317",
+      "archiveBytes": 62877,
+      "archiveSha256": "be33c2b15c8e146a82c4283b6cebf854fe0968ca36f8c4535954bbf3b8d0e317"
+    }
+  ],
+  "limitations": [
+    "Browse was intentionally not requested before the capability index publication.",
+    "No offline or launcher-update journey is claimed.",
+    "No repeat of the already retained 418 source component checks.",
+    "No physical-controller, sustained-hardware or FPS claim."
+  ]
+}

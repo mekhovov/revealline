@@ -2,10 +2,20 @@ import { boundedJSON, exactKeys, stableId } from '../../game/data-json.mjs';
 import { WORLD_LIMITS, worldSHA256 } from './world-content.mjs';
 
 const origin = 'https://raw.githubusercontent.com/mekhovov/revealline/';
-const indexURL = origin + 'main/authoring/fpv-worlds/published/index.json';
+// This endpoint only publishes packs supported by the surface-coating-v1 runtime.
+// The original index remains compatible with already cached older players.
+const indexURL = origin + 'main/authoring/fpv-worlds/published/surface-coating-v1/index.json';
 const check = (condition) => {
   if (!condition) throw new Error('Invalid world download.');
 };
+
+export function worldImportErrorCopy(error) {
+  if (error?.code !== 'unsupported-world-extension') return null;
+  return [
+    'This SIM version does not support a required world feature. Open Flight practice, choose Check available practice, then Play available version. If that version still cannot import it, use a compatible pack. Prepare offline saves the version you opened.',
+    'Ця версія SIM не підтримує потрібну можливість світу. Відкрийте «Практика польоту», виберіть «Перевірити доступну практику», а потім «Грати в доступну версію». Якщо імпорт усе ще неможливий, потрібен сумісний пакунок. Підготовка офлайн зберігає відкриту версію.',
+  ];
+}
 
 export function worldLibraryIndex(bytes) {
   const value = boundedJSON(new TextDecoder('utf-8', { fatal: true }).decode(bytes), {
@@ -181,8 +191,9 @@ export function mountWorldLibrary({ el, txt, parent, begin, install }) {
         if (rows.length) show('Choose a world to download.', 'Оберіть світ для завантаження.');
         else show('No published worlds yet.', 'Опублікованих світів ще немає.');
       }
-    } catch {
+    } catch (error) {
       if (!closed) {
+        const compatibility = worldImportErrorCopy(error);
         if (committed)
           show(
             'Pack saved. Reload to refresh Library.',
@@ -190,6 +201,7 @@ export function mountWorldLibrary({ el, txt, parent, begin, install }) {
           );
         else if (signal.aborted)
           show('Cancelled or timed out. Try again.', 'Скасовано або час вичерпано. Повторіть.');
+        else if (compatibility) show(...compatibility);
         else
           show(
             'Download or save failed. Try again.',
