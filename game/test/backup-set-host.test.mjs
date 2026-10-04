@@ -1,3 +1,4 @@
+import { nativeCaptureSession as nativeSession } from '../capture-presentation-session.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { Document } from './helpers/couch-dom.mjs';
@@ -195,8 +196,8 @@ test('actual solo host exports a paused unfinished flight without changing its c
   assert.equal(h.$('music-preview').textContent, music);
   const link = h.$('download-backup-game'),
     game = await (await fetchBlob(link.href)).json();
-  assert.ok(game.session?.replay);
-  assert.equal(game.session.replay.ticks, h.rendered.run.tick);
+  assert.ok(nativeSession(game.session)?.replay);
+  assert.equal(nativeSession(game.session).replay.ticks, h.rendered.run.tick);
   assert.equal(h.document?.hidden ?? h.doc.hidden, false);
   assert.equal(h.doc.activeElement.id, 'download-backup-game');
   h.$('library-dialog').dispatchEvent(new Event('cancel', { cancelable: true }));

@@ -9,7 +9,11 @@ import {
   prepareCreatorTeamSourceCampaign,
 } from '../creator/team.mjs';
 import { createPursuitPilotCandidates } from '../content-design/pursuit-pilot-candidates.mjs';
-import { TEAM_HUNT_ATTEMPT_KEY, restoreTeamHuntAttempt } from '../coop/hunt-attempts.mjs';
+import {
+  TEAM_HUNT_ATTEMPT_KEY,
+  restoreTeamHuntAttempt,
+  snapshotTeamHuntPresentation,
+} from '../coop/hunt-attempts.mjs';
 import {
   CREATOR_TEAM_DATABASE,
   CREATOR_TEAM_PROGRESS_FORMAT,
@@ -17,6 +21,7 @@ import {
   createInstalledTeamAttemptSnapshot,
   createInstalledTeamCampaignStore,
   installedTeamGameplayId,
+  snapshotInstalledTeamPresentation,
 } from '../creator/team-installed.mjs';
 import { stepCoop } from '../coop/core.mjs';
 import { getLocale, setLocale } from '../i18n/index.mjs';
@@ -152,8 +157,14 @@ test('a fresh Team host discovers and launches one exact installed edition', asy
     saved,
     `Starting an installed Team mission writes its recoverable initial checkpoint. ${f.$('coop-message').textContent}`,
   );
-  assert.equal(saved.editionId, editionId);
-  assert.equal(saved.checkpoint.tick, 0);
+  const decoded = snapshotInstalledTeamPresentation(saved, editionId, prepared.pack.levels[0].id);
+  assert.equal(
+    decoded.attemptAppearance?.environmentPin ?? null,
+    null,
+    'An installed edition never inherits built-in chapter authority.',
+  );
+  assert.equal(decoded.snapshot.editionId, editionId);
+  assert.equal(decoded.snapshot.checkpoint.tick, 0);
 });
 
 test('installed Team cards show historical clears without inventing a star grade', async (t) => {
@@ -359,19 +370,22 @@ for (const restoring of [false, true])
       );
       if (!restoring) {
         const initial = JSON.parse(local.getItem(TEAM_HUNT_ATTEMPT_KEY));
-        assert.deepEqual(initial.segments, [{ release: true }]);
+        assert.deepEqual(snapshotTeamHuntPresentation(initial).snapshot.segments, [
+          { release: true },
+        ]);
         const verified = await restoreTeamHuntAttempt(initial, { pack: prepared.pack, level });
         assert.equal(verified.run.tick, 0);
         assert.deepEqual(verified.run.needsNeutral, [true, true]);
       }
       f.$('coop-pause').click();
-      const saved = JSON.parse(local.getItem(TEAM_HUNT_ATTEMPT_KEY));
+      const savedEnvelope = JSON.parse(local.getItem(TEAM_HUNT_ATTEMPT_KEY));
+      const saved = snapshotTeamHuntPresentation(savedEnvelope).snapshot;
       if (restoring) assert.equal(saved.attemptId, snapshot.attemptId);
       else assert.ok(saved.attemptId);
       assert.equal(saved.checkpoint.tick, snapshot.checkpoint.tick);
       if (restoring) assert.deepEqual(saved.segments[0], snapshot.segments[0]);
       assert.deepEqual(saved.segments.at(-1), { release: true });
-      const verified = await restoreTeamHuntAttempt(saved, { pack: prepared.pack, level });
+      const verified = await restoreTeamHuntAttempt(savedEnvelope, { pack: prepared.pack, level });
       assert.equal(verified.run.tick, run.tick);
       assert.deepEqual(verified.run.needsNeutral, [true, true]);
       // Force-pause persistence serializes asynchronously through the installed store.

@@ -1,3 +1,4 @@
+import { nativeCaptureSession as nativeSession } from '../capture-presentation-session.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
@@ -145,10 +146,10 @@ for (const turnPolicy of ['immediate', 'grid-center'])
     assert.deepEqual(authoritativeCheckpoint(p.rendered.run), before);
     assert.deepEqual(info(p).owner, owner);
     const saved = JSON.parse(storage.getItem('revealline.suspended.dev.v1'));
-    assert.equal(verifyReplay(saved.replay).match, true);
+    assert.equal(verifyReplay(nativeSession(saved).replay).match, true);
     await start(p);
     ticks(p, 8);
-    assert.ok(p.rendered.run.tick > saved.replay.ticks);
+    assert.ok(p.rendered.run.tick > nativeSession(saved).replay.ticks);
     assert.deepEqual(p.errors, []);
   });
 test('actual notices survive later empty fixed-step batches and same-ID restore resets the history', async (t) => {

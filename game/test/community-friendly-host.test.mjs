@@ -1,3 +1,4 @@
+import { nativeCaptureSession as nativeSession } from '../capture-presentation-session.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
@@ -166,7 +167,7 @@ async function verifyFriendlyGameplay(t, slug, query, base) {
   const key = `revealline.suspended.journey-${editionId}.v1.solo-v2`;
   await settle(() => !!page.storage.getItem(key));
   assert.equal(
-    JSON.parse(page.storage.getItem(key)).actorAppearancePin.content.editionId,
+    nativeSession(JSON.parse(page.storage.getItem(key))).actorAppearancePin.content.editionId,
     editionId,
   );
   assert.equal(page.win.location.href, href);

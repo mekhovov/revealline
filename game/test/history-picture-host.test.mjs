@@ -1,3 +1,4 @@
+import { nativeCaptureSession as nativeSession } from '../capture-presentation-session.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
@@ -304,7 +305,7 @@ test('history Load saved flight and explicit Resume keep the saved pin and check
   assert.equal(page.rendered.backdrop.pin.sha256, sha256);
   assert.deepEqual(
     page.rendered.backdrop.pin,
-    presentationPicturePins(saved.presentationPins).choices.find(
+    presentationPicturePins(nativeSession(saved).presentationPins).choices.find(
       (pin) => pin.identity.themeId === 'fpv',
     ),
   );
@@ -316,15 +317,18 @@ test('history Load saved flight and explicit Resume keep the saved pin and check
   page.$('export-session').click();
   await settle(() => page.$('save-json').value.startsWith('{'));
   const exported = JSON.parse(page.$('save-json').value);
-  assert.equal(exported.runId, saved.runId);
-  assert.deepEqual(exported.presentationPins, saved.presentationPins);
-  assert.deepEqual(exported.replay.checkpoint, saved.replay.checkpoint);
+  assert.equal(nativeSession(exported).runId, nativeSession(saved).runId);
+  assert.deepEqual(nativeSession(exported).presentationPins, nativeSession(saved).presentationPins);
+  assert.deepEqual(
+    nativeSession(exported).replay.checkpoint,
+    nativeSession(saved).replay.checkpoint,
+  );
   page.$('library-dialog').close();
   page.$('start-button').click();
   ticks(page, 2);
   assert.equal(page.rendered.paused, false);
   assert.equal(page.doc.querySelectorAll('dialog[open]').length, 0);
-  assert.ok(page.rendered.run.tick > saved.replay.ticks);
+  assert.ok(page.rendered.run.tick > nativeSession(saved).replay.ticks);
   assert.deepEqual(page.storage.map, storage);
   assert.equal(memory.allPuts.length, writes);
   assert.equal(locks.calls.filter((key) => key === writerKey).length, 1);

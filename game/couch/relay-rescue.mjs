@@ -1,3 +1,8 @@
+import {
+  acceptAttemptAppearance,
+  restoreAttemptAppearance,
+} from '../presentation/attempt-appearance.mjs';
+import { runtimeActorArtRevision } from '../hunt/preferences.mjs';
 import { nativeArtReviewURL } from '../ui/art-review-navigation.mjs';
 import { selectedArcadeCollection } from '../presentation/industrial-arcade.mjs';
 import { createLocalMatchRecorder, localMatchProvenance } from '../multiplayer-recording.mjs';
@@ -96,6 +101,8 @@ import { createCoopPresentationImport } from './coop-import-source.mjs';
 import { readPlayableTeamCampaign } from './creator-team-import.mjs';
 import {
   createInstalledTeamAttemptSnapshot,
+  nativeInstalledTeamAttempt,
+  withInstalledTeamAttemptAppearance,
   createInstalledTeamCampaignStore,
 } from '../creator/team-installed.mjs';
 import {
@@ -230,6 +237,7 @@ function picturePreparationText({ stage, status }, destination = null) {
 
 export function bootCoop({
   candidateJourney = null,
+  prepareCandidateEnvironment = async () => null,
   candidateProgress = null,
   candidatePreferences = null,
   candidateCaptureTeaching = null,
@@ -860,7 +868,7 @@ export function bootCoop({
         throw interrupted('continueInterrupted', 'Team Hunt Continue is unavailable.');
       const ownerRun = run,
         ownerGeneration = generation;
-      const restored = await restoreTeamHuntAttempt(saved.snapshot, {
+      const restored = await restoreTeamHuntAttempt(saved.envelope ?? saved.snapshot, {
         pack: row.pack,
         level: row.level,
         signal,
@@ -2460,6 +2468,7 @@ export function bootCoop({
             }),
       binding: null,
       actorAppearance: null,
+      environmentCandidate: null,
       downloadRequired: false,
       state: 'new',
     };
@@ -2508,6 +2517,10 @@ export function bootCoop({
                   request.onStatus?.(status);
               },
             });
+            check();
+            selection.environmentCandidate = journeyRow
+              ? await prepareCandidateEnvironment(journeyRow, { signal: controller.signal })
+              : null;
             check();
             if (!actors) {
               const content = await prepareTeamVisualThemeContext(
@@ -3738,6 +3751,24 @@ export function bootCoop({
           tuning: restored.snapshot.tuning,
         });
       } else candidate = createTunedCoop(recipe);
+      if (restored) {
+        const acceptedArtwork = restoreAttemptAppearance(
+          restored.attemptAppearance ?? null,
+          selection.environmentCandidate,
+        );
+        attemptTuning.get(candidate).attemptAppearance = acceptedArtwork;
+        painter.setAttemptAppearance(candidate, acceptedArtwork);
+      } else if (!briefingOnly) {
+        const acceptedArtwork =
+          recipe.attemptAppearance !== undefined
+            ? recipe.attemptAppearance
+            : acceptAttemptAppearance(selection.environmentCandidate, {
+                artRevision: runtimeActorArtRevision(),
+                collection: selectedArcadeCollection(menuStyle.themeHost.effectivePreferences()),
+              });
+        attemptTuning.get(candidate).attemptAppearance = acceptedArtwork;
+        painter.setAttemptAppearance(candidate, acceptedArtwork);
+      }
       if (briefingOnly) {
         if (candidate.status === 'running') {
           // A restored checkpoint can still contain held controls or a rescue.
@@ -3956,7 +3987,7 @@ export function bootCoop({
   function installedProgressText(row) {
     const progress = installedTeamProgress.get(row.installedEditionId),
       receipt = progress?.clears?.[row.levelId],
-      saved = progress?.attempts?.[row.levelId];
+      saved = nativeInstalledTeamAttempt(progress?.attempts?.[row.levelId]);
     if (saved)
       return t('interface:missionLibrary.team.resumeSavedAttempt', {
         difficulty: installedDifficultyLabel(saved.difficulty),
@@ -4015,6 +4046,7 @@ export function bootCoop({
         const promoted = mirror.promotion;
         restored = {
           ...restored,
+          attemptAppearance: restored.attemptAppearance ?? mirror.attemptAppearance,
           raw: mirror.raw,
           ...(promoted
             ? {
@@ -4815,6 +4847,9 @@ export function bootCoop({
           'pursuit-goals.v1')
         : 'pursuit-goals.v2',
       encounterPack,
+      ...(accepted && Object.hasOwn(accepted, 'attemptAppearance')
+        ? { attemptAppearance: accepted.attemptAppearance }
+        : {}),
       tuning:
         accepted?.tuning ?? gameplayTuning.snapshot(level.journeyDifficulty ?? options.difficulty),
     };
@@ -4854,7 +4889,12 @@ export function bootCoop({
       }),
     );
     painter.captureArcadeCollection(next);
+    if (recipe.attemptAppearance !== undefined)
+      painter.setAttemptAppearance(next, recipe.attemptAppearance);
     attemptTuning.set(next, {
+      ...(Object.hasOwn(recipe, 'attemptAppearance')
+        ? { attemptAppearance: recipe.attemptAppearance }
+        : {}),
       pictureLevel: recipe.level,
       encounterLevel: recipe.encounterLevel ?? recipe.level,
       encounterVariant: recipe.encounterVariant ?? 'authored',
@@ -4983,6 +5023,19 @@ export function bootCoop({
     // Keep the validated starting level separately for an exact fresh Retry.
     const startingLevel = structuredClone(recipe.level);
     const next = prepared || createTunedCoop(recipe);
+    const retainedTuning = attemptTuning.get(next);
+    const retainedArtwork = Object.hasOwn(retainedTuning, 'attemptAppearance')
+      ? retainedTuning.attemptAppearance
+      : recipe.attemptAppearance;
+    const nextArtwork =
+      retainedArtwork !== undefined
+        ? retainedArtwork
+        : acceptAttemptAppearance(selection.environmentCandidate, {
+            artRevision: runtimeActorArtRevision(),
+            collection: selectedArcadeCollection(menuStyle.themeHost.effectivePreferences()),
+          });
+    painter.setAttemptAppearance(next, nextArtwork);
+    attemptTuning.get(next).attemptAppearance = nextArtwork;
     const briefing = discoveryBriefings.get(next);
     const previousRun = run;
     const rememberVisibleArena =
@@ -5009,7 +5062,6 @@ export function bootCoop({
         : t('interface:proceduralTeamArenaIsReadyForThisAttempt'),
     );
     generation++;
-    painter.acceptEnemyArtwork(run);
     startCoop(run);
     beginInstalledTeamAttempt(run, selection, briefing?.restored, {
       // Starting an already prepared core clears its held controls before its
@@ -5812,6 +5864,7 @@ export function bootCoop({
     record.lastTick = currentRun.tick;
     try {
       record.raw = huntAttemptStore.save(record.recorder.snapshot(), record.raw, {
+        attemptAppearance: attemptTuning.get(currentRun)?.attemptAppearance ?? null,
         replaceAttemptId: record.replaceAttemptId,
       });
       record.replaceAttemptId = null;
@@ -5931,9 +5984,15 @@ export function bootCoop({
     record.chain = record.chain.then(async () => {
       if (record.failure) return null;
       try {
-        const progress = await installedTeamStore.recordAttempt(savedRun, {
-          expectedGeneration: record.generation,
-        });
+        const progress = await installedTeamStore.recordAttempt(
+          withInstalledTeamAttemptAppearance(
+            savedRun,
+            attemptTuning.get(currentRun)?.attemptAppearance ?? null,
+          ),
+          {
+            expectedGeneration: record.generation,
+          },
+        );
         record.generation = progress.generation;
         record.durable = true;
         installedTeamProgress.set(record.editionId, progress);

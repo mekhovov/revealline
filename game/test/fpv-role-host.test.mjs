@@ -1,3 +1,5 @@
+import { activateHostAction } from './helpers/host-action.mjs';
+import { nativeCaptureSession as nativeSession } from '../capture-presentation-session.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
@@ -28,6 +30,26 @@ const campaign = {
   levels: [retryFixture('self-contact').level],
 };
 const settle = (predicate, message) => waitFor(predicate, { timeoutMs: 30000, message });
+// Join the real preparation returned by the native change handler before
+// inspecting both painters or starting the accepted paired boards.
+async function changeReadyRecipe(fixture, id, value) {
+  const control = fixture.$(id),
+    handler = control.onchange;
+  let preparation,
+    invoked = false;
+  control.value = value;
+  control.onchange = (event) => {
+    invoked = true;
+    return (preparation = handler.call(control, event));
+  };
+  try {
+    control.emit('change');
+  } finally {
+    control.onchange = handler;
+  }
+  assert.equal(invoked, true);
+  await preparation;
+}
 class Picture {
   set src(url) {
     if (url.startsWith('data:image/png;base64,')) {
@@ -96,16 +118,15 @@ test('explicit new saved appearance and suspended checkpoint survive normal host
     p.frame(0);
     checkpoint = authoritativeCheckpoint(p.rendered.run);
     saved = storage.getItem(sessionKey);
-    assert.equal(JSON.parse(saved).bodyId, mapping.impact);
-    assert.equal(JSON.parse(saved).replay.ticks, 12);
+    assert.equal(nativeSession(JSON.parse(saved)).bodyId, mapping.impact);
+    assert.equal(nativeSession(JSON.parse(saved)).replay.ticks, 12);
     assert.deepEqual(p.errors, []);
   });
   // The real pagehide handler saves once more during the helper's settled teardown.
   const closed = storage.getItem(sessionKey);
-  assert.deepEqual(
-    { ...JSON.parse(closed), savedAt: JSON.parse(saved).savedAt },
-    JSON.parse(saved),
-  );
+  const afterPageHide = JSON.parse(closed);
+  nativeSession(afterPageHide).savedAt = nativeSession(JSON.parse(saved)).savedAt;
+  assert.deepEqual(afterPageHide, JSON.parse(saved));
   saved = closed;
   await t.test(
     'reload keeps that body and loads the exact saved checkpoint while paused',
@@ -189,8 +210,7 @@ test('actual Couch recommendation switches both independent painters without tou
   try {
     for (const [classId, bodyId] of Object.entries(mapping)) {
       looks.length = 0;
-      f.$('race-class').value = classId;
-      f.$('race-class').emit('change');
+      await changeReadyRecipe(f, 'race-class', classId);
       f.frame();
       assert.equal(looks.length, 2);
       assert.notEqual(looks[0].painter, looks[1].painter);
@@ -200,7 +220,7 @@ test('actual Couch recommendation switches both independent painters without tou
       assert.equal(f.renders[0].level.id, f.renders[1].level.id);
       assert.equal(f.renders[0].tick, 0);
     }
-    f.$('race-start').click();
+    await activateHostAction(f.$('race-start'));
     f.frame();
     f.key('KeyD');
     f.frames(4);

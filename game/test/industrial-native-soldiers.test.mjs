@@ -12,6 +12,8 @@ import * as themes from '../../optional-practice/civilian-fpv/world-themes.mjs';
 import { NATIVE_PURSUIT_COURSES } from '../../optional-practice/civilian-fpv/native-pursuit-courses.mjs';
 import { actorVisual } from '../hunt/actor-catalog.mjs';
 import { runtimeActorArtRevision } from '../hunt/preferences.mjs';
+import { canonicalJSON } from '../data-json.mjs';
+import { resolveIndustrialEnvironment } from '../presentation/industrial-environments.mjs';
 import {
   INDUSTRIAL_SOLDIER_REVISION,
   INDUSTRIAL_SOLDIER_FAMILIES,
@@ -72,6 +74,8 @@ async function nativeRendererFixture(
     ...vehicles,
     actorVisual,
     runtimeActorArtRevision: (location) => runtimeActorArtRevision(location, choice),
+    canonicalJSON,
+    resolveIndustrialEnvironment,
     sharedActorAppearance: () => ({ snapshot: () => ({ cast: 'tactical' }) }),
     THREE: { ...THREE, Scene, WebGLRenderer: Renderer },
     structuredClone,

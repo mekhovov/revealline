@@ -1,3 +1,5 @@
+import { activateHostAction } from './helpers/host-action.mjs';
+import { nativeCaptureSession as nativeSession } from '../capture-presentation-session.mjs';
 // Real Solo host and simulation; only browser/media boundaries are modeled.
 import test from 'node:test';
 import assert from 'node:assert/strict';
@@ -31,11 +33,11 @@ const activateTitle = (h, id) => {
   h.$(id).click();
 };
 const start = async (h) => {
-  h.$('shell-featured').click();
+  await activateHostAction(h.$('shell-featured'));
   await settle(() => h.doc.body.dataset.flightState === 'running');
 };
 async function flying(t, { policy = 'immediate', ...options } = {}) {
-  const h = await soloPage(t, { ...options, titleScreen: true });
+  const h = await soloPage(t, { waitForPictures: false, ...options, titleScreen: true });
   if (policy !== 'immediate') {
     h.change('turn-select', policy);
     await settle(() => h.doc.body.dataset.pictureState === 'ready');
@@ -298,7 +300,7 @@ for (const action of ['complete', 'cancel', 'escape', 'new-save', 'missions', 'b
       });
       h.$('pause-button').click();
       expected = snapshot(h);
-      assert.ok(JSON.parse(storage.getItem(slot)).presentationPins);
+      assert.ok(nativeSession(JSON.parse(storage.getItem(slot))).presentationPins);
     });
     const capturedRaw = storage.getItem(slot);
     await t.test('verified title restore', async (t) => {
@@ -531,7 +533,8 @@ test('an unavailable visual pin preserves flight and recovery without current-th
     const h = await flying(t, { storage });
     h.$('pause-button').click();
   });
-  const saved = JSON.parse(storage.getItem(slot));
+  // Deliberately derive a native historical v5 fixture, without new presentation metadata.
+  const saved = nativeSession(JSON.parse(storage.getItem(slot)));
   assert.equal(saved.format, 'xonix-session.v6');
   const originalVisualPin = saved.visualThemePin;
   const choice = saved.presentationPins.choices.find(

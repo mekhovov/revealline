@@ -82,6 +82,14 @@ import { openWorldStore } from './world-store.mjs';
 import { mountPracticeOfflineControls } from './offline.mjs';
 import { mountWorldLibrary, worldImportErrorCopy } from './world-reaction-runtime.mjs';
 import { dataIdentity } from '../../game/data-json.mjs';
+import { runtimeActorArtRevision } from '../../game/hunt/preferences.mjs';
+import {
+  prepareNativeIndustrialAttempt,
+  restoreNativeIndustrialCourse,
+  detachNativeIndustrialCourse,
+  validateNativeIndustrialCourses,
+  assertNativeIndustrialEdit,
+} from './industrial-environment.mjs';
 import {
   THEME_PROFILES,
   resolveThemeExperience,
@@ -90,6 +98,7 @@ import {
   recordedSimAppearance,
   createSimAppearanceSession,
   playableSimAppearance,
+  validateSimAppearance,
 } from './world-themes.mjs';
 import { mountWorldEditor } from './world-editor.mjs';
 import {
@@ -772,7 +781,9 @@ export function mountWorldApp({
     projectAssets = new Map(),
     projectGeneration = null,
     spatialEditor = null,
-    actorEditor = null;
+    actorEditor = null,
+    editorEnvironmentRequest = 0,
+    editorEnvironmentPreparation = null;
   let editorFields = '',
     courseScopeProject = null;
   const courseScopes = new Map();
@@ -784,6 +795,7 @@ export function mountWorldApp({
     checkpointRequest = null,
     checkpointSession = null,
     checkpointPreparation = null,
+    industrialPreparation = null,
     flightToken = 0,
     finished = false,
     sceneReady = false,
@@ -1385,7 +1397,7 @@ export function mountWorldApp({
       spatialEditor = mountWorldEditor({
         canvas: $('world-editor-canvas'),
         window: win,
-        course: editor,
+        course: editor.world?.themeProfile?.format === 'ThemeProfile.v3' ? null : editor,
         mode: editorMode(),
         getPresentation: () => appearanceControls.resolve().appearance,
         onError: reportError,
@@ -1414,27 +1426,61 @@ export function mountWorldApp({
     spatialEditor.refresh();
   }
   function refreshEditorScene() {
+    const request = ++editorEnvironmentRequest;
+    editorEnvironmentPreparation?.abort();
+    editorEnvironmentPreparation = null;
     if (!spatialEditor || !editor) return;
-    spatialEditor.setCourse(editor, editorMode());
-    const profile = resolveSimThemeProfile(editor, appearanceControls.resolve().appearance);
-    let status = $('editor-appearance-status');
-    if (!status) {
-      status = el('p', undefined, 'hint');
-      status.id = 'editor-appearance-status';
-      status.setAttribute('role', 'status');
-      $('world-editor-canvas').after(status);
-    }
-    status.textContent = `${txt('Preview appearance', 'Оформлення перегляду')}: ${creatorThemeLabel(profile)}.`;
-    $('creator-theme').title = txt(
-      'Used when World appearance is set to Authored appearance in Settings.',
-      'Використовується, коли в налаштуваннях оформлення світу вибрано «Авторське оформлення».',
-    );
-    spatialEditor.select(editorSelection ?? { kind: 'criterion', index: editorIndex });
-    const model =
-      (editingProject?.world.modelAsset
-        ? projectAssets.get(editingProject.world.modelAsset)
-        : null) ?? builtinWorldScene(editor);
-    if (model) void spatialEditor.loadScene(model).catch(reportError);
+    const source = editor,
+      selectedMode = editorMode();
+    const active = () => !disposed && request === editorEnvironmentRequest && source === editor;
+    const apply = (accepted) => {
+      if (!active()) return;
+      const appearance = accepted
+        ? recordedSimAppearance(source)
+        : appearanceControls.resolve().appearance;
+      const options = accepted
+        ? {
+            presentation: appearance,
+            industrialEnvironment: accepted.pin,
+            artRevision: accepted.artRevision,
+          }
+        : {};
+      if (accepted && editorScope !== accepted.mode) {
+        editorScope = accepted.mode;
+        refreshEditor(false);
+      }
+      spatialEditor.setCourse(source, accepted?.mode ?? selectedMode, options);
+      const profile = resolveSimThemeProfile(source, appearance);
+      let status = $('editor-appearance-status');
+      if (!status) {
+        status = el('p', undefined, 'hint');
+        status.id = 'editor-appearance-status';
+        status.setAttribute('role', 'status');
+        $('world-editor-canvas').after(status);
+      }
+      status.textContent = `${txt('Preview appearance', 'Оформлення перегляду')}: ${creatorThemeLabel(profile)}.`;
+      $('creator-theme').title = txt(
+        'Used when World appearance is set to Authored appearance in Settings.',
+        'Використовується, коли в налаштуваннях оформлення світу вибрано «Авторське оформлення».',
+      );
+      spatialEditor.select(editorSelection ?? { kind: 'criterion', index: editorIndex });
+      const model =
+        (editingProject?.world.modelAsset
+          ? projectAssets.get(editingProject.world.modelAsset)
+          : null) ?? builtinWorldScene(source);
+      if (model)
+        void spatialEditor.loadScene(model).catch((error) => {
+          if (active()) reportError(error);
+        });
+    };
+    if (source.world?.themeProfile?.format !== 'ThemeProfile.v3') return apply(null);
+    const controller = new AbortController();
+    editorEnvironmentPreparation = controller;
+    void restoreNativeIndustrialCourse(source, { signal: controller.signal })
+      .then(apply)
+      .catch((error) => {
+        if (active() && !controller.signal.aborted) reportError(error);
+      });
   }
   function moveSelection(c, ref, position) {
     if (ref.kind === 'criterion') {
@@ -2613,6 +2659,13 @@ export function mountWorldApp({
       new Option('Acro', 'acro'),
     );
     choice.options[0].disabled = !matching;
+    choice.disabled = editor.world.themeProfile?.format === 'ThemeProfile.v3';
+    choice.title = choice.disabled
+      ? txt(
+          'This retained appearance belongs to its recorded flight mode. Choose a creator theme or create a copy to edit either route.',
+          'Це збережене оформлення належить записаному режиму польоту. Виберіть авторську тему або створіть копію, щоб редагувати будь-який маршрут.',
+        )
+      : '';
     choice.value = editorScope;
     const mode = editorMode();
     $('creator-title').value = editor.locales[locale].title;
@@ -2734,7 +2787,7 @@ export function mountWorldApp({
     bindings: clone(editingProject?.routeBindings?.[editor.id] ?? null),
     overrides: clone(editingProject?.overrides ?? {}),
   });
-  function applyEdit(change, { nativePursuitAdmission = false } = {}) {
+  function applyEdit(change, { nativePursuitAdmission = false, detachIndustrial = false } = {}) {
     if (!editor)
       throw new Error(txt('Create a challenge copy first.', 'Спочатку створіть копію завдання.'));
     const before = editorSnapshot(),
@@ -2744,6 +2797,7 @@ export function mountWorldApp({
     try {
       change(next, bindings);
       valid = validateWorldCourse(next);
+      assertNativeIndustrialEdit(before.course, valid, { detach: detachIndustrial });
       if (nativePursuitAdmission && valid.pursuit) {
         const admitted = createWorldFlight({ course: valid, mode: 'acro' });
         admitted.dispose();
@@ -2784,7 +2838,7 @@ export function mountWorldApp({
           sha256: entry.packIdentity.replace('fpv-pack:', ''),
         })
       : null;
-    const c = clone(entry.course);
+    const c = detachNativeIndustrialCourse(entry.course);
     c.format = c.pursuit ? 'FlightCourse.v3' : 'FlightCourse.v2';
     c.id = unique('custom');
     c.revision = 'r1';
@@ -2931,6 +2985,7 @@ export function mountWorldApp({
     const generation = download ? download.generation : await worldStore.generation(),
       loaded = await inspectPack(file);
     for (const course of loaded.project.courses) validateWorldCourse(course);
+    await validateNativeIndustrialCourses(loaded.project.courses, { signal: download?.signal });
     if (
       (requiredIdentity && requiredIdentity !== `fpv-pack:${loaded.sha256}`) ||
       (download &&
@@ -3418,6 +3473,8 @@ export function mountWorldApp({
         ),
         button(txt('Edit', 'Редагувати'), async () => {
           const full = await worldStore.get(record.id);
+          await validateNativeIndustrialCourses(full.project.courses);
+          if (disposed) return;
           editingProject = full.project;
           projectAssets = full.assets;
           projectGeneration = await worldStore.generation();
@@ -3597,6 +3654,7 @@ export function mountWorldApp({
       );
     syncProject();
     for (const c of editingProject.courses) validateWorldCourse(c);
+    await validateNativeIndustrialCourses(editingProject.courses);
     const pack = await preparePack(editingProject, { assets: projectAssets });
     const installed = await installPack(pack, {
       store: worldStore,
@@ -3681,7 +3739,8 @@ export function mountWorldApp({
       { asset: next.world.modelAsset, license: inspected.license },
     ];
     synchronizeDefinitions(next);
-    if (request !== importRequest) return;
+    await validateNativeIndustrialCourses(next.courses);
+    if (request !== importRequest || disposed) return;
     if (review && !(await reviewReimport(review))) {
       $('import-report').textContent = txt(
         'Update cancelled. Your draft is unchanged.',
@@ -4700,7 +4759,10 @@ export function mountWorldApp({
       options.recover?.mode ??
       options.checkpoint?.mode ??
       $('flight-mode').value;
-    const token = ++flightToken;
+    const token = ++flightToken,
+      priorSceneReady = sceneReady;
+    industrialPreparation?.abort();
+    industrialPreparation = null;
     checkpointPreparation?.abort();
     checkpointPreparation = null;
     if (!options.preserveFocus) $('flight-dialog').dataset.flightMenuOpen = 'false';
@@ -4714,7 +4776,12 @@ export function mountWorldApp({
     await saveRecovery();
     await ready;
     if (disposed || token !== flightToken) return;
-    const retained = Boolean(options.recover || options.replayProof || options.checkpoint?.proof);
+    const retained = Boolean(
+      options.recover ||
+        options.replayProof ||
+        options.checkpoint?.proof ||
+        entry.course.world?.themeProfile?.format === 'ThemeProfile.v3',
+    );
     const sourceCourse = retained
       ? entry.course
       : entry.appearanceCourse === entry.course
@@ -4723,9 +4790,39 @@ export function mountWorldApp({
     const selectedAppearance = retained
       ? (options.presentation ?? entry.presentation ?? recordedSimAppearance(sourceCourse))
       : appearanceControls.resolve().appearance;
-    const acceptedAppearance = appearanceSession.begin(selectedAppearance, { retained });
+    const acceptedAppearance = validateSimAppearance(selectedAppearance);
     const playableAppearance = playableSimAppearance(acceptedAppearance);
-    if (!entry.legacy && !retained) {
+    let acceptedEnvironment = null;
+    if (!entry.legacy) {
+      const controller = new AbortController();
+      industrialPreparation = controller;
+      try {
+        acceptedEnvironment = await prepareNativeIndustrialAttempt({
+          entry: { ...entry, course: sourceCourse },
+          mode: requestedMode,
+          presentation: acceptedAppearance,
+          artRevision: runtimeActorArtRevision(win.location),
+          retained,
+          signal: controller.signal,
+        });
+      } catch (error) {
+        if (disposed || token !== flightToken || controller.signal.aborted) return;
+        sceneReady = priorSceneReady;
+        if (flight) updateHUD(flight.snapshot());
+        throw error;
+      } finally {
+        if (industrialPreparation === controller) industrialPreparation = null;
+      }
+      if (disposed || token !== flightToken) return;
+    }
+    if (acceptedEnvironment) {
+      entry = {
+        ...entry,
+        sourceCourse: acceptedEnvironment.sourceCourse,
+        course: acceptedEnvironment.course,
+        appearanceCourse: acceptedEnvironment.course,
+      };
+    } else if (!entry.legacy && !retained) {
       const themeProfile = snapshotSimThemeProfile(sourceCourse, playableAppearance.appearance);
       if (acceptedAppearance.drone) themeProfile.drone = acceptedAppearance.drone;
       const preparedCourse = {
@@ -4744,6 +4841,9 @@ export function mountWorldApp({
         sourceCourse: options.checkpoint ? (entry.sourceCourse ?? sourceCourse) : sourceCourse,
         appearanceCourse: entry.course,
       };
+    appearanceSession.begin(acceptedAppearance, {
+      retained: retained || Boolean(acceptedEnvironment),
+    });
     if (entry.legacy) entry.presentation = acceptedAppearance;
     // The guide creates its isolated lesson simulation before the flight view.
     if (!entry.legacy) await initWorldRuntime();
@@ -4990,7 +5090,16 @@ export function mountWorldApp({
           });
     }
     renderer.setPresentation?.(playableAppearance.appearance);
-    renderer.setCourse(entry.course, $('flight-mode').value);
+    renderer.setCourse(
+      entry.course,
+      $('flight-mode').value,
+      acceptedEnvironment
+        ? {
+            industrialEnvironment: acceptedEnvironment.pin,
+            artRevision: acceptedEnvironment.artRevision,
+          }
+        : {},
+    );
     paintLoadout();
     audio.setCourse(entry.course);
     huntReactions.reset(entry.course, flight.snapshot(), {
@@ -5110,6 +5219,8 @@ export function mountWorldApp({
   async function closeFlight() {
     enemyGuide.close();
     const token = ++flightToken;
+    industrialPreparation?.abort();
+    industrialPreparation = null;
     checkpointPreparation?.abort();
     checkpointPreparation = null;
     qualityPreparing = false;
@@ -5182,6 +5293,11 @@ export function mountWorldApp({
           diagnostic = txt('Exact world pack is missing.', 'Точний пакунок світу відсутній.');
         if (entry) {
           try {
+            if (!entry.legacy)
+              await restoreNativeIndustrialCourse(saved.course, {
+                mode: saved.proof.mode,
+                signal: controller.signal,
+              });
             if (
               example &&
               !entry.legacy &&
@@ -5375,12 +5491,15 @@ export function mountWorldApp({
     if (entry) return cloneChallenge(entry);
   });
   on($('creator-theme'), 'change', () =>
-    applyEdit((c) => {
-      const world = { ...c.world, theme: $('creator-theme').value };
-      delete world.themeProfile;
-      const resolved = resolveThemeExperience({ course: { ...c, world } });
-      Object.assign(c, resolved.course);
-    }),
+    applyEdit(
+      (c) => {
+        const world = { ...c.world, theme: $('creator-theme').value };
+        delete world.themeProfile;
+        const resolved = resolveThemeExperience({ course: { ...c, world } });
+        Object.assign(c, resolved.course);
+      },
+      { detachIndustrial: true },
+    ),
   );
   on($('editor-snap'), 'change', () => spatialEditor?.setSnap(Number($('editor-snap').value)));
   on($('editor-reset-view'), 'click', () => spatialEditor?.resetView());
@@ -5495,9 +5614,11 @@ export function mountWorldApp({
       mode: editorScope === 'both' ? undefined : editorMode(),
     });
   });
-  on($('export-challenge'), 'click', () => {
+  on($('export-challenge'), 'click', async () => {
     if (!editor) throw new Error('Create a challenge first.');
-    download(editor, `${editor.id}.json`);
+    const accepted = editor;
+    await validateNativeIndustrialCourses([accepted]);
+    download(accepted, `${editor.id}.json`);
   });
   on($('import-world'), 'change', async (e) => {
     try {
@@ -5545,6 +5666,7 @@ export function mountWorldApp({
         (r) => r.course,
       );
     for (const c of loaded.project.courses) validateWorldCourse(c);
+    await validateNativeIndustrialCourses(loaded.project.courses);
     editingProject = loaded.project;
     projectAssets = loaded.assets;
     projectGeneration = worldStore ? await worldStore.generation() : null;
@@ -5914,11 +6036,17 @@ export function mountWorldApp({
   });
   on($('flight-mode'), 'change', () => {
     const selectedMode = $('flight-mode').value;
+    // Selecting another flight mode starts a new attempt. Only this explicit
+    // action releases the mode-specific overlay; Retry keeps its accepted pin.
+    const modeEntry =
+      current?.course.world?.themeProfile?.format === 'ThemeProfile.v3'
+        ? { ...current, course: current.sourceCourse, appearanceCourse: undefined }
+        : current;
     renderCatalogue();
     if (checkpointRequest) {
       const hasSection = checkpointRequest.index < current.course.steps[selectedMode].length;
       const proof = hasSection ? demonstrationFor(current, selectedMode) : null;
-      return startFlight(proof ? demonstrationEntry(current) : current, {
+      return startFlight(proof ? demonstrationEntry(modeEntry) : modeEntry, {
         paused: true,
         checkpoint: {
           ...checkpointRequest,
@@ -5931,12 +6059,12 @@ export function mountWorldApp({
     if (replayProof) {
       const proof = replayKind === 'demonstration' ? demonstrationFor(current, selectedMode) : null;
       return startFlight(
-        proof ? demonstrationEntry(current) : current,
+        proof ? demonstrationEntry(modeEntry) : modeEntry,
         proof ? { preview: true, replayProof: proof, demonstration: true, paused: true } : {},
       );
     }
     if (current && $('flight-dialog').open)
-      return startFlight(current, {
+      return startFlight(modeEntry, {
         preview: preview && !modePractice,
         playlist: playingPlaylist,
         index: playlistIndex,
@@ -6401,6 +6529,11 @@ export function mountWorldApp({
         restorePackIdentity = null;
         restorePackInput.remove();
         ++flightToken;
+        industrialPreparation?.abort();
+        industrialPreparation = null;
+        editorEnvironmentPreparation?.abort();
+        editorEnvironmentPreparation = null;
+        editorEnvironmentRequest++;
         checkpointPreparation?.abort();
         checkpointPreparation = null;
         abortSectorLookup();

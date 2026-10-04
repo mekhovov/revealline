@@ -1,3 +1,4 @@
+import { requireAcceptedAttemptAppearance } from '../presentation/attempt-appearance.mjs';
 import { canvasInterfaceFonts } from '../presentation/theme-system.mjs';
 import { coopCombatView } from '../coop/combat-patrols.mjs';
 import { teamPictureArenaLevel } from '../coop/picture-source.mjs';
@@ -13,6 +14,7 @@ import { drawSnakeBody, drawSnakeTargetOrder } from '../ui/snake-view.mjs';
 import { t } from '../i18n/index.mjs';
 import {
   createArcadeAdapter,
+  getArcadeCollection,
   selectedArcadeCollection,
 } from '../presentation/industrial-arcade.mjs';
 import {
@@ -132,6 +134,7 @@ function prepareActorAppearance(snapshot) {
 /** Draw the authoritative board once. Rendering never advances game state. */
 export function createCoopPainter(canvas) {
   const arcadeAdapter = createArcadeAdapter(),
+    runAcceptedAppearances = new WeakMap(),
     runCollections = new WeakMap(),
     runArtRevisions = new WeakMap();
   let interfaceProvider = () => null;
@@ -247,6 +250,7 @@ export function createCoopPainter(canvas) {
     // Historical/unregistered painters do not infer a new opted-in appearance.
     const artRevision = runArtRevisions.has(run) ? runArtRevisions.get(run) : null;
     arcadeAdapter.setReviewRevision(artRevision);
+    arcadeAdapter.setEnvironment(runAcceptedAppearances.get(run)?.environmentPin ?? null);
     combatPresentation.setArtRevision(artRevision);
     destruction.setArtRevision(artRevision);
     const selectedArt = arcadeAdapter.resolve(presentation, runCollections.get(run) ?? null);
@@ -317,6 +321,7 @@ export function createCoopPainter(canvas) {
         );
     }
     cueLayout = null;
+    if (actors !== nextActors) actors.reset();
     actors = nextActors;
     actorPresentation = selectedActors;
     actorAppearanceStyle = actorAppearance?.style ?? null;
@@ -341,6 +346,7 @@ export function createCoopPainter(canvas) {
       canvasCSSWidth: canvas.clientWidth,
       style: actorStyle,
       previousRun,
+      concealed: run.status === 'won' && !!picture?.image,
     });
     const unit = canvas.width / run.width;
     const combat = coopCombatView(run),
@@ -506,6 +512,7 @@ export function createCoopPainter(canvas) {
         color: palette?.accent,
       });
       ctx.restore();
+      actors.drawDefeats(ctx, (count) => destruction.reserveTransientPieces(count));
       drawCoopBonuses(ctx, bonuses, { screenScale: canvas.clientWidth / 1152 });
       drawSnakeBody(ctx, run, { unit: 1, palette, colors });
       // Launch markers are anchored landmarks, not compulsory meeting pads.
@@ -1119,6 +1126,7 @@ export function createCoopPainter(canvas) {
   return {
     paint,
     observe(run) {
+      actors.observe(run);
       outcomes.observe(run);
       captures.observe(run);
     },
@@ -1129,8 +1137,23 @@ export function createCoopPainter(canvas) {
     setArcadeProvider(provider) {
       arcadeProvider = typeof provider === 'function' ? provider : () => null;
     },
+    setAttemptAppearance(run, appearance) {
+      if (runAcceptedAppearances.has(run) && runAcceptedAppearances.get(run) === appearance) return;
+      const accepted = requireAcceptedAttemptAppearance(appearance);
+      runArtRevisions.set(run, accepted?.artRevision ?? null);
+      runCollections.set(
+        run,
+        accepted?.collection
+          ? getArcadeCollection(accepted.collection.id, accepted.collection.revision)
+          : null,
+      );
+      // Keep the original accepted object: projected room views may be rebound
+      // every paint, without repeatedly copying metadata or flushing caches.
+      runAcceptedAppearances.set(run, appearance);
+    },
     acceptEnemyArtwork(run) {
       if (run.status !== 'ready') return false;
+      runAcceptedAppearances.delete(run);
       runArtRevisions.set(run, runtimeActorArtRevision());
       runCollections.set(run, selectedArcadeCollection(arcadeProvider()));
       return true;
@@ -1141,6 +1164,8 @@ export function createCoopPainter(canvas) {
         runCollections.set(run, selectedArcadeCollection(arcadeProvider()));
     },
     dispose() {
+      actors.reset();
+      destruction.reset();
       arcadeAdapter.clear();
     },
     get artSnapshot() {

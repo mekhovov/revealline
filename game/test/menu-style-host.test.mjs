@@ -1,3 +1,4 @@
+import { nativeCaptureSession as nativeSession } from '../capture-presentation-session.mjs';
 import { modelTeamDialogs } from './helpers/coop-host.mjs';
 import {
   installCoopPresentation,
@@ -246,7 +247,10 @@ for (const turnPolicy of ['immediate', 'grid-center']) {
     for (let n = 0; n < 12; n++) page.frame();
     page.$('pause-button').click();
     page.frame(0);
-    assert.equal(verifyReplay(JSON.parse(store.getItem(sessionKey)).replay).match, true);
+    assert.equal(
+      verifyReplay(nativeSession(JSON.parse(store.getItem(sessionKey))).replay).match,
+      true,
+    );
     assert.deepEqual(page.errors, []);
   });
 }

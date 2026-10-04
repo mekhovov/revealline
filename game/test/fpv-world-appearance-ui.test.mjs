@@ -15,6 +15,10 @@ import {
   resolveSimThemeProfile,
   snapshotSimThemeProfile,
 } from '../../optional-practice/civilian-fpv/world-themes.mjs';
+import { resolveIndustrialEnvironment } from '../presentation/industrial-environments.mjs';
+import { prepareNativeIndustrialAttempt } from '../../optional-practice/civilian-fpv/industrial-environment.mjs';
+import { preparePack } from '../../optional-practice/civilian-fpv/world-content.mjs';
+import { exportEditableZip } from '../../optional-practice/civilian-fpv/world-zip.mjs';
 import { worldRecordIdentity } from '../../optional-practice/civilian-fpv/world-records.mjs';
 
 const requireAuthoring = createRequire(
@@ -109,9 +113,11 @@ function fixture(t) {
     setPresentation(value) {
       this.presentation = value;
     },
-    setCourse(course) {
+    setCourse(course, mode, options = {}) {
       rendered.push({
         course,
+        mode,
+        options,
         presentation: this.presentation,
         profile: resolveSimThemeProfile(course, this.presentation),
       });
@@ -671,3 +677,137 @@ for (const section of [false, true])
     assert.equal(h.doc.activeElement, nativeOutcome);
     assert.equal(shell.dataset.phase, 'results');
   });
+
+test('native industrial Start and Retry retain source-authenticated art while the next attempt uses changed preferences', async (t) => {
+  const h = fixture(t);
+  h.win.location.searchParams.set('artReview', 'industrial-roster-v3');
+  await h.app.ready;
+  const entry = WORLD_CATALOGUE.find((e) => e.id === 'native-pursuit-runner-court');
+  h.$('sim-appearance-world').value = 'military-field';
+  h.$('sim-appearance-world').emit('change');
+  await h.app.startFlight(entry);
+  const first = h.rendered.at(-1),
+    pinned = structuredClone(first.course);
+  assert.equal(first.course.world.themeProfile.format, 'ThemeProfile.v3');
+  assert.equal(
+    resolveIndustrialEnvironment(first.options.industrialEnvironment).artRevision,
+    'industrial-roster-v3',
+  );
+  assert.notEqual(
+    first.options.industrialEnvironment,
+    first.course.world.themeProfile.industrialEnvironment,
+  );
+  h.$('world-arm').click();
+  h.app.pause();
+  h.$('sim-appearance-world').value = 'authored';
+  h.$('sim-appearance-world').emit('change');
+  h.win.location.searchParams.delete('artReview');
+  const count = h.rendered.length;
+  h.$('world-retry').click();
+  for (let i = 0; i < 100 && h.rendered.length === count; i++)
+    await new Promise((r) => setTimeout(r, 10));
+  assert.ok(h.rendered.length > count);
+  assert.deepEqual(h.rendered.at(-1).course, pinned);
+  assert.equal(h.rendered.at(-1).options.artRevision, 'industrial-roster-v3');
+  assert.equal(h.app.snapshot().appearance.accepted.collectionId, 'military-field');
+  await h.app.startFlight(entry);
+  assert.notEqual(h.rendered.at(-1).course.world.themeProfile.format, 'ThemeProfile.v3');
+  assert.equal(h.rendered.at(-1).options.industrialEnvironment, undefined);
+});
+
+test('native host rejects changed retained source before replacing the active renderer', async (t) => {
+  const h = fixture(t);
+  await h.app.ready;
+  const entry = WORLD_CATALOGUE.find((e) => e.id === 'native-pursuit-runner-court');
+  const accepted = await prepareNativeIndustrialAttempt({
+    entry,
+    mode: 'acro',
+    presentation: { collectionId: 'military-field', revision: 'r1' },
+    artRevision: 'industrial-roster-v3',
+  });
+  await h.app.startFlight({ ...entry, course: accepted.course }, { mode: 'acro' });
+  const previous = h.rendered.at(-1),
+    bad = structuredClone(accepted.course);
+  bad.spawn.x += 1;
+  await assert.rejects(
+    h.app.startFlight({ ...entry, course: bad }, { mode: 'acro' }),
+    /no longer matches/,
+  );
+  assert.equal(h.rendered.at(-1), previous);
+  assert.equal(h.app.snapshot().state.status, 'disarmed');
+});
+
+test('Studio imports exact retained Acro appearance, exports it, and explicitly detaches on creator-theme change', async (t) => {
+  const h = fixture(t);
+  await h.app.ready;
+  const entry = WORLD_CATALOGUE.find((e) => e.id === 'native-pursuit-runner-court');
+  const accepted = await prepareNativeIndustrialAttempt({
+    entry,
+    mode: 'acro',
+    presentation: { collectionId: 'military-field', revision: 'r1' },
+    artRevision: 'industrial-roster-v3',
+  });
+  const source = {
+    format: 'FPVWorldProject.v1',
+    id: 'industrial-roundtrip',
+    title: 'Industrial roundtrip',
+    world: { id: accepted.course.world.id },
+    courses: [accepted.course],
+    themes: [],
+    campaigns: [],
+    playlists: [],
+  };
+  const zip = await exportEditableZip(source);
+  Object.defineProperty(zip, 'name', { value: 'industrial.zip' });
+  h.$('import-pack').files = [zip];
+  h.$('import-pack').emit('change');
+  for (let i = 0; i < 100 && JSON.parse(h.$('creator-json').value || '{}').id !== entry.id; i++)
+    await new Promise((r) => setTimeout(r, 10));
+  const retained = JSON.parse(h.$('creator-json').value);
+  assert.deepEqual(retained, accepted.course, h.$('studio-status').textContent);
+  // Authenticated pack serialization stays exact after the host synchronizes definitions.
+  await preparePack({ ...source, courses: [retained] });
+  h.$('creator-title').value = 'Changed official';
+  h.$('creator-title').emit('change');
+  assert.deepEqual(
+    JSON.parse(h.$('creator-json').value),
+    retained,
+    'ordinary edits cannot silently reauthor the official pin',
+  );
+  h.$('creator-theme').value = 'ukrainian';
+  h.$('creator-theme').emit('change');
+  const detached = JSON.parse(h.$('creator-json').value);
+  assert.notEqual(detached.world.themeProfile?.format, 'ThemeProfile.v3');
+  assert.equal(detached.world.theme, 'ukrainian');
+});
+
+test('an explicit native mode change prepares a new mode pin while Retry keeps that pin', async (t) => {
+  const h = fixture(t);
+  h.win.location.searchParams.set('artReview', 'industrial-roster-v3');
+  await h.app.ready;
+  const entry = WORLD_CATALOGUE.find((e) => e.id === 'native-pursuit-runner-court');
+  h.$('sim-appearance-world').value = 'military-field';
+  h.$('sim-appearance-world').emit('change');
+  await h.app.startFlight(entry, { mode: 'self-level' });
+  const first = h.rendered.at(-1),
+    count = h.rendered.length;
+  h.$('flight-mode').value = 'acro';
+  h.$('flight-mode').emit('change');
+  for (let i = 0; i < 100 && h.rendered.length === count; i++)
+    await new Promise((r) => setTimeout(r, 10));
+  const next = h.rendered.at(-1);
+  assert.notEqual(next, first);
+  assert.equal(next.mode, 'acro');
+  assert.notEqual(
+    next.options.industrialEnvironment.sourceKey,
+    first.options.industrialEnvironment.sourceKey,
+  );
+  assert.equal(next.course.world.themeProfile.format, 'ThemeProfile.v3');
+  const accepted = structuredClone(next.course),
+    beforeRetry = h.rendered.length;
+  h.$('world-retry').click();
+  for (let i = 0; i < 100 && h.rendered.length === beforeRetry; i++)
+    await new Promise((r) => setTimeout(r, 10));
+  assert.deepEqual(h.rendered.at(-1).course, accepted);
+  assert.equal(h.rendered.at(-1).mode, 'acro');
+});

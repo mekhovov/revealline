@@ -242,6 +242,7 @@ const RUNTIME_PACKAGE_POLICIES = Object.freeze({
         'vendor/addons/utils/SkeletonUtils.js',
         'vendor/addons/provenance.json',
         'world-app.mjs',
+        'industrial-environment.mjs',
         // Checked projection of shared reactions plus four canonical presentation utilities.
         // The bounded projection shares common utilities; native pursuit uses the reviewed 128-file / 20 MiB envelope.
         'world-reaction-runtime.mjs',
@@ -354,6 +355,8 @@ export const OPTIONAL_PACKAGE_POLICIES = Object.freeze(
           ...(['civilian-fpv', 'fpv-worlds'].includes(id)
             ? [
                 'game/presentation/industrial-materials.mjs',
+                'game/presentation/industrial-environments.mjs',
+                'game/presentation/industrial-environments-data.mjs',
                 'game/presentation/industrial-machinery.mjs',
                 'game/ui/art-review-navigation.mjs',
                 'game/ui/enemy-appearance-controls.mjs',

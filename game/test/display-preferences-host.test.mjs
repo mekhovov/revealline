@@ -1,3 +1,5 @@
+import { nativeCaptureSession as nativeSession } from '../capture-presentation-session.mjs';
+import { activateHostAction } from './helpers/host-action.mjs';
 import { modelTeamDialogs } from './helpers/coop-host.mjs';
 import { installActorAppearanceTransport } from './helpers/actor-appearance-transport.mjs';
 import {
@@ -156,13 +158,13 @@ for (const turnPolicy of ['immediate', 'grid-center']) {
       profileKey,
       updatePreferences(emptyLibrary(), { turnPolicy, textSize: 'large' }),
     );
-    const page = await soloPage(t, { campaign, storage: store });
+    const page = await soloPage(t, { campaign, storage: store, waitForPictures: false });
     assert.equal(
       store.getItem(DISPLAY_PREFERENCES_KEY),
       null,
       'Legacy adoption must not write a new record.',
     );
-    page.$('start-button').click();
+    await activateHostAction(page.$('start-button'));
     await settle(() => page.doc.body.dataset.flightState === 'running');
     page.key('ArrowDown');
     page.key('ArrowDown', false);
@@ -197,7 +199,10 @@ for (const turnPolicy of ['immediate', 'grid-center']) {
     for (let n = 0; n < 12; n++) page.frame();
     page.$('pause-button').click();
     page.frame(0);
-    assert.equal(verifyReplay(JSON.parse(store.getItem(sessionKey)).replay).match, true);
+    assert.equal(
+      verifyReplay(nativeSession(JSON.parse(store.getItem(sessionKey))).replay).match,
+      true,
+    );
     assert.deepEqual(page.errors, []);
   });
 }
