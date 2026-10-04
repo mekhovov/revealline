@@ -765,6 +765,9 @@ export function mountWorldApp({
     projectGeneration = null,
     spatialEditor = null,
     actorEditor = null;
+  let editorFields = '',
+    courseScopeProject = null;
+  const courseScopes = new Map();
   let renderer = null,
     flight = null,
     recorder = null,
@@ -2423,6 +2426,78 @@ export function mountWorldApp({
     await startFlight(ref.course, { playlist: p, index });
   }
 
+  const editorFieldValues = () =>
+    JSON.stringify(
+      [
+        'creator-title',
+        'creator-json',
+        'creator-theme',
+        ...coordinates.map((k) => `criterion-${k}`),
+      ].map((id) => $(id)?.value),
+    );
+  const projectOwnsCourse = (course) =>
+    editingProject &&
+    (editingProject.courses.some((c) => c.id === course.id && c.world.id === course.world.id) ||
+      (!editingProject.courses.length && course.world.id === editingProject.world.id));
+  function paintCoursePicker() {
+    let row = $('editor-project-course-row');
+    if (!row) {
+      row = el('div');
+      row.id = 'editor-project-course-row';
+      const label = el('label'),
+        choice = el('select'),
+        reset = button('', () => refreshEditor());
+      choice.id = 'editor-project-course';
+      reset.id = 'editor-reset-fields';
+      label.append(el('span'), choice);
+      row.append(label, reset);
+      $('creator-title').closest('label').before(row);
+      listeners.push(() => row.remove());
+      on(choice, 'change', () => {
+        const id = choice.value;
+        choice.value = editor?.id ?? '';
+        if (id === editor?.id) return;
+        if (editorFieldValues() !== editorFields || actorEditor?.hasPendingChanges()) {
+          status(
+            txt(
+              'Apply your pending fields or reset them before changing challenge. Your edits are kept.',
+              'Застосуйте або скиньте незастосовані поля перед зміною завдання. Ваші зміни збережено.',
+            ),
+          );
+          return;
+        }
+        const target = editingProject?.courses.find((c) => c.id === id);
+        if (!target) throw new Error(txt('Challenge unavailable.', 'Завдання недоступне.'));
+        const next = validateWorldCourse(target);
+        courseScopes.set(editor.id, editorScope);
+        setEditor(next, { scope: courseScopes.get(id) });
+        actorEditor?.select(null);
+        status(
+          txt(
+            'Applied edits are kept. Switching challenge starts a new Undo history.',
+            'Застосовані зміни збережено. Після зміни завдання починається нова історія скасування.',
+          ),
+        );
+      });
+    }
+    if (courseScopeProject !== editingProject) {
+      courseScopeProject = editingProject;
+      courseScopes.clear();
+    }
+    row.hidden = !editingProject || editingProject.courses.length < 2;
+    const choice = $('editor-project-course');
+    choice.previousElementSibling.textContent = txt('Project challenge', 'Завдання проєкту');
+    choice.replaceChildren(
+      ...(editingProject?.courses ?? []).map(
+        (course) => new Option(`${course.locales[locale].title} · ${course.id}`, course.id),
+      ),
+    );
+    choice.value = editor?.id ?? '';
+    $('editor-reset-fields').textContent = txt(
+      'Reset unapplied fields',
+      'Скинути незастосовані поля',
+    );
+  }
   function refreshEditor(updateScene = true) {
     $('undo-edit').disabled = !undo.length;
     $('redo-edit').disabled = !redo.length;
@@ -2506,9 +2581,11 @@ export function mountWorldApp({
       );
     if (updateScene) refreshEditorScene();
     actorEditor?.refresh();
+    editorFields = editorFieldValues();
+    paintCoursePicker();
   }
   function syncProject(comparePositions = true, previousBindings = null) {
-    if (editingProject && editor?.world.id === editingProject.id) {
+    if (editor && projectOwnsCourse(editor)) {
       const previous = editingProject.courses.find((c) => c.id === editor.id),
         routes = editingProject.routeBindings?.[editor.id],
         bindings = routes?.['self-level'];
@@ -2548,11 +2625,10 @@ export function mountWorldApp({
             };
         }
       }
-      editingProject.title = editor.locales[locale].title;
-      editingProject.courses = [
-        clone(editor),
-        ...editingProject.courses.filter((c) => c.id !== editor.id),
-      ];
+      if (editingProject.courses.length < 2) editingProject.title = editor.locales[locale].title;
+      const index = editingProject.courses.findIndex((c) => c.id === editor.id);
+      if (index < 0) editingProject.courses.push(clone(editor));
+      else editingProject.courses[index] = clone(editor);
       synchronizeDefinitions(editingProject);
       editor = clone(editingProject.courses.find((c) => c.id === editor.id));
     }
@@ -2660,13 +2736,13 @@ export function mountWorldApp({
       id: course.id,
       course,
       world: course.world.id,
-      theme: editingProject?.id === course.world.id ? 'custom' : course.world.theme,
+      theme: projectOwnsCourse(course) ? 'custom' : course.world.theme,
       activity: 'exploration',
       difficulty: 'intermediate',
       duration: 4,
       packIdentity: 'authoring',
       legacy: false,
-      projectId: editingProject?.id === course.world.id ? editingProject.id : undefined,
+      projectId: projectOwnsCourse(course) ? editingProject.id : undefined,
     };
   }
 
@@ -3311,6 +3387,7 @@ export function mountWorldApp({
   function updateImportControls() {
     for (const id of ['preview-world', 'export-project', 'export-pack', 'install-project'])
       $(id).disabled = !editingProject;
+    paintCoursePicker();
   }
   function reviewReimport({ changes, diagnostics }) {
     return new Promise((resolve) => {
@@ -5284,7 +5361,7 @@ export function mountWorldApp({
   });
   on($('preview-world'), 'click', () => {
     syncProject();
-    return startFlight(customEntry(editingProject.courses[0]), {
+    return startFlight(customEntry(editor), {
       preview: true,
       mode: editorScope === 'both' ? undefined : editorMode(),
     });
