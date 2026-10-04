@@ -166,7 +166,7 @@ for (const [name, bytes] of Object.entries(inputs)) {
     throw Error('Frozen content changed while linking: ' + name);
 }
 const setup = `
-window.fixtureErrors=[];addEventListener('error',e=>fixtureErrors.push(e.message));addEventListener('unhandledrejection',e=>fixtureErrors.push(String(e.reason)));
+window.fixtureErrors=[];window.fixtureWarnings=[];window.fixtureDiagnosticsDropped=0;const diagnostic=(rows,value)=>{if(rows.length<1000)rows.push(value);else fixtureDiagnosticsDropped++};addEventListener('error',e=>diagnostic(fixtureErrors,e.message));addEventListener('unhandledrejection',e=>diagnostic(fixtureErrors,String(e.reason)));for(const name of ['warn','error']){const native=console[name].bind(console);console[name]=(...args)=>{diagnostic(name==='warn'?fixtureWarnings:fixtureErrors,args.map(String).join(' '));return native(...args)}}
 window.fixtureDownloads=[];const fixtureURLs=new Map(),fixtureCreate=URL.createObjectURL.bind(URL),fixtureRevoke=URL.revokeObjectURL.bind(URL);URL.createObjectURL=blob=>{const url=fixtureCreate(blob);fixtureURLs.set(url,blob);return url};URL.revokeObjectURL=url=>{fixtureRevoke(url);fixtureURLs.delete(url)};const fixtureAnchor=HTMLAnchorElement.prototype.click;HTMLAnchorElement.prototype.click=function(){if(this.download&&fixtureURLs.has(this.href)){fixtureDownloads.push({name:this.download,blob:fixtureURLs.get(this.href)});return}return fixtureAnchor.call(this)};
 Object.defineProperty(window,'localStorage',{value:parent.fixtureStorage});
 const nativeDB=window.indexedDB,prefix=new URL(location.href).searchParams.get('database');
@@ -180,7 +180,7 @@ const base=new URL('./player/optional-practice/civilian-fpv/',location.href).hre
 const [{mountWorldApp},{createFlightRenderer},model,storage,records,collision,zip]=await Promise.all(['world-app.mjs','world-assets.mjs','world-model.mjs','world-store.mjs','world-records.mjs','world-collision.mjs','world-zip.mjs'].map(p=>import(base+p)));
 window.fixtureZIP=zip;
 window.fixtureModel=model;window.fixtureCollision=collision;window.fixtureWorldStore=await storage.openWorldStore({indexedDB:window.indexedDB});window.fixtureRecords=await records.openWorldRecords(window.indexedDB);
-const rendererFactory=options=>{const renderer=createFlightRenderer(options),draw=renderer.draw,set=renderer.setCourse;window.fixtureRenderer=renderer;renderer.setCourse=function(c,...args){window.fixtureDrawState=null;window.fixtureRenderedCourse=c.id;return set.call(this,c,...args)};renderer.draw=function(s,...args){const value=draw.call(this,s,...args);window.fixtureDrawState=s;return value};return renderer};
+window.fixtureRenderers=[];const rendererFactory=options=>{const renderer=createFlightRenderer(options),draw=renderer.draw,set=renderer.setCourse;window.fixtureRenderers.push(renderer);window.fixtureRenderer=renderer;renderer.setCourse=function(c,...args){window.fixtureDrawState=null;window.fixtureRenderedCourse=c.id;return set.call(this,c,...args)};renderer.draw=function(s,...args){const value=draw.call(this,s,...args);window.fixtureDrawState=s;return value};return renderer};
 window.fixtureApp=mountWorldApp({rendererFactory});
 `;
 let html = (await fs.readFile(path.join(source, admitted.entry))).toString();

@@ -35,9 +35,40 @@ const errorOffsets = new WeakMap();
 function collectOwnerErrors() {
   if (!w || !receipt) return;
   const errors = w.fixtureErrors ?? [],
-    offset = errorOffsets.get(w) ?? 0;
-  receipt.errors.push(...errors.slice(offset));
-  errorOffsets.set(w, errors.length);
+    warnings = w.fixtureWarnings ?? [],
+    offset = errorOffsets.get(w) ?? { errors: 0, warnings: 0, dropped: 0 };
+  receipt.errors.push(...errors.slice(offset.errors));
+  receipt.warnings.push(...warnings.slice(offset.warnings));
+  receipt.diagnosticsDropped += (w.fixtureDiagnosticsDropped ?? 0) - offset.dropped;
+  errorOffsets.set(w, {
+    errors: errors.length,
+    warnings: warnings.length,
+    dropped: w.fixtureDiagnosticsDropped ?? 0,
+  });
+}
+async function disposeOwner() {
+  if (!app) return;
+  collectOwnerErrors();
+  try {
+    await app.dispose();
+    await wait(0);
+    const resources = (w.fixtureRenderers ?? []).map((r) => r.resources());
+    receipt.owners.push({ createdRenderers: resources.length, resources });
+    check(
+      'Disposed owner clears every actually created renderer resource',
+      resources.every(
+        (r) => r.disposed && Object.values(r.registered).every((count) => count === 0),
+      ),
+    );
+    w.fixtureRecords.close();
+    w.fixtureWorldStore.close();
+    app = null;
+  } catch (error) {
+    receipt.errors.push('Owner disposal: ' + error.message);
+    throw error;
+  } finally {
+    collectOwnerErrors();
+  }
 }
 function update(message) {
   $('status').textContent = message;
@@ -84,20 +115,7 @@ async function bytes(url) {
   return r.arrayBuffer();
 }
 async function mount(clock = 'controlled') {
-  if (app) {
-    collectOwnerErrors();
-    try {
-      await app.dispose();
-      w.fixtureRecords.close();
-      w.fixtureWorldStore.close();
-      app = null;
-    } catch (error) {
-      receipt.errors.push('Owner disposal: ' + error.message);
-      throw error;
-    } finally {
-      collectOwnerErrors();
-    }
-  }
+  await disposeOwner();
   w = d = null;
   const loaded = new Promise((resolve) => frame.addEventListener('load', resolve, { once: true }));
   frame.src =
@@ -110,6 +128,8 @@ async function mount(clock = 'controlled') {
   await loaded;
   await until(() => frame.contentWindow?.fixtureApp, 'actual admitted host mount');
   w = frame.contentWindow;
+  // A navigating iframe retains its WindowProxy identity; offsets belong to this owner.
+  errorOffsets.delete(w);
   d = w.document;
   app = w.fixtureApp;
   await app.ready;
@@ -427,6 +447,9 @@ $('run').onclick = async () => {
     checks: [],
     playback: [],
     errors: [],
+    warnings: [],
+    diagnosticsDropped: 0,
+    owners: [],
     limitations: [
       'Eight courses/sixteen proofs on the identified admitted host; no default catalogue addition.',
       'Complete identified historical admitted runtime; no source overlay. The qualifier proof closure matches exact admitted modules. No current-main whole-host, hardware/offline/FPS claim.',
@@ -535,8 +558,10 @@ $('run').onclick = async () => {
     }
     equal('Watch preserves imported records exactly', await w.fixtureRecords.list(), imported);
     await editWorld();
+    await disposeOwner();
     collectOwnerErrors();
     check('No runtime errors', receipt.errors.length === 0);
+    check('No owner diagnostics were dropped', receipt.diagnosticsDropped === 0);
     receipt.status = 'passed';
     $('native').disabled = false;
     update(
