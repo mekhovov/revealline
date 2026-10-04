@@ -1,3 +1,4 @@
+import { attachDemoLayout } from './demo-layout.mjs';
 import { REACTION_PORTRAITS } from '../journey/reaction-portraits.mjs';
 import { createReactionPreferences } from '../journey/reaction-preferences.mjs';
 import { musicStatusLabel } from './music-credit.mjs';
@@ -76,6 +77,7 @@ export function attachDemoHost({
   const reward = createDemoReward({ document: doc, canvas, readMedia, audioMaster });
   const sceneTransition = createDemoSceneTransition(canvas, doc);
   const fullscreen = attachDemoFullscreen({ document: doc, dialog, button: $('demo-fullscreen') });
+  const layout = attachDemoLayout({ document: doc, dialog, canvas });
   const idle = createDemoIdle(),
     captions = createDemoCaptions();
   let settings = readDemoSettings(storage, settingsKey, getContext().reduced);
@@ -1002,6 +1004,7 @@ export function attachDemoHost({
       audioControls.dispose();
       input.destroy();
       fullscreen.dispose();
+      layout.dispose();
       unsubscribe?.();
       unsubscribeAudio?.();
       unsubscribeGuide?.();

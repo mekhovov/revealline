@@ -2916,6 +2916,27 @@ No offline check yet.</pre
             Next level
           </button>
           <button
+            id="demo-interrupt"
+            data-demo-ui
+            class="button primary"
+            type="button"
+            data-i18n="demo:playChoices"
+          >
+            Want to play?
+          </button>
+          <button
+            id="demo-details-toggle"
+            class="button secondary"
+            type="button"
+            data-demo-ui
+            data-i18n="demo:details"
+            data-i18n-aria-label="demo:details"
+            aria-controls="demo-panel"
+            aria-expanded="false"
+          >
+            Audio &amp; details
+          </button>
+          <button
             id="demo-fullscreen"
             type="button"
             class="button secondary"
@@ -2946,8 +2967,8 @@ No offline check yet.</pre
           aria-label="Live game demonstration"
         ></canvas>
       </div>
-      <section id="demo-audience" class="demo-audience" data-ui-surface="toolbar" data-demo-ui>
-        <div class="demo-commentary">
+      <section id="demo-audience" class="demo-audience" data-demo-ui>
+        <div class="demo-commentary" data-ui-surface="toolbar">
           <img id="demo-guide-portrait" width="48" height="48" alt="" aria-hidden="true" hidden />
           <div>
             <p id="demo-guide-label" class="eyebrow" data-i18n="demo:guide">Flight guide</p>
@@ -2955,35 +2976,12 @@ No offline check yet.</pre
             <p id="demo-status" class="demo-readout"></p>
           </div>
         </div>
-        <div class="demo-invitation">
-          <button
-            id="demo-interrupt"
-            data-demo-ui
-            class="button primary"
-            type="button"
-            data-i18n="demo:playChoices"
-          >
-            Want to play?
-          </button>
+        <div class="demo-listening" data-ui-surface="toolbar">
+          <p id="demo-music-state" class="eyebrow"></p>
+          <p id="demo-now-playing"></p>
           <p id="demo-join-hint" data-i18n="demo:joinHint">
             Steer to take over · practice, no rewards
           </p>
-        </div>
-        <div class="demo-listening">
-          <p id="demo-music-state" class="eyebrow"></p>
-          <p id="demo-now-playing"></p>
-          <button
-            id="demo-details-toggle"
-            class="button secondary"
-            type="button"
-            data-demo-ui
-            data-i18n="demo:details"
-            data-i18n-aria-label="demo:details"
-            aria-controls="demo-panel"
-            aria-expanded="false"
-          >
-            Audio &amp; details
-          </button>
         </div>
       </section>
       <div id="demo-panel" class="demo-panel" data-demo-ui hidden>

@@ -16,8 +16,11 @@ playback remains unchanged.
 - Persistent song title, artist and actual muted/playback state. Existing audio
   transport, credits links, volume, styles and sound-content settings remain in
   Audio & details, with explicit close and restored keyboard focus.
-- An information strip below the board in portrait/desktop layouts and a narrow
-  information column beside it on short landscape screens. Expanded settings and
+- A horizontal action row with the play invitation and Audio & details beside
+  Pause/Next/Fullscreen/Back. On phones it wraps into two labelled rows.
+  Information uses a shallow bottom strip by default. When the actual map leaves
+  sufficient unused space beside its image, captions/music occupy those margins
+  without reducing the rendered game size; there is no fixed-width sidebar. Expanded settings and
   practice controls replace that information area; they do not cover the board.
   Long captions/large text can scroll inside the bounded information area.
 - Reuse of the existing guide portrait alongside teaching captions. Its reaction
@@ -37,15 +40,55 @@ Focus/close and fullscreen checks were repeated after their final edits.
 
 An isolated browser specimen loads production markup, styles, theme resolution,
 and localization; it does **not** run a level or bypass the game access gate.
-Browser checks covered 320×568 and 390×740 portrait and 844×390 landscape,
+Browser checks covered 320×568 and 390×740 portrait and 667×375/844×390 landscape,
 English/Ukrainian, Industrial Workshop and light Dnipro Porcelain, including large
-text. Header, board and information areas do not intersect; 844×390 normal-text
-information fits without scrolling. At 320×568 Ukrainian, all information fits in
-its reserved panel. Large text can require scrolling the information region.
+text. Controls and information do not cover the rendered game image. In margin mode the
+information container shares the board region, but its visible children stay in
+unused margins. 844×390 normal-text information fits without scrolling. At 320×568
+Ukrainian, all information fits in its reserved panel. Large text can require
+scrolling the information region; buttons wrap whole rather than split words.
 Physical Safari/iPhone, real gameplay appearance and physical controller review
 remain outstanding. The screenshots are layout specimens, not gameplay evidence.
 
-![Landscape specimen](landscape.jpg)
+### Horizontal/adaptive follow-up
+
+The initial all-horizontal trial reduced landscape game height too much. The final
+layout measures the current canvas aspect ratio and the space below the header.
+It uses two unused margins, one unused margin, or a horizontal bottom strip in
+that order, only when each text column has at least 180 pixels (234 with large
+text). Resizing, entering fullscreen, switching maps and opening details recompute
+placement. Unsupported observers fall back to rows. Both observers disconnect on
+host disposal. No extra frame loop is added.
+
+Measured normal-text specimen sizes (CSS pixels):
+
+| Viewport / map           | Layout                                   | Board region | Contained image |
+| ------------------------ | ---------------------------------------- | ------------ | --------------- |
+| 390×740 / 4:3            | horizontal information, wrapped controls | 374×431      | 374×281         |
+| 320×568 / 4:3, Ukrainian | horizontal information, wrapped controls | 304×210      | 280×210         |
+| 844×390 / 4:3            | two existing margins                     | 828×326      | 435×326         |
+| 844×390 / 16:9           | one existing margin                      | 828×326      | 580×326         |
+| 844×390 / 3:1            | horizontal information                   | 828×235      | 704×235         |
+
+The previous revision had a 418-pixel portrait board region at 390×740 and a
+324-pixel-high landscape board. The gain is modest: preserving a complete image's
+aspect ratio limits its size. Wider surrounding space is not reported as larger
+rendered gameplay. Readable information still costs height on maps with no spare
+side space. Physical-device review remains required.
+
+Follow-up verification: 4 focused layout/host tests pass (17 unrelated host tests
+skipped); 6 offline dependency-closure tests pass; ESLint, Prettier and diff checks
+pass. The first focused run hit a stale assertion that placed the play button in
+the old footer; that assertion now requires the header location. No gameplay,
+replay, reward or sound behavior was changed by this follow-up. The new module is
+statically imported by the production demo host for normal dependency discovery;
+no native package was built for this UI revision.
+
+![Landscape specimen with unused margins](landscape.jpg)
+
+![Wide-map specimen with one unused margin](landscape-wide.jpg)
+
+![Ultrawide-map specimen with horizontal information](landscape-horizontal.jpg)
 
 ![Portrait specimen](portrait.jpg)
 
