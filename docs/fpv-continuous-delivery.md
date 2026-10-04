@@ -2999,3 +2999,21 @@ Original inputs leave 19,121 bytes below 16 MiB. See
 preserved isolated imported-image mismatch. No hardware FPS or fix for the
 unreproduced long stalls is claimed. Publish through exact-head protected checks;
 merge and public availability remain separate.
+
+### Orchard authored tree surfaces — 4 October 2026
+
+The candidate on main a46 replaces only six existing Orchard bark/leaf maps.
+Original tree shapes, UVs, collision, actors, guide/cart routes and owners remain
+exact. The root reviewer accepted v2 close and avenue views; the overly fine v1
+textures and original screenshots remain retained. CPU378checks/89scenes and
+all30existing checks pass. Ten original authenticated recordings replay exactly
+through39,525ticks, with ten Rapier worlds freed once.
+
+Source and admitted-package WebGL each pass96checks/43pairs, with exact functional,
+image, draw-budget and resource results. All three source-bound packages pass two
+identical builds; all95inputs are committed and leave11,488B under16MiB. The full
+102-file admitted player renders, arms0.2s and pauses0.3s with no warning/error
+logs. See [Orchard qualification](fpv-orchard-tree-surfaces.md). Protected publication
+and public availability remain separate; no hardware FPS or whole-world realism
+claim follows. Continue independent Solar work and the next approved D3 optional
+Adventure conversion audit without mixing unfinished items into this focused PR.
