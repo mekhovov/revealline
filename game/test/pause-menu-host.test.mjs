@@ -107,9 +107,12 @@ test('Pause owns the compact action set and each child restores its exact opener
       'journey-skip',
       'overlay-random-level',
       'overlay-missions',
+      'copy-level-link',
+      'played-level-link',
+      'level-link-status',
       'pause-mission-info',
     ],
-    'mission commands keep row-major visual and focus order',
+    'mission controls and link feedback keep row-major document order',
   );
   assert.deepEqual(
     [...page.$('pause-sound-heading').parentElement.parentElement.children].map(

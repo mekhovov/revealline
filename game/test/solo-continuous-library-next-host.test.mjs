@@ -135,15 +135,60 @@ async function running(p, id) {
     return p.rendered.run.levelId === id && p.doc.body.dataset.flightState === 'running';
   });
 }
-async function win(p) {
+async function earnWin(p) {
   p.key('ArrowDown');
   p.key('ArrowDown', false);
   for (let tick = 0; tick < 900 && p.rendered.run.status !== 'won'; tick++) p.frame();
   assert.equal(p.rendered.run.status, 'won');
+}
+async function win(p) {
+  await earnWin(p);
   if (!p.$('skip-celebration').hidden) p.$('skip-celebration').click();
   if (p.$('game-overlay').hidden) p.$('show-result').click();
   await settle(() => !p.$('next-button').disabled);
 }
+test(
+  'Solo win advances from picture to results and the next mission automatically while Random stays available',
+  { timeout: 120000 },
+  async (t) => {
+    const { p } = await setup(t);
+    await earnWin(p);
+    const completed = p.rendered.run;
+    assert.equal(p.$('game-overlay').hidden, true);
+    assert.equal(p.doc.body.dataset.flightState, 'picture');
+    for (let tick = 0; tick < 80 && p.$('game-overlay').hidden; tick++) p.frame(100);
+    assert.equal(p.$('game-overlay').dataset.kind, 'won');
+    assert.equal(p.$('game-overlay').hidden, false);
+    assert.equal(p.$('result-random-level').hidden, false);
+    assert.equal(p.$('result-auto-next').hidden, false);
+    assert.match(p.$('result-auto-next').textContent, /4s/);
+    for (let tick = 0; tick < 20; tick++) p.frame(100);
+    assert.equal(
+      p.rendered.run,
+      completed,
+      'The mission summary remains readable during its timer.',
+    );
+    for (let tick = 0; tick < 25; tick++) p.frame(100);
+    await running(p, 'level-0-1');
+    assert.notEqual(p.rendered.run, completed);
+
+    await win(p);
+    const current = p.rendered.run;
+    const href = globalThis.location.href;
+    await p.$('result-random-level').onclick();
+    await settle(() => {
+      p.frame(0);
+      return p.rendered.run !== current || globalThis.location.href !== href;
+    });
+    assert.ok(
+      (p.rendered.run !== current && p.doc.body.dataset.flightState === 'running') ||
+        new URL(globalThis.location.href).searchParams.has('library-mission'),
+      'Random starts a compatible mission in place or hands the browser to its exact host.',
+    );
+    assert.equal(p.$('result-auto-next').hidden, true);
+    assert.deepEqual(p.errors, []);
+  },
+);
 test(
   'Solo Skip advances a Custom mission without rewards and retains its mission cursor',
   { timeout: 120000 },
