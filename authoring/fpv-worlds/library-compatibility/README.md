@@ -45,8 +45,14 @@ The frozen source r1 manifest is
 `6b2e7bf5712e2664c1685bbfc937a4dbfaadf424668daa69e50ce4be4260458b`. It combines
 the unchanged older HUD admission `a60d1b27fc83f7dbf03cc61cb76168c7026cbb7b`
 with the capable baseline `364fb78c3dc7e268b84b0a13349af32864bca802` and the
-declared candidate overlays. Native results are pending; no pass is inferred from
-preparation or peer review.
+declared candidate overlays. Root's native run at port 8960 passed **418/418**
+checks, with completion true and no error, cleanup error, console warning or
+console error. The gzip archives retain the full receipt and exact fixture
+manifest; original and archived hashes are in `evidence/source-browser-r1-archive.json`.
+This source observation covers old-player rejection before mutation, EN/UK direct
+and Library guidance, unchanged genuine proof/recovery/applied draft, one supported
+exact-pack commit, native reopen and owned Worker/renderer cleanup. It does not
+substitute for the subsequent admission or public entry verification.
 
 Previously cached code retains its original unsupported-import error wording.
 The new catalogue boundary prevents offering it an incompatible first-party pack;

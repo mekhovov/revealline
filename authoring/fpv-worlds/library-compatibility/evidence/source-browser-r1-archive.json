@@ -1,0 +1,32 @@
+{
+  "format": "FPVLibraryCompatibilityEvidence.v1",
+  "sourceRevision": "97883b0aebc1e75a8b7f26da3f556bf5b8e24e24",
+  "passed": 418,
+  "failed": 0,
+  "files": [
+    {
+      "path": "source-browser-r1.json.gz",
+      "bytes": 150665,
+      "sha256": "aabb78b2b76ad7fba196bd345f5c1590ec46b9d5a14f174fc3ace7f2bdc8528f",
+      "originalBytes": 1966825,
+      "originalSha256": "d6780fa5e8d2382edf49ed91b978ffe0621a5b276f447b6d657af02e45f0b6df"
+    },
+    {
+      "path": "source-fixture-r1.json.gz",
+      "bytes": 10110,
+      "sha256": "810e67a87379c9a1425e764f9a0d914da2045bff4f1bf052bfc43c3f8d695990",
+      "originalBytes": 71955,
+      "originalSha256": "6b2e7bf5712e2664c1685bbfc937a4dbfaadf424668daa69e50ce4be4260458b"
+    },
+    {
+      "path": "source-browser-r1.png",
+      "bytes": 9376,
+      "sha256": "a13e0fd9f9bc40604c4172fa2861e2659e486e1c8cf41b2ce65f9f96ab8fe1fc"
+    },
+    {
+      "path": "source-browser-r1-summary.json",
+      "bytes": 97,
+      "sha256": "5b589edb872ae938fa953292e6567b86f278de1fb51066a6197b87de655511c8"
+    }
+  ]
+}
