@@ -1,15 +1,19 @@
 # Library repaint preserves the current flight's Home action
 
-Current integrated candidate `d1d48b2b7ad67a0915532a1489f300abccd778ae`
-contains the focused 105-byte host fix on main
+Current publication candidate includes main
+`5bd8f36d7767dcd9dda740865b4d8f19ddbe7c28` with only the focused 105-byte host
+fix as its runtime change. The exact admitted candidate remains
+`d1d48b2b7ad67a0915532a1489f300abccd778ae`, built on main
 `5cde6dbc97c3067b6023d2bf7fd97fe251805347`. Full Node 22 validation, all 16
 existing appearance/texture checks, and all three package admissions pass. Two
 builds are identical, committed inputs and ZIP members are verified, and Worlds
 retains 95 original inputs and 102 admitted members. Its original inputs total
 16,777,085 bytes, leaving 131 bytes under the unchanged source ceiling before the
 separate visual-source capacity preparation. The zero-overlay admitted candidate
-lifecycle is prepared under `admitted-r1/`; its browser result is recorded below
-when available.
+lifecycle passed all 283 checks with no recorded warnings, errors or dropped
+observations. Its full receipt and screenshot are retained under
+`evidence/admitted-r1-passed/`; the raw receipt is 137,460 UTF-8 bytes
+(137,174 characters).
 
 The corrected source comparison passed all 433 checks with no recorded warnings,
 errors or dropped observations. That run is bound to the earlier exact source
@@ -112,3 +116,20 @@ bytes/SHA-256. JSON and logs use deterministic gzip; `gzip -dc FILE.json.gz`
 recovers the original bytes. Screenshots are retained unchanged. The separate
 `public-warm-1a/` archive records the parent's actual public launch at the earlier
 warm-frame deployment, and does not claim this language fix is deployed.
+
+## Main capacity integration and publication boundary
+
+Normal merge `d1ebca5a2c55687b142bbff2ae6134d71cd32809` incorporates merged
+capacity PR #1085. Of the 95 admitted original input paths, only the generated
+`world-visuals.mjs` differs from the historical d1d admission. Its readable
+canonical source is byte-identical to the admitted original module; the existing
+generator check and independent AST/token/comment/line-terminator comparison
+pass. The qualified lexical projection recovers exactly 41,026 bytes. The host
+and the other 93 original inputs remain byte-identical. No rendering behavior,
+limits, dependency counts, licenses or original recordings change in that bridge.
+
+Current original inputs total 16,736,059 bytes, leaving 41,157 bytes under the
+unchanged source limit. The resulting exact publication head must pass normal CI
+admission. The local build and native browser receipt retain their exact d1d
+identity; they are not presented as a fresh build of the capacity-integrated head.
+The bridge and semantic receipt are retained under `evidence/main-capacity-bridge/`.

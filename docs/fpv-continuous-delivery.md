@@ -3285,3 +3285,43 @@ this is not a comprehensive realistic-world or hardware-performance claim. Hut
 identity and scene rooting remain next quality work. Steady-flight CPU attribution
 continues independently. Festival, Harbor and Canals remain sequential after the
 Reservoir quality gate, with final new unit coverage reserved for D6.
+
+
+### 4 October — Language action ownership qualified; capacity prerequisite merged
+
+The focused language/menu ownership fix now has a 433-check native source pass
+at `bf3597703763584c79119bdeab50bfa03198ae6f` and a separate 283-check native
+admitted lifecycle pass at `d1d48b2b7ad67a0915532a1489f300abccd778ae`. The latter
+uses all 102 admitted files with no runtime overlays, on main5c including the
+qualified warm-frame and public personal-best control changes. Full Node22
+validation, all16 existing appearance/texture checks, and all-three/two-identical
+source-bound admissions pass. The prior324-check timeout is retained: it revealed
+the additional same-event stale Continue/Start state, repaired by synchronizing the
+existing HUD immediately after the native surface-open pause. No clock, arming,
+pause, physics, scoring or replay-proof guard changed.
+
+Capacity #1085 merged normally as `5bd8f36d7767dcd9dda740865b4d8f19ddbe7c28`
+at19:32:24Z after its current exact-head checks succeeded. Its initial allocation
+hold had preceded milestone57; only that proven obsolete hold was removed, then
+ordinary expected-head main updates and protected merge were used. The language
+branch normally incorporates this semantic-only projection: all95 input paths are
+checked, only world-visuals formatting changes from the admitted candidate, and
+the canonical bytes/AST/tokens/comments/line terminators remain exact. Resulting
+source reserve is41,157B; fresh publication CI remains distinct from historical
+local admission. See `authoring/fpv-worlds/language-phase/README.md` and its bounded
+lossless evidence archives.
+
+Warm #1084 is now publicly verified at marker/build identity
+`1a1a82d5e6617a53239218642eda3aa70e817fe3`: native Start, briefing Start, Ready,
+deliberate Arm, active flight and Pause were observed. Ghost #1086 is merged at5c,
+but that earlier public marker does not establish its deployment. Library's
+earlier8e public entry and empty published-world catalogue remain verified.
+
+Remaining delivery order is unchanged: qualify and publish the cap-guarded
+Reservoir coating capability, keep exact r14 native views/import/flight and
+575-check16-proof evidence distinct from broader terrace acceptance, then improve
+hut identity and terrain rooting. Steady-flight CPU attribution continues in its
+separate measured lane. Festival, Harbor and Canals follow the Reservoir quality
+standard; final additional unit coverage remains D6. No hardware-FPS, universal
+imported-image determinism, new offline or unobserved public deployment claim is
+added by this language increment.
