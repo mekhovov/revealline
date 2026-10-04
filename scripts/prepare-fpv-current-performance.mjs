@@ -6,42 +6,82 @@ import { createHash } from 'node:crypto';
 import { execFileSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 const [playerArg, outArg, scenario] = process.argv.slice(2);
-if (!playerArg || !outArg || (scenario && scenario !== '--readiness'))
-  throw Error('Use ADMITTED_PLAYER NEW_OUTPUT_DIRECTORY [--readiness]');
+if (
+  !playerArg ||
+  !outArg ||
+  (scenario && !['--readiness', '--admitted-readiness'].includes(scenario))
+)
+  throw Error('Use ADMITTED_PLAYER NEW_OUTPUT_DIRECTORY [--readiness|--admitted-readiness]');
 const root = fileURLToPath(new URL('..', import.meta.url));
 const player = await fs.realpath(playerArg),
   out = path.resolve(outArg);
 const hash = (v) => createHash('sha256').update(v).digest('hex');
 const git = (...args) => execFileSync('git', args, { cwd: root, maxBuffer: 32 * 1024 * 1024 });
-const source = git('rev-parse', 'HEAD').toString().trim();
-const inventory = JSON.parse(
-  await fs.readFile(
-    path.join(root, 'authoring/fpv-worlds/mode-editor/evidence/combined-source-inventory.json'),
-  ),
-);
+const admitted = scenario === '--admitted-readiness';
 const descriptor = await fs.readFile(path.join(player, 'optional-package.json'));
 const manifest = JSON.parse(descriptor);
-if (
-  manifest.engineCommit !== inventory.sourceRevision ||
-  manifest.revision !== inventory.packageRevision
-)
-  throw Error('Player must match retained d41 admission inventory');
+const source = admitted ? manifest.engineCommit : git('rev-parse', 'HEAD').toString().trim();
 const allowed = new Set(['optional-practice/civilian-fpv/world-app.mjs']);
 const overlays = new Map(),
   inputs = [];
-for (const row of inventory.inputs) {
-  const bytes = git('show', `${source}:${row.path}`),
-    sha256 = hash(bytes);
-  const changed = sha256 !== row.sha256 || bytes.length !== row.bytes;
-  if (changed && !allowed.has(row.path))
-    throw Error('Unexpected changed baseline input: ' + row.path);
-  if (changed) overlays.set(row.path, bytes);
-  inputs.push({ path: row.path, bytes: bytes.length, sha256, baselineSha256: row.sha256, changed });
+let staging;
+if (!admitted) {
+  const inventory = JSON.parse(
+    await fs.readFile(
+      path.join(root, 'authoring/fpv-worlds/mode-editor/evidence/combined-source-inventory.json'),
+    ),
+  );
+  if (
+    manifest.engineCommit !== inventory.sourceRevision ||
+    manifest.revision !== inventory.packageRevision
+  )
+    throw Error('Player must match retained d41 admission inventory');
+  for (const row of inventory.inputs) {
+    const bytes = git('show', `${source}:${row.path}`),
+      sha256 = hash(bytes);
+    const changed = sha256 !== row.sha256 || bytes.length !== row.bytes;
+    if (changed && !allowed.has(row.path))
+      throw Error('Unexpected changed baseline input: ' + row.path);
+    if (changed) overlays.set(row.path, bytes);
+    inputs.push({
+      path: row.path,
+      bytes: bytes.length,
+      sha256,
+      baselineSha256: row.sha256,
+      changed,
+    });
+  }
 }
 const records = [
   ...manifest.files,
   { path: 'optional-package.json', bytes: descriptor.length, sha256: hash(descriptor) },
 ];
+if (manifest.id !== 'fpv-worlds' || records.length !== 102)
+  throw Error('Expected complete 102-member Worlds player');
+if (admitted) {
+  const bytes = await fs.readFile(player + '.json'),
+    stage = JSON.parse(bytes);
+  if (
+    stage.format !== 'FPVEditorModesAdmittedStage.v1' ||
+    stage.sourceRevision !== source ||
+    stage.packageRevision !== manifest.revision ||
+    stage.files.length !== records.length ||
+    records.some(
+      (row) =>
+        !stage.files.some(
+          (s) => s.path === row.path && s.bytes === row.bytes && s.sha256 === row.sha256,
+        ),
+    )
+  )
+    throw Error('Player must match its exact verified admission staging receipt');
+  staging = {
+    receiptSHA256: hash(bytes),
+    sourceTree: stage.sourceTree,
+    verificationSha256: stage.verificationSha256,
+    archive: stage.archive,
+    manifest: stage.manifest,
+  };
+}
 for (const row of records) {
   const file = await fs.realpath(path.join(player, row.path));
   if (!file.startsWith(player + path.sep)) throw Error('Member escaped player: ' + row.path);
@@ -72,14 +112,20 @@ if (
   !html.includes('src="../civilian-fpv/world-app.mjs"')
 )
   throw Error('Unknown player entry');
+const hostPath = admitted
+  ? 'player/' + path.posix.dirname(manifest.entry) + '/readiness-host.html'
+  : 'host.html';
 const host = html
   .replace('data-fpv-worlds="true"', 'data-fpv-worlds="profile"')
-  .replace('<head>', '<head><base href="./player/optional-practice/fpv-worlds/">')
+  .replace(
+    '<head>',
+    admitted ? '<head>' : '<head><base href="./player/optional-practice/fpv-worlds/">',
+  )
   .replace('src="../civilian-fpv/world-app.mjs"', 'src="../../../probe-host.mjs"');
 const index = `<!doctype html><meta charset="utf-8"><title>Current FPV player ${scenario ? 'readiness checks' : 'transition profile'}</title>
 <style>body{margin:0;background:#101b20;color:#eee;font:14px system-ui}header{padding:8px;display:flex;gap:12px;align-items:center}button{font:inherit;padding:8px}iframe{display:block;border:0;width:100%;height:calc(100vh - 66px)}textarea{width:98%;height:220px}body[data-running=true] textarea{display:none}</style>
 <header><button id="run" disabled>${scenario ? 'Run readiness checks' : 'Run short player profile'}</button><button id="continue" hidden>Continue readiness checks</button><span id="status">Loading frozen host…</span></header>
-<iframe id="sim" title="Actual current-main FPV host" src="host.html${scenario ? '?initial-loss=1' : ''}"></iframe>
+<iframe id="sim" title="Pinned FPV host" src="${hostPath}${scenario ? '?initial-loss=1' : ''}"></iframe>
 <label>Complete receipt, populated after measurement<textarea id="receipt" readonly></textarea></label>
 <script type="module" src="profile.mjs"></script>`;
 const probe = await fs.readFile(new URL('./fpv-current-performance-host.mjs', import.meta.url));
@@ -103,7 +149,7 @@ if (new URL(location.href).searchParams.has('initial-loss')) {
 }
 `;
 for (const [name, bytes] of [
-  ['host.html', host],
+  [hostPath, host],
   ['index.html', index],
   ['probe-host.mjs', scenario ? Buffer.concat([Buffer.from(fault), probe]) : probe],
   [
@@ -123,19 +169,22 @@ const receipt = {
   format: 'FPVCurrentPlayerProfileFixture.v1',
   sourceRevision: source,
   scenario: scenario ? 'native-first-scene-context-loss-and-readiness' : 'short-transition-profile',
-  sourceTree: git('rev-parse', 'HEAD^{tree}').toString().trim(),
-  qualificationKind: overlays.size
-    ? 'committed-source overlay on complete admitted player'
-    : 'byte-identical admitted player inputs',
+  sourceTree: staging?.sourceTree ?? git('rev-parse', 'HEAD^{tree}').toString().trim(),
+  qualificationKind: admitted
+    ? 'admitted-package'
+    : overlays.size
+      ? 'committed-source overlay on complete admitted player'
+      : 'byte-identical admitted player inputs',
   baselineSource: manifest.engineCommit,
   baselinePackageRevision: manifest.revision,
-  sourceInputCount: inputs.length,
-  inputs,
+  ...(admitted ? { staging } : { sourceInputCount: inputs.length, inputs }),
   files,
   newPlayerBytes: newBytes,
   immutablePlayerMembers: records.length - overlays.size,
   limits: [
-    'No fresh package admission is claimed.',
+    admitted
+      ? 'Exact admitted package files are pinned; fixture-only host HTML is not a distributed player member.'
+      : 'No fresh package admission is claimed.',
     'Native clock, pause guards and all runtime files retained; explicit source overlays are listed.',
     'Separate host HTML disables only automatic mount so the unchanged mountWorldApp can receive a transparent renderer observer.',
     'Native per-origin storage; no imported records, hidden gameplay state or artificial animation timestamps.',
