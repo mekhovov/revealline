@@ -17,10 +17,15 @@ needs its own backward-compatible contract and pack/proof identity review.
 
 The manual `qualify.mjs` extracts the actual host functions and filter predicate, exercises
 validated course variants, checks every built-in entry in both languages and modes, and verifies
-the two original pack round trips. The initial run passed 284 checks. Only one of the 95 original
-admission inputs changes: `world-app.mjs`, +591 bytes. The projected source total is 16,742,229
-bytes with 34,987 bytes remaining. This is not a fresh admission or a native-browser result.
+the two original pack round trips. Both source/data runs passed 284 checks. Only one of the 95 original
+admission inputs changes: `world-app.mjs`, +620 bytes. The projected source total is 16,742,258
+bytes with 34,958 bytes remaining. This is not a fresh admission or a native-browser result.
 
-Native public-control qualification and the final source-bound admission are pending. The
+The first native run passed 364 controls before an incorrect fixture status-text wait timed out;
+the real example had completed. The corrected native observer passed 423 controls and reproduced
+a separate stale-label defect after public Acro replay returned to Missions. Both receipts are
+retained. The focused repair refreshes the catalogue on explicit Missions access, and the next
+immutable fixture requires the correct selected-mode label before any filter repaint. Native
+qualification of that repair and the final source-bound admission are pending. The
 qualified evidence PR #1096 remains separate, and the human-authorized P1 main-merge hold remains
 in force; this work does not lift that hold.
