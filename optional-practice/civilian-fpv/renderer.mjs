@@ -1083,23 +1083,90 @@ export function createFlightRenderer({
     if (size && size[1] > 0.5) {
       const panels = [],
         accents = [],
-        [width, height, depth] = size;
+        [width, height, depth] = size,
+        campusSize = {
+          'building-west-low': [18000, 9000, 20000],
+          'building-east-mid': [18000, 14000, 20000],
+          'building-west-high': [18000, 19000, 22000],
+          'building-east-high': [18000, 23000, 22000],
+        }[obstacle.id],
+        campusStories =
+          course.environment === 'rooftops' &&
+          kind === 'plaster' &&
+          themeProfile.id === 'pixel' &&
+          themeProfile.textureFilter === 'nearest' &&
+          !goalMaterialKit &&
+          obstacle.type === undefined &&
+          obstacle.rotation === undefined &&
+          campusSize &&
+          ['x', 'y', 'z'].every(
+            (axis, i) =>
+              Number.isFinite(obstacle.min[axis]) &&
+              Number.isFinite(obstacle.max[axis]) &&
+              obstacle.max[axis] - obstacle.min[axis] === campusSize[i],
+          )
+            ? Math.floor(height / 3)
+            : 0,
+        campusBridge = campusStories
+          ? course.obstacles.find(
+              (item) =>
+                item.id === 'roof-deck-skybridge' &&
+                item.type === undefined &&
+                item.rotation === undefined &&
+                ['x', 'y', 'z'].every(
+                  (axis, i) =>
+                    Number.isFinite(item.min?.[axis]) &&
+                    Number.isFinite(item.max?.[axis]) &&
+                    item.max[axis] - item.min[axis] === [50000, 1200, 6000][i],
+                ),
+            )
+          : null;
       for (let side = 0; side < 4; side++) {
         const span = side < 2 ? width : depth,
           half = (side < 2 ? depth : width) / 2;
         if (kind === 'plaster' && span > 2 && height > 2) {
-          const count = Math.max(1, Math.min(5, Math.floor(span / 2.4)));
+          const count = Math.max(1, Math.min(5, Math.floor(span / 2.4))),
+            floors = campusStories || Math.min(3, Math.floor(height / 2.2)),
+            storeyHeight = campusStories ? height / floors : 2.2;
           for (let i = 0; i < count; i++)
-            for (let floor = 0; floor < Math.min(3, Math.floor(height / 2.2)); floor++)
-              panels.push([
-                side,
-                -span / 2 + ((i + 0.5) * span) / count,
-                -height / 2 + 1.4 + floor * 2.2,
-                Math.min(1.1, (span / count) * 0.55),
-                1.05,
-                half,
-              ]);
+            for (let floor = 0; floor < floors; floor++) {
+              const along = -span / 2 + ((i + 0.5) * span) / count,
+                elevation =
+                  -height / 2 + (campusStories ? storeyHeight / 2 : 1.4) + floor * storeyHeight,
+                paneWidth = Math.min(campusStories ? 2 : 1.1, (span / count) * 0.55),
+                paneHeight = campusStories ? Math.min(1.5, storeyHeight * 0.5) : 1.05;
+              if (campusBridge) {
+                const faceAxis = side < 2 ? 'z' : 'x',
+                  alongAxis = side < 2 ? 'x' : 'z',
+                  face = (side === 0 || side === 2 ? obstacle.max : obstacle.min)[faceAxis],
+                  u =
+                    (obstacle.min[alongAxis] + obstacle.max[alongAxis]) / 2 +
+                    (side === 1 || side === 2 ? -along : along) * 1000,
+                  y = (obstacle.min.y + obstacle.max.y) / 2 + elevation * 1000;
+                // Keep solid bridge attachments as closed painted bays rather
+                // than clipping a pane through the existing collision volume.
+                if (
+                  face >= campusBridge.min[faceAxis] &&
+                  face <= campusBridge.max[faceAxis] &&
+                  u + paneWidth * 500 > campusBridge.min[alongAxis] &&
+                  u - paneWidth * 500 < campusBridge.max[alongAxis] &&
+                  y + paneHeight * 500 > campusBridge.min.y &&
+                  y - paneHeight * 500 < campusBridge.max.y
+                )
+                  continue;
+              }
+              panels.push([side, along, elevation, paneWidth, paneHeight, half]);
+            }
           accents.push([side, 0, -height / 2 + 0.25, span, 0.24, half]);
+          if (campusStories) {
+            // Painted storeys and corner piers share the existing two flush
+            // batches. Every opaque pane stays on the original closed wall.
+            for (let floor = 1; floor < floors; floor++)
+              accents.push([side, 0, -height / 2 + floor * storeyHeight, span - 0.48, 0.18, half]);
+            for (const edge of [-1, 1])
+              accents.push([side, edge * (span / 2 - 0.12), 0.05, 0.24, height - 0.7, half]);
+            accents.push([side, 0, height / 2 - 0.15, span, 0.3, half]);
+          }
         } else if ((kind === 'metal' || kind === 'storage-steel') && span > 1) {
           if (!yardContainer)
             accents.push([
