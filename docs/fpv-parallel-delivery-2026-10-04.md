@@ -44,8 +44,10 @@ Festival now has eight authored r5 challenges: 616 ordinary/replay/archive check
 across sixteen proofs and 311 historical `364fb78c3` admitted-browser checks with
 all sixteen complete Watch endpoints. Its current-main `21826c460` bridge has
 all 95 runtime inputs exact to separately admitted `0b54fd0fd`, plus 19 current
-parser/ZIP/record-import checks. Final native subject views, stopped-origin
-offline qualification and publication remain pending. The accepted r3 art is a
+parser/ZIP/record-import checks. Unmodified current-player cart/guide subject views,
+native guide completion and stopped-origin reload/Arm/resume/Pause have passed;
+an unexpected earlier pause is retained without attribution. Focused publication
+remains pending under the human main-merge hold. The accepted r3 art is a
 bounded gathering/surface/wayfinding checkpoint, not complete photoreal quality.
 Preserve the sequence Reservoir → Festival → Harbor → Canals → D6; Harbor and
 Canals have not started production. Earlier pending lists retain their historical

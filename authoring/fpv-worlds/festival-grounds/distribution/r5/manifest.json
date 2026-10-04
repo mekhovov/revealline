@@ -9,10 +9,7 @@
   "worldCount": 1,
   "courseCount": 8,
   "proofCount": 16,
-  "modes": [
-    "self-level",
-    "acro"
-  ],
+  "modes": ["self-level", "acro"],
   "files": {
     "pack": {
       "path": "festival-grounds.r5.rlpack",
@@ -88,8 +85,8 @@
     "revisionBridgeReceipt": "../../evidence/r4-r5-bridge.json",
     "admittedBrowserRuntime": "364fb78c3dc7e268b84b0a13349af32864bca802",
     "browserStatus": "Passed311 checks; exact identified historical admitted host, scripted public File/nativeIDB/complete controlled-RAF Watch/editor/reopen",
-    "nativeStatus": "Pending unmodified native entry",
-    "offlineStatus": "Pending stopped-origin reload",
+    "nativeStatus": "Passed on unmodified admitted0b54: actual grounded cart/guide tracking views; guide public1x demonstration complete41.3s. Bounded native launch/resume/pause.",
+    "offlineStatus": "Passed stopped-origin reload retaining8 challenges and exactpack, deliberate Arm/resume thenPause. Unexpected prior17.4s pause is retained/unattributed; no uninterrupted-playback or offline-editor claim.",
     "scope": "Bounded original stylized scene and distinct authored flight tasks. No photoreal, hardware, FPS or distinct imported-card metadata claim.",
     "browserChecks": 311,
     "completeControlledRAFWatchReplays": 16,
@@ -102,7 +99,10 @@
     "currentMainBridgeReceipt": "../../evidence/r5-current-main-bridge.json",
     "currentMainImportChecks": 19,
     "currentMainImportReceipt": "../../evidence/r5-current-main-import.json",
-    "runtimeBridge": "Festival subtree unchanged; all95 inputs equal current main and separately admitted0b54. Historical364 proof closure has only typed required-extension validation changed; current pack/ZIP/record import19 passes. Flight/collision/replay bytes remain exact. Browser311 remains historical364."
+    "runtimeBridge": "Festival subtree unchanged; all95 inputs equal current main and separately admitted0b54. Historical364 proof closure has only typed required-extension validation changed; current pack/ZIP/record import19 passes. Flight/collision/replay bytes remain exact. Browser311 remains historical364.",
+    "nativeReceipt": "../../evidence/r5-native-current/subject-observations.json",
+    "offlineReceipt": "../../evidence/r5-native-current/offline-journey.json",
+    "publicationStatus": "Qualified focused data change; protected PR publication pending. Human-authorized main-merge hold remains in force."
   },
   "discovery": "No production Library index row is added by this content change. Imported cards retain host defaults Explore/intermediate/4min."
 }
