@@ -1,0 +1,149 @@
+{
+  "format": "FPVReservoirWorldBuild.v1",
+  "stage": "Eight-route land-side candidate; actual art/collision/flight acceptance pending",
+  "sourcePins": [
+    {
+      "path": "scene.mjs",
+      "bytes": 25742,
+      "sha256": "767aa5d0c2bfe6853655d94d288e82934ed8d5230fdcd84a10ca3591bcee9ebc"
+    },
+    {
+      "path": "engineering.mjs",
+      "bytes": 3295,
+      "sha256": "d45f74576396b19eef9cd9e35e5cdfc95604dec3dc9e216f0818d2bc1328087d"
+    },
+    {
+      "path": "land-routes.mjs",
+      "bytes": 11875,
+      "sha256": "2a9897324e9aa40c781f5316392259178cf09c51a98904dadb2b51adbde3b658"
+    },
+    {
+      "path": "engineering-routes.mjs",
+      "bytes": 6477,
+      "sha256": "587cd008bd197742190b8e7778df9e2ff795e592fcea81420f0e2aa39f949014"
+    },
+    {
+      "path": "mineral.mjs",
+      "bytes": 2579,
+      "sha256": "3b93f15821b44511fbf4ca91a7707a8ae73ea20cc6eed13db31d7d29e35b8004"
+    },
+    {
+      "path": "ground-maps.mjs",
+      "bytes": 3555,
+      "sha256": "a5b4aaa1f1b290b8fb19070b85333de5dc0f22e72908c967b996f3eccca61dde"
+    },
+    {
+      "path": "retaining.mjs",
+      "bytes": 3918,
+      "sha256": "f74b4dd413437e7ae0b57a477736b096a4d39f6e07eba044387d4d2ae327e3ab"
+    }
+  ],
+  "source": {
+    "bytes": 1236672,
+    "sha256": "caf24d9c11ea4be3ee5db66a2e420ee06354c4a127d987ed15bba49ef344d0d5",
+    "triangles": 12288,
+    "materials": 13,
+    "nodes": 60,
+    "textures": 3,
+    "colliders": 48,
+    "collisionTriangles": 108
+  },
+  "prepared": {
+    "bytes": 1235152,
+    "sha256": "aa78187aaea643bce5dbc75b9ba6802e5a5b686210fa3f03b9796c0bc4311043",
+    "validatorErrors": 0
+  },
+  "pack": {
+    "bytes": 1382004,
+    "sha256": "98dc5237b8e809029a0c08f414f36689c7a58313f911a84971d3ed0429477714",
+    "identity": "fpv-pack:98dc5237b8e809029a0c08f414f36689c7a58313f911a84971d3ed0429477714"
+  },
+  "zip": {
+    "bytes": 1382065,
+    "sha256": "a1a81d26dc1f6cda4244bcf1a7dbff4a0126ee17df1f96fa0f51e263e0efb592"
+  },
+  "courses": [
+    {
+      "id": "mountain-reservoir-01",
+      "title": "Shoreline check-in",
+      "steps": {
+        "self-level": 4,
+        "acro": 4
+      }
+    },
+    {
+      "id": "mountain-reservoir-02",
+      "title": "Western dam crest",
+      "steps": {
+        "self-level": 7,
+        "acro": 7
+      }
+    },
+    {
+      "id": "mountain-reservoir-03",
+      "title": "Intake controls",
+      "steps": {
+        "self-level": 5,
+        "acro": 6
+      }
+    },
+    {
+      "id": "mountain-reservoir-04",
+      "title": "Dry spillway descent",
+      "steps": {
+        "self-level": 9,
+        "acro": 8
+      }
+    },
+    {
+      "id": "mountain-reservoir-05",
+      "title": "Exterior service passage",
+      "steps": {
+        "self-level": 8,
+        "acro": 8
+      }
+    },
+    {
+      "id": "mountain-reservoir-06",
+      "title": "Rock terrace climb",
+      "steps": {
+        "self-level": 7,
+        "acro": 8
+      }
+    },
+    {
+      "id": "mountain-reservoir-07",
+      "title": "Shoreline circuit",
+      "steps": {
+        "self-level": 11,
+        "acro": 11
+      }
+    },
+    {
+      "id": "mountain-reservoir-08",
+      "title": "Maintenance roof landing",
+      "steps": {
+        "self-level": 5,
+        "acro": 5
+      }
+    }
+  ],
+  "bounds": {
+    "min": {
+      "x": -44000,
+      "y": 0,
+      "z": -34000
+    },
+    "max": {
+      "x": 6000,
+      "y": 28000,
+      "z": 38000
+    }
+  },
+  "worldCount": 1,
+  "layoutCount": 8,
+  "runtimeChanges": 3,
+  "rendererPrerequisite": "REVEALLINE_surface_coating v1 support in renderer.mjs/world-visuals.mjs/world-content.mjs; required capability rejects older hosts. This asset generation is not package admission.",
+  "textures": 3,
+  "limitsUnchanged": true
+}
