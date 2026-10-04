@@ -70,7 +70,7 @@ test('demo fullscreen is explicit, targets the document and follows enter/exit s
   assert.equal(f.requests, 1);
   assert.equal(f.doc.fullscreenElement, f.doc.documentElement);
   assert.equal(f.button.getAttribute('aria-pressed'), 'true');
-  assert.match(f.button.textContent, /Exit|exitFullscreen/);
+  assert.match(f.button.getAttribute('aria-label'), /Exit|exitFullscreen/);
   await f.button.emit('click');
   assert.equal(f.exits, 1);
   assert.equal(f.doc.fullscreenElement, null);
