@@ -35,13 +35,15 @@ repair #1092 merged at `8b31237d6f2cba627b5d35acc10309e4d3335992`, following
 294 source and 294 exact admitted native controls. These newer HUD/Creator
 deployments have not yet received a public-entry check.
 
-Library compatibility #1093 is ready at
-`40b2e29df95691cbe44220e253ba8f795d60dd74`, normally updated onto Creator main;
-its source and optional-package checks pass while preview/capacity/candidate
-checks are running. Source418 controls, exact admitted entry and component
+Library compatibility #1093 merged normally as
+`21826c460e80fa4e7fa47ec8e6ba9f98f75beea4` after all active exact-head protected
+checks passed. Its normal Creator-main update matches the final admitted host
+byte-for-byte. Source418 controls, exact admitted entry and component
 admissions remain pinned to their original heads. The combined source inventory
 is 95 inputs / 16,741,638 bytes, leaving 35,578 bytes under the unchanged ceiling;
-one final combined admission is still required. The
+full validation and the single final all-three/two-build admission passed on
+`0b54fd0fdf8fe06dc900024a8b59713340b09bb3`. Its exact102-member zero-overlay
+player is staged for native offline and longer-session verification. The
 [combined journey](fpv-combined-journey-qualification.md) uses explicit pack and
 separate proof imports and passed all 453 native controls on frozen source
 `6c341bef4347d98bae882fb1785eabf6a133537c`, using the explicitly declared
@@ -204,7 +206,7 @@ is implied by this gate.
    exact hashes/size/revision, cancellation and atomic installation are delivered.
    Preserve their source/admitted 208-control and combined native offline receipts;
    the earlier 195-control pre-transport run remains historical. Compatibility
-   #1093 is qualified and awaiting protected publication; it gives older cached
+   #1093 is merged; it gives older cached
    players actionable guidance. Then register the first finished Reservoir
    revision in the separate capability index and verify the published row through
    Browse, download, install, selection, Watch and editing. The production index
