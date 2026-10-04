@@ -1,6 +1,6 @@
 # Parallel industrial delivery — 4 October 2026
 
-This continuation follows the user request to research the plan, implement independent features in parallel, and produce tested stacked PRs. It supersedes the automated-suite waiver for new work. It does not approve the Phase C artwork or turn optional scope into a release requirement.
+This continuation follows the user request to research the plan, implement independent features in parallel, and produce tested stacked PRs. It supersedes the automated-suite waiver for new work. The subsequent user instruction “art approved, proceed” clears the Phase C artistic gate. Optional scope remains optional.
 
 ## Review findings and adopted improvements
 
@@ -39,7 +39,7 @@ The six pilot cases remain separate: Crossing Post Solo/Versus; Pincer Yard Team
 
 Continue independent streams while tests or builds run; queue the next feature once its prerequisites pass. Stop only dependent work for a concrete missing decision, physical device, endpoint or repeated external failure. Keep the rest advancing. Report implemented, automatically tested, manually observed, artistically approved and publicly delivered as different statuses.
 
-The current corrected overhead treatment awaits an explicit production decision. Real hardware, human enjoyment and hosted HTTPS cannot be replaced by software fixtures. These are acceptance dependencies, not reasons to postpone independent code or tests.
+The corrected overhead treatment has explicit user approval; full-roster production is now authorized. Real hardware, human enjoyment and hosted HTTPS cannot be replaced by software fixtures. These are acceptance dependencies, not reasons to postpone independent code or tests.
 
 ## Optional scope retained
 
@@ -63,6 +63,6 @@ The first tested stack adds room wall-clock expiry, historical Snake seed recove
 
 Restoring the broader suites also exposed obsolete integration expectations. The next layer (#1037) follows explicit briefing/Start, separate Demo ownership and earned-picture/Results navigation, and models the actual Canvas/Text boundaries used by the shared guide. It awaits real preparation promises instead of increasing generic timeouts. These test repairs preserve gameplay assertions; broader Company and appearance results remain separate from the six-phase receipt.
 
-The [generated pilot route batch](qualification/pursuit-pilots/generated-routes-2026-10-04.md) adds exact native completion witnesses to the gameplay phase. Its fixed inputs and exported-session verification establish specific legal routes without altering authored missions. Human interception review, artistic approval, physical devices and real-network qualification remain required before promotion. Full roster artwork production continues to depend on the requested Phase C visual decision.
+The [generated pilot route batch](qualification/pursuit-pilots/generated-routes-2026-10-04.md) adds exact native completion witnesses to the gameplay phase. Its fixed inputs and exported-session verification establish specific legal routes without altering authored missions. Human interception review, artistic approval, physical devices and real-network qualification remain required before promotion. The subsequent Phase C approval permits full-roster production.
 
 A subsequent scope audit found a real authoring omission: Motion Lab did not yet consume the shared actor descriptor. Its [new bounded editor and native browser observations](qualification/industrial-art/motion-lab-2026-10-04/README.md) complete that integration, including exact Asset Studio-compatible JSON, independent preview ownership and 44 px controls. The [twelve native pursuit flight witnesses](../game/test/fixtures/native-pursuit-flight/README.md) separately establish legal completion/recovery for the six current behavior samples in both flight modes. They do not count as new layouts or artistic/human acceptance.

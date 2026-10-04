@@ -6,6 +6,7 @@ import { mountSharedActorPanel } from '../../authoring/motion-lab/shared-actor-p
 import {
   drawHuntActor,
   OVERHEAD_ACTOR_ART_REVISION,
+  INDUSTRIAL_ROSTER_ART_REVISION,
   OVERHEAD_ACTOR_SAMPLES,
 } from '../hunt/actor-art.mjs';
 import { validateActorAnimation, sampleActorAnimation } from '../presentation/actor-animation.mjs';
@@ -25,10 +26,12 @@ function context(canvas = null) {
     },
   );
 }
-function harness(t) {
+function harness(t, artRevision = null) {
   const doc = new Document(),
     host = doc.defaultView,
     frames = new Map();
+  if (artRevision)
+    host.location = { href: `http://localhost/authoring/motion-lab/?artReview=${artRevision}` };
   let clock = 0,
     onPlay = 0;
   class CanvasElement extends Element {
@@ -352,4 +355,26 @@ test('EN/UK controls preserve valid drafts, and Asset Studio remains the existin
   );
   assert.match(studio, /validateActorAnimation/);
   assert.match(studio, /Stage animation revision/);
+});
+
+test('production roster exposes non-Courier accessory edits in the actual Motion Lab panel', async (t) => {
+  const h = harness(t, INDUSTRIAL_ROSTER_ART_REVISION);
+  await h.open();
+  h.change('family', 'patroller');
+  h.change('clip', 'move');
+  assert.equal(h.$('accessory').disabled, false);
+  h.change('accessory', '-2');
+  const first = h.lastPaint();
+  h.change('accessory', '2');
+  assert.notDeepEqual(
+    h.lastPaint(),
+    first,
+    'The native baton gesture changes in the visible preview',
+  );
+  h.$('export').click();
+  const value = JSON.parse(h.$('source').value);
+  const frame = value.frames.find(({ id }) => id === value.clips.move.frames[0]);
+  assert.equal(frame.accessory, 2);
+  h.change('accessory', '3');
+  assert.equal(h.$('accessory').value, '2', 'Bounds still apply');
 });

@@ -1,15 +1,21 @@
 import { createHuntDestruction, drawHuntRemains } from '../../game/hunt/destruction.mjs';
 import { exportJSONFile } from '../../game/platform.mjs';
-import { drawHuntActor, OVERHEAD_ACTOR_SAMPLES } from '../../game/hunt/actor-art.mjs';
+import { drawHuntActor, INDUSTRIAL_ROSTER_SAMPLES } from '../../game/hunt/actor-art.mjs';
 import { actorDefinition, ACTOR_FAMILIES, ACTOR_CASTS } from '../../game/hunt/actor-catalog.mjs';
 import {
   drawClassicDrone,
   drawClassicCable,
   advanceClassicFlight,
 } from '../../game/snake/classic-flight-art.mjs';
-import { militaryFieldPixels } from '../../game/presentation/military-field-art.mjs';
 import {
-  INDUSTRIAL_MATERIALS,
+  INDUSTRIAL_MACHINERY_FAMILIES,
+  INDUSTRIAL_TEAM_HARDWARE_SLOTS,
+  drawMachinerySpecimen,
+  drawMachineryHardwareSpecimen,
+} from '../../game/presentation/industrial-machinery.mjs';
+import {
+  INDUSTRIAL_ENVIRONMENT_MATERIALS,
+  INDUSTRIAL_ENVIRONMENT_REVISION,
   drawIndustrialMaterialSpecimen,
 } from '../../game/presentation/industrial-materials.mjs';
 import {
@@ -37,7 +43,7 @@ const rows = ACTOR_FAMILIES.map(({ id: family }) => {
     rules = document.createElement('p'),
     pair = document.createElement('div');
   pair.className = 'actor-pair';
-  const panels = ['industrial-pilot-v1', 'industrial-overhead-v2'].map((revision) => {
+  const panels = ['industrial-overhead-v2', 'industrial-roster-v3'].map((revision) => {
     const panel = document.createElement('div'),
       label = document.createElement('h3'),
       canvas = document.createElement('canvas');
@@ -53,20 +59,20 @@ const copy = {
   en: {
     text: {
       'page-title': 'Industrial field kit',
-      eyebrow: 'ORIGINAL ART · OVERHEAD REVIEW 03',
+      eyebrow: 'ORIGINAL ART · ROSTER PRODUCTION 04',
       'nav-studio': 'Asset Studio',
       'nav-motion': 'Motion Lab',
       'nav-guide': 'Enemy field guide',
       intro:
-        'Directly overhead bodies: helmet crowns overlap shoulders, equipment sits on the back or sides, and short strides stay on the ground plane. Compare every family and direction before approving the new artwork.',
+        'Directly overhead bodies: helmet crowns overlap shoulders, equipment sits on the back or sides, and short strides stay on the ground plane. The overhead treatment is approved. This production batch adds distinct family silhouettes, equipment and movement.',
       sizes:
-        'All 12 families, with three appearance kits. Previous → corrected overhead; actual 16 / 24 / 32 px, enlarged, and all eight headings. Comparison grounds are separate from the transparent sprites.',
+        'All 12 families, with three appearance kits. Approved reference → expanded roster; actual 16 / 24 / 32 px, enlarged, and all eight headings. Comparison grounds are separate from the transparent sprites.',
       'hardware-title': 'Flight and machinery',
       'hardware-note':
-        'Existing FPV rig and connected body; candidate surface detail on the utility car and tank. Vehicle shapes retain their current game rules.',
+        'Shared FPV rig and connected body, six machinery families and five Team equipment states. Wheels, tracks and radar use the native presentation clock. Shapes keep their existing gameplay rules.',
       'materials-title': 'Shared terrain materials',
       'materials-note':
-        'Concrete, rutted earth and tread plate share original pixels with Military Field board tiles and supported native SIM material maps. Native hazard markers remain above these textures; physical material rules stay authored.',
+        'Concrete, earth, steel, masonry, timber and damaged surfaces form the kit. The first three share original pixels with Military Field board tiles and supported native SIM material maps. Native hazard markers remain above these textures; physical material rules stay authored.',
       'audio-title': 'Equipment and movement sounds',
       'audio-note':
         'Play a short sample through the game mixer. Your mute and Effects settings apply. Nothing plays automatically.',
@@ -80,6 +86,8 @@ const copy = {
       'studio-copy':
         'Import the review collection into a separate Studio workspace, select enemy.bouncer, then open Actor animation · advanced → Load current actor. The original transparent atlas contains twelve 32×32 poses (48 KiB decoded). Native movement, warning, recovery and blocked states select admitted clips. Notice and caught remain Studio previews for this actor. Export/import retains both the atlas and its original parent.',
       export: 'Download procedural soldier descriptors',
+      'machinery-download': 'Download production machinery collection',
+      'machinery-provenance': 'Machinery inventory and exact budgets',
       'atlas-download': 'Download complete Studio collection',
       'atlas-guide': 'Import and review instructions',
       'atlas-provenance': 'Artwork provenance and exact sizes',
@@ -91,10 +99,32 @@ const copy = {
     },
     labels: {
       actors: 'Character comparison',
-      hardware: 'Drone, body, utility car and tank preview',
+      hardware: 'FPV drone and connected body',
       atlas: 'Transparent twelve-pose machinery atlas',
     },
-    materials: ['Concrete barrier', 'Rutted earth', 'Steel tread plate'],
+    materials: [
+      'Concrete barrier',
+      'Rutted earth',
+      'Steel tread plate',
+      'Masonry courses',
+      'Timber boards',
+      'Damaged concrete',
+    ],
+    machines: [
+      'Utility car',
+      'Cargo truck',
+      'Armored carrier',
+      'Scout car',
+      'Tracked tank',
+      'Radar truck',
+    ],
+    hardwareStates: [
+      'Anchor · available',
+      'Anchor · captured',
+      'Core · shielded',
+      'Core · exposed',
+      'Core · secured',
+    ],
     treatments: ['Clean', 'Brutal without blood', 'Brutal with blood'],
     audio: {
       ready: 'Choose a sample.',
@@ -112,8 +142,8 @@ const copy = {
     states: ['Moving', 'Notice', 'Warning', 'Recovery', 'Blocked'],
     pause: 'Pause motion',
     resume: 'Resume motion',
-    released: 'Previous · angled figure',
-    candidate: 'Corrected · directly overhead',
+    released: 'Approved · overhead reference',
+    candidate: 'Production · distinct family rig',
     links: [
       'Capture Solo',
       'Capture Versus',
@@ -129,20 +159,20 @@ const copy = {
   uk: {
     text: {
       'page-title': 'Промисловий польовий набір',
-      eyebrow: 'ОРИГІНАЛЬНІ РЕСУРСИ · ВИГЛЯД ЗГОРИ 03',
+      eyebrow: 'ОРИГІНАЛЬНІ РЕСУРСИ · ПОВНИЙ НАБІР 04',
       'nav-studio': 'Студія ресурсів',
       'nav-motion': 'Лабораторія руху',
       'nav-guide': 'Довідник ворогів',
       intro:
-        'Персонажі прямо згори: верх шолома перекриває плечі, спорядження розташоване на спині або збоку, короткі кроки йдуть площиною землі. Порівняйте всі родини й напрямки перед схваленням нового вигляду.',
+        'Персонажі прямо згори: верх шолома перекриває плечі, спорядження розташоване на спині або збоку, короткі кроки йдуть площиною землі. Вигляд прямо згори схвалено. Цей набір додає різні силуети, спорядження й рухи кожної родини.',
       sizes:
-        'Усі 12 родин у трьох комплектах спорядження. Попередній → виправлений вигляд згори; справжні 16 / 24 / 32 пікселі, збільшення та всі вісім напрямків. Порівняльні поверхні відокремлені від прозорих спрайтів.',
+        'Усі 12 родин у трьох комплектах спорядження. Схвалений зразок → розширений набір; справжні 16 / 24 / 32 пікселі, збільшення та всі вісім напрямків. Порівняльні поверхні відокремлені від прозорих спрайтів.',
       'hardware-title': 'Політ і техніка',
       'hardware-note':
-        'Наявний FPV-дрон і з’єднане тіло; пробна деталізація автомобіля й танка. Ігрові правила техніки не змінюються.',
+        'Спільний FPV-дрон і з’єднане тіло, шість родин техніки та п’ять станів командного спорядження. Колеса, гусениці й радар використовують ігровий час відображення. Правила техніки збережено.',
       'materials-title': 'Спільні матеріали місцевості',
       'materials-note':
-        'Бетон, ґрунтові колії та рифлена сталь використовують ті самі оригінальні пікселі на полі Military Field і в підтримуваних матеріалах SIM. Позначки небезпеки залишаються над текстурами; фізичні правила визначає рівень.',
+        'Набір містить бетон, ґрунт, сталь, кладку, дерево й пошкоджені поверхні. Перші три використовують ті самі оригінальні пікселі на полі Military Field і в підтримуваних матеріалах SIM. Позначки небезпеки залишаються над текстурами; фізичні правила визначає рівень.',
       'audio-title': 'Звуки спорядження та руху',
       'audio-note':
         'Короткі зразки відтворюються через ігровий мікшер. Діють ваші налаштування звуку та гучності ефектів. Автоматичного відтворення немає.',
@@ -156,6 +186,8 @@ const copy = {
       'studio-copy':
         'Імпортуйте пробну колекцію в окремий простір Студії, оберіть enemy.bouncer, відкрийте розширену анімацію та завантажте поточного персонажа. Оригінальний прозорий атлас містить дванадцять поз 32×32 (48 КіБ після декодування). Рух, попередження, відновлення та блокування обирають відповідні кліпи. Помічання та знищення тут доступні як перегляд у Студії. Експорт та імпорт зберігають атлас і оригінал.',
       export: 'Завантажити процедурні описи солдатів',
+      'machinery-download': 'Завантажити колекцію нової техніки',
+      'machinery-provenance': 'Перелік техніки та точні обсяги',
       'atlas-download': 'Завантажити повну колекцію Студії',
       'atlas-guide': 'Інструкції імпорту та перегляду',
       'atlas-provenance': 'Походження ресурсів і точні розміри',
@@ -167,10 +199,32 @@ const copy = {
     },
     labels: {
       actors: 'Порівняння персонажів',
-      hardware: 'Перегляд дрона, тіла, автомобіля й танка',
+      hardware: 'FPV-дрон і з’єднане тіло',
       atlas: 'Прозорий атлас техніки з дванадцятьма позами',
     },
-    materials: ['Бетонна перешкода', 'Ґрунтові колії', 'Рифлена сталь'],
+    materials: [
+      'Бетонна перешкода',
+      'Ґрунтові колії',
+      'Рифлена сталь',
+      'Кладка',
+      'Дерев’яні дошки',
+      'Пошкоджений бетон',
+    ],
+    machines: [
+      'Легковик',
+      'Вантажівка',
+      'Бронетранспортер',
+      'Розвідувальна машина',
+      'Гусеничний танк',
+      'Радарна машина',
+    ],
+    hardwareStates: [
+      'Якір · доступний',
+      'Якір · захоплений',
+      'Ядро · захищене',
+      'Ядро · відкрите',
+      'Ядро · здобуте',
+    ],
     treatments: ['Без жорстокості', 'Жорстоко без крові', 'Жорстоко з кров’ю'],
     audio: {
       ready: 'Оберіть зразок.',
@@ -188,8 +242,8 @@ const copy = {
     states: ['Рух', 'Помітив', 'Попередження', 'Відновлення', 'Заблокований'],
     pause: 'Зупинити рух',
     resume: 'Продовжити рух',
-    released: 'Попередній · похила фігура',
-    candidate: 'Виправлений · прямо згори',
+    released: 'Схвалений · прямо згори',
+    candidate: 'Новий · окремий образ родини',
     links: [
       'Захоплення соло',
       'Захоплення проти',
@@ -212,15 +266,29 @@ const paths = [
   '../../optional-practice/fpv-worlds/index.html',
   '../asset-studio/',
 ];
-const materials = INDUSTRIAL_MATERIALS.map((material) => {
+const materials = INDUSTRIAL_ENVIRONMENT_MATERIALS.map((material) => {
   const card = document.createElement('div'),
     label = document.createElement('h3'),
     canvas = document.createElement('canvas');
   canvas.width = 192;
   canvas.height = 128;
   const ctx = canvas.getContext('2d');
-  drawIndustrialMaterialSpecimen(ctx, { material, x: 8, y: 8, width: 32, height: 32 });
-  drawIndustrialMaterialSpecimen(ctx, { material, x: 64, y: 8, width: 96, height: 96 });
+  drawIndustrialMaterialSpecimen(ctx, {
+    revision: INDUSTRIAL_ENVIRONMENT_REVISION,
+    material,
+    x: 8,
+    y: 8,
+    width: 32,
+    height: 32,
+  });
+  drawIndustrialMaterialSpecimen(ctx, {
+    revision: INDUSTRIAL_ENVIRONMENT_REVISION,
+    material,
+    x: 64,
+    y: 8,
+    width: 96,
+    height: 96,
+  });
   ctx.fillStyle = '#b8c9c8';
   ctx.font = '12px sans-serif';
   ctx.fillText('32 px', 8, 62);
@@ -291,7 +359,7 @@ function language() {
   motion.refresh();
   for (const id of ['nav-studio', 'nav-motion', 'nav-guide']) {
     const url = new URL($(id).getAttribute('href'), location.href);
-    url.searchParams.set('artReview', 'industrial-overhead-v2');
+    url.searchParams.set('artReview', 'industrial-roster-v3');
     url.searchParams.set('lang', locale);
     $(id).href = url.href;
   }
@@ -336,7 +404,7 @@ function language() {
       );
     row.rules.textContent = `${engines.join(' · ')}. ${definition.guide[locale].counter}`;
     for (const panel of row.panels) {
-      const label = panel.revision === 'industrial-pilot-v1' ? words.released : words.candidate;
+      const label = panel.revision === 'industrial-overhead-v2' ? words.released : words.candidate;
       panel.label.textContent = label;
       panel.canvas.setAttribute(
         'aria-label',
@@ -349,7 +417,7 @@ function language() {
     ...paths.map((path, i) => {
       const link = document.createElement('a'),
         url = new URL(path, location.href);
-      url.searchParams.set('artReview', i === 5 ? 'industrial-pilot-v1' : 'industrial-overhead-v2');
+      url.searchParams.set('artReview', 'industrial-roster-v3');
       url.searchParams.set('appearanceFamily', 'military-field');
       url.searchParams.set('appearanceRevision', 'r1');
       url.searchParams.set('lang', locale);
@@ -358,6 +426,11 @@ function language() {
       return link;
     }),
   );
+  machinery.forEach((row) => {
+    row.label.textContent =
+      row.index < 6 ? words.machines[row.index] : words.hardwareStates[row.index - 6];
+    row.canvas.setAttribute('aria-label', row.label.textContent);
+  });
   const stats = pageActorArtPool(document).stats();
   $('budget').textContent = `${words.budget}: ${stats.limit / 1048576} MiB · ${words.note}`;
 }
@@ -373,17 +446,20 @@ $('pause').onclick = () => {
   language();
 };
 $('export').onclick = () =>
-  void exportJSONFile(OVERHEAD_ACTOR_SAMPLES, 'industrial-overhead-v2-animations.json');
+  void exportJSONFile(INDUSTRIAL_ROSTER_SAMPLES, 'industrial-roster-v3-animations.json');
 
-const vehicles = ['enemy.bouncer', 'enemy.eroder'].map((slot) => {
-  const pixels = militaryFieldPixels({ width: 32, height: 32 }, slot, {
-    revision: 'industrial-pilot-v1',
-  });
-  const canvas = document.createElement('canvas');
-  canvas.width = canvas.height = 32;
-  canvas.getContext('2d').putImageData(new ImageData(pixels.rgba, 32, 32), 0, 0);
-  return canvas;
-});
+const machinery = [...INDUSTRIAL_MACHINERY_FAMILIES, ...INDUSTRIAL_TEAM_HARDWARE_SLOTS].map(
+  (family, index) => {
+    const card = document.createElement('div'),
+      label = document.createElement('h3'),
+      canvas = document.createElement('canvas');
+    canvas.width = 240;
+    canvas.height = 170;
+    card.append(label, canvas);
+    $('machinery').append(card);
+    return { family, index, label, canvas };
+  },
+);
 const effects = [
   ['Clean impact', 'Чистий удар', false, false],
   ['Brutal · no blood', 'Жорстоко · без крові', true, false],
@@ -488,7 +564,7 @@ function draw(now) {
       }
       const compassY = stacked ? 276 : 204;
       ['up', 'right', 'down', 'left'].forEach((heading, index) => {
-        const x = 16 + index * 64;
+        const x = 16 + index * Math.min(64, (width - 64) / 3);
         drawHuntActor(ctx, x, compassY, 32, Math.floor(clock / 100), {
           family: row.family,
           cast: $('cast').value,
@@ -504,7 +580,7 @@ function draw(now) {
         ctx.fillText(['↑', '→', '↓', '←'][index], x + 12, compassY - 8);
       });
       ['↗', '↘', '↙', '↖'].forEach((symbol, index) => {
-        const x = 16 + index * 64;
+        const x = 16 + index * Math.min(64, (width - 64) / 3);
         drawHuntActor(ctx, x, compassY + 56, 32, Math.floor(clock / 100), {
           family: row.family,
           cast: $('cast').value,
@@ -522,7 +598,7 @@ function draw(now) {
     }
   }
   const ctx = $('hardware').getContext('2d');
-  ctx.clearRect(0, 0, 960, 190);
+  ctx.clearRect(0, 0, 420, 170);
   ctx.imageSmoothingEnabled = false;
   const snake = {
     id: 0,
@@ -547,9 +623,32 @@ function draw(now) {
   );
   drawClassicDrone(ctx, snake, ink, { ...flight, reduced });
   ctx.restore();
-  vehicles.forEach((image, i) => {
-    ctx.drawImage(image, 480 + i * 190, 30, 128, 128);
-  });
+  for (const row of machinery) {
+    const context = row.canvas.getContext('2d');
+    context.clearRect(0, 0, 240, 170);
+    const heading = { up: 0, right: Math.PI / 2, down: Math.PI, left: -Math.PI / 2 }[
+      $('heading').value
+    ];
+    for (const [size, x, y] of [
+      [16, 22, 28],
+      [24, 72, 28],
+      [32, 130, 28],
+      [80, 120, 110],
+    ]) {
+      const options = {
+        x,
+        y,
+        size,
+        heading,
+        frame: { phase: clock / 1000, travelPhase: clock / 1000, speed: 1, reduced },
+      };
+      if (row.index < 6) drawMachinerySpecimen(context, row.family, options);
+      else drawMachineryHardwareSpecimen(context, row.family, options);
+      context.fillStyle = '#b8c9c8';
+      context.font = '12px sans-serif';
+      context.fillText(`${size}px`, x - size / 2, y + size / 2 + 16);
+    }
+  }
   for (const row of effects) {
     row.button.textContent = $('language').value === 'uk' ? row.uk : row.en;
     row.painter.advance(row.view, elapsed / 1000, {

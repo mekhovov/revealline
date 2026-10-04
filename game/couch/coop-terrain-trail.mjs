@@ -2,7 +2,10 @@ import { captureRecipe } from '../ui/feedback-cues.mjs';
 import { t } from '../i18n/index.mjs';
 import { drawActiveTrail, drawCapturePulse } from '../ui/actor-presentation.mjs';
 import { drawPresentationImage } from '../ui/presentation-draw-image.mjs';
-import { INDUSTRIAL_MATERIAL_REVISION } from '../presentation/industrial-materials.mjs';
+import {
+  INDUSTRIAL_MATERIAL_REVISION,
+  INDUSTRIAL_ENVIRONMENT_REVISION,
+} from '../presentation/industrial-materials.mjs';
 
 const CELL = 16;
 const CAPTURE_LIFE = 0.65;
@@ -120,7 +123,9 @@ export function prepareCoopMaterialSample(snapshot) {
         const frame = snapshot?.image?.(slot);
         return [
           kind,
-          frame?.materialReviewRevision === INDUSTRIAL_MATERIAL_REVISION
+          [INDUSTRIAL_MATERIAL_REVISION, INDUSTRIAL_ENVIRONMENT_REVISION].includes(
+            frame?.materialReviewRevision,
+          )
             ? prepareCoopWall(snapshot, slot)
             : null,
         ];

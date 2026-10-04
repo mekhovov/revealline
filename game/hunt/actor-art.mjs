@@ -1,4 +1,8 @@
-import { createSoldierAnimation, sampleActorAnimation } from '../presentation/actor-animation.mjs';
+import {
+  createSoldierAnimation,
+  sampleActorAnimation,
+  validateActorAnimation,
+} from '../presentation/actor-animation.mjs';
 import { actorArtReviewRevision } from './preferences.mjs';
 import { actorVisual, resolveActorFamily } from './actor-catalog.mjs';
 /** Original overhead pixel rigs. The host owns time, facing and vulnerability;
@@ -57,6 +61,84 @@ export const OVERHEAD_ACTOR_SAMPLES = Object.freeze(
           : 'cloth',
       ),
     ]),
+  ),
+);
+
+/** Successor artwork only: the accepted overhead perspective stays intact while
+ * family equipment, stride and non-gameplay gestures gain their own vocabulary.
+ * Previous descriptors and every saved/default art revision remain unchanged. */
+export const INDUSTRIAL_ROSTER_ART_REVISION = 'industrial-roster-v3';
+const rosterTraits = Object.freeze({
+  lookout: [18, 1, 160, 390, ['binoculars']],
+  patroller: [20, 1, 145, 340, ['pack']],
+  runner: [14, 2, 90, 260, []],
+  sprinter: [16, 3, 75, 190, []],
+  courier: [16, 2, 115, 310, ['satchel']],
+  guard: [20, 1, 155, 360, ['armor', 'weapon']],
+  'refuge-seeker': [20, 1, 135, 350, ['hood', 'pack']],
+  switchback: [16, 2, 105, 280, ['scarf']],
+  'rendezvous-pair': [18, 1, 125, 300, ['radio', 'pack']],
+  'shield-bearer': [18, 1, 170, 420, ['shield']],
+  'brace-trooper': [20, 2, 120, 230, ['armor']],
+  'relay-warden': [22, 1, 180, 460, ['radio', 'pack', 'armor']],
+});
+export const INDUSTRIAL_ROSTER_SAMPLES = Object.freeze(
+  Object.fromEntries(
+    Object.entries(OVERHEAD_ACTOR_SAMPLES).map(([family, original], index) => {
+      const [, amplitude, cadence, rest, equipment] = rosterTraits[family];
+      const value = structuredClone(original);
+      value.id = `industrial-roster-${family}`;
+      value.revision = 3;
+      value.parts = [...new Set([...value.parts, ...equipment])];
+      // The crown/pivot remain fixed. Only limb stride, breathing and equipment
+      // offsets vary; this data cannot introduce movement or vulnerability timing.
+      value.frames = [
+        0,
+        amplitude,
+        Math.max(1, amplitude - 1),
+        0,
+        -amplitude,
+        -Math.max(1, amplitude - 1),
+      ].map((stride, i) => ({
+        id: `move-${i}`,
+        durationMs: cadence + (i % 3 === 0 ? 15 : 0),
+        stride,
+        breath: 0,
+        accessory: [0, 1, 0, 0, -1, 0][i],
+        region: null,
+      }));
+      for (const [id, durationMs, breath, accessory] of [
+        ['idle-0', rest, 0, 0],
+        ['idle-1', rest, 1, index % 2],
+        ['notice-0', 95 + index * 3, 0, -1],
+        ['notice-1', 150 + index * 4, 1, 2],
+        ['prepare-0', 170, 1, -1],
+        ['prepare-1', 230, 2, 0],
+        ['blocked-0', 210, 0, -1],
+        ['blocked-1', 210, 1, 1],
+        ['recover-0', rest, 2, 1],
+        ['recover-1', rest, 0, 0],
+        ['caught-0', 80, 0, 2],
+        ['caught-1', 150, 1, -2],
+        ['caught-2', 260, 0, 0],
+        ['aim', 300, 0, -1],
+        ['fire-0', 70, 0, 2],
+        ['fire-1', 160, 0, 0],
+      ])
+        value.frames.push({ id, durationMs, stride: 0, breath, accessory, region: null });
+      value.clips = {
+        idle: { frames: ['idle-0', 'idle-1'], loop: true },
+        notice: { frames: ['notice-0', 'notice-1', 'idle-0'], loop: false },
+        anticipation: { frames: ['prepare-0', 'prepare-1'], loop: true },
+        move: { frames: value.frames.slice(0, 6).map((frame) => frame.id), loop: true },
+        blocked: { frames: ['blocked-0', 'blocked-1'], loop: true },
+        recovery: { frames: ['recover-0', 'recover-1'], loop: true },
+        caught: { frames: ['caught-0', 'caught-1', 'caught-2'], loop: false },
+        aim: { frames: ['aim'], loop: true },
+        fire: { frames: ['fire-0', 'fire-1'], loop: false },
+      };
+      return [family, validateActorAnimation(value)];
+    }),
   ),
 );
 
@@ -362,6 +444,8 @@ function overheadDetailed(ctx, role, family, gait, options, cast) {
   const stride = gait.stride,
     breath = gait.idling || gait.recovery ? gait.breath : 0,
     wide = ['guard', 'brace-trooper', 'relay-warden'].includes(family),
+    breadth = options.roster ? rosterTraits[family][0] : wide ? 20 : 18,
+    inset = (32 - breadth) / 2,
     hood = family === 'refuge-seeker',
     cap = ['lookout', 'patroller', 'courier'].includes(family),
     closed = options.phase === 'warning' || options.phase === 'burst';
@@ -393,9 +477,11 @@ function overheadDetailed(ctx, role, family, gait, options, cast) {
     pixel(ctx, role.glove, x + (x === 5 ? 2 : 1), y - 2, 2, 3);
   }
   // A broad, shallow shoulder/upper-back footprint under the central crown.
-  pixel(ctx, role.edge, wide ? 6 : 7, 12, wide ? 20 : 18, 10);
-  pixel(ctx, INK, 8, 11, 16, 12);
-  pixel(ctx, role.coat, 8, 12, 16, 9);
+  pixel(ctx, role.edge, inset, 12, breadth, 10);
+  const inner = options.roster ? inset + 1 : 8,
+    innerWidth = options.roster ? breadth - 2 : 16;
+  pixel(ctx, INK, inner, 11, innerWidth, 12);
+  pixel(ctx, role.coat, inner, 12, innerWidth, 9);
   pixel(ctx, role.light, 8, 12, 4, 2 + breath);
   pixel(ctx, role.light, 20, 12, 4, 2 + breath);
   pixel(ctx, role.camo, 8, 17, 4, 3);
@@ -632,6 +718,193 @@ function overheadCompact(ctx, role, family, gait, options, cast) {
   ctx.restore();
 }
 
+/** Accessories are top planes attached to the approved rig. Compact silhouettes
+ * use whole two-pixel cells; detailed parts remain inside the rotating 32px body.
+ * Kit differences change geometry, not just colors or a gameplay-facing badge. */
+function rosterEquipment(ctx, role, family, gait, options, cast, compactArt) {
+  const unit = compactArt ? 2 : 1;
+  const p = (color, x, y, w, h) => {
+    const snap = (n) => Math.round(n / unit) * unit;
+    pixel(
+      ctx,
+      color,
+      snap(x),
+      snap(y),
+      Math.max(unit, Math.floor(w / unit) * unit),
+      Math.max(unit, Math.floor(h / unit) * unit),
+    );
+  };
+  const accessory = gait.accessory ?? 0,
+    swing = Math.sign(accessory) * unit,
+    recovering = gait.recovery,
+    warning = options.phase === 'warning' || options.phase === 'turning',
+    caught = gait.caught,
+    closed = options.phase === 'warning' || options.phase === 'burst';
+  // Three different manufactured kits: strapped helmet, repaired asymmetrical
+  // shoulder pad, or insulated collar/boot gaiters. No cast grants protection.
+  if (cast === 'tactical') {
+    p(role.dark, 12, 12, 1, 6);
+    p(role.trim, 12, 13, 1, 3);
+    p(role.dark, 17, 20, 4, 2);
+    p(role.light, 18, 20, 2, 1);
+  } else if (cast === 'rivals') {
+    p(INK, 6, 15, 4, 7);
+    p(role.coat, 7, 16, 3, 4);
+    p(role.patch, 7, 17, 2, 2);
+    p(role.trim, 21, 20, 3, 2);
+    p(role.dark, 14, 12, 4, 2);
+  } else {
+    p(role.dark, 9, 12, 2, 9);
+    p(role.edge, 9, 13, 2, 6);
+    p(role.dark, 21, 12, 2, 9);
+    p(role.edge, 21, 13, 2, 6);
+    p(role.light, 11, 21, 3, 2);
+    p(role.light, 18, 21, 3, 2);
+  }
+  if (family === 'lookout') {
+    const y = gait.notice || gait.breath || warning ? 6 : 8;
+    p(INK, 9, y, 6, 4);
+    p(INK, 17, y, 6, 4);
+    p('#81b1ac', 10, y, 3, 2);
+    p('#b7d9cf', 18, y, 3, 2);
+    p(role.glove, 8, y + 3, 3, 3);
+    p(role.glove, 21, y + 3, 3, 3);
+    p(INK, 13, 21, 6, 4);
+    p(role.trim, 14, 22, 4, 2);
+  } else if (family === 'patroller') {
+    // Transverse bedroll and a baton make the slow measured patrol recognizable.
+    p(INK, 9, 21, 14, 5);
+    p(role.coat, 10, 22, 12, 3);
+    p(role.trim, 11, 22, 2, 3);
+    p(role.trim, 19, 22, 2, 3);
+    p(INK, 24, 14 + swing, 2, 8);
+    p(role.light, 24, 15 + swing, 1, 3);
+    if (gait.notice) p(role.glove, 22, 9, 3, 3);
+  } else if (family === 'runner') {
+    // A light rear harness leaves shoulders/crown readable; no large rucksack.
+    p(INK, 11, 19, 3, 6);
+    p(INK, 18, 19, 3, 6);
+    p(role.trim, 12, 20, 1, 4);
+    p(role.trim, 19, 20, 1, 4);
+    p(role.dark, 13, 20, 6, 2);
+    if (gait.notice || recovering) p(role.glove, 7, 10 + swing, 3, 3);
+  } else if (family === 'sprinter') {
+    p(INK, 8, 12, 3, 5);
+    p(INK, 21, 12, 3, 5);
+    p(role.trim, 9, 12, 1, 4);
+    p(role.trim, 22, 12, 1, 4);
+    p(role.dark, 13, 20, 6, 4);
+    p(role.light, 14, 20, 4, 2);
+    if (warning) {
+      p(role.glove, 7, 10, 3, 4);
+      p(role.glove, 22, 10, 3, 4);
+    } else if (recovering) {
+      p(role.glove, 8, 19 + (gait.breath ? unit : 0), 3, 3);
+      p(role.glove, 21, 19 + (gait.breath ? unit : 0), 3, 3);
+    }
+  } else if (family === 'courier') {
+    const y = 17 + swing;
+    p(INK, 22, y, 7, 7);
+    p('#795e3f', 23, y + 1, 5, 5);
+    p('#be9b65', 23, y + 1, 5, 2);
+    p('#d9c296', 25, y + 1, 1, 5);
+    p(role.trim, 20, 15, 5, 2);
+    if (gait.idling || gait.notice) {
+      p('#e5debd', 22, y - 2, 4, 3);
+      p('#795e3f', 23, y - 1, 2, 1);
+    }
+  } else if (family === 'guard') {
+    p(INK, 6, 12, 5, 9);
+    p(INK, 21, 12, 5, 9);
+    for (const x of [7, 22]) {
+      p(role.dark, x, 13, 3, 6);
+      p(role.light, x, 13, 3, 2);
+    }
+    for (const x of [11, 16, 21]) {
+      p(INK, x - 1, 20, 4, 4);
+      p(role.trim, x, 21, 2, 2);
+    }
+    if (options.armed === true) {
+      const recoil =
+        options.state === 'fire' || options.animationClip === 'fire' ? Math.max(0, swing) : 0;
+      p(INK, 24, 5 + recoil, 2, 14 - recoil);
+      p('#718277', 24, 8 + recoil, 1, 7);
+      p('#735c40', 23, 18, 3, 4);
+    }
+  } else if (family === 'refuge-seeker') {
+    // Hood plus wide rolled shelter kit: a different outline from patrol/radio.
+    p(role.dark, 9, 10, 3, 9);
+    p(role.dark, 20, 10, 3, 9);
+    p(role.coat, 9, 11, 2, 6);
+    p(role.coat, 21, 11, 2, 6);
+    p(INK, 9, 20, 14, 7);
+    p(role.dark, 10, 21, 12, 5);
+    p(role.light, 10, 21, 12, 2);
+    p(role.trim, 13, 21, 2, 5);
+    p(role.trim, 19, 21, 2, 5);
+    if (warning || gait.notice) p(role.glove, 23, 8 + swing, 3, 6);
+  } else if (family === 'switchback') {
+    p(role.dark, 10, 20, 13, 3);
+    p(role.patch, 11, 20, 11, 2);
+    p(INK, 23, 20 + swing, 5, 4);
+    p(role.trim, 23, 20 + swing, 4, 2);
+    p(role.patch, 24, 22 + swing, 2, 2);
+    if (warning) p(role.glove, 23, 9 + swing, 3, 4);
+  } else if (family === 'rendezvous-pair') {
+    const alternate = (String(options.partnerId ?? '').charCodeAt(0) || 0) % 2;
+    const antenna = alternate ? 10 : 21;
+    p(INK, 11, 20, 11, 6);
+    p(role.dark, 12, 21, 9, 4);
+    p(role.trim, 12, 21, 9, 2);
+    p(INK, antenna, 10, 1, 12);
+    p('#a8c9bb', antenna, 10, 1, 2);
+    p('#9cbdbe', 13, 22, 2, 1);
+    p('#dac295', 18, 22, 2, 1);
+    if (gait.notice || recovering) p(role.glove, alternate ? 5 : 24, 10 + swing, 3, 4);
+  } else if (family === 'shield-bearer') {
+    // Plates never open on a cosmetic frame. Heading and protection stay native.
+    p(INK, 5, 5, 22, 5);
+    p('#84928a', 6, 5, 20, 3);
+    p('#c8d0bd', 7, 5, 18, 1);
+    p('#384c46', 11, 6, 10, 2);
+    p(role.dark, 7, 8, 4, 2);
+    p(role.dark, 21, 8, 4, 2);
+    p(role.trim, 13, 21, 6, 4);
+  } else if (family === 'brace-trooper') {
+    for (const x of closed ? [6, 21] : [3, 25]) {
+      p(INK, x, closed ? 9 : 14, 4, 8);
+      p(role.trim, x + 1, closed ? 10 : 15, 2, 6);
+      p(role.light, x + 1, closed ? 10 : 15, 2, 2);
+    }
+    p(INK, 11, 21, 10, 5);
+    p(role.dark, 12, 22, 8, 3);
+    if (!closed) p('#aec3a0', 14, 21, 4, 3);
+  } else if (family === 'relay-warden') {
+    p(INK, 10, 19, 13, 8);
+    p(role.dark, 11, 20, 11, 6);
+    p(role.trim, 12, 20, 9, 2);
+    p(role.light, 12, 23, 3, 1);
+    for (const [x, y] of [
+      [9, 8],
+      [22, 10],
+    ]) {
+      p(INK, x, y, 1, 14);
+      p('#a8c9bb', x, y, 1, 2);
+    }
+    p('#8fab82', 16, 23, 4, 2);
+    if (accessory > 0) p('#d5dcc1', 18, 23, 2, 1);
+  }
+  if (caught) {
+    // A brief open-hand/stumble pose, not a hitbox displacement or an automatic
+    // gore effect. Actual clean/brutal breakup remains the shared defeat owner.
+    p(role.glove, 5, 13 + swing, 3, 3);
+    p(role.glove, 24, 13 - swing, 3, 3);
+  } else if (options.state === 'blocked') {
+    p(role.glove, 8, 10 + swing, 3, 3);
+    p(role.glove, 21, 10 - swing, 3, 3);
+  }
+}
+
 function markers(ctx, family, options, angle) {
   if (
     ['refuge-seeker', 'switchback', 'sprinter'].includes(family) &&
@@ -719,14 +992,17 @@ export function drawHuntActor(ctx, x, y, size, pose = 0, options = {}) {
   const angle = facing(options);
   const revision = options.artRevision ?? actorArtReviewRevision(),
     candidate = revision === 'industrial-pilot-v1',
-    overhead = revision === OVERHEAD_ACTOR_ART_REVISION;
+    roster = revision === INDUSTRIAL_ROSTER_ART_REVISION,
+    overhead = roster || revision === OVERHEAD_ACTOR_ART_REVISION;
   const descriptor =
     options.animation ??
-    (overhead
-      ? OVERHEAD_ACTOR_SAMPLES[visual.family]
-      : candidate
-        ? INDUSTRIAL_ACTOR_SAMPLES[visual.family]
-        : null);
+    (roster
+      ? INDUSTRIAL_ROSTER_SAMPLES[visual.family]
+      : overhead
+        ? OVERHEAD_ACTOR_SAMPLES[visual.family]
+        : candidate
+          ? INDUSTRIAL_ACTOR_SAMPLES[visual.family]
+          : null);
   const artOptions = overhead
     ? {
         ...options,
@@ -791,7 +1067,7 @@ export function drawHuntActor(ctx, x, y, size, pose = 0, options = {}) {
     // Explicit admitted drafts can animate the courier's approved satchel.
     // Historical/default procedural art retains its stride-derived bounce;
     // body position, facing and specialist protection never use this offset.
-    if (overhead && options.animation && descriptor.parts.includes('satchel'))
+    if (roster || (overhead && options.animation && descriptor.parts.includes('satchel')))
       gait.accessory = sample.accessory;
   }
   ctx.save();
@@ -818,9 +1094,11 @@ export function drawHuntActor(ctx, x, y, size, pose = 0, options = {}) {
     visual.palette,
     visual.family,
     gait,
-    { ...artOptions, industrialSample: candidate },
+    { ...artOptions, industrialSample: candidate, roster },
     visual.cast,
   );
+  if (roster)
+    rosterEquipment(ctx, visual.palette, visual.family, gait, artOptions, visual.cast, useCompact);
   if (candidate && INDUSTRIAL_ACTOR_SAMPLES[visual.family]) {
     const p = visual.palette;
     // Family-sized equipment changes the silhouette, not the occupied cell.

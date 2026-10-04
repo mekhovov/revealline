@@ -1,6 +1,11 @@
 import * as THREE from './vendor/three.module.js';
 import { actorVisual } from '../../game/hunt/actor-catalog.mjs';
-import { sharedActorAppearance } from '../../game/hunt/preferences.mjs';
+import { sharedActorAppearance, actorArtReviewRevision } from '../../game/hunt/preferences.mjs';
+import {
+  INDUSTRIAL_VEHICLE_REVISION,
+  buildIndustrialVehicle,
+  resolveIndustrialVehicleModel,
+} from './industrial-vehicles.mjs';
 import {
   buildWorldVisuals,
   buildDroneVisual,
@@ -103,6 +108,7 @@ export function createFlightRenderer({
   presentation: initialPresentation = {},
   createHuntPresentation = null,
 }) {
+  const machineryRevision = actorArtReviewRevision(win?.location);
   let renderer;
   try {
     renderer = new THREE.WebGLRenderer({
@@ -1518,6 +1524,36 @@ export function createFlightRenderer({
       });
       visual.tint.color.setHex(friendly ? 0x77ebe0 : 0xe6a16b);
       animated.rotors = visual.rotors;
+    } else if (
+      machineryRevision === INDUSTRIAL_VEHICLE_REVISION &&
+      resolveIndustrialVehicleModel({
+        actor: actorDefinitions.get(actor.id) ?? actor,
+        courseFormat: course.format,
+        collectionId: simCollectionIdForProfile(themeProfile),
+        collectionRevision: themeProfile?.revision,
+        assetRole: slot,
+      })
+    ) {
+      const model = resolveIndustrialVehicleModel({
+        actor: actorDefinitions.get(actor.id) ?? actor,
+        courseFormat: course.format,
+        collectionId: simCollectionIdForProfile(themeProfile),
+        collectionRevision: themeProfile?.revision,
+        assetRole: slot,
+      });
+      const visual = buildIndustrialVehicle({
+        THREE,
+        parent: group,
+        part,
+        model,
+        radius,
+        quality,
+        paints: { armor, dark, metal, glass, threat },
+      });
+      animated.wheels = visual.wheels;
+      animated.radar = visual.radar;
+      group.userData.nativeVehicleModel = model;
+      group.userData.machineryRevision = machineryRevision;
     } else if (actor.type === 'vehicle' && actorDefinitions.get(actor.id)?.vehicleModel) {
       const model = actorDefinitions.get(actor.id).vehicleModel;
       const tracked = model === 'field-tank';
@@ -2207,13 +2243,25 @@ export function createFlightRenderer({
       batch.instanceMatrix.needsUpdate = true;
     }
   }
+  function machineryPresentationOptions() {
+    return {
+      actorDefinitions: course?.actors ?? [],
+      machineryRevision,
+      machineryActorIds: [...actorRows]
+        .filter(([, row]) => row.group.userData.machineryRevision === INDUSTRIAL_VEHICLE_REVISION)
+        .map(([id]) => id),
+    };
+  }
+  function observePresentation(state) {
+    if (!disposed && course) huntPresentation?.observe?.(state, machineryPresentationOptions());
+  }
   function draw(state, { cameraMode = view, cameraFov = fov, cameraTilt = tilt } = {}) {
     if (disposed || !course) return;
     const hunt = course.steps[mode].find((step) => step.type === 'hunt-contact-v1');
     huntPresentation?.update(state, {
       reducedMotion,
       tailRadius: hunt?.tail.radius ?? 350,
-      actorDefinitions: course.actors,
+      ...machineryPresentationOptions(),
     });
     view = cameraMode;
     fov = cameraFov;
@@ -2947,6 +2995,7 @@ export function createFlightRenderer({
   setDrone(droneKind);
   return {
     available: true,
+    observePresentation,
     setCourse,
     setPresentation,
     setQuality,

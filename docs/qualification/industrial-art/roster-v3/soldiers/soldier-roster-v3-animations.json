@@ -1,0 +1,3283 @@
+{
+  "lookout": {
+    "format": "revealline-actor-animation.v1",
+    "id": "industrial-roster-lookout",
+    "revision": 3,
+    "rig": "overhead-soldier.v1",
+    "material": "cloth",
+    "parts": [
+      "cap",
+      "torso",
+      "arms",
+      "boots",
+      "binoculars"
+    ],
+    "anchors": {
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      },
+      "equipment": {
+        "x": 0.75,
+        "y": 0.625
+      }
+    },
+    "frames": [
+      {
+        "id": "move-0",
+        "durationMs": 175,
+        "stride": 0,
+        "breath": 0,
+        "accessory": 0,
+        "region": null
+      },
+      {
+        "id": "move-1",
+        "durationMs": 160,
+        "stride": 1,
+        "breath": 0,
+        "accessory": 1,
+        "region": null
+      },
+      {
+        "id": "move-2",
+        "durationMs": 160,
+        "stride": 1,
+        "breath": 0,
+        "accessory": 0,
+        "region": null
+      },
+      {
+        "id": "move-3",
+        "durationMs": 175,
+        "stride": 0,
+        "breath": 0,
+        "accessory": 0,
+        "region": null
+      },
+      {
+        "id": "move-4",
+        "durationMs": 160,
+        "stride": -1,
+        "breath": 0,
+        "accessory": -1,
+        "region": null
+      },
+      {
+        "id": "move-5",
+        "durationMs": 160,
+        "stride": -1,
+        "breath": 0,
+        "accessory": 0,
+        "region": null
+      },
+      {
+        "id": "idle-0",
+        "durationMs": 390,
+        "stride": 0,
+        "breath": 0,
+        "accessory": 0,
+        "region": null
+      },
+      {
+        "id": "idle-1",
+        "durationMs": 390,
+        "stride": 0,
+        "breath": 1,
+        "accessory": 0,
+        "region": null
+      },
+      {
+        "id": "notice-0",
+        "durationMs": 95,
+        "stride": 0,
+        "breath": 0,
+        "accessory": -1,
+        "region": null
+      },
+      {
+        "id": "notice-1",
+        "durationMs": 150,
+        "stride": 0,
+        "breath": 1,
+        "accessory": 2,
+        "region": null
+      },
+      {
+        "id": "prepare-0",
+        "durationMs": 170,
+        "stride": 0,
+        "breath": 1,
+        "accessory": -1,
+        "region": null
+      },
+      {
+        "id": "prepare-1",
+        "durationMs": 230,
+        "stride": 0,
+        "breath": 2,
+        "accessory": 0,
+        "region": null
+      },
+      {
+        "id": "blocked-0",
+        "durationMs": 210,
+        "stride": 0,
+        "breath": 0,
+        "accessory": -1,
+        "region": null
+      },
+      {
+        "id": "blocked-1",
+        "durationMs": 210,
+        "stride": 0,
+        "breath": 1,
+        "accessory": 1,
+        "region": null
+      },
+      {
+        "id": "recover-0",
+        "durationMs": 390,
+        "stride": 0,
+        "breath": 2,
+        "accessory": 1,
+        "region": null
+      },
+      {
+        "id": "recover-1",
+        "durationMs": 390,
+        "stride": 0,
+        "breath": 0,
+        "accessory": 0,
+        "region": null
+      },
+      {
+        "id": "caught-0",
+        "durationMs": 80,
+        "stride": 0,
+        "breath": 0,
+        "accessory": 2,
+        "region": null
+      },
+      {
+        "id": "caught-1",
+        "durationMs": 150,
+        "stride": 0,
+        "breath": 1,
+        "accessory": -2,
+        "region": null
+      },
+      {
+        "id": "caught-2",
+        "durationMs": 260,
+        "stride": 0,
+        "breath": 0,
+        "accessory": 0,
+        "region": null
+      },
+      {
+        "id": "aim",
+        "durationMs": 300,
+        "stride": 0,
+        "breath": 0,
+        "accessory": -1,
+        "region": null
+      },
+      {
+        "id": "fire-0",
+        "durationMs": 70,
+        "stride": 0,
+        "breath": 0,
+        "accessory": 2,
+        "region": null
+      },
+      {
+        "id": "fire-1",
+        "durationMs": 160,
+        "stride": 0,
+        "breath": 0,
+        "accessory": 0,
+        "region": null
+      }
+    ],
+    "clips": {
+      "idle": {
+        "frames": [
+          "idle-0",
+          "idle-1"
+        ],
+        "loop": true
+      },
+      "notice": {
+        "frames": [
+          "notice-0",
+          "notice-1",
+          "idle-0"
+        ],
+        "loop": false
+      },
+      "anticipation": {
+        "frames": [
+          "prepare-0",
+          "prepare-1"
+        ],
+        "loop": true
+      },
+      "move": {
+        "frames": [
+          "move-0",
+          "move-1",
+          "move-2",
+          "move-3",
+          "move-4",
+          "move-5"
+        ],
+        "loop": true
+      },
+      "blocked": {
+        "frames": [
+          "blocked-0",
+          "blocked-1"
+        ],
+        "loop": true
+      },
+      "recovery": {
+        "frames": [
+          "recover-0",
+          "recover-1"
+        ],
+        "loop": true
+      },
+      "caught": {
+        "frames": [
+          "caught-0",
+          "caught-1",
+          "caught-2"
+        ],
+        "loop": false
+      },
+      "aim": {
+        "frames": [
+          "aim"
+        ],
+        "loop": true
+      },
+      "fire": {
+        "frames": [
+          "fire-0",
+          "fire-1"
+        ],
+        "loop": false
+      }
+    },
+    "fallback": "compact-overhead.v1"
+  },
+  "patroller": {
+    "format": "revealline-actor-animation.v1",
+    "id": "industrial-roster-patroller",
+    "revision": 3,
+    "rig": "overhead-soldier.v1",
+    "material": "cloth",
+    "parts": [
+      "cap",
+      "torso",
+      "arms",
+      "boots",
+      "pack"
+    ],
+    "anchors": {
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      },
+      "equipment": {
+        "x": 0.75,
+        "y": 0.625
+      }
+    },
+    "frames": [
+      {
+        "id": "move-0",
+        "durationMs": 160,
+        "stride": 0,
+        "breath": 0,
+        "accessory": 0,
+        "region": null
+      },
+      {
+        "id": "move-1",
+        "durationMs": 145,
+        "stride": 1,
+        "breath": 0,
+        "accessory": 1,
+        "region": null
+      },
+      {
+        "id": "move-2",
+        "durationMs": 145,
+        "stride": 1,
+        "breath": 0,
+        "accessory": 0,
+        "region": null
+      },
+      {
+        "id": "move-3",
+        "durationMs": 160,
+        "stride": 0,
+        "breath": 0,
+        "accessory": 0,
+        "region": null
+      },
+      {
+        "id": "move-4",
+        "durationMs": 145,
+        "stride": -1,
+        "breath": 0,
+        "accessory": -1,
+        "region": null
+      },
+      {
+        "id": "move-5",
+        "durationMs": 145,
+        "stride": -1,
+        "breath": 0,
+        "accessory": 0,
+        "region": null
+      },
+      {
+        "id": "idle-0",
+        "durationMs": 340,
+        "stride": 0,
+        "breath": 0,
+        "accessory": 0,
+        "region": null
+      },
+      {
+        "id": "idle-1",
+        "durationMs": 340,
+        "stride": 0,
+        "breath": 1,
+        "accessory": 1,
+        "region": null
+      },
+      {
+        "id": "notice-0",
+        "durationMs": 98,
+        "stride": 0,
+        "breath": 0,
+        "accessory": -1,
+        "region": null
+      },
+      {
+        "id": "notice-1",
+        "durationMs": 154,
+        "stride": 0,
+        "breath": 1,
+        "accessory": 2,
+        "region": null
+      },
+      {
+        "id": "prepare-0",
+        "durationMs": 170,
+        "stride": 0,
+        "breath": 1,
+        "accessory": -1,
+        "region": null
+      },
+      {
+        "id": "prepare-1",
+        "durationMs": 230,
+        "stride": 0,
+        "breath": 2,
+        "accessory": 0,
+        "region": null
+      },
+      {
+        "id": "blocked-0",
+        "durationMs": 210,
+        "stride": 0,
+        "breath": 0,
+        "accessory": -1,
+        "region": null
+      },
+      {
+        "id": "blocked-1",
+        "durationMs": 210,
+        "stride": 0,
+        "breath": 1,
+        "accessory": 1,
+        "region": null
+      },
+      {
+        "id": "recover-0",
+        "durationMs": 340,
+        "stride": 0,
+        "breath": 2,
+        "accessory": 1,
+        "region": null
+      },
+      {
+        "id": "recover-1",
+        "durationMs": 340,
+        "stride": 0,
+        "breath": 0,
+        "accessory": 0,
+        "region": null
+      },
+      {
+        "id": "caught-0",
+        "durationMs": 80,
+        "stride": 0,
+        "breath": 0,
+        "accessory": 2,
+        "region": null
+      },
+      {
+        "id": "caught-1",
+        "durationMs": 150,
+        "stride": 0,
+        "breath": 1,
+        "accessory": -2,
+        "region": null
+      },
+      {
+        "id": "caught-2",
+        "durationMs": 260,
+        "stride": 0,
+        "breath": 0,
+        "accessory": 0,
+        "region": null
+      },
+      {
+        "id": "aim",
+        "durationMs": 300,
+        "stride": 0,
+        "breath": 0,
+        "accessory": -1,
+        "region": null
+      },
+      {
+        "id": "fire-0",
+        "durationMs": 70,
+        "stride": 0,
+        "breath": 0,
+        "accessory": 2,
+        "region": null
+      },
+      {
+        "id": "fire-1",
+        "durationMs": 160,
+        "stride": 0,
+        "breath": 0,
+        "accessory": 0,
+        "region": null
+      }
+    ],
+    "clips": {
+      "idle": {
+        "frames": [
+          "idle-0",
+          "idle-1"
+        ],
+        "loop": true
+      },
+      "notice": {
+        "frames": [
+          "notice-0",
+          "notice-1",
+          "idle-0"
+        ],
+        "loop": false
+      },
+      "anticipation": {
+        "frames": [
+          "prepare-0",
+          "prepare-1"
+        ],
+        "loop": true
+      },
+      "move": {
+        "frames": [
+          "move-0",
+          "move-1",
+          "move-2",
+          "move-3",
+          "move-4",
+          "move-5"
+        ],
+        "loop": true
+      },
+      "blocked": {
+        "frames": [
+          "blocked-0",
+          "blocked-1"
+        ],
+        "loop": true
+      },
+      "recovery": {
+        "frames": [
+          "recover-0",
+          "recover-1"
+        ],
+        "loop": true
+      },
+      "caught": {
+        "frames": [
+          "caught-0",
+          "caught-1",
+          "caught-2"
+        ],
+        "loop": false
+      },
+      "aim": {
+        "frames": [
+          "aim"
+        ],
+        "loop": true
+      },
+      "fire": {
+        "frames": [
+          "fire-0",
+          "fire-1"
+        ],
+        "loop": false
+      }
+    },
+    "fallback": "compact-overhead.v1"
+  },
+  "runner": {
+    "format": "revealline-actor-animation.v1",
+    "id": "industrial-roster-runner",
+    "revision": 3,
+    "rig": "overhead-soldier.v1",
+    "material": "cloth",
+    "parts": [
+      "helmet",
+      "torso",
+      "arms",
+      "boots"
+    ],
+    "anchors": {
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      },
+      "equipment": {
+        "x": 0.75,
+        "y": 0.625
+      }
+    },
+    "frames": [
+      {
+        "id": "move-0",
+        "durationMs": 105,
+        "stride": 0,
+        "breath": 0,
+        "accessory": 0,
+        "region": null
+      },
+      {
+        "id": "move-1",
+        "durationMs": 90,
+        "stride": 2,
+        "breath": 0,
+        "accessory": 1,
+        "region": null
+      },
+      {
+        "id": "move-2",
+        "durationMs": 90,
+        "stride": 1,
+        "breath": 0,
+        "accessory": 0,
+        "region": null
+      },
+      {
+        "id": "move-3",
+        "durationMs": 105,
+        "stride": 0,
+        "breath": 0,
+        "accessory": 0,
+        "region": null
+      },
+      {
+        "id": "move-4",
+        "durationMs": 90,
+        "stride": -2,
+        "breath": 0,
+        "accessory": -1,
+        "region": null
+      },
+      {
+        "id": "move-5",
+        "durationMs": 90,
+        "stride": -1,
+        "breath": 0,
+        "accessory": 0,
+        "region": null
+      },
+      {
+        "id": "idle-0",
+        "durationMs": 260,
+        "stride": 0,
+        "breath": 0,
+        "accessory": 0,
+        "region": null
+      },
+      {
+        "id": "idle-1",
+        "durationMs": 260,
+        "stride": 0,
+        "breath": 1,
+        "accessory": 0,
+        "region": null
+      },
+      {
+        "id": "notice-0",
+        "durationMs": 101,
+        "stride": 0,
+        "breath": 0,
+        "accessory": -1,
+        "region": null
+      },
+      {
+        "id": "notice-1",
+        "durationMs": 158,
+        "stride": 0,
+        "breath": 1,
+        "accessory": 2,
+        "region": null
+      },
+      {
+        "id": "prepare-0",
+        "durationMs": 170,
+        "stride": 0,
+        "breath": 1,
+        "accessory": -1,
+        "region": null
+      },
+      {
+        "id": "prepare-1",
+        "durationMs": 230,
+        "stride": 0,
+        "breath": 2,
+        "accessory": 0,
+        "region": null
+      },
+      {
+        "id": "blocked-0",
+        "durationMs": 210,
+        "stride": 0,
+        "breath": 0,
+        "accessory": -1,
+        "region": null
+      },
+      {
+        "id": "blocked-1",
+        "durationMs": 210,
+        "stride": 0,
+        "breath": 1,
+        "accessory": 1,
+        "region": null
+      },
+      {
+        "id": "recover-0",
+        "durationMs": 260,
+        "stride": 0,
+        "breath": 2,
+        "accessory": 1,
+        "region": null
+      },
+      {
+        "id": "recover-1",
+        "durationMs": 260,
+        "stride": 0,
+        "breath": 0,
+        "accessory": 0,
+        "region": null
+      },
+      {
+        "id": "caught-0",
+        "durationMs": 80,
+        "stride": 0,
+        "breath": 0,
+        "accessory": 2,
+        "region": null
+      },
+      {
+        "id": "caught-1",
+        "durationMs": 150,
+        "stride": 0,
+        "breath": 1,
+        "accessory": -2,
+        "region": null
+      },
+      {
+        "id": "caught-2",
+        "durationMs": 260,
+        "stride": 0,
+        "breath": 0,
+        "accessory": 0,
+        "region": null
+      },
+      {
+        "id": "aim",
+        "durationMs": 300,
+        "stride": 0,
+        "breath": 0,
+        "accessory": -1,
+        "region": null
+      },
+      {
+        "id": "fire-0",
+        "durationMs": 70,
+        "stride": 0,
+        "breath": 0,
+        "accessory": 2,
+        "region": null
+      },
+      {
+        "id": "fire-1",
+        "durationMs": 160,
+        "stride": 0,
+        "breath": 0,
+        "accessory": 0,
+        "region": null
+      }
+    ],
+    "clips": {
+      "idle": {
+        "frames": [
+          "idle-0",
+          "idle-1"
+        ],
+        "loop": true
+      },
+      "notice": {
+        "frames": [
+          "notice-0",
+          "notice-1",
+          "idle-0"
+        ],
+        "loop": false
+      },
+      "anticipation": {
+        "frames": [
+          "prepare-0",
+          "prepare-1"
+        ],
+        "loop": true
+      },
+      "move": {
+        "frames": [
+          "move-0",
+          "move-1",
+          "move-2",
+          "move-3",
+          "move-4",
+          "move-5"
+        ],
+        "loop": true
+      },
+      "blocked": {
+        "frames": [
+          "blocked-0",
+          "blocked-1"
+        ],
+        "loop": true
+      },
+      "recovery": {
+        "frames": [
+          "recover-0",
+          "recover-1"
+        ],
+        "loop": true
+      },
+      "caught": {
+        "frames": [
+          "caught-0",
+          "caught-1",
+          "caught-2"
+        ],
+        "loop": false
+      },
+      "aim": {
+        "frames": [
+          "aim"
+        ],
+        "loop": true
+      },
+      "fire": {
+        "frames": [
+          "fire-0",
+          "fire-1"
+        ],
+        "loop": false
+      }
+    },
+    "fallback": "compact-overhead.v1"
+  },
+  "sprinter": {
+    "format": "revealline-actor-animation.v1",
+    "id": "industrial-roster-sprinter",
+    "revision": 3,
+    "rig": "overhead-soldier.v1",
+    "material": "cloth",
+    "parts": [
+      "helmet",
+      "torso",
+      "arms",
+      "boots"
+    ],
+    "anchors": {
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      },
+      "equipment": {
+        "x": 0.75,
+        "y": 0.625
+      }
+    },
+    "frames": [
+      {
+        "id": "move-0",
+        "durationMs": 90,
+        "stride": 0,
+        "breath": 0,
+        "accessory": 0,
+        "region": null
+      },
+      {
+        "id": "move-1",
+        "durationMs": 75,
+        "stride": 3,
+        "breath": 0,
+        "accessory": 1,
+        "region": null
+      },
+      {
+        "id": "move-2",
+        "durationMs": 75,
+        "stride": 2,
+        "breath": 0,
+        "accessory": 0,
+        "region": null
+      },
+      {
+        "id": "move-3",
+        "durationMs": 90,
+        "stride": 0,
+        "breath": 0,
+        "accessory": 0,
+        "region": null
+      },
+      {
+        "id": "move-4",
+        "durationMs": 75,
+        "stride": -3,
+        "breath": 0,
+        "accessory": -1,
+        "region": null
+      },
+      {
+        "id": "move-5",
+        "durationMs": 75,
+        "stride": -2,
+        "breath": 0,
+        "accessory": 0,
+        "region": null
+      },
+      {
+        "id": "idle-0",
+        "durationMs": 190,
+        "stride": 0,
+        "breath": 0,
+        "accessory": 0,
+        "region": null
+      },
+      {
+        "id": "idle-1",
+        "durationMs": 190,
+        "stride": 0,
+        "breath": 1,
+        "accessory": 1,
+        "region": null
+      },
+      {
+        "id": "notice-0",
+        "durationMs": 104,
+        "stride": 0,
+        "breath": 0,
+        "accessory": -1,
+        "region": null
+      },
+      {
+        "id": "notice-1",
+        "durationMs": 162,
+        "stride": 0,
+        "breath": 1,
+        "accessory": 2,
+        "region": null
+      },
+      {
+        "id": "prepare-0",
+        "durationMs": 170,
+        "stride": 0,
+        "breath": 1,
+        "accessory": -1,
+        "region": null
+      },
+      {
+        "id": "prepare-1",
+        "durationMs": 230,
+        "stride": 0,
+        "breath": 2,
+        "accessory": 0,
+        "region": null
+      },
+      {
+        "id": "blocked-0",
+        "durationMs": 210,
+        "stride": 0,
+        "breath": 0,
+        "accessory": -1,
+        "region": null
+      },
+      {
+        "id": "blocked-1",
+        "durationMs": 210,
+        "stride": 0,
+        "breath": 1,
+        "accessory": 1,
+        "region": null
+      },
+      {
+        "id": "recover-0",
+        "durationMs": 190,
+        "stride": 0,
+        "breath": 2,
+        "accessory": 1,
+        "region": null
+      },
+      {
+        "id": "recover-1",
+        "durationMs": 190,
+        "stride": 0,
+        "breath": 0,
+        "accessory": 0,
+        "region": null
+      },
+      {
+        "id": "caught-0",
+        "durationMs": 80,
+        "stride": 0,
+        "breath": 0,
+        "accessory": 2,
+        "region": null
+      },
+      {
+        "id": "caught-1",
+        "durationMs": 150,
+        "stride": 0,
+        "breath": 1,
+        "accessory": -2,
+        "region": null
+      },
+      {
+        "id": "caught-2",
+        "durationMs": 260,
+        "stride": 0,
+        "breath": 0,
+        "accessory": 0,
+        "region": null
+      },
+      {
+        "id": "aim",
+        "durationMs": 300,
+        "stride": 0,
+        "breath": 0,
+        "accessory": -1,
+        "region": null
+      },
+      {
+        "id": "fire-0",
+        "durationMs": 70,
+        "stride": 0,
+        "breath": 0,
+        "accessory": 2,
+        "region": null
+      },
+      {
+        "id": "fire-1",
+        "durationMs": 160,
+        "stride": 0,
+        "breath": 0,
+        "accessory": 0,
+        "region": null
+      }
+    ],
+    "clips": {
+      "idle": {
+        "frames": [
+          "idle-0",
+          "idle-1"
+        ],
+        "loop": true
+      },
+      "notice": {
+        "frames": [
+          "notice-0",
+          "notice-1",
+          "idle-0"
+        ],
+        "loop": false
+      },
+      "anticipation": {
+        "frames": [
+          "prepare-0",
+          "prepare-1"
+        ],
+        "loop": true
+      },
+      "move": {
+        "frames": [
+          "move-0",
+          "move-1",
+          "move-2",
+          "move-3",
+          "move-4",
+          "move-5"
+        ],
+        "loop": true
+      },
+      "blocked": {
+        "frames": [
+          "blocked-0",
+          "blocked-1"
+        ],
+        "loop": true
+      },
+      "recovery": {
+        "frames": [
+          "recover-0",
+          "recover-1"
+        ],
+        "loop": true
+      },
+      "caught": {
+        "frames": [
+          "caught-0",
+          "caught-1",
+          "caught-2"
+        ],
+        "loop": false
+      },
+      "aim": {
+        "frames": [
+          "aim"
+        ],
+        "loop": true
+      },
+      "fire": {
+        "frames": [
+          "fire-0",
+          "fire-1"
+        ],
+        "loop": false
+      }
+    },
+    "fallback": "compact-overhead.v1"
+  },
+  "courier": {
+    "format": "revealline-actor-animation.v1",
+    "id": "industrial-roster-courier",
+    "revision": 3,
+    "rig": "overhead-soldier.v1",
+    "material": "cloth",
+    "parts": [
+      "cap",
+      "torso",
+      "arms",
+      "boots",
+      "satchel"
+    ],
+    "anchors": {
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      },
+      "equipment": {
+        "x": 0.75,
+        "y": 0.625
+      }
+    },
+    "frames": [
+      {
+        "id": "move-0",
+        "durationMs": 130,
+        "stride": 0,
+        "breath": 0,
+        "accessory": 0,
+        "region": null
+      },
+      {
+        "id": "move-1",
+        "durationMs": 115,
+        "stride": 2,
+        "breath": 0,
+        "accessory": 1,
+        "region": null
+      },
+      {
+        "id": "move-2",
+        "durationMs": 115,
+        "stride": 1,
+        "breath": 0,
+        "accessory": 0,
+        "region": null
+      },
+      {
+        "id": "move-3",
+        "durationMs": 130,
+        "stride": 0,
+        "breath": 0,
+        "accessory": 0,
+        "region": null
+      },
+      {
+        "id": "move-4",
+        "durationMs": 115,
+        "stride": -2,
+        "breath": 0,
+        "accessory": -1,
+        "region": null
+      },
+      {
+        "id": "move-5",
+        "durationMs": 115,
+        "stride": -1,
+        "breath": 0,
+        "accessory": 0,
+        "region": null
+      },
+      {
+        "id": "idle-0",
+        "durationMs": 310,
+        "stride": 0,
+        "breath": 0,
+        "accessory": 0,
+        "region": null
+      },
+      {
+        "id": "idle-1",
+        "durationMs": 310,
+        "stride": 0,
+        "breath": 1,
+        "accessory": 0,
+        "region": null
+      },
+      {
+        "id": "notice-0",
+        "durationMs": 107,
+        "stride": 0,
+        "breath": 0,
+        "accessory": -1,
+        "region": null
+      },
+      {
+        "id": "notice-1",
+        "durationMs": 166,
+        "stride": 0,
+        "breath": 1,
+        "accessory": 2,
+        "region": null
+      },
+      {
+        "id": "prepare-0",
+        "durationMs": 170,
+        "stride": 0,
+        "breath": 1,
+        "accessory": -1,
+        "region": null
+      },
+      {
+        "id": "prepare-1",
+        "durationMs": 230,
+        "stride": 0,
+        "breath": 2,
+        "accessory": 0,
+        "region": null
+      },
+      {
+        "id": "blocked-0",
+        "durationMs": 210,
+        "stride": 0,
+        "breath": 0,
+        "accessory": -1,
+        "region": null
+      },
+      {
+        "id": "blocked-1",
+        "durationMs": 210,
+        "stride": 0,
+        "breath": 1,
+        "accessory": 1,
+        "region": null
+      },
+      {
+        "id": "recover-0",
+        "durationMs": 310,
+        "stride": 0,
+        "breath": 2,
+        "accessory": 1,
+        "region": null
+      },
+      {
+        "id": "recover-1",
+        "durationMs": 310,
+        "stride": 0,
+        "breath": 0,
+        "accessory": 0,
+        "region": null
+      },
+      {
+        "id": "caught-0",
+        "durationMs": 80,
+        "stride": 0,
+        "breath": 0,
+        "accessory": 2,
+        "region": null
+      },
+      {
+        "id": "caught-1",
+        "durationMs": 150,
+        "stride": 0,
+        "breath": 1,
+        "accessory": -2,
+        "region": null
+      },
+      {
+        "id": "caught-2",
+        "durationMs": 260,
+        "stride": 0,
+        "breath": 0,
+        "accessory": 0,
+        "region": null
+      },
+      {
+        "id": "aim",
+        "durationMs": 300,
+        "stride": 0,
+        "breath": 0,
+        "accessory": -1,
+        "region": null
+      },
+      {
+        "id": "fire-0",
+        "durationMs": 70,
+        "stride": 0,
+        "breath": 0,
+        "accessory": 2,
+        "region": null
+      },
+      {
+        "id": "fire-1",
+        "durationMs": 160,
+        "stride": 0,
+        "breath": 0,
+        "accessory": 0,
+        "region": null
+      }
+    ],
+    "clips": {
+      "idle": {
+        "frames": [
+          "idle-0",
+          "idle-1"
+        ],
+        "loop": true
+      },
+      "notice": {
+        "frames": [
+          "notice-0",
+          "notice-1",
+          "idle-0"
+        ],
+        "loop": false
+      },
+      "anticipation": {
+        "frames": [
+          "prepare-0",
+          "prepare-1"
+        ],
+        "loop": true
+      },
+      "move": {
+        "frames": [
+          "move-0",
+          "move-1",
+          "move-2",
+          "move-3",
+          "move-4",
+          "move-5"
+        ],
+        "loop": true
+      },
+      "blocked": {
+        "frames": [
+          "blocked-0",
+          "blocked-1"
+        ],
+        "loop": true
+      },
+      "recovery": {
+        "frames": [
+          "recover-0",
+          "recover-1"
+        ],
+        "loop": true
+      },
+      "caught": {
+        "frames": [
+          "caught-0",
+          "caught-1",
+          "caught-2"
+        ],
+        "loop": false
+      },
+      "aim": {
+        "frames": [
+          "aim"
+        ],
+        "loop": true
+      },
+      "fire": {
+        "frames": [
+          "fire-0",
+          "fire-1"
+        ],
+        "loop": false
+      }
+    },
+    "fallback": "compact-overhead.v1"
+  },
+  "guard": {
+    "format": "revealline-actor-animation.v1",
+    "id": "industrial-roster-guard",
+    "revision": 3,
+    "rig": "overhead-soldier.v1",
+    "material": "armor",
+    "parts": [
+      "helmet",
+      "torso",
+      "arms",
+      "boots",
+      "armor",
+      "weapon"
+    ],
+    "anchors": {
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      },
+      "equipment": {
+        "x": 0.75,
+        "y": 0.625
+      }
+    },
+    "frames": [
+      {
+        "id": "move-0",
+        "durationMs": 170,
+        "stride": 0,
+        "breath": 0,
+        "accessory": 0,
+        "region": null
+      },
+      {
+        "id": "move-1",
+        "durationMs": 155,
+        "stride": 1,
+        "breath": 0,
+        "accessory": 1,
+        "region": null
+      },
+      {
+        "id": "move-2",
+        "durationMs": 155,
+        "stride": 1,
+        "breath": 0,
+        "accessory": 0,
+        "region": null
+      },
+      {
+        "id": "move-3",
+        "durationMs": 170,
+        "stride": 0,
+        "breath": 0,
+        "accessory": 0,
+        "region": null
+      },
+      {
+        "id": "move-4",
+        "durationMs": 155,
+        "stride": -1,
+        "breath": 0,
+        "accessory": -1,
+        "region": null
+      },
+      {
+        "id": "move-5",
+        "durationMs": 155,
+        "stride": -1,
+        "breath": 0,
+        "accessory": 0,
+        "region": null
+      },
+      {
+        "id": "idle-0",
+        "durationMs": 360,
+        "stride": 0,
+        "breath": 0,
+        "accessory": 0,
+        "region": null
+      },
+      {
+        "id": "idle-1",
+        "durationMs": 360,
+        "stride": 0,
+        "breath": 1,
+        "accessory": 1,
+        "region": null
+      },
+      {
+        "id": "notice-0",
+        "durationMs": 110,
+        "stride": 0,
+        "breath": 0,
+        "accessory": -1,
+        "region": null
+      },
+      {
+        "id": "notice-1",
+        "durationMs": 170,
+        "stride": 0,
+        "breath": 1,
+        "accessory": 2,
+        "region": null
+      },
+      {
+        "id": "prepare-0",
+        "durationMs": 170,
+        "stride": 0,
+        "breath": 1,
+        "accessory": -1,
+        "region": null
+      },
+      {
+        "id": "prepare-1",
+        "durationMs": 230,
+        "stride": 0,
+        "breath": 2,
+        "accessory": 0,
+        "region": null
+      },
+      {
+        "id": "blocked-0",
+        "durationMs": 210,
+        "stride": 0,
+        "breath": 0,
+        "accessory": -1,
+        "region": null
+      },
+      {
+        "id": "blocked-1",
+        "durationMs": 210,
+        "stride": 0,
+        "breath": 1,
+        "accessory": 1,
+        "region": null
+      },
+      {
+        "id": "recover-0",
+        "durationMs": 360,
+        "stride": 0,
+        "breath": 2,
+        "accessory": 1,
+        "region": null
+      },
+      {
+        "id": "recover-1",
+        "durationMs": 360,
+        "stride": 0,
+        "breath": 0,
+        "accessory": 0,
+        "region": null
+      },
+      {
+        "id": "caught-0",
+        "durationMs": 80,
+        "stride": 0,
+        "breath": 0,
+        "accessory": 2,
+        "region": null
+      },
+      {
+        "id": "caught-1",
+        "durationMs": 150,
+        "stride": 0,
+        "breath": 1,
+        "accessory": -2,
+        "region": null
+      },
+      {
+        "id": "caught-2",
+        "durationMs": 260,
+        "stride": 0,
+        "breath": 0,
+        "accessory": 0,
+        "region": null
+      },
+      {
+        "id": "aim",
+        "durationMs": 300,
+        "stride": 0,
+        "breath": 0,
+        "accessory": -1,
+        "region": null
+      },
+      {
+        "id": "fire-0",
+        "durationMs": 70,
+        "stride": 0,
+        "breath": 0,
+        "accessory": 2,
+        "region": null
+      },
+      {
+        "id": "fire-1",
+        "durationMs": 160,
+        "stride": 0,
+        "breath": 0,
+        "accessory": 0,
+        "region": null
+      }
+    ],
+    "clips": {
+      "idle": {
+        "frames": [
+          "idle-0",
+          "idle-1"
+        ],
+        "loop": true
+      },
+      "notice": {
+        "frames": [
+          "notice-0",
+          "notice-1",
+          "idle-0"
+        ],
+        "loop": false
+      },
+      "anticipation": {
+        "frames": [
+          "prepare-0",
+          "prepare-1"
+        ],
+        "loop": true
+      },
+      "move": {
+        "frames": [
+          "move-0",
+          "move-1",
+          "move-2",
+          "move-3",
+          "move-4",
+          "move-5"
+        ],
+        "loop": true
+      },
+      "blocked": {
+        "frames": [
+          "blocked-0",
+          "blocked-1"
+        ],
+        "loop": true
+      },
+      "recovery": {
+        "frames": [
+          "recover-0",
+          "recover-1"
+        ],
+        "loop": true
+      },
+      "caught": {
+        "frames": [
+          "caught-0",
+          "caught-1",
+          "caught-2"
+        ],
+        "loop": false
+      },
+      "aim": {
+        "frames": [
+          "aim"
+        ],
+        "loop": true
+      },
+      "fire": {
+        "frames": [
+          "fire-0",
+          "fire-1"
+        ],
+        "loop": false
+      }
+    },
+    "fallback": "compact-overhead.v1"
+  },
+  "refuge-seeker": {
+    "format": "revealline-actor-animation.v1",
+    "id": "industrial-roster-refuge-seeker",
+    "revision": 3,
+    "rig": "overhead-soldier.v1",
+    "material": "cloth",
+    "parts": [
+      "helmet",
+      "torso",
+      "arms",
+      "boots",
+      "satchel",
+      "hood",
+      "pack"
+    ],
+    "anchors": {
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      },
+      "equipment": {
+        "x": 0.75,
+        "y": 0.625
+      }
+    },
+    "frames": [
+      {
+        "id": "move-0",
+        "durationMs": 150,
+        "stride": 0,
+        "breath": 0,
+        "accessory": 0,
+        "region": null
+      },
+      {
+        "id": "move-1",
+        "durationMs": 135,
+        "stride": 1,
+        "breath": 0,
+        "accessory": 1,
+        "region": null
+      },
+      {
+        "id": "move-2",
+        "durationMs": 135,
+        "stride": 1,
+        "breath": 0,
+        "accessory": 0,
+        "region": null
+      },
+      {
+        "id": "move-3",
+        "durationMs": 150,
+        "stride": 0,
+        "breath": 0,
+        "accessory": 0,
+        "region": null
+      },
+      {
+        "id": "move-4",
+        "durationMs": 135,
+        "stride": -1,
+        "breath": 0,
+        "accessory": -1,
+        "region": null
+      },
+      {
+        "id": "move-5",
+        "durationMs": 135,
+        "stride": -1,
+        "breath": 0,
+        "accessory": 0,
+        "region": null
+      },
+      {
+        "id": "idle-0",
+        "durationMs": 350,
+        "stride": 0,
+        "breath": 0,
+        "accessory": 0,
+        "region": null
+      },
+      {
+        "id": "idle-1",
+        "durationMs": 350,
+        "stride": 0,
+        "breath": 1,
+        "accessory": 0,
+        "region": null
+      },
+      {
+        "id": "notice-0",
+        "durationMs": 113,
+        "stride": 0,
+        "breath": 0,
+        "accessory": -1,
+        "region": null
+      },
+      {
+        "id": "notice-1",
+        "durationMs": 174,
+        "stride": 0,
+        "breath": 1,
+        "accessory": 2,
+        "region": null
+      },
+      {
+        "id": "prepare-0",
+        "durationMs": 170,
+        "stride": 0,
+        "breath": 1,
+        "accessory": -1,
+        "region": null
+      },
+      {
+        "id": "prepare-1",
+        "durationMs": 230,
+        "stride": 0,
+        "breath": 2,
+        "accessory": 0,
+        "region": null
+      },
+      {
+        "id": "blocked-0",
+        "durationMs": 210,
+        "stride": 0,
+        "breath": 0,
+        "accessory": -1,
+        "region": null
+      },
+      {
+        "id": "blocked-1",
+        "durationMs": 210,
+        "stride": 0,
+        "breath": 1,
+        "accessory": 1,
+        "region": null
+      },
+      {
+        "id": "recover-0",
+        "durationMs": 350,
+        "stride": 0,
+        "breath": 2,
+        "accessory": 1,
+        "region": null
+      },
+      {
+        "id": "recover-1",
+        "durationMs": 350,
+        "stride": 0,
+        "breath": 0,
+        "accessory": 0,
+        "region": null
+      },
+      {
+        "id": "caught-0",
+        "durationMs": 80,
+        "stride": 0,
+        "breath": 0,
+        "accessory": 2,
+        "region": null
+      },
+      {
+        "id": "caught-1",
+        "durationMs": 150,
+        "stride": 0,
+        "breath": 1,
+        "accessory": -2,
+        "region": null
+      },
+      {
+        "id": "caught-2",
+        "durationMs": 260,
+        "stride": 0,
+        "breath": 0,
+        "accessory": 0,
+        "region": null
+      },
+      {
+        "id": "aim",
+        "durationMs": 300,
+        "stride": 0,
+        "breath": 0,
+        "accessory": -1,
+        "region": null
+      },
+      {
+        "id": "fire-0",
+        "durationMs": 70,
+        "stride": 0,
+        "breath": 0,
+        "accessory": 2,
+        "region": null
+      },
+      {
+        "id": "fire-1",
+        "durationMs": 160,
+        "stride": 0,
+        "breath": 0,
+        "accessory": 0,
+        "region": null
+      }
+    ],
+    "clips": {
+      "idle": {
+        "frames": [
+          "idle-0",
+          "idle-1"
+        ],
+        "loop": true
+      },
+      "notice": {
+        "frames": [
+          "notice-0",
+          "notice-1",
+          "idle-0"
+        ],
+        "loop": false
+      },
+      "anticipation": {
+        "frames": [
+          "prepare-0",
+          "prepare-1"
+        ],
+        "loop": true
+      },
+      "move": {
+        "frames": [
+          "move-0",
+          "move-1",
+          "move-2",
+          "move-3",
+          "move-4",
+          "move-5"
+        ],
+        "loop": true
+      },
+      "blocked": {
+        "frames": [
+          "blocked-0",
+          "blocked-1"
+        ],
+        "loop": true
+      },
+      "recovery": {
+        "frames": [
+          "recover-0",
+          "recover-1"
+        ],
+        "loop": true
+      },
+      "caught": {
+        "frames": [
+          "caught-0",
+          "caught-1",
+          "caught-2"
+        ],
+        "loop": false
+      },
+      "aim": {
+        "frames": [
+          "aim"
+        ],
+        "loop": true
+      },
+      "fire": {
+        "frames": [
+          "fire-0",
+          "fire-1"
+        ],
+        "loop": false
+      }
+    },
+    "fallback": "compact-overhead.v1"
+  },
+  "switchback": {
+    "format": "revealline-actor-animation.v1",
+    "id": "industrial-roster-switchback",
+    "revision": 3,
+    "rig": "overhead-soldier.v1",
+    "material": "cloth",
+    "parts": [
+      "helmet",
+      "torso",
+      "arms",
+      "boots",
+      "scarf"
+    ],
+    "anchors": {
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      },
+      "equipment": {
+        "x": 0.75,
+        "y": 0.625
+      }
+    },
+    "frames": [
+      {
+        "id": "move-0",
+        "durationMs": 120,
+        "stride": 0,
+        "breath": 0,
+        "accessory": 0,
+        "region": null
+      },
+      {
+        "id": "move-1",
+        "durationMs": 105,
+        "stride": 2,
+        "breath": 0,
+        "accessory": 1,
+        "region": null
+      },
+      {
+        "id": "move-2",
+        "durationMs": 105,
+        "stride": 1,
+        "breath": 0,
+        "accessory": 0,
+        "region": null
+      },
+      {
+        "id": "move-3",
+        "durationMs": 120,
+        "stride": 0,
+        "breath": 0,
+        "accessory": 0,
+        "region": null
+      },
+      {
+        "id": "move-4",
+        "durationMs": 105,
+        "stride": -2,
+        "breath": 0,
+        "accessory": -1,
+        "region": null
+      },
+      {
+        "id": "move-5",
+        "durationMs": 105,
+        "stride": -1,
+        "breath": 0,
+        "accessory": 0,
+        "region": null
+      },
+      {
+        "id": "idle-0",
+        "durationMs": 280,
+        "stride": 0,
+        "breath": 0,
+        "accessory": 0,
+        "region": null
+      },
+      {
+        "id": "idle-1",
+        "durationMs": 280,
+        "stride": 0,
+        "breath": 1,
+        "accessory": 1,
+        "region": null
+      },
+      {
+        "id": "notice-0",
+        "durationMs": 116,
+        "stride": 0,
+        "breath": 0,
+        "accessory": -1,
+        "region": null
+      },
+      {
+        "id": "notice-1",
+        "durationMs": 178,
+        "stride": 0,
+        "breath": 1,
+        "accessory": 2,
+        "region": null
+      },
+      {
+        "id": "prepare-0",
+        "durationMs": 170,
+        "stride": 0,
+        "breath": 1,
+        "accessory": -1,
+        "region": null
+      },
+      {
+        "id": "prepare-1",
+        "durationMs": 230,
+        "stride": 0,
+        "breath": 2,
+        "accessory": 0,
+        "region": null
+      },
+      {
+        "id": "blocked-0",
+        "durationMs": 210,
+        "stride": 0,
+        "breath": 0,
+        "accessory": -1,
+        "region": null
+      },
+      {
+        "id": "blocked-1",
+        "durationMs": 210,
+        "stride": 0,
+        "breath": 1,
+        "accessory": 1,
+        "region": null
+      },
+      {
+        "id": "recover-0",
+        "durationMs": 280,
+        "stride": 0,
+        "breath": 2,
+        "accessory": 1,
+        "region": null
+      },
+      {
+        "id": "recover-1",
+        "durationMs": 280,
+        "stride": 0,
+        "breath": 0,
+        "accessory": 0,
+        "region": null
+      },
+      {
+        "id": "caught-0",
+        "durationMs": 80,
+        "stride": 0,
+        "breath": 0,
+        "accessory": 2,
+        "region": null
+      },
+      {
+        "id": "caught-1",
+        "durationMs": 150,
+        "stride": 0,
+        "breath": 1,
+        "accessory": -2,
+        "region": null
+      },
+      {
+        "id": "caught-2",
+        "durationMs": 260,
+        "stride": 0,
+        "breath": 0,
+        "accessory": 0,
+        "region": null
+      },
+      {
+        "id": "aim",
+        "durationMs": 300,
+        "stride": 0,
+        "breath": 0,
+        "accessory": -1,
+        "region": null
+      },
+      {
+        "id": "fire-0",
+        "durationMs": 70,
+        "stride": 0,
+        "breath": 0,
+        "accessory": 2,
+        "region": null
+      },
+      {
+        "id": "fire-1",
+        "durationMs": 160,
+        "stride": 0,
+        "breath": 0,
+        "accessory": 0,
+        "region": null
+      }
+    ],
+    "clips": {
+      "idle": {
+        "frames": [
+          "idle-0",
+          "idle-1"
+        ],
+        "loop": true
+      },
+      "notice": {
+        "frames": [
+          "notice-0",
+          "notice-1",
+          "idle-0"
+        ],
+        "loop": false
+      },
+      "anticipation": {
+        "frames": [
+          "prepare-0",
+          "prepare-1"
+        ],
+        "loop": true
+      },
+      "move": {
+        "frames": [
+          "move-0",
+          "move-1",
+          "move-2",
+          "move-3",
+          "move-4",
+          "move-5"
+        ],
+        "loop": true
+      },
+      "blocked": {
+        "frames": [
+          "blocked-0",
+          "blocked-1"
+        ],
+        "loop": true
+      },
+      "recovery": {
+        "frames": [
+          "recover-0",
+          "recover-1"
+        ],
+        "loop": true
+      },
+      "caught": {
+        "frames": [
+          "caught-0",
+          "caught-1",
+          "caught-2"
+        ],
+        "loop": false
+      },
+      "aim": {
+        "frames": [
+          "aim"
+        ],
+        "loop": true
+      },
+      "fire": {
+        "frames": [
+          "fire-0",
+          "fire-1"
+        ],
+        "loop": false
+      }
+    },
+    "fallback": "compact-overhead.v1"
+  },
+  "rendezvous-pair": {
+    "format": "revealline-actor-animation.v1",
+    "id": "industrial-roster-rendezvous-pair",
+    "revision": 3,
+    "rig": "overhead-soldier.v1",
+    "material": "cloth",
+    "parts": [
+      "helmet",
+      "torso",
+      "arms",
+      "boots",
+      "satchel",
+      "radio",
+      "pack"
+    ],
+    "anchors": {
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      },
+      "equipment": {
+        "x": 0.75,
+        "y": 0.625
+      }
+    },
+    "frames": [
+      {
+        "id": "move-0",
+        "durationMs": 140,
+        "stride": 0,
+        "breath": 0,
+        "accessory": 0,
+        "region": null
+      },
+      {
+        "id": "move-1",
+        "durationMs": 125,
+        "stride": 1,
+        "breath": 0,
+        "accessory": 1,
+        "region": null
+      },
+      {
+        "id": "move-2",
+        "durationMs": 125,
+        "stride": 1,
+        "breath": 0,
+        "accessory": 0,
+        "region": null
+      },
+      {
+        "id": "move-3",
+        "durationMs": 140,
+        "stride": 0,
+        "breath": 0,
+        "accessory": 0,
+        "region": null
+      },
+      {
+        "id": "move-4",
+        "durationMs": 125,
+        "stride": -1,
+        "breath": 0,
+        "accessory": -1,
+        "region": null
+      },
+      {
+        "id": "move-5",
+        "durationMs": 125,
+        "stride": -1,
+        "breath": 0,
+        "accessory": 0,
+        "region": null
+      },
+      {
+        "id": "idle-0",
+        "durationMs": 300,
+        "stride": 0,
+        "breath": 0,
+        "accessory": 0,
+        "region": null
+      },
+      {
+        "id": "idle-1",
+        "durationMs": 300,
+        "stride": 0,
+        "breath": 1,
+        "accessory": 0,
+        "region": null
+      },
+      {
+        "id": "notice-0",
+        "durationMs": 119,
+        "stride": 0,
+        "breath": 0,
+        "accessory": -1,
+        "region": null
+      },
+      {
+        "id": "notice-1",
+        "durationMs": 182,
+        "stride": 0,
+        "breath": 1,
+        "accessory": 2,
+        "region": null
+      },
+      {
+        "id": "prepare-0",
+        "durationMs": 170,
+        "stride": 0,
+        "breath": 1,
+        "accessory": -1,
+        "region": null
+      },
+      {
+        "id": "prepare-1",
+        "durationMs": 230,
+        "stride": 0,
+        "breath": 2,
+        "accessory": 0,
+        "region": null
+      },
+      {
+        "id": "blocked-0",
+        "durationMs": 210,
+        "stride": 0,
+        "breath": 0,
+        "accessory": -1,
+        "region": null
+      },
+      {
+        "id": "blocked-1",
+        "durationMs": 210,
+        "stride": 0,
+        "breath": 1,
+        "accessory": 1,
+        "region": null
+      },
+      {
+        "id": "recover-0",
+        "durationMs": 300,
+        "stride": 0,
+        "breath": 2,
+        "accessory": 1,
+        "region": null
+      },
+      {
+        "id": "recover-1",
+        "durationMs": 300,
+        "stride": 0,
+        "breath": 0,
+        "accessory": 0,
+        "region": null
+      },
+      {
+        "id": "caught-0",
+        "durationMs": 80,
+        "stride": 0,
+        "breath": 0,
+        "accessory": 2,
+        "region": null
+      },
+      {
+        "id": "caught-1",
+        "durationMs": 150,
+        "stride": 0,
+        "breath": 1,
+        "accessory": -2,
+        "region": null
+      },
+      {
+        "id": "caught-2",
+        "durationMs": 260,
+        "stride": 0,
+        "breath": 0,
+        "accessory": 0,
+        "region": null
+      },
+      {
+        "id": "aim",
+        "durationMs": 300,
+        "stride": 0,
+        "breath": 0,
+        "accessory": -1,
+        "region": null
+      },
+      {
+        "id": "fire-0",
+        "durationMs": 70,
+        "stride": 0,
+        "breath": 0,
+        "accessory": 2,
+        "region": null
+      },
+      {
+        "id": "fire-1",
+        "durationMs": 160,
+        "stride": 0,
+        "breath": 0,
+        "accessory": 0,
+        "region": null
+      }
+    ],
+    "clips": {
+      "idle": {
+        "frames": [
+          "idle-0",
+          "idle-1"
+        ],
+        "loop": true
+      },
+      "notice": {
+        "frames": [
+          "notice-0",
+          "notice-1",
+          "idle-0"
+        ],
+        "loop": false
+      },
+      "anticipation": {
+        "frames": [
+          "prepare-0",
+          "prepare-1"
+        ],
+        "loop": true
+      },
+      "move": {
+        "frames": [
+          "move-0",
+          "move-1",
+          "move-2",
+          "move-3",
+          "move-4",
+          "move-5"
+        ],
+        "loop": true
+      },
+      "blocked": {
+        "frames": [
+          "blocked-0",
+          "blocked-1"
+        ],
+        "loop": true
+      },
+      "recovery": {
+        "frames": [
+          "recover-0",
+          "recover-1"
+        ],
+        "loop": true
+      },
+      "caught": {
+        "frames": [
+          "caught-0",
+          "caught-1",
+          "caught-2"
+        ],
+        "loop": false
+      },
+      "aim": {
+        "frames": [
+          "aim"
+        ],
+        "loop": true
+      },
+      "fire": {
+        "frames": [
+          "fire-0",
+          "fire-1"
+        ],
+        "loop": false
+      }
+    },
+    "fallback": "compact-overhead.v1"
+  },
+  "shield-bearer": {
+    "format": "revealline-actor-animation.v1",
+    "id": "industrial-roster-shield-bearer",
+    "revision": 3,
+    "rig": "overhead-soldier.v1",
+    "material": "armor",
+    "parts": [
+      "helmet",
+      "torso",
+      "arms",
+      "boots",
+      "shield"
+    ],
+    "anchors": {
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      },
+      "equipment": {
+        "x": 0.75,
+        "y": 0.625
+      }
+    },
+    "frames": [
+      {
+        "id": "move-0",
+        "durationMs": 185,
+        "stride": 0,
+        "breath": 0,
+        "accessory": 0,
+        "region": null
+      },
+      {
+        "id": "move-1",
+        "durationMs": 170,
+        "stride": 1,
+        "breath": 0,
+        "accessory": 1,
+        "region": null
+      },
+      {
+        "id": "move-2",
+        "durationMs": 170,
+        "stride": 1,
+        "breath": 0,
+        "accessory": 0,
+        "region": null
+      },
+      {
+        "id": "move-3",
+        "durationMs": 185,
+        "stride": 0,
+        "breath": 0,
+        "accessory": 0,
+        "region": null
+      },
+      {
+        "id": "move-4",
+        "durationMs": 170,
+        "stride": -1,
+        "breath": 0,
+        "accessory": -1,
+        "region": null
+      },
+      {
+        "id": "move-5",
+        "durationMs": 170,
+        "stride": -1,
+        "breath": 0,
+        "accessory": 0,
+        "region": null
+      },
+      {
+        "id": "idle-0",
+        "durationMs": 420,
+        "stride": 0,
+        "breath": 0,
+        "accessory": 0,
+        "region": null
+      },
+      {
+        "id": "idle-1",
+        "durationMs": 420,
+        "stride": 0,
+        "breath": 1,
+        "accessory": 1,
+        "region": null
+      },
+      {
+        "id": "notice-0",
+        "durationMs": 122,
+        "stride": 0,
+        "breath": 0,
+        "accessory": -1,
+        "region": null
+      },
+      {
+        "id": "notice-1",
+        "durationMs": 186,
+        "stride": 0,
+        "breath": 1,
+        "accessory": 2,
+        "region": null
+      },
+      {
+        "id": "prepare-0",
+        "durationMs": 170,
+        "stride": 0,
+        "breath": 1,
+        "accessory": -1,
+        "region": null
+      },
+      {
+        "id": "prepare-1",
+        "durationMs": 230,
+        "stride": 0,
+        "breath": 2,
+        "accessory": 0,
+        "region": null
+      },
+      {
+        "id": "blocked-0",
+        "durationMs": 210,
+        "stride": 0,
+        "breath": 0,
+        "accessory": -1,
+        "region": null
+      },
+      {
+        "id": "blocked-1",
+        "durationMs": 210,
+        "stride": 0,
+        "breath": 1,
+        "accessory": 1,
+        "region": null
+      },
+      {
+        "id": "recover-0",
+        "durationMs": 420,
+        "stride": 0,
+        "breath": 2,
+        "accessory": 1,
+        "region": null
+      },
+      {
+        "id": "recover-1",
+        "durationMs": 420,
+        "stride": 0,
+        "breath": 0,
+        "accessory": 0,
+        "region": null
+      },
+      {
+        "id": "caught-0",
+        "durationMs": 80,
+        "stride": 0,
+        "breath": 0,
+        "accessory": 2,
+        "region": null
+      },
+      {
+        "id": "caught-1",
+        "durationMs": 150,
+        "stride": 0,
+        "breath": 1,
+        "accessory": -2,
+        "region": null
+      },
+      {
+        "id": "caught-2",
+        "durationMs": 260,
+        "stride": 0,
+        "breath": 0,
+        "accessory": 0,
+        "region": null
+      },
+      {
+        "id": "aim",
+        "durationMs": 300,
+        "stride": 0,
+        "breath": 0,
+        "accessory": -1,
+        "region": null
+      },
+      {
+        "id": "fire-0",
+        "durationMs": 70,
+        "stride": 0,
+        "breath": 0,
+        "accessory": 2,
+        "region": null
+      },
+      {
+        "id": "fire-1",
+        "durationMs": 160,
+        "stride": 0,
+        "breath": 0,
+        "accessory": 0,
+        "region": null
+      }
+    ],
+    "clips": {
+      "idle": {
+        "frames": [
+          "idle-0",
+          "idle-1"
+        ],
+        "loop": true
+      },
+      "notice": {
+        "frames": [
+          "notice-0",
+          "notice-1",
+          "idle-0"
+        ],
+        "loop": false
+      },
+      "anticipation": {
+        "frames": [
+          "prepare-0",
+          "prepare-1"
+        ],
+        "loop": true
+      },
+      "move": {
+        "frames": [
+          "move-0",
+          "move-1",
+          "move-2",
+          "move-3",
+          "move-4",
+          "move-5"
+        ],
+        "loop": true
+      },
+      "blocked": {
+        "frames": [
+          "blocked-0",
+          "blocked-1"
+        ],
+        "loop": true
+      },
+      "recovery": {
+        "frames": [
+          "recover-0",
+          "recover-1"
+        ],
+        "loop": true
+      },
+      "caught": {
+        "frames": [
+          "caught-0",
+          "caught-1",
+          "caught-2"
+        ],
+        "loop": false
+      },
+      "aim": {
+        "frames": [
+          "aim"
+        ],
+        "loop": true
+      },
+      "fire": {
+        "frames": [
+          "fire-0",
+          "fire-1"
+        ],
+        "loop": false
+      }
+    },
+    "fallback": "compact-overhead.v1"
+  },
+  "brace-trooper": {
+    "format": "revealline-actor-animation.v1",
+    "id": "industrial-roster-brace-trooper",
+    "revision": 3,
+    "rig": "overhead-soldier.v1",
+    "material": "armor",
+    "parts": [
+      "helmet",
+      "torso",
+      "arms",
+      "boots",
+      "armor"
+    ],
+    "anchors": {
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      },
+      "equipment": {
+        "x": 0.75,
+        "y": 0.625
+      }
+    },
+    "frames": [
+      {
+        "id": "move-0",
+        "durationMs": 135,
+        "stride": 0,
+        "breath": 0,
+        "accessory": 0,
+        "region": null
+      },
+      {
+        "id": "move-1",
+        "durationMs": 120,
+        "stride": 2,
+        "breath": 0,
+        "accessory": 1,
+        "region": null
+      },
+      {
+        "id": "move-2",
+        "durationMs": 120,
+        "stride": 1,
+        "breath": 0,
+        "accessory": 0,
+        "region": null
+      },
+      {
+        "id": "move-3",
+        "durationMs": 135,
+        "stride": 0,
+        "breath": 0,
+        "accessory": 0,
+        "region": null
+      },
+      {
+        "id": "move-4",
+        "durationMs": 120,
+        "stride": -2,
+        "breath": 0,
+        "accessory": -1,
+        "region": null
+      },
+      {
+        "id": "move-5",
+        "durationMs": 120,
+        "stride": -1,
+        "breath": 0,
+        "accessory": 0,
+        "region": null
+      },
+      {
+        "id": "idle-0",
+        "durationMs": 230,
+        "stride": 0,
+        "breath": 0,
+        "accessory": 0,
+        "region": null
+      },
+      {
+        "id": "idle-1",
+        "durationMs": 230,
+        "stride": 0,
+        "breath": 1,
+        "accessory": 0,
+        "region": null
+      },
+      {
+        "id": "notice-0",
+        "durationMs": 125,
+        "stride": 0,
+        "breath": 0,
+        "accessory": -1,
+        "region": null
+      },
+      {
+        "id": "notice-1",
+        "durationMs": 190,
+        "stride": 0,
+        "breath": 1,
+        "accessory": 2,
+        "region": null
+      },
+      {
+        "id": "prepare-0",
+        "durationMs": 170,
+        "stride": 0,
+        "breath": 1,
+        "accessory": -1,
+        "region": null
+      },
+      {
+        "id": "prepare-1",
+        "durationMs": 230,
+        "stride": 0,
+        "breath": 2,
+        "accessory": 0,
+        "region": null
+      },
+      {
+        "id": "blocked-0",
+        "durationMs": 210,
+        "stride": 0,
+        "breath": 0,
+        "accessory": -1,
+        "region": null
+      },
+      {
+        "id": "blocked-1",
+        "durationMs": 210,
+        "stride": 0,
+        "breath": 1,
+        "accessory": 1,
+        "region": null
+      },
+      {
+        "id": "recover-0",
+        "durationMs": 230,
+        "stride": 0,
+        "breath": 2,
+        "accessory": 1,
+        "region": null
+      },
+      {
+        "id": "recover-1",
+        "durationMs": 230,
+        "stride": 0,
+        "breath": 0,
+        "accessory": 0,
+        "region": null
+      },
+      {
+        "id": "caught-0",
+        "durationMs": 80,
+        "stride": 0,
+        "breath": 0,
+        "accessory": 2,
+        "region": null
+      },
+      {
+        "id": "caught-1",
+        "durationMs": 150,
+        "stride": 0,
+        "breath": 1,
+        "accessory": -2,
+        "region": null
+      },
+      {
+        "id": "caught-2",
+        "durationMs": 260,
+        "stride": 0,
+        "breath": 0,
+        "accessory": 0,
+        "region": null
+      },
+      {
+        "id": "aim",
+        "durationMs": 300,
+        "stride": 0,
+        "breath": 0,
+        "accessory": -1,
+        "region": null
+      },
+      {
+        "id": "fire-0",
+        "durationMs": 70,
+        "stride": 0,
+        "breath": 0,
+        "accessory": 2,
+        "region": null
+      },
+      {
+        "id": "fire-1",
+        "durationMs": 160,
+        "stride": 0,
+        "breath": 0,
+        "accessory": 0,
+        "region": null
+      }
+    ],
+    "clips": {
+      "idle": {
+        "frames": [
+          "idle-0",
+          "idle-1"
+        ],
+        "loop": true
+      },
+      "notice": {
+        "frames": [
+          "notice-0",
+          "notice-1",
+          "idle-0"
+        ],
+        "loop": false
+      },
+      "anticipation": {
+        "frames": [
+          "prepare-0",
+          "prepare-1"
+        ],
+        "loop": true
+      },
+      "move": {
+        "frames": [
+          "move-0",
+          "move-1",
+          "move-2",
+          "move-3",
+          "move-4",
+          "move-5"
+        ],
+        "loop": true
+      },
+      "blocked": {
+        "frames": [
+          "blocked-0",
+          "blocked-1"
+        ],
+        "loop": true
+      },
+      "recovery": {
+        "frames": [
+          "recover-0",
+          "recover-1"
+        ],
+        "loop": true
+      },
+      "caught": {
+        "frames": [
+          "caught-0",
+          "caught-1",
+          "caught-2"
+        ],
+        "loop": false
+      },
+      "aim": {
+        "frames": [
+          "aim"
+        ],
+        "loop": true
+      },
+      "fire": {
+        "frames": [
+          "fire-0",
+          "fire-1"
+        ],
+        "loop": false
+      }
+    },
+    "fallback": "compact-overhead.v1"
+  },
+  "relay-warden": {
+    "format": "revealline-actor-animation.v1",
+    "id": "industrial-roster-relay-warden",
+    "revision": 3,
+    "rig": "overhead-soldier.v1",
+    "material": "armor",
+    "parts": [
+      "helmet",
+      "torso",
+      "arms",
+      "boots",
+      "armor",
+      "radio",
+      "pack"
+    ],
+    "anchors": {
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      },
+      "equipment": {
+        "x": 0.75,
+        "y": 0.625
+      }
+    },
+    "frames": [
+      {
+        "id": "move-0",
+        "durationMs": 195,
+        "stride": 0,
+        "breath": 0,
+        "accessory": 0,
+        "region": null
+      },
+      {
+        "id": "move-1",
+        "durationMs": 180,
+        "stride": 1,
+        "breath": 0,
+        "accessory": 1,
+        "region": null
+      },
+      {
+        "id": "move-2",
+        "durationMs": 180,
+        "stride": 1,
+        "breath": 0,
+        "accessory": 0,
+        "region": null
+      },
+      {
+        "id": "move-3",
+        "durationMs": 195,
+        "stride": 0,
+        "breath": 0,
+        "accessory": 0,
+        "region": null
+      },
+      {
+        "id": "move-4",
+        "durationMs": 180,
+        "stride": -1,
+        "breath": 0,
+        "accessory": -1,
+        "region": null
+      },
+      {
+        "id": "move-5",
+        "durationMs": 180,
+        "stride": -1,
+        "breath": 0,
+        "accessory": 0,
+        "region": null
+      },
+      {
+        "id": "idle-0",
+        "durationMs": 460,
+        "stride": 0,
+        "breath": 0,
+        "accessory": 0,
+        "region": null
+      },
+      {
+        "id": "idle-1",
+        "durationMs": 460,
+        "stride": 0,
+        "breath": 1,
+        "accessory": 1,
+        "region": null
+      },
+      {
+        "id": "notice-0",
+        "durationMs": 128,
+        "stride": 0,
+        "breath": 0,
+        "accessory": -1,
+        "region": null
+      },
+      {
+        "id": "notice-1",
+        "durationMs": 194,
+        "stride": 0,
+        "breath": 1,
+        "accessory": 2,
+        "region": null
+      },
+      {
+        "id": "prepare-0",
+        "durationMs": 170,
+        "stride": 0,
+        "breath": 1,
+        "accessory": -1,
+        "region": null
+      },
+      {
+        "id": "prepare-1",
+        "durationMs": 230,
+        "stride": 0,
+        "breath": 2,
+        "accessory": 0,
+        "region": null
+      },
+      {
+        "id": "blocked-0",
+        "durationMs": 210,
+        "stride": 0,
+        "breath": 0,
+        "accessory": -1,
+        "region": null
+      },
+      {
+        "id": "blocked-1",
+        "durationMs": 210,
+        "stride": 0,
+        "breath": 1,
+        "accessory": 1,
+        "region": null
+      },
+      {
+        "id": "recover-0",
+        "durationMs": 460,
+        "stride": 0,
+        "breath": 2,
+        "accessory": 1,
+        "region": null
+      },
+      {
+        "id": "recover-1",
+        "durationMs": 460,
+        "stride": 0,
+        "breath": 0,
+        "accessory": 0,
+        "region": null
+      },
+      {
+        "id": "caught-0",
+        "durationMs": 80,
+        "stride": 0,
+        "breath": 0,
+        "accessory": 2,
+        "region": null
+      },
+      {
+        "id": "caught-1",
+        "durationMs": 150,
+        "stride": 0,
+        "breath": 1,
+        "accessory": -2,
+        "region": null
+      },
+      {
+        "id": "caught-2",
+        "durationMs": 260,
+        "stride": 0,
+        "breath": 0,
+        "accessory": 0,
+        "region": null
+      },
+      {
+        "id": "aim",
+        "durationMs": 300,
+        "stride": 0,
+        "breath": 0,
+        "accessory": -1,
+        "region": null
+      },
+      {
+        "id": "fire-0",
+        "durationMs": 70,
+        "stride": 0,
+        "breath": 0,
+        "accessory": 2,
+        "region": null
+      },
+      {
+        "id": "fire-1",
+        "durationMs": 160,
+        "stride": 0,
+        "breath": 0,
+        "accessory": 0,
+        "region": null
+      }
+    ],
+    "clips": {
+      "idle": {
+        "frames": [
+          "idle-0",
+          "idle-1"
+        ],
+        "loop": true
+      },
+      "notice": {
+        "frames": [
+          "notice-0",
+          "notice-1",
+          "idle-0"
+        ],
+        "loop": false
+      },
+      "anticipation": {
+        "frames": [
+          "prepare-0",
+          "prepare-1"
+        ],
+        "loop": true
+      },
+      "move": {
+        "frames": [
+          "move-0",
+          "move-1",
+          "move-2",
+          "move-3",
+          "move-4",
+          "move-5"
+        ],
+        "loop": true
+      },
+      "blocked": {
+        "frames": [
+          "blocked-0",
+          "blocked-1"
+        ],
+        "loop": true
+      },
+      "recovery": {
+        "frames": [
+          "recover-0",
+          "recover-1"
+        ],
+        "loop": true
+      },
+      "caught": {
+        "frames": [
+          "caught-0",
+          "caught-1",
+          "caught-2"
+        ],
+        "loop": false
+      },
+      "aim": {
+        "frames": [
+          "aim"
+        ],
+        "loop": true
+      },
+      "fire": {
+        "frames": [
+          "fire-0",
+          "fire-1"
+        ],
+        "loop": false
+      }
+    },
+    "fallback": "compact-overhead.v1"
+  }
+}

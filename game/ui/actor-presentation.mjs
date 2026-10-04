@@ -788,7 +788,13 @@ export function drawPresentedActor(
     bodyPaintDiameter = Math.max(width, height);
     // The release host already cropped the declared source frame. Pivot and
     // motor anchors remain normalized to that entire frame, including alpha.
-    if (geometry.animation) {
+    if (
+      geometry.material === 'military-vehicle' &&
+      geometry.machineryRevision === 'industrial-roster-v3'
+    ) {
+      // This revision paints its complete sampled silhouette below. A static
+      // bitmap underneath would leave stale pixels when the radar folds.
+    } else if (geometry.animation) {
       const region = sampleActorAnimation(geometry.animation, {
         clip: frame.animationState ?? (frame.dormant || frame.stunned ? 'idle' : 'move'),
         timeMs: frame.animationTimeMs ?? (frame.phase ?? 0) * 1000,
@@ -828,7 +834,13 @@ export function drawPresentedActor(
     drawEnemySilhouette(ctx, frame, colors);
   }
   if (image && geometry?.material === 'military-vehicle')
-    drawMilitaryVehicleMotion(ctx, frame, geometry.vehicleRole, bodyPaintDiameter);
+    drawMilitaryVehicleMotion(
+      ctx,
+      frame,
+      geometry.vehicleRole,
+      bodyPaintDiameter,
+      geometry.machineryRevision,
+    );
   else if (image && bodyRecord && !geometry?.animation)
     drawEnemyBodyMotion(ctx, frame, bodyRecord, bodyPaintDiameter);
   if (image) ctx.scale(d / 28, d / 28);
