@@ -1,5 +1,7 @@
 # FPV implementation continuation — approved 1 October 2026
 
+> Current execution order and researched parallel acceptance gates: [4 October continuation](fpv-parallel-delivery-2026-10-04.md). Earlier checkpoints below are historical where superseded.
+
 Current status and next priorities: [4 October delivery review](fpv-delivery-review-2026-10-04.md).
 
 This plan supersedes the original remaining-work estimate in

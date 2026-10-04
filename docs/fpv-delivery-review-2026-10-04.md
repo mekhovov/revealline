@@ -1,5 +1,7 @@
 # FPV delivery review — 4 October 2026
 
+> Current execution order and researched parallel acceptance gates: [4 October continuation](fpv-parallel-delivery-2026-10-04.md). Earlier checkpoints below are historical where superseded.
+
 This status supersedes older checkpoints in the delivery plan. Continue the
 approved D0–D6 scope item by item. Publish each verified increment independently;
 use a native stack only for an unmerged dependency. Player feedback remains
