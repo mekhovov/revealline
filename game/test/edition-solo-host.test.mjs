@@ -801,11 +801,24 @@ test('edition pause keeps canonical Skip confirmation and Watch first cut action
   page.$('pause-button').click();
   assert.equal(page.$('game-overlay').hidden, false);
   assert.equal(page.$('demo-button').hidden, false);
+  const retainedRun = page.rendered.run,
+    paused = authoritativeCheckpoint(retainedRun);
   page.$('demo-button').click();
-  await settle(() => page.doc.body.dataset.flightState === 'running');
+  assert.equal(page.$('demo-dialog').open, true, 'Watch first cut opens the shared Demo player.');
+  await settle(() => page.$('demo-dialog').dataset.scene === 'playing');
+  assert.equal(page.$('demo-level').textContent, f.source.missions[0].name);
+  assert.equal(page.doc.body.dataset.flightState, 'paused');
+  assert.deepEqual(
+    authoritativeCheckpoint(retainedRun),
+    paused,
+    'Watching does not replace the paused attempt.',
+  );
+  page.$('demo-back').click();
+  assert.equal(page.$('demo-dialog').open, false);
   page.frame(0);
-  assert.equal(page.rendered.run.levelId, f.project.missions[0].id);
-  assert.match(page.$('run-message').textContent, /Demonstration.*no.*(award|reward)/i);
+  assert.equal(page.rendered.run, retainedRun);
+  assert.equal(page.rendered.run.levelId, second.id);
+  assert.deepEqual(authoritativeCheckpoint(retainedRun), paused);
   assert.deepEqual(page.errors, []);
 });
 

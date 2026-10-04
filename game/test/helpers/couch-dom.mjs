@@ -238,7 +238,21 @@ export class Element extends Events {
     this.emit('lostpointercapture', { pointerId: id });
   }
   getContext() {
-    return { id: this.id };
+    // Native board rendering is modeled by the host fixtures, but shared field
+    // guides now paint real actor rigs during menu preparation as well.
+    return (this.canvasContext ??= {
+      id: this.id,
+      canvas: this,
+      globalAlpha: 1,
+      imageSmoothingEnabled: true,
+      clearRect() {},
+      fillRect() {},
+      save() {},
+      restore() {},
+      translate() {},
+      rotate() {},
+      scale() {},
+    });
   }
   appendChild(node) {
     if (!node?.nodeType) throw new TypeError('appendChild requires a Node.');
