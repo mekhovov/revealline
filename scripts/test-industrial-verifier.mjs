@@ -6,6 +6,7 @@ import { tmpdir } from 'node:os';
 import { setTimeout as delay } from 'node:timers/promises';
 import {
   executeIndustrialPhase,
+  observeIndustrialPhase,
   selectIndustrialPhases,
   summarizeIndustrialTap,
 } from './verify-industrial-features.mjs';
@@ -159,4 +160,73 @@ test('aborting cannot accept an exit-zero child and kills its surviving descenda
     true,
   );
   await assertDescendantStopped(fixture.heartbeat);
+});
+
+test('cleanup EPERM preserves the interrupted exit-zero outcome as failed execution evidence', async (t) => {
+  if (process.platform === 'win32') return t.skip('POSIX owned process groups');
+  const fixture = await processFixture(t, true);
+  const controller = new AbortController();
+  const originalKill = process.kill.bind(process);
+  let cleanupCalls = 0;
+  t.mock.method(process, 'kill', (pid, signal) => {
+    const result = originalKill(pid, signal);
+    if (pid < 0 && signal === 'SIGKILL') {
+      cleanupCalls++;
+      // Actually retire the owned descendant, then inject the OS-error result
+      // at the same boundary. A failed cleanup must never be reported as clean.
+      throw Object.assign(new Error('Injected cleanup permission failure'), { code: 'EPERM' });
+    }
+    return result;
+  });
+  const running = observeIndustrialPhase({
+    command: [fixture.parent],
+    cwd: fixture.directory,
+    log: fixture.log,
+    signal: controller.signal,
+    deadlineMs: 5000,
+    graceMs: 5000,
+  });
+  await waitForReady(fixture.ready);
+  controller.abort();
+  const result = await running;
+  assert.equal(cleanupCalls, 1);
+  assert.equal(result.exitCode, 0);
+  assert.equal(result.signal, null);
+  assert.equal(result.interrupted, true);
+  assert.equal(result.timedOut, false);
+  assert.deepEqual(result.executionError, {
+    name: 'Error',
+    message: 'Injected cleanup permission failure',
+    code: 'EPERM',
+  });
+  assert.deepEqual(JSON.parse(JSON.stringify(result)), result, 'The receipt retains all metadata.');
+  assert.equal(
+    summarizeIndustrialTap(await fs.readFile(fixture.log, 'utf8'), 0, null).passed,
+    true,
+    'Passing TAP alone cannot override the captured execution failure.',
+  );
+  await assertDescendantStopped(fixture.heartbeat);
+});
+
+test('a failed child spawn still produces serializable failed execution evidence', async (t) => {
+  const directory = await fs.mkdtemp(path.join(tmpdir(), 'industrial-missing-cwd-'));
+  t.after(() => fs.rm(directory, { recursive: true, force: true }));
+  const result = await observeIndustrialPhase({
+    command: ['-e', 'process.exit(0)'],
+    cwd: path.join(directory, 'missing'),
+    log: path.join(directory, 'output.tap'),
+    deadlineMs: 5000,
+  });
+  assert.equal(result.executionError.code, 'ENOENT');
+  assert.equal(result.timedOut, false);
+  assert.equal(result.interrupted, false);
+  assert.equal(
+    summarizeIndustrialTap(
+      await fs.readFile(path.join(directory, 'output.tap'), 'utf8'),
+      result.exitCode,
+      result.signal,
+    ).passed,
+    false,
+  );
+  assert.deepEqual(JSON.parse(JSON.stringify(result)), result);
 });
