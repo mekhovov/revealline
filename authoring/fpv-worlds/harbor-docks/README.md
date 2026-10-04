@@ -1,6 +1,6 @@
 # Harbor Docks — original content candidate
 
-An original fictional Ukrainian quay. The supported portal gantry, closed container groups, raised service deck and waterside boundary form three readable flying spaces. The r2 scene has bounded actual-renderer acceptance; eight r3 courses are now authored, with ordinary-flight, complete browser/import and native/offline qualification still pending. This is not a completed or published eight-course world yet.
+An original fictional Ukrainian quay. The supported portal gantry, closed container groups, raised service deck and waterside boundary form three readable flying spaces. The r2 scene has bounded actual-renderer acceptance; eight r3 courses are authored, but qualification is blocked by an actual runtime defect in moving ground actors on finite raised supports. Complete browser/import and native/offline qualification are also pending. This is not a completed or published eight-course world yet.
 
 The revised r2 scene has 7,900 triangles, ten imported material batches, two original 256px maps and 38 solid records. Source GLB 761,036B; prepared GLB 760,368B and zero glTF validator errors. The one-course pack/ZIP round trip and 148 static collider-marker, support, expanded waypoint, swept-route and serialized-water checks pass. A separate 23-check r1/r2 comparison preserves every course field except revision, all markers/colliders and both embedded PNG byte streams. Six actual r2 views and disposal are retained in `evidence/r2-static/`; continuous water, recognizable barge, service deck and Low/Pixel readability were accepted for course expansion. This establishes a bounded stylized scene, not commercial-realism or hardware acceptance.
 
@@ -36,11 +36,16 @@ The exact accepted r2 source/prepared GLB bytes are reused by hardlink. All eigh
 7. Training-drone bay — isolated fictional stationary nonfiring target, using ordinary simulated projectiles and target health; no civilian in this layout.
 8. Harbor circuit — distinct capstone ending on the service deck.
 
-The first 406-check static survey retained three failures in `evidence/r3-static-v1-failed.json`: a copied half-space-floor predicate disallowed negative contact offsets. The unchanged finite-platform controller actually returned unblocked exact X/Z with Y−10mm for the cart and Y−3mm for the walker. The corrected survey preserves those returned positions, bounds the absolute deviation at every sampled point to 12mm (existing 10mm controller margin plus rounding), and separately verifies each named raised support. Its rerun and all sixteen flights remain pending; no actor position is forced or corrected by the qualifier.
+The first 406-check static survey retained three failures in `evidence/r3-static-v1-failed.json`: a copied half-space-floor predicate disallowed negative contact offsets. A second survey measured a transient 14mm walker deviation during a coarse 500mm move. Finer nominal spacing exposed stalled horizontal motion; it did not qualify the content. All three failures remain under `evidence/`.
+
+Actual `createWorldFlight` diagnostics then confirmed the runtime issue using 3,000 ordinary neutral-input ticks: the cart stops after about 2.97m and the walker after about 0.42m, while support queries still return the correct quay/deck. A diagnostic-only prospective 10mm initial clearance did not fix it and was never applied to source. Nine minimal cases retain the full synthetic course data and runtime hashes in `evidence/r3-minimal-ground-cases.json`: canonical half-space controls travel normally, whereas the exact and narrower finite cuboids and equivalent closed-trimesh supports stall. Wall/ledge cases are retained for a future correction, but the old behavior stalls before those boundaries and therefore does not establish their corrected behavior.
+
+The accepted scene, all 38 collider definitions, r3 routes/actors and pack identity remain frozen. No endpoint, pose, collision or physics shortcut is applied. A separately versioned opt-in runtime correction is being reviewed independently; Harbor will need an explicit new content revision and all sixteen fresh proofs once that contract qualifies. The proof observer requires real named support on every civilian tick, at most 12mm actual height deviation, full tracking criteria, actual projectile damage/defeat, complete ordinary flights and independent exact replays. No complete proof has yet been generated for r3.
 
 ```sh
 node authoring/fpv-worlds/harbor-docks/build-world.mjs ACCEPTED_R2_DIRECTORY NEW_WORLD_DIRECTORY
 node authoring/fpv-worlds/harbor-docks/qualify-world.mjs EXACT_PACK NEW_RECEIPT_DIRECTORY --clearance-only
 node authoring/fpv-worlds/harbor-docks/qualify-world.mjs EXACT_PACK NEW_PROOF_DIRECTORY
 node authoring/fpv-worlds/harbor-docks/prepare-world-import.mjs ADMITTED_RECEIPT WORLD_DIRECTORY PROOF_DIRECTORY NEW_FIXTURE
+node authoring/fpv-worlds/harbor-docks/diagnose-ground-actors.mjs EXACT_PROJECT RUNTIME_ROOT NEW_RECEIPT
 ```
