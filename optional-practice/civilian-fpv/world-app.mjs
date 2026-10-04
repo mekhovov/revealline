@@ -6100,6 +6100,7 @@ export function mountWorldApp({
       open(surface) {
         paintLessonReturn(surface);
         if (flight?.snapshot().status === 'active') pauseFlight();
+        if (flight) updateHUD(flight.snapshot());
         if (surface === 'results') {
           // Keep the native result actions and async verification in place.
           playShell.enterPlay();
