@@ -2,6 +2,8 @@
 
 Updated 4 October 2026. This register follows the approved hybrid Broforce/Factorio direction and the subsequent authorization to increase budgets. It describes this review branch, not a public release. Earlier dated delivery registers remain historical evidence.
 
+For the active dependency graph, research changes, test restoration and per-stream exit conditions, see [parallel implementation and qualification](industrial-parallel-delivery-2026-10-04.md).
+
 ## Required work and current boundary
 
 | Priority                         | Implemented in this branch                                                                                                                                                                                                                                                                                                                                                                         | Remaining acceptance                                                                                                                                                                                                                                                                                |
@@ -67,7 +69,7 @@ Presentation descriptors contain no executable code. Static asset v1 packages re
 
 ## Verification and release discipline
 
-Automated suites are explicitly waived by `publishing/test-policy.json`; relevant regressions are authored without running them. Mandatory lint, formatting, localization/content validation, projection checks, committed-source identity and package builds remain required. Manual checks are listed in `qualification/industrial-art/README.md` and native structural admission in `verification/native-pursuit-structural.json`. Neither technical admission nor an agent screenshot grants artistic or human-play approval.
+The 4 October request to complete and test every feature restores `publishing/test-policy.json` to required. Run relevant automated regressions for each stream, followed by the combined feature suite on the stacked head; authored-but-unrun cases are not acceptance evidence. Older dated waiver receipts below remain historical. Mandatory lint, formatting, localization/content validation, projection checks, committed-source identity and package builds remain required. Manual checks are listed in `qualification/industrial-art/README.md` and native structural admission in `verification/native-pursuit-structural.json`. Neither technical admission nor an agent screenshot grants artistic or human-play approval.
 
 Push reviewable PRs; do not merge or enable auto-merge. Phase C approval precedes mass art production. Independent local behavior, recordings and room corrections do not wait for that art decision.
 
