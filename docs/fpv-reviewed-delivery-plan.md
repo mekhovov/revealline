@@ -51,6 +51,28 @@ Quality presets must preserve collision, relevant sight lines and objective acto
 Measure frame times, loading and resource disposal before claiming performance.
 No multiplayer, online publishing or universal commercial-map conversion is added.
 
+### Campus facade checkpoint — 4 October 2026
+
+Quarry #1016 is merged at `47d2019dced85d80671b2d780da662f50ea11c20`.
+Campus now has a qualified bounded facade increment on that main baseline:
+full-height solid Pixel panes and quiet storey/corner articulation on the four
+existing closed buildings, preserving roofs, bridge, collision and shared Theme
+ownership. Source and admitted-package browser checks each pass **136 checks /
+56 identical image pairs**. CPU qualification passes **780 checks / 138 scenes**
+both before and after integration, and ten authenticated recordings replay
+through **53,982 ticks**. All three admissions pass two identical builds; the
+complete 102-file admitted player renders the facades and passes
+arm/pause/continue with empty warning/error logs. See [Campus qualification](fpv-campus-facade-levels.md).
+Publish through protected exact-head checks; local acceptance is not public or
+hardware qualification and does not certify the complete world's art.
+
+Continue D2 with the independently audited Railworks wagon framing increment,
+then Orchard/Solar Park. No Railworks runtime is included here. Keep D1
+performance work separate, followed by D3 examples/coaching, D4 creator, D5 four
+worlds and D6 deferred additional unit coverage. Counts remain **196 challenges,
+14 worlds, 58 School lessons and 374 steps**; D5 targets **228 challenges / 18
+worlds**. These art increments add no challenges or installed demonstrations.
+
 ### Quarry continuation checkpoint — 4 October 2026
 
 Courtyard #1012 and Warehouse #1014 are merged and now have actual public-player
