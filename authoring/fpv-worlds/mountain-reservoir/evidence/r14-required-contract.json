@@ -1,0 +1,272 @@
+{
+  "format": "FPVRequiredSurfaceCoatingManualQualification.v1",
+  "status": "passed",
+  "checks": [
+    {
+      "name": "unknown version rejected by shared validator",
+      "passed": true
+    },
+    {
+      "name": "unknown version rejected by real loader before scene construction",
+      "passed": true
+    },
+    {
+      "name": "unknown kind rejected by shared validator",
+      "passed": true
+    },
+    {
+      "name": "unknown kind rejected by real loader before scene construction",
+      "passed": true
+    },
+    {
+      "name": "extra numeric state rejected by shared validator",
+      "passed": true
+    },
+    {
+      "name": "extra numeric state rejected by real loader before scene construction",
+      "passed": true
+    },
+    {
+      "name": "blend rejected by shared validator",
+      "passed": true
+    },
+    {
+      "name": "blend rejected by real loader before scene construction",
+      "passed": true
+    },
+    {
+      "name": "alpha mask rejected by shared validator",
+      "passed": true
+    },
+    {
+      "name": "alpha mask rejected by real loader before scene construction",
+      "passed": true
+    },
+    {
+      "name": "partial opacity rejected by shared validator",
+      "passed": true
+    },
+    {
+      "name": "partial opacity rejected by real loader before scene construction",
+      "passed": true
+    },
+    {
+      "name": "transmission rejected by shared validator",
+      "passed": true
+    },
+    {
+      "name": "transmission rejected by real loader before scene construction",
+      "passed": true
+    },
+    {
+      "name": "missing required marker rejected by shared validator",
+      "passed": true
+    },
+    {
+      "name": "missing required marker rejected by real loader before scene construction",
+      "passed": true
+    },
+    {
+      "name": "missing used marker rejected by shared validator",
+      "passed": true
+    },
+    {
+      "name": "missing used marker rejected by real loader before scene construction",
+      "passed": true
+    },
+    {
+      "name": "duplicate marker rejected by shared validator",
+      "passed": true
+    },
+    {
+      "name": "duplicate marker rejected by real loader before scene construction",
+      "passed": true
+    },
+    {
+      "name": "lines rejected by shared validator",
+      "passed": true
+    },
+    {
+      "name": "lines rejected by real loader before scene construction",
+      "passed": true
+    },
+    {
+      "name": "marker without payload rejected by shared validator",
+      "passed": true
+    },
+    {
+      "name": "marker without payload rejected by real loader before scene construction",
+      "passed": true
+    },
+    {
+      "name": "Actual PBR material has fixed bias",
+      "passed": true
+    },
+    {
+      "name": "Opaque GLTF state retained",
+      "passed": true
+    },
+    {
+      "name": "Loader flat-normal clone association is preserved",
+      "passed": true
+    },
+    {
+      "name": "Loader vertex-color material variant remains enabled",
+      "passed": true
+    },
+    {
+      "name": "Shared real loader material remains shared",
+      "passed": true
+    },
+    {
+      "name": "Unmarked real loader material unchanged",
+      "passed": true
+    },
+    {
+      "name": "Canonical payload not duplicated in extras",
+      "passed": true
+    },
+    {
+      "name": "Actual parsed Theme bindings all apply",
+      "passed": true
+    },
+    {
+      "name": "Theme preserves coating and shared owner",
+      "passed": true
+    },
+    {
+      "name": "Theme cache keeps plain and coated distinct",
+      "passed": true
+    },
+    {
+      "name": "Actual parsed/theme material owners disposed exactly once",
+      "passed": true
+    },
+    {
+      "name": "Actual unlit material has fixed bias",
+      "passed": true
+    },
+    {
+      "name": "Opaque GLTF state retained",
+      "passed": true
+    },
+    {
+      "name": "Loader flat-normal clone association is preserved",
+      "passed": true
+    },
+    {
+      "name": "Loader vertex-color material variant remains enabled",
+      "passed": true
+    },
+    {
+      "name": "Shared real loader material remains shared",
+      "passed": true
+    },
+    {
+      "name": "Unmarked real loader material unchanged",
+      "passed": true
+    },
+    {
+      "name": "Canonical payload not duplicated in extras",
+      "passed": true
+    },
+    {
+      "name": "Actual parsed Theme bindings all apply",
+      "passed": true
+    },
+    {
+      "name": "Theme preserves coating and shared owner",
+      "passed": true
+    },
+    {
+      "name": "Theme cache keeps plain and coated distinct",
+      "passed": true
+    },
+    {
+      "name": "Actual parsed/theme material owners disposed exactly once",
+      "passed": true
+    },
+    {
+      "name": "source has exactly one canonical coating material",
+      "passed": true
+    },
+    {
+      "name": "Legacy host rejects source model",
+      "passed": true
+    },
+    {
+      "name": "Current host imports source model with required marker",
+      "passed": true
+    },
+    {
+      "name": "prepared has exactly one canonical coating material",
+      "passed": true
+    },
+    {
+      "name": "Legacy host rejects prepared model",
+      "passed": true
+    },
+    {
+      "name": "Current host imports prepared model with required marker",
+      "passed": true
+    },
+    {
+      "name": "Legacy host rejects actual r14 pack",
+      "passed": true
+    },
+    {
+      "name": "Legacy host rejects actual r14 editable ZIP",
+      "passed": true
+    },
+    {
+      "name": "pack retains exact prepared model bytes",
+      "passed": true
+    },
+    {
+      "name": "pack retains complete exact project",
+      "passed": true
+    },
+    {
+      "name": "ZIP retains exact prepared model bytes",
+      "passed": true
+    },
+    {
+      "name": "ZIP retains complete exact project",
+      "passed": true
+    },
+    {
+      "name": "reexport/reimport retains exact prepared model bytes",
+      "passed": true
+    },
+    {
+      "name": "reexport/reimport retains complete exact project",
+      "passed": true
+    },
+    {
+      "name": "r13/r14 full geometry/image binary payload exact",
+      "passed": true
+    },
+    {
+      "name": "Unmarked import model bytes remain legacy-exact",
+      "passed": true
+    },
+    {
+      "name": "Unmarked actual loader has no depth offset",
+      "passed": true
+    }
+  ],
+  "source": {
+    "bytes": 1236672,
+    "sha256": "caf24d9c11ea4be3ee5db66a2e420ee06354c4a127d987ed15bba49ef344d0d5"
+  },
+  "prepared": {
+    "bytes": 1235152,
+    "sha256": "aa78187aaea643bce5dbc75b9ba6802e5a5b686210fa3f03b9796c0bc4311043"
+  },
+  "pack": {
+    "bytes": 1382004,
+    "sha256": "98dc5237b8e809029a0c08f414f36689c7a58313f911a84971d3ed0429477714"
+  },
+  "legacyPlayer": "/tmp/fpv-reservoir-retaining-preview-r12-v1/player",
+  "scope": "CPU shared validation, real GLTF parser, Theme ownership and actual pack/ZIP compatibility. No native UI/WebGL/art/flight/hardware acceptance."
+}

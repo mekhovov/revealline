@@ -1,0 +1,213 @@
+{
+  "format": "FPVImportedOpaqueCoatingManualQualification.v1",
+  "status": "passed",
+  "checks": [
+    {
+      "name": "missing not applied",
+      "passed": true
+    },
+    {
+      "name": "missing preserves all material state",
+      "passed": true
+    },
+    {
+      "name": "null not applied",
+      "passed": true
+    },
+    {
+      "name": "null preserves all material state",
+      "passed": true
+    },
+    {
+      "name": "string not applied",
+      "passed": true
+    },
+    {
+      "name": "string preserves all material state",
+      "passed": true
+    },
+    {
+      "name": "array not applied",
+      "passed": true
+    },
+    {
+      "name": "array preserves all material state",
+      "passed": true
+    },
+    {
+      "name": "unknown version not applied",
+      "passed": true
+    },
+    {
+      "name": "unknown version preserves all material state",
+      "passed": true
+    },
+    {
+      "name": "unknown kind not applied",
+      "passed": true
+    },
+    {
+      "name": "unknown kind preserves all material state",
+      "passed": true
+    },
+    {
+      "name": "numeric override not applied",
+      "passed": true
+    },
+    {
+      "name": "numeric override preserves all material state",
+      "passed": true
+    },
+    {
+      "name": "extra key not applied",
+      "passed": true
+    },
+    {
+      "name": "extra key preserves all material state",
+      "passed": true
+    },
+    {
+      "name": "inherited keys not applied",
+      "passed": true
+    },
+    {
+      "name": "inherited keys preserves all material state",
+      "passed": true
+    },
+    {
+      "name": "blend not applied",
+      "passed": true
+    },
+    {
+      "name": "blend preserves all material state",
+      "passed": true
+    },
+    {
+      "name": "partial opacity not applied",
+      "passed": true
+    },
+    {
+      "name": "partial opacity preserves all material state",
+      "passed": true
+    },
+    {
+      "name": "alpha mask not applied",
+      "passed": true
+    },
+    {
+      "name": "alpha mask preserves all material state",
+      "passed": true
+    },
+    {
+      "name": "alpha map not applied",
+      "passed": true
+    },
+    {
+      "name": "alpha map preserves all material state",
+      "passed": true
+    },
+    {
+      "name": "transmission not applied",
+      "passed": true
+    },
+    {
+      "name": "transmission preserves all material state",
+      "passed": true
+    },
+    {
+      "name": "depth disabled not applied",
+      "passed": true
+    },
+    {
+      "name": "depth disabled preserves all material state",
+      "passed": true
+    },
+    {
+      "name": "depth write disabled not applied",
+      "passed": true
+    },
+    {
+      "name": "depth write disabled preserves all material state",
+      "passed": true
+    },
+    {
+      "name": "MeshStandardMaterial shared material applied once",
+      "passed": true
+    },
+    {
+      "name": "MeshStandardMaterial fixed bias and opaque depth state",
+      "passed": true
+    },
+    {
+      "name": "MeshStandardMaterial no geometry/material owner allocation",
+      "passed": true
+    },
+    {
+      "name": "MeshStandardMaterial repeated application stable",
+      "passed": true
+    },
+    {
+      "name": "MeshStandardMaterial shared material disposed once",
+      "passed": true
+    },
+    {
+      "name": "MeshBasicMaterial shared material applied once",
+      "passed": true
+    },
+    {
+      "name": "MeshBasicMaterial fixed bias and opaque depth state",
+      "passed": true
+    },
+    {
+      "name": "MeshBasicMaterial no geometry/material owner allocation",
+      "passed": true
+    },
+    {
+      "name": "MeshBasicMaterial repeated application stable",
+      "passed": true
+    },
+    {
+      "name": "MeshBasicMaterial shared material disposed once",
+      "passed": true
+    },
+    {
+      "name": "Only marked paint opts in before theme binding",
+      "passed": true
+    },
+    {
+      "name": "Existing theme bindings both apply",
+      "passed": true
+    },
+    {
+      "name": "Theme variant cache separates coating state",
+      "passed": true
+    },
+    {
+      "name": "Theme clone preserves fixed coating state",
+      "passed": true
+    },
+    {
+      "name": "Theme plain material retains default depth bias",
+      "passed": true
+    },
+    {
+      "name": "Theme retains original owners",
+      "passed": true
+    },
+    {
+      "name": "Every themed/current/original material disposed once",
+      "passed": true
+    }
+  ],
+  "source": {
+    "renderer.mjs": {
+      "bytes": 111471,
+      "sha256": "6e96a8bf9f0956b40bf6935d23ec7c732d58fcd1f601ce694f0977d3b888b96e"
+    },
+    "world-visuals.mjs": {
+      "bytes": 162427,
+      "sha256": "a7a834d44559827636c93850af874ddc3be275372bed64a4466e6da62b7ea014"
+    }
+  },
+  "scope": "CPU material contract and ownership only. Real GL depth, shadows, appearance, import and disposal require the actual renderer fixture."
+}
