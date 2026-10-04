@@ -1086,6 +1086,21 @@ export function createFlightRenderer({
       const panels = [],
         accents = [],
         [width, height, depth] = size,
+        railWagon =
+          course.environment === 'rail-depot' &&
+          kind === 'metal' &&
+          /^rail-car-[01]-[0-3]$/.test(obstacle.id ?? '') &&
+          themeProfile.id === 'operations' &&
+          themeProfile.textureFilter === 'linear' &&
+          !goalMaterialKit &&
+          obstacle.type === undefined &&
+          obstacle.rotation === undefined &&
+          ['x', 'y', 'z'].every(
+            (axis, i) =>
+              Number.isFinite(obstacle.min?.[axis]) &&
+              Number.isFinite(obstacle.max?.[axis]) &&
+              obstacle.max[axis] - obstacle.min[axis] === [5000, 4000, 13000][i],
+          ),
         campusSize = {
           'building-west-low': [18000, 9000, 20000],
           'building-east-mid': [18000, 14000, 20000],
@@ -1188,6 +1203,16 @@ export function createFlightRenderer({
               Math.min(0.3, height * 0.18),
               half,
             ]);
+          if (railWagon) {
+            // Framing stays on the existing closed corrugated wall. Strips
+            // meet edge-to-edge and share the wagon's existing accent batch.
+            const jamb = side < 2 ? 2.15 : 1.6;
+            for (const direction of [-1, 1]) {
+              accents.push([side, direction * jamb, 0.2, 0.12, 2.6, half]);
+              accents.push([side, 0, 0.2 + direction * 1.24, jamb * 2 - 0.12, 0.12, half]);
+              if (side >= 2) accents.push([side, direction * 5.2, 0.2, 0.12, 2.9, half]);
+            }
+          }
         } else if (/column/.test(obstacle.id) && span > 0.2) {
           accents.push([
             side,
@@ -1207,7 +1232,12 @@ export function createFlightRenderer({
         'balanced',
         bay ? { map: maps.map, index: Number(bay[1]) * 3 + Number(bay[2]) } : null,
       );
-      addFlushPanels(value, accents, kind === 'plaster' ? 0x8c7863 : theme.warm, 'high');
+      addFlushPanels(
+        value,
+        accents,
+        railWagon ? 0x34464b : kind === 'plaster' ? 0x8c7863 : theme.warm,
+        railWagon ? 'balanced' : 'high',
+      );
     }
     // Only the outer shipping-frame edges are outlined, not every corrugation.
     const outline = yardContainer ? new THREE.BoxGeometry(...size) : value.geometry,
