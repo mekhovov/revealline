@@ -33,10 +33,21 @@ is preserved. The coordinator subsequently observed the same frame paused at
 tick zero with Arm enabled and no graphics errors. The runtime and helper files
 match the source fixture; a focus pause is a hypothesis because that run retained
 no focus trace. The [same immutable fixture repeated the timeout](../authoring/fpv-worlds/library/evidence/worker-package-r1-exclusive-failure-provenance.json)
-under exclusive browser focus. A separate bounded diagnostic now records status
-setter stacks, focus/visibility and native animation-frame entries; no guard or
-timeout was relaxed and no automatic resume was added. Full admitted Library
-qualification remains pending.
+under exclusive browser focus. The [separate bounded diagnostic](../authoring/fpv-worlds/library/evidence/worker-ready-r2-provenance.json)
+records status setter stacks, focus/visibility and native animation-frame entries.
+Its first run proves that a 1,012.8 ms frame-entry gap triggered the initial pause
+while visible and focused. That pause was not the sustained timeout: the host
+then wrote Checking saved best and remained there through 30.6 seconds, with no
+Ready write or dropped status. The empty reference lookup had finished; waiting
+for graphics preparation is an inference, not directly observed by this trace.
+
+After the coordinator closed fourteen known completed GPU fixture tabs, the
+same immutable diagnostic reached Ready at 694 ms and retained it at the final
+1,474.2 ms observation. No runtime, harness, timeout, focus guard or automatic
+resume changed. This response is consistent with resource contention, but does
+not establish an exclusive cause. Both complete receipts and the frozen observer
+are preserved. These 120-check diagnostic runs do not qualify the full admitted
+Library matrix; its unchanged repeat remains pending.
 
 The exact admitted direct Worlds and Academy players separately passed
 [native offline preparation and stopped-origin reload](../authoring/fpv-worlds/library/evidence/worker-native-offline-smoke.json).
@@ -109,8 +120,8 @@ assumed to be identical to every individual course revision in a multi-course pa
 
 The current integrated Worker draft measures **16,776,298 bytes across 95 original
 inputs**, leaving **918 bytes** below the unchanged 16 MiB bound. The separate
-menu candidate `9fbe03fe3` projects 286 bytes across this actual input inventory;
-with the focus change (28 bytes), that would leave **604 bytes**. The earlier
+menu candidate `411396374` adds 338 bytes across this actual input inventory;
+with the focus change (28 bytes), that would leave **552 bytes**. The earlier
 429-byte menu estimate counted its canonical CSS as well as the generated input;
 the canonical CSS is outside these 95 original inputs.
 The current 918-byte reserve is confirmed by admission; combined menu/focus
