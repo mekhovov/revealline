@@ -1,7 +1,7 @@
 # Orchard tree surface increment
 
-The current candidate integrates main \`a46aded0b\` (graphics recovery and Campus).
-Its Orchard runtime changes only \`world-visuals.mjs\` and replaces the six existing authored trunk/crown texture maps in
+The current candidate integrates main `a46aded0b` (graphics recovery and Campus).
+Its Orchard runtime changes only `world-visuals.mjs` and replaces the six existing authored trunk/crown texture maps in
 the five canonical Orchard activities. It keeps the original closed geometry,
 UVs, collision solids, actors, objectives, map sizes, material owners and draw
 batches. Upright bark grain and opaque leaf clusters add restrained harvest color.

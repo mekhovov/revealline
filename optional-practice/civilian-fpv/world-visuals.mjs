@@ -315,7 +315,7 @@ function surfacePixels(kind, color, seed, size, pixel) {
     [0.23, 0.32],
     [0.71, 0.69],
   ];
-  const leafGrid = 18,
+  const leafGrid = orchardLeaves ? 10 : 18,
     leafRandom = random(seed ^ 0x6a09e667),
     leaves =
       kind === 'forest-floor' || kind === 'woodland-canopy' || orchardLeaves
@@ -528,12 +528,14 @@ function surfacePixels(kind, color, seed, size, pixel) {
         if (orchardLeaves) {
           // Opaque leaf groups carry restrained harvest warmth; the closed
           // crown and every route through the orchard keep their exact shape.
-          const harvest = Math.max(0, Math.min(0.25, (broad((u + 0.31) % 1, v) - 0.57) * 1.8));
+          const group = broad(u, v),
+            harvest = Math.max(0, Math.min(0.35, (broad((u + 0.31) % 1, v) - 0.52) * 1.6)),
+            leafEdge = blade * (detail.visible ? 1 : 0.3);
           red += harvest * 0.12;
-          green += harvest * 0.05;
+          green += harvest * 0.045;
           blue -= harvest * 0.025;
-          shade = 0.82 + broad(u, v) * 0.24 + mottling * 0.075 + blade * 0.1 - vein * 0.03;
-          relief = mottling * 0.015 + blade * 0.018 - vein * 0.008;
+          shade = 0.68 + group * 0.59 + leafEdge * 0.19 - vein * 0.04;
+          relief = (group - 0.5) * 0.05 + leafEdge * 0.025 - vein * 0.008;
         }
       }
       if (kind === 'solar') {
@@ -575,11 +577,16 @@ function surfacePixels(kind, color, seed, size, pixel) {
         roughness = 0.67 + grain * 0.17;
       }
       if (orchardBark) {
-        // Upright, broken grain uses the existing four-metre projection.
-        const line = u * 16 + Math.sin(v * tau) * 0.07 + (broad(u, v) - 0.5) * 0.14,
-          fissure = Math.max(0, 1 - Math.abs(Math.sin(line * tau)) / 0.13);
-        shade = 0.9 + patch * 0.6 + mottling * 0.1 - fissure * 0.18;
-        relief = mottling * 0.025 - fissure * 0.09;
+        // Unequal upright plates break across the existing four-metre tile.
+        // Staggered cracks retain broad readable structure beneath fine grain.
+        const plate = u * 20 + Math.sin(v * tau) * 0.15 + mottling * 0.6,
+          column = Math.floor(plate),
+          across = plate - column,
+          fissure = Math.max(0, 1 - Math.min(across, 1 - across) / 0.09),
+          height = v * 8 + column * 0.618 + broad(u, v) * 0.7,
+          split = Math.max(0, 1 - (height - Math.floor(height)) / 0.075);
+        shade = 0.94 + patch * 1.6 + mottling * 0.06 - fissure * 0.3 - split * 0.17;
+        relief = mottling * 0.015 - fissure * 0.09 - split * 0.035;
         roughness = 0.92 + grain * 0.045;
       }
       if (kind === 'bark') {
