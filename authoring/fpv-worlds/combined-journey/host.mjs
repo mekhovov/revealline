@@ -15,6 +15,7 @@ const data = {
   initialDatabases,
   initialCaches,
   lastDraw: null,
+  rendererCreations: 0,
   errors: [],
   warnings: [],
   transactions: [],
@@ -259,6 +260,7 @@ const app = mountWorldApp({
   window,
   rendererFactory(options) {
     renderer = createFlightRenderer(options);
+    data.rendererCreations++;
     const draw = renderer.draw;
     renderer.draw = function (state, ...args) {
       data.lastDraw = {
@@ -317,7 +319,7 @@ window.fpvJourney = {
       store.close();
       records.close();
       observer.disconnect();
-      data.resources = renderer?.resources();
+      data.resources = renderer?.resources() ?? null;
       IDBDatabase.prototype.transaction = nativeTransaction;
       IDBObjectStore.prototype.put = nativePut;
       IDBObjectStore.prototype.getAll = nativeGetAll;

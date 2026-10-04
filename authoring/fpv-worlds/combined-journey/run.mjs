@@ -162,11 +162,19 @@ async function finish(name) {
   });
   check(!p.data.errors.length && !p.data.warnings.length, name + ' no errors/warnings');
   check(!Object.keys(p.data.dropped).length, name + ' bounded observations without drops');
-  check(
-    p.data.resources?.registered &&
-      Object.values(p.data.resources.registered).every((x) => x === 0),
-    name + ' owned registered resources released',
-  );
+  if (p.data.rendererCreations === 0)
+    check(
+      p.data.resources === null && p.data.lastDraw === null,
+      name + ' never created a renderer or submitted a draw',
+    );
+  else
+    check(
+      p.data.rendererCreations === 1 &&
+        p.data.resources?.registered &&
+        Object.values(p.data.resources.registered).every((x) => x === 0),
+      name + ' owned registered resources released',
+      { creations: p.data.rendererCreations, resources: p.data.resources },
+    );
 }
 async function upload(id, bytes, name) {
   const input = q('#' + id);
