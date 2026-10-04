@@ -19,7 +19,7 @@ import { onNativeInactive, exportJSONFile } from '../platform.mjs';
 import { drawClassicBoard, classicCatchMarks } from '../snake/classic-view.mjs';
 import { createHuntDestruction } from '../hunt/destruction.mjs';
 import { mountRoomUI } from './room-ui.mjs';
-import { createRoomBoardPresentation } from './room-events.mjs';
+import { createRoomBoardPresentation, reconcileRoomPresentationRuns } from './room-events.mjs';
 import { advanceClassicFlight } from '../snake/classic-flight-art.mjs';
 import { createClassicPresentation } from '../snake/classic-presentation.mjs';
 import { BoardPainter } from '../ui/render.mjs';
@@ -586,10 +586,10 @@ async function poll() {
     // Admission may rotate the control epoch. Presentation failures after that
     // point still belong to this newly accepted activation, unlike late I/O.
     errorEpoch = lifecycle.snapshot().epoch;
-    if (!replacement)
-      snapshot.engine.runs = snapshot.engine.runs.map((run, index) =>
-        Object.assign(state.engine.runs[index], run),
-      );
+    snapshot.engine.runs = reconcileRoomPresentationRuns(state?.engine.runs, snapshot.engine.runs, {
+      replacement,
+      recovering,
+    });
     state = snapshot;
     syncControls();
     showAcceptedMission(snapshot);

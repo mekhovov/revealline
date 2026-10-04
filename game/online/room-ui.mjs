@@ -18,7 +18,7 @@ import { attachContextualReactions } from '../ui/contextual-reactions.mjs';
 import { attachEncounterDisplayControls } from '../ui/encounter-display-controls.mjs';
 import { attachMenuStyleControls } from '../ui/menu-style-controls.mjs';
 import { mountToolDisplay } from '../ui/tool-display.mjs';
-import { getLocale } from '../i18n/index.mjs';
+import { getLocale, t } from '../i18n/index.mjs';
 import { createRoomAudioActivation, createRoomEventCursor } from './room-events.mjs';
 import { attachRoomSupport } from './room-controls.mjs';
 
@@ -76,7 +76,7 @@ export function mountRoomUI({ getState, getSeat, canPlay, submit, pause, display
   });
   const encounter = attachEncounterDisplayControls({ prefix: 'room-' });
   const style = attachMenuStyleControls({ prefix: 'room-' });
-  const toolDisplay = mountToolDisplay();
+  const toolDisplay = mountToolDisplay({ preferences: display });
   const labels = {
     'room-sound-title': ['Sound', 'Звук'],
     'master-label': ['Master volume', 'Загальна гучність'],
@@ -84,6 +84,7 @@ export function mountRoomUI({ getState, getSeat, canPlay, submit, pause, display
     'reduced-label': ['Reduced effects', 'Менше ефектів'],
     'remains-label': ['Show enemy remains', 'Показувати рештки ворогів'],
     'text-size-label': ['Text size', 'Розмір тексту'],
+    'text-face-label': ['Text style', 'Стиль тексту'],
     'room-board-label': ['Snake board', 'Поле Snake'],
     'room-tail-label': ['Snake trail', 'Слід Snake'],
     'boost-button': ['Boost', 'Прискорення'],
@@ -104,6 +105,10 @@ export function mountRoomUI({ getState, getSeat, canPlay, submit, pause, display
     [...textSize.options].forEach((option, i) => {
       option.textContent = ['Звичайний', 'Великий'][i];
     });
+    const textFace = doc.querySelector('[data-tool-text-face]');
+    [...textFace.options].forEach((option, i) => {
+      option.textContent = [t('interface:themeFont'), t('common:text.plain')][i];
+    });
   }
   const stopDisplay = display.subscribe((choice) => {
     $('room-reduced').checked = choice.reducedEffects;
@@ -117,10 +122,6 @@ export function mountRoomUI({ getState, getSeat, canPlay, submit, pause, display
   $('room-effects').addEventListener('input', () =>
     sound.configure({ sfx: Number($('room-effects').value) }),
   );
-  const stopAudio = audioMaster.subscribe((choice) => {
-    $('room-master').value = String(choice.volume);
-    shell?.update({ muted: choice.muted });
-  });
   const modes = create('nav');
   modes.className = 'room-mode-links';
   for (const [name, label, path] of [
@@ -192,6 +193,12 @@ export function mountRoomUI({ getState, getSeat, canPlay, submit, pause, display
         preventScroll: true,
       }),
     initial: 'home',
+  });
+  // subscribe() publishes immediately; the title must exist before its first
+  // shared mute value arrives, even when this page has not joined a room.
+  const stopAudio = audioMaster.subscribe((choice) => {
+    $('room-master').value = String(choice.volume);
+    shell.update({ muted: choice.muted });
   });
   // Transport actions retain their native listeners and guards.
   $('ready').addEventListener('click', () => {

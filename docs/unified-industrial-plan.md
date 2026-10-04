@@ -104,3 +104,12 @@ The existing published-production continuation also needs reconciliation: its ex
 - The industrial review honors shared and OS Reduced effects even when its local checkbox is off. Asset Studio uses four fixed-size, pooled specimen canvases that wrap instead of shrinking the stated 16/24/32/112 px sizes.
 - All exact-head CI checks for the previous `5ee824303` commit passed, including Appearance, Community and all Company jobs. These are baseline results, separate from this continuation's receipts.
 - See the [offline and Studio evidence](qualification/industrial-art/offline-studio-2026-10-04/README.md). Device, gameplay-completion and artistic-approval gates remain open; no campaign promotion or mass art production is implied.
+
+## Room and animation-authoring continuation, 4 October 2026
+
+- Private rooms expose the shared Theme font/Plain setting alongside Text size. Normal EN/UK menu review at 320 px confirmed persistence and no horizontal overflow; original choices were restored.
+- Reading and motion controls share one preference owner, preventing font changes from overwriting newer Reduced effects intent. The room title reflects stored mute immediately; the art review follows cross-tab sound changes and sample completion.
+- Studio animation scrubbing spans the full admitted clip, including a 64-second clip's final frame. Missing optional Aim/Fire clips no longer show an unrelated Idle preview under the wrong label.
+- Recovered room snapshots replace destruction ownership, silently restoring settled state instead of replaying frozen pre-disconnect bursts. Ordinary polls retain once-only event ownership.
+- The recording audit found no new confirmed defect; native terminal export/import and genuine pilot completion remain acceptance work. All baseline `177afe429` CI checks passed; new-head evidence is separate.
+- See the [room and Studio evidence](qualification/industrial-art/room-studio-2026-10-04/README.md). Full art production still follows Phase C approval. Optional work remains optional.

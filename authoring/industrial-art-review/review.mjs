@@ -18,6 +18,7 @@ import {
 } from '../../game/ui/industrial-audio-review.mjs';
 import { pageActorArtPool } from '../../game/presentation/actor-art-pool.mjs';
 import { mountReviewMotionPreferences } from './motion-preferences.mjs';
+import { updateReviewAudioStatus } from './audio-status.mjs';
 
 const $ = (id) => document.getElementById(id);
 const motion = mountReviewMotionPreferences({
@@ -101,6 +102,7 @@ const copy = {
       played: 'Sample started. It stops after one second.',
       stopped: 'Sample stopped.',
       muted: 'Sound is muted. Unmute to listen.',
+      silent: 'Master volume is zero. Raise it in the game’s Sound settings to listen.',
       unavailable: 'Audio is unavailable or Effects volume is zero.',
       cancelled: 'Sample stopped.',
       mute: 'Mute sound',
@@ -176,6 +178,7 @@ const copy = {
       played: 'Зразок запущено. Він зупиниться за секунду.',
       stopped: 'Зразок зупинено.',
       muted: 'Звук вимкнено. Увімкніть його для прослуховування.',
+      silent: 'Загальна гучність нульова. Збільште її в налаштуваннях звуку гри.',
       unavailable: 'Звук недоступний або гучність ефектів нульова.',
       cancelled: 'Зразок зупинено.',
       mute: 'Вимкнути звук',
@@ -254,8 +257,13 @@ const audioRows = INDUSTRIAL_AUDIO_SAMPLES.map((sample) => {
 });
 function updateAudio() {
   const words = copy[$('language').value].audio;
-  $('audio-mute').textContent = sound.snapshot().muted ? words.unmute : words.mute;
-  $('audio-status').textContent = words[audioResult] ?? words.ready;
+  audioResult = updateReviewAudioStatus({
+    sound,
+    words,
+    result: audioResult,
+    mute: $('audio-mute'),
+    status: $('audio-status'),
+  });
 }
 $('audio-stop').onclick = () => {
   audioTicket++;
@@ -425,6 +433,9 @@ const effects = [
   return row;
 });
 function draw(now) {
+  // The existing frame also runs while paused. Read the current audio owner so
+  // cross-tab preferences and automatic sample stops reach the visible controls.
+  updateAudio();
   const reduced = motion.reducedEffects(),
     elapsed = last === null ? 0 : Math.min(100, now - last);
   last = now;
