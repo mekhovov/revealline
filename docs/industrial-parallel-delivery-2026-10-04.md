@@ -44,3 +44,13 @@ The current corrected overhead treatment awaits an explicit production decision.
 ## Optional scope retained
 
 Broader catalogue promotion, media-bearing Community rooms, Company Versus editions, media registry delivery, hosted accounts, public matchmaking, challenges/ghosts, networked SIM and new destructible-terrain/vehicle-combat rules remain optional. They enter their own reviewed plans after required local quality and recovery work; visual inspiration does not imply new collision or combat rules.
+
+## Repeatable phase verification
+
+`npm run test:industrial` executes the six bounded streams declared in `publishing/industrial-feature-tests.json`: gameplay, creator, presentation, recordings, rooms and local UX. Use `npm run test:industrial -- --phase creator` to isolate one stream. Node 22.22.2 is the pinned CI runtime; additional runtimes need their own receipts.
+
+Commit the stack before this command. It checks raw Git source identity before and after execution, records the Node/platform/architecture and test-file hashes, and refuses to call skipped, canceled, missing or failed tests a pass. Each invocation writes a unique directory under `.cache/industrial-verification/` with a run status, per-phase TAP logs, hashes and receipts. Incomplete runs cannot overwrite prior evidence. Phase execution has a ten-minute deadline; the GitHub matrix runs three independent phases at a time and retains artifacts for the exact PR head.
+
+The restored required policy also exercises the pre-existing package and candidate workflows. Repairs distinguish runtime defects from obsolete fixtures: native Team release ordering, Studio storage retirement and flight cleanup are production fixes; actor-role fixtures, legal in-bounds projectile geometry, sequential historical pair sampling and approved optional-package inventory counts are verification maintenance. Neither category weakens the historical recipe, replay or package-budget contract.
+
+This software matrix complements mandatory lint/format/content/source/build checks. It does not establish physical-device performance, human completion of the six Living Routes pilots, artistic approval or hosted-room readiness. The older pursuit-pressure route regressions are not substitutes for those six pilot routes.

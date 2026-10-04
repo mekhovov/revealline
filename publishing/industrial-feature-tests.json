@@ -1,0 +1,100 @@
+{
+  "format": "revealline-industrial-feature-tests.v1",
+  "phases": [
+    {
+      "id": "gameplay",
+      "files": [
+        "game/test/pursuit-successor.test.mjs",
+        "game/test/pursuit-specialists.test.mjs",
+        "game/test/pursuit-intercept-routes.test.mjs",
+        "game/test/content-pursuit-intercept.test.mjs",
+        "game/test/classic-snake-v2.test.mjs",
+        "game/test/classic-snake-v3.test.mjs",
+        "game/test/fpv-native-pursuit-successor.test.mjs",
+        "game/test/fpv-native-pursuit.test.mjs",
+        "game/test/coop-hunting.test.mjs",
+        "game/test/hunt-core.test.mjs",
+        "game/test/pursuit-variants.test.mjs",
+        "game/test/pursuit-campaigns.test.mjs",
+        "game/test/snake-hunt-core.test.mjs",
+        "game/test/snake-hunt-content.test.mjs",
+        "game/test/snake-hunt-transport.test.mjs",
+        "game/test/classic-snake-core.test.mjs",
+        "game/test/classic-snake-progress.test.mjs",
+        "game/test/hunt-records.test.mjs",
+        "game/test/team-hunt-attempts.test.mjs",
+        "game/test/team-hunt-progress.test.mjs",
+        "game/test/running-enemies-core.test.mjs",
+        "game/test/team-running-enemies.test.mjs",
+        "game/test/classic-snake-legacy-seeds.test.mjs"
+      ]
+    },
+    {
+      "id": "creator",
+      "files": [
+        "game/test/studio-pursuit-editor.test.mjs",
+        "game/test/studio-pursuit-preview.test.mjs",
+        "game/test/fpv-native-pursuit-editor.test.mjs",
+        "game/test/snake-studio-preview.test.mjs",
+        "game/test/snake-studio-launch.test.mjs",
+        "game/test/team-installed-host.test.mjs",
+        "game/test/asset-studio-return.test.mjs",
+        "game/test/asset-studio-actor-animation.test.mjs",
+        "game/test/asset-studio-preview-motion.test.mjs",
+        "game/test/classic-community-package.test.mjs"
+      ]
+    },
+    {
+      "id": "presentation",
+      "files": [
+        "game/test/actor-animation-budget.test.mjs",
+        "game/test/industrial-arcade.test.mjs",
+        "game/test/industrial-material-sample.test.mjs",
+        "game/test/industrial-review-motion.test.mjs",
+        "game/test/industrial-encounter-audio.test.mjs",
+        "game/test/shared-encounter-audio.test.mjs",
+        "game/test/hunt-overhead-art.test.mjs",
+        "game/test/classic-snake-presentation.test.mjs",
+        "game/test/defeat-presentation-host.test.mjs",
+        "game/test/field-kit-adoption.test.mjs",
+        "game/test/presentation-host.test.mjs",
+        "game/test/actor-atlas-runtime.test.mjs",
+        "game/test/actor-appearance-lease.test.mjs"
+      ]
+    },
+    {
+      "id": "recordings",
+      "files": [
+        "game/test/multiplayer-recording.test.mjs",
+        "game/test/terminal-recording-export.test.mjs",
+        "game/test/recording-verification-navigation.test.mjs"
+      ]
+    },
+    {
+      "id": "rooms",
+      "files": [
+        "game/test/online-room-artwork.test.mjs",
+        "game/test/online-room-client.test.mjs",
+        "game/test/online-room-content.test.mjs",
+        "game/test/online-room-input.test.mjs",
+        "game/test/online-room-presentation.test.mjs",
+        "game/test/online-room-registry.test.mjs",
+        "game/test/online-room-service.test.mjs",
+        "game/test/online-room-v2.test.mjs",
+        "game/test/online-room.test.mjs"
+      ]
+    },
+    {
+      "id": "local-ux",
+      "files": [
+        "game/test/classic-snake-ui.test.mjs",
+        "game/test/hunt-host.test.mjs",
+        "game/test/coop-briefing-host.test.mjs",
+        "game/test/mode-play-shell.test.mjs",
+        "game/test/phase-briefing.test.mjs",
+        "game/test/civilian-practice-ui.test.mjs",
+        "game/test/fpv-flight-ui.test.mjs"
+      ]
+    }
+  ]
+}

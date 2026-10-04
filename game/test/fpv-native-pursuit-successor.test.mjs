@@ -124,9 +124,20 @@ test('v2 pairs arrive separately, share one rest deadline, wait together, and pr
   }
   assert.equal(first.pursuit.arrived, true);
   assert.equal(second.pursuit.arrived, true);
+  assert.equal(first.pursuit.meetingUntil, second.pursuit.meetingUntil);
+  const deadline = first.pursuit.meetingUntil;
+  const arrivalPositions = run.actors.slice(0, 2).map((actor) => ({ ...actor.position }));
+  // Native actors update in stable order. The second arrival shares its deadline
+  // immediately; both local phase projections sample it on the next fixed step.
+  run.step();
+  assert.equal(first.pursuit.meetingUntil, deadline);
+  assert.equal(second.pursuit.meetingUntil, deadline);
+  assert.deepEqual(
+    run.actors.slice(0, 2).map((actor) => actor.position),
+    arrivalPositions,
+  );
   assert.equal(first.pursuit.phase, 'recovering');
   assert.equal(second.pursuit.phase, 'recovering');
-  assert.equal(first.pursuit.meetingUntil, second.pursuit.meetingUntil);
   const positions = run.actors.slice(0, 2).map((actor) => ({ ...actor.position }));
   for (let i = 0; i < 81; i++) run.step();
   assert.deepEqual(
