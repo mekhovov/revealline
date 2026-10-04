@@ -38,3 +38,7 @@ This fixture does not claim ordinary-control completion of edited courses, offli
 Use `stage-admitted.mjs BUNDLE_DIRECTORY BASELINE_PLAYER NEW_DIRECTORY` to verify the admitted archive and materialize its exact 102 members. Matching baseline members become immutable hardlinks; changed bytes are new files. The sibling stage receipt binds the admission, archive and all member hashes. It never builds, uploads or publishes a package.
 
 Pass `--admitted-source EXACT_COMMIT` to `prepare-browser.mjs` with that staged player. All 102 files remain unchanged hardlinks, with no runtime overlay. The host source must match the explicit admitted commit. The same public UI cases and trusted spatial step run with receipts clearly labelled `admitted-package`. This does not extend acceptance to offline or physical devices.
+
+## Remaining course selection work
+
+Explicit project-course selection is a separate next increment. Imported multi-course projects currently open their first course in the Workshop; this mode selector does not make every course independently accessible. That follow-on must preserve dirty edits, synchronization, per-course history, source reimport, test-flight selection and export ownership when switching courses. The planned eight-course Reservoir project must not be advertised as fully editable before that work is qualified.
