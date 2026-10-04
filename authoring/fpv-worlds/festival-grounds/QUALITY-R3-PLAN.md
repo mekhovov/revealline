@@ -80,3 +80,13 @@ Candidate build, source/asset and collision receipts are retained under
 `evidence/r3-*.json`. Matched actual-renderer review is still pending. No
 additional route, demonstration, offline acceptance or finished-world claim
 is made by this checkpoint.
+
+Root subsequently accepted this bounded gathering/surface/wayfinding checkpoint
+after eleven actual static views with zero errors and successful renderer
+disposal. The matched picnic/table-underside and market views show grounded
+geometry, no observed duplicate surface and retained broad lanes. Low/High,
+Pixel and shared industrial remain readable. The wide scene is still stylized
+and sparse; this does not establish a photoreal quality standard. Exact receipt
+and eleven screenshots are retained under `evidence/r3-static/`. The accepted
+scene is now the unchanged geometry baseline for eight-course expansion and
+sixteen ordinary-control demonstrations.
