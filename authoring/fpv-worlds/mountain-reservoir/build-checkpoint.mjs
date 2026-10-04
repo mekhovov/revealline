@@ -43,7 +43,7 @@ const prepared = await prepareWorldFile({
   title: 'Mountain Reservoir · first shoreline checkpoint',
 });
 const project = prepared.project;
-const revision = 'r3';
+const revision = 'r4';
 project.revision = revision;
 function volume(type, centre, size, extra = {}) {
   return {

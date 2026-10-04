@@ -171,28 +171,9 @@ prism(
 );
 solid('platform-shore-pad', [-34, 0, 22], [-26, 0.45, 30]);
 solid('building-maintenance', [-26, 0, -19], [-18, 4.2, -11]);
-prism(
-  'building-maintenance-roof',
-  [
-    [-26.3, -19.3],
-    [-17.7, -19.3],
-    [-17.7, -10.7],
-    [-26.3, -10.7],
-  ],
-  4.45,
-  4.2,
-);
+solid('building-maintenance-roof', [-26.3, 4.2, -19.3], [-17.7, 4.45, -10.7]);
 // Dam rises along the north water edge. The same solid and paint serve later routes.
-prism(
-  'platform-dam',
-  [
-    [-8, -32],
-    [49, -32],
-    [49, -25],
-    [-8, -25],
-  ],
-  9.5,
-);
+solid('platform-dam', [-8, 0, -32], [49, 9.5, -25]);
 solid('platform-dam-crest', [-8, 9.5, -29.8], [49, 9.85, -26]);
 for (let z = -32; z <= 36; z += 4)
   solid(`rail-shore-post-${z + 32}`, [5.45, 0, z - 0.1], [5.65, 1.2, z + 0.1]);
@@ -433,7 +414,7 @@ export const anchors = [
 
 export function createScene() {
   const document = {
-    asset: { version: '2.0', generator: 'RevealLine original Mountain Reservoir source r3' },
+    asset: { version: '2.0', generator: 'RevealLine original Mountain Reservoir source r4' },
     scene: 0,
     scenes: [{ nodes: [] }],
     nodes: [],

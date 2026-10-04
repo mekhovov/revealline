@@ -49,6 +49,8 @@ const receipt = {
   status: 'running',
   scope:
     'One course/two modes; ordinary controls through unchanged runtime, independent complete and archive-import replays. No eight-course delivery, native browser, offline or hardware claim.',
+  pilot:
+    'Existing adventureAuthoringPilot with ordinary 48% throttle during its final 65mm early-cut window until actual grounded contact. The authored 700mm/s touchdown limit is unchanged; all inputs are recorded and independently replayed.',
 };
 async function save() {
   await writeFile(path.join(output, 'qualification.json'), JSON.stringify(receipt, null, 2) + '\n');
@@ -122,6 +124,20 @@ try {
           milestones.push({ step: state.step, tick: state.ticks, position: state.position });
         }
         const controls = adventureAuthoringPilot(state, course, memory, mode);
+        // The shared pilot normally switches the motor off 65mm above support.
+        // Keep gentle motor support until contact for this stricter landing,
+        // using normal inputs rather than changing course, state or physics.
+        const pad = course.obstacles.find((o) => o.id === state.target?.surface);
+        if (
+          state.target?.type === 'land' &&
+          !state.grounded &&
+          pad?.max &&
+          state.position.y > pad.max.y &&
+          state.position.y - pad.max.y < 65 &&
+          Math.hypot(state.velocity.x, state.velocity.z) < 450 &&
+          controls.throttle === 0
+        )
+          controls.throttle = 0.48;
         state = flight.step(controls);
         recorder.record(controls);
       }
@@ -136,6 +152,8 @@ try {
         contacts: state.contacts,
         health: state.health,
         terminalSupport: state.support?.id,
+        landingSpeed: state.landingSpeed,
+        landingTilt: state.landingTilt,
         position: state.position,
         milestones,
         proof: { path: filename, bytes: bytes.length, sha256: hash(bytes) },
