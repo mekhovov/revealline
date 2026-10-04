@@ -24,6 +24,13 @@ Capacity PR #1047 is independent. Its reviewed integrated reserve of 17,552 byte
 less the projected 6,281-byte coaching change and this draft, leaves 10,797 bytes
 before D4 mode editing. This is arithmetic, not a combined admission result.
 
+The [current input audit](evidence/fpv-imported-examples-input-scope.json) compares
+all 95 original inputs with qualified disposal source `d9ad2561e`: 94 are exact,
+and the host is the sole 474-byte delta. This branch totals 16,771,214 original
+source bytes with 6,002 bytes free before integrating the independent capacity,
+coaching or editor increments. No input path or policy changes. This audit is
+not a replacement for final source-bound package admission.
+
 The manual preparer executes the actual private lookup functions extracted from
 the host through Acorn, with real course validators and recorded proofs. Its 46
 functional checks include baseline reproduction, exact positive lookup, wrong
