@@ -9,8 +9,11 @@ Runtime source `97883b0aebc1e75a8b7f26da3f556bf5b8e24e24` changes four admitted
 inputs by 1,736 bytes and adds no package member. Its base is the published
 coating capability `a767ff4945dc44bd9e8e689c4a03cef2a8111ef4`. The later normal
 merge of main `3bc7a923da2b7d50a6a675a91d5560005ad0f20d` changes none of those
-runtime bytes. Full admission and native acceptance are recorded separately when
-completed.
+runtime bytes. The final ordinary merge of qualified HUD main
+`ecf0bafc6541c6b57ae28a530763bab221555d4f` produces admission source
+`4eeb7bc4480acc1f82f07d436401283ea80cfd04`; its only incoming runtime change
+from the source fixture is the already qualified HUD update (+121 bytes).
+`evidence/input-bridge.json` checks all 95 original inputs against both parents.
 
 `qualify.mjs OLD_ADMITTED_PLAYER COATING_PACK NEW_RECEIPT` performs manual Node
 checks of actual pack import and exact roundtrip, typed versus malformed refusal,
@@ -60,3 +63,26 @@ the new guidance applies to updated code. Neither this fixture nor the typed err
 demonstrates the actual launcher update journey. No automatic navigation, cache
 clearing, proof injection, clock override, performance claim or new unit coverage
 is introduced.
+
+The integrated source passes full `npm run validate`, 24 existing content and
+appearance checks, scoped ESLint and `git diff --check`. One all-three-package
+admission produces two identical builds with committed inputs and ZIP members
+verified. The Worlds package remains 102 files; its 95 original inputs total
+16,741,315 bytes, leaving 35,901 bytes under the unchanged 16 MiB source limit.
+The exact Worlds distribution SHA-256 is
+`e6e5f179e8412993a675efe179df232b284a0d6409c4d162aebd7f4cbfb2f9f2`.
+
+The immutable player stages all 102 members with 223 checks, 96 verified hardlinks
+and six newly written members. It has no source overlays. Admission receipts,
+input inventory, staging receipt and command logs are losslessly archived under
+`evidence/`, with original and compressed hashes in `admission-archive.json`.
+Initial missing sparse helper and authoring dependency failures remain archived;
+they were repaired from exact Git blobs and existing installed dependencies, with
+no guard or runtime change. This source admission excludes the separate Creator
+install repair; that integrated journey has its own pending qualification.
+
+Both catalogues remain empty. A finished world may be added to the capability
+catalogue only after its immutable data and the capable runtime are published;
+real public download and the existing launcher update journey remain separate
+observations. This increment does not claim that old cached code acquired the new
+guidance or that preparing offline upgrades it.
