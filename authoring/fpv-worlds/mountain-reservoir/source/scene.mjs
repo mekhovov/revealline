@@ -293,6 +293,42 @@ terrain.setAttribute('position', new THREE.Float32BufferAttribute(terrainPositio
 terrain.setIndex(terrainIndices);
 terrain.computeVertexNormals();
 add(terrain, 'mineral-ridge');
+let terrainStitched = false;
+export function includeTerrainStitching() {
+  if (terrainStitched) throw Error('Terrain boundary already stitched');
+  const positions = [];
+  const skirt = (a, b, north) => {
+    const bottomA = [a[0], 0, a[2]],
+      bottomB = [b[0], 0, b[2]];
+    // The decorative heightfield interpolates between discrete terrace levels,
+    // exposing its open underside. Close that edge on the existing unreachable
+    // world boundary. Playable geometry and every original top triangle stay exact.
+    if (a[1] > 0) positions.push(...a, ...(north ? bottomA : b), ...(north ? b : bottomA));
+    if (b[1] > 0)
+      positions.push(...b, ...(north ? bottomA : bottomB), ...(north ? bottomB : bottomA));
+  };
+  for (let i = 0; i < zs.length - 1; i++) {
+    if (zs[i] < -34 || zs[i + 1] > 38) continue;
+    skirt(
+      [-44, groundHeight(-44, zs[i]), zs[i]],
+      [-44, groundHeight(-44, zs[i + 1]), zs[i + 1]],
+      false,
+    );
+  }
+  for (let i = 0; i < xs.length - 1; i++) {
+    if (xs[i] < -44 || xs[i + 1] > 6) continue;
+    skirt(
+      [xs[i], groundHeight(xs[i], -34), -34],
+      [xs[i + 1], groundHeight(xs[i + 1], -34), -34],
+      true,
+    );
+  }
+  const closure = new THREE.BufferGeometry();
+  closure.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3));
+  add(closure, 'mineral-ridge');
+  terrainStitched = true;
+  return { triangles: positions.length / 9, positions };
+}
 function surfaceHeight(x, z) {
   const ix = xs.findIndex((v, i) => x >= v && x <= xs[i + 1]),
     iz = zs.findIndex((v, i) => z >= v && z <= zs[i + 1]),
@@ -425,7 +461,8 @@ export function createScene() {
     asset: {
       version: '2.0',
       generator:
-        'RevealLine original Mountain Reservoir source ' + (engineeringAdded ? 'r7' : 'r4'),
+        'RevealLine original Mountain Reservoir source ' +
+        (terrainStitched ? 'r9-terrain-stitching-candidate' : engineeringAdded ? 'r7' : 'r4'),
     },
     scene: 0,
     scenes: [{ nodes: [] }],
