@@ -43,6 +43,8 @@ HTTP requests use the real Node server and sockets. Only the wall clock and serv
 
 ## Remaining qualification and priority
 
+The [local HTTP fault-and-outcome continuation](qualification/private-room-http-2026-10-04/README.md) adds four native completion cases and a reusable real-socket fault relay. The expanded room suite passes 73/73 on Node 22; the twelve service/transport cases pass on Node 20. This extends local software evidence without closing the physical-device or hosted-network gates below.
+
 | Priority | Item                                                                                     | Why it remains necessary                                                                                                      | Limitation until complete                                                                        |
 | -------- | ---------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------ |
 | P1       | Two real devices across delayed/lossy networks; reconnect just inside/outside the window | Confirm HTTP recovery, notices, no stale controls and fresh two-seat consent under actual scheduling and transport conditions | The passing local HTTP harness is not real-network qualification                                 |

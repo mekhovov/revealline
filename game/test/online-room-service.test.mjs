@@ -1,105 +1,10 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { request } from 'node:http';
-import { once } from 'node:events';
-import { createRoomService } from '../../services/rooms/server.mjs';
-import { CLASSIC_SNAKE_LEVELS } from '../snake/classic-catalogue.mjs';
 import { ROOM_CONTROL_PROTOCOL } from '../online/room-client-lifecycle.mjs';
 import { restoreTrustedRoomSnapshot } from '../online/room-core.mjs';
 
-const origin = 'http://127.0.0.1:8779';
-async function fixture(t) {
-  let clock = 0;
-  // Keep real HTTP delivery while choosing precisely when the service's timer
-  // wakes. This covers requests that beat maintenance after a clock jump.
-  t.mock.timers.enable({ apis: ['setInterval'] });
-  const server = await createRoomService({
-    now: () => clock,
-    catalogue: [
-      {
-        ...CLASSIC_SNAKE_LEVELS[0],
-        family: 'snake',
-        mode: 'versus',
-        id: 'test-snake',
-      },
-    ],
-  });
-  server.listen(0, '127.0.0.1');
-  await once(server, 'listening');
-  const url = `http://127.0.0.1:${server.address().port}`;
-  t.after(
-    () =>
-      new Promise((resolve) => {
-        server.closeAllConnections();
-        server.close(resolve);
-      }),
-  );
-  const api = async (path, seat = null, body = undefined) => {
-    const response = await fetch(`${url}${path}`, {
-      method: body === undefined ? 'GET' : 'POST',
-      headers: {
-        Origin: origin,
-        ...(seat ? { Authorization: `Bearer ${seat.token}` } : {}),
-        ...(body === undefined ? {} : { 'Content-Type': 'application/json' }),
-      },
-      ...(body === undefined ? {} : { body: JSON.stringify(body) }),
-    });
-    return { status: response.status, body: await response.json() };
-  };
-  const host = (await api('/rooms', null, { id: 'test-snake' })).body;
-  const guest = (await api('/join', null, { invite: host.invite })).body;
-  const snap = async () => (await api('/snapshot', host)).body;
-  const start = async () => {
-    const activation = (await snap()).controlActivation;
-    assert.equal((await api('/ready', host, { activation })).status, 200);
-    assert.equal((await api('/ready', guest, { activation })).status, 200);
-    return snap();
-  };
-  const hold = async (path, seat, body) => {
-    const text = JSON.stringify(body);
-    const received = once(server, 'request');
-    let pending;
-    const response = new Promise((resolve, reject) => {
-      pending = request(
-        `${url}${path}`,
-        {
-          method: 'POST',
-          headers: {
-            Origin: origin,
-            Authorization: `Bearer ${seat.token}`,
-            'Content-Type': 'application/json',
-            'Content-Length': Buffer.byteLength(text),
-          },
-        },
-        (result) => {
-          let data = '';
-          result.on('data', (chunk) => {
-            data += chunk;
-          });
-          result.on('end', () => resolve({ status: result.statusCode, body: JSON.parse(data) }));
-        },
-      );
-      pending.on('error', reject);
-      pending.write(text.slice(0, -1));
-    });
-    t.after(() => pending.destroy());
-    await received;
-    return { response, finish: () => pending.end(text.slice(-1)) };
-  };
-  return {
-    api,
-    host,
-    guest,
-    snap,
-    start,
-    hold,
-    url,
-    advance: (ms, { runTimer = true } = {}) => {
-      clock += ms;
-      if (runTimer) t.mock.timers.tick(4);
-    },
-  };
-}
+import { fixture, origin } from './helpers/room-service-http-fixture.mjs';
 
 test('delayed HTTP input and Ready bodies cannot cross pause/resume activation boundaries', async (t) => {
   const h = await fixture(t);
