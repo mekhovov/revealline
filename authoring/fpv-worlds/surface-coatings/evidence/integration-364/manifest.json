@@ -16,7 +16,14 @@
     "originalInputBytes": 16739353,
     "remainingBytes": 37863,
     "additionalFullValidation": false,
-    "additionalBrowserRun": false
+    "additionalBrowserRun": false,
+    "scopedCheckFiles": [
+      "game/test/fpv-workshop-visuals.test.mjs",
+      "game/test/fpv-world-content.test.mjs",
+      "game/test/fpv-world-textures.test.mjs"
+    ],
+    "additionalAppearanceChecks": 8,
+    "checkReceiptNote": "The first current-main invocation selected fpv-appearance rather than workshop-visuals and passed24. The intended original workshop/content/texture selection then passed33; both logs are retained, and the eight additional appearance cases are not counted twice."
   },
   "sparseStartupFailures": "Initial build startup required lz-string JS, its license, then icon-master.png, absent after sparse branch switch. No candidate package was written. Exact Git-hash/APFS materialization restored declared sources, then the unchanged-source build passed; license/icon errors retained. Initial JS ENOENT was observed in tool output before admission started.",
   "scope": "Main contributes only already-qualified paused first draw/context guard and ghost Settings visibility. Loader/validator/coating/Theme bytes or added renderer lines remain exact. Historical full validation and nine actual admitted views/native import remain bound to b51; integrated source/ZIP admission is separately bound to364.",
@@ -153,6 +160,13 @@
       "sha256": "9de804f6faee2c2042f8ac98df34efc5def535b80f89bdf83cdf2792e87ea234",
       "originalBytes": 32166,
       "originalSHA256": "005f2df65b71632416bab6dc7ded650c80b63fb89b5a3327866728a6069af34a"
+    },
+    {
+      "path": "fpv-required-coating-scoped-364.tap.gz",
+      "bytes": 2071,
+      "sha256": "10bf02675a04a53ab60898c81cc95eface664eb535fbccfd5ec7719e7b2b5300",
+      "originalBytes": 8161,
+      "originalSHA256": "988931056ce8fb490542c63947d2b06f735a5178d1ea0256cae1fe425535d718"
     }
   ]
 }
