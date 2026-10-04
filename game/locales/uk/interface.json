@@ -3437,7 +3437,7 @@
   "versusLibraryCompleteRematchOrChooseAllMissionsWheneverYou": "Бібліотеку суперництва завершено. Влаштуйте реванш або виберіть «Усі місії», коли захочете.",
   "theExactNextMissionIsNotReady": "Точна наступна місія не готова.",
   "theNextMissionCouldNotStart": "Не вдалося почати наступну місію.",
-  "stayKeepsBothPausedBoardsAndThisSeriesReplacePlay": "«Залишитися» зберігає обидва призупинені поля та цю серію. «Замінити й грати» відкидає цю спробу й відкриває точну вибрану місію.",
+  "stayKeepsBothPausedBoardsAndThisSeriesReplacePlay": "Залишитися — зберегти обидва призупинені поля й цю серію. Заміна скасовує цю спробу та відкриває саме вибрану місію.",
   "theSelectedMissionChangedRefreshTheLibrary": "Вибрана місія змінилася. Оновіть бібліотеку.",
   "thisExactBaseMissionIsUnavailable": "Ця точна базова місія недоступна.",
   "missionLibraryClosed": "Бібліотеку місій закрито.",
@@ -5947,5 +5947,6 @@
   "recording.exportRound": "Експортувати запис цього раунду",
   "recording.exportTeam": "Експортувати запис команди",
   "recording.verifyExported": "Перевірити експортований запис ↗",
-  "recording.exportHelp": "Обери експортований файл у новій вкладці. Можна перевірити і перемоги, і поразки; це не дає прогресу чи нагород."
+  "recording.exportHelp": "Обери експортований файл у новій вкладці. Можна перевірити і перемоги, і поразки; це не дає прогресу чи нагород.",
+  "replaceAndPrepare": "Замінити й підготувати"
 }

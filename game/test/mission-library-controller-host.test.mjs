@@ -252,8 +252,15 @@ test('Versus controller Play and replacement Stay preserve both paused boards an
   pulse(0);
   await settle(() => {
     p.frame(0);
-    return p.state() === 'running';
+    return !p.$('journey-chooser').open && p.state() === 'ready';
   });
+  assert.equal(p.doc.activeElement.id, 'race-start');
+  assert.equal(p.$('race-briefing').hidden, false);
+  const prepared = p.checkpoint();
+  frame();
+  assert.deepEqual(p.checkpoint(), prepared);
+  pulse(0);
+  await settle(() => p.state() === 'running');
 
   assert.equal(p.renders[0].level.id, 'signal-01');
   assert.equal(p.renders[1].level.id, 'signal-01');
@@ -333,14 +340,21 @@ test('Versus controller Download & play joins repeated Confirm without exposing 
   );
   frame();
   assert.equal(requests, 2);
-  assert.equal(p.state(), 'running');
+  assert.equal(p.state(), 'ready');
+  assert.equal(p.doc.activeElement.id, 'race-start');
+  assert.equal(p.$('race-briefing').hidden, false);
   assert.equal(p.renders[0].level.id, 'night-shift-03');
   assert.equal(p.renders[1].level.id, 'night-shift-03');
   assert.notDeepEqual(
     p.checkpoint(),
     before,
-    'The ready setup changes only after the owned preparation succeeds and starts play.',
+    'The ready setup changes only after the owned preparation succeeds.',
   );
+  const prepared = p.checkpoint();
+  frame();
+  assert.deepEqual(p.checkpoint(), prepared);
+  pulse(0);
+  await settle(() => p.state() === 'running');
 });
 
 for (const mode of ['solo', 'versus', 'team'])

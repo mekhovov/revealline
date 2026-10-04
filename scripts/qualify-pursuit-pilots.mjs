@@ -259,7 +259,9 @@ export async function verifyPursuitPilotRecording({ pilot, mode, pace, recording
     const verified = await verifyLocalMatchRecordingAsync(replay);
     check(
       verified.match,
-      'Recording does not match its full native terminal state; completion qualification requires an exact replay match.',
+      verified.terminalObservationMatch === null
+        ? 'Recording does not match its full native terminal state; completion qualification requires an exact replay match.'
+        : 'Recording does not match its declared terminal observations; completion qualification requires an observation match.',
     );
     const completedBoards =
       mode === 'team'
@@ -279,6 +281,12 @@ export async function verifyPursuitPilotRecording({ pilot, mode, pace, recording
       recipeSha256: verified.recipeSha256,
       provenance: verified.recipe.provenance,
       authority: verified.authority,
+      verificationScope: verified.verificationScope,
+      exactStateMatch: verified.exactStateMatch,
+      terminalObservationMatch: verified.terminalObservationMatch,
+      ...(verified.actual.observationSha256
+        ? { observationSha256: verified.actual.observationSha256 }
+        : {}),
     };
   } else if (entry.family === 'capture') {
     const source = recording.format?.startsWith('revealline-replay-presentation.')
@@ -361,7 +369,10 @@ export async function verifyPursuitPilotRecording({ pilot, mode, pace, recording
     };
   }
   return {
-    format: 'pursuit-pilot-recording-receipt.v1',
+    format:
+      outcome.terminalObservationMatch === true
+        ? 'pursuit-pilot-recording-receipt.v2'
+        : 'pursuit-pilot-recording-receipt.v1',
     source: sourceStamp(),
     pilot,
     mode,
@@ -369,10 +380,16 @@ export async function verifyPursuitPilotRecording({ pilot, mode, pace, recording
     seed: entry.seed,
     recipe: recipe(entry.level),
     recordingSha256: hash(canonicalJSON(recording)),
-    verification: 'native-replay-completion',
+    verification:
+      outcome.terminalObservationMatch === true
+        ? 'native-terminal-observation-completion'
+        : 'native-replay-completion',
     outcome,
     ...pending,
     scope:
+      (outcome.terminalObservationMatch === true
+        ? 'Only declared terminal gameplay observations are required to match; exactStateMatch separately reports the raw state digest. This is not a resumable checkpoint or proof of cross-device deterministic simulation. '
+        : '') +
       'Replay integrity is not an author signature, proof of human input, device qualification or release approval.',
   };
 }

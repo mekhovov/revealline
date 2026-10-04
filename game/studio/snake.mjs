@@ -6,6 +6,7 @@ import { renderEnemyFieldGuide } from '../ui/enemy-field-guide.mjs';
 import { createProfileRecordBackend } from '../profile-storage.mjs';
 import { boundedJSON, required } from '../data-json.mjs';
 import { contentStudioLinks } from '../ui/content-studio-navigation.mjs';
+import { mountSnakeStudioPreview } from './snake-preview-panel.mjs';
 import {
   CLASSIC_PACKAGE_FORMAT,
   validateClassicSnakePackage,
@@ -222,8 +223,13 @@ const cast = field(
 );
 const phase = field(
   fields,
-  words('Preview phase', 'Фаза перегляду'),
-  select(['rest', 'warning', 'burst', 'turning'].map((value) => [value, value])),
+  words('Specimen phase', 'Фаза зразка'),
+  select([
+    ['rest', words('Rest', 'Відпочинок')],
+    ['warning', words('Warning', 'Попередження')],
+    ['burst', words('Burst', 'Ривок')],
+    ['turning', words('Turning', 'Поворот')],
+  ]),
 );
 const specimen = el('canvas', null, {
   width: '240',
@@ -237,6 +243,12 @@ const guide = el('section', null, {
   'aria-label': words('Prey goal, tell and counter', 'Мета, ознака та протидія здобичі'),
 });
 editor.append(guide);
+const playPreview = mountSnakeStudioPreview({
+  container: boardSection,
+  getLevel: () => current().level,
+  getCast: () => cast.value,
+  language,
+});
 const modes = el('div', null, { class: 'actions' });
 editor.append(modes);
 const sourceDetails = el('details'),
@@ -384,6 +396,7 @@ function paint() {
   } catch (error) {
     report(error.message, true);
   }
+  playPreview.refresh();
 }
 function paintCell(point) {
   const identity = `${point.x},${point.y}`;

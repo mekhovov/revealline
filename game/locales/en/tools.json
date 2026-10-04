@@ -130,7 +130,7 @@
   "exportLoadedLibrary": "Export loaded library",
   "theMapExpansionIncludesThisEditedMapCurrentClassRecipes": "The map expansion includes this edited map, current class recipes, theme and images. The loaded library export preserves its original campaigns. These practice previews do not install content in the main game's library.",
   "replayARecordedRun": "Replay a recorded run",
-  "importAnExportedReplayToCheckItsFinalSimulationSummary": "Import a Solo replay or a local Capture Team/Versus recording to verify its final simulation state. Wins and losses can both match. Verification grants no progress or rewards and does not prove mission completion.",
+  "importAnExportedReplayToCheckItsFinalSimulationSummary": "Import a Solo replay or a local Capture Team/Versus recording to check its recorded result. The report states whether the full state or declared terminal observations match. Wins and losses can both match. Verification grants no progress or rewards and does not prove mission completion.",
   "openReplayTheaterToWatchPauseAndStepThroughA": "Watch a Solo recording in Replay Theater ↗",
   "verifyReplay": "Verify replay",
   "replayJson": "Replay JSON",
@@ -3140,5 +3140,7 @@
   "studio.themes.galleryHelp": "Try each theme’s controls without changing your game appearance or workspace.",
   "studio.themes.openAssetTools": "Open asset tools",
   "studio.themes.openThemeStudio": "Open Theme Studio",
-  "multiplayerRecordingVerificationOnly": "Team and Versus recordings are checked here with their native rules. Replay Theater currently provides visual playback for Solo recordings only."
+  "multiplayerRecordingVerificationOnly": "Team and Versus recordings are checked here with their native rules. Replay Theater currently provides visual playback for Solo recordings only.",
+  "recordingTerminalObservationsMatch": "Recorded terminal outcome, board topology and declared gameplay observations match. This does not verify every internal simulation value.",
+  "recordingTerminalObservationsDiffer": "Recorded terminal gameplay observations differ. Check the verification details."
 }

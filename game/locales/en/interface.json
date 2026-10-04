@@ -3414,7 +3414,7 @@
   "versusLibraryCompleteRematchOrChooseAllMissionsWheneverYou": "Versus library complete. Rematch or choose All missions whenever you like.",
   "theExactNextMissionIsNotReady": "The exact next mission is not ready.",
   "theNextMissionCouldNotStart": "The next mission could not start.",
-  "stayKeepsBothPausedBoardsAndThisSeriesReplacePlay": "Stay keeps both paused boards and this series. Replace & play discards this attempt and opens the exact selected mission.",
+  "stayKeepsBothPausedBoardsAndThisSeriesReplacePlay": "Stay keeps both paused boards and this series. Replacing discards this attempt and opens the exact selected mission.",
   "theSelectedMissionChangedRefreshTheLibrary": "The selected mission changed. Refresh the library.",
   "thisExactBaseMissionIsUnavailable": "This exact Base mission is unavailable.",
   "missionLibraryClosed": "Mission library closed.",
@@ -5837,5 +5837,6 @@
   "recording.exportRound": "Export recording of this round",
   "recording.exportTeam": "Export Team recording",
   "recording.verifyExported": "Verify exported recording ↗",
-  "recording.exportHelp": "Choose your exported file in the new tab. Wins and losses can be verified; this grants no progress or rewards."
+  "recording.exportHelp": "Choose your exported file in the new tab. Wins and losses can be verified; this grants no progress or rewards.",
+  "replaceAndPrepare": "Replace and prepare"
 }
