@@ -728,12 +728,15 @@
           'Disposed coaching controls have no retained parent',
           oldReturn.parentNode === null && oldReturnStatus.parentNode === null,
         );
+        const disposedRenderer = w.fixtureRenderer,
+          disposedCourse = w.fixtureLastCourse;
         click(oldReturn);
         await wait(30);
         must(
           'Detached return cannot restart a disposed flight',
-          app.snapshot().course === undefined &&
-            app.snapshot().state === undefined &&
+          w.fixtureRenderer === disposedRenderer &&
+            w.fixtureLastCourse === disposedCourse &&
+            w.fixtureRAF.pending() === 0 &&
             !d.querySelector('#world-return-challenge') &&
             !d.querySelector('#world-return-status'),
         );
