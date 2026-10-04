@@ -43,6 +43,8 @@ const prepared = await prepareWorldFile({
   title: 'Mountain Reservoir · first shoreline checkpoint',
 });
 const project = prepared.project;
+const revision = 'r3';
+project.revision = revision;
 function volume(type, centre, size, extra = {}) {
   return {
     type,
@@ -70,7 +72,7 @@ const route = [
 const course = validateWorldCourse({
   format: 'FlightCourse.v2',
   id: 'mountain-reservoir-01',
-  revision: 'r1',
+  revision,
   environment: 'coast',
   world: { id: 'mountain-reservoir', theme: 'ukrainian', style: 'coast' },
   locales: {
@@ -107,7 +109,7 @@ project.routeBindings = {
 };
 project.authoring = {
   format: 'FPVMountainReservoirCheckpoint.v1',
-  revision: 'r1',
+  revision,
   status: 'one-course scene review; seven courses and final sixteen demonstrations remain',
   coordinateReference: 'integer millimetres at drone lower point',
   visualBoundary:
@@ -160,10 +162,12 @@ assert(
 );
 const coursePath = path.join(root, 'project.json');
 await writeFile(coursePath, JSON.stringify(project, null, 2) + '\n');
-await writeFile(path.join(root, 'mountain-reservoir-checkpoint.r1.rlpack'), packBytes, {
+await writeFile(path.join(root, `mountain-reservoir-checkpoint.${revision}.rlpack`), packBytes, {
   flag: 'wx',
 });
-await writeFile(path.join(root, 'mountain-reservoir-checkpoint.r1.zip'), zipBytes, { flag: 'wx' });
+await writeFile(path.join(root, `mountain-reservoir-checkpoint.${revision}.zip`), zipBytes, {
+  flag: 'wx',
+});
 const sourceScript = await readFile(new URL('./source/scene.mjs', import.meta.url));
 const materialSource = await readFile(new URL('./source/mineral.mjs', import.meta.url));
 const receipt = {

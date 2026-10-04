@@ -67,7 +67,7 @@ try {
     );
     check(
       'Closed maintenance hut rejects interior spawn',
-      !collision.clearSpawn({ x: -36000, y: 1000, z: -13000 }, course.rules.droneRadius),
+      !collision.clearSpawn({ x: -22000, y: 1000, z: -15000 }, course.rules.droneRadius),
     );
     check(
       'Dam solid rejects interior spawn',
