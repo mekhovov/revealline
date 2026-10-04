@@ -155,6 +155,19 @@ const inputs = new Map([
   ['eight-courses.zip', Buffer.from(await zip.arrayBuffer())],
   ['eight-courses.project.json', Buffer.from(JSON.stringify(project, null, 2) + '\n')],
   ['source-updated.glb', scene(0.5)],
+  ['expected-original-model.glb', Buffer.from(await imported.modelBlob.arrayBuffer())],
+  [
+    'expected-updated-model.glb',
+    Buffer.from(
+      await (
+        await inspectImport({
+          files: { 'source.glb': scene(0.5) },
+          entry: 'source.glb',
+          id: project.id,
+        })
+      ).modelBlob.arrayBuffer(),
+    ),
+  ],
 ]);
 await fs.mkdir(out);
 for (const file of staged) {
