@@ -2979,3 +2979,23 @@ Airfield/Quarry pair while publication proceeds.
 Documentation #1013's prior a24d82c36 head passed required preflight, focused and
 release-ready checks in run37151674485; test/build were skipped, not passed.
 This evidence continuation requires its own fresh exact-head checks.
+
+### D1 environment light reuse and graphics recovery — 4 October 2026
+
+The focused `codex/fpv-environment-light-reuse` increment is locally qualified at
+`06d154e765c8332e5778bc51945799ee115353ac` on main `47d2019d`. One renderer-owned
+PMREM target is reused for identical exact normalized lighting inputs. Actual
+graphics loss releases scene ownership before restoration, allowing existing
+flight Retry to rebuild safely. Editor/import guards preserve blank startup,
+healthy course changes during asynchronous editor loading and stale-load
+rejection after loss.
+
+Full validate, 63 manual checks, 30 existing checks and all three reproducible
+source-bound package admissions pass. The actual final 102-file admitted editor
+passes 11 loss/restoration/control/cleanup checks. Earlier actual flight Retry
+and 72-pair source/package evidence retain their exact candidate identities.
+Original inputs leave 19,121 bytes below 16 MiB. See
+[the complete evidence and limits](fpv-environment-light-reuse.md), including the
+preserved isolated imported-image mismatch. No hardware FPS or fix for the
+unreproduced long stalls is claimed. Publish through exact-head protected checks;
+merge and public availability remain separate.
