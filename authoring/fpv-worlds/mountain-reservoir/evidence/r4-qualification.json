@@ -1,0 +1,2853 @@
+{
+  "format": "FPVMountainReservoirCheckpointFlights.v1",
+  "pack": {
+    "path": "/tmp/fpv-mountain-reservoir-scene-r4/prepared/mountain-reservoir-checkpoint.r4.rlpack",
+    "bytes": 1158277,
+    "sha256": "4c4a0aba2c6347f7670b86a40af5a0d9dd8a1be0e0b65e4a66465c4684136c6c",
+    "identity": "fpv-pack:4c4a0aba2c6347f7670b86a40af5a0d9dd8a1be0e0b65e4a66465c4684136c6c"
+  },
+  "checks": [
+    {
+      "name": "Shore pad spawn has physical support",
+      "passed": true
+    },
+    {
+      "name": "Closed maintenance hut rejects interior spawn",
+      "passed": true
+    },
+    {
+      "name": "Dam solid rejects interior spawn",
+      "passed": true
+    },
+    {
+      "name": "Nominal airborne point 0 retains 0.5m extra margin",
+      "passed": true
+    },
+    {
+      "name": "Nominal airborne point 1 retains 0.5m extra margin",
+      "passed": true
+    },
+    {
+      "name": "Nominal airborne segment 1 retains swept margin",
+      "passed": true,
+      "detail": {
+        "contacts": []
+      }
+    },
+    {
+      "name": "Nominal airborne point 2 retains 0.5m extra margin",
+      "passed": true
+    },
+    {
+      "name": "Nominal airborne segment 2 retains swept margin",
+      "passed": true,
+      "detail": {
+        "contacts": []
+      }
+    },
+    {
+      "name": "Nominal airborne point 3 retains 0.5m extra margin",
+      "passed": true
+    },
+    {
+      "name": "Nominal airborne segment 3 retains swept margin",
+      "passed": true,
+      "detail": {
+        "contacts": []
+      }
+    },
+    {
+      "name": "Nominal airborne point 4 retains 0.5m extra margin",
+      "passed": true
+    },
+    {
+      "name": "Nominal airborne segment 4 retains swept margin",
+      "passed": true,
+      "detail": {
+        "contacts": []
+      }
+    },
+    {
+      "name": "Nominal airborne point 5 retains 0.5m extra margin",
+      "passed": true
+    },
+    {
+      "name": "Nominal airborne segment 5 retains swept margin",
+      "passed": true,
+      "detail": {
+        "contacts": []
+      }
+    },
+    {
+      "name": "Reservoir starts beyond the visible rail and first eastern bound",
+      "passed": true
+    },
+    {
+      "name": "self-level completes all four ordinary objectives",
+      "passed": true
+    },
+    {
+      "name": "self-level has no contacts and full health",
+      "passed": true
+    },
+    {
+      "name": "self-level lands on the actual named shore pad",
+      "passed": true
+    },
+    {
+      "name": "self-level independent replay is terminal-state exact",
+      "passed": true
+    },
+    {
+      "name": "acro completes all four ordinary objectives",
+      "passed": true
+    },
+    {
+      "name": "acro has no contacts and full health",
+      "passed": true
+    },
+    {
+      "name": "acro lands on the actual named shore pad",
+      "passed": true
+    },
+    {
+      "name": "acro independent replay is terminal-state exact",
+      "passed": true
+    },
+    {
+      "name": "Checkpoint optional archive contains exactly two original modes",
+      "passed": true
+    },
+    {
+      "name": "self-level imported proof is untrusted until verification",
+      "passed": true
+    },
+    {
+      "name": "self-level imported proof independently completes exactly",
+      "passed": true
+    },
+    {
+      "name": "acro imported proof is untrusted until verification",
+      "passed": true
+    },
+    {
+      "name": "acro imported proof independently completes exactly",
+      "passed": true
+    }
+  ],
+  "modes": [
+    {
+      "mode": "self-level",
+      "status": "complete",
+      "ticks": 2990,
+      "contacts": 0,
+      "health": 100,
+      "terminalSupport": "platform-shore-pad",
+      "landingSpeed": 261,
+      "landingTilt": 0,
+      "position": {
+        "x": -29990,
+        "y": 452,
+        "z": 25974
+      },
+      "milestones": [
+        {
+          "step": 0,
+          "tick": 0,
+          "position": {
+            "x": -30000,
+            "y": 450,
+            "z": 26000
+          }
+        },
+        {
+          "step": 1,
+          "tick": 253,
+          "position": {
+            "x": -30000,
+            "y": 3645,
+            "z": 24184
+          }
+        },
+        {
+          "step": 2,
+          "tick": 717,
+          "position": {
+            "x": -10215,
+            "y": 4987,
+            "z": 15095
+          }
+        },
+        {
+          "step": 3,
+          "tick": 1272,
+          "position": {
+            "x": -10008,
+            "y": 6979,
+            "z": -11766
+          }
+        }
+      ],
+      "proof": {
+        "path": "mountain-reservoir-01-self-level.proof.json",
+        "bytes": 54575,
+        "sha256": "c64fbdb14fa6f8b7e3a8eba2671f267d38830e7b4b2be8f298adac171ca6841e"
+      },
+      "finalStateIdentity": "b16d5fd0fd3cbf7a",
+      "path": [
+        {
+          "tick": 1,
+          "position": {
+            "x": -30000,
+            "y": 452,
+            "z": 26000
+          },
+          "orientation": [
+            0,
+            0,
+            0,
+            1000000
+          ],
+          "input": {
+            "roll": 0,
+            "pitch": 0,
+            "yaw": 0,
+            "throttle": 769,
+            "actions": 0
+          }
+        },
+        {
+          "tick": 51,
+          "position": {
+            "x": -30000,
+            "y": 1470,
+            "z": 26000
+          },
+          "orientation": [
+            0,
+            0,
+            0,
+            1000000
+          ],
+          "input": {
+            "roll": 0,
+            "pitch": 0,
+            "yaw": 0,
+            "throttle": 482,
+            "actions": 0
+          }
+        },
+        {
+          "tick": 101,
+          "position": {
+            "x": -30000,
+            "y": 2209,
+            "z": 26000
+          },
+          "orientation": [
+            0,
+            0,
+            0,
+            1000000
+          ],
+          "input": {
+            "roll": 0,
+            "pitch": 0,
+            "yaw": 0,
+            "throttle": 483,
+            "actions": 0
+          }
+        },
+        {
+          "tick": 151,
+          "position": {
+            "x": -30000,
+            "y": 2688,
+            "z": 25896
+          },
+          "orientation": [
+            -123952,
+            0,
+            0,
+            992289
+          ],
+          "input": {
+            "roll": 0,
+            "pitch": 470,
+            "yaw": 0,
+            "throttle": 536,
+            "actions": 0
+          }
+        },
+        {
+          "tick": 201,
+          "position": {
+            "x": -30000,
+            "y": 3342,
+            "z": 24684
+          },
+          "orientation": [
+            58263,
+            0,
+            0,
+            998302
+          ],
+          "input": {
+            "roll": 0,
+            "pitch": -250,
+            "yaw": 0,
+            "throttle": 489,
+            "actions": 0
+          }
+        },
+        {
+          "tick": 251,
+          "position": {
+            "x": -30000,
+            "y": 3639,
+            "z": 24192
+          },
+          "orientation": [
+            8201,
+            0,
+            0,
+            999967
+          ],
+          "input": {
+            "roll": 0,
+            "pitch": -40,
+            "yaw": 0,
+            "throttle": 493,
+            "actions": 0
+          }
+        },
+        {
+          "tick": 301,
+          "position": {
+            "x": -28974,
+            "y": 3793,
+            "z": 23540
+          },
+          "orientation": [
+            -36885,
+            -16186,
+            -131654,
+            990478
+          ],
+          "input": {
+            "roll": 227,
+            "pitch": 68,
+            "yaw": -16,
+            "throttle": 523,
+            "actions": 0
+          }
+        },
+        {
+          "tick": 351,
+          "position": {
+            "x": -26290,
+            "y": 3960,
+            "z": 22354
+          },
+          "orientation": [
+            -16460,
+            -3327,
+            -24976,
+            999547
+          ],
+          "input": {
+            "roll": 205,
+            "pitch": 102,
+            "yaw": -3,
+            "throttle": 503,
+            "actions": 0
+          }
+        },
+        {
+          "tick": 401,
+          "position": {
+            "x": -23722,
+            "y": 4110,
+            "z": 21204
+          },
+          "orientation": [
+            -15548,
+            -2844,
+            -32644,
+            999343
+          ],
+          "input": {
+            "roll": 169,
+            "pitch": 84,
+            "yaw": -3,
+            "throttle": 504,
+            "actions": 0
+          }
+        },
+        {
+          "tick": 451,
+          "position": {
+            "x": -21122,
+            "y": 4260,
+            "z": 20054
+          },
+          "orientation": [
+            -15548,
+            -2847,
+            -32819,
+            999337
+          ],
+          "input": {
+            "roll": 177,
+            "pitch": 88,
+            "yaw": -3,
+            "throttle": 504,
+            "actions": 0
+          }
+        },
+        {
+          "tick": 501,
+          "position": {
+            "x": -18522,
+            "y": 4410,
+            "z": 18904
+          },
+          "orientation": [
+            -16073,
+            -2829,
+            -32819,
+            999329
+          ],
+          "input": {
+            "roll": 175,
+            "pitch": 92,
+            "yaw": -2,
+            "throttle": 505,
+            "actions": 0
+          }
+        },
+        {
+          "tick": 551,
+          "position": {
+            "x": -15922,
+            "y": 4609,
+            "z": 17730
+          },
+          "orientation": [
+            -15723,
+            -2841,
+            -32819,
+            999334
+          ],
+          "input": {
+            "roll": 173,
+            "pitch": 81,
+            "yaw": -3,
+            "throttle": 504,
+            "actions": 0
+          }
+        },
+        {
+          "tick": 601,
+          "position": {
+            "x": -13322,
+            "y": 4784,
+            "z": 16530
+          },
+          "orientation": [
+            -14503,
+            -2863,
+            -31594,
+            999392
+          ],
+          "input": {
+            "roll": 64,
+            "pitch": 28,
+            "yaw": -3,
+            "throttle": 502,
+            "actions": 0
+          }
+        },
+        {
+          "tick": 651,
+          "position": {
+            "x": -11123,
+            "y": 4911,
+            "z": 15516
+          },
+          "orientation": [
+            32805,
+            -3128,
+            72666,
+            996812
+          ],
+          "input": {
+            "roll": -313,
+            "pitch": -147,
+            "yaw": 0,
+            "throttle": 504,
+            "actions": 0
+          }
+        },
+        {
+          "tick": 701,
+          "position": {
+            "x": -10322,
+            "y": 4975,
+            "z": 15144
+          },
+          "orientation": [
+            9083,
+            -3129,
+            17856,
+            999795
+          ],
+          "input": {
+            "roll": -79,
+            "pitch": -40,
+            "yaw": -3,
+            "throttle": 498,
+            "actions": 0
+          }
+        },
+        {
+          "tick": 751,
+          "position": {
+            "x": -10112,
+            "y": 5080,
+            "z": 14617
+          },
+          "orientation": [
+            -207113,
+            -1744,
+            12945,
+            978230
+          ],
+          "input": {
+            "roll": -22,
+            "pitch": 675,
+            "yaw": -6,
+            "throttle": 555,
+            "actions": 0
+          }
+        },
+        {
+          "tick": 801,
+          "position": {
+            "x": -10111,
+            "y": 5280,
+            "z": 11830
+          },
+          "orientation": [
+            -9120,
+            -1823,
+            -1450,
+            999956
+          ],
+          "input": {
+            "roll": 0,
+            "pitch": 161,
+            "yaw": -2,
+            "throttle": 502,
+            "actions": 0
+          }
+        },
+        {
+          "tick": 851,
+          "position": {
+            "x": -10111,
+            "y": 5480,
+            "z": 9013
+          },
+          "orientation": [
+            -40521,
+            -1794,
+            64,
+            999178
+          ],
+          "input": {
+            "roll": 0,
+            "pitch": 191,
+            "yaw": -2,
+            "throttle": 504,
+            "actions": 0
+          }
+        },
+        {
+          "tick": 901,
+          "position": {
+            "x": -10111,
+            "y": 5680,
+            "z": 6163
+          },
+          "orientation": [
+            -35460,
+            -1794,
+            78,
+            999370
+          ],
+          "input": {
+            "roll": 1,
+            "pitch": 192,
+            "yaw": -2,
+            "throttle": 504,
+            "actions": 0
+          }
+        },
+        {
+          "tick": 951,
+          "position": {
+            "x": -10111,
+            "y": 5880,
+            "z": 3313
+          },
+          "orientation": [
+            -35460,
+            -1794,
+            78,
+            999370
+          ],
+          "input": {
+            "roll": 3,
+            "pitch": 192,
+            "yaw": -2,
+            "throttle": 504,
+            "actions": 0
+          }
+        },
+        {
+          "tick": 1001,
+          "position": {
+            "x": -10111,
+            "y": 6080,
+            "z": 463
+          },
+          "orientation": [
+            -35460,
+            -1800,
+            -97,
+            999370
+          ],
+          "input": {
+            "roll": 5,
+            "pitch": 192,
+            "yaw": -2,
+            "throttle": 504,
+            "actions": 0
+          }
+        },
+        {
+          "tick": 1051,
+          "position": {
+            "x": -10111,
+            "y": 6280,
+            "z": -2387
+          },
+          "orientation": [
+            -35460,
+            -1824,
+            -797,
+            999370
+          ],
+          "input": {
+            "roll": 10,
+            "pitch": 192,
+            "yaw": -2,
+            "throttle": 505,
+            "actions": 0
+          }
+        },
+        {
+          "tick": 1101,
+          "position": {
+            "x": -10071,
+            "y": 6480,
+            "z": -5237
+          },
+          "orientation": [
+            -35460,
+            -1800,
+            -97,
+            999370
+          ],
+          "input": {
+            "roll": -4,
+            "pitch": 192,
+            "yaw": -2,
+            "throttle": 505,
+            "actions": 0
+          }
+        },
+        {
+          "tick": 1151,
+          "position": {
+            "x": -10021,
+            "y": 6702,
+            "z": -8087
+          },
+          "orientation": [
+            -35460,
+            -1746,
+            1478,
+            999369
+          ],
+          "input": {
+            "roll": -12,
+            "pitch": 184,
+            "yaw": -2,
+            "throttle": 504,
+            "actions": 0
+          }
+        },
+        {
+          "tick": 1201,
+          "position": {
+            "x": -10008,
+            "y": 6878,
+            "z": -10612
+          },
+          "orientation": [
+            78778,
+            -1523,
+            90,
+            996892
+          ],
+          "input": {
+            "roll": 3,
+            "pitch": -370,
+            "yaw": -2,
+            "throttle": 503,
+            "actions": 0
+          }
+        },
+        {
+          "tick": 1251,
+          "position": {
+            "x": -10008,
+            "y": 6958,
+            "z": -11607
+          },
+          "orientation": [
+            23176,
+            -1523,
+            10,
+            999731
+          ],
+          "input": {
+            "roll": 1,
+            "pitch": -91,
+            "yaw": -2,
+            "throttle": 498,
+            "actions": 0
+          }
+        },
+        {
+          "tick": 1301,
+          "position": {
+            "x": -10183,
+            "y": 6982,
+            "z": -11652
+          },
+          "orientation": [
+            197864,
+            -6300,
+            121931,
+            972596
+          ],
+          "input": {
+            "roll": -387,
+            "pitch": -774,
+            "yaw": 25,
+            "throttle": 561,
+            "actions": 0
+          }
+        },
+        {
+          "tick": 1351,
+          "position": {
+            "x": -11552,
+            "y": 6982,
+            "z": -9344
+          },
+          "orientation": [
+            9080,
+            -2045,
+            -2395,
+            999954
+          ],
+          "input": {
+            "roll": -79,
+            "pitch": -115,
+            "yaw": -2,
+            "throttle": 499,
+            "actions": 0
+          }
+        },
+        {
+          "tick": 1401,
+          "position": {
+            "x": -12840,
+            "y": 6982,
+            "z": -6843
+          },
+          "orientation": [
+            37297,
+            -1838,
+            18260,
+            999136
+          ],
+          "input": {
+            "roll": -87,
+            "pitch": -176,
+            "yaw": -2,
+            "throttle": 501,
+            "actions": 0
+          }
+        },
+        {
+          "tick": 1451,
+          "position": {
+            "x": -14140,
+            "y": 6982,
+            "z": -4328
+          },
+          "orientation": [
+            33108,
+            -1877,
+            17549,
+            999296
+          ],
+          "input": {
+            "roll": -98,
+            "pitch": -180,
+            "yaw": -2,
+            "throttle": 501,
+            "actions": 0
+          }
+        },
+        {
+          "tick": 1501,
+          "position": {
+            "x": -15440,
+            "y": 6982,
+            "z": -1828
+          },
+          "orientation": [
+            33108,
+            -1877,
+            17549,
+            999296
+          ],
+          "input": {
+            "roll": -98,
+            "pitch": -180,
+            "yaw": -2,
+            "throttle": 501,
+            "actions": 0
+          }
+        },
+        {
+          "tick": 1551,
+          "position": {
+            "x": -16740,
+            "y": 6982,
+            "z": 672
+          },
+          "orientation": [
+            33108,
+            -1877,
+            17549,
+            999296
+          ],
+          "input": {
+            "roll": -100,
+            "pitch": -180,
+            "yaw": -2,
+            "throttle": 501,
+            "actions": 0
+          }
+        },
+        {
+          "tick": 1601,
+          "position": {
+            "x": -18040,
+            "y": 6982,
+            "z": 3172
+          },
+          "orientation": [
+            33108,
+            -1877,
+            17549,
+            999296
+          ],
+          "input": {
+            "roll": -100,
+            "pitch": -179,
+            "yaw": -2,
+            "throttle": 501,
+            "actions": 0
+          }
+        },
+        {
+          "tick": 1651,
+          "position": {
+            "x": -19340,
+            "y": 6982,
+            "z": 5672
+          },
+          "orientation": [
+            33108,
+            -1877,
+            17549,
+            999296
+          ],
+          "input": {
+            "roll": -100,
+            "pitch": -179,
+            "yaw": -2,
+            "throttle": 501,
+            "actions": 0
+          }
+        },
+        {
+          "tick": 1701,
+          "position": {
+            "x": -20640,
+            "y": 6982,
+            "z": 8172
+          },
+          "orientation": [
+            33108,
+            -1877,
+            17549,
+            999296
+          ],
+          "input": {
+            "roll": -101,
+            "pitch": -179,
+            "yaw": -2,
+            "throttle": 501,
+            "actions": 0
+          }
+        },
+        {
+          "tick": 1751,
+          "position": {
+            "x": -21940,
+            "y": 6982,
+            "z": 10672
+          },
+          "orientation": [
+            33108,
+            -1895,
+            18074,
+            999287
+          ],
+          "input": {
+            "roll": -103,
+            "pitch": -179,
+            "yaw": -2,
+            "throttle": 501,
+            "actions": 0
+          }
+        },
+        {
+          "tick": 1801,
+          "position": {
+            "x": -23240,
+            "y": 6982,
+            "z": 13172
+          },
+          "orientation": [
+            33108,
+            -1895,
+            18074,
+            999287
+          ],
+          "input": {
+            "roll": -104,
+            "pitch": -178,
+            "yaw": -2,
+            "throttle": 501,
+            "actions": 0
+          }
+        },
+        {
+          "tick": 1851,
+          "position": {
+            "x": -24540,
+            "y": 6982,
+            "z": 15672
+          },
+          "orientation": [
+            33108,
+            -1913,
+            18599,
+            999277
+          ],
+          "input": {
+            "roll": -105,
+            "pitch": -176,
+            "yaw": -2,
+            "throttle": 501,
+            "actions": 0
+          }
+        },
+        {
+          "tick": 1901,
+          "position": {
+            "x": -25840,
+            "y": 6982,
+            "z": 18172
+          },
+          "orientation": [
+            33108,
+            -1931,
+            19124,
+            999267
+          ],
+          "input": {
+            "roll": -101,
+            "pitch": -175,
+            "yaw": -2,
+            "throttle": 501,
+            "actions": 0
+          }
+        },
+        {
+          "tick": 1951,
+          "position": {
+            "x": -27184,
+            "y": 6982,
+            "z": 20672
+          },
+          "orientation": [
+            33108,
+            -1883,
+            17724,
+            999293
+          ],
+          "input": {
+            "roll": -91,
+            "pitch": -176,
+            "yaw": -2,
+            "throttle": 501,
+            "actions": 0
+          }
+        },
+        {
+          "tick": 2001,
+          "position": {
+            "x": -28525,
+            "y": 6982,
+            "z": 23172
+          },
+          "orientation": [
+            20735,
+            -1790,
+            8795,
+            999745
+          ],
+          "input": {
+            "roll": 61,
+            "pitch": 106,
+            "yaw": -2,
+            "throttle": 500,
+            "actions": 0
+          }
+        },
+        {
+          "tick": 2051,
+          "position": {
+            "x": -29535,
+            "y": 6982,
+            "z": 25114
+          },
+          "orientation": [
+            -65699,
+            -1726,
+            -33738,
+            997268
+          ],
+          "input": {
+            "roll": 132,
+            "pitch": 251,
+            "yaw": 1,
+            "throttle": 505,
+            "actions": 0
+          }
+        },
+        {
+          "tick": 2101,
+          "position": {
+            "x": -29863,
+            "y": 6968,
+            "z": 25741
+          },
+          "orientation": [
+            -15534,
+            -1759,
+            -7851,
+            999847
+          ],
+          "input": {
+            "roll": 58,
+            "pitch": 114,
+            "yaw": -2,
+            "throttle": 453,
+            "actions": 0
+          }
+        },
+        {
+          "tick": 2151,
+          "position": {
+            "x": -29949,
+            "y": 6624,
+            "z": 25898
+          },
+          "orientation": [
+            -2966,
+            -1775,
+            -2400,
+            999992
+          ],
+          "input": {
+            "roll": 4,
+            "pitch": 4,
+            "yaw": -2,
+            "throttle": 493,
+            "actions": 0
+          }
+        },
+        {
+          "tick": 2201,
+          "position": {
+            "x": -29990,
+            "y": 6224,
+            "z": 25948
+          },
+          "orientation": [
+            -1395,
+            -1779,
+            -1346,
+            999997
+          ],
+          "input": {
+            "roll": 7,
+            "pitch": 14,
+            "yaw": -2,
+            "throttle": 494,
+            "actions": 0
+          }
+        },
+        {
+          "tick": 2251,
+          "position": {
+            "x": -29990,
+            "y": 5824,
+            "z": 25974
+          },
+          "orientation": [
+            -345,
+            -1779,
+            54,
+            999999
+          ],
+          "input": {
+            "roll": -3,
+            "pitch": -2,
+            "yaw": -2,
+            "throttle": 494,
+            "actions": 0
+          }
+        },
+        {
+          "tick": 2301,
+          "position": {
+            "x": -29990,
+            "y": 5424,
+            "z": 25974
+          },
+          "orientation": [
+            -345,
+            -1779,
+            54,
+            999999
+          ],
+          "input": {
+            "roll": -3,
+            "pitch": -3,
+            "yaw": -2,
+            "throttle": 494,
+            "actions": 0
+          }
+        },
+        {
+          "tick": 2351,
+          "position": {
+            "x": -29990,
+            "y": 5024,
+            "z": 25974
+          },
+          "orientation": [
+            -345,
+            -1779,
+            54,
+            999999
+          ],
+          "input": {
+            "roll": -3,
+            "pitch": -3,
+            "yaw": -2,
+            "throttle": 494,
+            "actions": 0
+          }
+        },
+        {
+          "tick": 2401,
+          "position": {
+            "x": -29990,
+            "y": 4624,
+            "z": 25974
+          },
+          "orientation": [
+            -170,
+            -1779,
+            54,
+            999999
+          ],
+          "input": {
+            "roll": -3,
+            "pitch": -4,
+            "yaw": -2,
+            "throttle": 494,
+            "actions": 0
+          }
+        },
+        {
+          "tick": 2451,
+          "position": {
+            "x": -29990,
+            "y": 4224,
+            "z": 25974
+          },
+          "orientation": [
+            -170,
+            -1779,
+            54,
+            999999
+          ],
+          "input": {
+            "roll": -4,
+            "pitch": -4,
+            "yaw": -2,
+            "throttle": 494,
+            "actions": 0
+          }
+        },
+        {
+          "tick": 2501,
+          "position": {
+            "x": -29990,
+            "y": 3824,
+            "z": 25974
+          },
+          "orientation": [
+            -170,
+            -1779,
+            54,
+            999999
+          ],
+          "input": {
+            "roll": -4,
+            "pitch": -4,
+            "yaw": -2,
+            "throttle": 494,
+            "actions": 0
+          }
+        },
+        {
+          "tick": 2551,
+          "position": {
+            "x": -29990,
+            "y": 3424,
+            "z": 25974
+          },
+          "orientation": [
+            -170,
+            -1779,
+            54,
+            999999
+          ],
+          "input": {
+            "roll": -4,
+            "pitch": -4,
+            "yaw": -2,
+            "throttle": 494,
+            "actions": 0
+          }
+        },
+        {
+          "tick": 2601,
+          "position": {
+            "x": -29990,
+            "y": 3024,
+            "z": 25974
+          },
+          "orientation": [
+            -170,
+            -1779,
+            54,
+            999999
+          ],
+          "input": {
+            "roll": -4,
+            "pitch": -4,
+            "yaw": -2,
+            "throttle": 494,
+            "actions": 0
+          }
+        },
+        {
+          "tick": 2651,
+          "position": {
+            "x": -29990,
+            "y": 2624,
+            "z": 25974
+          },
+          "orientation": [
+            -170,
+            -1779,
+            54,
+            999999
+          ],
+          "input": {
+            "roll": -4,
+            "pitch": -4,
+            "yaw": -2,
+            "throttle": 494,
+            "actions": 0
+          }
+        },
+        {
+          "tick": 2701,
+          "position": {
+            "x": -29990,
+            "y": 2224,
+            "z": 25974
+          },
+          "orientation": [
+            -170,
+            -1779,
+            54,
+            999999
+          ],
+          "input": {
+            "roll": -4,
+            "pitch": -4,
+            "yaw": -2,
+            "throttle": 494,
+            "actions": 0
+          }
+        },
+        {
+          "tick": 2751,
+          "position": {
+            "x": -29990,
+            "y": 1824,
+            "z": 25974
+          },
+          "orientation": [
+            -170,
+            -1779,
+            54,
+            999999
+          ],
+          "input": {
+            "roll": -4,
+            "pitch": -4,
+            "yaw": -2,
+            "throttle": 494,
+            "actions": 0
+          }
+        },
+        {
+          "tick": 2801,
+          "position": {
+            "x": -29990,
+            "y": 1424,
+            "z": 25974
+          },
+          "orientation": [
+            -170,
+            -1779,
+            54,
+            999999
+          ],
+          "input": {
+            "roll": -4,
+            "pitch": -4,
+            "yaw": -2,
+            "throttle": 494,
+            "actions": 0
+          }
+        },
+        {
+          "tick": 2851,
+          "position": {
+            "x": -29990,
+            "y": 1024,
+            "z": 25974
+          },
+          "orientation": [
+            -170,
+            -1779,
+            54,
+            999999
+          ],
+          "input": {
+            "roll": -4,
+            "pitch": -4,
+            "yaw": -2,
+            "throttle": 494,
+            "actions": 0
+          }
+        },
+        {
+          "tick": 2901,
+          "position": {
+            "x": -29990,
+            "y": 652,
+            "z": 25974
+          },
+          "orientation": [
+            -170,
+            -1779,
+            54,
+            999999
+          ],
+          "input": {
+            "roll": -4,
+            "pitch": -4,
+            "yaw": -2,
+            "throttle": 507,
+            "actions": 0
+          }
+        },
+        {
+          "tick": 2951,
+          "position": {
+            "x": -29990,
+            "y": 452,
+            "z": 25974
+          },
+          "orientation": [
+            530,
+            -1779,
+            54,
+            999999
+          ],
+          "input": {
+            "roll": -3,
+            "pitch": -10,
+            "yaw": -2,
+            "throttle": 0,
+            "actions": 0
+          }
+        },
+        {
+          "tick": 2990,
+          "position": {
+            "x": -29990,
+            "y": 452,
+            "z": 25974
+          },
+          "orientation": [
+            1230,
+            -1779,
+            54,
+            999998
+          ],
+          "input": {
+            "roll": -3,
+            "pitch": -10,
+            "yaw": -2,
+            "throttle": 0,
+            "actions": 0
+          }
+        }
+      ]
+    },
+    {
+      "mode": "acro",
+      "status": "complete",
+      "ticks": 3002,
+      "contacts": 0,
+      "health": 100,
+      "terminalSupport": "platform-shore-pad",
+      "landingSpeed": 262,
+      "landingTilt": 17,
+      "position": {
+        "x": -29992,
+        "y": 452,
+        "z": 25980
+      },
+      "milestones": [
+        {
+          "step": 0,
+          "tick": 0,
+          "position": {
+            "x": -30000,
+            "y": 450,
+            "z": 26000
+          }
+        },
+        {
+          "step": 1,
+          "tick": 267,
+          "position": {
+            "x": -30000,
+            "y": 3688,
+            "z": 24012
+          }
+        },
+        {
+          "step": 2,
+          "tick": 736,
+          "position": {
+            "x": -10176,
+            "y": 4987,
+            "z": 15073
+          }
+        },
+        {
+          "step": 3,
+          "tick": 1297,
+          "position": {
+            "x": -9998,
+            "y": 6979,
+            "z": -11813
+          }
+        }
+      ],
+      "proof": {
+        "path": "mountain-reservoir-01-acro.proof.json",
+        "bytes": 50176,
+        "sha256": "bb3cb7ee2fcce122ef3c7669209a55258736a645a4508bb978311bff6e8c19d9"
+      },
+      "finalStateIdentity": "2e5b00d04f72417a",
+      "path": [
+        {
+          "tick": 1,
+          "position": {
+            "x": -30000,
+            "y": 452,
+            "z": 26000
+          },
+          "orientation": [
+            0,
+            0,
+            0,
+            1000000
+          ],
+          "input": {
+            "roll": 0,
+            "pitch": 0,
+            "yaw": 0,
+            "throttle": 769,
+            "actions": 0
+          }
+        },
+        {
+          "tick": 51,
+          "position": {
+            "x": -30000,
+            "y": 1470,
+            "z": 26000
+          },
+          "orientation": [
+            0,
+            0,
+            0,
+            1000000
+          ],
+          "input": {
+            "roll": 0,
+            "pitch": 0,
+            "yaw": 0,
+            "throttle": 482,
+            "actions": 0
+          }
+        },
+        {
+          "tick": 101,
+          "position": {
+            "x": -30000,
+            "y": 2209,
+            "z": 26000
+          },
+          "orientation": [
+            0,
+            0,
+            0,
+            1000000
+          ],
+          "input": {
+            "roll": 0,
+            "pitch": 0,
+            "yaw": 0,
+            "throttle": 483,
+            "actions": 0
+          }
+        },
+        {
+          "tick": 151,
+          "position": {
+            "x": -30000,
+            "y": 2688,
+            "z": 25915
+          },
+          "orientation": [
+            -93244,
+            0,
+            0,
+            995644
+          ],
+          "input": {
+            "roll": 0,
+            "pitch": -12,
+            "yaw": 0,
+            "throttle": 528,
+            "actions": 0
+          }
+        },
+        {
+          "tick": 201,
+          "position": {
+            "x": -30000,
+            "y": 3341,
+            "z": 24783
+          },
+          "orientation": [
+            16405,
+            0,
+            0,
+            999866
+          ],
+          "input": {
+            "roll": 0,
+            "pitch": -73,
+            "yaw": 0,
+            "throttle": 486,
+            "actions": 0
+          }
+        },
+        {
+          "tick": 251,
+          "position": {
+            "x": -30000,
+            "y": 3639,
+            "z": 24039
+          },
+          "orientation": [
+            42401,
+            0,
+            0,
+            999101
+          ],
+          "input": {
+            "roll": 0,
+            "pitch": 43,
+            "yaw": 0,
+            "throttle": 494,
+            "actions": 0
+          }
+        },
+        {
+          "tick": 301,
+          "position": {
+            "x": -29682,
+            "y": 3790,
+            "z": 23872
+          },
+          "orientation": [
+            -84159,
+            -5643,
+            -163287,
+            982967
+          ],
+          "input": {
+            "roll": -34,
+            "pitch": -54,
+            "yaw": 10,
+            "throttle": 540,
+            "actions": 0
+          }
+        },
+        {
+          "tick": 351,
+          "position": {
+            "x": -27259,
+            "y": 3940,
+            "z": 22741
+          },
+          "orientation": [
+            -12638,
+            -7561,
+            -36365,
+            999231
+          ],
+          "input": {
+            "roll": -50,
+            "pitch": -16,
+            "yaw": -7,
+            "throttle": 504,
+            "actions": 0
+          }
+        },
+        {
+          "tick": 401,
+          "position": {
+            "x": -24503,
+            "y": 4090,
+            "z": 21517
+          },
+          "orientation": [
+            -11276,
+            -2290,
+            -21714,
+            999699
+          ],
+          "input": {
+            "roll": 18,
+            "pitch": 8,
+            "yaw": -2,
+            "throttle": 504,
+            "actions": 0
+          }
+        },
+        {
+          "tick": 451,
+          "position": {
+            "x": -21951,
+            "y": 4240,
+            "z": 20367
+          },
+          "orientation": [
+            -16673,
+            -2336,
+            -36211,
+            999203
+          ],
+          "input": {
+            "roll": -2,
+            "pitch": -2,
+            "yaw": -2,
+            "throttle": 505,
+            "actions": 0
+          }
+        },
+        {
+          "tick": 501,
+          "position": {
+            "x": -19362,
+            "y": 4390,
+            "z": 19217
+          },
+          "orientation": [
+            -15973,
+            -2321,
+            -33936,
+            999294
+          ],
+          "input": {
+            "roll": -3,
+            "pitch": -2,
+            "yaw": -2,
+            "throttle": 505,
+            "actions": 0
+          }
+        },
+        {
+          "tick": 551,
+          "position": {
+            "x": -16762,
+            "y": 4540,
+            "z": 18067
+          },
+          "orientation": [
+            -15973,
+            -2315,
+            -33586,
+            999306
+          ],
+          "input": {
+            "roll": -3,
+            "pitch": 0,
+            "yaw": -2,
+            "throttle": 505,
+            "actions": 0
+          }
+        },
+        {
+          "tick": 601,
+          "position": {
+            "x": -14162,
+            "y": 4727,
+            "z": 16917
+          },
+          "orientation": [
+            -15973,
+            -2303,
+            -32886,
+            999329
+          ],
+          "input": {
+            "roll": -3,
+            "pitch": 1,
+            "yaw": -2,
+            "throttle": 504,
+            "actions": 0
+          }
+        },
+        {
+          "tick": 651,
+          "position": {
+            "x": -11659,
+            "y": 4881,
+            "z": 15790
+          },
+          "orientation": [
+            16156,
+            -2101,
+            40473,
+            999048
+          ],
+          "input": {
+            "roll": -66,
+            "pitch": -33,
+            "yaw": -2,
+            "throttle": 499,
+            "actions": 0
+          }
+        },
+        {
+          "tick": 701,
+          "position": {
+            "x": -10332,
+            "y": 4960,
+            "z": 15159
+          },
+          "orientation": [
+            27094,
+            -1858,
+            57573,
+            997972
+          ],
+          "input": {
+            "roll": 50,
+            "pitch": 21,
+            "yaw": 0,
+            "throttle": 501,
+            "actions": 0
+          }
+        },
+        {
+          "tick": 751,
+          "position": {
+            "x": -10168,
+            "y": 5017,
+            "z": 15037
+          },
+          "orientation": [
+            -90648,
+            -2628,
+            4129,
+            995871
+          ],
+          "input": {
+            "roll": 5,
+            "pitch": 155,
+            "yaw": -3,
+            "throttle": 522,
+            "actions": 0
+          }
+        },
+        {
+          "tick": 801,
+          "position": {
+            "x": -10168,
+            "y": 5206,
+            "z": 13372
+          },
+          "orientation": [
+            -110791,
+            -2884,
+            -685,
+            993840
+          ],
+          "input": {
+            "roll": 1,
+            "pitch": -131,
+            "yaw": -3,
+            "throttle": 516,
+            "actions": 0
+          }
+        },
+        {
+          "tick": 851,
+          "position": {
+            "x": -10168,
+            "y": 5406,
+            "z": 10273
+          },
+          "orientation": [
+            -14666,
+            -2935,
+            -397,
+            999889
+          ],
+          "input": {
+            "roll": 1,
+            "pitch": 15,
+            "yaw": -3,
+            "throttle": 503,
+            "actions": 0
+          }
+        },
+        {
+          "tick": 901,
+          "position": {
+            "x": -10168,
+            "y": 5606,
+            "z": 7430
+          },
+          "orientation": [
+            -37019,
+            -2935,
+            -478,
+            999311
+          ],
+          "input": {
+            "roll": 3,
+            "pitch": 5,
+            "yaw": -3,
+            "throttle": 504,
+            "actions": 0
+          }
+        },
+        {
+          "tick": 951,
+          "position": {
+            "x": -10168,
+            "y": 5806,
+            "z": 4603
+          },
+          "orientation": [
+            -36494,
+            -2935,
+            -475,
+            999330
+          ],
+          "input": {
+            "roll": 3,
+            "pitch": -3,
+            "yaw": -3,
+            "throttle": 504,
+            "actions": 0
+          }
+        },
+        {
+          "tick": 1001,
+          "position": {
+            "x": -10168,
+            "y": 6006,
+            "z": 1753
+          },
+          "orientation": [
+            -36492,
+            -2947,
+            -825,
+            999330
+          ],
+          "input": {
+            "roll": 3,
+            "pitch": -3,
+            "yaw": -3,
+            "throttle": 505,
+            "actions": 0
+          }
+        },
+        {
+          "tick": 1051,
+          "position": {
+            "x": -10134,
+            "y": 6206,
+            "z": -1097
+          },
+          "orientation": [
+            -36492,
+            -2947,
+            -825,
+            999330
+          ],
+          "input": {
+            "roll": -3,
+            "pitch": -3,
+            "yaw": -3,
+            "throttle": 505,
+            "actions": 0
+          }
+        },
+        {
+          "tick": 1101,
+          "position": {
+            "x": -10084,
+            "y": 6406,
+            "z": -3947
+          },
+          "orientation": [
+            -36496,
+            -2923,
+            -125,
+            999330
+          ],
+          "input": {
+            "roll": -3,
+            "pitch": -3,
+            "yaw": -3,
+            "throttle": 505,
+            "actions": 0
+          }
+        },
+        {
+          "tick": 1151,
+          "position": {
+            "x": -10034,
+            "y": 6606,
+            "z": -6797
+          },
+          "orientation": [
+            -36502,
+            -2887,
+            925,
+            999329
+          ],
+          "input": {
+            "roll": -3,
+            "pitch": -3,
+            "yaw": -3,
+            "throttle": 505,
+            "actions": 0
+          }
+        },
+        {
+          "tick": 1201,
+          "position": {
+            "x": -9998,
+            "y": 6806,
+            "z": -9621
+          },
+          "orientation": [
+            13929,
+            -2778,
+            1765,
+            999898
+          ],
+          "input": {
+            "roll": 3,
+            "pitch": -101,
+            "yaw": -3,
+            "throttle": 497,
+            "actions": 0
+          }
+        },
+        {
+          "tick": 1251,
+          "position": {
+            "x": -9998,
+            "y": 6929,
+            "z": -11473
+          },
+          "orientation": [
+            76338,
+            -2636,
+            887,
+            997079
+          ],
+          "input": {
+            "roll": 3,
+            "pitch": 44,
+            "yaw": -3,
+            "throttle": 502,
+            "actions": 0
+          }
+        },
+        {
+          "tick": 1301,
+          "position": {
+            "x": -9998,
+            "y": 6982,
+            "z": -11817
+          },
+          "orientation": [
+            25234,
+            -2850,
+            12621,
+            999598
+          ],
+          "input": {
+            "roll": -287,
+            "pitch": -385,
+            "yaw": -3,
+            "throttle": 496,
+            "actions": 0
+          }
+        },
+        {
+          "tick": 1351,
+          "position": {
+            "x": -10679,
+            "y": 6982,
+            "z": -10777
+          },
+          "orientation": [
+            128464,
+            -7966,
+            58403,
+            989961
+          ],
+          "input": {
+            "roll": 77,
+            "pitch": 132,
+            "yaw": -2,
+            "throttle": 522,
+            "actions": 0
+          }
+        },
+        {
+          "tick": 1401,
+          "position": {
+            "x": -12155,
+            "y": 6982,
+            "z": -8048
+          },
+          "orientation": [
+            12895,
+            -2595,
+            3912,
+            999906
+          ],
+          "input": {
+            "roll": -10,
+            "pitch": -4,
+            "yaw": -3,
+            "throttle": 500,
+            "actions": 0
+          }
+        },
+        {
+          "tick": 1451,
+          "position": {
+            "x": -13474,
+            "y": 6982,
+            "z": -5495
+          },
+          "orientation": [
+            30680,
+            -2616,
+            17571,
+            999372
+          ],
+          "input": {
+            "roll": -2,
+            "pitch": -7,
+            "yaw": -2,
+            "throttle": 501,
+            "actions": 0
+          }
+        },
+        {
+          "tick": 1501,
+          "position": {
+            "x": -14774,
+            "y": 6982,
+            "z": -2999
+          },
+          "orientation": [
+            34351,
+            -2563,
+            17925,
+            999246
+          ],
+          "input": {
+            "roll": -2,
+            "pitch": 1,
+            "yaw": -2,
+            "throttle": 501,
+            "actions": 0
+          }
+        },
+        {
+          "tick": 1551,
+          "position": {
+            "x": -16074,
+            "y": 6982,
+            "z": -499
+          },
+          "orientation": [
+            34351,
+            -2563,
+            17925,
+            999246
+          ],
+          "input": {
+            "roll": -2,
+            "pitch": 1,
+            "yaw": -2,
+            "throttle": 501,
+            "actions": 0
+          }
+        },
+        {
+          "tick": 1601,
+          "position": {
+            "x": -17374,
+            "y": 6982,
+            "z": 2001
+          },
+          "orientation": [
+            34351,
+            -2563,
+            17925,
+            999246
+          ],
+          "input": {
+            "roll": -2,
+            "pitch": 1,
+            "yaw": -2,
+            "throttle": 501,
+            "actions": 0
+          }
+        },
+        {
+          "tick": 1651,
+          "position": {
+            "x": -18674,
+            "y": 6982,
+            "z": 4501
+          },
+          "orientation": [
+            34351,
+            -2563,
+            17925,
+            999246
+          ],
+          "input": {
+            "roll": -2,
+            "pitch": 1,
+            "yaw": -2,
+            "throttle": 501,
+            "actions": 0
+          }
+        },
+        {
+          "tick": 1701,
+          "position": {
+            "x": -19974,
+            "y": 6982,
+            "z": 7001
+          },
+          "orientation": [
+            34351,
+            -2563,
+            17925,
+            999246
+          ],
+          "input": {
+            "roll": -2,
+            "pitch": 1,
+            "yaw": -2,
+            "throttle": 501,
+            "actions": 0
+          }
+        },
+        {
+          "tick": 1751,
+          "position": {
+            "x": -21274,
+            "y": 6982,
+            "z": 9501
+          },
+          "orientation": [
+            34351,
+            -2563,
+            17925,
+            999246
+          ],
+          "input": {
+            "roll": -3,
+            "pitch": 1,
+            "yaw": -2,
+            "throttle": 501,
+            "actions": 0
+          }
+        },
+        {
+          "tick": 1801,
+          "position": {
+            "x": -22574,
+            "y": 6982,
+            "z": 12001
+          },
+          "orientation": [
+            34351,
+            -2563,
+            17925,
+            999246
+          ],
+          "input": {
+            "roll": -3,
+            "pitch": 3,
+            "yaw": -2,
+            "throttle": 501,
+            "actions": 0
+          }
+        },
+        {
+          "tick": 1851,
+          "position": {
+            "x": -23874,
+            "y": 6982,
+            "z": 14501
+          },
+          "orientation": [
+            34351,
+            -2587,
+            18625,
+            999233
+          ],
+          "input": {
+            "roll": -3,
+            "pitch": 3,
+            "yaw": -2,
+            "throttle": 501,
+            "actions": 0
+          }
+        },
+        {
+          "tick": 1901,
+          "position": {
+            "x": -25179,
+            "y": 6982,
+            "z": 17001
+          },
+          "orientation": [
+            34001,
+            -2605,
+            18975,
+            999239
+          ],
+          "input": {
+            "roll": 1,
+            "pitch": 3,
+            "yaw": -2,
+            "throttle": 501,
+            "actions": 0
+          }
+        },
+        {
+          "tick": 1951,
+          "position": {
+            "x": -26529,
+            "y": 6982,
+            "z": 19501
+          },
+          "orientation": [
+            34001,
+            -2581,
+            18275,
+            999252
+          ],
+          "input": {
+            "roll": 3,
+            "pitch": 3,
+            "yaw": -2,
+            "throttle": 501,
+            "actions": 0
+          }
+        },
+        {
+          "tick": 2001,
+          "position": {
+            "x": -27879,
+            "y": 6982,
+            "z": 22001
+          },
+          "orientation": [
+            34001,
+            -2557,
+            17575,
+            999264
+          ],
+          "input": {
+            "roll": 3,
+            "pitch": 1,
+            "yaw": -2,
+            "throttle": 501,
+            "actions": 0
+          }
+        },
+        {
+          "tick": 2051,
+          "position": {
+            "x": -29167,
+            "y": 6982,
+            "z": 24415
+          },
+          "orientation": [
+            -40748,
+            -2501,
+            -22410,
+            998915
+          ],
+          "input": {
+            "roll": 31,
+            "pitch": 64,
+            "yaw": -2,
+            "throttle": 501,
+            "actions": 0
+          }
+        },
+        {
+          "tick": 2101,
+          "position": {
+            "x": -29826,
+            "y": 6982,
+            "z": 25682
+          },
+          "orientation": [
+            -55542,
+            -2384,
+            -28365,
+            998051
+          ],
+          "input": {
+            "roll": -27,
+            "pitch": -50,
+            "yaw": -2,
+            "throttle": 504,
+            "actions": 0
+          }
+        },
+        {
+          "tick": 2151,
+          "position": {
+            "x": -29904,
+            "y": 6721,
+            "z": 25833
+          },
+          "orientation": [
+            -2403,
+            -2432,
+            -1173,
+            999994
+          ],
+          "input": {
+            "roll": -10,
+            "pitch": -17,
+            "yaw": -2,
+            "throttle": 491,
+            "actions": 0
+          }
+        },
+        {
+          "tick": 2201,
+          "position": {
+            "x": -29914,
+            "y": 6321,
+            "z": 25859
+          },
+          "orientation": [
+            4046,
+            -2442,
+            3389,
+            999984
+          ],
+          "input": {
+            "roll": 4,
+            "pitch": 7,
+            "yaw": -3,
+            "throttle": 494,
+            "actions": 0
+          }
+        },
+        {
+          "tick": 2251,
+          "position": {
+            "x": -29964,
+            "y": 5921,
+            "z": 25956
+          },
+          "orientation": [
+            -4179,
+            -2443,
+            -811,
+            999988
+          ],
+          "input": {
+            "roll": 4,
+            "pitch": 0,
+            "yaw": -2,
+            "throttle": 494,
+            "actions": 0
+          }
+        },
+        {
+          "tick": 2301,
+          "position": {
+            "x": -29992,
+            "y": 5521,
+            "z": 25980
+          },
+          "orientation": [
+            -1204,
+            -2446,
+            -1336,
+            999996
+          ],
+          "input": {
+            "roll": -3,
+            "pitch": -3,
+            "yaw": -3,
+            "throttle": 494,
+            "actions": 0
+          }
+        },
+        {
+          "tick": 2351,
+          "position": {
+            "x": -29992,
+            "y": 5121,
+            "z": 25980
+          },
+          "orientation": [
+            -1204,
+            -2446,
+            -811,
+            999996
+          ],
+          "input": {
+            "roll": -3,
+            "pitch": -3,
+            "yaw": -3,
+            "throttle": 494,
+            "actions": 0
+          }
+        },
+        {
+          "tick": 2401,
+          "position": {
+            "x": -29992,
+            "y": 4721,
+            "z": 25980
+          },
+          "orientation": [
+            -854,
+            -2446,
+            -811,
+            999997
+          ],
+          "input": {
+            "roll": -3,
+            "pitch": -3,
+            "yaw": -3,
+            "throttle": 494,
+            "actions": 0
+          }
+        },
+        {
+          "tick": 2451,
+          "position": {
+            "x": -29992,
+            "y": 4321,
+            "z": 25980
+          },
+          "orientation": [
+            -854,
+            -2446,
+            -811,
+            999997
+          ],
+          "input": {
+            "roll": -3,
+            "pitch": -3,
+            "yaw": -3,
+            "throttle": 494,
+            "actions": 0
+          }
+        },
+        {
+          "tick": 2501,
+          "position": {
+            "x": -29992,
+            "y": 3921,
+            "z": 25980
+          },
+          "orientation": [
+            -854,
+            -2446,
+            -811,
+            999997
+          ],
+          "input": {
+            "roll": -3,
+            "pitch": -3,
+            "yaw": -3,
+            "throttle": 494,
+            "actions": 0
+          }
+        },
+        {
+          "tick": 2551,
+          "position": {
+            "x": -29992,
+            "y": 3521,
+            "z": 25980
+          },
+          "orientation": [
+            -854,
+            -2446,
+            -811,
+            999997
+          ],
+          "input": {
+            "roll": -3,
+            "pitch": -3,
+            "yaw": -3,
+            "throttle": 494,
+            "actions": 0
+          }
+        },
+        {
+          "tick": 2601,
+          "position": {
+            "x": -29992,
+            "y": 3121,
+            "z": 25980
+          },
+          "orientation": [
+            -854,
+            -2446,
+            -811,
+            999997
+          ],
+          "input": {
+            "roll": -3,
+            "pitch": -3,
+            "yaw": -3,
+            "throttle": 494,
+            "actions": 0
+          }
+        },
+        {
+          "tick": 2651,
+          "position": {
+            "x": -29992,
+            "y": 2721,
+            "z": 25980
+          },
+          "orientation": [
+            -854,
+            -2446,
+            -811,
+            999997
+          ],
+          "input": {
+            "roll": -3,
+            "pitch": -3,
+            "yaw": -3,
+            "throttle": 494,
+            "actions": 0
+          }
+        },
+        {
+          "tick": 2701,
+          "position": {
+            "x": -29992,
+            "y": 2321,
+            "z": 25980
+          },
+          "orientation": [
+            -854,
+            -2446,
+            -811,
+            999997
+          ],
+          "input": {
+            "roll": -3,
+            "pitch": -3,
+            "yaw": -3,
+            "throttle": 494,
+            "actions": 0
+          }
+        },
+        {
+          "tick": 2751,
+          "position": {
+            "x": -29992,
+            "y": 1921,
+            "z": 25980
+          },
+          "orientation": [
+            -854,
+            -2446,
+            -811,
+            999997
+          ],
+          "input": {
+            "roll": -3,
+            "pitch": -3,
+            "yaw": -3,
+            "throttle": 494,
+            "actions": 0
+          }
+        },
+        {
+          "tick": 2801,
+          "position": {
+            "x": -29992,
+            "y": 1521,
+            "z": 25980
+          },
+          "orientation": [
+            -854,
+            -2446,
+            -811,
+            999997
+          ],
+          "input": {
+            "roll": -3,
+            "pitch": -3,
+            "yaw": -3,
+            "throttle": 494,
+            "actions": 0
+          }
+        },
+        {
+          "tick": 2851,
+          "position": {
+            "x": -29992,
+            "y": 1121,
+            "z": 25980
+          },
+          "orientation": [
+            -854,
+            -2446,
+            -811,
+            999997
+          ],
+          "input": {
+            "roll": -3,
+            "pitch": -3,
+            "yaw": -3,
+            "throttle": 494,
+            "actions": 0
+          }
+        },
+        {
+          "tick": 2901,
+          "position": {
+            "x": -29992,
+            "y": 729,
+            "z": 25980
+          },
+          "orientation": [
+            -854,
+            -2446,
+            -811,
+            999997
+          ],
+          "input": {
+            "roll": -3,
+            "pitch": -3,
+            "yaw": -3,
+            "throttle": 506,
+            "actions": 0
+          }
+        },
+        {
+          "tick": 2951,
+          "position": {
+            "x": -29992,
+            "y": 485,
+            "z": 25980
+          },
+          "orientation": [
+            -854,
+            -2446,
+            -811,
+            999997
+          ],
+          "input": {
+            "roll": -3,
+            "pitch": -3,
+            "yaw": -3,
+            "throttle": 480,
+            "actions": 0
+          }
+        },
+        {
+          "tick": 3001,
+          "position": {
+            "x": -29992,
+            "y": 452,
+            "z": 25980
+          },
+          "orientation": [
+            -504,
+            -2446,
+            -811,
+            999997
+          ],
+          "input": {
+            "roll": -3,
+            "pitch": -3,
+            "yaw": -3,
+            "throttle": 0,
+            "actions": 0
+          }
+        },
+        {
+          "tick": 3002,
+          "position": {
+            "x": -29992,
+            "y": 452,
+            "z": 25980
+          },
+          "orientation": [
+            -504,
+            -2446,
+            -811,
+            999997
+          ],
+          "input": {
+            "roll": -2,
+            "pitch": -3,
+            "yaw": -3,
+            "throttle": 0,
+            "actions": 0
+          }
+        }
+      ]
+    }
+  ],
+  "status": "passed",
+  "scope": "One course/two modes; ordinary controls through unchanged runtime, independent complete and archive-import replays. No eight-course delivery, native browser, offline or hardware claim.",
+  "pilot": "Existing adventureAuthoringPilot with ordinary 48% throttle during its final 65mm early-cut window until actual grounded contact. The authored 700mm/s touchdown limit is unchanged; all inputs are recorded and independently replayed.",
+  "archive": {
+    "path": "mountain-reservoir-checkpoint-r4-proof-part-1-of-1.json",
+    "bytes": 123545,
+    "sha256": "521ddfd1e747e7deec17bebf53d00c30365beb19da5715000939164c7a4754c8"
+  }
+}
