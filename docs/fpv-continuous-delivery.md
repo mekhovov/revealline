@@ -3204,3 +3204,84 @@ prototype was included. Focus #1076 merged `b98205d76` and menu #1079 merged
 main update to`2cfc24050`; all95 input hashes exactly match the admitted combined
 candidate and fresh protected checks are pending. No new public deployment is
 inferred from local or historical package acceptance.
+
+### 4 October — Library live and personal-best access qualification
+
+The pending Library status above is historical. #1080 merged as
+`8e5ad71e9b791b7c16bae1cb308026ed3e18d5c2`. Both public deployment/build markers
+now identify that revision. The coordinator reloaded the actual public Worlds
+player, entered briefing, deliberately armed at zero throttle, observed active
+flight and paused. The same public Library's Browse optional worlds action
+reported “No published worlds yet.” The empty catalogue is intentional; it does
+not advertise unfinished Reservoir content. Markers, native UI text and images
+are retained in the
+[public checkpoint manifest](../authoring/fpv-worlds/personal-best-settings/evidence/public-library-8e/manifest.json).
+
+The focused personal-best Settings access change is qualified for publication.
+It removes two hiding assignments without changing the existing ghost handler,
+record selection, scoring or physics. The original native run retained 173
+passing controls and a later Arm timeout; a separate unchanged-runtime tail
+passed 166 controls and diagnosed an existing language repaint/Home phase race.
+Full validation, 16 existing checks and all-three/two-build admission pass. All
+95 original inputs remain exact to the admitted candidate, with 615 source bytes
+remaining. See [the scoped evidence](fpv-personal-best-settings.md); this is not a
+single broad browser pass or a new offline or hardware-performance claim.
+
+Warm-frame readiness #1084 is ready at `7da26a8e1`, with its separate native
+classification/lifecycle evidence and exact admission. World-visual source
+projection #1085 is ready at `7fa`; a normal expected-head main update has been
+requested. The latter recovers 41,026 original source bytes through the existing
+lexical preparation, with full validation, all three admissions, deterministic
+builds and AST/token/comment/line-ending identity. The generated world-visual
+member's bytes change; unrelated payloads remain exact except for the expected
+generated worker/descriptors. Neither ready PR is called publicly deployed here.
+
+Remaining engineering work is the isolated language-phase race and steady-flight
+CPU attribution. The next Reservoir gate is the capacity-bounded opaque-coating
+runtime capability, then the r14 pack's fresh proofs, actual native import and
+terrace visual acceptance. Hut identity and scene rooting remain subsequent
+quality work. Festival, Harbor and Canals follow sequentially after Reservoir
+meets the representative quality standard; final new unit coverage stays in D6.
+
+
+### 4 October — Warm readiness and ghost access merged; capacity hold resolved
+
+Warm-frame readiness #1084 merged normally as `1a1a82d5e6617a53239218642eda3aa70e817fe3`.
+Personal-best Settings #1086 subsequently merged normally as
+`5cde6dbc97c3067b6023d2bf7fd97fe251805347`, from updated head `04bc7c9505`.
+The exact 95-input bridge verifies qualified warm main plus the two ghost hiding
+deletions. Its original 173-control run and separate 166-control tail retain their
+historical runtime identities; the normal merge is not called another browser run.
+At the bounded 19:05 UTC deployment read, both public markers still identified
+the already launched Library revision `8e5ad71e`, while warm deployment was running.
+Newer public launch acceptance is not inferred from these merges.
+
+Capacity #1085's hold was the initial allocation race: staging added it at
+18:42:48 UTC, before milestone 57 was assigned at 18:43:55. Later staging skipped
+the allocated PR but had no label-removal path. After exact-head/source inspection,
+only that obsolete allocation hold was removed. Ordinary leased main updates
+preserve the original capacity candidate and incorporate warm and merged ghost
+work. Current inspected head `e058d93b4f2f415e5446190d7c61b3c6bdf4f465` has all
+95 expected input identities, 16,735,954 raw source bytes and 41,262 bytes reserve.
+Fresh exact-head checks and the normal protected controller remain authoritative.
+The 41,026-byte lexical reduction preserves the previously documented semantic,
+token/comment/newline contract; no cap or global publication policy changed.
+Bounded publication/source bridges are retained in the
+[checkpoint manifest](../authoring/fpv-worlds/language-phase/evidence/publication-checkpoint/manifest.json).
+
+The next reliability fix preserves current flight ownership during language and
+Library repaint. Its first +55-byte guard reproduced the original baseline race
+and retained 324 passing native checks, then exposed another real transient:
+public Settings paused flight but Home's resumability still said Start until a
+native frame. The failed receipt remains. The isolated +105-byte continuation
+also refreshes the existing HUD in the native surface-open callback. Its new
+bounded source browser qualification is pending; pause/arming guards are unchanged.
+
+The exact admitted r14 Reservoir coating candidate passed nine bounded native
+views and actual import/render/arm/pause. All sixteen fresh ordinary flight proofs,
+independent replays and archive reimports subsequently passed 575 checks. Broader
+terrace/art acceptance and protected runtime/content publication remain distinct;
+this is not a comprehensive realistic-world or hardware-performance claim. Hut
+identity and scene rooting remain next quality work. Steady-flight CPU attribution
+continues independently. Festival, Harbor and Canals remain sequential after the
+Reservoir quality gate, with final new unit coverage reserved for D6.
