@@ -565,6 +565,44 @@ test('a cancelled actor CSS export retains its accounted scratch pixels until en
   assert.equal(e.urls.length, 0, 'A cancelled export cannot create a CSS image URL.');
 });
 
+test('cancelling a host settles immediately but retains an asynchronous crop input until codec retirement', async () => {
+  const f = await fixture(),
+    manifest = structuredClone(f.manifest),
+    files = new Map(f.files),
+    document = {};
+  manifest.resolved.assets['player.scout.compact'].geometry.frame = {
+    x: 8,
+    y: 4,
+    width: 16,
+    height: 16,
+  };
+  files.set('runtime.json', new TextEncoder().encode(JSON.stringify(manifest)));
+  let finish,
+    cropClosed = 0;
+  const pool = pageActorArtPool(document),
+    e = environment(
+      { files },
+      {
+        document,
+        cropImage: () => new Promise((resolve) => (finish = resolve)),
+      },
+    ),
+    loading = e.host.load(),
+    rejected = assert.rejects(loading, { name: 'AbortError' });
+  while (!finish) await tick();
+  e.host.close();
+  await rejected;
+  assert.equal(e.decoded[0].closes, 0, 'The crop codec still owns its source pixels.');
+  assert.equal(pool.stats().reservedBytes, 4096 + 1024);
+  finish({ width: 16, height: 16, close: () => cropClosed++ });
+  await tick();
+  assert.equal(cropClosed, 1);
+  assert.equal(e.decoded[0].closes, 1);
+  assert.equal(pool.stats().reservedBytes, 0);
+  assert.equal(e.host.current(), null);
+  assert.equal(e.urls.length, 0);
+});
+
 test('actor CSS crop export refuses capacity before allocating a scratch canvas', async () => {
   const f = await fixture(),
     manifest = structuredClone(f.manifest),

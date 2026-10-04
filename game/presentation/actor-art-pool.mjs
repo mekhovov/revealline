@@ -114,15 +114,25 @@ export function createActorArtPool({ limit = ACTOR_DECODED_BYTES } = {}) {
       }
       entry.refs++;
       let active = true;
+      let rejectWait = null;
       const relinquish = () => {
         if (!active) return;
         active = false;
         signal?.removeEventListener('abort', relinquish);
         release(entry);
+        // The caller can leave immediately even when a browser codec cannot
+        // abort. Its entry keeps the reservation until the codec really settles.
+        rejectWait?.(new DOMException('Artwork load cancelled.', 'AbortError'));
+        rejectWait = null;
       };
       signal?.addEventListener('abort', relinquish, { once: true });
       try {
-        const image = await entry.promise;
+        const image = await new Promise((resolve, reject) => {
+          rejectWait = reject;
+          entry.promise.then(resolve, reject);
+          if (signal?.aborted) relinquish();
+        });
+        rejectWait = null;
         if (!active) throw new DOMException('Artwork load cancelled.', 'AbortError');
         return Object.freeze({
           image,
@@ -140,6 +150,7 @@ export function createActorArtPool({ limit = ACTOR_DECODED_BYTES } = {}) {
           },
         });
       } catch (error) {
+        rejectWait = null;
         relinquish();
         throw error;
       }
