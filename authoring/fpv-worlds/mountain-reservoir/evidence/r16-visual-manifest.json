@@ -1,0 +1,51 @@
+{
+  "sourceCommit": "351b58ced0d3da1f2e081e4c90f4853bba8b400b",
+  "scope": "Root actual renderer accepted bounded closed maintenance facade; eight observations, no errors, disposal pass. No whole-world photoreal or hardware acceptance.",
+  "files": [
+    {
+      "path": "authoring/fpv-worlds/mountain-reservoir/evidence/r16-static-facade.json",
+      "bytes": 18351,
+      "sha256": "2aa7f487c37c3ec9f7ad07abadca0c037558b93530c606277ccf550edcf94514"
+    },
+    {
+      "path": "authoring/fpv-worlds/mountain-reservoir/evidence/r16-hutfront-before.png",
+      "bytes": 160872,
+      "sha256": "cb0514c0403ac5c005e0614e7706d6427dcc723758963a015f1e464cbcf2ff94"
+    },
+    {
+      "path": "authoring/fpv-worlds/mountain-reservoir/evidence/r16-hutfront-after.png",
+      "bytes": 163827,
+      "sha256": "b5487d42eb5c0a847aca97cc5eebeb9ab62f5a8a7887fa76f540b1e1d594a09c"
+    },
+    {
+      "path": "authoring/fpv-worlds/mountain-reservoir/evidence/r16-huteast-before.png",
+      "bytes": 160189,
+      "sha256": "8a0f760fa67e901a3cfe497051eb510460feac586c69764bde8ba16dffbeda65"
+    },
+    {
+      "path": "authoring/fpv-worlds/mountain-reservoir/evidence/r16-huteast-after.png",
+      "bytes": 160379,
+      "sha256": "9626b44269dd1c001c7e4e75c68afc979d450ce927b3294ff48fbfd6e5ef0532"
+    },
+    {
+      "path": "authoring/fpv-worlds/mountain-reservoir/evidence/r16-hutgrazing-after.png",
+      "bytes": 155932,
+      "sha256": "826e818109a28d76b6cb1987827064c585d83a71613209e5eeefc069d56bf34e"
+    },
+    {
+      "path": "authoring/fpv-worlds/mountain-reservoir/evidence/r16-hutroof-after.png",
+      "bytes": 162796,
+      "sha256": "1fe6ba3e0a4af6fdba782810805ba8ba2127b5345cf1b42748965bbec0c454e4"
+    },
+    {
+      "path": "authoring/fpv-worlds/mountain-reservoir/evidence/r16-hutpixel-after.png",
+      "bytes": 144708,
+      "sha256": "e22d353dfb0a1f6524ad2618d6cbf48ccba3bb67a71cd6ab336a47e9048d3d5b"
+    },
+    {
+      "path": "authoring/fpv-worlds/mountain-reservoir/evidence/r16-hutindustrial-after.png",
+      "bytes": 158607,
+      "sha256": "3d695140002b52c971fcd896c49888f6a79b8a71414628d20cb01d57bdd29611"
+    }
+  ]
+}
