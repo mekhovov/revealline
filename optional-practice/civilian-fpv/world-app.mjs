@@ -4387,6 +4387,13 @@ export function mountWorldApp({
       'Відтворення завершено. Спробуйте завдання, коли будете готові.',
     );
   }
+  function drawFlight(state) {
+    return renderer?.draw?.(state, {
+      cameraMode: $('flight-camera').value,
+      cameraFov: Number($('world-fov').value),
+      cameraTilt: Number($('world-tilt').value),
+    });
+  }
   function frame(now) {
     if (disposed) return;
     raf = win.requestAnimationFrame(frame);
@@ -4538,12 +4545,7 @@ export function mountWorldApp({
     if (state.status === 'active') presentation.pause();
     audio.update(state, { active: !replayProof && state.status === 'active' });
     // Do not submit an intermediate scene while its assets or shaders are preparing.
-    if (sceneReady)
-      renderer?.draw?.(state, {
-        cameraMode: $('flight-camera').value,
-        cameraFov: Number($('world-fov').value),
-        cameraTilt: Number($('world-tilt').value),
-      });
+    if (sceneReady) drawFlight(state);
     const aim = renderer?.aimScreen?.();
     if (aim) {
       $('aim-reticle').style.left = `${aim.x * 100}%`;
@@ -4931,6 +4933,8 @@ export function mountWorldApp({
     if (disposed || token !== flightToken) return;
     if (ghostEnabled) await loadGhost();
     if (token !== flightToken || disposed) return;
+    // Submit shadow programs and visible uploads before exposing readiness.
+    if (drawFlight(flight.snapshot()) === false || disposed || token !== flightToken) return;
     sceneReady = true;
     if (options.returning === lessonReturn) {
       lessonReturn = null;
@@ -5842,6 +5846,7 @@ export function mountWorldApp({
             'Графіка змінилася під час підготовки. Повторіть політ.',
           ),
         );
+      if (drawFlight(flight.snapshot()) === false) return;
       if (disposed || token !== flightToken || generation !== scenePreparationGeneration) return;
       qualityPreparing = false;
       sceneReady = true;
