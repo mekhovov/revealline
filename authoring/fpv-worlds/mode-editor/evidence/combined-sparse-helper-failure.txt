@@ -1,0 +1,19 @@
+
+> revealline@0.142.4 validate
+> npm run i18n:check && node scripts/game-cli.mjs validate && node scripts/check-presentation-metadata.mjs && node scripts/refresh-fpv-reaction-runtime.mjs --check && node scripts/refresh-fpv-academy-audio.mjs --check && node scripts/refresh-fpv-play-shell.mjs --check && node scripts/refresh-fpv-presentation-assets.mjs --check
+
+
+> revealline@0.142.4 i18n:check
+> node scripts/localization.mjs check
+
+{
+  "localization": {
+    "locales": [
+      "en",
+      "uk"
+    ],
+    "messages": 12928,
+    "references": 8991
+  }
+}
+Game CLI error: Cannot find module '/private/tmp/fpv-editor-modes-20261004/scripts/lib/whole-spatial-source.mjs' imported from /private/tmp/fpv-editor-modes-20261004/scripts/generate-whole-spatial.mjs
