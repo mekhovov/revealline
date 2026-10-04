@@ -545,6 +545,32 @@ function surfacePixels(kind, color, seed, size, pixel) {
         relief = joint ? -0.025 : 0;
         roughness = joint ? 0.52 : 0.24;
       }
+      if (kind === 'solar-array') {
+        // One opaque atlas: quiet back/edge strip below the framed PV modules.
+        const back = v < 0.15,
+          column = ((u - 0.015) / 0.97) * 10,
+          row = ((v - 0.17) / 0.81) * 3,
+          a = column - Math.floor(column),
+          b = row - Math.floor(row),
+          rim = Math.min(a, 1 - a) < 0.036 || Math.min(b, 1 - b) < 0.018,
+          cellX = (a * 6) % 1,
+          cellY = (b * 12) % 1,
+          joint = Math.min(cellX, 1 - cellX, cellY, 1 - cellY) < 0.035,
+          corner = Math.abs(cellX - 0.5) + Math.abs(cellY - 0.5) > 0.86;
+        if (back || rim) {
+          red = back ? 0.22 : 0.39;
+          green = back ? 0.25 : 0.43;
+          blue = back ? 0.26 : 0.45;
+          shade = 0.98 + grain * 0.025;
+        } else {
+          shade =
+            (joint || corner ? 0.66 : 0.97) +
+            Math.sin(Math.floor(column) * 17 + Math.floor(row) * 31) * 0.035 +
+            grain * 0.02;
+        }
+        roughness = back ? 0.95 : rim ? 0.68 : 0.32;
+        relief = back || rim ? 0 : -0.004;
+      }
       if (kind === 'plaster') {
         shade *= 0.98 + patch * 0.4 + mottling * 0.035;
         relief += mottling * 0.02;
@@ -1224,6 +1250,29 @@ export function buildWorldVisuals({
     !kit &&
     JSON.stringify(profile) === ORCHARD_PROFILE &&
     canonicalOrchardTrees(course);
+  const solarPanels = (course.obstacles ?? []).filter((item) => /^solar-panel-/.test(item.id)),
+    solarArray =
+      environment === 'solar-farm' &&
+      JSON.stringify(profile) === JSON.stringify(resolveSimThemeProfile({ theme: 'operations' })) &&
+      !kit &&
+      solarPanels.length === 16 &&
+      new Set(solarPanels.map((item) => item.id)).size === 16 &&
+      solarPanels.every(
+        (item) =>
+          /^solar-panel-[0-3]-[0-3]$/.test(item.id) &&
+          item.type === undefined &&
+          Array.isArray(item.rotation) &&
+          item.rotation.length === 4 &&
+          item.rotation.every(
+            (v, i) => v === [Math.sin(Math.PI / 24), 0, 0, Math.cos(Math.PI / 24)][i],
+          ) &&
+          ['x', 'y', 'z'].every(
+            (axis, i) =>
+              Number.isFinite(item.min?.[axis]) &&
+              Number.isFinite(item.max?.[axis]) &&
+              item.max[axis] - item.min[axis] === [11000, 300, 7000][i],
+          ),
+      );
   const quarryRocks =
       environment === 'quarry'
         ? (course.obstacles ?? []).filter(
@@ -1358,6 +1407,7 @@ export function buildWorldVisuals({
       'quarry-stone': 0xa18a6d,
       foliage: 0x587d49,
       solar: 0x263e5d,
+      'solar-array': 0x263e5d,
     };
     if (!Object.hasOwn(colors, kind)) kind = 'concrete';
     if (!obstacleSurfaces.has(kind)) {
@@ -2085,7 +2135,7 @@ export function buildWorldVisuals({
       if (environment === 'quarry' || /^rock-/.test(id)) return 'stone';
       if (/^tree-canopy-/.test(id)) return 'foliage';
       if (/^tree-trunk-|timber|crate/.test(id)) return 'wood';
-      if (/^solar-panel-/.test(id)) return 'solar';
+      if (/^solar-panel-/.test(id)) return solarArray ? 'solar-array' : 'solar';
       if (/^building-/.test(id)) return 'plaster';
       if (/pier|deck|tower|platform|column|ramp/.test(id)) return 'concrete';
       return 'metal';
