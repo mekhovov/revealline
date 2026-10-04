@@ -64,6 +64,13 @@ current catalogue and visible shared controls. A production correction also
 pins retained recording-verifier links to their owning build across locale
 changes and page retirement. No generic deadlines or warning filters change.
 
+Main's subsequent World visuals source-capacity preparation is also retained.
+The readable canonical source includes the complete industrial renderer; its
+generated runtime uses the established lexical projection at the original
+import path. Regeneration preserves the integrated material behavior instead
+of restoring the older main-only source. The generator equality check joins
+mandatory validation; its historical capacity receipt keeps its original scope.
+
 The integration must pass the strict current-base `release-ready` check,
 industrial feature phases, Appearance and Company checks, mandatory static and
 content validation, source identity and committed-source builds. A scheduled
