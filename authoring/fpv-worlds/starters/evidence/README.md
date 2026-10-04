@@ -80,5 +80,34 @@ These raw receipts retain the original bytes; do not reformat them.
 The original flight receipt's `browserQualification: pending` describes its
 earlier source run; the separate r2 receipt supplies the later browser result.
 Edited browser copies do not inherit the original routes' clearance or flight
-qualification. Offline access, the explicit Acro spatial editor mode selector,
-complete D4, physical-device, novice and performance acceptance remain open.
+qualification. The explicit Acro spatial editor mode selector, complete D4,
+physical-device, novice and performance acceptance remain open.
+
+## Localhost offline reopening
+
+The separate [manual offline receipt](offline-d9ad.json) uses the same unchanged
+102-member admitted `d9ad2561e` player on its own localhost origin. The actual
+Library imported the original Industrial Split Level ZIP, producing pack
+`311b04890037…`, then **Prepare simulator offline** completed and an online reload
+confirmed the prepared player. The dedicated server stopped; curl returned
+connection-refused exit 7 before the subsequent actual browser reload.
+
+With that origin unavailable, the Workshop rendered, native keyboard input
+committed the title suffix ` — offline`, and two Undo plus two Redo actions
+restored the intended title. **Install** produced revision `36c064f4b7b2…`.
+Another actual reload and public **Edit** retained the title. Library restoration
+switched to the original revision and back to the edited revision while still
+offline. A second curl probe returned exit 7. Warning/error logs were empty.
+See the [offline editor](offline-editor-d9ad.png) and
+[offline Library](offline-library-d9ad.png) screenshots.
+
+The original file-chooser wait and synthetic fill did not complete their intended
+UI actions; the receipt records both diagnostics. Clicking the visible import
+label and actual keyboard input completed the normal flows. The server was
+restored afterward and returned HTTP 200; no player files changed.
+
+The raw receipt is 2,175 bytes, SHA-256
+`465ce030e230c1eb007cc80138e6fc29b4d405b3c63c38cafc1c389b2b273739`.
+This establishes cached localhost reopening and editing with the serving origin
+unavailable. It does not establish device-wide airplane mode, browser restart,
+storage eviction, a public-launcher path, flight completion or performance.
