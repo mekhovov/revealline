@@ -3182,3 +3182,25 @@ ordinary flights and independent/archive replays. Its visual/art acceptance
 remains pending, so r10 is not called accepted or published. First-ready resource
 investigation continues with bounded native program attribution; no broad
 performance gain or cache rewrite is claimed.
+
+
+### 4 October — Combined native and stopped-origin acceptance
+
+Historical combined source `216b36ce1` now passes 208 native Library controls,
+145 native appearance-focus controls (including trusted Tab/Shift+Tab), seven
+responsive iframe observations, and both admitted players' native offline
+reopens. Worlds Library and Academy Flight guide preparations completed through
+public controls; trusted Enter activated controls where an initial click only
+focused them. The known8939 server was stopped, with refused curl connections
+before and after actual reload/launch/pause in both Worlds and Academy. This is
+an own-origin outage check, not browser-wide offline, eviction or hardware/FPS
+acceptance. The exact server was restored after the check.
+
+The complete receipts/screenshots are losslessly retained in
+[combined qualification](fpv-library-integrated-reliability.md). Its 95 original
+inputs remain exact at16,776,664 bytes with552 bytes reserve; no unfinished shadow
+prototype was included. Focus #1076 merged `b98205d76` and menu #1079 merged
+`e7d06f3c6` through the normal protected path. Library #1080 received an ordinary
+main update to`2cfc24050`; all95 input hashes exactly match the admitted combined
+candidate and fresh protected checks are pending. No new public deployment is
+inferred from local or historical package acceptance.

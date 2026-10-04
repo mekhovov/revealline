@@ -1,0 +1,42 @@
+{
+  "format": "FPVProtectedPublicationFollowup.v1",
+  "auditedMain": "7e76112411f96ae72979cebee0a62ccdd66577d6",
+  "workflowFiles": [
+    {
+      "path": ".github/workflows/fastline-auto-merge.yml",
+      "sha256": "0dfddbbd89c9db94bc0298375aeb1e88b0b73d322bca9b5fe40f029fef3d2c0b"
+    },
+    {
+      "path": ".github/workflows/deploy-pages.yml",
+      "sha256": "c9ab4028b7eb5f20f34f0ffe4c44f6a3f1c384c90c1ee0c3f46bf069a8777acd"
+    }
+  ],
+  "observedConfiguration": {
+    "completedWorkflowListener": "Build and deploy GitHub Pages",
+    "currentSourceWorkflowName": "Validate source for continuous main Pages",
+    "workflowDispatchAvailable": false,
+    "otherWakeups": "PR metadata/synchronize/review events remain enabled."
+  },
+  "interpretation": "Name mismatch is a maintainer follow-up, not proven sole cause of an idle PR. Ordinary protected updates and the existing controller have continued to advance branches; no global workflow policy was changed.",
+  "actions": {
+    "1076": {
+      "expectedHead": "fe5f58d316ba398d4898f3bfcd781c7fc9f08c1e",
+      "newHead": "b57a81df65c0f4755b229e117f08467235a64f48",
+      "result": "ordinary expected-head update accepted; fresh checks active"
+    },
+    "1079": {
+      "expectedHead": "64a47acc43c1b6324024429fe8a4e99167b57cb5",
+      "newHead": "8c9c1d9bf7d665f033fb6ff7d6cbb1400f28d7ce",
+      "result": "ordinary expected-head update accepted; fresh checks active"
+    },
+    "1080": {
+      "head": "0c7476845103ab563dbf47df3cabf7f0f73b0445",
+      "result": "helper-only forward update; optional admission passed, fresh source gate pending"
+    }
+  },
+  "limits": [
+    "No auto-merge armed while exact-head source gates were pending; no bypass or force push.",
+    "The first expected-e7a update safely rejected because1076 had already advanced; no newer work was overwritten.",
+    "No repeated unchanged CI polling."
+  ]
+}
