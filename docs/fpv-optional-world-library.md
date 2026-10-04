@@ -6,7 +6,7 @@ pack inspection, course validation and transactional world store remain the
 installation boundary. A download does not open a course, change an editor draft,
 arm a drone, install executable packages or prepare the simulator offline.
 
-This is an unqualified draft normally integrated with main `ade4bfc2dd` and the
+This draft is normally integrated with main `ade4bfc2dd` and the
 separately qualified shell capacity prerequisite [#1065](https://github.com/mekhovov/revealline/pull/1065).
 The first source candidate `f33d01d62c` passed 189 actual browser controls;
 its [full receipt and frozen harness](../authoring/fpv-worlds/library/evidence/source-r1-provenance.json)
@@ -15,8 +15,9 @@ are preserved losslessly. The corrected source `74bd1b1a53` separately passes
 cancellations. Its [receipt and frozen fixture](../authoring/fpv-worlds/library/evidence/source-r2-provenance.json)
 retain the exact source and all 102 baseline members with two explicit overlays. Fresh
 source admission and finished-world availability are not yet claimed. The
-production catalog is empty: Mountain Reservoir still needs all eight distinct
-authored challenges and sixteen mode demonstrations qualified before publication.
+production catalog is empty. Mountain Reservoir's eight challenges and sixteen
+demonstrations are separately qualified in [#1066](https://github.com/mekhovov/revealline/pull/1066),
+but its protected publication and a production catalog row remain separate.
 
 ## Download contract
 
@@ -60,12 +61,14 @@ and existing package file count are retained. A fresh admission is still require
 The first complete draft measured **6,720 source bytes** beyond main: 659 bytes in
 the host adapter and 6,061 in the generated projection. Concise UI wording plus
 strict string guards reduced that historical draft to 6,684 bytes. Live language
-repainting and bounded dot-separated filenames bring the current draft to
-**7,167 bytes**: 710 in the host and 6,457 in the generated projection, including
-honest reporting of a committed save followed by a refresh failure. After
-the independent 3,562-byte shell recovery, it leaves **1,423 bytes** beneath
-the unchanged source ceiling. The separate 116-byte draw-readiness candidate
-would leave 1,307 bytes. These are source measurements, not fresh admission.
+repainting and bounded dot-separated filenames brought source `74bd1b1a53` to
+7,167 bytes, including honest reporting of a committed save followed by a refresh
+failure. The subsequent visual review adds labelled challenge counts, readable
+KiB/MiB sizes and existing card typography: **7,431 bytes** total, 710 in the host
+and 6,721 in the generated projection. After the independent 3,562-byte shell
+recovery, this leaves **1,159 bytes** beneath the unchanged source ceiling.
+The separate 116-byte draw-readiness candidate would leave 1,043 bytes. These
+are source measurements, not fresh admission.
 Limits and integrity checks are unchanged.
 
 The separately published prerequisite prepares
@@ -99,6 +102,16 @@ all 192 checks pass, with three actual HTTP-200 responses from the pinned raw
 repository URL. Native write and readonly refresh aborts are recorded separately
 from those HTTPS requests. The historical pass is not relabelled as evidence for
 this correction.
+
+The first native visual review found that the Library entry fits a 390-pixel
+viewport without horizontal overflow, but the unlabelled count and raw byte
+display needed clearer metadata. The next source fixture checks the improved
+labels and existing typography. Its preview-only EN/UK buttons dispatch the
+host's existing language-select change; they do not establish that native
+language navigation is exposed. Three shared-shell observations remain separate:
+the native Settings view did not expose that language control, sticky navigation
+overlapped other scrolled content, and the mobile Missions footer label/icon
+overlapped Expert. These are not repaired by this discovery change.
 
 Archives use gzip with zero modification time. Decompress each file with
 `gzip -dc <archive>`, then verify its raw SHA-256 and size from the provenance

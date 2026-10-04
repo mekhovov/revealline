@@ -250,9 +250,28 @@ async function execute() {
   must(
     panel().textContent.includes(fixture.asset.title[0]) &&
       panel().textContent.includes('r1') &&
-      panel().textContent.includes('17072 B'),
-    'Pinned catalogue title, revision and exact bytes visible',
+      panel().textContent.includes('1 challenge') &&
+      panel().textContent.includes('17 KiB'),
+    'Pinned catalogue title, revision, labelled count and readable download size visible',
   );
+  must(
+    parseFloat(ctx.w.getComputedStyle(panel().querySelector('[data-world] strong')).fontSize) >= 14,
+    'Existing card title typography remains readable',
+  );
+  must(
+    parseFloat(ctx.w.getComputedStyle(panel().querySelector('[data-world] p')).fontSize) >= 13,
+    'Metadata uses readable existing body typography',
+  );
+  change(q('#world-language'), 'uk');
+  must(
+    panel().textContent.includes(fixture.asset.title[1]) &&
+      panel().textContent.includes('Завдань: 1') &&
+      packButton().textContent === 'Завантажити',
+    'Ukrainian card title/count/download repaint',
+  );
+  change(q('#world-language'), 'en');
+  q('#creator-json').value = original.editor;
+  q('#creator-json').dispatchEvent(new ctx.w.Event('input', { bubbles: true }));
   eq(
     preserve(),
     original,
