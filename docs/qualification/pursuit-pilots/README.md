@@ -98,4 +98,4 @@ interpretation.
 
 Record real review evidence for each supported mode/pace and pinned seed: completion route, readable movement/vulnerability, useful Team roles, paired-board fairness, clean/brutal equivalence, touch/gamepad ownership, EN/UK, 320/360/390px layouts, performance and browser Studio round-trips. Derived seeds require separate review. This tool never marks human understanding, accessibility, device performance or public release as passed.
 
-Automated suites remain waived. Regression sources for the preview transport, startup picture ownership, locale-before-draft behavior and packet verifier are authored but are not a claim that those suites were executed.
+The 4 October continuation restores required automated testing. Older authored-but-unrun evidence remains historical; new source-bound results are recorded separately through the industrial feature matrix. Neither executed regressions nor this structural packet replace the manual completion and device checks above.
