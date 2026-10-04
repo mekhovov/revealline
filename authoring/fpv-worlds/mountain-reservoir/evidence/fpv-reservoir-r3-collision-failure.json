@@ -1,0 +1,27 @@
+{
+  "format": "FPVMountainReservoirCheckpointFlights.v1",
+  "pack": {
+    "path": "/tmp/fpv-mountain-reservoir-scene-r3/prepared/mountain-reservoir-checkpoint.r3.rlpack",
+    "bytes": 1158370,
+    "sha256": "ce9036f587831f78120a13d53920d9a7468ee3ebc728048fe6ecdc98bfca1347",
+    "identity": "fpv-pack:ce9036f587831f78120a13d53920d9a7468ee3ebc728048fe6ecdc98bfca1347"
+  },
+  "checks": [
+    {
+      "name": "Shore pad spawn has physical support",
+      "passed": true
+    },
+    {
+      "name": "Closed maintenance hut rejects interior spawn",
+      "passed": true
+    },
+    {
+      "name": "Dam solid rejects interior spawn",
+      "passed": false
+    }
+  ],
+  "modes": [],
+  "status": "failed",
+  "scope": "One course/two modes; ordinary controls through unchanged runtime, independent complete and archive-import replays. No eight-course delivery, native browser, offline or hardware claim.",
+  "error": "Error: Dam solid rejects interior spawn\n    at check (file:///private/tmp/fpv-mountain-reservoir-20261004/authoring/fpv-worlds/mountain-reservoir/qualify-checkpoint.mjs:58:22)\n    at file:///private/tmp/fpv-mountain-reservoir-20261004/authoring/fpv-worlds/mountain-reservoir/qualify-checkpoint.mjs:72:5"
+}
