@@ -6,7 +6,8 @@ pack inspection, course validation and transactional world store remain the
 installation boundary. A download does not open a course, change an editor draft,
 arm a drone, install executable packages or prepare the simulator offline.
 
-This is an unqualified draft based on main `a90fc81807dd43c4d5ee873cd0028daff1bc3a6e`.
+This is an unqualified draft normally integrated with main `ade4bfc2dd` and the
+separately qualified shell capacity prerequisite [#1065](https://github.com/mekhovov/revealline/pull/1065).
 No browser, source admission or finished-world availability is claimed. The
 production catalog is empty: Mountain Reservoir still needs all eight distinct
 authored challenges and sixteen mode demonstrations qualified before publication.
@@ -50,19 +51,21 @@ and existing package file count are retained. A fresh admission is still require
 
 The first complete draft measured **6,720 source bytes** beyond main: 659 bytes in
 the host adapter and 6,061 in the generated projection. Concise UI wording plus
-strict string guards give a current draft of 6,684 bytes. The already-qualified course picker leaves only 5,028
-bytes after its integration, so the draft is **1,656 bytes over that combined
-reserve**. It must not be admitted or published until a separately reviewed,
-lossless capacity prerequisite or safe implementation reduction closes the gap.
-Limits and integrity checks are not relaxed to make it fit.
+strict string guards reduced that historical draft to 6,684 bytes. Live language
+repainting and bounded dot-separated filenames bring the current draft to
+**6,912 bytes**: 687 in the host and 6,225 in the generated projection. After
+the independent 3,562-byte shell recovery, it leaves **1,678 bytes** beneath
+the unchanged source ceiling. The separate 116-byte draw-readiness candidate
+would leave 1,562 bytes. These are source measurements, not fresh admission.
+Limits and integrity checks are unchanged.
 
-A read-only measurement identifies one possible separate prerequisite: prepare
+The separately published prerequisite prepares
 only the generated shared-mode-shell section of `flight-fullscreen.mjs` with the
 same existing lexical projection after its pinned Prettier step. That section
 shrinks from 16,954 to 13,392 bytes (3,562 recovered), without changing the readable
-canonical `game/ui/mode-play-shell.mjs`. This is not implemented in this draft.
-It would require an independent identity/admission and actual shell qualification
-because Academy also consumes the shared module.
+canonical `game/ui/mode-play-shell.mjs`. Its independent identity, full validation,
+all-three admission and actual Worlds/Academy shell checks passed. Its protected
+publication remains separate from this unqualified feature.
 
 ## Bounded qualification plan
 

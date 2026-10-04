@@ -59,7 +59,7 @@ const sourceHashes={
 'game/audio/reactions/actors.mjs':
 '79debf91cafa2e01cd65170037ee483977cbf7d5c3a619ccac9ed400264598b8',
 'optional-practice/civilian-fpv/world-library.mjs':
-'d47e534f32dcdf044cfde7620b5155a89ab9856c6cc6a473ce6dead4f84ea84e',
+'824f71f935f8c06b170c5580b734a6af49fea883f0c5374c1ee391a162c3957c',
 'game/audio/reactions/guide-0-en.m4a':
 '58f961f54b52d0dbb58f53f000ca85bba166236126e135dc1f5e89f8f9a94210',
 'game/audio/reactions/guide-0-uk.m4a':
@@ -6451,7 +6451,7 @@ typeof row.sha256==='string'&&
 typeof row.path==='string'&&
 /^[a-f0-9]{40}$/.test(row.commit)&&
 /^[a-f0-9]{64}$/.test(row.sha256)&&
-/^authoring\/fpv-worlds\/(?:[a-z0-9_-]+\/)+[a-z0-9_-]+\.rlpack$/.test(row.path)&&
+/^authoring\/fpv-worlds\/(?:[a-z0-9_-]+\/)+[a-z0-9_-]+(?:\.[a-z0-9_-]+)*\.rlpack$/.test(row.path)&&
 Array.isArray(row.title)&&
 row.title.length===2&&
 row.title.every(
@@ -6516,8 +6516,16 @@ browse.type=cancel.type='button';
 let operation=null,
 closed=false,
 rows=[],
-saved=[];
+saved=[],
+notice=['',''];
+function show(...value){
+notice=value;
+message.textContent=txt(...notice);
+}
 function paint(){
+browse.textContent=txt('Browse optional worlds','Оглянути додаткові світи');
+cancel.textContent=txt('Cancel','Скасувати');
+message.textContent=txt(...notice);
 browse.disabled= !!operation;
 cancel.hidden= !operation;
 cards.replaceChildren();
@@ -6547,13 +6555,13 @@ signal=controller.signal;
 operation=controller;
 cancel.disabled=false;
 paint();
-message.textContent=txt('Loading…','Завантаження…');
+show('Loading…','Завантаження…');
 const timer=setTimeout(()=>controller.abort(),120000);
 try{
 const generation=row?await begin():null;
 signal.throwIfAborted();
 const bytes=await read(row?.url??indexURL,row?.bytes??8192,signal,(size)=>{
-message.textContent=row?`${size} / ${row.bytes} B`:txt('Loading…','Завантаження…');
+if(row)show(`${size} / ${row.bytes} B`,`${size} / ${row.bytes} B`);
 });
 signal.throwIfAborted();
 if(row){
@@ -6565,25 +6573,26 @@ signal,
 commit:()=>{
 cancel.disabled=true;
 clearTimeout(timer);
-message.textContent=txt('Saving…','Збереження…');
+show('Saving…','Збереження…');
 },
 });
 if(closed)return;
-message.textContent=txt(
+show(
 'Pack saved. Prepare simulator offline separately. Keep a backup.',
 'Пакунок збережено. Симулятор готується автономно окремо. Зробіть копію.',
 );
 }else{
 rows=worldLibraryIndex(bytes);
-message.textContent=rows.length
-?txt('Choose a world to download.','Оберіть світ для завантаження.')
-:txt('No published worlds yet.','Опублікованих світів ще немає.');
+if(rows.length)show('Choose a world to download.','Оберіть світ для завантаження.');
+else show('No published worlds yet.','Опублікованих світів ще немає.');
 }
 }catch{
-if(!closed)
-message.textContent=signal.aborted
-?txt('Cancelled or timed out. Try again.','Скасовано або час вичерпано. Повторіть.')
-:txt('Download or save failed. Try again.','Завантаження чи збереження не вдалося. Повторіть.');
+if(!closed){
+if(signal.aborted)
+show('Cancelled or timed out. Try again.','Скасовано або час вичерпано. Повторіть.');
+else
+show('Download or save failed. Try again.','Завантаження чи збереження не вдалося. Повторіть.');
+}
 }finally{
 clearTimeout(timer);
 operation=null;
@@ -6596,7 +6605,7 @@ if(!cancel.disabled)operation?.abort();
 };
 paint();
 return{
-refresh(records){
+refresh(records=saved){
 saved=records;
 if(!closed)paint();
 },

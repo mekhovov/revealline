@@ -32,7 +32,9 @@ export function worldLibraryIndex(bytes) {
         typeof row.path === 'string' &&
         /^[a-f0-9]{40}$/.test(row.commit) &&
         /^[a-f0-9]{64}$/.test(row.sha256) &&
-        /^authoring\/fpv-worlds\/(?:[a-z0-9_-]+\/)+[a-z0-9_-]+\.rlpack$/.test(row.path) &&
+        /^authoring\/fpv-worlds\/(?:[a-z0-9_-]+\/)+[a-z0-9_-]+(?:\.[a-z0-9_-]+)*\.rlpack$/.test(
+          row.path,
+        ) &&
         Array.isArray(row.title) &&
         row.title.length === 2 &&
         row.title.every(
@@ -100,8 +102,16 @@ export function mountWorldLibrary({ el, txt, parent, begin, install }) {
   let operation = null,
     closed = false,
     rows = [],
-    saved = [];
+    saved = [],
+    notice = ['', ''];
+  function show(...value) {
+    notice = value;
+    message.textContent = txt(...notice);
+  }
   function paint() {
+    browse.textContent = txt('Browse optional worlds', 'Оглянути додаткові світи');
+    cancel.textContent = txt('Cancel', 'Скасувати');
+    message.textContent = txt(...notice);
     browse.disabled = !!operation;
     cancel.hidden = !operation;
     cards.replaceChildren();
@@ -131,13 +141,13 @@ export function mountWorldLibrary({ el, txt, parent, begin, install }) {
     operation = controller;
     cancel.disabled = false;
     paint();
-    message.textContent = txt('Loading…', 'Завантаження…');
+    show('Loading…', 'Завантаження…');
     const timer = setTimeout(() => controller.abort(), 120000);
     try {
       const generation = row ? await begin() : null;
       signal.throwIfAborted();
       const bytes = await read(row?.url ?? indexURL, row?.bytes ?? 8192, signal, (size) => {
-        message.textContent = row ? `${size} / ${row.bytes} B` : txt('Loading…', 'Завантаження…');
+        if (row) show(`${size} / ${row.bytes} B`, `${size} / ${row.bytes} B`);
       });
       signal.throwIfAborted();
       if (row) {
@@ -149,28 +159,29 @@ export function mountWorldLibrary({ el, txt, parent, begin, install }) {
           commit: () => {
             cancel.disabled = true;
             clearTimeout(timer);
-            message.textContent = txt('Saving…', 'Збереження…');
+            show('Saving…', 'Збереження…');
           },
         });
         if (closed) return;
-        message.textContent = txt(
+        show(
           'Pack saved. Prepare simulator offline separately. Keep a backup.',
           'Пакунок збережено. Симулятор готується автономно окремо. Зробіть копію.',
         );
       } else {
         rows = worldLibraryIndex(bytes);
-        message.textContent = rows.length
-          ? txt('Choose a world to download.', 'Оберіть світ для завантаження.')
-          : txt('No published worlds yet.', 'Опублікованих світів ще немає.');
+        if (rows.length) show('Choose a world to download.', 'Оберіть світ для завантаження.');
+        else show('No published worlds yet.', 'Опублікованих світів ще немає.');
       }
     } catch {
-      if (!closed)
-        message.textContent = signal.aborted
-          ? txt('Cancelled or timed out. Try again.', 'Скасовано або час вичерпано. Повторіть.')
-          : txt(
-              'Download or save failed. Try again.',
-              'Завантаження чи збереження не вдалося. Повторіть.',
-            );
+      if (!closed) {
+        if (signal.aborted)
+          show('Cancelled or timed out. Try again.', 'Скасовано або час вичерпано. Повторіть.');
+        else
+          show(
+            'Download or save failed. Try again.',
+            'Завантаження чи збереження не вдалося. Повторіть.',
+          );
+      }
     } finally {
       clearTimeout(timer);
       operation = null;
@@ -183,7 +194,7 @@ export function mountWorldLibrary({ el, txt, parent, begin, install }) {
   };
   paint();
   return {
-    refresh(records) {
+    refresh(records = saved) {
       saved = records;
       if (!closed) paint();
     },
