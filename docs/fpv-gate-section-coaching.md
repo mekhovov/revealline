@@ -103,6 +103,14 @@ after disposal, and clicks the detached Return to confirm it cannot restart a
 flight. The v6 source receipt predates this cleanup; final package qualification
 must include it. The coaching runtime delta is 6,281 bytes against main `72d6661b`.
 
+The final local integration includes published main `c907b4f7f` (School #1031)
+and the exact reviewed disposal #1040 head `38e9b8524`. At integration time #1040
+was still awaiting protected merge, so this is local qualification, not permission
+to publish an unmerged dependency. Its disposal patch is exact, and the other
+68 source modules remain byte-identical to the accepted source fixture. The 95
+original inputs total 16,777,021 bytes, leaving 195 bytes below the unchanged
+16 MiB cap before the separately prepared source-capacity repair.
+
 The manual input preparer derives a slower ordinary Warehouse gate flight from
 the existing offline authoring pilot by changing only gate travel speed to
 350 mm/s. Both modes complete without contacts and with full health, and an
