@@ -656,25 +656,66 @@
           app.startFlight(copy(w.fixtureInputs.negative.entry)),
           'superseding dependency check',
         );
-        const ownedStatus = node('flight-status').textContent;
+        const ownedStatus = node('flight-status').textContent,
+          ownedSnapshot = app.snapshot(),
+          ownedSettings = ['flight-mode', 'flight-source', 'flight-camera'].map(
+            (id) => node(id).value,
+          );
+        w.fixtureFlightStatusTrace.length = 0;
         w.fixtureReleasePackRead = true;
-        await until(() => !w.fixturePackReadHeld, 'aborted old dependency read');
+        await until(() => w.fixturePackReadOutcome === 'abort', 'aborted old dependency read');
         await wait(30);
+        const finalSnapshot = app.snapshot(),
+          statusWrites = [...w.fixtureFlightStatusTrace];
+        cases.push({
+          kind: 'superseded native read',
+          nativeOutcome: w.fixturePackReadOutcome,
+          before: { course: ownedSnapshot.course, state: ownedSnapshot.state, status: ownedStatus },
+          after: {
+            course: finalSnapshot.course,
+            state: finalSnapshot.state,
+            status: node('flight-status').textContent,
+          },
+          statusWrites,
+        });
+        must(
+          'Aborted dependency read permits only a traced normal pause status write',
+          statusWrites.every(
+            (entry) =>
+              entry.value === 'Paused. Arm deliberately to continue.' &&
+              /\bpauseFlight\b/.test(entry.stack) &&
+              !/\breportError\b/.test(entry.stack),
+          ),
+          { statusWrites },
+        );
         equal(
-          'Old native storage rejection cannot overwrite unrelated flight',
+          'Unrelated status remains owned or follows its traced pause',
           node('flight-status').textContent,
-          ownedStatus,
+          statusWrites.at(-1)?.value ?? ownedStatus,
+        );
+        equal(
+          'Old native storage rejection preserves unrelated route and zero ticks',
+          { course: finalSnapshot.course, ticks: finalSnapshot.state.ticks },
+          { course: ownedSnapshot.course, ticks: 0 },
+        );
+        equal(
+          'Old native storage rejection preserves unrelated control settings',
+          ['flight-mode', 'flight-source', 'flight-camera'].map((id) => node(id).value),
+          ownedSettings,
         );
         must(
           'Unrelated route retains ownership after aborted dependency lookup',
-          app.snapshot().course === w.fixtureInputs.negative.entry.id &&
-            node('world-return-challenge').hidden,
+          finalSnapshot.course === w.fixtureInputs.negative.entry.id &&
+            ['paused', 'disarmed'].includes(finalSnapshot.state.status) &&
+            node('world-return-challenge').hidden &&
+            node('world-return-status').textContent === '',
         );
         errors.push(...w.fixtureErrors);
         equal('No browser errors or unhandled rejections', errors, []);
         $('status').textContent = 'PASS · ' + checks.length + ' checks';
       } catch (e) {
-        checks.push({ name: String(e.message ?? e), passed: false });
+        if (checks.at(-1)?.passed !== false || checks.at(-1).name !== String(e.message ?? e))
+          checks.push({ name: String(e.message ?? e), passed: false });
         $('status').textContent = 'FAIL · ' + e.message;
       } finally {
         const result = {
@@ -686,6 +727,7 @@
           cases,
           errors,
           statusTrace: w?.fixtureStatusTrace ?? [],
+          flightStatusTrace: w?.fixtureFlightStatusTrace ?? [],
           limitations: [
             'Actual browser functional evidence, not hardware/FPS.',
             'Supported startFlight recovery API and exact recorded input prefix; normal host independently verifies final practice result.',

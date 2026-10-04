@@ -68,6 +68,17 @@ rejections cover failed-return retry and superseded failure. Normal rendering
 and storage calls retain their receivers, arguments and results outside those
 declared fault cases. These controls do not modify production pause or Arm rules.
 
+The actual v5 run passed 188 assertions before its last storage-race observation
+compared the unrelated flight's Ready copy with its later Paused copy. The full
+failure is retained in `fpv-gate-coaching-browser-v5-failure.json`; its studio-only
+trace does not establish which lifecycle action changed the flight status. The
+v6 fixture retains the same production host and observes native transaction abort
+completion plus the flight-status setter's call stack. It requires the unrelated
+course, controls, zero ticks and cleared return context to remain exact. Any
+status change must come from the unchanged `pauseFlight` path, with no error
+handler write. This diagnostic does not disable a pause or treat the prior failed
+run as passing evidence.
+
 The manual input preparer derives a slower ordinary Warehouse gate flight from
 the existing offline authoring pilot by changing only gate travel speed to
 350 mm/s. Both modes complete without contacts and with full health, and an
