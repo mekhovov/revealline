@@ -1,0 +1,148 @@
+{
+  "format": "FPVReservoirWorldBuild.v1",
+  "stage": "Eight-route land-side candidate; actual art/collision/flight acceptance pending",
+  "sourcePins": [
+    {
+      "path": "scene.mjs",
+      "bytes": 24182,
+      "sha256": "c8782d1ec15b1ff290e5e3408021c564a8a99c39310d7701430f488792e98e13"
+    },
+    {
+      "path": "engineering.mjs",
+      "bytes": 3295,
+      "sha256": "d45f74576396b19eef9cd9e35e5cdfc95604dec3dc9e216f0818d2bc1328087d"
+    },
+    {
+      "path": "land-routes.mjs",
+      "bytes": 11875,
+      "sha256": "2a9897324e9aa40c781f5316392259178cf09c51a98904dadb2b51adbde3b658"
+    },
+    {
+      "path": "engineering-routes.mjs",
+      "bytes": 6477,
+      "sha256": "587cd008bd197742190b8e7778df9e2ff795e592fcea81420f0e2aa39f949014"
+    },
+    {
+      "path": "mineral.mjs",
+      "bytes": 2579,
+      "sha256": "3b93f15821b44511fbf4ca91a7707a8ae73ea20cc6eed13db31d7d29e35b8004"
+    },
+    {
+      "path": "ground-maps.mjs",
+      "bytes": 3555,
+      "sha256": "a5b4aaa1f1b290b8fb19070b85333de5dc0f22e72908c967b996f3eccca61dde"
+    },
+    {
+      "path": "retaining.mjs",
+      "bytes": 3918,
+      "sha256": "f74b4dd413437e7ae0b57a477736b096a4d39f6e07eba044387d4d2ae327e3ab"
+    }
+  ],
+  "source": {
+    "bytes": 1236484,
+    "sha256": "5998eeff3018fb0e32cfb67003d4b6da9e3bcd18efcdc2b89762778b486680fd",
+    "triangles": 12288,
+    "materials": 13,
+    "nodes": 60,
+    "textures": 3,
+    "colliders": 48,
+    "collisionTriangles": 108
+  },
+  "prepared": {
+    "bytes": 1234972,
+    "sha256": "8c3736a3c543f916f82eab9c675e0332095ff58763370f8372e813a114e14c3a",
+    "validatorErrors": 0
+  },
+  "pack": {
+    "bytes": 1381764,
+    "sha256": "f4cdf7e9e81fd45b9fe4cb4cad223c3dad45f7435c1f00f6e3c0527a3c50d4df",
+    "identity": "fpv-pack:f4cdf7e9e81fd45b9fe4cb4cad223c3dad45f7435c1f00f6e3c0527a3c50d4df"
+  },
+  "zip": {
+    "bytes": 1381825,
+    "sha256": "4b1e0d390182da1653f323290f5b1849de4f7aa0bb5b9ec355822355edabd4e3"
+  },
+  "courses": [
+    {
+      "id": "mountain-reservoir-01",
+      "title": "Shoreline check-in",
+      "steps": {
+        "self-level": 4,
+        "acro": 4
+      }
+    },
+    {
+      "id": "mountain-reservoir-02",
+      "title": "Western dam crest",
+      "steps": {
+        "self-level": 7,
+        "acro": 7
+      }
+    },
+    {
+      "id": "mountain-reservoir-03",
+      "title": "Intake controls",
+      "steps": {
+        "self-level": 5,
+        "acro": 6
+      }
+    },
+    {
+      "id": "mountain-reservoir-04",
+      "title": "Dry spillway descent",
+      "steps": {
+        "self-level": 9,
+        "acro": 8
+      }
+    },
+    {
+      "id": "mountain-reservoir-05",
+      "title": "Exterior service passage",
+      "steps": {
+        "self-level": 8,
+        "acro": 8
+      }
+    },
+    {
+      "id": "mountain-reservoir-06",
+      "title": "Rock terrace climb",
+      "steps": {
+        "self-level": 7,
+        "acro": 8
+      }
+    },
+    {
+      "id": "mountain-reservoir-07",
+      "title": "Shoreline circuit",
+      "steps": {
+        "self-level": 11,
+        "acro": 11
+      }
+    },
+    {
+      "id": "mountain-reservoir-08",
+      "title": "Maintenance roof landing",
+      "steps": {
+        "self-level": 5,
+        "acro": 5
+      }
+    }
+  ],
+  "bounds": {
+    "min": {
+      "x": -44000,
+      "y": 0,
+      "z": -34000
+    },
+    "max": {
+      "x": 6000,
+      "y": 28000,
+      "z": 38000
+    }
+  },
+  "worldCount": 1,
+  "layoutCount": 8,
+  "runtimeChanges": 0,
+  "textures": 3,
+  "limitsUnchanged": true
+}
