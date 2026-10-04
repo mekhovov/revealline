@@ -58,6 +58,15 @@ function click(node) {
   check(
     visible(node) && !node.disabled,
     'visible public control ' + (node?.id || node?.textContent),
+    {
+      id: node?.id,
+      label: node?.textContent,
+      hidden: node?.hidden,
+      disabled: node?.disabled,
+      dialog: node?.closest('dialog')?.id,
+      dialogOpen: node?.closest('dialog')?.open,
+      flightState: q('#flight-dialog')?.dataset.flightState,
+    },
   );
   node.click();
 }
@@ -348,7 +357,7 @@ async function execute() {
     }
     await armAndPause();
     await home();
-    click(q('#worlds-shell-action-retry'));
+    click(q('#worlds-shell-action-home-retry'));
     await until(
       () =>
         q('#flight-status').textContent.startsWith('Ready. Choose') && !q('#world-arm').disabled,
