@@ -1,0 +1,291 @@
+{
+  "scope": "Prospective authored10mm contact clearance; ordinary neutral-input simulation, no final course or completion proof",
+  "rows": [
+    {
+      "course": "harbor-docks-05",
+      "samples": [
+        {
+          "tick": 1,
+          "status": "active",
+          "actor": {
+            "x": 4000,
+            "y": 2010,
+            "z": 14
+          },
+          "blocked": false
+        },
+        {
+          "tick": 251,
+          "status": "active",
+          "actor": {
+            "x": 4000,
+            "y": 2010,
+            "z": 182
+          },
+          "blocked": true
+        },
+        {
+          "tick": 501,
+          "status": "active",
+          "actor": {
+            "x": 4000,
+            "y": 2010,
+            "z": 182
+          },
+          "blocked": true
+        },
+        {
+          "tick": 751,
+          "status": "active",
+          "actor": {
+            "x": 4000,
+            "y": 2010,
+            "z": 182
+          },
+          "blocked": true
+        },
+        {
+          "tick": 1001,
+          "status": "active",
+          "actor": {
+            "x": 4000,
+            "y": 2010,
+            "z": 182
+          },
+          "blocked": true
+        },
+        {
+          "tick": 1251,
+          "status": "active",
+          "actor": {
+            "x": 4000,
+            "y": 2010,
+            "z": 182
+          },
+          "blocked": true
+        },
+        {
+          "tick": 1501,
+          "status": "active",
+          "actor": {
+            "x": 4000,
+            "y": 2010,
+            "z": 182
+          },
+          "blocked": true
+        },
+        {
+          "tick": 1751,
+          "status": "active",
+          "actor": {
+            "x": 4000,
+            "y": 2010,
+            "z": 182
+          },
+          "blocked": true
+        },
+        {
+          "tick": 2001,
+          "status": "active",
+          "actor": {
+            "x": 4000,
+            "y": 2010,
+            "z": 182
+          },
+          "blocked": true
+        },
+        {
+          "tick": 2251,
+          "status": "active",
+          "actor": {
+            "x": 4000,
+            "y": 2010,
+            "z": 182
+          },
+          "blocked": true
+        },
+        {
+          "tick": 2501,
+          "status": "active",
+          "actor": {
+            "x": 4000,
+            "y": 2010,
+            "z": 182
+          },
+          "blocked": true
+        },
+        {
+          "tick": 2751,
+          "status": "active",
+          "actor": {
+            "x": 4000,
+            "y": 2010,
+            "z": 182
+          },
+          "blocked": true
+        }
+      ],
+      "final": {
+        "id": "harbor-service-cart",
+        "type": "vehicle",
+        "role": "civilian",
+        "position": {
+          "x": 4000,
+          "y": 2010,
+          "z": 182
+        },
+        "radius": 800,
+        "height": 1200,
+        "health": 50,
+        "maxHealth": 50,
+        "status": "active",
+        "pathIndex": 1,
+        "cooldown": 0,
+        "blocked": true
+      }
+    },
+    {
+      "course": "harbor-docks-06",
+      "samples": [
+        {
+          "tick": 1,
+          "status": "active",
+          "actor": {
+            "x": -15500,
+            "y": 5510,
+            "z": 30006
+          },
+          "blocked": false
+        },
+        {
+          "tick": 251,
+          "status": "active",
+          "actor": {
+            "x": -15500,
+            "y": 5510,
+            "z": 30312
+          },
+          "blocked": true
+        },
+        {
+          "tick": 501,
+          "status": "active",
+          "actor": {
+            "x": -15500,
+            "y": 5510,
+            "z": 30312
+          },
+          "blocked": true
+        },
+        {
+          "tick": 751,
+          "status": "active",
+          "actor": {
+            "x": -15500,
+            "y": 5510,
+            "z": 30312
+          },
+          "blocked": true
+        },
+        {
+          "tick": 1001,
+          "status": "active",
+          "actor": {
+            "x": -15500,
+            "y": 5510,
+            "z": 30312
+          },
+          "blocked": true
+        },
+        {
+          "tick": 1251,
+          "status": "active",
+          "actor": {
+            "x": -15500,
+            "y": 5510,
+            "z": 30312
+          },
+          "blocked": true
+        },
+        {
+          "tick": 1501,
+          "status": "active",
+          "actor": {
+            "x": -15500,
+            "y": 5510,
+            "z": 30312
+          },
+          "blocked": true
+        },
+        {
+          "tick": 1751,
+          "status": "active",
+          "actor": {
+            "x": -15500,
+            "y": 5510,
+            "z": 30312
+          },
+          "blocked": true
+        },
+        {
+          "tick": 2001,
+          "status": "active",
+          "actor": {
+            "x": -15500,
+            "y": 5510,
+            "z": 30312
+          },
+          "blocked": true
+        },
+        {
+          "tick": 2251,
+          "status": "active",
+          "actor": {
+            "x": -15500,
+            "y": 5510,
+            "z": 30312
+          },
+          "blocked": true
+        },
+        {
+          "tick": 2501,
+          "status": "active",
+          "actor": {
+            "x": -15500,
+            "y": 5510,
+            "z": 30312
+          },
+          "blocked": true
+        },
+        {
+          "tick": 2751,
+          "status": "active",
+          "actor": {
+            "x": -15500,
+            "y": 5510,
+            "z": 30312
+          },
+          "blocked": true
+        }
+      ],
+      "final": {
+        "id": "harbor-deck-inspector",
+        "type": "patrol",
+        "role": "civilian",
+        "position": {
+          "x": -15500,
+          "y": 5510,
+          "z": 30312
+        },
+        "radius": 300,
+        "height": 1800,
+        "health": 50,
+        "maxHealth": 50,
+        "status": "active",
+        "pathIndex": 1,
+        "cooldown": 0,
+        "blocked": true
+      }
+    }
+  ]
+}

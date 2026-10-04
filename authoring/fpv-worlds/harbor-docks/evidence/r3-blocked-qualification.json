@@ -1,0 +1,42 @@
+{
+  "format": "FPVHarborBlockedQualification.v1",
+  "acceptedScene": "ca463bd1f2110305e553c8d5461f5e8ae0eebdca",
+  "courseFreeze": "2b39ff379",
+  "packSHA256": "97887c21d200f6e1bc180eea7aeb2e1ed99e72eb4e86e089ab39dd0ab108dcad",
+  "status": "blocked: actual finite-support ground actors stall",
+  "completedProofs": 0,
+  "sourceGeometryCourseRuntimeEdits": false,
+  "note": "The10mm-clearance and alternative collider representations are diagnostic-only synthetic courses. No source scene, actor path, physics or released proof was changed.",
+  "evidence": [
+    {
+      "path": "r3-static-v2-failed.json",
+      "bytes": 94574,
+      "sha256": "eb57d5511280233af7f01c46e62e38b8fc6cbe8a15fddd7cdd58bbcfb7f9b1e8"
+    },
+    {
+      "path": "r3-static-v3-failed.json",
+      "bytes": 94591,
+      "sha256": "11d0eb076d79c41877c19fa90a01c555b7296a5606dde83cd4204f652483a631"
+    },
+    {
+      "path": "r3-actual-ground-stall.json",
+      "bytes": 5331,
+      "sha256": "67ac74094d0de504f88510d471a1554ffff94d25d2e4101c19ef9dc7f09c087a"
+    },
+    {
+      "path": "r3-offset10-diagnostic.json",
+      "bytes": 5996,
+      "sha256": "6291cbdf5fc43ec4aec030b00fad22a5de06f902e8731b9cdc53388bd0f21bf1"
+    },
+    {
+      "path": "r3-stalled-support.json",
+      "bytes": 1542,
+      "sha256": "0206ad4d04bec82399254fc385ed8230c989dccb0d27633e47e2fb232c3dd41e"
+    },
+    {
+      "path": "r3-minimal-ground-cases.json",
+      "bytes": 100674,
+      "sha256": "a42c9ab1f34c552e0244f4e26b27143982f8019bb057050895f75e7e6c7ad520"
+    }
+  ]
+}
