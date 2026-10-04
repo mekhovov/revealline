@@ -80,7 +80,7 @@ import {
 import { importEditableZip } from './world-zip.mjs';
 import { openWorldStore } from './world-store.mjs';
 import { preparePracticeOffline } from './offline.mjs';
-import { mountWorldLibrary } from './world-reaction-runtime.mjs';
+import { mountWorldLibrary, worldImportErrorCopy } from './world-reaction-runtime.mjs';
 import { dataIdentity } from '../../game/data-json.mjs';
 import {
   THEME_PROFILES,
@@ -1035,8 +1035,10 @@ export function mountWorldApp({
   };
   const reportError = (error) => {
     if (disposed) return;
-    status(error.message ?? error);
-    if ($('flight-dialog').open) $('flight-status').textContent = error.message ?? error;
+    const copy = worldImportErrorCopy(error),
+      message = copy ? txt(...copy) : (error.message ?? error);
+    status(message);
+    if ($('flight-dialog').open) $('flight-status').textContent = message;
   };
   const on = (node, event, callback, options) => {
     const fn = (...args) => {
@@ -3507,12 +3509,22 @@ export function mountWorldApp({
     syncProject();
     for (const c of editingProject.courses) validateWorldCourse(c);
     const pack = await preparePack(editingProject, { assets: projectAssets });
-    await installPack(pack, {
+    const installed = await installPack(pack, {
       store: worldStore,
       expectedGeneration: projectGeneration ?? (await worldStore.generation()),
     });
-    projectGeneration = await worldStore.generation();
-    await refreshStorage();
+    projectGeneration = installed.generation;
+    try {
+      await refreshStorage();
+    } catch {
+      status(
+        txt(
+          'World pack saved. Reload the page to refresh the Library.',
+          'Пакунок світу збережено. Перезавантажте сторінку, щоб оновити бібліотеку.',
+        ),
+      );
+      return;
+    }
     status(txt('World pack is ready to fly.', 'Пакунок світу готовий до польоту.'));
   }
   let importRequest = 0;
