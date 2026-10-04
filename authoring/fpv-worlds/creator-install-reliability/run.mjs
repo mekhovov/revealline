@@ -10,7 +10,7 @@ const receipt = {
     'Named native transaction aborts, not real quota exhaustion.',
     'Real ordinary grounded practice and interrupted recovery; no flight state, proof or clock injection.',
     'Scripted public DOM controls; only the outer Run is a trusted user action.',
-    'Source fixture with two declared current-main overlays, not an admitted/offline or hardware-performance claim.',
+    'The pinned fixture manifest declares source overlays or exact admission. No offline or hardware-performance claim.',
     'A committed install followed by a failed read is recorded separately from transaction rollback. Retry outcomes are observed, not presumed successful.',
   ],
 };
