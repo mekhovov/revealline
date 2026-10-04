@@ -1,0 +1,66 @@
+# Reservoir material scale — proposed next increment
+
+Design only. This branch starts from main `f3764070e`; the qualified seam repair
+is isolated in PR #1077 at `ab3a3585d`. Integrate its accepted r9 source through
+normal main history before producing a later revision. Do not overwrite any r8
+or r9 pack, proof or fixture, and do not resume Festival yet.
+
+## Problem observed in frozen r8/r9
+
+The decorative rock ridge, reachable grass overlay and gravel paths all sample
+the same original 256px mineral image at the same four-metre repeat. Geometry
+and colors differ, but the repeated mineral veining gives three different
+surfaces the same material scale. The broad lawn therefore looks like a flat
+painted sheet, and close paths have little readable aggregate. The existing
+source GLB spends 66,240 bytes on that single image.
+
+This pass should improve the ground seen during actual flight, not merely an
+overview. It does not solve the box-like canonical terraces, civic facade detail,
+tree silhouettes, purposeful maintenance props or drone presentation; those need
+their own concrete design and review before the representative-world gate closes.
+
+## Bounded candidate
+
+Keep the r9 rock image, terrain positions/normals/index, seam closure, all 48
+colliders, eight route pairs and bounds exact. Give the existing `shore-meadow`
+and `warm-gravel` material batches distinct original small albedo images and
+world-metre UV scales. Initial targets: a muted 1–2m grass/soil tile with fine
+irregular blades and sparse dry patches, and a 0.5–1m gravel tile with visibly
+smaller, irregular aggregate. Avoid high-contrast regular bands, giant grain,
+plastic sheen or features that appear to be flight openings/obstacles.
+
+Retain all 13 material batches and every geometry/triangle count; no extra draw
+batch, prop, shadow caster or production renderer/style change. The proposed
+allocation increase is two 128px images/textures, so imported texture count
+would rise from one to three. That is an explicit authoring-budget proposal,
+not an already accepted allocation or a production-limit increase. Keep added
+encoded images below 48KiB and the complete source GLB below the existing 1.2MiB
+target. R9 has 86,823 bytes of source headroom. If the visual result needs more,
+revise the design rather than silently raising the target.
+
+The two new textures belong only to this external GLB. Existing Authored/Pixel
+and shared-theme handling stays in the admitted renderer. Verify actual filtering,
+visibility and lifecycle there rather than assuming a texture-count bound proves
+correct appearance or disposal.
+
+## Acceptance and qualification
+
+Freeze identical cameras before and after: low FPV at the shore pad/path edge,
+close inspection of gravel and grass from about 3m, a 10–20m approach including
+the maintenance hut, chase showing the real racer and ground clearance, and a
+whole-site overview. Near-ground detail should read without looking noisy at
+distance; seams, silhouettes and route landmarks must remain intact.
+
+Use the same representative poses in Low/Balanced/High, plus Pixel/shared-theme
+controls. Qualify unchanged collision, course definitions and original GLB
+geometry; permit only named material/image/UV changes. Record imported and total
+renderer textures, draw calls, submitted triangles and disposal behavior. No
+universal pixel parity is expected on the two intentionally changed surfaces,
+but unchanged role data must be byte-identical. No FPS or hardware claim follows
+from static views.
+
+After visual acceptance, publish a distinct exact pack with all sixteen fresh
+dependency-bound demonstrations and independent replays, plus a bounded native
+import/Watch check. Reuse admitted immutable players and keep any rejected
+visuals. Extra unit coverage remains in D6. None of these steps establishes
+finished Reservoir art by itself.
