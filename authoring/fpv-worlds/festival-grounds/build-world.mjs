@@ -22,6 +22,7 @@ import {
 
 const [baselineArg, outputArg] = process.argv.slice(2);
 if (!baselineArg || !outputArg) throw Error('Use ACCEPTED_R3_GENERATED_DIRECTORY NEW_OUTPUT');
+const revision = 'r5';
 const sha = (b) => createHash('sha256').update(b).digest('hex');
 const must = (ok, name) => {
   if (!ok) throw Error(name);
@@ -39,9 +40,9 @@ must(
     sha(model) === 'e4ef61faebc4d4bc71d0ee62d13ad04ffd0b93196a5b61c69cf1ca8ba1c08db9',
   'Exact accepted source/prepared artwork',
 );
-const rows = festivalCourses(project.courses[0]);
+const rows = festivalCourses(project.courses[0], revision);
 const orientationBindings = structuredClone(project.routeBindings[project.courses[0].id]);
-project.revision = 'r4';
+project.revision = revision;
 project.title = 'Festival Grounds';
 project.courses = rows.map(({ course }) => validateWorldCourse(course));
 project.spawnBindings = {};
@@ -59,9 +60,9 @@ for (const c of project.courses) {
 }
 project.authoring = {
   format: 'FPVFestivalGroundsWorldCandidate.v1',
-  revision: 'r4',
+  revision,
   status:
-    'Eight-course candidate; exact sixteen ordinary flights, actual imported Watch/editor and offline qualification pending',
+    'Eight authored challenges over the accepted scene. Qualification and publication status are recorded externally against the exact pack SHA256.',
   acceptedScene: {
     revision: 'r3',
     sourceCommit: 'a2c0c006e11b304296492a2110ec1647e6497f7c',
@@ -120,13 +121,16 @@ await writeFile(
   JSON.stringify(project, null, 2) + '\n',
   { flag: 'wx' },
 );
-await writeFile(path.join(outputArg, 'prepared/festival-grounds.r4.rlpack'), packBytes, {
+await writeFile(path.join(outputArg, `prepared/festival-grounds.${revision}.rlpack`), packBytes, {
   flag: 'wx',
 });
-await writeFile(path.join(outputArg, 'prepared/festival-grounds.r4.zip'), zipBytes, { flag: 'wx' });
+await writeFile(path.join(outputArg, `prepared/festival-grounds.${revision}.zip`), zipBytes, {
+  flag: 'wx',
+});
 const receipt = {
   format: 'FPVFestivalWorldBuild.v1',
-  stage: 'Eight-course candidate, qualification pending',
+  stage: 'Eight authored challenges; qualification is recorded separately against this exact pack',
+  revision,
   source: build.source,
   prepared: build.prepared,
   pack: {
