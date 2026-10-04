@@ -1503,7 +1503,7 @@ archive are retained in `authoring/fpv-worlds/demonstrations`.
 Authoring qualification passes15/15; all154 v2 and24 v1 recordings independently
 replay. All1,331 checkpoint positions pass (768 restored /563 explicit fallbacks).
 Actual WebGL source281/281 and packaged279/279 checks each complete18 runs:
-all16 Garage examples in both modes plus retained original/school representatives.
+all 16 Garage examples in both modes plus retained original/school representatives.
 The checks cover exact final state, FPV/chase, speed/pause, controlled held-input
 isolation, localization and saved-record preservation. Their supplied frame
 timestamps accelerate playback; they do not measure hardware performance.
@@ -2987,7 +2987,7 @@ through39,525ticks, with ten Rapier worlds freed once.
 
 Source and admitted-package WebGL each pass96checks/43pairs, with exact functional,
 image, draw-budget and resource results. All three source-bound packages pass two
-identical builds; all95inputs are committed and leave11,488B under16MiB. The full
+identical builds; all 95inputs are committed and leave11,488B under16MiB. The full
 102-file admitted player renders, arms0.2s and pauses0.3s with no warning/error
 logs. See [Orchard qualification](fpv-orchard-tree-surfaces.md). Protected publication
 and public availability remain separate; no hardware FPS or whole-world realism
@@ -3177,7 +3177,7 @@ The complete receipts/screenshots are losslessly retained in
 inputs remain exact at16,776,664 bytes with552 bytes reserve; no unfinished shadow
 prototype was included. Focus #1076 merged `b98205d76` and menu #1079 merged
 `e7d06f3c6` through the normal protected path. Library #1080 received an ordinary
-main update to`2cfc24050`; all95 input hashes exactly match the admitted combined
+main update to`2cfc24050`; all 95 input hashes exactly match the admitted combined
 candidate and fresh protected checks are pending. No new public deployment is
 inferred from local or historical package acceptance.
 
@@ -3268,7 +3268,7 @@ at `bf3597703763584c79119bdeab50bfa03198ae6f` and a separate 283-check native
 admitted lifecycle pass at `d1d48b2b7ad67a0915532a1489f300abccd778ae`. The latter
 uses all 102 admitted files with no runtime overlays, on main5c including the
 qualified warm-frame and public personal-best control changes. Full Node22
-validation, all16 existing appearance/texture checks, and all-three/two-identical
+validation, all 16 existing appearance/texture checks, and all-three/two-identical
 source-bound admissions pass. The prior324-check timeout is retained: it revealed
 the additional same-event stale Continue/Start state, repaired by synchronizing the
 existing HUD immediately after the native surface-open pause. No clock, arming,
@@ -3278,7 +3278,7 @@ Capacity #1085 merged normally as `5bd8f36d7767dcd9dda740865b4d8f19ddbe7c28`
 at19:32:24Z after its current exact-head checks succeeded. Its initial allocation
 hold had preceded milestone57; only that proven obsolete hold was removed, then
 ordinary expected-head main updates and protected merge were used. The language
-branch normally incorporates this semantic-only projection: all95 input paths are
+branch normally incorporates this semantic-only projection: all 95 input paths are
 checked, only world-visuals formatting changes from the admitted candidate, and
 the canonical bytes/AST/tokens/comments/line terminators remain exact. Resulting
 source reserve is41,157B; fresh publication CI remains distinct from historical
@@ -3385,12 +3385,12 @@ the actual default Industrial presentation; it does not qualify an authored
 natural performance workload, published Browse/download or cached-native offline.
 The final exact combined source `0b54fd0fdf8fe06dc900024a8b59713340b09bb3`
 passed full Node22 validation and all-three/two-identical-build admission, with
-all95 original inputs byte-exact to the successful online fixture. The complete
+all 95 original inputs byte-exact to the successful online fixture. The complete
 zero-overlay102-file player passed223 staging checks and supplies the single
 runtime for subsequent native/offline and longer-session work. Original source
 reserve is35,578 bytes; no limits changed and no second build set was created.
 
-The exact admitted port8966 run subsequently passed all453 of the same named
+The exact admitted port8966 run subsequently passed all 453 of the same named
 native online controls with zero overlays. Its full6,456,634-byte receipt and
 screenshot are retained losslessly under `combined-journey/evidence/admitted-8966-passed`.
 Both hosts had no errors/warnings; the created renderer released its owned
@@ -3398,14 +3398,27 @@ resources and the reopened lobby created no renderer. Published Browse and the
 separate stopped-origin offline phase are not implied by that online pass.
 
 That separate offline phase subsequently passed on the same native admitted entry.
-Public preparation completed; the dedicated8966 server stopped and curl refused
-before and after native reload. Library retained edited revisiond44a3936bff0 and
-rollback50ffbb0e5da7; Creator showed course02/Acro X=-9.9m, Y=5m, Z=15m. Unchanged
-course01 loaded, deliberately armed at zero throttle and paused at33.9s. Native
+Public preparation completed; the dedicated 8966 server stopped and curl refused
+before and after native reload. Library retained edited revision d44a3936bff0 and
+rollback 50ffbb0e5da7; Creator showed course 02/Acro X=-9.9m, Y=5m, Z=15m. Unchanged
+course 01 loaded, deliberately armed at zero throttle and paused at 33.9s. Native
 text/screenshots and exact server stop/refusal/restart metadata are retained under
 `combined-journey/evidence/offline-8966-passed`. This qualifies own-origin outage,
 not browser-wide offline, eviction or a repeated private database audit. The
-same server root was restored with HTTP200. Longer-session evidence is still pending.
+same server root was restored with HTTP 200.
+
+The separate [native session audit](../authoring/fpv-worlds/longer-session/README.md)
+then passed 306 controls on the same exact 0b54 admission: eight 20-second windows
+across authored industrial Yard and natural Reservoir, 167.196s total run. The
+three repeated Ready resource counts per scene stayed identical, and both owners
+released all registered resources. Mean host callback CPU ranged 1.442–1.850ms;
+the recurring first stick-width read represented 25.0–29.5% of that nested time.
+The maximum observed native RAF gap was 34.3ms. Supported LoAF/longtask observers
+saw no qualifying entries starting inside these windows; that does not establish
+absence of jank. The complete receipt, exact observer and audit retain overhead,
+viewport, profile and shared-browser limits. This is a bounded single-runtime
+observation, not a before/after speedup, hardware-FPS, GPU-time or thermal-endurance
+claim. No optimization is included in this manual-evidence increment.
 
 The active parallel-plan checkpoint and engineering priorities were reconciled,
 including merged ghost/language/coating/HUD/Creator status. Reservoir's bounded
@@ -3415,7 +3428,7 @@ verification remains pending. An explicit owner-authorized temporary main-merge
 hold applies until Character/P1 #1083 completes protected merge and Pages delivery
 and the coordinator lifts the hold. #1094 is not enrolled in auto-merge; its checks
 and prepared data remain intact. Development and qualification continue.
-Festival r5 eight-course source has616 checks /16 ordinary completion and replay
-proofs, plus311 historical admitted-browser checks /16 Watch replays; final native
+Festival r5 eight-course source has616 checks / 16 ordinary completion and replay
+proofs, plus 311 historical admitted-browser checks / 16 Watch replays; final native
 offline qualification and publication remain pending. Continue
 Festival, Harbor, Canals and then D6, retaining device/novice limits.

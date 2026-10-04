@@ -4,11 +4,14 @@ Status: executed bounded qualification, 4 October 2026 UTC. Source8965 and exact
 admitted8966 each passed453 native online controls; the admitted native page also
 passed a separately observed stopped-origin reload/edit/flight check. Final source
 `0b54fd0fdf8fe06dc900024a8b59713340b09bb3` passed full validation and one fresh
-all-three/two-build admission; all95 inputs match merged main21826. Complete
+all-three/two-build admission; all 95 inputs match merged main21826. Complete
 receipts, manifests and the preceding failed manual fixtures are retained in the
 [manual qualification directory](../authoring/fpv-worlds/combined-journey/README.md).
 The actual journey used explicit file imports, so published Browse/download remains
-open; longer-session performance is also separate. The design below records the
+open. The same admitted runtime separately passed 306 checks across eight native
+20-second authored Yard/Reservoir windows; the [bounded session audit](../authoring/fpv-worlds/longer-session/README.md)
+retains measurements and resource plateaus without a hardware-FPS or speedup claim.
+The design below records the
 intended boundaries, not additional results. This is the bounded integrated-reliability
 gate in the [parallel delivery plan](fpv-parallel-delivery-2026-10-04.md), not a new allocation.
 
