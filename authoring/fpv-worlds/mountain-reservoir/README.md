@@ -1,5 +1,22 @@
 # Mountain Reservoir — optional eight-course world
 
+Revision [r11](distribution/r11/README.md) gives grass and gravel distinct original
+128px surface maps at measured world scale. It retains r9 seam closure and every
+route/collider/geometry attribute. The bounded material pass has accepted actual
+views and disposal, 148 asset checks and 575 fresh ordinary-flight/replay checks
+for sixteen exact-pack demonstrations. Rejected r10 artwork and proofs remain
+recorded. See [material scope and evidence](MATERIAL-SCALE-PLAN.md). Generic
+terrace composition, vegetation rooting and maintenance identity still need work
+before the representative Reservoir art standard is complete.
+
+Revision [r9](distribution/r9/README.md) closes the terrace/ridge sky seams with
+34 decorative boundary triangles. Its eight routes and collision remain exact
+apart from the explicit revision. It has sixteen fresh exact-pack demonstrations,
+315 asset checks, 575 ordinary-flight/replay checks and accepted fixed-camera
+old/new renderer views. See [the focused repair](TERRAIN-STITCHING.md). This does
+not establish the broader representative-world art standard. Published r8 and
+all its recordings and historical acceptance below remain intact.
+
 Revision `r8` provides eight bilingual courses over one original shared land-side
 scene, sixteen exact-pack ordinary-control completion proofs, actual imported
 player/editor qualification and a successful stopped-server offline journey.

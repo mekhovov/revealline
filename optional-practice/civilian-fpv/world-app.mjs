@@ -4569,7 +4569,7 @@ export function mountWorldApp({
       lessonReturn = null;
       paintLessonReturn();
     }
-    playShell?.enterPlay();
+    if (!options.preserveFocus) playShell?.enterPlay();
     if (playShell) $('flight-dialog').prepend(playShell.elements.header);
     const requestedMode =
       options.mode ??
