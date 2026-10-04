@@ -1,0 +1,71 @@
+{
+  "format": "FPVReservoirLandRouteDraft.v1",
+  "status": "transport-validated; flight/art qualification pending",
+  "courses": [
+    {
+      "id": "mountain-reservoir-01",
+      "revision": "r4",
+      "steps": {
+        "self-level": 4,
+        "acro": 4
+      }
+    },
+    {
+      "id": "mountain-reservoir-02",
+      "revision": "r4",
+      "steps": {
+        "self-level": 7,
+        "acro": 7
+      }
+    },
+    {
+      "id": "mountain-reservoir-05",
+      "revision": "r4",
+      "steps": {
+        "self-level": 8,
+        "acro": 8
+      }
+    },
+    {
+      "id": "mountain-reservoir-06",
+      "revision": "r4",
+      "steps": {
+        "self-level": 6,
+        "acro": 7
+      }
+    },
+    {
+      "id": "mountain-reservoir-08",
+      "revision": "r4",
+      "steps": {
+        "self-level": 5,
+        "acro": 5
+      }
+    }
+  ],
+  "worldCount": 1,
+  "layoutCount": 5,
+  "model": {
+    "bytes": 1131784,
+    "sha256": "dfd964aedd7051450b4440cca590e1f17606282ffdc1607eef0477066e591ac1",
+    "exactAcceptedR4": true
+  },
+  "pack": {
+    "bytes": 1215404,
+    "sha256": "6b57cca77c6c26d31b7e6c91c5d77ec702854aca07408b21be46af7c3f016789",
+    "identity": "fpv-pack:6b57cca77c6c26d31b7e6c91c5d77ec702854aca07408b21be46af7c3f016789"
+  },
+  "zip": {
+    "bytes": 1215465,
+    "sha256": "57f6af4813b5402c76e90b99a341940faa5b1bb46d479949cdea2c18c2bc9c8e"
+  },
+  "limitsUnchanged": true,
+  "runtimeChanges": 0,
+  "geometryChanges": 0,
+  "collisionChanges": 0,
+  "limitations": [
+    "Only five courses authored; no final eight-course delivery or final sixteen proofs.",
+    "First-course r4 proofs remain historical and are not rebound to this new pack.",
+    "Shared bounds remain land-side; absent intake/spillway/island require a later coherent world revision."
+  ]
+}
