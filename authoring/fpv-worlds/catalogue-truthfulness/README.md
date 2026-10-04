@@ -18,8 +18,11 @@ needs its own backward-compatible contract and pack/proof identity review.
 The manual `qualify.mjs` extracts the actual host functions and filter predicate, exercises
 validated course variants, checks every built-in entry in both languages and modes, and verifies
 the two original pack round trips. Both source/data runs passed 284 checks. Only one of the 95 original
-admission inputs changes: `world-app.mjs`, +620 bytes. The projected source total is 16,742,258
-bytes with 34,958 bytes remaining. This is not a fresh admission or a native-browser result.
+admission inputs changes: `world-app.mjs`, +620 bytes. Final admission `add835c7b` confirms
+16,742,258 source bytes with 34,958 bytes remaining and 102 runtime members. Full Node22
+validation, 12 existing World UI checks and two identical builds of all three optional packages
+passed. The initial UI check could not locate the pinned authoring dependency; reusing the
+existing installed `fake-indexeddb` 6.2.5 resolved that environment failure without source changes.
 
 The first native run passed 364 controls before an incorrect fixture status-text wait timed out;
 the real example had completed. The corrected native observer passed 423 controls and reproduced
@@ -27,6 +30,15 @@ a separate stale-label defect after public Acro replay returned to Missions. Bot
 retained. The focused repair refreshes the catalogue on explicit Missions access, and the next
 immutable source fixture 8976 passed 424 checks and 14 samples, including the correct
 selected-mode label before any filter repaint. Both native owners recorded no warnings or errors.
-The final source-bound admission and exact admitted native fixture remain pending. The
-qualified evidence PR #1096 remains separate, and the human-authorized P1 main-merge hold remains
-in force; this work does not lift that hold.
+The exact admitted fixture 8977 separately passed all 424 checks and 14 samples with zero
+runtime overlays. Ordered check names/results, catalogue samples and the immediate-mode
+observation match the source run exactly; both owners recorded no warnings or errors. Each run
+imports the real packs and the separate Reservoir proof archive through native controls,
+checks selected-mode/language filters and unchanged built-ins, pauses actual Watch playback,
+then verifies stored identities, native reopen and disposal. These are not published Browse,
+whole replay completion, uninstrumented entry, offline or performance claims.
+
+The lossless source/admitted receipts, both earlier observations, admission manifests and
+validation logs are under `evidence/`. The qualified evidence PR #1096 remains separate. This
+focused change is held in Draft under the human-authorized P1 main-merge hold; no hold lift or
+automatic merge is requested.

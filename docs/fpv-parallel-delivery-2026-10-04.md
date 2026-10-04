@@ -29,11 +29,12 @@ revision. Eight 20-second Yard/Reservoir windows passed 306 controls, retained
 stable same-course resource counts and released registered owners. These bounded
 results and earlier failures are preserved in [qualified evidence PR #1096](https://github.com/mekhovov/revealline/pull/1096);
 they establish no universal FPS, device-wide outage, eviction or permanent-storage guarantee.
-The next measured performance work is the separate stick-width observation candidate.
+The separate stick-width observation candidate passed its bounded native geometry/timing
+and admission checks and is preserved in Draft PR #1099 under the same publication hold.
 
 Reservoir r16 is published through #1090 after the coating runtime #1088 and
 bounded art/proof/import qualification. Its first compatible Library row #1094,
-combined evidence #1096 and qualified Festival r5 #1097 are procedurally Draft
+combined evidence #1096, qualified Festival r5 #1097 and stick observation #1099 are procedurally Draft
 under the human-authorized temporary main-merge hold for Character P1 #1083.
 Draft records the hold, not unfinished qualification; restore Ready only after
 the explicit hold lift. The production catalogue remains empty until #1094 is
@@ -41,11 +42,13 @@ published and actual Browse/download is verified. Proof archives remain separate
 
 Festival has 616 ordinary/replay checks, 311 historical admitted-browser controls,
 current native subject/guide observations and stopped-origin launch/pause evidence;
-the interrupted attempt remains retained. Harbor is now the next bounded scene
-milestone, before its eight-route expansion; initial water/barge/deck views require
-revision. Imported-card truthfulness is a separate host-only correction in native
-qualification: no invented difficulty/duration, and only unambiguous selected-mode
-tracking inferred as Follow/Observe. Frozen packs/proofs stay unchanged. Preserve
+the interrupted attempt remains retained. Harbor's accepted r2 scene is fixed while
+eight authored routes enter static/ordinary-proof qualification. A fine-step actor
+support stall is under diagnosis; no native import/offline or release claim follows.
+Imported-card truthfulness is a separate qualified host-only correction with 424 native
+source checks, fresh all-three/two-build admission and 424 exact admitted native checks.
+No invented difficulty/duration remains, and only unambiguous selected-mode
+tracking is inferred as Follow/Observe. Frozen packs/proofs stay unchanged. Preserve
 Reservoir → Festival → Harbor → Canals → D6 and all physical-device/novice limits.
 
 ## Starting position
@@ -110,8 +113,8 @@ Performance, Library delivery and integrated reliability own the main engineerin
 allocation. Small reproduced menu/input repairs belong to integrated reliability;
 do not open separate broad redesigns. Art/content works on Reservoir in parallel,
 not on additional unrelated worlds. Reservoir's bounded standard is accepted and
-Festival's qualified r5 is in procedural Draft publication. Harbor's initial scene
-and one-course checkpoint comes next, then its remaining routes and Canals. Keep
+Festival's qualified r5 is in procedural Draft publication. Harbor's accepted r2 scene
+now has eight authored routes in static/ordinary-proof qualification, then Canals. Keep
 each world's proofs, import/offline checks and protected publication explicit;
 D6 follows those deliverables, with functional verification throughout.
 
@@ -232,9 +235,10 @@ content work. Record browser/GPU/device identity before any performance claim.
 Retain Core 72 MiB / Company 80 MiB and the existing optional-package file/source ceilings.
 Final combined admission `0b54fd0fd` is byte-exact across all 95 original inputs to
 main 21826: 16,741,638 source bytes, 35,578 bytes remaining,102/104 runtime members.
-The imported-card draft adds 620 host bytes (34,958 remaining), before any separate
-stick-width candidate integration. These draft figures are a source inventory,
-not a fresh package admission. All ceilings remain unchanged.
+The imported-card admission `add835c7b` adds 620 host bytes (34,958 remaining), before
+any separate stick-width candidate integration. It retains 95 original inputs and
+102 runtime members; all three packages passed two identical builds. All ceilings
+remain unchanged.
 Retain the bounded receipts and admit actual final integration; use existing UI,
 small data manifests and reviewed lossless preparation before proposing a limit
 change. The core budget does not waive the separate World Studio ceiling.
