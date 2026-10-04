@@ -47,6 +47,15 @@ loads matching manifests within a bounded deadline and offers visible retry
 without deleting installations or progress. Its authored initialization and
 offline regressions are included in the required local-UX CI phase.
 
+The final integration also retains main's pre-ready native render: a course
+publishes scene readiness only after a valid frame, with context-loss, disposal
+and generation checks intact. Artwork cancellation now uses one native abort
+listener per signal while preserving independent lease release and late-codec
+accounting. This fixes the real Node 20 listener-fan-out warning without raising
+limits or suppressing diagnostics. The complete continuous-host suite passes
+14 cases on Node 20.19.5; the actor-pool regressions pass 12 cases on both Node
+20 and Node 22, and the combined Node 22 run passes 26 cases.
+
 The integration must pass the strict current-base `release-ready` check,
 industrial feature phases, Appearance and Company checks, mandatory static and
 content validation, source identity and committed-source builds. A scheduled
