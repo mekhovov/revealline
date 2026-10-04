@@ -1,0 +1,39 @@
+<!doctype html><meta charset="utf-8" /><title>Pre-arm appearance focus qualification</title>
+<style>
+  body {
+    margin: 0;
+    background: #101b20;
+    color: #eee;
+    font: 14px system-ui;
+  }
+  header {
+    padding: 8px;
+    display: flex;
+    gap: 12px;
+    align-items: center;
+  }
+  button {
+    font: inherit;
+    padding: 8px;
+  }
+  iframe {
+    display: block;
+    border: 0;
+    width: 100%;
+    height: calc(100vh - 74px);
+  }
+  textarea {
+    width: 98%;
+    height: 240px;
+  }
+  body[data-running='true'] textarea {
+    display: none;
+  }
+</style>
+<header>
+  <button id="run">Run focus checks</button><button id="continue" hidden>Finish focus checks</button
+  ><span id="status">One visible native player; no flight starts before the checks.</span>
+</header>
+<iframe id="sim" title="Frozen native FPV player" src="about:blank"></iframe>
+<label>Complete receipt<textarea id="receipt" readonly></textarea></label>
+<script type="module" src="browser-harness.mjs"></script>
