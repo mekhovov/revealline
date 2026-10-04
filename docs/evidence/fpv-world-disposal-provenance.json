@@ -149,5 +149,21 @@
     "v4 passes83 source checks on its explicit pre-Solar freeze. v5 uses final d9ad admitted package plus late-error guard and passes94 checks, zero source overlays."
   ],
   "finalAdmittedSource": "d9ad2561ee1d7685ef97961478b7de30278c1e48",
-  "finalRuntimeSha256": "6bd30bcd11caa83ccdb36d9bb7c826a9735b5d4549bb49008494921a6a0ba4cc"
+  "finalRuntimeSha256": "6bd30bcd11caa83ccdb36d9bb7c826a9735b5d4549bb49008494921a6a0ba4cc",
+  "normalPlayerObservation": {
+    "source": "d9ad2561ee1d7685ef97961478b7de30278c1e48",
+    "files": [
+      {
+        "path": "fpv-world-disposal-normal-player.json",
+        "bytes": 583,
+        "sha256": "da8d7a5ae1aa3da21539db289d7f374f6fdfab6fe682fe9803d803c5e95ea312"
+      },
+      {
+        "path": "fpv-world-disposal-normal-player.png",
+        "bytes": 60212,
+        "sha256": "7f4c451e3d6d3211efaca261c43fda9b677a14cd8b8924497a52449b2078baa6"
+      }
+    ],
+    "scope": "Fresh-tab Clearing check-in render,Arm0.2s,pause;prior legacy briefing browser-transport failure retained with unknown cause"
+  }
 }
