@@ -1,0 +1,284 @@
+<!doctype html>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Mountain Reservoir · scene review</title>
+<style>
+  body {
+    background: #142128;
+    color: #e6ecea;
+    font: 16px system-ui;
+    margin: 20px;
+  }
+  h1 {
+    font-size: 24px;
+  }
+  p {
+    max-width: 95ch;
+  }
+  label {
+    margin-right: 18px;
+  }
+  select,
+  button {
+    font: inherit;
+    padding: 7px;
+  }
+  canvas {
+    display: block;
+    width: 1120px;
+    max-width: 100%;
+    height: 630px;
+    background: #263d48;
+    margin: 16px 0;
+  }
+  textarea {
+    width: 100%;
+    height: 120px;
+  }
+  #status {
+    font-weight: 600;
+  }
+  small {
+    color: #b3c5c1;
+  }
+</style>
+<h1>Mountain Reservoir · scene review</h1>
+<p>
+  Original shared scene and authored route candidates for review. No final sixteen-proof release is
+  claimed. The yellow inspection rail marks the land-side boundary at x=6m; the visible reservoir
+  starts at x=8m, outside every flight area. Water has no new physics.
+</p>
+<label
+  >View
+  <select id="pose">
+    <option value="shore">Shore approach · 5m height</option>
+    <option value="hut">Closed hut · 4m distance</option>
+    <option value="rock">Terrace material · 5m distance</option>
+    <option value="dam">Dam approach · 15m distance</option>
+    <option value="intake">Intake-control gallery · close view</option>
+    <option value="spillway">Dry spillway · side composition</option>
+    <option value="descent">Dry spillway · upper approach</option>
+    <option value="wide">Reservoir composition</option>
+    <option value="overview">Course overview</option>
+  </select></label
+>
+<label
+  >Course
+  <select id="course"></select
+></label>
+<label
+  >Mode
+  <select id="mode">
+    <option value="self-level">Self-level</option>
+    <option value="acro">Acro</option>
+  </select></label
+>
+<label
+  >Quality
+  <select id="quality">
+    <option>low</option>
+    <option selected>balanced</option>
+    <option>high</option>
+  </select></label
+>
+<label
+  >Appearance
+  <select id="appearance">
+    <option value="authored">Authored</option>
+    <option value="pixel">Pixel</option>
+    <option value="industrial-workshop">Shared industrial</option>
+  </select></label
+>
+<button id="render" disabled>Render selected view</button>
+<p id="status" role="status">Checking immutable inputs…</p>
+<canvas id="view"></canvas>
+<small
+  >Static actual renderer observations only. No simulated completion, imported-example lookup,
+  full-world artistic acceptance, offline or hardware claim.</small
+>
+<textarea id="receipt" readonly aria-label="Static visual observation receipt"></textarea>
+<script type="module">
+  const $ = (id) => document.getElementById(id),
+    base = './player/optional-practice/civilian-fpv/';
+  const errors = [],
+    observations = [];
+  addEventListener('error', (e) => errors.push(e.message));
+  addEventListener('unhandledrejection', (e) => errors.push(String(e.reason)));
+  const hash = async (bytes) =>
+    [...new Uint8Array(await crypto.subtle.digest('SHA-256', bytes))]
+      .map((v) => v.toString(16).padStart(2, '0'))
+      .join('');
+  const get = async (url) => {
+    const r = await fetch(url, { cache: 'no-store' });
+    if (!r.ok) throw Error('HTTP ' + r.status + ' ' + url);
+    return r.arrayBuffer();
+  };
+  let renderer, project, sceneBytes, manifest;
+  const poses = {
+    shore: [
+      [-24, 5, 26],
+      [14, 5, -20],
+    ],
+    hut: [
+      [-14, 2.5, -8],
+      [-22, 2.5, -15],
+    ],
+    rock: [
+      [-28, 3, -3],
+      [-35, 4, -5],
+    ],
+    dam: [
+      [-3, 7, -10],
+      [13, 8, -27],
+    ],
+    intake: [
+      [2, 7, -16],
+      [-1, 5, -24],
+    ],
+    spillway: [
+      [-18, 8, -3],
+      [-11, 7, -19],
+    ],
+    descent: [
+      [-11, 12.2, -29],
+      [-11, 1, -2],
+    ],
+    wide: [
+      [-39, 19, 35],
+      [14, 5, -18],
+    ],
+    overview: [
+      [-10, 12, 14],
+      [0, 3, -18],
+    ],
+  };
+  async function render() {
+    $('render').disabled = true;
+    try {
+      const c = structuredClone(project.courses.find((c) => c.id === $('course').value)),
+        appearance = $('appearance').value;
+      if (appearance === 'pixel') {
+        c.world.theme = 'pixel';
+        delete c.world.themeProfile;
+      }
+      renderer.setPresentation({
+        collectionId: appearance === 'pixel' ? 'authored' : appearance,
+        revision: 'r1',
+      });
+      renderer.setCourse(c, $('mode').value);
+      renderer.setQuality($('quality').value);
+      renderer.setDrone('racer');
+      await renderer.loadScene(sceneBytes);
+      if ((await renderer.prepare()) === false) throw Error('Shader preparation superseded');
+      const THREE = await import(base + 'vendor/three.module.js');
+      const [position, target] = poses[$('pose').value],
+        dx = target[0] - position[0],
+        dz = target[2] - position[2];
+      const rotation = new THREE.Quaternion().setFromEuler(
+        new THREE.Euler(
+          Math.atan2(target[1] - position[1], Math.hypot(dx, dz)),
+          -Math.atan2(dx, -dz),
+          0,
+          'YXZ',
+        ),
+      );
+      const state = {
+        position: Object.fromEntries(['x', 'y', 'z'].map((k, i) => [k, position[i] * 1000])),
+        orientation: rotation.toArray().map((v) => Math.round(v * 1e6)),
+        step: 0,
+        ticks: 0,
+        status: 'disarmed',
+        actors: [],
+        projectiles: [],
+        lastInput: { throttle: 0 },
+      };
+      renderer.draw(state, {
+        cameraMode: $('pose').value === 'overview' ? 'overview' : 'fpv',
+        cameraFov: 72,
+        cameraTilt: 0,
+      });
+      const canvas = $('view'),
+        gl = canvas.getContext('webgl2'),
+        rgba = new Uint8Array(gl.drawingBufferWidth * gl.drawingBufferHeight * 4);
+      gl.readPixels(
+        0,
+        0,
+        gl.drawingBufferWidth,
+        gl.drawingBufferHeight,
+        gl.RGBA,
+        gl.UNSIGNED_BYTE,
+        rgba,
+      );
+      const observation = {
+        pose: $('pose').value,
+        course: c.id,
+        mode: $('mode').value,
+        quality: $('quality').value,
+        appearance,
+        positionMetres: position,
+        targetMetres: target,
+        pixelSHA256: await hash(rgba),
+        resources: renderer.resources(),
+      };
+      observations.push(observation);
+      $('receipt').value = JSON.stringify(
+        {
+          format: 'FPVMountainReservoirStaticViews.v1',
+          fixture: await hash(new TextEncoder().encode(JSON.stringify(manifest))),
+          observations,
+          errors,
+        },
+        null,
+        2,
+      );
+      $('status').textContent =
+        'Rendered ' +
+        observation.pose +
+        ' / ' +
+        observation.quality +
+        ' / ' +
+        appearance +
+        '. Visual acceptance pending.';
+    } catch (error) {
+      errors.push(error.stack);
+      $('status').textContent = 'FAILED: ' + error.message;
+      throw error;
+    } finally {
+      $('render').disabled = false;
+    }
+  }
+  try {
+    manifest = JSON.parse(new TextDecoder().decode(await get('./fixture.json')));
+    for (const file of [
+      ...manifest.content,
+      ...manifest.admittedFiles.map((f) => ({ ...f, path: 'player/' + f.path })),
+    ]) {
+      const bytes = await get('./' + file.path);
+      if (bytes.byteLength !== file.bytes || (await hash(bytes)) !== file.sha256)
+        throw Error('Immutable input mismatch ' + file.path);
+    }
+    if ((await hash(await get('./index.html'))) !== manifest.harnessSHA256)
+      throw Error('Harness mismatch');
+    project = JSON.parse(new TextDecoder().decode(await get('./content/project.json')));
+    for (const course of project.courses) {
+      const option = document.createElement('option');
+      option.value = course.id;
+      option.textContent = course.locales.en.title;
+      $('course').append(option);
+    }
+    sceneBytes = await get('./content/scene.glb');
+    const { createFlightRenderer } = await import(base + 'world-assets.mjs');
+    renderer = createFlightRenderer({
+      canvas: $('view'),
+      window,
+      reducedMotion: true,
+      onContextLost: () => errors.push('WebGL context lost'),
+    });
+    if (!renderer.available) throw Error('Renderer unavailable');
+    $('render').onclick = render;
+    await render();
+  } catch (error) {
+    $('status').textContent = 'FAILED: ' + error.message;
+    errors.push(error.stack);
+  }
+</script>
