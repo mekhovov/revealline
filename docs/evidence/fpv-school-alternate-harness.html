@@ -37,7 +37,8 @@
     timestamps accelerate real recorded commands. This does not measure FPS, physical controls,
     player acceptance or offline availability. The scope is 12 early lessons in Acro and 16
     intermediate/advanced lessons in Self-level. Native iframe reload checks retained storage;
-    explicit host unmount is a separate lifecycle gate.
+    explicit host unmount is a separate lifecycle gate. Keep this tab visible and its player focused
+    while qualification runs; a pause or loss of focus fails without automatic resume.
   </p>
   <button id="run">Run 28 alternate School checks</button>
   <p id="status" role="status">Ready</p>
@@ -69,6 +70,8 @@
     async function execute() {
       const checks = [],
         phases = [],
+        playback = [],
+        focusEvents = [],
         errors = [],
         names = new Set(),
         started = performance.now();
@@ -80,7 +83,8 @@
         store,
         failed,
         baseline,
-        sequence = 0;
+        sequence = 0,
+        activePlayback = null;
       let prefix = 'fpv-school-alternates-' + Date.now() + ':';
       const memory = new Map([
         [
@@ -107,6 +111,20 @@
         setItem: (k, v) => memory.set(k, String(v)),
         removeItem: (k) => memory.delete(k),
       };
+      const observeFocus = (kind, owner) => {
+        if (focusEvents.length < 128)
+          focusEvents.push({
+            ms: Math.round(performance.now() - started),
+            kind,
+            owner,
+            visibility: document.visibilityState,
+            focused: document.hasFocus(),
+            frameVisibility: d?.visibilityState,
+            frameFocused: d?.hasFocus(),
+          });
+      };
+      const observeOuter = () => observeFocus('visibilitychange', 'outer');
+      document.addEventListener('visibilitychange', observeOuter);
       window.fixtureRegisterDB = (name) => {
         if (!name.startsWith('fpv-school-alternates-')) throw Error('Unexpected database name');
         names.add(name);
@@ -203,6 +221,10 @@
         );
         w = frame.contentWindow;
         d = w.document;
+        for (const kind of ['focus', 'blur'])
+          w.addEventListener(kind, () => observeFocus(kind, 'frame'));
+        d.addEventListener('visibilitychange', () => observeFocus('visibilitychange', 'frame'));
+        observeFocus('mounted', 'frame');
         app = w.fixtureApp;
         store = w.fixtureRecords;
         await bounded(app.ready, 'host ready');
@@ -280,19 +302,110 @@
         row.id = data.records.worldRecordIdentity(row);
         return row;
       }
-      async function playToEnd() {
+      async function playToEnd(row, sectionIndex = null) {
+        const playbackStart = performance.now();
+        activePlayback = {
+          id: row.course.id,
+          mode: row.proof.mode,
+          sectionIndex,
+          ticks: state()?.ticks ?? null,
+          totalTicks: row.proof.frames.length,
+          pulses: 0,
+          stalledPulses: 0,
+          maxPulseGapMs: 0,
+        };
+        const failPlayback = (reason) => {
+          const snapshot = app.snapshot();
+          activePlayback.failure = {
+            reason,
+            elapsedMs: Math.round(performance.now() - playbackStart),
+            visibility: document.visibilityState,
+            focused: document.hasFocus(),
+            frameVisibility: d.visibilityState,
+            frameFocused: d.hasFocus(),
+            message: d.getElementById('flight-status')?.textContent,
+            course: snapshot.course,
+            replay: snapshot.replay,
+            sectionReplay: snapshot.sectionReplay,
+            state: snapshot.state,
+          };
+          throw Error(reason + ': ' + JSON.stringify(activePlayback));
+        };
+        const requireFocus = () => {
+          if (
+            document.visibilityState !== 'visible' ||
+            !document.hasFocus() ||
+            d.visibilityState !== 'visible' ||
+            !d.hasFocus()
+          )
+            failPlayback('Playback requires visible focused ownership; no automatic resume');
+        };
+        requireFocus();
         await until(() => state() && !d.getElementById('world-arm').disabled, 'playback prepared');
         set('world-replay-rate', '1');
         d.getElementById('world-viewport').focus();
         await pulse(0);
+        requireFocus();
         if (state().status !== 'active') click(d.getElementById('world-arm'));
         await pulse(0);
+        if (state().status !== 'active')
+          failPlayback('Playback did not start through the actual Arm/Resume button');
         must(state().status === 'active', 'Playback resumes through actual Arm/Resume button');
-        for (let i = 0; i < 5000 && !app.snapshot().replay?.finished; i++) await pulse(200);
+        let previousPulse = performance.now(),
+          previousTick = state().ticks;
+        const maxPulses = Math.ceil(row.proof.frames.length / 10) + 30;
+        for (let i = 0; i < maxPulses && !app.snapshot().replay?.finished; i++) {
+          requireFocus();
+          if (state().status !== 'active') failPlayback('Unexpected production playback pause');
+          if (performance.now() - playbackStart > 120000)
+            failPlayback('Playback wall-clock bound exceeded');
+          await pulse(200);
+          const now = performance.now(),
+            snapshot = app.snapshot();
+          activePlayback.maxPulseGapMs = Math.max(
+            activePlayback.maxPulseGapMs,
+            now - previousPulse,
+          );
+          previousPulse = now;
+          activePlayback.pulses++;
+          activePlayback.ticks = snapshot.state.ticks;
+          if (!Number.isSafeInteger(snapshot.state.ticks) || snapshot.state.ticks < previousTick)
+            failPlayback('Playback ticks did not remain monotonic');
+          activePlayback.stalledPulses =
+            snapshot.state.ticks > previousTick ? 0 : activePlayback.stalledPulses + 1;
+          previousTick = snapshot.state.ticks;
+          requireFocus();
+          if (!snapshot.replay?.finished && snapshot.state.status !== 'active')
+            failPlayback('Unexpected production playback pause');
+          if (!snapshot.replay?.finished && activePlayback.stalledPulses >= 5)
+            failPlayback('Playback ticks stalled for five delivered frames');
+          if (i % 25 === 0 || snapshot.replay?.finished) {
+            $('status').textContent =
+              'Watch ' +
+              row.course.id +
+              ' / ' +
+              row.proof.mode +
+              (sectionIndex === null ? '' : ' / section ' + sectionIndex) +
+              ' · ticks ' +
+              activePlayback.ticks +
+              '/' +
+              row.proof.frames.length;
+            $('receipt').value = JSON.stringify(
+              { status: 'running', checks, phases, playback, activePlayback, focusEvents },
+              null,
+              2,
+            );
+          }
+        }
+        if (!app.snapshot().replay?.finished) failPlayback('Playback pulse bound exceeded');
         await until(
           () => app.snapshot().replay?.finished && !d.getElementById('result-panel').hidden,
           'playback finished',
+          5000,
         );
+        activePlayback.elapsedMs = Math.round(performance.now() - playbackStart);
+        playback.push(plain(activePlayback));
+        activePlayback = null;
       }
       async function cleanup() {
         if (app) {
@@ -599,7 +712,7 @@
             () => app.snapshot().course === id && app.snapshot().replay?.kind === 'demonstration',
             'School demonstration ' + pairKey(row),
           );
-          await playToEnd();
+          await playToEnd(row);
           must(
             w.fixtureWorldStateIdentity(state()) === row.proof.finalStateIdentity &&
               state().status === 'complete' &&
@@ -655,7 +768,7 @@
             () => app.snapshot().sectionReplay?.index === index,
             'section identity ' + id,
           );
-          await playToEnd();
+          await playToEnd(row, index);
           must(
             app.snapshot().sectionReplay.sectionComplete && app.snapshot().replay.mode === mode,
             id + ':' + mode + ' exact recorded section completes',
@@ -726,6 +839,7 @@
       } catch (error) {
         failed = String(error.stack ?? error);
       } finally {
+        document.removeEventListener('visibilitychange', observeOuter);
         try {
           await cleanup();
         } catch (error) {
@@ -750,6 +864,9 @@
         total: checks.length,
         checks,
         phases,
+        playback,
+        activePlayback,
+        focusEvents,
         errors,
         failure: failed ?? null,
         offline: 'Not measured: reload uses live HTTP; only IndexedDB persistence was checked.',
