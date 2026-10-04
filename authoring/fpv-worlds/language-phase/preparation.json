@@ -1,0 +1,35 @@
+{
+  "format": "FPVLanguagePhasePreparation.v1",
+  "sourceRevision": "40ef6750cd876f6d06a71c559905c655dec9cfca",
+  "baseline": "8e5ad71e9b791b7c16bae1cb308026ed3e18d5c2",
+  "status": "Prepared for root native browser; not executed by preparer",
+  "files": [
+    {
+      "path": "prepare.mjs",
+      "bytes": 6024,
+      "sha256": "80117996873fa4949bb0c99dac8392ae1e8add1cc87401a284f1f0d7f3c218a1"
+    },
+    {
+      "path": "host.mjs",
+      "bytes": 2947,
+      "sha256": "5ce0375587a36d04521966bba1a225e3b3b23b357aaeabfbe5d9aafa95bcd147"
+    },
+    {
+      "path": "run.mjs",
+      "bytes": 15811,
+      "sha256": "ac827e9adee876943c8924c30f34edb7a1987a9006b55cc599918d4bb5c0b61d"
+    },
+    {
+      "path": "diagnostic.rlpack",
+      "bytes": 2803,
+      "sha256": "f50172e5d8e9e0666f6a07f91e5f3ede3c37490c570adbb845f265a21f963388"
+    },
+    {
+      "path": "source-r1-fixture.json.gz",
+      "rawBytes": 95218,
+      "rawSha256": "63073d611112a79dcd9a3e098bec18b8873cf46bedecfecc38d7e06f94971a20",
+      "bytes": 9300,
+      "sha256": "c56bc19fb4e5737ae165a7cbf40ff36058450e8db16710c30910df5202fd3221"
+    }
+  ]
+}
