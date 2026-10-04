@@ -1,31 +1,27 @@
-import fs from "node:fs/promises";
-import path from "node:path";
-import vm from "node:vm";
-import { createRequire } from "node:module";
-import { pathToFileURL } from "node:url";
-import { execFileSync } from "node:child_process";
-import { createHash } from "node:crypto";
+import fs from 'node:fs/promises';
+import path from 'node:path';
+import vm from 'node:vm';
+import { createRequire } from 'node:module';
+import { pathToFileURL } from 'node:url';
+import { execFileSync } from 'node:child_process';
+import { createHash } from 'node:crypto';
 const [root, baseline, candidate, recordedPath, out] = process.argv.slice(2);
 if (
   ![root, recordedPath, out].every((p) => p && path.isAbsolute(p)) ||
   ![baseline, candidate].every((x) => /^[a-f0-9]{40}$/.test(x))
 )
-  throw Error(
-    "ABS_ROOT BASELINE CANDIDATE ABS_RETAINED_NATIVE_RECEIPT ABS_NEW_RECEIPT",
-  );
-const require = createRequire(path.join(root, "package.json")),
-  { parse } = require("acorn"),
-  sha = (b) => createHash("sha256").update(b).digest("hex");
+  throw Error('ABS_ROOT BASELINE CANDIDATE ABS_RETAINED_NATIVE_RECEIPT ABS_NEW_RECEIPT');
+const require = createRequire(path.join(root, 'package.json')),
+  { parse } = require('acorn'),
+  sha = (b) => createHash('sha256').update(b).digest('hex');
 const nativeBytes = await fs.readFile(recordedPath),
   native = JSON.parse(nativeBytes),
   baseState = native.hosts[0].windows[0].before.state;
 const { STICK_LAYOUTS, neutralFlightInput } = await import(
-  pathToFileURL(
-    path.join(root, "optional-practice/civilian-fpv/radio-profile.mjs"),
-  )
+  pathToFileURL(path.join(root, 'optional-practice/civilian-fpv/radio-profile.mjs'))
 );
 const receipt = {
-  format: "FPVHUDExactSourceFunctionParity.v1",
+  format: 'FPVHUDExactSourceFunctionParity.v1',
   baseline,
   candidate,
   source: {},
@@ -35,10 +31,10 @@ const receipt = {
   },
   checks: [],
   limitations: [
-    "Bounded manual comparison of exact committed rendering functions in an isolated Node VM. No permanent unit suite and no mutation of any live flight, proof or model.",
-    "The retained native state is a display seed; objective flags, criteria and radio preview values are explicit synthetic display-only branches. They are not represented as verified or reachable flight proofs.",
-    "DOM/size adapters compare resulting text, attributes, flags, transforms and read order. Native geometry/source switching is qualified separately by the browser fixture; this is not physical radio/controller/mobile acceptance.",
-    "Unchanged collaborators are stubs; compared code includes exact paintInput/updateHUD/stepName/modePracticeNotice/radioHelp/gamepadHelp and candidate paintText. No manual reimplementation of the changed rendering logic.",
+    'Bounded manual comparison of exact committed rendering functions in an isolated Node VM. No permanent unit suite and no mutation of any live flight, proof or model.',
+    'The retained native state is a display seed; objective flags, criteria and radio preview values are explicit synthetic display-only branches. They are not represented as verified or reachable flight proofs.',
+    'DOM/size adapters compare resulting text, attributes, flags, transforms and read order. Native geometry/source switching is qualified separately by the browser fixture; this is not physical radio/controller/mobile acceptance.',
+    'Unchanged collaborators are stubs; compared code includes exact paintInput/updateHUD/stepName/modePracticeNotice/radioHelp/gamepadHelp and candidate paintText. No manual reimplementation of the changed rendering logic.',
   ],
 };
 function check(ok, name, detail) {
@@ -51,35 +47,25 @@ function check(ok, name, detail) {
 }
 function source(revision) {
   const value = execFileSync(
-    "git",
-    ["show", revision + ":optional-practice/civilian-fpv/world-app.mjs"],
+    'git',
+    ['show', revision + ':optional-practice/civilian-fpv/world-app.mjs'],
     {
       cwd: root,
-      env: { ...process.env, GIT_NO_LAZY_FETCH: "1" },
+      env: { ...process.env, GIT_NO_LAZY_FETCH: '1' },
       maxBuffer: 2e6,
     },
   ).toString();
-  const ast = parse(value, { ecmaVersion: "latest", sourceType: "module" }),
+  const ast = parse(value, { ecmaVersion: 'latest', sourceType: 'module' }),
     found = {};
   function visit(n) {
-    if (!n || typeof n !== "object") return;
-    if (n.type === "FunctionDeclaration" && n.id)
-      found[n.id.name] = value.slice(n.start, n.end);
-    if (
-      n.type === "VariableDeclarator" &&
-      n.id?.type === "Identifier" &&
-      n.init
-    )
-      found[n.id.name] =
-        "const " +
-        n.id.name +
-        " = " +
-        value.slice(n.init.start, n.init.end) +
-        ";";
+    if (!n || typeof n !== 'object') return;
+    if (n.type === 'FunctionDeclaration' && n.id) found[n.id.name] = value.slice(n.start, n.end);
+    if (n.type === 'VariableDeclarator' && n.id?.type === 'Identifier' && n.init)
+      found[n.id.name] = 'const ' + n.id.name + ' = ' + value.slice(n.init.start, n.init.end) + ';';
     for (const [k, v] of Object.entries(n))
-      if (k !== "start" && k !== "end") {
+      if (k !== 'start' && k !== 'end') {
         if (Array.isArray(v)) v.forEach(visit);
-        else if (v && typeof v === "object") visit(v);
+        else if (v && typeof v === 'object') visit(v);
       }
   }
   visit(ast);
@@ -97,12 +83,12 @@ function environment(locale, options = {}) {
     events = [];
   function node(id) {
     if (nodes.has(id)) return nodes.get(id);
-    let text = "";
+    let text = '';
     const classes = new Set(),
       dot = { style: {} };
     const n = {
       id,
-      value: "",
+      value: '',
       disabled: false,
       hidden: false,
       dataset: {},
@@ -130,10 +116,10 @@ function environment(locale, options = {}) {
       set textContent(v) {
         this.writes++;
         text = String(v);
-        events.push("write:" + id);
+        events.push('write:' + id);
       },
       get clientWidth() {
-        events.push("read:" + id);
+        events.push('read:' + id);
         return options.width ?? 78;
       },
       dot,
@@ -142,26 +128,25 @@ function environment(locale, options = {}) {
     return n;
   }
   for (const [id, value] of Object.entries({
-    "flight-mode": "self-level",
-    "flight-source": "keyboard",
-    "flight-stick-display": "expanded",
-    "sim-motion": "full",
-    "flight-keyboard-preset": "two-stick",
-    "flight-drone-guide": "off",
-    "flight-guide-scale": "1",
+    'flight-mode': 'self-level',
+    'flight-source': 'keyboard',
+    'flight-stick-display': 'expanded',
+    'sim-motion': 'full',
+    'flight-keyboard-preset': 'two-stick',
+    'flight-drone-guide': 'off',
+    'flight-guide-scale': '1',
   }))
     node(id).value = value;
-  node("flight-title").textContent = "Native authored title";
-  node("flight-menu-brief").textContent = "Native authored brief";
+  node('flight-title').textContent = 'Native authored title';
+  node('flight-menu-brief').textContent = 'Native authored brief';
   events.length = 0;
   const controls = { roll: 0.25, pitch: -0.5, yaw: 0.75, throttle: 0.65 },
     logs = {};
   const env = {
     $: node,
     locale,
-    txt: (a, b) => (locale === "uk" ? b : a),
-    terminal: (s) =>
-      ["complete", "expired", "failed", "destroyed"].includes(s.status),
+    txt: (a, b) => (locale === 'uk' ? b : a),
+    terminal: (s) => ['complete', 'expired', 'failed', 'destroyed'].includes(s.status),
     playShell: {
       update(p) {
         logs.shell = copy(p);
@@ -176,7 +161,7 @@ function environment(locale, options = {}) {
     demonstrationFor: () => true,
     checkpointSession: null,
     replayProof: null,
-    replayKind: "recording",
+    replayKind: 'recording',
     finished: false,
     modePractice: false,
     playingPlaylist: null,
@@ -184,7 +169,7 @@ function environment(locale, options = {}) {
     STICK_LAYOUTS,
     neutralFlightInput,
     flightToken: 1,
-    stickTraceLayout: "",
+    stickTraceLayout: '',
     stickTraces: [
       {
         reset() {},
@@ -204,7 +189,7 @@ function environment(locale, options = {}) {
         controls: options.unavailable ? null : controls,
         stickMode: options.stickMode ?? 2,
       }),
-      status: () => ({ reason: "ready", pickup: null }),
+      status: () => ({ reason: 'ready', pickup: null }),
     },
     gamepad: { preview: () => ({ controls }) },
     input: { sample: () => controls },
@@ -217,9 +202,8 @@ function environment(locale, options = {}) {
       logs.drone = { controls: copy(c), ...o };
     },
     paintCoach() {},
-    keyboardFlightHelp: (preset, lang, o) =>
-      JSON.stringify({ preset, lang, ...o }),
-    keyboardFlightPreset: () => ({ fire: "Space" }),
+    keyboardFlightHelp: (preset, lang, o) => JSON.stringify({ preset, lang, ...o }),
+    keyboardFlightPreset: () => ({ fire: 'Space' }),
   };
   function snapshot() {
     return {
@@ -246,51 +230,48 @@ function environment(locale, options = {}) {
 }
 function compile(source, env, entry) {
   const names =
-    entry === "updateHUD"
-      ? ["stepName", "modePracticeNotice", "paintText", "updateHUD"]
-      : ["radioHelp", "gamepadHelp", "paintText", "paintInput"];
+    entry === 'updateHUD'
+      ? ['stepName', 'modePracticeNotice', 'paintText', 'updateHUD']
+      : ['radioHelp', 'gamepadHelp', 'paintText', 'paintInput'];
   vm.runInNewContext(
-    names.map((n) => source[n] ?? "").join("\n") +
-      "\nglobalThis.run=" +
-      entry +
-      ";",
+    names.map((n) => source[n] ?? '').join('\n') + '\nglobalThis.run=' + entry + ';',
     env,
   );
   return env.run;
 }
-const hold = { type: "hold", ticks: 90 },
+const hold = { type: 'hold', ticks: 90 },
   track = {
-    type: "actor-track-v1",
+    type: 'actor-track-v1',
     ticks: 80,
     minDistance: 1000,
     maxDistance: 9000,
     minTargetTravel: 2000,
   },
-  hunt = { type: "hunt-contact-v1", targets: ["a", "b", "c"], ordered: true };
+  hunt = { type: 'hunt-contact-v1', targets: ['a', 'b', 'c'], ordered: true };
 const cases = [
-  { name: "hold", target: hold },
-  { name: "hold-progress", target: hold, state: { hold: 35 } },
-  ...["complete", "expired", "failed", "destroyed"].map((status) => ({
-    name: "terminal-" + status,
+  { name: 'hold', target: hold },
+  { name: 'hold-progress', target: hold, state: { hold: 35 } },
+  ...['complete', 'expired', 'failed', 'destroyed'].map((status) => ({
+    name: 'terminal-' + status,
     target: hold,
     state: { status },
   })),
   ...[
-    "acquire-subject",
-    "subject-unavailable",
-    "airborne-clearance",
-    "subject-range",
-    "relative-speed",
-    "airframe-tilt",
-    "nose-alignment",
-    "subject-occluded",
-    "subject-travel",
+    'acquire-subject',
+    'subject-unavailable',
+    'airborne-clearance',
+    'subject-range',
+    'relative-speed',
+    'airframe-tilt',
+    'nose-alignment',
+    'subject-occluded',
+    'subject-travel',
   ].map((reason) => ({
-    name: "track-" + reason,
+    name: 'track-' + reason,
     target: track,
     state: { hold: 25, actorTrack: { reason } },
   })),
-  ...["active", "failed", "complete"].flatMap((status) =>
+  ...['active', 'failed', 'complete'].flatMap((status) =>
     [false, true].flatMap((ordered) =>
       [false, true].map((failure) => ({
         name: `hunt-${status}-${ordered}-${failure}`,
@@ -298,49 +279,49 @@ const cases = [
         state: {
           status,
           hunt: {
-            caught: ["a"],
+            caught: ['a'],
             tail: [1, 2],
-            failure: failure ? "tail" : null,
+            failure: failure ? 'tail' : null,
           },
         },
       })),
     ),
   ),
   ...[false, true].flatMap((replay) =>
-    ["full-attempt", "section"].map((kind) => ({
+    ['full-attempt', 'section'].map((kind) => ({
       name: `checkpoint-${replay}-${kind}`,
       target: hold,
       state: { hold: 30 },
       scope: {
         checkpointSession: { kind, index: 2, startTick: 10 },
         replayProof: replay ? {} : null,
-        replayKind: "section",
+        replayKind: 'section',
       },
     })),
   ),
   {
-    name: "mode-practice",
+    name: 'mode-practice',
     target: track,
     scope: { modePractice: true },
-    state: { hold: 20, actorTrack: { reason: "subject-range" } },
+    state: { hold: 20, actorTrack: { reason: 'subject-range' } },
   },
   {
-    name: "mode-practice-checkpoint",
+    name: 'mode-practice-checkpoint',
     target: hold,
     scope: {
       modePractice: true,
-      checkpointSession: { kind: "section", index: 1, startTick: 10 },
+      checkpointSession: { kind: 'section', index: 1, startTick: 10 },
     },
     state: { hold: 20 },
   },
   {
-    name: "finished-replay-paused",
+    name: 'finished-replay-paused',
     target: hold,
-    state: { status: "paused" },
+    state: { status: 'paused' },
     scope: { replayProof: {}, finished: true },
   },
 ];
-for (const locale of ["en", "uk"])
+for (const locale of ['en', 'uk'])
   for (const c of cases) {
     const results = [];
     for (let i = 0; i < 2; i++) {
@@ -349,55 +330,48 @@ for (const locale of ["en", "uk"])
       e.env.current = {
         legacy: false,
         course: {
-          actors: [{ type: "humanoid", role: "hostile" }],
-          steps: { "self-level": [copy(c.target)], acro: [copy(c.target)] },
+          actors: [{ type: 'humanoid', role: 'hostile' }],
+          steps: { 'self-level': [copy(c.target)], acro: [copy(c.target)] },
         },
       };
       const state = {
         ...copy(baseState),
-        status: "active",
+        status: 'active',
         step: 0,
         total: 1,
         hold: 0,
         ticks: 50,
         ...copy(c.state ?? {}),
       };
-      const run = compile(sources[i], e.env, "updateHUD");
+      const run = compile(sources[i], e.env, 'updateHUD');
       run(state);
-      const writes = e.node("flight-objective").writes;
+      const writes = e.node('flight-objective').writes;
       run(state);
       if (i === 1)
         check(
-          e.node("flight-objective").writes === writes,
-          "candidate objective node retained " + locale + "/" + c.name,
+          e.node('flight-objective').writes === writes,
+          'candidate objective node retained ' + locale + '/' + c.name,
         );
       results.push(e.snapshot());
     }
     check(
       same(...results),
-      "exact objective/HUD parity " + locale + "/" + c.name,
-      results[1].nodes["flight-objective"].text,
+      'exact objective/HUD parity ' + locale + '/' + c.name,
+      results[1].nodes['flight-objective'].text,
     );
   }
-for (const locale of ["en", "uk"])
+for (const locale of ['en', 'uk'])
   for (const stickMode of [1, 2, 3, 4])
-    for (const sourceName of [
-      "radio",
-      "keyboard",
-      "touch",
-      "controller",
-      "recording",
-    ])
+    for (const sourceName of ['radio', 'keyboard', 'touch', 'controller', 'recording'])
       for (const width of [0, 46, 78, 106]) {
         const results = [];
         for (let i = 0; i < 2; i++) {
           const e = environment(locale, { stickMode, width });
-          e.node("flight-source").value =
-            sourceName === "recording" ? "keyboard" : sourceName;
-          e.env.replayProof = sourceName === "recording" ? {} : null;
+          e.node('flight-source').value = sourceName === 'recording' ? 'keyboard' : sourceName;
+          e.env.replayProof = sourceName === 'recording' ? {} : null;
           const state = {
             ...copy(baseState),
-            status: "paused",
+            status: 'paused',
             lastInput: {
               roll: 250,
               pitch: -500,
@@ -406,20 +380,20 @@ for (const locale of ["en", "uk"])
               actions: 0,
             },
           };
-          const run = compile(sources[i], e.env, "paintInput");
+          const run = compile(sources[i], e.env, 'paintInput');
           run(state);
           if (i === 1) {
-            const right = e.events.indexOf("read:world-right-stick"),
-              leftLabel = e.events.indexOf("write:world-left-label");
+            const right = e.events.indexOf('read:world-right-stick'),
+              leftLabel = e.events.indexOf('write:world-left-label');
             check(
               right >= 0 && right < leftLabel,
-              "both reads precede stick label " +
+              'both reads precede stick label ' +
                 locale +
-                "/" +
+                '/' +
                 stickMode +
-                "/" +
+                '/' +
                 sourceName +
-                "/" +
+                '/' +
                 width,
             );
           }
@@ -427,21 +401,21 @@ for (const locale of ["en", "uk"])
         }
         check(
           same(...results),
-          "exact stick mode/display parity " +
+          'exact stick mode/display parity ' +
             locale +
-            "/" +
+            '/' +
             stickMode +
-            "/" +
+            '/' +
             sourceName +
-            "/" +
+            '/' +
             width,
         );
       }
 receipt.completed = true;
 receipt.objectiveCases = cases.length * 2;
 receipt.inputCases = 2 * 4 * 5 * 4;
-await fs.writeFile(out, JSON.stringify(receipt, null, 2) + "\n", {
-  flag: "wx",
+await fs.writeFile(out, JSON.stringify(receipt, null, 2) + '\n', {
+  flag: 'wx',
 });
 console.log(
   JSON.stringify({
