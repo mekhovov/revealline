@@ -1,0 +1,17 @@
+{
+  "format": "FPVAdmittedPlayerLaunch.v1",
+  "candidate": "9efa36364425e2846002748bb29478b378d2b5cb",
+  "runtime": "10577460f906c2f68d611a6ec2b2fbc4b6b652242bc8e89503cb486fa708e680",
+  "url": "http://127.0.0.1:8834/dist/fpv-railworks-wagon-admitted-player-9efa36364/optional-practice/fpv-worlds/index.html",
+  "mode": "Self-level",
+  "controls": "Keyboard",
+  "appearance": "Authored appearance",
+  "quality": "Balanced",
+  "arm": "- link \"Skip to flight selection\":\n  - /url: \"#explore\"\n- dialog:\n  - banner:\n    - button \"Menu\"\n    - generic: FPV SIM · Worlds\n    - button \"Pause\"\n  - paragraph: Signals and platforms\n  - generic: +\n  - generic: 0.0 m · 0 m/s · 0.2 s · ♥ 100\n  - strong: 1/4 · Hold position\n  - status: Flight active.\n  - generic \"Yaw 0%, Throttle 0%\":\n  - generic \"Roll 0%, Pitch 0%\":\n  - complementary \"Drone response. vertical speed near zero. 0.0 m · +0.0 m/s vertical · 0.0 m/s drift\":\n    - button \"Hide drone response\": ×\n    - status: Motors off · Drone upright\n- status: Preparing flight…",
+  "pause": "- link \"Skip to flight selection\":\n  - /url: \"#explore\"\n- dialog:\n  - banner:\n    - button \"Menu\"\n    - generic: FPV SIM · Worlds\n    - button \"Resume\"\n  - paragraph: Signals and platforms\n  - button \"Arm / resume\"\n  - generic: +\n  - generic: 0.0 m · 0 m/s · 0.4 s · ♥ 100\n  - strong: 1/4 · Hold position\n  - status: Paused. Arm deliberately to continue.\n  - generic \"Yaw 0%, Throttle 0%\":\n  - generic \"Roll 0%, Pitch 0%\":\n  - complementary \"Drone response. Paused · actual pose retained vertical speed near zero. 0.0 m · +0.0 m/s vertical · 0.0 m/s drift\":\n    - button \"Hide drone response\": ×\n    - status: Motors off · Drone upright\n- status: Preparing flight…\n- dialog \"FPV / LINE\":\n  - heading \"FPV / LINE\" [level=1]:\n    - img \"FPV / LINE\"\n  - paragraph: FPV SIM · Worlds\n  - navigation \"Choose game mode\":\n    - navigation:\n      - link \"Solo\":\n        - /url: http://127.0.0.1:8834/dist/fpv-railworks-wagon-admitted-player-9efa36364/game/?lang=en\n      - link \"Versus\":\n        - /url: http://127.0.0.1:8834/dist/fpv-railworks-wagon-admitted-player-9efa36364/game/couch/?lang=en\n      - link \"Team\":\n        - /url: http://127.0.0.1:8834/dist/fpv-railworks-wagon-admitted-player-9efa36364/game/couch/relay-rescue.html?lang=en\n      - button \"FPV SIM\"\n      - link \"Snake\":\n        - /url: http://127.0.0.1:8834/dist/fpv-railworks-wagon-admitted-player-9efa36364/game/snake/play.html?lang=en\n  - paragraph: Signals and platforms\n  - navigation \"Main menu\":\n    - button \"Continue\" [active]\n    - button \"Select Mission\"\n    - button \"Settings\"\n    - button \"Full screen\"\n    - 'button \"Sound: off\"'\n  - button \"Retry\"\n  - paragraph: \"Tab/arrows move; Enter selects; Esc goes back. Controller: release, then press/release A to connect. Calibrated radio: hold yaw right for 0.7 s, then centre to connect; roll/pitch move, hold yaw right/left then centre to confirm/go back.\"",
+  "console": [],
+  "screenshot": "/tmp/fpv-railworks-admitted-player-9efa36364.png",
+  "limitations": [
+    "Complete admitted player render/arm/pause only; not physical hardware, sustained FPS or whole route acceptance."
+  ]
+}
