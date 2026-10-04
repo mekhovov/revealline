@@ -1,0 +1,44 @@
+{
+  "format": "FPVWorldLibraryDOMCompatibility.v1",
+  "parent": "7dfddab433b6e849e4bb959edabcb7645f217225",
+  "runtimeSource": "01fc6ad206f6ea7e6dd78921f799e2ed1a773915",
+  "combinedCheckSource": "216b36ce15df84f5148d9d16e92c5defdee0da09",
+  "changedRuntimeInputs": [],
+  "existingChecksPassed": 23,
+  "newTests": 0,
+  "artifacts": [
+    {
+      "file": "dom-helper-dependency-failure.tap.gz",
+      "rawBytes": 4086,
+      "rawSHA256": "2825eb7789edc3c7ce280fc6108261ffc7dc1cca5e52f8b837e159335f804eb7",
+      "gzipBytes": 1312,
+      "gzipSHA256": "012c963474a92e2fa2912b2f4612d7e28ac6d51cb67611cee9506cf175fcbf9c"
+    },
+    {
+      "file": "dom-helper-missing-sibling-failure.tap.gz",
+      "rawBytes": 19218,
+      "rawSHA256": "42804f8ac945d715e5b3772531607653671f58eedf511b5f29ddfe2a9d4d8484",
+      "gzipBytes": 1681,
+      "gzipSHA256": "fad5457bad6a3d1e4c17d2d742ecbc7ed1b6e357cc9884db5474cf411d4d82bf"
+    },
+    {
+      "file": "dom-helper-combined-existing-pass.tap.gz",
+      "rawBytes": 5566,
+      "rawSHA256": "4011b40e04f4ebb36a334d8ea27f8d141fcdbd4330e95698278db821338c454d",
+      "gzipBytes": 1409,
+      "gzipSHA256": "1a525e55c6d6605dad0330f2df668f31baf7fddc3e46be8b85f9ca32f51c61a1"
+    },
+    {
+      "file": "dom-helper-combined-worker-pass.tap.gz",
+      "rawBytes": 320,
+      "rawSHA256": "25e4a4800bf0897614ef658c777ebb8defd25039161e7323d4aad9a2811ab795",
+      "gzipBytes": 205,
+      "gzipSHA256": "51ce38652c8d8027f3c5ebd95d8dc27dfad03c597134f0f55d9dd2cb66fac0d9"
+    }
+  ],
+  "limits": [
+    "Combined checks include the independent focus change; not a standalone Library check pass.",
+    "Failed mount run was stopped after reported failures left open test resources; complete available output preserved.",
+    "Existing fake-indexeddb was reused through NODE_PATH; no dependency install or production fallback added."
+  ]
+}

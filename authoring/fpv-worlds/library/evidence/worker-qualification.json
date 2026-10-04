@@ -1,0 +1,45 @@
+{
+  "format": "FPVWorldLibraryQualification.v1",
+  "sourceRevision": "01fc6ad206f6ea7e6dd78921f799e2ed1a773915",
+  "node": "22.22.2",
+  "validation": {
+    "command": "npm --logs-max=0 run validate",
+    "exitCode": 0,
+    "warnings": "Seven inherited navigation warnings; see worker-full-validation.txt."
+  },
+  "existingChecks": {
+    "optionalInstallation": 6,
+    "genericWorkerOwnership": 1,
+    "passed": 7,
+    "failed": 0,
+    "scope": "Existing checks only; no new unit coverage"
+  },
+  "scopedLint": "passed",
+  "sourceBrowser": {
+    "passed": 208,
+    "failed": 0,
+    "provenance": "worker-source-r1-provenance.json"
+  },
+  "admission": {
+    "allPackages": [
+      "civilian-flight",
+      "civilian-fpv",
+      "fpv-worlds"
+    ],
+    "exitCode": 0,
+    "identicalBuilds": 2,
+    "committedInputs": true,
+    "zipMembers": true,
+    "inputScope": "worker-admission-scope.json"
+  },
+  "admittedBrowser": {
+    "passed": 208,
+    "failed": 0,
+    "receipt": "worker-package-r1-pass-provenance.json",
+    "sameFrozenRuntimeAndHarnessAsRetainedTimeouts": true
+  },
+  "nativeOfflineSmoke": {
+    "status": "passed",
+    "receipt": "worker-native-offline-smoke.json"
+  }
+}

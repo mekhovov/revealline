@@ -1,0 +1,12 @@
+{
+  "format": "FPVWorldLibraryDocumentationBridge.v1",
+  "checkedHead": "8293ce7b523461a00d64d3ffd32767c256e86abd",
+  "admittedSource": "01fc6ad206f6ea7e6dd78921f799e2ed1a773915",
+  "originalInputCount": 95,
+  "originalInputBytes": 16776298,
+  "reserveBytes": 918,
+  "allCommittedAndWorkingInputsExact": true,
+  "changesSinceAdmissionAreEvidenceOnly": true,
+  "sourceInventorySHA256": "edd7910a43b0260f16a1233079449d4cca6a57b8e9f42eff521428381c709c8a",
+  "newBuildRequired": false
+}
