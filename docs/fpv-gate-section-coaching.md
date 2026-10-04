@@ -79,6 +79,16 @@ status change must come from the unchanged `pauseFlight` path, with no error
 handler write. This diagnostic does not disable a pause or treat the prior failed
 run as passing evidence.
 
+The final source v6 actual-browser run passes **194/194 checks**, with no browser
+errors. The retained setter trace identifies the single Ready-to-Paused write as
+`pauseFlight → advanceFrame` under the unchanged execution-gap guard; the new
+Woodland route remains disarmed at zero ticks, with exact controls and no return
+context. No stale error-handler write occurs. The receipt is
+`fpv-gate-coaching-source-browser.json` (SHA-256
+`d80d799c162ffb4e33c8cac71a2e1a36592d66df137753f31a2ca960dd966d14`).
+All earlier failed receipts remain failures. Package admission and the matching
+packaged host run are still pending at this source checkpoint.
+
 The manual input preparer derives a slower ordinary Warehouse gate flight from
 the existing offline authoring pilot by changing only gate travel speed to
 350 mm/s. Both modes complete without contacts and with full health, and an
