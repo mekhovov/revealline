@@ -3319,8 +3319,12 @@ Coating #1088 then passed all current `a767ff494` checks and merged normally as
 `3bc7a923da2b7d50a6a675a91d5560005ad0f20d`. HUD #1089 received the reviewed label
 and ordinary expected-head updates for phase and coating, then passed every
 active check at exact `d97b7eb42` and merged normally as
-`ecf0bafc6541c6b57ae28a530763bab221555d4f`. No newer merge is inferred publicly live from
-the historical `5bd` entry. No force, bypass or release-policy change was used.
+`ecf0bafc6541c6b57ae28a530763bab221555d4f`. The later public deployment/build markers both identified `3bc7a923d`; the
+coordinator entered briefing, reached Ready, deliberately armed, observed active
+flight, then paused at 51.8 seconds with Continue available.
+[This bounded public evidence](../authoring/fpv-worlds/creator-install-reliability/evidence/public-3bc/manifest.json)
+qualifies normal entry for coating/language ancestry, not a public coating import,
+FPS, later HUD or Creator run. No force, bypass or release-policy change was used.
 
 The historical-main `5bd` Creator diagnostic preserved a genuine recording and
 interrupted flight while reproducing two postcommit defects. The focused 323-byte
@@ -3334,7 +3338,11 @@ all-three/two-build admission. Its exact zero-overlay admitted player passed
 294/294 native controls, with both hosts free of warnings/errors. The complete
 1,888,634-byte receipt is preserved losslessly under
 `authoring/fpv-worlds/creator-install-reliability/evidence/admitted-8961-passed`.
-This does not yet establish the later HUD/compatibility combined journey.
+The publication branch then normally merged HUD main `ecf0bafc6`. Its 95-input
+bridge proves only the independently qualified 121-byte HUD difference from
+admitted `fc325`; the 323-byte Creator function is byte-exact. Combined source
+reserve is 37,314 bytes, with fresh protected CI required. This source bridge
+does not establish the later HUD/compatibility combined browser journey.
 
 Remaining work is the finished first Library row and old-cache compatibility,
 Creator's protected publication, final combined reliability, and representative
