@@ -1,12 +1,13 @@
 # FPV continuous feature delivery
 
-Updated 2026-10-01. The owner requests a verified PR after each completed feature,
+Updated 2026-10-04. The owner requests a verified PR after each completed feature,
 with the next independent item developed while source gates and deployment run.
 Additional unit coverage belongs in the final phase. Build, browser, replay,
 import/export and publication verification remain part of every applicable item.
 
-**Current checkpoint:** see “Reviewed continuation — creator repair, Acro school,
-graphics and audio” at the end of this log. Earlier tables and heads are history.
+**Current checkpoint:** see “4 October — Current publication and Creator
+transaction boundary” at the end of this log and the active parallel delivery
+plan. Earlier tables and heads are history.
 
 ## Delivery queue
 
