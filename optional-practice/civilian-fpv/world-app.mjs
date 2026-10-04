@@ -4301,6 +4301,7 @@ export function mountWorldApp({
               },
         );
         if (flight.snapshot().ticks > before) {
+          renderer?.observePresentation?.(flight.snapshot());
           audio.update(flight.snapshot(), {
             active: !replayProof && flight.snapshot().status === 'active',
           });

@@ -68,7 +68,11 @@
         "game/test/field-kit-adoption.test.mjs",
         "game/test/presentation-host.test.mjs",
         "game/test/actor-atlas-runtime.test.mjs",
-        "game/test/actor-appearance-lease.test.mjs"
+        "game/test/actor-appearance-lease.test.mjs",
+        "game/test/industrial-soldier-roster.test.mjs",
+        "game/test/industrial-machinery.test.mjs",
+        "game/test/industrial-native-vehicles.test.mjs",
+        "game/test/industrial-environment-production.test.mjs"
       ]
     },
     {

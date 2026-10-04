@@ -3,6 +3,20 @@ import {
   INDUSTRIAL_TERRAIN_MATERIALS,
   industrialMaterialPixels,
 } from './industrial-materials.mjs';
+import {
+  INDUSTRIAL_MACHINERY_REVISION,
+  INDUSTRIAL_TEAM_HARDWARE_SLOTS,
+  drawMachinerySpecimen,
+  machineryHardwarePixels,
+  machineryPixels,
+} from './industrial-machinery.mjs';
+
+export function militaryVehicleRole(slot) {
+  if (slot === 'team.enemy.drifter') return 'utility-car';
+  if (/^team\.enemy\.hunter\.(patrol|warning|charge|recovery)$/.test(slot))
+    return 'armored-carrier';
+  return slot.startsWith('enemy.') ? (MILITARY_FIELD_ROLES[slot] ?? null) : null;
+}
 
 /** Original overhead pixel silhouettes. These replace only verified built-in
  * presentation slots; their names are not new combat or collision policies. */
@@ -39,7 +53,13 @@ const rgb = (hex) => [1, 3, 5].map((at) => Number.parseInt(hex.slice(at, at + 2)
 
 /** Wheel/tread glints follow the shared actor sampler, including its pause and
  * reduced-effects policy. No independently advancing presentation clock. */
-export function drawMilitaryVehicleMotion(ctx, frame, role, diameter) {
+export function drawMilitaryVehicleMotion(ctx, frame, role, diameter, revision = null) {
+  if (revision === INDUSTRIAL_MACHINERY_REVISION) {
+    // The same sampled clocks drive the complete rigid body and accessory pose.
+    // No rotor decoration is added to ground machinery.
+    drawMachinerySpecimen(ctx, role, { size: diameter, frame });
+    return;
+  }
   if (frame.reduced || !Number.isFinite(frame.travelPhase) || frame.speed <= 0) return;
   const step = Math.floor(frame.travelPhase * 6) % 2;
   const tracked = role === 'tracked-tank';
@@ -54,6 +74,16 @@ export function drawMilitaryVehicleMotion(ctx, frame, role, diameter) {
 /** No clocks, randomness, physics or DOM access. Keep the original sprite frame
  * and pivot while using transparent air around every vehicle silhouette. */
 export function militaryFieldPixels({ width, height }, slot, { revision = null } = {}) {
+  if (revision === INDUSTRIAL_MACHINERY_REVISION) {
+    const vehicle = militaryVehicleRole(slot);
+    if (vehicle) return machineryPixels({ width, height }, vehicle);
+    if (INDUSTRIAL_TEAM_HARDWARE_SLOTS.includes(slot))
+      return machineryHardwarePixels({ width, height }, slot);
+    if (INDUSTRIAL_TERRAIN_MATERIALS[slot])
+      return industrialMaterialPixels({ width, height }, INDUSTRIAL_TERRAIN_MATERIALS[slot], {
+        revision,
+      });
+  }
   if (revision === 'industrial-overhead-v2') revision = INDUSTRIAL_MATERIAL_REVISION;
   const role = MILITARY_FIELD_ROLES[slot];
   if (!role) return null;

@@ -11,6 +11,7 @@ import { contrastRatio } from '../../game/presentation/theme-system.mjs';
 import { actorArtReviewRevision } from '../../game/hunt/preferences.mjs';
 import {
   INDUSTRIAL_MATERIAL_REVISION,
+  INDUSTRIAL_ENVIRONMENT_REVISION,
   industrialMaterialPixels,
 } from '../../game/presentation/industrial-materials.mjs';
 
@@ -3961,11 +3962,16 @@ export function createWorkshopTexture(
       data[at + 3] = 255;
     }
   const sampleRole =
-    collectionId === 'military-field' && reviewRevision === INDUSTRIAL_MATERIAL_REVISION
+    collectionId === 'military-field' &&
+    [INDUSTRIAL_MATERIAL_REVISION, INDUSTRIAL_ENVIRONMENT_REVISION].includes(reviewRevision)
       ? { concrete: 'concrete', grass: 'earth', steel: 'metal' }[role]
       : null;
   if (sampleRole)
-    data.set(industrialMaterialPixels({ width: size, height: size }, sampleRole).rgba);
+    data.set(
+      industrialMaterialPixels({ width: size, height: size }, sampleRole, {
+        revision: reviewRevision,
+      }).rgba,
+    );
   const texture = new THREE.DataTexture(data, size, size);
   texture.name = `${collection.descriptor?.materials[role] ?? `${collectionId}-${role}`}-${collection.revision}`;
   texture.colorSpace = THREE.SRGBColorSpace;

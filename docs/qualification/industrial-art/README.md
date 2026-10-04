@@ -1,6 +1,6 @@
 # Industrial art and unified play review
 
-This is a review candidate, not production art approval or a public release.
+The corrected overhead treatment received explicit user approval on 4 October 2026 (“art approved, proceed”). Production extension is authorized. Technical source admission and public release qualification remain separate. Earlier observations below retain their historical status.
 The [implementation register](../../unified-industrial-plan.md) separates implemented source from required acceptance and optional expansion.
 
 ## Open the sample
@@ -61,7 +61,7 @@ The earlier packets authored regressions without running the then-waived suites.
 - Measured low-end frame rate/peak memory and simultaneous two-board effects.
 - Pause/Retry/restore/seeking across all represented modes, completed pinned-seed routes and human play review.
 
-The all-family corrected overhead rig is a perspective review, not approval of full-roster/36-appearance production artwork. The plan still requires Phase C approval before mass production. Independent engine, recording and private-room correctness work can proceed.
+The all-family corrected overhead treatment is now approved for full-roster/36-appearance production. The next version retains historical renders and requires its own regression and device evidence. Independent engine, recording and private-room correctness work can proceed.
 
 ## Source gates for candidate 02
 

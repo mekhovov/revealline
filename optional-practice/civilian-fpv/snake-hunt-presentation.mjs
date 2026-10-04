@@ -3,6 +3,10 @@ import { createDestructionPreferences } from '../../game/hunt/preferences.mjs';
 import { createEncounterDisplayPreferences } from '../../game/encounter-display-preferences.mjs';
 import { actorVisual } from '../../game/hunt/actor-catalog.mjs';
 import { sharedActorAppearance } from '../../game/hunt/preferences.mjs';
+import {
+  INDUSTRIAL_MACHINERY_REVISION,
+  INDUSTRIAL_MACHINERY_PALETTE,
+} from '../../game/presentation/industrial-machinery.mjs';
 
 export function mountSnakeHuntPresentationControls({
   document,
@@ -117,7 +121,10 @@ export function createSnakeHuntPresentation({ THREE, scene, preferences }) {
     color: 0xffffff,
     roughness: 0.98,
   });
-  let disposed = false;
+  let disposed = false,
+    previousTick = null,
+    observedTick = null;
+  const vehicleBursts = new Map();
   function put(mesh, at, size, tint, angle = 0) {
     if (mesh.count >= mesh.instanceMatrix.count) return;
     position.set(...at);
@@ -133,15 +140,45 @@ export function createSnakeHuntPresentation({ THREE, scene, preferences }) {
   }
   return {
     palette,
-    reset,
-    update(state, { reducedMotion = false, tailRadius = 350, actorDefinitions = [] } = {}) {
+    reset() {
+      reset();
+      previousTick = null;
+      observedTick = null;
+      vehicleBursts.clear();
+    },
+    // Accepted native simulation steps feed this observer independently of drawing.
+    // Restore and seek reconstruct state without replaying historical equipment bursts.
+    observe(state, { machineryRevision = null, machineryActorIds = [] } = {}) {
+      if (disposed || machineryRevision !== INDUSTRIAL_MACHINERY_REVISION) return;
+      if (observedTick !== null && state.ticks < observedTick) vehicleBursts.clear();
+      observedTick = state.ticks;
+      const admitted = new Set(machineryActorIds);
+      for (const event of state.events ?? []) {
+        if (
+          event.type === 'defeat' &&
+          admitted.has(event.actor) &&
+          state.actors?.some((actor) => actor.id === event.actor && actor.status === 'defeated')
+        )
+          vehicleBursts.set(event.actor, state.ticks);
+      }
+    },
+    update(
+      state,
+      {
+        reducedMotion = false,
+        tailRadius = 350,
+        actorDefinitions = [],
+        machineryRevision = null,
+        machineryActorIds = [],
+      } = {},
+    ) {
       if (disposed) return;
       reset();
-      if (!state.hunt) return;
+      if (!state.hunt && machineryRevision !== INDUSTRIAL_MACHINERY_REVISION) return;
       const prefs = preferences();
       const bloody = prefs.brutal && prefs.blood;
-      const catches = state.hunt.catches.slice(-12);
-      for (const point of state.hunt.tail.slice(0, 64))
+      const catches = state.hunt?.catches.slice(-12) ?? [];
+      for (const point of state.hunt?.tail.slice(0, 64) ?? [])
         put(
           tail,
           [point.x / 1000, point.y / 1000, point.z / 1000],
@@ -203,6 +240,79 @@ export function createSnakeHuntPresentation({ THREE, scene, preferences }) {
             age * ((piece % 4) + 1),
           );
         }
+      }
+      // Preserve existing humanoid feedback; equipment uses remaining capacity.
+      if (machineryRevision === INDUSTRIAL_MACHINERY_REVISION) {
+        if (
+          previousTick !== null &&
+          (state.ticks < previousTick ||
+            (state.ticks > previousTick + 1 && observedTick !== state.ticks))
+        )
+          vehicleBursts.clear();
+        const admitted = new Set(machineryActorIds);
+        const definitions = new Map(
+          actorDefinitions
+            .filter((actor) => actor.type === 'vehicle' && admitted.has(actor.id))
+            .map((actor) => [actor.id, actor]),
+        );
+        for (const actor of (state.actors ?? []).slice(0, 20)) {
+          const definition = definitions.get(actor.id);
+          if (!definition) continue;
+          if (actor.status !== 'defeated') {
+            vehicleBursts.delete(actor.id);
+            continue;
+          }
+          const origin = [
+              actor.position.x / 1000,
+              actor.position.y / 1000,
+              actor.position.z / 1000,
+            ],
+            radius = Math.max(0.2, Math.min(2, (definition.radius ?? 900) / 1000)),
+            metal = INDUSTRIAL_MACHINERY_PALETTE,
+            cargo = definition.vehicleModel === 'cargo-truck',
+            tracked = definition.vehicleModel === 'field-tank';
+          // Persisted defeated state reconstructs only settled equipment, never
+          // historical bursts. Blood preference has no effect on machine material.
+          if (prefs.showRemains !== false)
+            for (let part = 0; part < 2; part++)
+              put(
+                remains,
+                [
+                  origin[0] + (part ? 0.23 : -0.18) * radius,
+                  origin[1] + 0.05,
+                  origin[2] + part * 0.13 * radius,
+                ],
+                [radius * (part ? 0.2 : 0.62), radius * 0.1, radius * (tracked ? 0.63 : 0.4)],
+                part ? metal.rubber : cargo ? metal.canvas : metal.hull,
+                part * 0.7,
+              );
+          const tick = vehicleBursts.get(actor.id),
+            age = tick === undefined ? Infinity : (state.ticks - tick) / 50;
+          if (reducedMotion || age < 0 || age > 0.8 || bursts++ >= 4) continue;
+          const count = prefs.brutal ? 18 : 6;
+          for (let part = 0; part < count; part++) {
+            const angle = part * 2.39996,
+              distance = age * (prefs.brutal ? 2.8 : 1.2) * radius;
+            put(
+              fragments,
+              [
+                origin[0] + Math.cos(angle) * distance,
+                origin[1] + Math.max(0.06, radius * 0.4 + age * 1.6 - 4.9 * age * age),
+                origin[2] + Math.sin(angle) * distance,
+              ],
+              [radius * 0.14, radius * 0.07, radius * (part % 3 === 0 ? 0.3 : 0.13)],
+              part % 3 === 0
+                ? metal.rubber
+                : part % 3 === 1
+                  ? metal.steel
+                  : cargo
+                    ? metal.canvas
+                    : metal.hull,
+              angle + age * 2,
+            );
+          }
+        }
+        previousTick = state.ticks;
       }
       for (const mesh of pools) {
         mesh.instanceMatrix.needsUpdate = true;

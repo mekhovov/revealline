@@ -2,7 +2,11 @@ import {
   validateActorAnimation,
   sampleActorAnimation,
 } from '../../game/presentation/actor-animation.mjs';
-import { OVERHEAD_ACTOR_SAMPLES } from '../../game/hunt/actor-art.mjs';
+import {
+  OVERHEAD_ACTOR_SAMPLES,
+  INDUSTRIAL_ROSTER_SAMPLES,
+  INDUSTRIAL_ROSTER_ART_REVISION,
+} from '../../game/hunt/actor-art.mjs';
 
 export const ACTOR_FRAME_FIELDS = Object.freeze({
   durationMs: Object.freeze({ min: 16, max: 2000 }),
@@ -19,16 +23,20 @@ function admit(source) {
 
 /** A local draft of the existing data-only descriptor. No new save format,
  * gameplay state, collection ownership or art-family preference is written. */
-export function createSharedActorStudy({ family = 'courier' } = {}) {
-  const drafts = new Map();
+export function createSharedActorStudy({ family = 'courier', artRevision = null } = {}) {
+  const drafts = new Map(),
+    samples =
+      artRevision === INDUSTRIAL_ROSTER_ART_REVISION
+        ? INDUSTRIAL_ROSTER_SAMPLES
+        : OVERHEAD_ACTOR_SAMPLES;
   let currentFamily,
     descriptor,
     clip = 'move',
     timeMs = 0;
   function selectFamily(value) {
-    if (!Object.hasOwn(OVERHEAD_ACTOR_SAMPLES, value)) throw new Error('family');
+    if (!Object.hasOwn(samples, value)) throw new Error('family');
     currentFamily = value;
-    descriptor = drafts.get(value) ?? admit(OVERHEAD_ACTOR_SAMPLES[value]);
+    descriptor = drafts.get(value) ?? admit(samples[value]);
     drafts.set(value, descriptor);
     if (!Object.hasOwn(descriptor.clips, clip)) clip = 'idle';
     timeMs = 0;

@@ -7,7 +7,12 @@ import {
   resolveThemeFamilySelection,
 } from './theme-system.mjs';
 import { INDUSTRIAL_BUILTIN_SPRITES } from './industrial-arcade-builtins.mjs';
-import { MILITARY_FIELD_ROLES, militaryFieldPixels } from './military-field-art.mjs';
+import {
+  MILITARY_FIELD_ROLES,
+  militaryFieldPixels,
+  militaryVehicleRole,
+} from './military-field-art.mjs';
+import { INDUSTRIAL_MACHINERY_REVISION } from './industrial-machinery.mjs';
 import { actorArtReviewRevision } from '../hunt/preferences.mjs';
 import {
   INDUSTRIAL_MATERIAL_REVISION,
@@ -321,12 +326,16 @@ export function createArcadeAdapter({
             );
             ctx.putImageData(data, 0, 0);
             canvases.add(canvas);
-            const vehicle = collection.id === 'military-field' && slot.startsWith('enemy.');
+            const vehicle =
+              collection.id === 'military-field' &&
+              (slot.startsWith('enemy.') ||
+                (reviewRevision === INDUSTRIAL_MACHINERY_REVISION && militaryVehicleRole(slot)));
             derived = Object.freeze({
               ...original,
               image: canvas,
               ...(collection.id === 'military-field' &&
-              reviewRevision === INDUSTRIAL_MATERIAL_REVISION &&
+              (reviewRevision === INDUSTRIAL_MATERIAL_REVISION ||
+                reviewRevision === INDUSTRIAL_MACHINERY_REVISION) &&
               INDUSTRIAL_TERRAIN_MATERIALS[slot]
                 ? { materialReviewRevision: reviewRevision }
                 : {}),
@@ -336,7 +345,10 @@ export function createArcadeAdapter({
                       ...original.geometry,
                       rotors: Object.freeze([]),
                       material: 'military-vehicle',
-                      vehicleRole: MILITARY_FIELD_ROLES[slot],
+                      vehicleRole: militaryVehicleRole(slot) ?? MILITARY_FIELD_ROLES[slot],
+                      ...(reviewRevision === INDUSTRIAL_MACHINERY_REVISION
+                        ? { machineryRevision: reviewRevision }
+                        : {}),
                       occupiedBounds: Object.freeze({
                         x: 5 / 32,
                         y: 1 / 32,

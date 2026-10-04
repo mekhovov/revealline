@@ -1,6 +1,11 @@
 import { getLocale, localizedText, t } from '../../game/i18n/index.mjs';
 import { ACTOR_FAMILIES, ACTOR_CASTS } from '../../game/hunt/actor-catalog.mjs';
-import { drawHuntActor, OVERHEAD_ACTOR_ART_REVISION } from '../../game/hunt/actor-art.mjs';
+import {
+  drawHuntActor,
+  OVERHEAD_ACTOR_ART_REVISION,
+  INDUSTRIAL_ROSTER_ART_REVISION,
+} from '../../game/hunt/actor-art.mjs';
+import { actorArtReviewRevision } from '../../game/hunt/preferences.mjs';
 import { pageActorArtPool } from '../../game/presentation/actor-art-pool.mjs';
 import { createPreviewLoop } from './preview-loop.mjs';
 import { ACTOR_FRAME_FIELDS, createSharedActorStudy } from './shared-actor-study.mjs';
@@ -18,7 +23,11 @@ export function mountSharedActorPanel({
   reducedEffects = false,
   onPlay = () => {},
 }) {
-  const study = createSharedActorStudy(),
+  const artRevision =
+      actorArtReviewRevision(host?.location) === INDUSTRIAL_ROSTER_ART_REVISION
+        ? INDUSTRIAL_ROSTER_ART_REVISION
+        : OVERHEAD_ACTOR_ART_REVISION,
+    study = createSharedActorStudy({ artRevision }),
     listeners = [],
     pool = pageActorArtPool(doc);
   const identity = `motion-actor-${++instance}`;
@@ -196,7 +205,8 @@ export function mountSharedActorPanel({
     frame.value = String(value.frameIndex);
     for (const [name, input] of Object.entries(inputs)) input.value = String(value.frame[name]);
     inputs.accessory.disabled =
-      value.family !== 'courier' || !value.descriptor.parts.includes('satchel');
+      artRevision !== INDUSTRIAL_ROSTER_ART_REVISION &&
+      (value.family !== 'courier' || !value.descriptor.parts.includes('satchel'));
     loopControl.checked = value.descriptor.clips[value.clip].loop;
     localizedText(play, () => t(key(playing ? 'pause' : 'play')));
     play.setAttribute('aria-pressed', String(playing));
@@ -226,7 +236,7 @@ export function mountSharedActorPanel({
         family: value.family,
         cast: cast.value,
         heading: heading.value,
-        artRevision: OVERHEAD_ACTOR_ART_REVISION,
+        artRevision,
         animation: value.descriptor,
         animationClip: value.clip,
         state: value.clip,
