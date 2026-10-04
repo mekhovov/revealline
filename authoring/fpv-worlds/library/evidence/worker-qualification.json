@@ -32,7 +32,12 @@
     "zipMembers": true,
     "inputScope": "worker-admission-scope.json"
   },
-  "admittedBrowser": "Repeated119-check timeout; both complete failures retained. Bounded diagnostic pending.",
+  "admittedBrowser": {
+    "passed": 208,
+    "failed": 0,
+    "receipt": "worker-package-r1-pass-provenance.json",
+    "sameFrozenRuntimeAndHarnessAsRetainedTimeouts": true
+  },
   "nativeOfflineSmoke": {
     "status": "passed",
     "receipt": "worker-native-offline-smoke.json"

@@ -1,4 +1,4 @@
-# Optional world discovery — implementation draft
+# Optional world discovery — verified candidate
 
 The Library gains an explicit **Browse optional worlds** action. It reads a small
 first-party catalog and downloads only the chosen data pack. The existing native
@@ -22,10 +22,21 @@ Full source validation, seven applicable existing installation/worker checks,
 scoped lint and all-three source-bound admission passed at `01fc6ad20`, with
 two identical builds and all committed inputs/ZIP members verified. The
 [qualification receipt](../authoring/fpv-worlds/library/evidence/worker-qualification.json)
-binds those results. The new exact 102-member Worlds and 69-member Academy players
-are staged. Changed-worker native offline checks passed as described below;
-the admitted Library matrix remains pending after two readiness timeouts.
+binds those results. The exact 102-member Worlds and 69-member Academy players
+are staged. The [unchanged admitted Library matrix](../authoring/fpv-worlds/library/evidence/worker-package-r1-pass-provenance.json)
+now passes **208/208**, matching every source control name and outcome. Its 45
+native Workers each terminate once, and all three successful pack responses use
+the real immutable HTTPS asset. Changed-worker native offline checks passed as
+described below. Earlier readiness timeouts and their operational recovery remain
+part of the evidence; this is not an uninterrupted first-pass claim.
 The production catalogue remains empty.
+
+The worker projection prerequisite [#1075](https://github.com/mekhovov/revealline/pull/1075)
+merged as `da0bd0d6b`. The coordinator verified that public deployment marker and
+an actual Worlds reload, briefing, zero-throttle arm and pause. This deployment
+claim belongs to the prerequisite; Library discovery still awaits its own
+protected publication and public entry check. A later main revision includes the
+separate Reservoir r9 pack and is not inferred live from that earlier launch.
 
 The first admitted fixture run passed 119 controls, then timed out waiting for
 the selected flight's exact Ready text. Its [failure receipt](../authoring/fpv-worlds/library/evidence/worker-package-r1-failure-provenance.json)
@@ -46,8 +57,10 @@ same immutable diagnostic reached Ready at 694 ms and retained it at the final
 1,474.2 ms observation. No runtime, harness, timeout, focus guard or automatic
 resume changed. This response is consistent with resource contention, but does
 not establish an exclusive cause. Both complete receipts and the frozen observer
-are preserved. These 120-check diagnostic runs do not qualify the full admitted
-Library matrix; its unchanged repeat remains pending.
+are preserved. These 120-check diagnostic runs are separate from the subsequent
+full unchanged admitted Library repeat, which passed all 208 controls. The
+source/package comparison is exact for control names and outcomes. No hardware
+timing or exclusive root-cause claim follows from this operational recovery.
 
 The exact admitted direct Worlds and Academy players separately passed
 [native offline preparation and stopped-origin reload](../authoring/fpv-worlds/library/evidence/worker-native-offline-smoke.json).
@@ -55,7 +68,7 @@ The coordinator stopped the known server and observed connection refusal before
 and after reloading both players. Worlds entered flight at zero throttle and
 paused; Academy entered practice and paused. This qualifies the changed Worker's
 native install/cache path for this local-origin outage, not device-wide offline,
-eviction endurance or the unfinished admitted Library matrix.
+eviction endurance or a general browser offline guarantee.
 
 ### Historical page-transport evidence
 
@@ -136,7 +149,8 @@ The draft adds one readable canonical `world-library.mjs` entry to the establish
 generated reaction/presentation projection. Pinned Prettier and the existing
 AST/token/comment/line-preserving lexical projection prepare it; no handwritten
 minification or source-policy change is used. The 24 existing audio recordings
-and existing package file count are retained. A fresh admission is still required.
+and existing package file count are retained. At this historical checkpoint,
+fresh admission was still required; the current admission is recorded above.
 
 The first complete draft measured **6,720 source bytes** beyond main: 659 bytes in
 the host adapter and 6,061 in the generated projection. Concise UI wording plus
@@ -157,7 +171,7 @@ same existing lexical projection after its pinned Prettier step. That section
 shrinks from 16,954 to 13,392 bytes (3,562 recovered), without changing the readable
 canonical `game/ui/mode-play-shell.mjs`. Its independent identity, full validation,
 all-three admission and actual Worlds/Academy shell checks passed. Its protected
-publication remains separate from this unqualified feature.
+publication remains separate from this feature's qualification.
 
 ## Bounded qualification plan
 
