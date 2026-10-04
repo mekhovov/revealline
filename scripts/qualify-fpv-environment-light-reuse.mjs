@@ -462,9 +462,16 @@ const initialImportedScene = new THREE.Group();
 blank.finishImport({ scene: initialImportedScene, scenes: [initialImportedScene], animations: [] });
 await initialImport;
 check('non-scenery import before course remains supported', initialImportedScene.parent !== null);
+const finishBlankControls = blank.delayControls(),
+  staleBlankEditor = blank.runtime.createEditor().then(
+    () => false,
+    (error) => /World preview changed/.test(error.message),
+  );
 blank.owner.lost = true;
 blank.listeners.get('webglcontextlost')({ preventDefault() {} });
 blank.owner.lost = false;
+finishBlankControls();
+check('pending editor stays invalid after loss and restoration', await staleBlankEditor);
 const restoredImportStarted = blank.waitForImport(),
   restoredImport = blank.runtime.loadScene(
     '{"asset":{"version":"2.0","extras":{"fpvScenery":true}}}',
@@ -485,6 +492,22 @@ blank.runtime.dispose();
 check(
   'blank/import-only owner releases final resources',
   Object.values(blank.runtime.resources().registered).every((n) => n === 0),
+);
+const changing = fixture();
+changing.runtime.setCourse(structuredClone(course));
+const finishChangingControls = changing.delayControls(),
+  healthyPendingEditor = changing.runtime.createEditor();
+changing.runtime.setCourse(structuredClone(course));
+finishChangingControls();
+check(
+  'healthy course change during editor load still initializes editor',
+  !!(await healthyPendingEditor) && (await changing.runtime.prepare()),
+);
+changing.runtime.dispose();
+check(
+  'healthy editor race owner releases resources and target once',
+  Object.values(changing.runtime.resources().registered).every((n) => n === 0) &&
+    targets.every((target) => target.disposals === 1),
 );
 const receipt = {
   format: 'fpv-environment-light-reuse-manual.v1',

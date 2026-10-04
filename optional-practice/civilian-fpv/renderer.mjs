@@ -170,6 +170,7 @@ export function createFlightRenderer({
     ghostSamples = [],
     ghostPose = null,
     sceneGeneration = 0,
+    contextGeneration = 0,
     presentationGeneration = 0,
     rotorTick = null,
     rotorPhase = 0,
@@ -2440,14 +2441,14 @@ export function createFlightRenderer({
     selectEditor(editorSelection, false);
   }
   async function createEditor(callbacks = {}) {
-    const generation = sceneGeneration;
+    const generation = contextGeneration;
     if (renderer.getContext().isContextLost())
       throw new Error('World editor is unavailable while graphics are lost.');
     if (!loadTransformControls)
       throw new Error('World editing requires the World Studio renderer.');
     const { TransformControls } = await loadTransformControls();
     if (disposed) throw new Error('Editor was disposed while loading');
-    if (generation !== sceneGeneration || renderer.getContext().isContextLost())
+    if (generation !== contextGeneration || renderer.getContext().isContextLost())
       throw new Error('World preview changed while the editor was loading');
     editorCallbacks = callbacks;
     if (!editor) {
@@ -2617,6 +2618,7 @@ export function createFlightRenderer({
     // Retry rebuilds the scene on this renderer. Release old GPU ownership while
     // the context is lost, before Three restores its resource caches.
     sceneGeneration++;
+    contextGeneration++;
     presentationGeneration++;
     importGeneration++;
     clearSceneResources();

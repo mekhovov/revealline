@@ -294,3 +294,24 @@ TransformControls, observe actual loss/restoration, exercise the cleared control
 and check final cleanup and GL errors. Current-source admission and this actual
 editor observation remain pending at this checkpoint. Historical failed receipts,
 including the isolated v5 imported image-hash mismatch, remain unchanged.
+
+## Healthy editor initialization race correction
+
+Independent review found that using `sceneGeneration` for the pending editor
+load also rejected an ordinary course update during initialization. The host
+retains its initial `ready` promise, so that rejection could leave the editor
+without controls. The guard now captures a dedicated `contextGeneration` that
+advances only on actual graphics loss. Normal course changes remain compatible;
+a pending editor still rejects after loss, including when the context has already
+restored before the loader resolves. Imported-scene generation behavior is
+unchanged.
+
+The manual qualifier now passes 63 checks, including both loading races and
+final cleanup. All eight PMREM targets are disposed once; the 30 existing checks,
+lint and formatting also pass. The context-generation scope receipt verifies
+that the entire renderer differs from `a64afef45` only by the four enumerated
+counter substitutions. Full validate passed at `a64afef45` before this correction;
+current-source admission and the admitted editor browser observation remain
+pending. Prior successful and failed browser receipts keep their exact historical
+identities. The new bounded evidence is in
+`docs/evidence/fpv-environment-light-context-generation-{manual,scope}.json`.
