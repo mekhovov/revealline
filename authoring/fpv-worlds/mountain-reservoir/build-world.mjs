@@ -3,7 +3,14 @@
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { createHash } from 'node:crypto';
-import { createScene, includeLandEngineering, obstacles, bounds, spawn } from './source/scene.mjs';
+import {
+  createScene,
+  includeLandEngineering,
+  includeTerrainStitching,
+  obstacles,
+  bounds,
+  spawn,
+} from './source/scene.mjs';
 import { landRouteCandidates } from './source/land-routes.mjs';
 import { engineeringRouteCandidates } from './source/engineering-routes.mjs';
 import { prepareWorldFile } from '../../../scripts/fpv-content.mjs';
@@ -22,9 +29,11 @@ import {
   exportEditableZip,
   importEditableZip,
 } from '../../../optional-practice/civilian-fpv/world-zip.mjs';
-const [baselineArg, outputArg] = process.argv.slice(2);
+const [baselineArg, outputArg, variant] = process.argv.slice(2);
 if (!baselineArg || !outputArg)
   throw Error('Use ACCEPTED_R4_PREPARED_DIRECTORY NEW_OUTPUT_DIRECTORY');
+if (variant && !['--terrain-stitching', '--material-scale'].includes(variant))
+  throw Error('Unknown scene variant');
 const hash = (b) => createHash('sha256').update(b).digest('hex');
 const check = (ok, label) => {
   if (!ok) throw Error(label);
@@ -37,7 +46,8 @@ check(
   'Exact accepted first-course baseline',
 );
 includeLandEngineering();
-const scene = createScene();
+if (variant) includeTerrainStitching();
+const scene = createScene({ groundMaterials: variant === '--material-scale' });
 check(
   scene.bytes.length < 1.2 * 1024 * 1024 && scene.statistics.triangles < 15000,
   'Original artwork target exceeded',
@@ -56,7 +66,7 @@ const prepared = await prepareWorldFile({
     title: 'Mountain Reservoir · land-side world',
   }),
   project = prepared.project,
-  revision = 'r8',
+  revision = variant === '--material-scale' ? 'r11' : variant ? 'r9' : 'r8',
   first = validateWorldCourse({
     ...structuredClone(baseline.courses[0]),
     revision,
@@ -160,6 +170,7 @@ for (const file of [
   'land-routes.mjs',
   'engineering-routes.mjs',
   'mineral.mjs',
+  'ground-maps.mjs',
 ]) {
   const bytes = await readFile(new URL('./source/' + file, import.meta.url));
   sourcePins.push({ path: file, bytes: bytes.length, sha256: hash(bytes) });

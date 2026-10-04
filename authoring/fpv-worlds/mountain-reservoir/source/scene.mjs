@@ -3,6 +3,7 @@
 import * as THREE from '../../../../optional-practice/civilian-fpv/vendor/three.module.js';
 import { encodeWorldGLB } from '../../../../optional-practice/civilian-fpv/world-content.mjs';
 import { mineralPNG, noise } from './mineral.mjs';
+import { grassPNG, gravelPNG } from './ground-maps.mjs';
 import { addReservoirEngineering } from './engineering.mjs';
 
 const xyz = (a) => Object.fromEntries(['x', 'y', 'z'].map((k, i) => [k, Math.round(a[i] * 1000)]));
@@ -293,6 +294,42 @@ terrain.setAttribute('position', new THREE.Float32BufferAttribute(terrainPositio
 terrain.setIndex(terrainIndices);
 terrain.computeVertexNormals();
 add(terrain, 'mineral-ridge');
+let terrainStitched = false;
+export function includeTerrainStitching() {
+  if (terrainStitched) throw Error('Terrain boundary already stitched');
+  const positions = [];
+  const skirt = (a, b, north) => {
+    const bottomA = [a[0], 0, a[2]],
+      bottomB = [b[0], 0, b[2]];
+    // The decorative heightfield interpolates between discrete terrace levels,
+    // exposing its open underside. Close that edge on the existing unreachable
+    // world boundary. Playable geometry and every original top triangle stay exact.
+    if (a[1] > 0) positions.push(...a, ...(north ? bottomA : b), ...(north ? b : bottomA));
+    if (b[1] > 0)
+      positions.push(...b, ...(north ? bottomA : bottomB), ...(north ? bottomB : bottomA));
+  };
+  for (let i = 0; i < zs.length - 1; i++) {
+    if (zs[i] < -34 || zs[i + 1] > 38) continue;
+    skirt(
+      [-44, groundHeight(-44, zs[i]), zs[i]],
+      [-44, groundHeight(-44, zs[i + 1]), zs[i + 1]],
+      false,
+    );
+  }
+  for (let i = 0; i < xs.length - 1; i++) {
+    if (xs[i] < -44 || xs[i + 1] > 6) continue;
+    skirt(
+      [xs[i], groundHeight(xs[i], -34), -34],
+      [xs[i + 1], groundHeight(xs[i + 1], -34), -34],
+      true,
+    );
+  }
+  const closure = new THREE.BufferGeometry();
+  closure.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3));
+  add(closure, 'mineral-ridge');
+  terrainStitched = true;
+  return { triangles: positions.length / 9, positions };
+}
 function surfaceHeight(x, z) {
   const ix = xs.findIndex((v, i) => x >= v && x <= xs[i + 1]),
     iz = zs.findIndex((v, i) => z >= v && z <= zs[i + 1]),
@@ -420,12 +457,19 @@ export const anchors = [
   { id: 'shore-return', kind: 'landing', position: [-30, 0.45, 26], order: 3 },
 ];
 
-export function createScene() {
+export function createScene({ groundMaterials = false } = {}) {
   const document = {
     asset: {
       version: '2.0',
       generator:
-        'RevealLine original Mountain Reservoir source ' + (engineeringAdded ? 'r7' : 'r4'),
+        'RevealLine original Mountain Reservoir source ' +
+        (groundMaterials
+          ? 'r11-ground-material-candidate'
+          : terrainStitched
+            ? 'r9-terrain-stitching-candidate'
+            : engineeringAdded
+              ? 'r7'
+              : 'r4'),
     },
     scene: 0,
     scenes: [{ nodes: [] }],
@@ -479,7 +523,19 @@ export function createScene() {
           baseColorFactor: [color.r, color.g, color.b, 1],
           metallicFactor: role === 'reservoir-water' ? 0.15 : 0,
           roughnessFactor: definition[2],
-          ...(textured ? { baseColorTexture: { index: 0 } } : {}),
+          ...(textured
+            ? {
+                baseColorTexture: {
+                  index: groundMaterials
+                    ? role === 'shore-meadow'
+                      ? 1
+                      : role === 'warm-gravel'
+                        ? 2
+                        : 0
+                    : 0,
+                },
+              }
+            : {}),
         },
       }) - 1;
     const mesh =
@@ -490,7 +546,18 @@ export function createScene() {
             attributes: {
               POSITION: attribute(batch.positions, 'VEC3'),
               NORMAL: attribute(batch.normals, 'VEC3'),
-              ...(textured ? { TEXCOORD_0: attribute(batch.uvs, 'VEC2') } : {}),
+              ...(textured
+                ? {
+                    TEXCOORD_0: attribute(
+                      groundMaterials && role === 'shore-meadow'
+                        ? batch.uvs.map((v) => (v * 4) / 1.5)
+                        : groundMaterials && role === 'warm-gravel'
+                          ? batch.uvs.map((v) => (v * 4) / 0.75)
+                          : batch.uvs,
+                      'VEC2',
+                    ),
+                  }
+                : {}),
               ...(colored
                 ? {
                     COLOR_0: attribute(
@@ -528,16 +595,26 @@ export function createScene() {
       }) - 1,
     );
   }
-  const texture = mineralPNG(),
-    imageView =
+  document.images = [];
+  const images = [['original-mineral-grain-256', mineralPNG()]];
+  if (groundMaterials)
+    images.push(['original-short-grass-128', grassPNG()], ['original-gravel-128', gravelPNG()]);
+  if (groundMaterials && images[1][1].length + images[2][1].length > 48 * 1024)
+    throw Error('Ground image authoring budget exceeded');
+  for (const [name, texture] of images) {
+    const padding = (4 - (offset % 4)) % 4;
+    if (padding) {
+      pieces.push(new Uint8Array(padding));
+      offset += padding;
+    }
+    const imageView =
       document.bufferViews.push({ buffer: 0, byteOffset: offset, byteLength: texture.length }) - 1;
-  pieces.push(texture);
-  offset += texture.length;
-  document.images = [
-    { name: 'original-mineral-grain-256', mimeType: 'image/png', bufferView: imageView },
-  ];
+    pieces.push(texture);
+    offset += texture.length;
+    document.images.push({ name, mimeType: 'image/png', bufferView: imageView });
+  }
   document.samplers = [{ magFilter: 9729, minFilter: 9987, wrapS: 10497, wrapT: 10497 }];
-  document.textures = [{ sampler: 0, source: 0 }];
+  document.textures = document.images.map((_, source) => ({ sampler: 0, source }));
   document.buffers[0].byteLength = offset;
   const binary = new Uint8Array(offset);
   let position = 0;
@@ -551,7 +628,7 @@ export function createScene() {
       triangles,
       materials: document.materials.length,
       nodes: document.nodes.length,
-      textures: 1,
+      textures: document.textures.length,
       colliders: obstacles.length,
       collisionTriangles: terrains.reduce((n, o) => n + o.indices.length / 3, 0),
     },
