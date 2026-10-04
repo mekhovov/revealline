@@ -1,7 +1,7 @@
 <!doctype html>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Mountain Reservoir · first shoreline checkpoint</title>
+<title>Mountain Reservoir · scene review</title>
 <style>
   body {
     background: #142128;
@@ -42,11 +42,11 @@
     color: #b3c5c1;
   }
 </style>
-<h1>Mountain Reservoir · Shoreline check-in</h1>
+<h1>Mountain Reservoir · scene review</h1>
 <p>
-  One original scene and one course for review. Seven further courses and the final sixteen examples
-  remain unfinished. The yellow inspection rail marks the land-side boundary at x=6m; the visible
-  reservoir starts at x=8m, outside this first flight area. Water has no new physics.
+  Original shared scene and authored route candidates for review. No final sixteen-proof release is
+  claimed. The yellow inspection rail marks the land-side boundary at x=6m; the visible reservoir
+  starts at x=8m, outside every flight area. Water has no new physics.
 </p>
 <label
   >View
@@ -55,8 +55,22 @@
     <option value="hut">Closed hut · 4m distance</option>
     <option value="rock">Terrace material · 5m distance</option>
     <option value="dam">Dam approach · 15m distance</option>
+    <option value="intake">Intake-control gallery · close view</option>
+    <option value="spillway">Dry spillway · side composition</option>
+    <option value="descent">Dry spillway · upper approach</option>
     <option value="wide">Reservoir composition</option>
     <option value="overview">Course overview</option>
+  </select></label
+>
+<label
+  >Course
+  <select id="course"></select
+></label>
+<label
+  >Mode
+  <select id="mode">
+    <option value="self-level">Self-level</option>
+    <option value="acro">Acro</option>
   </select></label
 >
 <label
@@ -117,6 +131,18 @@
       [-3, 7, -10],
       [13, 8, -27],
     ],
+    intake: [
+      [2, 7, -16],
+      [-1, 5, -24],
+    ],
+    spillway: [
+      [-18, 8, -3],
+      [-11, 7, -19],
+    ],
+    descent: [
+      [-11, 12.2, -29],
+      [-11, 1, -2],
+    ],
     wide: [
       [-39, 19, 35],
       [14, 5, -18],
@@ -129,7 +155,7 @@
   async function render() {
     $('render').disabled = true;
     try {
-      const c = structuredClone(project.courses[0]),
+      const c = structuredClone(project.courses.find((c) => c.id === $('course').value)),
         appearance = $('appearance').value;
       if (appearance === 'pixel') {
         c.world.theme = 'pixel';
@@ -139,7 +165,7 @@
         collectionId: appearance === 'pixel' ? 'authored' : appearance,
         revision: 'r1',
       });
-      renderer.setCourse(c, 'self-level');
+      renderer.setCourse(c, $('mode').value);
       renderer.setQuality($('quality').value);
       renderer.setDrone('racer');
       await renderer.loadScene(sceneBytes);
@@ -185,6 +211,8 @@
       );
       const observation = {
         pose: $('pose').value,
+        course: c.id,
+        mode: $('mode').value,
         quality: $('quality').value,
         appearance,
         positionMetres: position,
@@ -232,6 +260,12 @@
     if ((await hash(await get('./index.html'))) !== manifest.harnessSHA256)
       throw Error('Harness mismatch');
     project = JSON.parse(new TextDecoder().decode(await get('./content/project.json')));
+    for (const course of project.courses) {
+      const option = document.createElement('option');
+      option.value = course.id;
+      option.textContent = course.locales.en.title;
+      $('course').append(option);
+    }
     sceneBytes = await get('./content/scene.glb');
     const { createFlightRenderer } = await import(base + 'world-assets.mjs');
     renderer = createFlightRenderer({

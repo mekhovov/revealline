@@ -17,7 +17,8 @@ function volume(type, centre, size, surface) {
   };
 }
 export const hold = (point, size = [2.4, 1.4, 2.4]) => volume('hold', point, size);
-export const land = (point, surface, size = [3.2, 1.1, 3.2]) => volume('land', point, size, surface);
+export const land = (point, surface, size = [3.2, 1.1, 3.2]) =>
+  volume('land', point, size, surface);
 export function gate(axis, at, direction, side, y, width = 2.4, height = 1.6) {
   return {
     type: 'gate',
@@ -181,8 +182,20 @@ export function landRouteCandidates(base, { engineering = false } = {}) {
     // The later real dry chute occupies the former eastern approach; use its
     // open west side instead. The frozen r5 draft remains unchanged by default.
     data.find((route) => route.suffix === '08').steps = {
-      'self-level': [hold([-16, 6.5, 8]), gate('z', -7, -1, -16, 6.5, 2.6), hold([-16, 6.5, -15]), hold([-22, 6.5, -15]), land([-22, 4.9, -15], 'building-maintenance-roof')],
-      acro: [hold([-15, 7, 9]), gate('z', -6, -1, -15, 7, 2.6), hold([-16, 7, -15]), gate('x', -20, -1, -15, 7, 2.8), land([-22, 4.9, -15], 'building-maintenance-roof')],
+      'self-level': [
+        hold([-16, 6.5, 8]),
+        gate('z', -7, -1, -16, 6.5, 2.6),
+        hold([-16, 6.5, -15]),
+        hold([-22, 6.5, -15]),
+        land([-22, 4.9, -15], 'building-maintenance-roof'),
+      ],
+      acro: [
+        hold([-15, 7, 9]),
+        gate('z', -6, -1, -15, 7, 2.6),
+        hold([-16, 7, -15]),
+        gate('x', -20, -1, -15, 7, 2.8),
+        land([-22, 4.9, -15], 'building-maintenance-roof'),
+      ],
     };
   }
   return data.map(({ suffix, en, uk, steps }) => ({

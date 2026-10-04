@@ -38,3 +38,16 @@ drafts. Freeze the complete shared scene and all eight bilingual route pairs
 before generating the final sixteen ordinary-control demonstrations. Every
 record must independently replay against the final exact pack, followed by
 actual imported player, editor/reimport and offline qualification.
+
+## Engineering reference review
+
+The Bureau of Reclamation's [Black Canyon Dam gallery](https://www.usbr.gov/pn/about/photogallery/blkcanyon.html)
+and [historic dam/spillway collection](https://www.usbr.gov/history/archive.html),
+plus the USACE [Tuttle Creek works description](https://www.nwk.usace.army.mil/Media/News-Releases/Article/1300988/corps-making-final-preparations-for-3-major-projects-at-tuttle-creek-dam/),
+were consulted as primary references on 4 October 2026. The latter distinguishes
+intake controls, the downstream stilling basin and the spillway bridge as separate
+structures. Our design inference is to make the closed control station, attached
+gallery and continuous dry chute/apron visually distinct and physically supported.
+This is an original compressed fictional layout, not an accurate model or hydraulic
+simulation of any referenced dam. No reference image, texture or mesh is copied
+into the assets; the existing original-art license remains the applicable notice.

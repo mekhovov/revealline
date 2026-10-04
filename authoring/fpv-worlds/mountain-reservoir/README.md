@@ -144,3 +144,15 @@ around the proposed chute. No generated r6 scene, clearance result, visual revie
 or final sixteen proofs exist. This source checkpoint was saved when the user
 requested re-prioritization; it is not a publication candidate. `DESIGN.md`
 records the land-only decision and remaining acceptance requirements.
+
+Implementation resumed after the review. The generated `r7` full-world candidate
+has eight bilingual route pairs over one World, 12,016 imported triangles,
+13 materials, one original texture and 48 matching collision records. Its
+prepared GLB is 1,166,172 bytes (`0ef73f962a189567176b4ba5bdbea14babde10a2671d8e71522ecd370a8f49cd`),
+with zero validator errors and exact pack/ZIP project round trips. The intake
+gallery has a continuous concrete base; the dry chute has solid rotated-box
+floor/walls and a grounded head pier. Bounds and lake exclusion are unchanged.
+These are build/transport facts only; the new shared scene still needs visual
+acceptance, route clearance and all sixteen final proofs. The earlier `r6`
+previsual candidate is retained with its build receipt; `r7` adds the head pier.
+The unextended scene generator still produces the exact accepted r4 source GLB.

@@ -422,7 +422,11 @@ export const anchors = [
 
 export function createScene() {
   const document = {
-    asset: { version: '2.0', generator: 'RevealLine original Mountain Reservoir source ' + (engineeringAdded ? 'r6' : 'r4') },
+    asset: {
+      version: '2.0',
+      generator:
+        'RevealLine original Mountain Reservoir source ' + (engineeringAdded ? 'r7' : 'r4'),
+    },
     scene: 0,
     scenes: [{ nodes: [] }],
     nodes: [],
