@@ -11,8 +11,10 @@ Watch replays, eight-course/two-mode editing, source reimport and storage reopen
 All terminal identities, ticks and landing speeds match the ordinary proofs;
 errors, warnings and dropped diagnostics are empty. The created renderer releases
 all registered resources, while the reopened lobby correctly creates none.
-Native subject views and offline qualification are still pending; this is not
-yet a published or production-Library world.
+The unmodified current admitted player also passes native cart/guide subject
+views, guide completion at 41.3s, and stopped-origin reload retaining all eight
+challenges with deliberate Arm/resume/Pause. Protected publication remains
+pending; no production Library row is included.
 
 The scene has 12,284 imported triangles, 12 material batches, two original 256px
 maps and 47 explicit solids. Eleven actual-renderer views accepted the bounded r3
@@ -65,8 +67,17 @@ The full-world browser fixture authenticates the identified complete historical
 admitted host and the exact flight/collision/content/proof module closure; it
 adds no runtime overlay. Its complete Watch matrix uses controlled RAF delivery
 with the unchanged performance clock and pause guards, not assigned simulation
-state or native-clock endurance. Native launch and true stopped-origin offline
-use require the separate unmodified admitted entry and their own receipts.
+state or native-clock endurance. The separate unmodified admitted `0b54fd0fd`
+entry supplies [native subject evidence](evidence/r5-native-current/subject-observations.json)
+and [stopped-origin evidence](evidence/r5-native-current/offline-journey.json).
+Authored/Balanced/FPV views show the grounded cart and walker during actual
+tracking; the guide reaches the native public 1x completion UI at 41.3s. After
+offline preparation and online reload, the server is stopped and connection
+refusal is verified before and after the offline journey. A fresh reload retains
+the exact installed pack; deliberate Arm/resume and Pause work. An unexpected
+pause at 17.4s remains unattributed and retained, followed by observed Flight
+active at 19.6s and deliberate Pause at 19.7s. Its screenshot is labeled paused,
+not active. No uninterrupted flight, offline editor or hardware claim follows.
 
 The publication branch includes merged main `21826c460` with all 95 runtime
 inputs exact to its separately admitted combined candidate `0b54fd0fd`. The
@@ -79,7 +90,7 @@ The immutable r5 candidate files are [the installable pack](distribution/r5/fest
 [the editable project ZIP](distribution/r5/festival-grounds.r5.zip) and
 [sixteen exact-pack demonstrations](distribution/r5/festival-grounds.r5.proofs.json).
 The [release manifest](distribution/r5/manifest.json) records their sizes,
-SHA-256 digests and the remaining qualification gates. Installing this optional
+SHA-256 digests and the exact qualification scope. Installing this optional
 pack adds one world and eight authored challenges; it does not change the bundled
 14-world/196-challenge catalogue.
 

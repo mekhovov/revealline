@@ -3,8 +3,8 @@
 This independent D5 world follows Mountain Reservoir. The initial one-course
 scene checkpoint is preserved; the current r5 candidate has all eight authored
 challenges and sixteen qualified ordinary-control demonstrations. Actual
-imported-player/editor and offline qualification, followed by protected
-publication, remain release gates. [README.md](README.md) records current status;
+imported-player/editor and bounded native/offline qualification have passed.
+Protected publication remains separate. [README.md](README.md) records current status;
 the design and initial production bounds below remain the original scope.
 
 The fictional Ukrainian community festival is an open racing contrast to the
