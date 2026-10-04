@@ -165,6 +165,9 @@ test('native dialogue obeys one-line arbitration, master mute, pause, volume and
   assert.equal(first.ended, true);
   assert.equal(ended, 1);
   assert.equal(dialogueChannel.active, second);
+  // The first snapshot establishes a baseline; retained warnings must not replay.
+  sound.update(frame(0, [{ type: 'fire', actor: 'hostile' }]));
+  assert.equal(second.ended, false);
   sound.update(frame(1, [{ type: 'fire', actor: 'hostile' }]));
   assert.equal(second.ended, true);
   const paused = sound.playDialogue(clip);
