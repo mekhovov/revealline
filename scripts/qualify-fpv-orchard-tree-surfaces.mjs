@@ -15,7 +15,7 @@ import { builtinWorldScene } from '../optional-practice/civilian-fpv/world-asset
 import { dataIdentity } from '../game/data-json.mjs';
 
 const root = new URL('../', import.meta.url),
-  baseline = '96ef08777c36a49c49babf8e15489867d484ba59',
+  baseline = 'a46aded0b56c612fbbfb1736cfb27ee0746c2b1f',
   prefix = 'optional-practice/civilian-fpv/',
   visualPath = prefix + 'world-visuals.mjs',
   rendererPath = prefix + 'renderer.mjs',
