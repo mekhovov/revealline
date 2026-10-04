@@ -1,5 +1,30 @@
 # Reservoir material scale — proposed next increment
 
+Current revision r11 removes r10's broad brown grass patches. Actual fixed-camera
+review rejected r10 because that motif tiled into regular diagonal rows, despite
+readable gravel and passing functional checks. The source commit `60b5161`, its
+immutable preview, screenshots and fresh r10 proofs remain retained. The grass
+map now keeps the same wrapped short blades and sparse dry blades over only weak,
+finer tonal variation. Gravel, both UV scales and all geometry/material batches
+are unchanged. The candidate still has three textures and 128px added maps; their
+combined size falls to 39,007 bytes. Source GLB is 1,210,776 bytes
+(`503c49b5e29a3cb486272ca2d328b4d50b69fda82ba90d45bd76c37d2b29343a`).
+The r11 asset contract passes 148 checks, with zero prepare validation errors.
+Another 43 direct r10/r11 comparisons retain every geometry attribute, material
+batch, sampler, node and both non-grass images exactly. The changed grass image
+and explicit candidate metadata are the only intended differences.
+New actual visual review and revision-bound r11 proofs are pending; the r10
+flight evidence below is historical and cannot authenticate the new r11 pack.
+
+The rejected r10 browser run still supplies useful resource evidence: eleven
+static observations covered Low/Balanced/High, Pixel, shared Industrial, chase
+and overview, followed by successful disposal. Matched grass-close draws remain
+156 calls and 25,572 submitted triangles. Registered renderer materials increase
+from 276 to 278 and textures from 30 to 32; the external GLB still has thirteen
+material batches. Those observed owner counts are retained explicitly, rather
+than inferring total renderer ownership from the asset material count. See
+`evidence/r10-static-review.json`; no FPS or final artistic acceptance follows.
+
 This branch starts from main `f3764070e`; the qualified seam repair is isolated
 in PR #1077 at `ab3a3585d`. Its accepted r9 source must reach normal main history
 before this later revision is published. No r8 or r9 pack, proof or fixture is
@@ -17,7 +42,8 @@ The pinned prepare pipeline has zero validation errors. Manual asset comparison
 passes 148 checks; the original r8/r9 generation also remains exact in 315 checks.
 The first standalone gravel prototype was rejected during author inspection
 because it resembled fitted paving; the scene candidate uses separated aggregate
-and dusty gaps instead. Visual acceptance remains pending.
+and dusty gaps instead. Subsequent actual review rejected the r10 grass motif;
+see `evidence/r10-material-art-rejected.json` and its retained screenshots.
 
 Fresh r10 qualification at frozen source `60b5161950563d76ef4bf87c97ed6f6d3f716632`
 passes 575 checks: all sixteen ordinary flights finish with full health and zero

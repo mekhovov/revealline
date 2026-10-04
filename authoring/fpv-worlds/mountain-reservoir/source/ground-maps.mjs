@@ -31,7 +31,8 @@ export function grassPNG() {
   const blades = new Float32Array(size * size),
     dry = new Float32Array(size * size);
   // At a 1.5m repeat, these 2–7px marks describe short irregular grass blades.
-  // Wrapped strokes and periodic soil patches preserve the repeat boundary.
+  // Wrapped strokes preserve the repeat boundary. Avoid a broad soil motif:
+  // at the fixed1.5m repeat, its dark patches read as planted rows in flight.
   for (let i = 0; i < 1050; i++) {
     const x = random(i, 1, 71) * size,
       y = random(i, 2, 71) * size,
@@ -50,10 +51,9 @@ export function grassPNG() {
   }
   return image((x, y) => {
     const at = y * size + x,
-      cover = periodic(x, y, 5),
-      soil = Math.max(0, 0.39 - cover) * 95,
-      value = 206 + (cover - 0.5) * 24 + (random(x, y, 8) - 0.5) * 14 + blades[at];
-    return [value + soil * 0.25 + dry[at] * 9, value - soil * 0.45, value - soil - dry[at] * 20];
+      grain = periodic(x, y, 17),
+      value = 206 + (grain - 0.5) * 4 + (random(x, y, 8) - 0.5) * 14 + blades[at];
+    return [value + dry[at] * 9, value, value - dry[at] * 20];
   });
 }
 export function gravelPNG() {

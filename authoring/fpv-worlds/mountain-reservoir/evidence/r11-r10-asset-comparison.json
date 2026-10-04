@@ -1,0 +1,179 @@
+{
+  "format": "FPVReservoirGrassRefinement.v1",
+  "status": "passed",
+  "scope": "Static r10/r11 scene comparison; only grass image and explicit revision/generator metadata differ. Art acceptance remains separate.",
+  "checks": [
+    {
+      "name": "meshes exact between rejected r10 and r11",
+      "passed": true
+    },
+    {
+      "name": "materials exact between rejected r10 and r11",
+      "passed": true
+    },
+    {
+      "name": "nodes exact between rejected r10 and r11",
+      "passed": true
+    },
+    {
+      "name": "scenes exact between rejected r10 and r11",
+      "passed": true
+    },
+    {
+      "name": "samplers exact between rejected r10 and r11",
+      "passed": true
+    },
+    {
+      "name": "textures exact between rejected r10 and r11",
+      "passed": true
+    },
+    {
+      "name": "accessors exact between rejected r10 and r11",
+      "passed": true
+    },
+    {
+      "name": "closed-window/NORMAL exact",
+      "passed": true
+    },
+    {
+      "name": "closed-window/POSITION exact",
+      "passed": true
+    },
+    {
+      "name": "chalk-enamel/NORMAL exact",
+      "passed": true
+    },
+    {
+      "name": "chalk-enamel/POSITION exact",
+      "passed": true
+    },
+    {
+      "name": "blue-enamel/NORMAL exact",
+      "passed": true
+    },
+    {
+      "name": "blue-enamel/POSITION exact",
+      "passed": true
+    },
+    {
+      "name": "safety-yellow/NORMAL exact",
+      "passed": true
+    },
+    {
+      "name": "safety-yellow/POSITION exact",
+      "passed": true
+    },
+    {
+      "name": "oxidized-roof/NORMAL exact",
+      "passed": true
+    },
+    {
+      "name": "oxidized-roof/POSITION exact",
+      "passed": true
+    },
+    {
+      "name": "shore-meadow/COLOR_0 exact",
+      "passed": true
+    },
+    {
+      "name": "shore-meadow/NORMAL exact",
+      "passed": true
+    },
+    {
+      "name": "shore-meadow/POSITION exact",
+      "passed": true
+    },
+    {
+      "name": "shore-meadow/TEXCOORD_0 exact",
+      "passed": true
+    },
+    {
+      "name": "warm-gravel/COLOR_0 exact",
+      "passed": true
+    },
+    {
+      "name": "warm-gravel/NORMAL exact",
+      "passed": true
+    },
+    {
+      "name": "warm-gravel/POSITION exact",
+      "passed": true
+    },
+    {
+      "name": "warm-gravel/TEXCOORD_0 exact",
+      "passed": true
+    },
+    {
+      "name": "mineral-ridge/COLOR_0 exact",
+      "passed": true
+    },
+    {
+      "name": "mineral-ridge/NORMAL exact",
+      "passed": true
+    },
+    {
+      "name": "mineral-ridge/POSITION exact",
+      "passed": true
+    },
+    {
+      "name": "mineral-ridge/TEXCOORD_0 exact",
+      "passed": true
+    },
+    {
+      "name": "reservoir-water/COLOR_0 exact",
+      "passed": true
+    },
+    {
+      "name": "reservoir-water/NORMAL exact",
+      "passed": true
+    },
+    {
+      "name": "reservoir-water/POSITION exact",
+      "passed": true
+    },
+    {
+      "name": "water-current/NORMAL exact",
+      "passed": true
+    },
+    {
+      "name": "water-current/POSITION exact",
+      "passed": true
+    },
+    {
+      "name": "tree-bark/NORMAL exact",
+      "passed": true
+    },
+    {
+      "name": "tree-bark/POSITION exact",
+      "passed": true
+    },
+    {
+      "name": "fir-light/NORMAL exact",
+      "passed": true
+    },
+    {
+      "name": "fir-light/POSITION exact",
+      "passed": true
+    },
+    {
+      "name": "fir-dark/NORMAL exact",
+      "passed": true
+    },
+    {
+      "name": "fir-dark/POSITION exact",
+      "passed": true
+    },
+    {
+      "name": "image0 unchanged",
+      "passed": true
+    },
+    {
+      "name": "image2 unchanged",
+      "passed": true
+    },
+    {
+      "name": "grass image alone intentionally changes",
+      "passed": true
+    }
+  ]
+}

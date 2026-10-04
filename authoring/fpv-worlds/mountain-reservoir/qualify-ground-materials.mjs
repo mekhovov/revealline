@@ -98,7 +98,7 @@ const projects = await Promise.all(
 );
 const noRevision = (v) => JSON.stringify(v, (k, x) => (k === 'revision' ? undefined : x));
 check(
-  projects[0].revision === 'r9' && projects[1].revision === 'r10',
+  projects[0].revision === 'r9' && projects[1].revision === 'r11',
   'Distinct candidate revision',
 );
 check(

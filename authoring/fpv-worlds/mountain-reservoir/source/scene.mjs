@@ -464,7 +464,7 @@ export function createScene({ groundMaterials = false } = {}) {
       generator:
         'RevealLine original Mountain Reservoir source ' +
         (groundMaterials
-          ? 'r10-ground-material-candidate'
+          ? 'r11-ground-material-candidate'
           : terrainStitched
             ? 'r9-terrain-stitching-candidate'
             : engineeringAdded
