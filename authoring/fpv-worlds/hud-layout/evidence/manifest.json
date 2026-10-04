@@ -254,5 +254,29 @@
     "file": "fpv-hud-source-renderer-parity-r3.json.gz",
     "bytes": 3820,
     "sha256": "076971c2368a41b8b7eea4c09d3b357b66a537e99b52fb5cb6d5a699c2bfc9a4"
+  },
+  {
+    "source": "/tmp/fpv-hud-layout-8956-admitted-flight.png",
+    "rawBytes": 72640,
+    "rawSHA256": "e934da7a711e370ace9480238094ee6b06fac08155656fefa4ca60df37331566",
+    "file": "fpv-hud-layout-8956-admitted-flight.png.gz",
+    "bytes": 66991,
+    "sha256": "b7972e2143736202b90268559be314e77b3f738b566aae8a0679694e8ed75cd4"
+  },
+  {
+    "source": "/tmp/fpv-hud-layout-8956-admitted-flight.txt",
+    "rawBytes": 565,
+    "rawSHA256": "b2c02787e2f5a965802659217950db035d972eb364e8085baa5aeec6bba097c7",
+    "file": "fpv-hud-layout-8956-admitted-flight.txt.gz",
+    "bytes": 342,
+    "sha256": "cba364bf7b9f9381ca5ce56c7360b06330c8e5b627313a3ec2f5100f51fdb0a4"
+  },
+  {
+    "source": "/tmp/fpv-hud-layout-8956-admitted-paused.txt",
+    "rawBytes": 1685,
+    "rawSHA256": "e9361c694b0e41adc0197cbb67060b73bf9f21bab82439ef7060f94fadf42584",
+    "file": "fpv-hud-layout-8956-admitted-paused.txt.gz",
+    "bytes": 743,
+    "sha256": "edc9aae41b41aecd922eaadb1e37a802ec750a9e5dedfa10e791351dd96ffeb7"
   }
 ]
