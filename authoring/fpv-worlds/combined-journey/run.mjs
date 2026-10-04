@@ -154,7 +154,8 @@ async function finish(name) {
   check(!p.data.errors.length && !p.data.warnings.length, name + ' no errors/warnings');
   check(!Object.keys(p.data.dropped).length, name + ' bounded observations without drops');
   check(
-    Object.values(p.data.resources?.registered ?? {}).every((x) => x === 0),
+    p.data.resources?.registered &&
+      Object.values(p.data.resources.registered).every((x) => x === 0),
     name + ' owned registered resources released',
   );
 }
