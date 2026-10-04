@@ -763,7 +763,7 @@ test('persistent scheduler remains bounded after a stall and only explicit music
   await sound.dispose();
 });
 
-test('reaction defaults are quiet while saved slider choices remain intact', () => {
+test('spoken reactions default off while captions and saved opt-in remain intact', () => {
   for (const raw of [null, 'invalid']) {
     const storage = {
       getItem: () => raw,
@@ -773,6 +773,8 @@ test('reaction defaults are quiet while saved slider choices remain intact', () 
     };
     const prefs = createReactionOptions({ getStorage: () => storage });
     assert.equal(prefs.snapshot().volume, 0.25);
+    assert.equal(prefs.snapshot().speech, false);
+    assert.equal(prefs.snapshot().subtitles, true);
     prefs.dispose();
   }
   const record = JSON.stringify({
@@ -793,6 +795,7 @@ test('reaction defaults are quiet while saved slider choices remain intact', () 
     }),
   });
   assert.equal(prefs.snapshot().volume, 0.65);
+  assert.equal(prefs.snapshot().speech, true);
   prefs.dispose();
   const unavailable = createReactionOptions({
     getStorage() {
@@ -800,7 +803,9 @@ test('reaction defaults are quiet while saved slider choices remain intact', () 
     },
   });
   assert.equal(unavailable.snapshot().volume, 0.25);
-  unavailable.choose({ volume: 0.15 });
+  assert.equal(unavailable.snapshot().speech, false);
+  unavailable.choose({ volume: 0.15, speech: true });
+  assert.equal(unavailable.snapshot().speech, true);
   assert.equal(unavailable.snapshot().volume, 0.15);
   assert.equal(unavailable.snapshot().durable, false);
   unavailable.dispose();

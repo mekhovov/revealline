@@ -4,7 +4,7 @@ import { boundedJSON, exactKeys } from '../data-json.mjs';
 export const REACTION_OPTIONS_KEY = 'revealline.reaction-presentation.v1';
 export const DEFAULT_REACTION_OPTIONS = Object.freeze({
   sounds: true,
-  speech: true,
+  speech: false,
   subtitles: true,
   volume: DEFAULT_DIALOGUE_VOLUME,
   scale: 1,

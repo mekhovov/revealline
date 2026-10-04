@@ -9,6 +9,10 @@ and older receipts remain historical; their superseded blockers are not the curr
 
 ## Character voice comfort correction — 4 October 2026
 
+Spoken character/action reactions now default to **off**, including absent, invalid
+or unavailable preference storage. Captions remain enabled; saved explicit speech
+choices are preserved. Players can enable Spoken reactions in the audio settings.
+
 The user reported that the newly added character/action voices dominate music and
 sound effects. Starting from main `3bc7a923da`, lower fresh Dialogue volume from
 65% to 25% and apply a shared 0.4 dialogue mix trim in both the main game and FPV
