@@ -25,14 +25,31 @@ Manual asset qualification passes 315 checks, including default-r8 and
 current-candidate reproduction, every original mesh attribute, new boundary
 coordinates and inward normals, exact old edge vertices, and all eight courses
 equal apart from revision. The prepare pipeline reports zero validator errors
-and exact pack/ZIP round trips. These checks do not establish visual acceptance,
-frame times, new-pack demonstration qualification or representative finished art.
+and exact pack/ZIP round trips. These asset checks are distinct from the actual
+renderer and new-pack demonstration qualification below; they do not establish
+frame times or representative finished art.
 
 The static comparison uses the same course, camera and unchanged admitted renderer
-for both immutable prepared GLBs. Review west/north low FPV and a grazing western
-angle, then the wide composition and Low/Balanced/High visibility. Covered skirt
-segments are behind the existing closed terrace solids; inspect grazing views for
-coplanar artifacts. Pixel/shared-style controls retain their existing ownership.
+for both immutable prepared GLBs. Actual review accepted matched west/north low
+FPV and western grazing views: the former sky holes close. Candidate grazing
+views also pass in Authored Low/Balanced/High, Pixel and shared industrial. No
+coplanar flicker was observed in those static angles; this is bounded seam
+acceptance, not a broad camera or sustained-flight art review.
+
+The ten observations in `evidence/r9-static-views.json` have no captured errors.
+Matched Balanced before/after views retain draw calls and resource owners; each
+submits 68 more triangles across the renderer's observed passes for the 34 added
+mesh triangles. The actual observation settings and all screenshots are retained.
+
+Fresh ordinary qualification of the exact r9 pack passes **575 checks**, including
+all sixteen flights, complete replays and archive-import replays. Every flight
+finishes with full health and zero contacts. Every retained physical result,
+milestone and sampled input/path matches r8 exactly; only revision and the
+dependency-bound proof file differ. See `evidence/r9-qualification.json` and
+`evidence/r9-r8-flight-comparison.json`. The sixteen-record archive is 908,558
+bytes, SHA-256 `c8b50e0ae00450c0b3c0af623de92f5eb6ac3b63f095d39603d3d1e8ce542641`.
+The r8 full imported-player and stopped-server offline runs remain explicitly
+historical evidence. No new r9 offline or physical-device claim is made.
 
 ```sh
 node authoring/fpv-worlds/mountain-reservoir/build-world.mjs ACCEPTED_R4_PREPARED NEW_R9_OUTPUT --terrain-stitching
