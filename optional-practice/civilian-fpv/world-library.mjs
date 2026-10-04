@@ -10,7 +10,8 @@ const check = (condition) => {
 };
 
 export function worldImportErrorCopy(error) {
-  if (error?.code !== 'unsupported-world-extension') return null;
+  if (!['unsupported-world-extension', 'unsupported-ground-motion'].includes(error?.code))
+    return null;
   return [
     'This SIM version does not support a required world feature. Open Flight practice, choose Check available practice, then Play available version. If that version still cannot import it, use a compatible pack. Prepare offline saves the version you opened.',
     'Ця версія SIM не підтримує потрібну можливість світу. Відкрийте «Практика польоту», виберіть «Перевірити доступну практику», а потім «Грати в доступну версію». Якщо імпорт усе ще неможливий, потрібен сумісний пакунок. Підготовка офлайн зберігає відкриту версію.',

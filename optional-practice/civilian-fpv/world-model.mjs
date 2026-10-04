@@ -619,6 +619,7 @@ export function validateWorldCourse(input) {
         'damage',
         'projectileSpeed',
         'range',
+        'groundMotion',
       ],
       'actor',
     );
@@ -636,6 +637,20 @@ export function validateWorldCourse(input) {
       'Actors need a supported role; hazards do not use combat roles',
     );
     actorIds.add(value.id);
+    if (value.groundMotion !== undefined) {
+      required(
+        ['patrol', 'sentry', 'vehicle'].includes(value.type) && stableId(value.groundMotion),
+        'Invalid actor ground motion',
+      );
+      if (value.groundMotion !== 'support-v1')
+        throw Object.assign(
+          new TypeError(`Unsupported actor ground motion: ${value.groundMotion}.`),
+          {
+            code: 'unsupported-ground-motion',
+            groundMotion: value.groundMotion,
+          },
+        );
+    }
     vector(value.position);
     required(within(value.position, c.bounds), 'Actor spawn outside bounds');
     const radius =
@@ -970,7 +985,7 @@ export function createWorldFlight({
             a.role === 'hostile' && a.fireEveryTicks ? 1 + (random() % a.fireEveryTicks) : 0,
           blocked: false,
         };
-        collision.addActor(actor);
+        collision.addActor(actor, a.groundMotion);
         required(
           collision.clearActorSpawn(actor),
           `Actor ${actor.id} spawn overlaps solid geometry`,

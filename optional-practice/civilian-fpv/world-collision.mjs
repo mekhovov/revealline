@@ -192,7 +192,7 @@ export function createWorldCollision(course) {
   }
   return {
     support,
-    addActor(actor) {
+    addActor(actor, groundMotion) {
       assertLive();
       const grounded = ['patrol', 'sentry'].includes(actor.type);
       const lift = grounded ? actor.height / 2 : actor.radius;
@@ -200,7 +200,12 @@ export function createWorldCollision(course) {
         ? RAPIER.ColliderDesc.capsule(Math.max(0, lift - actor.radius) / 1000, actor.radius / 1000)
         : RAPIER.ColliderDesc.ball(actor.radius / 1000);
       desc.setTranslation(...AXES.map((k) => centre(actor.position, lift)[k] / 1000));
-      actors.set(actor.id, { collider: world.createCollider(desc), lift, radius: actor.radius });
+      actors.set(actor.id, {
+        collider: world.createCollider(desc),
+        lift,
+        radius: actor.radius,
+        groundMotion,
+      });
     },
     clearActorSpawn(actor) {
       assertLive();
@@ -224,13 +229,32 @@ export function createWorldCollision(course) {
       const proxy = actors.get(actor.id);
       if (proxy) proxy.collider.setTranslation(mm(centre(actor.position, proxy.lift)));
     },
-    moveGroundActor(actor, delta) {
+    moveGroundActor: function moveGroundActor(actor, delta) {
       assertLive();
       const proxy = actors.get(actor.id);
+      const supported = proxy.groundMotion === 'support-v1';
+      const distance2 = supported && AXES.reduce((n, k) => n + delta[k] * delta[k], 0);
+      if (supported && distance2 > actor.radius * actor.radius) {
+        // At most four parts for the schema's 300 mm/tick and 100 mm radius.
+        // Leave two millimetres for component rounding before querying support.
+        let parts = 2;
+        while (distance2 > ((actor.radius - 2) * parts) ** 2) parts++;
+        let current = actor,
+          result;
+        for (let i = 0; i < parts; i++) {
+          result = moveGroundActor(
+            current,
+            sub(rounded(scale(delta, (i + 1) / parts)), rounded(scale(delta, i / parts))),
+          );
+          current = { ...actor, position: result.position };
+          if (!result.grounded) break;
+        }
+        return result;
+      }
       proxy.collider.setTranslation(mm(centre(actor.position, proxy.lift)));
       controller.computeColliderMovement(
         proxy.collider,
-        mm({ ...delta, y: Math.min(delta.y, -10) }),
+        mm({ ...delta, y: Math.min(delta.y, supported ? -1 : -10) }),
         undefined,
         undefined,
         staticOnly,
@@ -238,10 +262,35 @@ export function createWorldCollision(course) {
       const movement = controller.computedMovement();
       const position = rounded(add(actor.position, scale(movement, 1000)));
       let grounded = controller.computedGrounded();
-      // Integer rounding can put the feet just above Rapier's small contact
-      // offset. Reacquire nearby support rather than freezing on a flat deck.
-      // The bounded drop cannot jump a gap or select a distant lower floor.
-      if (!grounded) {
+      if (supported) {
+        // Keep the existing 10 mm controller offset, a 1 mm downward request
+        // and 1 mm integer margin. Convert normal clearance to vertical lift.
+        // Preserve swept steps; a center ray need not touch the supporting edge.
+        const ground = support(position, actor.radius, 220);
+        grounded = !!ground && position.y >= ground.y - 6 && position.y - ground.y <= 220;
+        if (grounded) {
+          const raise = Math.max(0, ground.y + Math.ceil(12000000 / ground.normal.y) - position.y);
+          const hit =
+            raise &&
+            world.castShape(
+              mm(centre(position, proxy.lift)),
+              IDENTITY,
+              { x: 0, y: raise / 1000, z: 0 },
+              proxy.collider.shape,
+              0,
+              1,
+              false,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              staticOnly,
+            );
+          position.y += raise;
+          grounded = !hit;
+        }
+      } else if (!grounded) {
+        // Retain legacy reacquisition and its exact integer trajectory.
         const ground = support(position, actor.radius, 220);
         if (ground && position.y >= ground.y - 6 && position.y - ground.y <= 220) {
           grounded = true;
