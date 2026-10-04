@@ -104,10 +104,64 @@ async function download(mode = 'normal') {
   click(packButton());
   await idle();
 }
+function captureNetwork() {
+  receipt.network.push(...clone(ctx.n.requests));
+  receipt.aborts.push(...clone(ctx.n.aborts));
+  receipt.workers.push(...clone(ctx.n.workers));
+  receipt.pageRequests.push(...clone(ctx.n.pageRequests));
+}
+async function workerBoundary() {
+  const count = ctx.n.requests.length;
+  const request = {
+    type: 'world-read',
+    url:
+      'https://raw.githubusercontent.com/mekhovov/revealline/' +
+      fixture.asset.commit +
+      '/' +
+      fixture.asset.path,
+    bytes: fixture.asset.bytes,
+    sha256: fixture.asset.sha256,
+  };
+  for (const [name, change] of [
+    ['foreign origin', { url: 'https://example.com/pack.rlpack' }],
+    ['mutable pack ref', { url: request.url.replace(fixture.asset.commit, 'main') }],
+    ['missing hash', { sha256: undefined }],
+    ['malformed hash', { sha256: 'x'.repeat(64) }],
+    ['empty pack', { bytes: 0 }],
+    ['oversize pack', { bytes: 67108865 }],
+    ['wrong operation', { type: 'download' }],
+    [
+      'index bound',
+      {
+        url: 'https://raw.githubusercontent.com/mekhovov/revealline/main/authoring/fpv-worlds/published/index.json',
+        bytes: 8193,
+        sha256: undefined,
+      },
+    ],
+  ]) {
+    const worker = new ctx.w.Worker(new URL('worker.js', frame.src));
+    let result;
+    try {
+      result = await bounded(
+        new Promise((resolve, reject) => {
+          worker.onmessage = ({ data }) => resolve(data);
+          worker.onerror = () => reject(Error('Native diagnostic worker failed'));
+          worker.postMessage({ ...request, ...change });
+        }),
+        'native worker request ' + name,
+      );
+    } finally {
+      worker.terminate();
+    }
+    must(
+      result.type === 'world-error' && ctx.n.requests.length === count,
+      'Native worker refuses before fetch: ' + name,
+    );
+  }
+}
 async function openHost() {
   if (ctx.app) {
-    receipt.network.push(...clone(ctx.n.requests));
-    receipt.aborts.push(...clone(ctx.n.aborts));
+    captureNetwork();
     ctx.store.close();
     await bounded(ctx.app.dispose(), 'old host disposal');
     eq(ctx.w.fixtureErrors, [], 'Old host has no uncaught errors');
@@ -160,6 +214,8 @@ async function execute() {
     checks: [],
     network: [],
     aborts: [],
+    workers: [],
+    pageRequests: [],
   };
   render('Verifying immutable files…');
   fixture = JSON.parse(new TextDecoder().decode(await bytes('./fixture.json')));
@@ -194,6 +250,7 @@ async function execute() {
   window.fixtureDatabases = new Set();
   await openHost();
   eq(ctx.n.requests, [], 'Opening Library performs no remote download');
+  await workerBoundary();
   eq(await records(), [], 'Isolated native library starts empty');
   await index([]);
   must(message() === 'No published worlds yet.', 'Empty production catalogue is honest');
@@ -304,6 +361,7 @@ async function execute() {
   ctx.n.mode = 'hold';
   click(packButton());
   await until(() => ctx.n.held, 'held pack stream');
+  await until(() => message() === '64 / 17072 B', 'native worker progress delivered');
   must(
     browse().disabled && packButton().disabled && !cancel().hidden,
     'Single operation owns Browse and Download',
@@ -442,6 +500,10 @@ async function execute() {
   const oldPanel = panel(),
     oldCancel = cancel();
   await bounded(ctx.app.dispose(), 'pending-download owner disposal');
+  await until(
+    () => ctx.n.workers.every((x) => x.terminateCount === 1),
+    'disposed native worker cancellation acknowledged',
+  );
   must(
     !oldPanel.isConnected && ctx.n.requests.at(-1).aborted,
     'Owner disposal removes UI and aborts fetch',
@@ -449,13 +511,40 @@ async function execute() {
   oldCancel.click();
   eq(await records(), [], 'Late removed control cannot install a pack');
   eq(ctx.w.fixtureErrors, [], 'No uncaught application errors');
-  receipt.network.push(...clone(ctx.n.requests));
-  receipt.aborts.push(...clone(ctx.n.aborts));
+  captureNetwork();
   must(
     receipt.network.every(
       (x) => x.cache === 'no-store' && x.credentials === 'omit' && x.redirect === 'error',
     ),
     'Every catalogue/pack request uses bounded first-party transport policy',
+  );
+  eq(receipt.pageRequests, [], 'Library never fetches index or packs on the page thread');
+  must(
+    receipt.workers.every(
+      (x) =>
+        x.nativeWorker &&
+        x.terminateCount === 1 &&
+        ['world-done', 'world-error'].includes(x.terminal),
+    ),
+    'Every native dedicated worker terminates exactly once after terminal reply',
+  );
+  must(
+    receipt.workers
+      .filter((x) => x.terminal === 'world-done')
+      .every((x) =>
+        x.events.some(
+          (e) => e.event === 'transfer' && e.exactBuffer && e.byteLength === x.receivedBytes,
+        ),
+      ),
+    'Successful native worker replies transfer the exact received buffer',
+  );
+  must(
+    receipt.network
+      .filter((x) =>
+        ['http', 'oversize-header', 'short', 'long', 'corrupt', 'hold'].includes(x.mode),
+      )
+      .every((x) => x.readerCancelled),
+    'All bounded body/fault/cancel paths close the worker reader',
   );
   ctx.store.close();
   ctx.app = null;
@@ -470,7 +559,7 @@ $('run').onclick = () =>
     receipt.status = 'failed';
     receipt.error = { message: error.message, stack: error.stack };
     if (ctx.n) {
-      receipt.network.push(...clone(ctx.n.requests));
+      captureNetwork();
       receipt.lastMessage = panel()?.querySelector('[role=status]')?.textContent;
       receipt.errors = clone(ctx.w.fixtureErrors);
     }

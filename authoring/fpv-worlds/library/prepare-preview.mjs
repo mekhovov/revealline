@@ -15,7 +15,8 @@ const rows = fixture.files.map((f) => ({
   path: 'player/' + f.path,
 }));
 rows.push(fixture.browserSources.find((f) => f.path.endsWith('/fixture-host.html')));
-assert(rows.length === 103);
+rows.push(fixture.browserSources.find((f) => f.path === 'worker-diagnostic.js'));
+assert(rows.length === 104 && rows.every(Boolean));
 await fs.mkdir(out);
 for (const f of rows) {
   const source = await fs.realpath(path.join(root, f.path));
