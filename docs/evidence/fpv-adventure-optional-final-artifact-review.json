@@ -1,0 +1,119 @@
+{
+  "format": "FPVAdventureOptionalFinalArtifactReview.v1",
+  "base": "5e4abe27305ef06f4bbecb8f9365c218dee55979",
+  "checks": [
+    {
+      "name": "accepted complete actual-browser receipt",
+      "passed": true
+    },
+    {
+      "name": "browser frozen sourceFiles",
+      "passed": true
+    },
+    {
+      "name": "browser frozen fixtureFiles",
+      "passed": true
+    },
+    {
+      "name": "browser frozen proofArchive",
+      "passed": true
+    },
+    {
+      "name": "browser frozen candidate",
+      "passed": true
+    },
+    {
+      "name": "browser frozen admittedSource",
+      "passed": true
+    },
+    {
+      "name": "all102 admitted player files bound",
+      "passed": true
+    },
+    {
+      "name": "12 complete two-mode replays across6worlds",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/acro exact original result",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/self-level exact original result",
+      "passed": true
+    },
+    {
+      "name": "adventure-quarry-04/acro exact original result",
+      "passed": true
+    },
+    {
+      "name": "adventure-quarry-04/self-level exact original result",
+      "passed": true
+    },
+    {
+      "name": "adventure-rooftops-01/acro exact original result",
+      "passed": true
+    },
+    {
+      "name": "adventure-rooftops-01/self-level exact original result",
+      "passed": true
+    },
+    {
+      "name": "adventure-rail-depot-05/acro exact original result",
+      "passed": true
+    },
+    {
+      "name": "adventure-rail-depot-05/self-level exact original result",
+      "passed": true
+    },
+    {
+      "name": "adventure-orchard-01/acro exact original result",
+      "passed": true
+    },
+    {
+      "name": "adventure-orchard-01/self-level exact original result",
+      "passed": true
+    },
+    {
+      "name": "adventure-solar-farm-05/acro exact original result",
+      "passed": true
+    },
+    {
+      "name": "adventure-solar-farm-05/self-level exact original result",
+      "passed": true
+    },
+    {
+      "name": "no tracked production edits",
+      "passed": true
+    },
+    {
+      "name": "no untracked production files",
+      "passed": true
+    },
+    {
+      "name": "converter receipt bound to exact committed candidate script",
+      "passed": true
+    }
+  ],
+  "summary": {
+    "checks": 23,
+    "browser": {
+      "bytes": 114612,
+      "sha256": "83b0985c3b6089dadd86748170f1df7bb058668bace8e6e644a1cea1af78211b",
+      "checks": 395,
+      "elapsedMs": 73347,
+      "completedRenderedReplays": 12,
+      "maxActiveLoopObservationMs": 43,
+      "snapshotEmptyMs": 0.09999999403953552,
+      "snapshot62RecordsRangeMs": [
+        99.59999999403954,
+        119.5
+      ]
+    }
+  },
+  "limitations": [
+    "Instrumented functional observations, not hardware FPS or uninstrumented frame times.",
+    "Historical browser candidatebf/9efa; later Orchard maps qualified separately.",
+    "Explicit app.dispose defect retained for a separate focused fix."
+  ]
+}
