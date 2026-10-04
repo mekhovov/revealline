@@ -72,7 +72,9 @@
         "game/test/industrial-soldier-roster.test.mjs",
         "game/test/industrial-machinery.test.mjs",
         "game/test/industrial-native-vehicles.test.mjs",
-        "game/test/industrial-environment-production.test.mjs"
+        "game/test/industrial-environment-production.test.mjs",
+        "game/test/industrial-native-soldiers.test.mjs",
+        "game/test/industrial-soldier-debris.test.mjs"
       ]
     },
     {

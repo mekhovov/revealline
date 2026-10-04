@@ -7,6 +7,13 @@ import {
   resolveIndustrialVehicleModel,
 } from './industrial-vehicles.mjs';
 import {
+  INDUSTRIAL_SOLDIER_REVISION,
+  industrialSoldierPaintKeys,
+  resolveIndustrialSoldierFamily,
+  buildIndustrialSoldier,
+  applyIndustrialSoldierPose,
+} from './industrial-soldiers.mjs';
+import {
   buildWorldVisuals,
   buildDroneVisual,
   buildContainerVisualGeometry,
@@ -1455,6 +1462,15 @@ export function createFlightRenderer({
       actor.pursuit?.family ??
       course.pursuit?.actors.find((policy) => policy.id === actor.id)?.family ??
       ((actorDefinitions.get(actor.id)?.speed ?? actor.speed ?? 0) > 0 ? 'patroller' : 'lookout');
+    const nativeSoldierFamily = resolveIndustrialSoldierFamily({
+      revision: machineryRevision,
+      actor: actorDefinitions.get(actor.id) ?? actor,
+      family: huntFamily,
+      huntTarget,
+      collectionId: simCollectionIdForProfile(themeProfile),
+      collectionRevision: themeProfile?.revision,
+      assetRole: slot,
+    });
     const huntAppearance = huntTarget
       ? actorVisual(huntFamily, preferredCast === 'authored' ? 'rivals' : preferredCast)
       : null;
@@ -1805,6 +1821,55 @@ export function createFlightRenderer({
         [0, radius, 0],
       );
       ring.rotation.x = Math.PI / 2;
+    } else if (nativeSoldierFamily) {
+      const paints = Object.fromEntries(
+        industrialSoldierPaintKeys(nativeSoldierFamily).map((key) => [
+          key,
+          key === 'coat'
+            ? armor
+            : key === 'pants'
+              ? trousers
+              : material(huntAppearance.palette[key] ?? key, { roughness: 0.87 }),
+        ]),
+      );
+      group.userData.ownedMaterials.push(...Object.values(paints));
+      animated.soldier = buildIndustrialSoldier({
+        THREE,
+        parent: group,
+        part,
+        family: nativeSoldierFamily,
+        cast: huntAppearance.cast,
+        radius,
+        height,
+        quality,
+        paints,
+      });
+      group.userData.soldierRevision = INDUSTRIAL_SOLDIER_REVISION;
+      group.userData.soldierFamily = nativeSoldierFamily;
+      group.userData.soldierKit = animated.soldier.kitId;
+      if (['shield-bearer', 'brace-trooper'].includes(nativeSoldierFamily)) {
+        animated.armorTell = part(
+          new THREE.RingGeometry(
+            radius * 1.04,
+            radius * 1.13,
+            20,
+            1,
+            0,
+            nativeSoldierFamily === 'shield-bearer' ? Math.PI : Math.PI * 2,
+          ),
+          threat,
+          [0, 0.04, 0],
+        );
+        animated.armorTell.rotation.x = -Math.PI / 2;
+      }
+      if (course.pursuit?.actors.some((policy) => policy.id === actor.id)) {
+        animated.intent = part(
+          new THREE.ConeGeometry(radius * 0.23, radius * 0.65, 3),
+          paints.trim,
+          [0, 0.07, -radius * 1.25],
+        );
+        animated.intent.rotation.x = -Math.PI / 2;
+      }
     } else {
       part(
         pixel
@@ -2204,6 +2269,15 @@ export function createFlightRenderer({
           row.animated.body.rotation.z =
             !reducedMotion && moving ? Math.sin(seconds * 2.3) * 0.018 : 0;
         }
+        if (row.animated.soldier)
+          applyIndustrialSoldierPose(row.animated.soldier, {
+            ticks: state.ticks,
+            phase: actor.pursuit?.phase ?? 'idle',
+            moving,
+            blocked: actor.blocked,
+            active: actor.status === 'active',
+            reducedMotion,
+          });
         row.lastTick = state.ticks;
       }
       row.lastPosition.set(p.x, p.y, p.z);
@@ -2247,6 +2321,11 @@ export function createFlightRenderer({
     return {
       actorDefinitions: course?.actors ?? [],
       machineryRevision,
+      soldierRevision:
+        machineryRevision === INDUSTRIAL_SOLDIER_REVISION ? INDUSTRIAL_SOLDIER_REVISION : null,
+      soldierActorIds: [...actorRows]
+        .filter(([, row]) => row.group.userData.soldierRevision === INDUSTRIAL_SOLDIER_REVISION)
+        .map(([id]) => id),
       machineryActorIds: [...actorRows]
         .filter(([, row]) => row.group.userData.machineryRevision === INDUSTRIAL_VEHICLE_REVISION)
         .map(([id]) => id),

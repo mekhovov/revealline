@@ -356,6 +356,8 @@ export const OPTIONAL_PACKAGE_POLICIES = Object.freeze(
                 'game/presentation/industrial-materials.mjs',
                 'game/presentation/industrial-machinery.mjs',
                 'game/ui/art-review-navigation.mjs',
+                'game/hunt/industrial-soldier-kit.mjs',
+                'optional-practice/civilian-fpv/industrial-soldiers.mjs',
                 'optional-practice/civilian-fpv/industrial-vehicles.mjs',
               ]
             : []),

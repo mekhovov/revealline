@@ -186,6 +186,7 @@
     "optional-practice/civilian-fpv/app.mjs",
     "optional-practice/civilian-fpv/renderer.mjs",
     "optional-practice/civilian-fpv/industrial-vehicles.mjs",
+    "optional-practice/civilian-fpv/industrial-soldiers.mjs",
     "optional-practice/civilian-fpv/input.mjs",
     "optional-practice/civilian-fpv/copy.mjs",
     "optional-practice/civilian-fpv/style.css",

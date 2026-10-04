@@ -4,6 +4,10 @@ import { createEncounterDisplayPreferences } from '../../game/encounter-display-
 import { actorVisual } from '../../game/hunt/actor-catalog.mjs';
 import { sharedActorAppearance } from '../../game/hunt/preferences.mjs';
 import {
+  INDUSTRIAL_SOLDIER_KIT_REVISION,
+  INDUSTRIAL_SOLDIER_KITS,
+} from '../../game/hunt/industrial-soldier-kit.mjs';
+import {
   INDUSTRIAL_MACHINERY_REVISION,
   INDUSTRIAL_MACHINERY_PALETTE,
 } from '../../game/presentation/industrial-machinery.mjs';
@@ -124,9 +128,13 @@ export function createSnakeHuntPresentation({ THREE, scene, preferences }) {
   let disposed = false,
     previousTick = null,
     observedTick = null;
-  const vehicleBursts = new Map();
+  const vehicleBursts = new Map(),
+    soldierBursts = new Map(),
+    seenSoldierCatches = new Set();
+  let priorSoldierPreferences = null;
+  const catchKey = (caught) => `${caught.id}/${caught.tick}`;
   function put(mesh, at, size, tint, angle = 0) {
-    if (mesh.count >= mesh.instanceMatrix.count) return;
+    if (mesh.count >= mesh.instanceMatrix.count) return false;
     position.set(...at);
     scale.set(...size);
     rotation.setFromEuler(euler.set(angle, angle * 0.7, angle * 0.4));
@@ -134,9 +142,41 @@ export function createSnakeHuntPresentation({ THREE, scene, preferences }) {
     mesh.setMatrixAt(mesh.count, matrix);
     mesh.setColorAt(mesh.count, color.set(tint));
     mesh.count++;
+    return true;
   }
   function reset() {
     for (const mesh of pools) mesh.count = 0;
+  }
+  function kitPiece(mesh, origin, appearance, angle, size = 0.035) {
+    const kit = INDUSTRIAL_SOLDIER_KITS[appearance.family];
+    if (!kit) return;
+    // Render the same accessory's pixel rectangles as shallow native pieces.
+    // Each rectangle consumes one instance in the existing pool; no extra pool
+    // or hidden particle allowance is introduced for detailed equipment.
+    for (const [layer, [role, x, y, width, height]] of kit.rectangles.entries()) {
+      const dx = (x + width / 2 - kit.size[0] / 2) * size,
+        dz = (y + height / 2 - kit.size[1] / 2) * size;
+      if (
+        !put(
+          mesh,
+          [
+            origin[0] + Math.cos(angle) * dx - Math.sin(angle) * dz,
+            origin[1] + layer * size * 0.02,
+            origin[2] + Math.sin(angle) * dx + Math.cos(angle) * dz,
+          ],
+          [width * size, size * 0.65, height * size],
+          appearance.palette[role] ?? role,
+          0,
+        )
+      )
+        break;
+      // Keep the pixel plate in the same plane; body fragments may tumble.
+      if (mesh.count) {
+        rotation.setFromEuler(euler.set(0, -angle, 0));
+        matrix.compose(position, rotation, scale);
+        mesh.setMatrixAt(mesh.count - 1, matrix);
+      }
+    }
   }
   return {
     palette,
@@ -145,14 +185,52 @@ export function createSnakeHuntPresentation({ THREE, scene, preferences }) {
       previousTick = null;
       observedTick = null;
       vehicleBursts.clear();
+      soldierBursts.clear();
+      seenSoldierCatches.clear();
+      priorSoldierPreferences = null;
     },
     // Accepted native simulation steps feed this observer independently of drawing.
     // Restore and seek reconstruct state without replaying historical equipment bursts.
-    observe(state, { machineryRevision = null, machineryActorIds = [] } = {}) {
-      if (disposed || machineryRevision !== INDUSTRIAL_MACHINERY_REVISION) return;
-      if (observedTick !== null && state.ticks < observedTick) vehicleBursts.clear();
+    observe(
+      state,
+      {
+        machineryRevision = null,
+        machineryActorIds = [],
+        soldierRevision = null,
+        soldierActorIds = [],
+      } = {},
+    ) {
+      if (
+        disposed ||
+        (machineryRevision !== INDUSTRIAL_MACHINERY_REVISION &&
+          soldierRevision !== INDUSTRIAL_SOLDIER_KIT_REVISION)
+      )
+        return;
+      if (observedTick !== null && state.ticks < observedTick) {
+        vehicleBursts.clear();
+        soldierBursts.clear();
+        seenSoldierCatches.clear();
+        for (const caught of state.hunt?.catches ?? []) seenSoldierCatches.add(catchKey(caught));
+      }
       observedTick = state.ticks;
-      const admitted = new Set(machineryActorIds);
+      if (soldierRevision === INDUSTRIAL_SOLDIER_KIT_REVISION) {
+        const soldiers = new Set(soldierActorIds);
+        for (const event of state.events ?? []) {
+          if (event.type !== 'catch' || !soldiers.has(event.actor)) continue;
+          // Native catches carry the transaction's starting tick; step() then
+          // increments the snapshot clock before publishing the accepted event.
+          const caught = state.hunt?.catches.find(
+            (entry) => entry.id === event.actor && entry.tick === state.ticks - 1,
+          );
+          if (caught && !seenSoldierCatches.has(catchKey(caught))) {
+            soldierBursts.set(catchKey(caught), state.ticks);
+            seenSoldierCatches.add(catchKey(caught));
+          }
+        }
+      }
+      const admitted = new Set(
+        machineryRevision === INDUSTRIAL_MACHINERY_REVISION ? machineryActorIds : [],
+      );
       for (const event of state.events ?? []) {
         if (
           event.type === 'defeat' &&
@@ -170,6 +248,8 @@ export function createSnakeHuntPresentation({ THREE, scene, preferences }) {
         actorDefinitions = [],
         machineryRevision = null,
         machineryActorIds = [],
+        soldierRevision = null,
+        soldierActorIds = [],
       } = {},
     ) {
       if (disposed) return;
@@ -177,7 +257,31 @@ export function createSnakeHuntPresentation({ THREE, scene, preferences }) {
       if (!state.hunt && machineryRevision !== INDUSTRIAL_MACHINERY_REVISION) return;
       const prefs = preferences();
       const bloody = prefs.brutal && prefs.blood;
-      const catches = state.hunt?.catches.slice(-12) ?? [];
+      const catches = state.hunt?.catches.slice(-12) ?? [],
+        soldierIds = new Set(
+          soldierRevision === INDUSTRIAL_SOLDIER_KIT_REVISION ? soldierActorIds : [],
+        );
+      if (
+        previousTick !== null &&
+        (state.ticks < previousTick ||
+          (state.ticks > previousTick + 1 && observedTick !== state.ticks))
+      )
+        soldierBursts.clear();
+      const retainedCatches = new Set(catches.map(catchKey));
+      for (const [key, tick] of soldierBursts)
+        if (!retainedCatches.has(key) || state.ticks - tick > 40) soldierBursts.delete(key);
+      for (const key of seenSoldierCatches)
+        if (!retainedCatches.has(key)) seenSoldierCatches.delete(key);
+      for (const key of retainedCatches) seenSoldierCatches.add(key);
+      if (soldierRevision === INDUSTRIAL_SOLDIER_KIT_REVISION) {
+        if (
+          reducedMotion ||
+          (priorSoldierPreferences?.brutal && !prefs.brutal) ||
+          (priorSoldierPreferences?.blood && !prefs.blood)
+        )
+          soldierBursts.clear();
+        priorSoldierPreferences = { brutal: prefs.brutal, blood: prefs.blood };
+      }
       for (const point of state.hunt?.tail.slice(0, 64) ?? [])
         put(
           tail,
@@ -196,6 +300,16 @@ export function createSnakeHuntPresentation({ THREE, scene, preferences }) {
           caught.family ?? ((actor?.speed ?? 0) > 0 ? 'patroller' : 'lookout'),
           cast === 'authored' ? 'rivals' : cast,
         );
+        const productionKit =
+          soldierIds.has(caught.id) && INDUSTRIAL_SOLDIER_KITS[appearance.family];
+        if (productionKit && prefs.showRemains !== false)
+          kitPiece(
+            remains,
+            [origin[0], origin[1] + 0.045, origin[2]],
+            appearance,
+            ((caught.tick ?? 0) % 7) * 0.3,
+            0.026,
+          );
         // Clean feedback remains visible for a short moment. Graphic remains
         // require the independent shared Brutal, Blood and Remains settings.
         if (bloody && prefs.showRemains !== false) {
@@ -210,11 +324,18 @@ export function createSnakeHuntPresentation({ THREE, scene, preferences }) {
               remains,
               [origin[0] + (piece - 1) * 0.22, origin[1] + 0.07, origin[2] + (piece % 2) * 0.18],
               [0.15, 0.11, piece === 1 ? 0.32 : 0.22],
-              piece === 1 ? palette.flesh : palette.skin,
+              piece === 1 ? palette.flesh : productionKit ? appearance.palette.skin : palette.skin,
               piece * 0.8,
             );
         }
-        if (reducedMotion || age > 0.8 || bursts++ >= 4) continue;
+        if (
+          reducedMotion ||
+          age < 0 ||
+          age > 0.8 ||
+          (productionKit && !soldierBursts.has(catchKey(caught))) ||
+          bursts++ >= 4
+        )
+          continue;
         const count = prefs.brutal ? 24 : 8;
         const vx = caught.velocity.x / 1000;
         const vz = caught.velocity.z / 1000;
@@ -224,16 +345,26 @@ export function createSnakeHuntPresentation({ THREE, scene, preferences }) {
           const speed = 0.9 + (piece % 5) * 0.4;
           const size = bloody && piece < 6 ? [0.11, 0.26, 0.11] : [0.06, 0.06, 0.06];
           const y = Math.max(0.06, 0.8 + age * (1.5 + (piece % 3) * 0.5) - 4.9 * age * age);
+          const at = [
+            origin[0] + Math.cos(angle) * age * speed,
+            origin[1] + y,
+            origin[2] + Math.sin(angle) * age * speed,
+          ];
+          if (productionKit && piece === (bloody ? 6 : 0)) {
+            kitPiece(fragments, at, appearance, angle + age * 2);
+            continue;
+          }
           put(
             fragments,
-            [
-              origin[0] + Math.cos(angle) * age * speed,
-              origin[1] + y,
-              origin[2] + Math.sin(angle) * age * speed,
-            ],
+            at,
             size,
             bloody
-              ? [palette.blood, palette.flesh, palette.skin, palette.bone][piece % 4]
+              ? [
+                  palette.blood,
+                  palette.flesh,
+                  productionKit ? appearance.palette.skin : palette.skin,
+                  palette.bone,
+                ][piece % 4]
               : piece % 2
                 ? appearance.palette.coat
                 : palette.spark,
@@ -312,8 +443,12 @@ export function createSnakeHuntPresentation({ THREE, scene, preferences }) {
             );
           }
         }
-        previousTick = state.ticks;
       }
+      if (
+        machineryRevision === INDUSTRIAL_MACHINERY_REVISION ||
+        soldierRevision === INDUSTRIAL_SOLDIER_KIT_REVISION
+      )
+        previousTick = state.ticks;
       for (const mesh of pools) {
         mesh.instanceMatrix.needsUpdate = true;
         if (mesh.instanceColor) mesh.instanceColor.needsUpdate = true;

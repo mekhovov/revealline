@@ -4,6 +4,7 @@ import {
   validateActorAnimation,
 } from '../presentation/actor-animation.mjs';
 import { actorArtReviewRevision } from './preferences.mjs';
+import { INDUSTRIAL_SOLDIER_KITS } from './industrial-soldier-kit.mjs';
 import { actorVisual, resolveActorFamily } from './actor-catalog.mjs';
 /** Original overhead pixel rigs. The host owns time, facing and vulnerability;
  * this renderer never advances AI, reads a clock or consumes randomness. */
@@ -734,6 +735,17 @@ function rosterEquipment(ctx, role, family, gait, options, cast, compactArt) {
       Math.max(unit, Math.floor(h / unit) * unit),
     );
   };
+  const kit = (id, x = null, y = null) => {
+    const part = INDUSTRIAL_SOLDIER_KITS[id];
+    for (const [color, xx, yy, width, height] of part.rectangles)
+      p(
+        role[color] ?? color,
+        (x ?? part.anchor[0]) + xx,
+        (y ?? part.anchor[1]) + yy,
+        width,
+        height,
+      );
+  };
   const accessory = gait.accessory ?? 0,
     swing = Math.sign(accessory) * unit,
     recovering = gait.recovery,
@@ -763,36 +775,23 @@ function rosterEquipment(ctx, role, family, gait, options, cast, compactArt) {
   }
   if (family === 'lookout') {
     const y = gait.notice || gait.breath || warning ? 6 : 8;
-    p(INK, 9, y, 6, 4);
-    p(INK, 17, y, 6, 4);
-    p('#81b1ac', 10, y, 3, 2);
-    p('#b7d9cf', 18, y, 3, 2);
+    kit(family, null, y);
     p(role.glove, 8, y + 3, 3, 3);
     p(role.glove, 21, y + 3, 3, 3);
     p(INK, 13, 21, 6, 4);
     p(role.trim, 14, 22, 4, 2);
   } else if (family === 'patroller') {
     // Transverse bedroll and a baton make the slow measured patrol recognizable.
-    p(INK, 9, 21, 14, 5);
-    p(role.coat, 10, 22, 12, 3);
-    p(role.trim, 11, 22, 2, 3);
-    p(role.trim, 19, 22, 2, 3);
+    kit(family);
     p(INK, 24, 14 + swing, 2, 8);
     p(role.light, 24, 15 + swing, 1, 3);
     if (gait.notice) p(role.glove, 22, 9, 3, 3);
   } else if (family === 'runner') {
     // A light rear harness leaves shoulders/crown readable; no large rucksack.
-    p(INK, 11, 19, 3, 6);
-    p(INK, 18, 19, 3, 6);
-    p(role.trim, 12, 20, 1, 4);
-    p(role.trim, 19, 20, 1, 4);
-    p(role.dark, 13, 20, 6, 2);
+    kit(family);
     if (gait.notice || recovering) p(role.glove, 7, 10 + swing, 3, 3);
   } else if (family === 'sprinter') {
-    p(INK, 8, 12, 3, 5);
-    p(INK, 21, 12, 3, 5);
-    p(role.trim, 9, 12, 1, 4);
-    p(role.trim, 22, 12, 1, 4);
+    kit(family);
     p(role.dark, 13, 20, 6, 4);
     p(role.light, 14, 20, 4, 2);
     if (warning) {
@@ -804,10 +803,7 @@ function rosterEquipment(ctx, role, family, gait, options, cast, compactArt) {
     }
   } else if (family === 'courier') {
     const y = 17 + swing;
-    p(INK, 22, y, 7, 7);
-    p('#795e3f', 23, y + 1, 5, 5);
-    p('#be9b65', 23, y + 1, 5, 2);
-    p('#d9c296', 25, y + 1, 1, 5);
+    kit(family, null, y);
     p(role.trim, 20, 15, 5, 2);
     if (gait.idling || gait.notice) {
       p('#e5debd', 22, y - 2, 4, 3);
@@ -820,10 +816,7 @@ function rosterEquipment(ctx, role, family, gait, options, cast, compactArt) {
       p(role.dark, x, 13, 3, 6);
       p(role.light, x, 13, 3, 2);
     }
-    for (const x of [11, 16, 21]) {
-      p(INK, x - 1, 20, 4, 4);
-      p(role.trim, x, 21, 2, 2);
-    }
+    kit(family);
     if (options.armed === true) {
       const recoil =
         options.state === 'fire' || options.animationClip === 'fire' ? Math.max(0, swing) : 0;
@@ -837,25 +830,17 @@ function rosterEquipment(ctx, role, family, gait, options, cast, compactArt) {
     p(role.dark, 20, 10, 3, 9);
     p(role.coat, 9, 11, 2, 6);
     p(role.coat, 21, 11, 2, 6);
-    p(INK, 9, 20, 14, 7);
-    p(role.dark, 10, 21, 12, 5);
-    p(role.light, 10, 21, 12, 2);
-    p(role.trim, 13, 21, 2, 5);
-    p(role.trim, 19, 21, 2, 5);
+    kit(family);
     if (warning || gait.notice) p(role.glove, 23, 8 + swing, 3, 6);
   } else if (family === 'switchback') {
     p(role.dark, 10, 20, 13, 3);
     p(role.patch, 11, 20, 11, 2);
-    p(INK, 23, 20 + swing, 5, 4);
-    p(role.trim, 23, 20 + swing, 4, 2);
-    p(role.patch, 24, 22 + swing, 2, 2);
+    kit(family, null, 20 + swing);
     if (warning) p(role.glove, 23, 9 + swing, 3, 4);
   } else if (family === 'rendezvous-pair') {
     const alternate = (String(options.partnerId ?? '').charCodeAt(0) || 0) % 2;
     const antenna = alternate ? 10 : 21;
-    p(INK, 11, 20, 11, 6);
-    p(role.dark, 12, 21, 9, 4);
-    p(role.trim, 12, 21, 9, 2);
+    kit(family);
     p(INK, antenna, 10, 1, 12);
     p('#a8c9bb', antenna, 10, 1, 2);
     p('#9cbdbe', 13, 22, 2, 1);
@@ -863,12 +848,7 @@ function rosterEquipment(ctx, role, family, gait, options, cast, compactArt) {
     if (gait.notice || recovering) p(role.glove, alternate ? 5 : 24, 10 + swing, 3, 4);
   } else if (family === 'shield-bearer') {
     // Plates never open on a cosmetic frame. Heading and protection stay native.
-    p(INK, 5, 5, 22, 5);
-    p('#84928a', 6, 5, 20, 3);
-    p('#c8d0bd', 7, 5, 18, 1);
-    p('#384c46', 11, 6, 10, 2);
-    p(role.dark, 7, 8, 4, 2);
-    p(role.dark, 21, 8, 4, 2);
+    kit(family);
     p(role.trim, 13, 21, 6, 4);
   } else if (family === 'brace-trooper') {
     for (const x of closed ? [6, 21] : [3, 25]) {
@@ -876,14 +856,10 @@ function rosterEquipment(ctx, role, family, gait, options, cast, compactArt) {
       p(role.trim, x + 1, closed ? 10 : 15, 2, 6);
       p(role.light, x + 1, closed ? 10 : 15, 2, 2);
     }
-    p(INK, 11, 21, 10, 5);
-    p(role.dark, 12, 22, 8, 3);
+    kit(family);
     if (!closed) p('#aec3a0', 14, 21, 4, 3);
   } else if (family === 'relay-warden') {
-    p(INK, 10, 19, 13, 8);
-    p(role.dark, 11, 20, 11, 6);
-    p(role.trim, 12, 20, 9, 2);
-    p(role.light, 12, 23, 3, 1);
+    kit(family);
     for (const [x, y] of [
       [9, 8],
       [22, 10],
