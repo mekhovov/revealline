@@ -1,0 +1,88 @@
+{
+  "source": "d1d48b2b7ad67a0915532a1489f300abccd778ae",
+  "sourceTree": "b96edf5e90cf4276b7d1d7110d713dc0d3bdf26f",
+  "parentMain": "5cde6dbc97c3067b6023d2bf7fd97fe251805347",
+  "fullValidationExit": 0,
+  "existingChecks": {
+    "passed": 16,
+    "failed": 0
+  },
+  "admissionExit": 0,
+  "packages": [
+    "civilian-flight",
+    "civilian-fpv",
+    "fpv-worlds"
+  ],
+  "identicalBuilds": 2,
+  "originalInputs": 95,
+  "originalInputBytes": 16777085,
+  "sourceReserveBytes": 131,
+  "admittedMembers": 102,
+  "runtimeOverlays": 0,
+  "scope": "Exact clean integrated candidate with current-main warm/ghost changes. Native admitted lifecycle is recorded separately when run.",
+  "files": [
+    {
+      "path": "fpv-language-phase-d1d48b2b7-validate.log.gz",
+      "bytes": 3399,
+      "sha256": "05bebaba8dac541ee3805fd865e92b6c7e7fbb2c9392fbaada915e79f41527e5",
+      "storedBytes": 1460,
+      "storedSha256": "5c5d4a061aa75bf7bae88cb02f5380e144b1d5636492c3c3e24663d91f06d83c"
+    },
+    {
+      "path": "fpv-language-phase-d1d48b2b7-existing-checks.log.gz",
+      "bytes": 4360,
+      "sha256": "b3e88a87c5a9e7f772588cf2193fac06cf3904704944de092aa2fe83c814bd39",
+      "storedBytes": 1156,
+      "storedSha256": "894768b2d4b1f1d6e7ae987e43c0c1edcd07c106433ca1f85dadf973f9a77761"
+    },
+    {
+      "path": "fpv-language-phase-d1d48b2b7-admission.log.gz",
+      "bytes": 421,
+      "sha256": "70b4f57bec30b4db9eaa0b8600530a56f514ca6253b3a7f6b1047112309cbc51",
+      "storedBytes": 291,
+      "storedSha256": "6fd1862d340112f4857ccac3cf80185b307e9e7e8ebd39b58e492f2cee2ff27b"
+    },
+    {
+      "path": "fpv-language-phase-d1d-input-bridge.json.gz",
+      "bytes": 18864,
+      "sha256": "8cf98841ec341a15f57aad064ab4d7037ce11319b0b0217c9cf192f042ace3f6",
+      "storedBytes": 5826,
+      "storedSha256": "f9f25199380b29621ad9df1fc05690aa80256949f6a689d6e81a982c7244ea04"
+    },
+    {
+      "path": "optional-candidate-verification.json.gz",
+      "bytes": 1142,
+      "sha256": "88a715e5a2d5df77343629298824590f95b995388bd6f906688aad64a8ef2341",
+      "storedBytes": 614,
+      "storedSha256": "33cec36fd7404e73115f761feac97cf97f3a599dbeb64b43711deac6c8798ac1"
+    },
+    {
+      "path": "optional-checksums.json.gz",
+      "bytes": 2136,
+      "sha256": "2f21bb40e2f3419354117d2bd87165e1917d1d1bf8b14babad217d78a0c03777",
+      "storedBytes": 925,
+      "storedSha256": "2604c226e01a3cd2ebd85fa6cda475144332283bd66dd52b9095a81c6300b7cd"
+    },
+    {
+      "path": "source-inventory-optional-fpv-worlds.json.gz",
+      "bytes": 32166,
+      "sha256": "2613a50716b3777c3d2cca17759b07d147c0fc81052ef1cbe576c9f0f9bdb449",
+      "storedBytes": 7145,
+      "storedSha256": "4267b8919c2318c53de7cc82b49ff3e19a5d353a017192f322d9027b8fbcbf27"
+    },
+    {
+      "path": "fpv-language-phase-player-d1d48b2b7.json.gz",
+      "bytes": 42960,
+      "sha256": "c1ddbb095299acbc3dec39529bd0d345cc1e045e0ff49626dab66e62873f63bc",
+      "storedBytes": 7354,
+      "storedSha256": "8be1e3c961fed773fd520e4f272ebf2a66920e2bd3e89d8a451c9afa51c5a691"
+    },
+    {
+      "path": "fixture.json.gz",
+      "bytes": 28359,
+      "sha256": "a1a5758ca9035ea5b319a89eee3e82c6bfd463c9d9d128c84e2f14201f7211f5",
+      "storedBytes": 6535,
+      "storedSha256": "cb0dae61b2a8b979c53eccfd0622215b0d65b34dc3e1186ff88ffe0b56b5cabe"
+    }
+  ]
+}

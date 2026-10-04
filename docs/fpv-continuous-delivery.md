@@ -3242,3 +3242,86 @@ runtime capability, then the r14 pack's fresh proofs, actual native import and
 terrace visual acceptance. Hut identity and scene rooting remain subsequent
 quality work. Festival, Harbor and Canals follow sequentially after Reservoir
 meets the representative quality standard; final new unit coverage stays in D6.
+
+
+### 4 October — Warm readiness and ghost access merged; capacity hold resolved
+
+Warm-frame readiness #1084 merged normally as `1a1a82d5e6617a53239218642eda3aa70e817fe3`.
+Personal-best Settings #1086 subsequently merged normally as
+`5cde6dbc97c3067b6023d2bf7fd97fe251805347`, from updated head `04bc7c9505`.
+The exact 95-input bridge verifies qualified warm main plus the two ghost hiding
+deletions. Its original 173-control run and separate 166-control tail retain their
+historical runtime identities; the normal merge is not called another browser run.
+At the bounded 19:05 UTC deployment read, both public markers still identified
+the already launched Library revision `8e5ad71e`, while warm deployment was running.
+Newer public launch acceptance is not inferred from these merges.
+
+Capacity #1085's hold was the initial allocation race: staging added it at
+18:42:48 UTC, before milestone 57 was assigned at 18:43:55. Later staging skipped
+the allocated PR but had no label-removal path. After exact-head/source inspection,
+only that obsolete allocation hold was removed. Ordinary leased main updates
+preserve the original capacity candidate and incorporate warm and merged ghost
+work. Current inspected head `e058d93b4f2f415e5446190d7c61b3c6bdf4f465` has all
+95 expected input identities, 16,735,954 raw source bytes and 41,262 bytes reserve.
+Fresh exact-head checks and the normal protected controller remain authoritative.
+The 41,026-byte lexical reduction preserves the previously documented semantic,
+token/comment/newline contract; no cap or global publication policy changed.
+Bounded publication/source bridges are retained in the
+[checkpoint manifest](../authoring/fpv-worlds/language-phase/evidence/publication-checkpoint/manifest.json).
+
+The next reliability fix preserves current flight ownership during language and
+Library repaint. Its first +55-byte guard reproduced the original baseline race
+and retained 324 passing native checks, then exposed another real transient:
+public Settings paused flight but Home's resumability still said Start until a
+native frame. The failed receipt remains. The isolated +105-byte continuation
+also refreshes the existing HUD in the native surface-open callback. Its new
+bounded source browser qualification is pending; pause/arming guards are unchanged.
+
+The exact admitted r14 Reservoir coating candidate passed nine bounded native
+views and actual import/render/arm/pause. All sixteen fresh ordinary flight proofs,
+independent replays and archive reimports subsequently passed 575 checks. Broader
+terrace/art acceptance and protected runtime/content publication remain distinct;
+this is not a comprehensive realistic-world or hardware-performance claim. Hut
+identity and scene rooting remain next quality work. Steady-flight CPU attribution
+continues independently. Festival, Harbor and Canals remain sequential after the
+Reservoir quality gate, with final new unit coverage reserved for D6.
+
+
+### 4 October — Language action ownership qualified; capacity prerequisite merged
+
+The focused language/menu ownership fix now has a 433-check native source pass
+at `bf3597703763584c79119bdeab50bfa03198ae6f` and a separate 283-check native
+admitted lifecycle pass at `d1d48b2b7ad67a0915532a1489f300abccd778ae`. The latter
+uses all 102 admitted files with no runtime overlays, on main5c including the
+qualified warm-frame and public personal-best control changes. Full Node22
+validation, all16 existing appearance/texture checks, and all-three/two-identical
+source-bound admissions pass. The prior324-check timeout is retained: it revealed
+the additional same-event stale Continue/Start state, repaired by synchronizing the
+existing HUD immediately after the native surface-open pause. No clock, arming,
+pause, physics, scoring or replay-proof guard changed.
+
+Capacity #1085 merged normally as `5bd8f36d7767dcd9dda740865b4d8f19ddbe7c28`
+at19:32:24Z after its current exact-head checks succeeded. Its initial allocation
+hold had preceded milestone57; only that proven obsolete hold was removed, then
+ordinary expected-head main updates and protected merge were used. The language
+branch normally incorporates this semantic-only projection: all95 input paths are
+checked, only world-visuals formatting changes from the admitted candidate, and
+the canonical bytes/AST/tokens/comments/line terminators remain exact. Resulting
+source reserve is41,157B; fresh publication CI remains distinct from historical
+local admission. See `authoring/fpv-worlds/language-phase/README.md` and its bounded
+lossless evidence archives.
+
+Warm #1084 is now publicly verified at marker/build identity
+`1a1a82d5e6617a53239218642eda3aa70e817fe3`: native Start, briefing Start, Ready,
+deliberate Arm, active flight and Pause were observed. Ghost #1086 is merged at5c,
+but that earlier public marker does not establish its deployment. Library's
+earlier8e public entry and empty published-world catalogue remain verified.
+
+Remaining delivery order is unchanged: qualify and publish the cap-guarded
+Reservoir coating capability, keep exact r14 native views/import/flight and
+575-check16-proof evidence distinct from broader terrace acceptance, then improve
+hut identity and terrain rooting. Steady-flight CPU attribution continues in its
+separate measured lane. Festival, Harbor and Canals follow the Reservoir quality
+standard; final additional unit coverage remains D6. No hardware-FPS, universal
+imported-image determinism, new offline or unobserved public deployment claim is
+added by this language increment.
