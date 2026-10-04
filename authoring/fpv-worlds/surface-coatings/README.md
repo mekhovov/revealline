@@ -38,7 +38,7 @@ content. The historical Reservoir r13 source preview established the bounded
 appearance of the same fixed bias, but is not a package or final required-asset
 qualification. No Reservoir asset is published by this runtime change.
 
-The branch depends on source-capacity PR #1085. The helper is authored in
+Source-capacity PR #1085 merged normally as `5bd8f36d7767dcd9dda740865b4d8f19ddbe7c28`; this capability is an independent follow-up on main. The helper is authored in
 `world-visuals-source.mjs`; the existing admitted `world-visuals.mjs` is refreshed
 with `scripts/refresh-fpv-world-visuals.mjs`. No file allowance or size ceiling
 changes. Static entry closure remains exact against the capacity parent:
@@ -91,3 +91,11 @@ interaction issue; the normal visible chooser succeeded.
 Protected publication remains pending. The older direct-loader prototype and its
 rejected prepare-boundary assumption are preserved separately
 at `530ad2d9606c9b5493e1dbfbf7e64b51d9339ab3`.
+
+## Current-main integration
+
+Candidate `364fb78c3dc7e268b84b0a13349af32864bca802` normally merges that current main. Of the 95 original admitted inputs, 93 retain their b51 bytes. The renderer adds only the already-qualified context-loss guard (+98B); the host adds the paused first draw and preserves ghost visibility in Settings (net +218B). The incoming changes equal main exactly, and every coating-specific line and other capability module retains its reviewed bytes. Collision, recordings, material ownership and the coating appearance path are unchanged.
+
+The integrated manual contract passes 87 checks, the existing content/Theme/texture files pass 33, and the generated visual projection is byte-identical to its canonical source projection. Fresh all-three package admissions verify committed inputs, ZIP members and two identical builds. Worlds remains 102 files / 95 inputs, totaling 16,739,353 raw source bytes with 37,863 bytes available. Small build-startup failures from missing sparse build dependencies are explicitly retained; exact Git-hash/APFS source materialization resolved them before the successful build. See `evidence/integration-364/manifest.json`.
+
+The earlier complete validation and actual admitted nine-view/native import evidence remain historical b51 receipts, not re-labelled as a new current-main browser run. No new full validation or full browser matrix was needed for the disjoint, independently-qualified incoming changes. The first locally admitted capable sources are b51 and364; public deployment support remains pending until protected publication and public verification.
