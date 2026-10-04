@@ -55,6 +55,9 @@ test('graph edits survive refresh, explicitly synchronize Hunt quotas and Undo r
   assert.ok(
     Object.values(editor.course().steps).every((steps) => steps[0].targets.includes('pursuit-2')),
   );
+  // The native actor host refreshes immediately after a successful commit;
+  // reflect that accepted source before exercising its later Undo refresh.
+  editor.render();
   editor.undo();
   panel = editor.render();
   assert.deepEqual(editor.course(), source);
