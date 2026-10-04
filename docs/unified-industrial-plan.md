@@ -4,6 +4,8 @@ Updated 4 October 2026. This register follows the approved hybrid Broforce/Facto
 
 For the active dependency graph, research changes, test restoration and per-stream exit conditions, see [parallel implementation and qualification](industrial-parallel-delivery-2026-10-04.md).
 
+The latest scope audit also completed [Motion Lab's shared actor editor](qualification/industrial-art/motion-lab-2026-10-04/README.md): the native descriptor/renderer, bounded frame and accessory edits, heading overlays, pooled ownership and existing Asset Studio handoff now replace the missing integration. This does not approve the candidate artwork. The six native SIM pursuit samples separately gained [twelve fixed legal completion/recovery witnesses](../game/test/fixtures/native-pursuit-flight/README.md), in addition to the pilot cases below.
+
 The six native pilots now have [32 generated completion cases](qualification/pursuit-pilots/generated-routes-2026-10-04.md), covering their declared Capture difficulties, Snake modes/paces and SIM flight modes. Fixed legal controls, native recording verification and exact recipe pins establish completion for those cases. They do not grant human-play, device, artwork or public-release approval.
 
 ## Required work and current boundary
