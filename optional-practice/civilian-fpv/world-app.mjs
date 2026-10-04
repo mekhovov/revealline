@@ -921,17 +921,20 @@ export function mountWorldApp({
   function demonstrationFor(entry, mode) {
     if (!entry) return null;
     entry = demonstrationEntry(entry);
-    const cache = demonstrationCache.get(entry.course) ?? new Map();
-    if (cache.has(mode)) return cache.get(mode);
+    const cache = demonstrationCache.get(entry.course) ?? new Map(),
+      cacheKey = `${entry.projectId ?? ''}:${entry.packIdentity}:${mode}`;
+    if (cache.has(cacheKey)) return cache.get(cacheKey);
     if (!entry.legacy) {
       const sourceIdentity = dataIdentity(validateWorldCourse(entry.course));
-      let candidate = WORLD_DEMONSTRATIONS.find(
-        (item) =>
-          item.proof.course === entry.id &&
-          item.proof.mode === mode &&
-          item.sourceIdentity === sourceIdentity,
-      );
-      if (!candidate && !entry.projectId) {
+      let candidate =
+        !entry.projectId &&
+        WORLD_DEMONSTRATIONS.find(
+          (item) =>
+            item.proof.course === entry.id &&
+            item.proof.mode === mode &&
+            item.sourceIdentity === sourceIdentity,
+        );
+      if (!candidate && (!entry.projectId || /^fpv-pack:[a-f0-9]{64}$/.test(entry.packIdentity))) {
         const saved = records.find((r) => {
           if (
             r.status !== 'verified' ||
@@ -943,7 +946,13 @@ export function mountWorldApp({
           )
             return false;
           try {
-            return dataIdentity(validateWorldCourse(r.course)) === sourceIdentity;
+            return (
+              dataIdentity(validateWorldCourse(r.course)) === sourceIdentity &&
+              r.proof.format === 'FlightAttempt.v2' &&
+              r.proof.model === WORLD_FLIGHT_MODEL &&
+              r.proof.backend === WORLD_COLLISION_BACKEND &&
+              r.proof.responseIdentity === responseIdentity(r.proof.response)
+            );
           } catch {
             return false;
           }
@@ -963,7 +972,7 @@ export function mountWorldApp({
         candidate.sourceIdentity === sourceIdentity
           ? proof
           : null;
-      cache.set(mode, match);
+      cache.set(cacheKey, match);
       demonstrationCache.set(entry.course, cache);
       return match;
     }
@@ -976,7 +985,7 @@ export function mountWorldApp({
     const match = Object.entries(identity).every(([key, value]) => proof[key] === value)
       ? proof
       : null;
-    cache.set(mode, match);
+    cache.set(cacheKey, match);
     demonstrationCache.set(entry.course, cache);
     return match;
   }
