@@ -1,3 +1,4 @@
+import { WORLD_SURFACE_COATING_EXTENSION, validateWorldSurfaceCoatings } from './world-themes.mjs';
 import { assertCriterionAnchorTranslation, compileContentProject } from './content-definitions.mjs';
 /** Browser/Node boundary for user-owned FPV worlds. No network or renderer dependencies. */
 export const WORLD_PROJECT_FORMAT = 'FPVWorldProject.v1';
@@ -192,6 +193,7 @@ export function encodeWorldGLB(document, binary = new Uint8Array()) {
   return bytes;
 }
 const SUPPORTED_EXTENSIONS = new Set([
+  WORLD_SURFACE_COATING_EXTENSION,
   'KHR_materials_unlit',
   'KHR_texture_transform',
   'KHR_mesh_quantization',
@@ -279,6 +281,7 @@ function validateDocument(doc, binary) {
     textures = arrayField(doc, 'textures', 128),
     materials = arrayField(doc, 'materials', 256),
     skins = arrayField(doc, 'skins', 64);
+  validateWorldSurfaceCoatings(doc);
   assert(
     (doc.extensions?.KHR_lights_punctual?.lights?.length ?? 0) <= 8,
     'At most eight imported lights.',
