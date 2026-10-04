@@ -834,3 +834,24 @@ Reuse the existing continuous-practice, touch and controller contracts during D3
 integration. Continue D4 creator work, D5's **228 challenges / 18 worlds** target,
 then D6's deferred unit/regression work. Physical controls, sustained device
 timings and novice feedback remain honestly unqualified.
+
+### Mountain Reservoir qualification — 4 October 2026
+
+Measured coaching, explicit route-mode editing, multi-course selection and exact
+imported-example lookup are now merged. The first D5 optional world, Mountain
+Reservoir r8, has eight distinct bilingual land-side routes and sixteen new
+ordinary-control demonstrations, all freshly qualified against its final shared
+world. It passes 575 CPU checks and 304 actual admitted-player/editor checks,
+including every Watch replay. A separate stopped-server native reload retained
+the world, flew Dry spillway descent and edited course 08 in Acro with Undo/Redo.
+Offline install/rollback was not part of that bounded run; earlier framework
+evidence remains separate. See the [world and exact evidence](../authoring/fpv-worlds/mountain-reservoir/README.md).
+
+This is **one of four D5 worlds** locally qualified, with protected publication
+and public entry tracked separately. The bundled catalogue stays **196 / 14**;
+installing this optional world produces **204 authored challenges / 15 installed
+worlds**. Festival Grounds is next, followed by Harbor Docks and Old Town Canals,
+toward **228 / 18**. Generic imported-card activity/difficulty/duration metadata
+is an existing host follow-up. Continue current-player performance, Library
+discovery and integration work in parallel; broader artistic acceptance,
+physical controls, named-device timings and deferred D6 unit coverage remain open.
