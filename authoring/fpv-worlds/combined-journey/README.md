@@ -1,8 +1,18 @@
 # Combined journey fixture preparation
 
 This local-only manual fixture implements the bounded
-[combined-journey design](../../../..//docs/fpv-combined-journey-qualification.md).
-It has not run in a browser. Ready component PRs are unchanged.
+[combined-journey design](../../../../docs/fpv-combined-journey-qualification.md).
+Ready component PRs are unchanged.
+
+The first native online run at port8963 stopped at its Retry control after 362
+successful checks, followed by the failed control check and three passing cleanup
+checks. The fixture selected the Results-dialog Retry while the current surface
+was Home. The full failure, screenshot and manifest are preserved under
+`evidence/source-8963-failed`; the receipt confirms a genuine paused17-tick flight,
+retained recovery, no warnings/errors and zero owned resources after disposal.
+The next immutable fixture selects the existing public Home Retry button and
+adds compact control/dialog/phase observations. Production and visibility guards
+are unchanged; the remainder of the journey is still unqualified.
 
 Preparation rejects any input difference beyond the exact accepted 323-byte
 Creator function when using the Library admitted player as a source baseline.
