@@ -53,6 +53,16 @@ wrappers are bound in [package provenance](evidence/fpv-imported-examples-packag
 This admission precedes the separately qualified capacity merge; it does not
 claim a combined latest-main package or installed/public release acceptance.
 
+The subsequent ordinary merge of main `ef9d606b647e3d209201b77c5cf4fdbf90bde772`
+is recorded in the [95-input integration audit](evidence/fpv-imported-examples-main-integration.json).
+The demonstrated host and 93 other inputs remain exact. Only the generated
+reaction projection changes from 849,454 to 838,378 bytes, matching the already
+qualified #1047 artifact byte for byte (AST, tokens, comments, line terminators,
+25 source pins and 24 recording payloads preserved). This combined source totals
+16,760,138 bytes with 17,078 bytes free. The merge does not change package limits,
+licenses, proof data or the frozen browser fixture. Fresh exact-head protected CI
+must verify integrated admission; the audit is not a new combined browser run.
+
 The manual preparer executes the actual private lookup functions extracted from
 the host through Acorn, with real course validators and recorded proofs. Its 46
 functional checks include baseline reproduction, exact positive lookup, wrong
