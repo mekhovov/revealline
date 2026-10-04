@@ -83,11 +83,42 @@
   },
   "visual": {
     "v1": "Not accepted: overly fine foliage, uniform bark; original screenshots retained. No source matrix run.",
-    "v2": "Root reviewed genuine close bark/crown and avenue views. Accepted bounded improvement: broken bark plates, visible broad leaf groups, route/guide clear. Closed simple tree forms remain; no complete-world realism claim. Source matrix now running."
+    "v2": "Root reviewed genuine close bark/crown and avenue views. Accepted bounded improvement: broken bark plates, visible broad leaf groups, route/guide clear. Closed simple tree forms remain; no complete-world realism claim. Source matrix now running.",
+    "sourceMatrix": {
+      "passed": true,
+      "checks": 96,
+      "imagePairs": 43
+    },
+    "packageMatrix": {
+      "passed": true,
+      "checks": 96,
+      "imagePairs": 43,
+      "exactFunctionalComparison": true
+    },
+    "actualPlayer": {
+      "passed": true,
+      "files": 102,
+      "settings": [
+        "Authored",
+        "Balanced",
+        "Self-level",
+        "Keyboard"
+      ],
+      "armSeconds": 0.2,
+      "pauseSeconds": 0.3,
+      "warningErrors": []
+    }
   },
   "limitations": [
     "CPU replay preserves actual outcomes, not hardware or art acceptance.",
     "Original replay format carries the inherited OrchardFacade label; input/member hashes and actual Orchard courses are explicit.",
     "No unit coverage added."
-  ]
+  ],
+  "admission": {
+    "sourceRevision": "480a2a19a37357466700d36cc5e78728a75c1736",
+    "allThreePassed": true,
+    "reproducibleBuilds": 2,
+    "inputBytes": 16765728,
+    "headroom": 11488
+  }
 }

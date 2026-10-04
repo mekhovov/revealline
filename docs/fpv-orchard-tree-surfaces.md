@@ -41,9 +41,37 @@ Root reviewed the [close bark](evidence/fpv-orchard-bark-v2-review.png),
 [avenue](evidence/fpv-orchard-avenue-v2-review.png). The bounded surface improvement
 is accepted: broken plates and broad leaf groups read more clearly, and the
 route and guide remain readable. Simple closed tree forms remain; this is not
-a claim of a complete realistic world. The frozen actual-WebGL source matrix
-is running. Package admission, package browser and actual-player observations
-are still pending.
+a claim of a complete realistic world. The actual source and admitted-package WebGL matrices each pass **96 checks /
+43 image pairs**. [Source receipt](evidence/fpv-orchard-source-browser-v2.json),
+[package receipt](evidence/fpv-orchard-package-browser-v2.json) and
+[complete comparison](evidence/fpv-orchard-source-package-browser-comparison.json)
+retain all checks, image hashes, draw calls, triangle counts and resource cycles.
+All functional fields are exactly equal between source and package, including
+geometry/UV checks, draw budgets, Pixel/shared/control images, the three-cycle
+GPU/registered-resource plateau and final registered-owner cleanup.
+
+All three optional applications pass clean [source-bound admission](evidence/fpv-orchard-admission-v2.json)
+with two identical builds on documentation successor
+`480a2a19a37357466700d36cc5e78728a75c1736`. The 95 original inputs total
+**16,765,728 bytes**, leaving **11,488 bytes** below the unchanged16MiB cap.
+Only world-visuals differs from main a46 (+4,204bytes). All admitted inputs are
+rebound to that committed tree. The complete102-file player passes223 extraction
+and digest checks ([receipt](evidence/fpv-orchard-admitted-player.json),
+[executed probe](evidence/fpv-orchard-admitted-player-probe.mjs)).
+ZIP SHA-256: `eb0ee77afa231f2a3388fce61f9bf08837b7a126c5bd71c284808103aafe8aa3`.
+
+The [package closure](evidence/fpv-orchard-source-package-closure.json) proves
+every one of31 fixture modules matches its admitted member. Only the expected
+pruned localization catalogue differs from source; the renderer, visual maps,
+physics and vendor bytes are exact. The harness is identical. Immutable storage
+reuse retains61 package-fixture links and98 earlier-player links after full byte
+comparison ([player reuse](evidence/fpv-orchard-player-storage-reuse.json)).
+The complete admitted player also passed actual UI observation with Authored,
+Balanced, Self-level and Keyboard settings: rendered Orchard, Arm through0.2s,
+then Pause at0.3s, with empty warning/error logs. [Original observation](evidence/fpv-orchard-admitted-player-observation.json)
+and [screenshot](evidence/fpv-orchard-admitted-player.png) retain that bounded
+acceptance. This is local admitted-player evidence; protected exact-head CI,
+merge and public deployment remain separate. No runtime changed after admission.
 
 ## Original recordings and resource boundaries
 
