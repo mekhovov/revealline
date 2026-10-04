@@ -1,0 +1,141 @@
+# Unified gameplay and industrial art — implementation register
+
+Updated 4 October 2026. This register follows the approved hybrid Broforce/Factorio direction and the subsequent authorization to increase budgets. It describes this review branch, not a public release. Earlier dated delivery registers remain historical evidence.
+
+## Required work and current boundary
+
+| Priority                         | Implemented in this branch                                                                                                                                                                                                                                                                                                                                                        | Remaining acceptance                                                                                                                                                                                                                                |
+| -------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Local character behavior         | Versioned Capture/Team pursuit v2: ordinary Sprinter, committed Refuge, warned Switchback and coordinated Rendezvous. Native SIM pursuit adds six finite-population courses in two flight modes, routes and Studio editing. A v2 successor fixes Refuge commitment and Rendezvous arrival; the six historical r1 courses remain pinned.                                           | Human completion/interception review, historical device recordings and controller qualification. Structural admission is not a completed play route.                                                                                                |
+| Local UX and shared presentation | Snake uses the shared board artwork provider. The shared menu shell, play, Pause and Results are integrated; live review found that legacy mission selection still launches directly without the planned separate briefing/Start. The private-room host now follows the same shell with native input/HUD.                                                                         | Cross-device fullscreen, enlarged text, touch ownership and gamepad review across every host. Native flight arming remains native.                                                                                                                  |
+| Art A/B and first C specimens    | Tracked inventory; bounded animation descriptor and image-atlas asset v2; shared decoded-memory pool; Asset Studio advanced authoring; all twelve families/36 appearances in a corrected directly overhead review rig; car/tank and concrete/earth/metal samples; shared drone/body and three defeat previews; a twelve-frame original atlas; six shared-mixer listening samples. | Broader native/device/offline review and artistic approval; Capture access is now unlocked and initial native clears are observed. Terrain/audio and the multi-frame sample are implemented; the treatment is not production-approved.              |
+| Multiplayer recordings           | Terminal native Capture Team/Versus export and reconstruction, including consumed commands, ordered releases, full terminal-state digest and exact build/ownership metadata.                                                                                                                                                                                                      | Cross-runtime exact-state portability, additional native pilot routes and historical device compatibility. Source provenance is validated canonically and against each pinned pilot. See the pursuit-pilot README for the accepted one-round scope. |
+| Private-room consistency         | Successor control/snapshot contract, native equipment, fresh steering, Boost/Support, bounded cosmetic journal, shared shell/audio/reactions/destruction and silent reconnect.                                                                                                                                                                                                    | Latency/reconnection/backgrounding/device review and a configured HTTPS service. A local service is not hosted multiplayer delivery.                                                                                                                |
+
+## Art phases
+
+A. **Inventory/specification:** `qualification/industrial-art/inventory.json` inventories 603 tracked game visual files, 575 authoring visual/model files and three optional-practice visual files at the recorded baseline. Hashes and bytes preserve provenance. Keep/Refine tags are mechanical triage, not an artistic review of every file. Authored photographs, Company/custom bindings, vendor material and retained revisions are kept intact.
+
+B. **Shared animation/assets:** `revealline-actor-animation.v1` is bounded data: identity, revision, approved rig/parts, material, anchors, atlas frames, clips and compact fallback. Asset v2 admits image atlases only, with the same frame dimensions and pivot as admitted geometry. Direct Team enemy slots accept admitted asset-v2 full-sheet images through the same frame contract; historical static slots still require their intact 32×32 image. Generic enemy rendering selects observed idle/move plus native pressure/hunter warning, committed and recovery clips, claimed-rover/eroder warnings and contour blocked states. The presentation clock restarts on a state change and freezes with native pause/freeze. Notice/caught remain Studio-only for these generic actors; aim/fire are never inferred. Hunt soldier rigs sample native states directly. Custom descriptors cannot change AI, collisions, vulnerability, objectives or sound timing.
+
+C. **Playable review sample:** open `authoring/industrial-art-review/`. Candidate 03 compares the previous angled figure with a directly overhead rig for all twelve families/36 appearances at actual 16/24/32 px, enlarged light/dark specimens and eight simultaneous headings. `artReview=industrial-overhead-v2` selects the corrected rig for that page session; it is not a saved preference or default replacement. The earlier `industrial-pilot-v1` revision remains supported. See [the perspective audit](qualification/industrial-art/overhead-v2/README.md) for native facing, gait and Studio corrections. With Military Field selected, utility-car/tank details and opaque concrete/earth/metal material samples use the shared adapter while preserving custom IDs/SHA and native hazard cues. Capture Team admits the same material frames; modern Snake uses concrete walls and Retro remains unchanged. Native SIM reuses the material pixels in existing concrete/grass/steel maps, retaining geometry and physical material rules. Six deliberate sound samples and bounded native footsteps/equipment/machine onsets use the existing shared mixer. The shared FPV/Retro body is retained. New native SIM models remain a separate review surface. No Broforce or Factorio artwork is copied.
+
+The original machinery atlas contains twelve transparent 32×32 poses on a 128×96 sheet: 906 bytes transferred and 49,152 bytes decoded. Its complete `.rltheme` sample is 990,438 bytes and matches the published Studio’s 335-slot contract. Native workspace adoption and immutable parent transport are validated by the producer. The browser imported, staged, saved and reloaded the sample. Although the download-event adapter timed out, the actual exported file was found in Downloads and successfully re-imported; the twelve frames, seven clips and pivot were retained. A SHA-256 receipt records that external file. This is a technical sample, not a newly approved tank combat actor.
+
+D. **Full roster/machinery:** pending Phase C artistic approval. The shared all-family overhead rig is available for perspective review; this is not final production approval of the 36 appearances. Extend the approved detail/animation treatment to the full roster, six vehicle families and Team hardware after review.
+
+E. **Environment/campaign adoption:** pending the accepted material kit. Introduce chapter appearance packages without revealing concealed photographs or obscuring reward pictures, hazards and ownership cues.
+
+F. **Qualification/recommendation:** pending measured phone/device/performance, offline, replay, Studio, audio and human review. The candidate is not the recommended appearance yet.
+
+## Visual specification
+
+- Overhead silhouettes face their authoritative heading; cosmetic movement never offsets the collision location. Accessories identify a family before color does.
+- Runner: narrow body and light belt; Courier: angular offset satchel; Guard: broad armor and carried equipment; Shield: pronounced frontal plate and viewing slot.
+- A restrained olive/charcoal/steel base uses warm wear highlights. Ukrainian FPV blue/yellow markings stay readable. Retain main theme tokens and typography.
+- Use consistent upper-left highlights, dark contact outlines and transparent surroundings. At 16 px prioritize head/shoulders/accessory; 24/32 px add equipment and material wear.
+- Soldier stride, notice, anticipation, blocked and recovery accents sample presentation time. Pause/Reduced effects suppress motion independently of gameplay.
+- Clean, brutal without blood and bloody destruction use the shared cause/material recipes. Gore remains opt-in. Essential cues render above debris. The page-wide 128 transient pieces/four burst envelopes and 24 settled clusters per board are unchanged.
+
+## Increased budgets and ownership
+
+| Budget                                      |                              Previous |                                                                       New | Reason                                                                                                                           |
+| ------------------------------------------- | ------------------------------------: | ------------------------------------------------------------------------: | -------------------------------------------------------------------------------------------------------------------------------- |
+| Decoded actor art per page                  | Declared 32 MiB, no common accounting | 64 MiB desktop; 32 MiB compact/coarse-pointer or reported <=4 GiB devices | A single pool reserves in-flight images, shares both boards and releases abandoned previews. Compact fallback remains available. |
+| Core offline inventory                      |                                64 MiB |                                                                    80 MiB | Matching build and service-worker admission; finite headroom for new modules.                                                    |
+| FPV Academy optional file count             |                                    72 |                                                                        96 | Shared presentation and discovery dependencies. Byte cap remains 8 MiB.                                                          |
+| FPV Worlds optional file count              |                                   104 |                                                                       128 | Native route/pursuit and shared animation modules.                                                                               |
+| FPV Worlds optional source/runtime envelope |                                16 MiB |                                                                    20 MiB | New original source inputs exceeded 16 MiB by about 52 KiB; the revised envelope admits the complete pinned source inventory.    |
+
+These are ceilings, not preallocated memory or a quality setting that downloads everything. Actor originals and derived crops are accounted before decode, keyed by immutable bytes and geometry, and shared through leases. The final owner releases the image. A canceled last owner cannot make a late decode escape accounting. A replacement waits for an uninterruptible canceled generation to retire. DOM-isolated actor providers share the page pool; CSS crop-export canvases remain charged through asynchronous encoding. Studio actor image-asset previews and their output canvases use the same pool and release on disposal, collapse or replacement. Stale failures cannot overwrite a newer preview. Small fixed built-in fixture images still use the existing BoardPainter loader; the actor pool is not a whole-page or GPU-memory measurement. Unrelated media-store, image geometry, effect and custom-model limits remain unchanged.
+
+Committed Worlds package at `fb4815ff3`: 105 runtime files /15,626,030 bytes; 98 original inputs /16,829,790 bytes. Academy contains 69 runtime files /4,357,687 bytes. Both packages passed two reproducible builds, committed-input verification and ZIP membership verification. Final review-head receipts supersede these baseline measurements. These are package measurements, not FPS or peak-process-memory benchmarks.
+
+## Historical compatibility and ownership
+
+New Capture generations use level.v14/core.v15/replay.v16 and Capture-Snake level.v15/core.v16/replay.v17. Team uses level/pack.v13/core.v15 and Capture-Snake level/pack.v14/core.v16. Historical helpers/saves default to v1, while new Varied preparation requests v2 explicitly. Native SIM keeps FlightCourse.v3 / FlightAttempt.v3 with explicitly pinned civilian-world-pursuit.v1 or v2 models. Two corrected r2 courses and the native playlist r2 select v2; historical r1 content keeps its original model. Studio upgrades are explicit and undoable. See `fpv-native-pursuit.md` for exact bounds and contact rules.
+
+Presentation descriptors contain no executable code. Static asset v1 packages remain supported. Community/Company ownership and immutable dependencies remain authoritative. Imported recordings do not grant official progression or unlock rewards.
+
+## Optional work retained
+
+- Broader authored campaign promotion beyond qualified pilots.
+- Media-bearing Community private rooms and explicit Company Versus editions.
+- Room-scoped verified media registry and asset delivery.
+- Hosted accounts, public matchmaking, challenges/ghosts and networked SIM.
+- New destructible terrain, vehicle combat and environmental chain reactions.
+
+## Verification and release discipline
+
+Automated suites are explicitly waived by `publishing/test-policy.json`; relevant regressions are authored without running them. Mandatory lint, formatting, localization/content validation, projection checks, committed-source identity and package builds remain required. Manual checks are listed in `qualification/industrial-art/README.md` and native structural admission in `verification/native-pursuit-structural.json`. Neither technical admission nor an agent screenshot grants artistic or human-play approval.
+
+Push reviewable PRs; do not merge or enable auto-merge. Phase C approval precedes mass art production. Independent local behavior, recordings and room corrections do not wait for that art decision.
+
+## Reliability continuation, 4 October 2026
+
+- Artwork cancellation/reopen, DOM-isolated pool sharing, CSS encoding scratch storage and Studio preview disposal are corrected. These are resource-lifecycle fixes within the existing 64/32 MiB ceilings; no new budget increase or art approval is implied.
+- Terminal multiplayer imports reject missing canonical source pins. The pilot verifier additionally binds recordings to the native source level/revision/identity and Team package identity. Complete historical v1 recordings retain their interpretation; imported results still cannot grant official progression.
+- Private Team Support now tracks keyboard and pointer holds separately and requires fresh keyboard input after suspension. The room painter freezes under transport pause and silently restores the initial event tick. Late failed requests from an older control activation cannot suspend a newer one.
+- Independent source reviews found no confirmed blockers. Regression cases were authored without executing waived suites. Manual Snake layout evidence is linked below; real-network reconnect and hardware input review remain pending.
+- All exact-head CI checks for the previous `a1ccee67` revision passed, including the full committed-source preview build, Community acceptance and all Company build/admission jobs. Current-head receipts belong to PR #1005 and must not be inferred from that baseline.
+
+## Next required items after candidate 03
+
+1. Finish Phase C evidence: extend the observed Solo/Versus/Team native clears with contact-interception and additional pilot routes; complete offload/interrupted-load review; review the material/sound samples and actual animation motion. Snake and SIM startup/Pause screenshots are recorded separately from human completion evidence.
+2. Review and approve the visual treatment, then finish family-specific production artwork/animation, machinery, Team hardware and native 3D bindings in chapter-sized batches. Keep Company/custom ownership and compact fallbacks.
+3. Complete the existing qualification matrices for historical recordings, private-room reconnects, controllers, touch and device performance. The required recording and room source is present; public hosting and human acceptance are not implied.
+
+The review page has a measured 390 px layout with native-size specimens. Native Snake Solo was subsequently observed at actual 320/360/390 CSS px, plus Versus and Team at 320 px, including Ukrainian Team turn controls. Boards and controls fit without horizontal overflow; the smallest observed two-player D-pad control is 45.3 px. See the [4 October continuation](qualification/industrial-art/continuation-2026-10-04/README.md). The later [landscape and local recovery pass](qualification/industrial-art/local-recovery-2026-10-04/README.md) adds short-window layouts and shared Plain/Large reading controls, including Ukrainian Team at 320 px. Physical-device and simultaneous-input qualification remain open. No additional budget increase was needed for candidates 02 or 03; the corrected rig remains procedural.
+
+The existing published-production continuation's exact additive Team migration guard rejects 54 newer picture slots. The isolated candidate migration described below now admits precisely those additions without weakening that guard. The playable sample still targets the published Studio slot contract; production approval is not rewritten to make this check pass.
+
+## Pursuit and local recovery continuation, 4 October 2026
+
+- Native SIM v2 preserves a Refuge actor’s announced destination across intermediate nodes. Rendezvous partners use separated arrival positions and geometrically separate admitted approaches, preventing body blocking at a shared node. Old models and pack identities remain unchanged; Refuge Return r2 and Meeting Yard r2 are explicit successors. All 16 preparation cases (six retained plus two successors in two modes) and Studio round-trips passed with zero simulation steps. This is structural evidence, not completed flight review.
+- Private-room menus and gameplay share a single controller owner with neutral/fresh-input transitions. Stale audio activation cannot suspend a newer session. A localhost two-seat Team pause/reload/Ready cycle was observed separately from these new hardware fixes; physical controllers and network stress remain pending.
+- Interrupted optional downloads, verification, registration and removal now retain operation ownership until pending writes retire. Offloaded workers use non-creating cache reads. Regression cases cover the races; browser offload/reinstall qualification is tracked in the offline/Studio continuation below.
+- Snake pads flank the field in short landscape windows. At 720×360, paired canvases increase from 77.75×58.31 to 194×145.5 CSS px with 44 px controls. Shared Text style/Text size settings are available through the normal settings menu; EN/UK and narrow enlarged-text observations are recorded.
+- Baseline `b754c4bf9` exact-head Appearance, Community and all Company build/admission jobs passed. New-head checks must be evaluated separately. Automated suites remain waived; no public release or artistic approval is implied.
+
+## Offline and accessible preview continuation, 4 October 2026
+
+- The shared optional-package progress panel now belongs to the invoking modal. Cancel stays in its interactive top layer; closing the owner or disposing Academy cancels preparation. Launcher repair instructions remain visible after release checks and explain removal before re-download.
+- Native Worlds now offers runtime-file removal alongside preparation, with separate EN/UK status and serialized operations. Installed worlds and flight records retain their existing stores.
+- The industrial review honors shared and OS Reduced effects even when its local checkbox is off. Asset Studio uses four fixed-size, pooled specimen canvases that wrap instead of shrinking the stated 16/24/32/112 px sizes.
+- All exact-head CI checks for the previous `5ee824303` commit passed, including Appearance, Community and all Company jobs. These are baseline results, separate from this continuation's receipts.
+- See the [offline and Studio evidence](qualification/industrial-art/offline-studio-2026-10-04/README.md). Device, gameplay-completion and artistic-approval gates remain open; no campaign promotion or mass art production is implied.
+
+## Room and animation-authoring continuation, 4 October 2026
+
+- Private rooms expose the shared Theme font/Plain setting alongside Text size. Normal EN/UK menu review at 320 px confirmed persistence and no horizontal overflow; original choices were restored.
+- Reading and motion controls share one preference owner, preventing font changes from overwriting newer Reduced effects intent. The room title reflects stored mute immediately; the art review follows cross-tab sound changes and sample completion.
+- Studio animation scrubbing spans the full admitted clip, including a 64-second clip's final frame. Missing optional Aim/Fire clips no longer show an unrelated Idle preview under the wrong label.
+- Recovered room snapshots replace destruction ownership, silently restoring settled state instead of replaying frozen pre-disconnect bursts. Ordinary polls retain once-only event ownership.
+- The recording audit found no new confirmed defect; native terminal export/import and genuine pilot completion remain acceptance work. All baseline `177afe429` CI checks passed; new-head evidence is separate.
+- See the [room and Studio evidence](qualification/industrial-art/room-studio-2026-10-04/README.md). Full art production still follows Phase C approval. Optional work remains optional.
+
+## Intent, room-layout and native guide continuation, 4 October 2026
+
+- Capture's ordinary pursuit warnings now retain and display their accepted upcoming direction, including correct rotation in cached artwork. Reduced effects retains the essential static cue; simulation and specialist contact rules remain unchanged.
+- Private-room canvases fill their allocated area instead of collapsing. Paired portrait/landscape layouts preserve aspect ratio, and a control-layout breakpoint change releases input and requests shared pause. Normal two-seat Ready behavior was observed at 320/360/390 px and 568×320.
+- Native FPV SIM now exposes accepted enemies/counts and native Goal–Tell–Counter advice before flight and through its paused shared menu. The guide remains paused on dismissal and preserves historical versus successor pursuit descriptions. It uses the existing shared catalogue and optional-package projection.
+- All `aa68949c7` baseline CI checks passed. Current source, package and build receipts are evaluated separately; regression suites remain waived.
+- See the [intent, layout and flight-guide evidence](qualification/industrial-art/intent-room-guide-2026-10-04/README.md). Continue Phase C native completion/device evidence and the explicit picture-slot migration reconciliation. Artwork approval still precedes mass production; optional expansion remains optional.
+
+## Candidate migration and Studio continuation, 4 October 2026
+
+- A candidate-only migration admits exactly 54 pinned Retro picture slots alongside published revision 104's 335 slots. Published history, owners and runtime bytes remain immutable. The successor correctly reopens 98 changed-source reviews; new slots remain source-stage. Legacy production guards are unchanged.
+- An isolated candidate command pins consumed inputs to a clean committed source tree, stages the ledger and compiled output together, and provides byte-for-byte reproduction. It does not adopt content, rewrite approvals or replace defaults.
+- Capture/Team Studio previews current and announced directions independently. Native FPV World Studio uses generation-correct flight guidance, includes optional Couriers and removes Snake-only advice.
+- Private-room artwork preparation shares transport cancellation and an eight-second deadline. Suspension immediately frees the poll; failed or retired preparation releases its painters, and late artwork cannot replace a newer room. Previous accepted boards remain until replacement succeeds. Regression cases are authored but unrun; interrupted-network/device qualification remains open.
+- See the [candidate and Studio evidence](qualification/industrial-art/candidate-studio-2026-10-04/README.md). Next: review candidate coverage, complete native play/device evidence, obtain Phase C art approval, then implement atomic published adoption. Optional expansion remains optional.
+
+## Native play and recording continuation, 4 October 2026
+
+- User unlocked the ordinary Capture gate. Normal agent-controlled play cleared Crossing Post in Solo (62.3%) and Versus (56.2%), and Pincer Yard in Team (68.5%, both seats contributing). These are specific native routes, not human-play or release approval.
+- Fixed the Team authored-pursuit picture projection that prevented Pincer Yard from launching. Exact authored identity and version/ruleset checks remain intact; supplemental overlays still borrow their unchanged base edition.
+- Terminal multiplayer exports link directly to the local verification panel with EN/UK guidance. Replay Theater is clearly identified as Solo playback; imports cannot grant progression.
+- Both genuine multiplayer exports match in the originating browser. Node's exact-state checks reject them; the Versus diagnosis isolated tiny cross-runtime numeric drift. Legacy v1 validation stays strict. A portable successor recording contract or matching-runtime qualification path is required next.
+- Live menu review found direct mission launch in legacy Solo/Versus/Team. Complete the shared **selection → briefing → explicit Start** transition across hosts, preserving Retry/Continue ownership.
+- A local delayed-artwork fault confirmed eight-second cancellation, visible paused recovery and two-seat readiness before play. Hardware and real-network qualification remain open.
+- See [native play and recording evidence](qualification/industrial-art/native-play-2026-10-04/README.md). Continue the portability and shared launch fixes before mass artwork production; Phase C artistic approval and optional-work boundaries are unchanged.

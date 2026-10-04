@@ -1,4 +1,5 @@
-export const ROOM_CONTROL_PROTOCOL = 'revealline-room-controls.v1';
+import { roomControls } from './room-controls.mjs';
+export { ROOM_CONTROL_PROTOCOL } from './room-controls.mjs';
 
 /** Native endpoints require their own approved host policy. A Capacitor hostname
  * of localhost is not a browser development origin. */
@@ -37,6 +38,76 @@ export function terminalRoomError(error) {
     'ROOM_PROTOCOL_MISMATCH',
     'ORIGIN_NOT_ALLOWED',
   ].includes(error?.code);
+}
+
+/** Artwork preparation must not hold the snapshot poll open after suspension.
+ * Fetches share this signal; uninterruptible decodes lose their painter owner
+ * immediately, so late completion cannot retain assets or replace a new room. */
+export async function prepareRoomBoardPainters(prepare, { signal, timeoutMs = 8000 } = {}) {
+  if (!Number.isInteger(timeoutMs) || timeoutMs < 1 || timeoutMs > 30000)
+    throw new TypeError('Room artwork preparation needs a bounded deadline.');
+  const controller = new AbortController(),
+    painters = [],
+    dispose = (painter) => {
+      try {
+        painter?.dispose?.();
+      } catch {
+        // Continue retiring other boards even if one presentation cleanup fails.
+      }
+    };
+  let accepting = true,
+    completed = false;
+  const cancelled = new Promise((resolve, reject) => {
+    controller.signal.addEventListener('abort', () => reject(controller.signal.reason), {
+      once: true,
+    });
+  });
+  const abort = () =>
+    controller.abort(new DOMException('Room artwork preparation cancelled.', 'AbortError'));
+  if (signal?.aborted) abort();
+  else signal?.addEventListener('abort', abort, { once: true });
+  const timeout = setTimeout(
+    () =>
+      controller.abort(
+        Object.assign(new Error('Room artwork preparation timed out. Reconnect to try again.'), {
+          code: 'ROOM_ARTWORK_TIMEOUT',
+        }),
+      ),
+    timeoutMs,
+  );
+  try {
+    await Promise.race([
+      cancelled,
+      Promise.resolve().then(() => {
+        if (controller.signal.aborted) throw controller.signal.reason;
+        return prepare({
+          signal: controller.signal,
+          retain(painter) {
+            if (!accepting || controller.signal.aborted) {
+              dispose(painter);
+              throw (
+                controller.signal.reason ??
+                new DOMException('Room artwork preparation retired.', 'AbortError')
+              );
+            }
+            painters.push(painter);
+            return painter;
+          },
+        });
+      }),
+    ]);
+    if (controller.signal.aborted) throw controller.signal.reason;
+    completed = true;
+    return painters;
+  } finally {
+    accepting = false;
+    clearTimeout(timeout);
+    signal?.removeEventListener('abort', abort);
+    if (!completed) {
+      abort();
+      painters.forEach(dispose);
+    }
+  }
 }
 
 /** Owns browser control activation, never simulation or authoritative outcomes.
@@ -155,11 +226,7 @@ export function createRoomClientLifecycle({ sendInput, onError = () => {}, maxPe
         onError(error, owner);
         return false;
       }
-      pending.push({
-        direction: control.direction,
-        boost: control.boost,
-        support: control.support,
-      });
+      pending.push(roomControls(control));
       pump();
       return true;
     },

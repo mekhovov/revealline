@@ -8,6 +8,11 @@ import {
 } from './theme-system.mjs';
 import { INDUSTRIAL_BUILTIN_SPRITES } from './industrial-arcade-builtins.mjs';
 import { MILITARY_FIELD_ROLES, militaryFieldPixels } from './military-field-art.mjs';
+import { actorArtReviewRevision } from '../hunt/preferences.mjs';
+import {
+  INDUSTRIAL_MATERIAL_REVISION,
+  INDUSTRIAL_TERRAIN_MATERIALS,
+} from './industrial-materials.mjs';
 
 /** An appearance layer only. The original release remains the authority for
  * pictures, audio, provenance, geometry, and all saved presentation identities. */
@@ -161,12 +166,13 @@ export function industrialTexturePixels(
   { width, height, rgba },
   slot,
   collection = INDUSTRIAL_ARCADE_COLLECTION,
+  { reviewRevision = null } = {},
 ) {
   // Enemy livery must never recolor the Ukrainian FPV player into the opposing kit.
   if (collection.id === 'military-field' && slot.startsWith('player.'))
     return { width, height, rgba: new Uint8ClampedArray(rgba) };
   if (collection.id === 'military-field') {
-    const military = militaryFieldPixels({ width, height }, slot);
+    const military = militaryFieldPixels({ width, height }, slot, { revision: reviewRevision });
     if (military) return military;
   }
   const colors = colorsFor(collection),
@@ -257,7 +263,11 @@ export function industrialTexturePixels(
 const defaultCanvas = () => globalThis.document?.createElement('canvas');
 /** Each adapter owns a bounded cache, retired with its painter. Original shared
  * ImageBitmaps are neither changed nor disposed. Failure preserves authored art. */
-export function createArcadeAdapter({ canvasFactory = defaultCanvas } = {}) {
+export function createArcadeAdapter({
+  canvasFactory = defaultCanvas,
+  reviewRevision = actorArtReviewRevision(),
+} = {}) {
+  if (reviewRevision === 'industrial-overhead-v2') reviewRevision = INDUSTRIAL_MATERIAL_REVISION;
   let snapshots = new WeakMap();
   const canvases = new Set();
   return {
@@ -305,7 +315,9 @@ export function createArcadeAdapter({ canvasFactory = defaultCanvas } = {}) {
             ctx.drawImage(original.image, 0, 0);
             const data = ctx.getImageData(0, 0, width, height);
             data.data.set(
-              industrialTexturePixels({ width, height, rgba: data.data }, slot, collection).rgba,
+              industrialTexturePixels({ width, height, rgba: data.data }, slot, collection, {
+                reviewRevision,
+              }).rgba,
             );
             ctx.putImageData(data, 0, 0);
             canvases.add(canvas);
@@ -313,6 +325,11 @@ export function createArcadeAdapter({ canvasFactory = defaultCanvas } = {}) {
             derived = Object.freeze({
               ...original,
               image: canvas,
+              ...(collection.id === 'military-field' &&
+              reviewRevision === INDUSTRIAL_MATERIAL_REVISION &&
+              INDUSTRIAL_TERRAIN_MATERIALS[slot]
+                ? { materialReviewRevision: reviewRevision }
+                : {}),
               ...(vehicle
                 ? {
                     geometry: Object.freeze({

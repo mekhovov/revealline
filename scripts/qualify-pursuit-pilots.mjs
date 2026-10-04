@@ -9,6 +9,13 @@ import { createContentExecutionCatalog } from '../game/content-design/execution.
 import { compileContentProject } from '../game/content-design/project.mjs';
 import { applyGameplayTuning, resolveGameplayTuning } from '../game/gameplay-tuning.mjs';
 import { createRecorder, snapshotReplay, verifyReplay } from '../game/replay.mjs';
+import { createCoop } from '../game/coop/core.mjs';
+import { UNTIMED_DUEL_PROTOCOL } from '../game/multiplayer.mjs';
+import {
+  localMatchProvenance,
+  snapshotLocalMatchRecording,
+  verifyLocalMatchRecordingAsync,
+} from '../game/multiplayer-recording.mjs';
 import { snapshotReplayPresentation } from '../game/replay-presentation.mjs';
 import { CLASSIC_SNAKE_V3_LEVELS } from '../game/snake/classic-catalogue-v3.mjs';
 import { prepareClassicSnakeLevel } from '../game/snake/classic-setup.mjs';
@@ -72,7 +79,8 @@ export function pursuitPilotCases() {
         for (const level of entry.campaign.levels) {
           const accepted = applyGameplayTuning(level, resolveGameplayTuning(entry.difficulty));
           const options = { seed: team ? 17 : 1, classId: 'scout', turnPolicy: 'immediate' };
-          const recorder = mode === 'solo' ? createRecorder(accepted, options) : null;
+          const recorder = mode !== 'team' ? createRecorder(accepted, options) : null;
+          const teamRun = mode === 'team' ? createCoop(accepted, { seed: options.seed }) : null;
           cases.push({
             pilot: level.id,
             family: 'capture',
@@ -80,13 +88,26 @@ export function pursuitPilotCases() {
             pace: entry.difficulty,
             seed: options.seed,
             level: recorder?.level ?? accepted,
-            ...(recorder ? { options: recorder.options } : {}),
+            options: recorder?.options ?? {
+              seed: teamRun.seed,
+              difficulty: teamRun.difficulty,
+              ...teamRun.config,
+            },
+            ...(mode === 'versus' ? { duel: { protocol: UNTIMED_DUEL_PROTOCOL, seconds: 0 } } : {}),
+            ...(mode !== 'solo'
+              ? {
+                  recordingProvenance: localMatchProvenance(
+                    level,
+                    team ? { packageIdentity: dataIdentity(entry.campaign) } : {},
+                  ),
+                }
+              : {}),
             source: source.id,
             revision: source.revision,
             launch: `/game/${team ? 'couch/relay-rescue.html' : mode === 'versus' ? 'couch/' : ''}?journey=pursuit-pilots-v1&lang=en`,
             launchKind: 'campaign-entry-requires-selection',
-            beforeStart: `Select mission ${level.id}, difficulty ${entry.difficulty} and authored encounters. Start a fresh attempt; do not Continue a saved cursor. ${mode === 'solo' ? 'Use Scout with immediate turns.' : 'Retain the native paired/shared rules.'}`,
-            recording: mode === 'solo' ? 'native-solo-replay' : 'local-terminal-export-unavailable',
+            beforeStart: `Select mission ${level.id}, difficulty ${entry.difficulty} and authored encounters. Start a fresh attempt; do not Continue a saved cursor. ${mode === 'team' ? 'Use the Full cooperation configuration and seed 17.' : 'Use Scout with immediate turns and seed 1.'} ${mode === 'versus' ? 'Keep the native untimed authored race; export one finished round.' : ''}`,
+            recording: mode === 'solo' ? 'native-solo-replay' : 'native-local-capture-terminal',
           });
         }
     }
@@ -220,12 +241,46 @@ export async function verifyPursuitPilotRecording({ pilot, mode, pace, recording
     (item) => item.pilot === pilot && item.mode === mode && item.pace === pace,
   );
   check(entry, 'Unknown pilot/mode/pace. Prepare the packet for accepted cases.');
-  check(
-    entry.recording !== 'local-terminal-export-unavailable',
-    'Capture Team/Versus local terminal recording export is unavailable; manual evidence remains pending.',
-  );
   let outcome;
-  if (entry.family === 'capture') {
+  if (entry.family === 'capture' && mode !== 'solo') {
+    const replay = snapshotLocalMatchRecording(recording);
+    check(
+      replay.recipe.mode === mode && same(replay.recipe.level, entry.level),
+      'Recording differs from the pinned Capture recipe or mode.',
+    );
+    check(
+      same(replay.recipe.options, entry.options) && same(replay.recipe.duel, entry.duel ?? null),
+      'Recording seed, cooperation or race rules differ from the pinned Capture case.',
+    );
+    check(
+      same(replay.recipe.provenance, entry.recordingProvenance),
+      'Recording source ownership or revision differs from the pinned Capture case.',
+    );
+    const verified = await verifyLocalMatchRecordingAsync(replay);
+    check(
+      verified.match,
+      'Recording does not match its full native terminal state; completion qualification requires an exact replay match.',
+    );
+    const completedBoards =
+      mode === 'team'
+        ? verified.state.status === 'won'
+          ? [1]
+          : []
+        : verified.state.runs.flatMap((run, index) => (run.status === 'won' ? [index + 1] : []));
+    check(
+      completedBoards.length > 0,
+      'No native board completed the mission; timer or collision wins are not completion routes.',
+    );
+    outcome = {
+      summary: verified.actual.summary,
+      ticks: verified.ticks,
+      recordedBuild: verified.recordedBuild,
+      completedBoards,
+      recipeSha256: verified.recipeSha256,
+      provenance: verified.recipe.provenance,
+      authority: verified.authority,
+    };
+  } else if (entry.family === 'capture') {
     const source = recording.format?.startsWith('revealline-replay-presentation.')
       ? snapshotReplayPresentation(recording).replay
       : recording;

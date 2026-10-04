@@ -12,9 +12,28 @@ test('overhead bodies face native motion and accepted armor before a pending tur
   assert.equal(actorFacingRadians({ ...actor, vy: 2 }), (Math.PI * 3) / 4);
   assert.equal(actorFacingRadians({ ...actor, aim: { x: 4, y: 8 } }), Math.PI);
   assert.equal(
-    actorFacingRadians({ ...actor, pursuit: { heading: 'left', nextHeading: 'right' } }),
+    actorFacingRadians({
+      ...actor,
+      pursuit: { behavior: 'shield', heading: 'left', nextHeading: 'right' },
+    }),
     -Math.PI / 2,
   );
+});
+
+test('ordinary successor prey faces actual diagonal/fallback movement, retaining its last heading at rest', () => {
+  for (const behavior of ['patroller', 'courier', 'refuge', 'switchback', 'pair', 'runner']) {
+    const actor = {
+      x: 4,
+      y: 4,
+      vx: 2,
+      vy: 2,
+      pursuit: { behavior, heading: 'left', nextHeading: 'up', phase: 'fallback' },
+    };
+    const before = structuredClone(actor);
+    assert.equal(actorFacingRadians(actor), (Math.PI * 3) / 4);
+    assert.equal(actorFacingRadians({ ...actor, vx: 0, vy: 0 }), -Math.PI / 2);
+    assert.deepEqual(actor, before);
+  }
 });
 
 test('stationary cleared goals use authored facing without guessing from visit counts', () => {

@@ -23,14 +23,16 @@ acknowledgements in replay receipts, and exact terminal ticks must reproduce. Re
 Capture, Team and Snake painters. Repeated snapshots preserve presentation
 ownership and do not award local chapter progress.
 
-The transport additionally advertises `revealline-room-controls.v1`. Every full
+The transport additionally advertises `revealline-room-controls.v2`. Every full
 snapshot binds a service-owned `controlActivation` to its state identity. Ready,
 Pause, input and Rematch requests must carry that current activation; the service
 checks it after reading the complete request body. Pause, resume, rematch,
 heartbeat pause and service-stall transitions rotate it. An already-sent delayed
-input or Ready request therefore cannot affect a resumed attempt. Gameplay and
-replay formats remain unchanged; clients without this control contract need a
-matching deployment and a fresh room.
+input or Ready request therefore cannot affect a resumed attempt. The current room format is `revealline-room.v2` with v2 full snapshots. It preserves
+ability/supply pulses and fresh Team/Snake steering gestures. V2 Capture Versus uses
+the same native untimed duel controller and coverage/lives/score tie breaks as local
+play. The v1 receipt and trusted checkpoint resolver retains historical behavior;
+clients need a matching deployment and a fresh room after an upgrade.
 
 Five seconds without a seat heartbeat pauses both boards. A player can reconnect
 for sixty seconds; both seats must explicitly choose Ready to resume. Missing
@@ -185,3 +187,28 @@ snapshot and HTTP client-authority regressions. These are authored and unrun
 under the current automated-suite waiver.
 
 Explicit service lint: `node_modules/.bin/eslint --config services/rooms/eslint.config.mjs services/rooms/*.mjs --max-warnings 0`.
+
+## Shared local and online presentation
+
+Private Capture/Snake Versus and Team now use the shared title/menu shell, fullscreen
+service, native keyboard/touch/gamepad input, measured board fitting and controller
+menu navigation. Pause and settings stop local input immediately and request shared
+pause; Resume is a new Ready vote, never an implicit restart. Room HUDs show the native
+coverage/lives/score or catches/length/queued turns, plus Team rescue and Support state.
+
+The page has one shared Soundscape mixer. Master mute/volume, effects, destruction,
+remains, reduced effects and EN/UK contextual reactions use the existing services.
+Native simulation events are projected into a 512-entry presentation journal with
+stable per-generation IDs. Both boards share the native sound voice/priority budgets.
+Each snapshot carries the journal window; client cursors suppress duplicates and
+silently prime first load, reconnect, a missing window and rematch. Capture geometry
+arrays are replaced by a bounded presentation count, retaining capture sound tiers.
+Actor phase and shutter changes are journaled by the server without changing native
+simulation, randomness or outcomes. A paused clock emits no new cues.
+
+The service remains authoritative; the browser renders accepted full snapshots and
+submits native control intent. It does not predict outcomes or grant local rewards.
+Internet latency, two-player touch/gamepad review, all phone orientations, hearing
+review and public-release qualification remain separate from source validation.
+The authored v2 regressions in `game/test/online-room-v2.test.mjs` are unrun under
+the repository waiver.

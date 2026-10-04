@@ -561,11 +561,11 @@ test('historical nine packs retain their budget boundary; optional pressure chap
   );
   for (const neon of neonPacks)
     for (const entry of neon.levelVisuals)
-    for (const { dataUrl } of Object.values(entry.visualOverrides)) {
-      const dimensions = inspectImageDataUrl(dataUrl);
-      assert.equal(dimensions.valid, true);
-      known.set(dataUrl, dimensions);
-    }
+      for (const { dataUrl } of Object.values(entry.visualOverrides)) {
+        const dimensions = inspectImageDataUrl(dataUrl);
+        assert.equal(dimensions.valid, true);
+        known.set(dataUrl, dimensions);
+      }
   const active = [];
   for (const entry of index.packs) {
     const source = JSON.parse(await readFile(path.join(ROOT, 'game/content/packs', entry.path)));

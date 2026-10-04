@@ -48,6 +48,8 @@ export const HUNT_SCENARIO_VERSION = 'xonix-playground.v10';
 export const SNAKE_SCENARIO_VERSION = 'xonix-playground.v11';
 export const PURSUIT_SCENARIO_VERSION = 'xonix-playground.v12';
 export const SNAKE_PURSUIT_SCENARIO_VERSION = 'xonix-playground.v13';
+export const PURSUIT_V2_SCENARIO_VERSION = 'xonix-playground.v14';
+export const SNAKE_PURSUIT_V2_SCENARIO_VERSION = 'xonix-playground.v15';
 
 // Transport admission and Studio preparation share this table. The older v1
 // envelope remains readable; new v1 previews can carry an explicit null mastery.
@@ -65,6 +67,8 @@ const scenarioLevelVersions = Object.freeze({
   [SNAKE_SCENARIO_VERSION]: 'xonix-level.v11',
   [PURSUIT_SCENARIO_VERSION]: 'xonix-level.v12',
   [SNAKE_PURSUIT_SCENARIO_VERSION]: 'xonix-level.v13',
+  [PURSUIT_V2_SCENARIO_VERSION]: 'xonix-level.v14',
+  [SNAKE_PURSUIT_V2_SCENARIO_VERSION]: 'xonix-level.v15',
 });
 export function scenarioFormatForLevel(version) {
   return Object.entries(scenarioLevelVersions).find(([, level]) => level === version)?.[0] ?? null;
@@ -515,8 +519,11 @@ export function validateScenario(value, { classRecipes: defaultRecipes = CLASSES
     return result([contentError('scenario.supportedFormat')], {
       warnings,
     });
-  const snakePursuit = value.format === SNAKE_PURSUIT_SCENARIO_VERSION;
-  const pursuit = value.format === PURSUIT_SCENARIO_VERSION || snakePursuit;
+  const snakePursuit = [SNAKE_PURSUIT_SCENARIO_VERSION, SNAKE_PURSUIT_V2_SCENARIO_VERSION].includes(
+    value.format,
+  );
+  const pursuit =
+    [PURSUIT_SCENARIO_VERSION, PURSUIT_V2_SCENARIO_VERSION].includes(value.format) || snakePursuit;
   const snake = value.format === SNAKE_SCENARIO_VERSION || snakePursuit;
   const hunt = value.format === HUNT_SCENARIO_VERSION || snake || pursuit;
   const sentinel = value.format === SENTINEL_SCENARIO_VERSION || hunt;

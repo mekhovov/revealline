@@ -8,8 +8,8 @@ import { getLocale, onLocaleChange } from '../i18n/index.mjs';
 const copy = {
   title: ['Pursuit routes and personalities', 'Маршрути та характери переслідування'],
   help: [
-    'Author up to six targets. Ordinary prey allows one-contact catches; Shield and Brace are explicit hazardous challenges. Use cell centres (for example 12.5, 8.5). Routes need two to eight reachable points; paired actors must name one another. Inspection uses the same compiler as play and export.',
-    'Створіть до шести цілей. Звичайну здобич ловлять дотиком; Щит та Броньований ривок — окремі небезпечні випробування. Вказуйте центри клітинок (наприклад 12.5, 8.5). Маршрути потребують від двох до восьми досяжних точок; напарники мають указувати одне одного. Перевірка використовує той самий компілятор, що й гра та експорт.',
+    'Author up to six targets. Ordinary prey allows one-contact catches; Shield and Brace are explicit hazardous challenges. Use cell centres (for example 12.5, 8.5). Routes need two to eight reachable points; Runner and Sprinter may omit them. Paired actors must name one another and share the same ordered meeting points. New editions use committed goals, announced switchbacks and timed sprints. Inspection uses the same compiler as play and export.',
+    'Створіть до шести цілей. Звичайну здобич ловлять дотиком; Щит та Броньований ривок — окремі небезпечні випробування. Вказуйте центри клітинок (наприклад 12.5, 8.5). Маршрути потребують від двох до восьми досяжних точок; Бігун і Спринтер можуть їх не мати. Напарники мають указувати одне одного й однаковий порядок точок зустрічі. Нові версії використовують сталі цілі, оголошені зміни напрямку та ривки з попередженням. Перевірка використовує той самий компілятор, що й гра та експорт.',
   ],
   add: ['Add target', 'Додати ціль'],
   remove: ['Remove target', 'Видалити ціль'],
@@ -22,6 +22,11 @@ const copy = {
   cast: ['Preview cast (cosmetic)', 'Вигляд для перегляду'],
   pose: ['Preview state', 'Стан для перегляду'],
   direction: ['Preview direction', 'Напрямок для перегляду'],
+  nextDirection: ['Preview next direction', 'Наступний напрямок для перегляду'],
+  intentPreview: [
+    'Illustration only: current facing and announced direction are separate. The game chooses the actual next direction from its accepted routes.',
+    'Лише ілюстрація: поточний і оголошений напрямки незалежні. У грі наступний напрямок визначають прийняті маршрути.',
+  ],
   frame: ['Next animation frame', 'Наступний кадр анімації'],
   walk: ['Running', 'Біг'],
   up: ['Up', 'Угору'],
@@ -66,6 +71,7 @@ const copy = {
 const words = (key) => copy[key][getLocale() === 'uk' ? 1 : 0];
 const behaviors = [
   'runner',
+  'sprinter',
   'patroller',
   'courier',
   'refuge',
@@ -95,8 +101,8 @@ export function selectedMissionPursuitSource(source, missionId, population) {
   const project = structuredClone(compileContentProject(source).source);
   const mission = project.missions.find((entry) => entry.id === missionId && !entry.archived);
   if (!mission) throw new Error(words('select'));
-  mission.format = 'MissionDesignV5';
-  mission.pursuit = { version: 'mission-pursuit.v1', actors: structuredClone(population) };
+  mission.format = 'MissionDesignV6';
+  mission.pursuit = { version: 'mission-pursuit.v2', actors: structuredClone(population) };
   mission.revision = `pursuit-${dataIdentity(mission)}`;
   const changed = new Set();
   for (const campaign of project.campaigns) {
@@ -137,6 +143,10 @@ export function createPursuitEditor({ container, getSource, getMission, apply })
     directionLabel = node('label'),
     directionCaption = node('span'),
     direction = node('select'),
+    nextDirectionLabel = node('label'),
+    nextDirectionCaption = node('span'),
+    nextDirection = node('select'),
+    intentNote = node('p'),
     frame = node('button'),
     preview = node('canvas');
   let animationFrame = 0;
@@ -162,17 +172,28 @@ export function createPursuitEditor({ container, getSource, getMission, apply })
     pose.append(option);
   }
   pose.value = 'rest';
+  pose.dataset.pursuitPreview = 'state';
   poseLabel.append(poseCaption, pose);
   pose.onchange = () => draw();
   directionLabel.style.cssText = castLabel.style.cssText;
+  nextDirectionLabel.style.cssText = castLabel.style.cssText;
   for (const value of ['up', 'right', 'down', 'left']) {
     const option = node('option');
     option.value = value;
     direction.append(option);
+    const nextOption = node('option');
+    nextOption.value = value;
+    nextDirection.append(nextOption);
   }
   direction.value = 'right';
+  direction.dataset.pursuitPreview = 'direction';
+  nextDirection.value = 'down';
+  nextDirection.dataset.pursuitPreview = 'next-direction';
   directionLabel.append(directionCaption, direction);
+  nextDirectionLabel.append(nextDirectionCaption, nextDirection);
+  nextDirectionLabel.hidden = intentNote.hidden = true;
   direction.onchange = () => draw();
+  nextDirection.onchange = () => draw();
   frame.type = 'button';
   frame.onclick = () => {
     animationFrame = (animationFrame + 1) % 12;
@@ -192,6 +213,8 @@ export function createPursuitEditor({ container, getSource, getMission, apply })
     castLabel,
     poseLabel,
     directionLabel,
+    nextDirectionLabel,
+    intentNote,
     frame,
     preview,
     list,
@@ -249,6 +272,12 @@ export function createPursuitEditor({ container, getSource, getMission, apply })
     );
 
   function draw() {
+    const announcesDirection = (behavior) =>
+      (pose.value === 'warning' && ['refuge', 'switchback', 'sprinter'].includes(behavior)) ||
+      (pose.value === 'turning' && behavior === 'shield');
+    nextDirectionLabel.hidden = intentNote.hidden = !rows.some(({ fields }) =>
+      announcesDirection(fields.behavior.value),
+    );
     // Locale can change while the Studio is still loading its first draft.
     if (!activeMission) return;
     const ctx = preview.getContext?.('2d'),
@@ -282,6 +311,7 @@ export function createPursuitEditor({ container, getSource, getMission, apply })
       ctx.stroke();
       ctx.fillStyle = '#fff0c3';
       for (const point of actor.waypoints) ctx.fillRect(point.x * sx - 2, point.y * sy - 2, 4, 4);
+      const announcedDirection = announcesDirection(actor.behavior) ? nextDirection.value : null;
       drawHuntActor(ctx, actor.x * sx - 12, actor.y * sy - 12, 24, 0, {
         kind: actor.behavior,
         partnerId: actor.partnerId,
@@ -289,12 +319,7 @@ export function createPursuitEditor({ container, getSource, getMission, apply })
         state: pose.value === 'walk' ? 'walk' : pose.value === 'rest' ? 'recover' : 'warning',
         timeMs: animationFrame * 130,
         heading: direction.value,
-        nextHeading:
-          pose.value === 'turning'
-            ? ['up', 'right', 'down', 'left'][
-                (['up', 'right', 'down', 'left'].indexOf(direction.value) + 1) % 4
-              ]
-            : null,
+        nextHeading: announcedDirection,
         phase: pose.value,
       });
       const row = rows.find((entry) => entry.fields.id.value === actor.id);
@@ -308,12 +333,7 @@ export function createPursuitEditor({ container, getSource, getMission, apply })
           state: pose.value === 'walk' ? 'walk' : pose.value === 'rest' ? 'recover' : 'warning',
           timeMs: animationFrame * 130,
           heading: direction.value,
-          nextHeading:
-            pose.value === 'turning'
-              ? ['up', 'right', 'down', 'left'][
-                  (['up', 'right', 'down', 'left'].indexOf(direction.value) + 1) % 4
-                ]
-              : null,
+          nextHeading: announcedDirection,
           phase: pose.value,
         });
       }
@@ -334,8 +354,11 @@ export function createPursuitEditor({ container, getSource, getMission, apply })
     castCaption.textContent = words('cast');
     poseCaption.textContent = words('pose');
     directionCaption.textContent = words('direction');
+    nextDirectionCaption.textContent = words('nextDirection');
+    intentNote.textContent = words('intentPreview');
     frame.textContent = words('frame');
     for (const option of direction.options) option.textContent = words(option.value);
+    for (const option of nextDirection.options) option.textContent = words(option.value);
     for (const option of pose.options) option.textContent = words(option.value);
     preview.setAttribute('aria-label', words('preview'));
     for (const option of cast.options)

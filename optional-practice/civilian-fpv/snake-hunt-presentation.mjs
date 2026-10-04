@@ -156,7 +156,7 @@ export function createSnakeHuntPresentation({ THREE, scene, preferences }) {
         const actor = actorDefinitions.find((entry) => entry.id === caught.id);
         const cast = sharedActorAppearance().snapshot().cast;
         const appearance = actorVisual(
-          (actor?.speed ?? 0) > 0 ? 'patroller' : 'lookout',
+          caught.family ?? ((actor?.speed ?? 0) > 0 ? 'patroller' : 'lookout'),
           cast === 'authored' ? 'rivals' : cast,
         );
         // Clean feedback remains visible for a short moment. Graphic remains

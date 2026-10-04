@@ -1,4 +1,7 @@
 import { selectedArcadeCollection } from '../presentation/industrial-arcade.mjs';
+import { createLocalMatchRecorder, localMatchProvenance } from '../multiplayer-recording.mjs';
+import { recordingVerificationHref } from '../ui/recording-verification.mjs';
+import { downloadJSON } from '../content.mjs';
 import { pursuitRoster } from '../hunt/pursuit-goals.mjs';
 import { prepareTeamRunningEnemies } from '../hunt/team-running-enemies.mjs';
 import { createRunningEnemyPreferences } from '../hunt/running-enemy-preferences.mjs';
@@ -25,6 +28,7 @@ import { mountControllerSetup } from './controller-setup.mjs';
 import { gameplayTuningDescription } from '../ui/gameplay-copy.mjs';
 import {
   t,
+  getLocale,
   localizedText,
   localizedAttribute,
   localizedMessage,
@@ -600,6 +604,10 @@ export function bootCoop({
   const installedTeamProgress = new Map();
   const installedTeamAttempts = new WeakMap();
   const huntAttempts = new WeakMap();
+  const localRecordings = new WeakMap();
+  const recordingBuild = document.documentElement.dataset.buildVersion;
+  const buildVersion =
+    recordingBuild && recordingBuild !== '__REVEALLINE_VERSION__' ? recordingBuild : 'dev';
   const huntRetryOwners = new WeakMap();
   const huntAttemptStore = createTeamHuntAttemptStore();
   let huntSaveControls = null;
@@ -939,6 +947,7 @@ export function bootCoop({
           requestDeparture('retry', primary(), {
             runningEnemies: runningEnemyPreferences.snapshot().enabled,
             runningEnemyStyle: runningEnemyPreferences.snapshot().style,
+            pursuitGeneration: 'pursuit-goals.v2',
           });
         },
         getAvailability: () => {
@@ -949,6 +958,7 @@ export function bootCoop({
             );
             prepareTeamRunningEnemies(applyGameplayTuning(source, tuning), {
               style: runningEnemyPreferences.snapshot().style,
+              generation: 'pursuit-goals.v2',
             });
             return { available: true, reason: '' };
           } catch (error) {
@@ -1813,6 +1823,9 @@ export function bootCoop({
     const show = run && !running();
     $('coop-overlay').hidden = !show;
     placeTools(Boolean(show));
+    $('coop-export-recording').hidden = !['won', 'lost'].includes(run?.status);
+    $('coop-recording-status').hidden = !['won', 'lost'].includes(run?.status);
+    $('coop-recording-help').hidden = !['won', 'lost'].includes(run?.status);
     $('coop-pause').disabled = !running();
     difficultyControls();
     const skipDestination = journeyNavigation();
@@ -3459,6 +3472,7 @@ export function bootCoop({
             encounterVariant: restored.snapshot.encounterVariant ?? 'authored',
             runningEnemies: Boolean(restored.snapshot.runningEnemies),
             runningEnemyStyle: restored.snapshot.runningEnemyStyle ?? 'original',
+            pursuitGeneration: restored.snapshot.pursuitGeneration ?? 'pursuit-goals.v1',
             tuning: restored.snapshot.tuning,
           }
         : null,
@@ -3662,12 +3676,28 @@ export function bootCoop({
         if (restored.snapshot.levelId !== row.levelId)
           throw new Error('Saved Team attempt belongs to another installed mission.');
         candidate = restored.run;
+        localRecordings.set(
+          candidate,
+          createLocalMatchRecorder({
+            build: buildVersion,
+            mode: 'team',
+            level: preparedRuntimeLevel(recipe),
+            options: {
+              seed: candidate.seed,
+              difficulty: candidate.difficulty,
+              ...candidate.config,
+            },
+            provenance: localMatchProvenance(recipe.level),
+            segments: restored.snapshot.segments,
+          }),
+        );
         attemptTuning.set(candidate, {
           pictureLevel: recipe.level,
           encounterLevel: recipe.encounterLevel,
           encounterVariant: recipe.encounterVariant,
           runningEnemies: recipe.runningEnemies,
           runningEnemyStyle: recipe.runningEnemyStyle,
+          pursuitGeneration: recipe.pursuitGeneration,
           runtimeLevel: preparedRuntimeLevel(recipe),
           encounterPack: recipe.encounterPack,
           adminOverride: restored.snapshot.tuning.adminOverride,
@@ -3936,6 +3966,7 @@ export function bootCoop({
                   encounterVariant: promoted.snapshot.encounterVariant,
                   runningEnemies: Boolean(promoted.snapshot.runningEnemies),
                   runningEnemyStyle: promoted.snapshot.runningEnemyStyle ?? 'original',
+                  pursuitGeneration: promoted.snapshot.pursuitGeneration ?? 'pursuit-goals.v1',
                   encounterLevelIdentity: promoted.snapshot.encounterLevelIdentity,
                 }),
               }
@@ -4708,6 +4739,11 @@ export function bootCoop({
       runningEnemyStyle: accepted
         ? (accepted.runningEnemyStyle ?? 'original')
         : runningEnemyPreferences.snapshot().style,
+      pursuitGeneration: accepted
+        ? (accepted.pursuitGeneration ??
+          accepted.runtimeLevel?.pursuit?.version ??
+          'pursuit-goals.v1')
+        : 'pursuit-goals.v2',
       encounterPack,
       tuning:
         accepted?.tuning ?? gameplayTuning.snapshot(level.journeyDifficulty ?? options.difficulty),
@@ -4728,12 +4764,25 @@ export function bootCoop({
   function preparedRuntimeLevel(recipe) {
     const tuned = applyGameplayTuning(recipe.encounterLevel ?? recipe.level, recipe.tuning);
     return recipe.runningEnemies
-      ? prepareTeamRunningEnemies(tuned, { style: recipe.runningEnemyStyle })
+      ? prepareTeamRunningEnemies(tuned, {
+          style: recipe.runningEnemyStyle,
+          generation: recipe.pursuitGeneration ?? 'pursuit-goals.v2',
+        })
       : tuned;
   }
   function createTunedCoop(recipe) {
     const level = preparedRuntimeLevel(recipe);
     const next = createCoop(level, recipe.options);
+    localRecordings.set(
+      next,
+      createLocalMatchRecorder({
+        build: buildVersion,
+        mode: 'team',
+        level,
+        options: { seed: next.seed, difficulty: next.difficulty, ...next.config },
+        provenance: localMatchProvenance(recipe.level),
+      }),
+    );
     painter.captureArcadeCollection(next);
     attemptTuning.set(next, {
       pictureLevel: recipe.level,
@@ -4741,6 +4790,7 @@ export function bootCoop({
       encounterVariant: recipe.encounterVariant ?? 'authored',
       runningEnemies: recipe.runningEnemies ?? false,
       runningEnemyStyle: recipe.runningEnemyStyle ?? 'original',
+      pursuitGeneration: level.pursuit?.version ?? recipe.pursuitGeneration,
       runtimeLevel: level,
       encounterPack: recipe.encounterPack ?? null,
       adminOverride: recipe.tuning.adminOverride,
@@ -5637,6 +5687,7 @@ export function bootCoop({
     huntSaveControls.refresh();
   }
   function recordTeamInputRelease(currentRun) {
+    localRecordings.get(currentRun)?.release();
     if (!['running', 'paused'].includes(currentRun.status)) return;
     huntAttempts.get(currentRun)?.recorder.release();
     const installed = installedTeamAttempts.get(currentRun);
@@ -5692,6 +5743,10 @@ export function bootCoop({
     restored = null,
     { deferSave = false } = {},
   ) {
+    localRecordings.get(currentRun)?.bindSource({
+      ...(picture?.installedEditionId ? { editionId: picture.installedEditionId } : {}),
+      ...(picture?.pack ? { packageIdentity: dataIdentity(picture.pack) } : {}),
+    });
     const attemptId = teamPersistenceId(currentRun, restored);
     beginHuntAttempt(currentRun, picture, restored, { armed: !deferSave, attemptId });
     const editionId = picture?.installedEditionId,
@@ -5914,6 +5969,7 @@ export function bootCoop({
           const commands = batch.consume(input.consume());
           huntAttempts.get(run)?.recorder.append(commands);
           appendInstalledTeamCommands(run, commands);
+          localRecordings.get(run)?.append(commands);
           stepCoop(run, commands, FIXED_DT);
           music?.sound.feedback(true, { family: acceptedPicture?.request.themeId ?? 'fpv' }, run, {
             mode: 'team',
@@ -5944,6 +6000,31 @@ export function bootCoop({
     frame = requestAnimationFrame(update);
   }
   $('coop-start').onclick = () => requestDeparture('retry', $('coop-start'));
+  localizedText($('coop-export-recording'), () => t('interface:recording.exportTeam'));
+  localizedAttribute($('coop-verify-recording'), 'href', () =>
+    recordingVerificationHref(
+      globalThis.location?.href ??
+        document.baseURI ??
+        'http://localhost/game/couch/relay-rescue.html',
+      getLocale(),
+    ),
+  );
+  $('coop-export-recording').onclick = async () => {
+    const owner = run;
+    if (!['won', 'lost'].includes(owner?.status)) return;
+    try {
+      const recorder = localRecordings.get(owner);
+      if (!recorder) throw new Error('Recording is unavailable for this attempt.');
+      const value = await recorder.snapshot(owner);
+      if (disposed || run !== owner) return;
+      const result = await downloadJSON(value, `revealline-team-${owner.level.id}.json`);
+      if (!disposed && run === owner)
+        localizedText($('coop-recording-status'), () => result.message);
+    } catch (error) {
+      if (!disposed && run === owner)
+        localizedText($('coop-recording-status'), () => error.message);
+    }
+  };
   $('coop-retry').onclick = () => requestDeparture('retry', $('coop-retry'));
   $('coop-resume').onclick = resume;
   $('coop-pause').onclick = pause;

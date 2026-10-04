@@ -79,7 +79,7 @@ import {
 } from './world-content.mjs';
 import { importEditableZip } from './world-zip.mjs';
 import { openWorldStore } from './world-store.mjs';
-import { preparePracticeOffline } from './offline.mjs';
+import { mountPracticeOfflineControls } from './offline.mjs';
 import { dataIdentity } from '../../game/data-json.mjs';
 import {
   THEME_PROFILES,
@@ -101,6 +101,7 @@ import {
 } from './sim-presentation.mjs';
 import { createWorldAudio } from './world-reaction-runtime.mjs';
 import { mountWorldHuntReactions } from './world-reaction-runtime.mjs';
+import { mountWorldEnemyGuide, worldEnemyGuide } from './world-reaction-runtime.mjs';
 import {
   evaluateWorldResult,
   createSectorTracker,
@@ -263,6 +264,9 @@ const COPY_EN = {
   backupProofs: 'Back up flight records',
   restoreProofs: 'Import recordings / examples',
   prepareRuntime: 'Prepare simulator offline',
+  removeRuntime: 'Remove offline simulator files',
+  runtimeOfflineHelp:
+    'Removal keeps your installed worlds and flight records. Download again before playing offline.',
   keepOffline: 'Request persistent storage',
   close: 'Close',
   keyboard: 'Keyboard',
@@ -432,6 +436,9 @@ const COPY_UK = {
   restoreProofs: 'Імпорт записів / прикладів',
   keepOffline: 'Запросити постійне сховище',
   prepareRuntime: 'Підготувати автономний запуск',
+  removeRuntime: 'Прибрати автономні файли симулятора',
+  runtimeOfflineHelp:
+    'Встановлені світи й записи польотів залишаться. Перед автономною грою завантажте файли знову.',
   close: 'Закрити',
   keyboard: 'Клавіатура',
   touch: 'Дотик',
@@ -949,7 +956,7 @@ export function mountWorldApp({
       // normalized source fingerprint binds this data to the exact revision;
       // replayWorldFlight checks every v2 identity and final state before play.
       const match =
-        proof?.format === 'FlightAttempt.v2' &&
+        ['FlightAttempt.v2', 'FlightAttempt.v3'].includes(proof?.format) &&
         proof.session === 'demonstration' &&
         proof.model === WORLD_FLIGHT_MODEL &&
         proof.backend === WORLD_COLLISION_BACKEND &&
@@ -1046,6 +1053,42 @@ export function mountWorldApp({
     });
     return b;
   };
+  const enemyGuide = mountWorldEnemyGuide({
+    document: doc,
+    locale: () => locale,
+    onPause: () => pauseFlight(),
+  });
+  const guideButtons = [];
+  function currentEnemyGuide(trigger) {
+    if (!current || !flight) return;
+    enemyGuide.open(current.course, {
+      mode: $('flight-mode').value,
+      state: flight.snapshot(),
+      trigger,
+    });
+  }
+  function makeGuideButton(id) {
+    const control = button('', (event) => currentEnemyGuide(event.currentTarget));
+    control.id = id;
+    control.hidden = true;
+    control.setAttribute('aria-controls', enemyGuide.dialog.id);
+    guideButtons.push(control);
+    return control;
+  }
+  function refreshEnemyGuide() {
+    const available = Boolean(
+      current &&
+        worldEnemyGuide(current.course, {
+          mode: $('flight-mode').value,
+        }).rows.length,
+    );
+    for (const control of guideButtons) {
+      control.textContent = txt('Enemy field guide', 'Довідник ворогів');
+      control.hidden = !available;
+    }
+    enemyGuide.refresh();
+  }
+  $('flight-options').before(makeGuideButton('world-flight-enemy-guide'));
   const audio = createWorldAudio({ window: win, storage });
   const presentation = mountSimPresentation({
     root: doc,
@@ -1222,6 +1265,7 @@ export function mountWorldApp({
     audioControls.refresh();
     huntPresentationControls.refresh();
     huntReactions.refresh();
+    refreshEnemyGuide();
     updateGhostHUD();
     for (const id of ['flight-mode', 'first-flight-mode']) {
       $(id).options[0].textContent = txt('Self-level', 'Самовирівнювання');
@@ -1723,7 +1767,18 @@ export function mountWorldApp({
   actorEditor = mountActorEditor({
     container: actorContainer,
     getCourse: () => editor,
-    onChange: (mutator) => applyEdit(mutator),
+    onChange: async (mutator) => {
+      const source = editor;
+      await initWorldRuntime();
+      if (editor !== source)
+        throw new Error(
+          txt(
+            'The editor changed. Review the current challenge before applying.',
+            'Редактор змінився. Перегляньте поточне завдання перед застосуванням.',
+          ),
+        );
+      return applyEdit(mutator, { nativePursuitAdmission: true });
+    },
     locale: () => locale,
   });
 
@@ -2121,6 +2176,21 @@ export function mountWorldApp({
           );
           info.append(watch);
         }
+        if (worldEnemyGuide(entry.course, { mode: $('flight-mode').value }).rows.length) {
+          const inspect = button(txt('Preview targets', 'Переглянути цілі'), (event) =>
+            enemyGuide.open(entry.course, {
+              mode: $('flight-mode').value,
+              trigger: event.currentTarget,
+            }),
+          );
+          inspect.dataset.enemyGuideCourse = entry.id;
+          inspect.setAttribute('aria-controls', enemyGuide.dialog.id);
+          inspect.setAttribute(
+            'aria-label',
+            `${txt('Preview targets', 'Переглянути цілі')}: ${label(entry)}`,
+          );
+          info.append(inspect);
+        }
         const fly = button(txt('Fly', 'Летіти'), () => startFlight(entry));
         fly.setAttribute('aria-label', `${txt('Fly', 'Летіти')}: ${label(entry)}`);
         const add = button(
@@ -2148,6 +2218,7 @@ export function mountWorldApp({
         button(txt('Free flight', 'Вільний політ'), () => {
           const course = clone(group[0].course);
           course.format = 'FlightCourse.v2';
+          delete course.pursuit;
           course.id = unique('freeflight');
           course.world ??= {
             id: group[0].world,
@@ -2430,7 +2501,7 @@ export function mountWorldApp({
     bindings: clone(editingProject?.routeBindings?.[editor.id] ?? null),
     overrides: clone(editingProject?.overrides ?? {}),
   });
-  function applyEdit(change) {
+  function applyEdit(change, { nativePursuitAdmission = false } = {}) {
     if (!editor)
       throw new Error(txt('Create a challenge copy first.', 'Спочатку створіть копію завдання.'));
     const before = editorSnapshot(),
@@ -2440,6 +2511,10 @@ export function mountWorldApp({
     try {
       change(next, bindings);
       valid = validateWorldCourse(next);
+      if (nativePursuitAdmission && valid.pursuit) {
+        const admitted = createWorldFlight({ course: valid, mode: 'acro' });
+        admitted.dispose();
+      }
       if (valid.id !== editor.id || valid.world.id !== editor.world.id)
         throw new Error(
           txt(
@@ -2476,7 +2551,7 @@ export function mountWorldApp({
         })
       : null;
     const c = clone(entry.course);
-    c.format = 'FlightCourse.v2';
+    c.format = c.pursuit ? 'FlightCourse.v3' : 'FlightCourse.v2';
     c.id = unique('custom');
     c.revision = 'r1';
     c.world ??= {
@@ -4268,6 +4343,7 @@ export function mountWorldApp({
       'Практика із самовирівнюванням · без заліку. Для цих маневрів потрібен Acro.',
     );
   async function startFlight(entry, options = {}) {
+    enemyGuide.close();
     if (disposed) return;
     playShell?.enterPlay();
     if (playShell) $('flight-dialog').prepend(playShell.elements.header);
@@ -4332,6 +4408,7 @@ export function mountWorldApp({
     checkpointRequest = options.checkpoint ?? null;
     checkpointSession = null;
     $('flight-mode').value = requestedMode;
+    refreshEnemyGuide();
     const needsAcro = !entry.legacy && worldCourseRequiresAcro(entry.course);
     modePractice = needsAcro && requestedMode === 'self-level';
     const learning = !checkpointRequest && learningById.get(entry.beginner);
@@ -4677,6 +4754,7 @@ export function mountWorldApp({
       )}`;
   }
   async function closeFlight() {
+    enemyGuide.close();
     const token = ++flightToken;
     checkpointPreparation?.abort();
     checkpointPreparation = null;
@@ -4691,6 +4769,7 @@ export function mountWorldApp({
     flight = null;
     const closedLesson = current?.beginner;
     current = null;
+    refreshEnemyGuide();
     recorder = null;
     checkpointSession = null;
     checkpointRequest = null;
@@ -5152,22 +5231,41 @@ export function mountWorldApp({
           'Постійне сховище не надано. Експортуйте пакунки та записи.',
         );
   });
-  on($('prepare-runtime'), 'click', async () => {
-    const result = await preparePracticeOffline({
-      navigator: win.navigator,
-      location: win.location,
-      storage,
-      packageId: 'fpv-worlds',
-    });
-    status(
-      typeof result === 'string'
-        ? result
-        : txt(
-            'Offline runtime preparation completed.',
-            'Підготовку автономного запуску завершено.',
-          ),
-    );
+  const runtimeOffline = mountPracticeOfflineControls({
+    prepareButton: $('prepare-runtime'),
+    removeButton: $('remove-runtime'),
+    document: doc,
+    window: win,
+    storage,
+    packageId: 'fpv-worlds',
+    onStatus(kind, error) {
+      if (disposed) return;
+      const messages = {
+        preparing: [
+          'Preparing simulator files for offline use…',
+          'Підготовка файлів для автономного запуску…',
+        ],
+        removing: ['Removing offline simulator files…', 'Прибирання автономних файлів симулятора…'],
+        ready: [
+          'Offline runtime preparation completed.',
+          'Підготовку автономного запуску завершено.',
+        ],
+        removed: [
+          'Offline simulator files removed. Installed worlds and flight records are kept.',
+          'Автономні файли симулятора прибрано. Встановлені світи й записи польотів збережено.',
+        ],
+        cancelled: ['Offline download cancelled.', 'Автономне завантаження скасовано.'],
+      };
+      $('runtime-offline-status').textContent = messages[kind]
+        ? txt(...messages[kind])
+        : String(error?.message ?? error);
+    },
   });
+  if (!runtimeOffline.available)
+    $('runtime-offline-status').textContent = txt(
+      'Offline installation needs a secure browser with service-worker support.',
+      'Для автономного встановлення потрібен захищений браузер із підтримкою сервісних воркерів.',
+    );
   on($('world-flight-menu'), 'click', () => setFlightMenu(true));
   on($('world-flight-close-menu'), 'click', () => setFlightMenu(false));
   on($('world-flight-resume'), 'click', () => $('world-arm').click());
@@ -5241,6 +5339,7 @@ export function mountWorldApp({
   menuHint.id = 'sim-menu-hint';
   doc.querySelector('main').append(menuHint);
   function menuContext() {
+    if (enemyGuide.dialog.open) return { root: enemyGuide.dialog, key: enemyGuide.dialog.id };
     if (packRemovalReview?.dialog.open)
       return { root: packRemovalReview.dialog, key: 'pack-removal-review' };
     const secondary = ['world-radio-dialog', 'drone-hangar', 'sim-settings']
@@ -5288,7 +5387,8 @@ export function mountWorldApp({
       if (menuHint.textContent !== value) menuHint.textContent = value;
     },
     onBack() {
-      if (packRemovalReview?.dialog.open) $('pack-removal-cancel').click();
+      if (enemyGuide.dialog.open) enemyGuide.close();
+      else if (packRemovalReview?.dialog.open) $('pack-removal-cancel').click();
       else if ($('world-radio-dialog').open) closeRadio();
       else if ($('drone-hangar').open)
         $('drone-hangar').querySelector('[data-close-hangar]').click();
@@ -5731,6 +5831,7 @@ export function mountWorldApp({
     ),
   );
   shellBriefing.append(help);
+  shellBriefing.append(makeGuideButton('world-briefing-enemy-guide'));
   let shellTab = 'explore';
   const openCatalogueTab = (id) => {
     shellTab = id;
@@ -5806,6 +5907,7 @@ export function mountWorldApp({
     initial: 'home',
     focusPlay: () => $('world-viewport').focus(),
   });
+  playShell.elements.content.home.append(makeGuideButton('world-menu-enemy-guide'));
   on(doc.querySelector('.wordmark'), 'click', () => playShell.openHome());
   for (const id of ['lobby-sound', 'world-sound'])
     if ($(id)) on($(id), 'click', () => playShell.update({ muted: !audio.enabled() }));
@@ -5924,6 +6026,7 @@ export function mountWorldApp({
     }),
     async dispose() {
       if (disposed) return;
+      runtimeOffline.dispose();
       proofImport?.abort();
       packRemovalReview?.close();
       restorePackIdentity = null;
@@ -5960,6 +6063,7 @@ export function mountWorldApp({
       audioControls.dispose();
       huntPresentationControls.dispose();
       huntReactions.dispose();
+      enemyGuide.dispose();
       audio.dispose();
       presentation.dispose();
       droneResponse.dispose();
