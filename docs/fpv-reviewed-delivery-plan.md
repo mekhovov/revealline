@@ -704,3 +704,29 @@ and Solar increments and broader world polish, then D3 examples/coaching, D4
 creator, D5's **228 challenges / 18 worlds** target and deferred D6 unit coverage.
 Functional qualification continues at each increment. Browser checks do not
 close named-device timing, physical controls or complete-world artistic goals.
+
+### Solar and optional School examples checkpoint — 4 October 2026
+
+Railworks #1020 is merged at `bf167a4fd`. The independent Solar increment is locally
+qualified on that main: photovoltaic cells and aluminum-colored framing belong
+only on the existing banks' upper faces; sides and backs stay solid and quiet.
+The final canonical-profile guard preserves same-ID theme edits. Geometry,
+collision, resource counts, Pixel/shared themes and retained recordings remain
+unchanged. See [Solar qualification](fpv-solar-panel-frames.md) for original-source
+and final-package attribution, actual browser/player evidence and limits. These
+bounded increments do not close broader world-model realism or artistic polish.
+
+The next independent D3 School batch is **28 optional alternate examples**:
+`beginner-01`–`12` in Acro and `beginner-27`–`42` in Self-level. Eligibility follows
+actual step types and `worldCourseRequiresAcro`, not a nonexistent `step.skill`
+property. Exclude the fourteen already optional foundation Self-level examples
+and sixteen Acro-skill lessons that allow only unscored Self-level practice.
+Preserve the **178 bundled examples** and distribute new proofs through the
+existing optional archive importer. The sixty Adventure examples are separate
+work. Functional replay and actual import/playback qualification precede claims
+of completion; this checkpoint does not say the new batch has been generated.
+
+Content remains **196 challenges / 14 worlds**. Continue the approved D3 examples
+and coaching work, D4 creator, D5's **228 challenges / 18 worlds** target and D6
+unit coverage, while retaining broader art, named-device performance and physical
+control acceptance as separate unfinished goals.
