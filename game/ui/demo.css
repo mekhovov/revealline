@@ -588,13 +588,13 @@
 #demo-dialog .demo-audience {
   grid-area: audience;
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(145px, 0.65fr) minmax(170px, 0.75fr);
-  gap: 8px 16px;
+  grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
+  gap: 6px 16px;
   align-items: center;
   min-width: 0;
   max-height: 38dvh;
   overflow: auto;
-  padding: 8px;
+  padding: 6px 8px;
 }
 #demo-dialog .demo-commentary {
   display: flex;
@@ -615,13 +615,12 @@
   line-height: 1.4;
   overflow-wrap: anywhere;
 }
-#demo-dialog .demo-invitation,
 #demo-dialog .demo-listening {
   min-width: 0;
 }
 #demo-dialog #demo-interrupt {
   position: static;
-  width: 100%;
+  width: auto;
 }
 #demo-dialog #demo-join-hint {
   font-size: calc(0.75rem * var(--demo-text-factor, 1));
@@ -636,9 +635,7 @@
   white-space: normal;
   overflow-wrap: anywhere;
 }
-#demo-dialog #demo-details-toggle {
-  width: 100%;
-}
+
 #demo-dialog .demo-panel,
 #demo-dialog[data-reward='expanded'] .demo-panel {
   grid-area: audience;
@@ -683,55 +680,124 @@
     color: inherit;
   }
 }
-@media (max-width: 900px) {
-  #demo-dialog .demo-audience {
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-  }
-  #demo-dialog .demo-commentary {
-    grid-column: 1 / -1;
+#demo-dialog .demo-header-actions {
+  flex-wrap: wrap;
+  justify-content: flex-start;
+}
+#demo-dialog .demo-header-actions .button {
+  flex-shrink: 0;
+  overflow-wrap: normal;
+  word-break: normal;
+}
+#demo-dialog .demo-heading {
+  flex-basis: 120px;
+}
+#demo-dialog:is([data-info-layout='margins'], [data-info-layout='side'])[open] {
+  grid-template-rows: auto minmax(80px, 1fr);
+  grid-template-areas: 'heading' 'board';
+}
+#demo-dialog:is([data-info-layout='margins'], [data-info-layout='side']) .demo-audience {
+  grid-area: board;
+  grid-template-columns: var(--demo-info-margin) minmax(0, 1fr) var(--demo-info-margin);
+  align-items: end;
+  align-self: stretch;
+  z-index: 1;
+  padding: 0;
+  gap: 0;
+  max-height: none;
+  overflow: hidden;
+  pointer-events: none;
+  background: transparent;
+}
+#demo-dialog:is([data-info-layout='margins'], [data-info-layout='side']) .demo-commentary,
+#demo-dialog:is([data-info-layout='margins'], [data-info-layout='side']) .demo-listening {
+  padding: 8px;
+  max-height: 100%;
+  overflow: auto;
+  pointer-events: auto;
+}
+#demo-dialog:is([data-info-layout='margins'], [data-info-layout='side']) .demo-commentary {
+  grid-column: 1;
+  align-items: flex-start;
+}
+#demo-dialog:is([data-info-layout='margins'], [data-info-layout='side']) .demo-listening {
+  grid-column: 3;
+}
+#demo-dialog[data-info-layout='side'] .demo-audience {
+  grid-template-columns: minmax(0, 1fr) var(--demo-info-margin);
+  grid-template-rows: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 4px 0;
+}
+#demo-dialog[data-info-layout='side'] .demo-commentary,
+#demo-dialog[data-info-layout='side'] .demo-listening {
+  grid-column: 2;
+}
+#demo-dialog[data-info-layout='side'] .demo-listening {
+  align-self: start;
+}
+#demo-dialog[data-info-layout='side'] #demo-canvas {
+  object-position: left center;
+}
+/* Keep all actions in reading order; narrow screens use two compact rows.
+   No landscape sidebar: wide maps get the entire available width. */
+@media (max-width: 1000px) {
+  #demo-dialog .demo-heading {
+    display: flex;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 2px 10px;
   }
 }
-@media (orientation: landscape) and (max-height: 600px) {
-  #demo-dialog[open] {
-    grid-template-columns: minmax(0, 1fr) clamp(210px, 28vw, 290px);
-    grid-template-rows: auto minmax(0, 1fr);
-    grid-template-areas: 'heading heading' 'board audience';
-  }
-  #demo-dialog .demo-heading {
-    flex-basis: 100px;
-  }
-  #demo-dialog .demo-audience {
+@media (max-width: 600px) {
+  #demo-dialog .demo-header {
+    display: grid;
     grid-template-columns: minmax(0, 1fr);
-    align-content: start;
-    max-height: 100%;
-    gap: 12px;
   }
-  #demo-dialog .demo-commentary {
-    grid-column: auto;
+  #demo-dialog .demo-header-actions {
+    display: grid;
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    width: 100%;
   }
-  #demo-dialog .demo-panel {
-    max-height: 100%;
-  }
-  #demo-guide-portrait {
-    width: 36px;
-    height: 36px;
-    flex-basis: 36px;
+  #demo-dialog .demo-header-actions .button {
+    padding-inline: 5px;
+    font-size: calc(0.8rem * var(--demo-text-factor, 1));
   }
 }
 @media (max-width: 600px) {
   #demo-dialog .demo-header-actions {
-    width: 100%;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
-  #demo-dialog .demo-header-actions .button {
-    flex: 1 1 0;
-    padding-inline: 4px;
-    font-size: calc(0.8rem * var(--demo-text-factor, 1));
+  #demo-dialog .demo-audience {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 4px;
+  }
+  #demo-dialog .demo-listening {
+    border-top: 1px solid currentColor;
+    padding-top: 4px;
+  }
+  #demo-dialog #demo-music-state {
+    display: inline;
+    margin-inline-end: 6px;
+  }
+  #demo-dialog #demo-now-playing {
+    display: inline;
   }
 }
-@media (max-width: 360px) and (orientation: portrait) {
+@media (orientation: landscape) and (max-height: 600px) {
+  #demo-dialog[open] {
+    gap: 4px;
+  }
+  #demo-dialog .demo-header {
+    gap: 2px;
+  }
   #demo-dialog .demo-audience {
+    max-height: 26dvh;
+  }
+  #demo-dialog .demo-panel {
     max-height: 45dvh;
   }
+}
+@media (max-width: 1000px) {
   #demo-guide-portrait {
     width: 36px;
     height: 36px;

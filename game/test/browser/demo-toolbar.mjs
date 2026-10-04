@@ -1,3 +1,4 @@
+import { attachDemoLayout } from '../../ui/demo-layout.mjs';
 import { setLocale, translateDOM, t } from '../../i18n/index.mjs';
 import {
   applyResolvedPresentation,
@@ -56,6 +57,7 @@ $('demo-details-toggle').onclick = () => {
 $('demo-details-close').onclick = () => {
   $('demo-panel').hidden = true;
   dialog.dataset.details = 'closed';
+  $('demo-details-toggle').setAttribute('aria-expanded', 'false');
   $('demo-details-toggle').focus();
 };
 $('demo-interrupt').onclick = () => {
@@ -69,6 +71,11 @@ $('demo-resume').onclick = () => {
 };
 const canvas = $('demo-canvas'),
   ctx = canvas.getContext('2d');
+const aspect = new URLSearchParams(location.search).get('aspect');
+if (aspect === 'wide' || aspect === 'ultrawide') {
+  canvas.width = aspect === 'wide' ? 1024 : 1728;
+  canvas.height = 576;
+}
 ctx.fillStyle = '#0b141e';
 ctx.fillRect(0, 0, canvas.width, canvas.height);
 ctx.strokeStyle = '#28525d';
@@ -79,3 +86,4 @@ ctx.fillStyle = '#a1d0dd';
 ctx.font = '16px sans-serif';
 ctx.fillText('Layout preview — no game running', 24, canvas.height / 2);
 dialog.showModal();
+attachDemoLayout({ document, dialog, canvas });

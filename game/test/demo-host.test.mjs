@@ -573,7 +573,8 @@ test('spectator information and play invitation stay visible while details remai
   }
   assert.ok(page.$('demo-caption').closest('#demo-audience'));
   assert.ok(page.$('demo-now-playing').closest('#demo-audience'));
-  assert.ok(page.$('demo-interrupt').closest('#demo-audience'));
+  assert.ok(page.$('demo-interrupt').closest('.demo-header-actions'));
+  assert.ok(page.$('demo-details-toggle').closest('.demo-header-actions'));
   assert.match(page.$('demo-interrupt').textContent, /Want to play/);
   assert.match(page.$('demo-join-hint').textContent, /practice/);
   assert.equal(page.$('demo-guide-portrait').hidden, false);
