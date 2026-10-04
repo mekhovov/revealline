@@ -1,6 +1,6 @@
 # Harbor Docks — original content candidate
 
-An original fictional Ukrainian quay. The supported portal gantry, closed container groups, raised service deck and waterside boundary form three readable flying spaces. The r2 scene has bounded actual-renderer acceptance; eight r3 courses are authored, but qualification is blocked by an actual runtime defect in moving ground actors on finite raised supports. Complete browser/import and native/offline qualification are also pending. This is not a completed or published eight-course world yet.
+An original fictional Ukrainian quay. The supported portal gantry, closed container groups, raised service deck and waterside boundary form three readable flying spaces. The r2 scene has bounded actual-renderer acceptance. The frozen eight-course r3 exposed an actual finite-support movement defect; r4 explicitly opts its two civilian ground subjects into the separately versioned correction. Fresh r4 course proofs and complete browser/import/native/offline qualification are pending. This is not a completed or published eight-course world yet.
 
 The revised r2 scene has 7,900 triangles, ten imported material batches, two original 256px maps and 38 solid records. Source GLB 761,036B; prepared GLB 760,368B and zero glTF validator errors. The one-course pack/ZIP round trip and 148 static collider-marker, support, expanded waypoint, swept-route and serialized-water checks pass. A separate 23-check r1/r2 comparison preserves every course field except revision, all markers/colliders and both embedded PNG byte streams. Six actual r2 views and disposal are retained in `evidence/r2-static/`; continuous water, recognizable barge, service deck and Low/Pixel readability were accepted for course expansion. This establishes a bounded stylized scene, not commercial-realism or hardware acceptance.
 
@@ -12,7 +12,7 @@ All playable land rests on a real platform at Y0–2m. Spawn is Y2.25m; the firs
 
 The existing required `REVEALLINE_surface_coating` version1 opaque-finish capability provides fixed host-defined depth bias for exact canonical painted planes. Imported face regions are partitioned; no free numerical rendering state or new runtime code is introduced. Old unsupported hosts must refuse this capability. Low/Balanced/High, Pixel/shared appearance, grazing paint and shadow boundaries need actual visual review.
 
-Original CC0 geometry/maps/lettering; see [design and reference](DESIGN.md) and [license](source/LICENSE.md). Encoding helpers adapt the project's own authoring utilities. No copied competitor assets or logos, new renderer style, physics changes, package ceiling changes or new unit coverage.
+Original CC0 geometry/maps/lettering; see [design and reference](DESIGN.md) and [license](source/LICENSE.md). Encoding helpers adapt the project's own authoring utilities. No copied competitor assets or logos, new renderer style, package ceiling changes or new unit coverage. The content does not edit shared physics code; its explicit versioned movement dependency is described below.
 
 ```sh
 node authoring/fpv-worlds/harbor-docks/build-checkpoint.mjs NEW_DIRECTORY
@@ -23,7 +23,7 @@ node authoring/fpv-worlds/harbor-docks/prepare-preview.mjs EXACT_ADMITTED_102_PL
 
 The static preview authenticates every complete admitted player byte and uses that renderer unchanged. Named views show the arrival apron, closed containers, gantry, service deck, water boundary, grazing apron and wide/overview/chase composition. These are manual observations, not flights or performance measurements. Freeze the final shared scene before all eight routes and sixteen fresh exact-pack proofs.
 
-## Eight-course r3 qualification in progress
+## Eight courses, with the failed r3 checkpoint retained
 
 The exact accepted r2 source/prepared GLB bytes are reused by hardlink. All eight layouts share the same 38 solids and bounds. The source has EN/UK briefing and lesson text, independently cloned Self-level/Acro criteria, source-bound orientation anchors and local route ownership for the other layouts:
 
@@ -40,7 +40,15 @@ The first 406-check static survey retained three failures in `evidence/r3-static
 
 Actual `createWorldFlight` diagnostics then confirmed the runtime issue using 3,000 ordinary neutral-input ticks: the cart stops after about 2.97m and the walker after about 0.42m, while support queries still return the correct quay/deck. A diagnostic-only prospective 10mm initial clearance did not fix it and was never applied to source. Nine minimal cases retain the full synthetic course data and runtime hashes in `evidence/r3-minimal-ground-cases.json`: canonical half-space controls travel normally, whereas the exact and narrower finite cuboids and equivalent closed-trimesh supports stall. Wall/ledge cases are retained for a future correction, but the old behavior stalls before those boundaries and therefore does not establish their corrected behavior.
 
-The accepted scene, all 38 collider definitions, r3 routes/actors and pack identity remain frozen. No endpoint, pose, collision or physics shortcut is applied. A separately versioned opt-in runtime correction is being reviewed independently; Harbor will need an explicit new content revision and all sixteen fresh proofs once that contract qualifies. The proof observer requires real named support on every civilian tick, at most 12mm actual height deviation, full tracking criteria, actual projectile damage/defeat, complete ordinary flights and independent exact replays. No complete proof has yet been generated for r3.
+The accepted scene, all 38 collider definitions, r3 routes/actors and pack identity remain frozen at `590fbb10011c596e179c1c3b82d278d39a42d2e0`. The original r3 observer's 12mm maximum and all failed receipts remain historical. No complete proof was generated for r3.
+
+## Explicit r4 ground-motion dependency
+
+The r4 branch starts from runtime prerequisite `9b5c3d65e2877847126c87f263fbc7e9aca357fb`. Only the cart in course 05 and the inspector in course 06 receive `groundMotion: "support-v1"`; the stationary training drone remains unmarked. The project, pack and all eight course revisions advance to r4. Scene/model bytes, all collision solids, bounds, spawns, actor paths/speeds, route criteria, objective tolerances and source bindings stay fixed. Older runtimes reject the unsupported actor field; this content must not be listed for an older Library runtime cohort.
+
+The opt-in algorithm retains the existing 10mm controller margin and uses a 1mm downward request plus 1mm integer clearance. Its normal clearance is 12mm; the Harbor r4 observer explicitly permits two additional 1mm native/support rounding steps, giving a 14mm maximum on these flat named supports. It records both signed `actor.feetY - authoredSolid.max.y` and the separate native support-ray gap on every civilian tick, rejects negative or greater-than-14mm values and requires the exact named support. No actor pose is assigned by the qualifier. This r4-only policy does not retroactively change the r3 failures. A center-ray gap on a stepped general-purpose case is not used to justify changing these flat Harbor supports.
+
+Fresh r4 static qualification and all sixteen ordinary-control recordings, independent complete replay and archive replay are pending. They must establish full tracking criteria, actual projectile damage/defeat and complete flights. Exact capable-player import/Watch and native/offline review are later gates; the prior r2 scene acceptance does not imply that the eight courses have passed them.
 
 ```sh
 node authoring/fpv-worlds/harbor-docks/build-world.mjs ACCEPTED_R2_DIRECTORY NEW_WORLD_DIRECTORY

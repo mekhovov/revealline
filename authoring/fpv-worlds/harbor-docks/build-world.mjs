@@ -22,7 +22,7 @@ import {
 
 const [baselineArg, outputArg] = process.argv.slice(2);
 if (!baselineArg || !outputArg) throw Error('Use ACCEPTED_R2_GENERATED_DIRECTORY NEW_OUTPUT');
-const revision = 'r3';
+const revision = 'r4';
 const sha = (b) => createHash('sha256').update(b).digest('hex');
 const must = (ok, name) => {
   if (!ok) throw Error(name);
@@ -74,10 +74,11 @@ project.authoring = {
   collision:
     'One shared38-solid world. All playable land is supported by the Y0–2m quay. Containers, gantry beams and the service house are closed; actual gantry opening and service-deck underside stay open. Water remains outside playable bounds.',
   actors:
-    'Follow/observe layouts own one civilian actor each on the actual quay/deck support. Following requires4m target travel. The isolated fictional training layout owns one stationary nonfiring drone target and uses ordinary simulated projectile/health rules; no civilians share that layout.',
+    'Follow/observe layouts own one civilian actor each on the actual quay/deck support, explicitly requiring groundMotion support-v1. Following requires4m target travel. The isolated fictional training layout owns one stationary nonfiring drone target and uses ordinary simulated projectile/health rules; no civilians share that layout.',
   routeOwnership:
     'Eight independent ordered layouts, two independently cloned ordinary-mode arrays, unchanged shared World and spawn. Orientation preserves its original source anchors; the seven new layouts use null route bindings to own authored local criteria.',
-  license: 'Original CC0 geometry/maps/marks; no third-party harbor art or runtime changes',
+  license:
+    'Original CC0 geometry/maps/marks; no third-party harbor art. This data-only content edits no shared runtime code; civilian ground subjects require the separately versioned support-v1 runtime.',
 };
 synchronizeDefinitions(project);
 must(
