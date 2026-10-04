@@ -1,0 +1,33 @@
+{
+  "format": "FPVImportedExamplesPackageProvenance.v1",
+  "candidate": "79a721dd19343726fed30f618a2d7c8cd164d691",
+  "hostSha256": "6d93d9c36fb8d0c576907d98618d7aa73637bb49bd8d72ec310508241b96045c",
+  "artifacts": [
+    {
+      "artifact": "fpv-imported-examples-package-v1-manifest.json.gz",
+      "bytes": 20774,
+      "sha256": "6a4e08bf74c854155d66080ca00efa6a66ffc3fa152ebae8293808f9a5e66e08",
+      "storedBytes": 6593,
+      "storedSha256": "93cce2ed8bed189993edec96d64d3e0ea7e2e71bb054704586f6d7b422833648",
+      "compression": "gzip-mtime0"
+    },
+    {
+      "artifact": "fpv-imported-examples-package-v1-player.html.gz",
+      "bytes": 35978,
+      "sha256": "aaae76acd891093903b0186e1a50897bc5f714c789927a6410001c8fb56e7700",
+      "storedBytes": 9102,
+      "storedSha256": "c519f448847242a9e4892a353db80aed88b9bc665a6b375ffd56aecd5b5de2b3",
+      "compression": "gzip-mtime0"
+    },
+    {
+      "artifact": "fpv-imported-examples-package-v1-index.html.gz",
+      "bytes": 21438,
+      "sha256": "c0dbeeac676ab1fe10072d50c8f1feec9e3ec23e3c0f7083aa9ad0de5c47f97d",
+      "storedBytes": 5979,
+      "storedSha256": "9ffc0dc9ea2f4c2da0e5a40e1362740e4b8bb0aae6f16d85a9c0aaa87d939466",
+      "compression": "gzip-mtime0"
+    }
+  ],
+  "browserStatus": "pending",
+  "scope": "Exact102 admitted members; candidate host from admitted ZIP, no source overlays; explicit baseline comparison only. Static import paths are rewritten into frozen closure; controlled RAF preserves real performance clock and production pause guards."
+}
