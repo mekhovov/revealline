@@ -8,6 +8,7 @@ import {
   roomServiceEndpoint,
   terminalRoomError,
 } from '../online/room-client-lifecycle.mjs';
+import { readRoomInvitation } from '../online/room-content.mjs';
 
 const owner = { seat: 0, token: 'first' };
 const input = (direction) => ({ direction, boost: false, support: false });
@@ -29,6 +30,50 @@ const deferred = () => {
   });
   return { promise, resolve, reject };
 };
+
+test('same-page invitation navigation retires the previous room before normal pinned boot', async () => {
+  const source = await readFile(new URL('../online/rooms.mjs', import.meta.url), 'utf8');
+  const handler = parse(source, { ecmaVersion: 'latest', sourceType: 'module' }).body.find(
+    (node) => node.type === 'FunctionDeclaration' && node.id.name === 'followInvitation',
+  );
+  assert.ok(handler);
+  const calls = [],
+    invite = 'f'.repeat(64),
+    content = 'b'.repeat(64),
+    base = 'http://localhost:8787/game/online/?lang=en';
+  const context = {
+    location: {
+      href: `${base}#invite=${invite}&recipe=snake:versus:review&content=${content}`,
+      pathname: '/game/online/',
+      search: '?lang=en',
+      reload: () => calls.push('reload'),
+    },
+    credentials: { invite: 'a'.repeat(64) },
+    lifecycle: { snapshot: () => ({ phase: 'abandoned' }) },
+    history: { replaceState: (...args) => calls.push(args[2]) },
+    readRoomInvitation,
+    leave: () => calls.push('leave'),
+    notice: (value) => calls.push(value),
+  };
+  const navigate = runInNewContext(`(${source.slice(handler.start, handler.end)})`, context);
+  navigate();
+  assert.deepEqual(calls, ['leave', 'reload']);
+  assert.equal(readRoomInvitation(context.location.href).expectedHash, content);
+  calls.length = 0;
+  context.location.href = `${base}#invite=invalid`;
+  navigate();
+  assert.equal(calls.length, 1);
+  assert.match(calls[0], /Invalid room invitation/);
+  calls.length = 0;
+  context.location.href = `${base}#settings`;
+  navigate();
+  assert.deepEqual(calls, []);
+  context.location.href = `${base}#invite=${invite}`;
+  context.credentials.invite = invite;
+  context.lifecycle.snapshot = () => ({ phase: 'connected' });
+  navigate();
+  assert.deepEqual(calls, ['/game/online/?lang=en']);
+});
 
 test('late action failures preserve the terminal unavailable notice until a new seat is owned', async () => {
   // Execute the real page handler; only its DOM notice boundary is substituted.
@@ -93,6 +138,49 @@ test('native localhost and unapproved origins never acquire a development room e
   assert.equal(roomServiceEndpoint(hosted, 'https://user:password@rooms.example'), null);
   assert.equal(roomServiceEndpoint(hosted, 'https://rooms.example/path'), null);
   assert.equal(roomServiceEndpoint(hosted, 'https://rooms.example'), 'https://rooms.example');
+});
+
+test('late poll and action failures from a retired epoch cannot suspend accepted readiness', async () => {
+  const source = await readFile(new URL('../online/rooms.mjs', import.meta.url), 'utf8'),
+    handler = parse(source, { ecmaVersion: 'latest', sourceType: 'module' }).body.find(
+      (node) => node.type === 'FunctionDeclaration' && node.id.name === 'connectionError',
+    ),
+    lifecycle = createRoomClientLifecycle({ sendInput() {} });
+  lifecycle.own(owner);
+  accept(lifecycle, snapshot());
+  const beforePause = lifecycle.snapshot().epoch;
+  lifecycle.suspend();
+  lifecycle.pauseAcknowledged(lifecycle.snapshot().epoch);
+  accept(lifecycle, snapshot('paused', 'b'));
+  const readyEpoch = lifecycle.snapshot().epoch;
+  accept(lifecycle, snapshot('playing', 'c'));
+  let suspensions = 0,
+    notice = 'Room playing';
+  const fail = runInNewContext(`(${source.slice(handler.start, handler.end)})`, {
+    credentials: owner,
+    lifecycle,
+    terminalRoomError,
+    abandonLocal() {
+      lifecycle.abandon();
+    },
+    suspendLocal() {
+      lifecycle.suspend();
+      suspensions++;
+    },
+    notice(value) {
+      notice = value;
+    },
+    say: (en) => en,
+  });
+  fail(new Error('Late snapshot timeout'), owner, beforePause);
+  fail(new Error('Ready response lost after the playing snapshot arrived'), owner, readyEpoch);
+  assert.equal(lifecycle.canPlay(), true);
+  assert.equal(suspensions, 0);
+  assert.equal(notice, 'Room playing');
+  fail(new Error('Current activation failed'), owner, lifecycle.snapshot().epoch);
+  assert.equal(lifecycle.canPlay(), false);
+  assert.equal(suspensions, 1);
+  assert.match(notice, /Reconnecting/);
 });
 
 test('restored seats and connection recovery need shared Pause then fresh readiness', () => {

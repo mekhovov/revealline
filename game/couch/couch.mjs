@@ -1,4 +1,6 @@
 import { selectedArcadeCollection } from '../presentation/industrial-arcade.mjs';
+import { createLocalMatchRecorder, localMatchProvenance } from '../multiplayer-recording.mjs';
+import { recordingVerificationHref } from '../ui/recording-verification.mjs';
 import { pursuitRoster } from '../hunt/pursuit-goals.mjs';
 import { missionBriefing } from '../mission-brief.mjs';
 import { createEncounterVariantPreferences } from '../hunt/preferences.mjs';
@@ -22,7 +24,15 @@ import {
   journeyPresetDescription,
 } from '../ui/gameplay-copy.mjs';
 import { contentText } from '../i18n/content.mjs';
-import { t, localizedText, localizedOption, localizedMessage, render } from '../i18n/index.mjs';
+import {
+  t,
+  getLocale,
+  localizedText,
+  localizedAttribute,
+  localizedOption,
+  localizedMessage,
+  render,
+} from '../i18n/index.mjs';
 import { attachCouchTouch } from '../ui/couch-touch.mjs';
 import { mountPresentationPage } from '../presentation/page.mjs';
 import { createCouchShell } from './couch-shell.mjs';
@@ -911,6 +921,10 @@ try {
   );
   boardFootprints = createBoardFootprints([0, 1].map((i) => $(`race-canvas-${i}`)));
   let boardLayoutKey = null;
+  const localRecordings = new WeakMap();
+  const recordingBuild = document.documentElement.dataset.buildVersion;
+  const buildVersion =
+    recordingBuild && recordingBuild !== '__REVEALLINE_VERSION__' ? recordingBuild : 'dev';
   let match,
     theme,
     backdrop = null,
@@ -1414,6 +1428,7 @@ try {
       actorPreferenceRevision: configured.actorPreferenceRevision,
       runningEnemies: configured.runningEnemies,
       runningEnemyStyle: configured.runningEnemyStyle ?? runningEnemyPreferences.snapshot().style,
+      pursuitGeneration: configured.pursuitGeneration ?? 'pursuit-goals.v2',
     };
     $('race-format').value = roundRecipe.format;
     match = createRound(roundRecipe);
@@ -1454,9 +1469,10 @@ try {
       ? prepareRunningEnemyLevel(tunedLevel, {
           classes: recipe.entry.classes,
           style: recipe.runningEnemyStyle,
+          generation: recipe.pursuitGeneration ?? 'pursuit-goals.v2',
         })
       : tunedLevel;
-    return createDuel(
+    const next = createDuel(
       recipe.runtimeLevel,
       {
         seed: recipe.seed,
@@ -1469,6 +1485,25 @@ try {
         protocol: qualifiedVersusEntry(recipe.entry) ? UNTIMED_DUEL_PROTOCOL : DUEL_PROTOCOL,
       },
     );
+    localRecordings.set(
+      next,
+      createLocalMatchRecorder({
+        build: buildVersion,
+        mode: 'versus',
+        level: recipe.runtimeLevel,
+        options: {
+          seed: recipe.seed,
+          turnPolicy: recipe.turnPolicy,
+          classId: recipe.classId,
+          ...(recipe.entry.classes ? { classRecipes: recipe.entry.classes } : {}),
+        },
+        duel: { seconds: recipe.seconds, protocol: next.protocol },
+        provenance: localMatchProvenance(recipe.entry.level, {
+          ...(recipe.entry.creatorEditionId ? { editionId: recipe.entry.creatorEditionId } : {}),
+        }),
+      }),
+    );
+    return next;
   }
   function paintRound(recipe) {
     showActorNotice(recipe);
@@ -1658,6 +1693,12 @@ try {
         sameMission && !fresh
           ? roundRecipe.runningEnemyStyle
           : runningEnemyPreferences.snapshot().style,
+      pursuitGeneration:
+        sameMission && !fresh
+          ? (roundRecipe.pursuitGeneration ??
+            roundRecipe.runtimeLevel?.pursuit?.version ??
+            'pursuit-goals.v1')
+          : 'pursuit-goals.v2',
       tuning:
         sameMission &&
         !fresh &&
@@ -2566,7 +2607,10 @@ try {
     onPause: pause,
     onAcceptedInput: (player, source) => shell?.observe(player, source),
     onStop: (player) => {
-      if (match) releaseInputs(match.runs[player]);
+      if (match) {
+        localRecordings.get(match)?.release([player]);
+        releaseInputs(match.runs[player]);
+      }
     },
     onPads: (count, nextSlots) => {
       assignmentsChanged = nextSlots.some((slot, i) => slot !== slots[i]);
@@ -4005,6 +4049,9 @@ try {
     localizedText($('race-installed-status'), () =>
       [featuredStatus, installedStatus].filter(Boolean).map(render).join(' '),
     );
+    $('race-export-recording').hidden = match.status !== 'finished';
+    $('race-recording-status').hidden = match.status !== 'finished';
+    $('race-recording-help').hidden = match.status !== 'finished';
     $('race-pause').disabled = !running;
     $('race-menu-release').hidden = running || !menuOwner;
     $('race-menu-release').disabled = running || !menuOwner;
@@ -4042,6 +4089,29 @@ try {
     if ($('race-menu-status').textContent !== text)
       localizedText($('race-menu-status'), () => text);
   }
+  localizedText($('race-export-recording'), () => t('interface:recording.exportRound'));
+  localizedAttribute($('race-verify-recording'), 'href', () =>
+    recordingVerificationHref(
+      globalThis.location?.href ?? document.baseURI ?? 'http://localhost/game/couch/',
+      getLocale(),
+    ),
+  );
+  $('race-export-recording').onclick = async () => {
+    const owner = match;
+    if (owner?.status !== 'finished') return;
+    try {
+      const recorder = localRecordings.get(owner);
+      if (!recorder) throw new Error('Recording is unavailable for this round.');
+      const value = await recorder.snapshot(owner);
+      if (disposed || match !== owner) return;
+      const result = await downloadJSON(value, `revealline-versus-${owner.runs[0].levelId}.json`);
+      if (!disposed && match === owner)
+        localizedText($('race-recording-status'), () => result.message);
+    } catch (error) {
+      if (!disposed && match === owner)
+        localizedText($('race-recording-status'), () => error.message);
+    }
+  };
   menuRouter = createControllerRouter({
     readPads: readAssignedMenuPads,
     autoJoin: true,
@@ -4058,6 +4128,8 @@ try {
     'race-coop',
     'race-start',
     'race-retry',
+    'race-export-recording',
+    'race-verify-recording',
     'race-optional-setup-toggle',
     'race-chapters',
     'race-journey-next',
@@ -4427,6 +4499,7 @@ try {
                 ? { ...command, boost: false, action: false, pickup: false }
                 : command,
           );
+          localRecordings.get(match)?.append(commands);
           stepDuel(match, commands);
           match.runs.forEach((run, i) =>
             sound.feedback(true, theme, run, {

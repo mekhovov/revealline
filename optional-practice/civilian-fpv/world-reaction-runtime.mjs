@@ -2,22 +2,26 @@
 // Native flight logic remains in its existing cores. No simulation clock or record recipe changes.
 const sourceHashes = {
   'optional-practice/civilian-fpv/world-audio.mjs':
-    '104011e3e43091577ef2c740aaead7727fc45234fc2cbb2ce61fa3441dc63f8b',
+    'c8ec1535a969018e3b5eaa4e2ae575e4dc464ab5983af65471183e7dd76f3723',
   'game/ui/audio-output.mjs': 'dc1b2776407d0b6649b0d15c5c721bd59384d7e38a2e61087961ff7a37bd86c1',
   'game/ui/audio-master.mjs': '6bf14bc5268c0eff8f38c21c819f398917712fdc2607c33977ac873111d1dca8',
   'game/audio-preferences.mjs': '9212831a3524c9e1ebe8c595783f9f53a112e02e3d51280d775ac103b94a9239',
-  'game/ui/encounter-audio.mjs': 'ef72dc277ec903688ea15aad395f19520cf03534156af1bd25927386b047e9f7',
+  'game/ui/encounter-audio.mjs': 'de48fc709c99c571e1e2a15e8a5cb1958a53e6404751cc3482255f05c626c519',
   'game/ui/movement-audio.mjs': '685d8e458401354028a2cacda0c7b1009b3c1e480a08d4cafce46d8f98b69020',
   'game/ui/dialogue-channel.mjs':
     'f4839f3a1634189a03eed6a3096dc595dfc88ee6437277ee82d78de05c300142',
   'optional-practice/civilian-fpv/world-hangar.mjs':
     '759d21e034e65e99600df72ef7e04a2fdff8359ec9119baa401323b248ec85ef',
   'optional-practice/civilian-fpv/world-actor-editor.mjs':
-    '07ad9b964c86b7e4ca16a65a778827bb0b9aef3a0be7cd1c287b9e318102b8d5',
+    'd7d3355ce9a1f0c207994b5a358b556ddbe6ddc1ba3a7bd7ffbd9261aa2b8d38',
+  'optional-practice/civilian-fpv/world-pursuit-editor.mjs':
+    'c1ab754353a095a4c6206d4d353e0d500fd30440d2ed73b2aa426d0ec9b75270',
+  'optional-practice/civilian-fpv/world-enemy-guide.mjs':
+    '6320d09d4488e8c2b51a3f4ab7324d1e40d620d8917dbd59fa6f5969d7765bf7',
   'optional-practice/civilian-fpv/world-progress.mjs':
-    'c7de9e847bc3dbbb8e1aee6da39887ab4778769c33476a428c4186c57b5c845d',
+    'f3e8dd54fa7dd4d4ad6d66d07fcdbda2604b50694a808310d6351c3a51a075cd',
   'optional-practice/civilian-fpv/world-hunt-reactions.mjs':
-    '07a55c4d0018983b2174dfbf7363a584fff8641704a293adb49700147bf86f8d',
+    '7d890938c2ec3b6d8bd6046db3b436589cf7b356c0e7004ef8814e59713dbbc7',
   'game/ui/contextual-reactions.mjs':
     '4678ab822811af4c6fc4c43986d0276c2eebfbec59f882464a63bd6108bb1bd0',
   'game/ui/hunt-feedback-layout.mjs':
@@ -114,13 +118,14 @@ import * as external0 from '../../game/i18n/index.mjs';
 import * as external1 from './vendor/three.module.js';
 import * as external2 from './world-visuals.mjs';
 import * as external3 from './world-themes.mjs';
-import * as external4 from '../../game/data-json.mjs';
+import * as external4 from './world-pursuit.mjs';
 import * as external5 from '../../game/hunt/actor-catalog.mjs';
-import * as external6 from '../../game/hunt/actor-art.mjs';
-import * as external7 from '../../game/hunt/preferences.mjs';
-import * as external8 from './world-model.mjs';
-import * as external9 from './flight-sectors.mjs';
-import * as external10 from './snake-hunt.mjs';
+import * as external6 from './snake-hunt.mjs';
+import * as external7 from '../../game/data-json.mjs';
+import * as external8 from '../../game/hunt/actor-art.mjs';
+import * as external9 from '../../game/hunt/preferences.mjs';
+import * as external10 from './world-model.mjs';
+import * as external11 from './flight-sectors.mjs';
 const modules = Object.create(null);
 modules['game/ui/audio-output.mjs'] = (() => {
   /** Shared output topology for Capture, Snake and native flight presentation.
@@ -546,12 +551,47 @@ modules['game/ui/encounter-audio.mjs'] = (() => {
     'brace-trooper': 0.68,
     'relay-warden': 0.62,
   });
+  // Original material accents reuse the admitted bank. Cadence follows observed
+  // movement, never a sprite frame, random choice or simulation mutation.
+  const ACTOR_SOUNDS = Object.freeze({
+    runner: Object.freeze({ cadence: 0.32, rate: 1.08, equipment: 'paper', from: 240, to: 150 }),
+    courier: Object.freeze({ cadence: 0.29, rate: 1.19, equipment: 'ratchet', from: 360, to: 210 }),
+    guard: Object.freeze({
+      cadence: 0.41,
+      rate: 0.87,
+      equipment: 'contact-metal',
+      from: 210,
+      to: 90,
+    }),
+    shield: Object.freeze({
+      cadence: 0.48,
+      rate: 0.7,
+      equipment: 'contact-metal',
+      from: 135,
+      to: 48,
+    }),
+  });
+  function actorSoundProfile(family) {
+    return ACTOR_SOUNDS[family === 'shield-bearer' ? 'shield' : family] ?? ACTOR_SOUNDS.runner;
+  }
   function encounterSoundRecipe(type, details = {}) {
     const pitch = FAMILY_PITCH[details.family] ?? 1;
-    const metal = details.material === 'metal' || details.machine === true;
+    const actor = actorSoundProfile(details.family),
+      tracked = details.machine === 'tracked',
+      metal =
+        details.material === 'metal' || [true, 'tracked', 'wheeled'].includes(details.machine);
     const brutal = details.brutal === true;
     const recipes = {
-      step: ['grain', 0.11, 0, 130, 65, 0.055],
+      step: ['grain', 0.11, 0, 130 * actor.rate, 65 * actor.rate, 0.055],
+      equipment: [actor.equipment, 0.12, 1, actor.from, actor.to, 0.085],
+      drive: [
+        tracked ? 'ratchet' : 'wheels',
+        0.17,
+        1,
+        tracked ? 110 : 210,
+        tracked ? 48 : 90,
+        0.16,
+      ],
       notice: ['switch', 0.17, 2, 360, 520, 0.09],
       warning: ['warning', 0.44, 5, 620, 860, 0.13],
       burst: ['paper', 0.19, 2, 190, 320, 0.09],
@@ -584,17 +624,32 @@ modules['game/ui/encounter-audio.mjs'] = (() => {
     const row = recipes[type];
     if (!row) return null;
     const [name, gain, priority, from, to, duration] = row;
+    const scale = Number.isFinite(details.gainScale)
+      ? Math.max(0, Math.min(1, details.gainScale))
+      : 1;
+    const movement = ['step', 'equipment', 'drive'].includes(type);
     return {
       name,
-      gain,
+      gain: gain * scale,
       priority,
-      rate: pitch,
+      movement,
+      // Loop textures are deliberately sampled as short envelopes for footsteps.
+      maxDuration: movement ? duration : null,
+      cooldown:
+        type === 'step'
+          ? actor.cadence
+          : type === 'equipment'
+            ? 0.7
+            : type === 'drive'
+              ? 1.2
+              : null,
+      rate: type === 'step' ? actor.rate : pitch,
       tone: {
         from: from * pitch,
         to: to * pitch,
         duration,
-        gain: gain * 0.14,
-        type: metal ? 'triangle' : 'sine',
+        gain: gain * scale * 0.14,
+        type: metal || type === 'equipment' ? 'triangle' : 'sine',
       },
     };
   }
@@ -610,7 +665,11 @@ modules['game/ui/encounter-audio.mjs'] = (() => {
     return null;
   }
 
-  return { encounterSoundRecipe: encounterSoundRecipe, actorPhaseSound: actorPhaseSound };
+  return {
+    actorSoundProfile: actorSoundProfile,
+    encounterSoundRecipe: encounterSoundRecipe,
+    actorPhaseSound: actorPhaseSound,
+  };
 })();
 modules['game/ui/movement-audio.mjs'] = (() => {
   const MOVEMENT_AUDIO_KEY = 'revealline.movement-audio.v1';
@@ -669,6 +728,7 @@ modules['optional-practice/civilian-fpv/world-audio.mjs'] = (() => {
   const createAudioMaster = modules['game/ui/audio-master.mjs']['createAudioMaster'];
   const createAudioPreferences = modules['game/audio-preferences.mjs']['createAudioPreferences'];
   const encounterSoundRecipe = modules['game/ui/encounter-audio.mjs']['encounterSoundRecipe'];
+  const actorPhaseSound = modules['game/ui/encounter-audio.mjs']['actorPhaseSound'];
   const readMovementAudio = modules['game/ui/movement-audio.mjs']['readMovementAudio'];
   const MOVEMENT_AUDIO_KEY = modules['game/ui/movement-audio.mjs']['MOVEMENT_AUDIO_KEY'];
   const dialogueChannel = modules['game/ui/dialogue-channel.mjs']['dialogueChannel'];
@@ -753,6 +813,8 @@ modules['optional-practice/civilian-fpv/world-audio.mjs'] = (() => {
     const recentCues = new Map();
     let actorDefinitions = new Map();
     let actorPositions = new Map();
+    let actorPhases = new Map();
+    let actorFamilies = new Map();
     let lastFootstep = -Infinity;
 
     const volume = (value) =>
@@ -881,18 +943,26 @@ modules['optional-practice/civilian-fpv/world-audio.mjs'] = (() => {
       delay = 0,
       type = 'sine',
       movementCue = false,
+      priority = 2,
     }) {
       if (
         !graph ||
         !enabled ||
         masterState.volume === 0 ||
         !levels.interface ||
-        effects.size >= 12 ||
         !wanted ||
         context.state !== 'running'
       )
         return;
-      if (movementCue && (!movement.enabled || movement.volume === 0)) return;
+      if (
+        movementCue &&
+        (!movement.enabled ||
+          movement.volume === 0 ||
+          [...effects].some((effect) => effect.priority >= 4))
+      )
+        return;
+      if (priority >= 4) for (const effect of [...effects]) if (effect.movementCue) effect.stop();
+      if (effects.size >= 12) return;
       const oscillator = context.createOscillator();
       const envelope = context.createGain();
       const start = context.currentTime + delay;
@@ -908,6 +978,8 @@ modules['optional-practice/civilian-fpv/world-audio.mjs'] = (() => {
         .connect(movementCue ? graph.output.movementBus : graph.buses.interface);
       let stopped = false;
       const effect = {
+        priority,
+        movementCue,
         stop() {
           if (stopped) return;
           stopped = true;
@@ -935,19 +1007,37 @@ modules['optional-practice/civilian-fpv/world-audio.mjs'] = (() => {
         fire: 'fire',
         impact: 'impact',
         defeat: 'catch',
+        'protected-contact': 'impact',
+        warning: 'warning',
+        notice: 'notice',
+        burst: 'burst',
+        recover: 'recover',
+        blocked: 'blocked',
+        equipment: 'equipment',
+        drive: 'drive',
       }[type];
       if (!kind) return;
-      const now = context?.currentTime ?? 0;
-      if (now - (recentCues.get(kind) ?? -Infinity) < 0.12) return;
-      recentCues.set(kind, now);
       const actor = actorDefinitions.get(event.actor);
-      const machine = actor?.type === 'vehicle';
+      const machine =
+        event.machine ??
+        (actor?.type === 'vehicle'
+          ? actor.vehicleModel === 'field-tank'
+            ? 'tracked'
+            : 'wheeled'
+          : false);
       const recipe = encounterSoundRecipe(kind, {
-        family: actor?.speed > 0 ? 'patroller' : 'lookout',
+        family:
+          event.family ??
+          actorFamilies.get(event.actor) ??
+          (actor?.speed > 0 ? 'patroller' : 'lookout'),
         machine,
       });
+      const now = context?.currentTime ?? 0;
+      if (now - (recentCues.get(kind) ?? -Infinity) < (recipe.cooldown ?? 0.12)) return;
+      recentCues.set(kind, now);
       if (recipe.priority >= 5 || (type === 'fire' && !player)) dialogueChannel.interrupt();
-      const voice = { ...recipe.tone };
+      const voice = { ...recipe.tone, priority: recipe.priority, movementCue: recipe.movement };
+      if (recipe.movement) voice.gain *= levels.interface;
       if (type === 'fire' && !player) voice.gain *= 0.65;
       if (type === 'objective' && gateStyle === 'digital') voice.type = 'triangle';
       tone(voice);
@@ -1110,6 +1200,10 @@ modules['optional-practice/civilian-fpv/world-audio.mjs'] = (() => {
         lastContacts = null;
         recentCues.clear();
         actorPositions.clear();
+        actorPhases.clear();
+        actorFamilies = new Map(
+          (course.pursuit?.actors ?? []).map((policy) => [policy.id, policy.family]),
+        );
         lastFootstep = -Infinity;
         actorDefinitions = new Map((course.actors ?? []).map((actor) => [actor.id, actor]));
         stopEffects();
@@ -1144,7 +1238,9 @@ modules['optional-practice/civilian-fpv/world-audio.mjs'] = (() => {
           ramp(graph.humGain.gain, ambience.humGain);
           if (fresh) {
             let nearestVehicle = Infinity,
-              nearestFoot = Infinity;
+              nearestFoot = Infinity,
+              footActor = null,
+              startingVehicle = null;
             for (const actor of snapshot.actors ?? []) {
               const previous = actorPositions.get(actor.id),
                 position = actor.position;
@@ -1157,23 +1253,50 @@ modules['optional-practice/civilian-fpv/world-audio.mjs'] = (() => {
                   position.y - snapshot.position.y,
                   position.z - snapshot.position.z,
                 );
-                if (actor.type === 'vehicle') nearestVehicle = Math.min(nearestVehicle, d);
-                else if (['patrol', 'sentry'].includes(actor.type))
-                  nearestFoot = Math.min(nearestFoot, d);
+                if (actor.type === 'vehicle') {
+                  nearestVehicle = Math.min(nearestVehicle, d);
+                  if (
+                    !previous.moving &&
+                    d < 16000 &&
+                    (!startingVehicle || d < startingVehicle.distance)
+                  )
+                    startingVehicle = { actor: actor.id, distance: d };
+                } else if (['patrol', 'sentry'].includes(actor.type) && d < nearestFoot) {
+                  nearestFoot = d;
+                  footActor = actor;
+                }
               }
             }
             ramp(
               graph.vehicleGain.gain,
               flying && nearestVehicle < 16000 ? 0.012 * (1 - nearestVehicle / 16000) : 0,
             );
-            if (flying && nearestFoot < 6000 && context.currentTime - lastFootstep >= 0.34) {
+            if (flying && startingVehicle) cue('drive', false, { actor: startingVehicle.actor });
+            const step = encounterSoundRecipe('step', {
+              family: footActor?.pursuit?.family ?? actorFamilies.get(footActor?.id),
+            });
+            if (
+              flying &&
+              nearestFoot < 6000 &&
+              context.currentTime - lastFootstep >= step.cooldown
+            ) {
               lastFootstep = context.currentTime;
-              const step = encounterSoundRecipe('step');
               tone({
                 ...step.tone,
                 gain: step.tone.gain * (1 - nearestFoot / 6000) * levels.interface,
                 movementCue: true,
+                priority: 0,
               });
+            }
+            for (const actor of snapshot.actors ?? []) {
+              if (!actor.pursuit || actor.status !== 'active') continue;
+              const phase = actor.blocked ? 'blocked' : actor.pursuit.phase;
+              const sound = actorPhaseSound(actorPhases.get(actor.id), phase);
+              if (sound) {
+                cue(sound, false, { actor: actor.id, family: actor.pursuit.family });
+                if (sound !== 'warning')
+                  cue('equipment', false, { actor: actor.id, family: actor.pursuit.family });
+              }
             }
             const events = snapshot.events ?? [];
             const types = new Set();
@@ -1194,7 +1317,24 @@ modules['optional-practice/civilian-fpv/world-audio.mjs'] = (() => {
           ramp(graph.humGain.gain, 0);
         }
         actorPositions = new Map(
-          (snapshot.actors ?? []).map((actor) => [actor.id, { ...actor.position }]),
+          (snapshot.actors ?? []).map((actor) => {
+            const previous = actorPositions.get(actor.id);
+            return [
+              actor.id,
+              {
+                ...actor.position,
+                moving:
+                  fresh && previous && actor.position
+                    ? Math.hypot(actor.position.x - previous.x, actor.position.z - previous.z) > 0
+                    : previous?.moving,
+              },
+            ];
+          }),
+        );
+        actorPhases = new Map(
+          (snapshot.actors ?? [])
+            .filter((actor) => actor.pursuit)
+            .map((actor) => [actor.id, actor.blocked ? 'blocked' : actor.pursuit.phase]),
         );
         lastTick = tick;
         lastStep = step;
@@ -1426,13 +1566,614 @@ modules['optional-practice/civilian-fpv/world-hangar.mjs'] = (() => {
 
   return { mountDroneHangar: mountDroneHangar };
 })();
+modules['optional-practice/civilian-fpv/world-pursuit-editor.mjs'] = (() => {
+  const PURSUIT_COURSE = external4['PURSUIT_COURSE'];
+  const PURSUIT_FORMAT_V2 = external4['PURSUIT_FORMAT_V2'];
+  const PURSUIT_FAMILIES = external4['PURSUIT_FAMILIES'];
+
+  /** Remove policy ownership with the same transaction as native actor/objective edits. */
+  function removePursuitActor(course, id) {
+    if (!course.pursuit) return;
+    const removed = course.pursuit.actors.find((actor) => actor.id === id);
+    course.pursuit.actors = course.pursuit.actors.filter((actor) => actor.id !== id);
+    if (removed?.pair)
+      for (const actor of course.pursuit.actors)
+        if (actor.pair === removed.pair) {
+          actor.family = 'runner';
+          actor.pair = null;
+        }
+    if (!course.pursuit.actors.length) {
+      delete course.pursuit;
+      course.format = 'FlightCourse.v2';
+      for (const actor of course.actors) delete actor.vehicleModel;
+    }
+  }
+
+  /** Explicit successor: preserve the existing course until native admission succeeds. */
+  function pursuitFromWaypoints(course, id, family = 'runner') {
+    const actor = course.actors.find((item) => item.id === id);
+    if (
+      !actor ||
+      !['patrol', 'sentry'].includes(actor.type) ||
+      actor.role !== 'hostile' ||
+      actor.fireEveryTicks !== 0
+    )
+      throw new TypeError('Choose an unarmed hostile Hunt target.');
+    if (course.pursuit) throw new TypeError('Edit the existing pursuit graph.');
+    const points = [actor.position, ...actor.path].filter(
+      (point, index, all) =>
+        all.findIndex((other) => ['x', 'y', 'z'].every((axis) => point[axis] === other[axis])) ===
+        index,
+    );
+    if (points.length < 2) throw new TypeError('Add at least one distinct native waypoint first.');
+    const nodes = points.map((position, index) => ({
+      id: `node-${index + 1}`,
+      position: { ...position },
+    }));
+    const edges = nodes.slice(1).map((node, index) => ({ from: nodes[index].id, to: node.id }));
+    if (nodes.length > 2) edges.push({ from: nodes.at(-1).id, to: nodes[0].id });
+    course.format = PURSUIT_COURSE;
+    course.pursuit = {
+      format: PURSUIT_FORMAT_V2,
+      nodes,
+      edges,
+      actors: [{ id, family, start: nodes[0].id, goals: nodes.map((node) => node.id), pair: null }],
+    };
+    actor.path = [];
+  }
+
+  /** Bounded graph editor uses the host's native validation, Undo and atomic commit. */
+  function renderPursuitEditor({ document, course, selected, locale, change, busy, draft = {} }) {
+    const uk = locale === 'uk',
+      text = (en, translated) => (uk ? translated : en);
+    const el = (tag, content) => {
+      const node = document.createElement(tag);
+      if (content) node.textContent = content;
+      return node;
+    };
+    const panel = el('details'),
+      title = el(
+        'summary',
+        text('Native pursuit · advanced routes', 'Наземне переслідування · маршрути'),
+      );
+    panel.dataset.pursuitEditor = '';
+    panel.append(
+      title,
+      el(
+        'p',
+        text(
+          'Create a versioned pursuit from the selected unarmed Hunt target’s native waypoints. Ground support, body clearance and slopes are checked before applying. Runner: 1.5 m/s, 6 m sight range, 0.5 s decisions. Armor: 25 hull damage with a 0.4 s cooldown.',
+          'Створіть версію переслідування з точок вибраної неозброєної цілі. Перед застосуванням перевіряються опора, габарити й схили. Бігун: 1,5 м/с, огляд 6 м, рішення кожні 0,5 с. Броня: 25 шкоди корпусу з паузою 0,4 с.',
+        ),
+      ),
+    );
+    const button = (label, run, disabled = false) => {
+      const node = el('button', label);
+      node.type = 'button';
+      node.disabled = busy || disabled;
+      node.addEventListener('click', run);
+      return node;
+    };
+    if (!course.pursuit) {
+      for (const key of Object.keys(draft)) delete draft[key];
+      panel.append(
+        button(
+          text('Create Runner from waypoints', 'Створити бігуна з точок'),
+          () => change((next) => pursuitFromWaypoints(next, selected)),
+          !selected,
+        ),
+      );
+      return panel;
+    }
+    const explanation = el(
+      'p',
+      text(
+        `Graph: at most 64 nodes / 128 undirected edges, millimetres. Policies: ${PURSUIT_FAMILIES.join(', ')}. Each actor starts at its node; clear its ordinary path. Required targets remain in Contact Hunt objectives; couriers must be optional. Rendezvous uses two actors with the same pair ID and one identical goal. V2 requires separate graph approaches for their bodies; refuge goals remain committed through intermediate nodes. All edits below apply together.`,
+        `Граф: до 64 вузлів / 128 ненапрямлених ребер, міліметри. Політики: ${PURSUIT_FAMILIES.join(', ')}. Персонаж починає у своєму вузлі без звичайного маршруту. Обов’язкові цілі залишаються в завданнях полювання; кур’єри необов’язкові. Пара має спільний pair та одну однакову ціль. V2 потребує окремих підходів для тіл; ціль укриття зберігається між проміжними вузлами. Усі зміни застосовуються разом.`,
+      ),
+    );
+    const input = el('textarea');
+    input.rows = 18;
+    input.maxLength = 65536;
+    input.spellcheck = false;
+    input.setAttribute(
+      'aria-label',
+      text('Pursuit graph and actor policies JSON', 'JSON графа та політик персонажів'),
+    );
+    const fingerprint = JSON.stringify({
+      pursuit: course.pursuit,
+      actors: course.actors,
+      steps: course.steps,
+    });
+    if (draft.fingerprint !== fingerprint) {
+      draft.fingerprint = fingerprint;
+      draft.value = JSON.stringify(course.pursuit, null, 2);
+      draft.base = draft.value;
+    }
+    input.value = draft.value;
+    const status = el('p');
+    status.setAttribute('role', 'status');
+    let dirty = input.value !== JSON.stringify(course.pursuit, null, 2);
+    input.addEventListener('input', () => {
+      dirty = true;
+      draft.value = input.value;
+      status.textContent = text(
+        'Unapplied pursuit changes. Apply before editing other panels.',
+        'Незастосовані зміни. Застосуйте їх перед редагуванням інших панелей.',
+      );
+    });
+    if (course.pursuit.format !== PURSUIT_FORMAT_V2)
+      panel.append(
+        button(
+          text('Upgrade to committed pursuit v2', 'Оновити до узгодженого переслідування v2'),
+          () => {
+            if (dirty) {
+              status.textContent = text(
+                'Apply or discard graph edits before upgrading.',
+                'Застосуйте або скасуйте зміни графа перед оновленням.',
+              );
+              return;
+            }
+            return change((next) => {
+              next.pursuit.format = PURSUIT_FORMAT_V2;
+            });
+          },
+        ),
+      );
+    panel.append(
+      explanation,
+      input,
+      button(text('Apply graph and Hunt targets', 'Застосувати граф і цілі полювання'), () =>
+        change((next) => {
+          const accepted = JSON.parse(input.value);
+          next.pursuit = accepted;
+          next.format = PURSUIT_COURSE;
+          for (const mode of ['self-level', 'acro']) {
+            const hunt = next.steps[mode].find((step) => step.type === 'hunt-contact-v1');
+            if (!hunt)
+              throw new TypeError('Add a Contact Hunt objective in each flight mode first.');
+            for (const policy of accepted.actors ?? []) {
+              if (policy.family === 'courier')
+                hunt.targets = hunt.targets.filter((id) => id !== policy.id);
+              else if (!hunt.targets.includes(policy.id)) hunt.targets.push(policy.id);
+            }
+          }
+          for (const policy of accepted.actors ?? []) {
+            const actor = next.actors.find((item) => item.id === policy.id);
+            const start = accepted.nodes?.find((node) => node.id === policy.start);
+            if (actor && start) {
+              actor.path = [];
+              actor.position = { ...start.position };
+            }
+          }
+        }),
+      ),
+      button(text('Discard graph edits', 'Скасувати зміни графа'), () => {
+        input.value = draft.base;
+        draft.value = draft.base;
+        dirty = false;
+        status.textContent = '';
+      }),
+      button(text('Return to ordinary native actors', 'Повернути звичайних персонажів'), () => {
+        if (dirty) {
+          status.textContent = text(
+            'Apply or undo your text edits first.',
+            'Спершу застосуйте або скасуйте зміни тексту.',
+          );
+          return;
+        }
+        return change((next) => {
+          delete next.pursuit;
+          next.format = 'FlightCourse.v2';
+          for (const actor of next.actors) delete actor.vehicleModel;
+        });
+      }),
+      status,
+    );
+    return panel;
+  }
+
+  return {
+    removePursuitActor: removePursuitActor,
+    pursuitFromWaypoints: pursuitFromWaypoints,
+    renderPursuitEditor: renderPursuitEditor,
+  };
+})();
+modules['optional-practice/civilian-fpv/world-enemy-guide.mjs'] = (() => {
+  const actorDefinition = external5['actorDefinition'];
+  const HUNT_CONTACT_CRITERION = external6['HUNT_CONTACT_CRITERION'];
+  const PURSUIT_FAMILIES = external4['PURSUIT_FAMILIES'];
+  const PURSUIT_FORMAT = external4['PURSUIT_FORMAT'];
+  const PURSUIT_FORMAT_V2 = external4['PURSUIT_FORMAT_V2'];
+  const PURSUIT_RULES = external4['PURSUIT_RULES'];
+
+  // Names are shared with Capture/Snake; goals and counters describe only native
+  // flight policies. A costume never grants an unimplemented flight capability.
+  const descriptions = {
+    lookout: [
+      ['Holds its position.', 'Утримує свою позицію.'],
+      [
+        'A stationary humanoid marks a direct approach.',
+        'Нерухома постать позначає прямий підхід.',
+      ],
+      [
+        'Approach at body height and touch it with the drone.',
+        'Підійдіть на висоті тіла й торкніться його дроном.',
+      ],
+    ],
+    patroller: [
+      ['Follows its authored ground route.', 'Рухається авторським наземним маршрутом.'],
+      [
+        'Watch its heading as it follows ground waypoints.',
+        'Стежте за напрямком руху через наземні точки маршруту.',
+      ],
+      [
+        'Intercept a crossing at body height instead of following from above.',
+        'Перехопіть на перетині на висоті тіла замість переслідування згори.',
+      ],
+    ],
+    runner: [
+      [
+        'Seeks a more distant reachable route when it sees a drone within six metres.',
+        'Шукає віддаленіший доступний маршрут, коли бачить дрон у межах шести метрів.',
+      ],
+      [
+        'Commits to a direction for half a second; it runs at 1.5 m/s.',
+        'Утримує напрямок пів секунди; швидкість — 1,5 м/с.',
+      ],
+      [
+        'Use a crossing to intercept its escape, keeping enough room to turn the aircraft.',
+        'Перехопіть шлях відступу на перетині, залишаючи місце для повороту дрона.',
+      ],
+    ],
+    sprinter: [
+      [
+        'Makes a committed burst along a ground route.',
+        'Виконує спрямований ривок наземним маршрутом.',
+      ],
+      [
+        'Warns for 0.8 s, bursts at 3 m/s for 0.4 s, then recovers for 1.6 s.',
+        'Попереджає 0,8 с, рухається зі швидкістю 3 м/с протягом 0,4 с і відновлюється 1,6 с.',
+      ],
+      [
+        'Cut across the route or approach during recovery. Ordinary contact always catches it.',
+        'Перетніть маршрут або підійдіть під час відновлення. Звичайний контакт завжди перехоплює ціль.',
+      ],
+    ],
+    courier: [
+      [
+        'Visits delivery waypoints; catching it is optional.',
+        'Відвідує точки доставки; перехоплення необов’язкове.',
+      ],
+      [
+        'A satchel identifies the courier. It stays in the world after delivery.',
+        'Сумка позначає кур’єра. Після доставки він залишається у світі.',
+      ],
+      [
+        'Take a safe detour if you want the extra catch. It does not satisfy a required Hunt objective.',
+        'Оберіть безпечний обхід заради додаткового перехоплення. Воно не зараховується до обов’язкової цілі полювання.',
+      ],
+    ],
+    'refuge-seeker': [
+      ['Chooses one of its authored shelter waypoints.', 'Обирає одну з авторських точок укриття.'],
+      [
+        'Its heading shows the chosen route; it rests after reaching a shelter.',
+        'Напрямок показує обраний маршрут; в укритті ціль перепочиває.',
+      ],
+      [
+        'Cover the shelter approach. Shelter gives no contact protection.',
+        'Перекрийте підхід до укриття. Укриття не захищає від контакту.',
+      ],
+    ],
+    switchback: [
+      [
+        'Chooses another connected exit when possible.',
+        'За можливості обирає інший з’єднаний вихід.',
+      ],
+      [
+        'Shows the next heading during a 0.8 s warning before moving.',
+        'Показує наступний напрямок під час попередження тривалістю 0,8 с.',
+      ],
+      [
+        'Cover the announced exit; it cannot jump across walls or blocked routes.',
+        'Перекрийте оголошений вихід; ціль не перестрибує стіни або заблоковані маршрути.',
+      ],
+    ],
+    'rendezvous-pair': [
+      [
+        'Two independently catchable partners seek a shared meeting point.',
+        'Дві окремо доступні для перехоплення цілі прямують до спільного місця зустрічі.',
+      ],
+      [
+        'Follow their converging routes. The survivor becomes a Runner after its partner is caught.',
+        'Стежте за маршрутами, що зближуються. Після перехоплення партнера друга ціль стає бігуном.',
+      ],
+      [
+        'Intercept either partner, then adjust to the survivor’s escape route.',
+        'Перехопіть одного партнера, потім пристосуйтеся до шляху відступу другого.',
+      ],
+    ],
+    'shield-bearer': [
+      [
+        'Keeps its front protected while following its ground route.',
+        'Захищає передній бік під час руху наземним маршрутом.',
+      ],
+      [
+        'The shield marks the protected front half. A heading change is warned for 0.8 s.',
+        'Щит позначає захищену передню половину. Зміну напрямку показано за 0,8 с.',
+      ],
+      [
+        'Touch the side or rear. Contact in front damages the hull; use the facing visible before contact.',
+        'Торкніться збоку або ззаду. Контакт спереду пошкоджує корпус; орієнтуйтеся на напрямок перед контактом.',
+      ],
+    ],
+    'brace-trooper': [
+      [
+        'Protects its body during a warned, committed burst.',
+        'Захищає тіло під час оголошеного спрямованого ривка.',
+      ],
+      [
+        'Armor is closed through the 0.8 s warning and 0.4 s burst; recovery lasts 1.6 s.',
+        'Броня закрита протягом попередження 0,8 с і ривка 0,4 с; відновлення триває 1,6 с.',
+      ],
+      [
+        'Wait for recovery before touching it. Warning and burst contact damage the hull.',
+        'Дочекайтеся відновлення, перш ніж торкатися. Контакт під час попередження або ривка пошкоджує корпус.',
+      ],
+    ],
+  };
+
+  /** Read-only projection of a validated native course and its optional snapshot.
+   * Repeated objective references count once; ordinary non-Hunt actors are not
+   * reinterpreted as prey. Historical policies retain their original descriptions. */
+  function worldEnemyGuide(
+    course,
+    { mode = 'self-level', locale = 'en', state = null, actorId = null } = {},
+  ) {
+    const language = locale === 'uk' ? 'uk' : 'en',
+      index = language === 'uk' ? 1 : 0,
+      steps = (course?.steps?.[mode] ?? []).filter((step) => step.type === HUNT_CONTACT_CRITERION),
+      required = new Set(steps.flatMap((step) => step.targets)),
+      pursuit = [PURSUIT_FORMAT, PURSUIT_FORMAT_V2].includes(course?.pursuit?.format)
+        ? course.pursuit
+        : null,
+      policies = new Map((pursuit?.actors ?? []).map((actor) => [actor.id, actor])),
+      caught = new Set([...(state?.hunt?.caught ?? []), ...(state?.pursuit?.bonusCaught ?? [])]),
+      rows = new Map();
+    for (const actor of course?.actors ?? []) {
+      if (actorId !== null && actor.id !== actorId) continue;
+      const policy = policies.get(actor.id),
+        optional = policy?.family === 'courier';
+      if (
+        (!required.has(actor.id) && !optional) ||
+        !['patrol', 'sentry'].includes(actor.type) ||
+        actor.role !== 'hostile' ||
+        actor.fireEveryTicks !== 0
+      )
+        continue;
+      const family =
+        policy?.family ?? (actor.speed > 0 && actor.path.length > 0 ? 'patroller' : 'lookout');
+      if (!PURSUIT_FAMILIES.includes(family)) continue;
+      if (!rows.has(family)) {
+        const definition = actorDefinition(family),
+          [goal, tell, counter] = descriptions[family].map((line) => line[index]);
+        rows.set(family, {
+          family,
+          name: definition.name[language],
+          specialist: definition.specialist,
+          total: 0,
+          remaining: 0,
+          required: 0,
+          optional: 0,
+          survivor: false,
+          goal,
+          tell,
+          counter,
+        });
+      }
+      const row = rows.get(family);
+      row.total++;
+      row.remaining += Number(!caught.has(actor.id));
+      row[optional ? 'optional' : 'required']++;
+      row.survivor ||= Boolean(
+        family === 'rendezvous-pair' &&
+          state?.actors?.some(
+            (live) =>
+              live.id === actor.id && live.status === 'active' && live.pursuit?.family === 'runner',
+          ),
+      );
+    }
+    if (pursuit?.format === PURSUIT_FORMAT_V2) {
+      if (rows.has('refuge-seeker'))
+        rows.get('refuge-seeker').tell = [
+          'Announces a shelter for 0.8 s, commits until arrival, then rests for 1.6 s.',
+          'Оголошує укриття за 0,8 с, дотримується маршруту до прибуття, потім перепочиває 1,6 с.',
+        ][index];
+      if (rows.has('rendezvous-pair'))
+        rows.get('rendezvous-pair').tell = [
+          'Approaches on separate routes, waits for its partner, then both rest for 1.6 s. A survivor becomes a Runner.',
+          'Наближається окремим маршрутом і чекає партнера, потім обидва відпочивають 1,6 с. Той, хто лишився, стає бігуном.',
+        ][index];
+    }
+    return {
+      rows: [...rows.values()],
+      ordered: steps.some((step) => step.ordered),
+      tail: steps.some((step) => step.tail.linksPerCatch > 0),
+    };
+  }
+
+  /** One paused, text-first native guide. No aircraft, renderer, clock or record is
+   * created by preview; dismissing it never resumes an existing flight. */
+  function mountWorldEnemyGuide({ document: doc, locale = () => 'en', onPause = () => {} }) {
+    const node = (tag, text) => {
+      const value = doc.createElement(tag);
+      if (text !== undefined) value.textContent = text;
+      return value;
+    };
+    const dialog = node('dialog'),
+      header = node('header'),
+      heading = node('h2'),
+      close = node('button'),
+      content = node('section');
+    dialog.id = 'world-enemy-guide';
+    dialog.className = 'world-enemy-guide';
+    heading.id = 'world-enemy-guide-title';
+    dialog.setAttribute('aria-labelledby', heading.id);
+    close.type = 'button';
+    header.append(heading, close);
+    dialog.append(header, content);
+    doc.body.append(dialog);
+    let selected = null,
+      focus = null,
+      disposed = false;
+    const text = (en, uk) => (locale() === 'uk' ? uk : en);
+    function refresh() {
+      heading.textContent = text('Enemy field guide · FPV SIM', 'Довідник ворогів · FPV SIM');
+      close.textContent = text('Back', 'Назад');
+      if (!selected) return;
+      const { course, mode, state } = selected,
+        guide = worldEnemyGuide(course, { mode, state, locale: locale() });
+      content.replaceChildren(
+        node('h3', course.locales[locale() === 'uk' ? 'uk' : 'en'].title),
+        node(
+          'p',
+          text(
+            state
+              ? 'Current flight · paused inspection. Resume explicitly when ready.'
+              : 'Course preview · no flight started.',
+            state
+              ? 'Поточний політ · огляд на паузі. Продовжіть окремою дією, коли будете готові.'
+              : 'Перегляд завдання · політ не розпочато.',
+          ),
+        ),
+        node(
+          'p',
+          text(
+            'These unarmed targets are caught by physical drone contact at body height. Populations are finite; caught targets do not respawn. Other obstacles and combat actors keep their native rules.',
+            'Ці неозброєні цілі перехоплюються фізичним контактом дрона на висоті тіла. Кількість скінченна; перехоплені цілі не відроджуються. Інші перешкоди й бойові об’єкти зберігають власні правила.',
+          ),
+        ),
+      );
+      if (guide.ordered)
+        content.append(
+          node(
+            'p',
+            text(
+              'This course includes ordered catches. Follow the next target shown in the flight objective.',
+              'У цьому завданні є послідовні перехоплення. Стежте за наступною ціллю в меті польоту.',
+            ),
+          ),
+        );
+      if (guide.tail)
+        content.append(
+          node(
+            'p',
+            text(
+              'Catches grow a solid echo tail on this course. Keep clear of your previous route.',
+              'У цьому завданні перехоплення подовжують небезпечний слід. Не торкайтеся свого попереднього маршруту.',
+            ),
+          ),
+        );
+      if (guide.rows.some((row) => row.specialist))
+        content.append(
+          node(
+            'p',
+            text(
+              `Protected contact deals ${PURSUIT_RULES.protectedDamage} hull damage. The shared contact-damage cooldown is ${PURSUIT_RULES.contactCooldown} flight ticks (0.4 s); it does not open armor.`,
+              `Захищений контакт завдає ${PURSUIT_RULES.protectedDamage} одиниць шкоди корпусу. Спільна затримка між контактними пошкодженнями — ${PURSUIT_RULES.contactCooldown} тактів польоту (0,4 с); вона не відкриває броню.`,
+            ),
+          ),
+        );
+      for (const row of guide.rows) {
+        const card = node('article');
+        card.dataset.enemyFamily = row.family;
+        card.append(node('h3', `${row.specialist ? '◇ ' : ''}${row.name} × ${row.total}`));
+        card.append(
+          node(
+            'p',
+            [
+              `${text('Required', 'Обов’язкових')}: ${row.required}`,
+              ...(row.optional ? [`${text('Optional', 'Необов’язкових')}: ${row.optional}`] : []),
+              ...(state ? [`${text('Remaining', 'Залишилось')}: ${row.remaining}`] : []),
+            ].join(' · '),
+          ),
+        );
+        if (row.specialist)
+          card.append(
+            node('strong', text('Hazard · protected contact', 'Небезпека · захищений контакт')),
+          );
+        for (const [key, label] of [
+          ['goal', text('Goal', 'Мета')],
+          ['tell', text('Tell', 'Ознака')],
+          ['counter', text('How to catch', 'Як перехопити')],
+        ]) {
+          const paragraph = node('p');
+          paragraph.append(node('strong', `${label}: `), doc.createTextNode(row[key]));
+          card.append(paragraph);
+        }
+        if (row.survivor)
+          card.append(
+            node(
+              'p',
+              text('The surviving partner is now a Runner.', 'Партнер, що лишився, тепер бігун.'),
+            ),
+          );
+        content.append(card);
+      }
+    }
+    function dismiss() {
+      if (!dialog.open) return;
+      dialog.close();
+      if (focus?.isConnected) focus.focus({ preventScroll: true });
+      selected = null;
+      focus = null;
+    }
+    const cancel = (event) => {
+      event.preventDefault();
+      dismiss();
+    };
+    close.addEventListener('click', dismiss);
+    dialog.addEventListener('cancel', cancel);
+    return {
+      dialog,
+      open(course, { mode = 'self-level', state = null, trigger = doc.activeElement } = {}) {
+        if (disposed || !worldEnemyGuide(course, { mode }).rows.length) return false;
+        onPause();
+        selected = { course, mode, state };
+        focus = trigger;
+        refresh();
+        if (!dialog.open) dialog.showModal();
+        close.focus();
+        return true;
+      },
+      refresh,
+      close: dismiss,
+      dispose() {
+        disposed = true;
+        focus = null;
+        dismiss();
+        close.removeEventListener('click', dismiss);
+        dialog.removeEventListener('cancel', cancel);
+        dialog.remove();
+      },
+    };
+  }
+
+  return { worldEnemyGuide: worldEnemyGuide, mountWorldEnemyGuide: mountWorldEnemyGuide };
+})();
 modules['optional-practice/civilian-fpv/world-actor-editor.mjs'] = (() => {
-  const boundedJSON = external4['boundedJSON'];
-  const exactKeys = external4['exactKeys'];
+  const WORLD_VEHICLE_MODELS = external4['WORLD_VEHICLE_MODELS'];
+  const renderPursuitEditor =
+    modules['optional-practice/civilian-fpv/world-pursuit-editor.mjs']['renderPursuitEditor'];
+  const removePursuitActor =
+    modules['optional-practice/civilian-fpv/world-pursuit-editor.mjs']['removePursuitActor'];
+  const worldEnemyGuide =
+    modules['optional-practice/civilian-fpv/world-enemy-guide.mjs']['worldEnemyGuide'];
+  const boundedJSON = external7['boundedJSON'];
+  const exactKeys = external7['exactKeys'];
   const ACTOR_CASTS = external5['ACTOR_CASTS'];
-  const actorFieldGuide = external5['actorFieldGuide'];
-  const drawHuntActor = external6['drawHuntActor'];
-  const sharedActorAppearance = external7['sharedActorAppearance'];
+  const drawHuntActor = external8['drawHuntActor'];
+  const sharedActorAppearance = external9['sharedActorAppearance'];
 
   const TYPES = ['drone', 'patrol', 'sentry', 'vehicle', 'hazard'];
   const AXES = ['x', 'y', 'z'];
@@ -1674,6 +2415,7 @@ modules['optional-practice/civilian-fpv/world-actor-editor.mjs'] = (() => {
     let huntAddMode = 'both';
     let huntDraftOwner = null;
     const huntDrafts = new Map();
+    const pursuitDraft = {};
     let message = '';
     let error = false;
     let disposed = false;
@@ -1736,10 +2478,21 @@ modules['optional-practice/civilian-fpv/world-actor-editor.mjs'] = (() => {
         node.setAttribute('role', error ? 'alert' : 'status');
       }
     }
-    async function change(mutator, success = 'updated', committed = () => {}) {
+    async function change(
+      mutator,
+      success = 'updated',
+      committed = () => {},
+      { pursuit = false } = {},
+    ) {
       if (disposed || busy) return;
       busy = true;
       try {
+        if (!pursuit && pursuitDraft.base !== undefined && pursuitDraft.value !== pursuitDraft.base)
+          throw new TypeError(
+            (typeof locale === 'function' ? locale() : locale) === 'uk'
+              ? 'Застосуйте або скасуйте зміни графа переслідування.'
+              : 'Apply or discard pursuit graph edits first.',
+          );
         await onChange(mutator);
         committed();
         message = text(success);
@@ -1862,6 +2615,7 @@ modules['optional-practice/civilian-fpv/world-actor-editor.mjs'] = (() => {
       );
     }
     function removeTargetReferences(course, bindings, id, { removeTracking = false } = {}) {
+      removePursuitActor(course, id);
       for (const mode of MODES)
         alterSteps(course, bindings, mode, (step) => {
           if (removeTracking && step.type === 'actor-track-v1' && step.actorId === id) return null;
@@ -2546,7 +3300,19 @@ modules['optional-practice/civilian-fpv/world-actor-editor.mjs'] = (() => {
         button(text('remove'), removeActor, !selected),
       );
       container.append(toolbar, element('p', text('budget'), 'hint'));
-      container.append(renderHunt(course), renderTracking(course));
+      container.append(
+        renderHunt(course),
+        renderTracking(course),
+        renderPursuitEditor({
+          document,
+          course,
+          selected,
+          draft: pursuitDraft,
+          locale: typeof locale === 'function' ? locale() : locale,
+          change: (mutator) => change(mutator, 'updated', () => {}, { pursuit: true }),
+          busy,
+        }),
+      );
       if (!selected) {
         container.append(announcement);
         return;
@@ -2557,12 +3323,17 @@ modules['optional-practice/civilian-fpv/world-actor-editor.mjs'] = (() => {
           (step) => step.type === 'hunt-contact-v1' && step.targets.includes(actor.id),
         ),
       );
-      if (contactTarget) {
-        const language = (typeof locale === 'function' ? locale() : locale) === 'uk' ? 'uk' : 'en';
-        const family = actor.speed > 0 ? 'patroller' : 'lookout';
-        const guide = actorFieldGuide(family, language);
+      const language = (typeof locale === 'function' ? locale() : locale) === 'uk' ? 'uk' : 'en',
+        nativeGuides = MODES.map((mode) => ({
+          mode,
+          guide: worldEnemyGuide(course, { mode, locale: language, actorId: actor.id }).rows[0],
+        })).filter(({ guide }) => guide),
+        guide = nativeGuides[0]?.guide;
+      if (guide) {
+        const family = guide.family;
         const section = element('fieldset'),
           legend = element('legend', language === 'uk' ? 'Довідник цілей' : 'Target field guide');
+        section.dataset.actorFieldGuide = actor.id;
         const preview = element('canvas');
         preview.width = preview.height = 112;
         preview.style.cssText = 'display:block;width:5rem;height:5rem;image-rendering:pixelated;';
@@ -2590,6 +3361,16 @@ modules['optional-practice/civilian-fpv/world-actor-editor.mjs'] = (() => {
           legend,
           preview,
           element('strong', guide.name),
+          element(
+            'p',
+            guide.optional
+              ? language === 'uk'
+                ? 'Необов’язкове перехоплення · не зараховується до квоти.'
+                : 'Optional catch · no quota credit.'
+              : `${language === 'uk' ? 'Обов’язкова ціль у режимах' : 'Required target in'}: ${nativeGuides
+                  .map(({ mode }) => text(mode === 'self-level' ? 'level' : 'acro'))
+                  .join(', ')}.`,
+          ),
           element('p', `${guide.goal} ${guide.tell} ${guide.counter}`),
           label(language === 'uk' ? 'Спільний вигляд персонажів' : 'Shared character cast', cast),
         );
@@ -2597,13 +3378,17 @@ modules['optional-practice/civilian-fpv/world-actor-editor.mjs'] = (() => {
           element(
             'p',
             language === 'uk'
-              ? 'Вигляд спільний із грою. Цей льотний персонаж використовує справжній наземний маршрут; клітинкові щити й ривки не підмінюють його фізику.'
-              : 'Appearance is shared with the game. This flight actor uses a native ground route; grid shields and bursts do not replace its physics.',
+              ? course.pursuit
+                ? 'Нативна фізика польоту, прийнятий граф, напрямок і фаза визначають рух та вразливість.'
+                : 'Вигляд спільний із грою. Цей льотний персонаж використовує справжній наземний маршрут; клітинкові щити й ривки не підмінюють його фізику.'
+              : course.pursuit
+                ? 'Native flight physics and the accepted graph, heading and phase control movement and vulnerability.'
+                : 'Appearance is shared with the game. This flight actor uses a native ground route; grid shields and bursts do not replace its physics.',
             'hint',
           ),
         );
         container.append(section);
-        container.append(element('p', text('huntEligible'), 'hint'));
+        if (!guide.optional) container.append(element('p', text('huntEligible'), 'hint'));
         paint();
       }
       const role = choose(
@@ -2613,6 +3398,41 @@ modules['optional-practice/civilian-fpv/world-actor-editor.mjs'] = (() => {
       );
       if (actor.type !== 'hazard')
         container.append(label(text('role'), role), element('p', text('roleHelp'), 'hint'));
+      if (course.pursuit && actor.type === 'vehicle') {
+        const names = {
+          'field-utility': ['Field utility car', 'Польовий автомобіль'],
+          'cargo-truck': ['Cargo truck', 'Вантажівка'],
+          'armored-carrier': ['Armored carrier', 'Бронетранспортер'],
+          'field-tank': ['Tracked tank', 'Гусеничний танк'],
+          'relay-truck': ['Relay truck', 'Машина зв’язку'],
+        };
+        const uk = (typeof locale === 'function' ? locale() : locale) === 'uk';
+        const model = choose(
+          [
+            ['', uk ? 'Звичайний вигляд' : 'Original appearance'],
+            ...WORLD_VEHICLE_MODELS.map((id) => [id, names[id][uk ? 1 : 0]]),
+          ],
+          actor.vehicleModel ?? '',
+          uk ? 'Модель техніки' : 'Vehicle model',
+        );
+        model.addEventListener('change', () =>
+          change((next) => {
+            const target = actorIn(next);
+            if (model.value) target.vehicleModel = model.value;
+            else delete target.vehicleModel;
+          }),
+        );
+        container.append(
+          label(uk ? 'Модель техніки' : 'Vehicle model', model),
+          element(
+            'p',
+            uk
+              ? 'Лише вигляд. Колізії, маршрути та зброя використовують наявні правила техніки.'
+              : 'Appearance only. Collision, paths and weapons retain native vehicle rules.',
+            'hint',
+          ),
+        );
+      }
       const position = positionFields(actor.position, course.bounds, text('position'));
       container.append(element('h4', text('position')), position.group);
       const numericGroup = element('div', undefined, 'numeric-grid');
@@ -2656,6 +3476,11 @@ modules['optional-practice/civilian-fpv/world-actor-editor.mjs'] = (() => {
           change((next, bindings) => {
             const target = actorIn(next);
             target.position = position.read();
+            const policy = next.pursuit?.actors.find((item) => item.id === target.id);
+            if (policy)
+              next.pursuit.nodes.find((node) => node.id === policy.start).position = {
+                ...target.position,
+              };
             for (const [key, , scale] of [...basic, ...extra])
               target[key] = numeric(fields[key], scale);
             if (target.type !== 'hazard') {
@@ -2731,6 +3556,18 @@ modules['optional-practice/civilian-fpv/world-actor-editor.mjs'] = (() => {
           !actor.path.length,
         ),
       );
+      if (course.pursuit?.actors.some((policy) => policy.id === actor.id)) {
+        for (const control of routeActions.querySelectorAll('button')) control.disabled = true;
+        container.append(
+          element(
+            'p',
+            (typeof locale === 'function' ? locale() : locale) === 'uk'
+              ? 'Рухом керує граф переслідування. Змінюйте вузли та цілі в його редакторі.'
+              : 'The pursuit graph owns movement. Edit its nodes and goals in the graph editor.',
+            'hint',
+          ),
+        );
+      }
       container.append(routeActions);
       const jsonDetails = element('details');
       const json = element('textarea');
@@ -2829,12 +3666,12 @@ modules['optional-practice/civilian-fpv/world-actor-editor.mjs'] = (() => {
   return { mountActorEditor: mountActorEditor };
 })();
 modules['optional-practice/civilian-fpv/world-progress.mjs'] = (() => {
-  const boundedJSON = external4['boundedJSON'];
-  const createWorldFlight = external8['createWorldFlight'];
-  const initWorldRuntime = external8['initWorldRuntime'];
-  const replayWorldFlight = external8['replayWorldFlight'];
-  const validateWorldCourse = external8['validateWorldCourse'];
-  const WORLD_MAX_TICKS = external8['WORLD_MAX_TICKS'];
+  const boundedJSON = external7['boundedJSON'];
+  const createWorldFlight = external10['createWorldFlight'];
+  const initWorldRuntime = external10['initWorldRuntime'];
+  const replayWorldFlight = external10['replayWorldFlight'];
+  const validateWorldCourse = external10['validateWorldCourse'];
+  const WORLD_MAX_TICKS = external10['WORLD_MAX_TICKS'];
 
   const centre = (step) =>
     step.min
@@ -2913,6 +3750,7 @@ modules['optional-practice/civilian-fpv/world-progress.mjs'] = (() => {
           (state.hunt?.caught.length ?? 0) * 250,
       ),
       ...(state.hunt ? { catches: state.hunt.caught.length, huntFailure: state.hunt.failure } : {}),
+      ...(state.pursuit ? { bonusCatches: state.pursuit.bonusCaught.length } : {}),
       accuracy: state.shots ? Math.min(1, (state.hits ?? 0) / state.shots) : null,
       health: state.health ?? null,
       targets,
@@ -3075,7 +3913,7 @@ modules['optional-practice/civilian-fpv/world-progress.mjs'] = (() => {
   }
 
   return {
-    createSectorTracker: external9['createSectorTracker'],
+    createSectorTracker: external11['createSectorTracker'],
     medalTargets: medalTargets,
     evaluateWorldResult: evaluateWorldResult,
     compatibleGhost: compatibleGhost,
@@ -3644,10 +4482,10 @@ modules['game/journey/reaction-voice-cache.mjs'] = (() => {
   };
 })();
 modules['game/journey/campaign-feedback.mjs'] = (() => {
-  const boundedJSON = external4['boundedJSON'];
-  const exactKeys = external4['exactKeys'];
-  const required = external4['required'];
-  const stableId = external4['stableId'];
+  const boundedJSON = external7['boundedJSON'];
+  const exactKeys = external7['exactKeys'];
+  const required = external7['required'];
+  const stableId = external7['stableId'];
 
   const CAMPAIGN_FEEDBACK_FORMAT = 'revealline-campaign-feedback.v1';
   // Original fixed synth phrases. These are presentation recipes, not schedules
@@ -4020,8 +4858,8 @@ modules['game/journey/reactions.mjs'] = (() => {
   };
 })();
 modules['game/journey/reaction-preferences.mjs'] = (() => {
-  const boundedJSON = external4['boundedJSON'];
-  const exactKeys = external4['exactKeys'];
+  const boundedJSON = external7['boundedJSON'];
+  const exactKeys = external7['exactKeys'];
 
   const JOURNEY_REACTION_PREFERENCES_KEY = 'revealline.journey-reactions.v1';
   const format = 'JourneyReactionPreferencesV1';
@@ -4183,8 +5021,8 @@ modules['game/journey/reaction-preferences.mjs'] = (() => {
   };
 })();
 modules['game/journey/reaction-options.mjs'] = (() => {
-  const boundedJSON = external4['boundedJSON'];
-  const exactKeys = external4['exactKeys'];
+  const boundedJSON = external7['boundedJSON'];
+  const exactKeys = external7['exactKeys'];
 
   const REACTION_OPTIONS_KEY = 'revealline.reaction-presentation.v1';
   const DEFAULT_REACTION_OPTIONS = Object.freeze({
@@ -6062,8 +6900,8 @@ modules['game/ui/contextual-reactions.mjs'] = (() => {
   const actorDefinition = external5['actorDefinition'];
   const resolveActorFamily = external5['resolveActorFamily'];
   const actorEventReaction = modules['game/hunt/actor-reactions.mjs']['actorEventReaction'];
-  const drawHuntActor = external6['drawHuntActor'];
-  const sharedActorAppearance = external7['sharedActorAppearance'];
+  const drawHuntActor = external8['drawHuntActor'];
+  const sharedActorAppearance = external9['sharedActorAppearance'];
 
   const recentLines = new Map();
   const HISTORY_KEY = 'revealline.reaction-recent.v1';
@@ -6748,7 +7586,7 @@ modules['game/ui/contextual-reactions.mjs'] = (() => {
 modules['optional-practice/civilian-fpv/world-hunt-reactions.mjs'] = (() => {
   const attachContextualReactions =
     modules['game/ui/contextual-reactions.mjs']['attachContextualReactions'];
-  const HUNT_CONTACT_CRITERION = external10['HUNT_CONTACT_CRITERION'];
+  const HUNT_CONTACT_CRITERION = external6['HUNT_CONTACT_CRITERION'];
 
   /** Presentation projection only: native SIM has unarmed stationary/patrol prey.
    * Do not infer unsupported arcade behavior from a course's name or artwork. */
@@ -6767,13 +7605,18 @@ modules['optional-practice/civilian-fpv/world-hunt-reactions.mjs'] = (() => {
             .filter((step) => step.type === HUNT_CONTACT_CRITERION)
             .flatMap((step) => step.targets),
         );
+        for (const policy of course?.pursuit?.actors ?? []) targets.add(policy.id);
         actors = new Map(
           (course?.actors ?? [])
             .filter((actor) => targets.has(actor.id))
-            .map((actor) => [actor.id, actor.speed > 0 ? 'patroller' : 'lookout']),
+            .map((actor) => [
+              actor.id,
+              course?.pursuit?.actors.find((policy) => policy.id === actor.id)?.family ??
+                (actor.speed > 0 ? 'patroller' : 'lookout'),
+            ]),
         );
         families = [...new Set(actors.values())];
-        seen = new Set(state?.hunt?.caught ?? []);
+        seen = new Set([...(state?.hunt?.caught ?? []), ...(state?.pursuit?.bonusCaught ?? [])]);
         lastTick = state?.ticks ?? -1;
         health = state?.health ?? null;
         playback = replay;
@@ -6819,7 +7662,9 @@ modules['optional-practice/civilian-fpv/world-hunt-reactions.mjs'] = (() => {
             type: 'actor.caught',
             id: event.actor,
             tick: state.ticks,
-            actorFamily: actors.get(event.actor),
+            actorFamily:
+              state.actors?.find((actor) => actor.id === event.actor)?.pursuit?.family ??
+              actors.get(event.actor),
           });
         }
         if (events.length || danger)
@@ -6944,3 +7789,7 @@ export function mountWorldHuntReactions(options) {
     },
   };
 }
+export const worldEnemyGuide =
+  modules['optional-practice/civilian-fpv/world-enemy-guide.mjs'].worldEnemyGuide;
+export const mountWorldEnemyGuide =
+  modules['optional-practice/civilian-fpv/world-enemy-guide.mjs'].mountWorldEnemyGuide;

@@ -27,6 +27,7 @@ import { snakeStudioReturnHref } from '../ui/content-studio-navigation.mjs';
 import { fpvWorldLaunchURL, appearanceLaunchURL } from '../fpv-entry.mjs';
 import { CLASSIC_COPY } from '../snake/classic-copy.mjs';
 import { advanceClassicFlight } from '../snake/classic-flight-art.mjs';
+import { t } from '../i18n/index.mjs';
 
 const appURL = new URL('../snake/classic-app.mjs', import.meta.url);
 const source = await readFile(appURL, 'utf8');
@@ -85,7 +86,13 @@ async function harness({
     drawings = [],
     scheduledFrames = [],
     optionalEntries = [];
-  const display = { reducedEffects: false, effectiveReducedEffects: false };
+  const display = {
+    textFace: 'pixel',
+    textSize: 'standard',
+    reducedEffects: false,
+    effectiveReducedEffects: false,
+  };
+  const displayListeners = new Set();
   const location = {
     href: `https://example.test/game/snake/play.html?mode=${mode}&level=${entry.id}&activity=${activity}`,
   };
@@ -152,11 +159,23 @@ async function harness({
     navigator: { getGamepads: () => [] },
     setTimeout,
     getLocale: () => 'en',
+    t,
     setLocale() {},
     onLocaleChange() {},
     createDestructionPreferences: () => preferences({ brutal: false, blood: true }),
     createEncounterDisplayPreferences: () => preferences({ showRemains: true }),
-    createDisplayPreferences: () => preferences(display),
+    createDisplayPreferences: () => ({
+      snapshot: () => display,
+      subscribe(listener) {
+        displayListeners.add(listener);
+        listener(display);
+        return () => displayListeners.delete(listener);
+      },
+      set(patch) {
+        Object.assign(display, patch);
+        for (const listener of displayListeners) listener(display);
+      },
+    }),
     createTouchPreferences: () => preferences({ size: 'normal', opacity: 1, side: 'right' }),
     createClassicPresentation: () => ({ snapshot: () => null }),
     createBoardFootprints: () => ({ refresh() {}, dispose() {}, width: () => 336 }),
@@ -636,4 +655,23 @@ test('a failed Versus score board freezes its flight clock while the surviving b
     state.drawings.slice(-2).map((row) => row.options.flight),
     [nextFailed, nextSurviving],
   );
+});
+
+test('Snake reading controls update the shared display owner without replacing or advancing an attempt', async () => {
+  const state = await harness({ mode: 'team' });
+  const before = state.created.map((run) => core.exportClassicSnakeReplay(run));
+  state.shell.open('settings');
+  state.$('snake-text-size').value = 'large';
+  state.$('snake-text-size').emit('change');
+  state.$('snake-text-face').value = 'plain';
+  state.$('snake-text-face').emit('change');
+  assert.equal(state.display.textSize, 'large');
+  assert.equal(state.display.textFace, 'plain');
+  assert.equal(state.document.body.dataset.textSize, 'large');
+  assert.equal(state.document.body.dataset.textFace, 'plain');
+  assert.deepEqual(
+    state.created.map((run) => core.exportClassicSnakeReplay(run)),
+    before,
+  );
+  assert.equal(state.shell.blocksPlay(), true);
 });

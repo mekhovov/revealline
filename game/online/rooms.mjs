@@ -14,9 +14,13 @@ import {
   roomServiceEndpoint,
   terminalRoomError,
   createRoomClientLifecycle,
+  prepareRoomBoardPainters,
 } from './room-client-lifecycle.mjs';
 import { onNativeInactive, exportJSONFile } from '../platform.mjs';
-import { drawClassicBoard } from '../snake/classic-view.mjs';
+import { drawClassicBoard, classicCatchMarks } from '../snake/classic-view.mjs';
+import { createHuntDestruction } from '../hunt/destruction.mjs';
+import { mountRoomUI } from './room-ui.mjs';
+import { createRoomBoardPresentation, reconcileRoomPresentationRuns } from './room-events.mjs';
 import { advanceClassicFlight } from '../snake/classic-flight-art.mjs';
 import { createClassicPresentation } from '../snake/classic-presentation.mjs';
 import { BoardPainter } from '../ui/render.mjs';
@@ -37,7 +41,8 @@ const display = createDisplayPreferences(),
   destruction = createDestructionPreferences(),
   remains = createEncounterDisplayPreferences();
 const presentation = createClassicPresentation({ displayPreferences: display }),
-  appearance = sharedActorAppearance();
+  appearance = sharedActorAppearance(),
+  teamPresentation = createRoomBoardPresentation();
 const SESSION_KEY = 'revealline.private-room.seat.v1';
 let credentials = null,
   state = null,
@@ -53,7 +58,9 @@ let catalogueEntries = [],
 let canvases = [],
   painters = [],
   flights = [],
-  eventIds = new Set();
+  eventIds = new Set(),
+  effects = [],
+  roomUI = null;
 const messages = {
   title: ['Private rooms', 'Приватні кімнати'],
   intro: [
@@ -80,8 +87,8 @@ const messages = {
   receipt: ['Save match replay', 'Зберегти повтор матчу'],
   support: ['Support / Boost', 'Підтримка / Прискорення'],
   keys: [
-    'Arrow keys or WASD steer your own drone. Space pauses both boards. A lost connection pauses play; reconnect within 60 seconds, then both choose Ready.',
-    'Стрілки або WASD керують вашим дроном. Пробіл зупиняє обидва поля. Після втрати зв’язку поверніться за 60 секунд і обидва оберіть «Готово».',
+    'Arrow keys or WASD steer. Shift boosts, E uses equipment and R collects supplies when available. Hold Space for Team Support; P or Escape pauses both players. After reconnecting within 60 seconds, both choose Ready.',
+    'Стрілки або WASD керують дроном. Shift прискорює, E активує обладнання, R збирає припаси. У Team утримуйте пробіл для підтримки; P або Escape зупиняє обох. Поверніться за 60 секунд і обидва оберіть «Готово».',
   ],
   qualification: [
     'Private rooms preview · server outcomes stay separate from local chapter rewards. Public matchmaking requires a qualified service.',
@@ -132,16 +139,22 @@ function syncControls() {
       : say('Reconnect', 'Відновити зв’язок');
 }
 function suspendLocal() {
+  roomUI?.suspend();
+  teamPresentation.reset();
   lifecycle.suspend();
-  direction = null;
-  boost = false;
+  polling?.controller.abort();
+  polling = null;
+
   previousFrame = null;
   syncControls();
 }
 function abandonLocal(message) {
+  roomUI?.suspend();
+  roomUI?.shell.open('missions');
   lifecycle.abandon();
-  direction = null;
-  boost = false;
+  polling?.controller.abort();
+  polling = null;
+  roomUI?.shell.update({ phase: 'ready', canResume: false });
   saveSeat(null);
   $('invitation').hidden = true;
   syncControls();
@@ -153,17 +166,27 @@ function abandonLocal(message) {
       ),
   );
 }
-function connectionError(error, owner = credentials) {
-  if (credentials !== owner || lifecycle.snapshot().phase === 'abandoned') return;
+function connectionError(error, owner = credentials, epoch = null) {
+  const current = lifecycle.snapshot();
+  if (
+    credentials !== owner ||
+    current.phase === 'abandoned' ||
+    (epoch !== null && epoch !== current.epoch)
+  )
+    return;
   if (terminalRoomError(error)) {
     abandonLocal();
     return;
   }
   suspendLocal();
+  const detail =
+    error.code === 'ROOM_ARTWORK_TIMEOUT'
+      ? say('Room artwork preparation timed out', 'Час очікування оформлення кімнати вичерпано')
+      : error.message;
   notice(
     say(
-      `Connection interrupted: ${error.message}. Controls are paused. Reconnecting…`,
-      `Зв’язок перервано: ${error.message}. Керування призупинено. Відновлюємо зв’язок…`,
+      `Connection interrupted: ${detail}. Controls are paused. Reconnecting…`,
+      `Зв’язок перервано: ${detail}. Керування призупинено. Відновлюємо зв’язок…`,
     ),
   );
 }
@@ -217,6 +240,7 @@ async function own(value, { restoring = false, catalogueId = null, expectedHash 
   if (catalogueId) value = { ...value, catalogueId };
   credentials = value;
   state = null;
+  teamPresentation.reset();
   acceptedRecipeJSON = null;
   lifecycle.own(value, { restoring });
   saveSeat(value);
@@ -232,6 +256,7 @@ async function own(value, { restoring = false, catalogueId = null, expectedHash 
   $('accepted-source').textContent = '';
   $('identity').textContent = '';
   syncControls();
+  roomUI?.shell.open('missions');
   await poll();
 }
 async function requestPause(activation = state?.controlActivation) {
@@ -245,7 +270,7 @@ async function requestPause(activation = state?.controlActivation) {
     await api('/pause', { activation }, owner, operation.controller.signal);
     if (credentials === owner) lifecycle.pauseAcknowledged(epoch);
   } catch (error) {
-    connectionError(error, owner);
+    connectionError(error, owner, epoch);
   } finally {
     if (pauseRequest === operation) pauseRequest = null;
   }
@@ -357,13 +382,14 @@ for (const [id, path] of [
       $(id).disabled
     )
       return;
-    const owner = credentials;
+    const owner = credentials,
+      epoch = lifecycle.snapshot().epoch;
     $(id).disabled = true;
     try {
       await api(path, { activation: state.controlActivation }, owner);
       if (credentials === owner) await poll();
     } catch (error) {
-      connectionError(error, owner);
+      connectionError(error, owner, epoch);
     } finally {
       $(id).disabled = false;
     }
@@ -414,10 +440,10 @@ function leave() {
   pauseRequest?.controller.abort();
   pauseRequest = null;
   state = null;
+  teamPresentation.reset();
   acceptedRecipeJSON = null;
   lifecycle.release();
-  direction = null;
-  boost = false;
+
   saveSeat(null);
   painters.forEach((painter) => painter?.dispose?.());
   painters = [];
@@ -430,30 +456,67 @@ function leave() {
   $('result').textContent = '';
   reconnect.hidden = true;
   notice(say('Choose a new room.', 'Виберіть нову кімнату.'));
+  effects.forEach((effect) => effect.reset());
+  effects = [];
+  roomUI?.update(null);
 }
+function followInvitation() {
+  let invitation;
+  try {
+    invitation = readRoomInvitation(location.href);
+  } catch (error) {
+    notice(error.message);
+    return;
+  }
+  if (!invitation) return;
+  if (credentials?.invite === invitation.invite && lifecycle.snapshot().phase !== 'abandoned') {
+    history.replaceState(null, '', `${location.pathname}${location.search}`);
+    return;
+  }
+  // Hash-only navigation does not reload the page. Retire the old seat and use
+  // the same boot/admission path as a fresh invitation, including its SHA pins.
+  leave();
+  location.reload();
+}
+window.addEventListener('hashchange', followInvitation);
 $('leave').addEventListener('click', leave);
 reconnect.addEventListener('click', () => {
   if (lifecycle.snapshot().phase === 'abandoned') leave();
   else if (credentials) void poll();
   else void boot();
 });
-async function allocateBoards(snapshot, owner, epoch) {
+async function allocateBoards(snapshot, owner, epoch, signal) {
   const count = snapshot.engine.runs.length;
   const nextCanvases = Array.from({ length: count }, (_, index) => {
     const canvas = document.createElement('canvas');
     canvas.setAttribute('aria-label', say(`Player ${index + 1} board`, `Поле гравця ${index + 1}`));
     return canvas;
   });
-  let nextPainters = [];
-  if (snapshot.engine.kind === 'team') nextPainters = [createCoopPainter(nextCanvases[0])];
-  else if (snapshot.engine.kind === 'capture') {
-    const [presets, pack] = await Promise.all([
-      fetch('../../authoring/motion-lab/presets.json').then((response) => response.json()),
-      fetch('../content/packs/fieldcraft.json').then((response) => response.json()),
-    ]);
-    nextPainters = nextCanvases.map(() => new BoardPainter(presets));
-    await Promise.all(nextPainters.map((painter) => painter.setLook(pack.themes[0], 'fpv-body')));
-  }
+  const nextPainters = await prepareRoomBoardPainters(
+    async ({ signal: artworkSignal, retain }) => {
+      if (snapshot.engine.kind === 'team') retain(createCoopPainter(nextCanvases[0]));
+      else if (snapshot.engine.kind === 'capture') {
+        const read = async (url) => {
+          const response = await fetch(url, { signal: artworkSignal });
+          if (!response.ok)
+            throw new Error(
+              say(
+                `Room artwork unavailable (${response.status})`,
+                `Оформлення кімнати недоступне (${response.status})`,
+              ),
+            );
+          return response.json();
+        };
+        const [presets, pack] = await Promise.all([
+          read('../../authoring/motion-lab/presets.json'),
+          read('../content/packs/fieldcraft.json'),
+        ]);
+        const prepared = nextCanvases.map(() => retain(new BoardPainter(presets)));
+        await Promise.all(prepared.map((painter) => painter.setLook(pack.themes[0], 'fpv-body')));
+      }
+    },
+    { signal },
+  );
   if (credentials !== owner || stopped || document.hidden || epoch !== lifecycle.snapshot().epoch) {
     nextPainters.forEach((painter) => painter?.dispose?.());
     return;
@@ -462,7 +525,9 @@ async function allocateBoards(snapshot, owner, epoch) {
   canvases = nextCanvases;
   painters = nextPainters;
   flights = [];
-  $('boards').replaceChildren(...canvases);
+  effects.forEach((effect) => effect.reset());
+  effects = canvases.map(() => createHuntDestruction());
+  roomUI.boards(canvases, snapshot);
   $('boards').classList.toggle('paired', count === 2);
 }
 
@@ -480,6 +545,7 @@ async function poll() {
   polling = operation;
   const owner = credentials,
     epoch = lifecycle.snapshot().epoch;
+  let errorEpoch = epoch;
   try {
     const wire = await api('/snapshot', undefined, owner, operation.controller.signal);
     if (credentials !== owner || epoch !== lifecycle.snapshot().epoch || stopped || document.hidden)
@@ -533,23 +599,22 @@ async function poll() {
     // Terminal outcomes remain server-owned, including during recovery.
     if (['finished', 'abandoned'].includes(snapshot.status)) lifecycle.pauseAcknowledged(epoch);
     const replacement = !state || state.generation !== snapshot.generation;
+    const recovering = lifecycle.snapshot().phase !== 'connected';
+    if (replacement || recovering) teamPresentation.reset();
     if (replacement) {
-      direction = null;
-      boost = false;
       eventIds.clear();
-      await allocateBoards(snapshot, owner, epoch);
+      await allocateBoards(snapshot, owner, epoch, operation.controller.signal);
     }
     if (credentials !== owner || stopped || document.hidden || !lifecycle.accept(snapshot, epoch))
       return;
-    if (!replacement)
-      snapshot.engine.runs = snapshot.engine.runs.map((run, index) =>
-        Object.assign(state.engine.runs[index], run),
-      );
+    // Admission may rotate the control epoch. Presentation failures after that
+    // point still belong to this newly accepted activation, unlike late I/O.
+    errorEpoch = lifecycle.snapshot().epoch;
+    snapshot.engine.runs = reconcileRoomPresentationRuns(state?.engine.runs, snapshot.engine.runs, {
+      replacement,
+      recovering,
+    });
     state = snapshot;
-    if (!lifecycle.canPlay()) {
-      direction = null;
-      boost = false;
-    }
     syncControls();
     showAcceptedMission(snapshot);
     if (owner.invite) {
@@ -584,60 +649,14 @@ async function poll() {
       : '';
     for (const event of snapshot.events) eventIds.add(event.id);
     if (eventIds.size > 256) eventIds = new Set(snapshot.events.map((event) => event.id));
+    roomUI.update(snapshot, { replacement, recovering });
     if (snapshot.status === 'abandoned') abandonLocal();
   } catch (error) {
-    connectionError(error, owner);
+    connectionError(error, owner, errorEpoch);
   } finally {
     if (polling === operation) polling = null;
   }
 }
-let direction = null,
-  boost = false;
-function input(next = direction) {
-  if (!lifecycle.canPlay() || stopped || document.hidden) return;
-  direction = next;
-  lifecycle.submit({ direction, boost, support: boost });
-}
-const keys = {
-  ArrowUp: 'up',
-  KeyW: 'up',
-  ArrowRight: 'right',
-  KeyD: 'right',
-  ArrowDown: 'down',
-  KeyS: 'down',
-  ArrowLeft: 'left',
-  KeyA: 'left',
-};
-document.addEventListener('keydown', (event) => {
-  if (event.target.closest('input,select,textarea') || event.repeat) return;
-  if (keys[event.code]) {
-    event.preventDefault();
-    void input(keys[event.code]);
-  }
-  if (event.code === 'Space' && lifecycle.canPlay()) {
-    event.preventDefault();
-    $('pause').click();
-  }
-});
-document.querySelectorAll('[data-direction]').forEach((button) =>
-  button.addEventListener('pointerdown', (event) => {
-    event.preventDefault();
-    void input(button.dataset.direction);
-  }),
-);
-$('support').addEventListener('pointerdown', (event) => {
-  if (!lifecycle.canPlay() || stopped || document.hidden) return;
-  event.currentTarget.setPointerCapture(event.pointerId);
-  boost = true;
-  void input();
-});
-for (const type of ['pointerup', 'pointercancel', 'lostpointercapture'])
-  $('support').addEventListener(type, () => {
-    if (boost) {
-      boost = false;
-      void input();
-    }
-  });
 function suspend() {
   if (!credentials || ['abandoned', 'idle'].includes(lifecycle.snapshot().phase)) return;
   suspendLocal();
@@ -652,6 +671,7 @@ document.addEventListener('visibilitychange', () => {
 });
 window.addEventListener('orientationchange', suspend);
 window.addEventListener('offline', suspend);
+window.addEventListener('blur', suspend);
 window.addEventListener('online', () => void poll());
 let removeNativeInactive = null;
 void onNativeInactive(suspend)
@@ -664,6 +684,7 @@ void onNativeInactive(suspend)
 function frame(time) {
   const dt = Math.min(0.1, previousFrame === null ? 0 : (time - previousFrame) / 1000);
   previousFrame = time;
+  roomUI?.frame();
   if (state)
     state.engine.runs.forEach((run, index) => {
       const canvas = canvases[index];
@@ -674,18 +695,33 @@ function frame(time) {
       if (state.engine.kind === 'snake') {
         flights[index] = advanceClassicFlight(flights[index], dt * 1000, !paused, reduced);
         const cast = appearance.snapshot().cast;
+        effects[index]?.advance({ valid: true, eliminations: classicCatchMarks(run) }, dt, {
+          key: run,
+          paused,
+          reduced,
+          ...fx,
+          sources: run.snakes.map((snake) => ({
+            ...snake.body[0],
+            id: snake.id,
+            direction: snake.direction,
+          })),
+        });
         drawClassicBoard(canvas, run, {
+          attemptKey: `${state.roomId}:${state.generation}`,
           presentation: presentation.snapshot(),
+          effects: effects[index],
+          boardStyle: roomUI.boardStyle(),
+          style: roomUI.tailStyle(),
           cast: cast === 'authored' ? 'rivals' : cast,
           reduced,
           flight: flights[index],
-          cssWidth: canvas.clientWidth,
+          cssWidth: roomUI.width(index) ?? canvas.clientWidth,
           pixelRatio: devicePixelRatio || 1,
           ...fx,
           showRemains: remains.snapshot().showRemains,
         });
       } else if (state.engine.kind === 'team')
-        painters[index]?.paint(run, {
+        painters[index]?.paint(teamPresentation.project(run, { paused }), {
           reduced,
           ...fx,
           showRemains: remains.snapshot().showRemains,
@@ -792,6 +828,8 @@ window.addEventListener('pagehide', (event) => {
   suspend();
   stopped = true;
   if (!event.persisted) {
+    roomUI?.dispose();
+    effects.forEach((effect) => effect.reset());
     void removeNativeInactive?.();
     removeNativeInactive = null;
   }
@@ -800,6 +838,15 @@ window.addEventListener('pageshow', () => {
   stopped = false;
   previousFrame = null;
   void poll();
+});
+roomUI = mountRoomUI({
+  getState: () => state,
+  getSeat: () => credentials?.seat ?? 0,
+  canPlay: () => lifecycle.canPlay() && !stopped && !document.hidden,
+  submit: (control) => lifecycle.submit(control),
+  pause: suspend,
+  display,
+  destruction,
 });
 requestAnimationFrame(frame);
 void boot();

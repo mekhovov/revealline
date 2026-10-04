@@ -1,5 +1,20 @@
 /* Legacy layout and paint share one cascade layer. Theme recipes own opt-in appearance. */
 @layer legacy {
+  .recording-help {
+    grid-column: 1 / -1;
+    flex-basis: 100%;
+    margin: 0;
+    font-size: 0.875em;
+  }
+  .recording-help > a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+  }
+  .recording-help > span {
+    display: block;
+    margin-block-start: 0.35em;
+  }
   /* Layout only: Field Kit owns the shared typography, palette and controls. */
   :root {
     color-scheme: dark;

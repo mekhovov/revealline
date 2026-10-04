@@ -130,8 +130,8 @@
   "exportLoadedLibrary": "Export loaded library",
   "theMapExpansionIncludesThisEditedMapCurrentClassRecipes": "The map expansion includes this edited map, current class recipes, theme and images. The loaded library export preserves its original campaigns. These practice previews do not install content in the main game's library.",
   "replayARecordedRun": "Replay a recorded run",
-  "importAnExportedReplayToCheckItsFinalSimulationSummary": "Import an exported replay to check its final simulation summary. Playback is a verification run and grants no campaign rewards.",
-  "openReplayTheaterToWatchPauseAndStepThroughA": "Open Replay Theater to watch, pause and step through a recording ↗",
+  "importAnExportedReplayToCheckItsFinalSimulationSummary": "Import a Solo replay or a local Capture Team/Versus recording to verify its final simulation state. Wins and losses can both match. Verification grants no progress or rewards and does not prove mission completion.",
+  "openReplayTheaterToWatchPauseAndStepThroughA": "Watch a Solo recording in Replay Theater ↗",
   "verifyReplay": "Verify replay",
   "replayJson": "Replay JSON",
   "orPasteExportedReplayJsonHere": "Or paste exported replay JSON here",
@@ -3139,5 +3139,6 @@
   "studio.themes.gallery": "Explore built-in themes",
   "studio.themes.galleryHelp": "Try each theme’s controls without changing your game appearance or workspace.",
   "studio.themes.openAssetTools": "Open asset tools",
-  "studio.themes.openThemeStudio": "Open Theme Studio"
+  "studio.themes.openThemeStudio": "Open Theme Studio",
+  "multiplayerRecordingVerificationOnly": "Team and Versus recordings are checked here with their native rules. Replay Theater currently provides visual playback for Solo recordings only."
 }

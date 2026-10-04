@@ -173,3 +173,17 @@ export const createActorAppearancePreferences = (options = {}) =>
 
 let actorAppearance;
 export const sharedActorAppearance = () => (actorAppearance ??= createActorAppearancePreferences());
+
+/** Explicit, session-only art review pin; never changes a saved appearance or a
+ * gameplay recipe. Unrecognized revisions use the released artwork. */
+export function actorArtReviewRevision(location = globalThis.location) {
+  try {
+    const params = new URL(location.href).searchParams;
+    return params.getAll('artReview').length === 1 &&
+      ['industrial-pilot-v1', 'industrial-overhead-v2'].includes(params.get('artReview'))
+      ? params.get('artReview')
+      : null;
+  } catch {
+    return null;
+  }
+}

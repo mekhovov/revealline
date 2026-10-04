@@ -9,7 +9,7 @@ import { contextualAppearance } from '../ui/mode-choice.mjs';
 import { fpvWorldLaunchURL, appearanceLaunchURL } from '../fpv-entry.mjs';
 import { boardPlacement } from '../ui/feedback-cues.mjs';
 import { createClassicAudio } from './classic-audio.mjs';
-import { getLocale, setLocale, onLocaleChange } from '../i18n/index.mjs';
+import { getLocale, setLocale, onLocaleChange, t } from '../i18n/index.mjs';
 import { boundedJSON, exactKeys, required } from '../data-json.mjs';
 import { createDestructionPreferences, sharedActorAppearance } from '../hunt/preferences.mjs';
 import { ACTOR_CASTS, actorFieldGuide } from '../hunt/actor-catalog.mjs';
@@ -167,7 +167,11 @@ const gamepadState = new Map(),
 const effects = [createHuntDestruction(), createHuntDestruction()];
 const destruction = createDestructionPreferences(),
   remains = createEncounterDisplayPreferences();
-const display = createDisplayPreferences();
+const display = createDisplayPreferences({
+  onWarning: (message, key) => {
+    $('snake-display-status').textContent = key ? t(key) : message;
+  },
+});
 const presentation = createClassicPresentation({ displayPreferences: display });
 const audioMaster = createAudioMaster(),
   audioPreferences = createAudioPreferences({ audioMaster });
@@ -686,6 +690,8 @@ function renderCopy() {
     doc.querySelector(selector)?.setAttribute('aria-label', text(label));
   for (const node of doc.querySelectorAll('[data-word]'))
     node.textContent = text(node.dataset.word);
+  for (const node of doc.querySelectorAll('#snake-display-reading [data-i18n]'))
+    node.textContent = t(node.dataset.i18n);
   $('language').value = locale;
   for (const button of doc.querySelectorAll('#mode-tabs [data-mode]')) {
     button.textContent = text(button.dataset.mode);
@@ -1112,6 +1118,17 @@ function watchReview() {
 destruction.subscribe(primeEffects);
 remains.subscribe(primeEffects);
 display.subscribe(primeEffects);
+display.subscribe((choice) => {
+  doc.body.dataset.textFace = $('snake-text-face').value = choice.textFace;
+  doc.body.dataset.textSize = $('snake-text-size').value = choice.textSize;
+  footprint?.refresh();
+});
+$('snake-text-face').addEventListener('change', () =>
+  display.set({ textFace: $('snake-text-face').value }),
+);
+$('snake-text-size').addEventListener('change', () =>
+  display.set({ textSize: $('snake-text-size').value }),
+);
 $('brutal').addEventListener('change', () => destruction.set({ brutal: $('brutal').checked }));
 $('blood').addEventListener('change', () => destruction.set({ blood: $('blood').checked }));
 $('remains').addEventListener('change', () => remains.set($('remains').checked));
@@ -1490,6 +1507,7 @@ function frame(now) {
       ? review.frames[i][Math.min(review.frames[i].length - 1, Math.floor(review.time / 240))]
       : run;
     drawClassicBoard(boards[i].canvas, shown, {
+      attemptKey: review ?? match,
       effects: review ? null : effects[i],
       ...choice,
       showRemains: remains.snapshot().showRemains,
