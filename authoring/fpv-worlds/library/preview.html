@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <link rel="icon" href="data:," />
+  <title>Library verification catalog preview</title>
+  <style>
+    body {
+      margin: 0;
+      background: #101923;
+      color: #eef4f4;
+      font: 14px system-ui;
+    }
+    p {
+      margin: 8px;
+    }
+    iframe {
+      display: block;
+      width: 100%;
+      height: calc(100vh - 68px);
+      border: 0;
+    }
+  </style>
+  <p>Verification catalog only · one qualified authoring starter. Production catalog is empty.</p>
+  <p id="status" role="status">Opening native Library…</p>
+  <iframe id="sim" title="Actual native Library"></iframe>
+  <script type="module">
+    const memory = new Map([
+      [
+        'revealline.fpv.world-settings.v1',
+        JSON.stringify({
+          'world-language': 'en',
+          'flight-quality': 'low',
+          'sim-motion': 'reduced',
+        }),
+      ],
+    ]);
+    window.fixtureStorage = {
+      getItem: (k) => memory.get(k) ?? null,
+      setItem: (k, v) => memory.set(k, String(v)),
+      removeItem: (k) => memory.delete(k),
+    };
+    window.fixturePrefix = 'fpv-library-visual-' + crypto.randomUUID() + ':';
+    window.fixtureDatabases = new Set();
+    const frame = document.getElementById('sim'),
+      status = document.getElementById('status');
+    async function until(f) {
+      const start = performance.now();
+      while (!f()) {
+        if (performance.now() - start > 30000) throw Error('Preview timeout');
+        await new Promise((r) => setTimeout(r, 20));
+      }
+    }
+    try {
+      const fixture = await (await fetch('./fixture.json')).json();
+      frame.src = './player/optional-practice/fpv-worlds/fixture-host.html?token=visual#packs';
+      await until(
+        () => frame.contentWindow?.fixtureToken === 'visual' && frame.contentWindow.fpvWorldStudio,
+      );
+      const w = frame.contentWindow,
+        d = frame.contentDocument;
+      await w.fpvWorldStudio.ready;
+      w.fixtureNetwork.index = { format: 'FPVWorldLibrary.v1', worlds: [fixture.asset] };
+      d.getElementById('worlds-shell-action-missions').click();
+      d.querySelector('[data-tab=packs]').click();
+      d.querySelector('#optional-world-library button').click();
+      await until(() => !d.querySelector('#optional-world-library button').disabled);
+      status.textContent =
+        'Use native EN/УК and resize the page. Pack download uses the pinned real HTTPS asset; no automatic pack download.';
+    } catch (error) {
+      status.textContent = String(error);
+    }
+  </script>
+</html>
