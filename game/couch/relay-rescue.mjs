@@ -5096,6 +5096,9 @@ export function bootCoop({
       stopArena(error);
       return;
     }
+    // Persistence and progress callbacks may make a newer focus choice after
+    // this Start has already published its native running state.
+    const startFocus = document.activeElement;
     if (rememberVisibleArena && !disposed && run === next && running() && foreground())
       arenaPreference.choose(startingLevel.id);
     if (!disposed && run === next && running() && foreground())
@@ -5110,7 +5113,7 @@ export function bootCoop({
         picture: earnedTeamPicture(selection, binding),
       });
     if (disposed || run !== next || !running() || !foreground()) return;
-    input.focus();
+    if (document.activeElement === startFocus) input.focus();
     if (loopStopped) {
       loopStopped = false;
       last = null;

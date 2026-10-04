@@ -1,10 +1,10 @@
 # P2 chapter environments — implementation and qualification register
 
-Updated 5 October 2026. P2 is applied for actual-source qualification on `codex/industrial-chapter-environments`, from recoverable WIP checkpoint `96833542d392e725105a89dc22ddd19e794ac748` above P1 baseline `4bc2179fee3a12a938b3475a501c5125fca979b4`. The first complete actual-source verification used clean commit `1717a5348111ae673209056b0eeef3e15e220f58`; its results and the subsequent targeted packaging corrections are distinguished below. P1 remains first in the public-delivery sequence; this P2 branch is not approved for merge or release. The corrected local software checks and committed-source builds passed at `9d305906107922993d921371725b509695eb035a`. Exact-head hosted checks for draft PR #1095 remain a separate delivery gate; physical-device, human-play and hosted HTTPS qualification are not implied.
+Updated 5 October 2026. P2 is applied for actual-source qualification on `codex/industrial-chapter-environments`, from recoverable WIP checkpoint `96833542d392e725105a89dc22ddd19e794ac748` above P1 baseline `4bc2179fee3a12a938b3475a501c5125fca979b4`. The first complete actual-source verification used clean commit `1717a5348111ae673209056b0eeef3e15e220f58`; its results and the subsequent targeted packaging corrections are distinguished below. P1 remains first in the public-delivery sequence; this P2 branch is not approved for merge or release. The corrected local software checks and committed-source builds passed at `9d305906107922993d921371725b509695eb035a`. The later exact head `1be3c8e32650b8c5f21747bdbdb3e64f94782b30` passed all eleven executed hosted checks; its unallocated-PR stage was intentionally skipped. Reconciliation now incorporates final P1 `dd44ea0046c50c58aa9b1d8f23f62c670d22a64c`, preserving both native Start fixes and P2 accepted appearance/session ownership. Successor checks belong to their own exact source; physical-device, human-play and hosted HTTPS qualification are not implied.
 
 Draft preparation began against `6320712822ed65c706eabfaeaa2447063092cce5` and continued while P1 advanced. Historical cache-loader receipts below retain their own source/draft hashes; applying those modules does not retroactively make the receipts proof of the checkpoint or a delivered build. The user already approved the corrected overhead art treatment; artistic approval is not a pending prerequisite for this batch.
 
-## Current software qualification at `9d3059061079`
+## Local baseline qualification at `9d3059061079`
 
 The corrected source is clean and pinned to tree `c541673598266aab7031483e55a635f281b50c5e`. All completed reruns below retain that exact identity; the earlier failed `1717a5348111` receipts remain in the history section.
 
@@ -16,9 +16,29 @@ The corrected source is clean and pinned to tree `c541673598266aab7031483e55a635
 | Main committed-source build        | **Passed**, 2,998 entries / 900,326,444 bytes; source unchanged. This is the in-memory committed-source build and manifest validation, not a claimed emitted main ZIP. `.cache/p2-9d305906-build.json`. |
 | Native optional packages           | Academy and Worlds each built twice reproducibly; committed inputs, source/runtime ZIP members and limits verified at this head. `.cache/p2-native-optional-9d305906/p2-native-verification.json`.      |
 
-The corrected delta changes main package admission, two targeted tests and review documentation/evidence, not gameplay or presentation runtime. The unaffected gameplay **209/209**, presentation **328/328**, recordings **16/16**, rooms **80/80**, local UX **360/360** and additional Capture **381/381** observations remain bound to `1717a5348111`; they were not unnecessarily repeated locally or relabeled as `9d3059061079` runs. [Draft PR #1095](https://github.com/mekhovov/revealline/pull/1095) runs all six phases against its exact hosted head before delivery. The local software/build results are achieved; hosted CI completion, merge/release and the manual qualification below remain separate.
+The corrected delta changes main package admission, two targeted tests and review documentation/evidence, not gameplay or presentation runtime. The unaffected gameplay **209/209**, presentation **328/328**, recordings **16/16**, rooms **80/80**, local UX **360/360** and additional Capture **381/381** observations remain bound to `1717a5348111`; they were not unnecessarily repeated locally or relabeled as `9d3059061079` runs. [Draft PR #1095](https://github.com/mekhovov/revealline/pull/1095) runs all six phases against its exact hosted head before delivery. The local software/build results are achieved. The later hosted baseline completed at `1be3c8e32650`; successor verification, merge/release and the manual qualification below remain separate.
 
-The first hosted run at `9d3059061079` passed five industrial phases but failed local UX with **340/341**: the World appearance host module could not load its locked `fake-indexeddb` dependency, so its twenty tests never started. The workflow had installed only root dependencies. The follow-up installs the existing `authoring/fpv-worlds` lockfile for that phase, with install scripts disabled; it changes no runtime dependency or gameplay assertion. A cross-contract dependency/setup regression and the complete World host file passed **33/33** locally (`.cache/p2-ci-dependency-fix/receipt.json`). The initial hosted failure remains recorded, and the corrected exact-head hosted run must pass separately.
+The first hosted run at `9d3059061079` passed five industrial phases but failed local UX with **340/341**: the World appearance host module could not load its locked `fake-indexeddb` dependency, so its twenty tests never started. The workflow had installed only root dependencies. The follow-up installs the existing `authoring/fpv-worlds` lockfile for that phase, with install scripts disabled; it changes no runtime dependency or gameplay assertion. A cross-contract dependency/setup regression and the complete World host file passed **33/33** locally (`.cache/p2-ci-dependency-fix/receipt.json`). The initial hosted failure remains recorded. The corrected exact-head run at `1be3c8e32650` subsequently passed all six phases, including all 360 local-UX cases.
+
+## Completed hosted baseline and final P1 reconciliation
+
+Exact P2 head `1be3c8e32650b8c5f21747bdbdb3e64f94782b30` passed all six
+industrial phases with unchanged-source receipts: gameplay **209**, creator
+**217**, presentation **329**, recordings **16**, rooms **80**, and local UX
+**360**—**1,211 test executions**, zero failures, cancellations, skips or todo.
+Appearance passed **491/491** plus main/Worlds builds. Company candidate,
+capacity, optional practice and Community hosted acceptance passed. All eleven
+executed checks succeeded; the unallocated-PR stage was intentionally skipped.
+This is the pre-reconciliation software baseline, not proof of a later head.
+
+The final P1 merge preserves the exact-owner asynchronous Versus Start and
+Team post-start focus choice, along with corrected native menu, catalogue and
+steering fixtures. The title-mode fixture retains P2 saved-envelope unwrapping
+while loading the requested native steering preference before boot. Recheck
+these native hosts together with accepted appearance, Retry/Continue and
+session ownership at the actual successor commit. The PR check records and
+committed-source receipts identify that source; earlier results keep their
+original identity. P2 remains a review draft without merge or auto-merge.
 
 ## Applied implementation scope
 
@@ -32,7 +52,7 @@ The first hosted run at `9d3059061079` passed five industrial phases but failed 
 | Studio              | 14 native full-theme packages, three terrain rasters each, actual published 335-slot contract, native import/adopt/merged-byte validation. Native World authoring explicitly detaches an official environment before changing its source. | Import is an explicit full-theme choice. This is not a new partial-package import mechanism or automatic replacement of personal artwork.                                              |
 | Discovery           | EN/UK review cards, actual-size material specimens, named missions and verified native routes.                                                                                                                                            | Capture opens a collection then mission selection. Snake links select mode and level. SIM selects a course, with flight mode chosen natively.                                          |
 
-The applied implementation covers the chapter/material binding gap. The separate [native caught-clip bridge](actor-defeat-clips.md) now connects admitted generic atlases to actual Team hunter and Capture relay defeat events, with bounded retirement, pause/Reduced behavior and silent restore/seek. It preserves existing Hunt soldier destruction. Generic actors without a distinct native notice or defeat lifecycle do not receive invented phases; their Studio clip availability is not evidence of a missing gameplay state. Native SIM Lookout already samples its genuine notice phase. Both batches are present in the P2 checkpoint; their local software/build evidence is recorded above, with exact-head hosted review checks still required before delivery.
+The applied implementation covers the chapter/material binding gap. The separate [native caught-clip bridge](actor-defeat-clips.md) now connects admitted generic atlases to actual Team hunter and Capture relay defeat events, with bounded retirement, pause/Reduced behavior and silent restore/seek. It preserves existing Hunt soldier destruction. Generic actors without a distinct native notice or defeat lifecycle do not receive invented phases; their Studio clip availability is not evidence of a missing gameplay state. Native SIM Lookout already samples its genuine notice phase. Both batches are present in the P2 checkpoint; their local software/build evidence is recorded above, and hosted baseline checks passed at `1be3c8e32650`. The reconciliation successor requires its own exact-head checks before delivery.
 
 ## Player and creator access
 
@@ -100,7 +120,7 @@ The **main** distribution at `1717a5348111` failed before packaging because its 
 
 ## Remaining delivery checks
 
-1. Complete all six hosted industrial phases and required PR checks on the exact PR #1095 head. Local creator/Appearance reruns and committed builds are complete; keep the five unaffected local phase receipts at their original `1717a5348111` identity instead of relabeling or repeating them. A documentation follow-up does not change the source identity of the already completed builds.
+1. Require all six hosted industrial phases and applicable PR checks on the reconciled PR #1095 head, plus affected native Start/session host checks and a committed-source build. The `1be3c8e32650` hosted baseline is complete; keep all earlier local/build receipts at their original identities. A merge or documentation follow-up does not change the source identity of already completed evidence.
 2. Preserve the installed-pack preparation finding as unreproduced with no root-cause fix. The actual-source 381/381 Capture cohort passed, but any recurrence requires the original preparation error and ownership/lifecycle diagnosis, not a timeout increase or automatic retry.
 3. Preserve native package `publicEligible: false` until the separate review/release gates are satisfied. Main manifest validation and actual optional ZIPs are proven software outputs, not public deployment. Keep P1 first in the public-delivery sequence.
 4. Extend interactive/browser and physical qualification only with clearly named kits and source heads. All fourteen Studio packages have automated native admission; Guarded Crossings has the actual-source import→save→export→reimport→save→reload evidence above. That is not fourteen physical-device or human-play approvals.

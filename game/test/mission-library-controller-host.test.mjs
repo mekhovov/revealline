@@ -8,6 +8,7 @@ import { page as teamPage } from './helpers/coop-host.mjs';
 import { Element } from './helpers/couch-dom.mjs';
 import { managedIndexedDB } from './helpers/managed-idb.mjs';
 import { waitFor } from './helpers/wait-for.mjs';
+import { deferred } from './helpers/media-fixtures.mjs';
 import { createTeamImpactOriginalCandidates } from '../content-design/team-impact-originals.mjs';
 import { authoritativeCheckpoint } from '../replay.mjs';
 
@@ -38,7 +39,11 @@ class JourneyPicture {
   }
 }
 
-async function host(t, mode, { fetchResponse, defaultEntry = false, goalStorage } = {}) {
+async function host(
+  t,
+  mode,
+  { fetchResponse, defaultEntry = false, goalStorage, onDatabase } = {},
+) {
   // Native SUMMARY activation is the only missing browser default modeled here.
   // Real host routing, gamepad polling, navigation and callbacks stay installed.
   const click = Element.prototype.click;
@@ -70,7 +75,18 @@ async function host(t, mode, { fetchResponse, defaultEntry = false, goalStorage 
   const indexedDB = {
     open(name, ...args) {
       if (!databases.has(name)) databases.set(name, managedIndexedDB());
-      return databases.get(name).indexedDB.open(name, ...args);
+      const request = databases.get(name).indexedDB.open(name, ...args);
+      if (onDatabase) {
+        let success;
+        Object.defineProperty(request, 'onsuccess', {
+          get: () => (event) => {
+            onDatabase(name, request.result);
+            success?.(event);
+          },
+          set: (value) => (success = value),
+        });
+      }
+      return request;
     },
   };
   let p;
@@ -221,18 +237,13 @@ async function host(t, mode, { fetchResponse, defaultEntry = false, goalStorage 
         pulse(to.y < from.y ? 12 : to.y > from.y ? 13 : to.x < from.x ? 14 : 15);
       } else pulse(direction);
     }
-    assert.equal(
-      p.doc.activeElement,
-      target,
+    assert.ok(
+      p.doc.activeElement === target,
       `Controller reaches ${target?.id || target?.textContent}; current ${p.doc.activeElement?.id}`,
     );
   }
   const opener = p.$(
-    mode === 'solo'
-      ? 'shell-play'
-      : mode === 'versus'
-        ? 'race-library-switch'
-        : 'coop-discovery-open',
+    mode === 'solo' ? 'shell-play' : mode === 'versus' ? 'race-chapters' : 'coop-discovery-open',
   );
   reach(opener);
   pulse(0);
@@ -243,24 +254,47 @@ async function host(t, mode, { fetchResponse, defaultEntry = false, goalStorage 
   return { p, pulse, reach, frame, opener, before, snapshot };
 }
 
-test('Versus controller Play and replacement Stay preserve both paused boards and the real opener', async (t) => {
-  const { p, pulse, reach, frame, opener } = await host(t, 'versus');
+function assertFocus(page, target, message = '') {
+  assert.ok(
+    page.doc.activeElement === target,
+    `${message ? message + ' ' : ''}Expected focus ${target?.id || target?.textContent}; current ${page.doc.activeElement?.id}`,
+  );
+}
+
+async function prepareFirstVersusMission(controls) {
+  const { p, pulse, reach, frame } = controls;
   reach(p.$('journey-search-clear'));
   pulse(0);
   const first = p.$('journey-cards').children[0];
-  assert.equal(p.doc.activeElement, first);
+  assertFocus(p, first);
+  const previousBoards = p.renders.slice();
   pulse(0);
   await settle(() => {
-    p.frame(0);
-    return !p.$('journey-chooser').open && p.state() === 'ready';
+    frame();
+    return (
+      !p.$('journey-chooser').open &&
+      p.state() === 'ready' &&
+      p.renders.every((run, index) => run !== previousBoards[index]) &&
+      !p.$('race-start').disabled &&
+      p.$('race-picture-cancel').hidden
+    );
   });
+}
+
+test('Versus controller Play and replacement Stay preserve both paused boards and the real opener', async (t) => {
+  const controls = await host(t, 'versus');
+  const { p, pulse, reach, frame, opener } = controls;
+  await prepareFirstVersusMission(controls);
   assert.equal(p.doc.activeElement.id, 'race-start');
   assert.equal(p.$('race-briefing').hidden, false);
   const prepared = p.checkpoint();
   frame();
   assert.deepEqual(p.checkpoint(), prepared);
   pulse(0);
-  await settle(() => p.state() === 'running');
+  await settle(() => {
+    frame();
+    return p.state() === 'running';
+  });
 
   assert.equal(p.renders[0].level.id, 'signal-01');
   assert.equal(p.renders[1].level.id, 'signal-01');
@@ -287,9 +321,111 @@ test('Versus controller Play and replacement Stay preserve both paused boards an
   assert.equal(p.doc.activeElement.dataset.missionId, second.dataset.missionId);
   pulse(1);
   assert.equal(p.$('journey-chooser').open, false);
-  assert.equal(p.doc.activeElement, opener);
+  assertFocus(p, opener);
   assert.deepEqual(p.checkpoint(), before);
 });
+
+// Hold only the next native picture metadata transaction's completion. The
+// real store, reader, Start handler and controller router still own the action.
+function controlledPictureRead() {
+  let next = null,
+    counting = false,
+    reads = 0;
+  return {
+    onDatabase(name, db) {
+      if (name !== 'revealline-soundtrack-v1') return;
+      const transaction = db.transaction.bind(db);
+      db.transaction = (stores, mode) => {
+        const tx = transaction(stores, mode);
+        const metadataRead =
+          mode === 'readonly' && stores.length === 1 && stores[0] === 'mediaRecords';
+        if (counting && metadataRead) reads++;
+        if (next && metadataRead) {
+          const gate = next;
+          next = null;
+          let complete;
+          Object.defineProperty(tx, 'oncomplete', {
+            get: () => (event) => {
+              void gate.promise.then((fail) => {
+                if (fail) {
+                  tx.error = new DOMException('Controlled metadata read failure.', 'UnknownError');
+                  tx.onabort?.();
+                } else complete?.(event);
+              });
+            },
+            set: (value) => (complete = value),
+          });
+        }
+        return tx;
+      };
+    },
+    hold() {
+      assert.equal(next, null);
+      counting = true;
+      next = deferred();
+      return next;
+    },
+    reads: () => reads,
+  };
+}
+
+for (const outcome of ['confirm again', 'direction then return', 'back', 'failure'])
+  test(`Versus pending Start retains only its exact picture-confirmation action: ${outcome}`, async (t) => {
+    const picture = controlledPictureRead();
+    const controls = await host(t, 'versus', { onDatabase: picture.onDatabase });
+    const { p, pulse, frame } = controls;
+    await prepareFirstVersusMission(controls);
+    assert.equal(p.doc.activeElement.id, 'race-start');
+    const before = p.checkpoint();
+    const gate = picture.hold();
+    t.after(() => gate.resolve());
+    const start = p.$('race-start');
+    const click = start.onclick;
+    let pending;
+    start.onclick = (event) => (pending = click(event));
+    pulse(0);
+    const first = pending;
+    await settle(() => picture.reads() === 1);
+    frame();
+    assert.equal(p.state(), 'ready');
+    assert.equal(start.disabled, false, 'The owned busy Start remains natively focusable.');
+    assert.equal(start.getAttribute('aria-busy'), 'true');
+    assert.equal(start.getAttribute('aria-disabled'), 'true');
+    assertFocus(p, start);
+    assert.deepEqual(p.checkpoint(), before);
+    if (outcome === 'confirm again') {
+      pulse(0);
+      // Drain the modeled IndexedDB microtasks before counting any second read.
+      await new Promise((resolve) => setImmediate(resolve));
+      assert.equal(picture.reads(), 1, 'Repeated Confirm does not reverify or cancel the picture.');
+      assertFocus(p, start);
+    } else if (outcome === 'direction then return') {
+      pulse(13);
+      assert.notEqual(p.doc.activeElement, start);
+      start.focus();
+      frame();
+    } else if (outcome === 'back') {
+      pulse(1);
+      assert.notEqual(p.doc.activeElement, start);
+    }
+    gate.resolve(outcome === 'failure');
+    await first;
+    frame();
+    assert.equal(start.getAttribute('aria-busy'), null);
+    assert.equal(start.getAttribute('aria-disabled'), null);
+    if (outcome === 'confirm again') {
+      assert.equal(p.state(), 'running');
+    } else {
+      assert.equal(p.state(), 'ready', 'An interrupted or failed confirmation cannot launch.');
+      assert.deepEqual(p.checkpoint(), before);
+      if (outcome === 'failure') {
+        assert.equal(start.disabled, true);
+        assert.equal(p.$('race-chapter-retry').hidden, false);
+        assert.equal(p.$('race-chapter-retry').disabled, false);
+        assert.match(p.$('race-message').textContent, /Controlled metadata read failure/);
+      }
+    }
+  });
 
 test('Versus controller Download & play joins repeated Confirm without exposing Cancel or replacing the ready setup early', async (t) => {
   const bytes = await readFile(new URL('../content/packs/night-shift.json', import.meta.url));
@@ -320,7 +456,7 @@ test('Versus controller Download & play joins repeated Confirm without exposing 
   pulse(0);
   await settle(() => /Retry/.test(action()));
   assert.equal(requests, 1);
-  assert.equal(p.doc.activeElement, card);
+  assertFocus(p, card);
 
   pulse(0);
   await settle(() => requests === 2 && /Preparing/.test(action()));
@@ -332,7 +468,7 @@ test('Versus controller Download & play joins repeated Confirm without exposing 
   assert.equal(requests, 2, 'Repeated controller Confirm joins the owned preparation.');
   assert.match(action(), /Preparing/);
   assert.equal(p.$('journey-chooser').open, true);
-  assert.equal(p.doc.activeElement, card);
+  assertFocus(p, card);
 
   release();
   await settle(
@@ -354,7 +490,10 @@ test('Versus controller Download & play joins repeated Confirm without exposing 
   frame();
   assert.deepEqual(p.checkpoint(), prepared);
   pulse(0);
-  await settle(() => p.state() === 'running');
+  await settle(() => {
+    frame();
+    return p.state() === 'running';
+  });
 });
 
 for (const mode of ['solo', 'versus', 'team'])
@@ -391,10 +530,10 @@ for (const mode of ['solo', 'versus', 'team'])
     assert.equal(p.$('journey-search').value, '');
     assert.equal(p.$('journey-collection').value, 'Classic');
     assert(p.$('journey-cards').children.length > 0);
-    assert.equal(p.doc.activeElement, p.$('journey-cards').children[0]);
+    assertFocus(p, p.$('journey-cards').children[0]);
     pulse(1);
     assert.equal(p.$('journey-chooser').open, false);
-    assert.equal(p.doc.activeElement, opener);
+    assertFocus(p, opener);
   });
 
 for (const mode of ['solo', 'versus', 'team'])
@@ -477,7 +616,7 @@ for (const mode of ['solo', 'versus', 'team'])
     assert.deepEqual(snapshot(), before, 'Browsing must not start or advance a mission.');
     pulse(1);
     assert.equal(p.$('journey-chooser').open, false);
-    assert.equal(p.doc.activeElement, opener, 'East returns to the exact Missions opener.');
+    assertFocus(p, opener, 'East returns to the exact Missions opener.');
     for (let index = 0; index < 6; index++) frame();
     assert.deepEqual(snapshot(), before, 'Controller confirm/back input must not leak into play.');
     if (mode === 'team') {

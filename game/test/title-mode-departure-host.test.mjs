@@ -12,7 +12,7 @@ import { createManagedMediaStore } from '../managed-media-store.mjs';
 import { createStillMediaStore } from '../media-store.mjs';
 import { prepareStillAsset } from '../media-still.mjs';
 import { createExecutionCatalog } from '../campaign-contexts.mjs';
-import { campaignKey } from '../library.mjs';
+import { campaignKey, loadLibrary, saveLibrary, updatePreferences } from '../library.mjs';
 import { waitFor } from './helpers/wait-for.mjs';
 
 const slot = 'revealline.suspended.dev.v1';
@@ -91,16 +91,24 @@ function frozen(h, before) {
   assert.deepEqual(h.errors, []);
 }
 async function flight(t, options = {}) {
+  const storage = options.storage ?? memoryStorage();
+  if (options.policy)
+    saveLibrary(
+      storage,
+      'revealline.library.dev.v1',
+      updatePreferences(loadLibrary(storage, 'revealline.library.dev.v1').library, {
+        turnPolicy: options.policy,
+      }),
+    );
   // This fixture explicitly starts through the real title action below.
   // Joining that action also owns any unfinished initial picture preparation.
-  const h = await host(t, { waitForPictures: false, ...options });
-  if (options.policy === 'grid-center') {
-    h.change('turn-select', 'grid-center');
-    // The explicit Start action below joins this policy change's picture preparation.
-  }
+  // Load the requested native steering preference before boot rather than
+  // changing an unrelated loadout control during startup picture preparation.
+  const h = await host(t, { waitForPictures: false, ...options, storage });
   h.$('shell-featured').focus();
   await press(h, 'Enter');
   await settle(() => h.doc.body.dataset.flightState === 'running');
+  assert.equal(h.rendered.run.turnPolicy, options.policy ?? 'immediate');
   h.key('ArrowDown');
   for (let i = 0; i < 12; i++) h.frame();
   h.key('ArrowDown', false);

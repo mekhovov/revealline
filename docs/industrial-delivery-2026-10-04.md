@@ -94,6 +94,47 @@ merge is followed by exact-commit Pages metadata/byte checks. Test, merge and
 public-delivery results belong to their actual source revisions and are not
 inferred from older receipts.
 
+The broader focused gate also exposed a test baseline error and a missing CI
+prerequisite. `structuredClone` changes the native null-prototype loadout bank;
+the facing regression now compares independent same-seed native runs, preserving
+strict whole-state equality and checking the original bank reference/prototype.
+Focused CI installs the existing locked World Studio development dependencies
+before running the selected native host and ownership tests. This restores their
+declared `fake-indexeddb` fixture without skipping tests or changing gameplay.
+Hosted results remain bound to the corrected head, not the earlier failed run.
+The controller mission-library fixture also uses the visible Chapters entry
+instead of the hidden legacy selector. Its preparation boundary includes the
+enabled native Start action before checking focus, preserving paused-attempt,
+replacement, input and goal assertions.
+That updated path exposed a real asynchronous Start defect: neutral controller
+navigation moved focus away from the disabled Start button during picture
+confirmation, revoking the action itself. Only the exact owned confirmation now
+retains a focusable Start marked busy and unavailable to repeat activation. The
+existing busy guard, focus lease, source identity, navigation, Back and lifecycle
+cancellation checks remain authoritative.
+The full mission-library controller file passes 15 cases on both supported
+Node 20 and Node 22 baselines; the strengthened repeat-confirmation cases
+also pass independently. Quick-start fixtures now traverse native Settings,
+Gameplay and Back instead of opening hidden legacy disclosures. All nine
+quick-start cases pass on both Node versions while retaining deliberate Start,
+native echo suppression, passive Cancel and focus assertions.
+
+The completed broad focused run is retained as failed evidence; its later
+failures also covered outdated native mission-menu entry points, omitted
+briefing/results actions and pre-publication catalogue counts. Corrections
+exercise the visible native actions and accepted steering policies, rather than
+assuming hidden legacy controls can launch play. Studio search admits both the
+Journey source and Living Routes pilot matches while retaining inert authored
+text and unchanged drafts. Pack checks distinguish the ten public choices from
+the bounded installed collection: the historical nine-pack rejection and
+48 MiB limit stay intact, and adding an archived or Neon chapter still requires
+an explicit removal when full. No capacity increase or automatic eviction is
+introduced by this delivery correction. The now-reachable Team Start path
+also preserves a newer focus choice made by its post-render bookmark, music or
+progress callbacks. Its regression proves that visible Pause accepted focus
+and that Start does not subsequently steal it. Normal Start still focuses the
+board under the existing foreground and attempt-ownership guards.
+
 ## P2: complete the chapter environment programme
 
 After P1 delivery, bind all fourteen existing expansion chapters to immutable

@@ -193,6 +193,10 @@ async function runningYard(f) {
     () => status(f).textContent,
   );
   if (!f.$('coop-overlay').hidden && /Start together/.test(f.$('coop-resume').textContent)) {
+    // New briefing ownership requires released input before the fresh pointer Start.
+    f.tick(2);
+    assert.equal(f.$('coop-overlay').hidden, false);
+    assert.equal(f.$('coop-clock').textContent, '0:00');
     assert.equal(f.doc.activeElement.id, 'coop-resume');
     pointerClick(f.$('coop-resume'));
   }
@@ -220,7 +224,9 @@ test('holding controller Confirm through Team preparation cannot start the accep
   const controls = joinedController(f);
   controls.seek((element) => element.id === 'coop-discovery-open', 'Missions');
   await openLibrary(f, 'coop-discovery-open', () => controls.press(0));
-  controls.seek((element) => element === relayCard(f), 'Relay Yard');
+  assert.equal(f.doc.activeElement, arenaCard(f, 'first-connection'));
+  controls.press(15); // The second card is to the right in the modeled four-column grid.
+  assert.equal(f.doc.activeElement, relayCard(f));
   const selecting = operation(relayCard(f), () => {
     controls.pad.buttons[0] = { pressed: true, value: 1 };
     f.tick();
