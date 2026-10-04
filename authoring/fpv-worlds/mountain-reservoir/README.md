@@ -1,5 +1,13 @@
 # Mountain Reservoir — optional eight-course world
 
+Revision [r9](distribution/r9/README.md) closes the terrace/ridge sky seams with
+34 decorative boundary triangles. Its eight routes and collision remain exact
+apart from the explicit revision. It has sixteen fresh exact-pack demonstrations,
+315 asset checks, 575 ordinary-flight/replay checks and accepted fixed-camera
+old/new renderer views. See [the focused repair](TERRAIN-STITCHING.md). This does
+not establish the broader representative-world art standard. Published r8 and
+all its recordings and historical acceptance below remain intact.
+
 Revision `r8` provides eight bilingual courses over one original shared land-side
 scene, sixteen exact-pack ordinary-control completion proofs, actual imported
 player/editor qualification and a successful stopped-server offline journey.

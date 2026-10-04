@@ -1,0 +1,46 @@
+{
+  "format": "FPVOptionalWorldRelease.v1",
+  "id": "mountain-reservoir",
+  "revision": "r9",
+  "title": {
+    "en": "Mountain Reservoir",
+    "uk": "\u0413\u0456\u0440\u0441\u044c\u043a\u0435 \u0432\u043e\u0434\u043e\u0441\u0445\u043e\u0432\u0438\u0449\u0435"
+  },
+  "worldCount": 1,
+  "courseCount": 8,
+  "proofCount": 16,
+  "modes": ["self-level", "acro"],
+  "files": {
+    "pack": {
+      "path": "mountain-reservoir.r9.rlpack",
+      "bytes": 1316609,
+      "sha256": "28a50cb742ce0825edbf760d42fb93fb4147daee1b23f590ef7baf59a4023894"
+    },
+    "editable": {
+      "path": "mountain-reservoir.r9.zip",
+      "bytes": 1316670,
+      "sha256": "2b633b9eb2dd7cb29748b689a9d4a6a1d3d7111462f2b4fc280001128bb0bf97"
+    },
+    "proofs": {
+      "path": "mountain-reservoir.r9.proofs.json",
+      "bytes": 908558,
+      "sha256": "c8b50e0ae00450c0b3c0af623de92f5eb6ac3b63f095d39603d3d1e8ce542641"
+    }
+  },
+  "license": "CC0-1.0",
+  "defaultCatalogueChanges": 0,
+  "waterPolicy": "Lake scenery lies outside playable land-side bounds; no water physics or island-flight claim.",
+  "qualification": {
+    "assetChecks": 315,
+    "ordinaryFlightChecks": 575,
+    "freshExactPackProofs": 16,
+    "actualStaticRendererObservations": 10,
+    "staticBrowserReceipt": "../../evidence/r9-static-views.json",
+    "ordinaryFlightReceipt": "../../evidence/r9-qualification.json",
+    "assetReceipt": "../../evidence/r9-terrain-stitching-qualification.json",
+    "historicalR8ImportAndOfflineEvidence": "../r8/manifest.json",
+    "limits": "Accepted bounded seam closure only. The r8 full imported-player/offline journeys are not newly repeated r9 claims; no frame-rate, hardware or representative finished-art claim."
+  },
+  "change": "Close unreachable decorative terrace/ridge boundaries with 34 triangles; preserve all 48 colliders, eight course routes and original imported geometry.",
+  "previousRevision": "r8"
+}
