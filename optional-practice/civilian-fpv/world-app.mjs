@@ -747,6 +747,7 @@ export function mountWorldApp({
     packRemovalReview = null,
     restorePackIdentity = null,
     disposed = false,
+    closing = null,
     playShell = null;
   let entries = [],
     playlistId = unique('playlist'),
@@ -1018,6 +1019,7 @@ export function mountWorldApp({
     $('studio-status').textContent = String(message);
   };
   const reportError = (error) => {
+    if (disposed) return;
     status(error.message ?? error);
     if ($('flight-dialog').open) $('flight-status').textContent = error.message ?? error;
   };
@@ -3414,7 +3416,7 @@ export function mountWorldApp({
           ? 'Відтворення на паузі. Натисніть «Продовжити».'
           : 'Пауза. Натисніть «Увімкнути», щоб продовжити.',
       );
-      void saveRecovery().catch(reportError);
+      if (!disposed) void saveRecovery().catch(reportError);
     }
   }
   function abortSectorLookup() {
@@ -5914,53 +5916,70 @@ export function mountWorldApp({
         style: $('flight-stick-display').value,
       },
     }),
-    async dispose() {
-      if (disposed) return;
-      proofImport?.abort();
-      packRemovalReview?.close();
-      restorePackIdentity = null;
-      restorePackInput.remove();
-      pauseFlight();
-      immersive.dispose();
-      await saveRecovery();
+    dispose() {
+      if (closing) return closing;
       disposed = true;
-      ++flightToken;
-      checkpointPreparation?.abort();
-      checkpointPreparation = null;
-      abortSectorLookup();
-      pauseFlight();
-      await saveRecovery();
-      win.cancelAnimationFrame(raf);
-      for (const remove of listeners) remove();
-      if (playShell) playShell.elements.root.prepend(playShell.elements.header);
-      playShell?.dispose();
-      menuNavigation.dispose();
-      menuHint.remove();
-      input.dispose();
-      gamepad.dispose();
-      radioSetup?.dispose();
-      flight?.dispose?.();
-      flight = null;
-      recorder = null;
-      current = null;
-      sectorReferenceProof = null;
-      ghostEnabled = false;
-      renderer?.dispose();
-      hangar.dispose();
-      appearanceControls.dispose();
-      actorEditor?.dispose();
-      audioControls.dispose();
-      huntPresentationControls.dispose();
-      huntReactions.dispose();
-      audio.dispose();
-      presentation.dispose();
-      droneResponse.dispose();
-      stickTraces.forEach((trace) => trace.dispose());
-      beginnerCoach.dispose();
-      spatialEditor?.dispose();
-      await notebook.close();
-      recordStore?.close();
-      worldStore?.close();
+      closing = Promise.resolve().then(async () => {
+        proofImport?.abort();
+        packRemovalReview?.close();
+        restorePackIdentity = null;
+        restorePackInput.remove();
+        ++flightToken;
+        checkpointPreparation?.abort();
+        checkpointPreparation = null;
+        abortSectorLookup();
+        pauseFlight();
+        immersive.dispose();
+        const notebookClosing = Promise.resolve().then(() => notebook.close());
+        void notebookClosing.catch(() => {});
+        let saveError;
+        try {
+          // Hydration may own pending storage requests and still need the DOM.
+          await Promise.allSettled([ready]);
+          await saveRecovery();
+        } catch (error) {
+          saveError = error;
+        }
+        try {
+          win.cancelAnimationFrame(raf);
+          for (const remove of listeners) remove();
+          if (playShell) playShell.elements.root.prepend(playShell.elements.header);
+          menuNavigation.dispose();
+          playShell?.dispose();
+          menuHint.remove();
+          input.dispose();
+          gamepad.dispose();
+          radioSetup?.dispose();
+          flight?.dispose?.();
+          flight = null;
+          recorder = null;
+          current = null;
+          sectorReferenceProof = null;
+          ghostEnabled = false;
+          renderer?.dispose();
+          hangar.dispose();
+          appearanceControls.dispose();
+          actorEditor?.dispose();
+          audioControls.dispose();
+          huntPresentationControls.dispose();
+          huntReactions.dispose();
+          audio.dispose();
+          presentation.dispose();
+          droneResponse.dispose();
+          stickTraces.forEach((trace) => trace.dispose());
+          beginnerCoach.dispose();
+          spatialEditor?.dispose();
+        } finally {
+          try {
+            await notebookClosing;
+          } finally {
+            recordStore?.close();
+            worldStore?.close();
+            if (saveError) throw saveError;
+          }
+        }
+      });
+      return closing;
     },
   };
 }
