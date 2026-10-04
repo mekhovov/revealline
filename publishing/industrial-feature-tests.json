@@ -129,7 +129,9 @@
         "game/test/mode-choice-appearance.test.mjs",
         "game/test/enemy-appearance-controls.test.mjs",
         "game/test/military-level-directory.test.mjs",
-        "game/test/fpv-theme-family-controls.test.mjs"
+        "game/test/fpv-theme-family-controls.test.mjs",
+        "game/test/download-initialization.test.mjs",
+        "game/test/offline.test.mjs"
       ]
     }
   ]
