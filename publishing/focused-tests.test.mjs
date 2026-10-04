@@ -719,3 +719,56 @@ test('Journey star sidecars select previous-release storage and backup compatibi
     assert.ok(command.args.includes('game/test/journey-backup.test.mjs'));
   }
 });
+
+test('focused CI installs the locked native fixture owner before selected checks', async () => {
+  const consumers = [
+    'game/test/community-ownership-concurrency.test.mjs',
+    'game/test/fpv-world-appearance-ui.test.mjs',
+    'game/test/fpv-world-content.test.mjs',
+  ];
+  const plan = focusedTestPlan(consumers, manifest);
+  for (const file of consumers)
+    assert.ok(plan.commands.some(({ command, args }) => command === 'node' && args.includes(file)));
+
+  const workflow = await readFile(
+    path.join(directory, '../.github/workflows/deploy-pages.yml'),
+    'utf8',
+  );
+  const focused = workflow.split('  focused:\n')[1].split('\n  test:')[0];
+  const steps = focused.split(/\n      - /);
+  const install = steps.findIndex((step) =>
+    step.startsWith('name: Install pinned authoring dependencies for selected focused gates\n'),
+  );
+  const rootInstall = steps.findIndex((step) =>
+    step.startsWith('name: Install dependencies once for selected focused gates\n'),
+  );
+  const execute = steps.findIndex((step) => step.startsWith('name: Run selected focused gates\n'));
+  assert.ok(rootInstall >= 0 && install > rootInstall && execute > install);
+  assert.match(steps[install], /if: steps\.plan\.outputs\.required == 'true'/);
+  assert.match(steps[install], /working-directory: source/);
+  assert.match(
+    steps[install],
+    /run: npm ci --prefix authoring\/fpv-worlds --ignore-scripts --include=dev --prefer-offline\s*$/,
+  );
+  assert.doesNotMatch(steps[install], /--omit=dev|continue-on-error|\|\|/);
+
+  const owner = JSON.parse(
+    await readFile(path.join(directory, '../authoring/fpv-worlds/package.json'), 'utf8'),
+  );
+  const lock = JSON.parse(
+    await readFile(path.join(directory, '../authoring/fpv-worlds/package-lock.json'), 'utf8'),
+  );
+  assert.match(owner.devDependencies['fake-indexeddb'], /^\d+\.\d+\.\d+$/);
+  for (const [name, version] of Object.entries({
+    ...owner.dependencies,
+    ...owner.devDependencies,
+  })) {
+    assert.equal(lock.packages['node_modules/' + name].version, version);
+    assert.match(lock.packages['node_modules/' + name].integrity, /^sha512-/);
+  }
+  assert.equal(
+    lock.packages[''].devDependencies['fake-indexeddb'],
+    owner.devDependencies['fake-indexeddb'],
+  );
+  assert.equal(lock.packages['node_modules/fake-indexeddb'].dev, true);
+});

@@ -94,6 +94,15 @@ merge is followed by exact-commit Pages metadata/byte checks. Test, merge and
 public-delivery results belong to their actual source revisions and are not
 inferred from older receipts.
 
+The broader focused gate also exposed a test baseline error and a missing CI
+prerequisite. `structuredClone` changes the native null-prototype loadout bank;
+the facing regression now compares independent same-seed native runs, preserving
+strict whole-state equality and checking the original bank reference/prototype.
+Focused CI installs the existing locked World Studio development dependencies
+before running the selected native host and ownership tests. This restores their
+declared `fake-indexeddb` fixture without skipping tests or changing gameplay.
+Hosted results remain bound to the corrected head, not the earlier failed run.
+
 ## P2: complete the chapter environment programme
 
 After P1 delivery, bind all fourteen existing expansion chapters to immutable
