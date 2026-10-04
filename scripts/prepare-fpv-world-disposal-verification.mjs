@@ -12,13 +12,17 @@ const args = process.argv.slice(2);
 const opts = {};
 for (let i = 0; i < args.length; i += 2) {
   if (
-    !['--out', '--player-root', '--player-receipt', '--baseline'].includes(args[i]) ||
+    !['--out', '--player-root', '--player-receipt', '--baseline', '--candidate-kind'].includes(
+      args[i],
+    ) ||
     !args[i + 1]
   )
     throw Error('Expected --out dist/NAME --player-root PATH --player-receipt PATH --baseline SHA');
   opts[args[i].slice(2)] = args[i + 1];
 }
 if (!/^dist\/fpv-world-disposal-[a-z0-9-]+$/.test(opts.out ?? '')) throw Error('Invalid output');
+const kind = opts['candidate-kind'] ?? 'source';
+if (!['source', 'package'].includes(kind)) throw Error('Candidate kind must be source or package');
 const baseline = opts.baseline ?? 'a087facd9ca57f0e7519aa161cb6acc86a7eee3e';
 if (!/^[a-f0-9]{40}$/.test(baseline)) throw Error('Exact baseline required');
 const dest = path.join(root, opts.out);
@@ -49,7 +53,7 @@ for (const entry of receipt.files) {
     current = bytes;
   }
   // Only raw source paths exist in the worktree. All unchanged package assets stay immutable.
-  const selected = current;
+  const selected = kind === 'package' ? bytes : current;
   files.push({
     path: entry.path,
     bytes: selected.length,
@@ -59,7 +63,8 @@ for (const entry of receipt.files) {
   sources.push({ entry, src, bytes: selected, link: selected.equals(bytes) });
 }
 const before = git('show', `${baseline}:${hostPath}`);
-const after = await fs.readFile(path.join(root, hostPath));
+const selectedRoot = kind === 'package' ? playerRoot : root;
+const after = await fs.readFile(path.join(selectedRoot, hostPath));
 const base = `/${opts.out}`;
 function serveHost(bytes) {
   let text = bytes.toString();
@@ -108,7 +113,10 @@ window.fixtureRendererEvents={created:0,disposed:0,draws:0};
 const rendererFactory=options=>{const r=createFlightRenderer(options);fixtureRendererEvents.created++;window.fixtureRenderer=r;const dispose=r.dispose,draw=r.draw;r.dispose=function(){fixtureRendererEvents.disposed++;return dispose.call(this)};r.draw=function(state,...a){const result=draw.call(this,state,...a);window.fixtureDrawState=state;fixtureRendererEvents.draws++;return result};return r};
 window.fixtureApp=mountWorldApp({rendererFactory});
 `;
-let html = await fs.readFile(path.join(root, 'optional-practice/fpv-worlds/index.html'), 'utf8');
+let html = await fs.readFile(
+  path.join(selectedRoot, 'optional-practice/fpv-worlds/index.html'),
+  'utf8',
+);
 html = html
   .replace('data-fpv-worlds="true"', 'data-fpv-worlds="fixture"')
   .replace(/<script\b[^>]*src="[^"]*world-app\.mjs"[^>]*><\/script>/, '')
@@ -139,6 +147,7 @@ for (const [name, bytes] of artifacts)
   await fs.writeFile(path.join(dest, name), bytes, { flag: 'wx' });
 const manifest = {
   format: 'FPVWorldDisposalFixture.v1',
+  kind,
   baseline,
   workingHead: git('rev-parse', 'HEAD').toString().trim(),
   baselineHostSha256: hash(before),
@@ -148,7 +157,7 @@ const manifest = {
   files,
   fixtureFiles: Object.fromEntries([...artifacts].map(([name, bytes]) => [name, hash(bytes)])),
   scope:
-    'Actual host, renderer, physics, controls, native IndexedDB; isolated DB names/settings and externally delivered RAF timestamps. Performance clock and production guards unchanged. Verified immutable admitted assets plus explicitly hashed current source overlays; diagnostic source fixture is not a new admission.',
+    'Actual host, renderer, physics, controls, native IndexedDB; isolated DB names/settings and externally delivered RAF timestamps. Performance clock and production guards unchanged. Source mode overlays explicitly hashed source inputs; package mode uses only complete verified admitted player bytes. Static host import URLs alone are rewritten for baseline/candidate comparison.',
 };
 await fs.writeFile(path.join(dest, 'manifest.json'), JSON.stringify(manifest, null, 2) + '\n', {
   flag: 'wx',
