@@ -1,6 +1,10 @@
 import { huntDestructionBudget } from './destruction-budget.mjs';
 import { drawHuntActor } from './actor-art.mjs';
-import { sharedActorAppearance } from './preferences.mjs';
+import { sharedActorAppearance, actorArtReviewRevision } from './preferences.mjs';
+import {
+  INDUSTRIAL_SOLDIER_KIT_REVISION,
+  INDUSTRIAL_SOLDIER_KITS,
+} from './industrial-soldier-kit.mjs';
 import {
   HUNT_PRESENTATION_CATALOG as catalog,
   huntActorPresentation,
@@ -53,7 +57,22 @@ export function drawHumanoidPixelBody(ctx, actor = {}, palette = {}) {
     detail: 'compact',
   });
 }
-function equipment(ctx, family, colors) {
+function equipment(ctx, family, colors, artRevision = null) {
+  const kit = artRevision === INDUSTRIAL_SOLDIER_KIT_REVISION && INDUSTRIAL_SOLDIER_KITS[family];
+  if (kit) {
+    // The live 32px rig and this 16px defeat layer consume identical rectangles.
+    // Center the detached accessory; its size never becomes collision geometry.
+    for (const [role, x, y, width, height] of kit.rectangles)
+      rect(
+        ctx,
+        colors[role] ?? role,
+        (x - kit.size[0] / 2) / 2,
+        (y - kit.size[1] / 2) / 2,
+        width / 2,
+        height / 2,
+      );
+    return;
+  }
   const paint = (color, x, y, w, h) => rect(ctx, color, x, y, w, h);
   const { coat, light, dark, ink } = colors;
   if (family === 'courier') {
@@ -104,10 +123,15 @@ function equipment(ctx, family, colors) {
   }
 }
 
-function piece(ctx, index, bloody, color, unit, appearance) {
+function piece(ctx, index, bloody, color, unit, appearance, artRevision = null) {
   ctx.scale(unit, unit);
-  if (appearance && ((!bloody && index % 2 === 0) || (bloody && index % 6 === 4))) {
-    equipment(ctx, appearance.family, appearance.palette);
+  if (
+    appearance &&
+    (artRevision === INDUSTRIAL_SOLDIER_KIT_REVISION
+      ? index === 0
+      : (!bloody && index % 2 === 0) || (bloody && index % 6 === 4))
+  ) {
+    equipment(ctx, appearance.family, appearance.palette, artRevision);
     return;
   }
   const material = catalog.materials[bloody ? 'flesh' : 'neutral'];
@@ -129,7 +153,13 @@ function piece(ctx, index, bloody, color, unit, appearance) {
 export function drawHuntRemains(
   ctx,
   mark,
-  { unit = 1, brutal = false, blood: showBlood = true, color = '#79d7ce' } = {},
+  {
+    unit = 1,
+    brutal = false,
+    blood: showBlood = true,
+    color = '#79d7ce',
+    artRevision = actorArtReviewRevision(),
+  } = {},
 ) {
   const seed = hash(`${mark.id}/${mark.tick}`),
     bloody = brutal && showBlood && actorFor(mark)?.material === 'flesh';
@@ -160,6 +190,7 @@ export function drawHuntRemains(
       coatFor(mark, color),
       unit * (brutal ? recipes.settled.fullScale : recipes.settled.cleanScale),
       actorFor(mark),
+      artRevision,
     );
     ctx.restore();
   }
@@ -259,6 +290,7 @@ function blast(ctx, burst, t, unit) {
  * Sources are read-only craft positions for contact direction, not gameplay RNG. */
 export function createHuntDestruction({
   preview = false,
+  artRevision = actorArtReviewRevision(),
   onPreempt = () => {},
   budget = huntDestructionBudget,
   now = () => globalThis.performance?.now?.() ?? Date.now(),
@@ -363,6 +395,9 @@ export function createHuntDestruction({
             chain: fresh.length,
             brutal,
             bloody: brutal && showBlood && actorFor(mark)?.material === 'flesh',
+            ...(artRevision === INDUSTRIAL_SOLDIER_KIT_REVISION
+              ? { kitAppearance: actorFor(mark) }
+              : {}),
           });
         }
         bursts = bursts.slice(-budgets.settledClustersPerBoard);
@@ -417,7 +452,15 @@ export function createHuntDestruction({
           ctx.save();
           ctx.translate(px, py);
           ctx.rotate(angle + t * (i % 2 ? 6 : -6));
-          piece(ctx, i, burst.bloody, coatFor(burst, color), unit, actorFor(burst));
+          piece(
+            ctx,
+            i,
+            burst.bloody,
+            coatFor(burst, color),
+            unit,
+            burst.kitAppearance ?? actorFor(burst),
+            artRevision,
+          );
           ctx.restore();
           particles++;
           // Directional stepped droplets or neutral chips share one hard cap.

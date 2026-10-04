@@ -165,6 +165,7 @@ export async function produceSoldierRoster(output) {
     [
       'game/hunt/actor-art.mjs',
       'game/hunt/actor-catalog.mjs',
+      'game/hunt/industrial-soldier-kit.mjs',
       'game/presentation/actor-animation.mjs',
       'scripts/produce-soldier-roster.mjs',
     ].map(async (path) => ({
