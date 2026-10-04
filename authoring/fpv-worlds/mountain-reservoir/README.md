@@ -1,10 +1,18 @@
-# Mountain Reservoir — eight-course candidate
+# Mountain Reservoir — optional eight-course world
 
-This is unfinished D5 authoring work: eight bilingual courses over one original
-shared land-side scene. Revision `r8` now has sixteen exact-pack ordinary-control
-completion proofs; actual full-world import/Watch/editor and offline qualification
-remain before publication. It is not yet a delivered optional world.
+Revision `r8` provides eight bilingual courses over one original shared land-side
+scene, sixteen exact-pack ordinary-control completion proofs, actual imported
+player/editor qualification and a successful stopped-server offline journey.
+[Download and import the world](distribution/r8/README.md). This completes one of
+four D5 content increments; protected publication and public-entry verification
+remain distinct from local acceptance.
 No files are added to the default catalogue, admitted source closure or precache.
+The bundled baseline remains 196 challenges / 14 worlds. Installing only this
+world yields 204 authored challenges / 15 installed worlds, not the final
+228 / 18 target.
+
+The chronology below retains rejected artwork and qualification failures. Later
+r8 evidence supersedes the earlier one-course and unbuilt-draft status statements.
 
 `source/scene.mjs` owns original geometry, colors, collider locations and semantic
 markers. No third-party art or texture downloads are used. The explicit original
@@ -186,3 +194,34 @@ any budget. These proofs supersede the one-course r4 checkpoint for r8 only.
 node authoring/fpv-worlds/mountain-reservoir/build-world.mjs ACCEPTED_R4_PREPARED NEW_WORLD
 node authoring/fpv-worlds/mountain-reservoir/qualify-world.mjs EXACT_R8_PACK NEW_QUALIFICATION
 ```
+
+The full world now passes **304 actual-browser checks** on the unmodified
+102-file admitted runtime `248b8d9af1b082c283a2cbd9501ea8d906f83374`:
+native File/IndexedDB import of all eight courses and sixteen proofs; every
+actual catalogue Watch replay; eight-course/two-mode editor selection; an
+Acro-only edit with Undo/Redo; a non-first disarmed preview; original GLB
+reimport; and native storage reopening. All sixteen browser terminal identities,
+ticks, contacts and landing speeds exactly match the ordinary-flight proofs.
+The full receipt, fixture manifest, screenshot and comparison are retained.
+The manual harness controls animation timestamps while preserving the actual
+performance clock, visibility and pause guards; these are functional checks,
+not frame-rate measurements. Its twenty-module proof closure matches the
+qualifier, except the standard locale catalogue projection, regenerated and
+compared exactly with the existing package policy. No runtime overlay is used.
+
+A separate **uninstrumented native player** imported the exact pack and all
+sixteen verified recordings, prepared its runtime offline and reloaded online.
+After its own HTTP server stopped (independent connection-refused check), a real
+reload retained the world and Watch controls. Dry spillway descent rendered and
+armed to 0.3s before pausing. Offline editor course 08 / Acro applied X −15→−14.5m,
+then Undo, Redo and Undo restored −15m. Runtime warnings/errors were empty.
+This bounded journey did **not** perform offline install/rollback; earlier
+framework evidence is separate. See `evidence/r8-offline-native.json` and the
+four screenshots.
+
+The current host hardcodes imported-card Explore / Intermediate / 4 min labels;
+it does not consume individual activity, difficulty or duration metadata.
+This data-only release therefore claims distinct authored flight tasks, not a
+distinct catalogue activity mix. A later host repair must preserve this exact
+pack and proof dependency. Wider art polish, named-device timing and physical
+controls remain separate acceptance work.
