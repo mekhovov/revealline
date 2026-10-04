@@ -11,10 +11,11 @@ const boxes = [],
   terrains = [],
   batches = new Map();
 const paints = [
-  ['mineral-ridge', '#b8b8a7', 1],
-  ['fir-dark', '#244f46', 1],
-  ['fir-light', '#3e6953', 1],
-  ['reservoir-water', '#3e969c', 0.23],
+  ['mineral-ridge', '#ffffff', 1],
+  ['fir-dark', '#304329', 1],
+  ['fir-light', '#536640', 1],
+  ['tree-bark', '#554635', 1],
+  ['reservoir-water', '#ffffff', 0.23],
   ['water-current', '#6fb2b2', 0.35],
   ['chalk-enamel', '#e5dfbe', 0.8],
   ['oxidized-roof', '#577d76', 0.82],
@@ -22,6 +23,7 @@ const paints = [
   ['safety-yellow', '#d6ab48', 0.8],
   ['closed-window', '#27454e', 0.65],
   ['warm-gravel', '#aa9c79', 1],
+  ['shore-meadow', '#ffffff', 1],
 ];
 function add(shape, role, at = [0, 0, 0], rotate = [0, 0, 0]) {
   const matrix = new THREE.Matrix4().compose(
@@ -37,18 +39,42 @@ function add(shape, role, at = [0, 0, 0], rotate = [0, 0, 0]) {
   batch.positions.push(...flat.attributes.position.array);
   batch.normals.push(...flat.attributes.normal.array);
   const positions = flat.attributes.position.array,
-    normals = flat.attributes.normal.array;
+    normals = flat.attributes.normal.array,
+    rock = new THREE.Color('#85918f'),
+    groundCover = new THREE.Color('#647441'),
+    waterDeep = new THREE.Color('#376f76'),
+    waterShallow = new THREE.Color('#739a8d');
   for (let i = 0; i < positions.length; i += 3) {
     const [x, y, z] = positions.slice(i, i + 3),
-      [nx, ny, nz] = normals.slice(i, i + 3),
-      moss = Math.min(0.7, Math.max(0, ny - 0.6) * 2.5 * noise(x / 7, z / 7)),
-      variation = Math.min(
-        1,
-        0.84 + 0.16 * noise(x / 3.1, z / 3.1) + 0.04 * noise(y * 1.2, x * 0.2),
+      ny = normals[i + 1],
+      moss = Math.min(1, Math.max(0, ny - 0.62) * 4) * (0.35 + 0.65 * noise(x / 11, z / 11)),
+      variation = 0.82 + 0.18 * noise(x / 3.1, z / 3.1),
+      triangle = Math.floor(i / 9) * 9,
+      a = new THREE.Vector3(...positions.slice(triangle, triangle + 3)),
+      b = new THREE.Vector3(...positions.slice(triangle + 3, triangle + 6)).sub(a),
+      c = new THREE.Vector3(...positions.slice(triangle + 6, triangle + 9)).sub(a),
+      face = b.cross(c),
+      ax = Math.abs(face.x),
+      ay = Math.abs(face.y),
+      az = Math.abs(face.z);
+    // Choose one projection for the whole triangle. Per-vertex axis changes
+    // folded r2 UVs through faces and caused the rejected vertical bank strips.
+    batch.uvs.push((ax > ay && ax > az ? z : x) / 4, (ay >= ax && ay >= az ? z : y) / 4);
+    const color =
+      role === 'mineral-ridge'
+        ? rock.clone().lerp(groundCover, moss).multiplyScalar(variation)
+        : new THREE.Color().setRGB(variation, variation, variation);
+    if (role === 'shore-meadow')
+      color.copy(groundCover).multiplyScalar(0.8 + noise(x / 9, z / 9) * 0.28);
+    if (role === 'reservoir-water') {
+      const bankDistance = Math.max(
+        0,
+        Math.min(x - shoreLeft(z), shoreRight(z) - x, z + 25, shoreSouth(x) - z),
       );
-    // Metre-scale dominant-face projection retains grain on steep rock faces.
-    batch.uvs.push((Math.abs(nx) > Math.abs(nz) ? z : x) / 4, (Math.abs(ny) > 0.65 ? z : y) / 4);
-    batch.colors.push(variation - moss * 0.32, variation - moss * 0.12, variation - moss * 0.36);
+      color.copy(waterShallow).lerp(waterDeep, Math.min(1, bankDistance / 7));
+      color.multiplyScalar(0.96 + 0.04 * noise(x / 4, z / 4));
+    }
+    batch.colors.push(color.r, color.g, color.b);
   }
   batches.set(role, batch);
   flat.dispose();
@@ -144,14 +170,14 @@ prism(
   4.1,
 );
 solid('platform-shore-pad', [-34, 0, 22], [-26, 0.45, 30]);
-solid('building-maintenance', [-40, 0, -17], [-32, 4.2, -9]);
+solid('building-maintenance', [-26, 0, -19], [-18, 4.2, -11]);
 prism(
   'building-maintenance-roof',
   [
-    [-40.3, -17.3],
-    [-31.7, -17.3],
-    [-31.7, -8.7],
-    [-40.3, -8.7],
+    [-26.3, -19.3],
+    [-17.7, -19.3],
+    [-17.7, -10.7],
+    [-26.3, -10.7],
   ],
   4.45,
   4.2,
@@ -181,17 +207,17 @@ for (const [i, x, z] of [
   solid(`platform-pad-bollard-${i}`, [x - 0.2, 0, z - 0.2], [x + 0.2, 0.8, z + 0.2]);
 
 // Thin opaque paint is attached outside canonical closed faces. It never suggests an opening.
-for (const z of [-14.8, -11.4]) {
-  detailBox('closed-window', [0.025, 1.3, 1.8], [-31.98, 2.75, z]);
+for (const z of [-16.8, -13.4]) {
+  detailBox('closed-window', [0.025, 1.3, 1.8], [-17.98, 2.75, z]);
   for (const dz of [-0.98, 0.98])
-    detailBox('chalk-enamel', [0.05, 1.55, 0.12], [-31.955, 2.75, z + dz]);
-  for (const y of [2, 3.5]) detailBox('chalk-enamel', [0.05, 0.12, 2.08], [-31.95, y, z]);
+    detailBox('chalk-enamel', [0.05, 1.55, 0.12], [-17.955, 2.75, z + dz]);
+  for (const y of [2, 3.5]) detailBox('chalk-enamel', [0.05, 0.12, 2.08], [-17.95, y, z]);
 }
-detailBox('blue-enamel', [1.65, 2.45, 0.035], [-36, 1.225, -8.98]);
-detailBox('safety-yellow', [1.75, 0.1, 0.045], [-36, 2.5, -8.96]);
-detailBox('oxidized-roof', [8.68, 0.07, 8.68], [-36, 4.49, -13]);
-for (let x = -40; x < -31.8; x += 0.45)
-  detailBox('chalk-enamel', [0.04, 0.028, 8.5], [x, 4.54, -13]);
+detailBox('blue-enamel', [1.65, 2.45, 0.035], [-22, 1.225, -10.98]);
+detailBox('safety-yellow', [1.75, 0.1, 0.045], [-22, 2.5, -10.96]);
+detailBox('oxidized-roof', [8.68, 0.07, 8.68], [-22, 4.49, -15]);
+for (let x = -26; x < -17.8; x += 0.45)
+  detailBox('chalk-enamel', [0.04, 0.028, 8.5], [x, 4.54, -15]);
 // Landing pad H and corner marks are flush and do not change support geometry.
 for (const x of [-31, -29]) detailBox('chalk-enamel', [0.24, 0.016, 3], [x, 0.463, 26]);
 detailBox('chalk-enamel', [2, 0.016, 0.24], [-30, 0.464, 26]);
@@ -206,16 +232,34 @@ for (let x = -6; x < 48; x += 4) {
 }
 // Inspection rail visibly identifies the first route's water-side edge.
 for (let z = -30; z < 36; z += 4) detailBox('safety-yellow', [0.028, 0.24, 0.55], [5.428, 0.86, z]);
+// Flush meadow pigment over the existing flat support: no new elevation or
+// collision. The gravel inspection paths and concrete pad remain distinct.
+const meadow = new THREE.PlaneGeometry(50, 72, 10, 12);
+meadow.rotateX(-Math.PI / 2);
+add(meadow, 'shore-meadow', [-19, 0.007, 2]);
+detailBox('warm-gravel', [13, 0.003, 12], [-22, 0.012, -15]);
+const pathPositions = [];
+for (let z = -9; z < 23; z += 2) {
+  const centre = (v) => -22 - smooth((v + 9) / 32) * 8,
+    a = [centre(z) - 1.65, 0.012, z],
+    b = [centre(z) + 1.65, 0.012, z],
+    c = [centre(z + 2) - 1.65, 0.012, z + 2],
+    d = [centre(z + 2) + 1.65, 0.012, z + 2];
+  pathPositions.push(...a, ...c, ...b, ...b, ...c, ...d);
+}
+const servicePath = new THREE.BufferGeometry();
+servicePath.setAttribute('position', new THREE.Float32BufferAttribute(pathPositions, 3));
+add(servicePath, 'warm-gravel');
 
 // A connected heightfield encloses an irregular lake. All raised imported
 // ground remains outside the first course, where it cannot fake a collision surface.
 const shoreLeft = (z) => 8.8 + 0.65 * Math.sin(z * 0.18) + noise(z * 0.27, 3) * 1.8;
 const shoreRight = (z) => 44 + 3.8 * Math.sin(z * 0.095) + noise(z * 0.23, 9) * 4;
 const shoreSouth = (x) => 39 + 2.2 * Math.sin(x * 0.14) + noise(x * 0.3, 7) * 2;
-const smooth = (value) => {
+function smooth(value) {
   const t = Math.max(0, Math.min(1, value));
   return t * t * (3 - 2 * t);
-};
+}
 const hill = (x, z, cx, cz, rx, rz) => Math.exp(-(((x - cx) / rx) ** 2) - ((z - cz) / rz) ** 2);
 function groundHeight(x, z) {
   const shoreDistance = Math.max(shoreLeft(z) - x, x - shoreRight(z), -25 - z, z - shoreSouth(x));
@@ -280,7 +324,7 @@ function surfaceHeight(x, z) {
 }
 // The bank mesh covers this plane outside the irregular shoreline. Its lower
 // bed is hidden below the opaque water, leaving no dangling ridge or shore gap.
-const water = new THREE.PlaneGeometry(50, 72);
+const water = new THREE.PlaneGeometry(50, 72, 12, 16);
 water.rotateX(-Math.PI / 2);
 add(water, 'reservoir-water', [33, 0.22, 9]);
 for (let i = 0; i < 25; i++) {
@@ -293,8 +337,9 @@ for (let i = 0; i < 25; i++) {
     [0, ((i % 4) - 2) * 0.11, 0],
   );
 }
-// Grounded conifer clusters supply familiar scale without another mesh owner.
-for (let i = 0; i < 48; i++) {
+// Mixed clusters have open trunks, uneven fir tiers and rounder deciduous crowns.
+// Every root is placed on the exact rendered terrain, outside the flight boundary.
+for (let i = 0; i < 56; i++) {
   const cluster = [
       [58, 17],
       [64, -9],
@@ -303,21 +348,65 @@ for (let i = 0; i < 48; i++) {
       [-60, 3],
       [-60, -30],
     ][i % 6],
-    x = cluster[0] + Math.sin(i * 2.4) * (3 + (i % 8)),
-    z = cluster[1] + Math.cos(i * 1.7) * (3 + (i % 7)),
+    x = cluster[0] + Math.sin(i * 2.4) * (2 + (i % 6)),
+    z = cluster[1] + Math.cos(i * 1.7) * (2 + (i % 5)),
     base = surfaceHeight(x, z) - 0.1,
-    h = 3.2 + (i % 7) * 0.42;
-  add(new THREE.CylinderGeometry(0.12, 0.2, h * 0.65, 5), 'mineral-ridge', [
-    x,
-    base + h * 0.325,
-    z,
-  ]);
-  for (let k = 0; k < 2; k++)
-    add(new THREE.ConeGeometry(1.25 - k * 0.3, h * 0.64, 7), i % 3 ? 'fir-dark' : 'fir-light', [
-      x,
-      base + h * (0.43 + k * 0.23),
-      z,
-    ]);
+    h = 3.8 + (i % 9) * 0.43;
+  add(new THREE.CylinderGeometry(0.09, 0.18, h * 0.74, 5), 'tree-bark', [x, base + h * 0.37, z]);
+  if (i % 3) {
+    for (let k = 0; k < 3; k++) {
+      const shape = new THREE.ConeGeometry((1.45 - k * 0.3) * (h / 6), h * 0.39, 7);
+      shape.scale(1, 1, 0.78 + (i % 4) * 0.09);
+      add(
+        shape,
+        k === 2 && i % 2 ? 'fir-light' : 'fir-dark',
+        [x + Math.sin(i + k) * 0.12, base + h * (0.45 + k * 0.18), z + Math.cos(i + k) * 0.12],
+        [0, i * 0.73 + k * 0.4, 0],
+      );
+    }
+  } else {
+    for (let k = 0; k < 3; k++) {
+      const shape = new THREE.IcosahedronGeometry(1, 0);
+      shape.scale(h * (0.2 - k * 0.024), h * 0.23, h * 0.19);
+      add(
+        shape,
+        k % 2 ? 'fir-dark' : 'fir-light',
+        [
+          x + Math.sin(i + k * 2) * h * 0.1,
+          base + h * (0.55 + k * 0.12),
+          z + Math.cos(i + k * 2) * h * 0.1,
+        ],
+        [0.13 * k, i * 0.57, 0.08 * k],
+      );
+    }
+  }
+}
+// Irregular low outcrops break the smooth bank into geological shelves.
+// These are embedded scenery, all east of the marked course boundary.
+for (let i = 0; i < 10; i++) {
+  const z = -21 + i * 5.7,
+    x = shoreRight(z) + 2.5 + (i % 3),
+    base = surfaceHeight(x, z);
+  for (let layer = 0; layer < 2; layer++) {
+    const shape = new THREE.IcosahedronGeometry(1, 0),
+      p = shape.attributes.position;
+    for (let j = 0; j < p.count; j++) {
+      const scale = 0.88 + 0.24 * noise(p.getX(j) * 3 + i, p.getZ(j) * 3 + layer);
+      p.setXYZ(
+        j,
+        p.getX(j) * scale * (2.2 - layer * 0.55),
+        p.getY(j) * (0.6 - layer * 0.12),
+        p.getZ(j) * scale * 1.35,
+      );
+    }
+    shape.computeVertexNormals();
+    add(
+      shape,
+      'mineral-ridge',
+      [x + layer * 0.25, base + layer * 0.5 - 0.12, z],
+      [0.12, i * 1.73, -0.07],
+    );
+  }
 }
 // Flush irregular gravel apron gives the existing flat support a readable scale.
 const gravelPositions = [];
@@ -344,7 +433,7 @@ export const anchors = [
 
 export function createScene() {
   const document = {
-    asset: { version: '2.0', generator: 'RevealLine original Mountain Reservoir source r2' },
+    asset: { version: '2.0', generator: 'RevealLine original Mountain Reservoir source r3' },
     scene: 0,
     scenes: [{ nodes: [] }],
     nodes: [],
@@ -358,7 +447,10 @@ export function createScene() {
   let offset = 0,
     triangles = 0;
   function attribute(values, type, componentType = 5126) {
-    const data = new Float32Array(values),
+    const data =
+        componentType === 5121
+          ? new Uint8Array(values.map((v) => Math.round(Math.max(0, Math.min(1, v)) * 255)))
+          : new Float32Array(values),
       bytes = new Uint8Array(data.buffer);
     const view =
       document.bufferViews.push({
@@ -372,10 +464,11 @@ export function createScene() {
     const accessor = {
       bufferView: view,
       componentType,
-      count: values.length / (type === 'VEC2' ? 2 : 3),
+      count: values.length / { VEC2: 2, VEC3: 3, VEC4: 4 }[type],
       type,
+      ...(componentType === 5121 ? { normalized: true } : {}),
     };
-    if (type === 'VEC3') {
+    if (type === 'VEC3' && componentType !== 5121) {
       accessor.min = [0, 1, 2].map((k) => Math.min(...values.filter((_, i) => i % 3 === k)));
       accessor.max = [0, 1, 2].map((k) => Math.max(...values.filter((_, i) => i % 3 === k)));
     }
@@ -384,7 +477,8 @@ export function createScene() {
   for (const [role, batch] of batches) {
     const definition = paints.find(([id]) => id === role),
       color = new THREE.Color(definition[1]),
-      textured = role === 'mineral-ridge' || role === 'warm-gravel';
+      textured = role === 'mineral-ridge' || role === 'warm-gravel' || role === 'shore-meadow',
+      colored = textured || role === 'reservoir-water';
     const material =
       document.materials.push({
         name: role,
@@ -403,10 +497,14 @@ export function createScene() {
             attributes: {
               POSITION: attribute(batch.positions, 'VEC3'),
               NORMAL: attribute(batch.normals, 'VEC3'),
-              ...(textured
+              ...(textured ? { TEXCOORD_0: attribute(batch.uvs, 'VEC2') } : {}),
+              ...(colored
                 ? {
-                    TEXCOORD_0: attribute(batch.uvs, 'VEC2'),
-                    COLOR_0: attribute(batch.colors, 'VEC3'),
+                    COLOR_0: attribute(
+                      batch.colors.flatMap((v, i) => (i % 3 === 2 ? [v, 1] : [v])),
+                      'VEC4',
+                      5121,
+                    ),
                   }
                 : {}),
             },

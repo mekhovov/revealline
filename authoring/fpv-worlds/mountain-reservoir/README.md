@@ -71,3 +71,16 @@ the complete normalized course is byte-equivalent in JSON content to `r1`
 `cb799ef07882e62e415d28746ea99a1f36a872b091fd17c9dd5257bb2535334a`.
 Khronos validation reports zero errors. These remain transport and scope checks,
 not visual acceptance or flight proofs.
+
+Actual `r2` review accepted the connected terrain correction but rejected the
+overall artwork: beige dune-like slopes, sparse repeated cones, bank UV strips
+and uniform water/shore remain visible in the retained `evidence/` screenshot
+and observation. No proofs or additional courses were generated.
+
+The `r3` source uses grey exposed rock versus olive cover by surface slope,
+triangle-consistent metre UVs, low embedded bank outcrops, varied clustered firs
+and deciduous crowns, shallow/deep water color, and flush meadow/gravel cover
+over the unchanged flat support. The closed hut, roof, paint and exact collision
+solids move together to x −26…−18 m, z −19…−11 m, removing their overlap with
+the western rock terrace. Project/course revision advances to `r3`; route and
+physics remain unchanged. This is another scene candidate, not art acceptance.
