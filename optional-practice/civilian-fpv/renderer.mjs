@@ -2024,7 +2024,7 @@ export function createFlightRenderer({
     }
   }
   function draw(state, { cameraMode = view, cameraFov = fov, cameraTilt = tilt } = {}) {
-    if (disposed || !course) return;
+    if (disposed || !course || renderer.getContext().isContextLost()) return false;
     const hunt = course.steps[mode].find((step) => step.type === 'hunt-contact-v1');
     huntPresentation?.update(state, {
       reducedMotion,
@@ -2192,6 +2192,7 @@ export function createFlightRenderer({
     updateGhost(state.ticks);
     if (pathLine) pathLine.visible = view !== 'fpv' && view !== 'editor';
     renderer.render(scene, camera);
+    return !renderer.getContext().isContextLost();
   }
   function setPath(samples) {
     if (pathLine) {

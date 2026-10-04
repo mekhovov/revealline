@@ -1,0 +1,169 @@
+{
+  "format": "FPVPreReadyAdmittedLifecycleAnalysis.v1",
+  "admittedSource": "8df41944e5014725046b04621b3a82d3284a157e",
+  "fixtureVariant": "admitted",
+  "runtimeOverlays": [],
+  "receipt": {
+    "bytes": 416523,
+    "sha256": "a125bf6ab74ba7752b01e3bd3cab695a0e4248273bee5a869974fc1271125edb",
+    "checks": 253,
+    "completed": true
+  },
+  "checkNamesMatchSourceQualification": true,
+  "snapshots": [
+    {
+      "name": "ready container-yard-08",
+      "nativeStateMatchesSourceQualification": true
+    },
+    {
+      "name": "before quality loss",
+      "nativeStateMatchesSourceQualification": true
+    },
+    {
+      "name": "ready container-yard-08",
+      "nativeStateMatchesSourceQualification": true
+    },
+    {
+      "name": "ready container-yard-08",
+      "nativeStateMatchesSourceQualification": true
+    },
+    {
+      "name": "ready warm-frame-diagnostic-route",
+      "nativeStateMatchesSourceQualification": true
+    },
+    {
+      "name": "ready warm-frame-diagnostic-route",
+      "nativeStateMatchesSourceQualification": true
+    },
+    {
+      "name": "ready warm-frame-diagnostic-route",
+      "nativeStateMatchesSourceQualification": true
+    },
+    {
+      "name": "paused genuine ghost recording",
+      "nativeStateMatchesSourceQualification": true
+    },
+    {
+      "name": "ready warm-frame-diagnostic-route",
+      "nativeStateMatchesSourceQualification": true
+    },
+    {
+      "name": "native restored ghost recording",
+      "nativeStateMatchesSourceQualification": true
+    }
+  ],
+  "hosts": [
+    {
+      "warmFrames": 11,
+      "allWarmPhysicsInputSnapshotsExact": true,
+      "events": {
+        "open-request": 4,
+        "open-upgradeneeded": 3,
+        "open-success": 4,
+        "transaction-start": 25,
+        "transaction-complete": 25,
+        "close-call": 4
+      },
+      "nativeLosses": 2,
+      "nativeRestorations": 2,
+      "errors": [],
+      "warnings": [],
+      "dropped": {},
+      "finalRegistered": {
+        "geometries": 0,
+        "materials": 0,
+        "textures": 0
+      },
+      "closeCallStacks": [
+        "Error: Native connection close called\n    at IDBDatabase.close (http://127.0.0.1:8946/probe-host.mjs:65:14)\n    at Object.close (http://127.0.0.1:8946/player/game/profile-storage.mjs:189:19)\n    at Object.close (http://127.0.0.1:8946/player/optional-practice/civilian-fpv/attempts.mjs:373:13)\n    at Object.close (http://127.0.0.1:8946/player/optional-practice/civilian-fpv/notebook.mjs:266:32)\n    at http://127.0.0.1:8946/player/optional-practice/civilian-fpv/world-app.mjs:6261:71",
+        "Error: Native connection close called\n    at IDBDatabase.close (http://127.0.0.1:8946/probe-host.mjs:65:14)\n    at Object.close (http://127.0.0.1:8946/player/game/profile-storage.mjs:189:19)\n    at http://127.0.0.1:8946/player/game/rewards/store.mjs:450:55\n    at http://127.0.0.1:8946/player/game/profile-storage.mjs:42:16",
+        "Error: Native connection close called\n    at IDBDatabase.close (http://127.0.0.1:8946/probe-host.mjs:65:14)\n    at Object.close (http://127.0.0.1:8946/player/optional-practice/civilian-fpv/world-records.mjs:236:21)\n    at http://127.0.0.1:8946/player/optional-practice/civilian-fpv/world-app.mjs:6304:26\n    at async Object.finish (http://127.0.0.1:8946/probe-host.mjs:331:7)\n    at async finish (http://127.0.0.1:8946/lifecycle.mjs:85:5)\n    at async $.onclick (http://127.0.0.1:8946/lifecycle.mjs:688:5)",
+        "Error: Native connection close called\n    at IDBDatabase.close (http://127.0.0.1:8946/probe-host.mjs:65:14)\n    at Object.close (http://127.0.0.1:8946/player/optional-practice/civilian-fpv/world-store.mjs:355:21)\n    at http://127.0.0.1:8946/player/optional-practice/civilian-fpv/world-app.mjs:6305:25\n    at async Object.finish (http://127.0.0.1:8946/probe-host.mjs:331:7)\n    at async finish (http://127.0.0.1:8946/lifecycle.mjs:85:5)\n    at async $.onclick (http://127.0.0.1:8946/lifecycle.mjs:688:5)"
+      ]
+    },
+    {
+      "warmFrames": 1,
+      "allWarmPhysicsInputSnapshotsExact": true,
+      "events": {
+        "open-request": 4,
+        "open-success": 4,
+        "transaction-start": 11,
+        "transaction-complete": 11,
+        "close-call": 4
+      },
+      "nativeLosses": 0,
+      "nativeRestorations": 0,
+      "errors": [],
+      "warnings": [],
+      "dropped": {},
+      "finalRegistered": {
+        "geometries": 0,
+        "materials": 0,
+        "textures": 0
+      },
+      "closeCallStacks": [
+        "Error: Native connection close called\n    at IDBDatabase.close (http://127.0.0.1:8946/probe-host.mjs:65:14)\n    at Object.close (http://127.0.0.1:8946/player/game/profile-storage.mjs:189:19)\n    at Object.close (http://127.0.0.1:8946/player/optional-practice/civilian-fpv/attempts.mjs:373:13)\n    at Object.close (http://127.0.0.1:8946/player/optional-practice/civilian-fpv/notebook.mjs:266:32)\n    at http://127.0.0.1:8946/player/optional-practice/civilian-fpv/world-app.mjs:6261:71",
+        "Error: Native connection close called\n    at IDBDatabase.close (http://127.0.0.1:8946/probe-host.mjs:65:14)\n    at Object.close (http://127.0.0.1:8946/player/game/profile-storage.mjs:189:19)\n    at http://127.0.0.1:8946/player/game/rewards/store.mjs:450:55\n    at http://127.0.0.1:8946/player/game/profile-storage.mjs:42:16",
+        "Error: Native connection close called\n    at IDBDatabase.close (http://127.0.0.1:8946/probe-host.mjs:65:14)\n    at Object.close (http://127.0.0.1:8946/player/optional-practice/civilian-fpv/world-records.mjs:236:21)\n    at http://127.0.0.1:8946/player/optional-practice/civilian-fpv/world-app.mjs:6304:26\n    at async Object.finish (http://127.0.0.1:8946/probe-host.mjs:331:7)\n    at async finish (http://127.0.0.1:8946/lifecycle.mjs:85:5)\n    at async $.onclick (http://127.0.0.1:8946/lifecycle.mjs:722:5)",
+        "Error: Native connection close called\n    at IDBDatabase.close (http://127.0.0.1:8946/probe-host.mjs:65:14)\n    at Object.close (http://127.0.0.1:8946/player/optional-practice/civilian-fpv/world-store.mjs:355:21)\n    at http://127.0.0.1:8946/player/optional-practice/civilian-fpv/world-app.mjs:6305:25\n    at async Object.finish (http://127.0.0.1:8946/probe-host.mjs:331:7)\n    at async finish (http://127.0.0.1:8946/lifecycle.mjs:85:5)\n    at async $.onclick (http://127.0.0.1:8946/lifecycle.mjs:722:5)"
+      ]
+    }
+  ],
+  "ghostViews": {
+    "fpv": {
+      "samples": 14,
+      "visible": false,
+      "trail": true,
+      "pose": {
+        "tick": 0,
+        "finished": false,
+        "position": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "orientation": [
+          0,
+          0,
+          0,
+          1000000
+        ]
+      }
+    },
+    "chase": {
+      "samples": 14,
+      "visible": true,
+      "trail": true,
+      "pose": {
+        "tick": 0,
+        "finished": false,
+        "position": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "orientation": [
+          0,
+          0,
+          0,
+          1000000
+        ]
+      }
+    }
+  },
+  "rapidStart": {
+    "firstRequestReturnedAt": 119541.19999998808,
+    "pendingMethods": [],
+    "secondRequestReturnedAt": 119564.69999998808
+  },
+  "replacementDisposal": {
+    "at": 122573.80000001192,
+    "pendingMethods": []
+  },
+  "limits": [
+    "No cause or repair of earlier r4 native closing-connection failure is established.",
+    "Pending-owner cancellation is established only for rows that observed a pending method.",
+    "Hidden legacy ghost handler is separate from public accessibility.",
+    "No total-load, sustained-FPS, hardware or offline claim."
+  ]
+}

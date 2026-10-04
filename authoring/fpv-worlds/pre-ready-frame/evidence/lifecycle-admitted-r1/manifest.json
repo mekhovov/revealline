@@ -1,0 +1,40 @@
+{
+  "format": "FPVPreReadyAdmittedEvidence.v1",
+  "source": "8df41944e5014725046b04621b3a82d3284a157e",
+  "receiptComplete": true,
+  "checks": 253,
+  "allPassed": true,
+  "files": [
+    {
+      "file": "receipt.json.gz",
+      "bytes": 416523,
+      "sha256": "a125bf6ab74ba7752b01e3bd3cab695a0e4248273bee5a869974fc1271125edb",
+      "storedBytes": 28057,
+      "storedSha256": "b3640c3d9b8b8a821ecbf0ccb2de6e52feb8d8e0fa00d7bdc2dd636325c1fb1c"
+    },
+    {
+      "file": "analysis.json.gz",
+      "bytes": 7644,
+      "sha256": "33308dd7f349e31a3d432cb47e3bf93e284e75cabfc9f70df8dd20b32523a22f",
+      "storedBytes": 1402,
+      "storedSha256": "6473d4642448fb5e4897ded41fd75c97103a7c70191b471ac48845d87574b7e7"
+    },
+    {
+      "file": "fixture.json.gz",
+      "bytes": 45642,
+      "sha256": "d257217daa84ddc31005701123060e8b59cbb4c69d02716accd1f28d6cfacf93",
+      "storedBytes": 7819,
+      "storedSha256": "066e234ead117b2d97b8c59d1503694dab50fb3c035489daf892ea0277afd30e"
+    },
+    {
+      "file": "fpv-warm-lifecycle-8946-passed.png",
+      "bytes": 24644,
+      "sha256": "a17f59d849eb8674b4148b857bd4376088dd1d293befa19183c5593ba362bd84"
+    },
+    {
+      "file": "fpv-warm-lifecycle-8946-restored-yard.png",
+      "bytes": 71105,
+      "sha256": "758c4e960b4b0ba96751f76a4cf6082e47bfdfeafb6fc624721ae3433bd5598e"
+    }
+  ]
+}
