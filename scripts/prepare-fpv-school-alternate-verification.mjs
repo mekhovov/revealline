@@ -68,7 +68,8 @@ function buildPlayer(html, sourceBase, frozenBase) {
     Object.defineProperty(navigator,'getGamepads',{value:()=>[]});
     if(query.get('clock')==='controlled'){
       let nextId=1;const callbacks=new Map();window.requestAnimationFrame=cb=>{const id=nextId++;callbacks.set(id,cb);return id};window.cancelAnimationFrame=id=>callbacks.delete(id);
-      window.fixtureRAF={stamp:performance.now(),deliver(delta=200){this.stamp+=delta;const pending=[...callbacks.entries()];callbacks.clear();for(const[,cb]of pending)cb(this.stamp);return pending.length}};
+      const owners=new WeakMap();let nextOwner=0;const trace={callbacks:0,owners:[],first:[],slow:[],last:[]};
+      window.fixtureRAF={trace,stamp:performance.now(),deliver(delta=200){this.stamp+=delta;const pending=[...callbacks.entries()];callbacks.clear();for(const[,cb]of pending){if(!owners.has(cb)){owners.set(cb,nextOwner++);trace.owners.push({name:cb.name,calls:0,lastAt:null,maxGapMs:0})}const id=owners.get(cb),owner=trace.owners[id],at=performance.now(),gap=owner.lastAt===null?0:at-owner.lastAt;owner.lastAt=at;owner.calls++;owner.maxGapMs=Math.max(owner.maxGapMs,gap);const row={owner:id,name:cb.name,at,gapMs:gap,stamp:this.stamp,delta,status:document.getElementById('flight-status')?.textContent};trace.callbacks++;if(trace.first.length<16)trace.first.push(row);if(gap>250&&trace.slow.length<128)trace.slow.push(row);trace.last.push(row);if(trace.last.length>32)trace.last.shift();cb(this.stamp)}return pending.length}};
     }
   `;
   const boot = `
@@ -80,7 +81,7 @@ function buildPlayer(html, sourceBase, frozenBase) {
     window.fixtureRecords=await openWorldRecords(window.indexedDB);
     import{createFlightProfileStore,defaultRadioProfile,DEFAULT_RESPONSE}from${JSON.stringify(`${frozenBase}/optional-practice/civilian-fpv/radio-profile.mjs`)};
     createFlightProfileStore({storage:window.localStorage}).save({format:'FlightProfiles.v1',radio:defaultRadioProfile(),response:DEFAULT_RESPONSE});
-    const rendererFactory=options=>{const renderer=createFlightRenderer(options);window.fixtureRenderer=renderer;return renderer};
+    const rendererFactory=options=>{const renderer=createFlightRenderer(options);window.fixtureRenderer=renderer;const draw=renderer.draw,setCourse=renderer.setCourse;renderer.setCourse=function(course,...args){window.fixtureDrawState=null;window.fixtureRenderedCourse=course?.id;return Reflect.apply(setCourse,this,[course,...args])};renderer.draw=function(state,...args){const result=Reflect.apply(draw,this,[state,...args]);window.fixtureDrawState=state;return result};return renderer};
     window.fixtureApp=mountWorldApp({rendererFactory});
   `;
   if (!html.includes('data-fpv-worlds="true"') || !html.includes('</body>'))

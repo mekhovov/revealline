@@ -89,6 +89,25 @@ persistence verification is pending. The manual fixture reuses the complete
 retained package provenance, not a new package admission or a claim that these
 optional archives are bundled.
 
+The retained [v3 browser failure](evidence/fpv-school-alternate-browser-v3-failure.json)
+passed 51 of 52 checks before playback. Both archives imported and all 28
+records independently verified. The failed fixture assertion incorrectly
+expected the earlier wrong-pack control to survive the authenticated import.
+`worldRecordIdentity` hashes course, proof and optional presentation, excluding
+the dependency hint `packIdentity`; the valid record therefore correctly
+replaces that same-ID row. This is a fixture expectation error, not an importer
+or recording failure. Its [original frozen manifest](evidence/fpv-school-alternate-v3-fixture.json)
+and complete failed receipt remain preserved. The initial missing-dependency
+rejection and no-unlock checks passed and must remain in the corrected fixture.
+
+The manual playback observer also avoids repeatedly cloning the entire stored
+recording library during an active frame. It observes transparently forwarded
+renderer draws, then compares the completed draw's identity with the full host
+snapshot and authoritative proof. Paused zero-time renderer preparation retains
+unchanged simulation ticks and records its timings. Focus and long-frame pause
+guards remain enabled; a pause during active playback fails rather than silently
+resuming. This instrumentation is not a hardware or frame-rate measurement.
+
 Controlled-input reachability does not establish novice teaching quality,
 physical-radio acceptance or hardware performance. Additional unit coverage,
 coaching improvements and public deployment remain separate gates.
