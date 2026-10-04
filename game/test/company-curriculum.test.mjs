@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { CURRICULUM_LESSONS } from '../company-campaigns/curriculum-lessons.mjs';
+import { SKY_WATCH_CAMPAIGN } from '../company-campaigns/sky-watch.mjs';
 import { canonicalJSON } from '../data-json.mjs';
 import { readFile } from 'node:fs/promises';
 import {
@@ -402,9 +403,9 @@ test('later curricula use canonical progression with registered distinct present
       assert.ok(mission.design.introduces.length <= 1);
     }
     const edition = COMPANY_EDITIONS.find((entry) => entry.id === definition.brandId);
-    const campaignIds = CURRICULUM_CAMPAIGNS.filter(
-      (entry) => entry.brandId === definition.brandId,
-    ).map((entry) => entry.id);
+    const campaignIds = [...CURRICULUM_CAMPAIGNS, SKY_WATCH_CAMPAIGN]
+      .filter((entry) => entry.brandId === definition.brandId)
+      .map((entry) => entry.id);
     assert.deepEqual(edition.campaignIds, campaignIds);
     assert.equal(edition.entryCampaignId, campaignIds[0]);
     const themes = createCompanyThemes(definition.brandId);

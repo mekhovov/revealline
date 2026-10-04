@@ -182,13 +182,14 @@ test('real Git snapshot runs an older frozen entry through an aliased temp root 
   for (const relative of [
     'scripts/pack-indexes.mjs',
     'scripts/brand-icons.mjs',
+    'scripts/build-entry-writer.mjs',
     'game/data-json.mjs',
     'game/content-launch.mjs',
   ])
     await fs.copyFile(new URL(`../${relative}`, import.meta.url), path.join(root, relative));
   await fs.writeFile(
     path.join(root, 'scripts/offline-core-closure.mjs'),
-    'export function isOptionalSpatialAudioBody() { return false; }\n',
+    'export function isOptionalSpatialAudioBody() { return false; }\nexport function isOptionalReactionVoiceBody() { return false; }\n',
   );
   // Retain the historical argv/URL guard in the archived entry. The real build
   // implementation runs behind it, so fixing only the current entry guard would
@@ -754,6 +755,12 @@ test('packaged offline builds generate scoped metadata, generated brand icons, c
     new URL('../game/offline.mjs', import.meta.url),
     path.join(root, 'game/offline.mjs'),
   );
+  // This fixture exercises the core offline cache, not the separate installed
+  // app/update sentinel. Supply its bounded update-context dependency.
+  await fs.writeFile(
+    path.join(root, 'game/game-updates.mjs'),
+    'export function readGameUpdateContext() { return null; }\n',
+  );
   await fs.mkdir(path.join(root, 'game/content-design'));
   await fs.copyFile(
     new URL('../game/content-design/limits.mjs', import.meta.url),
@@ -997,10 +1004,15 @@ test('compact offline catalogue and inventory preserve reader results, source te
   );
   for (const [name, source] of Object.entries(sources)) {
     if (name.startsWith('game/offline/')) continue;
-    assert.equal(await fs.readFile(path.join(out, name), 'utf8'), source, name);
+    const emitted = await fs.readFile(path.join(out, name), 'utf8');
+    // Current builds project allowlisted runtime module whitespace. The empty
+    // module fixtures retain exactly the same export; authored JSON stays exact.
+    if (source === 'export {};') assert.match(emitted, /^export\s*\{\s*\};$/, name);
+    else assert.equal(emitted, source, name);
+    assert.equal(await fs.readFile(path.join(root, name), 'utf8'), source, name);
     const record = inventory.files.find((file) => file.path === name);
-    assert.equal(record?.bytes, Buffer.byteLength(source), name);
-    assert.equal(record?.sha256, hash(Buffer.from(source)), name);
+    assert.equal(record?.bytes, Buffer.byteLength(emitted), name);
+    assert.equal(record?.sha256, hash(Buffer.from(emitted)), name);
   }
 });
 
