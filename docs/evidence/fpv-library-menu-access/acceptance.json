@@ -1,0 +1,196 @@
+{
+  "format": "FPVLibraryMenuAccessAcceptance.v1",
+  "sourceRevision": "411396374bf25a1888a4a861c089d19671fd8432",
+  "sourceTree": "fb956c394080eae13c3e098a44961dcefe9284bd",
+  "status": "accepted bounded native responsive and control scope",
+  "sourceSamples": 6,
+  "admittedSamples": 7,
+  "admittedPlayers": {
+    "worlds": 102,
+    "academy": 69
+  },
+  "overlays": [],
+  "actualBrowserActions": {
+    "worlds": [
+      "Native Settings EN/UK change persisted across Reload",
+      "At320 CSS pixels language width260.796875; Close/Fullscreen visibly wrap",
+      "Native Library tabs/footer readable at320/390/844/1280; no horizontal pageoverflow",
+      "Native Escape/back retained",
+      "Start then briefingStart; deliberate zero-throttle Arm; Flightactive then Pause via nativeEnter"
+    ],
+    "academy": [
+      "At320 CSS pixels Expertoptions then Back, Startbriefing, Practice, Pause",
+      "Native fullscreenAPI false; full-window fallback exposes Exitfullscreen and remainedpaused"
+    ]
+  },
+  "consoleScope": "No zero-console claim. Observer TypeError logs16:22/16:36 are not diagnosed. Possibly harness-related is a hypothesis only.",
+  "inputObservation": "One click backend failed; nativeEnter succeeded. No application behavior conclusion from that backendfailure.",
+  "limits": [
+    "Native iframe CSS viewport sizes, not physicalphones. Outerbrowser1280x720.",
+    "Structured layout observations plus coordinator actualactions/visualreview, not seven automatedend-to-endcases.",
+    "No newoffline, flightcompletion, hardwareFPS or universalzeroerror claim."
+  ],
+  "historical": [
+    {
+      "source": "b6a418bca",
+      "result": "Mobile review exposed five-column strips and tinyselector."
+    },
+    {
+      "source": "0af8b222f",
+      "result": "Admissionpassed; later60px language rule defeated addedrule. Superseded."
+    },
+    {
+      "source": "9fbe03fe3",
+      "result": "Language/tabs fixed; SettingsClose/Fullscreen clipped320. Final411 wrapsheader."
+    }
+  ],
+  "archives": [
+    {
+      "file": "source-layouts.json.gz",
+      "rawBytes": 14240,
+      "rawSHA256": "b5c9df37c9ea42b23a4eb6e6e5aa850bf5610b266f044c0af95784b91bf5ef8a",
+      "gzipBytes": 1447,
+      "gzipSHA256": "525b46124b84e505b188992cb79adb9290bf9c2e850adc9c4b2660cb6e6af270"
+    },
+    {
+      "file": "admitted-layouts.json.gz",
+      "rawBytes": 14695,
+      "rawSHA256": "09304c9d7d6db56f1375effae9a6d2b8ef67d13250f7c39bb4a1f8d7913715e7",
+      "gzipBytes": 1477,
+      "gzipSHA256": "13ff59c35958cb66d6fcf2be0d83e1e1db7c7d35bbf398dead0cf7534e12fdc9"
+    },
+    {
+      "file": "source-fixture.json.gz",
+      "rawBytes": 46442,
+      "rawSHA256": "b7bec3701b3561417abf5e3beac09da4a2651516b959a5be543ff7fb583ddf62",
+      "gzipBytes": 7527,
+      "gzipSHA256": "f280c0525d463d67d71fe3fcb4be945dc0c0b0ab67d6684a39634b4d3892fb73"
+    },
+    {
+      "file": "admitted-fixture.json.gz",
+      "rawBytes": 82890,
+      "rawSHA256": "30910922206a053d4a0c397cc869608bbecc1ed05a686fe0534e9d06da4c9369",
+      "gzipBytes": 12404,
+      "gzipSHA256": "b1466bc4157471b5cb31da907620c86985cc1e367c2955032f921613d07337a6"
+    },
+    {
+      "file": "responsive-wrapper.html.gz",
+      "rawBytes": 1665,
+      "rawSHA256": "faabd022ac0cec4fc636a2f291973c2e316af7c86d6c762f1781b0f8a0d37319",
+      "gzipBytes": 924,
+      "gzipSHA256": "d2e725d80c80b729684c46a3099bc69a42f485568c5ee74fa18735b57ac8cef4"
+    },
+    {
+      "file": "responsive-wrapper.mjs.gz",
+      "rawBytes": 2633,
+      "rawSHA256": "f626c95506accbc3f4c9862ebd908ec7544976540e0a8a83967e7acb7d4a0107",
+      "gzipBytes": 1213,
+      "gzipSHA256": "02e54dfd7c1bc87f84ba8ff18187e3dcd416cb020e56988d8b81b2d10ad522e0"
+    },
+    {
+      "file": "validation.log.gz",
+      "rawBytes": 3146,
+      "rawSHA256": "a568a8c5b7a6f9af5cbad0611af1d5e8f2ff21009313420a06633ea3b3e7e3e0",
+      "gzipBytes": 1387,
+      "gzipSHA256": "87fca607b204dee8913394b863fb62324fa2c66bd95812912a192757fa1795db"
+    },
+    {
+      "file": "admission.log.gz",
+      "rawBytes": 411,
+      "rawSHA256": "5677c10b683114144b0655c027e4f85b82dbb61fb73bad600f2dd770cd090942",
+      "gzipBytes": 282,
+      "gzipSHA256": "1cd29b6551981894a357da471a0f3bb1d932157f537db7dcc83b8bc2d791909b"
+    },
+    {
+      "file": "qualification-checkpoint.json.gz",
+      "rawBytes": 2482,
+      "rawSHA256": "d7e268b9b2d173a513aa2349a8d6e6677ba8368587a1708d2b5cf5be3cfad61e",
+      "gzipBytes": 1116,
+      "gzipSHA256": "a744393c4a58ad0ef288fb80d2ac2bc23b75e89b026ec9d0b4fcc52eb4d9fe35"
+    },
+    {
+      "file": "admission-verification.json.gz",
+      "rawBytes": 1142,
+      "rawSHA256": "4c56d62580439d015755dede0587768b2cbd4664f2742fac4274f4f34caeeec8",
+      "gzipBytes": 609,
+      "gzipSHA256": "dd1c2ef00f33f2f7c2f3cf60d9a7430558c958895bc1b8fc9380fc7643897994"
+    },
+    {
+      "file": "admission-checksums.json.gz",
+      "rawBytes": 2136,
+      "rawSHA256": "4e881fcf376bde454a4f912cc5f01e1b2bd5789f64ee2dcc58792653ed136d15",
+      "gzipBytes": 922,
+      "gzipSHA256": "bb0cc12a779c64b346abd01ddd6aabbbe6b5a42f3d7bd738e7b44a5ac151aec8"
+    },
+    {
+      "file": "worlds-inputs.json.gz",
+      "rawBytes": 32166,
+      "rawSHA256": "435df71d11ddb3f29a68b895c4dcefd45df908e2bdbcf6949e8a4256fdb1bf4a",
+      "gzipBytes": 7146,
+      "gzipSHA256": "ea9938230bf7b05dfe38b6a5c30b169b3f48a7ab7b9fc7ac460bf146e737875c"
+    },
+    {
+      "file": "worlds-player.json.gz",
+      "rawBytes": 42944,
+      "rawSHA256": "bb1257e889e3de0927e85dd5a2e3b5cf8f8eca3b03475ddb00a144f89f283189",
+      "gzipBytes": 7343,
+      "gzipSHA256": "38839ba3c4a5e2b55cbaf6e0e919f3e49125d2afff1c95136792ae21e5be2f20"
+    },
+    {
+      "file": "academy-player.json.gz",
+      "rawBytes": 28927,
+      "rawSHA256": "b1a45595a73f821e1e66600d7f98a0a87a54186aef46e4075300243393d3d248",
+      "gzipBytes": 5118,
+      "gzipSHA256": "874de6bd48a646e1d1def1e30f11690245f706c355db662f8c8bf7391a2cb0f5"
+    },
+    {
+      "file": "historical-0af8-qualification.json.gz",
+      "rawBytes": 2117,
+      "rawSHA256": "03e690a04f8260eb051885cb4bf04e1ce0f79e8fcc889adb0466ceb7b434fe76",
+      "gzipBytes": 975,
+      "gzipSHA256": "5070d862bd62728bf016d7ee5120a253e87728b96ba03595a79fee977c369fd9"
+    }
+  ],
+  "screenshots": [
+    {
+      "file": "admitted-settings320.png",
+      "bytes": 62794,
+      "sha256": "02e5380654d29c3baa503068f5457cd9eba1ed897f60dec20346856f40ea894a"
+    },
+    {
+      "file": "admitted-library390.png",
+      "bytes": 63373,
+      "sha256": "399f2abd25e14517b78d8fd863520bdc6e01e836e58db08e5f5489700a11dee4"
+    },
+    {
+      "file": "admitted-library-landscape.png",
+      "bytes": 92371,
+      "sha256": "6eb2d8e8760644dd2d25832fc70ffc7c6c1357b88823c5cfd8969cf40fd7a84b"
+    },
+    {
+      "file": "admitted-academy320.png",
+      "bytes": 72893,
+      "sha256": "72eafcbad52503ac0bd570b4373fc540bcae04fb4a7b1a6c2dbfc36179dcbf37"
+    },
+    {
+      "file": "admitted-flight-active.png",
+      "bytes": 67004,
+      "sha256": "554cb742d7cf8c6c9ae0186355a6fb401237ca077d58964c7133ab76cf2cd988"
+    },
+    {
+      "file": "source-settings-uk-320.png",
+      "bytes": 61989,
+      "sha256": "442bf14d7cf32f5496809560d400143f0a24bc2c8704e3f48b272e7a8c25d972"
+    },
+    {
+      "file": "source-library-uk-390.png",
+      "bytes": 63455,
+      "sha256": "abee61af179fe038b2f4fc47f48d1b6f6b3f87de7efbace5301d86baae455d42"
+    },
+    {
+      "file": "source-library-uk-landscape.png",
+      "bytes": 92534,
+      "sha256": "c9679d960c934e98f184837dbc242f86e6e414f77d95a254ad098dff0bffdbce"
+    }
+  ]
+}
