@@ -96,6 +96,8 @@ interpretation.
 
 ## Qualification still required
 
+The [4 October generated completion routes](generated-routes-2026-10-04.md) add native legal-input witnesses for all 32 declared cases across the six Capture, Snake and SIM pilots. They pin the official recipes and verify exported recordings. These are software-generated routes, not browser input captures or human-play sign-off; historical original recordings retain their own provenance.
+
 Record real review evidence for each supported mode/pace and pinned seed: completion route, readable movement/vulnerability, useful Team roles, paired-board fairness, clean/brutal equivalence, touch/gamepad ownership, EN/UK, 320/360/390px layouts, performance and browser Studio round-trips. Derived seeds require separate review. This tool never marks human understanding, accessibility, device performance or public release as passed.
 
 The 4 October continuation restores required automated testing. Older authored-but-unrun evidence remains historical; new source-bound results are recorded separately through the industrial feature matrix. Neither executed regressions nor this structural packet replace the manual completion and device checks above.
