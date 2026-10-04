@@ -814,6 +814,7 @@ export function mountWorldApp({
   let selectedWorld = null,
     learningPreferences = null,
     learningResponse = null,
+    lessonReturn = null,
     modePractice = false;
   const sectors = createSectorTracker();
   let storage;
@@ -1046,6 +1047,61 @@ export function mountWorldApp({
     });
     return b;
   };
+  const lessonReturnButton = button('', () => returnFromLesson());
+  lessonReturnButton.id = 'world-return-challenge';
+  lessonReturnButton.hidden = true;
+  $('school-lessons').before(lessonReturnButton);
+  function paintLessonReturn(surface = playShell?.topDialog()?.dataset.modeSurface) {
+    lessonReturnButton.hidden = !lessonReturn;
+    if (!lessonReturn) return;
+    lessonReturnButton.textContent = `${txt('Return to', 'Повернутися до')} ${localized(lessonReturn.title)}`;
+    if (playShell && surface !== 'missions')
+      playShell.elements.content.home.append(lessonReturnButton);
+    else $('school-lessons').before(lessonReturnButton);
+  }
+  function lessonOrigin(context) {
+    const entry = catalogue.find((item) => keyOf(item) === context.key),
+      saved = context.playlist
+        ? playlistStore
+            .snapshot()
+            .playlists.find(
+              (item) =>
+                item.id === context.playlist.id && item.revision === context.playlist.revision,
+            )
+        : null;
+    if (
+      !entry ||
+      dataIdentity(validateWorldCourse(entry.course)) !== context.identity ||
+      (context.playlist && (!saved || dataIdentity(saved) !== dataIdentity(context.playlist)))
+    )
+      throw Error(
+        txt(
+          'The original challenge or playlist is unavailable. Restore its exact revision to return.',
+          'Початкове завдання або добірка недоступні. Відновіть їхню точну версію, щоб повернутися.',
+        ),
+      );
+    return { ...entry, course: context.course };
+  }
+  async function returnFromLesson() {
+    const context = lessonReturn;
+    if (!context) return;
+    lessonOrigin(context);
+    const token = flightToken + 1;
+    await closeFlight();
+    if (disposed || token !== flightToken || lessonReturn !== context) return;
+    const entry = lessonOrigin(context);
+    $('flight-mode').value = context.mode;
+    $('flight-source').value = context.source;
+    $('flight-camera').value = context.camera;
+    response = { ...context.response };
+    input.select(context.source);
+    savePreferences();
+    return startFlight(entry, {
+      mode: context.mode,
+      playlist: context.playlist,
+      index: context.index,
+    });
+  }
   const audio = createWorldAudio({ window: win, storage });
   const presentation = mountSimPresentation({
     root: doc,
@@ -3922,6 +3978,63 @@ export function mountWorldApp({
             .filter((sector) => sector.loss > 0)
             .sort((a, b) => b.loss - a.loss)[0]
         : null;
+      const measured = resultSummary.sectors.find(
+        (sector) => sector.index === (lostSector?.index ?? resultSummary.weakest),
+      );
+      if (
+        !isPreview &&
+        !entry.legacy &&
+        !entry.beginner &&
+        proof.session === 'practice' &&
+        measured &&
+        entry.course.steps[proof.mode][measured.index]?.type === 'gate'
+      ) {
+        const lesson = learningEntries.get('beginner-24'),
+          suggestion = el('div');
+        suggestion.dataset.coachLesson = lesson.id;
+        suggestion.append(
+          el(
+            'p',
+            `${txt('Section', 'Ділянка')} ${measured.index + 1}: ${seconds(measured.ticks)}. ${
+              lostSector
+                ? txt(
+                    `${seconds(lostSector.loss)} longer than the same section in your best flight with these settings.`,
+                    `На ${seconds(lostSector.loss)} довше за ту саму ділянку у вашому найкращому польоті з цими налаштуваннями.`,
+                  )
+                : txt('Your longest completed section.', 'Ваша найдовша пройдена ділянка.')
+            }`,
+          ),
+          button(
+            `${txt('Optional gate-sequence lesson', 'Необов’язковий урок проходження воріт')}: ${label(lesson)}`,
+            () => {
+              if (disposed || token !== flightToken || current !== entry) return;
+              const original = demonstrationEntry(entry),
+                installed = catalogue.find((item) => keyOf(item) === keyOf(original));
+              if (!installed) return;
+              lessonReturn = {
+                key: keyOf(original),
+                identity: dataIdentity(validateWorldCourse(installed.course)),
+                course: original.course,
+                title: Object.fromEntries(
+                  ['en', 'uk'].map((language) => [
+                    language,
+                    original.course.locales[language].title,
+                  ]),
+                ),
+                mode: proof.mode,
+                source: $('flight-source').value,
+                camera: $('flight-camera').value,
+                response: { ...response },
+                playlist: completedPlaylist ? clone(completedPlaylist) : null,
+                index: completedPlaylistIndex,
+              };
+              paintLessonReturn();
+              return startFlight(lesson, { mode: proof.mode });
+            },
+          ),
+        );
+        $('result-panel').append(suggestion);
+      }
       if (!entry.legacy)
         $('result-panel').append(
           button(txt('Watch this section', 'Переглянути цю ділянку'), () =>
@@ -4261,6 +4374,10 @@ export function mountWorldApp({
     );
   async function startFlight(entry, options = {}) {
     if (disposed) return;
+    if (lessonReturn && keyOf(entry) !== keyOf(learningEntries.get('beginner-24'))) {
+      lessonReturn = null;
+      paintLessonReturn();
+    }
     playShell?.enterPlay();
     if (playShell) $('flight-dialog').prepend(playShell.elements.header);
     const requestedMode =
@@ -4413,6 +4530,7 @@ export function mountWorldApp({
     $('flight-status').textContent = txt('Preparing scene…', 'Підготовка сцени…');
     paintLoadout();
     if (!$('flight-dialog').open) $('flight-dialog').showModal();
+    paintLessonReturn();
     if (!renderer)
       renderer = rendererFactory({
         canvas: $('world-canvas'),
@@ -4709,6 +4827,7 @@ export function mountWorldApp({
       ).focus({ preventScroll: true });
     } else $('world-grid').querySelector('[aria-pressed="true"]')?.focus({ preventScroll: true });
     renderPacks();
+    paintLessonReturn();
   }
   async function restoreProofs(file) {
     if (!recordStore) throw new Error('Flight storage is unavailable.');
@@ -4905,6 +5024,7 @@ export function mountWorldApp({
     renderPlaylist();
     refreshEditor();
     renderPacks();
+    paintLessonReturn();
   });
   on($('play-playlist'), 'click', () => flySequence(playlistValue()));
   on($('save-playlist'), 'click', () => {
@@ -5773,6 +5893,7 @@ export function mountWorldApp({
       canResume: () =>
         Boolean(recovery && dependencyAvailable(recovery.packIdentity, recovery.course.id)),
       open(surface) {
+        paintLessonReturn(surface);
         if (flight?.snapshot().status === 'active') pauseFlight();
         if (surface === 'results') {
           // Keep the native result actions and async verification in place.
