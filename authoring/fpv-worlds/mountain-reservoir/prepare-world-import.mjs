@@ -45,14 +45,62 @@ if (
 const proofRuntime = [],
   seen = new Set(),
   root = process.cwd();
+async function projectedCatalog() {
+  const sourceInputs = [];
+  const read = (file) => {
+    const bytes = execFileSync('git', ['show', 'HEAD:' + file]);
+    sourceInputs.push({ path: file, bytes: bytes.length, sha256: sha(bytes) });
+    return bytes;
+  };
+  const policy = (
+    await import(
+      'data:text/javascript;base64,' +
+        read('publishing/optional-package-policy.mjs').toString('base64')
+    )
+  ).OPTIONAL_PACKAGE_POLICIES['fpv-worlds'];
+  const locales = {};
+  for (const language of ['en', 'uk']) {
+    const errors = JSON.parse(read(`game/locales/${language}/errors.json`));
+    locales[language] = {
+      errors: Object.fromEntries(
+        Object.entries(errors).filter(([key]) => key.startsWith('dataJson.')),
+      ),
+    };
+    for (const [namespace, keys] of Object.entries(policy.localeKeys ?? {})) {
+      const source = JSON.parse(read(`game/locales/${language}/${namespace}.json`));
+      if (!keys.every((key) => typeof source[key] === 'string'))
+        throw Error('Incomplete optional locale projection');
+      locales[language][namespace] = Object.fromEntries(keys.map((key) => [key, source[key]]));
+    }
+  }
+  return {
+    bytes: Buffer.from(
+      `// Selected optional-practice validator messages only.\nglobalThis.RevealLineTranslations=${JSON.stringify(locales)};\n`,
+    ),
+    sourceInputs,
+  };
+}
 async function qualifyModule(relative) {
   if (seen.has(relative)) return;
   seen.add(relative);
   const local = await fs.readFile(path.join(root, relative));
   const pinned = frozen.find((f) => f.path === relative);
-  if (!pinned || sha(local) !== pinned.sha256 || local.length !== pinned.bytes)
+  const projection = relative === 'game/i18n/catalogs.mjs' ? await projectedCatalog() : null;
+  const expected = projection?.bytes ?? local;
+  if (!pinned || sha(expected) !== pinned.sha256 || expected.length !== pinned.bytes)
     throw Error('Qualified proof runtime differs from admitted member: ' + relative);
-  proofRuntime.push({ path: relative, bytes: local.length, sha256: sha(local) });
+  proofRuntime.push({
+    path: relative,
+    bytes: expected.length,
+    sha256: sha(expected),
+    ...(projection
+      ? {
+          presentationProjection:
+            'Exact existing optional-package-policy locale projection; flight/collision code is byte-identical.',
+          sourceInputs: projection.sourceInputs,
+        }
+      : {}),
+  });
   const ast = parse(local.toString(), { ecmaVersion: 'latest', sourceType: 'module' });
   const imports = [];
   function visit(node) {
@@ -178,7 +226,7 @@ const manifest = {
   })),
   packIdentity: qualification.pack.identity,
   scope:
-    'Eight-course world on the identified complete admitted host, no runtime overlay; complete proof module closure matches local qualifier. Real File import/native IDB, source reimport, editor mode ownership, collision queries and sixteen complete catalogue Watch replays; controlled RAF with unchanged performance clock and pause guards. Native-clock and actual offline qualification remain separate. No hardware/FPS claim.',
+    'Eight-course world on the identified complete admitted host, no runtime overlay; complete proof module closure matches local qualifier, with the standard locale catalogue projection regenerated exactly from current source/policy. Real File import/native IDB, source reimport, editor mode ownership, collision queries and sixteen complete catalogue Watch replays; controlled RAF with unchanged performance clock and pause guards. Native-clock and actual offline qualification remain separate. No hardware/FPS claim.',
 };
 await fs.writeFile(path.join(output, 'manifest.json'), JSON.stringify(manifest, null, 2) + '\n', {
   flag: 'wx',
