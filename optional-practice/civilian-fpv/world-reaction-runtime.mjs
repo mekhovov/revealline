@@ -59,7 +59,7 @@ const sourceHashes={
 'game/audio/reactions/actors.mjs':
 '79debf91cafa2e01cd65170037ee483977cbf7d5c3a619ccac9ed400264598b8',
 'optional-practice/civilian-fpv/world-library.mjs':
-'31b05df1c556c9b1d9fa809745443fdb5620516bde33235c76fe612c95cc056a',
+'1c6f186bab309c70a99e3a62614f1456e40f4851fe87dec2873957f109007f0b',
 'game/audio/reactions/guide-0-en.m4a':
 '58f961f54b52d0dbb58f53f000ca85bba166236126e135dc1f5e89f8f9a94210',
 'game/audio/reactions/guide-0-uk.m4a':
@@ -6477,16 +6477,15 @@ cache:'no-store',
 credentials:'omit',
 redirect:'error',
 });
-check(response.ok);
+const reader=response.body?.getReader();
+try{
+check(response.ok&&reader);
 const advertised=response.headers.get('content-length');
 check(
 !advertised||(Number.isSafeInteger(+advertised)&& +advertised>=0&& +advertised<=limit),
 );
-const reader=response.body?.getReader();
-check(reader);
 const bytes=new Uint8Array(limit);
 let size=0;
-try{
 while(true){
 signal.throwIfAborted();
 const{done,value}=await reader.read();
@@ -6496,10 +6495,10 @@ bytes.set(value,size);
 size+=value.byteLength;
 progress(size);
 }
-}finally{
-await reader.cancel().catch(()=>{});
-}
 return bytes.subarray(0,size);
+}finally{
+if(reader)await reader.cancel().catch(()=>{});
+}
 }
 
 function mountWorldLibrary({el,txt,parent,begin,install}){

@@ -63,16 +63,16 @@ async function read(url, limit, signal, progress) {
     credentials: 'omit',
     redirect: 'error',
   });
-  check(response.ok);
-  const advertised = response.headers.get('content-length');
-  check(
-    !advertised || (Number.isSafeInteger(+advertised) && +advertised >= 0 && +advertised <= limit),
-  );
   const reader = response.body?.getReader();
-  check(reader);
-  const bytes = new Uint8Array(limit);
-  let size = 0;
   try {
+    check(response.ok && reader);
+    const advertised = response.headers.get('content-length');
+    check(
+      !advertised ||
+        (Number.isSafeInteger(+advertised) && +advertised >= 0 && +advertised <= limit),
+    );
+    const bytes = new Uint8Array(limit);
+    let size = 0;
     while (true) {
       signal.throwIfAborted();
       const { done, value } = await reader.read();
@@ -82,10 +82,10 @@ async function read(url, limit, signal, progress) {
       size += value.byteLength;
       progress(size);
     }
+    return bytes.subarray(0, size);
   } finally {
-    await reader.cancel().catch(() => {});
+    if (reader) await reader.cancel().catch(() => {});
   }
-  return bytes.subarray(0, size);
 }
 
 export function mountWorldLibrary({ el, txt, parent, begin, install }) {

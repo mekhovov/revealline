@@ -243,6 +243,8 @@ async function execute() {
   for (const mode of ['http', 'reject']) {
     await index([], mode);
     must(message().includes('failed'), 'Retryable index ' + mode);
+    if (mode === 'http')
+      must(ctx.n.requests.at(-1).bodyCancelled, 'Rejected HTTP index body is cancelled');
   }
   await index([fixture.asset]);
   must(
@@ -260,6 +262,8 @@ async function execute() {
   for (const mode of packFaults) {
     await download(mode);
     must(message().includes('failed'), 'Pack ' + mode + ' rejected');
+    if (['http', 'oversize-header'].includes(mode))
+      must(ctx.n.requests.at(-1).bodyCancelled, 'Rejected pack body is cancelled: ' + mode);
     eq(await records(), [], 'No partial native install ' + mode);
     eq(preserve(), original, 'No activation or draft change ' + mode);
   }
