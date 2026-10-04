@@ -11,6 +11,7 @@ import {
   createWorldRecorder,
   replayWorldFlight,
   worldStateIdentity,
+  WORLD_FLIGHT_HZ,
 } from '../../../optional-practice/civilian-fpv/world-model.mjs';
 import { createWorldCollision } from '../../../optional-practice/civilian-fpv/world-collision.mjs';
 import {
@@ -57,6 +58,7 @@ const checks = [],
     },
     checks,
     flights,
+    tickHz: WORLD_FLIGHT_HZ,
     scope:
       option === '--clearance-only'
         ? 'Static source/collision survey only; no ordinary-flight or visual acceptance.'
@@ -175,7 +177,10 @@ try {
           maxSupportDeviation = 0;
         const goal = route[i],
           length = Math.hypot(...axes.map((k) => goal[k] - position[k])),
-          parts = Math.max(1, Math.ceil(length / 500));
+          // Nominal survey points use speed/Hz spacing. Catch-up to the next
+          // point can exceed one real actor tick if movement is clipped; the
+          // separate ordinary-flight proof is authoritative for actual motion.
+          parts = Math.max(1, Math.ceil(length / (subject.speed / WORLD_FLIGHT_HZ)));
         for (let n = 1; n <= parts; n++) {
           const next = Object.fromEntries(
             axes.map((k) => [
