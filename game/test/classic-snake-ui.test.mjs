@@ -223,6 +223,16 @@ async function harness({
     CLASSIC_COPY,
     ...core,
     ...matches,
+    createClassicSnake(...args) {
+      return core.createClassicSnake(...args.map((argument) => structuredClone(argument)));
+    },
+    restoreClassicSnakeLegacyMatch(...args) {
+      // The legacy wrapper is assembled in the browser VM. Its production
+      // validator shares that realm; normalize only the harness boundary here.
+      return matches.restoreClassicSnakeLegacyMatch(
+        ...args.map((argument) => structuredClone(argument)),
+      );
+    },
     createClassicSnakeMatch(...args) {
       // The VM models a browser realm; normalize only this harness crossing so
       // strict plain-data admission sees the same realm it would in production.

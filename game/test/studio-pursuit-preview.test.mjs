@@ -43,7 +43,7 @@ test('Capture Snake and its authored pursuit successor preview preserve their se
     successor = selectedMissionPursuitSource(source, missionId, pursuitPopulation(varied)),
     result = playable(successor, missionId);
   assert.equal(original.scenario.format, 'xonix-playground.v11');
-  assert.equal(result.scenario.format, 'xonix-playground.v13');
+  assert.equal(result.scenario.format, 'xonix-playground.v15');
   assert.equal(validateScenario(result.scenario).valid, true);
   assert.deepEqual(result.scenario.level.snake, original.scenario.level.snake);
   assert.deepEqual(result.scenario.level.classic.hunt, original.scenario.level.classic.hunt);
