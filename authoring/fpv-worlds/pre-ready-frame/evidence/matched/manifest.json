@@ -1,0 +1,71 @@
+{
+  "runtime": "2f9a7a87876a4ee64eb5b7c581b3ea339aaba146",
+  "base": "7e76112411f96ae72979cebee0a62ccdd66577d6",
+  "scope": "Matched native source fixture348+348; lifecycle and full admission pending. Original receipts unchanged.",
+  "files": [
+    {
+      "source": "/tmp/fpv-pre-ready-baseline-8938.json",
+      "file": "fpv-pre-ready-baseline-8938.json.gz",
+      "bytes": 906754,
+      "sha256": "b1194bf01cdc048e0e3b3a0247db87a87006ac1f08d985510b13e053b468b46f",
+      "storedBytes": 32488,
+      "storedSha256": "8cc3ad947b91d58d860b7b36e94196ec3d4e802c3fe1cc8e0e38bef2b0b9e5e2"
+    },
+    {
+      "source": "/tmp/fpv-pre-ready-candidate-8937.json",
+      "file": "fpv-pre-ready-candidate-8937.json.gz",
+      "bytes": 906567,
+      "sha256": "2d21182b98976b0b901638707714be8ce2a2d66983ef99e0f4d2aae560d89a1b",
+      "storedBytes": 32651,
+      "storedSha256": "247cacf03c8ac6c76e0ccc6cc3c259aa090f90808e19efbadbd6101bca052af9"
+    },
+    {
+      "source": "/tmp/fpv-first-ready-programs-8927.json",
+      "file": "fpv-first-ready-programs-8927.json.gz",
+      "bytes": 641097,
+      "sha256": "fad1c9062ab2152ef7063f44c0ab1c48cd9c8af30c385d5b5850bb5bc9f4a854",
+      "storedBytes": 26785,
+      "storedSha256": "ee0585d62d2d72e308bfebd4b6f07671e24454cee372c699f45429a7d55778ac"
+    },
+    {
+      "source": "/tmp/fpv-pre-ready-matched-r2-analysis.json",
+      "file": "fpv-pre-ready-matched-r2-analysis.json.gz",
+      "bytes": 19625,
+      "sha256": "c42b394b1de96070bb5ee664a87ef24e524951a9f158fb3bf3f6f381a9ebe9b1",
+      "storedBytes": 1239,
+      "storedSha256": "c75293b956cc3a99818720d041d2a2ae32a0c4bd45246dc6e3ae829127be6a3c"
+    },
+    {
+      "source": "/tmp/fpv-first-ready-programs-8927-analysis.md",
+      "file": "fpv-first-ready-programs-8927-analysis.md.gz",
+      "bytes": 5222,
+      "sha256": "96a0be8cf85c830e716c8518dd9d020642321d726d08fda1554ac5ec4c565a09",
+      "storedBytes": 2640,
+      "storedSha256": "dcb7cb34797a0091dea5f1cc1e1ba2bdb9a646f4bdf44f42851ea191fbda8cd4"
+    },
+    {
+      "source": "/tmp/fpv-library-ready-8934-analysis.md",
+      "file": "fpv-library-ready-8934-analysis.md.gz",
+      "bytes": 3920,
+      "sha256": "fd047a02a8040416e94dd048b5e2d10e954801a7a47fa261da6196a4410dd58b",
+      "storedBytes": 2052,
+      "storedSha256": "6fcea67561b8a895ec5f378942ac039bf4a3562390e92a7d1e714efced2105d7"
+    },
+    {
+      "source": "/private/tmp/fpv-pre-ready-2f9-r2/fixture.json",
+      "file": "fpv-pre-ready-2f9-r2-fixture.json.gz",
+      "bytes": 45379,
+      "sha256": "fae8a25a93542af6d815411e30917c5e57a4699dc5634be55c9face634bf7845",
+      "storedBytes": 7726,
+      "storedSha256": "b87365ad55f78b6b925b6d9e4289b23d4229ea07a011380d63b2b541394b6df3"
+    },
+    {
+      "source": "/private/tmp/fpv-pre-ready-main7e-r2/fixture.json",
+      "file": "fpv-pre-ready-main7e-r2-fixture.json.gz",
+      "bytes": 45338,
+      "sha256": "f8858811b5a714fba171cd27685a9d5b642cf107c46f58954772dc901b269ebf",
+      "storedBytes": 7684,
+      "storedSha256": "ccf1026692957b020bf1de61b14c7dad04fa5b64c41be92a9ff02e8dc51480ae"
+    }
+  ]
+}
