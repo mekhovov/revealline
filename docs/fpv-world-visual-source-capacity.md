@@ -30,7 +30,24 @@ The manual `scripts/qualify-fpv-world-visual-capacity.mjs` receipt binds this
 specific preparation to the baseline above. Future semantic changes need their
 own verification and must not reuse that historical identity claim.
 
-Scoped lint, canonical formatting, generator equality and all three existing
-lexical-projection checks pass. Full validation, package admission and runtime
-member comparison remain pending at this checkpoint. No new unit coverage,
+Frozen candidate `d9ac8ee1937fb473107278ad613d33314ab9dd0d` passed full
+`npm run validate` on Node 22.22.2, scoped lint, canonical formatting, generator
+equality and all three existing lexical-projection checks. All three optional
+packages passed committed-input and ZIP-member admission with two byte-identical
+builds. Their runtime memberships remain 48 (Flight), 69 (Academy), and 102
+(Worlds); the readable source is not shipped in the explicit runtime closure.
+
+The optional builder emits the prepared module bytes directly. Independent
+baseline builds, reconstructed from exact main `0a1548fd` Git input objects,
+confirm that all unrelated payload members retain their bytes. Only the prepared
+module, generated package descriptor and binding worker differ in Academy and
+Worlds. Flight only changes its generated revision bindings. The changed module
+has semantic/token/comment/newline identity, not byte equality with its original.
+
+The admitted Worlds original-input total is 16,726,366 bytes (50,850 bytes below
+16 MiB) at this older main baseline, before the separately merged Library input
+growth. Adding this unchanged 41,026-byte saving to the qualified Library total
+would leave 41,578 bytes; that arithmetic is not a new integrated admission.
+Evidence and hashes are retained under
+`docs/verification/fpv-world-visual-source-capacity/`. No new unit coverage,
 hardware performance or public availability is claimed.
