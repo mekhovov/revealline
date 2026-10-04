@@ -26,8 +26,21 @@ in-memory detour, not an additional persistent recovery format.
 Source candidate is on `codex/fpv-gate-section-coaching`, based on
 `a087facd9ca57f0e7519aa161cb6acc86a7eee3e`. The frozen v1 host SHA-256 is
 `451d9145f22bc5b3eb77f7ea605a46a5bb4b6e4ce2b138bb8bb7d4f75be14019`.
-Browser acceptance, clean current-main package admission and the packaged player
-are pending. This checkpoint is not a publication or live-delivery claim.
+The normal merge `f942dab3e5404923f65c80cf6ad6133d23e28597` incorporates main
+`72d6661b117e1cf1d76ac5de44381685c63d19b9`; the coaching host is byte-identical.
+Incoming runtime changes are the already-merged Solar material/UV paths, guarded
+away from the Warehouse/School fixtures. Browser acceptance, clean current-main
+package admission and the packaged player are pending. This checkpoint is not a
+publication or live-delivery claim.
+
+The first actual browser run passed its first 15 checks (including verified
+measured loss and one playlist advancement), then stopped on a fixture mistake:
+it waited for the lesson's Arm control to be enabled while the intentional lesson
+guide blocks Arm. The real lesson loaded paused correctly. The complete failure
+and v1 manifest are retained in `docs/evidence/fpv-gate-coaching-browser-v1-failure.json`
+and `fpv-gate-coaching-source-v1-fixture.json`. The v2 observer waits for the exact
+lesson, its open guide and the Ready status; it does not change the production
+guide or arming rule.
 
 The manual input preparer derives a slower ordinary Warehouse gate flight from
 the existing offline authoring pilot by changing only gate travel speed to
