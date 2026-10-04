@@ -23,6 +23,14 @@ in-memory detour, not an additional persistent recovery format.
 
 ## Qualification checkpoint
 
+The accepted source browser passes **194/194 checks**. The final integrated
+package passes **208/208**, including owned-node disposal, and its rendered
+result panel is visually accepted. All 194 original check names and outcomes
+match; fourteen additional setup/disposal checks pass. Full validation and all
+three reproducible package admissions pass. Exact final candidates and retained
+diagnostics follow. Protected publication waits for the separately reviewed
+disposal dependency #1040; no public deployment is claimed here.
+
 Source candidate is on `codex/fpv-gate-section-coaching`, based on
 `a087facd9ca57f0e7519aa161cb6acc86a7eee3e`. The frozen v1 host SHA-256 is
 `451d9145f22bc5b3eb77f7ea605a46a5bb4b6e4ce2b138bb8bb7d4f75be14019`.
@@ -110,6 +118,44 @@ to publish an unmerged dependency. Its disposal patch is exact, and the other
 68 source modules remain byte-identical to the accepted source fixture. The 95
 original inputs total 16,777,021 bytes, leaving 195 bytes below the unchanged
 16 MiB cap before the separately prepared source-capacity repair.
+
+## Final package candidate
+
+Clean candidate `f6c7f7b141ef7171c3ead0e27b7ea4f195fae0a2`, tree
+`18867ea0b565faf241a485d1efca515c5a730552`, passes Node 22.22.2 full validation
+and source-bound admission for `civilian-flight`, `civilian-fpv` and `fpv-worlds`.
+Each package is built twice with byte-identical results; committed original
+inputs and every ZIP member are verified. The production host hash is
+`add2a0321fdd37663027c922a6279241db6ea97ed6b3f38ee9b33719d3a33aa7`.
+
+The complete 102-member Worlds player is extracted from the admitted ZIP
+(SHA-256 `67af250f3942c8f112b7aa2344c153f379b97a3bba4b5191a80ed302801080b2`).
+Its 223 staging checks verify the inventories, checksums and each reread member.
+It reuses 97 exact immutable files and writes only five changed files, 565,912
+bytes. This is the full admitted player, not a development-only asset subset.
+The frozen package browser fixture retains the accepted v6 functional matrix
+and adds explicit disposal of the new coaching controls. Its actual-browser run
+passes **208/208 checks**, with no uncaught browser errors. The complete receipt
+`fpv-gate-coaching-package-browser.json` has SHA-256
+`6d9ef40d95fb158d0d6600934cb964bc476b9a3983fa00078db74ce50e5c940f`.
+All original 194 source check names and outcomes remain exact; fourteen new
+setup/disposal observations pass. Manifest hashes, fixture URLs and timing traces
+differ by provenance and observed lifecycle timing; these are not claimed to be
+byte-identical receipts.
+
+The actual packaged-host result panel was also inspected: the complete visible
+panel shows 53.34 seconds and +46.12 seconds with a clearly optional lesson action
+(`fpv-gate-coaching-result-preview.png`). This is the real mounted packaged host
+using the declared recovery-prefix fixture, native storage and WebGL. The full
+102-file standalone player is staged separately. No installed identity, offline
+operation, public deployment, device performance or learning outcome is claimed.
+
+```sh
+npm run validate
+node scripts/bundle-optional-practice.mjs --out dist/fpv-gate-coaching-candidate-f6c7f7b14 --base-path /revealline/ --packages civilian-flight,civilian-fpv,fpv-worlds
+node docs/evidence/fpv-gate-coaching-admitted-stage-probe.mjs
+node scripts/prepare-fpv-gate-coaching-verification.mjs dist/fpv-gate-coaching-verification-package-f6c7f7b14 dist/fpv-gate-coaching-admitted-player-f6c7f7b14
+```
 
 The manual input preparer derives a slower ordinary Warehouse gate flight from
 the existing offline authoring pilot by changing only gate travel speed to
