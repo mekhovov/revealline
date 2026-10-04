@@ -5,6 +5,19 @@
 source-bound admission and the bounded actual-player UI/audio integration smoke.
 The existing canonical audio warning-priority test failure remains disclosed below.
 
+**Current main integration:** normal expected-head update `88822f3ecd751b2278bd9131e60e8d5641707343`
+merges main `5931ef12678cc52ab332fbbfe5516ad93a60caa9`. The
+[committed-input comparison](evidence/fpv-reaction-capacity-main-integration.json)
+finds 94 of 95 inputs exact to frozen capacity source `45d673d36`. The only
+incoming input is `world-app.mjs`, byte-identical to qualified disposal source
+`d9ad2561ee1d7685ef97961478b7de30278c1e48` (SHA-256
+`6bd30bcd11caa83ccdb36d9bb7c826a9735b5d4549bb49008494921a6a0ba4cc`).
+Its 742-byte growth gives **16,759,664 source bytes / 17,552 bytes remaining**,
+with the same 95 input paths. The compaction, licenses, proofs and package
+policies remain exact. Prior package/browser receipts keep their historical
+candidate identities; fresh protected CI must admit this combined head.
+This scoped integration check does not claim another local build or browser run.
+
 The generated World reaction runtime now uses the existing checked lexical
 projection after pinned Prettier formatting. This extends source repair #1011
 without changing canonical modules, recordings, licenses, package policies or
