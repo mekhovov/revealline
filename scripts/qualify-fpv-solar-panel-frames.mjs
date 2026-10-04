@@ -209,6 +209,7 @@ function guard(course = canonical, profile = resolveSimThemeProfile(course), kit
         environment: course.environment,
         pixel: profile.textureFilter === 'nearest',
         kit,
+        resolveSimThemeProfile,
       },
     ),
   );
@@ -914,6 +915,36 @@ check(
   !guard(canonical, { ...resolveSimThemeProfile(canonical), textureFilter: 'unknown' }),
 );
 check('shared kit rejects', !guard(canonical, resolveSimThemeProfile(canonical), {}));
+const canonicalProfile = resolveSimThemeProfile({ theme: 'operations' });
+check(
+  'canonical authored profile clone remains eligible',
+  guard(canonical, structuredClone(canonicalProfile)),
+);
+const modifiedProfiles = [
+  ['palette', { palette: { ...canonicalProfile.palette, accent: 0x91c7bd } }],
+  ['assets', { assets: { ...canonicalProfile.assets, gate: 'builtin:gate' } }],
+  ['drone', { drone: 'racer' }],
+  ['UI', { ui: { ...canonicalProfile.ui, accent: '#a5c582' } }],
+  ['audio', { audio: { ...canonicalProfile.audio, ambience: 'hangar' } }],
+  ['characters', { characters: 'civilian' }],
+  ['title', { title: { ...canonicalProfile.title, en: 'Custom Field Operations' } }],
+  ['revision', { revision: 'r2' }],
+];
+for (const [label, override] of modifiedProfiles) {
+  const course = structuredClone(canonical);
+  course.themeProfile = { ...structuredClone(canonicalProfile), ...override };
+  const resolved = resolveSimThemeProfile(course);
+  check(
+    'same-ID modified ' + label + ': real resolver preserves custom profile',
+    resolved.id === 'operations' &&
+      resolved.textureFilter === 'linear' &&
+      jsonHash(resolved) !== jsonHash(canonicalProfile) &&
+      Object.entries(override).every(([key, value]) => jsonHash(resolved[key]) === jsonHash(value)),
+  );
+  check('same-ID modified ' + label + ': full-profile guard rejects', !guard(course));
+  for (const quality of ['low', 'balanced', 'high'])
+    compare(course, quality, 'authored', 'same-ID modified ' + label + '/' + quality);
+}
 const reusable = build('after', canonical, 'balanced'),
   stableResources = resources(reusable),
   expected = jsonHash(snapshot(reusable));
