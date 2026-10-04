@@ -152,8 +152,12 @@ fixture. The sole other difference is main's lossless `world-visuals.mjs`
 projection, independently checked for exact normalized AST, token spelling,
 comments and line terminators. This bridge, the full staging inventory, and
 all admission receipts are retained. Source browser parity and artifact
-admission are distinct evidence; no repeated native package matrix, public
-deployment or offline acceptance is implied.
+admission are distinct evidence. Root additionally inspected the exact admitted
+unmodified entry at `8956` through actual public Home Start → briefing Start →
+Ready → Arm → native-clock active flight → Pause, with Continue and Retry
+available. The accessibility snapshots and screenshot are retained. That smoke
+does not claim movement, physical-controller acceptance, a repeated native
+package matrix, public deployment, or offline acceptance.
 
 Evidence gzip files are lossless; `evidence/manifest.json` records original and
 compressed byte counts and SHA-256 hashes. Full D6 qualification, sustained
