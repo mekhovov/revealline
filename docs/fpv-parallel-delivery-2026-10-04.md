@@ -34,14 +34,22 @@ Next engineering work is the measured HUD/layout candidate under browser
 qualification, then continued integrated reliability. No hardware-FPS conclusion
 is drawn from these bounded observations.
 
-Reservoir's required coating capability is qualified and awaiting its focused
-publication. The r14 pack has passed 16 ordinary-flight/replay proofs and bounded
-native import/flight views; representative terrain rooting and hut quality remain
-open. The production Library index stays empty intentionally until the required
-world-quality and publication gates are met. Preserve the research gates below
-and the sequence Reservoir → Festival → Harbor → Canals → D6. Earlier estimates
-and pending lists below describe their original checkpoints, not a reversal of
-this delivered state.
+Reservoir's required coating runtime #1088 and qualified r16 content #1090 are
+merged. The retained bounded terrace, rooted-trunk and closed-hut observations,
+575 ordinary/replay checks and 304 imported-browser checks support that increment;
+they do not establish photoreal or hardware acceptance. Production Library
+registration and the final combined current-player journey remain separate.
+
+Festival now has eight authored r5 challenges: 616 ordinary/replay/archive checks
+across sixteen proofs and 311 historical `364fb78c3` admitted-browser checks with
+all sixteen complete Watch endpoints. Its current-main `21826c460` bridge has
+all 95 runtime inputs exact to separately admitted `0b54fd0fd`, plus 19 current
+parser/ZIP/record-import checks. Final native subject views, stopped-origin
+offline qualification and publication remain pending. The accepted r3 art is a
+bounded gathering/surface/wayfinding checkpoint, not complete photoreal quality.
+Preserve the sequence Reservoir → Festival → Harbor → Canals → D6; Harbor and
+Canals have not started production. Earlier pending lists retain their historical
+scope where superseded here.
 
 ## Starting position
 
@@ -95,7 +103,7 @@ Preserve the fixed flight integrator, existing proof versions and physics profil
 | ------------------------------------------- | --------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | --------------------------------------------------------------------------------- |
 | Delivery — immediate                        | Finish current ready PR publication, verify deployment, and maintain this allocation          | Current-head protected checks, permitted merge, public marker and actual player launch                                                                                                                 | Next verified focused PR; never wait on unchanged CI when independent work exists |
 | Performance — P0                            | Controlled current-player baseline and bounded fixes for reproduced stalls                    | Exact input provenance, one visible native-clock player, cold/warm/course/quality observations, before/after comparison, unchanged replay/visibility contracts and package admission for runtime fixes | Representative natural/industrial scenes and longer-session qualification         |
-| Art/content — P1                            | Improve published Mountain Reservoir until it meets the representative quality standard below | Coherent scene and eight distinct route pairs, matching solid/support collision, final world freeze, sixteen full completion/replays, native import/editor/offline and public entry                    | Festival Grounds, Harbor Docks, Old Town Canals, one complete world per PR        |
+| Art/content — P1                            | Complete Festival Grounds after the accepted bounded Mountain Reservoir r16 scene checkpoint. | Coherent scene and eight distinct route pairs, matching solid/support collision, final world freeze, sixteen full completion/replays, native import/editor/offline and public entry                    | Harbor Docks, then Old Town Canals, one complete world per PR                     |
 | Discovery — P1                              | Optional first-party worlds in Library                                                        | Bounded immutable data catalogue, explicit download size/revision, cancel/retry, exact hash/native install, no partial activation, removal/recovery and honest runtime-offline status                  | Register each finished world after its publication; preserve earlier revisions    |
 | Player integration — P1                     | Complete touch/controller/radio and teaching journeys                                         | EN/UK, small portrait/landscape and 1280×800 layouts, menu/flight ownership, arm/reset/pause, reconnect, settings restore, fullscreen fallback and unobstructed flight view                            | Repairs for reproduced issues, then retained D6 scenarios                         |
 | Reliability — P1 before broad world rollout | Combined creator/recording/recovery flow                                                      | Multi-course/mode edit/reimport/export/reopen, exact dependency replay, rollback, interrupted/quota failures and preserved records                                                                     | Final integrated release candidate                                                |
@@ -103,9 +111,9 @@ Preserve the fixed flight integrator, existing proof versions and physics profil
 
 Performance, Library delivery and integrated reliability own the main engineering
 allocation. Small reproduced menu/input repairs belong to integrated reliability;
-do not open separate broad redesigns. Art/content works on Reservoir in parallel,
-not on additional unfinished worlds. Festival remains preserved at 47f8e36e until
-the Reservoir standard is demonstrated. Then complete Festival, Harbor and Canals
+do not open separate broad redesigns. After the accepted bounded Reservoir r16
+checkpoint, art/content is completing Festival. Preserve its earlier `47f8e36e`
+scene and rejected revisions as evidence. Complete Festival, Harbor and Canals
 sequentially, including each world's proofs, import/offline checks and publication,
 before starting the next. D6 follows those deliverables; functional verification
 continues throughout.
@@ -122,11 +130,12 @@ performance pass.
 Reservoir r8 is the published functional baseline: eight courses and sixteen final
 mode-specific completion/replays, 575 CPU checks and 304 imported-player checks,
 plus a true server-offline flight/editor journey. Preserve that immutable package,
-examples and completion evidence. The art review found visible triangular
-openings at the western terrace/ridge join, so a narrow seam repair comes first.
-Keep canonical collision and route envelopes unchanged; publish any changed visual
-pack as an explicit revision and requalify exact dependencies rather than replacing
-published bytes. Water remains outside playable land bounds.
+examples and completion evidence. Its art review found visible triangular
+openings at the western terrace/ridge join; the later r9 seam repair and r16
+retaining/material/rooting/hut work preserve canonical collision and route
+envelopes. Those changed visual packs have explicit revisions and fresh exact
+dependencies rather than replacing published bytes. Water remains outside
+playable land bounds.
 
 Installing Reservoir yields 204 challenges / 15 installed worlds; the bundled
 baseline remains 196 / 14. It is the first of four additional worlds, with production
