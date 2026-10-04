@@ -755,6 +755,7 @@ export function mountWorldApp({
     playingPlaylist = null,
     playlistIndex = 0;
   let editor = null,
+    editorScope = 'both',
     editorIndex = 0,
     editorSelection = null,
     undo = [],
@@ -1326,7 +1327,7 @@ export function mountWorldApp({
         canvas: $('world-editor-canvas'),
         window: win,
         course: editor,
-        mode: 'self-level',
+        mode: editorMode(),
         getPresentation: () => appearanceControls.resolve().appearance,
         onError: reportError,
         onSelect(ref) {
@@ -1334,7 +1335,7 @@ export function mountWorldApp({
           if (ref?.kind === 'criterion') editorIndex = ref.index;
           if (ref?.kind === 'actor') actorEditor?.select(ref.id);
           refreshEditor(false);
-          if (ref?.kind === 'criterion') actorEditor?.selectObjective('self-level', ref.index);
+          if (ref?.kind === 'criterion') actorEditor?.selectObjective(editorMode(), ref.index);
         },
         onPreview(ref) {
           if (ref?.position)
@@ -1355,7 +1356,7 @@ export function mountWorldApp({
   }
   function refreshEditorScene() {
     if (!spatialEditor || !editor) return;
-    spatialEditor.setCourse(editor);
+    spatialEditor.setCourse(editor, editorMode());
     const profile = resolveSimThemeProfile(editor, appearanceControls.resolve().appearance);
     let status = $('editor-appearance-status');
     if (!status) {
@@ -1393,12 +1394,16 @@ export function mountWorldApp({
       );
     }
   }
+  function editorMode() {
+    return editorScope === 'acro' ? 'acro' : 'self-level';
+  }
+  function matchingRoutes(course) {
+    return canonicalWorldJSON(course.steps['self-level']) === canonicalWorldJSON(course.steps.acro);
+  }
   function routeEditModes(course) {
-    // Mode-specific authoring can change order and length. Decide once before
-    // mutation; equal indices alone never identify corresponding objectives.
-    return canonicalWorldJSON(course.steps['self-level']) === canonicalWorldJSON(course.steps.acro)
+    return editorScope === 'both' && matchingRoutes(course)
       ? ['self-level', 'acro']
-      : ['self-level'];
+      : [editorMode()];
   }
   const notebook = createFlightNotebook({
     courses: FLIGHT_COURSES,
@@ -2413,11 +2418,38 @@ export function mountWorldApp({
     $('undo-edit').disabled = !undo.length;
     $('redo-edit').disabled = !redo.length;
     if (!editor) return;
+    const matching = matchingRoutes(editor);
+    if (editorScope === 'both' && !matching) editorScope = 'self-level';
+    let choice = $('editor-route-mode');
+    if (!choice) {
+      const label = el('label');
+      choice = el('select');
+      choice.id = 'editor-route-mode';
+      label.append(el('span'), choice);
+      $('criterion-list').closest('label').before(label);
+      listeners.push(() => label.remove());
+      on(choice, 'change', () => {
+        editorScope = choice.value;
+        editorIndex = 0;
+        editorSelection = { kind: 'criterion', index: 0 };
+        refreshEditor();
+        actorEditor?.selectObjective(editorMode(), editorIndex);
+      });
+    }
+    choice.previousElementSibling.textContent = txt('Route mode', 'Режим маршруту');
+    choice.replaceChildren(
+      new Option(txt('Both matching modes', 'Обидва однакові режими'), 'both'),
+      new Option(txt('Self-level', 'Самовирівнювання'), 'self-level'),
+      new Option('Acro', 'acro'),
+    );
+    choice.options[0].disabled = !matching;
+    choice.value = editorScope;
+    const mode = editorMode();
     $('creator-title').value = editor.locales[locale].title;
     $('creator-json').value = JSON.stringify(editor, null, 2);
     if ($('creator-theme')) $('creator-theme').value = editor.world.theme;
     $('criterion-list').replaceChildren();
-    editor.steps['self-level'].forEach((step, i) =>
+    editor.steps[mode].forEach((step, i) =>
       $('criterion-list').append(
         new Option(
           `${i + 1}. ${stepName(step)}${step.targets ? ` · ${step.targets.length}` : ''}`,
@@ -2425,7 +2457,7 @@ export function mountWorldApp({
         ),
       ),
     );
-    editorIndex = Math.max(0, Math.min(editorIndex, editor.steps['self-level'].length - 1));
+    editorIndex = Math.max(0, Math.min(editorIndex, editor.steps[mode].length - 1));
     for (const actor of editor.actors)
       $('criterion-list').append(
         new Option(`${txt('Actor', 'Персонаж')}: ${actor.id}`, `actor:${actor.id}`),
@@ -2441,15 +2473,15 @@ export function mountWorldApp({
       routeEditModes(editor).length === 2
         ? txt('Route edits: both matching modes', 'Зміни маршруту: обидва однакові режими')
         : txt(
-            'Route edits: Self-level only; modes have different routes',
-            'Зміни маршруту: лише самовирівнювання; режими мають різні маршрути',
+            `Route edits: ${mode === 'acro' ? 'Acro' : 'Self-level'} only. Shared source anchors stay unchanged.`,
+            `Зміни маршруту: лише ${mode === 'acro' ? 'Acro' : 'самовирівнювання'}. Спільні маркери джерела не змінюються.`,
           );
     const actor =
       editorSelection?.kind === 'actor'
         ? editor.actors.find((a) => a.id === editorSelection.id)
         : null;
     if (actor) $('criterion-list').value = `actor:${actor.id}`;
-    const p = actor?.position ?? criterionCentre(editor.steps['self-level'][editorIndex]);
+    const p = actor?.position ?? criterionCentre(editor.steps[mode][editorIndex]);
     for (const k of coordinates) {
       $(`criterion-${k}`).value = p ? p[k] / 1000 : '';
       $(`criterion-${k}`).disabled = !p;
@@ -2457,9 +2489,8 @@ export function mountWorldApp({
     $('move-criterion').disabled = !p;
     $('criterion-y').max = String(editor.bounds.max.y / 1000);
     for (const id of ['duplicate-criterion', 'remove-criterion', 'criterion-up', 'criterion-down'])
-      $(id).disabled =
-        Boolean(actor) || editor.steps['self-level'][editorIndex]?.type === 'actor-track-v1';
-    if (!actor && editor.steps['self-level'][editorIndex]?.type === 'actor-track-v1')
+      $(id).disabled = Boolean(actor) || editor.steps[mode][editorIndex]?.type === 'actor-track-v1';
+    if (!actor && editor.steps[mode][editorIndex]?.type === 'actor-track-v1')
       scope.textContent += txt(
         '. Edit this objective in Follow & observe below.',
         '. Редагуйте це завдання нижче в розділі «Супровід і спостереження».',
@@ -2470,10 +2501,23 @@ export function mountWorldApp({
   function syncProject(comparePositions = true, previousBindings = null) {
     if (editingProject && editor?.world.id === editingProject.id) {
       const previous = editingProject.courses.find((c) => c.id === editor.id),
-        bindings = editingProject.routeBindings?.[editor.id]?.['self-level'];
-      if (comparePositions && previous && bindings) {
+        routes = editingProject.routeBindings?.[editor.id],
+        bindings = routes?.['self-level'];
+      // One source anchor cannot encode two independent mode positions. Keep
+      // single-mode changes local; shared edits need matching anchor identities.
+      if (
+        comparePositions &&
+        previous &&
+        bindings &&
+        routeEditModes(editor).length === 2 &&
+        matchingRoutes(previous)
+      ) {
         for (const [i, anchorId] of bindings.entries()) {
-          const oldIndex = previousBindings ? previousBindings.indexOf(anchorId) : i;
+          const oldIndex = previousBindings?.['self-level']
+              ? previousBindings['self-level'].indexOf(anchorId)
+              : i,
+            oldAcroIndex = previousBindings?.acro ? previousBindings.acro.indexOf(anchorId) : i;
+          if (!anchorId || routes.acro?.[i] !== anchorId || oldAcroIndex !== oldIndex) continue;
           const before = criterionCentre(previous.steps['self-level'][oldIndex]),
             after = criterionCentre(editor.steps['self-level'][i]),
             source = editingProject.source.anchors.find((a) => a.id === anchorId);
@@ -2506,6 +2550,7 @@ export function mountWorldApp({
   }
   const editorSnapshot = () => ({
     course: clone(editor),
+    scope: editorScope,
     index: editorIndex,
     selection: clone(editorSelection),
     bindings: clone(editingProject?.routeBindings?.[editor.id] ?? null),
@@ -2538,11 +2583,12 @@ export function mountWorldApp({
     redo = [];
     editor = valid;
     if (editingProject && bindings) editingProject.routeBindings[editor.id] = bindings;
-    syncProject(true, before.bindings?.['self-level']);
+    syncProject(true, before.bindings);
     refreshEditor();
   }
-  function setEditor(course) {
+  function setEditor(course, { scope } = {}) {
     editor = validateWorldCourse(course);
+    editorScope = scope ?? (matchingRoutes(editor) ? 'both' : 'self-level');
     editorIndex = 0;
     editorSelection = null;
     undo = [];
@@ -3441,7 +3487,9 @@ export function mountWorldApp({
       );
     editingProject = next;
     projectAssets = assets;
-    setEditor(next.courses.find((course) => course.id === editor?.id) ?? next.courses[0]);
+    setEditor(next.courses.find((course) => course.id === editor?.id) ?? next.courses[0], {
+      scope: editorScope,
+    });
     projectGeneration = generation;
     updateImportControls();
     $('import-report').textContent = [
@@ -5118,7 +5166,7 @@ export function mountWorldApp({
     refreshEditor(false);
     spatialEditor?.select(editorSelection);
     if (editorSelection.kind === 'actor') actorEditor?.select(editorSelection.id);
-    else actorEditor?.selectObjective('self-level', editorIndex, { focus: true });
+    else actorEditor?.selectObjective(editorMode(), editorIndex, { focus: true });
   });
   on($('move-criterion'), 'click', () => {
     const position = Object.fromEntries(
@@ -5155,7 +5203,7 @@ export function mountWorldApp({
       if (
         !editor ||
         editorIndex + delta < 0 ||
-        editorIndex + delta >= editor.steps['self-level'].length
+        editorIndex + delta >= editor.steps[editorMode()].length
       )
         return;
       applyEdit((c, bindings) => {
@@ -5182,6 +5230,7 @@ export function mountWorldApp({
       target.push(editorSnapshot());
       const snapshot = source.pop();
       editor = snapshot.course;
+      editorScope = snapshot.scope;
       editorIndex = snapshot.index;
       editorSelection = snapshot.selection;
       if (editingProject) {
@@ -5208,7 +5257,10 @@ export function mountWorldApp({
   });
   on($('preview-challenge'), 'click', () => {
     if (!editor) throw new Error('Create a challenge first.');
-    return startFlight(customEntry(editor), { preview: true });
+    return startFlight(customEntry(editor), {
+      preview: true,
+      mode: editorScope === 'both' ? undefined : editorMode(),
+    });
   });
   on($('export-challenge'), 'click', () => {
     if (!editor) throw new Error('Create a challenge first.');
@@ -5223,7 +5275,10 @@ export function mountWorldApp({
   });
   on($('preview-world'), 'click', () => {
     syncProject();
-    return startFlight(customEntry(editingProject.courses[0]), { preview: true });
+    return startFlight(customEntry(editingProject.courses[0]), {
+      preview: true,
+      mode: editorScope === 'both' ? undefined : editorMode(),
+    });
   });
   on($('export-project'), 'click', async () => {
     syncProject();
