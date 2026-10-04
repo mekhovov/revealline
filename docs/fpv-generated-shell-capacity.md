@@ -12,8 +12,11 @@ integrates main `0a587fb2ea2ed7dbb15f2f0b8b74cabb0fef2ae6`, including the publis
 course picker and exact imported-world example lookup. Source identity and scoped
 checks pass. Full validation and source-bound all-three admission pass with two
 identical builds, committed-input verification and admitted ZIP checks. Actual
-admitted-player shell verification remains pending; this document does not claim
-a release or live deployment.
+admitted Worlds and Academy menu/start/pause/continue checks pass with empty
+warning/error logs. The later ordinary integration of main `ade4bfc2dd` adds
+only three planning documents; all 95 admitted World inputs remain exact to
+`248b8d9af`. Protected publication remains pending; this is not a live-deployment
+claim.
 
 The [manual identity receipt](evidence/fpv-generated-shell-source-capacity.json)
 compares all 95 original World source inputs with that exact main commit. Only
@@ -35,8 +38,8 @@ Existing shell, fullscreen and lexical-projection tests pass **38/38**. Scoped
 ESLint, syntax, generator `--check` and whitespace checks also pass. Full Node
 22.22.2 `npm --logs-max=0 run validate` passes with the existing navigation
 warnings retained in the [local-check receipt](evidence/fpv-generated-shell-local-checks.json).
-No new unit coverage was added. These checks establish source equivalence, not
-hardware performance or an observed browser pass.
+No new unit coverage was added. These checks establish source equivalence;
+the separate actual-browser observations below cover the admitted UI.
 
 The [admission](evidence/fpv-generated-shell-admission.json) and
 [artifact checksums](evidence/fpv-generated-shell-checksums.json) bind all three
@@ -52,6 +55,19 @@ verified. Immutable reuse avoids 151 duplicate file writes; the two staging
 operations write 840,720 new bytes. There are no source overlays. The Worlds
 player includes the merged exact imported-demo lookup and course picker, so it
 can support the separate Reservoir qualification without relabeling older players.
+
+The [Worlds smoke receipt](evidence/fpv-generated-shell-worlds-smoke.json) records
+Settings/Close, Continue, explicit Arm, active flight, Pause, Continue and a
+second Pause. The [Academy smoke receipt](evidence/fpv-generated-shell-academy-smoke.json)
+records Settings/Back, Start/briefing Start, active practice, Pause, Continue and
+another Pause. Both finish at their main menus with no warnings or errors.
+An ambiguous Academy Start selector was resolved to the current briefing's
+button; it was a browser-control selection issue, not an application failure.
+The [Worlds](evidence/fpv-generated-shell-worlds-launch.png) and
+[Academy](evidence/fpv-generated-shell-academy-launch.png) captures retain those
+actual UI observations. Worlds resumed an existing Clearing check-in session;
+this does not assert a fresh start, hardware FPS, audible output or fullscreen
+permission behavior.
 
 Reproduce the source audit without building a package:
 
