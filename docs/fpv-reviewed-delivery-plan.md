@@ -51,6 +51,28 @@ Quality presets must preserve collision, relevant sight lines and objective acto
 Measure frame times, loading and resource disposal before claiming performance.
 No multiplayer, online publishing or universal commercial-map conversion is added.
 
+### Optional Adventure examples checkpoint — 4 October 2026
+
+The D3 data-only Adventure increment converts all 60 retained authoring proofs
+into an optional Library-import JSON: both modes for each of 30 challenges,
+with the original 178 bundled examples and all core download inputs unchanged.
+The converter passes 992 checks and 120 exact original/transport replays; the
+actual admitted host passes 395 checks covering all 60 imports/lookups and
+persistence plus 12 complete rendered replays across both modes and six worlds.
+All original zero-contact and six reduced-health duel outcomes are retained.
+See [evidence and limits](fpv-adventure-optional-examples.md). Public availability
+requires protected merge and a working download link; it is not implied by local
+qualification. Historical failed fixture runs remain visible.
+
+The observed explicit World-host disposal ordering defect is the next narrow
+independent fix: shell teardown removes the menu hint target before menu
+navigation cleanup. It is not fixed by the data change. Then continue the
+separate 28 alternate School examples, audit one evidence-based optional lesson
+recommendation, and improve optional-example discoverability in Library without
+automatic download or core precaching. Existing section-watch, longest-section
+practice, live height/speed/tilt hints and touch/controller flows remain delivered
+features to preserve, not duplicate. Broader D3 work and D4–D6 remain open.
+
 ### Campus facade checkpoint — 4 October 2026
 
 Quarry #1016 is merged at `47d2019dced85d80671b2d780da662f50ea11c20`.
