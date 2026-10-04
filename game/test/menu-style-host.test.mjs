@@ -451,7 +451,7 @@ test('denied appearance saving leaves Team local choice usable without replacing
   customize(page, 'coop-');
   change(page, 'coop-theme-ornaments', 'off');
   reflects(page, 'coop-', 'vyshyvanka', 'off');
-  const status = page.doc.querySelector('[data-theme-controls] [role="status"]');
+  const status = page.doc.querySelector('[data-theme-controls] > [role="status"]');
   assert.match(status.textContent, /session|save/i);
   assert.deepEqual(store.map, before);
   page.win.emit('storage', {
