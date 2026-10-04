@@ -1,0 +1,78 @@
+{
+  "format": "FPVOptionalWorldRelease.v1",
+  "id": "mountain-reservoir",
+  "revision": "r16",
+  "title": {
+    "en": "Mountain Reservoir",
+    "uk": "Гірське водосховище"
+  },
+  "worldCount": 1,
+  "courseCount": 8,
+  "proofCount": 16,
+  "modes": [
+    "self-level",
+    "acro"
+  ],
+  "files": {
+    "pack": {
+      "path": "mountain-reservoir.r16.rlpack",
+      "bytes": 1379988,
+      "sha256": "50ffbb0e5da7dec94862a8f2ca85cfeb60542d3fe9f86bd3c4e288dfa0a2e554"
+    },
+    "editable": {
+      "path": "mountain-reservoir.r16.zip",
+      "bytes": 1380049,
+      "sha256": "ddef262aa80b83361ac2fe814ce3b018deb0fb39435cb9ea30d73046b27c6613"
+    },
+    "proofs": {
+      "path": "mountain-reservoir.r16.proofs.json",
+      "bytes": 908574,
+      "sha256": "073ee3e359764d35039f607d02d0815ac0768b892d046b1426c5c4a55f4cacfb"
+    }
+  },
+  "license": "CC0-1.0",
+  "defaultCatalogueChanges": 0,
+  "waterPolicy": "Lake scenery lies outside playable land-side bounds; no water physics or island-flight claim.",
+  "requiredCapabilities": [
+    {
+      "name": "REVEALLINE_surface_coating",
+      "version": 1,
+      "kind": "opaque-finish",
+      "runtimePullRequest": 1088
+    }
+  ],
+  "qualification": {
+    "sourceCommit": "351b58ced0d3da1f2e081e4c90f4853bba8b400b",
+    "assetChecks": 306,
+    "retainedRootContactChecks": 320,
+    "ordinaryFlightChecks": 575,
+    "freshExactPackProofs": 16,
+    "actualStaticFacadeObservations": 8,
+    "staticBrowserReceipt": "../../evidence/r16-static-facade.json",
+    "ordinaryFlightReceipt": "../../evidence/r16-qualification.json",
+    "assetReceipt": "../../evidence/r16-maintenance-qualification.json",
+    "rootContactReceipt": "../../evidence/r15-root-contact-qualification.json",
+    "proofParityReceipt": "../../evidence/r16-proof-parity.json",
+    "nativeR16Status": "Accepted zero-throttle native-clock fixture smoke: Ready/Arm/active47.1s/P pause/Continue. Same fixture draw observer/private storage namespace, not standalone-entry; Pause locator offscreen, keyboardP verified. No native completion/FPS claim.",
+    "historicalR8ImportAndOfflineEvidence": "../r8/manifest.json",
+    "limits": "Accepted bounded retaining finish, tree-foot contact and closed hut detail; broader art and hardware quality remain separate. Prior r8 offline is historical, not a new r16 claim.",
+    "browserClockScope": "Controlled RAF +200ms per pulse at public1x replay; real performance clock and production focus/visibility/pause guards unchanged. Entire16 Watch proofs require real UI and simulation/renderer terminal identity; no state/tick/completion assignment. Not native-clock playback, endurance or FPS. Separate genuine-native-clock fixture mode retains draw observer/private storage namespace and is a zero-throttle launch only, not standalone entry.",
+    "mergedRuntimeBase": "3bc7a923da2b7d50a6a675a91d5560005ad0f20d",
+    "admittedBrowserRuntime": "364fb78c3dc7e268b84b0a13349af32864bca802",
+    "currentMainBridgeChecks": 120,
+    "currentMainBridgeReceipt": "../../evidence/r16-main-bridge.json",
+    "runtimeBridge": "All95 inputs exact merged main;94 equal admitted364. Only qualified language-phase host +105B differs; renderer/coating and20-member proof closure unchanged. No fresh whole-head package claim.",
+    "browserChecks": 304,
+    "completeControlledRAFWatchReplays": 16,
+    "browserReceipt": "../../evidence/r16-final-browser.json",
+    "nativeClockReceipt": "../../evidence/r16-native-smoke.txt"
+  },
+  "change": "Required opaque retaining finish, full-foot rooting of existing trees and closed maintenance facade in existing batches; exact collision/routes preserved.",
+  "previousPublishedRevision": "r11",
+  "intermediateUnpublishedRevisions": [
+    "r12",
+    "r13",
+    "r14",
+    "r15"
+  ]
+}
