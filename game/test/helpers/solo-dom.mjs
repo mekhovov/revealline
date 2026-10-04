@@ -81,6 +81,11 @@ class SoloDocument extends Document {
   createElement(tag) {
     return new SoloElement(this, tag);
   }
+  createTextNode(value) {
+    const node = new SoloElement(this, 'span');
+    node.textContent = value;
+    return node;
+  }
 }
 function mount(document, html) {
   const stack = [document.body];

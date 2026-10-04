@@ -3,6 +3,7 @@ import { readFile } from 'node:fs/promises';
 import path from 'node:path';
 import { parse } from 'acorn';
 import LZString from 'lz-string';
+import { compactContentRegistry } from './localization.mjs';
 import { projectEditionModuleIndentation } from './edition-code-indentation.mjs';
 
 const hash = (bytes) => createHash('sha256').update(bytes).digest('hex');
@@ -110,17 +111,60 @@ export function projectDefaultContentRegistry(bytes, { codec, license }) {
   const messagesNode = tree.body[0]?.declarations?.[0]?.init;
   const groupsNode = tree.body[1]?.declarations?.[0]?.init?.callee?.object;
   const recordsNode = tree.body[2]?.declaration?.arguments?.[0]?.callee?.object;
-  if (![messagesNode, groupsNode, recordsNode].every((node) => node?.type === 'ArrayExpression'))
-    throw new Error('Unknown generated content registry tuples.');
-  const [messages, groups, records] = [messagesNode, groupsNode, recordsNode].map((node) =>
-    JSON.parse(source.slice(node.start, node.end)),
-  );
+  let messages, groups, records, packedSource = false;
+  if ([messagesNode, groupsNode, recordsNode].every((node) => node?.type === 'ArrayExpression')) {
+    [messages, groups, records] = [messagesNode, groupsNode, recordsNode].map((node) =>
+      JSON.parse(source.slice(node.start, node.end)),
+    );
+  } else {
+    const packedNode = tree.body[1]?.declarations?.[0]?.init;
+    const payloadNode = packedNode?.arguments?.[0];
+    const payload =
+      packedNode?.type === 'CallExpression' &&
+      packedNode.callee?.type === 'MemberExpression' &&
+      packedNode.callee.object?.name === 'JSON' &&
+      packedNode.callee.property?.name === 'parse' &&
+      payloadNode?.type === 'CallExpression' &&
+      payloadNode.callee?.name === 'decode' &&
+      payloadNode.arguments?.length === 1 &&
+      payloadNode.arguments[0]?.type === 'Literal' &&
+      typeof payloadNode.arguments[0].value === 'string'
+        ? payloadNode.arguments[0].value
+        : null;
+    const decoded = payload && LZString.decompressFromBase64(payload);
+    let packed;
+    try {
+      packed = decoded && JSON.parse(decoded);
+    } catch {}
+    if (!Array.isArray(packed) || packed.length !== 3 || !packed.every(Array.isArray))
+      throw new Error('Unknown generated content registry tuples.');
+    [messages, groups, records] = packed;
+    const encodedIdentities = source.match(/const identities = Array\.from\(atob\(("(?:[^"\\]|\\.)*")\)/)?.[1];
+    if (records.every(Number.isInteger)) {
+      if (!encodedIdentities) throw new Error('Unknown generated content registry identities.');
+      const identities = Buffer.from(JSON.parse(encodedIdentities), 'base64').toString('hex').match(/.{16}/g) || [];
+      if (identities.length !== records.length || !identities.every((identity) => /^[a-f0-9]{16}$/.test(identity)))
+        throw new Error('Invalid generated content registry identities.');
+      records = records.map((index, row) => [identities[row], index]);
+    }
+    if (!records.every(([identity, index]) => typeof identity === 'string' && Number.isInteger(index) && index >= 0 && index < groups.length))
+      throw new Error('Invalid generated content registry records.');
+    const registry = Object.fromEntries(
+      records.map(([identity, index]) => [
+        identity,
+        { fields: Object.fromEntries(groups[index].map(([field, message]) => [field, messages[message]])) },
+      ]),
+    );
+    if (compactContentRegistry(registry) !== source)
+      throw new Error('Generated content registry wrapper changed.');
+    packedSource = true;
+  }
   const expected =
     '// Generated from explicitly registered first-party content.\n' +
     `const messages = ${JSON.stringify(messages)};\n` +
     `const groups = ${JSON.stringify(groups)}.map(entries => ({fields: Object.fromEntries(entries.map(([field, index]) => [field, messages[index]]))}));\n` +
     `export default Object.fromEntries(${JSON.stringify(records)}.map(([identity, index]) => [identity, groups[index]]));\n`;
-  if (source !== expected) throw new Error('Generated content registry wrapper changed.');
+  if (!packedSource && source !== expected) throw new Error('Generated content registry wrapper changed.');
   const original = JSON.stringify([messages, groups, records]);
   const encoded = LZString.compressToBase64(original);
   if (LZString.decompressFromBase64(encoded) !== original)
