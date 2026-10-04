@@ -56,36 +56,27 @@ export function worldLibraryIndex(bytes) {
   });
 }
 
-async function read(url, limit, signal, progress) {
-  const response = await fetch(url, {
-    signal,
-    cache: 'no-store',
-    credentials: 'omit',
-    redirect: 'error',
+function read(url, bytes, signal, progress, sha256) {
+  signal.throwIfAborted();
+  return new Promise((resolve, reject) => {
+    const worker = new Worker(new URL('../fpv-worlds/worker.js', import.meta.url)),
+      cancel = () => worker.postMessage({ type: 'world-cancel' }),
+      finish = (error, value) => {
+        signal.removeEventListener('abort', cancel);
+        worker.terminate();
+        if (error || signal.aborted) reject(error ?? signal.reason);
+        else resolve(value);
+      };
+    worker.onerror = () => finish(new Error('World download unavailable.'));
+    worker.onmessageerror = worker.onerror;
+    worker.onmessage = ({ data }) => {
+      if (data.type === 'world-progress') progress(data.bytes);
+      else
+        finish(data.type === 'world-done' ? null : new Error('World download failed.'), data.bytes);
+    };
+    signal.addEventListener('abort', cancel, { once: true });
+    worker.postMessage({ type: 'world-read', url, bytes, sha256 });
   });
-  const reader = response.body?.getReader();
-  try {
-    check(response.ok && reader);
-    const advertised = response.headers.get('content-length');
-    check(
-      !advertised ||
-        (Number.isSafeInteger(+advertised) && +advertised >= 0 && +advertised <= limit),
-    );
-    const bytes = new Uint8Array(limit);
-    let size = 0;
-    while (true) {
-      signal.throwIfAborted();
-      const { done, value } = await reader.read();
-      if (done) break;
-      check(size + value.byteLength <= limit);
-      bytes.set(value, size);
-      size += value.byteLength;
-      progress(size);
-    }
-    return bytes.subarray(0, size);
-  } finally {
-    if (reader) await reader.cancel().catch(() => {});
-  }
 }
 
 export function mountWorldLibrary({ el, txt, parent, begin, install }) {
@@ -154,9 +145,15 @@ export function mountWorldLibrary({ el, txt, parent, begin, install }) {
     try {
       const generation = row ? await begin() : null;
       signal.throwIfAborted();
-      const bytes = await read(row?.url ?? indexURL, row?.bytes ?? 8192, signal, (size) => {
-        if (row) show(`${size} / ${row.bytes} B`, `${size} / ${row.bytes} B`);
-      });
+      const bytes = await read(
+        row?.url ?? indexURL,
+        row?.bytes ?? 8192,
+        signal,
+        (size) => {
+          if (row) show(`${size} / ${row.bytes} B`, `${size} / ${row.bytes} B`);
+        },
+        row?.sha256,
+      );
       signal.throwIfAborted();
       if (row) {
         check(bytes.length === row.bytes && (await worldSHA256(bytes)) === row.sha256);

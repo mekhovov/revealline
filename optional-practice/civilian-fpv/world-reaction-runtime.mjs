@@ -59,7 +59,7 @@ const sourceHashes={
 'game/audio/reactions/actors.mjs':
 '79debf91cafa2e01cd65170037ee483977cbf7d5c3a619ccac9ed400264598b8',
 'optional-practice/civilian-fpv/world-library.mjs':
-'77eac11bc0ad5250dfcafedde733749a4d0296ed22b9a65da3c40a63db71951d',
+'1f885ed9b66a52fa099977a19479ab6c6e234395c74c4381f21b4d772e86c82c',
 'game/audio/reactions/guide-0-en.m4a':
 '58f961f54b52d0dbb58f53f000ca85bba166236126e135dc1f5e89f8f9a94210',
 'game/audio/reactions/guide-0-uk.m4a':
@@ -6470,35 +6470,28 @@ return{...row,url:origin+row.commit+'/'+row.path};
 });
 }
 
-async function read(url,limit,signal,progress){
-const response=await fetch(url,{
-signal,
-cache:'no-store',
-credentials:'omit',
-redirect:'error',
-});
-const reader=response.body?.getReader();
-try{
-check(response.ok&&reader);
-const advertised=response.headers.get('content-length');
-check(
-!advertised||(Number.isSafeInteger(+advertised)&& +advertised>=0&& +advertised<=limit),
-);
-const bytes=new Uint8Array(limit);
-let size=0;
-while(true){
+function read(url,bytes,signal,progress,sha256){
 signal.throwIfAborted();
-const{done,value}=await reader.read();
-if(done)break;
-check(size+value.byteLength<=limit);
-bytes.set(value,size);
-size+=value.byteLength;
-progress(size);
-}
-return bytes.subarray(0,size);
-}finally{
-if(reader)await reader.cancel().catch(()=>{});
-}
+return new Promise((resolve,reject)=>{
+const worker=new Worker(
+new URL('../fpv-worlds/worker.js',new URL('./world-library.mjs',import.meta.url).href),
+),
+cancel=()=>worker.postMessage({type:'world-cancel'}),
+finish=(error,value)=>{
+signal.removeEventListener('abort',cancel);
+worker.terminate();
+if(error||signal.aborted)reject(error??signal.reason);
+else resolve(value);
+};
+worker.onerror=()=>finish(new Error('World download unavailable.'));
+worker.onmessageerror=worker.onerror;
+worker.onmessage=({data})=>{
+if(data.type==='world-progress')progress(data.bytes);
+else finish(data.type==='world-done'?null:new Error('World download failed.'),data.bytes);
+};
+signal.addEventListener('abort',cancel,{once:true});
+worker.postMessage({type:'world-read',url,bytes,sha256});
+});
 }
 
 function mountWorldLibrary({el,txt,parent,begin,install}){
@@ -6567,9 +6560,15 @@ const timer=setTimeout(()=>controller.abort(),120000);
 try{
 const generation=row?await begin():null;
 signal.throwIfAborted();
-const bytes=await read(row?.url??indexURL,row?.bytes??8192,signal,(size)=>{
+const bytes=await read(
+row?.url??indexURL,
+row?.bytes??8192,
+signal,
+(size)=>{
 if(row)show(`${size} / ${row.bytes} B`,`${size} / ${row.bytes} B`);
-});
+},
+row?.sha256,
+);
 signal.throwIfAborted();
 if(row){
 check(bytes.length===row.bytes&&(await worldSHA256(bytes))===row.sha256);
