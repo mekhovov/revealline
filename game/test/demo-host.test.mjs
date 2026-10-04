@@ -562,3 +562,24 @@ test('demo control hints show the saved keyboard bindings in the actual app', as
   assert.match(page.$('demo-bound-controls').textContent, /Directions: I · K · J · L/);
   assert.deepEqual(page.errors, []);
 });
+
+test('compact toolbar owns transport; details are absent from the board until requested', async (t) => {
+  const page = await demoPage(t);
+  await page.open();
+  assert.equal(page.$('demo-panel').hidden, true);
+  for (const id of ['demo-watch-pause', 'demo-next', 'demo-interrupt', 'demo-details-toggle']) {
+    assert.ok(page.$(id).closest('.demo-header-actions'), id);
+    assert.ok(page.$(id).getAttribute('aria-label'), 'Icon controls retain localized names.');
+  }
+  const run = page.demoFrame.run;
+  page.$('demo-details-toggle').click();
+  assert.equal(page.$('demo-panel').hidden, false);
+  assert.equal(page.$('demo-details-toggle').getAttribute('aria-expanded'), 'true');
+  frames(page, 4);
+  assert.equal(page.demoFrame.run, run, 'Opening details cannot take over or replace the run.');
+  page.$('demo-details-toggle').click();
+  assert.equal(page.$('demo-panel').hidden, true);
+  page.$('demo-interrupt').click();
+  assert.equal(page.$('demo-panel').hidden, false);
+  assert.equal(page.$('demo-actions').hidden, false);
+});
