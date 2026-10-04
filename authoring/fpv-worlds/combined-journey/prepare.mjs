@@ -43,6 +43,11 @@ const inputs = [];
 const overlays = new Map();
 for (const row of inventory.inputs) {
   const bytes = git('show', revision + ':' + row.path);
+  assert.equal(
+    hash(await fs.readFile(path.join(root, row.path))),
+    hash(bytes),
+    'Authoring inspection must use the exact committed source: ' + row.path,
+  );
   const sha256 = hash(bytes);
   const changed = bytes.length !== row.bytes || sha256 !== row.sha256;
   if (changed) {
@@ -78,7 +83,9 @@ assert.equal(hash(packBytes), '50ffbb0e5da7dec94862a8f2ca85cfeb60542d3fe9f86bd3c
 assert.equal(proofBytes.length, 908574);
 assert.equal(hash(proofBytes), '073ee3e359764d35039f607d02d0815ac0768b892d046b1426c5c4a55f4cacfb');
 const { inspectPack } = await import(
-  pathToFileURL(path.join(player, 'optional-practice/civilian-fpv/world-content.mjs'))
+  // The repository's ESM package boundary gives the pinned UMD i18n dependency
+  // its established Node loader semantics. The staged browser ZIP has no package.json.
+  pathToFileURL(path.join(root, 'optional-practice/civilian-fpv/world-content.mjs'))
 );
 const pack = await inspectPack(packBytes);
 assert.equal(pack.project.courses.length, 8);
