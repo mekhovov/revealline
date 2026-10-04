@@ -51,6 +51,10 @@
 <label
   >View
   <select id="pose">
+    <option value="grassclose">Grass · close FPV</option>
+    <option value="gravelclose">Gravel/grass boundary · close FPV</option>
+    <option value="groundapproach">Ground and hut · approach</option>
+    <option value="groundchase">Ground scale · racer chase</option>
     <option value="westjoin">Western terrace join · low FPV</option>
     <option value="northjoin">Northern terrace join · low FPV</option>
     <option value="westgrazing">Western join · grazing angle</option>
@@ -100,6 +104,7 @@
   </select></label
 >
 <button id="render" disabled>Render selected view</button>
+<button id="dispose" disabled>Verify resource disposal</button>
 <p id="status" role="status">Checking immutable inputs…</p>
 <canvas id="view"></canvas>
 <small
@@ -123,8 +128,28 @@
     if (!r.ok) throw Error('HTTP ' + r.status + ' ' + url);
     return r.arrayBuffer();
   };
-  let renderer, project, sceneBytes, manifest;
+  let renderer,
+    project,
+    sceneBytes,
+    manifest,
+    disposal = null;
   const poses = {
+    grassclose: [
+      [-13, 1.7, 16],
+      [-11.5, 0.01, 14],
+    ],
+    gravelclose: [
+      [0.1, 1.8, 19],
+      [2.8, 0.01, 18],
+    ],
+    groundapproach: [
+      [-17, 7, 10],
+      [-21, 1, -7],
+    ],
+    groundchase: [
+      [-16, 3, 12],
+      [-22, 0, -8],
+    ],
     westjoin: [
       [-30, 1.4, 24],
       [-41, 6, -11],
@@ -216,7 +241,12 @@
         lastInput: { throttle: 0 },
       };
       renderer.draw(state, {
-        cameraMode: $('pose').value === 'overview' ? 'overview' : 'fpv',
+        cameraMode:
+          $('pose').value === 'overview'
+            ? 'overview'
+            : $('pose').value === 'groundchase'
+              ? 'chase'
+              : 'fpv',
         cameraFov: 72,
         cameraTilt: 0,
       });
@@ -252,6 +282,7 @@
           fixture: await hash(new TextEncoder().encode(JSON.stringify(manifest))),
           observations,
           errors,
+          disposal,
         },
         null,
         2,
@@ -295,6 +326,7 @@
     if (manifest.content.some((f) => f.path === 'content/before-scene.glb')) {
       sceneBytes.before = await get('./content/before-scene.glb');
       $('variant-label').hidden = false;
+      $('variant').options[1].textContent = 'Before · ' + manifest.beforeRevision;
     }
     const { createFlightRenderer } = await import(base + 'world-assets.mjs');
     renderer = createFlightRenderer({
@@ -306,6 +338,33 @@
     if (!renderer.available) throw Error('Renderer unavailable');
     $('render').onclick = render;
     await render();
+    $('dispose').disabled = false;
+    $('dispose').onclick = async () => {
+      const before = renderer.resources();
+      renderer.dispose();
+      const after = renderer.resources();
+      disposal = {
+        before,
+        after,
+        passed: after.disposed && Object.values(after.registered).every((n) => n === 0),
+      };
+      $('render').disabled = true;
+      $('dispose').disabled = true;
+      $('receipt').value = JSON.stringify(
+        {
+          format: 'FPVMountainReservoirStaticViews.v1',
+          fixture: await hash(new TextEncoder().encode(JSON.stringify(manifest))),
+          observations,
+          errors,
+          disposal,
+        },
+        null,
+        2,
+      );
+      $('status').textContent = disposal.passed
+        ? 'Disposal PASS. Reload before rendering again.'
+        : 'FAILED: resources retained after disposal';
+    };
   } catch (error) {
     $('status').textContent = 'FAILED: ' + error.message;
     errors.push(error.stack);

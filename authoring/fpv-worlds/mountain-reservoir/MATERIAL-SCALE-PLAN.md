@@ -5,6 +5,20 @@ is isolated in PR #1077 at `ab3a3585d`. Integrate its accepted r9 source through
 normal main history before producing a later revision. Do not overwrite any r8
 or r9 pack, proof or fixture, and do not resume Festival yet.
 
+Implementation was subsequently authorized within this scope. The published r9
+head was merged locally into this independent branch; PR #1077 remains unchanged.
+The first static candidate is revision r10, not a publication candidate. It has
+12,050 triangles, 13 materials, three textures and 48 unchanged colliders. The
+two new original 128px images total 45,004 bytes; source GLB is 1,216,772 bytes
+(`dd622e212522c50805f0efbe577fb911fa732603ccb324436df4640f2fdb2353`),
+prepared GLB is 1,215,260 bytes
+(`47df9d90932315bea83b117b49d4fc97aa6322cab1cd75230a066904ecfc2b9d`).
+The pinned prepare pipeline has zero validation errors. Manual asset comparison
+passes 148 checks; the original r8/r9 generation also remains exact in 315 checks.
+No r10 flight proof or visual acceptance is claimed. The first standalone gravel
+prototype was rejected during author inspection because it resembled fitted
+paving; the scene candidate uses separated aggregate and dusty gaps instead.
+
 ## Problem observed in frozen r8/r9
 
 The decorative rock ridge, reachable grass overlay and gravel paths all sample
