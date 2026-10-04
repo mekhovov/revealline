@@ -1019,6 +1019,7 @@ export function mountWorldApp({
     $('studio-status').textContent = String(message);
   };
   const reportError = (error) => {
+    if (disposed) return;
     status(error.message ?? error);
     if ($('flight-dialog').open) $('flight-status').textContent = error.message ?? error;
   };
