@@ -7,6 +7,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { parse } from 'acorn';
 import { format, resolveConfig } from 'prettier';
+import { projectEditionModuleIndentation } from './edition-code-indentation.mjs';
 import { OPTIONAL_PACKAGE_POLICIES } from '../publishing/optional-package-policy.mjs';
 import { REACTION_VOICE_PILOT } from '../game/audio/reactions/pilot.mjs';
 import { ACTOR_VOICE_RECORDINGS } from '../game/audio/reactions/actors.mjs';
@@ -162,11 +163,18 @@ const lines = [
       : `export const ${name} = ${owner};`,
   ),
 ];
-const generated = await format(lines.join('\n'), {
+const formatted = await format(lines.join('\n'), {
   ...(await resolveConfig(path.join(root, target))),
   filepath: path.join(root, target),
   parser: 'babel',
+  // This generated projection repeats nested source scopes. Keep newlines for
+  // inspection without charging their indentation to the offline source budget.
+  // Canonical modules and packed recordings retain their original bytes.
+  tabWidth: 0,
 });
+// Reuse the checked lexical projection only on this generated copy. It retains
+// every token, comment, literal and line terminator, including packed recordings.
+const generated = projectEditionModuleIndentation(target, Buffer.from(formatted)).toString('utf8');
 const check = process.argv.includes('--check');
 if (process.argv.slice(2).some((arg) => arg !== '--check')) throw new Error('Use [--check].');
 if (check) {

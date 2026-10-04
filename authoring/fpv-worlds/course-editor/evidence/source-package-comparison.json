@@ -1,0 +1,18 @@
+{
+  "sourceChecks": 197,
+  "packageChecks": 241,
+  "commonCheckNames": 190,
+  "allChecksPassed": true,
+  "sourceRevision": "23ad656c96f1f89f415e246423bdc5de1377077d",
+  "packageSourceRevision": "23ad656c96f1f89f415e246423bdc5de1377077d",
+  "packageOverlays": [],
+  "projectAgreement": "All eight courses match after only the explicitly measured second-course Acro spatial translation. Project/world/source/provenance/bindings/overrides/playlist remain exact.",
+  "trustedDelta": {
+    "x": 3000,
+    "y": 0,
+    "z": 0
+  },
+  "limits": [
+    "No timing, FPS, device, offline or edited-flight completion comparison."
+  ]
+}

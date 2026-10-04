@@ -1,0 +1,262 @@
+<!doctype html><meta charset="utf-8" /><style>
+  body {
+    margin: 8px;
+    background: #192631;
+    color: #eef4ef;
+    font: 14px system-ui;
+  }
+  canvas {
+    width: 640px;
+    height: 360px;
+    display: block;
+  }
+</style>
+<p id="status">Loading frozen modules</p>
+<canvas id="canvas" width="640" height="360"></canvas>
+<script type="module">
+  const variant = new URL(location.href).searchParams.get('variant'),
+    canvas = document.getElementById('canvas'),
+    status = document.getElementById('status'),
+    receipt = {
+      variant,
+      samples: [],
+      targets: [],
+      checks: [],
+      errors: [],
+      warnings: [],
+      losses: 0,
+    },
+    send = (type, body = {}, transfer = []) =>
+      parent.postMessage({ type, ...body }, location.origin, transfer),
+    check = (name, pass) => {
+      receipt.checks.push({ name, pass: !!pass });
+      if (!pass) throw Error(name);
+    },
+    digest = async (b) =>
+      [...new Uint8Array(await crypto.subtle.digest('SHA-256', b))]
+        .map((x) => x.toString(16).padStart(2, '0'))
+        .join(''),
+    frame = () => new Promise(requestAnimationFrame);
+  let runtime,
+    flight,
+    originalPMREM,
+    THREE,
+    targets = [],
+    maxLive = 0;
+  const originalWarn = console.warn,
+    originalError = console.error;
+  console.warn = (...args) => {
+    receipt.warnings.push(args.map(String).join(' '));
+    originalWarn(...args);
+  };
+  console.error = (...args) => {
+    receipt.errors.push(args.map(String).join(' '));
+    originalError(...args);
+  };
+  window.addEventListener('error', (e) => receipt.errors.push(e.message));
+  window.addEventListener('unhandledrejection', (e) => receipt.errors.push(String(e.reason)));
+  try {
+    const manifest = await (await fetch('/manifest.json', { cache: 'no-store' })).json();
+    receipt.source = manifest.variants[variant];
+    for (const [name, pin] of Object.entries(receipt.source.files)) {
+      const response = await fetch('./' + name, { cache: 'no-store' });
+      check(
+        'source ' + name,
+        response.ok && (await digest(await response.arrayBuffer())) === pin.sha256,
+      );
+    }
+    const root = './optional-practice/civilian-fpv/',
+      [assets, catalogue, model, three, academy] = await Promise.all(
+        [
+          'world-assets.mjs',
+          'world-catalogue.mjs',
+          'world-model.mjs',
+          'vendor/three.module.js',
+          'model.mjs',
+        ].map((p) => import(root + p)),
+      );
+    THREE = three;
+    await model.initWorldRuntime();
+    originalPMREM = THREE.PMREMGenerator.prototype.fromScene;
+    THREE.PMREMGenerator.prototype.fromScene = function (...args) {
+      const start = performance.now(),
+        value = originalPMREM.apply(this, args),
+        probe = args[0],
+        row = {
+          id: targets.length,
+          ms: performance.now() - start,
+          sky: probe.children[0].material.color.toArray(),
+          ground: probe.children[1].material.color.toArray(),
+          panel: probe.children[2].geometry.parameters,
+          disposed: 0,
+        };
+      value.addEventListener('dispose', () => row.disposed++);
+      targets.push(row);
+      maxLive = Math.max(maxLive, targets.filter((t) => !t.disposed).length);
+      return value;
+    };
+    runtime = assets.createFlightRenderer({
+      canvas,
+      reducedMotion: true,
+      window: { devicePixelRatio: 1 },
+      onContextLost: () => receipt.losses++,
+    });
+    check('WebGL available', runtime.available);
+    const entries = [...catalogue.WORLD_CATALOGUE, ...catalogue.BEGINNER_CATALOGUE],
+      yard = entries.find((e) => e.id === 'container-yard-08'),
+      school = entries.find((e) => e.id === 'beginner-40'),
+      warehouse = entries.find((e) => e.id === 'warehouse-08');
+    check('matrix entries available', yard && school && warehouse);
+    const rows = [
+      { name: 'yard-imported', entry: yard, imported: true },
+      { name: 'yard-fallback', entry: yard },
+      { name: 'yard-retry', entry: yard },
+      { name: 'school-imported', entry: school, imported: true },
+      { name: 'school-fallback', entry: school },
+      { name: 'school-bounds', entry: school, bounds: true },
+      { name: 'warehouse-imported', entry: warehouse, imported: true },
+      { name: 'warehouse-fallback', entry: warehouse },
+      { name: 'pixel-yard', entry: yard, pixel: true },
+      { name: 'pixel-retry', entry: yard, pixel: true },
+      { name: 'workshop-school', entry: school, collection: 'industrial-workshop' },
+      { name: 'workshop-retry', entry: school, collection: 'industrial-workshop' },
+    ];
+    async function render(key, state, meta) {
+      const started = performance.now(),
+        prepared = await runtime.prepare();
+      check('prepared ' + key, prepared);
+      const prepareMs = performance.now() - started;
+      for (let i = 0; i < 3; i++) {
+        await frame();
+        runtime.draw(state, { cameraMode: 'overview' });
+      }
+      const gl = canvas.getContext('webgl2'),
+        pixels = new Uint8Array(gl.drawingBufferWidth * gl.drawingBufferHeight * 4);
+      gl.readPixels(
+        0,
+        0,
+        gl.drawingBufferWidth,
+        gl.drawingBufferHeight,
+        gl.RGBA,
+        gl.UNSIGNED_BYTE,
+        pixels,
+      );
+      check('WebGL error free ' + key, gl.getError() === gl.NO_ERROR);
+      const resources = runtime.resources(),
+        sample = {
+          key,
+          ...meta,
+          prepareMs,
+          resources,
+          allocationCount: targets.length,
+          liveTargets: targets.filter((t) => !t.disposed).length,
+        };
+      receipt.samples.push(sample);
+      send('sample', { key, pixels: pixels.buffer, resources, meta: sample }, [pixels.buffer]);
+    }
+    for (let cycle = 1; cycle <= 2; cycle++)
+      for (const row of rows) {
+        status.textContent = `${variant}: cycle ${cycle}/2 ${row.name}`;
+        flight?.dispose();
+        const course = structuredClone(row.entry.course);
+        if (row.pixel) {
+          course.world.theme = 'pixel';
+          delete course.world.themeProfile;
+        }
+        if (row.bounds) {
+          const b = course.bounds;
+          for (const axis of ['x', 'z']) {
+            b.min[axis] -= 2000;
+            b.max[axis] += 2000;
+          }
+          check(
+            'bounds variant changes course',
+            JSON.stringify(course.bounds) !== JSON.stringify(row.entry.course.bounds),
+          );
+        }
+        const before = JSON.stringify(course);
+        flight = (row.entry.legacy ? academy.createFlight : model.createWorldFlight)({
+          course,
+          mode: 'self-level',
+        });
+        const state = flight.snapshot(),
+          stateBefore = JSON.stringify(state);
+        runtime.setPresentation({ collectionId: row.collection ?? 'authored' });
+        const start = performance.now();
+        runtime.setCourse(course, 'self-level');
+        const setCourseMs = performance.now() - start,
+          allocationsAfterCourse = targets.length;
+        let loadMs = 0;
+        if (row.imported) {
+          const blob = assets.builtinWorldScene(course),
+            loadStart = performance.now();
+          await runtime.loadScene(blob);
+          loadMs = performance.now() - loadStart;
+        }
+        for (const quality of ['low', 'balanced', 'high']) {
+          const qStart = performance.now();
+          runtime.setQuality(quality);
+          const setQualityMs = performance.now() - qStart;
+          await render(`${cycle}/${row.name}/${quality}`, state, {
+            cycle,
+            name: row.name,
+            quality,
+            setCourseMs,
+            loadMs,
+            setQualityMs,
+          });
+          check(
+            'quality creates no PMREM ' + cycle + row.name + quality,
+            targets.length === allocationsAfterCourse,
+          );
+        }
+        check(
+          'course/state immutable ' + cycle + row.name,
+          JSON.stringify(course) === before && JSON.stringify(state) === stateBefore,
+        );
+      }
+    runtime.dispose();
+    runtime.dispose();
+    flight?.dispose();
+    receipt.finalResources = runtime.resources();
+    check(
+      'all targets disposed exactly once',
+      targets.every((t) => t.disposed === 1),
+    );
+    check('single live target', maxLive === 1);
+    check(
+      'registered resources zero',
+      Object.values(receipt.finalResources.registered).every((n) => n === 0),
+    );
+    check('no error or warning', receipt.errors.length === 0 && receipt.warnings.length === 0);
+    for (const sample of receipt.samples.filter((s) => s.cycle === 2)) {
+      const prior = receipt.samples.find(
+        (s) => s.cycle === 1 && s.name === sample.name && s.quality === sample.quality,
+      );
+      check(
+        'repeat texture/geometry plateau ' + sample.name + sample.quality,
+        prior &&
+          sample.resources.renderer.textures === prior.resources.renderer.textures &&
+          sample.resources.renderer.geometries === prior.resources.renderer.geometries,
+      );
+    }
+    receipt.targets = targets;
+    receipt.allocations = targets.length;
+    receipt.maxLive = maxLive;
+    receipt.pass = receipt.checks.every((c) => c.pass);
+    status.textContent = `${variant} complete: ${receipt.allocations} probes`;
+    send('done', { receipt });
+  } catch (error) {
+    receipt.errors.push(String(error.stack ?? error));
+    receipt.targets = targets;
+    receipt.pass = false;
+    runtime?.dispose();
+    flight?.dispose();
+    send('done', { receipt });
+    status.textContent = 'Failed: ' + error.message;
+  } finally {
+    if (originalPMREM) THREE.PMREMGenerator.prototype.fromScene = originalPMREM;
+    console.warn = originalWarn;
+    console.error = originalError;
+  }
+</script>

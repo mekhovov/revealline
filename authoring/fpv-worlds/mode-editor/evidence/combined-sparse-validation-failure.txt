@@ -1,0 +1,27 @@
+
+> revealline@0.142.4 validate
+> npm run i18n:check && node scripts/game-cli.mjs validate && node scripts/check-presentation-metadata.mjs && node scripts/refresh-fpv-reaction-runtime.mjs --check && node scripts/refresh-fpv-academy-audio.mjs --check && node scripts/refresh-fpv-play-shell.mjs --check && node scripts/refresh-fpv-presentation-assets.mjs --check
+
+
+> revealline@0.142.4 i18n:check
+> node scripts/localization.mjs check
+
+node:internal/fs/promises:952
+  const result = await PromisePrototypeThen(
+                 ^
+
+Error: ENOENT: no such file or directory, scandir '/private/tmp/fpv-editor-modes-20261004/site'
+    at async Object.readdir (node:internal/fs/promises:952:18)
+    at async walk (file:///private/tmp/fpv-editor-modes-20261004/scripts/localization.mjs:122:25)
+    at async sourceFiles (file:///private/tmp/fpv-editor-modes-20261004/scripts/localization.mjs:143:52)
+    at async extractTranslations (file:///private/tmp/fpv-editor-modes-20261004/scripts/localization.mjs:167:22)
+    at async validateLocalization (file:///private/tmp/fpv-editor-modes-20261004/scripts/localization.mjs:247:22)
+    at async main (file:///private/tmp/fpv-editor-modes-20261004/scripts/localization.mjs:328:30)
+    at async file:///private/tmp/fpv-editor-modes-20261004/scripts/localization.mjs:331:3 {
+  errno: -2,
+  code: 'ENOENT',
+  syscall: 'scandir',
+  path: '/private/tmp/fpv-editor-modes-20261004/site'
+}
+
+Node.js v20.19.5

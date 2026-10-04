@@ -747,6 +747,7 @@ export function mountWorldApp({
     packRemovalReview = null,
     restorePackIdentity = null,
     disposed = false,
+    closing = null,
     playShell = null;
   let entries = [],
     playlistId = unique('playlist'),
@@ -754,6 +755,7 @@ export function mountWorldApp({
     playingPlaylist = null,
     playlistIndex = 0;
   let editor = null,
+    editorScope = 'both',
     editorIndex = 0,
     editorSelection = null,
     undo = [],
@@ -763,6 +765,9 @@ export function mountWorldApp({
     projectGeneration = null,
     spatialEditor = null,
     actorEditor = null;
+  let editorFields = '',
+    courseScopeProject = null;
+  const courseScopes = new Map();
   let renderer = null,
     flight = null,
     recorder = null,
@@ -814,6 +819,7 @@ export function mountWorldApp({
   let selectedWorld = null,
     learningPreferences = null,
     learningResponse = null,
+    lessonReturn = null,
     modePractice = false;
   const sectors = createSectorTracker();
   let storage;
@@ -915,17 +921,20 @@ export function mountWorldApp({
   function demonstrationFor(entry, mode) {
     if (!entry) return null;
     entry = demonstrationEntry(entry);
-    const cache = demonstrationCache.get(entry.course) ?? new Map();
-    if (cache.has(mode)) return cache.get(mode);
+    const cache = demonstrationCache.get(entry.course) ?? new Map(),
+      cacheKey = `${entry.projectId ?? ''}:${entry.packIdentity}:${mode}`;
+    if (cache.has(cacheKey)) return cache.get(cacheKey);
     if (!entry.legacy) {
       const sourceIdentity = dataIdentity(validateWorldCourse(entry.course));
-      let candidate = WORLD_DEMONSTRATIONS.find(
-        (item) =>
-          item.proof.course === entry.id &&
-          item.proof.mode === mode &&
-          item.sourceIdentity === sourceIdentity,
-      );
-      if (!candidate && !entry.projectId) {
+      let candidate =
+        !entry.projectId &&
+        WORLD_DEMONSTRATIONS.find(
+          (item) =>
+            item.proof.course === entry.id &&
+            item.proof.mode === mode &&
+            item.sourceIdentity === sourceIdentity,
+        );
+      if (!candidate && (!entry.projectId || /^fpv-pack:[a-f0-9]{64}$/.test(entry.packIdentity))) {
         const saved = records.find((r) => {
           if (
             r.status !== 'verified' ||
@@ -937,7 +946,13 @@ export function mountWorldApp({
           )
             return false;
           try {
-            return dataIdentity(validateWorldCourse(r.course)) === sourceIdentity;
+            return (
+              dataIdentity(validateWorldCourse(r.course)) === sourceIdentity &&
+              r.proof.format === 'FlightAttempt.v2' &&
+              r.proof.model === WORLD_FLIGHT_MODEL &&
+              r.proof.backend === WORLD_COLLISION_BACKEND &&
+              r.proof.responseIdentity === responseIdentity(r.proof.response)
+            );
           } catch {
             return false;
           }
@@ -957,7 +972,7 @@ export function mountWorldApp({
         candidate.sourceIdentity === sourceIdentity
           ? proof
           : null;
-      cache.set(mode, match);
+      cache.set(cacheKey, match);
       demonstrationCache.set(entry.course, cache);
       return match;
     }
@@ -970,7 +985,7 @@ export function mountWorldApp({
     const match = Object.entries(identity).every(([key, value]) => proof[key] === value)
       ? proof
       : null;
-    cache.set(mode, match);
+    cache.set(cacheKey, match);
     demonstrationCache.set(entry.course, cache);
     return match;
   }
@@ -1018,6 +1033,7 @@ export function mountWorldApp({
     $('studio-status').textContent = String(message);
   };
   const reportError = (error) => {
+    if (disposed) return;
     status(error.message ?? error);
     if ($('flight-dialog').open) $('flight-status').textContent = error.message ?? error;
   };
@@ -1046,6 +1062,92 @@ export function mountWorldApp({
     });
     return b;
   };
+  const lessonReturnButton = button('', () => returnFromLesson());
+  const lessonReturnError = el('p');
+  lessonReturnError.id = 'world-return-status';
+  lessonReturnError.setAttribute('role', 'status');
+  lessonReturnButton.id = 'world-return-challenge';
+  lessonReturnButton.hidden = true;
+  listeners.push(() => {
+    lessonReturn = null;
+    lessonReturnButton.remove();
+    lessonReturnError.remove();
+  });
+  $('school-lessons').before(lessonReturnButton);
+  function paintLessonReturn(surface = playShell?.topDialog()?.dataset.modeSurface) {
+    lessonReturnButton.hidden = !lessonReturn;
+    lessonReturnError.hidden = !lessonReturn;
+    if (!lessonReturn) {
+      lessonReturnError.textContent = '';
+      return;
+    }
+    lessonReturnButton.textContent = `${txt('Return to', 'Повернутися до')} ${localized(lessonReturn.title)}`;
+    if (playShell && surface !== 'missions')
+      playShell.elements.content.home.append(lessonReturnButton);
+    else $('school-lessons').before(lessonReturnButton);
+    lessonReturnButton.after(lessonReturnError);
+  }
+  async function lessonOrigin(context) {
+    const entry = catalogue.find((item) => keyOf(item) === context.key),
+      pack = entry?.projectId
+        ? await worldStore?.get(entry.projectId, { sha256: entry.packIdentity.slice(9) })
+        : null,
+      saved = context.playlist
+        ? playlistStore
+            .snapshot()
+            .playlists.find(
+              (item) =>
+                item.id === context.playlist.id && item.revision === context.playlist.revision,
+            )
+        : null;
+    if (
+      !entry ||
+      (entry.projectId && !pack) ||
+      dataIdentity(validateWorldCourse(entry.course)) !== context.identity ||
+      (context.playlist && (!saved || dataIdentity(saved) !== dataIdentity(context.playlist)))
+    )
+      throw Error(
+        txt(
+          'The original challenge or playlist is unavailable. Restore its exact revision to return.',
+          'Початкове завдання або добірка недоступні. Відновіть їхню точну версію, щоб повернутися.',
+        ),
+      );
+    return { ...entry, course: context.course };
+  }
+  async function returnFromLesson() {
+    const context = lessonReturn;
+    if (!context) return;
+    let token = flightToken;
+    const owned = () => !disposed && token === flightToken && lessonReturn === context;
+    lessonReturnError.textContent = '';
+    try {
+      await lessonOrigin(context);
+      if (!owned()) return;
+      token++;
+      await closeFlight();
+      if (!owned()) return;
+      const entry = await lessonOrigin(context);
+      if (!owned()) return;
+      $('flight-mode').value = context.mode;
+      $('flight-source').value = context.source;
+      $('flight-camera').value = context.camera;
+      response = { ...context.response };
+      input.select(context.source);
+      savePreferences();
+      token++;
+      await startFlight(entry, {
+        mode: context.mode,
+        playlist: context.playlist,
+        index: context.index,
+        returning: context,
+      });
+    } catch (error) {
+      if (owned()) {
+        lessonReturnError.textContent = error.message;
+        throw error;
+      }
+    }
+  }
   const audio = createWorldAudio({ window: win, storage });
   const presentation = mountSimPresentation({
     root: doc,
@@ -1237,7 +1339,7 @@ export function mountWorldApp({
         canvas: $('world-editor-canvas'),
         window: win,
         course: editor,
-        mode: 'self-level',
+        mode: editorMode(),
         getPresentation: () => appearanceControls.resolve().appearance,
         onError: reportError,
         onSelect(ref) {
@@ -1245,7 +1347,7 @@ export function mountWorldApp({
           if (ref?.kind === 'criterion') editorIndex = ref.index;
           if (ref?.kind === 'actor') actorEditor?.select(ref.id);
           refreshEditor(false);
-          if (ref?.kind === 'criterion') actorEditor?.selectObjective('self-level', ref.index);
+          if (ref?.kind === 'criterion') actorEditor?.selectObjective(editorMode(), ref.index);
         },
         onPreview(ref) {
           if (ref?.position)
@@ -1266,7 +1368,7 @@ export function mountWorldApp({
   }
   function refreshEditorScene() {
     if (!spatialEditor || !editor) return;
-    spatialEditor.setCourse(editor);
+    spatialEditor.setCourse(editor, editorMode());
     const profile = resolveSimThemeProfile(editor, appearanceControls.resolve().appearance);
     let status = $('editor-appearance-status');
     if (!status) {
@@ -1304,12 +1406,16 @@ export function mountWorldApp({
       );
     }
   }
+  function editorMode() {
+    return editorScope === 'acro' ? 'acro' : 'self-level';
+  }
+  function matchingRoutes(course) {
+    return canonicalWorldJSON(course.steps['self-level']) === canonicalWorldJSON(course.steps.acro);
+  }
   function routeEditModes(course) {
-    // Mode-specific authoring can change order and length. Decide once before
-    // mutation; equal indices alone never identify corresponding objectives.
-    return canonicalWorldJSON(course.steps['self-level']) === canonicalWorldJSON(course.steps.acro)
+    return editorScope === 'both' && matchingRoutes(course)
       ? ['self-level', 'acro']
-      : ['self-level'];
+      : [editorMode()];
   }
   const notebook = createFlightNotebook({
     courses: FLIGHT_COURSES,
@@ -2320,15 +2426,114 @@ export function mountWorldApp({
     await startFlight(ref.course, { playlist: p, index });
   }
 
+  const editorFieldValues = () =>
+    JSON.stringify(
+      [
+        'creator-title',
+        'creator-json',
+        'creator-theme',
+        ...coordinates.map((k) => `criterion-${k}`),
+      ].map((id) => $(id)?.value),
+    );
+  const projectOwnsCourse = (course) =>
+    editingProject &&
+    (editingProject.courses.some((c) => c.id === course.id && c.world.id === course.world.id) ||
+      (!editingProject.courses.length && course.world.id === editingProject.world.id));
+  function paintCoursePicker() {
+    let row = $('editor-project-course-row');
+    if (!row) {
+      row = el('div');
+      row.id = 'editor-project-course-row';
+      const label = el('label'),
+        choice = el('select'),
+        reset = button('', () => refreshEditor());
+      choice.id = 'editor-project-course';
+      reset.id = 'editor-reset-fields';
+      label.append(el('span'), choice);
+      row.append(label, reset);
+      $('creator-title').closest('label').before(row);
+      listeners.push(() => row.remove());
+      on(choice, 'change', () => {
+        const id = choice.value;
+        choice.value = editor?.id ?? '';
+        if (id === editor?.id) return;
+        if (editorFieldValues() !== editorFields || actorEditor?.hasPendingChanges()) {
+          status(
+            txt(
+              'Apply your pending fields or reset them before changing challenge. Your edits are kept.',
+              'Застосуйте або скиньте незастосовані поля перед зміною завдання. Ваші зміни збережено.',
+            ),
+          );
+          return;
+        }
+        const target = editingProject?.courses.find((c) => c.id === id);
+        if (!target) throw new Error(txt('Challenge unavailable.', 'Завдання недоступне.'));
+        const next = validateWorldCourse(target);
+        courseScopes.set(editor.id, editorScope);
+        setEditor(next, { scope: courseScopes.get(id) });
+        actorEditor?.select(null);
+        status(
+          txt(
+            'Applied edits are kept. Switching challenge starts a new Undo history.',
+            'Застосовані зміни збережено. Після зміни завдання починається нова історія скасування.',
+          ),
+        );
+      });
+    }
+    if (courseScopeProject !== editingProject) {
+      courseScopeProject = editingProject;
+      courseScopes.clear();
+    }
+    row.hidden = !editingProject || editingProject.courses.length < 2;
+    const choice = $('editor-project-course');
+    choice.previousElementSibling.textContent = txt('Project challenge', 'Завдання проєкту');
+    choice.replaceChildren(
+      ...(editingProject?.courses ?? []).map(
+        (course) => new Option(`${course.locales[locale].title} · ${course.id}`, course.id),
+      ),
+    );
+    choice.value = editor?.id ?? '';
+    $('editor-reset-fields').textContent = txt(
+      'Reset unapplied fields',
+      'Скинути незастосовані поля',
+    );
+  }
   function refreshEditor(updateScene = true) {
     $('undo-edit').disabled = !undo.length;
     $('redo-edit').disabled = !redo.length;
     if (!editor) return;
+    const matching = matchingRoutes(editor);
+    if (editorScope === 'both' && !matching) editorScope = 'self-level';
+    let choice = $('editor-route-mode');
+    if (!choice) {
+      const label = el('label');
+      choice = el('select');
+      choice.id = 'editor-route-mode';
+      label.append(el('span'), choice);
+      $('criterion-list').closest('label').before(label);
+      listeners.push(() => label.remove());
+      on(choice, 'change', () => {
+        editorScope = choice.value;
+        editorIndex = 0;
+        editorSelection = { kind: 'criterion', index: 0 };
+        refreshEditor();
+        actorEditor?.selectObjective(editorMode(), editorIndex);
+      });
+    }
+    choice.previousElementSibling.textContent = txt('Route mode', 'Режим маршруту');
+    choice.replaceChildren(
+      new Option(txt('Both matching modes', 'Обидва однакові режими'), 'both'),
+      new Option(txt('Self-level', 'Самовирівнювання'), 'self-level'),
+      new Option('Acro', 'acro'),
+    );
+    choice.options[0].disabled = !matching;
+    choice.value = editorScope;
+    const mode = editorMode();
     $('creator-title').value = editor.locales[locale].title;
     $('creator-json').value = JSON.stringify(editor, null, 2);
     if ($('creator-theme')) $('creator-theme').value = editor.world.theme;
     $('criterion-list').replaceChildren();
-    editor.steps['self-level'].forEach((step, i) =>
+    editor.steps[mode].forEach((step, i) =>
       $('criterion-list').append(
         new Option(
           `${i + 1}. ${stepName(step)}${step.targets ? ` · ${step.targets.length}` : ''}`,
@@ -2336,7 +2541,7 @@ export function mountWorldApp({
         ),
       ),
     );
-    editorIndex = Math.max(0, Math.min(editorIndex, editor.steps['self-level'].length - 1));
+    editorIndex = Math.max(0, Math.min(editorIndex, editor.steps[mode].length - 1));
     for (const actor of editor.actors)
       $('criterion-list').append(
         new Option(`${txt('Actor', 'Персонаж')}: ${actor.id}`, `actor:${actor.id}`),
@@ -2352,15 +2557,15 @@ export function mountWorldApp({
       routeEditModes(editor).length === 2
         ? txt('Route edits: both matching modes', 'Зміни маршруту: обидва однакові режими')
         : txt(
-            'Route edits: Self-level only; modes have different routes',
-            'Зміни маршруту: лише самовирівнювання; режими мають різні маршрути',
+            `Route edits: ${mode === 'acro' ? 'Acro' : 'Self-level'} only. Shared source anchors stay unchanged.`,
+            `Зміни маршруту: лише ${mode === 'acro' ? 'Acro' : 'самовирівнювання'}. Спільні маркери джерела не змінюються.`,
           );
     const actor =
       editorSelection?.kind === 'actor'
         ? editor.actors.find((a) => a.id === editorSelection.id)
         : null;
     if (actor) $('criterion-list').value = `actor:${actor.id}`;
-    const p = actor?.position ?? criterionCentre(editor.steps['self-level'][editorIndex]);
+    const p = actor?.position ?? criterionCentre(editor.steps[mode][editorIndex]);
     for (const k of coordinates) {
       $(`criterion-${k}`).value = p ? p[k] / 1000 : '';
       $(`criterion-${k}`).disabled = !p;
@@ -2368,23 +2573,37 @@ export function mountWorldApp({
     $('move-criterion').disabled = !p;
     $('criterion-y').max = String(editor.bounds.max.y / 1000);
     for (const id of ['duplicate-criterion', 'remove-criterion', 'criterion-up', 'criterion-down'])
-      $(id).disabled =
-        Boolean(actor) || editor.steps['self-level'][editorIndex]?.type === 'actor-track-v1';
-    if (!actor && editor.steps['self-level'][editorIndex]?.type === 'actor-track-v1')
+      $(id).disabled = Boolean(actor) || editor.steps[mode][editorIndex]?.type === 'actor-track-v1';
+    if (!actor && editor.steps[mode][editorIndex]?.type === 'actor-track-v1')
       scope.textContent += txt(
         '. Edit this objective in Follow & observe below.',
         '. Редагуйте це завдання нижче в розділі «Супровід і спостереження».',
       );
     if (updateScene) refreshEditorScene();
     actorEditor?.refresh();
+    editorFields = editorFieldValues();
+    paintCoursePicker();
   }
   function syncProject(comparePositions = true, previousBindings = null) {
-    if (editingProject && editor?.world.id === editingProject.id) {
+    if (editor && projectOwnsCourse(editor)) {
       const previous = editingProject.courses.find((c) => c.id === editor.id),
-        bindings = editingProject.routeBindings?.[editor.id]?.['self-level'];
-      if (comparePositions && previous && bindings) {
+        routes = editingProject.routeBindings?.[editor.id],
+        bindings = routes?.['self-level'];
+      // One source anchor cannot encode two independent mode positions. Keep
+      // single-mode changes local; shared edits need matching anchor identities.
+      if (
+        comparePositions &&
+        previous &&
+        bindings &&
+        routeEditModes(editor).length === 2 &&
+        matchingRoutes(previous)
+      ) {
         for (const [i, anchorId] of bindings.entries()) {
-          const oldIndex = previousBindings ? previousBindings.indexOf(anchorId) : i;
+          const oldIndex = previousBindings?.['self-level']
+              ? previousBindings['self-level'].indexOf(anchorId)
+              : i,
+            oldAcroIndex = previousBindings?.acro ? previousBindings.acro.indexOf(anchorId) : i;
+          if (!anchorId || routes.acro?.[i] !== anchorId || oldAcroIndex !== oldIndex) continue;
           const before = criterionCentre(previous.steps['self-level'][oldIndex]),
             after = criterionCentre(editor.steps['self-level'][i]),
             source = editingProject.source.anchors.find((a) => a.id === anchorId);
@@ -2406,17 +2625,17 @@ export function mountWorldApp({
             };
         }
       }
-      editingProject.title = editor.locales[locale].title;
-      editingProject.courses = [
-        clone(editor),
-        ...editingProject.courses.filter((c) => c.id !== editor.id),
-      ];
+      if (editingProject.courses.length < 2) editingProject.title = editor.locales[locale].title;
+      const index = editingProject.courses.findIndex((c) => c.id === editor.id);
+      if (index < 0) editingProject.courses.push(clone(editor));
+      else editingProject.courses[index] = clone(editor);
       synchronizeDefinitions(editingProject);
       editor = clone(editingProject.courses.find((c) => c.id === editor.id));
     }
   }
   const editorSnapshot = () => ({
     course: clone(editor),
+    scope: editorScope,
     index: editorIndex,
     selection: clone(editorSelection),
     bindings: clone(editingProject?.routeBindings?.[editor.id] ?? null),
@@ -2449,11 +2668,12 @@ export function mountWorldApp({
     redo = [];
     editor = valid;
     if (editingProject && bindings) editingProject.routeBindings[editor.id] = bindings;
-    syncProject(true, before.bindings?.['self-level']);
+    syncProject(true, before.bindings);
     refreshEditor();
   }
-  function setEditor(course) {
+  function setEditor(course, { scope } = {}) {
     editor = validateWorldCourse(course);
+    editorScope = scope ?? (matchingRoutes(editor) ? 'both' : 'self-level');
     editorIndex = 0;
     editorSelection = null;
     undo = [];
@@ -2516,13 +2736,13 @@ export function mountWorldApp({
       id: course.id,
       course,
       world: course.world.id,
-      theme: editingProject?.id === course.world.id ? 'custom' : course.world.theme,
+      theme: projectOwnsCourse(course) ? 'custom' : course.world.theme,
       activity: 'exploration',
       difficulty: 'intermediate',
       duration: 4,
       packIdentity: 'authoring',
       legacy: false,
-      projectId: editingProject?.id === course.world.id ? editingProject.id : undefined,
+      projectId: projectOwnsCourse(course) ? editingProject.id : undefined,
     };
   }
 
@@ -3167,6 +3387,7 @@ export function mountWorldApp({
   function updateImportControls() {
     for (const id of ['preview-world', 'export-project', 'export-pack', 'install-project'])
       $(id).disabled = !editingProject;
+    paintCoursePicker();
   }
   function reviewReimport({ changes, diagnostics }) {
     return new Promise((resolve) => {
@@ -3352,7 +3573,9 @@ export function mountWorldApp({
       );
     editingProject = next;
     projectAssets = assets;
-    setEditor(next.courses.find((course) => course.id === editor?.id) ?? next.courses[0]);
+    setEditor(next.courses.find((course) => course.id === editor?.id) ?? next.courses[0], {
+      scope: editorScope,
+    });
     projectGeneration = generation;
     updateImportControls();
     $('import-report').textContent = [
@@ -3414,7 +3637,7 @@ export function mountWorldApp({
           ? 'Відтворення на паузі. Натисніть «Продовжити».'
           : 'Пауза. Натисніть «Увімкнути», щоб продовжити.',
       );
-      void saveRecovery().catch(reportError);
+      if (!disposed) void saveRecovery().catch(reportError);
     }
   }
   function abortSectorLookup() {
@@ -3922,6 +4145,63 @@ export function mountWorldApp({
             .filter((sector) => sector.loss > 0)
             .sort((a, b) => b.loss - a.loss)[0]
         : null;
+      const measured = resultSummary.sectors.find(
+        (sector) => sector.index === (lostSector?.index ?? resultSummary.weakest),
+      );
+      if (
+        !isPreview &&
+        !entry.legacy &&
+        !entry.beginner &&
+        proof.session === 'practice' &&
+        measured &&
+        entry.course.steps[proof.mode][measured.index]?.type === 'gate'
+      ) {
+        const lesson = learningEntries.get('beginner-24'),
+          suggestion = el('div');
+        suggestion.dataset.coachLesson = lesson.id;
+        suggestion.append(
+          el(
+            'p',
+            `${txt('Section', 'Ділянка')} ${measured.index + 1}: ${seconds(measured.ticks)}. ${
+              lostSector
+                ? txt(
+                    `${seconds(lostSector.loss)} longer than the same section in your best flight with these settings.`,
+                    `На ${seconds(lostSector.loss)} довше за ту саму ділянку у вашому найкращому польоті з цими налаштуваннями.`,
+                  )
+                : txt('Your longest completed section.', 'Ваша найдовша пройдена ділянка.')
+            }`,
+          ),
+          button(
+            `${txt('Optional gate-sequence lesson', 'Необов’язковий урок проходження воріт')}: ${label(lesson)}`,
+            () => {
+              if (disposed || token !== flightToken || current !== entry) return;
+              const original = demonstrationEntry(entry),
+                installed = catalogue.find((item) => keyOf(item) === keyOf(original));
+              if (!installed) return;
+              lessonReturn = {
+                key: keyOf(original),
+                identity: dataIdentity(validateWorldCourse(installed.course)),
+                course: original.course,
+                title: Object.fromEntries(
+                  ['en', 'uk'].map((language) => [
+                    language,
+                    original.course.locales[language].title,
+                  ]),
+                ),
+                mode: proof.mode,
+                source: $('flight-source').value,
+                camera: $('flight-camera').value,
+                response: { ...response },
+                playlist: completedPlaylist ? clone(completedPlaylist) : null,
+                index: completedPlaylistIndex,
+              };
+              paintLessonReturn();
+              return startFlight(lesson, { mode: proof.mode });
+            },
+          ),
+        );
+        $('result-panel').append(suggestion);
+      }
       if (!entry.legacy)
         $('result-panel').append(
           button(txt('Watch this section', 'Переглянути цю ділянку'), () =>
@@ -4261,6 +4541,14 @@ export function mountWorldApp({
     );
   async function startFlight(entry, options = {}) {
     if (disposed) return;
+    if (
+      lessonReturn &&
+      options.returning !== lessonReturn &&
+      keyOf(entry) !== keyOf(learningEntries.get('beginner-24'))
+    ) {
+      lessonReturn = null;
+      paintLessonReturn();
+    }
     playShell?.enterPlay();
     if (playShell) $('flight-dialog').prepend(playShell.elements.header);
     const requestedMode =
@@ -4413,6 +4701,7 @@ export function mountWorldApp({
     $('flight-status').textContent = txt('Preparing scene…', 'Підготовка сцени…');
     paintLoadout();
     if (!$('flight-dialog').open) $('flight-dialog').showModal();
+    paintLessonReturn();
     if (!renderer)
       renderer = rendererFactory({
         canvas: $('world-canvas'),
@@ -4623,6 +4912,10 @@ export function mountWorldApp({
     if (ghostEnabled) await loadGhost();
     if (token !== flightToken || disposed) return;
     sceneReady = true;
+    if (options.returning === lessonReturn) {
+      lessonReturn = null;
+      paintLessonReturn();
+    }
     $('flight-status').textContent = replayProof
       ? txt(
           'Playback paused. Resume when you are ready.',
@@ -4709,6 +5002,7 @@ export function mountWorldApp({
       ).focus({ preventScroll: true });
     } else $('world-grid').querySelector('[aria-pressed="true"]')?.focus({ preventScroll: true });
     renderPacks();
+    paintLessonReturn();
   }
   async function restoreProofs(file) {
     if (!recordStore) throw new Error('Flight storage is unavailable.');
@@ -4905,6 +5199,7 @@ export function mountWorldApp({
     renderPlaylist();
     refreshEditor();
     renderPacks();
+    paintLessonReturn();
   });
   on($('play-playlist'), 'click', () => flySequence(playlistValue()));
   on($('save-playlist'), 'click', () => {
@@ -4957,7 +5252,7 @@ export function mountWorldApp({
     refreshEditor(false);
     spatialEditor?.select(editorSelection);
     if (editorSelection.kind === 'actor') actorEditor?.select(editorSelection.id);
-    else actorEditor?.selectObjective('self-level', editorIndex, { focus: true });
+    else actorEditor?.selectObjective(editorMode(), editorIndex, { focus: true });
   });
   on($('move-criterion'), 'click', () => {
     const position = Object.fromEntries(
@@ -4994,7 +5289,7 @@ export function mountWorldApp({
       if (
         !editor ||
         editorIndex + delta < 0 ||
-        editorIndex + delta >= editor.steps['self-level'].length
+        editorIndex + delta >= editor.steps[editorMode()].length
       )
         return;
       applyEdit((c, bindings) => {
@@ -5021,6 +5316,7 @@ export function mountWorldApp({
       target.push(editorSnapshot());
       const snapshot = source.pop();
       editor = snapshot.course;
+      editorScope = snapshot.scope;
       editorIndex = snapshot.index;
       editorSelection = snapshot.selection;
       if (editingProject) {
@@ -5047,7 +5343,10 @@ export function mountWorldApp({
   });
   on($('preview-challenge'), 'click', () => {
     if (!editor) throw new Error('Create a challenge first.');
-    return startFlight(customEntry(editor), { preview: true });
+    return startFlight(customEntry(editor), {
+      preview: true,
+      mode: editorScope === 'both' ? undefined : editorMode(),
+    });
   });
   on($('export-challenge'), 'click', () => {
     if (!editor) throw new Error('Create a challenge first.');
@@ -5062,7 +5361,10 @@ export function mountWorldApp({
   });
   on($('preview-world'), 'click', () => {
     syncProject();
-    return startFlight(customEntry(editingProject.courses[0]), { preview: true });
+    return startFlight(customEntry(editor), {
+      preview: true,
+      mode: editorScope === 'both' ? undefined : editorMode(),
+    });
   });
   on($('export-project'), 'click', async () => {
     syncProject();
@@ -5773,6 +6075,7 @@ export function mountWorldApp({
       canResume: () =>
         Boolean(recovery && dependencyAvailable(recovery.packIdentity, recovery.course.id)),
       open(surface) {
+        paintLessonReturn(surface);
         if (flight?.snapshot().status === 'active') pauseFlight();
         if (surface === 'results') {
           // Keep the native result actions and async verification in place.
@@ -5914,53 +6217,70 @@ export function mountWorldApp({
         style: $('flight-stick-display').value,
       },
     }),
-    async dispose() {
-      if (disposed) return;
-      proofImport?.abort();
-      packRemovalReview?.close();
-      restorePackIdentity = null;
-      restorePackInput.remove();
-      pauseFlight();
-      immersive.dispose();
-      await saveRecovery();
+    dispose() {
+      if (closing) return closing;
       disposed = true;
-      ++flightToken;
-      checkpointPreparation?.abort();
-      checkpointPreparation = null;
-      abortSectorLookup();
-      pauseFlight();
-      await saveRecovery();
-      win.cancelAnimationFrame(raf);
-      for (const remove of listeners) remove();
-      if (playShell) playShell.elements.root.prepend(playShell.elements.header);
-      playShell?.dispose();
-      menuNavigation.dispose();
-      menuHint.remove();
-      input.dispose();
-      gamepad.dispose();
-      radioSetup?.dispose();
-      flight?.dispose?.();
-      flight = null;
-      recorder = null;
-      current = null;
-      sectorReferenceProof = null;
-      ghostEnabled = false;
-      renderer?.dispose();
-      hangar.dispose();
-      appearanceControls.dispose();
-      actorEditor?.dispose();
-      audioControls.dispose();
-      huntPresentationControls.dispose();
-      huntReactions.dispose();
-      audio.dispose();
-      presentation.dispose();
-      droneResponse.dispose();
-      stickTraces.forEach((trace) => trace.dispose());
-      beginnerCoach.dispose();
-      spatialEditor?.dispose();
-      await notebook.close();
-      recordStore?.close();
-      worldStore?.close();
+      closing = Promise.resolve().then(async () => {
+        proofImport?.abort();
+        packRemovalReview?.close();
+        restorePackIdentity = null;
+        restorePackInput.remove();
+        ++flightToken;
+        checkpointPreparation?.abort();
+        checkpointPreparation = null;
+        abortSectorLookup();
+        pauseFlight();
+        immersive.dispose();
+        const notebookClosing = Promise.resolve().then(() => notebook.close());
+        void notebookClosing.catch(() => {});
+        let saveError;
+        try {
+          // Hydration may own pending storage requests and still need the DOM.
+          await Promise.allSettled([ready]);
+          await saveRecovery();
+        } catch (error) {
+          saveError = error;
+        }
+        try {
+          win.cancelAnimationFrame(raf);
+          for (const remove of listeners) remove();
+          if (playShell) playShell.elements.root.prepend(playShell.elements.header);
+          menuNavigation.dispose();
+          playShell?.dispose();
+          menuHint.remove();
+          input.dispose();
+          gamepad.dispose();
+          radioSetup?.dispose();
+          flight?.dispose?.();
+          flight = null;
+          recorder = null;
+          current = null;
+          sectorReferenceProof = null;
+          ghostEnabled = false;
+          renderer?.dispose();
+          hangar.dispose();
+          appearanceControls.dispose();
+          actorEditor?.dispose();
+          audioControls.dispose();
+          huntPresentationControls.dispose();
+          huntReactions.dispose();
+          audio.dispose();
+          presentation.dispose();
+          droneResponse.dispose();
+          stickTraces.forEach((trace) => trace.dispose());
+          beginnerCoach.dispose();
+          spatialEditor?.dispose();
+        } finally {
+          try {
+            await notebookClosing;
+          } finally {
+            recordStore?.close();
+            worldStore?.close();
+            if (saveError) throw saveError;
+          }
+        }
+      });
+      return closing;
     },
   };
 }

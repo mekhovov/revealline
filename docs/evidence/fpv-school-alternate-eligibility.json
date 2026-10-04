@@ -1,0 +1,946 @@
+{
+  "format": "FPVSchoolAlternateEligibility.v1",
+  "base": "bf167a4fdfc81d7327fd94518da65ac82d64eb7e",
+  "generatedBy": "scripts/qualify-fpv-acro-school.mjs: qualifyAcroSchool explicit mode and proofArchive; no core installation",
+  "groups": {
+    "acro": [
+      "beginner-01",
+      "beginner-02",
+      "beginner-03",
+      "beginner-04",
+      "beginner-05",
+      "beginner-06",
+      "beginner-07",
+      "beginner-08",
+      "beginner-09",
+      "beginner-10",
+      "beginner-11",
+      "beginner-12"
+    ],
+    "self-level": [
+      "beginner-27",
+      "beginner-28",
+      "beginner-29",
+      "beginner-30",
+      "beginner-31",
+      "beginner-32",
+      "beginner-33",
+      "beginner-34",
+      "beginner-35",
+      "beginner-36",
+      "beginner-37",
+      "beginner-38",
+      "beginner-39",
+      "beginner-40",
+      "beginner-41",
+      "beginner-42"
+    ]
+  },
+  "eligibility": [
+    {
+      "id": "beginner-01",
+      "mode": "acro",
+      "recommendedMode": "self-level",
+      "stepTypes": {
+        "self-level": [
+          "hold",
+          "land"
+        ],
+        "acro": [
+          "hold",
+          "land"
+        ]
+      }
+    },
+    {
+      "id": "beginner-02",
+      "mode": "acro",
+      "recommendedMode": "self-level",
+      "stepTypes": {
+        "self-level": [
+          "hold",
+          "land"
+        ],
+        "acro": [
+          "hold",
+          "land"
+        ]
+      }
+    },
+    {
+      "id": "beginner-03",
+      "mode": "acro",
+      "recommendedMode": "self-level",
+      "stepTypes": {
+        "self-level": [
+          "hold",
+          "land"
+        ],
+        "acro": [
+          "hold",
+          "land"
+        ]
+      }
+    },
+    {
+      "id": "beginner-04",
+      "mode": "acro",
+      "recommendedMode": "self-level",
+      "stepTypes": {
+        "self-level": [
+          "hold",
+          "land"
+        ],
+        "acro": [
+          "hold",
+          "land"
+        ]
+      }
+    },
+    {
+      "id": "beginner-05",
+      "mode": "acro",
+      "recommendedMode": "self-level",
+      "stepTypes": {
+        "self-level": [
+          "hold",
+          "gate",
+          "land"
+        ],
+        "acro": [
+          "hold",
+          "gate",
+          "land"
+        ]
+      }
+    },
+    {
+      "id": "beginner-06",
+      "mode": "acro",
+      "recommendedMode": "self-level",
+      "stepTypes": {
+        "self-level": [
+          "hold",
+          "land"
+        ],
+        "acro": [
+          "hold",
+          "land"
+        ]
+      }
+    },
+    {
+      "id": "beginner-07",
+      "mode": "acro",
+      "recommendedMode": "self-level",
+      "stepTypes": {
+        "self-level": [
+          "hold",
+          "gate",
+          "land"
+        ],
+        "acro": [
+          "hold",
+          "gate",
+          "land"
+        ]
+      }
+    },
+    {
+      "id": "beginner-08",
+      "mode": "acro",
+      "recommendedMode": "self-level",
+      "stepTypes": {
+        "self-level": [
+          "hold",
+          "land"
+        ],
+        "acro": [
+          "hold",
+          "land"
+        ]
+      }
+    },
+    {
+      "id": "beginner-09",
+      "mode": "acro",
+      "recommendedMode": "self-level",
+      "stepTypes": {
+        "self-level": [
+          "hold",
+          "gate",
+          "land"
+        ],
+        "acro": [
+          "hold",
+          "gate",
+          "land"
+        ]
+      }
+    },
+    {
+      "id": "beginner-10",
+      "mode": "acro",
+      "recommendedMode": "self-level",
+      "stepTypes": {
+        "self-level": [
+          "hold",
+          "land"
+        ],
+        "acro": [
+          "hold",
+          "land"
+        ]
+      }
+    },
+    {
+      "id": "beginner-11",
+      "mode": "acro",
+      "recommendedMode": "self-level",
+      "stepTypes": {
+        "self-level": [
+          "hold",
+          "gate",
+          "land"
+        ],
+        "acro": [
+          "hold",
+          "gate",
+          "land"
+        ]
+      }
+    },
+    {
+      "id": "beginner-12",
+      "mode": "acro",
+      "recommendedMode": "self-level",
+      "stepTypes": {
+        "self-level": [
+          "hold",
+          "gate",
+          "land"
+        ],
+        "acro": [
+          "hold",
+          "gate",
+          "land"
+        ]
+      }
+    },
+    {
+      "id": "beginner-27",
+      "mode": "self-level",
+      "recommendedMode": "acro",
+      "stepTypes": {
+        "self-level": [
+          "hold",
+          "gate",
+          "land"
+        ],
+        "acro": [
+          "hold",
+          "gate",
+          "land"
+        ]
+      }
+    },
+    {
+      "id": "beginner-28",
+      "mode": "self-level",
+      "recommendedMode": "acro",
+      "stepTypes": {
+        "self-level": [
+          "hold",
+          "land"
+        ],
+        "acro": [
+          "hold",
+          "land"
+        ]
+      }
+    },
+    {
+      "id": "beginner-29",
+      "mode": "self-level",
+      "recommendedMode": "acro",
+      "stepTypes": {
+        "self-level": [
+          "hold",
+          "land"
+        ],
+        "acro": [
+          "hold",
+          "land"
+        ]
+      }
+    },
+    {
+      "id": "beginner-30",
+      "mode": "self-level",
+      "recommendedMode": "acro",
+      "stepTypes": {
+        "self-level": [
+          "hold",
+          "gate",
+          "land"
+        ],
+        "acro": [
+          "hold",
+          "gate",
+          "land"
+        ]
+      }
+    },
+    {
+      "id": "beginner-31",
+      "mode": "self-level",
+      "recommendedMode": "acro",
+      "stepTypes": {
+        "self-level": [
+          "hold",
+          "gate",
+          "land"
+        ],
+        "acro": [
+          "hold",
+          "gate",
+          "land"
+        ]
+      }
+    },
+    {
+      "id": "beginner-32",
+      "mode": "self-level",
+      "recommendedMode": "acro",
+      "stepTypes": {
+        "self-level": [
+          "hold",
+          "gate",
+          "land"
+        ],
+        "acro": [
+          "hold",
+          "gate",
+          "land"
+        ]
+      }
+    },
+    {
+      "id": "beginner-33",
+      "mode": "self-level",
+      "recommendedMode": "acro",
+      "stepTypes": {
+        "self-level": [
+          "hold",
+          "gate",
+          "land"
+        ],
+        "acro": [
+          "hold",
+          "gate",
+          "land"
+        ]
+      }
+    },
+    {
+      "id": "beginner-34",
+      "mode": "self-level",
+      "recommendedMode": "acro",
+      "stepTypes": {
+        "self-level": [
+          "hold",
+          "gate",
+          "land"
+        ],
+        "acro": [
+          "hold",
+          "gate",
+          "land"
+        ]
+      }
+    },
+    {
+      "id": "beginner-35",
+      "mode": "self-level",
+      "recommendedMode": "acro",
+      "stepTypes": {
+        "self-level": [
+          "hold",
+          "gate",
+          "land"
+        ],
+        "acro": [
+          "hold",
+          "gate",
+          "land"
+        ]
+      }
+    },
+    {
+      "id": "beginner-36",
+      "mode": "self-level",
+      "recommendedMode": "acro",
+      "stepTypes": {
+        "self-level": [
+          "hold",
+          "gate",
+          "land"
+        ],
+        "acro": [
+          "hold",
+          "gate",
+          "land"
+        ]
+      }
+    },
+    {
+      "id": "beginner-37",
+      "mode": "self-level",
+      "recommendedMode": "acro",
+      "stepTypes": {
+        "self-level": [
+          "hold",
+          "land"
+        ],
+        "acro": [
+          "hold",
+          "land"
+        ]
+      }
+    },
+    {
+      "id": "beginner-38",
+      "mode": "self-level",
+      "recommendedMode": "acro",
+      "stepTypes": {
+        "self-level": [
+          "hold",
+          "gate",
+          "land"
+        ],
+        "acro": [
+          "hold",
+          "gate",
+          "land"
+        ]
+      }
+    },
+    {
+      "id": "beginner-39",
+      "mode": "self-level",
+      "recommendedMode": "acro",
+      "stepTypes": {
+        "self-level": [
+          "hold",
+          "gate",
+          "land"
+        ],
+        "acro": [
+          "hold",
+          "gate",
+          "land"
+        ]
+      }
+    },
+    {
+      "id": "beginner-40",
+      "mode": "self-level",
+      "recommendedMode": "acro",
+      "stepTypes": {
+        "self-level": [
+          "hold",
+          "gate",
+          "land"
+        ],
+        "acro": [
+          "hold",
+          "gate",
+          "land"
+        ]
+      }
+    },
+    {
+      "id": "beginner-41",
+      "mode": "self-level",
+      "recommendedMode": "acro",
+      "stepTypes": {
+        "self-level": [
+          "hold",
+          "gate",
+          "land"
+        ],
+        "acro": [
+          "hold",
+          "gate",
+          "land"
+        ]
+      }
+    },
+    {
+      "id": "beginner-42",
+      "mode": "self-level",
+      "recommendedMode": "acro",
+      "stepTypes": {
+        "self-level": [
+          "hold",
+          "gate",
+          "land"
+        ],
+        "acro": [
+          "hold",
+          "gate",
+          "land"
+        ]
+      }
+    }
+  ],
+  "excluded": {
+    "existingOptionalFoundation": [
+      "beginner-13",
+      "beginner-14",
+      "beginner-15",
+      "beginner-16",
+      "beginner-17",
+      "beginner-18",
+      "beginner-19",
+      "beginner-20",
+      "beginner-21",
+      "beginner-22",
+      "beginner-23",
+      "beginner-24",
+      "beginner-25",
+      "beginner-26"
+    ],
+    "acroSkillUnscoredSelfLevelOnly": [
+      "beginner-43",
+      "beginner-44",
+      "beginner-45",
+      "beginner-46",
+      "beginner-47",
+      "beginner-48",
+      "beginner-49",
+      "beginner-50",
+      "beginner-51",
+      "beginner-52",
+      "beginner-53",
+      "beginner-54",
+      "beginner-55",
+      "beginner-56",
+      "beginner-57",
+      "beginner-58"
+    ]
+  },
+  "archives": [
+    {
+      "path": "authoring/fpv-worlds/demonstrations/optional/school-alternates-v1/fpv-school-acro-proof-part-1-of-1.json",
+      "bytes": 176551,
+      "sha256": "81f5a88402188a5632991e53ed3e5fbabd919ffcdbeb7916c0acc91ca0937422",
+      "records": 12,
+      "archiveId": "a25cb76a965972ffa13da62542dc4c574f9356f53efe8eba7681c1f6d7500a96"
+    },
+    {
+      "path": "authoring/fpv-worlds/demonstrations/optional/school-alternates-v1/fpv-school-self-level-proof-part-1-of-1.json",
+      "bytes": 603794,
+      "sha256": "db03219d3e9925b34e7d99769af3ba630ac94f8148365d906b3d88a200ad4c2b",
+      "records": 16,
+      "archiveId": "059a87575dba77e3847605262f4278e1b7216884ecdf501df9a8855a456d619b"
+    }
+  ],
+  "totals": {
+    "optionalRecords": 28,
+    "bytes": 780345,
+    "simulationTicks": 39761,
+    "coreRecordings": 178,
+    "newRuntimeSourceBytes": 0
+  },
+  "retainedProduction": [
+    {
+      "path": "scripts/qualify-fpv-acro-school.mjs",
+      "bytes": 18235,
+      "sha256": "7747873e2ce6ca7ba5f74a00ddb881f5ac3426691c0eb7e29255eef366c3aa3d"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/world-catalogue.mjs",
+      "bytes": 240477,
+      "sha256": "14f8523c829e9bdfdf8db5efb59169075be6045425222c615b846817694d24cc"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/world-model.mjs",
+      "bytes": 55549,
+      "sha256": "ce94192472f8cc0be1a70ec2dcdf7dc728956f55f589bb84335c851737f54d3e"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/world-records.mjs",
+      "bytes": 11475,
+      "sha256": "8fb720ec1a1a1e5cbc7ec5b253d14b6d76d680e6c03dc5f2c92b3e2e407d4c27"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/radio-profile.mjs",
+      "bytes": 18097,
+      "sha256": "f588fd5cda96ed9627a483f49ca843ace8d99a68fae42b0a4239c2cd0ab81933"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/world-demonstrations.mjs",
+      "bytes": 2207074,
+      "sha256": "c9f2d0ee5c571507ae1dce4f48898554cb2ad179218f1905cdc8013db2e2c114"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/demonstrations.mjs",
+      "bytes": 221646,
+      "sha256": "92bb4365c46d94f5c1fea9808ec4e24fb9014d35640ee488959c4e0f4b6c5cfa"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/world-app.mjs",
+      "bytes": 247664,
+      "sha256": "053dbfb4a3e0f2fbf8dfe3685a865368e314d845f8dc451fe9e59a275f52ae49"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/renderer.mjs",
+      "bytes": 110521,
+      "sha256": "10577460f906c2f68d611a6ec2b2fbc4b6b652242bc8e89503cb486fa708e680"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/world-visuals.mjs",
+      "bytes": 154862,
+      "sha256": "053f74a1d42db8373994350010f347ff0d306dfebd05cbdd9bf7df838b73d9e0"
+    }
+  ],
+  "productionTrees": [
+    "040000 tree 185e22a132ab9a83cf257a9234b02b927b40ceca\tgame",
+    "040000 tree 6b423d743d133014ec70a7033601f3f92864b440\toptional-practice"
+  ],
+  "checks": [
+    {
+      "label": "Core registry remains 154 World plus 24 Flight recordings",
+      "passed": true
+    },
+    {
+      "label": "All 58 School recommended-mode recordings remain installed",
+      "passed": true
+    },
+    {
+      "label": "acro group has its exact expected count",
+      "passed": true
+    },
+    {
+      "label": "beginner-01/acro is an absent alternate pair without Acro-only skill steps",
+      "passed": true
+    },
+    {
+      "label": "beginner-01 retains equal authored objectives in both modes",
+      "passed": true
+    },
+    {
+      "label": "beginner-02/acro is an absent alternate pair without Acro-only skill steps",
+      "passed": true
+    },
+    {
+      "label": "beginner-02 retains equal authored objectives in both modes",
+      "passed": true
+    },
+    {
+      "label": "beginner-03/acro is an absent alternate pair without Acro-only skill steps",
+      "passed": true
+    },
+    {
+      "label": "beginner-03 retains equal authored objectives in both modes",
+      "passed": true
+    },
+    {
+      "label": "beginner-04/acro is an absent alternate pair without Acro-only skill steps",
+      "passed": true
+    },
+    {
+      "label": "beginner-04 retains equal authored objectives in both modes",
+      "passed": true
+    },
+    {
+      "label": "beginner-05/acro is an absent alternate pair without Acro-only skill steps",
+      "passed": true
+    },
+    {
+      "label": "beginner-05 retains equal authored objectives in both modes",
+      "passed": true
+    },
+    {
+      "label": "beginner-06/acro is an absent alternate pair without Acro-only skill steps",
+      "passed": true
+    },
+    {
+      "label": "beginner-06 retains equal authored objectives in both modes",
+      "passed": true
+    },
+    {
+      "label": "beginner-07/acro is an absent alternate pair without Acro-only skill steps",
+      "passed": true
+    },
+    {
+      "label": "beginner-07 retains equal authored objectives in both modes",
+      "passed": true
+    },
+    {
+      "label": "beginner-08/acro is an absent alternate pair without Acro-only skill steps",
+      "passed": true
+    },
+    {
+      "label": "beginner-08 retains equal authored objectives in both modes",
+      "passed": true
+    },
+    {
+      "label": "beginner-09/acro is an absent alternate pair without Acro-only skill steps",
+      "passed": true
+    },
+    {
+      "label": "beginner-09 retains equal authored objectives in both modes",
+      "passed": true
+    },
+    {
+      "label": "beginner-10/acro is an absent alternate pair without Acro-only skill steps",
+      "passed": true
+    },
+    {
+      "label": "beginner-10 retains equal authored objectives in both modes",
+      "passed": true
+    },
+    {
+      "label": "beginner-11/acro is an absent alternate pair without Acro-only skill steps",
+      "passed": true
+    },
+    {
+      "label": "beginner-11 retains equal authored objectives in both modes",
+      "passed": true
+    },
+    {
+      "label": "beginner-12/acro is an absent alternate pair without Acro-only skill steps",
+      "passed": true
+    },
+    {
+      "label": "beginner-12 retains equal authored objectives in both modes",
+      "passed": true
+    },
+    {
+      "label": "self-level group has its exact expected count",
+      "passed": true
+    },
+    {
+      "label": "beginner-27/self-level is an absent alternate pair without Acro-only skill steps",
+      "passed": true
+    },
+    {
+      "label": "beginner-27 retains equal authored objectives in both modes",
+      "passed": true
+    },
+    {
+      "label": "beginner-28/self-level is an absent alternate pair without Acro-only skill steps",
+      "passed": true
+    },
+    {
+      "label": "beginner-28 retains equal authored objectives in both modes",
+      "passed": true
+    },
+    {
+      "label": "beginner-29/self-level is an absent alternate pair without Acro-only skill steps",
+      "passed": true
+    },
+    {
+      "label": "beginner-29 retains equal authored objectives in both modes",
+      "passed": true
+    },
+    {
+      "label": "beginner-30/self-level is an absent alternate pair without Acro-only skill steps",
+      "passed": true
+    },
+    {
+      "label": "beginner-30 retains equal authored objectives in both modes",
+      "passed": true
+    },
+    {
+      "label": "beginner-31/self-level is an absent alternate pair without Acro-only skill steps",
+      "passed": true
+    },
+    {
+      "label": "beginner-31 retains equal authored objectives in both modes",
+      "passed": true
+    },
+    {
+      "label": "beginner-32/self-level is an absent alternate pair without Acro-only skill steps",
+      "passed": true
+    },
+    {
+      "label": "beginner-32 retains equal authored objectives in both modes",
+      "passed": true
+    },
+    {
+      "label": "beginner-33/self-level is an absent alternate pair without Acro-only skill steps",
+      "passed": true
+    },
+    {
+      "label": "beginner-33 retains equal authored objectives in both modes",
+      "passed": true
+    },
+    {
+      "label": "beginner-34/self-level is an absent alternate pair without Acro-only skill steps",
+      "passed": true
+    },
+    {
+      "label": "beginner-34 retains equal authored objectives in both modes",
+      "passed": true
+    },
+    {
+      "label": "beginner-35/self-level is an absent alternate pair without Acro-only skill steps",
+      "passed": true
+    },
+    {
+      "label": "beginner-35 retains equal authored objectives in both modes",
+      "passed": true
+    },
+    {
+      "label": "beginner-36/self-level is an absent alternate pair without Acro-only skill steps",
+      "passed": true
+    },
+    {
+      "label": "beginner-36 retains equal authored objectives in both modes",
+      "passed": true
+    },
+    {
+      "label": "beginner-37/self-level is an absent alternate pair without Acro-only skill steps",
+      "passed": true
+    },
+    {
+      "label": "beginner-37 retains equal authored objectives in both modes",
+      "passed": true
+    },
+    {
+      "label": "beginner-38/self-level is an absent alternate pair without Acro-only skill steps",
+      "passed": true
+    },
+    {
+      "label": "beginner-38 retains equal authored objectives in both modes",
+      "passed": true
+    },
+    {
+      "label": "beginner-39/self-level is an absent alternate pair without Acro-only skill steps",
+      "passed": true
+    },
+    {
+      "label": "beginner-39 retains equal authored objectives in both modes",
+      "passed": true
+    },
+    {
+      "label": "beginner-40/self-level is an absent alternate pair without Acro-only skill steps",
+      "passed": true
+    },
+    {
+      "label": "beginner-40 retains equal authored objectives in both modes",
+      "passed": true
+    },
+    {
+      "label": "beginner-41/self-level is an absent alternate pair without Acro-only skill steps",
+      "passed": true
+    },
+    {
+      "label": "beginner-41 retains equal authored objectives in both modes",
+      "passed": true
+    },
+    {
+      "label": "beginner-42/self-level is an absent alternate pair without Acro-only skill steps",
+      "passed": true
+    },
+    {
+      "label": "beginner-42 retains equal authored objectives in both modes",
+      "passed": true
+    },
+    {
+      "label": "Existing optional foundation group stays excluded",
+      "passed": true
+    },
+    {
+      "label": "All 16 Acro-skill lessons stay excluded",
+      "passed": true
+    },
+    {
+      "label": "acro generator completed and independently replayed all selected lessons",
+      "passed": true
+    },
+    {
+      "label": "fpv-school-acro-proof-part-1-of-1.json matches generated bytes and SHA-256",
+      "passed": true
+    },
+    {
+      "label": "fpv-school-acro-proof-part-1-of-1.json imports without trusting exported verification flags",
+      "passed": true
+    },
+    {
+      "label": "acro imports exactly its expected course-mode pairs",
+      "passed": true
+    },
+    {
+      "label": "self-level generator completed and independently replayed all selected lessons",
+      "passed": true
+    },
+    {
+      "label": "fpv-school-self-level-proof-part-1-of-1.json matches generated bytes and SHA-256",
+      "passed": true
+    },
+    {
+      "label": "fpv-school-self-level-proof-part-1-of-1.json imports without trusting exported verification flags",
+      "passed": true
+    },
+    {
+      "label": "self-level imports exactly its expected course-mode pairs",
+      "passed": true
+    },
+    {
+      "label": "Both tracked production trees remain exact against the baseline",
+      "passed": true
+    },
+    {
+      "label": "No untracked production files extend either tree",
+      "passed": true
+    },
+    {
+      "label": "scripts/qualify-fpv-acro-school.mjs stays byte-identical to main qualification baseline",
+      "passed": true
+    },
+    {
+      "label": "optional-practice/civilian-fpv/world-catalogue.mjs stays byte-identical to main qualification baseline",
+      "passed": true
+    },
+    {
+      "label": "optional-practice/civilian-fpv/world-model.mjs stays byte-identical to main qualification baseline",
+      "passed": true
+    },
+    {
+      "label": "optional-practice/civilian-fpv/world-records.mjs stays byte-identical to main qualification baseline",
+      "passed": true
+    },
+    {
+      "label": "optional-practice/civilian-fpv/radio-profile.mjs stays byte-identical to main qualification baseline",
+      "passed": true
+    },
+    {
+      "label": "optional-practice/civilian-fpv/world-demonstrations.mjs stays byte-identical to main qualification baseline",
+      "passed": true
+    },
+    {
+      "label": "optional-practice/civilian-fpv/demonstrations.mjs stays byte-identical to main qualification baseline",
+      "passed": true
+    },
+    {
+      "label": "optional-practice/civilian-fpv/world-app.mjs stays byte-identical to main qualification baseline",
+      "passed": true
+    },
+    {
+      "label": "optional-practice/civilian-fpv/renderer.mjs stays byte-identical to main qualification baseline",
+      "passed": true
+    },
+    {
+      "label": "optional-practice/civilian-fpv/world-visuals.mjs stays byte-identical to main qualification baseline",
+      "passed": true
+    }
+  ],
+  "limitations": [
+    "Controlled authoring-input reachability does not establish novice usability or physical-radio performance.",
+    "Optional archives require explicit import; this evidence does not claim inclusion in the admitted ZIP or a public deployment."
+  ]
+}

@@ -1,0 +1,1004 @@
+<!doctype html>
+<html lang="en">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>School alternate examples · actual host verification</title>
+  <style>
+    body {
+      font: 15px system-ui;
+      background: #101923;
+      color: #eef4f4;
+      margin: 16px;
+    }
+    button {
+      font: inherit;
+      min-height: 44px;
+      padding: 8px 16px;
+    }
+    iframe {
+      display: block;
+      width: 1280px;
+      height: 800px;
+      border: 1px solid #56717a;
+    }
+    textarea {
+      width: 100%;
+      height: 260px;
+      font: 12px monospace;
+    }
+    p {
+      max-width: 100ch;
+    }
+  </style>
+  <h1>School alternate examples · production host</h1>
+  <p>
+    Actual File input, IndexedDB and WebGL with frozen runtime modules. The fixture uses private
+    database names and memory preferences; it never clears player storage. Controlled animation
+    timestamps accelerate real recorded commands. This does not measure FPS, physical controls,
+    player acceptance or offline availability. The scope is 12 early lessons in Acro and 16
+    intermediate/advanced lessons in Self-level. Native iframe reload checks retained storage;
+    explicit host unmount is a separate lifecycle gate. Keep this tab visible and its player focused
+    while qualification runs; a pause or loss of focus fails without automatic resume.
+  </p>
+  <button id="run">Run 28 alternate School checks</button>
+  <p id="status" role="status">Ready</p>
+  <textarea id="receipt" readonly aria-label="School alternate qualification receipt"></textarea>
+  <iframe id="sim" title="Actual FPV World player"></iframe>
+  <script type="module">
+    const $ = (id) => document.getElementById(id),
+      frame = $('sim');
+    const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+    const stable = (value) =>
+      JSON.stringify(value, (_, v) =>
+        v && typeof v === 'object' && !Array.isArray(v)
+          ? Object.fromEntries(Object.entries(v).sort(([a], [b]) => a.localeCompare(b)))
+          : v,
+      );
+    const plain = (value) => JSON.parse(JSON.stringify(value));
+    const hash = async (text) =>
+      [
+        ...new Uint8Array(
+          await crypto.subtle.digest(
+            'SHA-256',
+            typeof text === 'string' ? new TextEncoder().encode(text) : text,
+          ),
+        ),
+      ]
+        .map((n) => n.toString(16).padStart(2, '0'))
+        .join('');
+    let running = false;
+    async function execute() {
+      const checks = [],
+        phases = [],
+        playback = [],
+        focusEvents = [],
+        snapshotCosts = [],
+        rafReceipts = [],
+        errors = [],
+        names = new Set(),
+        started = performance.now();
+      let manifest,
+        data,
+        app,
+        w,
+        d,
+        store,
+        failed,
+        baseline,
+        sequence = 0,
+        activePlayback = null;
+      let prefix = 'fpv-school-alternates-' + Date.now() + ':';
+      const memory = new Map([
+        [
+          'revealline.fpv.world-settings.v1',
+          JSON.stringify({
+            'world-language': 'en',
+            'flight-source': 'keyboard',
+            'flight-mode': 'self-level',
+            'flight-camera': 'fpv',
+            'flight-quality': 'low',
+            'sim-motion': 'reduced',
+          }),
+        ],
+        [
+          'revealline.fpv.playlists.v1',
+          JSON.stringify({
+            playlists: [],
+            bookmark: { id: 'retained-optional-bookmark', revision: 'r1', nextIndex: 2 },
+          }),
+        ],
+      ]);
+      window.fixtureStorage = {
+        getItem: (k) => memory.get(k) ?? null,
+        setItem: (k, v) => memory.set(k, String(v)),
+        removeItem: (k) => memory.delete(k),
+      };
+      const observeFocus = (kind, owner) => {
+        if (focusEvents.length < 128)
+          focusEvents.push({
+            ms: Math.round(performance.now() - started),
+            kind,
+            owner,
+            visibility: document.visibilityState,
+            focused: document.hasFocus(),
+            frameVisibility: d?.visibilityState,
+            frameFocused: d?.hasFocus(),
+          });
+      };
+      const observeOuter = () => observeFocus('visibilitychange', 'outer');
+      document.addEventListener('visibilitychange', observeOuter);
+      window.fixtureRegisterDB = (name) => {
+        if (!name.startsWith('fpv-school-alternates-')) throw Error('Unexpected database name');
+        names.add(name);
+      };
+      function progress(label) {
+        phases.push({ ms: Math.round(performance.now() - started), label });
+        $('status').textContent = label;
+        $('receipt').value = JSON.stringify({ status: 'running', phase: label, checks }, null, 2);
+      }
+      function must(ok, name, detail = {}) {
+        checks.push({ name, passed: !!ok, ...detail });
+        if (!ok) throw Error(name);
+      }
+      const equal = (a, b, name) => must(stable(a) === stable(b), name);
+      async function bounded(operation, label, ms = 60000) {
+        let timer;
+        try {
+          return await Promise.race([
+            operation,
+            new Promise(
+              (_, reject) => (timer = setTimeout(() => reject(Error('Timeout ' + label)), ms)),
+            ),
+          ]);
+        } finally {
+          clearTimeout(timer);
+        }
+      }
+      async function until(fn, label, ms = 60000) {
+        const start = performance.now();
+        while (!fn()) {
+          if (performance.now() - start > ms)
+            throw Error(
+              'Timeout ' +
+                label +
+                '; ' +
+                (d?.getElementById('studio-status')?.textContent ?? '') +
+                '; ' +
+                (d?.getElementById('flight-status')?.textContent ?? '') +
+                '; ' +
+                (d?.querySelector('.coach-lab-status')?.textContent ?? ''),
+            );
+          await wait(15);
+          w?.fixtureRAF?.deliver(0);
+        }
+      }
+      const state = () => w.fixtureDrawState;
+      function measureSnapshot(label) {
+        const before = performance.now(),
+          value = app.snapshot();
+        snapshotCosts.push({
+          label,
+          wallMs: performance.now() - before,
+          records: value.records.length,
+        });
+        return value;
+      }
+      const copy = (value) => w.JSON.parse(JSON.stringify(value));
+      const button = (root, pattern) =>
+        [...root.querySelectorAll('button')].find((n) => pattern.test(n.textContent));
+      const click = (node) => {
+        if (!node || node.disabled) throw Error('Missing/disabled actual UI button');
+        node.click();
+      };
+      function set(id, value) {
+        const node = d.getElementById(id);
+        if (!node) throw Error('Missing select ' + id);
+        node.value = value;
+        node.dispatchEvent(new w.Event('change', { bubbles: true }));
+      }
+      const card = (id) => d.querySelector(`[data-lesson="${id}"]`);
+      const watchButton = (id) =>
+        button(card(id), /^Watch demonstration|^Переглянути демонстрацію/);
+      async function pulse(delta = 200) {
+        w.fixtureRAF.deliver(delta);
+        await wait(0);
+      }
+      async function closeFlight() {
+        if (d.getElementById('flight-dialog').open) {
+          click(d.getElementById('leave-flight'));
+          await until(() => !d.getElementById('flight-dialog').open, 'close flight');
+        }
+        await pulse(0);
+      }
+      async function mount() {
+        if (app) {
+          // Native navigation unloads the previous host; explicit unmount is a separate lifecycle gate.
+          errors.push(...w.fixtureErrors);
+          rafReceipts.push(plain(w.fixtureRAF.trace));
+          app = null;
+          store.close();
+        }
+        const token = prefix + ++sequence,
+          url = new URL('./player.html', location.href);
+        url.searchParams.set('token', token);
+        url.searchParams.set('database', prefix);
+        url.searchParams.set('clock', 'controlled');
+        const loaded = new Promise((resolve) =>
+          frame.addEventListener('load', resolve, { once: true }),
+        );
+        frame.src = url.href;
+        await bounded(loaded, 'HTTP frame');
+        await until(
+          () => frame.contentWindow?.fixtureLoadToken === token && frame.contentWindow?.fixtureApp,
+          'host module',
+        );
+        w = frame.contentWindow;
+        d = w.document;
+        for (const kind of ['focus', 'blur'])
+          w.addEventListener(kind, () => observeFocus(kind, 'frame'));
+        d.addEventListener('visibilitychange', () => observeFocus('visibilitychange', 'frame'));
+        observeFocus('mounted', 'frame');
+        app = w.fixtureApp;
+        store = w.fixtureRecords;
+        await bounded(app.ready, 'host ready');
+        w.focus();
+        await pulse(0);
+        set('school-tier', 'all');
+        click(d.querySelector('[data-tab="learn"]'));
+      }
+      async function notebook() {
+        const rows = {};
+        for (const name of [...names]
+          .filter((n) => n.startsWith(prefix) && !/world-records|fpv-worlds/.test(n))
+          .sort()) {
+          const db = await new Promise((resolve, reject) => {
+            const r = indexedDB.open(name);
+            r.onsuccess = () => resolve(r.result);
+            r.onerror = () => reject(r.error);
+          });
+          try {
+            rows[name.slice(prefix.length)] = {};
+            for (const key of db.objectStoreNames)
+              rows[name.slice(prefix.length)][key] = await new Promise((resolve, reject) => {
+                const tx = db.transaction(key, 'readonly'),
+                  r = tx.objectStore(key).getAll();
+                let value;
+                r.onsuccess = () => (value = r.result);
+                tx.oncomplete = () => resolve(value);
+                tx.onabort = () => reject(tx.error);
+              });
+          } finally {
+            db.close();
+          }
+        }
+        return rows;
+      }
+      async function protectedData() {
+        return {
+          session: await store.session(),
+          playlist: memory.get('revealline.fpv.playlists.v1'),
+          notebook: await notebook(),
+          rewards: [...memory].filter(([key]) =>
+            /reward|attempt|notebook|school|learning/.test(key),
+          ),
+        };
+      }
+      function beginImport(part) {
+        const input = d.getElementById('import-proofs'),
+          transfer = new w.DataTransfer();
+        transfer.items.add(
+          new w.File(
+            [typeof part === 'string' ? part : JSON.stringify(part)],
+            'optional-examples.json',
+            { type: 'application/json' },
+          ),
+        );
+        input.files = transfer.files;
+        d.getElementById('studio-status').textContent = '';
+        input.dispatchEvent(new w.Event('change', { bubbles: true }));
+      }
+      async function importPart(part) {
+        beginImport(part);
+        await until(
+          () =>
+            /^(Imported|Імпортовано)(?:\s|$)/.test(d.getElementById('studio-status').textContent),
+          'import finished',
+        );
+        return d.getElementById('studio-status').textContent;
+      }
+      async function archiveFor(rows) {
+        return (await data.records.exportProofParts(rows))[0];
+      }
+      function changedRecord(source, change) {
+        const row = plain(source);
+        change(row);
+        row.id = data.records.worldRecordIdentity(row);
+        return row;
+      }
+      async function playToEnd(row, sectionIndex = null) {
+        const playbackStart = performance.now();
+        activePlayback = {
+          id: row.course.id,
+          mode: row.proof.mode,
+          sectionIndex,
+          ticks: state()?.ticks ?? null,
+          totalTicks: row.proof.frames.length,
+          pulses: 0,
+          stalledPulses: 0,
+          maxPulseGapMs: 0,
+          warmup: [],
+        };
+        const failPlayback = (reason) => {
+          activePlayback.failure = {
+            reason,
+            elapsedMs: Math.round(performance.now() - playbackStart),
+            visibility: document.visibilityState,
+            focused: document.hasFocus(),
+            frameVisibility: d.visibilityState,
+            frameFocused: d.hasFocus(),
+            message: d.getElementById('flight-status')?.textContent,
+            course: w.fixtureRenderedCourse,
+            state: state(),
+            raf: w.fixtureRAF.trace,
+          };
+          throw Error(reason + ': ' + JSON.stringify(activePlayback));
+        };
+        const requireFocus = () => {
+          if (
+            document.visibilityState !== 'visible' ||
+            !document.hasFocus() ||
+            d.visibilityState !== 'visible' ||
+            !d.hasFocus()
+          )
+            failPlayback('Playback requires visible focused ownership; no automatic resume');
+        };
+        requireFocus();
+        await until(
+          () =>
+            w.fixtureRenderedCourse === row.course.id &&
+            state() &&
+            !d.getElementById('world-arm').disabled,
+          'playback prepared',
+        );
+        // The actual Pause action keeps shader preparation outside active playback.
+        // Its measured startup outliers remain evidence; production pause guards stay enabled.
+        click(d.getElementById('world-pause'));
+        // A full host snapshot clones every stored recording. Keep it outside active playback.
+        const paused = measureSnapshot('paused before ' + row.course.id + '/' + row.proof.mode);
+        must(
+          paused.course === row.course.id &&
+            paused.state.status === 'paused' &&
+            paused.replay?.mode === row.proof.mode &&
+            paused.replay.kind === (sectionIndex === null ? 'demonstration' : 'section') &&
+            (sectionIndex === null || paused.sectionReplay?.index === sectionIndex),
+          'Exact playback identity is paused before deliberate Arm',
+        );
+        set('world-replay-rate', '1');
+        d.getElementById('world-viewport').focus();
+        const initialTick = paused.state.ticks;
+        let stableWarmFrames = 0;
+        for (let i = 0; i < 10 && stableWarmFrames < 2; i++) {
+          requireFocus();
+          const before = performance.now();
+          await pulse(0);
+          const elapsed = performance.now() - before;
+          activePlayback.warmup.push({
+            pulse: i,
+            wallMs: elapsed,
+            status: d.getElementById('flight-status').textContent,
+            ticks: state().ticks,
+          });
+          requireFocus();
+          if (
+            !/^Playback paused/.test(d.getElementById('flight-status').textContent) ||
+            state().ticks !== initialTick
+          )
+            failPlayback('Paused zero-time preparation advanced or armed flight');
+          stableWarmFrames = elapsed <= 250 ? stableWarmFrames + 1 : 0;
+        }
+        if (stableWarmFrames !== 2)
+          failPlayback('Paused preparation did not stabilize within ten frames');
+        must(true, 'Two bounded paused preparation frames before deliberate Arm', {
+          id: row.course.id,
+          mode: row.proof.mode,
+          sectionIndex,
+          warmup: activePlayback.warmup,
+        });
+        requireFocus();
+        click(d.getElementById('world-arm'));
+        if (!/^Playback active/.test(d.getElementById('flight-status').textContent))
+          failPlayback('Playback did not start through the actual Arm/Resume button');
+        must(true, 'Playback deliberately armed after paused preparation');
+        let previousPulse = performance.now(),
+          previousTick = state().ticks;
+        const maxPulses = Math.ceil(row.proof.frames.length / 10) + 30;
+        const completed = () => !d.getElementById('result-panel').hidden;
+        for (let i = 0; i < maxPulses && !completed(); i++) {
+          requireFocus();
+          if (!/^Playback active/.test(d.getElementById('flight-status').textContent))
+            failPlayback('Unexpected production playback pause');
+          if (performance.now() - playbackStart > 120000)
+            failPlayback('Playback wall-clock bound exceeded');
+          await pulse(200);
+          const now = performance.now(),
+            drawn = state();
+          activePlayback.maxPulseGapMs = Math.max(
+            activePlayback.maxPulseGapMs,
+            now - previousPulse,
+          );
+          previousPulse = now;
+          activePlayback.pulses++;
+          activePlayback.ticks = drawn.ticks;
+          if (!Number.isSafeInteger(drawn.ticks) || drawn.ticks < previousTick)
+            failPlayback('Playback ticks did not remain monotonic');
+          activePlayback.stalledPulses =
+            drawn.ticks > previousTick ? 0 : activePlayback.stalledPulses + 1;
+          previousTick = drawn.ticks;
+          requireFocus();
+          if (
+            !completed() &&
+            !/^Playback active/.test(d.getElementById('flight-status').textContent)
+          )
+            failPlayback('Unexpected production playback pause');
+          if (!completed() && activePlayback.stalledPulses >= 5)
+            failPlayback('Playback ticks stalled for five delivered frames');
+          if (i % 25 === 0 || completed()) {
+            $('status').textContent =
+              'Watch ' +
+              row.course.id +
+              ' / ' +
+              row.proof.mode +
+              (sectionIndex === null ? '' : ' / section ' + sectionIndex) +
+              ' · ticks ' +
+              activePlayback.ticks +
+              '/' +
+              row.proof.frames.length;
+            $('receipt').value = JSON.stringify(
+              {
+                status: 'running',
+                checks,
+                phases,
+                playback,
+                activePlayback,
+                focusEvents,
+                snapshotCosts,
+                raf: w.fixtureRAF.trace,
+              },
+              null,
+              2,
+            );
+          }
+        }
+        if (!completed()) failPlayback('Playback pulse bound exceeded');
+        const final = measureSnapshot('completed ' + row.course.id + '/' + row.proof.mode);
+        must(
+          final.replay?.finished &&
+            final.course === row.course.id &&
+            final.replay.mode === row.proof.mode &&
+            w.fixtureWorldStateIdentity(final.state) === w.fixtureWorldStateIdentity(state()),
+          'Final rendered state agrees with the completed actual host snapshot',
+        );
+        activePlayback.elapsedMs = Math.round(performance.now() - playbackStart);
+        playback.push(plain(activePlayback));
+        activePlayback = null;
+        return final;
+      }
+      async function cleanup() {
+        if (app) {
+          // Native iframe teardown avoids the separately tracked explicit-unmount defect.
+          errors.push(...w.fixtureErrors);
+          rafReceipts.push(plain(w.fixtureRAF.trace));
+          app = null;
+        }
+        store?.close();
+        const unloaded = new Promise((resolve) =>
+          frame.addEventListener('load', resolve, { once: true }),
+        );
+        frame.src = 'about:blank';
+        await bounded(unloaded, 'native iframe teardown');
+        for (const name of names)
+          await bounded(
+            new Promise((resolve, reject) => {
+              const request = indexedDB.deleteDatabase(name);
+              request.onsuccess = resolve;
+              request.onerror = () => reject(request.error);
+              request.onblocked = () => reject(Error('Fixture database still open: ' + name));
+            }),
+            'delete isolated database',
+            5000,
+          );
+      }
+      try {
+        progress('Verify frozen modules, admitted assets and all archive parts');
+        manifest = await (await fetch('./fixture-manifest.json', { cache: 'no-store' })).json();
+        must(manifest.format === 'FPVSchoolAlternateFixture.v1', 'Exact School fixture format');
+        for (const [url, sha] of Object.entries({
+          ...manifest.currentSources,
+          ...Object.fromEntries(
+            Object.entries(manifest.fixtureFiles).map(([name, sha]) => [
+              new URL(name, location.href).href,
+              sha,
+            ]),
+          ),
+        })) {
+          const response = await fetch(url, { cache: 'no-store' });
+          if (!response.ok || (await hash(await response.arrayBuffer())) !== sha)
+            throw Error('Frozen input mismatch ' + url);
+        }
+        must(
+          true,
+          'Frozen candidate, complete admitted asset tree, harness and archives match their hashes',
+        );
+        const base = manifest.candidateBase + '/optional-practice/civilian-fpv/';
+        const [catalogue, records, model, worldDemos, flightDemos, identity] = await Promise.all([
+          ...[
+            'world-catalogue.mjs',
+            'world-records.mjs',
+            'world-model.mjs',
+            'world-demonstrations.mjs',
+            'demonstrations.mjs',
+          ].map((name) => import(base + name)),
+          import(manifest.candidateBase + '/game/data-json.mjs'),
+        ]);
+        data = { catalogue, records, model };
+        await model.initWorldRuntime();
+        const expected = [
+          ...Array.from({ length: 12 }, (_, i) => ({
+            id: 'beginner-' + String(i + 1).padStart(2, '0'),
+            mode: 'acro',
+          })),
+          ...Array.from({ length: 16 }, (_, i) => ({
+            id: 'beginner-' + (i + 27),
+            mode: 'self-level',
+          })),
+        ];
+        equal(manifest.expectedPairs, expected, 'Exact approved 28 course/mode pairs');
+        const archives = await Promise.all(
+          manifest.archives.map(async (part) =>
+            (await fetch(new URL(part.file, location.href), { cache: 'no-store' })).json(),
+          ),
+        );
+        const imported = (
+          await Promise.all(archives.map((part) => records.importProofPart(part)))
+        ).flat();
+        const pairKey = (r) => r.course.id + ':' + r.proof.mode;
+        equal(
+          imported.map(pairKey).sort(),
+          expected.map((r) => r.id + ':' + r.mode).sort(),
+          'Both archive cohorts contain exactly 28 distinct approved pairs',
+        );
+        must(
+          imported.every((r) => r.status === 'missing-dependency'),
+          'Authenticated archive flags never grant trusted verification',
+        );
+        for (const mode of ['acro', 'self-level']) {
+          const parts = archives
+            .filter((p) => p.records.every((r) => r.proof.mode === mode))
+            .sort((a, b) => a.part - b.part);
+          must(
+            parts.length > 0 &&
+              parts.length === parts[0].parts &&
+              parts.every(
+                (p, i) =>
+                  p.part === i + 1 &&
+                  p.parts === parts.length &&
+                  p.archiveId === parts[0].archiveId,
+              ),
+            mode + ' archive declared parts are complete',
+          );
+        }
+        const coreSnapshot = async () => ({
+          world: worldDemos.WORLD_DEMONSTRATIONS.length,
+          flight: flightDemos.FLIGHT_DEMONSTRATIONS.length,
+          worldSha256: await hash(JSON.stringify(worldDemos.WORLD_DEMONSTRATIONS)),
+          flightSha256: await hash(JSON.stringify(flightDemos.FLIGHT_DEMONSTRATIONS)),
+        });
+        equal(
+          await coreSnapshot(),
+          manifest.core,
+          'All 178 core recordings retain their exact content',
+        );
+        must(
+          manifest.core.world === 154 && manifest.core.flight === 24,
+          'Core registry remains 154 World plus 24 Flight examples',
+        );
+        const all = [...catalogue.WORLD_CATALOGUE, ...catalogue.BEGINNER_CATALOGUE];
+        for (const row of imported) {
+          const entry = catalogue.BEGINNER_CATALOGUE.find((e) => e.id === row.course.id);
+          must(
+            entry &&
+              entry.packIdentity === row.packIdentity &&
+              identity.dataIdentity(model.validateWorldCourse(entry.course)) ===
+                identity.dataIdentity(model.validateWorldCourse(row.course)) &&
+              !model.worldCourseRequiresAcro(entry.course) &&
+              row.proof.session === 'demonstration' &&
+              row.proof.course === entry.id &&
+              !worldDemos.WORLD_DEMONSTRATIONS.some(
+                (d) => d.proof.course === entry.id && d.proof.mode === row.proof.mode,
+              ),
+            pairKey(row) + ' is an exact eligible missing dependency pair',
+          );
+        }
+        await mount();
+        must(app.snapshot().catalogue === all.length, 'Full current catalogue is retained', {
+          catalogue: all.length,
+        });
+        for (const mode of ['acro', 'self-level']) {
+          set('flight-mode', mode);
+          must(
+            imported.filter((r) => r.proof.mode === mode).every((r) => !watchButton(r.course.id)),
+            mode + ' alternate School actions initially absent',
+          );
+          must(
+            imported.filter((r) => r.proof.mode !== mode).every((r) => !!watchButton(r.course.id)),
+            mode + ' original recommended examples remain available',
+          );
+        }
+        const first = imported.find((r) => r.proof.mode === 'acro'),
+          entry = all.find((e) => e.id === first.course.id);
+        const f = model.createWorldFlight({
+          course: entry.course,
+          mode: first.proof.mode,
+          response: first.proof.response,
+        });
+        f.arm();
+        const recorder = model.createWorldRecorder(f, { session: 'practice' });
+        for (const row of first.proof.frames.slice(0, 10)) {
+          f.step(
+            Object.fromEntries(
+              ['roll', 'pitch', 'yaw', 'throttle', 'actions'].map((key, i) => [key, row[i]]),
+            ),
+            { quantized: true },
+          );
+          recorder.record();
+        }
+        const session = {
+          course: entry.course,
+          proof: recorder.export(),
+          packIdentity: entry.packIdentity,
+          preview: false,
+          sectorReferenceId: null,
+          ghostEnabled: false,
+        };
+        f.dispose();
+        await store.saveSession(copy(session));
+        baseline = await protectedData();
+        progress('Reject missing dependencies, changed course and forged final identity');
+        const wrongPack = changedRecord(
+            first,
+            (r) => (r.packIdentity = 'fpv-pack:' + 'a'.repeat(64)),
+          ),
+          wrongCourse = changedRecord(first, (r) => (r.course.revision += '-fixture-other')),
+          invalid = changedRecord(first, (r) => (r.proof.finalStateIdentity = '0'.repeat(16)));
+        await importPart(await archiveFor([wrongPack, wrongCourse, invalid]));
+        let saved = plain(await store.list());
+        must(
+          saved.find((r) => r.id === wrongPack.id)?.status === 'missing-dependency',
+          'Missing exact installed pack never becomes verified',
+        );
+        must(
+          saved.find((r) => r.id === wrongCourse.id)?.status === 'invalid',
+          'Changed normalized course is rejected by actual importer',
+        );
+        must(
+          saved.find((r) => r.id === invalid.id)?.status === 'invalid',
+          'Valid transport checksum cannot authorize a forged replay final state',
+        );
+        for (const mode of ['acro', 'self-level']) {
+          set('flight-mode', mode);
+          must(
+            imported.filter((r) => r.proof.mode === mode).every((r) => !watchButton(r.course.id)),
+            mode + ' invalid or missing records do not unlock examples',
+          );
+        }
+        equal(
+          await protectedData(),
+          baseline,
+          'Rejected records preserve progress, recovery and bookmark',
+        );
+        progress('Import every authoritative mode archive through the actual File input');
+        for (const part of archives) {
+          const status = await importPart(part);
+          must(
+            status.includes('Imported ' + part.records.length + '/' + part.records.length),
+            'Every record in archive part ' + part.part + '/' + part.parts + ' was processed',
+            { mode: part.records[0].proof.mode, status },
+          );
+        }
+        saved = plain(await store.list());
+        must(
+          imported.every(
+            (r) =>
+              saved.find((s) => s.id === r.id)?.status === 'verified' &&
+              saved.find((s) => s.id === r.id)?.diagnostic === 'complete',
+          ),
+          'All 28 imported records independently replay to completion',
+        );
+        must(
+          wrongPack.id === first.id &&
+            saved.length === 30 &&
+            new Set(saved.map((r) => r.id)).size === 30 &&
+            saved.every((r) => r.packIdentity !== wrongPack.packIdentity),
+          'Authenticated import replaces the same-content missing-pack record without duplication',
+        );
+        const content = (r) => ({
+          id: r.id,
+          course: r.course,
+          proof: r.proof,
+          packIdentity: r.packIdentity,
+          presentation: r.presentation,
+        });
+        for (const row of imported)
+          equal(
+            content(saved.find((r) => r.id === row.id)),
+            content(row),
+            pairKey(row) + ' stores the exact authenticated pack, course and proof',
+          );
+        must(
+          saved.filter((r) => r.status === 'invalid').length === 2 &&
+            wrongCourse.id !== invalid.id &&
+            [wrongCourse, invalid].every(
+              (r) =>
+                !imported.some((s) => s.id === r.id) &&
+                saved.find((s) => s.id === r.id)?.status === 'invalid',
+            ),
+          'Both distinct changed-course and forged-state controls remain invalid',
+        );
+        for (const row of [wrongCourse, invalid])
+          equal(
+            content(saved.find((r) => r.id === row.id)),
+            content(row),
+            'Invalid control bytes remain exact: ' + row.id,
+          );
+        equal(await protectedData(), baseline, 'Import awards no progress or rewards');
+        for (const row of imported) {
+          set('flight-mode', row.proof.mode);
+          must(!!watchButton(row.course.id), pairKey(row) + ' School action uses selected mode');
+          const search = d.getElementById('search');
+          search.value = row.course.locales.en.title;
+          search.dispatchEvent(new w.Event('input', { bubbles: true }));
+          const result = [...d.querySelectorAll('.challenge-row')].find(
+            (n) => n.querySelector('strong')?.textContent === row.course.locales.en.title,
+          );
+          must(
+            !!result?.querySelector('.watch-example'),
+            pairKey(row) + ' catalogue example is available',
+          );
+        }
+        d.getElementById('search').value = '';
+        d.getElementById('search').dispatchEvent(new w.Event('input', { bubbles: true }));
+        must(
+          imported.every((r) => !card(r.course.id).classList.contains('is-complete')),
+          'Import never completes a School lesson',
+        );
+        progress('Pin and reimport without changing stored records');
+        const proofRow = [...d.querySelectorAll('#proof-records .proof-row')].find(
+          (row) =>
+            row.querySelector('strong')?.textContent === first.course.locales.en.title &&
+            /Example/.test(row.textContent) &&
+            /complete/.test(row.textContent),
+        );
+        click(button(proofRow, /^Pin$/));
+        await until(
+          () => app.snapshot().records.some((r) => r.id === first.id && r.pinned),
+          'pin persisted',
+        );
+        const pinned = plain(await store.list());
+        for (const part of archives) await importPart(part);
+        equal(
+          plain(await store.list()),
+          pinned,
+          'Repeat imports preserve exact records, pins and saved times',
+        );
+        progress('All 28 whole-lesson lab previews and full actual rendered replays');
+        for (const row of imported) {
+          const id = row.course.id,
+            mode = row.proof.mode;
+          set('flight-mode', mode);
+          click(button(card(id), /^Start lesson|^Fly it again/));
+          await until(
+            () => {
+              const paused = measureSnapshot('paused lesson guide ' + id);
+              return (
+                paused.course === id &&
+                paused.learning?.guideOpen &&
+                paused.state &&
+                d.getElementById('flight-status').textContent.startsWith('Ready.')
+              );
+            },
+            'lesson guide ready ' + pairKey(row),
+          );
+          await pulse(0);
+          click(d.querySelector('[data-coach-action="lab-replay"]'));
+          await pulse(20);
+          await until(
+            () => /WATCH LESSON/.test(d.querySelector('.coach-lab-status')?.textContent ?? ''),
+            'whole lesson preview ' + pairKey(row),
+          );
+          must(
+            d.getElementById('flight-mode').value === mode &&
+              measureSnapshot('paused lesson lab ' + id).state.status !== 'active',
+            pairKey(row) + ' lab preview leaves real flight paused',
+          );
+          await closeFlight();
+          click(watchButton(id));
+          const final = await playToEnd(row);
+          must(
+            w.fixtureWorldStateIdentity(state()) === row.proof.finalStateIdentity &&
+              state().ticks === row.proof.frames.length &&
+              state().status === 'complete' &&
+              state().contacts === 0 &&
+              state().health === state().maxHealth,
+            pairKey(row) +
+              ' rendered replay reaches exact final identity without contact or health loss',
+          );
+          const resources = w.fixtureRenderer.resources();
+          must(
+            resources.available && resources.renderer.calls > 0 && !resources.renderer.contextLost,
+            pairKey(row) + ' actual WebGL renderer submitted the replay frame',
+            {
+              calls: resources.renderer.calls,
+              triangles: resources.renderer.triangles,
+              ticks: state().ticks,
+            },
+          );
+          must(
+            final.replay.mode === mode &&
+              /Demonstration complete/.test(d.getElementById('result-panel').textContent),
+            pairKey(row) + ' selected mode and demonstration result remain explicit',
+          );
+          await closeFlight();
+        }
+        equal(plain(await store.list()), pinned, 'All 28 replays preserve proof bytes and pins');
+        equal(
+          await protectedData(),
+          baseline,
+          'All lab previews and full replays preserve player progress',
+        );
+        must(
+          imported.every((r) => !card(r.course.id).classList.contains('is-complete')),
+          'Watching all 28 examples never earns lesson completion',
+        );
+        progress('Recorded section playback in both selected flight modes');
+        for (const [id, mode] of [
+          ['beginner-07', 'acro'],
+          ['beginner-27', 'self-level'],
+        ]) {
+          const row = imported.find((r) => r.course.id === id && r.proof.mode === mode),
+            sectionEntry = all.find((e) => e.id === id),
+            index = 2;
+          set('flight-mode', mode);
+          await bounded(
+            app.startFlight(copy(sectionEntry), {
+              paused: true,
+              checkpoint: copy({ mode, index, proof: row.proof, watch: true }),
+            }),
+            'prepare section ' + id,
+          );
+          const final = await playToEnd(row, index);
+          must(
+            final.sectionReplay.sectionComplete && final.replay.mode === mode,
+            id + ':' + mode + ' exact recorded section completes',
+          );
+          must(
+            d.getElementById('export-flight').disabled,
+            'Section watch cannot export a scored attempt ' + id,
+          );
+          await closeFlight();
+        }
+        equal(
+          await protectedData(),
+          baseline,
+          'Section replay preserves player progress and recovery',
+        );
+        progress('Native iframe reload retains both mode cohorts and original recordings');
+        await mount();
+        equal(plain(await store.list()), pinned, 'Native reload retains all records and pins');
+        for (const mode of ['acro', 'self-level']) {
+          set('flight-mode', mode);
+          must(
+            imported.every((r) => !!watchButton(r.course.id)),
+            mode + ' originals and imported alternates survive native reload',
+          );
+        }
+        set('flight-mode', 'self-level');
+        must(
+          catalogue.BEGINNER_LESSONS.filter((l) => model.worldCourseRequiresAcro(l.course)).every(
+            (l) => !watchButton(l.id),
+          ),
+          'All 16 Acro-skill lessons still have no scored Self-level example',
+        );
+        progress('Remove one alternate in each mode without affecting its original');
+        for (const [id, mode] of [
+          ['beginner-12', 'acro'],
+          ['beginner-42', 'self-level'],
+        ]) {
+          const row = imported.find((r) => r.course.id === id);
+          set('flight-mode', mode);
+          const item = [...d.querySelectorAll('#proof-records .proof-row')].find(
+            (node) =>
+              node.querySelector('strong')?.textContent === row.course.locales.en.title &&
+              /Example/.test(node.textContent),
+          );
+          click(button(item, /^Remove$/));
+          await until(() => !app.snapshot().records.some((r) => r.id === row.id), 'remove ' + id);
+          must(!watchButton(id), id + ':' + mode + ' removal invalidates optional lookup');
+          set('flight-mode', mode === 'acro' ? 'self-level' : 'acro');
+          must(
+            !!watchButton(id),
+            id + ' original recommended example remains after optional removal',
+          );
+        }
+        equal(
+          await protectedData(),
+          baseline,
+          'Removal and mode changes preserve recovery, rewards and bookmark',
+        );
+        equal(
+          await coreSnapshot(),
+          manifest.core,
+          'Core 178 recordings are byte-equivalent after all workflows',
+        );
+        must(
+          w.fixtureErrors.length === 0 && errors.length === 0,
+          'No uncaught host or WebGL application errors',
+        );
+      } catch (error) {
+        failed = String(error.stack ?? error);
+      } finally {
+        document.removeEventListener('visibilitychange', observeOuter);
+        try {
+          await cleanup();
+        } catch (error) {
+          failed ??= String(error.stack ?? error);
+        }
+      }
+      if (errors.length) failed ??= 'Uncaught host errors during execution or native teardown';
+      const receipt = {
+        format: 'FPVSchoolAlternateBrowserReceipt.v1',
+        status: failed ? 'failed' : 'passed',
+        candidateHostSha256: manifest?.candidateHostSha256,
+        sourceFiles: manifest?.sourceFiles,
+        archives: manifest?.archives,
+        sourceRevision: manifest?.sourceRevision,
+        candidateInput: manifest?.candidateInput,
+        expectedPairs: manifest?.expectedPairs,
+        reusedPlayer: manifest?.reusedPlayer,
+        core: manifest?.core,
+        fixtureFiles: manifest?.fixtureFiles,
+        elapsedMs: Math.round(performance.now() - started),
+        passed: checks.filter((c) => c.passed).length,
+        total: checks.length,
+        checks,
+        phases,
+        playback,
+        activePlayback,
+        focusEvents,
+        snapshotCosts,
+        rafReceipts,
+        errors,
+        failure: failed ?? null,
+        offline: 'Not measured: reload uses live HTTP; only IndexedDB persistence was checked.',
+        controls:
+          'Scripted File inputs, buttons and controlled animation clock. Before the single deliberate Arm, up to ten zero-time frames remain paused with unchanged ticks until two frames take at most 250 ms each; all timings remain recorded. Transparent renderer forwarding observes existing draw states during active playback; full host snapshots run only outside active playback and the final snapshot identity must equal the final draw. Actual RAF callback-entry gaps are recorded without changing the performance clock. Production focus/pause guards remain active, with no automatic resume. No physical-device or player acceptance claim.',
+        lifecycle:
+          'Native iframe reload and teardown only; no explicit app.dispose qualification or WebGL leak claim.',
+      };
+      window.fpvSchoolAlternateReceipt = receipt;
+      $('receipt').value = JSON.stringify(receipt, null, 2);
+      $('status').textContent =
+        `${receipt.status.toUpperCase()}: ${receipt.passed}/${receipt.total}`;
+    }
+    $('run').addEventListener('click', async () => {
+      if (running) return;
+      running = true;
+      $('run').disabled = true;
+      try {
+        await execute();
+      } finally {
+        running = false;
+        $('run').disabled = false;
+      }
+    });
+  </script>
+</html>

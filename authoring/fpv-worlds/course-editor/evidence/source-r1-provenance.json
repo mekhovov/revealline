@@ -1,0 +1,35 @@
+{
+  "source": "23ad656c96f1f89f415e246423bdc5de1377077d",
+  "checks": 197,
+  "failures": 0,
+  "operatorConsoleWarnings": [],
+  "operatorConsoleErrors": [],
+  "archives": [
+    {
+      "file": "source-r1.json.gz",
+      "uncompressedBytes": 147339,
+      "uncompressedSha256": "61f7305d5b905959fdf05ac696ec9ee07c1a7a1adb49d2788844df1aaff61358"
+    },
+    {
+      "file": "source-r1-fixture.json.gz",
+      "uncompressedBytes": 19994,
+      "uncompressedSha256": "04cca07ffc60557c7c307f0fa9266e529e4b2d99b952bdf0ac14d58123679d1d"
+    },
+    {
+      "file": "source-r1-host.html.gz",
+      "uncompressedBytes": 34903,
+      "uncompressedSha256": "02d8dc92eadabd3592ad3aa260ed7171dd1837443f0fd0d4b93bb2fcc4ee0a3f"
+    },
+    {
+      "file": "source-r1-harness.mjs.gz",
+      "uncompressedBytes": 16888,
+      "uncompressedSha256": "9b8b7e5e4f79de563b840ed1c3b834b94614fa790068a7e4f19c9c469ae1a92a"
+    },
+    {
+      "file": "source-r1-index.html.gz",
+      "uncompressedBytes": 1401,
+      "uncompressedSha256": "2648642b7da997e394d3628ed2a2ab084649dce6bbff9adfe6cd1b760c3cb44d"
+    }
+  ],
+  "note": "Historical accepted source overlay. Decompress archives to recover exact original bytes; package r2 adds further ownership checks."
+}
