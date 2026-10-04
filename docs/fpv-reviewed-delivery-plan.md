@@ -51,30 +51,27 @@ Quality presets must preserve collision, relevant sight lines and objective acto
 Measure frame times, loading and resource disposal before claiming performance.
 No multiplayer, online publishing or universal commercial-map conversion is added.
 
-### Orchard surface checkpoint — 4 October 2026
+### Optional Adventure examples checkpoint — 4 October 2026
 
-Campus #1018 is merged and public render/arm/pause was verified at96ef08777.
-Graphics recovery #1019 is merged at`a46aded0b56c612fbbfb1736cfb27ee0746c2b1f`
-and [normal public Clearing check-in render/arm/pause](evidence/fpv-renderer-public-launch-a46aded0b.json)
-is verified; context-loss recovery retains its separate local evidence.
+The D3 data-only Adventure increment converts all 60 retained authoring proofs
+into an optional Library-import JSON: both modes for each of 30 challenges,
+with the original 178 bundled examples and all core download inputs unchanged.
+The converter passes 992 checks and 120 exact original/transport replays; the
+actual admitted host passes 395 checks covering all 60 imports/lookups and
+persistence plus 12 complete rendered replays across both modes and six worlds.
+All original zero-contact and six reduced-health duel outcomes are retained.
+See [evidence and limits](fpv-adventure-optional-examples.md). Public availability
+requires protected merge and a working download link; it is not implied by local
+qualification. Historical failed fixture runs remain visible.
 
-Orchard now has an accepted bounded authored-tree material increment. It replaces
-six existing maps with broken upright bark plates and broad opaque leaf groups;
-all closed tree geometry, UVs, routes, actors, collision and GPU owners remain
-unchanged. CPU378/89, ten original recordings/39,525ticks, source/package96checks/
-43pairs each, all three reproducible admissions and the full102-file admitted
-player render/arm/pause pass. [Qualification](fpv-orchard-tree-surfaces.md) retains
-the rejected first visual pass and exact candidate identities. Current original
-inputs leave11,488bytes below16MiB before independent Railworks/Solar integration.
-Protected CI, merge and public Orchard availability remain separate.
-
-Railworks #1020 continues independently; Solar is a separate art increment.
-Continue the approved D3 optional Adventure examples after publishing this focused
-Orchard item, without mixing unfinished conversion work into its PR. The earlier
-world-surface increments do not certify every world as fully realistic. Broader
-art/device acceptance and the unexplained historical long stalls remain recorded
-without blocking the approved sequence. D4 creator work, D5 four new worlds and
-D6 additional unit coverage retain their order and scope.
+The observed explicit World-host disposal ordering defect is the next narrow
+independent fix: shell teardown removes the menu hint target before menu
+navigation cleanup. It is not fixed by the data change. Then continue the
+separate 28 alternate School examples, audit one evidence-based optional lesson
+recommendation, and improve optional-example discoverability in Library without
+automatic download or core precaching. Existing section-watch, longest-section
+practice, live height/speed/tilt hints and touch/controller flows remain delivered
+features to preserve, not duplicate. Broader D3 work and D4–D6 remain open.
 
 ### Optional alternate School checkpoint — 4 October 2026
 
@@ -755,3 +752,29 @@ and Solar increments and broader world polish, then D3 examples/coaching, D4
 creator, D5's **228 challenges / 18 worlds** target and deferred D6 unit coverage.
 Functional qualification continues at each increment. Browser checks do not
 close named-device timing, physical controls or complete-world artistic goals.
+
+### Solar and optional School examples checkpoint — 4 October 2026
+
+Railworks #1020 is merged at `bf167a4fd`. The independent Solar increment is locally
+qualified on that main: photovoltaic cells and aluminum-colored framing belong
+only on the existing banks' upper faces; sides and backs stay solid and quiet.
+The final canonical-profile guard preserves same-ID theme edits. Geometry,
+collision, resource counts, Pixel/shared themes and retained recordings remain
+unchanged. See [Solar qualification](fpv-solar-panel-frames.md) for original-source
+and final-package attribution, actual browser/player evidence and limits. These
+bounded increments do not close broader world-model realism or artistic polish.
+
+The next independent D3 School batch is **28 optional alternate examples**:
+`beginner-01`–`12` in Acro and `beginner-27`–`42` in Self-level. Eligibility follows
+actual step types and `worldCourseRequiresAcro`, not a nonexistent `step.skill`
+property. Exclude the fourteen already optional foundation Self-level examples
+and sixteen Acro-skill lessons that allow only unscored Self-level practice.
+Preserve the **178 bundled examples** and distribute new proofs through the
+existing optional archive importer. The sixty Adventure examples are separate
+work. Functional replay and actual import/playback qualification precede claims
+of completion; this checkpoint does not say the new batch has been generated.
+
+Content remains **196 challenges / 14 worlds**. Continue the approved D3 examples
+and coaching work, D4 creator, D5's **228 challenges / 18 worlds** target and D6
+unit coverage, while retaining broader art, named-device performance and physical
+control acceptance as separate unfinished goals.
