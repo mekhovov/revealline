@@ -30,18 +30,16 @@ campaign.classRecipes = classRecipes;
 const entry = { campaign, classRecipes };
 const catalog = await json('../demo-data/catalog.json');
 
-test('curated wins and authored mistakes reproduce current Standard tuning across every installed base map', async () => {
+test('curated complete routes reproduce current Standard tuning without scripted reversal excerpts', async () => {
   const generated = await buildDemoRecordings();
-  assert.equal(generated.length, 16);
-  assert.equal(
-    new Set(generated.map(({ replay }) => replay.level.id)).size,
-    campaign.levels.length,
-  );
+  assert.equal(generated.length, 10);
+  assert.equal(new Set(generated.map(({ replay }) => replay.level.id)).size, 8);
   assert.deepEqual(
     catalog.clips,
     generated.map(({ descriptor }) => descriptor),
   );
   for (const { replay, descriptor, metrics } of generated) {
+    assert.ok(['won', 'lost'].includes(replay.summary.status));
     const authored = campaign.levels.find((level) => level.id === replay.level.id);
     assert.deepEqual(
       replay.level,
@@ -217,7 +215,7 @@ test('frozen browser variants preserve the exact reviewed trace and every non-en
 });
 
 test('catalogue admits only matching installed content and local bundled replay URLs', async () => {
-  assert.equal(resolveDemoCatalog(catalog, [entry]).length, 16);
+  assert.equal(resolveDemoCatalog(catalog, [entry]).length, 10);
   assert.equal(resolveDemoCatalog(catalog, []).length, 0);
   const changed = structuredClone(entry);
   changed.campaign.levels[0].rules.moveSpeed++;

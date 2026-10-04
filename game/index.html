@@ -2905,7 +2905,50 @@ No offline check yet.</pre
         </div>
         <div class="demo-header-actions" data-demo-ui>
           <button
+            id="demo-watch-pause"
+            data-icon="Ⅱ"
+            class="button secondary"
+            type="button"
+            data-i18n="demo:pauseDemo"
+          >
+            Pause demo
+          </button>
+          <button
+            id="demo-next"
+            data-icon="⏭"
+            class="button secondary"
+            type="button"
+            data-i18n="demo:next"
+          >
+            Next demonstration
+          </button>
+          <button
+            id="demo-interrupt"
+            data-icon="▶"
+            data-demo-ui
+            class="button primary"
+            type="button"
+            data-i18n="demo:playChoices"
+          >
+            Want to play?
+          </button>
+          <button
+            id="demo-details-toggle"
+            class="button secondary"
+            type="button"
+            data-demo-ui
+            data-icon="☰"
+            data-i18n="demo:details"
+            data-i18n-aria-label="demo:details"
+            aria-controls="demo-panel"
+            aria-expanded="false"
+          >
+            Audio &amp; details
+          </button>
+
+          <button
             id="demo-fullscreen"
+            data-icon="⛶"
             type="button"
             class="button secondary"
             data-demo-ui
@@ -2916,6 +2959,7 @@ No offline check yet.</pre
           </button>
           <button
             id="demo-back"
+            data-icon="×"
             type="button"
             class="button secondary"
             data-demo-exit
@@ -2935,31 +2979,9 @@ No offline check yet.</pre
           aria-label="Live game demonstration"
         ></canvas>
       </div>
-      <div class="demo-panel">
-        <div class="demo-transport" data-demo-ui>
-          <button
-            id="demo-watch-pause"
-            class="button secondary"
-            type="button"
-            data-i18n="demo:pauseDemo"
-          >
-            Pause demo
-          </button>
-          <button id="demo-next" class="button secondary" type="button" data-i18n="demo:next">
-            Next demonstration
-          </button>
-          <button
-            id="demo-interrupt"
-            data-demo-ui
-            class="button primary"
-            type="button"
-            data-i18n="demo:playChoices"
-          >
-            Want to play?
-          </button>
-        </div>
+      <div id="demo-panel" class="demo-panel" data-demo-ui hidden>
         <p id="demo-caption" class="demo-compact-caption"></p>
-        <details id="demo-details" data-demo-ui>
+        <details id="demo-details" data-demo-ui open>
           <summary>
             <span data-i18n="demo:details">Audio &amp; details</span
             ><span id="demo-now-playing"></span>
