@@ -68,6 +68,13 @@ detached status nodes; callers still receive an explicit disposal-save failure.
   DOM errors. The [actual fixture screenshot](evidence/fpv-world-disposal-packaged-browser-v5.png)
   and lossless receipt are retained. This is a local actual-player lifecycle run;
   deployment remains separately verified.
+- The complete normal admitted player also passed a fresh-tab **Clearing
+  check-in** render, Arm through **0.2 seconds** and Pause with empty warning/error
+  logs. The [observation](evidence/fpv-world-disposal-normal-player.json) and
+  [screenshot](evidence/fpv-world-disposal-normal-player.png) retain the earlier
+  **Lift and land** briefing attempt separately: browser transport reported
+  target-closed/focus-emulation timeouts, so that legacy launch is not counted
+  as passed and no runtime cause is inferred.
 
 The source receipt identifies the earlier `f31ef625…` host and pre-Solar fixture
 modules. The final package adds only the bounded late-error guard to that host
