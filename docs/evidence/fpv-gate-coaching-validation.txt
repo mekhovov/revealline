@@ -1,0 +1,53 @@
+
+> revealline@0.142.4 validate
+> npm run i18n:check && node scripts/game-cli.mjs validate && node scripts/check-presentation-metadata.mjs && node scripts/refresh-fpv-reaction-runtime.mjs --check && node scripts/refresh-fpv-academy-audio.mjs --check && node scripts/refresh-fpv-play-shell.mjs --check && node scripts/refresh-fpv-presentation-assets.mjs --check
+
+
+> revealline@0.142.4 i18n:check
+> node scripts/localization.mjs check
+
+{
+  "localization": {
+    "locales": [
+      "en",
+      "uk"
+    ],
+    "messages": 12928,
+    "references": 8991
+  }
+}
+{
+  "version": "0.142.4",
+  "files": 2806,
+  "literalReferencesValid": true,
+  "navigationWarnings": [
+    "game/downloads.html → ../app/update.html",
+    "game/downloads.html → ../app/",
+    "game/index.html → ../app/update.html",
+    "game/index.html → ../diagnostics/",
+    "site/about.html → ../releases/",
+    "site/about.html → ../privacy.html",
+    "site/about.html → ../credits.html"
+  ],
+  "contentSnapshots": [
+    {
+      "file": "game/content-design/whole-spatial-data.mjs",
+      "bytes": 528831,
+      "sha256": "e62ef45089df1bbaea04cceb932949fbe8d29377a4eeefcac8280125006495b3"
+    }
+  ],
+  "campaign": "first-signal",
+  "levels": 12,
+  "themes": 4,
+  "classes": 7,
+  "packs": 14,
+  "packLevels": 89,
+  "packGoals": 6,
+  "coopPacks": 1,
+  "coopLevels": 2
+}
+{"source":{"id":"field-kit","revision":104},"bytes":4729041,"sha256":"c905cab9ce4519379d57bdecf3ef02146b44d5a2ad82430a3939b2d2fc00f617","formatting":"bounded-canonical"}
+{"status":"verified-byte-identical","modules":25,"recordings":24,"bytes":849454}
+{"status":"verified-byte-identical","modules":7,"externalModules":1,"bytes":44115,"target":"optional-practice/civilian-fpv/sim-presentation.mjs"}
+{"status":"verified-byte-identical","sourceSha256":"751be3729b5a702525d629844eb59661673e9bc2a27b5589df7047ea9badab1d","bytes":16955,"packageSlotsAdded":0}
+{"status":"verified-byte-identical","assets":{"ui":{"source":"game/ui/fonts/field-kit/exo2-ui-400-600.woff2","bytes":76652,"sha256":"fce2dc8f15375b66d336c1defbca23dfb2310301b62c822206a0a013d19601ef","license":"OFL-1.1"},"pixel":{"source":"game/ui/fonts/departure-mono/DepartureMono-Regular.woff2","bytes":22496,"sha256":"5b4fed1daa90708aa9c6ee1190abca9dc22164a1c1def0020386e46b61038cfb","license":"OFL-1.1"},"mono":{"source":"game/ui/fonts/field-kit/ibm-plex-mono-500.woff2","bytes":40080,"sha256":"0498bcb48294756b5ac9062290e1639e907b1ec69b5dc2e8cfdec3fab58e0bc8","license":"OFL-1.1"},"display":{"source":"game/ui/fonts/field-kit/handjet-display-600.woff2","bytes":38120,"sha256":"4797c11d5e17c3f5f9b5b3fa96efb4fd2aabb877fb4d625dfc8eb7465464e145","license":"OFL-1.1"},"focus":{"source":"game/audio/effects/focus.wav","bytes":2924,"sha256":"0eb2a24d7e17e79c6d2b4dc4c1be57ba0622d2e3e8e177999c12eb18c54d3256","license":"CC0-1.0"},"confirm":{"source":"game/audio/effects/confirm.wav","bytes":5864,"sha256":"52f084b9648ccd970891996c7ccdabb796dcd33c0a6d4a420bb70e51daef9bf1","license":"CC0-1.0"},"cancel":{"source":"game/audio/effects/cancel.wav","bytes":3948,"sha256":"d59b933dbe794b9d36f962c8505513f3a85a30a6c2c3e2ed1d6895769d0a2616","license":"CC0-1.0"}}}

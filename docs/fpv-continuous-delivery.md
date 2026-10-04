@@ -3035,3 +3035,150 @@ v5 forwards real renderer draws and preserves the production pause guard. The
 separate explicit host-dispose ordering defect remains next. Publish through
 protected exact-head checks and verify the public optional JSON link after merge.
 See [complete qualification and limits](fpv-adventure-optional-examples.md).
+
+### D4 standalone creator starters — 4 October 2026
+
+The focused increment on School main `c907b4f7f` adds ten original one-course
+industrial/natural projects: sweeper, hairpin, chicane, climb and split level.
+Each has independent mode arrays, EN/UK guidance and reproducible editable ZIP,
+world-pack and project exports through existing APIs. It adds no player module,
+catalogue entry or optional-runtime source bytes; 196 challenges / 14 worlds and
+the existing package limits remain unchanged.
+
+Twenty ordinary-control flights and independent replays pass in 55,804 ticks
+with zero hard contacts. Nominal clearance passes 314 swept segments; it is
+bounded authored-path evidence. Actual browser r2 passes 237/237 checks on the
+unchanged 102-member admitted `d9ad2561e` player: ten ZIP identities, two numeric
+editor workflows, four original mode replays, a trusted 3D arrow drag, exact
+Undo/Redo, export/reimport, retained original pack revision and online native
+IndexedDB reopening. The manual upper-gate move is 3,500 mm along X. Edited
+copies do not inherit the original routes' flight or clearance qualification.
+
+The original r4 scalar-identity qualifier failure and r1 browser reopen failure
+are retained. r1's fixture incorrectly borrowed the parent's native IDB factory;
+r2 keeps each reader in its own JavaScript realm and verifies the prototypes and
+public Edit flow. No production guard changed. See the
+[starter qualification and raw receipts](../authoring/fpv-worlds/starters/evidence/README.md).
+
+Publish this completed authoring increment independently. Continue explicit
+spatial mode choice through route edits/order/Undo/Redo/source overrides in a
+separate branch after runtime-capacity review. Separate localhost offline
+qualification now passes on the same admitted player: actual Prepare offline,
+stopped origin with two curl exit-7 probes, reload/Workshop render, native keyboard
+edit, two Undo/Redo pairs, edited installation, reload, and restoration of both
+the original and edited revisions. Logs are empty; the dedicated server is
+restored afterward. The raw receipt and screenshots are in the starter evidence.
+This is not device-wide offline, browser restart, storage eviction or public-path
+qualification. Neither this increment nor browser checks close full D4, hardware,
+novice or sustained-FPS acceptance. Additional unit coverage remains in D6.
+
+
+### 4 October — Owner reallocation and publication completion
+
+The owner adopted publication first, engineering concentrated on performance,
+Library delivery and integrated reliability, and art/content concentrated on
+Reservoir as the representative quality standard. Festival is preserved at
+47f8e36e; finish Festival, Harbor and Canals one at a time after that standard,
+then D6. Functional verification remains continuous; extra unit coverage is D6.
+The allocation is recorded in #1069 on codex/fpv-allocation-priorities.
+
+Completed protected publication:
+- #1065 merged bf9b0290970f548738c719fbd47d57be93004be2; its marker and native
+  public launch/zero-throttle arming/pause were verified.
+- #1067 merged 29e23a11fa2e6226b1970855f9a6ef63b870c652. Frozen admitted
+  readiness candidate 53d passed 141 actual browser checks; no general FPS gain.
+- #1066 merged 94548aa26d489ecd93ec23274208fb7a6dd733e7 after exact-head
+  500ee518e4a7210d3de5fce304d0f2d02a8793da checks and holds were audited.
+  All 18 Reservoir tree children match qualified 34ba byte-for-byte; the latest
+  ordinary merge only incorporated accepted main. No stack/bypass was needed.
+- Public main-deployment.json now identifies 94548. Root reloaded the native
+  public SIM, started Lift and land, armed at zero throttle and paused normally.
+  Reservoir's production Library registration still remains; general SIM entry
+  does not imply that a newly published optional pack is already discoverable.
+
+Current independent candidates:
+- Library worker preparation 503d62f4a77ef29b032ce55016bc2e13ad75bee8, clean
+  codex/fpv-generated-worker-capacity in garage checkout. Recovers 1716 bytes;
+  exact AST/tokens/comments/line endings plus generator/lint/scoped checks pass.
+  Current-main integration, full admissions and admitted worker smoke remain.
+- Library dedicated-worker transport a0784ea613 is preserved separately. The old
+  source fixture's 195 passes predate transport; its page-fetch admission FAILED
+  the existing guard. Do not reuse that evidence for actual Worker cancellation,
+  transfer/hash/truncation/fault qualification or weaken the network guard.
+- Menu access 7e6b2e227178aad638a980ec159a75425b6683a9, clean
+  codex/fpv-library-menu-access in /private/tmp/fpv-delivery-review-20261004.
+  Reachable EN/UK and 320/390px source UI checks passed; full admission remains.
+- Focus runtime 58d89b606b068be706e1914c4e083a32d7e623fe and corrected fixture
+  c205ffd070b753990caee0c2110fc03c38762f85 in editor checkout.
+  Actual native-browser r2 passes 145/145, including trusted Tab/Shift+Tab,
+  retained appearance focus/parent menu and deliberate subsequent arm.
+  /tmp/fpv-prearm-focus-r2.json and PNG were saved. This is declared-source-overlay
+  evidence, not current-main/package admission. Existing 16 checks also pass.
+  Audio runtime unchanged; only the old diagnostic's initial-snapshot assumption
+  was corrected. Admission/current-main integration/publication remain.
+- Reservoir terrain-stitching branch is clean at published 34ba; Festival 47f8
+  and its recovery ref remain intact. Root and art audit confirmed sky-colored
+  slivers at the terrace/ridge join. Proposed narrow boundary closure adds
+  34 triangles, reuses existing material and preserves collision/routes.
+  FIRST WRITE FAILED ENOSPC; source SHA beea7973e6ae1e6adfa33d326ca5dfd46b525ad08aa87eb88dd864843933daa5
+  remains intact. No repaired asset/proof claim.
+
+Next performance investigation: matched Yard and actor-free first-ready actor/
+camera initialization versus shader preparation, native clocks, same state/pose,
+actor/program/resource counts and first/second draw. Existing timing evidence is
+mixed; no cache expansion or broad physics/rendering rewrite is justified.
+
+Storage remains an external blocker despite fluctuating df free-space figures
+(116-481 MiB). Tiny source/plan writes still fail ENOSPC. Root's earlier local
+delivery-log append did NOT persist; this remote checkpoint preserves the state.
+All original worktrees/source/failures/published packs remain. Do not delete
+unknown Git packs, repeat heavy builds or claim failed writes succeeded.
+User has been asked to free at least 2 GiB. No automation state was changed.
+
+### 4 October — Menu qualification and engineering publication checkpoint
+
+The earlier storage-blocked checkpoint above is historical. Storage recovered and
+the authorized serial source validation/admissions resumed. The owner allocation
+remains publication first, then performance, Library delivery and integrated
+reliability; Reservoir remains the representative art standard before the
+preserved Festival, Harbor and Canals work, followed by D6 unit coverage.
+
+Worker projection #1075 merged as
+`da0bd0d6be2b42a4d2f954ebdcb1f970311b0da5` from exact reviewed
+`727a68d00622a93a56425b006999f0e474a40d3d`. Pages run 37216276847 succeeded;
+both public deployment/build markers identify that merge. Its parents retain
+main `f3764070e` and the qualified worker head. Actual public UI launch of this
+new marker remains a separate coordinator check. The worker prerequisite's
+native Worlds/Academy offline acceptance remains documented.
+
+Menu source `411396374bf25a1888a4a861c089d19671fd8432` is qualified for focused
+publication: full validation, pinned format/generator equality and all three
+two-build admissions passed. Exact admitted Worlds/Academy players retain
+102/69 members with no overlays. Six source and seven final admitted native
+iframe layout observations cover 320/390/844/1280 CSS widths, reachable EN/UK
+Settings, retained language after Reload, readable tabs/footer and wrapped header
+actions. Native Worlds arming/pause and Academy practice/pause passed; Academy
+used the full-window fallback when native fullscreen returned false. Undiagnosed
+observer TypeError logs remain disclosed; no zero-console, physical-device,
+hardware-FPS or new offline claim is made. Superseded narrow-layout candidates
+remain historical. See [menu qualification](fpv-library-menu-access.md).
+
+Library transport remains separate at admitted source `01fc6ad20`. The genuine
+dedicated-Worker source fixture passed 208 controls and the all-three/two-build
+admission passed, with 918 bytes of Worlds source reserve before menu/focus
+integration. Its direct native Worlds and Academy players passed preparation,
+stopped-origin reload and entry/pause. However, the exact admitted Library matrix
+twice stopped after 119 controls waiting for the selected course's Ready text,
+including an exclusive-focus repeat. The new bounded status/focus/RAF diagnostic
+also reproduced that timeout; analysis is pending. The frozen runtime and guards
+are unchanged. Do not claim 208 admitted controls, weaken the network/pause guard
+or publish a finished production catalogue row on that evidence.
+
+Focus #1076 is ready on current main and undergoing protected exact-head checks.
+Reservoir r9 #1077 is separately published; its required source release-ready
+check passed while the appearance check was still running at the bounded audit.
+The later r10 content candidate passed 575 CPU controls including sixteen fresh
+ordinary flights and independent/archive replays. Its visual/art acceptance
+remains pending, so r10 is not called accepted or published. First-ready resource
+investigation continues with bounded native program attribution; no broad
+performance gain or cache rewrite is claimed.

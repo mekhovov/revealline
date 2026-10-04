@@ -34,6 +34,17 @@ function fixture(t) {
   let frameId = 0,
     now = 0,
     rendererDisposals = 0;
+  const createElement = doc.createElement.bind(doc);
+  doc.createElement = (tag) => {
+    const element = createElement(tag);
+    Object.defineProperty(element, 'previousElementSibling', {
+      get() {
+        const siblings = this.parentElement?.children.filter((child) => child.nodeType === 1);
+        return siblings?.[siblings.indexOf(this) - 1] ?? null;
+      },
+    });
+    return element;
+  };
   const priorOption = globalThis.Option;
   globalThis.Option = function (text, value) {
     const option = doc.createElement('option');
@@ -152,6 +163,40 @@ test('World disposal retires menu and renderer owners before their reparented co
   h.win.emit('blur');
   assert.equal(h.pendingFrames(), 0);
   assert.equal(h.rendererDisposals(), 1);
+});
+
+test('World Reset unapplied fields discards Hunt and pursuit drafts without changing the accepted course', async (t) => {
+  const h = fixture(t);
+  await h.app.ready;
+  const entry = WORLD_CATALOGUE.find((item) => item.id === 'native-pursuit-armor-windows');
+  h.$('creator-template').value = `${entry.packIdentity}:${entry.id}`;
+  h.$('clone-challenge').click();
+  await new Promise((resolve) => setImmediate(resolve));
+  assert.ok(h.$('creator-json').value, h.$('studio-status').textContent);
+  h.$('criterion-list').value = '0';
+  h.$('criterion-list').emit('change');
+  const source = JSON.parse(h.$('creator-json').value),
+    targets = source.steps['self-level'][0].targets,
+    shownTargets = () =>
+      h.doc.querySelectorAll('[data-hunt-target-id]').map((node) => node.dataset.huntTargetId),
+    graph = () => h.doc.querySelector('[data-pursuit-editor] textarea');
+  assert.equal(targets.length, 2);
+  assert.deepEqual(shownTargets(), targets);
+  const originalGraph = graph().value;
+  h.doc.querySelector('[data-hunt-target-action="remove"]').click();
+  graph().value = '{"unapplied":true}';
+  graph().emit('input');
+  h.$('criterion-list').emit('change');
+  assert.deepEqual(shownTargets(), targets.slice(1), 'ordinary refresh preserves target drafts');
+  assert.equal(graph().value, '{"unapplied":true}', 'ordinary refresh preserves graph drafts');
+  h.$('creator-title').value = 'Unapplied title';
+  h.$('editor-reset-fields').click();
+  assert.deepEqual(shownTargets(), targets);
+  assert.equal(graph().value, originalGraph);
+  assert.equal(h.$('creator-title').value, source.locales.en.title);
+  assert.deepEqual(JSON.parse(h.$('creator-json').value), source);
+  assert.equal(h.$('undo-edit').disabled, true, 'reset does not create an applied edit');
+  assert.equal(h.app.snapshot().state, undefined, 'reset does not launch a flight');
 });
 
 test('World app prepares a pinned appearance and queues drone/theme changes after arming', async (t) => {

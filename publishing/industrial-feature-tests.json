@@ -44,6 +44,7 @@
         "game/test/studio-pursuit-editor.test.mjs",
         "game/test/studio-pursuit-preview.test.mjs",
         "game/test/fpv-native-pursuit-editor.test.mjs",
+        "game/test/fpv-world-contact-hunt-editor.test.mjs",
         "game/test/snake-studio-preview.test.mjs",
         "game/test/snake-studio-launch.test.mjs",
         "game/test/team-installed-host.test.mjs",

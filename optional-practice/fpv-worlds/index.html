@@ -43,10 +43,6 @@
         >
         <button id="lobby-sound" data-sim-icon="mute" aria-label="Sound off">Sound off</button>
         <button id="lobby-settings" data-sim-icon="settings" data-i18n="settings">Settings</button>
-        <select id="world-language" aria-label="Language">
-          <option value="en">EN</option>
-          <option value="uk">УК</option>
-        </select>
       </div>
     </header>
     <main>
@@ -702,6 +698,15 @@
       <p data-i18n="settingsHelp">
         Your controls and flight preferences carry across worlds and playlists.
       </p>
+      <div class="sim-accessibility">
+        <label
+          >Language / Мова
+          <select id="world-language">
+            <option value="en">English</option>
+            <option value="uk">Українська</option>
+          </select>
+        </label>
+      </div>
       <div id="sim-settings-controls"></div>
       <div class="sim-accessibility">
         <label

@@ -4,6 +4,7 @@ import { Document } from './helpers/couch-dom.mjs';
 import { mountActorEditor } from '../../optional-practice/civilian-fpv/world-actor-editor.mjs';
 import { validateWorldCourse } from '../../optional-practice/civilian-fpv/world-model.mjs';
 import { EXPRESSIVE_HUNT_COURSES } from '../../optional-practice/civilian-fpv/expressive-hunt-courses.mjs';
+import { NATIVE_PURSUIT_COURSES } from '../../optional-practice/civilian-fpv/native-pursuit-courses.mjs';
 
 const modes = ['self-level', 'acro'];
 const settled = async () => {
@@ -322,4 +323,136 @@ test('mode-specific Hunt drafts survive actor addition and moving applies the dr
   assert.equal(moved.tail.radius, 300);
   assert.deepEqual(f.course().steps.acro, other);
   assert.deepEqual(f.bindings()['self-level'], ['self-level-1', 'self-level-0', 'self-level-2']);
+});
+
+test('unapplied Hunt target order participates in project challenge switching without marking untouched panels dirty', (t) => {
+  const f = fixture(t, { hunt: true }),
+    before = structuredClone(f.course()),
+    ids = before.steps['self-level'][1].targets;
+  assert.equal(f.editor.hasPendingChanges(), false);
+  f.editor.selectObjective('self-level', 1);
+  f.editor.refresh();
+  assert.equal(f.editor.hasPendingChanges(), false, 'viewing an objective changes no source');
+  const moveUp = () =>
+    f
+      .$(`[data-hunt-target-id="${ids[1]}"]`)
+      .querySelector('[data-hunt-target-action="up"]')
+      .click();
+  moveUp();
+  assert.equal(
+    f.editor.hasPendingChanges(),
+    true,
+    'list-only edits must block challenge replacement',
+  );
+  assert.deepEqual(f.course(), before, 'a pending order is not an accepted objective');
+  f.$(`[data-hunt-target-id="${ids[1]}"]`)
+    .querySelector('[data-hunt-target-action="down"]')
+    .click();
+  assert.equal(f.editor.hasPendingChanges(), false, 'restoring the original order is clean');
+  moveUp();
+  f.choose('[data-hunt-objective]', 'acro:1');
+  assert.equal(
+    f.editor.hasPendingChanges(),
+    true,
+    'a hidden draft still belongs to this challenge',
+  );
+  f.editor.refresh();
+  assert.equal(f.editor.hasPendingChanges(), true, 'routine refresh cannot acknowledge lost edits');
+  f.choose('[data-hunt-objective]', 'self-level:1');
+  assert.deepEqual(
+    [...f.container.querySelectorAll('[data-hunt-target-id]')].map(
+      (row) => row.dataset.huntTargetId,
+    ),
+    [ids[1], ids[0]],
+  );
+});
+
+test('applying one Hunt preserves another hidden pending draft until explicit discard resets both', async (t) => {
+  const f = fixture(t, { hunt: true }),
+    before = structuredClone(f.course()),
+    ids = before.steps['self-level'][1].targets;
+  f.editor.selectObjective('self-level', 1);
+  f.$(`[data-hunt-target-id="${ids[0]}"]`)
+    .querySelector('[data-hunt-target-action="remove"]')
+    .click();
+  f.choose('[data-hunt-objective]', 'acro:1');
+  f.$('[data-hunt-ordered]').checked = true;
+  f.$('[data-hunt-ordered]').emit('change');
+  await f.click('[data-hunt-action="apply"]');
+  assert.equal(f.course().steps.acro[1].ordered, true);
+  assert.deepEqual(f.course().steps['self-level'], before.steps['self-level']);
+  assert.equal(
+    f.editor.hasPendingChanges(),
+    true,
+    'applying Acro does not acknowledge Self-level edits',
+  );
+  f.editor.discardPendingChanges();
+  assert.equal(f.editor.hasPendingChanges(), false);
+  f.choose('[data-hunt-objective]', 'self-level:1');
+  assert.deepEqual(
+    [...f.container.querySelectorAll('[data-hunt-target-id]')].map(
+      (row) => row.dataset.huntTargetId,
+    ),
+    ids,
+  );
+  assert.equal(f.editor.hasPendingChanges(), false);
+});
+
+test('new Hunt target drafts remain pending through actor addition and clear after native admission', async (t) => {
+  const f = fixture(t),
+    ids = f.course().actors.map((actor) => actor.id);
+  assert.equal(f.editor.hasPendingChanges(), false);
+  f.choose('[data-hunt-target]', ids[1]);
+  await f.click('[data-hunt-action="add-target"]');
+  assert.equal(f.editor.hasPendingChanges(), true);
+  await f.click('[data-hunt-action="add-actor"]');
+  assert.equal(f.editor.hasPendingChanges(), true);
+  await f.click('[data-hunt-action="add"]');
+  for (const mode of modes)
+    assert.deepEqual(f.course().steps[mode].at(-1).targets, ids.slice(0, 2));
+  assert.equal(f.editor.hasPendingChanges(), false);
+});
+
+test('obsolete hidden Hunt drafts cannot block a newer accepted objective after refresh', (t) => {
+  const f = fixture(t, { hunt: true }),
+    ids = f.course().steps['self-level'][1].targets;
+  f.editor.selectObjective('self-level', 1);
+  f.$(`[data-hunt-target-id="${ids[0]}"]`)
+    .querySelector('[data-hunt-target-action="remove"]')
+    .click();
+  f.choose('[data-hunt-objective]', 'acro:1');
+  assert.equal(f.editor.hasPendingChanges(), true);
+  f.externalEdit((course) => {
+    course.steps['self-level'][1].ordered = true;
+  });
+  f.editor.refresh();
+  assert.equal(f.editor.hasPendingChanges(), false);
+  f.choose('[data-hunt-objective]', 'self-level:1');
+  assert.equal(f.$('[data-hunt-ordered]').checked, true);
+  assert.deepEqual(
+    [...f.container.querySelectorAll('[data-hunt-target-id]')].map(
+      (row) => row.dataset.huntTargetId,
+    ),
+    ids,
+  );
+});
+
+test('retained pursuit graph edits remain pending after host refresh and explicit reset restores admitted source', (t) => {
+  const f = fixture(t, {
+    change(course) {
+      Object.assign(course, structuredClone(NATIVE_PURSUIT_COURSES[2]));
+    },
+  });
+  const before = structuredClone(f.course()),
+    input = f.$('textarea');
+  assert.equal(f.editor.hasPendingChanges(), false);
+  input.value = '{';
+  input.emit('input');
+  f.editor.refresh();
+  assert.equal(f.$('textarea').value, '{');
+  assert.equal(f.editor.hasPendingChanges(), true);
+  f.editor.discardPendingChanges();
+  assert.equal(f.editor.hasPendingChanges(), false);
+  assert.deepEqual(JSON.parse(f.$('textarea').value), before.pursuit);
+  assert.deepEqual(f.course(), before);
 });

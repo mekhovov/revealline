@@ -1,7 +1,13 @@
 # FPV world authoring
 
 This folder owns offline preparation tools, authoring recipes and original small
-fixtures. It is not included in the browser runtime. Install the exact toolchain:
+fixtures. It is not included in the browser runtime.
+
+For editable sweeper, hairpin, chicane, climb and split-level routes, use the
+[industrial/natural creator starters](starters/README.md). Their data-only ZIP
+builder uses the existing simulator APIs and needs no external authoring toolchain.
+
+For external model preparation, install the exact toolchain:
 
 ```sh
 npm ci --prefix authoring/fpv-worlds --ignore-scripts

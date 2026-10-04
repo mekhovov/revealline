@@ -251,6 +251,15 @@ export function mountActorEditor({ container, getCourse, onChange, locale = 'en'
   let error = false;
   let disposed = false;
   let busy = false;
+  let cleanFields = '';
+  const fieldValues = () =>
+    JSON.stringify(
+      [
+        ...container.querySelectorAll(
+          'input, textarea, [data-tracking-subject], [data-tracking-kind], [data-actor-role]',
+        ),
+      ].map((node) => [node.value, node.checked]),
+    );
   const text = (key) =>
     LABELS[key][(typeof locale === 'function' ? locale() : locale) === 'uk' ? 1 : 0];
   const element = (tag, content, className) => {
@@ -749,6 +758,17 @@ export function mountActorEditor({ container, getCourse, onChange, locale = 'en'
         step.type === 'hunt-contact-v1' ? [{ mode, index, step }] : [],
       ),
     );
+    // Retained hidden drafts still belong to their exact accepted objective.
+    // External edits/Undo must not leave an obsolete draft blocking navigation.
+    for (const [key, draft] of huntDrafts)
+      if (
+        key !== 'new' &&
+        !rows.some(
+          (row) =>
+            `${row.mode}:${row.index}` === key && JSON.stringify(row.step) === draft.original,
+        )
+      )
+        huntDrafts.delete(key);
     const current = rows.find(
       (row) => row.mode === huntSelection?.mode && row.index === huntSelection.index,
     );
@@ -918,16 +938,16 @@ export function mountActorEditor({ container, getCourse, onChange, locale = 'en'
     tail.addEventListener('change', showTail);
     showTail();
     panel.append(grid, element('p', text('huntTailHelp'), 'hint'));
-    captureDraft = () =>
-      huntDrafts.set(draftKey, {
-        original,
-        targets: [...targets],
-        ordered: ordered.checked,
-        tail: tail.checked,
-        fields: Object.fromEntries(
-          Object.entries(fields).map(([name, field]) => [name, field.value]),
-        ),
-      });
+    const readDraft = () => ({
+      targets: [...targets],
+      ordered: ordered.checked,
+      tail: tail.checked,
+      fields: Object.fromEntries(
+        Object.entries(fields).map(([name, field]) => [name, field.value]),
+      ),
+    });
+    const baseline = draft?.baseline ?? JSON.stringify(readDraft());
+    captureDraft = () => huntDrafts.set(draftKey, { original, ...readDraft(), baseline });
     ordered.addEventListener('change', captureDraft);
     for (const field of Object.values(fields)) field.addEventListener('input', captureDraft);
     const locate = (next) => {
@@ -1080,6 +1100,10 @@ export function mountActorEditor({ container, getCourse, onChange, locale = 'en'
     return panel;
   }
   function refresh() {
+    paint();
+    cleanFields = fieldValues();
+  }
+  function paint() {
     if (disposed) return;
     const course = getCourse();
     container.replaceChildren(element('h3', text('heading')));
@@ -1221,6 +1245,7 @@ export function mountActorEditor({ container, getCourse, onChange, locale = 'en'
       actor.role ?? 'hostile',
       text('role'),
     );
+    role.dataset.actorRole = '';
     if (actor.type !== 'hazard')
       container.append(label(text('role'), role), element('p', text('roleHelp'), 'hint'));
     if (course.pursuit && actor.type === 'vehicle') {
@@ -1451,6 +1476,17 @@ export function mountActorEditor({ container, getCourse, onChange, locale = 'en'
   refresh();
   return {
     refresh,
+    hasPendingChanges: () =>
+      fieldValues() !== cleanFields ||
+      (pursuitDraft.base !== undefined && pursuitDraft.value !== pursuitDraft.base) ||
+      [...huntDrafts.values()].some(
+        ({ original: _original, baseline, ...value }) => JSON.stringify(value) !== baseline,
+      ),
+    discardPendingChanges() {
+      huntDrafts.clear();
+      if (pursuitDraft.base !== undefined) pursuitDraft.value = pursuitDraft.base;
+      refresh();
+    },
     select(id) {
       selected = id;
       trackingSelection = null;
