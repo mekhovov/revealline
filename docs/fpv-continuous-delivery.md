@@ -3134,3 +3134,51 @@ delivery-log append did NOT persist; this remote checkpoint preserves the state.
 All original worktrees/source/failures/published packs remain. Do not delete
 unknown Git packs, repeat heavy builds or claim failed writes succeeded.
 User has been asked to free at least 2 GiB. No automation state was changed.
+
+### 4 October — Menu qualification and engineering publication checkpoint
+
+The earlier storage-blocked checkpoint above is historical. Storage recovered and
+the authorized serial source validation/admissions resumed. The owner allocation
+remains publication first, then performance, Library delivery and integrated
+reliability; Reservoir remains the representative art standard before the
+preserved Festival, Harbor and Canals work, followed by D6 unit coverage.
+
+Worker projection #1075 merged as
+`da0bd0d6be2b42a4d2f954ebdcb1f970311b0da5` from exact reviewed
+`727a68d00622a93a56425b006999f0e474a40d3d`. Pages run 37216276847 succeeded;
+both public deployment/build markers identify that merge. Its parents retain
+main `f3764070e` and the qualified worker head. Actual public UI launch of this
+new marker remains a separate coordinator check. The worker prerequisite's
+native Worlds/Academy offline acceptance remains documented.
+
+Menu source `411396374bf25a1888a4a861c089d19671fd8432` is qualified for focused
+publication: full validation, pinned format/generator equality and all three
+two-build admissions passed. Exact admitted Worlds/Academy players retain
+102/69 members with no overlays. Six source and seven final admitted native
+iframe layout observations cover 320/390/844/1280 CSS widths, reachable EN/UK
+Settings, retained language after Reload, readable tabs/footer and wrapped header
+actions. Native Worlds arming/pause and Academy practice/pause passed; Academy
+used the full-window fallback when native fullscreen returned false. Undiagnosed
+observer TypeError logs remain disclosed; no zero-console, physical-device,
+hardware-FPS or new offline claim is made. Superseded narrow-layout candidates
+remain historical. See [menu qualification](fpv-library-menu-access.md).
+
+Library transport remains separate at admitted source `01fc6ad20`. The genuine
+dedicated-Worker source fixture passed 208 controls and the all-three/two-build
+admission passed, with 918 bytes of Worlds source reserve before menu/focus
+integration. Its direct native Worlds and Academy players passed preparation,
+stopped-origin reload and entry/pause. However, the exact admitted Library matrix
+twice stopped after 119 controls waiting for the selected course's Ready text,
+including an exclusive-focus repeat. The new bounded status/focus/RAF diagnostic
+also reproduced that timeout; analysis is pending. The frozen runtime and guards
+are unchanged. Do not claim 208 admitted controls, weaken the network/pause guard
+or publish a finished production catalogue row on that evidence.
+
+Focus #1076 is ready on current main and undergoing protected exact-head checks.
+Reservoir r9 #1077 is separately published; its required source release-ready
+check passed while the appearance check was still running at the bounded audit.
+The later r10 content candidate passed 575 CPU controls including sixteen fresh
+ordinary flights and independent/archive replays. Its visual/art acceptance
+remains pending, so r10 is not called accepted or published. First-ready resource
+investigation continues with bounded native program attribution; no broad
+performance gain or cache rewrite is claimed.
