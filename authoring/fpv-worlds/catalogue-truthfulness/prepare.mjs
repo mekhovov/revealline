@@ -4,8 +4,17 @@ import path from 'node:path';
 import { createHash } from 'node:crypto';
 import { execFileSync } from 'node:child_process';
 import { pathToFileURL } from 'node:url';
-const [root, revision, player, inventoryPath, reservoirPath, festivalPath, proofPath, out] =
-  process.argv.slice(2);
+const [
+  root,
+  revision,
+  player,
+  inventoryPath,
+  reservoirPath,
+  festivalPath,
+  proofPath,
+  out,
+  scenario = 'catalogue',
+] = process.argv.slice(2);
 if (
   !/^[a-f0-9]{40}$/.test(revision ?? '') ||
   ![root, player, inventoryPath, reservoirPath, festivalPath, proofPath, out].every(
@@ -15,6 +24,7 @@ if (
   throw Error(
     'Use ABS_ROOT EXACT_REV ABS_PLAYER ABS_INVENTORY ABS_RESERVOIR ABS_FESTIVAL ABS_RESERVOIR_PROOFS ABS_NEW_OUT',
   );
+if (!['catalogue', 'mode-diagnostic'].includes(scenario)) throw Error('Unknown manual scenario');
 const hash = (b) => createHash('sha256').update(b).digest('hex'),
   git = (...args) =>
     execFileSync('git', args, {
@@ -152,14 +162,25 @@ await write(
     .replace('data-fpv-worlds="true"', 'data-fpv-worlds="profile"')
     .replace('src="../civilian-fpv/world-app.mjs"', 'src="../../../host.mjs"'),
 );
-for (const name of ['host.mjs', 'run.mjs'])
-  await write(name, await fs.readFile(new URL(name, import.meta.url)));
+await write('host.mjs', await fs.readFile(new URL('host.mjs', import.meta.url)));
+const run = await fs.readFile(new URL('run.mjs', import.meta.url), 'utf8');
+if (scenario === 'mode-diagnostic') {
+  const marker = 'async function execute() {';
+  if (run.split(marker).length !== 2) throw Error('Expected one manual run boundary');
+  await write(
+    'run.mjs',
+    run.slice(0, run.indexOf(marker)) +
+      (await fs.readFile(new URL('mode-diagnostic.mjs', import.meta.url), 'utf8')),
+    'shared public-control helpers plus explicit mode diagnostic',
+  );
+} else await write('run.mjs', run);
 await write(
   'index.html',
   '<!doctype html><meta charset="utf-8"><title>Imported catalogue truthfulness</title><style>body{margin:0;background:#142029;color:white;font:14px system-ui}header{padding:10px}button{font:inherit;padding:8px}iframe{display:block;width:100%;height:760px;border:0}textarea{width:98%;height:220px}pre{white-space:pre-wrap}</style><header><button id="run">Run native imported catalogue checks</button> <span id="status">Exact packs and separate proofs; keep visible.</span></header><iframe id="sim" title="Native catalogue player" src="about:blank"></iframe><pre id="summary"></pre><label>Complete receipt<textarea id="receipt" readonly></textarea></label><script type="module" src="run.mjs"></script>',
 );
 const fixture = {
   format: 'FPVImportedCatalogueFixture.v1',
+  scenario,
   revision,
   sourceTree: git('rev-parse', revision + '^{tree}')
     .toString()
