@@ -6,6 +6,9 @@
   <title>Library verification catalog preview</title>
   <style>
     body {
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
       margin: 0;
       background: #101923;
       color: #eef4f4;
@@ -16,13 +19,15 @@
     }
     iframe {
       display: block;
+      flex: 1;
+      min-height: 0;
       width: 100%;
-      height: calc(100vh - 68px);
       border: 0;
     }
   </style>
   <p>Verification catalog only · one qualified authoring starter. Production catalog is empty.</p>
   <p id="status" role="status">Opening native Library…</p>
+  <p>Preview-only language controls: <button id="en">EN</button> <button id="uk">УК</button></p>
   <iframe id="sim" title="Actual native Library"></iframe>
   <script type="module">
     const memory = new Map([
@@ -59,6 +64,12 @@
       );
       const w = frame.contentWindow,
         d = frame.contentDocument;
+      for (const language of ['en', 'uk'])
+        document.getElementById(language).onclick = () => {
+          const select = d.getElementById('world-language');
+          select.value = language;
+          select.dispatchEvent(new w.Event('change', { bubbles: true }));
+        };
       await w.fpvWorldStudio.ready;
       w.fixtureNetwork.index = { format: 'FPVWorldLibrary.v1', worlds: [fixture.asset] };
       d.getElementById('worlds-shell-action-missions').click();
@@ -66,7 +77,7 @@
       d.querySelector('#optional-world-library button').click();
       await until(() => !d.querySelector('#optional-world-library button').disabled);
       status.textContent =
-        'Use native EN/УК and resize the page. Pack download uses the pinned real HTTPS asset; no automatic pack download.';
+        'Use the preview EN/УК controls and resize. They dispatch the existing language select change; native language navigation is not qualified.';
     } catch (error) {
       status.textContent = String(error);
     }

@@ -116,7 +116,11 @@ export function mountWorldLibrary({ el, txt, parent, begin, install }) {
     cancel.hidden = !operation;
     cards.replaceChildren();
     for (const row of rows) {
-      const card = el('div', undefined, 'proof-row'),
+      const card = el('div', undefined, 'proof-row challenge-info'),
+        size =
+          row.bytes < 1048576
+            ? `${Math.ceil(row.bytes / 1024)} KiB`
+            : `${(row.bytes / 1048576).toLocaleString(txt('en', 'uk'), { minimumFractionDigits: 1, maximumFractionDigits: 1 })} MiB`,
         stored = saved.some((item) => item.id === row.id && item.sha256 === row.sha256),
         download = el(
           'button',
@@ -128,7 +132,10 @@ export function mountWorldLibrary({ el, txt, parent, begin, install }) {
       download.onclick = () => run(row);
       card.append(
         el('strong', txt(...row.title)),
-        el('small', `${row.revision} · ${row.courses} · ${row.bytes} B`),
+        el(
+          'p',
+          `${row.revision} · ${txt(row.courses === 1 ? '1 challenge' : `${row.courses} challenges`, `Завдань: ${row.courses}`)} · ${size}`,
+        ),
         download,
       );
       cards.append(card);
