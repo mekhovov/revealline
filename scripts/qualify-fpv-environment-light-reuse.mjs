@@ -11,7 +11,7 @@ import * as themes from '../optional-practice/civilian-fpv/world-themes.mjs';
 import { FLIGHT_COURSES } from '../optional-practice/civilian-fpv/catalogue.mjs';
 
 const root = new URL('../', import.meta.url),
-  baseline = '0aeb0c2b4342715ba9a19b976114d7d905fed7bd',
+  baseline = '47d2019dced85d80671b2d780da662f50ea11c20',
   relative = 'optional-practice/civilian-fpv/renderer.mjs',
   bytes = await readFile(new URL(relative, root)),
   hash = (value) => createHash('sha256').update(value).digest('hex'),
