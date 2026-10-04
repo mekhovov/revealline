@@ -1,0 +1,3849 @@
+{
+  "format": "FPVAdventureOptionalExamplesBrowserReceipt.v1",
+  "status": "passed",
+  "candidateHostSha256": "053dbfb4a3e0f2fbf8dfe3685a865368e314d845f8dc451fe9e59a275f52ae49",
+  "sourceFiles": {
+    "game/data-json.mjs": "9ce33d6173f3cba8587ed7a7f1924c66e9d9c86ffa59b37a743764ea0b01f7bd",
+    "game/encounter-display-preferences.mjs": "6cd94187c299eaaa4cb14790c12d84388fb8d8dd4a5b48902dadd74dc6475b03",
+    "game/fpv-entry.mjs": "f994c064b82e04c2f218f748b9e745800fc6cc32163c51b40876a572c3c4fd42",
+    "game/hunt/actor-art.mjs": "c1373ba06450ee95be32d530f0bc85311d4f38d82244a65fc52d252c920e746b",
+    "game/hunt/actor-catalog.mjs": "a9d232092d58262ccd1008577b27ef8a99cb41abf8e3e962a2f34f3b8bc0df92",
+    "game/hunt/preferences.mjs": "1dcc93e3b50f8964150731f97c22335d73aae413114712c0528b012acabb4324",
+    "game/hunt/presentation-catalog.mjs": "cf39bc033b1f3263f21481f04c7595bac7a06a4613759b90594855834d067796",
+    "game/i18n/bootstrap.mjs": "242e4791b2202d2644b91df5aa76355019890525af774ee2e795c937988b0395",
+    "game/i18n/catalogs.mjs": "150f60e0ee7d0c281f026ccf76b11d02d73b6022e0097dec89875987e844fb3b",
+    "game/i18n/index.mjs": "29f40a6d92826ced1eb53283ed32e342ac6e95920abbf8d549f2d78e65b48d07",
+    "game/presentation/theme-system.mjs": "317e107e509f94449050c52f1756bd8436691f0d92bb8185aed697b3ba3127d6",
+    "game/profile-database.mjs": "6a843fc68c3d639ca6d3bac8c77228eccf21cd72a525872245bd5cbbd9d68a1c",
+    "game/profile-storage.mjs": "7f0e6cc3a957ddc00a032d41e8bea782907b901f714708de5385667fe5fbbaec",
+    "game/rewards/audio-groups.mjs": "85e1340e57dc925927830d6dd436d7b3da4b459f781e5f989d8efbbe54a44b6b",
+    "game/rewards/exploration.mjs": "e997a52802aee1410f06faa75ca4984958fd979d495b1b34b0ee2582c5628ccd",
+    "game/rewards/learning-profiles.mjs": "f24f81f972c921c7d3f89713c8a470086affd0b420783c1ab97cb15c6de4dc1d",
+    "game/rewards/model.mjs": "1f7ac62d4c5e9a01d1435e93116d7b59eb9bac8c4714769a9abaaba98d790d92",
+    "game/rewards/store.mjs": "0d12e0e1b83e55a8103c9efe9bfde90291005150dac766af7ee42bd51f91521f",
+    "game/ui/art/identity/fpv-line/wordmark.png": "1a0e6083ddc1147f20b374178c68618c4fc2ea1cb915664178f371ec055cc298",
+    "game/ui/art/menu-scenes/fpv-portrait.webp": "3d651795fa7623b0200fadaed05a1127109a9c9c6cbd44d183a92a8e12c2ee24",
+    "game/ui/art/menu-scenes/fpv.webp": "19f43cb1602e59a692d416d36d715e664765eecc24784b3b3e6516651c53df45",
+    "game/ui/native-menu-icons.mjs": "8a0a3b8c739e3c55708f8b634df6292103cbc37324313969b2d8346be5ab49db",
+    "game/ui/reward-knowledge.mjs": "77232a28c5112c0d20c291ca629bebbd908ca9945344bb997e0a4b392a8e931b",
+    "game/vendor/I18NEXT-LICENSE.txt": "1cd0a2b02a6cc40ef8ee16310d13eeffdd7b5de4a562fd3ee7c921d8eb54f60a",
+    "game/vendor/i18next-26.4.2.min.js": "eb0dd6d72e8f756b90faf864853af2a17870fe97b54473b7c34494870c65901c",
+    "launcher/app.mjs": "6266d525fed23e868572a171eed0a462b07ce894a7c845b093944c9395a9317d",
+    "launcher/app.webmanifest": "2415d98ee9661b76428c33c345a05d6ac9bc0522ab8a457b4b563426aa71d9a6",
+    "launcher/context.mjs": "b07afe79491b3f58775b131d59986c581d8df1275ae9d3d148f0a5bd49ea85a3",
+    "launcher/icons/icon-192.png": "5bc0f892cc5c13a7b1564cca9ef3ee0799a38b7b5fb63ccc9d7559dc2bf3a34d",
+    "launcher/icons/icon-512.png": "47f0661543ba686911027a8005c8b318c4f9146958f1736ee32fb056e5bfea91",
+    "launcher/index.html": "c917f1faa05a00d5f83e4256c7efb50d87557b5015b6352b48b3f2eb4019b184",
+    "launcher/navigation.mjs": "c59fd48a3cce005934ac290773da5b60d18e9a2bebc392a9e911a34b7112f6f1",
+    "launcher/worker.js": "d1374f53844dafa6802248465012b0dd1d345a318e9ed1e2df2d282e8228afe8",
+    "optional-package.json": "696475ad3eb6d69e77674e4f7812920c554f0bc4a7c116423866b6f72198a235",
+    "optional-practice/civilian-fpv/README.md": "2e97f96dcd653804eedf49f6a1d073cc9c8a71399db0cc5d7d1cbfae0ae66774",
+    "optional-practice/civilian-fpv/attempts.mjs": "5353e993c615dbb7091ab5d50497db82e71d3970f1587e6bb1398cc565be2494",
+    "optional-practice/civilian-fpv/beginner-coach.mjs": "20978a85d7f6e2a2e516bfcbbd08eb7798557b25b3aa9c48878473d694d2a39c",
+    "optional-practice/civilian-fpv/catalogue.mjs": "98338353d17eb585414538c9905040752fd5cd6699c48b17fa1706832b750997",
+    "optional-practice/civilian-fpv/content-definitions.mjs": "e3808d22cc3dc294311533a16164aced16f342eb9d4b1b22b77d279b2e8dcbfd",
+    "optional-practice/civilian-fpv/demonstrations.mjs": "92bb4365c46d94f5c1fea9808ec4e24fb9014d35640ee488959c4e0f4b6c5cfa",
+    "optional-practice/civilian-fpv/expressive-hunt-courses.mjs": "732c6d72dded07e7541965b3c250cfe339dd98ea49d22d2085b856cb869b9ede",
+    "optional-practice/civilian-fpv/flight-fullscreen.mjs": "f60358ea99f70f1afe9ff16ce0323ad1b5d9a92e742ecf1544b241faa6e59efc",
+    "optional-practice/civilian-fpv/flight-sectors.mjs": "5b1b54bde4e578e61da7d59f4a80a86db9aafbc78b4523d2ba2b540277a0a16d",
+    "optional-practice/civilian-fpv/input.mjs": "2d2bb875278e727f589de4e71300ebe1a3640b278abea8f067a79ba06f1d159a",
+    "optional-practice/civilian-fpv/math.mjs": "555c8b6ea170b46992133507d2a3d867f06185bca060239cab7db9c9b87f9f98",
+    "optional-practice/civilian-fpv/model.mjs": "9e4cd11cfdde2dd43b437069b8cb7a359a8132495db806cb5f68e8674d48aaf6",
+    "optional-practice/civilian-fpv/notebook.mjs": "74159518b1c79be1c2858503cd8ddee79aed8796e9b21bf6a9a8721d5099a129",
+    "optional-practice/civilian-fpv/offline.mjs": "7baa069758975eaa133ca9625e8ff0b903a92089f5e7ed0f172ba5e525a6f444",
+    "optional-practice/civilian-fpv/playlists.mjs": "ed81b450bc268cf8096fe14a7c1a46e9a5fca0c32ff8fdedad3c356955280a77",
+    "optional-practice/civilian-fpv/radio-controls.mjs": "ec81c8b2d7cfe8586a7b73ef0887972019c7c1c39e64e6f32ea0d39437d7d4fb",
+    "optional-practice/civilian-fpv/radio-guide.mjs": "52685411b2099492a1bb26ffed12911c2a006fae971229a08147c0ddfd81a2b1",
+    "optional-practice/civilian-fpv/radio-profile.mjs": "f588fd5cda96ed9627a483f49ca843ace8d99a68fae42b0a4239c2cd0ab81933",
+    "optional-practice/civilian-fpv/radio-runtime.mjs": "3d908c7f6f1295fddacb952fadfc327206153248dbf5222ef31677eb4ff8f71b",
+    "optional-practice/civilian-fpv/radio-session.mjs": "98fdd029f1deb9eb6b51f2ae2f8fb5c441e2b3a7a2aca520a7e9ce5e267e80ef",
+    "optional-practice/civilian-fpv/radio-setup.mjs": "d4c091a8539221e71e39a12436af45a681a21e13f5468b8b4ecccd1b4c05e7d6",
+    "optional-practice/civilian-fpv/renderer.mjs": "10577460f906c2f68d611a6ec2b2fbc4b6b652242bc8e89503cb486fa708e680",
+    "optional-practice/civilian-fpv/rotation-table.mjs": "2ddab304ac99a2e70fc7e84fc6c27eedb49f1f3dac976baed680effa659cef41",
+    "optional-practice/civilian-fpv/sim-presentation.mjs": "ef8890ad20ef190e0c7ef6c0d24d933ce587a752cb4f24f55877d353982409d5",
+    "optional-practice/civilian-fpv/snake-hunt-catalogue.mjs": "a77f55d138fadd3642ae4cd20326d6f9ab8fc9fdce34a2497d6741b51ea3897a",
+    "optional-practice/civilian-fpv/snake-hunt-presentation.mjs": "a80ec4ac0f35170e7f18c4deea11bf9d25f328d374ec7af0e8af8ad30472ca81",
+    "optional-practice/civilian-fpv/snake-hunt.mjs": "39ce47e8aaae6d7f3e70b8708d52fe2d22e90119318383f8298d8d0c4cc568da",
+    "optional-practice/civilian-fpv/style.css": "fdf8a71b22970d3ec2c608d36dd58a213f14596f0c5cfa4690e2019d73b77e3c",
+    "optional-practice/civilian-fpv/vendor/LICENSE.txt": "8b378ebe60e2fe500158cb0ac71cb5e8b7d92953c2abcc63a0eb90499653b5bc",
+    "optional-practice/civilian-fpv/vendor/addons/controls/TransformControls.js": "10f6d3e4c108dff62110f61a76749f9a1826c9781df9c3eb4ca0b5d9d2f5c4a8",
+    "optional-practice/civilian-fpv/vendor/addons/loaders/GLTFLoader.js": "03952cb129d558f92b8e6c757fbf7c1f718b3126c4d34f264d574b40ea36054f",
+    "optional-practice/civilian-fpv/vendor/addons/provenance.json": "a87fc39c9dc00b9ca055b006600c51c3f5ebfcc2117f523486979af1d0040be1",
+    "optional-practice/civilian-fpv/vendor/addons/utils/BufferGeometryUtils.js": "259085a7dac89e0840393a9347c77123fbc4206ec2146bf0c29ffc72e14a2800",
+    "optional-practice/civilian-fpv/vendor/addons/utils/SkeletonUtils.js": "28017bf37d0ecb0c4be6048db759ff14df729a562464830b064d4cc239c5af17",
+    "optional-practice/civilian-fpv/vendor/rapier/LICENSE": "4c05555705e3efde601fb1252ae48f1d63992af8a8fb8947745b7fa834e8f519",
+    "optional-practice/civilian-fpv/vendor/rapier/provenance.json": "6dc04a5eca22760fd38665af7649222da26ce343ff67f5ca68e5ed244e30d074",
+    "optional-practice/civilian-fpv/vendor/rapier/rapier.mjs": "02dc6a4e2fffc013bab08fbb44fa68f501d8303615e9afe4c7d89ad4eedda0d0",
+    "optional-practice/civilian-fpv/vendor/three.core.js": "9edde002b066a9a05676a6127f67735b62baf399bdea529f2f7e31657da769e6",
+    "optional-practice/civilian-fpv/vendor/three.module.js": "9052042d676cb0fdc1ddfefe193053f34b7ac0513a616fdac4535d49987812ea",
+    "optional-practice/civilian-fpv/world-app.mjs": "053dbfb4a3e0f2fbf8dfe3685a865368e314d845f8dc451fe9e59a275f52ae49",
+    "optional-practice/civilian-fpv/world-assets.mjs": "e1b987e2580b8b1e2d1afdfa3e9f0bc2d36a37e0bf516681cb0e94f045afd34c",
+    "optional-practice/civilian-fpv/world-catalogue.mjs": "14f8523c829e9bdfdf8db5efb59169075be6045425222c615b846817694d24cc",
+    "optional-practice/civilian-fpv/world-collision.mjs": "2899c7c84f9eae14b9a3434f585a8e873f4a1361e8f3ce4026ef27f44bdeef32",
+    "optional-practice/civilian-fpv/world-content.mjs": "aa3788b42d2e6379be68a4d76abb10667e7adb260fe00580a963ab09324f0df0",
+    "optional-practice/civilian-fpv/world-demonstrations.mjs": "c9f2d0ee5c571507ae1dce4f48898554cb2ad179218f1905cdc8013db2e2c114",
+    "optional-practice/civilian-fpv/world-editor.mjs": "06cd81f0036641ca5d3bfe408f843e4db446b9d61c8ca58778e01ee468c9c85c",
+    "optional-practice/civilian-fpv/world-model.mjs": "ce94192472f8cc0be1a70ec2dcdf7dc728956f55f589bb84335c851737f54d3e",
+    "optional-practice/civilian-fpv/world-reaction-runtime.mjs": "b853b250484e91f4ca0fae6660605db134cac87aa47522aea07fd52c7fdbf1e2",
+    "optional-practice/civilian-fpv/world-records.mjs": "8fb720ec1a1a1e5cbc7ec5b253d14b6d76d680e6c03dc5f2c92b3e2e407d4c27",
+    "optional-practice/civilian-fpv/world-store.mjs": "67aca935d0dd889db2310e2df9a4649d6755901e3d82990905b27ba15dde69b0",
+    "optional-practice/civilian-fpv/world-style.css": "fb8ebd479ba6c78bdba0206173295fb5d01f5a5cc8de1c14695c0cf4c15fed78",
+    "optional-practice/civilian-fpv/world-themes.mjs": "67abda8ff53ba18e9aede45c57a8f9ec599dc0ddf7c977ce1d8ad2524e6c5549",
+    "optional-practice/civilian-fpv/world-visuals.mjs": "053f74a1d42db8373994350010f347ff0d306dfebd05cbdd9bf7df838b73d9e0",
+    "optional-practice/civilian-fpv/world-zip.mjs": "874b371c817810a5869bc3ba37c94ff6fae4fc5cd418298f35340d2ce09039c8",
+    "optional-practice/fpv-worlds/README.md": "6520e5a40dcd9858ebf53e085dc1d37e27cc0617d228ab1721ad045444896ed5",
+    "optional-practice/fpv-worlds/SCENERY-LICENSES.txt": "d879c1a60cabeb2179e7a60fe6d827ef17828d263de84369f2f994eceb7439cd",
+    "optional-practice/fpv-worlds/app.webmanifest": "2415d98ee9661b76428c33c345a05d6ac9bc0522ab8a457b4b563426aa71d9a6",
+    "optional-practice/fpv-worlds/guide.html": "091186125c09f19e415c329d2a4183eeca3dc45bd2fe44e5ba2f3aa9170cf4f2",
+    "optional-practice/fpv-worlds/icons/icon-192.png": "5bc0f892cc5c13a7b1564cca9ef3ee0799a38b7b5fb63ccc9d7559dc2bf3a34d",
+    "optional-practice/fpv-worlds/icons/icon-512.png": "47f0661543ba686911027a8005c8b318c4f9146958f1736ee32fb056e5bfea91",
+    "optional-practice/fpv-worlds/index.html": "14c95d4de571c8eccd5f091edcd9c0da345b7a2ca0f5c444252032d309b04d7b",
+    "optional-practice/fpv-worlds/package-info.json": "fa717dfeb5ba0f3e84fef0564e486bd47545896229d55733f3a485e85414e014",
+    "optional-practice/fpv-worlds/preview.png": "a80c3e123dd83e6c1072503a3fdc091538d5415e21ba1b26ad345ab19d2c72a1",
+    "optional-practice/fpv-worlds/scenery-provenance.json": "d45c8608de29b2b2fb4f7b2d3d1e10559cb7c1302972ebd7363b6cde6400c878",
+    "optional-practice/fpv-worlds/worker.js": "c19a638fa7a4982650165712a507b3a4f5e7361dc01f9259052fc9c28ea04fff",
+    "optional-practice/guide.mjs": "31eff4946e03a906e593301e76c4a49fade84f9c05abeb13aa52b06b2dfa3203",
+    "optional-practice/install-context.mjs": "b07afe79491b3f58775b131d59986c581d8df1275ae9d3d148f0a5bd49ea85a3",
+    "optional-practice/navigation.mjs": "c59fd48a3cce005934ac290773da5b60d18e9a2bebc392a9e911a34b7112f6f1"
+  },
+  "proofArchive": {
+    "sha256": "c9734dcf05fcfc87a42960daad05e3b594e938dcfeb44624305802972aad5ca3",
+    "bytes": 4637320,
+    "records": 60
+  },
+  "fixtureFiles": {
+    "index.html": "f082456051d21d3f3e0222845932f1b3330698667f22c316cfe1dcd3b7489064",
+    "examples.json": "c9734dcf05fcfc87a42960daad05e3b594e938dcfeb44624305802972aad5ca3",
+    "player.html": "ed8a3854c1aa7c6fcf110a7ddf8648704a0c1492ace606d731a15eb1514e6e78"
+  },
+  "elapsedMs": 73347,
+  "passed": 395,
+  "total": 395,
+  "checks": [
+    {
+      "name": "All 102 admitted files, harness, wrapper and optional archive hashes match",
+      "passed": true
+    },
+    {
+      "name": "60 original examples cover 30 distinct Adventure challenges",
+      "passed": true
+    },
+    {
+      "name": "Exact 30-example mode partition acro",
+      "passed": true
+    },
+    {
+      "name": "Exact 30-example mode partition self-level",
+      "passed": true
+    },
+    {
+      "name": "Exact installed Adventure identity and unscored session markers",
+      "passed": true
+    },
+    {
+      "name": "Complete current catalogue retained",
+      "passed": true,
+      "catalogue": 196
+    },
+    {
+      "name": "adventure-coast-01/acro initially has no bundled Watch action",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/self-level initially has no bundled Watch action",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-02/acro initially has no bundled Watch action",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-02/self-level initially has no bundled Watch action",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-03/acro initially has no bundled Watch action",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-03/self-level initially has no bundled Watch action",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-04/acro initially has no bundled Watch action",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-04/self-level initially has no bundled Watch action",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-05/acro initially has no bundled Watch action",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-05/self-level initially has no bundled Watch action",
+      "passed": true
+    },
+    {
+      "name": "adventure-orchard-01/acro initially has no bundled Watch action",
+      "passed": true
+    },
+    {
+      "name": "adventure-orchard-01/self-level initially has no bundled Watch action",
+      "passed": true
+    },
+    {
+      "name": "adventure-orchard-02/acro initially has no bundled Watch action",
+      "passed": true
+    },
+    {
+      "name": "adventure-orchard-02/self-level initially has no bundled Watch action",
+      "passed": true
+    },
+    {
+      "name": "adventure-orchard-03/acro initially has no bundled Watch action",
+      "passed": true
+    },
+    {
+      "name": "adventure-orchard-03/self-level initially has no bundled Watch action",
+      "passed": true
+    },
+    {
+      "name": "adventure-orchard-04/acro initially has no bundled Watch action",
+      "passed": true
+    },
+    {
+      "name": "adventure-orchard-04/self-level initially has no bundled Watch action",
+      "passed": true
+    },
+    {
+      "name": "adventure-orchard-05/acro initially has no bundled Watch action",
+      "passed": true
+    },
+    {
+      "name": "adventure-orchard-05/self-level initially has no bundled Watch action",
+      "passed": true
+    },
+    {
+      "name": "adventure-quarry-01/acro initially has no bundled Watch action",
+      "passed": true
+    },
+    {
+      "name": "adventure-quarry-01/self-level initially has no bundled Watch action",
+      "passed": true
+    },
+    {
+      "name": "adventure-quarry-02/acro initially has no bundled Watch action",
+      "passed": true
+    },
+    {
+      "name": "adventure-quarry-02/self-level initially has no bundled Watch action",
+      "passed": true
+    },
+    {
+      "name": "adventure-quarry-03/acro initially has no bundled Watch action",
+      "passed": true
+    },
+    {
+      "name": "adventure-quarry-03/self-level initially has no bundled Watch action",
+      "passed": true
+    },
+    {
+      "name": "adventure-quarry-04/acro initially has no bundled Watch action",
+      "passed": true
+    },
+    {
+      "name": "adventure-quarry-04/self-level initially has no bundled Watch action",
+      "passed": true
+    },
+    {
+      "name": "adventure-quarry-05/acro initially has no bundled Watch action",
+      "passed": true
+    },
+    {
+      "name": "adventure-quarry-05/self-level initially has no bundled Watch action",
+      "passed": true
+    },
+    {
+      "name": "adventure-rail-depot-01/acro initially has no bundled Watch action",
+      "passed": true
+    },
+    {
+      "name": "adventure-rail-depot-01/self-level initially has no bundled Watch action",
+      "passed": true
+    },
+    {
+      "name": "adventure-rail-depot-02/acro initially has no bundled Watch action",
+      "passed": true
+    },
+    {
+      "name": "adventure-rail-depot-02/self-level initially has no bundled Watch action",
+      "passed": true
+    },
+    {
+      "name": "adventure-rail-depot-03/acro initially has no bundled Watch action",
+      "passed": true
+    },
+    {
+      "name": "adventure-rail-depot-03/self-level initially has no bundled Watch action",
+      "passed": true
+    },
+    {
+      "name": "adventure-rail-depot-04/acro initially has no bundled Watch action",
+      "passed": true
+    },
+    {
+      "name": "adventure-rail-depot-04/self-level initially has no bundled Watch action",
+      "passed": true
+    },
+    {
+      "name": "adventure-rail-depot-05/acro initially has no bundled Watch action",
+      "passed": true
+    },
+    {
+      "name": "adventure-rail-depot-05/self-level initially has no bundled Watch action",
+      "passed": true
+    },
+    {
+      "name": "adventure-rooftops-01/acro initially has no bundled Watch action",
+      "passed": true
+    },
+    {
+      "name": "adventure-rooftops-01/self-level initially has no bundled Watch action",
+      "passed": true
+    },
+    {
+      "name": "adventure-rooftops-02/acro initially has no bundled Watch action",
+      "passed": true
+    },
+    {
+      "name": "adventure-rooftops-02/self-level initially has no bundled Watch action",
+      "passed": true
+    },
+    {
+      "name": "adventure-rooftops-03/acro initially has no bundled Watch action",
+      "passed": true
+    },
+    {
+      "name": "adventure-rooftops-03/self-level initially has no bundled Watch action",
+      "passed": true
+    },
+    {
+      "name": "adventure-rooftops-04/acro initially has no bundled Watch action",
+      "passed": true
+    },
+    {
+      "name": "adventure-rooftops-04/self-level initially has no bundled Watch action",
+      "passed": true
+    },
+    {
+      "name": "adventure-rooftops-05/acro initially has no bundled Watch action",
+      "passed": true
+    },
+    {
+      "name": "adventure-rooftops-05/self-level initially has no bundled Watch action",
+      "passed": true
+    },
+    {
+      "name": "adventure-solar-farm-01/acro initially has no bundled Watch action",
+      "passed": true
+    },
+    {
+      "name": "adventure-solar-farm-01/self-level initially has no bundled Watch action",
+      "passed": true
+    },
+    {
+      "name": "adventure-solar-farm-02/acro initially has no bundled Watch action",
+      "passed": true
+    },
+    {
+      "name": "adventure-solar-farm-02/self-level initially has no bundled Watch action",
+      "passed": true
+    },
+    {
+      "name": "adventure-solar-farm-03/acro initially has no bundled Watch action",
+      "passed": true
+    },
+    {
+      "name": "adventure-solar-farm-03/self-level initially has no bundled Watch action",
+      "passed": true
+    },
+    {
+      "name": "adventure-solar-farm-04/acro initially has no bundled Watch action",
+      "passed": true
+    },
+    {
+      "name": "adventure-solar-farm-04/self-level initially has no bundled Watch action",
+      "passed": true
+    },
+    {
+      "name": "adventure-solar-farm-05/acro initially has no bundled Watch action",
+      "passed": true
+    },
+    {
+      "name": "adventure-solar-farm-05/self-level initially has no bundled Watch action",
+      "passed": true
+    },
+    {
+      "name": "Wrong exact pack remains missing-dependency",
+      "passed": true
+    },
+    {
+      "name": "Changed normalized course is invalid",
+      "passed": true
+    },
+    {
+      "name": "Wrong replay final identity is invalid despite valid transport hash",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/acro unusable proof does not enable Watch",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/self-level unusable proof does not enable Watch",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-02/acro unusable proof does not enable Watch",
+      "passed": true
+    },
+    {
+      "name": "Rejected imports preserve notebook, rewards, recovery and bookmark",
+      "passed": true
+    },
+    {
+      "name": "All 60 verified and saved through unchanged host",
+      "passed": true,
+      "status": "Imported 60/60 records or examples; 60 verified."
+    },
+    {
+      "name": "adventure-coast-01/acro actual host replay verification complete",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/acro exact saved identities and original proof",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/acro existing selected-mode catalogue Watch lookup",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/self-level actual host replay verification complete",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/self-level exact saved identities and original proof",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/self-level existing selected-mode catalogue Watch lookup",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-02/acro actual host replay verification complete",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-02/acro exact saved identities and original proof",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-02/acro existing selected-mode catalogue Watch lookup",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-02/self-level actual host replay verification complete",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-02/self-level exact saved identities and original proof",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-02/self-level existing selected-mode catalogue Watch lookup",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-03/acro actual host replay verification complete",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-03/acro exact saved identities and original proof",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-03/acro existing selected-mode catalogue Watch lookup",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-03/self-level actual host replay verification complete",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-03/self-level exact saved identities and original proof",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-03/self-level existing selected-mode catalogue Watch lookup",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-04/acro actual host replay verification complete",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-04/acro exact saved identities and original proof",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-04/acro existing selected-mode catalogue Watch lookup",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-04/self-level actual host replay verification complete",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-04/self-level exact saved identities and original proof",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-04/self-level existing selected-mode catalogue Watch lookup",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-05/acro actual host replay verification complete",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-05/acro exact saved identities and original proof",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-05/acro existing selected-mode catalogue Watch lookup",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-05/self-level actual host replay verification complete",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-05/self-level exact saved identities and original proof",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-05/self-level existing selected-mode catalogue Watch lookup",
+      "passed": true
+    },
+    {
+      "name": "adventure-orchard-01/acro actual host replay verification complete",
+      "passed": true
+    },
+    {
+      "name": "adventure-orchard-01/acro exact saved identities and original proof",
+      "passed": true
+    },
+    {
+      "name": "adventure-orchard-01/acro existing selected-mode catalogue Watch lookup",
+      "passed": true
+    },
+    {
+      "name": "adventure-orchard-01/self-level actual host replay verification complete",
+      "passed": true
+    },
+    {
+      "name": "adventure-orchard-01/self-level exact saved identities and original proof",
+      "passed": true
+    },
+    {
+      "name": "adventure-orchard-01/self-level existing selected-mode catalogue Watch lookup",
+      "passed": true
+    },
+    {
+      "name": "adventure-orchard-02/acro actual host replay verification complete",
+      "passed": true
+    },
+    {
+      "name": "adventure-orchard-02/acro exact saved identities and original proof",
+      "passed": true
+    },
+    {
+      "name": "adventure-orchard-02/acro existing selected-mode catalogue Watch lookup",
+      "passed": true
+    },
+    {
+      "name": "adventure-orchard-02/self-level actual host replay verification complete",
+      "passed": true
+    },
+    {
+      "name": "adventure-orchard-02/self-level exact saved identities and original proof",
+      "passed": true
+    },
+    {
+      "name": "adventure-orchard-02/self-level existing selected-mode catalogue Watch lookup",
+      "passed": true
+    },
+    {
+      "name": "adventure-orchard-03/acro actual host replay verification complete",
+      "passed": true
+    },
+    {
+      "name": "adventure-orchard-03/acro exact saved identities and original proof",
+      "passed": true
+    },
+    {
+      "name": "adventure-orchard-03/acro existing selected-mode catalogue Watch lookup",
+      "passed": true
+    },
+    {
+      "name": "adventure-orchard-03/self-level actual host replay verification complete",
+      "passed": true
+    },
+    {
+      "name": "adventure-orchard-03/self-level exact saved identities and original proof",
+      "passed": true
+    },
+    {
+      "name": "adventure-orchard-03/self-level existing selected-mode catalogue Watch lookup",
+      "passed": true
+    },
+    {
+      "name": "adventure-orchard-04/acro actual host replay verification complete",
+      "passed": true
+    },
+    {
+      "name": "adventure-orchard-04/acro exact saved identities and original proof",
+      "passed": true
+    },
+    {
+      "name": "adventure-orchard-04/acro existing selected-mode catalogue Watch lookup",
+      "passed": true
+    },
+    {
+      "name": "adventure-orchard-04/self-level actual host replay verification complete",
+      "passed": true
+    },
+    {
+      "name": "adventure-orchard-04/self-level exact saved identities and original proof",
+      "passed": true
+    },
+    {
+      "name": "adventure-orchard-04/self-level existing selected-mode catalogue Watch lookup",
+      "passed": true
+    },
+    {
+      "name": "adventure-orchard-05/acro actual host replay verification complete",
+      "passed": true
+    },
+    {
+      "name": "adventure-orchard-05/acro exact saved identities and original proof",
+      "passed": true
+    },
+    {
+      "name": "adventure-orchard-05/acro existing selected-mode catalogue Watch lookup",
+      "passed": true
+    },
+    {
+      "name": "adventure-orchard-05/self-level actual host replay verification complete",
+      "passed": true
+    },
+    {
+      "name": "adventure-orchard-05/self-level exact saved identities and original proof",
+      "passed": true
+    },
+    {
+      "name": "adventure-orchard-05/self-level existing selected-mode catalogue Watch lookup",
+      "passed": true
+    },
+    {
+      "name": "adventure-quarry-01/acro actual host replay verification complete",
+      "passed": true
+    },
+    {
+      "name": "adventure-quarry-01/acro exact saved identities and original proof",
+      "passed": true
+    },
+    {
+      "name": "adventure-quarry-01/acro existing selected-mode catalogue Watch lookup",
+      "passed": true
+    },
+    {
+      "name": "adventure-quarry-01/self-level actual host replay verification complete",
+      "passed": true
+    },
+    {
+      "name": "adventure-quarry-01/self-level exact saved identities and original proof",
+      "passed": true
+    },
+    {
+      "name": "adventure-quarry-01/self-level existing selected-mode catalogue Watch lookup",
+      "passed": true
+    },
+    {
+      "name": "adventure-quarry-02/acro actual host replay verification complete",
+      "passed": true
+    },
+    {
+      "name": "adventure-quarry-02/acro exact saved identities and original proof",
+      "passed": true
+    },
+    {
+      "name": "adventure-quarry-02/acro existing selected-mode catalogue Watch lookup",
+      "passed": true
+    },
+    {
+      "name": "adventure-quarry-02/self-level actual host replay verification complete",
+      "passed": true
+    },
+    {
+      "name": "adventure-quarry-02/self-level exact saved identities and original proof",
+      "passed": true
+    },
+    {
+      "name": "adventure-quarry-02/self-level existing selected-mode catalogue Watch lookup",
+      "passed": true
+    },
+    {
+      "name": "adventure-quarry-03/acro actual host replay verification complete",
+      "passed": true
+    },
+    {
+      "name": "adventure-quarry-03/acro exact saved identities and original proof",
+      "passed": true
+    },
+    {
+      "name": "adventure-quarry-03/acro existing selected-mode catalogue Watch lookup",
+      "passed": true
+    },
+    {
+      "name": "adventure-quarry-03/self-level actual host replay verification complete",
+      "passed": true
+    },
+    {
+      "name": "adventure-quarry-03/self-level exact saved identities and original proof",
+      "passed": true
+    },
+    {
+      "name": "adventure-quarry-03/self-level existing selected-mode catalogue Watch lookup",
+      "passed": true
+    },
+    {
+      "name": "adventure-quarry-04/acro actual host replay verification complete",
+      "passed": true
+    },
+    {
+      "name": "adventure-quarry-04/acro exact saved identities and original proof",
+      "passed": true
+    },
+    {
+      "name": "adventure-quarry-04/acro existing selected-mode catalogue Watch lookup",
+      "passed": true
+    },
+    {
+      "name": "adventure-quarry-04/self-level actual host replay verification complete",
+      "passed": true
+    },
+    {
+      "name": "adventure-quarry-04/self-level exact saved identities and original proof",
+      "passed": true
+    },
+    {
+      "name": "adventure-quarry-04/self-level existing selected-mode catalogue Watch lookup",
+      "passed": true
+    },
+    {
+      "name": "adventure-quarry-05/acro actual host replay verification complete",
+      "passed": true
+    },
+    {
+      "name": "adventure-quarry-05/acro exact saved identities and original proof",
+      "passed": true
+    },
+    {
+      "name": "adventure-quarry-05/acro existing selected-mode catalogue Watch lookup",
+      "passed": true
+    },
+    {
+      "name": "adventure-quarry-05/self-level actual host replay verification complete",
+      "passed": true
+    },
+    {
+      "name": "adventure-quarry-05/self-level exact saved identities and original proof",
+      "passed": true
+    },
+    {
+      "name": "adventure-quarry-05/self-level existing selected-mode catalogue Watch lookup",
+      "passed": true
+    },
+    {
+      "name": "adventure-rail-depot-01/acro actual host replay verification complete",
+      "passed": true
+    },
+    {
+      "name": "adventure-rail-depot-01/acro exact saved identities and original proof",
+      "passed": true
+    },
+    {
+      "name": "adventure-rail-depot-01/acro existing selected-mode catalogue Watch lookup",
+      "passed": true
+    },
+    {
+      "name": "adventure-rail-depot-01/self-level actual host replay verification complete",
+      "passed": true
+    },
+    {
+      "name": "adventure-rail-depot-01/self-level exact saved identities and original proof",
+      "passed": true
+    },
+    {
+      "name": "adventure-rail-depot-01/self-level existing selected-mode catalogue Watch lookup",
+      "passed": true
+    },
+    {
+      "name": "adventure-rail-depot-02/acro actual host replay verification complete",
+      "passed": true
+    },
+    {
+      "name": "adventure-rail-depot-02/acro exact saved identities and original proof",
+      "passed": true
+    },
+    {
+      "name": "adventure-rail-depot-02/acro existing selected-mode catalogue Watch lookup",
+      "passed": true
+    },
+    {
+      "name": "adventure-rail-depot-02/self-level actual host replay verification complete",
+      "passed": true
+    },
+    {
+      "name": "adventure-rail-depot-02/self-level exact saved identities and original proof",
+      "passed": true
+    },
+    {
+      "name": "adventure-rail-depot-02/self-level existing selected-mode catalogue Watch lookup",
+      "passed": true
+    },
+    {
+      "name": "adventure-rail-depot-03/acro actual host replay verification complete",
+      "passed": true
+    },
+    {
+      "name": "adventure-rail-depot-03/acro exact saved identities and original proof",
+      "passed": true
+    },
+    {
+      "name": "adventure-rail-depot-03/acro existing selected-mode catalogue Watch lookup",
+      "passed": true
+    },
+    {
+      "name": "adventure-rail-depot-03/self-level actual host replay verification complete",
+      "passed": true
+    },
+    {
+      "name": "adventure-rail-depot-03/self-level exact saved identities and original proof",
+      "passed": true
+    },
+    {
+      "name": "adventure-rail-depot-03/self-level existing selected-mode catalogue Watch lookup",
+      "passed": true
+    },
+    {
+      "name": "adventure-rail-depot-04/acro actual host replay verification complete",
+      "passed": true
+    },
+    {
+      "name": "adventure-rail-depot-04/acro exact saved identities and original proof",
+      "passed": true
+    },
+    {
+      "name": "adventure-rail-depot-04/acro existing selected-mode catalogue Watch lookup",
+      "passed": true
+    },
+    {
+      "name": "adventure-rail-depot-04/self-level actual host replay verification complete",
+      "passed": true
+    },
+    {
+      "name": "adventure-rail-depot-04/self-level exact saved identities and original proof",
+      "passed": true
+    },
+    {
+      "name": "adventure-rail-depot-04/self-level existing selected-mode catalogue Watch lookup",
+      "passed": true
+    },
+    {
+      "name": "adventure-rail-depot-05/acro actual host replay verification complete",
+      "passed": true
+    },
+    {
+      "name": "adventure-rail-depot-05/acro exact saved identities and original proof",
+      "passed": true
+    },
+    {
+      "name": "adventure-rail-depot-05/acro existing selected-mode catalogue Watch lookup",
+      "passed": true
+    },
+    {
+      "name": "adventure-rail-depot-05/self-level actual host replay verification complete",
+      "passed": true
+    },
+    {
+      "name": "adventure-rail-depot-05/self-level exact saved identities and original proof",
+      "passed": true
+    },
+    {
+      "name": "adventure-rail-depot-05/self-level existing selected-mode catalogue Watch lookup",
+      "passed": true
+    },
+    {
+      "name": "adventure-rooftops-01/acro actual host replay verification complete",
+      "passed": true
+    },
+    {
+      "name": "adventure-rooftops-01/acro exact saved identities and original proof",
+      "passed": true
+    },
+    {
+      "name": "adventure-rooftops-01/acro existing selected-mode catalogue Watch lookup",
+      "passed": true
+    },
+    {
+      "name": "adventure-rooftops-01/self-level actual host replay verification complete",
+      "passed": true
+    },
+    {
+      "name": "adventure-rooftops-01/self-level exact saved identities and original proof",
+      "passed": true
+    },
+    {
+      "name": "adventure-rooftops-01/self-level existing selected-mode catalogue Watch lookup",
+      "passed": true
+    },
+    {
+      "name": "adventure-rooftops-02/acro actual host replay verification complete",
+      "passed": true
+    },
+    {
+      "name": "adventure-rooftops-02/acro exact saved identities and original proof",
+      "passed": true
+    },
+    {
+      "name": "adventure-rooftops-02/acro existing selected-mode catalogue Watch lookup",
+      "passed": true
+    },
+    {
+      "name": "adventure-rooftops-02/self-level actual host replay verification complete",
+      "passed": true
+    },
+    {
+      "name": "adventure-rooftops-02/self-level exact saved identities and original proof",
+      "passed": true
+    },
+    {
+      "name": "adventure-rooftops-02/self-level existing selected-mode catalogue Watch lookup",
+      "passed": true
+    },
+    {
+      "name": "adventure-rooftops-03/acro actual host replay verification complete",
+      "passed": true
+    },
+    {
+      "name": "adventure-rooftops-03/acro exact saved identities and original proof",
+      "passed": true
+    },
+    {
+      "name": "adventure-rooftops-03/acro existing selected-mode catalogue Watch lookup",
+      "passed": true
+    },
+    {
+      "name": "adventure-rooftops-03/self-level actual host replay verification complete",
+      "passed": true
+    },
+    {
+      "name": "adventure-rooftops-03/self-level exact saved identities and original proof",
+      "passed": true
+    },
+    {
+      "name": "adventure-rooftops-03/self-level existing selected-mode catalogue Watch lookup",
+      "passed": true
+    },
+    {
+      "name": "adventure-rooftops-04/acro actual host replay verification complete",
+      "passed": true
+    },
+    {
+      "name": "adventure-rooftops-04/acro exact saved identities and original proof",
+      "passed": true
+    },
+    {
+      "name": "adventure-rooftops-04/acro existing selected-mode catalogue Watch lookup",
+      "passed": true
+    },
+    {
+      "name": "adventure-rooftops-04/self-level actual host replay verification complete",
+      "passed": true
+    },
+    {
+      "name": "adventure-rooftops-04/self-level exact saved identities and original proof",
+      "passed": true
+    },
+    {
+      "name": "adventure-rooftops-04/self-level existing selected-mode catalogue Watch lookup",
+      "passed": true
+    },
+    {
+      "name": "adventure-rooftops-05/acro actual host replay verification complete",
+      "passed": true
+    },
+    {
+      "name": "adventure-rooftops-05/acro exact saved identities and original proof",
+      "passed": true
+    },
+    {
+      "name": "adventure-rooftops-05/acro existing selected-mode catalogue Watch lookup",
+      "passed": true
+    },
+    {
+      "name": "adventure-rooftops-05/self-level actual host replay verification complete",
+      "passed": true
+    },
+    {
+      "name": "adventure-rooftops-05/self-level exact saved identities and original proof",
+      "passed": true
+    },
+    {
+      "name": "adventure-rooftops-05/self-level existing selected-mode catalogue Watch lookup",
+      "passed": true
+    },
+    {
+      "name": "adventure-solar-farm-01/acro actual host replay verification complete",
+      "passed": true
+    },
+    {
+      "name": "adventure-solar-farm-01/acro exact saved identities and original proof",
+      "passed": true
+    },
+    {
+      "name": "adventure-solar-farm-01/acro existing selected-mode catalogue Watch lookup",
+      "passed": true
+    },
+    {
+      "name": "adventure-solar-farm-01/self-level actual host replay verification complete",
+      "passed": true
+    },
+    {
+      "name": "adventure-solar-farm-01/self-level exact saved identities and original proof",
+      "passed": true
+    },
+    {
+      "name": "adventure-solar-farm-01/self-level existing selected-mode catalogue Watch lookup",
+      "passed": true
+    },
+    {
+      "name": "adventure-solar-farm-02/acro actual host replay verification complete",
+      "passed": true
+    },
+    {
+      "name": "adventure-solar-farm-02/acro exact saved identities and original proof",
+      "passed": true
+    },
+    {
+      "name": "adventure-solar-farm-02/acro existing selected-mode catalogue Watch lookup",
+      "passed": true
+    },
+    {
+      "name": "adventure-solar-farm-02/self-level actual host replay verification complete",
+      "passed": true
+    },
+    {
+      "name": "adventure-solar-farm-02/self-level exact saved identities and original proof",
+      "passed": true
+    },
+    {
+      "name": "adventure-solar-farm-02/self-level existing selected-mode catalogue Watch lookup",
+      "passed": true
+    },
+    {
+      "name": "adventure-solar-farm-03/acro actual host replay verification complete",
+      "passed": true
+    },
+    {
+      "name": "adventure-solar-farm-03/acro exact saved identities and original proof",
+      "passed": true
+    },
+    {
+      "name": "adventure-solar-farm-03/acro existing selected-mode catalogue Watch lookup",
+      "passed": true
+    },
+    {
+      "name": "adventure-solar-farm-03/self-level actual host replay verification complete",
+      "passed": true
+    },
+    {
+      "name": "adventure-solar-farm-03/self-level exact saved identities and original proof",
+      "passed": true
+    },
+    {
+      "name": "adventure-solar-farm-03/self-level existing selected-mode catalogue Watch lookup",
+      "passed": true
+    },
+    {
+      "name": "adventure-solar-farm-04/acro actual host replay verification complete",
+      "passed": true
+    },
+    {
+      "name": "adventure-solar-farm-04/acro exact saved identities and original proof",
+      "passed": true
+    },
+    {
+      "name": "adventure-solar-farm-04/acro existing selected-mode catalogue Watch lookup",
+      "passed": true
+    },
+    {
+      "name": "adventure-solar-farm-04/self-level actual host replay verification complete",
+      "passed": true
+    },
+    {
+      "name": "adventure-solar-farm-04/self-level exact saved identities and original proof",
+      "passed": true
+    },
+    {
+      "name": "adventure-solar-farm-04/self-level existing selected-mode catalogue Watch lookup",
+      "passed": true
+    },
+    {
+      "name": "adventure-solar-farm-05/acro actual host replay verification complete",
+      "passed": true
+    },
+    {
+      "name": "adventure-solar-farm-05/acro exact saved identities and original proof",
+      "passed": true
+    },
+    {
+      "name": "adventure-solar-farm-05/acro existing selected-mode catalogue Watch lookup",
+      "passed": true
+    },
+    {
+      "name": "adventure-solar-farm-05/self-level actual host replay verification complete",
+      "passed": true
+    },
+    {
+      "name": "adventure-solar-farm-05/self-level exact saved identities and original proof",
+      "passed": true
+    },
+    {
+      "name": "adventure-solar-farm-05/self-level existing selected-mode catalogue Watch lookup",
+      "passed": true
+    },
+    {
+      "name": "60 verified examples plus two distinct retained invalid records; missing pack replaced by correct exact record",
+      "passed": true
+    },
+    {
+      "name": "All 60 imports award no progress and preserve recovery",
+      "passed": true
+    },
+    {
+      "name": "Exact record bytes survive native HTTP iframe reload",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/acro lookup restored from IndexedDB",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/self-level lookup restored from IndexedDB",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-02/acro lookup restored from IndexedDB",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-02/self-level lookup restored from IndexedDB",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-03/acro lookup restored from IndexedDB",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-03/self-level lookup restored from IndexedDB",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-04/acro lookup restored from IndexedDB",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-04/self-level lookup restored from IndexedDB",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-05/acro lookup restored from IndexedDB",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-05/self-level lookup restored from IndexedDB",
+      "passed": true
+    },
+    {
+      "name": "adventure-orchard-01/acro lookup restored from IndexedDB",
+      "passed": true
+    },
+    {
+      "name": "adventure-orchard-01/self-level lookup restored from IndexedDB",
+      "passed": true
+    },
+    {
+      "name": "adventure-orchard-02/acro lookup restored from IndexedDB",
+      "passed": true
+    },
+    {
+      "name": "adventure-orchard-02/self-level lookup restored from IndexedDB",
+      "passed": true
+    },
+    {
+      "name": "adventure-orchard-03/acro lookup restored from IndexedDB",
+      "passed": true
+    },
+    {
+      "name": "adventure-orchard-03/self-level lookup restored from IndexedDB",
+      "passed": true
+    },
+    {
+      "name": "adventure-orchard-04/acro lookup restored from IndexedDB",
+      "passed": true
+    },
+    {
+      "name": "adventure-orchard-04/self-level lookup restored from IndexedDB",
+      "passed": true
+    },
+    {
+      "name": "adventure-orchard-05/acro lookup restored from IndexedDB",
+      "passed": true
+    },
+    {
+      "name": "adventure-orchard-05/self-level lookup restored from IndexedDB",
+      "passed": true
+    },
+    {
+      "name": "adventure-quarry-01/acro lookup restored from IndexedDB",
+      "passed": true
+    },
+    {
+      "name": "adventure-quarry-01/self-level lookup restored from IndexedDB",
+      "passed": true
+    },
+    {
+      "name": "adventure-quarry-02/acro lookup restored from IndexedDB",
+      "passed": true
+    },
+    {
+      "name": "adventure-quarry-02/self-level lookup restored from IndexedDB",
+      "passed": true
+    },
+    {
+      "name": "adventure-quarry-03/acro lookup restored from IndexedDB",
+      "passed": true
+    },
+    {
+      "name": "adventure-quarry-03/self-level lookup restored from IndexedDB",
+      "passed": true
+    },
+    {
+      "name": "adventure-quarry-04/acro lookup restored from IndexedDB",
+      "passed": true
+    },
+    {
+      "name": "adventure-quarry-04/self-level lookup restored from IndexedDB",
+      "passed": true
+    },
+    {
+      "name": "adventure-quarry-05/acro lookup restored from IndexedDB",
+      "passed": true
+    },
+    {
+      "name": "adventure-quarry-05/self-level lookup restored from IndexedDB",
+      "passed": true
+    },
+    {
+      "name": "adventure-rail-depot-01/acro lookup restored from IndexedDB",
+      "passed": true
+    },
+    {
+      "name": "adventure-rail-depot-01/self-level lookup restored from IndexedDB",
+      "passed": true
+    },
+    {
+      "name": "adventure-rail-depot-02/acro lookup restored from IndexedDB",
+      "passed": true
+    },
+    {
+      "name": "adventure-rail-depot-02/self-level lookup restored from IndexedDB",
+      "passed": true
+    },
+    {
+      "name": "adventure-rail-depot-03/acro lookup restored from IndexedDB",
+      "passed": true
+    },
+    {
+      "name": "adventure-rail-depot-03/self-level lookup restored from IndexedDB",
+      "passed": true
+    },
+    {
+      "name": "adventure-rail-depot-04/acro lookup restored from IndexedDB",
+      "passed": true
+    },
+    {
+      "name": "adventure-rail-depot-04/self-level lookup restored from IndexedDB",
+      "passed": true
+    },
+    {
+      "name": "adventure-rail-depot-05/acro lookup restored from IndexedDB",
+      "passed": true
+    },
+    {
+      "name": "adventure-rail-depot-05/self-level lookup restored from IndexedDB",
+      "passed": true
+    },
+    {
+      "name": "adventure-rooftops-01/acro lookup restored from IndexedDB",
+      "passed": true
+    },
+    {
+      "name": "adventure-rooftops-01/self-level lookup restored from IndexedDB",
+      "passed": true
+    },
+    {
+      "name": "adventure-rooftops-02/acro lookup restored from IndexedDB",
+      "passed": true
+    },
+    {
+      "name": "adventure-rooftops-02/self-level lookup restored from IndexedDB",
+      "passed": true
+    },
+    {
+      "name": "adventure-rooftops-03/acro lookup restored from IndexedDB",
+      "passed": true
+    },
+    {
+      "name": "adventure-rooftops-03/self-level lookup restored from IndexedDB",
+      "passed": true
+    },
+    {
+      "name": "adventure-rooftops-04/acro lookup restored from IndexedDB",
+      "passed": true
+    },
+    {
+      "name": "adventure-rooftops-04/self-level lookup restored from IndexedDB",
+      "passed": true
+    },
+    {
+      "name": "adventure-rooftops-05/acro lookup restored from IndexedDB",
+      "passed": true
+    },
+    {
+      "name": "adventure-rooftops-05/self-level lookup restored from IndexedDB",
+      "passed": true
+    },
+    {
+      "name": "adventure-solar-farm-01/acro lookup restored from IndexedDB",
+      "passed": true
+    },
+    {
+      "name": "adventure-solar-farm-01/self-level lookup restored from IndexedDB",
+      "passed": true
+    },
+    {
+      "name": "adventure-solar-farm-02/acro lookup restored from IndexedDB",
+      "passed": true
+    },
+    {
+      "name": "adventure-solar-farm-02/self-level lookup restored from IndexedDB",
+      "passed": true
+    },
+    {
+      "name": "adventure-solar-farm-03/acro lookup restored from IndexedDB",
+      "passed": true
+    },
+    {
+      "name": "adventure-solar-farm-03/self-level lookup restored from IndexedDB",
+      "passed": true
+    },
+    {
+      "name": "adventure-solar-farm-04/acro lookup restored from IndexedDB",
+      "passed": true
+    },
+    {
+      "name": "adventure-solar-farm-04/self-level lookup restored from IndexedDB",
+      "passed": true
+    },
+    {
+      "name": "adventure-solar-farm-05/acro lookup restored from IndexedDB",
+      "passed": true
+    },
+    {
+      "name": "adventure-solar-farm-05/self-level lookup restored from IndexedDB",
+      "passed": true
+    },
+    {
+      "name": "Persistence reload retains protected player data",
+      "passed": true
+    },
+    {
+      "name": "Both modes selected in each of all six Adventure worlds",
+      "passed": true
+    },
+    {
+      "name": "Exact existing Watch identity before deliberate Arm",
+      "passed": true
+    },
+    {
+      "name": "Two bounded paused preparation frames before deliberate Arm",
+      "passed": true,
+      "warmup": [
+        {
+          "pulse": 0,
+          "wallMs": 6.799999982118607,
+          "status": "Playback paused. Resume to continue.",
+          "ticks": 0
+        },
+        {
+          "pulse": 1,
+          "wallMs": 7.4000000059604645,
+          "status": "Playback paused. Resume to continue.",
+          "ticks": 0
+        }
+      ]
+    },
+    {
+      "name": "Playback deliberately armed through actual UI after paused preparation",
+      "passed": true
+    },
+    {
+      "name": "Final rendered state agrees with real completed host snapshot",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/acro rendered full playback exact final identity",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/acro correct mode and explicit unscored complete result",
+      "passed": true
+    },
+    {
+      "name": "Exact existing Watch identity before deliberate Arm",
+      "passed": true
+    },
+    {
+      "name": "Two bounded paused preparation frames before deliberate Arm",
+      "passed": true,
+      "warmup": [
+        {
+          "pulse": 0,
+          "wallMs": 5.9000000059604645,
+          "status": "Playback paused. Resume to continue.",
+          "ticks": 0
+        },
+        {
+          "pulse": 1,
+          "wallMs": 6.699999988079071,
+          "status": "Playback paused. Resume to continue.",
+          "ticks": 0
+        }
+      ]
+    },
+    {
+      "name": "Playback deliberately armed through actual UI after paused preparation",
+      "passed": true
+    },
+    {
+      "name": "Final rendered state agrees with real completed host snapshot",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/self-level rendered full playback exact final identity",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/self-level correct mode and explicit unscored complete result",
+      "passed": true
+    },
+    {
+      "name": "Exact existing Watch identity before deliberate Arm",
+      "passed": true
+    },
+    {
+      "name": "Two bounded paused preparation frames before deliberate Arm",
+      "passed": true,
+      "warmup": [
+        {
+          "pulse": 0,
+          "wallMs": 6.399999976158142,
+          "status": "Playback paused. Resume to continue.",
+          "ticks": 0
+        },
+        {
+          "pulse": 1,
+          "wallMs": 8.5,
+          "status": "Playback paused. Resume to continue.",
+          "ticks": 0
+        }
+      ]
+    },
+    {
+      "name": "Playback deliberately armed through actual UI after paused preparation",
+      "passed": true
+    },
+    {
+      "name": "Final rendered state agrees with real completed host snapshot",
+      "passed": true
+    },
+    {
+      "name": "adventure-quarry-04/acro rendered full playback exact final identity",
+      "passed": true
+    },
+    {
+      "name": "adventure-quarry-04/acro correct mode and explicit unscored complete result",
+      "passed": true
+    },
+    {
+      "name": "Exact existing Watch identity before deliberate Arm",
+      "passed": true
+    },
+    {
+      "name": "Two bounded paused preparation frames before deliberate Arm",
+      "passed": true,
+      "warmup": [
+        {
+          "pulse": 0,
+          "wallMs": 6.5,
+          "status": "Playback paused. Resume to continue.",
+          "ticks": 0
+        },
+        {
+          "pulse": 1,
+          "wallMs": 6.300000011920929,
+          "status": "Playback paused. Resume to continue.",
+          "ticks": 0
+        }
+      ]
+    },
+    {
+      "name": "Playback deliberately armed through actual UI after paused preparation",
+      "passed": true
+    },
+    {
+      "name": "Final rendered state agrees with real completed host snapshot",
+      "passed": true
+    },
+    {
+      "name": "adventure-quarry-04/self-level rendered full playback exact final identity",
+      "passed": true
+    },
+    {
+      "name": "adventure-quarry-04/self-level correct mode and explicit unscored complete result",
+      "passed": true
+    },
+    {
+      "name": "Exact existing Watch identity before deliberate Arm",
+      "passed": true
+    },
+    {
+      "name": "Two bounded paused preparation frames before deliberate Arm",
+      "passed": true,
+      "warmup": [
+        {
+          "pulse": 0,
+          "wallMs": 5.699999988079071,
+          "status": "Playback paused. Resume to continue.",
+          "ticks": 0
+        },
+        {
+          "pulse": 1,
+          "wallMs": 6.799999982118607,
+          "status": "Playback paused. Resume to continue.",
+          "ticks": 0
+        }
+      ]
+    },
+    {
+      "name": "Playback deliberately armed through actual UI after paused preparation",
+      "passed": true
+    },
+    {
+      "name": "Final rendered state agrees with real completed host snapshot",
+      "passed": true
+    },
+    {
+      "name": "adventure-rooftops-01/acro rendered full playback exact final identity",
+      "passed": true
+    },
+    {
+      "name": "adventure-rooftops-01/acro correct mode and explicit unscored complete result",
+      "passed": true
+    },
+    {
+      "name": "Exact existing Watch identity before deliberate Arm",
+      "passed": true
+    },
+    {
+      "name": "Two bounded paused preparation frames before deliberate Arm",
+      "passed": true,
+      "warmup": [
+        {
+          "pulse": 0,
+          "wallMs": 8.400000005960464,
+          "status": "Playback paused. Resume to continue.",
+          "ticks": 0
+        },
+        {
+          "pulse": 1,
+          "wallMs": 7,
+          "status": "Playback paused. Resume to continue.",
+          "ticks": 0
+        }
+      ]
+    },
+    {
+      "name": "Playback deliberately armed through actual UI after paused preparation",
+      "passed": true
+    },
+    {
+      "name": "Final rendered state agrees with real completed host snapshot",
+      "passed": true
+    },
+    {
+      "name": "adventure-rooftops-01/self-level rendered full playback exact final identity",
+      "passed": true
+    },
+    {
+      "name": "adventure-rooftops-01/self-level correct mode and explicit unscored complete result",
+      "passed": true
+    },
+    {
+      "name": "Exact existing Watch identity before deliberate Arm",
+      "passed": true
+    },
+    {
+      "name": "Two bounded paused preparation frames before deliberate Arm",
+      "passed": true,
+      "warmup": [
+        {
+          "pulse": 0,
+          "wallMs": 7.799999982118607,
+          "status": "Playback paused. Resume to continue.",
+          "ticks": 0
+        },
+        {
+          "pulse": 1,
+          "wallMs": 7,
+          "status": "Playback paused. Resume to continue.",
+          "ticks": 0
+        }
+      ]
+    },
+    {
+      "name": "Playback deliberately armed through actual UI after paused preparation",
+      "passed": true
+    },
+    {
+      "name": "Final rendered state agrees with real completed host snapshot",
+      "passed": true
+    },
+    {
+      "name": "adventure-rail-depot-05/acro rendered full playback exact final identity",
+      "passed": true
+    },
+    {
+      "name": "adventure-rail-depot-05/acro correct mode and explicit unscored complete result",
+      "passed": true
+    },
+    {
+      "name": "Exact existing Watch identity before deliberate Arm",
+      "passed": true
+    },
+    {
+      "name": "Two bounded paused preparation frames before deliberate Arm",
+      "passed": true,
+      "warmup": [
+        {
+          "pulse": 0,
+          "wallMs": 7.0999999940395355,
+          "status": "Playback paused. Resume to continue.",
+          "ticks": 0
+        },
+        {
+          "pulse": 1,
+          "wallMs": 7,
+          "status": "Playback paused. Resume to continue.",
+          "ticks": 0
+        }
+      ]
+    },
+    {
+      "name": "Playback deliberately armed through actual UI after paused preparation",
+      "passed": true
+    },
+    {
+      "name": "Final rendered state agrees with real completed host snapshot",
+      "passed": true
+    },
+    {
+      "name": "adventure-rail-depot-05/self-level rendered full playback exact final identity",
+      "passed": true
+    },
+    {
+      "name": "adventure-rail-depot-05/self-level correct mode and explicit unscored complete result",
+      "passed": true
+    },
+    {
+      "name": "Exact existing Watch identity before deliberate Arm",
+      "passed": true
+    },
+    {
+      "name": "Two bounded paused preparation frames before deliberate Arm",
+      "passed": true,
+      "warmup": [
+        {
+          "pulse": 0,
+          "wallMs": 7.0999999940395355,
+          "status": "Playback paused. Resume to continue.",
+          "ticks": 0
+        },
+        {
+          "pulse": 1,
+          "wallMs": 6.300000011920929,
+          "status": "Playback paused. Resume to continue.",
+          "ticks": 0
+        }
+      ]
+    },
+    {
+      "name": "Playback deliberately armed through actual UI after paused preparation",
+      "passed": true
+    },
+    {
+      "name": "Final rendered state agrees with real completed host snapshot",
+      "passed": true
+    },
+    {
+      "name": "adventure-orchard-01/acro rendered full playback exact final identity",
+      "passed": true
+    },
+    {
+      "name": "adventure-orchard-01/acro correct mode and explicit unscored complete result",
+      "passed": true
+    },
+    {
+      "name": "Exact existing Watch identity before deliberate Arm",
+      "passed": true
+    },
+    {
+      "name": "Two bounded paused preparation frames before deliberate Arm",
+      "passed": true,
+      "warmup": [
+        {
+          "pulse": 0,
+          "wallMs": 6.200000017881393,
+          "status": "Playback paused. Resume to continue.",
+          "ticks": 0
+        },
+        {
+          "pulse": 1,
+          "wallMs": 7,
+          "status": "Playback paused. Resume to continue.",
+          "ticks": 0
+        }
+      ]
+    },
+    {
+      "name": "Playback deliberately armed through actual UI after paused preparation",
+      "passed": true
+    },
+    {
+      "name": "Final rendered state agrees with real completed host snapshot",
+      "passed": true
+    },
+    {
+      "name": "adventure-orchard-01/self-level rendered full playback exact final identity",
+      "passed": true
+    },
+    {
+      "name": "adventure-orchard-01/self-level correct mode and explicit unscored complete result",
+      "passed": true
+    },
+    {
+      "name": "Exact existing Watch identity before deliberate Arm",
+      "passed": true
+    },
+    {
+      "name": "Two bounded paused preparation frames before deliberate Arm",
+      "passed": true,
+      "warmup": [
+        {
+          "pulse": 0,
+          "wallMs": 6.9000000059604645,
+          "status": "Playback paused. Resume to continue.",
+          "ticks": 0
+        },
+        {
+          "pulse": 1,
+          "wallMs": 7,
+          "status": "Playback paused. Resume to continue.",
+          "ticks": 0
+        }
+      ]
+    },
+    {
+      "name": "Playback deliberately armed through actual UI after paused preparation",
+      "passed": true
+    },
+    {
+      "name": "Final rendered state agrees with real completed host snapshot",
+      "passed": true
+    },
+    {
+      "name": "adventure-solar-farm-05/acro rendered full playback exact final identity",
+      "passed": true
+    },
+    {
+      "name": "adventure-solar-farm-05/acro correct mode and explicit unscored complete result",
+      "passed": true
+    },
+    {
+      "name": "Exact existing Watch identity before deliberate Arm",
+      "passed": true
+    },
+    {
+      "name": "Two bounded paused preparation frames before deliberate Arm",
+      "passed": true,
+      "warmup": [
+        {
+          "pulse": 0,
+          "wallMs": 6.4000000059604645,
+          "status": "Playback paused. Resume to continue.",
+          "ticks": 0
+        },
+        {
+          "pulse": 1,
+          "wallMs": 5.800000011920929,
+          "status": "Playback paused. Resume to continue.",
+          "ticks": 0
+        }
+      ]
+    },
+    {
+      "name": "Playback deliberately armed through actual UI after paused preparation",
+      "passed": true
+    },
+    {
+      "name": "Final rendered state agrees with real completed host snapshot",
+      "passed": true
+    },
+    {
+      "name": "adventure-solar-farm-05/self-level rendered full playback exact final identity",
+      "passed": true
+    },
+    {
+      "name": "adventure-solar-farm-05/self-level correct mode and explicit unscored complete result",
+      "passed": true
+    },
+    {
+      "name": "All 12 actual Watch replays preserve every original stored byte",
+      "passed": true
+    },
+    {
+      "name": "All 12 replays award no notebook progress, medals or rewards and preserve interrupted flight",
+      "passed": true
+    },
+    {
+      "name": "No runtime errors or unhandled rejections",
+      "passed": true,
+      "errors": []
+    },
+    {
+      "name": "Native iframe navigation and private database cleanup have no runtime errors",
+      "passed": true,
+      "errors": []
+    }
+  ],
+  "phases": [
+    {
+      "ms": 0,
+      "label": "Verify admitted player closure and optional archive"
+    },
+    {
+      "ms": 2598,
+      "label": "Actual import rejects changed course, invalid proof and missing pack"
+    },
+    {
+      "ms": 3021,
+      "label": "Import all 60 through the actual File input"
+    },
+    {
+      "ms": 18230,
+      "label": "Reload the actual HTTP host and verify all 60 persisted lookups"
+    },
+    {
+      "ms": 19063,
+      "label": "Actual Watch playback adventure-coast-01/acro"
+    },
+    {
+      "ms": 24305,
+      "label": "Actual Watch playback adventure-coast-01/self-level"
+    },
+    {
+      "ms": 29449,
+      "label": "Actual Watch playback adventure-quarry-04/acro"
+    },
+    {
+      "ms": 33476,
+      "label": "Actual Watch playback adventure-quarry-04/self-level"
+    },
+    {
+      "ms": 37269,
+      "label": "Actual Watch playback adventure-rooftops-01/acro"
+    },
+    {
+      "ms": 42678,
+      "label": "Actual Watch playback adventure-rooftops-01/self-level"
+    },
+    {
+      "ms": 48145,
+      "label": "Actual Watch playback adventure-rail-depot-05/acro"
+    },
+    {
+      "ms": 52226,
+      "label": "Actual Watch playback adventure-rail-depot-05/self-level"
+    },
+    {
+      "ms": 56039,
+      "label": "Actual Watch playback adventure-orchard-01/acro"
+    },
+    {
+      "ms": 60768,
+      "label": "Actual Watch playback adventure-orchard-01/self-level"
+    },
+    {
+      "ms": 65467,
+      "label": "Actual Watch playback adventure-solar-farm-05/acro"
+    },
+    {
+      "ms": 69317,
+      "label": "Actual Watch playback adventure-solar-farm-05/self-level"
+    }
+  ],
+  "playback": [
+    {
+      "id": "adventure-coast-01",
+      "mode": "acro",
+      "ticks": 4843,
+      "contacts": 0,
+      "health": 100,
+      "maxHealth": 100,
+      "shots": 0,
+      "hits": 0,
+      "finalStateIdentity": "2a8b70b9435283a4",
+      "pulseObservations": {
+        "id": "adventure-coast-01",
+        "mode": "acro",
+        "ticks": 4843,
+        "totalTicks": 4843,
+        "maxPulseGapMs": 26.899999976158142,
+        "pulses": 486,
+        "warmup": [
+          {
+            "pulse": 0,
+            "wallMs": 6.799999982118607,
+            "status": "Playback paused. Resume to continue.",
+            "ticks": 0
+          },
+          {
+            "pulse": 1,
+            "wallMs": 7.4000000059604645,
+            "status": "Playback paused. Resume to continue.",
+            "ticks": 0
+          }
+        ]
+      }
+    },
+    {
+      "id": "adventure-coast-01",
+      "mode": "self-level",
+      "ticks": 4843,
+      "contacts": 0,
+      "health": 100,
+      "maxHealth": 100,
+      "shots": 0,
+      "hits": 0,
+      "finalStateIdentity": "927ca0248786dd14",
+      "pulseObservations": {
+        "id": "adventure-coast-01",
+        "mode": "self-level",
+        "ticks": 4843,
+        "totalTicks": 4843,
+        "maxPulseGapMs": 30.69999998807907,
+        "pulses": 486,
+        "warmup": [
+          {
+            "pulse": 0,
+            "wallMs": 5.9000000059604645,
+            "status": "Playback paused. Resume to continue.",
+            "ticks": 0
+          },
+          {
+            "pulse": 1,
+            "wallMs": 6.699999988079071,
+            "status": "Playback paused. Resume to continue.",
+            "ticks": 0
+          }
+        ]
+      }
+    },
+    {
+      "id": "adventure-quarry-04",
+      "mode": "acro",
+      "ticks": 3327,
+      "contacts": 0,
+      "health": 94,
+      "maxHealth": 100,
+      "shots": 17,
+      "hits": 7,
+      "finalStateIdentity": "f770173470f4cc24",
+      "pulseObservations": {
+        "id": "adventure-quarry-04",
+        "mode": "acro",
+        "ticks": 3327,
+        "totalTicks": 3327,
+        "maxPulseGapMs": 29.900000005960464,
+        "pulses": 334,
+        "warmup": [
+          {
+            "pulse": 0,
+            "wallMs": 6.399999976158142,
+            "status": "Playback paused. Resume to continue.",
+            "ticks": 0
+          },
+          {
+            "pulse": 1,
+            "wallMs": 8.5,
+            "status": "Playback paused. Resume to continue.",
+            "ticks": 0
+          }
+        ]
+      }
+    },
+    {
+      "id": "adventure-quarry-04",
+      "mode": "self-level",
+      "ticks": 3121,
+      "contacts": 0,
+      "health": 97,
+      "maxHealth": 100,
+      "shots": 17,
+      "hits": 7,
+      "finalStateIdentity": "fd7c3d2fb71f5ab4",
+      "pulseObservations": {
+        "id": "adventure-quarry-04",
+        "mode": "self-level",
+        "ticks": 3121,
+        "totalTicks": 3121,
+        "maxPulseGapMs": 31.30000001192093,
+        "pulses": 314,
+        "warmup": [
+          {
+            "pulse": 0,
+            "wallMs": 6.5,
+            "status": "Playback paused. Resume to continue.",
+            "ticks": 0
+          },
+          {
+            "pulse": 1,
+            "wallMs": 6.300000011920929,
+            "status": "Playback paused. Resume to continue.",
+            "ticks": 0
+          }
+        ]
+      }
+    },
+    {
+      "id": "adventure-rooftops-01",
+      "mode": "acro",
+      "ticks": 5010,
+      "contacts": 0,
+      "health": 100,
+      "maxHealth": 100,
+      "shots": 0,
+      "hits": 0,
+      "finalStateIdentity": "f77f53e334bc2b73",
+      "pulseObservations": {
+        "id": "adventure-rooftops-01",
+        "mode": "acro",
+        "ticks": 5010,
+        "totalTicks": 5010,
+        "maxPulseGapMs": 32.5,
+        "pulses": 502,
+        "warmup": [
+          {
+            "pulse": 0,
+            "wallMs": 5.699999988079071,
+            "status": "Playback paused. Resume to continue.",
+            "ticks": 0
+          },
+          {
+            "pulse": 1,
+            "wallMs": 6.799999982118607,
+            "status": "Playback paused. Resume to continue.",
+            "ticks": 0
+          }
+        ]
+      }
+    },
+    {
+      "id": "adventure-rooftops-01",
+      "mode": "self-level",
+      "ticks": 5002,
+      "contacts": 0,
+      "health": 100,
+      "maxHealth": 100,
+      "shots": 0,
+      "hits": 0,
+      "finalStateIdentity": "72dea915e36540ae",
+      "pulseObservations": {
+        "id": "adventure-rooftops-01",
+        "mode": "self-level",
+        "ticks": 5002,
+        "totalTicks": 5002,
+        "maxPulseGapMs": 39.900000005960464,
+        "pulses": 502,
+        "warmup": [
+          {
+            "pulse": 0,
+            "wallMs": 8.400000005960464,
+            "status": "Playback paused. Resume to continue.",
+            "ticks": 0
+          },
+          {
+            "pulse": 1,
+            "wallMs": 7,
+            "status": "Playback paused. Resume to continue.",
+            "ticks": 0
+          }
+        ]
+      }
+    },
+    {
+      "id": "adventure-rail-depot-05",
+      "mode": "acro",
+      "ticks": 3327,
+      "contacts": 0,
+      "health": 94,
+      "maxHealth": 100,
+      "shots": 17,
+      "hits": 7,
+      "finalStateIdentity": "f0ddef099753eb92",
+      "pulseObservations": {
+        "id": "adventure-rail-depot-05",
+        "mode": "acro",
+        "ticks": 3327,
+        "totalTicks": 3327,
+        "maxPulseGapMs": 35.29999998211861,
+        "pulses": 334,
+        "warmup": [
+          {
+            "pulse": 0,
+            "wallMs": 7.799999982118607,
+            "status": "Playback paused. Resume to continue.",
+            "ticks": 0
+          },
+          {
+            "pulse": 1,
+            "wallMs": 7,
+            "status": "Playback paused. Resume to continue.",
+            "ticks": 0
+          }
+        ]
+      }
+    },
+    {
+      "id": "adventure-rail-depot-05",
+      "mode": "self-level",
+      "ticks": 3121,
+      "contacts": 0,
+      "health": 97,
+      "maxHealth": 100,
+      "shots": 17,
+      "hits": 7,
+      "finalStateIdentity": "b94c1dd1ff9ce63a",
+      "pulseObservations": {
+        "id": "adventure-rail-depot-05",
+        "mode": "self-level",
+        "ticks": 3121,
+        "totalTicks": 3121,
+        "maxPulseGapMs": 43,
+        "pulses": 314,
+        "warmup": [
+          {
+            "pulse": 0,
+            "wallMs": 7.0999999940395355,
+            "status": "Playback paused. Resume to continue.",
+            "ticks": 0
+          },
+          {
+            "pulse": 1,
+            "wallMs": 7,
+            "status": "Playback paused. Resume to continue.",
+            "ticks": 0
+          }
+        ]
+      }
+    },
+    {
+      "id": "adventure-orchard-01",
+      "mode": "acro",
+      "ticks": 4136,
+      "contacts": 0,
+      "health": 100,
+      "maxHealth": 100,
+      "shots": 0,
+      "hits": 0,
+      "finalStateIdentity": "8471c4ea6ea22c3c",
+      "pulseObservations": {
+        "id": "adventure-orchard-01",
+        "mode": "acro",
+        "ticks": 4136,
+        "totalTicks": 4136,
+        "maxPulseGapMs": 37.79999998211861,
+        "pulses": 415,
+        "warmup": [
+          {
+            "pulse": 0,
+            "wallMs": 7.0999999940395355,
+            "status": "Playback paused. Resume to continue.",
+            "ticks": 0
+          },
+          {
+            "pulse": 1,
+            "wallMs": 6.300000011920929,
+            "status": "Playback paused. Resume to continue.",
+            "ticks": 0
+          }
+        ]
+      }
+    },
+    {
+      "id": "adventure-orchard-01",
+      "mode": "self-level",
+      "ticks": 4130,
+      "contacts": 0,
+      "health": 100,
+      "maxHealth": 100,
+      "shots": 0,
+      "hits": 0,
+      "finalStateIdentity": "d6baeb61e5aa9f6e",
+      "pulseObservations": {
+        "id": "adventure-orchard-01",
+        "mode": "self-level",
+        "ticks": 4130,
+        "totalTicks": 4130,
+        "maxPulseGapMs": 38,
+        "pulses": 414,
+        "warmup": [
+          {
+            "pulse": 0,
+            "wallMs": 6.200000017881393,
+            "status": "Playback paused. Resume to continue.",
+            "ticks": 0
+          },
+          {
+            "pulse": 1,
+            "wallMs": 7,
+            "status": "Playback paused. Resume to continue.",
+            "ticks": 0
+          }
+        ]
+      }
+    },
+    {
+      "id": "adventure-solar-farm-05",
+      "mode": "acro",
+      "ticks": 3151,
+      "contacts": 0,
+      "health": 97,
+      "maxHealth": 100,
+      "shots": 15,
+      "hits": 7,
+      "finalStateIdentity": "d2eefe7ad72cb5e0",
+      "pulseObservations": {
+        "id": "adventure-solar-farm-05",
+        "mode": "acro",
+        "ticks": 3151,
+        "totalTicks": 3151,
+        "maxPulseGapMs": 39.30000001192093,
+        "pulses": 317,
+        "warmup": [
+          {
+            "pulse": 0,
+            "wallMs": 6.9000000059604645,
+            "status": "Playback paused. Resume to continue.",
+            "ticks": 0
+          },
+          {
+            "pulse": 1,
+            "wallMs": 7,
+            "status": "Playback paused. Resume to continue.",
+            "ticks": 0
+          }
+        ]
+      }
+    },
+    {
+      "id": "adventure-solar-farm-05",
+      "mode": "self-level",
+      "ticks": 3117,
+      "contacts": 0,
+      "health": 97,
+      "maxHealth": 100,
+      "shots": 17,
+      "hits": 7,
+      "finalStateIdentity": "a8419a6705f442d0",
+      "pulseObservations": {
+        "id": "adventure-solar-farm-05",
+        "mode": "self-level",
+        "ticks": 3117,
+        "totalTicks": 3117,
+        "maxPulseGapMs": 41.29999998211861,
+        "pulses": 313,
+        "warmup": [
+          {
+            "pulse": 0,
+            "wallMs": 6.4000000059604645,
+            "status": "Playback paused. Resume to continue.",
+            "ticks": 0
+          },
+          {
+            "pulse": 1,
+            "wallMs": 5.800000011920929,
+            "status": "Playback paused. Resume to continue.",
+            "ticks": 0
+          }
+        ]
+      }
+    }
+  ],
+  "activePlayback": {
+    "id": "adventure-solar-farm-05",
+    "mode": "self-level",
+    "ticks": 3117,
+    "totalTicks": 3117,
+    "maxPulseGapMs": 41.29999998211861,
+    "pulses": 313,
+    "warmup": [
+      {
+        "pulse": 0,
+        "wallMs": 6.4000000059604645,
+        "status": "Playback paused. Resume to continue.",
+        "ticks": 0
+      },
+      {
+        "pulse": 1,
+        "wallMs": 5.800000011920929,
+        "status": "Playback paused. Resume to continue.",
+        "ticks": 0
+      }
+    ]
+  },
+  "focusEvents": [
+    {
+      "ms": 2009,
+      "kind": "mounted",
+      "owner": "frame",
+      "visibility": "visible",
+      "focused": true,
+      "frameVisibility": "visible",
+      "frameFocused": true
+    },
+    {
+      "ms": 18245,
+      "kind": "visibilitychange",
+      "owner": "frame",
+      "visibility": "visible",
+      "focused": true,
+      "frameVisibility": "hidden",
+      "frameFocused": true
+    },
+    {
+      "ms": 18475,
+      "kind": "mounted",
+      "owner": "frame",
+      "visibility": "visible",
+      "focused": true,
+      "frameVisibility": "visible",
+      "frameFocused": true
+    },
+    {
+      "ms": 73297,
+      "kind": "visibilitychange",
+      "owner": "frame",
+      "visibility": "visible",
+      "focused": true,
+      "frameVisibility": "hidden",
+      "frameFocused": true
+    }
+  ],
+  "snapshotCosts": [
+    {
+      "label": "empty library baseline",
+      "wallMs": 0.09999999403953552,
+      "records": 0
+    },
+    {
+      "label": "paused before adventure-coast-01/acro",
+      "wallMs": 109.7999999821186,
+      "records": 62
+    },
+    {
+      "label": "completed adventure-coast-01/acro",
+      "wallMs": 106.09999999403954,
+      "records": 62
+    },
+    {
+      "label": "paused before adventure-coast-01/self-level",
+      "wallMs": 115,
+      "records": 62
+    },
+    {
+      "label": "completed adventure-coast-01/self-level",
+      "wallMs": 105.80000001192093,
+      "records": 62
+    },
+    {
+      "label": "paused before adventure-quarry-04/acro",
+      "wallMs": 118.60000002384186,
+      "records": 62
+    },
+    {
+      "label": "completed adventure-quarry-04/acro",
+      "wallMs": 103.39999997615814,
+      "records": 62
+    },
+    {
+      "label": "paused before adventure-quarry-04/self-level",
+      "wallMs": 106,
+      "records": 62
+    },
+    {
+      "label": "completed adventure-quarry-04/self-level",
+      "wallMs": 104.5,
+      "records": 62
+    },
+    {
+      "label": "paused before adventure-rooftops-01/acro",
+      "wallMs": 102.40000000596046,
+      "records": 62
+    },
+    {
+      "label": "completed adventure-rooftops-01/acro",
+      "wallMs": 119.5,
+      "records": 62
+    },
+    {
+      "label": "paused before adventure-rooftops-01/self-level",
+      "wallMs": 105.90000000596046,
+      "records": 62
+    },
+    {
+      "label": "completed adventure-rooftops-01/self-level",
+      "wallMs": 106,
+      "records": 62
+    },
+    {
+      "label": "paused before adventure-rail-depot-05/acro",
+      "wallMs": 104.59999999403954,
+      "records": 62
+    },
+    {
+      "label": "completed adventure-rail-depot-05/acro",
+      "wallMs": 106.7000000178814,
+      "records": 62
+    },
+    {
+      "label": "paused before adventure-rail-depot-05/self-level",
+      "wallMs": 102.30000001192093,
+      "records": 62
+    },
+    {
+      "label": "completed adventure-rail-depot-05/self-level",
+      "wallMs": 103.09999999403954,
+      "records": 62
+    },
+    {
+      "label": "paused before adventure-orchard-01/acro",
+      "wallMs": 106.30000001192093,
+      "records": 62
+    },
+    {
+      "label": "completed adventure-orchard-01/acro",
+      "wallMs": 104,
+      "records": 62
+    },
+    {
+      "label": "paused before adventure-orchard-01/self-level",
+      "wallMs": 106.90000000596046,
+      "records": 62
+    },
+    {
+      "label": "completed adventure-orchard-01/self-level",
+      "wallMs": 103.2000000178814,
+      "records": 62
+    },
+    {
+      "label": "paused before adventure-solar-farm-05/acro",
+      "wallMs": 101.2000000178814,
+      "records": 62
+    },
+    {
+      "label": "completed adventure-solar-farm-05/acro",
+      "wallMs": 101.80000001192093,
+      "records": 62
+    },
+    {
+      "label": "paused before adventure-solar-farm-05/self-level",
+      "wallMs": 99.59999999403954,
+      "records": 62
+    },
+    {
+      "label": "completed adventure-solar-farm-05/self-level",
+      "wallMs": 103,
+      "records": 62
+    }
+  ],
+  "uiActions": [
+    {
+      "id": "",
+      "text": "Fly",
+      "atMs": 2056.5,
+      "wallMs": 1.399999976158142,
+      "status": ""
+    },
+    {
+      "id": "",
+      "text": "Fly",
+      "atMs": 18540.899999976158,
+      "wallMs": 0.6000000238418579,
+      "status": ""
+    },
+    {
+      "id": "",
+      "text": "Watch example",
+      "atMs": 19069.899999976158,
+      "wallMs": 7.700000017881393,
+      "status": ""
+    },
+    {
+      "id": "world-pause",
+      "text": "Pause",
+      "atMs": 19907.5,
+      "wallMs": 0.09999999403953552,
+      "status": "Playback paused. Resume to continue."
+    },
+    {
+      "id": "world-arm",
+      "text": "Resume playback",
+      "atMs": 20031.79999998212,
+      "wallMs": 0.5999999940395355,
+      "status": "Playback active · no rewards."
+    },
+    {
+      "id": "leave-flight",
+      "text": "Back to lobby",
+      "atMs": 24278.19999998808,
+      "wallMs": 0.19999998807907104,
+      "status": "Playback paused. Resume to continue."
+    },
+    {
+      "id": "",
+      "text": "Watch example",
+      "atMs": 24318.399999976158,
+      "wallMs": 1.7000000178813934,
+      "status": "Playback paused. Resume to continue."
+    },
+    {
+      "id": "world-pause",
+      "text": "Pause",
+      "atMs": 25019.899999976158,
+      "wallMs": 0.30000001192092896,
+      "status": "Playback paused. Resume to continue."
+    },
+    {
+      "id": "world-arm",
+      "text": "Resume playback",
+      "atMs": 25147.79999998212,
+      "wallMs": 0.20000001788139343,
+      "status": "Playback active · no rewards."
+    },
+    {
+      "id": "leave-flight",
+      "text": "Back to lobby",
+      "atMs": 29425.09999999404,
+      "wallMs": 0.29999998211860657,
+      "status": "Playback paused. Resume to continue."
+    },
+    {
+      "id": "",
+      "text": "Watch example",
+      "atMs": 29461.09999999404,
+      "wallMs": 1.9000000059604645,
+      "status": "Playback paused. Resume to continue."
+    },
+    {
+      "id": "world-pause",
+      "text": "Pause",
+      "atMs": 30215.29999998212,
+      "wallMs": 0.09999999403953552,
+      "status": "Playback paused. Resume to continue."
+    },
+    {
+      "id": "world-arm",
+      "text": "Resume playback",
+      "atMs": 30349,
+      "wallMs": 0.3999999761581421,
+      "status": "Playback active · no rewards."
+    },
+    {
+      "id": "leave-flight",
+      "text": "Back to lobby",
+      "atMs": 33453.69999998808,
+      "wallMs": 0.19999998807907104,
+      "status": "Playback paused. Resume to continue."
+    },
+    {
+      "id": "",
+      "text": "Watch example",
+      "atMs": 33487.39999997616,
+      "wallMs": 2.300000011920929,
+      "status": "Playback paused. Resume to continue."
+    },
+    {
+      "id": "world-pause",
+      "text": "Pause",
+      "atMs": 34125,
+      "wallMs": 0,
+      "status": "Playback paused. Resume to continue."
+    },
+    {
+      "id": "world-arm",
+      "text": "Resume playback",
+      "atMs": 34244,
+      "wallMs": 0.29999998211860657,
+      "status": "Playback active · no rewards."
+    },
+    {
+      "id": "leave-flight",
+      "text": "Back to lobby",
+      "atMs": 37245,
+      "wallMs": 0.19999998807907104,
+      "status": "Playback paused. Resume to continue."
+    },
+    {
+      "id": "",
+      "text": "Watch example",
+      "atMs": 37281.79999998212,
+      "wallMs": 2.5,
+      "status": "Playback paused. Resume to continue."
+    },
+    {
+      "id": "world-pause",
+      "text": "Pause",
+      "atMs": 37973.19999998808,
+      "wallMs": 0.09999999403953552,
+      "status": "Playback paused. Resume to continue."
+    },
+    {
+      "id": "world-arm",
+      "text": "Resume playback",
+      "atMs": 38088.29999998212,
+      "wallMs": 0.5999999940395355,
+      "status": "Playback active · no rewards."
+    },
+    {
+      "id": "leave-flight",
+      "text": "Back to lobby",
+      "atMs": 42654.19999998808,
+      "wallMs": 0.4000000059604645,
+      "status": "Playback paused. Resume to continue."
+    },
+    {
+      "id": "",
+      "text": "Watch example",
+      "atMs": 42692.59999999404,
+      "wallMs": 1.7999999821186066,
+      "status": "Playback paused. Resume to continue."
+    },
+    {
+      "id": "world-pause",
+      "text": "Pause",
+      "atMs": 43397.79999998212,
+      "wallMs": 0.09999999403953552,
+      "status": "Playback paused. Resume to continue."
+    },
+    {
+      "id": "world-arm",
+      "text": "Resume playback",
+      "atMs": 43519.29999998212,
+      "wallMs": 0.20000001788139343,
+      "status": "Playback active · no rewards."
+    },
+    {
+      "id": "leave-flight",
+      "text": "Back to lobby",
+      "atMs": 48123.09999999404,
+      "wallMs": 0.19999998807907104,
+      "status": "Playback paused. Resume to continue."
+    },
+    {
+      "id": "",
+      "text": "Watch example",
+      "atMs": 48158.89999997616,
+      "wallMs": 2.600000023841858,
+      "status": "Playback paused. Resume to continue."
+    },
+    {
+      "id": "world-pause",
+      "text": "Pause",
+      "atMs": 48829.5,
+      "wallMs": 0,
+      "status": "Playback paused. Resume to continue."
+    },
+    {
+      "id": "world-arm",
+      "text": "Resume playback",
+      "atMs": 48949,
+      "wallMs": 0.29999998211860657,
+      "status": "Playback active · no rewards."
+    },
+    {
+      "id": "leave-flight",
+      "text": "Back to lobby",
+      "atMs": 52204.29999998212,
+      "wallMs": 0.20000001788139343,
+      "status": "Playback paused. Resume to continue."
+    },
+    {
+      "id": "",
+      "text": "Watch example",
+      "atMs": 52239,
+      "wallMs": 1.699999988079071,
+      "status": "Playback paused. Resume to continue."
+    },
+    {
+      "id": "world-pause",
+      "text": "Pause",
+      "atMs": 52832.79999998212,
+      "wallMs": 0,
+      "status": "Playback paused. Resume to continue."
+    },
+    {
+      "id": "world-arm",
+      "text": "Resume playback",
+      "atMs": 52949.29999998212,
+      "wallMs": 0.30000001192092896,
+      "status": "Playback active · no rewards."
+    },
+    {
+      "id": "leave-flight",
+      "text": "Back to lobby",
+      "atMs": 56017.5,
+      "wallMs": 0.09999999403953552,
+      "status": "Playback paused. Resume to continue."
+    },
+    {
+      "id": "",
+      "text": "Watch example",
+      "atMs": 56054,
+      "wallMs": 1.5999999940395355,
+      "status": "Playback paused. Resume to continue."
+    },
+    {
+      "id": "world-pause",
+      "text": "Pause",
+      "atMs": 56751.79999998212,
+      "wallMs": 0.09999999403953552,
+      "status": "Playback paused. Resume to continue."
+    },
+    {
+      "id": "world-arm",
+      "text": "Resume playback",
+      "atMs": 56871.59999999404,
+      "wallMs": 0.19999998807907104,
+      "status": "Playback active · no rewards."
+    },
+    {
+      "id": "leave-flight",
+      "text": "Back to lobby",
+      "atMs": 60744.19999998808,
+      "wallMs": 0.19999998807907104,
+      "status": "Playback paused. Resume to continue."
+    },
+    {
+      "id": "",
+      "text": "Watch example",
+      "atMs": 60782.29999998212,
+      "wallMs": 2,
+      "status": "Playback paused. Resume to continue."
+    },
+    {
+      "id": "world-pause",
+      "text": "Pause",
+      "atMs": 61430.69999998808,
+      "wallMs": 0.09999999403953552,
+      "status": "Playback paused. Resume to continue."
+    },
+    {
+      "id": "world-arm",
+      "text": "Resume playback",
+      "atMs": 61551,
+      "wallMs": 0.5,
+      "status": "Playback active · no rewards."
+    },
+    {
+      "id": "leave-flight",
+      "text": "Back to lobby",
+      "atMs": 65445.69999998808,
+      "wallMs": 0.30000001192092896,
+      "status": "Playback paused. Resume to continue."
+    },
+    {
+      "id": "",
+      "text": "Watch example",
+      "atMs": 65481.09999999404,
+      "wallMs": 1.5999999940395355,
+      "status": "Playback paused. Resume to continue."
+    },
+    {
+      "id": "world-pause",
+      "text": "Pause",
+      "atMs": 66108.79999998212,
+      "wallMs": 0.09999999403953552,
+      "status": "Playback paused. Resume to continue."
+    },
+    {
+      "id": "world-arm",
+      "text": "Resume playback",
+      "atMs": 66224.09999999404,
+      "wallMs": 0.19999998807907104,
+      "status": "Playback active · no rewards."
+    },
+    {
+      "id": "leave-flight",
+      "text": "Back to lobby",
+      "atMs": 69294,
+      "wallMs": 0.19999998807907104,
+      "status": "Playback paused. Resume to continue."
+    },
+    {
+      "id": "",
+      "text": "Watch example",
+      "atMs": 69330.59999999404,
+      "wallMs": 1.5,
+      "status": "Playback paused. Resume to continue."
+    },
+    {
+      "id": "world-pause",
+      "text": "Pause",
+      "atMs": 69932.59999999404,
+      "wallMs": 0.09999999403953552,
+      "status": "Playback paused. Resume to continue."
+    },
+    {
+      "id": "world-arm",
+      "text": "Resume playback",
+      "atMs": 70044.79999998212,
+      "wallMs": 0.20000001788139343,
+      "status": "Playback active · no rewards."
+    },
+    {
+      "id": "leave-flight",
+      "text": "Back to lobby",
+      "atMs": 73110.89999997616,
+      "wallMs": 0.20000001788139343,
+      "status": "Playback paused. Resume to continue."
+    }
+  ],
+  "rafReceipts": [
+    {
+      "callbacks": 678,
+      "owners": [
+        {
+          "name": "frame",
+          "calls": 678,
+          "lastAt": 15974.59999999404,
+          "maxGapMs": 1201.4000000059605
+        }
+      ],
+      "first": [
+        {
+          "owner": 0,
+          "name": "frame",
+          "at": 392.90000000596046,
+          "gapMs": 0,
+          "stamp": 9.599999994039536,
+          "delta": 0,
+          "status": ""
+        },
+        {
+          "owner": 0,
+          "name": "frame",
+          "at": 1063.5,
+          "gapMs": 670.5999999940395,
+          "stamp": 9.599999994039536,
+          "delta": 0,
+          "status": ""
+        },
+        {
+          "owner": 0,
+          "name": "frame",
+          "at": 1087.699999988079,
+          "gapMs": 24.19999998807907,
+          "stamp": 9.599999994039536,
+          "delta": 0,
+          "status": ""
+        },
+        {
+          "owner": 0,
+          "name": "frame",
+          "at": 1116,
+          "gapMs": 28.30000001192093,
+          "stamp": 9.599999994039536,
+          "delta": 0,
+          "status": ""
+        },
+        {
+          "owner": 0,
+          "name": "frame",
+          "at": 1142.9000000059605,
+          "gapMs": 26.900000005960464,
+          "stamp": 9.599999994039536,
+          "delta": 0,
+          "status": ""
+        },
+        {
+          "owner": 0,
+          "name": "frame",
+          "at": 1160.2999999821186,
+          "gapMs": 17.399999976158142,
+          "stamp": 9.599999994039536,
+          "delta": 0,
+          "status": ""
+        },
+        {
+          "owner": 0,
+          "name": "frame",
+          "at": 1181.5999999940395,
+          "gapMs": 21.30000001192093,
+          "stamp": 9.599999994039536,
+          "delta": 0,
+          "status": ""
+        },
+        {
+          "owner": 0,
+          "name": "frame",
+          "at": 1202.2999999821186,
+          "gapMs": 20.69999998807907,
+          "stamp": 9.599999994039536,
+          "delta": 0,
+          "status": ""
+        },
+        {
+          "owner": 0,
+          "name": "frame",
+          "at": 1222.7999999821186,
+          "gapMs": 20.5,
+          "stamp": 9.599999994039536,
+          "delta": 0,
+          "status": ""
+        },
+        {
+          "owner": 0,
+          "name": "frame",
+          "at": 1243.5,
+          "gapMs": 20.700000017881393,
+          "stamp": 9.599999994039536,
+          "delta": 0,
+          "status": ""
+        },
+        {
+          "owner": 0,
+          "name": "frame",
+          "at": 1259.699999988079,
+          "gapMs": 16.19999998807907,
+          "stamp": 9.599999994039536,
+          "delta": 0,
+          "status": ""
+        },
+        {
+          "owner": 0,
+          "name": "frame",
+          "at": 1275.4000000059605,
+          "gapMs": 15.700000017881393,
+          "stamp": 9.599999994039536,
+          "delta": 0,
+          "status": ""
+        },
+        {
+          "owner": 0,
+          "name": "frame",
+          "at": 1300.199999988079,
+          "gapMs": 24.799999982118607,
+          "stamp": 9.599999994039536,
+          "delta": 0,
+          "status": ""
+        },
+        {
+          "owner": 0,
+          "name": "frame",
+          "at": 1328,
+          "gapMs": 27.80000001192093,
+          "stamp": 9.599999994039536,
+          "delta": 0,
+          "status": ""
+        },
+        {
+          "owner": 0,
+          "name": "frame",
+          "at": 2529.4000000059605,
+          "gapMs": 1201.4000000059605,
+          "stamp": 9.599999994039536,
+          "delta": 0,
+          "status": ""
+        },
+        {
+          "owner": 0,
+          "name": "frame",
+          "at": 2561.7999999821186,
+          "gapMs": 32.39999997615814,
+          "stamp": 9.599999994039536,
+          "delta": 0,
+          "status": ""
+        }
+      ],
+      "slow": [
+        {
+          "owner": 0,
+          "name": "frame",
+          "at": 1063.5,
+          "gapMs": 670.5999999940395,
+          "stamp": 9.599999994039536,
+          "delta": 0,
+          "status": ""
+        },
+        {
+          "owner": 0,
+          "name": "frame",
+          "at": 2529.4000000059605,
+          "gapMs": 1201.4000000059605,
+          "stamp": 9.599999994039536,
+          "delta": 0,
+          "status": ""
+        }
+      ],
+      "last": [
+        {
+          "owner": 0,
+          "name": "frame",
+          "at": 15353.09999999404,
+          "gapMs": 26.19999998807907,
+          "stamp": 9.599999994039536,
+          "delta": 0,
+          "status": ""
+        },
+        {
+          "owner": 0,
+          "name": "frame",
+          "at": 15372,
+          "gapMs": 18.900000005960464,
+          "stamp": 9.599999994039536,
+          "delta": 0,
+          "status": ""
+        },
+        {
+          "owner": 0,
+          "name": "frame",
+          "at": 15393.299999982119,
+          "gapMs": 21.299999982118607,
+          "stamp": 9.599999994039536,
+          "delta": 0,
+          "status": ""
+        },
+        {
+          "owner": 0,
+          "name": "frame",
+          "at": 15414.5,
+          "gapMs": 21.200000017881393,
+          "stamp": 9.599999994039536,
+          "delta": 0,
+          "status": ""
+        },
+        {
+          "owner": 0,
+          "name": "frame",
+          "at": 15435.59999999404,
+          "gapMs": 21.099999994039536,
+          "stamp": 9.599999994039536,
+          "delta": 0,
+          "status": ""
+        },
+        {
+          "owner": 0,
+          "name": "frame",
+          "at": 15457.5,
+          "gapMs": 21.900000005960464,
+          "stamp": 9.599999994039536,
+          "delta": 0,
+          "status": ""
+        },
+        {
+          "owner": 0,
+          "name": "frame",
+          "at": 15479.40000000596,
+          "gapMs": 21.900000005960464,
+          "stamp": 9.599999994039536,
+          "delta": 0,
+          "status": ""
+        },
+        {
+          "owner": 0,
+          "name": "frame",
+          "at": 15495.199999988079,
+          "gapMs": 15.799999982118607,
+          "stamp": 9.599999994039536,
+          "delta": 0,
+          "status": ""
+        },
+        {
+          "owner": 0,
+          "name": "frame",
+          "at": 15513,
+          "gapMs": 17.80000001192093,
+          "stamp": 9.599999994039536,
+          "delta": 0,
+          "status": ""
+        },
+        {
+          "owner": 0,
+          "name": "frame",
+          "at": 15535.09999999404,
+          "gapMs": 22.099999994039536,
+          "stamp": 9.599999994039536,
+          "delta": 0,
+          "status": ""
+        },
+        {
+          "owner": 0,
+          "name": "frame",
+          "at": 15550.5,
+          "gapMs": 15.400000005960464,
+          "stamp": 9.599999994039536,
+          "delta": 0,
+          "status": ""
+        },
+        {
+          "owner": 0,
+          "name": "frame",
+          "at": 15570.699999988079,
+          "gapMs": 20.19999998807907,
+          "stamp": 9.599999994039536,
+          "delta": 0,
+          "status": ""
+        },
+        {
+          "owner": 0,
+          "name": "frame",
+          "at": 15595.09999999404,
+          "gapMs": 24.400000005960464,
+          "stamp": 9.599999994039536,
+          "delta": 0,
+          "status": ""
+        },
+        {
+          "owner": 0,
+          "name": "frame",
+          "at": 15623.199999988079,
+          "gapMs": 28.099999994039536,
+          "stamp": 9.599999994039536,
+          "delta": 0,
+          "status": ""
+        },
+        {
+          "owner": 0,
+          "name": "frame",
+          "at": 15639.799999982119,
+          "gapMs": 16.599999994039536,
+          "stamp": 9.599999994039536,
+          "delta": 0,
+          "status": ""
+        },
+        {
+          "owner": 0,
+          "name": "frame",
+          "at": 15657.5,
+          "gapMs": 17.700000017881393,
+          "stamp": 9.599999994039536,
+          "delta": 0,
+          "status": ""
+        },
+        {
+          "owner": 0,
+          "name": "frame",
+          "at": 15678.699999988079,
+          "gapMs": 21.19999998807907,
+          "stamp": 9.599999994039536,
+          "delta": 0,
+          "status": ""
+        },
+        {
+          "owner": 0,
+          "name": "frame",
+          "at": 15700.5,
+          "gapMs": 21.80000001192093,
+          "stamp": 9.599999994039536,
+          "delta": 0,
+          "status": ""
+        },
+        {
+          "owner": 0,
+          "name": "frame",
+          "at": 15721.40000000596,
+          "gapMs": 20.900000005960464,
+          "stamp": 9.599999994039536,
+          "delta": 0,
+          "status": ""
+        },
+        {
+          "owner": 0,
+          "name": "frame",
+          "at": 15736.799999982119,
+          "gapMs": 15.399999976158142,
+          "stamp": 9.599999994039536,
+          "delta": 0,
+          "status": ""
+        },
+        {
+          "owner": 0,
+          "name": "frame",
+          "at": 15752.199999988079,
+          "gapMs": 15.400000005960464,
+          "stamp": 9.599999994039536,
+          "delta": 0,
+          "status": ""
+        },
+        {
+          "owner": 0,
+          "name": "frame",
+          "at": 15782.59999999404,
+          "gapMs": 30.400000005960464,
+          "stamp": 9.599999994039536,
+          "delta": 0,
+          "status": ""
+        },
+        {
+          "owner": 0,
+          "name": "frame",
+          "at": 15809.90000000596,
+          "gapMs": 27.30000001192093,
+          "stamp": 9.599999994039536,
+          "delta": 0,
+          "status": ""
+        },
+        {
+          "owner": 0,
+          "name": "frame",
+          "at": 15825.59999999404,
+          "gapMs": 15.699999988079071,
+          "stamp": 9.599999994039536,
+          "delta": 0,
+          "status": ""
+        },
+        {
+          "owner": 0,
+          "name": "frame",
+          "at": 15843.799999982119,
+          "gapMs": 18.19999998807907,
+          "stamp": 9.599999994039536,
+          "delta": 0,
+          "status": ""
+        },
+        {
+          "owner": 0,
+          "name": "frame",
+          "at": 15865,
+          "gapMs": 21.200000017881393,
+          "stamp": 9.599999994039536,
+          "delta": 0,
+          "status": ""
+        },
+        {
+          "owner": 0,
+          "name": "frame",
+          "at": 15886,
+          "gapMs": 21,
+          "stamp": 9.599999994039536,
+          "delta": 0,
+          "status": ""
+        },
+        {
+          "owner": 0,
+          "name": "frame",
+          "at": 15906.90000000596,
+          "gapMs": 20.900000005960464,
+          "stamp": 9.599999994039536,
+          "delta": 0,
+          "status": ""
+        },
+        {
+          "owner": 0,
+          "name": "frame",
+          "at": 15922.40000000596,
+          "gapMs": 15.5,
+          "stamp": 9.599999994039536,
+          "delta": 0,
+          "status": ""
+        },
+        {
+          "owner": 0,
+          "name": "frame",
+          "at": 15937.90000000596,
+          "gapMs": 15.5,
+          "stamp": 9.599999994039536,
+          "delta": 0,
+          "status": ""
+        },
+        {
+          "owner": 0,
+          "name": "frame",
+          "at": 15955,
+          "gapMs": 17.099999994039536,
+          "stamp": 9.599999994039536,
+          "delta": 0,
+          "status": ""
+        },
+        {
+          "owner": 0,
+          "name": "frame",
+          "at": 15974.59999999404,
+          "gapMs": 19.599999994039536,
+          "stamp": 9.599999994039536,
+          "delta": 0,
+          "status": ""
+        }
+      ]
+    },
+    {
+      "callbacks": 4921,
+      "owners": [
+        {
+          "name": "frame",
+          "calls": 4921,
+          "lastAt": 55062.70000001788,
+          "maxGapMs": 720.2999999821186
+        }
+      ],
+      "first": [
+        {
+          "owner": 0,
+          "name": "frame",
+          "at": 242.5,
+          "gapMs": 0,
+          "stamp": 17.400000005960464,
+          "delta": 0,
+          "status": ""
+        },
+        {
+          "owner": 0,
+          "name": "frame",
+          "at": 304.7000000178814,
+          "gapMs": 62.20000001788139,
+          "stamp": 17.400000005960464,
+          "delta": 0,
+          "status": ""
+        },
+        {
+          "owner": 0,
+          "name": "frame",
+          "at": 1025,
+          "gapMs": 720.2999999821186,
+          "stamp": 17.400000005960464,
+          "delta": 0,
+          "status": "Verifying recording…"
+        },
+        {
+          "owner": 0,
+          "name": "frame",
+          "at": 1274.5,
+          "gapMs": 249.5,
+          "stamp": 17.400000005960464,
+          "delta": 0,
+          "status": "Verifying recording…"
+        },
+        {
+          "owner": 0,
+          "name": "frame",
+          "at": 1300.300000011921,
+          "gapMs": 25.80000001192093,
+          "stamp": 17.400000005960464,
+          "delta": 0,
+          "status": "Verifying recording…"
+        },
+        {
+          "owner": 0,
+          "name": "frame",
+          "at": 1321.7000000178814,
+          "gapMs": 21.400000005960464,
+          "stamp": 17.400000005960464,
+          "delta": 0,
+          "status": "Verifying recording…"
+        },
+        {
+          "owner": 0,
+          "name": "frame",
+          "at": 1342.800000011921,
+          "gapMs": 21.099999994039536,
+          "stamp": 17.400000005960464,
+          "delta": 0,
+          "status": "Verifying recording…"
+        },
+        {
+          "owner": 0,
+          "name": "frame",
+          "at": 1364.300000011921,
+          "gapMs": 21.5,
+          "stamp": 17.400000005960464,
+          "delta": 0,
+          "status": "Verifying recording…"
+        },
+        {
+          "owner": 0,
+          "name": "frame",
+          "at": 1380.2000000178814,
+          "gapMs": 15.900000005960464,
+          "stamp": 17.400000005960464,
+          "delta": 0,
+          "status": "Verifying recording…"
+        },
+        {
+          "owner": 0,
+          "name": "frame",
+          "at": 1397.0999999940395,
+          "gapMs": 16.899999976158142,
+          "stamp": 17.400000005960464,
+          "delta": 0,
+          "status": "Verifying recording…"
+        },
+        {
+          "owner": 0,
+          "name": "frame",
+          "at": 1418.300000011921,
+          "gapMs": 21.200000017881393,
+          "stamp": 17.400000005960464,
+          "delta": 0,
+          "status": "Verifying recording…"
+        },
+        {
+          "owner": 0,
+          "name": "frame",
+          "at": 1439.7000000178814,
+          "gapMs": 21.400000005960464,
+          "stamp": 17.400000005960464,
+          "delta": 0,
+          "status": "Verifying recording…"
+        },
+        {
+          "owner": 0,
+          "name": "frame",
+          "at": 1460.5999999940395,
+          "gapMs": 20.899999976158142,
+          "stamp": 17.400000005960464,
+          "delta": 0,
+          "status": "Verifying recording…"
+        },
+        {
+          "owner": 0,
+          "name": "frame",
+          "at": 1481.800000011921,
+          "gapMs": 21.200000017881393,
+          "stamp": 17.400000005960464,
+          "delta": 0,
+          "status": "Verifying recording…"
+        },
+        {
+          "owner": 0,
+          "name": "frame",
+          "at": 1592.300000011921,
+          "gapMs": 110.5,
+          "stamp": 17.400000005960464,
+          "delta": 0,
+          "status": "Verifying recording…"
+        },
+        {
+          "owner": 0,
+          "name": "frame",
+          "at": 1673.2000000178814,
+          "gapMs": 80.90000000596046,
+          "stamp": 17.400000005960464,
+          "delta": 0,
+          "status": "Follow the route, turns and landing. Pause or slow playback to study the flight."
+        }
+      ],
+      "slow": [
+        {
+          "owner": 0,
+          "name": "frame",
+          "at": 1025,
+          "gapMs": 720.2999999821186,
+          "stamp": 17.400000005960464,
+          "delta": 0,
+          "status": "Verifying recording…"
+        },
+        {
+          "owner": 0,
+          "name": "frame",
+          "at": 6492.4000000059605,
+          "gapMs": 256.40000000596046,
+          "stamp": 97217.40000000596,
+          "delta": 0,
+          "status": "Verifying recording…"
+        },
+        {
+          "owner": 0,
+          "name": "frame",
+          "at": 24440.5,
+          "gapMs": 299.5,
+          "stamp": 424417.40000000596,
+          "delta": 0,
+          "status": "Playback paused. Resume to continue."
+        },
+        {
+          "owner": 0,
+          "name": "frame",
+          "at": 24875,
+          "gapMs": 252.40000000596046,
+          "stamp": 424417.40000000596,
+          "delta": 0,
+          "status": "Verifying recording…"
+        },
+        {
+          "owner": 0,
+          "name": "frame",
+          "at": 29908,
+          "gapMs": 257.09999999403954,
+          "stamp": 524817.400000006,
+          "delta": 0,
+          "status": "Playback paused. Resume to continue."
+        }
+      ],
+      "last": [
+        {
+          "owner": 0,
+          "name": "frame",
+          "at": 54410.30000001192,
+          "gapMs": 7,
+          "stamp": 940617.400000006,
+          "delta": 200,
+          "status": "Playback active · no rewards."
+        },
+        {
+          "owner": 0,
+          "name": "frame",
+          "at": 54418.59999999404,
+          "gapMs": 8.299999982118607,
+          "stamp": 940817.400000006,
+          "delta": 200,
+          "status": "Playback active · no rewards."
+        },
+        {
+          "owner": 0,
+          "name": "frame",
+          "at": 54425.70000001788,
+          "gapMs": 7.100000023841858,
+          "stamp": 941017.400000006,
+          "delta": 200,
+          "status": "Playback active · no rewards."
+        },
+        {
+          "owner": 0,
+          "name": "frame",
+          "at": 54433.5,
+          "gapMs": 7.799999982118607,
+          "stamp": 941217.400000006,
+          "delta": 200,
+          "status": "Playback active · no rewards."
+        },
+        {
+          "owner": 0,
+          "name": "frame",
+          "at": 54440.90000000596,
+          "gapMs": 7.4000000059604645,
+          "stamp": 941417.400000006,
+          "delta": 200,
+          "status": "Playback active · no rewards."
+        },
+        {
+          "owner": 0,
+          "name": "frame",
+          "at": 54447.90000000596,
+          "gapMs": 7,
+          "stamp": 941617.400000006,
+          "delta": 200,
+          "status": "Playback active · no rewards."
+        },
+        {
+          "owner": 0,
+          "name": "frame",
+          "at": 54455,
+          "gapMs": 7.0999999940395355,
+          "stamp": 941817.400000006,
+          "delta": 200,
+          "status": "Playback active · no rewards."
+        },
+        {
+          "owner": 0,
+          "name": "frame",
+          "at": 54463.40000000596,
+          "gapMs": 8.400000005960464,
+          "stamp": 942017.400000006,
+          "delta": 200,
+          "status": "Playback active · no rewards."
+        },
+        {
+          "owner": 0,
+          "name": "frame",
+          "at": 54472.30000001192,
+          "gapMs": 8.900000005960464,
+          "stamp": 942217.400000006,
+          "delta": 200,
+          "status": "Playback active · no rewards."
+        },
+        {
+          "owner": 0,
+          "name": "frame",
+          "at": 54479.80000001192,
+          "gapMs": 7.5,
+          "stamp": 942417.400000006,
+          "delta": 200,
+          "status": "Playback active · no rewards."
+        },
+        {
+          "owner": 0,
+          "name": "frame",
+          "at": 54486.80000001192,
+          "gapMs": 7,
+          "stamp": 942617.400000006,
+          "delta": 200,
+          "status": "Playback active · no rewards."
+        },
+        {
+          "owner": 0,
+          "name": "frame",
+          "at": 54494.30000001192,
+          "gapMs": 7.5,
+          "stamp": 942817.400000006,
+          "delta": 200,
+          "status": "Playback active · no rewards."
+        },
+        {
+          "owner": 0,
+          "name": "frame",
+          "at": 54501.80000001192,
+          "gapMs": 7.5,
+          "stamp": 943017.400000006,
+          "delta": 200,
+          "status": "Playback active · no rewards."
+        },
+        {
+          "owner": 0,
+          "name": "frame",
+          "at": 54509.5,
+          "gapMs": 7.699999988079071,
+          "stamp": 943217.400000006,
+          "delta": 200,
+          "status": "Playback active · no rewards."
+        },
+        {
+          "owner": 0,
+          "name": "frame",
+          "at": 54516.90000000596,
+          "gapMs": 7.4000000059604645,
+          "stamp": 943417.400000006,
+          "delta": 200,
+          "status": "Playback active · no rewards."
+        },
+        {
+          "owner": 0,
+          "name": "frame",
+          "at": 54524.80000001192,
+          "gapMs": 7.9000000059604645,
+          "stamp": 943617.400000006,
+          "delta": 200,
+          "status": "Playback active · no rewards."
+        },
+        {
+          "owner": 0,
+          "name": "frame",
+          "at": 54531.90000000596,
+          "gapMs": 7.0999999940395355,
+          "stamp": 943817.400000006,
+          "delta": 200,
+          "status": "Playback active · no rewards."
+        },
+        {
+          "owner": 0,
+          "name": "frame",
+          "at": 54545.80000001192,
+          "gapMs": 13.900000005960464,
+          "stamp": 944017.400000006,
+          "delta": 200,
+          "status": "Playback active · no rewards."
+        },
+        {
+          "owner": 0,
+          "name": "frame",
+          "at": 54577.70000001788,
+          "gapMs": 31.900000005960464,
+          "stamp": 944217.400000006,
+          "delta": 200,
+          "status": "Playback active · no rewards."
+        },
+        {
+          "owner": 0,
+          "name": "frame",
+          "at": 54585.59999999404,
+          "gapMs": 7.899999976158142,
+          "stamp": 944417.400000006,
+          "delta": 200,
+          "status": "Playback active · no rewards."
+        },
+        {
+          "owner": 0,
+          "name": "frame",
+          "at": 54593.09999999404,
+          "gapMs": 7.5,
+          "stamp": 944617.400000006,
+          "delta": 200,
+          "status": "Playback active · no rewards."
+        },
+        {
+          "owner": 0,
+          "name": "frame",
+          "at": 54601.09999999404,
+          "gapMs": 8,
+          "stamp": 944817.400000006,
+          "delta": 200,
+          "status": "Playback active · no rewards."
+        },
+        {
+          "owner": 0,
+          "name": "frame",
+          "at": 54608.09999999404,
+          "gapMs": 7,
+          "stamp": 945017.400000006,
+          "delta": 200,
+          "status": "Playback active · no rewards."
+        },
+        {
+          "owner": 0,
+          "name": "frame",
+          "at": 54615.5,
+          "gapMs": 7.4000000059604645,
+          "stamp": 945217.400000006,
+          "delta": 200,
+          "status": "Playback active · no rewards."
+        },
+        {
+          "owner": 0,
+          "name": "frame",
+          "at": 54622.90000000596,
+          "gapMs": 7.4000000059604645,
+          "stamp": 945417.400000006,
+          "delta": 200,
+          "status": "Playback active · no rewards."
+        },
+        {
+          "owner": 0,
+          "name": "frame",
+          "at": 54630.40000000596,
+          "gapMs": 7.5,
+          "stamp": 945617.400000006,
+          "delta": 200,
+          "status": "Playback active · no rewards."
+        },
+        {
+          "owner": 0,
+          "name": "frame",
+          "at": 54638.5,
+          "gapMs": 8.099999994039536,
+          "stamp": 945817.400000006,
+          "delta": 200,
+          "status": "Playback active · no rewards."
+        },
+        {
+          "owner": 0,
+          "name": "frame",
+          "at": 54646.20000001788,
+          "gapMs": 7.700000017881393,
+          "stamp": 946017.400000006,
+          "delta": 200,
+          "status": "Playback active · no rewards."
+        },
+        {
+          "owner": 0,
+          "name": "frame",
+          "at": 54653.30000001192,
+          "gapMs": 7.0999999940395355,
+          "stamp": 946217.400000006,
+          "delta": 200,
+          "status": "Playback active · no rewards."
+        },
+        {
+          "owner": 0,
+          "name": "frame",
+          "at": 54896.09999999404,
+          "gapMs": 242.7999999821186,
+          "stamp": 946217.400000006,
+          "delta": 0,
+          "status": "Playback paused. Resume to continue."
+        },
+        {
+          "owner": 0,
+          "name": "frame",
+          "at": 54897.20000001788,
+          "gapMs": 1.100000023841858,
+          "stamp": 946217.400000006,
+          "delta": 0,
+          "status": "Playback paused. Resume to continue."
+        },
+        {
+          "owner": 0,
+          "name": "frame",
+          "at": 55062.70000001788,
+          "gapMs": 165.5,
+          "stamp": 946217.400000006,
+          "delta": 0,
+          "status": "Playback paused. Resume to continue."
+        }
+      ]
+    }
+  ],
+  "admittedSource": "9efa36364425e2846002748bb29478b378d2b5cb",
+  "candidate": "bf167a4fdfc81d7327fd94518da65ac82d64eb7e",
+  "errors": [],
+  "failure": null,
+  "offline": "Not measured: reload uses live HTTP; only IndexedDB persistence was checked.",
+  "teardown": "Native HTTP iframe navigation and private database cleanup. Explicit app.dispose is not qualified: baseline v1 shell/menu teardown failure retained separately.",
+  "controls": "Scripted File inputs, buttons and controlled animation clock; no physical-device or player acceptance claim."
+}
