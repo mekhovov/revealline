@@ -179,6 +179,15 @@ export function mountActorEditor({ container, getCourse, onChange, locale = 'en'
   let error = false;
   let disposed = false;
   let busy = false;
+  let cleanFields = '';
+  const fieldValues = () =>
+    JSON.stringify(
+      [
+        ...container.querySelectorAll(
+          'input, textarea, [data-tracking-subject], [data-tracking-kind], [data-actor-role]',
+        ),
+      ].map((node) => [node.value, node.checked]),
+    );
   const text = (key) =>
     LABELS[key][(typeof locale === 'function' ? locale() : locale) === 'uk' ? 1 : 0];
   const element = (tag, content, className) => {
@@ -638,6 +647,10 @@ export function mountActorEditor({ container, getCourse, onChange, locale = 'en'
     return panel;
   }
   function refresh() {
+    paint();
+    cleanFields = fieldValues();
+  }
+  function paint() {
     if (disposed) return;
     const course = getCourse();
     container.replaceChildren(element('h3', text('heading')));
@@ -746,6 +759,7 @@ export function mountActorEditor({ container, getCourse, onChange, locale = 'en'
       actor.role ?? 'hostile',
       text('role'),
     );
+    role.dataset.actorRole = '';
     if (actor.type !== 'hazard')
       container.append(label(text('role'), role), element('p', text('roleHelp'), 'hint'));
     const position = positionFields(actor.position, course.bounds, text('position'));
@@ -923,6 +937,7 @@ export function mountActorEditor({ container, getCourse, onChange, locale = 'en'
   refresh();
   return {
     refresh,
+    hasPendingChanges: () => fieldValues() !== cleanFields,
     select(id) {
       selected = id;
       trackingSelection = null;
