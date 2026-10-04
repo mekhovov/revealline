@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-/** Freeze a complete admitted player with one explicit source-host overlay. */
+/** Freeze an admitted player, optionally with one explicit source-host overlay. */
 import assert from 'node:assert/strict';
 import * as fs from 'node:fs/promises';
 import path from 'node:path';
@@ -11,10 +11,18 @@ const root = fileURLToPath(new URL('../', import.meta.url)),
   opts = {},
   args = process.argv.slice(2);
 for (let i = 0; i < args.length; i += 2) {
-  assert(['--player-root', '--player-receipt', '--data', '--out'].includes(args[i]) && args[i + 1]);
+  assert(
+    ['--player-root', '--player-receipt', '--data', '--out', '--kind'].includes(args[i]) &&
+      args[i + 1],
+  );
   opts[args[i].slice(2)] = args[i + 1];
 }
-assert(Object.keys(opts).length === 4 && /^dist\/fpv-imported-examples-[a-z0-9-]+$/.test(opts.out));
+assert(
+  ['player-root', 'player-receipt', 'data', 'out'].every((key) => opts[key]) &&
+    /^dist\/fpv-imported-examples-[a-z0-9-]+$/.test(opts.out),
+);
+const kind = opts.kind ?? 'source';
+assert(['source', 'package'].includes(kind));
 const dest = path.join(root, opts.out),
   base = '/' + opts.out,
   digest = (b) => createHash('sha256').update(b).digest('hex'),
@@ -23,8 +31,12 @@ const dest = path.join(root, opts.out),
   receipt = JSON.parse(receiptBytes),
   preparationBytes = await fs.readFile(path.join(opts.data, 'preparation.json')),
   preparation = JSON.parse(preparationBytes),
-  candidate = await fs.readFile(path.join(root, hostPath)),
-  baseline = await fs.readFile(path.join(opts['player-root'], hostPath)),
+  candidate = await fs.readFile(
+    path.join(kind === 'package' ? opts['player-root'] : root, hostPath),
+  ),
+  baseline = execFileSync('git', ['show', '5931ef12678cc52ab332fbbfe5516ad93a60caa9:' + hostPath], {
+    cwd: root,
+  }),
   files = [],
   assets = new Map();
 assert(receipt.files.length === 102 && receipt.checks.every((c) => c.passed));
@@ -46,8 +58,8 @@ assert.equal(
     'optional-practice',
     'publishing',
   ),
-  hostPath,
-  'Only the host may differ from the admitted original source',
+  kind === 'package' ? '' : hostPath,
+  'Package source must be exact; source mode may change only the host',
 );
 assert.equal(
   git('diff', 'HEAD', '--name-only', '--', 'game', 'optional-practice', 'publishing'),
@@ -141,6 +153,7 @@ for (const [name, bytes] of assets) {
 }
 const manifest = {
   format: 'FPVImportedExamplesBrowser.v1',
+  kind,
   sourceHead: execFileSync('git', ['rev-parse', 'HEAD'], { cwd: root }).toString().trim(),
   playerSource: receipt.sourceRevision,
   playerReceiptSha256: digest(receiptBytes),
@@ -154,7 +167,11 @@ const manifest = {
     sha256: digest(b),
   })),
   scope:
-    '102 immutable admitted files. Only static host import paths rewritten; source candidate changes one explicitly bound host. Actual UI/File/IndexedDB/renderer/physics, private database names and memory preferences, external RAF scheduling. Real performance clock and pause guards untouched. No package admission or hardware-performance claim.',
+    '102 immutable admitted files. Only static host import paths rewritten. ' +
+    (kind === 'package'
+      ? 'Candidate host comes from the admitted ZIP; no source overlays. '
+      : 'Source candidate changes one explicitly bound host; not final package admission. ') +
+    'Actual UI/File/IndexedDB/renderer/physics, private database names and memory preferences, external RAF scheduling. Real performance clock and pause guards untouched. No hardware-performance claim.',
 };
 await fs.writeFile(path.join(dest, 'manifest.json'), JSON.stringify(manifest, null, 2) + '\n', {
   flag: 'wx',
