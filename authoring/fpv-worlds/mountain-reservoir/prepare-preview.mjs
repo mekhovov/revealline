@@ -4,9 +4,19 @@ import * as fs from 'node:fs/promises';
 import path from 'node:path';
 import { createHash } from 'node:crypto';
 import { execFileSync } from 'node:child_process';
-const [playerArg, generatedArg, outArg, beforeArg] = process.argv.slice(2);
+const [playerArg, generatedArg, outArg, beforeArg, runtimeVariant] = process.argv.slice(2);
 if (!playerArg || !generatedArg || !outArg)
   throw Error('Use PLAYER_DIRECTORY GENERATED_DIRECTORY NEW_PREVIEW_DIRECTORY');
+if (runtimeVariant && runtimeVariant !== '--surface-coating-prototype')
+  throw Error('Unknown runtime prototype');
+const overlayBaselines = runtimeVariant
+  ? {
+      'optional-practice/civilian-fpv/renderer.mjs':
+        'fccd13d67dbbab4401041c532f6709df10816683dee08ab38090abc564d02b87',
+      'optional-practice/civilian-fpv/world-visuals.mjs':
+        '20ad5548a64d896051b6e6955ecc4741a26d1d195d409afc2786c135be7c8aa6',
+    }
+  : {};
 const player = await fs.realpath(playerArg),
   generated = await fs.realpath(generatedArg),
   output = path.resolve(outArg);
@@ -29,7 +39,8 @@ for (const item of files) {
   checked.push({ from, ...item });
 }
 const codePins = [],
-  packageProjections = [];
+  packageProjections = [],
+  runtimeOverlays = [];
 for (const item of files.filter(
   (f) => /\.(mjs|js)$/.test(f.path) && !f.path.endsWith('world-app.mjs'),
 )) {
@@ -47,15 +58,38 @@ for (const item of files.filter(
     packageProjections.push({ ...item, sourceSHA256: sha(b) });
     continue;
   }
+  if (Object.hasOwn(overlayBaselines, item.path)) {
+    if (item.sha256 !== overlayBaselines[item.path])
+      throw Error('Unexpected coating baseline ' + item.path);
+    runtimeOverlays.push({
+      path: item.path,
+      baselineSHA256: item.sha256,
+      bytes: b.length,
+      sha256: sha(b),
+    });
+    continue;
+  }
   if (sha(b) !== item.sha256)
     throw Error('Baseline dependency differs from current source ' + item.path);
   codePins.push({ path: item.path, sha256: item.sha256 });
 }
+if (runtimeOverlays.length !== Object.keys(overlayBaselines).length)
+  throw Error('Incomplete declared runtime overlay');
+const effectiveFiles = files.map((file) => {
+  const overlay = runtimeOverlays.find((item) => item.path === file.path);
+  return overlay ? { path: file.path, bytes: overlay.bytes, sha256: overlay.sha256 } : file;
+});
 await fs.mkdir(output);
 for (const item of checked) {
   const to = path.join(output, 'player', item.path);
   await fs.mkdir(path.dirname(to), { recursive: true });
-  await fs.link(item.from, to);
+  if (Object.hasOwn(overlayBaselines, item.path)) {
+    const b = await fs.readFile(item.path),
+      expected = effectiveFiles.find((file) => file.path === item.path);
+    if (b.length !== expected.bytes || sha(b) !== expected.sha256)
+      throw Error('Overlay changed while freezing ' + item.path);
+    await fs.writeFile(to, b, { flag: 'wx' });
+  } else await fs.link(item.from, to);
 }
 await fs.mkdir(path.join(output, 'content'));
 const projectBytes = await fs.readFile(path.join(generated, 'prepared/project.json')),
@@ -89,8 +123,12 @@ const record = {
   sourceCommit: execFileSync('git', ['rev-parse', 'HEAD'], { encoding: 'utf8' }).trim(),
   baselinePlayer: manifest.engineCommit,
   scope:
-    'Actual unchanged admitted renderer plus external original model/course. Host world-app is retained but not imported. Static camera poses are visual observations, not flights or completion proofs.',
+    (runtimeVariant
+      ? 'Historical complete102 admitted asset closure with exactly two explicit source renderer/coating overlays; this is a source prototype, not an admitted candidate package. '
+      : 'Actual unchanged admitted renderer plus external original model/course. ') +
+    'Host world-app is retained but not imported. Static camera poses are visual observations, not flights or completion proofs.',
   admittedFiles: files,
+  ...(runtimeVariant ? { runtimeOverlays, effectiveFiles } : {}),
   unchangedSourceModules: codePins,
   packageProjections,
   content: [
@@ -121,6 +159,7 @@ console.log(
       output,
       admittedFiles: files.length,
       unchangedSourceModules: codePins.length,
+      runtimeOverlays: runtimeOverlays.length,
       newContentBytes: projectBytes.length + modelBytes.length,
       source: record.sourceCommit,
     },
