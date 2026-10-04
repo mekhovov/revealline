@@ -1,0 +1,47 @@
+{
+  "format": "FPVPreReadyFixtureSourceIdentity.v1",
+  "files": [
+    {
+      "path": "authoring/fpv-worlds/pre-ready-frame/matched/probe.mjs",
+      "sha256": "28b5aba5cbadd66adb2508d35738ae662bf50c8c9aea8218a6de0efac2f9063e",
+      "bytes": 6404,
+      "exactExecutedSource": true,
+      "fixture": "/private/tmp/fpv-pre-ready-2f9-r2"
+    },
+    {
+      "path": "authoring/fpv-worlds/pre-ready-frame/matched/run.mjs",
+      "sha256": "28041412be816a8aee18771844d93eff539f7ed06991cab9e9472c74af463806",
+      "bytes": 10044,
+      "exactExecutedSource": true,
+      "fixture": "/private/tmp/fpv-pre-ready-2f9-r2"
+    },
+    {
+      "path": "authoring/fpv-worlds/pre-ready-frame/matched/native-programs.mjs",
+      "sha256": "1a7a55d6ed194b4e0e6a7d5723f2892e65852ccd2e30908ec544e139cff9d8f0",
+      "bytes": 2749,
+      "exactExecutedSource": true,
+      "fixture": "/private/tmp/fpv-pre-ready-2f9-r2"
+    },
+    {
+      "path": "authoring/fpv-worlds/pre-ready-frame/lifecycle/probe-host.mjs",
+      "sha256": "0a615352d644f822a3da86ae8437e067aca9e0498c38de6d45d136c16cf6c5f1",
+      "bytes": 10553,
+      "exactExecutedSource": true,
+      "fixture": "/private/tmp/fpv-pre-ready-lifecycle-admitted-8df-r1"
+    },
+    {
+      "path": "authoring/fpv-worlds/pre-ready-frame/lifecycle/lifecycle.mjs",
+      "sha256": "3e794084d27ffc60a500066796375b25bbcad9cacf3c8652102d806a50c3be85",
+      "bytes": 24302,
+      "exactExecutedSource": true,
+      "fixture": "/private/tmp/fpv-pre-ready-lifecycle-admitted-8df-r1"
+    },
+    {
+      "path": "authoring/fpv-worlds/pre-ready-frame/lifecycle/diagnostic.rlpack",
+      "sha256": "f50172e5d8e9e0666f6a07f91e5f3ede3c37490c570adbb845f265a21f963388",
+      "bytes": 2803,
+      "exactExecutedSource": true,
+      "fixture": "/private/tmp/fpv-pre-ready-lifecycle-admitted-8df-r1"
+    }
+  ]
+}
