@@ -1,5 +1,17 @@
 # Mountain Reservoir — optional eight-course world
 
+Revision [r16](distribution/r16/README.md) combines the accepted bounded retaining
+finish, rooted tree feet and closed maintenance facade. It preserves all eight
+routes and collision envelopes. Source/prepared ownership audits and sixteen
+fresh ordinary flights with independent complete/archive replays pass; actual
+r16 imported-player verification is being recorded separately before publication.
+This revision requires the named `REVEALLINE_surface_coating` v1 capability from
+the separate runtime change. Older players must reject the unsupported asset;
+earlier r11 remains available below. See the
+[exact hashes](distribution/r16/manifest.json) and
+[scoped acceptance history](ROOTING-MAINTENANCE-DESIGN.md). This is not a claim
+of completed photoreal/commercial art quality or hardware performance.
+
 Revision [r11](distribution/r11/README.md) gives grass and gravel distinct original
 128px surface maps at measured world scale. It retains r9 seam closure and every
 route/collider/geometry attribute. The bounded material pass has accepted actual
