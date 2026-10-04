@@ -67,6 +67,29 @@ immutable files and writing four changed members (1,137,489 bytes). The new
 admitted fixture adds exact original/updated GLB bytes through export and native
 reopening, complete expected reimported courses, and a trusted spatial translation
 on course two with exact preservation of the other seven courses and shared
-bindings/overrides. This extended actual browser qualification remains pending.
+bindings/overrides. The admitted browser passes **241/241**, with empty operator
+console warning/error logs. A trusted four-pixel arrow drag translated the second
+course's Acro gate by exactly 3,000 mm in X. Undo/Redo and the subsequent course
+roundtrip retain the correct course and fresh history. The source/package
+comparison preserves 190 common check names and exact whole-course results after
+accounting for that explicitly measured final spatial edit.
+
+The first admitted attempt deliberately remains a failure: its approximately
+eleven-pixel drag translated the gate by 8,000 mm, beyond the unchanged 5,000 mm
+bound. The same immutable fixture was reloaded for the smaller deliberate drag;
+neither runtime nor assertions were loosened. Its full receipt and screenshot
+are retained separately from the passing attempt.
+
+A later read-only audit briefly proposed relaxing project ownership for JSON ID
+changes. Independent review identified the existing upstream `applyEdit` stable-ID
+guard: changed course/world IDs are already rejected before assignment or project
+synchronization. The concern was a false positive. The uncommitted proposal was
+reverted, restoring the exact qualified host hash
+`b67fef5098029ba434e9271b7d1d8dc7a7f10110f44627e3516b08beb59a152d`.
+No rename/append semantics changed and no replacement admission was required.
+The optional `?scope=identity` fixture entry provides a separate bounded manual
+control for that rejection, pending-field retention, project export and native
+reopening. It does not modify the accepted source-r1 or package-r2 fixture.
+
 Neither qualification claims completed edited routes, offline readiness, hardware
 performance or public deployment.

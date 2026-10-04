@@ -14,6 +14,11 @@ const digest = async (b) =>
     .join('');
 let receipt,
   ctx = {};
+const identityOnly = new URL(location.href).searchParams.get('scope') === 'identity';
+if (identityOnly) {
+  $('run').textContent = 'Run rejected ID and draft-preservation checks';
+  $('spatial').hidden = true;
+}
 const q = (s) => ctx.d.querySelector(s),
   course = () => JSON.parse(q('#creator-json').value);
 function render(message) {
@@ -192,6 +197,7 @@ async function execute() {
   receipt = {
     format: 'FPVProjectCourseEditorBrowser.v1',
     status: 'running',
+    scope: identityOnly ? 'rejected-json-id-preservation' : 'full-course-selection',
     checks: [],
     startedAt: new Date().toISOString(),
     limits: [
@@ -259,6 +265,10 @@ async function execute() {
   const original = (await zip.importEditableZip(inputs.get('eight-courses.zip'))).project;
   await upload(inputs.get('eight-courses.zip'), 'eight-courses.zip');
   const baseline = await ctx.store.get(original.id);
+  if (identityOnly) {
+    await identityCase(original, baseline);
+    return;
+  }
   must(q('#editor-project-course').options.length === 8, 'All eight project courses available');
   must(original.id !== original.world.id, 'Fixture covers distinct project/world identities');
   for (const c of original.courses) {
@@ -468,6 +478,104 @@ async function execute() {
     'Stage one passed. In the real canvas, drag one translation arrow of the selected Challenge 2 Acro gate a small distance (under 5m), then click Continue: check selected-course spatial edit. Leave course, mode and other controls unchanged.',
   );
   canvas.scrollIntoView({ block: 'center' });
+}
+async function identityCase(original, baseline) {
+  must(original.id !== original.world.id, 'Distinct project/world identity boundary');
+  select('picker-2');
+  mode('acro');
+  const before = clone(course());
+  for (const field of ['course', 'world']) {
+    const changed = clone(before);
+    if (field === 'course') changed.id = 'picker-2-copy';
+    else changed.world.id = 'unowned-world';
+    const raw = JSON.stringify(changed, null, 2);
+    input(q('#creator-json'), raw);
+    click(q('#apply-json'));
+    await until(
+      () => q('#studio-status').textContent.includes('Keep the challenge and world IDs stable'),
+      field + ' ID refusal',
+    );
+    must(q('#creator-json').value === raw, field + ' rejected JSON stays available to correct');
+    must(
+      q('#editor-project-course').options.length === 8 &&
+        q('#editor-project-course').value === before.id,
+      field + ' rejection retains selected course and eight-item list',
+    );
+    eq(
+      (await project()).project,
+      original,
+      field + ' rejection keeps complete applied project exact',
+    );
+    set(q('#editor-project-course'), 'picker-1');
+    must(
+      q('#editor-project-course').value === before.id && q('#creator-json').value === raw,
+      field + ' unapplied JSON blocks switch without loss',
+    );
+    click(q('#editor-reset-fields'));
+    eq(course(), before, field + ' explicit reset restores applied fields');
+    must(
+      q('#undo-edit').disabled && q('#redo-edit').disabled,
+      field + ' rejection adds no history',
+    );
+  }
+  select('picker-1');
+  eq(course(), original.courses[0], 'Switch after reset reaches original first course');
+  select('picker-2');
+  eq(course(), before, 'Switch back restores exact original second course');
+  must(q('#editor-route-mode').value === 'acro', 'Rejected IDs preserve per-course route scope');
+  const saved = await project();
+  eq(saved.project, original, 'Whole project unchanged after rejected IDs and switching');
+  const file = await exported('export-pack'),
+    pack = await ctx.content.inspectPack(file.blob);
+  await assetsExact(pack, 'Stable-ID playable export');
+  eq(pack.project, original, 'Playable export preserves whole original project');
+  await upload(saved.blob, saved.name);
+  eq((await project()).project, original, 'Editable ZIP reimport retains exact original project');
+  eq(
+    (await ctx.store.get(original.id, { sha256: baseline.sha256 })).project,
+    original,
+    'Original installed revision remains exact',
+  );
+  await openHost();
+  click(q('[data-tab="packs"]'));
+  click(button(q('[data-pack-id="' + original.id + '"]'), 'Edit'));
+  await until(
+    () => !q('#creator').hidden && q('#editor-project-course').options.length === 8,
+    'Native reopening after rejected IDs',
+  );
+  eq(
+    (await project()).project,
+    original,
+    'Native reopening preserves all eight courses and assets',
+  );
+  select('picker-2');
+  mode('acro');
+  await preview('preview-challenge', before);
+  eq(
+    (await project()).project,
+    original,
+    'Selected original-course preview preserves whole project',
+  );
+  receipt.exportedProject = original;
+  receipt.revisions = { original: baseline.sha256 };
+  await disposeAndPass(
+    'rejected course/world JSON IDs, retained pending fields, switch, exact export, native reopening and preview',
+  );
+}
+async function disposeAndPass(description) {
+  const owned = q('#editor-project-course-row'),
+    choice = q('#editor-project-course');
+  ctx.store.close();
+  await bounded(ctx.app.dispose(), 'Owned picker disposal');
+  ctx.app = null;
+  must(
+    !owned.isConnected && !choice.isConnected && !q('#editor-project-course'),
+    'Owned picker disposed',
+  );
+  eq(ctx.w.fixtureErrors, [], 'Disposal has no uncaught errors');
+  receipt.completedAt = new Date().toISOString();
+  receipt.status = 'passed';
+  render(`PASS ${receipt.checks.length}/${receipt.checks.length} — ${description}.`);
 }
 async function spatial() {
   $('spatial').disabled = true;
