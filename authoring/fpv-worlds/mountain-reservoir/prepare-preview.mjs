@@ -79,7 +79,14 @@ const record = {
     { path: 'content/scene.glb', bytes: modelBytes.length, sha256: sha(modelBytes) },
   ],
   harnessSHA256: sha(html),
-  build: JSON.parse(await fs.readFile(path.join(generated, 'checkpoint-build.json'))),
+  build: JSON.parse(
+    await fs.readFile(
+      path.join(
+        generated,
+        project.courses.length === 1 ? 'checkpoint-build.json' : 'world-build.json',
+      ),
+    ),
+  ),
 };
 await fs.writeFile(path.join(output, 'fixture.json'), JSON.stringify(record, null, 2) + '\n', {
   flag: 'wx',

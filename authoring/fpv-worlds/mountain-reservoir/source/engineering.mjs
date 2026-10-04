@@ -18,8 +18,7 @@ export function addReservoirEngineering({ solid, detailBox }) {
   for (const x of [-6.5, -5, -3.5, -2, -0.5, 1, 2.5, 4])
     detailBox('safety-yellow', [0.55, 0.17, 0.025], [x, 4.32, -20.905]);
   // A clear inspection landing mark on the supported eastern gallery.
-  for (const x of [1.7, 2.7])
-    detailBox('chalk-enamel', [0.15, 0.016, 1.65], [x, 3.365, -22.65]);
+  for (const x of [1.7, 2.7]) detailBox('chalk-enamel', [0.15, 0.016, 1.65], [x, 3.365, -22.65]);
   detailBox('chalk-enamel', [1.05, 0.016, 0.15], [2.2, 3.366, -22.65]);
 
   // Dry overflow/maintenance chute. Each sloping part is one solid rotated box,
@@ -30,14 +29,24 @@ export function addReservoirEngineering({ solid, detailBox }) {
     normal = [0, Math.cos(angle), Math.sin(angle)],
     topMiddle = [-11, 5.1, -15];
   const slope = (id, x, width, thickness, normalOffset) => {
-    const centre = [x, topMiddle[1] + normal[1] * normalOffset, topMiddle[2] + normal[2] * normalOffset],
+    const centre = [
+        x,
+        topMiddle[1] + normal[1] * normalOffset,
+        topMiddle[2] + normal[2] * normalOffset,
+      ],
       half = [width / 2, thickness / 2, length / 2];
-    solid(id, centre.map((v, i) => v - half[i]), centre.map((v, i) => v + half[i]), rotation);
+    solid(
+      id,
+      centre.map((v, i) => v - half[i]),
+      centre.map((v, i) => v + half[i]),
+      rotation,
+    );
   };
   slope('platform-dry-spillway', -11, 4, 0.3, -0.15);
   slope('rail-dry-spillway-west', -12.9, 0.3, 0.8, 0.4);
   slope('rail-dry-spillway-east', -9.1, 0.3, 0.8, 0.4);
   solid('platform-spillway-head', [-13, 9.2, -29.8], [-8, 9.85, -24.9]);
+  solid('building-spillway-head-pier', [-12.8, 0, -29.5], [-12.2, 9.2, -25.2]);
   solid('building-spillway-support-north', [-12.65, 0, -23.2], [-9.35, 8.35, -22.7]);
   solid('building-spillway-support-south', [-12.65, 0, -12.2], [-9.35, 3.1, -11.7]);
   solid('platform-spillway-apron', [-14, 0, -5.15], [-8, 0.35, 0.5]);
@@ -46,8 +55,6 @@ export function addReservoirEngineering({ solid, detailBox }) {
     const y = 9.85 - ((z + 25) / 20) * 9.5;
     detailBox('oxidized-roof', [3.45, 0.012, 0.045], [-11, y + 0.013, z], [angle, 0, 0]);
   }
-  for (const x of [-12.25, -9.75])
-    detailBox('safety-yellow', [0.12, 0.018, 3.4], [x, 0.37, -1.95]);
-  for (const z of [-3.55, -0.35])
-    detailBox('chalk-enamel', [2.6, 0.018, 0.12], [-11, 0.371, z]);
+  for (const x of [-12.25, -9.75]) detailBox('safety-yellow', [0.12, 0.018, 3.4], [x, 0.37, -1.95]);
+  for (const z of [-3.55, -0.35]) detailBox('chalk-enamel', [2.6, 0.018, 0.12], [-11, 0.371, z]);
 }
