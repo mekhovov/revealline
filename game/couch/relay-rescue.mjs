@@ -1,5 +1,6 @@
 import { selectedArcadeCollection } from '../presentation/industrial-arcade.mjs';
 import { createLocalMatchRecorder, localMatchProvenance } from '../multiplayer-recording.mjs';
+import { recordingVerificationHref } from '../ui/recording-verification.mjs';
 import { downloadJSON } from '../content.mjs';
 import { pursuitRoster } from '../hunt/pursuit-goals.mjs';
 import { prepareTeamRunningEnemies } from '../hunt/team-running-enemies.mjs';
@@ -1824,6 +1825,7 @@ export function bootCoop({
     placeTools(Boolean(show));
     $('coop-export-recording').hidden = !['won', 'lost'].includes(run?.status);
     $('coop-recording-status').hidden = !['won', 'lost'].includes(run?.status);
+    $('coop-recording-help').hidden = !['won', 'lost'].includes(run?.status);
     $('coop-pause').disabled = !running();
     difficultyControls();
     const skipDestination = journeyNavigation();
@@ -5998,8 +6000,14 @@ export function bootCoop({
     frame = requestAnimationFrame(update);
   }
   $('coop-start').onclick = () => requestDeparture('retry', $('coop-start'));
-  localizedText($('coop-export-recording'), () =>
-    getLocale() === 'uk' ? 'Експортувати запис команди' : 'Export Team recording',
+  localizedText($('coop-export-recording'), () => t('interface:recording.exportTeam'));
+  localizedAttribute($('coop-verify-recording'), 'href', () =>
+    recordingVerificationHref(
+      globalThis.location?.href ??
+        document.baseURI ??
+        'http://localhost/game/couch/relay-rescue.html',
+      getLocale(),
+    ),
   );
   $('coop-export-recording').onclick = async () => {
     const owner = run;
