@@ -6,6 +6,7 @@ import { soloPage, settle, memoryStorage } from './helpers/solo-dom.mjs';
 import { waitFor } from './helpers/wait-for.mjs';
 import { retryFixture } from './fixtures/retry-scenarios.mjs';
 import { authoritativeCheckpoint } from '../replay.mjs';
+import { activateHostAction } from './helpers/host-action.mjs';
 
 const classes = JSON.parse(readFileSync(new URL('../content/classes.json', import.meta.url)));
 const impactDemo = JSON.parse(
@@ -88,10 +89,10 @@ async function setup(t, { themeId = 'fpv', lives = 1, classic = false, reduced =
     });
   await settle(() => surface.frame.painter.image !== null);
   page.$('reduced-effects').checked = reduced;
-  page.$('start-button').click();
   // Start owns asynchronous picture preparation; steer only after the exact
   // attempt has replaced the ready briefing state.
-  await settle(() => page.doc.body.dataset.flightState === 'running');
+  await activateHostAction(page.$('start-button'));
+  assert.equal(page.doc.body.dataset.flightState, 'running');
   page.key('ArrowDown');
   for (let i = 0; i < (classic ? 292 : 30); i++) page.frame();
   page.key('ArrowDown', false);
