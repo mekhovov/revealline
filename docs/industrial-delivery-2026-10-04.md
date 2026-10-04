@@ -78,6 +78,13 @@ same event turn. These lifecycle corrections coexist with the industrial
 renderer, pre-ready scene checks and saved-artwork ownership; their historical
 browser receipts remain bound to their original source.
 
+The next main reconciliation retains validated opaque GLTF surface coatings,
+including their required capability declaration and material-clone depth offset.
+Imported scenery ownership and the industrial procedural renderer remain
+separate. The Company host regression waits on the actual Demo scene boundary
+with a bounded preparation budget; native pause, Skip confirmation, edition
+rotation and unchanged suspended-run assertions remain intact.
+
 The integration must pass the strict current-base `release-ready` check,
 industrial feature phases, Appearance and Company checks, mandatory static and
 content validation, source identity and committed-source builds. A scheduled

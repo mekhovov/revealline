@@ -21,6 +21,8 @@ import {
   buildStadiumStructureGeometry,
 } from './world-visuals.mjs';
 import {
+  WORLD_SURFACE_COATING_EXTENSION,
+  validateWorldSurfaceCoatings,
   normalizeSimPresentation,
   resolveSimThemeProfile,
   resolveSimEffects,
@@ -31,6 +33,7 @@ import {
   bindSimModelRole,
   instanceSimDetails,
   applySimMaterialBindings,
+  applySimSurfaceCoatings,
   ownedSimMaterials,
   simCollectionIdForProfile,
   setSurfaceQuality,
@@ -83,24 +86,38 @@ const safePath = (value) =>
  * ImageBitmapLoader fetches blob URLs and instead requires connect-src blob:.
  * Keep the pinned GLTF parser, sampler/color-space rules and resource manager. */
 export function configureWorldGLTFLoader(loader, { onImageError = () => {} } = {}) {
-  return loader.register((parser) => ({
-    name: 'REVEALLINE_WORLD_IMAGE_ELEMENT',
-    beforeRoot() {
-      const images = new THREE.TextureLoader(parser.options.manager)
-        .setCrossOrigin(parser.options.crossOrigin)
-        .setRequestHeader(parser.options.requestHeader);
-      const load = images.load.bind(images);
-      images.load = (url, onLoad, onProgress, onError) =>
-        load(url, onLoad, onProgress, (error) => {
-          // GLTFLoader revokes embedded blob URLs on success, but not on error.
-          // Provided sidecar URLs belong to loadScene's existing finally block.
-          if (url.startsWith('blob:')) URL.revokeObjectURL(url);
-          onImageError(error);
-          onError?.(error);
-        });
-      parser.textureLoader = images;
-    },
-  }));
+  return loader
+    .register((parser) => ({
+      name: 'REVEALLINE_WORLD_IMAGE_ELEMENT',
+      beforeRoot() {
+        const images = new THREE.TextureLoader(parser.options.manager)
+          .setCrossOrigin(parser.options.crossOrigin)
+          .setRequestHeader(parser.options.requestHeader);
+        const load = images.load.bind(images);
+        images.load = (url, onLoad, onProgress, onError) =>
+          load(url, onLoad, onProgress, (error) => {
+            // GLTFLoader revokes embedded blob URLs on success, but not on error.
+            // Provided sidecar URLs belong to loadScene's existing finally block.
+            if (url.startsWith('blob:')) URL.revokeObjectURL(url);
+            onImageError(error);
+            onError?.(error);
+          });
+        parser.textureLoader = images;
+      },
+    }))
+    .register((parser) => {
+      let marked;
+      return {
+        name: WORLD_SURFACE_COATING_EXTENSION,
+        beforeRoot() {
+          marked = validateWorldSurfaceCoatings(parser.json);
+        },
+        afterRoot(result) {
+          for (const scene of result.scenes)
+            applySimSurfaceCoatings(scene, parser.associations, marked);
+        },
+      };
+    });
 }
 
 /** Presentation only. All world/actor positions are canonical millimetres.

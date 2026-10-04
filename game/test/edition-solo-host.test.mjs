@@ -4,6 +4,7 @@ import { readFile } from 'node:fs/promises';
 import { PNGImage } from './helpers/png-image.mjs';
 import { RasterImage } from './helpers/raster-image.mjs';
 import { soloPage, settle, memoryStorage } from './helpers/solo-dom.mjs';
+import { waitFor } from './helpers/wait-for.mjs';
 import { managedIndexedDB } from './helpers/managed-idb.mjs';
 import { editionProviderFixture } from './helpers/edition-provider-fixture.mjs';
 import { compileContentProject, resolveMission } from '../content-design/project.mjs';
@@ -805,7 +806,13 @@ test('edition pause keeps canonical Skip confirmation and Watch first cut action
     paused = authoritativeCheckpoint(retainedRun);
   page.$('demo-button').click();
   assert.equal(page.$('demo-dialog').open, true, 'Watch first cut opens the shared Demo player.');
-  await settle(() => page.$('demo-dialog').dataset.scene === 'playing');
+  // This boundary includes exact-edition Demo planning and verified asset work.
+  // Keep the real scene predicate and paused-attempt assertions; a crowded
+  // company cohort may take longer than an ordinary five-second UI transition.
+  await waitFor(() => page.$('demo-dialog').dataset.scene === 'playing', {
+    timeoutMs: 20000,
+    message: 'Exact-edition Demo preparation did not reach its playable scene.',
+  });
   assert.ok(
     f.source.missions.some((mission) => mission.name === page.$('demo-level').textContent),
     'The presentation-only Demo rotation stays within this edition, without requiring its first mission.',
