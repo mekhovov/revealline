@@ -1,0 +1,794 @@
+{
+  "format": "FPVHarborSceneQualification.v1",
+  "status": "passed",
+  "scope": "Static authoring/collision checks only; visual review and ordinary-flight proofs pending",
+  "pack": {
+    "bytes": 646529,
+    "sha256": "6466b450df3895d09231effb53331baa5e1cc9919d7dc8cbcf793f51a1f8f68d",
+    "identity": "fpv-pack:6466b450df3895d09231effb53331baa5e1cc9919d7dc8cbcf793f51a1f8f68d"
+  },
+  "checks": [
+    {
+      "name": "Clear entry spawn",
+      "passed": true
+    },
+    {
+      "name": "Raised quay is actual landing support",
+      "passed": true
+    },
+    {
+      "name": "Service deck is a real named support",
+      "passed": true
+    },
+    {
+      "name": "Gantry interior has actual broad open space",
+      "passed": true
+    },
+    {
+      "name": "Visible east boundary blocks contact",
+      "passed": true
+    },
+    {
+      "name": "Water is outside every playable X coordinate",
+      "passed": true
+    },
+    {
+      "name": "platform-quay is a solid interior",
+      "passed": true
+    },
+    {
+      "name": "platform-quay source marker retained",
+      "passed": true
+    },
+    {
+      "name": "platform-quay eight authored/imported corners agree within1mm",
+      "passed": true
+    },
+    {
+      "name": "container-harbor-0 is a solid interior",
+      "passed": true
+    },
+    {
+      "name": "container-harbor-0 source marker retained",
+      "passed": true
+    },
+    {
+      "name": "container-harbor-0 eight authored/imported corners agree within1mm",
+      "passed": true
+    },
+    {
+      "name": "container-harbor-1 is a solid interior",
+      "passed": true
+    },
+    {
+      "name": "container-harbor-1 source marker retained",
+      "passed": true
+    },
+    {
+      "name": "container-harbor-1 eight authored/imported corners agree within1mm",
+      "passed": true
+    },
+    {
+      "name": "container-harbor-2 is a solid interior",
+      "passed": true
+    },
+    {
+      "name": "container-harbor-2 source marker retained",
+      "passed": true
+    },
+    {
+      "name": "container-harbor-2 eight authored/imported corners agree within1mm",
+      "passed": true
+    },
+    {
+      "name": "container-harbor-3 is a solid interior",
+      "passed": true
+    },
+    {
+      "name": "container-harbor-3 source marker retained",
+      "passed": true
+    },
+    {
+      "name": "container-harbor-3 eight authored/imported corners agree within1mm",
+      "passed": true
+    },
+    {
+      "name": "container-harbor-4 is a solid interior",
+      "passed": true
+    },
+    {
+      "name": "container-harbor-4 source marker retained",
+      "passed": true
+    },
+    {
+      "name": "container-harbor-4 eight authored/imported corners agree within1mm",
+      "passed": true
+    },
+    {
+      "name": "container-harbor-5 is a solid interior",
+      "passed": true
+    },
+    {
+      "name": "container-harbor-5 source marker retained",
+      "passed": true
+    },
+    {
+      "name": "container-harbor-5 eight authored/imported corners agree within1mm",
+      "passed": true
+    },
+    {
+      "name": "container-harbor-6 is a solid interior",
+      "passed": true
+    },
+    {
+      "name": "container-harbor-6 source marker retained",
+      "passed": true
+    },
+    {
+      "name": "container-harbor-6 eight authored/imported corners agree within1mm",
+      "passed": true
+    },
+    {
+      "name": "container-harbor-7 is a solid interior",
+      "passed": true
+    },
+    {
+      "name": "container-harbor-7 source marker retained",
+      "passed": true
+    },
+    {
+      "name": "container-harbor-7 eight authored/imported corners agree within1mm",
+      "passed": true
+    },
+    {
+      "name": "container-harbor-8 is a solid interior",
+      "passed": true
+    },
+    {
+      "name": "container-harbor-8 source marker retained",
+      "passed": true
+    },
+    {
+      "name": "container-harbor-8 eight authored/imported corners agree within1mm",
+      "passed": true
+    },
+    {
+      "name": "container-harbor-9 is a solid interior",
+      "passed": true
+    },
+    {
+      "name": "container-harbor-9 source marker retained",
+      "passed": true
+    },
+    {
+      "name": "container-harbor-9 eight authored/imported corners agree within1mm",
+      "passed": true
+    },
+    {
+      "name": "container-harbor-10 is a solid interior",
+      "passed": true
+    },
+    {
+      "name": "container-harbor-10 source marker retained",
+      "passed": true
+    },
+    {
+      "name": "container-harbor-10 eight authored/imported corners agree within1mm",
+      "passed": true
+    },
+    {
+      "name": "container-harbor-11 is a solid interior",
+      "passed": true
+    },
+    {
+      "name": "container-harbor-11 source marker retained",
+      "passed": true
+    },
+    {
+      "name": "container-harbor-11 eight authored/imported corners agree within1mm",
+      "passed": true
+    },
+    {
+      "name": "platform-gantry-foot-14--23 is a solid interior",
+      "passed": true
+    },
+    {
+      "name": "platform-gantry-foot-14--23 source marker retained",
+      "passed": true
+    },
+    {
+      "name": "platform-gantry-foot-14--23 eight authored/imported corners agree within1mm",
+      "passed": true
+    },
+    {
+      "name": "post-gantry-14--23 is a solid interior",
+      "passed": true
+    },
+    {
+      "name": "post-gantry-14--23 source marker retained",
+      "passed": true
+    },
+    {
+      "name": "post-gantry-14--23 eight authored/imported corners agree within1mm",
+      "passed": true
+    },
+    {
+      "name": "platform-gantry-foot-14--5 is a solid interior",
+      "passed": true
+    },
+    {
+      "name": "platform-gantry-foot-14--5 source marker retained",
+      "passed": true
+    },
+    {
+      "name": "platform-gantry-foot-14--5 eight authored/imported corners agree within1mm",
+      "passed": true
+    },
+    {
+      "name": "post-gantry-14--5 is a solid interior",
+      "passed": true
+    },
+    {
+      "name": "post-gantry-14--5 source marker retained",
+      "passed": true
+    },
+    {
+      "name": "post-gantry-14--5 eight authored/imported corners agree within1mm",
+      "passed": true
+    },
+    {
+      "name": "platform-gantry-foot-32--23 is a solid interior",
+      "passed": true
+    },
+    {
+      "name": "platform-gantry-foot-32--23 source marker retained",
+      "passed": true
+    },
+    {
+      "name": "platform-gantry-foot-32--23 eight authored/imported corners agree within1mm",
+      "passed": true
+    },
+    {
+      "name": "post-gantry-32--23 is a solid interior",
+      "passed": true
+    },
+    {
+      "name": "post-gantry-32--23 source marker retained",
+      "passed": true
+    },
+    {
+      "name": "post-gantry-32--23 eight authored/imported corners agree within1mm",
+      "passed": true
+    },
+    {
+      "name": "platform-gantry-foot-32--5 is a solid interior",
+      "passed": true
+    },
+    {
+      "name": "platform-gantry-foot-32--5 source marker retained",
+      "passed": true
+    },
+    {
+      "name": "platform-gantry-foot-32--5 eight authored/imported corners agree within1mm",
+      "passed": true
+    },
+    {
+      "name": "post-gantry-32--5 is a solid interior",
+      "passed": true
+    },
+    {
+      "name": "post-gantry-32--5 source marker retained",
+      "passed": true
+    },
+    {
+      "name": "post-gantry-32--5 eight authored/imported corners agree within1mm",
+      "passed": true
+    },
+    {
+      "name": "beam-gantry-cross--23 is a solid interior",
+      "passed": true
+    },
+    {
+      "name": "beam-gantry-cross--23 source marker retained",
+      "passed": true
+    },
+    {
+      "name": "beam-gantry-cross--23 eight authored/imported corners agree within1mm",
+      "passed": true
+    },
+    {
+      "name": "beam-gantry-cross--5 is a solid interior",
+      "passed": true
+    },
+    {
+      "name": "beam-gantry-cross--5 source marker retained",
+      "passed": true
+    },
+    {
+      "name": "beam-gantry-cross--5 eight authored/imported corners agree within1mm",
+      "passed": true
+    },
+    {
+      "name": "beam-gantry-rail-14 is a solid interior",
+      "passed": true
+    },
+    {
+      "name": "beam-gantry-rail-14 source marker retained",
+      "passed": true
+    },
+    {
+      "name": "beam-gantry-rail-14 eight authored/imported corners agree within1mm",
+      "passed": true
+    },
+    {
+      "name": "beam-gantry-rail-32 is a solid interior",
+      "passed": true
+    },
+    {
+      "name": "beam-gantry-rail-32 source marker retained",
+      "passed": true
+    },
+    {
+      "name": "beam-gantry-rail-32 eight authored/imported corners agree within1mm",
+      "passed": true
+    },
+    {
+      "name": "beam-quayside-boom is a solid interior",
+      "passed": true
+    },
+    {
+      "name": "beam-quayside-boom source marker retained",
+      "passed": true
+    },
+    {
+      "name": "beam-quayside-boom eight authored/imported corners agree within1mm",
+      "passed": true
+    },
+    {
+      "name": "gantry-operator-cab is a solid interior",
+      "passed": true
+    },
+    {
+      "name": "gantry-operator-cab source marker retained",
+      "passed": true
+    },
+    {
+      "name": "gantry-operator-cab eight authored/imported corners agree within1mm",
+      "passed": true
+    },
+    {
+      "name": "harbor-service-house is a solid interior",
+      "passed": true
+    },
+    {
+      "name": "harbor-service-house source marker retained",
+      "passed": true
+    },
+    {
+      "name": "harbor-service-house eight authored/imported corners agree within1mm",
+      "passed": true
+    },
+    {
+      "name": "harbor-service-annex is a solid interior",
+      "passed": true
+    },
+    {
+      "name": "harbor-service-annex source marker retained",
+      "passed": true
+    },
+    {
+      "name": "harbor-service-annex eight authored/imported corners agree within1mm",
+      "passed": true
+    },
+    {
+      "name": "platform-service-deck is a solid interior",
+      "passed": true
+    },
+    {
+      "name": "platform-service-deck source marker retained",
+      "passed": true
+    },
+    {
+      "name": "platform-service-deck eight authored/imported corners agree within1mm",
+      "passed": true
+    },
+    {
+      "name": "post-service-deck--20.6-27.4 is a solid interior",
+      "passed": true
+    },
+    {
+      "name": "post-service-deck--20.6-27.4 source marker retained",
+      "passed": true
+    },
+    {
+      "name": "post-service-deck--20.6-27.4 eight authored/imported corners agree within1mm",
+      "passed": true
+    },
+    {
+      "name": "post-service-deck--20.6-35.6 is a solid interior",
+      "passed": true
+    },
+    {
+      "name": "post-service-deck--20.6-35.6 source marker retained",
+      "passed": true
+    },
+    {
+      "name": "post-service-deck--20.6-35.6 eight authored/imported corners agree within1mm",
+      "passed": true
+    },
+    {
+      "name": "post-service-deck--10.4-27.4 is a solid interior",
+      "passed": true
+    },
+    {
+      "name": "post-service-deck--10.4-27.4 source marker retained",
+      "passed": true
+    },
+    {
+      "name": "post-service-deck--10.4-27.4 eight authored/imported corners agree within1mm",
+      "passed": true
+    },
+    {
+      "name": "post-service-deck--10.4-35.6 is a solid interior",
+      "passed": true
+    },
+    {
+      "name": "post-service-deck--10.4-35.6 source marker retained",
+      "passed": true
+    },
+    {
+      "name": "post-service-deck--10.4-35.6 eight authored/imported corners agree within1mm",
+      "passed": true
+    },
+    {
+      "name": "wall-quay-boundary is a solid interior",
+      "passed": true
+    },
+    {
+      "name": "wall-quay-boundary source marker retained",
+      "passed": true
+    },
+    {
+      "name": "wall-quay-boundary eight authored/imported corners agree within1mm",
+      "passed": true
+    },
+    {
+      "name": "bollard--34 is a solid interior",
+      "passed": true
+    },
+    {
+      "name": "bollard--34 source marker retained",
+      "passed": true
+    },
+    {
+      "name": "bollard--34 eight authored/imported corners agree within1mm",
+      "passed": true
+    },
+    {
+      "name": "bollard-19 is a solid interior",
+      "passed": true
+    },
+    {
+      "name": "bollard-19 source marker retained",
+      "passed": true
+    },
+    {
+      "name": "bollard-19 eight authored/imported corners agree within1mm",
+      "passed": true
+    },
+    {
+      "name": "bollard-39 is a solid interior",
+      "passed": true
+    },
+    {
+      "name": "bollard-39 source marker retained",
+      "passed": true
+    },
+    {
+      "name": "bollard-39 eight authored/imported corners agree within1mm",
+      "passed": true
+    },
+    {
+      "name": "self-level waypoint0 expanded sphere clear and within bounds",
+      "passed": true,
+      "detail": {
+        "point": {
+          "x": -2000,
+          "y": 4500,
+          "z": 34000
+        }
+      }
+    },
+    {
+      "name": "self-level waypoint1 expanded sphere clear and within bounds",
+      "passed": true,
+      "detail": {
+        "point": {
+          "x": -2000,
+          "y": 6000,
+          "z": 20000
+        }
+      }
+    },
+    {
+      "name": "self-level swept leg1 retains extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "x": -2000,
+          "y": 4000,
+          "z": 34000
+        },
+        "to": {
+          "x": -2000,
+          "y": 5500,
+          "z": 20000
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "self-level waypoint2 expanded sphere clear and within bounds",
+      "passed": true,
+      "detail": {
+        "point": {
+          "x": -3000,
+          "y": 7000,
+          "z": -4000
+        }
+      }
+    },
+    {
+      "name": "self-level swept leg2 retains extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "x": -2000,
+          "y": 5500,
+          "z": 20000
+        },
+        "to": {
+          "x": -3000,
+          "y": 6500,
+          "z": -4000
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "self-level waypoint3 expanded sphere clear and within bounds",
+      "passed": true,
+      "detail": {
+        "point": {
+          "x": 24000,
+          "y": 9000,
+          "z": -14000
+        }
+      }
+    },
+    {
+      "name": "self-level swept leg3 retains extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "x": -3000,
+          "y": 6500,
+          "z": -4000
+        },
+        "to": {
+          "x": 24000,
+          "y": 8500,
+          "z": -14000
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "self-level waypoint4 expanded sphere clear and within bounds",
+      "passed": true,
+      "detail": {
+        "point": {
+          "x": 24000,
+          "y": 8000,
+          "z": 25000
+        }
+      }
+    },
+    {
+      "name": "self-level swept leg4 retains extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "x": 24000,
+          "y": 8500,
+          "z": -14000
+        },
+        "to": {
+          "x": 24000,
+          "y": 7500,
+          "z": 25000
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "self-level waypoint5 expanded sphere clear and within bounds",
+      "passed": true,
+      "detail": {
+        "point": {
+          "x": -2000,
+          "y": 8000,
+          "z": 34000
+        }
+      }
+    },
+    {
+      "name": "self-level swept leg5 retains extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "x": 24000,
+          "y": 7500,
+          "z": 25000
+        },
+        "to": {
+          "x": -2000,
+          "y": 7500,
+          "z": 34000
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "acro waypoint0 expanded sphere clear and within bounds",
+      "passed": true,
+      "detail": {
+        "point": {
+          "x": -2000,
+          "y": 4500,
+          "z": 34000
+        }
+      }
+    },
+    {
+      "name": "acro waypoint1 expanded sphere clear and within bounds",
+      "passed": true,
+      "detail": {
+        "point": {
+          "x": -2000,
+          "y": 6000,
+          "z": 20000
+        }
+      }
+    },
+    {
+      "name": "acro swept leg1 retains extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "x": -2000,
+          "y": 4000,
+          "z": 34000
+        },
+        "to": {
+          "x": -2000,
+          "y": 5500,
+          "z": 20000
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "acro waypoint2 expanded sphere clear and within bounds",
+      "passed": true,
+      "detail": {
+        "point": {
+          "x": -3000,
+          "y": 7000,
+          "z": -4000
+        }
+      }
+    },
+    {
+      "name": "acro swept leg2 retains extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "x": -2000,
+          "y": 5500,
+          "z": 20000
+        },
+        "to": {
+          "x": -3000,
+          "y": 6500,
+          "z": -4000
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "acro waypoint3 expanded sphere clear and within bounds",
+      "passed": true,
+      "detail": {
+        "point": {
+          "x": 24000,
+          "y": 9000,
+          "z": -14000
+        }
+      }
+    },
+    {
+      "name": "acro swept leg3 retains extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "x": -3000,
+          "y": 6500,
+          "z": -4000
+        },
+        "to": {
+          "x": 24000,
+          "y": 8500,
+          "z": -14000
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "acro waypoint4 expanded sphere clear and within bounds",
+      "passed": true,
+      "detail": {
+        "point": {
+          "x": 24000,
+          "y": 8000,
+          "z": 25000
+        }
+      }
+    },
+    {
+      "name": "acro swept leg4 retains extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "x": 24000,
+          "y": 8500,
+          "z": -14000
+        },
+        "to": {
+          "x": 24000,
+          "y": 7500,
+          "z": 25000
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "acro waypoint5 expanded sphere clear and within bounds",
+      "passed": true,
+      "detail": {
+        "point": {
+          "x": -2000,
+          "y": 8000,
+          "z": 34000
+        }
+      }
+    },
+    {
+      "name": "acro swept leg5 retains extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "x": 24000,
+          "y": 7500,
+          "z": 25000
+        },
+        "to": {
+          "x": -2000,
+          "y": 7500,
+          "z": 34000
+        },
+        "contacts": []
+      }
+    }
+  ]
+}
