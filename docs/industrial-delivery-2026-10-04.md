@@ -56,6 +56,14 @@ limits or suppressing diagnostics. The complete continuous-host suite passes
 14 cases on Node 20.19.5; the actor-pool regressions pass 12 cases on both Node
 20 and Node 22, and the combined Node 22 run passes 26 cases.
 
+The broader Node 20 gate exposed additional outdated test boundaries: the
+published Solo fixture lacked the native MediaQueryList event API, offline notes
+mistook a safe text node for markup, and Versus navigation targeted a replaced
+legacy control. Fixtures now exercise the complete native boot, briefing/Start,
+current catalogue and visible shared controls. A production correction also
+pins retained recording-verifier links to their owning build across locale
+changes and page retirement. No generic deadlines or warning filters change.
+
 The integration must pass the strict current-base `release-ready` check,
 industrial feature phases, Appearance and Company checks, mandatory static and
 content validation, source identity and committed-source builds. A scheduled
