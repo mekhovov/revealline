@@ -1,0 +1,88 @@
+{
+  "format": "FPVWorldLibraryAdmittedAcceptance.v1",
+  "admittedSource": "01fc6ad206f6ea7e6dd78921f799e2ed1a773915",
+  "fixtureSHA256": "ac116c5c93d8d4b90958f251b3558432d05004ded1dd2c7a26c047756b3d65c0",
+  "admittedMembers": 102,
+  "runtimeOverlays": [],
+  "artifacts": [
+    {
+      "file": "worker-package-r1-pass.json.gz",
+      "rawBytes": 104273,
+      "rawSHA256": "60a8790f26e02ff6f3f70523c7b35cdc9c4b7d8f3039d75e73676053bab92d17",
+      "storedBytes": 10987,
+      "storedSHA256": "4988f1a3d5923de1f9833597f843e15d21bbde7f31059cf00be8a68eea1a8677",
+      "gzip": true
+    },
+    {
+      "file": "worker-package-r1-pass.png",
+      "rawBytes": 56465,
+      "rawSHA256": "24f6b61218a110e2b612971096bc46c0b4af0ae22051b0a35a214cbef65c5985",
+      "storedBytes": 56465,
+      "storedSHA256": "24f6b61218a110e2b612971096bc46c0b4af0ae22051b0a35a214cbef65c5985",
+      "gzip": false
+    },
+    {
+      "file": "worker-package-r1-fixture.json.gz",
+      "rawBytes": 20101,
+      "rawSHA256": "ac116c5c93d8d4b90958f251b3558432d05004ded1dd2c7a26c047756b3d65c0",
+      "storedBytes": 6568,
+      "storedSHA256": "a2b56f11e48ce08e0951856a8ddeefe180765f42389316fcf349182118acd06d",
+      "gzip": true
+    },
+    {
+      "file": "worker-package-r1-browser-harness.mjs.gz",
+      "rawBytes": 20962,
+      "rawSHA256": "36b688ee946b46f2811ba821e22bcb6676ef4c8a3949808cb6084c28e24d57ba",
+      "storedBytes": 6560,
+      "storedSHA256": "c29d778b1bad7991bb81704ebe94d69cdc83aa9efef8653cf1886a1eb15240c9",
+      "gzip": true
+    },
+    {
+      "file": "worker-package-r1-worker-diagnostic.js.gz",
+      "rawBytes": 4072,
+      "rawSHA256": "bafdd420a16511fab35d6e2bcf532172048137209576a0628089a5128020428d",
+      "storedBytes": 1425,
+      "storedSHA256": "989786ff3854837fffb3aac622324bec41f69e03485720d1c7abc97fb5447e7d",
+      "gzip": true
+    },
+    {
+      "file": "worker-package-r1-index.html.gz",
+      "rawBytes": 1419,
+      "rawSHA256": "bd1d2c3e235be469bc3800ef9d1b3a609ed57a408db724c86caaa1059a806912",
+      "storedBytes": 759,
+      "storedSHA256": "5bcfb2943edbc62db6ea0c11951cfce541ecdd0ca232d8f83fde4cc95cdf1346",
+      "gzip": true
+    },
+    {
+      "file": "worker-package-r1-host.html.gz",
+      "rawBytes": 38542,
+      "rawSHA256": "e42cbf72db8b7f46d4ab42569285f2585c4346b5d82db9589ba369ca6afa39da",
+      "storedBytes": 9814,
+      "storedSHA256": "bc07982c1adb190350b46ee2786596378054a4f974471cc5058caa8545cb89f9",
+      "gzip": true
+    }
+  ],
+  "checks": {
+    "passed": 208,
+    "failed": 0,
+    "sourceControlNamesAndOutcomesExact": true
+  },
+  "nativeWorkers": 45,
+  "eachTerminatedOnce": true,
+  "workerRequests": 37,
+  "actualImmutableHTTPSPackResponses": 3,
+  "pageRequests": [],
+  "recovery": "The same immutable full fixture passed after the coordinator closed fourteen known completed GPU fixture tabs. Both earlier 119-control timeouts and the failed/successful readiness diagnostic are retained. No runtime, harness, Ready assertion, timeout, focus guard or automatic resume changed. This operational response does not establish an exclusive cause.",
+  "failures": [
+    "worker-package-r1-failure-provenance.json",
+    "worker-package-r1-exclusive-failure-provenance.json",
+    "worker-ready-r2-provenance.json"
+  ],
+  "limits": [
+    "Actual native host/IndexedDB/Worker and unchanged production clock. Only named worker-fetch fault responses, observation wrappers and isolated storage names are injected.",
+    "Successful pack download uses the actual immutable first-party HTTPS URL. The production catalogue remains empty.",
+    "Timeout callback is explicitly injected, not a claim of two-minute wall-clock endurance. No offline, finished-world, flight-completion or FPS claim.",
+    "No general console-clean claim is inferred from the success path, which does not serialize a separate errors field.",
+    "Native offline preparation is a separate direct-host receipt, not part of this full Library matrix."
+  ]
+}
