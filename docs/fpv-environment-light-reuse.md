@@ -254,3 +254,43 @@ are 16,749,525 bytes (27,691 bytes under 16 MiB
 on its recorded parent). Full validate, 48 manual checks and 30 existing checks
 pass. The entire admitted 102-file player is frozen for a real host UI
 loss/restore/Retry observation; acceptance of that run remains pending.
+
+## Actual host acceptance and final editor lifecycle guards
+
+The admitted `4f364314378400b22792074d7d0bb6aa292eb044` player now has actual
+host acceptance: all 102 files verified, actual WebGL loss/restoration observed,
+and zero non-loss GL errors or uncaught errors. The operator selected Clearing
+check-in, Chase, Utility and authored appearance, then used the normal Menu →
+Retry → Arm (0.2 seconds) → Pause flow. The rebuilt Utility was visible at the
+pad. Moving focus to the outer loss control paused flight before the loss event;
+this does not claim uninterrupted flight through graphics loss. The full receipt
+is preserved losslessly in `fpv-environment-light-actual-host-4f3643143.json.gz`
+with its raw/compressed identities in the adjacent summary. No physical-device
+FPS or historical-stall improvement is claimed.
+
+The final null-path review found that the existing spatial editor retains its
+returned pointer/wheel/snap controls after reporting its reload requirement.
+Cleared pick/snap/zoom controls now remain inert. A pending editor load captures
+the scene generation and cannot install a new gizmo after loss; pending imported
+scenes also reject and release ownership. New requests reject while the context
+is actually lost. Initial blank editors and ordinary imports before a course
+remain supported; a fresh scenery import after restoration tolerates the cleared
+course. These are editor/import lifecycle guards, not automatic editor recovery.
+
+Runtime `ec0273520` includes those guards. Integration `adcf64da7` incorporates
+published main `47d2019d` and preserves its Lighthouse/Quarry work. The final scope
+receipt verifies the entire renderer becomes byte-identical to host-qualified
+`4f` after removing only the enumerated editor/import guards and the published
+Quarry statements. It also verifies all 95 admitted source inputs against main:
+only the renderer differs. Inputs total 16,758,039 bytes, leaving 19,177 bytes
+under 16 MiB. All 59 manual ownership/lifecycle checks, 30 existing checks,
+changed-file lint and formatting pass. The saved manual/scope receipts are
+`fpv-environment-light-final-guard-manual.json` and
+`fpv-environment-light-final-guard-scope.json` under `docs/evidence`.
+
+The final admitted editor fixture preserves the existing host's explicit reload
+contract. It will verify every admitted file, mount the real spatial editor and
+TransformControls, observe actual loss/restoration, exercise the cleared controls,
+and check final cleanup and GL errors. Current-source admission and this actual
+editor observation remain pending at this checkpoint. Historical failed receipts,
+including the isolated v5 imported image-hash mismatch, remain unchanged.
