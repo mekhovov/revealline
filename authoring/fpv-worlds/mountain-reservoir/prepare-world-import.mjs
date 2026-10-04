@@ -85,16 +85,23 @@ for (const name of [
   'world-records.mjs',
 ])
   await qualifyModule('optional-practice/civilian-fpv/' + name);
-const inputs = {
-  'project.json': projectBytes,
-  'scene.glb': await fs.readFile(path.join(generatedArg, 'prepared', project.world.modelAsset)),
-  'world.rlpack': await fs.readFile(qualification.pack.path),
-  'world.zip': await fs.readFile(
-    path.join(generatedArg, 'prepared', 'mountain-reservoir.' + project.revision + '.zip'),
+const inputPaths = {
+  'project.json': path.join(generatedArg, 'prepared/project.json'),
+  'scene.glb': path.join(generatedArg, 'prepared', project.world.modelAsset),
+  'world.rlpack': qualification.pack.path,
+  'world.zip': path.join(
+    generatedArg,
+    'prepared',
+    'mountain-reservoir.' + project.revision + '.zip',
   ),
-  'proofs.json': await fs.readFile(path.join(proofArg, qualification.archives[0].path)),
-  'qualification.json': Buffer.from(JSON.stringify(qualification)),
+  'proofs.json': path.join(proofArg, qualification.archives[0].path),
+  'qualification.json': path.join(proofArg, 'qualification.json'),
 };
+const inputs = Object.fromEntries(
+  await Promise.all(
+    Object.entries(inputPaths).map(async ([name, file]) => [name, await fs.readFile(file)]),
+  ),
+);
 if (
   sha(inputs['world.rlpack']) !== qualification.pack.sha256 ||
   sha(inputs['proofs.json']) !== qualification.archives[0].sha256
@@ -107,8 +114,13 @@ for (const file of frozen) {
   await fs.link(file.from, destination);
 }
 await fs.mkdir(path.join(output, 'content'));
-for (const [name, bytes] of Object.entries(inputs))
-  await fs.writeFile(path.join(output, 'content', name), bytes, { flag: 'wx' });
+for (const [name, bytes] of Object.entries(inputs)) {
+  const destination = path.join(output, 'content', name);
+  // Both sides are immutable generated evidence, never mutable authoring source.
+  await fs.link(path.resolve(inputPaths[name]), destination);
+  if (sha(await fs.readFile(destination)) !== sha(bytes))
+    throw Error('Frozen content changed while linking: ' + name);
+}
 const setup = `
 window.fixtureErrors=[];addEventListener('error',e=>fixtureErrors.push(e.message));addEventListener('unhandledrejection',e=>fixtureErrors.push(String(e.reason)));
 window.fixtureDownloads=[];const fixtureURLs=new Map(),fixtureCreate=URL.createObjectURL.bind(URL),fixtureRevoke=URL.revokeObjectURL.bind(URL);URL.createObjectURL=blob=>{const url=fixtureCreate(blob);fixtureURLs.set(url,blob);return url};URL.revokeObjectURL=url=>{fixtureRevoke(url);fixtureURLs.delete(url)};const fixtureAnchor=HTMLAnchorElement.prototype.click;HTMLAnchorElement.prototype.click=function(){if(this.download&&fixtureURLs.has(this.href)){fixtureDownloads.push({name:this.download,blob:fixtureURLs.get(this.href)});return}return fixtureAnchor.call(this)};
