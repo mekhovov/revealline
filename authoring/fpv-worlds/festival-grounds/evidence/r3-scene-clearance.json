@@ -1,0 +1,931 @@
+{
+  "format": "FPVFestivalSceneQualification.v1",
+  "status": "passed",
+  "scope": "Static authoring/collision checks only; visual review and ordinary-flight proofs pending",
+  "pack": {
+    "bytes": 1152883,
+    "sha256": "c33258a8ae80a9e0c697723bca5f372c129d10c96f3095a0fe21eb21702ec79c",
+    "identity": "fpv-pack:c33258a8ae80a9e0c697723bca5f372c129d10c96f3095a0fe21eb21702ec79c"
+  },
+  "checks": [
+    {
+      "name": "Clear entry spawn",
+      "passed": true
+    },
+    {
+      "name": "Lawn floor is the actual landing support",
+      "passed": true
+    },
+    {
+      "name": "Sound desk has a real landing support",
+      "passed": true
+    },
+    {
+      "name": "Entry arch is physically open below its beam",
+      "passed": true
+    },
+    {
+      "name": "Stage front is physically open below its supported roof",
+      "passed": true
+    },
+    {
+      "name": "Picnic table has a real top support",
+      "passed": true
+    },
+    {
+      "name": "The middle below the table is physically open",
+      "passed": true
+    },
+    {
+      "name": "The table legs block real contact",
+      "passed": true
+    },
+    {
+      "name": "West six-metre lane center retains extra0.5m swept clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "x": -32000,
+          "y": 400,
+          "z": 10000
+        },
+        "to": {
+          "x": -32000,
+          "y": 400,
+          "z": 23000
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "Table stops50mm short of the painted lane boundary",
+      "passed": true
+    },
+    {
+      "name": "platform-stage-deck is a solid interior",
+      "passed": true
+    },
+    {
+      "name": "platform-stage-deck source marker retained",
+      "passed": true
+    },
+    {
+      "name": "platform-stage-deck eight authored/imported corners agree within1mm",
+      "passed": true
+    },
+    {
+      "name": "building-stage-back is a solid interior",
+      "passed": true
+    },
+    {
+      "name": "building-stage-back source marker retained",
+      "passed": true
+    },
+    {
+      "name": "building-stage-back eight authored/imported corners agree within1mm",
+      "passed": true
+    },
+    {
+      "name": "post-stage-west-back is a solid interior",
+      "passed": true
+    },
+    {
+      "name": "post-stage-west-back source marker retained",
+      "passed": true
+    },
+    {
+      "name": "post-stage-west-back eight authored/imported corners agree within1mm",
+      "passed": true
+    },
+    {
+      "name": "post-stage-west-front is a solid interior",
+      "passed": true
+    },
+    {
+      "name": "post-stage-west-front source marker retained",
+      "passed": true
+    },
+    {
+      "name": "post-stage-west-front eight authored/imported corners agree within1mm",
+      "passed": true
+    },
+    {
+      "name": "post-stage-east-back is a solid interior",
+      "passed": true
+    },
+    {
+      "name": "post-stage-east-back source marker retained",
+      "passed": true
+    },
+    {
+      "name": "post-stage-east-back eight authored/imported corners agree within1mm",
+      "passed": true
+    },
+    {
+      "name": "post-stage-east-front is a solid interior",
+      "passed": true
+    },
+    {
+      "name": "post-stage-east-front source marker retained",
+      "passed": true
+    },
+    {
+      "name": "post-stage-east-front eight authored/imported corners agree within1mm",
+      "passed": true
+    },
+    {
+      "name": "platform-stage-roof--1 is a solid interior",
+      "passed": true
+    },
+    {
+      "name": "platform-stage-roof--1 source marker retained",
+      "passed": true
+    },
+    {
+      "name": "platform-stage-roof--1 eight authored/imported corners agree within1mm",
+      "passed": true
+    },
+    {
+      "name": "platform-stage-roof-1 is a solid interior",
+      "passed": true
+    },
+    {
+      "name": "platform-stage-roof-1 source marker retained",
+      "passed": true
+    },
+    {
+      "name": "platform-stage-roof-1 eight authored/imported corners agree within1mm",
+      "passed": true
+    },
+    {
+      "name": "beam-stage-rear is a solid interior",
+      "passed": true
+    },
+    {
+      "name": "beam-stage-rear source marker retained",
+      "passed": true
+    },
+    {
+      "name": "beam-stage-rear eight authored/imported corners agree within1mm",
+      "passed": true
+    },
+    {
+      "name": "beam-stage-front is a solid interior",
+      "passed": true
+    },
+    {
+      "name": "beam-stage-front source marker retained",
+      "passed": true
+    },
+    {
+      "name": "beam-stage-front eight authored/imported corners agree within1mm",
+      "passed": true
+    },
+    {
+      "name": "beam-stage-side-west is a solid interior",
+      "passed": true
+    },
+    {
+      "name": "beam-stage-side-west source marker retained",
+      "passed": true
+    },
+    {
+      "name": "beam-stage-side-west eight authored/imported corners agree within1mm",
+      "passed": true
+    },
+    {
+      "name": "beam-stage-side-east is a solid interior",
+      "passed": true
+    },
+    {
+      "name": "beam-stage-side-east source marker retained",
+      "passed": true
+    },
+    {
+      "name": "beam-stage-side-east eight authored/imported corners agree within1mm",
+      "passed": true
+    },
+    {
+      "name": "platform-sound-desk is a solid interior",
+      "passed": true
+    },
+    {
+      "name": "platform-sound-desk source marker retained",
+      "passed": true
+    },
+    {
+      "name": "platform-sound-desk eight authored/imported corners agree within1mm",
+      "passed": true
+    },
+    {
+      "name": "building-stage-speaker--9 is a solid interior",
+      "passed": true
+    },
+    {
+      "name": "building-stage-speaker--9 source marker retained",
+      "passed": true
+    },
+    {
+      "name": "building-stage-speaker--9 eight authored/imported corners agree within1mm",
+      "passed": true
+    },
+    {
+      "name": "building-stage-speaker-9 is a solid interior",
+      "passed": true
+    },
+    {
+      "name": "building-stage-speaker-9 source marker retained",
+      "passed": true
+    },
+    {
+      "name": "building-stage-speaker-9 eight authored/imported corners agree within1mm",
+      "passed": true
+    },
+    {
+      "name": "building-market-1 is a solid interior",
+      "passed": true
+    },
+    {
+      "name": "building-market-1 source marker retained",
+      "passed": true
+    },
+    {
+      "name": "building-market-1 eight authored/imported corners agree within1mm",
+      "passed": true
+    },
+    {
+      "name": "platform-market-roof-1--1 is a solid interior",
+      "passed": true
+    },
+    {
+      "name": "platform-market-roof-1--1 source marker retained",
+      "passed": true
+    },
+    {
+      "name": "platform-market-roof-1--1 eight authored/imported corners agree within1mm",
+      "passed": true
+    },
+    {
+      "name": "platform-market-roof-1-1 is a solid interior",
+      "passed": true
+    },
+    {
+      "name": "platform-market-roof-1-1 source marker retained",
+      "passed": true
+    },
+    {
+      "name": "platform-market-roof-1-1 eight authored/imported corners agree within1mm",
+      "passed": true
+    },
+    {
+      "name": "building-market-2 is a solid interior",
+      "passed": true
+    },
+    {
+      "name": "building-market-2 source marker retained",
+      "passed": true
+    },
+    {
+      "name": "building-market-2 eight authored/imported corners agree within1mm",
+      "passed": true
+    },
+    {
+      "name": "platform-market-roof-2--1 is a solid interior",
+      "passed": true
+    },
+    {
+      "name": "platform-market-roof-2--1 source marker retained",
+      "passed": true
+    },
+    {
+      "name": "platform-market-roof-2--1 eight authored/imported corners agree within1mm",
+      "passed": true
+    },
+    {
+      "name": "platform-market-roof-2-1 is a solid interior",
+      "passed": true
+    },
+    {
+      "name": "platform-market-roof-2-1 source marker retained",
+      "passed": true
+    },
+    {
+      "name": "platform-market-roof-2-1 eight authored/imported corners agree within1mm",
+      "passed": true
+    },
+    {
+      "name": "building-market-3 is a solid interior",
+      "passed": true
+    },
+    {
+      "name": "building-market-3 source marker retained",
+      "passed": true
+    },
+    {
+      "name": "building-market-3 eight authored/imported corners agree within1mm",
+      "passed": true
+    },
+    {
+      "name": "platform-market-roof-3--1 is a solid interior",
+      "passed": true
+    },
+    {
+      "name": "platform-market-roof-3--1 source marker retained",
+      "passed": true
+    },
+    {
+      "name": "platform-market-roof-3--1 eight authored/imported corners agree within1mm",
+      "passed": true
+    },
+    {
+      "name": "platform-market-roof-3-1 is a solid interior",
+      "passed": true
+    },
+    {
+      "name": "platform-market-roof-3-1 source marker retained",
+      "passed": true
+    },
+    {
+      "name": "platform-market-roof-3-1 eight authored/imported corners agree within1mm",
+      "passed": true
+    },
+    {
+      "name": "building-market-4 is a solid interior",
+      "passed": true
+    },
+    {
+      "name": "building-market-4 source marker retained",
+      "passed": true
+    },
+    {
+      "name": "building-market-4 eight authored/imported corners agree within1mm",
+      "passed": true
+    },
+    {
+      "name": "platform-market-roof-4--1 is a solid interior",
+      "passed": true
+    },
+    {
+      "name": "platform-market-roof-4--1 source marker retained",
+      "passed": true
+    },
+    {
+      "name": "platform-market-roof-4--1 eight authored/imported corners agree within1mm",
+      "passed": true
+    },
+    {
+      "name": "platform-market-roof-4-1 is a solid interior",
+      "passed": true
+    },
+    {
+      "name": "platform-market-roof-4-1 source marker retained",
+      "passed": true
+    },
+    {
+      "name": "platform-market-roof-4-1 eight authored/imported corners agree within1mm",
+      "passed": true
+    },
+    {
+      "name": "building-clock-tower is a solid interior",
+      "passed": true
+    },
+    {
+      "name": "building-clock-tower source marker retained",
+      "passed": true
+    },
+    {
+      "name": "building-clock-tower eight authored/imported corners agree within1mm",
+      "passed": true
+    },
+    {
+      "name": "platform-clock-cap is a solid interior",
+      "passed": true
+    },
+    {
+      "name": "platform-clock-cap source marker retained",
+      "passed": true
+    },
+    {
+      "name": "platform-clock-cap eight authored/imported corners agree within1mm",
+      "passed": true
+    },
+    {
+      "name": "post-entry--6 is a solid interior",
+      "passed": true
+    },
+    {
+      "name": "post-entry--6 source marker retained",
+      "passed": true
+    },
+    {
+      "name": "post-entry--6 eight authored/imported corners agree within1mm",
+      "passed": true
+    },
+    {
+      "name": "post-entry-6 is a solid interior",
+      "passed": true
+    },
+    {
+      "name": "post-entry-6 source marker retained",
+      "passed": true
+    },
+    {
+      "name": "post-entry-6 eight authored/imported corners agree within1mm",
+      "passed": true
+    },
+    {
+      "name": "beam-entry is a solid interior",
+      "passed": true
+    },
+    {
+      "name": "beam-entry source marker retained",
+      "passed": true
+    },
+    {
+      "name": "beam-entry eight authored/imported corners agree within1mm",
+      "passed": true
+    },
+    {
+      "name": "building-ticket--14 is a solid interior",
+      "passed": true
+    },
+    {
+      "name": "building-ticket--14 source marker retained",
+      "passed": true
+    },
+    {
+      "name": "building-ticket--14 eight authored/imported corners agree within1mm",
+      "passed": true
+    },
+    {
+      "name": "platform-ticket-roof--14 is a solid interior",
+      "passed": true
+    },
+    {
+      "name": "platform-ticket-roof--14 source marker retained",
+      "passed": true
+    },
+    {
+      "name": "platform-ticket-roof--14 eight authored/imported corners agree within1mm",
+      "passed": true
+    },
+    {
+      "name": "building-ticket-14 is a solid interior",
+      "passed": true
+    },
+    {
+      "name": "building-ticket-14 source marker retained",
+      "passed": true
+    },
+    {
+      "name": "building-ticket-14 eight authored/imported corners agree within1mm",
+      "passed": true
+    },
+    {
+      "name": "platform-ticket-roof-14 is a solid interior",
+      "passed": true
+    },
+    {
+      "name": "platform-ticket-roof-14 source marker retained",
+      "passed": true
+    },
+    {
+      "name": "platform-ticket-roof-14 eight authored/imported corners agree within1mm",
+      "passed": true
+    },
+    {
+      "name": "bench-west-seat is a solid interior",
+      "passed": true
+    },
+    {
+      "name": "bench-west-seat source marker retained",
+      "passed": true
+    },
+    {
+      "name": "bench-west-seat eight authored/imported corners agree within1mm",
+      "passed": true
+    },
+    {
+      "name": "bench-west-leg-a is a solid interior",
+      "passed": true
+    },
+    {
+      "name": "bench-west-leg-a source marker retained",
+      "passed": true
+    },
+    {
+      "name": "bench-west-leg-a eight authored/imported corners agree within1mm",
+      "passed": true
+    },
+    {
+      "name": "bench-west-leg-b is a solid interior",
+      "passed": true
+    },
+    {
+      "name": "bench-west-leg-b source marker retained",
+      "passed": true
+    },
+    {
+      "name": "bench-west-leg-b eight authored/imported corners agree within1mm",
+      "passed": true
+    },
+    {
+      "name": "bench-west-back is a solid interior",
+      "passed": true
+    },
+    {
+      "name": "bench-west-back source marker retained",
+      "passed": true
+    },
+    {
+      "name": "bench-west-back eight authored/imported corners agree within1mm",
+      "passed": true
+    },
+    {
+      "name": "bench-east-seat is a solid interior",
+      "passed": true
+    },
+    {
+      "name": "bench-east-seat source marker retained",
+      "passed": true
+    },
+    {
+      "name": "bench-east-seat eight authored/imported corners agree within1mm",
+      "passed": true
+    },
+    {
+      "name": "bench-east-leg-a is a solid interior",
+      "passed": true
+    },
+    {
+      "name": "bench-east-leg-a source marker retained",
+      "passed": true
+    },
+    {
+      "name": "bench-east-leg-a eight authored/imported corners agree within1mm",
+      "passed": true
+    },
+    {
+      "name": "bench-east-leg-b is a solid interior",
+      "passed": true
+    },
+    {
+      "name": "bench-east-leg-b source marker retained",
+      "passed": true
+    },
+    {
+      "name": "bench-east-leg-b eight authored/imported corners agree within1mm",
+      "passed": true
+    },
+    {
+      "name": "bench-east-back is a solid interior",
+      "passed": true
+    },
+    {
+      "name": "bench-east-back source marker retained",
+      "passed": true
+    },
+    {
+      "name": "bench-east-back eight authored/imported corners agree within1mm",
+      "passed": true
+    },
+    {
+      "name": "picnic-west-top is a solid interior",
+      "passed": true
+    },
+    {
+      "name": "picnic-west-top source marker retained",
+      "passed": true
+    },
+    {
+      "name": "picnic-west-top eight authored/imported corners agree within1mm",
+      "passed": true
+    },
+    {
+      "name": "picnic-west-leg-a is a solid interior",
+      "passed": true
+    },
+    {
+      "name": "picnic-west-leg-a source marker retained",
+      "passed": true
+    },
+    {
+      "name": "picnic-west-leg-a eight authored/imported corners agree within1mm",
+      "passed": true
+    },
+    {
+      "name": "picnic-west-leg-b is a solid interior",
+      "passed": true
+    },
+    {
+      "name": "picnic-west-leg-b source marker retained",
+      "passed": true
+    },
+    {
+      "name": "picnic-west-leg-b eight authored/imported corners agree within1mm",
+      "passed": true
+    },
+    {
+      "name": "self-level waypoint0 expanded sphere clear and within bounds",
+      "passed": true,
+      "detail": {
+        "point": {
+          "x": 0,
+          "y": 2500,
+          "z": 25000
+        }
+      }
+    },
+    {
+      "name": "self-level waypoint1 expanded sphere clear and within bounds",
+      "passed": true,
+      "detail": {
+        "point": {
+          "x": 0,
+          "y": 4000,
+          "z": 12000
+        }
+      }
+    },
+    {
+      "name": "self-level swept leg1 retains extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "x": 0,
+          "y": 2000,
+          "z": 25000
+        },
+        "to": {
+          "x": 0,
+          "y": 3500,
+          "z": 12000
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "self-level waypoint2 expanded sphere clear and within bounds",
+      "passed": true,
+      "detail": {
+        "point": {
+          "x": 0,
+          "y": 4200,
+          "z": -10000
+        }
+      }
+    },
+    {
+      "name": "self-level swept leg2 retains extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "x": 0,
+          "y": 3500,
+          "z": 12000
+        },
+        "to": {
+          "x": 0,
+          "y": 3700,
+          "z": -10000
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "self-level waypoint3 expanded sphere clear and within bounds",
+      "passed": true,
+      "detail": {
+        "point": {
+          "x": 31500,
+          "y": 4500,
+          "z": -9000
+        }
+      }
+    },
+    {
+      "name": "self-level swept leg3 retains extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "x": 0,
+          "y": 3700,
+          "z": -10000
+        },
+        "to": {
+          "x": 31500,
+          "y": 4000,
+          "z": -9000
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "self-level waypoint4 expanded sphere clear and within bounds",
+      "passed": true,
+      "detail": {
+        "point": {
+          "x": 31500,
+          "y": 5500,
+          "z": 25000
+        }
+      }
+    },
+    {
+      "name": "self-level swept leg4 retains extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "x": 31500,
+          "y": 4000,
+          "z": -9000
+        },
+        "to": {
+          "x": 31500,
+          "y": 5000,
+          "z": 25000
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "self-level waypoint5 expanded sphere clear and within bounds",
+      "passed": true,
+      "detail": {
+        "point": {
+          "x": 0,
+          "y": 5500,
+          "z": 25000
+        }
+      }
+    },
+    {
+      "name": "self-level swept leg5 retains extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "x": 31500,
+          "y": 5000,
+          "z": 25000
+        },
+        "to": {
+          "x": 0,
+          "y": 5000,
+          "z": 25000
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "acro waypoint0 expanded sphere clear and within bounds",
+      "passed": true,
+      "detail": {
+        "point": {
+          "x": 0,
+          "y": 2500,
+          "z": 25000
+        }
+      }
+    },
+    {
+      "name": "acro waypoint1 expanded sphere clear and within bounds",
+      "passed": true,
+      "detail": {
+        "point": {
+          "x": 0,
+          "y": 4000,
+          "z": 12000
+        }
+      }
+    },
+    {
+      "name": "acro swept leg1 retains extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "x": 0,
+          "y": 2000,
+          "z": 25000
+        },
+        "to": {
+          "x": 0,
+          "y": 3500,
+          "z": 12000
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "acro waypoint2 expanded sphere clear and within bounds",
+      "passed": true,
+      "detail": {
+        "point": {
+          "x": 0,
+          "y": 4200,
+          "z": -10000
+        }
+      }
+    },
+    {
+      "name": "acro swept leg2 retains extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "x": 0,
+          "y": 3500,
+          "z": 12000
+        },
+        "to": {
+          "x": 0,
+          "y": 3700,
+          "z": -10000
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "acro waypoint3 expanded sphere clear and within bounds",
+      "passed": true,
+      "detail": {
+        "point": {
+          "x": 31500,
+          "y": 4500,
+          "z": -9000
+        }
+      }
+    },
+    {
+      "name": "acro swept leg3 retains extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "x": 0,
+          "y": 3700,
+          "z": -10000
+        },
+        "to": {
+          "x": 31500,
+          "y": 4000,
+          "z": -9000
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "acro waypoint4 expanded sphere clear and within bounds",
+      "passed": true,
+      "detail": {
+        "point": {
+          "x": 31500,
+          "y": 5500,
+          "z": 25000
+        }
+      }
+    },
+    {
+      "name": "acro swept leg4 retains extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "x": 31500,
+          "y": 4000,
+          "z": -9000
+        },
+        "to": {
+          "x": 31500,
+          "y": 5000,
+          "z": 25000
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "acro waypoint5 expanded sphere clear and within bounds",
+      "passed": true,
+      "detail": {
+        "point": {
+          "x": 0,
+          "y": 5500,
+          "z": 25000
+        }
+      }
+    },
+    {
+      "name": "acro swept leg5 retains extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "x": 31500,
+          "y": 5000,
+          "z": 25000
+        },
+        "to": {
+          "x": 0,
+          "y": 5000,
+          "z": 25000
+        },
+        "contacts": []
+      }
+    }
+  ]
+}

@@ -74,7 +74,7 @@ function texturePNG(kind = 'fabric') {
 
 export function createArtwork(paints) {
   const batches = new Map();
-  function add(shape, role, at = [0, 0, 0], rotate = [0, 0, 0]) {
+  function add(shape, role, at = [0, 0, 0], rotate = [0, 0, 0], tint = 1) {
     const flat = shape.index ? shape.toNonIndexed() : shape.clone();
     shape.dispose();
     flat.applyMatrix4(
@@ -86,6 +86,7 @@ export function createArtwork(paints) {
     );
     if (!flat.attributes.normal) flat.computeVertexNormals();
     const batch = batches.get(role) ?? { positions: [], normals: [], uvs: [], colors: [] };
+    if (tint !== 1) batch.tinted = true;
     const p = flat.attributes.position.array,
       n = flat.attributes.normal.array;
     batch.positions.push(...p);
@@ -104,7 +105,7 @@ export function createArtwork(paints) {
           (ax > ay && ax > az ? p[j + 2] : p[j]) / metres,
           (ay >= ax && ay >= az ? p[j + 2] : p[j + 1]) / metres,
         );
-        const variation = role === 'lawn' ? 0.84 + noise(p[j] / 4, p[j + 2] / 4) * 0.16 : 1;
+        const variation = role === 'lawn' ? 0.84 + noise(p[j] / 4, p[j + 2] / 4) * 0.16 : tint;
         batch.colors.push(variation, variation, variation, 1);
       }
     }
@@ -112,9 +113,9 @@ export function createArtwork(paints) {
     flat.dispose();
   }
   const box = (role, size, at, rotate) => add(new THREE.BoxGeometry(...size), role, at, rotate);
-  function encode(boxes, anchors) {
+  function encode(boxes, anchors, revision = 'r2') {
     const doc = {
-      asset: { version: '2.0', generator: 'RevealLine original Festival Grounds r2' },
+      asset: { version: '2.0', generator: 'RevealLine original Festival Grounds ' + revision },
       scene: 0,
       scenes: [{ nodes: [] }],
       nodes: [],
@@ -178,7 +179,9 @@ export function createArtwork(paints) {
                 POSITION: attribute(batch.positions, 3),
                 NORMAL: attribute(batch.normals, 3),
                 ...(definition[3] ? { TEXCOORD_0: attribute(batch.uvs, 2) } : {}),
-                ...(role === 'lawn' ? { COLOR_0: attribute(batch.colors, 4, true) } : {}),
+                ...(role === 'lawn' || batch.tinted
+                  ? { COLOR_0: attribute(batch.colors, 4, true) }
+                  : {}),
               },
               material,
             },

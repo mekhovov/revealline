@@ -44,15 +44,25 @@
 </style>
 <h1>Festival Grounds · scene review</h1>
 <p>
-  Original one-course scene checkpoint, not the complete eight-course world. Review the supported
-  stage, closed market stalls, open lawn and clock landmark. Actual renderer with unchanged admitted
-  files; no flight or timing claims.
+  Original one-course scene checkpoint, not the complete eight-course world. Compare frozen r2 with
+  the gathering candidate: broad market courts, the west bench table and closed-wall event marks.
+  Actual unchanged admitted renderer. No flight, final art-quality or timing claim.
 </p>
+<label
+  >Variant
+  <select id="variant">
+    <option value="before">Before · frozen r2</option>
+    <option value="after" selected>After · candidate r3</option>
+  </select></label
+>
 <label
   >View
   <select id="pose">
     <option value="entry">Entry and lawn</option>
     <option value="market">Market closed facade</option>
+    <option value="court">Market courts and event markings</option>
+    <option value="picnic">Picnic table and bench</option>
+    <option value="lane">Table underside and lane edge</option>
     <option value="stage">Stage underside</option>
     <option value="roof">Stage roof approach</option>
     <option value="clock">Clock and service lane</option>
@@ -88,6 +98,7 @@
   </select></label
 >
 <button id="render" disabled>Render selected view</button>
+<button id="dispose" disabled>Dispose renderer</button>
 <p id="status" role="status">Checking immutable inputs…</p>
 <canvas id="view"></canvas>
 <small
@@ -111,7 +122,11 @@
     if (!r.ok) throw Error('HTTP ' + r.status + ' ' + url);
     return r.arrayBuffer();
   };
-  let renderer, project, sceneBytes, manifest;
+  let renderer,
+    manifest,
+    disposed = false;
+  const projects = {},
+    scenes = {};
   const poses = {
     entry: [
       [0, 4.2, 36],
@@ -120,6 +135,18 @@
     market: [
       [-13, 2.3, 8],
       [-22, 2.1, 12],
+    ],
+    court: [
+      [-10, 5.7, 20],
+      [-21, 1.9, 9],
+    ],
+    picnic: [
+      [-31.8, 2.5, 21],
+      [-36.1, 0.8, 16],
+    ],
+    lane: [
+      [-33.3, 0.52, 18.8],
+      [-35.7, 0.5, 16],
     ],
     stage: [
       [7, 3.1, -12],
@@ -145,7 +172,10 @@
   async function render() {
     $('render').disabled = true;
     try {
-      const c = structuredClone(project.courses.find((c) => c.id === $('course').value)),
+      if (disposed) throw Error('Renderer already disposed');
+      const variant = $('variant').value,
+        project = projects[variant],
+        c = structuredClone(project.courses.find((c) => c.id === $('course').value)),
         appearance = $('appearance').value;
       if (appearance === 'pixel') {
         c.world.theme = 'pixel';
@@ -158,7 +188,7 @@
       renderer.setCourse(c, $('mode').value);
       renderer.setQuality($('quality').value);
       renderer.setDrone('racer');
-      await renderer.loadScene(sceneBytes);
+      await renderer.loadScene(scenes[variant]);
       if ((await renderer.prepare()) === false) throw Error('Shader preparation superseded');
       const THREE = await import(base + 'vendor/three.module.js');
       const [position, target] = poses[$('pose').value],
@@ -200,6 +230,8 @@
         rgba,
       );
       const observation = {
+        variant,
+        revision: project.revision,
         pose: $('pose').value,
         course: c.id,
         mode: $('mode').value,
@@ -211,18 +243,11 @@
         resources: renderer.resources(),
       };
       observations.push(observation);
-      $('receipt').value = JSON.stringify(
-        {
-          format: 'FPVFestivalGroundsStaticViews.v1',
-          fixture: await hash(new TextEncoder().encode(JSON.stringify(manifest))),
-          observations,
-          errors,
-        },
-        null,
-        2,
-      );
+      await updateReceipt();
       $('status').textContent =
         'Rendered ' +
+        variant +
+        ' / ' +
         observation.pose +
         ' / ' +
         observation.quality +
@@ -234,8 +259,24 @@
       $('status').textContent = 'FAILED: ' + error.message;
       throw error;
     } finally {
-      $('render').disabled = false;
+      $('render').disabled = disposed;
     }
+  }
+  let disposal = null;
+  async function updateReceipt() {
+    $('receipt').value = JSON.stringify(
+      {
+        format: 'FPVFestivalGroundsStaticViews.v2',
+        fixture: await hash(new TextEncoder().encode(JSON.stringify(manifest))),
+        sourceCommit: manifest.sourceCommit,
+        baselinePlayer: manifest.baselinePlayer,
+        observations,
+        errors,
+        disposal,
+      },
+      null,
+      2,
+    );
   }
   try {
     manifest = JSON.parse(new TextDecoder().decode(await get('./fixture.json')));
@@ -249,14 +290,16 @@
     }
     if ((await hash(await get('./index.html'))) !== manifest.harnessSHA256)
       throw Error('Harness mismatch');
-    project = JSON.parse(new TextDecoder().decode(await get('./content/project.json')));
-    for (const course of project.courses) {
+    for (const [name, paths] of Object.entries(manifest.variants)) {
+      projects[name] = JSON.parse(new TextDecoder().decode(await get('./' + paths.project)));
+      scenes[name] = await get('./' + paths.model);
+    }
+    for (const course of projects.after.courses) {
       const option = document.createElement('option');
       option.value = course.id;
       option.textContent = course.locales.en.title;
       $('course').append(option);
     }
-    sceneBytes = await get('./content/scene.glb');
     const { createFlightRenderer } = await import(base + 'world-assets.mjs');
     renderer = createFlightRenderer({
       canvas: $('view'),
@@ -266,6 +309,17 @@
     });
     if (!renderer.available) throw Error('Renderer unavailable');
     $('render').onclick = render;
+    $('dispose').disabled = false;
+    $('dispose').onclick = async () => {
+      $('render').disabled = true;
+      $('dispose').disabled = true;
+      const before = renderer.resources();
+      renderer.dispose();
+      disposed = true;
+      disposal = { before, after: renderer.resources() };
+      $('status').textContent = 'Renderer disposed; review resource receipt.';
+      await updateReceipt();
+    };
     await render();
   } catch (error) {
     $('status').textContent = 'FAILED: ' + error.message;

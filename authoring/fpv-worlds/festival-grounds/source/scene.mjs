@@ -2,10 +2,11 @@
 import * as THREE from '../../../../optional-practice/civilian-fpv/vendor/three.module.js';
 import { createArtwork, xyz, noise } from './art.mjs';
 import { lettering } from './lettering.mjs';
+import { addGatheringDetails } from './gathering.mjs';
 
 export const bounds = { min: xyz([-42, 0, -42]), max: xyz([42, 24, 42]) };
 export const spawn = xyz([0, 0.25, 25]);
-export function createScene() {
+export function createScene({ gathering = false } = {}) {
   const art = createArtwork({
     canvas: ['#c2b389', 1, 0, true],
     blue: ['#245c72', 0.9, 0, true],
@@ -285,5 +286,10 @@ export function createScene() {
     { id: 'service-lookout', kind: 'checkpoint', position: [31.5, 4.5, -9], order: 3 },
     { id: 'entry-return', kind: 'landing', position: [0, 0.25, 25], order: 4 },
   ];
-  return { ...art.encode(boxes, anchors), obstacles: boxes, anchors };
+  if (gathering) addGatheringDetails(art, solid);
+  return {
+    ...art.encode(boxes, anchors, gathering ? 'r3' : 'r2'),
+    obstacles: boxes,
+    anchors,
+  };
 }
