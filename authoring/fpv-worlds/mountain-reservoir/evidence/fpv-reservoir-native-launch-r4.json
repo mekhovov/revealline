@@ -1,0 +1,16 @@
+{
+  "authoring": "8bf37589c9882dfbdefa9a72b10746d78a39ff5a",
+  "pack": "4c4a0aba2c6347f7670b86a40af5a0d9dd8a1be0e0b65e4a66465c4684136c6c",
+  "observations": [
+    "Native-clock installed Shoreline check-in opened Ready",
+    "Arm/resume: Flight active; timer advanced0.2s then42.9s; health100",
+    "Nested pause-button locators failed to resolve live node twice; keyboard P visibly paused at99.6s"
+  ],
+  "pausedText": "Skip to flight selection\nFPV SIM · Worlds\nResume\n\nShoreline check-in\n\nArm / resume\n+\n0.5 m · 0 m/s · 99.6 s · ♥ 100\n1/4 · Hold position\n\nPaused. Arm deliberately to continue.\n\n×\n\nPaused · actual pose retained · Drone upright\n\nPreparing flight…\n\nFPV SIM · WORLDS\n\nShoreline check-in\n\nContinue\nSelect Mission\nSettings\nFull screen\nSound: off\nRetry\n\nTab/arrows move; Enter selects; Esc goes back. Controller: release, then press/release A to connect. Calibrated radio: hold yaw right for 0.7 s, then centre to connect; roll/pitch move, hold yaw right/left then centre to confirm/go back.",
+  "logs": [],
+  "limitations": [
+    "One course checkpoint",
+    "No physical-device, sustained-FPS or offline claim",
+    "Pause verified through actual keyboard P; no pause-button acceptance claim from this run"
+  ]
+}
