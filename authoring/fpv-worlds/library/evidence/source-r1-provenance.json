@@ -1,0 +1,52 @@
+{
+  "format": "FPVWorldLibraryBrowserEvidence.v1",
+  "candidate": "f33d01d62c2050a5f44f3f00d1204937874644e5",
+  "passed": 189,
+  "failed": 0,
+  "archives": [
+    {
+      "file": "source-r1.json.gz",
+      "rawBytes": 53362,
+      "rawSHA256": "e05b94bbc1942b355414c6aa5e44b86894a8144701bf48f53516c0f52a60469b",
+      "gzipBytes": 9654,
+      "gzipSHA256": "e0825415a6597e59406ebc030812ea110bf9c3e46ac745d19cc87484c7ee2269"
+    },
+    {
+      "file": "source-r1-fixture.json.gz",
+      "rawBytes": 20297,
+      "rawSHA256": "ee39abf1c2983a8406692627af7725d13064ca3645f72f7cd35fb0daf5ed14be",
+      "gzipBytes": 6609,
+      "gzipSHA256": "c06de8d48ab28c7925ac757b129fe3d6284187498c10da5a13cd43b30a208a60"
+    },
+    {
+      "file": "source-r1-harness.mjs.gz",
+      "rawBytes": 16991,
+      "rawSHA256": "85ac77ff3e7bd67ddacf0be8d0f1b14d3c6201b5d2d80a5353605cf1edc6f51a",
+      "gzipBytes": 5464,
+      "gzipSHA256": "26f4f19edcc0fdad9daff935bec8422edabea04fa233734ed3f98a8898ee5c13"
+    },
+    {
+      "file": "source-r1-host.html.gz",
+      "rawBytes": 38445,
+      "rawSHA256": "5fa13c5da6e9c370ab0f8851a3b11af8893a926948ae7f1c7d50a58f9eb94ec5",
+      "gzipBytes": 9863,
+      "gzipSHA256": "c72c5ed1a2208af86a0bd274059b89ae340e38f78281ea5382bed47a9def59b6"
+    },
+    {
+      "file": "source-r1-index.html.gz",
+      "rawBytes": 1383,
+      "rawSHA256": "85ea38e2f1e6a571f6b533e13096981c86c94ea85b2c4324caff07dd64da5176",
+      "gzipBytes": 740,
+      "gzipSHA256": "d9b77b7f0d79c4e2a28350fe5c1ca4f163cbf9db58b3525e4ebd3b898586c7a3"
+    }
+  ],
+  "screenshot": {
+    "bytes": 56452,
+    "sha256": "1e6a244c28d65d9a0ad1d62229975475195a0f68331f4835aab55a109debe0ce"
+  },
+  "limitations": [
+    "Historical first source candidate; subsequent response-body cleanup requires its separate qualifier.",
+    "Explicit catalogue/fault responses and injected timeout callback; real successful immutable first-party pack request and native IndexedDB.",
+    "Unarmed retained flight/editor preservation, not flight completion, device FPS or offline readiness."
+  ]
+}
