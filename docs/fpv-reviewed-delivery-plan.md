@@ -73,6 +73,32 @@ automatic download or core precaching. Existing section-watch, longest-section
 practice, live height/speed/tilt hints and touch/controller flows remain delivered
 features to preserve, not duplicate. Broader D3 work and D4–D6 remain open.
 
+### Optional alternate School checkpoint — 4 October 2026
+
+The 28 remaining eligible alternate School examples are qualified as explicit
+optional imports: original Self-level lessons 01–12 in Acro, and non-skill
+intermediate/advanced lessons 27–42 in Self-level. The 14 foundation alternates
+already exist; the 16 Acro-skill lessons retain only unscored Self-level practice.
+All 28 new recordings complete, independently replay, and import/replay again
+with zero contacts and full health. The actual retained admitted player passes
+393 checks and 30 playbacks, including two recorded sections, with unchanged
+progress and no errors. The 178 built-in recordings and all production code stay
+unchanged. See [School archive qualification](fpv-school-alternate-examples.md).
+
+Orchard #1021 is merged and has an actual public Authored/Touch render, arm and
+pause observation at descendant main `a087facd9`, with no warning/error logs.
+Solar #1022 was superseded by replacement #1025; its integration review and
+protected CI/deployment remain separate. These are bounded surface improvements,
+not complete-world artistic or hardware acceptance.
+
+Continue D3 with the independent optional Adventure examples, lifecycle repair
+and one evidence-based gate-section lesson recommendation with deliberate return
+to the prior challenge. Preserve timing provenance, exact dependencies, selected
+controls and playlist bookmarks. Broader art/performance and coaching remain
+open; D4 creator, D5 four worlds, and deferred D6 unit coverage follow. Counts stay
+**196 challenges / 14 worlds / 58 School lessons / 374 School steps**; D5 targets
+**228 challenges / 18 worlds**.
+
 ### Campus facade checkpoint — 4 October 2026
 
 Quarry #1016 is merged at `47d2019dced85d80671b2d780da662f50ea11c20`.
