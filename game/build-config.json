@@ -106,6 +106,8 @@
     "authoring/motion-lab/assets",
     "authoring/motion-lab/index.html",
     "authoring/motion-lab/app.js",
+    "authoring/motion-lab/shared-actor-panel.mjs",
+    "authoring/motion-lab/shared-actor-study.mjs",
     "authoring/motion-lab/preview-loop.mjs",
     "authoring/motion-lab/display-entry.mjs",
     "authoring/motion-lab/display.mjs",
