@@ -1,0 +1,52 @@
+{
+  "format": "FPVWorldLibraryNativeOfflineSmoke.v1",
+  "sourceRevision": "01fc6ad206f6ea7e6dd78921f799e2ed1a773915",
+  "reportedBy": "Coordinating agent through actual native browser controls",
+  "status": "passed",
+  "players": {
+    "worlds": "worker-worlds-player.json",
+    "academy": "worker-academy-player.json"
+  },
+  "origin": "http://127.0.0.1:8932",
+  "preparation": {
+    "worlds": "Prepare simulator offline completed",
+    "academy": "Exact package ready offline"
+  },
+  "outage": {
+    "stoppedOwnedPID": 30778,
+    "curlBeforeExitCode": 7,
+    "curlAfterExitCode": 7,
+    "actualReloadBoth": true
+  },
+  "worlds": [
+    "Reloaded native page while origin unavailable",
+    "Back then Start, briefingStart",
+    "Deliberate Arm at zero throttle",
+    "Flightactive then Pause"
+  ],
+  "academy": [
+    "Reloaded native page while origin unavailable",
+    "Start",
+    "Practice in progress then Pause"
+  ],
+  "restoredServer": {
+    "session": 26877
+  },
+  "screenshots": [
+    {
+      "file": "worker-worlds-offline-01fc.png",
+      "bytes": 72542,
+      "sha256": "8dd700a35b6581cfca4ccb1d87188586c2e3abfd27fa7f51671cb57c6fc735b6"
+    },
+    {
+      "file": "worker-academy-offline-01fc.png",
+      "bytes": 70887,
+      "sha256": "34a17cba4e17eb526084d2e519ac0d4347fb816579e6868bcd051521ce4ec773"
+    }
+  ],
+  "limits": [
+    "Local origin stopped, not device-wide networking disabled, eviction endurance, persistent-storage guarantee or physical-device qualification.",
+    "Exact admitted native player smoke is separate from both119-check Library matrix readiness timeouts; no full admitted208-pass claim.",
+    "No audible audio, flightcompletion or hardwareFPS claim."
+  ]
+}
