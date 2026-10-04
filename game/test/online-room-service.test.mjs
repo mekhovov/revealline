@@ -10,6 +10,9 @@ import { restoreTrustedRoomSnapshot } from '../online/room-core.mjs';
 const origin = 'http://127.0.0.1:8779';
 async function fixture(t) {
   let clock = 0;
+  // Keep real HTTP delivery while choosing precisely when the service's timer
+  // wakes. This covers requests that beat maintenance after a clock jump.
+  t.mock.timers.enable({ apis: ['setInterval'] });
   const server = await createRoomService({
     now: () => clock,
     catalogue: [
@@ -52,15 +55,48 @@ async function fixture(t) {
     assert.equal((await api('/ready', guest, { activation })).status, 200);
     return snap();
   };
+  const hold = async (path, seat, body) => {
+    const text = JSON.stringify(body);
+    const received = once(server, 'request');
+    let pending;
+    const response = new Promise((resolve, reject) => {
+      pending = request(
+        `${url}${path}`,
+        {
+          method: 'POST',
+          headers: {
+            Origin: origin,
+            Authorization: `Bearer ${seat.token}`,
+            'Content-Type': 'application/json',
+            'Content-Length': Buffer.byteLength(text),
+          },
+        },
+        (result) => {
+          let data = '';
+          result.on('data', (chunk) => {
+            data += chunk;
+          });
+          result.on('end', () => resolve({ status: result.statusCode, body: JSON.parse(data) }));
+        },
+      );
+      pending.on('error', reject);
+      pending.write(text.slice(0, -1));
+    });
+    t.after(() => pending.destroy());
+    await received;
+    return { response, finish: () => pending.end(text.slice(-1)) };
+  };
   return {
     api,
     host,
     guest,
     snap,
     start,
+    hold,
     url,
-    advance: (ms) => {
+    advance: (ms, { runTimer = true } = {}) => {
       clock += ms;
+      if (runTimer) t.mock.timers.tick(4);
     },
   };
 }
@@ -165,6 +201,94 @@ test('service-stall pause rotates input ownership before readiness can resume', 
   assert.notEqual(paused.controlActivation, playing.controlActivation);
   assert.equal(
     (await h.api('/ready', h.host, { activation: playing.controlActivation })).body.code,
+    'STALE_ACTIVATION',
+  );
+});
+
+test('a heartbeat after the reconnect deadline cannot revive a room during a service stall', async (t) => {
+  const h = await fixture(t);
+  await h.start();
+  h.advance(60001, { runTimer: false });
+  const expired = await h.api('/snapshot', h.host);
+  assert.equal(expired.status, 410);
+  assert.equal(expired.body.code, 'ROOM_UNAVAILABLE');
+  const otherSeat = await h.api('/snapshot', h.guest);
+  assert.equal(otherSeat.status, 410);
+  assert.equal(otherSeat.body.code, 'ROOM_UNAVAILABLE');
+});
+
+test('a disconnected waiting seat loses earlier Ready even without a simulation step', async (t) => {
+  const h = await fixture(t);
+  const waiting = await h.snap();
+  await h.api('/ready', h.host, { activation: waiting.controlActivation });
+  h.advance(5001);
+  const recovered = await h.snap();
+  assert.equal(recovered.status, 'waiting');
+  assert.notEqual(recovered.controlActivation, waiting.controlActivation);
+  assert.deepEqual(
+    recovered.seats.map((seat) => seat.ready),
+    [false, false],
+  );
+  await h.api('/snapshot', h.guest);
+  assert.equal(
+    (await h.api('/ready', h.guest, { activation: recovered.controlActivation })).status,
+    200,
+  );
+  assert.equal((await h.snap()).status, 'waiting');
+  await h.api('/ready', h.host, { activation: recovered.controlActivation });
+  assert.equal((await h.snap()).status, 'playing');
+});
+
+test('a slow action body cannot act on a room after its reconnect deadline', async (t) => {
+  const h = await fixture(t);
+  const playing = await h.start();
+  const pending = await h.hold('/pause', h.host, { activation: playing.controlActivation });
+  h.advance(60001, { runTimer: false });
+  pending.finish();
+  const expired = await pending.response;
+  assert.equal(expired.status, 410);
+  assert.equal(expired.body.code, 'ROOM_UNAVAILABLE');
+  assert.equal((await h.api('/snapshot', h.guest)).body.code, 'ROOM_UNAVAILABLE');
+});
+
+test('recovery within sixty seconds needs both Ready choices without advancing the paused match', async (t) => {
+  const h = await fixture(t);
+  const playing = await h.start();
+  h.advance(59000);
+  const recovered = await h.snap();
+  assert.equal(recovered.status, 'paused');
+  assert.equal(recovered.tick, playing.tick);
+  assert.equal(recovered.activeMs, playing.activeMs);
+  assert.deepEqual(recovered.queue, []);
+  assert.deepEqual(
+    recovered.seats.map((seat) => seat.ready),
+    [false, false],
+  );
+  await h.api('/snapshot', h.guest);
+  assert.equal(
+    (await h.api('/ready', h.host, { activation: recovered.controlActivation })).status,
+    200,
+  );
+  assert.equal((await h.snap()).status, 'paused');
+  assert.equal(
+    (await h.api('/ready', h.guest, { activation: recovered.controlActivation })).status,
+    200,
+  );
+  const resumed = await h.snap();
+  assert.equal(resumed.status, 'playing');
+  assert.notEqual(resumed.controlActivation, recovered.controlActivation);
+  assert.equal(resumed.activeMs, playing.activeMs);
+  assert.equal(
+    (
+      await h.api('/input', h.host, {
+        sequence: 1,
+        generation: playing.generation,
+        activation: playing.controlActivation,
+        direction: 'up',
+        boost: false,
+        support: false,
+      })
+    ).body.code,
     'STALE_ACTIVATION',
   );
 });

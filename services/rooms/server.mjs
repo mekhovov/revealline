@@ -23,6 +23,7 @@ import {
   readyAuthoritativeRoom,
   pauseAuthoritativeRoom,
   submitAuthoritativeInput,
+  expireAuthoritativeRoom,
   stepAuthoritativeRoom,
   rematchAuthoritativeRoom,
   snapshotAuthoritativeRoom,
@@ -171,6 +172,13 @@ export async function createRoomService({
       activations.set(room, { status: room.status, generation: room.generation });
     }
   };
+  const admitRoomConnection = (room) => {
+    if (!room || rooms.get(room.id) !== room)
+      fail('ROOM_UNAVAILABLE', 410, 'This room expired. Request a new invitation.');
+    syncActivation(room, expireAuthoritativeRoom(room, now()));
+    if (room.status === 'abandoned')
+      fail('ROOM_UNAVAILABLE', 410, 'This room expired. Request a new invitation.');
+  };
   const allowed = new Set(origins);
   const read = async (request) => {
     let size = 0;
@@ -251,7 +259,7 @@ export async function createRoomService({
   };
   const join = (id) => {
     const room = rooms.get(id);
-    required(room, 'The room no longer exists.');
+    admitRoomConnection(room);
     joinAuthoritativeRoom(room, now());
     const bearer = token();
     credentials.set(bearer, { id, seat: 1 });
@@ -328,7 +336,9 @@ export async function createRoomService({
       if (!auth)
         fail('SEAT_UNAVAILABLE', 401, 'This seat is unavailable. Request a new invitation.');
       const room = rooms.get(auth.id);
-      if (!room) fail('ROOM_UNAVAILABLE', 410, 'This room expired. Request a new invitation.');
+      // Check expiry before a returning heartbeat can refresh lastSeen. Timer
+      // callbacks can be delayed, and a stall deliberately advances no ticks.
+      admitRoomConnection(room);
       touchAuthoritativeRoom(room, auth.seat, now());
       syncActivation(room);
       if (request.method === 'GET' && url.pathname === '/snapshot')
@@ -337,6 +347,9 @@ export async function createRoomService({
         return send(200, exportAuthoritativeRoomResult(room));
       required(request.method === 'POST', 'Unsupported room operation.');
       const body = await read(request);
+      // A slowly delivered body can outlive both its seat deadline and room
+      // retention. Never operate on the stale room object retained by this task.
+      admitRoomConnection(room);
       // Body delivery can span a pause/resume or rematch. Check the current
       // service activation after reading, before admitting any queued action.
       if (
@@ -388,6 +401,7 @@ export async function createRoomService({
     remainder -= steps * (1000 / 120);
     for (const [id, room] of rooms) {
       try {
+        syncActivation(room, expireAuthoritativeRoom(room, time));
         for (let tick = 0; tick < steps; tick++) stepAuthoritativeRoom(room, time);
       } catch {
         room.status = 'abandoned';
