@@ -27,3 +27,36 @@ The final packaged WebGL matrix passed **136 checks / 56 image pairs / three res
 The complete 102-file admitted player was observed through its actual UI: the Solar scene rendered with the new authored panel finish, armed to 0.2 s and paused at 0.3 s, without warnings or errors. [Observation](evidence/fpv-solar-admitted-player-observation.json) and [screenshot](evidence/fpv-solar-admitted-player.png) retain that local launch. This is separate from matrix rendering, installed/offline and public deployment qualification.
 
 Local qualification is complete. Protected exact-head CI and public deployment remain separate gates. Additional unit coverage is deferred to D6. No hardware, installed/offline, public Solar or broad artistic acceptance is claimed.
+
+## Orchard integration — 4 October 2026
+
+Normal merge `0292f749dd4debd5348b86ea52f010fe007f324c` integrates main
+`5e4abe27305ef06f4bbecb8f9365c218dee55979` after Orchard #1021. The only conflict
+was the adjacent independent Solar and Orchard selection declarations; both
+blocks are retained unchanged. The [scope audit](evidence/fpv-solar-orchard-integration.json)
+proves every added/removed Solar runtime line matches the published Solar patch
+against new main, and every incoming Orchard line matches its published patch
+against the prior Solar head. Renderer bytes remain exact. The combined
+world-visuals SHA-256 is `47f2db17bedca05e6fd9b4ebd578cd447fae75db52b28c9f50552fd029a6a2a8`.
+
+The same manual CPU qualifier passes **1,306 checks / 153 scenes** against new
+main. All 15 canonical Solar snapshots, including maps, are exact; 152 of all
+153 scene records match the preceding qualification. The sole difference is
+the reviewed `orchard/authored` scene hash, with resource counts, capacities and
+attribute bytes unchanged. The [complete compressed receipt](evidence/fpv-solar-orchard-cpu.json.gz)
+expands to 321,707 bytes, SHA-256
+`5ba8442fb00dbe821a141ece8c9bbd20766f83ce7e82ac92007b0acf827fbd08`.
+
+Fresh [source-bound admission](evidence/fpv-solar-orchard-admission.json) at that
+clean merge and tree `58ffe708c977c830e897df9173ad65f232ba86bb` passes two
+identical builds for all three applications: **48 / 679,266 bytes**,
+**69 / 4,408,761 bytes**, and **102 / 15,563,836 bytes**. All committed inputs and
+ZIP members are verified. The 95 original inputs total **16,769,998 bytes**, with
+**7,218 bytes** remaining below the unchanged 16 MiB limit. The Worlds ZIP
+SHA-256 is `0704a46eca0f985393668967808a49a2543d5807dcbd3aa8b66bf4ada90d34ae`.
+
+Earlier source/package browser and actual-player receipts retain their original
+candidate identities; they are not relabelled as a new integrated browser run.
+Exact Solar patch/map preservation and the isolated incoming Orchard audit
+qualify this integration without repeating unchanged visual matrices. Focused
+lint/format checks pass; the subsequent evidence commit changes no runtime.
