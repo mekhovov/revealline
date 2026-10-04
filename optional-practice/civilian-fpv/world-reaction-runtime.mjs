@@ -60,7 +60,7 @@ const sourceHashes={
 'game/audio/reactions/actors.mjs':
 '79debf91cafa2e01cd65170037ee483977cbf7d5c3a619ccac9ed400264598b8',
 'optional-practice/civilian-fpv/world-library.mjs':
-'1f885ed9b66a52fa099977a19479ab6c6e234395c74c4381f21b4d772e86c82c',
+'065d1f290696c6730a8a9cf1a983ea5853115efc4b0b0b60fd80be1e8ef5e90f',
 'game/audio/reactions/guide-0-en.m4a':
 '58f961f54b52d0dbb58f53f000ca85bba166236126e135dc1f5e89f8f9a94210',
 'game/audio/reactions/guide-0-uk.m4a':
@@ -6440,10 +6440,20 @@ const WORLD_LIMITS=external11['WORLD_LIMITS'];
 const worldSHA256=external11['worldSHA256'];
 
 const origin='https://raw.githubusercontent.com/mekhovov/revealline/';
-const indexURL=origin+'main/authoring/fpv-worlds/published/index.json';
+// This endpoint only publishes packs supported by the surface-coating-v1 runtime.
+// The original index remains compatible with already cached older players.
+const indexURL=origin+'main/authoring/fpv-worlds/published/surface-coating-v1/index.json';
 const check=(condition)=>{
 if(!condition)throw new Error('Invalid world download.');
 };
+
+function worldImportErrorCopy(error){
+if(error?.code!=='unsupported-world-extension')return null;
+return[
+'This SIM version does not support a required world feature. Open Flight practice, choose Check available practice, then Play available version. If that version still cannot import it, use a compatible pack. Prepare offline saves the version you opened.',
+'Ця версія SIM не підтримує потрібну можливість світу. Відкрийте «Практика польоту», виберіть «Перевірити доступну практику», а потім «Грати в доступну версію». Якщо імпорт усе ще неможливий, потрібен сумісний пакунок. Підготовка офлайн зберігає відкриту версію.',
+];
+}
 
 function worldLibraryIndex(bytes){
 const value=boundedJSON(new TextDecoder('utf-8',{fatal:true}).decode(bytes),{
@@ -6615,12 +6625,14 @@ rows=worldLibraryIndex(bytes);
 if(rows.length)show('Choose a world to download.','Оберіть світ для завантаження.');
 else show('No published worlds yet.','Опублікованих світів ще немає.');
 }
-}catch{
+}catch(error){
 if(!closed){
+const compatibility=worldImportErrorCopy(error);
 if(committed)
 show('Pack saved. Reload to refresh Library.','Пакунок збережено. Перезавантажте бібліотеку.');
 else if(signal.aborted)
 show('Cancelled or timed out. Try again.','Скасовано або час вичерпано. Повторіть.');
+else if(compatibility)show(...compatibility);
 else
 show('Download or save failed. Try again.','Завантаження чи збереження не вдалося. Повторіть.');
 }
@@ -6648,7 +6660,11 @@ root.remove();
 };
 }
 
-return{worldLibraryIndex:worldLibraryIndex,mountWorldLibrary:mountWorldLibrary};
+return{
+worldImportErrorCopy:worldImportErrorCopy,
+worldLibraryIndex:worldLibraryIndex,
+mountWorldLibrary:mountWorldLibrary,
+};
 })();
 // Exact source recordings; decoded only through the existing bounded voice cache.
 // prettier-ignore
@@ -6700,6 +6716,8 @@ library.close();
 },
 };
 }
+export const worldImportErrorCopy=
+modules['optional-practice/civilian-fpv/world-library.mjs'].worldImportErrorCopy;
 export const worldLibraryIndex=
 modules['optional-practice/civilian-fpv/world-library.mjs'].worldLibraryIndex;
 export const mountWorldLibrary=
