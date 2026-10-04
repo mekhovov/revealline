@@ -684,3 +684,23 @@ Proceed with protected publication, then follow deployment identity and an
 actual public launch. The earlier 15–17 second pauses remain unreproduced; this
 increment does not close sustained named-device performance, broad image
 determinism, remaining art acceptance or deferred D6 unit coverage.
+
+### D2 Railworks checkpoint — 4 October 2026
+
+Campus #1018 is merged at `96ef08777` and its public player was observed rendering
+the authored facades, arming and pausing. D1 environment-light ownership and
+graphics recovery #1019 is merged at `a46aded0b`; that source merge is distinct
+from public deployment qualification. The independent Railworks increment is
+qualified on that main: eight existing closed wagons gain subdued flush framing
+and stiffeners, reusing their accent batches. It preserves collision, original
+maps, Pixel/shared themes and retained recordings. The wagons remain box-like;
+this is bounded visible progress, not comprehensive realistic world completion.
+See [Railworks qualification](fpv-railworks-wagon-frames.md) for exact candidates
+and the source/package evidence.
+
+The catalogue remains **196 challenges / 14 worlds / 58 school lessons / 374
+school steps**. Continue the remaining D2 art work with the independent Orchard
+and Solar increments and broader world polish, then D3 examples/coaching, D4
+creator, D5's **228 challenges / 18 worlds** target and deferred D6 unit coverage.
+Functional qualification continues at each increment. Browser checks do not
+close named-device timing, physical controls or complete-world artistic goals.
