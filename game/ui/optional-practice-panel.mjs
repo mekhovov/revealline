@@ -1,3 +1,4 @@
+import { nativeArtReviewURL } from './art-review-navigation.mjs';
 import { getLocale, localizedText, onLocaleChange, t } from '../i18n/index.mjs';
 import {
   optionalPracticeCatalogURL,
@@ -93,7 +94,10 @@ export function mountOptionalPracticePanel({
     fallback = node('a', 'fpvGameAction');
     fallback.href =
       fpvLaunchURL(href, getLocale()) ??
-      new URL('../optional-practice/civilian-fpv/index.html', indexURL).href;
+      nativeArtReviewURL(
+        new URL('../optional-practice/civilian-fpv/index.html', indexURL).href,
+        href,
+      );
     bindAppearance(fallback);
     fallback.target = '_blank';
     fallback.rel = 'noopener noreferrer';
@@ -127,7 +131,7 @@ export function mountOptionalPracticePanel({
     for (const item of sourcePreviews) {
       const row = node('li'),
         link = node('a', item.titleKey);
-      link.href = item.url;
+      link.href = nativeArtReviewURL(item.url, href);
       bindAppearance(link);
       link.target = '_blank';
       link.rel = 'noopener noreferrer';

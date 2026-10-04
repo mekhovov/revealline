@@ -1,3 +1,4 @@
+import { nativeArtReviewURL } from '../ui/art-review-navigation.mjs';
 import { selectedArcadeCollection } from '../presentation/industrial-arcade.mjs';
 import { createLocalMatchRecorder, localMatchProvenance } from '../multiplayer-recording.mjs';
 import { recordingVerificationHref } from '../ui/recording-verification.mjs';
@@ -3001,7 +3002,7 @@ try {
         runtimeOnly: row.collection === 'Custom',
       });
     if (!context.isCurrent() || missionLibrary.library.find(row.id) !== row) return false;
-    location.href = href;
+    location.href = nativeArtReviewURL(href, location.href);
     return true;
   }
   async function launchLibrarySelection(pack, selection, context) {

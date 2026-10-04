@@ -1,3 +1,4 @@
+import { nativeArtReviewURL } from '../ui/art-review-navigation.mjs';
 import { selectedArcadeCollection } from '../presentation/industrial-arcade.mjs';
 import { createLocalMatchRecorder, localMatchProvenance } from '../multiplayer-recording.mjs';
 import { recordingVerificationHref } from '../ui/recording-verification.mjs';
@@ -277,11 +278,11 @@ export function bootCoop({
   if (returns.length === 1 && ['solo', 'versus'].includes(returns[0]))
     catalogueParams.set('return', returns[0]);
   const catalogueHref = `relay-rescue.html${catalogueParams.size ? `?${catalogueParams}` : ''}`;
-  $('coop-catalogue').setAttribute('href', catalogueHref);
+  $('coop-catalogue').setAttribute('href', nativeArtReviewURL(catalogueHref, location.href));
   localizedText($('coop-catalogue'), () =>
     candidateJourney ? t('interface:legacyArenas') : t('interface:newJourney2'),
   );
-  $('coop-more-catalogue').setAttribute('href', catalogueHref);
+  $('coop-more-catalogue').setAttribute('href', nativeArtReviewURL(catalogueHref, location.href));
   localizedText($('coop-more-catalogue'), () =>
     candidateJourney ? t('interface:legacyArenas') : t('interface:newJourney2'),
   );
@@ -311,13 +312,16 @@ export function bootCoop({
       ? `${destination}?journey=legacy`
       : destination;
   };
-  $('coop-home').setAttribute('href', homeHref);
-  $('coop-versus').setAttribute('href', versusHref);
-  $('coop-race').setAttribute('href', returnHref());
+  $('coop-home').setAttribute('href', nativeArtReviewURL(homeHref, location.href));
+  $('coop-versus').setAttribute('href', nativeArtReviewURL(versusHref, location.href));
+  $('coop-race').setAttribute('href', nativeArtReviewURL(returnHref(), location.href));
   localizedText($('coop-race'), () =>
     fromSolo ? t('interface:backToSolo') : t('interface:raceMode'),
   );
-  $('coop-solo').setAttribute('href', fromSolo ? returnHref() : homeHref);
+  $('coop-solo').setAttribute(
+    'href',
+    nativeArtReviewURL(fromSolo ? returnHref() : homeHref, location.href),
+  );
   const arenaPreference = createTeamArenaPreference({
     pack: COOP_STARTER_PACK,
     getStorage: () => localStorage,
@@ -4327,7 +4331,7 @@ export function bootCoop({
         runtimeOnly: row.collection === 'Custom',
       });
     if (!current() || missionLibrary.find(context.libraryMissionId) !== row) return false;
-    location.assign(href);
+    location.assign(nativeArtReviewURL(href, location.href));
     return true;
   }
   function getTeamLibrary() {
@@ -5447,7 +5451,7 @@ export function bootCoop({
       closeDeparture(ticket, { restore: false });
       if (ticket.kind === 'setup') lobby();
       else if (ticket.kind === 'retry') start(ticket.recipe, prepared);
-      else location.assign(destination);
+      else location.assign(nativeArtReviewURL(destination, location.href));
     } catch (error) {
       if (error.name === 'AbortError') return;
       message(t('interface:team.replaceFailed', { error: error.message }));
@@ -5497,13 +5501,16 @@ export function bootCoop({
       cancelNext();
       $(id).setAttribute(
         'href',
-        kind === 'return'
-          ? returnHref()
-          : kind === 'versus'
-            ? versusHref
-            : kind === 'catalogue'
-              ? catalogueHref
-              : homeHref,
+        nativeArtReviewURL(
+          kind === 'return'
+            ? returnHref()
+            : kind === 'versus'
+              ? versusHref
+              : kind === 'catalogue'
+                ? catalogueHref
+                : homeHref,
+          location.href,
+        ),
       );
       if (departure || pictureOperation) {
         event.preventDefault();

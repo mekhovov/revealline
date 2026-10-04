@@ -1,3 +1,4 @@
+import { workshopReturnLinks, workshopToolHref } from '../../game/ui/workshop-return.mjs';
 import { getLocale, localizedText, t } from '../../game/i18n/index.mjs';
 import { ACTOR_FAMILIES, ACTOR_CASTS } from '../../game/hunt/actor-catalog.mjs';
 import {
@@ -157,7 +158,9 @@ export function mountSharedActorPanel({
   exchangeActions.className = 'shared-actor-actions';
   exchangeActions.append(importButton, exportButton);
   const studio = node('a', 'studio');
-  studio.href = '../asset-studio/';
+  studio.href = host?.location?.href
+    ? workshopToolHref(workshopReturnLinks(host.location.href, 'motion-lab').game, 'asset-studio')
+    : '../asset-studio/';
   studio.setAttribute('data-workshop-tool', 'asset-studio');
   exchange.append(
     node('summary', 'exchange'),

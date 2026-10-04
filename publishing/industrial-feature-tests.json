@@ -101,13 +101,20 @@
     {
       "id": "local-ux",
       "files": [
+        "game/test/art-review-navigation.test.mjs",
+        "game/test/art-review-host-navigation.test.mjs",
         "game/test/classic-snake-ui.test.mjs",
         "game/test/hunt-host.test.mjs",
         "game/test/coop-briefing-host.test.mjs",
         "game/test/mode-play-shell.test.mjs",
         "game/test/phase-briefing.test.mjs",
         "game/test/civilian-practice-ui.test.mjs",
-        "game/test/fpv-flight-ui.test.mjs"
+        "game/test/fpv-flight-ui.test.mjs",
+        "game/test/workshop-return.test.mjs",
+        "game/test/content-studio-navigation.test.mjs",
+        "game/test/couch-departure.test.mjs",
+        "game/test/title-mode-departure-host.test.mjs",
+        "game/test/mode-choice-appearance.test.mjs"
       ]
     }
   ]

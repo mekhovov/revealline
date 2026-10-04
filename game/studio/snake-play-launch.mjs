@@ -1,4 +1,5 @@
 import { validateClassicSnakePackage } from '../snake/classic-community.mjs';
+import { nativeArtReviewURL } from '../ui/art-review-navigation.mjs';
 
 /** Pin the selected native package entry before installation can yield. The
  * caller owns foreground intent; a completed storage transaction alone never
@@ -33,5 +34,5 @@ export async function prepareSnakeStudioPlay({
     lang: locale,
     studio: 'snake',
   }).toString();
-  return url.href;
+  return nativeArtReviewURL(url.href, baseURL);
 }
