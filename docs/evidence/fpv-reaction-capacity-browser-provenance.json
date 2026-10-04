@@ -1,0 +1,24 @@
+{
+  "format": "FPVReactionCapacityBrowserProvenance.v1",
+  "sourceRevision": "45d673d3641b16d4dd8c51daa0eb7ce12ba96a4a",
+  "runtimeSha256": "58a89e84edfe8ef4d244218bc60d1d323961a913619b790f30a10c20418378a8",
+  "artifacts": [
+    {
+      "path": "docs/evidence/fpv-reaction-capacity-player.json",
+      "bytes": 1138,
+      "sha256": "69589476faba86f421a1e22313c5513588b58ff6907f5162ea3ac90f9c9cadbb"
+    },
+    {
+      "path": "docs/evidence/fpv-reaction-capacity-player.png",
+      "bytes": 57211,
+      "sha256": "7d26187e019e492be07583138ffd36e9754047b18b803f70f16cbb60738fa4f7"
+    }
+  ],
+  "result": "passed",
+  "qualification": "Actual complete admitted player, retained Clearing check-in session, render/Resume/Pause/Continue and Sound off/on UI integration; no warning/error logs",
+  "limits": [
+    "No fresh course start",
+    "No audible-perception or individual voice-family claim",
+    "No hardware or sustained FPS claim"
+  ]
+}
