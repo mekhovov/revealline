@@ -94,6 +94,15 @@ main `c15c179a2` (optional Adventure examples #1027). Its incoming files are
 optional data, authoring tools, documentation and evidence. The integration
 receipt verifies all 69 frozen source modules still have the exact v6 hashes.
 
+Final lifecycle review adds a 121-byte owned cleanup callback beside the new
+controls. It removes both nodes and clears the detour through the existing
+listener cleanup list. This is separate from the explicit-host-disposal repair;
+it does not change shell teardown or claim same-document remount support. The
+final package observer retains node references, checks that both have no parent
+after disposal, and clicks the detached Return to confirm it cannot restart a
+flight. The v6 source receipt predates this cleanup; final package qualification
+must include it. The coaching runtime delta is 6,281 bytes against main `72d6661b`.
+
 The manual input preparer derives a slower ordinary Warehouse gate flight from
 the existing offline authoring pilot by changing only gate travel speed to
 350 mm/s. Both modes complete without contacts and with full health, and an

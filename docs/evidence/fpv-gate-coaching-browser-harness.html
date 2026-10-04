@@ -71,6 +71,7 @@
         d,
         app,
         sequence = 0,
+        appDisposed = false,
         row,
         playlist;
       window.fixtureStorage = {
@@ -710,6 +711,32 @@
             node('world-return-challenge').hidden &&
             node('world-return-status').textContent === '',
         );
+        progress('Owned coaching controls detach during explicit host disposal');
+        await takeLesson(await originalResult());
+        const oldReturn = node('world-return-challenge'),
+          oldReturnStatus = node('world-return-status');
+        must(
+          'Active detour owns one visible return and its status',
+          d.querySelectorAll('#world-return-challenge').length === 1 &&
+            d.querySelectorAll('#world-return-status').length === 1 &&
+            !oldReturn.hidden &&
+            !oldReturnStatus.hidden,
+        );
+        await bounded(app.dispose(), 'explicit host disposal');
+        appDisposed = true;
+        must(
+          'Disposed coaching controls have no retained parent',
+          oldReturn.parentNode === null && oldReturnStatus.parentNode === null,
+        );
+        click(oldReturn);
+        await wait(30);
+        must(
+          'Detached return cannot restart a disposed flight',
+          app.snapshot().course === undefined &&
+            app.snapshot().state === undefined &&
+            !d.querySelector('#world-return-challenge') &&
+            !d.querySelector('#world-return-status'),
+        );
         errors.push(...w.fixtureErrors);
         equal('No browser errors or unhandled rejections', errors, []);
         $('status').textContent = 'PASS · ' + checks.length + ' checks';
@@ -738,7 +765,7 @@
         $('receipt').value = JSON.stringify(result, null, 2);
         if (w && !previewOnly) {
           w.fixtureReleasePackRead = true;
-          app.pause();
+          if (!appDisposed) app.pause();
         }
         running = false;
         $('run').disabled = $('preview').disabled = false;

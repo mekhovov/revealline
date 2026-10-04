@@ -1053,6 +1053,11 @@ export function mountWorldApp({
   lessonReturnError.setAttribute('role', 'status');
   lessonReturnButton.id = 'world-return-challenge';
   lessonReturnButton.hidden = true;
+  listeners.push(() => {
+    lessonReturn = null;
+    lessonReturnButton.remove();
+    lessonReturnError.remove();
+  });
   $('school-lessons').before(lessonReturnButton);
   function paintLessonReturn(surface = playShell?.topDialog()?.dataset.modeSurface) {
     lessonReturnButton.hidden = !lessonReturn;
