@@ -108,6 +108,37 @@
       "rawSha256": "e08af8e5fee64df04301180cddabb94be9230f959760444d88508bbf61e41fe5",
       "gzipBytes": 9992,
       "gzipSha256": "dd15c742e6d672f20cdf18fe733675befe619b7997d41a2e6e140d0534a53352"
+    },
+    {
+      "path": "fpv-world-disposal-packaged-browser-v5.json.gz",
+      "rawBytes": 173299,
+      "rawSha256": "13e10b0be9f952ec2e0d76cf74f3f1ae198f85576fd21ff138f3e1f8952b6244",
+      "gzipBytes": 16308,
+      "gzipSha256": "1d9d7c0664df15935061860e4345177adddea1931149bf464b7777bccc75aac1",
+      "checks": 94,
+      "passed": 94,
+      "errors": []
+    },
+    {
+      "path": "fpv-world-disposal-packaged-v5-manifest.json.gz",
+      "rawBytes": 23323,
+      "rawSha256": "710740b1a9cfd8a43bd7f57b9b60797f4d7b95929d67b2f2155ab5dcb42640b4",
+      "gzipBytes": 6320,
+      "gzipSha256": "6a8ff2008c159a33400b5561c8cf37fbe7f26121b1a6e2383e7e0ce41ccf3794"
+    },
+    {
+      "path": "fpv-world-disposal-packaged-v5-index.html.gz",
+      "rawBytes": 15456,
+      "rawSha256": "e66367e4c9a152bb28dbc9f1de032eb9aa1356135f0d4e88295e2dfdfb07e26a",
+      "gzipBytes": 4593,
+      "gzipSha256": "af109e5fbaabe313c754b334e1ff0a9f341a06e4e7628aa8b684289a627739b6"
+    },
+    {
+      "path": "fpv-world-disposal-packaged-v5-player.html.gz",
+      "rawBytes": 38411,
+      "rawSha256": "923335c90b5b0c4d433be03f16a7832895479def17456d9def7ff7604fbe7ab5",
+      "gzipBytes": 10001,
+      "gzipSha256": "7061b887a64a697b7370b5575a00cdae91a0565e371875526f5004e0f6a1374f"
     }
   ],
   "restore": "gzip -dc FILE.gz > RESTORED; verify byte count and SHA-256 against this manifest",
@@ -115,6 +146,8 @@
     "v1 fails an overbroad baseline-active assertion after correctly reproducing lobby failure; fault cases not reached.",
     "v2 diagnoses both reorder-only and baseline recovery-save resource leaks; no cleanup success claimed.",
     "v3 was never browser-run: static audit rejected assignment to the frozen Rapier default export. v4 observes prototype methods without changing runtime bytes.",
-    "v4 passes83 source checks; manifest pins pre-Solar frozen modules. Current-main Solar integration is separate and pending package qualification."
-  ]
+    "v4 passes83 source checks on its explicit pre-Solar freeze. v5 uses final d9ad admitted package plus late-error guard and passes94 checks, zero source overlays."
+  ],
+  "finalAdmittedSource": "d9ad2561ee1d7685ef97961478b7de30278c1e48",
+  "finalRuntimeSha256": "6bd30bcd11caa83ccdb36d9bb7c826a9735b5d4549bb49008494921a6a0ba4cc"
 }
