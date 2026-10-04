@@ -5,8 +5,8 @@ with the next independent item developed while source gates and deployment run.
 Additional unit coverage belongs in the final phase. Build, browser, replay,
 import/export and publication verification remain part of every applicable item.
 
-**Current checkpoint:** see “4 October — Current publication and Creator
-transaction boundary” at the end of this log and the active parallel delivery
+**Current checkpoint:** see “5 October — Public21826 and imported catalogue truthfulness”
+at the end of this log and the active parallel delivery
 plan. Earlier tables and heads are history.
 
 ## Delivery queue
@@ -2987,7 +2987,7 @@ through39,525ticks, with ten Rapier worlds freed once.
 
 Source and admitted-package WebGL each pass96checks/43pairs, with exact functional,
 image, draw-budget and resource results. All three source-bound packages pass two
-identical builds; all95inputs are committed and leave11,488B under16MiB. The full
+identical builds; all 95inputs are committed and leave11,488B under16MiB. The full
 102-file admitted player renders, arms0.2s and pauses0.3s with no warning/error
 logs. See [Orchard qualification](fpv-orchard-tree-surfaces.md). Protected publication
 and public availability remain separate; no hardware FPS or whole-world realism
@@ -3177,7 +3177,7 @@ The complete receipts/screenshots are losslessly retained in
 inputs remain exact at16,776,664 bytes with552 bytes reserve; no unfinished shadow
 prototype was included. Focus #1076 merged `b98205d76` and menu #1079 merged
 `e7d06f3c6` through the normal protected path. Library #1080 received an ordinary
-main update to`2cfc24050`; all95 input hashes exactly match the admitted combined
+main update to`2cfc24050`; all 95 input hashes exactly match the admitted combined
 candidate and fresh protected checks are pending. No new public deployment is
 inferred from local or historical package acceptance.
 
@@ -3278,7 +3278,7 @@ Capacity #1085 merged normally as `5bd8f36d7767dcd9dda740865b4d8f19ddbe7c28`
 at19:32:24Z after its current exact-head checks succeeded. Its initial allocation
 hold had preceded milestone57; only that proven obsolete hold was removed, then
 ordinary expected-head main updates and protected merge were used. The language
-branch normally incorporates this semantic-only projection: all95 input paths are
+branch normally incorporates this semantic-only projection: all 95 input paths are
 checked, only world-visuals formatting changes from the admitted candidate, and
 the canonical bytes/AST/tokens/comments/line terminators remain exact. Resulting
 source reserve is41,157B; fresh publication CI remains distinct from historical
@@ -3352,3 +3352,32 @@ its data-only #1090 is in protected publication. The production Library index st
 empty until the finished content and compatible runtime are published and verified. Festival, Harbor and Canals remain sequential after that
 quality standard, followed by D6. Physical-device, novice and universal FPS/offline
 claims remain pending.
+
+### 5 October — Public21826 and imported catalogue truthfulness
+
+Matching public deployment/build markers now identify main 21826c460e80. The
+coordinator used native briefing, deliberately armed at zero throttle, observed
+active flight at 2.4 seconds, then paused at 2.5 seconds with Continue available. The
+[archived public receipt](../authoring/fpv-worlds/catalogue-truthfulness/evidence/public-21826/manifest.json)
+qualifies normal public entry for merged HUD, Creator and compatibility ancestry.
+It does not qualify the still-unpublished first Reservoir row or all component
+matrices on the public origin.
+
+The exact final combined 0b54 admission/native 453 journey, stopped-origin cached
+reopen/edited-course/flight acceptance and 306-control eight-window native session
+are preserved in qualified [PR #1096](https://github.com/mekhovov/revealline/pull/1096).
+First Reservoir row #1094 and qualified Festival r5 #1097 are also Draft under the
+explicit human-authorized P1 #1083 main-merge hold. This procedural state preserves
+heads and qualification; no hold lift, merge, policy change or live-row claim is
+implied. Harbor is the next bounded scene checkpoint after Festival; initial
+water/barge/deck views need revision. Canals and D6 retain their approved order.
+
+The separate imported catalogue correction removes the unverified Explore,
+intermediate and 4-minute defaults. The selected mode can infer only one consistent
+validated tracking kind with holds/landings as Follow or Observe; ambiguous routes
+remain Authored challenge. Built-in metadata, schemas, immutable packs and proof
+identities are unchanged. The manual actual-function/data 284 checks passed,
+including exact Reservoir/Festival pack round trips. Runtime grows 591 bytes in one
+of 95 inputs, leaving 34,987 source bytes before other draft integrations. Native
+fixture 8971 is frozen but unrun at this checkpoint; final admission/publication
+remain pending. See the [focused scope](../authoring/fpv-worlds/catalogue-truthfulness/README.md).
