@@ -196,7 +196,7 @@ is implied by this gate.
    load/disposal session on final integrated source. Optimize only measured costs.
 3. **Integrated reliability:** focus, language access, narrow-screen menus and
    personal-best access are delivered; language/Home phase ownership is now merged.
-   Creator's source correction passed294 native controls after reproducing its
+   Creator's source correction passed 294 native controls after reproducing its
    postcommit refresh/generation-read defects; final exact admitted acceptance is
    pending. Retain dirty course/mode, exact revisions, genuine proofs and recovery,
    including the strict fence against a separate writer. Then qualify the
@@ -222,11 +222,11 @@ content work. Record browser/GPU/device identity before any performance claim.
 ## Capacity and publication
 
 Retain Core 72 MiB / Company 80 MiB and the existing optional-package file/source ceilings.
-Main `3bc7a923d` retains37,758 original source bytes after the verified visual
-projection and merged phase/coating increments, with102/104 runtime files.
-Creator's fresh all-three admission `fc3254382` includes that main plus its323-byte
-correction and retains37,435 bytes. The independently qualified121-byte HUD change
-would leave37,314 bytes when combined; that arithmetic is not a combined admission.
+Main `3bc7a923d` retains 37,758 original source bytes after the verified visual
+projection and merged phase/coating increments, with 102/104 runtime files.
+Creator's fresh all-three admission `fc3254382` includes that main plus its 323-byte
+correction and retains 37,435 bytes. The independently qualified 121-byte HUD change
+would leave 37,314 bytes when combined; that arithmetic is not a combined admission.
 Retain the bounded receipts and admit actual final integration; use existing UI,
 small data manifests and reviewed lossless preparation before proposing a limit
 change. The core budget does not waive the separate World Studio ceiling.

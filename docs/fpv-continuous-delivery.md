@@ -3348,13 +3348,13 @@ publication remains separate. Neither newer merge is inferred publicly live from
 the historical `5bd` entry. No force, bypass or release-policy change was used.
 
 The historical-main `5bd` Creator diagnostic preserved a genuine recording and
-interrupted flight while reproducing two postcommit defects. The focused323-byte
+interrupted flight while reproducing two postcommit defects. The focused 323-byte
 correction uses the committed transaction generation and truthful EN/UK saved-pack
-refresh guidance. Source294 controls pass, including failed install/retry, a real
+refresh guidance. Source 294 controls pass, including failed install/retry, a real
 second-connection revision conflict, exact retained proof/recovery and reopen/Watch.
 The incorrect compiled-view-only fixture edit and its failed assertion are retained.
 Full validation passed on `f1c8641b6`; integrated `fc3254382` has the exact same host
-and94 other inputs matching coating's admitted source,28 existing checks, and fresh
+and 94 other inputs matching coating's admitted source, 28 existing checks, and fresh
 all-three/two-build admission. Zero-overlay admitted browser acceptance remains
 pending. This does not yet establish the later HUD/compatibility combined journey.
 
