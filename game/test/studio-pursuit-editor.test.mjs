@@ -75,3 +75,76 @@ test('pursuit editor creation does not read an unadopted Studio draft', () => {
     setLocale(previous, { persist: false });
   }
 });
+
+test('Studio previews announced direction independently of the body without changing authored routes', (t) => {
+  const document = new Document(),
+    container = document.createElement('div'),
+    create = document.createElement.bind(document),
+    source = createPursuitPilotCandidates({ team: true }),
+    before = structuredClone(source),
+    mission = source.missions.find((entry) => entry.id === 'pincer-yard'),
+    previousLocale = getLocale();
+  document.createElement = (tag) => {
+    const node = create(tag);
+    if (tag === 'canvas') {
+      node.rotations = [];
+      const ctx = new Proxy(
+        {},
+        {
+          get: (state, key) =>
+            key in state
+              ? state[key]
+              : (...args) => {
+                  if (key === 'clearRect') node.rotations.length = 0;
+                  if (key === 'rotate') node.rotations.push(args[0]);
+                },
+        },
+      );
+      node.getContext = () => ctx;
+    }
+    return node;
+  };
+  let applied = 0;
+  const editor = createPursuitEditor({
+    container,
+    getSource: () => source,
+    getMission: () => mission,
+    apply: () => applied++,
+  });
+  t.after(() => {
+    editor.dispose();
+    setLocale(previousLocale, { persist: false });
+  });
+  editor.sync();
+  const choose = (key, value) => {
+    const select = container.querySelector(`[data-pursuit-preview="${key}"]`);
+    select.value = value;
+    select.emit('change');
+    return select;
+  };
+  const portrait = container.querySelectorAll('canvas').find((node) => node.width === 56),
+    behavior = container.querySelector('[data-pursuit-field="behavior"]');
+  choose('direction', 'left');
+  const nextDirection = choose('next-direction', 'right');
+  choose('state', 'warning');
+  assert.equal(nextDirection.parentElement.hidden, false);
+  for (const family of ['refuge', 'switchback', 'sprinter']) {
+    behavior.value = family;
+    behavior.emit('change');
+    assert.deepEqual(portrait.rotations, [-Math.PI / 2, Math.PI / 2], family);
+  }
+  choose('next-direction', 'up');
+  assert.deepEqual(portrait.rotations, [-Math.PI / 2, 0]);
+  choose('state', 'walk');
+  assert.equal(nextDirection.parentElement.hidden, true);
+  assert.deepEqual(portrait.rotations, [-Math.PI / 2]);
+  behavior.value = 'shield';
+  behavior.emit('change');
+  choose('state', 'turning');
+  assert.deepEqual(portrait.rotations, [-Math.PI / 2, -Math.PI / 2, 0]);
+  setLocale('uk', { persist: false });
+  assert.match(nextDirection.parentElement.textContent, /Наступний напрямок для перегляду/);
+  assert.equal(nextDirection.value, 'up');
+  assert.equal(applied, 0);
+  assert.deepEqual(source, before, 'Preview choices cannot rewrite headings, routes or revisions');
+});
