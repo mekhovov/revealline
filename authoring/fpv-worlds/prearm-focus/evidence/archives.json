@@ -1,0 +1,61 @@
+{
+  "format": "FPVPrearmFocusEvidence.v1",
+  "files": [
+    {
+      "file": "existing-baseline-failures.tap.gz",
+      "bytes": 1809,
+      "sha256": "560337db4bd85cd613e35a9385edad9e24622d0fd5706a334c0d159855ea457a",
+      "originalBytes": 6266,
+      "originalSha256": "15e4377afc34063e7ab3a59ee5884844a4e111d6b22736f64e4854002013df91"
+    },
+    {
+      "file": "existing-candidate-checks.tap.gz",
+      "bytes": 1053,
+      "sha256": "7051968a67afcea88d9d9b252b6c8765db0e06d3e796565527fbe8ac6d80f3c2",
+      "originalBytes": 3871,
+      "originalSha256": "a09d673c5a4f867bf842f7d5d0e6010f0be65c438dcded27ca79545fda9932f6"
+    },
+    {
+      "file": "source-browser-r2.json.gz",
+      "bytes": 9531,
+      "sha256": "ec525883f8a28d7d3cd03ade87d966aab200f498a9f05381c0be939b4bc66e6c",
+      "originalBytes": 63856,
+      "originalSha256": "9aea8cde0c3bf5582e2c0b306a5e15799720858b1d48a1038995ca5e4c5c7086"
+    },
+    {
+      "file": "source-browser-r2.png",
+      "bytes": 24696,
+      "sha256": "72fc3c7984651fdcfdf8a825b2de44e4876903874dfbad93fe2a4fccea9609b9",
+      "originalBytes": 24696,
+      "originalSha256": "72fc3c7984651fdcfdf8a825b2de44e4876903874dfbad93fe2a4fccea9609b9"
+    },
+    {
+      "file": "unrun-r1-fixture.json.gz",
+      "bytes": 6036,
+      "sha256": "9f37f352ccb2ea1a8228f37ace65e0086f5e1d890e56b7e6ff3a6b6d746f81b4",
+      "originalBytes": 25481,
+      "originalSha256": "00ea084fee085b3019201bf527d72b884e61176a583f381e38c706bb70260487"
+    },
+    {
+      "file": "unrun-r1-harness.mjs.gz",
+      "bytes": 3094,
+      "sha256": "1fbbf7738aa445a7fe3b8243b760d9673551374adfa998eb4d939ff53b5a2cb8",
+      "originalBytes": 9298,
+      "originalSha256": "7a5c615b4ecf4caff3b70eb4859e4602bd76fd374e7bb0a76fb9824fd5a0aebd"
+    },
+    {
+      "file": "source-r2-fixture.json.gz",
+      "bytes": 6037,
+      "sha256": "3f1ce3d63cdadf4f028a557d49c9bcf653a13f6a020028c4cf7c51fd89836ff2",
+      "originalBytes": 25481,
+      "originalSha256": "15779ad812fb8863f7a0f716065b815ae2cb0bfd455efc6636b97de9752e3f1f"
+    },
+    {
+      "file": "source-r2-harness.mjs.gz",
+      "bytes": 3138,
+      "sha256": "c1bbfde29e8c5c17e1be11acc4032391941d03cd97421b335cc020c74305e891",
+      "originalBytes": 9455,
+      "originalSha256": "34fbe48bffaddab99bba6e4797ed32dbd0017f22ffda453c6abaad37591aedec"
+    }
+  ]
+}
