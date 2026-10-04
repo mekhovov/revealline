@@ -3376,8 +3376,15 @@ The separate imported catalogue correction removes the unverified Explore,
 intermediate and 4-minute defaults. The selected mode can infer only one consistent
 validated tracking kind with holds/landings as Follow or Observe; ambiguous routes
 remain Authored challenge. Built-in metadata, schemas, immutable packs and proof
-identities are unchanged. The manual actual-function/data 284 checks passed,
-including exact Reservoir/Festival pack round trips. Runtime grows 591 bytes in one
-of 95 inputs, leaving 34,987 source bytes before other draft integrations. Native
-fixture 8971 is frozen but unrun at this checkpoint; final admission/publication
-remain pending. See the [focused scope](../authoring/fpv-worlds/catalogue-truthfulness/README.md).
+identities are unchanged. Both manual actual-function/data runs passed 284 checks,
+including exact Reservoir/Festival pack round trips. Native 8971 passed its first
+364 controls but timed out on a fixture label predicate despite actual replay
+completion; the failure is retained. Corrected observer run 8974 completed 423
+controls and reproduced a separate product defect: an Acro replay changed the
+selected mode while Missions retained the previous Follow label until a filter
+repaint. The narrow correction repaints when Missions opens. Its immutable 8976
+fixture passed 424 checks and 14 samples, requiring Observe immediately before any
+filter change; both native owners recorded no warnings or errors. Final admission
+and protected publication remain pending. Runtime grows 620 bytes in one of
+95 inputs, leaving 34,958 source bytes before other draft integrations. See the
+[focused scope](../authoring/fpv-worlds/catalogue-truthfulness/README.md).
