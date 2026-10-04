@@ -1,13 +1,11 @@
 # FPV continuous feature delivery
 
-Updated 2026-10-04. The owner requests a verified PR after each completed feature,
+Updated 2026-10-05. The owner requests a verified PR after each completed feature,
 with the next independent item developed while source gates and deployment run.
 Additional unit coverage belongs in the final phase. Build, browser, replay,
 import/export and publication verification remain part of every applicable item.
 
-**Current checkpoint:** see “4 October — Current publication and Creator
-transaction boundary” at the end of this log and the active parallel delivery
-plan. Earlier tables and heads are history.
+**Current scoped checkpoint:** see “5 October — Stick geometry observation qualified; publication held” at the end of this log, the active parallel delivery plan and the coordinator’s central checkpoint. Earlier tables and heads are history.
 
 ## Delivery queue
 
@@ -3352,3 +3350,44 @@ its data-only #1090 is in protected publication. The production Library index st
 empty until the finished content and compatible runtime are published and verified. Festival, Harbor and Canals remain sequential after that
 quality standard, followed by D6. Physical-device, novice and universal FPS/offline
 claims remain pending.
+
+
+### 5 October — Stick geometry observation qualified; publication held
+
+The separate Worlds display-only candidate `34ddde3ed0416f0e90aae8170101bd6a6c8d08e2`
+replaces unchanged per-frame stick width reads with one owned ResizeObserver,
+preserving exact integer padding-box radius, current axes, synchronous source/display
+changes and the original no-observer fallback. Physics, recorder/input pickup and
+Academy's separate implementation are unchanged. Its +937 original-source bytes
+retain the existing 104-file/16MiB limits.
+
+Native source qualification passed1,338 geometry controls (46 cases each for baseline,
+candidate and explicit no-observer fallback),2,400 manual exact-source display
+comparisons, and372 timing controls across eight5s windows. Mixed-scene paired host
+RAF plus ResizeObserver callback means changed1.706→1.249ms and1.678→1.181ms for Yard
+Ready/playback,1.652→1.101ms and1.663→1.281ms for Reservoir. Stable candidate windows
+read no stick widths. These are measured callback costs, not whole-frame CPU, GPU
+time, input latency, FPS or hardware qualification. Native start ticks differed by
+one during playback; final ticks, settings/canvas and corresponding registered
+resources matched. No qualifying LoAF entries does not mean no jank.
+
+Clean admission `d73f573e492978fdbded369d4b009e78d644f296` passed full validation,
+15 existing controls and all-three/two-byte-identical package builds. Its102-member
+Worlds player has95 independently rechecked inputs totaling16,742,575B, leaving
+34,641B. Actual unmodified admitted entry8978 passed Ready/Arm/active/Pause,
+Expanded+Touch settings and deliberate Continue, then Compact+Keyboard restoration
+while paused; warnings/errors were zero. This adds no flight-completion, physical
+touch, new offline or public-deployment claim. All registered renderer resources
+and owned observer targets were released in the separate functional matrix.
+
+[The focused evidence](../authoring/fpv-worlds/stick-geometry/README.md) retains all
+failed fixtures and complete successful receipts losslessly, including the earlier
+unexplained timing canvas change. No production fix is claimed for that discarded
+comparison. The source/package identity and raw observer limits remain explicit.
+
+The verified human #1083/P1 delivery hold still applies to main merges. This
+completed increment is published only as a **Draft PR**, without fastline or
+auto-merge enrollment; fresh protected checks/publication remain separate. The
+first Library row #1094 and combined/endurance evidence #1096 remain independently
+tracked. This checkpoint does not finish broader D1 performance/physical-device
+acceptance, D5's remaining worlds, or deferred D6 coverage.
