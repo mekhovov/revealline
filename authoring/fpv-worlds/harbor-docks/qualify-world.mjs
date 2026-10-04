@@ -34,15 +34,19 @@ if (!packArg || !outputArg || (option && option !== '--clearance-only'))
   throw Error('Use EXACT_PACK NEW_OUTPUT [--clearance-only]');
 const output = path.resolve(outputArg),
   axes = ['x', 'y', 'z'],
+  supportLimit = 14,
   hash = (b) => createHash('sha256').update(b).digest('hex'),
   bytes = await readFile(packArg),
   inspected = await inspectPack(new Blob([bytes])),
   project = inspected.project;
 if (
+  project.revision !== 'r4' ||
   project.courses.length !== 8 ||
-  project.courses.some((c, i) => c.id !== 'harbor-docks-' + String(i + 1).padStart(2, '0'))
+  project.courses.some(
+    (c, i) => c.revision !== 'r4' || c.id !== 'harbor-docks-' + String(i + 1).padStart(2, '0'),
+  )
 )
-  throw Error('Eight actual Harbor courses in stable order required');
+  throw Error('Eight actual Harbor r4 courses in stable order required');
 await mkdir(output);
 const checks = [],
   flights = [],
@@ -59,6 +63,26 @@ const checks = [],
     checks,
     flights,
     tickHz: WORLD_FLIGHT_HZ,
+    groundMotion: {
+      policy: 'support-v1',
+      prerequisite: '9b5c3d65e2877847126c87f263fbc7e9aca357fb',
+      maxFlatSupportGapMm: supportLimit,
+      equation:
+        'Native controller10mm +1mm downward request +1mm integer clearance =12mm normal clearance. On these flat supports allow two further1mm native/support rounding steps, maximum14mm. Measure signed feetY minus authored solid.max.y independently, and retain native support-ray gap separately. No pose correction or objective tolerance change.',
+    },
+    runtime: await Promise.all(
+      [
+        'world-model.mjs',
+        'world-collision.mjs',
+        'world-records.mjs',
+        'vendor/rapier/rapier.mjs',
+      ].map(async (file) => {
+        const bytes = await readFile(
+          new URL('../../../optional-practice/civilian-fpv/' + file, import.meta.url),
+        );
+        return { file, bytes: bytes.length, sha256: hash(bytes) };
+      }),
+    ),
     scope:
       option === '--clearance-only'
         ? 'Static source/collision survey only; no ordinary-flight or visual acceptance.'
@@ -147,10 +171,18 @@ try {
       'Only follow, observe and isolated training layouts own actors',
       project.courses.every((c, i) => c.actors.length === (i >= 4 && i <= 6 ? 1 : 0)),
     );
+    check(
+      'Only the two civilian ground subjects explicitly opt into support-v1',
+      project.courses.every((c, i) =>
+        c.actors.every((a) =>
+          i === 4 || i === 5 ? a.groundMotion === 'support-v1' : a.groundMotion === undefined,
+        ),
+      ),
+    );
     for (const c of project.courses.filter((c) => c.actors.some((a) => a.role === 'civilian'))) {
       const subject = c.actors[0],
         target = c.steps['self-level'].find((s) => s.type === 'actor-track-v1');
-      collision.addActor(subject);
+      collision.addActor(subject, subject.groundMotion);
       check(c.id + ' real actor spawn is clear', collision.clearActorSpawn(subject));
       check(
         c.id + ' actual civilian subject and tracking objective',
@@ -201,11 +233,9 @@ try {
           !blocked &&
             Math.abs(position.x - goal.x) <= 3 &&
             Math.abs(position.z - goal.z) <= 3 &&
-            // The unchanged10mm character-controller contact margin can settle
-            // slightly inside a finite box, unlike its half-space floor. Keep
-            // actual returned poses; allow12mm including integer rounding on
-            // every segment sample and separately require the named support.
-            maxSupportDeviation <= 12,
+            // r4 opts into12mm normal clearance plus at most two1mm rounding
+            // steps. Historical r3 <=12mm failures remain unchanged.
+            maxSupportDeviation <= supportLimit,
           { goal, position, blocked, maxSupportDeviation },
         );
         const support = c.id.endsWith('05') ? 'platform-quay' : 'platform-service-deck';
@@ -347,7 +377,18 @@ try {
           supportTicks = Object.fromEntries(
             course.actors
               .filter((a) => a.role === 'civilian')
-              .map((a) => [a.id, { samples: 0, failures: 0, firstFailures: [] }]),
+              .map((a) => [
+                a.id,
+                {
+                  samples: 0,
+                  failures: 0,
+                  minFlatGap: null,
+                  maxFlatGap: null,
+                  minRayGap: null,
+                  maxRayGap: null,
+                  firstFailures: [],
+                },
+              ]),
           ),
           actorHeightDeviation = Object.fromEntries(course.actors.map((a) => [a.id, 0])),
           actorTravel = Object.fromEntries(course.actors.map((a) => [a.id, 0]));
@@ -395,19 +436,36 @@ try {
                     ? 'platform-quay'
                     : 'platform-service-deck',
                   actual = supportSurvey.support(
-                    { ...actor.position, y: actor.position.y + 12 },
+                    { ...actor.position, y: actor.position.y + supportLimit },
                     actor.radius,
                     30,
                   ),
+                  solid = course.obstacles.find((o) => o.id === expected),
+                  flatGap = actor.position.y - solid.max.y,
+                  rayGap = actual && actor.position.y - actual.y,
                   summary = supportTicks[actor.id];
                 summary.samples++;
-                if (actual?.id !== expected || Math.abs(actual.y - actor.position.y) > 12) {
+                summary.minFlatGap = Math.min(summary.minFlatGap ?? flatGap, flatGap);
+                summary.maxFlatGap = Math.max(summary.maxFlatGap ?? flatGap, flatGap);
+                if (actual) {
+                  summary.minRayGap = Math.min(summary.minRayGap ?? rayGap, rayGap);
+                  summary.maxRayGap = Math.max(summary.maxRayGap ?? rayGap, rayGap);
+                }
+                if (
+                  actual?.id !== expected ||
+                  flatGap < 0 ||
+                  flatGap > supportLimit ||
+                  rayGap < 0 ||
+                  rayGap > supportLimit
+                ) {
                   summary.failures++;
                   if (summary.firstFailures.length < 16)
                     summary.firstFailures.push({
                       tick: state.ticks,
                       expected,
                       actual,
+                      flatGap,
+                      rayGap,
                       position: actor.position,
                     });
                 }
@@ -505,7 +563,7 @@ try {
                 '/' +
                 mode +
                 ' actual raised-support height stays within controller margin',
-              actorHeightDeviation[criterion.actorId] <= 12,
+              actorHeightDeviation[criterion.actorId] <= supportLimit,
               actorHeightDeviation,
             );
             check(
