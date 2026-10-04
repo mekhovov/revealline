@@ -3071,3 +3071,66 @@ restored afterward. The raw receipt and screenshots are in the starter evidence.
 This is not device-wide offline, browser restart, storage eviction or public-path
 qualification. Neither this increment nor browser checks close full D4, hardware,
 novice or sustained-FPS acceptance. Additional unit coverage remains in D6.
+
+
+### 4 October — Owner reallocation and publication completion
+
+The owner adopted publication first, engineering concentrated on performance,
+Library delivery and integrated reliability, and art/content concentrated on
+Reservoir as the representative quality standard. Festival is preserved at
+47f8e36e; finish Festival, Harbor and Canals one at a time after that standard,
+then D6. Functional verification remains continuous; extra unit coverage is D6.
+The allocation is recorded in #1069 on codex/fpv-allocation-priorities.
+
+Completed protected publication:
+- #1065 merged bf9b0290970f548738c719fbd47d57be93004be2; its marker and native
+  public launch/zero-throttle arming/pause were verified.
+- #1067 merged 29e23a11fa2e6226b1970855f9a6ef63b870c652. Frozen admitted
+  readiness candidate 53d passed 141 actual browser checks; no general FPS gain.
+- #1066 merged 94548aa26d489ecd93ec23274208fb7a6dd733e7 after exact-head
+  500ee518e4a7210d3de5fce304d0f2d02a8793da checks and holds were audited.
+  All 18 Reservoir tree children match qualified 34ba byte-for-byte; the latest
+  ordinary merge only incorporated accepted main. No stack/bypass was needed.
+- Public main-deployment.json now identifies 94548. Root reloaded the native
+  public SIM, started Lift and land, armed at zero throttle and paused normally.
+  Reservoir's production Library registration still remains; general SIM entry
+  does not imply that a newly published optional pack is already discoverable.
+
+Current independent candidates:
+- Library worker preparation 503d62f4a77ef29b032ce55016bc2e13ad75bee8, clean
+  codex/fpv-generated-worker-capacity in garage checkout. Recovers 1716 bytes;
+  exact AST/tokens/comments/line endings plus generator/lint/scoped checks pass.
+  Current-main integration, full admissions and admitted worker smoke remain.
+- Library dedicated-worker transport a0784ea613 is preserved separately. The old
+  source fixture's 195 passes predate transport; its page-fetch admission FAILED
+  the existing guard. Do not reuse that evidence for actual Worker cancellation,
+  transfer/hash/truncation/fault qualification or weaken the network guard.
+- Menu access 7e6b2e227178aad638a980ec159a75425b6683a9, clean
+  codex/fpv-library-menu-access in /private/tmp/fpv-delivery-review-20261004.
+  Reachable EN/UK and 320/390px source UI checks passed; full admission remains.
+- Focus runtime 58d89b606b068be706e1914c4e083a32d7e623fe and corrected fixture
+  c205ffd070b753990caee0c2110fc03c38762f85 in editor checkout.
+  Actual native-browser r2 passes 145/145, including trusted Tab/Shift+Tab,
+  retained appearance focus/parent menu and deliberate subsequent arm.
+  /tmp/fpv-prearm-focus-r2.json and PNG were saved. This is declared-source-overlay
+  evidence, not current-main/package admission. Existing 16 checks also pass.
+  Audio runtime unchanged; only the old diagnostic's initial-snapshot assumption
+  was corrected. Admission/current-main integration/publication remain.
+- Reservoir terrain-stitching branch is clean at published 34ba; Festival 47f8
+  and its recovery ref remain intact. Root and art audit confirmed sky-colored
+  slivers at the terrace/ridge join. Proposed narrow boundary closure adds
+  34 triangles, reuses existing material and preserves collision/routes.
+  FIRST WRITE FAILED ENOSPC; source SHA beea7973e6ae1e6adfa33d326ca5dfd46b525ad08aa87eb88dd864843933daa5
+  remains intact. No repaired asset/proof claim.
+
+Next performance investigation: matched Yard and actor-free first-ready actor/
+camera initialization versus shader preparation, native clocks, same state/pose,
+actor/program/resource counts and first/second draw. Existing timing evidence is
+mixed; no cache expansion or broad physics/rendering rewrite is justified.
+
+Storage remains an external blocker despite fluctuating df free-space figures
+(116-481 MiB). Tiny source/plan writes still fail ENOSPC. Root's earlier local
+delivery-log append did NOT persist; this remote checkpoint preserves the state.
+All original worktrees/source/failures/published packs remain. Do not delete
+unknown Git packs, repeat heavy builds or claim failed writes succeeded.
+User has been asked to free at least 2 GiB. No automation state was changed.
