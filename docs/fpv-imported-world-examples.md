@@ -1,7 +1,8 @@
 # Examples for installed worlds
 
 The source browser passes **47/47 checks**, including both complete rendered
-demonstrations. Final package admission and publication remain pending. This is
+demonstrations. All three packages pass source-bound admission with two identical
+builds; the final packaged browser and publication remain pending. This is
 a focused D5 prerequisite, independent of the capacity and D4 editor changes.
 
 An installed world can import and verify a demonstration yet have no Watch action:
@@ -29,7 +30,28 @@ all 95 original inputs with qualified disposal source `d9ad2561e`: 94 are exact,
 and the host is the sole 474-byte delta. This branch totals 16,771,214 original
 source bytes with 6,002 bytes free before integrating the independent capacity,
 coaching or editor increments. No input path or policy changes. This audit is
-not a replacement for final source-bound package admission.
+consistent with the completed source-bound package admission described below.
+
+Candidate `79a721dd19343726fed30f618a2d7c8cd164d691` integrates main
+`b625c933c0628ad16e4d4cacae9c8f1c1665ab15` (starter data/docs only). Its host is
+byte-identical to the accepted source browser. Full `npm run validate` and scoped
+lint pass. Existing runtime, notebook, content, archive and appearance checks
+pass 56/57: the remaining pre-arm appearance-focus assertion is the previously
+reproduced baseline failure, not a claimed pass. The exact commands and limits
+are in [local checks](evidence/fpv-imported-examples-local-checks.json).
+
+The [admission receipt](evidence/fpv-imported-examples-admission.json) verifies
+all three packages, two identical builds, committed original inputs and ZIP
+members. The Worlds player has 102 members totaling 15,565,052 bytes. Its ZIP
+SHA-256 is `616faa168dfdc1023accf1eae2753cbe9c1c8b9cb148b1c4a6c60047fc72e02a`.
+The [staging receipt](evidence/fpv-imported-examples-admitted-player.json)
+checks every member twice and reuses 99 immutable admitted files; only three
+files (287,535 bytes) are newly written. The package browser fixture uses this
+exact player and candidate host without a source overlay. It keeps the explicit
+baseline comparison, private storage and controlled scheduling; its frozen
+wrappers are bound in [package provenance](evidence/fpv-imported-examples-package-provenance.json).
+This admission precedes the separately qualified capacity merge; it does not
+claim a combined latest-main package or installed/public release acceptance.
 
 The manual preparer executes the actual private lookup functions extracted from
 the host through Acorn, with real course validators and recorded proofs. Its 46
