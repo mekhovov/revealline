@@ -669,3 +669,18 @@ requires deployment identity and a real player launch. They do not replace the
 larger remaining art work with an unsupported same-quality claim. Reuse existing
 licensed resources and original geometry; this inspection does not establish
 redistribution permission for FlightDivision's proprietary models or textures.
+
+### D1 graphics ownership checkpoint — 4 October 2026
+
+The bounded environment-light reuse and graphics-loss recovery increment is
+locally qualified at `06d154e76` on published main `47d2019d`. Full validation,
+63 manual checks, 30 existing checks, three reproducible source-bound admissions
+and the actual 102-file editor loss/restoration smoke pass. The final editor
+preserves its existing reload requirement; flight Retry has separate actual-host
+evidence. See [the qualification](fpv-environment-light-reuse.md) for exact
+candidate bridges and the retained v5 imported-image discrepancy.
+
+Proceed with protected publication, then follow deployment identity and an
+actual public launch. The earlier 15–17 second pauses remain unreproduced; this
+increment does not close sustained named-device performance, broad image
+determinism, remaining art acceptance or deferred D6 unit coverage.
