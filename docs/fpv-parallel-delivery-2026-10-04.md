@@ -68,8 +68,9 @@ separate proof imports and passed all 453 native controls on frozen source
 manual runs are retained: a wrong
 Results/Home Retry selector, then a cleanup assertion requiring a renderer in a
 reopened lobby that never created one. Neither was repaired by changing product
-behavior or weakening flight guards. Published Browse and cached-native offline
-acceptance remain separate gates.
+behavior or weakening flight guards. That historical source6c fixture did not
+establish offline behavior; the later exact admitted8966 stopped-origin result
+is recorded above. Published Browse/download remains pending.
 
 Reservoir r16's retaining surfaces, rooted vegetation and maintenance-hut review
 are accepted within the recorded views. Its 575 CPU checks / 16 fresh ordinary
