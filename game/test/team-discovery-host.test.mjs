@@ -5,6 +5,7 @@ import { deferred, waitFor } from './helpers/coop-presentation-fixture.mjs';
 import { COOP_STARTER_PACK } from '../coop/library.mjs';
 import { COOP_PICTURE_BINDINGS } from '../couch/coop-picture-bindings.mjs';
 import { TEAM_ARENA_PREFERENCE_KEY } from '../couch/team-arena-preference.mjs';
+import { TEAM_CONTEXTUAL_TEACHING_FORMAT } from '../couch/team-contextual-teaching.mjs';
 
 // Actual Team markup, host, prepared originals and simulation. Finite DOM/Image
 // boundaries do not establish native layout, physical devices or public play.
@@ -40,8 +41,13 @@ const prepared = (f, title) =>
   );
 async function started(f, title) {
   await prepared(f, title);
-  if (!f.$('coop-overlay').hidden && /Start together/.test(f.$('coop-resume').textContent))
+  if (!f.$('coop-overlay').hidden && /Start together/.test(f.$('coop-resume').textContent)) {
+    // Observe released input in the new briefing before the separate Start.
+    f.tick(2);
+    assert.equal(f.$('coop-overlay').hidden, false);
+    assert.equal(f.$('coop-clock').textContent, '0:00');
     enter(f, f.$('coop-resume'));
+  }
   await waitFor(() => f.$('coop-overlay').hidden);
 }
 function pause(f) {
@@ -122,18 +128,19 @@ test('a newer Back focus during Play admission prevents preparation and keeps th
   f.$('coop-discovery-cancel').addEventListener('focusin', () => {
     if (!redirect) return;
     redirect = false;
-    f.$('coop-level').focus();
+    // The arena selector now belongs to Settings; redirect to its visible opener.
+    f.$('coop-settings-open').focus();
   });
   enter(f, card(f, 'Relay Yard'));
   await new Promise((resolve) => setImmediate(resolve));
   assert.equal(f.artwork.calls.reads.length, reads);
-  assert.equal(f.doc.activeElement.id, 'coop-level');
+  assert.equal(f.doc.activeElement.id, 'coop-settings-open');
   assert.equal(dialog(f).open, false);
   assert.equal(f.$('coop-menu').hidden, false);
   assert.equal(f.$('coop-level').value, 'first-connection');
 });
 
-test('successful built-in discovery updates only the existing Team arena bookmark', async (t) => {
+test('successful built-in discovery updates its arena bookmark and introductory teaching only', async (t) => {
   const values = new Map();
   const writes = [];
   const f = await page(t, {
@@ -154,7 +161,12 @@ test('successful built-in discovery updates only the existing Team arena bookmar
   await prepared(f, 'Relay Yard');
   assert.deepEqual(writes, [], 'Preparation does not persist a started attempt or arena bookmark.');
   await started(f, 'Relay Yard');
-  assert.deepEqual(writes, [TEAM_ARENA_PREFERENCE_KEY]);
+  assert.deepEqual(writes, [TEAM_CONTEXTUAL_TEACHING_FORMAT, TEAM_ARENA_PREFERENCE_KEY]);
+  assert.deepEqual(JSON.parse(values.get(TEAM_CONTEXTUAL_TEACHING_FORMAT)), {
+    format: TEAM_CONTEXTUAL_TEACHING_FORMAT,
+    introduced: ['cut'],
+    completed: [],
+  });
   const bookmark = JSON.parse(values.get(TEAM_ARENA_PREFERENCE_KEY));
   assert.equal(bookmark.levelId, 'relay-yard');
   assert.equal(bookmark.packId, COOP_STARTER_PACK.id);
@@ -162,14 +174,18 @@ test('successful built-in discovery updates only the existing Team arena bookmar
 });
 
 test('a bookmark callback with a newer focus choice is not overwritten after accepted Play', async (t) => {
+  const callbackFocus = [];
   const f = await page(t, {
     ...options,
-    beforeImport: ({ install, $ }) =>
+    beforeImport: ({ install, $, doc }) =>
       install('localStorage', {
         value: {
           getItem: () => null,
           setItem(key) {
-            if (key === TEAM_ARENA_PREFERENCE_KEY) $('coop-pause').focus();
+            if (key === TEAM_ARENA_PREFERENCE_KEY) {
+              $('coop-pause').focus();
+              callbackFocus.push(doc.activeElement.id);
+            }
           },
         },
       }),
@@ -177,6 +193,11 @@ test('a bookmark callback with a newer focus choice is not overwritten after acc
   await open(f);
   enter(f, card(f, 'Relay Yard'));
   await started(f, 'Relay Yard');
+  assert.deepEqual(
+    callbackFocus,
+    ['coop-pause'],
+    'The visible Pause action accepted native focus.',
+  );
   assert.equal(f.doc.activeElement.id, 'coop-pause');
   assert.equal(f.$('coop-overlay').hidden, true);
 });

@@ -455,16 +455,19 @@ test('historical nine packs retain their budget boundary; optional pressure chap
   const archiveIndex = JSON.parse(
     await readFile(path.join(ROOT, 'game/content/packs/archive-index.json')),
   );
-  assert.equal(index.packs.length, 8);
-  assert.equal(archiveIndex.packs.length, 6);
+  assert.equal(index.packs.length, 10);
+  assert.equal(archiveIndex.packs.length, 4);
   const historicalRefs = [
     ...index.packs.filter(
       (entry) =>
-        !['fpv-arcade-r5', 'fpv-pressure-frontier', 'neon-reference-pack'].includes(entry.id),
+        ![
+          'fpv-arcade-r5',
+          'fpv-pressure-frontier',
+          'neon-reference-pack',
+          'neon-mosaic-pack',
+        ].includes(entry.id),
     ),
-    ...archiveIndex.packs.filter(
-      (entry) => !['fpv-arcade-r4', 'neon-reference-pack', 'neon-mosaic-pack'].includes(entry.id),
-    ),
+    ...archiveIndex.packs.filter((entry) => entry.id !== 'fpv-arcade-r4'),
   ];
   assert.equal(historicalRefs.length, 9);
   const known = new Map(
@@ -566,29 +569,47 @@ test('historical nine packs retain their budget boundary; optional pressure chap
         assert.equal(dimensions.valid, true);
         known.set(dataUrl, dimensions);
       }
+  // Neon chapters are now public choices. The installed-library cap still
+  // applies to the selected collection; publication does not install all packs.
+  const neonIds = new Set(neonPacks.map((pack) => pack.id));
+  const boundedRefs = index.packs.filter((entry) => !neonIds.has(entry.id));
+  assert.equal(boundedRefs.length, 8);
   const active = [];
-  for (const entry of index.packs) {
+  for (const entry of boundedRefs) {
     const source = JSON.parse(await readFile(path.join(ROOT, 'game/content/packs', entry.path)));
     active.push((await preparePack(source, { decodeImage })).pack);
   }
   const activeText = JSON.stringify({ format: 'xonix-pack-library.v1', packs: active });
   assert.ok(Buffer.byteLength(activeText) < PACK_LIMITS.libraryBytes);
   const installed = await importPackLibrary(activeText, { decodeImage });
-  assert.equal(installed.packs.length, 8);
-  for (const { id, path: packPath } of archiveIndex.packs) {
+  assert.equal(installed.packs.length, boundedRefs.length);
+  const allPublished = JSON.stringify({
+    format: 'xonix-pack-library.v1',
+    packs: [...active, ...neonPacks],
+  });
+  assert.ok(Buffer.byteLength(allPublished) > PACK_LIMITS.libraryBytes);
+  decoded = 0;
+  await assert.rejects(importPackLibrary(allPublished, { decodeImage }), /byte budget/);
+  assert.equal(decoded, 0, 'Published availability cannot bypass installed-library admission.');
+  const optionalRefs = [
+    ...archiveIndex.packs,
+    ...index.packs.filter((entry) => neonIds.has(entry.id)),
+  ];
+  assert.equal(optionalRefs.length, 6);
+  for (const { id, path: packPath } of optionalRefs) {
     const archived = (
       await preparePack(
         JSON.parse(await readFile(path.join(ROOT, 'game/content/packs', packPath))),
         { decodeImage },
       )
     ).pack;
-    // All eight active chapters fit; another image-heavy edition cannot silently
+    // The eight-chapter collection fits; another image-heavy edition cannot silently
     // evict a chapter or raise the 48 MiB library cap. A deliberate removal makes room.
     assert.throws(() => installPack(installed, archived), /byte budget/);
     assert.equal(exportPackLibrary(installed), activeText);
     const smaller = removePack(installed, 'fpv-pressure-frontier');
     const withArchive = installPack(smaller, archived);
-    assert.equal(withArchive.packs.length, 8);
+    assert.equal(withArchive.packs.length, boundedRefs.length);
     const bytes = exportPackLibrary(withArchive);
     assert.ok(Buffer.byteLength(bytes) <= PACK_LIMITS.libraryBytes);
     assert.equal(exportPackLibrary(await importPackLibrary(bytes, { decodeImage })), bytes);
