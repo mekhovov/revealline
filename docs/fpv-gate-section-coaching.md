@@ -89,6 +89,11 @@ context. No stale error-handler write occurs. The receipt is
 All earlier failed receipts remain failures. Package admission and the matching
 packaged host run are still pending at this source checkpoint.
 
+Normal merge `ef82afc0b1721a1e1254e4a36032d480a2d8bb77` incorporates published
+main `c15c179a2` (optional Adventure examples #1027). Its incoming files are
+optional data, authoring tools, documentation and evidence. The integration
+receipt verifies all 69 frozen source modules still have the exact v6 hashes.
+
 The manual input preparer derives a slower ordinary Warehouse gate flight from
 the existing offline authoring pilot by changing only gate travel speed to
 350 mm/s. Both modes complete without contacts and with full health, and an
