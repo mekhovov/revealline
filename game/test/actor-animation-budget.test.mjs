@@ -1,5 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import { getEventListeners } from 'node:events';
+import { waitFor } from './helpers/wait-for.mjs';
 import {
   ACTOR_DECODED_BYTES,
   COMPACT_ACTOR_DECODED_BYTES,
@@ -288,4 +290,146 @@ test('animation round-trips data, freezes effects and rejects gameplay fields', 
     validateActorAnimation({ ...source, clips: { ...source.clips, execute: 'alert(1)' } }),
   );
   assert.throws(() => validateActorAnimation({ ...source, parts: ['custom-script'] }));
+});
+
+test('many live artwork leases share one abort listener and release independently', async () => {
+  const pool = createActorArtPool({ limit: 128 }),
+    owner = new AbortController(),
+    closed = [],
+    leases = [];
+  for (let index = 0; index < 24; index++)
+    leases.push(
+      await pool.acquire({
+        key: `actor-${index}`,
+        width: 1,
+        height: 1,
+        signal: owner.signal,
+        load: () => ({ width: 1, height: 1, close: () => closed.push(index) }),
+      }),
+    );
+  assert.equal(getEventListeners(owner.signal, 'abort').length, 1);
+  assert.equal(pool.stats().leases, 24);
+  for (const lease of leases.slice(0, 12)) {
+    lease.release();
+    lease.release();
+  }
+  assert.equal(closed.length, 12);
+  assert.equal(pool.stats().leases, 12);
+  assert.equal(getEventListeners(owner.signal, 'abort').length, 1);
+  owner.abort();
+  assert.equal(new Set(closed).size, 24);
+  assert.equal(closed.length, 24);
+  assert.equal(getEventListeners(owner.signal, 'abort').length, 0);
+  assert.deepEqual(pool.stats(), {
+    limit: 128,
+    reservedBytes: 0,
+    decodedBytes: 0,
+    entries: 0,
+    leases: 0,
+  });
+  await assert.rejects(
+    pool.acquire({
+      key: 'already-aborted',
+      width: 1,
+      height: 1,
+      signal: owner.signal,
+      load: () => assert.fail('An already-aborted owner cannot start a decode.'),
+    }),
+    { name: 'AbortError' },
+  );
+  assert.equal(getEventListeners(owner.signal, 'abort').length, 0);
+  assert.equal(pool.stats().entries, 0);
+  const continuingOwner = new AbortController();
+  for (let round = 0; round < 2; round++) {
+    const lease = await pool.acquire({
+      key: 'ordinary-release',
+      width: 1,
+      height: 1,
+      signal: continuingOwner.signal,
+      load: () => ({ width: 1, height: 1 }),
+    });
+    assert.equal(getEventListeners(continuingOwner.signal, 'abort').length, 1);
+    lease.release();
+    assert.equal(getEventListeners(continuingOwner.signal, 'abort').length, 0);
+    assert.equal(pool.stats().entries, 0);
+    assert.equal(continuingOwner.signal.aborted, false);
+  }
+});
+
+test('shared abort listener survives one decoder failure and releases every pending caller', async () => {
+  const pool = createActorArtPool({ limit: 128 }),
+    owner = new AbortController(),
+    codecs = [],
+    outcomes = [];
+  let closed = 0;
+  for (let index = 0; index < 12; index++) {
+    const pending = pool.acquire({
+      key: `pending-${index}`,
+      width: 1,
+      height: 1,
+      signal: owner.signal,
+      load: () =>
+        new Promise((resolve, reject) => {
+          codecs.push({ resolve, reject });
+        }),
+    });
+    outcomes.push(assert.rejects(pending, index === 0 ? /Broken codec/ : { name: 'AbortError' }));
+  }
+  await Promise.resolve();
+  assert.equal(codecs.length, 12);
+  assert.equal(getEventListeners(owner.signal, 'abort').length, 1);
+  codecs[0].reject(new Error('Broken codec'));
+  await outcomes[0];
+  assert.equal(pool.stats().leases, 11);
+  assert.equal(pool.stats().reservedBytes, 44);
+  assert.equal(getEventListeners(owner.signal, 'abort').length, 1);
+  owner.abort();
+  await Promise.all(outcomes);
+  assert.equal(getEventListeners(owner.signal, 'abort').length, 0);
+  assert.equal(pool.stats().leases, 0);
+  assert.equal(pool.stats().reservedBytes, 44, 'Uninterruptible codecs remain accounted.');
+  for (const codec of codecs.slice(1))
+    codec.resolve({ width: 1, height: 1, close: () => closed++ });
+  await waitFor(() => pool.stats().entries === 0);
+  assert.equal(closed, 11);
+  assert.equal(pool.stats().reservedBytes, 0);
+});
+
+test('many replacement waits share cancellation without resurrecting a retired decode', async () => {
+  const pool = createActorArtPool({ limit: 4 }),
+    oldOwner = new AbortController(),
+    newOwner = new AbortController();
+  let rejectCodec;
+  const original = pool.acquire({
+    key: 'retired',
+    width: 1,
+    height: 1,
+    signal: oldOwner.signal,
+    load: () => new Promise((resolve, reject) => (rejectCodec = reject)),
+  });
+  const oldCancelled = assert.rejects(original, { name: 'AbortError' });
+  await Promise.resolve();
+  oldOwner.abort();
+  await oldCancelled;
+  const waits = Array.from({ length: 12 }, () =>
+    assert.rejects(
+      pool.acquire({
+        key: 'retired',
+        width: 1,
+        height: 1,
+        signal: newOwner.signal,
+        load: () => assert.fail('A pending retired codec still owns the reservation.'),
+      }),
+      { name: 'AbortError' },
+    ),
+  );
+  assert.equal(getEventListeners(newOwner.signal, 'abort').length, 1);
+  newOwner.abort();
+  await Promise.all(waits);
+  assert.equal(getEventListeners(newOwner.signal, 'abort').length, 0);
+  assert.equal(pool.stats().leases, 0);
+  assert.equal(pool.stats().reservedBytes, 4);
+  rejectCodec(new Error('The retired codec failed later.'));
+  await waitFor(() => pool.stats().entries === 0);
+  assert.equal(pool.stats().reservedBytes, 0);
 });
