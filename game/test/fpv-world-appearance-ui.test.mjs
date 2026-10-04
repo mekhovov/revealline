@@ -448,6 +448,48 @@ test('World keyboard and native pause actions open the same shared menu without 
   }
 });
 
+test('World language refresh preserves native mission ownership and menu phase without another animation frame', async (t) => {
+  const h = fixture(t);
+  await h.app.ready;
+  const entry = WORLD_CATALOGUE.find((item) => item.id === 'native-pursuit-runner-court');
+  await h.app.startFlight(entry);
+  const shell = h.doc.querySelector('[data-mode-play-shell]');
+  const assertMissionOwner = () => {
+    const title = h.$('flight-title').textContent;
+    // This regression checks ownership; the native host owns title localization.
+    assert.ok(Object.values(entry.course.locales).some((copy) => copy.title === title));
+    assert.equal(shell.querySelector('.mode-play-mission').textContent, title);
+  };
+  h.$('world-arm').click();
+  h.tick(2);
+  const active = h.app.snapshot().state;
+  assert.equal(active.status, 'active');
+  assert.equal(shell.dataset.phase, 'playing');
+
+  h.$('world-language').value = 'uk';
+  h.$('world-language').emit('change');
+  assert.deepEqual(h.app.snapshot().state, active);
+  assert.equal(shell.dataset.phase, 'playing');
+  assert.equal(h.doc.documentElement.lang, 'uk');
+  assert.equal(h.$('worlds-shell-action-settings').textContent, 'Налаштування');
+  assertMissionOwner();
+
+  h.$('worlds-shell-action-menu').click();
+  const paused = h.app.snapshot().state;
+  assert.equal(paused.status, 'paused');
+  assert.equal(shell.dataset.phase, 'paused');
+  assert.equal(h.$('worlds-shell-action-primary').textContent, 'Продовжити');
+  h.$('world-language').value = 'en';
+  h.$('world-language').emit('change');
+  assert.deepEqual(h.app.snapshot().state, paused);
+  assert.equal(shell.dataset.phase, 'paused');
+  assert.equal(h.doc.documentElement.lang, 'en');
+  assertMissionOwner();
+  assert.equal(h.$('worlds-shell-action-primary').textContent, 'Continue');
+  h.$('worlds-shell-home-dialog').emit('cancel', { bubbles: false });
+  assert.deepEqual(h.app.snapshot().state, paused);
+});
+
 test('World terminal preview offers Retry and prepares a fresh disarmed attempt', async (t) => {
   const h = fixture(t);
   await h.app.ready;

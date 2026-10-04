@@ -12,6 +12,37 @@ estimates are not current instructions. Functional verification accompanies ever
 increment. Additional unit coverage stays in D6. Hardware and novice feedback
 remain pending and nonblocking, never passed by implication.
 
+## Current execution checkpoint
+
+Library's dedicated-worker transport, responsive menu/language controls and
+pre-arm focus repair are merged; public entry and the intentionally empty Library
+index were verified at `8e5ad71e9b791b7c16bae1cb308026ed3e18d5c2`. Warm-frame
+readiness #1084 is merged and publicly launched at
+`1a1a82d5e6617a53239218642eda3aa70e817fe3`. Public personal-best access #1086
+is merged at `5cde6dbc97c3067b6023d2bf7fd97fe251805347`; its public deployment
+has not yet been checked. Source-capacity preparation #1085 is merged at
+`5bd8f36d7767dcd9dda740865b4d8f19ddbe7c28`, recovering 41,026 original source
+bytes without a behavior or limit change. That main input set has 41,262 bytes
+of reserve; the separately qualified language fix leaves 41,157 bytes.
+
+The language/menu action-ownership fix is now qualified: 433 native source checks,
+283 exact admitted lifecycle checks, full validation, 16 existing checks and all
+three/two-identical package admissions. Its earlier failed run remains retained.
+Publication follows the normal capacity-only main bridge and protected checks;
+see [the exact evidence and boundaries](../authoring/fpv-worlds/language-phase/README.md).
+Next engineering work is the measured HUD/layout candidate under browser
+qualification, then continued integrated reliability. No hardware-FPS conclusion
+is drawn from these bounded observations.
+
+Reservoir's required coating capability is qualified and awaiting its focused
+publication. The r14 pack has passed 16 ordinary-flight/replay proofs and bounded
+native import/flight views; representative terrain rooting and hut quality remain
+open. The production Library index stays empty intentionally until the required
+world-quality and publication gates are met. Preserve the research gates below
+and the sequence Reservoir → Festival → Harbor → Canals → D6. Earlier estimates
+and pending lists below describe their original checkpoints, not a reversal of
+this delivered state.
+
 ## Starting position
 
 The delivered catalogue contains 196 authored challenges, 14 worlds, 58 School

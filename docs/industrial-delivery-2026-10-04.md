@@ -71,6 +71,13 @@ import path. Regeneration preserves the integrated material behavior instead
 of restoring the older main-only source. The generator equality check joins
 mandatory validation; its historical capacity receipt keeps its original scope.
 
+The subsequent language/phase ownership fix from main is retained as well.
+Changing EN/UK cannot replace an existing flight's Continue/Retry action with
+lobby metadata. Opening a native menu publishes the paused flight's HUD in the
+same event turn. These lifecycle corrections coexist with the industrial
+renderer, pre-ready scene checks and saved-artwork ownership; their historical
+browser receipts remain bound to their original source.
+
 The integration must pass the strict current-base `release-ready` check,
 industrial feature phases, Appearance and Company checks, mandatory static and
 content validation, source identity and committed-source builds. A scheduled
