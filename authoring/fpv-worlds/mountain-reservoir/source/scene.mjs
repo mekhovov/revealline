@@ -5,6 +5,9 @@ import { encodeWorldGLB } from '../../../../optional-practice/civilian-fpv/world
 import { mineralPNG, noise } from './mineral.mjs';
 import { grassPNG, gravelPNG } from './ground-maps.mjs';
 import { addReservoirEngineering } from './engineering.mjs';
+import { rootTrunks } from './rooting.mjs';
+import { retainingFaces } from './retaining.mjs';
+import { maintenanceInlays } from './maintenance.mjs';
 
 const xyz = (a) => Object.fromEntries(['x', 'y', 'z'].map((k, i) => [k, Math.round(a[i] * 1000)]));
 export const bounds = { min: xyz([-44, 0, -34]), max: xyz([6, 28, 38]) };
@@ -190,12 +193,25 @@ for (const [i, x, z] of [
   solid(`platform-pad-bollard-${i}`, [x - 0.2, 0, z - 0.2], [x + 0.2, 0.8, z + 0.2]);
 
 // Thin opaque paint is attached outside canonical closed faces. It never suggests an opening.
+const oldWindowRanges = Object.fromEntries(
+  ['closed-window', 'chalk-enamel'].map((role) => [
+    role,
+    Object.fromEntries(
+      ['positions', 'normals', 'uvs', 'colors'].map((key) => [
+        key,
+        { start: batches.get(role)?.[key].length ?? 0 },
+      ]),
+    ),
+  ]),
+);
 for (const z of [-16.8, -13.4]) {
   detailBox('closed-window', [0.025, 1.3, 1.8], [-17.98, 2.75, z]);
   for (const dz of [-0.98, 0.98])
     detailBox('chalk-enamel', [0.05, 1.55, 0.12], [-17.955, 2.75, z + dz]);
   for (const y of [2, 3.5]) detailBox('chalk-enamel', [0.05, 0.12, 2.08], [-17.95, y, z]);
 }
+for (const [role, attributes] of Object.entries(oldWindowRanges))
+  for (const [key, range] of Object.entries(attributes)) range.end = batches.get(role)[key].length;
 detailBox('blue-enamel', [1.65, 2.45, 0.035], [-22, 1.225, -10.98]);
 detailBox('safety-yellow', [1.75, 0.1, 0.045], [-22, 2.5, -10.96]);
 detailBox('oxidized-roof', [8.68, 0.07, 8.68], [-22, 4.49, -15]);
@@ -330,6 +346,39 @@ export function includeTerrainStitching() {
   terrainStitched = true;
   return { triangles: positions.length / 9, positions };
 }
+let retainingAdded = false,
+  retainingCoating = false,
+  requiredCoating = false;
+export function includeRetainingFaces({ coating = false, required = false } = {}) {
+  if (retainingAdded) throw Error('Retaining finish already included');
+  if (required && !coating) throw Error('Required coating needs the finish');
+  const finish = retainingFaces(terrains),
+    shape = new THREE.BufferGeometry(),
+    first = batches.get('mineral-ridge').colors.length;
+  shape.setAttribute('position', new THREE.Float32BufferAttribute(finish.positions, 3));
+  add(shape, 'mineral-ridge');
+  const colors = batches.get('mineral-ridge').colors;
+  for (let i = first; i < colors.length; i++)
+    colors[i] *= finish.shades[Math.floor((i - first) / 3)];
+  if (coating) {
+    const batch = batches.get('mineral-ridge'),
+      firstUV = (first / 3) * 2;
+    // Compress the existing mineral pattern vertically on the new cut faces.
+    // The metre projection stays continuous across each face's four bands;
+    // no new map or UV change to the retained ridge/top surfaces is introduced.
+    for (let i = 0; i < finish.faces.length; i++) {
+      if (finish.faces[i].kind !== 'side') continue;
+      for (let vertex = 0; vertex < 3; vertex++) {
+        const uv = firstUV + (i * 3 + vertex) * 2;
+        batch.uvs[uv + 1] *= 4;
+      }
+    }
+  }
+  retainingAdded = true;
+  retainingCoating = coating;
+  requiredCoating = required;
+  return finish;
+}
 function surfaceHeight(x, z) {
   const ix = xs.findIndex((v, i) => x >= v && x <= xs[i + 1]),
     iz = zs.findIndex((v, i) => z >= v && z <= zs[i + 1]),
@@ -400,6 +449,26 @@ for (let i = 0; i < 56; i++) {
     }
   }
 }
+let treesRooted = false;
+export function includeRootedVegetation() {
+  if (treesRooted) throw Error('Tree feet already rooted');
+  const contact = rootTrunks(
+    batches.get('tree-bark'),
+    batches.get('mineral-ridge').positions.slice(0, terrainIndices.length * 3),
+  );
+  treesRooted = true;
+  return contact;
+}
+let maintenanceAdded = false;
+export function includeMaintenanceInlays() {
+  if (maintenanceAdded) throw Error('Maintenance inlays already included');
+  for (const [role, attributes] of Object.entries(oldWindowRanges))
+    for (const [key, { start, end }] of Object.entries(attributes))
+      batches.get(role)[key].splice(start, end - start);
+  const result = maintenanceInlays(add);
+  maintenanceAdded = true;
+  return { ...result, removedTriangles: 120, removedRanges: oldWindowRanges };
+}
 // Irregular low outcrops break the smooth bank into geological shelves.
 // These are embedded scenery, all east of the marked course boundary.
 for (let i = 0; i < 10; i++) {
@@ -464,7 +533,17 @@ export function createScene({ groundMaterials = false } = {}) {
       generator:
         'RevealLine original Mountain Reservoir source ' +
         (groundMaterials
-          ? 'r11-ground-material-candidate'
+          ? retainingAdded
+            ? retainingCoating
+              ? requiredCoating
+                ? treesRooted
+                  ? maintenanceAdded
+                    ? 'r16-maintenance-inlays-candidate'
+                    : 'r15-rooted-vegetation-candidate'
+                  : 'r14-required-surface-coating-candidate'
+                : 'r13-opaque-retaining-coating-candidate'
+              : 'r12-retaining-finish-candidate'
+            : 'r11-ground-material-candidate'
           : terrainStitched
             ? 'r9-terrain-stitching-candidate'
             : engineeringAdded
@@ -472,6 +551,12 @@ export function createScene({ groundMaterials = false } = {}) {
               : 'r4'),
     },
     scene: 0,
+    ...(requiredCoating
+      ? {
+          extensionsUsed: ['REVEALLINE_surface_coating'],
+          extensionsRequired: ['REVEALLINE_surface_coating'],
+        }
+      : {}),
     scenes: [{ nodes: [] }],
     nodes: [],
     meshes: [],
@@ -519,6 +604,15 @@ export function createScene({ groundMaterials = false } = {}) {
     const material =
       document.materials.push({
         name: role,
+        ...(retainingCoating && role === 'mineral-ridge'
+          ? requiredCoating
+            ? { extensions: { REVEALLINE_surface_coating: { version: 1, kind: 'opaque-finish' } } }
+            : {
+                extras: {
+                  reveallineSurface: { format: 'SimSurfaceCoating.v1', kind: 'opaque-finish' },
+                },
+              }
+          : {}),
         pbrMetallicRoughness: {
           baseColorFactor: [color.r, color.g, color.b, 1],
           metallicFactor: role === 'reservoir-water' ? 0.15 : 0,
