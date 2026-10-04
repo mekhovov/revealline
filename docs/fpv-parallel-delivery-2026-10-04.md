@@ -73,16 +73,16 @@ Verify each newest deployment and player entry before claiming the new change li
 These are design conclusions from primary sources inspected on 4 October, not
 claims that another simulator's assets or physics have been imported.
 
-| Reference | Observed workflow | Application to our remaining work |
-| --- | --- | --- |
-| [FlightDivision setup](https://www.flightdivision.com/blog/fastest-way-to-start-fpv-simulator-training) | Browser entry, controller detection/calibration and an immediate first lesson | Verify the existing saved-profile-to-first-flight path; remove reproduced detours rather than adding another setup system |
-| [Liftoff mentor](https://www.liftoff-game.com/news/virtual-mentor-reveal) | Guided instruction plus optional assisted flight/controller settings | Preserve mode choice and optional assistance; validate the existing 58 lessons before growing their count |
-| [VelociDrone manual](https://www.velocidrone.com/desktop_manual) | Best/previous-lap ghosts and slower replay with stick display | Retain exact-mode local ghosts and section practice; qualify retry → watch → practise → return as one journey |
-| [WebFPV](https://webfpv.org/) | Scannable tracks/maps, named gaps, road-following cars and browser-based builders | Deliver bounded Library discovery; give new worlds recognizable route landmarks and distinct moving-subject activities using existing components |
-| [Uncrashed](https://store.steampowered.com/app/1682970/Uncrashed__FPV_Drone_Simulator/) | Varied freestyle/racing environments and environment/track creation | Review each new world as a coherent flying place, including approach, gaps and recovery space, rather than isolated decorative assets |
+| Reference                                                                                                                                                                          | Observed workflow                                                                                           | Application to our remaining work                                                                                                                             |
+| ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [FlightDivision setup](https://www.flightdivision.com/blog/fastest-way-to-start-fpv-simulator-training)                                                                            | Browser entry, controller detection/calibration and an immediate first lesson                               | Verify the existing saved-profile-to-first-flight path; remove reproduced detours rather than adding another setup system                                     |
+| [Liftoff mentor](https://www.liftoff-game.com/news/virtual-mentor-reveal)                                                                                                          | Guided instruction plus optional assisted flight/controller settings                                        | Preserve mode choice and optional assistance; validate the existing 58 lessons before growing their count                                                     |
+| [VelociDrone manual](https://www.velocidrone.com/desktop_manual)                                                                                                                   | Best/previous-lap ghosts and slower replay with stick display                                               | Retain exact-mode local ghosts and section practice; qualify retry → watch → practise → return as one journey                                                 |
+| [WebFPV](https://webfpv.org/)                                                                                                                                                      | Scannable tracks/maps, named gaps, road-following cars and browser-based builders                           | Deliver bounded Library discovery; give new worlds recognizable route landmarks and distinct moving-subject activities using existing components              |
+| [Uncrashed](https://store.steampowered.com/app/1682970/Uncrashed__FPV_Drone_Simulator/)                                                                                            | Varied freestyle/racing environments and environment/track creation                                         | Review each new world as a coherent flying place, including approach, gaps and recovery space, rather than isolated decorative assets                         |
 | [Valve handheld guidance](https://partner.steamgames.com/doc/steamhardware/recommendations) and [compatibility](https://partner.steamgames.com/doc/steamhardware/compat?l=english) | Controller access to the whole experience, appropriate prompts, readable small-screen text and offline play | Check complete browser/controller journeys at handheld dimensions; use these as design criteria, not a claim of Steam certification or native SDK integration |
-| [Chrome long animation frames](https://developer.chrome.com/docs/web-platform/long-animation-frames) | Frame-level timing can expose work hidden by individual long-task measurements | Add bounded, feature-detected diagnostic attribution; separate cold/warm transitions, host work, animation frames and GPU observations |
-| [Three.js renderer](https://threejs.org/docs/pages/WebGLRenderer.html) | Configure lighting before shader compilation; asynchronous compilation reduces compilation stalls | Audit the existing preparation path and resource lifetime before changing it; optimize a reproduced cause, preserving the pinned runtime |
+| [Chrome long animation frames](https://developer.chrome.com/docs/web-platform/long-animation-frames)                                                                               | Frame-level timing can expose work hidden by individual long-task measurements                              | Add bounded, feature-detected diagnostic attribution; separate cold/warm transitions, host work, animation frames and GPU observations                        |
+| [Three.js renderer](https://threejs.org/docs/pages/WebGLRenderer.html)                                                                                                             | Configure lighting before shader compilation; asynchronous compilation reduces compilation stalls           | Audit the existing preparation path and resource lifetime before changing it; optimize a reproduced cause, preserving the pinned runtime                      |
 
 The research changes emphasis, not the engine contract: put current-player
 performance back alongside art, make optional worlds discoverable, and strengthen
@@ -91,15 +91,15 @@ Preserve the fixed flight integrator, existing proof versions and physics profil
 
 ## Parallel work and completion gates
 
-| Lane / priority | Deliverable | Required completion evidence | Then continue to |
-| --- | --- | --- | --- |
-| Delivery — immediate | Finish current ready PR publication, verify deployment, and maintain this allocation | Current-head protected checks, permitted merge, public marker and actual player launch | Next verified focused PR; never wait on unchanged CI when independent work exists |
-| Performance — P0 | Controlled current-player baseline and bounded fixes for reproduced stalls | Exact input provenance, one visible native-clock player, cold/warm/course/quality observations, before/after comparison, unchanged replay/visibility contracts and package admission for runtime fixes | Representative natural/industrial scenes and longer-session qualification |
-| Art/content — P1 | Improve published Mountain Reservoir until it meets the representative quality standard below | Coherent scene and eight distinct route pairs, matching solid/support collision, final world freeze, sixteen full completion/replays, native import/editor/offline and public entry | Festival Grounds, Harbor Docks, Old Town Canals, one complete world per PR |
-| Discovery — P1 | Optional first-party worlds in Library | Bounded immutable data catalogue, explicit download size/revision, cancel/retry, exact hash/native install, no partial activation, removal/recovery and honest runtime-offline status | Register each finished world after its publication; preserve earlier revisions |
-| Player integration — P1 | Complete touch/controller/radio and teaching journeys | EN/UK, small portrait/landscape and 1280×800 layouts, menu/flight ownership, arm/reset/pause, reconnect, settings restore, fullscreen fallback and unobstructed flight view | Repairs for reproduced issues, then retained D6 scenarios |
-| Reliability — P1 before broad world rollout | Combined creator/recording/recovery flow | Multi-course/mode edit/reimport/export/reopen, exact dependency replay, rollback, interrupted/quota failures and preserved records | Final integrated release candidate |
-| D6 — final | Deferred unit coverage and full regression | Targeted new coverage, applicable required checks restored through the established process, resolved known diagnostics and explicit device/art limits | Stop recurring implementation when approved backlog is complete |
+| Lane / priority                             | Deliverable                                                                                   | Required completion evidence                                                                                                                                                                           | Then continue to                                                                  |
+| ------------------------------------------- | --------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | --------------------------------------------------------------------------------- |
+| Delivery — immediate                        | Finish current ready PR publication, verify deployment, and maintain this allocation          | Current-head protected checks, permitted merge, public marker and actual player launch                                                                                                                 | Next verified focused PR; never wait on unchanged CI when independent work exists |
+| Performance — P0                            | Controlled current-player baseline and bounded fixes for reproduced stalls                    | Exact input provenance, one visible native-clock player, cold/warm/course/quality observations, before/after comparison, unchanged replay/visibility contracts and package admission for runtime fixes | Representative natural/industrial scenes and longer-session qualification         |
+| Art/content — P1                            | Improve published Mountain Reservoir until it meets the representative quality standard below | Coherent scene and eight distinct route pairs, matching solid/support collision, final world freeze, sixteen full completion/replays, native import/editor/offline and public entry                    | Festival Grounds, Harbor Docks, Old Town Canals, one complete world per PR        |
+| Discovery — P1                              | Optional first-party worlds in Library                                                        | Bounded immutable data catalogue, explicit download size/revision, cancel/retry, exact hash/native install, no partial activation, removal/recovery and honest runtime-offline status                  | Register each finished world after its publication; preserve earlier revisions    |
+| Player integration — P1                     | Complete touch/controller/radio and teaching journeys                                         | EN/UK, small portrait/landscape and 1280×800 layouts, menu/flight ownership, arm/reset/pause, reconnect, settings restore, fullscreen fallback and unobstructed flight view                            | Repairs for reproduced issues, then retained D6 scenarios                         |
+| Reliability — P1 before broad world rollout | Combined creator/recording/recovery flow                                                      | Multi-course/mode edit/reimport/export/reopen, exact dependency replay, rollback, interrupted/quota failures and preserved records                                                                     | Final integrated release candidate                                                |
+| D6 — final                                  | Deferred unit coverage and full regression                                                    | Targeted new coverage, applicable required checks restored through the established process, resolved known diagnostics and explicit device/art limits                                                  | Stop recurring implementation when approved backlog is complete                   |
 
 Performance, Library delivery and integrated reliability own the main engineering
 allocation. Small reproduced menu/input repairs belong to integrated reliability;
@@ -140,12 +140,12 @@ Harbor for vertical industrial reuse, then the denser Canals environment. The
 following allocation guides authoring within each eight-challenge commitment;
 every authored challenge still needs its own verified objectives and EN/UK brief:
 
-| World | Eight-challenge mix | Distinct experience |
-| --- | --- | --- |
-| Reservoir | Existing planned eight land routes: orientation, elevation/precision, gallery/spillway, circuit and roof landing | Terrain, grounded civil structures and approach/landing decisions |
-| Festival | One orientation, three races, one precision, one follow, one observe and one capstone | Open sight lines, named event landmarks and accessible moving-subject practice |
-| Harbor | One orientation, two races, one precision, one follow, one observe, one fictional combat and one capstone | Gantries, containers, height changes and clearly separated moving encounters |
-| Canals | One orientation, two races, two precision, one follow, one observe and one capstone | Bridges, courtyards and close-proximity architectural route choices |
+| World     | Eight-challenge mix                                                                                              | Distinct experience                                                            |
+| --------- | ---------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------ |
+| Reservoir | Existing planned eight land routes: orientation, elevation/precision, gallery/spillway, circuit and roof landing | Terrain, grounded civil structures and approach/landing decisions              |
+| Festival  | One orientation, three races, one precision, one follow, one observe and one capstone                            | Open sight lines, named event landmarks and accessible moving-subject practice |
+| Harbor    | One orientation, two races, one precision, one follow, one observe, one fictional combat and one capstone        | Gantries, containers, height changes and clearly separated moving encounters   |
+| Canals    | One orientation, two races, two precision, one follow, one observe and one capstone                              | Bridges, courtyards and close-proximity architectural route choices            |
 
 Use existing deterministic actor paths, goals and limits. Follow/observe means
 actual authored target behavior and verified scoring, not merely decorative
@@ -160,13 +160,13 @@ another distinct activity within the same eight-course scope and document why.
 This is a production gate for subsequent worlds, not a claim that functional
 replays establish finished art quality.
 
-| Order | Work and player benefit | Completion evidence |
-| --- | --- | --- |
-| 1 | Close western terrace/ridge seams so the terrain reads as a continuous solid environment | Narrow geometry repair, unchanged collision/routes, no sky holes from the fixed close-FPV and approach views, explicit new content revision |
-| 2 | Differentiate rock, grass and gravel scale; connect fractured terrain strata; strengthen dam, intake, chute and maintenance-hut identity | Plausible surface scale and transitions, readable landmarks without HUD, no repeated generic facade pattern dominating the scene |
-| 3 | Add only purposeful, grounded maintenance props and varied rooted vegetation; inspect drone scale and clearance | No floating supports, fake traversable openings or reachable decorative solids without corresponding collision; keep flight lines readable |
-| 4 | Compare fixed close-FPV, approach, chase and overview poses across the west terrace, intake, spillway and shoreline | Low/Balanced/High use the same pose; equal relevant visibility/collision, no holes/z-fighting, clear route openings; inspect Authored/shared-theme/Pixel handling |
-| 5 | Confirm total scene cost and resource lifetime, then qualify the revised world | Same-pose draw/triangle/resource observations, repeated unload/disposal, exact-dependency replay/import/offline evidence; physical-device performance remains separate |
+| Order | Work and player benefit                                                                                                                  | Completion evidence                                                                                                                                                    |
+| ----- | ---------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 1     | Close western terrace/ridge seams so the terrain reads as a continuous solid environment                                                 | Narrow geometry repair, unchanged collision/routes, no sky holes from the fixed close-FPV and approach views, explicit new content revision                            |
+| 2     | Differentiate rock, grass and gravel scale; connect fractured terrain strata; strengthen dam, intake, chute and maintenance-hut identity | Plausible surface scale and transitions, readable landmarks without HUD, no repeated generic facade pattern dominating the scene                                       |
+| 3     | Add only purposeful, grounded maintenance props and varied rooted vegetation; inspect drone scale and clearance                          | No floating supports, fake traversable openings or reachable decorative solids without corresponding collision; keep flight lines readable                             |
+| 4     | Compare fixed close-FPV, approach, chase and overview poses across the west terrace, intake, spillway and shoreline                      | Low/Balanced/High use the same pose; equal relevant visibility/collision, no holes/z-fighting, clear route openings; inspect Authored/shared-theme/Pixel handling      |
+| 5     | Confirm total scene cost and resource lifetime, then qualify the revised world                                                           | Same-pose draw/triangle/resource observations, repeated unload/disposal, exact-dependency replay/import/offline evidence; physical-device performance remains separate |
 
 Retain existing package limits. The initial Reservoir authoring targets stay
 15,000 imported triangles, 1.2 MiB GLB and 48 colliders. Published r8 has 12,016
@@ -179,23 +179,30 @@ is implied by this gate.
 
 ### Engineering execution within the revised allocation
 
-1. **Library delivery:** finish the reviewed lossless worker-source preparation,
-   then the dedicated-worker download path. Keep the network guard, bounded index,
-   exact hashes/size/revision, cancellation, transfer ownership and atomic native
-   installation. The previous 195-check source fixture predates this transport;
-   it cannot qualify the new worker path. Register only fully published packs.
-2. **Performance:** investigate first-ready actor/camera initialization versus
-   shader preparation on Yard and an actor-free reference at fixed quality/pose.
-   Record native-clock first/second-draw timings and actor/program/resource counts.
-   The readiness fix removed pending draws but shifted some work into the first
-   ready draw; existing comparisons are mixed, not a general FPS gain. Change
-   initialization/preparation only if the new observation establishes the cause.
-3. **Integrated reliability:** finish the reproduced pre-arm appearance-focus
-   repair and reachable EN/UK/small-screen menu fixes, then qualify the complete
-   Library install -> select -> settings -> arm -> pause/retry -> replay -> editor
-   -> offline/reopen path. Include cancellation/quota failure and retained records.
-   Preserve input ownership and deliberate neutral/arm pickup. Hardware/novice
-   observations remain honestly pending and nonblocking.
+1. **Library delivery:** the dedicated-worker transport, bounded immutable paths,
+   exact hashes/size/revision, cancellation and atomic installation are delivered.
+   Preserve their source/admitted 208-control and combined native offline receipts;
+   the earlier 195-control pre-transport run remains historical. Next establish
+   actionable compatibility for older cached players before registering the first
+   finished Reservoir revision, then verify the actual published row through
+   Browse, download, install, selection, Watch and editing. The production index
+   remains intentionally empty; fixture starter rows are not delivered worlds.
+2. **Performance:** the native program trace identified 66 first-draw shadow links;
+   the merged warm-frame change moves that initialization before Ready in the
+   qualified Yard cases. HUD work has measured bounded callback/width-read savings
+   and merged as `ecf0bafc6541c6b57ae28a530763bab221555d4f`. Neither proves a general loading/FPS gain or
+   resolves every historical stall. Next use one genuinely natural presentation
+   and one industrial reference at fixed poses/quality, plus a bounded longer
+   load/disposal session on final integrated source. Optimize only measured costs.
+3. **Integrated reliability:** focus, language access, narrow-screen menus and
+   personal-best access are delivered; language/Home phase ownership is now merged.
+   Creator's correction passed 294 source and 294 exact admitted native controls
+   after reproducing its postcommit refresh/generation-read defects; its focused
+   protected publication is next. Retain dirty course/mode, exact revisions, genuine proofs and recovery,
+   including the strict fence against a separate writer. Then qualify the
+   final combined Library -> select -> settings -> arm -> pause/retry -> replay ->
+   editor -> offline/reopen journey. Reuse exact component receipts and target
+   boundary failures; real quota/eviction and broader hardware remain unclaimed.
 
 ### Visual and input quality checks
 
@@ -215,10 +222,14 @@ content work. Record browser/GPU/device identity before any performance claim.
 ## Capacity and publication
 
 Retain Core 72 MiB / Company 80 MiB and the existing optional-package file/source ceilings.
-World Studio's projected source headroom after the merged shell/readiness changes
-is 8,474 bytes, with 102/104 runtime files. The proposed worker preparation and
-Library/menu/focus integration would leave approximately 461 source bytes; this
-estimate is not admission evidence. Admit every actual candidate; use existing UI,
+Coating main `3bc7a923d` retains 37,758 original source bytes after the verified visual
+projection and merged phase/coating increments, with 102/104 runtime files.
+Creator's fresh all-three admission `fc3254382` includes that main plus its 323-byte
+correction and retains 37,435 bytes. HUD main `ecf0bafc6` retains 37,637 bytes. Creator's normal publication merge
+contains only that already-qualified 121-byte HUD difference from its admitted
+source; all 95 inputs are audited, with 37,314 bytes remaining. This source bridge
+is not a new combined admission; fresh protected CI remains required.
+Retain the bounded receipts and admit actual final integration; use existing UI,
 small data manifests and reviewed lossless preparation before proposing a limit
 change. The core budget does not waive the separate World Studio ceiling.
 
@@ -241,9 +252,11 @@ actual launch, not merely a green PR.
 
 D6 includes original proofs/rewards, all final world examples, shared-prefab and
 reimport compatibility, EN/UK presentation, input/lifecycle recovery, repeated
-loading/disposal, archive/retention limits and the deferred unit coverage. Resolve
-the retained pre-arm appearance-focus and audio-warning-arbitration diagnostics
-without weakening expectations or labelling a known baseline failure a new defect.
+loading/disposal, archive/retention limits and the deferred unit coverage. The
+pre-arm focus and audio-warning-arbitration diagnostics are resolved; preserve
+their original failures and accepted fixes. The Academy fake-DOM mount diagnostic,
+unexplained historical storage-close observation and final regression remain
+distinct open evidence limits, without weakened expectations or inferred causes.
 
 Sustained 60 fps desktop / 30 fps mobile remain targets, not achieved results. Hardware,
 novice and broader artist acceptance stay explicitly pending when unavailable.
