@@ -2,7 +2,11 @@
 
 The owner approved resuming continuous implementation after the priority review,
 with independent work in parallel and focused PRs/native stacks where needed.
-This is the current execution order for the remaining approved D0–D6 scope.
+The owner subsequently rebalanced the allocation: finish publication first; put the
+main engineering effort into performance, Library delivery and integrated reliability;
+put art/content effort into Reservoir and a representative quality standard. Deliver
+Festival, Harbor and Canals one at a time after that, followed by D6. This is the
+current execution order for the remaining approved D0–D6 scope.
 Historical receipts remain in the delivery log; older pending lists, counts and
 estimates are not current instructions. Functional verification accompanies every
 increment. Additional unit coverage stays in D6. Hardware and novice feedback
@@ -25,10 +29,13 @@ Fourteen bounded art increments have shipped; complete scene-quality acceptance
 and sustained performance are still open. No same-quality-as-commercial-SIM or
 real-device qualification claim follows from feature counts.
 
-Imported exact-pack example lookup #1060 merged at a90fc8180. Public deployment
-and launch still need verification. Multi-course editing #1063 merged at 0a587fb2e after qualification
-(197 source / 241 packaged / 160 stable-identity assertions). Its public deployment
-and launch remain separate acceptance steps. Do not redo its implementation.
+Imported exact-pack example lookup #1060 and multi-course editing #1063 are merged;
+public deployment and actual SIM launch were verified on ade4bfc2. Shared-shell
+source preparation #1065 is merged and its bf9b0290 deployment/flight entry was
+verified. Scene-readiness #1067 merged at 29e23a11; Reservoir #1066 merged at 94548aa2.
+Reservoir's eight-course/16-example functional package is published, but production
+Library registration and representative art acceptance remain separate work.
+Verify each newest deployment and player entry before claiming the new change live.
 
 ## Research and concrete changes
 
@@ -55,16 +62,25 @@ Preserve the fixed flight integrator, existing proof versions and physics profil
 
 | Lane / priority | Deliverable | Required completion evidence | Then continue to |
 | --- | --- | --- | --- |
-| Delivery — immediate | Publish ready #1060/#1063 and maintain current plan | Current-head protected checks, permitted merge, public marker and actual player launch | Next verified focused PR; never wait on unchanged CI when independent work exists |
+| Delivery — immediate | Finish current ready PR publication, verify deployment, and maintain this allocation | Current-head protected checks, permitted merge, public marker and actual player launch | Next verified focused PR; never wait on unchanged CI when independent work exists |
 | Performance — P0 | Controlled current-player baseline and bounded fixes for reproduced stalls | Exact input provenance, one visible native-clock player, cold/warm/course/quality observations, before/after comparison, unchanged replay/visibility contracts and package admission for runtime fixes | Representative natural/industrial scenes and longer-session qualification |
-| Art/content — P1 | Complete Mountain Reservoir as the quality reference | Coherent scene and eight distinct route pairs, matching solid/support collision, final world freeze, sixteen full completion/replays, native import/editor/offline and public entry | Festival Grounds, Harbor Docks, Old Town Canals, one complete world per PR |
+| Art/content — P1 | Improve published Mountain Reservoir until it meets the representative quality standard below | Coherent scene and eight distinct route pairs, matching solid/support collision, final world freeze, sixteen full completion/replays, native import/editor/offline and public entry | Festival Grounds, Harbor Docks, Old Town Canals, one complete world per PR |
 | Discovery — P1 | Optional first-party worlds in Library | Bounded immutable data catalogue, explicit download size/revision, cancel/retry, exact hash/native install, no partial activation, removal/recovery and honest runtime-offline status | Register each finished world after its publication; preserve earlier revisions |
 | Player integration — P1 | Complete touch/controller/radio and teaching journeys | EN/UK, small portrait/landscape and 1280×800 layouts, menu/flight ownership, arm/reset/pause, reconnect, settings restore, fullscreen fallback and unobstructed flight view | Repairs for reproduced issues, then retained D6 scenarios |
 | Reliability — P1 before broad world rollout | Combined creator/recording/recovery flow | Multi-course/mode edit/reimport/export/reopen, exact dependency replay, rollback, interrupted/quota failures and preserved records | Final integrated release candidate |
 | D6 — final | Deferred unit coverage and full regression | Targeted new coverage, applicable required checks restored through the established process, resolved known diagnostics and explicit device/art limits | Stop recurring implementation when approved backlog is complete |
 
-Independent source/authoring work proceeds concurrently. On this machine, heavy
-builds, proof generation and active-browser performance observations are serialized
+Performance, Library delivery and integrated reliability own the main engineering
+allocation. Small reproduced menu/input repairs belong to integrated reliability;
+do not open separate broad redesigns. Art/content works on Reservoir in parallel,
+not on additional unfinished worlds. Festival remains preserved at 47f8e36e until
+the Reservoir standard is demonstrated. Then complete Festival, Harbor and Canals
+sequentially, including each world's proofs, import/offline checks and publication,
+before starting the next. D6 follows those deliverables; functional verification
+continues throughout.
+
+Independent source/authoring work within that allocation proceeds concurrently.
+On this machine, heavy builds, proof generation and active-browser performance observations are serialized
 when disk or measurement interference requires it. This protects measurement
 quality without blocking independent development. No per-frame recording-library
 clone, suppressed pause guard or background catch-up is allowed to manufacture a
@@ -72,17 +88,21 @@ performance pass.
 
 ### World production and variety
 
-Reservoir r8 now qualifies all eight courses and sixteen exact-pack ordinary
-demonstrations (575 CPU checks, 304 actual imported-player/editor checks). Its
-native player also reloaded after the server stopped, flew Dry spillway descent
-and performed an Acro-only edit with Undo/Redo offline. Land-side intake/control
-gallery, dry spillway and Shoreline circuit replace the earlier provisional
-island idea; water remains outside playable land bounds. This is D5 **one of
-four** locally qualified worlds, pending protected publication/public entry.
-The optional install yields 204 challenges / 15 installed worlds; the bundled
-baseline remains 196 / 14. Historical one-course proofs are separate from final
-r8 qualification. Generic imported-card Explore / Intermediate / 4 min metadata
-is an existing host follow-up, not a claim about each route's activity or duration.
+Reservoir r8 is the published functional baseline: eight courses and sixteen final
+mode-specific completion/replays, 575 CPU checks and 304 imported-player checks,
+plus a true server-offline flight/editor journey. Preserve that immutable package,
+examples and completion evidence. The art review found visible triangular
+openings at the western terrace/ridge join, so a narrow seam repair comes first.
+Keep canonical collision and route envelopes unchanged; publish any changed visual
+pack as an explicit revision and requalify exact dependencies rather than replacing
+published bytes. Water remains outside playable land bounds.
+
+Installing Reservoir yields 204 challenges / 15 installed worlds; the bundled
+baseline remains 196 / 14. It is the first of four additional worlds, with production
+Library registration, public player entry and representative art acceptance still
+separate. Art follow-ups do not add courses. Generic imported-card
+Explore / Intermediate / 4 min metadata remains a bounded host follow-up,
+not a claim about each Reservoir route's activity or duration.
 
 After Reservoir, build Festival first for a readable open-racing contrast, then
 Harbor for vertical industrial reuse, then the denser Canals environment. The
@@ -104,6 +124,48 @@ Decorative detail and quality settings cannot change collision, target visibilit
 or objective actors. If an authored mix proves unsuitable for a scene, substitute
 another distinct activity within the same eight-course scope and document why.
 
+### Reservoir representative quality standard
+
+This is a production gate for subsequent worlds, not a claim that functional
+replays establish finished art quality.
+
+| Order | Work and player benefit | Completion evidence |
+| --- | --- | --- |
+| 1 | Close western terrace/ridge seams so the terrain reads as a continuous solid environment | Narrow geometry repair, unchanged collision/routes, no sky holes from the fixed close-FPV and approach views, explicit new content revision |
+| 2 | Differentiate rock, grass and gravel scale; connect fractured terrain strata; strengthen dam, intake, chute and maintenance-hut identity | Plausible surface scale and transitions, readable landmarks without HUD, no repeated generic facade pattern dominating the scene |
+| 3 | Add only purposeful, grounded maintenance props and varied rooted vegetation; inspect drone scale and clearance | No floating supports, fake traversable openings or reachable decorative solids without corresponding collision; keep flight lines readable |
+| 4 | Compare fixed close-FPV, approach, chase and overview poses across the west terrace, intake, spillway and shoreline | Low/Balanced/High use the same pose; equal relevant visibility/collision, no holes/z-fighting, clear route openings; inspect Authored/shared-theme/Pixel handling |
+| 5 | Confirm total scene cost and resource lifetime, then qualify the revised world | Same-pose draw/triangle/resource observations, repeated unload/disposal, exact-dependency replay/import/offline evidence; physical-device performance remains separate |
+
+Retain existing package limits. The initial Reservoir authoring targets stay
+15,000 imported triangles, 1.2 MiB GLB and 48 colliders. Published r8 has 12,016
+triangles, 1,167,804 GLB bytes, 13 materials and one texture; byte headroom is tighter
+than triangle headroom. Whole-scene observations reached 198 draws / about 29.3k
+triangles, so additional detail requires measured cost, not just imported-mesh totals.
+The current scene has no objective actors; do not present decorative additions as
+new follow/observe gameplay. No commercial-parity, physical-device or FPS acceptance
+is implied by this gate.
+
+### Engineering execution within the revised allocation
+
+1. **Library delivery:** finish the reviewed lossless worker-source preparation,
+   then the dedicated-worker download path. Keep the network guard, bounded index,
+   exact hashes/size/revision, cancellation, transfer ownership and atomic native
+   installation. The previous 195-check source fixture predates this transport;
+   it cannot qualify the new worker path. Register only fully published packs.
+2. **Performance:** investigate first-ready actor/camera initialization versus
+   shader preparation on Yard and an actor-free reference at fixed quality/pose.
+   Record native-clock first/second-draw timings and actor/program/resource counts.
+   The readiness fix removed pending draws but shifted some work into the first
+   ready draw; existing comparisons are mixed, not a general FPS gain. Change
+   initialization/preparation only if the new observation establishes the cause.
+3. **Integrated reliability:** finish the reproduced pre-arm appearance-focus
+   repair and reachable EN/UK/small-screen menu fixes, then qualify the complete
+   Library install -> select -> settings -> arm -> pause/retry -> replay -> editor
+   -> offline/reopen path. Include cancellation/quota failure and retained records.
+   Preserve input ownership and deliberate neutral/arm pickup. Hardware/novice
+   observations remain honestly pending and nonblocking.
+
 ### Visual and input quality checks
 
 Choose one natural and one industrial reference scene; record concrete remaining
@@ -122,8 +184,10 @@ content work. Record browser/GPU/device identity before any performance claim.
 ## Capacity and publication
 
 Retain Core 72 MiB / Company 80 MiB and the existing optional-package file/source ceilings.
-World Studio's projected combined headroom after #1060/#1063 is only 5,028 source
-bytes and 102/104 runtime files. Admit every actual candidate; use existing UI,
+World Studio's projected source headroom after the merged shell/readiness changes
+is 8,474 bytes, with 102/104 runtime files. The proposed worker preparation and
+Library/menu/focus integration would leave approximately 461 source bytes; this
+estimate is not admission evidence. Admit every actual candidate; use existing UI,
 small data manifests and reviewed lossless preparation before proposing a limit
 change. The core budget does not waive the separate World Studio ceiling.
 
