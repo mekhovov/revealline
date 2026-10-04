@@ -138,6 +138,7 @@ export function mountWorldLibrary({ el, txt, parent, begin, install }) {
     if (closed || operation) return;
     const controller = new AbortController(),
       signal = controller.signal;
+    let committed = false;
     operation = controller;
     cancel.disabled = false;
     paint();
@@ -156,6 +157,10 @@ export function mountWorldLibrary({ el, txt, parent, begin, install }) {
         await install(bytes, row, {
           generation,
           signal,
+          saved: () => {
+            committed = true;
+            saved = [...saved, row];
+          },
           commit: () => {
             cancel.disabled = true;
             clearTimeout(timer);
@@ -174,7 +179,12 @@ export function mountWorldLibrary({ el, txt, parent, begin, install }) {
       }
     } catch {
       if (!closed) {
-        if (signal.aborted)
+        if (committed)
+          show(
+            'Pack saved. Reload to refresh Library.',
+            'Пакунок збережено. Перезавантажте бібліотеку.',
+          );
+        else if (signal.aborted)
           show('Cancelled or timed out. Try again.', 'Скасовано або час вичерпано. Повторіть.');
         else
           show(

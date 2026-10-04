@@ -59,7 +59,7 @@ const sourceHashes={
 'game/audio/reactions/actors.mjs':
 '79debf91cafa2e01cd65170037ee483977cbf7d5c3a619ccac9ed400264598b8',
 'optional-practice/civilian-fpv/world-library.mjs':
-'824f71f935f8c06b170c5580b734a6af49fea883f0c5374c1ee391a162c3957c',
+'31b05df1c556c9b1d9fa809745443fdb5620516bde33235c76fe612c95cc056a',
 'game/audio/reactions/guide-0-en.m4a':
 '58f961f54b52d0dbb58f53f000ca85bba166236126e135dc1f5e89f8f9a94210',
 'game/audio/reactions/guide-0-uk.m4a':
@@ -6552,6 +6552,7 @@ async function run(row){
 if(closed||operation)return;
 const controller=new AbortController(),
 signal=controller.signal;
+let committed=false;
 operation=controller;
 cancel.disabled=false;
 paint();
@@ -6570,6 +6571,10 @@ signal.throwIfAborted();
 await install(bytes,row,{
 generation,
 signal,
+saved:()=>{
+committed=true;
+saved=[...saved,row];
+},
 commit:()=>{
 cancel.disabled=true;
 clearTimeout(timer);
@@ -6588,7 +6593,9 @@ else show('No published worlds yet.','Опублікованих світів щ
 }
 }catch{
 if(!closed){
-if(signal.aborted)
+if(committed)
+show('Pack saved. Reload to refresh Library.','Пакунок збережено. Перезавантажте бібліотеку.');
+else if(signal.aborted)
 show('Cancelled or timed out. Try again.','Скасовано або час вичерпано. Повторіть.');
 else
 show('Download or save failed. Try again.','Завантаження чи збереження не вдалося. Повторіть.');
