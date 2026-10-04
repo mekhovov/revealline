@@ -34,7 +34,19 @@ const app = modules[0].mountWorldApp({
   window,
   rendererFactory(options) {
     data.rendererCount++;
-    return (renderer = modules[1].createFlightRenderer(options));
+    renderer = modules[1].createFlightRenderer(options);
+    const draw = renderer.draw,
+      setCourse = renderer.setCourse;
+    renderer.setCourse = function (course, ...args) {
+      data.course = course.id;
+      data.lastDraw = null;
+      return setCourse.call(this, course, ...args);
+    };
+    renderer.draw = function (state, ...args) {
+      data.lastDraw = { status: state.status, ticks: state.ticks };
+      return draw.call(this, state, ...args);
+    };
+    return renderer;
   },
 });
 await app.ready;
