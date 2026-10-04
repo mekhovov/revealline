@@ -4028,6 +4028,35 @@ export function createWorkshopMaterials({
   return { collectionId, paint, texture, materials: paints, textures: maps };
 }
 
+/** Apply already validated GLTF material identities; never infer by name or subtree. */
+export function applySimSurfaceCoatings(root, associations, marked) {
+  const seen = new Set();
+  let applied = 0;
+  root.traverse((item) => {
+    if (!item.isMesh) return;
+    for (const paint of Array.isArray(item.material) ? item.material : [item.material]) {
+      if (!paint?.isMaterial || seen.has(paint)) continue;
+      seen.add(paint);
+      if (
+        !marked.has(associations.get(paint)?.materials) ||
+        paint.transparent ||
+        paint.opacity !== 1 ||
+        paint.alphaTest > 0 ||
+        paint.alphaMap ||
+        paint.transmission > 0 ||
+        !paint.depthTest ||
+        !paint.depthWrite
+      )
+        continue;
+      paint.polygonOffset = true;
+      paint.polygonOffsetFactor = -1;
+      paint.polygonOffsetUnits = -1;
+      applied++;
+    }
+  });
+  return applied;
+}
+
 export function validateSimMaterialBinding(input) {
   const value = boundedJSON(input, { maxBytes: 1024, maxNodes: 12, maxDepth: 2, maxString: 80 });
   exactKeys(
@@ -4112,6 +4141,9 @@ export function applySimMaterialBindings(
           flatShading: Boolean(paint.flatShading),
           depthTest: paint.depthTest,
           depthWrite: paint.depthWrite,
+          polygonOffset: paint.polygonOffset,
+          polygonOffsetFactor: paint.polygonOffsetFactor,
+          polygonOffsetUnits: paint.polygonOffsetUnits,
         },
         key = `${binding.role}:${JSON.stringify(state)}`;
       if (!variants.has(key)) {
