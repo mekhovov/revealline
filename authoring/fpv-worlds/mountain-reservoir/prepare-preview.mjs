@@ -65,6 +65,7 @@ const modelPath = path.join(generated, 'prepared', project.world.modelAsset),
 await fs.writeFile(path.join(output, 'content/project.json'), projectBytes, { flag: 'wx' });
 await fs.link(modelPath, path.join(output, 'content/scene.glb'));
 const beforeContent = [];
+let beforeRevision = null;
 if (beforeArg) {
   const beforeRoot = await fs.realpath(beforeArg),
     beforeProject = JSON.parse(await fs.readFile(path.join(beforeRoot, 'prepared/project.json'))),
@@ -73,6 +74,7 @@ if (beforeArg) {
   const noRevision = (value) => JSON.stringify(value, (k, v) => (k === 'revision' ? undefined : v));
   if (noRevision(beforeProject.courses) !== noRevision(project.courses))
     throw Error('Before/after course or collision differs');
+  beforeRevision = beforeProject.revision;
   await fs.link(beforePath, path.join(output, 'content/before-scene.glb'));
   beforeContent.push({
     path: 'content/before-scene.glb',
@@ -96,8 +98,9 @@ const record = {
     { path: 'content/scene.glb', bytes: modelBytes.length, sha256: sha(modelBytes) },
     ...beforeContent,
   ],
+  beforeRevision,
   comparison: beforeArg
-    ? 'Fixed identical r9 course/camera for both meshes; all course fields except revision equal published r8. Before mesh is immutable r8, after is the new candidate.'
+    ? `Fixed identical ${project.revision} course/camera for both meshes; all course fields except revision equal ${beforeRevision}. Before mesh is immutable ${beforeRevision}, after is the new candidate.`
     : null,
   harnessSHA256: sha(html),
   build: JSON.parse(
