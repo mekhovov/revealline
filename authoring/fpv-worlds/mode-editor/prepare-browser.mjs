@@ -26,15 +26,27 @@ const options = {};
 for (let i = 2; i < process.argv.length; i += 2) {
   const key = process.argv[i];
   assert(
-    ['--player', '--starter', '--out'].includes(key) && process.argv[i + 1],
+    ['--player', '--starter', '--out', '--admitted-source'].includes(key) && process.argv[i + 1],
     'Use --player ADMITTED_DIRECTORY --starter ACCEPTED_SPLIT_LEVEL_ZIP --out NEW_DIRECTORY',
   );
-  options[key.slice(2)] = path.resolve(process.argv[i + 1]);
+  options[key.slice(2)] =
+    key === '--admitted-source' ? process.argv[i + 1] : path.resolve(process.argv[i + 1]);
 }
-assert(Object.keys(options).length === 3, 'All three directory options are required');
+assert(
+  options.player && options.starter && options.out,
+  'All three directory options are required',
+);
+const admitted = Boolean(options['admitted-source']);
+if (admitted)
+  assert(
+    /^[a-f0-9]{40}$/.test(options['admitted-source']),
+    'Expected exact admitted source commit',
+  );
 const player = await fs.realpath(options.player);
 const starter = await fs.realpath(options.starter);
-const overlay = await fs.readFile(new URL('../../../' + HOST, import.meta.url));
+const overlay = await fs.readFile(
+  admitted ? path.join(player, HOST) : new URL('../../../' + HOST, import.meta.url),
+);
 const descriptor = await fs.readFile(path.join(player, 'optional-package.json'));
 const manifest = JSON.parse(descriptor);
 assert(
@@ -42,11 +54,13 @@ assert(
   'Expected the admitted 102-member Worlds package',
 );
 assert(
-  manifest.engineCommit === 'd9ad2561ee1d7685ef97961478b7de30278c1e48',
+  manifest.engineCommit ===
+    (options['admitted-source'] ?? 'd9ad2561ee1d7685ef97961478b7de30278c1e48'),
   'Unexpected admitted source',
 );
 assert(
-  manifest.files.find((f) => f.path === HOST)?.sha256 === EXPECTED_HOST,
+  manifest.files.find((f) => f.path === HOST)?.sha256 ===
+    (admitted ? hash(overlay) : EXPECTED_HOST),
   'Unexpected admitted host',
 );
 const files = [
@@ -163,7 +177,7 @@ await fs.mkdir(options.out);
 for (const record of staged) {
   const destination = path.join(options.out, record.destination);
   await fs.mkdir(path.dirname(destination), { recursive: true });
-  if (record.path === HOST) await fs.writeFile(destination, overlay, { flag: 'wx' });
+  if (record.path === HOST && !admitted) await fs.writeFile(destination, overlay, { flag: 'wx' });
   else await fs.link(record.source, destination);
 }
 await fs.mkdir(path.join(options.out, 'inputs'));
@@ -203,10 +217,23 @@ for (const [source, destination] of [
     fs.constants.COPYFILE_EXCL,
   );
 }
+if (admitted) {
+  const htmlPath = path.join(options.out, 'index.html');
+  let html = await fs.readFile(htmlPath, 'utf8');
+  html = html
+    .replaceAll('source overlay qualification', 'admitted package qualification')
+    .replaceAll('with source overlay', 'from admitted package')
+    .replace(
+      /  <p>[\s\S]*?<\/p>/,
+      '  <p>Exact combined admitted player, actual Workshop and renderer, isolated native IndexedDB. All 102 package files are unchanged. Run the same public UI scenarios and trusted Acro drag as the source qualification. No offline, hardware or performance claim.</p>',
+    );
+  await fs.writeFile(htmlPath, html);
+}
 const receipt = {
-  format: 'FPVEditorModesSourceOverlayFixture.v1',
+  format: admitted ? 'FPVEditorModesAdmittedFixture.v1' : 'FPVEditorModesSourceOverlayFixture.v1',
+  qualificationKind: admitted ? 'admitted-package' : 'source-overlay',
   sourceRevision: manifest.engineCommit,
-  hostSha256: EXPECTED_HOST,
+  hostSha256: admitted ? hash(overlay) : EXPECTED_HOST,
   hostHTMLSha256: hash(hostHTML),
   packageRevision: manifest.revision,
   admittedFiles: files,
@@ -214,7 +241,9 @@ const receipt = {
     path: HOST,
     bytes: overlay.length,
     sha256: hash(overlay),
-    sourceCommit: execFileSync('git', ['rev-parse', 'HEAD'], { encoding: 'utf8' }).trim(),
+    sourceCommit: admitted
+      ? manifest.engineCommit
+      : execFileSync('git', ['rev-parse', 'HEAD'], { encoding: 'utf8' }).trim(),
   },
   inputs: [...authored].map(([name, bytes]) => ({
     path: 'inputs/' + name,
@@ -230,12 +259,14 @@ const receipt = {
   modifications: [
     'Separate host HTML adds a base URL and isolated storage/download instrumentation before the unchanged automatic mount.',
     'The native IndexedDB factory remains in the host iframe realm; only database names are prefixed. Parent read-only inspection uses its own factory with the same prefix.',
-    '101 baseline files remain immutable hardlinks; world-app.mjs is a separate exact source overlay. This fixture is NOT an admitted package. The original manifest is retained as baseline evidence; it does not certify the overlay.',
+    admitted
+      ? 'All 102 admitted player files are unchanged immutable hardlinks; no runtime overlay.'
+      : '101 baseline files remain immutable hardlinks; world-app.mjs is a separate exact source overlay. This fixture is NOT an admitted package. The original manifest is retained as baseline evidence; it does not certify the overlay.',
   ],
   limitations: [
     'Manual spatial drag remains necessary after stage one.',
     'Online native-IDB reopening only; no service-worker installation or offline claim.',
-    'No ordinary-flight completion or package-capacity acceptance is claimed by this source UI fixture.',
+    'This UI fixture does not qualify new flight completion, public deployment or device behavior.',
   ],
 };
 await fs.writeFile(
@@ -249,7 +280,7 @@ console.log(
       output: options.out,
       admittedFiles: files.length,
       inputs: receipt.inputs.length,
-      hostSha256: EXPECTED_HOST,
+      hostSha256: admitted ? hash(overlay) : EXPECTED_HOST,
       browserQualification: 'pending',
     },
     null,

@@ -32,3 +32,9 @@ Click **Run explicit mode and ownership checks**. Stage one verifies:
 Stage one stops with an Acro upper gate selected. Use the real pointer to drag a translation arrow by a small distance, then click **Check spatial edit and Undo/Redo**. The second stage requires trusted pointer events, checks that only the selected Acro criterion moved, verifies Undo/Redo, editable ZIP round trip, exact pack installation with retained original revision, and native-IDB reopening. Final disposal must remove the captured owned route-mode label and select.
 
 This fixture does not claim ordinary-control completion of edited courses, offline acceptance, physical-device input, performance, public-launcher availability, or package-size admission. Those require separate evidence. Preserve failed fixtures and their receipts. No additional unit coverage is introduced here.
+
+## Same scenarios on an admitted combined package
+
+Use `stage-admitted.mjs BUNDLE_DIRECTORY BASELINE_PLAYER NEW_DIRECTORY` to verify the admitted archive and materialize its exact 102 members. Matching baseline members become immutable hardlinks; changed bytes are new files. The sibling stage receipt binds the admission, archive and all member hashes. It never builds, uploads or publishes a package.
+
+Pass `--admitted-source EXACT_COMMIT` to `prepare-browser.mjs` with that staged player. All 102 files remain unchanged hardlinks, with no runtime overlay. The host source must match the explicit admitted commit. The same public UI cases and trusted spatial step run with receipts clearly labelled `admitted-package`. This does not extend acceptance to offline or physical devices.

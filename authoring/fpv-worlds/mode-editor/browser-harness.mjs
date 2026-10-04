@@ -402,25 +402,28 @@ async function stageOne() {
       'Online native-IDB reopening only; no offline, controller, novice or performance acceptance.',
     ],
   };
-  render(
-    'running',
-    'Checking frozen baseline assets, exact source overlay and authored public inputs…',
-  );
+  render('running', 'Checking frozen runtime assets and authored public inputs…');
   const manifestBytes = await fetchBytes('./fixture.json'),
     manifest = JSON.parse(new TextDecoder().decode(manifestBytes));
+  receipt.qualificationKind = manifest.qualificationKind ?? 'source-overlay';
+  if (receipt.qualificationKind === 'admitted-package') {
+    receipt.format = 'FPVEditorModesAdmittedQualification.v1';
+    receipt.limitations[0] = 'Exact combined admitted closure; no runtime overlay.';
+  }
   receipt.fixtureSha256 = await digest(manifestBytes);
   receipt.baseline = {
     source: manifest.sourceRevision,
     host: manifest.hostSha256,
     packageRevision: manifest.packageRevision,
   };
-  receipt.overlay = manifest.overlay;
+  receipt.runtimeHost = manifest.overlay;
+  if (receipt.qualificationKind === 'source-overlay') receipt.overlay = manifest.overlay;
   for (const file of manifest.admittedFiles) {
     const expected = file.path === manifest.overlay.path ? manifest.overlay : file,
       bytes = await fetchBytes('./player/' + file.path);
     must(
       bytes.byteLength === expected.bytes && (await digest(bytes)) === expected.sha256,
-      (file.path === manifest.overlay.path
+      (file.path === manifest.overlay.path && receipt.qualificationKind === 'source-overlay'
         ? 'Source overlay checksum: '
         : 'Baseline admitted checksum: ') + file.path,
     );
@@ -775,7 +778,7 @@ async function stageTwo() {
   receipt.completedAt = new Date().toISOString();
   render(
     'passed',
-    `PASS ${receipt.checks.length}/${receipt.checks.length}. Explicit mode edits, source ownership/reimport, EN/UK/mobile, unarmed previews, trusted gizmo, native reopen and owned cleanup. Source overlay only; package admission remains separate.`,
+    `PASS ${receipt.checks.length}/${receipt.checks.length}. Explicit mode edits, source ownership/reimport, EN/UK/mobile, unarmed previews, trusted gizmo, native reopen and owned cleanup. ${receipt.qualificationKind === 'admitted-package' ? 'Exact combined admitted package; public/device qualification remains separate.' : 'Source overlay only; package admission remains separate.'}`,
   );
 }
 const fail = (error) => {
