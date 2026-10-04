@@ -806,7 +806,10 @@ test('edition pause keeps canonical Skip confirmation and Watch first cut action
   page.$('demo-button').click();
   assert.equal(page.$('demo-dialog').open, true, 'Watch first cut opens the shared Demo player.');
   await settle(() => page.$('demo-dialog').dataset.scene === 'playing');
-  assert.equal(page.$('demo-level').textContent, f.source.missions[0].name);
+  assert.ok(
+    f.source.missions.some((mission) => mission.name === page.$('demo-level').textContent),
+    'The presentation-only Demo rotation stays within this edition, without requiring its first mission.',
+  );
   assert.equal(page.doc.body.dataset.flightState, 'paused');
   assert.deepEqual(
     authoritativeCheckpoint(retainedRun),
