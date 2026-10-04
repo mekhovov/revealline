@@ -204,6 +204,24 @@ is implied by this gate.
    editor -> offline/reopen journey. Reuse exact component receipts and target
    boundary failures; real quota/eviction and broader hardware remain unclaimed.
 
+The bounded [combined-journey design](fpv-combined-journey-qualification.md) reuses
+the preserved 216 staging and component receipts. Reservoir's pack and proof
+archive remain separate imports; online source overlays cannot establish cached
+native offline continuity. Final acceptance needs the exact admitted combined
+runtime, the eligible published content, and a dedicated empty origin.
+
+The next performance window uses natural Reservoir and industrial Yard on the
+same final runtime with native longer observation windows. Require owned-resource
+release and no monotonic growth across identical repeated poses; internal
+environment caches are not an absolute-zero failure. Track ImageBitmap ownership
+separately, following [Three.js disposal guidance](https://threejs.org/manual/pages/how-to-dispose-of-objects.html).
+Feature-detect Long Animation Frames, whose reporting threshold is 50 ms; no
+entries does not prove no jank. Include entries overlapping a window's start or
+state their exclusion, and retain API/browser support in the receipt. These are
+measurement requirements, not a benchmark or FPS result.
+[Chrome's LoAF documentation](https://developer.chrome.com/docs/web-platform/long-animation-frames)
+describes the threshold and attribution limits.
+
 ### Visual and input quality checks
 
 Choose one natural and one industrial reference scene; record concrete remaining
