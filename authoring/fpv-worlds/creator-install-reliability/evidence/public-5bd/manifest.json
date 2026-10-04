@@ -1,0 +1,48 @@
+{
+  "format": "FPVPublicEntryEvidence.v1",
+  "sourceRevision": "5bd8f36d7767dcd9dda740865b4d8f19ddbe7c28",
+  "operator": "Parent coordinator native browser",
+  "flow": [
+    "Reload/Start",
+    "briefing Start",
+    "Ready",
+    "deliberate Arm",
+    "Flight active",
+    "Pause",
+    "Settings personal best visible and disabled because no personal best",
+    "Close",
+    "Continue action"
+  ],
+  "limits": [
+    "No personal-best playback claim",
+    "No claim that language395a, coating or HUD were deployed",
+    "No hardware FPS or device-wide offline claim"
+  ],
+  "files": [
+    {
+      "path": "flight.txt",
+      "bytes": 648,
+      "sha256": "8156ea49d2cc888df50f3db4882d3f3254edb3bf389c9ef1f9b2914cf1f37edf"
+    },
+    {
+      "path": "flight.png",
+      "bytes": 86240,
+      "sha256": "4a6c5311a22ae73b9c2a38a9c25880caf335c9d90e6f8784ebafcf68bf038697"
+    },
+    {
+      "path": "settings.txt",
+      "bytes": 6605,
+      "sha256": "476db1c4115fc122c53167d7a71aaf98283e1937bdfd834cba0edae11ebc72a1"
+    },
+    {
+      "path": "deployment.json",
+      "bytes": 308,
+      "sha256": "062a031ed97fdf35c4c21079ebbd5aa5392543cd1944c25f820e9d764b41f322"
+    },
+    {
+      "path": "build.json",
+      "bytes": 143,
+      "sha256": "3feb9e07f4fd29fdea97ab05e7bcaeabf9a7e2844e4b1bc4a06d19d6bca99371"
+    }
+  ]
+}
