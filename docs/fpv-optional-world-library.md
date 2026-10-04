@@ -10,8 +10,10 @@ This is an unqualified draft normally integrated with main `ade4bfc2dd` and the
 separately qualified shell capacity prerequisite [#1065](https://github.com/mekhovov/revealline/pull/1065).
 The first source candidate `f33d01d62c` passed 189 actual browser controls;
 its [full receipt and frozen harness](../authoring/fpv-worlds/library/evidence/source-r1-provenance.json)
-are preserved losslessly. A subsequent three-byte response-body cleanup correction
-and explicit cancellation checks are awaiting their own browser result. Fresh
+are preserved losslessly. The corrected source `74bd1b1a53` separately passes
+**192/192** actual browser checks, including three observed rejected-body
+cancellations. Its [receipt and frozen fixture](../authoring/fpv-worlds/library/evidence/source-r2-provenance.json)
+retain the exact source and all 102 baseline members with two explicit overlays. Fresh
 source admission and finished-world availability are not yet claimed. The
 production catalog is empty: Mountain Reservoir still needs all eight distinct
 authored challenges and sixteen mode demonstrations qualified before publication.
@@ -92,8 +94,11 @@ unarmed flight and dirty editor text remained unchanged. All 189 checks passed;
 86 manual canonical/generated parser boundary checks and scoped lint also pass.
 The first reader rejected bad status/oversized headers before acquiring its
 reader, so a later audit moved those checks under the same cancellation `finally`.
-The new qualifier explicitly observes cancellation of those rejected bodies;
-the historical pass is not relabelled as evidence for this correction.
+The corrected qualifier explicitly observes cancellation of those rejected bodies;
+all 192 checks pass, with three actual HTTP-200 responses from the pinned raw
+repository URL. Native write and readonly refresh aborts are recorded separately
+from those HTTPS requests. The historical pass is not relabelled as evidence for
+this correction.
 
 Archives use gzip with zero modification time. Decompress each file with
 `gzip -dc <archive>`, then verify its raw SHA-256 and size from the provenance
