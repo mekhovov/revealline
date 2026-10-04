@@ -171,6 +171,61 @@ async function mount() {
   p = w.fpvCatalogue;
   w.focus();
 }
+async function modeReturnObservation() {
+  await preferences('en', 'self-level');
+  filters();
+  selectWorld(fixture.packs.diagnostic.world);
+  const before = rows();
+  check(
+    before.find((r) => r.title === 'catalogue-mode-split')?.metadata === 'Follow a subject',
+    'Mode-return case starts from selected self-level Follow',
+  );
+  set('first-flight-mode', 'acro');
+  click(q('#watch-first-flight'));
+  await until(
+    () =>
+      p.data.course === 'flight-01' &&
+      p.data.lastDraw?.status === 'active' &&
+      q('#flight-mode').value === 'acro',
+    'Public first-flight Acro replay is actually drawn active',
+    45000,
+  );
+  receipt.modeReplayStart = {
+    course: p.data.course,
+    draw: { ...p.data.lastDraw },
+    status: q('#flight-status').textContent,
+  };
+  await home();
+  const paused = p.app.snapshot();
+  check(
+    paused.course === 'flight-01' &&
+      paused.replay?.kind === 'demonstration' &&
+      paused.replay.mode === 'acro' &&
+      paused.state.status === 'paused',
+    'Public Acro replay changes mode and pauses normally',
+  );
+  await missions();
+  const after = rows(),
+    row = after.find((r) => r.title === 'catalogue-mode-split');
+  check(
+    q('#flight-mode').value === 'acro' && !!row,
+    'Missions returns to retained diagnostic world with Acro selected',
+  );
+  receipt.modeObservation = {
+    before,
+    after,
+    selectedMode: q('#flight-mode').value,
+    expected: 'Observe a subject',
+    actual: row.metadata,
+    stale: row.metadata !== 'Observe a subject',
+  };
+  filters('observe');
+  selectWorld(fixture.packs.diagnostic.world);
+  check(
+    rows().length === 1 && rows()[0].metadata === 'Observe a subject',
+    'Normal filter repaint independently agrees with selected-mode criteria',
+  );
+}
 function output() {
   $('receipt').value = JSON.stringify(receipt);
   $('summary').textContent = JSON.stringify(
@@ -180,6 +235,7 @@ function output() {
       checks: receipt.checks.length,
       failed: receipt.checks.filter((r) => !r.passed),
       samples: receipt.samples.length,
+      modeObservation: receipt.modeObservation ?? null,
       source: fixture?.revision,
       hosts: receipt.hosts.map((h) => ({
         name: h.name,
@@ -307,11 +363,12 @@ async function execute() {
       );
     click(watch);
     await until(
-      () => /^(Flight active|Playback active)/.test(q('#flight-status').textContent),
+      () => p.data.course === course.id && p.data.lastDraw?.status === 'active',
       'Native exact Watch starts',
       45000,
     );
     receipt.watchStartStatus = q('#flight-status').textContent;
+    receipt.watchStartDraw = { ...p.data.lastDraw };
     await home();
     click(q('#worlds-shell-action-settings'));
     await until(() => q('#sim-settings').open, 'Public Settings pauses native Watch');
@@ -332,6 +389,7 @@ async function execute() {
       same(p.app.snapshot().state, paused.state),
       'Catalogue language refresh preserves paused replay state',
     );
+    await modeReturnObservation();
     const beforeReopen = await p.inspect();
     check(
       same(beforeReopen, installed),
@@ -354,7 +412,9 @@ async function execute() {
     );
     await finish('reopened owner');
     receipt.completed = true;
-    $('status').textContent = 'PASS';
+    $('status').textContent = receipt.modeObservation?.stale
+      ? 'DIAGNOSTIC: stale mode label reproduced'
+      : 'PASS';
   } catch (error) {
     receipt.error = { message: error.message, stack: error.stack };
     try {
