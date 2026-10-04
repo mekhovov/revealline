@@ -35,6 +35,7 @@
     {
       "id": "creator",
       "files": [
+        "game/test/solo-database.test.mjs",
         "game/test/studio-pursuit-editor.test.mjs",
         "game/test/studio-pursuit-preview.test.mjs",
         "game/test/fpv-native-pursuit-editor.test.mjs",
