@@ -1,5 +1,7 @@
 # FPV implementation continuation — approved 1 October 2026
 
+Current status and next priorities: [4 October delivery review](fpv-delivery-review-2026-10-04.md).
+
 This plan supersedes the original remaining-work estimate in
 `fpv-worlds-implementation.md`. Keep the completed native UI, radio calibration,
 fullscreen and existing simulation/content contracts. Direction: grounded
