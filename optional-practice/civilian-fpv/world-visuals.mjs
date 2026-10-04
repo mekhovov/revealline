@@ -2,6 +2,7 @@ import * as THREE from './vendor/three.module.js';
 import {
   BUILTIN_SIM_VISUAL_COLLECTIONS,
   SIM_MATERIAL_ROLES,
+  THEME_PROFILES,
   resolveSimVisualCollection,
   resolveSimThemeProfile,
 } from './world-themes.mjs';
@@ -16,6 +17,75 @@ const ADVENTURE_SURFACES = Object.freeze({
   'solar-farm': { floor: 'ballast', color: 0x97937a, wall: 'metal' },
   'rail-depot': { floor: 'ballast', color: 0x777773, wall: 'metal' },
 });
+
+const ORCHARD_PROFILE = JSON.stringify(
+  THEME_PROFILES.find((profile) => profile.id === 'ukrainian'),
+);
+function canonicalOrchardTrees(course) {
+  if (
+    !/^adventure-orchard-0[1-5]$/.test(course.id ?? '') ||
+    course.world?.id !== 'orchard' ||
+    course.world?.style !== 'orchard' ||
+    course.obstacles?.length !== 34 ||
+    !['x', 'y', 'z'].every(
+      (axis, index) =>
+        course.bounds?.min?.[axis] === [-60000, 0, -60000][index] &&
+        course.bounds?.max?.[axis] === [60000, 35000, 60000][index],
+    ) ||
+    !course.obstacles
+      .filter((item) => !/^tree-/.test(item.id ?? ''))
+      .every((item) => ['building-barn', 'rock-survey-plinth'].includes(item.id))
+  )
+    return false;
+  const trees = (course.obstacles ?? []).filter((item) => /^tree-/.test(item.id ?? ''));
+  return (
+    trees.length === 32 &&
+    new Set(trees.map((item) => item.id)).size === 32 &&
+    trees.every((item) => {
+      const id = /^tree-(trunk|canopy)-([0-3])-([0-3])$/.exec(item.id);
+      if (!id || item.rotation !== undefined) return false;
+      const x = [-36000, -18000, 18000, 36000][Number(id[2])],
+        z = [-34000, -16000, 2000, 20000][Number(id[3])];
+      if (id[1] === 'trunk')
+        return (
+          item.type === undefined &&
+          ['x', 'y', 'z'].every(
+            (axis, index) =>
+              item.min?.[axis] === [x - 400, 0, z - 400][index] &&
+              item.max?.[axis] === [x + 400, 5000, z + 400][index],
+          )
+        );
+      const vertices = [
+          x,
+          8000,
+          z,
+          x - 3400,
+          4800,
+          z,
+          x,
+          4800,
+          z - 3400,
+          x + 3400,
+          4800,
+          z,
+          x,
+          4800,
+          z + 3400,
+          x,
+          3000,
+          z,
+        ],
+        indices = [0, 1, 2, 0, 2, 3, 0, 3, 4, 0, 4, 1, 5, 2, 1, 5, 3, 2, 5, 4, 3, 5, 1, 4];
+      return (
+        item.type === 'trimesh' &&
+        item.vertices?.length === vertices.length &&
+        item.indices?.length === indices.length &&
+        vertices.every((value, index) => item.vertices[index] === value) &&
+        indices.every((value, index) => item.indices[index] === value)
+      );
+    })
+  );
+}
 
 /** The six closed Quarry solids share one finish; creator variants stay generic. */
 export function isQuarryStrataObstacle(obstacle) {
@@ -191,7 +261,9 @@ function surfacePixels(kind, color, seed, size, pixel) {
     '111100110001110',
     '011100110101010',
   ];
-  const woodlandSurface = kind === 'bark' || kind === 'forest-floor',
+  const orchardBark = kind === 'orchard-bark',
+    orchardLeaves = kind === 'orchard-foliage',
+    woodlandSurface = kind === 'bark' || kind === 'forest-floor',
     earth = woodlandSurface ? new THREE.Color(0x695946).lerp(base, 0.3) : null,
     moss = woodlandSurface ? new THREE.Color(0x576747).lerp(base, 0.3) : null,
     pale = woodlandSurface ? new THREE.Color(0x92917b).lerp(base, 0.3) : null,
@@ -246,7 +318,7 @@ function surfacePixels(kind, color, seed, size, pixel) {
   const leafGrid = 18,
     leafRandom = random(seed ^ 0x6a09e667),
     leaves =
-      kind === 'forest-floor' || kind === 'woodland-canopy'
+      kind === 'forest-floor' || kind === 'woodland-canopy' || orchardLeaves
         ? Array.from({ length: leafGrid * leafGrid }, (_, index) => {
             const angle = leafRandom() * Math.PI * 2,
               u = ((index % leafGrid) + 0.5) / leafGrid,
@@ -436,7 +508,7 @@ function surfacePixels(kind, color, seed, size, pixel) {
         relief += mottling * 0.045;
         roughness = 0.95;
       }
-      if (kind === 'woodland-canopy') {
+      if (kind === 'woodland-canopy' || orchardLeaves) {
         // Original leaf clusters: broad shade carries at flight distance, while
         // scattered elliptical leaves and veins resolve only at close range.
         // Opaque, mipmapped maps preserve the established crown silhouette.
@@ -453,6 +525,16 @@ function surfacePixels(kind, color, seed, size, pixel) {
         shade = 0.76 + broad(u, v) * 0.2 + mottling * 0.12 + blade * 0.14 - vein * 0.035;
         relief = mottling * 0.04 + blade * 0.025 - vein * 0.01;
         roughness = 0.88 + grain * 0.06;
+        if (orchardLeaves) {
+          // Opaque leaf groups carry restrained harvest warmth; the closed
+          // crown and every route through the orchard keep their exact shape.
+          const harvest = Math.max(0, Math.min(0.25, (broad((u + 0.31) % 1, v) - 0.57) * 1.8));
+          red += harvest * 0.12;
+          green += harvest * 0.05;
+          blue -= harvest * 0.025;
+          shade = 0.82 + broad(u, v) * 0.24 + mottling * 0.075 + blade * 0.1 - vein * 0.03;
+          relief = mottling * 0.015 + blade * 0.018 - vein * 0.008;
+        }
       }
       if (kind === 'solar') {
         const bus = (u * 12) % 1 < 0.022,
@@ -491,6 +573,14 @@ function surfacePixels(kind, color, seed, size, pixel) {
         shade *= 0.93 + vein * 0.055 + patch + mottling * 0.08;
         relief += vein * 0.025;
         roughness = 0.67 + grain * 0.17;
+      }
+      if (orchardBark) {
+        // Upright, broken grain uses the existing four-metre projection.
+        const line = u * 16 + Math.sin(v * tau) * 0.07 + (broad(u, v) - 0.5) * 0.14,
+          fissure = Math.max(0, 1 - Math.abs(Math.sin(line * tau)) / 0.13);
+        shade = 0.9 + patch * 0.6 + mottling * 0.1 - fissure * 0.18;
+        relief = mottling * 0.025 - fissure * 0.09;
+        roughness = 0.92 + grain * 0.045;
       }
       if (kind === 'bark') {
         // Coarse broken plates replace sawn-wood striping. V spans the entire
@@ -598,7 +688,7 @@ function surfacePixels(kind, color, seed, size, pixel) {
   const reliefScale =
     woodlandSurface || kind === 'woodland-canopy'
       ? size / 64
-      : meadow || quarryStone
+      : meadow || quarryStone || orchardBark || orchardLeaves
         ? size / 128
         : 2;
   for (let y = 0; y < size; y++)
@@ -1121,6 +1211,12 @@ export function buildWorldVisuals({
   surfaceDetail.name = 'surface-detail';
   world.add(surfaceDetail);
   const pixel = profile.textureFilter === 'nearest';
+  const orchardTrees =
+    environment === 'orchard' &&
+    !pixel &&
+    !kit &&
+    JSON.stringify(profile) === ORCHARD_PROFILE &&
+    canonicalOrchardTrees(course);
   const quarryRocks =
       environment === 'quarry'
         ? (course.obstacles ?? []).filter(
@@ -1275,7 +1371,17 @@ export function buildWorldVisuals({
               : 'steel';
       const maps = kit
         ? { map: kit.texture(role) }
-        : surfaceMaps(kind === 'stadium-steel' ? 'painted-steel' : kind, colors[kind], { pixel });
+        : surfaceMaps(
+            orchardTrees && kind === 'wood'
+              ? 'orchard-bark'
+              : orchardTrees && kind === 'foliage'
+                ? 'orchard-foliage'
+                : kind === 'stadium-steel'
+                  ? 'painted-steel'
+                  : kind,
+            colors[kind],
+            { pixel },
+          );
       // A shared owner stays under world even when callers make no obstacle
       // mesh, and never shares texture lifetime with independently removed actors.
       world.userData.ownedMaterials.push(material(0xffffff, maps));
