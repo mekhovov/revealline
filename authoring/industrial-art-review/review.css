@@ -174,3 +174,31 @@ output {
 #export {
   margin-top: 16px;
 }
+
+.environment-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr));
+  gap: 16px;
+  margin-block: 16px;
+}
+.environment-grid article {
+  min-width: 0;
+  padding: 16px;
+}
+.environment-grid canvas {
+  width: auto;
+  max-width: 100%;
+  image-rendering: pixelated;
+}
+.environment-grid nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.environment-grid ul {
+  overflow-wrap: anywhere;
+}
+.environment-budget {
+  color: var(--muted, #bbc4bb);
+  font-size: 0.85rem;
+}

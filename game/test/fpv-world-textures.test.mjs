@@ -10,6 +10,8 @@ import * as visuals from '../../optional-practice/civilian-fpv/world-visuals.mjs
 import * as themes from '../../optional-practice/civilian-fpv/world-themes.mjs';
 import { FLIGHT_COURSES } from '../../optional-practice/civilian-fpv/catalogue.mjs';
 import { runtimeActorArtRevision } from '../hunt/preferences.mjs';
+import { canonicalJSON } from '../data-json.mjs';
+import { resolveIndustrialEnvironment } from '../presentation/industrial-environments.mjs';
 import {
   inspectImport,
   encodeWorldGLB,
@@ -174,6 +176,8 @@ async function rendererFixture() {
     ...themes,
     ...visuals,
     runtimeActorArtRevision,
+    canonicalJSON,
+    resolveIndustrialEnvironment,
     Blob,
     URL,
     ArrayBuffer,

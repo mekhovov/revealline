@@ -1,4 +1,5 @@
 import { boundedJSON, dataIdentity, exactKeys, required, stableId } from '../../game/data-json.mjs';
+import { validateIndustrialEnvironmentPin } from '../../game/presentation/industrial-environments.mjs';
 
 import {
   BUILTIN_SIM_VISUAL_COLLECTIONS,
@@ -244,6 +245,7 @@ const collectionForProfile = (profile) =>
 /** New World recordings retain one exact authored fallback in their course snapshot. */
 export function snapshotSimThemeProfile(course = {}, presentation = {}) {
   const selected = resolveSimThemeProfile(course, presentation);
+  if (selected.format === 'ThemeProfile.v3') return selected;
   if (!collectionForProfile(selected)) return selected;
   const authored = resolveThemeProfile(course);
   const authoredFallback =
@@ -313,12 +315,12 @@ function copy(value) {
 export function validateThemeProfile(input) {
   const value = copy(input);
   if (
-    !['ThemeProfile.v1', 'ThemeProfile.v2'].includes(value.format) ||
+    !['ThemeProfile.v1', 'ThemeProfile.v2', 'ThemeProfile.v3'].includes(value.format) ||
     !/^[a-z][a-z0-9-]{0,63}$/.test(value.id) ||
     typeof value.revision !== 'string'
   )
     throw new TypeError('Invalid theme profile.');
-  if (value.format === 'ThemeProfile.v2') {
+  if (['ThemeProfile.v2', 'ThemeProfile.v3'].includes(value.format)) {
     exactKeys(
       value,
       [
@@ -334,6 +336,7 @@ export function validateThemeProfile(input) {
         'audio',
         'ui',
         'authoredFallback',
+        ...(value.format === 'ThemeProfile.v3' ? ['artRevision', 'industrialEnvironment'] : []),
       ],
       'pinned theme profile',
     );
@@ -346,8 +349,25 @@ export function validateThemeProfile(input) {
     )
       throw new TypeError('Invalid authored theme fallback.');
     value.authoredFallback = validateThemeProfile(value.authoredFallback);
+    if (value.format === 'ThemeProfile.v3') {
+      required(
+        value.id === 'military-field' && value.revision === 'r1',
+        'Industrial environment needs its retained collection.',
+      );
+      required(
+        value.artRevision === 'industrial-roster-v3',
+        'Industrial environment needs its retained actor art.',
+      );
+      value.industrialEnvironment = validateIndustrialEnvironmentPin(value.industrialEnvironment);
+      required(value.industrialEnvironment !== null, 'Industrial environment pin required.');
+    }
   } else if (Object.hasOwn(value, 'authoredFallback'))
     throw new TypeError('Authored theme fallback requires ThemeProfile.v2.');
+  if (
+    value.format !== 'ThemeProfile.v3' &&
+    (Object.hasOwn(value, 'industrialEnvironment') || Object.hasOwn(value, 'artRevision'))
+  )
+    throw new TypeError('Industrial environment requires ThemeProfile.v3.');
   for (const key of ['sky', 'fog', 'ground', 'wall', 'accent', 'warm'])
     if (
       !Number.isInteger(value.palette?.[key]) ||

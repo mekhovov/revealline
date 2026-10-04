@@ -1,3 +1,4 @@
+import { prepareIndustrialEnvironmentSource } from '../presentation/industrial-environments.mjs';
 import { createPursuitCampaignCandidates } from './pursuit-campaign-candidates.mjs';
 import { createPursuitPilotCandidates } from './pursuit-pilot-candidates.mjs';
 import {
@@ -134,6 +135,21 @@ export async function createTeamGreyboxEntry({
   await candidateProgress.load();
   return Object.freeze({
     candidateJourney,
+    prepareCandidateEnvironment(row, { signal } = {}) {
+      if (!candidateJourney.owns(row)) return Promise.resolve(null);
+      return prepareIndustrialEnvironmentSource({
+        engine: 'capture',
+        mode: 'team',
+        source: row.level,
+        origin: {
+          kind: 'builtin',
+          catalogueId: source.id,
+          catalogueRevision: source.revision,
+          sourceForm: `compiled-native-v1:${source.policyId}:${row.difficulty}`,
+        },
+        signal,
+      });
+    },
     candidateProgress,
     candidatePreferences: preferences,
     candidateCardPresenter: createTeamMissionCardPresenter(candidateJourney, candidateProgress, {

@@ -1,3 +1,7 @@
+import {
+  CAPTURE_PRESENTATION_SESSION_FORMAT,
+  nativeCaptureSession,
+} from '../capture-presentation-session.mjs';
 import { contentText } from '../i18n/content.mjs';
 import { t, localizedText } from '../i18n/index.mjs';
 import { captureOperationFocus } from './operation-focus.mjs';
@@ -526,7 +530,7 @@ export function attachLibraryPanel(api) {
         value7: usage.percent.toFixed(1),
       }),
     );
-    const saved = api.saved();
+    const saved = nativeCaptureSession(api.saved());
     localizedText($('suspended-status'), () =>
       saved
         ? t('gameplay:savedFlight', {
@@ -807,7 +811,7 @@ export function attachLibraryPanel(api) {
       status('save-status', t('interface:preparingTheVerifiedAttemptDownload'), 'busy');
       const exported = await downloadJSON(prepared.session, 'revealline-suspended-flight.json');
       if (!currentAttemptExport(operation)) return;
-      const session = prepared.session;
+      const session = nativeCaptureSession(prepared.session);
       status(
         'save-status',
         t('gameplay:attemptPrepared', {
@@ -1101,6 +1105,7 @@ export function attachLibraryPanel(api) {
           'xonix-session.v4',
           'xonix-session.v5',
           'xonix-session.v6',
+          CAPTURE_PRESENTATION_SESSION_FORMAT,
         ].includes(parsed.format)
       ) {
         operation.commit(t('interface:restoringTheVerifiedSavedFlight'));

@@ -1,3 +1,4 @@
+import { nativeCaptureSession as nativeSession } from '../capture-presentation-session.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
@@ -59,7 +60,7 @@ function initialStorage(turnPolicy, saved = fixture(standard, turnPolicy)) {
   assert.equal(saveSession(storage, sessionKey, saved).ok, true);
   return storage;
 }
-const saved = (page) => JSON.parse(page.storage.getItem(sessionKey));
+const saved = (page) => nativeSession(JSON.parse(page.storage.getItem(sessionKey)));
 const slotWrites = (page) => page.storage.writes.filter(([key]) => key === sessionKey);
 const preference = (page) =>
   loadLibrary(page.storage, profileKey, { campaigns }).library.preferences.campaignDifficulty;
@@ -565,10 +566,24 @@ test('ordinary practice selecting an authored campaign ignores saved Gentle and 
   for (let tick = 0; page.rendered.run.status === 'running' && tick < 600; tick++) page.frame();
   assert.equal(page.rendered.run.status, 'won');
   assert.equal(page.rendered.run.lives, 3);
+  const completed = authoritativeCheckpoint(page.rendered.run);
+  assert.equal(page.$('skip-celebration').hidden, false);
+  page.$('skip-celebration').click();
+  assert.equal(page.$('show-result').hidden, false);
+  page.$('show-result').click();
+  assert.deepEqual(authoritativeCheckpoint(page.rendered.run), completed);
   assert.match(page.$('overlay-copy').textContent, /Practice complete/);
   assert.deepEqual([...storage.map], before);
   assert.equal(storage.writes.length, writes, 'A real practice win cannot write awards or a save.');
   page.$('collection-button').click();
-  assert.equal(page.$('gallery-grid').children.length, 0, 'No in-memory picture award either.');
+  assert.equal(
+    page.$('gallery-grid').querySelectorAll('button').length,
+    0,
+    'No in-memory picture award either.',
+  );
+  assert.ok(
+    page.$('gallery-grid').textContent,
+    'The empty Collection still explains how to earn pictures.',
+  );
   assert.deepEqual(page.errors, []);
 });

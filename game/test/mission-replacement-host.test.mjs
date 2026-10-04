@@ -1,3 +1,4 @@
+import { nativeCaptureSession as nativeSession } from '../capture-presentation-session.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
@@ -59,7 +60,7 @@ function preserved(h, run, before) {
   assert.deepEqual(h.errors, []);
 }
 async function setup(t, options = {}) {
-  const h = await soloPage(t, { storage: storageFixture(), ...options });
+  const h = await soloPage(t, { storage: storageFixture(), waitForPictures: false, ...options });
   await change(h, 'level-select', first);
   return h;
 }
@@ -72,8 +73,7 @@ function openRetainedSetup(h) {
   h.$('shell-missions').showModal();
 }
 async function flight(h, paused = true) {
-  await settle(() => h.doc.body.dataset.pictureState === 'ready');
-  h.$('start-button').click();
+  await action(h.$('start-button'));
   await settle(() => h.doc.body.dataset.flightState === 'running');
   h.frame(0); // Paint the newly started attempt before taking its reference.
   const run = h.rendered.run,
@@ -210,7 +210,7 @@ for (const entry of ['level', 'card', 'campaign', 'pack'])
     assert.equal(h.$('campaign-select').value.startsWith(campaign.id + '/'), true);
     preserved(h, run, before);
     const saved = h.storage.getItem(slot);
-    assert.deepEqual(JSON.parse(saved).replay.checkpoint, before);
+    assert.deepEqual(nativeSession(JSON.parse(saved)).replay.checkpoint, before);
     await request(); // another native change does not queue or replace a prompt
     assert.equal(h.storage.getItem(slot), saved);
     h.$('mission-replace-stay').click();
@@ -308,7 +308,7 @@ for (const method of ['button', 'Escape', 'controller'])
     assert.equal(h.storage.getItem(slot), raw);
     h.$('shell-missions').close();
     const heldTick = run.tick;
-    h.$('start-button').click();
+    await action(h.$('start-button'));
     h.frame();
     h.frame();
     assert.equal(h.rendered.paused, false);
@@ -371,12 +371,36 @@ for (const stage of ['download', 'save', 'cancel-download'])
     const db = managedIndexedDB();
     const h = await setup(t, { assetIndexedDB: db.indexedDB });
     await change(h, 'pack-select', 'night-shift');
-    await settle(() => h.doc.body.dataset.pictureState === 'ready');
-    h.$('start-button').click();
+    assert.equal(
+      h.$('start-button').disabled,
+      false,
+      JSON.stringify({
+        phase: 'before Start',
+        state: h.doc.body.dataset.flightState,
+        picture: h.doc.body.dataset.pictureState,
+        hidden: h.$('start-button').hidden,
+        status: h.$('flight-preparation-status').textContent,
+        dialogs: h.doc.querySelectorAll('dialog[open]').map((node) => node.id),
+        errors: h.errors,
+      }),
+    );
+    assert.equal(h.$('start-button').hidden, false);
+    await action(h.$('start-button'));
     h.key('ArrowDown');
     for (let n = 0; n < 20; n++) h.frame();
     h.key('ArrowDown', false);
-    assert.ok(h.rendered.run.tick > 0);
+    assert.ok(
+      h.rendered.run.tick > 0,
+      JSON.stringify({
+        state: h.doc.body.dataset.flightState,
+        picture: h.doc.body.dataset.pictureState,
+        message: h.$('run-message').textContent,
+        status: h.$('flight-preparation-status').textContent,
+        dialogs: h.doc.querySelectorAll('dialog[open]').map((node) => node.id),
+        disabled: h.$('start-button').disabled,
+        errors: h.errors,
+      }),
+    );
     openRetainedSetup(h);
     h.frame(0);
     const run = h.rendered.run,
@@ -400,7 +424,7 @@ for (const stage of ['download', 'save', 'cancel-download'])
     const saved = h.storage.getItem(slot);
     assert.equal(h.$('mission-replace-dialog').open, true);
     assert.match(h.$('mission-replace-status').textContent, /saved and verified/);
-    assert.deepEqual(JSON.parse(saved).replay.checkpoint, before);
+    assert.deepEqual(nativeSession(JSON.parse(saved)).replay.checkpoint, before);
     const confirm = h.$('mission-replace-confirm');
     let disabled = confirm.disabled;
     Object.defineProperty(confirm, 'disabled', {
@@ -461,8 +485,7 @@ test('successful different-pack install adopts a fresh paused run and leaves the
   const db = managedIndexedDB();
   const h = await setup(t, { assetIndexedDB: db.indexedDB });
   await change(h, 'pack-select', 'night-shift');
-  await settle(() => h.doc.body.dataset.pictureState === 'ready');
-  h.$('start-button').click();
+  await action(h.$('start-button'));
   for (let n = 0; n < 5; n++) h.frame();
   assert.ok(h.rendered.run.tick > 0);
   openRetainedSetup(h);
@@ -534,8 +557,8 @@ test('restored paused unfinished flight is guarded and Stay preserves its exact 
     h.$('mission-replace-stay').click();
     preserved(h, run, before);
     assert.deepEqual(
-      JSON.parse(storage.getItem(slot)).replay.checkpoint,
-      JSON.parse(raw).replay.checkpoint,
+      nativeSession(JSON.parse(storage.getItem(slot))).replay.checkpoint,
+      nativeSession(JSON.parse(raw)).replay.checkpoint,
     );
   });
 });

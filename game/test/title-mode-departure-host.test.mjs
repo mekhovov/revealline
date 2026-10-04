@@ -1,3 +1,4 @@
+import { nativeCaptureSession as nativeSession } from '../capture-presentation-session.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
@@ -95,7 +96,7 @@ async function flight(t, options = {}) {
   const h = await host(t, { waitForPictures: false, ...options });
   if (options.policy === 'grid-center') {
     h.change('turn-select', 'grid-center');
-    await settle(() => h.doc.body.dataset.pictureState === 'ready');
+    // The explicit Start action below joins this policy change's picture preparation.
   }
   h.$('shell-featured').focus();
   await press(h, 'Enter');
@@ -338,7 +339,9 @@ for (const reason of ['quota', 'readback', 'newer-before', 'newer-after'])
     let written = false,
       newer;
     if (reason === 'newer-before') {
-      newer = JSON.stringify({ ...JSON.parse(get(slot)), savedAt: '2026-09-16T00:00:00.000Z' });
+      const changed = JSON.parse(get(slot));
+      nativeSession(changed).savedAt = '2026-09-16T00:00:00.000Z';
+      newer = JSON.stringify(changed);
       set(slot, newer);
     }
     h.storage.setItem = (key, value) => {
@@ -351,7 +354,9 @@ for (const reason of ['quota', 'readback', 'newer-before', 'newer-after'])
     await request(h, 'team');
     if (reason === 'newer-after') {
       assert.match(h.$('mode-leave-status').textContent, /saved and verified/);
-      newer = JSON.stringify({ ...JSON.parse(get(slot)), savedAt: '2026-09-16T00:00:00.000Z' });
+      const changed = JSON.parse(get(slot));
+      nativeSession(changed).savedAt = '2026-09-16T00:00:00.000Z';
+      newer = JSON.stringify(changed);
       set(slot, newer);
       h.$('mode-leave-confirm').click();
       assert.equal(globalThis.location.href, homeURL);
@@ -496,7 +501,7 @@ for (const kind of ['versus', 'team'])
         soundtrackIndexedDB: f.memory.indexedDB,
         pictures: { Image: Picture },
       });
-      assert.ok(JSON.parse(storage.getItem(slot)).presentationPins);
+      assert.ok(nativeSession(JSON.parse(storage.getItem(slot))).presentationPins);
       assert.equal(h.rendered.run.player.cutting, true);
     });
     const captured = storage.getItem(slot);
@@ -556,7 +561,7 @@ for (const kind of ['versus', 'team'])
         soundtrackIndexedDB: f.memory.indexedDB,
         pictures: { Image: Picture },
       });
-      assert.ok(JSON.parse(storage.getItem(slot)).presentationPins);
+      assert.ok(nativeSession(JSON.parse(storage.getItem(slot))).presentationPins);
       assert.equal(h.rendered.run.player.cutting, true);
     });
     const captured = storage.getItem(slot);

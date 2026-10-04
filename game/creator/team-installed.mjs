@@ -1,3 +1,4 @@
+import { snapshotAttemptAppearance } from '../presentation/attempt-appearance.mjs';
 import { prepareTeamRunningEnemies } from '../hunt/team-running-enemies.mjs';
 import { deriveEncounterLevel } from '../hunt/variants.mjs';
 import { ENCOUNTER_VARIANTS } from '../hunt/preferences.mjs';
@@ -139,6 +140,53 @@ function validateReward(source) {
     'Installed Team picture reward is damaged.',
   );
   return source;
+}
+
+export const INSTALLED_TEAM_PRESENTATION_FORMAT = 'revealline-installed-team-presentation.v1';
+export const nativeInstalledTeamAttempt = (value) =>
+  value?.format === INSTALLED_TEAM_PRESENTATION_FORMAT ? value.attempt : value;
+
+export function snapshotInstalledTeamPresentation(source, editionId, levelId) {
+  const value = boundedJSON(source, {
+    maxBytes: 1024 * 1024,
+    maxNodes: 100020,
+    maxDepth: 12,
+    maxArray: MAX_ATTEMPT_SEGMENTS,
+    maxString: 160,
+  });
+  if (value.format !== INSTALLED_TEAM_PRESENTATION_FORMAT)
+    return {
+      snapshot: validateInstalledTeamAttempt(value, editionId, levelId),
+      attemptAppearance: null,
+    };
+  exactKeys(value, ['format', 'attempt', 'appearance'], 'Installed Team presentation');
+  const snapshot = validateInstalledTeamAttempt(value.attempt, editionId, levelId),
+    attemptAppearance = snapshotAttemptAppearance(value.appearance);
+  required(attemptAppearance !== null, 'An installed Team presentation needs accepted artwork.');
+  required(
+    attemptAppearance.environmentPin === null,
+    'Installed Team content cannot claim built-in chapter artwork authority.',
+  );
+  return { snapshot, attemptAppearance };
+}
+
+export function withInstalledTeamAttemptAppearance(attempt, appearance) {
+  const selected = snapshotAttemptAppearance(appearance);
+  const output =
+    selected === null ||
+    (selected.artRevision === null &&
+      selected.collection === null &&
+      selected.environmentPin === null)
+      ? attempt
+      : { format: INSTALLED_TEAM_PRESENTATION_FORMAT, attempt, appearance: selected };
+  const checked = snapshotInstalledTeamPresentation(output, attempt.editionId, attempt.levelId);
+  return checked.attemptAppearance === null
+    ? checked.snapshot
+    : {
+        format: INSTALLED_TEAM_PRESENTATION_FORMAT,
+        attempt: checked.snapshot,
+        appearance: checked.attemptAppearance,
+      };
 }
 
 export function validateInstalledTeamAttempt(source, editionId, levelId) {
@@ -291,7 +339,11 @@ export function validateInstalledTeamAttempt(source, editionId, levelId) {
 }
 
 function replayAttempt(pack, source, editionId, levelId, { terminal = false } = {}) {
-  const attempt = validateInstalledTeamAttempt(source, editionId, levelId);
+  const { snapshot: attempt, attemptAppearance } = snapshotInstalledTeamPresentation(
+    source,
+    editionId,
+    levelId,
+  );
   const configured = installedTeamConfiguration(
       pack,
       attempt.levelId,
@@ -342,7 +394,7 @@ function replayAttempt(pack, source, editionId, levelId, { terminal = false } = 
       ? 'Only an exactly replayed Team win can earn progress.'
       : 'Only an unfinished Team attempt can be recovered.',
   );
-  return { attempt, run };
+  return { attempt, run, attemptAppearance };
 }
 
 function extendsSavedAttempt(completed, saved) {
@@ -458,7 +510,7 @@ export function validateInstalledTeamProgress(source, editionId) {
   const progress = boundedJSON(source, {
     maxBytes: 2 * 1024 * 1024,
     maxNodes: 100000,
-    maxDepth: 12,
+    maxDepth: 14,
     maxArray: MAX_ATTEMPT_SEGMENTS,
     maxString: 160,
   });
@@ -508,7 +560,7 @@ export function validateInstalledTeamProgress(source, editionId) {
   }
   for (const [levelId, attempt] of Object.entries(progress.attempts)) {
     required(text(levelId, 80), 'Installed Team attempt has an invalid level identity.');
-    validateInstalledTeamAttempt(attempt, editionId, levelId);
+    snapshotInstalledTeamPresentation(attempt, editionId, levelId);
   }
   return progress;
 }
@@ -1065,11 +1117,15 @@ export function createInstalledTeamCampaignStore({
       editionId,
       generation: progress.generation,
       snapshot: Object.freeze(structuredClone(restored.attempt)),
+      attemptAppearance: restored.attemptAppearance,
       run: restored.run,
     });
   }
   async function recordAttempt(source, { expectedGeneration, signal } = {}) {
     creatorAbort(signal);
+    const native = nativeInstalledTeamAttempt(source);
+    const checked = snapshotInstalledTeamPresentation(source, native?.editionId, native?.levelId);
+    source = checked.snapshot;
     required(
       source && editionPattern.test(source.editionId) && text(source.levelId, 80),
       'Save an exact installed Team attempt.',
@@ -1082,7 +1138,8 @@ export function createInstalledTeamCampaignStore({
     );
     required(editionSource !== undefined, 'This exact Team edition is no longer installed.');
     const edition = await inspectEdition(editionSource, source.editionId),
-      replayed = replayAttempt(edition.pack, source, source.editionId, source.levelId);
+      replayed = replayAttempt(edition.pack, source, source.editionId, source.levelId),
+      saved = withInstalledTeamAttemptAppearance(replayed.attempt, checked.attemptAppearance);
     creatorAbort(signal);
     return updateProgress(
       source.editionId,
@@ -1098,9 +1155,9 @@ export function createInstalledTeamCampaignStore({
             'Installed Team progress changed in another tab. Reopen the mission library.',
           );
         const previous = progress.attempts[source.levelId];
-        if (previous && canonicalJSON(previous) === canonicalJSON(replayed.attempt))
+        if (previous && canonicalJSON(previous) === canonicalJSON(saved))
           return structuredClone(progress);
-        progress.attempts[source.levelId] = replayed.attempt;
+        progress.attempts[source.levelId] = saved;
         progress.generation++;
         put(progress);
         return structuredClone(progress);
@@ -1121,7 +1178,7 @@ export function createInstalledTeamCampaignStore({
       ({ edition, progress: current, put }) => {
         required(edition !== undefined, 'This exact Team edition is no longer installed.');
         const progress = validateInstalledTeamProgress(current, editionId),
-          previous = progress.attempts[levelId];
+          previous = nativeInstalledTeamAttempt(progress.attempts[levelId]);
         if (!previous) return structuredClone(progress);
         required(
           previous.attemptId === attemptId,
@@ -1251,7 +1308,7 @@ export function createInstalledTeamCampaignStore({
               ...(picture ? { reward: picture } : {}),
             };
           const duplicate = previous?.runId === runId,
-            pending = progress.attempts[levelId];
+            pending = nativeInstalledTeamAttempt(progress.attempts[levelId]);
           if (duplicate) {
             required(
               canonicalJSON(previous) === canonicalJSON(receipt),

@@ -23,9 +23,22 @@ import { mountRoomUI } from './room-ui.mjs';
 import { createRoomBoardPresentation, reconcileRoomPresentationRuns } from './room-events.mjs';
 import { advanceClassicFlight } from '../snake/classic-flight-art.mjs';
 import { createClassicPresentation } from '../snake/classic-presentation.mjs';
+import {
+  prepareRoomEnvironment,
+  ROOM_APPEARANCE_KEY,
+  roomAppearanceIdentity,
+  serializeRoomAppearance,
+  restoreRoomAppearance,
+} from './room-environment.mjs';
+import { acceptAttemptAppearance } from '../presentation/attempt-appearance.mjs';
+import { selectedArcadeCollection } from '../presentation/industrial-arcade.mjs';
 import { BoardPainter } from '../ui/render.mjs';
 import { createCoopPainter } from '../couch/coop-view.mjs';
-import { createDestructionPreferences, sharedActorAppearance } from '../hunt/preferences.mjs';
+import {
+  createDestructionPreferences,
+  sharedActorAppearance,
+  runtimeActorArtRevision,
+} from '../hunt/preferences.mjs';
 import { createDisplayPreferences } from '../display-preferences.mjs';
 import { createEncounterDisplayPreferences } from '../encounter-display-preferences.mjs';
 const linkedLocale = new URL(location.href).searchParams.get('lang');
@@ -51,7 +64,8 @@ let credentials = null,
   pauseRequest = null,
   booting = false,
   previousFrame = null,
-  acceptedRecipeJSON = null;
+  acceptedRecipeJSON = null,
+  acceptedRoomAppearance = null;
 let catalogueEntries = [],
   unavailableEntries = [],
   selectedSeed = 17;
@@ -445,8 +459,17 @@ function leave() {
   lifecycle.release();
 
   saveSeat(null);
+  try {
+    sessionStorage.removeItem(ROOM_APPEARANCE_KEY);
+  } catch {
+    /* Denied tab storage. */
+  }
   painters.forEach((painter) => painter?.dispose?.());
   painters = [];
+  acceptedRoomAppearance = null;
+  presentation.setAttemptAppearance(null);
+  effects.forEach((effect) => effect.reset());
+  effects = [];
   canvases = [];
   flights = [];
   eventIds.clear();
@@ -492,8 +515,13 @@ async function allocateBoards(snapshot, owner, epoch, signal) {
     canvas.setAttribute('aria-label', say(`Player ${index + 1} board`, `Поле гравця ${index + 1}`));
     return canvas;
   });
+  let candidate = null;
   const nextPainters = await prepareRoomBoardPainters(
     async ({ signal: artworkSignal, retain }) => {
+      candidate = await prepareRoomEnvironment(snapshot.recipe, { signal: artworkSignal });
+      if (artworkSignal.aborted) throw artworkSignal.reason;
+      await presentation.ready;
+      if (artworkSignal.aborted) throw artworkSignal.reason;
       if (snapshot.engine.kind === 'team') retain(createCoopPainter(nextCanvases[0]));
       else if (snapshot.engine.kind === 'capture') {
         const read = async (url) => {
@@ -521,14 +549,60 @@ async function allocateBoards(snapshot, owner, epoch, signal) {
     nextPainters.forEach((painter) => painter?.dispose?.());
     return;
   }
+  const identity = roomAppearanceIdentity(endpoint, snapshot);
+  let retained,
+    raw = null;
+  try {
+    raw = sessionStorage.getItem(ROOM_APPEARANCE_KEY);
+  } catch {
+    /* Ephemeral tab. */
+  }
+  try {
+    retained = restoreRoomAppearance(raw, identity, candidate);
+  } catch {
+    nextPainters.forEach((painter) => painter?.dispose?.());
+    throw roomError(
+      say(
+        'Saved artwork does not match this room. Leave the room to begin a fresh attempt.',
+        'Збережене оформлення не відповідає кімнаті. Вийдіть із кімнати, щоб почати нову спробу.',
+      ),
+      'ROOM_ARTWORK_RESTORE',
+    );
+  }
+  let accepted;
+  try {
+    accepted =
+      retained === undefined
+        ? acceptAttemptAppearance(candidate, {
+            artRevision: runtimeActorArtRevision(),
+            collection: selectedArcadeCollection(presentation.theme.effectivePreferences()),
+          })
+        : retained;
+    for (const painter of nextPainters) {
+      painter.setPresentation(presentation.boardSnapshot());
+      if (snapshot.engine.kind === 'capture') painter.setAttemptAppearance(accepted);
+    }
+    presentation.setAttemptAppearance(accepted);
+  } catch (error) {
+    nextPainters.forEach((painter) => painter?.dispose?.());
+    throw error;
+  }
   painters.forEach((painter) => painter?.dispose?.());
+  acceptedRoomAppearance = accepted;
   canvases = nextCanvases;
   painters = nextPainters;
   flights = [];
   effects.forEach((effect) => effect.reset());
-  effects = canvases.map(() => createHuntDestruction());
+  effects = canvases.map(() =>
+    createHuntDestruction({ artRevision: accepted?.artRevision ?? null }),
+  );
   roomUI.boards(canvases, snapshot);
   $('boards').classList.toggle('paired', count === 2);
+  try {
+    sessionStorage.setItem(ROOM_APPEARANCE_KEY, serializeRoomAppearance(identity, accepted));
+  } catch {
+    /* Current room retains its in-memory owner. */
+  }
 }
 
 async function poll() {
@@ -709,6 +783,7 @@ function frame(time) {
         drawClassicBoard(canvas, run, {
           attemptKey: `${state.roomId}:${state.generation}`,
           presentation: presentation.snapshot(),
+          artRevision: acceptedRoomAppearance?.artRevision ?? null,
           effects: effects[index],
           boardStyle: roomUI.boardStyle(),
           style: roomUI.tailStyle(),
@@ -720,13 +795,15 @@ function frame(time) {
           ...fx,
           showRemains: remains.snapshot().showRemains,
         });
-      } else if (state.engine.kind === 'team')
-        painters[index]?.paint(teamPresentation.project(run, { paused }), {
+      } else if (state.engine.kind === 'team') {
+        const projected = teamPresentation.project(run, { paused });
+        painters[index]?.setAttemptAppearance(projected, acceptedRoomAppearance);
+        painters[index]?.paint(projected, {
           reduced,
           ...fx,
           showRemains: remains.snapshot().showRemains,
         });
-      else {
+      } else {
         if (canvas.width !== run.width * 16) {
           canvas.width = run.width * 16;
           canvas.height = run.height * 16;

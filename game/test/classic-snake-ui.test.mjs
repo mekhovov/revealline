@@ -29,6 +29,13 @@ import { CLASSIC_COPY } from '../snake/classic-copy.mjs';
 import { advanceClassicFlight } from '../snake/classic-flight-art.mjs';
 import { t } from '../i18n/index.mjs';
 import { mountEnemyAppearanceControls } from '../ui/enemy-appearance-controls.mjs';
+import { prepareClassicEnvironments } from '../snake/classic-environment.mjs';
+import { selectedArcadeCollection } from '../presentation/industrial-arcade.mjs';
+import {
+  acceptAttemptAppearance,
+  restoreAttemptAppearance,
+  snapshotAttemptAppearance,
+} from '../presentation/attempt-appearance.mjs';
 
 const appURL = new URL('../snake/classic-app.mjs', import.meta.url);
 const source = await readFile(appURL, 'utf8');
@@ -110,9 +117,16 @@ async function harness({
   let enemyStyle = 'authored';
   const enemyListeners = new Set(),
     artworkSelections = [],
-    appearanceActions = [];
+    appearanceActions = [],
+    acceptedAppearances = [];
   const context = createContext({
     __appURL: appURL.href,
+    prepareClassicEnvironments,
+    selectedArcadeCollection,
+    acceptAttemptAppearance: (candidate, options) =>
+      acceptAttemptAppearance(candidate, structuredClone(options)),
+    restoreAttemptAppearance,
+    snapshotAttemptAppearance,
     mountModePlayShell(options) {
       shell = mountModePlayShell(options);
       return shell;
@@ -206,7 +220,18 @@ async function harness({
     createClassicPresentation: () => ({
       snapshot: () => null,
       setArtRevision: (revision) => artworkSelections.push(revision),
+      setAttemptAppearance(value) {
+        acceptedAppearances.push(value);
+        artworkSelections.push(value?.artRevision ?? null);
+      },
       theme: {
+        effectivePreferences: () =>
+          enemyStyle === 'military'
+            ? {
+                arcadeArt: 'follow-game',
+                arcadeCollection: { id: 'military-field', revision: 'r1' },
+              }
+            : { arcadeArt: 'authored' },
         applyComplete: (family) => appearanceActions.push(family),
         set: (value) => appearanceActions.push(value),
       },
@@ -284,6 +309,7 @@ async function harness({
     created,
     drawings,
     artworkSelections,
+    acceptedAppearances,
     appearanceActions,
     display,
     window,
@@ -325,7 +351,7 @@ for (const mode of ['solo', 'versus', 'team']) {
     );
   });
 
-  test(`${mode} military preset is available on an ordinary level and takes effect on Retry without changing its recipe`, async () => {
+  test(`${mode} Retry retains accepted artwork; a new mission Start accepts the chosen military preset`, async () => {
     const state = await harness({ mode });
     state.start();
     state.frame(0);
@@ -345,12 +371,17 @@ for (const mode of ['solo', 'versus', 'team']) {
     );
     state.retry();
     state.frame(100);
-    assert.equal(state.artworkSelections.at(-1), 'industrial-roster-v3');
-    assert.equal(state.drawings.at(-1).options.artRevision, 'industrial-roster-v3');
+    assert.equal(state.artworkSelections.at(-1), null);
+    assert.equal(state.drawings.at(-1).options.artRevision, null);
     assert.deepEqual(
       state.created.slice(before.length).map((run) => core.exportClassicSnakeReplay(run)),
       before,
     );
+    state.$('mission').value = CLASSIC_SNAKE_LEVELS[1].id;
+    state.$('mission').emit('change');
+    state.start();
+    state.frame(200);
+    assert.equal(state.artworkSelections.at(-1), 'industrial-roster-v3');
   });
 
   test(`${mode} mission and settings menus cannot start or steer the prepared Snake boards`, async () => {
@@ -646,7 +677,8 @@ test('a V2 round saves its accepted timeline and continues paused without advanc
   state.frame(core.classicSnakeSummary(state.created[0]).stepMs);
   state.window.emit('blur');
   const saved = JSON.parse(state.storage.get('revealline.classic-snake.round.v2'));
-  assert.equal(saved.format, 'revealline-classic-snake-session.v2');
+  assert.equal(saved.format, 'revealline-classic-snake-session.v3');
+  assert.equal(saved.appearance.environmentPin, null);
   assert.equal(saved.match.turns.length, 1);
   assert.equal(saved.match.replays[0].steps, 1);
   assert.equal(saved.match.turns[0].direction, 'up');
@@ -800,4 +832,61 @@ test('actual Snake links and optional SIM launch retain an explicit native revie
       false,
     );
   }
+});
+
+for (const mode of ['solo', 'versus', 'team']) {
+  test(`${mode} keeps accepted chapter materials through Retry, export and Continue after preferences change`, async () => {
+    const entry = CLASSIC_SNAKE_LEVELS.find((item) => item.id === 'classic-living-cable-cutoff');
+    const state = await harness({ entry, mode });
+    const select = state.document.querySelector('[data-enemy-appearance]');
+    select.value = 'military';
+    select.emit('change');
+    await flush();
+    state.start();
+    state.window.emit('blur');
+    const key = 'revealline.classic-snake.round.v2';
+    const saved = JSON.parse(state.storage.get(key));
+    assert.equal(saved.format, 'revealline-classic-snake-session.v3');
+    assert.ok(saved.appearance.environmentPin);
+    const accepted = state.acceptedAppearances.at(-1);
+    select.value = 'authored';
+    select.emit('change');
+    await flush();
+    state.retry();
+    assert.equal(state.acceptedAppearances.at(-1), accepted, 'Retry retains the accepted owner');
+    state.window.emit('blur');
+    assert.deepEqual(JSON.parse(state.storage.get(key)).appearance, saved.appearance);
+    const restored = await harness({ entry, mode });
+    await importSession(restored.$, saved);
+    assert.equal(restored.$('save-status').textContent, CLASSIC_COPY.en.loaded);
+    assert.deepEqual(
+      snapshotAttemptAppearance(restored.acceptedAppearances.at(-1)),
+      saved.appearance,
+    );
+    restored.frame(0);
+    assert.equal(restored.drawings.at(-1).options.artRevision, 'industrial-roster-v3');
+  });
+}
+
+test('a forged chapter pin is rejected before replacing the active mission or save', async () => {
+  const entry = CLASSIC_SNAKE_LEVELS.find((item) => item.id === 'classic-living-cable-cutoff');
+  const state = await harness({ entry });
+  const select = state.document.querySelector('[data-enemy-appearance]');
+  select.value = 'military';
+  select.emit('change');
+  await flush();
+  state.start();
+  state.window.emit('blur');
+  const key = 'revealline.classic-snake.round.v2';
+  const prior = state.storage.get(key),
+    saved = JSON.parse(prior);
+  saved.appearance.environmentPin.appearanceSha256 = '0'.repeat(64);
+  const before = state.created.map((run) => core.exportClassicSnakeReplay(run));
+  await importSession(state.$, saved);
+  assert.equal(state.$('save-status').textContent, CLASSIC_COPY.en.invalid);
+  assert.equal(state.storage.get(key), prior);
+  assert.deepEqual(
+    state.created.map((run) => core.exportClassicSnakeReplay(run)),
+    before,
+  );
 });

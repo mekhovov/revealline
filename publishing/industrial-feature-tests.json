@@ -51,7 +51,10 @@
         "game/test/asset-studio-return.test.mjs",
         "game/test/asset-studio-actor-animation.test.mjs",
         "game/test/asset-studio-preview-motion.test.mjs",
-        "game/test/classic-community-package.test.mjs"
+        "game/test/classic-community-package.test.mjs",
+        "game/test/installed-team-presentation.test.mjs",
+        "game/test/fpv-world-editor-appearance.test.mjs",
+        "game/test/creator-player-navigation.test.mjs"
       ]
     },
     {
@@ -84,7 +87,15 @@
         "game/test/published-audio.test.mjs",
         "game/test/coop-view-presentation.test.mjs",
         "game/test/fpv-world-textures.test.mjs",
-        "game/test/fpv-objective-labels.test.mjs"
+        "game/test/fpv-objective-labels.test.mjs",
+        "game/test/industrial-environments.test.mjs",
+        "game/test/attempt-appearance.test.mjs",
+        "game/test/capture-presentation-session.test.mjs",
+        "game/test/team-presentation-attempt.test.mjs",
+        "game/test/classic-environment-renderer.test.mjs",
+        "game/test/fpv-industrial-environments.test.mjs",
+        "game/test/capture-environment-painter.test.mjs",
+        "game/test/actor-defeat-presentation.test.mjs"
       ]
     },
     {
@@ -107,7 +118,8 @@
         "game/test/online-room-service.test.mjs",
         "game/test/online-room-v2.test.mjs",
         "game/test/online-room.test.mjs",
-        "game/test/online-room-http-qualification.test.mjs"
+        "game/test/online-room-http-qualification.test.mjs",
+        "game/test/room-environment.test.mjs"
       ]
     },
     {
@@ -131,7 +143,12 @@
         "game/test/military-level-directory.test.mjs",
         "game/test/fpv-theme-family-controls.test.mjs",
         "game/test/download-initialization.test.mjs",
-        "game/test/offline.test.mjs"
+        "game/test/offline.test.mjs",
+        "game/test/classic-environment.test.mjs",
+        "game/test/capture-attempt-appearance-host.test.mjs",
+        "game/test/fpv-world-appearance-ui.test.mjs",
+        "game/test/industrial-environment-review.test.mjs",
+        "game/test/continuous-host.test.mjs"
       ]
     }
   ]
