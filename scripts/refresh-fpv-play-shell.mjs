@@ -5,6 +5,7 @@ import { fileURLToPath } from 'node:url';
 import path from 'node:path';
 import { parse } from 'acorn';
 import { format, resolveConfig } from 'prettier';
+import { projectEditionModuleIndentation } from './edition-code-indentation.mjs';
 
 const root = fileURLToPath(new URL('../', import.meta.url));
 const check = process.argv.includes('--check');
@@ -47,10 +48,14 @@ for (const [start, end] of edits.sort((a, b) => b[0] - a[0]))
 const hash = createHash('sha256').update(source).digest('hex');
 const jsBegin = '// BEGIN GENERATED SHARED MODE SHELL';
 const jsEnd = '// END GENERATED SHARED MODE SHELL';
-const generated = await format(
+const formatted = await format(
   `${jsBegin}\n// Canonical source sha256: ${hash}\nconst sharedModeShell = (() => {\n${projected}\nreturn {${exports.join(',')}};\n})();\nexport const mountSimPlayShell = sharedModeShell.mountModePlayShell;\n${jsEnd}\n`,
   { ...(await resolveConfig(path.join(root, 'game/ui/mode-play-shell.mjs'))), parser: 'babel' },
 );
+const generated = projectEditionModuleIndentation(
+  'flight-fullscreen.mjs',
+  Buffer.from(formatted),
+).toString();
 async function replace(file, begin, end, body) {
   const old = await read(file);
   const first = old.indexOf(begin),
