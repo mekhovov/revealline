@@ -3,7 +3,14 @@
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { createHash } from 'node:crypto';
-import { createScene, includeLandEngineering, obstacles, bounds, spawn } from './source/scene.mjs';
+import {
+  createScene,
+  includeLandEngineering,
+  includeTerrainStitching,
+  obstacles,
+  bounds,
+  spawn,
+} from './source/scene.mjs';
 import { landRouteCandidates } from './source/land-routes.mjs';
 import { engineeringRouteCandidates } from './source/engineering-routes.mjs';
 import { prepareWorldFile } from '../../../scripts/fpv-content.mjs';
@@ -22,9 +29,10 @@ import {
   exportEditableZip,
   importEditableZip,
 } from '../../../optional-practice/civilian-fpv/world-zip.mjs';
-const [baselineArg, outputArg] = process.argv.slice(2);
+const [baselineArg, outputArg, variant] = process.argv.slice(2);
 if (!baselineArg || !outputArg)
   throw Error('Use ACCEPTED_R4_PREPARED_DIRECTORY NEW_OUTPUT_DIRECTORY');
+if (variant && variant !== '--terrain-stitching') throw Error('Unknown scene variant');
 const hash = (b) => createHash('sha256').update(b).digest('hex');
 const check = (ok, label) => {
   if (!ok) throw Error(label);
@@ -37,6 +45,7 @@ check(
   'Exact accepted first-course baseline',
 );
 includeLandEngineering();
+if (variant) includeTerrainStitching();
 const scene = createScene();
 check(
   scene.bytes.length < 1.2 * 1024 * 1024 && scene.statistics.triangles < 15000,
@@ -56,7 +65,7 @@ const prepared = await prepareWorldFile({
     title: 'Mountain Reservoir · land-side world',
   }),
   project = prepared.project,
-  revision = 'r8',
+  revision = variant ? 'r9' : 'r8',
   first = validateWorldCourse({
     ...structuredClone(baseline.courses[0]),
     revision,
