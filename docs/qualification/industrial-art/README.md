@@ -50,7 +50,7 @@ The [Team export and adoption continuation](team-adoption-2026-10-04/README.md) 
 
 `../../verification/native-pursuit-structural.json` records the native SIM route/Studio admission cases and source hashes. Zero simulation steps were used; this is deliberately not a completion route.
 
-Automated regression sources cover bounded decoding, cancellation, sharing, atlas admission/pivot rules, stale Studio ownership, pursuit phases, recording validation and room ordering. They were authored **without running** the waived test suites.
+The earlier packets authored regressions without running the then-waived suites. The 4 October continuation restores required execution for bounded decoding, cancellation, sharing, atlas admission/pivot rules, stale Studio ownership, pursuit phases, recordings and room ordering. The [parallel delivery register](../../industrial-parallel-delivery-2026-10-04.md) describes the six-phase command and exact-source receipts. Historical waiver evidence is not a current passing verdict.
 
 ## Pending before broad recommendation
 

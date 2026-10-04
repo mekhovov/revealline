@@ -37,6 +37,7 @@ const showcase = [
     'social-drone-community-connections',
     7,
     '1a360b73d74bfec5bae456e15e1e1f1a42f7c400bc04f0275b342c46160be98f',
+    9, // The later Sky Watch addition preserves the showcase snapshot below.
   ],
   [
     'victory-drones',
@@ -58,10 +59,16 @@ const showcase = [
   ],
 ];
 
-for (const [editionId, campaignId, oldRevision, snapshotHash] of showcase)
+for (const [
+  editionId,
+  campaignId,
+  oldRevision,
+  snapshotHash,
+  currentRevision = oldRevision + 1,
+] of showcase)
   test(`${campaignId}: six learning beats keep all old promises, finals and exact gameplay`, async () => {
     const edition = catalog.editions.find((entry) => entry.id === editionId);
-    assert.equal(edition.revision, oldRevision + 1);
+    assert.equal(edition.revision, currentRevision);
     const history = edition.presentationHistory.find((entry) =>
       entry.path.endsWith(`${editionId}-before-showcase-learning.json`),
     );
