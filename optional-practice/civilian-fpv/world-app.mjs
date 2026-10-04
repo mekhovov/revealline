@@ -1048,19 +1048,30 @@ export function mountWorldApp({
     return b;
   };
   const lessonReturnButton = button('', () => returnFromLesson());
+  const lessonReturnError = el('p');
+  lessonReturnError.id = 'world-return-status';
+  lessonReturnError.setAttribute('role', 'status');
   lessonReturnButton.id = 'world-return-challenge';
   lessonReturnButton.hidden = true;
   $('school-lessons').before(lessonReturnButton);
   function paintLessonReturn(surface = playShell?.topDialog()?.dataset.modeSurface) {
     lessonReturnButton.hidden = !lessonReturn;
-    if (!lessonReturn) return;
+    lessonReturnError.hidden = !lessonReturn;
+    if (!lessonReturn) {
+      lessonReturnError.textContent = '';
+      return;
+    }
     lessonReturnButton.textContent = `${txt('Return to', 'Повернутися до')} ${localized(lessonReturn.title)}`;
     if (playShell && surface !== 'missions')
       playShell.elements.content.home.append(lessonReturnButton);
     else $('school-lessons').before(lessonReturnButton);
+    lessonReturnButton.after(lessonReturnError);
   }
-  function lessonOrigin(context) {
+  async function lessonOrigin(context) {
     const entry = catalogue.find((item) => keyOf(item) === context.key),
+      pack = entry?.projectId
+        ? await worldStore?.get(entry.projectId, { sha256: entry.packIdentity.slice(9) })
+        : null,
       saved = context.playlist
         ? playlistStore
             .snapshot()
@@ -1071,6 +1082,7 @@ export function mountWorldApp({
         : null;
     if (
       !entry ||
+      (entry.projectId && !pack) ||
       dataIdentity(validateWorldCourse(entry.course)) !== context.identity ||
       (context.playlist && (!saved || dataIdentity(saved) !== dataIdentity(context.playlist)))
     )
@@ -1085,22 +1097,36 @@ export function mountWorldApp({
   async function returnFromLesson() {
     const context = lessonReturn;
     if (!context) return;
-    lessonOrigin(context);
-    const token = flightToken + 1;
-    await closeFlight();
-    if (disposed || token !== flightToken || lessonReturn !== context) return;
-    const entry = lessonOrigin(context);
-    $('flight-mode').value = context.mode;
-    $('flight-source').value = context.source;
-    $('flight-camera').value = context.camera;
-    response = { ...context.response };
-    input.select(context.source);
-    savePreferences();
-    return startFlight(entry, {
-      mode: context.mode,
-      playlist: context.playlist,
-      index: context.index,
-    });
+    let token = flightToken;
+    const owned = () => !disposed && token === flightToken && lessonReturn === context;
+    lessonReturnError.textContent = '';
+    try {
+      await lessonOrigin(context);
+      if (!owned()) return;
+      token++;
+      await closeFlight();
+      if (!owned()) return;
+      const entry = await lessonOrigin(context);
+      if (!owned()) return;
+      $('flight-mode').value = context.mode;
+      $('flight-source').value = context.source;
+      $('flight-camera').value = context.camera;
+      response = { ...context.response };
+      input.select(context.source);
+      savePreferences();
+      token++;
+      await startFlight(entry, {
+        mode: context.mode,
+        playlist: context.playlist,
+        index: context.index,
+        returning: context,
+      });
+    } catch (error) {
+      if (owned()) {
+        lessonReturnError.textContent = error.message;
+        throw error;
+      }
+    }
   }
   const audio = createWorldAudio({ window: win, storage });
   const presentation = mountSimPresentation({
@@ -4374,7 +4400,11 @@ export function mountWorldApp({
     );
   async function startFlight(entry, options = {}) {
     if (disposed) return;
-    if (lessonReturn && keyOf(entry) !== keyOf(learningEntries.get('beginner-24'))) {
+    if (
+      lessonReturn &&
+      options.returning !== lessonReturn &&
+      keyOf(entry) !== keyOf(learningEntries.get('beginner-24'))
+    ) {
       lessonReturn = null;
       paintLessonReturn();
     }
@@ -4741,6 +4771,10 @@ export function mountWorldApp({
     if (ghostEnabled) await loadGhost();
     if (token !== flightToken || disposed) return;
     sceneReady = true;
+    if (options.returning === lessonReturn) {
+      lessonReturn = null;
+      paintLessonReturn();
+    }
     $('flight-status').textContent = replayProof
       ? txt(
           'Playback paused. Resume when you are ready.',
