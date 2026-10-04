@@ -4157,11 +4157,12 @@ try {
       localizedText($('race-menu-status'), () => text);
   }
   localizedText($('race-export-recording'), () => t('interface:recording.exportRound'));
+  // Locale bindings can outlive a retired page. Keep verification in the build
+  // that owns this recording instead of consulting a later document's location.
+  const recordingPageHref =
+    globalThis.location?.href ?? document.baseURI ?? 'http://localhost/game/couch/';
   localizedAttribute($('race-verify-recording'), 'href', () =>
-    recordingVerificationHref(
-      globalThis.location?.href ?? document.baseURI ?? 'http://localhost/game/couch/',
-      getLocale(),
-    ),
+    recordingVerificationHref(recordingPageHref, getLocale()),
   );
   $('race-export-recording').onclick = async () => {
     const owner = match;

@@ -6109,13 +6109,13 @@ export function bootCoop({
   }
   $('coop-start').onclick = () => requestDeparture('retry', $('coop-start'));
   localizedText($('coop-export-recording'), () => t('interface:recording.exportTeam'));
+  // A retained locale binding belongs to this recording's original build.
+  const recordingPageHref =
+    globalThis.location?.href ??
+    document.baseURI ??
+    'http://localhost/game/couch/relay-rescue.html';
   localizedAttribute($('coop-verify-recording'), 'href', () =>
-    recordingVerificationHref(
-      globalThis.location?.href ??
-        document.baseURI ??
-        'http://localhost/game/couch/relay-rescue.html',
-      getLocale(),
-    ),
+    recordingVerificationHref(recordingPageHref, getLocale()),
   );
   $('coop-export-recording').onclick = async () => {
     const owner = run;
