@@ -1,3 +1,4 @@
+import { DEFAULT_DIALOGUE_VOLUME } from '../audio/dialogue-mix.mjs';
 import { boundedJSON, exactKeys } from '../data-json.mjs';
 
 export const REACTION_OPTIONS_KEY = 'revealline.reaction-presentation.v1';
@@ -5,7 +6,7 @@ export const DEFAULT_REACTION_OPTIONS = Object.freeze({
   sounds: true,
   speech: true,
   subtitles: true,
-  volume: 0.65,
+  volume: DEFAULT_DIALOGUE_VOLUME,
   scale: 1,
   background: true,
 });

@@ -2,7 +2,8 @@
 // Native flight logic remains in its existing cores. No simulation clock or record recipe changes.
 const sourceHashes={
 'optional-practice/civilian-fpv/world-audio.mjs':
-'104011e3e43091577ef2c740aaead7727fc45234fc2cbb2ce61fa3441dc63f8b',
+'c4814756c991590065309e828d28933c169174b929149ecac83b8fa05974e300',
+'game/audio/dialogue-mix.mjs':'43ffa5b261e585e59b515fab19d1b6d0ccf636152ca6107602dbdb9143ddb00a',
 'game/ui/audio-output.mjs':'dc1b2776407d0b6649b0d15c5c721bd59384d7e38a2e61087961ff7a37bd86c1',
 'game/ui/audio-master.mjs':'6bf14bc5268c0eff8f38c21c819f398917712fdc2607c33977ac873111d1dca8',
 'game/audio-preferences.mjs':'9212831a3524c9e1ebe8c595783f9f53a112e02e3d51280d775ac103b94a9239',
@@ -18,7 +19,7 @@ const sourceHashes={
 'optional-practice/civilian-fpv/world-hunt-reactions.mjs':
 '07a55c4d0018983b2174dfbf7363a584fff8641704a293adb49700147bf86f8d',
 'game/ui/contextual-reactions.mjs':
-'4678ab822811af4c6fc4c43986d0276c2eebfbec59f882464a63bd6108bb1bd0',
+'e5edcb242ffd35d251ee74f39634f745150e4f66ccd44d46eea16c29852ea715',
 'game/ui/hunt-feedback-layout.mjs':
 '697525f452578880c62102b984da3ff51ec794913c3a2708187c62815c816de5',
 'game/ui/reaction-caption.mjs':'5b7edf3006681a02b40134ff4eee2b1f7da3770eec2b5e9b9ae70c39332a5890',
@@ -51,7 +52,7 @@ const sourceHashes={
 'game/journey/reaction-preferences.mjs':
 'a14d2dcb99daffd83dcbf62311e6756d587db3134bf04c81cd2cd420b4f6809a',
 'game/journey/reaction-options.mjs':
-'63c6cd0471f13915a73b575178c5fa3c1dc0a0e80a854d2cbfba1ff3f5965feb',
+'6642858bf72765d85054402bffb4c4db6196abfdc560f39fc4093946f0a5eca7',
 'game/journey/reaction-voice-library.mjs':
 '366fe4931bf91315971873853cda38a487cb8501151ad36a25bc925031951afd',
 'game/audio/reactions/pilot.mjs':
@@ -122,6 +123,19 @@ import*as external9 from'./flight-sectors.mjs';
 import*as external10 from'./snake-hunt.mjs';
 import*as external11 from'./world-content.mjs';
 const modules=Object.create(null);
+modules['game/audio/dialogue-mix.mjs']=(()=>{
+/** Decorative spoken reactions sit behind music and gameplay warnings.
+ * The mix trim also applies to saved slider choices without rewriting preferences. */
+const DEFAULT_DIALOGUE_VOLUME=0.25;
+const DIALOGUE_MIX_GAIN=0.4;
+const DIALOGUE_MUSIC_GAIN=0.9;
+
+return{
+DEFAULT_DIALOGUE_VOLUME:DEFAULT_DIALOGUE_VOLUME,
+DIALOGUE_MIX_GAIN:DIALOGUE_MIX_GAIN,
+DIALOGUE_MUSIC_GAIN:DIALOGUE_MUSIC_GAIN,
+};
+})();
 modules['game/ui/audio-output.mjs']=(()=>{
 /** Shared output topology for Capture, Snake and native flight presentation.
  * A page owns one context. Construction is called only from its gesture owner. */
@@ -648,6 +662,8 @@ kind:active?.radio?'radio':active?'dialogue':null,
 return{dialogueChannel:dialogueChannel};
 })();
 modules['optional-practice/civilian-fpv/world-audio.mjs']=(()=>{
+const DEFAULT_DIALOGUE_VOLUME=modules['game/audio/dialogue-mix.mjs']['DEFAULT_DIALOGUE_VOLUME'];
+const DIALOGUE_MIX_GAIN=modules['game/audio/dialogue-mix.mjs']['DIALOGUE_MIX_GAIN'];
 const createGameAudioContext=modules['game/ui/audio-output.mjs']['createGameAudioContext'];
 const createGameAudioOutput=modules['game/ui/audio-output.mjs']['createGameAudioOutput'];
 const requestPlaybackAudioSession=
@@ -698,7 +714,7 @@ let lastContacts=null;
 let ambience=AMBIENCES.hangar;
 let motorStyle='quad';
 let gateStyle='chime';
-let dialogue={enabled:false,volume:0.8};
+let dialogue={enabled:false,volume:DEFAULT_DIALOGUE_VOLUME};
 let dialogueVoice=null;
 const effects=new Set();
 const audioMaster=options.audioMaster??createAudioMaster();
@@ -787,7 +803,7 @@ return[key,bus];
 }),
 );
 const dialogueBus=output.dialogueBus;
-dialogueBus.gain.value=dialogue.enabled?dialogue.volume:0;
+dialogueBus.gain.value=dialogue.enabled?dialogue.volume*DIALOGUE_MIX_GAIN:0;
 const motor=candidate.createGain();
 motor.gain.value=0;
 const motorFilter=candidate.createBiquadFilter();
@@ -982,7 +998,8 @@ if(typeof enabled!=='boolean'|| !Number.isFinite(value)||value<0||value>1)
 throw new TypeError('Dialogue requires an enabled boolean and volume from zero to one.');
 dialogue={enabled,volume:value};
 if(!enabled|| !value)dialogueVoice?.stop();
-if(graph&&context.state!=='closed')ramp(graph.dialogueBus.gain,enabled?value:0);
+if(graph&&context.state!=='closed')
+ramp(graph.dialogueBus.gain,enabled?value*DIALOGUE_MIX_GAIN:0);
 },
 /** Uses the existing flight context and the shared one-line dialogue arbiter. */
 playDialogue(buffer,{onended=()=>{}}={}){
@@ -3680,6 +3697,7 @@ createReactionPreferences:createReactionPreferences,
 };
 })();
 modules['game/journey/reaction-options.mjs']=(()=>{
+const DEFAULT_DIALOGUE_VOLUME=modules['game/audio/dialogue-mix.mjs']['DEFAULT_DIALOGUE_VOLUME'];
 const boundedJSON=external4['boundedJSON'];
 const exactKeys=external4['exactKeys'];
 
@@ -3688,7 +3706,7 @@ const DEFAULT_REACTION_OPTIONS=Object.freeze({
 sounds:true,
 speech:true,
 subtitles:true,
-volume:0.65,
+volume:DEFAULT_DIALOGUE_VOLUME,
 scale:1,
 background:true,
 });
@@ -5572,6 +5590,7 @@ connection?.then((db)=>db.close()).catch(()=>{});
 return{createReactionVoiceLibrary:createReactionVoiceLibrary};
 })();
 modules['game/ui/contextual-reactions.mjs']=(()=>{
+const DIALOGUE_MUSIC_GAIN=modules['game/audio/dialogue-mix.mjs']['DIALOGUE_MUSIC_GAIN'];
 const attachHuntFeedbackLayout=
 modules['game/ui/hunt-feedback-layout.mjs']['attachHuntFeedbackLayout'];
 const journeyOwnsReactionCaption=
@@ -6078,7 +6097,7 @@ release();
 });
 if(activeVoice){
 try{
-lease=acquireGain({factor:0.65});
+lease=acquireGain({factor:DIALOGUE_MUSIC_GAIN});
 }catch{
 lease=null;
 }

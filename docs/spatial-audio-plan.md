@@ -7,6 +7,26 @@ implemented source, retained verification and the user's listening decisions.
 The chronological [implementation record](verification/spatial-audio/implementation.md)
 and older receipts remain historical; their superseded blockers are not the current backlog.
 
+## Character voice comfort correction — 4 October 2026
+
+The user reported that the newly added character/action voices dominate music and
+sound effects. Starting from main `3bc7a923da`, lower fresh Dialogue volume from
+65% to 25% and apply a shared 0.4 dialogue mix trim in both the main game and FPV
+flight. Fresh main-game dialogue gain becomes 0.10 instead of 0.65 (about −16.3 dB).
+Existing saved slider choices remain unchanged but play about 8 dB lower through
+the new trim. Music ducking during a spoken reaction retains 90% instead of 65%,
+so dialogue stays in the background. Dialogue mute/slider, captions, warning
+priority, approved recordings and preferred startup remain available/unchanged.
+
+Both generated FPV runtimes were refreshed and their reproducibility checks pass.
+86 focused audio/reaction/flight tests pass, including default and saved volume,
+storage failure, bus gains, mute and warning arbitration; changed-source lint and
+format checks pass. A broader optional voice-download panel assertion (three
+inspections versus two expected) also fails on unchanged main and is unrelated
+to this correction. No new subjective listening or public release is claimed.
+This implements the concrete comfort feedback without closing the wider A3/A5
+listening/fit reviews. Radio Armed cues retain their separate existing mix.
+
 ## Delivery checkpoint — 1 October 2026
 
 - Main audio redesign: merged in [PR #817](https://github.com/mekhovov/revealline/pull/817).
