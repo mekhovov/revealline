@@ -2849,6 +2849,7 @@ export function mountWorldApp({
     // Install the inspected bytes' identity. Repacking through Creator can change
     // source metadata and silently break references to the original revision.
     await worldStore.install({ ...loaded, expectedGeneration: generation });
+    download?.saved();
     if (disposed || !restorePackInput.isConnected) return;
     await refreshStorage();
     status(

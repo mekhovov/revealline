@@ -31,7 +31,9 @@ authored challenges and sixteen mode demonstrations qualified before publication
   downloading, so concurrent library writes cannot silently be overwritten.
   Once validation finishes, Cancel is disabled for the native atomic save.
 - Saved state is derived from the native revision list. Exact saved revisions are
-  not downloaded again; removal refreshes the controls. Unmount aborts any pending
+  not downloaded again; removal refreshes the controls. A committed save whose
+  later storage refresh fails stays labelled saved and asks for a reload.
+  Unmount aborts any pending
   fetch and removes owned UI. Network, content, quota and conflict errors retain
   a retry action instead of activating partial content.
 - Saving a pack does not establish runtime cache readiness or durable storage.
@@ -53,10 +55,11 @@ The first complete draft measured **6,720 source bytes** beyond main: 659 bytes 
 the host adapter and 6,061 in the generated projection. Concise UI wording plus
 strict string guards reduced that historical draft to 6,684 bytes. Live language
 repainting and bounded dot-separated filenames bring the current draft to
-**6,912 bytes**: 687 in the host and 6,225 in the generated projection. After
-the independent 3,562-byte shell recovery, it leaves **1,678 bytes** beneath
+**7,164 bytes**: 710 in the host and 6,454 in the generated projection, including
+honest reporting of a committed save followed by a refresh failure. After
+the independent 3,562-byte shell recovery, it leaves **1,426 bytes** beneath
 the unchanged source ceiling. The separate 116-byte draw-readiness candidate
-would leave 1,562 bytes. These are source measurements, not fresh admission.
+would leave 1,310 bytes. These are source measurements, not fresh admission.
 Limits and integrity checks are unchanged.
 
 The separately published prerequisite prepares
