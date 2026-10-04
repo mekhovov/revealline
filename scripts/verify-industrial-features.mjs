@@ -124,14 +124,40 @@ export async function executeIndustrialPhase({
       clearTimeout(deadline);
       clearTimeout(killTimer);
       signal?.removeEventListener('abort', interrupt);
-      const finish = () =>
-        failure
-          ? reject(failure)
-          : resolve({ exitCode, signal: childSignal, timedOut, interrupted });
+      const result = { exitCode, signal: childSignal, timedOut, interrupted };
+      const finish = () => {
+        if (failure) {
+          // Keep cleanup failures fatal, but do not discard the observed child
+          // outcome needed for a truthful failed execution receipt.
+          failure.executionResult = result;
+          reject(failure);
+        } else resolve(result);
+      };
       if (writer.destroyed) finish();
       else writer.end(finish);
     });
   });
+}
+
+/** Receipt callers retain failures as data; an execution error never proves a
+ * passing phase, even if the child printed a complete passing TAP summary. */
+export async function observeIndustrialPhase(options) {
+  try {
+    return { ...(await executeIndustrialPhase(options)), executionError: null };
+  } catch (error) {
+    return {
+      exitCode: null,
+      signal: null,
+      timedOut: false,
+      interrupted: options.signal?.aborted === true,
+      ...error.executionResult,
+      executionError: {
+        name: error.name,
+        message: error.message,
+        code: error.code ?? null,
+      },
+    };
+  }
 }
 
 async function main(args) {
@@ -196,14 +222,22 @@ async function main(args) {
       );
       const command = ['--test', '--test-reporter=tap', '--test-concurrency=2', ...phase.files];
       const log = path.join(output, `${phase.id}.tap`);
-      const result = await executeIndustrialPhase({
+      const result = await observeIndustrialPhase({
         command,
         cwd: root,
         log,
         signal: controller.signal,
       });
-      const bytes = await fs.readFile(log);
-      const summary = summarizeIndustrialTap(bytes.toString(), result.exitCode, result.signal);
+      let logReadError = null;
+      const bytes = await fs.readFile(log).catch((error) => {
+        logReadError = error.message;
+        return null;
+      });
+      const summary = summarizeIndustrialTap(
+        bytes?.toString() ?? '',
+        result.exitCode,
+        result.signal,
+      );
       let rawAfter = null,
         sourceVerificationError = null;
       try {
@@ -232,17 +266,20 @@ async function main(args) {
         deadlineMs: 10 * 60 * 1000,
         timedOut: result.timedOut,
         interrupted: result.interrupted,
+        executionError: result.executionError,
         source,
         manifestSha256: sha256(manifestBytes),
         command: ['node', ...command],
         files,
-        logSha256: sha256(bytes),
+        logSha256: bytes === null ? null : sha256(bytes),
+        logReadError,
         summary,
         sourceUnchanged,
         sourceVerificationError,
         testedFilesUnchanged,
         passed:
           summary.passed &&
+          !result.executionError &&
           !result.timedOut &&
           !result.interrupted &&
           sourceUnchanged &&
@@ -256,6 +293,7 @@ async function main(args) {
       );
       console.log(JSON.stringify({ phase: phase.id, ...summary, passed: receipt.passed, log }));
       passed &&= receipt.passed;
+      if (result.executionError) throw new Error(result.executionError.message);
     }
     completed = true;
   } catch (error) {
