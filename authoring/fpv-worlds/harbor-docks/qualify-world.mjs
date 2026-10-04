@@ -333,10 +333,17 @@ try {
         for (const obstacle of navigation.obstacles)
           if (obstacle.type === 'trimesh') Object.assign(obstacle, obstacleBounds(obstacle));
         const flight = createWorldFlight({ course, mode }),
+          supportSurvey = createWorldCollision(course),
           recorder = createWorldRecorder(flight, { session: 'demonstration' }),
           memory = { boxes: [] },
           milestones = [],
           tracking = [],
+          damage = [],
+          supportTicks = Object.fromEntries(
+            course.actors
+              .filter((a) => a.role === 'civilian')
+              .map((a) => [a.id, { samples: 0, failures: 0, firstFailures: [] }]),
+          ),
           actorHeightDeviation = Object.fromEntries(course.actors.map((a) => [a.id, 0])),
           actorTravel = Object.fromEntries(course.actors.map((a) => [a.id, 0]));
         try {
@@ -378,6 +385,40 @@ try {
                   actor.position.y - course.actors.find((a) => a.id === actor.id).position.y,
                 ),
               );
+              if (actor.role === 'civilian') {
+                const expected = course.id.endsWith('05')
+                    ? 'platform-quay'
+                    : 'platform-service-deck',
+                  actual = supportSurvey.support(
+                    { ...actor.position, y: actor.position.y + 12 },
+                    actor.radius,
+                    30,
+                  ),
+                  summary = supportTicks[actor.id];
+                summary.samples++;
+                if (actual?.id !== expected || Math.abs(actual.y - actor.position.y) > 12) {
+                  summary.failures++;
+                  if (summary.firstFailures.length < 16)
+                    summary.firstFailures.push({
+                      tick: state.ticks,
+                      expected,
+                      actual,
+                      position: actor.position,
+                    });
+                }
+              }
+              if (actor.health !== before.health || actor.status !== before.status)
+                damage.push({
+                  tick: state.ticks,
+                  actor: actor.id,
+                  beforeHealth: before.health,
+                  afterHealth: actor.health,
+                  beforeStatus: before.status,
+                  afterStatus: actor.status,
+                  shots: state.shots,
+                  hits: state.hits,
+                  events: structuredClone(state.events),
+                });
             }
             if (prior.target?.type === 'actor-track-v1' && state.step > prior.step)
               tracking.push({
@@ -413,6 +454,8 @@ try {
             tracking,
             actorTravel,
             actorHeightDeviation,
+            supportTicks,
+            damage,
             proof: { path: filename, bytes: proofBytes.length, sha256: hash(proofBytes) },
             finalStateIdentity: worldStateIdentity(state),
           };
@@ -460,6 +503,12 @@ try {
               actorHeightDeviation[criterion.actorId] <= 12,
               actorHeightDeviation,
             );
+            check(
+              course.id + '/' + mode + ' actual named support is retained on every actor tick',
+              supportTicks[criterion.actorId].samples === state.ticks &&
+                supportTicks[criterion.actorId].failures === 0,
+              supportTicks,
+            );
           }
           if (course.id.endsWith('07')) {
             check(
@@ -471,6 +520,22 @@ try {
                 state.actors[0].role === 'hostile' &&
                 state.actors[0].status === 'defeated' &&
                 state.actors[0].health === 0,
+            );
+            check(
+              course.id +
+                '/' +
+                mode +
+                ' recorded damage uses ordinary player pulses and final defeat',
+              damage.length === 2 &&
+                damage[0].beforeHealth === 50 &&
+                damage[0].afterHealth === 25 &&
+                damage[1].beforeHealth === 25 &&
+                damage[1].afterHealth === 0 &&
+                damage[1].afterStatus === 'defeated' &&
+                damage[1].events.some(
+                  (e) => e.type === 'defeat' && e.actor === 'harbor-training-drone',
+                ),
+              damage,
             );
           }
           const replay = await replayWorldFlight(course, proof, { sampleEvery: 50 });
@@ -492,6 +557,7 @@ try {
           records.push(record);
         } finally {
           flight.dispose();
+          supportSurvey.dispose();
         }
       }
     const parts = await exportProofParts(records),
