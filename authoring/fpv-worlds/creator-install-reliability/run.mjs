@@ -457,7 +457,18 @@ async function run() {
     p.data.pendingGeneration = false;
     const externalProject = w.JSON.parse(JSON.stringify(editedC.project));
     externalProject.courses[1].locales.en.brief = 'Real separate-connection revision';
+    externalProject.definitions.challenges.find(
+      (c) => c.id === 'creator-install-second',
+    ).locales.en.brief = 'Real separate-connection revision';
     const externalPack = await p.content.inspectPack(await p.content.preparePack(externalProject));
+    check(
+      externalPack.sha256 !== editedC.sha256,
+      'separate writer prepares a genuinely different exact revision',
+    );
+    check(
+      externalPack.project.courses[1].locales.en.brief === 'Real separate-connection revision',
+      'authoritative definition compiles the intended external change',
+    );
     const externalResult = await p.store.install({
       ...externalPack,
       expectedGeneration: retryC.generation,
