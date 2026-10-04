@@ -79,7 +79,16 @@ window.fetch = async (input, options = {}) => {
     };
   n.requests.push(entry);
   options.signal.addEventListener('abort', () => (entry.aborted = true), { once: true });
-  if (n.mode === 'http') return new Response('', { status: 503 });
+  const rejectedBody = () =>
+    new ReadableStream({
+      start(controller) {
+        controller.enqueue(new Uint8Array([1]));
+      },
+      cancel() {
+        entry.bodyCancelled = true;
+      },
+    });
+  if (n.mode === 'http') return new Response(rejectedBody(), { status: 503 });
   if (n.mode === 'reject') throw new TypeError('Fixture network unavailable');
   if (n.mode === 'hold') {
     const bytes = isIndex ? new TextEncoder().encode(JSON.stringify(n.index)) : n.pack;
@@ -108,7 +117,9 @@ window.fetch = async (input, options = {}) => {
   }
   if (isIndex) return new Response(typeof n.index === 'string' ? n.index : JSON.stringify(n.index));
   if (n.mode === 'oversize-header')
-    return new Response('', { headers: { 'content-length': String(n.pack.length + 1) } });
+    return new Response(rejectedBody(), {
+      headers: { 'content-length': String(n.pack.length + 1) },
+    });
   if (n.mode === 'short') return new Response(n.pack.subarray(0, n.pack.length - 1));
   if (n.mode === 'long') return new Response(new Uint8Array(n.pack.length + 1));
   if (n.mode === 'corrupt') {
