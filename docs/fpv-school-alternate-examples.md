@@ -83,11 +83,32 @@ exact. Each of the 28 School IDs fails the canonical Orchard guard. The final
 School branch has no production delta against that main; replay, host and
 registry identities retain their original qualification.
 
-Actual-player import, dependency matching, optional example lookup, replay and
-persistence verification is pending. The manual fixture reuses the complete
-102-file Railworks admitted player by verified immutable hardlinks; this is
-retained package provenance, not a new package admission or a claim that these
-optional archives are bundled.
+Actual-player qualification passes **393 of 393 checks / 30 playbacks**: all 28
+whole recordings and one recorded section in each flight mode. Both mode
+archives import through the actual File input, resolve original dependencies,
+and replay to exact complete identities with full health and zero contacts.
+The full drawn states match the authoritative proofs and final host snapshots.
+Mode-specific School/catalogue actions, whole-lesson lab previews, repeat
+imports, pinning, native reload, removal, invalid dependencies and retained
+progress/recovery/bookmarks pass with no reported errors. The run took 60,838 ms;
+this is a fixture duration, not a hardware-performance result.
+
+The [complete browser receipt](evidence/fpv-school-alternate-browser.json) is
+138,741 bytes, SHA-256
+`0e587322a86cc5e03c0498cdf52f0f20e26a6447755d155ee1abf49f57f6110b`.
+Its [screenshot](evidence/fpv-school-alternate-browser.png) and
+[frozen manifest](evidence/fpv-school-alternate-final-fixture.json) retain
+candidate `8f5a97373e10c289f2bec8d120f21b2179fe564c`. The fixture reuses the
+complete 102-file Railworks admitted player at
+`9efa36364425e2846002748bb29478b378d2b5cb`, through verified immutable hardlinks.
+Its 70-module host closure uses the original package projection; the optional
+archives remain separate explicit imports. This is retained package provenance,
+not a new package admission or a claim that these archives are bundled.
+
+The later unrelated main demo-player update `a087facd9ca57f0e7519aa161cb6acc86a7eee3e`
+is integrated. The [final scoped audit](evidence/fpv-school-alternate-final-integration.json)
+confirms none of its changed paths intersect either the 70 host modules or the
+102 admitted player members; this School branch adds no production changes.
 
 The retained [v3 browser failure](evidence/fpv-school-alternate-browser-v3-failure.json)
 passed 51 of 52 checks before playback. Both archives imported and all 28
@@ -110,4 +131,7 @@ resuming. This instrumentation is not a hardware or frame-rate measurement.
 
 Controlled-input reachability does not establish novice teaching quality,
 physical-radio acceptance or hardware performance. Additional unit coverage,
-coaching improvements and public deployment remain separate gates.
+coaching improvements and public deployment remain separate gates. Native HTTP
+reload verifies persistence, not installed/offline acceptance. Explicit
+`app.dispose` qualification remains the separately owned lifecycle repair; this
+fixture uses native iframe navigation and teardown.
