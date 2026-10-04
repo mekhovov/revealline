@@ -52,7 +52,7 @@ const sourceHashes={
 'game/journey/reaction-preferences.mjs':
 'a14d2dcb99daffd83dcbf62311e6756d587db3134bf04c81cd2cd420b4f6809a',
 'game/journey/reaction-options.mjs':
-'6642858bf72765d85054402bffb4c4db6196abfdc560f39fc4093946f0a5eca7',
+'78bc6b07aa9d2b2855093193a67c1bc9a1127fd2c85e6c1491a778cc07f0125d',
 'game/journey/reaction-voice-library.mjs':
 '366fe4931bf91315971873853cda38a487cb8501151ad36a25bc925031951afd',
 'game/audio/reactions/pilot.mjs':
@@ -3704,7 +3704,7 @@ const exactKeys=external4['exactKeys'];
 const REACTION_OPTIONS_KEY='revealline.reaction-presentation.v1';
 const DEFAULT_REACTION_OPTIONS=Object.freeze({
 sounds:true,
-speech:true,
+speech:false,
 subtitles:true,
 volume:DEFAULT_DIALOGUE_VOLUME,
 scale:1,
