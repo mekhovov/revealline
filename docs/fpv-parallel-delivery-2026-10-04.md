@@ -48,8 +48,11 @@ admissions remain pinned to their original heads. The combined source inventory
 is 95 inputs / 16,741,638 bytes, leaving 35,578 bytes under the unchanged ceiling;
 full validation and the single final all-three/two-build admission passed on
 `0b54fd0fdf8fe06dc900024a8b59713340b09bb3`. Its exact102-member zero-overlay
-player passed the same453 native online controls at port8966 with zero overlays;
-native offline and longer-session verification remain pending. The
+player passed the same453 native online controls at port8966 with zero overlays.
+Its separate stopped-origin native reload also retained the edited course and
+original rollback, reopened the Acro edit, and armed/paused unchanged course01;
+connection refusal before/after and exact server restart are retained. This is
+not browser-wide offline or eviction. Longer-session verification remains pending. The
 [combined journey](fpv-combined-journey-qualification.md) uses explicit pack and
 separate proof imports and passed all 453 native controls on frozen source
 `6c341bef4347d98bae882fb1785eabf6a133537c`, using the explicitly declared

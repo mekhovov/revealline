@@ -1,9 +1,16 @@
 # Final combined Library and Creator journey
 
-Status: design only, 4 October 2026. No new admission, browser result or runtime
-change is claimed. This is the bounded integrated-reliability gate in the
-[parallel delivery plan](fpv-parallel-delivery-2026-10-04.md), not a new allocation.
-Keep ready Creator repair #1092 unchanged while this local continuation is prepared.
+Status: executed bounded qualification, 4 October 2026 UTC. Source8965 and exact
+admitted8966 each passed453 native online controls; the admitted native page also
+passed a separately observed stopped-origin reload/edit/flight check. Final source
+`0b54fd0fdf8fe06dc900024a8b59713340b09bb3` passed full validation and one fresh
+all-three/two-build admission; all95 inputs match merged main21826. Complete
+receipts, manifests and the preceding failed manual fixtures are retained in the
+[manual qualification directory](../authoring/fpv-worlds/combined-journey/README.md).
+The actual journey used explicit file imports, so published Browse/download remains
+open; longer-session performance is also separate. The design below records the
+intended boundaries, not additional results. This is the bounded integrated-reliability
+gate in the [parallel delivery plan](fpv-parallel-delivery-2026-10-04.md), not a new allocation.
 
 ## Exact prerequisites
 
@@ -16,7 +23,7 @@ Keep ready Creator repair #1092 unchanged while this local continuation is prepa
   perform a fresh combined admission if no retained admitted closure matches.
   Do not relabel the historical `216b36ce1`, `fc3254382` or compatibility player.
 - Reservoir r16 is data from immutable commit
-  `ea57d2e321896ab873c2ca6ca06791a88362a674`, pending #1090 publication.
+  `ea57d2e321896ab873c2ca6ca06791a88362a674`, published through merged #1090.
   Pack: `authoring/fpv-worlds/mountain-reservoir/distribution/r16/mountain-reservoir.r16.rlpack`,
   1,379,988 bytes, SHA-256
   `50ffbb0e5da7dec94862a8f2ca85cfeb60542d3fe9f86bd3c4e288dfa0a2e554`.
@@ -107,9 +114,11 @@ The parent runs trusted browser actions; no benchmark or competing GPU run overl
    prove connection refusal before and after the offline actions. Reload the
    exact admitted native entry, show the saved project and edited non-first course,
    and launch/pause an unchanged saved course. Reopen Creator and confirm the saved
-   edit remains available. Restart the same root/server, then perform a final
-   read-only durable comparison. No network-dependent Browse result is required
-   while the origin is stopped.
+   edit remains available. Restart the same root/server. The executed offline phase
+   retained public Library/Creator/flight observations rather than a second private
+   database comparison; the453-control online receipt already records the exact
+   durable comparison. No network-dependent Browse result is required while the
+   origin is stopped.
 
 ## Boundaries and receipt
 

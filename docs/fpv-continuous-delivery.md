@@ -3397,6 +3397,16 @@ Both hosts had no errors/warnings; the created renderer released its owned
 resources and the reopened lobby created no renderer. Published Browse and the
 separate stopped-origin offline phase are not implied by that online pass.
 
+That separate offline phase subsequently passed on the same native admitted entry.
+Public preparation completed; the dedicated8966 server stopped and curl refused
+before and after native reload. Library retained edited revisiond44a3936bff0 and
+rollback50ffbb0e5da7; Creator showed course02/Acro X=-9.9m, Y=5m, Z=15m. Unchanged
+course01 loaded, deliberately armed at zero throttle and paused at33.9s. Native
+text/screenshots and exact server stop/refusal/restart metadata are retained under
+`combined-journey/evidence/offline-8966-passed`. This qualifies own-origin outage,
+not browser-wide offline, eviction or a repeated private database audit. The
+same server root was restored with HTTP200. Longer-session evidence is still pending.
+
 The active parallel-plan checkpoint and engineering priorities were reconciled,
 including merged ghost/language/coating/HUD/Creator status. Reservoir's bounded
 r16 art review is accepted and its data is merged; the first production Library
