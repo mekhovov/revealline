@@ -1,0 +1,96 @@
+{
+  "format": "FPVOptionalWorldRelease.v1",
+  "id": "festival-grounds",
+  "revision": "r5",
+  "title": {
+    "en": "Festival Grounds",
+    "uk": "Фестивальний майданчик"
+  },
+  "worldCount": 1,
+  "courseCount": 8,
+  "proofCount": 16,
+  "modes": [
+    "self-level",
+    "acro"
+  ],
+  "files": {
+    "pack": {
+      "path": "festival-grounds.r5.rlpack",
+      "bytes": 1256875,
+      "sha256": "87baca276e174f31ba19c02f4f2359c97affa07eefd4a5f4912b4d8664450f51"
+    },
+    "editable": {
+      "path": "festival-grounds.r5.zip",
+      "bytes": 1256934,
+      "sha256": "9eb3505f9b6a375198dae005506be4d55a96cc0730e6602e9e163b96cc172698"
+    },
+    "proofs": {
+      "path": "festival-grounds.r5.proofs.json",
+      "bytes": 1098458,
+      "sha256": "277503e86f3cb0b9cd60bc405ec41562bed1533c3f8a779391141ac3985884b6"
+    }
+  },
+  "license": "CC0-1.0",
+  "defaultCatalogueChanges": 0,
+  "requiredCapabilities": [],
+  "allocation": [
+    {
+      "id": "festival-grounds-01",
+      "activity": "orientation"
+    },
+    {
+      "id": "festival-grounds-02",
+      "activity": "race"
+    },
+    {
+      "id": "festival-grounds-03",
+      "activity": "race"
+    },
+    {
+      "id": "festival-grounds-04",
+      "activity": "race"
+    },
+    {
+      "id": "festival-grounds-05",
+      "activity": "precision"
+    },
+    {
+      "id": "festival-grounds-06",
+      "activity": "follow"
+    },
+    {
+      "id": "festival-grounds-07",
+      "activity": "observe"
+    },
+    {
+      "id": "festival-grounds-08",
+      "activity": "capstone"
+    }
+  ],
+  "resources": {
+    "bytes": 1122416,
+    "sha256": "fe3ee76100ea7c62bd1fdcca7eabd3d9d560ff7a9f62932f62f5e6395a37eac8",
+    "triangles": 12284,
+    "materials": 12,
+    "nodes": 64,
+    "textures": 2,
+    "colliders": 47
+  },
+  "qualification": {
+    "sourceCommit": "95aa9c82afa0f360454147f0eebfe6f0f1c475ac",
+    "assetChecks": 144,
+    "staticCollisionChecks": 495,
+    "ordinaryFlightChecks": 616,
+    "freshExactPackProofs": 16,
+    "actualStaticObservations": 11,
+    "ordinaryFlightReceipt": "../../evidence/r5-ordinary-qualification.json",
+    "staticReceipt": "../../evidence/r3-static/static-review.json",
+    "revisionBridgeReceipt": "../../evidence/r4-r5-bridge.json",
+    "admittedBrowserRuntime": "364fb78c3dc7e268b84b0a13349af32864bca802",
+    "browserStatus": "Pending exact-pack import/Watch/editor/reopen qualification",
+    "nativeStatus": "Pending unmodified native entry",
+    "offlineStatus": "Pending stopped-origin reload",
+    "scope": "Bounded original stylized scene and distinct authored flight tasks. No photoreal, hardware, FPS or distinct imported-card metadata claim."
+  },
+  "discovery": "No production Library index row is added by this content change. Imported cards retain host defaults Explore/intermediate/4min."
+}

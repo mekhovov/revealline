@@ -1,10 +1,11 @@
-# Festival Grounds — original scene checkpoint
+# Festival Grounds — original scene and challenge design
 
-This independent D5 world follows qualified Mountain Reservoir #1066. The first
-checkpoint is a scene and one orientation course, not the completed eight-course
-world. Final release requires eight distinct challenges, sixteen ordinary-control
-demonstrations against the final shared World, actual imported-player/editor and
-offline qualification, and protected publication.
+This independent D5 world follows Mountain Reservoir. The initial one-course
+scene checkpoint is preserved; the current r5 candidate has all eight authored
+challenges and sixteen qualified ordinary-control demonstrations. Actual
+imported-player/editor and offline qualification, followed by protected
+publication, remain release gates. [README.md](README.md) records current status;
+the design and initial production bounds below remain the original scope.
 
 The fictional Ukrainian community festival is an open racing contrast to the
 Reservoir. A covered timber stage anchors the north end, four market kiosks form
@@ -49,9 +50,9 @@ reference image, logo, mesh or competitor asset is included.
 
 01 orientation: Entry check-in; 02 race: Main lawn loop; 03 race: Market slalom;
 04 race: Stage-side sprint; 05 precision: Sound-desk landing; 06 follow: Service
-cart escort; 07 observe: Festival guide; 08 capstone: Grounds circuit. Names are
-provisional. Follow/observe will use real criteria and actor travel, not merely
-decorative motion. Both modes remain selectable, with independent route arrays.
+cart escort; 07 observe: Festival guide; 08 capstone: Grounds circuit. Follow/observe
+use real criteria and actor travel, not merely decorative motion. Both modes remain
+selectable, with independent route arrays.
 
 First review poses: entry/lawn FPV, close market facade, stage underside/roof,
 clock/service loop and overview, plus low/Pixel readability. Freeze geometry only
