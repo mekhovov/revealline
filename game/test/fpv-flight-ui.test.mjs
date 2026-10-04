@@ -524,7 +524,10 @@ test('Studio preview runs the actual course as authoring and never reaches the n
   assert.equal(f.$('studio-dialog').open, false);
   assert.equal(f.view.exportAttempt().session, 'authoring');
   assert.equal(f.$('try').hidden, false);
-  assert.equal(f.view.arm(), true);
+  assert.equal(f.$('academy-shell-briefing-dialog').open, true);
+  assert.equal(f.view.arm(), false, 'An authoring preview still requires explicit Start.');
+  f.$('academy-shell-action-start').click();
+  assert.equal(f.view.snapshot().status, 'active');
   f.tick();
   const example = FLIGHT_DEMONSTRATIONS.find(
     (item) => item.course === course.id && item.mode === 'self-level',

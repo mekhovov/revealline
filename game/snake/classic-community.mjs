@@ -232,11 +232,18 @@ export function createClassicSnakeCommunityLibrary({ indexedDB = globalThis.inde
     indexedDB,
     operationTimeoutMs: 5000,
   });
-  let opening = null;
+  const migrationOwners = new Set();
+  let opening = null,
+    closed = false;
   const ready = () => {
+    required(!closed, 'Classic library is closed.');
     if (!opening)
       opening = (async () => {
-        if ((await backend.read()).migrated) return;
+        const current = await backend.read();
+        // A primary read may finish while its page is entering history. Never
+        // open migration connections on behalf of that retired page afterward.
+        required(!closed, 'Classic library is closed.');
+        if (current.migrated) return;
         const historical = createProfileRecordBackend({
           key: LIBRARY_FORMAT,
           empty: emptyLegacy,
@@ -262,6 +269,8 @@ export function createClassicSnakeCommunityLibrary({ indexedDB = globalThis.inde
           indexedDB,
           operationTimeoutMs: 5000,
         });
+        migrationOwners.add(historical);
+        migrationOwners.add(receipts);
         try {
           const legacy = await historical.read(),
             oldReceipts = await receipts.read();
@@ -296,6 +305,8 @@ export function createClassicSnakeCommunityLibrary({ indexedDB = globalThis.inde
         } finally {
           historical.close();
           receipts.close();
+          migrationOwners.delete(historical);
+          migrationOwners.delete(receipts);
         }
       })().catch((error) => {
         opening = null;
@@ -442,6 +453,12 @@ export function createClassicSnakeCommunityLibrary({ indexedDB = globalThis.inde
         collectUnowned(state, receipt.runtimeIdentity);
       });
     },
-    close: () => backend.close(),
+    close() {
+      if (closed) return;
+      closed = true;
+      backend.close();
+      for (const owner of migrationOwners) owner.close();
+      migrationOwners.clear();
+    },
   });
 }

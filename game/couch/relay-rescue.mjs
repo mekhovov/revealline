@@ -5006,7 +5006,11 @@ export function bootCoop({
     );
     generation++;
     startCoop(run);
-    beginInstalledTeamAttempt(run, selection, briefing?.restored);
+    beginInstalledTeamAttempt(run, selection, briefing?.restored, {
+      // Starting an already prepared core clears its held controls before its
+      // save owners exist. Retain that same release in their initial journals.
+      releasedBeforeBinding: previousRun === next,
+    });
     discoveryBriefings.delete(next);
     if (previousRun?.level.hunt && !run.level.hunt) clearHuntAttempt(previousRun);
     runningEnemyControls.refresh();
@@ -5834,7 +5838,7 @@ export function bootCoop({
     currentRun,
     picture,
     restored = null,
-    { deferSave = false } = {},
+    { deferSave = false, releasedBeforeBinding = false } = {},
   ) {
     localRecordings.get(currentRun)?.bindSource({
       ...(picture?.installedEditionId ? { editionId: picture.installedEditionId } : {}),
@@ -5842,6 +5846,7 @@ export function bootCoop({
     });
     const attemptId = teamPersistenceId(currentRun, restored);
     beginHuntAttempt(currentRun, picture, restored, { armed: !deferSave, attemptId });
+    if (releasedBeforeBinding) huntAttempts.get(currentRun)?.recorder.release();
     const editionId = picture?.installedEditionId,
       setup = installedPreset(currentRun),
       tuning = attemptTuning.get(currentRun);
@@ -5873,6 +5878,8 @@ export function bootCoop({
         durable: Boolean(restored && !restored.huntAttempt),
         armed: !deferSave,
       };
+    if (releasedBeforeBinding && !record.segments.at(-1)?.release)
+      record.segments.push({ release: true });
     installedTeamAttempts.set(currentRun, record);
     if (!restored && !deferSave) persistInstalledTeamAttempt(currentRun, picture, { force: true });
   }

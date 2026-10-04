@@ -9,6 +9,7 @@ import { contentStudioLinks } from '../ui/content-studio-navigation.mjs';
 import { mountSnakeStudioPreview } from './snake-preview-panel.mjs';
 import { captureStudioActionFocus } from './action-focus.mjs';
 import { prepareSnakeStudioPlay } from './snake-play-launch.mjs';
+import { createSnakeStudioStorageLifecycle } from './snake-storage-lifecycle.mjs';
 import {
   CLASSIC_PACKAGE_FORMAT,
   validateClassicSnakePackage,
@@ -58,10 +59,12 @@ const report = (text, error = false) => {
   status.dataset.error = String(error);
 };
 const guard = (fn) => async () => {
+  let operation;
   try {
-    await fn();
+    operation = storage.capture();
+    await fn(operation);
   } catch (error) {
-    report(error.message, true);
+    if (operation?.current()) report(error.message, true);
   }
 };
 const button = (text, fn) => {
@@ -103,25 +106,31 @@ function retirePlay() {
   playFocus?.cancel();
   playFocus = null;
 }
-const library = createClassicSnakeCommunityLibrary();
-const drafts = createProfileRecordBackend({
-  key: 'classic-snake-studio-draft.v1',
-  empty: () => ({ draft: null }),
-  validate: (source) => {
-    const value = boundedJSON(source, {
-      maxBytes: 1536 * 1024,
-      maxNodes: 160000,
-      maxArray: 1536,
-      maxDepth: 14,
-    });
-    required(
-      Object.keys(value).length === 1 && Object.hasOwn(value, 'draft'),
-      'Invalid Snake Studio draft.',
-    );
-    if (value.draft !== null) validateClassicSnakePackage(value.draft);
-    return value;
-  },
-  operationTimeoutMs: 5000,
+const createDrafts = () =>
+  createProfileRecordBackend({
+    key: 'classic-snake-studio-draft.v1',
+    empty: () => ({ draft: null }),
+    validate: (source) => {
+      const value = boundedJSON(source, {
+        maxBytes: 1536 * 1024,
+        maxNodes: 160000,
+        maxArray: 1536,
+        maxDepth: 14,
+      });
+      required(
+        Object.keys(value).length === 1 && Object.hasOwn(value, 'draft'),
+        'Invalid Snake Studio draft.',
+      );
+      if (value.draft !== null) validateClassicSnakePackage(value.draft);
+      return value;
+    },
+    operationTimeoutMs: 5000,
+  });
+const storage = createSnakeStudioStorageLifecycle({
+  window,
+  document,
+  create: () => ({ library: createClassicSnakeCommunityLibrary(), drafts: createDrafts() }),
+  retire: retirePlay,
 });
 const top = el('div', null, { class: 'fields' });
 root.append(top);
@@ -572,9 +581,10 @@ actions.append(
     active = Math.min(active, draft.entries.length - 1);
     refresh();
   }),
-  button(words('Save valid draft', 'Зберегти правильну чернетку'), async () => {
+  button(words('Save valid draft', 'Зберегти правильну чернетку'), async ({ drafts, current }) => {
     const pack = validate();
     await drafts.update(() => ({ draft: pack }));
+    if (!current()) return;
     report(
       words(
         'Draft saved in the shared profile database.',
@@ -582,8 +592,9 @@ actions.append(
       ),
     );
   }),
-  button(words('Restore saved draft', 'Відновити чернетку'), async () => {
+  button(words('Restore saved draft', 'Відновити чернетку'), async ({ drafts, current }) => {
     const saved = await drafts.read();
+    if (!current()) return;
     required(saved.draft, 'No saved draft.');
     draft = structuredClone(saved.draft);
     active = 0;
@@ -609,16 +620,18 @@ const file = el('input', null, {
 field(actions, words('Import package', 'Імпорт пакунка'), file);
 file.addEventListener(
   'change',
-  guard(async () => {
+  guard(async ({ current }) => {
     if (!file.files[0]) return;
-    draft = structuredClone(await importClassicSnakePackage(file.files[0]));
+    const imported = await importClassicSnakePackage(file.files[0]);
+    if (!current()) return;
+    draft = structuredClone(imported);
     active = 0;
     refresh();
     file.value = '';
   }),
 );
 for (const mode of ['solo', 'versus', 'team']) {
-  const play = button(words(`Play ${mode}`, `Грати: ${mode}`), async () => {
+  const play = button(words(`Play ${mode}`, `Грати: ${mode}`), async ({ library, current }) => {
     retirePlay();
     play.focus({ preventScroll: true });
     const focus = captureStudioActionFocus(play),
@@ -632,7 +645,7 @@ for (const mode of ['solo', 'versus', 'team']) {
         locale: language,
         baseURL: location.href,
         install: (pack, options) => library.install(pack, options),
-        isCurrent: () => revision === playRevision && focus.current(),
+        isCurrent: () => current() && revision === playRevision && focus.current(),
       });
       if (url && revision === playRevision && focus.current()) location.assign(url);
     } finally {
@@ -644,14 +657,5 @@ for (const mode of ['solo', 'versus', 'team']) {
 }
 sourceDetails.addEventListener('toggle', () => {
   if (sourceDetails.open) sourceArea.value = JSON.stringify(draft, null, 2);
-});
-window.addEventListener('pagehide', (event) => {
-  retirePlay();
-  // A cached page keeps these owners: close() is permanent, so disposing them
-  // here would break Save/Restore/Play after the browser's Back action.
-  if (!event.persisted) {
-    drafts.close();
-    library.close();
-  }
 });
 refresh();

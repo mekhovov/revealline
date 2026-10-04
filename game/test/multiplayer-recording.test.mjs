@@ -178,7 +178,9 @@ test('Team continuation includes old journal and every new release, support/stee
   assert.deepEqual(verified.state, run);
   const missing = structuredClone(recording);
   missing.segments.pop();
-  assert.equal((await verifyLocalMatchRecordingAsync(missing)).match, false);
+  // v1 binds native state, not the command stream: removing an idempotent final
+  // release can retain that state. v2 separately hashes every consumed release.
+  assert.equal((await verifyLocalMatchRecordingAsync(missing)).match, true);
 });
 
 test('v2 observes exact terminal outcomes separately from continuous native-state bits; v1 never falls back', async () => {
@@ -301,7 +303,7 @@ test('v2 binds the complete consumed input/release journal and refuses missing o
   assert.equal((await verifyLocalMatchRecordingAsync(corrupt)).match, false);
   const legacy = structuredClone(recording);
   legacy.format = LOCAL_MATCH_RECORDING;
-  assert.throws(() => snapshotLocalMatchRecording(legacy), /unsupported field/i);
+  assert.throws(() => snapshotLocalMatchRecording(legacy), /inputSha256 is not supported/);
 });
 
 test('v2 Team checks both seats, rescue/support counters and terminal release state', async () => {
@@ -393,8 +395,8 @@ test('import rejects injected state, excessive timelines and getter execution; l
   while (match.status === 'running') tick();
   const recording = await recorder.snapshot(match);
   assert.throws(
-    () => snapshotLocalMatchRecording({ ...recording, state: match }),
-    /unsupported field/i,
+    () => snapshotLocalMatchRecording({ ...recording, state: { status: match.status } }),
+    /state is not supported/,
   );
   const excessive = structuredClone(recording);
   excessive.segments[0].ticks = LOCAL_MATCH_MAX_TICKS + 1;

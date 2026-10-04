@@ -1,10 +1,10 @@
-// Authored regressions; automated suites remain waived by publishing/test-policy.json.
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { readFile } from 'node:fs/promises';
-import { runInNewContext } from 'node:vm';
-import { parse } from 'acorn';
 import { prepareSnakeStudioPlay } from '../studio/snake-play-launch.mjs';
+import { createSnakeStudioStorageLifecycle } from '../studio/snake-storage-lifecycle.mjs';
+import { createProfileRecordBackend } from '../profile-storage.mjs';
+import { createClassicSnakeCommunityLibrary } from '../snake/classic-community.mjs';
+import { managedIndexedDB } from './helpers/managed-idb.mjs';
 import { captureStudioActionFocus } from '../studio/action-focus.mjs';
 import { CLASSIC_SNAKE_LEVELS } from '../snake/classic-catalogue.mjs';
 import {
@@ -173,35 +173,126 @@ test('the shared Studio foreground lease prevents late navigation after input, b
   }
 });
 
-test('actual Studio pagehide retires Play but preserves storage owners for a cached Back return', async () => {
-  const source = await readFile(new URL('../studio/snake.mjs', import.meta.url), 'utf8'),
-    ast = parse(source, { ecmaVersion: 'latest', sourceType: 'module' }),
-    binding = ast.body.find(
-      (node) =>
-        node.type === 'ExpressionStatement' &&
-        node.expression.callee?.object?.name === 'window' &&
-        node.expression.callee?.property?.name === 'addEventListener' &&
-        node.expression.arguments[0]?.value === 'pagehide',
-    );
-  assert.ok(binding);
-  const window = new Events();
+test('Studio closes live database connections and reopens once after a cached Back or freeze', async () => {
+  const document = new Document(),
+    window = new Events(),
+    memory = managedIndexedDB();
   let retired = 0,
-    draftClosed = false,
-    libraryClosed = false;
-  runInNewContext(source.slice(binding.start, binding.end), {
+    created = 0;
+  const storage = createSnakeStudioStorageLifecycle({
+    document,
     window,
-    retirePlay: () => retired++,
-    drafts: { close: () => (draftClosed = true) },
-    library: { close: () => (libraryClosed = true) },
+    retire: () => retired++,
+    create: () => {
+      created++;
+      return {
+        drafts: createProfileRecordBackend({
+          key: 'studio-lifecycle-test',
+          empty: () => ({ draft: null }),
+          validate: (value) => value,
+          indexedDB: memory.indexedDB,
+        }),
+        library: createClassicSnakeCommunityLibrary({ indexedDB: memory.indexedDB }),
+      };
+    },
+  });
+  const original = storage.capture(),
+    pack = source();
+  await original.drafts.update(() => ({ draft: pack }));
+  const saved = await original.library.install(pack, { owner: 'studio' });
+  const closed = memory.closed;
+  window.emit('pagehide', { persisted: true });
+  assert.ok(
+    memory.closed > closed,
+    'Actual profile and library connections close before history freeze.',
+  );
+  assert.equal(original.current(), false);
+  await assert.rejects(original.drafts.read(), /closed/);
+  assert.throws(() => storage.capture(), /suspended/);
+  document.emit('freeze');
+  assert.equal(retired, 1);
+  window.emit('pageshow', { persisted: true });
+  document.emit('resume');
+  assert.equal(created, 2, 'Overlapping restore signals create one set of lazy owners.');
+  const restored = storage.capture();
+  assert.equal(original.current(), false, 'Restoring the page cannot revive an old operation.');
+  assert.deepEqual((await restored.drafts.read()).draft, pack);
+  assert.equal((await restored.library.load(saved.identity)).identity, saved.identity);
+  await restored.drafts.update(() => ({ draft: null }));
+  assert.equal((await restored.drafts.read()).draft, null);
+  document.emit('freeze');
+  document.emit('resume');
+  assert.equal(created, 3);
+  window.emit('pagehide', { persisted: false });
+  window.emit('pageshow', { persisted: true });
+  document.emit('resume');
+  assert.equal(created, 3, 'A final page exit cannot reopen its disposed owners.');
+  assert.throws(() => storage.capture(), /suspended/);
+  storage.dispose();
+});
+
+test('an old installation cannot launch the restored Studio owner', async () => {
+  const document = new Document(),
+    window = new Events(),
+    gate = defer();
+  let retired = 0;
+  const storage = createSnakeStudioStorageLifecycle({
+    document,
+    window,
+    retire: () => retired++,
+    create: () => ({ library: { close() {} } }),
+  });
+  const old = storage.capture();
+  const pending = prepareSnakeStudioPlay({
+    ...settings(),
+    isCurrent: old.current,
+    install: async (pack) => {
+      await gate.promise;
+      return installed(pack);
+    },
   });
   window.emit('pagehide', { persisted: true });
-  assert.equal(retired, 1);
-  assert.equal(draftClosed, false);
-  assert.equal(libraryClosed, false);
   window.emit('pageshow', { persisted: true });
-  assert.equal(draftClosed || libraryClosed, false, 'A cached page retains usable storage.');
-  window.emit('pagehide', { persisted: false });
-  assert.equal(retired, 2);
-  assert.equal(draftClosed, true);
-  assert.equal(libraryClosed, true);
+  assert.equal(retired, 1);
+  gate.resolve();
+  assert.equal(await pending, null);
+  assert.equal(storage.capture().current(), true);
+  storage.dispose();
+});
+
+test('freezing first-use library migration closes every primary and temporary owner', async () => {
+  for (const stopAtOpen of [1, 2, 3]) {
+    const document = new Document(),
+      window = new Events(),
+      memory = managedIndexedDB();
+    let storage,
+      opens = 0;
+    const indexedDB = {
+      open(...args) {
+        const request = memory.indexedDB.open(...args);
+        if (++opens === stopAtOpen)
+          queueMicrotask(() => window.emit('pagehide', { persisted: true }));
+        return request;
+      },
+    };
+    storage = createSnakeStudioStorageLifecycle({
+      document,
+      window,
+      retire() {},
+      create: () => ({ library: createClassicSnakeCommunityLibrary({ indexedDB }) }),
+    });
+    const operation = storage.capture(),
+      pending = operation.library.install(source(), { owner: 'studio' });
+    await assert.rejects(pending, /closed/);
+    await new Promise((resolve) => setImmediate(resolve));
+    assert.equal(operation.current(), false);
+    assert.equal(opens, stopAtOpen, 'Retirement must not start another migration connection.');
+    assert.equal(memory.closed, opens, 'Every already requested connection is eventually closed.');
+    window.emit('pageshow', { persisted: true });
+    const restored = storage.capture(),
+      installed = await restored.library.install(source(), { owner: 'studio' });
+    assert.equal((await restored.library.load(installed.identity)).identity, installed.identity);
+    storage.dispose();
+    assert.equal(memory.closed, opens);
+  }
 });
