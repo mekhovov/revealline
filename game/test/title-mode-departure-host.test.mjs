@@ -12,6 +12,7 @@ import { createStillMediaStore } from '../media-store.mjs';
 import { prepareStillAsset } from '../media-still.mjs';
 import { createExecutionCatalog } from '../campaign-contexts.mjs';
 import { campaignKey } from '../library.mjs';
+import { waitFor } from './helpers/wait-for.mjs';
 
 const slot = 'revealline.suspended.dev.v1';
 const gameURL = 'http://localhost/game/';
@@ -109,6 +110,28 @@ async function flight(t, options = {}) {
   h.$('shell-menu').click();
   assert.equal(h.$('shell-home').open, true);
   return h;
+}
+async function pendingPictureRestore(h, decodeCount, gate) {
+  // This is setup for cancellation at the real held decoder boundary, not a
+  // responsiveness deadline. Saved replay verification and startup picture
+  // admission share the host thread and can exceed the generic 5 s fixture
+  // wait under the CI cohort. Neither a busy button alone nor a decode from an
+  // already-finished operation is enough to exercise this lifecycle contract.
+  await waitFor(() => decodeCount() > 0 && h.$('continue-saved').disabled, {
+    message: 'Saved Continue must own a pending original-picture decode.',
+    timeoutMs: 20_000,
+  }).catch((error) => {
+    error.message += JSON.stringify({
+      decodes: decodeCount(),
+      continueDisabled: h.$('continue-saved').disabled,
+      titleDisabled: h.$('shell-continue').disabled,
+      message: h.$('run-message').textContent,
+      picture: h.doc.body.dataset.pictureState,
+      errors: h.errors.map(String),
+    });
+    gate.resolve();
+    throw error;
+  });
 }
 function request(h, kind) {
   h.$(`shell-title-${kind}`).focus();
@@ -500,18 +523,7 @@ for (const kind of ['versus', 'team'])
       await settle(() => !h.$('shell-continue').disabled && !h.$('continue-saved').disabled);
       h.$('shell-continue').focus();
       const pending = press(h, 'Enter');
-      await settle(() => decodes > 0 && h.$('continue-saved').disabled).catch((error) => {
-        error.message += JSON.stringify({
-          decodes,
-          continueDisabled: h.$('continue-saved').disabled,
-          titleDisabled: h.$('shell-continue').disabled,
-          message: h.$('run-message').textContent,
-          picture: h.doc.body.dataset.pictureState,
-          errors: h.errors.map(String),
-        });
-        gate.resolve();
-        throw error;
-      });
+      await pendingPictureRestore(h, () => decodes, gate);
       assert.equal(h.rendered.run, old, 'Pending media cannot adopt the saved owner.');
       assert.equal(h.$('shell-flight-cancel').hidden, true);
       await request(h, kind);
@@ -571,18 +583,7 @@ for (const kind of ['versus', 'team'])
       await settle(() => !h.$('shell-continue').disabled && !h.$('continue-saved').disabled);
       h.$('shell-continue').focus();
       const pending = press(h, 'Enter');
-      await settle(() => decodes > 0 && h.$('continue-saved').disabled).catch((error) => {
-        error.message += JSON.stringify({
-          decodes,
-          continueDisabled: h.$('continue-saved').disabled,
-          titleDisabled: h.$('shell-continue').disabled,
-          message: h.$('run-message').textContent,
-          picture: h.doc.body.dataset.pictureState,
-          errors: h.errors.map(String),
-        });
-        gate.resolve();
-        throw error;
-      });
+      await pendingPictureRestore(h, () => decodes, gate);
       assert.equal(h.rendered.run, old, 'Pending media cannot adopt the saved owner.');
       assert.equal(h.$('shell-flight-cancel').hidden, true);
       assert.equal(h.doc.activeElement.id, 'shell-continue');
