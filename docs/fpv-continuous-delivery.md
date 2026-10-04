@@ -3358,9 +3358,10 @@ claims remain pending.
 Reservoir r16 data #1090 merged normally as
 `53620a6615210047385c770ef1c24f4eb0bdc461`; Creator commit/retry repair #1092
 merged as `8b31237d6f2cba627b5d35acc10309e4d3335992`. Library compatibility
-#1093 is now at `40b2e29df95691cbe44220e253ba8f795d60dd74`, normally integrated
-with that Creator main, with source/optional admission passing and the remaining
-protected checks running at this checkpoint. Latest actual public-entry evidence
+#1093 merged normally as `21826c460e80fa4e7fa47ec8e6ba9f98f75beea4` after every
+active check passed at exact `40b2e29df95691cbe44220e253ba8f795d60dd74`. Its
+normal Creator-main update has the same host bytes as the final combined admission.
+Latest actual public-entry evidence
 remains the recorded `3bc7a923d` launch, not these newer merges.
 
 The bounded [combined journey](fpv-combined-journey-qualification.md) passed all
@@ -3382,8 +3383,12 @@ Only these manual observer/control defects changed. No product guard, physics,
 clock or visibility behavior was altered to obtain the pass. This online run uses
 the actual default Industrial presentation; it does not qualify an authored
 natural performance workload, published Browse/download or cached-native offline.
-One final exact combined all-three/two-build admission supplies the shared runtime
-for the subsequent offline and longer-session work.
+The final exact combined source `0b54fd0fdf8fe06dc900024a8b59713340b09bb3`
+passed full Node22 validation and all-three/two-identical-build admission, with
+all95 original inputs byte-exact to the successful online fixture. The complete
+zero-overlay102-file player passed223 staging checks and supplies the single
+runtime for subsequent native/offline and longer-session work. Original source
+reserve is35,578 bytes; no limits changed and no second build set was created.
 
 The active parallel-plan checkpoint and engineering priorities were reconciled,
 including merged ghost/language/coating/HUD/Creator status. Reservoir's bounded

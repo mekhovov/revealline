@@ -13,6 +13,19 @@ cases passed. The source fixture still overlays only the accepted 323-byte
 Creator correction on the exact Library admitted player. This is not a new
 zero-overlay admission, published Browse or offline result.
 
+Final combined source `0b54fd0fdf8fe06dc900024a8b59713340b09bb3` normally
+integrates Creator main `8b31237d6f2cba627b5d35acc10309e4d3335992`; all95 inputs
+are byte-exact to the successful online fixture. Full Node22 validation passed,
+including generated-source checks and its retained navigation warnings. All three
+packages passed one fresh source-bound admission with two identical builds each,
+committed input verification and ZIP-member admission. Worlds has102 members and
+16,741,638 original input bytes, leaving35,578 bytes under the unchanged limit.
+The immutable complete player passed223 staging checks with zero overlays;
+99 files reuse verified immutable links. The admitted fixture at port8966 and
+longer-session fixture reuse this single build. Their native/offline results are
+still pending. [Admission evidence](evidence/admission-0b54/manifest.json) retains
+exact logs, inventories, package descriptors, checksums and original-source bridge.
+
 The first native online run at port8963 stopped at its Retry control after 362
 successful checks, followed by the failed control check and three passing cleanup
 checks. The fixture selected the Results-dialog Retry while the current surface
