@@ -479,7 +479,7 @@ function overheadDetailed(ctx, role, family, gait, options, cast) {
       pixel(ctx, role.glove, 22, 10, 3, 3);
     }
   } else if (family === 'courier') {
-    const y = 18 - (Math.abs(stride) === 2 ? 1 : 0);
+    const y = 18 + (gait.accessory ?? -(Math.abs(stride) === 2 ? 1 : 0));
     pixel(ctx, INK, 23, y, 6, 6);
     pixel(ctx, '#795e3f', 24, y + 1, 4, 4);
     pixel(ctx, '#be9b65', 24, y + 1, 4, 2);
@@ -586,7 +586,7 @@ function overheadCompact(ctx, role, family, gait, options, cast) {
     pixel(ctx, INK, 11, 6, 1, 3);
     pixel(ctx, role.trim, 5, 5, 6, 1);
   } else if (family === 'courier') {
-    const y = 8 - Math.abs(step);
+    const y = 8 + (gait.accessory == null ? -Math.abs(step) : Math.round(gait.accessory / 2));
     pixel(ctx, INK, 12, y, 3, 3);
     pixel(ctx, '#be9b65', 12, y, 3, 1);
     pixel(ctx, '#795e3f', 13, y + 1, 2, 2);
@@ -788,6 +788,11 @@ export function drawHuntActor(ctx, x, y, size, pose = 0, options = {}) {
       gait.stride = moving ? sample.stride : 0;
     } else if (gait.stride !== 0) gait.stride = sample.stride;
     gait.breath = sample.breath;
+    // Explicit admitted drafts can animate the courier's approved satchel.
+    // Historical/default procedural art retains its stride-derived bounce;
+    // body position, facing and specialist protection never use this offset.
+    if (overhead && options.animation && descriptor.parts.includes('satchel'))
+      gait.accessory = sample.accessory;
   }
   ctx.save();
   ctx.translate(x, y);
