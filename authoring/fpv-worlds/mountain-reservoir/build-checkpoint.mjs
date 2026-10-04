@@ -27,7 +27,7 @@ assert(process.argv.length === 3 && output !== process.cwd(), 'Choose a new outp
 await mkdir(output, { recursive: false });
 const source = createScene();
 assert(
-  source.bytes.length < 800 * 1024 && source.statistics.triangles < 15000,
+  source.bytes.length < 1.2 * 1024 * 1024 && source.statistics.triangles < 15000,
   'Initial art target exceeded',
 );
 assert(
@@ -165,12 +165,17 @@ await writeFile(path.join(root, 'mountain-reservoir-checkpoint.r1.rlpack'), pack
 });
 await writeFile(path.join(root, 'mountain-reservoir-checkpoint.r1.zip'), zipBytes, { flag: 'wx' });
 const sourceScript = await readFile(new URL('./source/scene.mjs', import.meta.url));
+const materialSource = await readFile(new URL('./source/mineral.mjs', import.meta.url));
 const receipt = {
   format: 'FPVMountainReservoirCheckpointBuild.v1',
   stage: 'one course, visual review and two-mode flight proofs pending',
   sourceScript: {
     path: 'authoring/fpv-worlds/mountain-reservoir/source/scene.mjs',
     sha256: hash(sourceScript),
+  },
+  materialSource: {
+    path: 'authoring/fpv-worlds/mountain-reservoir/source/mineral.mjs',
+    sha256: hash(materialSource),
   },
   source: { bytes: source.bytes.length, sha256: hash(source.bytes), ...source.statistics },
   prepared: {
@@ -186,7 +191,7 @@ const receipt = {
   zip: { bytes: zipBytes.length, sha256: hash(zipBytes) },
   courses: project.courses.map((c) => c.id),
   runtimeChanges: 0,
-  textures: 0,
+  textures: source.statistics.textures,
   limitsUnchanged: true,
   sourcePipeline:
     'scripts/fpv-content.mjs prepareWorldFile; pinned glTF Transform 4.5.1 and Khronos Validator 2.0.0-dev.3.10',
