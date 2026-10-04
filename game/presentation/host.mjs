@@ -658,18 +658,28 @@ export function createPresentationHost({
             report('decoding', localizedMessage('interface:presentation.preparingFrames'));
             if (actorHashes.has(hash)) {
               const keepOriginal = actorLeases.get(hash).retain();
+              let cropStarted = false;
               try {
                 const lease = await actorPool.acquire({
                   key: `${hash}:${frame.x},${frame.y},${frame.width},${frame.height}`,
                   width: frame.width,
                   height: frame.height,
                   signal: controller.signal,
-                  load: (signal) => cropImage(original, frame, { signal }),
+                  async load(signal) {
+                    // Transfer the existing hold into the codec. Taking it here
+                    // would race a cancelled caller before this microtask starts.
+                    cropStarted = true;
+                    try {
+                      return await cropImage(original, frame, { signal });
+                    } finally {
+                      keepOriginal();
+                    }
+                  },
                 });
                 image = lease.image;
                 own(lease.release);
               } finally {
-                keepOriginal();
+                if (!cropStarted) keepOriginal();
               }
             } else {
               image = await cropImage(original, frame, { signal: controller.signal });

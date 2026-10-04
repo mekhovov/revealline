@@ -45,13 +45,27 @@ export async function studioActorImage(asset, blob, options, own) {
     )
       return original.image;
     const releaseSource = original.retain();
+    let cropStarted = false;
     try {
       const crop = await pool.acquire({
         key: `${file.sha256}:${frame.x},${frame.y},${frame.width},${frame.height}`,
         width: frame.width,
         height: frame.height,
         signal: owner.controller.signal,
-        load: () => createImageBitmap(original.image, frame.x, frame.y, frame.width, frame.height),
+        async load() {
+          cropStarted = true;
+          try {
+            return await createImageBitmap(
+              original.image,
+              frame.x,
+              frame.y,
+              frame.width,
+              frame.height,
+            );
+          } finally {
+            releaseSource();
+          }
+        },
       });
       owner.leases.push(crop);
       if (!options.isCurrent()) {
@@ -60,7 +74,7 @@ export async function studioActorImage(asset, blob, options, own) {
       }
       return crop.image;
     } finally {
-      releaseSource();
+      if (!cropStarted) releaseSource();
     }
   } catch (error) {
     owner.release();

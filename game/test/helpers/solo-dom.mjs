@@ -59,6 +59,14 @@ export class SoloElement extends Element {
   focus() {
     if (!this.disabled) super.focus();
   }
+  getContext() {
+    // Guides and sprite admission need a usable inert Canvas boundary. Drawing
+    // assertions install their explicit observable context in soloPage below.
+    return (this._canvasContext ??= new Proxy(
+      { canvas: this, id: this.id },
+      { get: (target, key) => (Object.hasOwn(target, key) ? target[key] : () => {}) },
+    ));
+  }
 }
 class SoloDocument extends Document {
   constructor() {

@@ -378,6 +378,104 @@ test('paired animated context previews share the page atlas and release both own
   assert.equal(pageActorArtPool(f.document).stats().reservedBytes, 0);
 });
 
+test('closing a Studio crop rejects immediately but preserves the source until its codec settles', async (t) => {
+  const f = fixture(),
+    prior = Object.getOwnPropertyDescriptor(globalThis, 'document');
+  Object.defineProperty(globalThis, 'document', { configurable: true, value: f.document });
+  t.after(() => {
+    if (prior) Object.defineProperty(globalThis, 'document', prior);
+    else delete globalThis.document;
+  });
+  let finish,
+    sourceClosed = 0,
+    cropClosed = 0;
+  const original = { width: 4, height: 4, close: () => sourceClosed++ };
+  decoder(t, async (source) => {
+    if (source instanceof Blob) return original;
+    assert.strictEqual(source, original);
+    return new Promise((resolve) => (finish = resolve));
+  });
+  const asset = structuredClone(f.asset),
+    owned = [],
+    pool = pageActorArtPool(f.document);
+  asset.geometry.frame = { x: 1, y: 1, width: 2, height: 2 };
+  const pending = croppedImage(
+      asset,
+      new Map([[asset.file.sha256, new Blob(['review'])]]),
+      { isCurrent: () => true, slotId: 'enemy.bouncer' },
+      (release) => owned.push(release),
+    ),
+    rejected = assert.rejects(pending, { name: 'AbortError' });
+  await settle();
+  assert.equal(typeof finish, 'function');
+  owned.forEach((release) => release());
+  await rejected;
+  assert.equal(sourceClosed, 0);
+  assert.equal(pool.stats().reservedBytes, 64 + 16);
+  finish({ width: 2, height: 2, close: () => cropClosed++ });
+  await settle();
+  assert.equal(sourceClosed, 1);
+  assert.equal(cropClosed, 1);
+  assert.equal(pool.stats().reservedBytes, 0);
+});
+
+test('one preview can close before a shared crop starts without rejecting the surviving preview', async (t) => {
+  const f = fixture(),
+    prior = Object.getOwnPropertyDescriptor(globalThis, 'document');
+  Object.defineProperty(globalThis, 'document', { configurable: true, value: f.document });
+  t.after(() => {
+    if (prior) Object.defineProperty(globalThis, 'document', prior);
+    else delete globalThis.document;
+  });
+  let crops = 0,
+    sourceClosed = 0,
+    cropClosed = 0;
+  const original = { width: 4, height: 4, close: () => sourceClosed++ },
+    crop = { width: 2, height: 2, close: () => cropClosed++ };
+  decoder(t, async (source) => {
+    if (source instanceof Blob) return original;
+    assert.strictEqual(source, original);
+    assert.equal(sourceClosed, 0);
+    crops++;
+    return crop;
+  });
+  const asset = structuredClone(f.asset),
+    bytes = new Map([[asset.file.sha256, new Blob(['review'])]]),
+    left = [],
+    right = [];
+  asset.geometry.frame = { x: 1, y: 1, width: 2, height: 2 };
+  const first = croppedImage(
+      asset,
+      bytes,
+      {
+        slotId: 'enemy.bouncer',
+        isCurrent() {
+          // Both original acquisitions have settled. Close the first owner
+          // before the new crop's scheduled load callback is allowed to run.
+          queueMicrotask(() => left.forEach((release) => release()));
+          return true;
+        },
+      },
+      (release) => left.push(release),
+    ),
+    rejected = assert.rejects(first, { name: 'AbortError' }),
+    second = croppedImage(
+      asset,
+      bytes,
+      { slotId: 'enemy.bouncer', isCurrent: () => true },
+      (release) => right.push(release),
+    );
+  await rejected;
+  assert.strictEqual(await second, crop);
+  assert.equal(crops, 1);
+  assert.equal(sourceClosed, 0);
+  assert.equal(cropClosed, 0);
+  right.forEach((release) => release());
+  assert.equal(sourceClosed, 1);
+  assert.equal(cropClosed, 1);
+  assert.equal(pageActorArtPool(f.document).stats().reservedBytes, 0);
+});
+
 test('Studio clip selection reaches the procedural sampler with stationary warning/recovery pose vocabulary', async () => {
   const f = fixture(),
     calls = [];

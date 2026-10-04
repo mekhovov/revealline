@@ -150,7 +150,7 @@ test('cancelling a replacement wait is immediate and never starts another decode
           rejectDecode = reject;
         }),
     }),
-    firstRejected = assert.rejects(first, /Retired codec failed/);
+    firstRejected = assert.rejects(first, { name: 'AbortError' });
   await Promise.resolve();
   old.abort();
   const waiting = pool.acquire({
@@ -166,6 +166,9 @@ test('cancelling a replacement wait is immediate and never starts another decode
   assert.equal(pool.stats().reservedBytes, 4096);
   rejectDecode(new Error('Retired codec failed'));
   await firstRejected;
+  // Caller cancellation is already complete; let the failed codec retire its
+  // separately owned reservation before testing a fresh allocation.
+  for (let step = 0; step < 4; step++) await Promise.resolve();
   assert.equal(pool.stats().reservedBytes, 0);
   const repaired = await pool.acquire({
     key: 'same-actor',
@@ -174,6 +177,63 @@ test('cancelling a replacement wait is immediate and never starts another decode
     load: () => ({ width: 32, height: 32 }),
   });
   repaired.release();
+  assert.equal(pool.stats().reservedBytes, 0);
+});
+
+test('cancelled callers settle immediately while an uninterruptible codec remains accounted', async () => {
+  const pool = createActorArtPool({ limit: 4096 }),
+    owner = new AbortController();
+  let finish,
+    closed = 0;
+  const pending = pool.acquire({
+      key: 'slow-codec',
+      width: 32,
+      height: 32,
+      signal: owner.signal,
+      load: () => new Promise((resolve) => (finish = resolve)),
+    }),
+    cancelled = assert.rejects(pending, { name: 'AbortError' });
+  await Promise.resolve();
+  owner.abort();
+  await cancelled;
+  assert.equal(pool.stats().leases, 0);
+  assert.equal(pool.stats().reservedBytes, 4096);
+  assert.equal(closed, 0);
+  await assert.rejects(
+    pool.acquire({ key: 'other', width: 1, height: 1, load: () => ({ width: 1, height: 1 }) }),
+    /decoded byte budget/,
+  );
+  finish({ width: 32, height: 32, close: () => closed++ });
+  for (let step = 0; step < 4; step++) await Promise.resolve();
+  assert.equal(closed, 1);
+  assert.equal(pool.stats().reservedBytes, 0);
+});
+
+test('one board can leave a pending shared codec immediately without cancelling the remaining board', async () => {
+  const pool = createActorArtPool({ limit: 4096 }),
+    left = new AbortController();
+  let finish, decodeSignal;
+  const resource = {
+    key: 'two-boards',
+    width: 32,
+    height: 32,
+    load(signal) {
+      decodeSignal = signal;
+      return new Promise((resolve) => (finish = resolve));
+    },
+  };
+  const first = pool.acquire({ ...resource, signal: left.signal }),
+    cancelled = assert.rejects(first, { name: 'AbortError' }),
+    second = pool.acquire(resource);
+  await Promise.resolve();
+  left.abort();
+  await cancelled;
+  assert.equal(decodeSignal.aborted, false);
+  assert.equal(pool.stats().leases, 1);
+  assert.equal(pool.stats().reservedBytes, 4096);
+  finish({ width: 32, height: 32 });
+  const lease = await second;
+  lease.release();
   assert.equal(pool.stats().reservedBytes, 0);
 });
 
