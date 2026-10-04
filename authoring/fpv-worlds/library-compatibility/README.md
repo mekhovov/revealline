@@ -86,3 +86,12 @@ catalogue only after its immutable data and the capable runtime are published;
 real public download and the existing launcher update journey remain separate
 observations. This increment does not claim that old cached code acquired the new
 guidance or that preparing offline upgrades it.
+
+The unmodified admitted entry then passed root's native browser smoke at port 8962:
+Home → briefing → Ready → deliberate Arm (native active time 17.3 seconds) → Pause
+with Continue available → Select Mission → Library. Import, offline preparation
+and Browse controls were present; console warnings/errors were empty. No Browse
+request was made against the not-yet-published capability index, and no offline
+run is claimed. `evidence/admitted-entry.json` binds the exact source, raw evidence
+hashes and bounded action scope. The previous 418-control source fixture was not
+repeated merely because the integrated admission has a later documentation head.
