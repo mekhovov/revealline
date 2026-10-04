@@ -1,5 +1,7 @@
 # FPV implementation continuation — approved 1 October 2026
 
+Current status and next priorities: [4 October delivery review](fpv-delivery-review-2026-10-04.md).
+
 This plan supersedes the original remaining-work estimate in
 `fpv-worlds-implementation.md`. Keep the completed native UI, radio calibration,
 fullscreen and existing simulation/content contracts. Direction: grounded
@@ -800,3 +802,33 @@ Content remains **196 challenges / 14 worlds**. Continue the approved D3 example
 and coaching work, D4 creator, D5's **228 challenges / 18 worlds** target and D6
 unit coverage, while retaining broader art, named-device performance and physical
 control acceptance as separate unfinished goals.
+
+### Measured coaching and creator checkpoint — 4 October 2026
+
+The catalogue remains **196 challenges / 14 worlds / 58 School lessons**, with
+**178 bundled demonstrations**. The bounded Orchard and Solar increments are
+verified live; Solar's public marker and actual authored launch identify merged
+`72d6661b`. These passes do not close broader world-art or hardware acceptance.
+Optional Adventure **#1027** (60 examples) and alternate School **#1031** (28)
+are merged after actual import, persistence and playback qualification.
+
+The next D3 increment offers one existing gate-sequence lesson from verified
+section timing and preserves the exact original route, controls and playlist
+bookmark on return. Its source browser passes 194 checks; the final local
+candidate includes the reviewed explicit-disposal **#1040** repair, passes
+all-three package admission with two identical builds, and passes 208 packaged
+browser checks including owned-control disposal. The rendered recommendation is
+accepted. Disposal #1040 merged at `5931ef126`; normal coaching integration
+preserves all 95 admitted inputs exactly and is ready for protected publication.
+The separate source-capacity **#1047** repair preserves the existing cap and recordings.
+See [coaching qualification](fpv-gate-section-coaching.md) for exact provenance.
+
+D4's ten independent editable starter projects have twenty replay proofs and
+237 actual-editor checks covering numeric/spatial edits, Undo/Redo, retained
+revisions and native IndexedDB reopening. Starter **#1050** is published, and its
+separate offline exercise passed. Carry explicit Acro/Self-level route selection through future
+editor work; do not claim the present Self-level spatial editor already does so.
+Reuse the existing continuous-practice, touch and controller contracts during D3
+integration. Continue D4 creator work, D5's **228 challenges / 18 worlds** target,
+then D6's deferred unit/regression work. Physical controls, sustained device
+timings and novice feedback remain honestly unqualified.
