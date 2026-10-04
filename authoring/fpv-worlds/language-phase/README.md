@@ -7,21 +7,33 @@ could therefore open Start briefing while the aircraft was still disarmed. The
 next native frame restored Continue, after the wrong action was already taken.
 The original observation remains in the separate personal-best evidence.
 
-Candidate `40ef6750cd876f6d06a71c559905c655dec9cfca`, based on main
+Initial candidate `40ef6750cd876f6d06a71c559905c655dec9cfca`, based on main
 `8e5ad71e9b791b7c16bae1cb308026ed3e18d5c2`, gates only that lobby shell update on
 the absence of a flight. All Library rendering continues. Existing flight HUD
 updates retain their phase, current mission and resumability ownership. Initial
 and saved-recovery lobby updates remain unchanged. `closeFlight()` already clears
 the flight before calling `renderPacks()`; that path is source-reviewed.
 
-This is 55 additional original source bytes. No physics, clocks, arming/pause
+The initial guard adds 55 original source bytes. No physics, clocks, arming/pause
 guards, ghost eligibility, scoring or storage schema changes. Syntax, existing
 format/lint and independent source review pass. At this preparation checkpoint,
-native browser acceptance, full validation and fresh admission remain pending.
+the original native run retained 324 passing checks but timed out afterward.
+It proved another same-turn defect: public Settings paused active flight while
+Home retained `canResume=false` and Start from the active state. An immediate
+primary action opened briefing; the next native frame restored Continue.
+The complete failed receipt is retained under `evidence/source-r1-failed/`.
+
+Candidate `bf3597703763584c79119bdeab50bfa03198ae6f` also calls the existing
+`updateHUD(flight.snapshot())` after pausing in the native surface-open callback.
+This synchronizes phase and resumability together before the action is exposed;
+it does not change pause, arming, physics or clocks. Total growth is 105 original
+source bytes. Root and independent source reviews found no blocker. The new
+immutable `source-r2/` comparison adds explicit immediate Continue/Retry checks
+and saved-recovery title checks; native acceptance and final admission are pending.
 
 ## Bounded manual comparison
 
-`prepare.mjs` binds all 95 original inputs against an exact retained admitted
+The original `prepare.mjs` binds all 95 original inputs against an exact retained admitted
 102-member player. Baseline members remain exact; the candidate has one declared
 committed host overlay of exactly 55 bytes. Other members are immutable hardlinks.
 The frozen source descriptor is retained losslessly in
@@ -50,3 +62,9 @@ failure is preserved before ordinary cleanup.
 The ground hold/land diagnostic pack is not a published lesson or a flight-skill
 proof. No new unit coverage, hardware-performance, offline, universal UI or
 public-deployment acceptance is claimed by this preparation.
+
+For the corrected comparison, run `source-r2/prepare.mjs` with the same baseline
+and retained admitted player, replacing the candidate argument with
+`bf3597703763584c79119bdeab50bfa03198ae6f`. It requires exactly the 105-byte
+committed host overlay. The original descriptor/tools and failed run remain
+unchanged.
