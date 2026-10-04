@@ -165,3 +165,10 @@ in [MDN's Fetch guidance](https://developer.mozilla.org/en-US/docs/Web/API/Fetch
 and [readable-stream guidance](https://developer.mozilla.org/en-US/docs/Web/API/Streams_API/Using_readable_streams).
 The distinction between saved data and durable offline readiness follows
 [WebKit's origin storage/eviction policy](https://webkit.org/blog/14403/updates-to-storage-policy/).
+
+Normal cancellation waits for the Worker's terminal reply after its reader cleanup.
+This follows the [immediate termination contract](https://developer.mozilla.org/en-US/docs/Web/API/Worker/terminate):
+terminating first would give the Worker no opportunity to finish that cleanup.
+Successful replies use the [transfer list](https://developer.mozilla.org/en-US/docs/Web/API/Worker/postMessage)
+for the returned byte buffer; the manual native-Worker fixture observes both that
+list and the exact received bytes.
