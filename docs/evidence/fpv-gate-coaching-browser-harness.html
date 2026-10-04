@@ -269,7 +269,10 @@
       async function takeLesson(coach) {
         click(coach.querySelector('button'));
         await until(
-          () => app.snapshot().course === 'beginner-24' && !node('world-arm').disabled,
+          () =>
+            app.snapshot().course === 'beginner-24' &&
+            app.snapshot().learning?.guideOpen &&
+            /Ready|Готово/.test(node('flight-status').textContent),
           'lesson prepared',
         );
         equal(
@@ -415,6 +418,10 @@
         const acroBookmark = savedPlaylist().bookmark;
         await takeLesson(uk);
         await startPrefix(row.lesson.entry, row.lesson.prefix);
+        must(
+          'School completion has no additional gate recommendation',
+          !node('result-panel').querySelector('[data-coach-lesson]'),
+        );
         must('Lesson completion retains return action', !node('world-return-challenge').hidden);
         await returnHome();
         await checkReturn(acroBookmark);
