@@ -1,0 +1,62 @@
+{
+  "format": "FPVPreReadySourceChecks.v1",
+  "source": "8df41944e5014725046b04621b3a82d3284a157e",
+  "files": [
+    {
+      "file": "fpv-pre-ready-8df-validation.log.gz",
+      "bytes": 3399,
+      "sha256": "05bebaba8dac541ee3805fd865e92b6c7e7fbb2c9392fbaada915e79f41527e5",
+      "storedBytes": 1460,
+      "storedSha256": "5c5d4a061aa75bf7bae88cb02f5380e144b1d5636492c3c3e24663d91f06d83c"
+    },
+    {
+      "file": "fpv-pre-ready-8df-existing-checks.tap.gz",
+      "bytes": 44008,
+      "sha256": "8c1009bcb32d4d3f0e29fe639b36a0e80d40c1e22abb97e0122e5a5dcf4d45fb",
+      "storedBytes": 4066,
+      "storedSha256": "cc4da158ea9731c53e0e3a410e4a0959e57b705684f4cb415d128e4c9413b232"
+    },
+    {
+      "file": "fpv-pre-ready-8df-existing-world-checks.tap.gz",
+      "bytes": 4363,
+      "sha256": "bbca3d4a8dc992db7c07d2bb0e2e3458d22e5c1e8368bfe6846519a68fceb903",
+      "storedBytes": 1161,
+      "storedSha256": "6482af47df47fd6d89c65b270d9247983a9554836b759937e2c8ed425f2ba3cc"
+    },
+    {
+      "file": "fpv-pre-ready-8df-lint.log.gz",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "storedBytes": 20,
+      "storedSha256": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64"
+    },
+    {
+      "file": "fpv-pre-ready-8df-format.log.gz",
+      "bytes": 66,
+      "sha256": "17aa973d3f004560237d9a95171210b0671deff23d61628eecf7322ff5938f20",
+      "storedBytes": 82,
+      "storedSha256": "6cd316ae8e81df0ff79776205007450fac3d62e1ba8e884e169e326d7955ebe5"
+    },
+    {
+      "file": "fpv-pre-ready-8df-admission.log.gz",
+      "bytes": 425,
+      "sha256": "ecf848cd0c2f085bcda6d619295ff7102284ee7479af6788abb92c91d95411f4",
+      "storedBytes": 293,
+      "storedSha256": "620a24765fdf028ea2ef612322ed7a76d53db26e7a960ad23c139404d494a588"
+    },
+    {
+      "file": "fpv-pre-ready-8df-materialization.json.gz",
+      "bytes": 327,
+      "sha256": "a24b3f2829ccc2debcd21b88a8799c7d7437ce8a38f3e1e11aefd5901ca23cf6",
+      "storedBytes": 245,
+      "storedSha256": "1f28b24a1969ccecd96b0514b2c9262cc2e3438def4044e8808fb2af2d6907c1"
+    },
+    {
+      "file": "fpv-pre-ready-8df-test-assets.json.gz",
+      "bytes": 364,
+      "sha256": "b7f4946b1804215eaf99251b1393f7e51d83aedebac1ddd32bcd2720c970cfab",
+      "storedBytes": 225,
+      "storedSha256": "a70109edb769d096df836c32b7d4ee67bbf4d1c031f5f2f0724abca6e1fee8c4"
+    }
+  ]
+}

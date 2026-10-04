@@ -1,0 +1,20 @@
+{
+  "files": [
+    {
+      "path": "optional-practice/civilian-fpv/app.mjs",
+      "gitBlob": "0b1b6e2864df9dbc94ddadc5f0b8b81e78ac5dee",
+      "sameInBaselineAdmissionPublication": true
+    },
+    {
+      "path": "game/test/fpv-flight-ui.test.mjs",
+      "gitBlob": "67bdcf4511634a010cecd3201b66e4994e326887",
+      "sameInBaselineAdmissionPublication": true
+    },
+    {
+      "path": "game/test/helpers/couch-dom.mjs",
+      "gitBlob": "16a47e0b6b5bcf33b401aa265b3733cf286a9061",
+      "sameInBaselineAdmissionPublication": true
+    }
+  ],
+  "finding": "Existing fake-DOM HTML copier does not assign className; Settings class selectors return null during mount, before the changed Worlds renderer draw."
+}
