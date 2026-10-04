@@ -3,6 +3,7 @@
 import * as THREE from '../../../../optional-practice/civilian-fpv/vendor/three.module.js';
 import { encodeWorldGLB } from '../../../../optional-practice/civilian-fpv/world-content.mjs';
 import { mineralPNG, noise } from './mineral.mjs';
+import { addReservoirEngineering } from './engineering.mjs';
 
 const xyz = (a) => Object.fromEntries(['x', 'y', 'z'].map((k, i) => [k, Math.round(a[i] * 1000)]));
 export const bounds = { min: xyz([-44, 0, -34]), max: xyz([6, 28, 38]) };
@@ -80,8 +81,8 @@ function add(shape, role, at = [0, 0, 0], rotate = [0, 0, 0]) {
   flat.dispose();
 }
 const detailBox = (role, size, at, rotate) => add(new THREE.BoxGeometry(...size), role, at, rotate);
-function solid(id, min, max) {
-  boxes.push({ id, min: xyz(min), max: xyz(max) });
+function solid(id, min, max, rotation) {
+  boxes.push({ id, min: xyz(min), max: xyz(max), ...(rotation ? { rotation } : {}) });
 }
 function prism(id, footprint, height, bottom = 0) {
   const vertices = [
@@ -405,6 +406,13 @@ gravel.setAttribute('position', new THREE.Float32BufferAttribute(gravelPositions
 add(gravel, 'warm-gravel');
 
 export const obstacles = [...terrains, ...boxes];
+let engineeringAdded = false;
+export function includeLandEngineering() {
+  if (engineeringAdded) throw Error('Land engineering already included');
+  addReservoirEngineering({ solid, detailBox });
+  obstacles.splice(0, obstacles.length, ...terrains, ...boxes);
+  engineeringAdded = true;
+}
 export const anchors = [
   { id: 'shore-pad', kind: 'spawn', position: [-30, 0.45, 26] },
   { id: 'shore-lookout-south', kind: 'checkpoint', position: [-10, 5, 15], order: 1 },
@@ -414,7 +422,7 @@ export const anchors = [
 
 export function createScene() {
   const document = {
-    asset: { version: '2.0', generator: 'RevealLine original Mountain Reservoir source r4' },
+    asset: { version: '2.0', generator: 'RevealLine original Mountain Reservoir source ' + (engineeringAdded ? 'r6' : 'r4') },
     scene: 0,
     scenes: [{ nodes: [] }],
     nodes: [],
@@ -511,6 +519,7 @@ export function createScene() {
       document.nodes.push({
         name: box.id,
         translation,
+        ...(box.rotation ? { rotation: box.rotation } : {}),
         extras: { rl: { id: box.id, kind: 'collider', size } },
       }) - 1,
     );
