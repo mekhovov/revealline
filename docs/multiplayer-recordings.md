@@ -112,11 +112,18 @@ They are not relabelled as v2 evidence. Their Chrome success/Node failure remain
 recorded in the original review. A fresh v2 Crossing Post clear now passes the declared observations in both Chrome
 and Node 22; Chrome also matches the raw state digest, while Node reports it
 as different. See [the continuation evidence](qualification/industrial-art/briefing-studio-2026-10-04/README.md).
-This demonstrates this one route, not universal cross-runtime simulation. Team
-v2 exports and additional native engines/devices still need equivalent review.
+This demonstrates this one route, not universal cross-runtime simulation. A
+genuine Pincer Yard Team v2 export also passes the declared observations in the
+browser and Node, while retaining the different Node raw-state diagnostic. See
+[the Team continuation](qualification/industrial-art/team-adoption-2026-10-04/README.md).
+Additional native engines and historical devices still need equivalent review.
 
 Regression sources cover strict historical handling, v2 mismatched topology,
 objectives, actor identities, RNG, elimination attribution, Team seats/counters,
-input hashes, cancellation and honest UI labels. They are authored but unrun
-under the repository's automated-suite waiver. Static validation and source
-build checks do not substitute for those native cross-runtime observations.
+input hashes, cancellation and honest UI labels. The 4 October request restored
+required automated verification: all 16 recording cases passed on committed
+source `ac7bd48a9d873782b1b96324229c8c09ffbf822b`, within the 568-case
+[parallel verification programme](industrial-parallel-delivery-2026-10-04.md).
+The [32 generated pilot completion cases](qualification/pursuit-pilots/generated-routes-2026-10-04.md)
+add pinned native route/reconstruction evidence. These executed regressions do
+not replace genuine exported-file, cross-runtime or physical-device evidence.

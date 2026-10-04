@@ -112,12 +112,27 @@ The original [mutable-source structural receipt](verification/native-pursuit-str
 records production preparation of the six r1 samples in both native modes,
 including every graph edge using real collision geometry. Scoped formatting, lint and generated projection identity checks passed. Regressions cover native admission, legacy
 separation, graph failures, movement commitments, partner fallback, protected
-contact, Studio conversion and proof recovery; they are authored but **unrun**
-under the repository suite waiver.
+contact, Studio conversion and proof recovery. The original receipt used the
+then-active suite waiver. The 4 October continuation restored required tests:
+both native pursuit regression files and the native pursuit editor cases passed
+on committed source `ac7bd48a9d873782b1b96324229c8c09ffbf822b`, within the
+[568-case feature verification](industrial-parallel-delivery-2026-10-04.md).
 
-No completion recordings, human catchability review, phone performance results
-or public-release qualification are claimed for these successor samples. Those
-remain release gates, as do visual review of every cast and native slope examples.
+[Twelve fixed native completion witnesses](../game/test/fixtures/native-pursuit-flight/README.md)
+now cover the current six-course playlist in Self-level and Acro. They retain
+the authored seeds, exact pack/recipe/model identities and native Gentle response.
+Every route finishes with 100 hull health, no damaging contacts and no shots;
+Armor Windows uses exposed Shield contact and Brace recovery. Refuge Return
+finishes with the optional courier still active. The regression replays fixed
+hashed controls, restores halfway through using native recovery, and compares
+both terminal recordings with independent native replay. The reviewed generator
+submits only legal controls; normal tests do not regenerate adaptive routes.
+
+These software existence witnesses passed on Node 20 and 22. They are not human
+catchability review, phone performance results or public-release qualification.
+Those remain release gates, as do visual review of every cast and native slope
+examples. The samples still share a training yard and do not become six new
+campaign layouts merely because completion is demonstrated.
 
 The [v2 structural continuation](verification/native-pursuit-v2-structural.json)
 prepares all six retained r1 courses and both corrected r2 revisions in Self-level
@@ -127,4 +142,8 @@ revisions also pass programmatic `.rlpack` and editable ZIP round-trips (7,117 a
 7,176 bytes). These are mutable-source receipts, not a committed build, browser
 editing session or completed gameplay route. Relevant commitment, pair spacing,
 shared rest, survivor fallback, invalid approaches, explicit Studio upgrade and
-v1/v2 replay/recovery regressions are authored but unrun.
+v1/v2 replay/recovery regressions are now executed as described above. The
+[generated Low Pass Depot routes](qualification/pursuit-pilots/generated-routes-2026-10-04.md)
+exercise the separate three-patroller pilot in both flight modes. The twelve
+new native pursuit witnesses above supply separate evidence for these six
+behavior samples; neither batch substitutes for the other.
