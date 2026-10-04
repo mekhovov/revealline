@@ -4,22 +4,62 @@ export const ACTOR_DECODED_BYTES = 64 * 1024 * 1024;
 export const COMPACT_ACTOR_DECODED_BYTES = 32 * 1024 * 1024;
 const pages = new WeakMap();
 const fallbackPage = {};
+const abortGroups = new WeakMap();
+
+// A presentation may retain many image/crop leases on one load signal. Keep
+// their independent ownership without adding one native listener per image.
+function observeAbort(signal, callback) {
+  if (!signal) return () => {};
+  let group = abortGroups.get(signal);
+  if (!group) {
+    const callbacks = new Set();
+    const dispatch = () => {
+      signal.removeEventListener('abort', dispatch);
+      abortGroups.delete(signal);
+      for (const callback of [...callbacks]) {
+        if (!callbacks.has(callback)) continue;
+        try {
+          callback();
+        } catch (error) {
+          // Like separate EventTarget listeners, one failing disposal must not
+          // prevent the remaining leases from seeing cancellation.
+          queueMicrotask(() => {
+            throw error;
+          });
+        }
+      }
+      callbacks.clear();
+    };
+    group = { callbacks, dispatch };
+    abortGroups.set(signal, group);
+    signal.addEventListener('abort', dispatch, { once: true });
+  }
+  group.callbacks.add(callback);
+  return () => {
+    group.callbacks.delete(callback);
+    if (!group.callbacks.size && abortGroups.get(signal) === group) {
+      signal.removeEventListener('abort', group.dispatch);
+      abortGroups.delete(signal);
+    }
+  };
+}
 
 // An uninterruptible browser codec still owns its reservation after its last
 // caller leaves. A replacement waits for that generation instead of allocating
 // the same pixels twice or inheriting the old caller's cancellation.
 function waitForRetirement(entry, signal) {
   return new Promise((resolve, reject) => {
-    let finished = false;
+    let finished = false,
+      unobserve = () => {};
     const finish = (error) => {
       if (finished) return;
       finished = true;
-      signal?.removeEventListener('abort', abort);
+      unobserve();
       if (error) reject(error);
       else resolve();
     };
     const abort = () => finish(new DOMException('Artwork load cancelled.', 'AbortError'));
-    signal?.addEventListener('abort', abort, { once: true });
+    unobserve = observeAbort(signal, abort);
     entry.promise.then(
       () => finish(),
       () => finish(),
@@ -114,18 +154,19 @@ export function createActorArtPool({ limit = ACTOR_DECODED_BYTES } = {}) {
       }
       entry.refs++;
       let active = true;
-      let rejectWait = null;
+      let rejectWait = null,
+        unobserve = () => {};
       const relinquish = () => {
         if (!active) return;
         active = false;
-        signal?.removeEventListener('abort', relinquish);
+        unobserve();
         release(entry);
         // The caller can leave immediately even when a browser codec cannot
         // abort. Its entry keeps the reservation until the codec really settles.
         rejectWait?.(new DOMException('Artwork load cancelled.', 'AbortError'));
         rejectWait = null;
       };
-      signal?.addEventListener('abort', relinquish, { once: true });
+      unobserve = observeAbort(signal, relinquish);
       try {
         const image = await new Promise((resolve, reject) => {
           rejectWait = reject;
