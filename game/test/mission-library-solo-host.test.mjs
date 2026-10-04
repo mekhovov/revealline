@@ -158,6 +158,10 @@ test('late Custom clear follows authored Next, ends truthfully, and never grants
     for (let tick = 0; tick < 900 && p.rendered.run.status !== 'won'; tick++) p.frame();
     assert.equal(p.rendered.run.status, 'won');
     if (!p.$('skip-celebration').hidden) p.$('skip-celebration').click();
+    assert.equal(p.$('show-result').hidden, false);
+    p.$('show-result').click();
+    assert.equal(p.$('game-overlay').dataset.kind, 'won');
+    assert.equal(p.$('next-button').hidden, false);
   }
   await clear();
   p.$('next-button').click();
@@ -178,7 +182,10 @@ test('late Custom clear follows authored Next, ends truthfully, and never grants
     (entry) => entry.clears['authored-next-1'],
   );
   assert.deepEqual(Object.keys(progress.clears).sort(), ['authored-next-1', 'authored-next-2']);
-  p.$('choose-mission').click();
+  assert.equal(p.$('overlay-menu').hidden, false);
+  p.$('overlay-menu').click();
+  await settle(() => p.$('shell-home').open);
+  p.$('shell-play').click();
   await settle(() => p.$('journey-chooser').open);
   assert.equal(p.$('journey-collection').value, 'Custom');
   assert.deepEqual(p.errors, []);
@@ -311,7 +318,7 @@ test('Journey setup changes next preset and library details without replacing th
   assert.deepEqual(p.errors, []);
 });
 
-test('unified Solo download prepares the selected late installed Classic before explicit Start', async (t) => {
+test('unified Solo prepares the included late Classic through validation before explicit Start', async (t) => {
   const p = await soloPage(t, { titleScreen: true });
   await open(p);
   p.$('journey-collection').value = 'Classic';
@@ -324,7 +331,9 @@ test('unified Solo download prepares the selected late installed Classic before 
     (button) => button.dataset.missionId === row.id,
   );
   assert.ok(card);
-  assert.match(card.textContent, /Download/);
+  assert.equal(card.dataset.availabilityState, 'included');
+  assert.equal(card.querySelector('.journey-card-action').hidden, true);
+  assert.equal(card.disabled, false);
   card.focus();
   card.click();
   await startPrepared(p, row.runtimeId);
@@ -333,7 +342,7 @@ test('unified Solo download prepares the selected late installed Classic before 
   assert.deepEqual(p.errors, []);
 });
 
-test('unified Solo failed Download retries inline and preserves the flight until retry succeeds', async (t) => {
+test('unified Solo failed included-chapter read retries inline and preserves the flight until retry succeeds', async (t) => {
   let available = false,
     requests = 0;
   const p = await soloPage(t, {
@@ -356,7 +365,9 @@ test('unified Solo failed Download retries inline and preserves the flight until
     selected = () =>
       [...p.$('journey-cards').children].find((card) => card.dataset.missionId === row.id);
   const card = selected();
-  assert.match(card.textContent, /Download/);
+  assert.equal(card.dataset.availabilityState, 'included');
+  assert.equal(card.querySelector('.journey-card-action').hidden, true);
+  assert.equal(card.disabled, false);
   card.focus();
   card.click();
   await settle(() => /Could not prepare/.test(p.$('journey-chooser-status').textContent));

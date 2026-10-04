@@ -958,6 +958,7 @@ try {
     currentLibrarySelection = null,
     preparedFocusMatch = null,
     startIntentEpoch = 0,
+    pendingReadyStart = null,
     framePads = [],
     frameReadError = null,
     slots = [null, null],
@@ -2122,6 +2123,8 @@ try {
           ticket === generation,
       });
       preparationDisplay = display;
+      const pendingStart = { owns: ownsReadyStart };
+      pendingReadyStart = pendingStart;
       updateMenu();
       try {
         if (offlineAvailability().packageConsent) {
@@ -2167,6 +2170,7 @@ try {
         }
         return;
       } finally {
+        if (pendingReadyStart === pendingStart) pendingReadyStart = null;
         if (
           !disposed &&
           match === selectedRun &&
@@ -4101,7 +4105,19 @@ try {
     }
     $('race-message').hidden = contentBusy;
     $('race-installed-status').hidden = contentBusy;
-    $('race-start').disabled = running || contentBusy || !contentReady;
+    // The exact ready-confirmation action keeps its focused Start available
+    // while awaiting the picture. Native disabling would make controller
+    // navigation move focus away and revoke this same action. Its existing
+    // contentBusy guard rejects repeats; deliberate navigation still retires it.
+    const ownedReadyStart = contentBusy && pendingReadyStart?.owns();
+    $('race-start').disabled = running || !contentReady || (contentBusy && !ownedReadyStart);
+    if (ownedReadyStart) {
+      $('race-start').setAttribute('aria-busy', 'true');
+      $('race-start').setAttribute('aria-disabled', 'true');
+    } else {
+      $('race-start').removeAttribute('aria-busy');
+      $('race-start').removeAttribute('aria-disabled');
+    }
     $('race-journey-difficulty').disabled =
       contentBusy || Boolean(creatorVersusOwners.has(roundRecipe.entry));
     $('race-chapters').disabled = running || contentBusy;

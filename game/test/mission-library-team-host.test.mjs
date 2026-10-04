@@ -104,6 +104,10 @@ async function play(f, name) {
   );
   assert.equal(f.$('coop-overlay').hidden, false);
   assert.match(f.$('coop-resume').textContent, /Start together/);
+  // The accepted briefing requires a released input sample before a new Start.
+  f.tick(2);
+  assert.equal(f.$('coop-overlay').hidden, false);
+  assert.equal(f.$('coop-clock').textContent, '0:00');
   f.$('coop-resume').focus();
   f.tap('Enter');
   await waitFor(
