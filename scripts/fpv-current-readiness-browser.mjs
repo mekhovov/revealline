@@ -1,7 +1,8 @@
 /* global document, addEventListener */
 // Native public-UI lifecycle checks, separately qualified from performance measurements.
 const $ = (id) => document.getElementById(id),
-  frame = $('sim');
+  frame = $('sim'),
+  hostPath = frame.getAttribute('src').split('?')[0];
 const receipt = {
   format: 'FPVSceneReadinessFunctional.v1',
   checks: [],
@@ -246,7 +247,7 @@ $('run').onclick = async () => {
     await until(() => !q('#flight-dialog').open, 'close saves recovery');
     await finishHost();
     const previousReady = readyCount;
-    frame.src = 'host.html?reopen=1';
+    frame.src = hostPath + '?reopen=1';
     await until(() => readyCount > previousReady, 'fresh host native storage hydration');
     adopt();
     phase('Public recovery after native IDB reopen');
