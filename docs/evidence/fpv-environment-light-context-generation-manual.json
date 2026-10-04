@@ -1,0 +1,263 @@
+{
+  "format": "fpv-environment-light-reuse-manual.v1",
+  "baseline": "47d2019dced85d80671b2d780da662f50ea11c20",
+  "rendererSha256": "4e9e632510f32455a32325809522b48fe64c51de7f272364b2b1810fc565c9bc",
+  "method": "Real renderer closure, actual Three Colors/Scene; WebGLRenderer, scene construction and PMREM allocation controlled. Does not substitute for actual WebGL/browser comparison.",
+  "checks": [
+    {
+      "name": "world-visuals.mjs unchanged",
+      "pass": true
+    },
+    {
+      "name": "world-model.mjs unchanged",
+      "pass": true
+    },
+    {
+      "name": "world-collision.mjs unchanged",
+      "pass": true
+    },
+    {
+      "name": "world-catalogue.mjs unchanged",
+      "pass": true
+    },
+    {
+      "name": "world-assets.mjs unchanged",
+      "pass": true
+    },
+    {
+      "name": "world-themes.mjs unchanged",
+      "pass": true
+    },
+    {
+      "name": "previous target released before each allocation",
+      "pass": true
+    },
+    {
+      "name": "same probe reuses exact target",
+      "pass": true
+    },
+    {
+      "name": "quality keeps ownership and expected binding: low",
+      "pass": true
+    },
+    {
+      "name": "quality keeps ownership and expected binding: balanced",
+      "pass": true
+    },
+    {
+      "name": "quality keeps ownership and expected binding: high",
+      "pass": true
+    },
+    {
+      "name": "quality keeps ownership and expected binding: low",
+      "pass": true
+    },
+    {
+      "name": "quality keeps ownership and expected binding: high",
+      "pass": true
+    },
+    {
+      "name": "normalized Color and integer inputs reuse",
+      "pass": true
+    },
+    {
+      "name": "precision case deliberately shares rounded hex",
+      "pass": true
+    },
+    {
+      "name": "previous target released before each allocation",
+      "pass": true
+    },
+    {
+      "name": "sub-hex linear difference regenerates",
+      "pass": true
+    },
+    {
+      "name": "previous target released before each allocation",
+      "pass": true
+    },
+    {
+      "name": "indoor change regenerates",
+      "pass": true
+    },
+    {
+      "name": "previous target released before each allocation",
+      "pass": true
+    },
+    {
+      "name": "sky channel change regenerates",
+      "pass": true
+    },
+    {
+      "name": "previous target released before each allocation",
+      "pass": true
+    },
+    {
+      "name": "two renderers have distinct targets",
+      "pass": true
+    },
+    {
+      "name": "second renderer releases only its own target once",
+      "pass": true
+    },
+    {
+      "name": "context loss clears environment before callback",
+      "pass": true
+    },
+    {
+      "name": "context loss releases and invalidates exactly once",
+      "pass": true
+    },
+    {
+      "name": "pending preparation invalidated by loss",
+      "pass": true
+    },
+    {
+      "name": "pending editor creation cannot reattach after loss",
+      "pass": true
+    },
+    {
+      "name": "pending imported scene rejected and released after loss",
+      "pass": true
+    },
+    {
+      "name": "new imported scene rejected while lost",
+      "pass": true
+    },
+    {
+      "name": "new editor rejected while lost",
+      "pass": true
+    },
+    {
+      "name": "all watched scene resources released once during loss",
+      "pass": true
+    },
+    {
+      "name": "registered resources empty while lost",
+      "pass": true
+    },
+    {
+      "name": "optional hunt owner released during loss",
+      "pass": true
+    },
+    {
+      "name": "prepare cannot reuse cleared scene",
+      "pass": true
+    },
+    {
+      "name": "cleared editor ignores pointer selection",
+      "pass": true
+    },
+    {
+      "name": "cosmetic and editor interactions while lost keep scene ownership empty",
+      "pass": true
+    },
+    {
+      "name": "lost context cannot cache a newly invalid target",
+      "pass": true
+    },
+    {
+      "name": "blank editor creation remains supported after restoration",
+      "pass": true
+    },
+    {
+      "name": "previous target released before each allocation",
+      "pass": true
+    },
+    {
+      "name": "restored same inputs regenerate",
+      "pass": true
+    },
+    {
+      "name": "same-quality aircraft recreated with latest valid cosmetic chosen while lost",
+      "pass": true
+    },
+    {
+      "name": "pending presentation retained for Retry",
+      "pass": true
+    },
+    {
+      "name": "new optional hunt owner created on Retry",
+      "pass": true
+    },
+    {
+      "name": "restored installed scene prepares",
+      "pass": true
+    },
+    {
+      "name": "previous target released before each allocation",
+      "pass": true
+    },
+    {
+      "name": "generation failure keeps no stale binding",
+      "pass": true
+    },
+    {
+      "name": "previous target released before each allocation",
+      "pass": true
+    },
+    {
+      "name": "same inputs recover after generation failure",
+      "pass": true
+    },
+    {
+      "name": "every allocated target disposed exactly once",
+      "pass": true
+    },
+    {
+      "name": "old loss resources not disposed again",
+      "pass": true
+    },
+    {
+      "name": "each optional hunt owner disposed once",
+      "pass": true
+    },
+    {
+      "name": "course is not mutated",
+      "pass": true
+    },
+    {
+      "name": "registered renderer resources zero after disposal",
+      "pass": true
+    },
+    {
+      "name": "initial blank editor remains supported",
+      "pass": true
+    },
+    {
+      "name": "non-scenery import before course remains supported",
+      "pass": true
+    },
+    {
+      "name": "context loss clears environment before callback",
+      "pass": true
+    },
+    {
+      "name": "pending editor stays invalid after loss and restoration",
+      "pass": true
+    },
+    {
+      "name": "fresh scenery import after restore tolerates the cleared course",
+      "pass": true
+    },
+    {
+      "name": "blank/import-only owner releases final resources",
+      "pass": true
+    },
+    {
+      "name": "previous target released before each allocation",
+      "pass": true
+    },
+    {
+      "name": "healthy course change during editor load still initializes editor",
+      "pass": true
+    },
+    {
+      "name": "healthy editor race owner releases resources and target once",
+      "pass": true
+    }
+  ],
+  "allocated": 8,
+  "disposals": [1, 1, 1, 1, 1, 1, 1, 1],
+  "passed": true
+}

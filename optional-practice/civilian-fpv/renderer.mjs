@@ -130,7 +130,7 @@ export function createFlightRenderer({
     editHandles = new THREE.Group();
   editHandles.visible = false;
   scene.add(world, goals, aircraft, ghostAircraft, actors, projectiles, imported, editHandles);
-  const huntPresentation = createHuntPresentation?.({ THREE, scene }) ?? null;
+  let huntPresentation = createHuntPresentation?.({ THREE, scene }) ?? null;
   const hemisphere = new THREE.HemisphereLight(0xe5f3ff, 0x3d504a, 2.1);
   const sunlight = new THREE.DirectionalLight(0xffefd8, 3.1);
   const fillLight = new THREE.DirectionalLight(0x9cc7e8, 0.24);
@@ -170,6 +170,7 @@ export function createFlightRenderer({
     ghostSamples = [],
     ghostPose = null,
     sceneGeneration = 0,
+    contextGeneration = 0,
     presentationGeneration = 0,
     rotorTick = null,
     rotorPhase = 0,
@@ -185,6 +186,7 @@ export function createFlightRenderer({
     lastActorState = null,
     importedAnimationTick = null,
     environmentLight = null,
+    environmentLightInputs = null,
     themeProfile = null,
     effectPalette = resolveSimEffects(null),
     goalMaterialKit = null,
@@ -1083,23 +1085,105 @@ export function createFlightRenderer({
     if (size && size[1] > 0.5) {
       const panels = [],
         accents = [],
-        [width, height, depth] = size;
+        [width, height, depth] = size,
+        railWagon =
+          course.environment === 'rail-depot' &&
+          kind === 'metal' &&
+          /^rail-car-[01]-[0-3]$/.test(obstacle.id ?? '') &&
+          themeProfile.id === 'operations' &&
+          themeProfile.textureFilter === 'linear' &&
+          !goalMaterialKit &&
+          obstacle.type === undefined &&
+          obstacle.rotation === undefined &&
+          ['x', 'y', 'z'].every(
+            (axis, i) =>
+              Number.isFinite(obstacle.min?.[axis]) &&
+              Number.isFinite(obstacle.max?.[axis]) &&
+              obstacle.max[axis] - obstacle.min[axis] === [5000, 4000, 13000][i],
+          ),
+        campusSize = {
+          'building-west-low': [18000, 9000, 20000],
+          'building-east-mid': [18000, 14000, 20000],
+          'building-west-high': [18000, 19000, 22000],
+          'building-east-high': [18000, 23000, 22000],
+        }[obstacle.id],
+        campusStories =
+          course.environment === 'rooftops' &&
+          kind === 'plaster' &&
+          themeProfile.id === 'pixel' &&
+          themeProfile.textureFilter === 'nearest' &&
+          !goalMaterialKit &&
+          obstacle.type === undefined &&
+          obstacle.rotation === undefined &&
+          campusSize &&
+          ['x', 'y', 'z'].every(
+            (axis, i) =>
+              Number.isFinite(obstacle.min[axis]) &&
+              Number.isFinite(obstacle.max[axis]) &&
+              obstacle.max[axis] - obstacle.min[axis] === campusSize[i],
+          )
+            ? Math.floor(height / 3)
+            : 0,
+        campusBridge = campusStories
+          ? course.obstacles.find(
+              (item) =>
+                item.id === 'roof-deck-skybridge' &&
+                item.type === undefined &&
+                item.rotation === undefined &&
+                ['x', 'y', 'z'].every(
+                  (axis, i) =>
+                    Number.isFinite(item.min?.[axis]) &&
+                    Number.isFinite(item.max?.[axis]) &&
+                    item.max[axis] - item.min[axis] === [50000, 1200, 6000][i],
+                ),
+            )
+          : null;
       for (let side = 0; side < 4; side++) {
         const span = side < 2 ? width : depth,
           half = (side < 2 ? depth : width) / 2;
         if (kind === 'plaster' && span > 2 && height > 2) {
-          const count = Math.max(1, Math.min(5, Math.floor(span / 2.4)));
+          const count = Math.max(1, Math.min(5, Math.floor(span / 2.4))),
+            floors = campusStories || Math.min(3, Math.floor(height / 2.2)),
+            storeyHeight = campusStories ? height / floors : 2.2;
           for (let i = 0; i < count; i++)
-            for (let floor = 0; floor < Math.min(3, Math.floor(height / 2.2)); floor++)
-              panels.push([
-                side,
-                -span / 2 + ((i + 0.5) * span) / count,
-                -height / 2 + 1.4 + floor * 2.2,
-                Math.min(1.1, (span / count) * 0.55),
-                1.05,
-                half,
-              ]);
+            for (let floor = 0; floor < floors; floor++) {
+              const along = -span / 2 + ((i + 0.5) * span) / count,
+                elevation =
+                  -height / 2 + (campusStories ? storeyHeight / 2 : 1.4) + floor * storeyHeight,
+                paneWidth = Math.min(campusStories ? 2 : 1.1, (span / count) * 0.55),
+                paneHeight = campusStories ? Math.min(1.5, storeyHeight * 0.5) : 1.05;
+              if (campusBridge) {
+                const faceAxis = side < 2 ? 'z' : 'x',
+                  alongAxis = side < 2 ? 'x' : 'z',
+                  face = (side === 0 || side === 2 ? obstacle.max : obstacle.min)[faceAxis],
+                  u =
+                    (obstacle.min[alongAxis] + obstacle.max[alongAxis]) / 2 +
+                    (side === 1 || side === 2 ? -along : along) * 1000,
+                  y = (obstacle.min.y + obstacle.max.y) / 2 + elevation * 1000;
+                // Keep solid bridge attachments as closed painted bays rather
+                // than clipping a pane through the existing collision volume.
+                if (
+                  face >= campusBridge.min[faceAxis] &&
+                  face <= campusBridge.max[faceAxis] &&
+                  u + paneWidth * 500 > campusBridge.min[alongAxis] &&
+                  u - paneWidth * 500 < campusBridge.max[alongAxis] &&
+                  y + paneHeight * 500 > campusBridge.min.y &&
+                  y - paneHeight * 500 < campusBridge.max.y
+                )
+                  continue;
+              }
+              panels.push([side, along, elevation, paneWidth, paneHeight, half]);
+            }
           accents.push([side, 0, -height / 2 + 0.25, span, 0.24, half]);
+          if (campusStories) {
+            // Painted storeys and corner piers share the existing two flush
+            // batches. Every opaque pane stays on the original closed wall.
+            for (let floor = 1; floor < floors; floor++)
+              accents.push([side, 0, -height / 2 + floor * storeyHeight, span - 0.48, 0.18, half]);
+            for (const edge of [-1, 1])
+              accents.push([side, edge * (span / 2 - 0.12), 0.05, 0.24, height - 0.7, half]);
+            accents.push([side, 0, height / 2 - 0.15, span, 0.3, half]);
+          }
         } else if ((kind === 'metal' || kind === 'storage-steel') && span > 1) {
           if (!yardContainer)
             accents.push([
@@ -1119,6 +1203,16 @@ export function createFlightRenderer({
               Math.min(0.3, height * 0.18),
               half,
             ]);
+          if (railWagon) {
+            // Framing stays on the existing closed corrugated wall. Strips
+            // meet edge-to-edge and share the wagon's existing accent batch.
+            const jamb = side < 2 ? 2.15 : 1.6;
+            for (const direction of [-1, 1]) {
+              accents.push([side, direction * jamb, 0.2, 0.12, 2.6, half]);
+              accents.push([side, 0, 0.2 + direction * 1.24, jamb * 2 - 0.12, 0.12, half]);
+              if (side >= 2) accents.push([side, direction * 5.2, 0.2, 0.12, 2.9, half]);
+            }
+          }
         } else if (/column/.test(obstacle.id) && span > 0.2) {
           accents.push([
             side,
@@ -1138,7 +1232,12 @@ export function createFlightRenderer({
         'balanced',
         bay ? { map: maps.map, index: Number(bay[1]) * 3 + Number(bay[2]) } : null,
       );
-      addFlushPanels(value, accents, kind === 'plaster' ? 0x8c7863 : theme.warm, 'high');
+      addFlushPanels(
+        value,
+        accents,
+        railWagon ? 0x34464b : kind === 'plaster' ? 0x8c7863 : theme.warm,
+        railWagon ? 'balanced' : 'high',
+      );
     }
     // Only the outer shipping-frame edges are outlined, not every corrugation.
     const outline = yardContainer ? new THREE.BoxGeometry(...size) : value.geometry,
@@ -1153,8 +1252,39 @@ export function createFlightRenderer({
     materials.add(edgePaint);
     value.add(new THREE.LineSegments(edges, edgePaint));
   }
+  function releaseEnvironmentLight() {
+    scene.environment = null;
+    const previous = environmentLight;
+    environmentLight = null;
+    environmentLightInputs = null;
+    previous?.dispose();
+  }
+  function setEnvironmentLight({ sky, ground, indoor }) {
+    if (renderer.getContext().isContextLost()) {
+      releaseEnvironmentLight();
+      return;
+    }
+    const inputs = {
+      sky: new THREE.Color(sky),
+      ground: new THREE.Color(ground),
+      indoor: Boolean(indoor),
+    };
+    // One renderer owns one probe. Compare linear channels without hex rounding:
+    // the resolved floor color can contain a full-precision theme blend.
+    if (
+      environmentLight &&
+      environmentLightInputs?.sky.equals(inputs.sky) &&
+      environmentLightInputs.ground.equals(inputs.ground) &&
+      environmentLightInputs.indoor === inputs.indoor
+    )
+      return;
+    releaseEnvironmentLight();
+    environmentLight = createEnvironmentLight(renderer, inputs);
+    environmentLightInputs = inputs;
+  }
   function setCourse(value, selectedMode = 'self-level', options = {}) {
-    if (disposed) return;
+    if (disposed || renderer.getContext().isContextLost()) return;
+    huntPresentation ??= createHuntPresentation?.({ THREE, scene }) ?? null;
     if (options.presentation) setPresentation(options.presentation);
     activePresentation = pendingPresentation;
     sceneGeneration++;
@@ -1173,8 +1303,6 @@ export function createFlightRenderer({
     currentStep = -1;
     clearImported();
     scene.environment = null;
-    environmentLight?.dispose();
-    environmentLight = null;
     for (const group of [world, goals, actors, projectiles]) releaseGroup(group);
     garageDetailMaterials.clear();
     stadiumDetailMaterials.clear();
@@ -1224,7 +1352,7 @@ export function createFlightRenderer({
     hemisphere.groundColor
       .copy(surroundings.groundColor ?? new THREE.Color(theme.ground))
       .multiplyScalar(0.4);
-    environmentLight = createEnvironmentLight(renderer, {
+    setEnvironmentLight({
       sky: surroundings.indoor ? theme.wall : theme.sky,
       ground: surroundings.groundColor ?? theme.ground,
       indoor: surroundings.indoor,
@@ -2165,6 +2293,8 @@ export function createFlightRenderer({
       ? { data: input }
       : input;
     if (disposed) throw new Error('Flight renderer is disposed');
+    if (renderer.getContext().isContextLost())
+      throw new Error('World preview is unavailable while graphics are lost.');
     const generation = sceneGeneration,
       request = ++importGeneration;
     signal?.throwIfAborted();
@@ -2261,6 +2391,7 @@ export function createFlightRenderer({
       if (
         imageFailed ||
         disposed ||
+        renderer.getContext().isContextLost() ||
         generation !== sceneGeneration ||
         request !== importGeneration ||
         signal?.aborted
@@ -2284,7 +2415,7 @@ export function createFlightRenderer({
       imported.add(result.scene);
       if (
         json.asset?.extras?.fpvScenery === true &&
-        ['woodland', 'courtyard', 'container-yard'].includes(course.environment)
+        ['woodland', 'courtyard', 'container-yard'].includes(course?.environment)
       )
         sceneryFallback.visible = false;
       imported.userData.auxiliaryRoots = result.scenes.filter((item) => item !== result.scene);
@@ -2407,10 +2538,15 @@ export function createFlightRenderer({
     selectEditor(editorSelection, false);
   }
   async function createEditor(callbacks = {}) {
+    const generation = contextGeneration;
+    if (renderer.getContext().isContextLost())
+      throw new Error('World editor is unavailable while graphics are lost.');
     if (!loadTransformControls)
       throw new Error('World editing requires the World Studio renderer.');
     const { TransformControls } = await loadTransformControls();
     if (disposed) throw new Error('Editor was disposed while loading');
+    if (generation !== contextGeneration || renderer.getContext().isContextLost())
+      throw new Error('World preview changed while the editor was loading');
     editorCallbacks = callbacks;
     if (!editor) {
       editor = new TransformControls(camera, canvas);
@@ -2441,6 +2577,7 @@ export function createFlightRenderer({
     return {
       select: selectEditor,
       pick(clientX, clientY) {
+        if (!editor) return false;
         if (editor.dragging || editor.axis) return true;
         const rect = canvas.getBoundingClientRect();
         raycaster.setFromCamera(
@@ -2461,7 +2598,7 @@ export function createFlightRenderer({
       isDragging: () => !!editor?.dragging,
       setSnap(value) {
         if (![0, 0.1, 0.25, 0.5, 1].includes(value)) throw new TypeError('Invalid editor snap');
-        editor.setTranslationSnap(value || null);
+        editor?.setTranslationSnap(value || null);
       },
       orbit(dx, dy) {
         editorCamera.yaw -= dx * 0.007;
@@ -2469,6 +2606,7 @@ export function createFlightRenderer({
         callbacks.onRedraw?.();
       },
       zoom(delta) {
+        if (!course) return;
         const extent =
           Math.max(
             course.bounds.max.x - course.bounds.min.x,
@@ -2529,8 +2667,58 @@ export function createFlightRenderer({
     editor.attach(object);
     return { detach: () => editor?.detach() };
   }
+  function clearSceneResources() {
+    huntPresentation?.dispose();
+    huntPresentation = null;
+    if (editor) {
+      scene.remove(editor.getHelper());
+      editor.dispose();
+      editor = null;
+    }
+    setPath([]);
+    releaseEnvironmentLight();
+    setGhost([]);
+    clearImported();
+    for (const group of [world, goals, aircraft, actors, projectiles, editHandles])
+      releaseGroup(group);
+    releaseShadow();
+    for (const value of materials) {
+      for (const texture of texturesOf(value)) texture.dispose();
+      value.dispose();
+    }
+    for (const value of geometry) value.dispose();
+    materials.clear();
+    garageDetailMaterials.clear();
+    geometry.clear();
+    goalRows.length = 0;
+    actorRows.clear();
+    actorDefinitions.clear();
+    seenActors.clear();
+    qualityDetails.length = 0;
+    lastActorState = null;
+    pulseRows.clear();
+    stadiumDetailMaterials.clear();
+    droneVisual = null;
+    obstacleMaps = null;
+    obstacleSurface = null;
+    obstacleFittingsMaterial = null;
+    garageDetailMaterial = null;
+    environmentSurfaceKind = null;
+    stadiumMaterial = null;
+    sceneryFallback = null;
+    themeProfile = null;
+    course = null;
+    editRows.length = 0;
+  }
   const lost = (event) => {
     event.preventDefault();
+    // Retry rebuilds the scene on this renderer. Release old GPU ownership while
+    // the context is lost, before Three restores its resource caches.
+    sceneGeneration++;
+    contextGeneration++;
+    presentationGeneration++;
+    importGeneration++;
+    clearSceneResources();
     onContextLost();
   };
   canvas.addEventListener('webglcontextlost', lost);
@@ -2599,7 +2787,7 @@ export function createFlightRenderer({
     setCosmetic(recipe) {
       if (/^#[a-fA-F0-9]{6}$/.test(recipe?.color)) {
         cosmeticColor = recipe.color;
-        droneVisual.tint.color.set(cosmeticColor);
+        droneVisual?.tint.color.set(cosmeticColor);
       }
     },
     resources() {
@@ -2662,49 +2850,9 @@ export function createFlightRenderer({
     dispose() {
       if (disposed) return;
       disposed = true;
-      huntPresentation?.dispose();
       sceneGeneration++;
       canvas.removeEventListener('webglcontextlost', lost);
-      if (editor) {
-        scene.remove(editor.getHelper());
-        editor.dispose();
-        editor = null;
-      }
-      setPath([]);
-      scene.environment = null;
-      environmentLight?.dispose();
-      environmentLight = null;
-      setGhost([]);
-      clearImported();
-      for (const group of [world, goals, aircraft, actors, projectiles, editHandles])
-        releaseGroup(group);
-      releaseShadow();
-      for (const value of materials) {
-        for (const texture of texturesOf(value)) texture.dispose();
-        value.dispose();
-      }
-      for (const value of geometry) value.dispose();
-      materials.clear();
-      garageDetailMaterials.clear();
-      geometry.clear();
-      goalRows.length = 0;
-      actorRows.clear();
-      actorDefinitions.clear();
-      seenActors.clear();
-      qualityDetails.length = 0;
-      lastActorState = null;
-      pulseRows.clear();
-      stadiumDetailMaterials.clear();
-      droneVisual = null;
-      obstacleMaps = null;
-      obstacleSurface = null;
-      obstacleFittingsMaterial = null;
-      garageDetailMaterial = null;
-      environmentSurfaceKind = null;
-      stadiumMaterial = null;
-      sceneryFallback = null;
-      themeProfile = null;
-      course = null;
+      clearSceneResources();
       renderer.dispose();
       renderer.forceContextLoss();
     },

@@ -51,6 +51,28 @@ Quality presets must preserve collision, relevant sight lines and objective acto
 Measure frame times, loading and resource disposal before claiming performance.
 No multiplayer, online publishing or universal commercial-map conversion is added.
 
+### Campus facade checkpoint — 4 October 2026
+
+Quarry #1016 is merged at `47d2019dced85d80671b2d780da662f50ea11c20`.
+Campus now has a qualified bounded facade increment on that main baseline:
+full-height solid Pixel panes and quiet storey/corner articulation on the four
+existing closed buildings, preserving roofs, bridge, collision and shared Theme
+ownership. Source and admitted-package browser checks each pass **136 checks /
+56 identical image pairs**. CPU qualification passes **780 checks / 138 scenes**
+both before and after integration, and ten authenticated recordings replay
+through **53,982 ticks**. All three admissions pass two identical builds; the
+complete 102-file admitted player renders the facades and passes
+arm/pause/continue with empty warning/error logs. See [Campus qualification](fpv-campus-facade-levels.md).
+Publish through protected exact-head checks; local acceptance is not public or
+hardware qualification and does not certify the complete world's art.
+
+Continue D2 with the independently audited Railworks wagon framing increment,
+then Orchard/Solar Park. No Railworks runtime is included here. Keep D1
+performance work separate, followed by D3 examples/coaching, D4 creator, D5 four
+worlds and D6 deferred additional unit coverage. Counts remain **196 challenges,
+14 worlds, 58 School lessons and 374 steps**; D5 targets **228 challenges / 18
+worlds**. These art increments add no challenges or installed demonstrations.
+
 ### Quarry continuation checkpoint — 4 October 2026
 
 Courtyard #1012 and Warehouse #1014 are merged and now have actual public-player
@@ -647,3 +669,38 @@ requires deployment identity and a real player launch. They do not replace the
 larger remaining art work with an unsupported same-quality claim. Reuse existing
 licensed resources and original geometry; this inspection does not establish
 redistribution permission for FlightDivision's proprietary models or textures.
+
+### D1 graphics ownership checkpoint — 4 October 2026
+
+The bounded environment-light reuse and graphics-loss recovery increment is
+locally qualified at `06d154e76` on published main `47d2019d`. Full validation,
+63 manual checks, 30 existing checks, three reproducible source-bound admissions
+and the actual 102-file editor loss/restoration smoke pass. The final editor
+preserves its existing reload requirement; flight Retry has separate actual-host
+evidence. See [the qualification](fpv-environment-light-reuse.md) for exact
+candidate bridges and the retained v5 imported-image discrepancy.
+
+Proceed with protected publication, then follow deployment identity and an
+actual public launch. The earlier 15–17 second pauses remain unreproduced; this
+increment does not close sustained named-device performance, broad image
+determinism, remaining art acceptance or deferred D6 unit coverage.
+
+### D2 Railworks checkpoint — 4 October 2026
+
+Campus #1018 is merged at `96ef08777` and its public player was observed rendering
+the authored facades, arming and pausing. D1 environment-light ownership and
+graphics recovery #1019 is merged at `a46aded0b`; that source merge is distinct
+from public deployment qualification. The independent Railworks increment is
+qualified on that main: eight existing closed wagons gain subdued flush framing
+and stiffeners, reusing their accent batches. It preserves collision, original
+maps, Pixel/shared themes and retained recordings. The wagons remain box-like;
+this is bounded visible progress, not comprehensive realistic world completion.
+See [Railworks qualification](fpv-railworks-wagon-frames.md) for exact candidates
+and the source/package evidence.
+
+The catalogue remains **196 challenges / 14 worlds / 58 school lessons / 374
+school steps**. Continue the remaining D2 art work with the independent Orchard
+and Solar increments and broader world polish, then D3 examples/coaching, D4
+creator, D5's **228 challenges / 18 worlds** target and deferred D6 unit coverage.
+Functional qualification continues at each increment. Browser checks do not
+close named-device timing, physical controls or complete-world artistic goals.
