@@ -116,3 +116,32 @@ readable and no flicker was observed at the inspected grazing angle. Evidence is
 retained in `evidence/r16-*` with exact image hashes. Independent read-only review
 of351b58 also found no blocking geometry/ownership defect. This does not claim
 complete-world photoreal quality, a hardware benchmark or final revision proofs.
+
+## Final r16 content qualification
+
+Fresh ordinary-control qualification passes 575 checks and all 16 flights with
+full health, no contacts and the intended physical landing. Each independently
+replayed flight and imported archive reaches its exact terminal identity. The
+input frames, physical results and sampled paths equal r14; only the revised
+course identity and encoded proof checksum change. The new archive is bound to
+pack `50ffbb0e5da7dec94862a8f2ca85cfeb60542d3fe9f86bd3c4e288dfa0a2e554`.
+
+Actual import, native storage, collision, editor/Undo/Redo/source-reimport and
+all 16 complete Watch replays pass 304 browser checks with no recorded errors.
+Watch uses controlled RAF timestamps at +200ms per delivered pulse, public 1×
+rate, genuine performance time and unchanged focus/visibility/pause guards.
+No flight state, ticks or completion are assigned. Final actual app and renderer
+identities match each complete proof. This is not native-clock endurance or FPS.
+
+The separate native-clock mode was observed Ready → Arm → active at 47.1s with
+zero throttle → keyboard P pause/Continue menu. It retains the manual fixture's
+draw observer and private storage namespace, so it is not an unmodified
+standalone-entry claim. A Pause-button locator was outside the operator viewport;
+keyboard P is the action verified. No native course completion is claimed.
+
+Both current browser observations pin the complete, unoverlaid admitted 364
+player. The main-based data branch uses merged coating main3bc; all 95 runtime
+inputs equal that main, and the 120-check bridge to admitted364 finds only the
+already-qualified language-phase host +105B. The coating renderer, content and
+20-module proof closure are unchanged. The focused art release includes only
+the Reservoir authoring/data/evidence directory, not runtime or catalogue files.

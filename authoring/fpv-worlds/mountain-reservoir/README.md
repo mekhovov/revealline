@@ -3,8 +3,10 @@
 Revision [r16](distribution/r16/README.md) combines the accepted bounded retaining
 finish, rooted tree feet and closed maintenance facade. It preserves all eight
 routes and collision envelopes. Source/prepared ownership audits and sixteen
-fresh ordinary flights with independent complete/archive replays pass; actual
-r16 imported-player verification is being recorded separately before publication.
+fresh ordinary flights with independent complete/archive replays pass. Actual
+r16 import, complete controlled-RAF Watch and editor verification passes all
+304 checks. A separate native-clock fixture launch remained at zero throttle
+and paused through keyboard P; it is not native-clock completion evidence.
 This revision requires the named `REVEALLINE_surface_coating` v1 capability from
 the separate runtime change. Older players must reject the unsupported asset;
 earlier r11 remains available below. See the
