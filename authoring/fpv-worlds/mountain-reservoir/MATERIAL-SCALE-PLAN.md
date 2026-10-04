@@ -1,9 +1,9 @@
 # Reservoir material scale — proposed next increment
 
-Design only. This branch starts from main `f3764070e`; the qualified seam repair
-is isolated in PR #1077 at `ab3a3585d`. Integrate its accepted r9 source through
-normal main history before producing a later revision. Do not overwrite any r8
-or r9 pack, proof or fixture, and do not resume Festival yet.
+This branch starts from main `f3764070e`; the qualified seam repair is isolated
+in PR #1077 at `ab3a3585d`. Its accepted r9 source must reach normal main history
+before this later revision is published. No r8 or r9 pack, proof or fixture is
+overwritten, and Festival remains paused.
 
 Implementation was subsequently authorized within this scope. The published r9
 head was merged locally into this independent branch; PR #1077 remains unchanged.
@@ -15,9 +15,21 @@ prepared GLB is 1,215,260 bytes
 (`47df9d90932315bea83b117b49d4fc97aa6322cab1cd75230a066904ecfc2b9d`).
 The pinned prepare pipeline has zero validation errors. Manual asset comparison
 passes 148 checks; the original r8/r9 generation also remains exact in 315 checks.
-No r10 flight proof or visual acceptance is claimed. The first standalone gravel
-prototype was rejected during author inspection because it resembled fitted
-paving; the scene candidate uses separated aggregate and dusty gaps instead.
+The first standalone gravel prototype was rejected during author inspection
+because it resembled fitted paving; the scene candidate uses separated aggregate
+and dusty gaps instead. Visual acceptance remains pending.
+
+Fresh r10 qualification at frozen source `60b5161950563d76ef4bf87c97ed6f6d3f716632`
+passes 575 checks: all sixteen ordinary flights finish with full health and zero
+contacts, then replay independently both directly and after archive import.
+All retained r9 physical fields, recorded controls, sampled paths and final state
+identities match exactly. Only the course identity inside each proof changes
+for revision r10. The new 908,574-byte archive has SHA-256
+`231479765bfd49f1663c5caeb98de695f3d4f7ed28f318e74729b91489fddd78`.
+Full qualification and comparison receipts are retained as
+`evidence/r10-qualification.json` and `evidence/r10-r9-flight-comparison.json`.
+This does not establish actual resource disposal, visual quality, native browser
+import, offline behavior or hardware performance for r10.
 
 ## Problem observed in frozen r8/r9
 
