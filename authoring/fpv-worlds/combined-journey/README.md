@@ -27,8 +27,16 @@ the same **453/453** named native online controls with zero overlays. Its exact
 `evidence/admitted-8966-passed`. Both hosts again had no errors or warnings;
 the created renderer released its registered resources, while the reopened lobby
 created no renderer. This remains explicit file import rather than published
-Browse acceptance. Native offline and longer-session verification are separate
-and still pending. [Admission evidence](evidence/admission-0b54/manifest.json) retains
+Browse acceptance. The separately observed native offline check also passed:
+public preparation completed, then the exact native page reloaded with its own
+origin server stopped. The edited revision and original rollback remained visible;
+Creator retained course02/Acro X=-9.9m, and unchanged course01 armed at zero throttle
+and paused at33.9s. Refusal was captured before and after qualification, then the
+same server root restarted successfully. `evidence/offline-8966-passed` preserves
+the native text/screenshots and server timestamps. This is not browser-wide
+offline, eviction, a second database audit or published Browse acceptance.
+Longer-session verification remains separate and pending.
+[Admission evidence](evidence/admission-0b54/manifest.json) retains
 exact logs, inventories, package descriptors, checksums and original-source bridge.
 
 The first native online run at port8963 stopped at its Retry control after 362
