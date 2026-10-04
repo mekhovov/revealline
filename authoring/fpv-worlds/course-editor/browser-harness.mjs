@@ -114,7 +114,19 @@ async function exported(id) {
 }
 async function project() {
   const x = await exported('export-project');
-  return { ...x, ...(await ctx.zip.importEditableZip(x.blob)) };
+  const value = { ...x, ...(await ctx.zip.importEditableZip(x.blob)) };
+  await assetsExact(value, 'Editable export');
+  return value;
+}
+async function assetsExact(value, name) {
+  const actual = value.assets.get(value.project.world.modelAsset),
+    expected = ctx.inputs.get(ctx.assetExpected);
+  eq([...value.assets.keys()], [value.project.world.modelAsset], name + ' exact asset closure');
+  must(
+    actual.size === expected.size &&
+      (await digest(await actual.arrayBuffer())) === (await digest(await expected.arrayBuffer())),
+    name + ' exact expected model bytes',
+  );
 }
 function select(id) {
   set(q('#editor-project-course'), id);
@@ -242,7 +254,7 @@ async function execute() {
     deleteDatabase: (name) => indexedDB.deleteDatabase(fixturePrefix + name),
     cmp: indexedDB.cmp.bind(indexedDB),
   };
-  ctx = { zip, content, storage, inputs };
+  ctx = { zip, content, storage, inputs, assetExpected: 'expected-original-model.glb' };
   await openHost();
   const original = (await zip.importEditableZip(inputs.get('eight-courses.zip'))).project;
   await upload(inputs.get('eight-courses.zip'), 'eight-courses.zip');
@@ -349,6 +361,7 @@ async function execute() {
   await preview('preview-world', b);
   const exportedPack = await exported('export-pack'),
     inspected = await content.inspectPack(exportedPack.blob);
+  await assetsExact(inspected, 'Playable export');
   eq(
     inspected.project.courses,
     edited.project.courses,
@@ -380,11 +393,27 @@ async function execute() {
   await reimport(false);
   eq((await project()).project, edited.project, 'Cancelled source reimport retains exact draft');
   await reimport(true);
+  ctx.assetExpected = 'expected-updated-model.glb';
   must(
     course().id === 'picker-2' && q('#editor-route-mode').value === 'acro',
     'Accepted source reimport retains active course and mode',
   );
   const updated = await project();
+  const expectedCourses = edited.project.courses.map((c, i) =>
+    i === 0 ? c : translate(c, 500, i === 1 ? ['self-level'] : ['self-level', 'acro']),
+  );
+  eq(
+    updated.project.courses,
+    expectedCourses,
+    'All eight reimported courses exact:16 arrays, IDs, order, spawn and world',
+  );
+  for (const key of ['id', 'title', 'playlists', 'spawnBindings'])
+    eq(updated.project[key], edited.project[key], 'Reimport keeps project ' + key);
+  const modelHash = await digest(await inputs.get('expected-updated-model.glb').arrayBuffer());
+  must(
+    updated.project.world.sourceHash === modelHash && updated.project.source.hash === modelHash,
+    'Reimport source identities match exact updated model',
+  );
   must(updated.project.courses.length === 8, 'Source reimport retains all courses');
   eq(updated.project.overrides, overrides, 'Source reimport retains shared override');
   eq(course().steps.acro, b.steps.acro, 'Source reimport retains locally edited Acro');
@@ -413,6 +442,103 @@ async function execute() {
   eq(ctx.w.fixtureErrors, [], 'Host has no uncaught errors');
   receipt.exportedProject = updated.project;
   receipt.revisions = { original: baseline.sha256, edited: inspected.sha256 };
+  select('picker-1');
+  select('picker-2');
+  mode('acro');
+  set(q('#criterion-list'), 0);
+  set(q('#editor-snap'), 0.25);
+  const canvas = q('#world-editor-canvas'),
+    pointerEvents = [];
+  for (const type of ['pointerdown', 'pointermove', 'pointerup'])
+    canvas.addEventListener(type, (event) => {
+      if (event.isTrusted && pointerEvents.length < 128)
+        pointerEvents.push({ type, x: event.clientX, y: event.clientY, buttons: event.buttons });
+    });
+  await until(() => ctx.app.snapshot().editorPresentation, 'Selected course actual spatial editor');
+  ctx.manual = { before: course(), project: updated.project, pointerEvents };
+  receipt.manualSelection = {
+    course: course().id,
+    mode: 'acro',
+    index: 0,
+    criterion: course().steps.acro[0],
+  };
+  receipt.status = 'awaiting-spatial';
+  $('spatial').disabled = false;
+  render(
+    'Stage one passed. In the real canvas, drag one translation arrow of the selected Challenge 2 Acro gate a small distance (under 5m), then click Continue: check selected-course spatial edit. Leave course, mode and other controls unchanged.',
+  );
+  canvas.scrollIntoView({ block: 'center' });
+}
+async function spatial() {
+  $('spatial').disabled = true;
+  receipt.status = 'running';
+  render('Checking trusted selected-course gizmo edit and whole-project ownership…');
+  const { before, project: prior, pointerEvents } = ctx.manual,
+    after = course();
+  must(
+    ['pointerdown', 'pointermove', 'pointerup'].every((type) =>
+      pointerEvents.some((e) => e.type === type),
+    ),
+    'Trusted drag reached actual selected-course canvas',
+  );
+  const centre = (s) => ({
+    x: s.axis === 'x' ? s.at : (s.minSide + s.maxSide) / 2,
+    y: (s.minY + s.maxY) / 2,
+    z: s.axis === 'z' ? s.at : (s.minSide + s.maxSide) / 2,
+  });
+  const a = centre(before.steps.acro[0]),
+    b = centre(after.steps.acro[0]),
+    delta = Object.fromEntries(['x', 'y', 'z'].map((k) => [k, b[k] - a[k]]));
+  must(
+    Object.values(delta).some((v) => v !== 0) &&
+      Object.values(delta).every((v) => Number.isSafeInteger(v) && Math.abs(v) <= 5000),
+    'Bounded nonzero integer spatial translation',
+    { delta },
+  );
+  const expected = clone(before),
+    step = expected.steps.acro[0];
+  step.at += delta[step.axis];
+  for (const key of ['minSide', 'maxSide']) step[key] += delta[step.axis === 'x' ? 'z' : 'x'];
+  for (const key of ['minY', 'maxY']) step[key] += delta.y;
+  eq(
+    after,
+    expected,
+    'Spatial edit changes only selected Acro gate, preserving Self-level and course identity',
+  );
+  const final = await project(),
+    expectedProject = clone(prior);
+  expectedProject.courses[1] = after;
+  eq(
+    final.project.courses,
+    expectedProject.courses,
+    'Spatial edit leaves all other seven courses exactly unchanged',
+  );
+  for (const key of [
+    'overrides',
+    'routeBindings',
+    'spawnBindings',
+    'world',
+    'source',
+    'title',
+    'playlists',
+  ])
+    eq(final.project[key], prior[key], 'Spatial edit preserves ' + key);
+  click(q('#undo-edit'));
+  eq(course(), before, 'Selected course spatial Undo exact');
+  click(q('#redo-edit'));
+  eq(course(), after, 'Selected course spatial Redo exact');
+  select('picker-1');
+  eq(course(), prior.courses[0], 'Other course still exact after spatial edit');
+  select('picker-2');
+  eq(course(), after, 'Spatial edit retained after course roundtrip');
+  must(
+    q('#editor-route-mode').value === 'acro' &&
+      q('#undo-edit').disabled &&
+      q('#redo-edit').disabled,
+    'Roundtrip restores Acro with fresh owned history',
+  );
+  receipt.spatial = { delta, pointerEvents, finalCourse: after };
+  receipt.exportedProject = final.project;
   const owned = q('#editor-project-course-row'),
     choice = q('#editor-project-course');
   ctx.store.close();
@@ -430,22 +556,22 @@ async function execute() {
       receipt.checks.length +
       '/' +
       receipt.checks.length +
-      ' — selected courses, dirty fields, source/history ownership, full-project persistence and actual previews.',
+      ' — selected courses, dirty fields, source/history ownership, exact models, full-project persistence, trusted gizmo and actual previews.',
   );
 }
-$('run').addEventListener('click', () =>
-  execute().catch((error) => {
-    receipt ??= { checks: [] };
-    receipt.status = 'failed';
-    receipt.error = error.stack ?? String(error);
-    receipt.failure = ctx.d
-      ? {
-          courseJSON: q('#creator-json')?.value,
-          status: q('#studio-status')?.textContent,
-          importReport: q('#import-report')?.textContent,
-          errors: ctx.w.fixtureErrors,
-        }
-      : null;
-    render('FAIL: ' + error.message + '. Preserve full receipt.');
-  }),
-);
+const fail = (error) => {
+  receipt ??= { checks: [] };
+  receipt.status = 'failed';
+  receipt.error = error.stack ?? String(error);
+  receipt.failure = ctx.d
+    ? {
+        courseJSON: q('#creator-json')?.value,
+        status: q('#studio-status')?.textContent,
+        importReport: q('#import-report')?.textContent,
+        errors: ctx.w.fixtureErrors,
+      }
+    : null;
+  render('FAIL: ' + error.message + '. Preserve full receipt.');
+};
+$('run').addEventListener('click', () => execute().catch(fail));
+$('spatial').addEventListener('click', () => spatial().catch(fail));
