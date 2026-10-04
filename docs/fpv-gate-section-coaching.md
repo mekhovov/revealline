@@ -28,10 +28,11 @@ package passes **208/208**, including owned-node disposal, and its rendered
 result panel is visually accepted. All 194 original check names and outcomes
 match; fourteen additional setup/disposal checks pass. Full validation and all
 three reproducible package admissions pass. Exact final candidates and retained
-diagnostics follow. Protected publication waits for the separately reviewed
-disposal dependency #1040; no public deployment is claimed here.
+diagnostics follow. Disposal dependency #1040 is now merged, and the ordinary
+main integration preserves all 95 qualified inputs exactly. No public deployment
+is claimed here.
 
-Source candidate is on `codex/fpv-gate-section-coaching`, based on
+The historical source candidate is on `codex/fpv-gate-section-coaching`, based on
 `a087facd9ca57f0e7519aa161cb6acc86a7eee3e`. The frozen v1 host SHA-256 is
 `451d9145f22bc5b3eb77f7ea605a46a5bb4b6e4ce2b138bb8bb7d4f75be14019`.
 The normal merge `f942dab3e5404923f65c80cf6ad6133d23e28597` incorporates main
@@ -179,3 +180,14 @@ node scripts/prepare-fpv-gate-coaching-verification.mjs dist/fpv-gate-coaching-v
 
 Existing frozen destinations are immutable. A changed fixture requires a new
 directory and hash manifest; previous failed or superseded evidence is retained.
+
+## Publication integration
+
+Disposal #1040 merged normally at `5931ef12678cc52ab332fbbfe5516ad93a60caa9`.
+The coaching branch integrates it at `401e0eac401478c7ca75d9da806fa984d850b674`.
+This merge changes no files: the admitted candidate already contained the exact
+disposal patch and School data. All 95 original input sizes and SHA-256 values
+remain exact, including the production host, so the historical admission and
+208-check packaged-browser evidence apply without rebuilding unchanged inputs.
+See `fpv-gate-coaching-publication-integration.json` for the reread receipt.
+The independent source-capacity #1047 repair is not part of this main snapshot.

@@ -794,14 +794,15 @@ bookmark on return. Its source browser passes 194 checks; the final local
 candidate includes the reviewed explicit-disposal **#1040** repair, passes
 all-three package admission with two identical builds, and passes 208 packaged
 browser checks including owned-control disposal. The rendered recommendation is
-accepted. Protected publication waits for #1040's ordinary merge. The separate
-source-capacity **#1047** repair preserves the existing cap and recordings.
+accepted. Disposal #1040 merged at `5931ef126`; normal coaching integration
+preserves all 95 admitted inputs exactly and is ready for protected publication.
+The separate source-capacity **#1047** repair preserves the existing cap and recordings.
 See [coaching qualification](fpv-gate-section-coaching.md) for exact provenance.
 
 D4's ten independent editable starter projects have twenty replay proofs and
 237 actual-editor checks covering numeric/spatial edits, Undo/Redo, retained
-revisions and native IndexedDB reopening. Offline qualification and publication
-are separate gates. Carry explicit Acro/Self-level route selection through future
+revisions and native IndexedDB reopening. Starter **#1050** is published, and its
+separate offline exercise passed. Carry explicit Acro/Self-level route selection through future
 editor work; do not claim the present Self-level spatial editor already does so.
 Reuse the existing continuous-practice, touch and controller contracts during D3
 integration. Continue D4 creator work, D5's **228 challenges / 18 worlds** target,
