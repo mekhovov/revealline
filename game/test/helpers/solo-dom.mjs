@@ -132,8 +132,9 @@ export function memoryStorage(entries = {}) {
     },
   };
 }
-function assetDatabase(indexedDB = memoryIndexedDB().indexedDB) {
-  const connections = new Set();
+export function soloDatabase(indexedDB) {
+  const connections = new Set(),
+    databases = new Map();
   return {
     close() {
       for (const db of connections) {
@@ -141,8 +142,13 @@ function assetDatabase(indexedDB = memoryIndexedDB().indexedDB) {
         db.close();
       }
     },
-    open(...args) {
-      const request = indexedDB.open(...args);
+    open(name, ...args) {
+      // The finite model represents one database. Browser names must not share
+      // schema/version state, but explicit test routers keep their own policy.
+      if (indexedDB === undefined && !databases.has(name))
+        databases.set(name, memoryIndexedDB().indexedDB);
+      const backend = indexedDB === undefined ? databases.get(name) : indexedDB;
+      const request = backend.open(name, ...args);
       let success;
       Object.defineProperty(request, 'onsuccess', {
         get: () => success,
@@ -197,7 +203,7 @@ export async function soloPage(
   );
   const doc = new SoloDocument(),
     win = new Events(),
-    db = assetDatabase(assetIndexedDB);
+    db = soloDatabase(assetIndexedDB);
   const mediaDB = soundtrackIndexedDB ?? memoryIndexedDB().indexedDB;
   const audioElements = [];
   if (audio?.filePlayback !== false && audio) {
