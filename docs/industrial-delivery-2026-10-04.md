@@ -32,11 +32,13 @@ The reconciliation retains main's native course/mode editor, lesson return,
 menu-focus and idempotent shutdown changes alongside Hunt authoring, enemy
 guides, artwork and offline recovery. The new canonical optional-worker source
 retains the stack's cancellation and non-creating cache reads; generated
-projections are regenerated from their combined sources. Seven new FPV authoring
+projections are regenerated from their combined sources. Nine new FPV authoring
 entrypoints also receive the shared synchronous appearance bootstrap. The
 saved-Continue cancellation fixture waits for the observed held-decode boundary
 with an operation-specific setup budget; storage, focus, cancellation and late
-completion assertions remain unchanged.
+completion assertions remain unchanged. The subsequent native Library merge
+retains its bounded dedicated-worker downloads alongside the runtime worker
+cancellation latch, non-creating cache reads and serialized offline removal.
 
 The integration must pass the strict current-base `release-ready` check,
 industrial feature phases, Appearance and Company checks, mandatory static and

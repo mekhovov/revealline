@@ -164,6 +164,12 @@ export class Element extends Events {
   get nextSibling() {
     return this.parentNode?.children[this.parentNode.children.indexOf(this) + 1] ?? null;
   }
+  get previousElementSibling() {
+    const siblings = this.parentNode?.children ?? [];
+    for (let index = siblings.indexOf(this) - 1; index >= 0; index--)
+      if (siblings[index].nodeType === 1) return siblings[index];
+    return null;
+  }
   get textContent() {
     return (this._text || '') + this.children.map((child) => child.textContent).join('');
   }

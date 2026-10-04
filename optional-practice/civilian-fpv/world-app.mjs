@@ -80,6 +80,7 @@ import {
 import { importEditableZip } from './world-zip.mjs';
 import { openWorldStore } from './world-store.mjs';
 import { mountPracticeOfflineControls } from './offline.mjs';
+import { mountWorldLibrary } from './world-reaction-runtime.mjs';
 import { dataIdentity } from '../../game/data-json.mjs';
 import {
   THEME_PROFILES,
@@ -2868,6 +2869,7 @@ export function mountWorldApp({
       }
     }
     if (disposed) return;
+    worldLibrary.refresh(revisions);
     renderFilters();
     renderCatalogue();
     renderPlaylist();
@@ -2912,13 +2914,18 @@ export function mountWorldApp({
   restorePackInput.accept = '.rlpack';
   restorePackInput.hidden = true;
   doc.body.append(restorePackInput);
-  async function installExactPack(file, requiredIdentity = null) {
+  async function installExactPack(file, requiredIdentity = null, download = null) {
     if (!worldStore)
       throw new Error(txt('World storage is unavailable.', 'Сховище світів недоступне.'));
-    const generation = await worldStore.generation(),
+    const generation = download ? download.generation : await worldStore.generation(),
       loaded = await inspectPack(file);
     for (const course of loaded.project.courses) validateWorldCourse(course);
-    if (requiredIdentity && requiredIdentity !== `fpv-pack:${loaded.sha256}`)
+    if (
+      (requiredIdentity && requiredIdentity !== `fpv-pack:${loaded.sha256}`) ||
+      (download &&
+        (loaded.project.id !== download.row.id ||
+          loaded.project.courses.length !== download.row.courses))
+    )
       throw new Error(
         txt(
           `This is a different revision. Nothing was installed. Required: ${requiredIdentity}`,
@@ -2926,9 +2933,12 @@ export function mountWorldApp({
         ),
       );
     if (disposed || !restorePackInput.isConnected) return;
+    download?.signal.throwIfAborted();
+    download?.commit();
     // Install the inspected bytes' identity. Repacking through Creator can change
     // source metadata and silently break references to the original revision.
     await worldStore.install({ ...loaded, expectedGeneration: generation });
+    download?.saved();
     if (disposed || !restorePackInput.isConnected) return;
     await refreshStorage();
     status(
@@ -2938,6 +2948,14 @@ export function mountWorldApp({
       ),
     );
   }
+  const worldLibrary = mountWorldLibrary({
+    el,
+    txt,
+    parent: $('installed-packs'),
+    begin: () => worldStore.generation(),
+    install: (bytes, row, options) =>
+      installExactPack(bytes, `fpv-pack:${row.sha256}`, { ...options, row }),
+  });
   on(restorePackInput, 'change', async (event) => {
     const file = event.target.files[0],
       required = restorePackIdentity;
@@ -5302,6 +5320,7 @@ export function mountWorldApp({
     refreshEditor();
     renderPacks();
     paintLessonReturn();
+    worldLibrary.refresh();
   });
   on($('play-playlist'), 'click', () => flySequence(playlistValue()));
   on($('save-playlist'), 'click', () => {
@@ -6348,6 +6367,7 @@ export function mountWorldApp({
       disposed = true;
       closing = Promise.resolve().then(async () => {
         runtimeOffline.dispose();
+        worldLibrary.dispose();
         proofImport?.abort();
         packRemovalReview?.close();
         restorePackIdentity = null;

@@ -22,6 +22,7 @@ const entries = [
   'world-progress.mjs',
   'world-hunt-reactions.mjs',
   'world-enemy-guide.mjs',
+  'world-library.mjs',
 ].map((file) => native + file);
 const policy = OPTIONAL_PACKAGE_POLICIES['fpv-worlds'];
 const external = new Set(policy.sharedFiles.filter((file) => file !== target));
