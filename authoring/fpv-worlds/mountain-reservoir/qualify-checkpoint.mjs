@@ -182,7 +182,7 @@ try {
     parts.length === 1 && parts[0].records.length === 2,
   );
   const archive = Buffer.from(canonicalWorldJSON(parts[0]) + '\n'),
-    filename = 'mountain-reservoir-checkpoint-r1-proof-part-1-of-1.json';
+    filename = `mountain-reservoir-checkpoint-${course.revision}-proof-part-1-of-1.json`;
   await writeFile(path.join(output, filename), archive, { flag: 'wx' });
   for (const record of await importProofPart(archive.toString())) {
     check(
