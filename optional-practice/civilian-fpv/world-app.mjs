@@ -80,7 +80,7 @@ import {
 import { importEditableZip } from './world-zip.mjs';
 import { openWorldStore } from './world-store.mjs';
 import { mountPracticeOfflineControls } from './offline.mjs';
-import { mountWorldLibrary } from './world-reaction-runtime.mjs';
+import { mountWorldLibrary, worldImportErrorCopy } from './world-reaction-runtime.mjs';
 import { dataIdentity } from '../../game/data-json.mjs';
 import {
   THEME_PROFILES,
@@ -1042,8 +1042,10 @@ export function mountWorldApp({
   };
   const reportError = (error) => {
     if (disposed) return;
-    status(error.message ?? error);
-    if ($('flight-dialog').open) $('flight-status').textContent = error.message ?? error;
+    const copy = worldImportErrorCopy(error),
+      message = copy ? txt(...copy) : (error.message ?? error);
+    status(message);
+    if ($('flight-dialog').open) $('flight-status').textContent = message;
   };
   const on = (node, event, callback, options) => {
     const fn = (...args) => {
