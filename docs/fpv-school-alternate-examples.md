@@ -45,7 +45,7 @@ state. The existing pilot required no change.
   `missing-dependency` records and replayed again to the identical terminal state.
 - The two archives total 780,345 bytes. Authoring-only data adds zero runtime
   source-input bytes and does not change package or library limits.
-- The eligibility receipt pins all production files to main baseline
+- The eligibility receipt pins both production trees to main baseline
   `bf167a4fdfc81d7327fd94518da65ac82d64eb7e`, checks the exact 28 pairs and excluded
   groups, and retains the 154 World plus 24 Flight recordings.
 
@@ -73,6 +73,15 @@ does not provide an arbitrary multi-ID option. Do not select all School lessons
 in Self-level: the Acro skill group is deliberately outside this archive.
 
 ## Scope of acceptance
+
+Normal main integration at `114011bead19c5114ebf7c4273bcf1bb3fda4a3f` includes
+Orchard PR #1021, main `5e4abe273`. Its only incoming production change is the
+Orchard material path in `world-visuals.mjs`. The scoped
+[`39-check integration audit`](evidence/fpv-school-alternate-main-integration.json)
+confirms all frozen School data/tool bytes and all other production modules stay
+exact. Each of the 28 School IDs fails the canonical Orchard guard. The final
+School branch has no production delta against that main; replay, host and
+registry identities retain their original qualification.
 
 Actual-player import, dependency matching, optional example lookup, replay and
 persistence verification is pending. The manual fixture reuses the complete

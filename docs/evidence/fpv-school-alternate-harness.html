@@ -313,6 +313,7 @@
           pulses: 0,
           stalledPulses: 0,
           maxPulseGapMs: 0,
+          warmup: [],
         };
         const failPlayback = (reason) => {
           const snapshot = app.snapshot();
@@ -342,15 +343,42 @@
         };
         requireFocus();
         await until(() => state() && !d.getElementById('world-arm').disabled, 'playback prepared');
+        // The actual Pause action keeps shader preparation outside active playback.
+        // Its measured startup outliers remain evidence; production pause guards stay enabled.
+        click(d.getElementById('world-pause'));
         set('world-replay-rate', '1');
         d.getElementById('world-viewport').focus();
-        await pulse(0);
+        const initialTick = state().ticks;
+        let stableWarmFrames = 0;
+        for (let i = 0; i < 10 && stableWarmFrames < 2; i++) {
+          requireFocus();
+          const before = performance.now();
+          await pulse(0);
+          const elapsed = performance.now() - before;
+          activePlayback.warmup.push({
+            pulse: i,
+            wallMs: elapsed,
+            status: state().status,
+            ticks: state().ticks,
+          });
+          requireFocus();
+          if (state().status !== 'paused' || state().ticks !== initialTick)
+            failPlayback('Paused zero-time preparation advanced or armed flight');
+          stableWarmFrames = elapsed <= 250 ? stableWarmFrames + 1 : 0;
+        }
+        if (stableWarmFrames !== 2)
+          failPlayback('Paused preparation did not stabilize within ten frames');
+        must(true, 'Two bounded paused preparation frames before deliberate Arm', {
+          id: row.course.id,
+          mode: row.proof.mode,
+          sectionIndex,
+          warmup: activePlayback.warmup,
+        });
         requireFocus();
-        if (state().status !== 'active') click(d.getElementById('world-arm'));
-        await pulse(0);
+        click(d.getElementById('world-arm'));
         if (state().status !== 'active')
           failPlayback('Playback did not start through the actual Arm/Resume button');
-        must(state().status === 'active', 'Playback resumes through actual Arm/Resume button');
+        must(state().status === 'active', 'Playback deliberately armed after paused preparation');
         let previousPulse = performance.now(),
           previousTick = state().ticks;
         const maxPulses = Math.ceil(row.proof.frames.length / 10) + 30;
@@ -871,7 +899,7 @@
         failure: failed ?? null,
         offline: 'Not measured: reload uses live HTTP; only IndexedDB persistence was checked.',
         controls:
-          'Scripted File inputs, buttons and controlled animation clock; no physical-device or player acceptance claim.',
+          'Scripted File inputs, buttons and controlled animation clock. Before the single deliberate Arm, up to ten zero-time frames remain paused with unchanged ticks until two frames take at most 250 ms each; all timings remain recorded. Production focus/pause guards remain active, with no automatic resume. No physical-device or player acceptance claim.',
         lifecycle:
           'Native iframe reload and teardown only; no explicit app.dispose qualification or WebGL leak claim.',
       };
