@@ -3341,18 +3341,22 @@ not a personal-best playback or newer-runtime claim. See the
 
 Language/Home phase #1087 merged normally as
 `395a638b1b3d68b0da9771f313990f3028703481` after current-head protected checks.
-Coating #1088 received an ordinary automated update from `13ea3d8e7` to
-`a767ff494`; HUD #1089 received the reviewed label and an expected-head update
-request from `b5f57d6dd`. Their newer protected checks/public deployment remain
-separate from the original admitted receipts. No force, bypass or release-policy
-change was used.
+Coating #1088 then passed all current `a767ff494` checks and merged normally as
+`3bc7a923da2b7d50a6a675a91d5560005ad0f20d`. HUD #1089 received the reviewed label
+and ordinary expected-head updates for phase and coating; its current protected
+publication remains separate. Neither newer merge is inferred publicly live from
+the historical `5bd` entry. No force, bypass or release-policy change was used.
 
-A separate historical-main `5bd` native Creator diagnostic is frozen for the
-coordinator. It preserves a real completed recording and an interrupted flight
-while editing the other course, then distinguishes transaction abort/retry from
-committed-save/read failures. No runtime defect or browser pass is presumed.
-The final combined current-main journey remains a later admission boundary;
-this source fixture has two explicit overlays over a retained admitted player.
+The historical-main `5bd` Creator diagnostic preserved a genuine recording and
+interrupted flight while reproducing two postcommit defects. The focused323-byte
+correction uses the committed transaction generation and truthful EN/UK saved-pack
+refresh guidance. Source294 controls pass, including failed install/retry, a real
+second-connection revision conflict, exact retained proof/recovery and reopen/Watch.
+The incorrect compiled-view-only fixture edit and its failed assertion are retained.
+Full validation passed on `f1c8641b6`; integrated `fc3254382` has the exact same host
+and94 other inputs matching coating's admitted source,28 existing checks, and fresh
+all-three/two-build admission. Zero-overlay admitted browser acceptance remains
+pending. This does not yet establish the later HUD/compatibility combined journey.
 
 Remaining work is the finished first Library row and old-cache compatibility,
 Creator failure/retry, final combined reliability, representative natural and
