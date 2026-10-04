@@ -270,6 +270,19 @@ async function execute() {
     receipt.fixture = fixture;
     expected = await (await fetch('expected-project.json')).json();
     check(fixture.inputs.length === 95, 'exact 95-input fixture');
+    for (const file of fixture.files) {
+      check(
+        /^[\w./-]+$/.test(file.path) && !file.path.split('/').includes('..'),
+        'bounded manifest path ' + file.path,
+      );
+      const response = await fetch(file.path, { cache: 'no-store' });
+      check(response.ok, 'read pinned fixture member ' + file.path);
+      const bytes = await response.arrayBuffer();
+      check(
+        bytes.byteLength === file.bytes && (await sha(bytes)) === file.sha256,
+        'browser verifies frozen member ' + file.path,
+      );
+    }
     $('native').hidden = !fixture.offlineEligible;
     const bytes = await (await fetch('content/world.rlpack')).arrayBuffer();
     const proofs = await (await fetch('content/proofs.json')).arrayBuffer();
