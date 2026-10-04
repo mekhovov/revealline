@@ -106,3 +106,13 @@ The [v4 failure](evidence/fpv-adventure-optional-browser-v4-failure.json) also s
 V5 transparently forwards the existing renderer `setCourse` and `draw` calls with unchanged receiver, arguments and return value and observes the already-produced draw state. The hot playback loop reads actual status/result DOM and that state, with no full-library snapshot calls. A full snapshot is measured only while paused or after completed playback; final rendered identity must equal the completed host snapshot. The controlled RAF scheduler retains bounded real callback-entry timing, UI click duration and snapshot-cost observations without replacing `performance.now`, changing the guard or automatically resuming. This is functional instrumentation, not uninstrumented frame-performance evidence.
 
 The [final artifact review](evidence/fpv-adventure-optional-final-artifact-review.json) passes 23 scope and receipt checks. Accepted v5 took 73.347 seconds for the complete functional run. Its measured whole-host snapshot call rose from 0.1 ms with an empty library to 99.6–119.5 ms with the 60 examples and two negative controls. This supports the observer-overhead explanation for the earlier guard pauses; those earlier runs lacked equivalent callback timing, so their precise cause is not retrospectively proven. The accepted run’s largest observed active-loop gap was 43 ms. These are instrumented loop observations, not hardware FPS or unmodified rendering benchmarks.
+
+## Current-main integration
+
+The ordinary merge of main `72d6661b117e1cf1d76ac5de44381685c63d19b9` preserves
+the published Solar implementation and its plan edits. The [95-input scope audit](evidence/fpv-adventure-main-solar-integration.json)
+finds only `renderer.mjs` and `world-visuals.mjs` changed; the host, physics, course
+definitions and proof transport remain exact. Solar surfaces apply to the five
+Adventure Solar courses. Their art qualification remains in the separate Solar
+delivery; the Adventure receipt still identifies its frozen historical player.
+This integration is not represented as a new browser run or package admission.
