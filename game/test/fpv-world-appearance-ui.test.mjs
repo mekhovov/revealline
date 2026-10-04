@@ -32,7 +32,8 @@ function fixture(t) {
     frames = new Map(),
     rendered = [];
   let frameId = 0,
-    now = 0;
+    now = 0,
+    rendererDisposals = 0;
   const priorOption = globalThis.Option;
   globalThis.Option = function (text, value) {
     const option = doc.createElement('option');
@@ -112,7 +113,9 @@ function fixture(t) {
     setPath() {},
     async loadScene() {},
     draw() {},
-    dispose() {},
+    dispose() {
+      rendererDisposals++;
+    },
   };
   const app = mountWorldApp({ document: doc, window: win, rendererFactory: () => renderer });
   t.after(() => app.dispose());
@@ -121,6 +124,8 @@ function fixture(t) {
     doc,
     win,
     rendered,
+    pendingFrames: () => frames.size,
+    rendererDisposals: () => rendererDisposals,
     $: (id) => doc.getElementById(id),
     tick(count = 1) {
       for (let i = 0; i < count; i++) {
@@ -132,6 +137,22 @@ function fixture(t) {
     },
   };
 }
+
+test('World disposal retires menu and renderer owners before their reparented controls disappear', async (t) => {
+  const h = fixture(t);
+  await h.app.ready;
+  await h.app.startFlight(WORLD_CATALOGUE.find((item) => !item.legacy));
+  h.$('worlds-shell-action-menu').click();
+  assert.ok(h.$('sim-menu-hint'));
+  await h.app.dispose();
+  assert.equal(h.pendingFrames(), 0);
+  assert.equal(h.rendererDisposals(), 1);
+  assert.equal(h.$('sim-menu-hint'), null);
+  await h.app.dispose();
+  h.win.emit('blur');
+  assert.equal(h.pendingFrames(), 0);
+  assert.equal(h.rendererDisposals(), 1);
+});
 
 test('World app prepares a pinned appearance and queues drone/theme changes after arming', async (t) => {
   const h = fixture(t);
@@ -310,6 +331,8 @@ test('World pre-arm appearance refresh keeps focus on the control the player is 
   const h = fixture(t);
   await h.app.ready;
   await h.app.startFlight(WORLD_CATALOGUE.find((item) => !item.legacy));
+  h.$('world-flight-menu').click();
+  h.$('worlds-shell-action-settings').click();
   const select = h.$('sim-appearance-world');
   select.focus();
   select.value = 'industrial-workshop';
@@ -324,7 +347,13 @@ test('World pre-arm appearance refresh keeps focus on the control the player is 
   }
   assert.equal(h.rendered.at(-1).profile.id, 'industrial-workshop');
   assert.match(h.$('flight-status').textContent, /^Ready/);
-  assert.equal(h.doc.activeElement, select);
+  assert.equal(h.$('sim-settings').open, true);
+  assert.equal(h.$('worlds-shell-home-dialog').open, true);
+  assert.equal(
+    h.doc.activeElement === select,
+    true,
+    `Appearance control lost focus to ${h.doc.activeElement?.id || h.doc.activeElement?.tagName}`,
+  );
 });
 
 test('World title retains connected catalogue nodes and transfers the common bar into native flight', async (t) => {

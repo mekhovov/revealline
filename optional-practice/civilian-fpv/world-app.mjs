@@ -1025,6 +1025,7 @@ export function mountWorldApp({
     $('studio-status').textContent = String(message);
   };
   const reportError = (error) => {
+    if (disposed) return;
     status(error.message ?? error);
     if ($('flight-dialog').open) $('flight-status').textContent = error.message ?? error;
   };
@@ -2610,9 +2611,12 @@ export function mountWorldApp({
   }
 
   async function refreshStorage() {
+    if (disposed) return;
     if (worldStore) {
       installed = await worldStore.list();
+      if (disposed) return;
       revisions = await worldStore.list({ includeRevisions: true });
+      if (disposed) return;
       catalogue = [...WORLD_CATALOGUE, ...BEGINNER_CATALOGUE];
       for (const record of revisions) {
         try {
@@ -2632,6 +2636,7 @@ export function mountWorldApp({
       }
     }
     if (recordStore) records = await recordStore.list();
+    if (disposed) return;
     demonstrationCache = new WeakMap();
     let recoveryError = null;
     if (recordStore) {
@@ -3919,10 +3924,12 @@ export function mountWorldApp({
       const verified = entry.legacy
         ? await replayFlightCooperatively(entry.course, proof)
         : await replayWorldFlight(entry.course, proof);
+      if (disposed) return;
       if (verified.state.status !== state.status || verified.state.ticks !== state.ticks)
         throw new Error('Recording does not reproduce this result.');
       if (!isPreview && proof.session === 'practice' && entry.legacy && state.status === 'complete')
         await notebook.accept(proof, { presentation: entry.presentation });
+      if (disposed) return;
       if (!isPreview && recordStore)
         await recordStore.put({
           course: entry.course,
@@ -3932,6 +3939,7 @@ export function mountWorldApp({
           packIdentity: entry.packIdentity,
           ...(entry.legacy ? { presentation: entry.presentation } : {}),
         });
+      if (disposed) return;
       if (!isPreview && state.status === 'complete' && completedPlaylist) {
         try {
           playlistStore.bookmark(
@@ -3947,6 +3955,7 @@ export function mountWorldApp({
         await recordStore.saveSession(null);
         recovery = null;
       }
+      if (disposed) return;
       if (
         !isPreview &&
         entry.beginner &&
@@ -4345,7 +4354,9 @@ export function mountWorldApp({
   async function startFlight(entry, options = {}) {
     enemyGuide.close();
     if (disposed) return;
-    playShell?.enterPlay();
+    // Refreshing the unarmed world's appearance is not a new navigation step.
+    // Keep its settings/menu and keyboard focus where the player left them.
+    if (!options.preserveFocus) playShell?.enterPlay();
     if (playShell) $('flight-dialog').prepend(playShell.elements.header);
     const requestedMode =
       options.mode ??
@@ -4356,7 +4367,7 @@ export function mountWorldApp({
     const token = ++flightToken;
     checkpointPreparation?.abort();
     checkpointPreparation = null;
-    $('flight-dialog').dataset.flightMenuOpen = 'false';
+    if (!options.preserveFocus) $('flight-dialog').dataset.flightMenuOpen = 'false';
     qualityPreparing = false;
     scenePreparationGeneration++;
     abortSectorLookup();
@@ -5339,6 +5350,7 @@ export function mountWorldApp({
   menuHint.id = 'sim-menu-hint';
   doc.querySelector('main').append(menuHint);
   function menuContext() {
+    if (disposed) return null;
     if (enemyGuide.dialog.open) return { root: enemyGuide.dialog, key: enemyGuide.dialog.id };
     if (packRemovalReview?.dialog.open)
       return { root: packRemovalReview.dialog, key: 'pack-removal-review' };
@@ -6044,7 +6056,6 @@ export function mountWorldApp({
       win.cancelAnimationFrame(raf);
       for (const remove of listeners) remove();
       if (playShell) playShell.elements.root.prepend(playShell.elements.header);
-      playShell?.dispose();
       menuNavigation.dispose();
       menuHint.remove();
       input.dispose();
@@ -6070,6 +6081,9 @@ export function mountWorldApp({
       stickTraces.forEach((trace) => trace.dispose());
       beginnerCoach.dispose();
       spatialEditor?.dispose();
+      // Reparented menu controls remain available until their input, hints,
+      // audio and editor owners have all retired.
+      playShell?.dispose();
       await notebook.close();
       recordStore?.close();
       worldStore?.close();
