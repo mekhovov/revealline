@@ -1,0 +1,5 @@
+{
+  "status": "stopped-partial",
+  "observation": "Actual Watch playback adventure-coast-01/acro; iframe status Playback paused. Resume to continue.",
+  "context": "Other public player UI actions occurred after v2 began. Blur is plausible but not instrumented; not an established cause. No manual resume or pause guard bypass."
+}
