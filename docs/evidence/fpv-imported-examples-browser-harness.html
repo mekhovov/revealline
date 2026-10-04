@@ -28,10 +28,10 @@
   </style>
   <h1>Imported world examples</h1>
   <p>
-    Frozen admitted player closure with one explicit source host change. Actual File inputs, native
-    IndexedDB, catalogue Watch and two full rendered replays. Private storage and controlled RAF
-    timestamps; performance clock and production pause guards stay unchanged. Keep this window
-    visible and focused. No FPS or offline claim.
+    Frozen admitted player closure; the manifest identifies source or admitted-package comparison.
+    Actual File inputs, native IndexedDB, catalogue Watch and two full rendered replays. Private
+    storage and controlled RAF timestamps; performance clock and production pause guards stay
+    unchanged. Keep this window visible and focused. No FPS or offline claim.
   </p>
   <button id="run">Run bounded imported-world qualification</button>
   <p id="status" role="status">Ready</p>
@@ -498,7 +498,9 @@
         failure,
         elapsedMs: performance.now() - started,
         limitations: [
-          'Source host overlay, not final candidate package admission',
+          manifest?.kind === 'package'
+            ? 'Exact admitted candidate host and player; static comparison import paths rewritten'
+            : 'Source host overlay, not final candidate package admission',
           'Controlled RAF timestamps; real performance clock and pause guards preserved',
           'No hardware FPS, offline, audible perception or Reservoir content qualification',
         ],
