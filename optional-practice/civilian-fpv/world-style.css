@@ -495,6 +495,9 @@
   dialog header strong {
     display: block;
   }
+  .sim-settings > header {
+    flex-wrap: wrap;
+  }
   dialog header small {
     display: block;
     color: var(--accent);
@@ -964,7 +967,7 @@
   }
   .sim-worlds #world-language {
     font-size: 12px;
-    width: 60px;
+    width: 100%;
     min-height: 40px;
     padding: 5px;
     border-color: #344858;
@@ -2096,7 +2099,7 @@
     }
     .sim-worlds .studio-header nav {
       display: grid;
-      grid-template-columns: repeat(5, minmax(0, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
       gap: 2px;
     }
     .sim-worlds .studio-header nav button {

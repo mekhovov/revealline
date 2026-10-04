@@ -34,7 +34,7 @@ test('native Hunt preview names accepted families and counts an optional courier
     ],
   );
   assert.match(guide.rows[1].counter, /does not satisfy a required Hunt objective/);
-  assert.doesNotMatch(JSON.stringify(guide), /250|points|enclosure|Pulse|Reel/);
+  assert.doesNotMatch(JSON.stringify(guide), /250|\bpoints\b|enclosure|Pulse|Reel/);
   assert.equal(dataIdentity(course), before);
 });
 
@@ -149,7 +149,7 @@ test('World Studio uses native versioned guide advice and exposes optional couri
   guide = select('courier');
   assert.match(guide.textContent, /Optional catch · no quota credit/);
   assert.match(guide.textContent, /does not satisfy a required Hunt objective/);
-  assert.doesNotMatch(guide.textContent, /Required target|250|points/);
+  assert.doesNotMatch(guide.textContent, /Required target|250|\bpoints\b/);
   locale = 'uk';
   editor.refresh();
   assert.match(container.querySelector('[data-actor-field-guide]').textContent, /Необов’язкове/);

@@ -1,0 +1,159 @@
+{
+  "format": "FPVPrearmFocusEvidence.v1",
+  "files": [
+    {
+      "file": "existing-baseline-failures.tap.gz",
+      "bytes": 1809,
+      "sha256": "560337db4bd85cd613e35a9385edad9e24622d0fd5706a334c0d159855ea457a",
+      "originalBytes": 6266,
+      "originalSha256": "15e4377afc34063e7ab3a59ee5884844a4e111d6b22736f64e4854002013df91"
+    },
+    {
+      "file": "existing-candidate-checks.tap.gz",
+      "bytes": 1053,
+      "sha256": "7051968a67afcea88d9d9b252b6c8765db0e06d3e796565527fbe8ac6d80f3c2",
+      "originalBytes": 3871,
+      "originalSha256": "a09d673c5a4f867bf842f7d5d0e6010f0be65c438dcded27ca79545fda9932f6"
+    },
+    {
+      "file": "source-browser-r2.json.gz",
+      "bytes": 9531,
+      "sha256": "ec525883f8a28d7d3cd03ade87d966aab200f498a9f05381c0be939b4bc66e6c",
+      "originalBytes": 63856,
+      "originalSha256": "9aea8cde0c3bf5582e2c0b306a5e15799720858b1d48a1038995ca5e4c5c7086"
+    },
+    {
+      "file": "source-browser-r2.png",
+      "bytes": 24696,
+      "sha256": "72fc3c7984651fdcfdf8a825b2de44e4876903874dfbad93fe2a4fccea9609b9",
+      "originalBytes": 24696,
+      "originalSha256": "72fc3c7984651fdcfdf8a825b2de44e4876903874dfbad93fe2a4fccea9609b9"
+    },
+    {
+      "file": "unrun-r1-fixture.json.gz",
+      "bytes": 6036,
+      "sha256": "9f37f352ccb2ea1a8228f37ace65e0086f5e1d890e56b7e6ff3a6b6d746f81b4",
+      "originalBytes": 25481,
+      "originalSha256": "00ea084fee085b3019201bf527d72b884e61176a583f381e38c706bb70260487"
+    },
+    {
+      "file": "unrun-r1-harness.mjs.gz",
+      "bytes": 3094,
+      "sha256": "1fbbf7738aa445a7fe3b8243b760d9673551374adfa998eb4d939ff53b5a2cb8",
+      "originalBytes": 9298,
+      "originalSha256": "7a5c615b4ecf4caff3b70eb4859e4602bd76fd374e7bb0a76fb9824fd5a0aebd"
+    },
+    {
+      "file": "source-r2-fixture.json.gz",
+      "bytes": 6037,
+      "sha256": "3f1ce3d63cdadf4f028a557d49c9bcf653a13f6a020028c4cf7c51fd89836ff2",
+      "originalBytes": 25481,
+      "originalSha256": "15779ad812fb8863f7a0f716065b815ae2cb0bfd455efc6636b97de9752e3f1f"
+    },
+    {
+      "file": "source-r2-harness.mjs.gz",
+      "bytes": 3138,
+      "sha256": "c1bbfde29e8c5c17e1be11acc4032391941d03cd97421b335cc020c74305e891",
+      "originalBytes": 9455,
+      "originalSha256": "34fbe48bffaddab99bba6e4797ed32dbd0017f22ffda453c6abaad37591aedec"
+    },
+    {
+      "file": "integrated-validation.log.gz",
+      "bytes": 1385,
+      "sha256": "9d3cee376af35e7b6ba48228e19f6fef457369c8fc88c0011e883d8f730a83b4",
+      "originalBytes": 3146,
+      "originalSha256": "a568a8c5b7a6f9af5cbad0611af1d5e8f2ff21009313420a06633ea3b3e7e3e0"
+    },
+    {
+      "file": "integrated-existing-checks.tap.gz",
+      "bytes": 1040,
+      "sha256": "60e1dbd66e28a445f3d89f9cb661fb00b3c3158912826b3dd6978e4c074be2b9",
+      "originalBytes": 3864,
+      "originalSha256": "3c999f3445c5934c9a5a324b597a14a450a8968536fa160cbee9446cda0a3475"
+    },
+    {
+      "file": "integrated-materialization.json.gz",
+      "bytes": 240,
+      "sha256": "f84eee6d189e353ad5a33061da7047da70f6fc6db52f8f246856251f0b5ccfe6",
+      "originalBytes": 319,
+      "originalSha256": "2b41425cc0cdfad1f26c2ec3140d730dce5a0af1873153b23965eec2e1f8466a"
+    },
+    {
+      "file": "admission-log.json.gz",
+      "bytes": 284,
+      "sha256": "d5873f8829f36d3f11c59ab28f1ed1c16b53e4a7143bcff8f7ec26de3d3aba58",
+      "originalBytes": 409,
+      "originalSha256": "e0d1c667f9d6069c54d54c0d97f7b00b3e4c414436676e424ca2b536c0ce2e26"
+    },
+    {
+      "file": "admission-verification.json.gz",
+      "bytes": 609,
+      "sha256": "1867b9a89972fb76bb66d0fe9085645e239e99118f5544a0b74d1636734fba6b",
+      "originalBytes": 1142,
+      "originalSha256": "72f370768dbd5ae314d873352644a4b72911de56da42b8199ea0e4e29325a39d"
+    },
+    {
+      "file": "admission-envelope.json.gz",
+      "bytes": 1048,
+      "sha256": "2a0ba4738cea3e9d908f4d2f023f509099916dc4264beb34526c90f32ff4abfb",
+      "originalBytes": 2633,
+      "originalSha256": "6855e6b9e62e9f59f75d9a5446cc50b7f37bbbd19aaa5830649c678632b4c516"
+    },
+    {
+      "file": "admission-checksums.json.gz",
+      "bytes": 889,
+      "sha256": "0cf61b593d5e2de379843f9785c24195d6cef6c1364530e387a8ebf9885b2caf",
+      "originalBytes": 2136,
+      "originalSha256": "673deb7c1410ad1fbb30e40b3fc02177e48b6b625a3f2414c475660493858a8e"
+    },
+    {
+      "file": "admission-world-inputs.json.gz",
+      "bytes": 6875,
+      "sha256": "a3d39347e60992a36f2685ddc28222c92c07b15d39560719f9c303979f48f5a9",
+      "originalBytes": 32166,
+      "originalSha256": "d1e5201020609aa9fc7772c24130a6226bb240654b709689a391757cc67064d3"
+    },
+    {
+      "file": "admitted-player.json.gz",
+      "bytes": 5560,
+      "sha256": "5c29e487d0f29ed08952f43e7b5ee92fda35baf5ed2fbfe10ffd0fb79dca94d0",
+      "originalBytes": 18784,
+      "originalSha256": "f5e09043c1f7dfc2c786825e7e701cf7a6030755cdeac28bd301ddfe8302cc23"
+    },
+    {
+      "file": "admitted-r1-fixture.json.gz",
+      "bytes": 5996,
+      "sha256": "206322bba977b1adbd7ea7b31e42f3eafab9c99d991d0b2157188184932abe51",
+      "originalBytes": 25467,
+      "originalSha256": "f7162b3a5f2e57c03dedc931226f75c3ffcf774aca3ca2cd93f26dcbd52860a0"
+    },
+    {
+      "file": "integrated-scoped-lint.log.gz",
+      "bytes": 20,
+      "sha256": "f1b651238a58fe290baec6c5e32f3bdb1943dd2bd582f02569231f7a757c7837",
+      "originalBytes": 0,
+      "originalSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "file": "integrated-format.log.gz",
+      "bytes": 84,
+      "sha256": "912650647e765a63f0f6ff01455d933a977cd0aa8fd22d00d5e6c42ab2323d12",
+      "originalBytes": 66,
+      "originalSha256": "17aa973d3f004560237d9a95171210b0671deff23d61628eecf7322ff5938f20"
+    },
+    {
+      "file": "admitted-browser-r1.json.gz",
+      "bytes": 9506,
+      "sha256": "15b603bff15665f527013a1ef9f17bdef95b90f0d45aa81d5ddc8400ff617d25",
+      "originalBytes": 63860,
+      "originalSha256": "3971e9155418e3dc700cccb85162d413d50c11b84c23e11bfc3f1a231ed66b83"
+    },
+    {
+      "file": "admitted-browser-r1.png",
+      "bytes": 24696,
+      "sha256": "72fc3c7984651fdcfdf8a825b2de44e4876903874dfbad93fe2a4fccea9609b9",
+      "originalBytes": 24696,
+      "originalSha256": "72fc3c7984651fdcfdf8a825b2de44e4876903874dfbad93fe2a4fccea9609b9"
+    }
+  ]
+}

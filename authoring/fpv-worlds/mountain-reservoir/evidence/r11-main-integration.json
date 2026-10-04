@@ -1,0 +1,20 @@
+{
+  "format": "FPVReservoirMaterialIntegration.v1",
+  "status": "passed",
+  "qualifiedSource": "d7a8e044d03859b59212fdfdcde3d25af8c7e75a",
+  "main": "7e76112411f96ae72979cebee0a62ccdd66577d6",
+  "integrated": "f7dc23b8960c5bbd6d5628a3c183dfff760f1ad6",
+  "publishedR9Tree": "3cdfd7d1a49e2d6d906a205e7b9934121757b390",
+  "mainR9Tree": "3cdfd7d1a49e2d6d906a205e7b9934121757b390",
+  "candidateArtTree": "50d6bb16cb0271dcf2530d2b33e5634c607674ab",
+  "integratedArtTree": "50d6bb16cb0271dcf2530d2b33e5634c607674ab",
+  "exactQualifiedPaths": [
+    "authoring/fpv-worlds/mountain-reservoir",
+    "optional-practice/civilian-fpv",
+    "game",
+    "publishing"
+  ],
+  "method": "Bounded four-generation tree:0 fetch exposed normal ancestry at the local shallow boundary. Normal merge retained the exact candidate in three virtual-common-ancestor conflicts; incoming main Reservoir subtree is byte-identical to the already-qualified r9 parent. All relevant qualified trees remain exact.",
+  "incomingOtherScope": "Previously merged generated-worker whitespace/capacity source, documentation and scripts. No art/player-physics/renderer changes.",
+  "claims": "No repeat full build or matrix for history-only relevant-scope integration; historical admitted248b player provenance remains explicit."
+}

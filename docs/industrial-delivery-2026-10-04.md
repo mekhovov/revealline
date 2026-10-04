@@ -1,0 +1,63 @@
+# Unified gameplay delivery and remaining chapter materials
+
+The 4 October instruction requests P0 verification repairs, then P1 delivery,
+then the remaining P2 environment implementation. This is the active sequence;
+device acceptance, recording portability and hosted rooms retain their separate
+qualification boundaries in `unified-industrial-plan.md`.
+
+## P0: appearance checks
+
+The denied-save regression now selects the theme control's own status, rather
+than the nested Military Field note. The replay fixture admits the new cosmetic
+preference key for reads only. Storage mutation restrictions and unchanged
+profile/session assertions remain intact. Both complete affected test files
+passed 21 cases on Node 22.22.2, with scoped lint and formatting passing.
+
+## P1: one integration and publication boundary
+
+The terminal integration preserves the source history of PRs #997, #1000,
+#1023, #1024, #1026, #1028, #1029, #1030, #1032, #1033, #1034, #1035,
+#1036, #1037, #1038, #1039, #1041, #1042, #1043, #1044, #1045, #1046,
+#1048, #1049, #1051, #1052, #1053, #1055, #1056, #1057, #1058, #1059,
+#1068, #1070, #1073, #1074 and #1078. It joins current main using a merge
+commit, without rewriting or deleting their branches. Protected main publishes
+on each merge, so the complete integration is reviewed together instead of
+publishing partially reconciled components.
+
+The reconciliation retains main's native course/mode editor, lesson return,
+menu-focus and idempotent shutdown changes alongside Hunt authoring, enemy
+guides, artwork and offline recovery. The new canonical optional-worker source
+retains the stack's cancellation and non-creating cache reads; generated
+projections are regenerated from their combined sources.
+
+The integration must pass the strict current-base `release-ready` check,
+industrial feature phases, Appearance and Company checks, mandatory static and
+content validation, source identity and committed-source builds. A scheduled
+ordinary PR uses the existing Unified native experience milestone; it neither
+allocates a new immutable release nor edits historical tags. A successful main
+merge is followed by exact-commit Pages metadata/byte checks. Test, merge and
+public-delivery results belong to their actual source revisions and are not
+inferred from older receipts.
+
+## P2: complete the chapter environment programme
+
+After P1 delivery, bind all fourteen existing expansion chapters to immutable
+presentation-only material packages: four Capture Solo/Versus, six Capture
+Team, two Living Routes Snake and two expressive SIM chapters. Include the six
+current native pursuit courses. This adopts existing layouts and does not
+promote prototype missions or introduce combat/terrain rules.
+
+Use the existing six material families and four variations. Masonry, timber
+and damaged concrete must become native wall/structure bindings, rather than
+remaining review specimens. Preserve slow/lethal markings, concealed images,
+reward pictures, Retro Field and creator/Company ownership. Resolve accepted
+presentation at preparation, retain it through Retry/restore, and account for
+derived caches. Existing Asset/Theme Studio packages, import/export and native
+previews carry the same immutable dependencies; no executable custom behavior
+or new package family is introduced.
+
+Completion requires source-derived chapter coverage, native integration,
+ownership and historical regressions, Studio round-trips, bounded packages,
+and committed-source verification. Physical-device performance, human play
+acceptance, recommended-default promotion and the separate production-ledger
+migration are not implied by this implementation.
