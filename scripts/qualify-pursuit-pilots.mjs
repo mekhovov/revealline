@@ -257,6 +257,10 @@ export async function verifyPursuitPilotRecording({ pilot, mode, pace, recording
       'Recording source ownership or revision differs from the pinned Capture case.',
     );
     const verified = await verifyLocalMatchRecordingAsync(replay);
+    check(
+      verified.match,
+      'Recording does not match its full native terminal state; completion qualification requires an exact replay match.',
+    );
     const completedBoards =
       mode === 'team'
         ? verified.state.status === 'won'
@@ -264,7 +268,7 @@ export async function verifyPursuitPilotRecording({ pilot, mode, pace, recording
           : []
         : verified.state.runs.flatMap((run, index) => (run.status === 'won' ? [index + 1] : []));
     check(
-      verified.match && completedBoards.length > 0,
+      completedBoards.length > 0,
       'No native board completed the mission; timer or collision wins are not completion routes.',
     );
     outcome = {

@@ -5943,5 +5943,9 @@
   "workshop.materialPreview.detail": "Деталі",
   "workshop.materialPreview.balanced": "Збалансовано",
   "workshop.materialPreview.detailed": "Докладно",
-  "workshop.materialPreview.telemetry": "Показати телеметрію"
+  "workshop.materialPreview.telemetry": "Показати телеметрію",
+  "recording.exportRound": "Експортувати запис цього раунду",
+  "recording.exportTeam": "Експортувати запис команди",
+  "recording.verifyExported": "Перевірити експортований запис ↗",
+  "recording.exportHelp": "Обери експортований файл у новій вкладці. Можна перевірити і перемоги, і поразки; це не дає прогресу чи нагород."
 }

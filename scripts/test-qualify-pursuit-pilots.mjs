@@ -15,7 +15,10 @@ import { createRecorder, exportReplay } from '../game/replay.mjs';
 import { createRun } from '../game/core/index.mjs';
 import { createCoop, startCoop } from '../game/coop/core.mjs';
 import { createDuel, resumeDuel } from '../game/multiplayer.mjs';
-import { createLocalMatchRecorder } from '../game/multiplayer-recording.mjs';
+import {
+  createLocalMatchRecorder,
+  verifyLocalMatchRecordingAsync,
+} from '../game/multiplayer-recording.mjs';
 
 const cases = pursuitPilotCases();
 const snake = cases.find(
@@ -134,7 +137,7 @@ test('native multiplayer cases require reconstructed completion, not a self-atte
     const recording = await recorder.snapshot(state);
     await assert.rejects(
       verifyPursuitPilotRecording({ ...entry, recording }),
-      /No native board completed/,
+      /does not match its full native terminal state/,
     );
     const changed = structuredClone(recording);
     changed.recipe.options.seed++;
@@ -143,6 +146,34 @@ test('native multiplayer cases require reconstructed completion, not a self-atte
       /seed, cooperation or race rules differ/,
     );
   }
+});
+
+test('a reconstructed native clear with a changed digest reports integrity failure, not a missing completion', async () => {
+  const recording = JSON.parse(
+    await readFile(
+      new URL(
+        '../docs/qualification/industrial-art/native-play-2026-10-04/versus-crossing-post.json',
+        import.meta.url,
+      ),
+      'utf8',
+    ),
+  );
+  // Keep the genuine consumed commands and accepted recipe. A clear alone must
+  // not make an altered full-state checkpoint qualify on any browser/runtime.
+  recording.final.stateSha256 = '0'.repeat(64);
+  const reconstructed = await verifyLocalMatchRecordingAsync(recording);
+  assert.equal(reconstructed.match, false);
+  assert.equal(reconstructed.state.runs[0].status, 'won');
+  assert.equal(reconstructed.state.reason, 'First clear');
+  await assert.rejects(
+    verifyPursuitPilotRecording({
+      pilot: 'crossing-post',
+      mode: 'versus',
+      pace: 'standard',
+      recording,
+    }),
+    /does not match its full native terminal state/,
+  );
 });
 
 test('pilot evidence rejects different source pins and imported ownership even for the exact runtime recipe', async () => {
@@ -185,7 +216,7 @@ test('pilot evidence rejects different source pins and imported ownership even f
     }
     await assert.rejects(
       verifyPursuitPilotRecording({ ...entry, recording }),
-      /No native board completed/,
+      /does not match its full native terminal state/,
       'matching source metadata still cannot prove a clear',
     );
   }

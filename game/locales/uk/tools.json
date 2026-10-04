@@ -130,8 +130,8 @@
   "exportLoadedLibrary": "Експортувати завантажену бібліотеку",
   "theMapExpansionIncludesThisEditedMapCurrentClassRecipes": "Доповнення містить цю змінену карту, поточні рецепти класів, тему й зображення. Експорт завантаженої бібліотеки зберігає її початкові кампанії. Тренувальні перегляди не встановлюють вміст у бібліотеку основної гри.",
   "replayARecordedRun": "Відтворити записане проходження",
-  "importAnExportedReplayToCheckItsFinalSimulationSummary": "Імпортуй повтор для перевірки кінцевого підсумку симуляції. Відтворення є перевіркою й не дає нагород кампанії.",
-  "openReplayTheaterToWatchPauseAndStepThroughA": "Відкрити театр повторів для перегляду, паузи й покрокового відтворення ↗",
+  "importAnExportedReplayToCheckItsFinalSimulationSummary": "Імпортуй одиночний повтор або локальний запис командної гри чи суперництва в захопленні території, щоб перевірити кінцевий стан симуляції. Збіг можливий і для перемоги, і для поразки. Перевірка не дає прогресу чи нагород і не доводить проходження місії.",
+  "openReplayTheaterToWatchPauseAndStepThroughA": "Переглянути одиночний запис у театрі повторів ↗",
   "verifyReplay": "Перевірити повтор",
   "replayJson": "JSON повтору",
   "orPasteExportedReplayJsonHere": "Або встав сюди JSON експортованого повтору",
@@ -3201,5 +3201,6 @@
   "studio.themes.gallery": "Огляд вбудованих тем",
   "studio.themes.galleryHelp": "Спробуйте елементи керування кожної теми, не змінюючи вигляд гри чи робочий простір.",
   "studio.themes.openAssetTools": "Відкрити інструменти ресурсів",
-  "studio.themes.openThemeStudio": "Відкрити студію тем"
+  "studio.themes.openThemeStudio": "Відкрити студію тем",
+  "multiplayerRecordingVerificationOnly": "Командні записи й записи суперництва перевіряються тут за їхніми рідними правилами. Театр повторів наразі відтворює на екрані лише одиночні записи."
 }

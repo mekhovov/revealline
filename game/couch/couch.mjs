@@ -1,5 +1,6 @@
 import { selectedArcadeCollection } from '../presentation/industrial-arcade.mjs';
 import { createLocalMatchRecorder, localMatchProvenance } from '../multiplayer-recording.mjs';
+import { recordingVerificationHref } from '../ui/recording-verification.mjs';
 import { pursuitRoster } from '../hunt/pursuit-goals.mjs';
 import { missionBriefing } from '../mission-brief.mjs';
 import { createEncounterVariantPreferences } from '../hunt/preferences.mjs';
@@ -27,6 +28,7 @@ import {
   t,
   getLocale,
   localizedText,
+  localizedAttribute,
   localizedOption,
   localizedMessage,
   render,
@@ -4049,6 +4051,7 @@ try {
     );
     $('race-export-recording').hidden = match.status !== 'finished';
     $('race-recording-status').hidden = match.status !== 'finished';
+    $('race-recording-help').hidden = match.status !== 'finished';
     $('race-pause').disabled = !running;
     $('race-menu-release').hidden = running || !menuOwner;
     $('race-menu-release').disabled = running || !menuOwner;
@@ -4086,8 +4089,12 @@ try {
     if ($('race-menu-status').textContent !== text)
       localizedText($('race-menu-status'), () => text);
   }
-  localizedText($('race-export-recording'), () =>
-    getLocale() === 'uk' ? 'Експортувати запис цього раунду' : 'Export recording of this round',
+  localizedText($('race-export-recording'), () => t('interface:recording.exportRound'));
+  localizedAttribute($('race-verify-recording'), 'href', () =>
+    recordingVerificationHref(
+      globalThis.location?.href ?? document.baseURI ?? 'http://localhost/game/couch/',
+      getLocale(),
+    ),
   );
   $('race-export-recording').onclick = async () => {
     const owner = match;
@@ -4122,6 +4129,7 @@ try {
     'race-start',
     'race-retry',
     'race-export-recording',
+    'race-verify-recording',
     'race-optional-setup-toggle',
     'race-chapters',
     'race-journey-next',

@@ -5833,5 +5833,9 @@
   "workshop.materialPreview.detail": "Detail",
   "workshop.materialPreview.balanced": "Balanced",
   "workshop.materialPreview.detailed": "Detailed",
-  "workshop.materialPreview.telemetry": "Show telemetry"
+  "workshop.materialPreview.telemetry": "Show telemetry",
+  "recording.exportRound": "Export recording of this round",
+  "recording.exportTeam": "Export Team recording",
+  "recording.verifyExported": "Verify exported recording ↗",
+  "recording.exportHelp": "Choose your exported file in the new tab. Wins and losses can be verified; this grants no progress or rewards."
 }

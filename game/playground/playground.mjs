@@ -45,6 +45,7 @@ import { generateLevel } from '../generator.mjs';
 import { resolvePreviewSize } from './viewport.mjs';
 import { captureControlGeometry } from './control-geometry.mjs';
 import { firstFlightPreviewURL } from '../ui/first-flight-preview.mjs';
+import { openRecordingVerificationSection } from '../ui/recording-verification.mjs';
 import { verifyReplayAsync, MAX_REPLAY_BYTES } from '../replay.mjs';
 import {
   LOCAL_MATCH_RECORDING,
@@ -1752,4 +1753,15 @@ try {
     element.removeAttribute('aria-busy');
   });
   $('boot-status').hidden = true;
+  openRecordingVerificationSection({
+    document,
+    location: window.location,
+    focus:
+      !document.activeElement ||
+      document.activeElement === document.body ||
+      document.activeElement === document.documentElement,
+  });
 }
+window.addEventListener('hashchange', () =>
+  openRecordingVerificationSection({ document, location: window.location, focus: true }),
+);

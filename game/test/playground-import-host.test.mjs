@@ -80,7 +80,10 @@ function mount(document, html) {
     if (!['meta', 'link', 'input', 'br', 'img', 'hr'].includes(tag)) stack.push(node);
   }
 }
-async function harness(t, { deferImage = false, classicRole = false, tacticalResponse } = {}) {
+async function harness(
+  t,
+  { deferImage = false, classicRole = false, tacticalResponse, hash, initialFocusId } = {},
+) {
   const document = new EditorDocument(),
     window = new Events(),
     images = [],
@@ -89,6 +92,8 @@ async function harness(t, { deferImage = false, classicRole = false, tacticalRes
     layoutFrames = [],
     resizeObservers = [];
   mount(document, await readFile(new URL('../playground/index.html', import.meta.url), 'utf8'));
+  if (hash !== undefined) window.location = { hash };
+  if (initialFocusId) document.getElementById(initialFocusId).focus();
   const documents = new Map(
     await Promise.all(
       [
@@ -555,6 +560,38 @@ test('preview iframe load waits for the child readiness marker and does not reus
   assert.match(f.$('preview-load-status').textContent, /recovery controls/);
   assert.equal(feedback.hidden, false);
   assert.equal(f.$('preview-load-status'), feedback);
+});
+
+test('recording deep links open only the verifier without importing data or replacing editor state', async (t) => {
+  const f = await harness(t, { hash: '#recording-verification' }),
+    section = f.$('recording-verification');
+  assert.equal(section.open, true);
+  assert.equal(f.document.activeElement, section.querySelector('summary'));
+  assert.equal(f.$('replay-paste').value, '');
+  assert.equal(f.$('replay-result').textContent, '');
+  const source = f.$('level-json').value,
+    preview = f.$('preview-frame').src;
+  section.open = false;
+  f.$('generate-button').focus();
+  f.window.location.hash = '#recording-verification?import=untrusted';
+  f.window.emit('hashchange');
+  assert.equal(section.open, false);
+  assert.equal(f.document.activeElement, f.$('generate-button'));
+  f.window.location.hash = '#recording-verification';
+  f.window.emit('hashchange');
+  assert.equal(section.open, true);
+  assert.equal(f.document.activeElement, section.querySelector('summary'));
+  assert.equal(f.$('level-json').value, source);
+  assert.equal(f.$('preview-frame').src, preview);
+});
+
+test('late Playground startup does not steal a deliberately selected control for its recording link', async (t) => {
+  const f = await harness(t, {
+    hash: '#recording-verification',
+    initialFocusId: 'generate-button',
+  });
+  assert.equal(f.$('recording-verification').open, true);
+  assert.equal(f.document.activeElement, f.$('generate-button'));
 });
 
 test('replay file reading acknowledges immediately, cancellation preserves the result, and a fresh real recording verifies', async (t) => {
