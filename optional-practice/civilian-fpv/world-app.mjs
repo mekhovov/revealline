@@ -5217,6 +5217,7 @@ export function mountWorldApp({
     refreshEditor();
     renderPacks();
     paintLessonReturn();
+    worldLibrary.refresh();
   });
   on($('play-playlist'), 'click', () => flySequence(playlistValue()));
   on($('save-playlist'), 'click', () => {
