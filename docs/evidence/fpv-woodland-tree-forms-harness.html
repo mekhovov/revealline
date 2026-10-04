@@ -1,0 +1,461 @@
+<!doctype html>
+<meta charset="utf-8" />
+<title>Woodland tree forms qualification</title>
+<style>
+  body {
+    background: #101b28;
+    color: #eee;
+    font: 16px system-ui;
+    margin: 20px;
+  }
+  canvas {
+    display: none !important;
+  }
+  #views {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  #views img {
+    width: calc(50% - 12px);
+    height: auto;
+  }
+  pre {
+    white-space: pre-wrap;
+  }
+</style>
+<h1>Woodland tree forms</h1>
+<p>
+  Original / clustered crowns. Geometry equivalence, rendered views and resource disposal. No
+  hardware FPS claim.
+</p>
+<button id="run">Run verification</button
+><a id="download" download="woodland-tree-forms-browser.json" hidden>Download evidence</a>
+<div id="views"></div>
+<pre id="result">Ready</pre>
+<script type="module">
+  import * as THREE from '../../optional-practice/civilian-fpv/vendor/three.module.js';
+  import * as after from '../../optional-practice/civilian-fpv/world-visuals.mjs';
+  import * as before from '../../dist/fpv-woodland-tree-forms-verification/before.mjs';
+  import {
+    WORLD_CATALOGUE,
+    BEGINNER_CATALOGUE,
+  } from '../../optional-practice/civilian-fpv/world-catalogue.mjs';
+  import * as beforeAssets from '../../dist/fpv-woodland-tree-forms-verification/before-assets.mjs';
+  import * as afterAssets from '../../optional-practice/civilian-fpv/world-assets.mjs';
+  import { GLTFLoader } from '../../optional-practice/civilian-fpv/vendor/addons/loaders/GLTFLoader.js';
+  const result = document.querySelector('#result');
+  function build(api, course, quality) {
+    const world = new THREE.Group();
+    const material = (color, extras = {}) =>
+      new THREE.MeshStandardMaterial({ color, roughness: 0.8, ...extras });
+    const mesh = (shape, paint, parent = world) => {
+      const m = new THREE.Mesh(shape, paint);
+      parent.add(m);
+      return m;
+    };
+    const box = (size, at, color, parent = world) => {
+      const m = mesh(new THREE.BoxGeometry(...size), material(color), parent);
+      m.position.set(...at);
+      return m;
+    };
+    const visual = api.buildWorldVisuals({ course, world, material, mesh, box, quality });
+    const scene = new THREE.Scene();
+    scene.background = new THREE.Color(0xb6d5e2);
+    scene.add(world, new THREE.HemisphereLight(0xe6f3ff, 0x69644d, 2));
+    const light = new THREE.DirectionalLight(0xffefcd, 2);
+    light.position.set(15, 40, 20);
+    scene.add(light);
+    const paints = new Set();
+    world.traverse((m) => {
+      if (m.material) paints.add(m.material);
+    });
+    api.setSurfaceQuality(paints, quality);
+    light.castShadow = quality !== 'low';
+    light.shadow.mapSize.setScalar(quality === 'high' ? 2048 : 1024);
+    Object.assign(light.shadow.camera, {
+      left: -120,
+      right: 120,
+      top: 120,
+      bottom: -120,
+      near: 0.1,
+      far: 300,
+    });
+    light.shadow.camera.updateProjectionMatrix();
+    world.updateMatrixWorld(true);
+    return { world, visual, scene };
+  }
+  function vertices(root) {
+    const rows = [];
+    const transform = new THREE.Matrix4(),
+      p = new THREE.Vector3();
+    root.traverse((m) => {
+      if (!m.isMesh || m.name === 'woodland-canopy-sector' || m.name === 'woodland-branch-sector')
+        return;
+      const positions = m.geometry.attributes.position;
+      for (let i = 0; i < (m.isInstancedMesh ? m.count : 1); i++) {
+        if (m.isInstancedMesh) {
+          m.getMatrixAt(i, transform);
+          transform.premultiply(m.matrixWorld);
+        } else transform.copy(m.matrixWorld);
+        const points = [];
+        for (let j = 0; j < positions.count; j++) {
+          p.fromBufferAttribute(positions, j).applyMatrix4(transform);
+          points.push(p.x, p.y, p.z);
+        }
+        rows.push({
+          color: m.material.color.getHex(),
+          points,
+          center: new THREE.Vector3().setFromMatrixPosition(transform).toArray(),
+        });
+      }
+    });
+    return rows.sort(
+      (a, b) =>
+        a.center[0] - b.center[0] || a.center[2] - b.center[2] || a.points.length - b.points.length,
+    );
+  }
+  function assert(ok, message) {
+    if (!ok) throw Error(message);
+  }
+  document.querySelector('#run').onclick = async () => {
+    const report = {
+      baseline: 'a8c808a26447dcea17c82852cb07b24d3059d2cb',
+      userAgent: navigator.userAgent,
+      cases: [],
+      views: [],
+    };
+    try {
+      const courses = [...WORLD_CATALOGUE, ...BEGINNER_CATALOGUE].map((x) => x.course);
+      const woodland = [
+        ...new Map(
+          courses
+            .filter((c) => c.environment === 'woodland')
+            .map((c) => [JSON.stringify(c.bounds), c]),
+        ).values(),
+      ];
+      woodland.push({
+        ...woodland[0],
+        theme: 'pixel',
+        themeProfile: undefined,
+        id: 'woodland-pixel-check',
+      });
+      woodland.push({
+        ...woodland[0],
+        theme: 'industrial-workshop',
+        themeProfile: undefined,
+        id: 'woodland-industrial-check',
+      });
+      const meadow = courses.find((c) => c.environment === 'field');
+      const renderer = new THREE.WebGLRenderer({ antialias: true, preserveDrawingBuffer: true });
+      renderer.setSize(640, 360);
+      renderer.setPixelRatio(1);
+      report.renderer = renderer.getContext().getParameter(renderer.getContext().RENDERER);
+      document.querySelector('#views').replaceChildren(renderer.domElement);
+      for (const course of [...woodland, meadow])
+        for (const quality of ['low', 'balanced', 'high']) {
+          renderer.shadowMap.enabled = quality !== 'low';
+          renderer.shadowMap.type = THREE.PCFShadowMap;
+          const pair = [before, after].map((api) => build(api, course, quality));
+          const [a, b] = pair.map((x) => vertices(x.world));
+          assert(a.length === b.length, 'Logical mesh count');
+          let maxError = 0;
+          a.forEach((row, i) => {
+            assert(
+              row.points.length === b[i].points.length,
+              'Unchanged non-canopy geometry identity',
+            );
+            row.points.forEach(
+              (v, j) => (maxError = Math.max(maxError, Math.abs(v - b[i].points[j]))),
+            );
+          });
+          assert(maxError < 0.00002, 'World geometry drift ' + maxError);
+          const canopies = [];
+          pair[1].world.traverse((x) => {
+            if (x.name === 'woodland-canopy-sector') canopies.push(x);
+          });
+          assert(
+            course.environment !== 'woodland' || canopies.length === 24,
+            '24 sector/material batches',
+          );
+          assert(
+            canopies.every((x) => x.castShadow && !x.receiveShadow && x.boundingSphere),
+            'Shadows and culling bounds',
+          );
+          const natural = course.environment === 'woodland' && !course.id.endsWith('-check');
+          if (natural) {
+            const original = [];
+            pair[0].world.traverse((m) => {
+              if (m.name === 'woodland-canopy-sector') original.push(m);
+            });
+            const envelopes = [];
+            const matrix = new THREE.Matrix4(),
+              point = new THREE.Vector3(),
+              center = new THREE.Vector3();
+            original.forEach((group, gi) => {
+              assert(canopies[gi].count === group.count * 5, 'Five lobes per original crown');
+              for (let i = 0; i < group.count; i++) {
+                group.getMatrixAt(i, matrix);
+                center.setFromMatrixPosition(matrix);
+                const radius = new THREE.Vector3().setFromMatrixScale(matrix).x;
+                envelopes.push({ center: center.clone(), radius });
+                for (let j = 0; j < 5; j++) {
+                  const newer = canopies[gi];
+                  newer.getMatrixAt(i * 5 + j, matrix);
+                  for (let k = 0; k < newer.geometry.attributes.position.count; k++) {
+                    point
+                      .fromBufferAttribute(newer.geometry.attributes.position, k)
+                      .applyMatrix4(matrix);
+                    assert(
+                      point.distanceTo(center) <= radius + 0.00002,
+                      'Crown stays inside previous sphere',
+                    );
+                    assert(
+                      point.x < course.bounds.min.x / 1000 ||
+                        point.x > course.bounds.max.x / 1000 ||
+                        point.z < course.bounds.min.z / 1000 ||
+                        point.z > course.bounds.max.z / 1000,
+                      'Crown outside flight arena',
+                    );
+                  }
+                }
+              }
+            });
+            let forks = 0;
+            pair[1].world.traverse((m) => {
+              if (m.name !== 'woodland-branch-sector') return;
+              forks++;
+              for (let i = 0; i < m.count; i++) {
+                m.getMatrixAt(i, matrix);
+                for (let k = 0; k < m.geometry.attributes.position.count; k++) {
+                  point.fromBufferAttribute(m.geometry.attributes.position, k).applyMatrix4(matrix);
+                  assert(
+                    envelopes.some((e) => point.distanceTo(e.center) < e.radius + 0.00002),
+                    'Branch stays inside previous canopy envelope',
+                  );
+                }
+              }
+            });
+            assert(forks === 8, 'Eight batched branch sectors');
+          }
+          const shapes = pair.map((x) => {
+            const s = new Set();
+            x.world.traverse((m) => {
+              if (m.geometry) s.add(m.geometry);
+            });
+            return s.size;
+          });
+          report.cases.push({
+            id: course.id,
+            environment: course.environment,
+            quality,
+            maxVertexErrorMetres: maxError,
+            logicalMeshes: a.length,
+            geometries: shapes,
+            batches: canopies.length,
+          });
+          const cx = (course.bounds.min.x + course.bounds.max.x) / 2000,
+            cz = (course.bounds.min.z + course.bounds.max.z) / 2000;
+          const camera = new THREE.PerspectiveCamera(80, 640 / 360, 0.1, 1000);
+          for (let view = 0; view < 6; view++) {
+            if (view === 5) {
+              const tree = pair[0].visual.backdrop.children.find(
+                (m) =>
+                  m.geometry?.type === 'CylinderGeometry' &&
+                  m.geometry.parameters.radiusTop === 0.14,
+              );
+              camera.position.set(tree.position.x + 8, tree.position.y + 3, tree.position.z + 10);
+              camera.lookAt(tree.position.x, tree.position.y * 2.1, tree.position.z);
+            } else if (view === 4) {
+              camera.position.set(cx, 80, cz + 100);
+              camera.lookAt(cx, 0, cz);
+            } else {
+              camera.position.set(cx, 3, cz);
+              camera.lookAt(
+                cx + Math.sin((view * Math.PI) / 2) * 80,
+                8,
+                cz - Math.cos((view * Math.PI) / 2) * 80,
+              );
+            }
+            const readings = [],
+              pixels = [];
+            for (const owner of pair) {
+              renderer.render(owner.scene, camera);
+              if (course.id === 'woodland-08' && quality === 'balanced' && view === 5) {
+                const image = document.createElement('img');
+                image.width = 640;
+                image.alt =
+                  owner === pair[0] ? 'Original trees' : 'Clustered crowns and branch forks';
+                image.src = renderer.domElement.toDataURL('image/png');
+                document.querySelector('#views').append(image);
+              }
+              readings.push({
+                calls: renderer.info.render.calls,
+                triangles: renderer.info.render.triangles,
+                geometries: renderer.info.memory.geometries,
+              });
+              const px = new Uint8Array(640 * 360 * 4);
+              renderer
+                .getContext()
+                .readPixels(
+                  0,
+                  0,
+                  640,
+                  360,
+                  renderer.getContext().RGBA,
+                  renderer.getContext().UNSIGNED_BYTE,
+                  px,
+                );
+              pixels.push(px);
+            }
+            let changed = 0,
+              total = 0;
+            for (let i = 0; i < pixels[0].length; i++) {
+              const d = Math.abs(pixels[0][i] - pixels[1][i]);
+              if (d > 2) changed++;
+              total += d;
+            }
+            const changedRatio = changed / pixels[0].length;
+            if (course.environment !== 'woodland' || course.id.endsWith('-check'))
+              assert(changedRatio === 0, 'Unrelated appearance changed');
+            report.views.push({
+              id: course.id,
+              quality,
+              view,
+              before: readings[0],
+              after: readings[1],
+              changedChannelsRatio: changedRatio,
+              meanChannelError: total / pixels[0].length,
+            });
+          }
+          let expected = 0,
+            disposed = 0;
+          for (const owner of pair) {
+            owner.world.traverse((m) => {
+              if (m.geometry) {
+                expected++;
+                m.geometry.addEventListener('dispose', () => disposed++);
+              }
+            });
+            after.disposeSimVisualGroup(owner.world);
+            owner.scene.traverse((o) => {
+              if (o.shadow) o.shadow.dispose();
+            });
+          }
+          renderer.render(new THREE.Scene(), camera);
+          assert(disposed >= expected, 'All referenced geometry disposed');
+          assert(renderer.info.memory.geometries === 0, 'GPU geometry released');
+          report.cleanup ??= [];
+          report.cleanup.push({ ...renderer.info.memory });
+          assert(renderer.info.memory.textures === 1, 'Unexpected residual texture allocation');
+          await new Promise(requestAnimationFrame);
+        }
+      report.imported = [];
+      for (const environment of ['courtyard', 'warehouse', 'stadium', 'container-yard', 'garage']) {
+        const a = new Uint8Array(await beforeAssets.builtinWorldScene(environment).arrayBuffer()),
+          b = new Uint8Array(await afterAssets.builtinWorldScene(environment).arrayBuffer());
+        assert(
+          a.length === b.length && a.every((v, i) => v === b[i]),
+          'Unchanged ' + environment + ' GLB',
+        );
+      }
+      for (const course of woodland.filter((c) => !c.id.endsWith('-check'))) {
+        const pair = [before, after].map((api) => build(api, course, 'balanced'));
+        const rows = [];
+        for (let index = 0; index < 2; index++) {
+          const bytes = new Uint8Array(
+              await [beforeAssets, afterAssets][index].builtinWorldScene(course).arrayBuffer(),
+            ),
+            view = new DataView(bytes.buffer, bytes.byteOffset, bytes.byteLength);
+          const json = JSON.parse(
+            new TextDecoder().decode(bytes.subarray(20, 20 + view.getUint32(12, true))),
+          );
+          const placed = json.asset.extras.placements;
+          assert(
+            placed.every(
+              (p) =>
+                p.bounds.max[0] < course.bounds.min.x / 1000 ||
+                p.bounds.min[0] > course.bounds.max.x / 1000 ||
+                p.bounds.max[2] < course.bounds.min.z / 1000 ||
+                p.bounds.min[2] > course.bounds.max.z / 1000,
+            ),
+            'Imported placement clearance',
+          );
+          const imported = await new GLTFLoader().parseAsync(
+            bytes.buffer.slice(bytes.byteOffset, bytes.byteOffset + bytes.byteLength),
+            '',
+          );
+          const owner = pair[index];
+          owner.visual.backdrop.visible = false;
+          owner.world.add(imported.scene);
+          owner.world.updateMatrixWorld(true);
+          imported.scene.traverse((m) => {
+            if (m.isMesh) {
+              m.castShadow = true;
+              m.receiveShadow = true;
+            }
+          });
+          const matrix = new THREE.Matrix4(),
+            point = new THREE.Vector3();
+          let checked = 0;
+          imported.scene.traverse((m) => {
+            if (!m.isMesh) return;
+            for (let i = 0; i < (m.isInstancedMesh ? m.count : 1); i++) {
+              if (m.isInstancedMesh) {
+                m.getMatrixAt(i, matrix);
+                matrix.premultiply(m.matrixWorld);
+              } else matrix.copy(m.matrixWorld);
+              for (let j = 0; j < m.geometry.attributes.position.count; j++) {
+                point.fromBufferAttribute(m.geometry.attributes.position, j).applyMatrix4(matrix);
+                checked++;
+                assert(
+                  point.x < course.bounds.min.x / 1000 ||
+                    point.x > course.bounds.max.x / 1000 ||
+                    point.z < course.bounds.min.z / 1000 ||
+                    point.z > course.bounds.max.z / 1000,
+                  'Imported vertex outside flight arena',
+                );
+              }
+            }
+          });
+          const camera = new THREE.PerspectiveCamera(80, 640 / 360, 0.1, 1000),
+            first = placed[0].bounds;
+          const x = (first.min[0] + first.max[0]) / 2,
+            z = (first.min[2] + first.max[2]) / 2;
+          camera.position.set(x + 9, 4, z + 12);
+          camera.lookAt(x, 3, z);
+          renderer.render(owner.scene, camera);
+          const image = document.createElement('img');
+          image.width = 640;
+          image.alt = index
+            ? 'Imported Woodland with varied tree orientations'
+            : 'Original imported Woodland';
+          image.src = renderer.domElement.toDataURL('image/png');
+          document.querySelector('#views').append(image);
+          rows.push({
+            bytes: bytes.length,
+            placements: placed.length,
+            verticesOutsideArena: checked,
+            calls: renderer.info.render.calls,
+            triangles: renderer.info.render.triangles,
+          });
+          after.disposeSimVisualGroup(owner.world);
+          owner.scene.traverse((o) => {
+            if (o.shadow) o.shadow.dispose();
+          });
+        }
+        report.imported.push({ id: course.id, before: rows[0], after: rows[1] });
+      }
+      report.passed = true;
+      renderer.dispose();
+      result.textContent = JSON.stringify(report, null, 2);
+      const link = document.querySelector('#download');
+      link.href = URL.createObjectURL(new Blob([result.textContent], { type: 'application/json' }));
+      link.hidden = false;
+    } catch (error) {
+      report.passed = false;
+      report.error = error.stack;
+      result.textContent = JSON.stringify(report, null, 2);
+    }
+  };
+</script>

@@ -75,6 +75,7 @@ export function attachDemoHost({
   let active = false,
     disposed = false,
     interrupted = false,
+    detailsOpen = false,
     lifecycleSuspended = false,
     director = null,
     controller = null,
@@ -106,6 +107,10 @@ export function attachDemoHost({
   };
   const text = (id, value) => {
     if ($(id).textContent !== value) $(id).textContent = value;
+    if ($(id).dataset.icon) {
+      $(id).setAttribute('aria-label', value);
+      $(id).title = value;
+    }
   };
   const currentRun = () => practice?.state ?? director?.player?.state;
   const allPicturesPreview = () =>
@@ -145,6 +150,7 @@ export function attachDemoHost({
       ),
     );
     text('demo-level', source ? contentText(source.level, 'name') : t('demo:loading'));
+    $('demo-level').title = $('demo-level').textContent;
     text(
       'demo-caption',
       t(
@@ -187,6 +193,12 @@ export function attachDemoHost({
               : 'demo:blurredPicture',
       ),
     );
+    $('demo-panel').hidden = !detailsOpen && !interrupted && !practice;
+    $('demo-details-toggle').setAttribute('aria-expanded', String(!$('demo-panel').hidden));
+    text('demo-details-toggle', t('demo:details'));
+    text('demo-next', t('demo:next'));
+    text('demo-interrupt', t('demo:playChoices'));
+    text('demo-back', t('demo:back'));
     $('demo-actions').hidden = !interrupted && !practice;
     $('demo-takeover').hidden = !!practice;
     $('demo-takeover').disabled = loading || terminal;
@@ -201,6 +213,7 @@ export function attachDemoHost({
     $('demo-watch-pause').disabled = handoffPending;
     text('demo-watch-pause', t(interrupted ? 'demo:resumeDemo' : 'demo:pauseDemo'));
     $('demo-watch-pause').setAttribute('aria-pressed', String(interrupted));
+    $('demo-watch-pause').dataset.icon = interrupted ? '▶' : 'Ⅱ';
     $('demo-return').hidden = !practice;
     $('demo-pause').hidden = !practice || !armed;
     const capabilities = arcadeActionCapabilities(state?.level);
@@ -278,6 +291,7 @@ export function attachDemoHost({
   function close({ handoff = false } = {}) {
     if (!active) return;
     active = false;
+    detailsOpen = false;
     sceneTransition.clear();
     reward.reset();
     delete dialog.dataset.reward;
@@ -638,6 +652,10 @@ export function attachDemoHost({
   });
   listen($('demo-takeover'), 'click', () => void takeover());
   listen($('demo-fresh'), 'click', () => void fresh());
+  listen($('demo-details-toggle'), 'click', () => {
+    detailsOpen = !detailsOpen;
+    renderControls();
+  });
   listen($('demo-next'), 'click', () => {
     if (!busy && !practice) {
       interrupted = false;

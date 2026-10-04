@@ -2,6 +2,7 @@
 // licenses, unmodified models, textures and hashes: authoring/fpv-worlds/assets/kenney.
 // Scene layouts are presentation only; every model lies outside flight bounds.
 import { createFlightRenderer as createRenderer } from './renderer.mjs';
+import { resolveSimThemeProfile } from './world-themes.mjs';
 import { Matrix4, Vector3, Quaternion } from './vendor/three.module.js';
 
 /** World-only extensions stay outside the original Academy package's closure. */
@@ -180,6 +181,9 @@ export function builtinWorldScene(course) {
     maxX = bounds.max.x / 1000;
   const minZ = bounds.min.z / 1000,
     maxZ = bounds.max.z / 1000;
+  // Keep small creator arenas on their original exterior layout.
+  const warehouseComposition =
+    environment === 'warehouse' && Math.min(maxX - minX, maxZ - minZ) >= 64;
   const { json: original, bin: originalBin, models } = readLibrary();
   const json = structuredClone(original);
   const roots = [],
@@ -191,13 +195,31 @@ export function builtinWorldScene(course) {
     json.nodes.push(node);
     return next;
   };
-  function edge(name, side, along, height, gap = 1, offsetY = 0) {
+  function edge(name, side, along, height, gap = 1, offsetY = 0, turn = 0) {
     const model = models.get(name);
     if (!model) throw new Error(`Missing built-in scenery: ${name}`);
     const scale = height / model.size[1];
-    const yaw = [0, -Math.PI / 2, Math.PI, Math.PI / 2][side];
-    const halfX = ((side % 2 ? model.size[2] : model.size[0]) * scale) / 2;
-    const halfZ = ((side % 2 ? model.size[0] : model.size[2]) * scale) / 2;
+    const yaw = [0, -Math.PI / 2, Math.PI, Math.PI / 2][side] + turn;
+    // Exact rotated box extents retain the edge clearance for irregular crowns.
+    // Keep legacy cardinal extents byte-stable for every other environment.
+    const cosine = Math.abs(Math.cos(yaw)),
+      sine = Math.abs(Math.sin(yaw)),
+      halfX =
+        ((turn
+          ? model.size[0] * cosine + model.size[2] * sine
+          : side % 2
+            ? model.size[2]
+            : model.size[0]) *
+          scale) /
+        2,
+      halfZ =
+        ((turn
+          ? model.size[0] * sine + model.size[2] * cosine
+          : side % 2
+            ? model.size[0]
+            : model.size[2]) *
+          scale) /
+        2;
     const x =
       side === 1
         ? maxX + gap + halfX
@@ -243,12 +265,30 @@ export function builtinWorldScene(course) {
           0.96,
           Math.max(0.04, (i + 0.5 + Math.sin(i * 2.7 + side) * 0.22) / count),
         );
+        // Four distinct groves, with outer trees behind the near silhouettes.
+        // Reuse the existing forty models: depth comes from composition, not
+        // additional meshes. Benches retain the original accessible edge rhythm.
+        const woodland = environment === 'woodland';
+        const grove = Math.floor(i / 3);
+        const centres = [0.13, 0.38, 0.67, 0.89];
+        const treeAlong = woodland
+          ? Math.max(
+              0.04,
+              Math.min(
+                0.96,
+                centres[grove] + ((i % 3) - 1) * 0.055 + Math.sin(side * 2 + grove) * 0.025,
+              ),
+            )
+          : along;
+        const rear = i % 3 === 1;
         retro(
           (i + side) % 3 === 0 ? 'tree-park-pine-large' : 'tree-park-large',
           side,
-          along,
-          environment === 'woodland' ? 5.5 + ((i * 3 + side) % 5) * 1.2 : 5.2 + (i % 2),
-          environment === 'woodland' ? 1.5 + ((i + side) % 3) * 2 : 3.5,
+          treeAlong,
+          woodland ? (rear ? 9.5 : 5.5) + ((i + side) % 3) * 1.1 : 5.2 + (i % 2),
+          woodland ? (rear ? 10 : 2) + ((i + side) % 3) * 1.4 : 3.5,
+          0,
+          environment === 'woodland' ? (i + side * count) * 2.399963229728653 : 0,
         );
         if (i % 4 === 1) retro('detail-bench', side, along, 1.1, 1.2);
       }
@@ -298,6 +338,26 @@ export function builtinWorldScene(course) {
     // Distinct industrial settings, not the same mirrored row on every side.
     const yard = environment === 'container-yard';
     const garage = environment === 'garage';
+    // Each yard edge has a recognizable skyline: tower depot, storage stacks,
+    // tank-side sheds and truck services. Existing models/counts stay bounded.
+    const yardFrontages = [
+      { along: [0.12, 0.31, 0.52], heights: [12, 17, 11], gap: 19 },
+      { along: [0.2, 0.51, 0.81], heights: [10, 12, 16], gap: 23 },
+      { along: [0.32, 0.59, 0.83], heights: [10, 11, 13], gap: 16 },
+      { along: [0.13, 0.36, 0.6], heights: [16, 11, 10], gap: 20 },
+    ];
+    // Offset the two industrial backlines behind connected window bays.
+    // The northern tank clears the first building's nearest face by 0.55 m.
+    const warehouseFrontages = [
+      { along: [0.15, 0.52, 0.82], gaps: [16, 20, 15] },
+      { along: [0.2, 0.48, 0.78], gaps: [22, 16, 20] },
+    ];
+    const yardStacks = [
+      [0.12, 0.24, 0.5, 0.62],
+      [0.22, 0.34, 0.46, 0.58],
+      [0.27, 0.39, 0.61, 0.73],
+      [0.12, 0.24, 0.4, 0.52],
+    ];
     for (let side = 0; side < 4; side++) {
       if (yard || side % 2 === 0) {
         const buildings = garage
@@ -307,15 +367,25 @@ export function builtinWorldScene(course) {
           industrial(
             name,
             side,
-            (i + 0.5) / buildings.length,
-            (garage ? 14 : 10) + i * 2 + side,
-            garage ? 24 : 14,
+            yard
+              ? yardFrontages[side].along[i]
+              : warehouseComposition
+                ? warehouseFrontages[side / 2].along[i]
+                : (i + 0.5) / buildings.length,
+            yard ? yardFrontages[side].heights[i] : (garage ? 14 : 10) + i * 2 + side,
+            yard
+              ? yardFrontages[side].gap
+              : warehouseComposition
+                ? warehouseFrontages[side / 2].gaps[i]
+                : garage
+                  ? 24
+                  : 14,
           ),
         );
       }
       if (!garage && (yard || side === 1)) {
         for (let i = 0; i < (yard ? 4 : 2); i++) {
-          const along = 0.16 + i * 0.17;
+          const along = yard ? yardStacks[side][i] : 0.16 + i * 0.17;
           const name = (side + i) % 2 ? 'shipping-container-a' : 'shipping-container-b';
           industrial(name, side, along, 2.8, 1.5 + (i % 2) * 0.4);
           if (yard && (i + side) % 3 !== 0)
@@ -340,8 +410,23 @@ export function builtinWorldScene(course) {
     } else if (!garage) industrial('detail-tank', 0, 0.04, 6, 8);
   }
   if (environment === 'warehouse') {
-    for (let side = 0; side < 4; side++)
-      for (let i = 0; i < 8; i++) retro('wall-a-flat-window', side, (i + 0.5) / 8, 6, 0.5, 2.5);
+    // Two four-bay runs read as a frontage rather than isolated floating panels.
+    // Reuse all 32 six-metre panels with a four-centimetre construction joint.
+    const centres = [
+      [0.25, 0.69],
+      [0.3, 0.75],
+      [0.29, 0.74],
+      [0.24, 0.7],
+    ];
+    for (let side = 0; side < 4; side++) {
+      const span = side % 2 ? maxZ - minZ : maxX - minX;
+      for (let i = 0; i < 8; i++) {
+        const along = warehouseComposition
+          ? centres[side][Math.floor(i / 4)] + (((i % 4) - 1.5) * 6.04) / span
+          : (i + 0.5) / 8;
+        retro('wall-a-flat-window', side, along, 6, 0.5, 2.5);
+      }
+    }
   }
   json.scenes = [{ name: `${environment} · Kenney CC0 scenery`, nodes: roots }];
   json.scene = 0;
@@ -356,6 +441,38 @@ export function builtinWorldScene(course) {
   const bin = instanceScenery(json, roots, placements, originalBin);
   const pixels =
     environment === 'warehouse' || environment === 'stadium' || course?.world?.theme === 'pixel';
+  // glTF defaults omitted metallicFactor to 1. These closed-library park
+  // surfaces are dielectric; the original textures describe colour, not metal.
+  // Scope to the natural Woodland presentation, never arbitrary creator imports.
+  if (
+    environment === 'woodland' &&
+    !pixels &&
+    resolveSimThemeProfile(typeof course === 'object' ? course : { environment }).textureFilter !==
+      'nearest'
+  ) {
+    const surfaces = {
+      treeA: [0, 1],
+      treeB: [0, 1],
+      dirt: [0, 1],
+      planks: [0, 0.92],
+      concreteSmooth: [0, 0.86],
+      concrete: [0, 0.94],
+      metal: [0.35, 0.64],
+      wall_metal: [0.08, 0.76],
+    };
+    for (const material of json.materials ?? []) {
+      const surface = surfaces[material.name];
+      if (!surface) continue;
+      // This library was authored unlit. Natural scenery should receive the
+      // world's lighting; explicit metalness avoids glTF's metallic default.
+      if (material.extensions) delete material.extensions.KHR_materials_unlit;
+      material.pbrMetallicRoughness = {
+        ...material.pbrMetallicRoughness,
+        metallicFactor: surface[0],
+        roughnessFactor: surface[1],
+      };
+    }
+  }
   if (pixels)
     for (const sampler of json.samplers ?? []) {
       sampler.magFilter = 9728;

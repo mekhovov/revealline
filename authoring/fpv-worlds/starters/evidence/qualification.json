@@ -1,0 +1,801 @@
+{
+  "format": "FPVCreatorStarterQualification.v1",
+  "passed": true,
+  "projects": 10,
+  "archiveRoundTrips": 20,
+  "reproducibleArchives": 20,
+  "stableStudioDefinitionSplits": 10,
+  "nominalRoutes": 20,
+  "completedReplays": 20,
+  "runtimeSourceBytesAdded": 0,
+  "limitsChanged": false,
+  "browserQualification": "pending",
+  "verificationSources": [
+    {
+      "path": "authoring/fpv-worlds/starters/build.mjs",
+      "sha256": "ccf861eba3713a2dd3aba6013f3dc7e168ef78003005f859e097928704c4fe02"
+    },
+    {
+      "path": "scripts/qualify-fpv-adventures.mjs",
+      "sha256": "cc24b5a389bd6875b8e3361c189ecea0348a7e86da827e393423c519ae2fa646"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/world-model.mjs",
+      "sha256": "ce94192472f8cc0be1a70ec2dcdf7dc728956f55f589bb84335c851737f54d3e"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/world-collision.mjs",
+      "sha256": "2899c7c84f9eae14b9a3434f585a8e873f4a1361e8f3ce4026ef27f44bdeef32"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/content-definitions.mjs",
+      "sha256": "e3808d22cc3dc294311533a16164aced16f342eb9d4b1b22b77d279b2e8dcbfd"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/world-content.mjs",
+      "sha256": "aa3788b42d2e6379be68a4d76abb10667e7adb260fe00580a963ab09324f0df0"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/world-zip.mjs",
+      "sha256": "874b371c817810a5869bc3ba37c94ff6fae4fc5cd418298f35340d2ce09039c8"
+    }
+  ],
+  "limitations": [
+    "Nominal swept paths are guidance, not clearance guarantees for other flight lines.",
+    "Airborne probes expand the sphere by 0.5 m around its original center. Takeoff/landing segments use the actual drone radius; floor contact is allowed only at landing.",
+    "Current spatial editing targets Self-level when routes differ; Acro remains editable in Challenge JSON.",
+    "No physical-device, novice, performance or complete D4 acceptance is claimed."
+  ],
+  "results": [
+    {
+      "id": "creator-industrial-chicane",
+      "title": {
+        "en": "Industrial starter · Chicane",
+        "uk": "Промисловий шаблон · Шикана"
+      },
+      "source": {
+        "path": "authoring/fpv-worlds/starters/projects/creator-industrial-chicane.json",
+        "sha256": "473d2d452dc5a44c9336411eb60d59a58fbc2949e7784933141df3d0bc222192",
+        "bytes": 16263
+      },
+      "artifacts": {
+        "zip": {
+          "path": "creator-industrial-chicane.zip",
+          "sha256": "a38f63f73b8b46cf615ed97b80aebb55e860c7f7058b2e004e92c662df3c23e3",
+          "bytes": 13205
+        },
+        "rlpack": {
+          "path": "creator-industrial-chicane.rlpack",
+          "sha256": "a9432ce8133f4666d39f874e87cbfbebf094ce18b55288b457e555edb381472e",
+          "bytes": 13146
+        },
+        "project.json": {
+          "path": "creator-industrial-chicane.project.json",
+          "sha256": "e45355957743477f921a1e2bf71fd0332dafafe363963dcbc953e5c6f1758fe7",
+          "bytes": 13084
+        }
+      },
+      "clearance": [
+        {
+          "mode": "self-level",
+          "points": 16,
+          "segments": 15,
+          "airborneProbeRadiusMm": 720,
+          "groundEndpointSegmentsAtDroneRadius": 2,
+          "passed": true
+        },
+        {
+          "mode": "acro",
+          "points": 15,
+          "segments": 14,
+          "airborneProbeRadiusMm": 720,
+          "groundEndpointSegmentsAtDroneRadius": 2,
+          "passed": true
+        }
+      ],
+      "flights": [
+        {
+          "mode": "self-level",
+          "status": "complete",
+          "ticks": 2685,
+          "contacts": 0,
+          "proof": {
+            "path": "creator-industrial-chicane-route-self-level.proof.json",
+            "sha256": "da4bbae37694c6b89c5a13e022e6151a2d005e6e10e79a2bdc01f86cf15951a2",
+            "bytes": 48731
+          },
+          "stateIdentity": "99311d77d1126596",
+          "replayMatched": true
+        },
+        {
+          "mode": "acro",
+          "status": "complete",
+          "ticks": 2466,
+          "contacts": 0,
+          "proof": {
+            "path": "creator-industrial-chicane-route-acro.proof.json",
+            "sha256": "6a938f113704d46e7db9fac9d2cf6706b3161a7685ea2e088873dd433ace1b49",
+            "bytes": 41523
+          },
+          "stateIdentity": "83273a6131a39fcc",
+          "replayMatched": true
+        }
+      ]
+    },
+    {
+      "id": "creator-industrial-climb",
+      "title": {
+        "en": "Industrial starter · Climb",
+        "uk": "Промисловий шаблон · Набір висоти"
+      },
+      "source": {
+        "path": "authoring/fpv-worlds/starters/projects/creator-industrial-climb.json",
+        "sha256": "0ed8d3e2c208157556c37bf491c136ceb64ec309ccf7a4137026720ef4508d7b",
+        "bytes": 16287
+      },
+      "artifacts": {
+        "zip": {
+          "path": "creator-industrial-climb.zip",
+          "sha256": "c6de502a60bbe27238284899b03fb7dfaffbb13e5984f394c2913b84fd23710f",
+          "bytes": 13245
+        },
+        "rlpack": {
+          "path": "creator-industrial-climb.rlpack",
+          "sha256": "2b208a4f6a0f21d54d3a5ddca9abc445487bab12ef9db9ad32f62587b9bf3139",
+          "bytes": 13186
+        },
+        "project.json": {
+          "path": "creator-industrial-climb.project.json",
+          "sha256": "dbb235f466fb315b26649e6c5adbc5a25f6b23257e6a2e7a67aa0c58a29b3b6a",
+          "bytes": 13124
+        }
+      },
+      "clearance": [
+        {
+          "mode": "self-level",
+          "points": 16,
+          "segments": 15,
+          "airborneProbeRadiusMm": 720,
+          "groundEndpointSegmentsAtDroneRadius": 2,
+          "passed": true
+        },
+        {
+          "mode": "acro",
+          "points": 15,
+          "segments": 14,
+          "airborneProbeRadiusMm": 720,
+          "groundEndpointSegmentsAtDroneRadius": 2,
+          "passed": true
+        }
+      ],
+      "flights": [
+        {
+          "mode": "self-level",
+          "status": "complete",
+          "ticks": 2592,
+          "contacts": 0,
+          "proof": {
+            "path": "creator-industrial-climb-route-self-level.proof.json",
+            "sha256": "7affa8de50812d0e2e25dc065d50727545e8e2f4da392095940536031897ee6a",
+            "bytes": 44633
+          },
+          "stateIdentity": "f7afe5ba57c2a2de",
+          "replayMatched": true
+        },
+        {
+          "mode": "acro",
+          "status": "complete",
+          "ticks": 2652,
+          "contacts": 0,
+          "proof": {
+            "path": "creator-industrial-climb-route-acro.proof.json",
+            "sha256": "f4a38c98ea09d2fec154fa1bd87de863232a786a0d02b7c7c34082a3151ae534",
+            "bytes": 44265
+          },
+          "stateIdentity": "94f18693d0668728",
+          "replayMatched": true
+        }
+      ]
+    },
+    {
+      "id": "creator-industrial-hairpin",
+      "title": {
+        "en": "Industrial starter · Hairpin",
+        "uk": "Промисловий шаблон · Розворот"
+      },
+      "source": {
+        "path": "authoring/fpv-worlds/starters/projects/creator-industrial-hairpin.json",
+        "sha256": "62bd6e5ba141a0e8411aeba85721c7435e2489b6a598e1c11a6dc6aac9b13cd4",
+        "bytes": 19088
+      },
+      "artifacts": {
+        "zip": {
+          "path": "creator-industrial-hairpin.zip",
+          "sha256": "53afce27140f2fba2395a6b235cc9a7577e099d6729f98fe4bdf3ba31f3aa4d6",
+          "bytes": 14986
+        },
+        "rlpack": {
+          "path": "creator-industrial-hairpin.rlpack",
+          "sha256": "29e4a9aa461d4905e2e55b10f381db1397c0982f43b18ce9dd50456a29022aad",
+          "bytes": 14927
+        },
+        "project.json": {
+          "path": "creator-industrial-hairpin.project.json",
+          "sha256": "7c503a341205b9bf22faecb07d546d3cf002b937d9996c819b505d70a70318fd",
+          "bytes": 14865
+        }
+      },
+      "clearance": [
+        {
+          "mode": "self-level",
+          "points": 18,
+          "segments": 17,
+          "airborneProbeRadiusMm": 720,
+          "groundEndpointSegmentsAtDroneRadius": 2,
+          "passed": true
+        },
+        {
+          "mode": "acro",
+          "points": 17,
+          "segments": 16,
+          "airborneProbeRadiusMm": 720,
+          "groundEndpointSegmentsAtDroneRadius": 2,
+          "passed": true
+        }
+      ],
+      "flights": [
+        {
+          "mode": "self-level",
+          "status": "complete",
+          "ticks": 2863,
+          "contacts": 0,
+          "proof": {
+            "path": "creator-industrial-hairpin-route-self-level.proof.json",
+            "sha256": "680ffb300eac43db1405f563bc5c5b9991337c92933eb3127cc26385809e0a20",
+            "bytes": 51488
+          },
+          "stateIdentity": "93b2f8f592ee6c2f",
+          "replayMatched": true
+        },
+        {
+          "mode": "acro",
+          "status": "complete",
+          "ticks": 2761,
+          "contacts": 0,
+          "proof": {
+            "path": "creator-industrial-hairpin-route-acro.proof.json",
+            "sha256": "8c039ca9174a2486aa4f432c63c3f978b78da135a3c6e29f376b74442d7cb866",
+            "bytes": 46445
+          },
+          "stateIdentity": "ce0d6c4882b7d15b",
+          "replayMatched": true
+        }
+      ]
+    },
+    {
+      "id": "creator-industrial-split-level",
+      "title": {
+        "en": "Industrial starter · Split level",
+        "uk": "Промисловий шаблон · Два рівні"
+      },
+      "source": {
+        "path": "authoring/fpv-worlds/starters/projects/creator-industrial-split-level.json",
+        "sha256": "5519060e3bdde4fedfcef203aec3d1ae49a709e20bcc4011a72d5f2934cc1b06",
+        "bytes": 22540
+      },
+      "artifacts": {
+        "zip": {
+          "path": "creator-industrial-split-level.zip",
+          "sha256": "dbf62085ac11aca531d70fd445fa00f8beb597aa7728a01f436b2dd495a05091",
+          "bytes": 17131
+        },
+        "rlpack": {
+          "path": "creator-industrial-split-level.rlpack",
+          "sha256": "311b04890037f6b5681dd1fd0067f72292a888bfd2e8cb5b605e8de707aa8711",
+          "bytes": 17072
+        },
+        "project.json": {
+          "path": "creator-industrial-split-level.project.json",
+          "sha256": "de65279eb9a113f31cccf0a87817fa7d8eb3466df2c729f96a2be1dad648e316",
+          "bytes": 17010
+        }
+      },
+      "clearance": [
+        {
+          "mode": "self-level",
+          "points": 21,
+          "segments": 20,
+          "airborneProbeRadiusMm": 720,
+          "groundEndpointSegmentsAtDroneRadius": 2,
+          "passed": true
+        },
+        {
+          "mode": "acro",
+          "points": 22,
+          "segments": 21,
+          "airborneProbeRadiusMm": 720,
+          "groundEndpointSegmentsAtDroneRadius": 2,
+          "passed": true
+        }
+      ],
+      "flights": [
+        {
+          "mode": "self-level",
+          "status": "complete",
+          "ticks": 4024,
+          "contacts": 0,
+          "proof": {
+            "path": "creator-industrial-split-level-route-self-level.proof.json",
+            "sha256": "24fd7325b726fa7eeb296754fe54a98fc6b5d31688b8968a1cafa7abd510b007",
+            "bytes": 71108
+          },
+          "stateIdentity": "c6a52efd455aeefa",
+          "replayMatched": true
+        },
+        {
+          "mode": "acro",
+          "status": "complete",
+          "ticks": 3670,
+          "contacts": 0,
+          "proof": {
+            "path": "creator-industrial-split-level-route-acro.proof.json",
+            "sha256": "9902a6867bdf63597320a36f4dfd3ae96f676e4e99c3c07c7558b5b468cf39af",
+            "bytes": 61130
+          },
+          "stateIdentity": "4a4560272f8dc41a",
+          "replayMatched": true
+        }
+      ]
+    },
+    {
+      "id": "creator-industrial-sweeper",
+      "title": {
+        "en": "Industrial starter · Sweeper",
+        "uk": "Промисловий шаблон · Плавний поворот"
+      },
+      "source": {
+        "path": "authoring/fpv-worlds/starters/projects/creator-industrial-sweeper.json",
+        "sha256": "59d2fb9f3eef82bce6ec2ddf59fb8d0db148d843a012d81da00eca365e1b6dba",
+        "bytes": 16410
+      },
+      "artifacts": {
+        "zip": {
+          "path": "creator-industrial-sweeper.zip",
+          "sha256": "957a3103c0cfff61e6881ca1064e1c276abd88b8c55603081dcaaa445f86d2df",
+          "bytes": 13473
+        },
+        "rlpack": {
+          "path": "creator-industrial-sweeper.rlpack",
+          "sha256": "5ec66334e3fae9c3b19a5270a48a0d37bf5ee7ca4dc8b23e1ba075766acc931f",
+          "bytes": 13414
+        },
+        "project.json": {
+          "path": "creator-industrial-sweeper.project.json",
+          "sha256": "27b2fd694f35cf975344fc26555638e426f00bab07d1dab9d8f60bd9883fed7c",
+          "bytes": 13352
+        }
+      },
+      "clearance": [
+        {
+          "mode": "self-level",
+          "points": 14,
+          "segments": 13,
+          "airborneProbeRadiusMm": 720,
+          "groundEndpointSegmentsAtDroneRadius": 2,
+          "passed": true
+        },
+        {
+          "mode": "acro",
+          "points": 13,
+          "segments": 12,
+          "airborneProbeRadiusMm": 720,
+          "groundEndpointSegmentsAtDroneRadius": 2,
+          "passed": true
+        }
+      ],
+      "flights": [
+        {
+          "mode": "self-level",
+          "status": "complete",
+          "ticks": 2108,
+          "contacts": 0,
+          "proof": {
+            "path": "creator-industrial-sweeper-route-self-level.proof.json",
+            "sha256": "d5ec64effd17c697cb59439f22e3dcdf0ab9d2693d588aef50ac9f3c8b0e7b33",
+            "bytes": 38957
+          },
+          "stateIdentity": "40d812661d495a25",
+          "replayMatched": true
+        },
+        {
+          "mode": "acro",
+          "status": "complete",
+          "ticks": 2081,
+          "contacts": 0,
+          "proof": {
+            "path": "creator-industrial-sweeper-route-acro.proof.json",
+            "sha256": "d64d6bc6e37170a55b1a09545b5a0b671612a68c13b3f16fa800d67167cc6db3",
+            "bytes": 35832
+          },
+          "stateIdentity": "d9787d1a7f83c99e",
+          "replayMatched": true
+        }
+      ]
+    },
+    {
+      "id": "creator-natural-chicane",
+      "title": {
+        "en": "Natural starter · Chicane",
+        "uk": "Природний шаблон · Шикана"
+      },
+      "source": {
+        "path": "authoring/fpv-worlds/starters/projects/creator-natural-chicane.json",
+        "sha256": "7f0f692aeda95508c60ded5123a139c1d8eec4cdf14973e1e925f70dd80ee425",
+        "bytes": 16247
+      },
+      "artifacts": {
+        "zip": {
+          "path": "creator-natural-chicane.zip",
+          "sha256": "a6e31163b64e84af11490920d8dd294e3ff2da64c9e3bbf3cc9d3dc13c1d66cd",
+          "bytes": 13210
+        },
+        "rlpack": {
+          "path": "creator-natural-chicane.rlpack",
+          "sha256": "57faa0a517dd4e066579647209207e6ad59691ade5f85615f7281a6805daf504",
+          "bytes": 13151
+        },
+        "project.json": {
+          "path": "creator-natural-chicane.project.json",
+          "sha256": "8088eac3e1a8b4382db0c5b3723ab128d619e7b1ac3cf10d91cb99fe9c49dc1d",
+          "bytes": 13089
+        }
+      },
+      "clearance": [
+        {
+          "mode": "self-level",
+          "points": 16,
+          "segments": 15,
+          "airborneProbeRadiusMm": 720,
+          "groundEndpointSegmentsAtDroneRadius": 2,
+          "passed": true
+        },
+        {
+          "mode": "acro",
+          "points": 15,
+          "segments": 14,
+          "airborneProbeRadiusMm": 720,
+          "groundEndpointSegmentsAtDroneRadius": 2,
+          "passed": true
+        }
+      ],
+      "flights": [
+        {
+          "mode": "self-level",
+          "status": "complete",
+          "ticks": 2685,
+          "contacts": 0,
+          "proof": {
+            "path": "creator-natural-chicane-route-self-level.proof.json",
+            "sha256": "4ffb93efd3d8473033d8df2e1be7ff416089cf64f566ded844c5dd450491fbd2",
+            "bytes": 48728
+          },
+          "stateIdentity": "99311d77d1126596",
+          "replayMatched": true
+        },
+        {
+          "mode": "acro",
+          "status": "complete",
+          "ticks": 2466,
+          "contacts": 0,
+          "proof": {
+            "path": "creator-natural-chicane-route-acro.proof.json",
+            "sha256": "e5aa2e8b2acbfc6fbdef95a107fc4736f059451af3934d94fbb3d28e9ab01ad8",
+            "bytes": 41520
+          },
+          "stateIdentity": "83273a6131a39fcc",
+          "replayMatched": true
+        }
+      ]
+    },
+    {
+      "id": "creator-natural-climb",
+      "title": {
+        "en": "Natural starter · Climb",
+        "uk": "Природний шаблон · Набір висоти"
+      },
+      "source": {
+        "path": "authoring/fpv-worlds/starters/projects/creator-natural-climb.json",
+        "sha256": "787c0bf33cd1f538c1418cc9c8f0eded4ea1db44c362c47d05dc9762954db338",
+        "bytes": 16271
+      },
+      "artifacts": {
+        "zip": {
+          "path": "creator-natural-climb.zip",
+          "sha256": "afcdc9e70ce307accff31f1590b49d0eab0cd1f54ff52d91eb6e83f43a1ff9aa",
+          "bytes": 13250
+        },
+        "rlpack": {
+          "path": "creator-natural-climb.rlpack",
+          "sha256": "bfa14ef04e9193b6a6f3079f4e439db4a443a201a49201cd91e480fd2574ed6b",
+          "bytes": 13191
+        },
+        "project.json": {
+          "path": "creator-natural-climb.project.json",
+          "sha256": "a6f684632e8f76cdb0cd7eb4ec6adb8c1e3ad8be0d45d9ac60a39eaf969b99c6",
+          "bytes": 13129
+        }
+      },
+      "clearance": [
+        {
+          "mode": "self-level",
+          "points": 16,
+          "segments": 15,
+          "airborneProbeRadiusMm": 720,
+          "groundEndpointSegmentsAtDroneRadius": 2,
+          "passed": true
+        },
+        {
+          "mode": "acro",
+          "points": 15,
+          "segments": 14,
+          "airborneProbeRadiusMm": 720,
+          "groundEndpointSegmentsAtDroneRadius": 2,
+          "passed": true
+        }
+      ],
+      "flights": [
+        {
+          "mode": "self-level",
+          "status": "complete",
+          "ticks": 2592,
+          "contacts": 0,
+          "proof": {
+            "path": "creator-natural-climb-route-self-level.proof.json",
+            "sha256": "b3a716e2189dbb13743c7f6c8c5c3168a235e14bd4b93b380d4a790e0a81c868",
+            "bytes": 44630
+          },
+          "stateIdentity": "f7afe5ba57c2a2de",
+          "replayMatched": true
+        },
+        {
+          "mode": "acro",
+          "status": "complete",
+          "ticks": 2652,
+          "contacts": 0,
+          "proof": {
+            "path": "creator-natural-climb-route-acro.proof.json",
+            "sha256": "86e1cfbec0902dcf8d671e0d2f7541e438628e60a7d8fc368b5e41b5b0b127d1",
+            "bytes": 44262
+          },
+          "stateIdentity": "94f18693d0668728",
+          "replayMatched": true
+        }
+      ]
+    },
+    {
+      "id": "creator-natural-hairpin",
+      "title": {
+        "en": "Natural starter · Hairpin",
+        "uk": "Природний шаблон · Розворот"
+      },
+      "source": {
+        "path": "authoring/fpv-worlds/starters/projects/creator-natural-hairpin.json",
+        "sha256": "227b6039d658d9043728168d359715d203eb12d7a98e70a59ad43bb1c3b76ab1",
+        "bytes": 19072
+      },
+      "artifacts": {
+        "zip": {
+          "path": "creator-natural-hairpin.zip",
+          "sha256": "60383fe16c8cceb0e0c68b9a42a837e24b61523f69eea79818d60a184150e0ec",
+          "bytes": 14991
+        },
+        "rlpack": {
+          "path": "creator-natural-hairpin.rlpack",
+          "sha256": "dc24ab92321f0e011eb23d03de9625634e60e1c716556bf9f9daf06622cdcbce",
+          "bytes": 14932
+        },
+        "project.json": {
+          "path": "creator-natural-hairpin.project.json",
+          "sha256": "23aedc8d52b189f07404d4fe7708f4e5f33e92490713b0ef74784c4da2ff9c37",
+          "bytes": 14870
+        }
+      },
+      "clearance": [
+        {
+          "mode": "self-level",
+          "points": 18,
+          "segments": 17,
+          "airborneProbeRadiusMm": 720,
+          "groundEndpointSegmentsAtDroneRadius": 2,
+          "passed": true
+        },
+        {
+          "mode": "acro",
+          "points": 17,
+          "segments": 16,
+          "airborneProbeRadiusMm": 720,
+          "groundEndpointSegmentsAtDroneRadius": 2,
+          "passed": true
+        }
+      ],
+      "flights": [
+        {
+          "mode": "self-level",
+          "status": "complete",
+          "ticks": 2863,
+          "contacts": 0,
+          "proof": {
+            "path": "creator-natural-hairpin-route-self-level.proof.json",
+            "sha256": "56b2e048b0b72c434d9794dc8f2758b23f3b93808bb01d7358f3fa48713312b0",
+            "bytes": 51485
+          },
+          "stateIdentity": "93b2f8f592ee6c2f",
+          "replayMatched": true
+        },
+        {
+          "mode": "acro",
+          "status": "complete",
+          "ticks": 2761,
+          "contacts": 0,
+          "proof": {
+            "path": "creator-natural-hairpin-route-acro.proof.json",
+            "sha256": "9952decab19e00ad8d59849c80c26c132017cc84c0e3de477b3c6d03fd48d423",
+            "bytes": 46442
+          },
+          "stateIdentity": "ce0d6c4882b7d15b",
+          "replayMatched": true
+        }
+      ]
+    },
+    {
+      "id": "creator-natural-split-level",
+      "title": {
+        "en": "Natural starter · Split level",
+        "uk": "Природний шаблон · Два рівні"
+      },
+      "source": {
+        "path": "authoring/fpv-worlds/starters/projects/creator-natural-split-level.json",
+        "sha256": "2b3d342f977bdb019ad63cf89d4c22b0c51c8576bacfba8958094efbae519368",
+        "bytes": 22524
+      },
+      "artifacts": {
+        "zip": {
+          "path": "creator-natural-split-level.zip",
+          "sha256": "8838af5aafd846e8ac295722826d4d8155b9a1bbf46b07aa1a332214e6107f51",
+          "bytes": 17136
+        },
+        "rlpack": {
+          "path": "creator-natural-split-level.rlpack",
+          "sha256": "da38079e1b4ce6ec7e2a657e0e9b48cc293856fb4f6caa96e268071efd000725",
+          "bytes": 17077
+        },
+        "project.json": {
+          "path": "creator-natural-split-level.project.json",
+          "sha256": "e3a75450439cac610bc2feccc5bcc2103cd73f3e3e9fc6cef33d2bce37d1338e",
+          "bytes": 17015
+        }
+      },
+      "clearance": [
+        {
+          "mode": "self-level",
+          "points": 21,
+          "segments": 20,
+          "airborneProbeRadiusMm": 720,
+          "groundEndpointSegmentsAtDroneRadius": 2,
+          "passed": true
+        },
+        {
+          "mode": "acro",
+          "points": 22,
+          "segments": 21,
+          "airborneProbeRadiusMm": 720,
+          "groundEndpointSegmentsAtDroneRadius": 2,
+          "passed": true
+        }
+      ],
+      "flights": [
+        {
+          "mode": "self-level",
+          "status": "complete",
+          "ticks": 4024,
+          "contacts": 0,
+          "proof": {
+            "path": "creator-natural-split-level-route-self-level.proof.json",
+            "sha256": "5f541ad9e760e8ac4aa2941f5f0fd9137c18565d9c3e10efada08f08144af9d1",
+            "bytes": 71105
+          },
+          "stateIdentity": "c6a52efd455aeefa",
+          "replayMatched": true
+        },
+        {
+          "mode": "acro",
+          "status": "complete",
+          "ticks": 3670,
+          "contacts": 0,
+          "proof": {
+            "path": "creator-natural-split-level-route-acro.proof.json",
+            "sha256": "72666169d699fd3862189bfb38d26c10d92b89343b97e88d31af6def019c17b8",
+            "bytes": 61127
+          },
+          "stateIdentity": "4a4560272f8dc41a",
+          "replayMatched": true
+        }
+      ]
+    },
+    {
+      "id": "creator-natural-sweeper",
+      "title": {
+        "en": "Natural starter · Sweeper",
+        "uk": "Природний шаблон · Плавний поворот"
+      },
+      "source": {
+        "path": "authoring/fpv-worlds/starters/projects/creator-natural-sweeper.json",
+        "sha256": "3a414b1692c4e51a1e41206d777f88c9f011690c37dc12c154eeb852d76f7c1b",
+        "bytes": 16394
+      },
+      "artifacts": {
+        "zip": {
+          "path": "creator-natural-sweeper.zip",
+          "sha256": "a7377941a5c889669a7f82d5a591fc71fcaf285a1dc0dd81d1a21c6b2c19d745",
+          "bytes": 13478
+        },
+        "rlpack": {
+          "path": "creator-natural-sweeper.rlpack",
+          "sha256": "6b694e25e27b7cecc49c5bb7abc1eb4aa339fdd8825ec87c1c508722ee56f120",
+          "bytes": 13419
+        },
+        "project.json": {
+          "path": "creator-natural-sweeper.project.json",
+          "sha256": "398c469274c5caab97ca1d1ad0b135438ef914ec3fde9955707abdc05d449c87",
+          "bytes": 13357
+        }
+      },
+      "clearance": [
+        {
+          "mode": "self-level",
+          "points": 14,
+          "segments": 13,
+          "airborneProbeRadiusMm": 720,
+          "groundEndpointSegmentsAtDroneRadius": 2,
+          "passed": true
+        },
+        {
+          "mode": "acro",
+          "points": 13,
+          "segments": 12,
+          "airborneProbeRadiusMm": 720,
+          "groundEndpointSegmentsAtDroneRadius": 2,
+          "passed": true
+        }
+      ],
+      "flights": [
+        {
+          "mode": "self-level",
+          "status": "complete",
+          "ticks": 2108,
+          "contacts": 0,
+          "proof": {
+            "path": "creator-natural-sweeper-route-self-level.proof.json",
+            "sha256": "84535b96ea254059afd696f44e9f3f93d97c44451c762323827ea5c7b6116757",
+            "bytes": 38954
+          },
+          "stateIdentity": "40d812661d495a25",
+          "replayMatched": true
+        },
+        {
+          "mode": "acro",
+          "status": "complete",
+          "ticks": 2081,
+          "contacts": 0,
+          "proof": {
+            "path": "creator-natural-sweeper-route-acro.proof.json",
+            "sha256": "feef325d16059ebe2ca81d9017492ef1d7f9899afdc590fcc86e21660a487df9",
+            "bytes": 35829
+          },
+          "stateIdentity": "d9787d1a7f83c99e",
+          "replayMatched": true
+        }
+      ]
+    }
+  ]
+}

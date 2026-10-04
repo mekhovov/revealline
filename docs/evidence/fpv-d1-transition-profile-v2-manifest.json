@@ -1,0 +1,205 @@
+{
+  "format": "FPVD1BoundedTransitionProfileManifest.v1",
+  "sourceHead": "e572026ba357f3194bf47e7137a0817cacb1a640",
+  "sourceTree": "6a90e48f99151041d899b4b8d6b2de5fcffd8b2f",
+  "sourceMode": "committed-source",
+  "sourceFiles": {
+    "/optional-practice/civilian-fpv/world-model.mjs": "ce94192472f8cc0be1a70ec2dcdf7dc728956f55f589bb84335c851737f54d3e",
+    "/game/data-json.mjs": "9ce33d6173f3cba8587ed7a7f1924c66e9d9c86ffa59b37a743764ea0b01f7bd",
+    "/game/i18n/index.mjs": "29f40a6d92826ced1eb53283ed32e342ac6e95920abbf8d549f2d78e65b48d07",
+    "/game/vendor/i18next-26.4.2.min.js": "eb0dd6d72e8f756b90faf864853af2a17870fe97b54473b7c34494870c65901c",
+    "/game/i18n/catalogs.mjs": "15a52267d8df3f90334f59084247d4a183c6e190e7460cdb6cc3464d29f8c75a",
+    "/game/i18n/bootstrap.mjs": "242e4791b2202d2644b91df5aa76355019890525af774ee2e795c937988b0395",
+    "/optional-practice/civilian-fpv/radio-profile.mjs": "f588fd5cda96ed9627a483f49ca843ace8d99a68fae42b0a4239c2cd0ab81933",
+    "/optional-practice/civilian-fpv/math.mjs": "555c8b6ea170b46992133507d2a3d867f06185bca060239cab7db9c9b87f9f98",
+    "/optional-practice/civilian-fpv/rotation-table.mjs": "2ddab304ac99a2e70fc7e84fc6c27eedb49f1f3dac976baed680effa659cef41",
+    "/optional-practice/civilian-fpv/model.mjs": "9e4cd11cfdde2dd43b437069b8cb7a359a8132495db806cb5f68e8674d48aaf6",
+    "/optional-practice/civilian-fpv/flight-sectors.mjs": "5b1b54bde4e578e61da7d59f4a80a86db9aafbc78b4523d2ba2b540277a0a16d",
+    "/optional-practice/civilian-fpv/world-themes.mjs": "67abda8ff53ba18e9aede45c57a8f9ec599dc0ddf7c977ce1d8ad2524e6c5549",
+    "/game/presentation/theme-system.mjs": "317e107e509f94449050c52f1756bd8436691f0d92bb8185aed697b3ba3127d6",
+    "/optional-practice/civilian-fpv/snake-hunt.mjs": "39ce47e8aaae6d7f3e70b8708d52fe2d22e90119318383f8298d8d0c4cc568da",
+    "/optional-practice/civilian-fpv/world-collision.mjs": "2899c7c84f9eae14b9a3434f585a8e873f4a1361e8f3ce4026ef27f44bdeef32",
+    "/optional-practice/civilian-fpv/vendor/rapier/rapier.mjs": "02dc6a4e2fffc013bab08fbb44fa68f501d8303615e9afe4c7d89ad4eedda0d0",
+    "/optional-practice/civilian-fpv/world-catalogue.mjs": "14f8523c829e9bdfdf8db5efb59169075be6045425222c615b846817694d24cc",
+    "/optional-practice/civilian-fpv/catalogue.mjs": "98338353d17eb585414538c9905040752fd5cd6699c48b17fa1706832b750997",
+    "/optional-practice/civilian-fpv/snake-hunt-catalogue.mjs": "a77f55d138fadd3642ae4cd20326d6f9ab8fc9fdce34a2497d6741b51ea3897a",
+    "/optional-practice/civilian-fpv/expressive-hunt-courses.mjs": "732c6d72dded07e7541965b3c250cfe339dd98ea49d22d2085b856cb869b9ede",
+    "/optional-practice/civilian-fpv/world-assets.mjs": "2670f199445373f9633ae259a046b704bcc5512887376e2498ab2e8e0055607e",
+    "/optional-practice/civilian-fpv/renderer.mjs": "0fa5a05706705fd6128d13b18a4714c7a8010bdfc2adc6ed96d7b43906647a75",
+    "/optional-practice/civilian-fpv/vendor/three.module.js": "9052042d676cb0fdc1ddfefe193053f34b7ac0513a616fdac4535d49987812ea",
+    "/optional-practice/civilian-fpv/vendor/three.core.js": "9edde002b066a9a05676a6127f67735b62baf399bdea529f2f7e31657da769e6",
+    "/game/hunt/actor-catalog.mjs": "a9d232092d58262ccd1008577b27ef8a99cb41abf8e3e962a2f34f3b8bc0df92",
+    "/game/hunt/preferences.mjs": "1dcc93e3b50f8964150731f97c22335d73aae413114712c0528b012acabb4324",
+    "/optional-practice/civilian-fpv/world-visuals.mjs": "640107863d738020223ed42c8654c533e40cea31b34355543c2b1809e417ea9b",
+    "/optional-practice/civilian-fpv/vendor/addons/loaders/GLTFLoader.js": "03952cb129d558f92b8e6c757fbf7c1f718b3126c4d34f264d574b40ea36054f",
+    "/optional-practice/civilian-fpv/vendor/addons/utils/BufferGeometryUtils.js": "259085a7dac89e0840393a9347c77123fbc4206ec2146bf0c29ffc72e14a2800",
+    "/optional-practice/civilian-fpv/vendor/addons/utils/SkeletonUtils.js": "28017bf37d0ecb0c4be6048db759ff14df729a562464830b064d4cc239c5af17",
+    "/optional-practice/civilian-fpv/vendor/addons/controls/TransformControls.js": "10f6d3e4c108dff62110f61a76749f9a1826c9781df9c3eb4ca0b5d9d2f5c4a8"
+  },
+  "files": [
+    {
+      "path": "optional-practice/civilian-fpv/world-model.mjs",
+      "bytes": 55549,
+      "sha256": "ce94192472f8cc0be1a70ec2dcdf7dc728956f55f589bb84335c851737f54d3e"
+    },
+    {
+      "path": "game/data-json.mjs",
+      "bytes": 5594,
+      "sha256": "9ce33d6173f3cba8587ed7a7f1924c66e9d9c86ffa59b37a743764ea0b01f7bd"
+    },
+    {
+      "path": "game/i18n/index.mjs",
+      "bytes": 417,
+      "sha256": "29f40a6d92826ced1eb53283ed32e342ac6e95920abbf8d549f2d78e65b48d07"
+    },
+    {
+      "path": "game/vendor/i18next-26.4.2.min.js",
+      "bytes": 43702,
+      "sha256": "eb0dd6d72e8f756b90faf864853af2a17870fe97b54473b7c34494870c65901c"
+    },
+    {
+      "path": "game/i18n/catalogs.mjs",
+      "bytes": 1193747,
+      "sha256": "15a52267d8df3f90334f59084247d4a183c6e190e7460cdb6cc3464d29f8c75a"
+    },
+    {
+      "path": "game/i18n/bootstrap.mjs",
+      "bytes": 13117,
+      "sha256": "242e4791b2202d2644b91df5aa76355019890525af774ee2e795c937988b0395"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/radio-profile.mjs",
+      "bytes": 18097,
+      "sha256": "f588fd5cda96ed9627a483f49ca843ace8d99a68fae42b0a4239c2cd0ab81933"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/math.mjs",
+      "bytes": 3062,
+      "sha256": "555c8b6ea170b46992133507d2a3d867f06185bca060239cab7db9c9b87f9f98"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/rotation-table.mjs",
+      "bytes": 7509,
+      "sha256": "2ddab304ac99a2e70fc7e84fc6c27eedb49f1f3dac976baed680effa659cef41"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/model.mjs",
+      "bytes": 17641,
+      "sha256": "9e4cd11cfdde2dd43b437069b8cb7a359a8132495db806cb5f68e8674d48aaf6"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/flight-sectors.mjs",
+      "bytes": 2673,
+      "sha256": "5b1b54bde4e578e61da7d59f4a80a86db9aafbc78b4523d2ba2b540277a0a16d"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/world-themes.mjs",
+      "bytes": 20974,
+      "sha256": "67abda8ff53ba18e9aede45c57a8f9ec599dc0ddf7c977ce1d8ad2524e6c5549"
+    },
+    {
+      "path": "game/presentation/theme-system.mjs",
+      "bytes": 65920,
+      "sha256": "317e107e509f94449050c52f1756bd8436691f0d92bb8185aed697b3ba3127d6"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/snake-hunt.mjs",
+      "bytes": 3683,
+      "sha256": "39ce47e8aaae6d7f3e70b8708d52fe2d22e90119318383f8298d8d0c4cc568da"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/world-collision.mjs",
+      "bytes": 12256,
+      "sha256": "2899c7c84f9eae14b9a3434f585a8e873f4a1361e8f3ce4026ef27f44bdeef32"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/vendor/rapier/rapier.mjs",
+      "bytes": 4340292,
+      "sha256": "02dc6a4e2fffc013bab08fbb44fa68f501d8303615e9afe4c7d89ad4eedda0d0"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/world-catalogue.mjs",
+      "bytes": 240477,
+      "sha256": "14f8523c829e9bdfdf8db5efb59169075be6045425222c615b846817694d24cc"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/catalogue.mjs",
+      "bytes": 10565,
+      "sha256": "98338353d17eb585414538c9905040752fd5cd6699c48b17fa1706832b750997"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/snake-hunt-catalogue.mjs",
+      "bytes": 23242,
+      "sha256": "a77f55d138fadd3642ae4cd20326d6f9ab8fc9fdce34a2497d6741b51ea3897a"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/expressive-hunt-courses.mjs",
+      "bytes": 12582,
+      "sha256": "732c6d72dded07e7541965b3c250cfe339dd98ea49d22d2085b856cb869b9ede"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/world-assets.mjs",
+      "bytes": 1167019,
+      "sha256": "2670f199445373f9633ae259a046b704bcc5512887376e2498ab2e8e0055607e"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/renderer.mjs",
+      "bytes": 103573,
+      "sha256": "0fa5a05706705fd6128d13b18a4714c7a8010bdfc2adc6ed96d7b43906647a75"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/vendor/three.module.js",
+      "bytes": 662772,
+      "sha256": "9052042d676cb0fdc1ddfefe193053f34b7ac0513a616fdac4535d49987812ea"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/vendor/three.core.js",
+      "bytes": 1458113,
+      "sha256": "9edde002b066a9a05676a6127f67735b62baf399bdea529f2f7e31657da769e6"
+    },
+    {
+      "path": "game/hunt/actor-catalog.mjs",
+      "bytes": 17484,
+      "sha256": "a9d232092d58262ccd1008577b27ef8a99cb41abf8e3e962a2f34f3b8bc0df92"
+    },
+    {
+      "path": "game/hunt/preferences.mjs",
+      "bytes": 5851,
+      "sha256": "1dcc93e3b50f8964150731f97c22335d73aae413114712c0528b012acabb4324"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/world-visuals.mjs",
+      "bytes": 137986,
+      "sha256": "640107863d738020223ed42c8654c533e40cea31b34355543c2b1809e417ea9b"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/vendor/addons/loaders/GLTFLoader.js",
+      "bytes": 117586,
+      "sha256": "03952cb129d558f92b8e6c757fbf7c1f718b3126c4d34f264d574b40ea36054f"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/vendor/addons/utils/BufferGeometryUtils.js",
+      "bytes": 37728,
+      "sha256": "259085a7dac89e0840393a9347c77123fbc4206ec2146bf0c29ffc72e14a2800"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/vendor/addons/utils/SkeletonUtils.js",
+      "bytes": 11551,
+      "sha256": "28017bf37d0ecb0c4be6048db759ff14df729a562464830b064d4cc239c5af17"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/vendor/addons/controls/TransformControls.js",
+      "bytes": 51722,
+      "sha256": "10f6d3e4c108dff62110f61a76749f9a1826c9781df9c3eb4ca0b5d9d2f5c4a8"
+    }
+  ],
+  "bytes": 9862484,
+  "harnessSha256": "3e1b0cc71c2e296765e3791319efc886d3641d3a2b6fc7a0bf0b5eebe0f6ae64",
+  "harnessBytes": 28923,
+  "status": "prepared-not-executed",
+  "notProductionQualification": true,
+  "scope": "Local-only diagnostic harness. All 31 renderer/model source files are exact historical e572; no production code edits or original receipt changes.",
+  "harnessVersion": 2,
+  "harnessPath": "profile-v2.html",
+  "changeFromV1": "Read-only DOM textarea exposes the complete receipt only after completion; input bytes, timing wrappers and 36-case sequence unchanged."
+}
