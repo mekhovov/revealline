@@ -80,7 +80,7 @@ import {
 import { importEditableZip } from './world-zip.mjs';
 import { openWorldStore } from './world-store.mjs';
 import { preparePracticeOffline } from './offline.mjs';
-import { mountWorldLibrary } from './world-reaction-runtime.mjs';
+import { mountWorldLibrary, worldImportErrorCopy } from './world-reaction-runtime.mjs';
 import { dataIdentity } from '../../game/data-json.mjs';
 import {
   THEME_PROFILES,
@@ -1035,8 +1035,10 @@ export function mountWorldApp({
   };
   const reportError = (error) => {
     if (disposed) return;
-    status(error.message ?? error);
-    if ($('flight-dialog').open) $('flight-status').textContent = error.message ?? error;
+    const copy = worldImportErrorCopy(error),
+      message = copy ? txt(...copy) : (error.message ?? error);
+    status(message);
+    if ($('flight-dialog').open) $('flight-status').textContent = message;
   };
   const on = (node, event, callback, options) => {
     const fn = (...args) => {
@@ -1637,6 +1639,10 @@ export function mountWorldApp({
     mountStickTrace($(`world-${side}-stick`), { travel: 180 * 0.34 }),
   );
   let stickTraceLayout = '';
+  const paintText = (id, text) => {
+    const node = $(id);
+    if (node.textContent !== text) node.textContent = text;
+  };
   function paintInput(state) {
     const source = replayProof ? 'recording' : $('flight-source').value,
       touchActive = source === 'touch',
@@ -1677,13 +1683,15 @@ export function mountWorldApp({
         yaw: txt('Yaw', 'Рискання'),
         throttle: txt('Throttle', 'Газ'),
       })[key];
+    // Read both current padding-box sizes before either stick writes its labels.
+    const radii = ['left', 'right'].map((side) => $(`world-${side}-stick`).clientWidth * 0.34);
     for (const [index, side] of ['left', 'right'].entries()) {
       const node = $(`world-${side}-stick`),
         horizontal = layout[index * 2],
         vertical = layout[index * 2 + 1],
         x = controls[horizontal],
         y = vertical === 'throttle' ? controls[vertical] * 2 - 1 : controls[vertical],
-        radius = node.clientWidth * 0.34;
+        radius = radii[index];
       paintStickDirections(node, { horizontal, vertical, locale });
       node.querySelector('i').style.transform = `translate(${x * radius}px, ${-y * radius}px)`;
       stickTraces[index].update({
@@ -1698,11 +1706,12 @@ export function mountWorldApp({
         'aria-label',
         `${controlName(horizontal)} ${Math.round(x * 100)}%, ${controlName(vertical)} ${Math.round(controls[vertical] * 100)}%`,
       );
-      $(`world-${side}-label`).textContent =
-        `${controlName(horizontal)} / ${controlName(vertical)}`;
+      paintText(`world-${side}-label`, `${controlName(horizontal)} / ${controlName(vertical)}`);
     }
-    $('world-touch-throttle').textContent =
-      `${Math.round(controls.throttle * 100)}%${touchActive && $('world-left-stick').dataset.touchActive !== 'true' ? ` · ${txt('held', 'утримується')}` : ''}`;
+    paintText(
+      'world-touch-throttle',
+      `${Math.round(controls.throttle * 100)}%${touchActive && $('world-left-stick').dataset.touchActive !== 'true' ? ` · ${txt('held', 'утримується')}` : ''}`,
+    );
     const status = $('world-input-status');
     const text =
       source === 'radio'
@@ -1732,7 +1741,8 @@ export function mountWorldApp({
     monitor.dataset.source = source;
     paintDroneResponse(state, controls, { source, unavailable });
     paintCoach(state, radioPreview);
-    $('world-keys-hint').textContent =
+    paintText(
+      'world-keys-hint',
       source === 'radio'
         ? txt(
             `Radio sticks control flight · P pauses · ${keyboardFlightPreset($('flight-keyboard-preset').value).fire === 'Space' ? 'Space' : 'F'} or Fire shoots.`,
@@ -1750,7 +1760,8 @@ export function mountWorldApp({
                   'The sticks show recorded commands. Pause, slow down or switch views to study them.',
                   'Стіки показують записані команди. Зупиняйте, сповільнюйте або змінюйте камеру, щоб їх роздивитися.',
                 )
-              : keyboardFlightHelp($('flight-keyboard-preset').value, locale, { combat: true });
+              : keyboardFlightHelp($('flight-keyboard-preset').value, locale, { combat: true }),
+    );
     $('flight-stick-display').setAttribute(
       'aria-label',
       txt('Stick display', 'Відображення стіків'),
@@ -3498,12 +3509,22 @@ export function mountWorldApp({
     syncProject();
     for (const c of editingProject.courses) validateWorldCourse(c);
     const pack = await preparePack(editingProject, { assets: projectAssets });
-    await installPack(pack, {
+    const installed = await installPack(pack, {
       store: worldStore,
       expectedGeneration: projectGeneration ?? (await worldStore.generation()),
     });
-    projectGeneration = await worldStore.generation();
-    await refreshStorage();
+    projectGeneration = installed.generation;
+    try {
+      await refreshStorage();
+    } catch {
+      status(
+        txt(
+          'World pack saved. Reload the page to refresh the Library.',
+          'Пакунок світу збережено. Перезавантажте сторінку, щоб оновити бібліотеку.',
+        ),
+      );
+      return;
+    }
     status(txt('World pack is ready to fly.', 'Пакунок світу готовий до польоту.'));
   }
   let importRequest = 0;
@@ -3888,7 +3909,7 @@ export function mountWorldApp({
     // Their playback result must not offer an impossible Continue action.
     const playbackEnded = Boolean(replayProof && finished);
     $('flight-dialog').dataset.flightState = state.status;
-    $('world-flight-identity').textContent = $('flight-title').textContent;
+    paintText('world-flight-identity', $('flight-title').textContent);
     playShell?.update({
       phase:
         terminal(state) || playbackEnded
@@ -3904,14 +3925,15 @@ export function mountWorldApp({
     updateSectorHUD();
     updateGhostHUD();
     const target = current.course.steps[$('flight-mode').value][state.step];
-    $('flight-instruments').textContent =
-      `${(state.position.y / 1000).toFixed(1)} m · ${(Math.hypot(state.velocity.x, state.velocity.y, state.velocity.z) / 1000) | 0} m/s · ${((state.ticks - (checkpointSession?.startTick ?? 0)) / 50).toFixed(1)} s${state.health !== undefined ? ` · ♥ ${state.health}` : ''}`;
-    $('flight-objective').textContent = terminal(state)
+    paintText(
+      'flight-instruments',
+      `${(state.position.y / 1000).toFixed(1)} m · ${(Math.hypot(state.velocity.x, state.velocity.y, state.velocity.z) / 1000) | 0} m/s · ${((state.ticks - (checkpointSession?.startTick ?? 0)) / 50).toFixed(1)} s${state.health !== undefined ? ` · ♥ ${state.health}` : ''}`,
+    );
+    let objective = terminal(state)
       ? txt('Flight ended', 'Політ завершено')
       : `${Math.min(state.step + 1, state.total ?? current.course.steps[$('flight-mode').value].length)}/${current.course.steps[$('flight-mode').value].length} · ${target ? stepName(target) : state.status}${state.hold ? ` · ${target?.type === 'actor-track-v1' ? `${(state.hold / 50).toFixed(1)}/${(target.ticks / 50).toFixed(1)} s` : `${state.hold}/${target?.ticks ?? 0}`}` : ''}`;
     if (checkpointSession && !terminal(state))
-      $('flight-objective').textContent =
-        `${replayKind === 'section' && replayProof ? txt('Recorded section', 'Записана ділянка') : txt('Unscored practice', 'Тренування без заліку')} · ${checkpointSession.kind !== 'full-attempt' ? `${txt('Section', 'Ділянка')} ${checkpointSession.index + 1} · ` : ''}${target ? stepName(target) : state.status}${state.hold ? ` · ${state.hold}/${target?.ticks ?? 0}` : ''}`;
+      objective = `${replayKind === 'section' && replayProof ? txt('Recorded section', 'Записана ділянка') : txt('Unscored practice', 'Тренування без заліку')} · ${checkpointSession.kind !== 'full-attempt' ? `${txt('Section', 'Ділянка')} ${checkpointSession.index + 1} · ` : ''}${target ? stepName(target) : state.status}${state.hold ? ` · ${state.hold}/${target?.ticks ?? 0}` : ''}`;
     if (target?.type === 'actor-track-v1' && !terminal(state)) {
       const hints = {
         'acquire-subject': ['Find the marked subject', 'Знайдіть позначений об’єкт'],
@@ -3928,37 +3950,37 @@ export function mountWorldApp({
         'subject-travel': ['Continue with the moving subject', 'Продовжуйте рух за об’єктом'],
       };
       const hint = hints[state.actorTrack?.reason];
-      if (hint) $('flight-objective').textContent += ` · ${txt(...hint)}`;
+      if (hint) objective += ` · ${txt(...hint)}`;
     }
     if (state.hunt) {
       const criterion = current.course.steps[$('flight-mode').value].find(
         (step) => step.type === 'hunt-contact-v1',
       );
       const count = state.hunt.caught.length;
-      $('flight-objective').textContent +=
-        ` · ${txt('Caught', 'Спіймано')} ${count}/${criterion.targets.length} · ${txt('Echo tail', 'Хвіст')} ${state.hunt.tail.length}`;
+      objective += ` · ${txt('Caught', 'Спіймано')} ${count}/${criterion.targets.length} · ${txt('Echo tail', 'Хвіст')} ${state.hunt.tail.length}`;
       if (!terminal(state) && criterion.ordered)
-        $('flight-objective').textContent +=
-          ` · ${txt('Next', 'Далі')} ${String(count + 1).padStart(2, '0')}`;
+        objective += ` · ${txt('Next', 'Далі')} ${String(count + 1).padStart(2, '0')}`;
       if (state.hunt.failure)
-        $('flight-objective').textContent +=
-          ` · ${txt('Touched your echo tail', 'Зіткнення зі своїм хвостом')}`;
+        objective += ` · ${txt('Touched your echo tail', 'Зіткнення зі своїм хвостом')}`;
     }
-    if (modePractice)
-      $('flight-objective').textContent =
-        `${modePracticeNotice()} · ${$('flight-objective').textContent}`;
+    if (modePractice) objective = `${modePracticeNotice()} · ${objective}`;
+    paintText('flight-objective', objective);
     $('world-arm').disabled =
       !sceneReady ||
       Boolean(ghostLookup) ||
       beginnerCoach.blocksArm() ||
       terminal(state) ||
       (Boolean(replayProof) && finished);
-    $('world-arm').textContent = replayProof
-      ? txt('Resume playback', 'Продовжити перегляд')
-      : txt('Arm / resume', 'Увімкнути / продовжити');
-    $('world-retry').textContent = replayProof
-      ? txt('Restart playback', 'Переглянути спочатку')
-      : txt('Retry', 'Ще раз');
+    paintText(
+      'world-arm',
+      replayProof
+        ? txt('Resume playback', 'Продовжити перегляд')
+        : txt('Arm / resume', 'Увімкнути / продовжити'),
+    );
+    paintText(
+      'world-retry',
+      replayProof ? txt('Restart playback', 'Переглянути спочатку') : txt('Retry', 'Ще раз'),
+    );
     $('world-watch-demo').hidden =
       Boolean(replayProof) ||
       Boolean(checkpointSession) ||
@@ -3971,7 +3993,7 @@ export function mountWorldApp({
         (a) => a.type !== 'hazard' && (a.role ?? 'hostile') === 'hostile',
       );
     $('world-flight-resume').disabled = $('world-arm').disabled;
-    $('world-flight-resume').textContent = $('world-arm').textContent;
+    paintText('world-flight-resume', $('world-arm').textContent);
     $('world-flight-fire').hidden = $('world-fire').hidden || $('flight-source').value !== 'touch';
     $('world-next').disabled =
       Boolean(checkpointSession) ||
