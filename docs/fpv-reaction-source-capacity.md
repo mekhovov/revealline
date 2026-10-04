@@ -1,5 +1,10 @@
 # Lossless reaction source capacity — 4 October 2026
 
+**Qualified source and admitted-player checkpoint:** frozen candidate
+`45d673d3641b16d4dd8c51daa0eb7ce12ba96a4a` passes full validation, all-three
+source-bound admission and the bounded actual-player UI/audio integration smoke.
+The existing canonical audio warning-priority test failure remains disclosed below.
+
 The generated World reaction runtime now uses the existing checked lexical
 projection after pinned Prettier formatting. This extends source repair #1011
 without changing canonical modules, recordings, licenses, package policies or
@@ -42,8 +47,16 @@ reconfirms the exact one-input delta against baseline.
 were staged directly from the admitted ZIP and re-read for exact equality.
 Ninety-eight immutable files were reused by verified hardlinks; four files
 required 1,124,697 new bytes. No live source inode is shared with this fixture.
-The actual admitted-player/audio smoke check remains pending. Detailed existing
-checks and their retained failure are in the [local-check receipt](evidence/fpv-reaction-source-capacity-local-checks.json).
+The [actual-player receipt](evidence/fpv-reaction-capacity-player.json) records a
+retained Clearing check-in session initially at 0.6 seconds with sound enabled.
+Sound off/on, explicit Resume, Pause and menu Continue work; the final pause is
+at 73.7 seconds, and the initial Sound:on preference is restored. Browser warning
+and error logs are empty. This qualifies normal admitted UI/render/control and
+audio-toggle integration. It does not claim a fresh course start, audible
+perception, playback of every voice family, physical-device behavior or sustained
+FPS. [Artifact hashes](evidence/fpv-reaction-capacity-browser-provenance.json)
+bind the unchanged receipt and screenshot. Detailed existing checks and their
+retained failure are in the [local-check receipt](evidence/fpv-reaction-source-capacity-local-checks.json).
 
 Reproduce the source-only identity check using an admitted World source inventory:
 
