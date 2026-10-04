@@ -3390,10 +3390,22 @@ zero-overlay102-file player passed223 staging checks and supplies the single
 runtime for subsequent native/offline and longer-session work. Original source
 reserve is35,578 bytes; no limits changed and no second build set was created.
 
+The exact admitted port8966 run subsequently passed all453 of the same named
+native online controls with zero overlays. Its full6,456,634-byte receipt and
+screenshot are retained losslessly under `combined-journey/evidence/admitted-8966-passed`.
+Both hosts had no errors/warnings; the created renderer released its owned
+resources and the reopened lobby created no renderer. Published Browse and the
+separate stopped-origin offline phase are not implied by that online pass.
+
 The active parallel-plan checkpoint and engineering priorities were reconciled,
 including merged ghost/language/coating/HUD/Creator status. Reservoir's bounded
 r16 art review is accepted and its data is merged; the first production Library
-row still awaits compatible publication and actual download/install verification.
-Festival r5 eight-course source has 616 checks / 16 ordinary completion and replay
-proofs; native import/editor/offline and publication remain pending. Continue
+row is ready as #1094 following compatibility's merge; actual download/install
+verification remains pending. An explicit owner-authorized temporary main-merge
+hold applies until Character/P1 #1083 completes protected merge and Pages delivery
+and the coordinator lifts the hold. #1094 is not enrolled in auto-merge; its checks
+and prepared data remain intact. Development and qualification continue.
+Festival r5 eight-course source has616 checks /16 ordinary completion and replay
+proofs, plus311 historical admitted-browser checks /16 Watch replays; final native
+offline qualification and publication remain pending. Continue
 Festival, Harbor, Canals and then D6, retaining device/novice limits.
