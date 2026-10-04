@@ -47,7 +47,7 @@ try{
 const{url,bytes:limit,sha256}=data??{},
 index=
 url===
-'https://raw.githubusercontent.com/mekhovov/revealline/main/authoring/fpv-worlds/published/index.json';
+'https://raw.githubusercontent.com/mekhovov/revealline/main/authoring/fpv-worlds/published/surface-coating-v1/index.json';
 if(
 data?.type!=='world-read'||
 (index

@@ -267,11 +267,20 @@ function validateDocument(doc, binary) {
     !doc.asset.minVersion || doc.asset.minVersion === '2.0',
     'Unsupported minimum glTF version.',
   );
-  for (const extension of doc.extensionsRequired ?? [])
-    assert(
-      SUPPORTED_EXTENSIONS.has(extension),
-      `Unsupported required extension: ${extension}. Use the offline prepare command to decode it first.`,
-    );
+  const requiredExtensions = doc.extensionsRequired ?? [];
+  assert(
+    Array.isArray(requiredExtensions) &&
+      requiredExtensions.every(
+        (name) => typeof name === 'string' && /^[A-Za-z][A-Za-z0-9_]{0,127}$/.test(name),
+      ),
+    'Invalid required extension names.',
+  );
+  for (const extension of requiredExtensions)
+    if (!SUPPORTED_EXTENSIONS.has(extension))
+      throw Object.assign(new TypeError(`Unsupported required extension: ${extension}.`), {
+        code: 'unsupported-world-extension',
+        extension,
+      });
   const buffers = arrayField(doc, 'buffers', 1),
     views = arrayField(doc, 'bufferViews', WORLD_LIMITS.accessors),
     accessors = arrayField(doc, 'accessors', WORLD_LIMITS.accessors),
