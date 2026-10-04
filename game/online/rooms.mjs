@@ -14,6 +14,7 @@ import {
   roomServiceEndpoint,
   terminalRoomError,
   createRoomClientLifecycle,
+  prepareRoomBoardPainters,
 } from './room-client-lifecycle.mjs';
 import { onNativeInactive, exportJSONFile } from '../platform.mjs';
 import { drawClassicBoard, classicCatchMarks } from '../snake/classic-view.mjs';
@@ -141,6 +142,8 @@ function suspendLocal() {
   roomUI?.suspend();
   teamPresentation.reset();
   lifecycle.suspend();
+  polling?.controller.abort();
+  polling = null;
 
   previousFrame = null;
   syncControls();
@@ -149,6 +152,8 @@ function abandonLocal(message) {
   roomUI?.suspend();
   roomUI?.shell.open('missions');
   lifecycle.abandon();
+  polling?.controller.abort();
+  polling = null;
   roomUI?.shell.update({ phase: 'ready', canResume: false });
   saveSeat(null);
   $('invitation').hidden = true;
@@ -174,10 +179,14 @@ function connectionError(error, owner = credentials, epoch = null) {
     return;
   }
   suspendLocal();
+  const detail =
+    error.code === 'ROOM_ARTWORK_TIMEOUT'
+      ? say('Room artwork preparation timed out', 'Час очікування оформлення кімнати вичерпано')
+      : error.message;
   notice(
     say(
-      `Connection interrupted: ${error.message}. Controls are paused. Reconnecting…`,
-      `Зв’язок перервано: ${error.message}. Керування призупинено. Відновлюємо зв’язок…`,
+      `Connection interrupted: ${detail}. Controls are paused. Reconnecting…`,
+      `Зв’язок перервано: ${detail}. Керування призупинено. Відновлюємо зв’язок…`,
     ),
   );
 }
@@ -476,23 +485,38 @@ reconnect.addEventListener('click', () => {
   else if (credentials) void poll();
   else void boot();
 });
-async function allocateBoards(snapshot, owner, epoch) {
+async function allocateBoards(snapshot, owner, epoch, signal) {
   const count = snapshot.engine.runs.length;
   const nextCanvases = Array.from({ length: count }, (_, index) => {
     const canvas = document.createElement('canvas');
     canvas.setAttribute('aria-label', say(`Player ${index + 1} board`, `Поле гравця ${index + 1}`));
     return canvas;
   });
-  let nextPainters = [];
-  if (snapshot.engine.kind === 'team') nextPainters = [createCoopPainter(nextCanvases[0])];
-  else if (snapshot.engine.kind === 'capture') {
-    const [presets, pack] = await Promise.all([
-      fetch('../../authoring/motion-lab/presets.json').then((response) => response.json()),
-      fetch('../content/packs/fieldcraft.json').then((response) => response.json()),
-    ]);
-    nextPainters = nextCanvases.map(() => new BoardPainter(presets));
-    await Promise.all(nextPainters.map((painter) => painter.setLook(pack.themes[0], 'fpv-body')));
-  }
+  const nextPainters = await prepareRoomBoardPainters(
+    async ({ signal: artworkSignal, retain }) => {
+      if (snapshot.engine.kind === 'team') retain(createCoopPainter(nextCanvases[0]));
+      else if (snapshot.engine.kind === 'capture') {
+        const read = async (url) => {
+          const response = await fetch(url, { signal: artworkSignal });
+          if (!response.ok)
+            throw new Error(
+              say(
+                `Room artwork unavailable (${response.status})`,
+                `Оформлення кімнати недоступне (${response.status})`,
+              ),
+            );
+          return response.json();
+        };
+        const [presets, pack] = await Promise.all([
+          read('../../authoring/motion-lab/presets.json'),
+          read('../content/packs/fieldcraft.json'),
+        ]);
+        const prepared = nextCanvases.map(() => retain(new BoardPainter(presets)));
+        await Promise.all(prepared.map((painter) => painter.setLook(pack.themes[0], 'fpv-body')));
+      }
+    },
+    { signal },
+  );
   if (credentials !== owner || stopped || document.hidden || epoch !== lifecycle.snapshot().epoch) {
     nextPainters.forEach((painter) => painter?.dispose?.());
     return;
@@ -579,7 +603,7 @@ async function poll() {
     if (replacement || recovering) teamPresentation.reset();
     if (replacement) {
       eventIds.clear();
-      await allocateBoards(snapshot, owner, epoch);
+      await allocateBoards(snapshot, owner, epoch, operation.controller.signal);
     }
     if (credentials !== owner || stopped || document.hidden || !lifecycle.accept(snapshot, epoch))
       return;

@@ -1,7 +1,8 @@
 import { WORLD_VEHICLE_MODELS } from './world-pursuit.mjs';
 import { renderPursuitEditor, removePursuitActor } from './world-pursuit-editor.mjs';
+import { worldEnemyGuide } from './world-enemy-guide.mjs';
 import { boundedJSON, exactKeys } from '../../game/data-json.mjs';
-import { ACTOR_CASTS, actorFieldGuide } from '../../game/hunt/actor-catalog.mjs';
+import { ACTOR_CASTS } from '../../game/hunt/actor-catalog.mjs';
 import { drawHuntActor } from '../../game/hunt/actor-art.mjs';
 import { sharedActorAppearance } from '../../game/hunt/preferences.mjs';
 
@@ -1147,14 +1148,17 @@ export function mountActorEditor({ container, getCourse, onChange, locale = 'en'
         (step) => step.type === 'hunt-contact-v1' && step.targets.includes(actor.id),
       ),
     );
-    if (contactTarget) {
-      const language = (typeof locale === 'function' ? locale() : locale) === 'uk' ? 'uk' : 'en';
-      const family =
-        course.pursuit?.actors.find((policy) => policy.id === actor.id)?.family ??
-        (actor.speed > 0 ? 'patroller' : 'lookout');
-      const guide = actorFieldGuide(family, language);
+    const language = (typeof locale === 'function' ? locale() : locale) === 'uk' ? 'uk' : 'en',
+      nativeGuides = MODES.map((mode) => ({
+        mode,
+        guide: worldEnemyGuide(course, { mode, locale: language, actorId: actor.id }).rows[0],
+      })).filter(({ guide }) => guide),
+      guide = nativeGuides[0]?.guide;
+    if (guide) {
+      const family = guide.family;
       const section = element('fieldset'),
         legend = element('legend', language === 'uk' ? 'Довідник цілей' : 'Target field guide');
+      section.dataset.actorFieldGuide = actor.id;
       const preview = element('canvas');
       preview.width = preview.height = 112;
       preview.style.cssText = 'display:block;width:5rem;height:5rem;image-rendering:pixelated;';
@@ -1182,6 +1186,16 @@ export function mountActorEditor({ container, getCourse, onChange, locale = 'en'
         legend,
         preview,
         element('strong', guide.name),
+        element(
+          'p',
+          guide.optional
+            ? language === 'uk'
+              ? 'Необов’язкове перехоплення · не зараховується до квоти.'
+              : 'Optional catch · no quota credit.'
+            : `${language === 'uk' ? 'Обов’язкова ціль у режимах' : 'Required target in'}: ${nativeGuides
+                .map(({ mode }) => text(mode === 'self-level' ? 'level' : 'acro'))
+                .join(', ')}.`,
+        ),
         element('p', `${guide.goal} ${guide.tell} ${guide.counter}`),
         label(language === 'uk' ? 'Спільний вигляд персонажів' : 'Shared character cast', cast),
       );
@@ -1199,7 +1213,7 @@ export function mountActorEditor({ container, getCourse, onChange, locale = 'en'
         ),
       );
       container.append(section);
-      container.append(element('p', text('huntEligible'), 'hint'));
+      if (!guide.optional) container.append(element('p', text('huntEligible'), 'hint'));
       paint();
     }
     const role = choose(

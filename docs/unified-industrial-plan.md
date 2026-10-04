@@ -87,7 +87,7 @@ Push reviewable PRs; do not merge or enable auto-merge. Phase C approval precede
 
 The review page has a measured 390 px layout with native-size specimens. Native Snake Solo was subsequently observed at actual 320/360/390 CSS px, plus Versus and Team at 320 px, including Ukrainian Team turn controls. Boards and controls fit without horizontal overflow; the smallest observed two-player D-pad control is 45.3 px. See the [4 October continuation](qualification/industrial-art/continuation-2026-10-04/README.md). The later [landscape and local recovery pass](qualification/industrial-art/local-recovery-2026-10-04/README.md) adds short-window layouts and shared Plain/Large reading controls, including Ukrainian Team at 320 px. Physical-device and simultaneous-input qualification remain open. No additional budget increase was needed for candidates 02 or 03; the corrected rig remains procedural.
 
-The existing published-production continuation also needs reconciliation: its exact additive Team migration guard rejects 54 newer picture slots. The new sample deliberately targets the published Studio slot contract. Production approval is not rewritten to make this check pass.
+The existing published-production continuation's exact additive Team migration guard rejects 54 newer picture slots. The isolated candidate migration described below now admits precisely those additions without weakening that guard. The playable sample still targets the published Studio slot contract; production approval is not rewritten to make this check pass.
 
 ## Pursuit and local recovery continuation, 4 October 2026
 
@@ -121,3 +121,11 @@ The existing published-production continuation also needs reconciliation: its ex
 - Native FPV SIM now exposes accepted enemies/counts and native Goal–Tell–Counter advice before flight and through its paused shared menu. The guide remains paused on dismissal and preserves historical versus successor pursuit descriptions. It uses the existing shared catalogue and optional-package projection.
 - All `aa68949c7` baseline CI checks passed. Current source, package and build receipts are evaluated separately; regression suites remain waived.
 - See the [intent, layout and flight-guide evidence](qualification/industrial-art/intent-room-guide-2026-10-04/README.md). Continue Phase C native completion/device evidence and the explicit picture-slot migration reconciliation. Artwork approval still precedes mass production; optional expansion remains optional.
+
+## Candidate migration and Studio continuation, 4 October 2026
+
+- A candidate-only migration admits exactly 54 pinned Retro picture slots alongside published revision 104's 335 slots. Published history, owners and runtime bytes remain immutable. The successor correctly reopens 98 changed-source reviews; new slots remain source-stage. Legacy production guards are unchanged.
+- An isolated candidate command pins consumed inputs to a clean committed source tree, stages the ledger and compiled output together, and provides byte-for-byte reproduction. It does not adopt content, rewrite approvals or replace defaults.
+- Capture/Team Studio previews current and announced directions independently. Native FPV World Studio uses generation-correct flight guidance, includes optional Couriers and removes Snake-only advice.
+- Private-room artwork preparation shares transport cancellation and an eight-second deadline. Suspension immediately frees the poll; failed or retired preparation releases its painters, and late artwork cannot replace a newer room. Previous accepted boards remain until replacement succeeds. Regression cases are authored but unrun; interrupted-network/device qualification remains open.
+- See the [candidate and Studio evidence](qualification/industrial-art/candidate-studio-2026-10-04/README.md). Next: review candidate coverage, complete native play/device evidence, obtain Phase C art approval, then implement atomic published adoption. Optional expansion remains optional.

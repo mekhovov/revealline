@@ -12,6 +12,7 @@ import {
 } from '../../optional-practice/civilian-fpv/native-pursuit-courses.mjs';
 import { EXPRESSIVE_HUNT_COURSES } from '../../optional-practice/civilian-fpv/expressive-hunt-courses.mjs';
 import { validateWorldCourse } from '../../optional-practice/civilian-fpv/world-model.mjs';
+import { mountActorEditor } from '../../optional-practice/civilian-fpv/world-actor-editor.mjs';
 
 const courseNamed = (id, courses = NATIVE_PURSUIT_COURSES) =>
   validateWorldCourse(courses.find((course) => course.id === `native-pursuit-${id}`));
@@ -84,6 +85,83 @@ test('successor refuge and meeting advice never rewrites historical policy descr
   assert.doesNotMatch(oldPair.tell, /waits for its partner/);
   assert.match(newPair.tell, /waits for its partner/);
   assert.equal(newPair.total, 2);
+});
+
+test('an actor inspector scopes native counts before family grouping and still admits optional couriers', () => {
+  const course = courseNamed('meeting-yard', NATIVE_PURSUIT_V2_COURSES),
+    actorId = course.pursuit.actors[0].id,
+    original = structuredClone(course),
+    [selected] = worldEnemyGuide(course, { actorId }).rows;
+  assert.equal(selected.family, 'rendezvous-pair');
+  assert.equal(selected.total, 1);
+  assert.equal(selected.required, 1);
+  assert.match(selected.tell, /waits for its partner/);
+  assert.equal(worldEnemyGuide(course).rows[0].total, 2);
+  assert.deepEqual(worldEnemyGuide(course, { actorId: 'missing-actor' }).rows, []);
+  const refuge = courseNamed('refuge-return', NATIVE_PURSUIT_V2_COURSES),
+    courierId = refuge.pursuit.actors.find((actor) => actor.family === 'courier').id;
+  for (const mode of ['self-level', 'acro']) {
+    const [courier] = worldEnemyGuide(refuge, { actorId: courierId, mode }).rows;
+    assert.equal(courier.total, 1);
+    assert.equal(courier.optional, 1);
+    assert.equal(courier.required, 0);
+    assert.match(courier.counter, /does not satisfy a required Hunt objective/);
+  }
+  assert.deepEqual(course, original);
+});
+
+test('World Studio uses native versioned guide advice and exposes optional couriers without changing objectives', (t) => {
+  const document = new Document(),
+    container = document.createElement('section'),
+    create = document.createElement.bind(document);
+  // This regression owns native guide/authoring behavior, not pixel rendering.
+  document.createElement = (tag) => {
+    const node = create(tag);
+    if (tag === 'canvas') node.getContext = () => null;
+    return node;
+  };
+  document.body.append(container);
+  let course = courseNamed('refuge-return'),
+    locale = 'en',
+    changes = 0;
+  const editor = mountActorEditor({
+    container,
+    getCourse: () => course,
+    locale: () => locale,
+    onChange: () => changes++,
+  });
+  t.after(() => editor.dispose());
+  const select = (family) => {
+    const actorId = course.pursuit.actors.find((actor) => actor.family === family).id;
+    editor.select(actorId);
+    return container.querySelector(`[data-actor-field-guide="${actorId}"]`);
+  };
+  const oldBefore = structuredClone(course);
+  let guide = select('refuge-seeker');
+  assert.match(guide.textContent, /rests after reaching a shelter/);
+  assert.doesNotMatch(guide.textContent, /commits until arrival/);
+  assert.deepEqual(course, oldBefore);
+  course = courseNamed('refuge-return', NATIVE_PURSUIT_V2_COURSES);
+  const before = structuredClone(course);
+  guide = select('refuge-seeker');
+  assert.match(guide.textContent, /commits until arrival/);
+  assert.match(guide.textContent, /Required target in: Self-level, Acro/);
+  guide = select('courier');
+  assert.match(guide.textContent, /Optional catch · no quota credit/);
+  assert.match(guide.textContent, /does not satisfy a required Hunt objective/);
+  assert.doesNotMatch(guide.textContent, /Required target|250|points/);
+  locale = 'uk';
+  editor.refresh();
+  assert.match(container.querySelector('[data-actor-field-guide]').textContent, /Необов’язкове/);
+  assert.deepEqual(course, before);
+  course = courseNamed('armor-windows');
+  const armorBefore = structuredClone(course);
+  locale = 'en';
+  guide = select('brace-trooper');
+  assert.match(guide.textContent, /Warning and burst contact damage the hull/);
+  assert.doesNotMatch(guide.textContent, /Pulse|Reel|enclosure/);
+  assert.deepEqual(course, armorBefore);
+  assert.equal(changes, 0, 'Inspecting advice never edits a course or starts a flight');
 });
 
 test('a restored native snapshot accounts for once-only catches and a pair survivor without mutating recorded identity', () => {

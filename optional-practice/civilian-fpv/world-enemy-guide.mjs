@@ -143,7 +143,10 @@ const descriptions = {
 /** Read-only projection of a validated native course and its optional snapshot.
  * Repeated objective references count once; ordinary non-Hunt actors are not
  * reinterpreted as prey. Historical policies retain their original descriptions. */
-export function worldEnemyGuide(course, { mode = 'self-level', locale = 'en', state = null } = {}) {
+export function worldEnemyGuide(
+  course,
+  { mode = 'self-level', locale = 'en', state = null, actorId = null } = {},
+) {
   const language = locale === 'uk' ? 'uk' : 'en',
     index = language === 'uk' ? 1 : 0,
     steps = (course?.steps?.[mode] ?? []).filter((step) => step.type === HUNT_CONTACT_CRITERION),
@@ -155,6 +158,7 @@ export function worldEnemyGuide(course, { mode = 'self-level', locale = 'en', st
     caught = new Set([...(state?.hunt?.caught ?? []), ...(state?.pursuit?.bonusCaught ?? [])]),
     rows = new Map();
   for (const actor of course?.actors ?? []) {
+    if (actorId !== null && actor.id !== actorId) continue;
     const policy = policies.get(actor.id),
       optional = policy?.family === 'courier';
     if (
