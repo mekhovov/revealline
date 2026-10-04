@@ -59,6 +59,9 @@ export function mineralPNG() {
       scanlines[at + 2] = shade;
     }
   }
+  return rgbPNG(size, scanlines);
+}
+export function rgbPNG(size, scanlines) {
   const header = Buffer.alloc(13);
   header.writeUInt32BE(size, 0);
   header.writeUInt32BE(size, 4);
