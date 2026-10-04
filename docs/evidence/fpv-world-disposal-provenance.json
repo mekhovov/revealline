@@ -1,0 +1,120 @@
+{
+  "format": "FPVWorldDisposalEvidence.v1",
+  "baseline": "a087facd9ca57f0e7519aa161cb6acc86a7eee3e",
+  "qualifiedRuntimeCommit": "5d830831f",
+  "qualifiedRuntimeSha256": "f31ef625a2a1f893f93cb241bf88f33a083934c642b0825c404f0578d7458cc4",
+  "archives": [
+    {
+      "path": "fpv-world-disposal-browser-v1.json.gz",
+      "rawBytes": 39169,
+      "rawSha256": "447f86a1ebf3974edd2fbdbbb8fb81aacc6bee7029b00c9e68eae1ed25a23d3c",
+      "gzipBytes": 9057,
+      "gzipSha256": "171c8dd77fa650346900ced2f7c839f525a20ed61039fe6e2a83ca96cacf80b6",
+      "checks": 11,
+      "passed": 10,
+      "errors": [
+        {
+          "message": "Error: Baseline reproduces removed-main teardown failure",
+          "stack": "Error: Baseline reproduces removed-main teardown failure\n    at must (http://127.0.0.1:8878/dist/fpv-world-disposal-v1/index.html:17:126)\n    at runCase (http://127.0.0.1:8878/dist/fpv-world-disposal-v1/index.html:69:4)\n    at async $.onclick (http://127.0.0.1:8878/dist/fpv-world-disposal-v1/index.html:98:102)"
+        }
+      ]
+    },
+    {
+      "path": "fpv-world-disposal-v1-manifest.json.gz",
+      "rawBytes": 23261,
+      "rawSha256": "a44633cb0a5c7cb6619d476d1941f6f758b4427a1db3e4ad84f6dfb682c6501b",
+      "gzipBytes": 6344,
+      "gzipSha256": "7a3361b1830fb49f323ebb2e61b7996f69bed534ace566c501da153a72403141"
+    },
+    {
+      "path": "fpv-world-disposal-v1-index.html.gz",
+      "rawBytes": 8753,
+      "rawSha256": "5a29f16e4743a3e95db9ebb17477b7637ecfdda6b07346d0cf6d34b66359896b",
+      "gzipBytes": 3452,
+      "gzipSha256": "0ac55f81dda576db26ac5edb1db1e9686a5cb9b516a394eeecd870282367bac9"
+    },
+    {
+      "path": "fpv-world-disposal-v1-player.html.gz",
+      "rawBytes": 37050,
+      "rawSha256": "dc3e077a9fa18682b7b2c9d7bdf5d55e9fbb1faa3149e607fdc0f27b5eae31b0",
+      "gzipBytes": 9514,
+      "gzipSha256": "6f8f33b47fe1f95c91b7e6b4c25c192fe0600b2402ac9dd9c624fdf10a7884a1"
+    },
+    {
+      "path": "fpv-world-disposal-reorder-only-host.mjs.gz",
+      "rawBytes": 247664,
+      "rawSha256": "73985fce39ce08aeaa577ab98dfb41c4d277511d05020b36ec1c488f69b4a6e3",
+      "gzipBytes": 66580,
+      "gzipSha256": "5c135b8eeef0eda58b01f137441ba1b00ebf71a70b975a7c54fab6103a99082b"
+    },
+    {
+      "path": "fpv-world-disposal-browser-v2.json.gz",
+      "rawBytes": 122664,
+      "rawSha256": "397503ee9cc9ec20232c89f00f9b17b53f36562a5aa760dc89a62a53654a1955",
+      "gzipBytes": 13160,
+      "gzipSha256": "3929d71a0c94572af67eca04b15fc6a568d11b6693d1aa96146d644514ac6cb6",
+      "checks": 43,
+      "passed": 43,
+      "errors": []
+    },
+    {
+      "path": "fpv-world-disposal-v2-manifest.json.gz",
+      "rawBytes": 23261,
+      "rawSha256": "690cbf61c3984ce5320067207fe34b9718fb5b986ed4d118c5677b4c98bc0526",
+      "gzipBytes": 6345,
+      "gzipSha256": "57d16e7b4be18e4dd4663d12f7e4fce5b8224b26363aad5c3b367e5f8c3f2de5"
+    },
+    {
+      "path": "fpv-world-disposal-v2-index.html.gz",
+      "rawBytes": 11176,
+      "rawSha256": "8fefb3269c630f018754976100dec67a3ff005ad56c36634461092ac88d3feae",
+      "gzipBytes": 3730,
+      "gzipSha256": "75aa9e6c8310cd0ca94b7d2a38e60711cbc0dc75d8836dfa7213d0f959632451"
+    },
+    {
+      "path": "fpv-world-disposal-v2-player.html.gz",
+      "rawBytes": 37050,
+      "rawSha256": "cc61097aa65b5bddcde009626e0dde8703f239db9679a182bed25d5549042d46",
+      "gzipBytes": 9514,
+      "gzipSha256": "7a22ab80a4bd0c76268925d3b1bc9ef91581f832dd09b591afe06d18d7a23363"
+    },
+    {
+      "path": "fpv-world-disposal-browser-v4.json.gz",
+      "rawBytes": 162898,
+      "rawSha256": "67bea28b51af3d697cdc45edebf18e4f31ae8dc621baa30c70f4a74e200493c9",
+      "gzipBytes": 15254,
+      "gzipSha256": "a0885acc0d6d1be7cf9bfbf17bcbc41ee0ca6f47e7e90c4015eecf3cb6d3d227",
+      "checks": 83,
+      "passed": 83,
+      "errors": []
+    },
+    {
+      "path": "fpv-world-disposal-v4-manifest.json.gz",
+      "rawBytes": 23261,
+      "rawSha256": "fadb5f2559b1f08b9b321e58c4e439bc17c1e67dd3af44830c546bad00d72575",
+      "gzipBytes": 6342,
+      "gzipSha256": "50dc510399d6f5c7b82acf7137bcdefb64e80a9d668b873c8889f03fcebe58c8"
+    },
+    {
+      "path": "fpv-world-disposal-v4-index.html.gz",
+      "rawBytes": 15064,
+      "rawSha256": "5c0da90937b082f94cfcfd7f814ed782168895f8c28446ccf466139da8f981d1",
+      "gzipBytes": 4510,
+      "gzipSha256": "3fa352a867320ba602744f7ef0d86ef415908b99a01c21aafc7d23deb370433d"
+    },
+    {
+      "path": "fpv-world-disposal-v4-player.html.gz",
+      "rawBytes": 38366,
+      "rawSha256": "e08af8e5fee64df04301180cddabb94be9230f959760444d88508bbf61e41fe5",
+      "gzipBytes": 9992,
+      "gzipSha256": "dd15c742e6d672f20cdf18fe733675befe619b7997d41a2e6e140d0534a53352"
+    }
+  ],
+  "restore": "gzip -dc FILE.gz > RESTORED; verify byte count and SHA-256 against this manifest",
+  "limits": [
+    "v1 fails an overbroad baseline-active assertion after correctly reproducing lobby failure; fault cases not reached.",
+    "v2 diagnoses both reorder-only and baseline recovery-save resource leaks; no cleanup success claimed.",
+    "v3 was never browser-run: static audit rejected assignment to the frozen Rapier default export. v4 observes prototype methods without changing runtime bytes.",
+    "v4 passes83 source checks; manifest pins pre-Solar frozen modules. Current-main Solar integration is separate and pending package qualification."
+  ]
+}
