@@ -56,7 +56,7 @@ const prepared = await prepareWorldFile({
     title: 'Mountain Reservoir · land-side world',
   }),
   project = prepared.project,
-  revision = 'r7',
+  revision = 'r8',
   first = validateWorldCourse({
     ...structuredClone(baseline.courses[0]),
     revision,

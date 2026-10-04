@@ -1,9 +1,9 @@
-# Mountain Reservoir — first scene checkpoint
+# Mountain Reservoir — eight-course candidate
 
-This is unfinished D5 authoring work: one original shared scene and **Shoreline
-check-in** (`mountain-reservoir-01`) in two selectable modes. It is not a delivered
-eight-course world. Seven courses, sixteen final exact-pack demonstrations,
-final-world visual/collision acceptance and offline qualification remain.
+This is unfinished D5 authoring work: eight bilingual courses over one original
+shared land-side scene. Revision `r8` now has sixteen exact-pack ordinary-control
+completion proofs; actual full-world import/Watch/editor and offline qualification
+remain before publication. It is not yet a delivered optional world.
 No files are added to the default catalogue, admitted source closure or precache.
 
 `source/scene.mjs` owns original geometry, colors, collider locations and semantic
@@ -156,3 +156,33 @@ These are build/transport facts only; the new shared scene still needs visual
 acceptance, route clearance and all sixteen final proofs. The earlier `r6`
 previsual candidate is retained with its build receipt; `r7` adds the head pier.
 The unextended scene generator still produces the exact accepted r4 source GLB.
+
+The actual r7 intake, dry-spillway side/upper and wide/low views were accepted as
+a bounded original scene increment. This is not commercial-art parity, artist
+approval, device performance or complete-world quality certification. The
+screenshots and actual renderer observations remain under `evidence/`.
+
+The r7 conservative 0.5m clearance survey found six failures in routes 05/06.
+Revision r8 shifts the exterior passage east and rises before the middle/upper
+terrace edges; the accepted source/prepared GLB and every collider remain exact.
+All 462 source-corner, support and swept-clearance checks then passed. All sixteen
+ordinary flights complete in 1,616–3,972 ticks with zero contacts, full health,
+the intended physical support and qualifying landing speed. Independent complete
+replays and archive-import replays match terminal identities: **575 checks**.
+The qualifier uses ordinary inputs from the existing authoring pilot, explicitly
+surveyed legs in place of its coarse AABB planner, measured flat-top navigation
+metadata for terrain, and the disclosed r4 gentle-touchdown input correction.
+Actual flight geometry, scoring, state and production limits are unchanged.
+
+Pack SHA-256: `e76fd8aa7c2d1ae1b24daacc98a06cc8e78c137204aca68464de0415f158c0fa`.
+Sixteen-record archive: 908,558 bytes,
+`a4390166600173c3bdbeef3bcd107680865d87418c3387d345c7eb2f8f7ac9c9`.
+The first archive-write attempt incorrectly used the smaller world-JSON
+serializer after all flights/replays passed; its failure is retained. The final
+run uses the existing recording archive serializer and importer without changing
+any budget. These proofs supersede the one-course r4 checkpoint for r8 only.
+
+```sh
+node authoring/fpv-worlds/mountain-reservoir/build-world.mjs ACCEPTED_R4_PREPARED NEW_WORLD
+node authoring/fpv-worlds/mountain-reservoir/qualify-world.mjs EXACT_R8_PACK NEW_QUALIFICATION
+```
