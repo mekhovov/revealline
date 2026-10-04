@@ -1,0 +1,55 @@
+{
+  "format": "pass: generator, manual qualifier and qualification document",
+  "sourceRevision": "45d673d3641b16d4dd8c51daa0eb7ce12ba96a4a",
+  "node": "v20.19.5",
+  "prettier": "3.6.2",
+  "acorn": "8.18.0",
+  "validation": {
+    "command": "npm --logs-max=0 run validate",
+    "exitCode": 0,
+    "localizationMessages": 12928,
+    "literalReferences": 8991,
+    "files": 2806,
+    "navigationWarnings": [
+      "game/downloads.html \u2192 ../app/update.html",
+      "game/downloads.html \u2192 ../app/",
+      "game/index.html \u2192 ../app/update.html",
+      "game/index.html \u2192 ../diagnostics/",
+      "site/about.html \u2192 ../releases/",
+      "site/about.html \u2192 ../privacy.html",
+      "site/about.html \u2192 ../credits.html"
+    ]
+  },
+  "generator": {
+    "command": "node scripts/refresh-fpv-reaction-runtime.mjs --check",
+    "status": "verified-byte-identical",
+    "modules": 25,
+    "recordings": 24,
+    "bytes": 838378
+  },
+  "syntax": "pass: generator and generated runtime",
+  "lint": "pass: generator and manual qualifier",
+  "existingChecks": {
+    "command": "node --test scripts/test-edition-code-indentation.mjs game/test/fpv-hunt-reactions.test.mjs game/test/shared-encounter-audio.test.mjs game/test/actor-voice-manifest.test.mjs",
+    "tests": 17,
+    "pass": 16,
+    "fail": 1,
+    "exitCode": 1,
+    "failure": {
+      "test": "native dialogue obeys one-line arbitration, master mute, pause, volume and warning priority",
+      "path": "game/test/fpv-hunt-reactions.test.mjs",
+      "line": 169,
+      "message": "Expected values to be strictly equal: false !== true",
+      "scope": "Pre-existing canonical-source assertion also recorded by #1011; test and direct canonical audio imports are byte-identical to current baseline. Does not import generated reaction projection."
+    }
+  },
+  "manualQualifierInitialFailure": {
+    "error": "ENOBUFS",
+    "cause": "Node default 1MiB execFileSync buffer was too small to read unchanged pinned Rapier module from Git",
+    "correction": "Bounded 16MiB Git-reader buffer; no source or admission budget changed",
+    "rerun": "pass"
+  },
+  "newUnitCoverage": false,
+  "limitsChanged": false,
+  "browserQualified": false
+}
