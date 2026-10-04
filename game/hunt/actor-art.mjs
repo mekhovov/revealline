@@ -3,7 +3,7 @@ import {
   sampleActorAnimation,
   validateActorAnimation,
 } from '../presentation/actor-animation.mjs';
-import { actorArtReviewRevision } from './preferences.mjs';
+import { runtimeActorArtRevision } from './preferences.mjs';
 import { INDUSTRIAL_SOLDIER_KITS } from './industrial-soldier-kit.mjs';
 import { actorVisual, resolveActorFamily } from './actor-catalog.mjs';
 /** Original overhead pixel rigs. The host owns time, facing and vulnerability;
@@ -966,7 +966,9 @@ export function drawHuntActor(ctx, x, y, size, pose = 0, options = {}) {
   const visual =
     actorVisual(options.visualId) ?? actorVisual(family, options.cast) ?? actorVisual(family);
   const angle = facing(options);
-  const revision = options.artRevision ?? actorArtReviewRevision(),
+  const revision = Object.hasOwn(options, 'artRevision')
+      ? options.artRevision
+      : runtimeActorArtRevision(),
     candidate = revision === 'industrial-pilot-v1',
     roster = revision === INDUSTRIAL_ROSTER_ART_REVISION,
     overhead = roster || revision === OVERHEAD_ACTOR_ART_REVISION;

@@ -11,7 +11,7 @@ import * as visuals from '../../optional-practice/civilian-fpv/world-visuals.mjs
 import * as themes from '../../optional-practice/civilian-fpv/world-themes.mjs';
 import { NATIVE_PURSUIT_COURSES } from '../../optional-practice/civilian-fpv/native-pursuit-courses.mjs';
 import { actorVisual } from '../hunt/actor-catalog.mjs';
-import { actorArtReviewRevision } from '../hunt/preferences.mjs';
+import { runtimeActorArtRevision } from '../hunt/preferences.mjs';
 import {
   INDUSTRIAL_SOLDIER_REVISION,
   INDUSTRIAL_SOLDIER_FAMILIES,
@@ -30,7 +30,10 @@ const qualities = ['low', 'balanced', 'high'];
 const radius = 0.3;
 const height = 1.8;
 
-async function nativeRendererFixture(revision = INDUSTRIAL_SOLDIER_REVISION) {
+async function nativeRendererFixture(
+  revision = INDUSTRIAL_SOLDIER_REVISION,
+  choice = { style: 'authored' },
+) {
   let source = await fs.readFile(
     new URL('../../optional-practice/civilian-fpv/renderer.mjs', import.meta.url),
     'utf8',
@@ -68,7 +71,7 @@ async function nativeRendererFixture(revision = INDUSTRIAL_SOLDIER_REVISION) {
     ...soldiers,
     ...vehicles,
     actorVisual,
-    actorArtReviewRevision,
+    runtimeActorArtRevision: (location) => runtimeActorArtRevision(location, choice),
     sharedActorAppearance: () => ({ snapshot: () => ({ cast: 'tactical' }) }),
     THREE: { ...THREE, Scene, WebGLRenderer: Renderer },
     structuredClone,
@@ -684,5 +687,44 @@ test('production renderer preserves authored, historical and custom soldier owne
       assert.equal(renderer.resources().registered.geometries, 0);
       assert.equal(renderer.resources().registered.materials, 0);
     }
+  }
+});
+
+test('production renderer accepts saved artwork at course boundaries and honors explicit authored pins', async () => {
+  const choice = { style: 'authored' },
+    { renderer, scene } = await nativeRendererFixture(null, choice),
+    course = armorWindowsCourse(),
+    original = JSON.stringify(course),
+    actors = () => course.actors.map((actor) => scene.getObjectByName(`actor-${actor.id}`));
+  try {
+    renderer.setCourse(course);
+    for (const group of actors()) assert.equal(group.userData.soldierRevision, undefined);
+    const first = actors();
+    choice.style = 'military';
+    assert.deepEqual(actors(), first, 'Changing preferences does not replace an accepted rig');
+    renderer.setQuality('high');
+    for (const group of actors()) assert.equal(group.userData.soldierRevision, undefined);
+
+    renderer.setCourse(course);
+    for (const group of actors()) {
+      assert.equal(group.userData.soldierRevision, INDUSTRIAL_SOLDIER_REVISION);
+      assert.ok(group.getObjectByName('industrial-soldier-head'));
+    }
+    choice.style = 'authored';
+    renderer.setQuality('low');
+    for (const group of actors())
+      assert.equal(group.userData.soldierRevision, INDUSTRIAL_SOLDIER_REVISION);
+
+    choice.style = 'military';
+    renderer.setCourse(course, 'self-level', { artRevision: null });
+    for (const group of actors()) {
+      assert.equal(group.userData.soldierRevision, undefined);
+      assert.equal(group.getObjectByName('industrial-soldier-head'), undefined);
+    }
+    assert.equal(JSON.stringify(course), original);
+  } finally {
+    renderer.dispose();
+    assert.equal(renderer.resources().registered.geometries, 0);
+    assert.equal(renderer.resources().registered.materials, 0);
   }
 });

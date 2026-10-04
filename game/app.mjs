@@ -6868,7 +6868,7 @@ try {
       adoptFlightActors(stagedActors);
       stagedActors = null;
       setTheme();
-      painter.setLevel?.(run.level, { seed: run.seed, arcadeCollection: null });
+      painter.setLevel?.(run.level, { seed: run.seed, arcadeCollection: null, artRevision: null });
       updateLoadout();
       overlay('pause');
       refreshHUD();
@@ -9920,7 +9920,10 @@ try {
     modeDepartureHold = false;
     titleFlightHold = false;
     courseEntryMessage = '';
-    if (!started) rememberSelection();
+    if (!started) {
+      painter.acceptEnemyArtwork?.();
+      rememberSelection();
+    }
     started = true;
     paused = false;
     void updatePlayedLevelLink();

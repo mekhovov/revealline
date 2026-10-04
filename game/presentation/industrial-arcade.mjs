@@ -13,7 +13,7 @@ import {
   militaryVehicleRole,
 } from './military-field-art.mjs';
 import { INDUSTRIAL_MACHINERY_REVISION } from './industrial-machinery.mjs';
-import { actorArtReviewRevision } from '../hunt/preferences.mjs';
+import { runtimeActorArtRevision } from '../hunt/preferences.mjs';
 import {
   INDUSTRIAL_MATERIAL_REVISION,
   INDUSTRIAL_TERRAIN_MATERIALS,
@@ -270,12 +270,19 @@ const defaultCanvas = () => globalThis.document?.createElement('canvas');
  * ImageBitmaps are neither changed nor disposed. Failure preserves authored art. */
 export function createArcadeAdapter({
   canvasFactory = defaultCanvas,
-  reviewRevision = actorArtReviewRevision(),
+  reviewRevision = runtimeActorArtRevision(),
 } = {}) {
   if (reviewRevision === 'industrial-overhead-v2') reviewRevision = INDUSTRIAL_MATERIAL_REVISION;
   let snapshots = new WeakMap();
   const canvases = new Set();
   return {
+    setReviewRevision(value) {
+      const next = value === 'industrial-overhead-v2' ? INDUSTRIAL_MATERIAL_REVISION : value;
+      if (next === reviewRevision) return false;
+      this.clear();
+      reviewRevision = next;
+      return true;
+    },
     resolve(base, collection) {
       if (!base || !collections.includes(collection)) return base;
       const variants = snapshots.get(base) ?? new Map();

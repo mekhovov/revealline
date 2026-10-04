@@ -97,7 +97,12 @@ export function createClassicPresentation({
     });
   let disposed = false,
     themeSnapshot = null,
+    artRevision = actorArtReviewRevision(win?.location),
     current;
+  function clearDerived() {
+    for (const canvas of derived.values()) canvas.width = canvas.height = 0;
+    derived.clear();
+  }
   function imageFor(slot) {
     if (disposed) return null;
     const frame = artwork.current()?.image(slot),
@@ -123,7 +128,7 @@ export function createClassicPresentation({
           { width: canvas.width, height: canvas.height, rgba: pixels.data },
           slot,
           collection,
-          { reviewRevision: actorArtReviewRevision(win?.location) },
+          { reviewRevision: artRevision },
         ).rgba,
       );
       context.putImageData(pixels, 0, 0);
@@ -189,13 +194,29 @@ export function createClassicPresentation({
     stop();
     theme.dispose();
     artwork.close();
-    for (const canvas of derived.values()) canvas.width = canvas.height = 0;
-    derived.clear();
+    clearDerived();
     win?.removeEventListener('pagehide', hide);
   }
   function hide(event) {
     if (!event.persisted) dispose();
   }
   win?.addEventListener('pagehide', hide);
-  return Object.freeze({ snapshot: () => current, ready, theme, dispose });
+  return Object.freeze({
+    snapshot: () => current,
+    ready,
+    theme,
+    async readAudio(slot, options) {
+      await ready;
+      const snapshot = artwork.current();
+      if (disposed || slot !== 'audio.pickup' || snapshot?.resolved.assets[slot]?.kind !== 'audio')
+        return null;
+      return artwork.readAudio(slot, { ...options, snapshot });
+    },
+    setArtRevision(revision) {
+      if (revision === artRevision) return;
+      artRevision = revision;
+      clearDerived();
+    },
+    dispose,
+  });
 }

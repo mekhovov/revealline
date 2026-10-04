@@ -55,18 +55,19 @@ test('material treatment adds bounded surface detail while rejecting giant input
   assert.throws(() => industrialTexturePixels({ width: 129, height: 1, rgba: [] }, 'terrain.wall'));
 });
 
-function fixture(hash = INDUSTRIAL_BUILTIN_SPRITES['terrain.wall'][0]) {
+function fixture(hash, slot = 'terrain.wall') {
+  hash ??= INDUSTRIAL_BUILTIN_SPRITES[slot][0];
   const image = { width: 16, height: 16 },
     geometry = { frame: { width: 16, height: 16 }, rotors: [] },
-    asset = { id: 'terrain.wall.field-kit', file: { width: 16, height: 16, sha256: hash } },
+    asset = { id: `${slot}.field-kit`, file: { width: 16, height: 16, sha256: hash } },
     frame = { image, geometry, asset },
     base = Object.freeze({
       source: Object.freeze({ id: 'unchanged' }),
       manifestSha256: 'exact-source',
       fonts: Object.freeze({ ui: 'test' }),
       canvas: Object.freeze({ motionScale: 0 }),
-      resolved: Object.freeze({ assets: Object.freeze({ 'terrain.wall': asset }) }),
-      image: (slot) => (slot === 'terrain.wall' ? frame : null),
+      resolved: Object.freeze({ assets: Object.freeze({ [slot]: asset }) }),
+      image: (requested) => (requested === slot ? frame : null),
     });
   let allocations = 0;
   const canvases = [],
@@ -75,7 +76,7 @@ function fixture(hash = INDUSTRIAL_BUILTIN_SPRITES['terrain.wall'][0]) {
       const canvas = {
         getContext: () => ({
           drawImage() {},
-          getImageData: () => ({ data: pixelArtForSlot('terrain.wall').rgba }),
+          getImageData: () => ({ data: pixelArtForSlot(slot).rgba }),
           putImageData() {},
         }),
       };
@@ -143,6 +144,46 @@ test('uploaded/custom hashes and failed Canvas reads retain original artwork', (
     failing.resolve(broken.base, INDUSTRIAL_ARCADE_COLLECTION).image('terrain.wall'),
     broken.frame,
   );
+});
+
+test('changing the adapter revision retires cached canvases and preserves custom vehicle ownership', () => {
+  const slot = 'enemy.border-patrol',
+    f = fixture(undefined, slot),
+    collection = getArcadeCollection('military-field'),
+    adapter = createArcadeAdapter({ canvasFactory: f.canvasFactory, reviewRevision: null });
+  try {
+    const old = adapter.resolve(f.base, collection).image(slot);
+    assert.notEqual(old.image, f.frame.image);
+    assert.equal(old.geometry.machineryRevision, undefined);
+    assert.equal(adapter.setReviewRevision('industrial-roster-v3'), true);
+    assert.equal(old.image.width, 0);
+    assert.equal(old.image.height, 0);
+    const next = adapter.resolve(f.base, collection).image(slot);
+    assert.notEqual(next.image, old.image);
+    assert.equal(next.geometry.machineryRevision, 'industrial-roster-v3');
+    assert.equal(next.asset, f.frame.asset);
+    assert.equal(adapter.setReviewRevision('industrial-roster-v3'), false);
+    assert.equal(adapter.resolve(f.base, collection).image(slot), next);
+    assert.equal(adapter.setReviewRevision(null), true);
+    assert.equal(next.image.width, 0);
+    const restored = adapter.resolve(f.base, collection).image(slot);
+    assert.notEqual(restored.image, next.image);
+    assert.equal(restored.geometry.machineryRevision, undefined);
+    assert.deepEqual(restored.geometry, old.geometry);
+    assert.equal(f.frame.image.width, 16);
+
+    for (const custom of [fixture('a'.repeat(64), slot), fixture(undefined, slot)]) {
+      if (custom.frame.asset.file.sha256 !== 'a'.repeat(64))
+        custom.frame.asset.id = `${slot}.custom`;
+      for (const revision of ['industrial-roster-v3', null]) {
+        adapter.setReviewRevision(revision);
+        assert.equal(adapter.resolve(custom.base, collection).image(slot), custom.frame);
+      }
+    }
+    assert.equal(f.allocations(), 3, 'Custom assets allocate no derived canvas');
+  } finally {
+    adapter.clear();
+  }
 });
 
 test('Solo freezes selection at a new level and preserves source presentation identity', () => {

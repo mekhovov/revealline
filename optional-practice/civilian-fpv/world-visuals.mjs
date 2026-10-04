@@ -8,7 +8,7 @@ import {
 } from './world-themes.mjs';
 import { boundedJSON, exactKeys, required, stableId } from '../../game/data-json.mjs';
 import { contrastRatio } from '../../game/presentation/theme-system.mjs';
-import { actorArtReviewRevision } from '../../game/hunt/preferences.mjs';
+import { runtimeActorArtRevision } from '../../game/hunt/preferences.mjs';
 import {
   INDUSTRIAL_MATERIAL_REVISION,
   INDUSTRIAL_ENVIRONMENT_REVISION,
@@ -1224,6 +1224,7 @@ export function buildWorldVisuals({
   presentation,
   quality = 'balanced',
   maxAnisotropy = 1,
+  reviewRevision = runtimeActorArtRevision(),
 }) {
   const profile = resolveSimThemeProfile(course, presentation),
     theme = profile.palette,
@@ -1232,7 +1233,7 @@ export function buildWorldVisuals({
   const collectionId = simCollectionIdForProfile(profile),
     themed = Boolean(collectionId),
     kit = themed
-      ? createWorkshopMaterials({ material, quality, maxAnisotropy, collectionId })
+      ? createWorkshopMaterials({ material, quality, maxAnisotropy, collectionId, reviewRevision })
       : null;
   const min = Object.fromEntries(Object.entries(course.bounds.min).map(([k, v]) => [k, v / 1000]));
   const max = Object.fromEntries(Object.entries(course.bounds.max).map(([k, v]) => [k, v / 1000]));
@@ -2854,13 +2855,14 @@ export function buildDroneVisual({
   quality = 'balanced',
   maxAnisotropy = 1,
   collectionId = simCollectionIdForProfile(profile),
+  reviewRevision = runtimeActorArtRevision(),
 }) {
   const pixel = kind === 'pixel',
     utility = kind === 'utility',
     detail = quality === 'high' && !pixel,
     rotors = [];
   const kit = collectionId
-    ? createWorkshopMaterials({ material, quality, maxAnisotropy, collectionId })
+    ? createWorkshopMaterials({ material, quality, maxAnisotropy, collectionId, reviewRevision })
     : null;
   parent.userData.modelRole = `drone-${kind}`;
   parent.userData.collectionId = collectionId ?? 'authored';
@@ -3921,7 +3923,7 @@ export function createWorkshopTexture(
     quality = 'balanced',
     maxAnisotropy = 1,
     collectionId = 'industrial-workshop',
-    reviewRevision = actorArtReviewRevision(),
+    reviewRevision = runtimeActorArtRevision(),
   } = {},
 ) {
   const collection = getSimVisualCollection(collectionId),
@@ -4024,13 +4026,17 @@ export function createWorkshopMaterials({
   quality = 'balanced',
   maxAnisotropy = 1,
   collectionId = 'industrial-workshop',
+  reviewRevision = runtimeActorArtRevision(),
 }) {
   const collection = getSimVisualCollection(collectionId);
   const maps = new Map(),
     paints = new Map();
   const texture = (role) => {
     if (!maps.has(role))
-      maps.set(role, createWorkshopTexture(role, { quality, maxAnisotropy, collectionId }));
+      maps.set(
+        role,
+        createWorkshopTexture(role, { quality, maxAnisotropy, collectionId, reviewRevision }),
+      );
     return maps.get(role);
   };
   const paint = (role) => {
@@ -4088,6 +4094,7 @@ export function applySimMaterialBindings(
     quality = 'balanced',
     maxAnisotropy = 1,
     associations = null,
+    reviewRevision = runtimeActorArtRevision(),
     material = (color, extras) => new THREE.MeshStandardMaterial({ color, ...extras }),
   } = {},
 ) {
@@ -4126,7 +4133,13 @@ export function applySimMaterialBindings(
       diagnose(item, 'transparency-protected');
       return;
     }
-    kit ??= createWorkshopMaterials({ material, quality, maxAnisotropy, collectionId });
+    kit ??= createWorkshopMaterials({
+      material,
+      quality,
+      maxAnisotropy,
+      collectionId,
+      reviewRevision,
+    });
     const replacements = originals.map((paint) => {
       retained.add(paint);
       const state = {

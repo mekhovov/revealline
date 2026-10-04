@@ -1,4 +1,5 @@
 import { drawHuntRemains } from '../hunt/destruction.mjs';
+import { runtimeActorArtRevision } from '../hunt/preferences.mjs';
 import { createClassicTargetFacing, drawClassicTarget } from './classic-target-art.mjs';
 import { drawClassicDrone, drawClassicCable } from './classic-flight-art.mjs';
 export { drawClassicTarget } from './classic-target-art.mjs';
@@ -163,6 +164,7 @@ export function drawClassicBoard(
     style = 'cable',
     boardStyle = 'theme',
     cast = 'rivals',
+    artRevision = runtimeActorArtRevision(),
     presentation,
     accent = null,
     reduced = false,
@@ -231,7 +233,8 @@ export function drawClassicBoard(
   if (showRemains) {
     ctx.save();
     ctx.scale(UNIT / 16, UNIT / 16);
-    for (const mark of classicCatchMarks(run)) drawHuntRemains(ctx, mark, { brutal, blood });
+    for (const mark of classicCatchMarks(run))
+      drawHuntRemains(ctx, mark, { brutal, blood, artRevision });
     ctx.restore();
   }
   if (effects) {
@@ -262,6 +265,7 @@ export function drawClassicBoard(
         ...target,
         heading: headings.get(target.id),
         cast,
+        artRevision,
         direction:
           target.kind === 'still' || (target.kind === 'sprinter' && target.phase === 'rest')
             ? undefined

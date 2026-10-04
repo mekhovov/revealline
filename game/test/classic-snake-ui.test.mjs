@@ -28,6 +28,7 @@ import { fpvWorldLaunchURL, appearanceLaunchURL, nativeArtReviewURL } from '../f
 import { CLASSIC_COPY } from '../snake/classic-copy.mjs';
 import { advanceClassicFlight } from '../snake/classic-flight-art.mjs';
 import { t } from '../i18n/index.mjs';
+import { mountEnemyAppearanceControls } from '../ui/enemy-appearance-controls.mjs';
 
 const appURL = new URL('../snake/classic-app.mjs', import.meta.url);
 const source = await readFile(appURL, 'utf8');
@@ -106,6 +107,10 @@ async function harness({
     set() {},
   });
   let shell;
+  let enemyStyle = 'authored';
+  const enemyListeners = new Set(),
+    artworkSelections = [],
+    appearanceActions = [];
   const context = createContext({
     __appURL: appURL.href,
     mountModePlayShell(options) {
@@ -126,7 +131,26 @@ async function harness({
       return { open() {}, root: () => null, close() {}, dispose() {} };
     },
     boardPlacement: () => ({ board: 'solo', pan: 0 }),
-    createClassicAudio: () => ({ reset() {}, update() {} }),
+    createClassicAudio: () => ({ reset() {}, update() {}, prepare() {}, dispose() {} }),
+    runtimeActorArtRevision: () =>
+      artReview ?? (enemyStyle === 'military' ? 'industrial-roster-v3' : null),
+    mountEnemyAppearanceControls(options) {
+      return mountEnemyAppearanceControls({
+        ...options,
+        preferences: {
+          snapshot: () => ({ style: enemyStyle, durable: true }),
+          set({ style }) {
+            enemyStyle = style;
+            for (const listener of enemyListeners) listener();
+          },
+          subscribe(listener) {
+            enemyListeners.add(listener);
+            listener();
+            return () => enemyListeners.delete(listener);
+          },
+        },
+      });
+    },
     sharedActorAppearance: () => preferences({ cast: 'authored' }),
     ACTOR_CASTS,
     actorFieldGuide,
@@ -179,7 +203,14 @@ async function harness({
       },
     }),
     createTouchPreferences: () => preferences({ size: 'normal', opacity: 1, side: 'right' }),
-    createClassicPresentation: () => ({ snapshot: () => null }),
+    createClassicPresentation: () => ({
+      snapshot: () => null,
+      setArtRevision: (revision) => artworkSelections.push(revision),
+      theme: {
+        applyComplete: (family) => appearanceActions.push(family),
+        set: (value) => appearanceActions.push(value),
+      },
+    }),
     createBoardFootprints: () => ({ refresh() {}, dispose() {}, width: () => 336 }),
     devicePixelRatio: 2,
     createAudioMaster: () => preferences({ muted: false, volume: 1 }),
@@ -252,6 +283,8 @@ async function harness({
     document,
     created,
     drawings,
+    artworkSelections,
+    appearanceActions,
     display,
     window,
     storage,
@@ -274,6 +307,52 @@ async function harness({
 }
 
 for (const mode of ['solo', 'versus', 'team']) {
+  test(`${mode} accepts a changed military preset on the first Start without replacing the recipe`, async () => {
+    const state = await harness({ mode });
+    const before = state.created.map((run) => core.exportClassicSnakeReplay(run));
+    state.shell.open('settings');
+    const selector = state.document.querySelector('[data-enemy-appearance]');
+    selector.value = 'military';
+    selector.dispatchEvent({ type: 'change' });
+    await flush();
+    state.start();
+    state.frame(0);
+    assert.equal(state.artworkSelections.at(-1), 'industrial-roster-v3');
+    assert.equal(state.drawings.at(-1).options.artRevision, 'industrial-roster-v3');
+    assert.deepEqual(
+      state.created.map((run) => core.exportClassicSnakeReplay(run)),
+      before,
+    );
+  });
+
+  test(`${mode} military preset is available on an ordinary level and takes effect on Retry without changing its recipe`, async () => {
+    const state = await harness({ mode });
+    state.start();
+    state.frame(0);
+    state.shell.open('settings');
+    const before = state.created.map((run) => core.exportClassicSnakeReplay(run));
+    const selector = state.document.querySelector('[data-enemy-appearance]');
+    selector.value = 'military';
+    selector.dispatchEvent({ type: 'change' });
+    await flush();
+    state.frame(50);
+    assert.deepEqual(state.appearanceActions, ['military-field']);
+    assert.equal(state.artworkSelections.at(-1), null, 'The current attempt retains its art.');
+    assert.equal(state.drawings.at(-1).options.artRevision, null);
+    assert.deepEqual(
+      state.created.map((run) => core.exportClassicSnakeReplay(run)),
+      before,
+    );
+    state.retry();
+    state.frame(100);
+    assert.equal(state.artworkSelections.at(-1), 'industrial-roster-v3');
+    assert.equal(state.drawings.at(-1).options.artRevision, 'industrial-roster-v3');
+    assert.deepEqual(
+      state.created.slice(before.length).map((run) => core.exportClassicSnakeReplay(run)),
+      before,
+    );
+  });
+
   test(`${mode} mission and settings menus cannot start or steer the prepared Snake boards`, async () => {
     const state = await harness({ mode });
     const before = state.created.map((run) => core.exportClassicSnakeReplay(run));

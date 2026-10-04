@@ -1,6 +1,6 @@
 import { huntDestructionBudget } from './destruction-budget.mjs';
 import { drawHuntActor } from './actor-art.mjs';
-import { sharedActorAppearance, actorArtReviewRevision } from './preferences.mjs';
+import { sharedActorAppearance, runtimeActorArtRevision } from './preferences.mjs';
 import {
   INDUSTRIAL_SOLDIER_KIT_REVISION,
   INDUSTRIAL_SOLDIER_KITS,
@@ -158,7 +158,7 @@ export function drawHuntRemains(
     brutal = false,
     blood: showBlood = true,
     color = '#79d7ce',
-    artRevision = actorArtReviewRevision(),
+    artRevision = runtimeActorArtRevision(),
   } = {},
 ) {
   const seed = hash(`${mark.id}/${mark.tick}`),
@@ -290,7 +290,7 @@ function blast(ctx, burst, t, unit) {
  * Sources are read-only craft positions for contact direction, not gameplay RNG. */
 export function createHuntDestruction({
   preview = false,
-  artRevision = actorArtReviewRevision(),
+  artRevision = runtimeActorArtRevision(),
   onPreempt = () => {},
   budget = huntDestructionBudget,
   now = () => globalThis.performance?.now?.() ?? Date.now(),
@@ -316,6 +316,12 @@ export function createHuntDestruction({
     bloodEnabled = false,
     brutalEnabled = false;
   return Object.freeze({
+    setArtRevision(value) {
+      if (value === artRevision) return false;
+      artRevision = value;
+      this.reset();
+      return true;
+    },
     reset() {
       owner = null;
       seen.clear();

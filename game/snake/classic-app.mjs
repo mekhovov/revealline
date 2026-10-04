@@ -9,9 +9,14 @@ import { contextualAppearance } from '../ui/mode-choice.mjs';
 import { fpvWorldLaunchURL, appearanceLaunchURL, nativeArtReviewURL } from '../fpv-entry.mjs';
 import { boardPlacement } from '../ui/feedback-cues.mjs';
 import { createClassicAudio } from './classic-audio.mjs';
+import { mountEnemyAppearanceControls } from '../ui/enemy-appearance-controls.mjs';
 import { getLocale, setLocale, onLocaleChange, t } from '../i18n/index.mjs';
 import { boundedJSON, exactKeys, required } from '../data-json.mjs';
-import { createDestructionPreferences, sharedActorAppearance } from '../hunt/preferences.mjs';
+import {
+  createDestructionPreferences,
+  sharedActorAppearance,
+  runtimeActorArtRevision,
+} from '../hunt/preferences.mjs';
 import { ACTOR_CASTS, actorFieldGuide } from '../hunt/actor-catalog.mjs';
 import { renderEnemyFieldGuide } from '../ui/enemy-field-guide.mjs';
 import { attachContextualReactions } from '../ui/contextual-reactions.mjs';
@@ -165,6 +170,7 @@ let review = null,
 const gamepadState = new Map(),
   gamepadSeats = new Map();
 const effects = [createHuntDestruction(), createHuntDestruction()];
+let acceptedArtRevision = runtimeActorArtRevision();
 const destruction = createDestructionPreferences(),
   remains = createEncounterDisplayPreferences();
 const display = createDisplayPreferences({
@@ -173,10 +179,27 @@ const display = createDisplayPreferences({
   },
 });
 const presentation = createClassicPresentation({ displayPreferences: display });
+const enemyAppearanceControls = mountEnemyAppearanceControls({
+  document: doc,
+  container: $('snake-enemy-appearance'),
+  locale: getLocale,
+  applyMilitary: async () => {
+    await presentation.theme.applyComplete('military-field');
+    renderCopy();
+  },
+  applyAuthored: async () => {
+    await presentation.theme.set({ arcadeArt: 'authored' });
+    renderCopy();
+  },
+});
+onLocaleChange(enemyAppearanceControls.refresh);
 const audioMaster = createAudioMaster(),
   audioPreferences = createAudioPreferences({ audioMaster });
 const sound = new Soundscape({ audioMaster });
-const classicAudio = createClassicAudio(sound, { getDestruction: () => destruction.snapshot() });
+const classicAudio = createClassicAudio(sound, {
+  getDestruction: () => destruction.snapshot(),
+  presentation,
+});
 sound.configure({
   master: 1,
   music: 0,
@@ -346,7 +369,10 @@ function pause({ showMenu = true } = {}) {
 function start() {
   if (result()) return;
   playShell?.enterPlay();
-  if (ready) void records.visit(entry.id);
+  if (ready) {
+    acceptEnemyArtwork();
+    void records.visit(entry.id);
+  }
   importEpoch++;
   review = null;
   ready = false;
@@ -354,18 +380,17 @@ function start() {
   previousFrame = null;
   sound.gameplayPaused = false;
   reactions.resume();
-  void sound
-    .enable()
-    .then(() =>
-      reactions.prepare(
-        runs.flatMap(
-          (run) =>
-            run.level.targets?.required?.map((target) => target.kind) ?? [
-              run.level.targetMovement === 'flee' ? 'runner' : 'lookout',
-            ],
-        ),
+  void sound.enable().then(() => {
+    classicAudio.prepare();
+    return reactions.prepare(
+      runs.flatMap(
+        (run) =>
+          run.level.targets?.required?.map((target) => target.kind) ?? [
+            run.level.targetMovement === 'flee' ? 'runner' : 'lookout',
+          ],
       ),
     );
+  });
   refresh();
   boards[0]?.canvas.focus({ preventScroll: true });
 }
@@ -411,7 +436,7 @@ function prepare({ launch = false } = {}) {
       targetRules = 'authored';
     } else duel = 'score';
   }
-  for (const fx of effects) fx.reset();
+  acceptEnemyArtwork();
   match = createClassicSnakeMatch(acceptedLevel(), {
     mode,
     seed,
@@ -429,6 +454,14 @@ function prepare({ launch = false } = {}) {
   renderCopy();
   refresh();
   if (launch) start();
+}
+function acceptEnemyArtwork() {
+  acceptedArtRevision = runtimeActorArtRevision();
+  presentation.setArtRevision(acceptedArtRevision);
+  effects.forEach((fx, index) => {
+    fx.reset();
+    effects[index] = createHuntDestruction({ artRevision: acceptedArtRevision });
+  });
 }
 function buildBoards() {
   boardLayoutObserver?.disconnect();
@@ -1064,7 +1097,7 @@ function restore(raw) {
     sound.gameplayPaused = true;
     reactions.reset(`classic:${++reactionAttempt}`);
     reactions.suspend();
-    for (const fx of effects) fx.reset();
+    acceptEnemyArtwork();
     buildBoards();
     updateURL();
     renderCopy();
@@ -1418,12 +1451,13 @@ landscapeControls?.addEventListener('change', () => {
   pause();
   footprint?.refresh();
 });
-globalThis.addEventListener('pagehide', () => {
+globalThis.addEventListener('pagehide', (event) => {
   importEpoch++;
   snakeSimPanel?.close({ restoreFocus: false });
   pause();
   sound.suspend();
   classicAudio.reset();
+  if (!event.persisted) classicAudio.dispose();
   save();
 });
 globalThis.addEventListener('pageshow', () => footprint?.refresh());
@@ -1518,6 +1552,7 @@ function frame(now) {
       style,
       boardStyle,
       cast: currentCast(),
+      artRevision: acceptedArtRevision,
       presentation: presentation.snapshot(),
       accent,
       reduced: isReduced(),

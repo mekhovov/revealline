@@ -6,9 +6,11 @@ import { parse } from 'acorn';
 import * as THREE from '../../optional-practice/civilian-fpv/vendor/three.module.js';
 import * as visuals from '../../optional-practice/civilian-fpv/world-visuals.mjs';
 import * as themes from '../../optional-practice/civilian-fpv/world-themes.mjs';
+import * as soldiers from '../../optional-practice/civilian-fpv/industrial-soldiers.mjs';
+import * as vehicles from '../../optional-practice/civilian-fpv/industrial-vehicles.mjs';
 import { contrastRatio } from '../presentation/theme-system.mjs';
 import { actorVisual } from '../hunt/actor-catalog.mjs';
-import { sharedActorAppearance, actorArtReviewRevision } from '../hunt/preferences.mjs';
+import { sharedActorAppearance, runtimeActorArtRevision } from '../hunt/preferences.mjs';
 import {
   ACCEPTANCE_CASES,
   acceptanceRoute,
@@ -176,9 +178,11 @@ async function rendererFixture() {
   const create = vm.runInNewContext(`${source}; createFlightRenderer`, {
     ...themes,
     ...visuals,
+    ...soldiers,
+    ...vehicles,
     actorVisual,
     sharedActorAppearance,
-    actorArtReviewRevision,
+    runtimeActorArtRevision,
     structuredClone,
     THREE: {
       ...THREE,

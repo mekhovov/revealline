@@ -1028,6 +1028,7 @@ try {
     if (!current()) return false;
     clear({ resetDirection: cue !== null });
     if (!current()) return false;
+    if (match.status === 'ready') painters.forEach((p) => p.acceptEnemyArtwork?.());
     resumeDuel(match, { preserveContinuation: true });
     if (cue) beginStartCue(cue);
     else {

@@ -780,15 +780,17 @@ export class Soundscape {
       !this.enabled ||
       this.paused ||
       this.audioMaster.muted ||
-      (this.persistentMusic && this.gameplayPaused) ||
+      this.audioMaster.volume === 0 ||
+      ((this.persistentMusic || event.feedback) && this.gameplayPaused) ||
       !this.context
     )
       return;
     const now = this.context.currentTime,
-      key =
+      eventKey =
         event.type === 'run.completed'
           ? `${event.type}:${event.levelId || ''}:${event.tick ?? ''}`
-          : event.type;
+          : event.type,
+      key = event.board === undefined ? eventKey : `${event.board}:${eventKey}`;
     if (
       this.recentEvents.has(key) &&
       now - this.recentEvents.get(key) < (event.type === 'run.completed' ? 5 : 0.09)
@@ -808,12 +810,29 @@ export class Soundscape {
             'pickup.collected': 'pickup',
             'powerup.collected': 'pickup',
           }[event.type];
-    if (publishedCue && this.publishedAudio?.play(publishedCue)) return;
+    const ownership = {
+      board: event.board ?? 'solo',
+      pan: event.pan ?? 0,
+      feedback: event.feedback === true,
+      priority: event.feedback === true ? 3 : 0,
+    };
+    if (publishedCue && this.publishedAudio?.play(publishedCue, ownership)) return;
     const base = clamp(this.track.root + 12, 48, 76),
       cue = (steps, voice = 'bell', spacing = 0.09, duration = 0.25) =>
         steps.forEach((n, i) =>
           this.play(
-            { kind: 'tone', frequency: midiFrequency(base + n), voice, volume: 0.08, duration },
+            {
+              kind: 'tone',
+              frequency: midiFrequency(base + n),
+              voice,
+              volume: 0.08,
+              duration,
+              pan: ownership.pan,
+              encounter: ownership.feedback,
+              board: ownership.board,
+              priority: ownership.priority,
+              cueName: publishedCue,
+            },
             now + 0.015 + i * spacing,
           ),
         );
