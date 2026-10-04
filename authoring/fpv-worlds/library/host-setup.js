@@ -59,79 +59,72 @@ window.setTimeout = (fn, ms, ...args) => {
   if (ms === 120000) fixtureNetwork.timeout = fn;
   return nativeTimer(fn, ms, ...args);
 };
-window.fetch = async (input, options = {}) => {
-  const url = String(input);
-  const isIndex = url === indexURL,
-    isPack =
-      /^https:\/\/raw\.githubusercontent\.com\/mekhovov\/revealline\/[a-f0-9]{40}\/authoring\/fpv-worlds\//.test(
-        url,
-      );
-  if (!isIndex && !isPack) return nativeFetch(input, options);
-  const n = fixtureNetwork,
-    entry = {
-      url,
-      kind: isIndex ? 'index' : 'pack',
-      mode: n.mode,
-      cache: options.cache,
-      credentials: options.credentials,
-      redirect: options.redirect,
-      aborted: false,
-    };
-  n.requests.push(entry);
-  options.signal.addEventListener('abort', () => (entry.aborted = true), { once: true });
-  const rejectedBody = () =>
-    new ReadableStream({
-      start(controller) {
-        controller.enqueue(new Uint8Array([1]));
-      },
-      cancel() {
-        entry.bodyCancelled = true;
+// Real native Worker per production request; only the diagnostic worker fetch is injected.
+const NativeWorker = window.Worker;
+fixtureNetwork.workers = [];
+fixtureNetwork.pageRequests = [];
+window.fetch = (input, options) => {
+  if (String(input).startsWith('https://raw.githubusercontent.com/mekhovov/revealline/'))
+    fixtureNetwork.pageRequests.push(String(input));
+  return nativeFetch(input, options);
+};
+window.Worker = class extends NativeWorker {
+  constructor(input, options) {
+    const payload = new URL(input, location.href);
+    if (!payload.pathname.endsWith('/optional-practice/fpv-worlds/worker.js')) {
+      super(input, options);
+      return;
+    }
+    const diagnostic = new URL('worker-diagnostic.js', parent.location.href);
+    super(diagnostic, options);
+    const n = fixtureNetwork;
+    const record = { nativeWorker: true, payload: payload.href, terminateCount: 0, events: [] };
+    n.workers.push(record);
+    this.fixtureRecord = record;
+    let request;
+    this.addEventListener('message', (event) => {
+      const data = event.data;
+      if (!data?.fixtureWorker) {
+        record.terminal = data?.type;
+        if (data?.type === 'world-done') record.receivedBytes = data.bytes.byteLength;
+        return;
+      }
+      event.stopImmediatePropagation();
+      record.events.push(data);
+      if (data.event === 'request') {
+        request = data.entry;
+        n.requests.push(request);
+      } else if (data.event === 'abort') {
+        if (request) request.aborted = true;
+        n.held = null;
+      } else if (data.event === 'reader-cancel' && request) {
+        request.readerCancelled = true;
+      } else if (data.event === 'body-cancel' && request) {
+        request.bodyCancelled = true;
+      } else if (data.event === 'native-response' && request) {
+        Object.assign(request, {
+          native: true,
+          status: data.status,
+          responseURL: data.responseURL,
+        });
+      } else if (data.event === 'held') {
+        n.held = { release: () => super.postMessage({ type: 'fixture-release' }) };
+      } else if (data.event === 'released') n.held = null;
+    });
+    super.postMessage({
+      type: 'fixture-config',
+      config: {
+        payload: payload.href,
+        indexURL,
+        index: n.index,
+        mode: n.mode,
+        pack: n.pack,
+        invalid: n.invalid,
       },
     });
-  if (n.mode === 'http') return new Response(rejectedBody(), { status: 503 });
-  if (n.mode === 'reject') throw new TypeError('Fixture network unavailable');
-  if (n.mode === 'hold') {
-    const bytes = isIndex ? new TextEncoder().encode(JSON.stringify(n.index)) : n.pack;
-    const stream = new ReadableStream({
-      start(controller) {
-        const first = Math.min(64, bytes.length);
-        controller.enqueue(bytes.subarray(0, first));
-        n.held = {
-          release() {
-            controller.enqueue(bytes.subarray(first));
-            controller.close();
-            n.held = null;
-          },
-        };
-        options.signal.addEventListener(
-          'abort',
-          () => {
-            controller.error(new DOMException('Cancelled', 'AbortError'));
-            n.held = null;
-          },
-          { once: true },
-        );
-      },
-    });
-    return new Response(stream);
   }
-  if (isIndex) return new Response(typeof n.index === 'string' ? n.index : JSON.stringify(n.index));
-  if (n.mode === 'oversize-header')
-    return new Response(rejectedBody(), {
-      headers: { 'content-length': String(n.pack.length + 1) },
-    });
-  if (n.mode === 'short') return new Response(n.pack.subarray(0, n.pack.length - 1));
-  if (n.mode === 'long') return new Response(new Uint8Array(n.pack.length + 1));
-  if (n.mode === 'corrupt') {
-    const b = n.pack.slice();
-    b[b.length - 1] ^= 1;
-    return new Response(b);
+  terminate() {
+    if (this.fixtureRecord) this.fixtureRecord.terminateCount++;
+    return super.terminate();
   }
-  if (n.mode === 'invalid-pack') return new Response(n.invalid);
-  if (n.mode === 'prepared-pack') return new Response(n.pack);
-  const response = await nativeFetch(input, options);
-  entry.native = true;
-  entry.status = response.status;
-  entry.responseURL = response.url;
-  return response;
 };

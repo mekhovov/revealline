@@ -6,15 +6,18 @@ import path from 'node:path';
 import { createHash } from 'node:crypto';
 import { execFileSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
+import { parse } from 'acorn';
+import { installPracticeWorker } from '../../../optional-practice/worker-template.mjs';
 
 const root = fileURLToPath(new URL('../../../', import.meta.url));
 const opts = {},
   args = process.argv.slice(2);
 for (let i = 0; i < args.length; i += 2) {
-  assert(['--player', '--out', '--admitted'].includes(args[i]) && args[i + 1]);
+  assert(['--player', '--out', '--admitted', '--source'].includes(args[i]) && args[i + 1]);
   opts[args[i].slice(2)] = args[i + 1];
 }
 assert(opts.player && opts.out);
+assert(!(opts.source && opts.admitted), 'Choose a source overlay or an admitted package');
 const player = await fs.realpath(opts.player),
   out = path.resolve(opts.out);
 assert(!(await fs.stat(out).catch(() => null)), 'Never replace a frozen fixture');
@@ -22,18 +25,38 @@ const hash = (b) => createHash('sha256').update(b).digest('hex');
 const descriptor = await fs.readFile(path.join(player, 'optional-package.json'));
 const manifest = JSON.parse(descriptor);
 assert.equal(manifest.id, 'fpv-worlds');
-assert.equal(manifest.engineCommit, opts.admitted ?? '248b8d9af1b082c283a2cbd9501ea8d906f83374');
+assert.equal(
+  manifest.engineCommit,
+  opts.admitted ?? opts.source ?? '248b8d9af1b082c283a2cbd9501ea8d906f83374',
+);
 const files = [
   ...manifest.files,
   { path: 'optional-package.json', bytes: descriptor.length, sha256: hash(descriptor) },
 ];
 assert.equal(files.length, 102);
 const overlays = new Map();
-if (!opts.admitted)
+if (!opts.admitted) {
   for (const name of ['world-app.mjs', 'world-reaction-runtime.mjs']) {
     const file = 'optional-practice/civilian-fpv/' + name;
     overlays.set(file, await fs.readFile(path.join(root, file)));
   }
+  const file = 'optional-practice/fpv-worlds/worker.js';
+  const original = await fs.readFile(path.join(player, file), 'utf8');
+  const call = parse(original, { ecmaVersion: 'latest' }).body[0].expression;
+  assert.equal(call.type, 'CallExpression');
+  assert.equal(call.callee.type, 'FunctionExpression');
+  assert.equal(call.callee.id.name, 'installPracticeWorker');
+  assert.equal(call.arguments[0].name, 'self');
+  assert.equal(call.arguments.length, 3);
+  overlays.set(
+    file,
+    Buffer.from(
+      original.slice(0, call.callee.start) +
+        installPracticeWorker.toString() +
+        original.slice(call.callee.end),
+    ),
+  );
+}
 const staged = [];
 for (const f of files) {
   assert(!path.isAbsolute(f.path) && !f.path.split('/').includes('..'));
@@ -67,7 +90,7 @@ const html = (await fs.readFile(path.join(player, manifest.entry), 'utf8')).repl
 );
 const hostPath = 'player/optional-practice/fpv-worlds/fixture-host.html';
 await fs.writeFile(path.join(out, hostPath), html, { flag: 'wx' });
-for (const file of ['index.html', 'browser-harness.mjs'])
+for (const file of ['index.html', 'browser-harness.mjs', 'worker-diagnostic.js'])
   await fs.copyFile(
     new URL(file, import.meta.url),
     path.join(out, file),
@@ -86,13 +109,15 @@ const fixture = {
   overlays: [...overlays].map(([path, b]) => ({ path, bytes: b.length, sha256: hash(b) })),
   asset,
   browserSources: await Promise.all(
-    ['index.html', 'browser-harness.mjs', hostPath, 'pack.rlpack'].map(async (p) => {
-      const b = await fs.readFile(path.join(out, p));
-      return { path: p, bytes: b.length, sha256: hash(b) };
-    }),
+    ['index.html', 'browser-harness.mjs', 'worker-diagnostic.js', hostPath, 'pack.rlpack'].map(
+      async (p) => {
+        const b = await fs.readFile(path.join(out, p));
+        return { path: p, bytes: b.length, sha256: hash(b) };
+      },
+    ),
   ),
   limits: [
-    'Actual native host/IndexedDB and unchanged production clock. Only named catalogue/network fault responses and isolated storage names are injected.',
+    'Actual native host/IndexedDB/Worker and unchanged production clock. Only named worker-fetch fault responses, observation wrappers and isolated storage names are injected.',
     'Successful pack download uses the actual immutable first-party HTTPS URL. The production catalogue remains empty.',
     'Timeout callback is explicitly injected, not a claim of two-minute wall-clock endurance. No offline, finished-world, flight-completion or FPS claim.',
   ],
