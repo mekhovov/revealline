@@ -19,29 +19,49 @@ pre-arm focus repair are merged; public entry and the intentionally empty Librar
 index were verified at `8e5ad71e9b791b7c16bae1cb308026ed3e18d5c2`. Warm-frame
 readiness #1084 is merged and publicly launched at
 `1a1a82d5e6617a53239218642eda3aa70e817fe3`. Public personal-best access #1086
-is merged at `5cde6dbc97c3067b6023d2bf7fd97fe251805347`; its public deployment
-has not yet been checked. Source-capacity preparation #1085 is merged at
-`5bd8f36d7767dcd9dda740865b4d8f19ddbe7c28`, recovering 41,026 original source
-bytes without a behavior or limit change. That main input set has 41,262 bytes
-of reserve; the separately qualified language fix leaves 41,157 bytes.
+and source-capacity preparation #1085 are merged and their public ancestry was
+verified by a native launch at `5bd8f36d7767dcd9dda740865b4d8f19ddbe7c28`.
+Settings showed the personal-best preference disabled with no eligible best;
+this was not a public ghost-playback test. Capacity preparation recovered 41,026
+original source bytes without changing behavior or limits.
 
-The language/menu action-ownership fix is now qualified: 433 native source checks,
-283 exact admitted lifecycle checks, full validation, 16 existing checks and all
-three/two-identical package admissions. Its earlier failed run remains retained.
-Publication follows the normal capacity-only main bridge and protected checks;
-see [the exact evidence and boundaries](../authoring/fpv-worlds/language-phase/README.md).
-Next engineering work is the measured HUD/layout candidate under browser
-qualification, then continued integrated reliability. No hardware-FPS conclusion
-is drawn from these bounded observations.
+Language/Home ownership #1087 and required surface-coating capability #1088 are
+merged; public marker/build and native Ready → Arm → Pause/Continue were verified
+at `3bc7a923da2b7d50a6a675a91d5560005ad0f20d`. This establishes public entry,
+not a new public imported-coating matrix. HUD/layout #1089 merged at
+`ecf0bafc6541c6b57ae28a530763bab221555d4f`; its measured callback/layout savings
+are bounded CPU observations, not a hardware-FPS result. Creator commit/retry
+repair #1092 merged at `8b31237d6f2cba627b5d35acc10309e4d3335992`, following
+294 source and 294 exact admitted native controls. These newer HUD/Creator
+deployments have not yet received a public-entry check.
 
-Reservoir's required coating capability is qualified and awaiting its focused
-publication. The r14 pack has passed 16 ordinary-flight/replay proofs and bounded
-native import/flight views; representative terrain rooting and hut quality remain
-open. The production Library index stays empty intentionally until the required
-world-quality and publication gates are met. Preserve the research gates below
-and the sequence Reservoir → Festival → Harbor → Canals → D6. Earlier estimates
-and pending lists below describe their original checkpoints, not a reversal of
-this delivered state.
+Library compatibility #1093 is ready at
+`40b2e29df95691cbe44220e253ba8f795d60dd74`, normally updated onto Creator main;
+its source and optional-package checks pass while preview/capacity/candidate
+checks are running. Source418 controls, exact admitted entry and component
+admissions remain pinned to their original heads. The combined source inventory
+is 95 inputs / 16,741,638 bytes, leaving 35,578 bytes under the unchanged ceiling;
+one final combined admission is still required. The
+[combined journey](fpv-combined-journey-qualification.md) uses explicit pack and
+separate proof imports and passed all 453 native controls on frozen source
+`6c341bef4347d98bae882fb1785eabf6a133537c`, using the explicitly declared
+323-byte Creator overlay on the Library admitted player. Its first two failed
+manual runs are retained: a wrong
+Results/Home Retry selector, then a cleanup assertion requiring a renderer in a
+reopened lobby that never created one. Neither was repaired by changing product
+behavior or weakening flight guards. Published Browse and cached-native offline
+acceptance remain separate gates.
+
+Reservoir r16's retaining surfaces, rooted vegetation and maintenance-hut review
+are accepted within the recorded views. Its 575 CPU checks / 16 fresh ordinary
+proofs and 304 imported-player checks passed; data-only #1090 merged at
+`53620a6615210047385c770ef1c24f4eb0bdc461`. The production Library index remains
+intentionally empty until compatibility publication and the separate immutable
+first-row download/install gate. Festival's bounded r3 scene review was accepted;
+the expanded eight-course r5 candidate has passed 616 CPU checks / 16 ordinary
+completion/replay proofs, with final native content qualification and publication
+still pending. Continue Festival → Harbor → Canals → D6. Older dated checkpoints
+and estimates remain historical, not current instructions.
 
 ## Starting position
 
@@ -64,8 +84,8 @@ Imported exact-pack example lookup #1060 and multi-course editing #1063 are merg
 public deployment and actual SIM launch were verified on ade4bfc2. Shared-shell
 source preparation #1065 is merged and its bf9b0290 deployment/flight entry was
 verified. Scene-readiness #1067 merged at 29e23a11; Reservoir #1066 merged at 94548aa2.
-Reservoir's eight-course/16-example functional package is published, but production
-Library registration and representative art acceptance remain separate work.
+Reservoir's original eight-course/16-example functional publication is historical;
+the accepted r16 follow-up and remaining production Library gate are recorded above.
 Verify each newest deployment and player entry before claiming the new change live.
 
 ## Research and concrete changes
@@ -95,7 +115,7 @@ Preserve the fixed flight integrator, existing proof versions and physics profil
 | ------------------------------------------- | --------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | --------------------------------------------------------------------------------- |
 | Delivery — immediate                        | Finish current ready PR publication, verify deployment, and maintain this allocation          | Current-head protected checks, permitted merge, public marker and actual player launch                                                                                                                 | Next verified focused PR; never wait on unchanged CI when independent work exists |
 | Performance — P0                            | Controlled current-player baseline and bounded fixes for reproduced stalls                    | Exact input provenance, one visible native-clock player, cold/warm/course/quality observations, before/after comparison, unchanged replay/visibility contracts and package admission for runtime fixes | Representative natural/industrial scenes and longer-session qualification         |
-| Art/content — P1                            | Improve published Mountain Reservoir until it meets the representative quality standard below | Coherent scene and eight distinct route pairs, matching solid/support collision, final world freeze, sixteen full completion/replays, native import/editor/offline and public entry                    | Festival Grounds, Harbor Docks, Old Town Canals, one complete world per PR        |
+| Art/content — P1                            | Complete Festival after the accepted bounded Reservoir r16 scene gate | Coherent scene and eight distinct route pairs, matching solid/support collision, final world freeze, sixteen full completion/replays, native import/editor/offline and public entry                    | Harbor Docks, then Old Town Canals, one complete world per PR        |
 | Discovery — P1                              | Optional first-party worlds in Library                                                        | Bounded immutable data catalogue, explicit download size/revision, cancel/retry, exact hash/native install, no partial activation, removal/recovery and honest runtime-offline status                  | Register each finished world after its publication; preserve earlier revisions    |
 | Player integration — P1                     | Complete touch/controller/radio and teaching journeys                                         | EN/UK, small portrait/landscape and 1280×800 layouts, menu/flight ownership, arm/reset/pause, reconnect, settings restore, fullscreen fallback and unobstructed flight view                            | Repairs for reproduced issues, then retained D6 scenarios                         |
 | Reliability — P1 before broad world rollout | Combined creator/recording/recovery flow                                                      | Multi-course/mode edit/reimport/export/reopen, exact dependency replay, rollback, interrupted/quota failures and preserved records                                                                     | Final integrated release candidate                                                |
@@ -103,12 +123,11 @@ Preserve the fixed flight integrator, existing proof versions and physics profil
 
 Performance, Library delivery and integrated reliability own the main engineering
 allocation. Small reproduced menu/input repairs belong to integrated reliability;
-do not open separate broad redesigns. Art/content works on Reservoir in parallel,
-not on additional unfinished worlds. Festival remains preserved at 47f8e36e until
-the Reservoir standard is demonstrated. Then complete Festival, Harbor and Canals
-sequentially, including each world's proofs, import/offline checks and publication,
-before starting the next. D6 follows those deliverables; functional verification
-continues throughout.
+do not open separate broad redesigns. Art/content has met the bounded Reservoir
+r16 scene gate and now completes the eight-course Festival candidate. Preserve
+the older Festival47f8e36e checkpoint as history. Finish Festival's native
+import/editor/offline checks and publication before Harbor, then Canals. D6
+follows those deliverables; functional verification continues throughout.
 
 Independent source/authoring work within that allocation proceeds concurrently.
 On this machine, heavy builds, proof generation and active-browser performance observations are serialized
@@ -119,19 +138,21 @@ performance pass.
 
 ### World production and variety
 
-Reservoir r8 is the published functional baseline: eight courses and sixteen final
-mode-specific completion/replays, 575 CPU checks and 304 imported-player checks,
-plus a true server-offline flight/editor journey. Preserve that immutable package,
-examples and completion evidence. The art review found visible triangular
-openings at the western terrace/ridge join, so a narrow seam repair comes first.
-Keep canonical collision and route envelopes unchanged; publish any changed visual
-pack as an explicit revision and requalify exact dependencies rather than replacing
+Reservoir r8 remains an immutable historical functional baseline with its original
+proofs and stopped-origin offline evidence. Its seam, rooting and hut follow-ups
+are now incorporated in separately published r16, exact pack
+`50ffbb0e5da7dec94862a8f2ca85cfeb60542d3fe9f86bd3c4e288dfa0a2e554`.
+The r16 qualification retains eight courses, 16 fresh mode-specific
+completion/replays, 575 CPU checks and 304 imported-player checks. Preserve both
+revisions and do not relabel old offline evidence as a new combined-runtime run.
+Canonical collision and route envelopes remain unchanged. Future changed visual
+packs need explicit revisions and exact-dependency qualification, never replaced
 published bytes. Water remains outside playable land bounds.
 
 Installing Reservoir yields 204 challenges / 15 installed worlds; the bundled
 baseline remains 196 / 14. It is the first of four additional worlds, with production
-Library registration, public player entry and representative art acceptance still
-separate. Art follow-ups do not add courses. Generic imported-card
+Library registration and its actual public download/entry still separate from the
+accepted bounded r16 art views. Art follow-ups do not add courses. Generic imported-card
 Explore / Intermediate / 4 min metadata remains a bounded host follow-up,
 not a claim about each Reservoir route's activity or duration.
 
@@ -182,9 +203,10 @@ is implied by this gate.
 1. **Library delivery:** the dedicated-worker transport, bounded immutable paths,
    exact hashes/size/revision, cancellation and atomic installation are delivered.
    Preserve their source/admitted 208-control and combined native offline receipts;
-   the earlier 195-control pre-transport run remains historical. Next establish
-   actionable compatibility for older cached players before registering the first
-   finished Reservoir revision, then verify the actual published row through
+   the earlier 195-control pre-transport run remains historical. Compatibility
+   #1093 is qualified and awaiting protected publication; it gives older cached
+   players actionable guidance. Then register the first finished Reservoir
+   revision in the separate capability index and verify the published row through
    Browse, download, install, selection, Watch and editing. The production index
    remains intentionally empty; fixture starter rows are not delivered worlds.
 2. **Performance:** the native program trace identified 66 first-draw shadow links;
@@ -197,8 +219,8 @@ is implied by this gate.
 3. **Integrated reliability:** focus, language access, narrow-screen menus and
    personal-best access are delivered; language/Home phase ownership is now merged.
    Creator's correction passed 294 source and 294 exact admitted native controls
-   after reproducing its postcommit refresh/generation-read defects; its focused
-   protected publication is next. Retain dirty course/mode, exact revisions, genuine proofs and recovery,
+   after reproducing its postcommit refresh/generation-read defects and merged as
+   #1092. Retain dirty course/mode, exact revisions, genuine proofs and recovery,
    including the strict fence against a separate writer. Then qualify the
    final combined Library -> select -> settings -> arm -> pause/retry -> replay ->
    editor -> offline/reopen journey. Reuse exact component receipts and target
