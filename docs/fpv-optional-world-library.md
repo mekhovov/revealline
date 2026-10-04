@@ -232,3 +232,19 @@ terminating first would give the Worker no opportunity to finish that cleanup.
 Successful replies use the [transfer list](https://developer.mozilla.org/en-US/docs/Web/API/Worker/postMessage)
 for the returned byte buffer; the manual native-Worker fixture observes both that
 list and the exact received bytes.
+
+## Existing test DOM compatibility
+
+The combined menu/focus/Library reliability run exposed a missing native DOM
+property in the existing `couch-dom` helper: `previousElementSibling`. Library
+inserts its controls before the existing installed-pack heading, which works in
+the accepted native source and admitted fixtures. The test double instead threw
+before all twelve appearance controls could mount. The minimal standards-correct
+getter now walks preceding element siblings; production insertion is unchanged.
+
+The combined candidate `216b36ce1` passes the same 23 existing appearance, audio,
+installation and worker-scope controls after the helper correction. This result
+includes the separately ready focus fix, and is not relabelled as a standalone
+Library check pass. Both the missing-dependency launch and incomplete failed
+mount run are retained. There are no new test cases or runtime input changes;
+all 95 admitted inputs remain exact to `01fc6ad20`.
