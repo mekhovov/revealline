@@ -1,0 +1,25 @@
+{
+  "format": "FPVLifecycleFailedEvidence.v1",
+  "completeReceipt": true,
+  "sourceRevision": "2f9a7a87876a4ee64eb5b7c581b3ea339aaba146",
+  "fixtureSha256": "50b535504de91c3e44670bbc486bfe588b5eff04535ff1cf05067a2259e6c5de",
+  "files": [
+    {
+      "source": "/tmp/fpv-warm-lifecycle-8943-failed.json",
+      "bytes": 376268,
+      "sha256": "81fc91c827e58a82756666ff5167845070eb04c8283dbda1e13ec6e1e11f8055",
+      "gzip": "fpv-warm-lifecycle-8943-failed.json.gz",
+      "gzipBytes": 22116,
+      "gzipSha256": "6aaa6ffadd4a42ae5aa8f7b70a10d88e6f6657ce87e74ce9c9daac21e3dbb3d9"
+    },
+    {
+      "source": "/tmp/fpv-warm-lifecycle-8943-summary.json",
+      "bytes": 26055,
+      "sha256": "4cdcbf2f971eef0bbb2f84291c6962dadacbea0194e5f1a10f984d70f87b7c34",
+      "gzip": "fpv-warm-lifecycle-8943-summary.json.gz",
+      "gzipBytes": 3588,
+      "gzipSha256": "6b61a3988aa7ee7b55c6a61d5dd026237fd8c632a1c5ad7077b134cc9c90a4ef"
+    }
+  ],
+  "finding": "Import did not finish. Native status recorded that IDBDatabase.transaction failed because the database connection is closing, before finally-disposal. This differs from passing prior r3 import and is not attributed to a selector/runtime/storage-pressure cause without native close provenance. Original complete failed run retained."
+}
