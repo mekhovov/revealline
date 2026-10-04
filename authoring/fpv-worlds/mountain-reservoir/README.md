@@ -3,7 +3,7 @@
 This is unfinished D5 authoring work: one original shared scene and **Shoreline
 check-in** (`mountain-reservoir-01`) in two selectable modes. It is not a delivered
 eight-course world. Seven courses, sixteen final exact-pack demonstrations,
-visual/collision acceptance, native installation and offline qualification remain.
+final-world visual/collision acceptance and offline qualification remain.
 No files are added to the default catalogue, admitted source closure or precache.
 
 `source/scene.mjs` owns original geometry, colors, collider locations and semantic
@@ -112,8 +112,19 @@ require all eight courses and sixteen demonstrations to be qualified anew.
 `#1060` admitted player (`79a721dd19343726fed30f618a2d7c8cd164d691`) by exact
 manifest hash and immutable hardlinks. It adds only the external content and a
 manual host harness; no runtime overlay or package rebuild. The real File input,
-native IndexedDB, collision queries and both catalogue Watch replays remain
-pending actual browser execution. The harness preserves production pause/focus
+native IndexedDB, collision queries and both catalogue Watch replays passed
+139 actual-browser checks on authoring commit `8bf37589c9882dfbdefa9a72b10746d78a39ff5a`.
+The two replays reached the exact 2,990/3,002-tick terminal identities with no
+contacts, full health and 261/262mm/s landings. The harness preserves production pause/focus
 guards, uses paused shader warmup and a lightweight draw observer, and provides a
 separate native-animation-clock launch for manual inspection. It is not an
 offline, hardware or full-world acceptance claim.
+
+The separate native-clock imported player rendered Shoreline check-in, armed,
+advanced its timer and retained full health. Actual keyboard P paused at 99.6s;
+two nested pause-button lookups failed, so this run does not qualify that button.
+The import and native-launch JSON receipts and screenshots are retained under
+`evidence/fpv-reservoir-{import-browser,native-launch}-r4.*`. This is an accepted
+first-course import/collision/playback checkpoint, not delivery of the entire
+Reservoir world. Any later shared bounds or geometry revision changes the exact
+pack dependency and requires new final proofs for all eight courses.
