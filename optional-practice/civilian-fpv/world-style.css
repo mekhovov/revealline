@@ -476,6 +476,9 @@
   dialog header strong {
     display: block;
   }
+  .sim-settings > header {
+    flex-wrap: wrap;
+  }
   dialog header small {
     display: block;
     color: var(--accent);
