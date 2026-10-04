@@ -6,18 +6,36 @@ pack inspection, course validation and transactional world store remain the
 installation boundary. A download does not open a course, change an editor draft,
 arm a drone, install executable packages or prepare the simulator offline.
 
-This draft is normally integrated with main `ade4bfc2dd` and the
+The current source continuation `a6e5ffbfe` normally integrates main `f3764070e`
+and the separate worker source-capacity prerequisite. It routes requests through
+a genuine dedicated Worker loaded from the existing generated verified worker;
+it does not register a service worker or cache the runtime merely to browse.
+Its [frozen manual fixture](../authoring/fpv-worlds/library/prepare-browser.mjs)
+adds worker-side request refusals, response faults, cancellation, transfer and
+owner cleanup checks. Actual browser qualification and fresh admission of this
+transport remain pending. The production catalogue remains empty.
+
+### Historical page-transport evidence
+
+The prior draft integrated main `ade4bfc2dd` and the
 separately qualified shell capacity prerequisite [#1065](https://github.com/mekhovov/revealline/pull/1065).
 The first source candidate `f33d01d62c` passed 189 actual browser controls;
 its [full receipt and frozen harness](../authoring/fpv-worlds/library/evidence/source-r1-provenance.json)
 are preserved losslessly. The corrected source `74bd1b1a53` separately passes
 **192/192** actual browser checks, including three observed rejected-body
 cancellations. Its [receipt and frozen fixture](../authoring/fpv-worlds/library/evidence/source-r2-provenance.json)
-retain the exact source and all 102 baseline members with two explicit overlays. Fresh
-source admission and finished-world availability are not yet claimed. The
-production catalog is empty. Mountain Reservoir's eight challenges and sixteen
+retain the exact source and all 102 baseline members with two explicit overlays.
+The subsequent labelled-count/readable-size candidate `ef770faff` passed
+**195/195** actual source controls and full source validation. Its
+[full receipt and frozen fixture](../authoring/fpv-worlds/library/evidence/source-r3-provenance.json)
+are preserved. Admission then rejected the application-thread fetch with
+`Optional practice network requests belong only to its generated verified worker`,
+before producing an artifact. This failure remains part of the record; the guard
+is unchanged and those 195 checks do not qualify the new Worker transport.
+
+Mountain Reservoir's eight challenges and sixteen
 demonstrations are separately qualified in [#1066](https://github.com/mekhovov/revealline/pull/1066),
-but its protected publication and a production catalog row remain separate.
+now merged; its quality follow-up and a production catalog row remain separate.
 
 ## Download contract
 
@@ -30,6 +48,12 @@ but its protected publication and a production catalog row remain separate.
   `revision`, full `commit`, repository `path`, `sha256`, exact `bytes`, and
   `courses`. Paths must stay under `authoring/fpv-worlds/` and end in `.rlpack`.
   Runtime constructs each URL from the fixed raw repository origin and full commit.
+- A dedicated Worker owns each explicit read. It permits only the fixed bounded
+  catalogue or a full-commit first-party pack request with an exact byte count
+  and digest. Requests omit credentials and reject redirects. The worker closes
+  its reader before replying, transfers successful bytes and is then terminated
+  by its page owner. Cancellation reaches its AbortController; no application
+  fetch allowance or executable world content is added.
 - Streaming reads enforce the declared byte bound. Pack length and SHA-256 must
   match before native pack inspection; all imported courses are validated, and
   the inspected project ID/course count must match the catalog row.
@@ -51,6 +75,16 @@ The authored revision is descriptive metadata pinned by the pack hash. It is not
 assumed to be identical to every individual course revision in a multi-course pack.
 
 ## Capacity checkpoint
+
+The current integrated Worker draft measures **16,776,298 bytes across 95 original
+inputs**, leaving **918 bytes** below the unchanged 16 MiB bound. The separately
+planned menu (429 bytes) and focus (28 bytes) changes would leave **461 bytes**.
+These are source measurements; final admission is still required. Relative to
+the admitted worker prerequisite `b452a0cac`, only the host adapter (+710),
+generated reaction module (+6,880), and generated worker (+1,682) change. The
+projected worker is 6,494 bytes; its readable canonical transport remains separate.
+
+### Historical source estimates
 
 The draft adds one readable canonical `world-library.mjs` entry to the established
 generated reaction/presentation projection. Pinned Prettier and the existing
