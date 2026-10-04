@@ -35,7 +35,7 @@ const track = (actorId, follow) => ({
   viewAngle: follow ? 3500 : 2000,
   minTargetTravel: follow ? 4000 : 0,
 });
-export function harborCourses(first, revision = 'r3') {
+export function harborCourses(first, revision = 'r4') {
   const row = (
     number,
     activity,
@@ -135,6 +135,7 @@ export function harborCourses(first, revision = 'r3') {
         {
           id: 'harbor-service-cart',
           type: 'vehicle',
+          groundMotion: 'support-v1',
           role: 'civilian',
           position: xyz([4, 2, 0]),
           path: [xyz([4, 2, 0]), xyz([4, 2, 18])],
@@ -160,6 +161,7 @@ export function harborCourses(first, revision = 'r3') {
         {
           id: 'harbor-deck-inspector',
           type: 'patrol',
+          groundMotion: 'support-v1',
           role: 'civilian',
           position: xyz([-15.5, 5.5, 30]),
           path: [xyz([-15.5, 5.5, 30]), xyz([-15.5, 5.5, 33.5])],
