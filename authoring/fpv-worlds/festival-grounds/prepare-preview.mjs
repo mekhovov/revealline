@@ -5,9 +5,9 @@ import path from 'node:path';
 import { createHash } from 'node:crypto';
 import { execFileSync } from 'node:child_process';
 import { parse } from 'acorn';
-const [playerArg, generatedArg, outArg] = process.argv.slice(2);
-if (!playerArg || !generatedArg || !outArg)
-  throw Error('Use PLAYER_DIRECTORY GENERATED_DIRECTORY NEW_PREVIEW_DIRECTORY');
+const [playerArg, generatedArg, outArg, beforeArg] = process.argv.slice(2);
+if (!playerArg || !generatedArg || !outArg || !beforeArg)
+  throw Error('Use PLAYER_DIRECTORY GENERATED_DIRECTORY NEW_PREVIEW_DIRECTORY FROZEN_BEFORE');
 const player = await fs.realpath(playerArg),
   generated = await fs.realpath(generatedArg),
   output = path.resolve(outArg);
@@ -101,10 +101,22 @@ await fs.link(
   path.join(generated, 'prepared', project.world.modelAsset),
   path.join(output, 'content/scene.glb'),
 );
+const before = await fs.realpath(beforeArg),
+  beforeProjectBytes = await fs.readFile(path.join(before, 'prepared/project.json')),
+  beforeProject = JSON.parse(beforeProjectBytes),
+  beforeModelPath = path.join(before, 'prepared', beforeProject.world.modelAsset),
+  beforeModelBytes = await fs.readFile(beforeModelPath);
+if (sha(beforeModelBytes) !== 'c57f273ffc9746ce218765b0a9e64199327996602b1fd13c66d8a1cc871f5f33')
+  throw Error('Expected exact frozen r2 prepared scene');
+await fs.link(
+  path.join(before, 'prepared/project.json'),
+  path.join(output, 'content/before-project.json'),
+);
+await fs.link(beforeModelPath, path.join(output, 'content/before-scene.glb'));
 const html = await fs.readFile(new URL('./preview.html', import.meta.url));
 await fs.writeFile(path.join(output, 'index.html'), html, { flag: 'wx' });
 const record = {
-  format: 'FPVFestivalGroundsStaticPreview.v1',
+  format: 'FPVFestivalGroundsStaticPreview.v2',
   sourceCommit: execFileSync('git', ['rev-parse', 'HEAD'], { encoding: 'utf8' }).trim(),
   baselinePlayer: manifest.engineCommit,
   scope:
@@ -115,7 +127,29 @@ const record = {
   content: [
     { path: 'content/project.json', bytes: projectBytes.length, sha256: sha(projectBytes) },
     { path: 'content/scene.glb', bytes: modelBytes.length, sha256: sha(modelBytes) },
+    {
+      path: 'content/before-project.json',
+      bytes: beforeProjectBytes.length,
+      sha256: sha(beforeProjectBytes),
+    },
+    {
+      path: 'content/before-scene.glb',
+      bytes: beforeModelBytes.length,
+      sha256: sha(beforeModelBytes),
+    },
   ],
+  variants: {
+    before: {
+      project: 'content/before-project.json',
+      model: 'content/before-scene.glb',
+      revision: beforeProject.revision,
+    },
+    after: {
+      project: 'content/project.json',
+      model: 'content/scene.glb',
+      revision: project.revision,
+    },
+  },
   harnessSHA256: sha(html),
   build: JSON.parse(
     await fs.readFile(
@@ -135,7 +169,11 @@ console.log(
       output,
       admittedFiles: files.length,
       unchangedSourceModules: codePins.length,
-      newContentBytes: projectBytes.length + modelBytes.length,
+      immutableContentBytes:
+        projectBytes.length +
+        modelBytes.length +
+        beforeProjectBytes.length +
+        beforeModelBytes.length,
       source: record.sourceCommit,
     },
     null,

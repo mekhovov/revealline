@@ -43,6 +43,32 @@ try {
     'Stage front is physically open below its supported roof',
     collision.clearSpawn({ x: 0, y: 3000, z: -20000 }, 720),
   );
+  if (course.revision === 'r3') {
+    check(
+      'Picnic table has a real top support',
+      collision.support({ x: -35700, y: 911, z: 16000 }, 220, 5)?.id === 'picnic-west-top',
+    );
+    check(
+      'The middle below the table is physically open',
+      collision.clearSpawn({ x: -35700, y: 120, z: 16000 }, 220),
+    );
+    check(
+      'The table legs block real contact',
+      !collision.clearSpawn({ x: -35700, y: 120, z: 14430 }, 220),
+    );
+    const from = { x: -32000, y: 400, z: 10000 },
+      to = { x: -32000, y: 400, z: 23000 };
+    const moved = collision.moveSphere(from, { x: 0, y: 0, z: to.z - from.z }, 720);
+    check(
+      'West six-metre lane center retains extra0.5m swept clearance',
+      !moved.contacts.length && axes.every((k) => Math.abs(moved.position[k] - to[k]) <= 3),
+      { from, to, contacts: moved.contacts },
+    );
+    check(
+      'Table stops50mm short of the painted lane boundary',
+      course.obstacles.find((b) => b.id === 'picnic-west-top').max.x === -35050,
+    );
+  }
   for (const box of course.obstacles) {
     const middle = axes.map((k) => (box.min[k] + box.max[k]) / 2);
     check(

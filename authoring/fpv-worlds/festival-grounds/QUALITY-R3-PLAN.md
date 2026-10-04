@@ -50,3 +50,33 @@ World, then produce all sixteen exact-pack ordinary-control proofs and complete
 independent/archive replays. Actual import/editor/Watch and offline verification
 remain required for the new world. No default-catalogue, physics, renderer or
 production-budget change is planned; unit coverage remains the deferred D6 work.
+
+## r3 candidate checkpoint
+
+The optional `--gathering` authoring path now generates r3. The default source
+generator still reproduces the exact r2 GLB SHA256 `4825f1d3…d743d`. Serialized
+asset qualification passed 144 checks; collision qualification passed 173.
+These are static contracts, not artistic acceptance or ordinary-flight proofs.
+
+The candidate adds 112 imported triangles (12,284 total), three real table
+solids (47 total), and 12,196 source bytes (1,122,416 total). It retains the
+twelve imported material batches, both encoded maps, all previous vertex/UV/
+normal bytes, all 44 previous colliders and the existing orientation route.
+Only the existing gravel batch gains normalized RGBA8 vertex color: original
+vertices remain opaque white; new courts use at most four percent darkening.
+The table's canonical solids draw its body and metal panel legs; an attached
+wooden upper finish and partitioned blue/ochre runner provide human scale.
+There is no duplicate imported box over its canonical faces.
+
+The tabletop ends at X=-35.05m, leaving 50mm to the painted lane boundary.
+That narrow edge is not a promised drone corridor. The six-metre lane center
+at X=-32m passes a 720mm-radius sweep, including the usual extra 0.5m margin.
+The table/bench-seat gap is 230mm and is not flyable. Between the panel legs,
+the opening is 2.98m long with 0.78m headroom; an ordinary 220mm-radius sphere
+clears its middle, while each real support blocks contact. The table is a
+gathering prop, not a newly required route or landing objective.
+
+Candidate build, source/asset and collision receipts are retained under
+`evidence/r3-*.json`. Matched actual-renderer review is still pending. No
+additional route, demonstration, offline acceptance or finished-world claim
+is made by this checkpoint.

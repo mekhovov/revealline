@@ -23,9 +23,14 @@ const check = (ok, message) => {
   if (!ok) throw Error(message);
 };
 const output = path.resolve(process.argv[2] ?? '');
-check(process.argv.length === 3 && output !== process.cwd(), 'Choose a new output directory');
+const gathering = process.argv[3] === '--gathering';
+check(
+  (process.argv.length === 3 || (gathering && process.argv.length === 4)) &&
+    output !== process.cwd(),
+  'Choose a new output directory [--gathering]',
+);
 await mkdir(output, { recursive: false });
-const source = createScene();
+const source = createScene({ gathering });
 check(
   source.bytes.length <= 1.5 * 1024 * 1024 && source.statistics.triangles <= 15000,
   'Initial artwork budget',
@@ -45,7 +50,7 @@ const prepared = await prepareWorldFile({
   title: 'Festival Grounds · scene checkpoint',
 });
 const project = prepared.project,
-  revision = 'r2';
+  revision = gathering ? 'r3' : 'r2';
 project.revision = revision;
 function volume(type, centre, size, extra = {}) {
   return {
@@ -180,12 +185,16 @@ const receipt = {
   },
   zip: { bytes: zipBytes.length, sha256: sha(zipBytes) },
   sourceFiles: await Promise.all(
-    ['source/scene.mjs', 'source/art.mjs', 'source/lettering.mjs', 'build-checkpoint.mjs'].map(
-      async (p) => ({
-        path: p,
-        sha256: sha(await readFile(new URL(p, import.meta.url))),
-      }),
-    ),
+    [
+      'source/scene.mjs',
+      'source/art.mjs',
+      'source/lettering.mjs',
+      'source/gathering.mjs',
+      'build-checkpoint.mjs',
+    ].map(async (p) => ({
+      path: p,
+      sha256: sha(await readFile(new URL(p, import.meta.url))),
+    })),
   ),
   courses: [course.id],
   runtimeChanges: 0,
