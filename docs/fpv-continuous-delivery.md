@@ -3035,3 +3035,33 @@ v5 forwards real renderer draws and preserves the production pause guard. The
 separate explicit host-dispose ordering defect remains next. Publish through
 protected exact-head checks and verify the public optional JSON link after merge.
 See [complete qualification and limits](fpv-adventure-optional-examples.md).
+
+### D4 standalone creator starters — 4 October 2026
+
+The focused increment on School main `c907b4f7f` adds ten original one-course
+industrial/natural projects: sweeper, hairpin, chicane, climb and split level.
+Each has independent mode arrays, EN/UK guidance and reproducible editable ZIP,
+world-pack and project exports through existing APIs. It adds no player module,
+catalogue entry or optional-runtime source bytes; 196 challenges / 14 worlds and
+the existing package limits remain unchanged.
+
+Twenty ordinary-control flights and independent replays pass in 55,804 ticks
+with zero hard contacts. Nominal clearance passes 314 swept segments; it is
+bounded authored-path evidence. Actual browser r2 passes 237/237 checks on the
+unchanged 102-member admitted `d9ad2561e` player: ten ZIP identities, two numeric
+editor workflows, four original mode replays, a trusted 3D arrow drag, exact
+Undo/Redo, export/reimport, retained original pack revision and online native
+IndexedDB reopening. The manual upper-gate move is 3,500 mm along X. Edited
+copies do not inherit the original routes' flight or clearance qualification.
+
+The original r4 scalar-identity qualifier failure and r1 browser reopen failure
+are retained. r1's fixture incorrectly borrowed the parent's native IDB factory;
+r2 keeps each reader in its own JavaScript realm and verifies the prototypes and
+public Edit flow. No production guard changed. See the
+[starter qualification and raw receipts](../authoring/fpv-worlds/starters/evidence/README.md).
+
+Publish this completed authoring increment independently. Continue explicit
+spatial mode choice through route edits/order/Undo/Redo/source overrides in a
+separate branch after runtime-capacity review; offline reopening is separately
+qualified. Neither this increment nor browser checks close full D4, hardware,
+novice or sustained-FPS acceptance. Additional unit coverage remains in D6.
