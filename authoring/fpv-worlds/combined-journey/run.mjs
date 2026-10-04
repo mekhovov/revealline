@@ -228,8 +228,10 @@ async function exportDraft(name) {
     'exported full eight-course project',
   );
   const assets = [];
-  for (const [name, bytes] of inspected.assets)
+  for (const [name, blob] of inspected.assets) {
+    const bytes = await blob.arrayBuffer();
     assets.push({ path: name, bytes: bytes.byteLength, sha256: await sha(bytes) });
+  }
   assets.sort((a, b) => a.path.localeCompare(b.path));
   check(same(assets, fixture.pack.assets), 'export preserves all exact model/texture bytes');
   receipt.exports.push({
