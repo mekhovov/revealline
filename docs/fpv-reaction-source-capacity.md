@@ -31,8 +31,19 @@ The first manual receipt attempt hit Node's default 1-MiB child-output buffer
 while reading pinned Rapier source. Giving this read-only Git reader a bounded
 16-MiB buffer allowed the unchanged package policy to be checked normally.
 
-Source-bound all-three admission, reproducible ZIP verification and the actual
-admitted-player/audio smoke check are pending at this source checkpoint.
+Frozen candidate `45d673d3641b16d4dd8c51daa0eb7ce12ba96a4a` passes full
+`npm run validate` and [source-bound all-three admission](evidence/fpv-reaction-source-capacity-admission.json),
+with two byte-identical builds, committed input checks and ZIP-member verification.
+World retains 102 admitted runtime files and 104 source-archive files (including
+the source inventory itself). [The admitted input comparison](evidence/fpv-reaction-source-capacity-admitted-inputs.json)
+reconfirms the exact one-input delta against baseline.
+
+[All 102 player members](evidence/fpv-reaction-capacity-admitted-player.json)
+were staged directly from the admitted ZIP and re-read for exact equality.
+Ninety-eight immutable files were reused by verified hardlinks; four files
+required 1,124,697 new bytes. No live source inode is shared with this fixture.
+The actual admitted-player/audio smoke check remains pending. Detailed existing
+checks and their retained failure are in the [local-check receipt](evidence/fpv-reaction-source-capacity-local-checks.json).
 
 Reproduce the source-only identity check using an admitted World source inventory:
 
