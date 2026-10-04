@@ -90,7 +90,8 @@
         "game/test/online-room-registry.test.mjs",
         "game/test/online-room-service.test.mjs",
         "game/test/online-room-v2.test.mjs",
-        "game/test/online-room.test.mjs"
+        "game/test/online-room.test.mjs",
+        "game/test/online-room-http-qualification.test.mjs"
       ]
     },
     {

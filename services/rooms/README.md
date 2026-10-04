@@ -80,9 +80,11 @@ SIM races and shared-world flight remain separate delivery stages.
 Regression cases are authored in `game/test/online-room.test.mjs`,
 `game/test/online-room-client.test.mjs` and `game/test/online-room-service.test.mjs`.
 They include held HTTP bodies crossing pause/resume, stale readiness, bounded
-client queues and abandoned-room recovery. Automated
-suites remain unrun under the current repository waiver. Local browser checks
-are recorded separately from network and public-release qualification.
+client queues and abandoned-room recovery. The current verification policy
+requires automated suites. The [local HTTP qualification](../../docs/qualification/private-room-http-2026-10-04/README.md)
+adds native Capture/Snake Versus and Team completion through a real loopback
+service and faulting HTTP relay. Local HTTP and browser evidence remain separate
+from physical-device, wide-area-network and public-release qualification.
 
 The server catalogue includes 258 structurally admitted native recipes: 96 Snake
 Versus, 96 Snake Team, 28 Capture Versus and 38 Capture Team. New pursuit chapters
@@ -181,10 +183,10 @@ delivery and matching client painter preparation before returning entries with
 a new presentation contract. Do not remove the current fail-closed checks merely
 because its simulation could run.
 
-`game/test/online-room-registry.test.mjs` adds native admission, immutable owner,
+`game/test/online-room-registry.test.mjs` covers native admission, immutable owner,
 SHA/length, malicious field, media/Company rejection, path containment, retained
-snapshot and HTTP client-authority regressions. These are authored and unrun
-under the current automated-suite waiver.
+snapshot and HTTP client-authority regressions. It is included in the executed
+room suite linked above.
 
 Explicit service lint: `node_modules/.bin/eslint --config services/rooms/eslint.config.mjs services/rooms/*.mjs --max-warnings 0`.
 
@@ -210,5 +212,5 @@ The service remains authoritative; the browser renders accepted full snapshots a
 submits native control intent. It does not predict outcomes or grant local rewards.
 Internet latency, two-player touch/gamepad review, all phone orientations, hearing
 review and public-release qualification remain separate from source validation.
-The authored v2 regressions in `game/test/online-room-v2.test.mjs` are unrun under
-the repository waiver.
+The v2 regressions in `game/test/online-room-v2.test.mjs` are included in the
+executed room suite. These checks do not grant public-release qualification.
