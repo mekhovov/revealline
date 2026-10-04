@@ -179,6 +179,42 @@ export function landRouteCandidates(base, { engineering = false } = {}) {
     },
   ];
   if (engineering) {
+    // Final shared-world sweeps require clearance from the protruding lower
+    // rock edge, and a vertical rise before crossing either terrace face.
+    const passage = data.find((route) => route.suffix === '05');
+    for (const route of Object.values(passage.steps))
+      for (const step of route) {
+        if (step.type === 'gate' && step.axis === 'z') {
+          const shift = -27800 - (step.minSide + step.maxSide) / 2;
+          step.minSide += shift;
+          step.maxSide += shift;
+        } else if (step.min && step.min.x < -27000 && step.type !== 'land') {
+          const shift = -27800 - (step.min.x + step.max.x) / 2;
+          step.min.x += shift;
+          step.max.x += shift;
+        }
+      }
+    data.find((route) => route.suffix === '06').steps = {
+      'self-level': [
+        hold([-35, 4.4, 16]),
+        hold([-35, 4.5, 7]),
+        hold([-35, 7.2, 7]),
+        hold([-39, 7.2, 4]),
+        hold([-39, 10.2, 4]),
+        hold([-41, 10.2, -9]),
+        land([-41, 8.95, -10], 'rock-west-upper', [2.4, 1.1, 2.4]),
+      ],
+      acro: [
+        hold([-35, 4.6, 16]),
+        gate('z', 10, -1, -35, 4.6, 3),
+        hold([-35, 4.6, 7]),
+        hold([-35, 7.3, 7]),
+        hold([-39, 7.3, 4]),
+        hold([-39, 10.3, 4]),
+        gate('z', -7, -1, -41, 10.3, 2.6),
+        land([-41, 8.95, -10], 'rock-west-upper', [2.4, 1.1, 2.4]),
+      ],
+    };
     // The later real dry chute occupies the former eastern approach; use its
     // open west side instead. The frozen r5 draft remains unchanged by default.
     data.find((route) => route.suffix === '08').steps = {
