@@ -18,8 +18,13 @@ are preserved losslessly. All 45 native dedicated Workers terminated once after
 their terminal reply; the page made no catalogue or pack requests. Three successful
 pack responses used the real immutable HTTPS asset. Named worker-response faults,
 timeout injection and native IndexedDB abort controls are disclosed in the receipt.
-Fresh admission and admitted-player qualification remain pending. The production
-catalogue remains empty.
+Full source validation, seven applicable existing installation/worker checks,
+scoped lint and all-three source-bound admission passed at `01fc6ad20`, with
+two identical builds and all committed inputs/ZIP members verified. The
+[qualification receipt](../authoring/fpv-worlds/library/evidence/worker-qualification.json)
+binds those results. The new exact 102-member Worlds and 69-member Academy players
+are staged; admitted-player and changed-worker offline checks remain pending.
+The production catalogue remains empty.
 
 ### Historical page-transport evidence
 
@@ -88,7 +93,8 @@ menu candidate `9fbe03fe3` projects 286 bytes across this actual input inventory
 with the focus change (28 bytes), that would leave **604 bytes**. The earlier
 429-byte menu estimate counted its canonical CSS as well as the generated input;
 the canonical CSS is outside these 95 original inputs.
-These are source measurements; final admission is still required. Relative to
+The current 918-byte reserve is confirmed by admission; combined menu/focus
+figures are projections until integration. Relative to
 the admitted worker prerequisite `b452a0cac`, only the host adapter (+710),
 generated reaction module (+6,880), and generated worker (+1,682) change. The
 projected worker is 6,494 bytes; its readable canonical transport remains separate.
