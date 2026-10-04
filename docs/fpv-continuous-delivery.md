@@ -5,8 +5,8 @@ with the next independent item developed while source gates and deployment run.
 Additional unit coverage belongs in the final phase. Build, browser, replay,
 import/export and publication verification remain part of every applicable item.
 
-**Current checkpoint:** see “4 October — Current publication and Creator
-transaction boundary” at the end of this log and the active parallel delivery
+**Current checkpoint:** see “4 October — Combined online journey and publication”
+at the end of this log and the active parallel delivery
 plan. Earlier tables and heads are history.
 
 ## Delivery queue
@@ -3352,3 +3352,43 @@ its data-only #1090 is in protected publication. The production Library index st
 empty until the finished content and compatible runtime are published and verified. Festival, Harbor and Canals remain sequential after that
 quality standard, followed by D6. Physical-device, novice and universal FPS/offline
 claims remain pending.
+
+## 4 October — Combined online journey and publication
+
+Reservoir r16 data #1090 merged normally as
+`53620a6615210047385c770ef1c24f4eb0bdc461`; Creator commit/retry repair #1092
+merged as `8b31237d6f2cba627b5d35acc10309e4d3335992`. Library compatibility
+#1093 is now at `40b2e29df95691cbe44220e253ba8f795d60dd74`, normally integrated
+with that Creator main, with source/optional admission passing and the remaining
+protected checks running at this checkpoint. Latest actual public-entry evidence
+remains the recorded `3bc7a923d` launch, not these newer merges.
+
+The bounded [combined journey](fpv-combined-journey-qualification.md) passed all
+453 native controls at port8965 on source
+`6c341bef4347d98bae882fb1785eabf6a133537c`. It used the exact Library admitted
+player plus the declared, byte-exact 323-byte Creator correction. Explicit native
+file imports installed pack50ff and then its separate proof archive073ee. Native
+selection, language/Settings ownership, neutral Arm/pause/visible Retry, the exact
+1,616-tick Watch, non-first-course/single-mode edit/Undo/Redo, export, transaction
+abort/ordinary retry/postcommit refresh failure and durable reopen all passed.
+All original proof rows, original dependency revision and interrupted recovery
+were retained. The created renderer released all registered resources; the
+reopened lobby demonstrably created no renderer. Both hosts had no errors/warnings.
+The full 6,456,631-byte receipt is losslessly archived with its original hash.
+
+Both preceding failed fixtures remain retained. One selected the closed Results
+Retry instead of Home Retry; the other required a renderer in the reopened lobby.
+Only these manual observer/control defects changed. No product guard, physics,
+clock or visibility behavior was altered to obtain the pass. This online run uses
+the actual default Industrial presentation; it does not qualify an authored
+natural performance workload, published Browse/download or cached-native offline.
+One final exact combined all-three/two-build admission supplies the shared runtime
+for the subsequent offline and longer-session work.
+
+The active parallel-plan checkpoint and engineering priorities were reconciled,
+including merged ghost/language/coating/HUD/Creator status. Reservoir's bounded
+r16 art review is accepted and its data is merged; the first production Library
+row still awaits compatible publication and actual download/install verification.
+Festival r5 eight-course source has 616 checks / 16 ordinary completion and replay
+proofs; native import/editor/offline and publication remain pending. Continue
+Festival, Harbor, Canals and then D6, retaining device/novice limits.

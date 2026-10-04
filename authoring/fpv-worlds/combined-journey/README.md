@@ -4,6 +4,15 @@ This local-only manual fixture implements the bounded
 [combined-journey design](../../../../docs/fpv-combined-journey-qualification.md).
 Ready component PRs are unchanged.
 
+The corrected native online run at port8965 passed **453/453** controls on frozen
+`6c341bef4347d98bae882fb1785eabf6a133537c`; its lossless receipt and screenshot
+are under `evidence/source-8965-passed`. The exact 1,616-tick Watch completed,
+the edited project and original proof dependency survived native transaction
+abort/retry and reopen, and both created and never-created renderer ownership
+cases passed. The source fixture still overlays only the accepted 323-byte
+Creator correction on the exact Library admitted player. This is not a new
+zero-overlay admission, published Browse or offline result.
+
 The first native online run at port8963 stopped at its Retry control after 362
 successful checks, followed by the failed control check and three passing cleanup
 checks. The fixture selected the Results-dialog Retry while the current surface
