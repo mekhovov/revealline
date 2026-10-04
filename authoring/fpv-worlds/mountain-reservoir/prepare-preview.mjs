@@ -4,7 +4,7 @@ import * as fs from 'node:fs/promises';
 import path from 'node:path';
 import { createHash } from 'node:crypto';
 import { execFileSync } from 'node:child_process';
-const [playerArg, generatedArg, outArg] = process.argv.slice(2);
+const [playerArg, generatedArg, outArg, beforeArg] = process.argv.slice(2);
 if (!playerArg || !generatedArg || !outArg)
   throw Error('Use PLAYER_DIRECTORY GENERATED_DIRECTORY NEW_PREVIEW_DIRECTORY');
 const player = await fs.realpath(playerArg),
@@ -60,9 +60,26 @@ for (const item of checked) {
 await fs.mkdir(path.join(output, 'content'));
 const projectBytes = await fs.readFile(path.join(generated, 'prepared/project.json')),
   project = JSON.parse(projectBytes);
-const modelBytes = await fs.readFile(path.join(generated, 'prepared', project.world.modelAsset));
+const modelPath = path.join(generated, 'prepared', project.world.modelAsset),
+  modelBytes = await fs.readFile(modelPath);
 await fs.writeFile(path.join(output, 'content/project.json'), projectBytes, { flag: 'wx' });
-await fs.writeFile(path.join(output, 'content/scene.glb'), modelBytes, { flag: 'wx' });
+await fs.link(modelPath, path.join(output, 'content/scene.glb'));
+const beforeContent = [];
+if (beforeArg) {
+  const beforeRoot = await fs.realpath(beforeArg),
+    beforeProject = JSON.parse(await fs.readFile(path.join(beforeRoot, 'prepared/project.json'))),
+    beforePath = path.join(beforeRoot, 'prepared', beforeProject.world.modelAsset),
+    beforeBytes = await fs.readFile(beforePath);
+  const noRevision = (value) => JSON.stringify(value, (k, v) => (k === 'revision' ? undefined : v));
+  if (noRevision(beforeProject.courses) !== noRevision(project.courses))
+    throw Error('Before/after course or collision differs');
+  await fs.link(beforePath, path.join(output, 'content/before-scene.glb'));
+  beforeContent.push({
+    path: 'content/before-scene.glb',
+    bytes: beforeBytes.length,
+    sha256: sha(beforeBytes),
+  });
+}
 const html = await fs.readFile(new URL('./preview.html', import.meta.url));
 await fs.writeFile(path.join(output, 'index.html'), html, { flag: 'wx' });
 const record = {
@@ -77,7 +94,11 @@ const record = {
   content: [
     { path: 'content/project.json', bytes: projectBytes.length, sha256: sha(projectBytes) },
     { path: 'content/scene.glb', bytes: modelBytes.length, sha256: sha(modelBytes) },
+    ...beforeContent,
   ],
+  comparison: beforeArg
+    ? 'Fixed identical r9 course/camera for both meshes; all course fields except revision equal published r8. Before mesh is immutable r8, after is the new candidate.'
+    : null,
   harnessSHA256: sha(html),
   build: JSON.parse(
     await fs.readFile(
