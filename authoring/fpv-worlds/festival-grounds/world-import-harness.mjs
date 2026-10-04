@@ -31,6 +31,14 @@ window.fixtureStorage = {
   removeItem: (k) => memory.delete(k),
 };
 let w, d, app, manifest, archive, project, receipt;
+const errorOffsets = new WeakMap();
+function collectOwnerErrors() {
+  if (!w || !receipt) return;
+  const errors = w.fixtureErrors ?? [],
+    offset = errorOffsets.get(w) ?? 0;
+  receipt.errors.push(...errors.slice(offset));
+  errorOffsets.set(w, errors.length);
+}
 function update(message) {
   $('status').textContent = message;
   $('receipt').value = JSON.stringify(receipt, null, 2);
@@ -77,10 +85,18 @@ async function bytes(url) {
 }
 async function mount(clock = 'controlled') {
   if (app) {
-    await app.dispose();
-    w.fixtureRecords.close();
-    w.fixtureWorldStore.close();
-    app = null;
+    collectOwnerErrors();
+    try {
+      await app.dispose();
+      w.fixtureRecords.close();
+      w.fixtureWorldStore.close();
+      app = null;
+    } catch (error) {
+      receipt.errors.push('Owner disposal: ' + error.message);
+      throw error;
+    } finally {
+      collectOwnerErrors();
+    }
   }
   w = d = null;
   const loaded = new Promise((resolve) => frame.addEventListener('load', resolve, { once: true }));
@@ -519,7 +535,7 @@ $('run').onclick = async () => {
     }
     equal('Watch preserves imported records exactly', await w.fixtureRecords.list(), imported);
     await editWorld();
-    receipt.errors.push(...w.fixtureErrors);
+    collectOwnerErrors();
     check('No runtime errors', receipt.errors.length === 0);
     receipt.status = 'passed';
     $('native').disabled = false;
@@ -534,7 +550,7 @@ $('run').onclick = async () => {
       status: d?.getElementById('studio-status')?.textContent,
       flight: d?.getElementById('flight-status')?.textContent,
     };
-    receipt.errors.push(...(w?.fixtureErrors ?? []));
+    collectOwnerErrors();
     update('FAIL · ' + error.message);
   }
 };
