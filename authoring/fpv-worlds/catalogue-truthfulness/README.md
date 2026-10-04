@@ -25,7 +25,8 @@ The first native run passed 364 controls before an incorrect fixture status-text
 the real example had completed. The corrected native observer passed 423 controls and reproduced
 a separate stale-label defect after public Acro replay returned to Missions. Both receipts are
 retained. The focused repair refreshes the catalogue on explicit Missions access, and the next
-immutable fixture requires the correct selected-mode label before any filter repaint. Native
-qualification of that repair and the final source-bound admission are pending. The
+immutable source fixture 8976 passed 424 checks and 14 samples, including the correct
+selected-mode label before any filter repaint. Both native owners recorded no warnings or errors.
+The final source-bound admission and exact admitted native fixture remain pending. The
 qualified evidence PR #1096 remains separate, and the human-authorized P1 main-merge hold remains
 in force; this work does not lift that hold.

@@ -232,7 +232,7 @@ content work. Record browser/GPU/device identity before any performance claim.
 Retain Core 72 MiB / Company 80 MiB and the existing optional-package file/source ceilings.
 Final combined admission `0b54fd0fd` is byte-exact across all 95 original inputs to
 main 21826: 16,741,638 source bytes, 35,578 bytes remaining,102/104 runtime members.
-The imported-card draft adds 591 host bytes (34,987 remaining), before any separate
+The imported-card draft adds 620 host bytes (34,958 remaining), before any separate
 stick-width candidate integration. These draft figures are a source inventory,
 not a fresh package admission. All ceilings remain unchanged.
 Retain the bounded receipts and admit actual final integration; use existing UI,

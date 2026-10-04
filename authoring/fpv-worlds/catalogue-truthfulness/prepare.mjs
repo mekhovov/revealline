@@ -1,4 +1,4 @@
-// Freeze one committed host overlay on the complete immutable admitted player.
+// Freeze an explicit source overlay or an exact complete admitted player.
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import { createHash } from 'node:crypto';
@@ -24,7 +24,9 @@ if (
   throw Error(
     'Use ABS_ROOT EXACT_REV ABS_PLAYER ABS_INVENTORY ABS_RESERVOIR ABS_FESTIVAL ABS_RESERVOIR_PROOFS ABS_NEW_OUT',
   );
-if (!['catalogue', 'mode-diagnostic'].includes(scenario)) throw Error('Unknown manual scenario');
+if (!['catalogue', 'mode-diagnostic', 'admitted'].includes(scenario))
+  throw Error('Unknown manual scenario');
+const admitted = scenario === 'admitted';
 const hash = (b) => createHash('sha256').update(b).digest('hex'),
   git = (...args) =>
     execFileSync('git', args, {
@@ -46,6 +48,15 @@ if (
   stage.sourceTree !== inventory.sourceTree
 )
   throw Error('Exact complete102/95 baseline required');
+if (
+  admitted &&
+  (stage.sourceRevision !== revision ||
+    stage.sourceTree !==
+      git('rev-parse', revision + '^{tree}')
+        .toString()
+        .trim())
+)
+  throw Error('Exact admitted revision/tree required');
 for (const row of inventory.inputs) {
   const bytes = git('show', revision + ':' + row.path),
     changed = hash(bytes) !== row.sha256;
@@ -54,7 +65,8 @@ for (const row of inventory.inputs) {
     throw Error('Working source differs ' + row.path);
   inputs.push({ ...row, bytes: bytes.length, sha256: hash(bytes), changed });
 }
-if (inputs.filter((r) => r.changed).length !== 1) throw Error('Exactly one host overlay required');
+if (inputs.filter((r) => r.changed).length !== (admitted ? 0 : 1))
+  throw Error(admitted ? 'Admitted fixture forbids overlays' : 'Exactly one host overlay required');
 if (await fs.stat(out).catch(() => null)) throw Error('Never replace frozen output');
 await fs.mkdir(out);
 const files = [];
@@ -71,7 +83,7 @@ for (const row of stage.files) {
     target = 'player/' + row.path;
   if (bytes.length !== row.bytes || hash(bytes) !== row.sha256)
     throw Error('Changed admitted member ' + row.path);
-  if (row.path === hostPath)
+  if (!admitted && row.path === hostPath)
     await write(target, git('show', revision + ':' + row.path), 'exact committed host overlay');
   else {
     await fs.mkdir(path.dirname(path.join(out, target)), { recursive: true });
@@ -198,7 +210,9 @@ const fixture = {
   proofs: { bytes: proofs.length, sha256: hash(proofs) },
   files,
   limitations: [
-    'Complete102-member admitted baseline with exactly one committed host overlay; not a fresh admission or cached native offline qualification.',
+    admitted
+      ? 'Exact complete102-member admitted player;95 source inputs match the admitted revision/tree; zero runtime overlays. This fixture does not qualify cached native offline use.'
+      : 'Complete102-member admitted baseline with exactly one committed host overlay; not a fresh admission or cached native offline qualification.',
     'Original native clocks, state and public controls. Same-realm prefixed native IndexedDB. Pack and proof imports are separate actions; no published Browse claim.',
     'No new unit coverage, physics, runtime schema, authored pack or proof changes.',
   ],
