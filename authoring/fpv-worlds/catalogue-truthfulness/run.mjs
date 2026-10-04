@@ -219,6 +219,11 @@ async function modeReturnObservation() {
     actual: row.metadata,
     stale: row.metadata !== 'Observe a subject',
   };
+  check(
+    !receipt.modeObservation.stale,
+    'Missions immediately reflects replay-selected Acro before any filter repaint',
+    receipt.modeObservation,
+  );
   filters('observe');
   selectWorld(fixture.packs.diagnostic.world);
   check(

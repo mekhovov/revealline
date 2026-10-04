@@ -6150,6 +6150,7 @@ export function mountWorldApp({
           return false;
         }
         if (surface === 'missions') {
+          renderCatalogue();
           showTab(shellTab, false);
           shellTab = 'explore';
         } else if (surface === 'workshop' || surface === 'help') {
