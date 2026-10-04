@@ -95,7 +95,14 @@
     "completeControlledRAFWatchReplays": 16,
     "browserReceipt": "../../evidence/r5-browser.json",
     "browserComparison": "../../evidence/r5-browser-comparison.json",
-    "browserClockScope": "Controlled RAF delivers200ms per pulse to actual1x Watch; real performance clock, visibility and pause guards remain unchanged. No state/tick/completion assignment. Native-clock launch and unmodified standalone entry are distinct manual steps."
+    "browserClockScope": "Controlled RAF delivers200ms per pulse to actual1x Watch; real performance clock, visibility and pause guards remain unchanged. No state/tick/completion assignment. Native-clock launch and unmodified standalone entry are distinct manual steps.",
+    "mergedRuntimeBase": "21826c460e80fa4e7fa47ec8e6ba9f98f75beea4",
+    "currentAdmittedRuntime": "0b54fd0fdf8fe06dc900024a8b59713340b09bb3",
+    "currentRuntimeInputCount": 95,
+    "currentMainBridgeReceipt": "../../evidence/r5-current-main-bridge.json",
+    "currentMainImportChecks": 19,
+    "currentMainImportReceipt": "../../evidence/r5-current-main-import.json",
+    "runtimeBridge": "Festival subtree unchanged; all95 inputs equal current main and separately admitted0b54. Historical364 proof closure has only typed required-extension validation changed; current pack/ZIP/record import19 passes. Flight/collision/replay bytes remain exact. Browser311 remains historical364."
   },
   "discovery": "No production Library index row is added by this content change. Imported cards retain host defaults Explore/intermediate/4min."
 }

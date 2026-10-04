@@ -68,6 +68,13 @@ with the unchanged performance clock and pause guards, not assigned simulation
 state or native-clock endurance. Native launch and true stopped-origin offline
 use require the separate unmodified admitted entry and their own receipts.
 
+The publication branch includes merged main `21826c460` with all 95 runtime
+inputs exact to its separately admitted combined candidate `0b54fd0fd`. The
+Festival subtree is unchanged. Flight/collision/replay modules remain exact to
+the historical browser host `364fb78c3`; the changed required-extension parser
+passes 19 current-main pack/ZIP/record-import checks. The 311 browser checks
+remain attributed to `364fb78c3`, not a newly claimed current-main run.
+
 The immutable r5 candidate files are [the installable pack](distribution/r5/festival-grounds.r5.rlpack),
 [the editable project ZIP](distribution/r5/festival-grounds.r5.zip) and
 [sixteen exact-pack demonstrations](distribution/r5/festival-grounds.r5.proofs.json).
