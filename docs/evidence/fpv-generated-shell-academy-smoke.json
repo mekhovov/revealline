@@ -1,0 +1,15 @@
+{
+  "url": "http://127.0.0.1:8878/dist/fpv-generated-shell-academy-248b8d9af/optional-practice/civilian-fpv/index.html",
+  "steps": [
+    "Settings",
+    "Back",
+    "Start",
+    "Briefing Start",
+    "Practice in progress",
+    "Pause to main menu",
+    "Continue practice in progress",
+    "Pause to main menu"
+  ],
+  "finalState": "Browser tab: 228, Title: \"FPV / LINE · SIM Academy\", URL: \"http://127.0.0.1:8878/dist/fpv-generated-shell-academy-248b8d9af/optional-practice/civilian-fpv/index.html\".\n0 AXWebArea FPV / LINE · SIM Academy, URL: 127.0.0.1:8878/dist/fpv-generated-shell-academy-248b8d9af/optional-practice/civilian-fpv/index.html\n\t1 container FPV / LINE, ID: academy-shell-home-dialog\n\t\t2 heading FPV / LINE, Value: 1, ID: academy-shell-home-title\n\t\t\t3 text FPV / LINE\n\t\t4 text FPV SIM · ACADEMY\n\t\t5 container Choose game mode\n\t\t6 text Lift and land\n\t\t7 container Main menu\n\t\t\t8 button Continue, ID: academy-shell-action-primary\n\t\t\t9 button Select Mission, ID: academy-shell-action-missions\n\t\t\t10 button Settings, ID: academy-shell-action-settings\n\t\t\t11 button Full screen, ID: academy-shell-action-fullscreen\n\t\t\t12 checkbox Sound: on, Value: 1, ID: academy-shell-action-sound\n\t\t13 button Retry, ID: academy-shell-action-home-retry\n\t\t\t14 text Retry\n\t\t15 text Tab/arrows move; Enter selects; Esc goes back. Controller: release, then press/release A to connect. Calibrated radio: hold yaw right for 0.7 s, then centre to connect; roll/pitch move, hold yaw right/left then centre to confirm/go back.\n\nThe focused UI element is 8 button Continue, ID: academy-shell-action-primary",
+  "logs": []
+}
