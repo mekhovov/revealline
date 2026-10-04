@@ -522,3 +522,99 @@
     }
   }
 }
+
+/* Keep the transport compact even when a theme adds heavy panel ornaments. */
+#demo-dialog[open] .demo-header {
+  top: max(4px, env(safe-area-inset-top));
+  left: max(4px, env(safe-area-inset-left));
+  right: max(4px, env(safe-area-inset-right));
+  padding: 0;
+  gap: 4px;
+}
+#demo-dialog .demo-header > div:first-child {
+  flex: 1 1 0;
+  min-width: 0;
+  width: auto;
+  padding: 3px 6px;
+}
+#demo-dialog .demo-header h2 {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 0.9rem;
+}
+#demo-dialog .demo-header .eyebrow {
+  font-size: 0.6rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+#demo-dialog .demo-header-actions {
+  flex: 0 0 auto;
+  gap: 0;
+  padding: 0;
+  align-items: center;
+}
+#demo-dialog .demo-header-actions button[data-icon] {
+  box-sizing: border-box;
+  width: 44px;
+  height: 44px;
+  min-width: 44px;
+  min-height: 44px;
+  padding: 0;
+  margin: 0;
+  border: 1px solid #8094a65c;
+  border-radius: 4px;
+  font-size: 0;
+  line-height: 1;
+  background: #111c27ed;
+  color: #f3f5fb;
+  box-shadow: none;
+  text-shadow: none;
+  transform: none;
+}
+#demo-dialog .demo-header-actions button[data-icon]::before {
+  content: attr(data-icon);
+  position: static;
+  display: inline;
+  font:
+    24px/1 system-ui,
+    sans-serif;
+  background: none;
+  border: 0;
+  opacity: 1;
+}
+#demo-dialog .demo-header-actions button[data-icon]::after {
+  display: none;
+}
+#demo-dialog .demo-header-actions button[data-icon]:focus-visible {
+  outline: 2px solid #76d9f0;
+  outline-offset: -3px;
+}
+#demo-dialog .demo-header-actions #demo-interrupt {
+  color: #ffdf70;
+}
+#demo-dialog .demo-panel,
+#demo-dialog[data-reward='expanded'] .demo-panel {
+  top: max(54px, calc(env(safe-area-inset-top) + 50px));
+  bottom: auto;
+  left: auto;
+  right: max(6px, env(safe-area-inset-right));
+  width: min(440px, calc(100% - 12px));
+  max-height: calc(100dvh - 66px - env(safe-area-inset-top) - env(safe-area-inset-bottom));
+  margin: 0;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 8px;
+}
+#demo-dialog .demo-panel[hidden] {
+  display: none;
+}
+#demo-dialog #demo-details > summary {
+  display: none;
+}
+#demo-dialog #demo-caption {
+  display: block;
+}
