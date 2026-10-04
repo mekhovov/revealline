@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Harbor Docks · imported eight-course world</title>
+  <style>
+    body {
+      font: 15px system-ui;
+      background: #142128;
+      color: #edf2eb;
+      margin: 16px;
+    }
+    button {
+      font: inherit;
+      padding: 10px;
+    }
+    iframe {
+      display: block;
+      width: min(1280px, 100%);
+      height: 800px;
+      margin-top: 16px;
+    }
+    textarea {
+      width: 100%;
+      height: 220px;
+    }
+    p {
+      max-width: 100ch;
+    }
+  </style>
+  <h1>Harbor Docks · imported eight-course world</h1>
+  <p>
+    Eight courses, sixteen exact-pack demonstrations. Actual identified admitted player, native
+    storage and unchanged flight physics. Keep this tab visible and focused while all sixteen Watch
+    replays run. Controlled animation timestamps do not support a performance claim. Native-clock
+    launch and offline qualification are separate checks. The Watch matrix delivers 200ms per
+    controlled RAF pulse at public 1x speed, retaining the real performance clock and pause guards.
+  </p>
+  <p>
+    <a href="./player/optional-practice/fpv-worlds/index.html" target="_blank" rel="noopener"
+      >Unmodified admitted standalone entry (separate native storage)</a
+    >
+    · <a href="./content/world.rlpack" download>Exact Harbor pack</a> ·
+    <a href="./content/proofs.json" download>Sixteen exact demonstrations</a>
+  </p>
+  <button id="run">Run import, collision and sixteen Watch and editor checks</button>
+  <button id="native" disabled>Open native-clock flight inside this fixture</button>
+  <p id="status" role="status">Ready</p>
+  <textarea id="receipt" readonly aria-label="Complete world receipt"></textarea>
+  <iframe id="sim" title="Actual admitted FPV World player"></iframe>
+  <script type="module" src="./world-import-harness.mjs"></script>
+</html>
