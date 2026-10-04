@@ -288,17 +288,36 @@ function terminal(room) {
     };
   return null;
 }
-/** One server-owned fixed tick; the host never fast-forwards after a stall. */
-export function stepAuthoritativeRoom(room, now) {
-  if (['abandoned', 'finished'].includes(room.status)) return;
+/** Wall-clock liveness is independent of simulation ticks. Returns whether
+ * controls/readiness were retired, so the transport can invalidate old requests. */
+export function expireAuthoritativeRoom(room, now) {
+  if (['abandoned', 'finished'].includes(room.status)) return false;
   const joined = room.seats.filter((seat) => seat.joined);
   if (joined.some((seat) => now - seat.lastSeen > 60000)) {
     room.status = 'abandoned';
     room.result = { outcome: 'abandoned' };
+    room.queue = [];
+    releaseRoomControls(room);
+    room.seats.forEach((seat) => {
+      seat.ready = false;
+    });
     event(room, 'abandoned');
-    return;
+    return true;
   }
-  if (joined.some((seat) => now - seat.lastSeen > 5000)) pauseAuthoritativeRoom(room, 'connection');
+  if (!joined.some((seat) => now - seat.lastSeen > 5000)) return false;
+  const retired = room.status === 'playing' || room.seats.some((seat) => seat.ready);
+  pauseAuthoritativeRoom(room, 'connection');
+  // Waiting and already-paused rooms have no advancing simulation. Their old
+  // Ready choices still expire; a later heartbeat cannot renew player consent.
+  room.seats.forEach((seat) => {
+    seat.ready = false;
+  });
+  return retired;
+}
+
+/** One server-owned fixed tick; the host never fast-forwards after a stall. */
+export function stepAuthoritativeRoom(room, now) {
+  expireAuthoritativeRoom(room, now);
   if (room.status !== 'playing') return;
   room.tick++;
   room.activeMs = room.tick * FIXED_DT * 1000;

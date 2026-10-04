@@ -50,9 +50,9 @@ const recipe = () => {
         id: `ed_${'a'.repeat(64)}`,
         sha256: 'b'.repeat(64),
         version: '1.0',
-        title,
+        title: { ...title },
       },
-      mission: { id: level.id, revision: String(level.revision), title },
+      mission: { id: level.id, revision: String(level.revision), title: { ...title } },
       presentation: 'shared-runtime',
     },
   };
