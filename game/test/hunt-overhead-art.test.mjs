@@ -218,6 +218,32 @@ test('specialist fronts use accepted heading, while pending turns and open armor
   );
 });
 
+test('ordinary warning intent uses the accepted next heading without turning the body or guessing from a goal', () => {
+  for (const family of ['refuge-seeker', 'switchback', 'sprinter']) {
+    const options = {
+        family,
+        heading: 'left',
+        nextHeading: 'right',
+        goal: { x: -50, y: 30 },
+        phase: 'warning',
+        reducedEffects: true,
+      },
+      before = structuredClone(options),
+      ctx = draw(options);
+    assert.deepEqual(ctx.rotations, [-Math.PI / 2, Math.PI / 2]);
+    const tip = ctx.paints.find(({ rect }) => JSON.stringify(rect) === '[-1,-11,2,1]');
+    assert.ok(
+      tip.corners.every(([x]) => x > 16),
+      `${family} announces east despite a western goal`,
+    );
+    assert.deepEqual(draw({ ...options, timeMs: 9999 }).paints, ctx.paints);
+    assert.deepEqual(draw({ ...options, nextHeading: null }).rotations, [-Math.PI / 2]);
+    assert.deepEqual(draw({ ...options, phase: 'committed' }).rotations, [-Math.PI / 2]);
+    assert.deepEqual(draw({ ...options, frozen: true }).rotations, [-Math.PI / 2, Math.PI / 2]);
+    assert.deepEqual(options, before);
+  }
+});
+
 test('the new art is explicitly pinned; released and previous pilot selections stay distinct', () => {
   const released = draw({ family: 'runner', artRevision: 'released' }).paints,
     unknown = draw({ family: 'runner', artRevision: 'unknown-future-revision' }).paints,

@@ -76,6 +76,7 @@ function fixture(t) {
     ]),
   );
   const win = new Target(),
+    layout = new Target(),
     doc = new Target(win),
     arena = new Target(doc),
     supportButton = new Target(doc),
@@ -84,6 +85,7 @@ function fixture(t) {
     navigated = [],
     steered = [];
   supportButton.tag = boostButton.tag = 'button';
+  win.matchMedia = () => layout;
   doc.querySelectorAll = () => [];
   doc.querySelector = (selector) => (selector === '#boost-button' ? boostButton : null);
   let pads = [null, owner],
@@ -134,6 +136,7 @@ function fixture(t) {
   return {
     input,
     win,
+    layout,
     doc,
     owner,
     arena,
@@ -162,6 +165,42 @@ function fixture(t) {
     },
   };
 }
+
+test('moving room controls across the landscape boundary releases holds and requires fresh Ready input', (t) => {
+  const f = fixture(t);
+  f.input.poll();
+  f.owner.axes[0] = 1;
+  f.owner.buttons[5].pressed = true;
+  f.supportButton.emit('pointerdown', { pointerId: 7, button: 0 });
+  assert.equal(f.input.poll().boost, true);
+  assert.equal(f.support.held(), true);
+  f.layout.emit('change', { matches: true });
+  assert.equal(f.pauses, 1);
+  assert.equal(f.support.held(), false);
+  assert.equal(f.supportButton.hasPointerCapture(7), false);
+  assert.deepEqual(f.input.poll(), neutral);
+  f.setScope('flight');
+  assert.deepEqual(f.input.poll(), neutral, 'held controller input cannot rearm after Ready');
+  f.owner.axes[0] = 0;
+  f.owner.buttons[5].pressed = false;
+  f.input.poll();
+  f.owner.axes[1] = 1;
+  f.owner.buttons[5].pressed = true;
+  assert.deepEqual(f.input.poll(), { ...neutral, direction: 'down', boost: true });
+  f.layout.emit('change', { matches: false });
+  assert.equal(f.pauses, 2, 'returning controls below the boards is the same pause boundary');
+});
+
+test('room layout changes leave an inactive picker alone and retire their listener on disposal', (t) => {
+  const f = fixture(t);
+  f.setScope('dialog:missions');
+  f.layout.emit('change', { matches: true });
+  assert.equal(f.pauses, 0);
+  f.setScope('flight');
+  f.input.destroy();
+  f.layout.emit('change', { matches: false });
+  assert.equal(f.pauses, 0, 'an old page owner cannot pause the replacement room');
+});
 
 test('one room poll owns menu and flight hardware without a newly connected pad stealing either', (t) => {
   const f = fixture(t);

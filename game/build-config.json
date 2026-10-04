@@ -277,6 +277,7 @@
     "optional-practice/civilian-fpv/world-editor.mjs",
     "optional-practice/civilian-fpv/world-audio.mjs",
     "optional-practice/civilian-fpv/world-hunt-reactions.mjs",
+    "optional-practice/civilian-fpv/world-enemy-guide.mjs",
     "optional-practice/civilian-fpv/world-reaction-runtime.mjs",
     "optional-practice/civilian-fpv/world-progress.mjs",
     "optional-practice/civilian-fpv/content-definitions.mjs",

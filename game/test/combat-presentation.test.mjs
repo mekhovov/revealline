@@ -180,6 +180,38 @@ test('specialists retain their current armored heading without an outer or pendi
   }
 });
 
+test('Capture ordinary warning arrows retain world intent through cached-body rotation and reduced effects', () => {
+  const headings = { up: 0, right: Math.PI / 2, down: Math.PI, left: -Math.PI / 2 };
+  for (const behavior of ['refuge', 'switchback', 'sprinter']) {
+    const p = painter(),
+      s = surface(),
+      v = view();
+    for (const [heading, facingRadians] of Object.entries(headings)) {
+      v.actors = [
+        {
+          ...view().actors[0],
+          kind: 'runner',
+          vx: 0,
+          vy: 0,
+          facingRadians,
+          pursuit: { behavior, heading, nextHeading: 'right', phase: 'warning' },
+        },
+      ];
+      const before = structuredClone(v);
+      p.drawActors(s.ctx, v, palette, { reduced: true });
+      const image = s.calls.filter(({ name }) => name === 'drawImage').at(-1).args[0],
+        turns = image.calls.filter(({ name }) => name === 'rotate').map(({ args }) => args[0]);
+      assert.equal(turns[0], 0, 'Cached body remains north-facing');
+      assert.equal(turns[1] + facingRadians, Math.PI / 2, 'Warning arrow announces world east');
+      const cached = image;
+      p.drawActors(s.ctx, v, palette, { reduced: true });
+      assert.strictEqual(s.calls.filter(({ name }) => name === 'drawImage').at(-1).args[0], cached);
+      assert.deepEqual(v, before);
+    }
+    assert.equal(p.images.length, 4, 'Relative intent angle is part of the sprite cache identity');
+  }
+});
+
 test('industrial compact Capture gait advances through stride poses and freezes for reduced effects', () => {
   const previous = Object.getOwnPropertyDescriptor(globalThis, 'location');
   try {

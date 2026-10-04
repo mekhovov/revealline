@@ -36,6 +36,17 @@ export function attachRoomInput({
   const hidden = () => {
     if (document.hidden) clear();
   };
+  // Use the same boundary as rooms.css. A resized desktop/hybrid window can
+  // relocate held touch controls without emitting an orientationchange event.
+  const sideControls = window.matchMedia?.(
+    '(max-height: 500px) and (orientation: landscape) and (max-width: 899px), (max-height: 500px) and (orientation: landscape) and (pointer: coarse)',
+  );
+  const layoutChanged = () => {
+    const playing = active();
+    clear();
+    if (playing) onPause();
+  };
+  sideControls?.addEventListener('change', layoutChanged);
   // The picker has no room credentials yet, so transport suspension cannot
   // own its input cleanup. Foreground loss always retires physical menu holds.
   window.addEventListener('blur', clear);
@@ -71,6 +82,7 @@ export function attachRoomInput({
       clear();
       window.removeEventListener('blur', clear);
       document.removeEventListener('visibilitychange', hidden);
+      sideControls?.removeEventListener('change', layoutChanged);
       input.destroy();
       router.destroy();
     },
