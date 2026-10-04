@@ -13,6 +13,7 @@ import { DISPLAY_PREFERENCES_KEY } from '../display-preferences.mjs';
 import { authoritativeCheckpoint, verifyReplay } from '../replay.mjs';
 import { emptyLibrary, updatePreferences, saveLibrary } from '../library.mjs';
 import { soloPage, memoryStorage, settle } from './helpers/solo-dom.mjs';
+import { activateHostAction } from './helpers/host-action.mjs';
 import { couchPage, mountCouch } from './helpers/couch-host.mjs';
 import { Document, Events } from './helpers/couch-dom.mjs';
 import { FIXED_DT } from '../coop/core.mjs';
@@ -186,14 +187,15 @@ for (const turnPolicy of ['immediate', 'grid-center']) {
       profileKey,
       updatePreferences(emptyLibrary(), { turnPolicy, textSize: 'large' }),
     );
-    const page = await soloPage(t, { campaign, storage: store });
+    const page = await soloPage(t, { campaign, storage: store, waitForPictures: false });
     assert.equal(
       store.getItem(THEME_PREFERENCES_KEY),
       null,
       'Opening a host does not create appearance preferences.',
     );
-    page.$('start-button').click();
-    await settle(() => page.doc.body.dataset.flightState === 'running');
+    assert.equal(page.$('game-overlay').hidden, false);
+    await activateHostAction(page.$('start-button'));
+    assert.equal(page.doc.body.dataset.flightState, 'running');
     page.key('ArrowDown');
     page.key('ArrowDown', false);
     for (let n = 0; n < 13; n++) page.frame();

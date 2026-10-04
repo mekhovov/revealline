@@ -129,8 +129,23 @@ test('restored ground flight captions follow pause/resume without suppressing an
   await settle(() => page.doc.body.dataset.flightState === 'running');
   ticks(page, 8);
   page.$('pause-button').click();
-  page.$('continue-saved').click();
-  await settle(() => !page.$('continue-saved').disabled);
+  const saved = authoritativeCheckpoint(page.rendered.run),
+    loadButton = page.$('continue-saved'),
+    load = loadButton.onclick;
+  let verification;
+  loadButton.onclick = (...args) => (verification = load.apply(loadButton, args));
+  try {
+    loadButton.click();
+  } finally {
+    loadButton.onclick = load;
+  }
+  assert.ok(verification instanceof Promise, 'The real Continue action owns verification.');
+  await verification;
+  page.frame(0);
+  assert.equal(loadButton.disabled, false);
+  assert.equal(page.doc.body.dataset.flightState, 'paused');
+  assert.match(page.$('run-message').textContent, /Saved flight verified.*Press Resume/);
+  assert.deepEqual(authoritativeCheckpoint(page.rendered.run), saved);
   page.$('start-button').click();
   await settle(() => page.doc.body.dataset.flightState === 'running');
   assert.equal(page.$('run-message').textContent, 'Flight resumed.');
