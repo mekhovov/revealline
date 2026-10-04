@@ -8,7 +8,7 @@ import * as visuals from '../../optional-practice/civilian-fpv/world-visuals.mjs
 import * as themes from '../../optional-practice/civilian-fpv/world-themes.mjs';
 import { contrastRatio } from '../presentation/theme-system.mjs';
 import { actorVisual } from '../hunt/actor-catalog.mjs';
-import { sharedActorAppearance } from '../hunt/preferences.mjs';
+import { sharedActorAppearance, actorArtReviewRevision } from '../hunt/preferences.mjs';
 import {
   ACCEPTANCE_CASES,
   acceptanceRoute,
@@ -178,6 +178,7 @@ async function rendererFixture() {
     ...visuals,
     actorVisual,
     sharedActorAppearance,
+    actorArtReviewRevision,
     structuredClone,
     THREE: {
       ...THREE,
