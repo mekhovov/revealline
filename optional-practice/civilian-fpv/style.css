@@ -3141,6 +3141,9 @@ body.mode-play-page {
   width: 100%;
   min-width: 0;
 }
+.sim-worlds #world-language {
+  width: 100%;
+}
 .sim-worlds .sim-shell-missions .studio-header {
   position: static;
   padding: 8px 0;
