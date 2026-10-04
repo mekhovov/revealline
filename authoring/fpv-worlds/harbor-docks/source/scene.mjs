@@ -61,13 +61,20 @@ export function createScene() {
     );
     art.add(geometry, role);
   }
-  function closed(id, min, max, role, topRole = role) {
+  function closed(id, min, max, role, topRole = role, omit = []) {
     solid(id, min, max);
     for (const side of [-1, 1]) {
-      face(role, 'x', side < 0 ? min[0] : max[0], min[2], min[1], max[2], max[1], side);
-      face(role, 'z', side < 0 ? min[2] : max[2], min[0], min[1], max[0], max[1], side);
+      if (!omit.includes(side < 0 ? 'x-' : 'x+'))
+        face(role, 'x', side < 0 ? min[0] : max[0], min[2], min[1], max[2], max[1], side);
+      if (!omit.includes(side < 0 ? 'z-' : 'z+'))
+        face(role, 'z', side < 0 ? min[2] : max[2], min[0], min[1], max[0], max[1], side);
     }
-    face(topRole, 'y', max[1], min[0], min[2], max[0], max[2]);
+    if (!omit.includes('y+')) face(topRole, 'y', max[1], min[0], min[2], max[0], max[2]);
+  }
+  function tiles(axis, plane, us, vs, choose, sign = 1) {
+    for (let u = 0; u < us.length - 1; u++)
+      for (let v = 0; v < vs.length - 1; v++)
+        face(choose(u, v), axis, plane, us[u], vs[v], us[u + 1], vs[v + 1], sign);
   }
   function bar(role, start, end, width = 0.08) {
     const direction = new THREE.Vector3(...end).sub(new THREE.Vector3(...start));
@@ -185,9 +192,13 @@ export function createScene() {
   face('dark', 'z', -5.2 + 0.012, 30.7, 16.1, 33.8, 17.7);
   lettering(art, '01', [23, 19.2, -4.18], 0.7);
   // Closed service house with grounded annex and a supported flat inspection deck.
-  closed('harbor-service-house', [-32, 0, 26], [-21, 4.8, 37], 'concrete');
+  closed('harbor-service-house', [-32, 0, 26], [-21, 4.8, 37], 'concrete', 'concrete', [
+    'x+',
+    'z+',
+    'y+',
+  ]);
   closed('harbor-service-annex', [-39, 0, 29], [-32, 2.8, 37], 'oxide');
-  closed('platform-service-deck', [-21, 3.2, 27], [-10, 3.5, 36], 'chalk');
+  closed('platform-service-deck', [-21, 3.2, 27], [-10, 3.5, 36], 'blue', 'concrete', ['y+']);
   for (const x of [-20.6, -10.4])
     for (const z of [27.4, 35.6])
       closed(
@@ -196,12 +207,57 @@ export function createScene() {
         [x + 0.18, 3.2, z + 0.18],
         'blue',
       );
-  // Solid facade glazing/door are explicit attached inlays, no implied opening.
-  for (const x of [-29.5, -24.5]) {
-    art.box('blue', [3.3, 1.9, 0.024], [x, 2.75, 37.014]);
-    art.box('dark', [2.95, 1.55, 0.024], [x, 2.75, 37.044]);
-    art.box('steel', [0.06, 1.55, 0.024], [x, 2.75, 37.074]);
-  }
+  // Replace original complete face paint with disjoint glazing/frame/plinth
+  // cells. These remain opaque closed surfaces on the identical collider plane.
+  tiles(
+    'z',
+    37,
+    [-32, -31.15, -30.95, -28.1, -27.9, -25.1, -24.9, -22.05, -21.85, -21],
+    [0, 0.45, 1.6, 1.78, 3.34, 3.52, 4.8],
+    (u, v) =>
+      v === 0
+        ? 'oxide'
+        : v === 3 && [2, 4, 6].includes(u)
+          ? 'dark'
+          : v >= 2 && v <= 4 && u > 0 && u < 8
+            ? 'blue'
+            : 'concrete',
+  );
+  tiles(
+    'x',
+    -21,
+    [26, 26.65, 26.8, 29.4, 29.55, 32.2, 32.35, 35.4, 35.55, 37],
+    [0, 0.45, 2.6, 3.5, 3.65, 4.45, 4.6, 4.8],
+    (u, v) =>
+      v === 0
+        ? 'oxide'
+        : v === 4 && [2, 4, 6].includes(u)
+          ? 'dark'
+          : v >= 3 && v <= 5 && u > 0 && u < 8
+            ? 'blue'
+            : u === 4 && v === 1
+              ? 'blue'
+              : 'concrete',
+  );
+  tiles('y', 4.8, [-32, -31.65, -21.35, -21], [26, 26.35, 36.65, 37], (u, v) =>
+    u === 1 && v === 1 ? 'dark' : 'steel',
+  );
+  // Bordered pad and deck-edge paint replace the blank white top rather than
+  // overlay it. Exact top/support height and the open underside stay unchanged.
+  tiles(
+    'y',
+    3.5,
+    [-21, -20.65, -18.2, -18, -13, -12.8, -10.35, -10],
+    [27, 27.35, 28.8, 29, 34, 34.2, 35.65, 36],
+    (u, v) =>
+      u === 0 || u === 6 || v === 0 || v === 6
+        ? 'blue'
+        : u >= 2 && u <= 4 && v >= 2 && v <= 4
+          ? u === 3 && v === 3
+            ? 'chalk'
+            : 'ochre'
+          : 'concrete',
+  );
   art.box('blue', [2.1, 2.4, 0.04], [-35.5, 1.2, 37.027]);
   lettering(art, 'ПОРТ', [-26.5, 4.1, 37.03], 0.55);
   for (const x of [-16.3, -14.7]) art.box('blue', [0.15, 0.005, 2.6], [x, 3.512, 31.5]);
@@ -213,20 +269,112 @@ export function createScene() {
     closed('bollard-' + z, [35.7, 0, z - 0.35], [36.3, 0.75, z + 0.35], 'dark', 'steel');
   }
   land = false;
-  face('water', 'y', 0.22, 43, -170, 260, 170);
+  // Three connected water rectangles continue beyond every preview far plane.
+  // The western land strip connects this terminal to shore; new scenery stays
+  // outside the playable rectangle and adds no physics or collision changes.
+  face('water', 'y', 0.22, 43, -2000, 2000, 2000);
+  face('water', 'y', 0.22, -47, -2000, 43, -52);
+  face('water', 'y', 0.22, -47, 50, 43, 2000);
+  face('asphalt', 'y', 2, -2000, -2000, -47, 2000);
+  face('concrete', 'x', -47, -2000, 0, -52, 2, 1);
+  face('concrete', 'x', -47, 50, 0, 2000, 2, 1);
   face('concrete', 'x', 43, -52, 0, 50, 2, 1);
   for (let i = 0; i < 26; i++) {
     const x = 49 + (i % 5) * 12.2,
       z = -90 + i * 7.1;
     face('ripple', 'y', 0.23, x, z, x + 5.4 + (i % 3), z + 0.06);
   }
-  // Stationary out-of-bounds utility vessel gives scale; no over-water gameplay.
-  art.box('dark', [11, 2.8, 34], [65, -0.2, -3]);
-  art.box('oxide', [10.6, 0.8, 33.6], [65, 1.2, -3]);
-  art.box('concrete', [9.6, 0.2, 29], [65, 1.7, -3]);
-  art.box('chalk', [7, 4.6, 8], [65, 4.1, 6]);
-  art.box('blue', [7.2, 0.35, 8.2], [65, 6.55, 6]);
-  art.box('dark', [7.04, 1.1, 0.03], [65, 5.5, 10.02]);
+  // Original stationary utility barge, entirely beyond playable X40m. Raked
+  // lower hull/chamfered ends, working deck and opaque framed cabin give scale.
+  const outline = [
+    [-3.8, -20],
+    [3.8, -20],
+    [5.5, -15],
+    [5.5, 12],
+    [4.7, 16],
+    [3, 17],
+    [-3, 17],
+    [-4.7, 16],
+    [-5.5, 12],
+    [-5.5, -15],
+  ];
+  const ring = (y, scale) => outline.map(([x, z]) => [65 + x * scale, y, -3 + z * scale]);
+  const rings = [ring(-0.8, 0.84), ring(0.45, 1), ring(1.7, 1)];
+  function polygon(role, points, outward) {
+    const normal = new THREE.Vector3()
+      .subVectors(new THREE.Vector3(...points[1]), new THREE.Vector3(...points[0]))
+      .cross(
+        new THREE.Vector3().subVectors(
+          new THREE.Vector3(...points[2]),
+          new THREE.Vector3(...points[0]),
+        ),
+      );
+    const reverse = normal.dot(new THREE.Vector3(...outward)) < 0;
+    const positions = [];
+    for (let i = 1; i < points.length - 1; i++)
+      positions.push(...points[0], ...points[reverse ? i + 1 : i], ...points[reverse ? i : i + 1]);
+    const shape = new THREE.BufferGeometry();
+    shape.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3));
+    art.add(shape, role);
+  }
+  for (let layer = 0; layer < 2; layer++)
+    for (let i = 0; i < outline.length; i++) {
+      const next = (i + 1) % outline.length,
+        a = rings[layer][i],
+        b = rings[layer][next];
+      polygon(
+        layer ? 'oxide' : 'dark',
+        [a, b, rings[layer + 1][next], rings[layer + 1][i]],
+        [(a[0] + b[0]) / 2 - 65, 0, (a[2] + b[2]) / 2 + 3],
+      );
+    }
+  polygon('dark', rings[0], [0, -1, 0]);
+  polygon('concrete', rings[2], [0, 1, 0]);
+  for (let i = 0; i < outline.length; i++) {
+    const a = rings[2][i],
+      b = rings[2][(i + 1) % outline.length];
+    const start = [65 + (a[0] - 65) * 0.96, 1.7, -3 + (a[2] + 3) * 0.96];
+    const end = [65 + (b[0] - 65) * 0.96, 1.7, -3 + (b[2] + 3) * 0.96];
+    const steps = Math.ceil(Math.hypot(end[0] - start[0], end[2] - start[2]) / 3);
+    for (let j = 0; j < steps; j++) {
+      const p = start.map((v, k) => v + ((end[k] - v) * j) / steps);
+      bar('steel', p, [p[0], 2.75, p[2]], 0.034);
+    }
+    bar('steel', [start[0], 2.75, start[2]], [end[0], 2.75, end[2]], 0.035);
+  }
+  const cabinUs = [61.5, 61.68, 63.76, 63.92, 66.08, 66.24, 68.32, 68.5],
+    cabinVs = [1.7, 3.15, 3.32, 4.75, 4.92, 5.75];
+  const cabinPaint = (u, v) =>
+    v === 0
+      ? 'blue'
+      : v === 2 && [1, 3, 5].includes(u)
+        ? 'dark'
+        : v >= 1 && v <= 3
+          ? 'steel'
+          : 'chalk';
+  for (const side of [-1, 1]) {
+    tiles('z', side < 0 ? 3.6 : 12.2, cabinUs, cabinVs, cabinPaint, side);
+    tiles(
+      'x',
+      side < 0 ? 61.5 : 68.5,
+      [3.6, 3.78, 6.25, 6.41, 9.39, 9.55, 12.02, 12.2],
+      cabinVs,
+      cabinPaint,
+      side,
+    );
+  }
+  art.box('blue', [7.5, 0.2, 9.1], [65, 5.85, 7.9]);
+  for (const x of [61.45, 68.55]) bar('steel', [x, 6.1, 3.5], [x, 6.1, 12.3], 0.035);
+  for (const z of [3.5, 12.3]) bar('steel', [61.45, 6.1, z], [68.55, 6.1, z], 0.035);
+  art.add(new THREE.CylinderGeometry(0.3, 0.3, 1.4, 8), 'oxide', [66.8, 6.65, 9.5]);
+  bar('steel', [63, 5.95, 5], [63, 8, 5], 0.035);
+  art.add(
+    new THREE.CylinderGeometry(0.65, 0.65, 1.8, 12),
+    'dark',
+    [65, 2.35, -10],
+    [0, 0, Math.PI / 2],
+  );
+  for (const x of [63.8, 66.2]) art.box('blue', [0.25, 0.9, 1.7], [x, 2.15, -10]);
   const anchors = [
     { id: 'quay-pad', kind: 'spawn', position: [-2, 2.25, 34] },
     { id: 'arrival-apron', kind: 'checkpoint', position: [-2, 6, 20], order: 1 },
@@ -234,5 +382,5 @@ export function createScene() {
     { id: 'gantry-lookout', kind: 'checkpoint', position: [24, 9, -14], order: 3 },
     { id: 'quay-return', kind: 'landing', position: [-2, 2.25, 34], order: 4 },
   ];
-  return { ...art.encode(obstacles, anchors, 'r1'), obstacles, anchors };
+  return { ...art.encode(obstacles, anchors, 'r2'), obstacles, anchors };
 }

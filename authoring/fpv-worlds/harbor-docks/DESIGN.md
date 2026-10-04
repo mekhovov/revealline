@@ -3,7 +3,9 @@
 Initial design recorded before production. Festival is now qualified and published
 as Draft #1097 under the human main-merge hold; this independent Harbor branch
 has its first scene/one-course candidate. README.md records current checks. No
-Harbor visual or ordinary-flight acceptance exists yet. No files in the Festival
+complete Harbor-scene or ordinary-flight acceptance exists yet; r1's container
+and gantry foundations have a bounded actual-renderer acceptance, and r2 addresses
+the rejected water/vessel/service-facade gaps. No files in the Festival
 release branch were changed for this design. Current runtime reference is merged
 main `21826c460e80fa4e7fa47ec8e6ba9f98f75beea4` (the separately admitted `0b54fd0fd`
 has all 95 runtime inputs byte-identical).
@@ -72,7 +74,11 @@ existing 0.5m extra margin, followed by actual ordinary-control collision proofs
   local wear. No strongly repeated blotches. Keep blue/ochre landmarks readable
   without washing out the High preset or obscuring gates in Pixel/shared styles.
 
-These are proposed caps, not measured scene counts. Whole-renderer draw/resource
+The current r2 asset uses 7,900 triangles, ten batches, two unchanged maps and 38
+colliders, leaving 7,100 triangles and ten collider slots under the hard design
+ceilings (six slots before the four-slot route reserve). Its 760,368B prepared
+GLB remains below the 1.5MiB target. These asset counts do not establish runtime
+cost. Whole-renderer draw/resource
 counts must include canonical geometry, objectives and actor presentation; mesh
 totals alone do not establish runtime cost or frame rate.
 

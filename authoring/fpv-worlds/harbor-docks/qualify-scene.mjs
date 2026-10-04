@@ -15,7 +15,7 @@ import {
 const [packPath, receiptPath] = process.argv.slice(2);
 if (!packPath || !receiptPath) throw Error('Use EXACT_PACK NEW_RECEIPT');
 const bytes = await readFile(packPath),
-  { project, sha256 } = await inspectPack(new Blob([bytes]));
+  { project, sha256, assets } = await inspectPack(new Blob([bytes]));
 if (project.courses.length !== 1 || project.courses[0].id !== 'harbor-docks-01')
   throw Error('Expected one-course Harbor checkpoint');
 const course = project.courses[0],
@@ -43,10 +43,47 @@ try {
     'Visible east boundary blocks contact',
     !collision.clearSpawn({ x: 39500, y: 2000, z: 0 }, 220),
   );
-  check(
-    'Water is outside every playable X coordinate',
-    course.bounds.max.x === 40000 && project.authoring.collision.includes('X43m'),
-  );
+  const asset = assets.get(project.world.modelAsset),
+    glb = Buffer.from(asset instanceof Blob ? await asset.arrayBuffer() : asset),
+    jsonLength = glb.readUInt32LE(12),
+    doc = JSON.parse(glb.subarray(20, 20 + jsonLength)),
+    binary = glb.subarray(28 + jsonLength),
+    water = doc.materials.findIndex((m) => m.name === 'water');
+  let waterTriangles = 0;
+  for (const mesh of doc.meshes)
+    for (const primitive of mesh.primitives) {
+      if (primitive.material !== water) continue;
+      const attribute = doc.accessors[primitive.attributes.POSITION],
+        view = doc.bufferViews[attribute.bufferView],
+        start = (view.byteOffset ?? 0) + (attribute.byteOffset ?? 0),
+        stride = view.byteStride ?? 12;
+      if (
+        attribute.componentType !== 5126 ||
+        attribute.type !== 'VEC3' ||
+        attribute.sparse ||
+        primitive.indices !== undefined
+      )
+        throw Error('Unexpected prepared water geometry layout');
+      for (let i = 0; i < attribute.count; i += 3) {
+        const points = [0, 1, 2].map((v) =>
+          axes.map((_, k) => binary.readFloatLE(start + (i + v) * stride + k * 4) * 1000),
+        );
+        const lo = axes.map((_, k) => Math.min(...points.map((p) => p[k]))),
+          hi = axes.map((_, k) => Math.max(...points.map((p) => p[k])));
+        check(
+          'Serialized water triangle ' +
+            waterTriangles +
+            ' stays outside playable X/Z bounds at Y0.22m',
+          points.every((p) => Math.abs(p[1] - 220) < 0.01) &&
+            (lo[0] > course.bounds.max.x ||
+              hi[0] < course.bounds.min.x ||
+              lo[2] > course.bounds.max.z ||
+              hi[2] < course.bounds.min.z),
+        );
+        waterTriangles++;
+      }
+    }
+  check('Serialized water triangles are present', waterTriangles > 0);
   for (const box of course.obstacles) {
     const middle = axes.map((k) => (box.min[k] + box.max[k]) / 2);
     check(
