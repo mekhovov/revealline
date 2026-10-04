@@ -1,3 +1,5 @@
+import { nativeArtReviewURL } from '../../game/ui/art-review-navigation.mjs';
+
 /** Presentation-only fullscreen. The document root includes every modal dialog. */
 export function mountFlightFullscreen({
   document: doc = globalThis.document,
@@ -250,7 +252,7 @@ export function createSimModeLinks({ document: doc, gameReturn, locale = () => '
           for (const key of ['appearanceFamily', 'appearanceRevision'])
             if (root.accepted.searchParams.has(key))
               target.searchParams.set(key, root.accepted.searchParams.get(key));
-          element.href = target.href;
+          element.href = nativeArtReviewURL(target.href, root.accepted.href);
           refresh();
         };
         synchronize();

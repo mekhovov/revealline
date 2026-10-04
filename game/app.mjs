@@ -1,3 +1,4 @@
+import { nativeArtReviewURL } from './ui/art-review-navigation.mjs';
 import { selectedArcadeCollection } from './presentation/industrial-arcade.mjs';
 import { specialistFailureCopy } from './hunt/actor-catalog.mjs';
 import { getLocale } from './i18n/index.mjs';
@@ -3664,7 +3665,7 @@ try {
   });
   for (const kind of ['versus', 'team'])
     for (const id of [`shell-title-${kind}`, `shell-${kind}`])
-      $(id)?.setAttribute('href', modeDestinations[kind]);
+      $(id)?.setAttribute('href', nativeArtReviewURL(modeDestinations[kind], location.href));
   if (authoredRoute) {
     localizedText($('shell-team'), () =>
       authoredRoute.id === DEFAULT_JOURNEY_ROUTES.solo
@@ -3714,7 +3715,8 @@ try {
       (librarySourceReturn?.mode === 'versus' && librarySourceDestination) ||
       authoredJourneyModeHref(currentAuthoredModeRoute(), 'versus') ||
       modeDestinations.versus;
-    for (const id of ['shell-versus', 'shell-title-versus']) $(id).setAttribute('href', href);
+    for (const id of ['shell-versus', 'shell-title-versus'])
+      $(id).setAttribute('href', nativeArtReviewURL(href, location.href));
   }
   function prepareModeHint(ticket) {
     if (ticket.kind === 'library') {
@@ -4081,7 +4083,10 @@ try {
     if (origin === 'solo-title' && !ticket.unfinished) {
       try {
         modeDepartureCurrent(ticket);
-        location.href = new URL(modeDestination(ticket), gameDocumentURL(location.href)).href;
+        location.href = nativeArtReviewURL(
+          new URL(modeDestination(ticket), gameDocumentURL(location.href)).href,
+          location.href,
+        );
       } catch (error) {
         cancelModeDeparture({ restore: true });
         warning(
@@ -4099,7 +4104,7 @@ try {
         prepared = prepareModeHint(ticket);
         ticket.token = prepared.token;
         modeDepartureCurrent(ticket);
-        location.href = prepared.href;
+        location.href = nativeArtReviewURL(prepared.href, location.href);
         return;
       } catch {
         if (prepared) clearModeHint(ticket);
@@ -4210,7 +4215,7 @@ try {
         if (profileStorage().getItem(sessionKey) !== ticket.savedRaw)
           throw new Error(t('interface:savedFlightChanged'));
       }
-      location.href = destination;
+      location.href = nativeArtReviewURL(destination, location.href);
     } catch (error) {
       clearModeHint(ticket);
       if (modeDeparture === ticket && error.name !== 'AbortError')

@@ -6,7 +6,7 @@ import { setMenuIcon } from '../ui/native-menu-icons.mjs';
 import { snakeStudioReturnHref } from '../ui/content-studio-navigation.mjs';
 import { mountOptionalPracticePanel } from '../ui/optional-practice-panel.mjs';
 import { contextualAppearance } from '../ui/mode-choice.mjs';
-import { fpvWorldLaunchURL, appearanceLaunchURL } from '../fpv-entry.mjs';
+import { fpvWorldLaunchURL, appearanceLaunchURL, nativeArtReviewURL } from '../fpv-entry.mjs';
 import { boardPlacement } from '../ui/feedback-cues.mjs';
 import { createClassicAudio } from './classic-audio.mjs';
 import { getLocale, setLocale, onLocaleChange, t } from '../i18n/index.mjs';
@@ -70,7 +70,7 @@ if (contentLibrary) {
     $('boot-status').textContent =
       `${getLocale() === 'uk' ? 'Не вдалося відкрити пакет Snake.' : 'This Snake package could not be opened.'} ${error.message}`;
     const link = doc.createElement('a');
-    link.href = '../studio/snake.html';
+    link.href = nativeArtReviewURL('../studio/snake.html', globalThis.location.href);
     link.textContent = getLocale() === 'uk' ? ' Відкрити Snake Studio' : ' Open Snake Studio';
     $('boot-status').append(link);
     throw error;
@@ -646,9 +646,10 @@ function renderModeLinks() {
     if (path) {
       const url = new URL(path, globalThis.location.href);
       url.searchParams.set('lang', locale);
-      node.href = appearanceLaunchURL(url.href, contextualAppearance(doc), { transfer: false });
+      const nativeHref = nativeArtReviewURL(url.href, globalThis.location.href);
+      node.href = appearanceLaunchURL(nativeHref, contextualAppearance(doc), { transfer: false });
       node.addEventListener('click', () => {
-        node.href = appearanceLaunchURL(url.href, contextualAppearance(doc));
+        node.href = appearanceLaunchURL(nativeHref, contextualAppearance(doc));
         pause();
       });
     } else {
@@ -779,15 +780,18 @@ function renderCopy() {
   $('controls-help').textContent = text(mode === 'solo' ? 'controls' : 'twoControls');
   for (const id of ['next']) $(id).textContent = text(id);
   $('home-link').textContent = text('home');
-  $('home-link').href = `../?lang=${locale}`;
+  $('home-link').href = nativeArtReviewURL(`../?lang=${locale}`, globalThis.location.href);
   $('studio-link').href =
-    snakeStudioReturnHref(globalThis.location.href) ?? `../studio/snake.html?lang=${locale}`;
+    snakeStudioReturnHref(globalThis.location.href) ??
+    nativeArtReviewURL(`../studio/snake.html?lang=${locale}`, globalThis.location.href);
   playShell?.setLocale(locale);
   renderModeLinks();
   $('campaign-link').textContent = text('campaigns');
-  $('campaign-link').href = `./?lang=${locale}`;
-  $('remix-link').href =
-    `${mode === 'solo' ? '../' : mode === 'versus' ? '../couch/' : '../couch/relay-rescue.html'}?journey=snake-hunt-v1&snake-style=capture&lang=${locale}`;
+  $('campaign-link').href = nativeArtReviewURL(`./?lang=${locale}`, globalThis.location.href);
+  $('remix-link').href = nativeArtReviewURL(
+    `${mode === 'solo' ? '../' : mode === 'versus' ? '../couch/' : '../couch/relay-rescue.html'}?journey=snake-hunt-v1&snake-style=capture&lang=${locale}`,
+    globalThis.location.href,
+  );
   $('seed-label').textContent = text('seed', { seed });
   $('save-status').textContent = saveNotice ? text(saveNotice) : '';
   $('continue').hidden = !savedRound;

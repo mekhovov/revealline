@@ -378,3 +378,15 @@ test('production roster exposes non-Courier accessory edits in the actual Motion
   h.change('accessory', '3');
   assert.equal(h.$('accessory').value, '2', 'Bounds still apply');
 });
+
+test('late-mounted shared actor panel keeps its exact review in the fixed Asset Studio handoff', (t) => {
+  const f = harness(t, INDUSTRIAL_ROSTER_ART_REVISION);
+  const link = f.root.querySelector('[data-workshop-tool="asset-studio"]');
+  const target = new URL(link.href);
+  assert.equal(
+    target.href,
+    'http://localhost/authoring/asset-studio/?artReview=industrial-roster-v3',
+  );
+  assert.equal(f.frames.size, 0, 'A tool link does not activate the animation preview.');
+  assert.equal(f.pool.stats().leases, 0);
+});

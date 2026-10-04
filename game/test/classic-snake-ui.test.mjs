@@ -24,7 +24,7 @@ import { mountModePlayShell } from '../ui/mode-play-shell.mjs';
 import { attachModalNavigation } from '../ui/modal-navigation.mjs';
 import { attachControllerNavigation } from '../ui/controller-navigation.mjs';
 import { snakeStudioReturnHref } from '../ui/content-studio-navigation.mjs';
-import { fpvWorldLaunchURL, appearanceLaunchURL } from '../fpv-entry.mjs';
+import { fpvWorldLaunchURL, appearanceLaunchURL, nativeArtReviewURL } from '../fpv-entry.mjs';
 import { CLASSIC_COPY } from '../snake/classic-copy.mjs';
 import { advanceClassicFlight } from '../snake/classic-flight-art.mjs';
 import { t } from '../i18n/index.mjs';
@@ -57,6 +57,7 @@ async function harness({
   entry = CLASSIC_SNAKE_LEVELS[0],
   mode = 'solo',
   activity = 'campaign',
+  artReview = null,
 } = {}) {
   const document = new Document();
   document.createElement = (tag) => {
@@ -94,7 +95,7 @@ async function harness({
   };
   const displayListeners = new Set();
   const location = {
-    href: `https://example.test/game/snake/play.html?mode=${mode}&level=${entry.id}&activity=${activity}`,
+    href: `https://example.test/game/snake/play.html?mode=${mode}&level=${entry.id}&activity=${activity}${artReview ? `&artReview=${encodeURIComponent(artReview)}` : ''}`,
   };
   const preferences = (snapshot) => ({
     snapshot: () => snapshot,
@@ -118,6 +119,7 @@ async function harness({
     snakeStudioReturnHref,
     fpvWorldLaunchURL,
     appearanceLaunchURL,
+    nativeArtReviewURL,
     contextualAppearance: () => null,
     mountOptionalPracticePanel(options) {
       optionalEntries.push(options);
@@ -684,4 +686,39 @@ test('Snake reading controls update the shared display owner without replacing o
     before,
   );
   assert.equal(state.shell.blocksPlay(), true);
+});
+
+test('actual Snake links and optional SIM launch retain an explicit native review without changing recipes', async () => {
+  for (const mode of ['solo', 'versus', 'team']) {
+    const state = await harness({ mode, artReview: 'industrial-roster-v3' });
+    const before = state.created.map((run) => core.exportClassicSnakeReplay(run));
+    for (const id of ['home-link', 'campaign-link', 'remix-link', 'studio-link']) {
+      const url = new URL(state.$(id).href, state.location.href);
+      assert.equal(url.searchParams.get('artReview'), 'industrial-roster-v3', id);
+    }
+    const links = state.$('snake-mode-links').querySelectorAll('a');
+    assert.equal(links.length, 3);
+    for (const link of links) {
+      assert.equal(new URL(link.href).searchParams.get('artReview'), 'industrial-roster-v3');
+      link.click();
+      assert.equal(new URL(link.href).searchParams.get('artReview'), 'industrial-roster-v3');
+    }
+    const sim = new URL(state.optionalEntries.at(-1).bundledHref);
+    assert.equal(sim.searchParams.get('artReview'), 'industrial-roster-v3');
+    const back = new URL(sim.searchParams.get('game-return'), sim);
+    assert.equal(
+      back.searchParams.get('level'),
+      new URL(state.location.href).searchParams.get('level'),
+    );
+    assert.equal(back.searchParams.get('artReview'), 'industrial-roster-v3');
+    assert.deepEqual(
+      state.created.map((run) => core.exportClassicSnakeReplay(run)),
+      before,
+    );
+    const normal = await harness({ mode });
+    assert.equal(
+      new URL(normal.$('campaign-link').href, normal.location.href).searchParams.has('artReview'),
+      false,
+    );
+  }
 });

@@ -89,7 +89,9 @@ function frozen(h, before) {
   assert.deepEqual(h.errors, []);
 }
 async function flight(t, options = {}) {
-  const h = await host(t, options);
+  // This fixture explicitly starts through the real title action below.
+  // Joining that action also owns any unfinished initial picture preparation.
+  const h = await host(t, { waitForPictures: false, ...options });
   if (options.policy === 'grid-center') {
     h.change('turn-select', 'grid-center');
     await settle(() => h.doc.body.dataset.pictureState === 'ready');
@@ -137,14 +139,15 @@ for (const kind of ['versus', 'team']) {
       const before = checkpoint(h),
         row = h.$('shell-title-modes');
       assert.equal(row.hidden, false);
+      const modes = row.children.filter((element) => element.dataset.gameMode);
       assert.deepEqual(
-        row.children.map((e) => e.dataset.gameMode),
+        modes.map((e) => e.dataset.gameMode),
         ['solo', 'versus', 'team'],
       );
-      assert.equal(row.children[0].tagName, 'SPAN');
-      assert.equal(row.children[0].getAttribute('aria-current'), 'page');
-      assert.equal(row.children[0].getAttribute('tabindex'), null);
-      row.children[0].click();
+      assert.equal(modes[0].tagName, 'BUTTON');
+      assert.equal(modes[0].getAttribute('aria-current'), 'page');
+      assert.equal(modes[0].getAttribute('tabindex'), null);
+      modes[0].click();
       assert.deepEqual(checkpoint(h), before);
       const calls = hintGuard(previewStorage);
       assert.equal(h.$(`shell-title-${kind}`).getAttribute('href'), destinations[kind]);
@@ -480,7 +483,7 @@ for (const kind of ['versus', 'team'])
       class RestorePicture extends Picture {
         decode() {
           decodes++;
-          return decodes === 1 ? Promise.resolve() : gate.promise;
+          return gate.promise;
         }
       }
       const h = await host(t, {
@@ -488,12 +491,28 @@ for (const kind of ['versus', 'team'])
         campaign: f.campaign,
         soundtrackIndexedDB: f.memory.indexedDB,
         pictures: { Image: RestorePicture },
+        waitForPictures: false,
       });
       const before = checkpoint(h),
         old = h.rendered.run;
+      // Continue may reuse the exact initial image. Keep that native media
+      // load pending instead of assuming restore always decodes a second copy.
+      await settle(() => !h.$('shell-continue').disabled && !h.$('continue-saved').disabled);
       h.$('shell-continue').focus();
       const pending = press(h, 'Enter');
-      await settle(() => decodes >= 2);
+      await settle(() => decodes > 0 && h.$('continue-saved').disabled).catch((error) => {
+        error.message += JSON.stringify({
+          decodes,
+          continueDisabled: h.$('continue-saved').disabled,
+          titleDisabled: h.$('shell-continue').disabled,
+          message: h.$('run-message').textContent,
+          picture: h.doc.body.dataset.pictureState,
+          errors: h.errors.map(String),
+        });
+        gate.resolve();
+        throw error;
+      });
+      assert.equal(h.rendered.run, old, 'Pending media cannot adopt the saved owner.');
       assert.equal(h.$('shell-flight-cancel').hidden, true);
       await request(h, kind);
       // The real restore owns sessionBusy until its asynchronous finally runs.
@@ -535,7 +554,7 @@ for (const kind of ['versus', 'team'])
       class RestorePicture extends Picture {
         decode() {
           decodes++;
-          return decodes === 1 ? Promise.resolve() : gate.promise;
+          return gate.promise;
         }
       }
       const h = await host(t, {
@@ -543,12 +562,28 @@ for (const kind of ['versus', 'team'])
         campaign: f.campaign,
         soundtrackIndexedDB: f.memory.indexedDB,
         pictures: { Image: RestorePicture },
+        waitForPictures: false,
       });
       const before = checkpoint(h),
         old = h.rendered.run;
+      // Continue may reuse the exact initial image. Keep that native media
+      // load pending instead of assuming restore always decodes a second copy.
+      await settle(() => !h.$('shell-continue').disabled && !h.$('continue-saved').disabled);
       h.$('shell-continue').focus();
       const pending = press(h, 'Enter');
-      await settle(() => decodes >= 2);
+      await settle(() => decodes > 0 && h.$('continue-saved').disabled).catch((error) => {
+        error.message += JSON.stringify({
+          decodes,
+          continueDisabled: h.$('continue-saved').disabled,
+          titleDisabled: h.$('shell-continue').disabled,
+          message: h.$('run-message').textContent,
+          picture: h.doc.body.dataset.pictureState,
+          errors: h.errors.map(String),
+        });
+        gate.resolve();
+        throw error;
+      });
+      assert.equal(h.rendered.run, old, 'Pending media cannot adopt the saved owner.');
       assert.equal(h.$('shell-flight-cancel').hidden, true);
       assert.equal(h.doc.activeElement.id, 'shell-continue');
       const cancel = new Event('cancel', { cancelable: true });
