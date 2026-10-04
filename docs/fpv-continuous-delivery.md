@@ -3017,3 +3017,21 @@ logs. See [Orchard qualification](fpv-orchard-tree-surfaces.md). Protected publi
 and public availability remain separate; no hardware FPS or whole-world realism
 claim follows. Continue independent Solar work and the next approved D3 optional
 Adventure conversion audit without mixing unfinished items into this focused PR.
+
+### Optional Adventure examples — 4 October 2026
+
+The separate data-only increment on Orchard main `5e4abe273` delivers 60 existing
+Adventure proofs as one 4,637,320-byte optional `FPVProofArchive.v2` download.
+All 30 courses retain both modes; no core registry, source limit, physics or
+player runtime changes. Portable conversion passes 992 checks and 120 exact
+replays. Historical bf/9efa admitted-host browser evidence passes 395 checks,
+all 60 import/lookup/persistence identities and 12 complete rendered examples.
+The incoming Orchard surface change has its own source/package and replay
+qualification; no new browser rendering on5e4 is claimed.
+
+The full v1–v4 failed/partial diagnostics remain alongside accepted v5 evidence.
+Repeated full-library diagnostic snapshots caused substantial observer overhead;
+v5 forwards real renderer draws and preserves the production pause guard. The
+separate explicit host-dispose ordering defect remains next. Publish through
+protected exact-head checks and verify the public optional JSON link after merge.
+See [complete qualification and limits](fpv-adventure-optional-examples.md).
