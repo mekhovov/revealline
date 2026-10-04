@@ -1,3 +1,4 @@
+import { DEFAULT_DIALOGUE_VOLUME, DIALOGUE_MIX_GAIN } from '../audio/dialogue-mix.mjs';
 import { encounterSoundRecipe } from './encounter-audio.mjs';
 import {
   createGameAudioContext,
@@ -44,7 +45,7 @@ export class Soundscape {
     this.menuSettings = readMenuAudio();
     this.radioSettings = readRadioAudio();
     this.movementSettings = readMovementAudio();
-    this.dialogueSettings = { enabled: false, volume: 0.65 };
+    this.dialogueSettings = { enabled: false, volume: DEFAULT_DIALOGUE_VOLUME };
     this.feedbackDirector = new FeedbackDirector(this);
     this.persistentMusic = persistentMusic;
     this.context = null;
@@ -383,7 +384,7 @@ export class Soundscape {
     if (!this.context) return;
     const time = this.context.currentTime;
     this.dialogueBus?.gain.setTargetAtTime(
-      this.dialogueSettings.enabled ? this.dialogueSettings.volume : 0,
+      this.dialogueSettings.enabled ? this.dialogueSettings.volume * DIALOGUE_MIX_GAIN : 0,
       time,
       0.015,
     );
