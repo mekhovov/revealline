@@ -1,0 +1,19 @@
+# Railworks closed wagon framing
+
+This bounded D2 increment gives the eight existing closed Railworks wagons subdued steel door/end framing and long-side stiffeners. It preserves the corrugated wall maps, roofs, original boxes, lower belts, tracks, sleepers, gantries, platforms, signal box, collision and authored tasks. It is not whole-world art acceptance.
+
+## Scope and resource budget
+
+Only authored Operations/linear `rail-depot` metal boxes with exact IDs `rail-car-[01]-[0-3]` and dimensions 5×4×13 m receive the framing. A shared material kit, another resolved theme, renamed/resized/typed/rotated/nonfinite shape keeps the prior detail. Same-size translated canonical boxes remain supported. No imported-model or loader behavior changes.
+
+The existing eight accent batches each contain 24 flush quads: four original lower belts, four strips on each end/side, and two extra stiffeners on each long side. Strips meet at their edges without overlapping interiors; the corrugated surfaces inside the frames stay solid. Color becomes subdued steel `0x34464b` and those existing batches become visible at Balanced. Low retains its original visible output. High detail capacity grows by **320 triangles / 23,040 position+normal bytes**; total wagon framing is **384 triangles**. Balanced can add at most eight submissions / 384 triangles. Expanded existing bounds can affect culling; zero new resource owners is not universal per-frame submission parity. There are no added geometries, materials, textures or shadow casters.
+
+## Frozen visual candidate
+
+Baseline is main `96ef08777c36a49c49babf8e15489867d484ba59`, which includes the merged Campus increment. Candidate renderer SHA-256 is `444e58b002fae7ac504c1de9d863a41e52c9a86be50697465e7cbb8b1da0fcb5`; source growth is **1,287 bytes**. Focused renderer/preparer lint, formatting, syntax and diff checks pass.
+
+The immutable v1 source fixture provides a 3 m long-side close view, 7.5 m side view, 5.5 m closed-end view, distant context and central gantry sightline, plus FPV/chase/overview and quality/theme controls. It reuses 58 exact frozen module hardlinks and writes four modules (525,625 bytes); every file is hash-verified and reread. Actual browser review accepted the [close side](evidence/fpv-railworks-close-review.png), [closed end](evidence/fpv-railworks-end-review.png) and [gantry sightline](evidence/fpv-railworks-gantry-review.png). The framing is coherent and the gantry unobstructed. Wagons remain box-like; this is an incremental framing improvement, not comprehensive realistic world-model completion.
+
+The manual CPU qualifier passed **1,061 checks across 192 scenes**. It verifies the exact recipe, joined/nonoverlapping strips, flush bounds, source-only scope, unchanged owner counts, original corrugated maps and base geometry, strict canonical guards, translated shapes, all 17 shared collections, three other authored themes, 13 other worlds, quality roundtrips and once-only cleanup. The [complete gzip-compressed receipt](evidence/fpv-railworks-wagon-cpu.json.gz) expands to 1,512,061 bytes, SHA-256 `696b297b60ae420d0a3ab05ab16189bb4c83c530298a0b125faacdbad1826f19`; the executable manual qualifier is `scripts/qualify-fpv-railworks-wagon-frames.mjs`.
+
+Authenticated ten-recording replay, actual source/package browser matrix, source-bound optional admissions and full admitted-player observation are pending at this checkpoint. Additional unit coverage remains deferred to D6. No hardware, installed/offline, public deployment or broad artistic acceptance is claimed.
