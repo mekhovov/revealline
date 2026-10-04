@@ -121,7 +121,7 @@ try {
       ),
     );
     check(
-      'Lake outside all playable bounds',
+      'Authored lake-exclusion contract retains the reviewed6m east bound',
       project.courses.every((c) => c.bounds.max.x === 6000) &&
         project.authoring.water.includes('outside'),
     );
@@ -169,6 +169,8 @@ try {
             collision.clearSpawn(p, radius) &&
               p.x - radius >= c.bounds.min.x &&
               p.x + radius <= c.bounds.max.x &&
+              p.y >= c.bounds.min.y &&
+              p.y + 2 * radius <= c.bounds.max.y &&
               p.z - radius >= c.bounds.min.z &&
               p.z + radius <= c.bounds.max.z,
             { lowerPoint: points[i] },
