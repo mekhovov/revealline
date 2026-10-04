@@ -21,6 +21,16 @@ paving; the scene candidate uses separated aggregate and dusty gaps instead.
 
 ## Problem observed in frozen r8/r9
 
+The subsequent native r9 smoke used the unchanged complete 102-file admitted
+248b player: the visible Library chooser imported the exact `28a50…` pack as
+eight challenges, recording import reported 16/16 verified, and the native
+catalogue exposed the eight courses with Watch controls. Shoreline check-in
+rendered, deliberately armed, became Flight active and paused. The compact
+root-observed receipt and screenshot are retained in
+`evidence/r9-native-smoke.json` and `evidence/r9-native-active.png`. This is an
+import/flight smoke, with no new offline or sixteen-Watch claim. It is recorded
+on this follow-up branch without resetting the ready r9 PR's checks.
+
 The decorative rock ridge, reachable grass overlay and gravel paths all sample
 the same original 256px mineral image at the same four-metre repeat. Geometry
 and colors differ, but the repeated mineral veining gives three different
