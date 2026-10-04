@@ -1150,8 +1150,7 @@ export function buildWorldVisuals({
   const solarPanels = (course.obstacles ?? []).filter((item) => /^solar-panel-/.test(item.id)),
     solarArray =
       environment === 'solar-farm' &&
-      profile.id === 'operations' &&
-      profile.textureFilter === 'linear' &&
+      JSON.stringify(profile) === JSON.stringify(resolveSimThemeProfile({ theme: 'operations' })) &&
       !kit &&
       solarPanels.length === 16 &&
       new Set(solarPanels.map((item) => item.id)).size === 16 &&
