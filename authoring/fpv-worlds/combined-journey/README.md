@@ -14,7 +14,7 @@ Creator correction on the exact Library admitted player. This is not a new
 zero-overlay admission, published Browse or offline result.
 
 Final combined source `0b54fd0fdf8fe06dc900024a8b59713340b09bb3` normally
-integrates Creator main `8b31237d6f2cba627b5d35acc10309e4d3335992`; all95 inputs
+integrates Creator main `8b31237d6f2cba627b5d35acc10309e4d3335992`; all 95 inputs
 are byte-exact to the successful online fixture. Full Node22 validation passed,
 including generated-source checks and its retained navigation warnings. All three
 packages passed one fresh source-bound admission with two identical builds each,
@@ -30,12 +30,15 @@ created no renderer. This remains explicit file import rather than published
 Browse acceptance. The separately observed native offline check also passed:
 public preparation completed, then the exact native page reloaded with its own
 origin server stopped. The edited revision and original rollback remained visible;
-Creator retained course02/Acro X=-9.9m, and unchanged course01 armed at zero throttle
-and paused at33.9s. Refusal was captured before and after qualification, then the
+Creator retained course 02/Acro X=-9.9m, and unchanged course 01 armed at zero throttle
+and paused at 33.9s. Refusal was captured before and after qualification, then the
 same server root restarted successfully. `evidence/offline-8966-passed` preserves
 the native text/screenshots and server timestamps. This is not browser-wide
 offline, eviction, a second database audit or published Browse acceptance.
-Longer-session verification remains separate and pending.
+The same admitted runtime separately passed 306 checks across eight native 20-second
+Yard/Reservoir windows. [The bounded session audit](../longer-session/README.md)
+retains authored profiles, full observations and resource plateaus; it makes no
+hardware-FPS, speedup or long-duration endurance claim.
 [Admission evidence](evidence/admission-0b54/manifest.json) retains
 exact logs, inventories, package descriptors, checksums and original-source bridge.
 
@@ -72,8 +75,8 @@ offline handoff; it refuses pre-existing databases/caches rather than deleting t
 Pack50ff and proof archive073ee are separate explicit imports. This version uses
 native file inputs and does not qualify the published Browse/download row.
 The selected full native-clock Watch is course08/self-level, 1,616 ticks. A bounded
-course02/Acro hold-volume edit precedes one precommit abort and postcommit-refresh
-failure/retry. Existing component matrices and all16 Watch runs are not repeated.
+course 02/Acro hold-volume edit precedes one precommit abort and postcommit-refresh
+failure/retry. Existing component matrices and all 16 Watch runs are not repeated.
 
 Two initial Node preparation mistakes were caught before any output tree or browser
 run: importing the staged browser closure lacked the repository's ESM package
