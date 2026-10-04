@@ -1,6 +1,9 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
+import { fileURLToPath } from 'node:url';
+import { collectBuildFiles, readBuildConfig } from '../../scripts/game-cli.mjs';
+import { OPTIONAL_PACKAGE_POLICIES } from '../../publishing/optional-package-policy.mjs';
 import {
   prepareNativeIndustrialAttempt,
   restoreNativeIndustrialCourse,
@@ -324,4 +327,19 @@ test('chapter variants map only procedural material pixels while historical samp
       }),
     /differs/,
   );
+});
+
+// The main distribution and standalone optional archives have separate explicit
+// allowlists. An admitted optional package must also be complete when bundled.
+test('main distribution supplies both bundled native optional runtime source closures', async () => {
+  const root = fileURLToPath(new URL('../../', import.meta.url));
+  const files = new Set(await collectBuildFiles(root, await readBuildConfig(root)));
+  for (const id of ['civilian-fpv', 'fpv-worlds']) {
+    const policy = OPTIONAL_PACKAGE_POLICIES[id];
+    for (const name of [
+      ...policy.localFiles.map((file) => policy.root + file),
+      ...policy.sharedFiles,
+    ])
+      assert.ok(files.has(name), `${id} is incomplete in the main distribution: ${name}`);
+  }
 });

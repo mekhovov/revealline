@@ -263,6 +263,7 @@
     "optional-practice/civilian-fpv/vendor/addons/utils/SkeletonUtils.js",
     "optional-practice/civilian-fpv/vendor/addons/provenance.json",
     "optional-practice/civilian-fpv/world-app.mjs",
+    "optional-practice/civilian-fpv/industrial-environment.mjs",
     "optional-practice/civilian-fpv/beginner-coach.mjs",
     "optional-practice/civilian-fpv/world-demonstrations.mjs",
     "optional-practice/civilian-fpv/world-catalogue.mjs",
