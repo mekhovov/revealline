@@ -12,8 +12,14 @@ a genuine dedicated Worker loaded from the existing generated verified worker;
 it does not register a service worker or cache the runtime merely to browse.
 Its [frozen manual fixture](../authoring/fpv-worlds/library/prepare-browser.mjs)
 adds worker-side request refusals, response faults, cancellation, transfer and
-owner cleanup checks. Actual browser qualification and fresh admission of this
-transport remain pending. The production catalogue remains empty.
+owner cleanup checks. The actual source browser passed **208/208** checks;
+the [complete receipt and frozen fixture](../authoring/fpv-worlds/library/evidence/worker-source-r1-provenance.json)
+are preserved losslessly. All 45 native dedicated Workers terminated once after
+their terminal reply; the page made no catalogue or pack requests. Three successful
+pack responses used the real immutable HTTPS asset. Named worker-response faults,
+timeout injection and native IndexedDB abort controls are disclosed in the receipt.
+Fresh admission and admitted-player qualification remain pending. The production
+catalogue remains empty.
 
 ### Historical page-transport evidence
 
@@ -77,8 +83,11 @@ assumed to be identical to every individual course revision in a multi-course pa
 ## Capacity checkpoint
 
 The current integrated Worker draft measures **16,776,298 bytes across 95 original
-inputs**, leaving **918 bytes** below the unchanged 16 MiB bound. The separately
-planned menu (429 bytes) and focus (28 bytes) changes would leave **461 bytes**.
+inputs**, leaving **918 bytes** below the unchanged 16 MiB bound. The separate
+menu candidate `9fbe03fe3` projects 286 bytes across this actual input inventory;
+with the focus change (28 bytes), that would leave **604 bytes**. The earlier
+429-byte menu estimate counted its canonical CSS as well as the generated input;
+the canonical CSS is outside these 95 original inputs.
 These are source measurements; final admission is still required. Relative to
 the admitted worker prerequisite `b452a0cac`, only the host adapter (+710),
 generated reaction module (+6,880), and generated worker (+1,682) change. The
