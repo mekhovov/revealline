@@ -1,0 +1,107 @@
+{
+  "format": "FPVLibraryCompatibilityManual.v1",
+  "checks": [
+    {
+      "name": "Exact genuine required-coating r14 pack",
+      "passed": true
+    },
+    {
+      "name": "Old admitted importer refuses mandatory coating",
+      "passed": true
+    },
+    {
+      "name": "Old inspection did not mutate pack",
+      "passed": true
+    },
+    {
+      "name": "Capable importer retains exact pack identity",
+      "passed": true
+    },
+    {
+      "name": "Supported pack roundtrip byte exact",
+      "passed": true
+    },
+    {
+      "name": "Future capability has typed refusal",
+      "passed": true
+    },
+    {
+      "name": "EN/UK update guidance retains unsupported fallback",
+      "passed": true
+    },
+    {
+      "name": "Guidance distinguishes prepare from update",
+      "passed": true
+    },
+    {
+      "name": "Malformed required names are not an update request: \"REVEALLINE_future_diagnostic\"",
+      "passed": true
+    },
+    {
+      "name": "Malformed required names are not an update request: [null]",
+      "passed": true
+    },
+    {
+      "name": "Malformed required names are not an update request: [42]",
+      "passed": true
+    },
+    {
+      "name": "Malformed required names are not an update request: [{}]",
+      "passed": true
+    },
+    {
+      "name": "Malformed required names are not an update request: [\"\"]",
+      "passed": true
+    },
+    {
+      "name": "Malformed required names are not an update request: [\"bad name\"]",
+      "passed": true
+    },
+    {
+      "name": "Malformed known coating remains a validation error: null",
+      "passed": true
+    },
+    {
+      "name": "Malformed known coating remains a validation error: false",
+      "passed": true
+    },
+    {
+      "name": "Malformed known coating remains a validation error: {\"version\":2,\"kind\":\"opaque-finish\"}",
+      "passed": true
+    },
+    {
+      "name": "Malformed known coating remains a validation error: {\"version\":1,\"kind\":\"opaque-finish\",\"offset\":-99}",
+      "passed": true
+    },
+    {
+      "name": "Unchanged v1 schema accepts empty capability catalogue",
+      "passed": true
+    },
+    {
+      "name": "old dedicated worker permits only its exact catalogue endpoint",
+      "passed": true
+    },
+    {
+      "name": "old catalogue request preserves no credentials/redirect contract",
+      "passed": true
+    },
+    {
+      "name": "new dedicated worker permits only its exact catalogue endpoint",
+      "passed": true
+    },
+    {
+      "name": "new catalogue request preserves no credentials/redirect contract",
+      "passed": true
+    }
+  ],
+  "pack": {
+    "path": "/tmp/fpv-reservoir-required-coating-r14-v1/prepared/mountain-reservoir.r14.rlpack",
+    "bytes": 1382004,
+    "sha256": "98dc5237b8e809029a0c08f414f36689c7a58313f911a84971d3ed0429477714"
+  },
+  "oldPlayer": "/private/tmp/fpv-hud-layout-admitted-player-a60d1b27f",
+  "oldRefusal": "Unsupported required extension: REVEALLINE_surface_coating. Use the offline prepare command to decode it first.",
+  "limits": [
+    "Node content and serialized dedicated-worker request boundaries only. Native UI, storage retention and launcher update flow require separate browser observations. No final-world presentation claim."
+  ]
+}
