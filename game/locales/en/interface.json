@@ -5838,5 +5838,12 @@
   "workshop.materialPreview.detail": "Detail",
   "workshop.materialPreview.balanced": "Balanced",
   "workshop.materialPreview.detailed": "Detailed",
-  "workshop.materialPreview.telemetry": "Show telemetry"
+  "workshop.materialPreview.telemetry": "Show telemetry",
+  "downloads.loadingFailedTitle": "Download information unavailable",
+  "downloads.loadingFailed": "Could not load download information. Reconnect and try again. Your installed game, downloaded files and progress are kept.",
+  "downloads.retryLoading": "Retry loading update",
+  "downloads.loadingDetails": "Loading details",
+  "downloads.downloadUnavailable": "Download unavailable",
+  "downloads.loadingTimedOut": "Loading download information took too long. Reconnect and retry.",
+  "downloads.publishedBuildChanged": "The published game changed while loading. Retry to load the latest matching update."
 }

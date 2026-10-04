@@ -5948,5 +5948,12 @@
   "workshop.materialPreview.detail": "Деталі",
   "workshop.materialPreview.balanced": "Збалансовано",
   "workshop.materialPreview.detailed": "Докладно",
-  "workshop.materialPreview.telemetry": "Показати телеметрію"
+  "workshop.materialPreview.telemetry": "Показати телеметрію",
+  "downloads.loadingFailedTitle": "Інформація про завантаження недоступна",
+  "downloads.loadingFailed": "Не вдалося отримати інформацію про завантаження. Відновіть з’єднання та повторіть спробу. Встановлену гру, завантажені файли та прогрес збережено.",
+  "downloads.retryLoading": "Повторити завантаження оновлення",
+  "downloads.loadingDetails": "Подробиці завантаження",
+  "downloads.downloadUnavailable": "Завантаження недоступне",
+  "downloads.loadingTimedOut": "Отримання інформації про завантаження триває надто довго. Відновіть з’єднання та повторіть спробу.",
+  "downloads.publishedBuildChanged": "Опублікована гра змінилася під час завантаження. Повторіть спробу, щоб отримати узгоджене останнє оновлення."
 }

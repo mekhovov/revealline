@@ -1547,6 +1547,25 @@ test('repair cache-write failure still serves verified online bytes and keeps ex
   assert.equal(await cache.get(`${scope}.offline-ready`).clone().text(), marker);
 });
 
+test('published pack growth does not inherit the old twelve imported-pack slot limit', () => {
+  for (const count of [14, 200]) {
+    const config = {
+      ...marker,
+      downloadCatalogue: true,
+      optionalPacks: Array.from({ length: count }, (_, i) => ({ name: `Official chapter ${i}` })),
+    };
+    const env = {
+      documentRef: { querySelector: () => ({ content: JSON.stringify(config) }) },
+      locationRef,
+      secure: true,
+      navigatorRef: { serviceWorker: {} },
+    };
+    assert.equal(offlineAvailability(env).available, true);
+    config.optionalPacks.push({ name: 42 });
+    assert.equal(offlineAvailability(env).available, false);
+  }
+});
+
 test('optional pack preparation and verification explicitly distinguish core cache from already-installed device packs', async () => {
   const optionalMarker = {
     ...marker,
