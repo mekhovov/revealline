@@ -3278,21 +3278,23 @@ export function mountWorldApp({
     );
   }
   function renderPacks() {
-    const titleCourse =
-      recovery?.course ??
-      (
-        catalogue.find((entry) => entry.legacy && !completedKeys().has(keyOf(entry))) ??
-        catalogue.find((entry) => entry.legacy)
-      )?.course;
-    playShell?.update({
-      canResume: Boolean(
-        recovery && dependencyAvailable(recovery.packIdentity, recovery.course.id),
-      ),
-      muted: !audio.enabled(),
-      missionName: titleCourse?.locales?.[locale]?.title ?? '',
-      summary: titleCourse?.locales?.[locale]?.brief ?? '',
-      phase: 'ready',
-    });
+    if (!flight) {
+      const titleCourse =
+        recovery?.course ??
+        (
+          catalogue.find((entry) => entry.legacy && !completedKeys().has(keyOf(entry))) ??
+          catalogue.find((entry) => entry.legacy)
+        )?.course;
+      playShell?.update({
+        canResume: Boolean(
+          recovery && dependencyAvailable(recovery.packIdentity, recovery.course.id),
+        ),
+        muted: !audio.enabled(),
+        missionName: titleCourse?.locales?.[locale]?.title ?? '',
+        summary: titleCourse?.locales?.[locale]?.brief ?? '',
+        phase: 'ready',
+      });
+    }
     $('recovery-banner')?.remove();
     const savedLesson = recovery && learningById.get(recovery.course.id);
     $('school-recover').hidden = !savedLesson;
