@@ -4519,11 +4519,13 @@ export function mountWorldApp({
     }
     if (state.status === 'active') presentation.pause();
     audio.update(state, { active: !replayProof && state.status === 'active' });
-    renderer?.draw?.(state, {
-      cameraMode: $('flight-camera').value,
-      cameraFov: Number($('world-fov').value),
-      cameraTilt: Number($('world-tilt').value),
-    });
+    // Do not submit an intermediate scene while its assets or shaders are preparing.
+    if (sceneReady)
+      renderer?.draw?.(state, {
+        cameraMode: $('flight-camera').value,
+        cameraFov: Number($('world-fov').value),
+        cameraTilt: Number($('world-tilt').value),
+      });
     const aim = renderer?.aimScreen?.();
     if (aim) {
       $('aim-reticle').style.left = `${aim.x * 100}%`;

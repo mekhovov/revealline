@@ -1,0 +1,82 @@
+{
+  "base": "ade4bfc2dd2934668889bf622e87a48cf1b52c03",
+  "observedMain": "feeaf4d077b075c1c767c2bab388ce346281ff87",
+  "aheadBy": 3,
+  "files": [
+    {
+      "path": "docs/deepwiki/README.md",
+      "status": "added",
+      "sha": "3095999b1ddc2cf24a41c1e0a54307734cefba7e"
+    },
+    {
+      "path": "docs/deepwiki/ai-tooling.json",
+      "status": "added",
+      "sha": "639ce2f4b15e8b6ddb8443f027e88b1850e74c62"
+    },
+    {
+      "path": "docs/deepwiki/ai-tooling.md",
+      "status": "added",
+      "sha": "a08c0d96343e44d6ed80d366ec09115330f16614"
+    },
+    {
+      "path": "docs/deepwiki/architecture.md",
+      "status": "added",
+      "sha": "2814f3f230e386e778886da96ccafc44a491a620"
+    },
+    {
+      "path": "docs/deepwiki/community-service.md",
+      "status": "added",
+      "sha": "e75ea1cffa2e13976bb1b2e2e94b7d761e4e1617"
+    },
+    {
+      "path": "docs/deepwiki/content-and-authoring.md",
+      "status": "added",
+      "sha": "38ba2296117c5602189891d4228a6ad943dfe874"
+    },
+    {
+      "path": "docs/deepwiki/getting-started.md",
+      "status": "added",
+      "sha": "41dc3f5afbb2324c6e3d39bc1094ef8c2b22c7b3"
+    },
+    {
+      "path": "docs/deepwiki/operations-and-configuration.md",
+      "status": "added",
+      "sha": "358aded9a37adbe4077da83a3c1b5f14ee4dfaf1"
+    },
+    {
+      "path": "docs/deepwiki/overview.md",
+      "status": "added",
+      "sha": "cb394817dae07d98de5f64e5385aa04d84303342"
+    },
+    {
+      "path": "docs/deepwiki/persistence-and-replays.md",
+      "status": "added",
+      "sha": "5bc35826e0d86aa08137a2ac48838ae18119c88c"
+    },
+    {
+      "path": "docs/deepwiki/runtime-data-flow.md",
+      "status": "added",
+      "sha": "39d015a3d8fb13a0a5f015550356c59fd7d95e84"
+    },
+    {
+      "path": "docs/deepwiki/testing.md",
+      "status": "added",
+      "sha": "5fc587d51793cf3970dd44b5426060a5ee3bb3cf"
+    },
+    {
+      "path": "package.json",
+      "status": "modified",
+      "sha": "45e176baf5ce384c7b9a5f73072943a45294be0c"
+    },
+    {
+      "path": "scripts/inventory-ai-tooling.mjs",
+      "status": "added",
+      "sha": "8b06cea211c9fd930a505aa5b0e902fb40b7d8a0"
+    }
+  ],
+  "admittedInputPathsTouched": [],
+  "packageVersionUnchanged": "0.142.4",
+  "packageChanges": [
+    "scripts.ai:inventory"
+  ]
+}
