@@ -38,17 +38,24 @@ checks for 16 exact-pack demonstrations. Every flight completes with full health
 zero contacts and the intended physical landing. Inputs, terminal physical
 results and sampled paths match r14. Separate accepted actual-renderer receipts
 cover required coating, tree contact and eight matched facade/tier/theme views,
-including owned-resource disposal. Final r16 imported-player observations are
-recorded separately in the release manifest when completed; they must not be
-inferred from earlier revisions.
+including owned-resource disposal. Final r16 import/editor/complete Watch
+verification passes 304 actual-browser checks with all 16 exact endpoints and
+no recorded errors. The full receipt identifies the exact admitted 364 player,
+pack and proof archive; its runtime relationship to merged main is separately
+audited in 120 checks.
 
 The browser import/complete Watch matrix uses controlled RAF timestamps,
 advancing 200ms per delivered frame at the public 1× replay rate. It preserves the
 real performance clock, focus/visibility and production pause guards; it never
 assigns flight state, ticks or completion. Each full replay must finish through
 the real UI and match the exact final simulation and renderer-observed identity.
-This is not native-clock playback of all 16 proofs, endurance or FPS evidence. A separate
-unmodified native-entry smoke, if recorded, establishes only that named launch.
+This is not native-clock playback of all 16 proofs, endurance or FPS evidence.
+The separate native-clock mode uses genuine RAF and performance time in the
+same fixture wrapper, retaining the draw observer and private storage namespace.
+It verified Ready → Arm → active at 47.1s with zero throttle → keyboard P pause
+and the Continue menu. The click-based Pause attempt failed because the fixture
+viewport was outside the operator's visible area. This is a zero-throttle launch
+smoke, not an unmodified standalone-entry run or a completed native flight.
 
 This is a bounded original art improvement. It is not photoreal/commercial art
 parity, hardware/FPS acceptance or a claim that every vegetation/composition
