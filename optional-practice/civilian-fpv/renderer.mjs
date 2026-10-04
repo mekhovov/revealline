@@ -759,6 +759,23 @@ export function createFlightRenderer({
     }
     shape.setAttribute('uv', new THREE.BufferAttribute(uv, 2));
   }
+  function solarPanelUV(shape, size) {
+    const p = shape.getAttribute('position'),
+      n = shape.getAttribute('normal'),
+      uv = shape.getAttribute('uv');
+    for (let i = 0; i < p.count; i++) {
+      // Only the local upper face is photovoltaic. Keep the closed back and
+      // thickness in the atlas's quiet strip; the authored tilt stays intact.
+      const top = n.getY(i) > 0.5,
+        across = Math.abs(n.getX(i)) > 0.5 ? p.getZ(i) / size[2] : p.getX(i) / size[0],
+        along = Math.abs(n.getY(i)) > 0.5 ? p.getZ(i) / size[2] : p.getY(i) / size[1];
+      uv.setXY(
+        i,
+        0.015 + (across + 0.5) * 0.97,
+        (top ? 0.17 : 0.02) + (along + 0.5) * (top ? 0.81 : 0.1),
+      );
+    }
+  }
   function garageStructureUV(shape, obstacle) {
     const positions = shape.getAttribute('position'),
       normals = shape.getAttribute('normal'),
@@ -989,16 +1006,18 @@ export function createFlightRenderer({
         ),
         roughness: yardContainer
           ? 0.82
-          : kind === 'solar'
-            ? 0.3
-            : kind === 'metal' || kind === 'stadium-steel'
-              ? 0.66
-              : kind === 'storage-steel'
-                ? 0.74
-                : 0.9,
+          : kind === 'solar-array'
+            ? 0.8
+            : kind === 'solar'
+              ? 0.3
+              : kind === 'metal' || kind === 'stadium-steel'
+                ? 0.66
+                : kind === 'storage-steel'
+                  ? 0.74
+                  : 0.9,
         metalness: yardContainer
           ? 0.12
-          : kind === 'solar'
+          : kind === 'solar' || kind === 'solar-array'
             ? 0.35
             : kind === 'metal' || kind === 'stadium-steel'
               ? 0.28
@@ -1033,7 +1052,8 @@ export function createFlightRenderer({
       const container = yardContainer ? buildContainerVisualGeometry(size) : null,
         shape = container?.shell ?? new THREE.BoxGeometry(...size);
       containerHardware = container?.hardware;
-      if (kind === 'storage-steel')
+      if (kind === 'solar-array') solarPanelUV(shape, size);
+      else if (kind === 'storage-steel')
         storageModuleUV(shape, size, !/^rack-[01]-[0-2]$/.test(obstacle.id));
       else if (kind === 'stadium-concrete' || kind === 'stadium-steel')
         stadiumStructureUV(shape, kind);
