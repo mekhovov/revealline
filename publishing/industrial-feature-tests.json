@@ -37,6 +37,7 @@
     {
       "id": "creator",
       "files": [
+        "game/test/company-studio-build.test.mjs",
         "game/test/solo-database.test.mjs",
         "game/test/motion-lab-shared-actor.test.mjs",
         "game/test/motion-lab-display-host.test.mjs",
