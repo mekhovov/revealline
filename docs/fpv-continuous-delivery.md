@@ -5,8 +5,8 @@ with the next independent item developed while source gates and deployment run.
 Additional unit coverage belongs in the final phase. Build, browser, replay,
 import/export and publication verification remain part of every applicable item.
 
-**Current checkpoint:** see “4 October — Current publication and Creator
-transaction boundary” at the end of this log and the active parallel delivery
+**Current checkpoint:** see “4 October — Combined online journey and publication”
+at the end of this log and the active parallel delivery
 plan. Earlier tables and heads are history.
 
 ## Delivery queue
@@ -1503,7 +1503,7 @@ archive are retained in `authoring/fpv-worlds/demonstrations`.
 Authoring qualification passes15/15; all154 v2 and24 v1 recordings independently
 replay. All1,331 checkpoint positions pass (768 restored /563 explicit fallbacks).
 Actual WebGL source281/281 and packaged279/279 checks each complete18 runs:
-all16 Garage examples in both modes plus retained original/school representatives.
+all 16 Garage examples in both modes plus retained original/school representatives.
 The checks cover exact final state, FPV/chase, speed/pause, controlled held-input
 isolation, localization and saved-record preservation. Their supplied frame
 timestamps accelerate playback; they do not measure hardware performance.
@@ -2987,7 +2987,7 @@ through39,525ticks, with ten Rapier worlds freed once.
 
 Source and admitted-package WebGL each pass96checks/43pairs, with exact functional,
 image, draw-budget and resource results. All three source-bound packages pass two
-identical builds; all95inputs are committed and leave11,488B under16MiB. The full
+identical builds; all 95inputs are committed and leave11,488B under16MiB. The full
 102-file admitted player renders, arms0.2s and pauses0.3s with no warning/error
 logs. See [Orchard qualification](fpv-orchard-tree-surfaces.md). Protected publication
 and public availability remain separate; no hardware FPS or whole-world realism
@@ -3177,7 +3177,7 @@ The complete receipts/screenshots are losslessly retained in
 inputs remain exact at16,776,664 bytes with552 bytes reserve; no unfinished shadow
 prototype was included. Focus #1076 merged `b98205d76` and menu #1079 merged
 `e7d06f3c6` through the normal protected path. Library #1080 received an ordinary
-main update to`2cfc24050`; all95 input hashes exactly match the admitted combined
+main update to`2cfc24050`; all 95 input hashes exactly match the admitted combined
 candidate and fresh protected checks are pending. No new public deployment is
 inferred from local or historical package acceptance.
 
@@ -3268,7 +3268,7 @@ at `bf3597703763584c79119bdeab50bfa03198ae6f` and a separate 283-check native
 admitted lifecycle pass at `d1d48b2b7ad67a0915532a1489f300abccd778ae`. The latter
 uses all 102 admitted files with no runtime overlays, on main5c including the
 qualified warm-frame and public personal-best control changes. Full Node22
-validation, all16 existing appearance/texture checks, and all-three/two-identical
+validation, all 16 existing appearance/texture checks, and all-three/two-identical
 source-bound admissions pass. The prior324-check timeout is retained: it revealed
 the additional same-event stale Continue/Start state, repaired by synchronizing the
 existing HUD immediately after the native surface-open pause. No clock, arming,
@@ -3278,7 +3278,7 @@ Capacity #1085 merged normally as `5bd8f36d7767dcd9dda740865b4d8f19ddbe7c28`
 at19:32:24Z after its current exact-head checks succeeded. Its initial allocation
 hold had preceded milestone57; only that proven obsolete hold was removed, then
 ordinary expected-head main updates and protected merge were used. The language
-branch normally incorporates this semantic-only projection: all95 input paths are
+branch normally incorporates this semantic-only projection: all 95 input paths are
 checked, only world-visuals formatting changes from the admitted candidate, and
 the canonical bytes/AST/tokens/comments/line terminators remain exact. Resulting
 source reserve is41,157B; fresh publication CI remains distinct from historical
@@ -3352,3 +3352,88 @@ its data-only #1090 is in protected publication. The production Library index st
 empty until the finished content and compatible runtime are published and verified. Festival, Harbor and Canals remain sequential after that
 quality standard, followed by D6. Physical-device, novice and universal FPS/offline
 claims remain pending.
+
+## 4 October — Combined online journey and publication
+
+Reservoir r16 data #1090 merged normally as
+`53620a6615210047385c770ef1c24f4eb0bdc461`; Creator commit/retry repair #1092
+merged as `8b31237d6f2cba627b5d35acc10309e4d3335992`. Library compatibility
+#1093 merged normally as `21826c460e80fa4e7fa47ec8e6ba9f98f75beea4` after every
+active check passed at exact `40b2e29df95691cbe44220e253ba8f795d60dd74`. Its
+normal Creator-main update has the same host bytes as the final combined admission.
+Latest actual public-entry evidence
+remains the recorded `3bc7a923d` launch, not these newer merges.
+
+The bounded [combined journey](fpv-combined-journey-qualification.md) passed all
+453 native controls at port8965 on source
+`6c341bef4347d98bae882fb1785eabf6a133537c`. It used the exact Library admitted
+player plus the declared, byte-exact 323-byte Creator correction. Explicit native
+file imports installed pack50ff and then its separate proof archive073ee. Native
+selection, language/Settings ownership, neutral Arm/pause/visible Retry, the exact
+1,616-tick Watch, non-first-course/single-mode edit/Undo/Redo, export, transaction
+abort/ordinary retry/postcommit refresh failure and durable reopen all passed.
+All original proof rows, original dependency revision and interrupted recovery
+were retained. The created renderer released all registered resources; the
+reopened lobby demonstrably created no renderer. Both hosts had no errors/warnings.
+The full 6,456,631-byte receipt is losslessly archived with its original hash.
+
+Both preceding failed fixtures remain retained. One selected the closed Results
+Retry instead of Home Retry; the other required a renderer in the reopened lobby.
+Only these manual observer/control defects changed. No product guard, physics,
+clock or visibility behavior was altered to obtain the pass. This online run uses
+the actual default Industrial presentation; it does not qualify an authored
+natural performance workload, published Browse/download or cached-native offline.
+The final exact combined source `0b54fd0fdf8fe06dc900024a8b59713340b09bb3`
+passed full Node22 validation and all-three/two-identical-build admission, with
+all 95 original inputs byte-exact to the successful online fixture. The complete
+zero-overlay102-file player passed223 staging checks and supplies the single
+runtime for subsequent native/offline and longer-session work. Original source
+reserve is35,578 bytes; no limits changed and no second build set was created.
+
+The exact admitted port8966 run subsequently passed all 453 of the same named
+native online controls with zero overlays. Its full6,456,634-byte receipt and
+screenshot are retained losslessly under `combined-journey/evidence/admitted-8966-passed`.
+Both hosts had no errors/warnings; the created renderer released its owned
+resources and the reopened lobby created no renderer. Published Browse and the
+separate stopped-origin offline phase are not implied by that online pass.
+
+That separate offline phase subsequently passed on the same native admitted entry.
+Public preparation completed; the dedicated 8966 server stopped and curl refused
+before and after native reload. Library retained edited revision d44a3936bff0 and
+rollback 50ffbb0e5da7; Creator showed course 02/Acro X=-9.9m, Y=5m, Z=15m. Unchanged
+course 01 loaded, deliberately armed at zero throttle and paused at 33.9s. Native
+text/screenshots and exact server stop/refusal/restart metadata are retained under
+`combined-journey/evidence/offline-8966-passed`. This qualifies own-origin outage,
+not browser-wide offline, eviction or a repeated private database audit. The
+same server root was restored with HTTP 200.
+
+The separate [native session audit](../authoring/fpv-worlds/longer-session/README.md)
+then passed 306 controls on the same exact 0b54 admission: eight 20-second windows
+across authored industrial Yard and natural Reservoir, 167.196s total run. The
+three repeated Ready resource counts per scene stayed identical, and both owners
+released all registered resources. Mean host callback CPU ranged 1.442–1.850ms;
+the recurring first stick-width read represented 25.0–29.5% of that nested time.
+The maximum observed native RAF gap was 34.3ms. Supported LoAF/longtask observers
+saw no qualifying entries starting inside these windows; that does not establish
+absence of jank. The complete receipt, exact observer and audit retain overhead,
+viewport, profile and shared-browser limits. This is a bounded single-runtime
+observation, not a before/after speedup, hardware-FPS, GPU-time or thermal-endurance
+claim. No optimization is included in this manual-evidence increment.
+
+The active parallel-plan checkpoint and engineering priorities were reconciled,
+including merged ghost/language/coating/HUD/Creator status. Reservoir's bounded
+r16 art review is accepted and its data is merged; the first production Library
+row is ready as #1094 following compatibility's merge; actual download/install
+verification remains pending. An explicit owner-authorized temporary main-merge
+hold applies until Character/P1 #1083 completes protected merge and Pages delivery
+and the coordinator lifts the hold. Qualified #1094 and evidence #1096 are
+temporarily Draft, with exact heads preserved and auto-merge disabled. This
+enforces the controller's explicit draft gate because it can directly merge an
+approved head even when auto-merge is absent. The existing release-train-hold
+label means unallocated product work and was not repurposed. Draft is procedural,
+not an unfinished-qualification claim; Ready returns only after the human hold
+is lifted. Development and qualification continue.
+Festival r5 eight-course source has616 checks / 16 ordinary completion and replay
+proofs, plus 311 historical admitted-browser checks / 16 Watch replays; final native
+offline qualification and publication remain pending. Continue
+Festival, Harbor, Canals and then D6, retaining device/novice limits.
