@@ -14,6 +14,11 @@ import { createProfileRecordBackend } from '../profile-storage.mjs';
 import { boundedJSON, exactKeys } from '../data-json.mjs';
 import { getLocale, setLocale } from '../i18n/index.mjs';
 import { nativeArtReviewURL, overflightLaunchURL } from '../fpv-entry.mjs';
+import {
+  overflightFamilyOptions,
+  overflightModuleLabel,
+  toggleOverflightFamily,
+} from './overflight-labels.mjs';
 
 const params = new URL(location.href).searchParams;
 if (['en', 'uk'].includes(params.get('lang'))) setLocale(params.get('lang'), { persist: false });
@@ -27,14 +32,18 @@ const element = (tag, text = '', attributes = {}) => {
   for (const [key, value] of Object.entries(attributes)) node.setAttribute(key, value);
   return node;
 };
-const link = (path, en, uk) =>
-  element('a', words(en, uk), {
-    href: nativeArtReviewURL(new URL(path, location.href).href, location.href),
+const link = (path, en, uk) => {
+  const target = new URL(path, location.href);
+  target.searchParams.set('lang', locale);
+  return element('a', words(en, uk), {
+    href: nativeArtReviewURL(target.href, location.href),
   });
+};
 const nav = element('nav');
 nav.append(
   link('../', 'Main game', 'Головна гра'),
   link('./', 'Content Studio', 'Майстерня контенту'),
+  link('../community/store.html', 'Community packages', 'Пакети спільноти'),
   link('../../authoring/asset-studio/', 'Asset Studio', 'Майстерня ресурсів'),
   link('../../authoring/motion-lab/#overflight-motion-study', 'Motion Lab', 'Лабораторія руху'),
   link('../overflight/play.html', 'Play Overflight', 'Грати в Проліт'),
@@ -236,19 +245,29 @@ function renderEditor() {
       encounter.pattern = pattern.value;
       refreshSource();
     });
-    const families = field(
-      row,
-      words('Native families (comma separated)', 'Родини ворогів (через кому)'),
-      element('input', '', { 'data-family': '', maxlength: 250 }),
-    );
-    families.value = encounter.families.join(', ');
-    families.addEventListener('input', () => {
-      encounter.families = families.value
-        .split(',')
-        .map((id) => id.trim())
-        .filter(Boolean);
-      refreshSource();
+    const families = element('details', '', { class: 'of-family-picker' });
+    const summary = element('summary');
+    const options = overflightFamilyOptions(locale);
+    const updateSummary = () => {
+      summary.textContent = `${words('Enemies', 'Вороги')} · ${encounter.families.map((id) => options.find((option) => option.id === id)?.name ?? id).join(', ') || words('Choose families', 'Виберіть родини')}`;
+    };
+    const choices = element('div', '', {
+      class: 'of-family-options',
+      role: 'group',
+      'aria-label': words('Enemy families', 'Родини ворогів'),
     });
+    for (const option of options) {
+      const input = field(choices, option.name, element('input', '', { type: 'checkbox' }));
+      input.checked = encounter.families.includes(option.id);
+      input.addEventListener('change', () => {
+        encounter.families = toggleOverflightFamily(encounter.families, option.id, input.checked);
+        updateSummary();
+        refreshSource();
+      });
+    }
+    updateSummary();
+    families.append(summary, choices);
+    row.append(families);
     row.append(
       button(words('Remove', 'Вилучити'), () => {
         draft.encounters.splice(index, 1);
@@ -319,7 +338,11 @@ function renderEditor() {
     10000,
   );
   for (const id of OVERFLIGHT_MODULES) {
-    const input = field(progressFields, id, element('input', '', { type: 'checkbox' }));
+    const input = field(
+      progressFields,
+      overflightModuleLabel(id, locale),
+      element('input', '', { type: 'checkbox' }),
+    );
     input.checked = draft.upgrades.modules.includes(id);
     input.disabled = id === 'primary';
     input.addEventListener('change', () => {

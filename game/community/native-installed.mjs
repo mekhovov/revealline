@@ -3,16 +3,19 @@ import { creatorSHA256 } from '../creator/bytes.mjs';
 import { createInstalledTeamCampaignStore } from '../creator/team-installed.mjs';
 import { exportCreatorTeamCampaign } from '../creator/team.mjs';
 import { exportCreatorTeamMediaCampaign } from '../creator/team-media.mjs';
+import { createOverflightLibrary } from '../overflight/community.mjs';
 
-/** Team and flight keep their existing storage, replay proofs and exact edition keys. */
+/** Native modes keep their existing stores, ownership and exact edition keys. */
 export function createCommunityNativeInstalled({ indexedDB = globalThis.indexedDB } = {}) {
   const team = createInstalledTeamCampaignStore({ indexedDB });
+  const overflight = createOverflightLibrary({ indexedDB });
   let flight = null;
   const world = () =>
     (flight ??= import('../../optional-practice/civilian-fpv/world-store.mjs').then((module) =>
       module.openWorldStore({ indexedDB }),
     ));
   async function storage(linked) {
+    if (linked.family === 'overflight') return overflight.editionStorage(linked.creatorEditionId);
     if (linked.family === 'team') {
       const inventory = await team.inventory();
       const edition = inventory.editions.find(
@@ -20,18 +23,22 @@ export function createCommunityNativeInstalled({ indexedDB = globalThis.indexedD
       );
       return edition ? { installed: true, offloaded: false, manifestRetained: true } : null;
     }
+    required(linked.family === 'fpv', 'Unsupported native Community family.');
     const store = await world(),
       revision = await store.get(linked.runtimeIdentity, { sha256: linked.creatorEditionId });
     return revision ? { installed: true, offloaded: false, manifestRetained: true } : null;
   }
   async function exported(linked) {
     let blob;
-    if (linked.family === 'team') {
+    if (linked.family === 'overflight')
+      blob = await overflight.exportEdition(linked.creatorEditionId);
+    else if (linked.family === 'team') {
       const loaded = await team.load(linked.creatorEditionId);
       blob = loaded.media
         ? exportCreatorTeamMediaCampaign(loaded.media)
         : exportCreatorTeamCampaign(loaded.prepared);
     } else {
+      required(linked.family === 'fpv', 'Unsupported native Community family.');
       const stored = await (
         await world()
       ).get(linked.runtimeIdentity, { sha256: linked.creatorEditionId });
@@ -50,12 +57,16 @@ export function createCommunityNativeInstalled({ indexedDB = globalThis.indexedD
   return Object.freeze({
     storage,
     async install(inspected) {
-      if (inspected.family === 'team') {
+      if (inspected.family === 'overflight') {
+        await overflight.installEdition(inspected);
+        return { family: 'overflight', missions: 1, assets: 0 };
+      } else if (inspected.family === 'team') {
         const review = await team.reviewInstall(inspected.prepared);
         required(review.enoughManagedSpace, 'The Team media library has insufficient space.');
         const installed = await team.install(inspected.prepared);
         required(installed.editionId === inspected.editionId, 'Team installed identity changed.');
       } else {
+        required(inspected.family === 'fpv', 'Unsupported native Community family.');
         const store = await world();
         await store.install({
           ...inspected.prepared,
@@ -74,12 +85,15 @@ export function createCommunityNativeInstalled({ indexedDB = globalThis.indexedD
         ? await (await world()).list({ includeRevisions: true })
         : [];
       return [
+        ...(families.includes('overflight') ? await overflight.editions() : []),
         ...editions.map((entry) => entry.editionId),
         ...revisions.map((revision) => revision.sha256),
       ];
     },
     export: exported,
     async reviewOffload(linked) {
+      if (linked.family === 'overflight')
+        return overflight.reviewEditionOffload(linked.creatorEditionId);
       const blob = await exported(linked);
       let generation;
       if (linked.family === 'team') generation = (await team.inventory()).generation;
@@ -94,17 +108,21 @@ export function createCommunityNativeInstalled({ indexedDB = globalThis.indexedD
       };
     },
     async offload(review) {
-      if (review.family === 'team')
+      if (review.family === 'overflight') await overflight.offloadEdition(review);
+      else if (review.family === 'team')
         await team.offloadEdition(review.editionId, { expectedGeneration: review.generation });
-      else
+      else {
+        required(review.family === 'fpv', 'Unsupported native Community family.');
         await (
           await world()
         ).removeRevision(review.runtimeIdentity, review.editionId, {
           expectedGeneration: review.generation,
         });
+      }
     },
     close() {
       team.close();
+      overflight.dispose();
       if (flight) void flight.then((store) => store.close());
     },
   });
