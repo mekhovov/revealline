@@ -1,0 +1,132 @@
+{
+  "runtime": "9b5c3d65e2877847126c87f263fbc7e9aca357fb",
+  "artifacts": [
+    {
+      "path": "fpv-ground-motion-contract-9b5c-r1.json.gz",
+      "rawBytes": 4516,
+      "rawSHA256": "fb2006be4f0e212a447295204714288e3d483d6c9516c800b602b45787f72351",
+      "storedBytes": 1049,
+      "storedSHA256": "29ee4ecc707ac0e045acbcea46bdec278b94da3bcefebf89123745ba16007be7"
+    },
+    {
+      "path": "fpv-ground-motion-contract-9b5c-r2.json.gz",
+      "rawBytes": 206685,
+      "rawSHA256": "4725cb9f50919440e3fbe9bd903eae4d8887f290f018fdb82a325a21d5d08148",
+      "storedBytes": 23855,
+      "storedSHA256": "bab8ab66b2c7cb373aeb5a8985f9551c6047f7137a11b8e8970096ba4115cc89"
+    },
+    {
+      "path": "fpv-ground-motion-contract-9b5c-r3.json.gz",
+      "rawBytes": 206686,
+      "rawSHA256": "9ab0fab9042f78ad8f09aa24ce8a07590babaf6032172f71d76287f196f2f366",
+      "storedBytes": 23856,
+      "storedSHA256": "de1915fe0e94eb95a9ec1eaf2d8545fd18645dce899336049d11bfe6a4d1b096"
+    },
+    {
+      "path": "fpv-ground-motion-contract-9b5c-r4.json.gz",
+      "rawBytes": 232907,
+      "rawSHA256": "e35a9c5374ee769b39773415420bcf567ce48e905255460494c9dbec6420f74c",
+      "storedBytes": 25606,
+      "storedSHA256": "de0f538443e0f55ac581fdedfbdb126c60f3117a0db12ecfcec327c9299902de"
+    },
+    {
+      "path": "contract.mjs",
+      "sha256": "1e9d5aa989b2340049ad9a52498494c6957260a4afa2538aa932d2a6f9872c5f",
+      "note": "Readable Prettier formatting after r4 execution; no behavior edit after r4. Runtime95 hashes are pinned inside every receipt."
+    },
+    {
+      "path": "fpv-ground-motion-native-8979-failed.json.gz",
+      "rawBytes": 148502,
+      "rawSHA256": "29e05846ae01af753d5af369acf24c2b64bea2818e84436391d1aa608cba63b6",
+      "storedBytes": 20909,
+      "storedSHA256": "eedd04faf2bf17062b687da0856bd4368edcfbdf9958e6240d5b2360182345d3"
+    },
+    {
+      "path": "native-r1-fixture.json.gz",
+      "rawBytes": 91022,
+      "rawSHA256": "99ea94bda82be714690833a3ba04ed12b3c01fe0b74d5b6c9e420d8b03464090",
+      "storedBytes": 15160,
+      "storedSHA256": "218390007c954fc025f1b5f8ea5ca7d76f2f056615e52db7e8568afa480d4cd4"
+    },
+    {
+      "path": "native-r3-fixture.json.gz",
+      "rawBytes": 91022,
+      "rawSHA256": "0e0123e77cb8ab56751a44d128d7e6d93062ad76a5dfb0186f35ec103f3f8a77",
+      "storedBytes": 15163,
+      "storedSHA256": "7c6621e773f7a6b1ab2ef9ab5a6f0229deb77a99b5020a5d497f9c66bf965f69"
+    },
+    {
+      "path": "fpv-ground-motion-native-8979-failed.png",
+      "rawBytes": 39764,
+      "rawSHA256": "4f4c9f6f851ecec9abd348ba404391703a9955e3efbc75f918e1296b8e21ba23",
+      "storedBytes": 39764,
+      "storedSHA256": "4f4c9f6f851ecec9abd348ba404391703a9955e3efbc75f918e1296b8e21ba23"
+    },
+    {
+      "path": "fpv-ground-motion-native-8980-passed.json.gz",
+      "rawBytes": 170358,
+      "rawSHA256": "11d162962496631d52d5e704f938b5ae2a4c63f02d35879e52adf282319beb52",
+      "storedBytes": 20988,
+      "storedSHA256": "080273d19ffb4a89f89bd67f1ff8245d8adac5747afbd04bf7f717dd7e815fc3"
+    },
+    {
+      "path": "fpv-ground-motion-native-8980-passed.png",
+      "rawBytes": 10977,
+      "rawSHA256": "826d104a7825272df16957fab7497c23ebe7322b60c88e2e460c56ab9cd6f7a8",
+      "storedBytes": 10977,
+      "storedSHA256": "826d104a7825272df16957fab7497c23ebe7322b60c88e2e460c56ab9cd6f7a8"
+    },
+    {
+      "path": "fpv-ground-motion-native-8980-console.json.gz",
+      "rawBytes": 2,
+      "rawSHA256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "storedBytes": 22,
+      "storedSHA256": "64406e753d82e11c6bd63d1d04bb6aa083eefa0a46949bbfce994d556b989f0f"
+    },
+    {
+      "path": "fpv-ground-motion-native-8979-console.json.gz",
+      "rawBytes": 2,
+      "rawSHA256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "storedBytes": 22,
+      "storedSHA256": "64406e753d82e11c6bd63d1d04bb6aa083eefa0a46949bbfce994d556b989f0f"
+    }
+  ],
+  "manualFiles": [
+    {
+      "path": "contract.mjs",
+      "bytes": 19756,
+      "sha256": "1e9d5aa989b2340049ad9a52498494c6957260a4afa2538aa932d2a6f9872c5f"
+    },
+    {
+      "path": "course.mjs",
+      "bytes": 1995,
+      "sha256": "a6d5c6c66c72229d7f6fb203a95b11d6dfcc754ba080fee354e336a4bf0ef758"
+    },
+    {
+      "path": "native-host.mjs",
+      "bytes": 4539,
+      "sha256": "a069fe430fa8d10ec9cb6487a01f872fc2986992bf3be7d2bcf3cc107f846df9"
+    },
+    {
+      "path": "native-prepare.mjs",
+      "bytes": 7608,
+      "sha256": "a1716138f0b3bbc96b2d7e9b6df550e1671b792607405341e48022ec18665fc0"
+    },
+    {
+      "path": "native-run-failed-r1.mjs",
+      "bytes": 14253,
+      "sha256": "a142f087cc2f37881fb8658a611f6b55b69f4f3160df8869f4d0b21f1d9bc510"
+    },
+    {
+      "path": "native-run-r3.mjs",
+      "bytes": 14376,
+      "sha256": "fcf0131155a25a0bb9973ce82f8e966f1ee2d0201cdc9c0fd8fea0c314ada8a6"
+    },
+    {
+      "path": "native-run.mjs",
+      "bytes": 14376,
+      "sha256": "fcf0131155a25a0bb9973ce82f8e966f1ee2d0201cdc9c0fd8fea0c314ada8a6"
+    }
+  ],
+  "activeNativeRun": "native-run.mjs matches frozen r3; failed r1 retained as native-run-failed-r1.mjs"
+}
