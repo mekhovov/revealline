@@ -1,3 +1,4 @@
+import { DEFAULT_DIALOGUE_VOLUME, DIALOGUE_MIX_GAIN } from '../../game/audio/dialogue-mix.mjs';
 import {
   createGameAudioContext,
   createGameAudioOutput,
@@ -47,7 +48,7 @@ export function createWorldAudio(options = {}) {
   let ambience = AMBIENCES.hangar;
   let motorStyle = 'quad';
   let gateStyle = 'chime';
-  let dialogue = { enabled: false, volume: 0.8 };
+  let dialogue = { enabled: false, volume: DEFAULT_DIALOGUE_VOLUME };
   let dialogueVoice = null;
   const effects = new Set();
   const audioMaster = options.audioMaster ?? createAudioMaster();
@@ -138,7 +139,7 @@ export function createWorldAudio(options = {}) {
         }),
       );
       const dialogueBus = output.dialogueBus;
-      dialogueBus.gain.value = dialogue.enabled ? dialogue.volume : 0;
+      dialogueBus.gain.value = dialogue.enabled ? dialogue.volume * DIALOGUE_MIX_GAIN : 0;
       const motor = candidate.createGain();
       motor.gain.value = 0;
       const motorFilter = candidate.createBiquadFilter();
@@ -361,7 +362,8 @@ export function createWorldAudio(options = {}) {
         throw new TypeError('Dialogue requires an enabled boolean and volume from zero to one.');
       dialogue = { enabled, volume: value };
       if (!enabled || !value) dialogueVoice?.stop();
-      if (graph && context.state !== 'closed') ramp(graph.dialogueBus.gain, enabled ? value : 0);
+      if (graph && context.state !== 'closed')
+        ramp(graph.dialogueBus.gain, enabled ? value * DIALOGUE_MIX_GAIN : 0);
     },
     /** Uses the existing flight context and the shared one-line dialogue arbiter. */
     playDialogue(buffer, { onended = () => {} } = {}) {

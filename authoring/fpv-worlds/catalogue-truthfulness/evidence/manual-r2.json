@@ -1,0 +1,1353 @@
+{
+  "format": "FPVImportedCatalogueManual.v1",
+  "sourceSHA256": "f1b2da5ba08792d316e3c71269d2c7dbcfaefce0b7bbc32e2177810c54edfdd2",
+  "checks": [
+    {
+      "name": "reservoir exact qualified immutable pack",
+      "passed": true
+    },
+    {
+      "name": "reservoir canonical roundtrip leaves pack identity exact",
+      "passed": true
+    },
+    {
+      "name": "reservoir selected-mode activity mountain-reservoir-01/self-level",
+      "passed": true
+    },
+    {
+      "name": "reservoir no invented duration/difficulty mountain-reservoir-01/self-level",
+      "passed": true
+    },
+    {
+      "name": "reservoir All filter retains mountain-reservoir-01/self-level",
+      "passed": true
+    },
+    {
+      "name": "reservoir unknown is not rated mountain-reservoir-01/self-level/beginner",
+      "passed": true
+    },
+    {
+      "name": "reservoir unknown is not rated mountain-reservoir-01/self-level/intermediate",
+      "passed": true
+    },
+    {
+      "name": "reservoir unknown is not rated mountain-reservoir-01/self-level/advanced",
+      "passed": true
+    },
+    {
+      "name": "reservoir presentation leaves validated course untouched mountain-reservoir-01/self-level",
+      "passed": true
+    },
+    {
+      "name": "reservoir selected-mode activity mountain-reservoir-02/self-level",
+      "passed": true
+    },
+    {
+      "name": "reservoir no invented duration/difficulty mountain-reservoir-02/self-level",
+      "passed": true
+    },
+    {
+      "name": "reservoir All filter retains mountain-reservoir-02/self-level",
+      "passed": true
+    },
+    {
+      "name": "reservoir unknown is not rated mountain-reservoir-02/self-level/beginner",
+      "passed": true
+    },
+    {
+      "name": "reservoir unknown is not rated mountain-reservoir-02/self-level/intermediate",
+      "passed": true
+    },
+    {
+      "name": "reservoir unknown is not rated mountain-reservoir-02/self-level/advanced",
+      "passed": true
+    },
+    {
+      "name": "reservoir presentation leaves validated course untouched mountain-reservoir-02/self-level",
+      "passed": true
+    },
+    {
+      "name": "reservoir selected-mode activity mountain-reservoir-03/self-level",
+      "passed": true
+    },
+    {
+      "name": "reservoir no invented duration/difficulty mountain-reservoir-03/self-level",
+      "passed": true
+    },
+    {
+      "name": "reservoir All filter retains mountain-reservoir-03/self-level",
+      "passed": true
+    },
+    {
+      "name": "reservoir unknown is not rated mountain-reservoir-03/self-level/beginner",
+      "passed": true
+    },
+    {
+      "name": "reservoir unknown is not rated mountain-reservoir-03/self-level/intermediate",
+      "passed": true
+    },
+    {
+      "name": "reservoir unknown is not rated mountain-reservoir-03/self-level/advanced",
+      "passed": true
+    },
+    {
+      "name": "reservoir presentation leaves validated course untouched mountain-reservoir-03/self-level",
+      "passed": true
+    },
+    {
+      "name": "reservoir selected-mode activity mountain-reservoir-04/self-level",
+      "passed": true
+    },
+    {
+      "name": "reservoir no invented duration/difficulty mountain-reservoir-04/self-level",
+      "passed": true
+    },
+    {
+      "name": "reservoir All filter retains mountain-reservoir-04/self-level",
+      "passed": true
+    },
+    {
+      "name": "reservoir unknown is not rated mountain-reservoir-04/self-level/beginner",
+      "passed": true
+    },
+    {
+      "name": "reservoir unknown is not rated mountain-reservoir-04/self-level/intermediate",
+      "passed": true
+    },
+    {
+      "name": "reservoir unknown is not rated mountain-reservoir-04/self-level/advanced",
+      "passed": true
+    },
+    {
+      "name": "reservoir presentation leaves validated course untouched mountain-reservoir-04/self-level",
+      "passed": true
+    },
+    {
+      "name": "reservoir selected-mode activity mountain-reservoir-05/self-level",
+      "passed": true
+    },
+    {
+      "name": "reservoir no invented duration/difficulty mountain-reservoir-05/self-level",
+      "passed": true
+    },
+    {
+      "name": "reservoir All filter retains mountain-reservoir-05/self-level",
+      "passed": true
+    },
+    {
+      "name": "reservoir unknown is not rated mountain-reservoir-05/self-level/beginner",
+      "passed": true
+    },
+    {
+      "name": "reservoir unknown is not rated mountain-reservoir-05/self-level/intermediate",
+      "passed": true
+    },
+    {
+      "name": "reservoir unknown is not rated mountain-reservoir-05/self-level/advanced",
+      "passed": true
+    },
+    {
+      "name": "reservoir presentation leaves validated course untouched mountain-reservoir-05/self-level",
+      "passed": true
+    },
+    {
+      "name": "reservoir selected-mode activity mountain-reservoir-06/self-level",
+      "passed": true
+    },
+    {
+      "name": "reservoir no invented duration/difficulty mountain-reservoir-06/self-level",
+      "passed": true
+    },
+    {
+      "name": "reservoir All filter retains mountain-reservoir-06/self-level",
+      "passed": true
+    },
+    {
+      "name": "reservoir unknown is not rated mountain-reservoir-06/self-level/beginner",
+      "passed": true
+    },
+    {
+      "name": "reservoir unknown is not rated mountain-reservoir-06/self-level/intermediate",
+      "passed": true
+    },
+    {
+      "name": "reservoir unknown is not rated mountain-reservoir-06/self-level/advanced",
+      "passed": true
+    },
+    {
+      "name": "reservoir presentation leaves validated course untouched mountain-reservoir-06/self-level",
+      "passed": true
+    },
+    {
+      "name": "reservoir selected-mode activity mountain-reservoir-07/self-level",
+      "passed": true
+    },
+    {
+      "name": "reservoir no invented duration/difficulty mountain-reservoir-07/self-level",
+      "passed": true
+    },
+    {
+      "name": "reservoir All filter retains mountain-reservoir-07/self-level",
+      "passed": true
+    },
+    {
+      "name": "reservoir unknown is not rated mountain-reservoir-07/self-level/beginner",
+      "passed": true
+    },
+    {
+      "name": "reservoir unknown is not rated mountain-reservoir-07/self-level/intermediate",
+      "passed": true
+    },
+    {
+      "name": "reservoir unknown is not rated mountain-reservoir-07/self-level/advanced",
+      "passed": true
+    },
+    {
+      "name": "reservoir presentation leaves validated course untouched mountain-reservoir-07/self-level",
+      "passed": true
+    },
+    {
+      "name": "reservoir selected-mode activity mountain-reservoir-08/self-level",
+      "passed": true
+    },
+    {
+      "name": "reservoir no invented duration/difficulty mountain-reservoir-08/self-level",
+      "passed": true
+    },
+    {
+      "name": "reservoir All filter retains mountain-reservoir-08/self-level",
+      "passed": true
+    },
+    {
+      "name": "reservoir unknown is not rated mountain-reservoir-08/self-level/beginner",
+      "passed": true
+    },
+    {
+      "name": "reservoir unknown is not rated mountain-reservoir-08/self-level/intermediate",
+      "passed": true
+    },
+    {
+      "name": "reservoir unknown is not rated mountain-reservoir-08/self-level/advanced",
+      "passed": true
+    },
+    {
+      "name": "reservoir presentation leaves validated course untouched mountain-reservoir-08/self-level",
+      "passed": true
+    },
+    {
+      "name": "reservoir selected-mode activity mountain-reservoir-01/acro",
+      "passed": true
+    },
+    {
+      "name": "reservoir no invented duration/difficulty mountain-reservoir-01/acro",
+      "passed": true
+    },
+    {
+      "name": "reservoir All filter retains mountain-reservoir-01/acro",
+      "passed": true
+    },
+    {
+      "name": "reservoir unknown is not rated mountain-reservoir-01/acro/beginner",
+      "passed": true
+    },
+    {
+      "name": "reservoir unknown is not rated mountain-reservoir-01/acro/intermediate",
+      "passed": true
+    },
+    {
+      "name": "reservoir unknown is not rated mountain-reservoir-01/acro/advanced",
+      "passed": true
+    },
+    {
+      "name": "reservoir presentation leaves validated course untouched mountain-reservoir-01/acro",
+      "passed": true
+    },
+    {
+      "name": "reservoir selected-mode activity mountain-reservoir-02/acro",
+      "passed": true
+    },
+    {
+      "name": "reservoir no invented duration/difficulty mountain-reservoir-02/acro",
+      "passed": true
+    },
+    {
+      "name": "reservoir All filter retains mountain-reservoir-02/acro",
+      "passed": true
+    },
+    {
+      "name": "reservoir unknown is not rated mountain-reservoir-02/acro/beginner",
+      "passed": true
+    },
+    {
+      "name": "reservoir unknown is not rated mountain-reservoir-02/acro/intermediate",
+      "passed": true
+    },
+    {
+      "name": "reservoir unknown is not rated mountain-reservoir-02/acro/advanced",
+      "passed": true
+    },
+    {
+      "name": "reservoir presentation leaves validated course untouched mountain-reservoir-02/acro",
+      "passed": true
+    },
+    {
+      "name": "reservoir selected-mode activity mountain-reservoir-03/acro",
+      "passed": true
+    },
+    {
+      "name": "reservoir no invented duration/difficulty mountain-reservoir-03/acro",
+      "passed": true
+    },
+    {
+      "name": "reservoir All filter retains mountain-reservoir-03/acro",
+      "passed": true
+    },
+    {
+      "name": "reservoir unknown is not rated mountain-reservoir-03/acro/beginner",
+      "passed": true
+    },
+    {
+      "name": "reservoir unknown is not rated mountain-reservoir-03/acro/intermediate",
+      "passed": true
+    },
+    {
+      "name": "reservoir unknown is not rated mountain-reservoir-03/acro/advanced",
+      "passed": true
+    },
+    {
+      "name": "reservoir presentation leaves validated course untouched mountain-reservoir-03/acro",
+      "passed": true
+    },
+    {
+      "name": "reservoir selected-mode activity mountain-reservoir-04/acro",
+      "passed": true
+    },
+    {
+      "name": "reservoir no invented duration/difficulty mountain-reservoir-04/acro",
+      "passed": true
+    },
+    {
+      "name": "reservoir All filter retains mountain-reservoir-04/acro",
+      "passed": true
+    },
+    {
+      "name": "reservoir unknown is not rated mountain-reservoir-04/acro/beginner",
+      "passed": true
+    },
+    {
+      "name": "reservoir unknown is not rated mountain-reservoir-04/acro/intermediate",
+      "passed": true
+    },
+    {
+      "name": "reservoir unknown is not rated mountain-reservoir-04/acro/advanced",
+      "passed": true
+    },
+    {
+      "name": "reservoir presentation leaves validated course untouched mountain-reservoir-04/acro",
+      "passed": true
+    },
+    {
+      "name": "reservoir selected-mode activity mountain-reservoir-05/acro",
+      "passed": true
+    },
+    {
+      "name": "reservoir no invented duration/difficulty mountain-reservoir-05/acro",
+      "passed": true
+    },
+    {
+      "name": "reservoir All filter retains mountain-reservoir-05/acro",
+      "passed": true
+    },
+    {
+      "name": "reservoir unknown is not rated mountain-reservoir-05/acro/beginner",
+      "passed": true
+    },
+    {
+      "name": "reservoir unknown is not rated mountain-reservoir-05/acro/intermediate",
+      "passed": true
+    },
+    {
+      "name": "reservoir unknown is not rated mountain-reservoir-05/acro/advanced",
+      "passed": true
+    },
+    {
+      "name": "reservoir presentation leaves validated course untouched mountain-reservoir-05/acro",
+      "passed": true
+    },
+    {
+      "name": "reservoir selected-mode activity mountain-reservoir-06/acro",
+      "passed": true
+    },
+    {
+      "name": "reservoir no invented duration/difficulty mountain-reservoir-06/acro",
+      "passed": true
+    },
+    {
+      "name": "reservoir All filter retains mountain-reservoir-06/acro",
+      "passed": true
+    },
+    {
+      "name": "reservoir unknown is not rated mountain-reservoir-06/acro/beginner",
+      "passed": true
+    },
+    {
+      "name": "reservoir unknown is not rated mountain-reservoir-06/acro/intermediate",
+      "passed": true
+    },
+    {
+      "name": "reservoir unknown is not rated mountain-reservoir-06/acro/advanced",
+      "passed": true
+    },
+    {
+      "name": "reservoir presentation leaves validated course untouched mountain-reservoir-06/acro",
+      "passed": true
+    },
+    {
+      "name": "reservoir selected-mode activity mountain-reservoir-07/acro",
+      "passed": true
+    },
+    {
+      "name": "reservoir no invented duration/difficulty mountain-reservoir-07/acro",
+      "passed": true
+    },
+    {
+      "name": "reservoir All filter retains mountain-reservoir-07/acro",
+      "passed": true
+    },
+    {
+      "name": "reservoir unknown is not rated mountain-reservoir-07/acro/beginner",
+      "passed": true
+    },
+    {
+      "name": "reservoir unknown is not rated mountain-reservoir-07/acro/intermediate",
+      "passed": true
+    },
+    {
+      "name": "reservoir unknown is not rated mountain-reservoir-07/acro/advanced",
+      "passed": true
+    },
+    {
+      "name": "reservoir presentation leaves validated course untouched mountain-reservoir-07/acro",
+      "passed": true
+    },
+    {
+      "name": "reservoir selected-mode activity mountain-reservoir-08/acro",
+      "passed": true
+    },
+    {
+      "name": "reservoir no invented duration/difficulty mountain-reservoir-08/acro",
+      "passed": true
+    },
+    {
+      "name": "reservoir All filter retains mountain-reservoir-08/acro",
+      "passed": true
+    },
+    {
+      "name": "reservoir unknown is not rated mountain-reservoir-08/acro/beginner",
+      "passed": true
+    },
+    {
+      "name": "reservoir unknown is not rated mountain-reservoir-08/acro/intermediate",
+      "passed": true
+    },
+    {
+      "name": "reservoir unknown is not rated mountain-reservoir-08/acro/advanced",
+      "passed": true
+    },
+    {
+      "name": "reservoir presentation leaves validated course untouched mountain-reservoir-08/acro",
+      "passed": true
+    },
+    {
+      "name": "festival exact qualified immutable pack",
+      "passed": true
+    },
+    {
+      "name": "festival canonical roundtrip leaves pack identity exact",
+      "passed": true
+    },
+    {
+      "name": "festival selected-mode activity festival-grounds-01/self-level",
+      "passed": true
+    },
+    {
+      "name": "festival no invented duration/difficulty festival-grounds-01/self-level",
+      "passed": true
+    },
+    {
+      "name": "festival All filter retains festival-grounds-01/self-level",
+      "passed": true
+    },
+    {
+      "name": "festival unknown is not rated festival-grounds-01/self-level/beginner",
+      "passed": true
+    },
+    {
+      "name": "festival unknown is not rated festival-grounds-01/self-level/intermediate",
+      "passed": true
+    },
+    {
+      "name": "festival unknown is not rated festival-grounds-01/self-level/advanced",
+      "passed": true
+    },
+    {
+      "name": "festival presentation leaves validated course untouched festival-grounds-01/self-level",
+      "passed": true
+    },
+    {
+      "name": "festival selected-mode activity festival-grounds-02/self-level",
+      "passed": true
+    },
+    {
+      "name": "festival no invented duration/difficulty festival-grounds-02/self-level",
+      "passed": true
+    },
+    {
+      "name": "festival All filter retains festival-grounds-02/self-level",
+      "passed": true
+    },
+    {
+      "name": "festival unknown is not rated festival-grounds-02/self-level/beginner",
+      "passed": true
+    },
+    {
+      "name": "festival unknown is not rated festival-grounds-02/self-level/intermediate",
+      "passed": true
+    },
+    {
+      "name": "festival unknown is not rated festival-grounds-02/self-level/advanced",
+      "passed": true
+    },
+    {
+      "name": "festival presentation leaves validated course untouched festival-grounds-02/self-level",
+      "passed": true
+    },
+    {
+      "name": "festival selected-mode activity festival-grounds-03/self-level",
+      "passed": true
+    },
+    {
+      "name": "festival no invented duration/difficulty festival-grounds-03/self-level",
+      "passed": true
+    },
+    {
+      "name": "festival All filter retains festival-grounds-03/self-level",
+      "passed": true
+    },
+    {
+      "name": "festival unknown is not rated festival-grounds-03/self-level/beginner",
+      "passed": true
+    },
+    {
+      "name": "festival unknown is not rated festival-grounds-03/self-level/intermediate",
+      "passed": true
+    },
+    {
+      "name": "festival unknown is not rated festival-grounds-03/self-level/advanced",
+      "passed": true
+    },
+    {
+      "name": "festival presentation leaves validated course untouched festival-grounds-03/self-level",
+      "passed": true
+    },
+    {
+      "name": "festival selected-mode activity festival-grounds-04/self-level",
+      "passed": true
+    },
+    {
+      "name": "festival no invented duration/difficulty festival-grounds-04/self-level",
+      "passed": true
+    },
+    {
+      "name": "festival All filter retains festival-grounds-04/self-level",
+      "passed": true
+    },
+    {
+      "name": "festival unknown is not rated festival-grounds-04/self-level/beginner",
+      "passed": true
+    },
+    {
+      "name": "festival unknown is not rated festival-grounds-04/self-level/intermediate",
+      "passed": true
+    },
+    {
+      "name": "festival unknown is not rated festival-grounds-04/self-level/advanced",
+      "passed": true
+    },
+    {
+      "name": "festival presentation leaves validated course untouched festival-grounds-04/self-level",
+      "passed": true
+    },
+    {
+      "name": "festival selected-mode activity festival-grounds-05/self-level",
+      "passed": true
+    },
+    {
+      "name": "festival no invented duration/difficulty festival-grounds-05/self-level",
+      "passed": true
+    },
+    {
+      "name": "festival All filter retains festival-grounds-05/self-level",
+      "passed": true
+    },
+    {
+      "name": "festival unknown is not rated festival-grounds-05/self-level/beginner",
+      "passed": true
+    },
+    {
+      "name": "festival unknown is not rated festival-grounds-05/self-level/intermediate",
+      "passed": true
+    },
+    {
+      "name": "festival unknown is not rated festival-grounds-05/self-level/advanced",
+      "passed": true
+    },
+    {
+      "name": "festival presentation leaves validated course untouched festival-grounds-05/self-level",
+      "passed": true
+    },
+    {
+      "name": "festival selected-mode activity festival-grounds-06/self-level",
+      "passed": true
+    },
+    {
+      "name": "festival no invented duration/difficulty festival-grounds-06/self-level",
+      "passed": true
+    },
+    {
+      "name": "festival All filter retains festival-grounds-06/self-level",
+      "passed": true
+    },
+    {
+      "name": "festival unknown is not rated festival-grounds-06/self-level/beginner",
+      "passed": true
+    },
+    {
+      "name": "festival unknown is not rated festival-grounds-06/self-level/intermediate",
+      "passed": true
+    },
+    {
+      "name": "festival unknown is not rated festival-grounds-06/self-level/advanced",
+      "passed": true
+    },
+    {
+      "name": "festival presentation leaves validated course untouched festival-grounds-06/self-level",
+      "passed": true
+    },
+    {
+      "name": "festival selected-mode activity festival-grounds-07/self-level",
+      "passed": true
+    },
+    {
+      "name": "festival no invented duration/difficulty festival-grounds-07/self-level",
+      "passed": true
+    },
+    {
+      "name": "festival All filter retains festival-grounds-07/self-level",
+      "passed": true
+    },
+    {
+      "name": "festival unknown is not rated festival-grounds-07/self-level/beginner",
+      "passed": true
+    },
+    {
+      "name": "festival unknown is not rated festival-grounds-07/self-level/intermediate",
+      "passed": true
+    },
+    {
+      "name": "festival unknown is not rated festival-grounds-07/self-level/advanced",
+      "passed": true
+    },
+    {
+      "name": "festival presentation leaves validated course untouched festival-grounds-07/self-level",
+      "passed": true
+    },
+    {
+      "name": "festival selected-mode activity festival-grounds-08/self-level",
+      "passed": true
+    },
+    {
+      "name": "festival no invented duration/difficulty festival-grounds-08/self-level",
+      "passed": true
+    },
+    {
+      "name": "festival All filter retains festival-grounds-08/self-level",
+      "passed": true
+    },
+    {
+      "name": "festival unknown is not rated festival-grounds-08/self-level/beginner",
+      "passed": true
+    },
+    {
+      "name": "festival unknown is not rated festival-grounds-08/self-level/intermediate",
+      "passed": true
+    },
+    {
+      "name": "festival unknown is not rated festival-grounds-08/self-level/advanced",
+      "passed": true
+    },
+    {
+      "name": "festival presentation leaves validated course untouched festival-grounds-08/self-level",
+      "passed": true
+    },
+    {
+      "name": "festival selected-mode activity festival-grounds-01/acro",
+      "passed": true
+    },
+    {
+      "name": "festival no invented duration/difficulty festival-grounds-01/acro",
+      "passed": true
+    },
+    {
+      "name": "festival All filter retains festival-grounds-01/acro",
+      "passed": true
+    },
+    {
+      "name": "festival unknown is not rated festival-grounds-01/acro/beginner",
+      "passed": true
+    },
+    {
+      "name": "festival unknown is not rated festival-grounds-01/acro/intermediate",
+      "passed": true
+    },
+    {
+      "name": "festival unknown is not rated festival-grounds-01/acro/advanced",
+      "passed": true
+    },
+    {
+      "name": "festival presentation leaves validated course untouched festival-grounds-01/acro",
+      "passed": true
+    },
+    {
+      "name": "festival selected-mode activity festival-grounds-02/acro",
+      "passed": true
+    },
+    {
+      "name": "festival no invented duration/difficulty festival-grounds-02/acro",
+      "passed": true
+    },
+    {
+      "name": "festival All filter retains festival-grounds-02/acro",
+      "passed": true
+    },
+    {
+      "name": "festival unknown is not rated festival-grounds-02/acro/beginner",
+      "passed": true
+    },
+    {
+      "name": "festival unknown is not rated festival-grounds-02/acro/intermediate",
+      "passed": true
+    },
+    {
+      "name": "festival unknown is not rated festival-grounds-02/acro/advanced",
+      "passed": true
+    },
+    {
+      "name": "festival presentation leaves validated course untouched festival-grounds-02/acro",
+      "passed": true
+    },
+    {
+      "name": "festival selected-mode activity festival-grounds-03/acro",
+      "passed": true
+    },
+    {
+      "name": "festival no invented duration/difficulty festival-grounds-03/acro",
+      "passed": true
+    },
+    {
+      "name": "festival All filter retains festival-grounds-03/acro",
+      "passed": true
+    },
+    {
+      "name": "festival unknown is not rated festival-grounds-03/acro/beginner",
+      "passed": true
+    },
+    {
+      "name": "festival unknown is not rated festival-grounds-03/acro/intermediate",
+      "passed": true
+    },
+    {
+      "name": "festival unknown is not rated festival-grounds-03/acro/advanced",
+      "passed": true
+    },
+    {
+      "name": "festival presentation leaves validated course untouched festival-grounds-03/acro",
+      "passed": true
+    },
+    {
+      "name": "festival selected-mode activity festival-grounds-04/acro",
+      "passed": true
+    },
+    {
+      "name": "festival no invented duration/difficulty festival-grounds-04/acro",
+      "passed": true
+    },
+    {
+      "name": "festival All filter retains festival-grounds-04/acro",
+      "passed": true
+    },
+    {
+      "name": "festival unknown is not rated festival-grounds-04/acro/beginner",
+      "passed": true
+    },
+    {
+      "name": "festival unknown is not rated festival-grounds-04/acro/intermediate",
+      "passed": true
+    },
+    {
+      "name": "festival unknown is not rated festival-grounds-04/acro/advanced",
+      "passed": true
+    },
+    {
+      "name": "festival presentation leaves validated course untouched festival-grounds-04/acro",
+      "passed": true
+    },
+    {
+      "name": "festival selected-mode activity festival-grounds-05/acro",
+      "passed": true
+    },
+    {
+      "name": "festival no invented duration/difficulty festival-grounds-05/acro",
+      "passed": true
+    },
+    {
+      "name": "festival All filter retains festival-grounds-05/acro",
+      "passed": true
+    },
+    {
+      "name": "festival unknown is not rated festival-grounds-05/acro/beginner",
+      "passed": true
+    },
+    {
+      "name": "festival unknown is not rated festival-grounds-05/acro/intermediate",
+      "passed": true
+    },
+    {
+      "name": "festival unknown is not rated festival-grounds-05/acro/advanced",
+      "passed": true
+    },
+    {
+      "name": "festival presentation leaves validated course untouched festival-grounds-05/acro",
+      "passed": true
+    },
+    {
+      "name": "festival selected-mode activity festival-grounds-06/acro",
+      "passed": true
+    },
+    {
+      "name": "festival no invented duration/difficulty festival-grounds-06/acro",
+      "passed": true
+    },
+    {
+      "name": "festival All filter retains festival-grounds-06/acro",
+      "passed": true
+    },
+    {
+      "name": "festival unknown is not rated festival-grounds-06/acro/beginner",
+      "passed": true
+    },
+    {
+      "name": "festival unknown is not rated festival-grounds-06/acro/intermediate",
+      "passed": true
+    },
+    {
+      "name": "festival unknown is not rated festival-grounds-06/acro/advanced",
+      "passed": true
+    },
+    {
+      "name": "festival presentation leaves validated course untouched festival-grounds-06/acro",
+      "passed": true
+    },
+    {
+      "name": "festival selected-mode activity festival-grounds-07/acro",
+      "passed": true
+    },
+    {
+      "name": "festival no invented duration/difficulty festival-grounds-07/acro",
+      "passed": true
+    },
+    {
+      "name": "festival All filter retains festival-grounds-07/acro",
+      "passed": true
+    },
+    {
+      "name": "festival unknown is not rated festival-grounds-07/acro/beginner",
+      "passed": true
+    },
+    {
+      "name": "festival unknown is not rated festival-grounds-07/acro/intermediate",
+      "passed": true
+    },
+    {
+      "name": "festival unknown is not rated festival-grounds-07/acro/advanced",
+      "passed": true
+    },
+    {
+      "name": "festival presentation leaves validated course untouched festival-grounds-07/acro",
+      "passed": true
+    },
+    {
+      "name": "festival selected-mode activity festival-grounds-08/acro",
+      "passed": true
+    },
+    {
+      "name": "festival no invented duration/difficulty festival-grounds-08/acro",
+      "passed": true
+    },
+    {
+      "name": "festival All filter retains festival-grounds-08/acro",
+      "passed": true
+    },
+    {
+      "name": "festival unknown is not rated festival-grounds-08/acro/beginner",
+      "passed": true
+    },
+    {
+      "name": "festival unknown is not rated festival-grounds-08/acro/intermediate",
+      "passed": true
+    },
+    {
+      "name": "festival unknown is not rated festival-grounds-08/acro/advanced",
+      "passed": true
+    },
+    {
+      "name": "festival presentation leaves validated course untouched festival-grounds-08/acro",
+      "passed": true
+    },
+    {
+      "name": "follow-with-holds-and-land/en validated mode classification",
+      "passed": true
+    },
+    {
+      "name": "follow-with-holds-and-land/en filter uses matching classification",
+      "passed": true
+    },
+    {
+      "name": "follow-with-holds-and-land/en incompatible tracking filter excludes",
+      "passed": true
+    },
+    {
+      "name": "follow-with-holds-and-land/en neutral text has no fabricated metadata",
+      "passed": true
+    },
+    {
+      "name": "follow-with-holds-and-land/uk validated mode classification",
+      "passed": true
+    },
+    {
+      "name": "follow-with-holds-and-land/uk filter uses matching classification",
+      "passed": true
+    },
+    {
+      "name": "follow-with-holds-and-land/uk incompatible tracking filter excludes",
+      "passed": true
+    },
+    {
+      "name": "follow-with-holds-and-land/uk neutral text has no fabricated metadata",
+      "passed": true
+    },
+    {
+      "name": "observe-other-mode/en validated mode classification",
+      "passed": true
+    },
+    {
+      "name": "observe-other-mode/en filter uses matching classification",
+      "passed": true
+    },
+    {
+      "name": "observe-other-mode/en incompatible tracking filter excludes",
+      "passed": true
+    },
+    {
+      "name": "observe-other-mode/en neutral text has no fabricated metadata",
+      "passed": true
+    },
+    {
+      "name": "observe-other-mode/uk validated mode classification",
+      "passed": true
+    },
+    {
+      "name": "observe-other-mode/uk filter uses matching classification",
+      "passed": true
+    },
+    {
+      "name": "observe-other-mode/uk incompatible tracking filter excludes",
+      "passed": true
+    },
+    {
+      "name": "observe-other-mode/uk neutral text has no fabricated metadata",
+      "passed": true
+    },
+    {
+      "name": "Mode selection preserves divergent follow semantics",
+      "passed": true
+    },
+    {
+      "name": "mixed-tracking/en validated mode classification",
+      "passed": true
+    },
+    {
+      "name": "mixed-tracking/en filter uses matching classification",
+      "passed": true
+    },
+    {
+      "name": "mixed-tracking/en incompatible tracking filter excludes",
+      "passed": true
+    },
+    {
+      "name": "mixed-tracking/en neutral text has no fabricated metadata",
+      "passed": true
+    },
+    {
+      "name": "mixed-tracking/uk validated mode classification",
+      "passed": true
+    },
+    {
+      "name": "mixed-tracking/uk filter uses matching classification",
+      "passed": true
+    },
+    {
+      "name": "mixed-tracking/uk incompatible tracking filter excludes",
+      "passed": true
+    },
+    {
+      "name": "mixed-tracking/uk neutral text has no fabricated metadata",
+      "passed": true
+    },
+    {
+      "name": "gate-ambiguity/en validated mode classification",
+      "passed": true
+    },
+    {
+      "name": "gate-ambiguity/en filter uses matching classification",
+      "passed": true
+    },
+    {
+      "name": "gate-ambiguity/en incompatible tracking filter excludes",
+      "passed": true
+    },
+    {
+      "name": "gate-ambiguity/en neutral text has no fabricated metadata",
+      "passed": true
+    },
+    {
+      "name": "gate-ambiguity/uk validated mode classification",
+      "passed": true
+    },
+    {
+      "name": "gate-ambiguity/uk filter uses matching classification",
+      "passed": true
+    },
+    {
+      "name": "gate-ambiguity/uk incompatible tracking filter excludes",
+      "passed": true
+    },
+    {
+      "name": "gate-ambiguity/uk neutral text has no fabricated metadata",
+      "passed": true
+    },
+    {
+      "name": "survival-ambiguity/en validated mode classification",
+      "passed": true
+    },
+    {
+      "name": "survival-ambiguity/en filter uses matching classification",
+      "passed": true
+    },
+    {
+      "name": "survival-ambiguity/en incompatible tracking filter excludes",
+      "passed": true
+    },
+    {
+      "name": "survival-ambiguity/en neutral text has no fabricated metadata",
+      "passed": true
+    },
+    {
+      "name": "survival-ambiguity/uk validated mode classification",
+      "passed": true
+    },
+    {
+      "name": "survival-ambiguity/uk filter uses matching classification",
+      "passed": true
+    },
+    {
+      "name": "survival-ambiguity/uk incompatible tracking filter excludes",
+      "passed": true
+    },
+    {
+      "name": "survival-ambiguity/uk neutral text has no fabricated metadata",
+      "passed": true
+    },
+    {
+      "name": "combat-ambiguity/en validated mode classification",
+      "passed": true
+    },
+    {
+      "name": "combat-ambiguity/en filter uses matching classification",
+      "passed": true
+    },
+    {
+      "name": "combat-ambiguity/en incompatible tracking filter excludes",
+      "passed": true
+    },
+    {
+      "name": "combat-ambiguity/en neutral text has no fabricated metadata",
+      "passed": true
+    },
+    {
+      "name": "combat-ambiguity/uk validated mode classification",
+      "passed": true
+    },
+    {
+      "name": "combat-ambiguity/uk filter uses matching classification",
+      "passed": true
+    },
+    {
+      "name": "combat-ambiguity/uk incompatible tracking filter excludes",
+      "passed": true
+    },
+    {
+      "name": "combat-ambiguity/uk neutral text has no fabricated metadata",
+      "passed": true
+    },
+    {
+      "name": "All built-in metadata exact self-level/en",
+      "passed": true
+    },
+    {
+      "name": "All built-in metadata exact self-level/uk",
+      "passed": true
+    },
+    {
+      "name": "All built-in metadata exact acro/en",
+      "passed": true
+    },
+    {
+      "name": "All built-in metadata exact acro/uk",
+      "passed": true
+    },
+    {
+      "name": "Imported validated hunt remains neutral",
+      "passed": true
+    },
+    {
+      "name": "Exactly one of 95 admitted inputs changes",
+      "passed": true
+    },
+    {
+      "name": "Unchanged source ceiling",
+      "passed": true
+    }
+  ],
+  "imported": [
+    {
+      "course": "mountain-reservoir-01",
+      "mode": "self-level",
+      "activity": null,
+      "label": "Authored challenge"
+    },
+    {
+      "course": "mountain-reservoir-02",
+      "mode": "self-level",
+      "activity": null,
+      "label": "Authored challenge"
+    },
+    {
+      "course": "mountain-reservoir-03",
+      "mode": "self-level",
+      "activity": null,
+      "label": "Authored challenge"
+    },
+    {
+      "course": "mountain-reservoir-04",
+      "mode": "self-level",
+      "activity": null,
+      "label": "Authored challenge"
+    },
+    {
+      "course": "mountain-reservoir-05",
+      "mode": "self-level",
+      "activity": null,
+      "label": "Authored challenge"
+    },
+    {
+      "course": "mountain-reservoir-06",
+      "mode": "self-level",
+      "activity": null,
+      "label": "Authored challenge"
+    },
+    {
+      "course": "mountain-reservoir-07",
+      "mode": "self-level",
+      "activity": null,
+      "label": "Authored challenge"
+    },
+    {
+      "course": "mountain-reservoir-08",
+      "mode": "self-level",
+      "activity": null,
+      "label": "Authored challenge"
+    },
+    {
+      "course": "mountain-reservoir-01",
+      "mode": "acro",
+      "activity": null,
+      "label": "Authored challenge"
+    },
+    {
+      "course": "mountain-reservoir-02",
+      "mode": "acro",
+      "activity": null,
+      "label": "Authored challenge"
+    },
+    {
+      "course": "mountain-reservoir-03",
+      "mode": "acro",
+      "activity": null,
+      "label": "Authored challenge"
+    },
+    {
+      "course": "mountain-reservoir-04",
+      "mode": "acro",
+      "activity": null,
+      "label": "Authored challenge"
+    },
+    {
+      "course": "mountain-reservoir-05",
+      "mode": "acro",
+      "activity": null,
+      "label": "Authored challenge"
+    },
+    {
+      "course": "mountain-reservoir-06",
+      "mode": "acro",
+      "activity": null,
+      "label": "Authored challenge"
+    },
+    {
+      "course": "mountain-reservoir-07",
+      "mode": "acro",
+      "activity": null,
+      "label": "Authored challenge"
+    },
+    {
+      "course": "mountain-reservoir-08",
+      "mode": "acro",
+      "activity": null,
+      "label": "Authored challenge"
+    },
+    {
+      "course": "festival-grounds-01",
+      "mode": "self-level",
+      "activity": null,
+      "label": "Authored challenge"
+    },
+    {
+      "course": "festival-grounds-02",
+      "mode": "self-level",
+      "activity": null,
+      "label": "Authored challenge"
+    },
+    {
+      "course": "festival-grounds-03",
+      "mode": "self-level",
+      "activity": null,
+      "label": "Authored challenge"
+    },
+    {
+      "course": "festival-grounds-04",
+      "mode": "self-level",
+      "activity": null,
+      "label": "Authored challenge"
+    },
+    {
+      "course": "festival-grounds-05",
+      "mode": "self-level",
+      "activity": null,
+      "label": "Authored challenge"
+    },
+    {
+      "course": "festival-grounds-06",
+      "mode": "self-level",
+      "activity": "follow",
+      "label": "Follow a subject"
+    },
+    {
+      "course": "festival-grounds-07",
+      "mode": "self-level",
+      "activity": "observe",
+      "label": "Observe a subject"
+    },
+    {
+      "course": "festival-grounds-08",
+      "mode": "self-level",
+      "activity": null,
+      "label": "Authored challenge"
+    },
+    {
+      "course": "festival-grounds-01",
+      "mode": "acro",
+      "activity": null,
+      "label": "Authored challenge"
+    },
+    {
+      "course": "festival-grounds-02",
+      "mode": "acro",
+      "activity": null,
+      "label": "Authored challenge"
+    },
+    {
+      "course": "festival-grounds-03",
+      "mode": "acro",
+      "activity": null,
+      "label": "Authored challenge"
+    },
+    {
+      "course": "festival-grounds-04",
+      "mode": "acro",
+      "activity": null,
+      "label": "Authored challenge"
+    },
+    {
+      "course": "festival-grounds-05",
+      "mode": "acro",
+      "activity": null,
+      "label": "Authored challenge"
+    },
+    {
+      "course": "festival-grounds-06",
+      "mode": "acro",
+      "activity": "follow",
+      "label": "Follow a subject"
+    },
+    {
+      "course": "festival-grounds-07",
+      "mode": "acro",
+      "activity": "observe",
+      "label": "Observe a subject"
+    },
+    {
+      "course": "festival-grounds-08",
+      "mode": "acro",
+      "activity": null,
+      "label": "Authored challenge"
+    }
+  ],
+  "builtinCount": 196,
+  "inputs": {
+    "count": 95,
+    "bytes": 16742258,
+    "reserve": 34958,
+    "differences": [
+      {
+        "path": "optional-practice/civilian-fpv/world-app.mjs",
+        "beforeBytes": 262294,
+        "bytes": 262914,
+        "sha256": "f1b2da5ba08792d316e3c71269d2c7dbcfaefce0b7bbc32e2177810c54edfdd2"
+      }
+    ]
+  },
+  "limitations": [
+    "Extracted actual host functions and filter predicate; this is source/data qualification, not native browser interaction or replay execution. Pack/proof bytes and runtime schemas are unchanged."
+  ]
+}
