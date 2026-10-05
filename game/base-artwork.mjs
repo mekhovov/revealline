@@ -2,12 +2,15 @@ import { validatePack } from './packs.mjs';
 import { campaignKey } from './library.mjs';
 import { required } from './data-json.mjs';
 
+
 /** Artwork uses the normal portable pack format, without changing the base
  * campaign's identity or installing a second playable copy of its levels. */
 export function resolveBaseArtwork(pack, campaign) {
   const checked = validatePack(pack);
   required(checked.valid, `Invalid base artwork: ${checked.errors.join('; ')}`);
   const source = pack.campaigns.find((item) => item.id === campaign.id);
+  if (!source && campaign.id !== 'first-signal')
+    return { visualOverrides: {}, levelVisuals: [] };
   required(source, 'Base artwork campaign is missing.');
   const owner = {
     ...source,
@@ -30,6 +33,7 @@ export function resolveBaseArtwork(pack, campaign) {
   return { visualOverrides: pack.visualOverrides, levelVisuals: pack.levelVisuals };
 }
 
+
 export async function loadBaseArtwork(
   campaign,
   {
@@ -42,3 +46,4 @@ export async function loadBaseArtwork(
   required(response.ok, `Base artwork is unavailable (${response.status}).`);
   return resolveBaseArtwork(await response.json(), campaign);
 }
+
