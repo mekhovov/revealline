@@ -121,7 +121,6 @@ export function createWorldAudio(options = {}) {
     if (
       preparingHumans ||
       !context?.decodeAudioData ||
-      options.getDestruction?.()?.brutal !== true ||
       options.getDestruction?.()?.vocals === false
     )
       return;
@@ -405,7 +404,10 @@ export function createWorldAudio(options = {}) {
       machine,
       brutal: options.getDestruction?.()?.brutal === true,
       vocals: options.getDestruction?.()?.vocals,
-      humanoid: actor?.type === 'humanoid' ? true : undefined,
+      // Patrols and sentries use the humanoid painter. Drones, hazards and
+      // vehicles must never inherit a human voice from the family fallback.
+      humanoid: event.humanoid ?? (actor ? ['patrol', 'sentry'].includes(actor.type) : undefined),
+      flesh: event.flesh,
     };
   }
 

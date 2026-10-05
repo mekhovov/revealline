@@ -8,6 +8,7 @@ import { createBoardFootprints } from '../couch/board-footprint.mjs';
 import { getSummary } from '../core/index.mjs';
 import { getCoopSummary } from '../coop/core.mjs';
 import { classicSnakeSummary } from '../snake/classic-core.mjs';
+import { classicTargetIdentity } from '../snake/classic-target-identity.mjs';
 import { arcadeActionCapabilities } from '../core/arcade-actions.mjs';
 import { createAudioMaster } from '../ui/audio-master.mjs';
 import { createAudioPreferences } from '../audio-preferences.mjs';
@@ -55,7 +56,7 @@ export function mountRoomUI({ getState, getSeat, canPlay, submit, pause, display
     audioPreferences = createAudioPreferences({ audioMaster }),
     sound = new Soundscape({ audioMaster, persistentMusic: true });
   sound.configure({ master: 1, music: 0, sfx: 0.7 });
-  sound.readDestruction = destruction.snapshot;
+  sound.setDestructionPreferences(() => encounter.snapshot());
   const reactions = attachContextualReactions({
     sound,
     container: $('room-reaction-caption'),
@@ -74,7 +75,11 @@ export function mountRoomUI({ getState, getSeat, canPlay, submit, pause, display
       );
     },
   });
-  const encounter = attachEncounterDisplayControls({ prefix: 'room-' });
+  const encounter = attachEncounterDisplayControls({
+    prefix: 'room-',
+    soundContainer: $('room-settings'),
+    destructionPreferences: destruction,
+  });
   const style = attachMenuStyleControls({ prefix: 'room-' });
   const toolDisplay = mountToolDisplay({ preferences: display });
   const labels = {
@@ -380,7 +385,11 @@ export function mountRoomUI({ getState, getSeat, canPlay, submit, pause, display
             sound.encounter(cue, {
               ...options,
               family: target.family ?? target.kind ?? event.actorFamily,
-              brutal: destruction.snapshot().brutal,
+              ...(event.type === 'target.caught'
+                ? classicTargetIdentity(target.kind ?? target.family, $('room-board').value)
+                : {}),
+              brutal: encounter.snapshot().brutal,
+              vocals: encounter.snapshot().vocals,
               closed: event.closed,
               pan: screenPan(target.x ?? 0, run.width ?? run.level.width, placement),
             });

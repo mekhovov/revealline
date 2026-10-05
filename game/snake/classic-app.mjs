@@ -21,6 +21,7 @@ import {
 import { createSignalReception } from '../ui/signal-reception.mjs';
 import { mountGlobalSettingsTools } from '../ui/global-settings-tools.mjs';
 import { attachMenuAudioSettings } from '../ui/menu-audio.mjs';
+import { attachDefeatSoundControls } from '../ui/defeat-sound-controls.mjs';
 import { mountGlobalSettings } from '../ui/global-settings-view.mjs';
 import { attachThemeFamilyControls } from '../ui/theme-family-controls.mjs';
 import {
@@ -285,6 +286,7 @@ const audioMaster = createAudioMaster(),
 const sound = new Soundscape({ audioMaster });
 const classicAudio = createClassicAudio(sound, {
   getDestruction: () => destruction.snapshot(),
+  getBoardStyle: () => boardStyle,
   presentation,
 });
 sound.configure({
@@ -2230,6 +2232,7 @@ globalThis.addEventListener('pagehide', (event) => {
     classicAudio.dispose();
     disposeTouch();
     touch.destroy();
+    snakeDefeatSoundControls.dispose();
   }
   save();
   const departingWriter = sessionWriter;
@@ -2516,6 +2519,13 @@ snakeSettingsView = mountModeSettings({
       $('snake-workshop').querySelector('.game-mode-destinations'),
     ],
   },
+});
+const snakeDefeatSoundControls = attachDefeatSoundControls({
+  document: doc,
+  window: globalThis,
+  container: snakeSettingsView.panels.audio,
+  prefix: 'snake-',
+  preferences: destruction,
 });
 attachThemeFamilyControls({
   document: doc,

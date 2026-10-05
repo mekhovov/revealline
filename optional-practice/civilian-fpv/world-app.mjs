@@ -1516,6 +1516,7 @@ export function mountWorldApp({
     document: doc,
     window: win,
     container: $('sim-flight-controls'),
+    soundContainer: $('sim-audio-mix'),
     storage,
     locale: () => locale,
   });
