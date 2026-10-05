@@ -57,6 +57,7 @@ export function createOverflightCommentator({ reactions = null, ...host } = {}) 
     upgraded = false,
     evolved = false,
     cleared = false,
+    rushReady = false,
     replaced = false;
   const context = () => ({
     attemptId: `overflight-${attempt}`,
@@ -69,7 +70,7 @@ export function createOverflightCommentator({ reactions = null, ...host } = {}) 
     owner = run;
     attempt++;
     last = '';
-    resultSent = upgraded = evolved = cleared = replaced = false;
+    resultSent = upgraded = evolved = cleared = rushReady = replaced = false;
     previousKills = run?.stats?.kills ?? 0;
     clearWindowTick = run?.tick ?? 0;
     clearWindowKills = 0;
@@ -112,6 +113,7 @@ export function createOverflightCommentator({ reactions = null, ...host } = {}) 
     // a missed milestone now; never replay its stale voice after danger passes.
     const danger =
       has('hit') ||
+      has('hunt-blocked') ||
       has('shield') ||
       has('warning') ||
       has('arrival') ||
@@ -129,7 +131,11 @@ export function createOverflightCommentator({ reactions = null, ...host } = {}) 
     }
     if (!cleared && clearWindowKills >= 18) {
       cleared = true;
-      mark('overflight.cleared');
+      mark(run.hunt ? 'overflight.hunt-cleared' : 'overflight.cleared');
+    }
+    if (!rushReady && has('rush-ready')) {
+      rushReady = true;
+      mark('overflight.hunt-rush');
     }
     if (!replaced && has('handoff')) {
       replaced = true;

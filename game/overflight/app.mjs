@@ -78,23 +78,58 @@ const doc = globalThis.document;
 const win = globalThis.window;
 const $ = (id) => doc.getElementById(id);
 const params = new URL(win.location.href).searchParams;
+// One native host owns both modes: lifecycle, input, rendering, settings and audio.
+const mode =
+  doc.documentElement.dataset.gameMode === 'overflight-hunt'
+    ? (await import('./raid-mode.mjs')).OVERFLIGHT_HUNT_MODE
+    : {
+        id: 'overflight',
+        name: { en: 'Overflight', uk: 'Проліт' },
+        defaultProject: DEFAULT_OVERFLIGHT_PROJECT,
+        compileProject: compileOverflightProject,
+        createProject: createOverflightProject,
+        createLibrary: createOverflightLibrary,
+        createPackage: createOverflightPackage,
+        exportPackage: exportOverflightPackage,
+        text: overflightText,
+        createRun: createOverflightRun,
+        start: startOverflight,
+        step: stepOverflight,
+        pause: pauseOverflight,
+        resume: resumeOverflight,
+        choose: chooseOverflightUpgrade,
+        reroll: rerollOverflightUpgrades,
+        summary: overflightSummary,
+        buildItems: overflightBuildItems,
+        createCard: createOverflightUpgradeCard,
+        encounterSets: ['front', 'crossing', 'mixed'],
+        studioPath: '../studio/overflight.html',
+        reviewBuilds: { ...QUALIFICATION_BUILDS, ...NO_PULSE_QUALIFICATION_BUILDS },
+        pilot: (run) => pilot(run, 'tight'),
+        selectCard,
+        previewRequest: overflightPreviewRequest,
+      };
+const records = mode.createRecords?.();
 if (['en', 'uk'].includes(params.get('lang'))) setLocale(params.get('lang'), { persist: false });
-const text = (key) => overflightText(getLocale(), key);
+const text = (key) => mode.text(getLocale(), key);
 const local = (value) => localizedOverflight(value, getLocale());
-const fixture = ['reference', 'stress'].includes(params.get('fixture'))
+const fixture = (mode.fixtures ?? ['reference', 'stress']).includes(params.get('fixture'))
   ? params.get('fixture')
   : null;
 const reviewBuild =
-  !fixture &&
-  Object.hasOwn(
-    { ...QUALIFICATION_BUILDS, ...NO_PULSE_QUALIFICATION_BUILDS },
-    params.get('reviewBuild'),
-  )
+  !fixture && Object.hasOwn(mode.reviewBuilds, params.get('reviewBuild'))
     ? params.get('reviewBuild')
     : null;
-const diagnostics = params.get('diagnostics') === '1' || !!fixture || !!reviewBuild;
+const diagnostics =
+  params.get('diagnostics') === '1' ||
+  params.get('benchmark') === '1' ||
+  !!fixture ||
+  !!reviewBuild;
 const benchmarkTrial =
-  fixture && ['1', '2', '3', 'soak'].includes(params.get('trial')) ? params.get('trial') : null;
+  (fixture || (mode.id === 'overflight-hunt' && params.get('benchmark') === '1')) &&
+  ['1', '2', '3', 'soak'].includes(params.get('trial'))
+    ? params.get('trial')
+    : null;
 const benchmarkProtocol = benchmarkTrial
   ? {
       warmupSeconds: 30,
@@ -103,9 +138,13 @@ const benchmarkProtocol = benchmarkTrial
       stopAtEnd: true,
     }
   : {};
-const review = createOverflightReviewPlayback({ build: reviewBuild, pilot, selectCard });
-const studio = params.get('studio') === 'overflight' && win.parent !== win;
-const OPTION_KEY = 'revealline.overflight.options.v1';
+const review = createOverflightReviewPlayback({
+  build: reviewBuild,
+  pilot: (run) => mode.pilot(run, reviewBuild),
+  selectCard: mode.selectCard,
+});
+const studio = params.get('studio') === mode.id && win.parent !== win;
+const OPTION_KEY = `revealline.${mode.id}.options.v1`;
 let options = { airframes: 3, slowResume: true, characterId: DEFAULT_OVERFLIGHT_CHARACTER };
 try {
   const saved = JSON.parse(win.localStorage.getItem(OPTION_KEY) ?? 'null');
@@ -130,8 +169,8 @@ const persistOptions = () => {
     /* Session-only preference. */
   }
 };
-let project = DEFAULT_OVERFLIGHT_PROJECT;
-let compiled = compileOverflightProject(project);
+let project = mode.defaultProject;
+let compiled = mode.compileProject(project);
 let seed = Number(params.get('seed'));
 if (!Number.isSafeInteger(seed) || seed < 1 || seed > 0xffffffff) seed = compiled.seed;
 let run = null,
@@ -150,7 +189,7 @@ let lastHUD = 0,
   lastMeasure = 0,
   lastFrame = null,
   offerKey = '',
-  hudBuildKey = '',
+  hudBuildKey = null,
   hudPulseCharge = null,
   library = null,
   music = null,
@@ -276,7 +315,7 @@ function updateShell() {
 }
 function pause({ menu = true } = {}) {
   if (!run || retired) return;
-  pauseOverflight(run);
+  mode.pause(run);
   releaseInput();
   sound.gameplayPaused = true;
   sound.pause();
@@ -299,11 +338,12 @@ function start() {
   if (run.phase === 'upgrade') return syncUpgrade();
   if (run.phase === 'ready') {
     if (run.airframes !== options.airframes || run.slowResume !== options.slowResume) {
-      run = createOverflightRun(compiled, { seed, ...options, fixture });
+      run = mode.createRun(compiled, { seed, ...options, fixture });
       run.appearance = preparationIdentity;
+      run.review = !!reviewBuild;
     }
-    startOverflight(run);
-  } else if (run.phase === 'paused') resumeOverflight(run);
+    mode.start(run);
+  } else if (run.phase === 'paused') mode.resume(run);
   else return;
   releaseInput();
   showStatus();
@@ -327,7 +367,7 @@ function formatTime(seconds) {
   return `${String(Math.floor(value / 60)).padStart(2, '0')}:${String(value % 60).padStart(2, '0')}`;
 }
 function moduleIcon(id) {
-  const slot = `pickup.module-${id}`;
+  const slot = `pickup.module-${mode.moduleIcons?.[id] ?? id}`;
   const canvas = doc.createElement('canvas');
   canvas.width = canvas.height = 16;
   canvas.className = 'overflight-module-icon';
@@ -345,7 +385,8 @@ function moduleIcon(id) {
 }
 function buildLabel() {
   return run
-    ? overflightBuildItems(run.build)
+    ? mode
+        .buildItems(run.build)
         .map((item) => `${local(item.title)} ${item.rank}`)
         .join(' · ')
     : '';
@@ -411,7 +452,7 @@ function updateHUD() {
     hudBuildKey = label;
     hudPulseCharge = null;
     $('hud-build').replaceChildren();
-    for (const item of overflightBuildItems(run.build)) {
+    for (const item of mode.buildItems(run.build)) {
       const badge = el('span', '', 'overflight-build-item');
       badge.append(moduleIcon(item.id), el('span', `${local(item.title)} ${item.rank}`));
       if (item.id === 'proximity-pulse') {
@@ -434,6 +475,10 @@ function updateHUD() {
     hudPulseCharge.dataset.ready = String(charge === 100);
   }
   const index = run.progression.choices;
+  if (mode.updateHUD) {
+    mode.updateHUD({ run, compiled, document: doc, text, local });
+    return;
+  }
   const thresholds = compiled.upgrades.thresholds;
   const previous = thresholds[index - 1] ?? 0;
   const next = thresholds[index] ?? previous;
@@ -479,7 +524,13 @@ function rewardToast(offer) {
   }, 2200);
 }
 function result() {
-  const summary = overflightSummary(run);
+  if (mode.renderResults) {
+    mode.renderResults({ run, document: doc, text, local, formatTime, moduleIcon, records });
+    updateShell();
+    shell.open('results');
+    return;
+  }
+  const summary = mode.summary(run);
   const won = run.phase === 'won';
   $('overflight-results').dataset.outcome = won ? 'won' : 'lost';
   $('result-title').textContent = text(won ? 'won' : 'lost');
@@ -508,7 +559,7 @@ function result() {
   ])
     if (achieved) $('result-milestones').append(el('span', `✓ ${text(label)}`));
   $('result-build').replaceChildren();
-  for (const item of overflightBuildItems(run.build)) {
+  for (const item of mode.buildItems(run.build)) {
     const badge = el('div', '', 'overflight-result-module');
     badge.append(
       moduleIcon(item.id),
@@ -531,7 +582,7 @@ function result() {
 function choose(id) {
   if (!run || run.phase !== 'upgrade') return;
   const offer = run.offers.find((entry) => entry.id === id);
-  if (chooseOverflightUpgrade(run, id) === false) return;
+  if (mode.choose(run, id) === false) return;
   releaseInput();
   offerKey = '';
   if (run.phase === 'upgrade') return syncUpgrade();
@@ -560,7 +611,7 @@ function syncUpgrade(force = false) {
     $('upgrade-cards').replaceChildren();
     for (const offer of run.offers ?? [])
       $('upgrade-cards').append(
-        createOverflightUpgradeCard({
+        mode.createCard({
           document: doc,
           offer,
           build: run.build,
@@ -569,6 +620,7 @@ function syncUpgrade(force = false) {
           reducedEffects: display.snapshot().effectiveReducedEffects,
           disabled: !!reviewBuild,
           moduleIcon,
+          paintSprite: renderer?.paintPreviewSprite,
           onChoose: choose,
         }),
       );
@@ -604,17 +656,18 @@ function transition() {
   }
 }
 async function prepare({ nextProject = project, nextSeed = seed, launch = false } = {}) {
-  const nextCompiled = compileOverflightProject(nextProject);
+  const nextCompiled = mode.compileProject(nextProject);
   if (!Number.isSafeInteger(nextSeed) || nextSeed < 1 || nextSeed > 0xffffffff)
     throw new TypeError('Invalid preview seed.');
   const ticket = ++epoch;
+  mode.resetPresentation?.();
   clipRecorder?.cancel();
   if (runtimeFailed) rendererOwner.invalidate();
   preparing = true;
   $('character-select').disabled = true;
   win.clearTimeout(rewardTimer);
   $('hud-reward').hidden = true;
-  if (run) pauseOverflight(run);
+  if (run) mode.pause(run);
   updateRecoveryControl();
   updateShell();
   releaseInput();
@@ -701,8 +754,9 @@ async function prepare({ nextProject = project, nextSeed = seed, launch = false 
     project = nextProject;
     compiled = nextCompiled;
     seed = nextSeed;
-    run = createOverflightRun(compiled, { seed, ...options, fixture });
+    run = mode.createRun(compiled, { seed, ...options, fixture });
     run.appearance = preparationIdentity;
+    run.review = !!reviewBuild;
     review.reset();
     audio.reset();
     commentator?.reset(run);
@@ -714,7 +768,7 @@ async function prepare({ nextProject = project, nextSeed = seed, launch = false 
     nextResourceSample = 0;
     lastPhase = null;
     offerKey = '';
-    hudBuildKey = '';
+    hudBuildKey = null;
     lastFrame = null;
     frames = [];
     simulation = [];
@@ -793,18 +847,30 @@ function readInput() {
 }
 function reviewIdentity() {
   return reviewBuild
-    ? { automated: true, build: reviewBuild, route: 'tight', inputHz: 10, upgradeDelayMs: 1500 }
+    ? {
+        automated: true,
+        build: reviewBuild,
+        route:
+          mode.id === 'overflight-hunt'
+            ? reviewBuild === 'objectives'
+              ? 'objectives'
+              : 'packs'
+            : 'tight',
+        inputHz: 10,
+        upgradeDelayMs: 1500,
+      }
     : null;
 }
 function sortieSummary() {
   return run
-    ? { ...overflightSummary(run), appearance: preparationIdentity, review: reviewIdentity() }
+    ? { ...mode.summary(run), appearance: preparationIdentity, review: reviewIdentity() }
     : null;
 }
 function measurement({ raw = false } = {}) {
   const rendererStats = renderer?.stats({ raw }) ?? null;
   return {
-    format: 'OverflightMeasurementsV1',
+    format:
+      mode.id === 'overflight-hunt' ? 'OverflightHuntMeasurementsV1' : 'OverflightMeasurementsV1',
     capturedAt: new Date().toISOString(),
     fixture,
     benchmarkTrial,
@@ -867,7 +933,11 @@ function onFrame(now) {
       steps = 0;
     clock.advance(now, active, (dt) => {
       const started = performance.now();
-      stepOverflight(run, review.input(run, input), dt);
+      mode.step(
+        run,
+        fixture && mode.fixtureInput ? mode.fixtureInput(run) : review.input(run, input),
+        dt,
+      );
       stepCPU += performance.now() - started;
       steps++;
       // Retire combat voices before the shared result motif/dialogue starts.
@@ -879,6 +949,8 @@ function onFrame(now) {
     });
     if (appearance) appearance.destruction = encounterDisplay.snapshot();
     renderer.present(run);
+    if ($('upgrade-dialog').open)
+      for (const card of $('upgrade-cards').children) card.paintPreview?.(now / 1000);
     if (benchmarkTrial && active && run.time >= nextResourceSample && !completedMeasurement) {
       resourceSamples.push({
         time: run.time,
@@ -962,6 +1034,7 @@ function refreshCopy() {
   for (const node of doc.querySelectorAll('[data-copy]'))
     node.textContent = text(node.dataset.copy);
   $('language').value = getLocale();
+  $('studio-link').href = destination(mode.studioPath);
   $('raw-metrics').setAttribute('aria-label', text('rawMeasurements'));
   shell?.setLocale(getLocale());
   $('fixture-description').textContent = fixture
@@ -969,8 +1042,9 @@ function refreshCopy() {
     : '';
   $('fixture-description').hidden = !fixture;
   for (const id of ['review-description', 'hud-review', 'result-review']) {
-    $(id).textContent = reviewLabel();
-    $(id).hidden = !reviewBuild;
+    const fixtureLabel = id === 'hud-review' && fixture ? `${text('fixture')}: ${fixture}` : '';
+    $(id).textContent = fixtureLabel || reviewLabel();
+    $(id).hidden = !reviewBuild && !fixtureLabel;
   }
   $('review-help').hidden = !reviewBuild;
   updateClip();
@@ -1005,7 +1079,7 @@ shell = mountModePlayShell({
   document: doc,
   mount: $('overflight-shell'),
   idPrefix: 'overflight',
-  modeName: { en: 'Overflight', uk: 'Проліт' },
+  modeName: mode.name,
   locale: getLocale(),
   wordmarkURL: new URL('../ui/art/identity/fpv-line/wordmark.png', import.meta.url).href,
   slots: Object.fromEntries(
@@ -1067,12 +1141,13 @@ commentator = createOverflightCommentator({
   getReduced: () => display.snapshot().effectiveReducedEffects,
   acquireGain: (settings) => music?.player.acquireGain(settings),
 });
+if (mode.installActions) mode.installActions({ document: doc, prepare, getSeed: () => seed });
 function renderMissions() {
   const root = $('overflight-mission-list');
   if (!root) return;
   root.replaceChildren();
-  for (const encounterSet of ['front', 'crossing', 'mixed']) {
-    const candidate = createOverflightProject({ encounterSet });
+  for (const encounterSet of mode.encounterSets) {
+    const candidate = mode.createProject({ encounterSet });
     const button = el('button', local(candidate.title));
     button.type = 'button';
     button.addEventListener('click', () => {
@@ -1103,8 +1178,8 @@ function renderMissions() {
     exportButton.setAttribute('aria-label', `${text('exportEncounter')} · ${local(entry.title)}`);
     exportButton.addEventListener('click', () => {
       downloadBlob(
-        exportOverflightPackage(createOverflightPackage(entry.project)),
-        `${entry.project.id}.overflight.json`,
+        mode.exportPackage(mode.createPackage(entry.project)),
+        `${entry.project.id}.${mode.id}.json`,
       );
     });
     const removeButton = el('button', text('removeLocalEncounter'));
@@ -1227,7 +1302,7 @@ for (const [id, event, fn] of [
     'reroll-upgrades',
     'click',
     () => {
-      if (run?.phase === 'upgrade' && rerollOverflightUpgrades(run)) {
+      if (run?.phase === 'upgrade' && mode.reroll(run)) {
         audio.update(run);
         offerKey = '';
         syncUpgrade();
@@ -1268,7 +1343,7 @@ listen(doc, 'visibilitychange', () => {
   }
 });
 listen($('studio-link'), 'click', () => {
-  $('studio-link').href = destination('../studio/overflight.html');
+  $('studio-link').href = destination(mode.studioPath);
 });
 listen($('render-host'), 'pointerdown', () => $('render-host').focus({ preventScroll: true }));
 listen($('test-graphics-recovery'), 'click', () => {
@@ -1373,14 +1448,14 @@ listen($('download-metrics'), 'click', () => {
 function acknowledge(type, values = {}) {
   if (studio)
     win.parent.postMessage(
-      { type: `overflight:${type}`, version: 1, ...values },
+      { type: `${mode.id}:${type}`, version: 1, ...values },
       win.location.origin,
     );
 }
 listen(win, 'message', async (event) => {
   const request =
     studio &&
-    overflightPreviewRequest(event, {
+    mode.previewRequest(event, {
       window: win,
       parent: win.parent,
       origin: win.location.origin,
@@ -1403,6 +1478,7 @@ listen(win, 'message', async (event) => {
 async function dispose() {
   if (retired) return;
   retired = true;
+  mode.resetPresentation?.();
   epoch++;
   clipRecorder?.dispose();
   win.clearTimeout(rewardTimer);
@@ -1431,6 +1507,7 @@ async function dispose() {
   theme.dispose();
   display.dispose();
   library?.dispose?.();
+  records?.dispose?.();
   delete win.RevealLineOverflight;
 }
 listen(win, 'pagehide', (event) => {
@@ -1466,12 +1543,12 @@ try {
     releaseInput();
     if (next.warning) showStatus(next.warning);
   });
-  library = createOverflightLibrary();
+  library = mode.createLibrary();
   await refreshMissions();
   if (params.has('community')) {
     const loaded = await library.load(params.get('community'));
     project = loaded.project ?? loaded;
-    compiled = compileOverflightProject(project);
+    compiled = mode.compileProject(project);
     seed = compiled.seed;
   }
   await prepare();
