@@ -1,0 +1,205 @@
+TAP version 13
+# Subtest: evolved Fan clears late pursuers only inside a deliberately overlapped pass, without pulse
+ok 1 - evolved Fan clears late pursuers only inside a deliberately overlapped pass, without pulse
+  ---
+  duration_ms: 11.641875
+  ...
+# Subtest: no-pulse policies reject pulse and the wrong support, even when no preferred draft remains
+ok 2 - no-pulse policies reject pulse and the wrong support, even when no preferred draft remains
+  ---
+  duration_ms: 3.697417
+  ...
+# Subtest: audit probes wait for two pulse ranks and only return ordinary inputs
+ok 3 - audit probes wait for two pulse ranks and only return ordinary inputs
+  ---
+  duration_ms: 2.353375
+  ...
+# Subtest: both primary branches have an earned no-pulse completion route and retain the intended support
+ok 4 - both primary branches have an earned no-pulse completion route and retain the intended support
+  ---
+  duration_ms: 4028.4885
+  ...
+# Subtest: fixed small-circle and wall input cannot turn early pulse ranks into a free sortie
+ok 5 - fixed small-circle and wall input cannot turn early pulse ranks into a free sortie
+  ---
+  duration_ms: 323.041333
+  ...
+# Subtest: explicit start, fixed ticks, paused upgrades, and confirm/boost release
+ok 6 - explicit start, fixed ticks, paused upgrades, and confirm/boost release
+  ---
+  duration_ms: 6.844459
+  ...
+# Subtest: approved primary payload keeps release distance, delay, radius and damage
+ok 7 - approved primary payload keeps release distance, delay, radius and damage
+  ---
+  duration_ms: 9.3715
+  ...
+# Subtest: movement normalizes diagonals, retains heading and uses approved boost values
+ok 8 - movement normalizes diagonals, retains heading and uses approved boost values
+  ---
+  duration_ms: 15.520042
+  ...
+# Subtest: dense area damage visits all 2500 candidates, rewards once and merges overflow XP
+ok 9 - dense area damage visits all 2500 candidates, rewards once and merges overflow XP
+  ---
+  duration_ms: 23.6315
+  ...
+# Subtest: area grid boundaries agree with brute-force circle oracle including oversized bodies
+ok 10 - area grid boundaries agree with brute-force circle oracle including oversized bodies
+  ---
+  duration_ms: 7.028709
+  ...
+# Subtest: three combat slots, one support, admitted modules and guaranteed evolution
+ok 11 - three combat slots, one support, admitted modules and guaranteed evolution
+  ---
+  duration_ms: 0.779667
+  ...
+# Subtest: queued choices stop at ten, rerolls stop at two, draft RNG does not change encounter RNG
+ok 12 - queued choices stop at ten, rerolls stop at two, draft RNG does not change encounter RNG
+  ---
+  duration_ms: 6.728667
+  ...
+# Subtest: arrival warning prevents contact and attack damage, contact is 20 with .75s protection
+ok 13 - arrival warning prevents contact and attack damage, contact is 20 with .75s protection
+  ---
+  duration_ms: 14.066375
+  ...
+# Subtest: priority attacks have at least one second warning, cap at two, cancel when owner dies
+ok 14 - priority attacks have at least one second warning, cap at two, cancel when owner dies
+  ---
+  duration_ms: 12.70925
+  ...
+# Subtest: sprinter telegraphs for one second, locks its burst heading, and preserves four-second travel
+ok 15 - sprinter telegraphs for one second, locks its burst heading, and preserves four-second travel
+  ---
+  duration_ms: 22.211125
+  ...
+# Subtest: courier and refuge rewards remain optional, exact-once and conserved through pickup overflow
+ok 16 - courier and refuge rewards remain optional, exact-once and conserved through pickup overflow
+  ---
+  duration_ms: 1.646834
+  ...
+# Subtest: radar support is bounded to eight sources, non-stacking, and cancels immediately on death
+ok 17 - radar support is bounded to eight sources, non-stacking, and cancels immediately on death
+  ---
+  duration_ms: 2.746
+  ...
+# Subtest: relay rally has a full warning, a bounded flank bias, and cancels on death without an extra attack
+ok 18 - relay rally has a full warning, a bounded flank bias, and cancels on death without an extra attack
+  ---
+  duration_ms: 8.387417
+  ...
+# Subtest: family behavior phases are deterministic and do not consume encounter or draft randomness
+ok 19 - family behavior phases are deterministic and do not consume encounter or draft randomness
+  ---
+  duration_ms: 69.41775
+  ...
+# Subtest: relay and radar within attack range never create aimed threats
+ok 20 - relay and radar within attack range never create aimed threats
+  ---
+  duration_ms: 17.877625
+  ...
+# Subtest: three-airframe replacement preserves build, world, XP and cooldown with safe protection
+ok 21 - three-airframe replacement preserves build, world, XP and cooldown with safe protection
+  ---
+  duration_ms: 2.923291
+  ...
+# Subtest: regular spawn expiry continues play and final death wins before hostile damage in the same tick
+ok 22 - regular spawn expiry continues play and final death wins before hostile damage in the same tick
+  ---
+  duration_ms: 12.598125
+  ...
+# Subtest: ordinary pursuit decisions stagger at 10Hz while every actor moves each fixed tick
+ok 23 - ordinary pursuit decisions stagger at 10Hz while every actor moves each fixed tick
+  ---
+  duration_ms: 2.473333
+  ...
+# Subtest: nonpiercing shots hit first collision surface rather than nearest center
+ok 24 - nonpiercing shots hit first collision surface rather than nearest center
+  ---
+  duration_ms: 2.43475
+  ...
+# Subtest: piercing shots hit all crossed bodies once and projectile pool exhaustion defers launch
+ok 25 - piercing shots hit all crossed bodies once and projectile pool exhaustion defers launch
+  ---
+  duration_ms: 5.200333
+  ...
+# Subtest: identical seeds, decisions and inputs produce identical simulation and summary
+ok 26 - identical seeds, decisions and inputs produce identical simulation and summary
+  ---
+  duration_ms: 94.829541
+  ...
+# Subtest: reference fixture simulates every actor for 1000 ticks with stable alive/visible counts
+ok 27 - reference fixture simulates every actor for 1000 ticks with stable alive/visible counts
+  ---
+  duration_ms: 333.305875
+  ...
+# Subtest: stress fixture simulates every actor for 1000 ticks with stable alive/visible counts
+ok 28 - stress fixture simulates every actor for 1000 ticks with stable alive/visible counts
+  ---
+  duration_ms: 470.709542
+  ...
+# Subtest: stationary slow fields persist at departure and reduce ordinary travel
+ok 29 - stationary slow fields persist at departure and reduce ordinary travel
+  ---
+  duration_ms: 8.598791
+  ...
+# Subtest: return pulse is a delayed second opportunity at the first pulse location
+ok 30 - return pulse is a delayed second opportunity at the first pulse location
+  ---
+  duration_ms: 14.516042
+  ...
+# Subtest: pulse charge comes from admitted flight, is consumed, and cannot refill against arena bounds or on upgrade
+ok 31 - pulse charge comes from admitted flight, is consumed, and cannot refill against arena bounds or on upgrade
+  ---
+  duration_ms: 14.925792
+  ...
+# Subtest: first pulse remains chip damage even at full flight charge, and every nearby enemy is affected
+ok 32 - first pulse remains chip damage even at full flight charge, and every nearby enemy is affected
+  ---
+  duration_ms: 8.871042
+  ...
+# Subtest: overlapping slow fields share one damage cadence and never multiply the slow
+ok 33 - overlapping slow fields share one damage cadence and never multiply the slow
+  ---
+  duration_ms: 3.846792
+  ...
+# Subtest: earning two or three pulse ranks cannot sustain stationary survival through the opening encounters
+ok 34 - earning two or three pulse ranks cannot sustain stationary survival through the opening encounters
+  ---
+  duration_ms: 732.71925
+  ...
+# Subtest: scanner prioritizes machinery, increases marked damage and caps chain to three targets
+ok 35 - scanner prioritizes machinery, increases marked damage and caps chain to three targets
+  ---
+  duration_ms: 2.926083
+  ...
+# Subtest: evolved shield uses boost departure pulse and recharges after absorbing one hit
+ok 36 - evolved shield uses boost departure pulse and recharges after absorbing one hit
+  ---
+  duration_ms: 18.083083
+  ...
+# Subtest: fixture defeat recycling waits for the next movement/grid phase
+ok 37 - fixture defeat recycling waits for the next movement/grid phase
+  ---
+  duration_ms: 11.606583
+  ...
+# Subtest: reference fixture retains broad distinct silhouettes beyond fifteen simulated minutes
+ok 38 - reference fixture retains broad distinct silhouettes beyond fifteen simulated minutes
+  ---
+  duration_ms: 14879.664708
+  ...
+# Subtest: stress fixture retains broad distinct silhouettes beyond fifteen simulated minutes
+ok 39 - stress fixture retains broad distinct silhouettes beyond fifteen simulated minutes
+  ---
+  duration_ms: 26059.069209
+  ...
+1..39
+# tests 39
+# suites 0
+# pass 39
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 43087.466584
