@@ -264,6 +264,7 @@ export function updateCombatPatrols(state) {
     if (
       actor.phase === 'cooldown' &&
       updatePursuitHeading({
+        version: state.level.pursuit?.version,
         actor,
         policy: pursuitPolicy(state.level, actor.id),
         actors: combat.actors,

@@ -1,0 +1,27 @@
+{
+  "baseline": "f3764070e22f0b33b63fd0f7434690fa7455dc64",
+  "unchangedFiles": [
+    "game/communities/coupa/index.html",
+    "game/communities/droneaid-community/index.html",
+    "game/communities/droneaid/index.html",
+    "game/communities/fpv-learning/index.html",
+    "game/communities/index.html",
+    "game/communities/social-drone-ua/index.html",
+    "game/communities/ukraine-culture/index.html",
+    "game/communities/victory-drones/index.html",
+    "game/community/index.html",
+    "game/community/moderation.html",
+    "game/creator/player.html",
+    "game/creator/team.html",
+    "game/presentation/combat-review.html",
+    "game/presentation/journey-actor-review.html",
+    "game/test/fpv-world-content.test.mjs",
+    "game/test/manual/edition-package-check.mjs",
+    "game/test/workshop-art-integration.test.mjs",
+    "game/ui/demo-picture.mjs",
+    "scripts/default-runtime-metadata.mjs",
+    "scripts/test-fpv-content.mjs",
+    "scripts/test-main-pages-profile.mjs",
+    "site/index.html"
+  ]
+}

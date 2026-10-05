@@ -9,6 +9,7 @@ import { createRecorder, recordInput, exportReplay, authoritativeCheckpoint } fr
 import { createDifficultyContext } from '../campaign-difficulty.mjs';
 import { prepareCampaignVisualThemeContext } from '../presentation/visual-theme-identities.mjs';
 import { ACTOR_APPEARANCE_RELEASES } from '../presentation/actor-appearance-lease.mjs';
+import { pageActorArtPool } from '../presentation/actor-art-pool.mjs';
 import {
   exportReplayPresentation,
   MAX_REPLAY_PRESENTATION_BYTES,
@@ -104,6 +105,8 @@ async function page(
     board = $('board'),
     frames = new Map(),
     paints = [],
+    looks = [],
+    disposals = new Map(),
     previous = new Map(),
     reads = [];
   let textLoadAction = null,
@@ -191,8 +194,14 @@ async function page(
     beforeRequest: beforeActorRequest,
   });
   if (editionFixture) install('Image', { value: PNGImage, writable: true });
-  t.mock.method(BoardPainter.prototype, 'setLook', async () => {
+  t.mock.method(BoardPainter.prototype, 'setLook', async function () {
+    looks.push(this);
     if (holdLook) await holdLook();
+  });
+  const disposePainter = BoardPainter.prototype.dispose;
+  t.mock.method(BoardPainter.prototype, 'dispose', function () {
+    disposals.set(this, (disposals.get(this) ?? 0) + 1);
+    disposePainter.call(this);
   });
   t.mock.method(BoardPainter.prototype, 'draw', (_context, run, _dt, options) =>
     paints.push({
@@ -228,6 +237,9 @@ async function page(
     source,
     reads,
     transport,
+    looks,
+    disposalCount: (painter) => disposals.get(painter) ?? 0,
+    actorBudget: () => pageActorArtPool(doc).stats(),
     load(value) {
       $('replay-text').value = typeof value === 'string' ? value : JSON.stringify(value);
       const before = textLoadDispatches;
@@ -483,12 +495,15 @@ test('wrong owner, exact source, asset bytes and oversized inputs preserve accep
   assert(live.every((image) => image.closes === 1));
 });
 
-test('cancel, supersede and close release staged actors once without replacing the accepted snapshot', async (t) => {
+test('cancel, supersede and close release staged painter and shared actor leases without replacing the accepted snapshot', async (t) => {
   const p = await page(t);
   p.load(p.source);
   await p.loaded();
   const before = p.frame(),
-    live = [...p.transport.decoded];
+    live = [...p.transport.decoded],
+    budget = p.actorBudget(),
+    acceptedPainter = p.looks.at(-1);
+  assert.ok(budget.leases > 0);
   for (const action of ['cancel', 'supersede', 'close']) {
     let finishLook,
       entered = false;
@@ -505,14 +520,18 @@ test('cancel, supersede and close release staged actors once without replacing t
       () => entered,
       () => p.$('import-status').textContent,
     );
-    const staged = p.transport.decoded.slice(count);
-    assert(staged.length > 0);
-    assert(staged.every((image) => image.closes === 0));
+    const stagedPainter = p.looks.at(-1);
+    assert.notEqual(stagedPainter, acceptedPainter);
+    assert.equal(p.disposalCount(stagedPainter), 0);
+    assert.equal(p.transport.decoded.length, count, 'The identical artwork reuses page bitmaps.');
+    assert.equal(p.actorBudget().decodedBytes, budget.decodedBytes);
+    assert.ok(p.actorBudget().leases > budget.leases, 'The staged load owns separate leases.');
+    assert(live.every((image) => image.closes === 0));
     p.holdLook(null);
     if (action === 'cancel') p.$('cancel-load').emit('click');
     else if (action === 'supersede') p.load({ format: 'unsupported' });
     else p.win.emit('pagehide', { persisted: false });
-    assert(staged.every((image) => image.closes === 1));
+    assert.equal(p.disposalCount(stagedPainter), 1);
     finishLook();
     await delay(10);
     if (action !== 'close') {
@@ -521,10 +540,20 @@ test('cancel, supersede and close release staged actors once without replacing t
       assert.deepEqual(after.checkpoint, before.checkpoint);
       assert.equal(after.actorAppearance.snapshot, before.actorAppearance.snapshot);
       assert(live.every((image) => image.closes === 0));
+      assert.deepEqual(p.actorBudget(), budget, 'Only the staged leases are released.');
+      assert.equal(p.disposalCount(acceptedPainter), 0);
     }
-    assert(staged.every((image) => image.closes === 1));
+    assert.equal(p.disposalCount(stagedPainter), 1);
   }
   assert(live.every((image) => image.closes === 1));
+  assert.equal(p.disposalCount(acceptedPainter), 1);
+  assert.deepEqual(p.actorBudget(), {
+    ...budget,
+    reservedBytes: 0,
+    decodedBytes: 0,
+    entries: 0,
+    leases: 0,
+  });
 });
 
 test('actual Solo Journey export loads in Theater with exact actors and completes/restarts the recorded input stream', async (t) => {

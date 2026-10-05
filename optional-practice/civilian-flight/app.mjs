@@ -497,7 +497,6 @@ export function mountCivilianPractice({ document: doc, window: win }) {
     disposed = true;
     menuNavigation.dispose();
     menuHint.remove();
-    playShell?.dispose();
     input.dispose();
     stopSound();
     audio.dispose();
@@ -506,6 +505,9 @@ export function mountCivilianPractice({ document: doc, window: win }) {
     win.cancelAnimationFrame(frame);
     win.removeEventListener('pagehide', pagehide);
     win.removeEventListener('orientationchange', pause);
+    // The shell owns reparented controls, including Sound. Retire their owners
+    // before removing the tree so teardown reaches every timer and listener.
+    playShell?.dispose();
   };
   const pagehide = (event) => {
     pause();

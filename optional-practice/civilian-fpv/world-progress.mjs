@@ -84,6 +84,7 @@ export function evaluateWorldResult(
         (state.hunt?.caught.length ?? 0) * 250,
     ),
     ...(state.hunt ? { catches: state.hunt.caught.length, huntFailure: state.hunt.failure } : {}),
+    ...(state.pursuit ? { bonusCatches: state.pursuit.bonusCaught.length } : {}),
     accuracy: state.shots ? Math.min(1, (state.hits ?? 0) / state.shots) : null,
     health: state.health ?? null,
     targets,

@@ -1,0 +1,1770 @@
+{
+  "format": "revealline-soldier-specimens.v1",
+  "artRevision": "industrial-roster-v3",
+  "families": 12,
+  "casts": 3,
+  "samples": [
+    {
+      "family": "lookout",
+      "cast": "tactical",
+      "size": 16,
+      "rectangle": {
+        "x": 4,
+        "y": 48,
+        "width": 16,
+        "height": 16
+      },
+      "rgbaSha256": "1026587d2207ed6a892ce6ecd919947db5ac8865a4447c74e4bd5481b7809ffc"
+    },
+    {
+      "family": "lookout",
+      "cast": "tactical",
+      "size": 24,
+      "rectangle": {
+        "x": 26,
+        "y": 44,
+        "width": 24,
+        "height": 24
+      },
+      "rgbaSha256": "38a4102038f8cef883f6987ff953bbc20eaedcc1b4811bcd67d07a7cbd067c35"
+    },
+    {
+      "family": "lookout",
+      "cast": "tactical",
+      "size": 32,
+      "rectangle": {
+        "x": 56,
+        "y": 40,
+        "width": 32,
+        "height": 32
+      },
+      "rgbaSha256": "f5a0abfa8edabbc80d438f9c6f5001837a332765479ebd88c776aa4eaadc9163"
+    },
+    {
+      "family": "lookout",
+      "cast": "tactical",
+      "size": 96,
+      "rectangle": {
+        "x": 94,
+        "y": 8,
+        "width": 96,
+        "height": 96
+      },
+      "rgbaSha256": "4c6358a50d4a805adb4621cd91775a2df7c3199c7e62733030f63b076603cb64"
+    },
+    {
+      "family": "lookout",
+      "cast": "rivals",
+      "size": 16,
+      "rectangle": {
+        "x": 208,
+        "y": 48,
+        "width": 16,
+        "height": 16
+      },
+      "rgbaSha256": "2cc0791aa405d394c1767083d70e3b38e61ba8d8c5f87113b00654ce72639d07"
+    },
+    {
+      "family": "lookout",
+      "cast": "rivals",
+      "size": 24,
+      "rectangle": {
+        "x": 230,
+        "y": 44,
+        "width": 24,
+        "height": 24
+      },
+      "rgbaSha256": "13f7d6d7ee59d9844faf7ab7ba23ea6e58f62a7dd650091e8b5c172a2bebb7cc"
+    },
+    {
+      "family": "lookout",
+      "cast": "rivals",
+      "size": 32,
+      "rectangle": {
+        "x": 260,
+        "y": 40,
+        "width": 32,
+        "height": 32
+      },
+      "rgbaSha256": "7d520ec36605bab95b8e2ecc4e791eff732f6e9e844ddb0dd9d71cbce54ca071"
+    },
+    {
+      "family": "lookout",
+      "cast": "rivals",
+      "size": 96,
+      "rectangle": {
+        "x": 298,
+        "y": 8,
+        "width": 96,
+        "height": 96
+      },
+      "rgbaSha256": "18752ef94739f30db5d1ebdf6a5807e16a20d1e5f74b83c6a60ce8f97023c100"
+    },
+    {
+      "family": "lookout",
+      "cast": "arcade",
+      "size": 16,
+      "rectangle": {
+        "x": 412,
+        "y": 48,
+        "width": 16,
+        "height": 16
+      },
+      "rgbaSha256": "afb2b4cd84a431d64e1513cb380570fb50787c84e9e7c6f545fdd0d51d0e5696"
+    },
+    {
+      "family": "lookout",
+      "cast": "arcade",
+      "size": 24,
+      "rectangle": {
+        "x": 434,
+        "y": 44,
+        "width": 24,
+        "height": 24
+      },
+      "rgbaSha256": "537b06efbdbcfd634c6028414a78da62522c0d3e67685214002f538d60e9f4fa"
+    },
+    {
+      "family": "lookout",
+      "cast": "arcade",
+      "size": 32,
+      "rectangle": {
+        "x": 464,
+        "y": 40,
+        "width": 32,
+        "height": 32
+      },
+      "rgbaSha256": "0aecb0da4c613124ded881c85fb74fb89acde4400a23e47f44086bcf5a964d9f"
+    },
+    {
+      "family": "lookout",
+      "cast": "arcade",
+      "size": 96,
+      "rectangle": {
+        "x": 502,
+        "y": 8,
+        "width": 96,
+        "height": 96
+      },
+      "rgbaSha256": "5412606d6611339816e73e180b1e2fd170734b0fe312e5585d8e7befdfa7bda0"
+    },
+    {
+      "family": "patroller",
+      "cast": "tactical",
+      "size": 16,
+      "rectangle": {
+        "x": 4,
+        "y": 160,
+        "width": 16,
+        "height": 16
+      },
+      "rgbaSha256": "4a6525f410b2ec87c564364f3d52e1feebd9ca014144617dca59c5d3fdb88b58"
+    },
+    {
+      "family": "patroller",
+      "cast": "tactical",
+      "size": 24,
+      "rectangle": {
+        "x": 26,
+        "y": 156,
+        "width": 24,
+        "height": 24
+      },
+      "rgbaSha256": "9a76c8dfd0685b894e61250fb5927f24069882056a24994c9bc46e207fe0234b"
+    },
+    {
+      "family": "patroller",
+      "cast": "tactical",
+      "size": 32,
+      "rectangle": {
+        "x": 56,
+        "y": 152,
+        "width": 32,
+        "height": 32
+      },
+      "rgbaSha256": "5d0e396048a8ae21832345e713fa35928f3366ec978012901316b1495b5c121f"
+    },
+    {
+      "family": "patroller",
+      "cast": "tactical",
+      "size": 96,
+      "rectangle": {
+        "x": 94,
+        "y": 120,
+        "width": 96,
+        "height": 96
+      },
+      "rgbaSha256": "f778862e68a52e2c897685137095e2d1d8924cb69c7307ea5099cbdc1e03d167"
+    },
+    {
+      "family": "patroller",
+      "cast": "rivals",
+      "size": 16,
+      "rectangle": {
+        "x": 208,
+        "y": 160,
+        "width": 16,
+        "height": 16
+      },
+      "rgbaSha256": "d73a94a61d6b6df1ccb6886ec645e3e1be1e47445bf01fdd190f025cc126dedf"
+    },
+    {
+      "family": "patroller",
+      "cast": "rivals",
+      "size": 24,
+      "rectangle": {
+        "x": 230,
+        "y": 156,
+        "width": 24,
+        "height": 24
+      },
+      "rgbaSha256": "43cf90f9e633a14b3ba6a4e3a796ad1902bf5a526addfe540f5b702e2d8ea67a"
+    },
+    {
+      "family": "patroller",
+      "cast": "rivals",
+      "size": 32,
+      "rectangle": {
+        "x": 260,
+        "y": 152,
+        "width": 32,
+        "height": 32
+      },
+      "rgbaSha256": "470d68a826e791cb996eb4a331b39cdd9df6387bb4a175219d031ba2de5a88ba"
+    },
+    {
+      "family": "patroller",
+      "cast": "rivals",
+      "size": 96,
+      "rectangle": {
+        "x": 298,
+        "y": 120,
+        "width": 96,
+        "height": 96
+      },
+      "rgbaSha256": "9db0c7c27f085a8d71b8179329538e57f5247150dad6f5b7f248c66baa1ef4d6"
+    },
+    {
+      "family": "patroller",
+      "cast": "arcade",
+      "size": 16,
+      "rectangle": {
+        "x": 412,
+        "y": 160,
+        "width": 16,
+        "height": 16
+      },
+      "rgbaSha256": "8fa2a56c5c4cce70b0223992f55d2df0f93bb268f117f260a5305d9947ec22aa"
+    },
+    {
+      "family": "patroller",
+      "cast": "arcade",
+      "size": 24,
+      "rectangle": {
+        "x": 434,
+        "y": 156,
+        "width": 24,
+        "height": 24
+      },
+      "rgbaSha256": "bd7cd47c1ac07ec26d384e02b42d2162b2258b7fe505f97287343ea2d8b53608"
+    },
+    {
+      "family": "patroller",
+      "cast": "arcade",
+      "size": 32,
+      "rectangle": {
+        "x": 464,
+        "y": 152,
+        "width": 32,
+        "height": 32
+      },
+      "rgbaSha256": "7d2e134c54158ec4f85098ab68a74293defeec4209d1563384cf741cff398f67"
+    },
+    {
+      "family": "patroller",
+      "cast": "arcade",
+      "size": 96,
+      "rectangle": {
+        "x": 502,
+        "y": 120,
+        "width": 96,
+        "height": 96
+      },
+      "rgbaSha256": "d74829a5f2736b407d6bd58db7b07bc5c2b848c8be8a508abf6fd394febd9454"
+    },
+    {
+      "family": "runner",
+      "cast": "tactical",
+      "size": 16,
+      "rectangle": {
+        "x": 4,
+        "y": 272,
+        "width": 16,
+        "height": 16
+      },
+      "rgbaSha256": "53b2043f9c7f4c1cbf6f3683780f3b93cb3bab9ada28b21562eec8abfc5daee4"
+    },
+    {
+      "family": "runner",
+      "cast": "tactical",
+      "size": 24,
+      "rectangle": {
+        "x": 26,
+        "y": 268,
+        "width": 24,
+        "height": 24
+      },
+      "rgbaSha256": "59be0b5302aa036c95c139e965a4d9c07f8fe141cc003c514ebf8e2aec095258"
+    },
+    {
+      "family": "runner",
+      "cast": "tactical",
+      "size": 32,
+      "rectangle": {
+        "x": 56,
+        "y": 264,
+        "width": 32,
+        "height": 32
+      },
+      "rgbaSha256": "47a1de60d80085f6cc85e0fd31bad8020ad0d7ac4e867615882100df3e52a22c"
+    },
+    {
+      "family": "runner",
+      "cast": "tactical",
+      "size": 96,
+      "rectangle": {
+        "x": 94,
+        "y": 232,
+        "width": 96,
+        "height": 96
+      },
+      "rgbaSha256": "09eed0e9ae84a21d1a420ce07822f7229b2591399419f7e4895ba45bf569846a"
+    },
+    {
+      "family": "runner",
+      "cast": "rivals",
+      "size": 16,
+      "rectangle": {
+        "x": 208,
+        "y": 272,
+        "width": 16,
+        "height": 16
+      },
+      "rgbaSha256": "c0e4c195003f5c059b7f6a21838ab564723a5cb07266f1ed8be164ddbb43eeeb"
+    },
+    {
+      "family": "runner",
+      "cast": "rivals",
+      "size": 24,
+      "rectangle": {
+        "x": 230,
+        "y": 268,
+        "width": 24,
+        "height": 24
+      },
+      "rgbaSha256": "8c6d4facb5c791654b58451512c49b725340ff2bfc1576c847d783099357a2d8"
+    },
+    {
+      "family": "runner",
+      "cast": "rivals",
+      "size": 32,
+      "rectangle": {
+        "x": 260,
+        "y": 264,
+        "width": 32,
+        "height": 32
+      },
+      "rgbaSha256": "cdcada8ce44876196caecd4cf4d2bc0ce1346ac4cc6dd71dca4167832391356b"
+    },
+    {
+      "family": "runner",
+      "cast": "rivals",
+      "size": 96,
+      "rectangle": {
+        "x": 298,
+        "y": 232,
+        "width": 96,
+        "height": 96
+      },
+      "rgbaSha256": "2c0035ffb80819e1ca16ec4cb36acbf02e4759ace318a32a431d63493608bb9b"
+    },
+    {
+      "family": "runner",
+      "cast": "arcade",
+      "size": 16,
+      "rectangle": {
+        "x": 412,
+        "y": 272,
+        "width": 16,
+        "height": 16
+      },
+      "rgbaSha256": "5f79dd0b9ac691ae1fe578f5abc51da9f106def2bdf0c988a5f74642c9f808d9"
+    },
+    {
+      "family": "runner",
+      "cast": "arcade",
+      "size": 24,
+      "rectangle": {
+        "x": 434,
+        "y": 268,
+        "width": 24,
+        "height": 24
+      },
+      "rgbaSha256": "3a21d239de2860beabec89943a1ff45a1169556626f74cf72c1cf7ce4479ecf5"
+    },
+    {
+      "family": "runner",
+      "cast": "arcade",
+      "size": 32,
+      "rectangle": {
+        "x": 464,
+        "y": 264,
+        "width": 32,
+        "height": 32
+      },
+      "rgbaSha256": "30497e403972e7e8cc69133db9fb2ccd514c6204058164086a05c8ca7e1c69ec"
+    },
+    {
+      "family": "runner",
+      "cast": "arcade",
+      "size": 96,
+      "rectangle": {
+        "x": 502,
+        "y": 232,
+        "width": 96,
+        "height": 96
+      },
+      "rgbaSha256": "97e7c142cea90bd3c3611c6ee257060a5bbabc955ec521f0dcc17898c14f71ed"
+    },
+    {
+      "family": "sprinter",
+      "cast": "tactical",
+      "size": 16,
+      "rectangle": {
+        "x": 4,
+        "y": 384,
+        "width": 16,
+        "height": 16
+      },
+      "rgbaSha256": "47b43b9235970fdb6dfa578f7a55e7be61d5d30e0fd03b1a1dc095d830e2ec03"
+    },
+    {
+      "family": "sprinter",
+      "cast": "tactical",
+      "size": 24,
+      "rectangle": {
+        "x": 26,
+        "y": 380,
+        "width": 24,
+        "height": 24
+      },
+      "rgbaSha256": "199b95eb3d5d04bca0d277bcc705cd2f13a0aec8886b723a4b8faea5cc622843"
+    },
+    {
+      "family": "sprinter",
+      "cast": "tactical",
+      "size": 32,
+      "rectangle": {
+        "x": 56,
+        "y": 376,
+        "width": 32,
+        "height": 32
+      },
+      "rgbaSha256": "1c0eb7521a7915c0c79ba7683cf295695089091513feaf6157812e2177eff1d2"
+    },
+    {
+      "family": "sprinter",
+      "cast": "tactical",
+      "size": 96,
+      "rectangle": {
+        "x": 94,
+        "y": 344,
+        "width": 96,
+        "height": 96
+      },
+      "rgbaSha256": "cae3d54a2b39639c834f89a1c327a004dc3762b9fb11818450e4e9a45e19ee5d"
+    },
+    {
+      "family": "sprinter",
+      "cast": "rivals",
+      "size": 16,
+      "rectangle": {
+        "x": 208,
+        "y": 384,
+        "width": 16,
+        "height": 16
+      },
+      "rgbaSha256": "85715c28d76a46e0e1c40b7dd8b4e01e2bcd09b8ce886d4e5751556106ab536e"
+    },
+    {
+      "family": "sprinter",
+      "cast": "rivals",
+      "size": 24,
+      "rectangle": {
+        "x": 230,
+        "y": 380,
+        "width": 24,
+        "height": 24
+      },
+      "rgbaSha256": "be34f07a268f60b85fe72ae1dec4401b8be660d557e46461db08862a80d5fb1e"
+    },
+    {
+      "family": "sprinter",
+      "cast": "rivals",
+      "size": 32,
+      "rectangle": {
+        "x": 260,
+        "y": 376,
+        "width": 32,
+        "height": 32
+      },
+      "rgbaSha256": "1f67be06f5eec8baf6d783ca173adba0ee9d1c7a1fa3708762db70123b5045f8"
+    },
+    {
+      "family": "sprinter",
+      "cast": "rivals",
+      "size": 96,
+      "rectangle": {
+        "x": 298,
+        "y": 344,
+        "width": 96,
+        "height": 96
+      },
+      "rgbaSha256": "dc583b3207e86e3461aa0ff4fbf200d71124f88513915719958d75e3e26243f0"
+    },
+    {
+      "family": "sprinter",
+      "cast": "arcade",
+      "size": 16,
+      "rectangle": {
+        "x": 412,
+        "y": 384,
+        "width": 16,
+        "height": 16
+      },
+      "rgbaSha256": "36213c2c07dc5457a2a87861663bc078069e6baa6a96be8a6b79cc892e5fc203"
+    },
+    {
+      "family": "sprinter",
+      "cast": "arcade",
+      "size": 24,
+      "rectangle": {
+        "x": 434,
+        "y": 380,
+        "width": 24,
+        "height": 24
+      },
+      "rgbaSha256": "ea3dba6e5f013bb17b943a8a1726c26a0be491e76312c1fbc34b4ecef336da4c"
+    },
+    {
+      "family": "sprinter",
+      "cast": "arcade",
+      "size": 32,
+      "rectangle": {
+        "x": 464,
+        "y": 376,
+        "width": 32,
+        "height": 32
+      },
+      "rgbaSha256": "f2c841c132b7c1207b5f9cf845f2d1b37b61ed97c89ab5b607bf38cefdf55b37"
+    },
+    {
+      "family": "sprinter",
+      "cast": "arcade",
+      "size": 96,
+      "rectangle": {
+        "x": 502,
+        "y": 344,
+        "width": 96,
+        "height": 96
+      },
+      "rgbaSha256": "64e6374527139b6905e5a2550610d9b7c7fac4fe4d5c37bd4f995a8299a55b5e"
+    },
+    {
+      "family": "courier",
+      "cast": "tactical",
+      "size": 16,
+      "rectangle": {
+        "x": 4,
+        "y": 496,
+        "width": 16,
+        "height": 16
+      },
+      "rgbaSha256": "031bf776cfad65c5d39568ad9ebe71ba46341078ec35a7957a09f6834bce9b79"
+    },
+    {
+      "family": "courier",
+      "cast": "tactical",
+      "size": 24,
+      "rectangle": {
+        "x": 26,
+        "y": 492,
+        "width": 24,
+        "height": 24
+      },
+      "rgbaSha256": "b7c704967e043908da0067bb131d818be2b5e7608af93b9f2f4e3cff80c31163"
+    },
+    {
+      "family": "courier",
+      "cast": "tactical",
+      "size": 32,
+      "rectangle": {
+        "x": 56,
+        "y": 488,
+        "width": 32,
+        "height": 32
+      },
+      "rgbaSha256": "c941b729050a837fe71a287a6c6cbf403d195c69883d9f63b602cddd3ecd2efc"
+    },
+    {
+      "family": "courier",
+      "cast": "tactical",
+      "size": 96,
+      "rectangle": {
+        "x": 94,
+        "y": 456,
+        "width": 96,
+        "height": 96
+      },
+      "rgbaSha256": "564aade929554d17e7c98a5df6573eb4f7ce2af7cc1c24781c0f35eb30abf2ff"
+    },
+    {
+      "family": "courier",
+      "cast": "rivals",
+      "size": 16,
+      "rectangle": {
+        "x": 208,
+        "y": 496,
+        "width": 16,
+        "height": 16
+      },
+      "rgbaSha256": "272737f81eb16dfc3d7b3a26d8f909cf555b2b48ec0402e9c6e606a1a5fe98e5"
+    },
+    {
+      "family": "courier",
+      "cast": "rivals",
+      "size": 24,
+      "rectangle": {
+        "x": 230,
+        "y": 492,
+        "width": 24,
+        "height": 24
+      },
+      "rgbaSha256": "9a58f6d20e9e3e91fb781ad772f107b6851e3b86b70176acbb8177309201897b"
+    },
+    {
+      "family": "courier",
+      "cast": "rivals",
+      "size": 32,
+      "rectangle": {
+        "x": 260,
+        "y": 488,
+        "width": 32,
+        "height": 32
+      },
+      "rgbaSha256": "fc757d6baa50ce792b657ba3cea804b19103e2182ea5f3856e7e4b0169333290"
+    },
+    {
+      "family": "courier",
+      "cast": "rivals",
+      "size": 96,
+      "rectangle": {
+        "x": 298,
+        "y": 456,
+        "width": 96,
+        "height": 96
+      },
+      "rgbaSha256": "88663935a8c67ba7ed18a4e3339a6c427f099d96e241794b4783b400afb6100a"
+    },
+    {
+      "family": "courier",
+      "cast": "arcade",
+      "size": 16,
+      "rectangle": {
+        "x": 412,
+        "y": 496,
+        "width": 16,
+        "height": 16
+      },
+      "rgbaSha256": "bdb992a78b945a11c6913f3cbad2a7f2c61e1607903f9abf02a4606102ad9d10"
+    },
+    {
+      "family": "courier",
+      "cast": "arcade",
+      "size": 24,
+      "rectangle": {
+        "x": 434,
+        "y": 492,
+        "width": 24,
+        "height": 24
+      },
+      "rgbaSha256": "c7e16146a4ffabc82c87941e9d9837309908e419425a92de43498f5587e00d38"
+    },
+    {
+      "family": "courier",
+      "cast": "arcade",
+      "size": 32,
+      "rectangle": {
+        "x": 464,
+        "y": 488,
+        "width": 32,
+        "height": 32
+      },
+      "rgbaSha256": "8c0c4bc288aa5dee3260c7f8b09a75d1d1b9f4e5bcba1d54ca4d445966681591"
+    },
+    {
+      "family": "courier",
+      "cast": "arcade",
+      "size": 96,
+      "rectangle": {
+        "x": 502,
+        "y": 456,
+        "width": 96,
+        "height": 96
+      },
+      "rgbaSha256": "fa68413dcf3d3d7154f06f032613e146b580e2f457d9ae5566762c1ebccaedb3"
+    },
+    {
+      "family": "guard",
+      "cast": "tactical",
+      "size": 16,
+      "rectangle": {
+        "x": 4,
+        "y": 608,
+        "width": 16,
+        "height": 16
+      },
+      "rgbaSha256": "ef9952883dd7511f45910f3988faaffe52504046f5093676eb9c5013f8ffed95"
+    },
+    {
+      "family": "guard",
+      "cast": "tactical",
+      "size": 24,
+      "rectangle": {
+        "x": 26,
+        "y": 604,
+        "width": 24,
+        "height": 24
+      },
+      "rgbaSha256": "1815ec0c6c9beabb430c0f5ed5d3c7147ae7ab914d51c1f9419486f3f3b12864"
+    },
+    {
+      "family": "guard",
+      "cast": "tactical",
+      "size": 32,
+      "rectangle": {
+        "x": 56,
+        "y": 600,
+        "width": 32,
+        "height": 32
+      },
+      "rgbaSha256": "16380299fbfa98f078e7401d174ec8963123f6bf94f4f30a8e909c6f095beeaf"
+    },
+    {
+      "family": "guard",
+      "cast": "tactical",
+      "size": 96,
+      "rectangle": {
+        "x": 94,
+        "y": 568,
+        "width": 96,
+        "height": 96
+      },
+      "rgbaSha256": "99626430bd9051331bc3f1d685c4734ec2e44f7372b04d197aa124a584412d33"
+    },
+    {
+      "family": "guard",
+      "cast": "rivals",
+      "size": 16,
+      "rectangle": {
+        "x": 208,
+        "y": 608,
+        "width": 16,
+        "height": 16
+      },
+      "rgbaSha256": "231038f0c2a935d32323a4c26127a3c9b1261c10fac85c66643ff792b917707b"
+    },
+    {
+      "family": "guard",
+      "cast": "rivals",
+      "size": 24,
+      "rectangle": {
+        "x": 230,
+        "y": 604,
+        "width": 24,
+        "height": 24
+      },
+      "rgbaSha256": "970196684bc6ed7401003050d2373e3f6709ab3c4e531fc4bfbe2fac3a4b5225"
+    },
+    {
+      "family": "guard",
+      "cast": "rivals",
+      "size": 32,
+      "rectangle": {
+        "x": 260,
+        "y": 600,
+        "width": 32,
+        "height": 32
+      },
+      "rgbaSha256": "419590177a1ce408818b1825240659c2bcafe54bfeed5aca38eb30f8b1f35834"
+    },
+    {
+      "family": "guard",
+      "cast": "rivals",
+      "size": 96,
+      "rectangle": {
+        "x": 298,
+        "y": 568,
+        "width": 96,
+        "height": 96
+      },
+      "rgbaSha256": "3f18a4c28789c1a1b0bede5fada118116e0e3b8b4815561e5c86231f882fcee5"
+    },
+    {
+      "family": "guard",
+      "cast": "arcade",
+      "size": 16,
+      "rectangle": {
+        "x": 412,
+        "y": 608,
+        "width": 16,
+        "height": 16
+      },
+      "rgbaSha256": "b46fda603bc69e70da2c32a6f27b03bc9b61445abe7c05832266b9505a80e6c2"
+    },
+    {
+      "family": "guard",
+      "cast": "arcade",
+      "size": 24,
+      "rectangle": {
+        "x": 434,
+        "y": 604,
+        "width": 24,
+        "height": 24
+      },
+      "rgbaSha256": "3c8f2a739b0d5a720c536db15e3683e195cb036a5fed2971874bb32d7ae45c7f"
+    },
+    {
+      "family": "guard",
+      "cast": "arcade",
+      "size": 32,
+      "rectangle": {
+        "x": 464,
+        "y": 600,
+        "width": 32,
+        "height": 32
+      },
+      "rgbaSha256": "b6962c2c7dd811bbd966820eabc7575354a972e8f753f401ef0810c361fb9451"
+    },
+    {
+      "family": "guard",
+      "cast": "arcade",
+      "size": 96,
+      "rectangle": {
+        "x": 502,
+        "y": 568,
+        "width": 96,
+        "height": 96
+      },
+      "rgbaSha256": "8c77ac76e71ff6e846382e0d42aa0e20e44e8789c52cafc9069efac90e0f7485"
+    },
+    {
+      "family": "refuge-seeker",
+      "cast": "tactical",
+      "size": 16,
+      "rectangle": {
+        "x": 4,
+        "y": 720,
+        "width": 16,
+        "height": 16
+      },
+      "rgbaSha256": "2c809551c2915952f99aa9de75cac4bbc00e47074558d3e0e5a37e9c7074c02b"
+    },
+    {
+      "family": "refuge-seeker",
+      "cast": "tactical",
+      "size": 24,
+      "rectangle": {
+        "x": 26,
+        "y": 716,
+        "width": 24,
+        "height": 24
+      },
+      "rgbaSha256": "09dd787917961fbdd623527af1a391e3b3ecfdd1084b6b9ea5f1412e64d188c9"
+    },
+    {
+      "family": "refuge-seeker",
+      "cast": "tactical",
+      "size": 32,
+      "rectangle": {
+        "x": 56,
+        "y": 712,
+        "width": 32,
+        "height": 32
+      },
+      "rgbaSha256": "ee9a863f47552617edcf536c9c3de5aba6aa7aac8f0cf3aea75c8d8155794ae8"
+    },
+    {
+      "family": "refuge-seeker",
+      "cast": "tactical",
+      "size": 96,
+      "rectangle": {
+        "x": 94,
+        "y": 680,
+        "width": 96,
+        "height": 96
+      },
+      "rgbaSha256": "430cceb6df51354c4626e9b5d665055c2cffccd717c7e7d4cd09a3e06b009700"
+    },
+    {
+      "family": "refuge-seeker",
+      "cast": "rivals",
+      "size": 16,
+      "rectangle": {
+        "x": 208,
+        "y": 720,
+        "width": 16,
+        "height": 16
+      },
+      "rgbaSha256": "82397e0648072cdbe5a1f1d4b02a3a0b6a9ffbcb393bdfbea953df8a43af3e36"
+    },
+    {
+      "family": "refuge-seeker",
+      "cast": "rivals",
+      "size": 24,
+      "rectangle": {
+        "x": 230,
+        "y": 716,
+        "width": 24,
+        "height": 24
+      },
+      "rgbaSha256": "35ddf2c491fd7cb1e038206563134fd5cde27c0e64449601f79b2c86f2731de3"
+    },
+    {
+      "family": "refuge-seeker",
+      "cast": "rivals",
+      "size": 32,
+      "rectangle": {
+        "x": 260,
+        "y": 712,
+        "width": 32,
+        "height": 32
+      },
+      "rgbaSha256": "b2b8d4185249fa01ac7c2aebb6dbf9043432da66ae7f1c8d8b862d0a529eba81"
+    },
+    {
+      "family": "refuge-seeker",
+      "cast": "rivals",
+      "size": 96,
+      "rectangle": {
+        "x": 298,
+        "y": 680,
+        "width": 96,
+        "height": 96
+      },
+      "rgbaSha256": "c2bbb36716b90c1da18fe05f1dd5d8331bccad299ab0528f58f2c46a847849bf"
+    },
+    {
+      "family": "refuge-seeker",
+      "cast": "arcade",
+      "size": 16,
+      "rectangle": {
+        "x": 412,
+        "y": 720,
+        "width": 16,
+        "height": 16
+      },
+      "rgbaSha256": "f5db2c4df69c5c4f06c1d8f6a82c6ca585303a1eb829a82190379f549d439983"
+    },
+    {
+      "family": "refuge-seeker",
+      "cast": "arcade",
+      "size": 24,
+      "rectangle": {
+        "x": 434,
+        "y": 716,
+        "width": 24,
+        "height": 24
+      },
+      "rgbaSha256": "c9fad0ceda51ae57ed012852fbfe0a342baea4cee49628cc3a24dd42a6352461"
+    },
+    {
+      "family": "refuge-seeker",
+      "cast": "arcade",
+      "size": 32,
+      "rectangle": {
+        "x": 464,
+        "y": 712,
+        "width": 32,
+        "height": 32
+      },
+      "rgbaSha256": "e91fd6e20f4371a7dad828a63a3e4933ca6e59e6fb6f4ae8e3a4a19c79dd288c"
+    },
+    {
+      "family": "refuge-seeker",
+      "cast": "arcade",
+      "size": 96,
+      "rectangle": {
+        "x": 502,
+        "y": 680,
+        "width": 96,
+        "height": 96
+      },
+      "rgbaSha256": "0694c27955ae08ea30b0512a3998ed732659ab340657fdc37703c76adc972184"
+    },
+    {
+      "family": "switchback",
+      "cast": "tactical",
+      "size": 16,
+      "rectangle": {
+        "x": 4,
+        "y": 832,
+        "width": 16,
+        "height": 16
+      },
+      "rgbaSha256": "22200fd7c1ae6e2815b553fb9937bc0bb54ac5018aed0adacdeefed368fb735f"
+    },
+    {
+      "family": "switchback",
+      "cast": "tactical",
+      "size": 24,
+      "rectangle": {
+        "x": 26,
+        "y": 828,
+        "width": 24,
+        "height": 24
+      },
+      "rgbaSha256": "7a3f817e4df23ebdbc8226860231c52db061a16e7e14ff1fadd44e1ac83b310d"
+    },
+    {
+      "family": "switchback",
+      "cast": "tactical",
+      "size": 32,
+      "rectangle": {
+        "x": 56,
+        "y": 824,
+        "width": 32,
+        "height": 32
+      },
+      "rgbaSha256": "bd1e62085a2b1287b038c19644e3c0635f797baaccdd78391e7b16f2d6000253"
+    },
+    {
+      "family": "switchback",
+      "cast": "tactical",
+      "size": 96,
+      "rectangle": {
+        "x": 94,
+        "y": 792,
+        "width": 96,
+        "height": 96
+      },
+      "rgbaSha256": "102844b328d31ac00e6d61f551d9a5e5e811ab34803d77affc68d6bee9248a2c"
+    },
+    {
+      "family": "switchback",
+      "cast": "rivals",
+      "size": 16,
+      "rectangle": {
+        "x": 208,
+        "y": 832,
+        "width": 16,
+        "height": 16
+      },
+      "rgbaSha256": "cfa771a6433d09e56b5102ce4bd53fcb7aada20fb045cb76f2d58ab07a916ed3"
+    },
+    {
+      "family": "switchback",
+      "cast": "rivals",
+      "size": 24,
+      "rectangle": {
+        "x": 230,
+        "y": 828,
+        "width": 24,
+        "height": 24
+      },
+      "rgbaSha256": "2878cd821f0dcc4a330a7077abe09e3ef29516985591d880565a2cca763cf13a"
+    },
+    {
+      "family": "switchback",
+      "cast": "rivals",
+      "size": 32,
+      "rectangle": {
+        "x": 260,
+        "y": 824,
+        "width": 32,
+        "height": 32
+      },
+      "rgbaSha256": "b219c2e7d1b428f4f70a6c52b155ada536c2ba8ca4d6b3ce0b4ca84b44576aef"
+    },
+    {
+      "family": "switchback",
+      "cast": "rivals",
+      "size": 96,
+      "rectangle": {
+        "x": 298,
+        "y": 792,
+        "width": 96,
+        "height": 96
+      },
+      "rgbaSha256": "e8d85c4aee0a178b2a163bd0911231699a0e75ea9912ef477d87bd083d30ea99"
+    },
+    {
+      "family": "switchback",
+      "cast": "arcade",
+      "size": 16,
+      "rectangle": {
+        "x": 412,
+        "y": 832,
+        "width": 16,
+        "height": 16
+      },
+      "rgbaSha256": "7c4a5cf64764befd84200f39ea925e0720c13f9b75f679157111b66a78123b2f"
+    },
+    {
+      "family": "switchback",
+      "cast": "arcade",
+      "size": 24,
+      "rectangle": {
+        "x": 434,
+        "y": 828,
+        "width": 24,
+        "height": 24
+      },
+      "rgbaSha256": "8d202df75afc255fbd4c42d537b9eba22f07e68811d732a65b7a761ccd022aa7"
+    },
+    {
+      "family": "switchback",
+      "cast": "arcade",
+      "size": 32,
+      "rectangle": {
+        "x": 464,
+        "y": 824,
+        "width": 32,
+        "height": 32
+      },
+      "rgbaSha256": "eb732e81413dba22f312c36caccf231e03723e145305ec241ab1626c7372e524"
+    },
+    {
+      "family": "switchback",
+      "cast": "arcade",
+      "size": 96,
+      "rectangle": {
+        "x": 502,
+        "y": 792,
+        "width": 96,
+        "height": 96
+      },
+      "rgbaSha256": "62b329c547cf1e7dc0a9b75a269d1d4286a623a0ccb148b045409ec5c655ef06"
+    },
+    {
+      "family": "rendezvous-pair",
+      "cast": "tactical",
+      "size": 16,
+      "rectangle": {
+        "x": 4,
+        "y": 944,
+        "width": 16,
+        "height": 16
+      },
+      "rgbaSha256": "ab336d0bd888c1cf7d0f00e71210af224a4531a6cf8398700a3979870ec11ce4"
+    },
+    {
+      "family": "rendezvous-pair",
+      "cast": "tactical",
+      "size": 24,
+      "rectangle": {
+        "x": 26,
+        "y": 940,
+        "width": 24,
+        "height": 24
+      },
+      "rgbaSha256": "0363ab61a2bed477ea5e033b9f50e40b8f7e6d5dece81518754752b8505d941c"
+    },
+    {
+      "family": "rendezvous-pair",
+      "cast": "tactical",
+      "size": 32,
+      "rectangle": {
+        "x": 56,
+        "y": 936,
+        "width": 32,
+        "height": 32
+      },
+      "rgbaSha256": "c13ef516abd9ca5b2abbab2a211a539b75bb5bff083c2dbb1858aa109d6c2bdc"
+    },
+    {
+      "family": "rendezvous-pair",
+      "cast": "tactical",
+      "size": 96,
+      "rectangle": {
+        "x": 94,
+        "y": 904,
+        "width": 96,
+        "height": 96
+      },
+      "rgbaSha256": "86fd3ef6585291c5e6c0d4ef1b44a5c4c4a0b9835d225f2f1dc1774a789053db"
+    },
+    {
+      "family": "rendezvous-pair",
+      "cast": "rivals",
+      "size": 16,
+      "rectangle": {
+        "x": 208,
+        "y": 944,
+        "width": 16,
+        "height": 16
+      },
+      "rgbaSha256": "180f88896ccac844a83904bb4fabaf3615d47a71e139929098b20b3f5bd9b68d"
+    },
+    {
+      "family": "rendezvous-pair",
+      "cast": "rivals",
+      "size": 24,
+      "rectangle": {
+        "x": 230,
+        "y": 940,
+        "width": 24,
+        "height": 24
+      },
+      "rgbaSha256": "3d72523a743ad40b3da8329abdf31f66c0952170b35f97d55eb7ee5403d6cbb7"
+    },
+    {
+      "family": "rendezvous-pair",
+      "cast": "rivals",
+      "size": 32,
+      "rectangle": {
+        "x": 260,
+        "y": 936,
+        "width": 32,
+        "height": 32
+      },
+      "rgbaSha256": "de7acfd053f8b43acd24586bea2bb659812b317c0842c9f2ab21ba36ce58fc2a"
+    },
+    {
+      "family": "rendezvous-pair",
+      "cast": "rivals",
+      "size": 96,
+      "rectangle": {
+        "x": 298,
+        "y": 904,
+        "width": 96,
+        "height": 96
+      },
+      "rgbaSha256": "83a8f2dc4b9a7ed4b9df54a48380e6651322e023f4e945efb223cf046d0a6ec6"
+    },
+    {
+      "family": "rendezvous-pair",
+      "cast": "arcade",
+      "size": 16,
+      "rectangle": {
+        "x": 412,
+        "y": 944,
+        "width": 16,
+        "height": 16
+      },
+      "rgbaSha256": "ad99deeaefc05a61b2b6e870ac4a0b1e833fb68377d58ac607bffe52bc8e1825"
+    },
+    {
+      "family": "rendezvous-pair",
+      "cast": "arcade",
+      "size": 24,
+      "rectangle": {
+        "x": 434,
+        "y": 940,
+        "width": 24,
+        "height": 24
+      },
+      "rgbaSha256": "78ae4dc8490594871204ad364be7f446614bff4437cf5b001ad9bcb3e96107a8"
+    },
+    {
+      "family": "rendezvous-pair",
+      "cast": "arcade",
+      "size": 32,
+      "rectangle": {
+        "x": 464,
+        "y": 936,
+        "width": 32,
+        "height": 32
+      },
+      "rgbaSha256": "d8b07db4ff2a72ee279b424f3a1e21ae92371e3e0f4c1fc673c6cce44b6f9a3d"
+    },
+    {
+      "family": "rendezvous-pair",
+      "cast": "arcade",
+      "size": 96,
+      "rectangle": {
+        "x": 502,
+        "y": 904,
+        "width": 96,
+        "height": 96
+      },
+      "rgbaSha256": "9500bb0d250fc8808025d54ef6645634814ec8ee65d929def02195a54e1c0979"
+    },
+    {
+      "family": "shield-bearer",
+      "cast": "tactical",
+      "size": 16,
+      "rectangle": {
+        "x": 4,
+        "y": 1056,
+        "width": 16,
+        "height": 16
+      },
+      "rgbaSha256": "e7aceed0c2e5e1ce144d5e38712456367cd33f36aab8510b7c35a7679908dbca"
+    },
+    {
+      "family": "shield-bearer",
+      "cast": "tactical",
+      "size": 24,
+      "rectangle": {
+        "x": 26,
+        "y": 1052,
+        "width": 24,
+        "height": 24
+      },
+      "rgbaSha256": "0817155fe41ae8c1222f867464b8484e943f0d219a6b51c13d2df68939a3983d"
+    },
+    {
+      "family": "shield-bearer",
+      "cast": "tactical",
+      "size": 32,
+      "rectangle": {
+        "x": 56,
+        "y": 1048,
+        "width": 32,
+        "height": 32
+      },
+      "rgbaSha256": "3191042b3782f913e3cd5a968cbd669b222307431dba3d66ffa8ba02d74426a7"
+    },
+    {
+      "family": "shield-bearer",
+      "cast": "tactical",
+      "size": 96,
+      "rectangle": {
+        "x": 94,
+        "y": 1016,
+        "width": 96,
+        "height": 96
+      },
+      "rgbaSha256": "378a863615ce9439edd0164d576a96bf9769675c0eb6375e2f6b4ff4b13be947"
+    },
+    {
+      "family": "shield-bearer",
+      "cast": "rivals",
+      "size": 16,
+      "rectangle": {
+        "x": 208,
+        "y": 1056,
+        "width": 16,
+        "height": 16
+      },
+      "rgbaSha256": "ff46eddf59c8ce0984474671ee5c9d030c58703bb333f4504e2a700395a54a19"
+    },
+    {
+      "family": "shield-bearer",
+      "cast": "rivals",
+      "size": 24,
+      "rectangle": {
+        "x": 230,
+        "y": 1052,
+        "width": 24,
+        "height": 24
+      },
+      "rgbaSha256": "6786159dd35273f646f7b5e941d181cb7e7bf1161a15192517355d21b97220d1"
+    },
+    {
+      "family": "shield-bearer",
+      "cast": "rivals",
+      "size": 32,
+      "rectangle": {
+        "x": 260,
+        "y": 1048,
+        "width": 32,
+        "height": 32
+      },
+      "rgbaSha256": "6083b4e14a041bddb94376e3b17d2f8c49a153f5f1f54b4ebc6308c2ebe59516"
+    },
+    {
+      "family": "shield-bearer",
+      "cast": "rivals",
+      "size": 96,
+      "rectangle": {
+        "x": 298,
+        "y": 1016,
+        "width": 96,
+        "height": 96
+      },
+      "rgbaSha256": "a4562fca8b1c5193e8ce95ee4fb29ca7a5f67a2bbc251c34fd7765cc7f3160c5"
+    },
+    {
+      "family": "shield-bearer",
+      "cast": "arcade",
+      "size": 16,
+      "rectangle": {
+        "x": 412,
+        "y": 1056,
+        "width": 16,
+        "height": 16
+      },
+      "rgbaSha256": "e2a4eea5c988818e5bfe2762a650ba0a97a331db057fe672ea07eeab1d931b10"
+    },
+    {
+      "family": "shield-bearer",
+      "cast": "arcade",
+      "size": 24,
+      "rectangle": {
+        "x": 434,
+        "y": 1052,
+        "width": 24,
+        "height": 24
+      },
+      "rgbaSha256": "ffb21a45674fc136401fdd152e7fef504336572e4f35a0a87561b19cc5df04cc"
+    },
+    {
+      "family": "shield-bearer",
+      "cast": "arcade",
+      "size": 32,
+      "rectangle": {
+        "x": 464,
+        "y": 1048,
+        "width": 32,
+        "height": 32
+      },
+      "rgbaSha256": "e6534dc75d4e5a31450d9f2bb1e188b33103bcadf1fb7580aebb3aea4fe24d2d"
+    },
+    {
+      "family": "shield-bearer",
+      "cast": "arcade",
+      "size": 96,
+      "rectangle": {
+        "x": 502,
+        "y": 1016,
+        "width": 96,
+        "height": 96
+      },
+      "rgbaSha256": "8271faf171a9003f3d59acefed11f7259adf976296c7c90c0cfcf47d96634e4d"
+    },
+    {
+      "family": "brace-trooper",
+      "cast": "tactical",
+      "size": 16,
+      "rectangle": {
+        "x": 4,
+        "y": 1168,
+        "width": 16,
+        "height": 16
+      },
+      "rgbaSha256": "e0158f42f922ab5f9c69252042460d978d3773cf17cda8409bef7e73bb6917bd"
+    },
+    {
+      "family": "brace-trooper",
+      "cast": "tactical",
+      "size": 24,
+      "rectangle": {
+        "x": 26,
+        "y": 1164,
+        "width": 24,
+        "height": 24
+      },
+      "rgbaSha256": "0e9932bec718578c9e7dcb36a67136f3a816a16c0292c72ae1e8855e7de02d17"
+    },
+    {
+      "family": "brace-trooper",
+      "cast": "tactical",
+      "size": 32,
+      "rectangle": {
+        "x": 56,
+        "y": 1160,
+        "width": 32,
+        "height": 32
+      },
+      "rgbaSha256": "2941f74d822de789b9b1829062dacb0962cc6d9008c01769babbbbcc4c89443c"
+    },
+    {
+      "family": "brace-trooper",
+      "cast": "tactical",
+      "size": 96,
+      "rectangle": {
+        "x": 94,
+        "y": 1128,
+        "width": 96,
+        "height": 96
+      },
+      "rgbaSha256": "c12253cf20602473858fd0c18a9124e4f862878c3d5c4c1a17a947b83eebabf0"
+    },
+    {
+      "family": "brace-trooper",
+      "cast": "rivals",
+      "size": 16,
+      "rectangle": {
+        "x": 208,
+        "y": 1168,
+        "width": 16,
+        "height": 16
+      },
+      "rgbaSha256": "3a7a91b4d50677d61a60a278b44705c307f5996a74422b41d79e773a724d6a6a"
+    },
+    {
+      "family": "brace-trooper",
+      "cast": "rivals",
+      "size": 24,
+      "rectangle": {
+        "x": 230,
+        "y": 1164,
+        "width": 24,
+        "height": 24
+      },
+      "rgbaSha256": "d739360b54d4519ac701cf6ce2f2b5363730c2ab13eb1d47894f344f1d0b76f0"
+    },
+    {
+      "family": "brace-trooper",
+      "cast": "rivals",
+      "size": 32,
+      "rectangle": {
+        "x": 260,
+        "y": 1160,
+        "width": 32,
+        "height": 32
+      },
+      "rgbaSha256": "954dd1b6bb47bb10b0b84a46c25ae7a8b457f86ab878ee4df709de78a8eb5bfb"
+    },
+    {
+      "family": "brace-trooper",
+      "cast": "rivals",
+      "size": 96,
+      "rectangle": {
+        "x": 298,
+        "y": 1128,
+        "width": 96,
+        "height": 96
+      },
+      "rgbaSha256": "78500c3bf188bf9005978419359ef66aa471e0751e52ade428ef518762208129"
+    },
+    {
+      "family": "brace-trooper",
+      "cast": "arcade",
+      "size": 16,
+      "rectangle": {
+        "x": 412,
+        "y": 1168,
+        "width": 16,
+        "height": 16
+      },
+      "rgbaSha256": "2985d34f692dbbd3822837b4d66cf7534f7ade0cabe7d0ebf07210299e85d404"
+    },
+    {
+      "family": "brace-trooper",
+      "cast": "arcade",
+      "size": 24,
+      "rectangle": {
+        "x": 434,
+        "y": 1164,
+        "width": 24,
+        "height": 24
+      },
+      "rgbaSha256": "4186adc155a16b295502caaad9968905c4c3dc1dec0481348a86cbb0b51413f0"
+    },
+    {
+      "family": "brace-trooper",
+      "cast": "arcade",
+      "size": 32,
+      "rectangle": {
+        "x": 464,
+        "y": 1160,
+        "width": 32,
+        "height": 32
+      },
+      "rgbaSha256": "794c8fb227b40627f37588d3d1b2ee6acd61c2626b4574264c2cbe9f4cb7e67a"
+    },
+    {
+      "family": "brace-trooper",
+      "cast": "arcade",
+      "size": 96,
+      "rectangle": {
+        "x": 502,
+        "y": 1128,
+        "width": 96,
+        "height": 96
+      },
+      "rgbaSha256": "14c7820cd3a804f0848f5492100a667f6bff81bec1526a5a44847152567bac92"
+    },
+    {
+      "family": "relay-warden",
+      "cast": "tactical",
+      "size": 16,
+      "rectangle": {
+        "x": 4,
+        "y": 1280,
+        "width": 16,
+        "height": 16
+      },
+      "rgbaSha256": "90ef677872ab23bd72437e5cedfde6d8ebaa17a29f077a29648f03bf5440b739"
+    },
+    {
+      "family": "relay-warden",
+      "cast": "tactical",
+      "size": 24,
+      "rectangle": {
+        "x": 26,
+        "y": 1276,
+        "width": 24,
+        "height": 24
+      },
+      "rgbaSha256": "65b42a37b306bc43dffb5ba805de21afcd908286ad8781ba6fb8f4ad69d2671d"
+    },
+    {
+      "family": "relay-warden",
+      "cast": "tactical",
+      "size": 32,
+      "rectangle": {
+        "x": 56,
+        "y": 1272,
+        "width": 32,
+        "height": 32
+      },
+      "rgbaSha256": "eda1b0cc10127013fd9f83e50b59d7294bd3005737652ceb8ae63fc3fb922d01"
+    },
+    {
+      "family": "relay-warden",
+      "cast": "tactical",
+      "size": 96,
+      "rectangle": {
+        "x": 94,
+        "y": 1240,
+        "width": 96,
+        "height": 96
+      },
+      "rgbaSha256": "cf499cea671e46a6413c1bda26d3c75b3e032cf408dff08492e4b9af8eb6e366"
+    },
+    {
+      "family": "relay-warden",
+      "cast": "rivals",
+      "size": 16,
+      "rectangle": {
+        "x": 208,
+        "y": 1280,
+        "width": 16,
+        "height": 16
+      },
+      "rgbaSha256": "04d96f5ec73757f7f6023735650b240c7c7dc1717a6c4b7680bb4b094e97b22c"
+    },
+    {
+      "family": "relay-warden",
+      "cast": "rivals",
+      "size": 24,
+      "rectangle": {
+        "x": 230,
+        "y": 1276,
+        "width": 24,
+        "height": 24
+      },
+      "rgbaSha256": "1c28fb39c994bbd29afb0db8160a5c0481fbd7ef8f715ec6601ab8bad7cb40db"
+    },
+    {
+      "family": "relay-warden",
+      "cast": "rivals",
+      "size": 32,
+      "rectangle": {
+        "x": 260,
+        "y": 1272,
+        "width": 32,
+        "height": 32
+      },
+      "rgbaSha256": "07a05bd74e368227da12d38da634f3aa219605e64137d09f566a5b0dfc598817"
+    },
+    {
+      "family": "relay-warden",
+      "cast": "rivals",
+      "size": 96,
+      "rectangle": {
+        "x": 298,
+        "y": 1240,
+        "width": 96,
+        "height": 96
+      },
+      "rgbaSha256": "519cee57e54131229d5010e86aded539f95dda61ff27481b4f1b5399380f8865"
+    },
+    {
+      "family": "relay-warden",
+      "cast": "arcade",
+      "size": 16,
+      "rectangle": {
+        "x": 412,
+        "y": 1280,
+        "width": 16,
+        "height": 16
+      },
+      "rgbaSha256": "cf7c09e7723d8247a0a35f37ce2ff98e42403ef17f27d212912bfc951ae31111"
+    },
+    {
+      "family": "relay-warden",
+      "cast": "arcade",
+      "size": 24,
+      "rectangle": {
+        "x": 434,
+        "y": 1276,
+        "width": 24,
+        "height": 24
+      },
+      "rgbaSha256": "212cc27b9bfe1aa6e0422c9d11fb041281a66650007b7a4cb217c2419aff0d33"
+    },
+    {
+      "family": "relay-warden",
+      "cast": "arcade",
+      "size": 32,
+      "rectangle": {
+        "x": 464,
+        "y": 1272,
+        "width": 32,
+        "height": 32
+      },
+      "rgbaSha256": "5a699acec64acd52b1ddba92e67c6d8a9c96c89e13a2b3aff7af2157c31c23c6"
+    },
+    {
+      "family": "relay-warden",
+      "cast": "arcade",
+      "size": 96,
+      "rectangle": {
+        "x": 502,
+        "y": 1240,
+        "width": 96,
+        "height": 96
+      },
+      "rgbaSha256": "245dd643dba4c9478b8de7314548a7e2a5be902efd81b1ebef84d45996b53baa"
+    }
+  ],
+  "sources": [
+    {
+      "path": "game/hunt/actor-art.mjs",
+      "sha256": "68f640400857a38e1e6a0a0d156895c7f168ae7bdd41036ee4aa9fad27fe5097"
+    },
+    {
+      "path": "game/hunt/actor-catalog.mjs",
+      "sha256": "c9acd0eea22d93cb210667797b8de81fc8995bdbfef2ae13e8d56c14b9972f8d"
+    },
+    {
+      "path": "game/presentation/actor-animation.mjs",
+      "sha256": "53ddaf069ed5da7bae3ab8ef6bf1284f38957ceb91f06315a489814cb2c06234"
+    },
+    {
+      "path": "scripts/produce-soldier-roster.mjs",
+      "sha256": "11b60fd8a52f95d483adb4e453ddd85c72a3d0a8cdfaec4c51a767bad76e52be"
+    }
+  ],
+  "assets": [
+    {
+      "path": "soldier-roster-v3.png",
+      "bytes": 29228,
+      "sha256": "2144926b77e07e92d94403b381192dbef2d344497869af547dbeca46d328e7b6",
+      "width": 612,
+      "height": 1344
+    },
+    {
+      "path": "soldier-roster-v3-animations.json",
+      "bytes": 62389,
+      "sha256": "3168eb1dca2c97db2a01d4f2f9065c0188e75b1932da7b424c1e051255a913de"
+    }
+  ],
+  "runtimeDecodedAtlasBytes": 0,
+  "scope": "Original procedural source specimens; no gameplay or default adoption. Actual native browser/device and human acceptance remain separate."
+}

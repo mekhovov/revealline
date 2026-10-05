@@ -183,6 +183,8 @@ export function combatView(run) {
       'xonix-core.v12': 'xonix-level.v11',
       'xonix-core.v13': 'xonix-level.v12',
       'xonix-core.v14': 'xonix-level.v13',
+      'xonix-core.v15': 'xonix-level.v14',
+      'xonix-core.v16': 'xonix-level.v15',
     };
     const ruleset = own(run, 'ruleset');
     check(
@@ -191,16 +193,22 @@ export function combatView(run) {
         pairs[ruleset] === own(level, 'version'),
       t('interface:unsupportedCombatPresentationSchemaPair'),
     );
-    const supplemental = ['xonix-core.v11', 'xonix-core.v13', 'xonix-core.v14'].includes(ruleset);
+    const supplemental = [
+      'xonix-core.v11',
+      'xonix-core.v13',
+      'xonix-core.v14',
+      'xonix-core.v15',
+      'xonix-core.v16',
+    ].includes(ruleset);
     const baseVersion = supplemental ? own(extension, 'baseVersion') : own(level, 'version');
     if (supplemental)
       check(
         (own(extension, 'version') === 'running-enemies.v1' &&
           /^xonix-level\.v[1-8]$/.test(baseVersion)) ||
-          (ruleset === 'xonix-core.v13' &&
+          (['xonix-core.v13', 'xonix-core.v15'].includes(ruleset) &&
             own(extension, 'version') === 'running-enemies.v2' &&
             baseVersion === 'xonix-level.v9') ||
-          (ruleset === 'xonix-core.v14' &&
+          (['xonix-core.v14', 'xonix-core.v16'].includes(ruleset) &&
             own(extension, 'version') === 'running-enemies.v3' &&
             baseVersion === 'xonix-level.v11'),
       );
@@ -255,7 +263,12 @@ export function combatView(run) {
             : ['cooldown', 'warning', 'recovery'].includes(phase)
           : phase === 'eliminated',
       );
-      const policy = ['xonix-core.v13', 'xonix-core.v14'].includes(ruleset)
+      const policy = [
+        'xonix-core.v13',
+        'xonix-core.v14',
+        'xonix-core.v15',
+        'xonix-core.v16',
+      ].includes(ruleset)
         ? dense(own(record(own(level, 'pursuit')), 'actors'), 6).find(
             (item) => own(record(item), 'id') === key,
           )
@@ -268,6 +281,20 @@ export function combatView(run) {
               : 'walking',
           }
         : null;
+      if (pursuit?.behavior === 'pair' && ['xonix-core.v15', 'xonix-core.v16'].includes(ruleset)) {
+        const native = own(source, 'pursuit');
+        if (native && own(record(native), 'partnerLost') === true) {
+          check(
+            own(native, 'behavior') === 'runner' &&
+              sourceActors.some(
+                (other) =>
+                  own(record(other), 'id') === own(policy, 'partnerId') &&
+                  own(other, 'alive') === false,
+              ),
+          );
+          pursuit.behavior = 'runner';
+        }
+      }
       const specialist = pursuit && ['shield', 'brace'].includes(pursuit.behavior);
       if (pursuit) {
         if (pursuit.behavior === 'pair') {
@@ -276,10 +303,19 @@ export function combatView(run) {
         }
         const phases = specialist
           ? ['walking', 'blocked', 'turning', 'rest', 'warning', 'burst']
-          : ['walking', 'committed', 'recovering', 'blocked'];
+          : [
+              'walking',
+              'committed',
+              'recovering',
+              'blocked',
+              ...(['xonix-core.v15', 'xonix-core.v16'].includes(ruleset)
+                ? ['idle', 'warning', 'burst', 'waiting', 'fallback']
+                : []),
+            ];
         check(
           [
             'runner',
+            ...(['xonix-core.v15', 'xonix-core.v16'].includes(ruleset) ? ['sprinter'] : []),
             'patroller',
             'courier',
             'refuge',
@@ -297,6 +333,15 @@ export function combatView(run) {
           check(integer(cursor));
           pursuit.cursor = cursor;
           pursuit.goal = goal == null ? null : point(record(goal), width);
+          if (['xonix-core.v15', 'xonix-core.v16'].includes(ruleset) && !specialist) {
+            pursuit.heading = own(nativeState, 'heading');
+            pursuit.nextHeading = own(nativeState, 'nextHeading');
+            check(['up', 'right', 'down', 'left'].includes(pursuit.heading));
+            check(
+              pursuit.nextHeading === null ||
+                ['up', 'right', 'down', 'left'].includes(pursuit.nextHeading),
+            );
+          }
         }
         if (specialist) {
           const state = record(own(source, 'pursuit'));
@@ -319,9 +364,12 @@ export function combatView(run) {
       const position = point(source, width),
         motion = velocity(
           source,
-          recipe.speed * (pursuit?.behavior === 'brace' && pursuit.phase === 'burst' ? 2 : 1),
+          recipe.speed *
+            (['brace', 'sprinter'].includes(pursuit?.behavior) && pursuit.phase === 'burst'
+              ? 2
+              : 1),
           !!pursuit,
-          !!specialist,
+          !!specialist || ['xonix-core.v15', 'xonix-core.v16'].includes(ruleset),
         );
       check(own(source, 'radius') === COMBAT_RADIUS);
       if (alive) check(fitsClassicDomain(domain, position, COMBAT_RADIUS, CELL.FIELD));
