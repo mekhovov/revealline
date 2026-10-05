@@ -1,5 +1,8 @@
 # Native browser review — 5 October 2026
 
+This page records the initial candidate before the later upgrade rebalance.
+Current card and balance evidence is in [the follow-up](upgrades-20261005/README.md).
+
 The reviewed source is bound in [browser-source.json](browser-source.json).
 The browser is the local Codex in-app Chromium on Apple M4 Pro/macOS 26.7.1.
 These observations do not qualify Iris Xe, M1 Air/Safari, physical gamepads or human enjoyment.

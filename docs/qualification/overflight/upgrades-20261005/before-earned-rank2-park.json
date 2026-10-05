@@ -1,0 +1,185 @@
+{
+  "format": "OverflightEarnedPulseBalanceV1",
+  "protocol": "One airframe, default front encounters, ordinary 10 Hz pilot until selected pulse rank, legal earned drafts throughout; park releases movement, move continues the same pilot.",
+  "injectedBuild": false,
+  "fixture": false,
+  "directStateWrites": false,
+  "mode": "park",
+  "wanted": 2,
+  "seed": 17031991,
+  "limit": 240,
+  "revision": "13241b30a2e9da7656f0278f7ffd4f3a6c78e432",
+  "sourceBindings": [
+    {
+      "path": "package.json",
+      "sha256": "f53e728f3f044062709c9c9154e73811c56994642c9dba0a2cf5400c442ff55a"
+    },
+    {
+      "path": "game/data-json.mjs",
+      "sha256": "9ce33d6173f3cba8587ed7a7f1924c66e9d9c86ffa59b37a743764ea0b01f7bd"
+    },
+    {
+      "path": "game/i18n/index.mjs",
+      "sha256": "29f40a6d92826ced1eb53283ed32e342ac6e95920abbf8d549f2d78e65b48d07"
+    },
+    {
+      "path": "game/i18n/catalogs.mjs",
+      "sha256": "2e4f2232cd6f7d0b5869f20733aacbc17c5c5200b801cf51e54baae5570fbfea"
+    },
+    {
+      "path": "game/i18n/bootstrap.mjs",
+      "sha256": "242e4791b2202d2644b91df5aa76355019890525af774ee2e795c937988b0395"
+    },
+    {
+      "path": "game/vendor/i18next-26.4.2.min.js",
+      "sha256": "eb0dd6d72e8f756b90faf864853af2a17870fe97b54473b7c34494870c65901c"
+    },
+    {
+      "path": "game/overflight/core.mjs",
+      "sha256": "6c754a7111b7bdeb3080de6bea9a2019b2e60dee97cb191bfcd2b781b51f7df8"
+    },
+    {
+      "path": "game/overflight/grid.mjs",
+      "sha256": "ef130a7f9594bff6af374fe252bb8aafdc7e86762bb8ef60107914654f21dd30"
+    },
+    {
+      "path": "game/overflight/project.mjs",
+      "sha256": "265d3b65111f54c0afc7ca6c0daa8d7a6ba018618de461a59b3003e934230c62"
+    },
+    {
+      "path": "game/overflight/review-pilot.mjs",
+      "sha256": "3391710682e438fb4353321097009fad91cb9ebbd8a15256bcae4f658bb4e263"
+    },
+    {
+      "path": "game/overflight/upgrades.mjs",
+      "sha256": "033bb6802dc52e77b3844b83d7f81cb2f841f5163275d52f0c6c924316d1dbe7"
+    }
+  ],
+  "outcome": "lost",
+  "time": 139.26666666666668,
+  "rankEarnedAt": 46.31666666666667,
+  "firstDamageAfterRank": 127.76666666666667,
+  "hullAtRank": 100,
+  "hull": 0,
+  "damageAfterRank": 100,
+  "kills": 645,
+  "xp": 186,
+  "build": {
+    "primary": {
+      "rank": 2,
+      "branch": "double",
+      "evolved": false
+    },
+    "combat": [
+      {
+        "id": "proximity-pulse",
+        "rank": 3
+      }
+    ],
+    "support": null,
+    "reinforcement": 0,
+    "repair": 0
+  },
+  "history": [
+    {
+      "id": "primary:double:2",
+      "time": 19.166666666666668,
+      "tick": 1150
+    },
+    {
+      "id": "proximity-pulse:1",
+      "time": 28.15,
+      "tick": 1689
+    },
+    {
+      "id": "proximity-pulse:2",
+      "time": 46.31666666666667,
+      "tick": 2779
+    },
+    {
+      "id": "proximity-pulse:3",
+      "time": 114.63333333333334,
+      "tick": 6878
+    }
+  ],
+  "samples": [
+    {
+      "time": 10,
+      "hull": 100,
+      "kills": 2,
+      "xp": 2
+    },
+    {
+      "time": 20,
+      "hull": 100,
+      "kills": 15,
+      "xp": 14
+    },
+    {
+      "time": 30,
+      "hull": 100,
+      "kills": 50,
+      "xp": 50
+    },
+    {
+      "time": 40,
+      "hull": 100,
+      "kills": 85,
+      "xp": 85
+    },
+    {
+      "time": 50,
+      "hull": 100,
+      "kills": 108,
+      "xp": 105
+    },
+    {
+      "time": 60,
+      "hull": 100,
+      "kills": 151,
+      "xp": 111
+    },
+    {
+      "time": 70,
+      "hull": 100,
+      "kills": 202,
+      "xp": 123
+    },
+    {
+      "time": 80,
+      "hull": 100,
+      "kills": 255,
+      "xp": 131
+    },
+    {
+      "time": 90,
+      "hull": 100,
+      "kills": 289,
+      "xp": 135
+    },
+    {
+      "time": 100,
+      "hull": 100,
+      "kills": 356,
+      "xp": 158
+    },
+    {
+      "time": 110,
+      "hull": 100,
+      "kills": 426,
+      "xp": 166
+    },
+    {
+      "time": 120,
+      "hull": 100,
+      "kills": 505,
+      "xp": 186
+    },
+    {
+      "time": 130,
+      "hull": 55,
+      "kills": 556,
+      "xp": 186
+    }
+  ]
+}
