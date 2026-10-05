@@ -557,6 +557,17 @@
     color: #9cb3b3;
     margin: 20px 0 0;
   }
+  .result-auto-next {
+    flex-basis: 100%;
+    width: fit-content;
+    margin: 14px 0 0;
+    padding: 7px 10px;
+    border: 1px solid color-mix(in srgb, var(--accent) 55%, transparent);
+    background: color-mix(in srgb, var(--accent) 10%, transparent);
+    color: #d8e9df;
+    font: 10px/1.4 var(--fk-font-mono, monospace);
+    letter-spacing: 0.35px;
+  }
   .landing-version {
     margin: 10px 0 0;
     color: var(--muted);
