@@ -1,0 +1,60 @@
+- link "Skip to flight selection":
+  - /url: "#explore"
+- button "Menu"
+- generic: FPV SIM · Worlds
+- button "Pause" [disabled]
+- status: Preparing flight…
+- dialog "FPV / LINE":
+  - heading "FPV / LINE" [level=1]:
+    - img "FPV / LINE"
+  - paragraph: FPV SIM · Worlds
+  - navigation "Choose game mode":
+    - navigation:
+      - link "Solo":
+        - /url: http://127.0.0.1:58606/player/game/?lang=en
+      - link "Versus":
+        - /url: http://127.0.0.1:58606/player/game/couch/?lang=en
+      - link "Team":
+        - /url: http://127.0.0.1:58606/player/game/couch/relay-rescue.html?lang=en
+      - button "FPV SIM"
+      - link "Snake":
+        - /url: http://127.0.0.1:58606/player/game/snake/play.html?lang=en
+  - paragraph: Lift and land
+  - navigation "Main menu":
+    - button "Start"
+    - button "Select Mission"
+    - button "Settings"
+    - button "Full screen"
+    - 'button "Sound: off"'
+- dialog "Select Mission":
+  - heading "Select Mission" [active] [level=1]
+  - navigation "Simulator":
+    - button "Fly"
+    - button "Learn to fly"
+    - button "My playlists"
+    - button "Workshop"
+    - button "Library"
+  - main:
+    - paragraph: TAKE IT WITH YOU
+    - heading "Library" [level=1]
+    - paragraph: Install portable worlds and back up your recorded flights.
+    - generic: Import .rlpack / editable project
+    - button "Back up flight records"
+    - generic: Import recordings / examples
+    - button "Prepare simulator offline"
+    - button "Request persistent storage"
+    - paragraph: Worlds and recordings are saved on this device. Export backups before clearing browser data.
+    - button "Browse optional worlds"
+    - status
+    - heading "Installed worlds" [level=2]
+    - strong: Festival Grounds
+    - generic: 8 challenges · 87baca276e17
+    - button "Edit"
+    - button "Export pack"
+    - button "Remove"
+    - generic "Recorded flights & recovery"
+    - status
+  - button "Back"
+  - button "Review mission"
+  - button "Expert options"
+  - paragraph: "Tab/arrows move; Enter selects; Esc goes back. Controller: release, then press/release A to connect. Calibrated radio: hold yaw right for 0.7 s, then centre to connect; roll/pitch move, hold yaw right/left then centre to confirm/go back."

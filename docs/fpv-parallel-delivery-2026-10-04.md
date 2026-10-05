@@ -29,6 +29,39 @@ pre-arm focus repair are merged; public entry and the intentionally empty Librar
 index were verified at `8e5ad71e9b791b7c16bae1cb308026ed3e18d5c2`. Warm-frame
 readiness #1084 is merged and publicly launched at
 `1a1a82d5e6617a53239218642eda3aa70e817fe3`. Public personal-best access #1086
+is merged at `5cde6dbc97c3067b6023d2bf7fd97fe251805347`; its public deployment
+has not yet been checked. Source-capacity preparation #1085 is merged at
+`5bd8f36d7767dcd9dda740865b4d8f19ddbe7c28`, recovering 41,026 original source
+bytes without a behavior or limit change. That main input set has 41,262 bytes
+of reserve; the separately qualified language fix leaves 41,157 bytes.
+
+The language/menu action-ownership fix is now qualified: 433 native source checks,
+283 exact admitted lifecycle checks, full validation, 16 existing checks and all
+three/two-identical package admissions. Its earlier failed run remains retained.
+Publication follows the normal capacity-only main bridge and protected checks;
+see [the exact evidence and boundaries](../authoring/fpv-worlds/language-phase/README.md).
+Next engineering work is the measured HUD/layout candidate under browser
+qualification, then continued integrated reliability. No hardware-FPS conclusion
+is drawn from these bounded observations.
+
+Reservoir's required coating runtime #1088 and qualified r16 content #1090 are
+merged. The retained bounded terrace, rooted-trunk and closed-hut observations,
+575 ordinary/replay checks and 304 imported-browser checks support that increment;
+they do not establish photoreal or hardware acceptance. Production Library
+registration and the final combined current-player journey remain separate.
+
+Festival now has eight authored r5 challenges: 616 ordinary/replay/archive checks
+across sixteen proofs and 311 historical `364fb78c3` admitted-browser checks with
+all sixteen complete Watch endpoints. Its current-main `21826c460` bridge has
+all 95 runtime inputs exact to separately admitted `0b54fd0fd`, plus 19 current
+parser/ZIP/record-import checks. Unmodified current-player cart/guide subject views,
+native guide completion and stopped-origin reload/Arm/resume/Pause have passed;
+an unexpected earlier pause is retained without attribution. Focused publication
+remains pending under the human main-merge hold. The accepted r3 art is a
+bounded gathering/surface/wayfinding checkpoint, not complete photoreal quality.
+Preserve the sequence Reservoir → Festival → Harbor → Canals → D6; Harbor and
+Canals have not started production. Earlier pending lists retain their historical
+scope where superseded here.
 and source-capacity preparation #1085 are merged and their public ancestry was
 verified by a native launch at `5bd8f36d7767dcd9dda740865b4d8f19ddbe7c28`.
 Settings showed the personal-best preference disabled with no eligible best;
@@ -138,23 +171,24 @@ Preserve the fixed flight integrator, existing proof versions and physics profil
 
 ## Parallel work and completion gates
 
-| Lane / priority                             | Deliverable                                                                          | Required completion evidence                                                                                                                                                                           | Then continue to                                                                  |
-| ------------------------------------------- | ------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | --------------------------------------------------------------------------------- |
-| Delivery — immediate                        | Finish current ready PR publication, verify deployment, and maintain this allocation | Current-head protected checks, permitted merge, public marker and actual player launch                                                                                                                 | Next verified focused PR; never wait on unchanged CI when independent work exists |
-| Performance — P0                            | Controlled current-player baseline and bounded fixes for reproduced stalls           | Exact input provenance, one visible native-clock player, cold/warm/course/quality observations, before/after comparison, unchanged replay/visibility contracts and package admission for runtime fixes | Representative natural/industrial scenes and longer-session qualification         |
-| Art/content — P1                            | Complete Festival after the accepted bounded Reservoir r16 scene gate                | Coherent scene and eight distinct route pairs, matching solid/support collision, final world freeze, sixteen full completion/replays, native import/editor/offline and public entry                    | Harbor Docks, then Old Town Canals, one complete world per PR                     |
-| Discovery — P1                              | Optional first-party worlds in Library                                               | Bounded immutable data catalogue, explicit download size/revision, cancel/retry, exact hash/native install, no partial activation, removal/recovery and honest runtime-offline status                  | Register each finished world after its publication; preserve earlier revisions    |
-| Player integration — P1                     | Complete touch/controller/radio and teaching journeys                                | EN/UK, small portrait/landscape and 1280×800 layouts, menu/flight ownership, arm/reset/pause, reconnect, settings restore, fullscreen fallback and unobstructed flight view                            | Repairs for reproduced issues, then retained D6 scenarios                         |
-| Reliability — P1 before broad world rollout | Combined creator/recording/recovery flow                                             | Multi-course/mode edit/reimport/export/reopen, exact dependency replay, rollback, interrupted/quota failures and preserved records                                                                     | Final integrated release candidate                                                |
-| D6 — final                                  | Deferred unit coverage and full regression                                           | Targeted new coverage, applicable required checks restored through the established process, resolved known diagnostics and explicit device/art limits                                                  | Stop recurring implementation when approved backlog is complete                   |
+| Lane / priority                             | Deliverable                                                                                   | Required completion evidence                                                                                                                                                                           | Then continue to                                                                  |
+| ------------------------------------------- | --------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | --------------------------------------------------------------------------------- |
+| Delivery — immediate                        | Finish current ready PR publication, verify deployment, and maintain this allocation          | Current-head protected checks, permitted merge, public marker and actual player launch                                                                                                                 | Next verified focused PR; never wait on unchanged CI when independent work exists |
+| Performance — P0                            | Controlled current-player baseline and bounded fixes for reproduced stalls                    | Exact input provenance, one visible native-clock player, cold/warm/course/quality observations, before/after comparison, unchanged replay/visibility contracts and package admission for runtime fixes | Representative natural/industrial scenes and longer-session qualification         |
+| Art/content — P1                            | Complete Festival Grounds after the accepted bounded Mountain Reservoir r16 scene checkpoint. | Coherent scene and eight distinct route pairs, matching solid/support collision, final world freeze, sixteen full completion/replays, native import/editor/offline and public entry                    | Harbor Docks, then Old Town Canals, one complete world per PR                     |
+| Discovery — P1                              | Optional first-party worlds in Library                                                        | Bounded immutable data catalogue, explicit download size/revision, cancel/retry, exact hash/native install, no partial activation, removal/recovery and honest runtime-offline status                  | Register each finished world after its publication; preserve earlier revisions    |
+| Player integration — P1                     | Complete touch/controller/radio and teaching journeys                                         | EN/UK, small portrait/landscape and 1280×800 layouts, menu/flight ownership, arm/reset/pause, reconnect, settings restore, fullscreen fallback and unobstructed flight view                            | Repairs for reproduced issues, then retained D6 scenarios                         |
+| Reliability — P1 before broad world rollout | Combined creator/recording/recovery flow                                                      | Multi-course/mode edit/reimport/export/reopen, exact dependency replay, rollback, interrupted/quota failures and preserved records                                                                     | Final integrated release candidate                                                |
+| D6 — final                                  | Deferred unit coverage and full regression                                                    | Targeted new coverage, applicable required checks restored through the established process, resolved known diagnostics and explicit device/art limits                                                  | Stop recurring implementation when approved backlog is complete                   |
 
 Performance, Library delivery and integrated reliability own the main engineering
 allocation. Small reproduced menu/input repairs belong to integrated reliability;
-do not open separate broad redesigns. Art/content has met the bounded Reservoir
-r16 scene gate and now completes the eight-course Festival candidate. Preserve
-the older Festival47f8e36e checkpoint as history. Finish Festival's native
-import/editor/offline checks and publication before Harbor, then Canals. D6
-follows those deliverables; functional verification continues throughout.
+do not open separate broad redesigns. After the accepted bounded Reservoir r16
+checkpoint, art/content is completing Festival. Preserve its earlier `47f8e36e`
+scene and rejected revisions as evidence. Complete Festival, Harbor and Canals
+sequentially, including each world's proofs, import/offline checks and publication,
+before starting the next. D6 follows those deliverables; functional verification
+continues throughout.
 
 Independent source/authoring work within that allocation proceeds concurrently.
 On this machine, heavy builds, proof generation and active-browser performance observations are serialized

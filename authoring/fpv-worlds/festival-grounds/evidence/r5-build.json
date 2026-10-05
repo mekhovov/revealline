@@ -1,0 +1,127 @@
+{
+  "format": "FPVFestivalWorldBuild.v1",
+  "stage": "Eight authored challenges; qualification is recorded separately against this exact pack",
+  "revision": "r5",
+  "source": {
+    "bytes": 1122416,
+    "sha256": "fe3ee76100ea7c62bd1fdcca7eabd3d9d560ff7a9f62932f62f5e6395a37eac8",
+    "triangles": 12284,
+    "materials": 12,
+    "nodes": 64,
+    "textures": 2,
+    "colliders": 47
+  },
+  "prepared": {
+    "bytes": 1121400,
+    "sha256": "e4ef61faebc4d4bc71d0ee62d13ad04ffd0b93196a5b61c69cf1ca8ba1c08db9",
+    "validatorErrors": 0
+  },
+  "pack": {
+    "bytes": 1256875,
+    "sha256": "87baca276e174f31ba19c02f4f2359c97affa07eefd4a5f4912b4d8664450f51",
+    "identity": "fpv-pack:87baca276e174f31ba19c02f4f2359c97affa07eefd4a5f4912b4d8664450f51"
+  },
+  "zip": {
+    "bytes": 1256934,
+    "sha256": "9eb3505f9b6a375198dae005506be4d55a96cc0730e6602e9e163b96cc172698"
+  },
+  "courses": [
+    {
+      "id": "festival-grounds-01",
+      "title": "Entry check-in",
+      "activity": "orientation",
+      "steps": {
+        "self-level": 5,
+        "acro": 5
+      },
+      "actors": 0
+    },
+    {
+      "id": "festival-grounds-02",
+      "title": "Main lawn loop",
+      "activity": "race",
+      "steps": {
+        "self-level": 7,
+        "acro": 7
+      },
+      "actors": 0
+    },
+    {
+      "id": "festival-grounds-03",
+      "title": "Market slalom",
+      "activity": "race",
+      "steps": {
+        "self-level": 10,
+        "acro": 10
+      },
+      "actors": 0
+    },
+    {
+      "id": "festival-grounds-04",
+      "title": "Stage-side sprint",
+      "activity": "race",
+      "steps": {
+        "self-level": 12,
+        "acro": 12
+      },
+      "actors": 0
+    },
+    {
+      "id": "festival-grounds-05",
+      "title": "Sound-desk landing",
+      "activity": "precision",
+      "steps": {
+        "self-level": 3,
+        "acro": 3
+      },
+      "actors": 0
+    },
+    {
+      "id": "festival-grounds-06",
+      "title": "Service cart escort",
+      "activity": "follow",
+      "steps": {
+        "self-level": 5,
+        "acro": 5
+      },
+      "actors": 1
+    },
+    {
+      "id": "festival-grounds-07",
+      "title": "Festival guide",
+      "activity": "observe",
+      "steps": {
+        "self-level": 4,
+        "acro": 4
+      },
+      "actors": 1
+    },
+    {
+      "id": "festival-grounds-08",
+      "title": "Grounds circuit",
+      "activity": "capstone",
+      "steps": {
+        "self-level": 12,
+        "acro": 12
+      },
+      "actors": 0
+    }
+  ],
+  "sourcePins": [
+    {
+      "path": "source/courses.mjs",
+      "bytes": 11199,
+      "sha256": "80b4633a6dc4b0822fc0604dc3969b961b1432fd3072595d3ea9a90d29fda9ea"
+    },
+    {
+      "path": "build-world.mjs",
+      "bytes": 7176,
+      "sha256": "723d016286447059ee948a4c180648c7d6aeec8a7c7e730ac23e11a4f9f2a7a8"
+    }
+  ],
+  "worldCount": 1,
+  "layoutCount": 8,
+  "acceptedArtBytesUnchanged": true,
+  "runtimeChanges": 0,
+  "limitsUnchanged": true
+}

@@ -1,0 +1,603 @@
+{
+  "format": "FPVFestivalGatheringQualification.v1",
+  "status": "passed",
+  "scope": "Serialized source/asset/collision contract; not art acceptance or flight completion",
+  "before": {
+    "bytes": 1110220,
+    "sha256": "4825f1d3a46e0780a7a471e8b8435db7226400899dd635c5ba499fd5ac9d743d"
+  },
+  "after": {
+    "bytes": 1122416,
+    "sha256": "fe3ee76100ea7c62bd1fdcca7eabd3d9d560ff7a9f62932f62f5e6395a37eac8"
+  },
+  "importedTriangles": 12284,
+  "addedTriangles": 112,
+  "colliders": 47,
+  "materialBatches": 12,
+  "originalMaps": 2,
+  "clearanceMillimetres": {
+    "tableToWestLaneEdge": 50,
+    "tableToBenchSeatEdge": 230,
+    "betweenPanelLegs": 2980,
+    "beneathTable": 780,
+    "westLaneWidth": 6000
+  },
+  "checks": [
+    {
+      "name": "Exact frozen r2 original GLB",
+      "passed": true
+    },
+    {
+      "name": "Default source generator retains r2 bytes",
+      "passed": true
+    },
+    {
+      "name": "Candidate generator reproduces serialized r3 bytes",
+      "passed": true
+    },
+    {
+      "name": "Unchanged 1.5MiB source ceiling",
+      "passed": true
+    },
+    {
+      "name": "materials exact",
+      "passed": true
+    },
+    {
+      "name": "textures exact",
+      "passed": true
+    },
+    {
+      "name": "samplers exact",
+      "passed": true
+    },
+    {
+      "name": "Exactly twelve existing imported mesh/material batches",
+      "passed": true
+    },
+    {
+      "name": "Original two maps only",
+      "passed": true
+    },
+    {
+      "name": "Original map0 exact encoded PNG bytes",
+      "passed": true
+    },
+    {
+      "name": "Original map1 exact encoded PNG bytes",
+      "passed": true
+    },
+    {
+      "name": "Every old mesh/anchor/collider node unchanged",
+      "passed": true
+    },
+    {
+      "name": "Only three new collider nodes",
+      "passed": true
+    },
+    {
+      "name": "gravel same primitive/material ownership",
+      "passed": true
+    },
+    {
+      "name": "gravel bounded append only",
+      "passed": true
+    },
+    {
+      "name": "gravel/NORMAL old serialized bytes retained",
+      "passed": true
+    },
+    {
+      "name": "gravel/NORMAL component contract retained",
+      "passed": true
+    },
+    {
+      "name": "gravel/POSITION old serialized bytes retained",
+      "passed": true
+    },
+    {
+      "name": "gravel/POSITION component contract retained",
+      "passed": true
+    },
+    {
+      "name": "gravel/TEXCOORD_0 old serialized bytes retained",
+      "passed": true
+    },
+    {
+      "name": "gravel/TEXCOORD_0 component contract retained",
+      "passed": true
+    },
+    {
+      "name": "gravel no undeclared new attributes",
+      "passed": true
+    },
+    {
+      "name": "Gravel tint compact normalized RGBA8",
+      "passed": true
+    },
+    {
+      "name": "All old gravel vertices retain opaque white",
+      "passed": true
+    },
+    {
+      "name": "New tint is subtle opaque luminance only",
+      "passed": true
+    },
+    {
+      "name": "gravel additions finite/nondegenerate/outward",
+      "passed": true
+    },
+    {
+      "name": "gravel additions stay within declared gathering/closed-wall regions",
+      "passed": true
+    },
+    {
+      "name": "paving same primitive/material ownership",
+      "passed": true
+    },
+    {
+      "name": "paving bounded append only",
+      "passed": true
+    },
+    {
+      "name": "paving/NORMAL old serialized bytes retained",
+      "passed": true
+    },
+    {
+      "name": "paving/NORMAL component contract retained",
+      "passed": true
+    },
+    {
+      "name": "paving/POSITION old serialized bytes retained",
+      "passed": true
+    },
+    {
+      "name": "paving/POSITION component contract retained",
+      "passed": true
+    },
+    {
+      "name": "paving/TEXCOORD_0 old serialized bytes retained",
+      "passed": true
+    },
+    {
+      "name": "paving/TEXCOORD_0 component contract retained",
+      "passed": true
+    },
+    {
+      "name": "paving no undeclared new attributes",
+      "passed": true
+    },
+    {
+      "name": "paving additions finite/nondegenerate/outward",
+      "passed": true
+    },
+    {
+      "name": "paving additions stay within declared gathering/closed-wall regions",
+      "passed": true
+    },
+    {
+      "name": "dark same primitive/material ownership",
+      "passed": true
+    },
+    {
+      "name": "dark bounded append only",
+      "passed": true
+    },
+    {
+      "name": "dark/NORMAL old serialized bytes retained",
+      "passed": true
+    },
+    {
+      "name": "dark/NORMAL component contract retained",
+      "passed": true
+    },
+    {
+      "name": "dark/POSITION old serialized bytes retained",
+      "passed": true
+    },
+    {
+      "name": "dark/POSITION component contract retained",
+      "passed": true
+    },
+    {
+      "name": "dark no undeclared new attributes",
+      "passed": true
+    },
+    {
+      "name": "dark additions finite/nondegenerate/outward",
+      "passed": true
+    },
+    {
+      "name": "dark additions stay within declared gathering/closed-wall regions",
+      "passed": true
+    },
+    {
+      "name": "timber same primitive/material ownership",
+      "passed": true
+    },
+    {
+      "name": "timber bounded append only",
+      "passed": true
+    },
+    {
+      "name": "timber/NORMAL old serialized bytes retained",
+      "passed": true
+    },
+    {
+      "name": "timber/NORMAL component contract retained",
+      "passed": true
+    },
+    {
+      "name": "timber/POSITION old serialized bytes retained",
+      "passed": true
+    },
+    {
+      "name": "timber/POSITION component contract retained",
+      "passed": true
+    },
+    {
+      "name": "timber/TEXCOORD_0 old serialized bytes retained",
+      "passed": true
+    },
+    {
+      "name": "timber/TEXCOORD_0 component contract retained",
+      "passed": true
+    },
+    {
+      "name": "timber no undeclared new attributes",
+      "passed": true
+    },
+    {
+      "name": "timber additions finite/nondegenerate/outward",
+      "passed": true
+    },
+    {
+      "name": "timber additions stay within declared gathering/closed-wall regions",
+      "passed": true
+    },
+    {
+      "name": "canvas same primitive/material ownership",
+      "passed": true
+    },
+    {
+      "name": "canvas bounded append only",
+      "passed": true
+    },
+    {
+      "name": "canvas/NORMAL old serialized bytes retained",
+      "passed": true
+    },
+    {
+      "name": "canvas/NORMAL component contract retained",
+      "passed": true
+    },
+    {
+      "name": "canvas/POSITION old serialized bytes retained",
+      "passed": true
+    },
+    {
+      "name": "canvas/POSITION component contract retained",
+      "passed": true
+    },
+    {
+      "name": "canvas/TEXCOORD_0 old serialized bytes retained",
+      "passed": true
+    },
+    {
+      "name": "canvas/TEXCOORD_0 component contract retained",
+      "passed": true
+    },
+    {
+      "name": "canvas no undeclared new attributes",
+      "passed": true
+    },
+    {
+      "name": "canvas additions finite/nondegenerate/outward",
+      "passed": true
+    },
+    {
+      "name": "canvas additions stay within declared gathering/closed-wall regions",
+      "passed": true
+    },
+    {
+      "name": "blue same primitive/material ownership",
+      "passed": true
+    },
+    {
+      "name": "blue bounded append only",
+      "passed": true
+    },
+    {
+      "name": "blue/NORMAL old serialized bytes retained",
+      "passed": true
+    },
+    {
+      "name": "blue/NORMAL component contract retained",
+      "passed": true
+    },
+    {
+      "name": "blue/POSITION old serialized bytes retained",
+      "passed": true
+    },
+    {
+      "name": "blue/POSITION component contract retained",
+      "passed": true
+    },
+    {
+      "name": "blue/TEXCOORD_0 old serialized bytes retained",
+      "passed": true
+    },
+    {
+      "name": "blue/TEXCOORD_0 component contract retained",
+      "passed": true
+    },
+    {
+      "name": "blue no undeclared new attributes",
+      "passed": true
+    },
+    {
+      "name": "blue additions finite/nondegenerate/outward",
+      "passed": true
+    },
+    {
+      "name": "blue additions stay within declared gathering/closed-wall regions",
+      "passed": true
+    },
+    {
+      "name": "ochre same primitive/material ownership",
+      "passed": true
+    },
+    {
+      "name": "ochre bounded append only",
+      "passed": true
+    },
+    {
+      "name": "ochre/NORMAL old serialized bytes retained",
+      "passed": true
+    },
+    {
+      "name": "ochre/NORMAL component contract retained",
+      "passed": true
+    },
+    {
+      "name": "ochre/POSITION old serialized bytes retained",
+      "passed": true
+    },
+    {
+      "name": "ochre/POSITION component contract retained",
+      "passed": true
+    },
+    {
+      "name": "ochre/TEXCOORD_0 old serialized bytes retained",
+      "passed": true
+    },
+    {
+      "name": "ochre/TEXCOORD_0 component contract retained",
+      "passed": true
+    },
+    {
+      "name": "ochre no undeclared new attributes",
+      "passed": true
+    },
+    {
+      "name": "ochre additions finite/nondegenerate/outward",
+      "passed": true
+    },
+    {
+      "name": "ochre additions stay within declared gathering/closed-wall regions",
+      "passed": true
+    },
+    {
+      "name": "metal same primitive/material ownership",
+      "passed": true
+    },
+    {
+      "name": "metal bounded append only",
+      "passed": true
+    },
+    {
+      "name": "metal/NORMAL old serialized bytes retained",
+      "passed": true
+    },
+    {
+      "name": "metal/NORMAL component contract retained",
+      "passed": true
+    },
+    {
+      "name": "metal/POSITION old serialized bytes retained",
+      "passed": true
+    },
+    {
+      "name": "metal/POSITION component contract retained",
+      "passed": true
+    },
+    {
+      "name": "metal no undeclared new attributes",
+      "passed": true
+    },
+    {
+      "name": "metal additions finite/nondegenerate/outward",
+      "passed": true
+    },
+    {
+      "name": "metal additions stay within declared gathering/closed-wall regions",
+      "passed": true
+    },
+    {
+      "name": "chalk same primitive/material ownership",
+      "passed": true
+    },
+    {
+      "name": "chalk bounded append only",
+      "passed": true
+    },
+    {
+      "name": "chalk/NORMAL old serialized bytes retained",
+      "passed": true
+    },
+    {
+      "name": "chalk/NORMAL component contract retained",
+      "passed": true
+    },
+    {
+      "name": "chalk/POSITION old serialized bytes retained",
+      "passed": true
+    },
+    {
+      "name": "chalk/POSITION component contract retained",
+      "passed": true
+    },
+    {
+      "name": "chalk no undeclared new attributes",
+      "passed": true
+    },
+    {
+      "name": "chalk additions finite/nondegenerate/outward",
+      "passed": true
+    },
+    {
+      "name": "chalk additions stay within declared gathering/closed-wall regions",
+      "passed": true
+    },
+    {
+      "name": "brick same primitive/material ownership",
+      "passed": true
+    },
+    {
+      "name": "brick bounded append only",
+      "passed": true
+    },
+    {
+      "name": "brick/NORMAL old serialized bytes retained",
+      "passed": true
+    },
+    {
+      "name": "brick/NORMAL component contract retained",
+      "passed": true
+    },
+    {
+      "name": "brick/POSITION old serialized bytes retained",
+      "passed": true
+    },
+    {
+      "name": "brick/POSITION component contract retained",
+      "passed": true
+    },
+    {
+      "name": "brick/TEXCOORD_0 old serialized bytes retained",
+      "passed": true
+    },
+    {
+      "name": "brick/TEXCOORD_0 component contract retained",
+      "passed": true
+    },
+    {
+      "name": "brick no undeclared new attributes",
+      "passed": true
+    },
+    {
+      "name": "brick additions finite/nondegenerate/outward",
+      "passed": true
+    },
+    {
+      "name": "brick additions stay within declared gathering/closed-wall regions",
+      "passed": true
+    },
+    {
+      "name": "leaves same primitive/material ownership",
+      "passed": true
+    },
+    {
+      "name": "leaves bounded append only",
+      "passed": true
+    },
+    {
+      "name": "leaves/NORMAL old serialized bytes retained",
+      "passed": true
+    },
+    {
+      "name": "leaves/NORMAL component contract retained",
+      "passed": true
+    },
+    {
+      "name": "leaves/POSITION old serialized bytes retained",
+      "passed": true
+    },
+    {
+      "name": "leaves/POSITION component contract retained",
+      "passed": true
+    },
+    {
+      "name": "leaves no undeclared new attributes",
+      "passed": true
+    },
+    {
+      "name": "leaves additions finite/nondegenerate/outward",
+      "passed": true
+    },
+    {
+      "name": "leaves additions stay within declared gathering/closed-wall regions",
+      "passed": true
+    },
+    {
+      "name": "leavesLight same primitive/material ownership",
+      "passed": true
+    },
+    {
+      "name": "leavesLight bounded append only",
+      "passed": true
+    },
+    {
+      "name": "leavesLight/NORMAL old serialized bytes retained",
+      "passed": true
+    },
+    {
+      "name": "leavesLight/NORMAL component contract retained",
+      "passed": true
+    },
+    {
+      "name": "leavesLight/POSITION old serialized bytes retained",
+      "passed": true
+    },
+    {
+      "name": "leavesLight/POSITION component contract retained",
+      "passed": true
+    },
+    {
+      "name": "leavesLight no undeclared new attributes",
+      "passed": true
+    },
+    {
+      "name": "leavesLight additions finite/nondegenerate/outward",
+      "passed": true
+    },
+    {
+      "name": "leavesLight additions stay within declared gathering/closed-wall regions",
+      "passed": true
+    },
+    {
+      "name": "Increment <=256 imported triangles",
+      "passed": true
+    },
+    {
+      "name": "Final imported geometry <=12428 triangles",
+      "passed": true
+    },
+    {
+      "name": "All44 old colliders unchanged and only3 table solids appended",
+      "passed": true
+    },
+    {
+      "name": "Three table collision envelopes exactly authored",
+      "passed": true
+    },
+    {
+      "name": "Existing routes/spawn/bounds/rules/actors unchanged",
+      "passed": true
+    },
+    {
+      "name": "Explicit r3 course/pack revision",
+      "passed": true
+    }
+  ]
+}
