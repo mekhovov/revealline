@@ -3824,3 +3824,48 @@ From main `cfa30a228eb25d2bc7e4dd6d76e417c0d76a6873`, branch `codex/fpv-learning
 Free-flight canonical-world selection and endless unscored operation are a separate dependent increment. Snake shared soundtrack controls are a separate independent increment. They remain separately reviewable; no old course/replay contract is rewritten. [The running-target audit](fpv-running-target-contact-audit.md) found eight valid moving-target catches replaying correctly; the next increment must clarify Contact Hunt versus pulse combat versus observation and treat momentum-preserving Hunt changes as versioned behavior.
 
 These changes are locally verified development work, not public live availability. Full frozen-source package admission remains pending sufficient temporary storage (3 GiB heavy-build floor; below 1 GiB observed). No protected checks, holds, source budgets or cleanup safeguards were relaxed. Continue focused publication, then target-action clarity/random selection/shared settings, accessible scenery revisions and the established Festival → Harbor → Canals → D6 sequence. Human art/device/novice acceptance stays explicitly unmeasured and does not block independent development.
+
+## 5 October — Shared graphical flight HUD
+
+Focused PR **#1110**, branch `codex/fpv-graphical-flight-hud`, is appended to native
+stack **#1106** after **#1104 → #1105**. Its implemented/frozen candidate is
+`3bbdc8dda7e1613fe4c2b838c40ffbbe9493f852`, based on exact parent
+`29646092ff152d4807e44522ff6f1e67ba7b79d9`. A following documentation-only
+fast-forward records qualification. No parent heads, stack targets, holds or
+required protections were altered. Public deployment is not claimed.
+
+Both SIM hosts replace their large numeric coach and duplicate telemetry with a
+shared compact target-band gauge, one correction and a runtime-earned progress
+ring. Exact conditions live behind safely paused Explain. Current target cues
+distinguish hold/landing, entry-side gates, tracking and Touch/Fire; hidden targets
+receive directional/obstructed guidance. Missing facts cannot earn success.
+Preferences, typed feedback and read-only legacy criterion facts preserve physics,
+recordings, scoring and identities. See `fpv-graphical-flight-hud.md`.
+
+All 58 School and 24 Academy demonstrations complete and replay unchanged:
+102,365 ticks per path, 65,309 eligibility comparisons and 484 transitions.
+The functional receipt contains 18 focused checks plus 3,336 EN/UK feedback cases;
+74 projection/legacy checks and 60 existing flight/UI/radio/replay tests pass.
+Browser review covers 390×844, 844×390 and 1280×800, EN/UK, touch, safe Explain,
+shared preferences and twenty theme options. Same-workload callback mean was
+0.089 ms versus old coach 0.108 ms; this is not an FPS/input-latency claim.
+
+Storage recovery removed only ten audited abandoned incomplete Git temporary
+packs (2,935,750,656 bytes), each checksum-invalid, unopened and unchanged during
+two checks. Valid packs, refs, source, registered worktrees and unique evidence
+were preserved. Free space stayed above 3 GiB for all qualification phases.
+All three frozen package admissions and two identical builds each passed, along
+with full Node22 validation and 53 existing offline/package checks.
+Exact admitted World/Academy prepared via their launchers and reloaded during a
+verified stopped-origin outage; Academy Explain returned paused and the full Acro
+tilt demonstration completed in World Studio without console warnings/errors.
+The local server was restored. Byte/hash receipts and screenshots are committed.
+
+#1110 remains Draft for coordinated parent publication and exact-head CI/reviews,
+not a remaining storage or package qualification failure. Parent Draft states
+were preserved. Next concrete delivery step: reconcile #1104/#1105 frozen
+qualification and current-main native stack ancestry with explicit recovery refs
+and remote-head leases where needed, then protected publication and actual public
+SIM launch. Additional unit coverage remains D6; physical-device/controller/novice
+acceptance and installed-app fullscreen are unclaimed. No scenery/physics/mission
+expansion was included in this HUD increment.
