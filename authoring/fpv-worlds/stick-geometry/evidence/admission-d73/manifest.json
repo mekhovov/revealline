@@ -1,0 +1,81 @@
+{
+  "format": "FPVStickGeometryAdmissionEvidence.v1",
+  "sourceRevision": "d73f573e492978fdbded369d4b009e78d644f296",
+  "sourceTree": "3cefcd32568f089a0f0508edc2a94ba3619c4c46",
+  "sourceInputs": 95,
+  "sourceBytes": 16742575,
+  "sourceReserve": 34641,
+  "committed95InputBytesIndependentlyVerified": true,
+  "runtimeCandidate": "34ddde3ed0416f0e90aae8170101bd6a6c8d08e2",
+  "runtimeUnchangedSinceSourceBrowser": true,
+  "validation": {
+    "full": "npm --logs-max=0 run validate",
+    "existing": "node --test game/test/fpv-radio-controls.test.mjs game/test/fpv-world-appearance-ui.test.mjs",
+    "existingPassed": 15,
+    "admission": "node scripts/bundle-optional-practice.mjs --out /private/tmp/fpv-stick-admission-d73f573e4 --packages civilian-flight,civilian-fpv,fpv-worlds",
+    "reproducibleBuilds": 2,
+    "sourceAndZIPChecksPassed": true
+  },
+  "archive": {
+    "path": "qualification.zip",
+    "bytes": 23593,
+    "sha256": "5ecac05aecb22d656ccf8ad0da00898f96ca1b309000e7a006a848105f88b3d0",
+    "roundtripVerified": true
+  },
+  "files": [
+    {
+      "path": "admission/optional-candidate-verification.json",
+      "bytes": 1142,
+      "sha256": "c6bd0b36ad3fba3e3c9bad5577d5d6a4594f7e2a7d208c1fbe6015bd025fb627"
+    },
+    {
+      "path": "admission/optional-checksums.json",
+      "bytes": 2136,
+      "sha256": "f30bc6164278e92154d8c4b737547234e0e91069b74f446aa5ced20223db2add"
+    },
+    {
+      "path": "admission/optional-packages.json",
+      "bytes": 2633,
+      "sha256": "809460fc66c9fc1dd71f878f55902cc7ec4c112d99a1f032cc350a6e826db2aa"
+    },
+    {
+      "path": "admission/source-inventory-optional-fpv-worlds.json",
+      "bytes": 32166,
+      "sha256": "1b0a3d93c52b6843e2b3b91ff669a874e2ad7eb253838f04d8529a36fd354262"
+    },
+    {
+      "path": "local/fpv-stick-admitted-player-d73f573e4.json",
+      "bytes": 43133,
+      "sha256": "237354e69956b0b5de28145b7969b561759264c17e840bbab1565efaf5b39832"
+    },
+    {
+      "path": "local/stage-fpv-stick-admitted-d73.mjs",
+      "bytes": 4829,
+      "sha256": "107b54a3fb0bc703ef2807cb2d46f6364262c5e063c03c5feac90761c7ede67d"
+    },
+    {
+      "path": "local/fpv-stick-materialize-d73.log",
+      "bytes": 327,
+      "sha256": "d620051a9198c92a8e0ed5c3aa26ab2802fae4bfd211f5fe571cd98d4e16e805"
+    },
+    {
+      "path": "local/fpv-stick-validate-d73.log",
+      "bytes": 3676,
+      "sha256": "31402988a94f83b18b55d31575a4fb00f8b7cf5191f6a0614effcf2070f8890f"
+    },
+    {
+      "path": "local/fpv-stick-existing-d73.log",
+      "bytes": 3923,
+      "sha256": "0a879813d360d33d88f945dfe467c82aa35183110afc6763bef5b3b37a296dc3"
+    },
+    {
+      "path": "local/fpv-stick-admission-d73.log",
+      "bytes": 412,
+      "sha256": "3cabb8a26440937d22db0a4aef279413a6c49b0d177e90356c544e0a2195d584"
+    }
+  ],
+  "limits": [
+    "Source-browser matrices remain tied to34dd with declared overlay; the exact admitted d73 native entry is a separate smoke.",
+    "No default full game build, new unit coverage, hardware/FPS, public deployment or offline acceptance is claimed."
+  ]
+}

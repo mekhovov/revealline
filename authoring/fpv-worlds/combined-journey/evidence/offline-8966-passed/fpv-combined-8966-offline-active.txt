@@ -1,0 +1,18 @@
+- link "Skip to flight selection":
+  - /url: "#explore"
+- dialog:
+  - banner:
+    - button "Menu"
+    - generic: FPV SIM · Worlds
+    - button "Pause"
+  - paragraph: Shoreline check-in
+  - generic: +
+  - generic: 0.5 m · 0 m/s · 33.5 s · ♥ 100
+  - strong: 1/4 · Hold position
+  - status: Flight active.
+  - generic "Yaw 0%, Throttle 0%":
+  - generic "Roll 0%, Pitch 0%":
+  - complementary "Drone response. vertical speed near zero. 0.5 m · +0.0 m/s vertical · 0.0 m/s drift":
+    - button "Hide drone response": ×
+    - status: Drone upright
+- status: Preparing flight…
