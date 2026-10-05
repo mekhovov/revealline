@@ -78,7 +78,7 @@ export const OVERFLIGHT_COPY = Object.freeze({
     noInstalled: 'Install an Overflight package in Studio to play it here.',
     libraryFailed: 'Installed encounters could not be loaded.',
     startHint:
-      'WASD / arrows · Space boost · Escape pause. Controller uses your shared saved mapping; without one, left stick / RT / Menu. Radios need a saved shared setup.',
+      'WASD / arrows · Space boost · Escape pause. Touch: drag to steer and hold Boost with your other thumb; choose stick, swipe or D-pad in Settings. Controller uses your shared saved mapping; without one, left stick / RT / Menu. Radios need a saved shared setup.',
     help: 'Skim the crowd edge so your payload lands among the pursuers. Salvage remains on the ground. Each level pauses the sortie for one of three upgrades. Enemy warnings lock before the attack; move out of their path. Defeat the final tank to complete the sortie.',
     settings: 'Sortie settings',
     language: 'Language',
@@ -262,7 +262,7 @@ export const OVERFLIGHT_COPY = Object.freeze({
     noInstalled: 'Встановіть пакет «Проліт» у студії, щоб грати тут.',
     libraryFailed: 'Не вдалося завантажити встановлені сутички.',
     startHint:
-      'WASD / стрілки · Пробіл — прискорення · Escape — пауза. Контролер використовує збережену спільну схему; без неї — лівий стік / RT / Menu. Для радіопульта потрібне збережене спільне налаштування.',
+      'WASD / стрілки · Пробіл — прискорення · Escape — пауза. Сенсорне керування: тягніть для руху й утримуйте «Прискорення» іншим пальцем; оберіть стік, жести чи хрестовину в налаштуваннях. Контролер використовує збережену спільну схему; без неї — лівий стік / RT / Menu. Для радіопульта потрібне збережене спільне налаштування.',
     help: 'Летіть уздовж краю натовпу, щоб заряд влучав у переслідувачів. Ресурси залишаються на землі. Кожен рівень зупиняє виліт для вибору одного з трьох покращень. Напрям атаки ворога фіксується після попередження — встигніть відійти. Здолайте фінальний танк, щоб завершити виліт.',
     settings: 'Налаштування вильоту',
     language: 'Мова',

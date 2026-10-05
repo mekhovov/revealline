@@ -349,7 +349,6 @@
     justify-content: center;
     gap: 16px;
     padding-block: 4px;
-    opacity: var(--snake-pad-opacity);
   }
   .pad {
     --pad: max(44px, var(--snake-pad-size));
@@ -367,6 +366,7 @@
     -webkit-user-select: none;
   }
   .pad.turn-pad {
+    opacity: var(--snake-pad-opacity);
     grid-template: var(--pad) / repeat(2, var(--pad));
   }
   .pad button[data-direction='up'] {
@@ -496,11 +496,6 @@
   }
   body[data-mode='versus'] #boards[data-arrangement='paired'] {
     grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-  @media (hover: hover) and (pointer: fine) and (min-width: 900px) {
-    #pads {
-      display: none;
-    }
   }
   @media (max-width: 700px), (max-height: 600px) {
     .board-stats [data-stat='best'],
@@ -822,7 +817,6 @@ body[data-board-style='living-circuit'][data-board-scene='relay'] .board-wrap {
   #pads > div {
     grid-row: 2;
     align-self: center;
-    opacity: var(--snake-pad-opacity);
   }
   #pads > div:first-child {
     grid-column: 1;
@@ -859,5 +853,35 @@ body[data-board-style='living-circuit'][data-board-scene='relay'] .board-wrap {
     height: 1px;
     overflow: hidden;
     clip-path: inset(50%);
+  }
+}
+
+/* The shared thumb controls keep their native size without applying opacity twice. */
+@layer legacy {
+  body[data-mode='solo'] #pads[data-side='left'] {
+    justify-content: flex-start;
+  }
+  body[data-mode='solo'] #pads[data-side='right'] {
+    justify-content: flex-end;
+  }
+  @media (orientation: portrait) and (max-width: 440px) {
+    body:not([data-mode='solo']) .shared-touch-controls {
+      --touch-size: min(156px, calc((100vw - 40px) / 2));
+    }
+    body:not([data-mode='solo']) .shared-touch-controls[data-touch-size='large'] {
+      --touch-size: min(192px, calc((100vw - 40px) / 2));
+    }
+  }
+}
+@media (max-height: 500px) and (orientation: landscape) and (max-width: 899px),
+  (max-height: 500px) and (orientation: landscape) and (pointer: coarse) {
+  body[data-mode='solo']:has(#pads[data-side='left']) .arena {
+    grid-template-columns: auto minmax(0, 1fr);
+  }
+  body[data-mode='solo'] #pads[data-side='left'] > div {
+    grid-column: 1;
+  }
+  body[data-mode='solo']:has(#pads[data-side='left']) #boards {
+    grid-column: 2;
   }
 }

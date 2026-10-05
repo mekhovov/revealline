@@ -72,6 +72,7 @@ import {
   createOverflightJSONPages,
 } from './host-loop.mjs';
 import { createOverflightAudio, overflightMusicContext } from './audio.mjs';
+import { createOverflightTouch } from './touch.mjs';
 import { createOverflightCommentator } from './commentator.mjs';
 import { attachOverflightStudioLinks } from './studio-links.mjs';
 import { overflightText, localizedOverflight } from './copy.mjs';
@@ -196,6 +197,7 @@ let run = null,
   shell = null,
   modeChoices = null,
   offlinePanel = null,
+  touchInput = null,
   navigator = null,
   controller = null,
   controllerStatus = null,
@@ -309,6 +311,7 @@ function releaseInput() {
   input = { x: 0, y: 0, boost: false };
   inputGate.release();
   controller?.clear();
+  touchInput?.clear();
   clock.reset();
   navigator?.cancelConfirm();
 }
@@ -334,6 +337,7 @@ function reviewLabel() {
   return reviewBuild ? `${text('automatedReview')} · ${text(`reviewBuild_${reviewBuild}`)}` : '';
 }
 function updateShell() {
+  touchInput?.refresh();
   shell?.update({
     phase: phaseForShell(),
     missionName: project.title,
@@ -510,6 +514,7 @@ function updateHUD() {
   }
   $('hud-level').textContent = `${text('level')} ${run.progression.choices + 1}`;
   const cooldown = Math.max(0, run.player.boostCooldown ?? 0);
+  touchInput?.updateBoost({ cooldown, readyLabel: text('ready') });
   $('hud-boost').textContent =
     `${text('boost')} ${cooldown > 0 ? `${cooldown.toFixed(1)}s` : text('ready')}`;
   const label = buildLabel();
@@ -902,6 +907,7 @@ function readInput() {
   if (offlinePanel?.frameFocused()) {
     held.clear();
     controller?.clear();
+    touchInput?.clear();
     navigator?.cancelConfirm();
     return inputGate.sample({ x: 0, y: 0, boost: false, neutral: false });
   }
@@ -927,11 +933,12 @@ function readInput() {
     : Number(held.has('KeyS') || held.has('ArrowDown')) -
       Number(held.has('KeyW') || held.has('ArrowUp'));
   const boost = (!editing && held.has('Space')) || axes.boost;
+  const touch = touchInput?.sample() ?? { x: 0, y: 0, boost: false, neutral: true };
   return inputGate.sample({
-    x: keyX || axes.x,
-    y: keyY || axes.y,
-    boost,
-    neutral: !held.size && axes.neutral,
+    x: keyX || axes.x || touch.x,
+    y: keyY || axes.y || touch.y,
+    boost: boost || touch.boost,
+    neutral: !held.size && axes.neutral && touch.neutral,
   });
 }
 function reviewIdentity() {
@@ -1123,6 +1130,7 @@ function onFrame(now) {
   }
 }
 function refreshCopy() {
+  touchInput?.refreshCopy();
   doc.documentElement.lang = getLocale();
   doc.title = `${text('title')} · FPV / LINE`;
   for (const node of doc.querySelectorAll('[data-copy]'))
@@ -1229,6 +1237,23 @@ shell = mountModePlayShell({
   },
 });
 const offlineSettings = el('section', '', 'overflight-offline-settings');
+touchInput = createOverflightTouch({
+  document: doc,
+  window: win,
+  arena: $('render-host'),
+  mount: $('overflight-game'),
+  settingsMount: $('overflight-settings'),
+  active: () =>
+    !retired &&
+    !preparing &&
+    !runtimeFailed &&
+    !!renderer &&
+    !contextGuard.blocked() &&
+    run?.phase === 'playing' &&
+    !activeModal(),
+  actionLabel: () => text('boost'),
+  onInterrupt: () => pause({ menu: false }),
+});
 const offlineHeading = el('h3');
 localizedText(offlineHeading, () => t('interface:nativeMenu.content'));
 const offlineButton = el('button');
@@ -1839,6 +1864,7 @@ async function dispose() {
   if ($('upgrade-dialog').open) $('upgrade-dialog').close();
   navigator.destroy();
   controller?.destroy();
+  touchInput?.dispose();
   missionChooser?.destroy();
   missionRegistry?.dispose();
   offlinePanel?.dispose();
