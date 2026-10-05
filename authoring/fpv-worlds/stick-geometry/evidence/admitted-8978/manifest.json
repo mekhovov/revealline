@@ -1,0 +1,60 @@
+{
+  "format": "FPVStickGeometryAdmittedSmoke.v1",
+  "sourceRevision": "d73f573e492978fdbded369d4b009e78d644f296",
+  "sourceTree": "3cefcd32568f089a0f0508edc2a94ba3619c4c46",
+  "stageReceiptSHA256": "237354e69956b0b5de28145b7969b561759264c17e840bbab1565efaf5b39832",
+  "url": "http://127.0.0.1:8978/optional-practice/fpv-worlds/index.html",
+  "unmodifiedEntry": true,
+  "runtimeOverlays": 0,
+  "reportedBy": "Root coordinator using actual native CUA",
+  "result": "passed",
+  "observed": [
+    "Home \u2192 briefing \u2192 Start \u2192 Ready \u2192 deliberate Arm \u2192 native active18.6s \u2192 Pause",
+    "Settings Expanded+Touch preserved pause until deliberate Continue resumed18.8s",
+    "Paused42.1s; restored Compact+Keyboard; closing Settings retained pause",
+    "Zero console warnings/errors; owner tab closed after capture"
+  ],
+  "limits": [
+    "Bounded entry/settings/pause smoke, not flight completion or a new physical-touch/controller claim.",
+    "Source geometry1338 and matched timing372 are separate retained qualification, not repeated by this smoke.",
+    "No public-deployment/offline or hardware/FPS claim."
+  ],
+  "archive": {
+    "path": "native-smoke.zip",
+    "bytes": 138328,
+    "sha256": "b9c3e3c77eea713ae4a914095c6e5909ba4a31da6c1abc20d0e7d8348c09f7b0",
+    "roundtripVerified": true
+  },
+  "files": [
+    {
+      "path": "fpv-stick-admitted-8978-active.png",
+      "bytes": 72602,
+      "sha256": "6f0660ab4d9e68bc11244ae1c753c561be52df65296cf5118b68dcfe1ee2c926"
+    },
+    {
+      "path": "fpv-stick-admitted-8978-active.txt",
+      "bytes": 565,
+      "sha256": "1a26e444e59c038c422198666e6fee9041d85758dd3f599a1a6c49610c637461"
+    },
+    {
+      "path": "fpv-stick-admitted-8978-console.json",
+      "bytes": 2,
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    {
+      "path": "fpv-stick-admitted-8978-paused.txt",
+      "bytes": 1685,
+      "sha256": "0553f9106125068d185017904761adceb9d7df2beb6bbb7b4ab94487a5555d45"
+    },
+    {
+      "path": "fpv-stick-admitted-8978-touch-expanded.png",
+      "bytes": 74581,
+      "sha256": "50216c2e74c1a01be3fa9e3b6fd65cb5befe2bf0f75f1bd454f2b5b4b8d734cc"
+    },
+    {
+      "path": "fpv-stick-admitted-8978-touch-expanded.txt",
+      "bytes": 682,
+      "sha256": "0434d1f61553a7a47262a943e5577e5901730a6e8cea45683237e44197068dd5"
+    }
+  ]
+}
