@@ -1,4 +1,9 @@
 import {
+  createOverflightCombatProfile,
+  validateOverflightCombatProfile,
+} from './combat-profile.mjs';
+import { overflightFormationSchedule, OVERFLIGHT_DIFFICULTIES } from './tactics.mjs';
+import {
   boundedJSON,
   canonicalJSON,
   dataIdentity,
@@ -9,6 +14,8 @@ import {
 
 export const OVERFLIGHT_PROJECT_FORMAT = 'OverflightProjectV1';
 export const OVERFLIGHT_COMPILED_FORMAT = 'OverflightCompiledV1';
+export const OVERFLIGHT_PROJECT_FORMAT_V2 = 'OverflightProjectV2';
+export const OVERFLIGHT_COMPILED_FORMAT_V2 = 'OverflightCompiledV2';
 export const OVERFLIGHT_PROJECT_MAX_BYTES = 128 * 1024;
 export const OVERFLIGHT_SOLDIERS = Object.freeze([
   'lookout',
@@ -39,6 +46,7 @@ export const OVERFLIGHT_MODULES = Object.freeze([
   'side-burst',
   'scanner',
   'shield',
+  'plating',
 ]);
 const freeze = (value) => {
   if (value && typeof value === 'object') {
@@ -78,7 +86,13 @@ const encounterFamilies = {
     ['switchback', 'rendezvous-pair', 'relay-warden', 'scout-car', 'radar-truck'],
   ],
 };
-export function createOverflightProject({ encounterSet = 'front', seed = 17031991 } = {}) {
+export function createOverflightProject({
+  encounterSet = 'front',
+  seed = 17031991,
+  difficulty = 'standard',
+  legacy = false,
+} = {}) {
+  required(OVERFLIGHT_DIFFICULTIES.includes(difficulty), 'Unknown difficulty.');
   required(Object.hasOwn(encounterFamilies, encounterSet), 'Unknown Overflight encounter set.');
   const groups = encounterFamilies[encounterSet];
   const encounters = [];
@@ -105,8 +119,55 @@ export function createOverflightProject({ encounterSet = 'front', seed = 1703199
       pattern: 'relief',
     });
   }
+  if (!legacy) {
+    encounters.length = 0;
+    const families = {
+      pursuit: ['patroller', 'runner', 'lookout'],
+      crossing: ['runner', 'switchback', 'rendezvous-pair', 'scout-car'],
+      flank: ['sprinter', 'courier', 'brace-trooper', 'guard'],
+      armored: ['patroller', 'shield-bearer', 'armored-carrier', 'utility-car', 'cargo-truck'],
+      support: ['refuge-seeker', 'relay-warden', 'radar-truck'],
+    };
+    for (const [index, window] of overflightFormationSchedule(
+      seed,
+      difficulty,
+      encounterSet,
+    ).entries()) {
+      const rate = Math.min(
+        40,
+        [3, 5, 7, 10, 13, 17, 24, 28, 30, 32, 34, 36][index] *
+          (difficulty === 'veteran' ? 1.15 : 1),
+      );
+      const end = Math.max(
+        window.start + 1,
+        window.end - createOverflightCombatProfile(difficulty).pacing.reliefSeconds,
+      );
+      encounters.push({
+        id: `formation-${index + 1}`,
+        start: window.start,
+        end,
+        spawnPerSecond: rate,
+        speed: Math.min(78, 38 + index * 4 + (difficulty === 'veteran' ? 8 : 0)),
+        hp: index < 3 ? 30 : index < 6 ? 45 : 60,
+        families: families[window.pattern],
+        pattern: window.pattern,
+      });
+      if (end < window.end)
+        encounters.push({
+          id: `relief-${index + 1}`,
+          start: end,
+          end: window.end,
+          spawnPerSecond: 0.5,
+          speed: 40,
+          hp: 30,
+          families: ['patroller'],
+          pattern: 'relief',
+        });
+    }
+  }
   return {
-    format: OVERFLIGHT_PROJECT_FORMAT,
+    format: legacy ? OVERFLIGHT_PROJECT_FORMAT : OVERFLIGHT_PROJECT_FORMAT_V2,
+    ...(!legacy ? { difficulty, combat: createOverflightCombatProfile(difficulty) } : {}),
     id: `overflight-${encounterSet}`,
     title: {
       en: `Overflight · ${encounterSet === 'front' ? 'Breakthrough' : encounterSet === 'crossing' ? 'Crosswinds' : 'Convergence'}`,
@@ -121,7 +182,7 @@ export function createOverflightProject({ encounterSet = 'front', seed = 1703199
       choices: 10,
       rerolls: 2,
       thresholds: [12, 45, 100, 180, 300, 480, 750, 1150, 1750, 2400],
-      modules: [...OVERFLIGHT_MODULES],
+      modules: OVERFLIGHT_MODULES.filter((id) => !legacy || id !== 'plating'),
     },
     goals: { eliteAt: 120, finalAt: 300, finalHp: 5000 },
     resources: structuredClone(OVERFLIGHT_RESOURCES),
@@ -171,10 +232,19 @@ export function validateOverflightProject(source) {
       'goals',
       'resources',
       'props',
+      ...(project.format === OVERFLIGHT_PROJECT_FORMAT_V2 ? ['difficulty', 'combat'] : []),
     ],
     'Overflight project',
   );
-  required(project.format === OVERFLIGHT_PROJECT_FORMAT, 'Unsupported Overflight project version.');
+  required(
+    [OVERFLIGHT_PROJECT_FORMAT, OVERFLIGHT_PROJECT_FORMAT_V2].includes(project.format),
+    'Unsupported Overflight project version.',
+  );
+  const v2 = project.format === OVERFLIGHT_PROJECT_FORMAT_V2;
+  if (v2) {
+    required(OVERFLIGHT_DIFFICULTIES.includes(project.difficulty), 'Unknown difficulty.');
+    validateOverflightCombatProfile(project.combat);
+  }
   required(stableId(project.id), 'Invalid Overflight project ID.');
   fields(project.title, ['en', 'uk'], 'Project title');
   for (const text of Object.values(project.title))
@@ -223,7 +293,13 @@ export function validateOverflightProject(source) {
     number(encounter.speed, 10, 140, 'enemy speed');
     number(encounter.hp, 1, 300, 'enemy hull');
     required(
-      ['pursuit', 'crossing', 'surge', 'relief'].includes(encounter.pattern),
+      [
+        'pursuit',
+        'crossing',
+        'surge',
+        'relief',
+        ...(v2 ? ['flank', 'armored', 'support'] : []),
+      ].includes(encounter.pattern),
       'Unsupported encounter pattern.',
     );
     required(
@@ -253,7 +329,9 @@ export function validateOverflightProject(source) {
     Array.isArray(project.upgrades.modules) &&
       project.upgrades.modules.includes('primary') &&
       new Set(project.upgrades.modules).size === project.upgrades.modules.length &&
-      project.upgrades.modules.every((id) => OVERFLIGHT_MODULES.includes(id)),
+      project.upgrades.modules.every(
+        (id) => OVERFLIGHT_MODULES.includes(id) && (v2 || id !== 'plating'),
+      ),
     'Unsupported or repeated module capability.',
   );
   fields(project.goals, ['eliteAt', 'finalAt', 'finalHp'], 'Goals');
@@ -285,7 +363,13 @@ export function compileOverflightProject(source) {
   const project = validateOverflightProject(source);
   return freeze({
     ...project,
-    format: OVERFLIGHT_COMPILED_FORMAT,
+    format:
+      project.format === OVERFLIGHT_PROJECT_FORMAT_V2
+        ? OVERFLIGHT_COMPILED_FORMAT_V2
+        : OVERFLIGHT_COMPILED_FORMAT,
+    rulesVersion: project.format === OVERFLIGHT_PROJECT_FORMAT_V2 ? 2 : 1,
+    difficulty: project.difficulty ?? 'standard',
+    combat: project.combat ?? null,
     projectIdentity: dataIdentity(project),
     sourceFormat: project.format,
   });

@@ -5,7 +5,7 @@ import {
   compileOverflightHuntProject,
   validateOverflightHuntProject,
   OVERFLIGHT_HUNT_ENCOUNTER_SETS,
-  OVERFLIGHT_HUNT_COMPILED_FORMAT,
+  OVERFLIGHT_HUNT_COMPILED_FORMAT_V2,
 } from '../overflight/raid-project.mjs';
 import {
   createOverflightProject,
@@ -28,7 +28,7 @@ test('Raid native and Studio compile the same immutable source and exact resourc
   const native = compileOverflightHuntProject(draft),
     studio = compileOverflightHuntProject(JSON.stringify(draft));
   assert.deepEqual(native, studio);
-  assert.equal(native.format, OVERFLIGHT_HUNT_COMPILED_FORMAT);
+  assert.equal(native.format, OVERFLIGHT_HUNT_COMPILED_FORMAT_V2);
   assert.ok(Object.isFrozen(native.encounters[0].packs[0].route[0]));
   draft.encounters[0].packs[0].route[0].x += 10;
   assert.notEqual(native.projectIdentity, compileOverflightHuntProject(draft).projectIdentity);
@@ -120,6 +120,8 @@ test('surviving escorts cannot overlap a later sector beyond the visible special
   const project = createOverflightHuntProject();
   const next = project.encounters[1].packs.find((p) => p.behavior === 'brace');
   const old = project.encounters[0].packs.find((p) => p.behavior === 'brace');
+  next.count = 6;
+  old.count = 6;
   next.x = old.x + 100;
   next.y = old.y;
   next.route = structuredClone(old.route);

@@ -1,7 +1,9 @@
+import { HUMAN_REACTION_CUES } from './destruction-audio.mjs';
 /** Match imported destruction recordings to the admitted bank without changing
  * their original samples. Summed channel magnitudes bound stereo/downmix peaks
  * even when channels cancel in a mono audition. This runs once after decoding. */
 const targets = Object.freeze({
+  ...Object.fromEntries(HUMAN_REACTION_CUES.map((name) => [name, -30])),
   'destroy-soft': -30,
   'destroy-armored': -30,
   'destroy-light': -29,

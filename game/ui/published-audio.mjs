@@ -1,6 +1,6 @@
 import { attachMenuAudioSettings } from './menu-audio.mjs';
 import { t } from '../i18n/index.mjs';
-import { DESTRUCTION_CUES } from './destruction-audio.mjs';
+import { DESTRUCTION_CUES, HUMAN_REACTION_CUES } from './destruction-audio.mjs';
 import { destructionBufferGain } from './destruction-level.mjs';
 const cueNames = new Set([
   'focus',
@@ -11,6 +11,7 @@ const cueNames = new Set([
   'victory',
   'pickup',
   ...DESTRUCTION_CUES,
+  ...HUMAN_REACTION_CUES,
 ]);
 
 /** Read-only session cache. An unavailable cue uses its existing procedural
@@ -60,11 +61,12 @@ export function createPublishedCues({ sound, readAudio }) {
         if (
           !Number.isFinite(decoded.duration) ||
           decoded.duration <= 0 ||
-          decoded.duration > (DESTRUCTION_CUES.includes(name) ? 1 : 15) ||
+          decoded.duration >
+            (HUMAN_REACTION_CUES.includes(name) ? 0.7 : DESTRUCTION_CUES.includes(name) ? 1 : 15) ||
           decoded.length * decoded.numberOfChannels > 4 * 1024 * 1024
         )
           throw new Error(t('interface:publishedCueExceedsItsDecodedBudget'));
-        if (DESTRUCTION_CUES.includes(name))
+        if ([...DESTRUCTION_CUES, ...HUMAN_REACTION_CUES].includes(name))
           attenuation.set(name, destructionBufferGain(name, decoded));
         return decoded;
       })
@@ -101,6 +103,7 @@ export function createPublishedCues({ sound, readAudio }) {
         gain = 1,
         rate = 1,
         maxDuration = null,
+        humanReaction = false,
       } = {},
     ) {
       if (!cueNames.has(name) || !available(ui)) return false;
@@ -112,7 +115,7 @@ export function createPublishedCues({ sound, readAudio }) {
       if (!buffer || buffer === 'loading') return false;
       const now = sound.context.currentTime;
       if (ui && now - (recent.get(name) ?? -Infinity) < 0.08) return true;
-      const destruction = DESTRUCTION_CUES.includes(name);
+      const destruction = [...DESTRUCTION_CUES, ...HUMAN_REACTION_CUES].includes(name);
       const owned = [...sound.voices].filter((voice) => voice.feedback);
       if (feedback && (owned.length >= 16 || sound.voices.size >= 64)) {
         const victim = owned
@@ -155,11 +158,18 @@ export function createPublishedCues({ sound, readAudio }) {
         name,
         board,
         feedback,
+        humanReaction,
         cueFamily: name,
         priority,
         source,
         retire() {
-          voice.stop();
+          if (!humanReaction) {
+            voice.stop();
+            return;
+          }
+          volume.gain.cancelScheduledValues?.(sound.context.currentTime);
+          volume.gain.setTargetAtTime?.(0, sound.context.currentTime, 0.008);
+          source.stop(sound.context.currentTime + 0.04);
         },
         stop() {
           if (stopped) return;

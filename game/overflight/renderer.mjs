@@ -1,3 +1,8 @@
+import {
+  overflightTacticalEnemyLayers,
+  overflightAttackLayers,
+  overflightCacheLayers,
+} from './tactical-view.mjs';
 import { bakeOverflightAtlas, overflightEnemyFrame, OVERFLIGHT_HERO_FRAMES } from './atlas.mjs';
 import { createOverflightBenchmark, insideOverflightCamera } from './benchmark.mjs';
 import { OVERFLIGHT_MACHINERY } from './project.mjs';
@@ -446,6 +451,18 @@ export async function createOverflightRenderer({
               cue.rotation ?? 0,
             );
         }
+        if (enemy.maxGuardIntegrity > 0 || enemy.maxArmor > 0)
+          for (const cue of overflightTacticalEnemyLayers(enemy, size))
+            pools.status.take(
+              cue.frame,
+              cue.x,
+              cue.y,
+              cue.width,
+              cue.height,
+              cue.tint,
+              cue.alpha,
+              cue.rotation,
+            );
         counts.behaviorCues += pools.status.used() - behaviorCueStart;
         if (
           !run.hunt &&
@@ -498,7 +515,20 @@ export async function createOverflightRenderer({
       }
     }
     for (const attack of run.priorityAttacks ?? []) {
-      if (attack.active) danger(attack.x, attack.y, attack.radius, camera, run.time);
+      if (!attack.active) continue;
+      if (['lane', 'fan'].includes(attack.kind)) {
+        for (const cue of overflightAttackLayers(attack))
+          pools.warnings.take(
+            cue.frame,
+            cue.x,
+            cue.y,
+            cue.width,
+            cue.height,
+            cue.tint,
+            cue.alpha,
+            cue.rotation,
+          );
+      } else danger(attack.x, attack.y, attack.radius, camera, run.time);
     }
     for (const pickup of run.pickups ?? []) {
       if (!pickup.active || !insideOverflightCamera(pickup.x, pickup.y, camera, 8)) continue;
@@ -516,6 +546,20 @@ export async function createOverflightRenderer({
           prop.x,
           prop.y,
           26,
+        );
+    }
+    for (const cache of run.caches ?? []) {
+      if (!insideOverflightCamera(cache.x, cache.y, camera, 100)) continue;
+      for (const cue of overflightCacheLayers(cache))
+        pools.status.take(
+          cue.frame,
+          cue.x,
+          cue.y,
+          cue.width,
+          cue.height,
+          cue.tint,
+          cue.alpha,
+          cue.rotation,
         );
     }
     for (const effect of run.effects ?? []) {
@@ -616,11 +660,20 @@ export async function createOverflightRenderer({
         index < (run.airframesRemaining ?? 1) ? colors.amber : 0x4b564b,
       );
     if (player.shield > 0)
-      pools.heroStatus.take('pickup.module-shield', player.x + 23, player.y + 29, 12);
+      for (let index = 0; index < Math.min(2, player.shield); index++)
+        pools.heroStatus.take(
+          'pickup.module-shield',
+          player.x + 24 + index * 13,
+          player.y + 29,
+          11,
+        );
     else if (player.invulnerable > 0) {
       pools.heroStatus.take('bar', player.x - 20, player.y + 27, 2, 7, colors.cyan);
       pools.heroStatus.take('bar', player.x + 20, player.y + 27, 2, 7, colors.cyan);
     }
+    if (player.armorReduction > 0)
+      for (let index = 0; index < Math.round(player.armorReduction * 10); index++)
+        pools.heroStatus.take('bar', player.x - 22 - index * 5, player.y + 29, 3, 9, colors.amber);
     if (boosting && !reduced)
       for (let index = 0; index < 3; index++) {
         const distance = 21 + index * 7;

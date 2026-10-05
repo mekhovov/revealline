@@ -1,4 +1,4 @@
-import { DESTRUCTION_CUES } from '../ui/destruction-audio.mjs';
+import { DESTRUCTION_CUES, HUMAN_REACTION_CUES } from '../ui/destruction-audio.mjs';
 import { createPresentationHost } from '../presentation/host.mjs';
 import { installThemeHost } from '../presentation/theme-host.mjs';
 import { TOKEN_DEFAULTS } from '../presentation/model.mjs';
@@ -211,7 +211,10 @@ export function createClassicPresentation({
       const snapshot = artwork.current();
       if (
         disposed ||
-        !['audio.pickup', ...DESTRUCTION_CUES.map((cue) => `audio.${cue}`)].includes(slot) ||
+        ![
+          'audio.pickup',
+          ...[...DESTRUCTION_CUES, ...HUMAN_REACTION_CUES].map((cue) => `audio.${cue}`),
+        ].includes(slot) ||
         snapshot?.resolved.assets[slot]?.kind !== 'audio'
       )
         return null;

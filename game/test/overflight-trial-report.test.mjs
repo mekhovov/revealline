@@ -95,7 +95,7 @@ const raidFixture = () =>
 
 test('Raid qualification binds exact default-content population and technical-workload metadata', () => {
   const run = raidFixture();
-  assert.deepEqual(OVERFLIGHT_HUNT_BENCHMARK_TARGET, { alive: 537, visible: 200 });
+  assert.deepEqual(OVERFLIGHT_HUNT_BENCHMARK_TARGET, { alive: 403, visible: 200 });
   assert.equal(
     run.enemies.filter((enemy) => enemy.active).length,
     OVERFLIGHT_HUNT_BENCHMARK_TARGET.alive,
