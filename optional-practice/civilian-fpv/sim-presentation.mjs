@@ -4,6 +4,8 @@ import {
   playableSimAppearance,
 } from './world-themes.mjs';
 import { setMenuIcon } from '../../game/ui/native-menu-icons.mjs';
+import { sharedEnemyArtwork } from '../../game/hunt/preferences.mjs';
+import { mountEnemyAppearanceControls } from '../../game/ui/enemy-appearance-controls.mjs';
 import {
   resolvePresentation,
   applyResolvedPresentation,
@@ -1899,6 +1901,20 @@ export function mountSimAppearanceControls({
   }
   fieldset.append(status);
   container?.append(fieldset);
+  const enemyAppearance = mountEnemyAppearanceControls({
+    document: doc,
+    container: fieldset,
+    locale,
+    includeUniform: true,
+    applyMilitary: () => {
+      host.preferences.applyComplete('military-field');
+      preferences.set({ interface: 'follow-game', world: 'follow-game' });
+    },
+    applyAuthored: () => {
+      host.set({ arcadeArt: 'authored' });
+      preferences.set({ world: 'authored' });
+    },
+  });
   const resolve = () => {
     const selection = host.snapshot().familySelection;
     const family = selection.family;
@@ -1921,6 +1937,7 @@ export function mountSimAppearanceControls({
   };
   function refresh() {
     const uk = locale() === 'uk';
+    enemyAppearance.refresh();
     legend.textContent = uk ? 'Оформлення' : 'Appearance';
     const value = preferences.snapshot();
     for (const name of ['interface', 'world']) {
@@ -1980,7 +1997,11 @@ export function mountSimAppearanceControls({
   let lastSelection = '';
   function notify() {
     const next = resolve();
-    const signature = JSON.stringify([preferences.snapshot().world, next]);
+    const signature = JSON.stringify([
+      preferences.snapshot().world,
+      next,
+      sharedEnemyArtwork().snapshot().style,
+    ]);
     if (signature !== lastSelection) {
       lastSelection = signature;
       onChange(next.appearance);
@@ -1994,7 +2015,12 @@ export function mountSimAppearanceControls({
     else host.setInterface('legacy', 'r1'); // Authored and unavailable choices retain the old adapter.
   }
   applyInterface();
-  lastSelection = JSON.stringify([preferences.snapshot().world, resolve()]);
+  lastSelection = JSON.stringify([
+    preferences.snapshot().world,
+    resolve(),
+    sharedEnemyArtwork().snapshot().style,
+  ]);
+  const unsubscribeArtwork = sharedEnemyArtwork().subscribe(notify);
   const unsubscribeHost = host.subscribe(notify);
   const unsubscribePreferences = preferences.subscribe(() => {
     applyInterface();
@@ -2019,7 +2045,9 @@ export function mountSimAppearanceControls({
     changed: notify,
     dispose() {
       win?.removeEventListener?.('revealline:complete-theme', completeTheme);
+      enemyAppearance.dispose();
       unsubscribeHost();
+      unsubscribeArtwork();
       unsubscribePreferences();
       preferences.dispose();
       fieldset.remove();
@@ -2547,19 +2575,34 @@ import * as academyAudioExternal0 from '../../game/i18n/index.mjs';
 export const createSimFlightAudio = (() => {
   const sourceHashes = Object.freeze({
     'optional-practice/civilian-fpv/world-audio.mjs':
-      '104011e3e43091577ef2c740aaead7727fc45234fc2cbb2ce61fa3441dc63f8b',
+      '753913b5070fec47a140236f5f820107254969b122dcf420bf139421546c3fbb',
+    'game/audio/dialogue-mix.mjs':
+      '43ffa5b261e585e59b515fab19d1b6d0ccf636152ca6107602dbdb9143ddb00a',
     'game/ui/audio-output.mjs': 'dc1b2776407d0b6649b0d15c5c721bd59384d7e38a2e61087961ff7a37bd86c1',
     'game/ui/audio-master.mjs': '6bf14bc5268c0eff8f38c21c819f398917712fdc2607c33977ac873111d1dca8',
     'game/audio-preferences.mjs':
       '9212831a3524c9e1ebe8c595783f9f53a112e02e3d51280d775ac103b94a9239',
     'game/ui/encounter-audio.mjs':
-      'ef72dc277ec903688ea15aad395f19520cf03534156af1bd25927386b047e9f7',
+      'de48fc709c99c571e1e2a15e8a5cb1958a53e6404751cc3482255f05c626c519',
     'game/ui/movement-audio.mjs':
       '685d8e458401354028a2cacda0c7b1009b3c1e480a08d4cafce46d8f98b69020',
     'game/ui/dialogue-channel.mjs':
       'f4839f3a1634189a03eed6a3096dc595dfc88ee6437277ee82d78de05c300142',
   });
   const modules = Object.create(null);
+  modules['game/audio/dialogue-mix.mjs'] = (() => {
+    /** Decorative spoken reactions sit behind music and gameplay warnings.
+     * The mix trim also applies to saved slider choices without rewriting preferences. */
+    const DEFAULT_DIALOGUE_VOLUME = 0.25;
+    const DIALOGUE_MIX_GAIN = 0.4;
+    const DIALOGUE_MUSIC_GAIN = 0.9;
+
+    return {
+      DEFAULT_DIALOGUE_VOLUME: DEFAULT_DIALOGUE_VOLUME,
+      DIALOGUE_MIX_GAIN: DIALOGUE_MIX_GAIN,
+      DIALOGUE_MUSIC_GAIN: DIALOGUE_MUSIC_GAIN,
+    };
+  })();
   modules['game/ui/audio-output.mjs'] = (() => {
     /** Shared output topology for Capture, Snake and native flight presentation.
      * A page owns one context. Construction is called only from its gesture owner. */
@@ -2984,12 +3027,53 @@ export const createSimFlightAudio = (() => {
       'brace-trooper': 0.68,
       'relay-warden': 0.62,
     });
+    // Original material accents reuse the admitted bank. Cadence follows observed
+    // movement, never a sprite frame, random choice or simulation mutation.
+    const ACTOR_SOUNDS = Object.freeze({
+      runner: Object.freeze({ cadence: 0.32, rate: 1.08, equipment: 'paper', from: 240, to: 150 }),
+      courier: Object.freeze({
+        cadence: 0.29,
+        rate: 1.19,
+        equipment: 'ratchet',
+        from: 360,
+        to: 210,
+      }),
+      guard: Object.freeze({
+        cadence: 0.41,
+        rate: 0.87,
+        equipment: 'contact-metal',
+        from: 210,
+        to: 90,
+      }),
+      shield: Object.freeze({
+        cadence: 0.48,
+        rate: 0.7,
+        equipment: 'contact-metal',
+        from: 135,
+        to: 48,
+      }),
+    });
+    function actorSoundProfile(family) {
+      return ACTOR_SOUNDS[family === 'shield-bearer' ? 'shield' : family] ?? ACTOR_SOUNDS.runner;
+    }
     function encounterSoundRecipe(type, details = {}) {
       const pitch = FAMILY_PITCH[details.family] ?? 1;
-      const metal = details.material === 'metal' || details.machine === true;
+      const actor = actorSoundProfile(details.family),
+        tracked = details.machine === 'tracked',
+        metal =
+          details.material === 'metal' || [true, 'tracked', 'wheeled'].includes(details.machine);
       const brutal = details.brutal === true;
       const recipes = {
-        step: ['grain', 0.11, 0, 130, 65, 0.055],
+        step: ['grain', 0.11, 0, 130 * actor.rate, 65 * actor.rate, 0.055],
+        equipment: [actor.equipment, 0.12, 1, actor.from, actor.to, 0.085],
+        drive: [
+          tracked ? 'ratchet' : 'wheels',
+          0.17,
+          1,
+          tracked ? 110 : 210,
+          tracked ? 48 : 90,
+          0.16,
+        ],
         notice: ['switch', 0.17, 2, 360, 520, 0.09],
         warning: ['warning', 0.44, 5, 620, 860, 0.13],
         burst: ['paper', 0.19, 2, 190, 320, 0.09],
@@ -3022,17 +3106,32 @@ export const createSimFlightAudio = (() => {
       const row = recipes[type];
       if (!row) return null;
       const [name, gain, priority, from, to, duration] = row;
+      const scale = Number.isFinite(details.gainScale)
+        ? Math.max(0, Math.min(1, details.gainScale))
+        : 1;
+      const movement = ['step', 'equipment', 'drive'].includes(type);
       return {
         name,
-        gain,
+        gain: gain * scale,
         priority,
-        rate: pitch,
+        movement,
+        // Loop textures are deliberately sampled as short envelopes for footsteps.
+        maxDuration: movement ? duration : null,
+        cooldown:
+          type === 'step'
+            ? actor.cadence
+            : type === 'equipment'
+              ? 0.7
+              : type === 'drive'
+                ? 1.2
+                : null,
+        rate: type === 'step' ? actor.rate : pitch,
         tone: {
           from: from * pitch,
           to: to * pitch,
           duration,
-          gain: gain * 0.14,
-          type: metal ? 'triangle' : 'sine',
+          gain: gain * scale * 0.14,
+          type: metal || type === 'equipment' ? 'triangle' : 'sine',
         },
       };
     }
@@ -3048,7 +3147,11 @@ export const createSimFlightAudio = (() => {
       return null;
     }
 
-    return { encounterSoundRecipe: encounterSoundRecipe, actorPhaseSound: actorPhaseSound };
+    return {
+      actorSoundProfile: actorSoundProfile,
+      encounterSoundRecipe: encounterSoundRecipe,
+      actorPhaseSound: actorPhaseSound,
+    };
   })();
   modules['game/ui/movement-audio.mjs'] = (() => {
     const MOVEMENT_AUDIO_KEY = 'revealline.movement-audio.v1';
@@ -3098,6 +3201,9 @@ export const createSimFlightAudio = (() => {
     return { dialogueChannel: dialogueChannel };
   })();
   modules['optional-practice/civilian-fpv/world-audio.mjs'] = (() => {
+    const DEFAULT_DIALOGUE_VOLUME =
+      modules['game/audio/dialogue-mix.mjs']['DEFAULT_DIALOGUE_VOLUME'];
+    const DIALOGUE_MIX_GAIN = modules['game/audio/dialogue-mix.mjs']['DIALOGUE_MIX_GAIN'];
     const createGameAudioContext = modules['game/ui/audio-output.mjs']['createGameAudioContext'];
     const createGameAudioOutput = modules['game/ui/audio-output.mjs']['createGameAudioOutput'];
     const requestPlaybackAudioSession =
@@ -3107,6 +3213,7 @@ export const createSimFlightAudio = (() => {
     const createAudioMaster = modules['game/ui/audio-master.mjs']['createAudioMaster'];
     const createAudioPreferences = modules['game/audio-preferences.mjs']['createAudioPreferences'];
     const encounterSoundRecipe = modules['game/ui/encounter-audio.mjs']['encounterSoundRecipe'];
+    const actorPhaseSound = modules['game/ui/encounter-audio.mjs']['actorPhaseSound'];
     const readMovementAudio = modules['game/ui/movement-audio.mjs']['readMovementAudio'];
     const MOVEMENT_AUDIO_KEY = modules['game/ui/movement-audio.mjs']['MOVEMENT_AUDIO_KEY'];
     const dialogueChannel = modules['game/ui/dialogue-channel.mjs']['dialogueChannel'];
@@ -3148,7 +3255,7 @@ export const createSimFlightAudio = (() => {
       let ambience = AMBIENCES.hangar;
       let motorStyle = 'quad';
       let gateStyle = 'chime';
-      let dialogue = { enabled: false, volume: 0.8 };
+      let dialogue = { enabled: false, volume: DEFAULT_DIALOGUE_VOLUME };
       let dialogueVoice = null;
       const effects = new Set();
       const audioMaster = options.audioMaster ?? createAudioMaster();
@@ -3191,6 +3298,8 @@ export const createSimFlightAudio = (() => {
       const recentCues = new Map();
       let actorDefinitions = new Map();
       let actorPositions = new Map();
+      let actorPhases = new Map();
+      let actorFamilies = new Map();
       let lastFootstep = -Infinity;
 
       const volume = (value) =>
@@ -3237,7 +3346,7 @@ export const createSimFlightAudio = (() => {
             }),
           );
           const dialogueBus = output.dialogueBus;
-          dialogueBus.gain.value = dialogue.enabled ? dialogue.volume : 0;
+          dialogueBus.gain.value = dialogue.enabled ? dialogue.volume * DIALOGUE_MIX_GAIN : 0;
           const motor = candidate.createGain();
           motor.gain.value = 0;
           const motorFilter = candidate.createBiquadFilter();
@@ -3319,18 +3428,26 @@ export const createSimFlightAudio = (() => {
         delay = 0,
         type = 'sine',
         movementCue = false,
+        priority = 2,
       }) {
         if (
           !graph ||
           !enabled ||
           masterState.volume === 0 ||
           !levels.interface ||
-          effects.size >= 12 ||
           !wanted ||
           context.state !== 'running'
         )
           return;
-        if (movementCue && (!movement.enabled || movement.volume === 0)) return;
+        if (
+          movementCue &&
+          (!movement.enabled ||
+            movement.volume === 0 ||
+            [...effects].some((effect) => effect.priority >= 4))
+        )
+          return;
+        if (priority >= 4) for (const effect of [...effects]) if (effect.movementCue) effect.stop();
+        if (effects.size >= 12) return;
         const oscillator = context.createOscillator();
         const envelope = context.createGain();
         const start = context.currentTime + delay;
@@ -3346,6 +3463,8 @@ export const createSimFlightAudio = (() => {
           .connect(movementCue ? graph.output.movementBus : graph.buses.interface);
         let stopped = false;
         const effect = {
+          priority,
+          movementCue,
           stop() {
             if (stopped) return;
             stopped = true;
@@ -3373,19 +3492,37 @@ export const createSimFlightAudio = (() => {
           fire: 'fire',
           impact: 'impact',
           defeat: 'catch',
+          'protected-contact': 'impact',
+          warning: 'warning',
+          notice: 'notice',
+          burst: 'burst',
+          recover: 'recover',
+          blocked: 'blocked',
+          equipment: 'equipment',
+          drive: 'drive',
         }[type];
         if (!kind) return;
-        const now = context?.currentTime ?? 0;
-        if (now - (recentCues.get(kind) ?? -Infinity) < 0.12) return;
-        recentCues.set(kind, now);
         const actor = actorDefinitions.get(event.actor);
-        const machine = actor?.type === 'vehicle';
+        const machine =
+          event.machine ??
+          (actor?.type === 'vehicle'
+            ? actor.vehicleModel === 'field-tank'
+              ? 'tracked'
+              : 'wheeled'
+            : false);
         const recipe = encounterSoundRecipe(kind, {
-          family: actor?.speed > 0 ? 'patroller' : 'lookout',
+          family:
+            event.family ??
+            actorFamilies.get(event.actor) ??
+            (actor?.speed > 0 ? 'patroller' : 'lookout'),
           machine,
         });
+        const now = context?.currentTime ?? 0;
+        if (now - (recentCues.get(kind) ?? -Infinity) < (recipe.cooldown ?? 0.12)) return;
+        recentCues.set(kind, now);
         if (recipe.priority >= 5 || (type === 'fire' && !player)) dialogueChannel.interrupt();
-        const voice = { ...recipe.tone };
+        const voice = { ...recipe.tone, priority: recipe.priority, movementCue: recipe.movement };
+        if (recipe.movement) voice.gain *= levels.interface;
         if (type === 'fire' && !player) voice.gain *= 0.65;
         if (type === 'objective' && gateStyle === 'digital') voice.type = 'triangle';
         tone(voice);
@@ -3435,7 +3572,7 @@ export const createSimFlightAudio = (() => {
           dialogue = { enabled, volume: value };
           if (!enabled || !value) dialogueVoice?.stop();
           if (graph && context.state !== 'closed')
-            ramp(graph.dialogueBus.gain, enabled ? value : 0);
+            ramp(graph.dialogueBus.gain, enabled ? value * DIALOGUE_MIX_GAIN : 0);
         },
         /** Uses the existing flight context and the shared one-line dialogue arbiter. */
         playDialogue(buffer, { onended = () => {} } = {}) {
@@ -3551,6 +3688,10 @@ export const createSimFlightAudio = (() => {
           lastContacts = null;
           recentCues.clear();
           actorPositions.clear();
+          actorPhases.clear();
+          actorFamilies = new Map(
+            (course.pursuit?.actors ?? []).map((policy) => [policy.id, policy.family]),
+          );
           lastFootstep = -Infinity;
           actorDefinitions = new Map((course.actors ?? []).map((actor) => [actor.id, actor]));
           stopEffects();
@@ -3585,7 +3726,9 @@ export const createSimFlightAudio = (() => {
             ramp(graph.humGain.gain, ambience.humGain);
             if (fresh) {
               let nearestVehicle = Infinity,
-                nearestFoot = Infinity;
+                nearestFoot = Infinity,
+                footActor = null,
+                startingVehicle = null;
               for (const actor of snapshot.actors ?? []) {
                 const previous = actorPositions.get(actor.id),
                   position = actor.position;
@@ -3598,23 +3741,50 @@ export const createSimFlightAudio = (() => {
                     position.y - snapshot.position.y,
                     position.z - snapshot.position.z,
                   );
-                  if (actor.type === 'vehicle') nearestVehicle = Math.min(nearestVehicle, d);
-                  else if (['patrol', 'sentry'].includes(actor.type))
-                    nearestFoot = Math.min(nearestFoot, d);
+                  if (actor.type === 'vehicle') {
+                    nearestVehicle = Math.min(nearestVehicle, d);
+                    if (
+                      !previous.moving &&
+                      d < 16000 &&
+                      (!startingVehicle || d < startingVehicle.distance)
+                    )
+                      startingVehicle = { actor: actor.id, distance: d };
+                  } else if (['patrol', 'sentry'].includes(actor.type) && d < nearestFoot) {
+                    nearestFoot = d;
+                    footActor = actor;
+                  }
                 }
               }
               ramp(
                 graph.vehicleGain.gain,
                 flying && nearestVehicle < 16000 ? 0.012 * (1 - nearestVehicle / 16000) : 0,
               );
-              if (flying && nearestFoot < 6000 && context.currentTime - lastFootstep >= 0.34) {
+              if (flying && startingVehicle) cue('drive', false, { actor: startingVehicle.actor });
+              const step = encounterSoundRecipe('step', {
+                family: footActor?.pursuit?.family ?? actorFamilies.get(footActor?.id),
+              });
+              if (
+                flying &&
+                nearestFoot < 6000 &&
+                context.currentTime - lastFootstep >= step.cooldown
+              ) {
                 lastFootstep = context.currentTime;
-                const step = encounterSoundRecipe('step');
                 tone({
                   ...step.tone,
                   gain: step.tone.gain * (1 - nearestFoot / 6000) * levels.interface,
                   movementCue: true,
+                  priority: 0,
                 });
+              }
+              for (const actor of snapshot.actors ?? []) {
+                if (!actor.pursuit || actor.status !== 'active') continue;
+                const phase = actor.blocked ? 'blocked' : actor.pursuit.phase;
+                const sound = actorPhaseSound(actorPhases.get(actor.id), phase);
+                if (sound) {
+                  cue(sound, false, { actor: actor.id, family: actor.pursuit.family });
+                  if (sound !== 'warning')
+                    cue('equipment', false, { actor: actor.id, family: actor.pursuit.family });
+                }
               }
               const events = snapshot.events ?? [];
               const types = new Set();
@@ -3635,7 +3805,24 @@ export const createSimFlightAudio = (() => {
             ramp(graph.humGain.gain, 0);
           }
           actorPositions = new Map(
-            (snapshot.actors ?? []).map((actor) => [actor.id, { ...actor.position }]),
+            (snapshot.actors ?? []).map((actor) => {
+              const previous = actorPositions.get(actor.id);
+              return [
+                actor.id,
+                {
+                  ...actor.position,
+                  moving:
+                    fresh && previous && actor.position
+                      ? Math.hypot(actor.position.x - previous.x, actor.position.z - previous.z) > 0
+                      : previous?.moving,
+                },
+              ];
+            }),
+          );
+          actorPhases = new Map(
+            (snapshot.actors ?? [])
+              .filter((actor) => actor.pursuit)
+              .map((actor) => [actor.id, actor.blocked ? 'blocked' : actor.pursuit.phase]),
           );
           lastTick = tick;
           lastStep = step;

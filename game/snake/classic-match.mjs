@@ -332,9 +332,10 @@ export function restoreClassicSnakeLegacyMatch(source, { level } = {}) {
     value.replays.every((r) => r.version === 'classic-snake-replay.v1'),
     'Only historical v1 Snake sessions use this migration.',
   );
-  const checked = value.replays.map((r) => restoreClassicSnakeReplay(r, { level }));
+  const checked = value.replays.map((r) => restoreClassicSnakeReplay(r, { level })),
+    seed = checked[0].seed;
   required(
-    checked.every((r) => r.seed === 17 && r.mode === (value.mode === 'team' ? 'team' : 'solo')),
+    checked.every((r) => r.seed === seed && r.mode === (value.mode === 'team' ? 'team' : 'solo')),
     'Historical Snake setup differs.',
   );
   const terminal = checked.filter((r) => r.status !== 'running'),
@@ -377,7 +378,7 @@ export function restoreClassicSnakeLegacyMatch(source, { level } = {}) {
   commands.sort((a, b) => a.atMs - b.atMs || a.order - b.order);
   const match = createClassicSnakeMatch(checked[0].level, {
     mode: value.mode,
-    seed: 17,
+    seed,
     policy: 'mission',
   });
   for (const { atMs, seat, direction } of commands) {

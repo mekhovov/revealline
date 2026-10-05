@@ -1,7 +1,8 @@
 import { readAssetStore } from './storage.mjs';
 import { offlineAvailability, prepareOffline, checkOffline } from './offline.mjs';
 import { createOfficialDownloads } from './official-downloads.mjs';
-import { downloadFiles, validateDownloadCatalogue } from './download-catalogue.mjs';
+import { downloadFiles } from './download-catalogue.mjs';
+import { loadDownloadMetadata } from './download-initialization.mjs';
 import {
   readOfflineDestination,
   continueOfflineDestination,
@@ -62,6 +63,7 @@ const store = createOfficialDownloads();
 const experienceStatuses = new Map();
 const groupInputs = () => document.querySelectorAll('input[data-group]');
 function syncGroupInputs() {
+  if (!catalogue) return;
   for (const input of groupInputs()) {
     const group = catalogue.groups.find((item) => item.id === input.dataset.group);
     input.checked =
@@ -76,6 +78,7 @@ let controller,
   runtimeHealth,
   launcherHealth = { status: 'missing' },
   ready = false,
+  initialized = false,
   estimateSequence = 0,
   healthSequence = 0,
   musicJob = false,
@@ -138,6 +141,7 @@ if (activity)
 const selected = new Set();
 const albums = new Map();
 const albumDownloads = new Map();
+const downloadedAlbums = new Set();
 const baseURL = new URL('../', import.meta.url).href;
 const edition = baseURL;
 const appURL = installedAppURL(location);
@@ -244,13 +248,24 @@ function busy(value) {
     'select-communities',
     'select-everything',
   ])
-    $(id).disabled = value;
+    $(id).disabled = value || !initialized;
   for (const button of document.querySelectorAll('#albums button, input[data-group]'))
-    button.disabled = value;
+    button.disabled = value || !initialized;
+  for (const [id, button] of albumDownloads)
+    button.disabled = value || !initialized || downloadedAlbums.has(id);
+  $('download-game').disabled = value || !initialized || !lastEstimate || setupComplete();
   $('pause').disabled = $('cancel').disabled = !value || musicJob;
   $('pause-music').disabled = $('cancel-music').disabled = !value || !musicJob;
   $('progress').hidden = !value || musicJob;
   $('music-progress').hidden = !value || !musicJob;
+}
+function setupComplete() {
+  return (
+    !navigationRequest &&
+    ready &&
+    activationResult?.paused !== true &&
+    (!updateContext || activationResult?.activated)
+  );
 }
 async function estimates({ signal } = {}) {
   signal?.throwIfAborted();
@@ -300,8 +315,6 @@ async function estimates({ signal } = {}) {
       },
     ),
   );
-  const setupComplete =
-    ready && activationResult?.paused !== true && (!updateContext || activationResult?.activated);
   localizedText($('download-game'), () =>
     navigationRequest
       ? ready
@@ -312,7 +325,7 @@ async function estimates({ signal } = {}) {
               : 'interface:downloads.downloadAndOpen',
             { size: size(remaining) },
           )
-      : setupComplete
+      : setupComplete()
         ? t('interface:downloads.offlineSetupComplete')
         : updateContext
           ? t('interface:updates.download', { size: size(remaining) })
@@ -323,7 +336,7 @@ async function estimates({ signal } = {}) {
               { size: size(remaining) },
             ),
   );
-  $('download-game').disabled = Boolean(controller) || (!navigationRequest && setupComplete);
+  $('download-game').disabled = !initialized || Boolean(controller) || setupComplete();
 }
 async function health({ verify = true, signal } = {}) {
   signal?.throwIfAborted();
@@ -415,13 +428,15 @@ async function health({ verify = true, signal } = {}) {
         { size: size(report.remainingBytes) },
       ),
     );
-    albumDownloads.get(id).disabled = Boolean(controller) || report.ready;
+    if (report.ready) downloadedAlbums.add(id);
+    else downloadedAlbums.delete(id);
+    albumDownloads.get(id).disabled = !initialized || Boolean(controller) || report.ready;
   }
   if (sequence !== healthSequence) return;
   await estimates({ signal });
 }
 async function run(task, { music = false } = {}) {
-  if (controller) return;
+  if (!initialized || controller) return;
   controller = new AbortController();
   musicJob = music;
   busy(true);
@@ -518,6 +533,7 @@ window.addEventListener('pagehide', (event) => {
   }
 });
 function selectionChanged() {
+  if (!initialized || controller) return;
   syncGroupInputs();
   resumeApprovedGame = null;
   yieldedToPlay = false;
@@ -529,7 +545,7 @@ function selectionChanged() {
 }
 $('all-game').onchange = selectionChanged;
 $('select-communities').onclick = () => {
-  if (!catalogue || controller) return;
+  if (!initialized || controller) return;
   catalogue.groups
     .filter((group) => group.category === 'community')
     .forEach((group) => selected.add(group.id));
@@ -537,7 +553,7 @@ $('select-communities').onclick = () => {
   selectionChanged();
 };
 $('select-everything').onclick = () => {
-  if (!catalogue || controller) return;
+  if (!initialized || controller) return;
   selected.clear();
   catalogue.groups
     .filter(
@@ -552,7 +568,7 @@ $('select-everything').onclick = () => {
   selectionChanged();
 };
 $('download-game').onclick = () => {
-  if (!lastEstimate || controller) return;
+  if (!initialized || !lastEstimate || controller) return;
   const approval = { ids: [...gameIDs()], files: gameFiles(), all: $('all-game').checked };
   // This click approves exactly the displayed selection for this page session.
   savedDownload = true;
@@ -797,7 +813,7 @@ $('activate').onclick = () =>
 async function selectRequestedPackage(groupId) {
   const signal = panelController.signal;
   signal.throwIfAborted();
-  if (!catalogue || controller) {
+  if (!initialized || controller) {
     requestedPackage = groupId;
     if (controller && musicJob) controller.abort();
     return;
@@ -848,17 +864,12 @@ async function initialize() {
     throw Object.assign(new Error(available.reason), { offlineCode: available.messageCode });
   if (new URL(location.href).searchParams.has('rollback'))
     localizedText($('activate'), () => t('interface:downloads.restorePrevious'));
-  [catalogue, core] = await Promise.all(
-    ['offline-content.json', 'offline-cache.json'].map(async (path) => {
-      const response = await fetch(
-        new URL(path, baseURL),
-        updateContext ? { cache: 'no-store' } : {},
-      );
-      if (!response.ok) throw localError('interface:downloads.catalogueMissing');
-      return response.json();
-    }),
-  );
-  validateDownloadCatalogue(catalogue);
+  ({ catalogue, core } = await loadDownloadMetadata({
+    baseURL,
+    buildId: available.buildId,
+    updating: Boolean(updateContext),
+    signal: panelController.signal,
+  }));
   navigationRequest = readOfflineDestination({
     pageURL: location.href,
     scope: baseURL,
@@ -912,9 +923,11 @@ async function initialize() {
       const label = document.createElement('label'),
         input = document.createElement('input');
       input.type = 'checkbox';
+      input.disabled = true;
       input.dataset.group = group.id;
       input.checked = selected.has(group.id);
       input.onchange = () => {
+        if (!initialized || controller) return;
         resumeApprovedGame = null;
         yieldedToPlay = false;
         if (input.checked) selected.add(group.id);
@@ -971,6 +984,7 @@ async function initialize() {
       localizedText(title, () => groupTitle(group));
       const download = document.createElement('button'),
         remove = document.createElement('button');
+      download.disabled = remove.disabled = true;
       localizedText(download, () => t('interface:downloads.downloadResume'));
       localizedText(remove, () => t('interface:downloads.removeDownload'));
       download.onclick = () => run((signal) => downloadAlbum(group, signal), { music: true });
@@ -989,7 +1003,6 @@ async function initialize() {
       $('albums').append(row);
     }
   }
-  busy(false);
   syncGroupInputs();
   const community = new URL(location.href).searchParams.get('community');
   const requestedCommunity = catalogue.groups.find(
@@ -1000,12 +1013,28 @@ async function initialize() {
     syncGroupInputs();
   }
   if (!navigationRequest) launcherHealth = await checkInstalledLauncher({ timeout: 1500 });
+  await health({ signal: panelController.signal });
+  initialized = true;
+  busy(false);
   if (requestedPackage) await selectRequestedPackage(requestedPackage);
-  await health();
   if (savedDownload && !ready) operation(() => t('interface:downloads.previousIncomplete'));
   if (ready && !navigationRequest && (!updateContext || active?.buildId === available.buildId))
     await selectEdition();
 }
+$('retry-initialization').onclick = () => location.reload();
+busy(false);
+if (updateContext)
+  localizedText($('update-status'), () => t('interface:downloads.checkingEdition'));
 void initialize().catch((error) => {
-  localizedText($('game-status'), () => errorText(error));
+  initialized = false;
+  lastEstimate = null;
+  ready = false;
+  busy(false);
+  $('activate').hidden = true;
+  $('initialization-recovery').hidden = false;
+  localizedText($('initialization-detail'), () => errorText(error));
+  localizedText($('game-status'), () => t('interface:downloads.loadingFailed'));
+  localizedText($('download-game'), () => t('interface:downloads.downloadUnavailable'));
+  if (updateContext)
+    localizedText($('update-status'), () => t('interface:downloads.loadingFailed'));
 });

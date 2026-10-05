@@ -28,6 +28,7 @@ const BASE_OPTIONAL_PACKAGE_POLICIES = Object.freeze({
       'game/ui/audio-output.mjs',
       'game/ui/audio-master.mjs',
       'game/audio-preferences.mjs',
+      'game/audio/dialogue-mix.mjs',
       'game/ui/encounter-audio.mjs',
       'game/ui/movement-audio.mjs',
       'game/ui/dialogue-channel.mjs',
@@ -230,6 +231,9 @@ const RUNTIME_PACKAGE_POLICIES = Object.freeze({
       'game/ui/art/menu-scenes/fpv.webp',
       'game/ui/art/menu-scenes/fpv-portrait.webp',
       'game/hunt/actor-art.mjs',
+      'game/presentation/actor-animation.mjs',
+      'optional-practice/civilian-fpv/world-pursuit.mjs',
+      'optional-practice/civilian-fpv/native-pursuit-courses.mjs',
       'game/hunt/presentation-catalog.mjs',
       'game/encounter-display-preferences.mjs',
       ...[
@@ -240,7 +244,7 @@ const RUNTIME_PACKAGE_POLICIES = Object.freeze({
         'vendor/addons/provenance.json',
         'world-app.mjs',
         // Checked projection of shared reactions plus four canonical presentation utilities.
-        // Keeps the source archive within the existing 104-file / 16 MiB limits.
+        // The bounded projection shares common utilities; native pursuit uses the reviewed 128-file / 20 MiB envelope.
         'world-reaction-runtime.mjs',
         'world-records.mjs',
         'world-store.mjs',
@@ -328,7 +332,7 @@ const RUNTIME_PACKAGE_POLICIES = Object.freeze({
 });
 
 // Discovery assets are admitted source inputs, never arbitrary catalogue URLs.
-// Flight Studio needs three new lightweight files above its former 64-file bound.
+// Pursuit, shared presentation and discovery additions retain finite reviewed envelopes.
 export const OPTIONAL_PACKAGE_POLICIES = Object.freeze(
   Object.fromEntries(
     Object.entries(RUNTIME_PACKAGE_POLICIES).map(([id, policy]) => [
@@ -337,7 +341,8 @@ export const OPTIONAL_PACKAGE_POLICIES = Object.freeze(
         ...policy,
         limits: Object.freeze({
           ...policy.limits,
-          files: id === 'civilian-fpv' ? 72 : id === 'fpv-worlds' ? 104 : policy.limits.files,
+          files: id === 'civilian-fpv' ? 96 : id === 'fpv-worlds' ? 128 : policy.limits.files,
+          bytes: id === 'fpv-worlds' ? 20 * 1024 * 1024 : policy.limits.bytes,
         }),
         localFiles: Object.freeze([
           ...policy.localFiles,
@@ -347,6 +352,17 @@ export const OPTIONAL_PACKAGE_POLICIES = Object.freeze(
         ]),
         sharedFiles: Object.freeze([
           ...policy.sharedFiles,
+          ...(['civilian-fpv', 'fpv-worlds'].includes(id)
+            ? [
+                'game/presentation/industrial-materials.mjs',
+                'game/presentation/industrial-machinery.mjs',
+                'game/ui/art-review-navigation.mjs',
+                'game/ui/enemy-appearance-controls.mjs',
+                'game/hunt/industrial-soldier-kit.mjs',
+                'optional-practice/civilian-fpv/industrial-soldiers.mjs',
+                'optional-practice/civilian-fpv/industrial-vehicles.mjs',
+              ]
+            : []),
           'optional-practice/guide.mjs',
           'optional-practice/navigation.mjs',
         ]),

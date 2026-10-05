@@ -1,10 +1,12 @@
 import { drawHuntRemains } from '../hunt/destruction.mjs';
-import { drawClassicTarget } from './classic-target-art.mjs';
+import { runtimeActorArtRevision } from '../hunt/preferences.mjs';
+import { createClassicTargetFacing, drawClassicTarget } from './classic-target-art.mjs';
 import { drawClassicDrone, drawClassicCable } from './classic-flight-art.mjs';
 export { drawClassicTarget } from './classic-target-art.mjs';
 import { CLASSIC_SNAKE_CHAPTERS } from './classic-catalogue.mjs';
 
 const UNIT = 28;
+const targetFacings = new WeakMap();
 const INKS = [
   { body: '#153d61', edge: '#65b6ff', band: '#ffe16b' },
   { body: '#4b285e', edge: '#e3b5ff', band: '#ffffff' },
@@ -162,10 +164,12 @@ export function drawClassicBoard(
     style = 'cable',
     boardStyle = 'theme',
     cast = 'rivals',
+    artRevision = runtimeActorArtRevision(),
     presentation,
     accent = null,
     reduced = false,
     flight = {},
+    attemptKey = run,
     pixelRatio = 1,
     cssWidth,
   } = {},
@@ -229,7 +233,8 @@ export function drawClassicBoard(
   if (showRemains) {
     ctx.save();
     ctx.scale(UNIT / 16, UNIT / 16);
-    for (const mark of classicCatchMarks(run)) drawHuntRemains(ctx, mark, { brutal, blood });
+    for (const mark of classicCatchMarks(run))
+      drawHuntRemains(ctx, mark, { brutal, blood, artRevision });
     ctx.restore();
   }
   if (effects) {
@@ -247,6 +252,8 @@ export function drawClassicBoard(
   ctx.strokeRect(1.5, 1.5, logicalWidth - 3, logicalHeight - 3);
   ctx.setLineDash([]);
   const targets = run.targets ?? (run.target ? [run.target] : []);
+  if (!targetFacings.has(canvas)) targetFacings.set(canvas, createClassicTargetFacing());
+  const headings = targetFacings.get(canvas)(run, attemptKey);
   for (const target of targets)
     drawClassicTarget(
       ctx,
@@ -256,7 +263,9 @@ export function drawClassicBoard(
       reduced || target.kind === 'still' || run.pulseTicks > 0 ? 0 : run.tick % 3,
       {
         ...target,
+        heading: headings.get(target.id),
         cast,
+        artRevision,
         direction:
           target.kind === 'still' || (target.kind === 'sprinter' && target.phase === 'rest')
             ? undefined

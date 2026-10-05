@@ -1,0 +1,176 @@
+:root {
+  color-scheme: dark;
+  font-family: 'Field Kit UI', sans-serif;
+  background: #101b20;
+  color: #f4efdb;
+}
+* {
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+}
+main {
+  max-width: 1100px;
+  margin: auto;
+  padding: clamp(16px, 4vw, 48px);
+}
+nav,
+.controls,
+.links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+}
+a {
+  color: #f5c768;
+  text-underline-offset: 4px;
+}
+h1 {
+  font-size: clamp(32px, 6vw, 64px);
+  margin: 12px 0;
+  line-height: 1;
+}
+h2 {
+  font-size: 23px;
+  margin: 0 0 14px;
+}
+p {
+  max-width: 80ch;
+  line-height: 1.55;
+  color: #b8c9c8;
+}
+.eyebrow {
+  margin-top: 40px;
+  color: #88dfdc;
+  letter-spacing: 0.12em;
+  font-size: 13px;
+}
+button,
+select {
+  min-height: 44px;
+  border: 1px solid #6f9996;
+  border-radius: 5px;
+  padding: 10px 14px;
+  color: inherit;
+  background: #24373b;
+  font: inherit;
+}
+button:hover,
+a:hover {
+  color: #beeb88;
+}
+label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+section,
+article {
+  margin: 24px 0;
+  padding: 20px;
+  border: 1px solid #486166;
+  border-radius: 10px;
+  background: #15262a;
+}
+#actors {
+  border: 0;
+  padding: 0;
+  background: transparent;
+}
+.actor-pair {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+}
+.actor-pair > div {
+  min-width: 0;
+}
+h3 {
+  font-size: 16px;
+  color: #b8c9c8;
+  margin: 0 0 8px;
+}
+canvas {
+  display: block;
+  image-rendering: pixelated;
+}
+.actor-pair canvas {
+  width: 100%;
+  height: auto;
+  max-width: 100%;
+}
+.hardware canvas {
+  max-width: 100%;
+  height: auto;
+}
+output {
+  display: block;
+  padding: 20px 0;
+  color: #a6c6bf;
+}
+.links a {
+  display: block;
+  padding: 14px 18px;
+  border: 1px solid #486166;
+  border-radius: 5px;
+}
+@media (max-width: 600px) {
+  .actor-pair {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 12px;
+  }
+  section,
+  article {
+    padding: 12px;
+  }
+  .controls {
+    align-items: stretch;
+  }
+  .controls label {
+    width: 100%;
+  }
+}
+
+.sample-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 210px), 1fr));
+  gap: 18px;
+  margin-top: 20px;
+}
+.sample-grid > div {
+  min-width: 0;
+}
+.sample-grid canvas {
+  max-width: 100%;
+  height: auto;
+}
+.sample-grid button {
+  width: 100%;
+  text-align: left;
+}
+
+.atlas-sheet {
+  max-width: 100%;
+  height: auto;
+  image-rendering: pixelated;
+  margin-bottom: 16px;
+}
+#effects > div {
+  max-width: 100%;
+}
+#effects canvas {
+  max-width: 100%;
+  height: auto;
+}
+.controls select {
+  max-width: 100%;
+  min-width: 0;
+}
+.controls label {
+  flex-wrap: wrap;
+}
+#export {
+  margin-top: 16px;
+}
