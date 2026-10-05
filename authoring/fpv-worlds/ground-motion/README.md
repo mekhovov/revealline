@@ -10,7 +10,16 @@ The four readable/generated source changes total 2,464 bytes. Only three are
 members of the admitted input inventory: the readable Library is projected into
 the reaction runtime. Their actual input growth is 2,422 bytes, projecting
 16,744,060 bytes and 33,156 bytes of reserve. The 104-file and 16 MiB ceilings are
-unchanged. This projection is not package admission.
+unchanged. Exact admission subsequently confirmed these totals at source
+`ca28461faa9a5245f55532bb27fbb5d69f557e16`, whose runtime bytes are identical
+to 9b5. Full Node 22 validation, 26 existing runtime/content checks, and all-three
+package admission with two byte-identical builds pass. The complete Worlds player
+contains 102 members; its ZIP is 15,553,989 bytes with SHA256
+`a532dbc0770695c59bb4e1ba59803a448120c3238e8d2c20e7805828b13384c0`.
+The [admission manifest](evidence/admission/manifest.json) retains the source
+inventories, checksums, successful logs and earlier sparse-prerequisite failures.
+Those failures were corrected by restoring verified Git blobs/APFS clones; no
+runtime, validation or package guard changed.
 
 ## Current evidence
 
@@ -83,7 +92,14 @@ was empty. Backup reported one part, but download capture timed out; no backup
 byte or filesystem-save claim is made. This is bounded localhost cache evidence,
 not device-wide offline, eviction durability or candidate-package acceptance.
 
-Full candidate package admission and actual admitted entry acceptance remain
-pending. Both existing Library feeds stay unchanged. A later Harbor listing requires its own compatible cohort and
+The separate exact admitted 8981 run subsequently passed all 292 controls with
+zero runtime overlays. Four owners reported no errors or warnings; all bounded
+observer drop counts were zero (the field is created only when dropping occurs).
+Registered geometry, material and texture owners were zero after disposal. See
+the [admitted native receipt](evidence/admitted-native/manifest.json). It repeats
+the source contract against both complete admitted players; the candidate's own
+offline journey remains separate from the old-cache result above.
+
+Both existing Library feeds stay unchanged. A later Harbor listing requires its own compatible cohort and
 qualified content; it cannot be added to an older surface-only feed. Publication
 must remain a Draft under the current human main-merge hold.

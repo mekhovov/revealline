@@ -3352,3 +3352,65 @@ its data-only #1090 is in protected publication. The production Library index st
 empty until the finished content and compatible runtime are published and verified. Festival, Harbor and Canals remain sequential after that
 quality standard, followed by D6. Physical-device, novice and universal FPS/offline
 claims remain pending.
+
+### 5 October — Explicit ground movement correction; publication hold retained
+
+Main remains `21826c460e80fa4e7fa47ec8e6ba9f98f75beea4`. The human
+#1083/P1 delivery hold remains in effect. First Reservoir Library row #1094,
+combined reliability evidence #1096, Festival content #1097, stick-width
+observation #1099 and imported-catalogue truthfulness #1100 remain held Drafts;
+none is enrolled for automatic merge. Earlier October 4 checkpoints are
+historical where superseded by this entry. No release bypass or hold removal is
+part of this increment.
+
+Integrated reliability #1096 is already complete and held, including its exact
+admitted online journey, stopped-origin offline tail and representative longer
+session evidence. Ground movement is a new Harbor prerequisite, not unfinished
+work from that integrated journey. The qualified Reservoir Library row and
+Festival content remain held; the remaining world order is Harbor, then Canals,
+then D6. The future support-v1 Library cohort is a separate delivery increment.
+
+Harbor exposed a real finite-platform ground-actor stall: ordinary native
+3000-tick flights stopped permanently on both solid boxes and equivalent closed
+meshes while retaining named support. The original half-space paths continued.
+The focused `groundMotion: "support-v1"` capability opts in only patrol, sentry
+and vehicle actors. Absent fields retain the legacy branch and course identities;
+no WORLD_RULES default, model/backend identity, snapshot field, player physics,
+input, renderer or reward changes are introduced. The correction retains native
+swept movement and full-shape upward-clearance checking. Older validators reject
+the new actor field before installation, and both older Library feeds remain
+unchanged. A later Harbor row needs a compatible cohort rather than registration
+in an older feed.
+
+Frozen runtime `9b5c3d65e2877847126c87f263fbc7e9aca357fb` has 534 manual
+geometry/replay/reset/ownership checks across 66 bounded cases, 1372 contract and
+editor/import checks, ten representative unchanged legacy recordings replayed
+exactly, and nine existing contact-hunt tests. Native source qualification passes
+292 checks including actual completion, export/import, Watch and old/new storage
+retention. Root's separately stopped-origin old-cache tail retains the
+unsupported pack and its older revision, refuses the new course, and still runs
+and pauses an ordinary built-in flight. Backup readiness was visible but its
+download capture timed out, so no exported-byte claim is made. Historical failed
+experiments and fixture failures remain losslessly archived in
+[the ground-motion evidence](../authoring/fpv-worlds/ground-motion/README.md).
+
+The exact candidate `ca28461faa9a5245f55532bb27fbb5d69f557e16` then passed
+full Node 22 validation, 26 existing runtime/content checks and all-three-package
+admission with two byte-identical builds. The 95 Worlds inputs total 16,744,060
+bytes, leaving 33,156 bytes under the unchanged ceiling. The 102-member player
+passed a separate native 8981 matrix, 292/292 with zero runtime overlays, four
+owners, no warnings/errors/dropped observations and zero registered renderer
+resources after disposal. Candidate offline and Harbor's complete native
+presentation journey remain separate next checks; the old-cache tail above
+does not establish either. The sparse prerequisite failures and subsequent exact
+Git-blob/APFS materialization are retained rather than treated as product faults.
+
+Harbor r4 explicitly opts in its cart and inspector while preserving the accepted
+scene, colliders, route criteria and remaining courses. Its static qualification
+passes 407 checks; all sixteen ordinary flights, independent replays and archive
+reimports pass 540 checks. This is separate content evidence and not a current
+public Library listing, completed native art review or unrestricted movement
+guarantee. The bounded 12-actor CPU observation records the added correction cost;
+it establishes no browser FPS or hardware-performance claim. Full regression and
+new unit coverage remain D6, with physical-device and novice qualification still
+unclaimed.
