@@ -1,0 +1,74 @@
+{
+  "sourceCommit": "3b52dd926",
+  "graphicsRecovery": {
+    "testedCommit": "e4162d212",
+    "message": "Graphics restored. Resume when ready.",
+    "pausedTime": "02:30",
+    "explicitResume": true,
+    "resumeControl": "Pause",
+    "canvasCount": 1
+  },
+  "retries": [
+    {
+      "retry": 1,
+      "time": "00:00",
+      "canvasCount": 1,
+      "announcement": ""
+    },
+    {
+      "retry": 2,
+      "time": "00:00",
+      "canvasCount": 1,
+      "announcement": ""
+    },
+    {
+      "retry": 3,
+      "time": "00:00",
+      "canvasCount": 1,
+      "announcement": ""
+    },
+    {
+      "retry": 4,
+      "time": "00:00",
+      "canvasCount": 1,
+      "announcement": ""
+    },
+    {
+      "retry": 5,
+      "time": "00:00",
+      "canvasCount": 1,
+      "announcement": ""
+    },
+    {
+      "retry": 6,
+      "time": "00:00",
+      "canvasCount": 1,
+      "announcement": ""
+    },
+    {
+      "retry": 7,
+      "time": "00:00",
+      "canvasCount": 1,
+      "announcement": ""
+    },
+    {
+      "retry": 8,
+      "time": "00:00",
+      "canvasCount": 1,
+      "announcement": ""
+    },
+    {
+      "retry": 9,
+      "time": "00:00",
+      "canvasCount": 1,
+      "announcement": ""
+    },
+    {
+      "retry": 10,
+      "time": "00:00",
+      "canvasCount": 1,
+      "announcement": ""
+    }
+  ],
+  "scope": "Local in-app browser smoke, not target-hardware qualification or a 15-minute rendered soak."
+}
