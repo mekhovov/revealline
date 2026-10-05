@@ -5,9 +5,23 @@ export const OVERFLIGHT_REACTION_FAMILIES = Object.freeze({
   'overflight.evolved': 'overflight-evolution',
   'overflight.cleared': 'overflight-clear',
   'overflight.replaced': 'overflight-handoff',
+  'overflight.hunt-cleared': 'overflight-hunt-clear',
+  'overflight.hunt-rush': 'overflight-hunt-rush',
 });
 export const OVERFLIGHT_REACTION_LINES = Object.freeze(
   [
+    [
+      'hunt-clear',
+      'overflight-hunt-clear',
+      'Clean pass. Choose your next target.',
+      'Чистий проліт. Обирай наступну ціль.',
+    ],
+    [
+      'hunt-rush',
+      'overflight-hunt-rush',
+      'Rush ready. Your next boost starts it.',
+      'Ривок готовий. Наступне прискорення його активує.',
+    ],
     [
       'upgrade',
       'overflight-upgrade',

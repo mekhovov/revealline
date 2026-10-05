@@ -10,6 +10,7 @@ const PLAY_ENTRIES = [
   'game/snake/index.html',
   'game/snake/play.html',
   'game/overflight/play.html',
+  'game/overflight/raid.html',
   'credits.html',
   'privacy.html',
 ];
@@ -94,7 +95,7 @@ export function selectOfflineCore(entries, excluded, { mode = 'solo' } = {}) {
       !isOptionalTeamImportManifest(name) &&
       // The native player links to its editor; navigation does not make the
       // optional authoring surface part of a player's startup package.
-      name !== 'game/studio/overflight.html' &&
+      !['game/studio/overflight.html', 'game/studio/raid.html'].includes(name) &&
       !retained.has(name) &&
       !(mode === 'solo' && PUBLISHED_SOLO_BOUNDARIES.has(name))
     ) {

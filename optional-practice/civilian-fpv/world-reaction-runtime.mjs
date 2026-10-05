@@ -53,7 +53,7 @@ const sourceHashes={
 'game/journey/campaign-feedback.mjs':
 '7b9b1df9c7cee0e7a6ac3d632ef53874e287054306c614453b37c767523b784e',
 'game/hunt/actor-reactions.mjs':'6abddc59bb89ded4622004bd362d23b86313a71e142744f98e750895493fe652',
-'game/overflight/reactions.mjs':'9402c2906611074efba28361e2717b0d6955190c9eb037ad371d9b7930a445bf',
+'game/overflight/reactions.mjs':'f400c252a6597b4497303517a8bf0d482be67f42b6a7d650f71fa0736c8172d9',
 'game/journey/reaction-preferences.mjs':
 'a14d2dcb99daffd83dcbf62311e6756d587db3134bf04c81cd2cd420b4f6809a',
 'game/journey/reaction-options.mjs':
@@ -4616,9 +4616,23 @@ const OVERFLIGHT_REACTION_FAMILIES=Object.freeze({
 'overflight.evolved':'overflight-evolution',
 'overflight.cleared':'overflight-clear',
 'overflight.replaced':'overflight-handoff',
+'overflight.hunt-cleared':'overflight-hunt-clear',
+'overflight.hunt-rush':'overflight-hunt-rush',
 });
 const OVERFLIGHT_REACTION_LINES=Object.freeze(
 [
+[
+'hunt-clear',
+'overflight-hunt-clear',
+'Clean pass. Choose your next target.',
+'Чистий проліт. Обирай наступну ціль.',
+],
+[
+'hunt-rush',
+'overflight-hunt-rush',
+'Rush ready. Your next boost starts it.',
+'Ривок готовий. Наступне прискорення його активує.',
+],
 [
 'upgrade',
 'overflight-upgrade',

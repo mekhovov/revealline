@@ -888,3 +888,112 @@ button:disabled {
     font-size: 28px;
   }
 }
+
+/* Raid uses the shared shell and typography; its instruments emphasize the hunt. */
+.raid-hunt-strip {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0.35rem 0.65rem;
+  background: rgb(9 18 15 / 82%);
+  border-left: 3px solid #f4c765;
+  font-size: clamp(0.65rem, 1.4vw, 0.95rem);
+}
+.raid-hunt-strip p {
+  margin: 0;
+}
+#hud-chain {
+  color: #9aebda;
+  white-space: nowrap;
+}
+#hud-chain[data-active='true'] {
+  color: #f4c765;
+}
+#hud-score {
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+.raid-boost {
+  display: grid;
+  gap: 0.2rem;
+  min-width: 11rem;
+  text-align: right;
+}
+#hud-rush {
+  color: #f4c765;
+  font-size: 0.75em;
+}
+#raid-rush-meter {
+  height: 4px;
+  background: #283d33;
+}
+#raid-rush-fill {
+  height: 100%;
+  background: #9aebda;
+}
+#raid-rush-meter[data-ready='true'] #raid-rush-fill {
+  background: #f4c765;
+}
+.raid-contact-key {
+  display: grid;
+  gap: 0.65rem;
+  margin: 1.25rem 0;
+}
+.raid-contact-key span {
+  padding: 0.65rem 0.85rem;
+  border-left: 3px solid #9aebda;
+  background: rgb(0 0 0 / 18%);
+}
+.raid-contact-key span:nth-child(2) {
+  border-color: #f9a275;
+}
+.raid-contact-key span:nth-child(3) {
+  border-color: #f4c765;
+}
+.raid-upgrade-preview {
+  width: 100%;
+  height: auto;
+  image-rendering: pixelated;
+  border: 1px solid #385044;
+}
+.overflight-result-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin: 1rem 0;
+}
+.overflight-raid .overflight-build-item {
+  font-size: 0.76em;
+}
+.overflight-raid #hud-build {
+  max-width: 72%;
+  flex-wrap: wrap;
+}
+@media (max-width: 700px) {
+  .raid-hunt-strip {
+    flex-wrap: wrap;
+    gap: 0.2rem 0.75rem;
+  }
+  #hud-objective {
+    flex-basis: 100%;
+  }
+  .raid-boost {
+    min-width: 8rem;
+  }
+  .overflight-raid #hud-build {
+    max-width: 60%;
+  }
+}
+
+.raid-accessible-status {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}

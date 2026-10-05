@@ -1,6 +1,7 @@
 import { bakeOverflightAtlas, overflightEnemyFrame, OVERFLIGHT_HERO_FRAMES } from './atlas.mjs';
 import { createOverflightBenchmark, insideOverflightCamera } from './benchmark.mjs';
 import { OVERFLIGHT_MACHINERY } from './project.mjs';
+import { overflightHuntEnemyLayers, overflightHuntStrikeLayers } from './raid-render-cues.mjs';
 import { overflightEffectLayers } from '../presentation/overflight-motion.mjs';
 import {
   createOverflightRemains,
@@ -107,6 +108,7 @@ export async function createOverflightRenderer({
     throw new Error('Overflight requires the bundled Phaser 4.2.1 renderer.');
   const preparedAt = performance.now();
   const atlas = bakeOverflightAtlas(appearance, document);
+  const previewFrames = new Map(atlas.inventory.frames.map((frame) => [frame.id, frame]));
   const key = `overflight-art-${++rendererSequence}`,
     groundKey = `${key}-ground`;
   let benchmark = createOverflightBenchmark();
@@ -431,8 +433,25 @@ export async function createOverflightRenderer({
             enemy.y + size * 0.35,
             12,
           );
+        if (run.hunt) {
+          for (const cue of overflightHuntEnemyLayers(enemy, size))
+            pools.status.take(
+              cue.frame,
+              enemy.x + cue.dx,
+              enemy.y + cue.dy,
+              cue.width,
+              cue.height,
+              cue.tint,
+              cue.alpha ?? 1,
+              cue.rotation ?? 0,
+            );
+        }
         counts.behaviorCues += pools.status.used() - behaviorCueStart;
-        if ((enemy.heavy || enemy.specialist || enemy.role === 'final') && enemy.maxHp > 0) {
+        if (
+          !run.hunt &&
+          (enemy.heavy || enemy.specialist || enemy.role === 'final') &&
+          enemy.maxHp > 0
+        ) {
           const width = enemy.heavy ? 34 : 22,
             health = clamp(enemy.hp / enemy.maxHp, 0, 1);
           pools.status.take('bar', enemy.x, enemy.y - size / 2 - 5, width + 2, 4, 0x09120f);
@@ -459,6 +478,24 @@ export async function createOverflightRenderer({
           camera,
           run.time,
         );
+    }
+    if (run.hunt) {
+      // One objective pointer and one optional opportunity; never hundreds of edge arrows.
+      for (const optional of [false, true]) {
+        let nearest = null,
+          distance = Infinity;
+        for (const enemy of run.enemies) {
+          if (!enemy.active || (optional ? enemy.behavior !== 'courier' : !enemy.objectiveId))
+            continue;
+          if (insideOverflightCamera(enemy.x, enemy.y, camera, 24)) continue;
+          const next = Math.hypot(enemy.x - run.player.x, enemy.y - run.player.y);
+          if (next < distance) {
+            nearest = enemy;
+            distance = next;
+          }
+        }
+        if (nearest) danger(nearest.x, nearest.y, 16, camera, run.time, !optional);
+      }
     }
     for (const attack of run.priorityAttacks ?? []) {
       if (attack.active) danger(attack.x, attack.y, attack.radius, camera, run.time);
@@ -533,6 +570,17 @@ export async function createOverflightRenderer({
     previousTime = run.time;
     previousHeading = heading;
     const boosting = player.boostRemaining > 0;
+    for (const cue of overflightHuntStrikeLayers(run))
+      pools.heroStatus.take(
+        cue.frame,
+        player.x + cue.dx,
+        player.y + cue.dy,
+        cue.width,
+        cue.height,
+        cue.tint,
+        cue.alpha,
+        cue.rotation,
+      );
     heroShadow
       .setPosition(player.x + 2 + bank * 2, player.y + 7)
       .setDisplaySize(boosting ? 43 : 39, 26)
@@ -600,6 +648,40 @@ export async function createOverflightRenderer({
 
   return {
     present,
+    // Upgrade previews use the already prepared, selected native art. The host
+    // drives these tiny canvases while paused; no second renderer/RAF/texture owner.
+    paintPreviewSprite(context, kind, x, y, size, time = 0) {
+      if (destroyed) return;
+      const id =
+        kind === 'drone'
+          ? `hero:${Math.floor(time * 30) % OVERFLIGHT_HERO_FRAMES}`
+          : kind === 'machine'
+            ? 'machine:tracked-tank:0'
+            : overflightEnemyFrame(
+                { id: 0, family: kind === 'shield' ? 'shield-bearer' : 'runner', wardrobe: 0 },
+                time,
+                appearance.reducedEffects,
+                appearance.cast,
+              );
+      const frame = previewFrames.get(id);
+      if (!frame) return;
+      context.save();
+      context.imageSmoothingEnabled = false;
+      context.translate(x, y);
+      context.rotate(Math.PI / 2);
+      context.drawImage(
+        atlas.canvas,
+        frame.x,
+        frame.y,
+        frame.width,
+        frame.height,
+        -size / 2,
+        -size / 2,
+        size,
+        size,
+      );
+      context.restore();
+    },
     /** Diagnostics only: exercise the browser/Phaser restoration path. The
      * host's ordinary context callbacks still own pause and explicit resume. */
     requestContextRecoveryTest() {
