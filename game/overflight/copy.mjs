@@ -8,6 +8,11 @@ export const OVERFLIGHT_COPY = Object.freeze({
     installed: 'Installed encounters',
     exportEncounter: 'Export',
     removeEncounter: 'Remove',
+    removeLocalEncounter: 'Remove local copy',
+    localEncounterRemoved: 'Local copy removed. The Community edition is still installed.',
+    communityEncounterOwner: 'Managed in Community',
+    communityEncounterRecovery:
+      'Keep an exact recovery package and manage this edition in Community.',
     encounterRemoved: 'Removed from the installed list. The current sortie is unchanged.',
     noInstalled: 'Install an Overflight package in Studio to play it here.',
     libraryFailed: 'Installed encounters could not be loaded.',
@@ -125,6 +130,11 @@ export const OVERFLIGHT_COPY = Object.freeze({
     installed: 'Встановлені сутички',
     exportEncounter: 'Експорт',
     removeEncounter: 'Вилучити',
+    removeLocalEncounter: 'Вилучити локальну копію',
+    localEncounterRemoved: 'Локальну копію вилучено. Видання спільноти залишається встановленим.',
+    communityEncounterOwner: 'Керування у спільноті',
+    communityEncounterRecovery:
+      'Збережіть точний пакет відновлення та керуйте виданням у спільноті.',
     encounterRemoved: 'Вилучено зі встановленого списку. Поточний виліт збережено.',
     noInstalled: 'Встановіть пакет «Проліт» у студії, щоб грати тут.',
     libraryFailed: 'Не вдалося завантажити встановлені сутички.',

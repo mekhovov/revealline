@@ -947,21 +947,32 @@ function renderMissions() {
         `${entry.project.id}.overflight.json`,
       );
     });
-    const removeButton = el('button', text('removeEncounter'));
+    const removeButton = el('button', text('removeLocalEncounter'));
+    removeButton.hidden = !entry.localOwned;
     removeButton.type = 'button';
-    removeButton.setAttribute('aria-label', `${text('removeEncounter')} · ${local(entry.title)}`);
+    removeButton.setAttribute(
+      'aria-label',
+      `${text('removeLocalEncounter')} · ${local(entry.title)}`,
+    );
     removeButton.addEventListener('click', async () => {
       removeButton.disabled = true;
       try {
         await library.remove(entry.identity);
         await refreshMissions();
-        $('installed-status').textContent = `${local(entry.title)} · ${text('encounterRemoved')}`;
+        $('installed-status').textContent =
+          `${local(entry.title)} · ${text(entry.communityOwned ? 'localEncounterRemoved' : 'encounterRemoved')}`;
       } catch (error) {
         $('installed-status').textContent = `${text('libraryFailed')} ${error.message}`;
         removeButton.disabled = false;
       }
     });
     row.append(button, exportButton, removeButton);
+    if (entry.communityOwned) {
+      const owner = el('a', text('communityEncounterOwner'));
+      owner.href = `../community/store.html?lang=${getLocale()}`;
+      owner.title = text('communityEncounterRecovery');
+      row.append(owner);
+    }
     community.append(row);
   }
 }

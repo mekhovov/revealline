@@ -47,8 +47,26 @@ body {
   border-top: 1px solid currentColor;
   padding: 12px 0;
 }
-.of-encounter input[data-family] {
+.of-family-picker {
   width: min(420px, 78vw);
+  align-self: start;
+}
+.of-family-picker summary {
+  cursor: pointer;
+  min-height: 44px;
+  padding: 8px;
+}
+.of-family-options {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 4px 12px;
+}
+#overflight-studio .of-family-options label {
+  display: flex;
+  align-items: center;
+  flex-direction: row-reverse;
+  justify-content: start;
+  min-height: 44px;
 }
 #of-status {
   min-height: 1.5em;
