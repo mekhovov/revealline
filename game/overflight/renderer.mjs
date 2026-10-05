@@ -1,7 +1,12 @@
-import { bakeOverflightAtlas, overflightEnemyFrame } from './atlas.mjs';
+import { bakeOverflightAtlas, overflightEnemyFrame, OVERFLIGHT_HERO_FRAMES } from './atlas.mjs';
 import { createOverflightBenchmark, insideOverflightCamera } from './benchmark.mjs';
 import { OVERFLIGHT_MACHINERY } from './project.mjs';
 import { overflightEffectLayers } from '../presentation/overflight-motion.mjs';
+import {
+  createOverflightRemains,
+  overflightRemainsFrame,
+  OVERFLIGHT_REMAINS_LIMITS,
+} from './remains.mjs';
 
 let phaserLoad = null,
   rendererSequence = 0;
@@ -105,7 +110,8 @@ export async function createOverflightRenderer({
   const key = `overflight-art-${++rendererSequence}`,
     groundKey = `${key}-ground`;
   let benchmark = createOverflightBenchmark();
-  let game, scene, pools, poolList, hero, heroCue, heroShadow, ground;
+  let game, scene, pools, poolList, hero, heroShadow, ground;
+  const remains = createOverflightRemains();
   let lost = false,
     destroyed = false,
     failed = false,
@@ -120,7 +126,10 @@ export async function createOverflightRenderer({
   let contextRecoveryTimer = null,
     contextRecoveryTests = 0;
   let previousHull = null,
-    hitAt = -Infinity;
+    hitAt = -Infinity,
+    previousHeading = null,
+    previousTime = null,
+    bank = 0;
   const counts = {
     alive: 0,
     visible: 0,
@@ -129,6 +138,8 @@ export async function createOverflightRenderer({
     pickups: 0,
     warnings: 0,
     behaviorCues: 0,
+    remains: 0,
+    defeats: 0,
     quads: 0,
   };
   let resolveReady, rejectReady;
@@ -204,24 +215,21 @@ export async function createOverflightRenderer({
             registerTexture(scene, Phaser, groundKey, atlas.ground);
             ground = scene.add.tileSprite(0, 0, 2880, 1080, groundKey).setOrigin(0).setDepth(0);
             pools = {
+              remains: imagePool(scene, key, 3),
               props: imagePool(scene, key, 5),
               pickups: imagePool(scene, key, 10),
+              defeats: imagePool(scene, key, 19),
               enemies: imagePool(scene, key, 20),
               effects: imagePool(scene, key, 30),
               projectiles: imagePool(scene, key, 35),
               warnings: imagePool(scene, key, 60),
               status: imagePool(scene, key, 65),
+              heroStatus: imagePool(scene, key, 72),
             };
             poolList = Object.values(pools);
             heroShadow = scene.add.image(0, 0, key, 'shadow').setDepth(38).setAlpha(0.8);
-            heroCue = scene.add
-              .image(0, 0, key, 'hero-ring')
-              .setDepth(70)
-              .setDisplaySize(44, 44)
-              .setTint(colors.white);
             hero = scene.add.image(0, 0, key, 'hero:0').setDepth(71);
             hero.setVisible(false);
-            heroCue.setVisible(false);
             heroShadow.setVisible(false);
             this.game.canvas.tabIndex = -1;
             this.game.canvas.style.imageRendering = 'pixelated';
@@ -300,6 +308,11 @@ export async function createOverflightRenderer({
   function present(run) {
     if (destroyed || lost || failed || !run) return;
     const started = performance.now();
+    if (current !== run) {
+      previousHull = previousHeading = previousTime = null;
+      hitAt = -Infinity;
+      bank = 0;
+    }
     current = run;
     const camera = run.camera;
     if (!camera || ![camera.x, camera.y, camera.width, camera.height].every(Number.isFinite))
@@ -314,6 +327,43 @@ export async function createOverflightRenderer({
     counts.visible = 0;
     counts.rendered = 0;
     counts.behaviorCues = 0;
+    const destruction = appearance.destruction ?? {};
+    remains.consume(run);
+    let movingRemains = 0;
+    remains.visitVisible(camera, (mark) => {
+      const age = Math.max(0, run.time - mark.time);
+      const moving =
+        !reduced &&
+        run.phase !== 'won' &&
+        run.phase !== 'lost' &&
+        age < OVERFLIGHT_REMAINS_LIMITS.settleSeconds &&
+        movingRemains < OVERFLIGHT_REMAINS_LIMITS.moving;
+      const frame = overflightRemainsFrame(mark, destruction, appearance.cast);
+      if (moving) {
+        movingRemains++;
+        pools.defeats.take(
+          `${frame.replace(/^remains:/, 'defeat:')}:${Math.min(3, Math.floor(age / 0.08))}`,
+          mark.x,
+          mark.y,
+          (mark.size * 64) / 48,
+          (mark.size * 64) / 48,
+          0xffffff,
+          0.92,
+          mark.heading,
+        );
+      }
+      if (destruction.showRemains !== false)
+        pools.remains.take(
+          frame,
+          mark.x,
+          mark.y,
+          mark.size,
+          mark.size,
+          0xffffff,
+          moving ? 0.35 : 0.72,
+          mark.heading,
+        );
+    });
     for (const enemy of run.enemies) {
       if (!enemy.active) continue;
       counts.alive++;
@@ -469,27 +519,81 @@ export async function createOverflightRenderer({
     const player = run.player;
     if (previousHull !== null && player.hull < previousHull) hitAt = run.time;
     previousHull = player.hull;
+    const heading = player.heading ?? 0;
+    if (previousTime !== null && run.time > previousTime) {
+      const dt = Math.min(0.1, run.time - previousTime);
+      const delta = Math.atan2(
+        Math.sin(heading - previousHeading),
+        Math.cos(heading - previousHeading),
+      );
+      const target = reduced ? 0 : clamp(delta / (dt * 9), -1, 1);
+      bank += (target - bank) * (1 - Math.exp(-dt * 12));
+    }
+    if (reduced) bank = 0;
+    previousTime = run.time;
+    previousHeading = heading;
+    const boosting = player.boostRemaining > 0;
     heroShadow
-      .setPosition(player.x + 2, player.y + 6)
-      .setDisplaySize(42, 30)
-      .setVisible(true);
-    heroCue
-      .setPosition(player.x, player.y)
-      .setTint(player.invulnerable > 0 ? colors.cyan : colors.white)
-      .setAlpha(player.boostRemaining > 0 ? 1 : 0.75)
+      .setPosition(player.x + 2 + bank * 2, player.y + 7)
+      .setDisplaySize(boosting ? 43 : 39, 26)
       .setVisible(true);
     hero
-      .setFrame(`hero:${reduced ? 0 : Math.floor(run.time * 30) % 4}`)
+      .setFrame(`hero:${reduced ? 0 : Math.floor(run.time * 60) % OVERFLIGHT_HERO_FRAMES}`)
       .setPosition(player.x, player.y)
-      .setRotation((player.heading ?? 0) + Math.PI / 2)
+      .setDisplaySize(64 * (1 - Math.abs(bank) * 0.09), boosting && !reduced ? 65 : 64)
+      .setRotation(heading + Math.PI / 2 + bank * 0.045)
       .setTint(run.time - hitAt < 0.16 ? colors.impact : 0xffffff)
       .setVisible(true);
     hero.setAlpha(player.invulnerable > 0 && !reduced && Math.floor(run.time * 12) % 2 ? 0.6 : 1);
+    // Compact local instruments follow the craft without enclosing it. Hull,
+    // replacement airframes and protection remain legible without flashing.
+    const health = clamp(player.hull / (player.maxHull || 100), 0, 1);
+    pools.heroStatus.take('bar', player.x, player.y + 29, 32, 5, 0x09120f, 0.95);
+    if (health > 0)
+      pools.heroStatus.take(
+        'bar',
+        player.x - 14 * (1 - health),
+        player.y + 29,
+        28 * health,
+        2,
+        health < 0.35 ? colors.danger : colors.cyan,
+      );
+    for (let index = 0; index < Math.min(3, run.airframes ?? 1); index++)
+      pools.heroStatus.take(
+        'bar',
+        player.x - 6 + index * 6,
+        player.y + 35,
+        4,
+        2,
+        index < (run.airframesRemaining ?? 1) ? colors.amber : 0x4b564b,
+      );
+    if (player.shield > 0)
+      pools.heroStatus.take('pickup.module-shield', player.x + 23, player.y + 29, 12);
+    else if (player.invulnerable > 0) {
+      pools.heroStatus.take('bar', player.x - 20, player.y + 27, 2, 7, colors.cyan);
+      pools.heroStatus.take('bar', player.x + 20, player.y + 27, 2, 7, colors.cyan);
+    }
+    if (boosting && !reduced)
+      for (let index = 0; index < 3; index++) {
+        const distance = 21 + index * 7;
+        pools.heroStatus.take(
+          'bar',
+          player.x - Math.cos(heading) * distance,
+          player.y - Math.sin(heading) * distance,
+          9 - index * 2,
+          2,
+          colors.cyan,
+          0.5 - index * 0.12,
+          heading,
+        );
+      }
     for (const pool of poolList) pool.end();
     counts.effects = pools.effects.used();
     counts.pickups = pools.pickups.used();
     counts.warnings = pools.warnings.used();
-    counts.quads = 4 + poolList.reduce((sum, pool) => sum + pool.used(), 0);
+    counts.remains = pools.remains.used();
+    counts.defeats = pools.defeats.used();
+    counts.quads = 3 + poolList.reduce((sum, pool) => sum + pool.used(), 0);
     benchmark.observe(counts);
     presentMs += performance.now() - started;
   }
@@ -523,8 +627,9 @@ export async function createOverflightRenderer({
     resourceStats() {
       return {
         ...counts,
-        allocatedSprites: poolList.reduce((sum, pool) => sum + pool.size(), 3),
+        allocatedSprites: poolList.reduce((sum, pool) => sum + pool.size(), 2),
         atlasBytes: atlas.inventory.baseRGBABytes ?? null,
+        remains: remains.snapshot(),
         contextLosses,
         contextRestores,
       };
@@ -532,7 +637,14 @@ export async function createOverflightRenderer({
     resetMeasurements(protocol = {}) {
       benchmark = createOverflightBenchmark(protocol);
       previousHull = null;
+      previousHeading = previousTime = null;
+      bank = 0;
       hitAt = -Infinity;
+      remains.reset();
+      for (const pool of poolList) {
+        pool.begin();
+        pool.end();
+      }
       current = null;
       frameActive = false;
       presentMs = 0;
@@ -549,7 +661,13 @@ export async function createOverflightRenderer({
         atlas: raw ? atlas.inventory : { ...inventory, frameCount: frames.length },
         heroArtwork: atlas.heroArtwork,
         counts: { ...counts },
-        allocatedSprites: poolList.reduce((sum, pool) => sum + pool.size(), 3),
+        allocatedSprites: poolList.reduce((sum, pool) => sum + pool.size(), 2),
+        remains: { ...remains.snapshot(), limits: OVERFLIGHT_REMAINS_LIMITS },
+        destruction: {
+          showRemains: appearance.destruction?.showRemains !== false,
+          brutal: appearance.destruction?.brutal === true,
+          blood: appearance.destruction?.blood !== false,
+        },
         fixture: current?.fixture ?? null,
         reducedEffects: appearance.reducedEffects === true,
         preparationMs,
@@ -576,6 +694,7 @@ export async function createOverflightRenderer({
         game.events.once(Phaser.Core.Events.DESTROY, () =>
           queueMicrotask(() => {
             atlas.dispose();
+            remains.reset();
             current = null;
             resolve();
           }),
