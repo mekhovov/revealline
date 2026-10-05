@@ -72,6 +72,13 @@ test('native Overflight source stays in player core while its linked Studio rema
     'game/ui/controller-navigation.mjs',
     'game/ui/audio.mjs',
     'game/ui/audio-master.mjs',
+    'game/ui/feedback-director.mjs',
+    'game/ui/human-reaction-policy.mjs',
+    'game/ui/destruction-audio.mjs',
+    'game/ui/defeat-sound-controls.mjs',
+    'game/ui/encounter-display-controls.mjs',
+    'game/ui/destruction-controls.mjs',
+    'game/audio/effects/bank.mjs',
     'game/couch/couch-music-host.mjs',
     'game/presentation/theme-host.mjs',
     'game/presentation/theme-bootstrap.mjs',
@@ -125,6 +132,116 @@ test('native Overflight source stays in player core while its linked Studio rema
   assert.equal(core.references.get('game/overflight/renderer.mjs'), 'game/overflight/app.mjs');
 });
 
+test('Classic Snake keeps its native chapters, rules, artwork and sound adapters in player core', async () => {
+  const player = (await readdir(new URL('../game/snake/', import.meta.url)))
+    .filter((name) => /\.(?:m?js|css|html)$/.test(name))
+    .map((name) => `game/snake/${name}`);
+  const shared = [
+    'game/ui/content-studio-navigation.mjs',
+    'game/ui/global-settings-tools.mjs',
+    'game/ui/install-offline-panel.mjs',
+    'game/ui/audio.mjs',
+    'game/ui/audio-master.mjs',
+    'game/ui/feedback-director.mjs',
+    'game/ui/human-reaction-policy.mjs',
+    'game/ui/destruction-audio.mjs',
+    'game/ui/defeat-sound-controls.mjs',
+    'game/audio/effects/bank.mjs',
+    'game/ui/fpv-body-recipes.mjs',
+    'authoring/motion-lab/animation.mjs',
+    'game/hunt/actor-art.mjs',
+    'game/hunt/destruction.mjs',
+    'game/presentation/host.mjs',
+  ];
+  const optional = [
+    'game/studio/snake.html',
+    'game/studio/snake.mjs',
+    'game/studio/snake.css',
+    'game/audio/effects/rotor.wav',
+    'game/audio/effects/human-reaction-1.wav',
+  ];
+  const files = await Promise.all(
+    [...player, ...shared, ...optional].map(async (name) => ({
+      name,
+      bytes: await readFile(new URL(`../${name}`, import.meta.url)),
+    })),
+  );
+  const { retained, optional: unretained } = selectOfflineCore(files, new Set());
+  for (const name of [
+    'game/snake/index.html',
+    'game/snake/hub.mjs',
+    'game/snake/play.html',
+    'game/snake/classic-app.mjs',
+    'game/snake/classic.css',
+    'game/snake/classic-audio.mjs',
+    'game/snake/classic-catalogue.mjs',
+    'game/snake/classic-catalogue-v4.mjs',
+    'game/snake/classic-core.mjs',
+    'game/snake/classic-core-v4.mjs',
+    'game/snake/classic-match.mjs',
+    'game/snake/classic-presentation.mjs',
+    'game/snake/classic-flight-art.mjs',
+    'game/snake/classic-target-art.mjs',
+    ...shared,
+  ])
+    assert.ok(retained.has(name), `${name} must be available on first offline play`);
+  for (const name of optional) {
+    assert.equal(retained.has(name), false, name);
+    assert.ok(unretained.includes(name), name);
+  }
+});
+
+test('actual native menu imports and styles remain in each mode offline closure', async () => {
+  const names = [
+    'game/index.html',
+    'game/boot.mjs',
+    'game/app.mjs',
+    'game/ui/game-shell.mjs',
+    'game/ui/field-kit-surfaces.mjs',
+    'game/ui/mode-choice.mjs',
+    'game/ui/mode-choice-view.mjs',
+    'game/ui/native-menus.mjs',
+    'game/ui/native-menu.css',
+    'game/ui/native-menu-icons.mjs',
+    'game/ui/mode-settings-view.mjs',
+    'game/ui/mode-settings-view.css',
+    'game/ui/settings-panels.mjs',
+    'game/ui/pause-menu.mjs',
+    'game/ui/pause-menu.css',
+    'game/ui/device-controls.css',
+    'game/ui/handheld-play.css',
+    'game/ui/touch-steering.css',
+    'game/ui/mode-boot.css',
+    'game/couch/index.html',
+    'game/couch/couch.mjs',
+    'game/couch/couch-shell.mjs',
+    'game/couch/relay-rescue.html',
+    'game/couch/relay-rescue.mjs',
+    'game/snake/play.html',
+    'game/snake/classic-app.mjs',
+  ];
+  const files = await Promise.all(
+    names.map(async (name) => ({
+      name,
+      bytes: await readFile(new URL(`../${name}`, import.meta.url)),
+    })),
+  );
+  for (const mode of ['solo', 'team', 'versus']) {
+    const { retained } = selectOfflineCore(files, new Set(), { mode });
+    for (const name of [
+      'game/ui/mode-choice-view.mjs',
+      'game/ui/mode-settings-view.mjs',
+      'game/ui/native-menu-icons.mjs',
+      'game/ui/pause-menu.mjs',
+      'game/ui/pause-menu.css',
+      'game/ui/touch-steering.css',
+    ])
+      assert.ok(retained.has(name), `${mode}: ${name}`);
+    if (mode !== 'solo')
+      assert.ok(retained.has('game/ui/mode-boot.css'), `${mode} boot stylesheet`);
+    else assert.ok(retained.has('game/ui/mode-settings-view.css'), 'Snake category stylesheet');
+  }
+});
 test('Solo startup graph retains boot styles and production assets while mode hosts stay separate', () => {
   const files = entries({
     'game/index.html':

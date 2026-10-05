@@ -9,7 +9,11 @@ import { attachModalNavigation } from '../ui/modal-navigation.mjs';
 import { attachFullscreen } from '../ui/fullscreen.mjs';
 import { attachControllerNavigation } from '../ui/controller-navigation.mjs';
 import { setMenuIcon } from '../ui/native-menu-icons.mjs';
-import { contextualAppearance } from '../ui/mode-choice.mjs';
+import { contextualAppearance, mountModeChoices } from '../ui/mode-choice.mjs';
+import {
+  attachInstallOfflinePanel,
+  guardInstallOfflineBlur,
+} from '../ui/install-offline-panel.mjs';
 import { appearanceLaunchURL, nativeArtReviewURL } from '../fpv-entry.mjs';
 import { installThemeHost } from '../presentation/theme-host.mjs';
 import { createPresentationHost } from '../presentation/host.mjs';
@@ -25,7 +29,7 @@ import { createAudioMaster } from '../ui/audio-master.mjs';
 import { createAudioPreferences } from '../audio-preferences.mjs';
 import { Soundscape } from '../ui/audio.mjs';
 import { attachCouchMusicHost } from '../couch/couch-music-host.mjs';
-import { getLocale, setLocale, onLocaleChange } from '../i18n/index.mjs';
+import { getLocale, setLocale, onLocaleChange, localizedText, t } from '../i18n/index.mjs';
 import {
   DEFAULT_OVERFLIGHT_PROJECT,
   createOverflightProject,
@@ -190,6 +194,8 @@ if (!Number.isSafeInteger(seed) || seed < 1 || seed > 0xffffffff) seed = compile
 let run = null,
   renderer = null,
   shell = null,
+  modeChoices = null,
+  offlinePanel = null,
   navigator = null,
   controller = null,
   controllerStatus = null,
@@ -308,6 +314,8 @@ function releaseInput() {
 }
 function activeModal() {
   return (
+    offlinePanel?.root() ??
+    modeChoices?.simulatorRoot() ??
     music?.root() ??
     (missionChooser?.elements.dialog.open ? missionChooser.elements.dialog : null) ??
     ($('upgrade-dialog').open ? $('upgrade-dialog') : shell?.topDialog())
@@ -889,6 +897,14 @@ const gameplayKeys = new Set([
   'Space',
 ]);
 function readInput() {
+  // The shared downloads iframe owns its controller while focused. Its parent
+  // remains paused and discards held flight input before focus returns.
+  if (offlinePanel?.frameFocused()) {
+    held.clear();
+    controller?.clear();
+    navigator?.cancelConfirm();
+    return inputGate.sample({ x: 0, y: 0, boost: false, neutral: false });
+  }
   const modal = activeModal();
   const axes = controller?.sample({
     scope:
@@ -1143,18 +1159,27 @@ function destination(path) {
     win.location.href,
   );
 }
-for (const [path, key] of [
-  ['../index.html', 'mainGame'],
-  ['../snake/play.html', 'snake'],
+const modeActions = {};
+for (const [key, path] of [
+  ['solo', '../index.html'],
+  ['team', '../couch/relay-rescue.html'],
+  ['versus', '../couch/'],
 ]) {
-  const link = el('a', text(key));
+  const link = el('a');
   link.href = destination(path);
   listen(link, 'click', () => {
     link.href = destination(path);
     pause({ menu: false });
   });
-  $('overflight-mode-links').append(link);
+  modeActions[key] = link;
 }
+modeChoices = mountModeChoices({
+  root: $('overflight-mode-links'),
+  current: 'overflight',
+  actions: modeActions,
+  guidesContainer: $('overflight-help'),
+  pause: () => pause({ menu: false }),
+});
 shell = mountModePlayShell({
   document: doc,
   mount: $('overflight-shell'),
@@ -1202,6 +1227,36 @@ shell = mountModePlayShell({
   onSurfaceChange: (name) => {
     if (name === 'missions') void refreshMissions();
   },
+});
+const offlineSettings = el('section', '', 'overflight-offline-settings');
+const offlineHeading = el('h3');
+localizedText(offlineHeading, () => t('interface:nativeMenu.content'));
+const offlineButton = el('button');
+offlineButton.id = 'overflight-offline-downloads';
+offlineButton.type = 'button';
+localizedText(offlineButton, () => t('interface:installAppGameAndSoundtrackDownloads'));
+setMenuIcon(offlineButton, 'content');
+const offlineStatus = el('p');
+offlineStatus.id = 'overflight-offline-status';
+offlineStatus.setAttribute('role', 'status');
+offlineStatus.hidden = true;
+offlineSettings.append(offlineHeading, offlineButton, offlineStatus);
+$('overflight-settings').append(offlineSettings);
+offlinePanel = attachInstallOfflinePanel({
+  document: doc,
+  window: win,
+  downloadsURL: new URL('../downloads.html', import.meta.url),
+  canActivate: () =>
+    !retired && !preparing && (!run || ['ready', 'won', 'lost'].includes(run.phase)),
+  onOpen: () => pause({ menu: false }),
+  onClose: releaseInput,
+  onStatus: (message) => {
+    offlineStatus.textContent = message;
+    offlineStatus.hidden = !message;
+  },
+});
+listen(offlineButton, 'click', () => {
+  if (shell.elements.dialogs.settings.open) offlinePanel.open();
 });
 // Overflight exposes its operation settings directly; it has no separate expert screen.
 shell.elements.buttons.expert.hidden = true;
@@ -1492,16 +1547,20 @@ navigator = attachControllerNavigation({
   document: doc,
   keyboard: true,
   getScope: () => (activeModal() ? 'ui' : 'flight'),
-  getRoot: () => activeModal() ?? $('overflight-shell'),
+  getRoot: () => (offlinePanel?.frameFocused() ? null : (activeModal() ?? $('overflight-shell'))),
   getDefaultFocus: () => activeModal()?.querySelector('button:not(:disabled),a[href]'),
   getControlLabels: () => controller?.labels() ?? { confirm: '', back: '', directions: '' },
   onBack: () => {
-    if (music?.root()) music.back();
+    if (offlinePanel?.root()) offlinePanel.close();
+    else if (modeChoices?.simulatorRoot()) modeChoices.closeSimulator();
+    else if (music?.root()) music.back();
     else if (missionChooser?.elements.dialog.open) missionChooser.close();
     else if (!$('upgrade-dialog').open) shell.back();
   },
   onMenu: () => {
-    if (music?.root()) music.back();
+    if (offlinePanel?.root()) offlinePanel.close();
+    else if (modeChoices?.simulatorRoot()) modeChoices.closeSimulator();
+    else if (music?.root()) music.back();
     else if (missionChooser?.elements.dialog.open) missionChooser.close();
     else if (!$('upgrade-dialog').open) shell.back();
   },
@@ -1619,11 +1678,15 @@ listen(doc, 'keydown', (event) => {
   }
 });
 listen(doc, 'keyup', (event) => held.release(event.code));
-listen(win, 'blur', () => {
-  held.clear();
-  pause();
-  music?.suspend();
-});
+listen(
+  win,
+  'blur',
+  guardInstallOfflineBlur(() => {
+    held.clear();
+    pause();
+    music?.suspend();
+  }, doc),
+);
 listen(doc, 'visibilitychange', () => {
   if (doc.hidden) {
     held.clear();
@@ -1778,6 +1841,8 @@ async function dispose() {
   controller?.destroy();
   missionChooser?.destroy();
   missionRegistry?.dispose();
+  offlinePanel?.dispose();
+  modeChoices?.dispose();
   shell.dispose();
   themeControls.dispose();
   encounterDisplay.dispose();
