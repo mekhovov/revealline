@@ -19,13 +19,14 @@ const MODE_ENTRIES = {
   team: ['game/couch/relay-rescue.html'],
 };
 // These are conditional source-v1 library adapters. Published Solo navigation
-// has exact metadata views and never executes their imports.
+// has exact metadata views and never executes their imports. The shared
+// encounter host statically imports the Versus factory even for Solo; that
+// small module belongs to core, while the actual Versus page remains optional.
 const PUBLISHED_SOLO_BOUNDARIES = new Set([
   'game/couch/index.html',
   'game/couch/relay-rescue.html',
   'game/couch/couch.mjs',
   'game/couch/relay-rescue.mjs',
-  'game/content-design/versus-host.mjs',
   'game/mission-library/remote-team.mjs',
   'game/mission-library/spatial-next-editions.mjs',
 ]);
