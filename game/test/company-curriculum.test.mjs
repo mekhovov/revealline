@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { CURRICULUM_LESSONS } from '../company-campaigns/curriculum-lessons.mjs';
+import { SKY_WATCH_CAMPAIGN } from '../company-campaigns/sky-watch.mjs';
 import { canonicalJSON } from '../data-json.mjs';
 import { readFile } from 'node:fs/promises';
 import {
@@ -402,9 +403,9 @@ test('later curricula use canonical progression with registered distinct present
       assert.ok(mission.design.introduces.length <= 1);
     }
     const edition = COMPANY_EDITIONS.find((entry) => entry.id === definition.brandId);
-    const campaignIds = CURRICULUM_CAMPAIGNS.filter(
-      (entry) => entry.brandId === definition.brandId,
-    ).map((entry) => entry.id);
+    const campaignIds = [...CURRICULUM_CAMPAIGNS, SKY_WATCH_CAMPAIGN]
+      .filter((entry) => entry.brandId === definition.brandId)
+      .map((entry) => entry.id);
     assert.deepEqual(edition.campaignIds, campaignIds);
     assert.equal(edition.entryCampaignId, campaignIds[0]);
     const themes = createCompanyThemes(definition.brandId);
@@ -421,7 +422,7 @@ test('later curricula use canonical progression with registered distinct present
   }
 });
 
-test('mission-art expansion retains every prior gameplay binding and revises each changed reward payload', async () => {
+test('mission-art expansion retains every prior curriculum gameplay binding and revises each changed reward payload', async () => {
   for (const editionId of [
     'social-drone-ua',
     'victory-drones',
@@ -444,6 +445,13 @@ test('mission-art expansion retains every prior gameplay binding and revises eac
       for (const descriptor of snapshot.catalog.campaigns) {
         const previous = snapshot.files.find((file) => file.path === descriptor.sourcePath).data;
         const current = projects.find(({ definition }) => definition.id === descriptor.id);
+        if (!current) {
+          // Sky Watch is a separate single-mission release. Its explicit r2
+          // geometry/media upgrade is covered by social-drone-sky-watch.test;
+          // it is not one of the eighteen gameplay-preserving curricula.
+          assert.equal(descriptor.id, SKY_WATCH_CAMPAIGN.id);
+          continue;
+        }
         assert.deepEqual(createRewardMissionBindings(previous), current.missionBindings);
         const oldRewards = snapshot.files.find((file) => file.path === descriptor.rewardPath).data;
         for (const before of oldRewards) {

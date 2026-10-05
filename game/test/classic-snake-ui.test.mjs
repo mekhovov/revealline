@@ -24,9 +24,11 @@ import { mountModePlayShell } from '../ui/mode-play-shell.mjs';
 import { attachModalNavigation } from '../ui/modal-navigation.mjs';
 import { attachControllerNavigation } from '../ui/controller-navigation.mjs';
 import { snakeStudioReturnHref } from '../ui/content-studio-navigation.mjs';
-import { fpvWorldLaunchURL, appearanceLaunchURL } from '../fpv-entry.mjs';
+import { fpvWorldLaunchURL, appearanceLaunchURL, nativeArtReviewURL } from '../fpv-entry.mjs';
 import { CLASSIC_COPY } from '../snake/classic-copy.mjs';
 import { advanceClassicFlight } from '../snake/classic-flight-art.mjs';
+import { t } from '../i18n/index.mjs';
+import { mountEnemyAppearanceControls } from '../ui/enemy-appearance-controls.mjs';
 
 const appURL = new URL('../snake/classic-app.mjs', import.meta.url);
 const source = await readFile(appURL, 'utf8');
@@ -56,6 +58,7 @@ async function harness({
   entry = CLASSIC_SNAKE_LEVELS[0],
   mode = 'solo',
   activity = 'campaign',
+  artReview = null,
 } = {}) {
   const document = new Document();
   document.createElement = (tag) => {
@@ -85,9 +88,15 @@ async function harness({
     drawings = [],
     scheduledFrames = [],
     optionalEntries = [];
-  const display = { reducedEffects: false, effectiveReducedEffects: false };
+  const display = {
+    textFace: 'pixel',
+    textSize: 'standard',
+    reducedEffects: false,
+    effectiveReducedEffects: false,
+  };
+  const displayListeners = new Set();
   const location = {
-    href: `https://example.test/game/snake/play.html?mode=${mode}&level=${entry.id}&activity=${activity}`,
+    href: `https://example.test/game/snake/play.html?mode=${mode}&level=${entry.id}&activity=${activity}${artReview ? `&artReview=${encodeURIComponent(artReview)}` : ''}`,
   };
   const preferences = (snapshot) => ({
     snapshot: () => snapshot,
@@ -98,6 +107,10 @@ async function harness({
     set() {},
   });
   let shell;
+  let enemyStyle = 'authored';
+  const enemyListeners = new Set(),
+    artworkSelections = [],
+    appearanceActions = [];
   const context = createContext({
     __appURL: appURL.href,
     mountModePlayShell(options) {
@@ -111,13 +124,33 @@ async function harness({
     snakeStudioReturnHref,
     fpvWorldLaunchURL,
     appearanceLaunchURL,
+    nativeArtReviewURL,
     contextualAppearance: () => null,
     mountOptionalPracticePanel(options) {
       optionalEntries.push(options);
       return { open() {}, root: () => null, close() {}, dispose() {} };
     },
     boardPlacement: () => ({ board: 'solo', pan: 0 }),
-    createClassicAudio: () => ({ reset() {}, update() {} }),
+    createClassicAudio: () => ({ reset() {}, update() {}, prepare() {}, dispose() {} }),
+    runtimeActorArtRevision: () =>
+      artReview ?? (enemyStyle === 'military' ? 'industrial-roster-v3' : null),
+    mountEnemyAppearanceControls(options) {
+      return mountEnemyAppearanceControls({
+        ...options,
+        preferences: {
+          snapshot: () => ({ style: enemyStyle, durable: true }),
+          set({ style }) {
+            enemyStyle = style;
+            for (const listener of enemyListeners) listener();
+          },
+          subscribe(listener) {
+            enemyListeners.add(listener);
+            listener();
+            return () => enemyListeners.delete(listener);
+          },
+        },
+      });
+    },
     sharedActorAppearance: () => preferences({ cast: 'authored' }),
     ACTOR_CASTS,
     actorFieldGuide,
@@ -152,13 +185,32 @@ async function harness({
     navigator: { getGamepads: () => [] },
     setTimeout,
     getLocale: () => 'en',
+    t,
     setLocale() {},
     onLocaleChange() {},
     createDestructionPreferences: () => preferences({ brutal: false, blood: true }),
     createEncounterDisplayPreferences: () => preferences({ showRemains: true }),
-    createDisplayPreferences: () => preferences(display),
+    createDisplayPreferences: () => ({
+      snapshot: () => display,
+      subscribe(listener) {
+        displayListeners.add(listener);
+        listener(display);
+        return () => displayListeners.delete(listener);
+      },
+      set(patch) {
+        Object.assign(display, patch);
+        for (const listener of displayListeners) listener(display);
+      },
+    }),
     createTouchPreferences: () => preferences({ size: 'normal', opacity: 1, side: 'right' }),
-    createClassicPresentation: () => ({ snapshot: () => null }),
+    createClassicPresentation: () => ({
+      snapshot: () => null,
+      setArtRevision: (revision) => artworkSelections.push(revision),
+      theme: {
+        applyComplete: (family) => appearanceActions.push(family),
+        set: (value) => appearanceActions.push(value),
+      },
+    }),
     createBoardFootprints: () => ({ refresh() {}, dispose() {}, width: () => 336 }),
     devicePixelRatio: 2,
     createAudioMaster: () => preferences({ muted: false, volume: 1 }),
@@ -204,6 +256,16 @@ async function harness({
     CLASSIC_COPY,
     ...core,
     ...matches,
+    createClassicSnake(...args) {
+      return core.createClassicSnake(...args.map((argument) => structuredClone(argument)));
+    },
+    restoreClassicSnakeLegacyMatch(...args) {
+      // The legacy wrapper is assembled in the browser VM. Its production
+      // validator shares that realm; normalize only the harness boundary here.
+      return matches.restoreClassicSnakeLegacyMatch(
+        ...args.map((argument) => structuredClone(argument)),
+      );
+    },
     createClassicSnakeMatch(...args) {
       // The VM models a browser realm; normalize only this harness crossing so
       // strict plain-data admission sees the same realm it would in production.
@@ -221,6 +283,8 @@ async function harness({
     document,
     created,
     drawings,
+    artworkSelections,
+    appearanceActions,
     display,
     window,
     storage,
@@ -243,6 +307,52 @@ async function harness({
 }
 
 for (const mode of ['solo', 'versus', 'team']) {
+  test(`${mode} accepts a changed military preset on the first Start without replacing the recipe`, async () => {
+    const state = await harness({ mode });
+    const before = state.created.map((run) => core.exportClassicSnakeReplay(run));
+    state.shell.open('settings');
+    const selector = state.document.querySelector('[data-enemy-appearance]');
+    selector.value = 'military';
+    selector.dispatchEvent({ type: 'change' });
+    await flush();
+    state.start();
+    state.frame(0);
+    assert.equal(state.artworkSelections.at(-1), 'industrial-roster-v3');
+    assert.equal(state.drawings.at(-1).options.artRevision, 'industrial-roster-v3');
+    assert.deepEqual(
+      state.created.map((run) => core.exportClassicSnakeReplay(run)),
+      before,
+    );
+  });
+
+  test(`${mode} military preset is available on an ordinary level and takes effect on Retry without changing its recipe`, async () => {
+    const state = await harness({ mode });
+    state.start();
+    state.frame(0);
+    state.shell.open('settings');
+    const before = state.created.map((run) => core.exportClassicSnakeReplay(run));
+    const selector = state.document.querySelector('[data-enemy-appearance]');
+    selector.value = 'military';
+    selector.dispatchEvent({ type: 'change' });
+    await flush();
+    state.frame(50);
+    assert.deepEqual(state.appearanceActions, ['military-field']);
+    assert.equal(state.artworkSelections.at(-1), null, 'The current attempt retains its art.');
+    assert.equal(state.drawings.at(-1).options.artRevision, null);
+    assert.deepEqual(
+      state.created.map((run) => core.exportClassicSnakeReplay(run)),
+      before,
+    );
+    state.retry();
+    state.frame(100);
+    assert.equal(state.artworkSelections.at(-1), 'industrial-roster-v3');
+    assert.equal(state.drawings.at(-1).options.artRevision, 'industrial-roster-v3');
+    assert.deepEqual(
+      state.created.slice(before.length).map((run) => core.exportClassicSnakeReplay(run)),
+      before,
+    );
+  });
+
   test(`${mode} mission and settings menus cannot start or steer the prepared Snake boards`, async () => {
     const state = await harness({ mode });
     const before = state.created.map((run) => core.exportClassicSnakeReplay(run));
@@ -636,4 +746,58 @@ test('a failed Versus score board freezes its flight clock while the surviving b
     state.drawings.slice(-2).map((row) => row.options.flight),
     [nextFailed, nextSurviving],
   );
+});
+
+test('Snake reading controls update the shared display owner without replacing or advancing an attempt', async () => {
+  const state = await harness({ mode: 'team' });
+  const before = state.created.map((run) => core.exportClassicSnakeReplay(run));
+  state.shell.open('settings');
+  state.$('snake-text-size').value = 'large';
+  state.$('snake-text-size').emit('change');
+  state.$('snake-text-face').value = 'plain';
+  state.$('snake-text-face').emit('change');
+  assert.equal(state.display.textSize, 'large');
+  assert.equal(state.display.textFace, 'plain');
+  assert.equal(state.document.body.dataset.textSize, 'large');
+  assert.equal(state.document.body.dataset.textFace, 'plain');
+  assert.deepEqual(
+    state.created.map((run) => core.exportClassicSnakeReplay(run)),
+    before,
+  );
+  assert.equal(state.shell.blocksPlay(), true);
+});
+
+test('actual Snake links and optional SIM launch retain an explicit native review without changing recipes', async () => {
+  for (const mode of ['solo', 'versus', 'team']) {
+    const state = await harness({ mode, artReview: 'industrial-roster-v3' });
+    const before = state.created.map((run) => core.exportClassicSnakeReplay(run));
+    for (const id of ['home-link', 'campaign-link', 'remix-link', 'studio-link']) {
+      const url = new URL(state.$(id).href, state.location.href);
+      assert.equal(url.searchParams.get('artReview'), 'industrial-roster-v3', id);
+    }
+    const links = state.$('snake-mode-links').querySelectorAll('a');
+    assert.equal(links.length, 3);
+    for (const link of links) {
+      assert.equal(new URL(link.href).searchParams.get('artReview'), 'industrial-roster-v3');
+      link.click();
+      assert.equal(new URL(link.href).searchParams.get('artReview'), 'industrial-roster-v3');
+    }
+    const sim = new URL(state.optionalEntries.at(-1).bundledHref);
+    assert.equal(sim.searchParams.get('artReview'), 'industrial-roster-v3');
+    const back = new URL(sim.searchParams.get('game-return'), sim);
+    assert.equal(
+      back.searchParams.get('level'),
+      new URL(state.location.href).searchParams.get('level'),
+    );
+    assert.equal(back.searchParams.get('artReview'), 'industrial-roster-v3');
+    assert.deepEqual(
+      state.created.map((run) => core.exportClassicSnakeReplay(run)),
+      before,
+    );
+    const normal = await harness({ mode });
+    assert.equal(
+      new URL(normal.$('campaign-link').href, normal.location.href).searchParams.has('artReview'),
+      false,
+    );
+  }
 });

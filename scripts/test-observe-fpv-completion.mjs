@@ -100,7 +100,19 @@ test('failed admission retains exact plan and observer authority pins without la
   assert.equal(report.qualified, false);
   assert.equal(report.functionalStatus, 'not-started');
   assert.match(report.failure, /Envelope differs/);
-  assert.equal(report.instrumentation.length, 7);
+  assert.deepEqual(
+    report.instrumentation.map((item) => item.path),
+    [
+      'scripts/observe-fpv-completion.mjs',
+      'scripts/fpv-observation-artifact.mjs',
+      'scripts/game-cli.mjs',
+      'publishing/edition-zip.mjs',
+      'publishing/optional-package-admission.mjs',
+      'publishing/optional-package-policy.mjs',
+      'publishing/edition-admission.mjs',
+      'game/editions/package-budget.mjs',
+    ],
+  );
   assert(
     report.instrumentation.every((item) => item.bytes > 0 && /^[a-f0-9]{64}$/.test(item.sha256)),
   );

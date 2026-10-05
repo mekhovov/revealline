@@ -72,8 +72,8 @@ Imported exact-pack example lookup #1060 and multi-course editing #1063 are merg
 public deployment and actual SIM launch were verified on ade4bfc2. Shared-shell
 source preparation #1065 is merged and its bf9b0290 deployment/flight entry was
 verified. Scene-readiness #1067 merged at 29e23a11; Reservoir #1066 merged at 94548aa2.
-Reservoir's eight-course/16-example functional package is published, but production
-Library registration and representative art acceptance remain separate work.
+Reservoir's original eight-course/16-example functional publication is historical;
+the accepted r16 follow-up and remaining production Library gate are recorded above.
 Verify each newest deployment and player entry before claiming the new change live.
 
 ## Research and concrete changes
@@ -99,15 +99,15 @@ Preserve the fixed flight integrator, existing proof versions and physics profil
 
 ## Parallel work and completion gates
 
-| Lane / priority                             | Deliverable                                                                                   | Required completion evidence                                                                                                                                                                           | Then continue to                                                                  |
-| ------------------------------------------- | --------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | --------------------------------------------------------------------------------- |
-| Delivery — immediate                        | Finish current ready PR publication, verify deployment, and maintain this allocation          | Current-head protected checks, permitted merge, public marker and actual player launch                                                                                                                 | Next verified focused PR; never wait on unchanged CI when independent work exists |
-| Performance — P0                            | Controlled current-player baseline and bounded fixes for reproduced stalls                    | Exact input provenance, one visible native-clock player, cold/warm/course/quality observations, before/after comparison, unchanged replay/visibility contracts and package admission for runtime fixes | Representative natural/industrial scenes and longer-session qualification         |
-| Art/content — P1                            | Improve published Mountain Reservoir until it meets the representative quality standard below | Coherent scene and eight distinct route pairs, matching solid/support collision, final world freeze, sixteen full completion/replays, native import/editor/offline and public entry                    | Festival Grounds, Harbor Docks, Old Town Canals, one complete world per PR        |
-| Discovery — P1                              | Optional first-party worlds in Library                                                        | Bounded immutable data catalogue, explicit download size/revision, cancel/retry, exact hash/native install, no partial activation, removal/recovery and honest runtime-offline status                  | Register each finished world after its publication; preserve earlier revisions    |
-| Player integration — P1                     | Complete touch/controller/radio and teaching journeys                                         | EN/UK, small portrait/landscape and 1280×800 layouts, menu/flight ownership, arm/reset/pause, reconnect, settings restore, fullscreen fallback and unobstructed flight view                            | Repairs for reproduced issues, then retained D6 scenarios                         |
-| Reliability — P1 before broad world rollout | Combined creator/recording/recovery flow                                                      | Multi-course/mode edit/reimport/export/reopen, exact dependency replay, rollback, interrupted/quota failures and preserved records                                                                     | Final integrated release candidate                                                |
-| D6 — final                                  | Deferred unit coverage and full regression                                                    | Targeted new coverage, applicable required checks restored through the established process, resolved known diagnostics and explicit device/art limits                                                  | Stop recurring implementation when approved backlog is complete                   |
+| Lane / priority                             | Deliverable                                                                          | Required completion evidence                                                                                                                                                                           | Then continue to                                                                  |
+| ------------------------------------------- | ------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | --------------------------------------------------------------------------------- |
+| Delivery — immediate                        | Finish current ready PR publication, verify deployment, and maintain this allocation | Current-head protected checks, permitted merge, public marker and actual player launch                                                                                                                 | Next verified focused PR; never wait on unchanged CI when independent work exists |
+| Performance — P0                            | Controlled current-player baseline and bounded fixes for reproduced stalls           | Exact input provenance, one visible native-clock player, cold/warm/course/quality observations, before/after comparison, unchanged replay/visibility contracts and package admission for runtime fixes | Representative natural/industrial scenes and longer-session qualification         |
+| Art/content — P1                            | Complete Festival after the accepted bounded Reservoir r16 scene gate                | Coherent scene and eight distinct route pairs, matching solid/support collision, final world freeze, sixteen full completion/replays, native import/editor/offline and public entry                    | Harbor Docks, then Old Town Canals, one complete world per PR                     |
+| Discovery — P1                              | Optional first-party worlds in Library                                               | Bounded immutable data catalogue, explicit download size/revision, cancel/retry, exact hash/native install, no partial activation, removal/recovery and honest runtime-offline status                  | Register each finished world after its publication; preserve earlier revisions    |
+| Player integration — P1                     | Complete touch/controller/radio and teaching journeys                                | EN/UK, small portrait/landscape and 1280×800 layouts, menu/flight ownership, arm/reset/pause, reconnect, settings restore, fullscreen fallback and unobstructed flight view                            | Repairs for reproduced issues, then retained D6 scenarios                         |
+| Reliability — P1 before broad world rollout | Combined creator/recording/recovery flow                                             | Multi-course/mode edit/reimport/export/reopen, exact dependency replay, rollback, interrupted/quota failures and preserved records                                                                     | Final integrated release candidate                                                |
+| D6 — final                                  | Deferred unit coverage and full regression                                           | Targeted new coverage, applicable required checks restored through the established process, resolved known diagnostics and explicit device/art limits                                                  | Stop recurring implementation when approved backlog is complete                   |
 
 Performance, Library delivery and integrated reliability own the main engineering
 allocation. Small reproduced menu/input repairs belong to integrated reliability;
@@ -127,19 +127,21 @@ performance pass.
 
 ### World production and variety
 
-Reservoir r8 is the published functional baseline: eight courses and sixteen final
-mode-specific completion/replays, 575 CPU checks and 304 imported-player checks,
-plus a true server-offline flight/editor journey. Preserve that immutable package,
-examples and completion evidence. The art review found visible triangular
-openings at the western terrace/ridge join, so a narrow seam repair comes first.
-Keep canonical collision and route envelopes unchanged; publish any changed visual
-pack as an explicit revision and requalify exact dependencies rather than replacing
+Reservoir r8 remains an immutable historical functional baseline with its original
+proofs and stopped-origin offline evidence. Its seam, rooting and hut follow-ups
+are now incorporated in separately published r16, exact pack
+`50ffbb0e5da7dec94862a8f2ca85cfeb60542d3fe9f86bd3c4e288dfa0a2e554`.
+The r16 qualification retains eight courses, 16 fresh mode-specific
+completion/replays, 575 CPU checks and 304 imported-player checks. Preserve both
+revisions and do not relabel old offline evidence as a new combined-runtime run.
+Canonical collision and route envelopes remain unchanged. Future changed visual
+packs need explicit revisions and exact-dependency qualification, never replaced
 published bytes. Water remains outside playable land bounds.
 
 Installing Reservoir yields 204 challenges / 15 installed worlds; the bundled
 baseline remains 196 / 14. It is the first of four additional worlds, with production
-Library registration, public player entry and representative art acceptance still
-separate. Art follow-ups do not add courses. Generic imported-card
+Library registration and its actual public download/entry still separate from the
+accepted bounded r16 art views. Art follow-ups do not add courses. Generic imported-card
 Explore / Intermediate / 4 min metadata remains a bounded host follow-up,
 not a claim about each Reservoir route's activity or duration.
 
@@ -214,6 +216,24 @@ is implied by this gate.
    Browse remains its own gate. Retain exact revisions, genuine proofs/recovery,
    and the strict separate-writer fence; real quota/eviction and broader hardware
    remain unclaimed. Do not repeat passed component matrices without a new cause.
+
+The bounded [combined-journey design](fpv-combined-journey-qualification.md) reuses
+the preserved 216 staging and component receipts. Reservoir's pack and proof
+archive remain separate imports; online source overlays cannot establish cached
+native offline continuity. Final acceptance needs the exact admitted combined
+runtime, the eligible published content, and a dedicated empty origin.
+
+The next performance window uses natural Reservoir and industrial Yard on the
+same final runtime with native longer observation windows. Require owned-resource
+release and no monotonic growth across identical repeated poses; internal
+environment caches are not an absolute-zero failure. Track ImageBitmap ownership
+separately, following [Three.js disposal guidance](https://threejs.org/manual/pages/how-to-dispose-of-objects.html).
+Feature-detect Long Animation Frames, whose reporting threshold is 50 ms; no
+entries does not prove no jank. Include entries overlapping a window's start or
+state their exclusion, and retain API/browser support in the receipt. These are
+measurement requirements, not a benchmark or FPS result.
+[Chrome's LoAF documentation](https://developer.chrome.com/docs/web-platform/long-animation-frames)
+describes the threshold and attribution limits.
 
 ### Visual and input quality checks
 

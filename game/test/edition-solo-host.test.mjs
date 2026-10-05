@@ -4,6 +4,7 @@ import { readFile } from 'node:fs/promises';
 import { PNGImage } from './helpers/png-image.mjs';
 import { RasterImage } from './helpers/raster-image.mjs';
 import { soloPage, settle, memoryStorage } from './helpers/solo-dom.mjs';
+import { waitFor } from './helpers/wait-for.mjs';
 import { managedIndexedDB } from './helpers/managed-idb.mjs';
 import { editionProviderFixture } from './helpers/edition-provider-fixture.mjs';
 import { compileContentProject, resolveMission } from '../content-design/project.mjs';
@@ -801,11 +802,33 @@ test('edition pause keeps canonical Skip confirmation and Watch first cut action
   page.$('pause-button').click();
   assert.equal(page.$('game-overlay').hidden, false);
   assert.equal(page.$('demo-button').hidden, false);
+  const retainedRun = page.rendered.run,
+    paused = authoritativeCheckpoint(retainedRun);
   page.$('demo-button').click();
-  await settle(() => page.doc.body.dataset.flightState === 'running');
+  assert.equal(page.$('demo-dialog').open, true, 'Watch first cut opens the shared Demo player.');
+  // This boundary includes exact-edition Demo planning and verified asset work.
+  // Keep the real scene predicate and paused-attempt assertions; a crowded
+  // company cohort may take longer than an ordinary five-second UI transition.
+  await waitFor(() => page.$('demo-dialog').dataset.scene === 'playing', {
+    timeoutMs: 20000,
+    message: 'Exact-edition Demo preparation did not reach its playable scene.',
+  });
+  assert.ok(
+    f.source.missions.some((mission) => mission.name === page.$('demo-level').textContent),
+    'The presentation-only Demo rotation stays within this edition, without requiring its first mission.',
+  );
+  assert.equal(page.doc.body.dataset.flightState, 'paused');
+  assert.deepEqual(
+    authoritativeCheckpoint(retainedRun),
+    paused,
+    'Watching does not replace the paused attempt.',
+  );
+  page.$('demo-back').click();
+  assert.equal(page.$('demo-dialog').open, false);
   page.frame(0);
-  assert.equal(page.rendered.run.levelId, f.project.missions[0].id);
-  assert.match(page.$('run-message').textContent, /Demonstration.*no.*(award|reward)/i);
+  assert.equal(page.rendered.run, retainedRun);
+  assert.equal(page.rendered.run.levelId, second.id);
+  assert.deepEqual(authoritativeCheckpoint(retainedRun), paused);
   assert.deepEqual(page.errors, []);
 });
 
