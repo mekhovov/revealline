@@ -53,14 +53,18 @@ const module = await import(pathToFileURL(path.join(root, lib))),
   { installPracticeWorker: installParentWorker } = await import(
     'data:text/javascript;base64,' + git('optional-practice/worker-template.mjs').toString('base64')
   );
-const feeds = [];
+const inheritedRows = module.worldLibraryIndex(
+    git('authoring/fpv-worlds/published/surface-coating-v1/index.json'),
+  ),
+  sameInheritedRows = (rows) => JSON.stringify(rows) === JSON.stringify(inheritedRows),
+  feeds = [];
 for (const name of ['index.json', 'surface-coating-v1/index.json', 'ground-motion-v1/index.json']) {
   const file = 'authoring/fpv-worlds/published/' + name,
     bytes = await read(file);
   feeds.push({ path: file, bytes: bytes.length, sha256: hash(bytes) });
   check(
     'Strict v1 parser accepts expected rows in ' + name,
-    module.worldLibraryIndex(bytes).length === (name === 'index.json' ? 0 : 1),
+    module.worldLibraryIndex(bytes).length === (name === 'index.json' ? 0 : inheritedRows.length),
   );
   if (name !== 'ground-motion-v1/index.json')
     check('Older feed exact ' + name, bytes.equals(git(file)));
@@ -73,14 +77,28 @@ const cumulative = module.worldLibraryIndex(
   await read('authoring/fpv-worlds/published/ground-motion-v1/index.json'),
 );
 check(
-  'Only the already-published Reservoir revision is eligible; no Harbor or Festival row',
-  cumulative.length === 1 &&
+  'Cohort retains every inherited compatible row with no additions or identity changes',
+  sameInheritedRows(cumulative),
+);
+check(
+  'Inherited catalogue retains the exact published Reservoir revision',
+  cumulative.length >= 1 &&
     cumulative[0].id === 'mountain-reservoir' &&
     cumulative[0].revision === 'r16' &&
     cumulative[0].commit === 'ea57d2e321896ab873c2ca6ca06791a88362a674' &&
     cumulative[0].sha256 === '50ffbb0e5da7dec94862a8f2ca85cfeb60542d3fe9f86bd3c4e288dfa0a2e554' &&
     cumulative[0].bytes === 1379988 &&
     cumulative[0].courses === 8,
+);
+check(
+  'Dropped inherited entry is refused by the identity comparison',
+  !sameInheritedRows(inheritedRows.slice(1)),
+);
+check(
+  'Changed inherited entry is refused by the identity comparison',
+  !sameInheritedRows(
+    inheritedRows.map((row, index) => (index === 0 ? { ...row, sha256: '0'.repeat(64) } : row)),
+  ),
 );
 const row = {
   id: 'cohort-diagnostic',
@@ -251,17 +269,21 @@ const policyPath = 'publishing/optional-package-policy.mjs',
   ].sort();
 check('Inherited current P1 policy remains byte-exact', policyBytes.equals(git(policyPath)));
 check(
-  'Current parent admission uses the exact105 input policy closure',
-  inventory.inputs.length === 105 &&
+  'Parent admission uses the exact inherited input policy closure',
+  inventory.inputs.length === expectedPaths.length &&
     JSON.stringify(inventory.inputs.map((r) => r.path).sort()) === JSON.stringify(expectedPaths),
 );
 check(
   'Current Worlds policy remains128 files and20MiB',
   policy.limits.files === 128 && policy.limits.bytes === 20971520,
 );
+const runtimePaths = [
+  ...optionalRuntimePaths(policy, { launcher: true }),
+  'optional-package.json',
+].sort();
 check(
-  'Unchanged runtime member paths remain112 including descriptor',
-  optionalRuntimePaths(policy, { launcher: true }).length + 1 === 112,
+  'Inherited runtime paths are unique and within the unchanged128-file ceiling',
+  new Set(runtimePaths).size === runtimePaths.length && runtimePaths.length <= policy.limits.files,
 );
 const parentInputs = [];
 for (const old of inventory.inputs) {
@@ -276,8 +298,8 @@ for (const old of inventory.inputs) {
     changed.push({ ...next, beforeBytes: old.bytes, beforeSHA256: old.sha256 });
 }
 check(
-  'All105 parent committed bytes match the named fresh admission inventory',
-  parentInputs.length === 105,
+  'Every inherited parent committed input matches the named admission inventory',
+  parentInputs.length === expectedPaths.length,
 );
 check(
   'Only two generated admitted inputs change',
@@ -295,7 +317,7 @@ await fs.writeFile(
   out,
   JSON.stringify(
     {
-      format: 'GroundMotionCohortSourceContract.v2',
+      format: 'GroundMotionCohortSourceContract.v3',
       baseline,
       inventoryPath,
       inventorySHA256: hash(await fs.readFile(inventoryPath)),
@@ -304,15 +326,18 @@ await fs.writeFile(
       policySHA256: hash(policyBytes),
       checks,
       feeds,
+      inheritedRows,
       cases,
       changedInputs: changed,
       inputCount: inputs.length,
+      runtimeMemberCount: runtimePaths.length,
+      runtimePathsSHA256: hash(JSON.stringify(runtimePaths)),
       totalSourceBytes: total,
       remainingSourceBytes: policy.limits.bytes - total,
       limitations: [
         'Manual Node parser and serialized worker request contracts with an in-memory scope and stubbed Response only; not a native Worker, HTTPS, UI, storage, offline or publication qualification.',
         'Input sum is a source measurement, not fresh package admission. No runtime limits or file policy changed.',
-        'Both old feeds remain exact. The new cohort copies the eligible merged Reservoir row byte-exact; no Harbor or Festival row is added. This is not observation of the newly served feed.',
+        'Both old feeds remain exact. The new cohort copies every compatible row from its exact named parent with no additions or identity changes. The parent catalogue must include only eligible published content. This is not observation of a newly served feed.',
       ],
     },
     null,

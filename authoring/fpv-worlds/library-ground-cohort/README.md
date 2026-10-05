@@ -45,6 +45,18 @@ reaction projection (−18 bytes) and worker projection (−2 bytes) differ from
 ground admission `328f4c537`; the policy still yields 112 Worlds members. This is
 a source measurement, not admission of the candidate.
 
+The follow-up [v3 source receipt](evidence/source-contract-inherited-v3.json)
+passes 60 checks against the same exact Harbor parent `c958e5e13`. Its probe
+derives the full catalogue and policy input set from that named parent instead
+of assuming that every future parent has one row and 105 inputs. Both old feeds
+remain byte-exact, the cumulative feed must copy the complete compatible feed,
+and negative cases reject a missing row or changed identity. The exact Reservoir
+identity, policy bytes, committed input bytes, immutable request checks and
+128-file/20 MiB ceilings remain enforced. This run still measures 105 inputs and
+112 runtime members; no runtime, feed or package content changed. It prepares
+the probe for a later linear stack refresh without claiming that refresh or
+fresh package admission has happened.
+
 The final source freeze is `2c99a82508f23e508666d7354a1b473507514d48`,
 tree `9b8339c70f93c9405770038d806dd1c283710687`. All 6,006 selected validation
 source files matched committed Git without copying new source. Full Node 22
