@@ -92,6 +92,7 @@ export function updateOverflightHuntHUD({ run, compiled, document, text, local }
   const milestone = { sector: hunt.sector, objectives: hunt.objectivesCompleted, ready, active };
   const previous = announcedHUD.get(run),
     status = $('raid-event-status');
+  if (!previous && status) status.textContent = '';
   if (previous && status && run.phase === 'playing') {
     const messages = [];
     if (previous.sector !== milestone.sector || previous.objectives !== milestone.objectives)
