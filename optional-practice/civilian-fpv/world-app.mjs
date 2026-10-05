@@ -13,6 +13,7 @@ import {
   FLIGHT_WORLDS,
   ACTIVITY_NAMES,
   CURATED_PLAYLISTS,
+  canonicalFreeFlightEntry,
 } from './world-catalogue.mjs';
 import { FLIGHT_COURSES } from './catalogue.mjs';
 import {
@@ -2386,13 +2387,18 @@ export function mountWorldApp({
       card.append(rows);
       card.append(
         button(txt('Free flight', 'Вільний політ'), () => {
-          const course = clone(group[0].course);
+          const source = canonicalFreeFlightEntry(catalogue, id);
+          if (!source) return;
+          const course = clone(source.course);
           course.format = 'FlightCourse.v2';
           delete course.pursuit;
           course.id = unique('freeflight');
+          for (const language of ['en', 'uk'])
+            course.locales[language].title =
+              `${language === 'uk' ? 'Вільний політ' : 'Free flight'} · ${world?.title?.[language] ?? source.world}`;
           course.world ??= {
-            id: group[0].world,
-            theme: group[0].theme,
+            id: source.world,
+            theme: source.theme,
             style: world?.style ?? 'hangar',
           };
           course.actors = [];
@@ -2404,8 +2410,9 @@ export function mountWorldApp({
           };
           return startFlight(
             {
-              ...group[0],
+              ...source,
               id: course.id,
+              freeFlight: true,
               course: validateWorldCourse(course),
               legacy: false,
               beginner: undefined,
@@ -3913,7 +3920,8 @@ export function mountWorldApp({
     node.classList.toggle('sector-behind', value !== null && value > 0);
   }
   function updateSectorHUD() {
-    $('sector-panel').hidden = Boolean(checkpointSession) || modePractice;
+    $('sector-panel').hidden =
+      Boolean(checkpointSession) || modePractice || Boolean(current?.freeFlight);
     const latest = sectors.latest(sectorReference?.sectors),
       title = latest
         ? `${txt('Sector', 'Ділянка')} ${latest.index + 1} · ${seconds(latest.ticks)}`
@@ -4102,6 +4110,7 @@ export function mountWorldApp({
         objective += ` · ${txt('Touched your echo tail', 'Зіткнення зі своїм хвостом')}`;
     }
     if (modePractice) objective = `${modePracticeNotice()} · ${objective}`;
+    if (current.freeFlight) objective = freeFlightNotice();
     paintText('flight-objective', objective);
     $('world-arm').disabled =
       !sceneReady ||
@@ -4123,7 +4132,8 @@ export function mountWorldApp({
       Boolean(replayProof) ||
       Boolean(checkpointSession) ||
       !demonstrationFor(current, $('flight-mode').value);
-    $('export-flight').disabled = Boolean(checkpointSession) || modePractice;
+    $('export-flight').disabled =
+      Boolean(checkpointSession) || modePractice || Boolean(current.freeFlight);
     $('world-fire').hidden =
       Boolean(replayProof) ||
       current.legacy ||
@@ -4149,11 +4159,11 @@ export function mountWorldApp({
     input.enable(false);
     fire = false;
     radio.freeze('finished');
-    if (modePractice && !checkpointSession) {
+    if ((modePractice || current.freeFlight) && !checkpointSession) {
       $('result-panel').hidden = false;
       $('result-panel').replaceChildren(
         el('h2', txt('Practice ended', 'Тренування завершено')),
-        el('p', modePracticeNotice()),
+        el('p', current.freeFlight ? freeFlightNotice() : modePracticeNotice()),
         el(
           'p',
           txt(
@@ -4164,7 +4174,9 @@ export function mountWorldApp({
         button(txt('Practise again', 'Тренуватися ще раз'), () => startFlight(current), 'primary'),
         button(txt('Back to lobby', 'До меню'), () => closeFlight()),
       );
-      $('flight-status').textContent = modePracticeNotice();
+      $('flight-status').textContent = current.freeFlight
+        ? freeFlightNotice()
+        : modePracticeNotice();
       return;
     }
     if (checkpointSession) {
@@ -4761,6 +4773,11 @@ export function mountWorldApp({
     paintInput(state);
     if (terminal(state)) void finishFlight(flightToken).catch(reportError);
   }
+  const freeFlightNotice = () =>
+    txt(
+      'Free flight · no time limit · unscored',
+      'Вільний політ · без обмеження часу · без заліку',
+    );
   const modePracticeNotice = () =>
     txt(
       'Self-level practice · no score. Acro is needed for these manoeuvres.',
@@ -4885,11 +4902,13 @@ export function mountWorldApp({
     }
     $('flight-dialog').classList.toggle('learning-flight', Boolean(learning));
     preview =
+      Boolean(entry.freeFlight) ||
       modePractice ||
       Boolean(checkpointRequest) ||
       Boolean(options.replayProof) ||
       (options.preview ?? false);
-    playingPlaylist = checkpointRequest || modePractice ? null : (options.playlist ?? null);
+    playingPlaylist =
+      checkpointRequest || modePractice || entry.freeFlight ? null : (options.playlist ?? null);
     playlistIndex = options.index ?? 0;
     finished = false;
     sceneReady = false;
@@ -4938,15 +4957,21 @@ export function mountWorldApp({
       ? $('world-replay-label').textContent
       : checkpointRequest
         ? txt('SECTION PRACTICE · UNSCORED', 'ТРЕНУВАННЯ ДІЛЯНКИ · БЕЗ ЗАЛІКУ')
-        : modePractice
-          ? txt('SELF-LEVEL PRACTICE · UNSCORED', 'ПРАКТИКА ІЗ САМОВИРІВНЮВАННЯМ · БЕЗ ЗАЛІКУ')
-          : preview
-            ? txt('AUTHORING PREVIEW', 'АВТОРСЬКИЙ ПЕРЕГЛЯД')
-            : learning
-              ? txt('FLIGHT SCHOOL', 'ЛЬОТНА ШКОЛА')
-              : localized(WORLD_THEMES.find((t) => t.id === entry.theme)?.title) || entry.world;
-    $('flight-brief').textContent = $('flight-menu-brief').textContent =
-      `${modePractice ? `${modePracticeNotice()} ` : ''}${entry.course.locales[locale].brief}`;
+        : entry.freeFlight
+          ? txt('FREE FLIGHT · UNSCORED', 'ВІЛЬНИЙ ПОЛІТ · БЕЗ ЗАЛІКУ')
+          : modePractice
+            ? txt('SELF-LEVEL PRACTICE · UNSCORED', 'ПРАКТИКА ІЗ САМОВИРІВНЮВАННЯМ · БЕЗ ЗАЛІКУ')
+            : preview
+              ? txt('AUTHORING PREVIEW', 'АВТОРСЬКИЙ ПЕРЕГЛЯД')
+              : learning
+                ? txt('FLIGHT SCHOOL', 'ЛЬОТНА ШКОЛА')
+                : localized(WORLD_THEMES.find((t) => t.id === entry.theme)?.title) || entry.world;
+    $('flight-brief').textContent = $('flight-menu-brief').textContent = entry.freeFlight
+      ? txt(
+          'Explore the world for as long as you like. Pause to change flight mode, view or controls. No score or recording is saved.',
+          'Досліджуйте світ скільки завгодно. На паузі змінюйте режим польоту, камеру чи керування. Результат і запис польоту не зберігаються.',
+        )
+      : `${modePractice ? `${modePracticeNotice()} ` : ''}${entry.course.locales[locale].brief}`;
     $('flight-status').textContent = txt('Preparing scene…', 'Підготовка сцени…');
     paintLoadout();
     if (!$('flight-dialog').open) $('flight-dialog').showModal();
@@ -5080,19 +5105,20 @@ export function mountWorldApp({
         course: entry.course,
         mode: $('flight-mode').value,
         response: replayProof?.response ?? response,
-        unscoredPractice: modePractice,
+        unscoredPractice: modePractice || Boolean(entry.freeFlight),
       });
-      recorder = modePractice
-        ? null
-        : (entry.legacy ? createFlightRecorder : createWorldRecorder)(flight, {
-            session: replayProof
-              ? replayKind === 'demonstration'
-                ? 'demonstration'
-                : 'replay'
-              : preview
-                ? 'authoring'
-                : 'practice',
-          });
+      recorder =
+        modePractice || entry.freeFlight
+          ? null
+          : (entry.legacy ? createFlightRecorder : createWorldRecorder)(flight, {
+              session: replayProof
+                ? replayKind === 'demonstration'
+                  ? 'demonstration'
+                  : 'replay'
+                : preview
+                  ? 'authoring'
+                  : 'practice',
+            });
     }
     renderer.setPresentation?.(playableAppearance.appearance);
     renderer.setCourse(entry.course, $('flight-mode').value);
@@ -5802,7 +5828,12 @@ export function mountWorldApp({
             'Тренування ділянки триває · без нагород і запису.',
           )
         : preview
-          ? txt('Preview: completion does not earn rewards.', 'Перегляд: виконання не дає нагород.')
+          ? current?.freeFlight
+            ? freeFlightNotice()
+            : txt(
+                'Preview: completion does not earn rewards.',
+                'Перегляд: виконання не дає нагород.',
+              )
           : txt('Flight active.', 'Політ триває.');
     $('world-viewport').focus();
   });
