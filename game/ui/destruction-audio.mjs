@@ -9,7 +9,7 @@ export const DESTRUCTION_CATEGORIES = Object.freeze([
 ]);
 export const DESTRUCTION_CUES = Object.freeze(DESTRUCTION_CATEGORIES.map((id) => `destroy-${id}`));
 
-// Separate slots preserve the dry impact when gore is disabled. Human identity
+// Separate slots preserve the dry impact when Classic sounds is selected. Human identity
 // is independent of armor/electronics material (for example a relay operator).
 export const HUMAN_REACTION_CUES = Object.freeze(
   Array.from({ length: 8 }, (_, index) => `human-reaction-${index + 1}`),

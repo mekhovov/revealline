@@ -1,6 +1,7 @@
 import { localizedText } from '../i18n/index.mjs';
 import { createDestructionPreferences } from '../hunt/preferences.mjs';
 import { huntText } from '../hunt/copy.mjs';
+import { attachDefeatSoundControls } from './defeat-sound-controls.mjs';
 import {
   createHuntDestruction,
   drawHumanoidPixelBody,
@@ -11,6 +12,8 @@ export function attachDestructionControls({
   document: doc = globalThis.document,
   window: win = globalThis.window,
   container,
+  soundContainer,
+  preferences: suppliedPreferences,
   prefix = '',
   getStorage,
   writable,
@@ -18,11 +21,13 @@ export function attachDestructionControls({
     doc.body?.dataset.effects === 'reduced' ||
     win?.matchMedia?.('(prefers-reduced-motion: reduce)').matches === true,
 } = {}) {
-  const preferences = createDestructionPreferences({
-    window: win,
-    ...(getStorage ? { getStorage } : {}),
-    ...(writable ? { writable } : {}),
-  });
+  const preferences =
+    suppliedPreferences ??
+    createDestructionPreferences({
+      window: win,
+      ...(getStorage ? { getStorage } : {}),
+      ...(writable ? { writable } : {}),
+    });
   const root = doc.createElement('div');
   root.className = 'hunt-destruction-controls';
   const input = (name, labelKey) => {
@@ -38,8 +43,7 @@ export function attachDestructionControls({
     return control;
   };
   const brutal = input('brutal-destruction', 'brutal'),
-    blood = input('blood-body-parts', 'blood'),
-    vocals = input('humanoid-reactions', 'humanoidReactions');
+    blood = input('blood-body-parts', 'blood');
   const help = doc.createElement('p');
   help.className = 'micro-note';
   localizedText(help, () => huntText('brutalHelp'));
@@ -63,6 +67,13 @@ export function attachDestructionControls({
   canvas.setAttribute('aria-hidden', 'true');
   root.append(canvas);
   container?.append(root);
+  const soundControls = attachDefeatSoundControls({
+    document: doc,
+    window: win,
+    container: soundContainer ?? root,
+    prefix,
+    preferences,
+  });
   const fx = createHuntDestruction({ preview: true, onPreempt: () => stopPreview() });
   let frame = null,
     revision = 0,
@@ -78,8 +89,6 @@ export function attachDestructionControls({
     brutal.checked = choice.brutal;
     blood.checked = choice.blood;
     blood.disabled = !choice.brutal;
-    vocals.checked = choice.vocals;
-    vocals.disabled = !choice.brutal;
     status.hidden = retry.hidden = choice.durable;
     localizedText(status, () => (choice.durable ? '' : huntText('saving')));
     stopPreview();
@@ -93,7 +102,6 @@ export function attachDestructionControls({
   const unsubscribe = preferences.subscribe(render);
   const chooseBrutal = () => preferences.set({ brutal: brutal.checked });
   const chooseBlood = () => preferences.set({ blood: blood.checked });
-  const chooseVocals = () => preferences.set({ vocals: vocals.checked });
   const save = () => preferences.retry();
   const animate = () => {
     stopPreview();
@@ -138,7 +146,6 @@ export function attachDestructionControls({
   };
   brutal.addEventListener('change', chooseBrutal);
   blood.addEventListener('change', chooseBlood);
-  vocals.addEventListener('change', chooseVocals);
   retry.addEventListener('click', save);
   preview.addEventListener('click', animate);
   win?.addEventListener?.('pagehide', stopPreview);
@@ -148,10 +155,10 @@ export function attachDestructionControls({
       disposed = true;
       stopPreview();
       unsubscribe();
-      preferences.dispose();
+      soundControls.dispose();
+      if (!suppliedPreferences) preferences.dispose();
       brutal.removeEventListener('change', chooseBrutal);
       blood.removeEventListener('change', chooseBlood);
-      vocals.removeEventListener('change', chooseVocals);
       retry.removeEventListener('click', save);
       preview.removeEventListener('click', animate);
       win?.removeEventListener?.('pagehide', stopPreview);

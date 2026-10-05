@@ -17,7 +17,6 @@ test('gore, optional reactions, actor identity and crowd admission are independe
   const p = createHumanReactionPolicy({ random: () => 0.42 });
   for (const details of [
     {},
-    { ...human, brutal: false },
     { ...human, vocals: false },
     { ...human, machine: true },
     { ...human, humanoid: false },
@@ -25,9 +24,15 @@ test('gore, optional reactions, actor identity and crowd admission are independe
     assert.equal(p.request(0, details), null);
   assert.equal(isHumanoidDestruction({ family: 'relay-warden' }), true);
   assert.equal(isHumanoidDestruction({ family: 'radar-truck', machine: true }), false);
-  assert(p.request(0, human));
+  assert(
+    p.request(0, { ...human, brutal: false, vocals: true }),
+    'reactions work with visual gore off',
+  );
   assert.equal(p.request(0.1, human), null);
-  assert(p.request(0.25, human));
+  assert(
+    p.request(0.25, { ...human, brutal: true, vocals: true }),
+    'gore does not change admission',
+  );
   assert.equal(p.request(0.5, human), null, 'sustained token limit, not only simultaneous cap');
   assert.equal(p.request(1, human, 2), null);
   assert(p.request(1, human));
@@ -64,7 +69,7 @@ test('old destruction settings keep gore choice and gain an independent persiste
   prefs.dispose();
   again.dispose();
 });
-test('native vocal layers obey SFX/gore, warning priority, two-voice budget and Pause ownership', async (t) => {
+test('native vocal layers obey SFX/style, warning priority, two-voice budget and Pause ownership', async (t) => {
   const h = audioHarness();
   t.after(() => h.soundscape.dispose());
   await h.soundscape.enable();
@@ -239,7 +244,7 @@ test('optional native practice decodes compact reactions once and owns pause/war
     getChannelData: () => new Float32Array(2400).fill(0.05),
   };
   let decodes = 0,
-    settings = { brutal: true, vocals: true };
+    settings = { brutal: false, vocals: true };
   h.context.decodeAudioData = async () => {
     decodes++;
     return decoded;
@@ -284,7 +289,12 @@ test('optional native practice decodes compact reactions once and owns pause/war
     h.soundscape.dispose();
   });
   audio.setCourse({
-    actors: [{ id: 'runner', type: 'patrol' }],
+    actors: [
+      { id: 'runner', type: 'patrol' },
+      { id: 'drone', type: 'drone' },
+      { id: 'hazard', type: 'hazard' },
+      { id: 'vehicle', type: 'vehicle', vehicleModel: 'field-tank' },
+    ],
     pursuit: { actors: [{ id: 'runner', family: 'runner' }] },
   });
   await audio.setEnabled(true);
@@ -302,7 +312,18 @@ test('optional native practice decodes compact reactions once and owns pause/war
   state.events = [{ type: 'warning', actor: 'runner' }];
   audio.update(state);
   assert.equal(recorded[0].stopped, true);
-  settings = { brutal: true, vocals: false };
+  for (const actor of ['drone', 'hazard', 'vehicle']) {
+    h.context.currentTime += 1;
+    state.ticks++;
+    state.events = [{ type: 'defeat', actor }];
+    audio.update(state);
+  }
+  assert.equal(
+    h.sources.filter((source) => source.buffer === decoded).length,
+    1,
+    'machine and hazard destruction never inherits a humanoid fallback',
+  );
+  settings = { brutal: false, vocals: false };
   h.context.currentTime += 1;
   state.ticks++;
   state.events = [{ type: 'defeat', actor: 'runner' }];

@@ -284,7 +284,7 @@ export class FeedbackDirector {
         const identity = event.actorId ?? event.enemy ?? event.id;
         const actor = [
           ...(run.enemies ?? []),
-          ...((run.classic ?? run).combatPatrols?.actors ?? []),
+          ...((run.runningEnemies ?? run.classic ?? run).combatPatrols?.actors ?? []),
         ].find((candidate) => candidate.id === identity);
         const humanoid = hunt?.targets?.find((target) => target.id === identity);
         const stronghold =
@@ -325,7 +325,10 @@ export class FeedbackDirector {
           family,
           machine,
           material: event.material,
-          humanoid: humanoid || actor?.bodyId === 'humanoid' || undefined,
+          humanoid:
+            event.humanoid ??
+            (humanoid ? true : actor?.bodyId ? actor.bodyId === 'humanoid' : undefined),
+          flesh: event.flesh,
           vocals: (options.getDestruction?.() ?? this.sound.readDestruction?.())?.vocals,
           brutal: (options.getDestruction?.() ?? this.sound.readDestruction?.())?.brutal === true,
           pan: Number.isFinite(source?.x) ? screenPan(source.x, run.width, options.placement) : 0,

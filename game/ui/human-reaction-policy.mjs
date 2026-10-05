@@ -23,7 +23,6 @@ export function createHumanReactionPolicy({ random = Math.random } = {}) {
       lastTime = now;
       if (
         !Number.isFinite(now) ||
-        details.brutal !== true ||
         details.vocals === false ||
         !isHumanoidDestruction(details) ||
         details.audible === false ||

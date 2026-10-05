@@ -9,6 +9,8 @@ export function attachEncounterDisplayControls({
   getStorage = () => globalThis.localStorage,
   writable = () => true,
   prefix = '',
+  soundContainer,
+  destructionPreferences,
 } = {}) {
   const checkbox = doc.getElementById(`${prefix}enemy-remains`),
     status = doc.getElementById(`${prefix}enemy-remains-status`),
@@ -19,7 +21,14 @@ export function attachEncounterDisplayControls({
     getStorage,
     writable,
     prefix,
+    preferences: destructionPreferences,
     container: checkbox?.closest('section') ?? checkbox?.parentElement?.parentElement,
+    soundContainer:
+      soundContainer ??
+      doc.getElementById(`${prefix}settings-panel-audio`) ??
+      (prefix === 'overflight-'
+        ? doc.getElementById('volume')?.closest('label')?.parentElement
+        : null),
   });
   const preferences = createEncounterDisplayPreferences({ window: win, getStorage, writable });
   const stop = preferences.subscribe((state) => {
