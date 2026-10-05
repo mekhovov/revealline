@@ -29,6 +29,7 @@ export function mountRewardMedia({
   readLocalAsset,
   cinematic = false,
   reducedMotion = false,
+  onEnded = () => {},
 }) {
   const payload = validateCompletionRewardPayload(input);
   required(['audio', 'video'].includes(payload.type), 'Reward media requires audio or video.');
@@ -85,7 +86,8 @@ export function mountRewardMedia({
     sourceURL = null,
     captionsEnd = 0,
     blurred = false,
-    posterReady = payload.type === 'audio';
+    posterReady = payload.type === 'audio',
+    silentPlayback = false;
   const alive = () => !disposed && !controller.signal.aborted;
   const available = () =>
     alive() && !blurred && document.visibilityState !== 'hidden' && document.hidden !== true;
@@ -124,6 +126,7 @@ export function mountRewardMedia({
   }
   function pause() {
     desired = false;
+    silentPlayback = false;
     binding?.setLocal({ muted: true });
     media?.pause();
     releaseGain?.();
@@ -133,7 +136,7 @@ export function mountRewardMedia({
     if (alive()) status.textContent = tr('paused');
   }
   const owner = { pause };
-  function claim() {
+  function claim({ muted = silentPlayback } = {}) {
     if (!available() || !desired) {
       pause();
       return false;
@@ -141,8 +144,11 @@ export function mountRewardMedia({
     const previous = foregroundOwners.get(audioMaster);
     if (previous !== owner) previous?.pause();
     foregroundOwners.set(audioMaster, owner);
-    releaseGain ??= musicDucker.acquire(0);
-    binding.setLocal({ muted: false });
+    if (muted) {
+      releaseGain?.();
+      releaseGain = null;
+    } else releaseGain ??= musicDucker.acquire(0);
+    binding.setLocal({ muted });
     return true;
   }
   async function acquire(reference, role) {
@@ -321,13 +327,16 @@ export function mountRewardMedia({
         return;
       }
       desired = true;
-      if (foregroundOwners.get(audioMaster) !== owner) claim();
-      status.textContent = tr('playing');
+      claim();
+      status.textContent = tr(silentPlayback ? 'playingMuted' : 'playing');
     });
     listenMedia(media, 'pause', () => {
       if (desired) pause();
     });
-    listenMedia(media, 'ended', pause);
+    listenMedia(media, 'ended', () => {
+      pause();
+      onEnded();
+    });
     listenMedia(media, 'error', failCurrent);
     listenMedia(media, 'durationchange', () => {
       if (prepared) {
@@ -382,7 +391,7 @@ export function mountRewardMedia({
     media.controls = true;
     media.hidden = cinematic;
   }
-  async function start() {
+  async function start({ allowMutedFallback = false } = {}) {
     if (!available() || (desired && preparation)) return;
     desired = true;
     // Claim early so another pending reward cannot begin after this gesture.
@@ -400,16 +409,26 @@ export function mountRewardMedia({
         await preparation;
       }
       if (!desired || !available() || !prepared) return;
+      silentPlayback = false;
       if (!claim()) return;
-      const started = media.play();
-      await started;
+      try {
+        await media.play();
+      } catch (error) {
+        if (!allowMutedFallback || !desired || !available() || !prepared) throw error;
+        // iOS rejects audible autoplay after the asynchronous integrity and
+        // decoder checks. Keep the earned recording moving, then let an
+        // explicit Play gesture enable its audio through the shared master.
+        silentPlayback = true;
+        if (!claim({ muted: true })) return;
+        await media.play();
+      }
       if (!desired || !available()) {
         pause();
         return;
       }
       media.hidden = false;
       if (poster && !cinematic) poster.hidden = true;
-      status.textContent = tr('playing');
+      status.textContent = tr(silentPlayback ? 'playingMuted' : 'playing');
     } catch {
       // Browsers can require a second explicit gesture after asynchronous decode.
       pause();
