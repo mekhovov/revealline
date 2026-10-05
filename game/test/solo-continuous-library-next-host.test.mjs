@@ -86,7 +86,7 @@ async function setup(t, { holdIndex = null } = {}) {
     source.visualOverrides = {};
     packs.push((await preparePack(source)).pack);
   }
-  const assets = manaedIndexedDB();
+  const assets = ;
   const db = await new Promise((resolve, reject) => {
     const request = assets.indexedDB.open('revealline-assets-v1', 1);
     request.onupgradeneeded = () => request.result.createObjectStore('assets');
