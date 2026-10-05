@@ -10,6 +10,14 @@ Creator displays English/Ukrainian names for all admitted enemies and upgrades. 
 
 ## Verification
 
+The first hosted Creator CI run exposed a test-only optional-dependency import:
+the root-only job does not install Studio's `fake-indexeddb`. Commit `9e7c03240`
+uses the repository's transactional IndexedDB model with independent named
+databases, preserving all four original cases and adding install/offload rollback
+fault injection. The focused file passes 5/5; the actual Creator CI job now passes
+216/216 with zero failures/skips. See `creator-ci-portability.tap` and the
+source-bound `creator-ci-fixed.json`. This repair changes no runtime/build bytes.
+
 `creator-community-targeted.tap`: 46 tests passed, 0 failed, 0 skipped; exit 0. This contains:
 
 - `game/test/overflight-community.test.mjs`
@@ -29,4 +37,4 @@ For local service execution only, the previously absent declared `pngjs@7.0.0` a
 
 ## Remaining explicit gates
 
-The new checkbox UI and Community ownership wording still need an actual browser review in both languages. Live authenticated Community publication and deployment were not exercised. Packages remain restricted to the code-owned Overflight resource revisions; arbitrary new artwork or logic is not admitted. Device performance, human play quality and release admission are separate gates. The existing Asset Studio/Motion Lab links remain the actual artwork review path; this patch adds no synthetic cross-mode renderer.
+The EN/UK checkbox UI, Studio preview/export, fresh-origin import and native installed mission flow have browser evidence in `creator-browser.json`, `creator-uk.png` and `import-native.png`. Live authenticated Community ownership UI, publication and deployment were not exercised. Packages remain restricted to the code-owned Overflight resource revisions; arbitrary new artwork or logic is not admitted. Device performance, human play quality and release admission are separate gates. The existing Asset Studio/Motion Lab links remain the actual artwork review path. The separate `reuse.html`/`reuse-browser.png` review demonstrates the actual Capture painter and Asset Studio adapter using one decoded shared supply-case asset; it is a paused renderer demonstration, not a second game's playtest.
