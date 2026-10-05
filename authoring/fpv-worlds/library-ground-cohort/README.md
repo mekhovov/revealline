@@ -17,7 +17,11 @@ Proof archives still require an explicit import, and changing the endpoint does
 not update a cached player. See [the catalogue contract](../published/README.md).
 
 The cohort commit was rebased from preserved `a7e2a0127` onto the current P1
-ground-motion and Harbor parent `781842147c6a906867cee5dbee86f2b365115edc`.
+ground-motion and Harbor parent `781842147c6a906867cee5dbee86f2b365115edc`,
+then onto final Harbor `c958e5e13d0357e46b9a2c489802708adcdc05d8` after
+the ground parent's admission evidence was committed. All 105 runtime input
+bytes remain exact across that final cascade; `a95bd5207` is retained under
+`codex/fpv-ground-cohort-before-final-harbor-a95`.
 Readable source differs only by the endpoint and its comments; the worker and
 reaction projections were regenerated using the parent's existing tools. The
 old feed files, Harbor content, package policy, limits, licenses and dependency
