@@ -10,6 +10,16 @@
       "sha256": "50ffbb0e5da7dec94862a8f2ca85cfeb60542d3fe9f86bd3c4e288dfa0a2e554",
       "bytes": 1379988,
       "courses": 8
+    },
+    {
+      "id": "festival-grounds",
+      "title": ["Festival Grounds", "Фестивальний майданчик"],
+      "revision": "r5",
+      "commit": "62d0e72f2963a61cc65ef829a320d9a1c2593b0c",
+      "path": "authoring/fpv-worlds/festival-grounds/distribution/r5/festival-grounds.r5.rlpack",
+      "sha256": "87baca276e174f31ba19c02f4f2359c97affa07eefd4a5f4912b4d8664450f51",
+      "bytes": 1256875,
+      "courses": 8
     }
   ]
 }
