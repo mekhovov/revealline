@@ -3560,3 +3560,35 @@ Draft native stack. The separate Library cohort must preserve older feeds and
 carry eligible published rows forward. No push, merge or new unit coverage was
 performed by this admission handoff. Canals remains at its first-scene stage;
 broader regression, novice and physical-device qualification remain D6.
+
+### 5 October — Disk recovery, current P1 admission and Reservoir public launch
+
+The user authorized disposable-cache cleanup while preserving development data.
+About 7 GiB of cache/duplicate allocation was recovered, principally 23 stale,
+unindexed, incomplete Git temporary packs that Git classified as garbage.
+Finalized Git packs/indexes and all 2,135 previously checked ref/worktree HEAD
+objects remain unchanged and readable. This is a bounded preservation check,
+not a recursive repository integrity claim. Unique qualification archives,
+working files, installed extensions and browser offline/profile data remain.
+Local validation and package builds resumed; runtime qualification is no longer
+blocked by disk space.
+
+Ground's final documentation head `d78ae3bdd84e7f92ea88f94f8ca9e3fe04afe009`
+retains all 105 inputs from admitted `328f4c5373a89342aca2063134c0bc2823ecbb07`.
+Full validation and all-three admission pass, with two byte-identical builds per
+package and an exact 112-member Worlds stage. Its new
+[P1 admission evidence](../authoring/fpv-worlds/ground-motion/evidence/integration-p1-admission/README.md)
+keeps failures and historical results separate. Harbor was cascaded linearly
+onto this parent with recovery refs; every Harbor source/distribution/evidence
+byte remains identical to prior `f70834deb9bb21b0b9f000f355884af047fc0ba9`.
+Native stack1103 remains `#1101 → #1102`, both Draft pending fresh integrated
+native/offline checks. No manual retarget, bypass or merge is requested.
+
+Reservoir Library #1094 is publicly available: the public deployment marker
+identifies `00770c96eb8eab8d0aedda433d115f86188d5a75`, and root launched the
+actual public SIM, used Browse/Download to install r16 (eight challenges,
+identity prefix `50ffbb0e5da7`), and opened Shoreline check-in. Deliberate arm,
+pause and continue worked; the captured ordinary flight reached 30.8 seconds.
+This is public installation/launch evidence, not a manual course completion,
+new recording, hardware or sustained performance claim. The compatible Library
+cohort must copy the eligible Reservoir row and retain both older feeds.
